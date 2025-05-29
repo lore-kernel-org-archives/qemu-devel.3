@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49FA6C54FB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A79E8C5B543
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 22:03:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKlKp-0005Xb-33; Thu, 29 May 2025 18:02:47 -0400
+	id 1uKlKm-0005WA-3F; Thu, 29 May 2025 18:02:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKlKn-0005Wm-8t
- for qemu-devel@nongnu.org; Thu, 29 May 2025 18:02:45 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKlKk-0005Vh-1g
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 18:02:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKlKl-0002ZX-KF
- for qemu-devel@nongnu.org; Thu, 29 May 2025 18:02:45 -0400
+ (Exim 4.90_1) (envelope-from <eblake@redhat.com>) id 1uKlKi-0002Yx-1h
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 18:02:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748556163;
+ s=mimecast20190719; t=1748556159;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tkU3lGy5x3O+d/0bLwArMdgLP1ASjGcnbZa8XHDrIqs=;
- b=NdJ08+TEk4biQRmpKvdUaKLxlu1OMIt+rUGOPIcUKDdkw1In+nAvpYQqp7Z14uSPgxlkmf
- T5bdA+Jzjryrgn1I3r+mE492Eib8r9JNt4l3mfmnn9tcODeSfnr87xuDFtohWP0DE1ouMn
- FWqTMgODB2gKKiQ/ykBeLIiPOwl881g=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=U0vEHaYcZpF3/g7DHEkOZXpi9Y1ZKVx3ya/+92EcPpQ=;
+ b=G56Z1BzgPfSXZkzRR85m0dvzYHUdLrmQ5Xy45IXprlhBrWtVhOY7V9gD6ujYLvgc1/aPpF
+ 7VA6rxcRDmtCB0SQ5SI0FtA73A580Ic+FC7n1utIO8DCta9eaFOvOCYXgawgCv6ShYQiM0
+ Hj87UaWH6pN6okUFFTpowq0cBZAXQO0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-331-Bg7H7zHeM0-VQm_2uJt1hA-1; Thu,
- 29 May 2025 18:02:39 -0400
-X-MC-Unique: Bg7H7zHeM0-VQm_2uJt1hA-1
-X-Mimecast-MFC-AGG-ID: Bg7H7zHeM0-VQm_2uJt1hA_1748556158
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-257-FLvnN5IGPmaijhFYwypKyw-1; Thu,
+ 29 May 2025 18:02:37 -0400
+X-MC-Unique: FLvnN5IGPmaijhFYwypKyw-1
+X-Mimecast-MFC-AGG-ID: FLvnN5IGPmaijhFYwypKyw_1748556156
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 46544195609E; Thu, 29 May 2025 22:02:38 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE23E1956086; Thu, 29 May 2025 22:02:35 +0000 (UTC)
 Received: from green.redhat.com (unknown [10.2.16.48])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 85F6C19560AE; Thu, 29 May 2025 22:02:36 +0000 (UTC)
+ id 6B1AA19560AE; Thu, 29 May 2025 22:02:34 +0000 (UTC)
 From: Eric Blake <eblake@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Nir Soffer <nirsof@gmail.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  qemu-block@nongnu.org (open list:Network Block Dev...)
-Subject: [PULL 3/6] nbd: Set unix socket send buffer on Linux
-Date: Thu, 29 May 2025 17:02:10 -0500
-Message-ID: <20250529220228.1187563-11-eblake@redhat.com>
+Subject: [PULL 2/6] nbd: Set unix socket send buffer on macOS
+Date: Thu, 29 May 2025 17:02:09 -0500
+Message-ID: <20250529220228.1187563-10-eblake@redhat.com>
 In-Reply-To: <20250529220228.1187563-8-eblake@redhat.com>
 References: <20250529220228.1187563-8-eblake@redhat.com>
 MIME-Version: 1.0
@@ -87,103 +87,196 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nir Soffer <nirsof@gmail.com>
 
-Like macOS we have similar issue on Linux. For TCP socket the send
-buffer size is 2626560 bytes (~2.5 MiB) and we get good performance.
-However for unix socket the default and maximum buffer size is 212992
-bytes (208 KiB) and we see poor performance when using one NBD
-connection, up to 4 times slower than macOS on the same machine.
+On macOS we need to increase unix socket buffers size on the client and
+server to get good performance. We set socket buffers on macOS after
+connecting or accepting a client connection.
 
-Tracing shows that for every 2 MiB payload (qemu uses 2 MiB io size), we
-do 1 recvmsg call with TCP socket, and 10 recvmsg calls with unix
-socket.
+Testing shows that setting socket receive buffer size (SO_RCVBUF) has no
+effect on performance, so we set only the send buffer size (SO_SNDBUF).
+It seems to work like Linux but not documented.
 
-Fixing this issue requires changing the maximum send buffer size (the
-receive buffer size is ignored). This can be done using:
+Testing shows that optimal buffer size is 512k to 4 MiB, depending on
+the test case. The difference is very small, so I chose 2 MiB.
 
-    $ cat /etc/sysctl.d/net-mem-max.conf
-    net.core.wmem_max = 2097152
+I tested reading from qemu-nbd and writing to qemu-nbd with qemu-img and
+computing a blkhash with nbdcopy and blksum.
 
-    $ sudo sysctl -p /etc/sysctl.d/net-mem-max.conf
+To focus on NBD communication and get less noisy results, I tested
+reading and writing to null-co driver. I added a read-pattern option to
+the null-co driver to return data full of 0xff:
 
-With this we can set the socket buffer size to 2 MiB. With the defaults
-the value requested by qemu is clipped to the maximum size and has no
-effect.
+    NULL="json:{'driver': 'raw', 'file': {'driver': 'null-co', 'size': '10g', 'read-pattern': 255}}"
 
-I tested on 2 machines:
-- Fedora 42 VM on MacBook Pro M2 Max
-- Dell PowerEdge R640 (Intel(R) Xeon(R) Gold 6230 CPU @ 2.10GHz)
+For testing buffer size I added an environment variable for setting the
+socket buffer size.
 
-On the older Dell machine we see very little improvement, up to 1.03
-higher throughput. On the M2 machine we see up to 2.67 times higher
-throughput. The following results are from the M2 machine.
+Read from qemu-nbd via qemu-img convert. In this test buffer size of 2m
+is optimal (12.6 times faster).
 
-Reading from qemu-nbd with qemu-img convert. In this test buffer size of
-4m is optimal (2.28 times faster).
+    qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
+    qemu-img convert -f raw -O raw -W -n "nbd+unix:///?socket=/tmp/nbd.sock" "$NULL"
 
 | buffer size | time    | user    | system  |
 |-------------|---------|---------|---------|
-|     default |   4.292 |   0.243 |   1.604 |
-|      524288 |   2.167 |   0.058 |   1.288 |
-|     1048576 |   2.041 |   0.060 |   1.238 |
-|     2097152 |   1.884 |   0.060 |   1.191 |
-|     4194304 |   1.881 |   0.054 |   1.196 |
+|     default |  13.361 |   2.653 |   5.702 |
+|       65536 |   2.283 |   0.204 |   1.318 |
+|      131072 |   1.673 |   0.062 |   1.008 |
+|      262144 |   1.592 |   0.053 |   0.952 |
+|      524288 |   1.496 |   0.049 |   0.887 |
+|     1048576 |   1.234 |   0.047 |   0.738 |
+|     2097152 |   1.060 |   0.080 |   0.602 |
+|     4194304 |   1.061 |   0.076 |   0.604 |
 
-Writing to qemu-nbd with qemu-img convert. In this test buffer size of
-1m is optimal (2.67 times faster).
+Write to qemu-nbd with qemu-img convert. In this test buffer size of 2m
+is optimal (9.2 times faster).
 
-| buffer size | time    | user    | system  |
-|-------------|---------|---------|---------|
-|     default |   3.113 |   0.334 |   1.094 |
-|      524288 |   1.173 |   0.179 |   0.654 |
-|     1048576 |   1.164 |   0.164 |   0.670 |
-|     2097152 |   1.227 |   0.197 |   0.663 |
-|     4194304 |   1.227 |   0.198 |   0.666 |
-
-Computing a blkhash with nbdcopy. In this test buffer size of 512k is
-optimal (1.19 times faster).
+    qemu-nbd -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
+    qemu-img convert -f raw -O raw -W -n "$NULL" "nbd+unix:///?socket=/tmp/nbd.sock"
 
 | buffer size | time    | user    | system  |
 |-------------|---------|---------|---------|
-|     default |   2.140 |   4.483 |   2.681 |
-|      524288 |   1.794 |   4.467 |   2.572 |
-|     1048576 |   1.807 |   4.447 |   2.644 |
-|     2097152 |   1.822 |   4.461 |   2.698 |
-|     4194304 |   1.827 |   4.465 |   2.700 |
+|     default |   8.063 |   2.522 |   4.184 |
+|       65536 |   1.472 |   0.430 |   0.867 |
+|      131072 |   1.071 |   0.297 |   0.654 |
+|      262144 |   1.012 |   0.239 |   0.587 |
+|      524288 |   0.970 |   0.201 |   0.514 |
+|     1048576 |   0.895 |   0.184 |   0.454 |
+|     2097152 |   0.877 |   0.174 |   0.440 |
+|     4194304 |   0.944 |   0.231 |   0.535 |
 
-Computing a blkhash with blksum. In this test buffer size of 4m is
-optimal (2.65 times faster).
+Compute a blkhash with nbdcopy, using 4 NBD connections and 256k request
+size. In this test buffer size of 4m is optimal (5.1 times faster).
+
+    qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
+    nbdcopy --blkhash "nbd+unix:///?socket=/tmp/nbd.sock" null:
 
 | buffer size | time    | user    | system  |
 |-------------|---------|---------|---------|
-|     default |   3.582 |   4.595 |   2.392 |
-|      524288 |   1.499 |   4.384 |   1.482 |
-|     1048576 |   1.377 |   4.381 |   1.345 |
-|     2097152 |   1.388 |   4.389 |   1.354 |
-|     4194304 |   1.352 |   4.395 |   1.302 |
+|     default |   8.624 |   5.727 |   6.507 |
+|       65536 |   2.563 |   4.760 |   2.498 |
+|      131072 |   1.903 |   4.559 |   2.093 |
+|      262144 |   1.759 |   4.513 |   1.935 |
+|      524288 |   1.729 |   4.489 |   1.924 |
+|     1048576 |   1.696 |   4.479 |   1.884 |
+|     2097152 |   1.710 |   4.480 |   1.763 |
+|     4194304 |   1.687 |   4.479 |   1.712 |
+
+Compute a blkhash with blksum, using 1 NBD connection and 256k read
+size. In this test buffer size of 512k is optimal (10.3 times faster).
+
+    qemu-nbd -r -t -e 0 -f raw -k /tmp/nbd.sock "$NULL" &
+    blksum "nbd+unix:///?socket=/tmp/nbd.sock"
+
+| buffer size | time    | user    | system  |
+|-------------|---------|---------|---------|
+|     default |  13.085 |   5.664 |   6.461 |
+|       65536 |   3.299 |   5.106 |   2.515 |
+|      131072 |   2.396 |   4.989 |   2.069 |
+|      262144 |   1.607 |   4.724 |   1.555 |
+|      524288 |   1.271 |   4.528 |   1.224 |
+|     1048576 |   1.294 |   4.565 |   1.333 |
+|     2097152 |   1.299 |   4.569 |   1.344 |
+|     4194304 |   1.291 |   4.559 |   1.327 |
 
 Signed-off-by: Nir Soffer <nirsof@gmail.com>
-Message-ID: <20250517201154.88456-4-nirsof@gmail.com>
+Message-ID: <20250517201154.88456-3-nirsof@gmail.com>
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Signed-off-by: Eric Blake <eblake@redhat.com>
 ---
- nbd/common.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ nbd/nbd-internal.h      |  5 +++++
+ nbd/client-connection.c |  3 +++
+ nbd/common.c            | 25 +++++++++++++++++++++++++
+ nbd/server.c            |  2 ++
+ 4 files changed, 35 insertions(+)
 
+diff --git a/nbd/nbd-internal.h b/nbd/nbd-internal.h
+index 715d92d6efc..6bafeef5ddc 100644
+--- a/nbd/nbd-internal.h
++++ b/nbd/nbd-internal.h
+@@ -74,4 +74,9 @@ static inline int nbd_write(QIOChannel *ioc, const void *buffer, size_t size,
+
+ int nbd_drop(QIOChannel *ioc, size_t size, Error **errp);
+
++/* nbd_set_socket_send_buffer
++ * Set the socket send buffer size for optimal performance.
++ */
++void nbd_set_socket_send_buffer(QIOChannelSocket *sioc);
++
+ #endif
+diff --git a/nbd/client-connection.c b/nbd/client-connection.c
+index b11e266807d..79ea97e4cc1 100644
+--- a/nbd/client-connection.c
++++ b/nbd/client-connection.c
+@@ -31,6 +31,8 @@
+ #include "qapi/clone-visitor.h"
+ #include "qemu/coroutine.h"
+
++#include "nbd/nbd-internal.h"
++
+ struct NBDClientConnection {
+     /* Initialization constants, never change */
+     SocketAddress *saddr; /* address to connect to */
+@@ -140,6 +142,7 @@ static int nbd_connect(QIOChannelSocket *sioc, SocketAddress *addr,
+         return ret;
+     }
+
++    nbd_set_socket_send_buffer(sioc);
+     qio_channel_set_delay(QIO_CHANNEL(sioc), false);
+
+     if (!info) {
 diff --git a/nbd/common.c b/nbd/common.c
-index 9436e9d1d14..2a133a66c39 100644
+index 589a748cfe6..9436e9d1d14 100644
 --- a/nbd/common.c
 +++ b/nbd/common.c
-@@ -271,8 +271,9 @@ const char *nbd_mode_lookup(NBDMode mode)
- /*
-  * Testing shows that 2m send buffer is optimal. Changing the receive buffer
-  * size has no effect on performance.
-+ * On Linux we need to increase net.core.wmem_max to make this effective.
-  */
--#if defined(__APPLE__)
-+#if defined(__APPLE__) || defined(__linux__)
- #define UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE (2 * MiB)
- #endif
+@@ -18,6 +18,9 @@
 
+ #include "qemu/osdep.h"
+ #include "trace.h"
++#include "io/channel-socket.h"
++#include "qapi/error.h"
++#include "qemu/units.h"
+ #include "nbd-internal.h"
+
+ /* Discard length bytes from channel.  Return -errno on failure and 0 on
+@@ -264,3 +267,25 @@ const char *nbd_mode_lookup(NBDMode mode)
+         return "<unknown>";
+     }
+ }
++
++/*
++ * Testing shows that 2m send buffer is optimal. Changing the receive buffer
++ * size has no effect on performance.
++ */
++#if defined(__APPLE__)
++#define UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE (2 * MiB)
++#endif
++
++void nbd_set_socket_send_buffer(QIOChannelSocket *sioc)
++{
++#ifdef UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE
++    if (sioc->localAddr.ss_family == AF_UNIX) {
++        size_t size = UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE;
++        Error *errp = NULL;
++
++        if (qio_channel_socket_set_send_buffer(sioc, size, &errp) < 0) {
++            warn_report_err(errp);
++        }
++    }
++#endif /* UNIX_STREAM_SOCKET_SEND_BUFFER_SIZE */
++}
+diff --git a/nbd/server.c b/nbd/server.c
+index 2076fb2666b..d242be98115 100644
+--- a/nbd/server.c
++++ b/nbd/server.c
+@@ -3291,6 +3291,8 @@ void nbd_client_new(QIOChannelSocket *sioc,
+     client->close_fn = close_fn;
+     client->owner = owner;
+
++    nbd_set_socket_send_buffer(sioc);
++
+     co = qemu_coroutine_create(nbd_co_client_start, client);
+     qemu_coroutine_enter(co);
+ }
 -- 
 2.49.0
 
