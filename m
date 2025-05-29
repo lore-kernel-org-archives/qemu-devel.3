@@ -4,96 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2506C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 06:34:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 759C0C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 06:54:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLyjs-0000lS-0a; Mon, 02 Jun 2025 02:33:42 -0400
+	id 1uLz2v-0000SS-6K; Mon, 02 Jun 2025 02:53:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uLyTa-0003RV-2M
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 02:17:00 -0400
-Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uLyTP-0003Xo-Dh
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 02:16:45 -0400
-Received: by mail-vs1-xe32.google.com with SMTP id
- ada2fe7eead31-4e59012c7eeso2871918137.1
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 23:16:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748844996; x=1749449796; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jPdsnRY5+Vx+B0EseW1kn4hEuKxtA+cyMPZCTOqyPyA=;
- b=tJFAsreJe+fJgrZV75mMYDwNJ1KqNR9LF4uJvcONzTi5EcG+gXR5jrP0+WZcpBA+UZ
- nc1vgb+0xHlyJp4bww0KRvo5bLqLaOSSiftNVJfLPP7gDgCuBGHcgOqxrc4NzRLm2TWw
- UKnZtCuSZLrHtPowNffgjmqQoDX1gGwhBHFAlXjDLMTgami9HsMWKpMYFTA0Dn6pr0TL
- StzqtLn+l63nOk2ZEhAHnVrd6WfL+emy+PMZSMdLc5m24EqH6uyykgiuShLNfPxo1wk1
- uplJyZXzu98xOvrchy0ZScd/o+mtXwCJgR4pQVjwSOVCzkugoXVxOsyi4gq5ar4usGt7
- wntw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748844996; x=1749449796;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jPdsnRY5+Vx+B0EseW1kn4hEuKxtA+cyMPZCTOqyPyA=;
- b=bfSYOYxudovOj8/vl85RQNUuM7TFk2YWl6ZkRAzt1WWaBInmp0RL5pwbcqZDv5Howp
- WXdavy/lGH12eH/fICPxR5vPbcwLiVaSsM0wUG20gvah/Rbx2CpAb8gPaYZLscBh2Syu
- GIfgaFyxBbPQ/qDp7Qwu1ey4sxqnelPvkdS1tGcJBXx3kw/mhxj0yh0Fph0pt/HvL9Cg
- 4TxIh2Am1ZBwOYtiRSELW1MIJNWJrekwbwCpmyL4lcOenu4snZShCWAeQ4PxBdqCzdT8
- s68fPPmdm7bklWoRx4ma+m6A6SI30CFuJ9Ok3aV6q2wdbbP2fs3v2HyY+PfVpteX5Yg5
- cBFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFcg3U4Hnfg0Ga31EJ8eCiWttf8UVKYvImYiiwnqIpqjpMO/HwuCm/7UE0Oz7jsCKROkpcLZzXL3xd@nongnu.org
-X-Gm-Message-State: AOJu0YyV1ELZRYLuVvvXRb+yL18gJTEiJA6q9GFq0ye5Xwk9cAIJ1TDE
- +WKMSokU1PS8EIceSqLvWqsXGOCHt7bDiF53ZYyYAVhEZ+AiuVZw9XzJCYStetzVcRY=
-X-Gm-Gg: ASbGnct03eZERx8GOjGI6hd0Mz9Xt/3i6sg3zwgR9uzbu9qdJimD5yWkUS0fXaFqJtL
- GBKZn/reyM2mGkskvbECNRnogaBXcsGWlosBfczrCwUqFP+AhFi/1keqq/DOUDjfBcuSIthBds4
- INs5oko3nutwnNGJV6eCNhA4c4G7MAMRpgEpCLPNTxOx4tnyiLA9wFgF0bCr9vvYUkH+hLVRdGM
- g9ROVwePLzu6HajuVEj+qGYqCzw2S/hz5K40kHgR693P/q54P2lrQ2uI6buyY3tHFECukGsvJoq
- qJJiZZPQ7ulwvXVeIr9U3txbe0V+W/VfeEXAPEzofZhoZvWaL/5SfKW+vnTwkew5Dw==
-X-Google-Smtp-Source: AGHT+IFdnPEJWTCb5wsXdXvdoOdB501kThHqOiB6OQn7+PTm7RElBHoxTB+v4YKVslukJyWphxK4yA==
-X-Received: by 2002:a05:6102:cd3:b0:4e5:fe5e:2be4 with SMTP id
- ada2fe7eead31-4e6e41d9351mr10517951137.22.1748844996624; 
- Sun, 01 Jun 2025 23:16:36 -0700 (PDT)
-Received: from [192.168.0.102] ([179.180.194.137])
- by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-87e2a2a4238sm5715521241.14.2025.06.01.23.16.32
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Jun 2025 23:16:36 -0700 (PDT)
-Message-ID: <09cc2688-ef7f-4dd6-a4ed-a18adb07d35e@linaro.org>
-Date: Mon, 2 Jun 2025 03:16:36 -0300
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uLz2r-0000RO-Nm
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 02:53:18 -0400
+Received: from mailout3.samsung.com ([203.254.224.33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uLz2o-0007u5-5O
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 02:53:17 -0400
+Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20250602065303epoutp0363f526d2948998e29d0374d1d889d712~FJz9baCY32525225252epoutp03E
+ for <qemu-devel@nongnu.org>; Mon,  2 Jun 2025 06:53:03 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20250602065303epoutp0363f526d2948998e29d0374d1d889d712~FJz9baCY32525225252epoutp03E
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1748847183;
+ bh=1z55st5mZ56IIzNkzIiLVTQSlBNgBYJF4HFz+KqC5dc=;
+ h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+ b=X9MV0UhVAgxLbKrGJaFCW2AJ3h/ZQi4GZtor/GtPMixDD1dF8TLP9H0qQRQ+gtytE
+ +qxwi5ckRLtd6HG96kK82hnNe7G9vkxAoBE6gH9urNsieUXeYgDaie3DAMle6yLHe+
+ pZd3IUe09P9IZ/JXHUA0T412dNrnoafd//LeZGi8=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20250602065302epcas5p2be86ae50c34b4b58c5fff39f78e65e09~FJz8_bdtd3002030020epcas5p2h;
+ Mon,  2 Jun 2025 06:53:02 +0000 (GMT)
+Received: from epcpadp2new (unknown [182.195.40.142]) by
+ epsnrtp01.localdomain (Postfix) with ESMTP id 4b9l0Z5VH2z6B9m5; Mon,  2 Jun
+ 2025 06:53:02 +0000 (GMT)
+Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
+ epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+ 20250529114524epcas5p49879b7d39d7ed2ffbcd704af43f6cba3~D-OE_X8N12570825708epcas5p4n;
+ Thu, 29 May 2025 11:45:24 +0000 (GMT)
+Received: from epsmgmc1p1new.samsung.com (unknown [182.195.42.40]) by
+ epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
+ 20250529114524epsmtrp1b816db94effe3c0c53ea074d9aacf133~D-OE84YG72788827888epsmtrp1R;
+ Thu, 29 May 2025 11:45:24 +0000 (GMT)
+X-AuditID: b6c32a28-460ee70000001e8a-52-683848d4e21b
+Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
+ epsmgmc1p1new.samsung.com (Symantec Messaging Gateway) with SMTP id
+ 26.72.07818.4D848386; Thu, 29 May 2025 20:45:24 +0900 (KST)
+Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
+ epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250529114522epsmtip2b11d832816afa87f9c38fae1189fb7e8~D-ODOVGxW3120231202epsmtip2g;
+ Thu, 29 May 2025 11:45:22 +0000 (GMT)
+Date: Thu, 29 May 2025 17:15:10 +0530
+From: Arpit Kumar <arpit1.kumar@samsung.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, linux-cxl@vger.kernel.org,
+ qemu-devel@nongnu.org, linuxarm@huawei.com, fan.ni@samsung.com, Yuquan Wang
+ <wangyuquan1236@phytium.com.cn>, Sweta Kumari <s5.kumari@samsung.com>,
+ Vinayak Holikatti <vinayak.kh@samsung.com>, Davidlohr Bueso
+ <dave@stgolabs.net>, Ajay Joshi <ajay.opensrc@micron.com>, cpgs@samsung.com
+Subject: Re: [PATCH qemu 7/8] hw/cxl/cxl-mailbox-utils: Added support for
+ Get Log Capabilities (Opcode 0402h)
+Message-ID: <1983025922.01748847182751.JavaMail.epsvc@epcpadp2new>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
- hotplug off
-To: eric.auger@redhat.com, Igor Mammedov <imammedo@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, anisinha@redhat.com, mst@redhat.com,
- shannon.zhaosl@gmail.com, pbonzini@redhat.com, Jonathan.Cameron@huawei.com,
- philmd@linaro.org, alex.bennee@linaro.org
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-25-eric.auger@redhat.com>
- <20250528113813.47086516@imammedo.users.ipa.redhat.com>
- <fd44ef37-ef02-4e60-817d-1362c76433b0@redhat.com>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <fd44ef37-ef02-4e60-817d-1362c76433b0@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
- envelope-from=gustavo.romero@linaro.org; helo=mail-vs1-xe32.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250528133847.00007b7c@huawei.com>
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFupnkeLIzCtJLcpLzFFi42LZdlhJXveKh0WGQU+3gsXj37PYLF4e0rRY
+ fXMNo0XT6rusFqsWXmOzOD/rFIvF4Y1nmCz+/3rFanG8dweLxZpzn1ksTpzczm4xbdoTNgce
+ j5Yjb1k9vq/vYPN4cm0zk8f2WVMZPd7vu8rm0bdlFaPH1Nn1Hp83yQVwRHHZpKTmZJalFunb
+ JXBl7LwZWDAlteL6rRlMDYxPvboYOTgkBEwk3q+I6GLk4hAS2M0oseTfc8YuRk6guIzExZmP
+ WSBsYYmV/56zQxR9YJR48uQ5WIJFQFXixN4NbCA2m4COxPnbc8FsEQEjiXc3JjGCNDALvGGS
+ +H5iN1iDsEC+xL1Ft8A28Ao4S0zZ1MYEMfU+s8SRG0eZIBKCEidnPgFrYBYwk5i3+SEzyKnM
+ AtISy/9xQITlJZq3zmYGsTkFDCW29h1hnsAoOAtJ9ywk3bMQumch6V7AyLKKUTK1oDg3PTfZ
+ sMAwL7Vcrzgxt7g0L10vOT93EyM4zrQ0djC++9akf4iRiYPxEKMEB7OSCG+TvVmGEG9KYmVV
+ alF+fFFpTmrxIUZpDhYlcd6VhhHpQgLpiSWp2ampBalFMFkmDk6pBibJ6t5p+xmOzXlhZiry
+ Xlzx2PUjzkG/ChdqH+iRkzr+SefQh8ufNMV3bP8Udbr42xod913JOxncTyY4d51IvmN66GuP
+ /6S4A7UvfU7dyiuSemvU/u9XhKnGtKOr7k5qPMfUO/nqpc4fnXfzRTd+OvP8SZXEjCOKDrNa
+ Vj79NmcZy4IKr8W5yWFPFA4G8J30dTjIkHLv9N953FnSvl0FK24cu3twcVN9QsSJqh5FNxGb
+ Lm+JiFq/DV+5t7PdXZR3eBHrWcarqUveLQ31mKZ6dm3Jju25Na99zznwdVy+0mjrUlB3y/iZ
+ w0wmybd1v7amn8m32WOz8mdQ6rKr77kuFUaXdH1LYa7mWx1+9NKDrwseK7EUZyQaajEXFScC
+ ABQ0gc0iAwAA
+X-CMS-MailID: 20250529114524epcas5p49879b7d39d7ed2ffbcd704af43f6cba3
+X-Msg-Generator: CA
+Content-Type: multipart/mixed;
+ boundary="----el_smSXdYFIlAMwTB7ap0a..dltiS3v3rvvNmq_h4IEEs8u2=_5b97f_"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+X-CPGSPASS: Y
+X-Hop-Count: 3
+X-CMS-RootMailID: 20250516134255epcas5p378dda7fbda7db62fe73cc6163c5e7043
+References: <20250305092501.191929-1-Jonathan.Cameron@huawei.com>
+ <20250305092501.191929-8-Jonathan.Cameron@huawei.com>
+ <20250512043011-mutt-send-email-mst@kernel.org>
+ <20250512093638-mutt-send-email-mst@kernel.org>
+ <20250512174038.00000beb@huawei.com>
+ <CGME20250516134255epcas5p378dda7fbda7db62fe73cc6163c5e7043@epcas5p3.samsung.com>
+ <1983025922.01747408682214.JavaMail.epsvc@epcpadp2new>
+ <20250528133106.000003c8@huawei.com> <20250528133847.00007b7c@huawei.com>
+Received-SPF: pass client-ip=203.254.224.33;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout3.samsung.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.071,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=-0.01, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,161 +126,324 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Eric,
+------el_smSXdYFIlAMwTB7ap0a..dltiS3v3rvvNmq_h4IEEs8u2=_5b97f_
+Content-Type: text/plain; charset="utf-8"; format="flowed"
+Content-Transfer-Encoding: 8bit
+Content-Disposition: inline
 
-On 5/28/25 06:48, Eric Auger wrote:
-> Hi Igor,
-> 
-> On 5/28/25 11:38 AM, Igor Mammedov wrote:
->> On Tue, 27 May 2025 09:40:26 +0200
->> Eric Auger <eric.auger@redhat.com> wrote:
+On 28/05/25 01:38PM, Jonathan Cameron wrote:
+>On Wed, 28 May 2025 13:31:06 +0100
+>Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+>
+>> On Fri, 16 May 2025 19:12:45 +0530
+>> Arpit Kumar <arpit1.kumar@samsung.com> wrote:
 >>
->>> From: Gustavo Romero <gustavo.romero@linaro.org>
->>>
->>> ACPI PCI hotplug is now turned on by default so we need to change the
->>> existing tests to keep it off. However, even setting the ACPI PCI
->>> hotplug off in the existing tests, there will be changes in the ACPI
->>> tables because the _OSC method was modified, hence in the next patch of
->>> this series the blobs are updated accordingly.
->>>
->>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
->>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> it would be better to test whatever default we end up with.
->> (like x86)
-> 
-> See my question on patch 2's comment. We intended to have tests for both
-> modes (legacy and acpi pcihp). Gustavo added some new tests for the new
-> default, namely acpi pcihp. Now I did not really understand your point
-> about keeping legacy mode as a default.
-
-I _think_ I understood what Igor is suggesting. In a separate series, that
-I've kept in a github branch to not add noise here, I removed the test for
-acpi-pcihp=on and just added one for acpi-pcihp=off after we adjust the blobs
-for the _OSC change. I added the test before acpi-pcihp=on becomes the default,
-since if everything is ok the native test must continue to work after acpi-pcihp=on
-becomes the default, as Igor said.
-
-Anyways, please see my last reply to Igor in this thread (for some reason
-I can't find the reply either in qemu-devel@ or qemu-arm@)... I'm pasting
-below the main part just in case (the branch and the overview for the tests
-location in the series):
-
-https://github.com/gromero/qemu/commits/v2_20250527_eric_auger_redhat_com/
-
-3c302f7222 tests/qtest/bios-tables-test: Update DSDT blobs                                   #1c (update blob)    \
-671f15f470 hw/arm/virt: Use ACPI PCI hotplug by default                                      #1b (modify default) | acpi-pcihp=on
-9468f730e1 tests/qtest/bios-tables-test: Prepare for changes in the DSDT table               #1a (whitelist)      /
-c9ec0e0226 hw/arm/virt: Plug pcihp hotplug/hotunplug callbacks
-dc44749a34 hw/arm/virt: Let virt support pci hotplug/unplug GED event
-f667079260 hw/core/sysbus: Introduce sysbus_mmio_map_name() helper
-46731e563b hw/acpi/ged: Support migration of AcpiPciHpState
-4fa7b0e0f6 hw/acpi/ged: Call pcihp plug callbacks in hotplug handler implementation
-587b001876 hw/acpi/ged: Prepare the device to react to PCI hotplug events
-b55183d128 hw/arm/virt-acpi-build: Modify the DSDT ACPI table to enable ACPI PCI hotplug
-fe4c96b384 hw/i386/acpi-build: Move aml_pci_edsm to a generic place
-010c50dbc7 hw/i386/acpi-build: Introduce and use acpi_get_pci_host
-5a1be727e6 hw/i386/acpi-build: Move build_append_pci_bus_devices/pcihp_slots to pcihp
-14a172e192 hw/i386/acpi-build: Move build_append_notification_callback to pcihp
-5110ae8874 hw/acpi/pcihp: Add an AmlRegionSpace arg to build_acpi_pci_hotplug
-82c2aef672 hw/i386/acpi-build: Introduce build_append_pcihp_resources() helper
-6372fe7eef qtest/bios-tables-test: Update DSDT 'noacpipcihp' variant blob                    #2 (blob update for test), part 2 of 2 (update blob)  ] New PCIe native test
-6fb29ba18d tests/qtest/bios-tables-test: Add aarch64 PCIe native hotplug test                #2 (pcie native hp test), part 1 of 2 (whitelist)     /
-12c63a505e tests/qtest/bios-tables-test: Update DSDT blobs after GPEX _OSC change            Patch 10/25 in this series (update blob)    \
-779bd47749 hw/pci-host/gpex-acpi: Use build_pci_host_bridge_osc_method                       Patch  9/25 in this series (modify default) | _OSC change
-f260fd59c1 tests/qtest/bios-tables-test: Prepare for changes in the DSDT table               Patch  8/25 in this series (whitelist)      /
-b000677fd9 hw/i386/acpi-build: Turn build_q35_osc_method into a generic method
-a72f87b634 hw/pci-host/gpex-acpi: Propagate hotplug type info from virt machine downto gpex
-77a87b6ba3 hw/pci-host/gpex-acpi: Split host bridge OSC and DSM generation
-67e4dc2e7b hw/pci-host/gpex-acpi: Add native_pci_hotplug arg to acpi_dsdt_add_pci_osc
-b89e69da54 hw/acpi: Rename and move build_x86_acpi_pci_hotplug to pcihp
-74f1080a74 hw/arm/virt: Introduce machine state acpi pcihp flags and props
-1048082f33 hw/i386/acpi-build: Make aml_pci_device_dsm() static
-
-Feel free to cherry-pick the tests and adjust them as you did before.
-
-I'll be off this week returning on June 9.
-
-
-Cheers,
-Gustavo
-
-> Thanks
-> 
-> Eric
+>> > On 12/05/25 05:40PM, Jonathan Cameron wrote:
+>> > >On Mon, 12 May 2025 09:37:07 -0400
+>> > >"Michael S. Tsirkin" <mst@redhat.com> wrote:
+>> > >
+>> > >> On Mon, May 12, 2025 at 04:42:41AM -0400, Michael S. Tsirkin wrote:
+>> > >> > On Wed, Mar 05, 2025 at 09:24:58AM +0000, Jonathan Cameron wrote:
+>> > >> > > From: Arpit Kumar <arpit1.kumar@samsung.com>
+>> > >> > >
+>> > >> > > CXL spec 3.2 section 8.2.10.5.3 describes Get Log Capabilities.
+>> > >> > > It provides log capabilities supported by specified log.
+>> > >> > >
+>> > >> > > Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+>> > >> > > Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>> > >> > > ---
+>> > >> > >  include/hw/cxl/cxl_device.h  | 20 ++++++++++++++++
+>> > >> > >  include/hw/cxl/cxl_mailbox.h |  5 ++++
+>> > >> > >  hw/cxl/cxl-mailbox-utils.c   | 45 ++++++++++++++++++++++++++++++++++++
+>> > >> > >  3 files changed, 70 insertions(+)
+>> > >> > >
+>> > >> > > diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>> > >> > > index ed6cd50c67..87a376c982 100644
+>> > >> > > --- a/include/hw/cxl/cxl_device.h
+>> > >> > > +++ b/include/hw/cxl/cxl_device.h
+>> > >> > > @@ -133,6 +133,18 @@ typedef enum {
+>> > >> > >      CXL_MBOX_MAX = 0x20
+>> > >> > >  } CXLRetCode;
+>> > >> > >
+>> > >> > > +/* types of logs */
+>> > >> > > +typedef enum {
+>> > >> > > +    CXL_LOG_COMMAND_EFFECT,
+>> > >> > > +    CXL_LOG_VENDOR_DEBUG,
+>> > >> > > +    CXL_LOG_COMPONENT_STATE_DUMP,
+>> > >> > > +    CXL_LOG_ERROR_CHECK_SCRUB,
+>> > >> > > +    CXL_LOG_MEDIA_TEST_CAPABILITY,
+>> > >> > > +    CXL_LOG_MEDIA_TEST_RESULTS_SHORT,
+>> > >> > > +    CXL_LOG_MEDIA_TEST_RESULTS_LONG,
+>> > >> > > +    MAX_LOG_TYPE
+>> > >> > > +} CXLLogType;
+>> > >> > > +
+>> > >> > >  typedef struct CXLCCI CXLCCI;
+>> > >> > >  typedef struct cxl_device_state CXLDeviceState;
+>> > >> > >  struct cxl_cmd;
+>> > >> > > @@ -163,6 +175,11 @@ typedef struct CXLEventLog {
+>> > >> > >      QSIMPLEQ_HEAD(, CXLEvent) events;
+>> > >> > >  } CXLEventLog;
+>> > >> > >
+>> > >> > > +typedef struct CXLLogCapabilities {
+>> > >> > > +    uint32_t param_flags;
+>> > >> > > +    QemuUUID uuid;
+>> > >> > > +} CXLLogCapabilities;
+>> > >> > > +
+>> > >> > >  typedef struct CXLCCI {
+>> > >> > >      struct cxl_cmd cxl_cmd_set[256][256];
+>> > >> > >      struct cel_log {
+>> > >> > > @@ -171,6 +188,9 @@ typedef struct CXLCCI {
+>> > >> > >      } cel_log[1 << 16];
+>> > >> > >      size_t cel_size;
+>> > >> > >
+>> > >> > > +    /* get log capabilities */
+>> > >> > > +    const CXLLogCapabilities *supported_log_cap;
+>> > >> > > +
+>> > >> > >      /* background command handling (times in ms) */
+>> > >> > >      struct {
+>> > >> > >          uint16_t opcode;
+>> > >> > > diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
+>> > >> > > index 9008402d1c..8e1c7c5f15 100644
+>> > >> > > --- a/include/hw/cxl/cxl_mailbox.h
+>> > >> > > +++ b/include/hw/cxl/cxl_mailbox.h
+>> > >> > > @@ -16,4 +16,9 @@
+>> > >> > >  #define CXL_MBOX_BACKGROUND_OPERATION (1 << 6)
+>> > >> > >  #define CXL_MBOX_BACKGROUND_OPERATION_ABORT (1 << 7)
+>> > >> > >
+>> > >> > > +#define CXL_LOG_CAP_CLEAR_SUPPORTED (1 << 0)
+>> > >> > > +#define CXL_LOG_CAP_POPULATE_SUPPORTED (1 << 1)
+>> > >> > > +#define CXL_LOG_CAP_AUTO_POPULATE_SUPPORTED (1 << 2)
+>> > >> > > +#define CXL_LOG_CAP_PERSISTENT_COLD_RESET_SUPPORTED (1 << 3)
+>> > >> > > +
+>> > >> > >  #endif
+>> > >> > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>> > >> > > index 299f232f26..f35fc4f112 100644
+>> > >> > > --- a/hw/cxl/cxl-mailbox-utils.c
+>> > >> > > +++ b/hw/cxl/cxl-mailbox-utils.c
+>> > >> > > @@ -81,6 +81,7 @@ enum {
+>> > >> > >      LOGS        = 0x04,
+>> > >> > >          #define GET_SUPPORTED 0x0
+>> > >> > >          #define GET_LOG       0x1
+>> > >> > > +        #define GET_LOG_CAPABILITIES   0x2
+>> > >> > >      FEATURES    = 0x05,
+>> > >> > >          #define GET_SUPPORTED 0x0
+>> > >> > >          #define GET_FEATURE   0x1
+>> > >> > > @@ -1068,6 +1069,43 @@ static CXLRetCode cmd_logs_get_log(const struct cxl_cmd *cmd,
+>> > >> > >      return CXL_MBOX_SUCCESS;
+>> > >> > >  }
+>> > >> > >
+>> > >> > > +static const struct CXLLogCapabilities *find_log_index(QemuUUID *uuid, CXLCCI *cci)
+>> > >> > > +{
+>> > >> > > +    for (int i = CXL_LOG_COMMAND_EFFECT; i < MAX_LOG_TYPE; i++) {
+>> > >> > > +        if (qemu_uuid_is_equal(uuid,
+>> > >> > > +            &cci->supported_log_cap[i].uuid)) {
+>> > >> > > +                return &cci->supported_log_cap[i];
+>> > >> > > +        }
+>> > >> > > +    }
+>> > >> > > +    return NULL;
+>> > >> > > +}
+>> > >> > > +
+>> > >> > > +/* CXL r3.2 Section 8.2.10.5.3: Get Log Capabilities (Opcode 0402h) */
+>> > >> > > +static CXLRetCode cmd_logs_get_log_capabilities(const struct cxl_cmd *cmd,
+>> > >> > > +                                                uint8_t *payload_in,
+>> > >> > > +                                                size_t len_in,
+>> > >> > > +                                                uint8_t *payload_out,
+>> > >> > > +                                                size_t *len_out,
+>> > >> > > +                                                CXLCCI *cci)
+>> > >> > > +{
+>> > >> > > +    const CXLLogCapabilities *cap;
+>> > >> > > +    struct {
+>> > >> > > +        QemuUUID uuid;
+>> > >> > > +    } QEMU_PACKED QEMU_ALIGNED(8) *get_log_capabilities_in = (void *)payload_in;
+>> > >> > > +
+>> > >> > > +    uint32_t *get_log_capabilities_out = (uint32_t *)payload_out;
+>> > >> > > +
+>> > >> > > +    cap = find_log_index(&get_log_capabilities_in->uuid, cci);
+>> > >> > > +    if (!cap) {
+>> > >> > > +        return CXL_MBOX_INVALID_LOG;
+>> > >> > > +    }
+>> > >> > > +
+>> > >> > > +    memcpy(get_log_capabilities_out, &cap->param_flags,
+>> > >> > > +           sizeof(cap->param_flags));
+>> > >> > > +    *len_out = sizeof(*get_log_capabilities_out);
+>> > >> > > +    return CXL_MBOX_SUCCESS;
+>> > >> > > +}
+>> > >> > > +
+>> > >> > >  /* CXL r3.1 section 8.2.9.6: Features */
+>> > >> > >  /*
+>> > >> > >   * Get Supported Features output payload
+>> > >> > > @@ -3253,6 +3291,8 @@ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>> > >> > >      [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported,
+>> > >> > >                                0, 0 },
+>> > >> > >      [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
+>> > >> > > +    [LOGS][GET_LOG_CAPABILITIES] = { "LOGS_GET_LOG_CAPABILITIES",
+>> > >> > > +                                     cmd_logs_get_log_capabilities, 0x10, 0 },
+>> > >> > >      [FEATURES][GET_SUPPORTED] = { "FEATURES_GET_SUPPORTED",
+>> > >> > >                                    cmd_features_get_supported, 0x8, 0 },
+>> > >> > >      [FEATURES][GET_FEATURE] = { "FEATURES_GET_FEATURE",
+>> > >> > > @@ -3512,10 +3552,15 @@ static void cxl_rebuild_cel(CXLCCI *cci)
+>> > >> > >      }
+>> > >> > >  }
+>> > >> > >
+>> > >> > > +static const struct CXLLogCapabilities cxl_get_log_cap[MAX_LOG_TYPE] = {
+>> > >> > > +    [CXL_LOG_COMMAND_EFFECT] = { .param_flags = 0, .uuid = cel_uuid },
+>> > >> > > +};
+>> > >> > > +
+>> > >> >
+>> > >> >
+>> > >> > causes ci build failures:
+>> > >> >
+>> > >> > https://gitlab.com/mstredhat/qemu/-/jobs/9999980051
+>> > >> >
+>> > >> > ../hw/cxl/cxl-mailbox-utils.c:3556:60: error: initializer element is not constant
+>> > >> >      [CXL_LOG_COMMAND_EFFECT] = { .param_flags = 0, .uuid = cel_uuid },
+>> > >> >                                                             ^~~~~~~~
+>> > >> > ../hw/cxl/cxl-mailbox-utils.c:3556:60: note: (near initialization for ‘cxl_get_log_cap[0].uuid’)
+>> > >> >
+>> > >> >
+>> > >> > Fixed it up like this:
+>> > >> >
+>> > >> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>> > >> > index f35fc4f112..13d26e391b 100644
+>> > >> > --- a/hw/cxl/cxl-mailbox-utils.c
+>> > >> > +++ b/hw/cxl/cxl-mailbox-utils.c
+>> > >> > @@ -992,9 +992,10 @@ static CXLRetCode cmd_timestamp_set(const struct cxl_cmd *cmd,
+>> > >> >  }
+>> > >> >
+>> > >> >  /* CXL r3.1 Section 8.2.9.5.2.1: Command Effects Log (CEL) */
+>> > >> > -static const QemuUUID cel_uuid = {
+>> > >> > -    .data = UUID(0x0da9c0b5, 0xbf41, 0x4b78, 0x8f, 0x79,
+>> > >> > +#define CEL_UUID UUID(0x0da9c0b5, 0xbf41, 0x4b78, 0x8f, 0x79, \
+>> > >> >                   0x96, 0xb1, 0x62, 0x3b, 0x3f, 0x17)
+>> > >> > +static const QemuUUID cel_uuid = {
+>> > >> > +    .data = CEL_UUID
+>> > >> >  };
+>> > >> >
+>> > >> >  /* CXL r3.1 Section 8.2.9.5.1: Get Supported Logs (Opcode 0400h) */
+>> > >> > @@ -3553,7 +3554,7 @@ static void cxl_rebuild_cel(CXLCCI *cci)
+>> > >> >  }
+>> > >> >
+>> > >> >  static const struct CXLLogCapabilities cxl_get_log_cap[MAX_LOG_TYPE] = {
+>> > >> > -    [CXL_LOG_COMMAND_EFFECT] = { .param_flags = 0, .uuid = cel_uuid },
+>> > >> > +    [CXL_LOG_COMMAND_EFFECT] = { .param_flags = 0, .uuid = CEL_UUID },
+>> > >> >  };
+>> > >> >
+>> > >> >  void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+>> > >> >
+>> > >>
+>> > >>
+>> > >> Actually no, does not help either. Dropped for now.
+>> > >> Next patch does not depend on this one, right?
+>> > >
+>> > >Indeed. Unrelated.
+>> > >
+>> > >Thanks,
+>> > >
+>> > >J
+>> >
+>> > Thanks for pointing this out. The code builds successfully on my setup
+>> > with gcc version: 11.4.0. However, it fails to compile on gcc 7.5.0
+>> > "cc (SUSE Linux) 7.5.0" as used by Michael. This could be a compiler
+>> > issue as per the link:
+>> > https://stackoverflow.com/questions/54135942/why-initializer-
+>> > element-is-not-a-constant-is-not-working-anymore.
+>> >
+>> > My setup doesn't allow me to regenerate the error using lower version
+>> > of compiler. A probable fix to it would be
+>> > type casting cel_uuid as: [CXL_LOG_COMMAND_EFFECT] =
+>> > { .param_flags = 0,.uuid = (QemuUUID)cel_uuid }. It will be helpful
+>> > if you could test the same.
 >>
->>> ---
->>>
->>> [Eric] also added acpi-pcihp=off to test_acpi_aarch64_virt_tcg_numamem
->>> ---
->>>   tests/qtest/bios-tables-test.c | 13 +++++++++----
->>>   1 file changed, 9 insertions(+), 4 deletions(-)
->>>
->>> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
->>> index 0a333ec435..6379dba714 100644
->>> --- a/tests/qtest/bios-tables-test.c
->>> +++ b/tests/qtest/bios-tables-test.c
->>> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
->>>       };
->>>   
->>>       data.variant = ".memhp";
->>> -    test_acpi_one(" -machine nvdimm=on"
->>> +    test_acpi_one(" -machine nvdimm=on,acpi-pcihp=off"
->>>                     " -cpu cortex-a57"
->>>                     " -m 256M,slots=3,maxmem=1G"
->>>                     " -object memory-backend-ram,id=ram0,size=128M"
->>> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem(void)
->>>       };
->>>   
->>>       data.variant = ".numamem";
->>> -    test_acpi_one(" -cpu cortex-a57"
->>> +    test_acpi_one(" -machine acpi-pcihp=off"
->>> +                  " -cpu cortex-a57"
->>>                     " -object memory-backend-ram,id=ram0,size=128M"
->>>                     " -numa node,memdev=ram0",
->>>                     &data);
->>> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(void)
->>>        * to solve the conflicts.
->>>        */
->>>       data.variant = ".pxb";
->>> -    test_acpi_one(" -device pcie-root-port,chassis=1,id=pci.1"
->>> +    test_acpi_one(" -machine acpi-pcihp=off"
->>> +                  " -device pcie-root-port,chassis=1,id=pci.1"
->>>                     " -device virtio-scsi-pci,id=scsi0,bus=pci.1"
->>>                     " -drive file="
->>>                     "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2,"
->>> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hmat(void)
->>>   
->>>       data.variant = ".acpihmatvirt";
->>>   
->>> -    test_acpi_one(" -machine hmat=on"
->>> +    test_acpi_one(" -machine hmat=on,acpi-pcihp=off"
->>>                     " -cpu cortex-a57"
->>>                     " -smp 4,sockets=2"
->>>                     " -m 384M"
->>> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
->>>       data.smbios_cpu_max_speed = 2900;
->>>       data.smbios_cpu_curr_speed = 2700;
->>>       test_acpi_one("-cpu cortex-a57 "
->>> +                  "-machine acpi-pcihp=off "
->>>                     "-smbios type=4,max-speed=2900,current-speed=2700", &data);
->>>       free_test_data(&data);
->>>   }
->>> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
->>>       };
->>>   
->>>       test_acpi_one("-cpu cortex-a57 "
->>> +                  "-machine acpi-pcihp=off "
->>>                     "-smp sockets=1,clusters=2,cores=2,threads=2", &data);
->>>       free_test_data(&data);
->>>   }
->>> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
->>>       };
->>>   
->>>       test_acpi_one("-cpu cortex-a57 "
->>> +                  "-machine acpi-pcihp=off "
->>>                     "-device virtio-iommu-pci", &data);
->>>       free_test_data(&data);
->>>   }
-> 
+>> I wonder if we are better off just filling it in in cxl_init_cci()
+>> So change the type of the element in struct CXLCCI to
+>> CXLLogCapabiliites supported_log_cap[MAX_LOGS];
+>>
+>> then assign the elements at runtime.
+>>
+>> That should avoid any issues with whether it is const or not at the
+>> cost of a little more code.
+>e.g.
+>diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>index 87a376c982..86fc6e03a1 100644
+>--- a/include/hw/cxl/cxl_device.h
+>+++ b/include/hw/cxl/cxl_device.h
+>@@ -189,7 +189,7 @@ typedef struct CXLCCI {
+>     size_t cel_size;
+>
+>     /* get log capabilities */
+>-    const CXLLogCapabilities *supported_log_cap;
+>+    CXLLogCapabilities supported_log_cap[MAX_LOG_TYPE];
+>
+>     /* background command handling (times in ms) */
+>     struct {
+>diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+>index f35fc4f112..4ef81c058e 100644
+>--- a/hw/cxl/cxl-mailbox-utils.c
+>+++ b/hw/cxl/cxl-mailbox-utils.c
+>@@ -3552,15 +3552,14 @@ static void cxl_rebuild_cel(CXLCCI *cci)
+>     }
+> }
+>
+>-static const struct CXLLogCapabilities cxl_get_log_cap[MAX_LOG_TYPE] = {
+>-    [CXL_LOG_COMMAND_EFFECT] = { .param_flags = 0, .uuid = cel_uuid },
+>-};
+>-
+> void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+> {
+>     cci->payload_max = payload_max;
+>     cxl_rebuild_cel(cci);
+>-    cci->supported_log_cap = cxl_get_log_cap;
+>+    cci->supported_log_cap[0] = (CXLLogCapabilities) {
+>+        .param_flags = 0,
+>+        .uuid = cel_uuid,
+>+    };
+>
+>     cci->bg.complete_pct = 0;
+>     cci->bg.starttime = 0;
+>
+>Should I think do the job.
+>
+>I don't have a test to hand for this, so please let me know if I messed it up!
+>
+Thanks Jonathan for your input. I tested the code changes
+suggested by you and it is working fine.
+Also, there was no compilation issue in my setup.
+@michael, can you please check for compilation issues if any 
+observed in your setup for the same?
+>>
+>> >
+>> > Also, In the existing code,
+>> > function: cmd_logs_get_supported(), cel_uuid(const) is assigned to a
+>> > non-const variable but I am unsure of why it is not throwing an error.
+>>
+>> Isn't it just copying the content which should be fine?
+>>
+>> >
+>> > Thanks,
+>> > Arpit
+>> > >>
+>> > >> > >  void cxl_init_cci(CXLCCI *cci, size_t payload_max)
+>> > >> > >  {
+>> > >> > >      cci->payload_max = payload_max;
+>> > >> > >      cxl_rebuild_cel(cci);
+>> > >> > > +    cci->supported_log_cap = cxl_get_log_cap;
+>> > >> > >
+>> > >> > >      cci->bg.complete_pct = 0;
+>> > >> > >      cci->bg.starttime = 0;
+>> > >> > > --
+>> > >> > > 2.43.0
+>> > >>
+>> > >>
+>> > >
+>> >
+>>
+>>
+>
+
+------el_smSXdYFIlAMwTB7ap0a..dltiS3v3rvvNmq_h4IEEs8u2=_5b97f_
+Content-Type: text/plain; charset="utf-8"
+
+
+------el_smSXdYFIlAMwTB7ap0a..dltiS3v3rvvNmq_h4IEEs8u2=_5b97f_--
 
 
