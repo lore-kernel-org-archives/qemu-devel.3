@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 431C4C54FB3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77349C5AE59
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 05:47:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKW6K-000367-6s; Thu, 29 May 2025 01:46:48 -0400
+	id 1uKW69-00032V-83; Thu, 29 May 2025 01:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKW64-00032Q-QK
- for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:36 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
+ id 1uKW5x-00030c-H7
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:25 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKW63-0003DP-7n
- for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:32 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-234e48b736aso6837935ad.3
- for <qemu-devel@nongnu.org>; Wed, 28 May 2025 22:46:30 -0700 (PDT)
+ id 1uKW5u-0003CJ-PM
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 01:46:25 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2349f096605so6816225ad.3
+ for <qemu-devel@nongnu.org>; Wed, 28 May 2025 22:46:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748497590; x=1749102390;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748497581; x=1749102381;
  darn=nongnu.org; 
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=qqii+YjN2Cl6J4vYDZM5guaZ91Y62BmZ1UnSf5EAOao=;
- b=v3KgyQgSLssZYzsrlFVdnDHUSLfGa+rkaBIg+w/H/nBzMP2397eJiZRdzzzYyCS9Ko
- QnfEr8e2i85NQtAtHWZys7HXh9qVo1wdUHM/1aPL0VsuqOcZxqgJJfT0t4UJmWoU9GIy
- 3mOUVcvm8np+fq94eIVELrrrLDOnb2tcLs2mbL3eiBxDwExMkp8SwCuBl9OMweCtYlw9
- UUqsj34EuDn3rmuyQD9uTl3xRqFwLezRmnCzn+ArRsJ4pGMOo6vKJN3mgqLlySwO9+Hn
- gewzO/cBhk9OG4IlEs9Y8oPHZpkOLHqTDeLn18XxNJffSVG2qXcPXEbzSS6qD4n3fROt
- HRpA==
+ :reply-to; bh=awxH8im/pfEWosRDyhhjz6r63zsYHaX2/Wznr/3cAS0=;
+ b=B+BFS4eRqEz4tXIOKD6j4WMZwz2kIaI5lZpg3oUZHI0sQc0nMTfRllN3+cmFD6hgOe
+ JzfKpJzyJykC01tw52vVI2dCbs8cauGFhBAP2OuXViJqQWTuWhx9FbLGvjhKH6liMjw7
+ p4ZLVzWWbvGhFuSZa0tshJtjLVMrcPDyLMdRGXww0eS837BW0PDbbewGlTushsjyT5BX
+ thDfLAFaJa+ylF9shKqyrVsY1+8ChbSGlBmiY90OLxNofmq0jdkD42kdOCiOOTCwiZhb
+ ph4tsq0PGaTS4dP2FJSDN34B28vB/ymhu0Ap9RVVjNOW7+5q3kSDDKGQbMglgcTacyJZ
+ QJ4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748497590; x=1749102390;
+ d=1e100.net; s=20230601; t=1748497581; x=1749102381;
  h=cc:to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=qqii+YjN2Cl6J4vYDZM5guaZ91Y62BmZ1UnSf5EAOao=;
- b=F/jNY2mNAhlksQ5aC1zp75Mfv5HpSmeQlpp0VgWWkTuqWBYJO/UIMgNs32VzJCCd9P
- rCYlcfYdQWIMIcU5GHCIFS/h6hNlBG0mApGzlsNHQIFJMKaFEbgDIPELkuaEllnh9mWy
- fQzsknYfIe0y2RRyte2sg1/f1bD+q3yrtRwseZl3EWFDEAtQGPITkmwh5UpwE5IcshFO
- C5tDOJP9g0n+H7BwNeD4x1JBYvrlbGxT4s+OMjJOwXTwIvvBuJbbvifDOnZOcj5j7C8q
- TJ6VBegrQKvi/CdEFjecM4cOdRFuhygMEUg2v2rpiw8j9yBZOCwl2I1mcP64MdX5HqrA
- nOuw==
+ bh=awxH8im/pfEWosRDyhhjz6r63zsYHaX2/Wznr/3cAS0=;
+ b=dZUbU34l8q1Rb+SjSsVWPaT29hkxOAGgCDvYPUL270fSjmfDWrSXMvn+NOj4jPhgSd
+ gwIJX3+P9eqKRLQp6u8S4T4mfGbEgszTMlzJDLlD0UZXMAuOjOC3MlMcB6zBxqC4BmFb
+ EV0tF6gtNan+H7ykOn/kX9+tnWSO2nLPse2/bNTKXHW591/fG7DWiCVcWwU+zCRDcS3m
+ e/S+M8TZVPt5VCzhYaZR3YsgISTvXPZqzKENeoc4ZvbglFCYAcp1rUDcdi+gO8R29JMC
+ mnJjapSiUgbHMOUVczNcfAQV4Wy5u6SxvHSXYV9rIM86gJT02lC8wJ41pPU4htYKqcGp
+ Ymmw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWk4Iny9LnfhmoQePdEb1JQ28295lFwRw9j6N0QuCaZ9I5zmYiXBAqJ4ABmyO+nwVICAhhlkjq604c7@nongnu.org
-X-Gm-Message-State: AOJu0YytmYvWi3ETuGNlj4/PcDN7uCevJ8x9Chudnqbc+hTeSBlEROMK
- 5c/Tyz1qaq+CFc8l7RHWjSb0okrA7UD8yRnwNxrUMFr4stvKtoIB5tm1LygVcX6hwMU=
-X-Gm-Gg: ASbGncvxBqFGM9cWyALESrJAouafkMYAZKaN+297ybFy9bDPsqUFlrjA4NlLW82u4SS
- G6wAdfpJROH1Jfy2R6HxmdGWETdpDFn2WKLOCStCcHdFuV7UrRfD9+9FRTN6Ro7fVM4s5NljDht
- iF/7veKRLnsW6hb+1eah/fw725XEWtdcCA4wLlNLVprLAPCbeTavsi7th0LY27qLSct0AKuv6lW
- MZzx7Aed0RMJoREqHPsEZZEPzaJUSW1b3HwgKoYUmscsIG5JsgGjvtQzo7JoIa9rIJv8dMXk4VP
- zVy9cSUTVq5kKRE/yX6lEDDoJud9xxqui8kiXr4bkkOhVANiCWCzfOPr3eXi3FU=
-X-Google-Smtp-Source: AGHT+IElIO1iKrYjzsW2mTypaj7HvcccM9R6tmZ96Dkxj2q+y/oUboQUNldMzILEQOeouFTqlZhx5A==
-X-Received: by 2002:a17:903:1a04:b0:234:8f5d:e3b6 with SMTP id
- d9443c01a7336-23507fd74f1mr10971865ad.3.1748497589798; 
- Wed, 28 May 2025 22:46:29 -0700 (PDT)
+ AJvYcCWq3dJ6MlGnXYbk4WkfUDcxOKjW27BWBBW7q7OwvBLhoEAfUh3JQ2QDBbD+XCmP3sWRb18HRVCxYpsR@nongnu.org
+X-Gm-Message-State: AOJu0YyXHQJkkMNyvSsQ6qLYqA5p2KgXqe00MV50LfhsC3kqGwAFXBFP
+ 7xZ2SH5LOVYZ/7HYkyUO2QdPd8qg+X2+gO8GNO3+Zi0C/p1JqUJYfoNZ9Dqm6k8Ph+M=
+X-Gm-Gg: ASbGncvS2+Urf/K1LEJlo6HS+IZJyYWSuzozO+6XOQEcKabsC6Yh/UPmlnfOKOLFcQt
+ HMU1tYuLDUKumm7YOYY/60a8PIVsJi/V1qhCetNVdfVZkIaov+AjBNGCR9lNgRoINHF2R7RXwTH
+ 7waRB8WFda27hh7n48wuPLA0F1t2BpbyM3TSRd0XZl1zBYEHRvzs16Xj/2Nhq+DJW8u4moIUO6I
+ JeI6/2ywiam2rS59B72yGx97n6H7+Nrtcci3REAU58481jVWouYegk/l0E2fWGaMWGdTM/PA2Ro
+ mUgQM7ORjlwVYinMQKWZE5s/WgS4EE3C2uj17G/Zno23iEIYhXQC
+X-Google-Smtp-Source: AGHT+IH94dbSz+AzpWq7pM3Z8WnPNOLqseWVB1L+39u485bC+5JJe0Eq76WMXK6gaLby0FEbZm3lFg==
+X-Received: by 2002:a17:902:c941:b0:234:db06:ac0 with SMTP id
+ d9443c01a7336-234db060c39mr58367655ad.45.1748497581020; 
+ Wed, 28 May 2025 22:46:21 -0700 (PDT)
 Received: from localhost ([157.82.128.1]) by smtp.gmail.com with UTF8SMTPSA id
- d9443c01a7336-23506d16e04sm4957575ad.212.2025.05.28.22.46.28
+ d9443c01a7336-23506cf9100sm4998315ad.198.2025.05.28.22.46.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 28 May 2025 22:46:29 -0700 (PDT)
+ Wed, 28 May 2025 22:46:20 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Thu, 29 May 2025 14:45:59 +0900
-Subject: [PATCH v5 10/13] hw/display/apple-gfx: Replace QemuSemaphore with
- QemuEvent
+Date: Thu, 29 May 2025 14:45:56 +0900
+Subject: [PATCH v5 07/13] migration: Replace QemuSemaphore with QemuEvent
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20250529-event-v5-10-53b285203794@daynix.com>
+Message-Id: <20250529-event-v5-7-53b285203794@daynix.com>
 References: <20250529-event-v5-0-53b285203794@daynix.com>
 In-Reply-To: <20250529-event-v5-0-53b285203794@daynix.com>
 To: Paolo Bonzini <pbonzini@redhat.com>, Stefan Weil <sw@weilnetz.de>, 
@@ -84,8 +83,8 @@ Cc: Phil Dennis-Jordan <phil@philjordan.eu>, qemu-devel@nongnu.org,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x634.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -107,52 +106,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-sem in AppleGFXReadMemoryJob is an one-shot event so it can be converted
-into QemuEvent, which is more specialized for such a use case.
+pause_event can utilize qemu_event_reset() to discard events.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/apple-gfx.m | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ migration/migration.h |  2 +-
+ migration/migration.c | 21 +++++++++------------
+ 2 files changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 8dde1f138dce..174d56ae05bc 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -454,7 +454,7 @@ static void set_cursor_glyph(void *opaque)
- /* ------ DMA (device reading system memory) ------ */
+diff --git a/migration/migration.h b/migration/migration.h
+index d53f7cad84d8..21aa6a3c8fee 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -379,7 +379,7 @@ struct MigrationState {
+     QemuSemaphore wait_unplug_sem;
  
- typedef struct AppleGFXReadMemoryJob {
--    QemuSemaphore sem;
-+    QemuEvent event;
-     hwaddr physical_address;
-     uint64_t length;
-     void *dst;
-@@ -470,7 +470,7 @@ static void apple_gfx_do_read_memory(void *opaque)
-                         job->dst, job->length, MEMTXATTRS_UNSPECIFIED);
-     job->success = (r == MEMTX_OK);
+     /* Migration is paused due to pause-before-switchover */
+-    QemuSemaphore pause_sem;
++    QemuEvent pause_event;
  
--    qemu_sem_post(&job->sem);
-+    qemu_event_set(&job->event);
+     /* The semaphore is used to notify COLO thread that failover is finished */
+     QemuSemaphore colo_exit_sem;
+diff --git a/migration/migration.c b/migration/migration.c
+index 4697732bef91..4098870bce33 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -1630,7 +1630,7 @@ void migration_cancel(void)
+         }
+         /* If the migration is paused, kick it out of the pause */
+         if (old_state == MIGRATION_STATUS_PRE_SWITCHOVER) {
+-            qemu_sem_post(&s->pause_sem);
++            qemu_event_set(&s->pause_event);
+         }
+         migrate_set_state(&s->state, old_state, MIGRATION_STATUS_CANCELLING);
+     } while (s->state != MIGRATION_STATUS_CANCELLING);
+@@ -2342,7 +2342,7 @@ void qmp_migrate_continue(MigrationStatus state, Error **errp)
+                    MigrationStatus_str(s->state));
+         return;
+     }
+-    qemu_sem_post(&s->pause_sem);
++    qemu_event_set(&s->pause_event);
  }
  
- static bool apple_gfx_read_memory(AppleGFXState *s, hwaddr physical_address,
-@@ -483,11 +483,11 @@ static bool apple_gfx_read_memory(AppleGFXState *s, hwaddr physical_address,
-     trace_apple_gfx_read_memory(physical_address, length, dst);
+ int migration_rp_wait(MigrationState *s)
+@@ -2911,21 +2911,18 @@ static bool migration_switchover_prepare(MigrationState *s)
+         return true;
+     }
  
-     /* Performing DMA requires BQL, so do it in a BH. */
--    qemu_sem_init(&job.sem, 0);
-+    qemu_event_init(&job.event, 0);
-     aio_bh_schedule_oneshot(qemu_get_aio_context(),
-                             apple_gfx_do_read_memory, &job);
--    qemu_sem_wait(&job.sem);
--    qemu_sem_destroy(&job.sem);
-+    qemu_event_wait(&job.event);
-+    qemu_event_destroy(&job.event);
-     return job.success;
- }
+-    /* Since leaving this state is not atomic with posting the semaphore
++    /*
++     * Since leaving this state is not atomic with setting the event
+      * it's possible that someone could have issued multiple migrate_continue
+-     * and the semaphore is incorrectly positive at this point;
+-     * the docs say it's undefined to reinit a semaphore that's already
+-     * init'd, so use timedwait to eat up any existing posts.
++     * and the event is incorrectly set at this point so reset it.
+      */
+-    while (qemu_sem_timedwait(&s->pause_sem, 1) == 0) {
+-        /* This block intentionally left blank */
+-    }
++    qemu_event_reset(&s->pause_event);
  
+     /* Update [POSTCOPY_]ACTIVE to PRE_SWITCHOVER */
+     migrate_set_state(&s->state, s->state, MIGRATION_STATUS_PRE_SWITCHOVER);
+     bql_unlock();
+ 
+-    qemu_sem_wait(&s->pause_sem);
++    qemu_event_wait(&s->pause_event);
+ 
+     bql_lock();
+     /*
+@@ -4057,7 +4054,7 @@ static void migration_instance_finalize(Object *obj)
+     qemu_mutex_destroy(&ms->qemu_file_lock);
+     qemu_sem_destroy(&ms->wait_unplug_sem);
+     qemu_sem_destroy(&ms->rate_limit_sem);
+-    qemu_sem_destroy(&ms->pause_sem);
++    qemu_event_destroy(&ms->pause_event);
+     qemu_sem_destroy(&ms->postcopy_pause_sem);
+     qemu_sem_destroy(&ms->rp_state.rp_sem);
+     qemu_sem_destroy(&ms->rp_state.rp_pong_acks);
+@@ -4072,7 +4069,7 @@ static void migration_instance_init(Object *obj)
+     ms->state = MIGRATION_STATUS_NONE;
+     ms->mbps = -1;
+     ms->pages_per_second = -1;
+-    qemu_sem_init(&ms->pause_sem, 0);
++    qemu_event_init(&ms->pause_event, false);
+     qemu_mutex_init(&ms->error_mutex);
+ 
+     migrate_params_init(&ms->parameters);
 
 -- 
 2.49.0
