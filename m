@@ -4,87 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79729C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 18:21:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F983C5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 18:41:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKhsP-0000ad-T3; Thu, 29 May 2025 14:21:13 -0400
+	id 1uKiB3-0007zu-7O; Thu, 29 May 2025 14:40:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uKhsO-0000aL-8l; Thu, 29 May 2025 14:21:12 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uKiB0-0007zB-Ut
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 14:40:27 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uKhsM-0001o7-P4; Thu, 29 May 2025 14:21:12 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3a363d15c64so814092f8f.3; 
- Thu, 29 May 2025 11:21:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uKiAz-00046Q-AC
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 14:40:26 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-742c27df0daso1040219b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 11:40:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748542869; x=1749147669; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=D/mq9+wWCDAiV1riKshTFQcSClgNfPQw5FVQUtbaFvc=;
- b=J1HSZlKMPlgXtIIUN88AFZs+zB+UD5zMCmpZbmeOewUz7bEjjrJ+eaWdcSG0ZksVcB
- yGzyHpYEvPm5KJHcTzBYZu0cSPrNyCbx0HIEvfcg6wDux8MhFKEteO7la5Od4IWzAMn1
- Hlfn2Z7ThiEZ32d1Xb9/Mp3DR7YdQ1Dcy1ne/Xm+OUZw9EgV2bHnoZpo6V7g0toMu/Lx
- xrKXUjAViSWEE0+4j0wXZhQp18+aQwoMzVY8V8tb5DzIBGjMFyIOtDodCjN8kH/vG4hL
- zs8dggAfx/OGWxPIHXJAFSRPGMEjkIs502r26mfqNWxsf+NNVSviQUm58Mwtt6N3f6dV
- X31w==
+ d=linaro.org; s=google; t=1748544022; x=1749148822; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=RJkeEQzGnH65tVX6U19CmFXWiHNyn7Q0wXLW/YY2zTU=;
+ b=xjeSclF9i0ZE4K8mddpIE8HXpg+RRPan10sUmp2GfqDeB3BBIG+206XI5LLFkHOE6W
+ Zb+/VwkzO/VHwa7BHqjMZzWNMfpG/lH4xuQ1J+1XfrryWDsXmxVtKX4cLFP/t+abPvrU
+ rMAnFX/8mZFTvVOP11B7aJdN3+p0rjafy2Fa6WSCBwezOYGkkqavHGVnpAlzpcoCpQbQ
+ sMQhJ9Qm4OIKSrLzFkHalUQ1PDZpA43zEMwmA8GQj/TQBHhcKXSKN8x3nxnSYXlH7McZ
+ yTCvKW711MC/vjnUufUuCmnzmzAN8KtC/5MrU5wBXDwdWz0ufOhrp4143C+f9fn5Ouxs
+ jGag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748542869; x=1749147669;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=D/mq9+wWCDAiV1riKshTFQcSClgNfPQw5FVQUtbaFvc=;
- b=URukl0qVGNVqBjhSXuO7kkwsOOTGM/7hqmA9BcPJxHbF4ektLGfGe0qC1qfPCDSal0
- 5kq38NJCeUwbgZy6Zf2bx5EBPjpJAY9BtqPfMFRmS2w3RRivmtVKjKQgPR/9v7kFfGB1
- aYfBrrJiUdcconTyuvYdkl0VxT0Y2JO5Aw8L0rnV8RxOknyEw8wqxHbemGqZZ2JCeYSU
- jSYFQPMX4s/EttUyXuxLTbzw2pQvLa0NuN7LXZXFIbHtTfE3NdeBnrEDvsBeGE4m1nZZ
- 5RZo78V48Gjb+twoZqbr4JHmKIWmom9mj2O3q5bVEQ8wsfi1sdmEheEMUKO9MOC8rCjP
- Rovg==
+ d=1e100.net; s=20230601; t=1748544022; x=1749148822;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=RJkeEQzGnH65tVX6U19CmFXWiHNyn7Q0wXLW/YY2zTU=;
+ b=ATFfrcvHKGCeGDuxZmB4NHqS9SUYvlslt5JI6dMuSA1vq8Kwt/Zp0vkMFEbitmhqMZ
+ t6wBuLJANPynhdwHIEm+ruxECxBF65UNbTjQKciuJZjKdV6T4p6Umhqgg3cFBxLm5bLU
+ 8uJyEas77tfz9m3d+/qltSPxA4w6YQPXYDdnAQtoPVlvMZLKlHuEOj5SKjJw/6bgHiuP
+ kwjdJNCzqmHBdR8YAR+Inh6eN7R+rJsRzucti6LAiBwfbcUKVkvD8PpgTqLVJc3W3CrS
+ PKDm5tmp+i8tBrhS0GHcKSx93JwAxbOykQmZar2eZ8avwnDfZirXUO2RIwTHaTmloOng
+ X+iA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU6vzfniyTqoYmlvbX/ZaQY7I1quvImyEJdgl1HoE28Kr3nCrKlEog6InYj6oOWEUTlkIbHk2qBqy6g@nongnu.org,
- AJvYcCWXSuOiIcqhnWAPwaMKsGqcNMvWTll7xr/PEEIzk900UpXmUl/nja554znqtOZSA5vrmXrrifjAqzY=@nongnu.org
-X-Gm-Message-State: AOJu0Yxa34PFkuoBYYAOJty7nQsKDWjEfSnJkB68kbuVef0gv8wWQQk2
- ZU7AR3fy5u5qLKnxaaqsHaOXz8oGSNedSNDSE/lYRXB5VNeSeesgewZj
-X-Gm-Gg: ASbGncsLQjzgASPxE0RGvaYRd+1tOlLO7ikuToXx41g09FfaLHXTnh3WISWfXHHN2mq
- DrOcR5LuutIFx8XgPbf2cAJgPwAX1i5cXVL3dMfPtQjN8WxM+yfLn5B/m81g5mQySzdCAW+Oa3/
- luiRfvT/YpUNVVgs+ySw1cErD8nmh+ArEv5IJ5if5P2fgJSkTWPwtvU5k7O9yBBcG0nN1gG7U8s
- 1cFtGTgW467ZZcbhhItoWt3Rdis+H2u3nRl3okLnl8dFL3XFibAu4d4pAedxp8lq/pzAdVc3z1F
- MJbYoN5PZmBM6ivjPaqYprUsD5DoOckUry9QjrSi5nNDfjd2+N3xQHVb87hFTG+Bgn/1G9uQFMP
- nV5FgoG+AywgwloOgoLBz
-X-Google-Smtp-Source: AGHT+IF2J8DTdqZuPltrC9Dsu+GUD/yWj+JYT6v8SnwVLFqlLACmnU/coIWo8px+GJScpTwQLPzNJw==
-X-Received: by 2002:adf:b311:0:b0:3a4:eecf:b8cb with SMTP id
- ffacd0b85a97d-3a4f7a36500mr227797f8f.28.1748542868673; 
- Thu, 29 May 2025 11:21:08 -0700 (PDT)
-Received: from [127.0.0.1] (ip-185-104-138-110.ptr.icomera.net.
- [185.104.138.110]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe5b7bbsm2667204f8f.4.2025.05.29.11.21.08
+ AJvYcCX3kI42iRHMgMcvDhiXQUM7YBXfj6dqjs8k++ViTcwFllMqynpSwHY/+E6d9rUidSR5I8HM9Suaja1V@nongnu.org
+X-Gm-Message-State: AOJu0YwUaymMQe1z35sWgPFhsutBUa7c+Id6+N7dD3A7pIV+MFNUXwD8
+ u9DKwwRYeYBVnOag0t0FdN4mQKepZp/Xbbt+JivbNf18eAZqlqqX7C+x8ydkOzz1iiE=
+X-Gm-Gg: ASbGnctXnx9XnaGCgYM5XjerhT7JMduL9xmWnHXJfgylPkw7386jX9Hk4+Ase8/SB5l
+ 6mR6ZsaIMhWqzJkTDqTODkHzSwxXlQ/NxxiBLx4iX4ggkIw22uanpubW9PnqMHG6QZOfk/kmUXP
+ aMagLVXsBhEBJONHbf7ZyC0CVdd/cvLfd39OlwYPwJzEPixi7jPPyz6Dse+nnHbJN0nA5UghLlg
+ ps8YvD+Bx5VKH+Rl4zB3mEBJ1Voq5CiTK3G+d9TuQRRP6nUuK9DapC6rUiUTHQyGU6xk9WeuKU+
+ kAzEqy8o7UOsWVRYnu6zw7BfmxmLkSBiP3ASozTUiA+fFpa7ceOE3vzL8dqENlwy
+X-Google-Smtp-Source: AGHT+IFQATXr6agSB7wd9OEK4hQgzMqfYWhYhXJ2KQ3Fv60KJjBz6aAjK2Afw+E9+qMHmAEMBxETgg==
+X-Received: by 2002:a05:6a00:1392:b0:736:32d2:aa8e with SMTP id
+ d2e1a72fcca58-747bd970cd2mr559813b3a.6.1748544022434; 
+ Thu, 29 May 2025 11:40:22 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-747affcfa19sm1691434b3a.132.2025.05.29.11.40.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 May 2025 11:21:08 -0700 (PDT)
-Date: Thu, 29 May 2025 18:21:01 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org
-CC: Nicholas Piggin <npiggin@gmail.com>
-Subject: Re: [PATCH 0/3] Misc ppc/e500 patches
-In-Reply-To: <cover.1748012109.git.balaton@eik.bme.hu>
-References: <cover.1748012109.git.balaton@eik.bme.hu>
-Message-ID: <676B619F-618D-4E4E-8C3C-1B7924F842F0@gmail.com>
+ Thu, 29 May 2025 11:40:21 -0700 (PDT)
+Message-ID: <47f7d567-d0eb-483e-90fb-4868fa481406@linaro.org>
+Date: Thu, 29 May 2025 11:40:21 -0700
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 1/9] gdbstub: Expose gdb_write_register function to
+ consumers of gdbstub
+Content-Language: en-US
+To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20250523020344.1341179-1-rowanbhart@gmail.com>
+ <20250523020344.1341179-2-rowanbhart@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250523020344.1341179-2-rowanbhart@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -102,34 +109,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/22/25 7:03 PM, Rowan Hart wrote:
+> From: novafacing <rowanbhart@gmail.com>
+> 
+> This patch exposes the gdb_write_register function from
+> gdbstub/gdbstub.c via the exec/gdbstub.h header file to support use in
+> plugins to write register contents.
+> 
+> Signed-off-by: novafacing <rowanbhart@gmail.com>
+> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+> ---
+>   gdbstub/gdbstub.c      |  2 +-
+>   include/exec/gdbstub.h | 14 ++++++++++++++
+>   2 files changed, 15 insertions(+), 1 deletion(-)
 
-
-Am 23=2E Mai 2025 15:02:10 UTC schrieb BALATON Zoltan <balaton@eik=2Ebme=
-=2Ehu>:
->Some small patches to e500 related parts=2E Also includes a patch from
->Bernhard that is rebased on current version=2E
->
->Regards,
->BALATON Zoltan
->
->BALATON Zoltan (2):
->  hw/ppc/e500: Move clock and TB frequency to machine class
->  hw/net/fsl_etsec: Set default MAC address
->
->Bernhard Beschow (1):
->  hw/ppc/e500: Use SysBusDevice API to access TYPE_CCSR's internal
->    resources
->
-> hw/net/fsl_etsec/etsec=2Ec |  1 +
-> hw/pci-host/ppce500=2Ec    |  8 ++++----
-> hw/ppc/e500=2Ec            | 26 +++++++++++++-------------
-> hw/ppc/e500=2Eh            |  4 ++++
-> hw/ppc/e500plat=2Ec        |  2 ++
-> hw/ppc/mpc8544ds=2Ec       |  2 ++
-> 6 files changed, 26 insertions(+), 17 deletions(-)
->
-
-Series:
-Acked-by: Bernhard Beschow <shentey@gmail=2Ecom>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
