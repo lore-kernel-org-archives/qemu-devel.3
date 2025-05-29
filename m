@@ -4,60 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3389C54FB3
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 09:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B265C5AD49
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 09:39:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKZGD-0000aX-Dh; Thu, 29 May 2025 05:09:13 -0400
+	id 1uKZiw-0006VS-S6; Thu, 29 May 2025 05:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uKZG9-0000aE-UH; Thu, 29 May 2025 05:09:09 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uKZG5-0008Sp-2V; Thu, 29 May 2025 05:09:09 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b7L744C7kz6L5Zt;
- Thu, 29 May 2025 17:05:20 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id EB21B14022E;
- Thu, 29 May 2025 17:08:54 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 29 May
- 2025 11:08:54 +0200
-Date: Thu, 29 May 2025 10:08:53 +0100
-To: Itaru Kitayama <itaru.kitayama@linux.dev>
-CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
- <peter.maydell@linaro.org>, <mst@redhat.com>, <linuxarm@huawei.com>,
- <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>, Yuquan Wang
- <wangyuquan1236@phytium.com.cn>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Alireza Sanaee <alireza.sanaee@huawei.com>, "Zhijian Li
- (Fujitsu)" <lizhijian@fujitsu.com>
-Subject: Re: [PATCH v14 0/5] arm/virt: CXL support via pxb_cxl
-Message-ID: <20250529100853.00000a0d@huawei.com>
-In-Reply-To: <aDeGyRM7qVYkHZrl@vm4>
-References: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
- <aDeGyRM7qVYkHZrl@vm4>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1uKZit-0006TF-QF
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 05:38:52 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hz1624917200@gmail.com>)
+ id 1uKZir-0003r8-PE
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 05:38:51 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-73972a54919so537851b3a.3
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 02:38:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748511528; x=1749116328; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:subject:from
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IfaelcgIVhuAZYME0fmvQjSKG7E6k1vdLTLsh7xtbcY=;
+ b=RmDhwbFqLEYLEP5JtgKbXY8KZmKJIzZ2fjNitNYsfWdiXoTMg37tNgivvSpEx0AZQ0
+ eI7Pnj73L0JOkmnLw+beIn0dov4Nrc03kWKq5Z+/9WjKGnpCefOKpeWwHYcfjCsJ+Gp7
+ kwFQnfbyzn4SP1vxKh+Uyq9T+RfIysZ2JgM7wlvR3PtKrwuSOynIWEF5UbkTpZXfN2xz
+ I35Y62AnEklec2DylTuD3QyIDdQPcZ9LnQrKvFfvvSJe39Six6u0gQ0fBFLVq5//7JCC
+ OoXry2XsY6S4kENAQyLXk65zv8v9tNqMb3RJtoeU77GsVqITnGs8v4UJyhM2Hf7zKtU/
+ h2CQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748511528; x=1749116328;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:subject:from
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=IfaelcgIVhuAZYME0fmvQjSKG7E6k1vdLTLsh7xtbcY=;
+ b=NwjRVohaX43e3NxIUGLxWYX2HNkYrFPhJ+4aZslhogLSSPC/8bawnHFb1hM8L4lvxD
+ zqKvU0R2r+dyVFLilllhOpzE9JZ6j1Ghfl59vjwb+XWquJT0383W9fWm0mClhZafDUCH
+ dFMykIFSk3pbZplPQ+6TMIxk3jBdlULjXMqwlpQwD0v+aWCEcGpDl6qdzWBYsP9L9MM5
+ 7NLdJTJRuyl3f1TG5xDn7TqD9pV4/OL79XTmlctDLvV39Byl3gsOng/qbJhdyKlgVb67
+ lz2eUNVzlAdNbSU/6YErBdtkSPE28+CNmig1VgiMAxkX77UCLDYZk5adHaxV3EXP2kMm
+ poYQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcjBA8U2uEf4e5tBDKYIvQWzUiNnnIWWzfkxX6xKD52tES+dMteyq5fgHtFjGA4xGrpERvwRdhe5Gb@nongnu.org
+X-Gm-Message-State: AOJu0YzCq0USzjwkX64ydjjo7NIe6ejq9rnotQFrNnHhtEmfIU79mm8Z
+ /ORr+VmBnQ7u0Uc3uvAGLbOyEPQSmRYOMsGpt+hYVXQNAPeNS6wim8o3
+X-Gm-Gg: ASbGncsafNzNV9BZKrYg+X/oDbmn0677YRk26h3JaBFtpYsvvjp1R/pCGOpxcCP+c1Z
+ snoKA47GSK6sx2jEZmJp+crDP1p8yWpOTcnIZ+CLsNMyuszEQOmLuiiHtEL+v5kJrfuP06SSyG9
+ vyKCSffSsGREcHJvIkTpsGeP17mAMsKLjZVAGOnPsoMw2FO4ltOnD+OkQwJFcXzKNav1hLxVw7n
+ bjukTFfHY5ogUOttb5Rzg23IRlF6PO2K30PvUqQRz3jqe2UzMLBZNMEwR48Ys9Qdsm+PuBvrtXx
+ WSL1bV/SBwaaZ2NmiXFm83jgllNGU6toBy9KpFs1jYRGJxqhvOMF2FEpLoV8y1BtGvFDAiuvSmC
+ 4IpKSdjH7pgVHYQQ/3XkWG8g=
+X-Google-Smtp-Source: AGHT+IE+pa2EtfGwA/xnHXrCpcDtei8Jwx3w8PaqKiFkuMv79/AKEmWoKyGpcA+Lc4zZkcjyTtf7Kw==
+X-Received: by 2002:a05:6a21:3305:b0:1f5:87a0:60ed with SMTP id
+ adf61e73a8af0-2188c289ab9mr29404816637.19.1748511527869; 
+ Thu, 29 May 2025 02:38:47 -0700 (PDT)
+Received: from ?IPV6:2001:da8:201:1412:2122::74ec?
+ ([2001:da8:201:1412:2122::74ec]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-747afeab7a6sm948107b3a.45.2025.05.29.02.38.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 May 2025 02:38:47 -0700 (PDT)
+Message-ID: <e6d1e6d6-b84f-42fa-8df7-67824e6f3e3d@gmail.com>
+Date: Thu, 29 May 2025 17:38:43 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+From: Zheng Huang <hz1624917200@gmail.com>
+Subject: Re: [PATCH] hw/scsi/esp: fix assertion error in fifo8_push
+To: Fabiano Rosas <farosas@suse.de>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Peter Xu <peterx@redhat.com>, peter.maydell@linaro.org
+References: <37889706-8576-476c-8fea-c1a3a2858b1e@gmail.com>
+ <684885a4-0022-4de8-98aa-07c9fe4a11c7@linaro.org>
+ <6dd914b1-2a2f-4a4c-bd2b-54e8302d1a75@ilande.co.uk>
+ <7e4a9c92-b33f-4bc9-968d-e726c6151a9d@gmail.com> <87tt54994x.fsf@suse.de>
+In-Reply-To: <87tt54994x.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=hz1624917200@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -71,148 +107,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 29 May 2025 06:57:29 +0900
-Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
 
-> Hi Jonathan,
+
+On 2025/5/28 21:07, Fabiano Rosas wrote:
+> Zheng Huang <hz1624917200@gmail.com> writes:
 > 
-> On Wed, May 28, 2025 at 12:07:21PM +0100, Jonathan Cameron wrote:
-> > v14: Simplifications suggeseted by Itaru (and some extra simplifications
-> >      that became apparent) and gather tags.
-> >      See individual patches for more information.  
+>> On 2025/5/28 03:40, Mark Cave-Ayland wrote:
+>>> On 27/05/2025 14:59, Philippe Mathieu-Daudé wrote:
+>>>
+>>>> Hi,
+>>>>
+>>>> Cc'ing maintainers:
+>>>>
+>>>> $ ./scripts/get_maintainer.pl -f hw/scsi/esp.c
+>>>> Paolo Bonzini <pbonzini@redhat.com> (supporter:SCSI)
+>>>> Fam Zheng <fam@euphon.net> (reviewer:SCSI)
+>>>> $ ./scripts/get_maintainer.pl -f migration/
+>>>> Peter Xu <peterx@redhat.com> (maintainer:Migration)
+>>>> Fabiano Rosas <farosas@suse.de> (maintainer:Migration)
+>>>>
+>>>> On 27/5/25 15:12, Zheng Huang wrote:
+>>>>> This patch add validation checks on FIFO structures in esp_post_load() to
+>>>>> avoid assertion error `assert(fifo->num < fifo->capacity);` in fifo8_push(),
+>>>>> which can occur if the inbound migration stream is malformed. By performing
+>>>>> these checks during post-load, we can catch and handle such issues earlier,
+>>>>> avoiding crashes due to corrupted state.
+>>>>
+>>>> How can that happen? Can you share a reproducer?
+>>>>
+>>>>>
+>>>>> Signed-off-by: Zheng Huang <hz1624917200@gmail.com>
+>>>>> ---
+>>>>>   hw/scsi/esp.c | 6 ++++++
+>>>>>   1 file changed, 6 insertions(+)
+>>>>>
+>>>>> diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
+>>>>> index ac841dc32e..ba77017087 100644
+>>>>> --- a/hw/scsi/esp.c
+>>>>> +++ b/hw/scsi/esp.c
+>>>>> @@ -1350,11 +1350,17 @@ static int esp_post_load(void *opaque, int version_id)
+>>>>>           /* Migrate ti_buf to fifo */
+>>>>>           len = s->mig_ti_wptr - s->mig_ti_rptr;
+>>>>>           for (i = 0; i < len; i++) {
+>>>>> +            if (&s->fifo.num >= &s->fifo.capacity) {
+>>>>> +                return -1;
+>>>>> +            }
+>>>>>               fifo8_push(&s->fifo, s->mig_ti_buf[i]);
+>>>>>           }
+>>>>>           /* Migrate cmdbuf to cmdfifo */
+>>>>>           for (i = 0; i < s->mig_cmdlen; i++) {
+>>>>> +            if (&s->cmdfifo.num >= &s->cmdfifo.capacity) {
+>>>>> +                return -1;
+>>>>> +            }
+>>>>>               fifo8_push(&s->cmdfifo, s->mig_cmdbuf[i]);
+>>>>>           }
+>>>>>       }
+>>>
+>>> This seems odd: this logic in esp_post_load() is for converting from pre-Fifo8 code to the current Fifo8 code, so why wouldn't we want to assert() for the case when the migration stream is intentionally malformed? Is there a case whereby the old code could generate an invalid migration stream like this?
+>>>
+>>>
+>>> ATB,
+>>>
+>>> Mark.
+>>>
+>>
+>> Hi Mark,
+>>
+>> The malformed migration stream in question originates from QEMU itself—either accidentally, due to 
+>> a bug, or maliciously crafted. If we allow unchecked data through in esp_post_load(), an attacker
+>> controlling the migration source could send crafted values that trigger undefined behavior.
+>> The commit https://gitlab.com/qemu-project/qemu/-/commit/b88cfee90268cad376682da8f99ccf024d7aa304
+>> also check the migration stream integrity in post_load handler, which is suggested by Peter Maydell in
+>> https://lists.gnu.org/archive/html/qemu-devel/2024-07/msg00099.html, 'to prevent the division-by-zero
+>> in the "malicious inbound migration state" case'.
+>>
+>> Also, I would appreciate your opinion on how we should handle such "malformed migration stream" case
+>> more generally, if there are more severe issues than assertion error, such as FPE, UAF, etc.? Should
+>> QEMU adopt a more systematic “post_load” validation pattern—verifying all critical fields across every
+>> migration handler—to harden the migration subsystem against any tampering of the migration image?
+>>
 > 
-> I think the suggestion was made by Zhi jian or Fan? who enaged in the
-> rewview of your proposed series v13.
-
-Ah. You are absolutely correct!  It was Zhijian Li (with some additional
-comments on the comments from Fan)
-
-Sorry about that and thanks for pointing out my mistake.
-
-I also failed to +CC Zhijian. Again my apologies. 
-
-Jonathan
-
-
+> From the migration perspective it does make sense to validate the values
+> and return error. The migration stream should indeed be considered
+> untrusted.
 > 
-> Itaru.
-> 
-> > 
-> > Updated cover letter
-> > 
-> > Richard Henderson has posted a pull request with a fix for the TCG TLB
-> > issue which will hopefully merge shortly (Thanks Richard!).
-> > 
-> > Back in 2022, this series stalled on the absence of a solution to device
-> > tree support for PCI Expander Bridges (PXB) and we ended up only having
-> > x86 support upstream. I've been carrying the arm64 support out of tree
-> > since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
-> > a few weeks ago) and a fair number of fiddly rebases.
-> > gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
-> > series.
-> > 
-> > A recent discussion with Peter Maydell indicated that there are various
-> > other ACPI only features now, so in general he might be more relaxed
-> > about DT support being necessary. The upcoming vSMMUv3 support would
-> > run into this problem as well.
-> > 
-> > I presented the background to the PXB issue at Linaro connect 2022. In
-> > short the issue is that PXBs steal MMIO space from the main PCI root
-> > bridge. The challenge is knowing how much to steal.
-> > 
-> > On ACPI platforms, we can rely on EDK2 to perform an enumeration and
-> > configuration of the PCI topology and QEMU can update the ACPI tables
-> > after EDK2 has done this when it can simply read the space used by the
-> > root ports. On device tree, there is no entity to figure out that
-> > enumeration so we don't know how to size the stolen region.
-> > 
-> > Three approaches were discussed:
-> > 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
-> >    3rd enumeration implementation that ends up out of sync with EDK2 and
-> >    the kernel (there are frequent issues because of how those existing
-> >    implementations differ.
-> > 2) Figure out how to enumerate in kernel. I never put a huge amount of work
-> >    into this, but it seemed likely to involve a nasty dance with similar
-> >    very specific code to that EDK2 is carrying and would very challenging
-> >    to upstream (given the lack of clarity on real use cases for PXBs and
-> >    DT).
-> > 3) Hack it based on the control we have which is bus numbers.
-> >    No one liked this but it worked :)
-> > 
-> > The other little wrinkle would be the need to define full bindings for CXL
-> > on DT + implement a fairly complex kernel stack as equivalent in ACPI
-> > involves a static table, CEDT, new runtime queries via _DSM and a description
-> > of various components. Doable, but so far there is no interest on physical
-> > platforms. Worth noting that for now, the QEMU CXL emulation is all about
-> > testing and developing the OS stack, not about virtualization (performance
-> > is terrible except in some very contrived situations!)
-> > 
-> > There is only a very simple test in here, because my intent is not to
-> > duplicate what we have on x86, but just to do a smoke test that everything
-> > is hooked up.  In general we need much more comprehensive end to end CXL
-> > tests but that requires a reaonsably stable guest software stack. A few
-> > people have expressed interest in working on that, but we aren't there yet.
-> > 
-> > Note that this series has a very different use case to that in the proposed
-> > SBSA-ref support:
-> > https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
-> > 
-> > SBSA-ref is a good choice if you want a relatively simple mostly fixed
-> > configuration.  That works well with the limited host system
-> > discoverability etc as EDK2 can be build against a known configuration.
-> > 
-> > My interest with this support in arm/virt is support host software stack
-> > development (we have a wide range of contributors, most of whom are working
-> > on emulation + the kernel support). I care about the weird corners. As such
-> > I need to be able to bring up variable numbers of host bridges, multiple CXL
-> > Fixed Memory Windows with varying characteristics (interleave etc), complex
-> > NUMA topologies with wierd performance characteristics etc. We can do that
-> > on x86 upstream today, or my gitlab tree. Note that we need arm support
-> > for some arch specific features in the near future (cache flushing).
-> > Doing kernel development with this need for flexibility on SBSA-ref is not
-> > currently practical. SBSA-ref CXL support is an excellent thing, just
-> > not much use to me for this work.
-> > 
-> > Also, we are kicking off some work on DCD virtualization, particularly to
-> > support inter-host shared memory being presented up into a VM. That
-> > will need upstream support on arm64 as it is built on top of the existing
-> > CXL emulation to avoid the need for a separate guest software stack.
-> > 
-> > Note this is TCG only - it is possible to support limited use with KVM but
-> > that needs additional patches not yet ready for upstream.  The challenge
-> > is interleave - and the solution is don't interleave if you want to run
-> > with KVM.
-> > 
-> > Jonathan Cameron (5):
-> >   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
-> >   hw/cxl: Make the CXL fixed memory windows devices.
-> >   hw/cxl-host: Allow split of establishing memory address and mmio
-> >     setup.
-> >   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
-> >     pxb-cxl
-> >   qtest/cxl: Add aarch64 virt test for CXL
-> > 
-> >  include/hw/arm/virt.h     |   4 +
-> >  include/hw/cxl/cxl.h      |   4 +
-> >  include/hw/cxl/cxl_host.h |   6 +-
-> >  hw/acpi/cxl.c             |  76 +++++++--------
-> >  hw/arm/virt-acpi-build.c  |  34 +++++++
-> >  hw/arm/virt.c             |  29 ++++++
-> >  hw/cxl/cxl-host-stubs.c   |   8 +-
-> >  hw/cxl/cxl-host.c         | 190 ++++++++++++++++++++++++++++++++------
-> >  hw/i386/pc.c              |  51 +++++-----
-> >  tests/qtest/cxl-test.c    |  59 +++++++++---
-> >  tests/qtest/meson.build   |   1 +
-> >  11 files changed, 353 insertions(+), 109 deletions(-)
-> > 
-> > -- 
-> > 2.48.1
-> > 
-> >   
+> But I agree that it would be nice to have some sort of reproducer. I
+> don't think it's practical to go around adding code to handle every
+> single hypothetical scenario. That creates some churn in the codebase
+> that might introduce bugs by itself.
+
+Hi Fibiano,
+
+I'm very appreciated for your advice. I also agree that there's no need
+and inpractical to check all fields of each device. So I'm focusing on
+security or critical issues such as buffer overflow, UAF, etc.. For
+instance, unmatching between buffer size and item number field will
+cause an arbitrary address write, which can be exploited to attack host
+machine. CVE-2013-4536(https://nvd.nist.gov/vuln/detail/CVE-2013-4536)
+describes this scenario.
+
+I've developed a fuzzer aiming to discover security issues caused 
+by malformed migration stream, which has reported some memory corruption
+crashes. I'm wondering if you will be interested in such issues that 
+are more severe than assertion error? I'll be glad to have some further
+discussion.
 
 
