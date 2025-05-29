@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA75C5AD49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC18C54FB3
 	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:30:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKisn-0004Jm-8U; Thu, 29 May 2025 15:25:41 -0400
+	id 1uKisn-0004Jl-69; Thu, 29 May 2025 15:25:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisO-0004BD-17
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:16 -0400
+ id 1uKisR-0004Dj-CC
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:19 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKisK-0000EY-QK
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:15 -0400
+ id 1uKisO-0000Q4-Vi
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:25:19 -0400
 Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGg5OH031586;
- Thu, 29 May 2025 19:24:59 GMT
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfslZ031391;
+ Thu, 29 May 2025 19:25:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=miDSQaUzrB4ZjpU5rgKBm/uxVG7HCzNmBqTohuZpeW8=; b=
- Ys4hruDSjV4/yDfHSjSbMkKve3pN4yy3mPeoPT/UyvWcfacIyXdZBmkIFDXDumEW
- 9UDljlXTBO+fagAc8H6ba6OUrPszY08SZ7I1VSdzr6OWoIyiANTEUpIOzgVH8Ikv
- H8LQr7pfWild2mWQM/XRg99SrZAkuL9v3ZgFdLE/IGwbRTHtbSxy0X/sC7KtOhIJ
- gl231yUEwyV+lYdHUsjOOHcQYFSSZjgLBUDPWVqJFqL/uY6Wg4Oi9JVsPxhXzSYy
- sYutVgtWDd1Fbs1/mffyaNzylRdqJYZy7Z1bS+TmPcpxvg94j3n71p+wNioeZLiD
- ZRlXH4BdejHlCw2MRPSPbA==
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=mUSwxjm1wr6KOfN6LH11R4WHLNQmJbyzCGl0KXX8NOA=; b=
+ M7nl/lwTL53EG7KU5pQfsgST+/9VY8nd6WB1ZOc42O5AsUoDFribQMryQ+MAAn04
+ jyj8di7+16zv12VkMD24qzbm2f4/bKYVB7UPxkSk0GnyyZ7D/yHKEYOh4GzU2KVJ
+ JPm1AaMQlsNXEbVk85VhoiOmHoia3UUKnF45MnR0KDGS7WEoWYpko3Zn/oG0tdPO
+ 10shFRf3yjfqPhwS2aZUiKesQaIF6C2nKD+4eHXaaZtTu+ANKe7Fe7toWbVhEB6k
+ FkCAbhcVBKwNiTJn25YjuD9XgUqd9Q1KFcNqUVIVfBrdYhnEZMdu6OO9nzet8SAX
+ 6CsM5Ifs8ovg4/vDnmmsCw==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33n0ycm-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33n0ycw-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:59 +0000 (GMT)
+ Thu, 29 May 2025 19:25:02 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54TJOd5r020578; Thu, 29 May 2025 19:24:58 GMT
+ with ESMTP id 54TJKdNh020323; Thu, 29 May 2025 19:25:02 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jc4vuw-1
+ 46u4jc4vxs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:58 +0000
+ Thu, 29 May 2025 19:25:02 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRT022158;
- Thu, 29 May 2025 19:24:58 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeRd022158;
+ Thu, 29 May 2025 19:25:01 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46u4jc4vjq-22; Thu, 29 May 2025 19:24:57 +0000
+ ESMTP id 46u4jc4vjq-27; Thu, 29 May 2025 19:25:01 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -64,15 +63,12 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 21/43] vfio/pci: vfio_notifier_init cpr parameters
-Date: Thu, 29 May 2025 12:24:17 -0700
-Message-Id: <1748546679-154091-22-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 26/43] migration: close kvm after cpr
+Date: Thu, 29 May 2025 12:24:22 -0700
+Message-Id: <1748546679-154091-27-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-29_09,2025-05-29_01,2025-03-28_01
@@ -81,20 +77,18 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290189
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX2AuvXex77c82
- CAbnT3YXae+10R0rGuMTulPSYbFEP9+VU9kx9mZk6B/qkMOlbeOUWQ3+TGDSVI9RVvIirMZC2XM
- JqRjUXegEs7FZmDRuf2Kjbf4A0DkNzIwBvFv86+dULdE9T9oEualNL46Zqc9W81PgTFnm5Giq8S
- dnUVcRWDrhIo8J7WeUPb6o2YXJ6QbO6o7Sktm8itEbDiy0bUc0n3bS5yFgF7sPETE+5tXkIw3h6
- gVA/OyQSGINYpbYVgPI4fnjeCObv0zzuGcMl/LDrrzCW009Nr73WM3/bQmDOvW5xPXBJ6tSpyJR
- ueR+frGa8Gc2Zskgxmx299+akzfg4Wv9gPNT8ystx9VMYx7BABn4UulDhONmFVP0zy0OwwpD0Tb
- S3MAm4t7nCrSqq8Mmir2aOtth8XCyuWb/ldu5tOnfWvr+fuNH8NQrlBsGZDrlOAaSmfAu83Z
-X-Proofpoint-GUID: LOdHPzm3LDpgk0jer0j_LKDEIY69sSrD
-X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=6838b48b cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX75hCycKI3EEY
+ nz7rMyVe7O4y+fylKZC1BYuQYtNAbYnavt7f6/0lMaHbWvPb8aL9CqfYERIBNnWyn4DS4+YtM+f
+ 96oq9k6uWo0W/bBcQZVXDGt4OPhhP41dPCWAgZuT2+ofRg5F/v+VdSa8wdeKJ7OwSB8LtEPBEcr
+ hIgXaAvVdNNGX8t4sjGguByyyXXLpizxrBmYA56nxcFvdas2tAi+g3tk8QB9iLOjd1nJTNqYlKi
+ YQ5c85RwYVNQGDCOM86cERsVFa47D/VueivTIYQ8WGdB+KYSH8rQqD9IFtDE1xygARivacS9lhy
+ VqY0FgCinx+Z6J3dWTQacrwK9Xhzc9H5Mfc1py8qdYiMQLg1wjblpKP0JUHiwvjbqhfUN5JaAcM
+ F3A5CU8SLRw6+Bq9m4oAqDA4M9yIJSI8iwU0nPMtnMyA358L/Ltb2NiaXSY43pf+kbkgfpi7
+X-Proofpoint-GUID: 15USkHBo_LbzUSXpDqA19hDPTXyP83wL
+X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=6838b48e cx=c_pps
  a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
- a=jRqgxlNjA3WZj7__-qIA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: LOdHPzm3LDpgk0jer0j_LKDEIY69sSrD
+ a=dt9VzEwgFbYA:10 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8 a=kfOKAURTLI36beqjriwA:9
+X-Proofpoint-ORIG-GUID: 15USkHBo_LbzUSXpDqA19hDPTXyP83wL
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -120,114 +114,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pass vdev and nr to vfio_notifier_init, for use by CPR in a subsequent
-patch.  No functional change.
+cpr-transfer breaks vfio network connectivity to and from the guest, and
+the host system log shows:
+  irq bypass consumer (token 00000000a03c32e5) registration fails: -16
+which is EBUSY.  This occurs because KVM descriptors are still open in
+the old QEMU process.  Close them.
 
+Cc: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 31 +++++++++++++++++++------------
- 1 file changed, 19 insertions(+), 12 deletions(-)
+ include/hw/vfio/vfio-device.h |  2 ++
+ include/migration/cpr.h       |  2 ++
+ include/system/kvm.h          |  1 +
+ accel/kvm/kvm-all.c           | 28 ++++++++++++++++++++++++++++
+ accel/stubs/kvm-stub.c        |  5 +++++
+ hw/vfio/helpers.c             | 10 ++++++++++
+ hw/vfio/vfio-stubs.c          | 13 +++++++++++++
+ migration/cpr-transfer.c      | 18 ++++++++++++++++++
+ migration/cpr.c               |  8 ++++++++
+ migration/migration.c         |  1 +
+ hw/vfio/meson.build           |  2 ++
+ 11 files changed, 90 insertions(+)
+ create mode 100644 hw/vfio/vfio-stubs.c
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index fa0601c..b776793 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -57,7 +57,8 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
- static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
- static void vfio_msi_disable_common(VFIOPCIDevice *vdev);
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 4e4d0b6..6eb6f21 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -231,4 +231,6 @@ void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
+ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+                       DeviceState *dev, bool ram_discard);
+ int vfio_device_get_aw_bits(VFIODevice *vdev);
++
++void vfio_kvm_device_close(void);
+ #endif /* HW_VFIO_VFIO_COMMON_H */
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 07858e9..d09b657 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -32,7 +32,9 @@ void cpr_state_close(void);
+ struct QIOChannel *cpr_state_ioc(void);
  
--static bool vfio_notifier_init(EventNotifier *e, const char *name, Error **errp)
-+static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
-+                               const char *name, int nr, Error **errp)
+ bool cpr_incoming_needed(void *opaque);
++void cpr_kvm_close(void);
+ 
++void cpr_transfer_init(void);
+ QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
+ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp);
+ 
+diff --git a/include/system/kvm.h b/include/system/kvm.h
+index b690dda..cfaa94c 100644
+--- a/include/system/kvm.h
++++ b/include/system/kvm.h
+@@ -194,6 +194,7 @@ bool kvm_has_sync_mmu(void);
+ int kvm_has_vcpu_events(void);
+ int kvm_max_nested_state_length(void);
+ int kvm_has_gsi_routing(void);
++void kvm_close(void);
+ 
+ /**
+  * kvm_arm_supports_user_irq
+diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
+index 278a506..d619448 100644
+--- a/accel/kvm/kvm-all.c
++++ b/accel/kvm/kvm-all.c
+@@ -512,16 +512,23 @@ static int do_kvm_destroy_vcpu(CPUState *cpu)
+         goto err;
+     }
+ 
++    /* If I am the CPU that created coalesced_mmio_ring, then discard it */
++    if (s->coalesced_mmio_ring == (void *)cpu->kvm_run + PAGE_SIZE) {
++        s->coalesced_mmio_ring = NULL;
++    }
++
+     ret = munmap(cpu->kvm_run, mmap_size);
+     if (ret < 0) {
+         goto err;
+     }
++    cpu->kvm_run = NULL;
+ 
+     if (cpu->kvm_dirty_gfns) {
+         ret = munmap(cpu->kvm_dirty_gfns, s->kvm_dirty_ring_bytes);
+         if (ret < 0) {
+             goto err;
+         }
++        cpu->kvm_dirty_gfns = NULL;
+     }
+ 
+     kvm_park_vcpu(cpu);
+@@ -600,6 +607,27 @@ err:
+     return ret;
+ }
+ 
++void kvm_close(void)
++{
++    CPUState *cpu;
++
++    CPU_FOREACH(cpu) {
++        cpu_remove_sync(cpu);
++        close(cpu->kvm_fd);
++        cpu->kvm_fd = -1;
++        close(cpu->kvm_vcpu_stats_fd);
++        cpu->kvm_vcpu_stats_fd = -1;
++    }
++
++    if (kvm_state && kvm_state->fd != -1) {
++        close(kvm_state->vmfd);
++        kvm_state->vmfd = -1;
++        close(kvm_state->fd);
++        kvm_state->fd = -1;
++    }
++    kvm_state = NULL;
++}
++
+ /*
+  * dirty pages logging control
+  */
+diff --git a/accel/stubs/kvm-stub.c b/accel/stubs/kvm-stub.c
+index ecfd763..97dacb3 100644
+--- a/accel/stubs/kvm-stub.c
++++ b/accel/stubs/kvm-stub.c
+@@ -134,3 +134,8 @@ int kvm_create_guest_memfd(uint64_t size, uint64_t flags, Error **errp)
  {
-     int ret = event_notifier_init(e, 0);
- 
-@@ -147,7 +148,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     pci_irq_deassert(&vdev->pdev);
- 
-     /* Get an eventfd for resample/unmask */
--    if (!vfio_notifier_init(&vdev->intx.unmask, "intx-unmask", errp)) {
-+    if (!vfio_notifier_init(vdev, &vdev->intx.unmask, "intx-unmask", 0, errp)) {
-         goto fail;
-     }
- 
-@@ -300,7 +301,8 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     }
+     return -ENOSYS;
+ }
++
++void kvm_close(void)
++{
++    return;
++}
+diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
+index d0dbab1..af1db2f 100644
+--- a/hw/vfio/helpers.c
++++ b/hw/vfio/helpers.c
+@@ -117,6 +117,16 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
+ int vfio_kvm_device_fd = -1;
  #endif
  
--    if (!vfio_notifier_init(&vdev->intx.interrupt, "intx-interrupt", errp)) {
-+    if (!vfio_notifier_init(vdev, &vdev->intx.interrupt, "intx-interrupt", 0,
-+                            errp)) {
-         return false;
-     }
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-@@ -486,7 +488,8 @@ static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
-         return;
-     }
- 
--    if (!vfio_notifier_init(&vector->kvm_interrupt, name, NULL)) {
-+    if (!vfio_notifier_init(vector->vdev, &vector->kvm_interrupt, name, nr,
-+                            NULL)) {
-         goto fail_notifier;
-     }
- 
-@@ -525,12 +528,13 @@ static void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr)
++void vfio_kvm_device_close(void)
++{
++#ifdef CONFIG_KVM
++    if (vfio_kvm_device_fd != -1) {
++        close(vfio_kvm_device_fd);
++        vfio_kvm_device_fd = -1;
++    }
++#endif
++}
++
+ int vfio_kvm_device_add_fd(int fd, Error **errp)
  {
-     VFIOMSIVector *vector = &vdev->msi_vectors[nr];
-     PCIDevice *pdev = &vdev->pdev;
--    Error *err = NULL;
-+    Error *local_err = NULL;
+ #ifdef CONFIG_KVM
+diff --git a/hw/vfio/vfio-stubs.c b/hw/vfio/vfio-stubs.c
+new file mode 100644
+index 0000000..a4c8b56
+--- /dev/null
++++ b/hw/vfio/vfio-stubs.c
+@@ -0,0 +1,13 @@
++/*
++ * Copyright (c) 2025 Oracle and/or its affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "hw/vfio/vfio-device.h"
++
++void vfio_kvm_device_close(void)
++{
++    return;
++}
+diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
+index e1f1403..396558f 100644
+--- a/migration/cpr-transfer.c
++++ b/migration/cpr-transfer.c
+@@ -17,6 +17,24 @@
+ #include "migration/vmstate.h"
+ #include "trace.h"
  
-     vector->vdev = vdev;
-     vector->virq = -1;
--    if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
--        error_report_err(err);
-+    if (!vfio_notifier_init(vdev, &vector->interrupt, "interrupt", nr,
-+                            &local_err)) {
-+        error_report_err(local_err);
-     }
-     vector->use = true;
-     if (vdev->interrupt == VFIO_INT_MSIX) {
-@@ -760,14 +764,15 @@ retry:
++static int cpr_transfer_notifier(NotifierWithReturn *notifier,
++                                 MigrationEvent *e,
++                                 Error **errp)
++{
++    if (e->type == MIG_EVENT_PRECOPY_DONE) {
++        cpr_kvm_close();
++    }
++    return 0;
++}
++
++void cpr_transfer_init(void)
++{
++    static NotifierWithReturn notifier;
++
++    migration_add_notifier_mode(&notifier, cpr_transfer_notifier,
++                                MIG_MODE_CPR_TRANSFER);
++}
++
+ QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
+ {
+     MigrationAddress *addr = channel->addr;
+diff --git a/migration/cpr.c b/migration/cpr.c
+index a50a57e..49fb0a5 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -7,12 +7,14 @@
  
-     for (i = 0; i < vdev->nr_vectors; i++) {
-         VFIOMSIVector *vector = &vdev->msi_vectors[i];
--        Error *err = NULL;
-+        Error *local_err = NULL;
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
++#include "hw/vfio/vfio-device.h"
+ #include "migration/cpr.h"
+ #include "migration/misc.h"
+ #include "migration/options.h"
+ #include "migration/qemu-file.h"
+ #include "migration/savevm.h"
+ #include "migration/vmstate.h"
++#include "system/kvm.h"
+ #include "system/runstate.h"
+ #include "trace.h"
  
-         vector->vdev = vdev;
-         vector->virq = -1;
-         vector->use = true;
+@@ -264,3 +266,9 @@ bool cpr_incoming_needed(void *opaque)
+     MigMode mode = migrate_mode();
+     return mode == MIG_MODE_CPR_TRANSFER;
+ }
++
++void cpr_kvm_close(void)
++{
++    kvm_close();
++    vfio_kvm_device_close();
++}
+diff --git a/migration/migration.c b/migration/migration.c
+index 4697732..89e2026 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -337,6 +337,7 @@ void migration_object_init(void)
  
--        if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
--            error_report_err(err);
-+        if (!vfio_notifier_init(vdev, &vector->interrupt, "interrupt", i,
-+                                &local_err)) {
-+            error_report_err(local_err);
-         }
+     ram_mig_init();
+     dirty_bitmap_mig_init();
++    cpr_transfer_init();
  
-         qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
-@@ -2919,7 +2924,8 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
+     /* Initialize cpu throttle timers */
+     cpu_throttle_init();
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index 73d29f9..98134a7 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -17,6 +17,8 @@ vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
  
--    if (!vfio_notifier_init(&vdev->err_notifier, "err_notifier", &err)) {
-+    if (!vfio_notifier_init(vdev, &vdev->err_notifier, "err_notifier", 0,
-+                            &err)) {
-         error_report_err(err);
-         vdev->pci_aer = false;
-         return;
-@@ -2986,7 +2992,8 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
+ specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
  
--    if (!vfio_notifier_init(&vdev->req_notifier, "req_notifier", &err)) {
-+    if (!vfio_notifier_init(vdev, &vdev->req_notifier, "req_notifier", 0,
-+                            &err)) {
-         error_report_err(err);
-         return;
-     }
++system_ss.add(when: 'CONFIG_VFIO', if_false: files('vfio-stubs.c'))
++
+ system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
+ system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
+ system_ss.add(when: 'CONFIG_VFIO', if_true: files(
 -- 
 1.8.3.1
 
