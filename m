@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59288C5AD49
-	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:25:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F2C8C54FB3
+	for <qemu-devel@archiver.kernel.org>; Thu, 29 May 2025 19:25:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKis5-000409-2Z; Thu, 29 May 2025 15:24:57 -0400
+	id 1uKirz-0003xP-9F; Thu, 29 May 2025 15:24:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKis2-0003yt-1O
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:54 -0400
+ id 1uKiry-0003x8-1v
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:50 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uKirz-0000Cp-S3
- for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:53 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGg51N031585;
- Thu, 29 May 2025 19:24:49 GMT
+ id 1uKirv-0000BS-LU
+ for qemu-devel@nongnu.org; Thu, 29 May 2025 15:24:49 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54TGfxVY022106;
+ Thu, 29 May 2025 19:24:42 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=z6u+p/BgfGW8RZmR2Ut99lqUaSk0ZyVt5Ta4KuYGcJE=; b=
- EAG4ZSP0pmNPy4Ghh2tPSgrjlUtZ8yepRJdHWjaObV+ckQMAI62ltYASrCvWPi8L
- r4QAlbPpd/5RUpqDorS6HhIeI6CddGo+5a0ahEFrzmImbjNwzZlzR/TSOkk3FJ6Q
- E5IMM/LUhcJ1DeXGIOwjKvw6wg3oDW6q6qPSBzDgtwSvz0iAIW7dX+alwomO1Wzr
- Mi91rEYfwKDMLVvAm6P2F7lG2sf/UjJFZmcVg3EldlrtK+r0GStRlfN+Vm7Wuv1x
- XKfRviHB0i44YksTJ8NDX1X7iZm7LvzWU+ZA3j7SZr1wDg9bJY1zDX1VrQbmMQJX
- i87747qt//X1CQ1ZLO5JAQ==
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=corp-2025-04-25; bh=FzeBy2SWFtGobYU5
+ q3r8pR5DTWzD+i5oki9BgOlOlYI=; b=esmZbjjXi2KTNrFW7vjVzAiGqlyRdlhE
+ Tw/DIfMedlcQWYqmNbDNYqfQ4rKdu9JtIIPpxW1Ubda81TYiFAA8OIHbI9JJW9yl
+ qP6wLqVPS5KDprJEji9TCPjvYPjagoz+rqxEReXUCDFPZvxy+wFoxrHJn6QuQgKN
+ cOoQDfF1cCfxZ5fIEH6ou8pLOZnxA5s1f95UiGKxmxCAVXzVEucctL8jVe2C2V5Q
+ I2IUJvVOV/K/bTHIjB7/7JJmJSxrY/4pNn7M/CxKr0awMJEHU0ei8KaxdEywIxrJ
+ FcfnJDaoE7iRYS8htQebClIELTPkbLyMQQINEsv7zFya4aLMY3oPIQ==
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v33n0yc0-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v0ym12hs-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:49 +0000 (GMT)
+ Thu, 29 May 2025 19:24:41 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 54THgPjr020337; Thu, 29 May 2025 19:24:48 GMT
+ with ESMTP id 54TJMOu8020575; Thu, 29 May 2025 19:24:41 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46u4jc4vqc-1
+ 46u4jc4vk7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 29 May 2025 19:24:48 +0000
+ Thu, 29 May 2025 19:24:41 +0000
 Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeR5022158;
- Thu, 29 May 2025 19:24:48 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 54TJOeQl022158;
+ Thu, 29 May 2025 19:24:40 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 46u4jc4vjq-10; Thu, 29 May 2025 19:24:48 +0000
+ ESMTP id 46u4jc4vjq-1; Thu, 29 May 2025 19:24:40 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,12 +63,13 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V4 09/43] vfio/container: register container for cpr
-Date: Thu, 29 May 2025 12:24:05 -0700
-Message-Id: <1748546679-154091-10-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V4 00/43] Live update: vfio and iommufd
+Date: Thu, 29 May 2025 12:23:56 -0700
+Message-Id: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
-References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-05-29_09,2025-05-29_01,2025-03-28_01
@@ -77,18 +78,19 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
  adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2505290189
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfX1p0gF2c/y+GI
- /PYzUJFsFcCBBgtW6202rBfbOu1xNyEVMV108y0SXtEcvwn4no2LfKOOM474Z3CbeoYTR5AFZ+h
- aF8/+GSnDGVZUMjgrGSOFaLjGpYSpnB7IK1LhcvQTb5wcw4xT02CsaSf1fLaxnRFep+RahhDFnC
- s6CTFKL6/AoQN/WIdpK0B8xoSbrArrOGPFwQgMhlTVbda8K7iBFB+ilbEQnJCYfg96qR4beECWq
- jGIb57uhblczDXkAwDa+G0sh2VMoK2XBiX3sBMLs5bQSKb45B+qgtmxQnBGkDj2/YKtufm+7L03
- eZKfZsiT6qLYmqB6LvX2UvBG23JBS2HzufQq9cZ9GxEN1Wk2upPlUa3JYRQ/qDP9Dg3OzbAZ1dL
- ZiLtSSONfXzKTAJ8BkivW8m+l3as+E5Cl3hpOTfmPNJRhlO0HBPoQ+iAgd29gSz+8zLhNzBt
-X-Proofpoint-GUID: R-AD1n_TJCs_CRx0dDnC5kuNqZZ3KcCM
-X-Authority-Analysis: v=2.4 cv=aO/wqa9m c=1 sm=1 tr=0 ts=6838b481 cx=c_pps
+X-Proofpoint-GUID: d8kWcSVbipAzPSCpYjQatpgcpVz1ylP5
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTI5MDE4OSBTYWx0ZWRfXziYYxrIb3MIR
+ aYYnll8o29hEwja2DfgaE1ONZEDFSPiC9ExfEgNRrN0/h55Mu/vnObFLYXQeKIQLHecOXJOtZtg
+ 3fDJXZNod7JHRuupFHPglu1mcOcLkwZG41yBbdTNYFcyiKQrfpVF3QV9AKhVcGI4DKX8rqRwxQf
+ MAO1WpqD84DcUK/Mp7jrKO5/3JhuDQ5/t8Vl+l/Tc+QflC1a3P3wnMQDmrCOYCTtiofQ4h7KPJI
+ xOqUQNFpmNzZnzntPZ0BdF+ZcPFA4FbXLnY1jPHl+fbl1hu51PtnSYHTkRuxGarPRlOM58QVL2C
+ DcSF7fEVIAgwew61bfY7wQpIa4vN7L4XBTzJz+UheqjIYRdCyzZBvY+yU+WrAmG4X4zjZei/4MS
+ vXKVktCJpzwAuskg1Bxsbjny4glRO28wdKQy/TWR/nGByhk87iKnmxiL00Ceenh4HXza2lC/
+X-Proofpoint-ORIG-GUID: d8kWcSVbipAzPSCpYjQatpgcpVz1ylP5
+X-Authority-Analysis: v=2.4 cv=N7MpF39B c=1 sm=1 tr=0 ts=6838b47a cx=c_pps
  a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=dt9VzEwgFbYA:10 a=yPCof4ZbAAAA:8 a=AABqGAaGSB0UP_gAvAYA:9
-X-Proofpoint-ORIG-GUID: R-AD1n_TJCs_CRx0dDnC5kuNqZZ3KcCM
+ a=IkcTkHD0fZMA:10 a=dt9VzEwgFbYA:10 a=6sVW_zmk9xcIwHsUiXsA:9
+ a=QEXdDO2ut3YA:10
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -32
@@ -114,210 +116,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Register a legacy container for cpr-transfer, replacing the generic CPR
-register call with a more specific legacy container register call.  Add a
-blocker if the kernel does not support VFIO_UPDATE_VADDR or VFIO_UNMAP_ALL.
+Support vfio and iommufd devices with the cpr-transfer live migration mode.
+Devices that do not support live migration can still support cpr-transfer,
+allowing live update to a new version of QEMU on the same host, with no loss
+of guest connectivity.
 
-This is mostly boiler plate.  The fields to to saved and restored are added
-in subsequent patches.
+No user-visible interfaces are added.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- include/hw/vfio/vfio-container.h |  2 ++
- include/hw/vfio/vfio-cpr.h       | 15 +++++++++
- hw/vfio/container.c              |  6 ++--
- hw/vfio/cpr-legacy.c             | 69 ++++++++++++++++++++++++++++++++++++++++
- hw/vfio/cpr.c                    |  5 ++-
- hw/vfio/meson.build              |  1 +
- 6 files changed, 92 insertions(+), 6 deletions(-)
+For legacy containers:
+
+Pass vfio device descriptors to new QEMU.  In new QEMU, during vfio_realize,
+skip the ioctls that configure the device, because it is already configured.
+
+Use VFIO_DMA_UNMAP_FLAG_VADDR to abandon the old VA's for DMA mapped
+regions, and use VFIO_DMA_MAP_FLAG_VADDR to register the new VA in new
+QEMU and update the locked memory accounting.  The physical pages remain
+pinned, because the descriptor of the device that locked them remains open,
+so DMA to those pages continues without interruption.  Mediated devices are
+not supported, however, because they require the VA to always be valid, and
+there is a brief window where no VA is registered.
+
+Save the MSI message area as part of vfio-pci vmstate, and pass the interrupt
+and notifier eventfd's to new QEMU.  New QEMU loads the MSI data, then the
+vfio-pci post_load handler finds the eventfds in CPR state, rebuilds vector
+data structures, and attaches the interrupts to the new KVM instance.  This
+logic also applies to iommufd containers.
+
+For iommufd containers:
+
+Use IOMMU_IOAS_MAP_FILE to register memory regions for DMA when they are
+backed by a file (including a memfd), so DMA mappings do not depend on VA,
+which can differ after live update.  This allows mediated devices to be
+supported.
+
+Pass the iommufd and vfio device descriptors from old to new QEMU.  In new
+QEMU, during vfio_realize, skip the ioctls that configure the device, because
+it is already configured.
+
+In new QEMU, call ioctl(IOMMU_IOAS_CHANGE_PROCESS) to update mm ownership and
+locked memory accounting.
+
+Patches 4 to 12 are specific to legacy containers.
+Patches 25 to 41 are specific to iommufd containers.
+The remainder apply to both.
+
+Changes from previous versions:
+  * V1 of this series contains minor changes from the "Live update: vfio" and
+    "Live update: iommufd" series, mainly bug fixes and refactored patches.
+
+Changes in V2:
+  * refactored various vfio code snippets into new cpr helpers
+  * refactored vfio struct members into cpr-specific structures
+  * refactored various small changes into their own patches
+  * split complex patches.  Notably:
+    - split "refactor for cpr" into 5 patches
+    - split "reconstruct device" into 4 patches
+  * refactored vfio_connect_container using helpers and made its
+    error recovery more robust.
+  * moved vfio pci msi/vector/intx cpr functions to cpr.c
+  * renamed "reused" to cpr_reused and cpr.reused
+  * squashed vfio_cpr_[un]register_container to their call sites
+  * simplified iommu_type setting after cpr
+  * added cpr_open_fd and cpr_is_incoming helpers
+  * removed changes from vfio_legacy_dma_map, and instead temporarily
+    override dma_map and dma_unmap ops.
+  * deleted error_report and returned Error to callers where possible.
+  * simplified the memory_get_xlat_addr interface
+  * fixed flags passed to iommufd_backend_alloc_hwpt
+  * defined MIG_PRI_UNINITIALIZED
+  * added maintainers
+
+Changes in V3:
+  * removed cleanup patches that were already pulled
+  * rebased to latest master
+
+Changes in V4:
+  * added SPDX-License-Identifier
+  * patch "vfio/container: preserve descriptors"
+    - rewrote search loop in vfio_container_connect
+    - do not return pfd from vfio_cpr_container_match
+    - add helper for VFIO_GROUP_GET_DEVICE_FD
+  * deleted patch "export vfio_legacy_dma_map"
+  * patch "vfio/container: restore DMA vaddr"
+    - deleted redundant error_report from vfio_legacy_cpr_dma_map
+    - save old dma_map function
+  * patch "vfio-pci: skip reset during cpr"
+    - use cpr_is_incoming instead of cpr_reused
+  * renamed err -> local_err in all new code
+  * patch "export MSI functions"
+    -  renamed with vfio_pci prefix, and defined wrappers for low level
+       routines instead of exporting them.
+  * patch "close kvm after cpr"
+    - fixed build error for !CONFIG_KVM
+  * added the cpr_resave_fd helper
+  * dropped patch "pass ramblock to vfio_container_dma_map", relying on
+    "pass MemoryRegion" from the vfio-user series instead.
+  * deleted "reused" variables, replaced with cpr_is_incoming()
+  * renamed cpr_needed_for_reuse -> cpr_incoming_needed
+  * rewrote patch "pci: skip reset during cpr"
+  * rebased to latest master
+
+  for iommufd:
+    * deleted redundant error_report from iommufd_backend_map_file_dma
+    * added interface doc for dma_map_file
+    * check return value of cpr_open_fd
+    * deleted "export iommufd_cdev_get_info_iova_range"
+    * deleted "reconstruct device"
+    * deleted "reconstruct hw_caps"
+    * deleted "define hwpt constructors"
+    * seperated cpr registration for iommufd be and vfio container
+    * correctly attach to multiple containers per iommufd using ioas_id
+    * simplified "reconstruct hwpt" by matching against hwpt_id.
+    * added patch "add vfio_device_free_name"
+
+
+Steve Sistare (43):
+  MAINTAINERS: Add reviewer for CPR
+  vfio: return mr from vfio_get_xlat_addr
+  vfio/container: pass MemoryRegion to DMA operations
+  vfio/pci: vfio_pci_put_device on failure
+  migration: cpr helpers
+  migration: lower handler priority
+  vfio: vfio_find_ram_discard_listener
+  vfio: move vfio-cpr.h
+  vfio/container: register container for cpr
+  vfio/container: preserve descriptors
+  vfio/container: discard old DMA vaddr
+  vfio/container: restore DMA vaddr
+  vfio/container: mdev cpr blocker
+  vfio/container: recover from unmap-all-vaddr failure
+  pci: export msix_is_pending
+  pci: skip reset during cpr
+  vfio-pci: skip reset during cpr
+  vfio/pci: vfio_pci_vector_init
+  vfio/pci: vfio_notifier_init
+  vfio/pci: pass vector to virq functions
+  vfio/pci: vfio_notifier_init cpr parameters
+  vfio/pci: vfio_notifier_cleanup
+  vfio/pci: export MSI functions
+  vfio-pci: preserve MSI
+  vfio-pci: preserve INTx
+  migration: close kvm after cpr
+  migration: cpr_get_fd_param helper
+  backends/iommufd: iommufd_backend_map_file_dma
+  backends/iommufd: change process ioctl
+  physmem: qemu_ram_get_fd_offset
+  vfio/iommufd: use IOMMU_IOAS_MAP_FILE
+  vfio/iommufd: invariant device name
+  vfio/iommufd: add vfio_device_free_name
+  vfio/iommufd: device name blocker
+  vfio/iommufd: register container for cpr
+  migration: vfio cpr state hook
+  vfio/iommufd: cpr state
+  vfio/iommufd: preserve descriptors
+  vfio/iommufd: reconstruct device
+  vfio/iommufd: reconstruct hwpt
+  vfio/iommufd: change process
+  iommufd: preserve DMA mappings
+  vfio/container: delete old cpr register
+
+ MAINTAINERS                           |  10 ++
+ hw/vfio/pci.h                         |  10 ++
+ hw/vfio/vfio-cpr.h                    |  15 --
+ include/exec/cpu-common.h             |   1 +
+ include/hw/pci/msix.h                 |   1 +
+ include/hw/pci/pci_device.h           |   3 +
+ include/hw/vfio/vfio-container-base.h |  38 ++++-
+ include/hw/vfio/vfio-container.h      |   2 +
+ include/hw/vfio/vfio-cpr.h            |  78 +++++++++
+ include/hw/vfio/vfio-device.h         |   5 +
+ include/migration/cpr.h               |  21 +++
+ include/migration/vmstate.h           |   6 +-
+ include/system/iommufd.h              |   6 +
+ include/system/kvm.h                  |   1 +
+ include/system/memory.h               |  19 ++-
+ accel/kvm/kvm-all.c                   |  28 ++++
+ accel/stubs/kvm-stub.c                |   5 +
+ backends/iommufd.c                    | 101 +++++++++++-
+ hw/pci/msix.c                         |   2 +-
+ hw/pci/pci.c                          |   5 +
+ hw/vfio/ap.c                          |   2 +-
+ hw/vfio/ccw.c                         |   2 +-
+ hw/vfio/container-base.c              |  13 +-
+ hw/vfio/container.c                   | 101 +++++++++---
+ hw/vfio/cpr-iommufd.c                 | 220 ++++++++++++++++++++++++++
+ hw/vfio/cpr-legacy.c                  | 288 ++++++++++++++++++++++++++++++++++
+ hw/vfio/cpr.c                         | 161 +++++++++++++++++--
+ hw/vfio/device.c                      |  40 +++--
+ hw/vfio/helpers.c                     |  10 ++
+ hw/vfio/iommufd.c                     |  86 ++++++++--
+ hw/vfio/listener.c                    |  93 +++++++----
+ hw/vfio/pci.c                         | 232 ++++++++++++++++++++-------
+ hw/vfio/platform.c                    |   2 +-
+ hw/vfio/vfio-stubs.c                  |  13 ++
+ hw/virtio/vhost-vdpa.c                |   9 +-
+ migration/cpr-transfer.c              |  18 +++
+ migration/cpr.c                       |  95 +++++++++--
+ migration/migration.c                 |   1 +
+ migration/savevm.c                    |   4 +-
+ system/memory.c                       |  32 +---
+ system/physmem.c                      |   5 +
+ backends/trace-events                 |   2 +
+ hw/vfio/meson.build                   |   4 +
+ 43 files changed, 1576 insertions(+), 214 deletions(-)
+ delete mode 100644 hw/vfio/vfio-cpr.h
+ create mode 100644 include/hw/vfio/vfio-cpr.h
+ create mode 100644 hw/vfio/cpr-iommufd.c
  create mode 100644 hw/vfio/cpr-legacy.c
+ create mode 100644 hw/vfio/vfio-stubs.c
 
-diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
-index afc498d..21e5807 100644
---- a/include/hw/vfio/vfio-container.h
-+++ b/include/hw/vfio/vfio-container.h
-@@ -10,6 +10,7 @@
- #define HW_VFIO_CONTAINER_H
- 
- #include "hw/vfio/vfio-container-base.h"
-+#include "hw/vfio/vfio-cpr.h"
- 
- typedef struct VFIOContainer VFIOContainer;
- typedef struct VFIODevice VFIODevice;
-@@ -29,6 +30,7 @@ typedef struct VFIOContainer {
-     int fd; /* /dev/vfio/vfio, empowered by the attached groups */
-     unsigned iommu_type;
-     QLIST_HEAD(, VFIOGroup) group_list;
-+    VFIOContainerCPR cpr;
- } VFIOContainer;
- 
- OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
-diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-index 750ea5b..d4e0bd5 100644
---- a/include/hw/vfio/vfio-cpr.h
-+++ b/include/hw/vfio/vfio-cpr.h
-@@ -9,8 +9,23 @@
- #ifndef HW_VFIO_VFIO_CPR_H
- #define HW_VFIO_VFIO_CPR_H
- 
-+#include "migration/misc.h"
-+
-+struct VFIOContainer;
- struct VFIOContainerBase;
- 
-+typedef struct VFIOContainerCPR {
-+    Error *blocker;
-+} VFIOContainerCPR;
-+
-+
-+bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
-+                                        Error **errp);
-+void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
-+
-+int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
-+                             Error **errp);
-+
- bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
-                                  Error **errp);
- void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
-diff --git a/hw/vfio/container.c b/hw/vfio/container.c
-index 0f948d0..7d2035c 100644
---- a/hw/vfio/container.c
-+++ b/hw/vfio/container.c
-@@ -643,7 +643,7 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
-     new_container = true;
-     bcontainer = &container->bcontainer;
- 
--    if (!vfio_cpr_register_container(bcontainer, errp)) {
-+    if (!vfio_legacy_cpr_register_container(container, errp)) {
-         goto fail;
-     }
- 
-@@ -679,7 +679,7 @@ fail:
-         vioc->release(bcontainer);
-     }
-     if (new_container) {
--        vfio_cpr_unregister_container(bcontainer);
-+        vfio_legacy_cpr_unregister_container(container);
-         object_unref(container);
-     }
-     if (fd >= 0) {
-@@ -720,7 +720,7 @@ static void vfio_container_disconnect(VFIOGroup *group)
-         VFIOAddressSpace *space = bcontainer->space;
- 
-         trace_vfio_container_disconnect(container->fd);
--        vfio_cpr_unregister_container(bcontainer);
-+        vfio_legacy_cpr_unregister_container(container);
-         close(container->fd);
-         object_unref(container);
- 
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-new file mode 100644
-index 0000000..419b9fb
---- /dev/null
-+++ b/hw/vfio/cpr-legacy.c
-@@ -0,0 +1,69 @@
-+/*
-+ * Copyright (c) 2021-2025 Oracle and/or its affiliates.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include <sys/ioctl.h>
-+#include <linux/vfio.h>
-+#include "qemu/osdep.h"
-+#include "hw/vfio/vfio-container.h"
-+#include "hw/vfio/vfio-cpr.h"
-+#include "migration/blocker.h"
-+#include "migration/cpr.h"
-+#include "migration/migration.h"
-+#include "migration/vmstate.h"
-+#include "qapi/error.h"
-+
-+static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
-+{
-+    if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
-+        error_setg(errp, "VFIO container does not support VFIO_UPDATE_VADDR");
-+        return false;
-+
-+    } else if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL)) {
-+        error_setg(errp, "VFIO container does not support VFIO_UNMAP_ALL");
-+        return false;
-+
-+    } else {
-+        return true;
-+    }
-+}
-+
-+static const VMStateDescription vfio_container_vmstate = {
-+    .name = "vfio-container",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .needed = cpr_incoming_needed,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
-+{
-+    VFIOContainerBase *bcontainer = &container->bcontainer;
-+    Error **cpr_blocker = &container->cpr.blocker;
-+
-+    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
-+                                vfio_cpr_reboot_notifier,
-+                                MIG_MODE_CPR_REBOOT);
-+
-+    if (!vfio_cpr_supported(container, cpr_blocker)) {
-+        return migrate_add_blocker_modes(cpr_blocker, errp,
-+                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
-+    }
-+
-+    vmstate_register(NULL, -1, &vfio_container_vmstate, container);
-+
-+    return true;
-+}
-+
-+void vfio_legacy_cpr_unregister_container(VFIOContainer *container)
-+{
-+    VFIOContainerBase *bcontainer = &container->bcontainer;
-+
-+    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
-+    migrate_del_blocker(&container->cpr.blocker);
-+    vmstate_unregister(NULL, &vfio_container_vmstate, container);
-+}
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-index 0210e76..0e59612 100644
---- a/hw/vfio/cpr.c
-+++ b/hw/vfio/cpr.c
-@@ -7,13 +7,12 @@
- 
- #include "qemu/osdep.h"
- #include "hw/vfio/vfio-device.h"
--#include "migration/misc.h"
- #include "hw/vfio/vfio-cpr.h"
- #include "qapi/error.h"
- #include "system/runstate.h"
- 
--static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
--                                    MigrationEvent *e, Error **errp)
-+int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
-+                             MigrationEvent *e, Error **errp)
- {
-     if (e->type == MIG_EVENT_PRECOPY_SETUP &&
-         !runstate_check(RUN_STATE_SUSPENDED) && !vm_get_suspended()) {
-diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index bccb050..73d29f9 100644
---- a/hw/vfio/meson.build
-+++ b/hw/vfio/meson.build
-@@ -21,6 +21,7 @@ system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
- system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
- system_ss.add(when: 'CONFIG_VFIO', if_true: files(
-   'cpr.c',
-+  'cpr-legacy.c',
-   'device.c',
-   'migration.c',
-   'migration-multifd.c',
+base-commit: d2e9b78162e31b1eaf20f3a4f563da82da56908d
 -- 
 1.8.3.1
 
