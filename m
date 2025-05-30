@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B575C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:14:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0016C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:14:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtvL-0008D8-D8; Fri, 30 May 2025 03:13:03 -0400
+	id 1uKtwH-0001Mw-Pq; Fri, 30 May 2025 03:14:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvK-0008Cw-Ld
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:02 -0400
+ id 1uKtwC-0001Bx-Es
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvI-0006nX-Ic
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:02 -0400
+ id 1uKtwA-0006to-Q4
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589176;
+ s=mimecast20190719; t=1748589234;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=0MNYloVPNKh7MQwa4zB8605g917Q9F4K6fJDmePAjcE=;
- b=CEF+ugxKGh6XbFTfFcqLeC5LQ7aOGRdKciaqgCRlWCw9x5FbEDqrHV80UGHObbYdm2jbEr
- m4+x9IiPj9buk6rvo+8FfAojwRm3UZ/1vXlVQU6vRpduKdsW/ggshjZvkX/W3JiufV2j6l
- 1kczzJICCBPVRCSnGPn552hyC52cnRQ=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=C+fKfW+kt4kVgqGQSBmHl0QgHwifbapTz278DJ0gOG8=;
+ b=am0uJvX3xOhffpktOKUIJrmQk9uut4KCSc9TLvpEwGJFBRILUPxs9Cj568O50H8k4JMQz2
+ 2cfwLW0ZNY73x+Df2EtHkDBluiJtcj9QQbio3tbUM0yQDKW5rP6MXbH/epr7Tsk3Ue0iI6
+ Fy0JF7dJOKByiJN99wYMmdU1c6V2Mek=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-546-DkHB0H6GPiGoEXroOidagg-1; Fri, 30 May 2025 03:12:54 -0400
-X-MC-Unique: DkHB0H6GPiGoEXroOidagg-1
-X-Mimecast-MFC-AGG-ID: DkHB0H6GPiGoEXroOidagg_1748589173
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-6047edc5cebso1806140a12.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:12:54 -0700 (PDT)
+ us-mta-170-zKXMRXxMPXaVROmy280LGQ-1; Fri, 30 May 2025 03:13:52 -0400
+X-MC-Unique: zKXMRXxMPXaVROmy280LGQ-1
+X-Mimecast-MFC-AGG-ID: zKXMRXxMPXaVROmy280LGQ_1748589231
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-ad56a52edc5so177862566b.0
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589173; x=1749193973;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0MNYloVPNKh7MQwa4zB8605g917Q9F4K6fJDmePAjcE=;
- b=ONPm2IJhwk36iltwdk6Car05oUUVxXJsFbQ5KKWsdZQ5UrxknxV63BtU3Y7x8ZQPRl
- Hpg3LqNCpzrKUNmD8jsDxS2h9W2nfDKggWm4TTrkk13n8pcHqJ6jWwrHFnVPleR0t6oU
- chUj6XLXfABdGiAFvsUa2RpuCI/INuUXMJVnTdGUejZBCQVA2Bjq47JdwSDxU3ZgdbZk
- XKeEmKzb5mlS4+yPNptQEg/Q+tvwXyjO2W7jz4Qhja5ajNS/rnByEdo3UKDG7YujCv9D
- 8/jXv6/8r7AaiC6x++uZPHF7NP0Ks+cRrld0Jo8MqwXZbo7cZaSxwKAHW77PPPp4FMyo
- wJzw==
-X-Gm-Message-State: AOJu0YyTbu+CEAl8Jqk2X7RJPTH2LZLTvQJtNHHBW7P5p30ic8tylRzW
- lfx0QJN4cWn3YuJtv61n56kltsmVy7QP28kURVPG4rwe74Tn0Hist292iWcgKYN0embzgiKWkc6
- EmZrl8zW73deIkMWSOmDjLPdQXEuY8Vob88D0mD/ZWYfbaybwDsLeZHKS35wq2/G1c1roK1wV1A
- tBOuQI2yqLwiY7/rUeOg5bNJLHUvqsJi0+sp5rJsai
-X-Gm-Gg: ASbGncv6vN3Ts8U0BYVYsqvBBfVd58MNb74kgwwUIf6jYUnCXSYxiQEeJ3g1bP85Y+u
- wGOuidsgWcBz9ItAmeYnurrqj111SS4vHQ7CPlG73U6YmvKxhXlr8aP/kg1gE/JAEzxte4eU2vN
- yrn07bqq4dobz4053cc4345GmB5rqXH5kbZRdnYFFzneLnwkv7LwcF/7XeO73tIX4QXBhgVTh/V
- vUdTmrFZbBnx868VvnZfF366OcQ/gNOGFwgzwo9GiGNwQL8rkuLer66jpssnVQ/yzOIJ/DQuhFQ
- ArpC+RQeb+z/tA==
-X-Received: by 2002:a05:6402:26c3:b0:5f3:f04b:5663 with SMTP id
- 4fb4d7f45d1cf-6056ef0065bmr1710251a12.24.1748589172511; 
- Fri, 30 May 2025 00:12:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFyksS01RV99+SICxd23T7z+xeU3mYKS+PRpPX2Lg3H1NSdLO/sjO06DxJA1rxJbMiljafiPA==
-X-Received: by 2002:a05:6402:26c3:b0:5f3:f04b:5663 with SMTP id
- 4fb4d7f45d1cf-6056ef0065bmr1710223a12.24.1748589171941; 
- Fri, 30 May 2025 00:12:51 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748589231; x=1749194031;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=C+fKfW+kt4kVgqGQSBmHl0QgHwifbapTz278DJ0gOG8=;
+ b=cQzkSDFBYlGpZGM4mccqZpQ9GegyKAqnpi2iGDGSXRQfet7+h3EER9+HVcoW9iq4iP
+ kFZ/i/W8nKxhjI/S1nL+jcczZ3lZnqJZynOLaXtFi1bs+XduiClztYxSCMhvGpJld9+G
+ /FfATcJ5lm5jZUUdduSyRJapy0s0P6uzzBWW8soBpNtNYYmFEu5ZRnXoNUUV1gCCzx4p
+ WefKE4NFqr3Y4BtnC7iI+BxiuEaE2XefF9QVcIgH1kBpSy9vb1oTUWtnJKq/49IGjYtK
+ 7z+xrsMcwRIHR7xYTdufViMUMcsDbEjzJzvWseFWuJo+tsYnYfjCp/AkT3zNRCZyAz1i
+ AJbg==
+X-Gm-Message-State: AOJu0YxgAa3RiPmM/j+3gzBBDaSO7VV5XMTXdKb48GtaYGczZyWhsknY
+ zKoQcTQSEDu0KEtDqsCVrP1Dfx0rv+4lZPbsiYzG8aX0QUINADUo1CoOhYPl9HniNiltX2UmVwd
+ QAlEu+lecXzAMLa81oU73DbMGT7qBcDWcA8dMToFZzLGI2kD8SiG0FBwlkvmDxiIKlPdkjfBkTJ
+ 5KHKyo+J7Af0Jjiea/aMeKBzofjBSD1DOcOIS/asB+
+X-Gm-Gg: ASbGncsNEOLaUPl7FpoKdL48rrafGpAfSnRDTVKBnQNOeMd0l7XqL4n2YS8cahn1Bw8
+ rzvUkI+Dx3ETJjOrfaGzy8mydXRkztcMvAuSBxDtTliJ4xE+L9Ft+mLryTrFL6cBLORYp0HFigg
+ 7Wb7LUT3aVrSk4SqIS805hk62gUEGqcJ8HR9qK136wZYfiQDDX+yG9B/ahajAfb95LPE2qQNiAR
+ ay53/RYsX3b3m6khWJacPMBNJrZi8hT7yZ8A52MBX2C0HNBsnePvzrYCloNJRunhORu892gfAac
+ Ebn08EpIWeh5iA==
+X-Received: by 2002:a17:907:3fa0:b0:aca:c507:a4e8 with SMTP id
+ a640c23a62f3a-adb32284f5emr209154966b.21.1748589231090; 
+ Fri, 30 May 2025 00:13:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGEtqM8gjmcBH3mxaynsU8ZEEQu8JmVog7tdZOlQCleRi75OyaKGMQgerhKut/MCf7xqNFE8w==
+X-Received: by 2002:a17:907:3fa0:b0:aca:c507:a4e8 with SMTP id
+ a640c23a62f3a-adb32284f5emr209152866b.21.1748589230707; 
+ Fri, 30 May 2025 00:13:50 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6056714632asm1174668a12.59.2025.05.30.00.12.51
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-ada5d7fed0dsm277601666b.9.2025.05.30.00.13.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:12:51 -0700 (PDT)
+ Fri, 30 May 2025 00:13:49 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/77] i386, build system changes for 2025-05-30
-Date: Fri, 30 May 2025 09:11:30 +0200
-Message-ID: <20250530071250.2050910-1-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PULL 24/77] i386/tdx: Validate TD attributes
+Date: Fri, 30 May 2025 09:11:54 +0200
+Message-ID: <20250530071250.2050910-25-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
+References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -105,201 +111,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit f0737158b483e7ec2b2512145aeab888b85cc1f7:
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-05-20 10:26:30 -0400)
+Validate TD attributes with tdx_caps that only supported bits are
+allowed by KVM.
 
-are available in the Git repository at:
+Besides, sanity check the attribute bits that have not been supported by
+QEMU yet. e.g., debug bit, it will be allowed in the future when debug
+TD support lands in QEMU.
 
-  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://lore.kernel.org/r/20250508150002.689633-13-xiaoyao.li@intel.com
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ target/i386/kvm/tdx.c | 33 +++++++++++++++++++++++++++++++--
+ 1 file changed, 31 insertions(+), 2 deletions(-)
 
-for you to fetch changes up to 9bd24d8d2756a0771b6677b02c7f9b603ef6afe9:
-
-  target/i386/tcg/helper-tcg: fix file references in comments (2025-05-28 19:35:55 +0200)
-
-----------------------------------------------------------------
-* target/i386/kvm: Intel TDX support
-* target/i386/emulate: more lflags cleanups
-* meson: remove need for explicit listing of dependencies in hw_common_arch and
-  target_common_arch
-* rust: small fixes
-* hpet: Reorganize register decoding to be more similar to Rust code
-* target/i386: fixes for AMD models
-* target/i386: new EPYC-Turin CPU model
-
-----------------------------------------------------------------
-Babu Moger (6):
-      target/i386: Update EPYC CPU model for Cache property, RAS, SVM feature bits
-      target/i386: Update EPYC-Rome CPU model for Cache property, RAS, SVM feature bits
-      target/i386: Update EPYC-Milan CPU model for Cache property, RAS, SVM feature bits
-      target/i386: Add couple of feature bits in CPUID_Fn80000021_EAX
-      target/i386: Update EPYC-Genoa for Cache property, perfmon-v2, RAS and SVM feature bits
-      target/i386: Add support for EPYC-Turin model
-
-Chao Peng (1):
-      i386/tdx: load TDVF for TD guest
-
-Fiona Ebner (1):
-      target/i386/tcg/helper-tcg: fix file references in comments
-
-Isaku Yamahata (5):
-      i386/tdx: Make sept_ve_disable set by default
-      i386/tdx: Support user configurable mrconfigid/mrowner/mrownerconfig
-      i386/tdvf: Introduce function to parse TDVF metadata
-      i386/tdx: Add TDVF memory via KVM_TDX_INIT_MEM_REGION
-      i386/tdx: Don't synchronize guest tsc for TDs
-
-Lei Wang (1):
-      i386: Remove unused parameter "uint32_t bit" in feature_word_description()
-
-Paolo Bonzini (4):
-      rust: hpet: rename hpet module to "device"
-      target/i386/emulate: more lflags cleanups
-      rocker: do not pollute the namespace
-      rust: make declaration of dependent crates more consistent
-
-Pierrick Bouvier (7):
-      meson: build target libraries with common dependencies
-      hw/arm: remove explicit dependencies listed
-      target/arm: remove explicit dependencies listed
-      meson: apply target config for picking files from lib{system, user}
-      meson: merge lib{system, user}_ss with {system, user}_ss
-      meson: remove lib{system, user}_ss aliases
-      meson: merge hw_common_arch in target_common_system_arch
-
-Xiaoyao Li (49):
-      i386: Introduce tdx-guest object
-      i386/tdx: Implement tdx_kvm_type() for TDX
-      i386/tdx: Implement tdx_kvm_init() to initialize TDX VM context
-      i386/tdx: Get tdx_capabilities via KVM_TDX_CAPABILITIES
-      i386/tdx: Introduce is_tdx_vm() helper and cache tdx_guest object
-      kvm: Introduce kvm_arch_pre_create_vcpu()
-      i386/tdx: Initialize TDX before creating TD vcpus
-      i386/tdx: Add property sept-ve-disable for tdx-guest object
-      i386/tdx: Wire CPU features up with attributes of TD guest
-      i386/tdx: Validate TD attributes
-      i386/tdx: Set APIC bus rate to match with what TDX module enforces
-      i386/tdx: Implement user specified tsc frequency
-      i386/tdx: Parse TDVF metadata for TDX VM
-      i386/tdx: Don't initialize pc.rom for TDX VMs
-      i386/tdx: Track mem_ptr for each firmware entry of TDVF
-      i386/tdx: Track RAM entries for TDX VM
-      headers: Add definitions from UEFI spec for volumes, resources, etc...
-      i386/tdx: Setup the TD HOB list
-      i386/tdx: Call KVM_TDX_INIT_VCPU to initialize TDX vcpu
-      i386/tdx: Finalize TDX VM
-      i386/tdx: Enable user exit on KVM_HC_MAP_GPA_RANGE
-      i386/tdx: Handle KVM_SYSTEM_EVENT_TDX_FATAL
-      i386/tdx: Wire TDX_REPORT_FATAL_ERROR with GuestPanic facility
-      kvm: Check KVM_CAP_MAX_VCPUS at vm level
-      i386/cpu: introduce x86_confidential_guest_cpu_instance_init()
-      i386/tdx: implement tdx_cpu_instance_init()
-      i386/cpu: Introduce enable_cpuid_0x1f to force exposing CPUID 0x1f
-      i386/tdx: Force exposing CPUID 0x1f
-      i386/tdx: Set kvm_readonly_mem_enabled to false for TDX VM
-      i386/tdx: Disable SMM for TDX VMs
-      i386/tdx: Disable PIC for TDX VMs
-      i386/tdx: Set and check kernel_irqchip mode for TDX
-      i386/tdx: Only configure MSR_IA32_UCODE_REV in kvm_init_msrs() for TDs
-      i386/apic: Skip kvm_apic_put() for TDX
-      cpu: Don't set vcpu_dirty when guest_state_protected
-      i386/cgs: Rename *mask_cpuid_features() to *adjust_cpuid_features()
-      i386/tdx: Implement adjust_cpuid_features() for TDX
-      i386/tdx: Add TDX fixed1 bits to supported CPUIDs
-      i386/tdx: Add supported CPUID bits related to TD Attributes
-      i386/tdx: Add supported CPUID bits relates to XFAM
-      i386/tdx: Add XFD to supported bit of TDX
-      i386/tdx: Define supported KVM features for TDX
-      i386/cgs: Introduce x86_confidential_guest_check_features()
-      target/i386: Print CPUID subleaf info for unsupported feature
-      i386/tdx: Fetch and validate CPUID of TD guest
-      i386/tdx: Don't treat SYSCALL as unavailable
-      i386/tdx: Make invtsc default on
-      i386/tdx: Validate phys_bits against host value
-      docs: Add TDX documentation
-
-Zhao Liu (3):
-      hw/timer/hpet: Reorganize register decoding
-      rust: Fix Zhao's email address
-      rust: Fix the typos in doc
-
- docs/system/confidential-guest-support.rst    |    1 +
- docs/system/i386/tdx.rst                      |  161 +++
- docs/system/target-i386.rst                   |    1 +
- configs/devices/i386-softmmu/default.mak      |    1 +
- meson.build                                   |  122 +--
- qapi/qom.json                                 |   35 +
- qapi/run-state.json                           |   31 +-
- hw/i386/tdvf-hob.h                            |   26 +
- hw/net/rocker/rocker.h                        |   14 +-
- hw/net/rocker/rocker_hw.h                     |   20 +-
- include/hw/i386/tdvf.h                        |   45 +
- include/standard-headers/uefi/uefi.h          |  187 ++++
- include/system/kvm.h                          |    1 +
- target/i386/confidential-guest.h              |   44 +-
- target/i386/cpu.h                             |   44 +
- target/i386/host-cpu.h                        |    1 +
- target/i386/kvm/kvm_i386.h                    |   15 +
- target/i386/kvm/tdx.h                         |   65 ++
- target/i386/tcg/helper-tcg.h                  |    4 +-
- accel/kvm/kvm-all.c                           |   11 +-
- hw/i386/kvm/apic.c                            |    5 +
- hw/i386/pc.c                                  |   29 +-
- hw/i386/pc_sysfw.c                            |    7 +
- hw/i386/tdvf-hob.c                            |  130 +++
- hw/i386/tdvf.c                                |  189 ++++
- hw/i386/x86-common.c                          |    6 +-
- hw/net/rocker/rocker_of_dpa.c                 |   40 +-
- hw/timer/hpet.c                               |  166 ++--
- system/runstate.c                             |   65 ++
- target/arm/kvm.c                              |    5 +
- target/i386/cpu.c                             |  522 +++++++++-
- target/i386/emulate/x86_flags.c               |   16 +-
- target/i386/host-cpu.c                        |    2 +-
- target/i386/kvm/kvm.c                         |  110 ++-
- target/i386/kvm/tdx-stub.c                    |   20 +
- target/i386/kvm/tdx.c                         | 1289 +++++++++++++++++++++++++
- target/i386/sev.c                             |   12 +-
- target/loongarch/kvm/kvm.c                    |    4 +
- target/mips/kvm.c                             |    5 +
- target/ppc/kvm.c                              |    5 +
- target/riscv/kvm/kvm-cpu.c                    |    5 +
- target/s390x/kvm/kvm.c                        |    5 +
- accel/tcg/meson.build                         |    8 +-
- gdbstub/meson.build                           |    4 +-
- hw/arm/meson.build                            |    4 +-
- hw/core/meson.build                           |    4 +-
- hw/i386/Kconfig                               |    6 +
- hw/i386/meson.build                           |    1 +
- plugins/meson.build                           |    4 +-
- rust/hw/char/pl011/meson.build                |   12 +-
- rust/hw/char/pl011/src/device.rs              |    4 +-
- rust/hw/timer/hpet/src/{hpet.rs => device.rs} |    2 +-
- rust/hw/timer/hpet/src/fw_cfg.rs              |    2 +-
- rust/hw/timer/hpet/src/lib.rs                 |    4 +-
- rust/meson.build                              |   16 +
- rust/qemu-api-macros/meson.build              |   14 +-
- rust/qemu-api/meson.build                     |    4 +-
- rust/qemu-api/src/bitops.rs                   |    2 +-
- rust/qemu-api/src/qom.rs                      |    4 +-
- rust/qemu-api/src/timer.rs                    |    2 +-
- rust/qemu-api/src/vmstate.rs                  |    2 +-
- rust/qemu-api/tests/vmstate_tests.rs          |    2 +-
- system/meson.build                            |    2 +-
- target/arm/meson.build                        |    2 +-
- target/i386/kvm/meson.build                   |    2 +
- tcg/meson.build                               |    4 +-
- 66 files changed, 3231 insertions(+), 346 deletions(-)
- create mode 100644 docs/system/i386/tdx.rst
- create mode 100644 hw/i386/tdvf-hob.h
- create mode 100644 include/hw/i386/tdvf.h
- create mode 100644 include/standard-headers/uefi/uefi.h
- create mode 100644 target/i386/kvm/tdx.h
- create mode 100644 hw/i386/tdvf-hob.c
- create mode 100644 hw/i386/tdvf.c
- create mode 100644 target/i386/kvm/tdx-stub.c
- create mode 100644 target/i386/kvm/tdx.c
- rename rust/hw/timer/hpet/src/{hpet.rs => device.rs} (99%)
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 22d66bdb14f..c78a0e8b5ed 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -18,10 +18,15 @@
+ #include "kvm_i386.h"
+ #include "tdx.h"
+ 
++#define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
+ #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
+ #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
+ #define TDX_TD_ATTRIBUTES_PERFMON           BIT_ULL(63)
+ 
++#define TDX_SUPPORTED_TD_ATTRS  (TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE |\
++                                 TDX_TD_ATTRIBUTES_PKS | \
++                                 TDX_TD_ATTRIBUTES_PERFMON)
++
+ static TdxGuest *tdx_guest;
+ 
+ static struct kvm_tdx_capabilities *tdx_caps;
+@@ -153,13 +158,34 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
+     return KVM_X86_TDX_VM;
+ }
+ 
+-static void setup_td_guest_attributes(X86CPU *x86cpu)
++static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
++{
++    if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
++        error_setg(errp, "Invalid attributes 0x%lx for TDX VM "
++                   "(KVM supported: 0x%llx)", tdx->attributes,
++                   tdx_caps->supported_attrs);
++        return -1;
++    }
++
++    if (tdx->attributes & ~TDX_SUPPORTED_TD_ATTRS) {
++        error_setg(errp, "Some QEMU unsupported TD attribute bits being "
++                    "requested: 0x%lx (QEMU supported: 0x%llx)",
++                    tdx->attributes, TDX_SUPPORTED_TD_ATTRS);
++        return -1;
++    }
++
++    return 0;
++}
++
++static int setup_td_guest_attributes(X86CPU *x86cpu, Error **errp)
+ {
+     CPUX86State *env = &x86cpu->env;
+ 
+     tdx_guest->attributes |= (env->features[FEAT_7_0_ECX] & CPUID_7_0_ECX_PKS) ?
+                              TDX_TD_ATTRIBUTES_PKS : 0;
+     tdx_guest->attributes |= x86cpu->enable_pmu ? TDX_TD_ATTRIBUTES_PERFMON : 0;
++
++    return tdx_validate_attributes(tdx_guest, errp);
+ }
+ 
+ static int setup_td_xfam(X86CPU *x86cpu, Error **errp)
+@@ -225,7 +251,10 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+                         sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
+ 
+-    setup_td_guest_attributes(x86cpu);
++    r = setup_td_guest_attributes(x86cpu, errp);
++    if (r) {
++        return r;
++    }
+ 
+     r = setup_td_xfam(x86cpu, errp);
+     if (r) {
 -- 
 2.49.0
 
