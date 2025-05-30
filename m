@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60A17C5B549
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97AB0C5B543
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:15:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL1Pj-0004yC-Fs; Fri, 30 May 2025 11:12:55 -0400
+	id 1uL1PL-0003lx-1X; Fri, 30 May 2025 11:12:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1PY-0004RD-Om; Fri, 30 May 2025 11:12:44 -0400
+ id 1uL1PB-0003LB-Pg; Fri, 30 May 2025 11:12:22 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1PV-0002Ko-GV; Fri, 30 May 2025 11:12:44 -0400
+ id 1uL1P8-0002Hx-R2; Fri, 30 May 2025 11:12:21 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 8407444AC3;
- Fri, 30 May 2025 17:11:48 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 82CD144B56;
+ Fri, 30 May 2025 17:11:46 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,9 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v4 42/48] block: mark bdrv_replace_child_bs() as GRAPH_UNLOCKED
-Date: Fri, 30 May 2025 17:11:19 +0200
-Message-Id: <20250530151125.955508-43-f.ebner@proxmox.com>
+Subject: [PATCH v4 23/48] block: never use atomics to access
+ bs->quiesce_counter
+Date: Fri, 30 May 2025 17:11:00 +0200
+Message-Id: <20250530151125.955508-24-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530151125.955508-1-f.ebner@proxmox.com>
 References: <20250530151125.955508-1-f.ebner@proxmox.com>
@@ -59,29 +60,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function bdrv_replace_child_bs() calls bdrv_drained_begin() which
-must be called with the graph unlocked.
+All accesses of bs->quiesce_counter are in the main thread, either
+after a GLOBAL_STATE_CODE() macro or in a function with GRAPH_WRLOCK
+annotation.
+
+This is essentially a revert of 414c2ec358 ("block: access
+quiesce_counter with atomic ops"). At that time, neither the
+GLOBAL_STATE_CODE() macro nor the GRAPH_WRLOCK annotation existed.
+Even if the field was only accessed in the main thread back then (did
+not check if that is actually the case), it wouldn't have been easy to
+verify.
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
- include/block/block-global-state.h | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ block/io.c                       | 7 ++-----
+ include/block/block_int-common.h | 2 +-
+ 2 files changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index b1f826dca6..dfdf5e187f 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -74,8 +74,8 @@ int bdrv_append(BlockDriverState *bs_new, BlockDriverState *bs_top,
- int GRAPH_WRLOCK
- bdrv_replace_node(BlockDriverState *from, BlockDriverState *to, Error **errp);
+diff --git a/block/io.c b/block/io.c
+index ac5c7174f6..9bd8ba8431 100644
+--- a/block/io.c
++++ b/block/io.c
+@@ -361,7 +361,7 @@ static void bdrv_do_drained_begin(BlockDriverState *bs, BdrvChild *parent,
+     GLOBAL_STATE_CODE();
  
--int bdrv_replace_child_bs(BdrvChild *child, BlockDriverState *new_bs,
--                          Error **errp);
-+int GRAPH_UNLOCKED
-+bdrv_replace_child_bs(BdrvChild *child, BlockDriverState *new_bs, Error **errp);
- BlockDriverState *bdrv_insert_node(BlockDriverState *bs, QDict *node_options,
-                                    int flags, Error **errp);
- int bdrv_drop_filter(BlockDriverState *bs, Error **errp);
+     /* Stop things in parent-to-child order */
+-    if (qatomic_fetch_inc(&bs->quiesce_counter) == 0) {
++    if (bs->quiesce_counter++ == 0) {
+         GRAPH_RDLOCK_GUARD_MAINLOOP();
+         bdrv_parent_drained_begin(bs, parent);
+         if (bs->drv && bs->drv->bdrv_drain_begin) {
+@@ -401,8 +401,6 @@ bdrv_drained_begin(BlockDriverState *bs)
+  */
+ static void bdrv_do_drained_end(BlockDriverState *bs, BdrvChild *parent)
+ {
+-    int old_quiesce_counter;
+-
+     IO_OR_GS_CODE();
+ 
+     if (qemu_in_coroutine()) {
+@@ -415,8 +413,7 @@ static void bdrv_do_drained_end(BlockDriverState *bs, BdrvChild *parent)
+     assert(bs->quiesce_counter > 0);
+ 
+     /* Re-enable things in child-to-parent order */
+-    old_quiesce_counter = qatomic_fetch_dec(&bs->quiesce_counter);
+-    if (old_quiesce_counter == 1) {
++    if (--bs->quiesce_counter == 0) {
+         GRAPH_RDLOCK_GUARD_MAINLOOP();
+         if (bs->drv && bs->drv->bdrv_drain_end) {
+             bs->drv->bdrv_drain_end(bs);
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index 925a3e7353..e96c6a6a03 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -1253,7 +1253,7 @@ struct BlockDriverState {
+     /* do we need to tell the quest if we have a volatile write cache? */
+     int enable_write_cache;
+ 
+-    /* Accessed with atomic ops.  */
++    /* Accessed only in the main thread. */
+     int quiesce_counter;
+ 
+     unsigned int write_gen;               /* Current data generation */
 -- 
 2.39.5
 
