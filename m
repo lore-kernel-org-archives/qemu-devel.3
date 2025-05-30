@@ -4,80 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FEC7C5B549
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 12:50:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67125C5B543
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 12:50:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKzBf-00023d-Lm; Fri, 30 May 2025 08:50:15 -0400
+	id 1uKzBa-00020j-Rn; Fri, 30 May 2025 08:50:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uKzBb-000213-QH
- for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:11 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ id 1uKzBV-000204-Bl
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:05 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uKzBY-0001pi-W5
- for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:11 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45024721cbdso15402885e9.2
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 05:50:07 -0700 (PDT)
+ id 1uKzBP-0001cY-RW
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:02 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-43cec5cd73bso13367105e9.3
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 05:49:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748609406; x=1749214206; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=hjPafosfBtpp6OfR6vWfKqeDiH1uNVyM2/xwKvCmH7s=;
- b=QuOdu0YcXrU22Dd/g8HJDX+cyKwqsRnuvkzC/AKdpfoWcb7W7dOUvcXENVnMCW+tZS
- FuIz27m/VwVFH6HDRLsQL1L8sQ4xJFe/e45GRexRWpla9mhvdHucVw+RDAH4H9xrSKi8
- CCKdXVkF+IbphnSDjYNM0zANePaAipo/Kba7fjVe6j0LthcYWwI+vT8YTWrmx/MfauM6
- Gmz+1ety+lf6u6UJrHcRFSsv7vBII0zJUUgtQvmvMzcsZHGPx45O928WjNRpnApFy1ue
- fd42KKZgg+Mh2kC0aWjb+LF5WRY+HTbJ2AGbAHwLSAP18mrO1Vcpev6IwFDOA4pTSQYZ
- bfTw==
+ d=linaro.org; s=google; t=1748609397; x=1749214197; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=iDO/Sk/FrFvktM+vX34n7V0ace0NdUC/wDYRVqTbEPk=;
+ b=QybOJeDM0nMTp3P5YeIPIWvIo4ysR+cMgNIk0YexMM/ITV1RmRfYE2poaPaGm2LC5Q
+ B17j4dVc98nq076spzB094snIQ1WhnKSeZbhHZoBqfjdkAuAJuLRIjLCRxZm35l8xRWq
+ QiZ4fJJuyDk17ACtV5Ey1EkE5cVG2C2bbOKTP8c5YxYbxuPmdZrgB7vpv+Uf6jUR55z/
+ tBIocMsKCh03uIbijoJRpXqjUOA3NMIfRolI4SlMxIkM+Yvh5RqaJX3o/ZxHnJ6/Kjfq
+ EEBPFmOfElathTYDFdnoDkQIkVYbzkbpZzbsmO5JkL/pJ5srE2p6ARbBdt7s2dH5y6tl
+ VJEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748609406; x=1749214206;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=hjPafosfBtpp6OfR6vWfKqeDiH1uNVyM2/xwKvCmH7s=;
- b=FHjhlZOWqiqXVJ2NT69oYCMt/Z8iaeRbU9e0J60A7ErEYYPaP+UNCRqNAtEmdNYDcC
- rNQsmdYjd2d7vtGKUhjSyx+eFuHMWNr8lOvMq0UWzDPog3yEi6C65Lxe4ePoDGDhn8RW
- hB+ST5Lv4Gn2IdpOs3N4PFzqsSQwU8uPzC57smLtkQus3MIzMDdYFHSJff1kSnOUkG5i
- dyO7qG0XLjUlqOqZn5GjxMbBdDyfwz655+zNqfXJszftyAN0EorLwDY/FRWedP8uKS32
- I3GlszjD4jy0itqVEnhUJhm7brctPMsVQnJ9pTYph8nRDJkF30xwP1hCfhxDEcboSjzn
- 6dNQ==
-X-Gm-Message-State: AOJu0Yyh6jR1vu1fB8sq4+UUWp5EiipYYj5YclBkv69tTnTv15P5VmE6
- qQYbDGLiVLSh5YPkPiT9P5b6YcS0MzIon9tCf+h5pCgSnd56ROpxOE3lLIqEm4LMBFkTxXtQjLV
- I92ZJ
-X-Gm-Gg: ASbGncugbjUMqhYMgg1Nd3hmY0Ty9cfqpeYN0ClbtXrNXtDpVFGyGEZoU1R8N1sVgEy
- XQmaNFCJ5GQ71/HHPHyL09HKOs6H0/idlUVJrg/3Paer5p6S9yjZyW/YtD+Rg4Sil3rui1pv+KD
- km3SB8NQ9i6Kc7jvVCd0PC2QGSPw8elNnHg/fyXmDnpw6iWzlDOXVQeBNDTnFEzOgLirb31Qgcn
- Feq/bFgXxeOHNgV+/0mif425uMlFlMYIWi5a74Y2TiQcvpWTWPhEB279Ir//6Hz3OWWn6Bsu5wR
- mdprJxLCGChmtSr8l/JXD8Q8CUIwk6BHK45cdy62GijviYQ3DsP6eTKumKc5NrR4D6RP
-X-Google-Smtp-Source: AGHT+IEWHRmr1dPZ+pfmMmxLNw5hfWHw1hLTJ0aK3sUww8aexTM6ERSD4/n5DeZUel30umgM9kUSjQ==
-X-Received: by 2002:a05:600c:4fcb:b0:43d:4686:5cfb with SMTP id
- 5b1f17b1804b1-450d658f66amr31883255e9.27.1748609405862; 
- Fri, 30 May 2025 05:50:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748609397; x=1749214197;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=iDO/Sk/FrFvktM+vX34n7V0ace0NdUC/wDYRVqTbEPk=;
+ b=EdlZdWKr8bsM6//UM/eU4v8HsAPhUWkReDFQ6U4Wn555o7ZwCIM8SbdcMZMR54fZz+
+ MaOOBUMx3+9Dj1iYVyAWaRefR9gxz46N3btaVATRoup1E8M8RVsigf/0DrDu/UY9iaaA
+ 2IU+C7SvkJ5Mbymgh3/AjzI0WB1++umWnA7hOVxpmpw4eW03NV+tGuJOk/shI0Z5QLc1
+ svfy19IJaIsGgKskj0AkOpKRHHSyjElGjH2KTs79En9iLpRiqu41p1s3rQkZLfcUYuxU
+ yLa6peHvAE/8kOua6Vl4ghpz5Ksy0Is8H/9+q8Pf5+M4ghWQOM8COqC90HFaD7wAIVnV
+ DaLw==
+X-Gm-Message-State: AOJu0Yyaj2jh2vhJI5hU+o0RvmngPLYCgEohcKZ9AfvTFjl/lv0BMR/1
+ kf0lha2URjpctr30+MaCkIys9QEwDCYJ8RB/k25QkA3KH7LJptFheI1Hzi59IX8kKfWCngArfzG
+ 8Oyry
+X-Gm-Gg: ASbGncvwNv+m5YVAKJY8MU5E/6UeCjF5FpBeWbLl3FctNcCjl6HFV8eQPx8NUXWk7p7
+ j7q86XF16ve8LYx4ItKyipzxccNYMZpQ/89RaWhoZsUrDY0zVrVy2E5q9ebfhiTsZrOsCbe2OCq
+ fo3l+RUkI0hoj5jUxMicjMC6M7uV5miPTwwQtoGuVOH1ibpOek6CpY3fj8c24d0xmLktXHRVxJm
+ IuaFbF5UAs7rUGDG3lLOErPUFw7ChtmK8jaY38L6IJqug7uReatYyh5V3S5835eF6wIuKA8CKrT
+ 0A2FnBQWXxT90cNYF6utQ++OV/yZhHoN3feFbg9scZkCzxJeCr+qDDcVNw==
+X-Google-Smtp-Source: AGHT+IHHxJ8Wd01aMcAXOTTDK9gkiZQMkgpo/BEr9FrqJ8VOJ2NsSHsd1/AbS/T/N1rcP0E9YTz+wg==
+X-Received: by 2002:a05:600c:a087:b0:442:f44f:65b with SMTP id
+ 5b1f17b1804b1-450d6561627mr28462475e9.32.1748609396683; 
+ Fri, 30 May 2025 05:49:56 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb7dafsm17235195e9.25.2025.05.30.05.50.04
+ 5b1f17b1804b1-450d7fb7dafsm17235195e9.25.2025.05.30.05.49.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 05:50:05 -0700 (PDT)
+ Fri, 30 May 2025 05:49:55 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/15] target/arm/hvf_arm: Avoid using poisoned CONFIG_HVF
- definition
-Date: Fri, 30 May 2025 13:49:43 +0100
-Message-ID: <20250530124953.383687-7-peter.maydell@linaro.org>
+Subject: [PULL 00/15] target-arm queue
+Date: Fri, 30 May 2025 13:49:37 +0100
+Message-ID: <20250530124953.383687-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250530124953.383687-1-peter.maydell@linaro.org>
-References: <20250530124953.383687-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,103 +96,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-In order to allow non-target specific code to include
-"hvf_arm.h", define the stubs in hvf-stub.c.
+Hi; here's a target-arm pull; mostly refactoring and other small stuff.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20250513173928.77376-3-philmd@linaro.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- MAINTAINERS            |  1 +
- target/arm/hvf_arm.h   | 16 ----------------
- target/arm/hvf-stub.c  | 20 ++++++++++++++++++++
- target/arm/meson.build |  1 +
- 4 files changed, 22 insertions(+), 16 deletions(-)
+thanks
+-- PMM
+
+The following changes since commit d2e9b78162e31b1eaf20f3a4f563da82da56908d:
+
+  Merge tag 'pull-qapi-2025-05-28' of https://repo.or.cz/qemu/armbru into staging (2025-05-29 08:36:01 -0400)
+
+are available in the Git repository at:
+
+  https://git.linaro.org/people/pmaydell/qemu-arm.git tags/pull-target-arm-20250530-2
+
+for you to fetch changes up to e86c1f967a323165d13bcadfad4b92d0d34cdb08:
+
+  hw/block: Drop unused nand.c (2025-05-29 17:45:13 +0100)
+
+----------------------------------------------------------------
+target-arm queue:
+ * hw/arm: Add GMAC devices to NPCM8XX SoC
+ * hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
+ * docs/interop: convert text files to restructuredText
+ * target/arm: Some minor refactorings
+ * tests/functional: Add a test for the Stellaris arm machines
+ * hw/block: Drop unused nand.c
+
+----------------------------------------------------------------
+Guenter Roeck (1):
+      hw/arm: Add missing psci_conduit to NPCM8XX SoC boot info
+
+Hao Wu (1):
+      hw/arm: Add GMAC devices to NPCM8XX SoC
+
+Nabih Estefan (1):
+      tests/qtest: Migrate GMAC test from 7xx to 8xx
+
+Peter Maydell (1):
+      hw/block: Drop unused nand.c
+
+Philippe Mathieu-Daudé (9):
+      target/arm/tcg-stubs: compile file once (system)
+      target/arm/hvf_arm: Avoid using poisoned CONFIG_HVF definition
+      target/arm: Only link with zlib when TCG is enabled
+      target/arm/cpregs: Include missing 'target/arm/cpu.h' header
+      hw/arm/boot: Include missing 'system/memory.h' header
+      target/arm/cpu-features: Include missing 'cpu.h' header
+      target/arm/qmp: Include missing 'cpu.h' header
+      target/arm/kvm: Include missing 'cpu-qom.h' header
+      target/arm/hvf: Include missing 'cpu-qom.h' header
+
+Souleymane Conte (1):
+      docs/interop: convert text files to restructuredText
+
+Thomas Huth (1):
+      tests/functional: Add a test for the Stellaris arm machines
+
+ MAINTAINERS                            |   4 +-
+ docs/interop/bitmaps.rst               |   2 +-
+ docs/interop/index.rst                 |   1 +
+ docs/interop/{qcow2.txt => qcow2.rst}  | 187 +++++---
+ docs/qcow2-cache.txt                   |   2 +-
+ include/hw/arm/npcm8xx.h               |   5 +-
+ include/hw/block/flash.h               |  18 -
+ target/arm/cpregs.h                    |   1 +
+ target/arm/cpu-features.h              |   1 +
+ target/arm/hvf_arm.h                   |  18 +-
+ target/arm/kvm_arm.h                   |   1 +
+ hw/arm/boot.c                          |   1 +
+ hw/arm/npcm8xx.c                       |  55 ++-
+ hw/block/nand.c                        | 835 ---------------------------------
+ target/arm/arm-qmp-cmds.c              |   1 +
+ target/arm/hvf-stub.c                  |  20 +
+ tests/qtest/npcm_gmac-test.c           |  85 +++-
+ hw/arm/Kconfig                         |   1 -
+ hw/block/Kconfig                       |   3 -
+ hw/block/meson.build                   |   1 -
+ target/arm/meson.build                 |   4 +-
+ target/arm/tcg/meson.build             |   2 +
+ tests/functional/meson.build           |   1 +
+ tests/functional/test_arm_stellaris.py |  48 ++
+ tests/qtest/meson.build                |   6 +-
+ 25 files changed, 334 insertions(+), 969 deletions(-)
+ rename docs/interop/{qcow2.txt => qcow2.rst} (89%)
+ delete mode 100644 hw/block/nand.c
  create mode 100644 target/arm/hvf-stub.c
-
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 8e68333623e..973254fae79 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -510,6 +510,7 @@ Apple Silicon HVF CPUs
- M: Alexander Graf <agraf@csgraf.de>
- S: Maintained
- F: target/arm/hvf/
-+F: target/arm/hvf-stub.c
- 
- X86 HVF CPUs
- M: Cameron Esfahani <dirty@apple.com>
-diff --git a/target/arm/hvf_arm.h b/target/arm/hvf_arm.h
-index 26c717b3826..7a44e092620 100644
---- a/target/arm/hvf_arm.h
-+++ b/target/arm/hvf_arm.h
-@@ -22,23 +22,7 @@ void hvf_arm_init_debug(void);
- 
- void hvf_arm_set_cpu_features_from_host(ARMCPU *cpu);
- 
--#ifdef CONFIG_HVF
--
- uint32_t hvf_arm_get_default_ipa_bit_size(void);
- uint32_t hvf_arm_get_max_ipa_bit_size(void);
- 
--#else
--
--static inline uint32_t hvf_arm_get_default_ipa_bit_size(void)
--{
--    return 0;
--}
--
--static inline uint32_t hvf_arm_get_max_ipa_bit_size(void)
--{
--    return 0;
--}
--
--#endif
--
- #endif
-diff --git a/target/arm/hvf-stub.c b/target/arm/hvf-stub.c
-new file mode 100644
-index 00000000000..ff137267a03
---- /dev/null
-+++ b/target/arm/hvf-stub.c
-@@ -0,0 +1,20 @@
-+/*
-+ * QEMU Hypervisor.framework (HVF) stubs for ARM
-+ *
-+ *  Copyright (c) Linaro
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hvf_arm.h"
-+
-+uint32_t hvf_arm_get_default_ipa_bit_size(void)
-+{
-+    g_assert_not_reached();
-+}
-+
-+uint32_t hvf_arm_get_max_ipa_bit_size(void)
-+{
-+    g_assert_not_reached();
-+}
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index e568dfb706a..2747f4b404c 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -32,6 +32,7 @@ arm_common_system_ss.add(files('cpu.c'), capstone)
- arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
-   'cpu32-stubs.c'))
- arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
-+arm_common_system_ss.add(when: 'CONFIG_HVF', if_false: files('hvf-stub.c'))
- arm_common_system_ss.add(files(
-   'arch_dump.c',
-   'arm-powerctl.c',
--- 
-2.43.0
-
+ create mode 100755 tests/functional/test_arm_stellaris.py
 
