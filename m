@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D844FC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 08:05:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 010E3C5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 08:05:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKuiU-0002bt-Gu; Fri, 30 May 2025 04:03:50 -0400
+	id 1uKuiD-0002W7-39; Fri, 30 May 2025 04:03:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKuiH-0002XO-74
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uKui8-0002Ug-FZ
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKuiF-0004cn-AR
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:36 -0400
+ id 1uKui6-0004am-S5
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748592214;
+ s=mimecast20190719; t=1748592206;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=I9UYi4Cy39R5dTUfo2DeyIIhvEGm6Vs7YuCFqZJ0aIg=;
- b=Nmy5OmbHaEbFH84WhJhXN8CEqmx3sjYpMloOvwhAsysriFqH8Y3vQYyae+oSyaCA2Q0wvY
- smGvyaPRG+RdQro4lT8Nv+AjsS/EY6x9G469hNeB4IgHKSioQBy2cp1hu8po7+OBQLmFxW
- pWUdLKrNBLaHXdkdxyrn1j9feEWmlAE=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ucBnDbok7v6Mu7KPseGvFTjV3duwh5RlIILFahRdtRA=;
+ b=VHNz+WniFEagXQB2cLfCCroUCFHgByqhLhcAkKTmgs21oVfDvRTPw7/cDk/9vx47Wwhmbg
+ xGWHHJtq3FyXwxdQo4VrArBNgEUf2IYGf4zEDgg61TlHh95vPhUcOy/ySFRezjSGXI/1h6
+ kJnG7zfqcZm+j/AkTlot9jyA+QsVjwQ=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-230-Jgx-WSZ6NNCmeyhh0vJvyg-1; Fri, 30 May 2025 04:03:33 -0400
-X-MC-Unique: Jgx-WSZ6NNCmeyhh0vJvyg-1
-X-Mimecast-MFC-AGG-ID: Jgx-WSZ6NNCmeyhh0vJvyg_1748592212
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ab68fbe53a4so90907466b.2
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 01:03:33 -0700 (PDT)
+ us-mta-561-uFPu5UrRM6yVn8KMI1MiNw-1; Fri, 30 May 2025 04:03:20 -0400
+X-MC-Unique: uFPu5UrRM6yVn8KMI1MiNw-1
+X-Mimecast-MFC-AGG-ID: uFPu5UrRM6yVn8KMI1MiNw_1748592199
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ad56c5412f2so153907066b.1
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 01:03:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748592212; x=1749197012;
+ d=1e100.net; s=20230601; t=1748592196; x=1749196996;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=I9UYi4Cy39R5dTUfo2DeyIIhvEGm6Vs7YuCFqZJ0aIg=;
- b=qGxucVlUgaY0vSbEMe5htEt2fkVu/ms1YC4iIwJjlZCyLJSAmbGATVTXLFfA4e/2N+
- D317ci2Z0dxYKFxW02vRlUnr5ecE5IL+Wki88DEzqDrwsxDanI7rl73lELtAU8FxW+3C
- j/xRfc+QBYsD1LZJl7EeR5zG+SrIGZquFWvm1PGSGRDd2fwfnLFx/azSV7tiuZ93Mj21
- QBE0tIyg8/+hiQ6Rq0sqCXis5r2gYHieVqiUUdfmMIfjMhx0IRWWVA0SUlmHVZrElEc2
- VkwdKwnRV7r1hDdKxSi07rANh0/4oYEr9EcrOWCRoe+EU5WD+eDDTzTtUO45dgYHCaRH
- FwqA==
-X-Gm-Message-State: AOJu0YxK4qbghgkAZZOGr7/ZOP3Yq/d4g+4xTZDTYqBh2be+c0nxQ0K6
- Ali7vQdj771yV3zCXTGH/noryAhQj1WQKiLoCl5HA4pX+GeQS1Yl1LA/bHsugVU/QuDCOsEqW8i
- fcS3MX+cz+jKWVlcn3cqTRI0GxTs6cRaudOsmdSvTu1trKwIi6+JvAA9E9+c9IFDkFCC+pe+FR0
- DQcAl19cx2eQUmVI2SNDMotHCEpOmMGsLxp9tqrwRA
-X-Gm-Gg: ASbGnculfJBpX9aOnjUaI458Zi0T8z6Y7SKWfYiQTWjyyzcEZp5bFV5AKzL21BuGxJJ
- s5Huu/F99G+POMyagVXGlzKBA60ZrBPczrw/AmhfMBZge4lN7BEP9Hdi7Ua11aceh/SKXi0ovNu
- ZbNN16hDt2xSvEgyuHoR3oW5mcgJUsupbCoLUSzeePoZ5istz+s4l0fdrVLc56KW4s/ScQeljyJ
- 5Wd8gmz92f/ZJrP8nRqd8NobEYCH29xSHXlygndN/ik9+Wp4aDs3ZDxBHrUFwOKq51dbKae9Kv0
- FceFEpLlkMQA3g==
-X-Received: by 2002:a17:907:9450:b0:ad8:9c97:c2da with SMTP id
- a640c23a62f3a-adb36bfb187mr113379466b.40.1748592211526; 
- Fri, 30 May 2025 01:03:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHkp5F1NC9thYzOG8he490C6v6/TNy0j9MFH/yK+eGJ5b5OxeIRWqOL8unQCi4NlxlUbKXnDg==
-X-Received: by 2002:a17:907:9450:b0:ad8:9c97:c2da with SMTP id
- a640c23a62f3a-adb36bfb187mr113358666b.40.1748592208152; 
- Fri, 30 May 2025 01:03:28 -0700 (PDT)
+ bh=ucBnDbok7v6Mu7KPseGvFTjV3duwh5RlIILFahRdtRA=;
+ b=OfnkbbSDpO0vOQS5kTQjYleIioiAVCraGY0MjqG7569uxn6kXwuINwAFOIUoGSzwea
+ MM2tPHbDJ6ZW0q73UvilstjDKhZRFk35vdYtvOYUsMHihfw198OpCm9eTM7e1dnSdQ8Z
+ 9Zhw4stWx7OoRklQLFdmSLcx2sau2vAsxwSkZyjKGFG9EjPdsjCcUEEmaKxq3n257JZE
+ sQJ8VTIeMgobVxjgfYfQ0ZhnY975Uk9cjcD3lVA78WbM1DfWsHVPuiS+ceGXukob7i+/
+ ruzHmIxFXPfIVJ66dpcwsBYTRMGSe0Fbez0RTQqyTOTm97kdT5qq9lswMwYPxEP6ViAT
+ msEA==
+X-Gm-Message-State: AOJu0YxkabdetOCfZ+sy5F4VcLmsX28yy8otsbI1f9ZX0RTzH8KPKp16
+ HnQGLyy9Yq58TNIvwZ3LjjHT6vSVmcQT15xG3FCkB6l8GjaHZogZrAl0jwCEihqpxSoX3BNdPq4
+ EvIEFGIpUdwpcmZT6sfUb5fzZO4BGJbZ0WEwx1ytyLigBOD2ca+iivHQQGItYcGwnIOT03qBYLn
+ SWBCNDirszzUQRz4r3Qa+jykC7nDa+chO8eldB3zAf
+X-Gm-Gg: ASbGncsnBhWFS5lDgRSCqk6doTCsaq0jjcJCVfFuendYZr920JcfCd+6xtajhQkgZTw
+ z43mrEU4E5+lvMXASgG89OQd+FKqXuAAODyfg2eydtZf6OgZ+7g1Hje7Y8F3NrU30FFsBbDPjj7
+ Shohi+pWe6z4/kZ2cwnElrD1DWS1IgXxcDNwhRQsEAhcZ+bbuo5GsK6kjNaVIWppPP8L/qKkfRP
+ 03sbGaPu8RzYvzTaBsX6UM7CrQKRs/TH7a117h0MiPkv5fTLKFLMu/HKJCddHzwEGqZzvLsofW8
+ XEwlDPz8fRrF+OxtGj9Qxzn2
+X-Received: by 2002:a17:907:3d90:b0:ad8:9257:571c with SMTP id
+ a640c23a62f3a-adb36b4cdd9mr134316966b.20.1748592196338; 
+ Fri, 30 May 2025 01:03:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEoaUH0pu+T1ZgUEPTJlRucO+jfglmnp6UDpzApsFnlT+8QhhfYXnmbuNXg/a34e/1wNM6Fhg==
+X-Received: by 2002:a17:907:3d90:b0:ad8:9257:571c with SMTP id
+ a640c23a62f3a-adb36b4cdd9mr134313666b.20.1748592195840; 
+ Fri, 30 May 2025 01:03:15 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad39479sm281821066b.124.2025.05.30.01.03.26
+ a640c23a62f3a-adb32e347fasm111858866b.168.2025.05.30.01.03.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 01:03:26 -0700 (PDT)
+ Fri, 30 May 2025 01:03:14 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 08/14] rust: qdev: support returning errors from realize
-Date: Fri, 30 May 2025 10:03:00 +0200
-Message-ID: <20250530080307.2055502-9-pbonzini@redhat.com>
+Cc: qemu-rust@nongnu.org
+Subject: [PATCH 03/14] util/error: expose Error definition to Rust code
+Date: Fri, 30 May 2025 10:02:55 +0200
+Message-ID: <20250530080307.2055502-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530080307.2055502-1-pbonzini@redhat.com>
 References: <20250530080307.2055502-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -109,109 +108,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+This is used to preserve the file and line in a roundtrip from
+C Error to Rust and back to C.
+
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs |  5 +++--
- rust/hw/timer/hpet/src/device.rs |  5 +++--
- rust/qemu-api/src/qdev.rs        | 10 ++++++----
- 3 files changed, 12 insertions(+), 8 deletions(-)
+ include/qapi/error-internal.h | 26 ++++++++++++++++++++++++++
+ rust/wrapper.h                |  1 +
+ util/error.c                  | 10 +---------
+ 3 files changed, 28 insertions(+), 9 deletions(-)
+ create mode 100644 include/qapi/error-internal.h
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index bd5cee04647..1e715e91bc3 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -175,7 +175,7 @@ fn properties() -> &'static [Property] {
-     fn vmsd() -> Option<&'static VMStateDescription> {
-         Some(&device_class::VMSTATE_PL011)
-     }
--    const REALIZE: Option<fn(&Self)> = Some(Self::realize);
-+    const REALIZE: Option<fn(&Self) -> qemu_api::Result<()>> = Some(Self::realize);
- }
+diff --git a/include/qapi/error-internal.h b/include/qapi/error-internal.h
+new file mode 100644
+index 00000000000..d5c3904adec
+--- /dev/null
++++ b/include/qapi/error-internal.h
+@@ -0,0 +1,26 @@
++/*
++ * QEMU Error Objects - struct definition
++ *
++ * Copyright IBM, Corp. 2011
++ * Copyright (C) 2011-2015 Red Hat, Inc.
++ *
++ * Authors:
++ *  Anthony Liguori   <aliguori@us.ibm.com>
++ *  Markus Armbruster <armbru@redhat.com>,
++ *
++ * This work is licensed under the terms of the GNU LGPL, version 2.  See
++ * the COPYING.LIB file in the top-level directory.
++ */
++
++#ifndef QAPI_ERROR_INTERNAL_H
++
++struct Error
++{
++    char *msg;
++    ErrorClass err_class;
++    const char *src, *func;
++    int line;
++    GString *hint;
++};
++
++#endif
+diff --git a/rust/wrapper.h b/rust/wrapper.h
+index beddd9aab2f..6060d3ba1ab 100644
+--- a/rust/wrapper.h
++++ b/rust/wrapper.h
+@@ -60,6 +60,7 @@ typedef enum memory_order {
+ #include "hw/qdev-properties-system.h"
+ #include "hw/irq.h"
+ #include "qapi/error.h"
++#include "qapi/error-internal.h"
+ #include "migration/vmstate.h"
+ #include "chardev/char-serial.h"
+ #include "exec/memattrs.h"
+diff --git a/util/error.c b/util/error.c
+index 673011b89e9..e5bcb7c0225 100644
+--- a/util/error.c
++++ b/util/error.c
+@@ -15,15 +15,7 @@
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+-
+-struct Error
+-{
+-    char *msg;
+-    ErrorClass err_class;
+-    const char *src, *func;
+-    int line;
+-    GString *hint;
+-};
++#include "qapi/error-internal.h"
  
- impl ResettablePhasesImpl for PL011State {
-@@ -619,9 +619,10 @@ fn event(&self, event: Event) {
-         }
-     }
- 
--    fn realize(&self) {
-+    fn realize(&self) -> qemu_api::Result<()> {
-         self.char_backend
-             .enable_handlers(self, Self::can_receive, Self::receive, Self::event);
-+        Ok(())
-     }
- 
-     fn reset_hold(&self, _type: ResetType) {
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index e3ba62b2875..68c82b09b60 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -724,7 +724,7 @@ fn post_init(&self) {
-         }
-     }
- 
--    fn realize(&self) {
-+    fn realize(&self) -> qemu_api::Result<()> {
-         if self.int_route_cap == 0 {
-             // TODO: Add error binding: warn_report()
-             println!("Hpet's hpet-intcap property not initialized");
-@@ -751,6 +751,7 @@ fn realize(&self) {
- 
-         self.init_gpio_in(2, HPETState::handle_legacy_irq);
-         self.init_gpio_out(from_ref(&self.pit_enabled));
-+        Ok(())
-     }
- 
-     fn reset_hold(&self, _type: ResetType) {
-@@ -1042,7 +1043,7 @@ fn vmsd() -> Option<&'static VMStateDescription> {
-         Some(&VMSTATE_HPET)
-     }
- 
--    const REALIZE: Option<fn(&Self)> = Some(Self::realize);
-+    const REALIZE: Option<fn(&Self) -> qemu_api::Result<()>> = Some(Self::realize);
- }
- 
- impl ResettablePhasesImpl for HPETState {
-diff --git a/rust/qemu-api/src/qdev.rs b/rust/qemu-api/src/qdev.rs
-index 1279d7a58d5..81052097071 100644
---- a/rust/qemu-api/src/qdev.rs
-+++ b/rust/qemu-api/src/qdev.rs
-@@ -12,10 +12,11 @@
- pub use bindings::{ClockEvent, DeviceClass, Property, ResetType};
- 
- use crate::{
--    bindings::{self, qdev_init_gpio_in, qdev_init_gpio_out, Error, ResettableClass},
-+    bindings::{self, qdev_init_gpio_in, qdev_init_gpio_out, ResettableClass},
-     callbacks::FnCall,
-     cell::{bql_locked, Opaque},
-     chardev::Chardev,
-+    error::{Error, Result},
-     irq::InterruptSource,
-     prelude::*,
-     qom::{ObjectClass, ObjectImpl, Owned},
-@@ -108,7 +109,7 @@ pub trait DeviceImpl: ObjectImpl + ResettablePhasesImpl + IsA<DeviceState> {
-     ///
-     /// If not `None`, the parent class's `realize` method is overridden
-     /// with the function pointed to by `REALIZE`.
--    const REALIZE: Option<fn(&Self)> = None;
-+    const REALIZE: Option<fn(&Self) -> Result<()>> = None;
- 
-     /// An array providing the properties that the user can set on the
-     /// device.  Not a `const` because referencing statics in constants
-@@ -134,10 +135,11 @@ fn vmsd() -> Option<&'static VMStateDescription> {
- /// readable/writeable from one thread at any time.
- unsafe extern "C" fn rust_realize_fn<T: DeviceImpl>(
-     dev: *mut bindings::DeviceState,
--    _errp: *mut *mut Error,
-+    errp: *mut *mut bindings::Error,
- ) {
-     let state = NonNull::new(dev).unwrap().cast::<T>();
--    T::REALIZE.unwrap()(unsafe { state.as_ref() });
-+    let result = T::REALIZE.unwrap()(unsafe { state.as_ref() });
-+    unsafe { Error::ok_or_propagate(result, errp); }
- }
- 
- unsafe impl InterfaceType for ResettableClass {
+ Error *error_abort;
+ Error *error_fatal;
 -- 
 2.49.0
 
