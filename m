@@ -4,89 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3926FC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:19:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1937C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:20:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtwR-0001hF-BH; Fri, 30 May 2025 03:14:11 -0400
+	id 1uKu1q-0002oQ-Cp; Fri, 30 May 2025 03:19:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtwL-0001Um-Ek
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uKtxd-0003yl-IX
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtwI-0006vy-QP
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:04 -0400
+ id 1uKtxb-0007Ei-Tw
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589241;
+ s=mimecast20190719; t=1748589323;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cdAwUYjVw4TAPIU7bCkk8Gi1InYgbYl2nnPePM6TsQw=;
- b=DbwlCyLKGoDmcIWd25akHQ5Yo3+d/J4j+LvH5qDQVCQzcmMbun2jRaSOmUesQOZWG9BdjJ
- Kllth3H3i+uzmXnRCpTNS5Tz3Iw4m1Mof/n8DfqXdv1kGnu8p9RsbJxkheFxV2FNZ/HXCz
- 8hWIyYDQwRO/k36CMoBTXsWJoEl4x88=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=I97BpjBsZhexIEDVYyyunQVZjuxFbCSEhOQVOnGSDMM=;
+ b=Y+S/bpNb+aPvv6GQ1WnKMsesZDNZrhQuK73bZrODgLo2+nRj7HCGROHcWW/277ZnRACep0
+ BtIyxTINL/w/UShLRmN/QJsIsiRlzYGw80P7yChcB54lcWANyd98s/bWFTBuzVrG+Po+7M
+ zwLBYCTtGYk87LJhmlXh+zZ4IRIEjFo=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-441-vHzDuJIFPn2hvWt8vDPRZQ-1; Fri, 30 May 2025 03:14:00 -0400
-X-MC-Unique: vHzDuJIFPn2hvWt8vDPRZQ-1
-X-Mimecast-MFC-AGG-ID: vHzDuJIFPn2hvWt8vDPRZQ_1748589239
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-601f3f35b88so1668937a12.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:14:00 -0700 (PDT)
+ us-mta-450-eayJnBwPOG-IMkSaGcSFrA-1; Fri, 30 May 2025 03:15:21 -0400
+X-MC-Unique: eayJnBwPOG-IMkSaGcSFrA-1
+X-Mimecast-MFC-AGG-ID: eayJnBwPOG-IMkSaGcSFrA_1748589320
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ad8a2dc92ddso124189266b.1
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:15:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589238; x=1749194038;
+ d=1e100.net; s=20230601; t=1748589319; x=1749194119;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cdAwUYjVw4TAPIU7bCkk8Gi1InYgbYl2nnPePM6TsQw=;
- b=uRvdWn1ngk8m0Zg5rFZJ2/2znbuxlUv+wqmcK1yqGmtFTx/vN2M7EkPdShfuRTIExk
- 5CJgouvalMAQegtNZCDhdUpjVLpEiUFEwoPPMd9NuCz5lco2JABFeLEsSlQRVJRnnNby
- OAt7E6C5G5bRH2DgdaFsE/XnprxgcrwfpF0DZsYBp8zhRWFvVPAjf85NxTwuG73+ICzF
- hvebcFUtkM2TMPuTO6f2l3YYvIUDJKLT/DwhpiwQcoUOkkqDfmLmmYwE/Q3sbEpggR+N
- v7if01Kgu2U9gXtoAmzJz5T+iyPGcI0/5tk+AuCssEH6gyEfl2TK4rXkWtq1oK7EqaTd
- AVDQ==
-X-Gm-Message-State: AOJu0YzLxcnD1sN2t6uNOWFam60FqWxMpZ6lLWRMZnwCKycXXwgdGC1n
- 0x1g1i8G68s1VcwccZMX5gnFvyQd48O4msJZRpKYu4sEZKWIws2Zn2nU+PtguuInVUEUQdEclHN
- JEWKldmYi+wlNfJU/KroUxg4leAWPW4lkxG3O8WHzlpF7kIEhiR97E6qymohyh8Q1K642NpHrqI
- uSfsRewQ7WtmXqC8vzaihNE3d33G1a0xPc8fxfuWdX
-X-Gm-Gg: ASbGncvmWtAzXzBnEnFqXrQafyit9YqoY+zVN35vO2igowT8NrBisAkvTMW3FQhbiXD
- a76Rhfklf9Vgjufc9HO3H4jdhb16x5QrWX7THu9K0d1jCF2Ty7rjoqa46MZGG6QTNa/zemw0LO+
- mV5lFa9hJINtMBSQi+gXkjESbkksPhQ618O4OACFC4Uy1L6hWF0sxusJl/cV0Uo55bV0ck+ojWc
- M+PE4RXuml9KWq3aXGThmb31SmphK8QcSQMGtX/Y1eFlhHYyx5CG8kcIhiqpYnkpnyif3OZX0qJ
- TS62RUMUMrDyFg==
-X-Received: by 2002:a05:6402:35ca:b0:602:346b:1509 with SMTP id
- 4fb4d7f45d1cf-6056db31ec2mr1618750a12.9.1748589238416; 
- Fri, 30 May 2025 00:13:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFGhkNGmXOjlaEBsgqD3BZpmUwXvsUpVpS/g+Yt7VnLi3f992W7QWMtj0FtZVAAhIXfoCvlHQ==
-X-Received: by 2002:a05:6402:35ca:b0:602:346b:1509 with SMTP id
- 4fb4d7f45d1cf-6056db31ec2mr1618730a12.9.1748589237973; 
- Fri, 30 May 2025 00:13:57 -0700 (PDT)
+ bh=I97BpjBsZhexIEDVYyyunQVZjuxFbCSEhOQVOnGSDMM=;
+ b=mdJnsLlT196ZmR0SkzuBvvOCDq7hVjaFnFDRrw95Uflbq4GxhNprsTWBdf9mBVNglN
+ kvx6GAo5r56hn63pL5XIbYuzC4R680GLivZONHTZNd0+OZ16nTNIpUaKss02W3WUT6QU
+ J9Qz8zBS7qruhqfloG7MhTlrS2rTfBUIALkreBIquoLtVTD5m1mBQNZ/GPK9uGZ+YShN
+ u3uGr3to2niGvjHmlESIy9PUDFFQmvODxS1niG/Pn/hqy10QK7weXGF5h4X4vBxsp7s3
+ 098n16HVXqMC5V0dGwJyYmyDiuD7gwsz1ML3GKDVQI0K0Ti7Ny5KNjnvlbR+uVlv2w+d
+ yaJg==
+X-Gm-Message-State: AOJu0Ywcv30WNiXPWElT5lEDcKA/D1gyxeqr4COSe1gOlp2Zsq3Q/nCF
+ dUedgfuDKO4gwrWhTrOmv1c4KcNNMPNIAQv8AMIlhnmLBDbqatugOBvODpmGZtAFeNkDw5v81Zy
+ 3OPSky19TWmH3uI09XTSirIxCVqiOTOJIyQkkC0bW0EndQQhjYunlmhgzF8etjth+qLc/XZe2j2
+ EzeDlZPx70FV+rtkweYA5toeMp+nuWi2l8CkaWrOp6
+X-Gm-Gg: ASbGnct5T6kVfSc/Tz40XXJbzGWr+13sBBh/eTK5ldM7JnneGWVO5XQ80qX0e3wBkpR
+ bwWrH8Rs0VqfxE979kWue0sBbINxWxxV83ayugtszlKH1CK3snFyMth5GeK9zROx7K5TJH2adhW
+ WyhkYbavuoeca412fXyJFGZFJNlxGdD+f2Zy2nyBx62kq/Z8flyp2+gB+HY/aDzg7f9P3XXwTs2
+ H2GQ/dzVtIGHN8DqNM/c563F2nNMjKVM7ROQ3N/0t7ZndtMLgKIYqc83q1zn6hKhgxcXMy2ZDU1
+ yptRQNfKzFA5oA==
+X-Received: by 2002:a17:907:7ba7:b0:ad8:96d2:f3b with SMTP id
+ a640c23a62f3a-adb322ab0f4mr205345466b.27.1748589319545; 
+ Fri, 30 May 2025 00:15:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH09F5c5lNRGie69php26hZ5x/f9XdC27FLPy5m5ANRsKdBrNORJgzzqiiXDMApSwEHFdjOLw==
+X-Received: by 2002:a17:907:7ba7:b0:ad8:96d2:f3b with SMTP id
+ a640c23a62f3a-adb322ab0f4mr205342166b.27.1748589319011; 
+ Fri, 30 May 2025 00:15:19 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60566c5c8easm1195334a12.28.2025.05.30.00.13.56
+ a640c23a62f3a-ada5dd045c8sm275719866b.103.2025.05.30.00.15.15
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:13:56 -0700 (PDT)
+ Fri, 30 May 2025 00:15:16 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 27/77] i386/tdx: Implement user specified tsc frequency
-Date: Fri, 30 May 2025 09:11:57 +0200
-Message-ID: <20250530071250.2050910-28-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+Subject: [PULL 58/77] i386/tdx: Add supported CPUID bits related to TD
+ Attributes
+Date: Fri, 30 May 2025 09:12:28 +0200
+Message-ID: <20250530071250.2050910-59-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -113,86 +111,131 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Reuse "-cpu,tsc-frequency=" to get user wanted tsc frequency and call VM
-scope VM_SET_TSC_KHZ to set the tsc frequency of TD before KVM_TDX_INIT_VM.
+For TDX, some CPUID feature bit is configured via TD attributes. They
+are not covered by tdx_caps.cpuid (which only contians the directly
+configurable CPUID bits), but they are actually supported when the
+related attributre bit is supported.
 
-Besides, sanity check the tsc frequency to be in the legal range and
-legal granularity (required by TDX module).
+Note, LASS and KeyLocker are not supported by KVM for TDX, nor does
+QEMU support it (see TDX_SUPPORTED_TD_ATTRS). They are defined in
+tdx_attrs_maps[] for the completeness of the existing TD Attribute
+bits that are related with CPUID features.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-16-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250508150002.689633-47-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c |  9 +++++++++
- target/i386/kvm/tdx.c | 25 +++++++++++++++++++++++++
- 2 files changed, 34 insertions(+)
+ target/i386/cpu.h     |  4 +++
+ target/i386/kvm/tdx.c | 60 +++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 64 insertions(+)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index e98f1ee26a6..fd1817fc5ea 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -870,6 +870,15 @@ static int kvm_arch_set_tsc_khz(CPUState *cs)
-     int r, cur_freq;
-     bool set_ioctl = false;
- 
-+    /*
-+     * TSC of TD vcpu is immutable, it cannot be set/changed via vcpu scope
-+     * VM_SET_TSC_KHZ, but only be initialized via VM scope VM_SET_TSC_KHZ
-+     * before ioctl KVM_TDX_INIT_VM in tdx_pre_create_vcpu()
-+     */
-+    if (is_tdx_vm()) {
-+        return 0;
-+    }
-+
-     if (!env->tsc_khz) {
-         return 0;
-     }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 342e4f2a572..e50c57264dc 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -899,6 +899,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_0_ECX_LA57              (1U << 16)
+ /* Read Processor ID */
+ #define CPUID_7_0_ECX_RDPID             (1U << 22)
++/* KeyLocker */
++#define CPUID_7_0_ECX_KeyLocker         (1U << 23)
+ /* Bus Lock Debug Exception */
+ #define CPUID_7_0_ECX_BUS_LOCK_DETECT   (1U << 24)
+ /* Cache Line Demote Instruction */
+@@ -959,6 +961,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+ #define CPUID_7_1_EAX_AVX_VNNI          (1U << 4)
+ /* AVX512 BFloat16 Instruction */
+ #define CPUID_7_1_EAX_AVX512_BF16       (1U << 5)
++/* Linear address space separation */
++#define CPUID_7_1_EAX_LASS              (1U << 6)
+ /* CMPCCXADD Instructions */
+ #define CPUID_7_1_EAX_CMPCCXADD         (1U << 7)
+ /* Fast Zero REP MOVS */
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 58983edd80a..93a16a1aaa8 100644
+index 9d92ff1484b..fa161661fa8 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -20,6 +20,9 @@
- #include "kvm_i386.h"
- #include "tdx.h"
+@@ -458,6 +458,34 @@ KvmCpuidInfo tdx_fixed1_bits = {
+     },
+ };
  
-+#define TDX_MIN_TSC_FREQUENCY_KHZ   (100 * 1000)
-+#define TDX_MAX_TSC_FREQUENCY_KHZ   (10 * 1000 * 1000)
++typedef struct TdxAttrsMap {
++    uint32_t attr_index;
++    uint32_t cpuid_leaf;
++    uint32_t cpuid_subleaf;
++    int cpuid_reg;
++    uint32_t feat_mask;
++} TdxAttrsMap;
 +
- #define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
- #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
- #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
-@@ -267,6 +270,28 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-         return r;
++static TdxAttrsMap tdx_attrs_maps[] = {
++    {.attr_index = 27,
++     .cpuid_leaf = 7,
++     .cpuid_subleaf = 1,
++     .cpuid_reg = R_EAX,
++     .feat_mask = CPUID_7_1_EAX_LASS,},
++
++    {.attr_index = 30,
++     .cpuid_leaf = 7,
++     .cpuid_subleaf = 0,
++     .cpuid_reg = R_ECX,
++     .feat_mask = CPUID_7_0_ECX_PKS,},
++
++    {.attr_index = 31,
++     .cpuid_leaf = 7,
++     .cpuid_subleaf = 0,
++     .cpuid_reg = R_ECX,
++     .feat_mask = CPUID_7_0_ECX_KeyLocker,},
++};
++
+ static struct kvm_cpuid_entry2 *find_in_supported_entry(uint32_t function,
+                                                         uint32_t index)
+ {
+@@ -494,6 +522,37 @@ static void tdx_add_supported_cpuid_by_fixed1_bits(void)
      }
+ }
  
-+    if (env->tsc_khz && (env->tsc_khz < TDX_MIN_TSC_FREQUENCY_KHZ ||
-+                         env->tsc_khz > TDX_MAX_TSC_FREQUENCY_KHZ)) {
-+        error_setg(errp, "Invalid TSC %ld KHz, must specify cpu_frequency "
-+                         "between [%d, %d] kHz", env->tsc_khz,
-+                         TDX_MIN_TSC_FREQUENCY_KHZ, TDX_MAX_TSC_FREQUENCY_KHZ);
-+       return -EINVAL;
-+    }
++static void tdx_add_supported_cpuid_by_attrs(void)
++{
++    struct kvm_cpuid_entry2 *e;
++    TdxAttrsMap *map;
++    int i;
 +
-+    if (env->tsc_khz % (25 * 1000)) {
-+        error_setg(errp, "Invalid TSC %ld KHz, it must be multiple of 25MHz",
-+                   env->tsc_khz);
-+        return -EINVAL;
-+    }
++    for (i = 0; i < ARRAY_SIZE(tdx_attrs_maps); i++) {
++        map = &tdx_attrs_maps[i];
++        if (!((1ULL << map->attr_index) & tdx_caps->supported_attrs)) {
++            continue;
++        }
 +
-+    /* it's safe even env->tsc_khz is 0. KVM uses host's tsc_khz in this case */
-+    r = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
-+    if (r < 0) {
-+        error_setg_errno(errp, -r, "Unable to set TSC frequency to %ld kHz",
-+                         env->tsc_khz);
-+        return r;
-+    }
++        e = find_in_supported_entry(map->cpuid_leaf, map->cpuid_subleaf);
 +
-     if (tdx_guest->mrconfigid) {
-         g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
-                               strlen(tdx_guest->mrconfigid), &data_len, errp);
++        switch(map->cpuid_reg) {
++        case R_EAX:
++            e->eax |= map->feat_mask;
++            break;
++        case R_EBX:
++            e->ebx |= map->feat_mask;
++            break;
++        case R_ECX:
++            e->ecx |= map->feat_mask;
++            break;
++        case R_EDX:
++            e->edx |= map->feat_mask;
++            break;
++        }
++    }
++}
++
+ static void tdx_setup_supported_cpuid(void)
+ {
+     if (tdx_supported_cpuid) {
+@@ -508,6 +567,7 @@ static void tdx_setup_supported_cpuid(void)
+     tdx_supported_cpuid->nent = tdx_caps->cpuid.nent;
+ 
+     tdx_add_supported_cpuid_by_fixed1_bits();
++    tdx_add_supported_cpuid_by_attrs();
+ }
+ 
+ static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
 -- 
 2.49.0
 
