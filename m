@@ -4,79 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2564EC5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:02:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1568AC5B543
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:19:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKxVT-0005JA-Vc; Fri, 30 May 2025 07:02:35 -0400
+	id 1uKxlW-0008MV-FV; Fri, 30 May 2025 07:19:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uKxVS-0005Iw-Bp
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:02:34 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uKxVQ-0005wS-DI
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:02:34 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-603fdd728ccso3141201a12.2
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 04:02:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748602950; x=1749207750; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mPtcMoWtTEBNTHyvX1Nc/C8ZnELjgzqWfvPXd/RNj/A=;
- b=GzGMwgdXcH7msX2OMIYgRuVzwL2N+q08b0CsF9F+emfX+dBlVLg6LD/40O6pslHmhr
- Ql4EJvED3tgjHoJt/o02mr1lXaUVoFaZyaLrOTqnAcw5VGaWJM9G/s2SdcQEuzAWxqvV
- flGmvc4BlYQxAa6SpuOZzDERdsfEBPK+yPqiECnwsBkfFonzwtIWWGkY5Un1njuD2hOi
- gJSWOV8ZiEHcYiEBgrgHsZl4rxtKiqcb9N1lYHsInn7rQscp/qcSjc2ILtU7QvOPJe56
- cA281pT3QEe3xCDrOcXRsSsuLANnxUV8HcifeYZso1gNDVuQQBypk+TYCf+bhPWK08nd
- b+6A==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKxlU-0008MC-5o
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:19:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKxlQ-0008Et-RC
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:19:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748603941;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=zZDVKDctgt0DQCPSntuxAyUo7sFfsqAKN1P+kQYxAxs=;
+ b=NN5di6LtjsyqhGzjcR5g9/rdr2MItFKdu3OnloE6Z7WrVJqtAOIs66Kzs01pqTBvEM32a0
+ 9soHO2sMfEugnktmaSW+S5670zKw4TCbkYYe+ClSlvutbbz2mfah+7xkXc6H0u2Kkl//pX
+ t0x3eBCjkWhX9iuJMB6uG3J3/CObL5Q=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-631-0VDBFWNpNhWz2oga4m5mxQ-1; Fri, 30 May 2025 07:18:59 -0400
+X-MC-Unique: 0VDBFWNpNhWz2oga4m5mxQ-1
+X-Mimecast-MFC-AGG-ID: 0VDBFWNpNhWz2oga4m5mxQ_1748603938
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43efa869b19so15818505e9.2
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 04:18:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748602950; x=1749207750;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mPtcMoWtTEBNTHyvX1Nc/C8ZnELjgzqWfvPXd/RNj/A=;
- b=TQ84J1gp+SMQfYMZiXLfbNvkFlZxWQ+K2upFcSsZH1e7fW+QUQHfHtPOP183nsU0l9
- xgM48UqChhG04QiSh28LPE/CN+1lRxReX6/ALxlqmVzGIJWDitErcNzcNRdWkA6haHRz
- BKwimcrvljmMzgDuifvatmcnQhIjLDJsV1wGw0O5iaQpIWNe4QInWdOUGUrOZ7yGrfFv
- mO5SMqQAy7bqr82wzkvsFFDLb/JYvk6/dWQgyWelD1WxhnzKDsld6HnPrr8o8qtkVelP
- qSa0kbREml0gRHYIICtf2IlGNMUg7Q4k8e12SWDqhLAEeWOrDtbAF+fvW24VEskioYXG
- ZyQw==
-X-Gm-Message-State: AOJu0Yz93swYHep1jxF1G28jegrmNbU2cXhFs+jLgrekaocMdneYWclx
- bVXsMR/ERyu2C9vYLBuy3uGLulnD3xoiPLrKbIv9FO+bI8aT23fw9XcH2Z+nznQYdqfuZiAmoct
- +SYCFjjnD1dMLUq1cAOoRhZsFeYi/qi4=
-X-Gm-Gg: ASbGnctK/wg7hDl0tYo+8fQrHYCQay0wv9RtIo4Jwvz+2Yy/Ayqq/KX/Y5/qojmEnwY
- XKfiJT1RXRGeRfSbZ7HvcP+RXq6XwyGqe55/0HsgOhVxgcM/DjQcwmDg2cxC2BTQtEIyDQOoCau
- yVtPDhL6WK13KuIFdWDJ4z33btC8CNPk0=
-X-Google-Smtp-Source: AGHT+IF6+qLHQFVt+SC+sDJ9G0UjplOH9loIJn3cnDwg3DVDnIe1Pp0w17/WwZbLjXrUZgSwcvPrtod/DUTVyBf8/xA=
-X-Received: by 2002:a05:6402:510a:b0:605:878:3557 with SMTP id
- 4fb4d7f45d1cf-6057c602f61mr1467711a12.16.1748602949469; Fri, 30 May 2025
- 04:02:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748603938; x=1749208738;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=zZDVKDctgt0DQCPSntuxAyUo7sFfsqAKN1P+kQYxAxs=;
+ b=fTSv/Hhwa+Jy1PRRMon9m26v6U/RbNUNAbdSsN392gecoOiCLfWt0Bm6W0REr65prK
+ Y2xRXIRLP6sxnjl50HHkal7+bmSZtH7gBJxnTSnZ1Ou3wmdDm2BNReDd1AP0XvSe+GoN
+ diRpP+03GtmEWwhwHrIxIsReIkW0CUKLSG4SlG1BXgxVIj/teYYK0jGGYLRNwbsRm92d
+ l27M897llt5Ifn5weZWlHguUIQgQfl9XYtC7xgiiFZmMOR/XSAe6JROsT43lAfqjCKxH
+ zB3+dWmoWPp6wDKuLfCs5U9ouWIo69VX5t57V2TDEn1bQKn2mUmjoMDUudi96IHaRsc+
+ edYg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXhG8Ih+ooSbB28tm1fL/menrrLukO2sX8x9N6H/Eo8K/FipgwAa4Mx/u1AnB+inNU+c+5BQkGhVFIY@nongnu.org
+X-Gm-Message-State: AOJu0Yx0AI78XBvZI0dhNRonCFvZ38aKLIds4QbUXMuOZ0UMp34gzoZf
+ gOMOHNBtz/SguG6tQOx3Fqx+V1SveJ3Q5jEOztEWdK5Dh8qe4zuqR9AEUwIlb+uvmNWplEss4yq
+ S1w04owvq65ztPjV9kYf7ZBcQv3TUuTqJN2a6i53Ivt1XX83lP74Ez9by
+X-Gm-Gg: ASbGncsbL/gVJr+eSIKzHihJWZ5Rre+bdmidydJ1utIaDDIhOiyAOuvE1GoJkIhXXhr
+ fpBG+ppU/ysx9naHIEa3Kp4kdDvhc3fbkQ2WjhxhQRQYz/ASokNc9WI5pfvYSQyIOH3mtzBrunm
+ eu8E5IJEh0z5xiPChX/XNHkNHaOBUeTY+bHHcBkXOGVFT20WGXFREIz5RZCbw67sLIf+BsmofJ1
+ N4w9NskFUnKem9lQ01ibKBnpm4c7d3DTntRZG6DIZCvAiFGlbdjXgzYqETDlCtrVuVXOugWgKPX
+ RJIwdA==
+X-Received: by 2002:a05:600c:a51:b0:442:f485:6fa4 with SMTP id
+ 5b1f17b1804b1-450d8871448mr19620365e9.31.1748603938494; 
+ Fri, 30 May 2025 04:18:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF0Bl4l2ejN3OUDalZGdcat+FmRDVLpR344Iy1wURI9nyrAGouDhlBGRK1z7/fmcy3CaWKg1Q==
+X-Received: by 2002:a05:600c:a51:b0:442:f485:6fa4 with SMTP id
+ 5b1f17b1804b1-450d8871448mr19620125e9.31.1748603938125; 
+ Fri, 30 May 2025 04:18:58 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d7fa2278sm15480225e9.12.2025.05.30.04.18.56
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 May 2025 04:18:57 -0700 (PDT)
+Date: Fri, 30 May 2025 07:18:54 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ yuanminghao <yuanmh12@chinatelecom.cn>, qemu-devel@nongnu.org,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH 1/1] vhost: do not reset used_memslots when destroying
+ vhost dev
+Message-ID: <20250530071844-mutt-send-email-mst@kernel.org>
+References: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
+ <20250513141341.5f3ffa57@imammedo.users.ipa.redhat.com>
+ <36d6672a-6d06-4af2-bdc6-4349df570662@redhat.com>
+ <20250514111224.7fb1263f@imammedo.users.ipa.redhat.com>
+ <acc02028-89ac-49ad-9c5c-d6973738b113@redhat.com>
 MIME-Version: 1.0
-References: <CAJSP0QXpwWZK3KeGZ-FVFLhu7CCv8PCRbGZ9MEJK5nS_jUWquQ@mail.gmail.com>
- <b374f581-fdbf-4fad-ab10-45394211c0d6@redhat.com>
-In-Reply-To: <b374f581-fdbf-4fad-ab10-45394211c0d6@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Fri, 30 May 2025 07:02:20 -0400
-X-Gm-Features: AX0GCFtcPgOqCrKFTRFLSrpXuLXvoyBQUBjEUzeEnFk0cDkw1XgYlf43GVEDlCw
-Message-ID: <CAJSP0QWXRt2j2Uo=NMHXhiButMBJ7QMYfL=VvmspBc=oTgxDgw@mail.gmail.com>
-Subject: Re: Armbian TLS certificate expired
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000a80b260636585927"
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <acc02028-89ac-49ad-9c5c-d6973738b113@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,94 +113,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a80b260636585927
-Content-Type: text/plain; charset="UTF-8"
+On Wed, May 14, 2025 at 11:26:05AM +0200, David Hildenbrand wrote:
+> On 14.05.25 11:12, Igor Mammedov wrote:
+> > On Tue, 13 May 2025 15:12:11 +0200
+> > David Hildenbrand <david@redhat.com> wrote:
+> > 
+> > > On 13.05.25 14:13, Igor Mammedov wrote:
+> > > > On Mon,  3 Mar 2025 13:02:17 -0500
+> > > > yuanminghao <yuanmh12@chinatelecom.cn> wrote:
+> > > > > > > Global used_memslots or used_shared_memslots is updated to 0 unexpectly
+> > > > > > 
+> > > > > > it shouldn't be 0 in practice, as it comes from number of RAM regions VM has.
+> > > > > > It's likely a bug somewhere else.
+> > > > 
+> > > > I haven't touched this code for a long time, but I'd say if we consider multiple
+> > > > devices, we shouldn't do following:
+> > > > 
+> > > > static void vhost_commit(MemoryListener *listener)
+> > > >       ...
+> > > >       if (dev->vhost_ops->vhost_backend_no_private_memslots &&
+> > > >           dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+> > > >           used_shared_memslots = dev->mem->nregions;
+> > > >       } else {
+> > > >           used_memslots = dev->mem->nregions;
+> > > >       }
+> > > > 
+> > > > where value dev->mem->nregions gets is well hidden/obscured
+> > > > and hard to trace where tail ends => fragile.
+> > > > 
+> > > > CCing David (accidental victim) who rewrote this part the last time,
+> > > > perhaps he can suggest a better way to fix the issue.
+> > > 
+> > > I think the original idea is that all devices (of on type: private vs.
+> > > non-private memslots) have the same number of memslots.
+> > > 
+> > > This avoids having to loop over all devices to figure out the number of
+> > > memslots.
+> > > 
+> > > ... but in vhost_get_free_memslots() we already loop over all devices.
+> > > 
+> > > The check in vhost_dev_init() needs to be taken care of.
+> > > 
+> > > So maybe we can get rid of both variables completely?
+> > 
+> > looks reasonable to me,  (instead of current state which is
+> > juggling with  dev->mem->nregions that can become 0 on unplug
+> > as it was reported).
+> > 
+> > David,
+> > do you have time to fix it?
+> 
+> I can try, but I was wondering/hoping whether Yuanminghao could take a look
+> at that? I can provide guidance if necessary.
 
-On Fri, May 30, 2025, 02:18 Thomas Huth <thuth@redhat.com> wrote:
 
-> On 29/05/2025 16.45, Stefan Hajnoczi wrote:
-> > The OrangePi, Cubieboard, Banana Pi, and replay tests use a sunxi
-> > armhf Linux package URL that is failing due to an expired TLS
-> > certificate:
-> >
-> > 2025-05-29 13:37:56,005 - qemu-test - INFO - Downloading
-> >
-> https://apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb
-> > to
-> /builds/qemu-project/qemu/functional-cache/download/3d968c15b121ede871dce49d13ee7644d6f74b6b121b84c9a40f51b0c80d6d22...
-> > ...
-> > urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED]
-> > certificate verify failed: certificate has expired (_ssl.c:992)>
-> >
-> > I will ignore these test failures for the time being. Hopefully the
-> > server admins will fix it. Otherwise it will be necessary to find a
-> > working URL for these tests.
->
-> I just gave it a try, and it seems like the certificate has been updated
-> already? Anyway, in the worst case, we could also try to switch to http
-> instead of https for this download (we're still checking the hashsum to
-> make
-> sure that nobody messed with the content).
->
+Guys?
 
-Yes, it's working for me too. Thanks!
+> -- 
+> Cheers,
+> 
+> David / dhildenb
 
-Stefan
-
-  Thomas
->
->
-
---000000000000a80b260636585927
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 30, 2025, 02:18 Thom=
-as Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wr=
-ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
- 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 29/05/20=
-25 16.45, Stefan Hajnoczi wrote:<br>
-&gt; The OrangePi, Cubieboard, Banana Pi, and replay tests use a sunxi<br>
-&gt; armhf Linux package URL that is failing due to an expired TLS<br>
-&gt; certificate:<br>
-&gt; <br>
-&gt; 2025-05-29 13:37:56,005 - qemu-test - INFO - Downloading<br>
-&gt; <a href=3D"https://apt.armbian.com/pool/main/l/linux-6.6.16/linux-imag=
-e-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V0=
-14b-B067e-R448a.deb" rel=3D"noreferrer noreferrer" target=3D"_blank">https:=
-//apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1=
-_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb</a=
-><br>
-&gt; to /builds/qemu-project/qemu/functional-cache/download/3d968c15b121ede=
-871dce49d13ee7644d6f74b6b121b84c9a40f51b0c80d6d22...<br>
-&gt; ...<br>
-&gt; urllib.error.URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAIL=
-ED]<br>
-&gt; certificate verify failed: certificate has expired (_ssl.c:992)&gt;<br=
->
-&gt; <br>
-&gt; I will ignore these test failures for the time being. Hopefully the<br=
->
-&gt; server admins will fix it. Otherwise it will be necessary to find a<br=
->
-&gt; working URL for these tests.<br>
-<br>
-I just gave it a try, and it seems like the certificate has been updated <b=
-r>
-already? Anyway, in the worst case, we could also try to switch to http <br=
->
-instead of https for this download (we&#39;re still checking the hashsum to=
- make <br>
-sure that nobody messed with the content).<br></blockquote></div></div><div=
- dir=3D"auto"><br></div><div dir=3D"auto">Yes, it&#39;s working for me too.=
- Thanks!</div><div dir=3D"auto"><br></div><div dir=3D"auto">Stefan</div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_=
-quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
-0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-=C2=A0 Thomas<br>
-<br>
-</blockquote></div></div></div>
-
---000000000000a80b260636585927--
 
