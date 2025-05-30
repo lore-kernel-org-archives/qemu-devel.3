@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3806C5B552
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 08:05:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A1FC5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 08:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKui3-0002OL-34; Fri, 30 May 2025 04:03:23 -0400
+	id 1uKuiY-0002e0-0C; Fri, 30 May 2025 04:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKui0-0002NE-OS
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uKuiO-0002Yw-DT
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKuhw-0004XZ-Br
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:20 -0400
+ id 1uKuiJ-0004de-Kq
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748592195;
+ s=mimecast20190719; t=1748592218;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M6QoYP5WCSbSMFCMhfRa9ReIhHpAzUDchEI+NzMVEms=;
- b=P23FgdZ3cKqZ+sKBZx7bgpJhQ1Z0TV0Kgqjeeknmzn2DQ+erObr7npr+gVfYVphKD16Y8V
- rEpv95CfPZmcY7nklmE/mI4R7fjRc5IxE+0SaS+id3BFzsynH4Eni0q+Rt7lt4bXi7aZPD
- naZMCHWOsGsOM0Zg95RlH7K5SV0Tqls=
+ bh=T8G+ZwNewrKmt3y0x+FnEurAOu2EK1ulbB74Dqd2P+4=;
+ b=SLI8ZgtJn/qfm8Ae4zqAqoa4BwHxjmzuLZLEXA+zJdDkj1okZtG6UgZSKNN6aqkxPbmMcx
+ 8hVh4Cfq5z/rTxUrsQFxf+K/XHfLMqx1zL4rByHFe15NmdJWRz/EsmuGNTxW3r253u+lvv
+ qt/w4IFOU4jF5J5efkEPic4/yBULKM4=
 Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
  [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-IIEwYzgzNeCLZU2VUzy92Q-1; Fri, 30 May 2025 04:03:13 -0400
-X-MC-Unique: IIEwYzgzNeCLZU2VUzy92Q-1
-X-Mimecast-MFC-AGG-ID: IIEwYzgzNeCLZU2VUzy92Q_1748592192
+ us-mta-665-gbNaLtv2Oqq9yfd8RSYH2Q-1; Fri, 30 May 2025 04:03:37 -0400
+X-MC-Unique: gbNaLtv2Oqq9yfd8RSYH2Q-1
+X-Mimecast-MFC-AGG-ID: gbNaLtv2Oqq9yfd8RSYH2Q_1748592216
 Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-601f3f35b88so1710070a12.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 01:03:13 -0700 (PDT)
+ 4fb4d7f45d1cf-6045875e52fso1297263a12.2
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 01:03:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748592192; x=1749196992;
+ d=1e100.net; s=20230601; t=1748592215; x=1749197015;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=M6QoYP5WCSbSMFCMhfRa9ReIhHpAzUDchEI+NzMVEms=;
- b=NSQiFXZr8N6ZoREUeg0hPFEKXZUDZ59wuiN1GYfNCES5EuRnAdZ6+y9QLAFwxWyuqg
- dx8s21JoTqSp3w73WXqDgNnQl3nLQ8upjZZVMBk7Vx6hFSjCdjTJ3sgMlT910HbYJWA6
- ivz4V2NEHqfEb7J5xsmipMY6qNzl/4MriZzswLIWbCO68drj5e5nAV1bXTLH+r9xm8oh
- t3riZu+MyIEmQS6bnqJEMj7ystssRYxhliBFoAZ4HT3P0GYIb+t8jGcLzqhaqUa6d+uL
- Yc/Q8AN94OvCBQs6M2MSoP8eiEe/+6T0ezSckZvnT0gL/R1NUPeJbXG1GdVAAShQVcXQ
- Prqw==
-X-Gm-Message-State: AOJu0Yx+mRA5JZFw4mkfUI+fcmXB+rGOYpEM67JBjy7rGxiJvkc+ODy7
- 8r1Tdtub71B4xXv1aLwEFoUD/OABexsC+hu8lVpH1CKqigMLMxJDOdg75vw3mPohIPNWT7/5Gjz
- sS7XuIvX0fwEPFV4HD7CkRfdToJdcVnTSFRc04W6YuJXGoW795E2/YRKDTYAkKC/BTnfuKhDx3R
- vIlgJzh14X13xtER1ulQ67upjpOvEHBfVOh+EFsTgo
-X-Gm-Gg: ASbGncsrPbhA91KqtxJyXbTMHASxCAMonLUwWfemTOQiaORPV2gQYFpgEHqc1zvUXWs
- 1ncQXWFO7o0XGF0GeJSwy7GogAE+iZVCRDlo8N6VQR3q4jZ9FjY7SqA8lLwoJ4wx6KYw7w5fvRa
- 21S0/rbwBxK1KKoNLvBsqGfH1W4YaV9HPJiQ51xsEjbpySoYr7FipAekhCSf61H8hhq4PkfJztt
- f9iAXbg6tPAkWx20RMCUUnfLlMymZPV1W/jdIJCYGPxKDhFeMgggDtJ8UA77v3dCk19dthU46B9
- 12Raa62NYjkdfQ==
-X-Received: by 2002:a05:6402:34d0:b0:602:3e4:54de with SMTP id
- 4fb4d7f45d1cf-6056db31fdfmr2252486a12.10.1748592191648; 
- Fri, 30 May 2025 01:03:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGTV+NBOEZUNPTidm/yHYmvPTkjQLR5Zjaf7PHW0R7WQSmI2kZJjbN4co+1imMPkaADl0Nnew==
-X-Received: by 2002:a05:6402:34d0:b0:602:3e4:54de with SMTP id
- 4fb4d7f45d1cf-6056db31fdfmr2252451a12.10.1748592191179; 
- Fri, 30 May 2025 01:03:11 -0700 (PDT)
+ bh=T8G+ZwNewrKmt3y0x+FnEurAOu2EK1ulbB74Dqd2P+4=;
+ b=gj1z5XR8wTIHrOnvIElNCTkDzDC6t1Ej3uDmtsrkHfMDTVNuqVv7k/xiPg/xvOTtp5
+ PYPh5CFwrVrOUF1K9AfsB6FqVhiKZHvhJ94Ve0GKnZS6zM9Td0R6dZoDk+mY+yGiepA8
+ gd5OE/s2seS2K3DY7G4krjzBDvt2+YCfqioPmyJctSk5STRPiMjVHcwcVQ4A3gR5IB4F
+ AeG8sg9NjxQNjIT3XRp1W3XBJ9M+2KXwe1K4V9+GMXWpvNmawUcg3U7LSgrMGGHaQg/P
+ /blvuxdvlN/D94/hQBPmKkMOW2iYFVatC59NTcw95fTPxwtLOyqVKFi4OmGJkD9q/KzH
+ gBtQ==
+X-Gm-Message-State: AOJu0YwwSBMXobpDH0+N3nvjZZ7te3BAkMFiRBriui/CMIWDsGlPkXOp
+ RD+DyZA2YCD2eSm5RtpODHcSRHIWL3YYzxEHT6FHAvrv/t5SIw7OrEYd0uEkqaCfVY90K5oelcJ
+ krx8pOit3x/SE4t0hW/KGBlias0mYZOVuju5kenBRCYrVjk/Lu5FGb+hG8mBWKdqjRIlqPm3+h4
+ tl2R11/0JpmNN09msLEyJIcFVdTkXzStHjtKGc1sGh
+X-Gm-Gg: ASbGncvi7v+KWFhMmVYXnGvxfL5om+EGDWmxkxtClaI/6P88PBoVyOKwDYXeiLJpEkE
+ 5AGnZveT3ScsRsdz4jaa5BdOOUhhHdeVVxoxM6QbvZUivJlVP3lrC3U49i0Y6Bo/8oz05n7nkzm
+ Va3O08Ij1hQsf0WbMrTNz0megk+X8JwZEaKjB0u1TajbfWdodBL+nBsgfJ+ITObMq1j4GRwnE1O
+ OOmZNt2dtuqHw/QGipr61Q79J6BqfWoY0XalhCD6/pafVGK5VBg+YyXDm6nLhWntNbr/rnXLvV1
+ DbJ7vHRdCiNQaZRtiM9a390Q
+X-Received: by 2002:a05:6402:50d0:b0:602:1b8b:290a with SMTP id
+ 4fb4d7f45d1cf-6056d673ad4mr1982001a12.0.1748592215306; 
+ Fri, 30 May 2025 01:03:35 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLGzXezFRlg+nvYk3YPoKVr5+Ye7gtdDwNNem7qNeMTPnt09ZShpToc8TgQf2WbG4ALxvYwA==
+X-Received: by 2002:a05:6402:50d0:b0:602:1b8b:290a with SMTP id
+ 4fb4d7f45d1cf-6056d673ad4mr1981969a12.0.1748592214847; 
+ Fri, 30 May 2025 01:03:34 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60566c59f81sm1252212a12.18.2025.05.30.01.03.10
+ 4fb4d7f45d1cf-60567141d48sm1232570a12.60.2025.05.30.01.03.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 01:03:10 -0700 (PDT)
+ Fri, 30 May 2025 01:03:32 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-rust@nongnu.org,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 01/14] subprojects: add the anyhow crate
-Date: Fri, 30 May 2025 10:02:53 +0200
-Message-ID: <20250530080307.2055502-2-pbonzini@redhat.com>
+Subject: [PATCH 10/14] hpet: adjust VMState for consistency with Rust version
+Date: Fri, 30 May 2025 10:03:02 +0200
+Message-ID: <20250530080307.2055502-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530080307.2055502-1-pbonzini@redhat.com>
 References: <20250530080307.2055502-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -109,141 +109,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a standard replacement for Box<dyn Error> which is more efficient (it only
-occcupies one word) and provides a backtrace of the error.  This could be plumbed
-into &error_abort in the future.
+No functional change intended.
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Suggested-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/meson.build                              |  2 ++
- rust/qemu-api/meson.build                     |  2 +-
- scripts/archive-source.sh                     |  2 +-
- scripts/make-release                          |  2 +-
- subprojects/.gitignore                        |  1 +
- subprojects/anyhow-1-rs.wrap                  |  7 ++++
- .../packagefiles/anyhow-1.0-rs/meson.build    | 33 +++++++++++++++++++
- 7 files changed, 46 insertions(+), 3 deletions(-)
- create mode 100644 subprojects/anyhow-1-rs.wrap
- create mode 100644 subprojects/packagefiles/anyhow-1.0-rs/meson.build
+ hw/timer/hpet.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/rust/meson.build b/rust/meson.build
-index afce62f4772..6227e01f32a 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -1,7 +1,9 @@
-+subproject('anyhow-1-rs', required: true)
- subproject('bilge-0.2-rs', required: true)
- subproject('bilge-impl-0.2-rs', required: true)
- subproject('libc-0.2-rs', required: true)
- 
-+anyhow_rs = dependency('anyhow-1-rs')
- bilge_rs = dependency('bilge-0.2-rs')
- bilge_impl_rs = dependency('bilge-impl-0.2-rs')
- libc_rs = dependency('libc-0.2-rs')
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index d19f52af4da..181ceca9536 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -35,7 +35,7 @@ _qemu_api_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _qemu_api_cfg,
--  dependencies: [libc_rs, qemu_api_macros, qemuutil_rs,
-+  dependencies: [anyhow_rs, libc_rs, qemu_api_macros, qemuutil_rs,
-                  qom, hwcore, chardev, migration],
- )
- 
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index e461c1531ed..816062fee94 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -27,7 +27,7 @@ sub_file="${sub_tdir}/submodule.tar"
- # in their checkout, because the build environment is completely
- # different to the host OS.
- subprojects="keycodemapdb libvfio-user berkeley-softfloat-3
--  berkeley-testfloat-3 arbitrary-int-1-rs bilge-0.2-rs
-+  berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs bilge-0.2-rs
-   bilge-impl-0.2-rs either-1-rs itertools-0.11-rs libc-0.2-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
-   syn-2-rs unicode-ident-1-rs"
-diff --git a/scripts/make-release b/scripts/make-release
-index 8c3594a1a47..ea65bdcc0cf 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -40,7 +40,7 @@ fi
- 
- # Only include wraps that are invoked with subproject()
- SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
--  berkeley-testfloat-3 arbitrary-int-1-rs bilge-0.2-rs
-+  berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs bilge-0.2-rs
-   bilge-impl-0.2-rs either-1-rs itertools-0.11-rs libc-0.2-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
-   syn-2-rs unicode-ident-1-rs"
-diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index d12d34618cc..b9ae507b85a 100644
---- a/subprojects/.gitignore
-+++ b/subprojects/.gitignore
-@@ -6,6 +6,7 @@
- /keycodemapdb
- /libvfio-user
- /slirp
-+/anyhow-1.0.98
- /arbitrary-int-1.2.7
- /bilge-0.2.0
- /bilge-impl-0.2.0
-diff --git a/subprojects/anyhow-1-rs.wrap b/subprojects/anyhow-1-rs.wrap
-new file mode 100644
-index 00000000000..a69a3645b49
---- /dev/null
-+++ b/subprojects/anyhow-1-rs.wrap
-@@ -0,0 +1,7 @@
-+[wrap-file]
-+directory = anyhow-1.0.98
-+source_url = https://crates.io/api/v1/crates/anyhow/1.0.98/download
-+source_filename = anyhow-1.0.98.tar.gz
-+source_hash = e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487
-+#method = cargo
-+patch_directory = anyhow-1-rs
-diff --git a/subprojects/packagefiles/anyhow-1.0-rs/meson.build b/subprojects/packagefiles/anyhow-1.0-rs/meson.build
-new file mode 100644
-index 00000000000..348bab98b9f
---- /dev/null
-+++ b/subprojects/packagefiles/anyhow-1.0-rs/meson.build
-@@ -0,0 +1,33 @@
-+project('anyhow-1-rs', 'rust',
-+  meson_version: '>=1.5.0',
-+  version: '1.0.98',
-+  license: 'MIT OR Apache-2.0',
-+  default_options: [])
-+
-+rustc = meson.get_compiler('rust')
-+
-+rust_args = ['--cap-lints', 'allow']
-+rust_args += ['--cfg', 'feature="std"']
-+if rustc.version().version_compare('<1.65.0')
-+  error('rustc version ' + rustc.version() + ' is unsupported. Please upgrade to at least 1.65.0')
-+endif
-+rust_args += [ '--cfg', 'std_backtrace' ] # >= 1.65.0
-+if rustc.version().version_compare('<1.81.0')
-+  rust_args += [ '--cfg', 'anyhow_no_core_error' ]
-+endif
-+
-+_anyhow_rs = static_library(
-+  'anyhow',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2018', 'build.rust_std=2018'],
-+  rust_abi: 'rust',
-+  rust_args: rust_args,
-+  dependencies: [],
-+)
-+
-+anyhow_dep = declare_dependency(
-+  link_with: _anyhow_rs,
-+)
-+
-+meson.override_dependency('anyhow-1-rs', anyhow_dep)
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 0fd1337a156..9db027cf76f 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -328,16 +328,16 @@ static const VMStateDescription vmstate_hpet_timer = {
+ static const VMStateDescription vmstate_hpet = {
+     .name = "hpet",
+     .version_id = 2,
+-    .minimum_version_id = 1,
++    .minimum_version_id = 2,
+     .pre_save = hpet_pre_save,
+     .post_load = hpet_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(config, HPETState),
+         VMSTATE_UINT64(isr, HPETState),
+         VMSTATE_UINT64(hpet_counter, HPETState),
+-        VMSTATE_UINT8_V(num_timers_save, HPETState, 2),
++        VMSTATE_UINT8(num_timers_save, HPETState),
+         VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
+-        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers, 0,
++        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers_save, 0,
+                                     vmstate_hpet_timer, HPETTimer),
+         VMSTATE_END_OF_LIST()
+     },
 -- 
 2.49.0
 
