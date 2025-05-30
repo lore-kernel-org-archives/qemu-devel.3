@@ -4,93 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFF3DC5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7CEC5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:42:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKy2E-0004cS-N2; Fri, 30 May 2025 07:36:26 -0400
+	id 1uKy7h-0006Sf-In; Fri, 30 May 2025 07:42:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKy2D-0004cE-Rb
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:36:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKy7f-0006SF-7c
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:42:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKy2B-0001lX-JA
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:36:25 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKy7c-0002H6-K4
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:42:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748604982;
+ s=mimecast20190719; t=1748605319;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8ZGaCvT1hf805LS3c2IZQI4zTa0xVczwlkRKDJpY5kg=;
- b=P4FC9Ci3uCLjvRTsMx2Bl0cASEE5PPO/tESCZvjJ2oFxcw3X7jfNfFMmpuipJXSAZf70dh
- ZAtJwFHz4b2HV6g5d1TKxmI15si8I0S67SlTW+3MM0exn8xJQMoZl82nqcsW5BaUFa18D4
- 2NgAziSwbtpHz5aGvOsK9xITm14Ynmo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=EoeRAQSF8pxyrayXzHUwAlAgnQD0tGiWqg2jxNw5Dao=;
+ b=L5wojCYcn7SNFAyZSvX2m6XsH87YXAuBsaAIiKzMSnOYNkFtfw4AN4DO5CJZEHcZr+k2Yd
+ 7bX7ifIZOVbs6X0l112RTCanumdMFk5qLccBOl5MvYTZALhVdKTJuaWUcNVv3FMXML7jfh
+ UY/1Bf86g58PaKE4D7+3s4JafurbAUo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-563-CpQLiE__NAqT84xmtrB3Hg-1; Fri, 30 May 2025 07:36:21 -0400
-X-MC-Unique: CpQLiE__NAqT84xmtrB3Hg-1
-X-Mimecast-MFC-AGG-ID: CpQLiE__NAqT84xmtrB3Hg_1748604980
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a367b3bc13so816878f8f.3
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 04:36:21 -0700 (PDT)
+ us-mta-330-0x4SVshdPNa5fDGDrTc4IQ-1; Fri, 30 May 2025 07:41:58 -0400
+X-MC-Unique: 0x4SVshdPNa5fDGDrTc4IQ-1
+X-Mimecast-MFC-AGG-ID: 0x4SVshdPNa5fDGDrTc4IQ_1748605317
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-442cdf07ad9so7980085e9.2
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 04:41:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748604980; x=1749209780;
+ d=1e100.net; s=20230601; t=1748605317; x=1749210117;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8ZGaCvT1hf805LS3c2IZQI4zTa0xVczwlkRKDJpY5kg=;
- b=thRWUnkK3y4RmnAyhLqdbCssZdcOulW8eWa74IWV4lUqGw5/OW+avHIOHzfmm7KKP+
- yypQ2aDmUqc/WUeEFb0lf04QnT6lYZbJ/CHrddMKOq4E4Ycnkv87mA97rZYX9uONoCCk
- FP5LUZLiYvmrWZurYf0B+aWRQrBoa8RjDw+bo8Glfu0+CJUb1MVhcF/F9WBKOnMGBNHT
- FXjkUbURaO/IAgLcj5wlQL4/8/nplza6OhiZbCp3DFXUTT5grQWAY6IDZrvUdnZNzTqA
- 9lw/IpOURT6AuenetWI0G+T/jRYfImJeY38SpxsifnAihJ06I7Nz8qaM4Ay0J5Ja2iVL
- n61Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXuNNFvDZMcTJ9JZpQD2P453ylD7ErEonGNB6aw5rvwvJVgrFG8XAK1z90J9k3qBi5YtQqWAjbAcLgG@nongnu.org
-X-Gm-Message-State: AOJu0YxxBLZxKtpmVJfWAxOdBij17vbpW1XEj1EQQfy07+kbFwfcIqSc
- l2zdBSYR/MMgdsN6+iaF2B51T6k2w7v+tzDBRpTZXcYOYE5XN0xvtXKkA91xtzfmdwUaY5VI+fI
- xUxidq3hQReAWjYcRxYMIuX9ORkMuosg8q+aQnu5VYBweTiDUxqbli+w1
-X-Gm-Gg: ASbGncupGAzRYpTZyQ9+ishngfQVaCj7qt00ILQ4DZZMalqmGOH+nynxgQN0cnpXFOJ
- 6e/v7E2/FqO6/CNF+AuLRWFuG9L/1kd5DzspeXL966DxQdhbCRqEevXbdxoJEXHpTOZhQzzMkU1
- bAOU7QgTA1eTsjkEku6HIJDE69zE+h0i2ZyVUqJOU1wXT0iNk4KFWjdubLJNAP7mX5hF/ziH3nD
- OehdYcglt8Oa3OHT5mLqD0cUwVOEuaeM+r8NeLfDPTmRPp+qJHVqmMIrzwEFfRJg6rW6ewHqvQY
- kmQsHQ==
-X-Received: by 2002:a05:6000:1250:b0:3a4:f7e7:416b with SMTP id
- ffacd0b85a97d-3a4f7e74172mr1727163f8f.16.1748604980217; 
- Fri, 30 May 2025 04:36:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXcASeMzXMDzODPM4fuQlpnS1jP9D0+iuownCalxk6dbVntj550zH5bR+pHVBbmE6ahK6khA==
-X-Received: by 2002:a05:6000:1250:b0:3a4:f7e7:416b with SMTP id
- ffacd0b85a97d-3a4f7e74172mr1727151f8f.16.1748604979840; 
- Fri, 30 May 2025 04:36:19 -0700 (PDT)
+ bh=EoeRAQSF8pxyrayXzHUwAlAgnQD0tGiWqg2jxNw5Dao=;
+ b=AxNEcvX+dc9DRNOcUCkftlaEKigCETi2Mk9s0t9z4SUZ3u1NXI4xPS1gqD/VJjsIdb
+ ndcudEY77x3jCPC6/lOl9OU0IjgpqhJJYKCAf8oPPElJp300vFbaL+VCbw999y2z14EW
+ l6H36LBx+MjzC8I193mu68lDoqtfUS6qak5p3coOBC2z8RXPMvYaym5D6SyNbNNkPN5J
+ 2BlRqjWDxRDU5gjtjE+B55mjj/6Frpw18nYGu8yVr2N3inntEosysewILclUoBa6dPBY
+ ru+L9rEoLSniibupTOqmAuo0B7U++dxNQrJedkoQXc5rcWnr7wgQ7qQvz4o9VCgbufZD
+ sQCw==
+X-Gm-Message-State: AOJu0YxWbmBpNSpy1p2FuSdJrjMkuismcRE2uyoA1/U2SD3O2FZ4sPjZ
+ lLxE/Jxozx/q5N3V+NjlIsno0TDktL2pvqw+l/sN+vAIYNNGkC2ZIxUBXMkSpoQB/nZDR/aHEhM
+ PIbEQqcw7ZypEXlqdTqJRoupWTHk6OvpUFvfvPtCUdBH57lVlQb9qwlqB
+X-Gm-Gg: ASbGnctMAVoTByQw4/HJdpyk+p2GJLZ3pNjPWfdFwbQlQfCqwYEUBQ0zXX96GKI7jMa
+ V5c6CbnTE5ADGTX+Ex4pw6zqikl98ScEt4tKFs134CEem+nuufq37vdLOlOTy82p+pQRX9mwNXV
+ 9QaO6GaJGkqmEEE2udKIdeC4GqO/9lUKVzq8RMjcGGiBjPApdo3jMtcxlJR6HF3zPfnY97KaIcR
+ T3XQQy7oFepzV/ru4UCpNco1K26iF37REOcJ/XIs73dxdrmZ1RiOnAbMUvvZrZESXJ5+44AyPsB
+ eNOhvA==
+X-Received: by 2002:a05:600c:45cc:b0:450:cc3d:6a03 with SMTP id
+ 5b1f17b1804b1-450d880abffmr15853575e9.7.1748605316775; 
+ Fri, 30 May 2025 04:41:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGjgSjpGVoxs29PyIsqGE7wXlr3eNDKMR9CH7HDu64jM5uBjCxxPEVqY+yK17dkv0ZsY57rlw==
+X-Received: by 2002:a05:600c:45cc:b0:450:cc3d:6a03 with SMTP id
+ 5b1f17b1804b1-450d880abffmr15853235e9.7.1748605316358; 
+ Fri, 30 May 2025 04:41:56 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe6c9d4sm4637732f8f.38.2025.05.30.04.36.18
+ 5b1f17b1804b1-450d8012b09sm15648245e9.37.2025.05.30.04.41.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 04:36:19 -0700 (PDT)
-Date: Fri, 30 May 2025 07:36:16 -0400
+ Fri, 30 May 2025 04:41:55 -0700 (PDT)
+Date: Fri, 30 May 2025 07:41:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: David Hildenbrand <david@redhat.com>
-Cc: Igor Mammedov <imammedo@redhat.com>,
- yuanminghao <yuanmh12@chinatelecom.cn>, qemu-devel@nongnu.org,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: Re: [PATCH 1/1] vhost: do not reset used_memslots when destroying
- vhost dev
-Message-ID: <20250530073603-mutt-send-email-mst@kernel.org>
-References: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
- <20250513141341.5f3ffa57@imammedo.users.ipa.redhat.com>
- <36d6672a-6d06-4af2-bdc6-4349df570662@redhat.com>
- <20250514111224.7fb1263f@imammedo.users.ipa.redhat.com>
- <acc02028-89ac-49ad-9c5c-d6973738b113@redhat.com>
- <20250530071844-mutt-send-email-mst@kernel.org>
- <b89fc010-cf76-4951-8d06-80dd7c2ebc8c@redhat.com>
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org,
+ marcel.apfelbaum@gmail.com, alex.williamson@redhat.com,
+ vasant.hegde@amd.com, suravee.suthikulpanit@amd.com,
+ santosh.shukla@amd.com, sarunkod@amd.com, Wei.Huang2@amd.com,
+ clement.mathieu--drif@eviden.com, ethan.milon@eviden.com,
+ joao.m.martins@oracle.com, boris.ostrovsky@oracle.com
+Subject: Re: [PATCH v2 00/20] AMD vIOMMU: DMA remapping support for VFIO
+ devices
+Message-ID: <20250530074128-mutt-send-email-mst@kernel.org>
+References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <b89fc010-cf76-4951-8d06-80dd7c2ebc8c@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -115,71 +112,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 30, 2025 at 01:28:58PM +0200, David Hildenbrand wrote:
-> On 30.05.25 13:18, Michael S. Tsirkin wrote:
-> > On Wed, May 14, 2025 at 11:26:05AM +0200, David Hildenbrand wrote:
-> > > On 14.05.25 11:12, Igor Mammedov wrote:
-> > > > On Tue, 13 May 2025 15:12:11 +0200
-> > > > David Hildenbrand <david@redhat.com> wrote:
-> > > > 
-> > > > > On 13.05.25 14:13, Igor Mammedov wrote:
-> > > > > > On Mon,  3 Mar 2025 13:02:17 -0500
-> > > > > > yuanminghao <yuanmh12@chinatelecom.cn> wrote:
-> > > > > > > > > Global used_memslots or used_shared_memslots is updated to 0 unexpectly
-> > > > > > > > 
-> > > > > > > > it shouldn't be 0 in practice, as it comes from number of RAM regions VM has.
-> > > > > > > > It's likely a bug somewhere else.
-> > > > > > 
-> > > > > > I haven't touched this code for a long time, but I'd say if we consider multiple
-> > > > > > devices, we shouldn't do following:
-> > > > > > 
-> > > > > > static void vhost_commit(MemoryListener *listener)
-> > > > > >        ...
-> > > > > >        if (dev->vhost_ops->vhost_backend_no_private_memslots &&
-> > > > > >            dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
-> > > > > >            used_shared_memslots = dev->mem->nregions;
-> > > > > >        } else {
-> > > > > >            used_memslots = dev->mem->nregions;
-> > > > > >        }
-> > > > > > 
-> > > > > > where value dev->mem->nregions gets is well hidden/obscured
-> > > > > > and hard to trace where tail ends => fragile.
-> > > > > > 
-> > > > > > CCing David (accidental victim) who rewrote this part the last time,
-> > > > > > perhaps he can suggest a better way to fix the issue.
-> > > > > 
-> > > > > I think the original idea is that all devices (of on type: private vs.
-> > > > > non-private memslots) have the same number of memslots.
-> > > > > 
-> > > > > This avoids having to loop over all devices to figure out the number of
-> > > > > memslots.
-> > > > > 
-> > > > > ... but in vhost_get_free_memslots() we already loop over all devices.
-> > > > > 
-> > > > > The check in vhost_dev_init() needs to be taken care of.
-> > > > > 
-> > > > > So maybe we can get rid of both variables completely?
-> > > > 
-> > > > looks reasonable to me,  (instead of current state which is
-> > > > juggling with  dev->mem->nregions that can become 0 on unplug
-> > > > as it was reported).
-> > > > 
-> > > > David,
-> > > > do you have time to fix it?
-> > > 
-> > > I can try, but I was wondering/hoping whether Yuanminghao could take a look
-> > > at that? I can provide guidance if necessary.
-> > 
-> > 
-> > Guys?
+On Fri, May 02, 2025 at 02:15:45AM +0000, Alejandro Jimenez wrote:
+> This series adds support for guests using the AMD vIOMMU to enable DMA
+> remapping for VFIO devices. In addition to the currently supported
+> passthrough (PT) mode, guest kernels are now able to to provide DMA
+> address translation and access permission checking to VFs attached to
+> paging domains, using the AMD v1 I/O page table format.
 > 
-> Is the original author not interested in fixing the problem?
+> Please see v1[0] cover letter for additional details such as example
+> QEMU command line parameters used in testing.
 
-Given the silence I'd guess no.
+are you working on v3? there was a bug you wanted to fix.
 
+> Changes since v1[0]:
+> - Added documentation entry for '-device amd-iommu'
+> - Code movement with no functional changes to avoid use of forward
+>   declarations in later patches [Sairaj, mst]
+> - Moved addr_translation and dma-remap property to separate commits.
+>   The dma-remap feature is only available for users to enable after
+>   all required functionality is implemented [Sairaj]
+> - Explicit initialization of significant fields like addr_translation
+>   and notifier_flags [Sairaj]
+> - Fixed bug in decoding of invalidation size [Sairaj]
+> - Changed fetch_pte() to use an out parameter for pte, and be able to
+>   check for error conditions via negative return value [Clement]
+> - Removed UNMAP-only notifier optimization, leaving vhost support for
+>   later series [Sairaj]
+> - Fixed ordering between address space unmap and memory region activation
+>   on devtab invalidation [Sairaj]
+> - Fixed commit message with "V=1, TV=0" [Sairaj]
+> - Dropped patch removing the page_fault event. That area is better
+>   addressed in separate series.
+> - Independent testing by Sairaj (thank you!)
+> 
+> Thank you,
+> Alejandro
+> 
+> [0] https://lore.kernel.org/all/20250414020253.443831-1-alejandro.j.jimenez@oracle.com/
+> 
+> Alejandro Jimenez (20):
+>   memory: Adjust event ranges to fit within notifier boundaries
+>   amd_iommu: Document '-device amd-iommu' common options
+>   amd_iommu: Reorder device and page table helpers
+>   amd_iommu: Helper to decode size of page invalidation command
+>   amd_iommu: Add helper function to extract the DTE
+>   amd_iommu: Return an error when unable to read PTE from guest memory
+>   amd_iommu: Add helpers to walk AMD v1 Page Table format
+>   amd_iommu: Add a page walker to sync shadow page tables on
+>     invalidation
+>   amd_iommu: Add basic structure to support IOMMU notifier updates
+>   amd_iommu: Sync shadow page tables on page invalidation
+>   amd_iommu: Use iova_tree records to determine large page size on UNMAP
+>   amd_iommu: Unmap all address spaces under the AMD IOMMU on reset
+>   amd_iommu: Add replay callback
+>   amd_iommu: Invalidate address translations on INVALIDATE_IOMMU_ALL
+>   amd_iommu: Toggle memory regions based on address translation mode
+>   amd_iommu: Set all address spaces to default translation mode on reset
+>   amd_iommu: Add dma-remap property to AMD vIOMMU device
+>   amd_iommu: Toggle address translation mode on devtab entry
+>     invalidation
+>   amd_iommu: Do not assume passthrough translation when DTE[TV]=0
+>   amd_iommu: Refactor amdvi_page_walk() to use common code for page walk
+> 
+>  hw/i386/amd_iommu.c | 1005 ++++++++++++++++++++++++++++++++++++-------
+>  hw/i386/amd_iommu.h |   52 +++
+>  qemu-options.hx     |   23 +
+>  system/memory.c     |   10 +-
+>  4 files changed, 934 insertions(+), 156 deletions(-)
+> 
+> 
+> base-commit: 5134cf9b5d3aee4475fe7e1c1c11b093731073cf
 > -- 
-> Cheers,
-> 
-> David / dhildenb
+> 2.43.5
 
 
