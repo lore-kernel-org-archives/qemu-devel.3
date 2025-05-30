@@ -4,109 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A71AC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 14:49:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27983C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL12o-0006RA-Qy; Fri, 30 May 2025 10:49:15 -0400
+	id 1uL1E0-0000GR-L4; Fri, 30 May 2025 11:00:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uL12m-0006QQ-H7
- for qemu-devel@nongnu.org; Fri, 30 May 2025 10:49:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uL1Dp-0000E8-1Q; Fri, 30 May 2025 11:00:39 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uL12i-0007yR-KZ
- for qemu-devel@nongnu.org; Fri, 30 May 2025 10:49:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748616547;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=nqepNYXQjbf85ZLuzzTPOpz+hwwqGB6HGZsk6zu1D10=;
- b=E9gXIZ6GA5GQ6zC+sYvJKHbDROxGm+JtbsKLxncOCwi8ZqXlXDm+SSkBP1DTgFk+ERfGQ+
- k6rtVlfxKMkEqoV9EOZ5ebdAiBX+r3sZsGrgalaIQoPrGMOSrvq3uIXt/wmVGPkkCOm96k
- HuG7Hnoi7+gBOSo3Vsyf54DwhyH+s0k=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-1ptzu_V1MLG5WWhpG3teLA-1; Fri, 30 May 2025 10:49:06 -0400
-X-MC-Unique: 1ptzu_V1MLG5WWhpG3teLA-1
-X-Mimecast-MFC-AGG-ID: 1ptzu_V1MLG5WWhpG3teLA_1748616545
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-442f4a3851fso17961635e9.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 07:49:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748616545; x=1749221345;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nqepNYXQjbf85ZLuzzTPOpz+hwwqGB6HGZsk6zu1D10=;
- b=sjeQMDkBgua5jw5N9lMuETsE87ddIvSEVrRcv+xF4OZTKOzGyiOo22yTfQ/wkjDORU
- uIoWmmMjJ7d4v0SMZhkqrtlgtBn/XJTxs6WcKkwLd4Rz020+gJ2/TJfd68zE/ILJa76P
- CDmp9cLXljDM68ndaYxdgnzck3cIUbsrsmMzOrYMmVo4F4MUwPXEZcnVUmKHm2jA/sq1
- v8sovmRBgQ8oc9T+GCJJw5zqFF0MfB/XZ2gKLVRR5XhFPGd8zwrpX2MwXNf9A6np6lVm
- nFu3Adoi5os2WnrITeMNM+TAdlAAjwef96KvuYEGs4HtCDBxKXWxgJSIEq2CosZehrKy
- PdOw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURdQL9zE7gWCP59WwUGNuBkBOFUcFozakaBXHeXyZHBuf+7FzkgGj5u64xNWaVD/46v8nfhWB24mJk@nongnu.org
-X-Gm-Message-State: AOJu0Yy/UTJKYopMHkRo4TMoiDWco0HybbP4N6Yh0+DvyG+72l0vVo+M
- 7uzjCqNba1sIRyGuPtfKKu/Qcp7SUG/g0vP3QUxQWvs3ZycoUD+60JP42IlBr/pfn1y996k8A2s
- gFNaRPg4CHWyzHSbWkEjQYg7x/pf9TYY5e4dDrhpcAmfi9cWeGvRRcij/
-X-Gm-Gg: ASbGncssaGA1v/WL5CoTnFb81qDSccdEDFa1buQwubIhe6H0BjL1XLRFkkpVE6m3sy+
- 9WWa40O7PmdMdhXm38e/5Aq+NKLpJBjBSMgKzaTnihGHnsqIvqRctld6/YB3+gAvCAro4GYWSFL
- t4HKFxIb5OdOEGqJV9Xjm8hBC8NlQgfJyshwQ+BV/NmntL+qpR8emUEs7yzAqoxyO0EqyBCvb1X
- F8GfkBCYhXlfZHDRXKb+n716O+zCxezqJAW9w6iE1Uq+5WiNcMEmpteNKwgfAQkqMPB4QXG+day
- xO1ybsfXe+BIAUPSTxmsTniX57U9zcHy
-X-Received: by 2002:a05:600c:45cc:b0:44d:a244:4983 with SMTP id
- 5b1f17b1804b1-450d87fd9bemr29521675e9.3.1748616544762; 
- Fri, 30 May 2025 07:49:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF1wWSt4EOdCrn3nu9eAYOCpvVHbBH3wN274HNH/BJAXiBBKw/lUmBOmEnT4BiZNKp2UDKduw==
-X-Received: by 2002:a05:600c:45cc:b0:44d:a244:4983 with SMTP id
- 5b1f17b1804b1-450d87fd9bemr29521355e9.3.1748616544335; 
- Fri, 30 May 2025 07:49:04 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb051bsm19991885e9.18.2025.05.30.07.49.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 07:49:03 -0700 (PDT)
-Date: Fri, 30 May 2025 16:49:03 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
- =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>, Yanan
- Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v9 12/20] acpi/generic_event_device: add logic to detect
- if HEST addr is available
-Message-ID: <20250530164903.0f9f8444@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250530080120-mutt-send-email-mst@kernel.org>
-References: <cover.1747722973.git.mchehab+huawei@kernel.org>
- <aa74b756f633dbee5442cf4baa2c1d81a669d2f9.1747722973.git.mchehab+huawei@kernel.org>
- <20250528174212.2823d3de@imammedo.users.ipa.redhat.com>
- <20250530080120-mutt-send-email-mst@kernel.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uL1Dl-0000o2-SQ; Fri, 30 May 2025 11:00:36 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b85wl0mC0z6K9FG;
+ Fri, 30 May 2025 22:59:03 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id B752A1402FC;
+ Fri, 30 May 2025 23:00:21 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 30 May
+ 2025 17:00:21 +0200
+Date: Fri, 30 May 2025 16:00:19 +0100
+To: Igor Mammedov <imammedo@redhat.com>
+CC: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>,
+ <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 05/25] hw/pci-host/gpex-acpi: Split host bridge OSC
+ and DSM generation
+Message-ID: <20250530160019.000061d1@huawei.com>
+In-Reply-To: <20250530140516.35db4d52@imammedo.users.ipa.redhat.com>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-6-eric.auger@redhat.com>
+ <20250530110227.00003341@huawei.com>
+ <20250530140516.35db4d52@imammedo.users.ipa.redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,118 +73,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 30 May 2025 08:01:28 -0400
-"Michael S. Tsirkin" <mst@redhat.com> wrote:
+On Fri, 30 May 2025 14:05:16 +0200
+Igor Mammedov <imammedo@redhat.com> wrote:
 
-> On Wed, May 28, 2025 at 05:42:12PM +0200, Igor Mammedov wrote:
-> > On Tue, 20 May 2025 08:41:31 +0200
-> > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> >   
-> > > Create a new property (x-has-hest-addr) and use it to detect if
-> > > the GHES table offsets can be calculated from the HEST address
-> > > (qemu 10.0 and upper) or via the legacy way via an offset obtained
-> > > from the hardware_errors firmware file.  
-> > 
-> > 
-> > it doesn't apply to current master anymore  
+> On Fri, 30 May 2025 11:02:27 +0100
+> Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 > 
-> indeed. Mauro?
+> > On Tue, 27 May 2025 09:40:07 +0200
+> > Eric Auger <eric.auger@redhat.com> wrote:
+> >   
+> > > acpi_dsdt_add_pci_osc() name is confusing as it gives the impression
+> > > it appends the _OSC method but in fact it also appends the _DSM method
+> > > for the host bridge. Let's split the function into two separate ones
+> > > and let them return the method Aml pointer instead. This matches the
+> > > way it is done on x86 (build_q35_osc_method). In a subsequent patch
+> > > we will replace the gpex method by the q35 implementation that will
+> > > become shared between ARM and x86.
+> > > 
+> > > acpi_dsdt_add_host_bridge_methods is a new top helper that generates
+> > > both the _OSC and _DSM methods.
+> > > 
+> > > Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> > > Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>    
+> > 
+> > Makes complete sense. I've had local equivalent of this on the CXL
+> > tree for a while as without it we don't register the _DSM for the
+> > CXL path (and we should).  However, can you modify it a little to
+> > make that easier for me?  Basically make sure the _DSM is registered
+> > for the CXL path as well.
+> >   
+> [...]
+> unless CXL is root host bridge, current _DSM shouldn't be added to it.
+> read on comment below.
 
-Michael,
-it's trivial conflict in machine compat,
-could you fix it up while applying?
-
-we have another series in queue that depends on this one being in merged. 
+I'm not clear how this is different from pxb-pcie where we do have
+the _DSM. Both are pretending to be real host bridges.
 
 > 
-> >   
-> > > 
-> > > Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> > > Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-> > > Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-> > > ---
-> > >  hw/acpi/generic_event_device.c |  2 ++
-> > >  hw/arm/virt-acpi-build.c       | 18 ++++++++++++++++--
-> > >  hw/core/machine.c              |  5 ++++-
-> > >  3 files changed, 22 insertions(+), 3 deletions(-)
-> > > 
-> > > diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
-> > > index d292f61b4e41..3cf9dab0d01a 100644
-> > > --- a/hw/acpi/generic_event_device.c
-> > > +++ b/hw/acpi/generic_event_device.c
-> > > @@ -318,6 +318,8 @@ static void acpi_ged_send_event(AcpiDeviceIf *adev, AcpiEventStatusBits ev)
-> > >  
-> > >  static const Property acpi_ged_properties[] = {
-> > >      DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
-> > > +    DEFINE_PROP_BOOL("x-has-hest-addr", AcpiGedState,
-> > > +                     ghes_state.use_hest_addr, false),
-> > >  };
-> > >  
-> > >  static const VMStateDescription vmstate_memhp_state = {
-> > > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> > > index da3ebf403ef9..3126234e657d 100644
-> > > --- a/hw/arm/virt-acpi-build.c
-> > > +++ b/hw/arm/virt-acpi-build.c
-> > > @@ -893,6 +893,10 @@ static const AcpiNotificationSourceId hest_ghes_notify[] = {
-> > >      { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-> > >  };
-> > >  
-> > > +static const AcpiNotificationSourceId hest_ghes_notify_10_0[] = {
-> > > +    { ACPI_HEST_SRC_ID_SYNC, ACPI_GHES_NOTIFY_SEA },
-> > > +};
+> > > @@ -124,7 +125,17 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
+> > >      byte_list[0] = 0;
+> > >      buf = aml_buffer(1, byte_list);
+> > >      aml_append(method, aml_return(buf));
+> > > -    aml_append(dev, method);
+> > > +    return method;
+> > > +}
 > > > +
-> > >  static
-> > >  void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-> > >  {
-> > > @@ -947,15 +951,25 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-> > >  
-> > >      if (vms->ras) {
-> > >          AcpiGedState *acpi_ged_state;
-> > > +        static const AcpiNotificationSourceId *notify;
-> > > +        unsigned int notify_sz;
-> > >          AcpiGhesState *ags;
-> > >  
-> > >          acpi_ged_state = ACPI_GED(vms->acpi_dev);
-> > >          ags = &acpi_ged_state->ghes_state;
-> > >          if (ags) {
-> > >              acpi_add_table(table_offsets, tables_blob);
-> > > +
-> > > +            if (!ags->use_hest_addr) {
-> > > +                notify = hest_ghes_notify_10_0;
-> > > +                notify_sz = ARRAY_SIZE(hest_ghes_notify_10_0);
-> > > +            } else {
-> > > +                notify = hest_ghes_notify;
-> > > +                notify_sz = ARRAY_SIZE(hest_ghes_notify);
-> > > +            }
-> > > +
-> > >              acpi_build_hest(ags, tables_blob, tables->hardware_errors,
-> > > -                            tables->linker, hest_ghes_notify,
-> > > -                            ARRAY_SIZE(hest_ghes_notify),
-> > > +                            tables->linker, notify, notify_sz,
-> > >                              vms->oem_id, vms->oem_table_id);
-> > >          }
-> > >      }
-> > > diff --git a/hw/core/machine.c b/hw/core/machine.c
-> > > index b8ae155dfa11..dfd36cf063c7 100644
-> > > --- a/hw/core/machine.c
-> > > +++ b/hw/core/machine.c
-> > > @@ -35,9 +35,12 @@
-> > >  #include "hw/virtio/virtio-pci.h"
-> > >  #include "hw/virtio/virtio-net.h"
-> > >  #include "hw/virtio/virtio-iommu.h"
-> > > +#include "hw/acpi/generic_event_device.h"
-> > >  #include "audio/audio.h"
-> > >  
-> > > -GlobalProperty hw_compat_10_0[] = {};
-> > > +GlobalProperty hw_compat_10_0[] = {
-> > > +    { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
-> > > +};
-> > >  const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
-> > >  
-> > >  GlobalProperty hw_compat_9_2[] = {  
+> > > +static void acpi_dsdt_add_host_bridge_methods(Aml *dev,
+> > > +                                              bool enable_native_pcie_hotplug)
+> > > +{
+> > > +    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
+> > > +    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));    
+> > 
+> > These two declarations seem to be very much part of the _OSC build though not
+> > within the the method.  I 'think' you get left with them later with no users.
+> > So move them into the osc build here and they will naturally go away when
+> > you move to the generic code.
+> > 
+> > They end up unused in the DSDT at the end of the series.
+> > 
+> > I ran a quick GPEX + pxb-pcie test and we do get the odd mix that the OSC for
+> > the GPEX say no native hotplug but the OSC for the PXB allows it.  
+> 
+> It's fine for each PXB to have it's own _OSC.
+> Also current incarnation of ACPI pcihp doesn't support PXBs at all,
+> it would be wrong to enable the on PXBs.
+> 
+> Thus I'd avoid touching CXL related code paths from this series.
+> 
+> I'm working on extending ACPI pcihp to PXBs
+> (for the same reason as Eric does for arm/virt, i.e. enable acpi-index support there).
+> I can add CXL bits then if there is a need/demand for that in CXL land.
+
+Ok.  My original motivation for _DSM on CXL was function 5 to stop Linux messing up
+the reenumeration which I know has been rejected upstream for a bunch of
+compatibility reasons.  Anyhow, that's a future problem.
+
+Thanks,
+
+Jonathan
+
+> 
+> [...]
+> 
 > 
 
 
