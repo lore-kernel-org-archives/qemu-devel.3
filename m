@@ -4,22 +4,22 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF28C5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:20:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62D8AC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL1Pc-0004ao-Ns; Fri, 30 May 2025 11:12:49 -0400
+	id 1uL1Pg-0004lB-3z; Fri, 30 May 2025 11:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1Pa-0004VH-ES; Fri, 30 May 2025 11:12:46 -0400
+ id 1uL1PY-0004RG-SF; Fri, 30 May 2025 11:12:44 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1PX-0002M3-A7; Fri, 30 May 2025 11:12:45 -0400
+ id 1uL1PV-0002Kl-Iw; Fri, 30 May 2025 11:12:44 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D17D044AAC;
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 1D25E44B9B;
  Fri, 30 May 2025 17:11:48 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
@@ -28,10 +28,9 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v4 34/48] block: mark bdrv_reopen_queue() and
- bdrv_reopen_multiple() as GRAPH_UNLOCKED
-Date: Fri, 30 May 2025 17:11:11 +0200
-Message-Id: <20250530151125.955508-35-f.ebner@proxmox.com>
+Subject: [PATCH v4 38/48] block: mark blk_drain() as GRAPH_UNLOCKED
+Date: Fri, 30 May 2025 17:11:15 +0200
+Message-Id: <20250530151125.955508-39-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530151125.955508-1-f.ebner@proxmox.com>
 References: <20250530151125.955508-1-f.ebner@proxmox.com>
@@ -60,63 +59,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function bdrv_reopen_queue() can call bdrv_drain_all_begin(),
-which must be called with the graph unlocked.
-
-The function bdrv_reopen_multiple() calls bdrv_reopen_prepare() which
-must be called with the graph unlocked.
-
-To mark bdrv_reopen_queue() as GRAPH_UNLOCKED, it is necessary to make
-the locked section in reopen_backing_file() shorter.
+The function blk_drain() calls bdrv_drained_begin(), which must be
+called with the graph unlocked.
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
- block/replication.c                | 3 ++-
- include/block/block-global-state.h | 9 +++++----
- 2 files changed, 7 insertions(+), 5 deletions(-)
+ include/system/block-backend-global-state.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/replication.c b/block/replication.c
-index 83978b61f5..3a431e908c 100644
---- a/block/replication.c
-+++ b/block/replication.c
-@@ -364,14 +364,15 @@ static void reopen_backing_file(BlockDriverState *bs, bool writable,
-     BlockReopenQueue *reopen_queue = NULL;
- 
-     GLOBAL_STATE_CODE();
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
- 
-+    bdrv_graph_rdlock_main_loop();
-     /*
-      * s->hidden_disk and s->secondary_disk may not be set yet, as they will
-      * only be set after the children are writable.
-      */
-     hidden_disk = bs->file->bs->backing;
-     secondary_disk = hidden_disk->bs->backing;
-+    bdrv_graph_rdunlock_main_loop();
- 
-     if (writable) {
-         s->orig_hidden_read_only = bdrv_is_read_only(hidden_disk->bs);
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index bcbb624a7b..f25c65c1b4 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -121,11 +121,12 @@ BlockDriverState *bdrv_new_open_driver_opts(BlockDriver *drv,
-                                             Error **errp);
- BlockDriverState *bdrv_new_open_driver(BlockDriver *drv, const char *node_name,
-                                        int flags, Error **errp);
--BlockReopenQueue *bdrv_reopen_queue(BlockReopenQueue *bs_queue,
--                                    BlockDriverState *bs, QDict *options,
--                                    bool keep_old_opts);
-+BlockReopenQueue * GRAPH_UNLOCKED
-+bdrv_reopen_queue(BlockReopenQueue *bs_queue, BlockDriverState *bs,
-+                  QDict *options, bool keep_old_opts);
- void bdrv_reopen_queue_free(BlockReopenQueue *bs_queue);
--int bdrv_reopen_multiple(BlockReopenQueue *bs_queue, Error **errp);
-+int GRAPH_UNLOCKED
-+bdrv_reopen_multiple(BlockReopenQueue *bs_queue, Error **errp);
- int bdrv_reopen(BlockDriverState *bs, QDict *opts, bool keep_old_opts,
-                 Error **errp);
- int bdrv_reopen_set_read_only(BlockDriverState *bs, bool read_only,
+diff --git a/include/system/block-backend-global-state.h b/include/system/block-backend-global-state.h
+index 1a134083b7..f6ec1174e6 100644
+--- a/include/system/block-backend-global-state.h
++++ b/include/system/block-backend-global-state.h
+@@ -78,7 +78,7 @@ int blk_make_zero(BlockBackend *blk, BdrvRequestFlags flags);
+ void blk_aio_cancel(BlockAIOCB *acb);
+ int blk_commit_all(void);
+ bool blk_in_drain(BlockBackend *blk);
+-void blk_drain(BlockBackend *blk);
++void GRAPH_UNLOCKED blk_drain(BlockBackend *blk);
+ void GRAPH_UNLOCKED blk_drain_all(void);
+ void blk_set_on_error(BlockBackend *blk, BlockdevOnError on_read_error,
+                       BlockdevOnError on_write_error);
 -- 
 2.39.5
 
