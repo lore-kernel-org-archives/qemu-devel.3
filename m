@@ -4,61 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F9D7C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 13:44:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B8AC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 13:46:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL01g-00067T-KM; Fri, 30 May 2025 09:44:01 -0400
+	id 1uL03z-000734-F9; Fri, 30 May 2025 09:46:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uL01e-00067F-KS
- for qemu-devel@nongnu.org; Fri, 30 May 2025 09:43:58 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uL01Y-000077-7j
- for qemu-devel@nongnu.org; Fri, 30 May 2025 09:43:58 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b84Fb2Jxcz6GFS4;
- Fri, 30 May 2025 21:43:31 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id EDD0F1402FF;
- Fri, 30 May 2025 21:43:36 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 30 May
- 2025 15:43:36 +0200
-Date: Fri, 30 May 2025 14:43:35 +0100
-To: Anisa Su <anisa.su887@gmail.com>
-CC: Fan Ni <nifan.cxl@gmail.com>, <qemu-devel@nongnu.org>,
- <dave@stgolabs.net>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH v2 01/10] cxl-mailbox-utils: Move opcodes enum to new
- header file
-Message-ID: <20250530144335.000064f3@huawei.com>
-In-Reply-To: <aCy8-vMEYsFaOiWC@deb-101020-bm01.eng.stellus.in>
-References: <20250508001754.122180-1-anisa.su887@gmail.com>
- <20250508001754.122180-2-anisa.su887@gmail.com>
- <aCyhv8Qz1LUpJKd3@lg>
- <aCy8-vMEYsFaOiWC@deb-101020-bm01.eng.stellus.in>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uL03y-00072X-Es
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 09:46:22 -0400
+Received: from mail-vk1-xa2d.google.com ([2607:f8b0:4864:20::a2d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uL03v-0000Th-Kk
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 09:46:21 -0400
+Received: by mail-vk1-xa2d.google.com with SMTP id
+ 71dfb90a1353d-5308d2d76f4so50511e0c.0
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 06:46:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1748612778; x=1749217578; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=iVefdb7qkX42XJzWCxv1YPV0+MjP7QAzAJ23vLZC8d8=;
+ b=dn6T6cEH401MVzLkhJ2s3FaUk1XFnIhZda5f04jumqTX3tpAG4q8UVnDXpN/egn2or
+ Y72KHfEXfhAT048yeTdgqzy41CWQefoqxFceYNm/G5YW8wKKpGQ9XUywZ0XdslM9/PnW
+ GP2J8tNThADRD8CdRAsXJFXzsnVN07On9pVPhBxfyOaiOc3oJocQ8COdi6KJwJHtvnG9
+ MgnUPlR1rOkGgT9uxLfDQVd6xpA77mKTNJR8NI/tHoPuPEWOXtYkR+et/Pn3voCsbHHr
+ mWO+OhaR1rK9PShqlfP2mGoe/x1pZJGFW4VCm8yEVnfamDBx4ZmfsMAmS0P+jiA62eXY
+ HsAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748612778; x=1749217578;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=iVefdb7qkX42XJzWCxv1YPV0+MjP7QAzAJ23vLZC8d8=;
+ b=UJCz3BkP4APlaPTzcURL8wN/ZvWufYMusF7jUNy36Dw+XRZcG3BcFWo6JKdptCj8Xc
+ EiGH+PwJyG9dltdhCoEyvNjnQoKFj54FPNfcFwCLTqboDVX1NX2cvVLdRjVBCbSgtRwt
+ zoRsl/LfXnzZeCHE5gaZcF0sfqdt1Lm6Bsak8/km58QkN56oDjaOpMXcUbfShCRcKXR1
+ RdVIzqjjVoZtQEdEwI6Zng1sZ1AeSzui4hMEe45+uOFWYqOd06wL+8AGM0q9tECxlDID
+ Lb8zO/p/K9gV1Pyl45EVg6oSeFgMou+7Kf8fMxVbPDkEemm2amGJLK4SOlK1d4Ih3fSG
+ SF2w==
+X-Gm-Message-State: AOJu0Yzrhj0PaLhHc5ArLFL/LyfUh7lGEs472XeLnZOM2ZqkaezrAdau
+ 0cXVoXxzE+W27O1blpQfWeS9CegQSvoA8ztuR6kccziDMgn3ZwMTByj2hXVpztkhw15xVrV7FHq
+ 41LJ7
+X-Gm-Gg: ASbGncslrvwlPa9Pc1qne+ttqoPq8ybBYzt8wsPVO2MQYFCxyej8TeqQjRlVKpbsTFE
+ jllxeNwj55TPR4Y3Vf2q5mDl7ENBumtTuiA2/GkAVStWcPWQ5y+YKZzHS/l9HQ2QCgnLEzvAC0n
+ jls6Y9YdWOzQeOJUM353WnRf152ywLr97nKcF8e/zcEeC9oBSGsARveHYgZL3hEFL2ftgwvenc8
+ iWcijqigb2c5p1m6UsSiVJ4WNugogMwu0Pzcnpo2Gq4wMu548b69iT6+ju5ogbfStnoHxJlXvuv
+ jW76Zmeiakgj1pxorXTbsee3In8ZVQYMG7lPVE7Kye8cSXwmbLBmJ6T6QyyaG8Lj2YPDQCxAD/L
+ v7A04
+X-Google-Smtp-Source: AGHT+IG1v8EQAkTWfF4hA+q8IKy23d2tpb/Sy9O4CprezlMlXso0hGVEngkGkZpoH5YHP7qZKnmeWw==
+X-Received: by 2002:a05:6122:4f83:b0:530:66e6:e21a with SMTP id
+ 71dfb90a1353d-53084bc1a70mr1450983e0c.3.1748612777960; 
+ Fri, 30 May 2025 06:46:17 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([177.188.133.196])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-53074bf86bcsm3121345e0c.35.2025.05.30.06.46.14
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 May 2025 06:46:17 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH] target/riscv: remove capital 'Z' CPU properties
+Date: Fri, 30 May 2025 10:46:08 -0300
+Message-ID: <20250530134608.1806922-1-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2d;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-vk1-xa2d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,218 +96,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 20 May 2025 17:33:46 +0000
-Anisa Su <anisa.su887@gmail.com> wrote:
+These properties were deprecated in QEMU 8.2, commit 8043effd9b.
 
-> On Tue, May 20, 2025 at 08:37:35AM -0700, Fan Ni wrote:
-> > On Thu, May 08, 2025 at 12:00:57AM +0000, anisa.su887@gmail.com wrote:  
-> > > From: Anisa Su <anisa.su@samsung.com>
-> > > 
-> > > In preparation for the next patch, move opcodes enum to new cxl_opcodes.h file
-> > > for visibility from mailbox-utils.c and i2c_mctp_cxl.c, which checks that
-> > > certain command sets are bound with the correct MCTP binding.
-> > > 
-> > > Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> > > ---
-> > >  hw/cxl/cxl-mailbox-utils.c   | 68 ++----------------------------------
-> > >  include/hw/cxl/cxl_opcodes.h | 64 +++++++++++++++++++++++++++++++++  
-> > 
-> > Should we put the opcodes into include/hw/cxl/cxl_mailbox.h instead of
-> > creating a new file. cxl_mailbox.h only has some macros.
-> > 
-> > Fan
-> >   
-> I had some discussion with Jonathan in the v1 thread about this. We
-> agreed it is fine to use mailbox.h because it only has a few macros in it,
-> but in case more things get added to it later, I made a separate file.
-> Then no need to re-organize later.
-> > 
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+---
+ target/riscv/cpu.c         | 17 -----------------
+ target/riscv/cpu.h         |  1 -
+ target/riscv/tcg/tcg-cpu.c | 31 +------------------------------
+ 3 files changed, 1 insertion(+), 48 deletions(-)
 
-We can always move them in future if it turns out cxl_mailbox.h is
-not a good home.
-
-Also, note that the include file added in this patch has no descriptive
-comments or ifndef magic which would have wanted to be there.
-
-Jonathan
-
-> >   
-> > >  2 files changed, 66 insertions(+), 66 deletions(-)
-> > >  create mode 100644 include/hw/cxl/cxl_opcodes.h
-> > > 
-> > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > > index a02d130926..ed3294530f 100644
-> > > --- a/hw/cxl/cxl-mailbox-utils.c
-> > > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > > @@ -23,6 +23,7 @@
-> > >  #include "qemu/uuid.h"
-> > >  #include "system/hostmem.h"
-> > >  #include "qemu/range.h"
-> > > +#include "hw/cxl/cxl_opcodes.h"
-> > >  
-> > >  #define CXL_CAPACITY_MULTIPLIER   (256 * MiB)
-> > >  #define CXL_DC_EVENT_LOG_SIZE 8
-> > > @@ -36,7 +37,7 @@
-> > >  
-> > >  /*
-> > >   * How to add a new command, example. The command set FOO, with cmd BAR.
-> > > - *  1. Add the command set and cmd to the enum.
-> > > + *  1. Add the command set and cmd to the enum in cxl_opcodes.h.
-> > >   *     FOO    = 0x7f,
-> > >   *          #define BAR 0
-> > >   *  2. Implement the handler
-> > > @@ -59,71 +60,6 @@
-> > >   *  a register interface that already deals with it.
-> > >   */
-> > >  
-> > > -enum {
-> > > -    INFOSTAT    = 0x00,
-> > > -        #define IS_IDENTIFY   0x1
-> > > -        #define BACKGROUND_OPERATION_STATUS    0x2
-> > > -        #define GET_RESPONSE_MSG_LIMIT         0x3
-> > > -        #define SET_RESPONSE_MSG_LIMIT         0x4
-> > > -        #define BACKGROUND_OPERATION_ABORT     0x5
-> > > -    EVENTS      = 0x01,
-> > > -        #define GET_RECORDS   0x0
-> > > -        #define CLEAR_RECORDS   0x1
-> > > -        #define GET_INTERRUPT_POLICY   0x2
-> > > -        #define SET_INTERRUPT_POLICY   0x3
-> > > -    FIRMWARE_UPDATE = 0x02,
-> > > -        #define GET_INFO      0x0
-> > > -        #define TRANSFER      0x1
-> > > -        #define ACTIVATE      0x2
-> > > -    TIMESTAMP   = 0x03,
-> > > -        #define GET           0x0
-> > > -        #define SET           0x1
-> > > -    LOGS        = 0x04,
-> > > -        #define GET_SUPPORTED 0x0
-> > > -        #define GET_LOG       0x1
-> > > -        #define GET_LOG_CAPABILITIES   0x2
-> > > -        #define CLEAR_LOG     0x3
-> > > -        #define POPULATE_LOG  0x4
-> > > -    FEATURES    = 0x05,
-> > > -        #define GET_SUPPORTED 0x0
-> > > -        #define GET_FEATURE   0x1
-> > > -        #define SET_FEATURE   0x2
-> > > -    IDENTIFY    = 0x40,
-> > > -        #define MEMORY_DEVICE 0x0
-> > > -    CCLS        = 0x41,
-> > > -        #define GET_PARTITION_INFO     0x0
-> > > -        #define GET_LSA       0x2
-> > > -        #define SET_LSA       0x3
-> > > -    HEALTH_INFO_ALERTS = 0x42,
-> > > -        #define GET_ALERT_CONFIG 0x1
-> > > -        #define SET_ALERT_CONFIG 0x2
-> > > -    SANITIZE    = 0x44,
-> > > -        #define OVERWRITE     0x0
-> > > -        #define SECURE_ERASE  0x1
-> > > -        #define MEDIA_OPERATIONS 0x2
-> > > -    PERSISTENT_MEM = 0x45,
-> > > -        #define GET_SECURITY_STATE     0x0
-> > > -    MEDIA_AND_POISON = 0x43,
-> > > -        #define GET_POISON_LIST        0x0
-> > > -        #define INJECT_POISON          0x1
-> > > -        #define CLEAR_POISON           0x2
-> > > -        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
-> > > -        #define SCAN_MEDIA             0x4
-> > > -        #define GET_SCAN_MEDIA_RESULTS 0x5
-> > > -    DCD_CONFIG  = 0x48,
-> > > -        #define GET_DC_CONFIG          0x0
-> > > -        #define GET_DYN_CAP_EXT_LIST   0x1
-> > > -        #define ADD_DYN_CAP_RSP        0x2
-> > > -        #define RELEASE_DYN_CAP        0x3
-> > > -    PHYSICAL_SWITCH = 0x51,
-> > > -        #define IDENTIFY_SWITCH_DEVICE      0x0
-> > > -        #define GET_PHYSICAL_PORT_STATE     0x1
-> > > -    TUNNEL = 0x53,
-> > > -        #define MANAGEMENT_COMMAND     0x0
-> > > -    MHD = 0x55,
-> > > -        #define GET_MHD_INFO 0x0
-> > > -};
-> > > -
-> > >  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> > >  typedef struct CXLCCIMessage {
-> > >      uint8_t category;
-> > > diff --git a/include/hw/cxl/cxl_opcodes.h b/include/hw/cxl/cxl_opcodes.h
-> > > new file mode 100644
-> > > index 0000000000..26d3a99e8a
-> > > --- /dev/null
-> > > +++ b/include/hw/cxl/cxl_opcodes.h
-> > > @@ -0,0 +1,64 @@
-> > > +enum {
-> > > +    INFOSTAT    = 0x00,
-> > > +        #define IS_IDENTIFY   0x1
-> > > +        #define BACKGROUND_OPERATION_STATUS    0x2
-> > > +        #define GET_RESPONSE_MSG_LIMIT         0x3
-> > > +        #define SET_RESPONSE_MSG_LIMIT         0x4
-> > > +        #define BACKGROUND_OPERATION_ABORT     0x5
-> > > +    EVENTS      = 0x01,
-> > > +        #define GET_RECORDS   0x0
-> > > +        #define CLEAR_RECORDS   0x1
-> > > +        #define GET_INTERRUPT_POLICY   0x2
-> > > +        #define SET_INTERRUPT_POLICY   0x3
-> > > +    FIRMWARE_UPDATE = 0x02,
-> > > +        #define GET_INFO      0x0
-> > > +        #define TRANSFER      0x1
-> > > +        #define ACTIVATE      0x2
-> > > +    TIMESTAMP   = 0x03,
-> > > +        #define GET           0x0
-> > > +        #define SET           0x1
-> > > +    LOGS        = 0x04,
-> > > +        #define GET_SUPPORTED 0x0
-> > > +        #define GET_LOG       0x1
-> > > +        #define GET_LOG_CAPABILITIES   0x2
-> > > +        #define CLEAR_LOG     0x3
-> > > +        #define POPULATE_LOG  0x4
-> > > +    FEATURES    = 0x05,
-> > > +        #define GET_SUPPORTED 0x0
-> > > +        #define GET_FEATURE   0x1
-> > > +        #define SET_FEATURE   0x2
-> > > +    IDENTIFY    = 0x40,
-> > > +        #define MEMORY_DEVICE 0x0
-> > > +    CCLS        = 0x41,
-> > > +        #define GET_PARTITION_INFO     0x0
-> > > +        #define GET_LSA       0x2
-> > > +        #define SET_LSA       0x3
-> > > +    HEALTH_INFO_ALERTS = 0x42,
-> > > +        #define GET_ALERT_CONFIG 0x1
-> > > +        #define SET_ALERT_CONFIG 0x2
-> > > +    SANITIZE    = 0x44,
-> > > +        #define OVERWRITE     0x0
-> > > +        #define SECURE_ERASE  0x1
-> > > +        #define MEDIA_OPERATIONS 0x2
-> > > +    PERSISTENT_MEM = 0x45,
-> > > +        #define GET_SECURITY_STATE     0x0
-> > > +    MEDIA_AND_POISON = 0x43,
-> > > +        #define GET_POISON_LIST        0x0
-> > > +        #define INJECT_POISON          0x1
-> > > +        #define CLEAR_POISON           0x2
-> > > +        #define GET_SCAN_MEDIA_CAPABILITIES 0x3
-> > > +        #define SCAN_MEDIA             0x4
-> > > +        #define GET_SCAN_MEDIA_RESULTS 0x5
-> > > +    DCD_CONFIG  = 0x48,
-> > > +        #define GET_DC_CONFIG          0x0
-> > > +        #define GET_DYN_CAP_EXT_LIST   0x1
-> > > +        #define ADD_DYN_CAP_RSP        0x2
-> > > +        #define RELEASE_DYN_CAP        0x3
-> > > +    PHYSICAL_SWITCH = 0x51,
-> > > +        #define IDENTIFY_SWITCH_DEVICE      0x0
-> > > +        #define GET_PHYSICAL_PORT_STATE     0x1
-> > > +    TUNNEL = 0x53,
-> > > +        #define MANAGEMENT_COMMAND     0x0
-> > > +    MHD = 0x55,
-> > > +        #define GET_MHD_INFO 0x0
-> > > +};
-> > > -- 
-> > > 2.47.2
-> > >   
-> > 
-> > -- 
-> > Fan Ni  
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index fe21e0fb44..7c6e0844d0 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1387,23 +1387,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_features[] = {
+     { },
+ };
+ 
+-/* Deprecated entries marked for future removal */
+-const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[] = {
+-    MULTI_EXT_CFG_BOOL("Zifencei", ext_zifencei, true),
+-    MULTI_EXT_CFG_BOOL("Zicsr", ext_zicsr, true),
+-    MULTI_EXT_CFG_BOOL("Zihintntl", ext_zihintntl, true),
+-    MULTI_EXT_CFG_BOOL("Zihintpause", ext_zihintpause, true),
+-    MULTI_EXT_CFG_BOOL("Zawrs", ext_zawrs, true),
+-    MULTI_EXT_CFG_BOOL("Zfa", ext_zfa, true),
+-    MULTI_EXT_CFG_BOOL("Zfh", ext_zfh, false),
+-    MULTI_EXT_CFG_BOOL("Zfhmin", ext_zfhmin, false),
+-    MULTI_EXT_CFG_BOOL("Zve32f", ext_zve32f, false),
+-    MULTI_EXT_CFG_BOOL("Zve64f", ext_zve64f, false),
+-    MULTI_EXT_CFG_BOOL("Zve64d", ext_zve64d, false),
+-
+-    { },
+-};
+-
+ static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
+                              Error **errp)
+ {
+diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+index 2a6793e022..17bf4e7579 100644
+--- a/target/riscv/cpu.h
++++ b/target/riscv/cpu.h
+@@ -951,7 +951,6 @@ extern const RISCVCPUMultiExtConfig riscv_cpu_extensions[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[];
+ extern const RISCVCPUMultiExtConfig riscv_cpu_named_features[];
+-extern const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[];
+ 
+ typedef struct isa_ext_data {
+     const char *name;
+diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+index 66929f2e8d..8ebffe55bc 100644
+--- a/target/riscv/tcg/tcg-cpu.c
++++ b/target/riscv/tcg/tcg-cpu.c
+@@ -1416,25 +1416,6 @@ static void riscv_cpu_add_profiles(Object *cpu_obj)
+     }
+ }
+ 
+-static bool cpu_ext_is_deprecated(const char *ext_name)
+-{
+-    return isupper(ext_name[0]);
+-}
+-
+-/*
+- * String will be allocated in the heap. Caller is responsible
+- * for freeing it.
+- */
+-static char *cpu_ext_to_lower(const char *ext_name)
+-{
+-    char *ret = g_malloc0(strlen(ext_name) + 1);
+-
+-    strcpy(ret, ext_name);
+-    ret[0] = tolower(ret[0]);
+-
+-    return ret;
+-}
+-
+ static void cpu_set_multi_ext_cfg(Object *obj, Visitor *v, const char *name,
+                                   void *opaque, Error **errp)
+ {
+@@ -1447,13 +1428,6 @@ static void cpu_set_multi_ext_cfg(Object *obj, Visitor *v, const char *name,
+         return;
+     }
+ 
+-    if (cpu_ext_is_deprecated(multi_ext_cfg->name)) {
+-        g_autofree char *lower = cpu_ext_to_lower(multi_ext_cfg->name);
+-
+-        warn_report("CPU property '%s' is deprecated. Please use '%s' instead",
+-                    multi_ext_cfg->name, lower);
+-    }
+-
+     cpu_cfg_ext_add_user_opt(multi_ext_cfg->offset, value);
+ 
+     prev_val = isa_ext_is_enabled(cpu, multi_ext_cfg->offset);
+@@ -1489,14 +1463,13 @@ static void cpu_add_multi_ext_prop(Object *cpu_obj,
+                                    const RISCVCPUMultiExtConfig *multi_cfg)
+ {
+     bool generic_cpu = riscv_cpu_is_generic(cpu_obj);
+-    bool deprecated_ext = cpu_ext_is_deprecated(multi_cfg->name);
+ 
+     object_property_add(cpu_obj, multi_cfg->name, "bool",
+                         cpu_get_multi_ext_cfg,
+                         cpu_set_multi_ext_cfg,
+                         NULL, (void *)multi_cfg);
+ 
+-    if (!generic_cpu || deprecated_ext) {
++    if (!generic_cpu) {
+         return;
+     }
+ 
+@@ -1539,8 +1512,6 @@ static void riscv_cpu_add_user_properties(Object *obj)
+     riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_vendor_exts);
+     riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_experimental_exts);
+ 
+-    riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_deprecated_exts);
+-
+     riscv_cpu_add_profiles(obj);
+ }
+ 
+-- 
+2.49.0
 
 
