@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C558AC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05369C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:24:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtyw-0006ol-5J; Fri, 30 May 2025 03:16:46 -0400
+	id 1uKtw8-0000yK-7j; Fri, 30 May 2025 03:13:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxb-0003u9-30
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uKtw5-0000xi-UD
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxY-0007EN-0g
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:22 -0400
+ id 1uKtw4-0006sd-1L
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589319;
+ s=mimecast20190719; t=1748589227;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Orjcr0WOSg/rpO4DfKUDnvKfRTwcJdCnl2YDxWmF/yU=;
- b=SWthx0TsMR5BCNnclKqamiAg7fhLk0jy1/RrM6NDS6mHoc3Z/879JTJED3g8Ok1DpbC0MK
- m8PdnNmzgixQSBdzfLcwQRM7vG2uGD1ILkuuPTatHgBK/MhQxMtAhp3iOVDx0OLzTxz9E6
- oI8aSaU6wCUa5DPu46j1+dzPOh817I4=
+ bh=4euU7urtYC8/FdRoR3xl5SEetWf8oe9lhTlN6Q0lR6c=;
+ b=RmRei2dH1Yygqg3A+LUw7XzmlweM3qeWun2FX06Wk7B9qGbFantovGV2vj8NDDcYBKVb4c
+ T8aQA9Kn9I4fPScMlFDVLHichcYfaPEckZO7VpwFUjCJd24rq1lRiX2cPpuHWNuxpuuXTc
+ 3YnBc6EJxcJ/HwPccScNFam3IDdKHSE=
 Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
  [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-ZJF9o_dGOtCAlg91V72sFw-1; Fri, 30 May 2025 03:15:18 -0400
-X-MC-Unique: ZJF9o_dGOtCAlg91V72sFw-1
-X-Mimecast-MFC-AGG-ID: ZJF9o_dGOtCAlg91V72sFw_1748589317
+ us-mta-677-XxFWpeNQPNm3uP6FQl4uRA-1; Fri, 30 May 2025 03:13:46 -0400
+X-MC-Unique: XxFWpeNQPNm3uP6FQl4uRA-1
+X-Mimecast-MFC-AGG-ID: XxFWpeNQPNm3uP6FQl4uRA_1748589225
 Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad56c5412f2so150224866b.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:15:18 -0700 (PDT)
+ a640c23a62f3a-ad891713195so120124666b.0
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589316; x=1749194116;
+ d=1e100.net; s=20230601; t=1748589224; x=1749194024;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Orjcr0WOSg/rpO4DfKUDnvKfRTwcJdCnl2YDxWmF/yU=;
- b=ayFK9kwB0/REAk5BxFVue7GT+/mQ7D3+ERu8q1pHG7yW/WlZ/F1HHZux+aOpjCV+NA
- aph21tyKgefQxZqm637YnmiW8wOyvfPfl5/Pgf42lmzvk4fFJKNcT0TZ5wZFdAUBDEtU
- 0y81nqQ5wkFYN7xN7sSsUs59kJ6++qSDDPDmks2CogyVBOS+YwUoZ96+WKwsIEaF7zBG
- Mwe0AnYYXCVM+C1v6g6LtpzmPj1xTDgvRUANuWOTG25m5jZFuHeIyU5y/mMn74/9a/Za
- /iwc+WHKh+i8Bq+qa+dT+X6j2wXWPWOC/bWQ3y/NmNLyH/ANphZ66efe17bP8T0XmtVJ
- jR3g==
-X-Gm-Message-State: AOJu0Yx/fBccQGbAz9BaPs8ZFM2qSHubOEyBL4VXXc90yKWGj6sDAq2m
- 6e6BBkbfyGq+r7HDAnISekBxzTTY1WnVLk1tW4NfhbSZBkq7H7ddC3aAhP+t2BbDOGeVsY9Gl61
- gCbjJ+qHpRa+yMmYSp5LMYwY6tjR3r1QV5c7SMJivR3rE620KpCfRB90YTssyTKacZclNgwx7eN
- qscxDtPohxg8iraVBo6K+R1Y5e8Grlu6UIr2VZeBsc
-X-Gm-Gg: ASbGncs3qDAVIArtRDz2y/stO9zN7m52yJsX00E6LZN9GeUaAlJZhwmFxCiNPx/Mzwu
- RsUA7sji8CODLAtBzKE7gIRKOJv2cCxtGHf9q4pErweIYaznp0CSaNBco7IOMASPY88rbcg1MwT
- uEzCTHRdUkJLbaWL/RZdGbF88hgSEVhv5hMIDTEf1xBIk2NVHneGw/JRbiw5sFfuceaGp7IOVfv
- uXckDcY1yXpWlyY0939ygpeIsFtYEEJa/QYT7Orx+kMt94MTzj+skzH6vGtmeRGr0jdRXBa3ZVT
- BhIFpHKSYACh7g==
-X-Received: by 2002:a17:907:7e8e:b0:ad2:425c:27ce with SMTP id
- a640c23a62f3a-adb36b2330fmr104851566b.2.1748589315684; 
- Fri, 30 May 2025 00:15:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHySeQKmrF/Fw22foAa2vg8INyuym5CyrS5Jf8pYpahvAL5IkS6hcZ7LLue3tY+34WTJzgMTw==
-X-Received: by 2002:a17:907:7e8e:b0:ad2:425c:27ce with SMTP id
- a640c23a62f3a-adb36b2330fmr104848566b.2.1748589315163; 
- Fri, 30 May 2025 00:15:15 -0700 (PDT)
+ bh=4euU7urtYC8/FdRoR3xl5SEetWf8oe9lhTlN6Q0lR6c=;
+ b=eqCR/Sq8a6xF222VDlLFk8FFI24xviEoBvUqQSRyb9ZBMkOXccQ26LHAJo6axELIw2
+ x7/HO6/1MJ2yEVWgnQg4tv75yCdbkrTMKH9dhde+DuzqUR8RztDRWtsdUok1KHoIxVtG
+ n6iQX1BRPX+nGpAcK2Vn/CUn3aRP4LtNIby5K2G5IrHXy6YG60Z+a78BCMpKGNb5eizz
+ FS5gY4UIks/PJRUW0h57mQZilUYTa9iT4Bw2R3a31wMftxmk51r/3PAyt40PN5aUEDkC
+ VAYwNQ/aeRhOq0DVCbpm4m3ozRkYC5Y5Z/26/AW9uDfXyMkrv306M7idUfRvcBEMShWi
+ wqcw==
+X-Gm-Message-State: AOJu0YyDWgAD5JL0DJMJ97S5xYL4AGE2/NDtQdSkvnUPv/xwgG13rhqz
+ z9dYPvqJHmVa3e0BdN/y1ctDg1jpyEbx57u485nTI18ncf4HtlWQnnmOKBePvT+S8j5cp2+/Bhh
+ IJ22L5d42k4izrb74ZcWWtGrHQwEA83m+ZNTtTtulQvRYJfojLmfqJYfygMUrQ1+Tia5p79Sss/
+ 5n+u/VbwqFwCLOLOO06wjh/4L8vTQyZcWB7U5CRG96
+X-Gm-Gg: ASbGncveh0qAq8LVge1o3KPzCC+AJ4xS/dCF/ZYzrdci8ANC03ZmCfM8SGJz3R7BZOU
+ rffE/28gtN7fx3BUIqnUHWXqc3FXjDzGK1BhkXgkf4JL/jS4XlEKPl7pGXPPywG98mwceMzSVuT
+ GQ7pMiUyq0DYpCdOh4mOUpEM1+FRx0lWQxmHPgliqfuOwBs61pGOUX9Al6nYrMgrw/KRAV4nEG8
+ A7LREtlFg3pLqSiexLxSgm5b1SHoDdjk1bEpYwwevyrCz3/haaxSNU2nWsujX8exaSC5sQll6Wo
+ 1jgGRTDXOk9sOg==
+X-Received: by 2002:a17:907:7e91:b0:ad8:9c97:c2fd with SMTP id
+ a640c23a62f3a-adb322d8de5mr210215566b.17.1748589223964; 
+ Fri, 30 May 2025 00:13:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFRBpTFVZNO0ZZt1h/STIW4dglIbeCDw1v8w9EXuujT6CFA8mNenhfXgH1X2aMxIljE8TiwIw==
+X-Received: by 2002:a17:907:7e91:b0:ad8:9c97:c2fd with SMTP id
+ a640c23a62f3a-adb322d8de5mr210213066b.17.1748589223513; 
+ Fri, 30 May 2025 00:13:43 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad6ac07sm278332366b.177.2025.05.30.00.15.14
+ a640c23a62f3a-ada5d7fed3dsm281027666b.12.2025.05.30.00.13.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:15:14 -0700 (PDT)
+ Fri, 30 May 2025 00:13:40 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 57/77] i386/tdx: Add TDX fixed1 bits to supported CPUIDs
-Date: Fri, 30 May 2025 09:12:27 +0200
-Message-ID: <20250530071250.2050910-58-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 21/77] i386/tdx: Add property sept-ve-disable for tdx-guest
+ object
+Date: Fri, 30 May 2025 09:11:51 +0200
+Message-ID: <20250530071250.2050910-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -111,237 +115,97 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-TDX architecture forcibly sets some CPUID bits for TD guest that VMM
-cannot disable it. They are fixed1 bits.
+Bit 28 of TD attribute, named SEPT_VE_DISABLE. When set to 1, it disables
+EPT violation conversion to #VE on guest TD access of PENDING pages.
 
-Fixed1 bits are not covered by tdx_caps.cpuid (which only contains the
-directly configurable bits), while fixed1 bits are supported for TD guest
-obviously.
+Some guest OS (e.g., Linux TD guest) may require this bit as 1.
+Otherwise refuse to boot.
 
-Add fixed1 bits to tdx_supported_cpuid. Besides, set all the fixed1
-bits to the initial set of KVM's support since KVM might not report them
-as supported.
+Add sept-ve-disable property for tdx-guest object, for user to configure
+this bit.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Acked-by: Markus Armbruster <armbru@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-46-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250508150002.689633-10-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h          |   2 +
- target/i386/kvm/kvm_i386.h |   7 ++
- target/i386/kvm/tdx.c      | 134 +++++++++++++++++++++++++++++++++++++
- target/i386/sev.c          |   8 ---
- 4 files changed, 143 insertions(+), 8 deletions(-)
+ qapi/qom.json         |  8 +++++++-
+ target/i386/kvm/tdx.c | 23 +++++++++++++++++++++++
+ 2 files changed, 30 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 7ffcf91b014..342e4f2a572 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -920,6 +920,8 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
- #define CPUID_7_0_EDX_FSRM              (1U << 4)
- /* AVX512 Vector Pair Intersection to a Pair of Mask Registers */
- #define CPUID_7_0_EDX_AVX512_VP2INTERSECT (1U << 8)
-+ /* "md_clear" VERW clears CPU buffers */
-+#define CPUID_7_0_EDX_MD_CLEAR          (1U << 10)
- /* SERIALIZE instruction */
- #define CPUID_7_0_EDX_SERIALIZE         (1U << 14)
- /* TSX Suspend Load Address Tracking instruction */
-diff --git a/target/i386/kvm/kvm_i386.h b/target/i386/kvm/kvm_i386.h
-index 484a1de84d5..5f83e8850a2 100644
---- a/target/i386/kvm/kvm_i386.h
-+++ b/target/i386/kvm/kvm_i386.h
-@@ -44,6 +44,13 @@ void kvm_request_xsave_components(X86CPU *cpu, uint64_t mask);
+diff --git a/qapi/qom.json b/qapi/qom.json
+index 3d7e11efc38..5a88d364236 100644
+--- a/qapi/qom.json
++++ b/qapi/qom.json
+@@ -1055,10 +1055,16 @@
+ # @attributes: The 'attributes' of a TD guest that is passed to
+ #     KVM_TDX_INIT_VM
+ #
++# @sept-ve-disable: toggle bit 28 of TD attributes to control disabling
++#     of EPT violation conversion to #VE on guest TD access of PENDING
++#     pages.  Some guest OS (e.g., Linux TD guest) may require this to
++#     be set, otherwise they refuse to boot.
++#
+ # Since: 10.1
+ ##
+ { 'struct': 'TdxGuestProperties',
+-  'data': { '*attributes': 'uint64' } }
++  'data': { '*attributes': 'uint64',
++            '*sept-ve-disable': 'bool' } }
  
- #ifdef CONFIG_KVM
- 
-+#include <linux/kvm.h>
-+
-+typedef struct KvmCpuidInfo {
-+    struct kvm_cpuid2 cpuid;
-+    struct kvm_cpuid_entry2 entries[KVM_MAX_CPUID_ENTRIES];
-+} KvmCpuidInfo;
-+
- bool kvm_is_vm_type_supported(int type);
- bool kvm_has_adjust_clock_stable(void);
- bool kvm_has_exception_payload(void);
+ ##
+ # @ThreadContextProperties:
 diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e3b7ad6d146..9d92ff1484b 100644
+index 2d2d48c083e..32ba3982ff1 100644
 --- a/target/i386/kvm/tdx.c
 +++ b/target/i386/kvm/tdx.c
-@@ -367,6 +367,133 @@ static Notifier tdx_machine_done_notify = {
-     .notify = tdx_finalize_vm,
- };
+@@ -18,6 +18,8 @@
+ #include "kvm_i386.h"
+ #include "tdx.h"
  
-+/*
-+ * Some CPUID bits change from fixed1 to configurable bits when TDX module
-+ * supports TDX_FEATURES0.VE_REDUCTION. e.g., MCA/MCE/MTRR/CORE_CAPABILITY.
-+ *
-+ * To make QEMU work with all the versions of TDX module, keep the fixed1 bits
-+ * here if they are ever fixed1 bits in any of the version though not fixed1 in
-+ * the latest version. Otherwise, with the older version of TDX module, QEMU may
-+ * treat the fixed1 bit as unsupported.
-+ *
-+ * For newer TDX module, it does no harm to keep them in tdx_fixed1_bits even
-+ * though they changed to configurable bits. Because tdx_fixed1_bits is used to
-+ * setup the supported bits.
-+ */
-+KvmCpuidInfo tdx_fixed1_bits = {
-+    .cpuid.nent = 8,
-+    .entries[0] = {
-+        .function = 0x1,
-+        .index = 0,
-+        .ecx = CPUID_EXT_SSE3 | CPUID_EXT_PCLMULQDQ | CPUID_EXT_DTES64 |
-+               CPUID_EXT_DSCPL | CPUID_EXT_SSSE3 | CPUID_EXT_CX16 |
-+               CPUID_EXT_PDCM | CPUID_EXT_PCID | CPUID_EXT_SSE41 |
-+               CPUID_EXT_SSE42 | CPUID_EXT_X2APIC | CPUID_EXT_MOVBE |
-+               CPUID_EXT_POPCNT | CPUID_EXT_AES | CPUID_EXT_XSAVE |
-+               CPUID_EXT_RDRAND | CPUID_EXT_HYPERVISOR,
-+        .edx = CPUID_FP87 | CPUID_VME | CPUID_DE | CPUID_PSE | CPUID_TSC |
-+               CPUID_MSR | CPUID_PAE | CPUID_MCE | CPUID_CX8 | CPUID_APIC |
-+               CPUID_SEP | CPUID_MTRR | CPUID_PGE | CPUID_MCA | CPUID_CMOV |
-+               CPUID_PAT | CPUID_CLFLUSH | CPUID_DTS | CPUID_MMX | CPUID_FXSR |
-+               CPUID_SSE | CPUID_SSE2,
-+    },
-+    .entries[1] = {
-+        .function = 0x6,
-+        .index = 0,
-+        .eax = CPUID_6_EAX_ARAT,
-+    },
-+    .entries[2] = {
-+        .function = 0x7,
-+        .index = 0,
-+        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
-+        .ebx = CPUID_7_0_EBX_FSGSBASE | CPUID_7_0_EBX_FDP_EXCPTN_ONLY |
-+               CPUID_7_0_EBX_SMEP | CPUID_7_0_EBX_INVPCID |
-+               CPUID_7_0_EBX_ZERO_FCS_FDS | CPUID_7_0_EBX_RDSEED |
-+               CPUID_7_0_EBX_SMAP | CPUID_7_0_EBX_CLFLUSHOPT |
-+               CPUID_7_0_EBX_CLWB | CPUID_7_0_EBX_SHA_NI,
-+        .ecx = CPUID_7_0_ECX_BUS_LOCK_DETECT | CPUID_7_0_ECX_MOVDIRI |
-+               CPUID_7_0_ECX_MOVDIR64B,
-+        .edx = CPUID_7_0_EDX_MD_CLEAR | CPUID_7_0_EDX_SPEC_CTRL |
-+               CPUID_7_0_EDX_STIBP | CPUID_7_0_EDX_FLUSH_L1D |
-+               CPUID_7_0_EDX_ARCH_CAPABILITIES | CPUID_7_0_EDX_CORE_CAPABILITY |
-+               CPUID_7_0_EDX_SPEC_CTRL_SSBD,
-+    },
-+    .entries[3] = {
-+        .function = 0x7,
-+        .index = 2,
-+        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
-+        .edx = CPUID_7_2_EDX_PSFD | CPUID_7_2_EDX_IPRED_CTRL |
-+               CPUID_7_2_EDX_RRSBA_CTRL | CPUID_7_2_EDX_BHI_CTRL,
-+    },
-+    .entries[4] = {
-+        .function = 0xD,
-+        .index = 0,
-+        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
-+        .eax = XSTATE_FP_MASK | XSTATE_SSE_MASK,
-+    },
-+    .entries[5] = {
-+        .function = 0xD,
-+        .index = 1,
-+        .flags = KVM_CPUID_FLAG_SIGNIFCANT_INDEX,
-+        .eax = CPUID_XSAVE_XSAVEOPT | CPUID_XSAVE_XSAVEC|
-+               CPUID_XSAVE_XGETBV1 | CPUID_XSAVE_XSAVES,
-+    },
-+    .entries[6] = {
-+        .function = 0x80000001,
-+        .index = 0,
-+        .ecx = CPUID_EXT3_LAHF_LM | CPUID_EXT3_ABM | CPUID_EXT3_3DNOWPREFETCH,
-+        /*
-+         * Strictly speaking, SYSCALL is not fixed1 bit since it depends on
-+         * the CPU to be in 64-bit mode. But here fixed1 is used to serve the
-+         * purpose of supported bits for TDX. In this sense, SYACALL is always
-+         * supported.
-+         */
-+        .edx = CPUID_EXT2_SYSCALL | CPUID_EXT2_NX | CPUID_EXT2_PDPE1GB |
-+               CPUID_EXT2_RDTSCP | CPUID_EXT2_LM,
-+    },
-+    .entries[7] = {
-+        .function = 0x80000007,
-+        .index = 0,
-+        .edx = CPUID_APM_INVTSC,
-+    },
-+};
++#define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
 +
-+static struct kvm_cpuid_entry2 *find_in_supported_entry(uint32_t function,
-+                                                        uint32_t index)
-+{
-+    struct kvm_cpuid_entry2 *e;
-+
-+    e = cpuid_find_entry(tdx_supported_cpuid, function, index);
-+    if (!e) {
-+        if (tdx_supported_cpuid->nent >= KVM_MAX_CPUID_ENTRIES) {
-+            error_report("tdx_supported_cpuid requries more space than %d entries",
-+                          KVM_MAX_CPUID_ENTRIES);
-+            exit(1);
-+        }
-+        e = &tdx_supported_cpuid->entries[tdx_supported_cpuid->nent++];
-+        e->function = function;
-+        e->index = index;
-+    }
-+
-+    return e;
-+}
-+
-+static void tdx_add_supported_cpuid_by_fixed1_bits(void)
-+{
-+    struct kvm_cpuid_entry2 *e, *e1;
-+    int i;
-+
-+    for (i = 0; i < tdx_fixed1_bits.cpuid.nent; i++) {
-+        e = &tdx_fixed1_bits.entries[i];
-+
-+        e1 = find_in_supported_entry(e->function, e->index);
-+        e1->eax |= e->eax;
-+        e1->ebx |= e->ebx;
-+        e1->ecx |= e->ecx;
-+        e1->edx |= e->edx;
-+    }
-+}
-+
- static void tdx_setup_supported_cpuid(void)
- {
-     if (tdx_supported_cpuid) {
-@@ -379,6 +506,8 @@ static void tdx_setup_supported_cpuid(void)
-     memcpy(tdx_supported_cpuid->entries, tdx_caps->cpuid.entries,
-            tdx_caps->cpuid.nent * sizeof(struct kvm_cpuid_entry2));
-     tdx_supported_cpuid->nent = tdx_caps->cpuid.nent;
-+
-+    tdx_add_supported_cpuid_by_fixed1_bits();
+ static TdxGuest *tdx_guest;
+ 
+ static struct kvm_tdx_capabilities *tdx_caps;
+@@ -252,6 +254,24 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     return 0;
  }
  
- static int tdx_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-@@ -463,6 +592,11 @@ static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
- {
-     struct kvm_cpuid_entry2 *e;
- 
-+    e = cpuid_find_entry(&tdx_fixed1_bits.cpuid, feature, index);
-+    if (e) {
-+        value |= cpuid_entry_get_reg(e, reg);
-+    }
++static bool tdx_guest_get_sept_ve_disable(Object *obj, Error **errp)
++{
++    TdxGuest *tdx = TDX_GUEST(obj);
 +
-     if (is_feature_word_cpuid(feature, index, reg)) {
-         e = cpuid_find_entry(tdx_supported_cpuid, feature, index);
-         if (e) {
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 8b87b7cdec3..adf787797e7 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -212,14 +212,6 @@ static const char *const sev_fw_errlist[] = {
++    return !!(tdx->attributes & TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE);
++}
++
++static void tdx_guest_set_sept_ve_disable(Object *obj, bool value, Error **errp)
++{
++    TdxGuest *tdx = TDX_GUEST(obj);
++
++    if (value) {
++        tdx->attributes |= TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE;
++    } else {
++        tdx->attributes &= ~TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE;
++    }
++}
++
+ /* tdx guest */
+ OBJECT_DEFINE_TYPE_WITH_INTERFACES(TdxGuest,
+                                    tdx_guest,
+@@ -272,6 +292,9 @@ static void tdx_guest_init(Object *obj)
  
- #define SEV_FW_MAX_ERROR      ARRAY_SIZE(sev_fw_errlist)
+     object_property_add_uint64_ptr(obj, "attributes", &tdx->attributes,
+                                    OBJ_PROP_FLAG_READWRITE);
++    object_property_add_bool(obj, "sept-ve-disable",
++                             tdx_guest_get_sept_ve_disable,
++                             tdx_guest_set_sept_ve_disable);
+ }
  
--/* <linux/kvm.h> doesn't expose this, so re-use the max from kvm.c */
--#define KVM_MAX_CPUID_ENTRIES 100
--
--typedef struct KvmCpuidInfo {
--    struct kvm_cpuid2 cpuid;
--    struct kvm_cpuid_entry2 entries[KVM_MAX_CPUID_ENTRIES];
--} KvmCpuidInfo;
--
- #define SNP_CPUID_FUNCTION_MAXCOUNT 64
- #define SNP_CPUID_FUNCTION_UNKNOWN 0xFFFFFFFF
- 
+ static void tdx_guest_finalize(Object *obj)
 -- 
 2.49.0
 
