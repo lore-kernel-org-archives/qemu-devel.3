@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF8CFC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:25:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA27BC54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:25:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKu1B-0001wr-7R; Fri, 30 May 2025 03:19:06 -0400
+	id 1uKty6-0004cr-H3; Fri, 30 May 2025 03:15:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxw-0004ZC-DD
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:45 -0400
+ id 1uKtwz-0002pV-NA
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxu-0007GI-I0
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:44 -0400
+ id 1uKtwy-0006zz-2u
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589341;
+ s=mimecast20190719; t=1748589283;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8CGgn1CBZ1LEjyTwoXOGqxJt2LdA5Kz7+q9O2PojpPI=;
- b=WGaZFlfQk67qU94ghp4CgdLe77ToWJOtw5Kc6mk/Vad6DFU2KVupVtfSfNs4r8VxrR/2op
- 8MbxE6941Ba0IucuXEmzhVobC/oyAp+Qym+klyD7eX4+cFXLFr+D/Tu4n34bVh76pznJnb
- 3qFnImG3nyVYDly9IUuvbkxWDF1+E4o=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=PwZVoCOHIB/52C9EF+XqubWfnZl+ifPa0w9UOgqMjCQ=;
+ b=LO3zniNIqkqgULCGX2Ye9/XNIXa7wFTaUvKEr2+w6iZQ8RNd6MpfuOfooz0hHzUgRImjI4
+ dN6IuAbAoWSpr4KcX5kt+WF+2QR74y1bTU3nPn60j9cnEXE2mSzERu5VuwXux/IU4io+sK
+ bI0sntTDkSzn9hAPslvPZ9GM1lsOwNk=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-D3anXKoKMYWJlNbi7fPJKw-1; Fri, 30 May 2025 03:15:39 -0400
-X-MC-Unique: D3anXKoKMYWJlNbi7fPJKw-1
-X-Mimecast-MFC-AGG-ID: D3anXKoKMYWJlNbi7fPJKw_1748589339
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-acf00f500d2so129794266b.2
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:15:39 -0700 (PDT)
+ us-mta-367-uhdKweS0NhOWDu7NyKwCcg-1; Fri, 30 May 2025 03:14:42 -0400
+X-MC-Unique: uhdKweS0NhOWDu7NyKwCcg-1
+X-Mimecast-MFC-AGG-ID: uhdKweS0NhOWDu7NyKwCcg_1748589281
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-603f71f6432so1478169a12.3
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:14:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589337; x=1749194137;
+ d=1e100.net; s=20230601; t=1748589280; x=1749194080;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8CGgn1CBZ1LEjyTwoXOGqxJt2LdA5Kz7+q9O2PojpPI=;
- b=mDVAmhsx+9FdBWjDNuFJeyNO4KkYtlokPri69MSgvL/i3LXbvzN/8IeQkaVonDrrKf
- JI+OXY9RVxvy6S4DAExdEsjGBTQw9xwlvYiz8oc4mKVXZ2foYWMcvwiq5psPb8M572o+
- gj5JvWTrpW41ee4gM3OgwOWv3G2gGWs5kzOubx2UqgE8/xkEqXuLzauQlg9D+FSjyJ5H
- D4WDE/t5S5d8rA3Ws3iJzVde+mSoPi/5NrYzvzcI75qR98IBxkhTdNbStd/IrzZyXBvh
- 326kqQfKKjm5LUNJHgIu9OqD1iV6bD2oh956nxoLAy0q/s0Afos7bCv7cuHAfWcIkCHj
- StHQ==
-X-Gm-Message-State: AOJu0YylO/ZMU1eIfqRq8wGzc1mc0yTizOL4zZ1ylpsW3zIOdI0Lt4OV
- cacc3Ftx8iHXL8H4jyQh/GtLODlgLVcLbdlkmNCo9/aKtnYtm7VRriRvLlN5H7/f3zYN12gNVcE
- dy7PNzFEASBcYk/9pPSBQ4NuStXUjuY8KP6Fvp6GFuKKTdEF8a0KkjVSlqe98zjOiUDHW9nEy7c
- 8idKgS5Idf8G2K93Iaa5+VcpLEmNYJke78NeSP4Cz+
-X-Gm-Gg: ASbGncuRAjnFA5G3uM8KYjaJQqhg6zNnMeSfwdxcCkRbZLSUiEYH+PEaQsUKSVS8iJB
- Vd8OKNdjbW7DcceXGt6oKkLB7AIMRenRapLga6JXXRVeRE7yDvHNeANdqCf8lP6Uz2gNfGkHmGt
- N4XcKeGp8JlbItjusb4ExMFAv+MmPP0P0nUbHDVDUsloO8ejSB2lHJmBYx/1N1e8uvpjvujs0AE
- bkCu8ouH1XvXUuIzAAAr3sv8svykIQzh6ntU/ITGyLg/xhhGQV5OzFNq6bLVEiwV55GZTzXYVsg
- M077ZhNUpbE9ug==
-X-Received: by 2002:a17:907:720b:b0:adb:2d60:25ef with SMTP id
- a640c23a62f3a-adb32301642mr199220866b.43.1748589337421; 
- Fri, 30 May 2025 00:15:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFe/dCep8yL6dql6QbksFCd+PLTrlY0UinDcSvxhZVCFZRSGACBW3TvWb/+i/R8iRebru+JJA==
-X-Received: by 2002:a17:907:720b:b0:adb:2d60:25ef with SMTP id
- a640c23a62f3a-adb32301642mr199218366b.43.1748589336902; 
- Fri, 30 May 2025 00:15:36 -0700 (PDT)
+ bh=PwZVoCOHIB/52C9EF+XqubWfnZl+ifPa0w9UOgqMjCQ=;
+ b=ZRgRRnBuiB9ZhFYcmQSNqUVgyk3eSlTpZegp+TVfDxsoIcnkRwiHLotOo6ljl49fn8
+ oDHj8Cefjxr0/XpEOy/0/oOmqfshyLog+Vrc/1Y/8bYkCZi7Y6EpTICuKG9MC8N3SqPX
+ gIwS5wIxC48FqwCvjdJuM1B2DRVBnMQh9cdcNHo5lGdTQXiDmpw1idyAWfn9QhDpz4+t
+ l3UTY24mWVIe3mDtEU0gokp9wh4x1mile+fjYhBGynGQ+e5Dz6ymtyUHGm73R6yAaZ7F
+ MUglKp8jZxl8tc35P3LO5xG0sBwr9Q55j+unRbn7VlHeKTx/Rxgvjm37++a3bleIJAWZ
+ Xb5Q==
+X-Gm-Message-State: AOJu0YxI+a+oBexFHuOaD7Rvceo1IpDvX6jqdmMYCDl9XC9ioVm7Noas
+ qTHUEpmdlKppm/tvuokyursmOtGvqxSGVXeeA0J7jNq70PtwFoZo8yefE8ApGRhS6sIrb5hPZj7
+ ken/JmT04+PtRukctimdM07u22jBreebGAmA3aIFMyAwA11NUCfLYcw1mhqDbJe3NVPA4lKY2ER
+ XiFEVbqIjxCMzyjAgjsSCD39FyasGv1+GPE36wW8mG
+X-Gm-Gg: ASbGnctqCbUNYSv2UY4ztB6FcJbyMBZ00ZipQEYQ05lm6b/MDxzQUk/47PAwILdEnN/
+ fBUrazdiknCGDt9IoUPexmIY7gON5ftIX3xAdexNstf0jT12M7WQtTYM0WIFb5C74v8b5l/IZE+
+ RCh0KHmKlKDE/7YEVxMoPUhfIvKRNW3Bn7EqGBOLCocUNZ8aQQ0kRcJIq3oK1oFBzD6+f2OIoJA
+ QPluNSxvEFI9yNV++U/j1rjfJSQsM6wxe/veC3DlalLLEEjB07JSRLMVp4EHdA+7+vMBYJq9TZQ
+ 9zEmLTjQZHTuV/xifFAnUyBJ
+X-Received: by 2002:a17:907:3e05:b0:ad8:9ff4:c02f with SMTP id
+ a640c23a62f3a-adb36b2377bmr106449666b.19.1748589279930; 
+ Fri, 30 May 2025 00:14:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEqhohebExsT4I9eo0WN/53RLQXCP/BwHmngV95FKmTdLu/qlNvyd++YM3FRvq0uk5YShCWJg==
+X-Received: by 2002:a17:907:3e05:b0:ad8:9ff4:c02f with SMTP id
+ a640c23a62f3a-adb36b2377bmr106447866b.19.1748589279491; 
+ Fri, 30 May 2025 00:14:39 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60566c5c5casm1208218a12.25.2025.05.30.00.15.35
+ a640c23a62f3a-ada5d7fece0sm277015166b.3.2025.05.30.00.14.38
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:15:35 -0700 (PDT)
+ Fri, 30 May 2025 00:14:38 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 66/77] i386/tdx: Don't treat SYSCALL as unavailable
-Date: Fri, 30 May 2025 09:12:36 +0200
-Message-ID: <20250530071250.2050910-67-pbonzini@redhat.com>
+Subject: [PULL 43/77] i386/cpu: introduce
+ x86_confidential_guest_cpu_instance_init()
+Date: Fri, 30 May 2025 09:12:13 +0200
+Message-ID: <20250530071250.2050910-44-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
@@ -111,48 +112,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-On Intel CPU, the value of CPUID_EXT2_SYSCALL depends on the mode of
-the vcpu. It's 0 outside 64-bit mode and 1 in 64-bit mode.
-
-The initial state of TDX vcpu is 32-bit protected mode. At the time of
-calling KVM_TDX_GET_CPUID, vcpu hasn't started running so the value read
-is 0.
-
-In reality, 64-bit mode should always be supported. So mark
-CPUID_EXT2_SYSCALL always supported to avoid false warning.
+To allow execute confidential guest specific cpu init operations.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-53-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250508150002.689633-32-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/tdx.c | 13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ target/i386/confidential-guest.h | 11 +++++++++++
+ target/i386/cpu.c                |  8 ++++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e474abf3a60..76293029917 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -845,6 +845,19 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
-             continue;
-         }
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 164be7633a2..a86c42a4755 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -39,6 +39,7 @@ struct X86ConfidentialGuestClass {
  
-+        /* Fixup for special cases */
-+        switch (w) {
-+        case FEAT_8000_0001_EDX:
-+            /*
-+             * Intel enumerates SYSCALL bit as 1 only when processor in 64-bit
-+             * mode and before vcpu running it's not in 64-bit mode.
-+             */
-+            actual |= CPUID_EXT2_SYSCALL;
-+            break;
-+        default:
-+            break;
-+        }
+     /* <public> */
+     int (*kvm_type)(X86ConfidentialGuest *cg);
++    void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
+     uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
+                                     int reg, uint32_t value);
+ };
+@@ -59,6 +60,16 @@ static inline int x86_confidential_guest_kvm_type(X86ConfidentialGuest *cg)
+     }
+ }
+ 
++static inline void x86_confidential_guest_cpu_instance_init(X86ConfidentialGuest *cg,
++                                                            CPUState *cpu)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
 +
-         requested = env->features[w];
-         unavailable = requested & ~actual;
-         mark_unavailable_features(cpu, w, unavailable, unav_prefix);
++    if (klass->cpu_instance_init) {
++        klass->cpu_instance_init(cg, cpu);
++    }
++}
++
+ /**
+  * x86_confidential_guest_mask_cpuid_features:
+  *
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 9689f6374e6..4a7c319bb9a 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -37,6 +37,7 @@
+ #include "hw/i386/topology.h"
+ #include "exec/watchpoint.h"
+ #ifndef CONFIG_USER_ONLY
++#include "confidential-guest.h"
+ #include "system/reset.h"
+ #include "qapi/qapi-commands-machine-target.h"
+ #include "system/address-spaces.h"
+@@ -8543,6 +8544,13 @@ static void x86_cpu_post_initfn(Object *obj)
+     }
+ 
+     accel_cpu_instance_init(CPU(obj));
++
++#ifndef CONFIG_USER_ONLY
++    if (current_machine && current_machine->cgs) {
++        x86_confidential_guest_cpu_instance_init(
++            X86_CONFIDENTIAL_GUEST(current_machine->cgs), (CPU(obj)));
++    }
++#endif
+ }
+ 
+ static void x86_cpu_init_default_topo(X86CPU *cpu)
 -- 
 2.49.0
 
