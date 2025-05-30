@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 019A8C54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:26:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8370EC54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:26:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtw1-0000t8-F9; Fri, 30 May 2025 03:13:45 -0400
+	id 1uKu2r-0004zp-S1; Fri, 30 May 2025 03:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvz-0000ne-N1
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uKtyI-0005KV-TS
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:16:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvx-0006s1-RQ
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:43 -0400
+ id 1uKtyE-0007I2-9W
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:16:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589221;
+ s=mimecast20190719; t=1748589361;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=doRJyOV8AutyhhZgEY/vOvD1MJZqBWNu1U5QaUUdXKk=;
- b=DEovMjAmod+zjPxxK2Qegj0ha9WWLKp8aq5iSWMm9chkxA0MY9ngqtoVx6OWj9wDly7OPE
- /cS/tJmCZ2jqMNzlpmdz2ysrJnqor2r+5X1qrbnsvrYJIpfeP7a9WlLsd0j+2A5WbJFaOj
- Hr4RpI8X+tMDmtko8ExnIqu8WUOKPyE=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=k6rnhF8ccsOc0IyQOQ+kTTtn6LraXj7NKQVTXhIToBM=;
+ b=PjibNmhoZHq3k73SMEyhF+W7G5ktKd0NM/lqssegsWC9mlD+EZe2pcG+yxgxJTDJ1YRkR2
+ 39oAiQjteI7TIyhNgcRxWwOzs8hkXpzauQabrwF+ifUpnqnMc+O54P4e+gCeage1PsnED1
+ QQEHjYA4mr9+JYxRAN1PMj0LbHGO9BE=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-357-1tCYav-aMm-Wh8RQg5cQRg-1; Fri, 30 May 2025 03:13:39 -0400
-X-MC-Unique: 1tCYav-aMm-Wh8RQg5cQRg-1
-X-Mimecast-MFC-AGG-ID: 1tCYav-aMm-Wh8RQg5cQRg_1748589219
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ad89da57be0so148841166b.3
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:39 -0700 (PDT)
+ us-mta-532-ZrLWcXsSM4OU7OpKQaQDOA-1; Fri, 30 May 2025 03:16:00 -0400
+X-MC-Unique: ZrLWcXsSM4OU7OpKQaQDOA-1
+X-Mimecast-MFC-AGG-ID: ZrLWcXsSM4OU7OpKQaQDOA_1748589359
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-604e837c1deso1448168a12.1
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:16:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589218; x=1749194018;
+ d=1e100.net; s=20230601; t=1748589358; x=1749194158;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=doRJyOV8AutyhhZgEY/vOvD1MJZqBWNu1U5QaUUdXKk=;
- b=GAT5i6PkXHrjtJZOgCZ+XLBSnNHjd9Q1tHTguu+ezX1Wtvqvq2VybxezU3ZexDfXs6
- 0A3HVn5hfhN2clFP/1AQyHwAQtZdS70I8I8zD4EXHN0LA/F2PE4vy2+vXHnxtcseS4a3
- 1JP0Wf7mvWDlOLg39Q/pArxpEprt5nbVJCslzZuWgL//KtKroT91lnzQR1jJUTf6lvE3
- LjMeXYE86ANuo3mwMMyxE+8O+EMjefmZqDNo9KdCzCpQZinK2C0ETwd85nlM/3Uur2IN
- o9wGiD4mJKf56+Ynq8u1lyz1LW3YIMVZmB/7zi8gYjdcWYxiSgsoJu7x//+SjaLO2BLX
- x7XA==
-X-Gm-Message-State: AOJu0Yw3WmbONlAjfqSyk4noyduSCdfJ5cj8EUy8nVJTQ4o5cRxnuLFF
- 9s3dircmvtf6l1fzEF6sD1evZh+HLa/WTMjH8pv0k9xFDl4mWquZXphEDfw+aBZJb4qM7kGolHt
- 7lBQ0+Jmll45r1YAnui/RFcIkgIf8BcUUN9DrstNdojhalwt5gZNkyIOLpbpliddIqPYRNY81Nl
- ZqkcrehY17TRwkep4/1jrdbxyRUgLHQvOagxoZp9A3
-X-Gm-Gg: ASbGnctfK6qJWpRNKQM1nJL8yF+IHt1zYUdU2nybCub6HrNlfogTBNT0aj/W+mL1SlP
- e5b0LQn6b+eESD6dJm4uMO5TQNpZr8AW7rMlixWro/YVnzD0rNkXW+ybeA24c/FM2wbgi4kK7/9
- 5Vg6J22gQHwPllVOV5yamQTjia8huz2UUEy3CHdgQGJixo6/8IDpXNZn8+5fSqiTXFMoUYQAoVb
- sfmwz+a5yer2PDvtsBUi0fICILxQZl1cbTE9jJfmScfAPyjjvvSyLw+VGMoixQ36QtPhkPtvbng
- KWcMtQDaXqgPzg==
-X-Received: by 2002:a17:907:7203:b0:ad5:8594:652e with SMTP id
- a640c23a62f3a-adb36ba4b75mr91480966b.35.1748589218007; 
- Fri, 30 May 2025 00:13:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGPBgM0CZPRSGDRT9KDmcuHIIl6zmlTOavLAL/DvRI8Wzp43R8yGxdjJFomWlNypFVerQ8gZg==
-X-Received: by 2002:a17:907:7203:b0:ad5:8594:652e with SMTP id
- a640c23a62f3a-adb36ba4b75mr91472866b.35.1748589217250; 
- Fri, 30 May 2025 00:13:37 -0700 (PDT)
+ bh=k6rnhF8ccsOc0IyQOQ+kTTtn6LraXj7NKQVTXhIToBM=;
+ b=PZGtlRoCL0XsrIsSu0Ql5JhUKN1tSOumlcJm5puJ8OcUvMTkFsO1eAemAlgjXxQEtN
+ YOAHY5GGzIdVJklQL/Yiia2xfUuLBz4dcHMxiKCNukZS/C2uB7NWeLALP1+9XN4+sjj/
+ OW8mdDd5XMk/kDMVuavOSK8U9qOxlquZDLiy1dGlbgk+LQc/1iQnWaZZawjrPKbfaUAh
+ XlC8tkZLCAZVxBGa6t2xYO+C7K8dXnWNXeUny0xjODBxzfKGLxKKZxlajo/eDICAt8t6
+ a1RFVEc9QavF4HSDSMg9oAIXkxBABpMyYyZjeg6FThjzybUL8Al2mvIcGXLAxkTL2xVR
+ q+QA==
+X-Gm-Message-State: AOJu0YyQioEdW+ojakVGmUl73T4UCBQFEtqAlZKauIxhcf+OJHn1vuwh
+ cqozbL6K2HzM5ZLHfdz6/W9hSQcdPcgPOAf6xIOoLf4adiu4U65Di9AXw9Koa9pKe1P3X5RDhN2
+ HQIIDrS/JcSJqEiWQHxErUW25wamKZfc++enDCzR0zwslmK/04VIC37+Z8erlNt/prQPiAMjETs
+ HUwJhz7wvJbctuAwVKqPh2VpS+Nymq4LdRVb1nRMWy
+X-Gm-Gg: ASbGncs5ZY9J9Vzpktwq+n4BKjRHWeijVnCHjfvGEp5YGIjbulEoi3JqJKTLPMlO9hm
+ L0cJnOr8SzvWefmYbSH8gfiDKu5ds2eE3sj/mx64PPvk5Gs1jW/UBmVOYekRJmW1W2h0zjc28Sc
+ oX7kskdg7b9VZ/Jvma8DMu2HPrAIQN2FSu8CUFknGyYwr5CoWWl4zexLObYHmAFgIRd33Ju3qnv
+ m3JmwneU3FMMULM63Wy8AZHOaSRao4/eXzIlVHvf4aGpB3S7abHnxZUequFg0AK91AiM4g3Kpa+
+ 8eeM849NLDCTdw==
+X-Received: by 2002:a17:906:36d9:b0:adb:3509:b459 with SMTP id
+ a640c23a62f3a-adb3509b66bmr95755266b.19.1748589358280; 
+ Fri, 30 May 2025 00:15:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+TFC6Oz/9zd5Gy/05edUDG01AbUyet40d1cdAwasS+2wxVbEN7jmo6+R7BK9+MtMMeMNx/Q==
+X-Received: by 2002:a17:906:36d9:b0:adb:3509:b459 with SMTP id
+ a640c23a62f3a-adb3509b66bmr95752666b.19.1748589357752; 
+ Fri, 30 May 2025 00:15:57 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5dd043c2sm275945466b.102.2025.05.30.00.13.35
+ a640c23a62f3a-ada5d7fef58sm275090866b.22.2025.05.30.00.15.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:13:36 -0700 (PDT)
+ Fri, 30 May 2025 00:15:56 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 19/77] kvm: Introduce kvm_arch_pre_create_vcpu()
-Date: Fri, 30 May 2025 09:11:49 +0200
-Message-ID: <20250530071250.2050910-20-pbonzini@redhat.com>
+Cc: Babu Moger <babu.moger@amd.com>,
+ Maksim Davydov <davydov-max@yandex-team.ru>, Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 74/77] target/i386: Add couple of feature bits in
+ CPUID_Fn80000021_EAX
+Date: Fri, 30 May 2025 09:12:44 +0200
+Message-ID: <20250530071250.2050910-75-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -111,172 +110,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Babu Moger <babu.moger@amd.com>
 
-Introduce kvm_arch_pre_create_vcpu(), to perform arch-dependent
-work prior to create any vcpu. This is for i386 TDX because it needs
-call TDX_INIT_VM before creating any vcpu.
+Add CPUID bit indicates that a WRMSR to MSR_FS_BASE, MSR_GS_BASE, or
+MSR_KERNEL_GS_BASE is non-serializing amd PREFETCHI that the indicates
+support for IC prefetch.
 
-The specific implementation for i386 will be added in the future patch.
+CPUID_Fn80000021_EAX
+Bit    Feature description
+20     Indicates support for IC prefetch.
+1      FsGsKernelGsBaseNonSerializing.
+       WRMSR to FS_BASE, GS_BASE and KernelGSbase are non-serializing.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Link: https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/programmer-references/57238.zip
+Signed-off-by: Babu Moger <babu.moger@amd.com>
+Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-8-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/a5f6283a59579b09ac345b3f21ecb3b3b2d92451.1746734284.git.babu.moger@amd.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/kvm.h       | 1 +
- accel/kvm/kvm-all.c        | 5 +++++
- target/arm/kvm.c           | 5 +++++
- target/i386/kvm/kvm.c      | 5 +++++
- target/loongarch/kvm/kvm.c | 4 ++++
- target/mips/kvm.c          | 5 +++++
- target/ppc/kvm.c           | 5 +++++
- target/riscv/kvm/kvm-cpu.c | 5 +++++
- target/s390x/kvm/kvm.c     | 5 +++++
- 9 files changed, 40 insertions(+)
+ target/i386/cpu.h | 4 ++++
+ target/i386/cpu.c | 4 ++--
+ 2 files changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index b690dda1370..62ec131d4d8 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -376,6 +376,7 @@ int kvm_arch_get_default_type(MachineState *ms);
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 22e82444aec..1146465c8c6 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -1092,12 +1092,16 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
  
- int kvm_arch_init(MachineState *ms, KVMState *s);
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp);
- int kvm_arch_init_vcpu(CPUState *cpu);
- int kvm_arch_destroy_vcpu(CPUState *cpu);
- 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 278a50690c9..42d239cf8f2 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -545,6 +545,11 @@ int kvm_init_vcpu(CPUState *cpu, Error **errp)
- 
-     trace_kvm_init_vcpu(cpu->cpu_index, kvm_arch_vcpu_id(cpu));
- 
-+    ret = kvm_arch_pre_create_vcpu(cpu, errp);
-+    if (ret < 0) {
-+        goto err;
-+    }
-+
-     ret = kvm_create_vcpu(cpu);
-     if (ret < 0) {
-         error_setg_errno(errp, -ret,
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index a2791aa866f..74fda8b8090 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -1846,6 +1846,11 @@ static int kvm_arm_sve_set_vls(ARMCPU *cpu)
- 
- #define ARM_CPU_ID_MPIDR       3, 0, 0, 0, 5
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     int ret;
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 6d88495d476..446f0600d4e 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2051,6 +2051,11 @@ full:
-     abort();
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     struct {
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 1bda570482c..c66bdd5302a 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -1071,7 +1071,11 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-             env->pv_features |= BIT(KVM_FEATURE_VIRT_EXTIOI);
-         }
-     }
-+    return 0;
-+}
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-     return 0;
- }
- 
-diff --git a/target/mips/kvm.c b/target/mips/kvm.c
-index d67b7c1a8ec..ec53acb51a1 100644
---- a/target/mips/kvm.c
-+++ b/target/mips/kvm.c
-@@ -61,6 +61,11 @@ int kvm_arch_irqchip_create(KVMState *s)
-     return 0;
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     CPUMIPSState *env = cpu_env(cs);
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 8a957c3c7d4..015658049e6 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -479,6 +479,11 @@ static void kvmppc_hw_debug_points_init(CPUPPCState *cenv)
-     }
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     PowerPCCPU *cpu = POWERPC_CPU(cs);
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index efb41fac53e..e1a04be20fe 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1472,6 +1472,11 @@ static int kvm_vcpu_enable_sbi_dbcn(RISCVCPU *cpu, CPUState *cs)
-     return kvm_set_one_reg(cs, kvm_sbi_dbcn.kvm_reg_id, &reg);
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     int ret = 0;
-diff --git a/target/s390x/kvm/kvm.c b/target/s390x/kvm/kvm.c
-index 6cd2ebc5f1f..67d9a1977c0 100644
---- a/target/s390x/kvm/kvm.c
-+++ b/target/s390x/kvm/kvm.c
-@@ -398,6 +398,11 @@ unsigned long kvm_arch_vcpu_id(CPUState *cpu)
-     return cpu->cpu_index;
- }
- 
-+int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
-+{
-+    return 0;
-+}
-+
- int kvm_arch_init_vcpu(CPUState *cs)
- {
-     unsigned int max_cpus = MACHINE(qdev_get_machine())->smp.max_cpus;
+ /* Processor ignores nested data breakpoints */
+ #define CPUID_8000_0021_EAX_NO_NESTED_DATA_BP            (1U << 0)
++/* WRMSR to FS_BASE, GS_BASE, or KERNEL_GS_BASE is non-serializing */
++#define CPUID_8000_0021_EAX_FS_GS_BASE_NS                (1U << 1)
+ /* LFENCE is always serializing */
+ #define CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING    (1U << 2)
+ /* Null Selector Clears Base */
+ #define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE            (1U << 6)
+ /* Automatic IBRS */
+ #define CPUID_8000_0021_EAX_AUTO_IBRS                    (1U << 8)
++/* Indicates support for IC prefetch */
++#define CPUID_8000_0021_EAX_PREFETCHI                    (1U << 20)
+ /* Enhanced Return Address Predictor Scurity */
+ #define CPUID_8000_0021_EAX_ERAPS                        (1U << 24)
+ /* Selective Branch Predictor Barrier */
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index d01a808e3a3..0d1b9077788 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -1253,12 +1253,12 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+     [FEAT_8000_0021_EAX] = {
+         .type = CPUID_FEATURE_WORD,
+         .feat_names = {
+-            "no-nested-data-bp", NULL, "lfence-always-serializing", NULL,
++            "no-nested-data-bp", "fs-gs-base-ns", "lfence-always-serializing", NULL,
+             NULL, NULL, "null-sel-clr-base", NULL,
+             "auto-ibrs", NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+             NULL, NULL, NULL, NULL,
+-            NULL, NULL, NULL, NULL,
++            "prefetchi", NULL, NULL, NULL,
+             "eraps", NULL, NULL, "sbpb",
+             "ibpb-brtype", "srso-no", "srso-user-kernel-no", NULL,
+         },
 -- 
 2.49.0
 
