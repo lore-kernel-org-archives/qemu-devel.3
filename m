@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A233C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:21:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5009FC54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:21:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtz9-0007Ob-Hd; Fri, 30 May 2025 03:16:59 -0400
+	id 1uKtyo-0005ve-Hn; Fri, 30 May 2025 03:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtwx-0002mY-MG
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uKtxU-0003ix-Gu
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtww-0006zl-2n
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:43 -0400
+ id 1uKtxS-0007E0-Jr
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589281;
+ s=mimecast20190719; t=1748589314;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/HbLb3H2jBZcMJMch8FTFxOlzVNoTW2d20cM59CCIjs=;
- b=R4S4Sz/iBbqYmTAjkf5n7qb3lvfRX4FfMq7kfZBuW1c6q6rBudn9lnoZjynsKTa25psxJv
- VK9d1xV/b8I2j6gewizGAkn7iPgiNnjwcQnZi2vQzUa4V5aV3HTg+K18nG2pGSqC9cLnv7
- iOEIczeLDddrOFytu+qrOXJWNH0DAbs=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dvks4Nng1J1od24AputbkRlHaoOQCBsdzfvCXnt7Xks=;
+ b=A6R67xE+Q/ZTsfX2bLdTfJreXFFiL2hUmDiNyqrH1uQI5JjtxWyg0nsyNpod1OeaAtB3ql
+ kNJM9Z2LQZg/ybdbha8zL+aNTO7wDqjXMWGzyQNqJ6m/Qafa1XL5LsB05uPZpxk7aeMsBr
+ HmOKX0Fo6y698OJmEgz72Idh+ogNI/E=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-325-hqroKK6lO9KmnYLXmgzRGw-1; Fri, 30 May 2025 03:14:39 -0400
-X-MC-Unique: hqroKK6lO9KmnYLXmgzRGw-1
-X-Mimecast-MFC-AGG-ID: hqroKK6lO9KmnYLXmgzRGw_1748589279
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-604fe4c3130so1406985a12.3
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:14:39 -0700 (PDT)
+ us-mta-652-Y2oWfNuWMA-Y1FR2uy7Vkg-1; Fri, 30 May 2025 03:15:12 -0400
+X-MC-Unique: Y2oWfNuWMA-Y1FR2uy7Vkg-1
+X-Mimecast-MFC-AGG-ID: Y2oWfNuWMA-Y1FR2uy7Vkg_1748589311
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-acb94dbd01fso158778166b.1
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:15:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589278; x=1749194078;
+ d=1e100.net; s=20230601; t=1748589310; x=1749194110;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/HbLb3H2jBZcMJMch8FTFxOlzVNoTW2d20cM59CCIjs=;
- b=euwqwyfFleS1Qi3+J8leWVN1NglAWNmYtBSZMuG+MsSBi8d4XP8LXoErGpk8rsGXCK
- QLctH9kE9vbnjML2oSniUPlou+YXEuL86yPJ4T3Fm3dcF1mi7/984TqXeF8kXcwQQld9
- BxrUTB8DpniQeZ2RSK042ZIv52JOmfr9dgKH/xBx1xdUtk97LJqlEcCVvlts7NA9MIFN
- ap/ttg5hoAMdvDU31qMPd4H6fYsWqyHDSF/gDWlXS5Pf/YERADYRq6HlZs2l8FVjnTLB
- g3jmwAu4tHCJx/zA6U2+n6EBMk42iqydDxcsmQWBKXQG6TtGMOCm34Ga+O9VAbINGM3e
- D+Hw==
-X-Gm-Message-State: AOJu0YxTfkY6V752343mutCdjGtLYFfrDCT/m57uhzH/ruww09dqEXjW
- TlzvgO5DriF3qAC5Rl4HZKWXk/XMV39W/PHmr9uI8BGbjj2kHs5YSGdCEYIxgaiJbuEUVV1j3EO
- fdxYhCCMmYnbn7Ff+qkAL1a+bf/68sggiHFhSCB2tcxpFsf2vw9VS+OggWDtaAXqP6oSlbo3xiA
- KdsKAryBiXwV1+qH63JbD9qg6c64ecBhGZoU/Xr3Um
-X-Gm-Gg: ASbGncs1OqvGDQcCk0AJqmggROUmU1FL8LDT74absqM1Z/REfq/B7edfRdwCxPjr0+h
- 3QavomcI4xEIHr5De/tcXYtQxt12G0t4iHnSH6WYGtTmFmgoXCFd8WkyvNizOVKIVD5e6MQogGL
- jzirWI3o+/zjDQQohq5IL63zkqTy/LuPfSW3WpyF64MQvfh5SbBlGmERqANrZMp0t7PjPdxprZU
- FNmWul9A2yH2f7mL/8oHWtP4SvVU6adQtVn0RGhpWImMBcwwLfctTCON2qlWtctwNWQGxWkMX3i
- m/ccsChbnjLqGQ==
-X-Received: by 2002:a05:6402:2692:b0:601:e385:e484 with SMTP id
- 4fb4d7f45d1cf-6056dd39ad7mr1963629a12.10.1748589277838; 
- Fri, 30 May 2025 00:14:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmAAz3kyfimRUu/TfXCCwrxCLK3yE6BVWyBQTgrXBU8qg5NojdTgimiNB5pt64maq+Z28YEw==
-X-Received: by 2002:a05:6402:2692:b0:601:e385:e484 with SMTP id
- 4fb4d7f45d1cf-6056dd39ad7mr1963609a12.10.1748589277434; 
- Fri, 30 May 2025 00:14:37 -0700 (PDT)
+ bh=dvks4Nng1J1od24AputbkRlHaoOQCBsdzfvCXnt7Xks=;
+ b=mJHsFKXodNN9r/UdcFWjTh0Dhh1HiU5BFgNKWNt9aERX0fFAHPDkGkAnTUSRKhpoj5
+ GOaBvO3HvQbWzNGMBd/vZA89Xofcun8SE3YJ73OL2cyUnUwV/pAF3kzt1pi+izoIPDk2
+ sGw0Z4jkoJHdXqWBvZBQCJPKHhxLA5peqpSf7ngemDPB6ak/W84x42oFM3MxzMqSO+Wq
+ VvrBeKFQJIXaupSb8BwW4fAWIzWvhnSXvJC3elhkrEZ3TAo88z1WTiEWjivN0pAuuK4L
+ OVieEEKYFqqvPJJo+7ng5X5OfZ8L9bjvvtKPWg2tC9rluiRe0JJIRGiUEnoKQfJcCP3m
+ voIA==
+X-Gm-Message-State: AOJu0Yyv6t4AvxJYYx6okmnx2sTqm6zwMm2CBtqcjv/8xFNELRcCfF+B
+ eBDCfxKBhn2SmBHWl3DrRJJOz+HOgwbwgFGkDKUdU+ifKOvRoSyNbp9+hj2QDr2O6eH77Dp287b
+ GrtZSRFzAKp9VUQsFG0jBvRi4FlCmmfhV2YCVRb6kf8Cf3W+/puT7YSWR23PSGTKG65uVP+tg4V
+ xhQIo+eMLiK7fEbLvZf9diGPOHFBHTlm6U1Nc//xXM
+X-Gm-Gg: ASbGnctBETsaHXDb8hVaq1chUCd3A+oPQ6FkwG4C0sWgRbJXC8l5Mhy3ynI2aWgkIA2
+ hvmbNvUH7b5knPNK6/EGz1XnvXKe3r0XKUbOtEzLEQpyUdCTah7sz8lbAIerNKOxFJVqmopvmq3
+ KS7iYyDxfLIIS7RbAPzP/oaoI7RYM7cG9u7DN3ML3lRBAmV61x8fw0RT8rmrIkurSMV+xjwjdiR
+ 6NB9Oi3KRD+ITU8TYkIOBIteNSgbzaoZhD0zVJJE+7pe/iyN+lW4lIBViXt+Zn+gdLQnPEnowgG
+ Ms+EsmFwIybwh6J/PB4uARvA
+X-Received: by 2002:a17:907:2d91:b0:ad8:9257:5728 with SMTP id
+ a640c23a62f3a-adb36b567femr99503966b.27.1748589310566; 
+ Fri, 30 May 2025 00:15:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFs6PO7Wp1hD0Z4LgwEASQXC1N/WorQVkh+pS+pHLqsnyPFG7NlhL5W+jtOAfYffpGMxxJvEg==
+X-Received: by 2002:a17:907:2d91:b0:ad8:9257:5728 with SMTP id
+ a640c23a62f3a-adb36b567femr99501466b.27.1748589310145; 
+ Fri, 30 May 2025 00:15:10 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60566c5bed1sm1195594a12.26.2025.05.30.00.14.35
+ a640c23a62f3a-ada5d82e838sm275358666b.72.2025.05.30.00.15.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:14:35 -0700 (PDT)
+ Fri, 30 May 2025 00:15:08 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 42/77] kvm: Check KVM_CAP_MAX_VCPUS at vm level
-Date: Fri, 30 May 2025 09:12:12 +0200
-Message-ID: <20250530071250.2050910-43-pbonzini@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 55/77] i386/cgs: Rename *mask_cpuid_features() to
+ *adjust_cpuid_features()
+Date: Fri, 30 May 2025 09:12:25 +0200
+Message-ID: <20250530071250.2050910-56-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -111,33 +114,100 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-KVM with TDX support starts to report different KVM_CAP_MAX_VCPUS per
-different VM types. So switch to check the KVM_CAP_MAX_VCPUS at vm level.
-
-KVM still returns the global KVM_CAP_MAX_VCPUS when the KVM is old that
-doesn't report different value at vm level.
+Because for TDX case, there are also fixed-1 bits that enforced by TDX
+module.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-31-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250508150002.689633-44-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- accel/kvm/kvm-all.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/confidential-guest.h | 20 ++++++++++----------
+ target/i386/kvm/kvm.c            |  2 +-
+ target/i386/sev.c                |  4 ++--
+ 3 files changed, 13 insertions(+), 13 deletions(-)
 
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 42d239cf8f2..71e60604585 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -2431,7 +2431,7 @@ static int kvm_recommended_vcpus(KVMState *s)
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index a86c42a4755..777d43cc968 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -40,8 +40,8 @@ struct X86ConfidentialGuestClass {
+     /* <public> */
+     int (*kvm_type)(X86ConfidentialGuest *cg);
+     void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
+-    uint32_t (*mask_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
+-                                    int reg, uint32_t value);
++    uint32_t (*adjust_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature,
++                                      uint32_t index, int reg, uint32_t value);
+ };
  
- static int kvm_max_vcpus(KVMState *s)
- {
--    int ret = kvm_check_extension(s, KVM_CAP_MAX_VCPUS);
-+    int ret = kvm_vm_check_extension(s, KVM_CAP_MAX_VCPUS);
-     return (ret) ? ret : kvm_recommended_vcpus(s);
+ /**
+@@ -71,21 +71,21 @@ static inline void x86_confidential_guest_cpu_instance_init(X86ConfidentialGuest
  }
  
+ /**
+- * x86_confidential_guest_mask_cpuid_features:
++ * x86_confidential_guest_adjust_cpuid_features:
+  *
+- * Removes unsupported features from a confidential guest's CPUID values, returns
+- * the value with the bits removed.  The bits removed should be those that KVM
+- * provides independent of host-supported CPUID features, but are not supported by
+- * the confidential computing firmware.
++ * Adjust the supported features from a confidential guest's CPUID values,
++ * returns the adjusted value.  There are bits being removed that are not
++ * supported by the confidential computing firmware or bits being added that
++ * are forcibly exposed to guest by the confidential computing firmware.
+  */
+-static inline int x86_confidential_guest_mask_cpuid_features(X86ConfidentialGuest *cg,
++static inline int x86_confidential_guest_adjust_cpuid_features(X86ConfidentialGuest *cg,
+                                                              uint32_t feature, uint32_t index,
+                                                              int reg, uint32_t value)
+ {
+     X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
+ 
+-    if (klass->mask_cpuid_features) {
+-        return klass->mask_cpuid_features(cg, feature, index, reg, value);
++    if (klass->adjust_cpuid_features) {
++        return klass->adjust_cpuid_features(cg, feature, index, reg, value);
+     } else {
+         return value;
+     }
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 90a0dac4a1e..0d474634312 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -574,7 +574,7 @@ uint32_t kvm_arch_get_supported_cpuid(KVMState *s, uint32_t function,
+     }
+ 
+     if (current_machine->cgs) {
+-        ret = x86_confidential_guest_mask_cpuid_features(
++        ret = x86_confidential_guest_adjust_cpuid_features(
+             X86_CONFIDENTIAL_GUEST(current_machine->cgs),
+             function, index, reg, ret);
+     }
+diff --git a/target/i386/sev.c b/target/i386/sev.c
+index 7ee700d6a35..8b87b7cdec3 100644
+--- a/target/i386/sev.c
++++ b/target/i386/sev.c
+@@ -947,7 +947,7 @@ out:
+ }
+ 
+ static uint32_t
+-sev_snp_mask_cpuid_features(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
++sev_snp_adjust_cpuid_features(X86ConfidentialGuest *cg, uint32_t feature, uint32_t index,
+                             int reg, uint32_t value)
+ {
+     switch (feature) {
+@@ -2405,7 +2405,7 @@ sev_snp_guest_class_init(ObjectClass *oc, const void *data)
+     klass->launch_finish = sev_snp_launch_finish;
+     klass->launch_update_data = sev_snp_launch_update_data;
+     klass->kvm_init = sev_snp_kvm_init;
+-    x86_klass->mask_cpuid_features = sev_snp_mask_cpuid_features;
++    x86_klass->adjust_cpuid_features = sev_snp_adjust_cpuid_features;
+     x86_klass->kvm_type = sev_snp_kvm_type;
+ 
+     object_class_property_add(oc, "policy", "uint64",
 -- 
 2.49.0
 
