@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F902C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:15:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A4A2C54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:15:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtvL-0008D7-CT; Fri, 30 May 2025 03:13:03 -0400
+	id 1uKtwS-0001lX-Bs; Fri, 30 May 2025 03:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvJ-0008Cl-T2
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:01 -0400
+ id 1uKtwH-0001QE-64
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvH-0006na-NY
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:01 -0400
+ id 1uKtwF-0006vS-EK
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589178;
+ s=mimecast20190719; t=1748589238;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3+XE4e8aMSeFFSFNL/218gsKkgHYSEQyHzUsqXaoYHs=;
- b=Pv7UT9F9AwCZCPsjdzICFUz05Yqy7FqnRG9Khm55pOlzRbARto4N3doPvsZ0SzXrE8erwG
- 4QllJr0w5f6dYRAbT3kCBxBrvDibliksU+2vI8VnRZDehbh6SiMNOIa+vP0eh7GwnCL/ZK
- LA+xH4G+j0yqCOkXDqbS5ogtLG4/pfM=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=w9xJhpuzXINKl3LZpWge4QLi33eUyTvHiKnQt0qRGfg=;
+ b=F9WBJig1yOWveqv0QFPEsnD85hRwN7Uaz39SBp3xfHbQ9Gc/L/npqfqLIWDqHMJQSBXEF0
+ tcsqvZSLAEJlII78nyMQpWzwT92WFm05LRDerX1Vo8+aAjhn4ppGrBBaURxy9Oo59uhvQy
+ 1DO/5I7zEKR3j4vfpAuY2Bwie1vpRgU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-138-SWjkpCdhPv2s1yPVQBCbNA-1; Fri, 30 May 2025 03:12:56 -0400
-X-MC-Unique: SWjkpCdhPv2s1yPVQBCbNA-1
-X-Mimecast-MFC-AGG-ID: SWjkpCdhPv2s1yPVQBCbNA_1748589176
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-604630fc735so1237771a12.3
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:12:56 -0700 (PDT)
+ us-mta-74-2WXk8fS0PoaNExRkv6Yigg-1; Fri, 30 May 2025 03:13:57 -0400
+X-MC-Unique: 2WXk8fS0PoaNExRkv6Yigg-1
+X-Mimecast-MFC-AGG-ID: 2WXk8fS0PoaNExRkv6Yigg_1748589236
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ac79e4764e5so176600466b.0
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589174; x=1749193974;
+ d=1e100.net; s=20230601; t=1748589236; x=1749194036;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3+XE4e8aMSeFFSFNL/218gsKkgHYSEQyHzUsqXaoYHs=;
- b=LZdwF85N+Dkt/NNmbGHYSwvLhBPEgqXgYT5sOZIvzoVhiSJf0g3HgxppoPGDN035oP
- YFibAIDQp5o1WA8wGM0lQ+cIaiyS4hi+vpIRq1WV8ZhV49b2dvFMmrtlheHR4u4yN8ki
- qMsCbbOLX96wovBXqwMJO7Vj8dLUXkONQGAdkS7/JIsK13TD9wMUktYf6WNgPlpcWWHI
- WA64kAKfE9emMzB3H/lMsxlYl9IMvfLNbwfErlnFqbo7Ngqss0p/MPmEmukwpayr3K02
- 0qhyNDj1c6zxnpRgsg4/umKEk64RP7fW0JKDoM18lZlDTOQ676DRGCPgKUFgyt7lemkn
- 4gAQ==
-X-Gm-Message-State: AOJu0YwE2X86QC5vO3ldt8xEsu6RWxzt5RtvqiMUDD/CCg8PjiAlyajg
- DHkj9GyEvl124Z1aN6alysiKJAkLgoA19eN3qqW301RFJIZFxPrsXM9vLF0j/QfHTS+qCAvhUtM
- 0cnTWkdordiBK0F4arqOjN71If821h6Cig8WPkNlcvSPM8b2xAuATTupHtNttKNMzw5SOzLIMZD
- 3uFlBDpLIczsO4HN2C7bzu5XVs6fe3s+ULs9+kmiHG
-X-Gm-Gg: ASbGncun+z0ds4oUMYUuRHHyzzCEDUL4xWYF9iaHZNvuhWYYpuLDs1XANDtaahOeF40
- If4KRM3D3hsr3SMgkeikUSB/n/7dzypBChBpTibWAAxPXr31pqylJUEbscwd4CB8Nxogbw9PquD
- 2ZXy0hP3XCgpeb069jtaZHpI5XJDbIOfW2W9fGaPUx1DFjGXE5hdklsER3KKtNtdqDGy1udC9k1
- Ntr7jTSHKQi9i7tPYtUThP8+7IjBcvufBpMONy2eXLyBBvSFZ3uQPnU+I/wa0bgsdRLXGqcPOIq
- A+WCfCBOgd7yWQ==
-X-Received: by 2002:a05:6402:35c6:b0:5f8:357e:bb1 with SMTP id
- 4fb4d7f45d1cf-6056e1597eamr1732657a12.22.1748589173889; 
- Fri, 30 May 2025 00:12:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBpa2ccG9zAuGIgx8wSbSDXRptQwtMp3U5IZCNMrpJEqezwrRYDrVCTs7ljl7Hm09h9cI+Lg==
-X-Received: by 2002:a05:6402:35c6:b0:5f8:357e:bb1 with SMTP id
- 4fb4d7f45d1cf-6056e1597eamr1732633a12.22.1748589173465; 
- Fri, 30 May 2025 00:12:53 -0700 (PDT)
+ bh=w9xJhpuzXINKl3LZpWge4QLi33eUyTvHiKnQt0qRGfg=;
+ b=iSg874SVUakl3HLI1O0CHryink99O/0+fhqPHEWqV5GP4xKCI0CKB+9ZFpHOht+Bvj
+ ww8hqV3fVU/ELNwJ7kDSyoXvFXbYtbFolAeS4l9xuQIo4MCWMuHJPRQ+qqgCb5sld/GA
+ 5819U0fe+FBpyMJsf0b3oJdJ1GV6i6GH0mXGsz4xdhRf92HgWNEEpOMy3r6tgHt1c2l7
+ IoAGbvcqH34OUdG23QysJnVd1jvyoyaWuiRKnrJ2xjtvNH1cXXZs2xGygspJX/oCpzxO
+ WzZZ/C08nh2oMQWgRxnvqHSb7T//N9dgx613QoNfuV4GgpBXBnijzpMCELhjmAvRe/a1
+ euxQ==
+X-Gm-Message-State: AOJu0YwUtS8qJWUkgeYNQPD5vAIyG7TZ4ZbjaW6zFPPaFLaH4h89WJk9
+ gipfxx8bfKpPTdww3r1wBB/jEIIIbUCmRKAz4kMWzj8B29fEhX+oSI4/K7HF0hcd8cJ4lbEG6jK
+ Wwfhl10ySAXyLH2oPrKJPSlMfutgcza0UU6t1NDi9YFZ4IA2AiwtiVrc2INaa0IETkvg0mx+GmT
+ F5326NgN0LBu3VgoodKXBZTj000hq2IZEIsI+qp5rf
+X-Gm-Gg: ASbGncvUuCZzTAtO0Zw41UE6H/qF1tmc3qVdzJjMqt4CE8W6pd5aZu61mLee8dPB6Nw
+ O/vmdFMAoBKq2IQ1EdMmJvnJHzmeNoe4wdrVB+DDeBaIXmrJAOxGG6botXyRcJv6qgBoK9HI4fA
+ 9NThv129d1fnQyopGggkTjQv3CWHYIHiKc3ffoUjkMKqOvTNK4zVZNEdkWwGjI5OPsvGNmQbHDI
+ 8uJJQKSGq3AQ9wuMuY3BcSSCgyFs5UuGyWu4v1j5J6nIvx3XP9kJHDCUXYnmtBkC6H9x/ih+mDD
+ NOIyUWVLtvkWRw==
+X-Received: by 2002:a17:906:c143:b0:ad8:9428:6a3b with SMTP id
+ a640c23a62f3a-adb36b05316mr105412466b.5.1748589235735; 
+ Fri, 30 May 2025 00:13:55 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGDU/OvWQ+LeP/oaX6fosAlEG6akHJT5Aiv9+wMCyGhbG7aJsJA9LXFjewVZkjQYwcMu/xRGA==
+X-Received: by 2002:a17:906:c143:b0:ad8:9428:6a3b with SMTP id
+ a640c23a62f3a-adb36b05316mr105409966b.5.1748589235358; 
+ Fri, 30 May 2025 00:13:55 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60567169e04sm1185863a12.79.2025.05.30.00.12.52
+ a640c23a62f3a-adb318db274sm119163566b.162.2025.05.30.00.13.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:12:52 -0700 (PDT)
+ Fri, 30 May 2025 00:13:54 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 01/77] meson: build target libraries with common dependencies
-Date: Fri, 30 May 2025 09:11:31 +0200
-Message-ID: <20250530071250.2050910-2-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 26/77] i386/tdx: Set APIC bus rate to match with what TDX
+ module enforces
+Date: Fri, 30 May 2025 09:11:56 +0200
+Message-ID: <20250530071250.2050910-27-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
@@ -111,143 +112,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-As mentioned in [1], dependencies
-were missing when compiling per target libraries, thus breaking
-compilation on certain host systems.
+TDX advertises core crystal clock with cpuid[0x15] as 25MHz for TD
+guests and it's unchangeable from VMM. As a result, TDX guest reads
+the APIC timer at the same frequency, 25MHz.
 
-We now explicitly add common dependencies to those libraries, so it
-solves the problem.
+While KVM's default emulated frequency for APIC bus is 1GHz, set the
+APIC bus rate to match with TDX explicitly to ensure KVM provide correct
+emulated APIC timer for TD guest.
 
-[1] https://lore.kernel.org/qemu-devel/20250513115637.184940-1-thuth@redhat.com/
-
-Tested-by: Thomas Huth <thuth@redhat.com>
-Fixes: 6f4e8a92bbd ("hw/arm: make most of the compilation units common")
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250521223414.248276-2-pierrick.bouvier@linaro.org
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250508150002.689633-15-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 75 ++++++++++++++++++++++++++++-------------------------
- 1 file changed, 40 insertions(+), 35 deletions(-)
+ target/i386/kvm/tdx.h |  3 +++
+ target/i386/kvm/tdx.c | 13 +++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index ad2053f968b..cbb22f60d1f 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3242,6 +3242,7 @@ config_devices_mak_list = []
- config_devices_h = {}
- config_target_h = {}
- config_target_mak = {}
-+config_base_arch_mak = {}
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index e472b11fb0d..d39e733d9fc 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -16,6 +16,9 @@ typedef struct TdxGuestClass {
+     X86ConfidentialGuestClass parent_class;
+ } TdxGuestClass;
  
- disassemblers = {
-   'alpha' : ['CONFIG_ALPHA_DIS'],
-@@ -3433,6 +3434,11 @@ foreach target : target_dirs
-     config_all_devices += config_devices
-   endif
-   config_target_mak += {target: config_target}
++/* TDX requires bus frequency 25MHz */
++#define TDX_APIC_BUS_CYCLES_NS 40
 +
-+  # build a merged config for all targets with the same TARGET_BASE_ARCH
-+  target_base_arch = config_target['TARGET_BASE_ARCH']
-+  config_base_arch = config_base_arch_mak.get(target_base_arch, {}) + config_target
-+  config_base_arch_mak += {target_base_arch: config_base_arch}
- endforeach
- target_dirs = actual_target_dirs
+ typedef struct TdxGuest {
+     X86ConfidentialGuest parent_obj;
  
-@@ -4111,57 +4117,56 @@ common_all = static_library('common',
- hw_common_arch_libs = {}
- target_common_arch_libs = {}
- target_common_system_arch_libs = {}
--foreach target : target_dirs
-+foreach target_base_arch, config_base_arch : config_base_arch_mak
-   config_target = config_target_mak[target]
--  target_base_arch = config_target['TARGET_BASE_ARCH']
-   target_inc = [include_directories('target' / target_base_arch)]
-   inc = [common_user_inc + target_inc]
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 671f23d910a..58983edd80a 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -254,6 +254,19 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+     init_vm = g_malloc0(sizeof(struct kvm_tdx_init_vm) +
+                         sizeof(struct kvm_cpuid_entry2) * KVM_MAX_CPUID_ENTRIES);
  
-+  target_common = common_ss.apply(config_target, strict: false)
-+  common_deps = []
-+  foreach dep: target_common.dependencies()
-+    common_deps += dep.partial_dependency(compile_args: true, includes: true)
-+  endforeach
++    if (!kvm_check_extension(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS)) {
++        error_setg(errp, "KVM doesn't support KVM_CAP_X86_APIC_BUS_CYCLES_NS");
++        return -EOPNOTSUPP;
++    }
 +
-   # prevent common code to access cpu compile time definition,
-   # but still allow access to cpu.h
-   target_c_args = ['-DCPU_DEFS_H']
-   target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
- 
-   if target_base_arch in hw_common_arch
--    if target_base_arch not in hw_common_arch_libs
--      src = hw_common_arch[target_base_arch]
--      lib = static_library(
--        'hw_' + target_base_arch,
--        build_by_default: false,
--        sources: src.all_sources() + genh,
--        include_directories: inc,
--        c_args: target_system_c_args,
--        dependencies: src.all_dependencies())
--      hw_common_arch_libs += {target_base_arch: lib}
--    endif
-+    src = hw_common_arch[target_base_arch]
-+    lib = static_library(
-+      'hw_' + target_base_arch,
-+      build_by_default: false,
-+      sources: src.all_sources() + genh,
-+      include_directories: inc,
-+      c_args: target_system_c_args,
-+      dependencies: src.all_dependencies() + common_deps)
-+    hw_common_arch_libs += {target_base_arch: lib}
-   endif
- 
-   if target_base_arch in target_common_arch
--    if target_base_arch not in target_common_arch_libs
--      src = target_common_arch[target_base_arch]
--      lib = static_library(
--        'target_' + target_base_arch,
--        build_by_default: false,
--        sources: src.all_sources() + genh,
--        include_directories: inc,
--        c_args: target_c_args,
--        dependencies: src.all_dependencies())
--      target_common_arch_libs += {target_base_arch: lib}
--    endif
-+    src = target_common_arch[target_base_arch]
-+    lib = static_library(
-+      'target_' + target_base_arch,
-+      build_by_default: false,
-+      sources: src.all_sources() + genh,
-+      include_directories: inc,
-+      c_args: target_c_args,
-+      dependencies: src.all_dependencies() + common_deps)
-+    target_common_arch_libs += {target_base_arch: lib}
-   endif
- 
-   if target_base_arch in target_common_system_arch
--    if target_base_arch not in target_common_system_arch_libs
--      src = target_common_system_arch[target_base_arch]
--      lib = static_library(
--        'target_system_' + target_base_arch,
--        build_by_default: false,
--        sources: src.all_sources() + genh,
--        include_directories: inc,
--        c_args: target_system_c_args,
--        dependencies: src.all_dependencies())
--      target_common_system_arch_libs += {target_base_arch: lib}
--    endif
-+    src = target_common_system_arch[target_base_arch]
-+    lib = static_library(
-+      'target_system_' + target_base_arch,
-+      build_by_default: false,
-+      sources: src.all_sources() + genh,
-+      include_directories: inc,
-+      c_args: target_system_c_args,
-+      dependencies: src.all_dependencies() + common_deps)
-+    target_common_system_arch_libs += {target_base_arch: lib}
-   endif
- endforeach
- 
++    r = kvm_vm_enable_cap(kvm_state, KVM_CAP_X86_APIC_BUS_CYCLES_NS,
++                          0, TDX_APIC_BUS_CYCLES_NS);
++    if (r < 0) {
++        error_setg_errno(errp, -r,
++                         "Unable to set core crystal clock frequency to 25MHz");
++        return r;
++    }
++
+     if (tdx_guest->mrconfigid) {
+         g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
+                               strlen(tdx_guest->mrconfigid), &data_len, errp);
 -- 
 2.49.0
 
