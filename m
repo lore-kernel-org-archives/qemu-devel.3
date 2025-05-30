@@ -4,82 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C55AC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CF1C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:39:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKt4d-0001xa-Ks; Fri, 30 May 2025 02:18:35 -0400
+	id 1uKtNn-0006kb-DW; Fri, 30 May 2025 02:38:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKt4c-0001wv-5G
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:18:34 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtNl-0006kA-D0
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:38:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKt4Z-0000FD-IH
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:18:33 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtNj-0002DJ-Dm
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:38:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748585907;
+ s=mimecast20190719; t=1748587097;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5HFt5J00MwY5g7CgwAmj8fkbqmktfcpDa7fzujgEWMU=;
- b=Gwse/HHKb4Z11QKqkJPMlkyyu8zQWRpkprFFrA0Zzm/BFmiUkY3OLC4VoDAuLNAY6s2UXs
- RNsfkcVqHB58YhTJevUP6VMmwmgj7T+ZRo9YTEFO6aiynbBGbMCrtNHeT6J1iGfiNGYt0p
- Q9TraVu5s9RfC1GT10oa8c7iFLbXDig=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MRUQctAiTvmvIG5YcPzhEMil4entyaV0xruuBpmcVkg=;
+ b=jOshh2GokyfktCKh8aT909gBImqFdm4viQY4Id7R9Q7T7a62FGPjKwAN5DCPQOyp1txTVY
+ xfXwucUwP1kJNXP84b6il4mzAY8yvoywCSKXHRu6OcKv+G6bd5aTVJhJFLP5W0IMvgQo5W
+ wdBx+UAatGeK9LsKydVFDQf11GVbDJM=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-412-pvil9k6KN4OJv0ylwP9hgw-1; Fri, 30 May 2025 02:18:24 -0400
-X-MC-Unique: pvil9k6KN4OJv0ylwP9hgw-1
-X-Mimecast-MFC-AGG-ID: pvil9k6KN4OJv0ylwP9hgw_1748585903
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-602df3e7adcso1815861a12.1
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:18:24 -0700 (PDT)
+ us-mta-604-k_4ZONkGOE2noX1d3vueHg-1; Fri, 30 May 2025 02:38:15 -0400
+X-MC-Unique: k_4ZONkGOE2noX1d3vueHg-1
+X-Mimecast-MFC-AGG-ID: k_4ZONkGOE2noX1d3vueHg_1748587094
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-604c41e0c10so1486323a12.1
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:38:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748585903; x=1749190703;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=5HFt5J00MwY5g7CgwAmj8fkbqmktfcpDa7fzujgEWMU=;
- b=w1rHoMBNz0nuxsVOCmIRoYXqHYA+t02AT0wIXJ8yWWcMQc7SczYH8SceT7CyEFrT+k
- DijfLMnLnotqbXKP+lAMP9ck0zBFhDNu8gmNh39WRKvelwn0lYwBN8h6xPEj9fipvi9H
- id3K/MfvCpVLSyOFfJR+ODHvH7Yfl6plj0uBSYoc7XZmumYjcDMlbaulwImJrHUlIO+U
- liMbP5Qx/x94sq7hkwNEV4E2At7g+VLIlOeOW3XelagoE4umt6HhV7EH/MovJmtpdh9z
- ppFAbussm5n68/imD36hQQUDG0DU/YgLnNlKMmJfXtp6l1dPtXaWJV+3PiRPJv7WJJq1
- 7Rjg==
-X-Gm-Message-State: AOJu0Ywe33q6BamzxX4M9zz7uh7FMogtPH7dlAfmdSKH4xHdbX0yIuRF
- CCuCw0J0/jPOR41MPubh0zjeoD4V0N286vdOTm6LnCR0D1qTxeb43dbgtg8S2dbDBTEFbcjV2UP
- YMudVH48YvPaXkQjMlaS+J1+RHc3tUC3YykCOCSLAYFHGfzXxIMkU+43XoDLSLyeAEWY=
-X-Gm-Gg: ASbGnctHnVUJoC9xxDz+XJLjzUCQIgTcBxP3qcsX8tg5J966GF/GtOgwW60p5749ztt
- wiWSG0TVj8pOkRbWXaM/4KUc4bOjziZ8N61U/1psJfRix4abxbRNW8wygPQEcYp9dz/08ZBDNIQ
- Fo6XW8YHpZ3PrKZZtMXKAGM9rRWNQ4le4JuLYkB5WUYrZ+cvv3l/4dgQY7Ztktwt1ZiMedoIwS2
- lCpMVB3JDuk3XtE0WuQVEanfOteOXPtq7at1+I3BEV+zBEVBUBoI40aFFvD6kg9UxiQkKa2ODnB
- hTIHb8u9Yr8S2nERyU0qwyAFPJ+/V952HhNPQgqgyHEU4hHduiIQ3IdxKj4CRao=
-X-Received: by 2002:a05:6402:13d2:b0:602:3cf1:44c8 with SMTP id
- 4fb4d7f45d1cf-6057c1b5a94mr937421a12.8.1748585903488; 
- Thu, 29 May 2025 23:18:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFaqMciS8kXcamRQ3BFDiEIDhaqoVXf+Jax0DoQ6wgsC1vRxvlFlLrlevl4qQL8K6eeLaBZnw==
-X-Received: by 2002:a05:6402:13d2:b0:602:3cf1:44c8 with SMTP id
- 4fb4d7f45d1cf-6057c1b5a94mr937406a12.8.1748585903074; 
- Thu, 29 May 2025 23:18:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748587094; x=1749191894;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=MRUQctAiTvmvIG5YcPzhEMil4entyaV0xruuBpmcVkg=;
+ b=vunnMMC0CPpvBkRN0x/GJK8Z8TDGIUbXKLwbzlb3mjcTTrqQH0Z2KHtm+BOmTqufnO
+ eHqAEtMPPwaC+LPJZ9ySS/LFVniUF0BzQUS8BqhNH5Qi+75Vc/t9pABVGfck9UA1UfGp
+ aQ1zpkdfmRvS6AgFZMI5ZNXW8X1oHFKExooX0G19c3+0tckzc0gM5GkNodp3MF99Ks13
+ +B1jw1cFlEUAHPcIHkGiZZXRF8NpfnHMlaLBwhMq4d6NkuHFnmh1AB1h1T3zuDIZXNg3
+ HDh3ZO6mqBGkI0dBfPY1+hyiMS3Ijv/oH5V9kdzPsyIJ06QhLyZzxEGiJxlWPlngPruw
+ D39Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW76WlPg1i+rJbqQNGgjoBy+QSCR66Y51ePh6OBA9df2iBojVqSYfHfybc8jduczpfja9zawDuotQSC@nongnu.org
+X-Gm-Message-State: AOJu0YygWfV+tEGSSVoNveTRX2qKlea8Hgt3H6UPhS7DlH9IVRAA6FRE
+ ewRLNHFx5JW8xoZNKSk8xeuMFEDgf091vDOTlWxaUUw3YqTAN4LMcYDDb1Co9YddS9o33fZ4Ilz
+ Ty4LD+V8L7gmj+xqxprz08Wu+vDssMNhwnJ0mtxuHxh4xf/jqXeDhWu8V
+X-Gm-Gg: ASbGncvCuG1eSwnBXpd6n5UPtJ1U7e8JZOo9Mo+OzYnNTr35CrIFUjZxTIeqazxpTg0
+ W44zpbs5RqllQqMR6b3Vr0maUmvDUFld0oWmByAfwJOU6pgJV0NtgyVquSiNTqAmcM1VMvTWPao
+ rMzfhss6UMRLO/Glm1Sz2YPcEaz+g2OQL2OFbmg/H7ushJ8ihrRSi1sydmT2PxTL3IU6PtG11Dx
+ Ovo6b4wmHNKniNGHdsxBsbxeBD0TLxbgyrtOeBAE/79Re1CHWhUeH3kw5xZgyi9CAH3yLGZagPn
+ SJbpO7LYaJxDfzHR/672jspQa1dGPhPz+eurD5pHEhO8TJGBD8Kt
+X-Received: by 2002:a17:906:a996:b0:ad8:9909:20aa with SMTP id
+ a640c23a62f3a-adb36bee594mr70441566b.40.1748587094149; 
+ Thu, 29 May 2025 23:38:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE2C9/6LHiHAU2LS13ZkGDY+kK19m0REAIWZilefydS2/UpWeolWwWtmB/rvLvYmZFQURqs8w==
+X-Received: by 2002:a17:906:a996:b0:ad8:9909:20aa with SMTP id
+ a640c23a62f3a-adb36bee594mr70440266b.40.1748587093715; 
+ Thu, 29 May 2025 23:38:13 -0700 (PDT)
 Received: from [192.168.0.7] (ltea-047-064-112-237.pools.arcor-ip.net.
  [47.64.112.237]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60566c5dd13sm1108850a12.32.2025.05.29.23.18.20
+ a640c23a62f3a-ada5dd04551sm271064566b.93.2025.05.29.23.38.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 May 2025 23:18:20 -0700 (PDT)
-Message-ID: <b374f581-fdbf-4fad-ab10-45394211c0d6@redhat.com>
-Date: Fri, 30 May 2025 08:18:19 +0200
+ Thu, 29 May 2025 23:38:12 -0700 (PDT)
+Message-ID: <8a1c3cba-548b-4286-9aae-bc2b3b0a1830@redhat.com>
+Date: Fri, 30 May 2025 08:38:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Armbian TLS certificate expired
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>
-References: <CAJSP0QXpwWZK3KeGZ-FVFLhu7CCv8PCRbGZ9MEJK5nS_jUWquQ@mail.gmail.com>
-Content-Language: en-US
+Subject: Re: [PATCH v2 07/25] s390x/diag: Implement DIAG 320 subcode 2
+To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
+ david@redhat.com, pbonzini@redhat.com,
+ "Daniel P. Berrange" <berrange@redhat.com>
+Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
+ fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
+ farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+References: <20250508225042.313672-1-zycai@linux.ibm.com>
+ <20250508225042.313672-8-zycai@linux.ibm.com>
+ <b986097d-d78b-4163-831b-2551336711ea@redhat.com>
+ <3d790dad-d4be-443a-ac9b-7c2a5bc53e17@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -122,7 +132,7 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAJSP0QXpwWZK3KeGZ-FVFLhu7CCv8PCRbGZ9MEJK5nS_jUWquQ@mail.gmail.com>
+In-Reply-To: <3d790dad-d4be-443a-ac9b-7c2a5bc53e17@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
@@ -134,7 +144,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -150,26 +160,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/05/2025 16.45, Stefan Hajnoczi wrote:
-> The OrangePi, Cubieboard, Banana Pi, and replay tests use a sunxi
-> armhf Linux package URL that is failing due to an expired TLS
-> certificate:
+On 29/05/2025 21.09, Zhuoying Cai wrote:
 > 
-> 2025-05-29 13:37:56,005 - qemu-test - INFO - Downloading
-> https://apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb
-> to /builds/qemu-project/qemu/functional-cache/download/3d968c15b121ede871dce49d13ee7644d6f74b6b121b84c9a40f51b0c80d6d22...
-> ...
-> urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED]
-> certificate verify failed: certificate has expired (_ssl.c:992)>
+> On 5/14/25 12:18 PM, Thomas Huth wrote:
+>> On 09/05/2025 00.50, Zhuoying Cai wrote:
+...
+>>> +int qcrypto_get_x509_cert_key_id(uint8_t *cert, size_t size,
+>>> +                                 QCryptoKeyidFlags flag,
+>>> +                                 uint8_t *result,
+>>> +                                 size_t *resultlen,
+>>> +                                 Error **errp)
+>>> +{
+>>> +    int ret = -1;
+>>> +    int keyid_len;
+>>> +    gnutls_x509_crt_t crt;
+>>> +    gnutls_datum_t datum = {.data = cert, .size = size};
+>>> +    gnutls_x509_crt_fmt_t fmt;
+>>> +
+>>> +    if (flag >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map)) {
+>>> +        error_setg(errp, "Unknown key id flag");
+>>> +        return -1;
+>>> +    }
+>>> +
+>>> +    if (result == NULL) {
+>>> +        error_setg(errp, "No valid buffer given");
+>>> +        return -1;
+>>> +    }
+>>
+>> This check sounds like it could also be a simple g_assert() statement instead?
+>>
 > 
-> I will ignore these test failures for the time being. Hopefully the
-> server admins will fix it. Otherwise it will be necessary to find a
-> working URL for these tests.
+> g_assert() may not be ideal here, as it will terminate the guest if the
+> assertion fails, which is not the intended behavior.
 
-I just gave it a try, and it seems like the certificate has been updated 
-already? Anyway, in the worst case, we could also try to switch to http 
-instead of https for this download (we're still checking the hashsum to make 
-sure that nobody messed with the content).
+OK, but if it is valid to call this function with result == NULL, then this 
+does not sound like an error, thus you likely should not use error_setg() 
+here. If it *not* valid to call this function with result == NULL, then 
+there is a programming error and it is OK to use g_assert() here.
+Anyway, please add a comment in front of the function where you describe the 
+parameters, including the information whether the pointers are allowed to be 
+NULL or not.
 
   Thomas
 
