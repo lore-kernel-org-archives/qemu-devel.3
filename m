@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54EB8C5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:16:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 115E3C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL1PO-00040n-OH; Fri, 30 May 2025 11:12:34 -0400
+	id 1uL1PO-00040i-P1; Fri, 30 May 2025 11:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1PC-0003NI-H5; Fri, 30 May 2025 11:12:22 -0400
+ id 1uL1PD-0003QS-Gk; Fri, 30 May 2025 11:12:23 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1P8-0002HL-RU; Fri, 30 May 2025 11:12:22 -0400
+ id 1uL1P8-0002Hy-Rh; Fri, 30 May 2025 11:12:23 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id AD4F444AF3;
- Fri, 30 May 2025 17:11:44 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 3BBFD44ADD;
+ Fri, 30 May 2025 17:11:46 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,9 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v4 09/48] block: move drain outside of
- bdrv_try_change_aio_context()
-Date: Fri, 30 May 2025 17:10:46 +0200
-Message-Id: <20250530151125.955508-10-f.ebner@proxmox.com>
+Subject: [PATCH v4 12/48] block: move drain outside of bdrv_root_attach_child()
+Date: Fri, 30 May 2025 17:10:49 +0200
+Message-Id: <20250530151125.955508-13-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530151125.955508-1-f.ebner@proxmox.com>
 References: <20250530151125.955508-1-f.ebner@proxmox.com>
@@ -63,240 +62,272 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 This is part of resolving the deadlock mentioned in commit "block:
 move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
 
-Convert the function to a _locked() version that has to be called with
-the graph lock held and add a convenience wrapper that has to be
-called with the graph unlocked, which drains and takes the lock
-itself. Since bdrv_try_change_aio_context() is global state code, the
-wrapper is too.
+The function bdrv_root_attach_child() runs under the graph lock, so it
+is not allowed to drain. It is called by:
+1. blk_insert_bs(), where a drained section is introduced.
+2. block_job_add_bdrv(), which holds the graph lock itself.
 
-Callers are adapted to use the appropriate variant, depending on
-whether the caller already holds the lock. In the
-test_set_aio_context() unit test, prior drains can be removed, because
-draining already happens inside the new wrapper.
+block_job_add_bdrv() is called by:
+1. mirror_start_job()
+2. stream_start()
+3. commit_start()
+4. backup_job_create()
+5. block_job_create()
+6. In the test_blockjob_common_drain_node() unit test
 
-Note that bdrv_attach_child_common_abort(), bdrv_attach_child_common()
-and bdrv_root_unref_child() hold the graph lock and are not actually
-allowed to drain either. This will be addressed in the following
-commits.
-
-Functions like qmp_blockdev_mirror() query the nodes to act on before
-draining and locking. In theory, draining could invalidate those nodes.
-This kind of issue is not addressed by these commits.
+In all callers, a drained section is introduced.
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block.c                            | 58 ++++++++++++++++++++++--------
- blockdev.c                         | 15 +++++---
- include/block/block-global-state.h |  8 +++--
- tests/unit/test-bdrv-drain.c       |  4 ---
- 4 files changed, 59 insertions(+), 26 deletions(-)
+
+Changes in v4:
+* Document requirement that all nodes need to be drained for
+  bdrv_root_attach_child() and block_job_add_bdrv().
+
+ block.c                      | 4 ++--
+ block/backup.c               | 2 ++
+ block/block-backend.c        | 2 ++
+ block/commit.c               | 4 ++++
+ block/mirror.c               | 5 +++++
+ block/stream.c               | 4 ++++
+ blockjob.c                   | 4 ++++
+ include/block/blockjob.h     | 2 ++
+ tests/unit/test-bdrv-drain.c | 2 ++
+ 9 files changed, 27 insertions(+), 2 deletions(-)
 
 diff --git a/block.c b/block.c
-index 6f42c0f1ab..3aaacabf7f 100644
+index e53a88e1b6..17c34dc240 100644
 --- a/block.c
 +++ b/block.c
-@@ -3028,7 +3028,10 @@ static void GRAPH_WRLOCK bdrv_attach_child_common_abort(void *opaque)
-     bdrv_replace_child_noperm(s->child, NULL);
+@@ -3228,6 +3228,8 @@ bdrv_attach_child_noperm(BlockDriverState *parent_bs,
+  *
+  * On failure NULL is returned, errp is set and the reference to
+  * child_bs is also dropped.
++ *
++ * All block nodes must be drained.
+  */
+ BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
+                                   const char *child_name,
+@@ -3242,7 +3244,6 @@ BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
  
-     if (bdrv_get_aio_context(bs) != s->old_child_ctx) {
--        bdrv_try_change_aio_context(bs, s->old_child_ctx, NULL, &error_abort);
-+        bdrv_drain_all_begin();
-+        bdrv_try_change_aio_context_locked(bs, s->old_child_ctx, NULL,
-+                                           &error_abort);
-+        bdrv_drain_all_end();
-     }
+     GLOBAL_STATE_CODE();
  
-     if (bdrv_child_get_parent_aio_context(s->child) != s->old_parent_ctx) {
-@@ -3115,8 +3118,10 @@ bdrv_attach_child_common(BlockDriverState *child_bs,
-     parent_ctx = bdrv_child_get_parent_aio_context(new_child);
-     if (child_ctx != parent_ctx) {
-         Error *local_err = NULL;
--        int ret = bdrv_try_change_aio_context(child_bs, parent_ctx, NULL,
--                                              &local_err);
-+        bdrv_drain_all_begin();
-+        int ret = bdrv_try_change_aio_context_locked(child_bs, parent_ctx, NULL,
-+                                                     &local_err);
-+        bdrv_drain_all_end();
+-    bdrv_drain_all_begin();
+     child = bdrv_attach_child_common(child_bs, child_name, child_class,
+                                    child_role, perm, shared_perm, opaque,
+                                    tran, errp);
+@@ -3255,7 +3256,6 @@ BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
  
-         if (ret < 0 && child_class->change_aio_ctx) {
-             Transaction *aio_ctx_tran = tran_new();
-@@ -3319,8 +3324,10 @@ void bdrv_root_unref_child(BdrvChild *child)
-          * When the parent requiring a non-default AioContext is removed, the
-          * node moves back to the main AioContext
-          */
--        bdrv_try_change_aio_context(child_bs, qemu_get_aio_context(), NULL,
--                                    NULL);
-+        bdrv_drain_all_begin();
-+        bdrv_try_change_aio_context_locked(child_bs, qemu_get_aio_context(),
-+                                           NULL, NULL);
-+        bdrv_drain_all_end();
-     }
+ out:
+     tran_finalize(tran, ret);
+-    bdrv_drain_all_end();
  
      bdrv_schedule_unref(child_bs);
-@@ -7719,9 +7726,13 @@ bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
-  *
-  * If ignore_child is not NULL, that child (and its subgraph) will not
-  * be touched.
-+ *
-+ * Called with the graph lock held.
-+ *
-+ * Called while all bs are drained.
-  */
--int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
--                                BdrvChild *ignore_child, Error **errp)
-+int bdrv_try_change_aio_context_locked(BlockDriverState *bs, AioContext *ctx,
-+                                       BdrvChild *ignore_child, Error **errp)
- {
-     Transaction *tran;
-     GHashTable *visited;
-@@ -7730,17 +7741,15 @@ int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
  
-     /*
-      * Recursion phase: go through all nodes of the graph.
--     * Take care of checking that all nodes support changing AioContext
--     * and drain them, building a linear list of callbacks to run if everything
--     * is successful (the transaction itself).
-+     * Take care of checking that all nodes support changing AioContext,
-+     * building a linear list of callbacks to run if everything is successful
-+     * (the transaction itself).
-      */
-     tran = tran_new();
-     visited = g_hash_table_new(NULL, NULL);
-     if (ignore_child) {
-         g_hash_table_add(visited, ignore_child);
-     }
--    bdrv_drain_all_begin();
--    bdrv_graph_rdlock_main_loop();
-     ret = bdrv_change_aio_context(bs, ctx, visited, tran, errp);
-     g_hash_table_destroy(visited);
+diff --git a/block/backup.c b/block/backup.c
+index 0151e84395..909027c17a 100644
+--- a/block/backup.c
++++ b/block/backup.c
+@@ -498,10 +498,12 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
+     block_copy_set_speed(bcs, speed);
  
-@@ -7754,15 +7763,34 @@ int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
-     if (!ret) {
-         /* Just run clean() callbacks. No AioContext changed. */
-         tran_abort(tran);
--        bdrv_graph_rdunlock_main_loop();
--        bdrv_drain_all_end();
+     /* Required permissions are taken by copy-before-write filter target */
++    bdrv_drain_all_begin();
+     bdrv_graph_wrlock();
+     block_job_add_bdrv(&job->common, "target", target, 0, BLK_PERM_ALL,
+                        &error_abort);
+     bdrv_graph_wrunlock();
++    bdrv_drain_all_end();
+ 
+     return &job->common;
+ 
+diff --git a/block/block-backend.c b/block/block-backend.c
+index 6a6949edeb..24cae3cb55 100644
+--- a/block/block-backend.c
++++ b/block/block-backend.c
+@@ -904,6 +904,7 @@ int blk_insert_bs(BlockBackend *blk, BlockDriverState *bs, Error **errp)
+ 
+     GLOBAL_STATE_CODE();
+     bdrv_ref(bs);
++    bdrv_drain_all_begin();
+     bdrv_graph_wrlock();
+ 
+     if ((bs->open_flags & BDRV_O_INACTIVE) && blk_can_inactivate(blk)) {
+@@ -919,6 +920,7 @@ int blk_insert_bs(BlockBackend *blk, BlockDriverState *bs, Error **errp)
+                                        BDRV_CHILD_FILTERED | BDRV_CHILD_PRIMARY,
+                                        perm, shared_perm, blk, errp);
+     bdrv_graph_wrunlock();
++    bdrv_drain_all_end();
+     if (blk->root == NULL) {
          return -EPERM;
      }
- 
-     tran_commit(tran);
-+    return 0;
-+}
-+
-+/*
-+ * Change bs's and recursively all of its parents' and children's AioContext
-+ * to the given new context, returning an error if that isn't possible.
-+ *
-+ * If ignore_child is not NULL, that child (and its subgraph) will not
-+ * be touched.
-+ */
-+int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
-+                                BdrvChild *ignore_child, Error **errp)
-+{
-+    int ret;
-+
-+    GLOBAL_STATE_CODE();
-+
+diff --git a/block/commit.c b/block/commit.c
+index 7cc8c0f0df..6c4b736ff8 100644
+--- a/block/commit.c
++++ b/block/commit.c
+@@ -392,6 +392,7 @@ void commit_start(const char *job_id, BlockDriverState *bs,
+      * this is the responsibility of the interface (i.e. whoever calls
+      * commit_start()).
+      */
 +    bdrv_drain_all_begin();
-+    bdrv_graph_rdlock_main_loop();
-+    ret = bdrv_try_change_aio_context_locked(bs, ctx, ignore_child, errp);
-     bdrv_graph_rdunlock_main_loop();
-     bdrv_drain_all_end();
--    return 0;
-+
-+    return ret;
- }
- 
- void bdrv_add_aio_context_notifier(BlockDriverState *bs,
-diff --git a/blockdev.c b/blockdev.c
-index 3982f9776b..750beba41f 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -3601,12 +3601,13 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
-     AioContext *new_context;
-     BlockDriverState *bs;
- 
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+    bdrv_drain_all_begin();
-+    bdrv_graph_rdlock_main_loop();
- 
-     bs = bdrv_find_node(node_name);
-     if (!bs) {
-         error_setg(errp, "Failed to find node with node-name='%s'", node_name);
--        return;
-+        goto out;
+     bdrv_graph_wrlock();
+     s->base_overlay = bdrv_find_overlay(top, base);
+     assert(s->base_overlay);
+@@ -424,18 +425,21 @@ void commit_start(const char *job_id, BlockDriverState *bs,
+                                  iter_shared_perms, errp);
+         if (ret < 0) {
+             bdrv_graph_wrunlock();
++            bdrv_drain_all_end();
+             goto fail;
+         }
      }
  
-     /* Protects against accidents. */
-@@ -3614,14 +3615,14 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
-         error_setg(errp, "Node %s is associated with a BlockBackend and could "
-                          "be in use (use force=true to override this check)",
-                          node_name);
--        return;
-+        goto out;
+     if (bdrv_freeze_backing_chain(commit_top_bs, base, errp) < 0) {
+         bdrv_graph_wrunlock();
++        bdrv_drain_all_end();
+         goto fail;
+     }
+     s->chain_frozen = true;
+ 
+     ret = block_job_add_bdrv(&s->common, "base", base, 0, BLK_PERM_ALL, errp);
+     bdrv_graph_wrunlock();
++    bdrv_drain_all_end();
+ 
+     if (ret < 0) {
+         goto fail;
+diff --git a/block/mirror.c b/block/mirror.c
+index c2c5099c95..6e8caf4b49 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -2014,6 +2014,7 @@ static BlockJob *mirror_start_job(
+      */
+     bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+ 
++    bdrv_drain_all_begin();
+     bdrv_graph_wrlock();
+     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
+                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
+@@ -2021,6 +2022,7 @@ static BlockJob *mirror_start_job(
+                              errp);
+     if (ret < 0) {
+         bdrv_graph_wrunlock();
++        bdrv_drain_all_end();
+         goto fail;
      }
  
-     if (iothread->type == QTYPE_QSTRING) {
-         IOThread *obj = iothread_by_id(iothread->u.s);
-         if (!obj) {
-             error_setg(errp, "Cannot find iothread %s", iothread->u.s);
--            return;
-+            goto out;
+@@ -2066,16 +2068,19 @@ static BlockJob *mirror_start_job(
+                                      iter_shared_perms, errp);
+             if (ret < 0) {
+                 bdrv_graph_wrunlock();
++                bdrv_drain_all_end();
+                 goto fail;
+             }
          }
  
-         new_context = iothread_get_aio_context(obj);
-@@ -3629,7 +3630,11 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
-         new_context = qemu_get_aio_context();
+         if (bdrv_freeze_backing_chain(mirror_top_bs, target, errp) < 0) {
+             bdrv_graph_wrunlock();
++            bdrv_drain_all_end();
+             goto fail;
+         }
+     }
+     bdrv_graph_wrunlock();
++    bdrv_drain_all_end();
+ 
+     QTAILQ_INIT(&s->ops_in_flight);
+ 
+diff --git a/block/stream.c b/block/stream.c
+index 6ba49cffd3..f5441f27f4 100644
+--- a/block/stream.c
++++ b/block/stream.c
+@@ -371,10 +371,12 @@ void stream_start(const char *job_id, BlockDriverState *bs,
+      * already have our own plans. Also don't allow resize as the image size is
+      * queried only at the job start and then cached.
+      */
++    bdrv_drain_all_begin();
+     bdrv_graph_wrlock();
+     if (block_job_add_bdrv(&s->common, "active node", bs, 0,
+                            basic_flags | BLK_PERM_WRITE, errp)) {
+         bdrv_graph_wrunlock();
++        bdrv_drain_all_end();
+         goto fail;
      }
  
--    bdrv_try_change_aio_context(bs, new_context, NULL, errp);
-+    bdrv_try_change_aio_context_locked(bs, new_context, NULL, errp);
-+
-+out:
-+    bdrv_graph_rdunlock_main_loop();
+@@ -395,10 +397,12 @@ void stream_start(const char *job_id, BlockDriverState *bs,
+                                  basic_flags, errp);
+         if (ret < 0) {
+             bdrv_graph_wrunlock();
++            bdrv_drain_all_end();
+             goto fail;
+         }
+     }
+     bdrv_graph_wrunlock();
 +    bdrv_drain_all_end();
+ 
+     s->base_overlay = base_overlay;
+     s->above_base = above_base;
+diff --git a/blockjob.c b/blockjob.c
+index 34185d7715..44991e3ff7 100644
+--- a/blockjob.c
++++ b/blockjob.c
+@@ -496,6 +496,7 @@ void *block_job_create(const char *job_id, const BlockJobDriver *driver,
+     int ret;
+     GLOBAL_STATE_CODE();
+ 
++    bdrv_drain_all_begin();
+     bdrv_graph_wrlock();
+ 
+     if (job_id == NULL && !(flags & JOB_INTERNAL)) {
+@@ -506,6 +507,7 @@ void *block_job_create(const char *job_id, const BlockJobDriver *driver,
+                      flags, cb, opaque, errp);
+     if (job == NULL) {
+         bdrv_graph_wrunlock();
++        bdrv_drain_all_end();
+         return NULL;
+     }
+ 
+@@ -544,10 +546,12 @@ void *block_job_create(const char *job_id, const BlockJobDriver *driver,
+     }
+ 
+     bdrv_graph_wrunlock();
++    bdrv_drain_all_end();
+     return job;
+ 
+ fail:
+     bdrv_graph_wrunlock();
++    bdrv_drain_all_end();
+     job_early_fail(&job->job);
+     return NULL;
  }
- 
- QemuOptsList qemu_common_drive_opts = {
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index aad160956a..91f249b5ad 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -278,8 +278,12 @@ bool GRAPH_RDLOCK
- bdrv_child_change_aio_context(BdrvChild *c, AioContext *ctx,
-                               GHashTable *visited, Transaction *tran,
-                               Error **errp);
--int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
--                                BdrvChild *ignore_child, Error **errp);
-+int GRAPH_UNLOCKED
-+bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
-+                            BdrvChild *ignore_child, Error **errp);
-+int GRAPH_RDLOCK
-+bdrv_try_change_aio_context_locked(BlockDriverState *bs, AioContext *ctx,
-+                                   BdrvChild *ignore_child, Error **errp);
- 
- int GRAPH_RDLOCK bdrv_probe_blocksizes(BlockDriverState *bs, BlockSizes *bsz);
- int bdrv_probe_geometry(BlockDriverState *bs, HDGeometry *geo);
+diff --git a/include/block/blockjob.h b/include/block/blockjob.h
+index 7061ab7201..990f3e179a 100644
+--- a/include/block/blockjob.h
++++ b/include/block/blockjob.h
+@@ -137,6 +137,8 @@ BlockJob *block_job_get_locked(const char *id);
+  * Add @bs to the list of BlockDriverState that are involved in
+  * @job. This means that all operations will be blocked on @bs while
+  * @job exists.
++ *
++ * All block nodes must be drained.
+  */
+ int GRAPH_WRLOCK
+ block_job_add_bdrv(BlockJob *job, const char *name, BlockDriverState *bs,
 diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index 290cd2a70e..3185f3f429 100644
+index 3185f3f429..4f3057844b 100644
 --- a/tests/unit/test-bdrv-drain.c
 +++ b/tests/unit/test-bdrv-drain.c
-@@ -1396,14 +1396,10 @@ static void test_set_aio_context(void)
-     bs = bdrv_new_open_driver(&bdrv_test, "test-node", BDRV_O_RDWR,
-                               &error_abort);
+@@ -772,9 +772,11 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
+     tjob->bs = src;
+     job = &tjob->common;
  
--    bdrv_drained_begin(bs);
-     bdrv_try_change_aio_context(bs, ctx_a, NULL, &error_abort);
--    bdrv_drained_end(bs);
++    bdrv_drain_all_begin();
+     bdrv_graph_wrlock();
+     block_job_add_bdrv(job, "target", target, 0, BLK_PERM_ALL, &error_abort);
+     bdrv_graph_wrunlock();
++    bdrv_drain_all_end();
  
--    bdrv_drained_begin(bs);
-     bdrv_try_change_aio_context(bs, ctx_b, NULL, &error_abort);
-     bdrv_try_change_aio_context(bs, qemu_get_aio_context(), NULL, &error_abort);
--    bdrv_drained_end(bs);
- 
-     bdrv_unref(bs);
-     iothread_join(a);
+     switch (result) {
+     case TEST_JOB_SUCCESS:
 -- 
 2.39.5
 
