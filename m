@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2C9C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 04:35:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 096B6C54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 04:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKrRg-0001j6-Lb; Fri, 30 May 2025 00:34:16 -0400
+	id 1uKrRh-0001jv-6s; Fri, 30 May 2025 00:34:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKrRK-0001MO-CV
- for qemu-devel@nongnu.org; Fri, 30 May 2025 00:33:55 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1uKrRM-0001NG-V1
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 00:33:59 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKrQx-0005Gx-LK
- for qemu-devel@nongnu.org; Fri, 30 May 2025 00:33:54 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-b170c99aa49so1025599a12.1
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 21:33:29 -0700 (PDT)
+ id 1uKrR9-0005Oz-3X
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 00:33:56 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-23526264386so6825985ad.2
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 21:33:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748579608; x=1749184408;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748579621; x=1749184421;
  darn=nongnu.org; 
  h=to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pr5XbKXLi2V3KwlJ9cBsFoT8dIWtqHqQMkw/uTu+ycI=;
- b=UD+E13pfs6uFkSc/MUFDVqNWerCpDtIYo3I2f2MyO92gnq50rpsr8Lr9+ASVCS2waQ
- RWUH3bsiWoGcKCQ6mAgGCO3HJqOFg4MNooHHI81w6Frp/vFmmWHS9kaYjkkTFxlsDuNC
- beSw/yKsOiCJk/10+prJSNqoshQ2NHxEsC3AfibPVnkt3pd3I695qZ4DEHG/s7Tii4th
- Hk9vwpze0tru739fkejOCS3GCBnNC2jFnBzUj+710BoQPY49HzsJyytKbrg97dTIVfa7
- wX51AXPhFH6O8S6gq6UPoJZEglYfaWz47nnd7UI4AB32cw/63RACp4xYijri+k5ma8al
- FYwQ==
+ :reply-to; bh=PzspMOXBN18eh+XrNUrzXep8Qjkld4nXnkxOhOiGHWE=;
+ b=tinI5KiEdDNc/fHo2hoELeRoqUk8vU1ejVkhQPceGhk1VUOZUXpcB62qdwWS0PzEzy
+ LGlgSc9iRKf9v8h20zaXq6yB7oPVPFK6ZfLDV5ivg6TzITSQEkuVv0hZLkvnMibZi9b3
+ QIWo1uQS5O67tkGMk/asDVctiDS32sBM0ekmi3KnftANq61wWbOwL6zg+sYcmKqoGO7Y
+ 2dxzERzOnLWU9I0qiMpmgy2LERGvnyozYOZdkQ0KRPMqgjlQzM5lkSqYlzmbOrvKGsR1
+ 5bv9dMIMfRlPzf1UphJFotkjDEQ4wqQmq/Qfo6uURLU7Tl73MJbu3/hIw5QZfzmS/CSP
+ +CVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748579608; x=1749184408;
+ d=1e100.net; s=20230601; t=1748579621; x=1749184421;
  h=to:in-reply-to:references:message-id:content-transfer-encoding
  :mime-version:subject:date:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pr5XbKXLi2V3KwlJ9cBsFoT8dIWtqHqQMkw/uTu+ycI=;
- b=kyohglIjeT87AZ5xgTDwCmXeeMu250Yb3F4p+Mn9bNvoHonfa5Y0roLyReEE4HT5la
- W3SfGQnZ0KWU1Ok/HcqylCbZSS4Y+q8r1yxEpd9SO5giUBBlleVvUG+OlzEgKQn7MZ1y
- UPJpQoXq4iYwiN0kMLzLk43ydSNKifeYl9Fo1+f4h5O7YWrbc4LiZnGMvqrTeWmNeOYf
- wPHK7Lto6iHsp0NrWI+6gkHQNG232mm81dV7LEBH+y084qRFgfTqJb/p8OxLUblgxHY+
- gkvi988AesM+DJlBvTCouBuIIA309N1U+GP0b295qy+NVu2xNre3aSKAdWVlaMkeeIYD
- b8aQ==
-X-Gm-Message-State: AOJu0YyU4zSG6mkW3EXmfxUeENHNeSpxJJeIpOKTUr+wc3GJUClSiKEP
- pSIDtNkP9VCsJ1/xM8Ffvx+/3U2xRwvHbs5Ce3G33ngu/lpW4wCx9K5YUN8FHYmg+/6YU0EspHH
- yHBvy
-X-Gm-Gg: ASbGncuTy6c+/BIib7PK/q/VOP+VRJ1u1+Rn1+oP+EdPz2jUf3NXFLhQj67RSjW4aU+
- FVGG/ujVR7n5ZxHpCIzLvTDlAY/dRWQpMf7DQ5g+sv2TyAiSTPGr7nRgEQGwb1IKNZLkNk3ZFdW
- NHdqDOhEekHFOGN+jnL28YFdEosXGDkl+WSe8+0TdbhoRG7uVe8uFe6/pEQ8wmtix0YgEU/zCg9
- QgpOP+hTCaryxKHG/x7ElGJM7o1tEx5SIT+1PUtkGAxCLJzl1Vxx3ADGbHI5VfKWOy/2hRhxR9F
- stDieQ7+MUXE2h0tg9WLAHi4AjyXdPnu+pLgV0KYO2sLp6U5Cj2y
-X-Google-Smtp-Source: AGHT+IEDnw6rAjoTTSpcdEGLAwTRg4WtJABskwOWq5rR/2oJZuGLio/NTkPa1Q8j6sMtlbflvmegpQ==
-X-Received: by 2002:a17:902:c952:b0:232:1daf:6f06 with SMTP id
- d9443c01a7336-23529a0a258mr31201755ad.47.1748579608319; 
- Thu, 29 May 2025 21:33:28 -0700 (PDT)
+ bh=PzspMOXBN18eh+XrNUrzXep8Qjkld4nXnkxOhOiGHWE=;
+ b=V9X/jJNzemsQ7LstpewSVdLGAg2om1vVrO4E9zS2nryXm1/JX2eNBJT+1IR1Jm+AGb
+ 8a4cGbHE5j2DLaO4hbf3CD4d2qlPQqNd+QOx1nbU1YMhwOIWrL45ckg/Hs9NzDtJ4G9t
+ lKfSaKMnDB3LzsE2sZ9K27zA54x0m+HaQckbILWqe6YyW0XJEoJw8/XLiuGdJ5BtFzQu
+ 7n8+dVscjf+N7J564DrjAeuWICv7Ig/BAF80nh9Ri6uzyzK4BjEOjdKF+dCxgV68pN7H
+ D7GWi51e3fb+pL962I/uS8U2av9wiu+c2bbhuMGwS2sm/BDzDmcha7UoqPjPmBk49inj
+ rogA==
+X-Gm-Message-State: AOJu0YzTjsLWa+Iir+vu4PigwOd0+BVB2wAkQr3PGPfHyeib3Hw2df51
+ a7o1nAgtrY7PTva8fmf83GdmSaFcekEE6CmbfBOGvcfFivzdKKdguwBeSyzsvUjwG2wXlhLEh8E
+ uLfrN
+X-Gm-Gg: ASbGncv2Vo6hO7BP5GoLLGGEUOk2HStWeTDiHIhP1EYT68KPLAUP358zuQjIHmiJH4R
+ 5z/rbZzTkfCA6PLdlsasMApa1iRO09UmStP3CVDcqNSclelqOLT/r2707RTYx4Ug5oyp26x8T4+
+ liJzNhVuO10HQC+n0qzDlxZ5XsQMT6rOMVnNynIPJYT+oFljj9RZKsxA/g10arrq99Od7ww/z3E
+ LYGH4U5ktfF7/JIOrpoq/P6y1FJI1F2DYRrySx2w8Q9Rersn68hKSqRUCl9ZQ/0HNRTZSaWOZIh
+ 2/6nLfOO3iXz1sff7rPnqjmdSkIySSb7bv8gQ4bT0COmwbWPwDI8qNbkNmt1yDo=
+X-Google-Smtp-Source: AGHT+IEaxA8Lq0B1laCaHcOAnqBoXnkQajj1gzeNhidp1lDH2ysWr3Z4JGktRcIikctO2CosWX5uMw==
+X-Received: by 2002:a17:903:2f90:b0:234:f580:a15 with SMTP id
+ d9443c01a7336-23529203bdfmr34360395ad.14.1748579621512; 
+ Thu, 29 May 2025 21:33:41 -0700 (PDT)
 Received: from localhost ([157.82.128.1]) by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-b2eceb0288fsm763078a12.9.2025.05.29.21.33.26
+ d9443c01a7336-23506d14702sm19809485ad.214.2025.05.29.21.33.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 May 2025 21:33:28 -0700 (PDT)
+ Thu, 29 May 2025 21:33:41 -0700 (PDT)
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 30 May 2025 13:33:16 +0900
-Subject: [PATCH 1/6] qdev-properties: Add DEFINE_PROP_ON_OFF_AUTO_BIT64()
+Date: Fri, 30 May 2025 13:33:21 +0900
+Subject: [PATCH 6/6] virtio-net: Add hash type options
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250530-vdpa-v1-1-5af4109b1c19@daynix.com>
+Message-Id: <20250530-vdpa-v1-6-5af4109b1c19@daynix.com>
 References: <20250530-vdpa-v1-0-5af4109b1c19@daynix.com>
 In-Reply-To: <20250530-vdpa-v1-0-5af4109b1c19@daynix.com>
 To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>, 
@@ -78,8 +78,8 @@ To: qemu-devel@nongnu.org, Yuri Benditovich <yuri.benditovich@daynix.com>,
  Paolo Abeni <pabeni@redhat.com>, devel@daynix.com, 
  Akihiko Odaki <akihiko.odaki@daynix.com>
 X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -18
 X-Spam_score: -1.9
 X-Spam_bar: -
@@ -101,150 +101,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DEFINE_PROP_ON_OFF_AUTO_BIT64() corresponds to DEFINE_PROP_ON_OFF_AUTO()
-as DEFINE_PROP_BIT64() corresponds to DEFINE_PROP_BOOL(). The difference
-is that DEFINE_PROP_ON_OFF_AUTO_BIT64() exposes OnOffAuto instead of
-bool.
+By default, virtio-net limits the hash types that will be advertised to
+the guest so that all hash types are covered by the offloading
+capability the client provides. This change allows to override this
+behavior and to advertise hash types that require user-space hash
+calculation by specifying "on" for the corresponding properties.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
 ---
- include/hw/qdev-properties.h | 18 ++++++++++++
- hw/core/qdev-properties.c    | 67 +++++++++++++++++++++++++++++++++++++++++++-
- 2 files changed, 84 insertions(+), 1 deletion(-)
+ include/hw/virtio/virtio-net.h |  1 +
+ hw/net/virtio-net.c            | 45 ++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 44 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
-index 2c99856caacb..0197aa4995e6 100644
---- a/include/hw/qdev-properties.h
-+++ b/include/hw/qdev-properties.h
-@@ -43,11 +43,22 @@ struct PropertyInfo {
-     ObjectPropertyRelease *release;
- };
- 
-+/**
-+ * struct OnOffAutoBit64 - OnOffAuto storage with 64 elements.
-+ * @on_bits: Bitmap of elements with "on".
-+ * @auto_bits: Bitmap of elements with "auto".
-+ */
-+typedef struct OnOffAutoBit64 {
-+    uint64_t on_bits;
-+    uint64_t auto_bits;
-+} OnOffAutoBit64;
-+
- 
- /*** qdev-properties.c ***/
- 
- extern const PropertyInfo qdev_prop_bit;
- extern const PropertyInfo qdev_prop_bit64;
-+extern const PropertyInfo qdev_prop_on_off_auto_bit64;
- extern const PropertyInfo qdev_prop_bool;
- extern const PropertyInfo qdev_prop_uint8;
- extern const PropertyInfo qdev_prop_uint16;
-@@ -100,6 +111,13 @@ extern const PropertyInfo qdev_prop_link;
-                 .set_default = true,                              \
-                 .defval.u  = (bool)_defval)
- 
-+#define DEFINE_PROP_ON_OFF_AUTO_BIT64(_name, _state, _field, _bit, _defval) \
-+    DEFINE_PROP(_name, _state, _field, qdev_prop_on_off_auto_bit64,         \
-+                OnOffAutoBit64,                                             \
-+                .bitnr    = (_bit),                                         \
-+                .set_default = true,                                        \
-+                .defval.i = (OnOffAuto)_defval)
-+
- #define DEFINE_PROP_BOOL(_name, _state, _field, _defval)     \
-     DEFINE_PROP(_name, _state, _field, qdev_prop_bool, bool, \
-                 .set_default = true,                         \
-diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-index 147b3ffd16e2..b7e8a89ba5cd 100644
---- a/hw/core/qdev-properties.c
-+++ b/hw/core/qdev-properties.c
-@@ -2,6 +2,7 @@
- #include "hw/qdev-properties.h"
- #include "qapi/error.h"
- #include "qapi/qapi-types-misc.h"
-+#include "qapi/qapi-visit-common.h"
- #include "qobject/qlist.h"
- #include "qemu/ctype.h"
- #include "qemu/error-report.h"
-@@ -180,7 +181,8 @@ const PropertyInfo qdev_prop_bit = {
- 
- static uint64_t qdev_get_prop_mask64(const Property *prop)
- {
--    assert(prop->info == &qdev_prop_bit64);
-+    assert(prop->info == &qdev_prop_bit64 ||
-+           prop->info == &qdev_prop_on_off_auto_bit64);
-     return 0x1ull << prop->bitnr;
+diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-net.h
+index c4957c44c06e..73fdefc0dcb8 100644
+--- a/include/hw/virtio/virtio-net.h
++++ b/include/hw/virtio/virtio-net.h
+@@ -148,6 +148,7 @@ typedef struct VirtioNetRssData {
+     uint32_t runtime_hash_types;
+     uint32_t supported_hash_types;
+     uint32_t peer_hash_types;
++    OnOffAutoBit64 specified_hash_types;
+     uint8_t key[VIRTIO_NET_RSS_MAX_KEY_SIZE];
+     uint16_t indirections_len;
+     uint16_t *indirections_table;
+diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+index cd5a632596b1..52fe404b3431 100644
+--- a/hw/net/virtio-net.c
++++ b/hw/net/virtio-net.c
+@@ -3959,9 +3959,14 @@ static void virtio_net_device_realize(DeviceState *dev, Error **errp)
+     if (qemu_get_vnet_hash_supported_types(qemu_get_queue(n->nic)->peer,
+                                            &n->rss_data.peer_hash_types)) {
+         n->rss_data.peer_hash_available = true;
+-        n->rss_data.supported_hash_types = n->rss_data.peer_hash_types;
++        n->rss_data.supported_hash_types =
++            n->rss_data.specified_hash_types.on_bits |
++            (n->rss_data.specified_hash_types.auto_bits &
++             n->rss_data.peer_hash_types);
+     } else {
+-        n->rss_data.supported_hash_types = VIRTIO_NET_RSS_SUPPORTED_HASHES;
++        n->rss_data.supported_hash_types =
++            n->rss_data.specified_hash_types.on_bits |
++            n->rss_data.specified_hash_types.auto_bits;
+     }
  }
  
-@@ -225,6 +227,69 @@ const PropertyInfo qdev_prop_bit64 = {
-     .set_default_value = set_default_value_bool,
+@@ -4178,6 +4183,42 @@ static const Property virtio_net_properties[] = {
+                       VIRTIO_NET_F_GUEST_USO6, true),
+     DEFINE_PROP_BIT64("host_uso", VirtIONet, host_features,
+                       VIRTIO_NET_F_HOST_USO, true),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv4", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_IPv4 - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-tcp4", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_TCPv4 - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-udp4", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_UDPv4 - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv6", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_IPv6 - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-tcp6", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_TCPv6 - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-udp6", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_UDPv6 - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-ipv6ex", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_IPv6_EX - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-tcp6ex", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_TCPv6_EX - 1,
++                                  ON_OFF_AUTO_AUTO),
++    DEFINE_PROP_ON_OFF_AUTO_BIT64("hash-udp6ex", VirtIONet,
++                                  rss_data.specified_hash_types,
++                                  VIRTIO_NET_HASH_REPORT_UDPv6_EX - 1,
++                                  ON_OFF_AUTO_AUTO),
  };
  
-+static void prop_get_on_off_auto_bit64(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    Property *prop = opaque;
-+    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
-+    OnOffAuto value;
-+    uint64_t mask = qdev_get_prop_mask64(prop);
-+
-+    if (p->auto_bits & mask) {
-+        value = ON_OFF_AUTO_AUTO;
-+    } else if (p->on_bits & mask) {
-+        value = ON_OFF_AUTO_ON;
-+    } else {
-+        value = ON_OFF_AUTO_OFF;
-+    }
-+
-+    visit_type_OnOffAuto(v, name, &value, errp);
-+}
-+
-+static void prop_set_on_off_auto_bit64(Object *obj, Visitor *v,
-+                                       const char *name, void *opaque,
-+                                       Error **errp)
-+{
-+    Property *prop = opaque;
-+    OnOffAutoBit64 *p = object_field_prop_ptr(obj, prop);
-+    OnOffAuto value;
-+    uint64_t mask = qdev_get_prop_mask64(prop);
-+
-+    if (!visit_type_OnOffAuto(v, name, &value, errp)) {
-+        return;
-+    }
-+
-+    switch (value) {
-+    case ON_OFF_AUTO_AUTO:
-+        p->on_bits &= ~mask;
-+        p->auto_bits |= mask;
-+        break;
-+
-+    case ON_OFF_AUTO_ON:
-+        p->on_bits |= mask;
-+        p->auto_bits &= ~mask;
-+        break;
-+
-+    case ON_OFF_AUTO_OFF:
-+        p->on_bits &= ~mask;
-+        p->auto_bits &= ~mask;
-+        break;
-+
-+    case ON_OFF_AUTO__MAX:
-+        g_assert_not_reached();
-+    }
-+}
-+
-+const PropertyInfo qdev_prop_on_off_auto_bit64 = {
-+    .type = "OnOffAuto",
-+    .description = "on/off/auto",
-+    .enum_table = &OnOffAuto_lookup,
-+    .get = prop_get_on_off_auto_bit64,
-+    .set = prop_set_on_off_auto_bit64,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-+
- /* --- bool --- */
- 
- static void get_bool(Object *obj, Visitor *v, const char *name, void *opaque,
+ static void virtio_net_class_init(ObjectClass *klass, const void *data)
 
 -- 
 2.49.0
