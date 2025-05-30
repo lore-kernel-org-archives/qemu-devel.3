@@ -4,131 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6CBC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:41:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD80EC54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:09:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtQS-0008Nj-Os; Fri, 30 May 2025 02:41:08 -0400
+	id 1uKtqj-000759-T6; Fri, 30 May 2025 03:08:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtQQ-0008N6-3O
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:41:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uKtqd-00074p-O5
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:08:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtQO-0002ee-3W
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:41:05 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uKtqV-0006O8-Um
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:08:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748587263;
+ s=mimecast20190719; t=1748588870;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=30vzHzoT8CR5e+wth/rC2ifkhVU0gf51OjRUcYZfLnM=;
- b=HHsC1+6yD2iE8sJuM6zh+58tQVdQjdvuznku/ITeKI1TnM8ibG/2ewe7VDpq2zREUkdeGV
- iTo+Nk+kKRHPLPAB6fhMgkbnZc0wXzUh4effe2QHJfj7SABxX5OpFZ2pMYV2goeB9in1JN
- d3NHVTq6zBZ/K8Yq3yH0dEILBD0/zWU=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=YhfwxdinJJdCY8Yy+StoCvJ5t74Fb+rUvLYPnVRdjZk=;
+ b=XdvX+s4ViXV0uG0gTYjtsPh+bw154RFPYvdv4Oy2TSVChQosHPuQzUhnIJHHZGqS5Sy7RW
+ WribT23KiA5VeSyyXgBGpLs4WYm0HIecxv05XY4SqPQpePNs/c+P2LJaaPD9yI9JtHnmrx
+ aabF/QQha3tbKdu5dfIM3A0sG4hCCYg=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-68-dKVxd7DBPiOy5QUou6DyaA-1; Fri, 30 May 2025 02:41:01 -0400
-X-MC-Unique: dKVxd7DBPiOy5QUou6DyaA-1
-X-Mimecast-MFC-AGG-ID: dKVxd7DBPiOy5QUou6DyaA_1748587260
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad8a2dc92ddso121882266b.1
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:41:01 -0700 (PDT)
+ us-mta-383-he_FMZ61PVOeOUq3QpmmLg-1; Fri, 30 May 2025 03:07:48 -0400
+X-MC-Unique: he_FMZ61PVOeOUq3QpmmLg-1
+X-Mimecast-MFC-AGG-ID: he_FMZ61PVOeOUq3QpmmLg_1748588867
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-6045875e52fso1255219a12.2
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:07:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748587260; x=1749192060;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=30vzHzoT8CR5e+wth/rC2ifkhVU0gf51OjRUcYZfLnM=;
- b=lwMiYPQ84qQzOl+zaIO5WRB9toL0Fgylde16iMaTNGaWTTXlU7u4zMeww5MSJaDbCT
- oNi00jmfcGnbnOLvOTFbW+J6nTACf9nSx8OKr/wN6nBNed4fJMkpPtHWzWTFygLp12XG
- q4lxvYeGIn1FIH6Z2WbroqEGn64MLja0w+Iv4u1qr1Itd4VSgDxWSTb/dT63+KoEF/UV
- gGaoy1mHJx8Goyy+Cttn9BORJ5nllIteCvR/DFEpNsPs8TlePKchtCqtItNClNwZmZrW
- C2reaA/4rhzF+GaiH7Asu6hnceZNSKSj9AZlputMGKb1Qlr/Mc5vGgED/F+sgq4mqO9u
- QgSg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWz+5yO302LW7R+1vePuA0aTDuV7UcJPFZAqvbl3EITEz+uJUF+Z5hwJCcJuBiBTsy6B5yrDwRCXu+h@nongnu.org
-X-Gm-Message-State: AOJu0YykqY2XnZIia885/0ShBOR0cenv4EtIDNKji6DZQqexJ3bwlhFx
- Obmexh2mcagdNiOJSHOU06pg8N45zPpi0jDcO+19TAAIXiiwM0tgx1tsPfvI7a4sT+1tCBUzuua
- kHVU63mrVR1ILngh8a8OuuO6tQO+e7IUELYFYCLv/zNS3r/k4hVbK+j4k
-X-Gm-Gg: ASbGncsDx1eI6QW7Sm7gCQjzPeTqsmuGHtI/U4mFXqxacBezs9DePp1jb7Xo5P3nyxw
- jtwXb1FqoZWZ+ub9LNqUailjz+hTnjL2QjXganL5jKVCjGIIuAqLe1LPoq4oG/cI5oAk9QM638R
- Wj27cnDsQlGzpqRRvw2UAdA9rBoasnRuQv5UDe1Ysh/VJEIC2EqmZRnJ8Qmc0GvxS8bfXQZ/2b6
- aUIuIj0+FbLqsYfBHSO6HiyItK+5H2p3ePD9xXeAIwvg7ENkMRQIlGpDaZz2m3ARDCDsZWII6hv
- iTsC8Da7JieLT03ack4+9IWECU8H1krrCorXWtLW0z4yV4NNvEt2gjNWKJW6l7s=
-X-Received: by 2002:a17:907:2d14:b0:ad8:99cc:774c with SMTP id
- a640c23a62f3a-adb3244d36fmr209683166b.58.1748587260368; 
- Thu, 29 May 2025 23:41:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOzZQodEaSWccSRPmDhNo1nxS0gard5BW+HGNQ4wyDOYhwfh27+IfNFOthEllEQ6tXsPTNFQ==
-X-Received: by 2002:a17:907:2d14:b0:ad8:99cc:774c with SMTP id
- a640c23a62f3a-adb3244d36fmr209681066b.58.1748587259930; 
- Thu, 29 May 2025 23:40:59 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-112-237.pools.arcor-ip.net.
- [47.64.112.237]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60566c2a762sm1146111a12.4.2025.05.29.23.40.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 May 2025 23:40:59 -0700 (PDT)
-Message-ID: <0daf1791-e44e-45a5-ab68-55a3cc0c6f6a@redhat.com>
-Date: Fri, 30 May 2025 08:40:58 +0200
+ d=1e100.net; s=20230601; t=1748588867; x=1749193667;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=YhfwxdinJJdCY8Yy+StoCvJ5t74Fb+rUvLYPnVRdjZk=;
+ b=vPNKSKwF0KDpoIZ7AKICXfTbQB0rdq0RKdY7nqmvazfg/PxW9JJDJUbMzCID0jdzMS
+ ZK3bzxhj+W+qasZvj1ML+vguRuzdf5eRb00DCwDJfaFiP9w3UDov5WMNj7gmM36Rs0Jj
+ Cnj42dGLOY9MkWQmw9ty3m2vYjTUEk987JB+pTlPJfff2oWBP9nWpBOToiOJh7gYaYwZ
+ ULuL69KAyHaZg4sx+JPuD1kTPEEKl1VdqFoYqDKfrqHUJma/JHeiphx0avnw3amcXE76
+ iFlb5TpSAoo3V8KbHdCWH0/5dhMGo7dvN/zwLU7gmlO3hs1oEiMi5Fomk9i2eppuNDKX
+ CP/g==
+X-Gm-Message-State: AOJu0YxVf6bGXOwnb3S7e49Px98tOUbnTm/QuFvmx4ZyksSmbJMemEkr
+ R0/sKxKQI6bRiRIzVvNp+kPnn+hDZWLa6XqqCwos/XaKO8zroqhfTIvcg4Tu/Zer3X2+dB4y5SD
+ VinmwXjHOL21ofDg2Pglu/A5FxlURiRyHXe+FYvMShsG57kiORMdi8HsOQ91crbrZwmjD5qcS1y
+ duaZ5d5PD/A8VdYkYmikfqm1h2hzobH+uhNTEApLDi
+X-Gm-Gg: ASbGnct1oZtLt1/HQ16Rl8knNQdaOA62fGFthCMUlk9vyXamV1Y7JIevXdgP44KMXAX
+ wytzGFGbb9aNCUYGrtefpN70NLuKHeK12bSJ/jBSM5df9ZvSBIrAdsFnpFe+gr3oD4ryU/pVodz
+ EVvNxVNBqjhXKInm3qGDNf5U4hSyAfgacOzPb2uGiJD59HbqxHMfJh/Uhw7tWdoLM1DGcxGGj16
+ wA4btgUOpdYNbX89pCMUi/ltE0jA3sl8eAB2yArQ/igiSAIb9O7iQV2S+CROzN6SsJG+e1YGCjP
+ tp7T7FRkVxWtCsfRkylKDjGh
+X-Received: by 2002:a05:6402:34d6:b0:5fb:e868:8730 with SMTP id
+ 4fb4d7f45d1cf-6056dd3b8d7mr1904486a12.10.1748588866874; 
+ Fri, 30 May 2025 00:07:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzjsNYAZHHvqeW4DRMFbeDorA7cXMjc7lYca8zOA9aj4n/jOTrsOiNhBDbD5iZ0JWTJIfzzg==
+X-Received: by 2002:a05:6402:34d6:b0:5fb:e868:8730 with SMTP id
+ 4fb4d7f45d1cf-6056dd3b8d7mr1904443a12.10.1748588866178; 
+ Fri, 30 May 2025 00:07:46 -0700 (PDT)
+Received: from [192.168.122.1] ([151.49.64.79])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-60566c74cdfsm1207182a12.42.2025.05.30.00.07.45
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 May 2025 00:07:45 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Subject: [PATCH] rocker: do not pollute the namespace
+Date: Fri, 30 May 2025 09:07:43 +0200
+Message-ID: <20250530070743.2050531-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] iotests: fix 240
-To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
- Hanna Reitz <hreitz@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250529203147.180338-1-stefanha@redhat.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250529203147.180338-1-stefanha@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -137,7 +88,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,62 +104,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/05/2025 22.31, Stefan Hajnoczi wrote:
-> Commit 2e8e18c2e463 ("virtio-scsi: add iothread-vq-mapping parameter")
-> removed the limitation that virtio-scsi devices must successfully set
-> the AioContext on their BlockBackends. This was made possible thanks to
-> the QEMU multi-queue block layer.
-> 
-> This change broke qemu-iotests 240, which checks that adding a
-> virtio-scsi device with a drive that is already in another AioContext
-> will fail.
-> 
-> Update the test to take the relaxed behavior into account. I considered
-> removing this test case entirely, but the code coverage still seems
-> valuable.
-> 
-> Fixes: 2e8e18c2e463 ("virtio-scsi: add iothread-vq-mapping parameter")
-> Reported-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->   tests/qemu-iotests/240     | 2 --
->   tests/qemu-iotests/240.out | 4 +---
->   2 files changed, 1 insertion(+), 5 deletions(-)
-> 
-> diff --git a/tests/qemu-iotests/240 b/tests/qemu-iotests/240
-> index 9b281e1dc0..f8af9ff648 100755
-> --- a/tests/qemu-iotests/240
-> +++ b/tests/qemu-iotests/240
-> @@ -81,8 +81,6 @@ class TestCase(iotests.QMPTestCase):
->   
->           self.vm.qmp_log('device_del', id='scsi-hd0')
->           self.vm.event_wait('DEVICE_DELETED')
-> -        self.vm.qmp_log('device_add', id='scsi-hd1', driver='scsi-hd', drive='hd0', bus="scsi1.0")
-> -
->           self.vm.qmp_log('device_del', id='scsi-hd1')
->           self.vm.event_wait('DEVICE_DELETED')
->           self.vm.qmp_log('blockdev-del', node_name='hd0')
-> diff --git a/tests/qemu-iotests/240.out b/tests/qemu-iotests/240.out
-> index 89ed25e506..10dcc42e06 100644
-> --- a/tests/qemu-iotests/240.out
-> +++ b/tests/qemu-iotests/240.out
-> @@ -46,10 +46,8 @@
->   {"execute": "device_add", "arguments": {"bus": "scsi0.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd0"}}
->   {"return": {}}
->   {"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
-> -{"error": {"class": "GenericError", "desc": "Cannot change iothread of active block backend"}}
-> -{"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
->   {"return": {}}
-> -{"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
-> +{"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
->   {"return": {}}
->   {"execute": "device_del", "arguments": {"id": "scsi-hd1"}}
->   {"return": {}}
+Do not leave the __le* macros defined, in fact do not use them at all.  Fixes a
+build failure on Alpine with the TDX patches:
 
-Thanks for fixing it!
+In file included from ../hw/net/rocker/rocker_of_dpa.c:25:
+../hw/net/rocker/rocker_hw.h:14:16: error: conflicting types for 'uint64_t'; have '__u64' {aka 'long long unsigned int'}
+   14 | #define __le64 uint64_t
+      |                ^~~~~~~~
+In file included from /usr/include/stdint.h:20,
+                 from ../include/qemu/osdep.h:111,
+                 from ../hw/net/rocker/rocker_of_dpa.c:17:
+/usr/include/bits/alltypes.h:136:25: note: previous declaration of 'uint64_t' with type 'uint64_t' {aka 'long unsigned int'}
+  136 | typedef unsigned _Int64 uint64_t;
+      |                         ^~~~~~~~
 
-CC: qemu-stable now since this was also in the 10.0 release.
+because the Linux headers include a typedef of __leNN.
 
-  Thomas
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ hw/net/rocker/rocker.h        | 14 +++---------
+ hw/net/rocker/rocker_hw.h     | 20 +++++++-----------
+ hw/net/rocker/rocker_of_dpa.c | 40 +++++++++++++++++------------------
+ 3 files changed, 31 insertions(+), 43 deletions(-)
+
+diff --git a/hw/net/rocker/rocker.h b/hw/net/rocker/rocker.h
+index 6e0962f47a8..ae06c1c72af 100644
+--- a/hw/net/rocker/rocker.h
++++ b/hw/net/rocker/rocker.h
+@@ -36,15 +36,7 @@ static inline G_GNUC_PRINTF(1, 2) int DPRINTF(const char *fmt, ...)
+ }
+ #endif
+ 
+-#define __le16 uint16_t
+-#define __le32 uint32_t
+-#define __le64 uint64_t
+-
+-#define __be16 uint16_t
+-#define __be32 uint32_t
+-#define __be64 uint64_t
+-
+-static inline bool ipv4_addr_is_multicast(__be32 addr)
++static inline bool ipv4_addr_is_multicast(uint32_t addr)
+ {
+     return (addr & htonl(0xf0000000)) == htonl(0xe0000000);
+ }
+@@ -52,8 +44,8 @@ static inline bool ipv4_addr_is_multicast(__be32 addr)
+ typedef struct ipv6_addr {
+     union {
+         uint8_t addr8[16];
+-        __be16 addr16[8];
+-        __be32 addr32[4];
++        uint16_t addr16[8];
++        uint32_t addr32[4];
+     };
+ } Ipv6Addr;
+ 
+diff --git a/hw/net/rocker/rocker_hw.h b/hw/net/rocker/rocker_hw.h
+index 1786323fa4a..7ec6bfbcb92 100644
+--- a/hw/net/rocker/rocker_hw.h
++++ b/hw/net/rocker/rocker_hw.h
+@@ -9,10 +9,6 @@
+ #ifndef ROCKER_HW_H
+ #define ROCKER_HW_H
+ 
+-#define __le16 uint16_t
+-#define __le32 uint32_t
+-#define __le64 uint64_t
+-
+ /*
+  * Return codes
+  */
+@@ -124,12 +120,12 @@ enum {
+  */
+ 
+ typedef struct rocker_desc {
+-    __le64 buf_addr;
++    uint64_t buf_addr;
+     uint64_t cookie;
+-    __le16 buf_size;
+-    __le16 tlv_size;
+-    __le16 rsvd[5];   /* pad to 32 bytes */
+-    __le16 comp_err;
++    uint16_t buf_size;
++    uint16_t tlv_size;
++    uint16_t rsvd[5];   /* pad to 32 bytes */
++    uint16_t comp_err;
+ } __attribute__((packed, aligned(8))) RockerDesc;
+ 
+ /*
+@@ -137,9 +133,9 @@ typedef struct rocker_desc {
+  */
+ 
+ typedef struct rocker_tlv {
+-    __le32 type;
+-    __le16 len;
+-    __le16 rsvd;
++    uint32_t type;
++    uint16_t len;
++    uint16_t rsvd;
+ } __attribute__((packed, aligned(8))) RockerTlv;
+ 
+ /* cmd msg */
+diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
+index 3378f63110b..4aed1787566 100644
+--- a/hw/net/rocker/rocker_of_dpa.c
++++ b/hw/net/rocker/rocker_of_dpa.c
+@@ -52,10 +52,10 @@ typedef struct of_dpa_flow_key {
+     uint32_t tunnel_id;              /* overlay tunnel id */
+     uint32_t tbl_id;                 /* table id */
+     struct {
+-        __be16 vlan_id;              /* 0 if no VLAN */
++        uint16_t vlan_id;              /* 0 if no VLAN */
+         MACAddr src;                 /* ethernet source address */
+         MACAddr dst;                 /* ethernet destination address */
+-        __be16 type;                 /* ethernet frame type */
++        uint16_t type;                 /* ethernet frame type */
+     } eth;
+     struct {
+         uint8_t proto;               /* IP protocol or ARP opcode */
+@@ -66,14 +66,14 @@ typedef struct of_dpa_flow_key {
+     union {
+         struct {
+             struct {
+-                __be32 src;          /* IP source address */
+-                __be32 dst;          /* IP destination address */
++                uint32_t src;          /* IP source address */
++                uint32_t dst;          /* IP destination address */
+             } addr;
+             union {
+                 struct {
+-                    __be16 src;      /* TCP/UDP/SCTP source port */
+-                    __be16 dst;      /* TCP/UDP/SCTP destination port */
+-                    __be16 flags;    /* TCP flags */
++                    uint16_t src;      /* TCP/UDP/SCTP source port */
++                    uint16_t dst;      /* TCP/UDP/SCTP destination port */
++                    uint16_t flags;    /* TCP flags */
+                 } tp;
+                 struct {
+                     MACAddr sha;     /* ARP source hardware address */
+@@ -86,11 +86,11 @@ typedef struct of_dpa_flow_key {
+                 Ipv6Addr src;       /* IPv6 source address */
+                 Ipv6Addr dst;       /* IPv6 destination address */
+             } addr;
+-            __be32 label;            /* IPv6 flow label */
++            uint32_t label;            /* IPv6 flow label */
+             struct {
+-                __be16 src;          /* TCP/UDP/SCTP source port */
+-                __be16 dst;          /* TCP/UDP/SCTP destination port */
+-                __be16 flags;        /* TCP flags */
++                uint16_t src;          /* TCP/UDP/SCTP source port */
++                uint16_t dst;          /* TCP/UDP/SCTP destination port */
++                uint16_t flags;        /* TCP flags */
+             } tp;
+             struct {
+                 Ipv6Addr target;    /* ND target address */
+@@ -112,13 +112,13 @@ typedef struct of_dpa_flow_action {
+     struct {
+         uint32_t group_id;
+         uint32_t tun_log_lport;
+-        __be16 vlan_id;
++        uint16_t vlan_id;
+     } write;
+     struct {
+-        __be16 new_vlan_id;
++        uint16_t new_vlan_id;
+         uint32_t out_pport;
+         uint8_t copy_to_cpu;
+-        __be16 vlan_id;
++        uint16_t vlan_id;
+     } apply;
+ } OfDpaFlowAction;
+ 
+@@ -143,7 +143,7 @@ typedef struct of_dpa_flow {
+ typedef struct of_dpa_flow_pkt_fields {
+     uint32_t tunnel_id;
+     struct eth_header *ethhdr;
+-    __be16 *h_proto;
++    uint16_t *h_proto;
+     struct vlan_header *vlanhdr;
+     struct ip_header *ipv4hdr;
+     struct ip6_header *ipv6hdr;
+@@ -180,7 +180,7 @@ typedef struct of_dpa_group {
+             uint32_t group_id;
+             MACAddr src_mac;
+             MACAddr dst_mac;
+-            __be16 vlan_id;
++            uint16_t vlan_id;
+         } l2_rewrite;
+         struct {
+             uint16_t group_count;
+@@ -190,13 +190,13 @@ typedef struct of_dpa_group {
+             uint32_t group_id;
+             MACAddr src_mac;
+             MACAddr dst_mac;
+-            __be16 vlan_id;
++            uint16_t vlan_id;
+             uint8_t ttl_check;
+         } l3_unicast;
+     };
+ } OfDpaGroup;
+ 
+-static int of_dpa_mask2prefix(__be32 mask)
++static int of_dpa_mask2prefix(uint32_t mask)
+ {
+     int i;
+     int count = 32;
+@@ -451,7 +451,7 @@ static void of_dpa_flow_pkt_parse(OfDpaFlowContext *fc,
+     fc->iovcnt = iovcnt + 2;
+ }
+ 
+-static void of_dpa_flow_pkt_insert_vlan(OfDpaFlowContext *fc, __be16 vlan_id)
++static void of_dpa_flow_pkt_insert_vlan(OfDpaFlowContext *fc, uint16_t vlan_id)
+ {
+     OfDpaFlowPktFields *fields = &fc->fields;
+     uint16_t h_proto = fields->ethhdr->h_proto;
+@@ -486,7 +486,7 @@ static void of_dpa_flow_pkt_strip_vlan(OfDpaFlowContext *fc)
+ 
+ static void of_dpa_flow_pkt_hdr_rewrite(OfDpaFlowContext *fc,
+                                         uint8_t *src_mac, uint8_t *dst_mac,
+-                                        __be16 vlan_id)
++                                        uint16_t vlan_id)
+ {
+     OfDpaFlowPktFields *fields = &fc->fields;
+ 
+-- 
+2.49.0
 
 
