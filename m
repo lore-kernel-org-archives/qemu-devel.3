@@ -4,77 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 547CAC5B549
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 10:14:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C36C5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 10:14:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKwkD-00069s-4a; Fri, 30 May 2025 06:13:45 -0400
+	id 1uKwkw-0006Nw-Cu; Fri, 30 May 2025 06:14:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uKwkA-00069J-Al
- for qemu-devel@nongnu.org; Fri, 30 May 2025 06:13:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKwks-0006L3-Na; Fri, 30 May 2025 06:14:26 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uKwk7-00012c-4D
- for qemu-devel@nongnu.org; Fri, 30 May 2025 06:13:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748600018;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S+/OYNGGuhonnz2htV5sktCCYBUtqpcXVuH372MH+es=;
- b=QG/42QNuEx28ac/r+g4X87x9qrNrzDtgP0afs+N2QNLBGcHpOgpjwHef0pf2aR/irf+jH6
- pmI3NzT2lYj9Wmn5CEFZtuN6NmyDp0THxOKRcigCISq01gkw8aGlbTAINIWvMM5H+x+/9c
- KcoGIR8qq0lkXacLhQ00meajj0ff2Vs=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-136-yO4hMGW_N56rq0yc8Y1iTw-1; Fri,
- 30 May 2025 06:13:35 -0400
-X-MC-Unique: yO4hMGW_N56rq0yc8Y1iTw-1
-X-Mimecast-MFC-AGG-ID: yO4hMGW_N56rq0yc8Y1iTw_1748600014
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 432051800366; Fri, 30 May 2025 10:13:33 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.173])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 14E1B30001B7; Fri, 30 May 2025 10:13:29 +0000 (UTC)
-Date: Fri, 30 May 2025 11:13:26 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-Subject: Re: [PATCH v2 0/3] ui/vnc: fix some endian problems
-Message-ID: <aDmExrPVuuwSfZHA@redhat.com>
-References: <20250514111931.1711390-1-berrange@redhat.com>
- <3371b5fc-80ad-4873-b914-21e8af9690fe@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uKwkp-000146-Kf; Fri, 30 May 2025 06:14:26 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b7zZd2qhxz6L550;
+ Fri, 30 May 2025 18:12:57 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 7489814049C;
+ Fri, 30 May 2025 18:14:15 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 30 May
+ 2025 12:14:14 +0200
+Date: Fri, 30 May 2025 11:14:13 +0100
+To: Eric Auger <eric.auger@redhat.com>
+CC: <eric.auger.pro@gmail.com>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>, <imammedo@redhat.com>,
+ <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 06/25] hw/pci-host/gpex-acpi: Propagate hotplug type
+ info from virt machine downto gpex
+Message-ID: <20250530111413.00003c66@huawei.com>
+In-Reply-To: <20250527074224.1197793-7-eric.auger@redhat.com>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-7-eric.auger@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <3371b5fc-80ad-4873-b914-21e8af9690fe@tls.msk.ru>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,44 +71,85 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, May 24, 2025 at 01:32:45PM +0300, Michael Tokarev wrote:
-> On 14.05.2025 14:19, Daniel P. Berrangé wrote:
-> > This fixes some edge cases in endian handling in the VNC server. These
-> > bugs are rarely going to be visible by default, since most servers will
-> > negotiate encoding formats / framebuffer formats that avoid hitting
-> > the problem scenarios.
-> > 
-> > In v2:
-> > 
-> >   - Rename 'client_bo' to 'client_endian' for reviewer clarity
-> >   - Rename 'native' to 'native_endian' for code consistency
-> > 
-> > Daniel P. Berrangé (3):
-> >    ui/vnc.c: replace big endian flag with byte order value
-> >    ui/vnc: take account of client byte order in pixman format
-> >    ui/vnc: fix tight palette pixel encoding for 8/16-bpp formats
+On Tue, 27 May 2025 09:40:08 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
+
+> Propagate the type of pci hotplug mode downto the gpex
+> acpi code. In case machine acpi_pcihp is unset we configure
+> pci native hotplug on pci0. For expander bridges we keep
+> legacy pci native hotplug, as done on x86 q35.
 > 
-> Hi!
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> ---
+>  include/hw/pci-host/gpex.h | 1 +
+>  hw/arm/virt-acpi-build.c   | 1 +
+>  hw/pci-host/gpex-acpi.c    | 3 ++-
+>  3 files changed, 4 insertions(+), 1 deletion(-)
 > 
-> Is there anything in there which is relevant for qemu-stable?
+> diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
+> index 84471533af..feaf827474 100644
+> --- a/include/hw/pci-host/gpex.h
+> +++ b/include/hw/pci-host/gpex.h
+> @@ -45,6 +45,7 @@ struct GPEXConfig {
+>      MemMapEntry pio;
+>      int         irq;
+>      PCIBus      *bus;
+> +    bool        pci_native_hotplug;
+>  };
+>  
+>  typedef struct GPEXIrq GPEXIrq;
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 7e8e0f0298..be5e00a56e 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -129,6 +129,7 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+>          .ecam   = memmap[ecam_id],
+>          .irq    = irq,
+>          .bus    = vms->bus,
+> +        .pci_native_hotplug = !vms->acpi_pcihp,
+>      };
+>  
+>      if (vms->highmem_mmio) {
+> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+> index 1aa2d12026..f1ab30f3d5 100644
+> --- a/hw/pci-host/gpex-acpi.c
+> +++ b/hw/pci-host/gpex-acpi.c
+> @@ -204,6 +204,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+>              if (is_cxl) {
+>                  build_cxl_osc_method(dev);
+>              } else {
+> +                /* pxb bridges do not have ACPI PCI Hot-plug enabled */
+>                  acpi_dsdt_add_host_bridge_methods(dev, true);
 
-I've not seen anyone raise these issues, since basically every serious
-VNC client supports 'tight' encoding and it is very rare to run anything
-other than true colour mode these days.
+This is awkward but explains why my CXL cases weren't causing trouble.
+A mixed config is counter to the recommendation in the PCI firmware spec
 
-None the less these are clear bug fixes, so valid to pull all three
-patches into stable if desired.
+"It is recommended that a machine with multiple host bridge devices should
+report the same capabilities for all host bridges of the same type and also
+negotiate control of the features described in the Control Field in the
+same way for all host bridges of the same type"
+
+I guess if any OS isn't coping with the mix then they can request native
+hotplug.
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
+>              }
+>  
+> @@ -279,7 +280,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+>      }
+>      aml_append(dev, aml_name_decl("_CRS", rbuf));
+>  
+> -    acpi_dsdt_add_host_bridge_methods(dev, true);
+> +    acpi_dsdt_add_host_bridge_methods(dev, cfg->pci_native_hotplug);
+>  
+>      Aml *dev_res0 = aml_device("%s", "RES0");
+>      aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
 
 
