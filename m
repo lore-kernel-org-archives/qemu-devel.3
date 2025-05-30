@@ -4,93 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B051C54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:40:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6CBC3ABB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:41:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtPN-0007YO-N5; Fri, 30 May 2025 02:40:01 -0400
+	id 1uKtQS-0008Nj-Os; Fri, 30 May 2025 02:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uKtPL-0007Xg-U8
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:39:59 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
- id 1uKtPJ-0002Lw-OL
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:39:59 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-7406c6dd2b1so2300818b3a.0
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:39:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748587195; x=1749191995; darn=nongnu.org;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
- :date:message-id:reply-to;
- bh=mLJgGsHYlC9EzJXe4GvyxSYR5mGvu8elhlUzRVWhsZ8=;
- b=H/A7eocoaE7qRR5lmssZAiyNcMjwyPoCk00U1Mo8GXvWmgraoXvHpB2c30qDM2QI44
- LdwvmcWpvcvxk5N9dAxg81Kv+3J8kqRCfsDnwSXPp92HmnNZrIvaoP9PtYOcmv7B32bu
- d9k0GKW/d9FJf1LL1VmGw/iYQZT144QNX0EBoPtAnmbzVVewVxKd3W5pYt72B20Cp4KO
- HwDyLLYAU7RkQEzqUdRD3NR9yMGxY/THaJe27U4ltdDyqFRhakDYK9lGpbwun4jlHfpx
- IUZNqMkf04WEBokqvY8wejhrJmXbwghucXjz66C1BhwmAmqnVzoPrVi0ARE9Z/XZrKCT
- BIig==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtQQ-0008N6-3O
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:41:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtQO-0002ee-3W
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:41:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748587263;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=30vzHzoT8CR5e+wth/rC2ifkhVU0gf51OjRUcYZfLnM=;
+ b=HHsC1+6yD2iE8sJuM6zh+58tQVdQjdvuznku/ITeKI1TnM8ibG/2ewe7VDpq2zREUkdeGV
+ iTo+Nk+kKRHPLPAB6fhMgkbnZc0wXzUh4effe2QHJfj7SABxX5OpFZ2pMYV2goeB9in1JN
+ d3NHVTq6zBZ/K8Yq3yH0dEILBD0/zWU=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-68-dKVxd7DBPiOy5QUou6DyaA-1; Fri, 30 May 2025 02:41:01 -0400
+X-MC-Unique: dKVxd7DBPiOy5QUou6DyaA-1
+X-Mimecast-MFC-AGG-ID: dKVxd7DBPiOy5QUou6DyaA_1748587260
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-ad8a2dc92ddso121882266b.1
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:41:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748587195; x=1749191995;
- h=mime-version:user-agent:content-transfer-encoding:references
- :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=mLJgGsHYlC9EzJXe4GvyxSYR5mGvu8elhlUzRVWhsZ8=;
- b=Q+OBQgtoIrwiRc72Qqug/V6Ar91SJZe+8Mzfcmx5+vjx591z39Px/OEcqqw0KtRAX6
- GbsSTYojgXwiHG0DC3jtOXMAcOKkr+Q0C5guwQ5XLqbROg5buEgmkPqRSLmv5qXpRJbq
- hstjL1DP8AxcozXaMz19nI0FNvRAdELRPtrYNdQX54z4Yf9N8SfI46hysZ/t4HTmCI11
- klNfRvyZEzIVhEZV4UlAgrYLJb5AfOtDsu/6m9Pto2Nk7b1/Oa2zH8JyNtMq5gwNNvAN
- V6q2m2+d8VNGK3k5aF5wr9rK9IUdI5t8kwCqJgraTimrK6XBmgnvrhDpu816xs0u66nM
- FWNA==
+ d=1e100.net; s=20230601; t=1748587260; x=1749192060;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=30vzHzoT8CR5e+wth/rC2ifkhVU0gf51OjRUcYZfLnM=;
+ b=lwMiYPQ84qQzOl+zaIO5WRB9toL0Fgylde16iMaTNGaWTTXlU7u4zMeww5MSJaDbCT
+ oNi00jmfcGnbnOLvOTFbW+J6nTACf9nSx8OKr/wN6nBNed4fJMkpPtHWzWTFygLp12XG
+ q4lxvYeGIn1FIH6Z2WbroqEGn64MLja0w+Iv4u1qr1Itd4VSgDxWSTb/dT63+KoEF/UV
+ gGaoy1mHJx8Goyy+Cttn9BORJ5nllIteCvR/DFEpNsPs8TlePKchtCqtItNClNwZmZrW
+ C2reaA/4rhzF+GaiH7Asu6hnceZNSKSj9AZlputMGKb1Qlr/Mc5vGgED/F+sgq4mqO9u
+ QgSg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+XHelbJ79CpwxgAeYgsY/413ALDoCji0KK/6UB9YhaSzo8XKHqVo7UE/nbcZusGyBhNoO3u+XSaLD@nongnu.org
-X-Gm-Message-State: AOJu0YzSbCsFcMIrnAgbwPszDM9HxL1lvkrJrFglMYfnoBzXgQr+9uYl
- D9pmlX8ORRUtRxhi9v43ToAz4m/mhx1xYromVjIQv1AAjPD39VsiEaDG
-X-Gm-Gg: ASbGncsuRnSJeOjKFxJuoupsaS0Fbt2nFRBRm7v1HU1y+pmcF+FRruhJeQfF7hdkv9U
- 4SPrTd/dRwNIv33EhwlVFdp96+sfCIwrMGb6s6/rC0AOSOZRDD3sxpYJcYg08Rujyplu/kIUtdj
- vD3hUz1QN3aT3CExzN92BJiGIP02QEe0S0Ax8itP6b2vwgQ1xzxiOH8FbqLkIN7/QDxrjnJ19IV
- b6K18m3seCU2INnmBzYLhSZgImoVJqonN4B2klPnTirNebKIcfvpzvMph+xe1vGpDEKXtBE6L2o
- 64stjxAhaGpDlwhCenHB3LZio0Y9PfRrp/rAit+LMpUeNSw9UWXR6CCteeWaQU4=
-X-Google-Smtp-Source: AGHT+IGmOXFwoepu/pbzBqeJZUwpvBSCTKkIXPBHov+l2efKKxR+9WAwidKlHu/qBk49+gVdNdUVeA==
-X-Received: by 2002:a05:6a21:7116:b0:1ee:5fae:8f6a with SMTP id
- adf61e73a8af0-21ac5ad4e92mr10704662637.1.1748587195414; 
- Thu, 29 May 2025 23:39:55 -0700 (PDT)
-Received: from [10.239.152.184] ([134.134.139.75])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b2eceb29b20sm801894a12.30.2025.05.29.23.39.52
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 29 May 2025 23:39:54 -0700 (PDT)
-Message-ID: <0790819eab97fbc5728f583b6ec90e338c2819e0.camel@gmail.com>
-Subject: Re: [PATCH 0/9] ui: Improve scale handling
-From: Weifeng Liu <weifeng.liu.z@gmail.com>
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
-Cc: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>, 
- Gerd Hoffmann <kraxel@redhat.com>, Dmitry Osipenko
- <dmitry.osipenko@collabora.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=	
- <alex.bennee@linaro.org>, Vivek Kasireddy <vivek.kasireddy@intel.com>, 
- Dongwon Kim <dongwon.kim@intel.com>
-Date: Fri, 30 May 2025 14:39:50 +0800
-In-Reply-To: <19542757-ecc0-4eb5-b26c-4a06f7f800c3@tls.msk.ru>
-References: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
- <19542757-ecc0-4eb5-b26c-4a06f7f800c3@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.56.1 (3.56.1-1.fc42) 
+ AJvYcCWz+5yO302LW7R+1vePuA0aTDuV7UcJPFZAqvbl3EITEz+uJUF+Z5hwJCcJuBiBTsy6B5yrDwRCXu+h@nongnu.org
+X-Gm-Message-State: AOJu0YykqY2XnZIia885/0ShBOR0cenv4EtIDNKji6DZQqexJ3bwlhFx
+ Obmexh2mcagdNiOJSHOU06pg8N45zPpi0jDcO+19TAAIXiiwM0tgx1tsPfvI7a4sT+1tCBUzuua
+ kHVU63mrVR1ILngh8a8OuuO6tQO+e7IUELYFYCLv/zNS3r/k4hVbK+j4k
+X-Gm-Gg: ASbGncsDx1eI6QW7Sm7gCQjzPeTqsmuGHtI/U4mFXqxacBezs9DePp1jb7Xo5P3nyxw
+ jtwXb1FqoZWZ+ub9LNqUailjz+hTnjL2QjXganL5jKVCjGIIuAqLe1LPoq4oG/cI5oAk9QM638R
+ Wj27cnDsQlGzpqRRvw2UAdA9rBoasnRuQv5UDe1Ysh/VJEIC2EqmZRnJ8Qmc0GvxS8bfXQZ/2b6
+ aUIuIj0+FbLqsYfBHSO6HiyItK+5H2p3ePD9xXeAIwvg7ENkMRQIlGpDaZz2m3ARDCDsZWII6hv
+ iTsC8Da7JieLT03ack4+9IWECU8H1krrCorXWtLW0z4yV4NNvEt2gjNWKJW6l7s=
+X-Received: by 2002:a17:907:2d14:b0:ad8:99cc:774c with SMTP id
+ a640c23a62f3a-adb3244d36fmr209683166b.58.1748587260368; 
+ Thu, 29 May 2025 23:41:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFOzZQodEaSWccSRPmDhNo1nxS0gard5BW+HGNQ4wyDOYhwfh27+IfNFOthEllEQ6tXsPTNFQ==
+X-Received: by 2002:a17:907:2d14:b0:ad8:99cc:774c with SMTP id
+ a640c23a62f3a-adb3244d36fmr209681066b.58.1748587259930; 
+ Thu, 29 May 2025 23:40:59 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-112-237.pools.arcor-ip.net.
+ [47.64.112.237]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-60566c2a762sm1146111a12.4.2025.05.29.23.40.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 29 May 2025 23:40:59 -0700 (PDT)
+Message-ID: <0daf1791-e44e-45a5-ab68-55a3cc0c6f6a@redhat.com>
+Date: Fri, 30 May 2025 08:40:58 +0200
 MIME-Version: 1.0
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=weifeng.liu.z@gmail.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] iotests: fix 240
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Hanna Reitz <hreitz@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20250529203147.180338-1-stefanha@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20250529203147.180338-1-stefanha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,90 +153,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Michael,
+On 29/05/2025 22.31, Stefan Hajnoczi wrote:
+> Commit 2e8e18c2e463 ("virtio-scsi: add iothread-vq-mapping parameter")
+> removed the limitation that virtio-scsi devices must successfully set
+> the AioContext on their BlockBackends. This was made possible thanks to
+> the QEMU multi-queue block layer.
+> 
+> This change broke qemu-iotests 240, which checks that adding a
+> virtio-scsi device with a drive that is already in another AioContext
+> will fail.
+> 
+> Update the test to take the relaxed behavior into account. I considered
+> removing this test case entirely, but the code coverage still seems
+> valuable.
+> 
+> Fixes: 2e8e18c2e463 ("virtio-scsi: add iothread-vq-mapping parameter")
+> Reported-by: Thomas Huth <thuth@redhat.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>   tests/qemu-iotests/240     | 2 --
+>   tests/qemu-iotests/240.out | 4 +---
+>   2 files changed, 1 insertion(+), 5 deletions(-)
+> 
+> diff --git a/tests/qemu-iotests/240 b/tests/qemu-iotests/240
+> index 9b281e1dc0..f8af9ff648 100755
+> --- a/tests/qemu-iotests/240
+> +++ b/tests/qemu-iotests/240
+> @@ -81,8 +81,6 @@ class TestCase(iotests.QMPTestCase):
+>   
+>           self.vm.qmp_log('device_del', id='scsi-hd0')
+>           self.vm.event_wait('DEVICE_DELETED')
+> -        self.vm.qmp_log('device_add', id='scsi-hd1', driver='scsi-hd', drive='hd0', bus="scsi1.0")
+> -
+>           self.vm.qmp_log('device_del', id='scsi-hd1')
+>           self.vm.event_wait('DEVICE_DELETED')
+>           self.vm.qmp_log('blockdev-del', node_name='hd0')
+> diff --git a/tests/qemu-iotests/240.out b/tests/qemu-iotests/240.out
+> index 89ed25e506..10dcc42e06 100644
+> --- a/tests/qemu-iotests/240.out
+> +++ b/tests/qemu-iotests/240.out
+> @@ -46,10 +46,8 @@
+>   {"execute": "device_add", "arguments": {"bus": "scsi0.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd0"}}
+>   {"return": {}}
+>   {"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
+> -{"error": {"class": "GenericError", "desc": "Cannot change iothread of active block backend"}}
+> -{"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
+>   {"return": {}}
+> -{"execute": "device_add", "arguments": {"bus": "scsi1.0", "drive": "hd0", "driver": "scsi-hd", "id": "scsi-hd1"}}
+> +{"execute": "device_del", "arguments": {"id": "scsi-hd0"}}
+>   {"return": {}}
+>   {"execute": "device_del", "arguments": {"id": "scsi-hd1"}}
+>   {"return": {}}
 
-On Thu, 2025-05-29 at 10:23 +0300, Michael Tokarev wrote:
-> On 11.05.2025 10:33, Weifeng Liu wrote:
-> > Hi all,
-> >=20
-> > Now we have quite a lot of display backends for different use
-> > cases.
-> > Even in the context of gtk, we have various implementations (e.g.,
-> > gl=3Don
-> > vs gl=3Doff, X11 vs Wayland). However, behaviors to users are not
-> > aligned
-> > across the backends, especially in the part of scale handling. This
-> > patch set attempts to improve scale handling.
-> >=20
-> > We have to deal with various coordinates due to the existence of
-> > scaling
-> > in different level. Firstly, in desktop level, we could have a
-> > global
-> > window scale factor. Secondly, users might set a zooming factor to
-> > adjust the size of guest content in scan-out level. Consequently,
-> > 1) the
-> > buffer from guest, 2) the host window and 3) OpenGl drawing area
-> > inside
-> > the host window are in distinct coordinates. It's important to
-> > define
-> > these coordinates and scales unambiguously and use a consistent
-> > naming
-> > convention for variables representing different concepts. The first
-> > patch in this set tries to achieve this goal by adding a document
-> > in
-> > gtk.c, and the next patch (PATCH 2) attempts to align the code with
-> > the
-> > document.
-> >=20
-> > PATCH 3 - 5 fix bugs in mouse position calculation due to not
-> > handling
-> > scale properly, for both gtk and sdl.
-> >=20
-> > PATCH 6 align scale update logic in gtk-egl with other
-> > implementations.
-> >=20
-> > PATCH 7 fix an issue that gtk window might keep enlarging/shrinking
-> > because
-> > ui info propagating to guest not considering scale.
-> >=20
-> > PATCH 8 and 9 align fixed-scale mode behavior in gtk-gl-area and
-> > gtk-egl with
-> > other implementations by adding appropriate padding to the window
-> > to preserve
-> > the scale.
-> ...
-> > Weifeng Liu (9):
-> > =C2=A0=C2=A0 ui/gtk: Document scale and coordinate handling
-> > =C2=A0=C2=A0 ui/gtk: Use consistent naming for variables in different
-> > coordinates
-> > =C2=A0=C2=A0 gtk/ui: Introduce helper gd_update_scale
-> > =C2=A0=C2=A0 ui/gtk: Update scales in fixed-scale mode when rendering G=
-L area
-> > =C2=A0=C2=A0 ui/sdl: Consider scaling in mouse event handling
-> > =C2=A0=C2=A0 ui/gtk: Don't update scale in fixed scale mode in gtk-egl.=
-c
-> > =C2=A0=C2=A0 ui/gtk: Consider scaling when propagating ui info
-> > =C2=A0=C2=A0 ui/gtk-gl-area: Render guest content with padding in fixed=
--scale
-> > mode
-> > =C2=A0=C2=A0 ui/gtk-egl: Render guest content with padding in fixed-sca=
-le
-> > mode
->=20
-> Is there anything here which should be picked up for qemu-stable
-> (current active branches: 7.2 and 10.0)?
->=20
+Thanks for fixing it!
 
-I think the first five patches are good candidates for backporting to
-the stable branches, as they only address bugs without altering
-existing behavior. I was able to apply them cleanly to stable-10.0, but
-porting them to 7.2 will require some additional effort. I'll send out
-a new patch set once the backporting work is complete.
+CC: qemu-stable now since this was also in the 10.0 release.
 
-Best regards,
-Weifeng
+  Thomas
 
-> Thanks,
->=20
-> /mjt
 
