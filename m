@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C157BC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:28:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57D91C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKu01-0007yb-0X; Fri, 30 May 2025 03:17:58 -0400
+	id 1uKu0I-0000Be-Q6; Fri, 30 May 2025 03:18:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxP-0003b9-LV
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:13 -0400
+ id 1uKtxm-0004Ah-3V
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:35 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxN-0007DO-Bz
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:11 -0400
+ id 1uKtxk-0007FQ-Fn
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589308;
+ s=mimecast20190719; t=1748589331;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IUwkvJnnoJf5EHLcKjTdm0AouYHJQp5bSzHJz7cc/Fw=;
- b=EvEOHUn9Cb4de1X9yntigKYg+N3PuiNSB6Cr2OiGcQHXUMN5aGOopS2/ykPy1yGLLHIgiJ
- VsPd/bIC7PyqBc8xInI1wSNyVoCTpdOX0H3hQMOh48ufNRfd3It4yVQM06dgytJiO5gDY3
- 6XcgqSjzBeTJ0+gBJEsDFz6bUzLo4C0=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ibN3OHGr1sUQmWMu64gMhIByGJ03ScPUHoMcbrYl78I=;
+ b=HxqKqn/9CJRtuVcJkFFkKeXrdh2QhixoJvHtN58WLfjmxtG1rdiikoHNr7XBE2OlygH4aS
+ nNhkiZWyKcvICKh3cH6fPL+m92fJvg6XAezxlIQFOQiH/1Z64ZLoggDU5lqD/YVc10vvRx
+ sSDqO+WymPiD/fWGw0RwMGlTJzDAYLg=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-473-vO3q-LCKOcSyZ5m3IaMdzw-1; Fri, 30 May 2025 03:15:07 -0400
-X-MC-Unique: vO3q-LCKOcSyZ5m3IaMdzw-1
-X-Mimecast-MFC-AGG-ID: vO3q-LCKOcSyZ5m3IaMdzw_1748589306
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad8a2dc92ddso124165366b.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:15:07 -0700 (PDT)
+ us-mta-215-4oeidW4eMZeRXyCrV9XVtA-1; Fri, 30 May 2025 03:15:29 -0400
+X-MC-Unique: 4oeidW4eMZeRXyCrV9XVtA-1
+X-Mimecast-MFC-AGG-ID: 4oeidW4eMZeRXyCrV9XVtA_1748589329
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-acbbb0009aeso130699466b.1
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:15:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589305; x=1749194105;
+ d=1e100.net; s=20230601; t=1748589328; x=1749194128;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IUwkvJnnoJf5EHLcKjTdm0AouYHJQp5bSzHJz7cc/Fw=;
- b=ATjepQI6Hml2+FmP6mGEdLjC2+Pd/qOUsNVDN+qd6Rv9HM99agICdCKazptBzD1RWC
- TswRUKBhFcmLsrhd1chF9NBLIF7KqSN1VaaiS9EtXJshi7R+IdLmuoBeKX7mXd/EAQbr
- Dtfj6wQUjflfuhCqM5/qxD2+0w3jOksMvqKkMJpR2ZG+Xg+HOFRED/S1VyX/1jgLqGOq
- Q0mXvsXPv2oBIMMo+hy76Uxr0nx2u0lnq71JjbzK1mZXjc+jXj7owGaM1SyvoZcW1OG9
- sm6Y9fe6IRyO2kUtLdk3TiM2j2lh0dbVpLVMIQ8h0iPlVY7tfEzG6x5b1kQZxW0jUU3Y
- hxrQ==
-X-Gm-Message-State: AOJu0YyIknjtI9OVlmqLdX+UWlP0IZxB6d8cgJtmNdobRKXPefuIfwqL
- rFTwcNCeEt4/PO9xf0csb7iog40jWufIhLaf1X4mON7G8JBgvFaZtUzkw8K4jAQZGynh4qEpEfb
- Y4nNESgJPpueCCeXgr8Co1b1Kt7EYvAX97CMkAfHaGEh+BJWB6uK6c6ZPcEJgTi/jezEHfVNp7s
- BCSOig33nysRpKCTdczXTLWhrn1CktfBJgzNjFc2zA
-X-Gm-Gg: ASbGncsRbO9XufAJn621wg31ZzOK8OtRGGlkj5QeDtyiYdaKQOHiv50OdkG5kuFo4Jb
- 4GTQzqlCJ3N4Peotnb/L5ktjxAbH1QgyGQYzb1+D4MEQxvITWh2dTJNwzUS5Ktd/OhOUXal4hfE
- l2PsMU5iHBvtTh30rzIvfFdjP59+Q1Od5wb/X7VmacSyfPyaa0XoVtKtiVdu+WAEhFWHfeJuLDj
- UcZJKNYoT3D7EzaJzvjGJZwIgWWDybqWLEKUyANpYOfO+VtFUTU1YzKvBFkwE55i3k7RuUl9tmB
- 6856Ax2Ny/0bCg==
-X-Received: by 2002:a17:907:3f09:b0:ad8:8d3c:8a73 with SMTP id
- a640c23a62f3a-adb3228d6aemr204216666b.17.1748589304834; 
- Fri, 30 May 2025 00:15:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAz9rQscQf7LBC9xtlARklz58FsrvLFoS4YiflZDixr11eSBQMYPMai5eDSzZmM4j9ylNxUA==
-X-Received: by 2002:a17:907:3f09:b0:ad8:8d3c:8a73 with SMTP id
- a640c23a62f3a-adb3228d6aemr204213766b.17.1748589304283; 
- Fri, 30 May 2025 00:15:04 -0700 (PDT)
+ bh=ibN3OHGr1sUQmWMu64gMhIByGJ03ScPUHoMcbrYl78I=;
+ b=CdkpcmqIf3i6Wx558ebIbffQ20OkKJaWsHYPLKksXU6mmIZ7fXpaEyxyKQP3CVCsrg
+ Zz9aJYYnY4e7hJDH/5RG5uuhcb9FcCZsR1MTFBvoq/Luh9VLHxOAM5SP3u6/8lHNTYpp
+ 1AUUpKpqI9FSVMCaT/+NPNY9CLWxMHJIMgALE7RYkJ3xJ3LiBmviQJdhKOmNUOJSfe/5
+ omdlWElCHcdRKBFmo97b+qaaNO77JPpvzI/ReGxJgwQn8JV7iRjKP5I9n/+5klQokViW
+ TKRv9NWqWWLVB4p8yH6i4xbCSP2H3v7JKl28Q2Frf9y+kMzWWIh+vX8EFe7kczISenjZ
+ /plw==
+X-Gm-Message-State: AOJu0YzKHuA3cDyK+n1aXOCZkm150WwY61bckZ5D3jUmD6Z7up0yTNnR
+ N1/cja7gaqQVLdgu1YoAUdnW8t3ulbCZbjGzrU7xKW0kux89FC5D6bCnpXIgm1+AFDdrblKLzef
+ NigxNhsCXfJJDDTZSVs/bLe4v5ZSQwK2jxNWiwIys2PvJRRLQDSsK16bmZXqKvy51BT4PCye4ko
+ S6Ebj0/bZtrtwkNphhZS6kDT9RzC15H7XAzQkWtn5l
+X-Gm-Gg: ASbGnctx9kOgcBPPR5UKmPi88zOoDhzfOBsjWGeiF35IdM5rFXZvCgXYj69rnTlMUdC
+ VTYWzTzHL8LmR2GE1KmNDYtbRhULlpXu4d9uwmr/b6EAfU7N5L3QQM70igxyqcYjPppI/Ry7yXb
+ 9xNgWgci4v2UCqZg8zXeA89KG8UsfMd/FL2UBkqZvIRctY/V2snVjSAUusbs4qWNNxbswszkgmM
+ n1W5TlV4IMKPTuWZOXV1i9i6/m7wDg+Sf/sE46LttByR46IHq2RsZjKkWOvbAQF6kwbvVW8AJze
+ WFppIvPPKYY5qw==
+X-Received: by 2002:a17:907:9411:b0:ad8:93a3:29b7 with SMTP id
+ a640c23a62f3a-adb32265462mr203536366b.18.1748589328211; 
+ Fri, 30 May 2025 00:15:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8DdsWjDYqSpFKB7Wqw4IcsllGhpCXK8jwHEaReUrpjw+JtoFhpXeJIDVhog7kEwlx0aOLnw==
+X-Received: by 2002:a17:907:9411:b0:ad8:93a3:29b7 with SMTP id
+ a640c23a62f3a-adb32265462mr203532966b.18.1748589327714; 
+ Fri, 30 May 2025 00:15:27 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5dd043d5sm275869966b.121.2025.05.30.00.15.02
+ a640c23a62f3a-ada5d82becbsm277514466b.39.2025.05.30.00.15.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:15:02 -0700 (PDT)
+ Fri, 30 May 2025 00:15:25 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 53/77] i386/apic: Skip kvm_apic_put() for TDX
-Date: Fri, 30 May 2025 09:12:23 +0200
-Message-ID: <20250530071250.2050910-54-pbonzini@redhat.com>
+Subject: [PULL 62/77] i386/cgs: Introduce
+ x86_confidential_guest_check_features()
+Date: Fri, 30 May 2025 09:12:32 +0200
+Message-ID: <20250530071250.2050910-63-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
@@ -111,51 +112,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-KVM neithers allow writing to MSR_IA32_APICBASE for TDs, nor allow for
-KVM_SET_LAPIC[*].
-
-Note, KVM_GET_LAPIC is also disallowed for TDX. It is called in the path
-
-  do_kvm_cpu_synchronize_state()
-  -> kvm_arch_get_registers()
-     -> kvm_get_apic()
-
-and it's already disllowed for confidential guest through
-guest_state_protected.
-
-[*] https://lore.kernel.org/all/Z3w4Ku4Jq0CrtXne@google.com/
+To do cgs specific feature checking. Note the feature checking in
+x86_cpu_filter_features() is valid for non-cgs VMs. For cgs VMs like
+TDX, what features can be supported has more restrictions.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-42-xiaoyao.li@intel.com
+Link: https://lore.kernel.org/r/20250508150002.689633-51-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/kvm/apic.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/i386/confidential-guest.h | 13 +++++++++++++
+ target/i386/kvm/kvm.c            |  8 ++++++++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/hw/i386/kvm/apic.c b/hw/i386/kvm/apic.c
-index 39035db0422..1be9bfe36e9 100644
---- a/hw/i386/kvm/apic.c
-+++ b/hw/i386/kvm/apic.c
-@@ -17,6 +17,7 @@
- #include "system/hw_accel.h"
- #include "system/kvm.h"
- #include "kvm/kvm_i386.h"
-+#include "kvm/tdx.h"
+diff --git a/target/i386/confidential-guest.h b/target/i386/confidential-guest.h
+index 777d43cc968..48b88dbd313 100644
+--- a/target/i386/confidential-guest.h
++++ b/target/i386/confidential-guest.h
+@@ -42,6 +42,7 @@ struct X86ConfidentialGuestClass {
+     void (*cpu_instance_init)(X86ConfidentialGuest *cg, CPUState *cpu);
+     uint32_t (*adjust_cpuid_features)(X86ConfidentialGuest *cg, uint32_t feature,
+                                       uint32_t index, int reg, uint32_t value);
++    int (*check_features)(X86ConfidentialGuest *cg, CPUState *cs);
+ };
  
- static inline void kvm_apic_set_reg(struct kvm_lapic_state *kapic,
-                                     int reg_id, uint32_t val)
-@@ -141,6 +142,10 @@ static void kvm_apic_put(CPUState *cs, run_on_cpu_data data)
-     struct kvm_lapic_state kapic;
-     int ret;
+ /**
+@@ -91,4 +92,16 @@ static inline int x86_confidential_guest_adjust_cpuid_features(X86ConfidentialGu
+     }
+ }
  
-+    if (is_tdx_vm()) {
-+        return;
++static inline int x86_confidential_guest_check_features(X86ConfidentialGuest *cg,
++                                                        CPUState *cs)
++{
++    X86ConfidentialGuestClass *klass = X86_CONFIDENTIAL_GUEST_GET_CLASS(cg);
++
++    if (klass->check_features) {
++        return klass->check_features(cg, cs);
 +    }
 +
-     kvm_put_apicbase(s->cpu, s->apicbase);
-     kvm_put_apic_state(s, &kapic);
++    return 0;
++}
++
+ #endif
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index cd87f5502a3..a6bc089d020 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2093,6 +2093,14 @@ int kvm_arch_init_vcpu(CPUState *cs)
+     int r;
+     Error *local_err = NULL;
  
++    if (current_machine->cgs) {
++        r = x86_confidential_guest_check_features(
++                X86_CONFIDENTIAL_GUEST(current_machine->cgs), cs);
++        if (r < 0) {
++            return r;
++        }
++    }
++
+     memset(&cpuid_data, 0, sizeof(cpuid_data));
+ 
+     cpuid_i = 0;
 -- 
 2.49.0
 
