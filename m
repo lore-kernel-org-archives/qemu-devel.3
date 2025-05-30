@@ -4,97 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 404F2C5B552
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 10:57:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2564EC5B543
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:02:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKxPu-00037Z-9X; Fri, 30 May 2025 06:56:50 -0400
+	id 1uKxVT-0005JA-Vc; Fri, 30 May 2025 07:02:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uKxPr-000370-C2
- for qemu-devel@nongnu.org; Fri, 30 May 2025 06:56:47 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uKxPp-0005Xj-G3
- for qemu-devel@nongnu.org; Fri, 30 May 2025 06:56:47 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E97B9126772;
- Fri, 30 May 2025 13:56:39 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9C42B21B20C;
- Fri, 30 May 2025 13:56:41 +0300 (MSK)
-Message-ID: <8a78195f-583e-442f-8d0a-41753c70e584@tls.msk.ru>
-Date: Fri, 30 May 2025 13:56:41 +0300
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uKxVS-0005Iw-Bp
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:02:34 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uKxVQ-0005wS-DI
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:02:34 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-603fdd728ccso3141201a12.2
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 04:02:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748602950; x=1749207750; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=mPtcMoWtTEBNTHyvX1Nc/C8ZnELjgzqWfvPXd/RNj/A=;
+ b=GzGMwgdXcH7msX2OMIYgRuVzwL2N+q08b0CsF9F+emfX+dBlVLg6LD/40O6pslHmhr
+ Ql4EJvED3tgjHoJt/o02mr1lXaUVoFaZyaLrOTqnAcw5VGaWJM9G/s2SdcQEuzAWxqvV
+ flGmvc4BlYQxAa6SpuOZzDERdsfEBPK+yPqiECnwsBkfFonzwtIWWGkY5Un1njuD2hOi
+ gJSWOV8ZiEHcYiEBgrgHsZl4rxtKiqcb9N1lYHsInn7rQscp/qcSjc2ILtU7QvOPJe56
+ cA281pT3QEe3xCDrOcXRsSsuLANnxUV8HcifeYZso1gNDVuQQBypk+TYCf+bhPWK08nd
+ b+6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748602950; x=1749207750;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mPtcMoWtTEBNTHyvX1Nc/C8ZnELjgzqWfvPXd/RNj/A=;
+ b=TQ84J1gp+SMQfYMZiXLfbNvkFlZxWQ+K2upFcSsZH1e7fW+QUQHfHtPOP183nsU0l9
+ xgM48UqChhG04QiSh28LPE/CN+1lRxReX6/ALxlqmVzGIJWDitErcNzcNRdWkA6haHRz
+ BKwimcrvljmMzgDuifvatmcnQhIjLDJsV1wGw0O5iaQpIWNe4QInWdOUGUrOZ7yGrfFv
+ mO5SMqQAy7bqr82wzkvsFFDLb/JYvk6/dWQgyWelD1WxhnzKDsld6HnPrr8o8qtkVelP
+ qSa0kbREml0gRHYIICtf2IlGNMUg7Q4k8e12SWDqhLAEeWOrDtbAF+fvW24VEskioYXG
+ ZyQw==
+X-Gm-Message-State: AOJu0Yz93swYHep1jxF1G28jegrmNbU2cXhFs+jLgrekaocMdneYWclx
+ bVXsMR/ERyu2C9vYLBuy3uGLulnD3xoiPLrKbIv9FO+bI8aT23fw9XcH2Z+nznQYdqfuZiAmoct
+ +SYCFjjnD1dMLUq1cAOoRhZsFeYi/qi4=
+X-Gm-Gg: ASbGnctK/wg7hDl0tYo+8fQrHYCQay0wv9RtIo4Jwvz+2Yy/Ayqq/KX/Y5/qojmEnwY
+ XKfiJT1RXRGeRfSbZ7HvcP+RXq6XwyGqe55/0HsgOhVxgcM/DjQcwmDg2cxC2BTQtEIyDQOoCau
+ yVtPDhL6WK13KuIFdWDJ4z33btC8CNPk0=
+X-Google-Smtp-Source: AGHT+IF6+qLHQFVt+SC+sDJ9G0UjplOH9loIJn3cnDwg3DVDnIe1Pp0w17/WwZbLjXrUZgSwcvPrtod/DUTVyBf8/xA=
+X-Received: by 2002:a05:6402:510a:b0:605:878:3557 with SMTP id
+ 4fb4d7f45d1cf-6057c602f61mr1467711a12.16.1748602949469; Fri, 30 May 2025
+ 04:02:29 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/9] ui: Improve scale handling
-To: Weifeng Liu <weifeng.liu.z@gmail.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Dongwon Kim <dongwon.kim@intel.com>
-References: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
- <19542757-ecc0-4eb5-b26c-4a06f7f800c3@tls.msk.ru>
- <0790819eab97fbc5728f583b6ec90e338c2819e0.camel@gmail.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <0790819eab97fbc5728f583b6ec90e338c2819e0.camel@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <CAJSP0QXpwWZK3KeGZ-FVFLhu7CCv8PCRbGZ9MEJK5nS_jUWquQ@mail.gmail.com>
+ <b374f581-fdbf-4fad-ab10-45394211c0d6@redhat.com>
+In-Reply-To: <b374f581-fdbf-4fad-ab10-45394211c0d6@redhat.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Fri, 30 May 2025 07:02:20 -0400
+X-Gm-Features: AX0GCFtcPgOqCrKFTRFLSrpXuLXvoyBQUBjEUzeEnFk0cDkw1XgYlf43GVEDlCw
+Message-ID: <CAJSP0QWXRt2j2Uo=NMHXhiButMBJ7QMYfL=VvmspBc=oTgxDgw@mail.gmail.com>
+Subject: Re: Armbian TLS certificate expired
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000a80b260636585927"
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,49 +92,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.05.2025 09:39, Weifeng Liu wrote:
-> On Thu, 2025-05-29 at 10:23 +0300, Michael Tokarev wrote:
+--000000000000a80b260636585927
+Content-Type: text/plain; charset="UTF-8"
 
->>> PATCH 3 - 5 fix bugs in mouse position calculation due to not
->>> handling
->>> scale properly, for both gtk and sdl.
->>>
->>> PATCH 6 align scale update logic in gtk-egl with other
->>> implementations.
->>>
->>> PATCH 7 fix an issue that gtk window might keep enlarging/shrinking
->>> because
->>> ui info propagating to guest not considering scale.
->>>
->>> PATCH 8 and 9 align fixed-scale mode behavior in gtk-gl-area and
->>> gtk-egl with
->>> other implementations by adding appropriate padding to the window
->>> to preserve
->>> the scale.
->> ...
->>> Weifeng Liu (9):
->>>     ui/gtk: Document scale and coordinate handling
->>>     ui/gtk: Use consistent naming for variables in different
->>> coordinates
->>>     gtk/ui: Introduce helper gd_update_scale
->>>     ui/gtk: Update scales in fixed-scale mode when rendering GL area
->>>     ui/sdl: Consider scaling in mouse event handling
->>>     ui/gtk: Don't update scale in fixed scale mode in gtk-egl.c
->>>     ui/gtk: Consider scaling when propagating ui info
->>>     ui/gtk-gl-area: Render guest content with padding in fixed-scale
->>> mode
->>>     ui/gtk-egl: Render guest content with padding in fixed-scale
->>> mode
-...
-> I think the first five patches are good candidates for backporting to
-> the stable branches, as they only address bugs without altering
-> existing behavior. [...]
+On Fri, May 30, 2025, 02:18 Thomas Huth <thuth@redhat.com> wrote:
 
-It somehow feels like *all* patches should be picked up, not just first
-5 of them :)  BTW, the first one (Document scale handling) does not fix
-any bugs ;)
+> On 29/05/2025 16.45, Stefan Hajnoczi wrote:
+> > The OrangePi, Cubieboard, Banana Pi, and replay tests use a sunxi
+> > armhf Linux package URL that is failing due to an expired TLS
+> > certificate:
+> >
+> > 2025-05-29 13:37:56,005 - qemu-test - INFO - Downloading
+> >
+> https://apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb
+> > to
+> /builds/qemu-project/qemu/functional-cache/download/3d968c15b121ede871dce49d13ee7644d6f74b6b121b84c9a40f51b0c80d6d22...
+> > ...
+> > urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED]
+> > certificate verify failed: certificate has expired (_ssl.c:992)>
+> >
+> > I will ignore these test failures for the time being. Hopefully the
+> > server admins will fix it. Otherwise it will be necessary to find a
+> > working URL for these tests.
+>
+> I just gave it a try, and it seems like the certificate has been updated
+> already? Anyway, in the worst case, we could also try to switch to http
+> instead of https for this download (we're still checking the hashsum to
+> make
+> sure that nobody messed with the content).
+>
 
-Thanks,
+Yes, it's working for me too. Thanks!
 
-/mjt
+Stefan
+
+  Thomas
+>
+>
+
+--000000000000a80b260636585927
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 30, 2025, 02:18 Thom=
+as Huth &lt;<a href=3D"mailto:thuth@redhat.com">thuth@redhat.com</a>&gt; wr=
+ote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On 29/05/20=
+25 16.45, Stefan Hajnoczi wrote:<br>
+&gt; The OrangePi, Cubieboard, Banana Pi, and replay tests use a sunxi<br>
+&gt; armhf Linux package URL that is failing due to an expired TLS<br>
+&gt; certificate:<br>
+&gt; <br>
+&gt; 2025-05-29 13:37:56,005 - qemu-test - INFO - Downloading<br>
+&gt; <a href=3D"https://apt.armbian.com/pool/main/l/linux-6.6.16/linux-imag=
+e-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V0=
+14b-B067e-R448a.deb" rel=3D"noreferrer noreferrer" target=3D"_blank">https:=
+//apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1=
+_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb</a=
+><br>
+&gt; to /builds/qemu-project/qemu/functional-cache/download/3d968c15b121ede=
+871dce49d13ee7644d6f74b6b121b84c9a40f51b0c80d6d22...<br>
+&gt; ...<br>
+&gt; urllib.error.URLError: &lt;urlopen error [SSL: CERTIFICATE_VERIFY_FAIL=
+ED]<br>
+&gt; certificate verify failed: certificate has expired (_ssl.c:992)&gt;<br=
+>
+&gt; <br>
+&gt; I will ignore these test failures for the time being. Hopefully the<br=
+>
+&gt; server admins will fix it. Otherwise it will be necessary to find a<br=
+>
+&gt; working URL for these tests.<br>
+<br>
+I just gave it a try, and it seems like the certificate has been updated <b=
+r>
+already? Anyway, in the worst case, we could also try to switch to http <br=
+>
+instead of https for this download (we&#39;re still checking the hashsum to=
+ make <br>
+sure that nobody messed with the content).<br></blockquote></div></div><div=
+ dir=3D"auto"><br></div><div dir=3D"auto">Yes, it&#39;s working for me too.=
+ Thanks!</div><div dir=3D"auto"><br></div><div dir=3D"auto">Stefan</div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gmail_quote gmail_=
+quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px =
+0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
+=C2=A0 Thomas<br>
+<br>
+</blockquote></div></div></div>
+
+--000000000000a80b260636585927--
 
