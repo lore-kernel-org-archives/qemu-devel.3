@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C48E3C3ABB2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C805CC5B552
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 08:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKvBx-0007Wk-U3; Fri, 30 May 2025 04:34:17 -0400
+	id 1uKvBq-0007Pc-6k; Fri, 30 May 2025 04:34:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1uKvBp-0007Pj-SF
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:34:10 -0400
+ id 1uKvBm-0007P1-94
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:34:06 -0400
 Received: from mgamail.intel.com ([198.175.65.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1uKvBn-0007t2-VG
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:34:09 -0400
+ id 1uKvBj-0007rn-Oc
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:34:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748594048; x=1780130048;
+ t=1748594044; x=1780130044;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=smTvk2thoVhe2rnRJ8+q/8EMMQcaZQ8DftZZKO2TQSg=;
- b=LcmJqQknyEUuct+4a+8WJGbWeOZb+sxFmP/nV8T8wRysLxMTGAT0fz2J
- cZ4VIi69bTOf13OnCVtxvd/FUX9xichiRPsETILJJxp43g1gRphfwSiN5
- 6t2Ce3rlqZcd/x2HipLWTmEDWjphpSjMQ5cG0liy59VLX3Pl4dIe57Adb
- O9bxxbsaGafAsJU/5J9F/+huM4NCW35u6ibOVVcPrpvi/orKnGDpkyKfC
- KXnwpKpdubDuDYoAmDzM/K4ejS+IWkXyJIqptp6B3Zr/r8WhgLKjVfTr8
- b41jwbOK8PKjacoaf4Ks2a7z3HsLCaJkM4RB38r+dplFGUCLtorkwf/GJ g==;
-X-CSE-ConnectionGUID: 5k+AwhUnR4WFYHh24yQuHw==
-X-CSE-MsgGUID: rQ29uxEcRwmbXVyXQSfoQw==
-X-IronPort-AV: E=McAfee;i="6700,10204,11448"; a="62081515"
-X-IronPort-AV: E=Sophos;i="6.16,195,1744095600"; d="scan'208";a="62081515"
+ bh=ErOx1YGbQNtXWKSFT1x2vQVQKaLrP+c6flBUhQ6KGOg=;
+ b=APWg8KRuutxQK1I/QBFnEdq6uz/2rhikSWTfF0w0uzlKNEyFP1RvfkKn
+ SyjXVXpHNfazgVmwjfElQ36j1DvBsCJj+VFYeElxLkWvZs6nMrmngNI9H
+ pGmHmLhgPKJ4wZrZnB4gKnBr0DEhIg7K38OIUiJsnKA4ghVJtIAvNpTHV
+ +5uAv7ZOktRRLTTXe+lDsSW5pDXTv9+1jpe55PJE61XTlmH3Sqco7Kc/l
+ LX6ZVSDsBiOMX66GWRbW9UbpwJ1gjU5N5KVA2skMqDW4XF2f0dRNn9Jww
+ I5aC+Urm1rvTyR5FAQHa8W0l8hwxo2HG7+YRqY+rGNJ2mIRxf7/Zgs4VD g==;
+X-CSE-ConnectionGUID: YKjgqwIpRYWDOXbjAJt4xQ==
+X-CSE-MsgGUID: m1BPHZVCSpyzrypFvv9Xcg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11448"; a="62081500"
+X-IronPort-AV: E=Sophos;i="6.16,195,1744095600"; d="scan'208";a="62081500"
 Received: from orviesa007.jf.intel.com ([10.64.159.147])
  by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 May 2025 01:34:06 -0700
-X-CSE-ConnectionGUID: JiSvmQtWQJWnCBMHfGYkVw==
-X-CSE-MsgGUID: VDjdUpRhSFudfhFgvQPHbQ==
+ 30 May 2025 01:34:02 -0700
+X-CSE-ConnectionGUID: 7bfgkNDAQ82bV8T88t+zEA==
+X-CSE-MsgGUID: WnjLLr2aQxO5SjuTXVXhyQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,195,1744095600"; d="scan'208";a="144453767"
+X-IronPort-AV: E=Sophos;i="6.16,195,1744095600"; d="scan'208";a="144453759"
 Received: from emr-bkc.sh.intel.com ([10.112.230.82])
  by orviesa007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 30 May 2025 01:34:02 -0700
+ 30 May 2025 01:33:58 -0700
 From: Chenyi Qiang <chenyi.qiang@intel.com>
 To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
@@ -59,10 +59,10 @@ Cc: Chenyi Qiang <chenyi.qiang@intel.com>, qemu-devel@nongnu.org,
  Li Xiaoyao <xiaoyao.li@intel.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  Alex Williamson <alex.williamson@redhat.com>
-Subject: [PATCH v6 2/5] memory: Change memory_region_set_ram_discard_manager()
- to return the result
-Date: Fri, 30 May 2025 16:32:51 +0800
-Message-ID: <20250530083256.105186-3-chenyi.qiang@intel.com>
+Subject: [PATCH v6 1/5] memory: Export a helper to get intersection of a
+ MemoryRegionSection with a given range
+Date: Fri, 30 May 2025 16:32:50 +0800
+Message-ID: <20250530083256.105186-2-chenyi.qiang@intel.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20250530083256.105186-1-chenyi.qiang@intel.com>
 References: <20250530083256.105186-1-chenyi.qiang@intel.com>
@@ -93,153 +93,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Modify memory_region_set_ram_discard_manager() to return -EBUSY if a
-RamDiscardManager is already set in the MemoryRegion. The caller must
-handle this failure, such as having virtio-mem undo its actions and fail
-the realize() process. Opportunistically move the call earlier to avoid
-complex error handling.
+Rename the helper to memory_region_section_intersect_range() to make it
+more generic. Meanwhile, define the @end as Int128 and replace the
+related operations with Int128_* format since the helper is exported as
+a wider API.
 
-This change is beneficial when introducing a new RamDiscardManager
-instance besides virtio-mem. After
-ram_block_coordinated_discard_require(true) unlocks all
-RamDiscardManager instances, only one instance is allowed to be set for
-one MemoryRegion at present.
-
-Suggested-by: David Hildenbrand <david@redhat.com>
+Suggested-by: Alexey Kardashevskiy <aik@amd.com>
+Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
 Reviewed-by: David Hildenbrand <david@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 ---
 Changes in v6:
-    - Add Reviewed-by from David.
+    - No change.
 
 Changes in v5:
-    - Nit in commit message (return false -> -EBUSY)
-    - Add set_ram_discard_manager(NULL) when ram_block_discard_range()
-      fails.
+    - Indent change for int128 ops to avoid the line over 80
+    - Add two Review-by from Alexey and Zhao
 
-Changes in v3:
-    - Move set_ram_discard_manager() up to avoid a g_free()
-    - Clean up set_ram_discard_manager() definition
+Changes in v4:
+    - No change.
 ---
- hw/virtio/virtio-mem.c  | 30 +++++++++++++++++-------------
- include/system/memory.h |  6 +++---
- system/memory.c         | 10 +++++++---
- 3 files changed, 27 insertions(+), 19 deletions(-)
+ hw/virtio/virtio-mem.c  | 32 +++++---------------------------
+ include/system/memory.h | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 35 insertions(+), 27 deletions(-)
 
 diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
-index b3c126ea1e..2e491e8c44 100644
+index a3d1a676e7..b3c126ea1e 100644
 --- a/hw/virtio/virtio-mem.c
 +++ b/hw/virtio/virtio-mem.c
-@@ -1047,6 +1047,17 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-         return;
-     }
+@@ -244,28 +244,6 @@ static int virtio_mem_for_each_plugged_range(VirtIOMEM *vmem, void *arg,
+     return ret;
+ }
  
-+    /*
-+     * Set ourselves as RamDiscardManager before the plug handler maps the
-+     * memory region and exposes it via an address space.
-+     */
-+    if (memory_region_set_ram_discard_manager(&vmem->memdev->mr,
-+                                              RAM_DISCARD_MANAGER(vmem))) {
-+        error_setg(errp, "Failed to set RamDiscardManager");
-+        ram_block_coordinated_discard_require(false);
-+        return;
-+    }
-+
-     /*
-      * We don't know at this point whether shared RAM is migrated using
-      * QEMU or migrated using the file content. "x-ignore-shared" will be
-@@ -1061,6 +1072,7 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-         ret = ram_block_discard_range(rb, 0, qemu_ram_get_used_length(rb));
-         if (ret) {
-             error_setg_errno(errp, -ret, "Unexpected error discarding RAM");
-+            memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
-             ram_block_coordinated_discard_require(false);
-             return;
+-/*
+- * Adjust the memory section to cover the intersection with the given range.
+- *
+- * Returns false if the intersection is empty, otherwise returns true.
+- */
+-static bool virtio_mem_intersect_memory_section(MemoryRegionSection *s,
+-                                                uint64_t offset, uint64_t size)
+-{
+-    uint64_t start = MAX(s->offset_within_region, offset);
+-    uint64_t end = MIN(s->offset_within_region + int128_get64(s->size),
+-                       offset + size);
+-
+-    if (end <= start) {
+-        return false;
+-    }
+-
+-    s->offset_within_address_space += start - s->offset_within_region;
+-    s->offset_within_region = start;
+-    s->size = int128_make64(end - start);
+-    return true;
+-}
+-
+ typedef int (*virtio_mem_section_cb)(MemoryRegionSection *s, void *arg);
+ 
+ static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+@@ -287,7 +265,7 @@ static int virtio_mem_for_each_plugged_section(const VirtIOMEM *vmem,
+                                       first_bit + 1) - 1;
+         size = (last_bit - first_bit + 1) * vmem->block_size;
+ 
+-        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+             break;
          }
-@@ -1122,13 +1134,6 @@ static void virtio_mem_device_realize(DeviceState *dev, Error **errp)
-     vmem->system_reset = VIRTIO_MEM_SYSTEM_RESET(obj);
-     vmem->system_reset->vmem = vmem;
-     qemu_register_resettable(obj);
--
--    /*
--     * Set ourselves as RamDiscardManager before the plug handler maps the
--     * memory region and exposes it via an address space.
--     */
--    memory_region_set_ram_discard_manager(&vmem->memdev->mr,
--                                          RAM_DISCARD_MANAGER(vmem));
- }
+         ret = cb(&tmp, arg);
+@@ -319,7 +297,7 @@ static int virtio_mem_for_each_unplugged_section(const VirtIOMEM *vmem,
+                                  first_bit + 1) - 1;
+         size = (last_bit - first_bit + 1) * vmem->block_size;
  
- static void virtio_mem_device_unrealize(DeviceState *dev)
-@@ -1136,12 +1141,6 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
-     VirtIODevice *vdev = VIRTIO_DEVICE(dev);
-     VirtIOMEM *vmem = VIRTIO_MEM(dev);
+-        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+             break;
+         }
+         ret = cb(&tmp, arg);
+@@ -355,7 +333,7 @@ static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
+     QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
+         MemoryRegionSection tmp = *rdl->section;
  
--    /*
--     * The unplug handler unmapped the memory region, it cannot be
--     * found via an address space anymore. Unset ourselves.
--     */
--    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
--
-     qemu_unregister_resettable(OBJECT(vmem->system_reset));
-     object_unref(OBJECT(vmem->system_reset));
+-        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+             continue;
+         }
+         rdl->notify_discard(rdl, &tmp);
+@@ -371,7 +349,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
+     QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
+         MemoryRegionSection tmp = *rdl->section;
  
-@@ -1154,6 +1153,11 @@ static void virtio_mem_device_unrealize(DeviceState *dev)
-     virtio_del_queue(vdev, 0);
-     virtio_cleanup(vdev);
-     g_free(vmem->bitmap);
-+    /*
-+     * The unplug handler unmapped the memory region, it cannot be
-+     * found via an address space anymore. Unset ourselves.
-+     */
-+    memory_region_set_ram_discard_manager(&vmem->memdev->mr, NULL);
-     ram_block_coordinated_discard_require(false);
- }
- 
+-        if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
++        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+             continue;
+         }
+         ret = rdl->notify_populate(rdl, &tmp);
+@@ -388,7 +366,7 @@ static int virtio_mem_notify_plug(VirtIOMEM *vmem, uint64_t offset,
+             if (rdl2 == rdl) {
+                 break;
+             }
+-            if (!virtio_mem_intersect_memory_section(&tmp, offset, size)) {
++            if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+                 continue;
+             }
+             rdl2->notify_discard(rdl2, &tmp);
 diff --git a/include/system/memory.h b/include/system/memory.h
-index b961c4076a..896948deb1 100644
+index fbbf4cf911..b961c4076a 100644
 --- a/include/system/memory.h
 +++ b/include/system/memory.h
-@@ -2499,13 +2499,13 @@ static inline bool memory_region_has_ram_discard_manager(MemoryRegion *mr)
-  *
-  * This function must not be called for a mapped #MemoryRegion, a #MemoryRegion
-  * that does not cover RAM, or a #MemoryRegion that already has a
-- * #RamDiscardManager assigned.
-+ * #RamDiscardManager assigned. Return 0 if the rdm is set successfully.
-  *
-  * @mr: the #MemoryRegion
-  * @rdm: #RamDiscardManager to set
+@@ -1211,6 +1211,36 @@ MemoryRegionSection *memory_region_section_new_copy(MemoryRegionSection *s);
   */
--void memory_region_set_ram_discard_manager(MemoryRegion *mr,
--                                           RamDiscardManager *rdm);
-+int memory_region_set_ram_discard_manager(MemoryRegion *mr,
-+                                          RamDiscardManager *rdm);
+ void memory_region_section_free_copy(MemoryRegionSection *s);
  
- /**
-  * memory_region_find: translate an address/size relative to a
-diff --git a/system/memory.c b/system/memory.c
-index 63b983efcd..b45b508dce 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2106,12 +2106,16 @@ RamDiscardManager *memory_region_get_ram_discard_manager(MemoryRegion *mr)
-     return mr->rdm;
- }
- 
--void memory_region_set_ram_discard_manager(MemoryRegion *mr,
--                                           RamDiscardManager *rdm)
-+int memory_region_set_ram_discard_manager(MemoryRegion *mr,
-+                                          RamDiscardManager *rdm)
- {
-     g_assert(memory_region_is_ram(mr));
--    g_assert(!rdm || !mr->rdm);
-+    if (mr->rdm && rdm) {
-+        return -EBUSY;
++/**
++ * memory_region_section_intersect_range: Adjust the memory section to cover
++ * the intersection with the given range.
++ *
++ * @s: the #MemoryRegionSection to be adjusted
++ * @offset: the offset of the given range in the memory region
++ * @size: the size of the given range
++ *
++ * Returns false if the intersection is empty, otherwise returns true.
++ */
++static inline bool memory_region_section_intersect_range(MemoryRegionSection *s,
++                                                         uint64_t offset,
++                                                         uint64_t size)
++{
++    uint64_t start = MAX(s->offset_within_region, offset);
++    Int128 end = int128_min(int128_add(int128_make64(s->offset_within_region),
++                                       s->size),
++                            int128_add(int128_make64(offset),
++                                       int128_make64(size)));
++
++    if (int128_le(end, int128_make64(start))) {
++        return false;
 +    }
 +
-     mr->rdm = rdm;
-+    return 0;
- }
- 
- uint64_t ram_discard_manager_get_min_granularity(const RamDiscardManager *rdm,
++    s->offset_within_address_space += start - s->offset_within_region;
++    s->offset_within_region = start;
++    s->size = int128_sub(end, int128_make64(start));
++    return true;
++}
++
+ /**
+  * memory_region_init: Initialize a memory region
+  *
 -- 
 2.43.5
 
