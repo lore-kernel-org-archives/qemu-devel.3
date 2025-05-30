@@ -4,58 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9669AC5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:47:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C4EC5B543
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:51:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKyCp-0000R4-0t; Fri, 30 May 2025 07:47:23 -0400
+	id 1uKyGY-0001Ld-Of; Fri, 30 May 2025 07:51:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKyCm-0000Qk-7h
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:47:20 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKyGW-0001LM-SZ
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:51:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKyCj-0002iH-St
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:47:19 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKyGU-00036D-Hw
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:51:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748605634;
+ s=mimecast20190719; t=1748605869;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=2q0VdY4ZERtZvo5VzZjGGKAzfECuDiuynYKQRRWNpMA=;
- b=CQpaZLj8M68YRmrfcyA+QYCd0aTNcHwwJfgqx+EDOsRemeNKJJ4rQVBWxgPhtnhLXbw5tD
- P3kNkUyzpQ8/oH6zQDyjRFtL1yy/zM8rmaG1ibvzmOXl9mqK6x/4uQe2fl8Ph1JAs0irAf
- o2OlfOLYy448Fk8rJExaPC+cQ+8/WMc=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-297-iqjxcHouMxGoUS3645VEcQ-1; Fri,
- 30 May 2025 07:47:13 -0400
-X-MC-Unique: iqjxcHouMxGoUS3645VEcQ-1
-X-Mimecast-MFC-AGG-ID: iqjxcHouMxGoUS3645VEcQ_1748605632
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 782381956080
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 11:47:12 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.33.76])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0C95018003FD; Fri, 30 May 2025 11:47:10 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 00/25] Functional tests, Microblaze endianness & pc/q35 cleanups
-Date: Fri, 30 May 2025 13:47:09 +0200
-Message-ID: <20250530114709.186993-1-thuth@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=iKx9OfLEwrhrxYqaPx+nIo9gZomyutfo8mU8vnyRzRs=;
+ b=FIQvoYkAT0E0kfYs+PnIhKhhJW67LWPOAi0ZumAVoNsOHD7W9EO0UHVago+HNNMvIBFBe+
+ OFfstBArdtl9eWpNmOFi13i9OoaImjojfsaRs0/vxuCmNxYpifsZxCQp2E8cwyZRmb88h4
+ KU8mK8729TXUSScqVOA/oeE+00AQqSw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-279-7jlDbxOVPhOBIoVFxNGTnA-1; Fri, 30 May 2025 07:51:07 -0400
+X-MC-Unique: 7jlDbxOVPhOBIoVFxNGTnA-1
+X-Mimecast-MFC-AGG-ID: 7jlDbxOVPhOBIoVFxNGTnA_1748605866
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f858bc5eso406821f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 04:51:07 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748605866; x=1749210666;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=iKx9OfLEwrhrxYqaPx+nIo9gZomyutfo8mU8vnyRzRs=;
+ b=ET8veFtpvYb8PxlUHdZ4xHw7inkZWhPFlV2CFHaQHk4FJN7e4tYgacIYI7zZwkXhOS
+ 2vptFsAZvx/+WCGngqipMQdh37EmnMVfywhPTZxJ9axKwUHS796x5zwNvGwr6l9IfwJg
+ lRT5PoGeNf6yUXLIMX6O0ZBg5sr2VnN1WWXBacPPH/BLsuzz95fIil2xqgGrcjAQBoLG
+ 9BllsYF5wUkxvdbH4Gea/pkkcDS0LdZg78kQWD0LTZQi+Ph7lyOi470OnF2XtT35PXpF
+ j/CSH9vjW9Nvs6kgLOULmg6MW6mJdLX0FMPw7Nu1PwTRvD7XDnZT7w/TZVkN+yAldheG
+ xE7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDTPBgVCxARE5cv4S7nOgTC2hmiSX7RUmrsbxvg/WgVm+NvWWuEFDuEnhrn1yUjxF1tl3g3xUHXWLT@nongnu.org
+X-Gm-Message-State: AOJu0YxARcHBA9bR5YBqYinQOZAot3vo8hZj5tmehM1styMUJ1URZjiW
+ F2OSkS1azeNt/DAEn8HsPw2as2a7zcR7+cay2fkZlQSY3DaunEdk/qiH5kQZQ3bBDCP+eB6tlc/
+ QhPa22UdxyapL/GUUkE7ZZVZ/YMRW19HNJ8B92dFoaVttC9P9JLV1RlUmDnZN3H4PxLo=
+X-Gm-Gg: ASbGnctE2lOt+Sapk4Vk8HdVSSP9MFu8Vsg1yd+F9jv6YwDCtnyLUbieESiGJH8HPRi
+ tq2cUsZJYjhuCQ0jPM1TfMd0UCkf4iaCwtL+gIeuAqkwY+tTCvtjLJHyti2EH+kZRb6YyBFW3lo
+ UR2KvpMXlxl/3A0Wxym/xKuU53lR21+mJheuWoKXHRYGyqMh+NTjZBWZDh4XT00E3+uFvva+eGO
+ nUHvwYvWvPvyk20lxrieewUM6MuGL7wVCudUnj2etdnxDLheqRiPt2yhcnWWq1zuhZ0WK+DRv1x
+ CBV18Ye0aYE1ukRRYk5Xo+pOhrvaoVMx
+X-Received: by 2002:a05:6000:2505:b0:3a3:7749:9783 with SMTP id
+ ffacd0b85a97d-3a4f7ab14d0mr2429065f8f.51.1748605866124; 
+ Fri, 30 May 2025 04:51:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8Sm9xv3UE7hXSz8rBIfIFy5so480NXTvpFi2tuDgqHgoGtffue90eNMOcTWeE8xcvgNPSuQ==
+X-Received: by 2002:a05:6000:2505:b0:3a3:7749:9783 with SMTP id
+ ffacd0b85a97d-3a4f7ab14d0mr2429041f8f.51.1748605865644; 
+ Fri, 30 May 2025 04:51:05 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4f009752esm4618481f8f.74.2025.05.30.04.51.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 30 May 2025 04:51:05 -0700 (PDT)
+Date: Fri, 30 May 2025 13:51:03 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Gustavo Romero <gustavo.romero@linaro.org>
+Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
+ pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
+ alex.bennee@linaro.org
+Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
+ hotplug off
+Message-ID: <20250530135103.09030cf0@imammedo.users.ipa.redhat.com>
+In-Reply-To: <6a5776b4-73ef-427b-b4e4-b25031b0ce53@linaro.org>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-25-eric.auger@redhat.com>
+ <20250528113813.47086516@imammedo.users.ipa.redhat.com>
+ <375cfbd6-e585-4b6d-bf10-6571aa40370e@linaro.org>
+ <20250528150239.5f6b63d0@imammedo.users.ipa.redhat.com>
+ <6a5776b4-73ef-427b-b4e4-b25031b0ce53@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -80,90 +120,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
- Hi Stefan!
+On Wed, 28 May 2025 12:04:26 -0300
+Gustavo Romero <gustavo.romero@linaro.org> wrote:
 
-The following changes since commit d2e9b78162e31b1eaf20f3a4f563da82da56908d:
+> Hi Igor,
+>=20
+> On 5/28/25 10:02, Igor Mammedov wrote:
+> > On Wed, 28 May 2025 09:41:15 -0300
+> > Gustavo Romero <gustavo.romero@linaro.org> wrote:
+> >  =20
+> >> Hi Igor,
+> >>
+> >> On 5/28/25 06:38, Igor Mammedov wrote: =20
+> >>> On Tue, 27 May 2025 09:40:26 +0200
+> >>> Eric Auger <eric.auger@redhat.com> wrote:
+> >>>     =20
+> >>>> From: Gustavo Romero <gustavo.romero@linaro.org>
+> >>>>
+> >>>> ACPI PCI hotplug is now turned on by default so we need to change the
+> >>>> existing tests to keep it off. However, even setting the ACPI PCI
+> >>>> hotplug off in the existing tests, there will be changes in the ACPI
+> >>>> tables because the _OSC method was modified, hence in the next patch=
+ of
+> >>>> this series the blobs are updated accordingly.
+> >>>>
+> >>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> >>>> Signed-off-by: Eric Auger <eric.auger@redhat.com> =20
+> >>>
+> >>> it would be better to test whatever default we end up with.
+> >>> (like x86) =20
+> >>
+> >> hmm maybe there is a confusion here, Igor. We are actually planning wh=
+at you =20
+> >=20
+> > perhaps, see my reply to Eric about my expectations wrt tests. =20
+>=20
+> Yip, I read it before my reply here.
+>=20
+>=20
+> > (i.e. default tests shouldn't have any explicit CLI options,
+> > instead it should follow whitelist blobs/set new default patch/update b=
+lobs pattern) =20
+>=20
+> I see. I agree with that. But this patch is not about the new test. The n=
+ew test is
+> _not_ in this series. Patches 8/25, 10/25, and 24/25 are _not_ about the =
+new test but
+> about adapting the _legacy tests_ (native acpi) to the situation when ACP=
+I HP becomes
+> the default, because this series makes acpi-pcihp=3Don the default, hence=
+ the CLI option
+> "acpi-pcihp=3Doff" added to them. An update to the blobs are also necessa=
+ry because of the
+> change in _OSC method, even when acpi-pcihp=3Doff.
+>=20
+>=20
+> >> said. This patch and the other two in this series related to the bios-=
+tables-test
+> >> (i.e., patches 8/25 and 10/25) are for actually making the current (le=
+gacy) test pass,
+> >> since the new default as per this series will be acpi-pcihp=3Don. That=
+'s why here we're
+> >> adapting the current test here to have acpi-pcihp=3Doff.
+> >>
+> >> The new test that will test for acpi-pcihp=3Don (the new default) is n=
+ot in this series
+> >> and we decided to merge it separate. It's in the patch 4/5 and 5/5 of =
+the follow series: =20
+>=20
+> We're doing the "blobs/set new default patch/update blobs pattern" in the=
+ new test, which
+> we can merge later, once this series is merged, no? The step "set new def=
+ault" then will
+> not be necessary because the new test will be merged separate, after this=
+ series, so when
+> acpi-pcihp=3Don is already the default.
+>=20
+> Please note that although we're using acpi-pcihp=3Don in the new test, it=
+'s not necessary,
+> we can dropped this option, making it implicit as you say, and it will wo=
+rk. This is the
+> new test:
+>=20
+> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05828.html 4/5
+> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05827.html 5/5=
+ =20
+>=20
+>=20
+> Thus, there are to "acts" of modifying the bios-tables-test:
+>=20
+> 1) Adapt the current tests to when acpi-pcihp=3Don becomes the default (h=
+ence the addition
+>     to them of "acpi-pcihp=3Doff".
 
-  Merge tag 'pull-qapi-2025-05-28' of https://repo.or.cz/qemu/armbru into staging (2025-05-29 08:36:01 -0400)
 
-are available in the Git repository at:
+that's what I disagree with.
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2025-05-30
+1) Instead adapting majority of tests to legacy before switching defaults,
+just do whitelist/modify default/update so all of tests run with new defaul=
+t.
 
-for you to fetch changes up to 5c54a367265ec19ed94a535cd15d178c16b8cae0:
+and then
 
-  tests/unit/test-util-sockets: fix mem-leak on error object (2025-05-30 09:52:08 +0200)
+> There is also the need to update the blobs, but it's because
+>     of the _OSC method change in DSDT table, which will change anyways, e=
+ven with "acpi-pcihp=3Doff=C2=A8,
+>     hence the need for patch 10/25 in this series. This is _done is this =
+series_.
 
-----------------------------------------------------------------
-* Functional tests improvements
-* Endianness improvements/clean-ups for the Microblaze machines
-* Remove obsolete -2.4 and -2.5 i440fx and q35 machine types and related code
 
-v3: Fixed a problem in the microblaze patches that caused CI failure
+=20
+> 2) Add a new test for testing the default (i.e. acpi-pcihp-on). It follow=
+s what you're
+>     saying above: "follow whitelist blobs/set new default patch/update bl=
+obs pattern",
+>     because we can drop the acpi-pcihp-on option from the CLI in this tes=
+t without any
+>     prejudice to test. While the step "set new default patch" was actuall=
+y done in 1).
 
-----------------------------------------------------------------
-Matheus Tavares Bernardino (1):
-      tests/unit/test-util-sockets: fix mem-leak on error object
+2) add a separate test case for native pcie hoplug (preferably within this =
+series)
 
-Philippe Mathieu-Daudé (17):
-      hw/i386/pc: Remove deprecated pc-q35-2.4 and pc-i440fx-2.4 machines
-      hw/i386/pc: Remove PCMachineClass::broken_reserved_end field
-      hw/i386/pc: Remove pc_compat_2_4[] array
-      hw/core/machine: Remove hw_compat_2_4[] array
-      hw/net/e1000: Remove unused E1000_FLAG_MAC flag
-      hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_MIGRATE_EXTRA definition
-      hw/virtio/virtio-pci: Remove VIRTIO_PCI_FLAG_DISABLE_PCIE definition
-      hw/i386/pc: Remove deprecated pc-q35-2.5 and pc-i440fx-2.5 machines
-      hw/i386/x86: Remove X86MachineClass::save_tsc_khz field
-      hw/nvram/fw_cfg: Remove legacy FW_CFG_ORDER_OVERRIDE
-      hw/core/machine: Remove hw_compat_2_5[] array
-      hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_OLD_PCI_CONFIGURATION definition
-      hw/scsi/vmw_pvscsi: Remove PVSCSI_COMPAT_DISABLE_PCIE_BIT definition
-      hw/scsi/vmw_pvscsi: Convert DeviceRealize -> InstanceInit
-      hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_OLD_MSI_OFFSETS definition
-      hw/net/vmxnet3: Remove VMXNET3_COMPAT_FLAG_DISABLE_PCIE definition
-      hw/net/vmxnet3: Merge DeviceRealize in InstanceInit
+3) even better would be to add #2 before #1 (right after 10/25),
+this way will guarantee that old native hotplug tables stay
+the same regardless of followup patches that add ACPI pcihp aml.
 
-Thomas Huth (7):
-      tests/functional/test_sparc64_tuxrun: Explicitly set the 'sun4u' machine
-      tests/functional/test_mips_malta: Re-enable the check for the PCI host bridge
-      tests/functional/test_mem_addr_space: Use set_machine() to select the machine
-      hw/microblaze: Add endianness property to the petalogix_s3adsp1800 machine
-      tests/functional: Test both microblaze s3adsp1800 endianness variants
-      hw/microblaze: Remove the big-endian variants of ml605 and xlnx-zynqmp-pmu
-      docs: Deprecate the qemu-system-microblazeel binary
 
- docs/about/deprecated.rst                        |  19 ++--
- docs/about/removed-features.rst                  |   9 ++
- include/hw/boards.h                              |   9 +-
- include/hw/i386/pc.h                             |   7 --
- include/hw/i386/x86.h                            |   5 --
- include/hw/loader.h                              |   2 -
- include/hw/nvram/fw_cfg.h                        |  10 ---
- include/hw/virtio/virtio-pci.h                   |   8 --
- hw/core/loader.c                                 |  14 ---
- hw/core/machine.c                                |  18 ----
- hw/i386/pc.c                                     |  42 ++-------
- hw/i386/pc_piix.c                                |  26 ------
- hw/i386/pc_q35.c                                 |  26 ------
- hw/i386/x86.c                                    |   1 -
- hw/microblaze/petalogix_ml605_mmu.c              |  15 +---
- hw/microblaze/petalogix_s3adsp1800_mmu.c         |  42 +++++++--
- hw/microblaze/xlnx-zynqmp-pmu.c                  |   7 +-
- hw/net/e1000.c                                   |  95 +++++++++-----------
- hw/net/vmxnet3.c                                 |  44 ++-------
- hw/nvram/fw_cfg.c                                | 110 ++---------------------
- hw/scsi/vmw_pvscsi.c                             |  67 +++-----------
- hw/virtio/virtio-pci.c                           |  11 +--
- system/vl.c                                      |   5 --
- target/i386/machine.c                            |   5 +-
- tests/qtest/test-x86-cpuid-compat.c              |  14 ---
- tests/unit/test-util-sockets.c                   |   4 +
- tests/functional/test_mem_addr_space.py          |  63 ++++++-------
- tests/functional/test_microblaze_s3adsp1800.py   |  18 ++--
- tests/functional/test_microblazeel_s3adsp1800.py |   6 +-
- tests/functional/test_mips_malta.py              |   6 +-
- tests/functional/test_sparc64_tuxrun.py          |   1 +
- 31 files changed, 198 insertions(+), 511 deletions(-)
+> Cheers,
+> Gustavo
+>=20
+> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05828.html 4/5
+> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05827.html 5/5
+> >>
+> >>
+> >> Cheers,
+> >> Gustavo
+> >> =20
+> >>>>
+> >>>> ---
+> >>>>
+> >>>> [Eric] also added acpi-pcihp=3Doff to test_acpi_aarch64_virt_tcg_num=
+amem
+> >>>> ---
+> >>>>    tests/qtest/bios-tables-test.c | 13 +++++++++----
+> >>>>    1 file changed, 9 insertions(+), 4 deletions(-)
+> >>>>
+> >>>> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-table=
+s-test.c
+> >>>> index 0a333ec435..6379dba714 100644
+> >>>> --- a/tests/qtest/bios-tables-test.c
+> >>>> +++ b/tests/qtest/bios-tables-test.c
+> >>>> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(v=
+oid)
+> >>>>        };
+> >>>>   =20
+> >>>>        data.variant =3D ".memhp";
+> >>>> -    test_acpi_one(" -machine nvdimm=3Don"
+> >>>> +    test_acpi_one(" -machine nvdimm=3Don,acpi-pcihp=3Doff"
+> >>>>                      " -cpu cortex-a57"
+> >>>>                      " -m 256M,slots=3D3,maxmem=3D1G"
+> >>>>                      " -object memory-backend-ram,id=3Dram0,size=3D1=
+28M"
+> >>>> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem=
+(void)
+> >>>>        };
+> >>>>   =20
+> >>>>        data.variant =3D ".numamem";
+> >>>> -    test_acpi_one(" -cpu cortex-a57"
+> >>>> +    test_acpi_one(" -machine acpi-pcihp=3Doff"
+> >>>> +                  " -cpu cortex-a57"
+> >>>>                      " -object memory-backend-ram,id=3Dram0,size=3D1=
+28M"
+> >>>>                      " -numa node,memdev=3Dram0",
+> >>>>                      &data);
+> >>>> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(voi=
+d)
+> >>>>         * to solve the conflicts.
+> >>>>         */
+> >>>>        data.variant =3D ".pxb";
+> >>>> -    test_acpi_one(" -device pcie-root-port,chassis=3D1,id=3Dpci.1"
+> >>>> +    test_acpi_one(" -machine acpi-pcihp=3Doff"
+> >>>> +                  " -device pcie-root-port,chassis=3D1,id=3Dpci.1"
+> >>>>                      " -device virtio-scsi-pci,id=3Dscsi0,bus=3Dpci.=
+1"
+> >>>>                      " -drive file=3D"
+> >>>>                      "tests/data/uefi-boot-images/bios-tables-test.a=
+arch64.iso.qcow2,"
+> >>>> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hm=
+at(void)
+> >>>>   =20
+> >>>>        data.variant =3D ".acpihmatvirt";
+> >>>>   =20
+> >>>> -    test_acpi_one(" -machine hmat=3Don"
+> >>>> +    test_acpi_one(" -machine hmat=3Don,acpi-pcihp=3Doff"
+> >>>>                      " -cpu cortex-a57"
+> >>>>                      " -smp 4,sockets=3D2"
+> >>>>                      " -m 384M"
+> >>>> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
+> >>>>        data.smbios_cpu_max_speed =3D 2900;
+> >>>>        data.smbios_cpu_curr_speed =3D 2700;
+> >>>>        test_acpi_one("-cpu cortex-a57 "
+> >>>> +                  "-machine acpi-pcihp=3Doff "
+> >>>>                      "-smbios type=3D4,max-speed=3D2900,current-spee=
+d=3D2700", &data);
+> >>>>        free_test_data(&data);
+> >>>>    }
+> >>>> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topolog=
+y(void)
+> >>>>        };
+> >>>>   =20
+> >>>>        test_acpi_one("-cpu cortex-a57 "
+> >>>> +                  "-machine acpi-pcihp=3Doff "
+> >>>>                      "-smp sockets=3D1,clusters=3D2,cores=3D2,thread=
+s=3D2", &data);
+> >>>>        free_test_data(&data);
+> >>>>    }
+> >>>> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
+> >>>>        };
+> >>>>   =20
+> >>>>        test_acpi_one("-cpu cortex-a57 "
+> >>>> +                  "-machine acpi-pcihp=3Doff "
+> >>>>                      "-device virtio-iommu-pci", &data);
+> >>>>        free_test_data(&data);
+> >>>>    } =20
+> >>>     =20
+> >> =20
+> >  =20
+>=20
 
 
