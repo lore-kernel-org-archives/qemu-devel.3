@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C81A9C5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54EB8C5B543
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:16:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL1Pb-0004WA-5v; Fri, 30 May 2025 11:12:47 -0400
+	id 1uL1PO-00040n-OH; Fri, 30 May 2025 11:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1PZ-0004Rh-0s; Fri, 30 May 2025 11:12:45 -0400
+ id 1uL1PC-0003NI-H5; Fri, 30 May 2025 11:12:22 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1PV-0002Kf-GZ; Fri, 30 May 2025 11:12:44 -0400
+ id 1uL1P8-0002HL-RU; Fri, 30 May 2025 11:12:22 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id E19E244B02;
- Fri, 30 May 2025 17:11:47 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id AD4F444AF3;
+ Fri, 30 May 2025 17:11:44 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v4 21/48] iotests/graph-changes-while-io: add test case with
- removal of lower snapshot
-Date: Fri, 30 May 2025 17:10:58 +0200
-Message-Id: <20250530151125.955508-22-f.ebner@proxmox.com>
+Subject: [PATCH v4 09/48] block: move drain outside of
+ bdrv_try_change_aio_context()
+Date: Fri, 30 May 2025 17:10:46 +0200
+Message-Id: <20250530151125.955508-10-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530151125.955508-1-f.ebner@proxmox.com>
 References: <20250530151125.955508-1-f.ebner@proxmox.com>
@@ -60,164 +60,243 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
+This is part of resolving the deadlock mentioned in commit "block:
+move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
 
-This case is catching potential deadlock which takes place when job-dismiss
-is issued when I/O requests are processed in a separate iothread.
+Convert the function to a _locked() version that has to be called with
+the graph lock held and add a convenience wrapper that has to be
+called with the graph unlocked, which drains and takes the lock
+itself. Since bdrv_try_change_aio_context() is global state code, the
+wrapper is too.
 
-See https://mail.gnu.org/archive/html/qemu-devel/2025-04/msg04421.html
+Callers are adapted to use the appropriate variant, depending on
+whether the caller already holds the lock. In the
+test_set_aio_context() unit test, prior drains can be removed, because
+draining already happens inside the new wrapper.
 
-Signed-off-by: Andrey Drobyshev <andrey.drobyshev@virtuozzo.com>
-[FE: re-use top image and rename snap1->mid as suggested by Kevin Wolf
-     remove image file after test as suggested by Kevin Wolf
-     add type annotation for function argument to make mypy happy]
+Note that bdrv_attach_child_common_abort(), bdrv_attach_child_common()
+and bdrv_root_unref_child() hold the graph lock and are not actually
+allowed to drain either. This will be addressed in the following
+commits.
+
+Functions like qmp_blockdev_mirror() query the nodes to act on before
+draining and locking. In theory, draining could invalidate those nodes.
+This kind of issue is not addressed by these commits.
+
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
- .../qemu-iotests/tests/graph-changes-while-io | 101 ++++++++++++++++--
- .../tests/graph-changes-while-io.out          |   4 +-
- 2 files changed, 96 insertions(+), 9 deletions(-)
+ block.c                            | 58 ++++++++++++++++++++++--------
+ blockdev.c                         | 15 +++++---
+ include/block/block-global-state.h |  8 +++--
+ tests/unit/test-bdrv-drain.c       |  4 ---
+ 4 files changed, 59 insertions(+), 26 deletions(-)
 
-diff --git a/tests/qemu-iotests/tests/graph-changes-while-io b/tests/qemu-iotests/tests/graph-changes-while-io
-index 35489e3b5e..dca1167b6d 100755
---- a/tests/qemu-iotests/tests/graph-changes-while-io
-+++ b/tests/qemu-iotests/tests/graph-changes-while-io
-@@ -27,6 +27,7 @@ from iotests import imgfmt, qemu_img, qemu_img_create, qemu_io, \
+diff --git a/block.c b/block.c
+index 6f42c0f1ab..3aaacabf7f 100644
+--- a/block.c
++++ b/block.c
+@@ -3028,7 +3028,10 @@ static void GRAPH_WRLOCK bdrv_attach_child_common_abort(void *opaque)
+     bdrv_replace_child_noperm(s->child, NULL);
  
+     if (bdrv_get_aio_context(bs) != s->old_child_ctx) {
+-        bdrv_try_change_aio_context(bs, s->old_child_ctx, NULL, &error_abort);
++        bdrv_drain_all_begin();
++        bdrv_try_change_aio_context_locked(bs, s->old_child_ctx, NULL,
++                                           &error_abort);
++        bdrv_drain_all_end();
+     }
  
- top = os.path.join(iotests.test_dir, 'top.img')
-+mid = os.path.join(iotests.test_dir, 'mid.img')
- nbd_sock = os.path.join(iotests.sock_dir, 'nbd.sock')
+     if (bdrv_child_get_parent_aio_context(s->child) != s->old_parent_ctx) {
+@@ -3115,8 +3118,10 @@ bdrv_attach_child_common(BlockDriverState *child_bs,
+     parent_ctx = bdrv_child_get_parent_aio_context(new_child);
+     if (child_ctx != parent_ctx) {
+         Error *local_err = NULL;
+-        int ret = bdrv_try_change_aio_context(child_bs, parent_ctx, NULL,
+-                                              &local_err);
++        bdrv_drain_all_begin();
++        int ret = bdrv_try_change_aio_context_locked(child_bs, parent_ctx, NULL,
++                                                     &local_err);
++        bdrv_drain_all_end();
  
+         if (ret < 0 && child_class->change_aio_ctx) {
+             Transaction *aio_ctx_tran = tran_new();
+@@ -3319,8 +3324,10 @@ void bdrv_root_unref_child(BdrvChild *child)
+          * When the parent requiring a non-default AioContext is removed, the
+          * node moves back to the main AioContext
+          */
+-        bdrv_try_change_aio_context(child_bs, qemu_get_aio_context(), NULL,
+-                                    NULL);
++        bdrv_drain_all_begin();
++        bdrv_try_change_aio_context_locked(child_bs, qemu_get_aio_context(),
++                                           NULL, NULL);
++        bdrv_drain_all_end();
+     }
  
-@@ -59,6 +60,15 @@ class TestGraphChangesWhileIO(QMPTestCase):
-         self.qsd.stop()
-         os.remove(top)
+     bdrv_schedule_unref(child_bs);
+@@ -7719,9 +7726,13 @@ bdrv_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+  *
+  * If ignore_child is not NULL, that child (and its subgraph) will not
+  * be touched.
++ *
++ * Called with the graph lock held.
++ *
++ * Called while all bs are drained.
+  */
+-int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+-                                BdrvChild *ignore_child, Error **errp)
++int bdrv_try_change_aio_context_locked(BlockDriverState *bs, AioContext *ctx,
++                                       BdrvChild *ignore_child, Error **errp)
+ {
+     Transaction *tran;
+     GHashTable *visited;
+@@ -7730,17 +7741,15 @@ int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
  
-+    def _wait_for_blockjob(self, status: str) -> None:
-+        done = False
-+        while not done:
-+            for event in self.qsd.get_qmp().get_events(wait=10.0):
-+                if event['event'] != 'JOB_STATUS_CHANGE':
-+                    continue
-+                if event['data']['status'] == status:
-+                    done = True
-+
-     def test_blockdev_add_while_io(self) -> None:
-         # Run qemu-img bench in the background
-         bench_thr = Thread(target=do_qemu_img_bench)
-@@ -117,16 +127,93 @@ class TestGraphChangesWhileIO(QMPTestCase):
-                 'device': 'job0',
-             })
+     /*
+      * Recursion phase: go through all nodes of the graph.
+-     * Take care of checking that all nodes support changing AioContext
+-     * and drain them, building a linear list of callbacks to run if everything
+-     * is successful (the transaction itself).
++     * Take care of checking that all nodes support changing AioContext,
++     * building a linear list of callbacks to run if everything is successful
++     * (the transaction itself).
+      */
+     tran = tran_new();
+     visited = g_hash_table_new(NULL, NULL);
+     if (ignore_child) {
+         g_hash_table_add(visited, ignore_child);
+     }
+-    bdrv_drain_all_begin();
+-    bdrv_graph_rdlock_main_loop();
+     ret = bdrv_change_aio_context(bs, ctx, visited, tran, errp);
+     g_hash_table_destroy(visited);
  
--            cancelled = False
--            while not cancelled:
--                for event in self.qsd.get_qmp().get_events(wait=10.0):
--                    if event['event'] != 'JOB_STATUS_CHANGE':
--                        continue
--                    if event['data']['status'] == 'null':
--                        cancelled = True
-+            self._wait_for_blockjob('null')
+@@ -7754,15 +7763,34 @@ int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+     if (!ret) {
+         /* Just run clean() callbacks. No AioContext changed. */
+         tran_abort(tran);
+-        bdrv_graph_rdunlock_main_loop();
+-        bdrv_drain_all_end();
+         return -EPERM;
+     }
  
-         bench_thr.join()
+     tran_commit(tran);
++    return 0;
++}
++
++/*
++ * Change bs's and recursively all of its parents' and children's AioContext
++ * to the given new context, returning an error if that isn't possible.
++ *
++ * If ignore_child is not NULL, that child (and its subgraph) will not
++ * be touched.
++ */
++int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
++                                BdrvChild *ignore_child, Error **errp)
++{
++    int ret;
++
++    GLOBAL_STATE_CODE();
++
++    bdrv_drain_all_begin();
++    bdrv_graph_rdlock_main_loop();
++    ret = bdrv_try_change_aio_context_locked(bs, ctx, ignore_child, errp);
+     bdrv_graph_rdunlock_main_loop();
+     bdrv_drain_all_end();
+-    return 0;
++
++    return ret;
+ }
  
-+    def test_remove_lower_snapshot_while_io(self) -> None:
-+        # Run qemu-img bench in the background
-+        bench_thr = Thread(target=do_qemu_img_bench, args=(100000, ))
-+        bench_thr.start()
-+
-+        # While I/O is performed on 'node0' node, consequently add 2 snapshots
-+        # on top of it, then remove (commit) them starting from lower one.
-+        while bench_thr.is_alive():
-+            # Recreate snapshot images on every iteration
-+            qemu_img_create('-f', imgfmt, mid, '1G')
-+            qemu_img_create('-f', imgfmt, top, '1G')
-+
-+            self.qsd.cmd('blockdev-add', {
-+                'driver': imgfmt,
-+                'node-name': 'mid',
-+                'file': {
-+                    'driver': 'file',
-+                    'filename': mid
-+                }
-+            })
-+
-+            self.qsd.cmd('blockdev-snapshot', {
-+                'node': 'node0',
-+                'overlay': 'mid',
-+            })
-+
-+            self.qsd.cmd('blockdev-add', {
-+                'driver': imgfmt,
-+                'node-name': 'top',
-+                'file': {
-+                    'driver': 'file',
-+                    'filename': top
-+                }
-+            })
-+
-+            self.qsd.cmd('blockdev-snapshot', {
-+                'node': 'mid',
-+                'overlay': 'top',
-+            })
-+
-+            self.qsd.cmd('block-commit', {
-+                'job-id': 'commit-mid',
-+                'device': 'top',
-+                'top-node': 'mid',
-+                'base-node': 'node0',
-+                'auto-finalize': True,
-+                'auto-dismiss': False,
-+            })
-+
-+            self._wait_for_blockjob('concluded')
-+            self.qsd.cmd('job-dismiss', {
-+                'id': 'commit-mid',
-+            })
-+
-+            self.qsd.cmd('block-commit', {
-+                'job-id': 'commit-top',
-+                'device': 'top',
-+                'top-node': 'top',
-+                'base-node': 'node0',
-+                'auto-finalize': True,
-+                'auto-dismiss': False,
-+            })
-+
-+            self._wait_for_blockjob('ready')
-+            self.qsd.cmd('job-complete', {
-+                'id': 'commit-top',
-+            })
-+
-+            self._wait_for_blockjob('concluded')
-+            self.qsd.cmd('job-dismiss', {
-+                'id': 'commit-top',
-+            })
-+
-+            self.qsd.cmd('blockdev-del', {
-+                'node-name': 'mid'
-+            })
-+            self.qsd.cmd('blockdev-del', {
-+                'node-name': 'top'
-+            })
-+
-+        bench_thr.join()
-+        os.remove(mid)
-+
- if __name__ == '__main__':
-     # Format must support raw backing files
-     iotests.main(supported_fmts=['qcow', 'qcow2', 'qed'],
-diff --git a/tests/qemu-iotests/tests/graph-changes-while-io.out b/tests/qemu-iotests/tests/graph-changes-while-io.out
-index fbc63e62f8..8d7e996700 100644
---- a/tests/qemu-iotests/tests/graph-changes-while-io.out
-+++ b/tests/qemu-iotests/tests/graph-changes-while-io.out
-@@ -1,5 +1,5 @@
--..
-+...
- ----------------------------------------------------------------------
--Ran 2 tests
-+Ran 3 tests
+ void bdrv_add_aio_context_notifier(BlockDriverState *bs,
+diff --git a/blockdev.c b/blockdev.c
+index 3982f9776b..750beba41f 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -3601,12 +3601,13 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
+     AioContext *new_context;
+     BlockDriverState *bs;
  
- OK
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
++    bdrv_drain_all_begin();
++    bdrv_graph_rdlock_main_loop();
+ 
+     bs = bdrv_find_node(node_name);
+     if (!bs) {
+         error_setg(errp, "Failed to find node with node-name='%s'", node_name);
+-        return;
++        goto out;
+     }
+ 
+     /* Protects against accidents. */
+@@ -3614,14 +3615,14 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
+         error_setg(errp, "Node %s is associated with a BlockBackend and could "
+                          "be in use (use force=true to override this check)",
+                          node_name);
+-        return;
++        goto out;
+     }
+ 
+     if (iothread->type == QTYPE_QSTRING) {
+         IOThread *obj = iothread_by_id(iothread->u.s);
+         if (!obj) {
+             error_setg(errp, "Cannot find iothread %s", iothread->u.s);
+-            return;
++            goto out;
+         }
+ 
+         new_context = iothread_get_aio_context(obj);
+@@ -3629,7 +3630,11 @@ void qmp_x_blockdev_set_iothread(const char *node_name, StrOrNull *iothread,
+         new_context = qemu_get_aio_context();
+     }
+ 
+-    bdrv_try_change_aio_context(bs, new_context, NULL, errp);
++    bdrv_try_change_aio_context_locked(bs, new_context, NULL, errp);
++
++out:
++    bdrv_graph_rdunlock_main_loop();
++    bdrv_drain_all_end();
+ }
+ 
+ QemuOptsList qemu_common_drive_opts = {
+diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
+index aad160956a..91f249b5ad 100644
+--- a/include/block/block-global-state.h
++++ b/include/block/block-global-state.h
+@@ -278,8 +278,12 @@ bool GRAPH_RDLOCK
+ bdrv_child_change_aio_context(BdrvChild *c, AioContext *ctx,
+                               GHashTable *visited, Transaction *tran,
+                               Error **errp);
+-int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
+-                                BdrvChild *ignore_child, Error **errp);
++int GRAPH_UNLOCKED
++bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
++                            BdrvChild *ignore_child, Error **errp);
++int GRAPH_RDLOCK
++bdrv_try_change_aio_context_locked(BlockDriverState *bs, AioContext *ctx,
++                                   BdrvChild *ignore_child, Error **errp);
+ 
+ int GRAPH_RDLOCK bdrv_probe_blocksizes(BlockDriverState *bs, BlockSizes *bsz);
+ int bdrv_probe_geometry(BlockDriverState *bs, HDGeometry *geo);
+diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
+index 290cd2a70e..3185f3f429 100644
+--- a/tests/unit/test-bdrv-drain.c
++++ b/tests/unit/test-bdrv-drain.c
+@@ -1396,14 +1396,10 @@ static void test_set_aio_context(void)
+     bs = bdrv_new_open_driver(&bdrv_test, "test-node", BDRV_O_RDWR,
+                               &error_abort);
+ 
+-    bdrv_drained_begin(bs);
+     bdrv_try_change_aio_context(bs, ctx_a, NULL, &error_abort);
+-    bdrv_drained_end(bs);
+ 
+-    bdrv_drained_begin(bs);
+     bdrv_try_change_aio_context(bs, ctx_b, NULL, &error_abort);
+     bdrv_try_change_aio_context(bs, qemu_get_aio_context(), NULL, &error_abort);
+-    bdrv_drained_end(bs);
+ 
+     bdrv_unref(bs);
+     iothread_join(a);
 -- 
 2.39.5
 
