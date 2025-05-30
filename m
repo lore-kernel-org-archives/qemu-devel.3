@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58AC4C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:16:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B552EC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:16:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtyn-0005lF-W7; Fri, 30 May 2025 03:16:38 -0400
+	id 1uKtvY-0008GH-4w; Fri, 30 May 2025 03:13:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxM-0003Ur-Du
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:10 -0400
+ id 1uKtvS-0008FY-UQ
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtxK-0007Cy-8W
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:15:07 -0400
+ id 1uKtvQ-0006oS-Ug
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589305;
+ s=mimecast20190719; t=1748589188;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=U7M87aC0AY1SYkZv1rKx3sSxTQzGh6ckfYlzcvYgk4I=;
- b=PN2jMUygRwgBaSEpDkwtEPfLNm3wP4FF2CwXQFEAUIVQnT8YSvqFtGMC+WSYLwJpIO3W6X
- y5YXltP++idWR7pawe4uGd6a1eKtFM/F2rl9jDVXFMk24DDwLHsLVVkRwTVgWjwssdRl6J
- WSPuFSxlhfBiW6b+wit9pURLGY6Y7tc=
-Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
- [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eTt+ijUG9kBQToPAyx24wWv7Og7qKej64dv1M2DfvhE=;
+ b=giwndl0bRcen3IU0dLMklWeRFlkF7a0y4X57CN/N3cscSQXvelbyglNHHwpBv3ltI450ON
+ t2SoRCkLtoRBxhqzqRp9C/N1ZURi6VVL3r6S3VEk7zQ77dIT22sUSf0Ifse9i3CwrWk08R
+ dKhiz6EOFPdDHnViJFcIXKLUK/iC3Uo=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-442-OJrGX2VgPp65i-wtMNcbpQ-1; Fri, 30 May 2025 03:15:04 -0400
-X-MC-Unique: OJrGX2VgPp65i-wtMNcbpQ-1
-X-Mimecast-MFC-AGG-ID: OJrGX2VgPp65i-wtMNcbpQ_1748589303
-Received: by mail-ej1-f70.google.com with SMTP id
- a640c23a62f3a-ad88ac202c0so142542066b.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:15:04 -0700 (PDT)
+ us-mta-98-3QIkPAbJMuWIJPeenv9wEA-1; Fri, 30 May 2025 03:13:06 -0400
+X-MC-Unique: 3QIkPAbJMuWIJPeenv9wEA-1
+X-Mimecast-MFC-AGG-ID: 3QIkPAbJMuWIJPeenv9wEA_1748589186
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-60498322443so1674249a12.2
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589302; x=1749194102;
+ d=1e100.net; s=20230601; t=1748589185; x=1749193985;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=U7M87aC0AY1SYkZv1rKx3sSxTQzGh6ckfYlzcvYgk4I=;
- b=QdJXQQThq21YGus51OPjvOzFT8VQ80GSiYzj/LLRnT9+QaBCBsKMm6DPTI6XGQ7od4
- a2yf9mTikEYC6x2RJsNgFsLhsCC825TR/a0ZI4MwPioV+1vjg4B6R8LdRuYQcq+JFeoj
- wLtpXJw/ugMx969KKiXLEYqyCFgscHR4/VA/rZDIPkGlk4hbpgGjiUW8VHTXd64HUAz1
- 6ztfMLT4w65saBezqqOM10TqQUWOpaylXZPl76siz9sdV6EJZlWZSbdhkqwrAtk5C1ty
- P9S6TIKJOud1Z7WPD72gUydcDY2+NFkoccnZL9ISQLoHUcGoBrU6VRB2Nv6jYCZGKmiB
- L3hg==
-X-Gm-Message-State: AOJu0Yy3m1j1OcuROV/FLKfLp3rhirN4fbtmvFGwIGb3eu7jnqwGJWH3
- gJI2rKTythrT6SjeeBvpBKvvUAc6MipSexGYpAsLnHIX2xlrEbzp3LTNm/a5vNOBzCf6oK3ZL0L
- NN9Uj55PnruksqwDsjZz97zFDzidmZctJ6aeJ/z9VVXhSCzboQyka8Db1nRMTpaTK6zOPTa1cHR
- T3wvzMuHZG2QMDfepHp5lP3BTtXRxhyL1sqvQx5atQ
-X-Gm-Gg: ASbGncv5U6QdC+K1CiNxtnJDZuRkJa2diuzfqc8HwKs97CVm5X+crO8hr5KBeC2VX3v
- stjyTUYlAo7/kbjZh/qBTzJWZYR2escr3HLY3Dob8ilkQ52wMV+QuOZhrJe2WBY1VTcaIuWImbW
- Pc45m6UpIaBRieDh+XwA9FJutUVxwZR7iGjmswUg4Ny8a2XmlKp+66J+G4k6p07qFqsXIsb5M4Y
- O0BDe3cy8z0SVEJiXU7r9xupHPfYCALXgJ1pM1a5XcKt/V5fwMG2UG5q+Cjy+gF+Hc2kMGltYwC
- QES5OgfZD6UJwA==
-X-Received: by 2002:a17:907:7e8a:b0:adb:2f9b:e16f with SMTP id
- a640c23a62f3a-adb3295e9a5mr214291366b.16.1748589302264; 
- Fri, 30 May 2025 00:15:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxDAd/Mj5U434BVHo5LDlKzTjfnahRzB3HpbbqXCFdlqza4INEOV3h9Y4xFqXhmsTEMMDwbQ==
-X-Received: by 2002:a17:907:7e8a:b0:adb:2f9b:e16f with SMTP id
- a640c23a62f3a-adb3295e9a5mr214288566b.16.1748589301796; 
- Fri, 30 May 2025 00:15:01 -0700 (PDT)
+ bh=eTt+ijUG9kBQToPAyx24wWv7Og7qKej64dv1M2DfvhE=;
+ b=MPnqGBk/Ra02ZYHEqmitr+C2M7+60ejXiEI6KuJ9IhrD4HgKsaRH6XsoIaMyFajhV8
+ TWOnWKrU0JnsoJ74d8jvQJZT4j1pn0CE9kkjtAw0EzWgtR+EUyAnra2hQXVC5JJBh67o
+ Do5CDTqlt8vf0MB6IgTeCPAylmjPF3V/7+veM3jNFgrYzELrvcOXDJt0HOiz8CZoOAwt
+ LvY1vnt4VJOObZgUFGqTXT6jp0jcQntH4AP7Q4yyBlJXRj8PTdUx6szdRg8DOwMC11ca
+ 4XOB5IEf1MEGzYSZ0nMXqqsBgutYalkwFqxJal0MBN6zyBFyap5leOIK90az4gBJMFyu
+ JR1w==
+X-Gm-Message-State: AOJu0Yyn4Y5DPh/amjvM9PDNHWXvVsrz7Yt6E3zFDp/w1Ur4XV4Y4tA5
+ ZJAIoDlioe5V97FVGnov3Oa++ELCOKVy0lB+YQ0okWxn+qnC5/TJ4PjIgcs2zBUdWTrAIO+7UAb
+ y8mIrotkscyTX9MFV16cJOsWRbZSgnpIzGe07BL26CsWtnVGehbYTWddUTktK+kw5ZUGLfORUjn
+ c6QQ+CsFKbtXuRGauq4wBnUM7ma6+01iocpZUXN1mz
+X-Gm-Gg: ASbGncsV3lPGEt6ivWEiH4BZ92CuLmFKVo+jU93hVitCrNNHcdKRL6iTx7PUamXnPLf
+ Uw4N0JzKqb/4Nm8hkxyFOzBHtUvVqCs3YKN16tGPLmqeammnFTnUSZZ6ibVMoecd349t+5B2iHl
+ wTwT47RC/qGCi5EDPG9+xrcmT75yGTG1PDevTpDQnTeF4z4Gm/3mBMVwoF6sYdx/Dnx2YFKXfmh
+ ZSHkRycaFLDiQN2r2rvBIQRyOwnY7ttEa6NqKm1FNpf2gzR3+ZrDN/uXztAJc7NNU+aIrGkwyBR
+ pyZIauyMiFCNkw==
+X-Received: by 2002:a05:6402:280d:b0:5fc:bff8:c60a with SMTP id
+ 4fb4d7f45d1cf-6056e15e00cmr1835967a12.26.1748589184817; 
+ Fri, 30 May 2025 00:13:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3dsOSWerJOHUIIpjiP3mxeAc8cev0PzOink8HHo5XoHQdAQVDzLtsJMJ5zRpNiCCf/CfuHA==
+X-Received: by 2002:a05:6402:280d:b0:5fc:bff8:c60a with SMTP id
+ 4fb4d7f45d1cf-6056e15e00cmr1835936a12.26.1748589184323; 
+ Fri, 30 May 2025 00:13:04 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad6ac07sm278294566b.177.2025.05.30.00.15.00
+ 4fb4d7f45d1cf-60566c756f5sm1216983a12.45.2025.05.30.00.13.02
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:15:00 -0700 (PDT)
+ Fri, 30 May 2025 00:13:02 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 52/77] i386/tdx: Only configure MSR_IA32_UCODE_REV in
- kvm_init_msrs() for TDs
-Date: Fri, 30 May 2025 09:12:22 +0200
-Message-ID: <20250530071250.2050910-53-pbonzini@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 05/77] meson: merge lib{system, user}_ss with {system, user}_ss
+Date: Fri, 30 May 2025 09:11:35 +0200
+Message-ID: <20250530071250.2050910-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,81 +110,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-For TDs, only MSR_IA32_UCODE_REV in kvm_init_msrs() can be configured
-by VMM, while the features enumerated/controlled by other MSRs except
-MSR_IA32_UCODE_REV in kvm_init_msrs() are not under control of VMM.
+Now that target configuration can be applied to lib{system, user}_ss,
+there is no reason to keep that separate from the existing {system,
+user}_ss.
+The only difference is that we'll now compile those files with
+-DCOMPILING_SYSTEM_VS_USER, which removes poison for
+CONFIG_USER_ONLY and CONFIG_SOFTMMU, without any other side effect.
 
-Only configure MSR_IA32_UCODE_REV for TDs.
+We extract existing system/user code common common libraries to
+lib{system, user}.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-41-xiaoyao.li@intel.com
+To not break existing meson files, we alias libsystem_ss to system_ss
+and libuser_ss to user_ss, so we can do the cleanup in next commit.
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20250521223414.248276-6-pierrick.bouvier@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/kvm.c | 40 +++++++++++++++++++++-------------------
- 1 file changed, 21 insertions(+), 19 deletions(-)
+ meson.build | 38 +++++++++++++++++++++++---------------
+ 1 file changed, 23 insertions(+), 15 deletions(-)
 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index 4fc37cc370d..90a0dac4a1e 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -3864,32 +3864,34 @@ static void kvm_init_msrs(X86CPU *cpu)
-     CPUX86State *env = &cpu->env;
+diff --git a/meson.build b/meson.build
+index 79d123c50ee..ea54d15f4a6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3694,14 +3694,14 @@ io_ss = ss.source_set()
+ qmp_ss = ss.source_set()
+ qom_ss = ss.source_set()
+ system_ss = ss.source_set()
+-libsystem_ss = ss.source_set()
++libsystem_ss = system_ss
+ specific_fuzz_ss = ss.source_set()
+ specific_ss = ss.source_set()
+ rust_devices_ss = ss.source_set()
+ stub_ss = ss.source_set()
+ trace_ss = ss.source_set()
+ user_ss = ss.source_set()
+-libuser_ss = ss.source_set()
++libuser_ss = user_ss
+ util_ss = ss.source_set()
  
-     kvm_msr_buf_reset(cpu);
--    if (has_msr_arch_capabs) {
--        kvm_msr_entry_add(cpu, MSR_IA32_ARCH_CAPABILITIES,
--                          env->features[FEAT_ARCH_CAPABILITIES]);
--    }
+ # accel modules
+@@ -4078,21 +4078,19 @@ common_ss.add(hwcore)
+ system_ss.add(authz, blockdev, chardev, crypto, io, qmp)
+ common_ss.add(qom, qemuutil)
  
--    if (has_msr_core_capabs) {
--        kvm_msr_entry_add(cpu, MSR_IA32_CORE_CAPABILITY,
--                          env->features[FEAT_CORE_CAPABILITY]);
--    }
-+    if (!is_tdx_vm()) {
-+        if (has_msr_arch_capabs) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_ARCH_CAPABILITIES,
-+                                env->features[FEAT_ARCH_CAPABILITIES]);
-+        }
- 
--    if (has_msr_perf_capabs && cpu->enable_pmu) {
--        kvm_msr_entry_add_perf(cpu, env->features);
-+        if (has_msr_core_capabs) {
-+            kvm_msr_entry_add(cpu, MSR_IA32_CORE_CAPABILITY,
-+                                env->features[FEAT_CORE_CAPABILITY]);
-+        }
-+
-+        if (has_msr_perf_capabs && cpu->enable_pmu) {
-+            kvm_msr_entry_add_perf(cpu, env->features);
-+        }
-+
-+        /*
-+         * Older kernels do not include VMX MSRs in KVM_GET_MSR_INDEX_LIST, but
-+         * all kernels with MSR features should have them.
-+         */
-+        if (kvm_feature_msrs && cpu_has_vmx(env)) {
-+            kvm_msr_entry_add_vmx(cpu, env->features);
-+        }
-     }
- 
-     if (has_msr_ucode_rev) {
-         kvm_msr_entry_add(cpu, MSR_IA32_UCODE_REV, cpu->ucode_rev);
-     }
+-common_ss.add_all(when: 'CONFIG_SYSTEM_ONLY', if_true: [system_ss])
+-common_ss.add_all(when: 'CONFIG_USER_ONLY', if_true: user_ss)
 -
--    /*
--     * Older kernels do not include VMX MSRs in KVM_GET_MSR_INDEX_LIST, but
--     * all kernels with MSR features should have them.
--     */
--    if (kvm_feature_msrs && cpu_has_vmx(env)) {
--        kvm_msr_entry_add_vmx(cpu, env->features);
--    }
--
-     assert(kvm_buf_set_msrs(cpu) == 0);
- }
+ libuser = static_library('user',
+-                         libuser_ss.all_sources() + genh,
++                         user_ss.all_sources() + genh,
+                          c_args: ['-DCONFIG_USER_ONLY',
+                                   '-DCOMPILING_SYSTEM_VS_USER'],
+-                         dependencies: libuser_ss.all_dependencies(),
++                         include_directories: common_user_inc,
++                         dependencies: user_ss.all_dependencies(),
+                          build_by_default: false)
  
+ libsystem = static_library('system',
+-                           libsystem_ss.all_sources() + genh,
++                           system_ss.all_sources() + genh,
+                            c_args: ['-DCONFIG_SOFTMMU',
+                                     '-DCOMPILING_SYSTEM_VS_USER'],
+-                           dependencies: libsystem_ss.all_dependencies(),
++                           dependencies: system_ss.all_dependencies(),
+                            build_by_default: false)
+ 
+ # Note that this library is never used directly (only through extract_objects)
+@@ -4101,7 +4099,6 @@ libsystem = static_library('system',
+ common_all = static_library('common',
+                             build_by_default: false,
+                             sources: common_ss.all_sources() + genh,
+-                            include_directories: common_user_inc,
+                             implicit_include_directories: false,
+                             dependencies: common_ss.all_dependencies())
+ 
+@@ -4115,10 +4112,20 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
+   inc = [common_user_inc + target_inc]
+ 
+   target_common = common_ss.apply(config_target, strict: false)
++  target_system = system_ss.apply(config_target, strict: false)
++  target_user = user_ss.apply(config_target, strict: false)
+   common_deps = []
++  system_deps = []
++  user_deps = []
+   foreach dep: target_common.dependencies()
+     common_deps += dep.partial_dependency(compile_args: true, includes: true)
+   endforeach
++  foreach dep: target_system.dependencies()
++    system_deps += dep.partial_dependency(compile_args: true, includes: true)
++  endforeach
++  foreach dep: target_user.dependencies()
++    user_deps += dep.partial_dependency(compile_args: true, includes: true)
++  endforeach
+ 
+   # prevent common code to access cpu compile time definition,
+   # but still allow access to cpu.h
+@@ -4133,7 +4140,7 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
+       sources: src.all_sources() + genh,
+       include_directories: inc,
+       c_args: target_system_c_args,
+-      dependencies: src.all_dependencies() + common_deps)
++      dependencies: src.all_dependencies() + common_deps + system_deps)
+     hw_common_arch_libs += {target_base_arch: lib}
+   endif
+ 
+@@ -4145,7 +4152,8 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
+       sources: src.all_sources() + genh,
+       include_directories: inc,
+       c_args: target_c_args,
+-      dependencies: src.all_dependencies() + common_deps)
++      dependencies: src.all_dependencies() + common_deps +
++                    system_deps + user_deps)
+     target_common_arch_libs += {target_base_arch: lib}
+   endif
+ 
+@@ -4157,7 +4165,7 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
+       sources: src.all_sources() + genh,
+       include_directories: inc,
+       c_args: target_system_c_args,
+-      dependencies: src.all_dependencies() + common_deps)
++      dependencies: src.all_dependencies() + common_deps + system_deps)
+     target_common_system_arch_libs += {target_base_arch: lib}
+   endif
+ endforeach
+@@ -4336,12 +4344,12 @@ foreach target : target_dirs
+     arch_deps += src.dependencies()
+   endif
+   if target_type == 'system'
+-    src = libsystem_ss.apply(config_target, strict: false)
++    src = system_ss.apply(config_target, strict: false)
+     objects += libsystem.extract_objects(src.sources())
+     arch_deps += src.dependencies()
+   endif
+   if target_type == 'user'
+-    src = libuser_ss.apply(config_target, strict: false)
++    src = user_ss.apply(config_target, strict: false)
+     objects += libuser.extract_objects(src.sources())
+     arch_deps += src.dependencies()
+   endif
 -- 
 2.49.0
 
