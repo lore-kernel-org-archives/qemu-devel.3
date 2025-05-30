@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B6BDC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D53EAC54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:18:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtyu-0006n6-PD; Fri, 30 May 2025 03:16:45 -0400
+	id 1uKtvc-0008Gt-06; Fri, 30 May 2025 03:13:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtwf-0002EA-Dh
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uKtvY-0008GM-AJ
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtwd-0006xx-E3
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:25 -0400
+ id 1uKtvW-0006ou-F8
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589262;
+ s=mimecast20190719; t=1748589193;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C3W23WX4zCqECxaSrIlcvPj2ZIcIzMpSdkQaRY+GObk=;
- b=Moe1uTLkNUXRw1U4puIXR3tZmDBZZg0BboTMv0oVetO1WSSXvtFD4qj6A/a+eExNY1/35k
- Uj3IHiQ1kB0fX/oJWlGkFtsxEf/43ChTZUmJRGqPGkALWkHactTTCfTLZ38mtvLdIY7ThV
- a+3wzwByxXuzvMbQaLtHqjDIEWmf28U=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XuGM+7MdwY4mWdwDSJvhZdiW4JgFJnWIC6vsozdV364=;
+ b=ZqU4c0swFqon/lic2dGmYptq5XJWwY1DRRe6Dvp85C5yTrZZtfG6WUxO9tojBXNXpafcXX
+ U3HSTw3eZqWKmFmYFaZK2nofgoeWOSj35viRsllCFniL+bplsKBs6OtBswn4WasqUDqNbd
+ eujBz0HiAmn+GNMSiXjltTbFt/lSKzc=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-558-CtZdXSL0Ou2ToDH2Lp90sw-1; Fri, 30 May 2025 03:14:21 -0400
-X-MC-Unique: CtZdXSL0Ou2ToDH2Lp90sw-1
-X-Mimecast-MFC-AGG-ID: CtZdXSL0Ou2ToDH2Lp90sw_1748589260
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ac6ce5fe9bfso185686166b.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:14:21 -0700 (PDT)
+ us-mta-551-Pz0UYwPXNmK5Fp2TaM22TQ-1; Fri, 30 May 2025 03:13:12 -0400
+X-MC-Unique: Pz0UYwPXNmK5Fp2TaM22TQ-1
+X-Mimecast-MFC-AGG-ID: Pz0UYwPXNmK5Fp2TaM22TQ_1748589191
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-603f71f6432so1477261a12.3
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589259; x=1749194059;
+ d=1e100.net; s=20230601; t=1748589190; x=1749193990;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C3W23WX4zCqECxaSrIlcvPj2ZIcIzMpSdkQaRY+GObk=;
- b=fAaVdGhwrnVl+oo7R/l5KMWnNa22f5GvtdOcm4SRuohWxvGeA8vQSXK/xYP0Qjlylg
- ufwrGEtRWO8FILzwXLswyXlRVvH/6KcvaO/giau+Hl6VYp6n0Krwy/F6ZNZK9BcxWxHO
- YRZIw26XGWe32m+meYslWohdpxCTe6YtKvz3l1QNeCdDC5Sb9rH7Lh+0xF1AtOAUFYxo
- egbQK8wFHjR/P14x/iNZ5KHSBW+T8/ySElVkiUIoZOrUm29ggUYBRJ4F3TcaWyunBEIx
- qpJaR7k7emuDztj1eRGaNgjKmSpOdGkVPKPLVnIelY9t0J3XUv1/mahOIESN4VUPUaJH
- I4JQ==
-X-Gm-Message-State: AOJu0YzJzmj4boD0v/ijITWWoBs/9OLkK2OAwefJf+RIXY6wgu+80j6m
- jx+3kHlL/1oZTUSDn2suEuYWdTJQtMMn1iyz2xi/wVqwtcHc1pVi6ulb4L8XGjuahD18qq+5yAl
- HQavsuoE/1vAUabkkKCA8Hi7dfrAn3ILim8AhdNDN/wO+h79RMiWHmq74SzXm97EjLxjDSGBaHE
- 0NfKz5IEg1ZFOI+rex7n2oAOAlOOiem258NfDHWKV9
-X-Gm-Gg: ASbGnctwhI/K+IcEGNMpUq7BGK7RXNkBxPi3evVzu7Pw/PtJgxLQHeve0Ne8xRBlhn9
- 37Xbnz8p1XbTE3D98G8mcIg0MaCqKwtKfIEyNpd7rv9tOR7W//lr65hbiCqhBC1a46u51H0GvyT
- g4M2BPiQN/cL4YIjdPMwwCK5nKr2LgCvzDcwOkXlyR3Je4y0sC/wFHm1msbQ0x50ReTUhBm+dpE
- 0P7Pddhl+K3lpcnIZrXVzzFjAtax7DpArYO1vK9OV6bA0CQYF1cX28OTX+kdgv9S1vlW5zGA8dA
- 9VTk+DH+8G1JsQ==
-X-Received: by 2002:a17:907:2cc2:b0:ad5:3156:2c0c with SMTP id
- a640c23a62f3a-adb322afceamr200569966b.26.1748589259371; 
- Fri, 30 May 2025 00:14:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF9IHqY4YrMKIEQ4V0jRV/apfSVrsvLz5NnRtvP/X6zwDVJgDhHeFTKsHjrqyUq1Z0H0xMNRA==
-X-Received: by 2002:a17:907:2cc2:b0:ad5:3156:2c0c with SMTP id
- a640c23a62f3a-adb322afceamr200566666b.26.1748589258848; 
- Fri, 30 May 2025 00:14:18 -0700 (PDT)
+ bh=XuGM+7MdwY4mWdwDSJvhZdiW4JgFJnWIC6vsozdV364=;
+ b=f9ekO6LHGG5aWfBen97+bMzJP80k5PcnHWKXBl8WJPSTYMBRH97NL7Eaq4OvsndMdU
+ p2goBsMPAxQnhlpBnRSi+1fijh1n46UNQim681o5cO9kvxh+/JO6dwYKOcYqKuU55l7D
+ YfQ/Uxeofgx5kwAfJ0i5kaL2aqxmb9bo2i+T1B3eiEvgBMBlhFb+lJKH36xQ/y/RGo5C
+ D7rFISViMuLL93HFQ13+V7QoHDwkDPXN9xrSnnu+FbtHfCIF069Db8EM/7FZKPfc4gAJ
+ vTmTXM2MFtQr0fR/U7TuL/ORnNcXHzpHIDN7MpRv7fnYLhpdbAvPagI76nOZLGu5qoKJ
+ wlfQ==
+X-Gm-Message-State: AOJu0Yw+cr4eV4OnltgsxMgCk/GzM9O2YNw5jJ/W//7GgIpQ0bb0xcao
+ YcKq5NkOVuIQ4X4BJ9Bf4tP9k5k2SndA+WaBYN4fW86i+N+I3JE4sNMtKLtUNsIW5t6XB7NeqMz
+ yovF8r2MDTmL5t5ltp4Tfl5uqh+SiGRSFdFYdTnQq9rb2KHDI2hsPBRIw2rzWCROX1C82dUY8DU
+ sGk21Uj8x4JOMlgUaLeSPphjRPi/JSWhFTvM+aHz+B
+X-Gm-Gg: ASbGncvjtgCTgYB6O2fYWLTaFaVFvf3UL+xCR4+YeHEjbxkuK7cz325HdFX9uNeE7Tx
+ ss38qqz69GxOAbHnLwpjevJM5JLs3epEwPSXRheDcRQgnfQfh0FwuI7hZz8x50sYVhO+6RdmrtT
+ Sc0U0VwkXTVw2M6bjHJx+W0bgiQBQB/EqbzYlV1TsPp143qdEp370q7fhi5wfpxKA8iYMF+x5Ao
+ MxXoUi++XlQEPKEZbpmEIGct+U4fXFsW69XpefBPnN8WFfhFLbsxB+BeX9uiYhacHi0xTUhTQzU
+ ByIsNiCLgZUsGg==
+X-Received: by 2002:a05:6402:3514:b0:604:5a44:a5c4 with SMTP id
+ 4fb4d7f45d1cf-6057c60519bmr1055176a12.16.1748589189868; 
+ Fri, 30 May 2025 00:13:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+oN78ZHS1NBeCBufuPwlffDfjXFfh1/HpuFsGAHJTdUrH+GPfe7Ptsy7/TiPacuVJOR2aIQ==
+X-Received: by 2002:a05:6402:3514:b0:604:5a44:a5c4 with SMTP id
+ 4fb4d7f45d1cf-6057c60519bmr1055155a12.16.1748589189372; 
+ Fri, 30 May 2025 00:13:09 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad6aaf5sm273004166b.183.2025.05.30.00.14.16
+ 4fb4d7f45d1cf-60566c31885sm1185639a12.10.2025.05.30.00.13.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:14:16 -0700 (PDT)
+ Fri, 30 May 2025 00:13:07 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- Isaku Yamahata <isaku.yamahata@intel.com>,
- Sean Christopherson <sean.j.christopherson@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 35/77] i386/tdx: Setup the TD HOB list
-Date: Fri, 30 May 2025 09:12:05 +0200
-Message-ID: <20250530071250.2050910-36-pbonzini@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 07/77] meson: merge hw_common_arch in target_common_system_arch
+Date: Fri, 30 May 2025 09:11:37 +0200
+Message-ID: <20250530071250.2050910-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -111,254 +110,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-The TD HOB list is used to pass the information from VMM to TDVF. The TD
-HOB must include PHIT HOB and Resource Descriptor HOB. More details can
-be found in TDVF specification and PI specification.
+No need to keep two different libraries, as both are compiled with exact
+same flags. As well, rename target common libraries to common_{arch} and
+system_{arch}, to follow what exists for common and system libraries.
 
-Build the TD HOB in TDX's machine_init_done callback.
-
-Co-developed-by: Isaku Yamahata <isaku.yamahata@intel.com>
-Signed-off-by: Isaku Yamahata <isaku.yamahata@intel.com>
-Co-developed-by: Sean Christopherson <sean.j.christopherson@intel.com>
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Acked-by: Gerd Hoffmann <kraxel@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250508150002.689633-24-xiaoyao.li@intel.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20250521223414.248276-8-pierrick.bouvier@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/i386/tdvf-hob.h    |  26 +++++++++
- hw/i386/tdvf-hob.c    | 130 ++++++++++++++++++++++++++++++++++++++++++
- target/i386/kvm/tdx.c |  16 ++++++
- hw/i386/meson.build   |   2 +-
- 4 files changed, 173 insertions(+), 1 deletion(-)
- create mode 100644 hw/i386/tdvf-hob.h
- create mode 100644 hw/i386/tdvf-hob.c
+ meson.build | 33 ++++++++++++---------------------
+ 1 file changed, 12 insertions(+), 21 deletions(-)
 
-diff --git a/hw/i386/tdvf-hob.h b/hw/i386/tdvf-hob.h
-new file mode 100644
-index 00000000000..4fc6a3740a5
---- /dev/null
-+++ b/hw/i386/tdvf-hob.h
-@@ -0,0 +1,26 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+
-+#ifndef HW_I386_TD_HOB_H
-+#define HW_I386_TD_HOB_H
-+
-+#include "hw/i386/tdvf.h"
-+#include "target/i386/kvm/tdx.h"
-+
-+void tdvf_hob_create(TdxGuest *tdx, TdxFirmwareEntry *td_hob);
-+
-+#define EFI_RESOURCE_ATTRIBUTE_TDVF_PRIVATE     \
-+    (EFI_RESOURCE_ATTRIBUTE_PRESENT |           \
-+     EFI_RESOURCE_ATTRIBUTE_INITIALIZED |       \
-+     EFI_RESOURCE_ATTRIBUTE_TESTED)
-+
-+#define EFI_RESOURCE_ATTRIBUTE_TDVF_UNACCEPTED  \
-+    (EFI_RESOURCE_ATTRIBUTE_PRESENT |           \
-+     EFI_RESOURCE_ATTRIBUTE_INITIALIZED |       \
-+     EFI_RESOURCE_ATTRIBUTE_TESTED)
-+
-+#define EFI_RESOURCE_ATTRIBUTE_TDVF_MMIO        \
-+    (EFI_RESOURCE_ATTRIBUTE_PRESENT     |       \
-+     EFI_RESOURCE_ATTRIBUTE_INITIALIZED |       \
-+     EFI_RESOURCE_ATTRIBUTE_UNCACHEABLE)
-+
-+#endif
-diff --git a/hw/i386/tdvf-hob.c b/hw/i386/tdvf-hob.c
-new file mode 100644
-index 00000000000..782b3d15787
---- /dev/null
-+++ b/hw/i386/tdvf-hob.c
-@@ -0,0 +1,130 @@
-+/*
-+ * Copyright (c) 2025 Intel Corporation
-+ * Author: Isaku Yamahata <isaku.yamahata at gmail.com>
-+ *                        <isaku.yamahata at intel.com>
-+ *         Xiaoyao Li <xiaoyao.li@intel.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "standard-headers/uefi/uefi.h"
-+#include "hw/pci/pcie_host.h"
-+#include "tdvf-hob.h"
-+
-+typedef struct TdvfHob {
-+    hwaddr hob_addr;
-+    void *ptr;
-+    int size;
-+
-+    /* working area */
-+    void *current;
-+    void *end;
-+} TdvfHob;
-+
-+static uint64_t tdvf_current_guest_addr(const TdvfHob *hob)
-+{
-+    return hob->hob_addr + (hob->current - hob->ptr);
-+}
-+
-+static void tdvf_align(TdvfHob *hob, size_t align)
-+{
-+    hob->current = QEMU_ALIGN_PTR_UP(hob->current, align);
-+}
-+
-+static void *tdvf_get_area(TdvfHob *hob, uint64_t size)
-+{
-+    void *ret;
-+
-+    if (hob->current + size > hob->end) {
-+        error_report("TD_HOB overrun, size = 0x%" PRIx64, size);
-+        exit(1);
-+    }
-+
-+    ret = hob->current;
-+    hob->current += size;
-+    tdvf_align(hob, 8);
-+    return ret;
-+}
-+
-+static void tdvf_hob_add_memory_resources(TdxGuest *tdx, TdvfHob *hob)
-+{
-+    EFI_HOB_RESOURCE_DESCRIPTOR *region;
-+    EFI_RESOURCE_ATTRIBUTE_TYPE attr;
-+    EFI_RESOURCE_TYPE resource_type;
-+
-+    TdxRamEntry *e;
-+    int i;
-+
-+    for (i = 0; i < tdx->nr_ram_entries; i++) {
-+        e = &tdx->ram_entries[i];
-+
-+        if (e->type == TDX_RAM_UNACCEPTED) {
-+            resource_type = EFI_RESOURCE_MEMORY_UNACCEPTED;
-+            attr = EFI_RESOURCE_ATTRIBUTE_TDVF_UNACCEPTED;
-+        } else if (e->type == TDX_RAM_ADDED) {
-+            resource_type = EFI_RESOURCE_SYSTEM_MEMORY;
-+            attr = EFI_RESOURCE_ATTRIBUTE_TDVF_PRIVATE;
-+        } else {
-+            error_report("unknown TDX_RAM_ENTRY type %d", e->type);
-+            exit(1);
-+        }
-+
-+        region = tdvf_get_area(hob, sizeof(*region));
-+        *region = (EFI_HOB_RESOURCE_DESCRIPTOR) {
-+            .Header = {
-+                .HobType = EFI_HOB_TYPE_RESOURCE_DESCRIPTOR,
-+                .HobLength = cpu_to_le16(sizeof(*region)),
-+                .Reserved = cpu_to_le32(0),
-+            },
-+            .Owner = EFI_HOB_OWNER_ZERO,
-+            .ResourceType = cpu_to_le32(resource_type),
-+            .ResourceAttribute = cpu_to_le32(attr),
-+            .PhysicalStart = cpu_to_le64(e->address),
-+            .ResourceLength = cpu_to_le64(e->length),
-+        };
-+    }
-+}
-+
-+void tdvf_hob_create(TdxGuest *tdx, TdxFirmwareEntry *td_hob)
-+{
-+    TdvfHob hob = {
-+        .hob_addr = td_hob->address,
-+        .size = td_hob->size,
-+        .ptr = td_hob->mem_ptr,
-+
-+        .current = td_hob->mem_ptr,
-+        .end = td_hob->mem_ptr + td_hob->size,
-+    };
-+
-+    EFI_HOB_GENERIC_HEADER *last_hob;
-+    EFI_HOB_HANDOFF_INFO_TABLE *hit;
-+
-+    /* Note, Efi{Free}Memory{Bottom,Top} are ignored, leave 'em zeroed. */
-+    hit = tdvf_get_area(&hob, sizeof(*hit));
-+    *hit = (EFI_HOB_HANDOFF_INFO_TABLE) {
-+        .Header = {
-+            .HobType = EFI_HOB_TYPE_HANDOFF,
-+            .HobLength = cpu_to_le16(sizeof(*hit)),
-+            .Reserved = cpu_to_le32(0),
-+        },
-+        .Version = cpu_to_le32(EFI_HOB_HANDOFF_TABLE_VERSION),
-+        .BootMode = cpu_to_le32(0),
-+        .EfiMemoryTop = cpu_to_le64(0),
-+        .EfiMemoryBottom = cpu_to_le64(0),
-+        .EfiFreeMemoryTop = cpu_to_le64(0),
-+        .EfiFreeMemoryBottom = cpu_to_le64(0),
-+        .EfiEndOfHobList = cpu_to_le64(0), /* initialized later */
-+    };
-+
-+    tdvf_hob_add_memory_resources(tdx, &hob);
-+
-+    last_hob = tdvf_get_area(&hob, sizeof(*last_hob));
-+    *last_hob =  (EFI_HOB_GENERIC_HEADER) {
-+        .HobType = EFI_HOB_TYPE_END_OF_HOB_LIST,
-+        .HobLength = cpu_to_le16(sizeof(*last_hob)),
-+        .Reserved = cpu_to_le32(0),
-+    };
-+    hit->EfiEndOfHobList = tdvf_current_guest_addr(&hob);
-+}
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index e06f5d0bd43..e20ffee9550 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -21,6 +21,7 @@
- #include "hw/i386/e820_memory_layout.h"
- #include "hw/i386/tdvf.h"
- #include "hw/i386/x86.h"
-+#include "hw/i386/tdvf-hob.h"
- #include "kvm_i386.h"
- #include "tdx.h"
+diff --git a/meson.build b/meson.build
+index 1c9f1aa91e7..f614d112192 100644
+--- a/meson.build
++++ b/meson.build
+@@ -4101,7 +4101,6 @@ common_all = static_library('common',
+                             dependencies: common_ss.all_dependencies())
  
-@@ -147,6 +148,19 @@ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr)
-     tdx_guest->tdvf_mr = tdvf_mr;
- }
+ # construct common libraries per base architecture
+-hw_common_arch_libs = {}
+ target_common_arch_libs = {}
+ target_common_system_arch_libs = {}
+ foreach target_base_arch, config_base_arch : config_base_arch_mak
+@@ -4130,22 +4129,10 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
+   target_c_args = ['-DCPU_DEFS_H']
+   target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
  
-+static TdxFirmwareEntry *tdx_get_hob_entry(TdxGuest *tdx)
-+{
-+    TdxFirmwareEntry *entry;
+-  if target_base_arch in hw_common_arch
+-    src = hw_common_arch[target_base_arch]
+-    lib = static_library(
+-      'hw_' + target_base_arch,
+-      build_by_default: false,
+-      sources: src.all_sources() + genh,
+-      include_directories: inc,
+-      c_args: target_system_c_args,
+-      dependencies: src.all_dependencies() + common_deps + system_deps)
+-    hw_common_arch_libs += {target_base_arch: lib}
+-  endif
+-
+   if target_base_arch in target_common_arch
+     src = target_common_arch[target_base_arch]
+     lib = static_library(
+-      'target_' + target_base_arch,
++      'common_' + target_base_arch,
+       build_by_default: false,
+       sources: src.all_sources() + genh,
+       include_directories: inc,
+@@ -4155,10 +4142,20 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
+     target_common_arch_libs += {target_base_arch: lib}
+   endif
+ 
++  # merge hw_common_arch in target_common_system_arch
++  if target_base_arch in hw_common_arch
++    hw_src = hw_common_arch[target_base_arch]
++    if target_base_arch in target_common_system_arch
++      target_common_system_arch[target_base_arch].add_all(hw_src)
++    else
++      target_common_system_arch += {target_base_arch: hw_src}
++    endif
++  endif
 +
-+    for_each_tdx_fw_entry(&tdx->tdvf, entry) {
-+        if (entry->type == TDVF_SECTION_TYPE_TD_HOB) {
-+            return entry;
-+        }
-+    }
-+    error_report("TDVF metadata doesn't specify TD_HOB location.");
-+    exit(1);
-+}
-+
- static void tdx_add_ram_entry(uint64_t address, uint64_t length,
-                               enum TdxRamType type)
- {
-@@ -281,6 +295,8 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
- 
-     qsort(tdx_guest->ram_entries, tdx_guest->nr_ram_entries,
-           sizeof(TdxRamEntry), &tdx_ram_entry_compare);
-+
-+    tdvf_hob_create(tdx_guest, tdx_get_hob_entry(tdx_guest));
- }
- 
- static Notifier tdx_machine_done_notify = {
-diff --git a/hw/i386/meson.build b/hw/i386/meson.build
-index 3bc1da2b6eb..7896f348cff 100644
---- a/hw/i386/meson.build
-+++ b/hw/i386/meson.build
-@@ -32,7 +32,7 @@ i386_ss.add(when: 'CONFIG_PC', if_true: files(
-   'port92.c'))
- i386_ss.add(when: 'CONFIG_X86_FW_OVMF', if_true: files('pc_sysfw_ovmf.c'),
-                                         if_false: files('pc_sysfw_ovmf-stubs.c'))
--i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c'))
-+i386_ss.add(when: 'CONFIG_TDX', if_true: files('tdvf.c', 'tdvf-hob.c'))
- 
- subdir('kvm')
- subdir('xen')
+   if target_base_arch in target_common_system_arch
+     src = target_common_system_arch[target_base_arch]
+     lib = static_library(
+-      'target_system_' + target_base_arch,
++      'system_' + target_base_arch,
+       build_by_default: false,
+       sources: src.all_sources() + genh,
+       include_directories: inc,
+@@ -4351,12 +4348,6 @@ foreach target : target_dirs
+     objects += libuser.extract_objects(src.sources())
+     arch_deps += src.dependencies()
+   endif
+-  if target_type == 'system' and target_base_arch in hw_common_arch_libs
+-    src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
+-    lib = hw_common_arch_libs[target_base_arch]
+-    objects += lib.extract_objects(src.sources())
+-    arch_deps += src.dependencies()
+-  endif
+   if target_type == 'system' and target_base_arch in target_common_system_arch_libs
+     src = target_common_system_arch[target_base_arch].apply(config_target, strict: false)
+     lib = target_common_system_arch_libs[target_base_arch]
 -- 
 2.49.0
 
