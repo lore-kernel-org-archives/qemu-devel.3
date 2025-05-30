@@ -4,88 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E548BC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 05:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C55AC54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKs90-0008WO-4t; Fri, 30 May 2025 01:19:02 -0400
+	id 1uKt4d-0001xa-Ks; Fri, 30 May 2025 02:18:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKs8x-0008Vm-MF
- for qemu-devel@nongnu.org; Fri, 30 May 2025 01:19:00 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uKs8u-0002v1-W4
- for qemu-devel@nongnu.org; Fri, 30 May 2025 01:18:59 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-7425bd5a83aso1332277b3a.0
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 22:18:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1748582335; x=1749187135;
- darn=nongnu.org; 
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Cope124TjOYa+7NUk9EDspUxzXdBjrFv+k/R7FUMnec=;
- b=mGVtTpz21ckiV7Nx7I9Ma7KLnz0eS4iY6AvlY1f1udwOIDzOQf3lKUEavW75on3EdH
- o2K6r4yfJXS5ON2QfAbZDejM2vLABajunH3/y6Xc9BGHJsBbuqCEtEGy641xUwcjwNZ/
- eRDwTG6wSpnq5fWvSG2sh/Qo6z5hJO+ihjJqCneDihREK1rauDMxwm3TWgSghsiW6yCK
- twU1+x8DwXbPC4L0qwUY6zXEeggQ87sGaI4XEpCyrKNhJeH+WbnbrOW/kkCSzJ+r6CMQ
- Ldga5yKrhQflqFmZzohc5ywPtB69bA78VVPr2KL0XCoYmGG2LQbWaQ3wsV/z2Hgpunu3
- LQGQ==
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKt4c-0001wv-5G
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:18:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKt4Z-0000FD-IH
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:18:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748585907;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=5HFt5J00MwY5g7CgwAmj8fkbqmktfcpDa7fzujgEWMU=;
+ b=Gwse/HHKb4Z11QKqkJPMlkyyu8zQWRpkprFFrA0Zzm/BFmiUkY3OLC4VoDAuLNAY6s2UXs
+ RNsfkcVqHB58YhTJevUP6VMmwmgj7T+ZRo9YTEFO6aiynbBGbMCrtNHeT6J1iGfiNGYt0p
+ Q9TraVu5s9RfC1GT10oa8c7iFLbXDig=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-412-pvil9k6KN4OJv0ylwP9hgw-1; Fri, 30 May 2025 02:18:24 -0400
+X-MC-Unique: pvil9k6KN4OJv0ylwP9hgw-1
+X-Mimecast-MFC-AGG-ID: pvil9k6KN4OJv0ylwP9hgw_1748585903
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-602df3e7adcso1815861a12.1
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:18:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748582335; x=1749187135;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Cope124TjOYa+7NUk9EDspUxzXdBjrFv+k/R7FUMnec=;
- b=DfwJk11CvNpJgwnHaBUjGfC6llb/dgbsa1kqqoDjcACNSbUarkExNTwCghpAn1MhVJ
- hXVaD0oMs6BZngiP4xkYp7opH6MaZUBL1ksjI+MTGMUVW4e5t4+pzHsugaXuyywJ7toI
- y6+efa5Lu6KRCnYBUG9BSsIwoPQ71+YEKMbfbqLw3jOwqXk/NJmNGgrf16Q3XERkvMnE
- LM19Et3HpWjopbpTFHDfxfuwqHn/HuHCnd4rOlFUXAhB3YfqmxYstQUQ56mL29nuQjCC
- eQK2DIkkV31w6laYCIzuJKC/9jBGGl16X/V9XOTvMY1LUHZvysj9Olxz6tcYfm7STRoS
- jr0Q==
-X-Gm-Message-State: AOJu0YwFb9kzUvv3AgIvij/XXiUWtXz4ngxIdXwKA5ibZqo/XNqccOUL
- /UjC6P0BtJP+JDQyYiNa4BqNnI2A+2hTySj9++ED98OdZ4ghn3ChvGwgCrUATTafky4L72DkZjm
- cxJ+9
-X-Gm-Gg: ASbGncvDAjqrR87/phjW4fZVras1rNHkF7hlE+G/Ic2F8mRBlbhaYCdpEevs5f872j5
- 0TPSZf3Sf1STGZoPiqWLHiNFi0EW8Pd6vJlOPogTEJ/NsHrbxnFgn0eUDPH3bKPyn7e+ySZdlkm
- yysBY096YxCBr4hZsH2qLPv5/sW+6zeAijowQZP6a8cGAzQafFg5PNErqBWDgTdIy7hUOlaaEM8
- g5YBjfsBL5LbE1ARX0rFGwdKbtD4Jj7SLpTomlUKSfnm2Aifq1bWC+Xrv4Zj8Pq9vPbeDyXGXGx
- IFJZN50SAvf7bUcEDEW0a0IJPG3KRXcFqsEL+gyxINgzXUaz+YFm/mLM6XRh5P4=
-X-Google-Smtp-Source: AGHT+IEK50F/mJqLXpIfu7lO7BQvA9+LMD2IB/Gtgpd/UbBFJ0O3cS9DGDQfeNeRqSrPhOljoafJjA==
-X-Received: by 2002:a05:6a00:4fc7:b0:742:aecc:c46d with SMTP id
- d2e1a72fcca58-747bd95a8c0mr2693895b3a.5.1748582335081; 
- Thu, 29 May 2025 22:18:55 -0700 (PDT)
-Received: from localhost ([157.82.128.1]) by smtp.gmail.com with UTF8SMTPSA id
- d2e1a72fcca58-747affd54fbsm2211683b3a.154.2025.05.29.22.18.53
+ d=1e100.net; s=20230601; t=1748585903; x=1749190703;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5HFt5J00MwY5g7CgwAmj8fkbqmktfcpDa7fzujgEWMU=;
+ b=w1rHoMBNz0nuxsVOCmIRoYXqHYA+t02AT0wIXJ8yWWcMQc7SczYH8SceT7CyEFrT+k
+ DijfLMnLnotqbXKP+lAMP9ck0zBFhDNu8gmNh39WRKvelwn0lYwBN8h6xPEj9fipvi9H
+ id3K/MfvCpVLSyOFfJR+ODHvH7Yfl6plj0uBSYoc7XZmumYjcDMlbaulwImJrHUlIO+U
+ liMbP5Qx/x94sq7hkwNEV4E2At7g+VLIlOeOW3XelagoE4umt6HhV7EH/MovJmtpdh9z
+ ppFAbussm5n68/imD36hQQUDG0DU/YgLnNlKMmJfXtp6l1dPtXaWJV+3PiRPJv7WJJq1
+ 7Rjg==
+X-Gm-Message-State: AOJu0Ywe33q6BamzxX4M9zz7uh7FMogtPH7dlAfmdSKH4xHdbX0yIuRF
+ CCuCw0J0/jPOR41MPubh0zjeoD4V0N286vdOTm6LnCR0D1qTxeb43dbgtg8S2dbDBTEFbcjV2UP
+ YMudVH48YvPaXkQjMlaS+J1+RHc3tUC3YykCOCSLAYFHGfzXxIMkU+43XoDLSLyeAEWY=
+X-Gm-Gg: ASbGnctHnVUJoC9xxDz+XJLjzUCQIgTcBxP3qcsX8tg5J966GF/GtOgwW60p5749ztt
+ wiWSG0TVj8pOkRbWXaM/4KUc4bOjziZ8N61U/1psJfRix4abxbRNW8wygPQEcYp9dz/08ZBDNIQ
+ Fo6XW8YHpZ3PrKZZtMXKAGM9rRWNQ4le4JuLYkB5WUYrZ+cvv3l/4dgQY7Ztktwt1ZiMedoIwS2
+ lCpMVB3JDuk3XtE0WuQVEanfOteOXPtq7at1+I3BEV+zBEVBUBoI40aFFvD6kg9UxiQkKa2ODnB
+ hTIHb8u9Yr8S2nERyU0qwyAFPJ+/V952HhNPQgqgyHEU4hHduiIQ3IdxKj4CRao=
+X-Received: by 2002:a05:6402:13d2:b0:602:3cf1:44c8 with SMTP id
+ 4fb4d7f45d1cf-6057c1b5a94mr937421a12.8.1748585903488; 
+ Thu, 29 May 2025 23:18:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFaqMciS8kXcamRQ3BFDiEIDhaqoVXf+Jax0DoQ6wgsC1vRxvlFlLrlevl4qQL8K6eeLaBZnw==
+X-Received: by 2002:a05:6402:13d2:b0:602:3cf1:44c8 with SMTP id
+ 4fb4d7f45d1cf-6057c1b5a94mr937406a12.8.1748585903074; 
+ Thu, 29 May 2025 23:18:23 -0700 (PDT)
+Received: from [192.168.0.7] (ltea-047-064-112-237.pools.arcor-ip.net.
+ [47.64.112.237]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-60566c5dd13sm1108850a12.32.2025.05.29.23.18.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 May 2025 22:18:54 -0700 (PDT)
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-Date: Fri, 30 May 2025 14:18:53 +0900
-Subject: [PATCH v2] virtio-net: Add queues for RSS during migration
+ Thu, 29 May 2025 23:18:20 -0700 (PDT)
+Message-ID: <b374f581-fdbf-4fad-ab10-45394211c0d6@redhat.com>
+Date: Fri, 30 May 2025 08:18:19 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+User-Agent: Mozilla Thunderbird
+Subject: Re: Armbian TLS certificate expired
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>
+References: <CAJSP0QXpwWZK3KeGZ-FVFLhu7CCv8PCRbGZ9MEJK5nS_jUWquQ@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAJSP0QXpwWZK3KeGZ-FVFLhu7CCv8PCRbGZ9MEJK5nS_jUWquQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250530-n-v2-1-b1be546ca586@daynix.com>
-X-B4-Tracking: v=1; b=H4sIALw/OWgC/yWMzQ6CMBCEX4Xs2Zr+SAVPvgfhUMsqe7A1rWkgp
- O/OipnTN5lvNsiYCDPcmg0SFsoUA4M+NeBnF14oaGIGLXUrL9KKIBxeHyhN15tOA+8+CZ+0HB/
- DyDxT/sa0HpdF/dq/3SrJdlGC0yNq67zxzt4ntwZazj6+Yay17nL2Jf6TAAAA
-X-Change-ID: 20250406-n-ae7be0389382
-To: qemu-devel@nongnu.org
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>, 
- devel@daynix.com, Akihiko Odaki <akihiko.odaki@daynix.com>
-X-Mailer: b4 0.15-dev-edae6
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pf1-x42e.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -49
+X-Spam_score: -5.0
+X-Spam_bar: -----
+X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,131 +150,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
-VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
-number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
-VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_features
-is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
-VIRTIO_NET_F_MQ uses bit 22.
+On 29/05/2025 16.45, Stefan Hajnoczi wrote:
+> The OrangePi, Cubieboard, Banana Pi, and replay tests use a sunxi
+> armhf Linux package URL that is failing due to an expired TLS
+> certificate:
+> 
+> 2025-05-29 13:37:56,005 - qemu-test - INFO - Downloading
+> https://apt.armbian.com/pool/main/l/linux-6.6.16/linux-image-current-sunxi_24.2.1_armhf__6.6.16-Seb3e-D6b4a-P2359-Ce96bHfe66-HK01ba-V014b-B067e-R448a.deb
+> to /builds/qemu-project/qemu/functional-cache/download/3d968c15b121ede871dce49d13ee7644d6f74b6b121b84c9a40f51b0c80d6d22...
+> ...
+> urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED]
+> certificate verify failed: certificate has expired (_ssl.c:992)>
+> 
+> I will ignore these test failures for the time being. Hopefully the
+> server admins will fix it. Otherwise it will be necessary to find a
+> working URL for these tests.
 
-Instead of inferring the required number of queues from
-vdev->guest_features, use the number loaded from the vm state. This
-change also has a nice side effect to remove a duplicate peer queue
-pair change by circumventing virtio_net_set_multiqueue().
+I just gave it a try, and it seems like the certificate has been updated 
+already? Anyway, in the worst case, we could also try to switch to http 
+instead of https for this download (we're still checking the hashsum to make 
+sure that nobody messed with the content).
 
-Also update the comment in include/hw/virtio/virtio.h to prevent an
-implementation of pre_load_queues() from refering to any fields being
-loaded during migration by accident in the future.
-
-Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizing")
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
----
-Changes in v2:
-- Updated a documentation comment of pre_load_queues() for clarity.
-- Link to v1: https://lore.kernel.org/qemu-devel/20250510-n-v1-1-19ee26ac3ca6@daynix.com
----
- include/hw/virtio/virtio.h | 10 ++++++++--
- hw/net/virtio-net.c        | 11 ++++-------
- hw/virtio/virtio.c         | 14 +++++++-------
- 3 files changed, 19 insertions(+), 16 deletions(-)
-
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 214d4a77e932..c594764f23f4 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -210,8 +210,14 @@ struct VirtioDeviceClass {
-     void (*guest_notifier_mask)(VirtIODevice *vdev, int n, bool mask);
-     int (*start_ioeventfd)(VirtIODevice *vdev);
-     void (*stop_ioeventfd)(VirtIODevice *vdev);
--    /* Called before loading queues. Useful to add queues before loading. */
--    int (*pre_load_queues)(VirtIODevice *vdev);
-+    /*
-+     * Called before loading queues.
-+     * If the number of queues change at runtime, use @n to know the
-+     * number and add or remove queues accordingly.
-+     * Note that this function is called in the middle of loading vmsd;
-+     * no assumption should be made on states being loaded from vmsd.
-+     */
-+    int (*pre_load_queues)(VirtIODevice *vdev, uint32_t n);
-     /* Saving and loading of a device; trying to deprecate save/load
-      * use vmsd for new devices.
-      */
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 221252e00a50..5a1aead4e70e 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -3022,11 +3022,10 @@ static void virtio_net_del_queue(VirtIONet *n, int index)
-     virtio_del_queue(vdev, index * 2 + 1);
- }
- 
--static void virtio_net_change_num_queue_pairs(VirtIONet *n, int new_max_queue_pairs)
-+static void virtio_net_change_num_queues(VirtIONet *n, int new_num_queues)
- {
-     VirtIODevice *vdev = VIRTIO_DEVICE(n);
-     int old_num_queues = virtio_get_num_queues(vdev);
--    int new_num_queues = new_max_queue_pairs * 2 + 1;
-     int i;
- 
-     assert(old_num_queues >= 3);
-@@ -3062,16 +3061,14 @@ static void virtio_net_set_multiqueue(VirtIONet *n, int multiqueue)
-     int max = multiqueue ? n->max_queue_pairs : 1;
- 
-     n->multiqueue = multiqueue;
--    virtio_net_change_num_queue_pairs(n, max);
-+    virtio_net_change_num_queues(n, max * 2 + 1);
- 
-     virtio_net_set_queue_pairs(n);
- }
- 
--static int virtio_net_pre_load_queues(VirtIODevice *vdev)
-+static int virtio_net_pre_load_queues(VirtIODevice *vdev, uint32_t n)
- {
--    virtio_net_set_multiqueue(VIRTIO_NET(vdev),
--                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_RSS) ||
--                              virtio_has_feature(vdev->guest_features, VIRTIO_NET_F_MQ));
-+    virtio_net_change_num_queues(VIRTIO_NET(vdev), n);
- 
-     return 0;
- }
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 2e98cecf64df..bbeccccf6d77 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -3259,13 +3259,6 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         config_len--;
-     }
- 
--    if (vdc->pre_load_queues) {
--        ret = vdc->pre_load_queues(vdev);
--        if (ret) {
--            return ret;
--        }
--    }
--
-     num = qemu_get_be32(f);
- 
-     if (num > VIRTIO_QUEUE_MAX) {
-@@ -3273,6 +3266,13 @@ virtio_load(VirtIODevice *vdev, QEMUFile *f, int version_id)
-         return -1;
-     }
- 
-+    if (vdc->pre_load_queues) {
-+        ret = vdc->pre_load_queues(vdev, num);
-+        if (ret) {
-+            return ret;
-+        }
-+    }
-+
-     for (i = 0; i < num; i++) {
-         vdev->vq[i].vring.num = qemu_get_be32(f);
-         if (k->has_variable_vring_alignment) {
-
----
-base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
-change-id: 20250406-n-ae7be0389382
-
-Best regards,
--- 
-Akihiko Odaki <akihiko.odaki@daynix.com>
+  Thomas
 
 
