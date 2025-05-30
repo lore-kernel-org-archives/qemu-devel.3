@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F25EC5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8EF28C5B543
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:20:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL1Pf-0004iO-4i; Fri, 30 May 2025 11:12:51 -0400
+	id 1uL1Pc-0004ao-Ns; Fri, 30 May 2025 11:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1Pb-0004Wx-GT; Fri, 30 May 2025 11:12:47 -0400
+ id 1uL1Pa-0004VH-ES; Fri, 30 May 2025 11:12:46 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1PY-0002N1-Vw; Fri, 30 May 2025 11:12:47 -0400
+ id 1uL1PX-0002M3-A7; Fri, 30 May 2025 11:12:45 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 228B04481B;
- Fri, 30 May 2025 17:11:49 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D17D044AAC;
+ Fri, 30 May 2025 17:11:48 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,9 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v4 41/48] block: mark bdrv_new() as GRAPH_UNLOCKED
-Date: Fri, 30 May 2025 17:11:18 +0200
-Message-Id: <20250530151125.955508-42-f.ebner@proxmox.com>
+Subject: [PATCH v4 34/48] block: mark bdrv_reopen_queue() and
+ bdrv_reopen_multiple() as GRAPH_UNLOCKED
+Date: Fri, 30 May 2025 17:11:11 +0200
+Message-Id: <20250530151125.955508-35-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530151125.955508-1-f.ebner@proxmox.com>
 References: <20250530151125.955508-1-f.ebner@proxmox.com>
@@ -59,61 +60,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function bdrv_new() calls bdrv_drained_begin(), which must be
-called with the graph unlocked.
+The function bdrv_reopen_queue() can call bdrv_drain_all_begin(),
+which must be called with the graph unlocked.
 
-Marking bdrv_new() as GRAPH_UNLOCKED requires making the locked
-section in bdrv_open_inherit() shorter.
+The function bdrv_reopen_multiple() calls bdrv_reopen_prepare() which
+must be called with the graph unlocked.
+
+To mark bdrv_reopen_queue() as GRAPH_UNLOCKED, it is necessary to make
+the locked section in reopen_backing_file() shorter.
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
+ block/replication.c                | 3 ++-
+ include/block/block-global-state.h | 9 +++++----
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
-I'm not sure if the TODO comment is only intended for the
-lower half of the function, i.e. is moving it like this okay?
-
- block.c                            | 7 ++++---
- include/block/block-global-state.h | 2 +-
- 2 files changed, 5 insertions(+), 4 deletions(-)
-
-diff --git a/block.c b/block.c
-index 6f470aac2f..1b9c99dda9 100644
---- a/block.c
-+++ b/block.c
-@@ -3995,10 +3995,8 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
+diff --git a/block/replication.c b/block/replication.c
+index 83978b61f5..3a431e908c 100644
+--- a/block/replication.c
++++ b/block/replication.c
+@@ -364,14 +364,15 @@ static void reopen_backing_file(BlockDriverState *bs, bool writable,
+     BlockReopenQueue *reopen_queue = NULL;
+ 
      GLOBAL_STATE_CODE();
-     assert(!qemu_in_coroutine());
- 
--    /* TODO We'll eventually have to take a writer lock in this function */
 -    GRAPH_RDLOCK_GUARD_MAINLOOP();
--
-     if (reference) {
-+        GRAPH_RDLOCK_GUARD_MAINLOOP();
-         bool options_non_empty = options ? qdict_size(options) : false;
-         qobject_unref(options);
  
-@@ -4019,6 +4017,9 @@ bdrv_open_inherit(const char *filename, const char *reference, QDict *options,
++    bdrv_graph_rdlock_main_loop();
+     /*
+      * s->hidden_disk and s->secondary_disk may not be set yet, as they will
+      * only be set after the children are writable.
+      */
+     hidden_disk = bs->file->bs->backing;
+     secondary_disk = hidden_disk->bs->backing;
++    bdrv_graph_rdunlock_main_loop();
  
-     bs = bdrv_new();
- 
-+    /* TODO We'll eventually have to take a writer lock in this function */
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-     /* NULL means an empty set of options */
-     if (options == NULL) {
-         options = qdict_new();
+     if (writable) {
+         s->orig_hidden_read_only = bdrv_is_read_only(hidden_disk->bs);
 diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index eec92a98da..b1f826dca6 100644
+index bcbb624a7b..f25c65c1b4 100644
 --- a/include/block/block-global-state.h
 +++ b/include/block/block-global-state.h
-@@ -67,7 +67,7 @@ int co_wrapper bdrv_create(BlockDriver *drv, const char *filename,
- int coroutine_fn GRAPH_UNLOCKED
- bdrv_co_create_file(const char *filename, QemuOpts *opts, Error **errp);
- 
--BlockDriverState *bdrv_new(void);
-+BlockDriverState * GRAPH_UNLOCKED bdrv_new(void);
- int bdrv_append(BlockDriverState *bs_new, BlockDriverState *bs_top,
+@@ -121,11 +121,12 @@ BlockDriverState *bdrv_new_open_driver_opts(BlockDriver *drv,
+                                             Error **errp);
+ BlockDriverState *bdrv_new_open_driver(BlockDriver *drv, const char *node_name,
+                                        int flags, Error **errp);
+-BlockReopenQueue *bdrv_reopen_queue(BlockReopenQueue *bs_queue,
+-                                    BlockDriverState *bs, QDict *options,
+-                                    bool keep_old_opts);
++BlockReopenQueue * GRAPH_UNLOCKED
++bdrv_reopen_queue(BlockReopenQueue *bs_queue, BlockDriverState *bs,
++                  QDict *options, bool keep_old_opts);
+ void bdrv_reopen_queue_free(BlockReopenQueue *bs_queue);
+-int bdrv_reopen_multiple(BlockReopenQueue *bs_queue, Error **errp);
++int GRAPH_UNLOCKED
++bdrv_reopen_multiple(BlockReopenQueue *bs_queue, Error **errp);
+ int bdrv_reopen(BlockDriverState *bs, QDict *opts, bool keep_old_opts,
                  Error **errp);
- 
+ int bdrv_reopen_set_read_only(BlockDriverState *bs, bool read_only,
 -- 
 2.39.5
 
