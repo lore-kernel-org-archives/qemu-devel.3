@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59B9AC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:15:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66FA4C3ABB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:16:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtvr-0000KU-HY; Fri, 30 May 2025 03:13:35 -0400
+	id 1uKty2-0004ZP-E5; Fri, 30 May 2025 03:15:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvm-0008Td-5x
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uKtx8-00033L-2H
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvk-0006pi-01
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:29 -0400
+ id 1uKtx6-00070d-Aq
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589205;
+ s=mimecast20190719; t=1748589291;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=iOdyiM5i52fELrIv/W1T+k3teEGSvJpSoU6puuRxHmI=;
- b=JdkevJCsqr9nKPG+GLq7RVsZ67ge1g9WpzrHybM8Bg3HZD6L+RW0P0K50+WO7bC9wcpA49
- x87kSbykGv9o4bI0PKWcm0c/nwDJhNSob+f59AakHn2fm3/tRjs9SjG+V/Z48G0JVm/mZJ
- m9iPghOTKDhlSz6c6E/G3QHU40TF9WA=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kmrfjHuadJffKlB3WUc28akcDQBFWMBFqmg2KxsvDI8=;
+ b=D3anL0PA7UtQwObpvLG0CS6cybpIEVbeE3Eppz+8qUJNKzkd3uj10kAzJx+PBf2EFOg2HQ
+ 1q0jSO33AtQt89D1/HDQF+As2XPZ/c+nFCJSjj28X5H76aRVI/Y9GqgKcNjYjGAdFv3Xyh
+ mxfpFffuigiS0PymWW6Poisn42t3Luk=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-618-CYwN916-OxmxKZB-SCV8EQ-1; Fri, 30 May 2025 03:13:23 -0400
-X-MC-Unique: CYwN916-OxmxKZB-SCV8EQ-1
-X-Mimecast-MFC-AGG-ID: CYwN916-OxmxKZB-SCV8EQ_1748589202
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-ad89da57be0so148824266b.3
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:22 -0700 (PDT)
+ us-mta-75-HHuqoBL6Mt2Fp7z2qqpjJA-1; Fri, 30 May 2025 03:14:49 -0400
+X-MC-Unique: HHuqoBL6Mt2Fp7z2qqpjJA-1
+X-Mimecast-MFC-AGG-ID: HHuqoBL6Mt2Fp7z2qqpjJA_1748589288
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ad89c32a8a6so161715166b.3
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:14:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589201; x=1749194001;
+ d=1e100.net; s=20230601; t=1748589287; x=1749194087;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iOdyiM5i52fELrIv/W1T+k3teEGSvJpSoU6puuRxHmI=;
- b=Sf4Vnx3jVcvDDV1bVbL2oWreyiUytWcwvk9m/AvlVQ8mwd1mjttpOMafRQT0702D2M
- m5cyotdEW7hY4HfUKMNphEnxbvwak7IRFwO4I/RFlkrDZsWlVEddiz3p6DELzcfNu7+W
- aYpJQr10cTYTeSC2w0YMi6X8zzFEAudfSOPLX3SMoLuZOm8jyu8piIUMUuyzfb2CmQVJ
- y/Gl7vKJfQRGy4JOF+EvsdiAdzMlgAgv2dPz1QikNoB1qUif73H3DS5hM9KwUvUCKUGi
- MJ21Gi3nNNZJbuengniU4IyoX+jbsHfnBO6oMgaPQlow8ROJurOOJMdBrcrB5fqFKt7c
- B+OQ==
-X-Gm-Message-State: AOJu0YwjKbhHb1KOuFgxcg9jlkgoyTiEMb+urETozEkWCPu+6OBuP3/g
- xp3114bfjKNiHEjJ3mMJOWVQDYdPwHla3IAoPmOe8EdSSfAMHvnub+V8d8X1NVUcvPsAg/A/MHS
- 1dEnK5GlV+AVYQG/4bwm15u2ilL2q0QPbNfPgwxcxoesFfWvZ7Nqe6OUBLJ5Mzb9oFt9VncVgYN
- Gpl9Ppew3XdJ70QPWW0lZkYhlO8NKUSz1mbVITvRhw
-X-Gm-Gg: ASbGncsTr+ORpRoPMfF7Dpe+SLAr0Yt1ce6eIewNaEQIOn6oaGCv0nvSgu4RVJgW0hR
- 7mHhOkVsDHWfTxAv5gZuUUH7GKigW5AXPLKTgiOU8fkf/BVc5NHl3gKoZuraLu72nv77ZkbJRZe
- 42W0GwKaTRx69caw0fRIpj98VVVZI/XF11PGDtWSw46r+/Dp0dkADjoUSV24D2LsVOR2wgzskap
- F4LsWW5pqu3MKTHw/7Lmd9Uhlap292vLgv5WHga/1c+iyY38JS281zSSYGdd25OeCZzVIIvDzd2
- PdYdWU4q7aDZlA==
-X-Received: by 2002:a17:907:7249:b0:ad8:9844:1424 with SMTP id
- a640c23a62f3a-adb36c08a69mr92047166b.61.1748589201331; 
- Fri, 30 May 2025 00:13:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrBmd8zLXX0sXa1HD8GXPXreS8gwNSYrx2e9HZU5aJ8m2rf55FXpCmP7Txix4YpOqy+fRiyA==
-X-Received: by 2002:a17:907:7249:b0:ad8:9844:1424 with SMTP id
- a640c23a62f3a-adb36c08a69mr92044866b.61.1748589200838; 
- Fri, 30 May 2025 00:13:20 -0700 (PDT)
+ bh=kmrfjHuadJffKlB3WUc28akcDQBFWMBFqmg2KxsvDI8=;
+ b=qwxG6zMdz1aycSMJRdnxF8MR3Hq2Idv5C/nhAQ32I/QXq+Y+Xiiny11SGMOiWTvqzt
+ a0l6E5vW6aOAMRRjPplM4DxJJJtitt70Uw1krVjj+7usAy6SAmyhvO8NcYpX3Llb29Mz
+ +Xw9Lr9b+h+Sq86Uy0jIOKMuI2Brlz7AsKsaeGPXSYfdcnN5nYcEbFkAuCb9Pq6NMXRp
+ +O//iqLQvIQvADDOkGhpItzw1W8lkvYGZ0+cvHc84Nk/hVgJCFAZjOJy56gHRQ7czhpD
+ cZ3gSSsmbzwzWpEp0Zu1PGWqnWL0PRQGTvOJvwMpaZ3rGd11oRncTZn09X6b0xIqqbfR
+ ISXg==
+X-Gm-Message-State: AOJu0Yy7+Jg4d+yW3XVWPfiPSp6X/1zJA30GSEiDjnRY0Cf0cbNYkBaI
+ 4UppvjWZgo6/BKEiB5CZDlywugtenhquqkH3jvZPJpssVFN0QmCRC1MqnrxswJaYfatZHrcFKsc
+ GJkuG4Op1z71J3cvxfHy5I5FOhPPQJUN9KRu2tOXs5Iq9kzwz41QDkCOLJuHu+5bEL5ITsuk8j5
+ zpfwpZ0GTMFCz45lkzXtf0DyHo2oso0oRvZqPczmw9
+X-Gm-Gg: ASbGnctC2I/V/xBXArGZ49z+kLAc8D/p5iVRTruaDTxJIRbVyUdTqbFk6g7PfOyfDKV
+ mhZr53J0quop9465CnqkCnHQeDZ4TYpaamxkDirw289I3vg+lJeH9Iu1jHgqh9VNvRik/NHvdZI
+ fz0IrnOwHqQJBbT4ry8FEgGQoEabjwkaIounJViJnRDII/gO9c2X27T6baOYxPr3rg8I3ITfB2V
+ PaSBmPrq0Vh+pU7Pa3XTG5ILK84hqflrf1lhZ3bVbwqRgiIFyLjBBawXFEecVHG5eiok7QFNIpT
+ zyEhqsO2u7AR1A==
+X-Received: by 2002:a17:907:7ea4:b0:ad8:9909:20a3 with SMTP id
+ a640c23a62f3a-adb3242f4f0mr201360966b.43.1748589287471; 
+ Fri, 30 May 2025 00:14:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFq+Bn/AxoOTQylFdy5QiEyhYOeSYXC+FgyROa8mwLp7RFDG/d1kLHxEp2gytfxVxmJacp6xQ==
+X-Received: by 2002:a17:907:7ea4:b0:ad8:9909:20a3 with SMTP id
+ a640c23a62f3a-adb3242f4f0mr201359066b.43.1748589287018; 
+ Fri, 30 May 2025 00:14:47 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5d7fec86sm276403866b.7.2025.05.30.00.13.20
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-ada5e2bf045sm277803266b.108.2025.05.30.00.14.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:13:20 -0700 (PDT)
+ Fri, 30 May 2025 00:14:45 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 12/77] target/i386/emulate: more lflags cleanups
-Date: Fri, 30 May 2025 09:11:42 +0200
-Message-ID: <20250530071250.2050910-13-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+	Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 46/77] i386/tdx: Force exposing CPUID 0x1f
+Date: Fri, 30 May 2025 09:12:16 +0200
+Message-ID: <20250530071250.2050910-47-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -108,43 +109,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+
+TDX uses CPUID 0x1f to configure TD guest's CPU topology. So set
+enable_cpuid_0x1f for TDs.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250508150002.689633-35-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/emulate/x86_flags.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ target/i386/kvm/tdx.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/i386/emulate/x86_flags.c b/target/i386/emulate/x86_flags.c
-index 47bc19778c2..cc138c77494 100644
---- a/target/i386/emulate/x86_flags.c
-+++ b/target/i386/emulate/x86_flags.c
-@@ -255,19 +255,19 @@ void lflags_to_rflags(CPUX86State *env)
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 7c5e59c5591..accaefb4011 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -400,7 +400,11 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
  
- void rflags_to_lflags(CPUX86State *env)
+ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
  {
--    target_ulong cf_xor_of;
-+    target_ulong cf_af, cf_xor_of;
- 
-+    /* Leave the low byte zero so that parity is always even...  */
-+    env->cc_dst = !(env->eflags & CC_Z) << 8;
++    X86CPU *x86cpu = X86_CPU(cpu);
 +
-+    /* ... and therefore cc_src always uses opposite polarity.  */
-     env->cc_src = CC_P;
-     env->cc_src ^= env->eflags & (CC_S | CC_P);
- 
-     /* rotate right by one to move CF and AF into the carry-out positions */
--    env->cc_src |= (
--        (env->eflags >> 1) |
--        (env->eflags << (TARGET_LONG_BITS - 1))) & (CC_C | CC_A);
-+    cf_af = env->eflags & (CC_C | CC_A);
-+    env->cc_src |= ((cf_af >> 1) | (cf_af << (TARGET_LONG_BITS - 1)));
- 
--    cf_xor_of = (env->eflags & (CC_C | CC_O)) + (CC_O - CC_C);
-+    cf_xor_of = ((env->eflags & (CC_C | CC_O)) + (CC_O - CC_C)) & CC_O;
-     env->cc_src |= -cf_xor_of & LF_MASK_PO;
--
--    /* Leave the low byte zero so that parity is not affected.  */
--    env->cc_dst = !(env->eflags & CC_Z) << 8;
+     object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
++
++    x86cpu->enable_cpuid_0x1f = true;
  }
+ 
+ static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
 -- 
 2.49.0
 
