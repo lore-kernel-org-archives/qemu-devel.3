@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D53EAC54F30
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:18:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3926FC54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:19:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtvc-0008Gt-06; Fri, 30 May 2025 03:13:20 -0400
+	id 1uKtwR-0001hF-BH; Fri, 30 May 2025 03:14:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvY-0008GM-AJ
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:17 -0400
+ id 1uKtwL-0001Um-Ek
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvW-0006ou-F8
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:15 -0400
+ id 1uKtwI-0006vy-QP
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:14:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589193;
+ s=mimecast20190719; t=1748589241;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=XuGM+7MdwY4mWdwDSJvhZdiW4JgFJnWIC6vsozdV364=;
- b=ZqU4c0swFqon/lic2dGmYptq5XJWwY1DRRe6Dvp85C5yTrZZtfG6WUxO9tojBXNXpafcXX
- U3HSTw3eZqWKmFmYFaZK2nofgoeWOSj35viRsllCFniL+bplsKBs6OtBswn4WasqUDqNbd
- eujBz0HiAmn+GNMSiXjltTbFt/lSKzc=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cdAwUYjVw4TAPIU7bCkk8Gi1InYgbYl2nnPePM6TsQw=;
+ b=DbwlCyLKGoDmcIWd25akHQ5Yo3+d/J4j+LvH5qDQVCQzcmMbun2jRaSOmUesQOZWG9BdjJ
+ Kllth3H3i+uzmXnRCpTNS5Tz3Iw4m1Mof/n8DfqXdv1kGnu8p9RsbJxkheFxV2FNZ/HXCz
+ 8hWIyYDQwRO/k36CMoBTXsWJoEl4x88=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-551-Pz0UYwPXNmK5Fp2TaM22TQ-1; Fri, 30 May 2025 03:13:12 -0400
-X-MC-Unique: Pz0UYwPXNmK5Fp2TaM22TQ-1
-X-Mimecast-MFC-AGG-ID: Pz0UYwPXNmK5Fp2TaM22TQ_1748589191
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-603f71f6432so1477261a12.3
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:12 -0700 (PDT)
+ us-mta-441-vHzDuJIFPn2hvWt8vDPRZQ-1; Fri, 30 May 2025 03:14:00 -0400
+X-MC-Unique: vHzDuJIFPn2hvWt8vDPRZQ-1
+X-Mimecast-MFC-AGG-ID: vHzDuJIFPn2hvWt8vDPRZQ_1748589239
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-601f3f35b88so1668937a12.1
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:14:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589190; x=1749193990;
+ d=1e100.net; s=20230601; t=1748589238; x=1749194038;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=XuGM+7MdwY4mWdwDSJvhZdiW4JgFJnWIC6vsozdV364=;
- b=f9ekO6LHGG5aWfBen97+bMzJP80k5PcnHWKXBl8WJPSTYMBRH97NL7Eaq4OvsndMdU
- p2goBsMPAxQnhlpBnRSi+1fijh1n46UNQim681o5cO9kvxh+/JO6dwYKOcYqKuU55l7D
- YfQ/Uxeofgx5kwAfJ0i5kaL2aqxmb9bo2i+T1B3eiEvgBMBlhFb+lJKH36xQ/y/RGo5C
- D7rFISViMuLL93HFQ13+V7QoHDwkDPXN9xrSnnu+FbtHfCIF069Db8EM/7FZKPfc4gAJ
- vTmTXM2MFtQr0fR/U7TuL/ORnNcXHzpHIDN7MpRv7fnYLhpdbAvPagI76nOZLGu5qoKJ
- wlfQ==
-X-Gm-Message-State: AOJu0Yw+cr4eV4OnltgsxMgCk/GzM9O2YNw5jJ/W//7GgIpQ0bb0xcao
- YcKq5NkOVuIQ4X4BJ9Bf4tP9k5k2SndA+WaBYN4fW86i+N+I3JE4sNMtKLtUNsIW5t6XB7NeqMz
- yovF8r2MDTmL5t5ltp4Tfl5uqh+SiGRSFdFYdTnQq9rb2KHDI2hsPBRIw2rzWCROX1C82dUY8DU
- sGk21Uj8x4JOMlgUaLeSPphjRPi/JSWhFTvM+aHz+B
-X-Gm-Gg: ASbGncvjtgCTgYB6O2fYWLTaFaVFvf3UL+xCR4+YeHEjbxkuK7cz325HdFX9uNeE7Tx
- ss38qqz69GxOAbHnLwpjevJM5JLs3epEwPSXRheDcRQgnfQfh0FwuI7hZz8x50sYVhO+6RdmrtT
- Sc0U0VwkXTVw2M6bjHJx+W0bgiQBQB/EqbzYlV1TsPp143qdEp370q7fhi5wfpxKA8iYMF+x5Ao
- MxXoUi++XlQEPKEZbpmEIGct+U4fXFsW69XpefBPnN8WFfhFLbsxB+BeX9uiYhacHi0xTUhTQzU
- ByIsNiCLgZUsGg==
-X-Received: by 2002:a05:6402:3514:b0:604:5a44:a5c4 with SMTP id
- 4fb4d7f45d1cf-6057c60519bmr1055176a12.16.1748589189868; 
- Fri, 30 May 2025 00:13:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE+oN78ZHS1NBeCBufuPwlffDfjXFfh1/HpuFsGAHJTdUrH+GPfe7Ptsy7/TiPacuVJOR2aIQ==
-X-Received: by 2002:a05:6402:3514:b0:604:5a44:a5c4 with SMTP id
- 4fb4d7f45d1cf-6057c60519bmr1055155a12.16.1748589189372; 
- Fri, 30 May 2025 00:13:09 -0700 (PDT)
+ bh=cdAwUYjVw4TAPIU7bCkk8Gi1InYgbYl2nnPePM6TsQw=;
+ b=uRvdWn1ngk8m0Zg5rFZJ2/2znbuxlUv+wqmcK1yqGmtFTx/vN2M7EkPdShfuRTIExk
+ 5CJgouvalMAQegtNZCDhdUpjVLpEiUFEwoPPMd9NuCz5lco2JABFeLEsSlQRVJRnnNby
+ OAt7E6C5G5bRH2DgdaFsE/XnprxgcrwfpF0DZsYBp8zhRWFvVPAjf85NxTwuG73+ICzF
+ hvebcFUtkM2TMPuTO6f2l3YYvIUDJKLT/DwhpiwQcoUOkkqDfmLmmYwE/Q3sbEpggR+N
+ v7if01Kgu2U9gXtoAmzJz5T+iyPGcI0/5tk+AuCssEH6gyEfl2TK4rXkWtq1oK7EqaTd
+ AVDQ==
+X-Gm-Message-State: AOJu0YzLxcnD1sN2t6uNOWFam60FqWxMpZ6lLWRMZnwCKycXXwgdGC1n
+ 0x1g1i8G68s1VcwccZMX5gnFvyQd48O4msJZRpKYu4sEZKWIws2Zn2nU+PtguuInVUEUQdEclHN
+ JEWKldmYi+wlNfJU/KroUxg4leAWPW4lkxG3O8WHzlpF7kIEhiR97E6qymohyh8Q1K642NpHrqI
+ uSfsRewQ7WtmXqC8vzaihNE3d33G1a0xPc8fxfuWdX
+X-Gm-Gg: ASbGncvmWtAzXzBnEnFqXrQafyit9YqoY+zVN35vO2igowT8NrBisAkvTMW3FQhbiXD
+ a76Rhfklf9Vgjufc9HO3H4jdhb16x5QrWX7THu9K0d1jCF2Ty7rjoqa46MZGG6QTNa/zemw0LO+
+ mV5lFa9hJINtMBSQi+gXkjESbkksPhQ618O4OACFC4Uy1L6hWF0sxusJl/cV0Uo55bV0ck+ojWc
+ M+PE4RXuml9KWq3aXGThmb31SmphK8QcSQMGtX/Y1eFlhHYyx5CG8kcIhiqpYnkpnyif3OZX0qJ
+ TS62RUMUMrDyFg==
+X-Received: by 2002:a05:6402:35ca:b0:602:346b:1509 with SMTP id
+ 4fb4d7f45d1cf-6056db31ec2mr1618750a12.9.1748589238416; 
+ Fri, 30 May 2025 00:13:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGhkNGmXOjlaEBsgqD3BZpmUwXvsUpVpS/g+Yt7VnLi3f992W7QWMtj0FtZVAAhIXfoCvlHQ==
+X-Received: by 2002:a05:6402:35ca:b0:602:346b:1509 with SMTP id
+ 4fb4d7f45d1cf-6056db31ec2mr1618730a12.9.1748589237973; 
+ Fri, 30 May 2025 00:13:57 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60566c31885sm1185639a12.10.2025.05.30.00.13.07
+ 4fb4d7f45d1cf-60566c5c8easm1195334a12.28.2025.05.30.00.13.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:13:07 -0700 (PDT)
+ Fri, 30 May 2025 00:13:56 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 07/77] meson: merge hw_common_arch in target_common_system_arch
-Date: Fri, 30 May 2025 09:11:37 +0200
-Message-ID: <20250530071250.2050910-8-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 27/77] i386/tdx: Implement user specified tsc frequency
+Date: Fri, 30 May 2025 09:11:57 +0200
+Message-ID: <20250530071250.2050910-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
@@ -110,91 +111,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-No need to keep two different libraries, as both are compiled with exact
-same flags. As well, rename target common libraries to common_{arch} and
-system_{arch}, to follow what exists for common and system libraries.
+Reuse "-cpu,tsc-frequency=" to get user wanted tsc frequency and call VM
+scope VM_SET_TSC_KHZ to set the tsc frequency of TD before KVM_TDX_INIT_VM.
 
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250521223414.248276-8-pierrick.bouvier@linaro.org
+Besides, sanity check the tsc frequency to be in the legal range and
+legal granularity (required by TDX module).
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Acked-by: Gerd Hoffmann <kraxel@redhat.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20250508150002.689633-16-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 33 ++++++++++++---------------------
- 1 file changed, 12 insertions(+), 21 deletions(-)
+ target/i386/kvm/kvm.c |  9 +++++++++
+ target/i386/kvm/tdx.c | 25 +++++++++++++++++++++++++
+ 2 files changed, 34 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 1c9f1aa91e7..f614d112192 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4101,7 +4101,6 @@ common_all = static_library('common',
-                             dependencies: common_ss.all_dependencies())
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index e98f1ee26a6..fd1817fc5ea 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -870,6 +870,15 @@ static int kvm_arch_set_tsc_khz(CPUState *cs)
+     int r, cur_freq;
+     bool set_ioctl = false;
  
- # construct common libraries per base architecture
--hw_common_arch_libs = {}
- target_common_arch_libs = {}
- target_common_system_arch_libs = {}
- foreach target_base_arch, config_base_arch : config_base_arch_mak
-@@ -4130,22 +4129,10 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
-   target_c_args = ['-DCPU_DEFS_H']
-   target_system_c_args = target_c_args + ['-DCOMPILING_SYSTEM_VS_USER', '-DCONFIG_SOFTMMU']
- 
--  if target_base_arch in hw_common_arch
--    src = hw_common_arch[target_base_arch]
--    lib = static_library(
--      'hw_' + target_base_arch,
--      build_by_default: false,
--      sources: src.all_sources() + genh,
--      include_directories: inc,
--      c_args: target_system_c_args,
--      dependencies: src.all_dependencies() + common_deps + system_deps)
--    hw_common_arch_libs += {target_base_arch: lib}
--  endif
--
-   if target_base_arch in target_common_arch
-     src = target_common_arch[target_base_arch]
-     lib = static_library(
--      'target_' + target_base_arch,
-+      'common_' + target_base_arch,
-       build_by_default: false,
-       sources: src.all_sources() + genh,
-       include_directories: inc,
-@@ -4155,10 +4142,20 @@ foreach target_base_arch, config_base_arch : config_base_arch_mak
-     target_common_arch_libs += {target_base_arch: lib}
-   endif
- 
-+  # merge hw_common_arch in target_common_system_arch
-+  if target_base_arch in hw_common_arch
-+    hw_src = hw_common_arch[target_base_arch]
-+    if target_base_arch in target_common_system_arch
-+      target_common_system_arch[target_base_arch].add_all(hw_src)
-+    else
-+      target_common_system_arch += {target_base_arch: hw_src}
-+    endif
-+  endif
++    /*
++     * TSC of TD vcpu is immutable, it cannot be set/changed via vcpu scope
++     * VM_SET_TSC_KHZ, but only be initialized via VM scope VM_SET_TSC_KHZ
++     * before ioctl KVM_TDX_INIT_VM in tdx_pre_create_vcpu()
++     */
++    if (is_tdx_vm()) {
++        return 0;
++    }
 +
-   if target_base_arch in target_common_system_arch
-     src = target_common_system_arch[target_base_arch]
-     lib = static_library(
--      'target_system_' + target_base_arch,
-+      'system_' + target_base_arch,
-       build_by_default: false,
-       sources: src.all_sources() + genh,
-       include_directories: inc,
-@@ -4351,12 +4348,6 @@ foreach target : target_dirs
-     objects += libuser.extract_objects(src.sources())
-     arch_deps += src.dependencies()
-   endif
--  if target_type == 'system' and target_base_arch in hw_common_arch_libs
--    src = hw_common_arch[target_base_arch].apply(config_target, strict: false)
--    lib = hw_common_arch_libs[target_base_arch]
--    objects += lib.extract_objects(src.sources())
--    arch_deps += src.dependencies()
--  endif
-   if target_type == 'system' and target_base_arch in target_common_system_arch_libs
-     src = target_common_system_arch[target_base_arch].apply(config_target, strict: false)
-     lib = target_common_system_arch_libs[target_base_arch]
+     if (!env->tsc_khz) {
+         return 0;
+     }
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 58983edd80a..93a16a1aaa8 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -20,6 +20,9 @@
+ #include "kvm_i386.h"
+ #include "tdx.h"
+ 
++#define TDX_MIN_TSC_FREQUENCY_KHZ   (100 * 1000)
++#define TDX_MAX_TSC_FREQUENCY_KHZ   (10 * 1000 * 1000)
++
+ #define TDX_TD_ATTRIBUTES_DEBUG             BIT_ULL(0)
+ #define TDX_TD_ATTRIBUTES_SEPT_VE_DISABLE   BIT_ULL(28)
+ #define TDX_TD_ATTRIBUTES_PKS               BIT_ULL(30)
+@@ -267,6 +270,28 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+         return r;
+     }
+ 
++    if (env->tsc_khz && (env->tsc_khz < TDX_MIN_TSC_FREQUENCY_KHZ ||
++                         env->tsc_khz > TDX_MAX_TSC_FREQUENCY_KHZ)) {
++        error_setg(errp, "Invalid TSC %ld KHz, must specify cpu_frequency "
++                         "between [%d, %d] kHz", env->tsc_khz,
++                         TDX_MIN_TSC_FREQUENCY_KHZ, TDX_MAX_TSC_FREQUENCY_KHZ);
++       return -EINVAL;
++    }
++
++    if (env->tsc_khz % (25 * 1000)) {
++        error_setg(errp, "Invalid TSC %ld KHz, it must be multiple of 25MHz",
++                   env->tsc_khz);
++        return -EINVAL;
++    }
++
++    /* it's safe even env->tsc_khz is 0. KVM uses host's tsc_khz in this case */
++    r = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
++    if (r < 0) {
++        error_setg_errno(errp, -r, "Unable to set TSC frequency to %ld kHz",
++                         env->tsc_khz);
++        return r;
++    }
++
+     if (tdx_guest->mrconfigid) {
+         g_autofree uint8_t *data = qbase64_decode(tdx_guest->mrconfigid,
+                               strlen(tdx_guest->mrconfigid), &data_len, errp);
 -- 
 2.49.0
 
