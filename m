@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06D83C5B549
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 12:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6C78C5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 12:51:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKzBg-00023k-2M; Fri, 30 May 2025 08:50:16 -0400
+	id 1uKzBz-0002EH-He; Fri, 30 May 2025 08:50:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uKzBd-00021x-Dq
- for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:13 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1uKzBw-0002DV-46
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:32 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uKzBb-0001qZ-Cz
- for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:13 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-450cfb79177so9562405e9.0
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 05:50:10 -0700 (PDT)
+ id 1uKzBu-0001ut-4G
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 08:50:31 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ad891bb0957so353909366b.3
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 05:50:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748609409; x=1749214209; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748609427; x=1749214227; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ufSxfyWU+LrfgqrHz6bvb5S7aMECLhYEgaqEeRsPhLc=;
- b=zQk8jDd0b9V7vwfqinG5f/I7QrLESAteT9L4+TQrVc40CtcuxdMVCHIXMjOWwmrC6W
- FhFM3MFWwoMfsNJ8Wdfy90UeRQr9lwTTi54GsH7e0ZdosuhhOx8uWSLKcVjUr6FsBl25
- bxippwTBosU88Wj8NAsme1nI7+/kyJ4a2p5gbBFExViRxdQABowW/gRAmmp7/ry/7RZC
- 5pwigQb+7jFud4KXXQzE6RKjzuAEEGcE5uGSmlf0ya5jDZDsatgCqNABUliHb/JJ61xm
- NW1mJf7a16v0IrL4Aikrx2UmkeHmBE7iQjHHRe0qccGvobp3uOrg4dc/xBfIpgcBRNyi
- UGCw==
+ :reply-to; bh=/lzXjjmX1bay6vF6d/3ie7l2smbDsKYexDQ/VeVxRWo=;
+ b=uhUOMiSm1wuSXWc/Gw0igRoVXpsHISYWxggy9ml3wNyNWinx6vh1s+boVIazE3FvR0
+ cglzdSpLUi4gucJ80UIBxm9RlZTnxjerzStwKSxPOxA1z9Z0mtjMcvMYxtB+wmR7M1nG
+ VGlf62dAh/gbnwL7rn0TxZsIpQM5imd9ZZSIVExT2IwjSZaQzm6usPxGQFNJorxtdZb/
+ TY1Zksiy5UtESerrSaiWyTq8D98eTzJM+BEgeyn8ekgnt8P1zzWbmr9jbfK6jX19jkyr
+ XjcZR7f4pF8KMNT1wMKvWXXpYJ103VTgc7AhSPArjAhoz9QDEsFe8E0BJeWEg31BMVly
+ Wl0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748609409; x=1749214209;
+ d=1e100.net; s=20230601; t=1748609427; x=1749214227;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ufSxfyWU+LrfgqrHz6bvb5S7aMECLhYEgaqEeRsPhLc=;
- b=gSctjHNqUeXPUnGkzH7dQ6ihoYLGceXu28OPd0EurZX5muLNxfmgzEuNovXl5Czt8u
- 4gZB2DIxvfscMk+TwCBZNyjWq4s45cxvyeuq1g9xMi4QCb7WCxACc73k0xrcmMQ4Y8NV
- LI62tRn8tpb6WTBDm50ePRQ+k4v2lcp1PPXrzhq3GKmb4FkbZR+aq8O8wJ/+B3C0Xlus
- M/SaKyVNxc5k3DPpFguKs6/FnlWhuT9yCoonFzitePOlgbGq9B3GedME0OnqpqRulcWq
- DngGF2LrMGQzDMC0819DQ0b3psHectPiJ0oLVSL4I/rkVIseh6LJj2rPgPwzFSzhO84l
- Acrg==
-X-Gm-Message-State: AOJu0YxaDAGwxjZnu/sc97MKoBnoArCxhKj220itxtaO9LcidCqe8Feo
- NwXiKfNoAoAlRra066S2znoZHNABhQUR6mri+LR2jHinhQ8Uzwv9B/qkW4g8ywEW1YNWIvw+2Xz
- fQfJz
-X-Gm-Gg: ASbGnctn+7omUMQEVEU0T5bP6zMPIQEHuaIhUm1eSploAJFwha5uByTmB4lluggD2c9
- r29KoCIrMhX+xBVnwxMJTmCSTZZKDkLX4/ZwRCkxBpEaZSEDM2WToFhWbymhpSPz8BO3EKCBfcN
- DiH0ZlmoyTkC+mDhzFMO0/imTSDjmyQVj4OITzKychfXXlJFjpNIb3Z4pIAlWoLqDsYCYhQtmF4
- B0U4/atNR58QLBDjkQRcegvK0aqw6OmsCGmjWn1pe5p7EqPx93Irsf47o4BQFiUo7ak2aV3+7py
- NuaVrET2iEwyVyq/h3EUkiStC0jk1Hk8ziw2Q8sxYgTGNMUpO+cqRFmmVpQu9GPaB++h
-X-Google-Smtp-Source: AGHT+IFfRr/1fstjQWxQEZ9GNQTX271FYuegLxMDTpqlUm/rdMYYv+h4gRNAWYXUidHzMkuQrIwdnw==
-X-Received: by 2002:a05:600c:6207:b0:445:49e:796b with SMTP id
- 5b1f17b1804b1-450d886f1f3mr21403915e9.17.1748609409411; 
- Fri, 30 May 2025 05:50:09 -0700 (PDT)
+ bh=/lzXjjmX1bay6vF6d/3ie7l2smbDsKYexDQ/VeVxRWo=;
+ b=RUZsZ5CjgAkTyw2K0HYK0xKcBYW831ViFrGya5ug3CEXnyyW9FzXvV2UdIhUcFldsO
+ 2qDLC97mgbeQ+ULIuNNn43bxd9XrMBWuaHhY93WIWeSOYnvKFsA5tZg/QhsAb5HPhQx2
+ 1wg89WudMB8wMa8jA9TJHIS5c/eevsUvoht3DRutczi+5nzGx0EMs8OttfiDHHLgsxM7
+ 7vDHjB5f+GuT6ZuYoxLooHqbM1qJMb4B+fcYDm209HYofgLq2mXXt8qYh1+bG3h3uUhl
+ +LB3zhXwsfODCjOICnJLQhUM47TfMFan3nfmR6PNis3eE8b5zmve3diKc98y4AN9Jl4Z
+ LU9A==
+X-Gm-Message-State: AOJu0Yyj/zJxnxWTOj+cagdvM/8LUQwtoph6hzyzaIIAfEHfSOrT3eWi
+ ioJay2JgIuU1E6+BR/s7FBY+nouLgpYBCVAFyDMhjJ6jX0GsRO16u7Why8lBSiSbmw9jHT/suNL
+ 7Jexk
+X-Gm-Gg: ASbGncuYWfMptDbfVUZ8cnyrP4NwBuZe2zgES1A72lKqF7jJNRqCy5eQaoK8pRiaq3r
+ 4N1hfaZOkKn+6R6o6KI30fgAIyPO7GTttlos+V0XMQDlwUItVmEL1ez08YvkSvuSc9Hlk3IA13t
+ 23GncZ0IAsckuhNxVoXoN3lKtPZmb+UVumwCPs2xkGBIkpkhSAq1ToZKq6clfSA4Sj7Zn0T9Xru
+ RQbTvNqdm+mMqj2xo0sY2uUf5oz5lee6VeOTJI9WG9/F5nlJaeg76QLqiqfyetHx4tbBeu4Rr0/
+ LbPLaOg0q6w8J07NUfgHcJqXfm/+ylW4jotD2pvEmOn1ZUsdSjzT+a9HVjOJRRCDxZSk
+X-Google-Smtp-Source: AGHT+IEKuOV3bfR2KD7pgeElSuGGm3K/XaDYVK23kxxbTYVvARiv/puTfqcxjYfF5GJyLTe2VEA8Cg==
+X-Received: by 2002:a05:600c:3b8e:b0:439:9b2a:1b2f with SMTP id
+ 5b1f17b1804b1-450d64e2a97mr36477625e9.3.1748609416736; 
+ Fri, 30 May 2025 05:50:16 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb7dafsm17235195e9.25.2025.05.30.05.50.08
+ 5b1f17b1804b1-450d7fb7dafsm17235195e9.25.2025.05.30.05.50.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 05:50:08 -0700 (PDT)
+ Fri, 30 May 2025 05:50:15 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/15] hw/arm/boot: Include missing 'system/memory.h' header
-Date: Fri, 30 May 2025 13:49:46 +0100
-Message-ID: <20250530124953.383687-10-peter.maydell@linaro.org>
+Subject: [PULL 14/15] tests/functional: Add a test for the Stellaris arm
+ machines
+Date: Fri, 30 May 2025 13:49:51 +0100
+Message-ID: <20250530124953.383687-15-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250530124953.383687-1-peter.maydell@linaro.org>
 References: <20250530124953.383687-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,36 +99,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
 
-default_reset_secondary() uses address_space_stl_notdirty(),
-itself declared in "system/memory.h". Include this header in
-order to avoid when refactoring headers:
+The 2023 edition of the QEMU advent calendar featured an image
+that we can use to test whether the lm3s6965evb machine is basically
+still working.
 
-  ../hw/arm/boot.c:281:5: error: implicit declaration of function 'address_space_stl_notdirty' is invalid in C99 [-Werror,-Wimplicit-function-declaration]
-    address_space_stl_notdirty(as, info->smp_bootreg_addr,
-    ^
+And for the lm3s811evb there is a small test kernel on github
+which can be used to check its UART.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20250513173928.77376-6-philmd@linaro.org
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+Message-id: 20250519170242.520805-1-thuth@redhat.com
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/arm/boot.c | 1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS                            |  1 +
+ tests/functional/meson.build           |  1 +
+ tests/functional/test_arm_stellaris.py | 48 ++++++++++++++++++++++++++
+ 3 files changed, 50 insertions(+)
+ create mode 100755 tests/functional/test_arm_stellaris.py
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index f94b940bc31..79afb51b8a5 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -19,6 +19,7 @@
- #include "system/kvm.h"
- #include "system/tcg.h"
- #include "system/system.h"
-+#include "system/memory.h"
- #include "system/numa.h"
- #include "hw/boards.h"
- #include "system/reset.h"
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 973254fae79..16af37986a4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1004,6 +1004,7 @@ F: hw/display/ssd03*
+ F: include/hw/input/gamepad.h
+ F: include/hw/timer/stellaris-gptm.h
+ F: docs/system/arm/stellaris.rst
++F: tests/functional/test_arm_stellaris.py
+ 
+ STM32L4x5 SoC Family
+ M: Samuel Tardieu <sam@rfc1149.net>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 52b4706cfe8..557d59ddf4d 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -137,6 +137,7 @@ tests_arm_system_thorough = [
+   'arm_raspi2',
+   'arm_replay',
+   'arm_smdkc210',
++  'arm_stellaris',
+   'arm_sx1',
+   'arm_vexpress',
+   'arm_virt',
+diff --git a/tests/functional/test_arm_stellaris.py b/tests/functional/test_arm_stellaris.py
+new file mode 100755
+index 00000000000..cbd21cb1a0b
+--- /dev/null
++++ b/tests/functional/test_arm_stellaris.py
+@@ -0,0 +1,48 @@
++#!/usr/bin/env python3
++#
++# Functional test that checks the serial console of the stellaris machines
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import QemuSystemTest, Asset, exec_command_and_wait_for_pattern
++from qemu_test import wait_for_console_pattern
++
++
++class StellarisMachine(QemuSystemTest):
++
++    ASSET_DAY22 = Asset(
++        'https://www.qemu-advent-calendar.org/2023/download/day22.tar.gz',
++        'ae3a63ef4b7a22c21bfc7fc0d85e402fe95e223308ed23ac854405016431ff51')
++
++    def test_lm3s6965evb(self):
++        self.set_machine('lm3s6965evb')
++        kernel_path = self.archive_extract(self.ASSET_DAY22,
++                                           member='day22/day22.bin')
++        self.vm.set_console()
++        self.vm.add_args('-kernel', kernel_path)
++        self.vm.launch()
++
++        wait_for_console_pattern(self, 'In a one horse open')
++
++    ASSET_NOTMAIN = Asset(
++        'https://github.com/Ahelion/QemuArmM4FDemoSw/raw/master/build/notmain.bin',
++        '6ceda031aa081a420fca2fca9e137fa681d6e3820d820ad1917736cb265e611a')
++
++    def test_lm3s811evb(self):
++        self.set_machine('lm3s811evb')
++        kernel_path = self.ASSET_NOTMAIN.fetch()
++
++        self.vm.set_console()
++        self.vm.add_args('-cpu', 'cortex-m4')
++        self.vm.add_args('-kernel', kernel_path)
++        self.vm.launch()
++
++        # The test kernel emits an initial '!' and then waits for input.
++        # For each character that we send it responds with a certain
++        # other ASCII character.
++        wait_for_console_pattern(self, '!')
++        exec_command_and_wait_for_pattern(self, '789', 'cdf')
++
++
++if __name__ == '__main__':
++    QemuSystemTest.main()
 -- 
 2.43.0
 
