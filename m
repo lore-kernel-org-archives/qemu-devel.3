@@ -4,98 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C4EC5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AA61C5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 11:55:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKyGY-0001Ld-Of; Fri, 30 May 2025 07:51:14 -0400
+	id 1uKyKJ-0002Ga-FD; Fri, 30 May 2025 07:55:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uKyGW-0001LM-SZ
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:51:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKyKG-0002Fh-6X
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:55:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uKyGU-00036D-Hw
- for qemu-devel@nongnu.org; Fri, 30 May 2025 07:51:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKyKE-0003OV-C8
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 07:55:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748605869;
+ s=mimecast20190719; t=1748606100;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=iKx9OfLEwrhrxYqaPx+nIo9gZomyutfo8mU8vnyRzRs=;
- b=FIQvoYkAT0E0kfYs+PnIhKhhJW67LWPOAi0ZumAVoNsOHD7W9EO0UHVago+HNNMvIBFBe+
- OFfstBArdtl9eWpNmOFi13i9OoaImjojfsaRs0/vxuCmNxYpifsZxCQp2E8cwyZRmb88h4
- KU8mK8729TXUSScqVOA/oeE+00AQqSw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-279-7jlDbxOVPhOBIoVFxNGTnA-1; Fri, 30 May 2025 07:51:07 -0400
-X-MC-Unique: 7jlDbxOVPhOBIoVFxNGTnA-1
-X-Mimecast-MFC-AGG-ID: 7jlDbxOVPhOBIoVFxNGTnA_1748605866
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f858bc5eso406821f8f.0
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 04:51:07 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748605866; x=1749210666;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=iKx9OfLEwrhrxYqaPx+nIo9gZomyutfo8mU8vnyRzRs=;
- b=ET8veFtpvYb8PxlUHdZ4xHw7inkZWhPFlV2CFHaQHk4FJN7e4tYgacIYI7zZwkXhOS
- 2vptFsAZvx/+WCGngqipMQdh37EmnMVfywhPTZxJ9axKwUHS796x5zwNvGwr6l9IfwJg
- lRT5PoGeNf6yUXLIMX6O0ZBg5sr2VnN1WWXBacPPH/BLsuzz95fIil2xqgGrcjAQBoLG
- 9BllsYF5wUkxvdbH4Gea/pkkcDS0LdZg78kQWD0LTZQi+Ph7lyOi470OnF2XtT35PXpF
- j/CSH9vjW9Nvs6kgLOULmg6MW6mJdLX0FMPw7Nu1PwTRvD7XDnZT7w/TZVkN+yAldheG
- xE7A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDTPBgVCxARE5cv4S7nOgTC2hmiSX7RUmrsbxvg/WgVm+NvWWuEFDuEnhrn1yUjxF1tl3g3xUHXWLT@nongnu.org
-X-Gm-Message-State: AOJu0YxARcHBA9bR5YBqYinQOZAot3vo8hZj5tmehM1styMUJ1URZjiW
- F2OSkS1azeNt/DAEn8HsPw2as2a7zcR7+cay2fkZlQSY3DaunEdk/qiH5kQZQ3bBDCP+eB6tlc/
- QhPa22UdxyapL/GUUkE7ZZVZ/YMRW19HNJ8B92dFoaVttC9P9JLV1RlUmDnZN3H4PxLo=
-X-Gm-Gg: ASbGnctE2lOt+Sapk4Vk8HdVSSP9MFu8Vsg1yd+F9jv6YwDCtnyLUbieESiGJH8HPRi
- tq2cUsZJYjhuCQ0jPM1TfMd0UCkf4iaCwtL+gIeuAqkwY+tTCvtjLJHyti2EH+kZRb6YyBFW3lo
- UR2KvpMXlxl/3A0Wxym/xKuU53lR21+mJheuWoKXHRYGyqMh+NTjZBWZDh4XT00E3+uFvva+eGO
- nUHvwYvWvPvyk20lxrieewUM6MuGL7wVCudUnj2etdnxDLheqRiPt2yhcnWWq1zuhZ0WK+DRv1x
- CBV18Ye0aYE1ukRRYk5Xo+pOhrvaoVMx
-X-Received: by 2002:a05:6000:2505:b0:3a3:7749:9783 with SMTP id
- ffacd0b85a97d-3a4f7ab14d0mr2429065f8f.51.1748605866124; 
- Fri, 30 May 2025 04:51:06 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8Sm9xv3UE7hXSz8rBIfIFy5so480NXTvpFi2tuDgqHgoGtffue90eNMOcTWeE8xcvgNPSuQ==
-X-Received: by 2002:a05:6000:2505:b0:3a3:7749:9783 with SMTP id
- ffacd0b85a97d-3a4f7ab14d0mr2429041f8f.51.1748605865644; 
- Fri, 30 May 2025 04:51:05 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f009752esm4618481f8f.74.2025.05.30.04.51.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 04:51:05 -0700 (PDT)
-Date: Fri, 30 May 2025 13:51:03 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Gustavo Romero <gustavo.romero@linaro.org>
-Cc: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
- qemu-devel@nongnu.org, qemu-arm@nongnu.org, peter.maydell@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
- pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
- alex.bennee@linaro.org
-Subject: Re: [PATCH v2 24/25] tests/qtest/bios-tables-test: Keep ACPI PCI
- hotplug off
-Message-ID: <20250530135103.09030cf0@imammedo.users.ipa.redhat.com>
-In-Reply-To: <6a5776b4-73ef-427b-b4e4-b25031b0ce53@linaro.org>
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-25-eric.auger@redhat.com>
- <20250528113813.47086516@imammedo.users.ipa.redhat.com>
- <375cfbd6-e585-4b6d-bf10-6571aa40370e@linaro.org>
- <20250528150239.5f6b63d0@imammedo.users.ipa.redhat.com>
- <6a5776b4-73ef-427b-b4e4-b25031b0ce53@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=YkgPw4gQVv80SoUxsMl5Le1ZeLzPdaR0AmKpa8/A5Ak=;
+ b=IM1IZsIuWM0mMNnY8aQO5MqniXq2EJXnQT6+tzTqkEK/lqi6PDTrOWvRN/7UUqWVBQx20n
+ rUdlPpxc9w+dxP21DEEwGmr6WsQszRnetyJ00/KDHyrhW3PxO3gg3eVgqlj6GFazgMtFVg
+ a9NG4Vk44z69pgWZnWLjuAFTytDXk8I=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-P3pKU1PCMdCUHuVhstfWDA-1; Fri,
+ 30 May 2025 07:54:59 -0400
+X-MC-Unique: P3pKU1PCMdCUHuVhstfWDA-1
+X-Mimecast-MFC-AGG-ID: P3pKU1PCMdCUHuVhstfWDA_1748606098
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 734991956080; Fri, 30 May 2025 11:54:58 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.76])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A91831955D82; Fri, 30 May 2025 11:54:56 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] travis.yml: Remove the aarch64 job
+Date: Fri, 30 May 2025 13:54:54 +0200
+Message-ID: <20250530115454.187727-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -120,233 +79,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 May 2025 12:04:26 -0300
-Gustavo Romero <gustavo.romero@linaro.org> wrote:
+From: Thomas Huth <thuth@redhat.com>
 
-> Hi Igor,
->=20
-> On 5/28/25 10:02, Igor Mammedov wrote:
-> > On Wed, 28 May 2025 09:41:15 -0300
-> > Gustavo Romero <gustavo.romero@linaro.org> wrote:
-> >  =20
-> >> Hi Igor,
-> >>
-> >> On 5/28/25 06:38, Igor Mammedov wrote: =20
-> >>> On Tue, 27 May 2025 09:40:26 +0200
-> >>> Eric Auger <eric.auger@redhat.com> wrote:
-> >>>     =20
-> >>>> From: Gustavo Romero <gustavo.romero@linaro.org>
-> >>>>
-> >>>> ACPI PCI hotplug is now turned on by default so we need to change the
-> >>>> existing tests to keep it off. However, even setting the ACPI PCI
-> >>>> hotplug off in the existing tests, there will be changes in the ACPI
-> >>>> tables because the _OSC method was modified, hence in the next patch=
- of
-> >>>> this series the blobs are updated accordingly.
-> >>>>
-> >>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> >>>> Signed-off-by: Eric Auger <eric.auger@redhat.com> =20
-> >>>
-> >>> it would be better to test whatever default we end up with.
-> >>> (like x86) =20
-> >>
-> >> hmm maybe there is a confusion here, Igor. We are actually planning wh=
-at you =20
-> >=20
-> > perhaps, see my reply to Eric about my expectations wrt tests. =20
->=20
-> Yip, I read it before my reply here.
->=20
->=20
-> > (i.e. default tests shouldn't have any explicit CLI options,
-> > instead it should follow whitelist blobs/set new default patch/update b=
-lobs pattern) =20
->=20
-> I see. I agree with that. But this patch is not about the new test. The n=
-ew test is
-> _not_ in this series. Patches 8/25, 10/25, and 24/25 are _not_ about the =
-new test but
-> about adapting the _legacy tests_ (native acpi) to the situation when ACP=
-I HP becomes
-> the default, because this series makes acpi-pcihp=3Don the default, hence=
- the CLI option
-> "acpi-pcihp=3Doff" added to them. An update to the blobs are also necessa=
-ry because of the
-> change in _OSC method, even when acpi-pcihp=3Doff.
->=20
->=20
-> >> said. This patch and the other two in this series related to the bios-=
-tables-test
-> >> (i.e., patches 8/25 and 10/25) are for actually making the current (le=
-gacy) test pass,
-> >> since the new default as per this series will be acpi-pcihp=3Don. That=
-'s why here we're
-> >> adapting the current test here to have acpi-pcihp=3Doff.
-> >>
-> >> The new test that will test for acpi-pcihp=3Don (the new default) is n=
-ot in this series
-> >> and we decided to merge it separate. It's in the patch 4/5 and 5/5 of =
-the follow series: =20
->=20
-> We're doing the "blobs/set new default patch/update blobs pattern" in the=
- new test, which
-> we can merge later, once this series is merged, no? The step "set new def=
-ault" then will
-> not be necessary because the new test will be merged separate, after this=
- series, so when
-> acpi-pcihp=3Don is already the default.
->=20
-> Please note that although we're using acpi-pcihp=3Don in the new test, it=
-'s not necessary,
-> we can dropped this option, making it implicit as you say, and it will wo=
-rk. This is the
-> new test:
->=20
-> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05828.html 4/5
-> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05827.html 5/5=
- =20
->=20
->=20
-> Thus, there are to "acts" of modifying the bios-tables-test:
->=20
-> 1) Adapt the current tests to when acpi-pcihp=3Don becomes the default (h=
-ence the addition
->     to them of "acpi-pcihp=3Doff".
+According to:
 
+ https://docs.travis-ci.com/user/billing-overview/#partner-queue-solution
 
-that's what I disagree with.
+only s390x and ppc64le are still part of the free OSS tier in Travis.
+aarch64 has been removed sometime during the last year. Thus remove
+the aarch64 job from our .travis.yml file now to avoid that someone
+burns non-OSS CI credits with this job by accident now.
 
-1) Instead adapting majority of tests to legacy before switching defaults,
-just do whitelist/modify default/update so all of tests run with new defaul=
-t.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ .travis.yml | 35 -----------------------------------
+ 1 file changed, 35 deletions(-)
 
-and then
-
-> There is also the need to update the blobs, but it's because
->     of the _OSC method change in DSDT table, which will change anyways, e=
-ven with "acpi-pcihp=3Doff=C2=A8,
->     hence the need for patch 10/25 in this series. This is _done is this =
-series_.
-
-
-=20
-> 2) Add a new test for testing the default (i.e. acpi-pcihp-on). It follow=
-s what you're
->     saying above: "follow whitelist blobs/set new default patch/update bl=
-obs pattern",
->     because we can drop the acpi-pcihp-on option from the CLI in this tes=
-t without any
->     prejudice to test. While the step "set new default patch" was actuall=
-y done in 1).
-
-2) add a separate test case for native pcie hoplug (preferably within this =
-series)
-
-3) even better would be to add #2 before #1 (right after 10/25),
-this way will guarantee that old native hotplug tables stay
-the same regardless of followup patches that add ACPI pcihp aml.
-
-
-> Cheers,
-> Gustavo
->=20
-> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05828.html 4/5
-> >> https://mail.gnu.org/archive/html/qemu-devel/2025-05/msg05827.html 5/5
-> >>
-> >>
-> >> Cheers,
-> >> Gustavo
-> >> =20
-> >>>>
-> >>>> ---
-> >>>>
-> >>>> [Eric] also added acpi-pcihp=3Doff to test_acpi_aarch64_virt_tcg_num=
-amem
-> >>>> ---
-> >>>>    tests/qtest/bios-tables-test.c | 13 +++++++++----
-> >>>>    1 file changed, 9 insertions(+), 4 deletions(-)
-> >>>>
-> >>>> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-table=
-s-test.c
-> >>>> index 0a333ec435..6379dba714 100644
-> >>>> --- a/tests/qtest/bios-tables-test.c
-> >>>> +++ b/tests/qtest/bios-tables-test.c
-> >>>> @@ -1626,7 +1626,7 @@ static void test_acpi_aarch64_virt_tcg_memhp(v=
-oid)
-> >>>>        };
-> >>>>   =20
-> >>>>        data.variant =3D ".memhp";
-> >>>> -    test_acpi_one(" -machine nvdimm=3Don"
-> >>>> +    test_acpi_one(" -machine nvdimm=3Don,acpi-pcihp=3Doff"
-> >>>>                      " -cpu cortex-a57"
-> >>>>                      " -m 256M,slots=3D3,maxmem=3D1G"
-> >>>>                      " -object memory-backend-ram,id=3Dram0,size=3D1=
-28M"
-> >>>> @@ -1747,7 +1747,8 @@ static void test_acpi_aarch64_virt_tcg_numamem=
-(void)
-> >>>>        };
-> >>>>   =20
-> >>>>        data.variant =3D ".numamem";
-> >>>> -    test_acpi_one(" -cpu cortex-a57"
-> >>>> +    test_acpi_one(" -machine acpi-pcihp=3Doff"
-> >>>> +                  " -cpu cortex-a57"
-> >>>>                      " -object memory-backend-ram,id=3Dram0,size=3D1=
-28M"
-> >>>>                      " -numa node,memdev=3Dram0",
-> >>>>                      &data);
-> >>>> @@ -1775,7 +1776,8 @@ static void test_acpi_aarch64_virt_tcg_pxb(voi=
-d)
-> >>>>         * to solve the conflicts.
-> >>>>         */
-> >>>>        data.variant =3D ".pxb";
-> >>>> -    test_acpi_one(" -device pcie-root-port,chassis=3D1,id=3Dpci.1"
-> >>>> +    test_acpi_one(" -machine acpi-pcihp=3Doff"
-> >>>> +                  " -device pcie-root-port,chassis=3D1,id=3Dpci.1"
-> >>>>                      " -device virtio-scsi-pci,id=3Dscsi0,bus=3Dpci.=
-1"
-> >>>>                      " -drive file=3D"
-> >>>>                      "tests/data/uefi-boot-images/bios-tables-test.a=
-arch64.iso.qcow2,"
-> >>>> @@ -1846,7 +1848,7 @@ static void test_acpi_aarch64_virt_tcg_acpi_hm=
-at(void)
-> >>>>   =20
-> >>>>        data.variant =3D ".acpihmatvirt";
-> >>>>   =20
-> >>>> -    test_acpi_one(" -machine hmat=3Don"
-> >>>> +    test_acpi_one(" -machine hmat=3Don,acpi-pcihp=3Doff"
-> >>>>                      " -cpu cortex-a57"
-> >>>>                      " -smp 4,sockets=3D2"
-> >>>>                      " -m 384M"
-> >>>> @@ -2123,6 +2125,7 @@ static void test_acpi_aarch64_virt_tcg(void)
-> >>>>        data.smbios_cpu_max_speed =3D 2900;
-> >>>>        data.smbios_cpu_curr_speed =3D 2700;
-> >>>>        test_acpi_one("-cpu cortex-a57 "
-> >>>> +                  "-machine acpi-pcihp=3Doff "
-> >>>>                      "-smbios type=3D4,max-speed=3D2900,current-spee=
-d=3D2700", &data);
-> >>>>        free_test_data(&data);
-> >>>>    }
-> >>>> @@ -2142,6 +2145,7 @@ static void test_acpi_aarch64_virt_tcg_topolog=
-y(void)
-> >>>>        };
-> >>>>   =20
-> >>>>        test_acpi_one("-cpu cortex-a57 "
-> >>>> +                  "-machine acpi-pcihp=3Doff "
-> >>>>                      "-smp sockets=3D1,clusters=3D2,cores=3D2,thread=
-s=3D2", &data);
-> >>>>        free_test_data(&data);
-> >>>>    }
-> >>>> @@ -2227,6 +2231,7 @@ static void test_acpi_aarch64_virt_viot(void)
-> >>>>        };
-> >>>>   =20
-> >>>>        test_acpi_one("-cpu cortex-a57 "
-> >>>> +                  "-machine acpi-pcihp=3Doff "
-> >>>>                      "-device virtio-iommu-pci", &data);
-> >>>>        free_test_data(&data);
-> >>>>    } =20
-> >>>     =20
-> >> =20
-> >  =20
->=20
+diff --git a/.travis.yml b/.travis.yml
+index 8fc1ae0cf22..0a634d7b4a0 100644
+--- a/.travis.yml
++++ b/.travis.yml
+@@ -79,41 +79,6 @@ after_script:
+ jobs:
+   include:
+ 
+-    - name: "[aarch64] GCC check-tcg"
+-      arch: arm64
+-      addons:
+-        apt_packages:
+-          - libaio-dev
+-          - libattr1-dev
+-          - libbrlapi-dev
+-          - libcacard-dev
+-          - libcap-ng-dev
+-          - libfdt-dev
+-          - libgcrypt20-dev
+-          - libgnutls28-dev
+-          - libgtk-3-dev
+-          - libiscsi-dev
+-          - liblttng-ust-dev
+-          - libncurses5-dev
+-          - libnfs-dev
+-          - libpixman-1-dev
+-          - libpng-dev
+-          - librados-dev
+-          - libsdl2-dev
+-          - libseccomp-dev
+-          - liburcu-dev
+-          - libusb-1.0-0-dev
+-          - libvdeplug-dev
+-          - libvte-2.91-dev
+-          - ninja-build
+-          - python3-tomli
+-          # Tests dependencies
+-          - genisoimage
+-      env:
+-        - TEST_CMD="make check check-tcg V=1"
+-        - CONFIG="--disable-containers --enable-fdt=system
+-                  --target-list=${MAIN_SYSTEM_TARGETS} --cxx=/bin/false"
+-
+     - name: "[ppc64] Clang check-tcg"
+       arch: ppc64le
+       compiler: clang
+-- 
+2.49.0
 
 
