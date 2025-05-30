@@ -4,86 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA1CC3ABB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98BD7C5B552
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:14:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtvj-0008Oo-FX; Fri, 30 May 2025 03:13:27 -0400
+	id 1uKtvR-0008FF-OY; Fri, 30 May 2025 03:13:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvi-0008Ld-CL
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uKtvP-0008Ea-Dc
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtve-0006pU-Lo
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:25 -0400
+ id 1uKtvN-0006o1-Ng
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589202;
+ s=mimecast20190719; t=1748589183;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tIm4zByOF5S6L9LJ/pZcViAbpqMTge38cNVlo2XDp78=;
- b=Cz8BJRVon6I5Bbdgm4lZF/UFeClAT4tMnrQJhU8qH4bRYYmAAw8ZFQPXBQLU2c14wa4jnu
- 5oWvkyzkgOBni1Qzpar8Wf/YBWwdEs+ten62Tyk5by+wngWEcf2j/kNKGvptQjYviLwH3S
- 9TESfArxzHwzd5ZTUGuBmGtAhqLswUI=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8iytk596qFvoq4XGuuczZdwRmvPFNDnfKNqPGLwBtZI=;
+ b=Wwhmhjmiwpaq4U9AQmp7J8n3kA3qc9RO3KnMtoIhp3yKZYvUhuwmRzq7hczVlwwUykdrlm
+ 6mcIDeImDqcPj3Rr/8hZ/l0wt6ADWf/0hiczlqbLKoVLJt/j8XtWMGTsSPkYoobCc5Tpo6
+ v8+KXu6FUdE0gWLxCbj0st3J47q1NJI=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-610-i-Se55d5MRez3UjE0Lrs-Q-1; Fri, 30 May 2025 03:13:19 -0400
-X-MC-Unique: i-Se55d5MRez3UjE0Lrs-Q-1
-X-Mimecast-MFC-AGG-ID: i-Se55d5MRez3UjE0Lrs-Q_1748589198
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-acb61452b27so134522366b.2
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:19 -0700 (PDT)
+ us-mta-615-zy5x7KYzM9i-iKb5t8xO_g-1; Fri, 30 May 2025 03:13:01 -0400
+X-MC-Unique: zy5x7KYzM9i-iKb5t8xO_g-1
+X-Mimecast-MFC-AGG-ID: zy5x7KYzM9i-iKb5t8xO_g_1748589181
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ab68fbe53a4so87509266b.2
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589198; x=1749193998;
+ d=1e100.net; s=20230601; t=1748589180; x=1749193980;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tIm4zByOF5S6L9LJ/pZcViAbpqMTge38cNVlo2XDp78=;
- b=G6VXBwrAxAm4xFk6oA7s7Cc5AaNqNq2DEoSp60DjzoorJ1WW2l5HlZTDAO8YBf1D6z
- DmY0gJ5pqVWBaWn3iGT4VsCfxWsVQPTzre+iKE6I8CT1/wTEfDWguUj2sodHXy1whg0t
- Ai2he0fEWKye2tlbDEQQH7BF8z8KJs3C5sYg8IyseMECUM4zv/yVXg8dScpb+tEwS5EY
- Eut0/wmghzIREqSvva33kjuA3QCmLCqbE9/+uHn2/YRtxcoGfgL/R9+MAcTV6vyQVf2I
- OIsXEMKSMlTM11E7QIsyl6SIV5wo2t8ecS2ca1cYb8u0Gu/n1ZNM6Bm99dtcwmZArxdA
- 4dxA==
-X-Gm-Message-State: AOJu0YznBPrSQXI1mo9Fbqzb/M2/EdBex1tfAJY2Kk1WfTEiByS1RbM9
- 44CLzGT3q5KNVcaWv4uSTq7egeqAuK1APlOqvll2dSGf/ms3fuffS5PqHyAyYpCrozjjhW5X7Lg
- eMYeGF7WSSP1jugmZ0FwYlhOWjowLZxGg16L02vfuxgUrzgQT+KD2wA66WPJ+GDDo6K3w6kjU4Z
- OKK9iR/TqgDpSQ1EMGFO2nPqdJYqxOUXnGe3CtXOiF
-X-Gm-Gg: ASbGnct7dTh4Kez6otjVr37zG2rkvnaC4jXyA8BMrgm+fp7uIgtSjFsIdRKCKUc0ZCD
- lJl2qjv9m0SxgYscdBE1EzgHr2Teqm/d5TQmysYMAfB64nV/WkPOjcVZ63pHghIjJHFqpxwLSYk
- WFj2CMZ0sk5nUiI8yYwy5JOph8iJPiY/DUtQHStZCLvjvBCwlH+nbGtxaVjp++Ow2oUO1NERnj7
- 6u2icceboefDA/K1RnEZ0QGeMhcxIiQZuTjnqEsEr8e2tacJCWYVrjuAF5igsXuPGZ49XcwLkhU
- qOvl35bjrRlhdg==
-X-Received: by 2002:a17:907:9282:b0:aca:d4f6:440d with SMTP id
- a640c23a62f3a-adb322860ecmr213004766b.17.1748589197643; 
- Fri, 30 May 2025 00:13:17 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFz64ITCYW6TVW9zQt46ZW48RZFPXh9v8mY7nH6dWfwITUYYvcmyHIxZc4HHEMgUgii7cRuaw==
-X-Received: by 2002:a17:907:9282:b0:aca:d4f6:440d with SMTP id
- a640c23a62f3a-adb322860ecmr213002366b.17.1748589197052; 
- Fri, 30 May 2025 00:13:17 -0700 (PDT)
+ bh=8iytk596qFvoq4XGuuczZdwRmvPFNDnfKNqPGLwBtZI=;
+ b=S2WEwWoyWy6mk7ZYITEkKKy390o78OIOwla/6AcWxnMZxDPE4MwJgsEkpHQJUGRhsO
+ XJJYfZ0mJVkNTV85erppNjC2uUQJ2J3v6IBt13S3bOwqpOk9R7SR3ZqZvFOL2XeVIU67
+ ZBMBqbfQBuyYjzEx+Rarv5RALeWIkO3FbQ6OTy+gj8hlYMEqJwVqIkuwlvCiqkMRQ+H2
+ lzvIAD1Idz6eDq7MXDhnSOaxAUL2nOuPNBGdOcQeC9c+lUF9RqwG8QnZjQhlQ4ITdF20
+ wEan/pLBQBETOvpbn9C3QsNjqP9mtYvQ3MBThJ6bCbURV9k8Z8mcBmPGfOb9xSPnsymo
+ uj3Q==
+X-Gm-Message-State: AOJu0Yyhybd/DUbb5xA2FdT3rYxcBN9REvfTaA+QMXNF2Zc5D44IXTLx
+ pjwXoGXArKj1l0sCisYJGwMmSryDZZU4WSQBu61owRNBfTMXrzJo6LMew1UqCuZVf7wQ3r0BJ1i
+ ACNUpnX0xlYiR+ZrkxWyWBLmAoQOHazJiMrjCFtoSeK3BF39WQ3VB4nPFofAZ/+u706RTwacpAP
+ B/4LMf3KZjkw5Ihrh6wjM/K7yN2MpE5JL7FSoVXDmB
+X-Gm-Gg: ASbGncvMQrs/OBNC9HolDcjdjSOHsbWQ9a0X3O+V3utenxT7rU0+N6hsPi86ov2NBd1
+ VzFkfUUY09xlIgFwsS564sJHNMr/NoJS7363pyOIJ9oXCbsMrN0Ijuc/B2JLhoOmG3wpQuE4UOL
+ YSpL5cwqNBrnahTSoNBYwF28Inxv4EWtmDUIi178mtfsE3OBcqj4XRyER1S4VaFMkzU0O2oYPjC
+ prnZkhB2EtHJm2/QRqdmJJpfGKYzvpwBx+mTPegFRcy54m1RQiV9SapEIwnNfx+I7Vd9Tj0YRMA
+ 87BhhuBqf3SQjw==
+X-Received: by 2002:a17:907:6d06:b0:adb:300a:bcc0 with SMTP id
+ a640c23a62f3a-adb36bfb72bmr112628366b.46.1748589179884; 
+ Fri, 30 May 2025 00:12:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHDqrsZ5cjAr6xNppyuMijtbLs3qlP7Mrr8aUC6OHcPevVYRxalwtazGbU26xJWMuQPDTTW+Q==
+X-Received: by 2002:a17:907:6d06:b0:adb:300a:bcc0 with SMTP id
+ a640c23a62f3a-adb36bfb72bmr112624366b.46.1748589179395; 
+ Fri, 30 May 2025 00:12:59 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad6aa17sm278798066b.175.2025.05.30.00.13.15
+ a640c23a62f3a-ada5d7fed96sm275835866b.32.2025.05.30.00.12.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:13:15 -0700 (PDT)
+ Fri, 30 May 2025 00:12:57 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 10/77] rust: Fix the typos in doc
-Date: Fri, 30 May 2025 09:11:40 +0200
-Message-ID: <20250530071250.2050910-11-pbonzini@redhat.com>
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 03/77] target/arm: remove explicit dependencies listed
+Date: Fri, 30 May 2025 09:11:33 +0200
+Message-ID: <20250530071250.2050910-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -108,75 +111,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-These typos are found by "cargo spellcheck". Though it outputs a lot of
-noise and false positives, there still are some real typos.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250520152750.2542612-6-zhao1.liu@intel.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20250521223414.248276-4-pierrick.bouvier@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 4 ++--
- rust/qemu-api/src/qom.rs         | 4 ++--
- rust/qemu-api/src/vmstate.rs     | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ target/arm/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index bde3be65c5b..bd5cee04647 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -480,13 +480,13 @@ pub fn post_load(&mut self) -> Result<(), ()> {
- }
+diff --git a/target/arm/meson.build b/target/arm/meson.build
+index b404fa54863..2ff7ed6e98f 100644
+--- a/target/arm/meson.build
++++ b/target/arm/meson.build
+@@ -28,7 +28,7 @@ arm_user_ss.add(files(
+   'vfp_fpscr.c',
+ ))
  
- impl PL011State {
--    /// Initializes a pre-allocated, unitialized instance of `PL011State`.
-+    /// Initializes a pre-allocated, uninitialized instance of `PL011State`.
-     ///
-     /// # Safety
-     ///
-     /// `self` must point to a correctly sized and aligned location for the
-     /// `PL011State` type. It must not be called more than once on the same
--    /// location/instance. All its fields are expected to hold unitialized
-+    /// location/instance. All its fields are expected to hold uninitialized
-     /// values with the sole exception of `parent_obj`.
-     unsafe fn init(&mut self) {
-         static PL011_OPS: MemoryRegionOps<PL011State> = MemoryRegionOpsBuilder::<PL011State>::new()
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 41e5a5e29a8..14f98fee60a 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -291,7 +291,7 @@ fn as_object(&self) -> &Object {
-     }
- 
-     /// Return the receiver as a const raw pointer to Object.
--    /// This is preferrable to `as_object_mut_ptr()` if a C
-+    /// This is preferable to `as_object_mut_ptr()` if a C
-     /// function only needs a `const Object *`.
-     fn as_object_ptr(&self) -> *const bindings::Object {
-         self.as_object().as_ptr()
-@@ -485,7 +485,7 @@ pub trait ObjectImpl: ObjectType + IsA<Object> {
-     /// `INSTANCE_INIT` functions have been called.
-     const INSTANCE_POST_INIT: Option<fn(&Self)> = None;
- 
--    /// Called on descendent classes after all parent class initialization
-+    /// Called on descendant classes after all parent class initialization
-     /// has occurred, but before the class itself is initialized.  This
-     /// is only useful if a class is not a leaf, and can be used to undo
-     /// the effects of copying the contents of the parent's class struct
-diff --git a/rust/qemu-api/src/vmstate.rs b/rust/qemu-api/src/vmstate.rs
-index 9c8b2398e9d..812f390d780 100644
---- a/rust/qemu-api/src/vmstate.rs
-+++ b/rust/qemu-api/src/vmstate.rs
-@@ -9,7 +9,7 @@
- //! * [`vmstate_unused!`](crate::vmstate_unused) and
- //!   [`vmstate_of!`](crate::vmstate_of), which are used to express the
- //!   migration format for a struct.  This is based on the [`VMState`] trait,
--//!   which is defined by all migrateable types.
-+//!   which is defined by all migratable types.
- //!
- //! * [`impl_vmstate_forward`](crate::impl_vmstate_forward) and
- //!   [`impl_vmstate_bitsized`](crate::impl_vmstate_bitsized), which help with
+-arm_common_system_ss.add(files('cpu.c'), capstone)
++arm_common_system_ss.add(files('cpu.c'))
+ arm_common_system_ss.add(when: 'TARGET_AARCH64', if_false: files(
+   'cpu32-stubs.c'))
+ arm_common_system_ss.add(when: 'CONFIG_KVM', if_false: files('kvm-stub.c'))
 -- 
 2.49.0
 
