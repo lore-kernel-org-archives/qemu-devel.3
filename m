@@ -4,147 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CF1C3ABB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B051C54F30
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 06:40:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtNn-0006kb-DW; Fri, 30 May 2025 02:38:23 -0400
+	id 1uKtPN-0007YO-N5; Fri, 30 May 2025 02:40:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtNl-0006kA-D0
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:38:21 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uKtNj-0002DJ-Dm
- for qemu-devel@nongnu.org; Fri, 30 May 2025 02:38:21 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748587097;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=MRUQctAiTvmvIG5YcPzhEMil4entyaV0xruuBpmcVkg=;
- b=jOshh2GokyfktCKh8aT909gBImqFdm4viQY4Id7R9Q7T7a62FGPjKwAN5DCPQOyp1txTVY
- xfXwucUwP1kJNXP84b6il4mzAY8yvoywCSKXHRu6OcKv+G6bd5aTVJhJFLP5W0IMvgQo5W
- wdBx+UAatGeK9LsKydVFDQf11GVbDJM=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-k_4ZONkGOE2noX1d3vueHg-1; Fri, 30 May 2025 02:38:15 -0400
-X-MC-Unique: k_4ZONkGOE2noX1d3vueHg-1
-X-Mimecast-MFC-AGG-ID: k_4ZONkGOE2noX1d3vueHg_1748587094
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-604c41e0c10so1486323a12.1
- for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:38:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
+ id 1uKtPL-0007Xg-U8
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:39:59 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <weifeng.liu.z@gmail.com>)
+ id 1uKtPJ-0002Lw-OL
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 02:39:59 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-7406c6dd2b1so2300818b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 29 May 2025 23:39:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748587195; x=1749191995; darn=nongnu.org;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=mLJgGsHYlC9EzJXe4GvyxSYR5mGvu8elhlUzRVWhsZ8=;
+ b=H/A7eocoaE7qRR5lmssZAiyNcMjwyPoCk00U1Mo8GXvWmgraoXvHpB2c30qDM2QI44
+ LdwvmcWpvcvxk5N9dAxg81Kv+3J8kqRCfsDnwSXPp92HmnNZrIvaoP9PtYOcmv7B32bu
+ d9k0GKW/d9FJf1LL1VmGw/iYQZT144QNX0EBoPtAnmbzVVewVxKd3W5pYt72B20Cp4KO
+ HwDyLLYAU7RkQEzqUdRD3NR9yMGxY/THaJe27U4ltdDyqFRhakDYK9lGpbwun4jlHfpx
+ IUZNqMkf04WEBokqvY8wejhrJmXbwghucXjz66C1BhwmAmqnVzoPrVi0ARE9Z/XZrKCT
+ BIig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748587094; x=1749191894;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=MRUQctAiTvmvIG5YcPzhEMil4entyaV0xruuBpmcVkg=;
- b=vunnMMC0CPpvBkRN0x/GJK8Z8TDGIUbXKLwbzlb3mjcTTrqQH0Z2KHtm+BOmTqufnO
- eHqAEtMPPwaC+LPJZ9ySS/LFVniUF0BzQUS8BqhNH5Qi+75Vc/t9pABVGfck9UA1UfGp
- aQ1zpkdfmRvS6AgFZMI5ZNXW8X1oHFKExooX0G19c3+0tckzc0gM5GkNodp3MF99Ks13
- +B1jw1cFlEUAHPcIHkGiZZXRF8NpfnHMlaLBwhMq4d6NkuHFnmh1AB1h1T3zuDIZXNg3
- HDh3ZO6mqBGkI0dBfPY1+hyiMS3Ijv/oH5V9kdzPsyIJ06QhLyZzxEGiJxlWPlngPruw
- D39Q==
+ d=1e100.net; s=20230601; t=1748587195; x=1749191995;
+ h=mime-version:user-agent:content-transfer-encoding:references
+ :in-reply-to:date:cc:to:from:subject:message-id:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mLJgGsHYlC9EzJXe4GvyxSYR5mGvu8elhlUzRVWhsZ8=;
+ b=Q+OBQgtoIrwiRc72Qqug/V6Ar91SJZe+8Mzfcmx5+vjx591z39Px/OEcqqw0KtRAX6
+ GbsSTYojgXwiHG0DC3jtOXMAcOKkr+Q0C5guwQ5XLqbROg5buEgmkPqRSLmv5qXpRJbq
+ hstjL1DP8AxcozXaMz19nI0FNvRAdELRPtrYNdQX54z4Yf9N8SfI46hysZ/t4HTmCI11
+ klNfRvyZEzIVhEZV4UlAgrYLJb5AfOtDsu/6m9Pto2Nk7b1/Oa2zH8JyNtMq5gwNNvAN
+ V6q2m2+d8VNGK3k5aF5wr9rK9IUdI5t8kwCqJgraTimrK6XBmgnvrhDpu816xs0u66nM
+ FWNA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW76WlPg1i+rJbqQNGgjoBy+QSCR66Y51ePh6OBA9df2iBojVqSYfHfybc8jduczpfja9zawDuotQSC@nongnu.org
-X-Gm-Message-State: AOJu0YygWfV+tEGSSVoNveTRX2qKlea8Hgt3H6UPhS7DlH9IVRAA6FRE
- ewRLNHFx5JW8xoZNKSk8xeuMFEDgf091vDOTlWxaUUw3YqTAN4LMcYDDb1Co9YddS9o33fZ4Ilz
- Ty4LD+V8L7gmj+xqxprz08Wu+vDssMNhwnJ0mtxuHxh4xf/jqXeDhWu8V
-X-Gm-Gg: ASbGncvCuG1eSwnBXpd6n5UPtJ1U7e8JZOo9Mo+OzYnNTr35CrIFUjZxTIeqazxpTg0
- W44zpbs5RqllQqMR6b3Vr0maUmvDUFld0oWmByAfwJOU6pgJV0NtgyVquSiNTqAmcM1VMvTWPao
- rMzfhss6UMRLO/Glm1Sz2YPcEaz+g2OQL2OFbmg/H7ushJ8ihrRSi1sydmT2PxTL3IU6PtG11Dx
- Ovo6b4wmHNKniNGHdsxBsbxeBD0TLxbgyrtOeBAE/79Re1CHWhUeH3kw5xZgyi9CAH3yLGZagPn
- SJbpO7LYaJxDfzHR/672jspQa1dGPhPz+eurD5pHEhO8TJGBD8Kt
-X-Received: by 2002:a17:906:a996:b0:ad8:9909:20aa with SMTP id
- a640c23a62f3a-adb36bee594mr70441566b.40.1748587094149; 
- Thu, 29 May 2025 23:38:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE2C9/6LHiHAU2LS13ZkGDY+kK19m0REAIWZilefydS2/UpWeolWwWtmB/rvLvYmZFQURqs8w==
-X-Received: by 2002:a17:906:a996:b0:ad8:9909:20aa with SMTP id
- a640c23a62f3a-adb36bee594mr70440266b.40.1748587093715; 
- Thu, 29 May 2025 23:38:13 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-112-237.pools.arcor-ip.net.
- [47.64.112.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5dd04551sm271064566b.93.2025.05.29.23.38.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 29 May 2025 23:38:12 -0700 (PDT)
-Message-ID: <8a1c3cba-548b-4286-9aae-bc2b3b0a1830@redhat.com>
-Date: Fri, 30 May 2025 08:38:11 +0200
+ AJvYcCU+XHelbJ79CpwxgAeYgsY/413ALDoCji0KK/6UB9YhaSzo8XKHqVo7UE/nbcZusGyBhNoO3u+XSaLD@nongnu.org
+X-Gm-Message-State: AOJu0YzSbCsFcMIrnAgbwPszDM9HxL1lvkrJrFglMYfnoBzXgQr+9uYl
+ D9pmlX8ORRUtRxhi9v43ToAz4m/mhx1xYromVjIQv1AAjPD39VsiEaDG
+X-Gm-Gg: ASbGncsuRnSJeOjKFxJuoupsaS0Fbt2nFRBRm7v1HU1y+pmcF+FRruhJeQfF7hdkv9U
+ 4SPrTd/dRwNIv33EhwlVFdp96+sfCIwrMGb6s6/rC0AOSOZRDD3sxpYJcYg08Rujyplu/kIUtdj
+ vD3hUz1QN3aT3CExzN92BJiGIP02QEe0S0Ax8itP6b2vwgQ1xzxiOH8FbqLkIN7/QDxrjnJ19IV
+ b6K18m3seCU2INnmBzYLhSZgImoVJqonN4B2klPnTirNebKIcfvpzvMph+xe1vGpDEKXtBE6L2o
+ 64stjxAhaGpDlwhCenHB3LZio0Y9PfRrp/rAit+LMpUeNSw9UWXR6CCteeWaQU4=
+X-Google-Smtp-Source: AGHT+IGmOXFwoepu/pbzBqeJZUwpvBSCTKkIXPBHov+l2efKKxR+9WAwidKlHu/qBk49+gVdNdUVeA==
+X-Received: by 2002:a05:6a21:7116:b0:1ee:5fae:8f6a with SMTP id
+ adf61e73a8af0-21ac5ad4e92mr10704662637.1.1748587195414; 
+ Thu, 29 May 2025 23:39:55 -0700 (PDT)
+Received: from [10.239.152.184] ([134.134.139.75])
+ by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b2eceb29b20sm801894a12.30.2025.05.29.23.39.52
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 29 May 2025 23:39:54 -0700 (PDT)
+Message-ID: <0790819eab97fbc5728f583b6ec90e338c2819e0.camel@gmail.com>
+Subject: Re: [PATCH 0/9] ui: Improve scale handling
+From: Weifeng Liu <weifeng.liu.z@gmail.com>
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org
+Cc: =?ISO-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>, 
+ Gerd Hoffmann <kraxel@redhat.com>, Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=	
+ <alex.bennee@linaro.org>, Vivek Kasireddy <vivek.kasireddy@intel.com>, 
+ Dongwon Kim <dongwon.kim@intel.com>
+Date: Fri, 30 May 2025 14:39:50 +0800
+In-Reply-To: <19542757-ecc0-4eb5-b26c-4a06f7f800c3@tls.msk.ru>
+References: <20250511073337.876650-1-weifeng.liu.z@gmail.com>
+ <19542757-ecc0-4eb5-b26c-4a06f7f800c3@tls.msk.ru>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1 (3.56.1-1.fc42) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 07/25] s390x/diag: Implement DIAG 320 subcode 2
-To: Zhuoying Cai <zycai@linux.ibm.com>, richard.henderson@linaro.org,
- david@redhat.com, pbonzini@redhat.com,
- "Daniel P. Berrange" <berrange@redhat.com>
-Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
- fiuczy@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-References: <20250508225042.313672-1-zycai@linux.ibm.com>
- <20250508225042.313672-8-zycai@linux.ibm.com>
- <b986097d-d78b-4163-831b-2551336711ea@redhat.com>
- <3d790dad-d4be-443a-ac9b-7c2a5bc53e17@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <3d790dad-d4be-443a-ac9b-7c2a5bc53e17@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.902,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=weifeng.liu.z@gmail.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,47 +106,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29/05/2025 21.09, Zhuoying Cai wrote:
-> 
-> On 5/14/25 12:18 PM, Thomas Huth wrote:
->> On 09/05/2025 00.50, Zhuoying Cai wrote:
-...
->>> +int qcrypto_get_x509_cert_key_id(uint8_t *cert, size_t size,
->>> +                                 QCryptoKeyidFlags flag,
->>> +                                 uint8_t *result,
->>> +                                 size_t *resultlen,
->>> +                                 Error **errp)
->>> +{
->>> +    int ret = -1;
->>> +    int keyid_len;
->>> +    gnutls_x509_crt_t crt;
->>> +    gnutls_datum_t datum = {.data = cert, .size = size};
->>> +    gnutls_x509_crt_fmt_t fmt;
->>> +
->>> +    if (flag >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map)) {
->>> +        error_setg(errp, "Unknown key id flag");
->>> +        return -1;
->>> +    }
->>> +
->>> +    if (result == NULL) {
->>> +        error_setg(errp, "No valid buffer given");
->>> +        return -1;
->>> +    }
->>
->> This check sounds like it could also be a simple g_assert() statement instead?
->>
-> 
-> g_assert() may not be ideal here, as it will terminate the guest if the
-> assertion fails, which is not the intended behavior.
+Hi Michael,
 
-OK, but if it is valid to call this function with result == NULL, then this 
-does not sound like an error, thus you likely should not use error_setg() 
-here. If it *not* valid to call this function with result == NULL, then 
-there is a programming error and it is OK to use g_assert() here.
-Anyway, please add a comment in front of the function where you describe the 
-parameters, including the information whether the pointers are allowed to be 
-NULL or not.
+On Thu, 2025-05-29 at 10:23 +0300, Michael Tokarev wrote:
+> On 11.05.2025 10:33, Weifeng Liu wrote:
+> > Hi all,
+> >=20
+> > Now we have quite a lot of display backends for different use
+> > cases.
+> > Even in the context of gtk, we have various implementations (e.g.,
+> > gl=3Don
+> > vs gl=3Doff, X11 vs Wayland). However, behaviors to users are not
+> > aligned
+> > across the backends, especially in the part of scale handling. This
+> > patch set attempts to improve scale handling.
+> >=20
+> > We have to deal with various coordinates due to the existence of
+> > scaling
+> > in different level. Firstly, in desktop level, we could have a
+> > global
+> > window scale factor. Secondly, users might set a zooming factor to
+> > adjust the size of guest content in scan-out level. Consequently,
+> > 1) the
+> > buffer from guest, 2) the host window and 3) OpenGl drawing area
+> > inside
+> > the host window are in distinct coordinates. It's important to
+> > define
+> > these coordinates and scales unambiguously and use a consistent
+> > naming
+> > convention for variables representing different concepts. The first
+> > patch in this set tries to achieve this goal by adding a document
+> > in
+> > gtk.c, and the next patch (PATCH 2) attempts to align the code with
+> > the
+> > document.
+> >=20
+> > PATCH 3 - 5 fix bugs in mouse position calculation due to not
+> > handling
+> > scale properly, for both gtk and sdl.
+> >=20
+> > PATCH 6 align scale update logic in gtk-egl with other
+> > implementations.
+> >=20
+> > PATCH 7 fix an issue that gtk window might keep enlarging/shrinking
+> > because
+> > ui info propagating to guest not considering scale.
+> >=20
+> > PATCH 8 and 9 align fixed-scale mode behavior in gtk-gl-area and
+> > gtk-egl with
+> > other implementations by adding appropriate padding to the window
+> > to preserve
+> > the scale.
+> ...
+> > Weifeng Liu (9):
+> > =C2=A0=C2=A0 ui/gtk: Document scale and coordinate handling
+> > =C2=A0=C2=A0 ui/gtk: Use consistent naming for variables in different
+> > coordinates
+> > =C2=A0=C2=A0 gtk/ui: Introduce helper gd_update_scale
+> > =C2=A0=C2=A0 ui/gtk: Update scales in fixed-scale mode when rendering G=
+L area
+> > =C2=A0=C2=A0 ui/sdl: Consider scaling in mouse event handling
+> > =C2=A0=C2=A0 ui/gtk: Don't update scale in fixed scale mode in gtk-egl.=
+c
+> > =C2=A0=C2=A0 ui/gtk: Consider scaling when propagating ui info
+> > =C2=A0=C2=A0 ui/gtk-gl-area: Render guest content with padding in fixed=
+-scale
+> > mode
+> > =C2=A0=C2=A0 ui/gtk-egl: Render guest content with padding in fixed-sca=
+le
+> > mode
+>=20
+> Is there anything here which should be picked up for qemu-stable
+> (current active branches: 7.2 and 10.0)?
+>=20
 
-  Thomas
+I think the first five patches are good candidates for backporting to
+the stable branches, as they only address bugs without altering
+existing behavior. I was able to apply them cleanly to stable-10.0, but
+porting them to 7.2 will require some additional effort. I'll send out
+a new patch set once the backporting work is complete.
 
+Best regards,
+Weifeng
+
+> Thanks,
+>=20
+> /mjt
 
