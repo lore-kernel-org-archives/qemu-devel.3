@@ -4,102 +4,224 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDAF9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 14:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11598C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 14:40:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL0qD-0002ZQ-4X; Fri, 30 May 2025 10:36:13 -0400
+	id 1uL0tO-0003bt-HT; Fri, 30 May 2025 10:39:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uL0qB-0002Z0-J7
- for qemu-devel@nongnu.org; Fri, 30 May 2025 10:36:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uL0tM-0003bb-WA
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 10:39:29 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uL0q8-0006Zj-1G
- for qemu-devel@nongnu.org; Fri, 30 May 2025 10:36:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748615766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=b/a5/vGJlf6FRqZe0d0YrCOWXV3mq8ZW9W/UpoyL/gU=;
- b=c6As4DWoR3vIgRp++U5XTcdC8weVtj7mvaJRVnnbN7vip/5C5OIMEi42HnbMWrTs5Vl4qJ
- m1rkcePifzl/HqEYzqydBH2qPH4flEEpsAVvuBrTVnxIDt7nxqG5zvjGzfocsxuDanavo4
- eOvedJYW1w/WdiKJSvtAaUxuev6qThA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-83-o-6PbwcnMoOp1gNqxTtXfA-1; Fri, 30 May 2025 10:36:04 -0400
-X-MC-Unique: o-6PbwcnMoOp1gNqxTtXfA-1
-X-Mimecast-MFC-AGG-ID: o-6PbwcnMoOp1gNqxTtXfA_1748615763
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43d007b2c79so17083615e9.2
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 07:36:04 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748615763; x=1749220563;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=b/a5/vGJlf6FRqZe0d0YrCOWXV3mq8ZW9W/UpoyL/gU=;
- b=XxCVaazRjovsVLuCQHmfowLjg40UIwWGgYwdaOXqCbu7MdqYE5vyNrtkJIIc2J3Z3H
- YuiqeVYioKsyAjwhM92z8UZu7gkRJm8zi5mvQNUraff9orh7r9jnBl40st/wBfvD1+Tv
- b2ZyQm2yo307xBBkIfEGR86Cqgvxtey4rwWiWutfBJPPg4VO2egh1iSXEjipjK5T8GkF
- YTnU8U0MMVIkDsfYx1CCdiXLfFi97rCER3drW8oWdd8v1o4lSPA3LVlrcs6i4nNkvppw
- 0YvUoClo+h8jXwAwBNvJK9CcOrCwX+gmeoII/YThJM5BL5RRtqvesGyyDL/FO10piLWt
- TfOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUY8WdTQ3TU3guq09fAQr17wQPRqSnmI1L8dYweUVGMs5+Re1R0YbbUgKcSc1FFMKc6995CeyXxz+Nt@nongnu.org
-X-Gm-Message-State: AOJu0YwFNlY+CVIUAw/lXmEvnP1sZNycPjGKkcjOSENdKNQ4P1asSXBJ
- AxJwoBdBTdY/2e8SseGDH1HqiWP5m4LF71WT30AaMu+0EzE9NQjoOQUnDRWm9RsyAIO702DoS0U
- lDGD+L60AcMgMwFYRmkQ5r6aYBgYPg0TEWCus2gD5nv50jZWVPm/yXirN
-X-Gm-Gg: ASbGncsq4pZA606cH2JAG544wmrQLnnP7yKh3/nAxZMkR8c6KxQuDJJ+Q7joYOWm/Ht
- OT7yL+C7tg43+irKyyFl51WMn9wkzVUQ4Xaqe2IUzU2X9Z7d4dIwMv1tNabp2aZp0o0h1cplwzF
- sPAsggfs5mpIu/LxkULK6AVbhySy7zL+Lu/MiQ9znbJnvPtlobC9vj4woSheD25QdKNbyaTQ2Bq
- SYcVfMXkF4FVpZS3qbwM4IMXpmNm8K3gm8PWzethwjKpZacXjuZweP3RS0xu3sPCZLO5TV+svMP
- T/dQuDuzPEcjO8h402iWsUq/RTdCk52V
-X-Received: by 2002:a05:600c:8b68:b0:440:6852:5b31 with SMTP id
- 5b1f17b1804b1-450d651182fmr45228805e9.10.1748615763049; 
- Fri, 30 May 2025 07:36:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFV3HJ8ILb3aqwl8Zpd/iyskFtiwxOT/H5EXz/BdpsSQTWkKiiuGboUgNaAOEqcUU7F2TbGtg==
-X-Received: by 2002:a05:600c:8b68:b0:440:6852:5b31 with SMTP id
- 5b1f17b1804b1-450d651182fmr45228485e9.10.1748615762654; 
- Fri, 30 May 2025 07:36:02 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fa249esm19938405e9.13.2025.05.30.07.36.01
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 07:36:02 -0700 (PDT)
-Date: Fri, 30 May 2025 16:35:58 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc: "Michael S . Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Ani Sinha
- <anisinha@redhat.com>, Dongjiu Geng <gengdongjiu1@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH RFC 1/3] acpi/ghes: move use_hest_addr out of
- acpi_build_hest()
-Message-ID: <20250530163558.2182fcb3@imammedo.users.ipa.redhat.com>
-In-Reply-To: <e1abcd0e1c5b66d91a7faed5b4147951c11b2e6d.1741094512.git.mchehab+huawei@kernel.org>
-References: <cover.1741094512.git.mchehab+huawei@kernel.org>
- <e1abcd0e1c5b66d91a7faed5b4147951c11b2e6d.1741094512.git.mchehab+huawei@kernel.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uL0tK-0006q0-DM
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 10:39:28 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 54UAt0IA015496;
+ Fri, 30 May 2025 14:39:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=FPzKHHMuFjYiy39OLCe67Bz56u9yQoJUHFIazb87UOI=; b=
+ etUKpfqlkXfsbA+51JvXhwSHcF8WWx1QXf9bTLNNCktXzzQLGKJ4VySDW2BZZ2Dd
+ QuT/9oe/cEtYO6U0wGNrTJtXJxUx9ZSA5K6Eq/NLZe6gR5+amHz/kcsBzxnz33YG
+ icJvIJTJugw/EEE214EaV1LBCmroTw5NBSux8jlulOfZ16GwCNCfVZLx4X2nMpSw
+ /29j09TZFWUbUbrk2cz3+lHv/Q9kjk8NbaF55+wqwUT1lI1Do5F+wM+O1EGxeF6B
+ LXIVsiuE0euWjSfKdmf8tc17Ej2d78siMIouva3d592loUhDkVpUKk0mlxYtWSu9
+ qgtOIBdczriKXMAcA+eA7w==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 46v46u2dxn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 30 May 2025 14:39:14 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 54UDDatb020363; Fri, 30 May 2025 14:39:14 GMT
+Received: from cy3pr05cu001.outbound.protection.outlook.com
+ (mail-westcentralusazon11013052.outbound.protection.outlook.com
+ [40.93.201.52])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 46u4jd4485-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 30 May 2025 14:39:14 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=f5jWeQf4vnubSf5ndBl8yQy/ZfIzKb3IjPdp3/sUyVqrCCgYR3Vcui0DfwCJxagAw+i2U6ureFu9kGBKU6ivafSCEYM1D40rUZCac/3oopAFWApy0hbpUEocEFjCxobpj32M7cY7+xcE9NJlPNW7K1FEAWZ315WUx72GIpiYRzJCgQvSP2OieSdKbjFsapgEWCgpKFwDvAwCA8qSK1/x5a3B4ykzPaHoIcOmQ5//JX5//LPLVq8HcAmhRYuXG+fkfDmyR0sxIG7iPHQUvBJwj4VEE16GLHo0kN14hkfadoDDi0yIZgHrj7qCTAjrQAnFFhXSAEk1Et6vTnIjTQ1Gow==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=FPzKHHMuFjYiy39OLCe67Bz56u9yQoJUHFIazb87UOI=;
+ b=PZsQur3w9+MJYmIRYW12hQutxQd12DKsms7lHo14D3mGZN4azQmJs8TKc5pikwgF3U/3R2Ybg8Q56nj5R8nkMlVUgVaF97kC/z6L5R35fDoTZH9GdPoX9pX/1FOsi+UA67WF1XQQvh9AQ6GlvsLGIlhnbShmXcoGaWosd74d/bD0HROIUixOQLnAc7AfRsdJRN+c+BcXg+hMst2eJBLLibNeegzSwJ/Rl/CpXnz0WKxJiTF/iEGcW+puyrLKBfz13dGNAIYltk1N0GAcnnjlAJu64M5f59xiZ6wVY6d1yjxUefUfHo9x/n1YaURixn/R9HUGBQpGp5K2dUj2OsYcpg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=FPzKHHMuFjYiy39OLCe67Bz56u9yQoJUHFIazb87UOI=;
+ b=QpriboCFoqyivgU+GnqM/I7MQiDt7W+krz4tY/KZyXaf5eh+x/EimxEBbU6g/oMOFoSpmmFxmV2oMW9D+L9lnaubsqAt8IoK3G0+Y9hEqM2st2TzV06/watvf8Y+U2T0GLRBUK6mUsN2XW4/G9sNt51M2vpBKlXe19kmo0dd+qU=
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com (2603:10b6:5:3a7::5) by
+ SA1PR10MB6319.namprd10.prod.outlook.com (2603:10b6:806:252::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.41; Fri, 30 May
+ 2025 14:39:10 +0000
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da]) by DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da%3]) with mapi id 15.20.8746.035; Fri, 30 May 2025
+ 14:39:10 +0000
+Message-ID: <9942f812-496d-4f9e-ba92-abe6bd6ef9db@oracle.com>
+Date: Fri, 30 May 2025 10:39:04 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 00/20] AMD vIOMMU: DMA remapping support for VFIO
+ devices
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org, 
+ eduardo@habkost.net, peterx@redhat.com, david@redhat.com,
+ philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ alex.williamson@redhat.com, vasant.hegde@amd.com,
+ suravee.suthikulpanit@amd.com, santosh.shukla@amd.com,
+ sarunkod@amd.com, Wei.Huang2@amd.com, clement.mathieu--drif@eviden.com,
+ ethan.milon@eviden.com, joao.m.martins@oracle.com,
+ boris.ostrovsky@oracle.com
+References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
+ <20250530074128-mutt-send-email-mst@kernel.org>
+Content-Language: en-US
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+In-Reply-To: <20250530074128-mutt-send-email-mst@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -49
-X-Spam_score: -5.0
-X-Spam_bar: -----
-X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-ClientProxiedBy: SJ0PR03CA0103.namprd03.prod.outlook.com
+ (2603:10b6:a03:333::18) To DS7PR10MB5280.namprd10.prod.outlook.com
+ (2603:10b6:5:3a7::5)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5280:EE_|SA1PR10MB6319:EE_
+X-MS-Office365-Filtering-Correlation-Id: 157d38db-487f-4d49-03f1-08dd9f87bd08
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aTRxc1BZcEFsTWFkc0RUTVh2NHVTeVBEVzhWRTFzY1FFaGRwM0FtYThWdHFY?=
+ =?utf-8?B?M0NFUng4b3ZVbDRQcjdBMi9hUWVLQVlJY1FxblZEQjRCSEJDeFBsQ0FRUWJJ?=
+ =?utf-8?B?a0M1anI3anZ5b0ZxZFNWRWdtUnFpRGVuMkhnRWRjcHFBd1kwUlpPNlk2VlAx?=
+ =?utf-8?B?clpBZHB1RWFVNWhqNEJpeUFHN0tOcTJjMzZjMVA3MHBmR3REUC90cC9tZWhI?=
+ =?utf-8?B?YkRtOThXd3l4c01SZ1JKNlovTWhyNzFIZkN1aHFqK2JETS8wY0JWUXJXdEVD?=
+ =?utf-8?B?alN5dTA2Qml0OU5LcUtIUmJGYWJiblZ5dXovSUxua1NWR0NBMmh3U0JRaS9R?=
+ =?utf-8?B?ZHVSM2JaWHdYOEh3QXpXWC9DcnpURWVyaU9meXIvVmlpVW5BQ0g5aVpzSzZR?=
+ =?utf-8?B?S3ZSMUN0RUNHaDZ5cnZuOExYa2VpMUt2dlZWajlhMm9HZlJIdG9aWFlVTXlX?=
+ =?utf-8?B?V1NHdWZ6ZloxSS80Z1FlSEloZjZGTzNNaGdHWitDMmFicjZSajRFSDdjdlRT?=
+ =?utf-8?B?VVFjSDRyK1RlS2NyT2xQWTFLZG1zcDAwSkJWdjF2ck51NzI2SEp4cE5mMFRL?=
+ =?utf-8?B?N1J6dUtkbDFJcEpleHFqQ3JMM1diMXBZMlBPSXZVTytzMnJzWEhhNWY2VXA0?=
+ =?utf-8?B?MkpaTXNFelZsRG1wc0I5ejB2ejBCMlQ5UXYycmY4d3JaMC85YXhRODhpOVEz?=
+ =?utf-8?B?MEoxVHVaUlNtREJUY0pUYkxUWDlhYmVjU0xML0xiTzFvTGRoWCtPZHBOdXVs?=
+ =?utf-8?B?NitSUmppclJGcFo5WFRHZk4yVmkzcldNUnk1V1BKRjRmN3dkbEl3dlJHS1RX?=
+ =?utf-8?B?WU1NQUZIT1Q4NVRDaDcxWmtUVnBTanNaRDJyNFA4clZTQTNkMVJ3ZDZQOXZP?=
+ =?utf-8?B?MmJFUmFsUGowNTVkckxXbW9LZ0x3anRtd09ObVRBNit2aytmY01pUnJRWFpt?=
+ =?utf-8?B?RjFHcFlPQTBNbDcxOVNMa0NJVWo0blpGVEV4YVZCT1I4aGNpRm5HT1IxUDh6?=
+ =?utf-8?B?c21CRmI2aXMrakMwTDB1aVh3VGpsekIrMmtWNllaSmtJQjQwZ2VPQmVNYlV3?=
+ =?utf-8?B?WDhKckVoVDYweGRLRkdZMGRoamJITzBmSlFJbGQ2YUMyN1JGUmRLM2FZblV0?=
+ =?utf-8?B?czVHeTk2OUgwTFJvcmZRODlBMGFRNy9ENU9YRG5KZTl0TFhVOVptVS84ekhY?=
+ =?utf-8?B?UWwzMVQzMUEzTmFacTluckVLZVNYaGNKdnAzNStza0lwdnBFWGZmWmhNZE1t?=
+ =?utf-8?B?dms0WFNrNzBGUS94NEFRTjBrdEw0bkdQTkxBTVd2R1VJNFJxbTdDRUlmdlJq?=
+ =?utf-8?B?OWYrUHUwVW12b3ZiVlBUOGtMMmlYcnAxV2NMRGh1OHJLZmFVcFFvRGN0c2VW?=
+ =?utf-8?B?SE1vSitlc2dTSlV3Uk5OVElKOU5uQ1lqd0tYZHZkUmRFMVhsM1o3U0c1Q1k5?=
+ =?utf-8?B?RDU5dndPUjk3MjY0Zm5WcXFselI4a3ErQkF4QkJMR01zWUxwKzloSis2S1p2?=
+ =?utf-8?B?RERJWVhOWFNvaE1VeU5kNE5mTllRQ0ptQWZHTGJzUFBUMTFzWVBXYlVRYVp2?=
+ =?utf-8?B?YStjemVCVUFzQmovUjVMUjRqcGEzTG1MdlAwMTVqQ2J3emNDZi9VUG04dmJj?=
+ =?utf-8?B?UjZTeVRkKzlsMmw3dHJGUlVRdXNoZ3UyY1VTdXk1V2czcHhTejJaRzVtcENZ?=
+ =?utf-8?B?OUpXczBORFIrK1d0bThkZHhld1ptVDltL0s0a09ZOTh1d0dFZ0FlanJYSlE5?=
+ =?utf-8?B?THhIT25aNVdyRlpyVGU4SUpoZ0Q5dHVGNHRLSmhwbHdOemJOTkpyS01ESXV2?=
+ =?utf-8?B?VnhncnhzOUxrWmJ0V21KYnFPNFBxcUVxangvWkUvd25xV0dIbEVCckpxMGx0?=
+ =?utf-8?B?a3VEZXZOdndOYVljcFR1elpEU3hNWkRLTC9xOVd3ZmpqcHFHWW1DREJxRFRz?=
+ =?utf-8?Q?KLXNSE6ej/Q=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR10MB5280.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?N2pxRG5XdkFMdW45SEFraUF3U2x3U094YmZBU1pROWxyaXYvUHZJNVdYQWNt?=
+ =?utf-8?B?aVBNUGltL29FSEZpSVB5TjFTQlJ2clhQcFIwbEFlK1F2TU9jVGhidERDeC9o?=
+ =?utf-8?B?YzFEWlpWa3lIYkpBRTdUclBTQTd6aWxsNjEraGh5SUlZYVN3bG93UXRSNGox?=
+ =?utf-8?B?eEFBeCtJSVlJRmhFbjY2MmZWbFU2cGg2a0E2U3p5ZklxZlRBZU1LU093dGRW?=
+ =?utf-8?B?TXhiUE45WGJXTDdSQzA3cnJkMzBQWFROUk02NHJvZmxxME1nQ05PN1FjYjRE?=
+ =?utf-8?B?SjNMSThGUEptNFArdDNPODUybVJMKzVIempQL1NVbVU3MFVEd010NlVPdGVz?=
+ =?utf-8?B?NmdsTW5DKzQxN2VQU0ROc1N2bFpoejZtVFcyZE55bmlGSWkrVmwzRTRQL0xr?=
+ =?utf-8?B?c01lRiszTGJDUzdzUkxKeVRmaTVMSzRZb25pUlZZczBDRnQ3a284dXE4Z1dq?=
+ =?utf-8?B?OVF1RTY2SWI3Ky9wazNUOEhrdHJRaWpkRUlKTHl3eFRIc080R0xTOUF5amZw?=
+ =?utf-8?B?SFNxTDl0RUc0M0swRm51NEp4MlhiWTk5dytMVzBXMEJmV2phSm5GQ0lCUGRv?=
+ =?utf-8?B?UkU0NkV6K1VsZlVZVmJtbks4WExYdUdVRkZzV2UyOHpNY2xSTVNaRVdaQ245?=
+ =?utf-8?B?WFlham9oQmI1RWhnVmcxQzZkb3VTNi9qZHRJcGFYT0xXaVpuTTdaWDhuVmhV?=
+ =?utf-8?B?YUo0SDJFMUptejBvTVpDL1k2KzE0ZXp3b0ZDUnhyRmR2M1UrMW9Hd2lsVm9o?=
+ =?utf-8?B?U2U0aS9pOFRpQ2hMOHd3ZHU4QlkvWlVRanlMOHRwbnVCWHVsam04cnI3TDhh?=
+ =?utf-8?B?MUlYMXA2OTdTNldKcG1KNitxZTZ1eXJtOFVFb0poK0ZCZFdoTWQyMjZCMFZ1?=
+ =?utf-8?B?aDR6SkVtTzE3bkNQK0NDZkwyOEdJOGRwNnZIUEZTeFd4R3oybzQxT1ZoWWRk?=
+ =?utf-8?B?aVZvY2FmU0IwL2hQdGUxT3BOOHhWTzc1cHF2cE53MVdXR2ZKV0FpOXhFN01i?=
+ =?utf-8?B?R09iUzd2SXJVNk54UDZjSTU4REtjS2srZlpkUVBCYUNIK0k0enlQV2kxbzgr?=
+ =?utf-8?B?TU1NODBRRTRQQ1MwTW5jbTdlUEgrMmhDK0x3Z2h0MWRuaGlNMkZsQWFkQWFU?=
+ =?utf-8?B?eXJnUjFra01FRCtWNU1td1d6NktNbTd4bUdTQTBoUW9LTHY0cGNuSUhXNkxB?=
+ =?utf-8?B?MFpiblhpRjVSc2hCTk1aTDYwc05zQ3IxVG9NTXZYNWNNLy8zai9JWlYxTU5a?=
+ =?utf-8?B?SlNOZXB6V0R5LzNqSGd0VlkvT1JNck9WU0NweEt3VEFrZmdFNGZEelZ6a3NK?=
+ =?utf-8?B?SmZzMlZxQVJ1cjZLWjJqK0FsUWx3Q2NzSk1jZ1VyQ0J4OW9pa29HZEl1bi9K?=
+ =?utf-8?B?c25QcmtNSDY3L2xxMzlJS0xTRG1PMGRpNTRlcmxFYlRHYTNEamVsUzFwUnlZ?=
+ =?utf-8?B?MWxwQXdlb3liSWl3K3BMY0Z5dkI0VkFPMHNCa2dRbnQ1OUc0eUxFdUU3a0po?=
+ =?utf-8?B?S3EyTU5DZEpKSjBSN2FkSFZRa1JkU3ErdmpGc1l3SzF2c3BOeStjQ1JiZExU?=
+ =?utf-8?B?QXYxT3pTSWlHTFYvWHJGcHU1TTRQd29Ic01YUkRGcTVJUS8veHhkbGVtb3p6?=
+ =?utf-8?B?aE4zaTRNS3NwYmNPSEoxQndZdDFaNE5GMG1iWlppemdsSFU3VTJPU25xYTVk?=
+ =?utf-8?B?MVc2SUEwTnAxa3lPVjBPUm5vL2RyVm12MTlUd3VtM1dVbjhSWENENEpSbTFM?=
+ =?utf-8?B?NVR3TVluMTdwWDBLd0hzVkRiRHFLMGhRNHNjV0ZWYzFqRTJONWsydFo1aXNN?=
+ =?utf-8?B?bktvWlNYVlI2WVUwajFxV1Niak5hQ1cweUljVUV1eWhyVmdNeFEySUJCZnh4?=
+ =?utf-8?B?UG5SNktsOGFQRHIzV1VsQzBSN2JQanJjdHN2RnAzV2tOZFJzanpuMzZwSjcz?=
+ =?utf-8?B?L25ad2JMRTYrYllXWlA1YjJIUXNUZzE3SFc3enRyU1QvekM4M3VtbDZUR2Y2?=
+ =?utf-8?B?VjBHeUNNTG5lMTlJTjlwZDNIbjcxS0xTODBYdERmZStvTFFEeTlPdVJUMDEx?=
+ =?utf-8?B?bHc5QTNlZmRQbEh5TFQvNzdnQk5zY3dzZm8zNWorVXQvNXJXU0c5MlhWNE1B?=
+ =?utf-8?B?Z1ppaDJjNlBSSzloQVQyUm9FVkNHcERmL3JOUko5djVVWDYzNzNoQzJpdTZt?=
+ =?utf-8?B?emc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 3n6Xj83HAvBzgFZr0Z8XDzED/GTT1+EM+2f3RGg/i5a/juFBE5nAGr0QMzmbI4qZ7GGVj+E7OuKi3fCsu20jAULlom4HCg1rzN/WC45PxBLJ45/giXE+sHgkJgCdGjyT1fygGsUOzoic92gTs75fJ2FIiOFQJVFtUnB8wwuHBR+dWIBoAcntDT7+lKwxERxSKGrqbV+JoMK9PSxb1h8iFja7QQKpfYVR3YK4YhfZIaWLlttohzTeGZubXEi3tyj1C1gpjCJWp1Jkr6oR1vaxQbN648pNOR/qV7ukqS9UFzV3FsN/ecvEyBikb9plzYEp+vidhBnSRcLqf1GKqa6PpDFue3sodk5vUHGIAfQeHcD9pOxUbcbWImtata1L2wqmcYzsvZ5WUWNzeFfRkGhnsbGUfEVeZa8cIaOy32GU0zrG/BRXdAsfBFZ8OOHH6IsJAFFda/azbuoETzV3MHATsszyJ/RTYYaANPRSWXZBneDaJ1XsKyCwaSMsOvLkTWG85JZlWLWTSgxjvR/QINXOvfDkFzyZQ/KGEWnSvF94PitN43bugcrbOw5IHDs/cLF9ThPYbCkASgRF6z7wBjMayCG2ZHiBg2/qPTrK562Zg18=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 157d38db-487f-4d49-03f1-08dd9f87bd08
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5280.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 30 May 2025 14:39:09.9497 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9jYweQ+xwUYBRyqaS6/HUclg2MfCuUzglX9CifFv11tJ2aHOumKwgwEAQnNE+laB3Ps9/XhXQE1i5xx1IJX5PPuXJEHGcnpRRmo1BeaOpsM=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR10MB6319
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-05-30_06,2025-05-30_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ phishscore=0 suspectscore=0
+ adultscore=0 malwarescore=0 bulkscore=0 mlxscore=0 mlxlogscore=999
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2505300129
+X-Proofpoint-GUID: GR4e-_0_1epOLdzarEUMdOp3z-bwAEDv
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNTMwMDEyOSBTYWx0ZWRfXyCDiv6er367r
+ lUsYVhVkJuoV26DzV7WOInspVnNTYA+wxYiRepinAXIiFEXRV0JHCwQBMx3ALMb9JuYHnHUTHd4
+ R9vWOADtRMQ8szgYa3J5se0enRknWVnGLe33XJWBieISl5OJs7iJzd4FhiguZY8ckFHfqvWcuIv
+ /E8gnt12DkZw4y4H08+jt7iVQ5A3ramdQjllnloub/tn7/FwgKG8g3liwMMWNJw0Ej8Wn8qigBU
+ RediVa9th70ye5QzUP3/mGGUMUoVg7rGoog6qj0AsWaXIq73jZiVfAa6NkTW2LO8ay86tJ3Kejb
+ s1RXnZVcRGf+Wn+S5Ln1uNDJifFmyV9HgctA1q4Rut2PWGOn6Vx8rsUA2gwLqoKgvVc315ROMYC
+ sRiiuBzZFY8kkS4Gg8S+68TtZfYyJKHgAR4Aw45+drssxqD6gmc6gHfSlVf3P7bP48oapAex
+X-Authority-Analysis: v=2.4 cv=VskjA/2n c=1 sm=1 tr=0 ts=6839c312 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=dt9VzEwgFbYA:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=zd2uoN0lAAAA:8
+ a=yPCof4ZbAAAA:8 a=VrpNjyLPOt3-gQcFioUA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: GR4e-_0_1epOLdzarEUMdOp3z-bwAEDv
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -117,189 +239,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue,  4 Mar 2025 14:30:56 +0100
-Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> The only reason why we're passing ags to acpi HEST table build
-> is to check if migration will be used or not.
+
+On 5/30/25 7:41 AM, Michael S. Tsirkin wrote:
+> On Fri, May 02, 2025 at 02:15:45AM +0000, Alejandro Jimenez wrote:
+>> This series adds support for guests using the AMD vIOMMU to enable DMA
+>> remapping for VFIO devices. In addition to the currently supported
+>> passthrough (PT) mode, guest kernels are now able to to provide DMA
+>> address translation and access permission checking to VFs attached to
+>> paging domains, using the AMD v1 I/O page table format.
+>>
+>> Please see v1[0] cover letter for additional details such as example
+>> QEMU command line parameters used in testing.
 > 
-> Well, we only need migration for arm, as other architectures
-> will only use the new code. So, move this out of acpi_build_hest(),
+> are you working on v3?
 
-> as otherwise we can't use it for x86, as the hotplug logic there
-> may not initialize ags during acpi table build time.
+Yes, there are suggestions from Sairaj that I will address on v3. I am 
+also planning to include two small patches from Joao Martins that add 
+support for the HATDis feature (this is something that Sairaj suggested 
+earlier). The Linux changes are being reviewed here:
+https://lore.kernel.org/all/cover.1746613368.git.Ankit.Soni@amd.com/
 
-can you expand on what hotplug logic you are talking about?
+I will be offline from 6/2 to 6/6, so I didn't want to send a new 
+revision and disappear. In general, the changes from v2->v3 are minor 
+and well contained, so any reviews I receive for v2 will be valid.
+That being said, I can send v3 today if you'd prefer that. Please let me 
+know.
 
+> there was a bug you wanted to fix.
+>
+
+I assume the bug is Sairaj's report of a dmesg warning with an NVME 
+passthrough on a 4.15 kernel, but unfortunately I have not been able to 
+reproduce that problem. We agreed that given the age of the kernel (and 
+reports of the same warning on NVME devices in unrelated scenarios), 
+this is likely a guest driver issue, and should not be a blocker.
+
+More details:
+I have tested an Ubuntu image with a 4.15 kernel, but I cannot hit any 
+issues when I passthrough a CX-6 VF (I don't have access to NMVE VF). 
+The kernel is old enough that I have to force bind the mlx5_core driver 
+to the VF on the guest, but once I do the VF comes up with no errors and 
+I can see DMA map/unmap activity in the traces.
+
+Sairaj: Are you passing a full NVME device to the guest (i.e. a PF)? I 
+ask because the BDF in '-device vfio-pci,host=0000:44:00.0' doesn't look 
+like a typical VF...
+
+Thank you,
+Alejandro
+
+>> Changes since v1[0]:
+>> - Added documentation entry for '-device amd-iommu'
+>> - Code movement with no functional changes to avoid use of forward
+>>    declarations in later patches [Sairaj, mst]
+>> - Moved addr_translation and dma-remap property to separate commits.
+>>    The dma-remap feature is only available for users to enable after
+>>    all required functionality is implemented [Sairaj]
+>> - Explicit initialization of significant fields like addr_translation
+>>    and notifier_flags [Sairaj]
+>> - Fixed bug in decoding of invalidation size [Sairaj]
+>> - Changed fetch_pte() to use an out parameter for pte, and be able to
+>>    check for error conditions via negative return value [Clement]
+>> - Removed UNMAP-only notifier optimization, leaving vhost support for
+>>    later series [Sairaj]
+>> - Fixed ordering between address space unmap and memory region activation
+>>    on devtab invalidation [Sairaj]
+>> - Fixed commit message with "V=1, TV=0" [Sairaj]
+>> - Dropped patch removing the page_fault event. That area is better
+>>    addressed in separate series.
+>> - Independent testing by Sairaj (thank you!)
+>>
+>> Thank you,
+>> Alejandro
+>>
+>> [0] https://lore.kernel.org/all/20250414020253.443831-1-alejandro.j.jimenez@oracle.com/
+>>
+>> Alejandro Jimenez (20):
+>>    memory: Adjust event ranges to fit within notifier boundaries
+>>    amd_iommu: Document '-device amd-iommu' common options
+>>    amd_iommu: Reorder device and page table helpers
+>>    amd_iommu: Helper to decode size of page invalidation command
+>>    amd_iommu: Add helper function to extract the DTE
+>>    amd_iommu: Return an error when unable to read PTE from guest memory
+>>    amd_iommu: Add helpers to walk AMD v1 Page Table format
+>>    amd_iommu: Add a page walker to sync shadow page tables on
+>>      invalidation
+>>    amd_iommu: Add basic structure to support IOMMU notifier updates
+>>    amd_iommu: Sync shadow page tables on page invalidation
+>>    amd_iommu: Use iova_tree records to determine large page size on UNMAP
+>>    amd_iommu: Unmap all address spaces under the AMD IOMMU on reset
+>>    amd_iommu: Add replay callback
+>>    amd_iommu: Invalidate address translations on INVALIDATE_IOMMU_ALL
+>>    amd_iommu: Toggle memory regions based on address translation mode
+>>    amd_iommu: Set all address spaces to default translation mode on reset
+>>    amd_iommu: Add dma-remap property to AMD vIOMMU device
+>>    amd_iommu: Toggle address translation mode on devtab entry
+>>      invalidation
+>>    amd_iommu: Do not assume passthrough translation when DTE[TV]=0
+>>    amd_iommu: Refactor amdvi_page_walk() to use common code for page walk
+>>
+>>   hw/i386/amd_iommu.c | 1005 ++++++++++++++++++++++++++++++++++++-------
+>>   hw/i386/amd_iommu.h |   52 +++
+>>   qemu-options.hx     |   23 +
+>>   system/memory.c     |   10 +-
+>>   4 files changed, 934 insertions(+), 156 deletions(-)
+>>
+>>
+>> base-commit: 5134cf9b5d3aee4475fe7e1c1c11b093731073cf
+>> -- 
+>> 2.43.5
 > 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  hw/acpi/ghes.c           | 16 ++++++++--------
->  hw/arm/virt-acpi-build.c | 12 ++++++++----
->  include/hw/acpi/ghes.h   | 25 +++++++++++++------------
->  3 files changed, 29 insertions(+), 24 deletions(-)
-> 
-> diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-> index 1fd5ba941771..ea00fed75c16 100644
-> --- a/hw/acpi/ghes.c
-> +++ b/hw/acpi/ghes.c
-> @@ -243,7 +243,7 @@ ghes_gen_err_data_uncorrectable_recoverable(GArray *block,
->   * Initialize "etc/hardware_errors" and "etc/hardware_errors_addr" fw_cfg blobs.
->   * See docs/specs/acpi_hest_ghes.rst for blobs format.
->   */
-> -static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
-> +static void build_ghes_error_table(GArray *hardware_errors, bool use_hest_addr,
->                                     BIOSLinker *linker, int num_sources)
->  {
->      int i, error_status_block_offset;
-> @@ -289,7 +289,7 @@ static void build_ghes_error_table(AcpiGhesState *ags, GArray *hardware_errors,
->                                         i * ACPI_GHES_MAX_RAW_DATA_LENGTH);
->      }
->  
-> -    if (!ags->use_hest_addr) {
-> +    if (!use_hest_addr) {
->          /*
->           * Tell firmware to write hardware_errors GPA into
->           * hardware_errors_addr fw_cfg, once the former has been initialized.
-> @@ -372,7 +372,7 @@ static void build_ghes_v2_entry(GArray *table_data,
->  }
->  
->  /* Build Hardware Error Source Table */
-> -void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-> +void acpi_build_hest(GArray *table_data, bool use_hest_addr,
->                       GArray *hardware_errors,
->                       BIOSLinker *linker,
->                       const AcpiNotificationSourceId *notif_source,
-> @@ -386,7 +386,7 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
->  
->      hest_offset = table_data->len;
->  
-> -    build_ghes_error_table(ags, hardware_errors, linker, num_sources);
-> +    build_ghes_error_table(hardware_errors, use_hest_addr, linker, num_sources);
->  
->      acpi_table_begin(&table, table_data);
->  
-> @@ -398,7 +398,7 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
->  
->      acpi_table_end(linker, &table);
->  
-> -    if (ags->use_hest_addr) {
-> +    if (use_hest_addr) {
->          /*
->           * Tell firmware to write into GPA the address of HEST via fw_cfg,
->           * once initialized.
-> @@ -411,13 +411,13 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
->  }
->  
->  void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> -                          GArray *hardware_error)
-> +                          bool use_hest_addr, GArray *hardware_error)
->  {
->      /* Create a read-only fw_cfg file for GHES */
->      fw_cfg_add_file(s, ACPI_HW_ERROR_FW_CFG_FILE, hardware_error->data,
->                      hardware_error->len);
->  
-> -    if (ags->use_hest_addr) {
-> +    if (use_hest_addr) {
->          fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
->              NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
->      } else {
-> @@ -529,7 +529,7 @@ void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
->          return;
->      }
->  
-> -    if (!ags->use_hest_addr) {
-> +    if (ags->hw_error_le) {
->          get_hw_error_offsets(le64_to_cpu(ags->hw_error_le),
->                               &cper_addr, &read_ack_register_addr);
->      } else {
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 154337e1a77b..71da17b652b2 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -964,9 +964,11 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->          acpi_ged_state = ACPI_GED(vms->acpi_dev);
->          ags = &acpi_ged_state->ghes_state;
->          if (ags) {
-> +            bool use_hest_addr = ags->use_hest_addr;
-> +
->              acpi_add_table(table_offsets, tables_blob);
->  
-> -            if (!ags->use_hest_addr) {
-> +            if (!use_hest_addr) {
->                  notify = hest_ghes_notify_9_2;
->                  notify_sz = ARRAY_SIZE(hest_ghes_notify_9_2);
->              } else {
-> @@ -974,7 +976,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->                  notify_sz = ARRAY_SIZE(hest_ghes_notify);
->              }
->  
-> -            acpi_build_hest(ags, tables_blob, tables->hardware_errors,
-> +            acpi_build_hest(tables_blob, use_hest_addr, tables->hardware_errors,
->                              tables->linker, notify, notify_sz,
->                              vms->oem_id, vms->oem_table_id);
->          }
-> @@ -1143,8 +1145,10 @@ void virt_acpi_setup(VirtMachineState *vms)
->      if (vms->ras) {
->          assert(vms->acpi_dev);
->          acpi_ged_state = ACPI_GED(vms->acpi_dev);
-> -        acpi_ghes_add_fw_cfg(&acpi_ged_state->ghes_state,
-> -                             vms->fw_cfg, tables.hardware_errors);
-> +        AcpiGhesState *ags = &acpi_ged_state->ghes_state;
-> +
-> +        acpi_ghes_add_fw_cfg(ags, vms->fw_cfg, ags->use_hest_addr,
-> +                             tables.hardware_errors);
->      }
->  
->      build_state->rsdp_mr = acpi_add_rom_blob(virt_acpi_build_update,
-> diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-> index df2ecbf6e4a9..eae6d4d0a562 100644
-> --- a/include/hw/acpi/ghes.h
-> +++ b/include/hw/acpi/ghes.h
-> @@ -73,31 +73,32 @@ typedef struct AcpiNotificationSourceId {
->      enum AcpiGhesNotifyType notify;
->  } AcpiNotificationSourceId;
->  
-> -/*
-> - * AcpiGhesState stores GPA values that will be used to fill HEST entries.
-> +/**
-> + * struct AcpiGhesState - GPA values that will be used to fill HEST entries
->   *
-> - * When use_hest_addr is false, the GPA of the etc/hardware_errors firmware
-> - * is stored at hw_error_le. This is the default on QEMU 9.x.
-> + * @hest_addr_le: GPA of the HEST table. Used on QEMU 10.x and above.
-> + * @hw_error_le: GPA of the etc/hardware_errors firmware.
-> + *               Used only on arm64 virt-9.x to preserve compatibility
-> + *               with QEMU 9.x.
-> + * @use_hest_addr: True if HEST address is present. Used only on arm64,
-> + *                 to identify if QEMU 9.x migration is needed.
->   *
-> - * When use_hest_addr is true, the GPA of the HEST table is stored at
-> - * hest_addr_le. This is the default for QEMU 10.x and above.
-> - *
-> - * Whe both GPA values are equal to zero means that GHES is not present.
-> + * When both GPA values are equal to zero means that GHES is not present.
->   */
->  typedef struct AcpiGhesState {
->      uint64_t hest_addr_le;
->      uint64_t hw_error_le;
-> -    bool use_hest_addr; /* True if HEST address is present */
-> +    bool use_hest_addr;
->  } AcpiGhesState;
->  
-> -void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-> +void acpi_build_hest(GArray *table_data, bool use_hest_addr,
->                       GArray *hardware_errors,
->                       BIOSLinker *linker,
->                       const AcpiNotificationSourceId * const notif_source,
->                       int num_sources,
->                       const char *oem_id, const char *oem_table_id);
-> -void acpi_ghes_add_fw_cfg(AcpiGhesState *vms, FWCfgState *s,
-> -                          GArray *hardware_errors);
-> +void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-> +                          bool use_hest_addr, GArray *hardware_error);
->  int acpi_ghes_memory_errors(AcpiGhesState *ags, uint16_t source_id,
->                              uint64_t error_physical_addr);
->  void ghes_record_cper_errors(AcpiGhesState *ags, const void *cper, size_t len,
 
 
