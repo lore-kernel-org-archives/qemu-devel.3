@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9164CC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:14:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE214C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 07:14:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKtvi-0008Na-TF; Fri, 30 May 2025 03:13:26 -0400
+	id 1uKtvn-0008Ti-V6; Fri, 30 May 2025 03:13:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtve-0008Hi-Iq
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uKtvk-0008R1-8Q
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKtvb-0006pA-1w
- for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:21 -0400
+ id 1uKtvg-0006pc-JR
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 03:13:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748589198;
+ s=mimecast20190719; t=1748589203;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MmCqGv2PLULpIzliwAI2nsyTkhSfdekcaFoTKA8oFL8=;
- b=Yb+rAql9fFlkZlNb+8IHIsooZFr9vBkjT/DQC3WpJTK/+mQW4AWfZln+dJ4gRKyvm1tOXD
- 76FxoVBgIuF1LcYYPYE7PUwlrIAYnmJic/lE3FTKTPnjYm8MY6kmCM00RQKaVbGF1J7z42
- We2yOrAque+2MkAxbattSUSQL5Sxd10=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AnmrsWO7Zf4jQvqc7hdOgurbp4085MGT48vgTwbmGno=;
+ b=YdYwPJRIQ5+S7NqhNsFXYaX2MDJhk2Up9BaTGZRdzPO5bq4qGPfMJ2/5O1Pc6K28lBNO52
+ D0DHm6UG6+o1+hwB9xv7Su7D3FFM/UgP4X8NFgvGR6AI/C/yGkhM2YziWTrEzAjsQlOFm+
+ MEAnkmsVzcEwm29xJWzr3ytwWsv5S3A=
+Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
+ [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-586-_lr_WY2GPRy1V5xJOuJNEg-1; Fri, 30 May 2025 03:13:17 -0400
-X-MC-Unique: _lr_WY2GPRy1V5xJOuJNEg-1
-X-Mimecast-MFC-AGG-ID: _lr_WY2GPRy1V5xJOuJNEg_1748589196
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ad8816c50e1so121137666b.0
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:16 -0700 (PDT)
+ us-mta-623-4kDa0ze_NauIyNhtlImWaQ-1; Fri, 30 May 2025 03:13:22 -0400
+X-MC-Unique: 4kDa0ze_NauIyNhtlImWaQ-1
+X-Mimecast-MFC-AGG-ID: 4kDa0ze_NauIyNhtlImWaQ_1748589201
+Received: by mail-ed1-f69.google.com with SMTP id
+ 4fb4d7f45d1cf-604793191acso1592358a12.0
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 00:13:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748589195; x=1749193995;
+ d=1e100.net; s=20230601; t=1748589201; x=1749194001;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MmCqGv2PLULpIzliwAI2nsyTkhSfdekcaFoTKA8oFL8=;
- b=lJtnA3IG+T5nPYWuTipBGZEOPZzSc2KFIXXERWY+a8GIlcJRx1q6JV/qN2ef9bdo30
- sia9AJ87a7fZ2u+QJdtRu8M5Y2pEmsRhC41aL63wlQdDfobdNMtfpyN4cJ34jKldHRlw
- q8wXiIdPoM5CLfYhvrQSr65HvddtTtUWI53YiMmNvx+lyKclIR3vb248VsAosUGW+//J
- wUFVYngf+eV2mWXZhDOW0veTO4J5fbYJgUS4AcTu0kzv624lNPW3jCZncpjJ6JhKxOF0
- wWVWtnqzMh5RpqFzIW2qkPq0fprTudg5V7HF424ZrufjFw3VpILVG0gUkPy7IPyqNidU
- Q/ww==
-X-Gm-Message-State: AOJu0YyBO4ER2vgfMdjRSrCkXCJVt9QK1KEdP72eWb2S51FCOTFFvgLH
- SWnsW/PmYvG3jmudq6zTDTdulpfga7kqx1c3fwJEPWNsPav/bnHGdWnNzC+cjv+hX+4lIQc0XeL
- yEmV6LyUl8KDH5ZFzGqYeIBU70IX7oLWiLSRUb2qGwLOSFhmX/mErb6OztUYtwowPrM3WmwpdCw
- Ev3LwHQ3YLtvRDHHpf5+plW2gVwqNML8Sq9MrKU40C
-X-Gm-Gg: ASbGncsyAravzW0wmjvjobnTrSfJ1hPVx/ZeMSLcwMtMbswt84Zk7x0k2nruQJwZlcv
- JU0cKYDFj5FfkiP3AC1fg0tPj2+lKPv0cIQtzjhgb+izZ6fCoptjTnTPgzxWVNyQ0dmzxJmuqW1
- 9jNG6udZwj2yQ0E5xzJOsZ6ReNwk1sWqsdjc5ykUdDE0V8zjVeWB11jn1vUEFb/U6jmFni3hRVC
- xpp7kbMxRFoWNREtmJRFd9CEtu/YdX8ub2XMXiNXw5OVUAuoyx3L3GV8w3dtFumB1P9M8JX19ay
- jqVaXNZReOd4mw==
-X-Received: by 2002:a17:906:36d9:b0:adb:3509:b459 with SMTP id
- a640c23a62f3a-adb3509b66bmr95106466b.19.1748589194995; 
- Fri, 30 May 2025 00:13:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiH1tT4H+jMeLRwMsO8hoa/9WyExHTmd8OqM7kxPpX55unrESa4fEfTGa8ONh0xDlPT9sr+A==
-X-Received: by 2002:a17:906:36d9:b0:adb:3509:b459 with SMTP id
- a640c23a62f3a-adb3509b66bmr95103566b.19.1748589194517; 
- Fri, 30 May 2025 00:13:14 -0700 (PDT)
+ bh=AnmrsWO7Zf4jQvqc7hdOgurbp4085MGT48vgTwbmGno=;
+ b=KEN1KUfrRXOzr6Qf8bsn7ehjjxrkrq/zlPzC6uYg3m9a4YPOlPqkZj/0fD8Ou5s1a2
+ 3dcRbNApzWu1qtVjYcQOnycyvFyp14dDt0GDsXdLwH/I+8Uwhdhu4+5OKgPq+zVWx+8K
+ aB28OBPwkAPFybjz4OTKwy6+wEngDJ86BofLZtm+huexUScX3GT8A7lFkp6G2izgJxPd
+ fv/h37Sf+pGHA7MmwnVR73jnH/lpof4ddmw/d1H/ehHx0efZ11fuNlS/C7zwNzIfTtqa
+ r0mQbnZ22ie4/3ib8tSzXL9YE2p945V9KyHre+DjZWwBrzhAp0HtbqvdxjzcVXeRIT3o
+ tDKw==
+X-Gm-Message-State: AOJu0YydZaQYBMnentq95zHct8Sj0OjaWkR8Q/4zbGvjMPogsbswVD9p
+ IBIH4K07eC7+xHEPfMgR6FDkhcHcWMcvXCoO7xBl9OGVbYe+5+fgEsovu2ydVnenes6dCu/qsWL
+ Zv0bykubo2EO1Ps9zkFAwHU6nzBBHUXvHBs3YTi4fvf2s6Jx66ejIXj5rUNTt3d8XPRgWO/7dcx
+ 0SoVJkmTSd9lw86OOA/q5JSSgx7NSPEGzStqb5PLC8
+X-Gm-Gg: ASbGnctPptROxekrBBQQnU8WnP+x+CdNwUfsbO8kYptZkPPLzlac759sJHKCRL573ZW
+ AnjYUzwhcQmB/W8Mclmfu5UthKG0kLIuOpru0SZYi5Xk0VLe6X0bXQEIyI9gd3jpMHZeVo9X8PO
+ uNWqzqaunZ8FK2IONt6cQSFG256tSXBaesEhlTdd1U93KNGT098GUZMbcy6js5UzjQS5P7LZDfk
+ yO0wZTDxuexbOJPEgAsrXOv2YpmeNKcELUPt0midLOaGXFf/srTN4/2QEzKu7cBPG4skoVaV5Ry
+ zJI1X5M5zbF+qw==
+X-Received: by 2002:a05:6402:5c9:b0:602:cef9:a63e with SMTP id
+ 4fb4d7f45d1cf-6056e9156d0mr1698172a12.30.1748589200553; 
+ Fri, 30 May 2025 00:13:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IECshrReUbZW3wM9qIgHa3z/qCRiIcSBiiwQvyo34jPzeZ6DQw1zU9Y9YQMRHWY8Q/uRtuKDA==
+X-Received: by 2002:a05:6402:5c9:b0:602:cef9:a63e with SMTP id
+ 4fb4d7f45d1cf-6056e9156d0mr1698098a12.30.1748589199362; 
+ Fri, 30 May 2025 00:13:19 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad3a6b6sm277715266b.142.2025.05.30.00.13.13
+ 4fb4d7f45d1cf-60567143860sm1177565a12.57.2025.05.30.00.13.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 00:13:13 -0700 (PDT)
+ Fri, 30 May 2025 00:13:17 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 09/77] rust: Fix Zhao's email address
-Date: Fri, 30 May 2025 09:11:39 +0200
-Message-ID: <20250530071250.2050910-10-pbonzini@redhat.com>
+Subject: [PULL 11/77] rust: hpet: rename hpet module to "device"
+Date: Fri, 30 May 2025 09:11:41 +0200
+Message-ID: <20250530071250.2050910-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530071250.2050910-1-pbonzini@redhat.com>
 References: <20250530071250.2050910-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -108,88 +108,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+Follow a similar convention as pl011.
 
-No one could find Zhao Liu via zhai1.liu@intel.com.
-
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250520152750.2542612-5-zhao1.liu@intel.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/fw_cfg.rs     | 2 +-
- rust/hw/timer/hpet/src/hpet.rs       | 2 +-
- rust/hw/timer/hpet/src/lib.rs        | 2 +-
- rust/qemu-api/src/bitops.rs          | 2 +-
- rust/qemu-api/src/timer.rs           | 2 +-
- rust/qemu-api/tests/vmstate_tests.rs | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+ rust/hw/timer/hpet/src/{hpet.rs => device.rs} | 0
+ rust/hw/timer/hpet/src/lib.rs                 | 2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename rust/hw/timer/hpet/src/{hpet.rs => device.rs} (100%)
 
-diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
-index aa08d283519..6c10316104c 100644
---- a/rust/hw/timer/hpet/src/fw_cfg.rs
-+++ b/rust/hw/timer/hpet/src/fw_cfg.rs
-@@ -1,5 +1,5 @@
- // Copyright (C) 2024 Intel Corporation.
--// Author(s): Zhao Liu <zhai1.liu@intel.com>
-+// Author(s): Zhao Liu <zhao1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use std::ptr::addr_of_mut;
-diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/hpet.rs
-index 779681d6509..e3ba62b2875 100644
---- a/rust/hw/timer/hpet/src/hpet.rs
-+++ b/rust/hw/timer/hpet/src/hpet.rs
-@@ -1,5 +1,5 @@
- // Copyright (C) 2024 Intel Corporation.
--// Author(s): Zhao Liu <zhai1.liu@intel.com>
-+// Author(s): Zhao Liu <zhao1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use std::{
+diff --git a/rust/hw/timer/hpet/src/hpet.rs b/rust/hw/timer/hpet/src/device.rs
+similarity index 100%
+rename from rust/hw/timer/hpet/src/hpet.rs
+rename to rust/hw/timer/hpet/src/device.rs
 diff --git a/rust/hw/timer/hpet/src/lib.rs b/rust/hw/timer/hpet/src/lib.rs
-index 1954584a87e..141aae229d4 100644
+index 141aae229d4..a95cf14ac98 100644
 --- a/rust/hw/timer/hpet/src/lib.rs
 +++ b/rust/hw/timer/hpet/src/lib.rs
-@@ -1,5 +1,5 @@
- // Copyright (C) 2024 Intel Corporation.
--// Author(s): Zhao Liu <zhai1.liu@intel.com>
-+// Author(s): Zhao Liu <zhao1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
+@@ -7,7 +7,7 @@
+ //! This library implements a device model for the IA-PC HPET (High
+ //! Precision Event Timers) device in QEMU.
  
- //! # HPET QEMU Device Model
-diff --git a/rust/qemu-api/src/bitops.rs b/rust/qemu-api/src/bitops.rs
-index 023ec1a9983..b1e3a530ab5 100644
---- a/rust/qemu-api/src/bitops.rs
-+++ b/rust/qemu-api/src/bitops.rs
-@@ -1,5 +1,5 @@
- // Copyright (C) 2024 Intel Corporation.
--// Author(s): Zhao Liu <zhai1.liu@intel.com>
-+// Author(s): Zhao Liu <zhao1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
++pub mod device;
+ pub mod fw_cfg;
+-pub mod hpet;
  
- //! This module provides bit operation extensions to integer types.
-diff --git a/rust/qemu-api/src/timer.rs b/rust/qemu-api/src/timer.rs
-index 868bd88575f..0a2d111d490 100644
---- a/rust/qemu-api/src/timer.rs
-+++ b/rust/qemu-api/src/timer.rs
-@@ -1,5 +1,5 @@
- // Copyright (C) 2024 Intel Corporation.
--// Author(s): Zhao Liu <zhai1.liu@intel.com>
-+// Author(s): Zhao Liu <zhao1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use std::{
-diff --git a/rust/qemu-api/tests/vmstate_tests.rs b/rust/qemu-api/tests/vmstate_tests.rs
-index ad0fc5cd5dd..bded836eb60 100644
---- a/rust/qemu-api/tests/vmstate_tests.rs
-+++ b/rust/qemu-api/tests/vmstate_tests.rs
-@@ -1,5 +1,5 @@
- // Copyright (C) 2025 Intel Corporation.
--// Author(s): Zhao Liu <zhai1.liu@intel.com>
-+// Author(s): Zhao Liu <zhao1.liu@intel.com>
- // SPDX-License-Identifier: GPL-2.0-or-later
- 
- use std::{
+ pub const TYPE_HPET: &::std::ffi::CStr = c"hpet";
 -- 
 2.49.0
 
