@@ -4,23 +4,23 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A264C5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B5BC5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 15:14:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uL1Ou-0002xh-6j; Fri, 30 May 2025 11:12:04 -0400
+	id 1uL1Om-0002sJ-L7; Fri, 30 May 2025 11:11:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1Om-0002rv-EU; Fri, 30 May 2025 11:11:56 -0400
+ id 1uL1Oj-0002pe-3a; Fri, 30 May 2025 11:11:53 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uL1Ok-0002Fg-Rk; Fri, 30 May 2025 11:11:56 -0400
+ id 1uL1Og-0002EK-RO; Fri, 30 May 2025 11:11:52 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 8B9D044A73;
- Fri, 30 May 2025 17:11:41 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 28B654484B;
+ Fri, 30 May 2025 17:11:40 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
@@ -28,10 +28,10 @@ Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
  eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
  xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
  fam@euphon.net, ari@tuxera.com
-Subject: [PATCH v4 07/48] block: mark bdrv_child_change_aio_context()
- GRAPH_RDLOCK
-Date: Fri, 30 May 2025 17:10:44 +0200
-Message-Id: <20250530151125.955508-8-f.ebner@proxmox.com>
+Subject: [PATCH v4 01/48] block: remove outdated comments about AioContext
+ locking
+Date: Fri, 30 May 2025 17:10:38 +0200
+Message-Id: <20250530151125.955508-2-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250530151125.955508-1-f.ebner@proxmox.com>
 References: <20250530151125.955508-1-f.ebner@proxmox.com>
@@ -60,35 +60,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a small step in preparation to mark bdrv_drained_begin() as
-GRAPH_UNLOCKED. More concretely, it is in preparation to move the
-drain out of bdrv_change_aio_context() and marking that function as
-GRAPH_RDLOCK.
+AioContext locking was removed in commit b49f4755c7 ("block: remove
+AioContext locking").
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/block-global-state.h | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ block.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/include/block/block-global-state.h b/include/block/block-global-state.h
-index 9be34b3c99..aad160956a 100644
---- a/include/block/block-global-state.h
-+++ b/include/block/block-global-state.h
-@@ -274,9 +274,10 @@ int bdrv_debug_remove_breakpoint(BlockDriverState *bs, const char *tag);
- int bdrv_debug_resume(BlockDriverState *bs, const char *tag);
- bool bdrv_debug_is_suspended(BlockDriverState *bs, const char *tag);
+diff --git a/block.c b/block.c
+index f222e1a50a..a5399888ba 100644
+--- a/block.c
++++ b/block.c
+@@ -4359,8 +4359,6 @@ bdrv_recurse_has_child(BlockDriverState *bs, BlockDriverState *child)
+  * bs_queue, or the existing bs_queue being used.
+  *
+  * bs is drained here and undrained by bdrv_reopen_queue_free().
+- *
+- * To be called with bs->aio_context locked.
+  */
+ static BlockReopenQueue * GRAPH_RDLOCK
+ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+@@ -4519,7 +4517,6 @@ bdrv_reopen_queue_child(BlockReopenQueue *bs_queue, BlockDriverState *bs,
+     return bs_queue;
+ }
  
--bool bdrv_child_change_aio_context(BdrvChild *c, AioContext *ctx,
--                                   GHashTable *visited, Transaction *tran,
--                                   Error **errp);
-+bool GRAPH_RDLOCK
-+bdrv_child_change_aio_context(BdrvChild *c, AioContext *ctx,
-+                              GHashTable *visited, Transaction *tran,
-+                              Error **errp);
- int bdrv_try_change_aio_context(BlockDriverState *bs, AioContext *ctx,
-                                 BdrvChild *ignore_child, Error **errp);
+-/* To be called with bs->aio_context locked */
+ BlockReopenQueue *bdrv_reopen_queue(BlockReopenQueue *bs_queue,
+                                     BlockDriverState *bs,
+                                     QDict *options, bool keep_old_opts)
+@@ -7278,10 +7275,6 @@ bool bdrv_op_blocker_is_empty(BlockDriverState *bs)
+     return true;
+ }
  
+-/*
+- * Must not be called while holding the lock of an AioContext other than the
+- * current one.
+- */
+ void bdrv_img_create(const char *filename, const char *fmt,
+                      const char *base_filename, const char *base_fmt,
+                      char *options, uint64_t img_size, int flags, bool quiet,
 -- 
 2.39.5
 
