@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64452C5B549
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C74D5C3ABB2
 	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 08:04:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKui4-0002Ou-50; Fri, 30 May 2025 04:03:24 -0400
+	id 1uKuiY-0002f4-SF; Fri, 30 May 2025 04:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKui0-0002NC-Np
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:21 -0400
+ id 1uKuiO-0002Yx-EJ
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uKuhy-0004Xy-9R
- for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:20 -0400
+ id 1uKuiL-0004e8-Ge
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 04:03:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748592197;
+ s=mimecast20190719; t=1748592220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UUj6q6B+e336ffq5s6Zk0rCKpR7Qm0AOx4IF/wqWtHg=;
- b=BuzoIo0GoYJ7OKAYRjooTYF579eNkmBPbdc524YVBxi5ZABfpfvpT9jKUdWRtKyWhcQqcf
- 9Bf0ZEyPbINyNEPyJr++xpFiTfKRMOdPpdg+v2/h9ATOyZ8DfN8XGOCR3xHXxZsr/XXOBu
- Cg1gPA3DuKqGTu7tu/dRFSkkGI4zm5s=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VTevlSH5ZQkYyW+Mm1Gr4K/vGmq39vmXxviFGBBggFI=;
+ b=gVsPpSwsYFhRC2DlWsochc1nYu0nEnc7+AwWavoEyCwBR2Vdeuqhon/dGSZwRsODREUP1R
+ ygtQSlqWIdcetg/YhxuD+cWA9w9/gPbcc3JWJ+8yFp8LpbWyhwxSSXZo6TJUno4il1WEKT
+ BXzS7707dP9T+F6HZP5P9+0PeF7gCrw=
+Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
+ [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-513-TjJSTUJPN-Kpf1L1BBwoZA-1; Fri, 30 May 2025 04:03:15 -0400
-X-MC-Unique: TjJSTUJPN-Kpf1L1BBwoZA-1
-X-Mimecast-MFC-AGG-ID: TjJSTUJPN-Kpf1L1BBwoZA_1748592195
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-adb32dbf60bso67157166b.1
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 01:03:15 -0700 (PDT)
+ us-mta-75-MWJoTG4SNw6SXHKAAg9pKw-1; Fri, 30 May 2025 04:03:39 -0400
+X-MC-Unique: MWJoTG4SNw6SXHKAAg9pKw-1
+X-Mimecast-MFC-AGG-ID: MWJoTG4SNw6SXHKAAg9pKw_1748592218
+Received: by mail-ej1-f72.google.com with SMTP id
+ a640c23a62f3a-ad556f5f1a9so131907666b.3
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 01:03:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748592194; x=1749196994;
+ d=1e100.net; s=20230601; t=1748592218; x=1749197018;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UUj6q6B+e336ffq5s6Zk0rCKpR7Qm0AOx4IF/wqWtHg=;
- b=pGcYymaHyI1JusKvcYjLND3MmmqPXh58kAbNff/+aSgoj7VttwNUNK7AscaxV2btTA
- CyaP2JAUY+fHqxFZY7TRyWDhZQS1+xMyTqUbSWtOsRWcVOWNtohqLngM9fFSxSd7IFT9
- hk3e6QlF34SfQQo3eB37RleL9eWyG8vzpHe7k8LBpVu+7NUSgv7aKtgdApIwmis5edJi
- uL2a79q7PbataFmVMWFQiWpcXVuep7tD4Jfh74V5haFlXWNHq1RQJAJ5qIpYmYtFwFf1
- 6WnPxNyHGAfn2AdjtUayFuolo054XRv1xidS8V3adhvXmwNO6Ggq/7h4iNfXGRm+GQCv
- 6NaA==
-X-Gm-Message-State: AOJu0YzQXXnIawZ0cGdiy+3ZYX8dqJ7M3AsY8xKCe+uAaV2e6SQq3r6g
- hKde6B3mghu1NHmhhq2cE1e9Yve+qou3acP5GcYOKOmJJUyS7LLGh1WTIkWn11jHF2vjVCJtkOS
- O5Pz5YWIXaHCXdjz9UJhEWc0wM1JckzXwzPLOYhTTa5aPGlR7cyuOSjm+XlpybuV0uHedScTbru
- WhDVSmbCAdN1w006n3Mdv+haxTXCkUnW8PzmVn+UBf
-X-Gm-Gg: ASbGnctSkoMVFjXb9/DkEesHFPAc44NUNkxWD89Np8BawfUvdienhUFaCQHOk4/2ut4
- fTdPEkF3aT5eDKb3XSIQBpgo/kbZfvsET1xd5ZTS9eY40tob9yXfiadZqtgJjQGC9gpAPEKUq3R
- haWUT2BOVZd1EPWYSbSWo9iYAmtNScQsBNn4FgdTC2KSf9UmPATHJRDdLuwpiMWvlhMurwyaFTY
- qGbLF6nHFQwwqa6swBXou9FpcCEocjyvLYXaAPGFHYJ1o1fZClOobtsu+DHkGMYqeyWF5pYRzA7
- kBq3cysdGMqqsw==
-X-Received: by 2002:a17:907:1ca3:b0:ad2:4b0c:ee8c with SMTP id
- a640c23a62f3a-adb322a519amr196938866b.35.1748592193817; 
- Fri, 30 May 2025 01:03:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEo1Hw4sjBjsj+Yc+BNtiU9OxmVUqqSMVhs3xXzI7t163AFUQEsY+/ECdsA3TBUxA2FYIjjnA==
-X-Received: by 2002:a17:907:1ca3:b0:ad2:4b0c:ee8c with SMTP id
- a640c23a62f3a-adb322a519amr196935766b.35.1748592193362; 
- Fri, 30 May 2025 01:03:13 -0700 (PDT)
+ bh=VTevlSH5ZQkYyW+Mm1Gr4K/vGmq39vmXxviFGBBggFI=;
+ b=rHLUR+cBWSLB2nI2yDnW/rN0zZs4CAzA2AyUqYB0JdHwDWvm8Gb/KHJd0YDYWlphZJ
+ drkbBn9u+AXW0/aZQHXeTFT3el+WHqvK7bWBrqgV+KDE/Epa5LC1klJd5xpwzYZYkTZZ
+ Jy4eprZt50PndWXSg9YEbeDLSDRXmrktv+OgJns0QzELx0MIbzPT1c0ey0YC19VV2iFe
+ IJQ88JtKD3Cp085d4o78vfAxyzbHkwhS2ltOydzsKcokv3Biq9/3TpBXy9YuDKBiDJed
+ Sgp5ZdzlZT7jRljLpQf8uwP18qvJDQa144Hv64I10bwLkI8etjhhUMCrdZub3N9iNrls
+ 8m8A==
+X-Gm-Message-State: AOJu0YzJS8Xkl1DkfPXVUpCIl2SmxemaT1s7WjLbqfLya2+cknI1vDEA
+ 2DjuzSs5+y8jQ63iXvmqEdrgXirEtB5Hy+hSuIC3+aWV8AXQvTZmbvuuW1TquOBrWO49E7Zhx42
+ PgolxdhFKU6Y/fENmW4rpma7VITFmOSl7zI56zd7Eetmt1gCXuobaD4k6lCjYn9MRQr6OIFQD/R
+ ZJXSNmDnVm8CgizA7Xmn6r0Ie/FNK4XD6KGpjyo2Ad
+X-Gm-Gg: ASbGncsqzAQy7fF/C0akjsJ+MbG6Dg726TaG7Nr634nqe3kNC6sxpuzc69A4bXnUZYg
+ uFPTc0s4nbqaMQTeUCfO/VlvMMdCMVSiCG4aFLx7tB778MUvhcz1v1ZFZ0tddLsglwQeRc3Gmmd
+ P/UOcdmroNz2R8HPz+cXLxGhQAMae4luJL8T2wy9LJYSBhRO9iZgKa5S6WNgRuodj9tB5n1uxVi
+ TYPah9Kb9LGsuD4TuLPGOGOd2zIGoERnUbdUoGPAe+cVtOIQB0c+Jbk9l9nMBseIK9ll+AmzOGf
+ YCbICYq2gRPwyArx2Ya43MuB
+X-Received: by 2002:a17:906:c110:b0:ad8:a935:b908 with SMTP id
+ a640c23a62f3a-adb322ace09mr198482366b.30.1748592217962; 
+ Fri, 30 May 2025 01:03:37 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQGKio6NRXHsSIQTnkeXtmtHWiIdsWF3pF0J1K64iq//5rjyAERQNoX6NCZ32Oegrk6NwjPA==
+X-Received: by 2002:a17:906:c110:b0:ad8:a935:b908 with SMTP id
+ a640c23a62f3a-adb322ace09mr198478966b.30.1748592217461; 
+ Fri, 30 May 2025 01:03:37 -0700 (PDT)
 Received: from [192.168.122.1] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad3a6d7sm282708266b.155.2025.05.30.01.03.12
+ a640c23a62f3a-ada5d82ccedsm283858666b.48.2025.05.30.01.03.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 01:03:12 -0700 (PDT)
+ Fri, 30 May 2025 01:03:35 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-rust@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 02/14] subprojects: add the foreign crate
-Date: Fri, 30 May 2025 10:02:54 +0200
-Message-ID: <20250530080307.2055502-3-pbonzini@redhat.com>
+Cc: qemu-rust@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+Subject: [PATCH 11/14] hpet: return errors from realize if properties are
+ incorrect
+Date: Fri, 30 May 2025 10:03:03 +0200
+Message-ID: <20250530080307.2055502-12-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530080307.2055502-1-pbonzini@redhat.com>
 References: <20250530080307.2055502-1-pbonzini@redhat.com>
@@ -109,145 +110,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a cleaned up and separated version of the patches at
-https://lore.kernel.org/all/20240701145853.1394967-4-pbonzini@redhat.com/
-https://lore.kernel.org/all/20240701145853.1394967-5-pbonzini@redhat.com/
+Do not silently adjust num_timers, and fail if intcap is 0.
 
-Its first user will be the Error bindings; for example a QEMU Error ** can be
-converted to a Rust Option using
-
-     unsafe { Option::<Error>::from_foreign(c_error) }
-
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/meson.build                              |  2 ++
- rust/qemu-api/meson.build                     |  2 +-
- scripts/archive-source.sh                     |  3 ++-
- scripts/make-release                          |  3 ++-
- subprojects/.gitignore                        |  1 +
- subprojects/foreign-0.3-rs.wrap               |  7 +++++
- .../packagefiles/foreign-0.3-rs/meson.build   | 26 +++++++++++++++++++
- 7 files changed, 41 insertions(+), 3 deletions(-)
- create mode 100644 subprojects/foreign-0.3-rs.wrap
- create mode 100644 subprojects/packagefiles/foreign-0.3-rs/meson.build
+ hw/timer/hpet.c | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
 
-diff --git a/rust/meson.build b/rust/meson.build
-index 6227e01f32a..59c7ed2736b 100644
---- a/rust/meson.build
-+++ b/rust/meson.build
-@@ -1,11 +1,13 @@
- subproject('anyhow-1-rs', required: true)
- subproject('bilge-0.2-rs', required: true)
- subproject('bilge-impl-0.2-rs', required: true)
-+subproject('foreign-0.3-rs', required: true)
- subproject('libc-0.2-rs', required: true)
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 9db027cf76f..cb48cc151f1 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -691,8 +691,14 @@ static void hpet_realize(DeviceState *dev, Error **errp)
+     int i;
+     HPETTimer *timer;
  
- anyhow_rs = dependency('anyhow-1-rs')
- bilge_rs = dependency('bilge-0.2-rs')
- bilge_impl_rs = dependency('bilge-impl-0.2-rs')
-+foreign_rs = dependency('foreign-0.3-rs')
- libc_rs = dependency('libc-0.2-rs')
++    if (s->num_timers < HPET_MIN_TIMERS || s->num_timers > HPET_MAX_TIMERS) {
++        error_setg(errp, "hpet.num_timers must be between %d and %d",
++                   HPET_MIN_TIMERS, HPET_MAX_TIMERS);
++        return;
++    }
+     if (!s->intcap) {
+-        warn_report("Hpet's intcap not initialized");
++        error_setg(errp, "hpet.hpet-intcap not initialized");
++        return;
+     }
+     if (hpet_fw_cfg.count == UINT8_MAX) {
+         /* first instance */
+@@ -700,7 +706,7 @@ static void hpet_realize(DeviceState *dev, Error **errp)
+     }
  
- subproject('proc-macro2-1-rs', required: true)
-diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-index 181ceca9536..aa22252866d 100644
---- a/rust/qemu-api/meson.build
-+++ b/rust/qemu-api/meson.build
-@@ -35,7 +35,7 @@ _qemu_api_rs = static_library(
-   override_options: ['rust_std=2021', 'build.rust_std=2021'],
-   rust_abi: 'rust',
-   rust_args: _qemu_api_cfg,
--  dependencies: [anyhow_rs, libc_rs, qemu_api_macros, qemuutil_rs,
-+  dependencies: [anyhow_rs, foreign_rs, libc_rs, qemu_api_macros, qemuutil_rs,
-                  qom, hwcore, chardev, migration],
- )
+     if (hpet_fw_cfg.count == 8) {
+-        error_setg(errp, "Only 8 instances of HPET is allowed");
++        error_setg(errp, "Only 8 instances of HPET are allowed");
+         return;
+     }
  
-diff --git a/scripts/archive-source.sh b/scripts/archive-source.sh
-index 816062fee94..035828c532e 100755
---- a/scripts/archive-source.sh
-+++ b/scripts/archive-source.sh
-@@ -28,7 +28,8 @@ sub_file="${sub_tdir}/submodule.tar"
- # different to the host OS.
- subprojects="keycodemapdb libvfio-user berkeley-softfloat-3
-   berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs bilge-0.2-rs
--  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs libc-0.2-rs proc-macro2-1-rs
-+  bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
-+  libc-0.2-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
-   syn-2-rs unicode-ident-1-rs"
- sub_deinit=""
-diff --git a/scripts/make-release b/scripts/make-release
-index ea65bdcc0cf..4509a9fabf5 100755
---- a/scripts/make-release
-+++ b/scripts/make-release
-@@ -41,7 +41,8 @@ fi
- # Only include wraps that are invoked with subproject()
- SUBPROJECTS="libvfio-user keycodemapdb berkeley-softfloat-3
-   berkeley-testfloat-3 anyhow-1-rs arbitrary-int-1-rs bilge-0.2-rs
--  bilge-impl-0.2-rs either-1-rs itertools-0.11-rs libc-0.2-rs proc-macro2-1-rs
-+  bilge-impl-0.2-rs either-1-rs foreign-0.3-rs itertools-0.11-rs
-+  libc-0.2-rs proc-macro2-1-rs
-   proc-macro-error-1-rs proc-macro-error-attr-1-rs quote-1-rs
-   syn-2-rs unicode-ident-1-rs"
+@@ -710,11 +716,6 @@ static void hpet_realize(DeviceState *dev, Error **errp)
+         sysbus_init_irq(sbd, &s->irqs[i]);
+     }
  
-diff --git a/subprojects/.gitignore b/subprojects/.gitignore
-index b9ae507b85a..f4281934ce1 100644
---- a/subprojects/.gitignore
-+++ b/subprojects/.gitignore
-@@ -11,6 +11,7 @@
- /bilge-0.2.0
- /bilge-impl-0.2.0
- /either-1.12.0
-+/foreign-0.3.1
- /itertools-0.11.0
- /libc-0.2.162
- /proc-macro-error-1.0.4
-diff --git a/subprojects/foreign-0.3-rs.wrap b/subprojects/foreign-0.3-rs.wrap
-new file mode 100644
-index 00000000000..0d218ec2c25
---- /dev/null
-+++ b/subprojects/foreign-0.3-rs.wrap
-@@ -0,0 +1,7 @@
-+[wrap-file]
-+directory = foreign-0.3.1
-+source_url = https://crates.io/api/v1/crates/foreign/0.3.1/download
-+source_filename = foreign-0.3.1.tar.gz
-+source_hash = 17ca1b5be8c9d320daf386f1809c7acc0cb09accbae795c2001953fa50585846
-+#method = cargo
-+patch_directory = foreign-0.3-rs
-diff --git a/subprojects/packagefiles/foreign-0.3-rs/meson.build b/subprojects/packagefiles/foreign-0.3-rs/meson.build
-new file mode 100644
-index 00000000000..0901c02c527
---- /dev/null
-+++ b/subprojects/packagefiles/foreign-0.3-rs/meson.build
-@@ -0,0 +1,26 @@
-+project('foreign-0.3-rs', 'rust',
-+  meson_version: '>=1.5.0',
-+  version: '0.2.0',
-+  license: 'MIT OR Apache-2.0',
-+  default_options: [])
-+
-+subproject('libc-0.2-rs', required: true)
-+libc_rs = dependency('libc-0.2-rs')
-+
-+_foreign_rs = static_library(
-+  'foreign',
-+  files('src/lib.rs'),
-+  gnu_symbol_visibility: 'hidden',
-+  override_options: ['rust_std=2021', 'build.rust_std=2021'],
-+  rust_abi: 'rust',
-+  rust_args: [
-+    '--cap-lints', 'allow',
-+  ],
-+  dependencies: [libc_rs],
-+)
-+
-+foreign_dep = declare_dependency(
-+  link_with: _foreign_rs,
-+)
-+
-+meson.override_dependency('foreign-0.3-rs', foreign_dep)
+-    if (s->num_timers < HPET_MIN_TIMERS) {
+-        s->num_timers = HPET_MIN_TIMERS;
+-    } else if (s->num_timers > HPET_MAX_TIMERS) {
+-        s->num_timers = HPET_MAX_TIMERS;
+-    }
+     for (i = 0; i < HPET_MAX_TIMERS; i++) {
+         timer = &s->timer[i];
+         timer->qemu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, hpet_timer, timer);
 -- 
 2.49.0
 
