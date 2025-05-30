@@ -4,99 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 239C3C5B543
-	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 12:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58CC1C5B549
+	for <qemu-devel@archiver.kernel.org>; Fri, 30 May 2025 12:12:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uKyZl-00017w-BC; Fri, 30 May 2025 08:11:05 -0400
+	id 1uKyaY-0001SS-19; Fri, 30 May 2025 08:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKyZi-00017C-Pb
- for qemu-devel@nongnu.org; Fri, 30 May 2025 08:11:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKyaU-0001Qu-FS
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 08:11:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uKyZg-0005F9-JN
- for qemu-devel@nongnu.org; Fri, 30 May 2025 08:11:02 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uKyaS-0005IA-IE
+ for qemu-devel@nongnu.org; Fri, 30 May 2025 08:11:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748607059;
+ s=mimecast20190719; t=1748607107;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=56Obo1kAqckMoE+zmxTq8NB/uf8Zra/91iFs6e+CSNk=;
- b=egH9ZraKToyVyk/zkc6KeH9EfMlAQbyvWNSQWdl/ICD+0OsV2aaUpGYIYaN1jEgbrpzSZr
- WAYP/LlV48I8KlXiOG7ify4Wr47HjaMLSmIWdz/4HFr2H7oyyIqx1NoYuuNj3r2bQvd9+k
- V+p/IRZgola3IyXGWHmvaqekdN8/R9A=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TOXFNxEr+Ox+OIhSNnPCM7SMU40zVSyxunLTDAFk2og=;
+ b=A4AIa8tWoQV423vtSOE/uZWP36Gw0GuJAc6m7mID+qqAgt9NGj5Mm3tRbu+E5U7SOIJCyT
+ oTatI/wYtskORrQQ7LVZDq1X2k+8FlT4U0kkJJh2ac7/Ivmrv0KoDNwrpiDkGEOiG5bIKs
+ Rkw0DozU3qErUrFTsuo+zNY2IO5JeM8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-MghJsjYuPvGJ4m5cecRe6w-1; Fri, 30 May 2025 08:10:58 -0400
-X-MC-Unique: MghJsjYuPvGJ4m5cecRe6w-1
-X-Mimecast-MFC-AGG-ID: MghJsjYuPvGJ4m5cecRe6w_1748607057
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-441c96c1977so13821395e9.0
- for <qemu-devel@nongnu.org>; Fri, 30 May 2025 05:10:58 -0700 (PDT)
+ us-mta-614-ouvNxY_LMtSH_p5Jn1_4uw-1; Fri, 30 May 2025 08:11:46 -0400
+X-MC-Unique: ouvNxY_LMtSH_p5Jn1_4uw-1
+X-Mimecast-MFC-AGG-ID: ouvNxY_LMtSH_p5Jn1_4uw_1748607105
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43cec217977so12784275e9.0
+ for <qemu-devel@nongnu.org>; Fri, 30 May 2025 05:11:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748607057; x=1749211857;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=56Obo1kAqckMoE+zmxTq8NB/uf8Zra/91iFs6e+CSNk=;
- b=SRYvNMd1G/mMk+povkiI6KL4xdu5IZN3MVEmDt6hcRbY/68ysilSMfch6bGEhQUl2Z
- vGQxjelu9eZxGzjohJiVVXaGkIXv8bDIOHVnVkoLCaUGsSfo6El69mmuejtS5bIC0e2M
- ihpN6NNIKgaUL6P1wpnKmaHbE4WvJ02+dtPwpjslfU9G7v1kty3TlnXe0RiFgT2FuQHG
- 76jojSahjuyknQqLVbLXEXGv1w5GKUOxzAigTSA+9j+cPE5IlKWSjrGD3CCjOoN9RYV2
- jF+HQMJNbudjtkPERCLCgvp6dWY1ID8iBvybUOj3WdS/A0/z9eV1ELb5zBS3LOaKmMsU
- cy0Q==
+ d=1e100.net; s=20230601; t=1748607105; x=1749211905;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=TOXFNxEr+Ox+OIhSNnPCM7SMU40zVSyxunLTDAFk2og=;
+ b=Jqnm55dWJsHZhUWIFJi7p/NFQVUFt1mqEld6h5zLziK/UmpRfjQe+wg+vfLCYCrQLT
+ s5PRUH00+Yq54aERJm4jjIkPwzj7fh0/1jJVw0JN/NZ8B4JBeJOWYdCVzgCV9ZIhVNp1
+ RJdJD4Bm42QBpy6enmSRQvSuYdU6bMSqcl5e08NQeuwNQZCRAgHDwxN70Xu+zv7chibI
+ e7fGXYWpzX/Rx5Dc/j5Q5MdmwnsijTg/03xv8BrKltqtLz+VqEqBaA/ELxx8Yh3vQMFh
+ H6628e2cHaDq+lVaqj+W29WjGWN7ZZmdWY+zCfxNAPuAMvDd055uQbPCgiOZ6QRnab8P
+ wOmQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVe50OaeAU6hezSNEg1QsvRMlWELPeubBswXnWaAp61fNiOM7Kew9+ruoE+w/n0Z5Ios+rVHTkKdvJm@nongnu.org
-X-Gm-Message-State: AOJu0YwXPij/dyHP716gvga4IFwCDEJqxJWNCmCruxX/6//u/D1+/J8D
- nPCkKoqf0rcjOIE2g4+lQ8EWDVDbGSmH5MThx0ECWE9Pbli/eulm8FG/gev/rhVBt6iDyiB97UJ
- JyU40WhJhnLFLTs7OfIB/QldKCaVTSrGFol7ROUGWz3ZOQRk723LyK7qV
-X-Gm-Gg: ASbGncvhfVzfswhX/OFAzKDZgeJDlJAXZor56wbSxq4Q/uRIorOvygnNJOCYFrvVB9r
- oXT06sbT4NEPNnv5oO51YNqGMAFpiWsascfmxk1j3d2V8TVvlYnHiEIb0EUxHVHKyfSS38VPkzI
- 2+0Cf+RBfxMmEN0gokmSRLqHZOWL5mztddugxjazYyNEahgSWuBYJCKKIq7WMKO8P5ZOkyGWWB5
- i5E3zkqamQFLJ5xC31tpxxSST6fO8DeTQZgOyR5HR/u6lveHkevjjVPjNeeUVtdQhtIjvt8MJtD
- Bxk4TQ==
-X-Received: by 2002:a05:600c:3147:b0:43d:b85:1831 with SMTP id
- 5b1f17b1804b1-450d8757eb5mr22549835e9.0.1748607057053; 
- Fri, 30 May 2025 05:10:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEUc0DMrk+8B1R0QjICerx0PDQ33QuxUpvmHpmbig9dnqjeFVNMVMuX8Gt6+t5/FD1ZuAJx8A==
-X-Received: by 2002:a05:600c:3147:b0:43d:b85:1831 with SMTP id
- 5b1f17b1804b1-450d8757eb5mr22549375e9.0.1748607056632; 
- Fri, 30 May 2025 05:10:56 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ AJvYcCVTKRtp69J3J/LdGuCzjDT0wHxpKGziH4iIRC5SRkUSP8JBr5fYDoiZmM4Et1vWVthUEKGun7LwX/X1@nongnu.org
+X-Gm-Message-State: AOJu0YzM67ZjyB2+8o96G7Ac3wM5WWb5s3kLrL7oYcuO9beepXAXh2Y4
+ Ms3K3X7yr1/wxPYfcaJ+OzuTJ7f7Ce6pkwXWJrRiCjGYQCRJhWNuGzKnQnSfTSCAhqiHgL8p5gb
+ L5E/Y53eC7BY/4RPhbAWlwcNJVyxXvj0UKdO+e9oMyxJCbPXIDnKgRA3D
+X-Gm-Gg: ASbGncvy6eVgGVVKHGKgeFts0QxxY/6oefTL8NXQczsKq/ofopTKdGBtGyRb24QrcX5
+ p0NN4xfFBJaO0IctLPVNfUwHQpaUw0s1W3suYWFcnC3nIMAKgz8gYf/aTV4kXNRSKAbeB5J4AGJ
+ 7mHo2o9/sWroRucNx4xFReU1x7vObNI2iQcEeU3qsISJm11xt8gZ+7aZOO7pjnM/P2t8a7YSwLS
+ 83yJLch8BsCN4oQrJY5nQCa/ad4Va9oFlIGnrAh+LRO92u4Ol8qJNSxmL/Fhze/9t+PQtH0rrKi
+ Yq77iLR8T1O351IOZ5YoWc77QThvhXrL
+X-Received: by 2002:a05:600c:3b0f:b0:440:6a37:be0d with SMTP id
+ 5b1f17b1804b1-450d884c411mr19886665e9.15.1748607105313; 
+ Fri, 30 May 2025 05:11:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG2CgH1TRjUUcnzhKpGV6wb4WRMQ5d9T6p9MjJfBE8JPzbIqJTRJwOVFP1thHl8M9NjFjC+Eg==
+X-Received: by 2002:a05:600c:3b0f:b0:440:6a37:be0d with SMTP id
+ 5b1f17b1804b1-450d884c411mr19886335e9.15.1748607104885; 
+ Fri, 30 May 2025 05:11:44 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb00ccsm16526085e9.17.2025.05.30.05.10.54
+ 5b1f17b1804b1-450d8000e3esm16552325e9.22.2025.05.30.05.11.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 30 May 2025 05:10:55 -0700 (PDT)
-Date: Fri, 30 May 2025 08:10:52 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Li Chen <me@linux.beauty>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,
- Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Sunil V L <sunilvl@ventanamicro.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>, qemu-arm <qemu-arm@nongnu.org>,
- qemu-devel <qemu-devel@nongnu.org>, qemu-riscv <qemu-riscv@nongnu.org>,
- Li Chen <chenl311@chinatelecom.cn>
-Subject: Re: [PATCH REPOST v4 0/4] acpi: Add machine option to disable SPCR
- table
-Message-ID: <20250530081034-mutt-send-email-mst@kernel.org>
-References: <20250528105404.457729-1-me@linux.beauty>
+ Fri, 30 May 2025 05:11:44 -0700 (PDT)
+Date: Fri, 30 May 2025 14:11:43 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
+ <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>,
+ <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH v2 06/25] hw/pci-host/gpex-acpi: Propagate hotplug type
+ info from virt machine downto gpex
+Message-ID: <20250530141143.6b13376b@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250530111413.00003c66@huawei.com>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-7-eric.auger@redhat.com>
+ <20250530111413.00003c66@huawei.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250528105404.457729-1-me@linux.beauty>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -49
 X-Spam_score: -5.0
@@ -105,7 +101,7 @@ X-Spam_report: (-5.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-2.907,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,56 +117,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, May 28, 2025 at 06:53:34PM +0800, Li Chen wrote:
-> From: Li Chen <chenl311@chinatelecom.cn>
-> 
-> (REPOST because the previous post failed to send to qemu-devel/qemu-riscv/qemu-arm,
->  see https://lore.kernel.org/qemu-devel/1971648603b.dce1f5d22901195.6702025346547333607@linux.beauty/T/#u)
-> 
-> This series introduces a new machine option, spcr=on|off, allowing users
-> to disable the ACPI SPCR (Serial Port Console Redirection) table.
-> By default, SPCR is enabled. Disabling it can help ensure that the guest's
-> console behavior is determined solely by kernel command-line parameters
-> on arch like arm64, avoiding unintended serial console configurations imposed
-> by firmware.
-> 
-> Also add tests on AArch64 and RISC-V virt machines using TCG and UEFI boot.
-> 
-> Changes since v3:
-> - Add Reviewed-by from Sunil V L <sunilvl@ventanamicro.com> for patch 1, 3, and 4.
-> - rename enable_spcr to acpi_spcr_enabled as suggested by Philippe Mathieu-Daudé.
-> Changes since v2:
-> - Omit UART device from DSDT and SPCR construction if no serial device is present,
-> as suggested by Philippe Mathieu-Daudé.
-> - Add Reviewed-by from Gavin Shan <gshan@redhat.com> for the first patch and fix style issue.
-> 
-> Changes since v1:
-> - Add bios-tables-test for RISC-V and ARM as suggested by
-> - Add Acked-by from Michael S. Tsirkin for the first patch
-> - Add Reviewed-by from Bibo Mao for the first patch
-> 
-> Li Chen (4):
->   acpi: Add machine option to disable SPCR table
->   tests/qtest/bios-tables-test: Add test for disabling SPCR on AArch64
->   tests/qtest/bios-tables-test: Add test for disabling SPCR on RISC-V
->   acpi/virt: suppress UART device & SPCR when guest has no serial
->     hardware
+On Fri, 30 May 2025 11:14:13 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
-Who's merging this?
-
-
->  hw/arm/virt-acpi-build.c       | 18 ++++++++-----
->  hw/core/machine.c              | 22 ++++++++++++++++
->  hw/loongarch/virt-acpi-build.c |  4 ++-
->  hw/riscv/virt-acpi-build.c     | 10 ++++++--
->  include/hw/boards.h            |  1 +
->  include/system/system.h        |  2 ++
->  qemu-options.hx                |  5 ++++
->  system/vl.c                    |  5 ++++
->  tests/qtest/bios-tables-test.c | 47 ++++++++++++++++++++++++++++++++--
->  9 files changed, 103 insertions(+), 11 deletions(-)
+> On Tue, 27 May 2025 09:40:08 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
 > 
-> -- 
-> 2.49.0
+> > Propagate the type of pci hotplug mode downto the gpex
+> > acpi code. In case machine acpi_pcihp is unset we configure
+> > pci native hotplug on pci0. For expander bridges we keep
+> > legacy pci native hotplug, as done on x86 q35.
+> > 
+> > Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> > Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> > ---
+> >  include/hw/pci-host/gpex.h | 1 +
+> >  hw/arm/virt-acpi-build.c   | 1 +
+> >  hw/pci-host/gpex-acpi.c    | 3 ++-
+> >  3 files changed, 4 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/include/hw/pci-host/gpex.h b/include/hw/pci-host/gpex.h
+> > index 84471533af..feaf827474 100644
+> > --- a/include/hw/pci-host/gpex.h
+> > +++ b/include/hw/pci-host/gpex.h
+> > @@ -45,6 +45,7 @@ struct GPEXConfig {
+> >      MemMapEntry pio;
+> >      int         irq;
+> >      PCIBus      *bus;
+> > +    bool        pci_native_hotplug;
+> >  };
+> >  
+> >  typedef struct GPEXIrq GPEXIrq;
+> > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> > index 7e8e0f0298..be5e00a56e 100644
+> > --- a/hw/arm/virt-acpi-build.c
+> > +++ b/hw/arm/virt-acpi-build.c
+> > @@ -129,6 +129,7 @@ static void acpi_dsdt_add_pci(Aml *scope, const MemMapEntry *memmap,
+> >          .ecam   = memmap[ecam_id],
+> >          .irq    = irq,
+> >          .bus    = vms->bus,
+> > +        .pci_native_hotplug = !vms->acpi_pcihp,
+> >      };
+> >  
+> >      if (vms->highmem_mmio) {
+> > diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+> > index 1aa2d12026..f1ab30f3d5 100644
+> > --- a/hw/pci-host/gpex-acpi.c
+> > +++ b/hw/pci-host/gpex-acpi.c
+> > @@ -204,6 +204,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+> >              if (is_cxl) {
+> >                  build_cxl_osc_method(dev);
+> >              } else {
+> > +                /* pxb bridges do not have ACPI PCI Hot-plug enabled */
+> >                  acpi_dsdt_add_host_bridge_methods(dev, true);  
+> 
+> This is awkward but explains why my CXL cases weren't causing trouble.
+> A mixed config is counter to the recommendation in the PCI firmware spec
+> 
+> "It is recommended that a machine with multiple host bridge devices should
+> report the same capabilities for all host bridges of the same type and also
+> negotiate control of the features described in the Control Field in the
+> same way for all host bridges of the same type"
+> 
+> I guess if any OS isn't coping with the mix then they can request native
+> hotplug.
+
+guest should be able to cope with mixed configs,
+ACPI pcihp is a crutch and works only for coldplugged bridges,
+while hotplugged bridges are handled by native hotplug.
+
+> 
+> 
+> 
+> >              }
+> >  
+> > @@ -279,7 +280,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+> >      }
+> >      aml_append(dev, aml_name_decl("_CRS", rbuf));
+> >  
+> > -    acpi_dsdt_add_host_bridge_methods(dev, true);
+> > +    acpi_dsdt_add_host_bridge_methods(dev, cfg->pci_native_hotplug);
+> >  
+> >      Aml *dev_res0 = aml_device("%s", "RES0");
+> >      aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));  
+> 
 
 
