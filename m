@@ -4,54 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66998C5AE59
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 17:35:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF095C5AE59
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 17:36:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLQ5v-0004cV-AA; Sat, 31 May 2025 13:34:07 -0400
+	id 1uLQ8D-0005fp-PE; Sat, 31 May 2025 13:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLQ5t-0004c4-4O; Sat, 31 May 2025 13:34:05 -0400
+ id 1uLQ8B-0005fG-3G; Sat, 31 May 2025 13:36:27 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLQ5r-00031P-JU; Sat, 31 May 2025 13:34:04 -0400
+ id 1uLQ89-0003Hb-Gr; Sat, 31 May 2025 13:36:26 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1478A126B55;
- Sat, 31 May 2025 20:33:56 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 05053126B59;
+ Sat, 31 May 2025 20:36:19 +0300 (MSK)
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9FFFA21BA5B;
- Sat, 31 May 2025 20:33:59 +0300 (MSK)
-Message-ID: <d594a44b-a2fd-4c58-8738-8a02cef4e7d4@tls.msk.ru>
-Date: Sat, 31 May 2025 20:33:59 +0300
+ by tsrv.corpit.ru (Postfix) with ESMTP id CA43F21BA60;
+ Sat, 31 May 2025 20:36:22 +0300 (MSK)
+Message-ID: <a72baf97-333c-45d7-beba-8e858dd4c7a6@tls.msk.ru>
+Date: Sat, 31 May 2025 20:36:22 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/4] qapi: add auto-generated return docs
-To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
-Cc: Kevin Wolf <kwolf@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Jiri Pirko <jiri@resnulli.us>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Lukas Straub <lukasstraub2@web.de>, Peter Xu <peterx@redhat.com>,
- Michael Roth <michael.roth@amd.com>, Jason Wang <jasowang@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, Eric Blake <eblake@redhat.com>,
- qemu-trivial@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- qemu-block@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Fabiano Rosas <farosas@suse.de>, Zhao Liu <zhao1.liu@intel.com>,
- Zhenwei Pi <pizhenwei@bytedance.com>, Ani Sinha <anisinha@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Hanna Reitz <hreitz@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- "Gonglei (Arei)" <arei.gonglei@huawei.com>,
- Laurent Vivier <laurent@vivier.eu>
-References: <20250523182442.54469-1-jsnow@redhat.com>
+Subject: Re: [PATCH 0/9] qom: Consolidate OBJECT_{DEFINE|DECLARE}_SIMPLE_TYPE*
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+References: <20250514084957.2221975-1-zhao1.liu@intel.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -97,7 +79,7 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20250523182442.54469-1-jsnow@redhat.com>
+In-Reply-To: <20250514084957.2221975-1-zhao1.liu@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
@@ -123,30 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 23.05.2025 21:24, John Snow wrote:
-> v3: rebased on top of python-qapi-linting (v4) pull request;
->      removed commits that are no longer needed.
->      Markus: I forget where we left off... shall we refresh?
+On 14.05.2025 11:49, Zhao Liu wrote:
+> Hi,
 > 
-> v2: fix multi-return-sections bug :(
+> When I read the qom doc (qom.rst) about OBJECT_DECLARE_SIMPLE_TYPE, I
+> found there's the wrong example. So I tried to fix the doc and cleaned
+> up the relevant code case to correctly show that for simple type, the
+> class definition is not needed.
 > 
-> John Snow (4):
->    docs/qapi-domain: add return-nodesc
->    docs, qapi: generate undocumented return sections
->    qapi: remove trivial "Returns:" sections
->    qapi: rephrase return docs to avoid type name
+> This series tries to:
+> 
+>   * fix & improve the documentation of OBJECT_{DEFINE|DECLARE}_SIMPLE_TYPE*,
+> 
+>   * and clean up several cases that could have used simple type macros
+>     (mainly by dropping unneeded class definitions).
 
-I've applied the first 2 patches to the trivial-patches tree.
-
-But the remaining 2 does not apply anymore due to reorg of
-the json files for single-binary.
-
-I tried to fiddle with the patches a bit, but it looks like
-it'd be better if the original author will do that, to avoid
-my mistakes :)
+What's the status of this series?  It looks like it needs a respin?
 
 Thanks,
 
 /mjt
-
 
