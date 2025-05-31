@@ -4,54 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD48C5AE59
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 14:14:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7228CC5B555
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 14:22:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLMxm-0008JC-GH; Sat, 31 May 2025 10:13:30 -0400
+	id 1uLN5L-0002ml-PE; Sat, 31 May 2025 10:21:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uLMxj-0008IS-H8; Sat, 31 May 2025 10:13:27 -0400
+ id 1uLN5H-0002kM-LH
+ for qemu-devel@nongnu.org; Sat, 31 May 2025 10:21:15 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uLMxg-0006Hj-54; Sat, 31 May 2025 10:13:27 -0400
+ id 1uLN5D-0007nL-Gr
+ for qemu-devel@nongnu.org; Sat, 31 May 2025 10:21:15 -0400
 Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 54VED0ol067517
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 54VEKrPY069146
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 31 May 2025 23:13:07 +0900 (JST)
+ Sat, 31 May 2025 23:20:59 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=UkwKDJFg/2nSSMYcw1889kv5A0ScloG0EqY5LY7JDfs=; 
+DKIM-Signature: a=rsa-sha256; bh=fPPYi8yqmkf0sqo12GAd2rwE/Q+D7WvQg6S1NeccAT4=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Date:Subject:Message-Id:To;
- s=rs20250326; t=1748700787; v=1;
- b=ltwYBkG0Qc8Sl2niNXO+7jf7CRes01PkK8BZctGJy4pRV1TPwfF8izuB5ImDRB0Z
- fYsciEZfW9BlltCyZFPYBb07JC0FxTL9lcH3ECYXBj80l6/VjV5hfKScGt/p/yUt
- +eZ7dKyKuqdAT1GMlvjzR+ubDa2Tq40KoGG8/1dH5qhDW6o3jsFOJYgQYSZBECuz
- XSc2qBuvUiO6ymWTPjLUZ86PL/vTLXOh4UNFSTgSySH5acBdCTTR5uYl7bMLoEw9
- gObkoFiJuoBAKEW5Mee7HaZ1C0U3Ok+f2mGXScwk8uHaFtTTyGDCfUuX//YYO/Ib
- EFXuC4b+/ONRVgvj0dOWIQ==
+ h=From:Subject:Date:Message-Id:To;
+ s=rs20250326; t=1748701259; v=1;
+ b=eSsHzBwEdbwZtLbHVJVJBx2RjlRfVKYos2jZnQ2HILN9g77mpYAnJv+kyDoirMAx
+ 1aiDR+bdbsWGBHWXHGuwy6xg8yEQ+ipwKqWeJf0zIV0kIVX6F/684JX3417kKqwd
+ Ko+WCkPNMFRVhkdRlKtRDRJo2ACHjFkbB1oQ4FXTWUYbexpMsmcFulyz33f7YJMa
+ ZBVxyEHp2y77yvQWpHS4/c26+NgNk+T2VacMIFnWlcIIpQPSKgolM5ngtOj+/XeV
+ taMM6rsuOzuuElaUdvevJ5tfvE5Lu61fTHMiyhpJcy1FhZdyO4nXbHrptmcDucHV
+ 2IKXRwTY6xm4hOtvKGu9BA==
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 31 May 2025 23:12:56 +0900
-Subject: [PATCH v6] target/arm: Always add pmu property for host
+Subject: [PATCH v2 0/2] ui/vnc: Do not copy z_stream
+Date: Sat, 31 May 2025 23:20:40 +0900
+Message-Id: <20250531-zlib-v2-0-b75c4b4769e1@rsg.ci.i.u-tokyo.ac.jp>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20250531-pmu-v6-1-2bb6c828ade3@rsg.ci.i.u-tokyo.ac.jp>
-X-B4-Tracking: v=1; b=H4sIAGcOO2gC/23My07DMBCF4VepvMbIHl9mwor3qLrwZUy9aFIlE
- LWq8u64jRBUYXlG8/03MfFYeRJvu5sYea5THfo2/MtOpGPoP1jW3LYABVZ56OT59CVDdsUjQ3J
- ZifZ5HrnUy6OyP7R9rNPnMF4f0Vnfr89+1lJJBN9pMJEo2Pccrn29vKbhJO6BGX4Rar8iaKgYN
- mwjZJPdBpl/kGmIEiZNjgIAbpD9g0CtyDYEASJQ8VFR2SD3g5zSyq7ISS0jd4kQMSH5J7Qsyzc
- Aqv+XawEAAA==
-X-Change-ID: 20240629-pmu-ad5f67e2c5d0
-To: Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Cornelia Huck <cohuck@redhat.com>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- devel@daynix.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-B4-Tracking: v=1; b=H4sIADgQO2gC/13MSwrCMBSF4a2UOzaSl7Q4ch+lgzxu7QVNJJHQW
+ rJ3Y4cO/8Ph2yFjIsxw7XZIWChTDC3kqQO3mHBHRr41SC4vXIuefR5kmUPFlZ4H65SDdn0lnGk
+ 9mHFqvVB+x7QdahG/9Q8ognHWBON7ZQet7M2bLdB6dvEJU631Czn4+qqZAAAA
+X-Change-ID: 20250417-zlib-ce3034f8bc3c
+To: qemu-devel@nongnu.org
+Cc: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ devel@daynix.com, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 X-Mailer: b4 0.15-dev-edae6
 Received-SPF: pass client-ip=49.212.243.89;
  envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
@@ -77,92 +76,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-kvm-steal-time and sve properties are added for KVM even if the
-corresponding features are not available. Always add pmu property for
-"host".
+vnc_worker_thread_loop() copies z_stream stored in its local VncState to
+the persistent VncState, and the copied one is freed with deflateEnd()
+later. However, deflateEnd() refuses to operate with a copied z_stream
+and returns Z_STREAM_ERROR, leaking the allocated memory.
 
-Note that we still don't add the property for other CPUs that lack PMU.
-This is because we do not know what a PMU version should be enabled
-when the user sets the property to true while it is defined as an
-an error for the "host" CPU when the host doesn't have a PMU.
-
-This fixes qtest-aarch64/arm-cpu-features on the hosts that supports
-KVM but doesn't support PMU emulation.
+Avoid copying the zlib state to fix the memory leak.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 ---
-kvm-steal-time and sve properties are added for KVM even if the
-corresponding features are not available. Always add pmu property for
-"host".
-
-Note that we still don't add the property for other CPUs that lack PMU.
-This is because we do not know what a PMU version should be enabled
-when the user sets the property to true while it is defined as an
-an error for the "host" CPU when the host doesn't have a PMU.
----
-Changes in v6:
-- Limited the scope of the change to the "host" CPU.
-- Link to v5: https://lore.kernel.org/r/20250104-pmu-v5-1-be9c8777c786@daynix.com
-
-Changes in v5:
-- Rebased.
-- Link to v4: https://lore.kernel.org/r/20240720-pmu-v4-0-2a2b28f6b08f@daynix.com
-
-Changes in v4:
-- Split patch "target/arm/kvm: Fix PMU feature bit early" into
-  "target/arm/kvm: Set PMU for host only when available" and
-  "target/arm/kvm: Do not silently remove PMU".
-- Changed to define PMU also for Armv7.
-- Changed not to define PMU for M.
-- Extracted patch "hvf: arm: Raise an exception for sysreg by default"
-  from "hvf: arm: Properly disable PMU".
-- Rebased.
-- Link to v3: https://lore.kernel.org/r/20240716-pmu-v3-0-8c7c1858a227@daynix.com
-
-Changes in v3:
-- Dropped patch "target/arm: Do not allow setting 'pmu' for hvf".
-- Dropped patch "target/arm: Allow setting 'pmu' only for host and max".
-- Dropped patch "target/arm/kvm: Report PMU unavailability".
-- Added patch "target/arm/kvm: Fix PMU feature bit early".
-- Added patch "hvf: arm: Do not advance PC when raising an exception".
-- Added patch "hvf: arm: Properly disable PMU".
-- Changed to check for Armv8 before adding PMU property.
-- Link to v2: https://lore.kernel.org/r/20240716-pmu-v2-0-f3e3e4b2d3d5@daynix.com
-
 Changes in v2:
-- Restricted writes to 'pmu' to host and max.
-- Prohibited writes to 'pmu' for hvf.
-- Link to v1: https://lore.kernel.org/r/20240629-pmu-v1-0-7269123b88a4@daynix.com
+- Rebased.
+- Link to v1: https://lore.kernel.org/qemu-devel/20250417-zlib-v1-0-34fad73b843b@daynix.com
+
 ---
- target/arm/cpu.c | 4 ++++
- 1 file changed, 4 insertions(+)
+Akihiko Odaki (2):
+      ui/vnc: Introduce the VncWorker type
+      ui/vnc: Do not copy z_stream
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index ca5ed7892e4e..c99d65e9bf05 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1716,6 +1716,7 @@ static void arm_cpu_propagate_feature_implications(ARMCPU *cpu)
- void arm_cpu_post_init(Object *obj)
- {
-     ARMCPU *cpu = ARM_CPU(obj);
-+    ARMCPUClass *acc = ARM_CPU_GET_CLASS(obj);
- 
-     /*
-      * Some features imply others. Figure this out now, because we
-@@ -1767,6 +1768,9 @@ void arm_cpu_post_init(Object *obj)
- 
-     if (arm_feature(&cpu->env, ARM_FEATURE_PMU)) {
-         cpu->has_pmu = true;
-+    }
-+
-+    if (cpu->has_pmu || !strcmp(acc->info->name, "host")) {
-         object_property_add_bool(obj, "pmu", arm_get_pmu, arm_set_pmu);
-     }
- 
-
+ ui/vnc.h              |  14 ++-
+ ui/vnc-enc-tight.c    | 341 ++++++++++++++++++++++++++------------------------
+ ui/vnc-enc-zlib.c     |  34 ++---
+ ui/vnc-enc-zrle.c     |  69 +++++-----
+ ui/vnc-jobs.c         |   9 +-
+ ui/vnc.c              |  56 ++++-----
+ ui/vnc-enc-zrle.c.inc |   2 +-
+ 7 files changed, 258 insertions(+), 267 deletions(-)
 ---
 base-commit: f0737158b483e7ec2b2512145aeab888b85cc1f7
-change-id: 20240629-pmu-ad5f67e2c5d0
+change-id: 20250417-zlib-ce3034f8bc3c
 
 Best regards,
 -- 
