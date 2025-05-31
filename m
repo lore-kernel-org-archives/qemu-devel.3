@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 496DBC5B549
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7091C5AE59
 	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 17:19:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLPol-00017g-4r; Sat, 31 May 2025 13:16:23 -0400
+	id 1uLPpS-0001U6-PE; Sat, 31 May 2025 13:17:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLPoh-00016Q-0h; Sat, 31 May 2025 13:16:19 -0400
+ id 1uLPox-0001Aj-At; Sat, 31 May 2025 13:16:40 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLPof-00011e-BI; Sat, 31 May 2025 13:16:18 -0400
+ id 1uLPot-00013g-4q; Sat, 31 May 2025 13:16:32 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD179126B32;
- Sat, 31 May 2025 20:16:05 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1669C126B39;
+ Sat, 31 May 2025 20:16:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 92A5221BA35;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E2E6621BA3C;
  Sat, 31 May 2025 20:16:09 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 02/27] qemu-img: create: convert img_size to signed,
- simplify handling
-Date: Sat, 31 May 2025 20:15:44 +0300
-Message-Id: <20250531171609.197078-3-mjt@tls.msk.ru>
+Subject: [PATCH 09/27] qemu-img: commit: refresh options/--help
+Date: Sat, 31 May 2025 20:15:51 +0300
+Message-Id: <20250531171609.197078-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250531171609.197078-1-mjt@tls.msk.ru>
 References: <20250531171609.197078-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,48 +59,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initializing an unsigned as -1, or using temporary
-sval for conversion is awkward.  Since we don't allow
-other "negative" values anyway, use signed value and
-pass it to bdrv_img_create() (where it is properly
-converted to unsigned), simplifying code.
+Add missing long options and --help output,
+reorder options for consistency.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 ---
- qemu-img.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ qemu-img.c | 68 ++++++++++++++++++++++++++++++++++++++----------------
+ 1 file changed, 48 insertions(+), 20 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index ec0f1152df..974d31a4b3 100644
+index c8ce206b73..5e651e8089 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -511,7 +511,7 @@ static int64_t cvtnum(const char *name, const char *value)
- static int img_create(int argc, char **argv)
- {
-     int c;
--    uint64_t img_size = -1;
-+    int64_t img_size = -1;
-     const char *fmt = "raw";
-     const char *base_fmt = NULL;
-     const char *filename;
-@@ -582,13 +582,10 @@ static int img_create(int argc, char **argv)
- 
-     /* Get image size, if specified */
-     if (optind < argc) {
--        int64_t sval;
--
--        sval = cvtnum("image size", argv[optind++]);
--        if (sval < 0) {
-+        img_size = cvtnum("image size", argv[optind++]);
-+        if (img_size < 0) {
-             goto fail;
+@@ -1047,38 +1047,73 @@ static int img_commit(const img_cmd_t *ccmd, int argc, char **argv)
+     for(;;) {
+         static const struct option long_options[] = {
+             {"help", no_argument, 0, 'h'},
+-            {"object", required_argument, 0, OPTION_OBJECT},
++            {"format", required_argument, 0, 'f'},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
++            {"cache", required_argument, 0, 't'},
++            {"drop", no_argument, 0, 'd'},
++            {"base", required_argument, 0, 'b'},
++            {"rate-limit", required_argument, 0, 'r'},
++            {"progress", no_argument, 0, 'p'},
++            {"quiet", no_argument, 0, 'q'},
++            {"object", required_argument, 0, OPTION_OBJECT},
+             {0, 0, 0, 0}
+         };
+-        c = getopt_long(argc, argv, ":f:ht:b:dpqr:",
++        c = getopt_long(argc, argv, "hf:t:db:r:pq",
+                         long_options, NULL);
+         if (c == -1) {
+             break;
          }
--        img_size = (uint64_t)sval;
+         switch(c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
+-            break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
+-            break;
+         case 'h':
+-            help();
++            cmd_help(ccmd, "[-f FMT | --image-opts] [-t CACHE_MODE] [-b BASE_IMG]\n"
++"        [-d] [-r RATE] [-q] [--object OBJDEF] FILE\n"
++,
++"  -f, --format FMT\n"
++"     specify FILE image format explicitly (default: probing is used)\n"
++"  --image-opts\n"
++"     treat FILE as an option string (key=value,..), not a file name\n"
++"     (incompatible with -f|--format)\n"
++"  -t, --cache CACHE_MODE image cache mode (default: " BDRV_DEFAULT_CACHE ")\n"
++"  -d, --drop\n"
++"     skip emptying FILE on completion\n"
++"  -b, --base BASE_IMG\n"
++"     image in the backing chain to commit change to\n"
++"     (default: immediate backing file; implies --drop)\n"
++"  -r, --rate-limit RATE\n"
++"     I/O rate limit, in bytes per second\n"
++"  -p, --progress\n"
++"     display progress information\n"
++"  -q, --quiet\n"
++"     quiet mode (produce only error messages if any)\n"
++"  --object OBJDEF\n"
++"     defines QEMU user-creatable object\n"
++"  FILE\n"
++"     name of the image file, or an option string (key=value,..)\n"
++"     with --image-opts, to operate on\n"
++);
+             break;
+         case 'f':
+             fmt = optarg;
+             break;
++        case OPTION_IMAGE_OPTS:
++            image_opts = true;
++            break;
+         case 't':
+             cache = optarg;
+             break;
++        case 'd':
++            drop = true;
++            break;
+         case 'b':
+             base = optarg;
+             /* -b implies -d */
+             drop = true;
+             break;
+-        case 'd':
+-            drop = true;
++        case 'r':
++            rate_limit = cvtnum("rate limit", optarg);
++            if (rate_limit < 0) {
++                return 1;
++            }
+             break;
+         case 'p':
+             progress = true;
+@@ -1086,18 +1121,11 @@ static int img_commit(const img_cmd_t *ccmd, int argc, char **argv)
+         case 'q':
+             quiet = true;
+             break;
+-        case 'r':
+-            rate_limit = cvtnum("rate limit", optarg);
+-            if (rate_limit < 0) {
+-                return 1;
+-            }
+-            break;
+         case OPTION_OBJECT:
+             user_creatable_process_cmdline(optarg);
+             break;
+-        case OPTION_IMAGE_OPTS:
+-            image_opts = true;
+-            break;
++        default:
++            tryhelp(argv[0]);
+         }
      }
-     if (optind != argc) {
-         error_exit("Unexpected argument: %s", argv[optind]);
+ 
 -- 
 2.39.5
 
