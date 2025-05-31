@@ -4,39 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C15AAC5AE59
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 17:22:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A2FCC5B549
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 17:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLPqi-0002rU-SP; Sat, 31 May 2025 13:18:25 -0400
+	id 1uLPs3-0005EQ-I3; Sat, 31 May 2025 13:19:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLPpW-0001W9-R8; Sat, 31 May 2025 13:17:14 -0400
+ id 1uLPqN-0002R0-U1; Sat, 31 May 2025 13:18:04 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLPpV-00016C-0f; Sat, 31 May 2025 13:17:10 -0400
+ id 1uLPqL-00018d-Eo; Sat, 31 May 2025 13:18:03 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5BDA1126B40;
+ by isrv.corpit.ru (Postfix) with ESMTP id 93A76126B46;
  Sat, 31 May 2025 20:16:06 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 33FBF21BA43;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6BC9F21BA49;
  Sat, 31 May 2025 20:16:10 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 16/27] qemu-img: snapshot: make -l (list) the default,
- simplify option handling
-Date: Sat, 31 May 2025 20:15:58 +0300
-Message-Id: <20250531171609.197078-17-mjt@tls.msk.ru>
+Subject: [PATCH 22/27] qemu-img: bench: refresh options/--help
+Date: Sat, 31 May 2025 20:16:04 +0300
+Message-Id: <20250531171609.197078-23-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250531171609.197078-1-mjt@tls.msk.ru>
 References: <20250531171609.197078-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -61,131 +59,185 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When no -l/-a/-c/-d specified, assume -l (list).
+Add missing long options and --help output,
+reorder options for consistency.
 
-Use the same values for SNAPSHOT_LIST/etc constants as the
-option chars (lacd), this makes it possible to simplify
-option handling a lot, combining cases for 4 options into
-one.
-
-Also remove bdrv_oflags handling (only list can use RO mode).
+Add missing --object option.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- docs/tools/qemu-img.rst |  2 +-
- qemu-img.c              | 52 ++++++++++++++---------------------------
- 2 files changed, 19 insertions(+), 35 deletions(-)
+ qemu-img.c | 112 +++++++++++++++++++++++++++++++++++++++--------------
+ 1 file changed, 84 insertions(+), 28 deletions(-)
 
-diff --git a/docs/tools/qemu-img.rst b/docs/tools/qemu-img.rst
-index 935f28bbc5..a346988292 100644
---- a/docs/tools/qemu-img.rst
-+++ b/docs/tools/qemu-img.rst
-@@ -256,7 +256,7 @@ Parameters to snapshot subcommand:
- 
- .. option:: -l
- 
--  Lists all snapshots in the given image
-+  Lists all snapshots in the given image (default action)
- 
- Command description:
- 
 diff --git a/qemu-img.c b/qemu-img.c
-index 38352e54ad..8fbf0c67a7 100644
+index 0d4bdc5df5..5011ec5fce 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -3583,10 +3583,11 @@ out:
-     return ret < 0;
- }
- 
--#define SNAPSHOT_LIST   1
--#define SNAPSHOT_CREATE 2
--#define SNAPSHOT_APPLY  3
--#define SNAPSHOT_DELETE 4
-+/* the same as options */
-+#define SNAPSHOT_LIST   'l'
-+#define SNAPSHOT_CREATE 'c'
-+#define SNAPSHOT_APPLY  'a'
-+#define SNAPSHOT_DELETE 'd'
- 
- static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
- {
-@@ -3594,7 +3595,7 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     BlockDriverState *bs;
-     QEMUSnapshotInfo sn;
-     char *filename, *fmt = NULL, *snapshot_name = NULL;
--    int c, ret = 0, bdrv_oflags;
-+    int c, ret = 0;
-     int action = 0;
-     bool quiet = false;
-     Error *err = NULL;
-@@ -3602,7 +3603,6 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     bool force_share = false;
-     int64_t rt;
- 
--    bdrv_oflags = BDRV_O_RDWR;
-     /* Parse commandline parameters */
-     for(;;) {
+@@ -4859,28 +4859,93 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+     for (;;) {
          static const struct option long_options[] = {
-@@ -3630,36 +3630,15 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-         case 'f':
-             fmt = optarg;
+             {"help", no_argument, 0, 'h'},
+-            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
++            {"format", required_argument, 0, 'f'},
+             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
++            {"cache", required_argument, 0, 't'},
++            {"count", required_argument, 0, 'c'},
++            {"depth", required_argument, 0, 'd'},
++            {"offset", required_argument, 0, 'o'},
++            {"buffer-size", required_argument, 0, 's'},
++            {"step-size", required_argument, 0, 'S'},
++            {"write", no_argument, 0, 'w'},
+             {"pattern", required_argument, 0, OPTION_PATTERN},
++            {"flush-interval", required_argument, 0, OPTION_FLUSH_INTERVAL},
+             {"no-drain", no_argument, 0, OPTION_NO_DRAIN},
++            {"aio", required_argument, 0, 'i'},
++            {"native", no_argument, 0, 'n'},
+             {"force-share", no_argument, 0, 'U'},
++            {"quiet", no_argument, 0, 'q'},
++            {"object", required_argument, 0, OPTION_OBJECT},
+             {0, 0, 0, 0}
+         };
+-        c = getopt_long(argc, argv, ":hc:d:f:ni:o:qs:S:t:wU", long_options,
+-                        NULL);
++        c = getopt_long(argc, argv, "hf:t:c:d:o:s:S:wi:nUq",
++                        long_options, NULL);
+         if (c == -1) {
              break;
--        case 'l':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_LIST;
--            bdrv_oflags &= ~BDRV_O_RDWR; /* no need for RW */
--            break;
--        case 'a':
-+        case SNAPSHOT_LIST:
-+        case SNAPSHOT_APPLY:
-+        case SNAPSHOT_CREATE:
-+        case SNAPSHOT_DELETE:
-             if (action) {
-                 error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
-                 return 0;
-             }
--            action = SNAPSHOT_APPLY;
--            snapshot_name = optarg;
--            break;
--        case 'c':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_CREATE;
--            snapshot_name = optarg;
--            break;
--        case 'd':
--            if (action) {
--                error_exit(argv[0], "Cannot mix '-l', '-a', '-c', '-d'");
--                return 0;
--            }
--            action = SNAPSHOT_DELETE;
-+            action = c;
-             snapshot_name = optarg;
-             break;
-         case 'q':
-@@ -3682,9 +3661,14 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     }
-     filename = argv[optind++];
+         }
  
-+    if (!action) {
-+        action = SNAPSHOT_LIST;
-+    }
-+
-     /* Open the image */
--    blk = img_open(image_opts, filename, fmt, bdrv_oflags, false, quiet,
--                   force_share);
-+    blk = img_open(image_opts, filename, fmt,
-+                   action == SNAPSHOT_LIST ? 0 : BDRV_O_RDWR,
-+                   false, quiet, force_share);
-     if (!blk) {
-         return 1;
+         switch (c) {
+-        case ':':
+-            missing_argument(argv[optind - 1]);
++        case 'h':
++            cmd_help(ccmd, "[-f FMT | --image-opts] [-t CACHE]\n"
++"        [-c COUNT] [-d DEPTH] [-o OFFSET] [-s BUFFER_SIZE] [-S STEP_SIZE]\n"
++"        [-w [--pattern PATTERN] [--flush-interval INTERVAL [--no-drain]]]\n"
++"        [-i AIO] [-n] [-U] [-q] FILE\n"
++,
++"  -f, --format FMT\n"
++"     specify FILE format explicitly\n"
++"  --image-opts\n"
++"     indicates that FILE is a complete image specification\n"
++"     instead of a file name (incompatible with --format)\n"
++"  -t, --cache CACHE\n"
++"     cache mode for FILE (default: " BDRV_DEFAULT_CACHE ")\n"
++"  -c, --count COUNT\n"
++"     number of I/O requests to perform\n"
++"  -d, --depth DEPTH\n"
++"     number of requests to perform in parallel\n"
++"  -o, --offset OFFSET\n"
++"     start first request at this OFFSET\n"
++"  -s, --buffer-size BUFFER_SIZE[bkKMGTPE]\n"
++"     size of each I/O request, with optional multiplier suffix\n"
++"     (powers of 1024, default is 4K)\n"
++"  -S, --step-size STEP_SIZE[bkKMGTPE]\n"
++"     each next request offset increment, with optional multiplier suffix\n"
++"     (powers of 1024, default is the same as BUFFER_SIZE)\n"
++"  -w, --write\n"
++"     perform write test (default is read)\n"
++"  --pattern PATTERN\n"
++"     write this pattern byte instead of zero\n"
++"  --flush-interval FLUSH_INTERVAL\n"
++"     issue flush after this number of requests\n"
++"  --no-drain\n"
++"     do not wait when flushing pending requests\n"
++"  -i, --aio AIO\n"
++"     async-io backend (threads, native, io_uring)\n"
++"  -n, --native\n"
++"     use native AIO backend if possible\n"
++"  -U, --force-share\n"
++"     open images in shared mode for concurrent access\n"
++"  -q, --quiet\n"
++"     quiet mode (produce only error messages if any)\n"
++"  --object OBJDEF\n"
++"     defines QEMU user-creatable object\n"
++"  FILE\n"
++"     name of the image file, or option string (key=value,..)\n"
++"     with --image-opts, to operate on\n"
++);
+             break;
+-        case '?':
+-            unrecognized_option(argv[optind - 1]);
++        case 'f':
++            fmt = optarg;
+             break;
+-        case 'h':
+-            help();
++        case OPTION_IMAGE_OPTS:
++            image_opts = true;
++            break;
++        case 't':
++            ret = bdrv_parse_cache_mode(optarg, &flags, &writethrough);
++            if (ret < 0) {
++                error_report("Invalid cache mode");
++                ret = -1;
++                goto out;
++            }
+             break;
+         case 'c':
+         {
+@@ -4904,9 +4969,6 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+             depth = res;
+             break;
+         }
+-        case 'f':
+-            fmt = optarg;
+-            break;
+         case 'n':
+             flags |= BDRV_O_NATIVE_AIO;
+             break;
+@@ -4927,9 +4989,6 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+             break;
+         }
+             break;
+-        case 'q':
+-            quiet = true;
+-            break;
+         case 's':
+         {
+             int64_t sval;
+@@ -4954,21 +5013,10 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+             step = sval;
+             break;
+         }
+-        case 't':
+-            ret = bdrv_parse_cache_mode(optarg, &flags, &writethrough);
+-            if (ret < 0) {
+-                error_report("Invalid cache mode");
+-                ret = -1;
+-                goto out;
+-            }
+-            break;
+         case 'w':
+             flags |= BDRV_O_RDWR;
+             is_write = true;
+             break;
+-        case 'U':
+-            force_share = true;
+-            break;
+         case OPTION_PATTERN:
+         {
+             unsigned long res;
+@@ -4994,9 +5042,17 @@ static int img_bench(const img_cmd_t *ccmd, int argc, char **argv)
+         case OPTION_NO_DRAIN:
+             drain_on_flush = false;
+             break;
+-        case OPTION_IMAGE_OPTS:
+-            image_opts = true;
++        case 'U':
++            force_share = true;
+             break;
++        case 'q':
++            quiet = true;
++            break;
++        case OPTION_OBJECT:
++            user_creatable_process_cmdline(optarg);
++            break;
++        default:
++            tryhelp(argv[0]);
+         }
      }
+ 
 -- 
 2.39.5
 
