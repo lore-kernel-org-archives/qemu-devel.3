@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEDC0C5AE59
-	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 17:20:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44287C5AE59
+	for <qemu-devel@archiver.kernel.org>; Sat, 31 May 2025 17:20:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLPrt-00052u-4X; Sat, 31 May 2025 13:19:38 -0400
+	id 1uLPpK-0001J3-5W; Sat, 31 May 2025 13:16:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLPpt-0001zV-7m; Sat, 31 May 2025 13:17:35 -0400
+ id 1uLPor-00019M-MV; Sat, 31 May 2025 13:16:31 -0400
 Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uLPpr-00016W-7x; Sat, 31 May 2025 13:17:32 -0400
+ id 1uLPop-000138-Ei; Sat, 31 May 2025 13:16:29 -0400
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 64B37126B41;
- Sat, 31 May 2025 20:16:06 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id F0932126B37;
+ Sat, 31 May 2025 20:16:05 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3D4DE21BA44;
- Sat, 31 May 2025 20:16:10 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id C935721BA3A;
+ Sat, 31 May 2025 20:16:09 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org,
 	qemu-block@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PATCH 17/27] qemu-img: snapshot: refresh options/--help
-Date: Sat, 31 May 2025 20:15:59 +0300
-Message-Id: <20250531171609.197078-18-mjt@tls.msk.ru>
+Subject: [PATCH 07/27] qemu-img: check: refresh options/--help
+Date: Sat, 31 May 2025 20:15:49 +0300
+Message-Id: <20250531171609.197078-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20250531171609.197078-1-mjt@tls.msk.ru>
 References: <20250531171609.197078-1-mjt@tls.msk.ru>
@@ -64,32 +64,31 @@ reorder options for consistency.
 
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- qemu-img.c | 60 +++++++++++++++++++++++++++++++++++++++---------------
- 1 file changed, 44 insertions(+), 16 deletions(-)
+ qemu-img.c | 60 +++++++++++++++++++++++++++++++++++++-----------------
+ 1 file changed, 41 insertions(+), 19 deletions(-)
 
 diff --git a/qemu-img.c b/qemu-img.c
-index 8fbf0c67a7..0774529383 100644
+index a26498a4e8..2129158c13 100644
 --- a/qemu-img.c
 +++ b/qemu-img.c
-@@ -3607,29 +3607,58 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-     for(;;) {
+@@ -805,31 +805,57 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
          static const struct option long_options[] = {
              {"help", no_argument, 0, 'h'},
--            {"object", required_argument, 0, OPTION_OBJECT},
-+            {"format", required_argument, 0, 'f'},
-             {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
-+            {"list", no_argument, 0, SNAPSHOT_LIST},
-+            {"apply", required_argument, 0, SNAPSHOT_APPLY},
-+            {"create", required_argument, 0, SNAPSHOT_CREATE},
-+            {"delete", required_argument, 0, SNAPSHOT_DELETE},
-             {"force-share", no_argument, 0, 'U'},
+             {"format", required_argument, 0, 'f'},
++            {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
++            {"cache", required_argument, 0, 'T'},
+             {"repair", required_argument, 0, 'r'},
++            {"force-share", no_argument, 0, 'U'},
+             {"output", required_argument, 0, OPTION_OUTPUT},
 +            {"quiet", no_argument, 0, 'q'},
-+            {"object", required_argument, 0, OPTION_OBJECT},
+             {"object", required_argument, 0, OPTION_OBJECT},
+-            {"image-opts", no_argument, 0, OPTION_IMAGE_OPTS},
+-            {"force-share", no_argument, 0, 'U'},
              {0, 0, 0, 0}
          };
--        c = getopt_long(argc, argv, ":la:c:d:f:hqU",
-+        c = getopt_long(argc, argv, "hf:la:c:d:Uq",
-                         long_options, NULL);
+-        c = getopt_long(argc, argv, ":hf:r:T:qU",
++        c = getopt_long(argc, argv, "hf:T:r:Uq",
+                         long_options, &option_index);
          if (c == -1) {
              break;
          }
@@ -102,57 +101,63 @@ index 8fbf0c67a7..0774529383 100644
 -            break;
          case 'h':
 -            help();
--            return 0;
-+            cmd_help(ccmd, "[-f FMT | --image-opts] [-l | -a|-c|-d SNAPSHOT]\n"
-+"        [-U] [-q] [--object OBJDEF] FILE\n"
++            cmd_help(ccmd, "[-f FMT | --image-opts] [-T CACHE_MODE] [-r leaks|all]\n"
++"        [-U] [--output human|json] [-q] [--object OBJDEF] FILE\n"
 +,
 +"  -f, --format FMT\n"
-+"     specify FILE format explicitly (default: probing is used)\n"
++"     specifies the format of the image explicitly (default: probing is used)\n"
 +"  --image-opts\n"
 +"     treat FILE as an option string (key=value,..), not a file name\n"
 +"     (incompatible with -f|--format)\n"
-+"  -l, --list\n"
-+"     list snapshots in FILE (default action if no -l|-c|-a|-d is given)\n"
-+"  -c, --create SNAPSHOT\n"
-+"     create named snapshot\n"
-+"  -a, --apply SNAPSHOT\n"
-+"     apply named snapshot to the base\n"
-+"  -d, --delete SNAPSHOT\n"
-+"     delete named snapshot\n"
-+"  (only one of -l|-c|-a|-d can be specified)\n"
++"  -T, --cache CACHE_MODE\n" /* why not -t ? */
++"     cache mode (default: " BDRV_DEFAULT_CACHE ")\n"
++"  -r, --repair leaks|all\n"
++"     repair errors of the given category in the image (image will be\n"
++"     opened in read-write mode, incompatible with -U|--force-share)\n"
 +"  -U, --force-share\n"
 +"     open image in shared mode for concurrent access\n"
++"  --output human|json\n"
++"     output format (default: human)\n"
 +"  -q, --quiet\n"
 +"     quiet mode (produce only error messages if any)\n"
 +"  --object OBJDEF\n"
 +"     defines QEMU user-creatable object\n"
 +"  FILE\n"
-+"     name of the image file, or option string (key=value,..)\n"
-+"     with --image-opts) to operate on\n"
++"     name of the image file, or an option string (key=value,..)\n"
++"     with --image-opts, to operate on\n"
 +);
-+            break;
+             break;
          case 'f':
              fmt = optarg;
              break;
 +        case OPTION_IMAGE_OPTS:
 +            image_opts = true;
 +            break;
-         case SNAPSHOT_LIST:
-         case SNAPSHOT_APPLY:
-         case SNAPSHOT_CREATE:
-@@ -3641,18 +3670,17 @@ static int img_snapshot(const img_cmd_t *ccmd, int argc, char **argv)
-             action = c;
-             snapshot_name = optarg;
-             break;
--        case 'q':
--            quiet = true;
--            break;
-         case 'U':
-             force_share = true;
-             break;
-+        case 'q':
-+            quiet = true;
++        case 'T':
++            cache = optarg;
 +            break;
+         case 'r':
+             flags |= BDRV_O_RDWR;
+ 
+@@ -842,24 +868,20 @@ static int img_check(const img_cmd_t *ccmd, int argc, char **argv)
+                            "(expecting 'leaks' or 'all'): %s", optarg);
+             }
+             break;
++        case 'U':
++            force_share = true;
++            break;
+         case OPTION_OUTPUT:
+             output_format = parse_output_format(argv[0], optarg);
+             break;
+-        case 'T':
+-            cache = optarg;
+-            break;
+         case 'q':
+             quiet = true;
+             break;
+-        case 'U':
+-            force_share = true;
+-            break;
          case OPTION_OBJECT:
              user_creatable_process_cmdline(optarg);
              break;
@@ -163,7 +168,7 @@ index 8fbf0c67a7..0774529383 100644
 +            tryhelp(argv[0]);
          }
      }
- 
+     if (optind != argc - 1) {
 -- 
 2.39.5
 
