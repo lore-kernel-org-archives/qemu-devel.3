@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18904C54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 16:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57B84C5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 16:49:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLlil-0002B2-52; Sun, 01 Jun 2025 12:39:40 -0400
+	id 1uLlra-0004PN-Ba; Sun, 01 Jun 2025 12:48:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uLlid-0002AY-D9
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 12:39:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uLlrH-0004Ob-Kc
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 12:48:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uLlib-0002eD-Og
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 12:39:31 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uLlrF-0003Tx-Ih
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 12:48:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748795967;
+ s=mimecast20190719; t=1748796503;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=i7IxUI6Jt3qi7uM1DRX2xoOFlZiSxSi2miZ3BLaRilo=;
- b=Onb6yKhDNoMAlMetJ2URIv6JSTKhSDTAAlFcAGrjSY8pwj11zNzmyiIW98TWAMOE5WfgJs
- wQOf75d+WyFXRJ/l9QUiFRg86SfNXymzxfkR3KxYCspKRno9S67/ygw8RumhzpuOVjaS7Q
- EOVXOItnpKKfUF5GBQgNkIC5UfrhTYM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=SXVQ09rwW8rM+Ou2johkXbmIzDvnqBT+4yZTeusayKU=;
+ b=YYwX8Cm4pV91qeSvoL3KrplWkXoKDbuBPs1Frfr35PSj4/Mq5ILAOnMjEWf87/FVCTELuK
+ 2RxC19oVI0dR2AkK+Yb0v+3LhYxn2n4x7uGK4Uxb5agkYELMnqUaYACq2izGm3Q/P/sqfm
+ hPh3+wSrhiW/cm4x+J9txdERZ1lIx9c=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-444-loBJzS2fOdWOb3rkbnEDLw-1; Sun, 01 Jun 2025 12:39:26 -0400
-X-MC-Unique: loBJzS2fOdWOb3rkbnEDLw-1
-X-Mimecast-MFC-AGG-ID: loBJzS2fOdWOb3rkbnEDLw_1748795965
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-441c96c1977so24123625e9.0
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 09:39:26 -0700 (PDT)
+ us-mta-674-el5aEb70NuWzAaCiub2j2g-1; Sun, 01 Jun 2025 12:48:22 -0400
+X-MC-Unique: el5aEb70NuWzAaCiub2j2g-1
+X-Mimecast-MFC-AGG-ID: el5aEb70NuWzAaCiub2j2g_1748796501
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-442dc702850so24477555e9.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 09:48:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748795965; x=1749400765;
+ d=1e100.net; s=20230601; t=1748796501; x=1749401301;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=i7IxUI6Jt3qi7uM1DRX2xoOFlZiSxSi2miZ3BLaRilo=;
- b=rM7z9nrZh2THVaHSq3MlAaeIm4xNmF1lAA9tZIq4J3T2XgoIftR4+zckdzEJKoiAu0
- hFS+avku7tm8gSDc1EA9z6NCu1H21ga8AchsfEFsc9shWg0R8k9/Ou9urLVLKL7Gt5ik
- RDKe540ShJ1KU/LdwMrWbOWDdwapjegcV/HUMMUfAYBQnHzofooCz46Ivz7p1k4WWOUy
- 08IrHHv1TBE5ynV/rAttig20Ln7BEt28b2nNwsidmnantYq6xaPQYDYOUZzGq1JHA2nw
- r2OWFYcPYTwMXX00KDByQyDmS91dDLma7C7UKUJ3nusq20bUP5TFxTxlCgzJCGZEW+5k
- kf9w==
+ bh=SXVQ09rwW8rM+Ou2johkXbmIzDvnqBT+4yZTeusayKU=;
+ b=LIxyQ2o2jDfDJBlTJM4AHc3Ekz5ymywsq+rcEt8RquEWJcyPXklLgTWlDIep1wjKW2
+ p0RDS2v+ATydtnL4fdrkBAG6k9hbQSomzqpBY+sD6orFzAE0CSRJis/qCpQjW8NdQ3NT
+ ooO3AcSmpXbsgkejU4qxw95JWm0bEGlPeoKOk67xl/fF7BsHRayh2vy5DK27ezz31LJf
+ ZtZyS/MrZeKqsa6GXJWCUkMrhy7hQ5M67DGMv4lFEq6lrA4BmiidygtBdxsbedX8mh00
+ 5eCnAHtyYirFI9ObWxSBmROWltb/SHwAG6rlhRSamkC/E5PehNM3x97JYuyTP7qygk2k
+ 9Mig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX4JjRPiLgSs1d63aTQqItX3pd3X1uIITyiN3IfMMQQytdyPWpXLLlhLW4xLpUwS/LyFPifckHNFdy+@nongnu.org
-X-Gm-Message-State: AOJu0YzYc/bsAEtjmeHQi3Q0zJKSU+XGAiM3uMzbaMilVBXIYg87hkLc
- 400CUCb/lrjCB5FsGFRhXXVF1j95gQuUYUH7S5xRWoB5ZgRHJ9IXcyJyNrYMn7YCGeCWHkzjak8
- fRbTZnxP2X/hjFXFRdzDqcACUh1vXoGx+1x80AO3zXRvMdfn9p7QpNwLw
-X-Gm-Gg: ASbGncuOLb0ZoG7BOZlmjOiQt7yjz2sAkGzuzzqXeLNFBd2upldWgihe1afcT1qKbpR
- wubqA7oieM5E/OzwfUZ/z/J6fEh2I6KnXkiAWviqwaXyn5g9IGqgwejqJ4pE4IkFaB2P5Ipzz7A
- KjSsomHzkNNs5y01Ey8hUaaft+Ym4n4Klv9hYH41Qah39KiyShRv2vnxwsY05U6tRk1i2Vr58V+
- JHkdZd2azK6x1CuN3etGpBORAo9LMW7pblAnlPBGxHj4paZMtGo/ha6eKAK4/aZRepkO2x1l04t
- UFn8bA3GyKNe+FB89mfZBM7FlAG0wyChIeo1tnGrQDGHzd1zjg==
-X-Received: by 2002:a5d:4082:0:b0:3a4:f8fa:8a3a with SMTP id
- ffacd0b85a97d-3a4f8fa8a6bmr6242975f8f.18.1748795965309; 
- Sun, 01 Jun 2025 09:39:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHT3GiL1vezAZlaf0x7le39vTXBupaB/SRe2rSbiZpGLS8rkkCWwou6j7VKmy1xia3+dTlagw==
-X-Received: by 2002:a5d:4082:0:b0:3a4:f8fa:8a3a with SMTP id
- ffacd0b85a97d-3a4f8fa8a6bmr6242966f8f.18.1748795964929; 
- Sun, 01 Jun 2025 09:39:24 -0700 (PDT)
+ AJvYcCUqdzi1T0hyv/XnmovPWmuCGPNp6GD7Uqq/1+wpUPAfZkmzqsftkujg4+QfYjaGqMU/IJNDE8xFPbe7@nongnu.org
+X-Gm-Message-State: AOJu0Yz2pxl+b59wDQj1mFS7wTAqm0PK1WnPzxiM0ArzSNs6XGGSkXf/
+ /Y4hJlfuJdyaEyJha3vAuGeRv/WQ2842HwycKNVC3Air/ovyAlZ4GCFdLgElnhBUB7Wb7SlvPdv
+ i3RbyFIr2d8YvHyYeZJbRQx/DQcqY95vWBa6vqc+FXaM7nC1j6UoJyF9W
+X-Gm-Gg: ASbGnctayrw7gHAVGJ22+zgTtV/Jm9Ogu8rCMCrsThd7q1Qgunv0VUd0vx4vxw7HRQq
+ qgt9bSLJedoWa5x87Kt0h/+xP4IiWhjq63LEeob0sQ7Y96hjiHdxumXSZhRwP9maq9vbLZ3JJal
+ FUyLa/xVAwM4OvAiWgmGuM2ElLuxl+Jz0+Lh9eyaxdSWR2kWZ5tXO/GBfqCX1AcuE9O63uvV+0E
+ sUdgTB8i7jVxmXkCZX9MaxIjZSxC6grszn+CziKTTUaypIm47Bywo1yd72/lU2hZI9GwNDwkJ59
+ dekYulyagZNNsBQ72IWtsAd3pJBNKD0CX3abprsfgMQRiuOaXw==
+X-Received: by 2002:a05:600c:3e0a:b0:450:c9e3:995c with SMTP id
+ 5b1f17b1804b1-4511ecc28admr49120965e9.12.1748796501131; 
+ Sun, 01 Jun 2025 09:48:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGOMr9i2zKgE3mzdNErYcQZDGaUEkZOjylj3QKEtcP7YzAGeaJl0NNRJt3yE9Im6N8okYK76A==
+X-Received: by 2002:a05:600c:3e0a:b0:450:c9e3:995c with SMTP id
+ 5b1f17b1804b1-4511ecc28admr49120745e9.12.1748796500662; 
+ Sun, 01 Jun 2025 09:48:20 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fc2725sm90441115e9.37.2025.06.01.09.39.24
+ ffacd0b85a97d-3a4efe74111sm12233616f8f.56.2025.06.01.09.48.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 01 Jun 2025 09:39:24 -0700 (PDT)
-Message-ID: <1c560f7e-5aa6-4184-8131-26efddb1fe08@redhat.com>
-Date: Sun, 1 Jun 2025 18:39:23 +0200
+ Sun, 01 Jun 2025 09:48:20 -0700 (PDT)
+Message-ID: <259a8bb5-e2ce-43e6-82a6-9b14c5f1d4bf@redhat.com>
+Date: Sun, 1 Jun 2025 18:48:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 17/43] vfio-pci: skip reset during cpr
+Subject: Re: [PATCH V4 12/43] vfio/container: restore DMA vaddr
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -86,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-18-git-send-email-steven.sistare@oracle.com>
+ <1748546679-154091-13-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1748546679-154091-18-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1748546679-154091-13-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -161,9 +161,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/29/25 21:24, Steve Sistare wrote:
-> Do not reset a vfio-pci device during CPR, and do not complain if the
-> kernel's PCI config space changes for non-emulated bits between the
-> vmstate save and load, which can happen due to ongoing interrupt activity.
+> In new QEMU, do not register the memory listener at device creation time.
+> Register it later, in the container post_load handler, after all vmstate
+> that may affect regions and mapping boundaries has been loaded.  The
+> post_load registration will cause the listener to invoke its callback on
+> each flat section, and the calls will match the mappings remembered by the
+> kernel.
+> 
+> The listener calls a special dma_map handler that passes the new VA of each
+> section to the kernel using VFIO_DMA_MAP_FLAG_VADDR.  Restore the normal
+> handler at the end.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
@@ -176,99 +183,156 @@ C.
 
 
 > ---
->   include/hw/vfio/vfio-cpr.h |  2 ++
->   hw/vfio/cpr.c              | 31 +++++++++++++++++++++++++++++++
->   hw/vfio/pci.c              |  7 +++++++
->   3 files changed, 40 insertions(+)
+>   include/hw/vfio/vfio-cpr.h |  3 +++
+>   hw/vfio/container.c        | 15 ++++++++++--
+>   hw/vfio/cpr-legacy.c       | 57 ++++++++++++++++++++++++++++++++++++++++++++++
+>   3 files changed, 73 insertions(+), 2 deletions(-)
 > 
 > diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-> index 56ede04..8bf85b9 100644
+> index 5a2e5f6..0462447 100644
 > --- a/include/hw/vfio/vfio-cpr.h
 > +++ b/include/hw/vfio/vfio-cpr.h
-> @@ -52,4 +52,6 @@ void vfio_cpr_giommu_remap(struct VFIOContainerBase *bcontainer,
->   bool vfio_cpr_ram_discard_register_listener(
->       struct VFIOContainerBase *bcontainer, MemoryRegionSection *section);
+> @@ -17,6 +17,9 @@ struct VFIOGroup;
 >   
-> +extern const VMStateDescription vfio_cpr_pci_vmstate;
+>   typedef struct VFIOContainerCPR {
+>       Error *blocker;
+> +    int (*saved_dma_map)(const struct VFIOContainerBase *bcontainer,
+> +                         hwaddr iova, ram_addr_t size,
+> +                         void *vaddr, bool readonly, MemoryRegion *mr);
+>   } VFIOContainerCPR;
+>   
+>   
+> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+> index 798abda..f91f2d5 100644
+> --- a/hw/vfio/container.c
+> +++ b/hw/vfio/container.c
+> @@ -137,6 +137,8 @@ static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
+>       int ret;
+>       Error *local_err = NULL;
+>   
+> +    g_assert(!cpr_is_incoming());
 > +
->   #endif /* HW_VFIO_VFIO_CPR_H */
-> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-> index 0e59612..fdbb58e 100644
-> --- a/hw/vfio/cpr.c
-> +++ b/hw/vfio/cpr.c
-> @@ -8,6 +8,8 @@
->   #include "qemu/osdep.h"
->   #include "hw/vfio/vfio-device.h"
+>       if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+>           if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+>               bcontainer->dirty_pages_supported) {
+> @@ -691,8 +693,17 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+>       }
+>       group_was_added = true;
+>   
+> -    if (!vfio_listener_register(bcontainer, errp)) {
+> -        goto fail;
+> +    /*
+> +     * If CPR, register the listener later, after all state that may
+> +     * affect regions and mapping boundaries has been cpr load'ed.  Later,
+> +     * the listener will invoke its callback on each flat section and call
+> +     * dma_map to supply the new vaddr, and the calls will match the mappings
+> +     * remembered by the kernel.
+> +     */
+> +    if (!cpr_is_incoming()) {
+> +        if (!vfio_listener_register(bcontainer, errp)) {
+> +            goto fail;
+> +        }
+>       }
+>   
+>       bcontainer->initialized = true;
+> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+> index cf80332..512ef41 100644
+> --- a/hw/vfio/cpr-legacy.c
+> +++ b/hw/vfio/cpr-legacy.c
+> @@ -10,11 +10,13 @@
+>   #include "hw/vfio/vfio-container.h"
 >   #include "hw/vfio/vfio-cpr.h"
-> +#include "hw/vfio/pci.h"
-> +#include "migration/cpr.h"
+>   #include "hw/vfio/vfio-device.h"
+> +#include "hw/vfio/vfio-listener.h"
+>   #include "migration/blocker.h"
+>   #include "migration/cpr.h"
+>   #include "migration/migration.h"
+>   #include "migration/vmstate.h"
 >   #include "qapi/error.h"
->   #include "system/runstate.h"
+> +#include "qemu/error-report.h"
 >   
-> @@ -37,3 +39,32 @@ void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
+>   static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
 >   {
->       migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
+> @@ -31,6 +33,32 @@ static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
+>       return true;
 >   }
-> +
+>   
 > +/*
-> + * The kernel may change non-emulated config bits.  Exclude them from the
-> + * changed-bits check in get_pci_config_device.
+> + * Set the new @vaddr for any mappings registered during cpr load.
+> + * The incoming state is cleared thereafter.
 > + */
-> +static int vfio_cpr_pci_pre_load(void *opaque)
+> +static int vfio_legacy_cpr_dma_map(const VFIOContainerBase *bcontainer,
+> +                                   hwaddr iova, ram_addr_t size, void *vaddr,
+> +                                   bool readonly, MemoryRegion *mr)
 > +{
-> +    VFIOPCIDevice *vdev = opaque;
-> +    PCIDevice *pdev = &vdev->pdev;
-> +    int size = MIN(pci_config_size(pdev), vdev->config_size);
-> +    int i;
+> +    const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
+> +                                                  bcontainer);
+> +    struct vfio_iommu_type1_dma_map map = {
+> +        .argsz = sizeof(map),
+> +        .flags = VFIO_DMA_MAP_FLAG_VADDR,
+> +        .vaddr = (__u64)(uintptr_t)vaddr,
+> +        .iova = iova,
+> +        .size = size,
+> +    };
 > +
-> +    for (i = 0; i < size; i++) {
-> +        pdev->cmask[i] &= vdev->emulated_config_bits[i];
+> +    g_assert(cpr_is_incoming());
+> +
+> +    if (ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map)) {
+> +        return -errno;
 > +    }
 > +
 > +    return 0;
 > +}
-> +
-> +const VMStateDescription vfio_cpr_pci_vmstate = {
-> +    .name = "vfio-cpr-pci",
-> +    .version_id = 0,
-> +    .minimum_version_id = 0,
-> +    .pre_load = vfio_cpr_pci_pre_load,
-> +    .needed = cpr_incoming_needed,
-> +    .fields = (VMStateField[]) {
-> +        VMSTATE_END_OF_LIST()
-> +    }
-> +};
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 56e7fdd..840590c 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -30,6 +30,7 @@
->   #include "hw/qdev-properties.h"
->   #include "hw/qdev-properties-system.h"
->   #include "migration/vmstate.h"
-> +#include "migration/cpr.h"
->   #include "qobject/qdict.h"
->   #include "qemu/error-report.h"
->   #include "qemu/main-loop.h"
-> @@ -3345,6 +3346,11 @@ static void vfio_pci_reset(DeviceState *dev)
+>   
+>   static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
 >   {
->       VFIOPCIDevice *vdev = VFIO_PCI_BASE(dev);
+> @@ -59,11 +87,34 @@ static int vfio_container_pre_save(void *opaque)
+>       return 0;
+>   }
 >   
-> +    /* Do not reset the device during qemu_system_reset prior to cpr load */
-> +    if (cpr_is_incoming()) {
-> +        return;
+> +static int vfio_container_post_load(void *opaque, int version_id)
+> +{
+> +    VFIOContainer *container = opaque;
+> +    VFIOContainerBase *bcontainer = &container->bcontainer;
+> +    VFIOGroup *group;
+> +    Error *local_err = NULL;
+> +
+> +    if (!vfio_listener_register(bcontainer, &local_err)) {
+> +        error_report_err(local_err);
+> +        return -1;
 > +    }
 > +
->       trace_vfio_pci_reset(vdev->vbasedev.name);
+> +    QLIST_FOREACH(group, &container->group_list, container_next) {
+> +        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +
+> +        /* Restore original dma_map function */
+> +        vioc->dma_map = container->cpr.saved_dma_map;
+> +    }
+> +    return 0;
+> +}
+> +
+>   static const VMStateDescription vfio_container_vmstate = {
+>       .name = "vfio-container",
+>       .version_id = 0,
+>       .minimum_version_id = 0,
+> +    .priority = MIG_PRI_LOW,  /* Must happen after devices and groups */
+>       .pre_save = vfio_container_pre_save,
+> +    .post_load = vfio_container_post_load,
+>       .needed = cpr_incoming_needed,
+>       .fields = (VMStateField[]) {
+>           VMSTATE_END_OF_LIST()
+> @@ -86,6 +137,12 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
 >   
->       vfio_pci_pre_reset(vdev);
-> @@ -3521,6 +3527,7 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
->   #ifdef CONFIG_IOMMUFD
->       object_class_property_add_str(klass, "fd", NULL, vfio_pci_set_fd);
->   #endif
-> +    dc->vmsd = &vfio_cpr_pci_vmstate;
->       dc->desc = "VFIO-based PCI device assignment";
->       pdc->realize = vfio_realize;
+>       vmstate_register(NULL, -1, &vfio_container_vmstate, container);
+>   
+> +    /* During incoming CPR, divert calls to dma_map. */
+> +    if (cpr_is_incoming()) {
+> +        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +        container->cpr.saved_dma_map = vioc->dma_map;
+> +        vioc->dma_map = vfio_legacy_cpr_dma_map;
+> +    }
+>       return true;
+>   }
 >   
 
 
