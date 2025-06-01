@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B8AC54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:30:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3DDAC5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:31:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkYt-00022C-2f; Sun, 01 Jun 2025 11:25:23 -0400
+	id 1uLkYt-00022G-43; Sun, 01 Jun 2025 11:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYh-0001rc-LM
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYl-0001wg-Nn
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYZ-0004P1-NY
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:06 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYj-0004aX-Fw
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791502;
+ s=mimecast20190719; t=1748791509;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=K3hh+nsreMps0mGehLZKh8JmUU9TDLRDwrt24jOn5dk=;
- b=KSxlqFXnaK9WpOVdL9ITiyKeSxusrjph4Z0cwhKA2Cb6ILrfw9Aa6cMZYgwjwZshpZfHCO
- ByCkTEnQurQ1MFEUOWCP4AP3b3EjL5XPbTzGaJlunCbNA2UsOp6gTFAmidXLZhbny6xx/Y
- cMxn54Li/RHfmMDuXOr8F7U+ekwi3iM=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZDSsFEzywjh9OxEWL6pzAyxwPIhej9RWGxAoQQErVX4=;
+ b=JUN+F2XAwRKYQOB/orSUOxUpN6pSQ2o3ElMpcdO6Q04XCYr+ky0Tn9077UFCj4TcmFj6bk
+ 6QeDqelb/jg0SyIvHyUcJcPgHqTWdIDonI+9O5Xmzze1DbLY63WS+PXuqwGUC45B0b0noc
+ BzZ+6xVNscu+LxzuTEdT3Az9rHEEB6M=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-HCpmHa7KOcSxqaPH9EFg5A-1; Sun, 01 Jun 2025 11:25:01 -0400
-X-MC-Unique: HCpmHa7KOcSxqaPH9EFg5A-1
-X-Mimecast-MFC-AGG-ID: HCpmHa7KOcSxqaPH9EFg5A_1748791500
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-450d6768d4dso15953155e9.2
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:00 -0700 (PDT)
+ us-mta-486-7LNTfkrtM52UkWzxQr8vmw-1; Sun, 01 Jun 2025 11:25:08 -0400
+X-MC-Unique: 7LNTfkrtM52UkWzxQr8vmw-1
+X-Mimecast-MFC-AGG-ID: 7LNTfkrtM52UkWzxQr8vmw_1748791507
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4f6ff23ccso1563856f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791499; x=1749396299;
+ d=1e100.net; s=20230601; t=1748791506; x=1749396306;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K3hh+nsreMps0mGehLZKh8JmUU9TDLRDwrt24jOn5dk=;
- b=IjJeriwc8/qMNehq332QfQ+56aX777pRg4i/8p+jOYQ2D4jhPAZjQ1+gaCFod8gFHS
- aglGRG0T3gygf/jNAwTi8TPycTbpzKJvqktkZKLI0NhcRcTWGo0Wzb1RdiculB3676OK
- VmyE5DQgTKd89rFHMORy0YnuHDnOopmuSEkvvTR5ALO9I0XMtHMrmjnTWE5o8uAA//oq
- WI4xCWe4VObwsAWfEmHZFTm7rqgArTVJUg7ah1LVZBlB7mpB/X841+/8uAbnm23kxfoo
- L7BJFLmhxiIom7CMVDNzW9pWin/ZWMBHAAj2b0zmGYNphkttNq6J1gaM2CL5oJR4GYFH
- +B4g==
-X-Gm-Message-State: AOJu0Yy8bLcszucU4WbVgtv7RGMRq9vEjQOWxTduwJJim0Y0JewR4jVl
- wEaYK9ioV3E9nLhdUl9YkT8+BqAeOZjns3uNoM5xRp5zz/CjjOX0bOFfxTs8GeBxCf5AYD0h2CA
- wrED6qhgUH/7rtQTSjcttxJJup/5EXreoV/EAydDG8iw/JzepNSvE1sLryhOwiPppP9/6xY//QS
- KPwUckTyowUcXp+wMr6e/73wHDN80Ai9NK2w==
-X-Gm-Gg: ASbGncsALE5wNX212eeHXc8U3v3pwtYvvIH3JSQaHZZvWoEXTaKSgD2FyI4yxPBx/cS
- LEHgXAbJA6mMd+j09DaNqfNVHvzhJeR+wjxmhoyBfUNfQ7Qbnm1MyzsbTnOif0JZ1W+VwH22jXD
- nsWJp2RXCXkbyQl/aUqR8A/PmIrmYbopArq4b8Z4Y4ZJQO79WU31625VXV9Fcv8x51Y9KfbQaJn
- 1zpf61hze0QerpFXl+2K0jd5vBo5UlThow024gJgC++nHfHbEcCJbSVDJ2MZtG/oo3dme0ScQ0y
- hQywDQ==
-X-Received: by 2002:a05:6000:2586:b0:3a4:ef0d:e614 with SMTP id
- ffacd0b85a97d-3a4f89d30d8mr7536985f8f.33.1748791499428; 
- Sun, 01 Jun 2025 08:24:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFYcQF/339ewniPmbtp+gM8KQO5fTU849NVHyrDzN/N3VoKh69PSUz2qgEZPNagOTR16hDgA==
-X-Received: by 2002:a05:6000:2586:b0:3a4:ef0d:e614 with SMTP id
- ffacd0b85a97d-3a4f89d30d8mr7536963f8f.33.1748791499035; 
- Sun, 01 Jun 2025 08:24:59 -0700 (PDT)
+ bh=ZDSsFEzywjh9OxEWL6pzAyxwPIhej9RWGxAoQQErVX4=;
+ b=ZLewJDudA/jzWHzHhNQPTrjq3tXC84NnXhq5Q7SgNfVn4J1RXAIt/wqAMAiVN/su7a
+ t3AcLuUtHdz0zOHiG0uEAJvzXnIOyWrUsfIcmjeuUv3p4ioif8D+paBE3tucUcIwbBQk
+ ajyRLpt/3kMp3K8uX5+McUptsudL3Y32vlLz48heyDmnhLFYO0xhj2W8bJSUvYKRYn/h
+ c88/HWT/Is9yAimvJU3zdgIzuZZpVWqjTpJuqQdFEokMpFs0DPSky+TtpyX8Nh4dAO63
+ hgWABMp3TJ13wiIjAAW7xeDKkPG+CVl2pR5hXK/qFuNe9QzK4Yp8XKKOteHUx/WslKPy
+ VlfA==
+X-Gm-Message-State: AOJu0Yy7ckAYERDYtOB8ijGo8sT0+/Mfi9dcHOy2sd0SYIQgX6qfdQJb
+ ZRYN7ACwCWXEGMsJvE9/BYZObiii8hw5UKpYrX/x1FluiWm4Uk+fpW+WWeDPIfPrrfZJ5x/+7Xb
+ o3AJC2RzqLxtnNf27BgS56fERnTMDAeXoQi3FRfXEtaNi6wzWwnzClt0NeswbxstiL3bgdO6CKc
+ mZrsIiJJKHQcEP3kNSqVj45rcvh3wJUoytgw==
+X-Gm-Gg: ASbGncsBwqjJ6Nplq4Cau1OS3DiFexMsWxKzfBrsHl6OblhE92JlHa0S/oYwTNnc5BX
+ 3QZYcW2GoiVlSLDJX63O4spp0OWSn2+dA6IE62UVbw6+hB+PleFq7kQNMR0IU6t+BD/6sAOpwUD
+ G7KJO684aFRFMDjaqrf3D8slbXeKfIVeQup0qdQnQ7/GfauiwwuOdvhpSwrV7o/vCczA5Y4BoGe
+ qRF79DgP38Jmvm7PgxsRlRntj6ZdcbDw7+gHTHsfIKs90bCl7qyjJUhjzx+B4zzp6ftSGLhCyNG
+ FQb+Lg==
+X-Received: by 2002:a5d:64ed:0:b0:3a4:f51c:21a9 with SMTP id
+ ffacd0b85a97d-3a4f7ab12a5mr7889761f8f.52.1748791506209; 
+ Sun, 01 Jun 2025 08:25:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGAcjJF6g+byLvSoBtxBrabkU4aCLTkZrOdWxEpTUostWIklT4x+FbaGhGkGDryG3QKZYa0Vg==
+X-Received: by 2002:a5d:64ed:0:b0:3a4:f51c:21a9 with SMTP id
+ ffacd0b85a97d-3a4f7ab12a5mr7889741f8f.52.1748791505822; 
+ Sun, 01 Jun 2025 08:25:05 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fc24d7sm89368775e9.36.2025.06.01.08.24.57
+ 5b1f17b1804b1-450d8013e0esm87687235e9.39.2025.06.01.08.25.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:24:58 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:24:56 -0400
+ Sun, 01 Jun 2025 08:25:05 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:25:03 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 05/31] pcie: Helper functions to check if PASID is enabled
-Message-ID: <1e82e8a828cf18a8abfeca7295322db91879de04.1748791463.git.mst@redhat.com>
+Subject: [PULL 08/31] pcie: Helper functions to check to check if PRI is
+ enabled
+Message-ID: <5be8cf79188a2a1c73d16f3a8b458d909ac976f4.1748791463.git.mst@redhat.com>
 References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -84,7 +85,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1748791463.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -111,47 +112,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-pasid_enabled checks whether the capability is
-present or not. If so, we read the configuration space to get
-the status of the feature (enabled or not).
+pri_enabled can be used to check whether the capability is present and
+enabled on a PCIe device
 
 Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Message-Id: <20250520071823.764266-3-clement.mathieu--drif@eviden.com>
+Message-Id: <20250520071823.764266-6-clement.mathieu--drif@eviden.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/pci/pcie.h | 2 ++
+ include/hw/pci/pcie.h | 1 +
  hw/pci/pcie.c         | 9 +++++++++
- 2 files changed, 11 insertions(+)
+ 2 files changed, 10 insertions(+)
 
 diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index fe82e0a915..dff98ff2c6 100644
+index 17f06cd5d6..ff6ce08e13 100644
 --- a/include/hw/pci/pcie.h
 +++ b/include/hw/pci/pcie.h
-@@ -154,4 +154,6 @@ void pcie_cap_slot_unplug_request_cb(HotplugHandler *hotplug_dev,
+@@ -158,6 +158,7 @@ void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
+ void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
+                    bool prg_response_pasid_req);
  
- void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
-                      bool exec_perm, bool priv_mod);
-+
-+bool pcie_pasid_enabled(const PCIDevice *dev);
++bool pcie_pri_enabled(const PCIDevice *dev);
+ bool pcie_pasid_enabled(const PCIDevice *dev);
+ bool pcie_ats_enabled(const PCIDevice *dev);
  #endif /* QEMU_PCIE_H */
 diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 4f935ff420..db9756d861 100644
+index 542172b3fa..eaeb68894e 100644
 --- a/hw/pci/pcie.c
 +++ b/hw/pci/pcie.c
-@@ -1239,3 +1239,12 @@ void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
- 
-     dev->exp.pasid_cap = offset;
+@@ -1266,6 +1266,15 @@ void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
+     dev->exp.pri_cap = offset;
  }
-+
-+bool pcie_pasid_enabled(const PCIDevice *dev)
+ 
++bool pcie_pri_enabled(const PCIDevice *dev)
 +{
-+    if (!pci_is_express(dev) || !dev->exp.pasid_cap) {
++    if (!pci_is_express(dev) || !dev->exp.pri_cap) {
 +        return false;
 +    }
-+    return (pci_get_word(dev->config + dev->exp.pasid_cap + PCI_PASID_CTRL) &
-+                PCI_PASID_CTRL_ENABLE) != 0;
++    return (pci_get_word(dev->config + dev->exp.pri_cap + PCI_PRI_CTRL) &
++                PCI_PRI_CTRL_ENABLE) != 0;
 +}
++
+ bool pcie_pasid_enabled(const PCIDevice *dev)
+ {
+     if (!pci_is_express(dev) || !dev->exp.pasid_cap) {
 -- 
 MST
 
