@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F000C5B549
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06C1C54FB3
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 18:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLnAt-00021G-1x; Sun, 01 Jun 2025 14:12:47 -0400
+	id 1uLnAu-00021Y-QN; Sun, 01 Jun 2025 14:12:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uLnAr-00020q-7v
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:45 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uLnAt-00021I-CU
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:47 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uLnAp-0002oi-LD
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:44 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-747d59045a0so555944b3a.1
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 11:12:43 -0700 (PDT)
+ id 1uLnAr-0002ow-RA
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:47 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-742c9563fd9so2935045b3a.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 11:12:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748801562; x=1749406362; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1748801564; x=1749406364; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HtMYrVMuloYt3Yjr4sNHWX4khJZ7APlMmjLEKIR4VtI=;
- b=IOnfxPpguI6wquYtky79KLaXwrHFDy137NJebL1Hms2H4H0NqUCG2oRzQo8fsM40Be
- 0TDhITaTtMZXCZcJAwm6lQ6htiGNJVNdJlVndxwYpjZS0QYTsEuEUZDNwzOwDBUk448H
- 7CA/t1t70P0lVSUUwmosz8X8cdabPanB2DPlYmpjxCetGbRGeYXcQA1NQU2irC7+B7o5
- Ngoxt3PcBB1iOfrw1fRrbgM1rUu6/qshXFHTM/3gI2HJvcvZQly6LwJ+v+ZGr01XLFqc
- weiQAxm0GRPZJhnBPqdG8xUTMOaSQ7AOLNtZgrlA2EbCueobhPZfLt7OpLLXIQX4PVWJ
- uUNg==
+ bh=3WBLhmVUNFmmWr7iWGyD+QREshlRfuZn9YAw+EwxcsE=;
+ b=lpMXUTP+2r/dBFp6QuWzwZK895DPgXVBXaT7Eb+nKjdcqZI3WCYWbrZoFrH/50KJ2U
+ G++tfRcBZEIWPLwPKbPttThbf+63AQ5128LHql1yVCQeEWORs9wLkutW1Prs+WcP5ka7
+ 2/VjmGRRumdJPf+7HPTeDn1Ftedtd6JJvaVYIUxdlpeX8aC4c04uJjvSbn+Qin64T1oa
+ 1A2afBg04AOt3yVL9ydrDDiNy8gtvlzHMnR3Srsr/RjfdDljHz4j8p4kXEE8HRNfC6jc
+ kvON1cqhE9NqFEX+k4DbVzqXac+U7P3JDfRooiPEZTIy+f7KyDl/Ofh1yJIclap+Ld+U
+ eCFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748801562; x=1749406362;
+ d=1e100.net; s=20230601; t=1748801564; x=1749406364;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HtMYrVMuloYt3Yjr4sNHWX4khJZ7APlMmjLEKIR4VtI=;
- b=KSBLd8rCI7TgdhnhekDfEkDfM3+vFmiI6tUHnyuPQzVxvU40qsPPUvUfgH/i59Me5o
- v4vvoHh7o3L5f9yAFrNSLEuavtxdx92+V5FmmiilCrlRh90d8xZb5j/LxrWc+reBJB1B
- Ce/AqU2QMjDXukIhhRjWb4LPGkwoS1W5IiXBKb+kZ/LlOwbrN9JH8PNiSAifVmjWjkuw
- pByvJhW6CcwIqgiVJlhLx26G7qSNK+B5qbhNDYBC31CE/kNydaVkXk0KHBvR88O87mPH
- BkUmahmJ/zlZlS2GFbxlaE/gTvGEDnf442AjNWv5QyUmlQvY+B/yYUkNedWQy6792xC5
- +ujw==
-X-Gm-Message-State: AOJu0YxFWGSc76FHSPrEUHXY4vwUvLS2rN8vhyzWZEkDlo14u34+q0/B
- O2YOz3Ba64ow5uemGcpWjqWpOIeLuK6aIiXH2lQi8zQq62b3+Q1G86Zed13g0zO7P7KsKg==
-X-Gm-Gg: ASbGncsyduZowIKP+8naxl4+VPePNahfHyPHq9Fgm753bz28gm/vvku8o8NwjL8ZRiA
- bTNzMVo+Bgwy0JuqNFvbpv1VnGff0KLW7ZX8CBYfqDYGYE+OX87YccOFeohT3NwAyWForoytehW
- dgu9CrtWU11yhSXLyZcetYRakNI3xFxKYc+FbyuwDfbBbAs/h/paW6eBj++cKkSoBobE8azr9nD
- i/60YbouD2mqV5K2x1x1aVBKbzC/ddbXabjnAE0FIc6jTtDIbBJ/1jpsJDWInpC8YDFPo9wrVO1
- sUb67jbpENnA+aqNb/7ZNOyA/jAE9z7HLl66SUBtkkcb/5W58PYkqBiUR2OeSw==
-X-Google-Smtp-Source: AGHT+IFoygaaqRZY4MpjSkbKv3SZzU7WJHNsxEBnkzkXypS3wGU5cUJeSySRFnUb0pFpWfG7age/tA==
-X-Received: by 2002:a05:6a20:7344:b0:1f5:7c6f:6c8b with SMTP id
- adf61e73a8af0-21adff5ae5bmr15141189637.10.1748801561586; 
- Sun, 01 Jun 2025 11:12:41 -0700 (PDT)
+ bh=3WBLhmVUNFmmWr7iWGyD+QREshlRfuZn9YAw+EwxcsE=;
+ b=bq62lItsJyFBR4fDlX/eL1hjDeJLDwVrGyzOq/VzKk4+2FQYIUmyUVnnc9QN34JG+y
+ aUDBaeGCiVoF8IMv3+89E3K3LeUO3WaEAEq4LGBwCd0I+GfJyfcIpnJI7eid5u3xtqYF
+ 2kQ/r+tAV7Ws5P9NaqRozBDIDw5WEan9guzxmCgvunTHA153kbq43Zip2ACn5sjDiPbK
+ 8hYWqRkZ8AJOcVbS982pnKLaNW2x84Kcz8uKmzRhvJ7RX+ZuwCgdRarDAegjy/m9nDq1
+ 32cS/LuBPsQYC3gx/FzUyjcTubBigXCYIpcuazlFBqgv9Nb+pHicg8DsysrJh7OjRuJ1
+ VdrQ==
+X-Gm-Message-State: AOJu0YxhnF70Pb3ID2owbNu1fxE2VDXT3DMZW2fvVpLZzCahkIkuWgGv
+ I4tkNUr//NDpu38Ii/Q/jPdUsPCtD2p1p4XvcYJdobXMmmRlI5WMVFg5IH/zmVEp6pZM4w==
+X-Gm-Gg: ASbGncvphJViFHAZv0GbI48HLCNcai+BQYHIQNDeksru6zzlthGEblg/lDpt9uU6Bno
+ y8eSHmXi2xJBigXsSB4SnIf1UJzDjhZQn9tsGaFVHUM6B6NFz+hUuzGIkx9athj+QsBlGEBPjtB
+ Ma6kHPDoQnrolnFSnRrCEn9ozRO0bTYCN6epsv/qFxOtXx2ctlr97DGjd/28mJFZP3qi8Fd+l1d
+ pt/xSoOZSb9wr3Zsj63o5pKcmy4JhuHGRi8HssxoXO0NkDMQBQE3NWV0GxGhrXTyFAeInf4PxwT
+ x1NEsiitFoU+gImVe5+7G4eA9zc9+iDaDXYTXyAa5EXvTRYks2mO5Qa38G/7Zw==
+X-Google-Smtp-Source: AGHT+IGJ8LcEKExYmpW+rhMh2S/WK9qeFiecSO5i3z+vg1zitqHFCfw5LMF1q134xtjoCedPAGbqDQ==
+X-Received: by 2002:a05:6a00:a27:b0:736:5438:ccc with SMTP id
+ d2e1a72fcca58-747c1a83bd3mr13717140b3a.9.1748801563981; 
+ Sun, 01 Jun 2025 11:12:43 -0700 (PDT)
 Received: from ubuntu.. ([49.207.58.139]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-747afed4bafsm6189191b3a.79.2025.06.01.11.12.39
+ d2e1a72fcca58-747afed4bafsm6189191b3a.79.2025.06.01.11.12.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 11:12:41 -0700 (PDT)
+ Sun, 01 Jun 2025 11:12:43 -0700 (PDT)
 From: Tanish Desai <tanishdesai37@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, pbonzini@redhat.com,
  Mads Ynddal <mads@ynddal.dk>, Tanish Desai <tanishdesai37@gmail.com>
-Subject: [PATCH 2/3] trace/ftrace: seperate cold paths of tracing functions
-Date: Sun,  1 Jun 2025 18:12:30 +0000
-Message-Id: <20250601181231.3461-3-tanishdesai37@gmail.com>
+Subject: [PATCH 3/3] trace/log: seperate cold path of tracing functions
+Date: Sun,  1 Jun 2025 18:12:31 +0000
+Message-Id: <20250601181231.3461-4-tanishdesai37@gmail.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250601181231.3461-1-tanishdesai37@gmail.com>
 References: <20250601181231.3461-1-tanishdesai37@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=tanishdesai37@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=tanishdesai37@gmail.com; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,82 +99,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moved rarely used (cold) code from the header file to the C file to avoid
-unnecessary inlining and reduce binary size. This improves code organization
-and follows good practices for managing cold paths.
+Moved frequently used hot paths from the .c file to the .h file to enable inlining
+and improve performance. This approach is inspired by past QEMU optimizations,
+where performance-critical code was inlined based on profiling results.
 
 Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 ---
- scripts/tracetool/backend/ftrace.py | 44 +++++++++++++++++++++--------
- 1 file changed, 32 insertions(+), 12 deletions(-)
+ scripts/tracetool/backend/log.py | 26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
-diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-index baed2ae61c..c9717d7b42 100644
---- a/scripts/tracetool/backend/ftrace.py
-+++ b/scripts/tracetool/backend/ftrace.py
-@@ -23,6 +23,10 @@
- def generate_h_begin(events, group):
-     out('#include "trace/ftrace.h"',
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index de27b7e62e..ca53747950 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -24,6 +24,10 @@ def generate_h_begin(events, group):
+     out('#include "qemu/log-for-trace.h"',
+         '#include "qemu/error-report.h"',
          '')
 +    for event in events:
-+        out('void _ftrace_%(api)s(%(args)s);',
++        out('void _log_%(api)s(%(args)s);',
 +            api=event.api(),
 +            args=event.args)
  
  
  def generate_h(event, group):
-@@ -30,26 +34,42 @@ def generate_h(event, group):
-     if len(event.args) > 0:
-         argnames = ", " + argnames
+@@ -38,6 +42,22 @@ def generate_h(event, group):
+         cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
  
--    out('    {',
-+    out('        if (trace_event_get_state(%(event_id)s)) {',
-+        '           _ftrace_%(api)s(%(args)s);',
-+        '        }',
-+        name=event.name,
-+        args=", ".join(event.args.names()),
-+        event_id="TRACE_" + event.name.upper(),
+     out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
++        '       _log_%(api)s(%(args)s);',
++        '    }',
++        cond=cond,
 +        event_lineno=event.lineno,
 +        event_filename=os.path.relpath(event.filename),
++        name=event.name,
 +        fmt=event.fmt.rstrip("\n"),
 +        argnames=argnames,
-+        api=event.api()
-+        )
-+
++        args = ", ".join(event.args.names()),
++        api=event.api())
 +
 +def generate_c(event, group):
 +        argnames = ", ".join(event.args.names())
 +        if len(event.args) > 0:
 +            argnames = ", " + argnames
-+        out('void _ftrace_%(api)s(%(args)s){',
-         '        char ftrace_buf[MAX_TRACE_STRLEN];',
-         '        int unused __attribute__ ((unused));',
-         '        int trlen;',
--        '        if (trace_event_get_state(%(event_id)s)) {',
-         '#line %(event_lineno)d "%(event_filename)s"',
--        '            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
--        '                             "%(name)s " %(fmt)s "\\n" %(argnames)s);',
-+        '       trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
++            out('void _log_%(api)s(%(args)s){',
+         '        if (message_with_timestamp) {',
+         '            struct timeval _now;',
+         '            gettimeofday(&_now, NULL);',
+@@ -53,12 +73,14 @@ def generate_h(event, group):
          '#line %(out_next_lineno)d "%(out_filename)s"',
--        '            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
--        '            unused = write(trace_marker_fd, ftrace_buf, trlen);',
--        '        }',
--        '    }',
--        name=event.name,
--        args=event.args,
--        event_id="TRACE_" + event.name.upper(),
-+        '                       "%(name)s " %(fmt)s "\\n" %(argnames)s);',
-+        '       trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
-+        '       unused = write(trace_marker_fd, ftrace_buf, trlen);',
-+        '}',
+         '        }',
+         '    }',
+-        cond=cond,
          event_lineno=event.lineno,
          event_filename=os.path.relpath(event.filename),
-+        name=event.name,
+         name=event.name,
          fmt=event.fmt.rstrip("\n"),
 -        argnames=argnames)
 +        argnames=argnames,
-+        api=event.api(),
-+        args=event.args)
++        args=event.args,
++        api=event.api()
++        )
  
  
  def generate_h_backend_dstate(event, group):
