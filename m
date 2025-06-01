@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18DC4C5B543
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:26:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B76CC5B543
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkYz-00026N-A0; Sun, 01 Jun 2025 11:25:29 -0400
+	id 1uLkZs-0003cs-Lx; Sun, 01 Jun 2025 11:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYs-000220-Ep
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZX-0003HM-EV
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:26:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYp-0004ca-Vf
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:21 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZW-0004gs-0o
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:26:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791519;
+ s=mimecast20190719; t=1748791561;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YJiOOwAv2YnFSleWHSjNqxKC6KzAim3GjLcQEGjgPCE=;
- b=MH5a/E3lqSX+AA5sD+hogwqudcEJB0MiSt6MkAHsuauDyYdfj6Qsjqj14U6IQvI1SIjEU7
- SXeyHlAC+OrPKMmpI1f6BRG6ZYNlIM4Pa+niukreEgHDn+ujiTt9D8on4gecXucCJo2lbX
- o20fOwwn0v+/CkDrZhijstI4NoqZ61o=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IAQySewBx8SloVNKOXAdxhJJVB1Xqg1y29AdslpVETY=;
+ b=B5QiWHdgFgmxubefF5ciq0Mvyc9Gr96AX73+VO0S8fWjGhAgJ6+ErJxSNyLk8ufWMfaxGk
+ +ltSWxkgwU5uQ7s0BP39eEcH1FYw70nGD8retr1qJiQPjCIikc5urUbJL8azNRvBWhTK+b
+ GYq99xfbqA823V6Dv2i2iT8l0AuROxk=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-121-AD4yA8P5M3GgCeVx6yryOw-1; Sun, 01 Jun 2025 11:25:18 -0400
-X-MC-Unique: AD4yA8P5M3GgCeVx6yryOw-1
-X-Mimecast-MFC-AGG-ID: AD4yA8P5M3GgCeVx6yryOw_1748791517
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450d57a0641so21739015e9.3
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:18 -0700 (PDT)
+ us-mta-76-FvOkRplJP3alXuX75Wgqyw-1; Sun, 01 Jun 2025 11:26:00 -0400
+X-MC-Unique: FvOkRplJP3alXuX75Wgqyw-1
+X-Mimecast-MFC-AGG-ID: FvOkRplJP3alXuX75Wgqyw_1748791559
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4f7f1b932so1836294f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:26:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791517; x=1749396317;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YJiOOwAv2YnFSleWHSjNqxKC6KzAim3GjLcQEGjgPCE=;
- b=PqHkgWnwMOr6RHOlJhN46mYluQEnMlsweqzq7j/h8TQdaPU+49zFNDmmEvC56hcu5a
- VoqLidiPaaFYcf6F8KnfW9yCL8y4jQHaD5BdrD+euPyq3xe9UBw7rBs8+qmbOmlumDO8
- xKYRlyTrq6E640VcHNN3A29qsNmN6qQvQbiURYeA8+tS8zjLyd+cuPXAn8QX0XAVwTLK
- gNXnjnQlLdyeavbBzvaxbUznIm5CmUUea72Jc7zL3M30i5VVAGE7BZ/8T0YNQZFpWrjx
- 3UiLMn6HB1BlyaHVeUYSEVQ0PYO/MQOJrOMt4aur2RbRKEzQwBbjUWZK96K5GciiTHmh
- 5Q+A==
-X-Gm-Message-State: AOJu0YzLNowywJzJmm1DRpJEtJeTTu4YnlJmsqRaEVGbQM8uBpyqcn/6
- 98GxZ0o873onzQZVbVQzHRC9zHUTExj1OosTJDn926aR0mdp3nvLc/J/X3SnWIRaT2C6xaM1Q4I
- ZEuZCMIWrV0T09AyQCyLwCMNNeZcbqrEfyEhtlsZ7w/uIOE5tqNhqxjULuuM1a2jfJIznrRPJdP
- uM8gRQxd4Hz6qXLFHS3+cfyGs5FjDKciWQdQ==
-X-Gm-Gg: ASbGncuWwRhn4ZtoyLUI9rCPghKcHifhNGQ9BRr5bzIdEkyZgrO6P5SWzJMo7QH5iWl
- Ell46bTIzS/5IwKU052IAsk9HMQmB8LGe9TJW29oIKy7OOH0fk8g9BG4MyhIKC+LMU7mNZ39fjf
- RlY2q7BDSZAISyNsH4rg5brkSsEFOu1twO+Hkw3jywWVTRPjqoiQiIT8/WGFgGDBUZ5e5zSqmoB
- 2XnlE2VTZpqsuO/NyamIkJkQRA4KdnHrK73cftm/I9VqKpJL6yYGKcN2OySvXyVNuIqMuait1kc
- vCJIYQ==
-X-Received: by 2002:a05:600c:500b:b0:442:ccf0:41e6 with SMTP id
- 5b1f17b1804b1-4511ecb8b24mr51248835e9.3.1748791516735; 
- Sun, 01 Jun 2025 08:25:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFZoR6jNpuzkkkeQQAk/CySquFGt5ogDk51MwX5+nqOtRfRyJXdBv43GrOkD6F210i1dIqomw==
-X-Received: by 2002:a05:600c:500b:b0:442:ccf0:41e6 with SMTP id
- 5b1f17b1804b1-4511ecb8b24mr51248615e9.3.1748791516253; 
- Sun, 01 Jun 2025 08:25:16 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748791559; x=1749396359;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=IAQySewBx8SloVNKOXAdxhJJVB1Xqg1y29AdslpVETY=;
+ b=iZjeKTMguOTEiwSjFhfilOc9vO4aO4LcTBNs8uS6YQquDi1dw5aUM+c8pxeI4earcq
+ 7jukwTrdn5iEXNTRUfX2fKqy5Jir6qRtHYSOo5sOJK9gjBbs5a15oMc+rL1pqVp7RUwH
+ A0XfSWj3wk1EcrofsA54jWlRDTWuBm5pe+el4d0ssbJXiU5trM3ouNMuL41CTMM2yGKa
+ 0SNK/EQqRwVdJMcJfsV7kCK7Wbtvl1sVK7PWXUUumCt9Z1xYVMuj6mZ09R8QWIgDSPTL
+ JbeaoLhTVXo/f3S6SsSipecXzK1FtnewQYpba9oI4G+MO0ut9yg0C/U3+4cFrpshixnB
+ S0kg==
+X-Gm-Message-State: AOJu0YwAPea7T+VIifH5VuXJJStbB2ahEbbScrtIkLZKbe4nCXhbwd/F
+ LyDePFRq6nqHxrwoef8UzdZ1Tip8ZvUXCp2YJSZvlHGIGY08b2CvkzwcK5b9+pgClX/Fym9riJe
+ veTjQbU0vvRtPiJEl37WvkEKRTUa8O8diNtA6UrA9TnIhQK/ROuiNhKGSeVzhHVN7kjHK+jqfhl
+ g5Zp/UqkwcLmDGlI77+EbX0joX0p5qYSoOjQ==
+X-Gm-Gg: ASbGncuM804/TO716UPe/hK07HodOWL0gulBUoaemWEm8fuDGWZ+SaTn/zS9TmiytTn
+ Yvgfhe7Q/RY4irZH/zCw1+C8fKcn0+p/kvQwxceJlV7jsP2nTb9dZz2dYPy+Z/MK9ijezVuOYTa
+ PvDjSAVlfgX5mH+WtHNUDNwdeD3DH8uLTBs8o6jfxRbYlB2yBBosLLai5QAv/tjThmwCAy22lh2
+ Nkjv59FesdgcPzbFKGRFGrB/v6aRN3L0+KdK5lVvJaeTW4S1aC7cLFLj+upVtcBuCZWZWIgvpOT
+ dxDykw==
+X-Received: by 2002:a05:6000:220d:b0:3a3:4baa:3f3d with SMTP id
+ ffacd0b85a97d-3a4fe154f5bmr3345749f8f.6.1748791558964; 
+ Sun, 01 Jun 2025 08:25:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFhNPdPvfIEFhKvRLZWGylYG9MfuTqUug660UFI2s8TsbqTM4TXdNswoR4+vV/eGNsbwakL8A==
+X-Received: by 2002:a05:6000:220d:b0:3a3:4baa:3f3d with SMTP id
+ ffacd0b85a97d-3a4fe154f5bmr3345727f8f.6.1748791558536; 
+ Sun, 01 Jun 2025 08:25:58 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d8012af3sm87483405e9.35.2025.06.01.08.25.14
+ 5b1f17b1804b1-450d7f8f188sm89607355e9.3.2025.06.01.08.25.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:25:15 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:25:14 -0400
+ Sun, 01 Jun 2025 08:25:56 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:25:55 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 12/31] pci: Add a pci-level initialization function for IOMMU
- notifiers
-Message-ID: <a849ff5d6fa9d263beaecd6421fff8e21d2591c8.1748791463.git.mst@redhat.com>
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, Si-Wei Liu <si-wei.liu@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 28/31] vdpa: reorder listener assignment
+Message-ID: <0e8b3b44e9dfa8f2b05313b9d19eb1fb622945b8.1748791463.git.mst@redhat.com>
 References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1748791463.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -110,98 +113,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-This is meant to be used by ATS-capable devices.
+Since commit f6fe3e333f ("vdpa: move memory listener to
+vhost_vdpa_shared") this piece of code repeatedly assign
+shared->listener members.  This was not a problem as it was not used
+until device start.
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Message-Id: <20250520071823.764266-10-clement.mathieu--drif@eviden.com>
+However next patches move the listener registration to this
+vhost_vdpa_init function.  When the listener is registered it is added
+to an embedded linked list, so setting its members again will cause
+memory corruption to the linked list node.
+
+Do the right thing and only set it in the first vdpa device.
+
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20250522145839.59974-6-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/pci/pci.h | 33 +++++++++++++++++++++++++++++++++
- hw/pci/pci.c         | 17 +++++++++++++++++
- 2 files changed, 50 insertions(+)
+ hw/virtio/vhost-vdpa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index d67ffe12db..f3016fd76f 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -442,6 +442,26 @@ typedef struct PCIIOMMUOps {
-      */
-     void (*get_iotlb_info)(void *opaque, uint8_t *addr_width,
-                            uint32_t *min_page_size);
-+    /**
-+     * @init_iotlb_notifier: initialize an IOMMU notifier.
-+     *
-+     * Optional callback.
-+     *
-+     * @bus: the #PCIBus of the PCI device.
-+     *
-+     * @opaque: the data passed to pci_setup_iommu().
-+     *
-+     * @devfn: device and function number of the PCI device.
-+     *
-+     * @n: the notifier to be initialized.
-+     *
-+     * @fn: the callback to be installed.
-+     *
-+     * @user_opaque: a user pointer that can be used to track a state.
-+     */
-+    void (*init_iotlb_notifier)(PCIBus *bus, void *opaque, int devfn,
-+                                IOMMUNotifier *n, IOMMUNotify fn,
-+                                void *user_opaque);
- } PCIIOMMUOps;
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 450f68f117..de834f2ebd 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -633,7 +633,6 @@ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
  
- AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
-@@ -462,6 +482,19 @@ void pci_device_unset_iommu_device(PCIDevice *dev);
- int pci_iommu_get_iotlb_info(PCIDevice *dev, uint8_t *addr_width,
-                              uint32_t *min_page_size);
+     v->dev = dev;
+     dev->opaque =  opaque ;
+-    v->shared->listener = vhost_vdpa_memory_listener;
  
-+/**
-+ * pci_iommu_init_iotlb_notifier: initialize an IOMMU notifier.
-+ *
-+ * This function is used by devices before registering an IOTLB notifier.
-+ *
-+ * @dev: the device.
-+ * @n: the notifier to be initialized.
-+ * @fn: the callback to be installed.
-+ * @opaque: a user pointer that can be used to track a state.
-+ */
-+int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
-+                                  IOMMUNotify fn, void *opaque);
-+
- /**
-  * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
-  *
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index fc4954ac81..dfa5a0259e 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2939,6 +2939,23 @@ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
-     return &address_space_memory;
+     ret = vhost_vdpa_set_backend_cap(dev);
+     if (unlikely(ret != 0)) {
+@@ -675,6 +674,7 @@ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
+     vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_ACKNOWLEDGE |
+                                VIRTIO_CONFIG_S_DRIVER);
+ 
++    v->shared->listener = vhost_vdpa_memory_listener;
+     return 0;
  }
  
-+int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
-+                                  IOMMUNotify fn, void *opaque)
-+{
-+    PCIBus *bus;
-+    PCIBus *iommu_bus;
-+    int devfn;
-+
-+    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    if (iommu_bus && iommu_bus->iommu_ops->init_iotlb_notifier) {
-+        iommu_bus->iommu_ops->init_iotlb_notifier(bus, iommu_bus->iommu_opaque,
-+                                                  devfn, n, fn, opaque);
-+        return 0;
-+    }
-+
-+    return -ENODEV;
-+}
-+
- bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
-                                  Error **errp)
- {
 -- 
 MST
 
