@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DD95C54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 18:13:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F000C5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 18:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLnAo-000201-Ei; Sun, 01 Jun 2025 14:12:42 -0400
+	id 1uLnAt-00021G-1x; Sun, 01 Jun 2025 14:12:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uLnAm-0001zn-Oc
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:40 -0400
-Received: from mail-pf1-x433.google.com ([2607:f8b0:4864:20::433])
+ id 1uLnAr-00020q-7v
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:45 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uLnAl-0002oF-3X
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:40 -0400
-Received: by mail-pf1-x433.google.com with SMTP id
- d2e1a72fcca58-742c73f82dfso2851000b3a.2
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 11:12:38 -0700 (PDT)
+ id 1uLnAp-0002oi-LD
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:44 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-747d59045a0so555944b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 11:12:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748801557; x=1749406357; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=oIlN2tt24vpImxMl+WQkZE+WQO/+mc93/aunqiU+sM4=;
- b=C3I+5aU4rBs55ChP/5bnOyoP0DTYv8b5rsj+WEuwlp+7KaMWzO+hX5jzJ/IDL694Cl
- RlEQIn8velgi6t68d7jUHbgs4QGua+StOWGiRQUIcpyJK/Ze2mypjVj09YN8Eg5WoE+E
- 1lm/jL3tXkItbWPMjjc+341Aeox4i7z7x18b8tY1CyqF4mVemnW6UnBB/i8G6bDyOnHJ
- 7mPV1+HEzPiWZmwiNdr+JeUuS6f9dQH8MITzVPntF+ShSV++eCKazrlCf8wlkFzr/JvM
- p9JadZKd+6iBYK0mcpFTVYbYz0W9VAKpAqBOdDwANuRT8SsGgWgJ0c3Fs+GhVChTrHW0
- 12QQ==
+ d=gmail.com; s=20230601; t=1748801562; x=1749406362; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HtMYrVMuloYt3Yjr4sNHWX4khJZ7APlMmjLEKIR4VtI=;
+ b=IOnfxPpguI6wquYtky79KLaXwrHFDy137NJebL1Hms2H4H0NqUCG2oRzQo8fsM40Be
+ 0TDhITaTtMZXCZcJAwm6lQ6htiGNJVNdJlVndxwYpjZS0QYTsEuEUZDNwzOwDBUk448H
+ 7CA/t1t70P0lVSUUwmosz8X8cdabPanB2DPlYmpjxCetGbRGeYXcQA1NQU2irC7+B7o5
+ Ngoxt3PcBB1iOfrw1fRrbgM1rUu6/qshXFHTM/3gI2HJvcvZQly6LwJ+v+ZGr01XLFqc
+ weiQAxm0GRPZJhnBPqdG8xUTMOaSQ7AOLNtZgrlA2EbCueobhPZfLt7OpLLXIQX4PVWJ
+ uUNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748801557; x=1749406357;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=oIlN2tt24vpImxMl+WQkZE+WQO/+mc93/aunqiU+sM4=;
- b=S2Ibbk9CBXVyTNRT43Uxry1Yh25r6fZY6s4SXv9O4lk89kUo12iLlL9e5TeQ3Rf0UC
- iFhVrr+EZJyHnPKN/zYhRcSn9h6jybt7X5Kb8QvmcxvkHFBLG+jvGXVf7rbvpLzg/8rk
- hVPiVWpYtghkbo3svnb3iMTuPqig4TTeckVL/Wk1R0HbZuhQmUhlC9NswXKfdK7MoxDj
- f+ZD6ZwI91RfDyZ8HMazGEbZR/GiLkl6Nq2MO9l1HAPa+Hq0u0KXwbKt8WUnNpeTwxgL
- Jet4rkQU+UewNTMIVNbnDITfblVwKQQFIEM+2vqxozp+cpiZpDGfp3MVISaknGgJlTJl
- kg6Q==
-X-Gm-Message-State: AOJu0YyjyiBy41ip9kD0+5tfEKoIRo0+DvgSynFa0kZSzxjBXU7+5MM/
- Zf0ZOaH3Z2ETbwke/TK9KnSapXiw7huBd7V+NlHdrfV8FWJX1ty8AFHWgSyOki2/zfq92w==
-X-Gm-Gg: ASbGncu25NwV96mltPjq58ePuQnMDjeKT/sHPI+wBUtuSMBFxp3fXLTRAczSAncqwoS
- 4F/2jrGUI3+SOUbKu27jDO4db0E+pICTF2pBr25YwQUIn+deNdakwPL8ay+7OlEJXEvkyPW44Xm
- D6c0TqH5UAoFkR0XYMsqx+kik9jMaIW1Oat7bfWm4FgtfXQz/GLgGoV1TpA1LKCt9NpF+ekxT2P
- GUp60B5JrxUQs9c21WPlrJ9TbzuNSMZjYak/0UwEkf4O45vEUychzHJ8KjjttXSuu606WT7w13i
- j/BxMrRe3E1FDrGuc12pFhZeLZYOPrG0QR2s4vNN4MGM4WFNlrcDdZgm9tzNdHIg1DxFWzh0
-X-Google-Smtp-Source: AGHT+IGeJ3mvGHXpOYjm8rD1lI5FQTniAQ4KN6xnkAHhzgeUeFH+N0t1nreLpOCYfRfokLOSTYqUNg==
-X-Received: by 2002:a05:6a00:2e24:b0:747:b04e:941a with SMTP id
- d2e1a72fcca58-747d1ab0437mr7160759b3a.17.1748801556723; 
- Sun, 01 Jun 2025 11:12:36 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748801562; x=1749406362;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HtMYrVMuloYt3Yjr4sNHWX4khJZ7APlMmjLEKIR4VtI=;
+ b=KSBLd8rCI7TgdhnhekDfEkDfM3+vFmiI6tUHnyuPQzVxvU40qsPPUvUfgH/i59Me5o
+ v4vvoHh7o3L5f9yAFrNSLEuavtxdx92+V5FmmiilCrlRh90d8xZb5j/LxrWc+reBJB1B
+ Ce/AqU2QMjDXukIhhRjWb4LPGkwoS1W5IiXBKb+kZ/LlOwbrN9JH8PNiSAifVmjWjkuw
+ pByvJhW6CcwIqgiVJlhLx26G7qSNK+B5qbhNDYBC31CE/kNydaVkXk0KHBvR88O87mPH
+ BkUmahmJ/zlZlS2GFbxlaE/gTvGEDnf442AjNWv5QyUmlQvY+B/yYUkNedWQy6792xC5
+ +ujw==
+X-Gm-Message-State: AOJu0YxFWGSc76FHSPrEUHXY4vwUvLS2rN8vhyzWZEkDlo14u34+q0/B
+ O2YOz3Ba64ow5uemGcpWjqWpOIeLuK6aIiXH2lQi8zQq62b3+Q1G86Zed13g0zO7P7KsKg==
+X-Gm-Gg: ASbGncsyduZowIKP+8naxl4+VPePNahfHyPHq9Fgm753bz28gm/vvku8o8NwjL8ZRiA
+ bTNzMVo+Bgwy0JuqNFvbpv1VnGff0KLW7ZX8CBYfqDYGYE+OX87YccOFeohT3NwAyWForoytehW
+ dgu9CrtWU11yhSXLyZcetYRakNI3xFxKYc+FbyuwDfbBbAs/h/paW6eBj++cKkSoBobE8azr9nD
+ i/60YbouD2mqV5K2x1x1aVBKbzC/ddbXabjnAE0FIc6jTtDIbBJ/1jpsJDWInpC8YDFPo9wrVO1
+ sUb67jbpENnA+aqNb/7ZNOyA/jAE9z7HLl66SUBtkkcb/5W58PYkqBiUR2OeSw==
+X-Google-Smtp-Source: AGHT+IFoygaaqRZY4MpjSkbKv3SZzU7WJHNsxEBnkzkXypS3wGU5cUJeSySRFnUb0pFpWfG7age/tA==
+X-Received: by 2002:a05:6a20:7344:b0:1f5:7c6f:6c8b with SMTP id
+ adf61e73a8af0-21adff5ae5bmr15141189637.10.1748801561586; 
+ Sun, 01 Jun 2025 11:12:41 -0700 (PDT)
 Received: from ubuntu.. ([49.207.58.139]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-747afed4bafsm6189191b3a.79.2025.06.01.11.12.34
+ d2e1a72fcca58-747afed4bafsm6189191b3a.79.2025.06.01.11.12.39
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 11:12:36 -0700 (PDT)
+ Sun, 01 Jun 2025 11:12:41 -0700 (PDT)
 From: Tanish Desai <tanishdesai37@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>, pbonzini@redhat.com,
  Mads Ynddal <mads@ynddal.dk>, Tanish Desai <tanishdesai37@gmail.com>
-Subject: [PATCH 0/3] trace: seperate cold path of trace
-Date: Sun,  1 Jun 2025 18:12:28 +0000
-Message-Id: <20250601181231.3461-1-tanishdesai37@gmail.com>
+Subject: [PATCH 2/3] trace/ftrace: seperate cold paths of tracing functions
+Date: Sun,  1 Jun 2025 18:12:30 +0000
+Message-Id: <20250601181231.3461-3-tanishdesai37@gmail.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250601181231.3461-1-tanishdesai37@gmail.com>
+References: <20250601181231.3461-1-tanishdesai37@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::433;
- envelope-from=tanishdesai37@gmail.com; helo=mail-pf1-x433.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=tanishdesai37@gmail.com; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,24 +99,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch continues the optimize fast trace paths started in previous patch (trace/simple: seperate hot paths of tracing fucntions), which optimized the simple backend by moving its hot path to the header. Here, we apply the same pattern to the log, ftrace, and syslog backends.
-The fast path remains in the header with minimal inline checks, while the backend-specific logic is now handled in dedicated `_log_trace_vhost_commit()`, `_ftrace_trace_vhost_commit()`, and `_syslog_trace_vhost_commit()` functions in the .c file.
-While this doesn’t yield the same level of optimization as the simple backend , it improves performance on compilers where inlining is less reliable and reduces header bloat.
-This change also improves code organization:
-- All trace event checks are now centralized in headers
-- All backend logic is contained in clearly named functions in the .c file
-This makes the tracing infrastructure cleaner, more maintainable, and better optimized for diverse compiler behaviors.
+Moved rarely used (cold) code from the header file to the C file to avoid
+unnecessary inlining and reduce binary size. This improves code organization
+and follows good practices for managing cold paths.
 
-Tanish Desai (3):
-  trace/syslog: seperate cold paths of tracing functions
-  trace/ftrace: seperate cold paths of tracing functions
-  trace/log: seperate cold path of tracing functions
-
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+---
  scripts/tracetool/backend/ftrace.py | 44 +++++++++++++++++++++--------
- scripts/tracetool/backend/log.py    | 26 +++++++++++++++--
- scripts/tracetool/backend/syslog.py | 36 ++++++++++++++++++-----
- 3 files changed, 85 insertions(+), 21 deletions(-)
+ 1 file changed, 32 insertions(+), 12 deletions(-)
 
+diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
+index baed2ae61c..c9717d7b42 100644
+--- a/scripts/tracetool/backend/ftrace.py
++++ b/scripts/tracetool/backend/ftrace.py
+@@ -23,6 +23,10 @@
+ def generate_h_begin(events, group):
+     out('#include "trace/ftrace.h"',
+         '')
++    for event in events:
++        out('void _ftrace_%(api)s(%(args)s);',
++            api=event.api(),
++            args=event.args)
+ 
+ 
+ def generate_h(event, group):
+@@ -30,26 +34,42 @@ def generate_h(event, group):
+     if len(event.args) > 0:
+         argnames = ", " + argnames
+ 
+-    out('    {',
++    out('        if (trace_event_get_state(%(event_id)s)) {',
++        '           _ftrace_%(api)s(%(args)s);',
++        '        }',
++        name=event.name,
++        args=", ".join(event.args.names()),
++        event_id="TRACE_" + event.name.upper(),
++        event_lineno=event.lineno,
++        event_filename=os.path.relpath(event.filename),
++        fmt=event.fmt.rstrip("\n"),
++        argnames=argnames,
++        api=event.api()
++        )
++
++
++def generate_c(event, group):
++        argnames = ", ".join(event.args.names())
++        if len(event.args) > 0:
++            argnames = ", " + argnames
++        out('void _ftrace_%(api)s(%(args)s){',
+         '        char ftrace_buf[MAX_TRACE_STRLEN];',
+         '        int unused __attribute__ ((unused));',
+         '        int trlen;',
+-        '        if (trace_event_get_state(%(event_id)s)) {',
+         '#line %(event_lineno)d "%(event_filename)s"',
+-        '            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
+-        '                             "%(name)s " %(fmt)s "\\n" %(argnames)s);',
++        '       trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
+-        '            unused = write(trace_marker_fd, ftrace_buf, trlen);',
+-        '        }',
+-        '    }',
+-        name=event.name,
+-        args=event.args,
+-        event_id="TRACE_" + event.name.upper(),
++        '                       "%(name)s " %(fmt)s "\\n" %(argnames)s);',
++        '       trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
++        '       unused = write(trace_marker_fd, ftrace_buf, trlen);',
++        '}',
+         event_lineno=event.lineno,
+         event_filename=os.path.relpath(event.filename),
++        name=event.name,
+         fmt=event.fmt.rstrip("\n"),
+-        argnames=argnames)
++        argnames=argnames,
++        api=event.api(),
++        args=event.args)
+ 
+ 
+ def generate_h_backend_dstate(event, group):
 -- 
 2.34.1
 
