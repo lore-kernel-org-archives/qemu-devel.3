@@ -4,83 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80ABCC54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 10:39:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E394CC54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 12:33:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLg5S-0002yF-SA; Sun, 01 Jun 2025 06:38:42 -0400
+	id 1uLhs9-0004C3-90; Sun, 01 Jun 2025 08:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLg5R-0002xW-7i
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 06:38:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLhs7-0004Bb-GH
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 08:33:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLg5O-00024Z-WF
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 06:38:40 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLhs5-0004FU-FE
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 08:33:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748774315;
+ s=mimecast20190719; t=1748781179;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=saFRGIx6J4DcvCD97jSTzwKWGLimGJdMbZK5gBiknxA=;
- b=hrGanSMXv0Mg3+26pltHV4qUZWvNe/r3mCsSfYjYkZAwrLEF8Yb13GtudcETFxU3kmIowf
- QRXjEbUpzgOrYXu6K1PM/HlZ2Q9nleUANBrCBJP5cM0wtOiMoMKABHxHrfD38hYdjJPFRM
- YdHtmyS7tl3AlWmK+asFlZMYc5t3S20=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kGkc5/H5rP3Fw2YD6zqyIcr/t3XjduTK7nEOcLxDx+w=;
+ b=Iuh19hIYsCTAIrQd/G5fLMN/d19Qzbuv9Aqn33EGxie+EpevFyFe+4rbjDN9ELgb3BSFtI
+ oucXppXO496a2S2GDLZLaGy25nYYCG5+fWvFQhiLFPY7hW8L1uyoQnAnTUoXiDzL/ll3g1
+ eKvd64hxUL0YpMAylp7ve8MLqlZbT20=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-465-Rzm549qmNIGJ9pyxw5N9Bg-1; Sun, 01 Jun 2025 06:38:33 -0400
-X-MC-Unique: Rzm549qmNIGJ9pyxw5N9Bg-1
-X-Mimecast-MFC-AGG-ID: Rzm549qmNIGJ9pyxw5N9Bg_1748774312
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4e713e05bso1619403f8f.3
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 03:38:33 -0700 (PDT)
+ us-mta-518-JE80hAhdNway-q-hcIm5ww-1; Sun, 01 Jun 2025 08:32:58 -0400
+X-MC-Unique: JE80hAhdNway-q-hcIm5ww-1
+X-Mimecast-MFC-AGG-ID: JE80hAhdNway-q-hcIm5ww_1748781177
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so398536f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 05:32:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748774312; x=1749379112;
+ d=1e100.net; s=20230601; t=1748781177; x=1749385977;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=saFRGIx6J4DcvCD97jSTzwKWGLimGJdMbZK5gBiknxA=;
- b=QRg5xUXIi2PPcEYQ/Gk7+FqPu07qijgBUe1xT8LUyMbLo3PiAlwGuaUajwqWPHoD+F
- JwS6mFJRETeWJOp20R/Gkof9FmvQ5z+tMJ02liZ+x7wL+toxH4Km+iRf0NkB8rXjtAQI
- /8Ndt//GkGQCfXtM4BuM3WacJvZrtPOOAhXgsPvXbLhkSRenl7c3ePpzOVKgKLnFcYt9
- 03P5c9zitWQHZwPzQX4hqh3Ov6KE9DdNJZ1QKp15Mrln32mw3e3OD3Q/xvCSRzkSAFoB
- xzeVG5MJ+iM1kHystBNwBJhdSg5TWaXvVm1M4c9w3wTmd2PZiVvGR22Zf42/27sQQUHJ
- 4u3g==
-X-Gm-Message-State: AOJu0YwjepAo8d9BBW9xVgiUj6+8DClju6s//J0mV20e5Nng2RG14A/Y
- W08Xk07deXkNkVJ2Pm12IdhMRdSyZfhP4gv9YRg20M56CDPDRIwlBN5kZ7psRQ5jvhRgDEz+DPs
- bf9jx2dMixhlIK/mY6w32NF9MB76VpEjfk14vH+lA3/bPx9y9jJZeuodV
-X-Gm-Gg: ASbGnctms7cEmctgic00U3TjUrqrPoez5wSBktBcMmyGX+W3dv3psC1xmE58rt6oE1+
- 7E9k6+ro1CPuZUUHwIkpdQMIsNiZ3OH5uObbJplx/Mrf2M3Mg38IQnqUbCC5Y/AZ2qM54NESXIa
- Pe4YDHk97aLBYuCXh6ncFT4SXU+WpElblwHtwnpp+9DFZPSukJQXniqMuqPx+EeXYuRhMNCYtXN
- 8Y4Rde1yOmapBFEG2aMiCjfuaxx1jIxL3dabmWpGllM5FqgI7U8v/eF8HQ7Xgq15cRH1Ty/rS5z
- 45k7Xg==
-X-Received: by 2002:a05:600c:35c2:b0:43d:82c:2b11 with SMTP id
- 5b1f17b1804b1-4511edf0aa8mr34600635e9.23.1748774312341; 
- Sun, 01 Jun 2025 03:38:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrCk1r+eXO3pTVrXT2hfHkXRl7fak4f/Q2dyXFdT9qsaCJQwwRirxv0cVT4r6iyeFcV4kI1w==
-X-Received: by 2002:a05:600c:35c2:b0:43d:82c:2b11 with SMTP id
- 5b1f17b1804b1-4511edf0aa8mr34600465e9.23.1748774311840; 
- Sun, 01 Jun 2025 03:38:31 -0700 (PDT)
+ bh=kGkc5/H5rP3Fw2YD6zqyIcr/t3XjduTK7nEOcLxDx+w=;
+ b=kJu/oOnOQQaK29ZWBkm4A88eQQdZO3MzNu4Gc1LoHBUzdbFv8t+P0g+TT+UXmbabDu
+ lA2ykHW9gfkUUW/d+5v/88YH9Xbfo0pp6a65w0Uq2OpEfH1tENEYCvUPmbaGs8mw9oo6
+ R9NZVeiEuQuGmVfyr/wAEPSMVgFukeq7UwGifCzqkLVJsuCAkpInGQ6Gq7kfB/nxXFue
+ e1T6IhLEip5w4EqEutWXJIwPQs2ohz6GjMK9D/6Mcf+j/OvLJYO31uQPNW+Zo87nLmlv
+ WARHPbK6gPElKDNer038y99fbDcjMAipeIs2bY9XXWnstp2OkE+ItLZGN5TRiTBqu5P5
+ Vz9Q==
+X-Gm-Message-State: AOJu0YwRyYj/aB1vy689KyozXlpADMjYJKEHUCAK2y1QcQaSrGHen+Wp
+ mm1RHlEUAh3lCDt2YZWfXE9mLL5m+E3x36s/NWNwNWCUO9RMeCeXAUsNymTmaqCG7Q5WoYXqhd1
+ 6g2w5VVIgEz8wgMi3NWenYYkQ2gFtNzGOANXJZMIFtPy+pfRyEAXKnyTR
+X-Gm-Gg: ASbGncumBxAoYSOkwivc8Jdxu4e4JWx8iOuj34ruS/mpIWuGFsXwCUyqpiZZiEZDSSj
+ horJAbF0jeSyv72p8hwEvfCN0z4PwUjgzxkek5No9oFPwu9xF1IJ98/U7bpsdgkr2Jn6Wv+V9pn
+ NjB8bPZnx4lL1bYxvhdmB/vEtzYY+kk/mRzCuxDEgIRkcHPc/69V6tY3/4xOx6bi0KD0bJ62h7O
+ jlLLBcDxhc2/9aIE5GPhatdcjazwztyxtqRb2omYJxwcrUNtJO68xoEWdJvbXcxI+9+UO/4xbyH
+ jfNaPQ==
+X-Received: by 2002:a05:6000:18a2:b0:3a3:70ab:b274 with SMTP id
+ ffacd0b85a97d-3a4eed99115mr11648319f8f.12.1748781176777; 
+ Sun, 01 Jun 2025 05:32:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLww/9qXeLPuKNXWzhAfkOWXd8ej0zPf3muEZEQR3Sa5MSnrsSHoKim18mUXWRyR8XWv+2Gg==
+X-Received: by 2002:a05:6000:18a2:b0:3a3:70ab:b274 with SMTP id
+ ffacd0b85a97d-3a4eed99115mr11648295f8f.12.1748781176414; 
+ Sun, 01 Jun 2025 05:32:56 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f00972d9sm11404300f8f.64.2025.06.01.03.38.29
+ ffacd0b85a97d-3a4f009fd9bsm11219791f8f.82.2025.06.01.05.32.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 03:38:30 -0700 (PDT)
-Date: Sun, 1 Jun 2025 06:38:28 -0400
+ Sun, 01 Jun 2025 05:32:55 -0700 (PDT)
+Date: Sun, 1 Jun 2025 08:32:52 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, Jason Wang <jasowang@redhat.com>,
- Yuri Benditovich <yuri.benditovich@daynix.com>, devel@daynix.com
-Subject: Re: [PATCH v2] virtio-net: Fix the interpretation of max_tx_vq
-Message-ID: <20250601063712-mutt-send-email-mst@kernel.org>
-References: <20250322-vq-v2-1-cee0aafe6404@daynix.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: qemu-devel@nongnu.org, anisinha@redhat.com, imammedo@redhat.com,
+ jonathan.cameron@huawei.com, linuxarm@huawei.com,
+ peter.maydell@linaro.org, prime.zeng@hisilicon.com,
+ shameerali.kolothum.thodi@huawei.com, wangyanan55@huawei.com,
+ yangyicong@hisilicon.com, Bibo Mao <maobibo@loongson.cn>
+Subject: Re: [PATCH v5 0/4] Building PPTT with root node and identical
+ implementation flag
+Message-ID: <20250601082826-mutt-send-email-mst@kernel.org>
+References: <20250523102654.1719-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250322-vq-v2-1-cee0aafe6404@daynix.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+In-Reply-To: <20250523102654.1719-1-alireza.sanaee@huawei.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -105,98 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 22, 2025 at 03:47:17PM +0900, Akihiko Odaki wrote:
-> virtio-net uses the max_tx_vq field of struct virtio_net_rss_config to
-> determine the number of queue pairs and emits an error message saying
-> "Can't get queue_pairs". However, the field tells only about tx.
+On Fri, May 23, 2025 at 11:26:50AM +0100, Alireza Sanaee wrote:
+> OS like Linux is using PPTT processor node's identical implementation
+> flag [1] to infer whether the whole system or a certain CPU cluster is
+> homogeneous or not [2]. QEMU currently only support building homogeneous
+> system, set the flag to indicate the fact. Build a root node in PPTT for
+> indicates the identical implementation which is needed for a
+> multi-socket system. Update the related PPTT tables as well.
 > 
-> Examine unclassified_queue and indirection_table to determine the number
-> of queues required for rx, and correct the name of field in the error
-> message, clarifying its correct semantics.
+> [1] ACPI 6.5 Table 5.158: Processor Structure Flags
+> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/acpi/pptt.c?h=v6.11-rc1#n810
 > 
-> Fixes: 590790297c0d ("virtio-net: implement RSS configuration command")
-> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-> ---
-
-
-Breaks CI:
-
-
-https://gitlab.com/mstredhat/qemu/-/jobs/10199709161
-
-
-../hw/net/virtio-net.c:1463:48: error: taking address of packed member 'us' of class or structure 'struct (unnamed at ../hw/net/virtio-net.c:1392:5)' may result in an unaligned pointer value [-Werror,-Waddress-of-packed-member]
- 1463 |         queue_pairs = MAX(virtio_lduw_p(vdev, &temp.us),
-      |                                                ^~~~~~~
-../include/qemu/osdep.h:419:19: note: expanded from macro 'MAX'
-  419 |     MAX_INTERNAL((a), (b), MAKE_IDENTIFIER(_a), MAKE_IDENTIFIER(_b))
-      |                   ^
-../include/qemu/osdep.h:414:21: note: expanded from macro 'MAX_INTERNAL'
-  414 |         typeof(1 ? (a) : (b)) _a = (a), _b = (b);       \
-      |                     ^
-1 error generated.
-
-
-
-> Changes in v2:
-> - Handled unclassified_queue too.
-> - Added a Fixes: tag.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20250321-vq-v1-1-6d6d285e5cbc@daynix.com
-> ---
->  hw/net/virtio-net.c | 26 ++++++++++++++++----------
->  1 file changed, 16 insertions(+), 10 deletions(-)
+> History:
+>     * v4->v5: fixed a typo
 > 
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index de87cfadffe1..afc6b82f13c9 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -1450,23 +1450,29 @@ static uint16_t virtio_net_handle_rss(VirtIONet *n,
->          err_value = (uint32_t)s;
->          goto error;
->      }
-> -    for (i = 0; i < n->rss_data.indirections_len; ++i) {
-> -        uint16_t val = n->rss_data.indirections_table[i];
-> -        n->rss_data.indirections_table[i] = virtio_lduw_p(vdev, &val);
-> -    }
->      offset += size_get;
->      size_get = sizeof(temp);
->      s = iov_to_buf(iov, iov_cnt, offset, &temp, size_get);
->      if (s != size_get) {
-> -        err_msg = "Can't get queue_pairs";
-> +        err_msg = "Can't get max_tx_vq";
->          err_value = (uint32_t)s;
->          goto error;
->      }
-> -    queue_pairs = do_rss ? virtio_lduw_p(vdev, &temp.us) : n->curr_queue_pairs;
-> -    if (queue_pairs == 0 || queue_pairs > n->max_queue_pairs) {
-> -        err_msg = "Invalid number of queue_pairs";
-> -        err_value = queue_pairs;
-> -        goto error;
-> +    if (do_rss) {
-> +        queue_pairs = MAX(virtio_lduw_p(vdev, &temp.us),
-> +                          n->rss_data.default_queue);
-> +        for (i = 0; i < n->rss_data.indirections_len; ++i) {
-> +            uint16_t val = n->rss_data.indirections_table[i];
-> +            n->rss_data.indirections_table[i] = virtio_lduw_p(vdev, &val);
-> +            queue_pairs = MAX(queue_pairs, n->rss_data.indirections_table[i]);
-> +        }
-> +        if (queue_pairs == 0 || queue_pairs > n->max_queue_pairs) {
-> +            err_msg = "Invalid number of queue_pairs";
-> +            err_value = queue_pairs;
-> +            goto error;
-> +        }
-> +    } else {
-> +        queue_pairs = n->curr_queue_pairs;
->      }
->      if (temp.b > VIRTIO_NET_RSS_MAX_KEY_SIZE) {
->          err_msg = "Invalid key size";
+>     * v3->v4: PPTT rev to 2
 > 
-> ---
-> base-commit: 825b96dbcee23d134b691fc75618b59c5f53da32
-> change-id: 20250321-vq-87aff4f531bf
+>     * v2->v3: rebase to 10
 > 
-> Best regards,
+> Alireza Sanaee (2):
+>   hw/acpi/aml-build: Build a root node in the PPTT table
+>   tests: virt: Update expected ACPI tables for virt test
+> 
+> Yicong Yang (2):
+>   tests: virt: Allow changes to PPTT test table
+>   hw/acpi/aml-build: Set identical implementation flag for PPTT
+>     processor nodes
+> 
+>  hw/acpi/aml-build.c                           |  24 +++++++++++++++---
+>  tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 96 bytes
+>  .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 176 bytes
+>  tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 356 bytes
+>  4 files changed, 20 insertions(+), 4 deletions(-)
+
+
+This interacts weirdly with loongarch. I tried applying patches
+on top of that, and on loongarch, I see:
+
+-[0F0h 0240 004h]       Flags (decoded below) : 00000000
++[0F0h 0240 004h]       Flags (decoded below) : 0000000E
+                             Physical package : 0
+-                     ACPI Processor ID valid : 0
+-                       Processor is a thread : 0
+-                              Node is a leaf : 0
++                     ACPI Processor ID valid : 1
++                       Processor is a thread : 1
++                              Node is a leaf : 1
+                     Identical Implementation : 0
+
+
+I'm sending a pull request later today. Once merged, pls
+rebase on top of that, updating loongarch as appropriate
+and repost copying relevant people.
+
+Cc Bibo Mao for more insight.
+
+
 > -- 
-> Akihiko Odaki <akihiko.odaki@daynix.com>
+> 2.34.1
 
 
