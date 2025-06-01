@@ -4,91 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FABC5B549
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0509C54FB3
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:32:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkYu-00022v-AV; Sun, 01 Jun 2025 11:25:24 -0400
+	id 1uLkZ1-00027O-Fy; Sun, 01 Jun 2025 11:25:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYi-0001sz-J0
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYx-000255-GM
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYa-0004Oh-Sp
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:07 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYv-0004dD-Bm
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791501;
+ s=mimecast20190719; t=1748791524;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ae+KwjiAG0ycwIGxgYOXtWkgDz9Lvz7odZpaInVMJP4=;
- b=Ls8yQJYthO7pZSxAmG3DxfZjcsIidDibJn4iGJL2HL4dzjWunOaZw/8hCKRNdEHRZ2ujwR
- gFMCTWTEbAtH0K01IMSOcID1+9Jt/rFRya8jTRvipbA+D7kCTTaYEIgUtLZYeu/g17Cct+
- 7GW96Dd/7Sunb7TrhiivGDRMvSv+TIc=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=f470Te/20A+JI7N7uDj23gq/WhgjwkX/MH5JkqvMLnY=;
+ b=QujeeHjwDCPlHPBhORXaLyL3p2WMdLUeT/7TbOHx8Fougf8IsKwhfQvhgayp1CFMTwRSLx
+ Z22ZkV0R/ZpKS5foR01i+3sqF08G5V2DkPXb7vNUzsrpY/pgLRJm3fzEuW0lpab7eZACxR
+ hd68S4oGqJG3QGguMs72LhpyCWVmIwo=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-187-nP7J-zssMv6P2sK2Lmh6CA-1; Sun, 01 Jun 2025 11:24:57 -0400
-X-MC-Unique: nP7J-zssMv6P2sK2Lmh6CA-1
-X-Mimecast-MFC-AGG-ID: nP7J-zssMv6P2sK2Lmh6CA_1748791495
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a1f6c5f4f2so1312269f8f.2
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:24:56 -0700 (PDT)
+ us-mta-357-jOeLjqkdOqan3r5IKu_9cw-1; Sun, 01 Jun 2025 11:25:23 -0400
+X-MC-Unique: jOeLjqkdOqan3r5IKu_9cw-1
+X-Mimecast-MFC-AGG-ID: jOeLjqkdOqan3r5IKu_9cw_1748791522
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-451d30992bcso6712815e9.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791495; x=1749396295;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ae+KwjiAG0ycwIGxgYOXtWkgDz9Lvz7odZpaInVMJP4=;
- b=kAvlUE+QEokUrP0rxwMtqsgBq/clFTzmEBhYpW8qaXRU6FFN/humtPylWiQs9Oh9pe
- PZ2FKQcqujQu87gSRjPxC4My5xykT/WaP3If3yr4b321TwcG654OWME7m+LjBVBCn81V
- ZiitphitwU7AMV4MLX3iUT3fmirmr9tlUVEYyt33hiQA/ePGcXOk7BeYI6zk3wXIkvuo
- KbCxsy10dAksgZ4IV9UMgLor3/Mz+nu3MQTHKq6frRtF8U+mat84oD64Ok0adVnfFwCW
- bWW0NO9d2XCWG7U4TylRrNBILsFjGDBTJE7KqzBnkXRX6pven67GQtEBjLMTMWSpRuKP
- hYUw==
-X-Gm-Message-State: AOJu0Yx1VGHtrEp+vPUorwP6SUBCRmDpVbDjOHVzB4P9GEcSvAk3VP4g
- vALf/ZzJiNA+l52/YmKw8ctA6sLP7yWg7lhtQCf8o9qrngvhrzCw3fuok4UzswxjLIrjmk0GMI2
- hqcOC8Y5fPYmSxSOnqS+Aiy2trtF0Ic5fbK7gC/cuK8cwOeaR9KavMk8xpu4u2P7kiOSdRzYd4r
- dAWZQjFTH31fQK4TJRH3J3WB62aJf5kQJhWg==
-X-Gm-Gg: ASbGncshBqnwh8foFu++E6Axgv/iLakmgFqwnq7LjZs+vzYiyruEOGIl/MsJU9U3db4
- WP7aWBXN5K/OGIrReuvHJG//MQsu/9FDkGAgG9lGFdqxRUlexmmlJuVswBO05rPor0R3FTNU4n1
- RYPPLdIum6wsGvXuA3e3v65SXrjZlJIjhcNFjC1pOrPo1icV2ExnB7G5F7LI5lhV2VWWb8Esuni
- F5q3dX6ieyfWg+6dRRkccnIlyZFb1+RD9yzM3NAW6cNPBx6A7EDf2TdIeHTbRIXXS3wsq5heZ0W
- 6SNfXg==
-X-Received: by 2002:a05:6000:22c6:b0:3a4:f7e6:284b with SMTP id
- ffacd0b85a97d-3a4f89a7eb0mr6344866f8f.10.1748791494998; 
- Sun, 01 Jun 2025 08:24:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFYs5M9CNTTnil6qdeTRlarfVIfVdJ+8sk+4Yu+I5oNukMVcdME1fc855fhEtx0h5Jl7pEjWg==
-X-Received: by 2002:a05:6000:22c6:b0:3a4:f7e6:284b with SMTP id
- ffacd0b85a97d-3a4f89a7eb0mr6344842f8f.10.1748791494552; 
- Sun, 01 Jun 2025 08:24:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748791522; x=1749396322;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=f470Te/20A+JI7N7uDj23gq/WhgjwkX/MH5JkqvMLnY=;
+ b=GFyrm8rjPa8VNIwMpftXU+6qL/qQ6Evnbmiag1ExLnJZuhs69vGQzSvNZHBa/PcFhR
+ E5Zjt1HOWSiUVDc/CMyyCe3qSniOp+vxmaGhJ7StBY0ce5oJNeWeN5tL+SGGLGQfpWRh
+ BPBp0mmsWAN/YofjsalOdgkTZ938eu69Q4nVs9ryhykPFfzZG4LqzDbRLNdeL4nmqN57
+ +9wG0HEHYqux60DkL8wutsueviQAArRd4BD0r7hYYIHX0RKCbEtbR412EnHfrAWfyEP5
+ +vGcB6A2WOPHvC4vvgRDdFWmCcVhR2Dp3UlGDVm7B5ffmnE79fdZVu3mTNREwlHWe0Pm
+ IqLw==
+X-Gm-Message-State: AOJu0YzxUpDXy8Gsl5yQDGh5tzIx1kDQ3I+7t1wBFHs9gv5gC4DKe6ek
+ qJr0ma6NWtU7w+WPB+8oRqL+D/mxZZxp73qvsVLdkPfyE01rU7GrPlVgbXyduQ2ZPKia8iNbLVf
+ 84+gSbHkfsNzNFyxlUCEXnhz8fewZqDJdegJiNKnDTY3gnW+ftiUmsT2/O+5BaUKYQULnp8jbhD
+ S5Tv2M+FOO1E1S2784pqM20GWX+qBW2kcOVw==
+X-Gm-Gg: ASbGncvJykTlp7QkfDgi2KCPJb3HVeyGODcRWmldseBXiG2GegMyHYW07ho3A4sfd/y
+ ua3RAqIT28VIVZsApvGO+ydY+x3tLFz4+V4owhRdqIMJk0/GN8Pb+ycOI1UaeSorOjx2fhmts++
+ yDvURmN7sEqjYM5RTIq4GvLZviaoMtyx0wRa3B3T9JB9Ex7B3qMYCG3JvSkpGKdBBAIc7O0O4fy
+ KoLtP3X1rGekq7uo/2m5umfDNIPap7iECjrSejA5noyc79K7WCc4bIhQ/K0vfZJ5ugu4kJpbvuN
+ sS1FkQ==
+X-Received: by 2002:a05:600c:8b11:b0:450:d4ad:b7de with SMTP id
+ 5b1f17b1804b1-4511ecb9cd9mr48814555e9.3.1748791521538; 
+ Sun, 01 Jun 2025 08:25:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3oRx0DFOf2pEH7L3o7ZAWFS5oZylVxJXGYiYF8/BUlsrxYWXnjUrKzDZWUdLV3ByHF7WMwg==
+X-Received: by 2002:a05:600c:8b11:b0:450:d4ad:b7de with SMTP id
+ 5b1f17b1804b1-4511ecb9cd9mr48814315e9.3.1748791520994; 
+ Sun, 01 Jun 2025 08:25:20 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f009fb0bsm11545616f8f.87.2025.06.01.08.24.51
+ 5b1f17b1804b1-450d800671csm88636315e9.30.2025.06.01.08.25.19
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:24:52 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:24:51 -0400
+ Sun, 01 Jun 2025 08:25:20 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:25:18 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Vasant Hegde <vasant.hegde@amd.com>,
- Alejandro Jimenez <alejandro.j.jimenez@oracle.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Joao Martins <joao.m.martins@oracle.com>,
- Sairaj Kodilkar <sarunkod@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
+ CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
+ Ethan Milon <ethan.milon@eviden.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 03/31] hw/i386/amd_iommu: Fix xtsup when vcpus < 255
-Message-ID: <0f178860df3489a9d3c19a5f7f024e6aa6c26515.1748791463.git.mst@redhat.com>
+Subject: [PULL 14/31] pci: Add a PCI-level API for PRI
+Message-ID: <f0f37daf8e67c7208641aec5e238197279ca7331.1748791463.git.mst@redhat.com>
 References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1748791463.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -117,56 +110,254 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Vasant Hegde <vasant.hegde@amd.com>
+From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
 
-If vCPUs > 255 then x86 common code (x86_cpus_init()) call kvm_enable_x2apic().
-But if vCPUs <= 255 then the common code won't calls kvm_enable_x2apic().
+A device can send a PRI request to the IOMMU using pci_pri_request_page.
+The PRI response is sent back using the notifier managed with
+pci_pri_register_notifier and pci_pri_unregister_notifier.
 
-This is because commit 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM
-checks on XTSup feature") removed the call to kvm_enable_x2apic when xtsup
-is "on", which break things when guest is booted with x2apic mode and
-there are <= 255 vCPUs.
-
-Fix this by adding back kvm_enable_x2apic() call when xtsup=on.
-
-Fixes: 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM checks on XTSup feature")
-Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Tested-by: Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
-Message-Id: <20250516100535.4980-3-sarunkod@amd.com>
-Fixes: 8c6619f3e692 ("hw/i386/amd_iommu: Simplify non-KVM checks on XTSup feature")
-Reported-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Tested-by: Tested-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-Cc: Joao Martins <joao.m.martins@oracle.com>
-Signed-off-by: Vasant Hegde <vasant.hegde@amd.com>
-Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
+Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
+Co-authored-by: Ethan Milon <ethan.milon@eviden.com>
+Message-Id: <20250520071823.764266-12-clement.mathieu--drif@eviden.com>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- hw/i386/amd_iommu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/hw/pci/pci.h | 130 +++++++++++++++++++++++++++++++++++++++++++
+ hw/pci/pci.c         |  66 ++++++++++++++++++++++
+ 2 files changed, 196 insertions(+)
 
-diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-index 17379db52a..963aa2450c 100644
---- a/hw/i386/amd_iommu.c
-+++ b/hw/i386/amd_iommu.c
-@@ -1715,6 +1715,14 @@ static void amdvi_sysbus_realize(DeviceState *dev, Error **errp)
-         exit(EXIT_FAILURE);
-     }
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 5d72607ed5..a6854dad2b 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -375,6 +375,28 @@ void pci_bus_get_w64_range(PCIBus *bus, Range *range);
  
-+    if (s->xtsup) {
-+        if (kvm_irqchip_is_split() && !kvm_enable_x2apic()) {
-+            error_report("AMD IOMMU xtsup=on requires x2APIC support on "
-+                          "the KVM side");
-+            exit(EXIT_FAILURE);
-+        }
+ void pci_device_deassert_intx(PCIDevice *dev);
+ 
++/* Page Request Interface */
++typedef enum {
++    IOMMU_PRI_RESP_SUCCESS,
++    IOMMU_PRI_RESP_INVALID_REQUEST,
++    IOMMU_PRI_RESP_FAILURE,
++} IOMMUPRIResponseCode;
++
++typedef struct IOMMUPRIResponse {
++    IOMMUPRIResponseCode response_code;
++    uint16_t prgi;
++} IOMMUPRIResponse;
++
++struct IOMMUPRINotifier;
++
++typedef void (*IOMMUPRINotify)(struct IOMMUPRINotifier *notifier,
++                               IOMMUPRIResponse *response);
++
++typedef struct IOMMUPRINotifier {
++    IOMMUPRINotify notify;
++} IOMMUPRINotifier;
++
++#define PCI_PRI_PRGI_MASK 0x1ffU
+ 
+ /**
+  * struct PCIIOMMUOps: callbacks structure for specific IOMMU handlers
+@@ -536,6 +558,72 @@ typedef struct PCIIOMMUOps {
+                                        IOMMUTLBEntry *result,
+                                        size_t result_length,
+                                        uint32_t *err_count);
++    /**
++     * @pri_register_notifier: setup the PRI completion callback.
++     *
++     * Callback required if devices are allowed to use the page request
++     * interface.
++     *
++     * @bus: the #PCIBus of the PCI device.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * @devfn: device and function number of the PCI device.
++     *
++     * @pasid: the pasid of the address space to track.
++     *
++     * @notifier: the notifier to register.
++     */
++    void (*pri_register_notifier)(PCIBus *bus, void *opaque, int devfn,
++                                  uint32_t pasid, IOMMUPRINotifier *notifier);
++    /**
++     * @pri_unregister_notifier: remove the PRI completion callback.
++     *
++     * Callback required if devices are allowed to use the page request
++     * interface.
++     *
++     * @bus: the #PCIBus of the PCI device.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * @devfn: device and function number of the PCI device.
++     *
++     * @pasid: the pasid of the address space to stop tracking.
++     */
++    void (*pri_unregister_notifier)(PCIBus *bus, void *opaque, int devfn,
++                                    uint32_t pasid);
++    /**
++     * @pri_request_page: issue a PRI request.
++     *
++     * Callback required if devices are allowed to use the page request
++     * interface.
++     *
++     * @bus: the #PCIBus of the PCI device.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * @devfn: device and function number of the PCI device.
++     *
++     * @pasid: the pasid of the address space to use for the request.
++     *
++     * @priv_req: privileged mode bit (PASID TLP).
++     *
++     * @exec_req: execute request bit (PASID TLP).
++     *
++     * @addr: untranslated address of the requested page.
++     *
++     * @lpig: last page in group.
++     *
++     * @prgi: page request group index.
++     *
++     * @is_read: request read access.
++     *
++     * @is_write: request write access.
++     */
++    int (*pri_request_page)(PCIBus *bus, void *opaque, int devfn,
++                            uint32_t pasid, bool priv_req, bool exec_req,
++                            hwaddr addr, bool lpig, uint16_t prgi, bool is_read,
++                            bool is_write);
+ } PCIIOMMUOps;
+ 
+ AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
+@@ -595,6 +683,48 @@ ssize_t pci_ats_request_translation(PCIDevice *dev, uint32_t pasid,
+                                     size_t result_length,
+                                     uint32_t *err_count);
+ 
++/**
++ * pci_pri_request_page: perform a PRI request.
++ *
++ * Returns 0 if the PRI request has been sent to the guest OS,
++ * an error code otherwise.
++ *
++ * @dev: the PRI-capable PCI device.
++ * @pasid: the pasid of the address space in which the translation will be done.
++ * @priv_req: privileged mode bit (PASID TLP).
++ * @exec_req: execute request bit (PASID TLP).
++ * @addr: untranslated address of the requested page.
++ * @lpig: last page in group.
++ * @prgi: page request group index.
++ * @is_read: request read access.
++ * @is_write: request write access.
++ */
++int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
++                         bool exec_req, hwaddr addr, bool lpig,
++                         uint16_t prgi, bool is_read, bool is_write);
++
++/**
++ * pci_pri_register_notifier: register the PRI callback for a given address
++ * space.
++ *
++ * Returns 0 on success, an error code otherwise.
++ *
++ * @dev: the PRI-capable PCI device.
++ * @pasid: the pasid of the address space to track.
++ * @notifier: the notifier to register.
++ */
++int pci_pri_register_notifier(PCIDevice *dev, uint32_t pasid,
++                              IOMMUPRINotifier *notifier);
++
++/**
++ * pci_pri_unregister_notifier: remove the PRI callback from a given address
++ * space.
++ *
++ * @dev: the PRI-capable PCI device.
++ * @pasid: the pasid of the address space to stop tracking.
++ */
++void pci_pri_unregister_notifier(PCIDevice *dev, uint32_t pasid);
++
+ /**
+  * pci_iommu_register_iotlb_notifier: register a notifier for changes to
+  * IOMMU translation entries in a specific address space.
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 0c63cb4bbe..c6b5768f3a 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2987,6 +2987,72 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
+     }
+ }
+ 
++int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
++                         bool exec_req, hwaddr addr, bool lpig,
++                         uint16_t prgi, bool is_read, bool is_write)
++{
++    PCIBus *bus;
++    PCIBus *iommu_bus;
++    int devfn;
++
++    if (!dev->is_master ||
++            ((pasid != PCI_NO_PASID) && !pcie_pasid_enabled(dev))) {
++        return -EPERM;
 +    }
 +
-     pci_setup_iommu(bus, &amdvi_iommu_ops, s);
-     amdvi_init(s);
- }
++    if (!pcie_pri_enabled(dev)) {
++        return -EPERM;
++    }
++
++    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
++    if (iommu_bus && iommu_bus->iommu_ops->pri_request_page) {
++        return iommu_bus->iommu_ops->pri_request_page(bus,
++                                                     iommu_bus->iommu_opaque,
++                                                     devfn, pasid, priv_req,
++                                                     exec_req, addr, lpig, prgi,
++                                                     is_read, is_write);
++    }
++
++    return -ENODEV;
++}
++
++int pci_pri_register_notifier(PCIDevice *dev, uint32_t pasid,
++                              IOMMUPRINotifier *notifier)
++{
++    PCIBus *bus;
++    PCIBus *iommu_bus;
++    int devfn;
++
++    if (!dev->is_master ||
++            ((pasid != PCI_NO_PASID) && !pcie_pasid_enabled(dev))) {
++        return -EPERM;
++    }
++
++    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
++    if (iommu_bus && iommu_bus->iommu_ops->pri_register_notifier) {
++        iommu_bus->iommu_ops->pri_register_notifier(bus,
++                                                    iommu_bus->iommu_opaque,
++                                                    devfn, pasid, notifier);
++        return 0;
++    }
++
++    return -ENODEV;
++}
++
++void pci_pri_unregister_notifier(PCIDevice *dev, uint32_t pasid)
++{
++    PCIBus *bus;
++    PCIBus *iommu_bus;
++    int devfn;
++
++    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
++    if (iommu_bus && iommu_bus->iommu_ops->pri_unregister_notifier) {
++        iommu_bus->iommu_ops->pri_unregister_notifier(bus,
++                                                      iommu_bus->iommu_opaque,
++                                                      devfn, pasid);
++    }
++}
++
+ ssize_t pci_ats_request_translation(PCIDevice *dev, uint32_t pasid,
+                                     bool priv_req, bool exec_req,
+                                     hwaddr addr, size_t length,
 -- 
 MST
 
