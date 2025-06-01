@@ -4,87 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E394CC54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 12:33:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67FCAC54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 13:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLhs9-0004C3-90; Sun, 01 Jun 2025 08:33:05 -0400
+	id 1uLjC6-0005o4-GR; Sun, 01 Jun 2025 09:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLhs7-0004Bb-GH
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 08:33:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uLjC2-0005nd-T6
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 09:57:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLhs5-0004FU-FE
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 08:33:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uLjC0-00045X-QT
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 09:57:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748781179;
+ s=mimecast20190719; t=1748786253;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kGkc5/H5rP3Fw2YD6zqyIcr/t3XjduTK7nEOcLxDx+w=;
- b=Iuh19hIYsCTAIrQd/G5fLMN/d19Qzbuv9Aqn33EGxie+EpevFyFe+4rbjDN9ELgb3BSFtI
- oucXppXO496a2S2GDLZLaGy25nYYCG5+fWvFQhiLFPY7hW8L1uyoQnAnTUoXiDzL/ll3g1
- eKvd64hxUL0YpMAylp7ve8MLqlZbT20=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=+IrOa9IeXy4RWB2pyHPAj1XJ/V2M6023sYuU3O+8NKE=;
+ b=BRkucYSJQhg9D6pB532s0p59KXrXLghbF5NUrl0NdLjUtF8U4kxIM2mogU4kquC8FQI0pD
+ K/L8eKb2JPtu6X7NK9AG3LwEDQfBJBzPekBM3VazMksl0iQ03YlVhDk9aIOYkdBqP59BME
+ TJC3DbeDEvtnhJh9PShwec0DJBO26rQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-JE80hAhdNway-q-hcIm5ww-1; Sun, 01 Jun 2025 08:32:58 -0400
-X-MC-Unique: JE80hAhdNway-q-hcIm5ww-1
-X-Mimecast-MFC-AGG-ID: JE80hAhdNway-q-hcIm5ww_1748781177
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4ff581df3so398536f8f.1
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 05:32:57 -0700 (PDT)
+ us-mta-440-rn4sOVHXNiWiZh-STf47YA-1; Sun, 01 Jun 2025 09:57:32 -0400
+X-MC-Unique: rn4sOVHXNiWiZh-STf47YA-1
+X-Mimecast-MFC-AGG-ID: rn4sOVHXNiWiZh-STf47YA_1748786251
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-451ac1b43c4so5214835e9.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 06:57:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748781177; x=1749385977;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1748786251; x=1749391051;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kGkc5/H5rP3Fw2YD6zqyIcr/t3XjduTK7nEOcLxDx+w=;
- b=kJu/oOnOQQaK29ZWBkm4A88eQQdZO3MzNu4Gc1LoHBUzdbFv8t+P0g+TT+UXmbabDu
- lA2ykHW9gfkUUW/d+5v/88YH9Xbfo0pp6a65w0Uq2OpEfH1tENEYCvUPmbaGs8mw9oo6
- R9NZVeiEuQuGmVfyr/wAEPSMVgFukeq7UwGifCzqkLVJsuCAkpInGQ6Gq7kfB/nxXFue
- e1T6IhLEip5w4EqEutWXJIwPQs2ohz6GjMK9D/6Mcf+j/OvLJYO31uQPNW+Zo87nLmlv
- WARHPbK6gPElKDNer038y99fbDcjMAipeIs2bY9XXWnstp2OkE+ItLZGN5TRiTBqu5P5
- Vz9Q==
-X-Gm-Message-State: AOJu0YwRyYj/aB1vy689KyozXlpADMjYJKEHUCAK2y1QcQaSrGHen+Wp
- mm1RHlEUAh3lCDt2YZWfXE9mLL5m+E3x36s/NWNwNWCUO9RMeCeXAUsNymTmaqCG7Q5WoYXqhd1
- 6g2w5VVIgEz8wgMi3NWenYYkQ2gFtNzGOANXJZMIFtPy+pfRyEAXKnyTR
-X-Gm-Gg: ASbGncumBxAoYSOkwivc8Jdxu4e4JWx8iOuj34ruS/mpIWuGFsXwCUyqpiZZiEZDSSj
- horJAbF0jeSyv72p8hwEvfCN0z4PwUjgzxkek5No9oFPwu9xF1IJ98/U7bpsdgkr2Jn6Wv+V9pn
- NjB8bPZnx4lL1bYxvhdmB/vEtzYY+kk/mRzCuxDEgIRkcHPc/69V6tY3/4xOx6bi0KD0bJ62h7O
- jlLLBcDxhc2/9aIE5GPhatdcjazwztyxtqRb2omYJxwcrUNtJO68xoEWdJvbXcxI+9+UO/4xbyH
- jfNaPQ==
-X-Received: by 2002:a05:6000:18a2:b0:3a3:70ab:b274 with SMTP id
- ffacd0b85a97d-3a4eed99115mr11648319f8f.12.1748781176777; 
- Sun, 01 Jun 2025 05:32:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLww/9qXeLPuKNXWzhAfkOWXd8ej0zPf3muEZEQR3Sa5MSnrsSHoKim18mUXWRyR8XWv+2Gg==
-X-Received: by 2002:a05:6000:18a2:b0:3a3:70ab:b274 with SMTP id
- ffacd0b85a97d-3a4eed99115mr11648295f8f.12.1748781176414; 
- Sun, 01 Jun 2025 05:32:56 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ bh=+IrOa9IeXy4RWB2pyHPAj1XJ/V2M6023sYuU3O+8NKE=;
+ b=lhIAVa51MDkisLGO4R4x+9qR4q3HzKcqKg9cGU7+OyapzI6FeCBW2HQxPUlesijrR4
+ OnZRifiaJGwKqsoc6xuCxEnDcZnq7Bdf9e03QuhtoGaHjwoDrNTBJgliRGmHwqqHshM/
+ Vii1X/92aWnsPglglj/wq33C8IBzNif6YutWh1WJpkrQB2bjP2lHFnRnJKAfKu2yhB/d
+ kGQjX4R/8nFN6+WwnDPtzpo/aw61ZQbfVmxH41ceLce4TxGHtgz50JMpzQ8EW7Po+Uxe
+ cBESzs/q3kBJ4V53k5YXVjoxtvoSoQzgLiBsO/HnDAz3dyyKvoxvjMUaDqJQJK5Jjvhy
+ Ppwg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXKxuERJXtalE5iZ6V6vN9g0tW4okQR3GaG4H7Jltuav5KNZ/JpRmfR+pUKmRCOaVrPrE431yG1I+xm@nongnu.org
+X-Gm-Message-State: AOJu0YxEYlt+8LDUeWihi221nUDAmNY95jLuDRLwDLuFXA71G5eUeAlh
+ CHW0AhH4SUwt3YcFQ/TMKLELzWGuE0DTc7mhIFRSCWBA4rCmD0hms2JVxg+L427thE1FLbjIv2n
+ X0N1hzKTKm6jGVZmT7iDWoDyLyHUFYohE5P1mWkkmgiMZE1FKjvMj7Del
+X-Gm-Gg: ASbGncu7i0s5C32Nu/4lbjzrxTNvRhucaaA6soJC772qHiHU+IauISRJYv80SXqd1jX
+ Qlc/tykI5kl6cboTJ9dvPQLkRCzgj7ciuA80KpO8v/r0pFUO3SJx5p6lqfyIXLLC8diCkl3A3Ej
+ 3GHjOlY7omEFLVkjEpnGPD7bYPlc0O+73LHMl4cAdaX53tXm5L5vqDeU4wswWNF6Pl11EvGcZ6f
+ 0+JS99ULo9PvLvYWjfImjvIDoSrCSTbJ7WSJPHDPqomVF7Gq8L/lXm8g4aHE/8DJgZSqS74UkSI
+ MVUIqK45bT0vCuRpLa24zWZN+KbtWN6e0Oj6056WudrjIQTMdA==
+X-Received: by 2002:a05:6000:220b:b0:3a4:d3ff:cef2 with SMTP id
+ ffacd0b85a97d-3a4f89dddd5mr7100002f8f.27.1748786250907; 
+ Sun, 01 Jun 2025 06:57:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+dOOfm0Ls8e1YlHjtmAKwmrHZWd3afozdAQspN/z+fNvkoswMgm9yfJF3BC/YKwFCg1b58g==
+X-Received: by 2002:a05:6000:220b:b0:3a4:d3ff:cef2 with SMTP id
+ ffacd0b85a97d-3a4f89dddd5mr7099984f8f.27.1748786250505; 
+ Sun, 01 Jun 2025 06:57:30 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f009fd9bsm11219791f8f.82.2025.06.01.05.32.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 05:32:55 -0700 (PDT)
-Date: Sun, 1 Jun 2025 08:32:52 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, anisinha@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, linuxarm@huawei.com,
- peter.maydell@linaro.org, prime.zeng@hisilicon.com,
- shameerali.kolothum.thodi@huawei.com, wangyanan55@huawei.com,
- yangyicong@hisilicon.com, Bibo Mao <maobibo@loongson.cn>
-Subject: Re: [PATCH v5 0/4] Building PPTT with root node and identical
- implementation flag
-Message-ID: <20250601082826-mutt-send-email-mst@kernel.org>
-References: <20250523102654.1719-1-alireza.sanaee@huawei.com>
+ ffacd0b85a97d-3a4efe73f3csm11379471f8f.42.2025.06.01.06.57.29
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 01 Jun 2025 06:57:29 -0700 (PDT)
+Message-ID: <7104860b-a406-47df-b180-35ea9bf31b0d@redhat.com>
+Date: Sun, 1 Jun 2025 15:57:29 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250523102654.1719-1-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] backends/iommufd: Add a helper to invalidate
+ user-managed HWPT
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20250530093512.3959484-1-zhenzhong.duan@intel.com>
+ <20250530093512.3959484-2-zhenzhong.duan@intel.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250530093512.3959484-2-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -109,63 +160,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 23, 2025 at 11:26:50AM +0100, Alireza Sanaee wrote:
-> OS like Linux is using PPTT processor node's identical implementation
-> flag [1] to infer whether the whole system or a certain CPU cluster is
-> homogeneous or not [2]. QEMU currently only support building homogeneous
-> system, set the flag to indicate the fact. Build a root node in PPTT for
-> indicates the identical implementation which is needed for a
-> multi-socket system. Update the related PPTT tables as well.
+On 5/30/25 11:35, Zhenzhong Duan wrote:
+> This helper passes cache invalidation request from guest to invalidate
+> stage-1 page table cache in host hardware.
 > 
-> [1] ACPI 6.5 Table 5.158: Processor Structure Flags
-> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/acpi/pptt.c?h=v6.11-rc1#n810
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
+> ---
+>   include/system/iommufd.h |  4 ++++
+>   backends/iommufd.c       | 36 ++++++++++++++++++++++++++++++++++++
+>   backends/trace-events    |  1 +
+>   3 files changed, 41 insertions(+)
 > 
-> History:
->     * v4->v5: fixed a typo
-> 
->     * v3->v4: PPTT rev to 2
-> 
->     * v2->v3: rebase to 10
-> 
-> Alireza Sanaee (2):
->   hw/acpi/aml-build: Build a root node in the PPTT table
->   tests: virt: Update expected ACPI tables for virt test
-> 
-> Yicong Yang (2):
->   tests: virt: Allow changes to PPTT test table
->   hw/acpi/aml-build: Set identical implementation flag for PPTT
->     processor nodes
-> 
->  hw/acpi/aml-build.c                           |  24 +++++++++++++++---
->  tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 96 bytes
->  .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 176 bytes
->  tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 356 bytes
->  4 files changed, 20 insertions(+), 4 deletions(-)
-
-
-This interacts weirdly with loongarch. I tried applying patches
-on top of that, and on loongarch, I see:
-
--[0F0h 0240 004h]       Flags (decoded below) : 00000000
-+[0F0h 0240 004h]       Flags (decoded below) : 0000000E
-                             Physical package : 0
--                     ACPI Processor ID valid : 0
--                       Processor is a thread : 0
--                              Node is a leaf : 0
-+                     ACPI Processor ID valid : 1
-+                       Processor is a thread : 1
-+                              Node is a leaf : 1
-                     Identical Implementation : 0
-
-
-I'm sending a pull request later today. Once merged, pls
-rebase on top of that, updating loongarch as appropriate
-and repost copying relevant people.
-
-Cc Bibo Mao for more insight.
-
-
-> -- 
-> 2.34.1
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index cbab75bfbf..83ab8e1e4c 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -61,6 +61,10 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>                                         uint64_t iova, ram_addr_t size,
+>                                         uint64_t page_size, uint64_t *data,
+>                                         Error **errp);
+> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+> +                                      uint32_t data_type, uint32_t entry_len,
+> +                                      uint32_t *entry_num, void *data,
+> +                                      Error **errp);
+>   
+>   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+>   #endif
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index b73f75cd0b..8bcdb60fe7 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -311,6 +311,42 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>       return true;
+>   }
+>   
+> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+> +                                      uint32_t data_type, uint32_t entry_len,
+> +                                      uint32_t *entry_num, void *data,
+> +                                      Error **errp)
+> +{
+> +    int ret, fd = be->fd;
+> +    uint32_t total_entries = *entry_num;
+> +    struct iommu_hwpt_invalidate cache = {
+> +        .size = sizeof(cache),
+> +        .hwpt_id = id,
+> +        .data_type = data_type,
+> +        .entry_len = entry_len,
+> +        .entry_num = total_entries,
+> +        .data_uptr = (uintptr_t)data,
+> +    };
+> +
+> +    ret = ioctl(fd, IOMMU_HWPT_INVALIDATE, &cache);
+> +    trace_iommufd_backend_invalidate_cache(fd, id, data_type, entry_len,
+> +                                           total_entries, cache.entry_num,
+> +                                           (uintptr_t)data, ret ? errno : 0);
+> +    *entry_num = cache.entry_num;
+> +
+> +    if (ret) {
+> +        error_setg_errno(errp, errno, "IOMMU_HWPT_INVALIDATE failed:"
+> +                         " total %d entries, processed %d entries",
+> +                         total_entries, cache.entry_num);
+> +    } else if (total_entries != cache.entry_num) {
+> +        error_setg(errp, "IOMMU_HWPT_INVALIDATE succeed but with unprocessed"
+> +                         " entries: total %d entries, processed %d entries."
+> +                         " Kernel BUG?!", total_entries, cache.entry_num);
+> +        return false;
+> +    }
+> +
+> +    return !ret;
+> +}
+> +
+>   static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+>   {
+>       HostIOMMUDeviceCaps *caps = &hiod->caps;
+> diff --git a/backends/trace-events b/backends/trace-events
+> index 40811a3162..7278214ea5 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -18,3 +18,4 @@ iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_
+>   iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+>   iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+>   iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+> +iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
 
 
