@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 955E6C5B555
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 740A4C5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:54:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkrR-0006b4-F8; Sun, 01 Jun 2025 11:44:33 -0400
+	id 1uLl0Y-0008Tc-Do; Sun, 01 Jun 2025 11:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uLkrO-0006am-O0
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:44:30 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ id 1uLl0V-0008R4-Ez
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:53:55 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uLkrM-0006TF-D9
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:44:30 -0400
+ id 1uLl0T-0007Cw-LB
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:53:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748792669; x=1780328669;
+ t=1748793234; x=1780329234;
  h=message-id:date:mime-version:subject:to:cc:references:
  from:in-reply-to:content-transfer-encoding;
- bh=CrzePAb4bB7XgRH1J0UXaTlj3s1yRQ9aXdOygA9u6iw=;
- b=i/0SXLjwxuwG/V1v63dvdA9ejCxl+DX4zfVSs7Q48BaUBfxPAenjrm92
- 1xHEXsXWAxdOV9E91iyVTvlZ+8gzeydmSbzH8R71vRy8KlpVMIZRmDREY
- ldcI4Jhes9+lOEnnx7LkEQXQCwbPH6C0+t/ghrr2vfyX8HHXxXkbQHN11
- 8hCnTgpSpJ23B9OpcsKbme18bm5E6RARsI4zB8uI5RncTwyJtngINO6i9
- yeZ1gb6lOirPWKvOiUcUhyhqWyGsyJ5oYuF3p8SU2UleptnYV2WJfAPt9
- YingS7zEQ7RDntRiKvSXEh4Q4ONHdavWmfsose+Yffau04SDxfGHjBPVV w==;
-X-CSE-ConnectionGUID: 1O0Yt7JjRF6C8PoSSQIvfQ==
-X-CSE-MsgGUID: 8t6oZnzNQTqGXsepFd6r8Q==
-X-IronPort-AV: E=McAfee;i="6700,10204,11450"; a="50517333"
-X-IronPort-AV: E=Sophos;i="6.16,201,1744095600"; d="scan'208";a="50517333"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jun 2025 08:44:25 -0700
-X-CSE-ConnectionGUID: 4RaEFyP8SvqAErzzBo7uyQ==
-X-CSE-MsgGUID: x5GmQESmQLKTuiau8cRcjA==
+ bh=a+rsVvs42P6P6HnIX16lnuDZ8+2PuELJSaeSCvUQPDU=;
+ b=dWlrmJwc9qFjCaHwtGQCkWZjDHSA/iNmGqB9EkUHdurg654J8XLpBxTg
+ LswPnQE9egKVehV6dW5vd5aXkf12qp9IPlAy8gS231WhYi34KJN8ttugg
+ XCKTcCA2HFELB8pHPuOnQ2phVTc6kqFiUmmPkVfOc1Epw0HLc9ueITKv/
+ hCVkQMQwmapst+fFwajNHMpCjgLrohAxP3ZDdbnf2vhBiSpUB5aOI0cli
+ 3wQtLiYgk81z86syCpg6zYUMh9iCNPQB//ipPTupVMZ8QdMpDjz/aZndY
+ 8Kbb4QkIYhsNJLhdASoM5tJQQHsmiAcQQLXpnlVLDGBtpj5uP04wtVxJi Q==;
+X-CSE-ConnectionGUID: uwj1U8fBQ8iPFzt3YmxJrQ==
+X-CSE-MsgGUID: wDpTd1QeR1u/7cqrXcD3HQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11450"; a="62168623"
+X-IronPort-AV: E=Sophos;i="6.16,201,1744095600"; d="scan'208";a="62168623"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jun 2025 08:53:51 -0700
+X-CSE-ConnectionGUID: XMtRHrsaQS+W0lNbolr6dg==
+X-CSE-MsgGUID: cK9aRdw0QnWkSgkcFQidbg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,201,1744095600"; d="scan'208";a="175340974"
+X-IronPort-AV: E=Sophos;i="6.16,201,1744095600"; d="scan'208";a="144306076"
 Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
  ([10.124.247.1])
- by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 01 Jun 2025 08:44:19 -0700
-Message-ID: <a5fbaad2-87c2-4791-8728-39db9e977521@intel.com>
-Date: Sun, 1 Jun 2025 23:44:16 +0800
+ by orviesa010-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 01 Jun 2025 08:53:47 -0700
+Message-ID: <ad5f550b-5d74-4635-996e-1b1d754e727f@intel.com>
+Date: Sun, 1 Jun 2025 23:53:43 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 1/5] memory: Export a helper to get intersection of a
- MemoryRegionSection with a given range
+Subject: Re: [PATCH v6 2/5] memory: Change
+ memory_region_set_ram_discard_manager() to return the result
 To: Chenyi Qiang <chenyi.qiang@intel.com>,
  David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
  Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>,
@@ -65,13 +65,13 @@ Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
  Xu Yilun <yilun.xu@intel.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
  <clg@kaod.org>, Alex Williamson <alex.williamson@redhat.com>
 References: <20250530083256.105186-1-chenyi.qiang@intel.com>
- <20250530083256.105186-2-chenyi.qiang@intel.com>
+ <20250530083256.105186-3-chenyi.qiang@intel.com>
 Content-Language: en-US
 From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <20250530083256.105186-2-chenyi.qiang@intel.com>
+In-Reply-To: <20250530083256.105186-3-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=xiaoyao.li@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -34
 X-Spam_score: -3.5
@@ -97,15 +97,20 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/30/2025 4:32 PM, Chenyi Qiang wrote:
-> Rename the helper to memory_region_section_intersect_range() to make it
-> more generic. Meanwhile, define the @end as Int128 and replace the
-> related operations with Int128_* format since the helper is exported as
-> a wider API.
+> Modify memory_region_set_ram_discard_manager() to return -EBUSY if a
+> RamDiscardManager is already set in the MemoryRegion. The caller must
+> handle this failure, such as having virtio-mem undo its actions and fail
+> the realize() process. Opportunistically move the call earlier to avoid
+> complex error handling.
 > 
-> Suggested-by: Alexey Kardashevskiy<aik@amd.com>
-> Reviewed-by: Alexey Kardashevskiy<aik@amd.com>
+> This change is beneficial when introducing a new RamDiscardManager
+> instance besides virtio-mem. After
+> ram_block_coordinated_discard_require(true) unlocks all
+> RamDiscardManager instances, only one instance is allowed to be set for
+> one MemoryRegion at present.
+> 
+> Suggested-by: David Hildenbrand<david@redhat.com>
 > Reviewed-by: David Hildenbrand<david@redhat.com>
-> Reviewed-by: Zhao Liu<zhao1.liu@intel.com>
 > Signed-off-by: Chenyi Qiang<chenyi.qiang@intel.com>
 
 Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
