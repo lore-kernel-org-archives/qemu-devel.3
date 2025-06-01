@@ -4,88 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 484A9C5B549
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:34:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F60C5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkYx-00024l-71; Sun, 01 Jun 2025 11:25:27 -0400
+	id 1uLkYt-00022D-Ac; Sun, 01 Jun 2025 11:25:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYu-00023s-UK
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYc-0001rA-6O
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYt-0004cu-1X
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:24 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYX-0004O2-Ff
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791522;
+ s=mimecast20190719; t=1748791488;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4oOyhyn0zwWJsClDDP7Djl4UlBECR0W4KSvSBeBDXig=;
- b=KxCzsCLf7J1ppACQzBEauNfEsXT41IZklK0S9KfS+ZSlv9K1Ox0FHqhswOLrLYcUFrdVHW
- 0ZPTBi6CqrbwrY0TM6S6RG2Hc7U5zxeUfgL/sD4lHuMp9bzP1u1wC67CqQqF1aNKQ7XC2k
- HqcjLt5CX7OH+esST/YVCr2N/kJFgsU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ content-transfer-encoding:content-transfer-encoding;
+ bh=nDg5yKMa0vWezmMCfLKMkb3rs4u75TamxEmrqGTOMUU=;
+ b=GYPhpo2j0Dj8BJyRb0TjNN84XsrrmjoAPt78ZmcSh/z2krCReFa2RZrPmJNliJpZR7hIya
+ ZH1qT+4wUlBACcskPOtHYCJXcw7uw6q7NDwQ4YEWBKjwDk4HNk6P0VbScC4qmCGB7bdp+t
+ r39h+BWhRTjqlUcNDG7nm/+jvS9qJB4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-245-LiUI1UfRO1C2gxILs-lWnA-1; Sun, 01 Jun 2025 11:25:21 -0400
-X-MC-Unique: LiUI1UfRO1C2gxILs-lWnA-1
-X-Mimecast-MFC-AGG-ID: LiUI1UfRO1C2gxILs-lWnA_1748791520
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-442dc702850so24188755e9.1
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:20 -0700 (PDT)
+ us-mta-92--8JifAusPiGK9mxiM8NOGA-1; Sun, 01 Jun 2025 11:24:47 -0400
+X-MC-Unique: -8JifAusPiGK9mxiM8NOGA-1
+X-Mimecast-MFC-AGG-ID: -8JifAusPiGK9mxiM8NOGA_1748791486
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4e713e05bso1679784f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:24:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791519; x=1749396319;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4oOyhyn0zwWJsClDDP7Djl4UlBECR0W4KSvSBeBDXig=;
- b=S3Xh45fYAwICtZHrYEYR/vTrnSM9Y+wUCvaUPvPi6w0kpHKd7pDqc6544IKlCBocwE
- gSJ3YiqtY45Hxon1VFAbwjcQmWBarcSX9oeZDS7nRE/Rdv9v6OOxvo/tvldOy8beloqL
- bLayOETtimP5eI53JYa7pyz8O6Z2kI6ECJJXgEkMgKfIqy5lt/eYIoRq1TapWUcwz+vc
- JmqIIcH5d6lLpae4JPAWEaBkInCVmzNXaHZuptTH8z86JDibSF+TGWNXbJFFIhAdRRzi
- EbeuSYaWxKO62aNwBKEeC8BmyrWUoaQpyoWZx8n53t+cYI7W0frXlXp0Q/ziIuRaWT2v
- CMUw==
-X-Gm-Message-State: AOJu0YzzAwyP9wQDmElAS83glnb6jNdAWi+BFfOOhk7gyFV66NlztCkn
- 36lQq9cuu9p9Lrx8s1GB+N5WVg9079EbrOYUZqeaiND4Pj7X5GopCebey9gFz3FNI455rC4LeYi
- 0nDenjW2vx1Y+RNFkHgySlJWjJ+jjqR7uXm6n80HWqV7srxmzmU6fgGuYwdqmJVzAVtQCCtcEtU
- 0ugdXBZAwfUff0xjhmb5MRDUY27GS2Zh6qcg==
-X-Gm-Gg: ASbGncvBVjVoBX3IqB4bjBdoZ1F7XX0KeyFY/krGagPQC/Q8MaGrVdORBUig3jT8ldv
- BscRXEWpn4wE7BLco5AghKNaAMz+v2oxGAGPj8MuVV0S1/hG//oyg0Atbics2y0x1l33v3aewMY
- 42ItqUKIp2m4D0rV6ewxdV+U0J9XQyCmK7EC3bkSci0Bd+GwufduFkJ6LkyZSDG9+xiasm3ueXm
- onsVsKgUCJIuTLYPKgGaAyEIKniYt1inbnIKotf9rgM73vz1Ph6C2Pc9615Qd8ivCy6eV7W+g1c
- XBMQQw==
-X-Received: by 2002:a05:600c:4747:b0:442:d9f2:c753 with SMTP id
- 5b1f17b1804b1-451221a1bbfmr35598245e9.26.1748791519127; 
- Sun, 01 Jun 2025 08:25:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEIWBPmbXwauyNBsxvUduJZ1u0g6ygdwkngsvcHVyVzsqVlPZx3M7EVDag8+OJgOGcr0aMWvw==
-X-Received: by 2002:a05:600c:4747:b0:442:d9f2:c753 with SMTP id
- 5b1f17b1804b1-451221a1bbfmr35597975e9.26.1748791518577; 
- Sun, 01 Jun 2025 08:25:18 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748791485; x=1749396285;
+ h=content-transfer-encoding:content-disposition:mime-version
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=nDg5yKMa0vWezmMCfLKMkb3rs4u75TamxEmrqGTOMUU=;
+ b=EKm4RSafeWeMMWZ0HlGgDax4cz2zXwBdGl433HREz/ucZTxEt3sSCnjbuJUYGnz3WO
+ QsrSzBJOQ7AoJjwFqlmOeT4gGzFcfKokDrr8aqO/aocbF2K4hKkLyMBlt7TGa6DHnLJ3
+ mC59HZH9HVo9vve9yDQdchjGnBHmgG8tN7/pYHj7MMqGm8DG6fiuDPppl3MDTuT7+/lQ
+ huFA81fAQX1VZsFwtUgBlaHPoEhXzEBYzh9hqSUdIYu6NSaYKOGocST2HnkztrdF1/be
+ 1qsTYBI/foFyMvpFXlgCjJldkuh/FL8ql8sw9hWZfURRWOfubaHejYZIrgKQtjF5Yl1W
+ DdYA==
+X-Gm-Message-State: AOJu0Yy3g4XzbM04xVoEa39B0twYilT65MyQbVvftSak6bXPoCyQgN/X
+ 2uV4D3VVRo+O68DvBIWx/TpsvjeK/AvvWIAN+EJRkx4uyDX06u1U0FeZ6eVML89le435d27S8K/
+ w4P6P4FVjAqviRpIo9veAfqdDGkJKfi7XkVCech3GZmmPoPDY8W1HNcdphIKhnZORVYoxlMfes0
+ 9roIiCkR+pcu9LzdQhcrKyxzyxIRzdSGqvIQ==
+X-Gm-Gg: ASbGncuXLqA0rUcbFrZvGUn1ljUnYuAFjI6oS/dTLpq6N6W/A4TLyGZcIY9IrGl6ci1
+ ZSFdGvKKW/ESL2GA0WkgptFz//bVz/ONw3441T9mut7RlEOEFwXDCT3Xn0rt7c9OyT/Jp+P3uq3
+ GY6n4V1QY+EaW76AVjz/8t2Z0ohcwp+ty4mixAfFTBCnq45RuzLsgaCDRNLCuzRpcv00Z5MuYML
+ 5MitQpCp5Ca0ccOnrUoiPz2MKkQ5yWg19pKqQUAk22YapcJ6nZou9uX5eFhkuorDsRQHQh7xxYD
+ pY72eQ==
+X-Received: by 2002:a5d:6b90:0:b0:3a4:ff01:218a with SMTP id
+ ffacd0b85a97d-3a4ff01218fmr2622489f8f.50.1748791485523; 
+ Sun, 01 Jun 2025 08:24:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGzOv2xN9vjeKVGUHC/cPl4/etwULhR+w9A+XTTMoORxJ4Kr3H12sfsIdarXeLN28Le9Kd41w==
+X-Received: by 2002:a5d:6b90:0:b0:3a4:ff01:218a with SMTP id
+ ffacd0b85a97d-3a4ff01218fmr2622474f8f.50.1748791485063; 
+ Sun, 01 Jun 2025 08:24:45 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d8006946sm87957085e9.31.2025.06.01.08.25.17
+ ffacd0b85a97d-3a4efe73f67sm11610485f8f.47.2025.06.01.08.24.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:25:17 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:25:16 -0400
+ Sun, 01 Jun 2025 08:24:44 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:24:43 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Ethan Milon <ethan.milon@eviden.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 13/31] pci: Add a pci-level API for ATS
-Message-ID: <e9b457500adb023229a08ece3a8d7f5866dd360e.1748791463.git.mst@redhat.com>
-References: <cover.1748791463.git.mst@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 00/31] virtio,pci,pc: features, fixes, tests
+Message-ID: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <cover.1748791463.git.mst@redhat.com>
+Content-Transfer-Encoding: 8bit
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -110,260 +106,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+The following changes since commit d2e9b78162e31b1eaf20f3a4f563da82da56908d:
 
-Devices implementing ATS can send translation requests using
-pci_ats_request_translation. The invalidation events are sent
-back to the device using the iommu notifier managed with
-pci_iommu_register_iotlb_notifier / pci_iommu_unregister_iotlb_notifier.
+  Merge tag 'pull-qapi-2025-05-28' of https://repo.or.cz/qemu/armbru into staging (2025-05-29 08:36:01 -0400)
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Co-authored-by: Ethan Milon <ethan.milon@eviden.com>
-Message-Id: <20250520071823.764266-11-clement.mathieu--drif@eviden.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+are available in the Git repository at:
+
+  https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+
+for you to fetch changes up to 1c5771c092742b729e2a640be184a0f48c0b2cdb:
+
+  hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine (2025-06-01 08:30:09 -0400)
+
+----------------------------------------------------------------
+virtio,pci,pc: features, fixes, tests
+
+vhost will now no longer set a call notifier if unused
+loongarch gained acpi tests based on bios-tables-test
+some core pci work for SVM support in vtd
+vhost vdpa init has been optimized for response time to QMP
+A couple more fixes
+
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
----
- include/hw/pci/pci.h | 126 +++++++++++++++++++++++++++++++++++++++++++
- hw/pci/pci.c         |  81 ++++++++++++++++++++++++++++
- 2 files changed, 207 insertions(+)
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index f3016fd76f..5d72607ed5 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -462,6 +462,80 @@ typedef struct PCIIOMMUOps {
-     void (*init_iotlb_notifier)(PCIBus *bus, void *opaque, int devfn,
-                                 IOMMUNotifier *n, IOMMUNotify fn,
-                                 void *user_opaque);
-+    /**
-+     * @register_iotlb_notifier: setup an IOTLB invalidation notifier.
-+     *
-+     * Callback required if devices are allowed to cache translations.
-+     *
-+     * @bus: the #PCIBus of the PCI device.
-+     *
-+     * @opaque: the data passed to pci_setup_iommu().
-+     *
-+     * @devfn: device and function number of the PCI device.
-+     *
-+     * @pasid: the pasid of the address space to watch.
-+     *
-+     * @n: the notifier to register.
-+     */
-+    void (*register_iotlb_notifier)(PCIBus *bus, void *opaque, int devfn,
-+                                    uint32_t pasid, IOMMUNotifier *n);
-+    /**
-+     * @unregister_iotlb_notifier: remove an IOTLB invalidation notifier.
-+     *
-+     * Callback required if devices are allowed to cache translations.
-+     *
-+     * @bus: the #PCIBus of the PCI device.
-+     *
-+     * @opaque: the data passed to pci_setup_iommu().
-+     *
-+     * @devfn: device and function number of the PCI device.
-+     *
-+     * @pasid: the pasid of the address space to stop watching.
-+     *
-+     * @n: the notifier to unregister.
-+     */
-+    void (*unregister_iotlb_notifier)(PCIBus *bus, void *opaque, int devfn,
-+                                      uint32_t pasid, IOMMUNotifier *n);
-+    /**
-+     * @ats_request_translation: issue an ATS request.
-+     *
-+     * Callback required if devices are allowed to use the address
-+     * translation service.
-+     *
-+     * @bus: the #PCIBus of the PCI device.
-+     *
-+     * @opaque: the data passed to pci_setup_iommu().
-+     *
-+     * @devfn: device and function number of the PCI device.
-+     *
-+     * @pasid: the pasid of the address space to use for the request.
-+     *
-+     * @priv_req: privileged mode bit (PASID TLP).
-+     *
-+     * @exec_req: execute request bit (PASID TLP).
-+     *
-+     * @addr: start address of the memory range to be translated.
-+     *
-+     * @length: length of the memory range in bytes.
-+     *
-+     * @no_write: request a read-only translation (if supported).
-+     *
-+     * @result: buffer in which the TLB entries will be stored.
-+     *
-+     * @result_length: result buffer length.
-+     *
-+     * @err_count: number of untranslated subregions.
-+     *
-+     * Returns: the number of translations stored in the result buffer, or
-+     * -ENOMEM if the buffer is not large enough.
-+     */
-+    ssize_t (*ats_request_translation)(PCIBus *bus, void *opaque, int devfn,
-+                                       uint32_t pasid, bool priv_req,
-+                                       bool exec_req, hwaddr addr,
-+                                       size_t length, bool no_write,
-+                                       IOMMUTLBEntry *result,
-+                                       size_t result_length,
-+                                       uint32_t *err_count);
- } PCIIOMMUOps;
- 
- AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
-@@ -495,6 +569,58 @@ int pci_iommu_get_iotlb_info(PCIDevice *dev, uint8_t *addr_width,
- int pci_iommu_init_iotlb_notifier(PCIDevice *dev, IOMMUNotifier *n,
-                                   IOMMUNotify fn, void *opaque);
- 
-+/**
-+ * pci_ats_request_translation: perform an ATS request.
-+ *
-+ * Returns the number of translations stored in @result in case of success,
-+ * a negative error code otherwise.
-+ * -ENOMEM is returned when the result buffer is not large enough to store
-+ * all the translations.
-+ *
-+ * @dev: the ATS-capable PCI device.
-+ * @pasid: the pasid of the address space in which the translation will be done.
-+ * @priv_req: privileged mode bit (PASID TLP).
-+ * @exec_req: execute request bit (PASID TLP).
-+ * @addr: start address of the memory range to be translated.
-+ * @length: length of the memory range in bytes.
-+ * @no_write: request a read-only translation (if supported).
-+ * @result: buffer in which the TLB entries will be stored.
-+ * @result_length: result buffer length.
-+ * @err_count: number of untranslated subregions.
-+ */
-+ssize_t pci_ats_request_translation(PCIDevice *dev, uint32_t pasid,
-+                                    bool priv_req, bool exec_req,
-+                                    hwaddr addr, size_t length,
-+                                    bool no_write, IOMMUTLBEntry *result,
-+                                    size_t result_length,
-+                                    uint32_t *err_count);
-+
-+/**
-+ * pci_iommu_register_iotlb_notifier: register a notifier for changes to
-+ * IOMMU translation entries in a specific address space.
-+ *
-+ * Returns 0 on success, or a negative errno otherwise.
-+ *
-+ * @dev: the device that wants to get notified.
-+ * @pasid: the pasid of the address space to track.
-+ * @n: the notifier to register.
-+ */
-+int pci_iommu_register_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
-+                                      IOMMUNotifier *n);
-+
-+/**
-+ * pci_iommu_unregister_iotlb_notifier: unregister a notifier that has been
-+ * registerd with pci_iommu_register_iotlb_notifier.
-+ *
-+ * Returns 0 on success, or a negative errno otherwise.
-+ *
-+ * @dev: the device that wants to stop notifications.
-+ * @pasid: the pasid of the address space to stop tracking.
-+ * @n: the notifier to unregister.
-+ */
-+int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
-+                                        IOMMUNotifier *n);
-+
- /**
-  * pci_setup_iommu: Initialize specific IOMMU handlers for a PCIBus
-  *
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index dfa5a0259e..0c63cb4bbe 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2987,6 +2987,87 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
-     }
- }
- 
-+ssize_t pci_ats_request_translation(PCIDevice *dev, uint32_t pasid,
-+                                    bool priv_req, bool exec_req,
-+                                    hwaddr addr, size_t length,
-+                                    bool no_write, IOMMUTLBEntry *result,
-+                                    size_t result_length,
-+                                    uint32_t *err_count)
-+{
-+    PCIBus *bus;
-+    PCIBus *iommu_bus;
-+    int devfn;
-+
-+    if (!dev->is_master ||
-+            ((pasid != PCI_NO_PASID) && !pcie_pasid_enabled(dev))) {
-+        return -EPERM;
-+    }
-+
-+    if (result_length == 0) {
-+        return -ENOSPC;
-+    }
-+
-+    if (!pcie_ats_enabled(dev)) {
-+        return -EPERM;
-+    }
-+
-+    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    if (iommu_bus && iommu_bus->iommu_ops->ats_request_translation) {
-+        return iommu_bus->iommu_ops->ats_request_translation(bus,
-+                                                     iommu_bus->iommu_opaque,
-+                                                     devfn, pasid, priv_req,
-+                                                     exec_req, addr, length,
-+                                                     no_write, result,
-+                                                     result_length, err_count);
-+    }
-+
-+    return -ENODEV;
-+}
-+
-+int pci_iommu_register_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
-+                                      IOMMUNotifier *n)
-+{
-+    PCIBus *bus;
-+    PCIBus *iommu_bus;
-+    int devfn;
-+
-+    if ((pasid != PCI_NO_PASID) && !pcie_pasid_enabled(dev)) {
-+        return -EPERM;
-+    }
-+
-+    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    if (iommu_bus && iommu_bus->iommu_ops->register_iotlb_notifier) {
-+        iommu_bus->iommu_ops->register_iotlb_notifier(bus,
-+                                           iommu_bus->iommu_opaque, devfn,
-+                                           pasid, n);
-+        return 0;
-+    }
-+
-+    return -ENODEV;
-+}
-+
-+int pci_iommu_unregister_iotlb_notifier(PCIDevice *dev, uint32_t pasid,
-+                                        IOMMUNotifier *n)
-+{
-+    PCIBus *bus;
-+    PCIBus *iommu_bus;
-+    int devfn;
-+
-+    if ((pasid != PCI_NO_PASID) && !pcie_pasid_enabled(dev)) {
-+        return -EPERM;
-+    }
-+
-+    pci_device_get_iommu_bus_devfn(dev, &bus, &iommu_bus, &devfn);
-+    if (iommu_bus && iommu_bus->iommu_ops->unregister_iotlb_notifier) {
-+        iommu_bus->iommu_ops->unregister_iotlb_notifier(bus,
-+                                                        iommu_bus->iommu_opaque,
-+                                                        devfn, pasid, n);
-+        return 0;
-+    }
-+
-+    return -ENODEV;
-+}
-+
- int pci_iommu_get_iotlb_info(PCIDevice *dev, uint8_t *addr_width,
-                              uint32_t *min_page_size)
- {
--- 
-MST
+----------------------------------------------------------------
+Bernhard Beschow (1):
+      hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
+
+Bibo Mao (8):
+      uefi-test-tools:: Add LoongArch64 support
+      tests/data/uefi-boot-images: Add ISO image for LoongArch system
+      tests/qtest/bios-tables-test: Use MiB macro rather hardcode value
+      tests/acpi: Add empty ACPI data files for LoongArch
+      tests/qtest/bios-tables-test: Add basic testing for LoongArch
+      rebuild-expected-aml.sh: Add support for LoongArch
+      tests/acpi: Fill acpi table data for LoongArch
+      tests/acpi: Remove stale allowed tables
+
+CLEMENT MATHIEU--DRIF (11):
+      pcie: Add helper to declare PASID capability for a pcie device
+      pcie: Helper functions to check if PASID is enabled
+      pcie: Helper function to check if ATS is enabled
+      pcie: Add a helper to declare the PRI capability for a pcie device
+      pcie: Helper functions to check to check if PRI is enabled
+      pci: Cache the bus mastering status in the device
+      pci: Add an API to get IOMMU's min page size and virtual address width
+      memory: Store user data pointer in the IOMMU notifiers
+      pci: Add a pci-level initialization function for IOMMU notifiers
+      pci: Add a pci-level API for ATS
+      pci: Add a PCI-level API for PRI
+
+Eugenio Pérez (7):
+      vdpa: check for iova tree initialized at net_client_start
+      vdpa: reorder vhost_vdpa_set_backend_cap
+      vdpa: set backend capabilities at vhost_vdpa_init
+      vdpa: add listener_registered
+      vdpa: reorder listener assignment
+      vdpa: move iova_tree allocation to net_vhost_vdpa_init
+      vdpa: move memory listener register to vhost_vdpa_init
+
+Huaitong Han (1):
+      vhost: Don't set vring call if guest notifier is unused
+
+Sairaj Kodilkar (1):
+      hw/i386/amd_iommu: Fix device setup failure when PT is on.
+
+Vasant Hegde (1):
+      hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+
+Yuri Benditovich (1):
+      virtio: check for validity of indirect descriptors
+
+ include/hw/pci/pci.h                               | 316 +++++++++++++++++++++
+ include/hw/pci/pci_device.h                        |   1 +
+ include/hw/pci/pcie.h                              |  13 +-
+ include/hw/pci/pcie_regs.h                         |   8 +
+ include/hw/virtio/vhost-vdpa.h                     |  22 +-
+ include/system/memory.h                            |   1 +
+ hw/i386/amd_iommu.c                                |  20 +-
+ hw/i386/pc_piix.c                                  |   5 +
+ hw/pci/pci.c                                       | 206 +++++++++++++-
+ hw/pci/pcie.c                                      |  78 +++++
+ hw/virtio/vhost-vdpa.c                             | 107 ++++---
+ hw/virtio/virtio-pci.c                             |   7 +-
+ hw/virtio/virtio.c                                 |  11 +
+ net/vhost-vdpa.c                                   |  34 +--
+ tests/qtest/bios-tables-test.c                     |  99 ++++++-
+ tests/data/acpi/loongarch64/virt/APIC              | Bin 0 -> 108 bytes
+ tests/data/acpi/loongarch64/virt/APIC.topology     | Bin 0 -> 213 bytes
+ tests/data/acpi/loongarch64/virt/DSDT              | Bin 0 -> 4641 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.memhp        | Bin 0 -> 5862 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.numamem      | Bin 0 -> 4647 bytes
+ tests/data/acpi/loongarch64/virt/DSDT.topology     | Bin 0 -> 5352 bytes
+ tests/data/acpi/loongarch64/virt/FACP              | Bin 0 -> 268 bytes
+ tests/data/acpi/loongarch64/virt/MCFG              | Bin 0 -> 60 bytes
+ tests/data/acpi/loongarch64/virt/PPTT              | Bin 0 -> 76 bytes
+ tests/data/acpi/loongarch64/virt/PPTT.topology     | Bin 0 -> 296 bytes
+ tests/data/acpi/loongarch64/virt/SLIT              |   0
+ tests/data/acpi/loongarch64/virt/SLIT.numamem      | Bin 0 -> 48 bytes
+ tests/data/acpi/loongarch64/virt/SPCR              | Bin 0 -> 80 bytes
+ tests/data/acpi/loongarch64/virt/SRAT              | Bin 0 -> 104 bytes
+ tests/data/acpi/loongarch64/virt/SRAT.memhp        | Bin 0 -> 144 bytes
+ tests/data/acpi/loongarch64/virt/SRAT.numamem      | Bin 0 -> 144 bytes
+ tests/data/acpi/loongarch64/virt/SRAT.topology     | Bin 0 -> 216 bytes
+ tests/data/acpi/rebuild-expected-aml.sh            |   4 +-
+ .../bios-tables-test.loongarch64.iso.qcow2         | Bin 0 -> 12800 bytes
+ tests/qtest/meson.build                            |   1 +
+ tests/uefi-test-tools/Makefile                     |   5 +-
+ .../UefiTestToolsPkg/UefiTestToolsPkg.dsc          |   6 +-
+ tests/uefi-test-tools/uefi-test-build.config       |  10 +
+ 38 files changed, 846 insertions(+), 108 deletions(-)
+ create mode 100644 tests/data/acpi/loongarch64/virt/APIC
+ create mode 100644 tests/data/acpi/loongarch64/virt/APIC.topology
+ create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
+ create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.memhp
+ create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.numamem
+ create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.topology
+ create mode 100644 tests/data/acpi/loongarch64/virt/FACP
+ create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
+ create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
+ create mode 100644 tests/data/acpi/loongarch64/virt/PPTT.topology
+ create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
+ create mode 100644 tests/data/acpi/loongarch64/virt/SLIT.numamem
+ create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
+ create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
+ create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.memhp
+ create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.numamem
+ create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.topology
+ create mode 100644 tests/data/uefi-boot-images/bios-tables-test.loongarch64.iso.qcow2
 
 
