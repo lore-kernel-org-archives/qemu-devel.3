@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55060C5B555
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:33:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB523C5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:33:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLka1-0003rZ-49; Sun, 01 Jun 2025 11:26:34 -0400
+	id 1uLkZO-0002rr-Nb; Sun, 01 Jun 2025 11:25:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZe-0003KT-G8
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:26:17 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZN-0002l0-BY
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZb-0004hA-N8
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:26:09 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZL-0004fl-NY
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791567;
+ s=mimecast20190719; t=1748791551;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kwblXR8nhghJfmmOV1A/vOPLGOORroiZAipr6mzYif0=;
- b=KUEHHVZ4FYNMNDja1MmcOyuvBOB6AQVoErniTopqZf+QJr1REg/YXsXYqSHwxYYX6eyLwr
- TpvnBJ/pH0X5pKHx5+zBMTKtH2nEoJZyXk76ks1JI481/RrbLp8GXmFGzA0tF8D9vqmnR9
- ow/235jeBNbQg25bLqYle8KyBvI9xMY=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=6dAlrl0LtxfLCgi64pVTEp018uC/mUt8mFKXJwY2ZbY=;
+ b=gbJN+zEZRFgg7oUtdT0QXDXkE+KJnKN6up/FQF+Mg8YzPbThwSTu7W1fYfjq1sSqy2pdBq
+ Me69TmMxdaI4biqwWcuRG6cK8epxNjaXtMpOaCOfkSF9a9Mf4sfd1OdFwXOv0GNhiA3wH1
+ jyoCKScuWmPmG7BJR/83Dt7Q4lRi0jY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-7O6_xdQTM1eSza8wc0hF8Q-1; Sun, 01 Jun 2025 11:26:05 -0400
-X-MC-Unique: 7O6_xdQTM1eSza8wc0hF8Q-1
-X-Mimecast-MFC-AGG-ID: 7O6_xdQTM1eSza8wc0hF8Q_1748791564
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eb6fcd88so2219833f8f.1
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:26:05 -0700 (PDT)
+ us-mta-80-mEFfjfG_PIi4Fs1IRjcHXA-1; Sun, 01 Jun 2025 11:25:49 -0400
+X-MC-Unique: mEFfjfG_PIi4Fs1IRjcHXA-1
+X-Mimecast-MFC-AGG-ID: mEFfjfG_PIi4Fs1IRjcHXA_1748791549
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-445135eb689so17895465e9.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791564; x=1749396364;
+ d=1e100.net; s=20230601; t=1748791548; x=1749396348;
  h=in-reply-to:content-transfer-encoding:content-disposition
  :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=kwblXR8nhghJfmmOV1A/vOPLGOORroiZAipr6mzYif0=;
- b=G2kJCvcyVTdXTX5nr/40Z8LFrnzZpDyyBOqW+SMh4Kw/NqmoJFRb8aLbyVC7LElk8b
- VeU7bIlNibrnW+BabkYXh2T2z6FjV9+Y9y7/XTKp/f5Va394XklcNgQi8VFHo9ZySyzB
- Y7k0veaxEcaVE0jgf39bWo3mw/oXbmbJbhXbGGAP+4K5h4eEmCi2fL20mCDPeCGGdrai
- d34XDEI4LUipaZVHAA10EKFlwN0YrhVAAZ4Ks+lilkLmL2OXKRnm4MAiE55NREiCCl21
- wdu3rV338yrfW3Vvy/hgGmhrAfIbkXH3nT2bt7W4QMkpZuVlAWgX+fHby+65j6hVvpuW
- T0wg==
-X-Gm-Message-State: AOJu0Yz0y8UfuKEDYo7arScZBIZ2nxIal437FPWGj+Jt0Vnr0NdHZWno
- A8epxCVATbsheeatNz0DnMM8UI5oT+aLmbuQstY1PSHgyR0kmG2YnnyAB++0wesDcgeLoVqkes1
- 3o+ZXZVKcZbrWiPFr3ifmnW7p7H2G/ESBvgcEtPi5z9L8oU6I2v2/EY6s1iNEXQKAztVXacKBnf
- 1ER0EfgdcSrNB+LB4UAWf2Z5N1h18ir9vEpw==
-X-Gm-Gg: ASbGncvayxOhAk3M1aujvVVM0L+Jco6j8IylmS9zmBp69luDqWvCnGCcA0j/4cTqLAE
- iA0SGCUXqsjoa/PLpI2YqDG7N189r8E4XfFnw/kgnjAQXkLQ1WjZ8rv+si91oLM2KmTwDcwhe3q
- 0wWqp+EUj6X/Ve6xj6Y6csHbyuEc8BPZtCYRS8/kCKEdjiBgsmIgJX9uL6/r+8bLo9c3zKJvYbq
- DaY6VMoG0aHx31Y7YvMCVfHuQgml3genR4pYGazTi7WT4l1ksWbJOlVOLA0E/eCUHxpf+a4gS+k
- rI17ww==
-X-Received: by 2002:a05:6000:2008:b0:3a4:cfbf:51ae with SMTP id
- ffacd0b85a97d-3a4fe154ecfmr3770229f8f.4.1748791563636; 
- Sun, 01 Jun 2025 08:26:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3ajmpWOSOacybeulf9x/QRFjv7ffKxo4Z/GkRUc0eVlAlutWA6CAJnwlIR4yXAqKz8FO9ZQ==
-X-Received: by 2002:a05:6000:2008:b0:3a4:cfbf:51ae with SMTP id
- ffacd0b85a97d-3a4fe154ecfmr3770204f8f.4.1748791563126; 
- Sun, 01 Jun 2025 08:26:03 -0700 (PDT)
+ bh=6dAlrl0LtxfLCgi64pVTEp018uC/mUt8mFKXJwY2ZbY=;
+ b=DGqedluLjAxx+PdN/hbT5dX3nQdBTPXkFQK78S8Dhvx0q6bK98V+KyAhkJ4mxeG40E
+ fByQWRuD2nwwNClyRzEH+/MkLbYdBZCJ4jU6bvU1slXnGcMCTcpGjhHSW7+5O4fNP8Ln
+ GBUYK0SOJIq99mr0vgbCkq6/NQlrUc567czEVvTBZZYswX4ED9k6O5XdNyrcyc3F+1up
+ n7ie7wtBqlEBnW0IFh407eMS8Rgl8lNyCaPv1UEddAUC0xCi44j8WAxIivDsdCuV118H
+ I4YQq6rlRL1MoG9ACfBKGk02fOPU2fiMxC96Focb7TlRO+jiR2emRT90b6HUB1cc1LuI
+ nU2w==
+X-Gm-Message-State: AOJu0Yy9cPFrElWn0pe9m7/tAO9WKb0akQqBM/u0emtzlH1tUNAIbqdu
+ e8nGc4rxOzXp7skNd1nfGwNY0TO3MeSg7iRE7iBjkXSzfpx2HhSb1D5HMSHSsGCsR/XWsjzLaHp
+ FvVIZUIAch59E35BZRgmxhVSJ6SICAn+cpSm64GM9zJebRDVt+Ekcd9oofcV5El8PHAE5PDLeXK
+ sC/wRNR5s2xFf60qQimntvaTewqTJX8G0VKQ==
+X-Gm-Gg: ASbGnctVVC/XrSLBFDE/6R6jzej3xm1hyQBzb7VMtMeoyKfft4GcvQmMvW4ZP2/WzX0
+ qmcqKn9b438BG95B8QKd4xv+1I3sLNXXBhu+GM+kr0NpoD/d0v5U//I0n2w8m0QjFUPVJX/6Zr7
+ stPO3ngexX8X6mLsa9XvXbm/r/JamMqgUHKkiE2mFzaBdobsA09yz+seZfaS0rAUc6bc/fXxTNb
+ FT0YMg3l86nZhUrfRM+Zqf2PsRznY37daybhO9aSR2j9s7KJ9z5+EFtbLSLmH9vqk5b04XIqiTA
+ YFLq5w==
+X-Received: by 2002:a05:6000:1447:b0:3a4:f722:f00b with SMTP id
+ ffacd0b85a97d-3a4f7a02565mr8143396f8f.11.1748791548144; 
+ Sun, 01 Jun 2025 08:25:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKrecldD8gO1vYtpqEneN8pyJrS7ibr/3skTLCJo76l3qH38tE1b2Dky2bAOOFlgbrXleMVA==
+X-Received: by 2002:a05:6000:1447:b0:3a4:f722:f00b with SMTP id
+ ffacd0b85a97d-3a4f7a02565mr8143369f8f.11.1748791547674; 
+ Sun, 01 Jun 2025 08:25:47 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7f8eceasm88604985e9.7.2025.06.01.08.25.59
+ 5b1f17b1804b1-450d7f92585sm92452755e9.5.2025.06.01.08.25.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:26:01 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:25:58 -0400
+ Sun, 01 Jun 2025 08:25:46 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:25:44 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
  Lei Yang <leiyang@redhat.com>, Si-Wei Liu <si-wei.liu@oracle.com>,
- Jason Wang <jasowang@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
- Stefano Garzarella <sgarzare@redhat.com>
-Subject: [PULL 29/31] vdpa: move iova_tree allocation to net_vhost_vdpa_init
-Message-ID: <fac4a20c49f673686e7f30e0c9bb50af308af292.1748791463.git.mst@redhat.com>
+ Jason Wang <jasowang@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>
+Subject: [PULL 24/31] vdpa: check for iova tree initialized at net_client_start
+Message-ID: <ee2136d8f5a1a4c317e39b0f3ca99e2095106ac8.1748791463.git.mst@redhat.com>
 References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
@@ -115,138 +114,42 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Eugenio Pérez <eperezma@redhat.com>
 
-As we are moving to keep the mapping through all the vdpa device life
-instead of resetting it at VirtIO reset, we need to move all its
-dependencies to the initialization too.  In particular devices with
-x-svq=on need a valid iova_tree from the beginning.
+To map the guest memory while it is migrating we need to create the
+iova_tree, as long as the destination uses x-svq=on. Checking to not
+override it.
 
-Simplify the code also consolidating the two creation points: the first
-data vq in case of SVQ active and CVQ start in case only CVQ uses it.
+The function vhost_vdpa_net_client_stop clear it if the device is
+stopped. If the guest starts the device again, the iova tree is
+recreated by vhost_vdpa_net_data_start_first or vhost_vdpa_net_cvq_start
+if needed, so old behavior is kept.
 
 Tested-by: Lei Yang <leiyang@redhat.com>
 Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
-Suggested-by: Si-Wei Liu <si-wei.liu@oracle.com>
 Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
-Message-Id: <20250522145839.59974-7-jonah.palmer@oracle.com>
+Message-Id: <20250522145839.59974-2-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- include/hw/virtio/vhost-vdpa.h | 16 ++++++++++++++-
- net/vhost-vdpa.c               | 36 +++-------------------------------
- 2 files changed, 18 insertions(+), 34 deletions(-)
+ net/vhost-vdpa.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/virtio/vhost-vdpa.h b/include/hw/virtio/vhost-vdpa.h
-index 221840987e..449bf5c840 100644
---- a/include/hw/virtio/vhost-vdpa.h
-+++ b/include/hw/virtio/vhost-vdpa.h
-@@ -43,7 +43,21 @@ typedef struct vhost_vdpa_shared {
-     struct vhost_vdpa_iova_range iova_range;
-     QLIST_HEAD(, vdpa_iommu) iommu_list;
- 
--    /* IOVA mapping used by the Shadow Virtqueue */
-+    /*
-+     * IOVA mapping used by the Shadow Virtqueue
-+     *
-+     * It is shared among all ASID for simplicity, whether CVQ shares ASID with
-+     * guest or not:
-+     * - Memory listener need access to guest's memory addresses allocated in
-+     *   the IOVA tree.
-+     * - There should be plenty of IOVA address space for both ASID not to
-+     *   worry about collisions between them.  Guest's translations are still
-+     *   validated with virtio virtqueue_pop so there is no risk for the guest
-+     *   to access memory that it shouldn't.
-+     *
-+     * To allocate a iova tree per ASID is doable but it complicates the code
-+     * and it is not worth it for the moment.
-+     */
-     VhostIOVATree *iova_tree;
- 
-     /* Copy of backend features */
 diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index decb826868..58d738945d 100644
+index 7ca8b46eee..decb826868 100644
 --- a/net/vhost-vdpa.c
 +++ b/net/vhost-vdpa.c
-@@ -235,6 +235,7 @@ static void vhost_vdpa_cleanup(NetClientState *nc)
-         return;
-     }
-     qemu_close(s->vhost_vdpa.shared->device_fd);
-+    g_clear_pointer(&s->vhost_vdpa.shared->iova_tree, vhost_iova_tree_delete);
-     g_free(s->vhost_vdpa.shared);
- }
+@@ -366,7 +366,9 @@ static void vhost_vdpa_net_data_start_first(VhostVDPAState *s)
  
-@@ -362,16 +363,8 @@ static int vdpa_net_migration_state_notifier(NotifierWithReturn *notifier,
- 
- static void vhost_vdpa_net_data_start_first(VhostVDPAState *s)
- {
--    struct vhost_vdpa *v = &s->vhost_vdpa;
--
      migration_add_notifier(&s->migration_state,
                             vdpa_net_migration_state_notifier);
--
--    /* iova_tree may be initialized by vhost_vdpa_net_load_setup */
--    if (v->shadow_vqs_enabled && !v->shared->iova_tree) {
--        v->shared->iova_tree = vhost_iova_tree_new(v->shared->iova_range.first,
--                                                   v->shared->iova_range.last);
--    }
- }
- 
- static int vhost_vdpa_net_data_start(NetClientState *nc)
-@@ -418,19 +411,12 @@ static int vhost_vdpa_net_data_load(NetClientState *nc)
- static void vhost_vdpa_net_client_stop(NetClientState *nc)
- {
-     VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
--    struct vhost_dev *dev;
- 
-     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
- 
-     if (s->vhost_vdpa.index == 0) {
-         migration_remove_notifier(&s->migration_state);
+-    if (v->shadow_vqs_enabled) {
++
++    /* iova_tree may be initialized by vhost_vdpa_net_load_setup */
++    if (v->shadow_vqs_enabled && !v->shared->iova_tree) {
+         v->shared->iova_tree = vhost_iova_tree_new(v->shared->iova_range.first,
+                                                    v->shared->iova_range.last);
      }
--
--    dev = s->vhost_vdpa.dev;
--    if (dev->vq_index + dev->nvqs == dev->vq_index_end) {
--        g_clear_pointer(&s->vhost_vdpa.shared->iova_tree,
--                        vhost_iova_tree_delete);
--    }
- }
- 
- static NetClientInfo net_vhost_vdpa_info = {
-@@ -602,24 +588,6 @@ out:
-         return 0;
-     }
- 
--    /*
--     * If other vhost_vdpa already have an iova_tree, reuse it for simplicity,
--     * whether CVQ shares ASID with guest or not, because:
--     * - Memory listener need access to guest's memory addresses allocated in
--     *   the IOVA tree.
--     * - There should be plenty of IOVA address space for both ASID not to
--     *   worry about collisions between them.  Guest's translations are still
--     *   validated with virtio virtqueue_pop so there is no risk for the guest
--     *   to access memory that it shouldn't.
--     *
--     * To allocate a iova tree per ASID is doable but it complicates the code
--     * and it is not worth it for the moment.
--     */
--    if (!v->shared->iova_tree) {
--        v->shared->iova_tree = vhost_iova_tree_new(v->shared->iova_range.first,
--                                                   v->shared->iova_range.last);
--    }
--
-     r = vhost_vdpa_cvq_map_buf(&s->vhost_vdpa, s->cvq_cmd_out_buffer,
-                                vhost_vdpa_net_cvq_cmd_page_len(), false);
-     if (unlikely(r < 0)) {
-@@ -1728,6 +1696,8 @@ static NetClientState *net_vhost_vdpa_init(NetClientState *peer,
-         s->vhost_vdpa.shared->device_fd = vdpa_device_fd;
-         s->vhost_vdpa.shared->iova_range = iova_range;
-         s->vhost_vdpa.shared->shadow_data = svq;
-+        s->vhost_vdpa.shared->iova_tree = vhost_iova_tree_new(iova_range.first,
-+                                                              iova_range.last);
-     } else if (!is_datapath) {
-         s->cvq_cmd_out_buffer = mmap(NULL, vhost_vdpa_net_cvq_cmd_page_len(),
-                                      PROT_READ | PROT_WRITE,
 -- 
 MST
 
