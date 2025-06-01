@@ -4,86 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06C1C54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 18:13:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37149C5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 19:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLnAu-00021Y-QN; Sun, 01 Jun 2025 14:12:48 -0400
+	id 1uLo1n-0001BL-NV; Sun, 01 Jun 2025 15:07:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uLnAt-00021I-CU
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:47 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uLnAr-0002ow-RA
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 14:12:47 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-742c9563fd9so2935045b3a.3
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 11:12:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748801564; x=1749406364; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=3WBLhmVUNFmmWr7iWGyD+QREshlRfuZn9YAw+EwxcsE=;
- b=lpMXUTP+2r/dBFp6QuWzwZK895DPgXVBXaT7Eb+nKjdcqZI3WCYWbrZoFrH/50KJ2U
- G++tfRcBZEIWPLwPKbPttThbf+63AQ5128LHql1yVCQeEWORs9wLkutW1Prs+WcP5ka7
- 2/VjmGRRumdJPf+7HPTeDn1Ftedtd6JJvaVYIUxdlpeX8aC4c04uJjvSbn+Qin64T1oa
- 1A2afBg04AOt3yVL9ydrDDiNy8gtvlzHMnR3Srsr/RjfdDljHz4j8p4kXEE8HRNfC6jc
- kvON1cqhE9NqFEX+k4DbVzqXac+U7P3JDfRooiPEZTIy+f7KyDl/Ofh1yJIclap+Ld+U
- eCFw==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLo1k-0001B9-W5
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 15:07:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLo1i-0008Ls-OG
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 15:07:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748804840;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Hzi8BzaQpU2H8PE4l2A++Hh6+qmvJmyb19nE2w5CDg8=;
+ b=h8HWISjnmzyIxw/oBC7TTSyEFWuTz1AYuq30CMsXnTv2idRDhTzCg9KAz+jh9THykbqlM0
+ 9kjt1fCTqO5t8PpBFRJZvrLZfXD3599d/P7kxL8QGcmThvNQ7Rl5rtITNMTHrNFxwgKgz1
+ kgKjH2NPD1eGmJGrPwFAl+amxWq+gCI=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-581-G8Al_Cq8NXi7I4_d4P00XA-1; Sun, 01 Jun 2025 15:07:19 -0400
+X-MC-Unique: G8Al_Cq8NXi7I4_d4P00XA-1
+X-Mimecast-MFC-AGG-ID: G8Al_Cq8NXi7I4_d4P00XA_1748804838
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4f65a705dso2307160f8f.2
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 12:07:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748801564; x=1749406364;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=3WBLhmVUNFmmWr7iWGyD+QREshlRfuZn9YAw+EwxcsE=;
- b=bq62lItsJyFBR4fDlX/eL1hjDeJLDwVrGyzOq/VzKk4+2FQYIUmyUVnnc9QN34JG+y
- aUDBaeGCiVoF8IMv3+89E3K3LeUO3WaEAEq4LGBwCd0I+GfJyfcIpnJI7eid5u3xtqYF
- 2kQ/r+tAV7Ws5P9NaqRozBDIDw5WEan9guzxmCgvunTHA153kbq43Zip2ACn5sjDiPbK
- 8hYWqRkZ8AJOcVbS982pnKLaNW2x84Kcz8uKmzRhvJ7RX+ZuwCgdRarDAegjy/m9nDq1
- 32cS/LuBPsQYC3gx/FzUyjcTubBigXCYIpcuazlFBqgv9Nb+pHicg8DsysrJh7OjRuJ1
- VdrQ==
-X-Gm-Message-State: AOJu0YxhnF70Pb3ID2owbNu1fxE2VDXT3DMZW2fvVpLZzCahkIkuWgGv
- I4tkNUr//NDpu38Ii/Q/jPdUsPCtD2p1p4XvcYJdobXMmmRlI5WMVFg5IH/zmVEp6pZM4w==
-X-Gm-Gg: ASbGncvphJViFHAZv0GbI48HLCNcai+BQYHIQNDeksru6zzlthGEblg/lDpt9uU6Bno
- y8eSHmXi2xJBigXsSB4SnIf1UJzDjhZQn9tsGaFVHUM6B6NFz+hUuzGIkx9athj+QsBlGEBPjtB
- Ma6kHPDoQnrolnFSnRrCEn9ozRO0bTYCN6epsv/qFxOtXx2ctlr97DGjd/28mJFZP3qi8Fd+l1d
- pt/xSoOZSb9wr3Zsj63o5pKcmy4JhuHGRi8HssxoXO0NkDMQBQE3NWV0GxGhrXTyFAeInf4PxwT
- x1NEsiitFoU+gImVe5+7G4eA9zc9+iDaDXYTXyAa5EXvTRYks2mO5Qa38G/7Zw==
-X-Google-Smtp-Source: AGHT+IGJ8LcEKExYmpW+rhMh2S/WK9qeFiecSO5i3z+vg1zitqHFCfw5LMF1q134xtjoCedPAGbqDQ==
-X-Received: by 2002:a05:6a00:a27:b0:736:5438:ccc with SMTP id
- d2e1a72fcca58-747c1a83bd3mr13717140b3a.9.1748801563981; 
- Sun, 01 Jun 2025 11:12:43 -0700 (PDT)
-Received: from ubuntu.. ([49.207.58.139]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-747afed4bafsm6189191b3a.79.2025.06.01.11.12.42
+ d=1e100.net; s=20230601; t=1748804837; x=1749409637;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Hzi8BzaQpU2H8PE4l2A++Hh6+qmvJmyb19nE2w5CDg8=;
+ b=OHjIKz3tg5eoBgWRvZKGL0gueb5rxtPWhhddlDHQxFBTVHlniAoWW6NiZ5qqYWrySz
+ LzV9VDu5d+fWrL/lKvf7bLSaq+PDwfjlNFxf9+T7suupL4RuPCBdJkstC22Cetozz2WY
+ CMNpeMGzOZldYUTr/vvGYByFiGQ+6RdieuA8gMVkDFUQZOOrI706GcbbiHi7nWtAdKGk
+ X45jRgCdAuJ3OlTn316M29ZM1dCnhzPRfnvHExBxRYw/MtjLNfW/p2drcXp7bCvVhlL6
+ J+9tMetQff+/h6agHcgXws3U5UwJDSHIbtjqLUOofbyrF5q04Z+B4aWtIzNG8mPXinjg
+ pAJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW6UTneoNcvETTNsZyNzWGqZ12fImkBMTpkEitNunLDSxHUxHALCBRMKGvTg7RtFHruiqdO8w3ZOTug@nongnu.org
+X-Gm-Message-State: AOJu0YwhbYTT6nuaaaINtGb9nDEX3N1D/ysUZiIM0PUlxzVdKOIyMlCY
+ FqA4UAGdTidQzU32ISm1nCjvIbZSnwLVxHaMaJXYfL5Y6TrTYyYRjg43b2vOYoW/X4yhd+H8V/I
+ wTezS4pdTa4IS0Zqgxkeszpi0+yRd0IHXTH2aVxXoWc3eI8SWdFp1w+yUTk6TSLy4
+X-Gm-Gg: ASbGncvNfVg64XuGTi+vDIzqrNIWpcVDZW+Cfc3a2WCvpcKP9GX2fBD7LyuQmOLOc4h
+ zmrN7qehz5CODYaYMmcX8EERLylkTUwIzxvTp+v38DBMNIimaXqV25F7rrYOp+XK8MREslp2mJ5
+ va0WmJTTAx9+QNwMLVRL52iMgOdqXj1HuW4USHQM+XVu7NAyw9CdOs1Hc2ztM7pTo3Ax+jfrp3T
+ jjk4KgGmtb0aeQ05MciesFl7uV4uQfke/IcwC1WCNVb8Cq2shkL1XEJj0VJDlDFCKhOqgN7It+S
+ A+1EhA==
+X-Received: by 2002:a05:6000:1aca:b0:3a4:fa09:d13b with SMTP id
+ ffacd0b85a97d-3a4fe3a7dccmr4647347f8f.59.1748804836810; 
+ Sun, 01 Jun 2025 12:07:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFBvQ1ZDheJ+cTSTB5MmmU+maPQh9mQ7OL+LNlU8FoxFKfz3gMvNYR2/9ZKxuLujfILo/ZV1w==
+X-Received: by 2002:a05:600c:470c:b0:450:cfe1:a827 with SMTP id
+ 5b1f17b1804b1-45126573571mr49491545e9.31.1748804825729; 
+ Sun, 01 Jun 2025 12:07:05 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d7f8f1basm95349345e9.6.2025.06.01.12.07.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 11:12:43 -0700 (PDT)
-From: Tanish Desai <tanishdesai37@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, pbonzini@redhat.com,
- Mads Ynddal <mads@ynddal.dk>, Tanish Desai <tanishdesai37@gmail.com>
-Subject: [PATCH 3/3] trace/log: seperate cold path of tracing functions
-Date: Sun,  1 Jun 2025 18:12:31 +0000
-Message-Id: <20250601181231.3461-4-tanishdesai37@gmail.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250601181231.3461-1-tanishdesai37@gmail.com>
-References: <20250601181231.3461-1-tanishdesai37@gmail.com>
+ Sun, 01 Jun 2025 12:07:05 -0700 (PDT)
+Date: Sun, 1 Jun 2025 15:07:02 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
+Cc: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH V4 16/43] pci: skip reset during cpr
+Message-ID: <20250601150607-mutt-send-email-mst@kernel.org>
+References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
+ <1748546679-154091-17-git-send-email-steven.sistare@oracle.com>
+ <d62bd9c6-1660-4d16-8d7d-5445ba6c5031@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=tanishdesai37@gmail.com; helo=mail-pf1-x42f.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <d62bd9c6-1660-4d16-8d7d-5445ba6c5031@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.071,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,71 +115,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moved frequently used hot paths from the .c file to the .h file to enable inlining
-and improve performance. This approach is inspired by past QEMU optimizations,
-where performance-critical code was inlined based on profiling results.
+On Sun, Jun 01, 2025 at 06:38:43PM +0200, Cédric Le Goater wrote:
+> On 5/29/25 21:24, Steve Sistare wrote:
+> > Do not reset a vfio-pci device during CPR.
+> > 
+> > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> > ---
+> >   include/hw/pci/pci_device.h | 3 +++
+> >   hw/pci/pci.c                | 5 +++++
+> >   hw/vfio/pci.c               | 7 +++++++
+> >   3 files changed, 15 insertions(+)
+> > 
+> > diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+> > index e41d95b..b481c5d 100644
+> > --- a/include/hw/pci/pci_device.h
+> > +++ b/include/hw/pci/pci_device.h
+> > @@ -181,6 +181,9 @@ struct PCIDevice {
+> >       uint32_t max_bounce_buffer_size;
+> >       char *sriov_pf;
+> > +
+> > +    /* CPR */
+> > +    bool skip_reset_on_cpr;
+> >   };
+> >   static inline int pci_intx(PCIDevice *pci_dev)
+> > diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+> > index f5ab510..21eb11c 100644
+> > --- a/hw/pci/pci.c
+> > +++ b/hw/pci/pci.c
+> > @@ -32,6 +32,7 @@
+> >   #include "hw/pci/pci_host.h"
+> >   #include "hw/qdev-properties.h"
+> >   #include "hw/qdev-properties-system.h"
+> > +#include "migration/cpr.h"
+> >   #include "migration/qemu-file-types.h"
+> >   #include "migration/vmstate.h"
+> >   #include "net/net.h"
+> > @@ -531,6 +532,10 @@ static void pci_reset_regions(PCIDevice *dev)
+> >   static void pci_do_device_reset(PCIDevice *dev)
+> >   {
+> > +    if (dev->skip_reset_on_cpr && cpr_is_incoming()) {
+> > +        return;
+> > +    }
+> 
+> Since ->skip_reset_on_cpr is only true for vfio-pci devices, it could be
+> replaced by : object_dynamic_cast(OBJECT(dev), "vfio-pci")
+> 
+> Thanks,
+> 
+> C.
 
-Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
----
- scripts/tracetool/backend/log.py | 26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+True but I don't really like driver dependent hacks.
+what exactly about vfio makes it survive without this reset?
 
-diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-index de27b7e62e..ca53747950 100644
---- a/scripts/tracetool/backend/log.py
-+++ b/scripts/tracetool/backend/log.py
-@@ -24,6 +24,10 @@ def generate_h_begin(events, group):
-     out('#include "qemu/log-for-trace.h"',
-         '#include "qemu/error-report.h"',
-         '')
-+    for event in events:
-+        out('void _log_%(api)s(%(args)s);',
-+            api=event.api(),
-+            args=event.args)
- 
- 
- def generate_h(event, group):
-@@ -38,6 +42,22 @@ def generate_h(event, group):
-         cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
- 
-     out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
-+        '       _log_%(api)s(%(args)s);',
-+        '    }',
-+        cond=cond,
-+        event_lineno=event.lineno,
-+        event_filename=os.path.relpath(event.filename),
-+        name=event.name,
-+        fmt=event.fmt.rstrip("\n"),
-+        argnames=argnames,
-+        args = ", ".join(event.args.names()),
-+        api=event.api())
-+
-+def generate_c(event, group):
-+        argnames = ", ".join(event.args.names())
-+        if len(event.args) > 0:
-+            argnames = ", " + argnames
-+            out('void _log_%(api)s(%(args)s){',
-         '        if (message_with_timestamp) {',
-         '            struct timeval _now;',
-         '            gettimeofday(&_now, NULL);',
-@@ -53,12 +73,14 @@ def generate_h(event, group):
-         '#line %(out_next_lineno)d "%(out_filename)s"',
-         '        }',
-         '    }',
--        cond=cond,
-         event_lineno=event.lineno,
-         event_filename=os.path.relpath(event.filename),
-         name=event.name,
-         fmt=event.fmt.rstrip("\n"),
--        argnames=argnames)
-+        argnames=argnames,
-+        args=event.args,
-+        api=event.api()
-+        )
- 
- 
- def generate_h_backend_dstate(event, group):
--- 
-2.34.1
+> 
+> > +
+> >       pci_device_deassert_intx(dev);
+> >       assert(dev->irq_state == 0);
+> > diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> > index 7d3b9ff..56e7fdd 100644
+> > --- a/hw/vfio/pci.c
+> > +++ b/hw/vfio/pci.c
+> > @@ -3402,6 +3402,13 @@ static void vfio_instance_init(Object *obj)
+> >       /* QEMU_PCI_CAP_EXPRESS initialization does not depend on QEMU command
+> >        * line, therefore, no need to wait to realize like other devices */
+> >       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+> > +
+> > +    /*
+> > +     * A device that is resuming for cpr is already configured, so do not
+> > +     * reset it during qemu_system_reset prior to cpr load, else interrupts
+> > +     * may be lost.
+> > +     */
+> > +    pci_dev->skip_reset_on_cpr = true;
+> >   }>     static void vfio_pci_base_dev_class_init(ObjectClass *klass,
+> > const void *data)
 
 
