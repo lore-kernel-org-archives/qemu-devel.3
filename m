@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4DDCC54FB3
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:34:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18289C5B549
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:35:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkYu-00022o-7Q; Sun, 01 Jun 2025 11:25:24 -0400
+	id 1uLkgd-0008Qc-Pr; Sun, 01 Jun 2025 11:33:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYl-0001wf-Nl
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkgW-000871-SE
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:33:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkYf-0004aH-NL
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:15 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkgT-0005IP-0E
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:33:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791506;
+ s=mimecast20190719; t=1748791843;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=BNH2pN0u94IUph1O8LRlSEdPOqYaYPrObBwYqpFSiHs=;
- b=AL1EeyWVcSmtd1/VzuBLgb8SLbWmDtWJuX0QO07jIl/wjTfdQWiAdylVHggMwAw676xPTJ
- 4uyZpoEctyxVTTQbW0whq+Z6sitsZtF1n2uskM6BLlin5CrRcA8CJ23qjZWj/dn4Hd28ih
- F3WZHI4F/TLAdF61/moj4WFFl6D3QWo=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=hKEH6Z9JCQimLJL8lPwV9KIkJSWOuDTn31SzP3o0in0=;
+ b=IuiN1C5mtirBpKPX3XSApJCHwwEdCsupLD1NVa9Mi01o9G2JUIFnJV32oY4zMLLk98khdL
+ LKXphcnaIKtos8E61q12pa7+CQopobLdUfJLHAYMl0Bm5/jN/yBkFehMdR5mKzUXby0ATS
+ QGtm2PF1ZvwyHiHBxkrsQl73BssdNnM=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-326-e1IWxMe3PuSRCyJf5JDXew-1; Sun, 01 Jun 2025 11:25:05 -0400
-X-MC-Unique: e1IWxMe3PuSRCyJf5JDXew-1
-X-Mimecast-MFC-AGG-ID: e1IWxMe3PuSRCyJf5JDXew_1748791504
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-451d5600a54so4822475e9.2
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:05 -0700 (PDT)
+ us-mta-383-jwGibX3HPnOXehCICnd4SA-1; Sun, 01 Jun 2025 11:25:07 -0400
+X-MC-Unique: jwGibX3HPnOXehCICnd4SA-1
+X-Mimecast-MFC-AGG-ID: jwGibX3HPnOXehCICnd4SA_1748791488
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-450cb902173so16115115e9.1
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:24:59 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791504; x=1749396304;
+ d=1e100.net; s=20230601; t=1748791488; x=1749396288;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BNH2pN0u94IUph1O8LRlSEdPOqYaYPrObBwYqpFSiHs=;
- b=wN51aOhjZ62yrFRh5wmoDeWEZIwmvXWTenRKP/QEdyAIOlRUGqS8GhCd+W0FWxro4+
- CXtCBzZzqgYWfBeeQgwZvRHTG7E08T55+FLKyQHGP8gBiKpKUGMyjYQl5parQNPjupxe
- XN2HwjHCR8RMNMFe0TVqSVFv8cFgFuXxyOS94MWT4/R/4DVVlZq+Ji8w16xLcPp8LoFY
- qRZ1fMwWxjDSNCcoix1+JkcCfhXqJR9dGzTc36BLexI0a/Z9Du1+2pG5W30QfZD3ZN8F
- NNPnFTqU+1g0dVpdK5IX67DiojaMXkpyCyJU91XyfY24zf52GfDvHYzVpxG05HbXnfai
- B62w==
-X-Gm-Message-State: AOJu0YzejCfS6u6+a9XSyiNPW2DdYXZwzV5pzfuo4EU0dMu21XyKrDB2
- c/lv5V743fvynJSLEpK+qPsjirjFGYG+9aUrJzK6yk4s4gnG3FbSGsjDaGl2w2r7Fn23oLonrjM
- FIAZTky6LOIQM9JRLx2WCEwBw+XsaU9V7mEHEKwU7U8ShqU0AHS9HZm2H35//c2LBA+8OSwO82v
- aufuBwnsaHY3kQ42j70ffvbwpPJVVXB5DZKg==
-X-Gm-Gg: ASbGncvfZbY/N4qmpyAf2UBSRpuIejoHZ6O20+s/w+jMI6K/fWnwSEoQhnfcQiOBoyL
- 2YsJ3kyAcWL5w+K6yFhzT5yxQ62HLjzvWGDls2fMvfjH9JknIxbT0biDsgMLQ4/xuqJGq5knZ/3
- YKEaZ9TMK74zB1XAvfX0l1KuCsnUApb8E9V6O1SkSAWtLCkuMrkZmfyTmCBxejSVtCL36LZClxZ
- NIaDxvSNgqA88sE8PgEUhorNXNLd16IXauaKG8rDuuvIgOy9LovcwqmdB8IA2VZxs4Vn5OqCL9c
- +09/VWUGi0BXP/pq
-X-Received: by 2002:a05:600c:3f10:b0:43d:fa59:af97 with SMTP id
- 5b1f17b1804b1-450d6591a0cmr81504115e9.32.1748791504021; 
- Sun, 01 Jun 2025 08:25:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcpYmUcW4ddwEGeMlju21OGvKaEaOH0ahLk/BxKlzlyAKq2Anx4271y3mjDyF9gW9m00/yCg==
-X-Received: by 2002:a05:600c:3f10:b0:43d:fa59:af97 with SMTP id
- 5b1f17b1804b1-450d6591a0cmr81503945e9.32.1748791503616; 
- Sun, 01 Jun 2025 08:25:03 -0700 (PDT)
+ bh=hKEH6Z9JCQimLJL8lPwV9KIkJSWOuDTn31SzP3o0in0=;
+ b=JlTRdQ9AwGdfCcCCEdZPDY4qAGPCyajuWbrEp5vFK2unRsZixwz5BY82p7w1csGuXU
+ 9asEc9rYqcHlUVd+7Zf3jNiJmMHlbc4aVrLO61eqA/T+2jOoxCy5+Op46X2TY5AHBfjU
+ DsPq2pFnbDq7EyF8hd25/fAYNlK0RiEI5HhPRBEdWfGGDUWyhC6BRXnGg7u47AmFa11U
+ FzBQBLdme4ZE14l6BSuX4ftzcY6Dcgq6fyGHXvRq/UK8zGDlnfXcw7mO8TsaTdmK/U4c
+ ZT1u8oEbkXfWXqyfiQMp2YczcNrsEjsQxhZSKBYNUqlHY9bnKLTSlJiSf9+Wl2hHIIYI
+ I+KQ==
+X-Gm-Message-State: AOJu0Yx2jJNgnUCgb6OVPKZz39rAAcQJHlGDBBvih++w5D2+t9gfB4kE
+ BXoxB3R5pcx2wd0t1l8xTPgS6ycJuBM+DNNqWLxG2fsn4eKzQYl8RuA+VZokdxe8hsHdLOL6BfT
+ 4nSoOOmSBC4dgf4WANytZR7LEWs6cZ355K9EFTijRtKpYB6iytprxVCzQdYR000HD/RPnyVOqYw
+ 646CNvvWF5qHb2MCrHcozqrjIhM3z/dqFrew==
+X-Gm-Gg: ASbGnctmvqdHZa3DknHDn92KYlVW+dkn6Yh1svOOHr4QB4AXWFEwMCLje/gXt2PivtZ
+ jvNf/LjnABhrN22DR9kfrEDr9EAiYL8hWCBRnbpMXQVsVFezFVQn+H9TQdJ9eV5MMEpKnhmYWTf
+ AwUl1DpKyVZSDSDtziKRlYhQRvqrOtm42XEWLBlFhIGVE4cvt/BdNiwXcua5esbwjNITHYCym/s
+ UnIbcQv1KZLLQucR72ZXP9i2btK3a/a/cOp3XKyAiP29MsdsfKIOy0N9Y9/0eOEewV/1ZB5/HPP
+ nO1xZ9qPhUrUf9kl
+X-Received: by 2002:a05:600c:3f92:b0:442:f904:1305 with SMTP id
+ 5b1f17b1804b1-450d6b5999bmr95833935e9.6.1748791487749; 
+ Sun, 01 Jun 2025 08:24:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHmKWDFQhl1SCz6HHk2dYVS/WFA74r7SfcWFfZWGmgNxihnFEFlOEzISUoCOe0f5IwNy5AWvw==
+X-Received: by 2002:a05:600c:3f92:b0:442:f904:1305 with SMTP id
+ 5b1f17b1804b1-450d6b5999bmr95833705e9.6.1748791487265; 
+ Sun, 01 Jun 2025 08:24:47 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7f8edf9sm87826135e9.3.2025.06.01.08.25.02
+ ffacd0b85a97d-3a4efe5b89dsm11909055f8f.19.2025.06.01.08.24.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:25:02 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:25:01 -0400
+ Sun, 01 Jun 2025 08:24:46 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:24:45 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PULL 07/31] pcie: Add a helper to declare the PRI capability for a
- pcie device
-Message-ID: <dcad6cb2abf4ffc4f911041d0547c4b54c2f92e2.1748791463.git.mst@redhat.com>
+ Yuri Benditovich <yuri.benditovich@daynix.com>
+Subject: [PULL 01/31] virtio: check for validity of indirect descriptors
+Message-ID: <ac8fc4ccacd8a77d8d56dc3990bfb221c1f48fcd.1748791463.git.mst@redhat.com>
 References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -85,7 +83,7 @@ Content-Disposition: inline
 In-Reply-To: <cover.1748791463.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -110,94 +108,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@eviden.com>
+From: Yuri Benditovich <yuri.benditovich@daynix.com>
 
-Signed-off-by: Clement Mathieu--Drif <clement.mathieu--drif@eviden.com>
-Message-Id: <20250520071823.764266-5-clement.mathieu--drif@eviden.com>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+virtio processes indirect descriptors even if the respected
+feature VIRTIO_RING_F_INDIRECT_DESC was not negotiated.
+If qemu is used with reduced set of features to emulate the
+hardware device that does not support indirect descriptors,
+the will probably trigger problematic flows on the hardware
+setup but do not reveal the  mistake on qemu.
+Add LOG_GUEST_ERROR for such case. This will issue logs with
+'-d guest_errors' in the command line
+
+Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
+Message-Id: <20250515063237.808293-1-yuri.benditovich@daynix.com>
+Signed-off-by: Yuri Benditovich <yuri.benditovich@daynix.com>
 ---
- include/hw/pci/pcie.h      |  5 ++++-
- include/hw/pci/pcie_regs.h |  3 +++
- hw/pci/pcie.c              | 26 ++++++++++++++++++++++++++
- 3 files changed, 33 insertions(+), 1 deletion(-)
+ hw/virtio/virtio.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/include/hw/pci/pcie.h b/include/hw/pci/pcie.h
-index 497d0bc2d2..17f06cd5d6 100644
---- a/include/hw/pci/pcie.h
-+++ b/include/hw/pci/pcie.h
-@@ -70,9 +70,10 @@ struct PCIExpressDevice {
-     uint16_t aer_cap;
-     PCIEAERLog aer_log;
- 
--    /* Offset of ATS and PASID capabilities in config space */
-+    /* Offset of ATS, PRI and PASID capabilities in config space */
-     uint16_t ats_cap;
-     uint16_t pasid_cap;
-+    uint16_t pri_cap;
- 
-     /* ACS */
-     uint16_t acs_cap;
-@@ -154,6 +155,8 @@ void pcie_cap_slot_unplug_request_cb(HotplugHandler *hotplug_dev,
- 
- void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
-                      bool exec_perm, bool priv_mod);
-+void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
-+                   bool prg_response_pasid_req);
- 
- bool pcie_pasid_enabled(const PCIDevice *dev);
- bool pcie_ats_enabled(const PCIDevice *dev);
-diff --git a/include/hw/pci/pcie_regs.h b/include/hw/pci/pcie_regs.h
-index 4d9cf4a29c..33a22229fe 100644
---- a/include/hw/pci/pcie_regs.h
-+++ b/include/hw/pci/pcie_regs.h
-@@ -91,6 +91,9 @@ typedef enum PCIExpLinkWidth {
- #define PCI_EXT_CAP_PASID_MAX_WIDTH     20
- #define PCI_PASID_CAP_WIDTH_SHIFT       8
- 
-+/* PRI */
-+#define PCI_PRI_VER                     1
-+
- /* AER */
- #define PCI_ERR_VER                     2
- #define PCI_ERR_SIZEOF                  0x48
-diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-index 36de709801..542172b3fa 100644
---- a/hw/pci/pcie.c
-+++ b/hw/pci/pcie.c
-@@ -1240,6 +1240,32 @@ void pcie_pasid_init(PCIDevice *dev, uint16_t offset, uint8_t pasid_width,
-     dev->exp.pasid_cap = offset;
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 2e98cecf64..5534251e01 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -205,6 +205,15 @@ static const char *virtio_id_to_name(uint16_t device_id)
+     return name;
  }
  
-+/* PRI */
-+void pcie_pri_init(PCIDevice *dev, uint16_t offset, uint32_t outstanding_pr_cap,
-+                   bool prg_response_pasid_req)
++static void virtio_check_indirect_feature(VirtIODevice *vdev)
 +{
-+    static const uint16_t control_reg_rw_mask = 0x3;
-+    static const uint16_t status_reg_rw1_mask = 0x3;
-+    static const uint32_t pr_alloc_reg_rw_mask = 0xffffffff;
-+    uint16_t status_reg;
-+
-+    status_reg = prg_response_pasid_req ? PCI_PRI_STATUS_PASID : 0;
-+    status_reg |= PCI_PRI_STATUS_STOPPED; /* Stopped by default */
-+
-+    pcie_add_capability(dev, PCI_EXT_CAP_ID_PRI, PCI_PRI_VER, offset,
-+                        PCI_EXT_CAP_PRI_SIZEOF);
-+    /* Disabled by default */
-+
-+    pci_set_word(dev->config + offset + PCI_PRI_STATUS, status_reg);
-+    pci_set_long(dev->config + offset + PCI_PRI_MAX_REQ, outstanding_pr_cap);
-+
-+    pci_set_word(dev->wmask + offset + PCI_PRI_CTRL, control_reg_rw_mask);
-+    pci_set_word(dev->w1cmask + offset + PCI_PRI_STATUS, status_reg_rw1_mask);
-+    pci_set_long(dev->wmask + offset + PCI_PRI_ALLOC_REQ, pr_alloc_reg_rw_mask);
-+
-+    dev->exp.pri_cap = offset;
++    if (!virtio_vdev_has_feature(vdev, VIRTIO_RING_F_INDIRECT_DESC)) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++                      "Device %s: indirect_desc was not negotiated!\n",
++                      vdev->name);
++    }
 +}
 +
- bool pcie_pasid_enabled(const PCIDevice *dev)
+ /* Called within call_rcu().  */
+ static void virtio_free_region_cache(VRingMemoryRegionCaches *caches)
  {
-     if (!pci_is_express(dev) || !dev->exp.pasid_cap) {
+@@ -1733,6 +1742,7 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+             virtio_error(vdev, "Invalid size for indirect buffer table");
+             goto done;
+         }
++        virtio_check_indirect_feature(vdev);
+ 
+         /* loop over the indirect descriptor table */
+         len = address_space_cache_init(&indirect_desc_cache, vdev->dma_as,
+@@ -1870,6 +1880,7 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+             virtio_error(vdev, "Invalid size for indirect buffer table");
+             goto done;
+         }
++        virtio_check_indirect_feature(vdev);
+ 
+         /* loop over the indirect descriptor table */
+         len = address_space_cache_init(&indirect_desc_cache, vdev->dma_as,
 -- 
 MST
 
