@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BACB8C5B543
-	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:27:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 892F9C54FB3
+	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkZA-0002L4-TK; Sun, 01 Jun 2025 11:25:40 -0400
+	id 1uLkZQ-0002yT-K3; Sun, 01 Jun 2025 11:25:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZ9-0002Jr-K9
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZP-0002uR-6K
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZ7-0004ei-Vx
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:39 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZN-0004fu-Hv
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791537;
+ s=mimecast20190719; t=1748791552;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZhAj20XZvrF3oiCRDGg3TLM+ez1BRti6haDYRLcshk0=;
- b=JCAX2PaOF/I20U0anATpndciHxvseC5Ay18hkuiQQz1WG0py0UzF0hrwks13ECjn0U3tuP
- B+yAnaWSG0Iu7+o1rEZoHhilZdyTAIqLvD9zWzuF1tFiM1DnjDAMDlIA0PzX2N8HmtISvg
- NSX6JpVpwWWlm9yqh9WtmERCmUrwZs4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=04O3W6vzLxgn86PWEaMIddUURG4vqFHvy1Jt5dN9Jtg=;
+ b=fRWAtpwrmVt5LPLt76lTuTInfhseKboqctZ0Hib82QlTS3sxMaICmgR+dicCeQCPFSYB0u
+ VlxE+Fftt01z97uy9oSk1E3XO18LlWUgHObTpr4SgiZk6lG6f7lpfjEpA6hBkR6wzgEy1H
+ uNANIKCBt42pBJnJ7BMw9+3cEnEtG3s=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-687-BwOT61UlPemRkWDDe9Qn4w-1; Sun, 01 Jun 2025 11:25:36 -0400
-X-MC-Unique: BwOT61UlPemRkWDDe9Qn4w-1
-X-Mimecast-MFC-AGG-ID: BwOT61UlPemRkWDDe9Qn4w_1748791535
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-43f251dc364so19858125e9.2
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:36 -0700 (PDT)
+ us-mta-621-7r6fcW3qOPGxjXzNM_xdkg-1; Sun, 01 Jun 2025 11:25:52 -0400
+X-MC-Unique: 7r6fcW3qOPGxjXzNM_xdkg-1
+X-Mimecast-MFC-AGG-ID: 7r6fcW3qOPGxjXzNM_xdkg_1748791551
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4e713e05bso1680199f8f.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791535; x=1749396335;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZhAj20XZvrF3oiCRDGg3TLM+ez1BRti6haDYRLcshk0=;
- b=jS+akDjLw8GVPPvJnByGeOo7RpD+aLvXyss1DsaShGfwwgamoJ5H/HX9jOtppX6ZZr
- ZzA+QNgj9azgfxjBAx4ZxIlV6lyZdNr6if2BTaLcUDv9hKjXvBDgP549oDMyekqpCqHT
- vzACLJvlLFqKwFQwdPGl6ngVPwYBYfvJ83dkYKlWBBbiBWvS0HRYy7skFGu2HbYGNasX
- C/iKwqVdE27wyrW7ZXQ5HRxSyyRs6D9QdEOurb7BJrWDdTZbjhZl4ZCh6cN0/ULXFTwA
- IYL29E/Rr2AR0gzKfr1Lfe6pMAVlpWrqJVD08UBBUS8vZgAnFFRFsJcGn2WT700+i0lW
- SzqA==
-X-Gm-Message-State: AOJu0Ywz+Ck5XbGlvcy2qO5ungt8/uCdJ5/hhIJSDqBn6bO1Qc+tZj+9
- BJxeshHbsS8i30tkFdT/0v4YXK4lKZTjo56tkyVtviRA37gPZd/tETqyjD1IMRWgM54FEUyt82N
- ES3u8MyopUJt4I5ZKsXt3xRzXK2QEHWQGxGsndoT3bpVowLE7MFTLNW8XXxS+mg7/hOE1MH0xCt
- FfENlg8mReESnYWxWe6jCYmGRh1QmKhh5TiA==
-X-Gm-Gg: ASbGncv0XAhQYrO5juKSHEAiHCGgQxJ5JIwtPEo0rDW3nX0YxH+WdQQDHtJi1TgMXCz
- 9vNdE/+xq+CxkGnWG4ouN6OHAzwAwrdiS3qnSCHA0Zge4xyL+DwNiSf9gk6gd2tvpVE6Kybca+B
- 92nBYYIOZbPAO3R16cbTV18VcniQcQytXJLzKTsrUxPVtmgBVGsKA5T0D9zLFSk8knfv0AMx5lr
- FA2o4txTWUfFygBtlQwY5e7l/UH0ALbT/BJItLq9nSu83rHryIQtgEOJJrIdGLIdb/4GZEvIcnM
- eFOyeQ==
-X-Received: by 2002:a05:600c:5494:b0:442:cab1:e092 with SMTP id
- 5b1f17b1804b1-4511ecc2522mr38168935e9.11.1748791534864; 
- Sun, 01 Jun 2025 08:25:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGe8Rtv2C5Xtb4hTznxvLVojM37voBHAmtZcvuYVqI6ZOXLRnIZlLC/LzEH2W4voF3PPoNnMA==
-X-Received: by 2002:a05:600c:5494:b0:442:cab1:e092 with SMTP id
- 5b1f17b1804b1-4511ecc2522mr38168625e9.11.1748791534418; 
- Sun, 01 Jun 2025 08:25:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748791550; x=1749396350;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=04O3W6vzLxgn86PWEaMIddUURG4vqFHvy1Jt5dN9Jtg=;
+ b=ObdKZC4jodS44XQkzDSOc+CfZLmcsYG4csMVkpivdACvrTgB72K/kPhmBAzbUPjimS
+ AL3jSzxzDMTRp91l7197xtDEnSlG8avrX74dwTR15rDCkyHsKQSlFuNBL/Q4gqqT2jo2
+ 3FSfO4oyH3ndTSPzZZrmBDMRLwVoKh8u575+axv5rea8Ezr5Zc5zQuDanH5xNy3iSl+p
+ 5oXDUkXpPmanw4KL4HvoNE2i+OFuE0cc9GDNqNhhLTvk3Uc9VCNrqo7Zh7yIEaVrwNsx
+ oAomTXAwdgnOV+0FSU6ENxzp8/0mVz9BPLjmIJRA6XWjSt/vMVt39/EJ9lMUbaaOXv+D
+ w0Ag==
+X-Gm-Message-State: AOJu0Yyo5vMhbJUv14I9h4hoT+eb0Qb/Tnzo+u90wBuAbcZRwHCsfC1J
+ 6EZ3wjn1Ll30t5zprST4ENTFXsWP2TMupj++9F24zuukQcH2OGPaTJGi2ONdGHutO5OmFh9sKyp
+ POanBhW7GYr9V1UAxo6IyHrimCPU5beGfHgQ5APZeCaP/RMgw/p+0Igt8mAuHjeOXTjFeLGpj3p
+ hDtVOeQFh89lerz9e9ysE2bBXjO3tN8OOn7A==
+X-Gm-Gg: ASbGnctSi73GWShUqB0+sKecs0YrZ8EF6zg+dd8+fS7GYHk9pFc3hFOff3d04fM2FGn
+ WuZUFCWplKSe0g44xKs0UrSqKNXssuFPtANKRAonh+vGsk7JP/B+G/pRHE/t1LNvTv3b20WYfHp
+ RUffPav5duKmM5uwpNT5Sx5PZFJiXYz2nJx/ZiuyLEOPO3uLzDdx1oHBJLmevlziLWIldVIoKaz
+ hIKJXU+3bBZE5DwdgIScw1KzVQtP5nRQDeV/QvbSbkEYMG2VUuvQfoJPx8pIM6By6eufVFC987H
+ AzWB7Q==
+X-Received: by 2002:a05:6000:2204:b0:3a4:ea7e:4634 with SMTP id
+ ffacd0b85a97d-3a4fe1618afmr3969459f8f.10.1748791550487; 
+ Sun, 01 Jun 2025 08:25:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEEqcpc2e6YmT+xlb9gBQzAxXyWTH0o5j2OoJWb/2hnmDyfjqmHI3LrQBmWE+L58VPUHcoXrg==
+X-Received: by 2002:a05:6000:2204:b0:3a4:ea7e:4634 with SMTP id
+ ffacd0b85a97d-3a4fe1618afmr3969438f8f.10.1748791550086; 
+ Sun, 01 Jun 2025 08:25:50 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450dc818f27sm74271845e9.18.2025.06.01.08.25.32
+ ffacd0b85a97d-3a4efe5b7bbsm11636706f8f.4.2025.06.01.08.25.48
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:25:33 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:25:32 -0400
+ Sun, 01 Jun 2025 08:25:49 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:25:47 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PULL 19/31] tests/qtest/bios-tables-test: Add basic testing for
- LoongArch
-Message-ID: <16736bf01b79ef411dbab75289979e283153ea23.1748791463.git.mst@redhat.com>
+ Eugenio =?utf-8?B?UMOpcmV6?= <eperezma@redhat.com>,
+ Lei Yang <leiyang@redhat.com>, Si-Wei Liu <si-wei.liu@oracle.com>,
+ Jason Wang <jasowang@redhat.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PULL 25/31] vdpa: reorder vhost_vdpa_set_backend_cap
+Message-ID: <c61f0d0938ff452974f319cc4fcae9975d2f20dd.1748791463.git.mst@redhat.com>
 References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
 In-Reply-To: <cover.1748791463.git.mst@redhat.com>
 X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
@@ -111,129 +113,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bibo Mao <maobibo@loongson.cn>
+From: Eugenio Pérez <eperezma@redhat.com>
 
-Add basic ACPI table test case for LoongArch, including cpu topology,
-numa memory, memory hotplug and oem-id test cases.
+It will be used directly by vhost_vdpa_init.
 
-Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20250520130158.767083-6-maobibo@loongson.cn>
+Tested-by: Lei Yang <leiyang@redhat.com>
+Reviewed-by: Si-Wei Liu <si-wei.liu@oracle.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Signed-off-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
+Message-Id: <20250522145839.59974-3-jonah.palmer@oracle.com>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/qtest/bios-tables-test.c | 79 ++++++++++++++++++++++++++++++++++
- tests/qtest/meson.build        |  1 +
- 2 files changed, 80 insertions(+)
+ hw/virtio/vhost-vdpa.c | 60 +++++++++++++++++++++---------------------
+ 1 file changed, 30 insertions(+), 30 deletions(-)
 
-diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-index 0b2bdf9d0d..d057cd90db 100644
---- a/tests/qtest/bios-tables-test.c
-+++ b/tests/qtest/bios-tables-test.c
-@@ -2420,6 +2420,74 @@ static void test_acpi_aarch64_virt_oem_fields(void)
-     g_free(args);
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 1ab2c11fa8..6b242ca56a 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -594,6 +594,36 @@ static void vhost_vdpa_init_svq(struct vhost_dev *hdev, struct vhost_vdpa *v)
+     v->shadow_vqs = g_steal_pointer(&shadow_vqs);
  }
  
-+#define LOONGARCH64_INIT_TEST_DATA(data)                          \
-+    test_data data = {                                            \
-+        .machine = "virt",                                        \
-+        .arch    = "loongarch64",                                 \
-+        .tcg_only = true,                                         \
-+        .uefi_fl1 = "pc-bios/edk2-loongarch64-code.fd",           \
-+        .uefi_fl2 = "pc-bios/edk2-loongarch64-vars.fd",           \
-+        .cd = "tests/data/uefi-boot-images/"                      \
-+              "bios-tables-test.loongarch64.iso.qcow2",           \
-+        .ram_start = 0,                                           \
-+        .scan_len = 128ULL * MiB,                                 \
++static int vhost_vdpa_set_backend_cap(struct vhost_dev *dev)
++{
++    struct vhost_vdpa *v = dev->opaque;
++
++    uint64_t features;
++    uint64_t f = 0x1ULL << VHOST_BACKEND_F_IOTLB_MSG_V2 |
++        0x1ULL << VHOST_BACKEND_F_IOTLB_BATCH |
++        0x1ULL << VHOST_BACKEND_F_IOTLB_ASID |
++        0x1ULL << VHOST_BACKEND_F_SUSPEND;
++    int r;
++
++    if (vhost_vdpa_call(dev, VHOST_GET_BACKEND_FEATURES, &features)) {
++        return -EFAULT;
 +    }
 +
-+static void test_acpi_loongarch64_virt(void)
-+{
-+    LOONGARCH64_INIT_TEST_DATA(data);
++    features &= f;
 +
-+    test_acpi_one("-cpu la464 ", &data);
-+    free_test_data(&data);
-+}
-+
-+static void test_acpi_loongarch64_virt_topology(void)
-+{
-+    LOONGARCH64_INIT_TEST_DATA(data);
-+
-+    data.variant = ".topology";
-+    test_acpi_one("-cpu la464 -smp sockets=1,cores=4,threads=2", &data);
-+    free_test_data(&data);
-+}
-+
-+static void test_acpi_loongarch64_virt_numamem(void)
-+{
-+    LOONGARCH64_INIT_TEST_DATA(data);
-+
-+    data.variant = ".numamem";
-+    test_acpi_one(" -cpu la464 -m 128"
-+                  " -object memory-backend-ram,id=ram0,size=64M"
-+                  " -object memory-backend-ram,id=ram1,size=64M"
-+                  " -numa node,memdev=ram0 -numa node,memdev=ram1"
-+                  " -numa dist,src=0,dst=1,val=21",
-+                  &data);
-+    free_test_data(&data);
-+}
-+
-+static void test_acpi_loongarch64_virt_memhp(void)
-+{
-+    LOONGARCH64_INIT_TEST_DATA(data);
-+
-+    data.variant = ".memhp";
-+    test_acpi_one(" -cpu la464 -m 128,slots=2,maxmem=256M"
-+                  " -object memory-backend-ram,id=ram0,size=128M",
-+                  &data);
-+    free_test_data(&data);
-+}
-+
-+static void test_acpi_loongarch64_virt_oem_fields(void)
-+{
-+    LOONGARCH64_INIT_TEST_DATA(data);
-+    char *args;
-+
-+    args = test_acpi_create_args(&data, "-cpu la464 "OEM_TEST_ARGS);
-+    data.qts = qtest_init(args);
-+    test_acpi_load_tables(&data);
-+    test_oem_fields(&data);
-+    qtest_quit(data.qts);
-+    free_test_data(&data);
-+    g_free(args);
-+}
- 
- int main(int argc, char *argv[])
- {
-@@ -2593,6 +2661,17 @@ int main(int argc, char *argv[])
-             qtest_add_func("acpi/virt/numamem",
-                            test_acpi_riscv64_virt_tcg_numamem);
-         }
-+    } else if (strcmp(arch, "loongarch64") == 0) {
-+        if (has_tcg) {
-+            qtest_add_func("acpi/virt", test_acpi_loongarch64_virt);
-+            qtest_add_func("acpi/virt/topology",
-+                           test_acpi_loongarch64_virt_topology);
-+            qtest_add_func("acpi/virt/numamem",
-+                           test_acpi_loongarch64_virt_numamem);
-+            qtest_add_func("acpi/virt/memhp", test_acpi_loongarch64_virt_memhp);
-+            qtest_add_func("acpi/virt/oem-fields",
-+                           test_acpi_loongarch64_virt_oem_fields);
++    if (vhost_vdpa_first_dev(dev)) {
++        r = vhost_vdpa_call(dev, VHOST_SET_BACKEND_FEATURES, &features);
++        if (r) {
++            return -EFAULT;
 +        }
-     }
-     ret = g_test_run();
-     boot_sector_cleanup(disk);
-diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-index 43e5a86699..395ccc0d4c 100644
---- a/tests/qtest/meson.build
-+++ b/tests/qtest/meson.build
-@@ -148,6 +148,7 @@ qtests_hppa = \
++    }
++
++    dev->backend_cap = features;
++    v->shared->backend_cap = features;
++
++    return 0;
++}
++
+ static int vhost_vdpa_init(struct vhost_dev *dev, void *opaque, Error **errp)
+ {
+     struct vhost_vdpa *v = opaque;
+@@ -841,36 +871,6 @@ static int vhost_vdpa_set_features(struct vhost_dev *dev,
+     return vhost_vdpa_add_status(dev, VIRTIO_CONFIG_S_FEATURES_OK);
+ }
  
- qtests_loongarch64 = qtests_filter + \
-   (config_all_devices.has_key('CONFIG_LOONGARCH_VIRT') ? ['numa-test'] : []) + \
-+  (unpack_edk2_blobs ? ['bios-tables-test'] : []) + \
-   ['boot-serial-test',
-    'cpu-plug-test']
- 
+-static int vhost_vdpa_set_backend_cap(struct vhost_dev *dev)
+-{
+-    struct vhost_vdpa *v = dev->opaque;
+-
+-    uint64_t features;
+-    uint64_t f = 0x1ULL << VHOST_BACKEND_F_IOTLB_MSG_V2 |
+-        0x1ULL << VHOST_BACKEND_F_IOTLB_BATCH |
+-        0x1ULL << VHOST_BACKEND_F_IOTLB_ASID |
+-        0x1ULL << VHOST_BACKEND_F_SUSPEND;
+-    int r;
+-
+-    if (vhost_vdpa_call(dev, VHOST_GET_BACKEND_FEATURES, &features)) {
+-        return -EFAULT;
+-    }
+-
+-    features &= f;
+-
+-    if (vhost_vdpa_first_dev(dev)) {
+-        r = vhost_vdpa_call(dev, VHOST_SET_BACKEND_FEATURES, &features);
+-        if (r) {
+-            return -EFAULT;
+-        }
+-    }
+-
+-    dev->backend_cap = features;
+-    v->shared->backend_cap = features;
+-
+-    return 0;
+-}
+-
+ static int vhost_vdpa_get_device_id(struct vhost_dev *dev,
+                                     uint32_t *device_id)
+ {
 -- 
 MST
 
