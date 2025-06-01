@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15C23C5B549
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 246D5C5B559
 	for <qemu-devel@archiver.kernel.org>; Sun,  1 Jun 2025 15:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLkZF-0002MA-Fb; Sun, 01 Jun 2025 11:25:45 -0400
+	id 1uLkZJ-0002X2-Uw; Sun, 01 Jun 2025 11:25:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZE-0002Lq-8z
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZH-0002Me-9d
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZC-0004eu-Rc
- for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:44 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uLkZF-0004fA-O1
+ for qemu-devel@nongnu.org; Sun, 01 Jun 2025 11:25:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748791542;
+ s=mimecast20190719; t=1748791545;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=VCcFzUnshNhYktTkop8VCX4UTK6/NnsYDFGziFmlv1w=;
- b=NLBnEUmffBG0Qj63PJ9TLgT/rS9+RSF7a1WjqLW9RoINWJKVdV5cO1TP2UecT+ZklNrCXh
- EKWaKDPk7ijnHB4PwYIqRJJYgGZiZ8OqrdGFP/1dMkJhTruD3acXFvxJL4932eHZx+KXFe
- i3DmDwLG2gNYOdoKEik8LEDs4TZXUTE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=X1R8EGI8kUf6+QvZ144Y6v9Xkzk62rtpVvSzTNxcczo=;
+ b=aa9SfcAOq7eFGcy15TNI+Bn2yA6XDhGkfvd0/MMQzb41ZyhrXrOIwbxaP1axaEqjTDMu7w
+ FxyzPDPV6zML+x8IZiQqWVyTbgdmXiUMWXZBkCs2Am9nJDeMEriNo6gchcTAhzhdmw0DLS
+ 8vBSqd/TJ2D0hw/D1TzJUbXll7t4Wtg=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-297-H8j0_FqxMMimrJH5NPm0ng-1; Sun, 01 Jun 2025 11:25:39 -0400
-X-MC-Unique: H8j0_FqxMMimrJH5NPm0ng-1
-X-Mimecast-MFC-AGG-ID: H8j0_FqxMMimrJH5NPm0ng_1748791538
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4517abcba41so6827645e9.0
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:38 -0700 (PDT)
+ us-mta-221-m5Lhv1iNMHi0GNosMX81VQ-1; Sun, 01 Jun 2025 11:25:44 -0400
+X-MC-Unique: m5Lhv1iNMHi0GNosMX81VQ-1
+X-Mimecast-MFC-AGG-ID: m5Lhv1iNMHi0GNosMX81VQ_1748791543
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-43eed325461so22432445e9.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 08:25:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748791537; x=1749396337;
+ d=1e100.net; s=20230601; t=1748791542; x=1749396342;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=VCcFzUnshNhYktTkop8VCX4UTK6/NnsYDFGziFmlv1w=;
- b=JD9DF9h+gFzSFQSeiMjvYewvx57+OO21GDp4hIluDiVVwxEEITaeBoAGB2/R1wj1G5
- qljt5ZQFySPHpMTkWojzANXVDmTeZu0M56DkExxQKPsjWWxm3p8aorIsbXTfoJODuGv4
- 1jK+yv7BHUncO3bNAlao+QQn9LmX+EwJzOiJz1wPFV46zl3pJZiHHq8Rix+0Tvva1q32
- lqSfbVYvs+6PCtVXLrsdckoR8lM53r6Pjrn1Abx3XluqKMvqRVQcRczpwxNzeiaQuknn
- E6UOj3CplNlbyf1DMQJl8BskLBZ924v+/FEZNdAdDAahBJXqPMngGOigaz8cmV7wIPhx
- b68A==
-X-Gm-Message-State: AOJu0Yx9wIO234ZfHNt+BhY92zjpCe1Ov2p4pfL/9ANQ/53Kt6IFz6cz
- LjK/2oqU2i6b/CwRumhkmRJw0M2cnhtC3NL4XNkymz7Dnm3aFTCw5GzH8Mluip23iX1gO8IqGYf
- pmcadzuJm7252B9BV48acdBUAmAgSSnWWOoC59aFi1rWoxe1JseqgzkKuRWeGwhCfrGqocm9Rt3
- QoW2s4hQ6jw8csoaDvIBbf99jRV36uPkxY9w==
-X-Gm-Gg: ASbGncuCFsMvZnBi8irdJ4XyyeINwc0jIzdbphLX7/FYScC0CMloV8rUZgUm+RJ1JPV
- uIX19O4Okj+uFldrta3wpEqaEZx7ZwtfThd+9pK1DTwJz21ZCTH3CKUVPRp4ugC02uGh4btFqI4
- ygYxm99lkwMyft/nAXeprsCvYdWzwESslWtCApmAY8yG/ER18aCuLYANAFFcewsqwNVMslpNSu9
- uiQ1TCQzAHmiN9c4hdRTCDDadLr2UfcBFfR3dwdRGfK3fysv6JPoxRHpRWv0AJxVUiipOBdO9hn
- z8Vvag==
-X-Received: by 2002:a05:600c:4fc8:b0:43c:ea1a:720a with SMTP id
- 5b1f17b1804b1-450d882b1ebmr66486755e9.1.1748791537450; 
- Sun, 01 Jun 2025 08:25:37 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0JqPlPg8/OWHDaMlBOn7ob7cLeFFcYuoKjJfKUzk6TIBFkIvM7dWfMpLlJsQbDL+imYemaA==
-X-Received: by 2002:a05:600c:4fc8:b0:43c:ea1a:720a with SMTP id
- 5b1f17b1804b1-450d882b1ebmr66486575e9.1.1748791537009; 
- Sun, 01 Jun 2025 08:25:37 -0700 (PDT)
+ bh=X1R8EGI8kUf6+QvZ144Y6v9Xkzk62rtpVvSzTNxcczo=;
+ b=hvdRuVJgGoN7Rn37y/OV2cnT24uz+hhHsJNiry8CDfzWbFZUIPW9HsqOl3jiwa6Gbm
+ XE3UgE86NCBx+2VaRqPxUcJIdPOckz+SEAVn8BbcTUM3Cn25DRO3nT4XaiVM5bI/keqp
+ t8tsOm+J236lElprp+2CjKL00XaFuVnDz+1UhLWDzdbTkE4k7BJwz+vTRMj0z9ZCoykU
+ Yg19GsbU23eabG9pcsICpMPLYVuPWupScrkhZ70wsry/RjUGWmIF4hFnA5Gt0+BXXtxa
+ XBNN8JlStIf2BpO3yaO0Rb3IMiopD0w3VuE4ItPfKaaBt9vaqXVdDGOw76Rk6tWujpLb
+ b3GQ==
+X-Gm-Message-State: AOJu0YwvvyBElrlKzD+hnY0iHcy/5A9c7iVt1qNfreUMo5MKbyQcz+Lz
+ EG9R901y4/YKBQ+AJqSrV0qvWQ8/ky5KV12mxfSGX/L4O8ymHYd2x9VAQKpqgbod9bziN/sfVcy
+ /4L9PkdpetXopMna6XS4LmPU+DSAAQcrNyfIascdWy15a2QD4HQ0Ef0mMNo4do+WWFHZK9FwNu7
+ nvtz9F2KB07VgEwLcbvOvx5kQ7CYBn+niIZw==
+X-Gm-Gg: ASbGncsBnffXr0HJcY91zGLkNk7NLEesrvJiBQnJih/US18CNCr+8IW4usJjEgs7EFd
+ ioDQUlwDYExD7gl83U5mOL72ZMs8KoU7aN/1I0BmhA/sWUquB8REP+JPbAK4RlueGRsu3gvI+Lb
+ WFnN42g+j8GjeQj0dQasZ8aixdDL+BQRDAHW1qVDMxikpyasbqmuJ+RmgHFRo/4wsq8DSSkekhn
+ 5ywh4pGerDEh1AeG1jiY3hiaj+f2JYRkrUQOPbPYPq8onJgdSB4EvWSqMCdODLNPMCuKEp/crdZ
+ pErVYA==
+X-Received: by 2002:a05:6000:2081:b0:3a4:ddde:13e4 with SMTP id
+ ffacd0b85a97d-3a4f89e24cdmr7322676f8f.58.1748791542156; 
+ Sun, 01 Jun 2025 08:25:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEbn7SNkqkwQkezZ6BMt+88VKRXG8VoV605MoI+hrbiIw77ASu2786aHzCTSinvh8ZyhvDjsA==
+X-Received: by 2002:a05:6000:2081:b0:3a4:ddde:13e4 with SMTP id
+ ffacd0b85a97d-3a4f89e24cdmr7322650f8f.58.1748791541655; 
+ Sun, 01 Jun 2025 08:25:41 -0700 (PDT)
 Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7f9efa3sm87656715e9.9.2025.06.01.08.25.35
+ ffacd0b85a97d-3a4f00972f3sm11975637f8f.69.2025.06.01.08.25.40
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 08:25:36 -0700 (PDT)
-Date: Sun, 1 Jun 2025 11:25:34 -0400
+ Sun, 01 Jun 2025 08:25:40 -0700 (PDT)
+Date: Sun, 1 Jun 2025 11:25:39 -0400
 From: "Michael S. Tsirkin" <mst@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Bibo Mao <maobibo@loongson.cn>, Igor Mammedov <imammedo@redhat.com>,
  Ani Sinha <anisinha@redhat.com>
-Subject: [PULL 20/31] rebuild-expected-aml.sh: Add support for LoongArch
-Message-ID: <8e35af507ad97a43a350be4805ade2dea9c2a251.1748791463.git.mst@redhat.com>
+Subject: [PULL 22/31] tests/acpi: Remove stale allowed tables
+Message-ID: <a0b833559ca19cbe0bbd7fa60106b7b6686d7617.1748791463.git.mst@redhat.com>
 References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -86,14 +86,15 @@ X-Mailer: git-send-email 2.27.0.106.g8ac3dc51b1
 X-Mutt-Fcc: =sent
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -31
-X-Spam_score: -3.2
-X-Spam_bar: ---
-X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.071,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.071,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_SUBJ_WIPE_DEBT=1.004 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,38 +112,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Update the list of supported architectures to include LoongArch.
+Remove stale allowed tables for LoongArch virt machine.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Message-Id: <20250520130158.767083-7-maobibo@loongson.cn>
+Message-Id: <20250520130806.767181-2-maobibo@loongson.cn>
 Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- tests/data/acpi/rebuild-expected-aml.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/tests/data/acpi/rebuild-expected-aml.sh b/tests/data/acpi/rebuild-expected-aml.sh
-index c1092fb8ba..cbf9ffe0dd 100755
---- a/tests/data/acpi/rebuild-expected-aml.sh
-+++ b/tests/data/acpi/rebuild-expected-aml.sh
-@@ -12,7 +12,7 @@
- # This work is licensed under the terms of the GNU GPLv2.
- # See the COPYING.LIB file in the top-level directory.
- 
--qemu_arches="x86_64 aarch64 riscv64"
-+qemu_arches="x86_64 aarch64 riscv64 loongarch64"
- 
- if [ ! -e "tests/qtest/bios-tables-test" ]; then
-     echo "Test: bios-tables-test is required! Run make check before this script."
-@@ -37,7 +37,7 @@ if [ -z "$qemu_bins" ]; then
-     echo "Only the following architectures are currently supported: $qemu_arches"
-     echo "None of these configured!"
-     echo "To fix, run configure \
--         --target-list=x86_64-softmmu,aarch64-softmmu,riscv64-softmmu"
-+         --target-list=x86_64-softmmu,aarch64-softmmu,riscv64-softmmu,loongarch64-softmmu"
-     exit 1;
- fi
- 
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index bad1380eec..dfb8523c8b 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,9 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/loongarch64/virt/APIC",
+-"tests/data/acpi/loongarch64/virt/DSDT",
+-"tests/data/acpi/loongarch64/virt/FACP",
+-"tests/data/acpi/loongarch64/virt/MCFG",
+-"tests/data/acpi/loongarch64/virt/PPTT",
+-"tests/data/acpi/loongarch64/virt/SLIT",
+-"tests/data/acpi/loongarch64/virt/SPCR",
+-"tests/data/acpi/loongarch64/virt/SRAT",
 -- 
 MST
 
