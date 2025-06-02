@@ -4,80 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48882C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 05:48:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B34C5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 05:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLxza-00067a-Va; Mon, 02 Jun 2025 01:45:51 -0400
+	id 1uLy0A-0006Gq-Nw; Mon, 02 Jun 2025 01:46:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLxxD-0005dj-E2; Mon, 02 Jun 2025 01:43:29 -0400
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uLxzG-00063G-Tm
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 01:45:33 -0400
+Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLxwO-000316-1w; Mon, 02 Jun 2025 01:43:20 -0400
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-4a58d95ea53so6045921cf.0; 
- Sun, 01 Jun 2025 22:42:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1uLxzE-0006T9-FV
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 01:45:29 -0400
+Received: by mail-vk1-xa31.google.com with SMTP id
+ 71dfb90a1353d-52f298abd9eso2733651e0c.3
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 22:45:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748842949; x=1749447749; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZDjt/1Oq3qv3l1LceDFVzaa+v1qRMH9yh2FyC56g2ZI=;
- b=aFpDnYfCRY5X8LqPX0zu556NKlk1FAr4ifpeIijlGnEJVU0411yr8VfvFeMGzpxtjl
- WkRrNCqgZWSbfCpoTgxAAdW8KI9q3/h2VsMXkgS2pTLJwBwlAR1nOh8OeoqTecYpF7Ux
- X5YSj3bbI1oJ/Zttruek9aZKlhqSjuvNUuC+aTeadbCKiqDpWwMYTpgFGtzrVlLFinRD
- IqeTtKYB/Dh11VmrtX8xahlFExMcWScacaQjt3y3b1HaHn2kKuq5ikGxRbP9gc0CGXsV
- 6r1pQ+uRiTCW0rwd6Qhxe/pnJE2N23bpZ6sX1GhVy24lc1c+o3Zc1m8D60o6k/Airfxe
- rSTQ==
+ d=linaro.org; s=google; t=1748843127; x=1749447927; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3wgaVQM5JOk0cE5WtY1vo4wuuhYf0EVx9YzGQ7j6Rv0=;
+ b=gvkv2VbC/3u0VcmwvxAfLpPIIGtHWG9KfKHdHrtQcbDmhD3zIgK2DDovZCYC+diFmT
+ sr5XqT8LkQCOxVdLjJqQ1N4pRAQtowa6RkbI6RP7QYTug2y1Yt5wjGQNgZrezX8C6ojj
+ zhV05MKtunniFLaSkogX5f/aI4jof/0CX8Q6qSqUxQCqemTM6Wvi+XV10SdQ/LPUDzWU
+ wHLwLBzuBN7ujLAbFq8AMTsexp3aYxMU+l1zickE0UVMp3QTPcDoTkE457II1KAKKGHy
+ LRp5C3GxYxlpsVCod8GAD2NgQeEE+aN4YUAoGqIZntNUEOXSUTjQDYSIdTFAUHRQkFsA
+ YBuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748842949; x=1749447749;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZDjt/1Oq3qv3l1LceDFVzaa+v1qRMH9yh2FyC56g2ZI=;
- b=WbYTwBEAmi5pwtuHCvk1Pvo2epFH4+Y9qiqSlMqDnjJM1SwTaP0mXr71zoIp1FKY/c
- eAiExoZlAGiqty2i/+UMP2MlsN2caPvGx9CNXGKT1XIH55acLymFbEvKVVcEXdiZNGPA
- jTteU22oRjdATt/2wfP3UsBtsGGAJaodo0HhnlHPBWg2cUPackhAwFE5iKsRdQDkoXQ9
- lGmiW77nXJM6uspxwG/RJ9+ZKK+M25rgIJqujQu0Tq0IqgwLuYq/Li0I6tCtXahYzlJI
- K/VGAIB5045u1lLOzQA3snErBgL3eAlPOuXG+bkn2OaB1PEDsIPcVSiedkDvcLQ2NV54
- 5nUw==
+ d=1e100.net; s=20230601; t=1748843127; x=1749447927;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3wgaVQM5JOk0cE5WtY1vo4wuuhYf0EVx9YzGQ7j6Rv0=;
+ b=q2pG3lZ+lB7M7Ug2bNQWNh1TDI86aCXebsWq0hvww+U2XZEjTmmtAtnz9neqD6Ujzo
+ fXpuBuNKKsFpaUuCKzWPzJjW7dc/3AB0xSNM9DJQhTbHPvJIcsHmJPWvB8mdWmyBhEgW
+ s/5k2HZQK7gpbAGVGsWtupQFoGIhFNYT8BQ0wCtMMgFoGlROpw5/500dUgtEfEvdn15T
+ Ca8EkzM94Hk5QXvdxcYf56TVnDALfw5T4pmuk3ONNOR63hRy8oY3fsdZsmetvAmWu53v
+ +klc4OXBQUyDk5gvbom5Q8FMqyhgDYBCnMlnlsZ3GHOEef1ZU6lpo5C/KY+CnqbOjdC9
+ XK5g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWUq168/ibFoCiQdA2oMwN3l6tkmEwnrj4094mTnNne0fpdXUTKK6m+UerUi5rpFhQSSTVeYtTb0omg@nongnu.org
-X-Gm-Message-State: AOJu0YwPUVkwBxYfLzDjsbVi5r6+/EmNAThJSf6Ix4af68koy6M+zSsj
- KZBKinK/YtJdzKFIkvztrPSWiLOHTYlzeRcVywWyJOBhuElyPQNI9rrPL+cNlw4OKTy2SFv2DlO
- YR2jub/Emh4qDOX5bl3sTJQpVq1sSaUuZpQ==
-X-Gm-Gg: ASbGncs4mxNibvClLuWOT7Q31nXko8gDRc6IR2nqrlb6F++3dweG4iNQEU9OzZTvP01
- O1Ep3JgE60MA5CVzykQ243niDK3Rh8Z/5UO+gjRafb/99dr+dLiUnUYzmY8TrI5Ntvsa8QvF5PE
- IEZGCaefPG8j3Xfz97U8RiJvftYhkza73gfDQuus4fsMUbuLw5rJ7faYQYmPum7z4=
-X-Google-Smtp-Source: AGHT+IHmQPDQwS79pC52oVn8j92v/e+7jcMPCc1tTanKme/Ppxwzrw0Lj5ZHVJ1bpGFbA5gMryoNX9/yLWK9/2tfr+w=
-X-Received: by 2002:ac5:cdcd:0:b0:530:5b54:e035 with SMTP id
- 71dfb90a1353d-530711eae2emr9482791e0c.4.1748839041791; Sun, 01 Jun 2025
- 21:37:21 -0700 (PDT)
+ AJvYcCVUMeZyD/wdlAnSRLj4J9GjyNE+9W1ZHtYNM/n+Az4hbxYj5fFhMh/CzJBB21kQ8jalFSpvS9OO0Nbf@nongnu.org
+X-Gm-Message-State: AOJu0YzTHtGXl4CHZqZqMVXNDmj5NN1funhfE0u7QX30l6ipAjIfr3P5
+ QbqpgeMNoFHTva8mczHXCEYIP0O5i89RyzAmJZc1dUUU83SUiTb8ZmQmhx1XjvKXoYc=
+X-Gm-Gg: ASbGncuO0DLocIrE4WgxBVtTD6Fv5IsnV58OA2EmE6VIc4oTlSS5ho4QlLen92pqhmr
+ gYAg55DBsqTRa0BUS6UVoocBIkCIugRnyQjjYNX+TyenwUOwnmEe0//HZ61VApLRWrFu2rqZQT+
+ VYwgviYo9QX2o/QK/8pK1jAG39FdDIGnG79MCHgdeRJ8v8UV7r+IDOgpWa1CdJxbjeG9aeaNosM
+ mo7LYO/W7FYmkFMbHt2MN30WMdh4X0Qu8jHvvYkkQKQDxGH4G1yhtOqzu503RrnTj6KwK0tNuNm
+ RNnceSCxS7lKIMrlE/kuM5v82m5KDUSd87GhNfUJ8NjhxnEGE4Mbp8R601SkMvSI0gY5YBAo1WD
+ N
+X-Google-Smtp-Source: AGHT+IEASqpdTxOXJHi/lxrbmZNTmg4f48ukCWyjorVuYf6dP4OlwoTInpTE4NLeSSvEATcoqYOhzw==
+X-Received: by 2002:a05:6122:1da7:b0:530:7e05:3836 with SMTP id
+ 71dfb90a1353d-5309378fc36mr4325068e0c.9.1748843126707; 
+ Sun, 01 Jun 2025 22:45:26 -0700 (PDT)
+Received: from [192.168.0.102] ([179.180.194.137])
+ by smtp.gmail.com with ESMTPSA id
+ 71dfb90a1353d-53074aaf305sm6961786e0c.4.2025.06.01.22.45.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 01 Jun 2025 22:45:25 -0700 (PDT)
+Message-ID: <0dc27145-d748-44c2-b6a8-19df16254882@linaro.org>
+Date: Mon, 2 Jun 2025 02:45:25 -0300
 MIME-Version: 1.0
-References: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 2 Jun 2025 14:36:55 +1000
-X-Gm-Features: AX0GCFsSs9L25y-to5GFCUKk9ZnkAJM6oUPN9FKZKfYMTtSLrXngMfHXRGnQp_w
-Message-ID: <CAKmqyKPiKgnD_NxeTyQjG4i--b+vTKi3=yuYS_cC6HkCSRU1Sw@mail.gmail.com>
-Subject: Re: [qemu PATCH 0/3] target/riscv: add missing named features
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=alistair23@gmail.com; helo=mail-qt1-x82e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 08/25] tests/qtest/bios-tables-test: Prepare for
+ changes in the DSDT table
+To: Igor Mammedov <imammedo@redhat.com>, Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com, pbonzini@redhat.com, Jonathan.Cameron@huawei.com,
+ philmd@linaro.org, alex.bennee@linaro.org
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-9-eric.auger@redhat.com>
+ <20250527143816.39c0dfab@imammedo.users.ipa.redhat.com>
+ <20250527150357.03bfab2c@imammedo.users.ipa.redhat.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20250527150357.03bfab2c@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-vk1-xa31.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,34 +110,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 30, 2025 at 6:24=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> Hi,
->
-> These simple patches add two missing named features in riscv,isa.  Third
-> patch is a doc change I figured was worth doing.
->
-> Drew, as far as Server SoC Reference platform goes, we don't have
-> 'sdext'. I guess we'll have to postpone the Server Soc Ref work for now.
->
-> Daniel Henrique Barboza (3):
->   target/riscv/cpu.c: add 'sdtrig' in riscv,isa
->   target/riscv/cpu.c: add 'ssstrict' to riscv,isa
->   target/riscv/cpu.c: do better with 'named features' doc
+Hi Igor and Eric,
 
-Thanks!
+On 5/27/25 10:03, Igor Mammedov wrote:
+> On Tue, 27 May 2025 14:38:16 +0200
+> Igor Mammedov <imammedo@redhat.com> wrote:
+> 
+>> On Tue, 27 May 2025 09:40:10 +0200
+>> Eric Auger <eric.auger@redhat.com> wrote:
+>>
+>>> From: Gustavo Romero <gustavo.romero@linaro.org>
+>>>
+>>> This commit adds DSDT blobs to the whilelist in the prospect to
+>>> allow changes in the GPEX _OSC method.
+>>>
+>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>
+>> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+> I take it back,
+> 
+> test with x86 enabled breaks on microvm,
+> so it's missing some DSTDs here
 
-Applied to riscv-to-apply.next
+It's fixed in the series I've just posted in 24/25 as we discuss it. Thanks.
 
-Alistair
 
->
->  target/riscv/cpu.c | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
->
-> --
-> 2.49.0
->
->
+Cheers,
+Gustavo
+
+> 
+>>
+>>> ---
+>>>   tests/qtest/bios-tables-test-allowed-diff.h | 5 +++++
+>>>   1 file changed, 5 insertions(+)
+>>>
+>>> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+>>> index dfb8523c8b..abe00ad4ee 100644
+>>> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+>>> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+>>> @@ -1 +1,6 @@
+>>>   /* List of comma-separated changed AML files to ignore */
+>>> +"tests/data/acpi/aarch64/virt/DSDT",
+>>> +"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
+>>> +"tests/data/acpi/aarch64/virt/DSDT.memhp",
+>>> +"tests/data/acpi/aarch64/virt/DSDT.pxb",
+>>> +"tests/data/acpi/aarch64/virt/DSDT.topology",
+>>
+> 
+
 
