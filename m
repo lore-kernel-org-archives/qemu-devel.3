@@ -4,40 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28BC0C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 15:44:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AECBC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 15:44:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM7Im-0002sy-IX; Mon, 02 Jun 2025 11:42:18 -0400
+	id 1uM7K3-0003sn-IL; Mon, 02 Jun 2025 11:43:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uM7Id-0002sL-WC; Mon, 02 Jun 2025 11:42:08 -0400
+ id 1uM7JG-0003BU-Tc; Mon, 02 Jun 2025 11:42:51 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uM7Ic-0003Gx-Hm; Mon, 02 Jun 2025 11:42:07 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b9yj82G4yz6HJcD;
- Mon,  2 Jun 2025 23:40:28 +0800 (CST)
+ id 1uM7JD-0003NO-H9; Mon, 02 Jun 2025 11:42:46 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b9yk14bmlz6HJTn;
+ Mon,  2 Jun 2025 23:41:13 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id E63341402CB;
- Mon,  2 Jun 2025 23:41:55 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 440A71400D4;
+ Mon,  2 Jun 2025 23:42:41 +0800 (CST)
 Received: from A2303104131.china.huawei.com (10.203.177.241) by
  frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 2 Jun 2025 17:41:48 +0200
+ 15.1.2507.39; Mon, 2 Jun 2025 17:42:33 +0200
 To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
 CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>, <jgg@nvidia.com>,
  <nicolinc@nvidia.com>, <ddutile@redhat.com>, <berrange@redhat.com>,
  <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
  <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
  <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root Complex
- association
-Date: Mon, 2 Jun 2025 16:41:05 +0100
-Message-ID: <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
+Subject: [PATCH v3 5/6] hw/arm/virt: Add an SMMU_IO_LEN macro
+Date: Mon, 2 Jun 2025 16:41:09 +0100
+Message-ID: <20250602154110.48392-6-shameerali.kolothum.thodi@huawei.com>
 X-Mailer: git-send-email 2.12.0.windows.1
 In-Reply-To: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
 References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
@@ -75,41 +74,59 @@ From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although this change does not affect functionality at present, it is
-required when we add support for user-creatable SMMUv3 devices in
-future patches.
+From: Nicolin Chen <nicolinc@nvidia.com>
 
+This is useful as the subsequent support for new SMMUv3 dev will also
+use the same.
+
+Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
 ---
- hw/arm/smmuv3.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/arm/virt.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-index ab67972353..7e934336c2 100644
---- a/hw/arm/smmuv3.c
-+++ b/hw/arm/smmuv3.c
-@@ -24,6 +24,7 @@
- #include "hw/qdev-properties.h"
- #include "hw/qdev-core.h"
- #include "hw/pci/pci.h"
-+#include "hw/pci/pci_bridge.h"
- #include "cpu.h"
- #include "exec/target_page.h"
- #include "trace.h"
-@@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error **errp)
-     SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
-     SysBusDevice *dev = SYS_BUS_DEVICE(d);
-     Error *local_err = NULL;
-+    Object *bus;
-+
-+    bus = object_property_get_link(OBJECT(d), "primary-bus", &error_abort);
-+    if (!bus || !object_dynamic_cast(bus->parent, TYPE_PCI_HOST_BRIDGE)) {
-+        error_setg(errp, "SMMUv3 is not attached to any PCIe Root Complex!");
-+        return;
-+    }
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 71b923f786..eeace4754d 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -146,6 +146,9 @@ static void arm_virt_compat_set(MachineClass *mc)
+ #define LEGACY_RAMLIMIT_GB 255
+ #define LEGACY_RAMLIMIT_BYTES (LEGACY_RAMLIMIT_GB * GiB)
  
-     c->parent_realize(d, &local_err);
-     if (local_err) {
++/* MMIO region size for SMMUv3 */
++#define SMMU_IO_LEN 0x20000
++
+ /* Addresses and sizes of our components.
+  * 0..128MB is space for a flash device so we can run bootrom code such as UEFI.
+  * 128MB..256MB is used for miscellaneous device I/O.
+@@ -177,7 +180,7 @@ static const MemMapEntry base_memmap[] = {
+     [VIRT_FW_CFG] =             { 0x09020000, 0x00000018 },
+     [VIRT_GPIO] =               { 0x09030000, 0x00001000 },
+     [VIRT_UART1] =              { 0x09040000, 0x00001000 },
+-    [VIRT_SMMU] =               { 0x09050000, 0x00020000 },
++    [VIRT_SMMU] =               { 0x09050000, SMMU_IO_LEN },
+     [VIRT_PCDIMM_ACPI] =        { 0x09070000, MEMORY_HOTPLUG_IO_LEN },
+     [VIRT_ACPI_GED] =           { 0x09080000, ACPI_GED_EVT_SEL_LEN },
+     [VIRT_NVDIMM_ACPI] =        { 0x09090000, NVDIMM_ACPI_IO_LEN},
+@@ -1447,7 +1450,6 @@ static void create_smmu(const VirtMachineState *vms,
+     int irq =  vms->irqmap[VIRT_SMMU];
+     int i;
+     hwaddr base = vms->memmap[VIRT_SMMU].base;
+-    hwaddr size = vms->memmap[VIRT_SMMU].size;
+     DeviceState *dev;
+ 
+     if (vms->iommu != VIRT_IOMMU_SMMUV3 || !vms->iommu_phandle) {
+@@ -1467,7 +1469,7 @@ static void create_smmu(const VirtMachineState *vms,
+         sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
+                            qdev_get_gpio_in(vms->gic, irq + i));
+     }
+-    create_smmuv3_dt_bindings(vms, base, size, irq);
++    create_smmuv3_dt_bindings(vms, base, SMMU_IO_LEN, irq);
+ }
+ 
+ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
 -- 
 2.34.1
 
