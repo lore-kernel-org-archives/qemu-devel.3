@@ -4,145 +4,139 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D631CC5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:12:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91772C5B555
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:12:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMCRA-0000pS-8c; Mon, 02 Jun 2025 17:11:16 -0400
+	id 1uMCRs-00015V-WD; Mon, 02 Jun 2025 17:12:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMCR3-0000oD-VM
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:10 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMCRm-000147-SC
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:54 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMCQv-0004Og-Om
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:03 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMCRk-0004So-1N
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748898656;
+ s=mimecast20190719; t=1748898711;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=OzQhT/qXyjZ2tB40NxqOTXT2Lyi6oiwytVUne15HM9g=;
- b=i7KOcwzB7dVN5NLkkr8ldLQMBwsnpZY/eim/j0TCFNh7M9KiOsTesQCSVGZ7A9/DEHR5Bc
- +R6LA/LIFDT7c534JrT1C39CV5uZbKnD5hiUX0rrsd+amFm2SdIZ6UQtUPEdyZ3czC1s/U
- zu8gEciqt6W+tdSGXTUA/5HIaTsreUE=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IcvOov1uG1A8bgtVh3O5iliUd5dctenVeY27uWju2kk=;
+ b=JQXoi8SjW8aY2Hrwca6yfIfyX1TsBzHiI9rTdSiLw/lQtl/wO2xYQv3wTEDMFeyg8RBKzK
+ lKAbs6HNpHgsPO3Mmj3GvBGeZUfh7eao5nrcb7auXu7gEGVu17l4okaONfhIeeMlPXuoqZ
+ BixQalXOAd1eqS8knvAFqr1k5QZi47c=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-463-dH5B7glQMkOFLqmQEoFAdQ-1; Mon, 02 Jun 2025 17:10:54 -0400
-X-MC-Unique: dH5B7glQMkOFLqmQEoFAdQ-1
-X-Mimecast-MFC-AGG-ID: dH5B7glQMkOFLqmQEoFAdQ_1748898654
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-43eea5a5d80so29776055e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:10:54 -0700 (PDT)
+ us-mta-395-p5efybtKMbO2WW2pdAoPOQ-1; Mon, 02 Jun 2025 17:11:49 -0400
+X-MC-Unique: p5efybtKMbO2WW2pdAoPOQ-1
+X-Mimecast-MFC-AGG-ID: p5efybtKMbO2WW2pdAoPOQ_1748898709
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-442dc702850so32937635e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:11:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748898653; x=1749503453;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=OzQhT/qXyjZ2tB40NxqOTXT2Lyi6oiwytVUne15HM9g=;
- b=wJGVSrCupIH+Y4BfkYPIAvIKW+UpnKkEhu3B8qzP0mnL55qV/zwiMSQ9TygfSbRXcT
- esrPc/3pnXtRgXDkpnJqzn9q/nu+qaVatXCck/j79z3piT2YTSMOYU6FSjkGFDaq39c3
- ZKgEN+YeceY58Y5sVrAqdxCwCBg7CgJFx9xr/ToPOwwZujV1ojizVXcqdS3bLd4pzCMP
- H1TyPw8RRtTgYuNTSuPtnzhWzUrTsHfJlv6gem9WNeMSHl1lNEY7gYPvYLWhR0w0bjUI
- f7DjB0pDqMsH6id8pvVmNyNTrK88jTZrXZEWTRgzT5EiX8zWc+BHdwSSn9LO7a6CKb4g
- 8aBQ==
-X-Gm-Message-State: AOJu0YzBPL201tOCb7XIP/ab7dNktkH1FjUHVXTIoUMu2t0L7oGwBLg7
- LfvvYTsd5BydiP4X8DRiNmONEuXWP8+wYC132iN+7uixGiGCPbga7VIKnlWAoxLzLkk3fjzTs07
- zGvcc0hPBMqTagUXV2mOPXL2lKvooy9PGZcidC8R6dm+Mbp42wEnJXzII
-X-Gm-Gg: ASbGncssRP2lSZXxWpLpYEXZDKxOBAfpABSyOrC9xNzbgn8SLCXeJGXE7CCZ8dIE+Vu
- ZJIZ8SwNLtrWfwADlwe/TDouuKsYWXbOtEnTt7AlOWDTAj4JxYdsyNCCdemotcEJHZF7aBDO3ev
- oJtJvY3ulbjrdvL/NfTZMJjGNN73N9vF3OsYfVXnHKUmNTlsd7UIt1urFRHL7T6cm+KSVYX/IRP
- hekng0qHTk7ZIyfvyDWP8U4QTVIVlHzFsapmVqdvlGWzk+qS7WDVWwkEvlgTbGaW4NCo4VPQn1e
- YJp4Vj829tgE3s91pg2UQdr1pyalSLxIXzKtTKEICoBE1VlINjQOv3YlMXWHIAsJdv4nfH68CFu
- IkhijjAXmsE05+WHFjFzGKZggSifcaZ5vCzqDlsM=
-X-Received: by 2002:a05:600c:5294:b0:43c:f513:958a with SMTP id
- 5b1f17b1804b1-450d883b9admr121721445e9.13.1748898653530; 
- Mon, 02 Jun 2025 14:10:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFn3HgJukX8eJRxBQZddzjAWn8SPEFrZCYlCmhbjON02y2UdyFHpnwRUCVi40uKvOcZ82Auhw==
-X-Received: by 2002:a05:600c:5294:b0:43c:f513:958a with SMTP id
- 5b1f17b1804b1-450d883b9admr121721315e9.13.1748898653137; 
- Mon, 02 Jun 2025 14:10:53 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f34:a300:1c2c:f35e:e8e5:488e?
- (p200300d82f34a3001c2cf35ee8e5488e.dip0.t-ipconnect.de.
- [2003:d8:2f34:a300:1c2c:f35e:e8e5:488e])
+ d=1e100.net; s=20230601; t=1748898708; x=1749503508;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=IcvOov1uG1A8bgtVh3O5iliUd5dctenVeY27uWju2kk=;
+ b=sY8zJLeF7ryR8NN+S81gTsqIbUSwZG8grhuFDzpVE8JZpUi9OVgrtStK9pv+ZUzKK8
+ Bk5OFH3GAi3rDSdG6Kh5Gz9QOkcXjbc2C5LI8CFMVNKvb1Tu3cQzxwMkaxtOH0AX3BCo
+ 1TQu9mXJ6ccuYEv58DU9uYL+jfuE5KLOaxEqN2mU/tsrsG8wdqQg8cX5f1Ktmz0X5Hbe
+ B5D8+GDg4BwFRROZ6Sg6C53EwYm4JNFqDqV+2Y0Fx1EJ3W/VvCMy5GVV8+B3SjbPtJ42
+ meiiP0QtC9LL38hiG+qADwgn1DPpSkgcgkxR16TA7sY/YP43Cs5H53ocCt3Aqwk1wJ15
+ cevQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU88GWlej1DriZRt2C25kcvKH/AS6ZP3fZItgp+Aj00zYEvcVhBIMIha945EFjAKn12IaFH5/T64x/J@nongnu.org
+X-Gm-Message-State: AOJu0Yzs9r4+t6IHuruadsRU1eKnxdTqU4G7thVYFxnZ+apJO/H25VED
+ EcOGmH86jKAwejAORKGsjyFkEWSsG0SFi9YfJLlhlsaFfEHBQyl2rHMU0NOA67vzfxBL5eTqn8d
+ Oi49v1IruBAU7i0OQR9S/qkKqt0uXOlHYlcekKpEy1zqEfQJdgGzxLawq
+X-Gm-Gg: ASbGncsIBRrB1uBHE7D6tQKw2DrVkjdOpkKZ3cAlGBr6D/TF89jnUAH2uNR+hS30ZNh
+ w2Qi/0CVF0XRRD0z9t/055hB3tbvf4pTMO3KMC6BI96emS68FKEFMu3mEdrmdArf9BKZuoZR3cV
+ WSOmGrrKtEtfafOs5xiLaIN+f29HAWA7J2LXbqDiIRh0y/3rryWfCAWxplWhhpmqUcJXh0FYk6q
+ ELLXnhLWsiFIWoRkYWma3JawhTgaj7kaplirXkgxgdSJBtACnGPoDjRfWsgeHbqkKQKxFgN9q6D
+ /ZlNfzDuO4Xc/hzacNfpBHsHfsnUZTEdhklgm3MyDS2/thUUEw==
+X-Received: by 2002:a05:600c:1914:b0:442:e147:bea7 with SMTP id
+ 5b1f17b1804b1-4512655c3bcmr80566485e9.29.1748898708382; 
+ Mon, 02 Jun 2025 14:11:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGqjHDDQEpCfhY/d3gK5E2dfoZXkOVGSMU71zUgGnpy01NVbOuBl/Nz0jhO6PgwOqVesdEf0A==
+X-Received: by 2002:a05:600c:1914:b0:442:e147:bea7 with SMTP id
+ 5b1f17b1804b1-4512655c3bcmr80566325e9.29.1748898707974; 
+ Mon, 02 Jun 2025 14:11:47 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb00ccsm136512135e9.17.2025.06.02.14.10.51
+ 5b1f17b1804b1-450d8012af3sm134480165e9.35.2025.06.02.14.11.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 14:10:52 -0700 (PDT)
-Message-ID: <2278c8cb-a547-4f8d-a8fb-cce38fa3b5f2@redhat.com>
-Date: Mon, 2 Jun 2025 23:10:51 +0200
+ Mon, 02 Jun 2025 14:11:46 -0700 (PDT)
+Message-ID: <e1abbc4a-7071-419e-ab49-64828e682064@redhat.com>
+Date: Mon, 2 Jun 2025 23:11:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/5] ram-block-attributes: Introduce RamBlockAttributes
- to manage RAMBlock with guest_memfd
-To: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
- <aik@amd.com>, Peter Xu <peterx@redhat.com>,
- Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Alex Williamson <alex.williamson@redhat.com>
-References: <20250530083256.105186-1-chenyi.qiang@intel.com>
- <20250530083256.105186-5-chenyi.qiang@intel.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250530083256.105186-5-chenyi.qiang@intel.com>
+Subject: Re: [PULL 02/77] hw/arm: remove explicit dependencies listed
+To: Nabih Estefan <nabihestefan@google.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+References: <20250530071250.2050910-1-pbonzini@redhat.com>
+ <20250530071250.2050910-3-pbonzini@redhat.com>
+ <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
+ <b7e988ef-82da-43bc-8c57-3b49b3bf9529@linaro.org>
+ <CA+QoejVhjy26FraUUMRtZtNPRW6u2MM3T=6hyguttPgx8qpkpw@mail.gmail.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <CA+QoejVhjy26FraUUMRtZtNPRW6u2MM3T=6hyguttPgx8qpkpw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -167,151 +161,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30.05.25 10:32, Chenyi Qiang wrote:
-> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
-> discard") highlighted that subsystems like VFIO may disable RAM block
-> discard. However, guest_memfd relies on discard operations for page
-> conversion between private and shared memory, potentially leading to
-> the stale IOMMU mapping issue when assigning hardware devices to
-> confidential VMs via shared memory. To address this and allow shared
-> device assignement, it is crucial to ensure the VFIO system refreshes
-> its IOMMU mappings.
+On 6/2/25 22:53, Nabih Estefan wrote:
+> Hi Pierrick,
 > 
-> RamDiscardManager is an existing interface (used by virtio-mem) to
-> adjust VFIO mappings in relation to VM page assignment. Effectively page
-> conversion is similar to hot-removing a page in one mode and adding it
-> back in the other. Therefore, similar actions are required for page
-> conversion events. Introduce the RamDiscardManager to guest_memfd to
-> facilitate this process.
-> 
-> Since guest_memfd is not an object, it cannot directly implement the
-> RamDiscardManager interface. Implementing it in HostMemoryBackend is
-> not appropriate because guest_memfd is per RAMBlock, and some RAMBlocks
-> have a memory backend while others do not. Notably, virtual BIOS
-> RAMBlocks using memory_region_init_ram_guest_memfd() do not have a
-> backend.
-> 
-> To manage RAMBlocks with guest_memfd, define a new object named
-> RamBlockAttributes to implement the RamDiscardManager interface. This
-> object can store the guest_memfd information such as bitmap for shared
-> memory and the registered listeners for event notification. In the
-> context of RamDiscardManager, shared state is analogous to populated, and
-> private state is signified as discarded. To notify the conversion events,
-> a new state_change() helper is exported for the users to notify the
-> listeners like VFIO, so that VFIO can dynamically DMA map/unmap the
-> shared mapping.
-> 
-> Note that the memory state is tracked at the host page size granularity,
-> as the minimum conversion size can be one page per request and VFIO
-> expects the DMA mapping for a specific iova to be mapped and unmapped
-> with the same granularity. Confidential VMs may perform partial
-> conversions, such as conversions on small regions within larger ones.
-> To prevent such invalid cases and until DMA mapping cut operation
-> support is available, all operations are performed with 4K granularity.
-> 
-> In addition, memory conversion failures cause QEMU to quit instead of
-> resuming the guest or retrying the operation at present. It would be
-> future work to add more error handling or rollback mechanisms once
-> conversion failures are allowed. For example, in-place conversion of
-> guest_memfd could retry the unmap operation during the conversion from
-> shared to private. For now, keep the complex error handling out of the
-> picture as it is not required.
-> 
-> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
-> ---
-> Changes in v6:
->      - Change the object type name from RamBlockAttribute to
->        RamBlockAttributes. (David)
->      - Save the associated RAMBlock instead MemoryRegion in
->        RamBlockAttributes. (David)
->      - Squash the state_change() helper introduction in this commit as
->        well as the mixture conversion case handling. (David)
->      - Change the block_size type from int to size_t and some cleanup in
->        validation check. (Alexey)
->      - Add a tracepoint to track the state changes. (Alexey)
-> 
-> Changes in v5:
->      - Revert to use RamDiscardManager interface instead of introducing
->        new hierarchy of class to manage private/shared state, and keep
->        using the new name of RamBlockAttribute compared with the
->        MemoryAttributeManager in v3.
->      - Use *simple* version of object_define and object_declare since the
->        state_change() function is changed as an exported function instead
->        of a virtual function in later patch.
->      - Move the introduction of RamBlockAttribute field to this patch and
->        rename it to ram_shared. (Alexey)
->      - call the exit() when register/unregister failed. (Zhao)
->      - Add the ram-block-attribute.c to Memory API related part in
->        MAINTAINERS.
-> 
-> Changes in v4:
->      - Change the name from memory-attribute-manager to
->        ram-block-attribute.
->      - Implement the newly-introduced PrivateSharedManager instead of
->        RamDiscardManager and change related commit message.
->      - Define the new object in ramblock.h instead of adding a new file.
-> ---
->   MAINTAINERS                   |   1 +
->   include/system/ramblock.h     |  21 ++
->   system/meson.build            |   1 +
->   system/ram-block-attributes.c | 480 ++++++++++++++++++++++++++++++++++
->   system/trace-events           |   3 +
->   5 files changed, 506 insertions(+)
->   create mode 100644 system/ram-block-attributes.c
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 6dacd6d004..8ec39aa7f8 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -3149,6 +3149,7 @@ F: system/memory.c
->   F: system/memory_mapping.c
->   F: system/physmem.c
->   F: system/memory-internal.h
-> +F: system/ram-block-attributes.c
->   F: scripts/coccinelle/memory-region-housekeeping.cocci
->   
->   Memory devices
-> diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-> index d8a116ba99..1bab9e2dac 100644
-> --- a/include/system/ramblock.h
-> +++ b/include/system/ramblock.h
-> @@ -22,6 +22,10 @@
->   #include "exec/cpu-common.h"
->   #include "qemu/rcu.h"
->   #include "exec/ramlist.h"
-> +#include "system/hostmem.h"
-> +
-> +#define TYPE_RAM_BLOCK_ATTRIBUTES "ram-block-attributes"
-> +OBJECT_DECLARE_SIMPLE_TYPE(RamBlockAttributes, RAM_BLOCK_ATTRIBUTES)
->   
->   struct RAMBlock {
->       struct rcu_head rcu;
-> @@ -91,4 +95,21 @@ struct RAMBlock {
->       ram_addr_t postcopy_length;
->   };
->   
-> +struct RamBlockAttributes {
-> +    Object parent;
-> +
-> +    RAMBlock *ram_block;
-> +
-> +    /* 1-setting of the bitmap represents ram is populated (shared) */
-> +    unsigned bitmap_size;
-> +    unsigned long *bitmap;
+> For what it's worth, those files were also breaking on Ubuntu and Debian for me.
+> I had to explicitly `sudo apt install libfdt-dev` for it to work
+> again. I don't believe
+> it was installed at all previously, but QEMU was building and working correctly
+> without it being explicitly installed.
 
-So, initially, all memory starts out as private, correct?
+yes. I had to install libfdt-dev/el on some systems too.
 
-I guess this mimics what kvm_set_phys_mem() ends up doing, when it does 
-the kvm_set_memory_attributes_private() call.
+However, for the windows (on Linux) build :
 
-So there is a short period of inconsistency, between creating the 
-RAMBlock and mapping it into the PA space.
+   ./configure --cross-prefix=x86_64-w64-mingw32- --target-list=aarch64-softmmu,ppc64-softmmu,x86_64-softmmu,s390x-softmmu --disable-docs --disable-sdl
 
-It might be wroth spelling that out / documenting it somewhere.
+It's still broken.
 
--- 
-Cheers,
+Thanks,
 
-David / dhildenb
+C.
+
+
+
+
+
+> 
+> Thanks,
+> Nabih
+> 
+> Nabih Estefan (he/him) |  Software Engineer |
+> nabihestefan@google.com |  857-308-9574
+> 
+> 
+> 
+> On Mon, Jun 2, 2025 at 11:41 AM Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> Hi Cédric,
+>>
+>> On 6/2/25 6:59 AM, Cédric Le Goater wrote:
+>>> Hello Pierrick,
+>>>
+>>> On 5/30/25 09:11, Paolo Bonzini wrote:
+>>>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>>
+>>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> Link: https://lore.kernel.org/r/20250521223414.248276-3-pierrick.bouvier@linaro.org
+>>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>>>> ---
+>>>>     hw/arm/meson.build | 4 ++--
+>>>>     1 file changed, 2 insertions(+), 2 deletions(-)
+>>>>
+>>>> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+>>>> index 5098795f61d..d90be8f4c94 100644
+>>>> --- a/hw/arm/meson.build
+>>>> +++ b/hw/arm/meson.build
+>>>> @@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
+>>>>     arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
+>>>>     arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
+>>>>     arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
+>>>> -arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
+>>>> +arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [files('musicpal.c')])
+>>>>     arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
+>>>>     arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
+>>>>     arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
+>>>> @@ -79,7 +79,7 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+>>>>     arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+>>>>     arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+>>>>
+>>>> -arm_common_ss.add(fdt, files('boot.c'))
+>>>> +arm_common_ss.add(files('boot.c'))
+>>>>
+>>>>     hw_arch += {'arm': arm_ss}
+>>>>     hw_common_arch += {'arm': arm_common_ss}
+>>>
+>>> This commit breaks building these files on Windows:
+>>>
+>>>        hw/arm/{boot.c,vexpress.c,imx8mp-evk.c,raspi4b.c}
+>>>
+>>> Error is :
+>>>
+>>>        fatal error: libfdt.h: No such file or directory
+>>>
+>>> Thanks,
+>>>
+>>
+>> Is libfdt available in your windows environment? If yes, is it in a non
+>> standard path?
+>> On my side, it built successfully, so I first need to reproduce this.
+>>
+>> Thanks,
+>> Pierrick
+>>
+> 
 
 
