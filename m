@@ -4,50 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D57DC5B549
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:57:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76A0EC5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:57:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM0yQ-0003UD-A9; Mon, 02 Jun 2025 04:56:50 -0400
+	id 1uM0z9-0003mH-11; Mon, 02 Jun 2025 04:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uM0yN-0003TV-VW; Mon, 02 Jun 2025 04:56:47 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uM0yM-0004UU-AI; Mon, 02 Jun 2025 04:56:47 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 4BC4143096;
- Mon,  2 Jun 2025 10:56:36 +0200 (CEST)
-Message-ID: <b5b9c93a-8b34-45cf-8c5b-ebbbeee118b3@proxmox.com>
-Date: Mon, 2 Jun 2025 10:56:32 +0200
+ (Exim 4.90_1) (envelope-from <nabelova31@gmail.com>)
+ id 1uM0z1-0003kM-UU
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:57:28 -0400
+Received: from mail-lj1-x22b.google.com ([2a00:1450:4864:20::22b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nabelova31@gmail.com>)
+ id 1uM0z0-0004Wn-EH
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:57:27 -0400
+Received: by mail-lj1-x22b.google.com with SMTP id
+ 38308e7fff4ca-32a696ff4deso38090951fa.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 01:57:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748854644; x=1749459444; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8IyhqbjoM6Y/7dTcJMbIU82rsUbs0Kd+u5FWH3M4oqQ=;
+ b=i2Y0j/QNf8HjEvdQu4t3/ghzBlBbLzNvk7Yc2ak8797tT6l6UX4yUebI6PoYrJ+r4+
+ HJB486iLCrIQBovo0zD4VLCRIaKgMx//LtJV7Hyi4TvdG+6VpJMIlJP96FtmzAXQGube
+ BJNA0VbT/Z8om1FudWfLj5qFHV4kFsQgtZtvGCV85DykikBNIXpkQOymnvwMrIUt7cJX
+ T/EWocTwB22LkUzUu/X4zvUv+PspYbylZroSR4IlcA+a0ajL9mWo0Al7QjOoT/cyQ0oj
+ OTVVyiJDj6sG8305SzljpOjczdEpoQPU9Q+cqkzhTXWpHdUsLK1RdCKETFflIu/Ui+75
+ EbBA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748854644; x=1749459444;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=8IyhqbjoM6Y/7dTcJMbIU82rsUbs0Kd+u5FWH3M4oqQ=;
+ b=YME8S3iiOP5nThjO4lQR7j5NEpma7rzdXp9P/MDiaSlXJ9Terv4IMBplLsbGAVB030
+ r8f59HtISWWlvtbhJVKW5D7fwlwtMb6jkz6Mgb5I0RarjmCjL3ZzYo5ed04rz5OYql28
+ 3HIyJN9K0TqDH0DA0ttfLhiaIVJWosJxJCYscnqQUOBgZHeh1AD4AzkJuN0Z97QKh3Lr
+ 9MWWiXLwNTaheBsX/NZ6MjP5WvJ5i7/Sd7TJN7uI7qSldWM0MQgFI58zsEYmt4Ex5163
+ FIHnxVWCNJfX3MV3uZBUNgAr0C5bzxrx1iWfOZc/sWb2QS9RkCFMJUOScVm2p07ndf9T
+ yEhw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJjDtF+wRlSrM+k6VDpP7rPw7QTev3iKswgF0A1AnrAcKnDKe/Q1xyvA9x7I4o4f0vZZXxEqBIz/pC@nongnu.org
+X-Gm-Message-State: AOJu0YzO5Bk7XrZugzl2IMJ/SJLqRX0rd4vIjE26LXDhJ0TG1APUd6Ae
+ nUJKSYnvuKJ1Qcuvvev6QmrNItRAhraefTrFxMbOf2IBkvDTTJDhdwom
+X-Gm-Gg: ASbGncteC3/z5ZXdjZFQ+5+4Jtm12SbmOlTVYFWgutiD2pGdRwOT/DAmHMErN944tSJ
+ LKK/NlsuGNDvFSbTHLVHvyxrwwfJ0zmA1cA8iY50VamMRHh66ays9PUUUFeUe1CQtpkBwdv/sow
+ u2avXwUzyOSmcQ9wXcpCJ74hyb1yb2whQKRhKxmxFl3Hqbh64w3WYenYgD2oeApmJo12HU+q3Rb
+ BcUCcteQVgxoEifw6Oz4XoDr1tx4jYU4ZsRgdsAxlYt1K10i+kZDW1GyH8FxqRxx8nAPzNBcyhL
+ YphRkJJYPLnSreyfYzJK/+3OPVkjeJvQtVUjB9Fk+2EFfXudclEzxwnvcf+barAOUCxL
+X-Google-Smtp-Source: AGHT+IFmvsSFAskKH7wDCIRqJAYFJbX3VVUh2NIv6UB4OsBFYO2eJCWkMCnD6ZwoQZJ4d61baaTwkQ==
+X-Received: by 2002:a2e:9a04:0:b0:32a:6e20:7cd4 with SMTP id
+ 38308e7fff4ca-32a907c3968mr37032061fa.21.1748854643849; 
+ Mon, 02 Jun 2025 01:57:23 -0700 (PDT)
+Received: from localhost.localdomain ([81.9.21.4])
+ by smtp.gmail.com with ESMTPSA id
+ 38308e7fff4ca-32a85b5664asm14150041fa.60.2025.06.02.01.57.22
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 02 Jun 2025 01:57:23 -0700 (PDT)
+From: Anastasia Belova <nabelova31@gmail.com>
+To: Ilya Maximets <i.maximets@ovn.org>
+Cc: Anastasia Belova <nabelova31@gmail.com>, Jason Wang <jasowang@redhat.com>,
+ qemu-devel@nongnu.org, sdl.qemu@linuxtesting.org
+Subject: [PATCH] net: fix buffer overflow in af_xdp_umem_create()
+Date: Mon,  2 Jun 2025 11:57:17 +0300
+Message-ID: <20250602085719.5058-1-nabelova31@gmail.com>
+X-Mailer: git-send-email 2.47.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 29/48] blockdev: avoid locking and draining multiple
- times in external_snapshot_abort()
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, den@virtuozzo.com,
- andrey.drobyshev@virtuozzo.com, hreitz@redhat.com, stefanha@redhat.com,
- eblake@redhat.com, jsnow@redhat.com, vsementsov@yandex-team.ru,
- xiechanglong.d@gmail.com, wencongyang2@huawei.com, berto@igalia.com,
- fam@euphon.net, ari@tuxera.com
-References: <20250530151125.955508-1-f.ebner@proxmox.com>
- <20250530151125.955508-30-f.ebner@proxmox.com>
-Content-Language: en-US
-In-Reply-To: <20250530151125.955508-30-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::22b;
+ envelope-from=nabelova31@gmail.com; helo=mail-lj1-x22b.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,26 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 30.05.25 um 17:11 schrieb Fiona Ebner:
-> By using the appropriate variants bdrv_set_backing_hd_drained() and
-> bdrv_try_change_aio_context_locked(), there only needs to be a single
-> drained and write-locked section in external_snapshot_abort().
-> 
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
-> 
-> The assumption in the added code comment about the reference is AFAIU
-> it. Is this correct?
-> 
-> And unrelated, but I'm wondering, isn't this dead code? It's only
-> executed if state->overlay_appended is set, which happens at the very
-> end of external_snapshot_action(). How can the transaction still be
-> aborted after that?
+s->pool has n_descs elements so maximum i should be
+n_descs - 1. Fix the upper bound.
 
-Of course, the point is that there can be multiple actions in a
-transaction :) I had tunnel vision on Friday.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Best Regards,
-Fiona
+Fixes: cb039ef3d9 ("net: add initial support for AF_XDP network backend")
+Signed-off-by: Anastasia Belova <nabelova31@gmail.com>
+---
+ net/af-xdp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/net/af-xdp.c b/net/af-xdp.c
+index 01c5fb914e..d022534d76 100644
+--- a/net/af-xdp.c
++++ b/net/af-xdp.c
+@@ -323,7 +323,7 @@ static int af_xdp_umem_create(AFXDPState *s, int sock_fd, Error **errp)
+ 
+     s->pool = g_new(uint64_t, n_descs);
+     /* Fill the pool in the opposite order, because it's a LIFO queue. */
+-    for (i = n_descs; i >= 0; i--) {
++    for (i = n_descs - 1; i >= 0; i--) {
+         s->pool[i] = i * XSK_UMEM__DEFAULT_FRAME_SIZE;
+     }
+     s->n_pool = n_descs;
+-- 
+2.47.0
 
 
