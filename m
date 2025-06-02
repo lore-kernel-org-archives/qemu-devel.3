@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46376C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 18:32:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CA3C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 18:40:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM9wb-0005GH-ME; Mon, 02 Jun 2025 14:31:33 -0400
+	id 1uMA4g-0006r6-EE; Mon, 02 Jun 2025 14:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uM9wZ-0005Fu-5f
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:31:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uM9wV-0004IB-TW
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:31:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748889083;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Rayeo0ZlRAVD6emdm0H+Diaay6DXmOzH9IMA1i9f+lk=;
- b=eVjG3Im7CNs9IBsTTamsHOBElMskR83DGoXFcTDWGNhBti0w9lgnrbQoIoYI0Mk7NyIlrL
- e9tRloI4BvZ5KsmzroUKKroAzIN73nEX2tdT5bxDr+8gZYf7v/JzZwHzDQHO+xoJdsP6le
- GRQaKM/hWrmsJpWkfk1TNkmQ5tmDRDg=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-511-o-79CqSWMf6LyvIY-jvjAA-1; Mon, 02 Jun 2025 14:31:21 -0400
-X-MC-Unique: o-79CqSWMf6LyvIY-jvjAA-1
-X-Mimecast-MFC-AGG-ID: o-79CqSWMf6LyvIY-jvjAA_1748889080
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4fea70656so854995f8f.0
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 11:31:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uMA4d-0006qW-Kj
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:39:51 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uMA4a-0004jJ-BO
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:39:51 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b200047a6a5so4755494a12.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 11:39:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748889585; x=1749494385; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=avIwfDFHWJSxmgv/nZT8jY0ikwd0WAxvHXwz5MZ28zE=;
+ b=y5Zrurg9elC+24asmnjlosBJx4DZt9hBCZVIYDEiV4PLEgvy+ZoNj0INaMtw8UGnTF
+ Qe50Ei5TRfLaYflNDKhaqjVzUjT/u6PPVgqv1vw1wfjFHLbBIn4ISuLpawg2kSTFo4gz
+ IGNILgBEOMKu56fjUA369pDXAOXBwu2fUg8LeOusaT1ha0b6sxnfEhCJRnTQ1u41PBPD
+ 4BivPaVVSqW+pfowou6Wlh9jH+xU0loyPaCj36fgSj2tB7y0TAYVpNOf042bRvARICU0
+ /72UYG0Wwxj9X6nkBv1fuWq5tlNVjxwJ30xJ3v7qCoJDkiwNf+iLp25PIXsqYmLuiSsA
+ jQCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748889080; x=1749493880;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
+ d=1e100.net; s=20230601; t=1748889585; x=1749494385;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Rayeo0ZlRAVD6emdm0H+Diaay6DXmOzH9IMA1i9f+lk=;
- b=GhpzQSUfDLFzVoGddF4hOrwwzksD0HBG/7/QvBgefzwDH6jrej+fLs895tz1RmpLQV
- 4cW1FzYFIJThCTe4Dy0A1dOA145zBcX/sUZ9esLQgrmgNybZNeBWi/bbEYgy4rXL0ASl
- vSD65OrR+2B29HZwpLMxMQzFFDnGxk57dh76yDLeHpxRsNngmXrxOo8GMbsvAFXepCch
- zf5sC8ytySOnSHH1CFJLS5yPwJlwvFatRfBtxfj3U8QGkrqkBk/ruzaGA82k/R/QpeFe
- Zwj/qeWTtl0y6zHu3plt6STT7gWEW/g9yh2f7RrwMPcNcr6ksjPHw6AE62yvEkYr5CAw
- tFRQ==
-X-Gm-Message-State: AOJu0YxKLTE1U9QPF38DVd1KTzvIdiUeCnwRSJfQO7wpmVbSde0J0jzB
- W/2cz7rDZEmGeF17YA/PNLMGL9z17VBZI2QqU2WiHWymECd2ySi+bdmiZdiBrKQqbh0swcQLus1
- lbOj0z/MEk2rZTZCUr/KAovbApfDt54i1TMACcyxGROFdGN23FEcDHGP8
-X-Gm-Gg: ASbGnctAPU0D5dLGWsx4TOREiaf0uObd5xEec38VB66hWV78hypO+GKr/d79FmTkzja
- bj8TVv3bKYPNt0yHsQslPb7rM+/wtLRrQloo+fGqYhSWDnOmF/9IyKBmjpG6sAhje9/vyHMvr9y
- Q5bEs9KhEvtjp30wOzhGPtdTxYCjZpk8JBWy1eksN5dkbCoA7BTEpAj2IOM2iYrSp0Kmoh/Xb22
- yEKi2uM58TtHHqU6WgebzVxAnkn1xHMSlBaEtJCg1PxxdLw/EdUYc5SrpWfVbxSNoJyIwhnh9Np
- zyOPsQ==
-X-Received: by 2002:a05:6000:26c1:b0:3a4:ea8f:efe4 with SMTP id
- ffacd0b85a97d-3a4f89bebefmr9268586f8f.18.1748889080209; 
- Mon, 02 Jun 2025 11:31:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHygX278LGn32k06lGCQX9LYX17g3vJ1VS9AqWsY/lFlmbw0gm+Ru0UXiRqg+znT3kZ78a39Q==
-X-Received: by 2002:a05:6000:26c1:b0:3a4:ea8f:efe4 with SMTP id
- ffacd0b85a97d-3a4f89bebefmr9268566f8f.18.1748889079722; 
- Mon, 02 Jun 2025 11:31:19 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ bh=avIwfDFHWJSxmgv/nZT8jY0ikwd0WAxvHXwz5MZ28zE=;
+ b=qgwBq8AzpcwReJ/lqzBIM06PPMOs9FvZMI7IlJsXIMMn9rxUz0aqUfFH6iKP5HQJB3
+ aX5EqzrlU8Hct2Z/O2rk6tj0VR3jtxxGvx/oq9pDQ8c8JGV8Zv4SZKhnCLBJojtpR2vy
+ VVgphgeLed9gLiUlQDdTwFTI7yNbWdwpgouZg944gv0wiaUnpVC6gmbEb9FsFDxTmIKc
+ xISzevht3qQ6cgk0g/gUI1+4ZMoJF2PAby85j/4WH9f2y+Q40usPoMXxGWq25etn6i16
+ bzHomF47YiOMq7fxC3VGMww4qeQiqZzqGfcmSZVsYn0jukgb45StOW5Uhvqix7Dp4xzp
+ MEmA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXPsmWZslRJh5uFdOB+9y/8wk5fC1ma/mHSYlO6anqoROkpPdNM6NODEISQUBNrEOGyZHCPUStbrsqx@nongnu.org
+X-Gm-Message-State: AOJu0YyxumLyo4pz/ixlqIfTzH+qSMz7X8FNtkKPHNB6xJ59WXciGv2/
+ 0knorOw/W9ebVJAgrWhOgiRtBCXj7v9ReIq5FnyHvW+I0as1KcMbdS3hhisOFdjuIZI=
+X-Gm-Gg: ASbGncsacy9ZA+T6obTSAMu1mgp58mVhn7xnPQNmcLynzen3BYAxzj8B/62RVn3US7C
+ e588JJlSgZB2+pkdeGKfKqxyqJvIl4gL4sa7K9oc2AamjsRfuJxJgnsqRFRu0JT8ViELoOSrLBa
+ zjZWZPHL7o2nkIoTaQJ6zobYmdy0dmuCi0Uae9/VDGQXT9Bboj30xwnPUYgpiMdRyKSXgZpXfA3
+ L+artB5wcCxPKac3IWMijGWMVZAiX1P8IlD8fBTgQXOXz41KkcJCdBEkr9uRXzpe/BdC/9miNcI
+ 8R228kmivokmNs5mPqW2xWL//PlD7zS0TVCVIPO2ii+cPP2Tic56x8VePD3aZbM9cs1rJ7ySAeI
+ =
+X-Google-Smtp-Source: AGHT+IGrBO8rxR4cW5YwZlMTQeGM8GQhIPqcBGLcaYZH0BrgHfs8jafqpJwfloa5XoHeZ76gA5yGmA==
+X-Received: by 2002:a17:90b:1b44:b0:310:c8ec:4192 with SMTP id
+ 98e67ed59e1d1-312e44cbe7dmr539023a91.10.1748889583472; 
+ Mon, 02 Jun 2025 11:39:43 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f00a03bdsm16096649f8f.91.2025.06.02.11.31.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Jun 2025 11:31:18 -0700 (PDT)
-Date: Mon, 2 Jun 2025 14:31:16 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Bibo Mao <maobibo@loongson.cn>
-Subject: Re: [PULL 00/31] virtio,pci,pc: features, fixes, tests
-Message-ID: <20250602142634-mutt-send-email-mst@kernel.org>
-References: <cover.1748791463.git.mst@redhat.com>
- <CAJSP0QUCipXvUWQ7uOm4Ct2a0O7=SFF9XZAozTFtAZfak8-EGg@mail.gmail.com>
- <20250602135333-mutt-send-email-mst@kernel.org>
- <CAJSP0QWvkMMcuy=5hU=4Ps4DtoE2TQ8Up4fDSLZZ8ia_+9jjEA@mail.gmail.com>
+ 98e67ed59e1d1-312e522d4dfsm48452a91.1.2025.06.02.11.39.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Jun 2025 11:39:43 -0700 (PDT)
+Message-ID: <b7e988ef-82da-43bc-8c57-3b49b3bf9529@linaro.org>
+Date: Mon, 2 Jun 2025 11:39:42 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 02/77] hw/arm: remove explicit dependencies listed
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+References: <20250530071250.2050910-1-pbonzini@redhat.com>
+ <20250530071250.2050910-3-pbonzini@redhat.com>
+ <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAJSP0QWvkMMcuy=5hU=4Ps4DtoE2TQ8Up4fDSLZZ8ia_+9jjEA@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,176 +107,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 02, 2025 at 02:25:48PM -0400, Stefan Hajnoczi wrote:
-> On Mon, Jun 2, 2025 at 1:54 PM Michael S. Tsirkin <mst@redhat.com> wrote:
-> >
-> > On Mon, Jun 02, 2025 at 12:39:17PM -0400, Stefan Hajnoczi wrote:
-> > > On Sun, Jun 1, 2025 at 11:34 AM Michael S. Tsirkin <mst@redhat.com> wrote:
-> > > >
-> > > > The following changes since commit d2e9b78162e31b1eaf20f3a4f563da82da56908d:
-> > > >
-> > > >   Merge tag 'pull-qapi-2025-05-28' of https://repo.or.cz/qemu/armbru into staging (2025-05-29 08:36:01 -0400)
-> > > >
-> > > > are available in the Git repository at:
-> > > >
-> > > >   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
-> > > >
-> > > > for you to fetch changes up to 1c5771c092742b729e2a640be184a0f48c0b2cdb:
-> > > >
-> > > >   hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine (2025-06-01 08:30:09 -0400)
-> > > >
-> > > > ----------------------------------------------------------------
-> > > > virtio,pci,pc: features, fixes, tests
-> > > >
-> > > > vhost will now no longer set a call notifier if unused
-> > > > loongarch gained acpi tests based on bios-tables-test
-> > > > some core pci work for SVM support in vtd
-> > > > vhost vdpa init has been optimized for response time to QMP
-> > > > A couple more fixes
-> > > >
-> > > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-> > >
-> > > Please take a look at this CI failure:
-> > > https://gitlab.com/qemu-project/qemu/-/jobs/10225580735#L4750
-> >
-> > Hmm must be how it interacts with something in your tree.
-> > Which commit are you merging with?
-> > Let me know, I'll try to rebase.
+Hi Cédric,
+
+On 6/2/25 6:59 AM, Cédric Le Goater wrote:
+> Hello Pierrick,
 > 
-> commit 25de0b9aa129b2b014a0595befef05f04511868d (HEAD -> staging)
-> Merge: 3e82ddaa8d 6e672b2a08
-> Author: Stefan Hajnoczi <stefanha@redhat.com>
-> Date:   Mon Jun 2 09:56:12 2025 -0400
+> On 5/30/25 09:11, Paolo Bonzini wrote:
+>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Link: https://lore.kernel.org/r/20250521223414.248276-3-pierrick.bouvier@linaro.org
+>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>> ---
+>>    hw/arm/meson.build | 4 ++--
+>>    1 file changed, 2 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+>> index 5098795f61d..d90be8f4c94 100644
+>> --- a/hw/arm/meson.build
+>> +++ b/hw/arm/meson.build
+>> @@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
+>>    arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
+>>    arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
+>>    arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
+>> -arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
+>> +arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [files('musicpal.c')])
+>>    arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
+>>    arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
+>>    arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
+>> @@ -79,7 +79,7 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+>>    arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+>>    arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+>>    
+>> -arm_common_ss.add(fdt, files('boot.c'))
+>> +arm_common_ss.add(files('boot.c'))
+>>    
+>>    hw_arch += {'arm': arm_ss}
+>>    hw_common_arch += {'arm': arm_common_ss}
 > 
->     Merge tag 'for_upstream' of
-> https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging
+> This commit breaks building these files on Windows:
 > 
->     virtio,pci,pc: features, fixes, tests
+>       hw/arm/{boot.c,vexpress.c,imx8mp-evk.c,raspi4b.c}
 > 
-> Commit 6e672b2a08 is the one you published and 3e82ddaa8d is the
-> qemu.git/master.
+> Error is :
+> 
+>       fatal error: libfdt.h: No such file or directory
+> 
+> Thanks,
+> 
 
-I could not figure it out. Must be a loongarch bug dealing
-with s390 hosts. I dropped them from the tag for now.
-Cc contributor to figure it out.
-Bibo Mao pls take a look.
+Is libfdt available in your windows environment? If yes, is it in a non 
+standard path?
+On my side, it built successfully, so I first need to reproduce this.
 
-New tag:
-0b006153b7ec66505cb2d231235aa19ca5d2ce37
-
-
-Thanks!
-
-
-> >
-> > > >
-> > > > ----------------------------------------------------------------
-> > > > Bernhard Beschow (1):
-> > > >       hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
-> > > >
-> > > > Bibo Mao (8):
-> > > >       uefi-test-tools:: Add LoongArch64 support
-> > > >       tests/data/uefi-boot-images: Add ISO image for LoongArch system
-> > > >       tests/qtest/bios-tables-test: Use MiB macro rather hardcode value
-> > > >       tests/acpi: Add empty ACPI data files for LoongArch
-> > > >       tests/qtest/bios-tables-test: Add basic testing for LoongArch
-> > > >       rebuild-expected-aml.sh: Add support for LoongArch
-> > > >       tests/acpi: Fill acpi table data for LoongArch
-> > > >       tests/acpi: Remove stale allowed tables
-> > > >
-> > > > CLEMENT MATHIEU--DRIF (11):
-> > > >       pcie: Add helper to declare PASID capability for a pcie device
-> > > >       pcie: Helper functions to check if PASID is enabled
-> > > >       pcie: Helper function to check if ATS is enabled
-> > > >       pcie: Add a helper to declare the PRI capability for a pcie device
-> > > >       pcie: Helper functions to check to check if PRI is enabled
-> > > >       pci: Cache the bus mastering status in the device
-> > > >       pci: Add an API to get IOMMU's min page size and virtual address width
-> > > >       memory: Store user data pointer in the IOMMU notifiers
-> > > >       pci: Add a pci-level initialization function for IOMMU notifiers
-> > > >       pci: Add a pci-level API for ATS
-> > > >       pci: Add a PCI-level API for PRI
-> > > >
-> > > > Eugenio Pérez (7):
-> > > >       vdpa: check for iova tree initialized at net_client_start
-> > > >       vdpa: reorder vhost_vdpa_set_backend_cap
-> > > >       vdpa: set backend capabilities at vhost_vdpa_init
-> > > >       vdpa: add listener_registered
-> > > >       vdpa: reorder listener assignment
-> > > >       vdpa: move iova_tree allocation to net_vhost_vdpa_init
-> > > >       vdpa: move memory listener register to vhost_vdpa_init
-> > > >
-> > > > Huaitong Han (1):
-> > > >       vhost: Don't set vring call if guest notifier is unused
-> > > >
-> > > > Sairaj Kodilkar (1):
-> > > >       hw/i386/amd_iommu: Fix device setup failure when PT is on.
-> > > >
-> > > > Vasant Hegde (1):
-> > > >       hw/i386/amd_iommu: Fix xtsup when vcpus < 255
-> > > >
-> > > > Yuri Benditovich (1):
-> > > >       virtio: check for validity of indirect descriptors
-> > > >
-> > > >  include/hw/pci/pci.h                               | 316 +++++++++++++++++++++
-> > > >  include/hw/pci/pci_device.h                        |   1 +
-> > > >  include/hw/pci/pcie.h                              |  13 +-
-> > > >  include/hw/pci/pcie_regs.h                         |   8 +
-> > > >  include/hw/virtio/vhost-vdpa.h                     |  22 +-
-> > > >  include/system/memory.h                            |   1 +
-> > > >  hw/i386/amd_iommu.c                                |  20 +-
-> > > >  hw/i386/pc_piix.c                                  |   5 +
-> > > >  hw/pci/pci.c                                       | 206 +++++++++++++-
-> > > >  hw/pci/pcie.c                                      |  78 +++++
-> > > >  hw/virtio/vhost-vdpa.c                             | 107 ++++---
-> > > >  hw/virtio/virtio-pci.c                             |   7 +-
-> > > >  hw/virtio/virtio.c                                 |  11 +
-> > > >  net/vhost-vdpa.c                                   |  34 +--
-> > > >  tests/qtest/bios-tables-test.c                     |  99 ++++++-
-> > > >  tests/data/acpi/loongarch64/virt/APIC              | Bin 0 -> 108 bytes
-> > > >  tests/data/acpi/loongarch64/virt/APIC.topology     | Bin 0 -> 213 bytes
-> > > >  tests/data/acpi/loongarch64/virt/DSDT              | Bin 0 -> 4641 bytes
-> > > >  tests/data/acpi/loongarch64/virt/DSDT.memhp        | Bin 0 -> 5862 bytes
-> > > >  tests/data/acpi/loongarch64/virt/DSDT.numamem      | Bin 0 -> 4647 bytes
-> > > >  tests/data/acpi/loongarch64/virt/DSDT.topology     | Bin 0 -> 5352 bytes
-> > > >  tests/data/acpi/loongarch64/virt/FACP              | Bin 0 -> 268 bytes
-> > > >  tests/data/acpi/loongarch64/virt/MCFG              | Bin 0 -> 60 bytes
-> > > >  tests/data/acpi/loongarch64/virt/PPTT              | Bin 0 -> 76 bytes
-> > > >  tests/data/acpi/loongarch64/virt/PPTT.topology     | Bin 0 -> 296 bytes
-> > > >  tests/data/acpi/loongarch64/virt/SLIT              |   0
-> > > >  tests/data/acpi/loongarch64/virt/SLIT.numamem      | Bin 0 -> 48 bytes
-> > > >  tests/data/acpi/loongarch64/virt/SPCR              | Bin 0 -> 80 bytes
-> > > >  tests/data/acpi/loongarch64/virt/SRAT              | Bin 0 -> 104 bytes
-> > > >  tests/data/acpi/loongarch64/virt/SRAT.memhp        | Bin 0 -> 144 bytes
-> > > >  tests/data/acpi/loongarch64/virt/SRAT.numamem      | Bin 0 -> 144 bytes
-> > > >  tests/data/acpi/loongarch64/virt/SRAT.topology     | Bin 0 -> 216 bytes
-> > > >  tests/data/acpi/rebuild-expected-aml.sh            |   4 +-
-> > > >  .../bios-tables-test.loongarch64.iso.qcow2         | Bin 0 -> 12800 bytes
-> > > >  tests/qtest/meson.build                            |   1 +
-> > > >  tests/uefi-test-tools/Makefile                     |   5 +-
-> > > >  .../UefiTestToolsPkg/UefiTestToolsPkg.dsc          |   6 +-
-> > > >  tests/uefi-test-tools/uefi-test-build.config       |  10 +
-> > > >  38 files changed, 846 insertions(+), 108 deletions(-)
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/APIC
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/APIC.topology
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.memhp
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.numamem
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.topology
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/FACP
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT.topology
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT.numamem
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.memhp
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.numamem
-> > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.topology
-> > > >  create mode 100644 tests/data/uefi-boot-images/bios-tables-test.loongarch64.iso.qcow2
-> > > >
-> > > >
-> >
-
+Thanks,
+Pierrick
 
