@@ -4,78 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55503C5B549
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 22:27:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 338DDC5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 22:27:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMDbs-0004KJ-6m; Mon, 02 Jun 2025 18:26:24 -0400
+	id 1uMDcO-0004mN-Cu; Mon, 02 Jun 2025 18:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uMDbc-0004FV-B1
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:26:08 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uMDba-0003tN-Gs
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:26:07 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-606a4af1869so718697a12.1
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 15:26:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748903164; x=1749507964; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vqA9W7+q7AoIPpvWkNkiM3ROgJ6NFWq8stsfZsfIcCs=;
- b=HPHZeij1apX4aA/Q3RIGIYqJoFitjSIEOzU/xjhcu34hG5i0bnTs9La5bcBWaFArXL
- LeIgHQNfSz7eJybGT7jmXGhFdoXKsLD34WKVLjYP1BWRs/ol6oD2OYv9aF5YW3gB37HW
- o9B/6Af6wDZCJlO7MIo4fnI8QXcxMDX/unJX5cFMXHsdLcdLBhrMj0vQEKF/HfPwFP29
- gJtnoOzv0+KMzED0Vnpb6H/XSOOfFg7a/e7VB6bQXkUh0jJ5K4jysmeLBpJPAKb7KJfC
- sUuEXnMnCzX6k90RVqiM+aNHpRFYraARVhlCbR07Jx+y7ZzVj4HN3R9UKKUV5+rcG+X3
- MOKw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748903164; x=1749507964;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=vqA9W7+q7AoIPpvWkNkiM3ROgJ6NFWq8stsfZsfIcCs=;
- b=qM2tOWffpGiAyjx+CC7YhFDMPJEwHOX0YDBKru1VrwZwSxsU7pBomRNIFoSm0Xsu+f
- HQQ6qNQQBwlit0asoKUr/r/RdNz+BdDt5NtIwbnkQ9YTyDmookeBndJ6eiF7zI7nxfaj
- l0d8aHclG0fBNc3eu5auVKTh7AekG+yxNiuGjPEeVdyccx5kUfv/JvQ2+gQf631ZwjcO
- 4DI8K14zDrroGNUe5wab+0r7z8qUf+jCBCcYiNqpTh3UaqbtXJ5m3512BBU5TayCZZ5h
- depE5NnaOh9bKQhyZbwv4M7mLtTPMy8ypTlmWXcMwk5ClwZoxTw7K93wcff4PCxa46zw
- VYdw==
-X-Gm-Message-State: AOJu0YzvvXHbNvk5hf7N3BF0phd1OcZyxqgcLkWSdO7X+MJ5G35Rx2De
- OaDAYajqDhmSJP50zwULuw1XxfKnpSjdsLV2OEfkq2j1HqfzUhS3fQc+xaZddmIn5gAV357mwn3
- oxJ1cvRNMrzQarYEPcPOdeT4fgiwmsE+TJ52s7Zg=
-X-Gm-Gg: ASbGncvVzmL3FUCDmaLf0t0DVfPeQU0cVchWxkNppldpQyu7CJs8EtPdjQmqk0ahCKb
- m3WqPpMRNA1w2LbaaHd1lxdWVaVdH+d5M9G2ZBZbdqsGO0A6XQ6grBVITeKBX2FHHD9a9e0SP4f
- XgVsYAz6k59xIHObCGLhnd5sITlpuTxG4=
-X-Google-Smtp-Source: AGHT+IGMwkXvp65s+s3xDL/dknA5Skgg0rrJ3UTJ7sbHPANqqNKn16eNHN+pbKQl9hdGZd1g4ttGH6fwKef53uv5SXc=
-X-Received: by 2002:a17:907:3fa1:b0:ad8:8efe:3205 with SMTP id
- a640c23a62f3a-adb36c28fccmr1348890066b.55.1748903163574; Mon, 02 Jun 2025
- 15:26:03 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250528192528.3968-1-tanishdesai37@gmail.com>
-In-Reply-To: <20250528192528.3968-1-tanishdesai37@gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 2 Jun 2025 18:25:51 -0400
-X-Gm-Features: AX0GCFvr7_C2NTzv0IYWxDt1obcsTCycDt35LYN2piWBGCwIroYyrPCQOLU1P98
-Message-ID: <CAJSP0QU-0f8Rbuk4Z6S6T_DSH1xq63Ai5gQKGzSadT08MhGQyQ@mail.gmail.com>
-Subject: Re: [PATCH] trace/simple: seperate hot paths of tracing fucntions
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uMDcM-0004kl-7e
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:26:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uMDcJ-0003va-QY
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:26:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748903211;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=7xBEGJqbH2+Z70g5MnEbjmNOetcpQfGIVk5i4aPi6Dw=;
+ b=Bdawcw8QmyJ9vh774BneX9ta4pqzHxQc+8NF204s46cnG/lnU6PR0LgYxRfCQWM6RtUpJw
+ K6FfzFeqI2y+GVMbvuR9Wci7baUonuymBBcdkWLHilZ+W6j1W4lAvEhUNsRp+Yvcjj7B+i
+ MR23iz4DQIBCUZuYzMaOM/1C0DZnaZo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-118-uIicL1rIMfuUIwblQ1ReHg-1; Mon,
+ 02 Jun 2025 18:26:47 -0400
+X-MC-Unique: uIicL1rIMfuUIwblQ1ReHg-1
+X-Mimecast-MFC-AGG-ID: uIicL1rIMfuUIwblQ1ReHg_1748903206
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 931991954B2B; Mon,  2 Jun 2025 22:26:46 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.84])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2914319560AB; Mon,  2 Jun 2025 22:26:46 +0000 (UTC)
+Date: Mon, 2 Jun 2025 18:01:19 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
 To: Tanish Desai <tanishdesai37@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mads@ynddal.dk
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com,
+	Mads Ynddal <mads@ynddal.dk>
+Subject: Re: [PATCH 1/3] trace/syslog: seperate cold paths of tracing functions
+Message-ID: <20250602220119.GA320269@fedora>
+References: <20250601181231.3461-1-tanishdesai37@gmail.com>
+ <20250601181231.3461-2-tanishdesai37@gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="P/DWvKMc37UQ36TR"
+Content-Disposition: inline
+In-Reply-To: <20250601181231.3461-2-tanishdesai37@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,9 +86,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Applied to my tracing tree, thanks!
 
-https://gitlab.com/stefanha/qemu/-/commit/ffcfb0faaa95fc6ca007f7dd989e390dacf936ca
+--P/DWvKMc37UQ36TR
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Stefan
+On Sun, Jun 01, 2025 at 06:12:29PM +0000, Tanish Desai wrote:
+> inline: move hot paths from .c to .h for better performance
+> Moved frequently used hot paths from the .c file to the .h file to enable=
+ inlining
+> and improve performance. This approach is inspired by past QEMU optimizat=
+ions,
+> where performance-critical code was inlined based on profiling results.
+>=20
+> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+> ---
+>  scripts/tracetool/backend/syslog.py | 36 +++++++++++++++++++++++------
+>  1 file changed, 29 insertions(+), 7 deletions(-)
+
+This commit description doesn't match what the patch does.
+
+What is the purpose of creating a _syslog_trace_foo() function in the .c
+file instead of calling syslog() directly from the .h file?
+
+>=20
+> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/back=
+end/syslog.py
+> index 012970f6cc..52b8ff65ea 100644
+> --- a/scripts/tracetool/backend/syslog.py
+> +++ b/scripts/tracetool/backend/syslog.py
+> @@ -21,8 +21,12 @@
+> =20
+> =20
+>  def generate_h_begin(events, group):
+> -    out('#include <syslog.h>',
+> -        '')
+> +    out('#include <syslog.h>')
+> +    for event in events:
+> +        out('void _syslog_%(api)s(%(args)s);',
+> +            api=3Devent.api(),
+> +            args=3Devent.args)
+> +    out('')
+> =20
+> =20
+>  def generate_h(event, group):
+> @@ -37,17 +41,35 @@ def generate_h(event, group):
+>          cond =3D "trace_event_get_state(%s)" % ("TRACE_" + event.name.up=
+per())
+> =20
+>      out('    if (%(cond)s) {',
+> -        '#line %(event_lineno)d "%(event_filename)s"',
+> -        '        syslog(LOG_INFO, "%(name)s " %(fmt)s %(argnames)s);',
+> -        '#line %(out_next_lineno)d "%(out_filename)s"',
+> +            '       _syslog_%(api)s(%(args)s);',
+>          '    }',
+>          cond=3Dcond,
+>          event_lineno=3Devent.lineno,
+>          event_filename=3Dos.path.relpath(event.filename),
+>          name=3Devent.name,
+>          fmt=3Devent.fmt.rstrip("\n"),
+> -        argnames=3Dargnames)
+> -
+> +        argnames=3Dargnames,
+> +        api=3Devent.api(),
+> +        args=3D", ".join(event.args.names()))
+> +
+> +
+> +def generate_c(event, group):
+> +        argnames =3D ", ".join(event.args.names())
+> +        if len(event.args) > 0:
+> +            argnames =3D ", " + argnames
+> +        out('void _syslog_%(api)s(%(args)s){',
+> +        '   #line %(event_lineno)d "%(event_filename)s"',
+> +        '            syslog(LOG_INFO, "%(name)s " %(fmt)s %(argnames)s);=
+',
+> +        '   #line %(out_next_lineno)d "%(out_filename)s"',
+> +        '}',
+> +        '',
+> +        event_lineno=3Devent.lineno,
+> +        event_filename=3Dos.path.relpath(event.filename),
+> +        name=3Devent.name,
+> +        fmt=3Devent.fmt.rstrip("\n"),
+> +        argnames=3Dargnames,
+> +        api=3Devent.api(),
+> +        args=3Devent.args)   =20
+> =20
+>  def generate_h_backend_dstate(event, group):
+>      out('    trace_event_get_state_dynamic_by_id(%(event_id)s) || \\',
+> --=20
+> 2.34.1
+>=20
+
+--P/DWvKMc37UQ36TR
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmg+Hy8ACgkQnKSrs4Gr
+c8iVKAf/fqaZeSH/UyLZHTFstVFT+bja5eANwON+4sWxsRqE0XnMrpmapIspWsK9
+99DH/bg0kYxnL7hmzMs7LNJ+2xasHAAC33ZHNkSZL7/Ovi8E8oy5M3lVfNYNRZOw
+ot5QE1yxgqguYPE8mDkfJirmzDyn5igQYKWVQzZ8DHFcaNXUxtQB8QjiHPLdkWrt
+exnjx4FxGfvTCe0VPWc4DIy0wtY3TC107hpnoaahjba7lR/gxLqS/7/Cd4eez2D1
+W6mBI+78R3ANMcnqmjNd5Ve0iItKpdx3+0vIgcqHnxu08gU7koALBSW45+ifHNwT
+XSoJBobpBhQnsE+1wvcEYj08Vd8wNQ==
+=YBPj
+-----END PGP SIGNATURE-----
+
+--P/DWvKMc37UQ36TR--
+
 
