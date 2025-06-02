@@ -4,75 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3AA8C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 00:53:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58724C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 00:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLtQS-0004iv-Gl; Sun, 01 Jun 2025 20:53:16 -0400
+	id 1uLtTL-0005ev-7K; Sun, 01 Jun 2025 20:56:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLtQO-0004ia-P8; Sun, 01 Jun 2025 20:53:14 -0400
-Received: from mail-ua1-x92c.google.com ([2607:f8b0:4864:20::92c])
+ id 1uLtTJ-0005eH-54; Sun, 01 Jun 2025 20:56:13 -0400
+Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLtQN-0006Xq-49; Sun, 01 Jun 2025 20:53:12 -0400
-Received: by mail-ua1-x92c.google.com with SMTP id
- a1e0cc1a2514c-87e7c306fc4so74503241.3; 
- Sun, 01 Jun 2025 17:53:08 -0700 (PDT)
+ id 1uLtTH-00071G-FR; Sun, 01 Jun 2025 20:56:12 -0400
+Received: by mail-ua1-x933.google.com with SMTP id
+ a1e0cc1a2514c-86fbb48fc7fso676261241.2; 
+ Sun, 01 Jun 2025 17:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748825588; x=1749430388; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1748825769; x=1749430569; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sYxoPMFfjUfg2+1WRtysPEm2brYz5pL6l/raJmrXCkM=;
- b=Ox+w+HpZCbBLmuVjSoofnXck14PW7XPl2cL77qgtTGqy13vMh62lbStr8uwLtoMeKe
- BdVNmORqFvkapMBHpgiecXioCnFWURCF16ReRBsEvbyYLJK6s0hIHgWEr1QsOyi5ewkk
- 0nXhlRUkp6JR5/vd3SGFmGoRtxPasDCkDCZrHXllfI3NqG7JafMPG8THLb+abDN6niig
- IKQ5xy5rAunDFDLCb6MwKpvhne5vm3OHhE4n9EO23Jucw3qrx2Y86EnhGDUzKQ5YSzN7
- XRafas/lFRUZBO8h6o1XiNNaOp4iwBJ/icatEYa9rQmzjctHF5xfsH6rX+Lo1TBa3qqn
- ronQ==
+ bh=sokfjRU3Ey34Z1h/Om9Ak0EDkRmMihKTCc+4CArsuz0=;
+ b=bCpeCFd2vSndzPAwCpWHIIR5YRCCh9iP2q9KFRr7XcBLzQ3mPESBRmzD4gJPsucHmL
+ u4S602ZPVENLB4kDOzwMZPbw9/9U4Ih1PDAuz7rSSOO+ozOm/6ZSeVmT8XbxZjad2jZu
+ qNZIz/XIVzRzs2+r3gI/fnfm3xSbsVqGmkH1JWswURiUFgb7nLIKgt+9sTGISh4GE32T
+ aH5sEI7DRbVkZWjRlTaJffJXSw7zAYOHkLbQHi/0bT479laAsvIhdv3DyrBnkZeQOzke
+ Aq5geTM/yM9eHcZzltVHb57H1aCG+ZKMVjugeigNat/KYQJSLUgk5ZXY+zc0z0FnEg/N
+ DnLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748825588; x=1749430388;
+ d=1e100.net; s=20230601; t=1748825769; x=1749430569;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sYxoPMFfjUfg2+1WRtysPEm2brYz5pL6l/raJmrXCkM=;
- b=Unr72T6shR46BUXbOlM1tnkXt9LuWyQoIQ0a9XRLEpCpOBlnU0S4y3ZSKsUmjOEkDk
- ZJwc3isnajkB8EchTy3bzSKNhkV6SZ42Fh91tz0jRPCF4cmexOPhtSIomAnhwUON02Mk
- m2BG/vBv2THzKhIGuJak2OUHlDs9ZPGwDABOtLuo0FwZW6XTPR+SNLUwkRl832UxnG+T
- qWMb7hdTDdj5mS0ySV/7VG0hXPJ3sbrjpXk23MOK5vTuzVIBEgJ3H5XWFqWQjRQfpYUF
- lrFrxaamMlLohTAAPqmvIjCpkIXGM7BRuTbf1Qntl0YujU09Q2yj9cdLcgdX0khh+EZW
- Qydw==
+ bh=sokfjRU3Ey34Z1h/Om9Ak0EDkRmMihKTCc+4CArsuz0=;
+ b=ZdFmNJMxO4ZS3JkMNYLJnoazLoDDzviGcAzAEZZuUWijhlfBttAVutPs4e9tLC2aIZ
+ z15KsvebedM202tVElDOhJE2N4zcUyvC0rc/hmq533vet9yFP9z0MTiNUkbyQ09XU3et
+ oz7yTwa2yXrFMuy0bKgZPJDoDnEWKSwkxzWR4jTVlV0qIR/k+n626pARD2ZUw3jp2CAs
+ U9md9Kx1VXbhi0GkBf2+Nylfox/ghOGSS5v7mkxwu5rZ472M4Ghx+ul3fN5r8rUKJUjQ
+ tdOGjQox+wGQ09xPtYfhRbWnzqeuit5KYIWmzQUBek7RUZIK37B5kTvl9o7srvpUcZvF
+ J8Vg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWXIgTt+KidKIAhpVNiI9gPpnhYmR+rw5n4nNhiGRcjC2uoqIw1XtM39GuXjV6BmP6TBKwJKYNXuMho@nongnu.org
-X-Gm-Message-State: AOJu0YzkvzlekC/wJRXr2kGg7oMBKNr+zG5qe92I6nGcHnBGuxvvGJBk
- 67FpJwtB+/I+H8368uiF7sLqgr/UH34GSj5+lhjnzsIwhS4ClLRJlZW4eiXn9VWFblS2UV17Xgk
- YmCsos2BumwVKMNzE8YEO+QZvPdj8Pcc=
-X-Gm-Gg: ASbGncsKhyyYIAW2Md3Pe69WuyAUbsnewtCOtyrAXwlNWx1X7MoHP4E5p+uRfAN5Klk
- vj4qfkbOzOH2JWTAG7fuW1bgjFkI3AwLEgOTtLIzh9JwqQ/8tOZaH47y4RnxS0663DPcQ9adumB
- dizzQQpLu1b7rt3/9ZCNTAc/ZlzxnqYMjkwPMzQ7Fh7qNaGgD2PdUG2fwZ+RrsyWM2UF8s+zStG
- w==
-X-Google-Smtp-Source: AGHT+IF+nVW2r3Dx2rWkkF/xyp8uvPUPSHHt93s56Fd3owD/h8qJtx8rfkvFv4Qsyc8ui9fGySz9fEXoUE/SQATON2o=
-X-Received: by 2002:a05:6102:32ce:b0:4e6:a33d:9925 with SMTP id
- ada2fe7eead31-4e6ecd2e650mr6887147137.5.1748825587911; Sun, 01 Jun 2025
- 17:53:07 -0700 (PDT)
+ AJvYcCUvTMQHwdxtNIOJwka2kNDwiVaYte1n3COWLV6WOhbU6KkJmXHMLDIOTmx/xtbDm+BENz8dCrDgWBIM@nongnu.org
+X-Gm-Message-State: AOJu0Yw6rCCqTopecd2tFQ18DGVu1G0Iqt4qqKJ6RVLx7/h53LRBfpqz
+ A8AWknbZPL1H2+jWCzda8oQoLRlj78qQxdcJufTdC7KQUptJjEHrbDHaTmJPE3ZecQK2sFLHfSJ
+ zT6/6mUv3IiVgL5vZdTXp6fdR9vYvs0c=
+X-Gm-Gg: ASbGncskVZMl81tYPYJmJ/ud5N3/1I0Tjww9+rl3A1O9gOBImHG87ac8VamBR4QQm2F
+ MPqiRjwqJWSahqIsgsALhvsIb36UXELMgqDCZ/0Ik1A10IfGo26bH+hrD4vBNabpPIrtNbG121u
+ Wu2DSmIzAhhuuaqd6ndjjcfnWMcEejI9MNyIMV1GPgAGo+im2BuWQvN3OafUC2e3k=
+X-Google-Smtp-Source: AGHT+IGQS1kABGVS7AQWZWUD+Aa44Ik9SUypLav+ZFYvsOPusghSP1VBuOiiU9pskmXFyDDzD45QHtvmAOg4CJ5Zg8I=
+X-Received: by 2002:a05:6102:26cb:b0:4e1:48ee:6f36 with SMTP id
+ ada2fe7eead31-4e701cb0c2cmr3481172137.19.1748825769600; Sun, 01 Jun 2025
+ 17:56:09 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250530134608.1806922-1-dbarboza@ventanamicro.com>
 In-Reply-To: <20250530134608.1806922-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 2 Jun 2025 10:52:41 +1000
-X-Gm-Features: AX0GCFtJa_ok2ESI6S6nPlIXNCZZY1-fCqrgFpaEY__tJ8t_XZ0P_CSdV1w2Tb0
-Message-ID: <CAKmqyKOepjGz2DsB-K7o4Zbu7VtSKbOcr9BwUajaudPERKjHFg@mail.gmail.com>
+Date: Mon, 2 Jun 2025 10:55:43 +1000
+X-Gm-Features: AX0GCFvX8E2Pg0ciZth2Gzni6fWovQkeQprQU-b2bsnwnpitV5RgPkkwNAIBk98
+Message-ID: <CAKmqyKOpXKAeazo3iNKMyjziDucQVthZH0LE-PLH9Gc8OVWubg@mail.gmail.com>
 Subject: Re: [PATCH] target/riscv: remove capital 'Z' CPU properties
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::92c;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x92c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,7 +102,9 @@ On Fri, May 30, 2025 at 11:47=E2=80=AFPM Daniel Henrique Barboza
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Thanks!
+
+Applied to riscv-to-apply.next
 
 Alistair
 
