@@ -4,141 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56972C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 16:21:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B0D4C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 16:23:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM7ti-0004Go-JQ; Mon, 02 Jun 2025 12:20:26 -0400
+	id 1uM7wm-0005DN-AG; Mon, 02 Jun 2025 12:23:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uM7tg-0004Ga-Sp
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 12:20:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uM7tf-00083F-3D
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 12:20:24 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748881220;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=UND6LBgYzKh5UJoTdUouoreyW1Exj+atQyioQIzdY4E=;
- b=XvQRrZp8KRGAceVsnIFIDr02jDJue+L6Ly8lgJtktjoC5iwWGEA5uWQfXIMFYfF14Ib0Y3
- fzMd79pfvp3ivT/kl6p2M+NzicKWC6mEnWLNQeQoVJ2OkTkNTUJAp78GyTtRGi22eVUk6s
- irVmzg99D+FZwuTyLNntdjHZ99g29EA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-645--2Aa9LwFP6ewJrK51XFc7w-1; Mon, 02 Jun 2025 12:20:19 -0400
-X-MC-Unique: -2Aa9LwFP6ewJrK51XFc7w-1
-X-Mimecast-MFC-AGG-ID: -2Aa9LwFP6ewJrK51XFc7w_1748881218
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f85f31d9so1264062f8f.1
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 09:20:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748881218; x=1749486018;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UND6LBgYzKh5UJoTdUouoreyW1Exj+atQyioQIzdY4E=;
- b=Kn2eVK4ZECPFkm/npn42BFs7QcxgcXFVhbS2Tx/WXBVapm01s0IedhSHn+56PWdH7x
- nc2VI5g/lfN5cn0u0w3S6rs8HX4Q1TxgHGsDKnCON8uJWpfIXoEWupi9gkc4RiOVCDHF
- 0FTkMNAdafTPovool5syKGum6sWckEtgF3UwkTSq4GP9maQolYrfeJ+GuK730Kg/CZh2
- nbvMkjpe+0cDs6oIoZeP0R2qkRHlgrR0/2RZ2POXiUX1axvcKldHhqIzMEy5FXUGpmJI
- vDJcNTQp4Gorg9UkKMj0ijmSIqAvsNlD+q2LahFUesZQirKZ8xfASGLkkmJiPq3tGjd0
- HwJw==
-X-Gm-Message-State: AOJu0Yyc0WaqD+6NPqwj6xcYdVfy3/uvpy8vZX/NFHtJvSzHN6sJ6Wu8
- hel2nIMUOBXo0uQyG+MgC3Bjhlhy2tlix8aPEvRvNEfbrrYl44L3y2Y9CPnBlTm+/NgXl1wugPM
- 9LsigF2KL/5RhtzFld8auMASiOs/H40cPSjt2ssn4b+V3wY03Fblt9ajO
-X-Gm-Gg: ASbGncsLoZiNu3rpDpkl8wzIYoP/KsBqdi5H8H4FfR+1qGrnIAsTV82fVvjYV7dPReK
- dCvfZtmbHKBYwMGVBbyHmqbF3TLm8UPDzV3WiNU121/eUSi1L8EzYhzbeCfG06nJQbk5B7Oqe/W
- 47HVmgLfCpJGQLHto3ELTi7ha2IqZOOm5dedFOoe1AheWTllM1AzfWPfQ1qqFRUfm9f908k/gZ4
- sFe3xcgs3F7ghSxulEUZU2E9D8ZEAf+D0GYo094pALy/b76jsBagHxCtfCMxPJRySY58F2ARMZK
- 7KSr+lo6yt/KIJIYjkobfGMKDEviLttFBisMAR84r0vJYoOLQE06
-X-Received: by 2002:a05:6000:18a5:b0:3a4:f70d:dec3 with SMTP id
- ffacd0b85a97d-3a4f89bec05mr9189329f8f.16.1748881218097; 
- Mon, 02 Jun 2025 09:20:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IESiDUL2+Vs7VE18oAK2IebVTWJNb220qZwPtf+CLouMGiM/sUVb1+RbvPc3MVVi0aOEJatLg==
-X-Received: by 2002:a05:6000:18a5:b0:3a4:f70d:dec3 with SMTP id
- ffacd0b85a97d-3a4f89bec05mr9189300f8f.16.1748881217672; 
- Mon, 02 Jun 2025 09:20:17 -0700 (PDT)
-Received: from [192.168.0.7] (ltea-047-064-112-237.pools.arcor-ip.net.
- [47.64.112.237]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe6c525sm15331568f8f.23.2025.06.02.09.20.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 09:20:17 -0700 (PDT)
-Message-ID: <1a5e1073-f624-4429-a7ca-6a5500fe036d@redhat.com>
-Date: Mon, 2 Jun 2025 18:20:16 +0200
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uM7wh-0005D7-7S
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 12:23:31 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uM7we-0008Ho-ES
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 12:23:30 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 4E7E51F799;
+ Mon,  2 Jun 2025 16:23:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748881403; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HBFdGBmI4ZMHsKsvKSl+t2u3Cvzc3A5i8cRjLzadzyk=;
+ b=Ssh0RYdxR/JjLQAVcc/cQiMksl43D1u+Hi9h2OiV6menTm67x6h6Df3yp99uM6R4lZOWR+
+ KyKG4c8jhUDoIj2cWZW0pgb5Dt3cLp4gQ6MuP4Dcq9RP5DhNpN/AEhNP6Mhd7ZtFN2C3Qx
+ gaQ5VNFQLjDR+uYV2Z3WPyZ629saYSs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748881403;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HBFdGBmI4ZMHsKsvKSl+t2u3Cvzc3A5i8cRjLzadzyk=;
+ b=47BIsxK3G5NKBni8edT9qqUMw13DX5INkd1tBX2OykCTxQqltpH3RW8ceo3RdJ68Qxp/39
+ YMnGpjVJ3R8eEHCQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748881402; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HBFdGBmI4ZMHsKsvKSl+t2u3Cvzc3A5i8cRjLzadzyk=;
+ b=r2XQbjFH+5mJh8P7tw9SJcQy/612Fhbhl0psoBqkzl3Jxb0TYjx+GZdpE+DsLv/DiA7WrO
+ oPRMyJYlRyJNTTheTb4xiXB3Oi2TwRWOyeu1rVprEtBoZxTw87Zd3aT0e+Mb0tWdvWW5b0
+ GmMcXVwFqoqQ/i4Bw1V3zI2uRkSChH4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748881402;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HBFdGBmI4ZMHsKsvKSl+t2u3Cvzc3A5i8cRjLzadzyk=;
+ b=gbjQpKVuWabI6wHpaiOM2l714ykpqKSQRibkqywrw0EI0xW6NwKY1BAi9tnXble0DUdEGe
+ UB5NxO4WOTOuZuAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C2D3A136C7;
+ Mon,  2 Jun 2025 16:23:21 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id IkPwIPnPPWgFEQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Jun 2025 16:23:21 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com, "Dr . David Alan
+ Gilbert" <dave@treblig.org>, Yanfei Xu <yanfei.xu@bytedance.com>
+Subject: Re: [PATCH 11/11] migration/postcopy: Avoid clearing dirty bitmap
+ for postcopy too
+In-Reply-To: <20250527215850.1271072-12-peterx@redhat.com>
+References: <20250527215850.1271072-1-peterx@redhat.com>
+ <20250527215850.1271072-12-peterx@redhat.com>
+Date: Mon, 02 Jun 2025 13:23:19 -0300
+Message-ID: <87y0ua3yfc.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Is anybody still using the "highbank" or "midway" QEMU machines?
-To: Peter Maydell <peter.maydell@linaro.org>,
- Guenter Roeck <linux@roeck-us.net>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <7aae8238-f7f4-4f3a-9a7e-e9afc99d1d0c@redhat.com>
- <1301bf7e-0e52-43c0-9910-55ea34647a34@roeck-us.net>
- <CAFEAcA_0Hu8+G50sy0FJ2rX-=cNymLddDdrS2nN5ZY-doKiT8w@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA_0Hu8+G50sy0FJ2rX-=cNymLddDdrS2nN5ZY-doKiT8w@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:email,suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,67 +117,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 02/06/2025 17.31, Peter Maydell wrote:
-> On Mon, 2 Jun 2025 at 15:24, Guenter Roeck <linux@roeck-us.net> wrote:
->> On 5/30/25 07:23, Thomas Huth wrote:
->>> I was trying to create a functional test for the "highbank" and
->>> "midway" arm machines of QEMU, and only succeeded after lots of
->>> trial and error to boot something on the "highbank" machine.
->>> Peter mentioned on IRC that he also does not test these machines
->>> by default, so we started wondering whether anybody is still
->>> using these machines? If not, we should maybe start the
->>> deprecation process for those instead?
-> 
->> I don't try to boot midway anymore. Commit log shows:
->>
->>       midway only works with an antique version of qemu. Stop testing it.
->>
->> That was back in 2021. The log shows that it needs qemu v3.0.
-> 
-> Might have been fixed by QEMU commit 61b82973e in 2022, which says
-> # This change fixes in passing booting on the 'midway' board model,
-> # which has been completely broken since we added support for Hyp
-> # mode to the Cortex-A15 CPU
+Peter Xu <peterx@redhat.com> writes:
 
-FWIW, I can now boot the midway machine at least to a shell prompt with the 
-latest version of QEMU: Grab the "Trusty Midway" images that are linked from 
-https://wiki.ubuntu.com/ARM/Server/Install/Calxeda ... unfortunately, there 
-is no dtb available, but you can use dtc to compile 
-arch/arm/boot/dts/calxeda/ecx-2000.dts from the Linux kernel sources into a 
-dtb file that seems to work. Then run QEMU like this:
+> This is a follow up on the other commit "migration/ram: avoid to do log
+> clear in the last round" but for postcopy.
+>
+> https://lore.kernel.org/r/20250514115827.3216082-1-yanfei.xu@bytedance.com
+>
+> I can observe more than 10% reduction of average page fault latency during
+> postcopy phase with this optimization:
+>
+>   Before: 268.00us (+-1.87%)
+>   After:  232.67us (+-2.01%)
+>
+> The test was done with a 16GB VM with 80 vCPUs, running a workload that
+> busy random writes to 13GB memory.
+>
+> Cc: Yanfei Xu <yanfei.xu@bytedance.com>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-qemu-system-arm -M midway -nographic -kernel vmlinuz \
-  -initrd initrd.gz -m 2047 -dtb ecx-2000.dtb \
-  -append "console=ttyAMA0 init=/bin/sh"
-
->> I only test highbank manually (not in automated tests). I have this in my code:
->>
->>       # highbank boots with updated (local version of) qemu,
->>       # but generates warnings to the console due to ignored SMC calls.
->>
->> I have not run the manual test for ages, so I have no idea if it still works.
->> It also looks like I removed the local changes. Those were needed to enable basic
->> SMC support for highbank; maybe similar code is now upstream.
-> 
->> Ok for me to remove both. Not worth the trouble.
-> 
-> Cool. I don't think these machine types provide anything to
-> users that is particularly interesting (if you just want
-> "boot an A15 or A9 Linux" then the virt board will do fine,
-> and the original "test system software for this hardware"
-> use case is long dead). So I'm in favour of deprecating
-> these (and eventually dropping them).
-> 
-> There's not actually a lot of highbank/midway specific code
-> here (no complex SoC modelling, lots of stock Arm peripheral
-> devices, so just 400 lines in hw/arm/highbank.c, plus another
-> 450 in hw/net/xgmac.c for the ethernet controller), but
-> if nobody's using it then there's no point keeping it around.
-
-I think I could also try to create a functional test with above images, but 
-if nobody is really using these machines, deprecation likely makes more 
-sense, indeed ... do you want me to create one of those two patches?
-
-  Thomas
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
