@@ -4,91 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C26B8C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 15:59:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4E0C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 16:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM7Ye-0004xD-IC; Mon, 02 Jun 2025 11:58:40 -0400
+	id 1uM7ce-0007fs-04; Mon, 02 Jun 2025 12:02:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uM7Yc-0004x0-PD
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 11:58:38 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uM7Ya-0005jT-MM
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 11:58:38 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-451d6ade159so13296815e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 08:58:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748879915; x=1749484715; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bKzjlRRjdfwTk+3ST0iw9swhI/Ohpa+RiuUs3EmPmK0=;
- b=ygdzEf02JGgdmQObb4tN8u400N/QFjWanTo3f42r3sjUIjDj+16RF/wMlz9G3gvJ0+
- 4YZMxsy6RRqJGix0yl65itfTZ3nOShsXdO2LKXHyMno/kKxWP1M4g9kXFhySa4dCNvhd
- 4E8DWYpCwD4J33a1+BYmC06VBp1L1B0SH3AuLtMIV+5BFIVPQ+gLYcec6B//eYANu7iS
- vd7Q4Fzcd45ecI0ON2uOxbn8GUqxvs56Gk8Ag1IoNj6ufS3Zm/cGVOKgWO0k6U48VJIy
- nQOpi21H2fjkL26H9OyByVROuomcBXk2mthNbLNYwW1IarTqXg8XmWlrOe7Ajl0drMvf
- gZRA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748879915; x=1749484715;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bKzjlRRjdfwTk+3ST0iw9swhI/Ohpa+RiuUs3EmPmK0=;
- b=kr3bDKAE/bEVV2VHgoYNMFJ++2ggTHbpLbKQi4/YaygnnZW2qDprEYsRHfLTeFWZPN
- RTjaAR/EQe9rnV3ghVRqC1XSoBClnRy4jr7Jx7VAef29k1uuN4kH/4Co3YHkbp70T/nJ
- 2C9RJGNyzP66I7+rbK02Um+SNDd0Qv1rs3rbMDKwRA1jZE51JnoZbJdcTBdkiy6tfKqS
- wmufXMK6sVTjDT9nOXWSwh5L0QEgirTSer8vfmekmqS1ltOZCXqPmy3bPXoN+BOCCyHi
- txPCg3bIwHbWlAOoOQPYBy1Zs/lI02fFfk80Ok5G2G6Tmo1B5f4s4mjTwp1WjKO/QlqP
- O/uQ==
-X-Gm-Message-State: AOJu0Yx1rZWAnSwX6GOILGv5N7zBAb8xM2lCBT6USd0Z9lAouYmiJ5Ra
- V/Mf00vYAgxUr1m05DkUlRhyzO2kID/ymxY93q7q1hsRQOngRedLh7t/kxtWm4MxuiE=
-X-Gm-Gg: ASbGnctn5aJiF9vb0PWje6gMVBhTJqTSLLBCEKLLNHfnR6I1m+J7gpSjkxq9NSmqnEd
- BbnIxFwrRzZJtg44xRroP9Gsqw/9twKLD4vvF2XpZdhStwULq7/i8f3jC12GFCRJXLfY1KAkfqo
- 3t+iJW5FgBmZlCsG4tUW6FlkIFDN41kx4lEGLMW4iIbyCUSQvTLbfnC2UsXqr4L9r4D+aLtQLa1
- YYPBQ8g+cYiYI6kQYTPnIdw/dEXhJC5U+2wKeF1FOcguR6+vT0kzsWnDcvaMfqBMZ9imNuXv+92
- KyKZMHTM14B8b6/FC1LWOBpuM3MYmJyyQgEwmeshSCr6fxvNeq34HItZ1XMTPCpr6nwXLCI4eb2
- f2t97M8gtU5eCUU7W27AM
-X-Google-Smtp-Source: AGHT+IHXG/y1txL4geBbeFb9BdX5sDNwysNX3H70H3aGjFRjtFZC2GhsPEu93dcS9nKWpz+sM8iUTw==
-X-Received: by 2002:a05:600c:4e10:b0:43d:77c5:9c1a with SMTP id
- 5b1f17b1804b1-451191fd314mr80721775e9.4.1748879915027; 
- Mon, 02 Jun 2025 08:58:35 -0700 (PDT)
-Received: from [192.168.1.127] (host-80-41-64-133.as13285.net. [80.41.64.133])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb8751sm125846745e9.29.2025.06.02.08.58.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 08:58:34 -0700 (PDT)
-Message-ID: <6a89fada-6d79-4848-9d10-2b16e6e56bf0@linaro.org>
-Date: Mon, 2 Jun 2025 16:58:32 +0100
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uM7ca-0007dT-Nr
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 12:02:44 -0400
+Received: from mailout3.samsung.com ([203.254.224.33])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
+ id 1uM7cU-0006A7-BC
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 12:02:44 -0400
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+ by mailout3.samsung.com (KnoxPortal) with ESMTP id
+ 20250602160233epoutp0337faecf7613a258d4f8d38b6f5d4d0b5~FRTu7zQrO2181921819epoutp03G
+ for <qemu-devel@nongnu.org>; Mon,  2 Jun 2025 16:02:33 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout3.samsung.com
+ 20250602160233epoutp0337faecf7613a258d4f8d38b6f5d4d0b5~FRTu7zQrO2181921819epoutp03G
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+ s=mail20170921; t=1748880153;
+ bh=gNt1A+G1hcdy1aQffIAfDZUX8n3iMKGTaux7QVLHRYE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=VllU8F+OSZVA+ORS9YvDRLebNGKcWGU7wVT4RXchyDXRjf1Bg/g+wBW5cgqkieT1Y
+ DnSGCoMI3tSy2K4M0aaTWaScJkIIEwmnQUpnkRweMK3PIaKqg3HMDL/2RQ2tVjzIum
+ Hx3eWS3suxjVW8FIcTlLF979Yx+NNzM98cZ6aBw0=
+Received: from epsnrtp03.localdomain (unknown [182.195.42.155]) by
+ epcas5p1.samsung.com (KnoxPortal) with ESMTPS id
+ 20250602160232epcas5p1a7607190e157d50242c3ef904976c98f~FRTuEtOOj1466514665epcas5p1N;
+ Mon,  2 Jun 2025 16:02:32 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.177]) by
+ epsnrtp03.localdomain (Postfix) with ESMTP id 4b9zBZ71bwz3hhTB; Mon,  2 Jun
+ 2025 16:02:30 +0000 (GMT)
+Received: from epsmtip2.samsung.com (unknown [182.195.34.31]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250602140018epcas5p2de38473dfcc0369193dd826c6e0e3fac~FPpAQUhSw1197711977epcas5p2T;
+ Mon,  2 Jun 2025 14:00:18 +0000 (GMT)
+Received: from test-PowerEdge-R740xd.samsungds.net (unknown [107.99.41.79])
+ by epsmtip2.samsung.com (KnoxPortal) with ESMTPA id
+ 20250602140017epsmtip2e3958f4716988e307d94f02d38db4166~FPo_11Uii2410424104epsmtip20;
+ Mon,  2 Jun 2025 14:00:17 +0000 (GMT)
+From: Arpit Kumar <arpit1.kumar@samsung.com>
+To: qemu-devel@nongnu.org
+Cc: gost.dev@samsung.com, linux-cxl@vger.kernel.org, nifan.cxl@gmail.com,
+ dave@stgolabs.net, vishak.g@samsung.com, krish.reddy@samsung.com,
+ a.manzanares@samsung.com, alok.rathore@samsung.com, Arpit Kumar
+ <arpit1.kumar@samsung.com>
+Subject: [PATCH 1/3] hw/cxl: Storing physical ports info during enumeration
+Date: Mon,  2 Jun 2025 19:29:40 +0530
+Message-Id: <20250602135942.2773823-2-arpit1.kumar@samsung.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250602135942.2773823-1-arpit1.kumar@samsung.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: TCG Address Sanitizer Optimization.
-To: Jon Wilson <jonwilson030981@googlemail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <CAJHT5-JwrQ31MEKKSNL-E0RPm+cg7UOiqzV5cPL-mnTOPa7eUA@mail.gmail.com>
- <87h60y41u1.fsf@draig.linaro.org>
- <CAJHT5-+tAuCoDV2G=-bZfP-j0gvY8Um-8TO8un2uNSGZpA1pcg@mail.gmail.com>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <CAJHT5-+tAuCoDV2G=-bZfP-j0gvY8Um-8TO8un2uNSGZpA1pcg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CMS-MailID: 20250602140018epcas5p2de38473dfcc0369193dd826c6e0e3fac
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-Sendblock-Type: REQ_APPROVE
+CMS-TYPE: 105P
+cpgsPolicy: CPGSC10-542,Y
+X-CFilter-Loop: Reflected
+X-CMS-RootMailID: 20250602140018epcas5p2de38473dfcc0369193dd826c6e0e3fac
+References: <20250602135942.2773823-1-arpit1.kumar@samsung.com>
+ <CGME20250602140018epcas5p2de38473dfcc0369193dd826c6e0e3fac@epcas5p2.samsung.com>
+Received-SPF: pass client-ip=203.254.224.33;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout3.samsung.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,32 +96,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/25 16:54, Jon Wilson wrote:
-> It would be good if we could have QEMU provide clean APIs to allow the sort of additional 
-> instrumentation that fuzzing requires. I guess the qemu-libafl-bridge project show the 
-> sort of modification which has been required so far...
-> https://github.com/AFLplusplus/qemu-libafl-bridge/tree/main/libafl <https://github.com/ 
-> AFLplusplus/qemu-libafl-bridge/tree/main/libafl>
-> 
-> I would like to conditionally call a helper, or even just insert a breakpoint instruction, 
-> but like I say I don't seem to be able to make use of any sort of branches. Even if I add 
-> a benign instrumentation that simply conditionally branches at a label and nothing else 
-> (e.g. no actual functionality), I still have the same problem.
-> e.g.
-> 
-> ////////////////////////////////////////////////////////////////////////////////
-> 
-> TCGLabel *done = gen_new_label();
-> TCGv addr_val = temp_tcgv_tl(addr);
-> TCGv zero = tcg_constant_tl(0);
-> tcg_gen_brcond_tl(TCG_COND_EQ, addr_val, zero, done);
-> gen_set_label(done);
-> 
-> ////////////////////////////////////////////////////////////////////////////////
-> 
-> Hence the current implementation is a little clumsy!
+Physical ports info is stored for both mailbox cci &
+mctp based cci type as per spec CXL r3.2 Table 8-230: Physical Switch
 
-This has not been a problem since 438e685b1, in qemu v8.0.
+Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
+---
+ hw/cxl/cxl-mailbox-utils.c  | 166 ++++++++++++++++++++++++++++++++++++
+ include/hw/cxl/cxl_device.h |  28 ++++++
+ 2 files changed, 194 insertions(+)
 
-r~
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index a02d130926..680055c6c0 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -124,6 +124,64 @@ enum {
+         #define GET_MHD_INFO 0x0
+ };
+ 
++/* link state flags */
++#define LINK_STATE_FLAG_LANE_REVERSED    (1 << 0)
++#define LINK_STATE_FLAG_PERST_ASSERTED   (1 << 1)
++#define LINK_STATE_FLAG_PRSNT            (1 << 2)
++#define LINK_STATE_FLAG_POWER_OFF        (1 << 3)
++
++/* physical port control info - CXL r3.2 table 7-19 */
++typedef enum {
++    PORT_DISABLED = 0,
++    BIND_IN_PROGRESS = 1,
++    UNBIND_IN_PROGRESS = 2,
++    DSP = 3,
++    USP = 4,
++    FABRIC_PORT = 5,
++    INVALID_PORT_ID = 15
++} current_port_config_state;
++
++typedef enum {
++    NOT_CXL_OR_DISCONNECTED = 0x00,
++    RCD_MODE = 0x01,
++    CXL_68B_FLIT_AND_VH_MODE = 0x02,
++    STANDARD_256B_FLIT_MODE = 0x03,
++    CXL_LATENCY_OPTIMIZED_256B_FLIT_MODE = 0x04,
++    PBR_MODE = 0x05
++} connected_device_mode;
++
++typedef enum {
++    NO_DEVICE_DETECTED = 0,
++    PCIE_DEVICE = 1,
++    CXL_TYPE_1_DEVICE = 2,
++    CXL_TYPE_2_DEVICE_OR_HBR_SWITCH = 3,
++    CXL_TYPE_3_SLD = 4,
++    CXL_TYPE_3_MLD = 5,
++    PBR_COMPONENT = 6
++} connected_device_type;
++
++typedef enum {
++    CXL_RCD_MODE = 0x00,
++    CXL_68B_FLIT_AND_VH_CAPABLE = 0x01,
++    CXL_256B_FLIT_CAPABLE = 0x02,
++    CXL_LATENCY_OPTIMIZED_256B_FLIT = 0x03,
++    CXL_PBR_CAPABLE = 0x04
++} supported_cxl_modes;
++
++typedef enum {
++    LTSSM_DETECT = 0x00,
++    LTSSM_POLLING = 0x01,
++    LTSSM_CONFIGURATION = 0x02,
++    LTSSM_RECOVERY = 0x03,
++    LTSSM_L0 = 0x04,
++    LTSSM_L0S = 0x05,
++    LTSSM_L1 = 0x06,
++    LTSSM_L2 = 0x07,
++    LTSSM_DISABLED = 0x08,
++    LTSSM_LOOPBACK = 0x09,
++    LTSSM_HOT_RESET = 0x0A
++} LTSSM_State;
++
+ /* CCI Message Format CXL r3.1 Figure 7-19 */
+ typedef struct CXLCCIMessage {
+     uint8_t category;
+@@ -3686,6 +3744,112 @@ void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
+     cxl_rebuild_cel(cci);
+ }
+ 
++static CXLRetCode cxl_set_port_type(struct phy_port *ports, int pnum,
++                                    CXLCCI *cci)
++{
++    PCIDevice *port_dev;
++    uint16_t lnkcap, lnkcap2, lnksta;
++    int i = pnum;
++    if (!cci) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    PCIBus *bus = &PCI_BRIDGE(cci->d)->sec_bus;
++    PCIEPort *usp = PCIE_PORT(cci->d);
++    port_dev = pcie_find_port_by_pn(bus, i);
++
++    if (port_dev) { /* DSP */
++        PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
++            ->devices[0];
++        ports->pport_info[i].port_id = i;
++        ports->pport_info[i].current_port_config_state = DSP;
++        ports->active_port_bitmask[i / 8] |= (1 << i % 8);
++        if (ds_dev) {
++            if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
++                ports->pport_info[i].connected_device_type = CXL_TYPE_3_MLD;
++            } else {
++                ports->pport_info[i].connected_device_type = PCIE_DEVICE;
++            }
++        } else {
++            ports->pport_info[i].connected_device_type = NO_DEVICE_DETECTED;
++        }
++        ports->pport_info[i].supported_ld_count = 3;
++    } else if (usp->port == i) { /* USP */
++        port_dev = PCI_DEVICE(usp);
++        ports->pport_info[i].port_id = i;
++        ports->pport_info[i].current_port_config_state = USP;
++        ports->pport_info[i].connected_device_type = NO_DEVICE_DETECTED;
++        ports->active_port_bitmask[i / 8] |= (1 << i % 8);
++    } else {
++        return CXL_MBOX_INVALID_INPUT;
++    }
++
++    if (!port_dev->exp.exp_cap) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    lnksta = port_dev->config_read(port_dev,
++                                   port_dev->exp.exp_cap + PCI_EXP_LNKSTA,
++                                   sizeof(lnksta));
++    lnkcap = port_dev->config_read(port_dev,
++                                   port_dev->exp.exp_cap + PCI_EXP_LNKCAP,
++                                   sizeof(lnkcap));
++    lnkcap2 = port_dev->config_read(port_dev,
++                                    port_dev->exp.exp_cap + PCI_EXP_LNKCAP2,
++                                    sizeof(lnkcap2));
++
++    ports->pport_info[i].max_link_width = (lnkcap & PCI_EXP_LNKCAP_MLW) >> 4;
++    ports->pport_info[i].negotiated_link_width = (lnksta & PCI_EXP_LNKSTA_NLW) >> 4;
++    ports->pport_info[i].supported_link_speeds_vector = (lnkcap2 & 0xFE) >> 1;
++    ports->pport_info[i].max_link_speed = lnkcap & PCI_EXP_LNKCAP_SLS;
++    ports->pport_info[i].current_link_speed = lnksta & PCI_EXP_LNKSTA_CLS;
++
++    ports->pport_info[i].ltssm_state = LTSSM_L2;
++    ports->pport_info[i].first_negotiated_lane_num = 0;
++    ports->pport_info[i].link_state_flags = 0;
++    ports->pport_info[i].supported_cxl_modes = CXL_256B_FLIT_CAPABLE;
++    ports->pport_info[i].connected_device_mode = STANDARD_256B_FLIT_MODE;
++
++    return CXL_MBOX_SUCCESS;
++}
++
++static CXLRetCode cxl_set_phy_port_info(CXLCCI *cci)
++{
++    uint8_t phy_port_num;
++    if (!cci) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    PCIEPort *usp = PCIE_PORT(cci->d);
++    PCIBus *bus = &PCI_BRIDGE(cci->d)->sec_bus;
++    struct phy_port *ports = &cci->pports;
++    int num_phys_ports = pcie_count_ds_ports(bus) + 1;
++    if (num_phys_ports < 0) {
++        return CXL_MBOX_INTERNAL_ERROR;
++    }
++
++    ports->num_ports = num_phys_ports;
++    phy_port_num =  usp->port;
++
++    cxl_set_port_type(ports, phy_port_num, cci); /* usp */
++
++    for (int devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
++        PCIDevice *dev = bus->devices[devfn];
++
++        if (dev) {
++            phy_port_num = PCIE_PORT(dev)->port;
++            const char *typename = object_get_typename(OBJECT(dev));
++
++            if ((strcmp(typename, "cxl-downstream") == 0)) {
++                cxl_set_port_type(ports, phy_port_num, cci);
++            } else {
++                return CXL_MBOX_INTERNAL_ERROR;
++            }
++        }
++    }
++    return CXL_MBOX_SUCCESS;
++}
++
+ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+                                   DeviceState *d, size_t payload_max)
+ {
+@@ -3693,6 +3857,7 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
+     cci->d = d;
+     cci->intf = intf;
+     cxl_init_cci(cci, payload_max);
++    cxl_set_phy_port_info(cci); /* store port info */
+ }
+ 
+ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
+@@ -3797,4 +3962,5 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+     cci->d = d;
+     cci->intf = intf;
+     cxl_init_cci(cci, payload_max);
++    cxl_set_phy_port_info(cci); /* store port info */
+ }
+diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+index ca515cab13..9eb128a1e8 100644
+--- a/include/hw/cxl/cxl_device.h
++++ b/include/hw/cxl/cxl_device.h
+@@ -127,6 +127,31 @@
+                   CXL_NUM_CHMU_INSTANCES * (1 << 16),                   \
+                   (1 << 16))
+ 
++/* CXL r3.2 Table 7-19: Port Info */
++struct cxl_phy_port_info {
++    uint8_t port_id;
++    uint8_t current_port_config_state;
++    uint8_t connected_device_mode;
++    uint8_t rsv1;
++    uint8_t connected_device_type;
++    uint8_t supported_cxl_modes;
++    uint8_t max_link_width;
++    uint8_t negotiated_link_width;
++    uint8_t supported_link_speeds_vector;
++    uint8_t max_link_speed;
++    uint8_t current_link_speed;
++    uint8_t ltssm_state;
++    uint8_t first_negotiated_lane_num;
++    uint16_t link_state_flags;
++    uint8_t supported_ld_count;
++} QEMU_PACKED;
++
++struct phy_port {
++    uint8_t num_ports;
++    uint8_t active_port_bitmask[0x20];
++    struct cxl_phy_port_info pport_info[PCI_DEVFN_MAX];
++};
++
+ /* CXL r3.1 Table 8-34: Command Return Codes */
+ typedef enum {
+     CXL_MBOX_SUCCESS = 0x0,
+@@ -223,6 +248,9 @@ typedef struct CXLCCI {
+     /* get log capabilities */
+     const CXLLogCapabilities *supported_log_cap;
+ 
++    /*physical ports information */
++    struct phy_port pports;
++
+     /* background command handling (times in ms) */
+     struct {
+         uint16_t opcode;
+-- 
+2.34.1
+
 
