@@ -4,97 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71B83C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 10:19:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7C7C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 10:23:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM2FO-0004m9-Fe; Mon, 02 Jun 2025 06:18:26 -0400
+	id 1uM2Jl-0006HQ-KF; Mon, 02 Jun 2025 06:22:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uM2FM-0004la-Rg
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 06:18:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uM2Jf-0006Gg-GW
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 06:22:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uM2FK-0005M2-US
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 06:18:24 -0400
+ id 1uM2Jd-0005rs-Rx
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 06:22:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748859497;
+ s=mimecast20190719; t=1748859768;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=MelZ/UKf7Sf6tZkePSBf9ugkdI2MHE2OHWmwLvm1iwI=;
- b=AO1vG6fC+aMWhdCnDjWgLC5QoEj+L4FdkQT7ixgJ04K1pRYLHDH3CbrTSuumARNOUNgIvK
- IQbcbhlvJcxfsP6elDK8xi9l1EmhTizoF04iYkcK7xslkM3KneuhDa8UrGBtF//sVjiSJj
- PgeZua7du++raSD6w7WiF/9uURyEGY0=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=CKMj/dmcZFnIoX+/jXJwdMyeYm/ORc0hdxg4CxCECwk=;
+ b=Q0QXgeEHE8JrwbFxBCIH2P+xB/V/6ht8I78e6IoB03ZVh9k99z+qasneDXwSkG8HsKDQHP
+ jFTDZeS2UIJvQ1F0QyW/SupSHCzEcvl9GJlBBrCOf+t70vzoFnGItp9mmpVCdGpV053WDH
+ cCbO5J4RxW6s85uyML6N+ULhg1uTOyc=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-225-4ZEXcAAjN3KnOk9vegmIuw-1; Mon, 02 Jun 2025 06:18:16 -0400
-X-MC-Unique: 4ZEXcAAjN3KnOk9vegmIuw-1
-X-Mimecast-MFC-AGG-ID: 4ZEXcAAjN3KnOk9vegmIuw_1748859495
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f8fd1856so1298020f8f.2
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 03:18:16 -0700 (PDT)
+ us-mta-688-Lsy6AbuwPg2-AyLbapAAIw-1; Mon, 02 Jun 2025 06:22:47 -0400
+X-MC-Unique: Lsy6AbuwPg2-AyLbapAAIw-1
+X-Mimecast-MFC-AGG-ID: Lsy6AbuwPg2-AyLbapAAIw_1748859766
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-451d5600a54so10277595e9.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 03:22:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748859495; x=1749464295;
+ d=1e100.net; s=20230601; t=1748859766; x=1749464566;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=MelZ/UKf7Sf6tZkePSBf9ugkdI2MHE2OHWmwLvm1iwI=;
- b=ZXqAcmPCuPQCj3IDnypJxgdOgmr9zBNRsJVCeVwbOzpTgHUGnEMfg6TQJ1bdFRTFhV
- gmEriYHAohKyx7GSS8e6tudgY2862GhyGlW9VF9hTGYVkTyXYdJgSRpXGJmqIiqmHFcb
- 6RLzLN+LA8v9bN5q/eqGFnhRFuV8DniArZAuC2oDEF2ZbR5j+4EE25x/FkuWUp4s9ah/
- fipkqfdXfr+yKP3BVtTYvdNKb6YqtcOGbLFO9AkUjHVSFEK2xuV5aqdQm3rFFTIGmZgU
- ZRM8QNEv8urVX17mqPMbJtQDSorDyVsLJ5QwNLYWOztTIig4Jl9jKUgErmwhJZRfqGqR
- CMHQ==
+ bh=CKMj/dmcZFnIoX+/jXJwdMyeYm/ORc0hdxg4CxCECwk=;
+ b=BqOn667ydfElydO/lSBQ3qJtWfEzHAcyhMX8hGhbuoH+WVo8fhC3My/H7cH1r9b18b
+ aCxrpgdW58TC1AYjRyVnBfPH4kTaZuQvihnXZpN8MHTaevhrUBrklavciah6CgFpCK0g
+ 2tDVSusfiYvqNGqeCHyV45idLAjMGL5hDxzqqAXseXw8oruuwudKRlHswHC5d3+47Es3
+ UY+kLmQTcYeIjUnouqSvjHZuQqPbPAyWilNi0q3ucFUdXH71u7LeFkuQorPb/EfTDKdP
+ KKL31r/sHE9nHUD2TaffhuLr5jTX48ghtZK38581ySnoMRfThkMfEyxA+oQprLr7UZwu
+ l4zw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUgMQGRrU+JrZLyQe1Ok0X94mOubwJMwBj2rHyo145648JVTBqYo4d5PUPcO/dIuJgC3hQr4rwVOS1N@nongnu.org
-X-Gm-Message-State: AOJu0YzNYsl8MVxRSox/eGPhdrn6sUAHxO6exVEaYtwgkyHJ56dtPY+X
- 2LndZo/NoMONuJxZPMV9PDyWZTQLQOpbqrVYeSP9AQLaRXQFvcxgmlSDnfgLIFh5wiBg0XoyImT
- Lo9vwADBzHNdlV3kYdmjFjHE8IjRVKc/ktlysiCtTOXhH1Uo4oiv1Cfyw
-X-Gm-Gg: ASbGncuOdCsdQap4DKdf86y5UnaBPcBvXZEpSu0iJQy+aoVfTcPKlVTEBHDL5Pjvp2X
- uQAB8ticaBQCgF0dM2N1S8hV3fGiRIvFUkOTg51E2l21KBxPbk3wBNkVY7Pt/XzkXk3zedM4wc0
- YGC7L95MiAUK9Laat6RTj3bqGZjCMOKzedgfu0wO1bh4FrXp+KJLaE4h4qH/hi2M/A96wcRZyXd
- c367ztzerH3S9Tt4tQBVVGv4lP746L/epmJsazNLTmzoAo4ixK31sP2OpcrFQ7bKVp98d43Y3Ri
- ogGKS5uG6DX0j5Aa4VPzj007jcMOpXtBnP8xjBjBzfc=
-X-Received: by 2002:a05:6000:250e:b0:3a3:7cbd:39b1 with SMTP id
- ffacd0b85a97d-3a4fe17c35emr6329275f8f.24.1748859495322; 
- Mon, 02 Jun 2025 03:18:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGFOZTLbRohg+R6GvDT/JPmv8dafLWrT4JIkj4D8Tc67CSXqCV5HYdlSebUF+SKSW+9TIufkg==
-X-Received: by 2002:a05:6000:250e:b0:3a3:7cbd:39b1 with SMTP id
- ffacd0b85a97d-3a4fe17c35emr6329239f8f.24.1748859494824; 
- Mon, 02 Jun 2025 03:18:14 -0700 (PDT)
+ AJvYcCWOPa/+/YXCG6D1VR08dpNB+h7gJSXb62BLEVzR5E4dALM+fa5uCi9rCIhggy3meoXPJ9PRAo046NqL@nongnu.org
+X-Gm-Message-State: AOJu0YyS0uSdx1Csb4Ap4CxYSioYkwBZf2+jN67peBnZnU0YgC0v9iFz
+ qj+onAn4nPa7T5GBVysw20lg968E+CU2t4USHEvGNrEYuPUkGtmBS2h0UGODGG+BSKXT+SEaw4C
+ 9FjK3rEv0FP9xQ1mA+gEO+wOZQ3IiIA429vm99ioqAMC4dafedV03iIx/
+X-Gm-Gg: ASbGncvNI6Yhv2EmiOGcfI1gB9Op7PXomZhQs2evPb6Uzj7fKmfA7ktkKV/fEh7nOHq
+ nuze1yFXO8cW/7g1FDRoYF3H8sp8CTLf4tFsz5SoN5itXHZdq+XDjGImxjm9Ebu+0AhB1uY7hz+
+ 2DA2OgHV1/DC+AViPbjzx1zuIwmy5DUT//eqcOnkyAmudBao7170WsRfR7mZtR7cUkx4VzSsFcG
+ oh6ttOcYDmY6C2s8fAs2QFz1kKY3zeXUmGOg5BjPExUVLEEEN6YVABTA405HI84+qjfB+VrcKyx
+ 7OJ0dAi6mrRanA7/oeD73IjsqcVSUGkF
+X-Received: by 2002:a05:600c:1c08:b0:43c:ec0a:ddfd with SMTP id
+ 5b1f17b1804b1-450d64e2cedmr95031915e9.6.1748859765969; 
+ Mon, 02 Jun 2025 03:22:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEeawgvYHwXYBD7Ncx6S/vt4KgrtY/j8BkA9OdXSa/4ZY4UEAQYaLMSnHOrNdPF14e7MUUAoA==
+X-Received: by 2002:a05:600c:1c08:b0:43c:ec0a:ddfd with SMTP id
+ 5b1f17b1804b1-450d64e2cedmr95031585e9.6.1748859765515; 
+ Mon, 02 Jun 2025 03:22:45 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f009ff11sm14127324f8f.86.2025.06.02.03.18.13
+ 5b1f17b1804b1-450d7fb80f6sm115820455e9.28.2025.06.02.03.22.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 02 Jun 2025 03:18:14 -0700 (PDT)
-Date: Mon, 2 Jun 2025 12:18:10 +0200
+ Mon, 02 Jun 2025 03:22:45 -0700 (PDT)
+Date: Mon, 2 Jun 2025 12:22:44 +0200
 From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>,
- <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
- <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH v2 05/25] hw/pci-host/gpex-acpi: Split host bridge OSC
- and DSM generation
-Message-ID: <20250602121810.649d82ce@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250530160019.000061d1@huawei.com>
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-6-eric.auger@redhat.com>
- <20250530110227.00003341@huawei.com>
- <20250530140516.35db4d52@imammedo.users.ipa.redhat.com>
- <20250530160019.000061d1@huawei.com>
+To: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jonathan Cameron
+ <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
+ =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
+ <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>, Yanan
+ Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
+ linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v9 12/20] acpi/generic_event_device: add logic to detect
+ if HEST addr is available
+Message-ID: <20250602122244.081a1960@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250530221810.694ce02e@foz.lan>
+References: <cover.1747722973.git.mchehab+huawei@kernel.org>
+ <aa74b756f633dbee5442cf4baa2c1d81a669d2f9.1747722973.git.mchehab+huawei@kernel.org>
+ <20250528174212.2823d3de@imammedo.users.ipa.redhat.com>
+ <20250530080120-mutt-send-email-mst@kernel.org>
+ <20250530164903.0f9f8444@imammedo.users.ipa.redhat.com>
+ <20250530221810.694ce02e@foz.lan>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -119,105 +124,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 30 May 2025 16:00:19 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+On Fri, 30 May 2025 22:18:10 +0200
+Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
 
-> On Fri, 30 May 2025 14:05:16 +0200
-> Igor Mammedov <imammedo@redhat.com> wrote:
+> Em Fri, 30 May 2025 16:49:03 +0200
+> Igor Mammedov <imammedo@redhat.com> escreveu:
 > 
-> > On Fri, 30 May 2025 11:02:27 +0100
-> > Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+> > On Fri, 30 May 2025 08:01:28 -0400
+> > "Michael S. Tsirkin" <mst@redhat.com> wrote:
 > >   
-> > > On Tue, 27 May 2025 09:40:07 +0200
-> > > Eric Auger <eric.auger@redhat.com> wrote:
-> > >     
-> > > > acpi_dsdt_add_pci_osc() name is confusing as it gives the impression
-> > > > it appends the _OSC method but in fact it also appends the _DSM method
-> > > > for the host bridge. Let's split the function into two separate ones
-> > > > and let them return the method Aml pointer instead. This matches the
-> > > > way it is done on x86 (build_q35_osc_method). In a subsequent patch
-> > > > we will replace the gpex method by the q35 implementation that will
-> > > > become shared between ARM and x86.
+> > > On Wed, May 28, 2025 at 05:42:12PM +0200, Igor Mammedov wrote:    
+> > > > On Tue, 20 May 2025 08:41:31 +0200
+> > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
+> > > >       
+> > > > > Create a new property (x-has-hest-addr) and use it to detect if
+> > > > > the GHES table offsets can be calculated from the HEST address
+> > > > > (qemu 10.0 and upper) or via the legacy way via an offset obtained
+> > > > > from the hardware_errors firmware file.      
 > > > > 
-> > > > acpi_dsdt_add_host_bridge_methods is a new top helper that generates
-> > > > both the _OSC and _DSM methods.
 > > > > 
-> > > > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> > > > Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>      
+> > > > it doesn't apply to current master anymore      
 > > > 
-> > > Makes complete sense. I've had local equivalent of this on the CXL
-> > > tree for a while as without it we don't register the _DSM for the
-> > > CXL path (and we should).  However, can you modify it a little to
-> > > make that easier for me?  Basically make sure the _DSM is registered
-> > > for the CXL path as well.
-> > >     
-> > [...]
-> > unless CXL is root host bridge, current _DSM shouldn't be added to it.
-> > read on comment below.  
+> > > indeed. Mauro?    
+> > 
+> > Michael,
+> > it's trivial conflict in machine compat,
+> > could you fix it up while applying?  
 > 
-> I'm not clear how this is different from pxb-pcie where we do have
-> the _DSM. Both are pretending to be real host bridges.
-
-there is some space for _OSC consolidation, but it's not realy related to pcihp,
-so I'd rather do it as a separate series on top. 
-
-current PCI _DSM and _CXL one (build_cxl_dsm_method) are implementing
-different namespaces, there is not much to consolidate there.
-
-If later on CXL would need E5C937D0-3553-4D7A-9117-EA4D19C3434D,
-then, I'd say do it at that time and use that moment as an opportunity
-to consolidate.
-
-> >   
-> > > > @@ -124,7 +125,17 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
-> > > >      byte_list[0] = 0;
-> > > >      buf = aml_buffer(1, byte_list);
-> > > >      aml_append(method, aml_return(buf));
-> > > > -    aml_append(dev, method);
-> > > > +    return method;
-> > > > +}
-> > > > +
-> > > > +static void acpi_dsdt_add_host_bridge_methods(Aml *dev,
-> > > > +                                              bool enable_native_pcie_hotplug)
-> > > > +{
-> > > > +    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
-> > > > +    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));      
-> > > 
-> > > These two declarations seem to be very much part of the _OSC build though not
-> > > within the the method.  I 'think' you get left with them later with no users.
-> > > So move them into the osc build here and they will naturally go away when
-> > > you move to the generic code.
-> > > 
-> > > They end up unused in the DSDT at the end of the series.
-> > > 
-> > > I ran a quick GPEX + pxb-pcie test and we do get the odd mix that the OSC for
-> > > the GPEX say no native hotplug but the OSC for the PXB allows it.    
-> > 
-> > It's fine for each PXB to have it's own _OSC.
-> > Also current incarnation of ACPI pcihp doesn't support PXBs at all,
-> > it would be wrong to enable the on PXBs.
-> > 
-> > Thus I'd avoid touching CXL related code paths from this series.
-> > 
-> > I'm working on extending ACPI pcihp to PXBs
-> > (for the same reason as Eric does for arm/virt, i.e. enable acpi-index support there).
-> > I can add CXL bits then if there is a need/demand for that in CXL land.  
+> IMHO, that's the best. The thing is, as code gets merged upstream with
+> backports, conflicts happen.
 > 
-> Ok.  My original motivation for _DSM on CXL was function 5 to stop Linux messing up
-> the reenumeration which I know has been rejected upstream for a bunch of
-> compatibility reasons.  Anyhow, that's a future problem.
+> I can re-send the series, if you prefer, as I'm keeping it rebasing it
+> from time to time at:
+> 	https://gitlab.com/mchehab_kernel/qemu/-/tree/qemu_submitted?ref_type=heads
+> 
+> (it is on the top of upstream/master)
+> 
+> But even that might have conflicts on your test tree if you pick
+> other patches touching this backport table:
+> 
+> > -GlobalProperty hw_compat_10_0[] = {};
+> > +GlobalProperty hw_compat_10_0[] = {
+> > +    { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+> > +};  
+> 
+> (this was the code when I sent the PR. When applying upstream,
+> such hunk is now(*):
+> 
+>  GlobalProperty hw_compat_10_0[] = {
+>      { "scsi-hd", "dpofua", "off" },
+> +    { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
+>  };
+> 
+> 
+> (*) https://gitlab.com/mchehab_kernel/qemu/-/commit/08c4859f8c6f36d7dccf2b773be88847e5d1fe0c
+> 
+> If you still prefer that I resubmit the entire PR, let me know.
 
-yep, let's worry about merging _DSMs when that future comes.
+If it's the only patch that needs rebase and doesn't affect the rest,
+I'd say there is no need to spam the list with whole series respin, 
+just post rebased v10 12/20 as reply here
+
+If it's more than that, respin series.
 
 > 
-> Thanks,
-> 
-> Jonathan
-> 
-> > 
-> > [...]
-> > 
-> >   
+> Regards,
+> Mauro
 > 
 
 
