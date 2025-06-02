@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 385B9C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F055AC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:13:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM0Fn-0008UH-Hd; Mon, 02 Jun 2025 04:10:43 -0400
+	id 1uM0Hp-0001O7-K9; Mon, 02 Jun 2025 04:12:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0Fm-0008Ty-6y
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:10:42 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0Hk-0001NO-SP
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:12:44 -0400
 Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0Fk-0008VM-4I
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:10:41 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0Hi-00009T-UO
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:12:44 -0400
 Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-450ce671a08so25208725e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 01:10:39 -0700 (PDT)
+ 5b1f17b1804b1-442f9043f56so23721935e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 01:12:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748851838; x=1749456638; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748851961; x=1749456761; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Y4/eaGDe+11IzLfHcZsnz+XBC189nhHHrAgY5I/uXo8=;
- b=O9LcK6fKadpRXAAx5qZndpdJL+5H7AF1QUJo1ZTBD/We1WZXVYQQOSyPcdSLUYIqFs
- zZJnhKusnh4uP5ChYEqPECBwhp5uJSOIjIqFNrNih4lFXYM4lHGTgqi/4vq/jU29sLtr
- DO6olAw84C3CLgCpQAJhrkoiCMjSB2FaAns2L6oqdct5a8PhlQfzXcItWXE59eG0qqVk
- V46g5FCpFQvTtKYOJpW6yv+LhvViD/OL9e2rbeJZ9BQkwnCYS14I6cn6aSS+8RLsQvCS
- R2X0F0mcZfuHPCSXSjrNq9Lko0OF74EuiqFE/PLX0dNPGdQsPkoTDe49vNo1LAxzD48K
- DhMg==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+4KhK5uoNca2eG5pQBsIKnhN6ngCRkA6a4bxOtiHBpw=;
+ b=Lmh0CpxpKkAt8qEsJ6hZuy5M4Y2LTEFY10rhdDh/VoEjyMrhuflkXmxxAYwjuHtQHu
+ vxqHuXY4rvQgwc2fW9aTn8ZlQTehKwKS3qTF/Cj/JMbwc8r15tKNcREJDsqi/eToauZT
+ yO6i0JTkxrEE+gZ3FL9II2be/w8MsG46cnW/ecN3xRTzxiYsdrTkWW6EyTe2BHcEg3eN
+ hh1/hNvxwSV+Uvk+vFTwBdmDAfwoyV5rAwv2R769frpHw/Vm0y/cTRZ4WtSoPvFMG6FD
+ diRRsg88J3xN2Z267F/wuGCkqVsjIxz+EuacAtk9Xyn1KT9QsKfuNoJC91d2eiov9OY2
+ kDhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748851838; x=1749456638;
+ d=1e100.net; s=20230601; t=1748851961; x=1749456761;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y4/eaGDe+11IzLfHcZsnz+XBC189nhHHrAgY5I/uXo8=;
- b=FkE6/AC54u4rsrnT/mDlcJgCNQglyulrHMd5S7YbiaHSKKYi/u4PhGNnTDqFssOoOr
- yFZLMczOyTVtH9xGL8yYQi/CqUfZ7oyyXf+/lK+ozlPLNTyE6o+6+nekrU7CVoFOSlw7
- PtbQ7oWeirMKSR/7QpdmwC7C2fax8ggBhOZLsnwvNtLRtUXZFjgHo4fKYmL8yhnT63n/
- tM/EYqnAi/L/mt+ln2XJCY3Fjlvg8DDZ2q7vlu/1HzBzq+L1DejoFrUZ5YswrQ70tdTj
- /9hzfYFw/2JaBuDOTYcVLDxqfoO08G1An0s8ivyfqI7OsTb5gf8gLMefbs1JCBH9UXpf
- hnUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVrfYeTOeqzdLi8ABdlMl/zoYggm2dNZWw36TZ054QTTSNlLby8a58EPpJi+JAad5RXyHqe2KD0JtVG@nongnu.org
-X-Gm-Message-State: AOJu0YyN86MtBeEaSrxdSbksgsGaurlVoPSwweSzS8UzTtzbSRuyu60c
- 2L83/QD9dd7OgxF28BazyGpmEnD3LOw9MCpKSESxavSf/m08KUattZx9GTLy8gpA8uIUfWKh9lF
- zbLEn9MA=
-X-Gm-Gg: ASbGncsjaRUxk/LWbDBJKw0uPLmy9gEkOhAOnZViKSwMU8LpfwQtZTMdHHwUkGqxDG7
- +3vhaEEp6e2wNwV3OiyH943RGCv3cXH14vBY/sZqvI2xFPivO+OmCPPXgkNq4dRBr42+TC2HffV
- ekZRfygEyvsVDEm0LPG3Dyd32xBVX/2tPWY7XORT30YOoEm9yUpTS4pdFI1Ij1mbNlORyXqj2Uc
- uyO0t+c+NN8ybNzLgUYBltPS0XAUaU6lkdPMJNOZ+TAKgwrkyA6Mo4U97xCir1PjLUoVxKdhXX3
- 9WhuIwRlqRYDeVUypZMOBbhLMLD9/+ylizIdCYgSBIVf7f31XAXyvlrAcVRlZ35klFTEEidQy4U
- 8/fvkivlSmrfMjt3LK5k=
-X-Google-Smtp-Source: AGHT+IH7/PJNQx7xiCiYtKTfQa/neQfBrUwZvIUUiNrwNogHS/1dnQoI+3YjLS1rjcD37fU+UHGB6g==
-X-Received: by 2002:a5d:5c84:0:b0:3a3:7ba5:960e with SMTP id
- ffacd0b85a97d-3a4fe3a8214mr5515346f8f.59.1748851838030; 
- Mon, 02 Jun 2025 01:10:38 -0700 (PDT)
+ bh=+4KhK5uoNca2eG5pQBsIKnhN6ngCRkA6a4bxOtiHBpw=;
+ b=XlvHQV+/gTZvo4Kxfkaxpol4j5vm5FScXcx29Kx6nzhcuNdRYrcfAz6tY8jkJI1pqG
+ TC2sUEHGRQFdSs8ywJ/zbm6R/7JBv0Aovcf/YqeK6mFpn8ztgAe4TVYSd49Xze3hzsKz
+ CVH46EZsbLawQ7p/CqeID6k85POoT0GGObtgU4DodQzLZkBduUu7/8CYO7Az8V8AyJaw
+ F2VXGXRYYYltbS1F0FQvkIkbYlBi0DqZefZjg81d95x+Rk/CyLY6vMZpm8OI2izoRq+d
+ lREii1RsbbqzYMb4RemW9+SdZog/bmoI0bocsjjsaOVqGD5QRZuQhaPboC0DUEpKl7OD
+ 3tcw==
+X-Gm-Message-State: AOJu0YxqxTwT7tmYsBM746ZHFJ7g1Xo4/+EV+KflhfGmGUeL1kwjnUcX
+ TNoUcAUH/llBzmDtA4fHmv4GCdcSKMIxkqeZckHVwR4LUtWBD8KTagrjFHJngfG+UOM=
+X-Gm-Gg: ASbGncvXhOr0VdFYUZhim1t9pRMCC38s4KDWWGdI7i/672euzy2Hs4QVuQnIXbSdivP
+ 8IdFFB6ft5yQiRl2LyMzLXMcO3B1sekv+3UZIAq8Lq66vbs0DgOfy1oVBNUwn6aYcuP8T4EoOoV
+ zy2d0jG9y3TP6MbGycvP0AZSqqilhZJJlNkNk/w/6xJR0+qY98p7wP4KeL3nt4Rp1ib3y7NeV09
+ Q+vDD8f/lmM+V/TogFhThve8hEPWcendW5+TSoG4EmDs4+tmiBCmId+e9yJhl+Gfu26l4uS1LCO
+ 6WQvvj+eGve2DxHh6Qc/JX4vuwpdWgrCH/5HuJxMwQMGtu8TQfNKXwmvDZI8lAAaQGabKmDHmap
+ deptN2G65G/7j90HLbwc=
+X-Google-Smtp-Source: AGHT+IEwFrKQjrZhWpTGoAjljQMeaUJ6j12krLgQciqJsdCcEB4HEmA5524gmQ8g0W9j5oAIpw5qQg==
+X-Received: by 2002:a05:600c:4e4d:b0:445:1984:247d with SMTP id
+ 5b1f17b1804b1-451191fd126mr56661045e9.7.1748851961063; 
+ Mon, 02 Jun 2025 01:12:41 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fc28f3sm112875365e9.39.2025.06.02.01.10.37
+ 5b1f17b1804b1-451df07ac73sm10722925e9.9.2025.06.02.01.12.40
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 01:10:37 -0700 (PDT)
-Message-ID: <4d8013d1-3787-4d8a-8b8d-3eee7d389d6e@linaro.org>
-Date: Mon, 2 Jun 2025 10:10:36 +0200
+ Mon, 02 Jun 2025 01:12:40 -0700 (PDT)
+Message-ID: <0648af18-2e50-4eaa-96fb-b0e64eb706d9@linaro.org>
+Date: Mon, 2 Jun 2025 10:12:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] rocker: do not pollute the namespace
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20250530070743.2050531-1-pbonzini@redhat.com>
+Subject: Re: [PULL 36/58] pc-bios: Move device tree files in their own subdir
+To: BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>
+Cc: qemu-devel@nongnu.org
+References: <20250425152843.69638-1-philmd@linaro.org>
+ <20250425152843.69638-37-philmd@linaro.org>
+ <621F23F2-05FC-4C8C-8AA8-F61DED04B306@gmail.com>
+ <83dcb220-dd06-fb7f-1960-432fb2696b60@eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250530070743.2050531-1-pbonzini@redhat.com>
+In-Reply-To: <83dcb220-dd06-fb7f-1960-432fb2696b60@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::330;
@@ -101,87 +102,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 30/5/25 09:07, Paolo Bonzini wrote:
-> Do not leave the __le* macros defined, in fact do not use them at all.  Fixes a
-> build failure on Alpine with the TDX patches:
+On 30/5/25 02:54, BALATON Zoltan wrote:
+> On Thu, 29 May 2025, Bernhard Beschow wrote:
+>> Am 25. April 2025 15:28:20 UTC schrieb "Philippe Mathieu-Daudé" 
+>> <philmd@linaro.org>:
+>>> From: BALATON Zoltan <balaton@eik.bme.hu>
+>>>
+>>> We have several device tree files already and may have more in the
+>>> future so add a new dtb subdirectory and move device tree files there
+>>> so they are not mixed with ROM binaries.
+>>>
+>>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Message-ID: 
+>>> <57f179bd3904c1f2ca062ca4d4ff9592bb4f4daa.1745402140.git.balaton@eik.bme.hu>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>> MAINTAINERS                                |   2 +-
+>>> system/datadir.c                           |   4 +++-
+>>> pc-bios/{ => dtb}/bamboo.dtb               | Bin
+>>> pc-bios/{ => dtb}/bamboo.dts               |   0
+>>> pc-bios/{ => dtb}/canyonlands.dtb          | Bin
+>>> pc-bios/{ => dtb}/canyonlands.dts          |   0
+>>> pc-bios/dtb/meson.build                    |  23 +++++++++++++++++++++
+>>> pc-bios/{ => dtb}/petalogix-ml605.dtb      | Bin
+>>> pc-bios/{ => dtb}/petalogix-ml605.dts      |   0
+>>> pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb | Bin
+>>> pc-bios/{ => dtb}/petalogix-s3adsp1800.dts |   0
+>>> pc-bios/meson.build                        |  23 +--------------------
+>>> qemu.nsi                                   |   2 +-
+>>> 13 files changed, 29 insertions(+), 25 deletions(-)
+>>> rename pc-bios/{ => dtb}/bamboo.dtb (100%)
+>>> rename pc-bios/{ => dtb}/bamboo.dts (100%)
+>>> rename pc-bios/{ => dtb}/canyonlands.dtb (100%)
+>>> rename pc-bios/{ => dtb}/canyonlands.dts (100%)
+>>> create mode 100644 pc-bios/dtb/meson.build
+>>> rename pc-bios/{ => dtb}/petalogix-ml605.dtb (100%)
+>>> rename pc-bios/{ => dtb}/petalogix-ml605.dts (100%)
+>>> rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dtb (100%)
+>>> rename pc-bios/{ => dtb}/petalogix-s3adsp1800.dts (100%)
+>>>
+>>> diff --git a/MAINTAINERS b/MAINTAINERS
+>>> index 661a47db5ac..d82d962f1a4 100644
+>>> --- a/MAINTAINERS
+>>> +++ b/MAINTAINERS
+>>> @@ -1581,7 +1581,7 @@ F: hw/pci-host/ppc440_pcix.c
+>>> F: hw/display/sm501*
+>>> F: hw/ide/sii3112.c
+>>> F: hw/rtc/m41t80.c
+>>> -F: pc-bios/canyonlands.dt[sb]
+>>> +F: pc-bios/dtb/canyonlands.dt[sb]
+>>> F: pc-bios/u-boot-sam460ex-20100605.bin
+>>> F: roms/u-boot-sam460ex
+>>> F: docs/system/ppc/amigang.rst
+>>> diff --git a/system/datadir.c b/system/datadir.c
+>>> index e450b84ce91..f96f8fc2646 100644
+>>> --- a/system/datadir.c
+>>> +++ b/system/datadir.c
+>>> @@ -44,9 +44,11 @@ char *qemu_find_file(QemuFileType type, const char 
+>>> *name)
+>>>
+>>>     switch (type) {
+>>>     case QEMU_FILE_TYPE_BIOS:
+>>> -    case QEMU_FILE_TYPE_DTB:
+>>>         subdir = "";
+>>>         break;
+>>> +    case QEMU_FILE_TYPE_DTB:
+>>> +        subdir = "dtb/";
+>>> +        break;
+>>>     case QEMU_FILE_TYPE_KEYMAP:
+>>>         subdir = "keymaps/";
+>>>         break;
+>>> diff --git a/pc-bios/bamboo.dtb b/pc-bios/dtb/bamboo.dtb
+>>> similarity index 100%
+>>> rename from pc-bios/bamboo.dtb
+>>> rename to pc-bios/dtb/bamboo.dtb
+>>> diff --git a/pc-bios/bamboo.dts b/pc-bios/dtb/bamboo.dts
+>>> similarity index 100%
+>>> rename from pc-bios/bamboo.dts
+>>> rename to pc-bios/dtb/bamboo.dts
+>>> diff --git a/pc-bios/canyonlands.dtb b/pc-bios/dtb/canyonlands.dtb
+>>> similarity index 100%
+>>> rename from pc-bios/canyonlands.dtb
+>>> rename to pc-bios/dtb/canyonlands.dtb
+>>> diff --git a/pc-bios/canyonlands.dts b/pc-bios/dtb/canyonlands.dts
+>>> similarity index 100%
+>>> rename from pc-bios/canyonlands.dts
+>>> rename to pc-bios/dtb/canyonlands.dts
+>>> diff --git a/pc-bios/dtb/meson.build b/pc-bios/dtb/meson.build
+>>> new file mode 100644
+>>> index 00000000000..7a71835bca7
+>>> --- /dev/null
+>>> +++ b/pc-bios/dtb/meson.build
+>>> @@ -0,0 +1,23 @@
+>>> +dtbs = [
+>>> +  'bamboo.dtb',
+>>> +  'canyonlands.dtb',
+>>> +  'petalogix-ml605.dtb',
+>>> +  'petalogix-s3adsp1800.dtb',
+>>
+>> Was it intended that the suffix changed from .dts to .dtb? This change 
+>> isn't motivated in the commit message and usually source files rather 
+>> than generated artifacts are listed in build files.
 > 
-> In file included from ../hw/net/rocker/rocker_of_dpa.c:25:
-> ../hw/net/rocker/rocker_hw.h:14:16: error: conflicting types for 'uint64_t'; have '__u64' {aka 'long long unsigned int'}
->     14 | #define __le64 uint64_t
->        |                ^~~~~~~~
-> In file included from /usr/include/stdint.h:20,
->                   from ../include/qemu/osdep.h:111,
->                   from ../hw/net/rocker/rocker_of_dpa.c:17:
-> /usr/include/bits/alltypes.h:136:25: note: previous declaration of 'uint64_t' with type 'uint64_t' {aka 'long unsigned int'}
->    136 | typedef unsigned _Int64 uint64_t;
->        |                         ^~~~~~~~
-> 
-> because the Linux headers include a typedef of __leNN.
-> 
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->   hw/net/rocker/rocker.h        | 14 +++---------
->   hw/net/rocker/rocker_hw.h     | 20 +++++++-----------
->   hw/net/rocker/rocker_of_dpa.c | 40 +++++++++++++++++------------------
->   3 files changed, 31 insertions(+), 43 deletions(-)
+> I think I either found similar python code somewhere and followed that 
+> because meson and python is not something I understand well. Or changed 
+> it because we always need the list of dtbs to install but only need the 
+> dts when compiling so this way we don't need another list or replacing 
+> suffix twice.
 
-
-> diff --git a/hw/net/rocker/rocker_of_dpa.c b/hw/net/rocker/rocker_of_dpa.c
-> index 3378f63110b..4aed1787566 100644
-> --- a/hw/net/rocker/rocker_of_dpa.c
-> +++ b/hw/net/rocker/rocker_of_dpa.c
-> @@ -52,10 +52,10 @@ typedef struct of_dpa_flow_key {
->       uint32_t tunnel_id;              /* overlay tunnel id */
->       uint32_t tbl_id;                 /* table id */
->       struct {
-> -        __be16 vlan_id;              /* 0 if no VLAN */
-> +        uint16_t vlan_id;              /* 0 if no VLAN */
->           MACAddr src;                 /* ethernet source address */
->           MACAddr dst;                 /* ethernet destination address */
-> -        __be16 type;                 /* ethernet frame type */
-> +        uint16_t type;                 /* ethernet frame type */
-
-Some comments are now mis-aligned, otherwise:
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->       } eth;
->       struct {
->           uint8_t proto;               /* IP protocol or ARP opcode */
-> @@ -66,14 +66,14 @@ typedef struct of_dpa_flow_key {
->       union {
->           struct {
->               struct {
-> -                __be32 src;          /* IP source address */
-> -                __be32 dst;          /* IP destination address */
-> +                uint32_t src;          /* IP source address */
-> +                uint32_t dst;          /* IP destination address */
->               } addr;
->               union {
->                   struct {
-> -                    __be16 src;      /* TCP/UDP/SCTP source port */
-> -                    __be16 dst;      /* TCP/UDP/SCTP destination port */
-> -                    __be16 flags;    /* TCP flags */
-> +                    uint16_t src;      /* TCP/UDP/SCTP source port */
-> +                    uint16_t dst;      /* TCP/UDP/SCTP destination port */
-> +                    uint16_t flags;    /* TCP flags */
->                   } tp;
->                   struct {
->                       MACAddr sha;     /* ARP source hardware address */
-> @@ -86,11 +86,11 @@ typedef struct of_dpa_flow_key {
->                   Ipv6Addr src;       /* IPv6 source address */
->                   Ipv6Addr dst;       /* IPv6 destination address */
->               } addr;
-> -            __be32 label;            /* IPv6 flow label */
-> +            uint32_t label;            /* IPv6 flow label */
->               struct {
-> -                __be16 src;          /* TCP/UDP/SCTP source port */
-> -                __be16 dst;          /* TCP/UDP/SCTP destination port */
-> -                __be16 flags;        /* TCP flags */
-> +                uint16_t src;          /* TCP/UDP/SCTP source port */
-> +                uint16_t dst;          /* TCP/UDP/SCTP destination port */
-> +                uint16_t flags;        /* TCP flags */
->               } tp;
->               struct {
->                   Ipv6Addr target;    /* ND target address */
+Should we revert?
 
