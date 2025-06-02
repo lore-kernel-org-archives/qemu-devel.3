@@ -4,75 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B27C0C5B555
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 17:32:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAA73C5B555
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 17:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM90P-0001RE-Vf; Mon, 02 Jun 2025 13:31:25 -0400
+	id 1uM9Eq-0004sf-Bn; Mon, 02 Jun 2025 13:46:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uM90O-0001R0-Cb
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 13:31:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uM90M-0006Xt-O4
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 13:31:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748885481;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AUjfYoFd5VP2l/D1/zyGPHcJJHPlCBN6dsaTtGCZsig=;
- b=GvQLGkt0xfMY4Br0Zyy13kKPRWr5EvZx1Ouv4lf3nbzpkrSyB6o5pck+wofoFPh7jlIPby
- SlrHUucN+sLStxkc9SDKJIU9/FLTINWJWRHf97HLxAmuwtX17oi/48ziFqmPWn7fM16+rx
- 5mn4jxh8BQQBVnVvM9dUyqRKV6hdVYE=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-JpKK9k2YNNyDWCKeW2hVeA-1; Mon,
- 02 Jun 2025 13:31:16 -0400
-X-MC-Unique: JpKK9k2YNNyDWCKeW2hVeA-1
-X-Mimecast-MFC-AGG-ID: JpKK9k2YNNyDWCKeW2hVeA_1748885475
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uM9En-0004sT-2E
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 13:46:17 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uM9El-0008CX-F7
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 13:46:16 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4DBB5195608C; Mon,  2 Jun 2025 17:31:15 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.56])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 266D51800371; Mon,  2 Jun 2025 17:31:11 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Isaku Yamahata <isaku.yamahata@intel.com>
-Subject: [PATCH 2/2] i386/tdvf: Fix build on 32-bit host
-Date: Mon,  2 Jun 2025 19:31:01 +0200
-Message-ID: <20250602173101.1052983-3-clg@redhat.com>
-In-Reply-To: <20250602173101.1052983-1-clg@redhat.com>
-References: <20250602173101.1052983-1-clg@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id AB3141F799;
+ Mon,  2 Jun 2025 17:46:12 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748886372; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KSvTDujfeglymYOPkJd3S3NxqODZvji6hSP7JEhFHsE=;
+ b=CRkWmNYhhhp8pgSGRN47s3PZRrKHgH14q3zLFmN8Pp3EfgLGqqFdMno/3uKfWVCNEt7ht3
+ kHi+IoHxPRDYPceb9Fhrs1uyFlvSjUFCoyRMzvWCyshvAIiRad5AJo22ooHt3DgNJKN75L
+ 1fwEOCPkclN1r5WMqwRY1iqJVdao/RA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748886372;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KSvTDujfeglymYOPkJd3S3NxqODZvji6hSP7JEhFHsE=;
+ b=+4+RFLBegUINr25L8Ed6EQvoGlz+hSsvpaf565uwFYpb2CHsloHanvpr9q3OgqhScSzK5K
+ 3Tuhdr4li45rawDA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748886372; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KSvTDujfeglymYOPkJd3S3NxqODZvji6hSP7JEhFHsE=;
+ b=CRkWmNYhhhp8pgSGRN47s3PZRrKHgH14q3zLFmN8Pp3EfgLGqqFdMno/3uKfWVCNEt7ht3
+ kHi+IoHxPRDYPceb9Fhrs1uyFlvSjUFCoyRMzvWCyshvAIiRad5AJo22ooHt3DgNJKN75L
+ 1fwEOCPkclN1r5WMqwRY1iqJVdao/RA=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748886372;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KSvTDujfeglymYOPkJd3S3NxqODZvji6hSP7JEhFHsE=;
+ b=+4+RFLBegUINr25L8Ed6EQvoGlz+hSsvpaf565uwFYpb2CHsloHanvpr9q3OgqhScSzK5K
+ 3Tuhdr4li45rawDA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1C16E13A63;
+ Mon,  2 Jun 2025 17:46:11 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id mFvAM2PjPWjCKQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 02 Jun 2025 17:46:11 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Alexey
+ Perevalov <a.perevalov@samsung.com>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 02/13] migration/postcopy: Push blocktime start/end into
+ page req mutex
+In-Reply-To: <20250527231248.1279174-3-peterx@redhat.com>
+References: <20250527231248.1279174-1-peterx@redhat.com>
+ <20250527231248.1279174-3-peterx@redhat.com>
+Date: Mon, 02 Jun 2025 14:46:09 -0300
+Message-ID: <87seki3ula.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:mid,
+ suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,39 +117,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use PRI formats where required.
+Peter Xu <peterx@redhat.com> writes:
 
-Cc: Isaku Yamahata <isaku.yamahata@intel.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/i386/tdvf.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+> The postcopy blocktime feature was tricky that it used quite some atomic
+> operations over quite a few arrays and vars, without explaining how that
+> would be thread safe.  The thread safety here is about concurrency between
+> the fault thread and the fault resolution threads, possible to access the
+> same chunk of data.  All these atomic ops can be expensive too before
+> knowing clearly how it works.
+>
+> OTOH, postcopy has one page_request_mutex used to serialize the received
+> bitmap updates.  So far it's ok - we don't yet have a lot of threads
+> contending the lock.  It might change after multifd will be supported, but
+> that's a separate story.  What is important is, with that mutex, it's
+> pretty lightweight to move all the blocktime maintenance into the mutex
+> critical section.  It's because the blocktime layer is lightweighted:
+> almost "remember which vcpu faulted on which address", and "ok we get some
+> fault resolved, calculate how long it takes".  It's also an optional
+> feature for now (but I have thought of changing that, maybe in the future).
+>
+> Let's push the blocktime layer into the mutex, so that it's always
+> thread-safe even without any atomic ops.
+>
+> To achieve that, I'll need to add a tid parameter on fault path so that
+> it'll start to pass the faulted thread ID into deeper the stack, but not
+> too deep.  When at it, add a comment for the shared fault handler (for
+> example, vhost-user devices running with postcopy), to mention a TODO.  One
+> reason it might not be trivial is that vhost-user's userfaultfds should be
+> opened by vhost-user process, so it's pretty hard to control making sure
+> the TID feature will be around.  It wasn't supported before, so keep it
+> like that for now.
+>
+> Now we should be as ease when everything is protected by a mutex that we
+> always take anyway.
+>
+> One side effect: we can finally remove one ramblock_recv_bitmap_test() in
+> mark_postcopy_blocktime_begin(), which was pretty weird and which also
+> includes a weird (but maybe necessary.. but maybe not?) operation to inject
+> a blocktime entry then quickly erase it..  When we're with the mutex, and
+> when we make sure it's invoked after checking the receive bitmap, it's not
+> needed anymore.  Instead, we assert.
+>
+> As another side effect, this paves way for removing all atomic ops in all
+> the mem accesses in blocktime layer.
+>
+> Note that we need a stub for mark_postcopy_blocktime_begin() for Windows
+> builds.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/hw/i386/tdvf.c b/hw/i386/tdvf.c
-index bd993ea2f07a..645d9d1294b4 100644
---- a/hw/i386/tdvf.c
-+++ b/hw/i386/tdvf.c
-@@ -101,16 +101,16 @@ static int tdvf_parse_and_check_section_entry(const TdvfSectionEntry *src,
- 
-     /* sanity check */
-     if (entry->size < entry->data_len) {
--        error_report("Broken metadata RawDataSize 0x%x MemoryDataSize 0x%lx",
-+        error_report("Broken metadata RawDataSize 0x%x MemoryDataSize 0x%"PRIx64,
-                      entry->data_len, entry->size);
-         return -1;
-     }
-     if (!QEMU_IS_ALIGNED(entry->address, TDVF_ALIGNMENT)) {
--        error_report("MemoryAddress 0x%lx not page aligned", entry->address);
-+        error_report("MemoryAddress 0x%"PRIx64" not page aligned", entry->address);
-         return -1;
-     }
-     if (!QEMU_IS_ALIGNED(entry->size, TDVF_ALIGNMENT)) {
--        error_report("MemoryDataSize 0x%lx not page aligned", entry->size);
-+        error_report("MemoryDataSize 0x%"PRIx64" not page aligned", entry->size);
-         return -1;
-     }
- 
--- 
-2.49.0
-
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
