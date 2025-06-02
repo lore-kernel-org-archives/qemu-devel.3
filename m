@@ -4,74 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58724C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 00:56:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85B5C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 04:04:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLtTL-0005ev-7K; Sun, 01 Jun 2025 20:56:15 -0400
+	id 1uLwOw-0001Ro-Pa; Mon, 02 Jun 2025 00:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLtTJ-0005eH-54; Sun, 01 Jun 2025 20:56:13 -0400
-Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ id 1uLwOn-0001RB-Ma; Mon, 02 Jun 2025 00:03:46 -0400
+Received: from mail-vk1-xa31.google.com ([2607:f8b0:4864:20::a31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLtTH-00071G-FR; Sun, 01 Jun 2025 20:56:12 -0400
-Received: by mail-ua1-x933.google.com with SMTP id
- a1e0cc1a2514c-86fbb48fc7fso676261241.2; 
- Sun, 01 Jun 2025 17:56:10 -0700 (PDT)
+ id 1uLwOk-0007DI-3Z; Mon, 02 Jun 2025 00:03:45 -0400
+Received: by mail-vk1-xa31.google.com with SMTP id
+ 71dfb90a1353d-52e728960c3so1476870e0c.2; 
+ Sun, 01 Jun 2025 21:03:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748825769; x=1749430569; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1748837020; x=1749441820; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sokfjRU3Ey34Z1h/Om9Ak0EDkRmMihKTCc+4CArsuz0=;
- b=bCpeCFd2vSndzPAwCpWHIIR5YRCCh9iP2q9KFRr7XcBLzQ3mPESBRmzD4gJPsucHmL
- u4S602ZPVENLB4kDOzwMZPbw9/9U4Ih1PDAuz7rSSOO+ozOm/6ZSeVmT8XbxZjad2jZu
- qNZIz/XIVzRzs2+r3gI/fnfm3xSbsVqGmkH1JWswURiUFgb7nLIKgt+9sTGISh4GE32T
- aH5sEI7DRbVkZWjRlTaJffJXSw7zAYOHkLbQHi/0bT479laAsvIhdv3DyrBnkZeQOzke
- Aq5geTM/yM9eHcZzltVHb57H1aCG+ZKMVjugeigNat/KYQJSLUgk5ZXY+zc0z0FnEg/N
- DnLg==
+ bh=oR/T4sj4Sz9nH//5IYvWjlk1YKbUuAfasS2nfIXYCr4=;
+ b=Dx471hIoNytFbCKckZ4SmV9Me6jsAe1mjs+GTJWoYEot7Wb/vQX+XalCmoeME2BQ9V
+ 7C14WMiy2P5SOUuYLsqnI3GlrIJZrXCm6fOM3UVFkx2AZG6Idd8P+D/L0mvB8M9ZAAX3
+ /SGoEQnU5p4xiavHB8+UKa7EKVnPUuoCoKTtCGYSXTY61xqgrtaHPlru2z2AkNb7BNMM
+ 27sutU9npCY1h6ZOS/qpMjs5Ldm6kiDXK3TheSDTmNGShXFVR2ewHqx7A3omgppyA+bk
+ 84qS96FnK8HP33dG5HK4zlEG5Gy8wbky5cadkY8MUCvYG/utfw7fYCagSNo5xJoj8wAZ
+ G5og==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748825769; x=1749430569;
+ d=1e100.net; s=20230601; t=1748837020; x=1749441820;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=sokfjRU3Ey34Z1h/Om9Ak0EDkRmMihKTCc+4CArsuz0=;
- b=ZdFmNJMxO4ZS3JkMNYLJnoazLoDDzviGcAzAEZZuUWijhlfBttAVutPs4e9tLC2aIZ
- z15KsvebedM202tVElDOhJE2N4zcUyvC0rc/hmq533vet9yFP9z0MTiNUkbyQ09XU3et
- oz7yTwa2yXrFMuy0bKgZPJDoDnEWKSwkxzWR4jTVlV0qIR/k+n626pARD2ZUw3jp2CAs
- U9md9Kx1VXbhi0GkBf2+Nylfox/ghOGSS5v7mkxwu5rZ472M4Ghx+ul3fN5r8rUKJUjQ
- tdOGjQox+wGQ09xPtYfhRbWnzqeuit5KYIWmzQUBek7RUZIK37B5kTvl9o7srvpUcZvF
- J8Vg==
+ bh=oR/T4sj4Sz9nH//5IYvWjlk1YKbUuAfasS2nfIXYCr4=;
+ b=f8rS1/bEbOanJZfnfyHiuRlv9VXNmxPl5YMnhT9tvkmkkF9CJx6+Us6hcaCmvUlp4/
+ vV/CRVBP5hHHlCKotg8DNNs+1WBgvtfwIP/f5fvCrc0E/GN2dWDz/o5c4XITf+SX7mwE
+ plOj8NvhkyiSE9Z5pftO2uqA06JJh9Wb0/3EDSZnclCXNDFGvxkOQStMIy4wEAFOikZK
+ kTlHPEB0b7YU7ih6bkHd7Ha5X1qYHA2oYBgI1WjBdPDJMMBKn1Tidpn0WJE3vWTvpBb/
+ L5HuWYy68kfqDB4ZzFVGZmGA6tN5U6IeuQROH81w0n8pq2bWjTtBJ3N+maFLtJMxTSAB
+ 2AWw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUvTMQHwdxtNIOJwka2kNDwiVaYte1n3COWLV6WOhbU6KkJmXHMLDIOTmx/xtbDm+BENz8dCrDgWBIM@nongnu.org
-X-Gm-Message-State: AOJu0Yw6rCCqTopecd2tFQ18DGVu1G0Iqt4qqKJ6RVLx7/h53LRBfpqz
- A8AWknbZPL1H2+jWCzda8oQoLRlj78qQxdcJufTdC7KQUptJjEHrbDHaTmJPE3ZecQK2sFLHfSJ
- zT6/6mUv3IiVgL5vZdTXp6fdR9vYvs0c=
-X-Gm-Gg: ASbGncskVZMl81tYPYJmJ/ud5N3/1I0Tjww9+rl3A1O9gOBImHG87ac8VamBR4QQm2F
- MPqiRjwqJWSahqIsgsALhvsIb36UXELMgqDCZ/0Ik1A10IfGo26bH+hrD4vBNabpPIrtNbG121u
- Wu2DSmIzAhhuuaqd6ndjjcfnWMcEejI9MNyIMV1GPgAGo+im2BuWQvN3OafUC2e3k=
-X-Google-Smtp-Source: AGHT+IGQS1kABGVS7AQWZWUD+Aa44Ik9SUypLav+ZFYvsOPusghSP1VBuOiiU9pskmXFyDDzD45QHtvmAOg4CJ5Zg8I=
-X-Received: by 2002:a05:6102:26cb:b0:4e1:48ee:6f36 with SMTP id
- ada2fe7eead31-4e701cb0c2cmr3481172137.19.1748825769600; Sun, 01 Jun 2025
- 17:56:09 -0700 (PDT)
+ AJvYcCUu/gF34/jQDHx91h9eH9+MXGY8IikO+s+zAtICtNr8/6YJAyK77Yy5PIAk7knxYu+FRzOCMeIJqyJa@nongnu.org
+X-Gm-Message-State: AOJu0Yw+JHn0yei0Lg7MpnOu+08vPcacO6X+o/walKK1PKKiG5HzHZwa
+ f+ZPPpSUU4VYNGAudw4mxD04Zc/IIP9z82L5MxaNE+drtnPMmrv1NwB8pHNFEdtUPVsIiXy0XK1
+ azyRqyIvAA2PJ8EhhWnLexx6XqODHrVQ=
+X-Gm-Gg: ASbGncuK4RUCcxuR71Pz9Y0/iYGD1qyB6+HU3EVCq+La+wANRjaKMOme2WhGzBpZgkC
+ 44ho7rSeN+9QwhXk8ms+KhZ5U0Hlxyr3UIOmZWnUVVB0aKT17jxn6YZejxgtGRzzWw0SkzhQ9cy
+ sH/f/tapLEj2cABkTX6mlcnBB4mSk/J8K8X5PEDneB1JEgWXFi6jkUVPmrj2u2oWQ=
+X-Google-Smtp-Source: AGHT+IFohOUNpKisSTnxTyGjbGw9k0gDRubq10xSFD9VbOxoN8loNk+foQiBc9cOUgpNy8dAd5KL8jMy59/HDJmkw9o=
+X-Received: by 2002:a05:6122:c97:b0:530:7a17:88ca with SMTP id
+ 71dfb90a1353d-5309379993cmr4127019e0c.9.1748837020323; Sun, 01 Jun 2025
+ 21:03:40 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250530134608.1806922-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250530134608.1806922-1-dbarboza@ventanamicro.com>
+References: <20250529140012.135408-1-mengzhuo@iscas.ac.cn>
+In-Reply-To: <20250529140012.135408-1-mengzhuo@iscas.ac.cn>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 2 Jun 2025 10:55:43 +1000
-X-Gm-Features: AX0GCFvX8E2Pg0ciZth2Gzni6fWovQkeQprQU-b2bsnwnpitV5RgPkkwNAIBk98
-Message-ID: <CAKmqyKOpXKAeazo3iNKMyjziDucQVthZH0LE-PLH9Gc8OVWubg@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: remove capital 'Z' CPU properties
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+Date: Mon, 2 Jun 2025 14:03:14 +1000
+X-Gm-Features: AX0GCFtvDEdP5fYpxqd-nu71X_Av0bs9XhdtdO0CLH0l3B48Lb1GEGJQFwbIvhY
+Message-ID: <CAKmqyKOjEdt_w6uv3cZHBtk2ctZiNwznp-Gv6TkX=5=Q=pfodw@mail.gmail.com>
+Subject: Re: [PATCH v5] target/riscv/kvm: add satp mode for host cpu
+To: Meng Zhuo <mengzhuo@iscas.ac.cn>
+Cc: qemu-devel@nongnu.org, Andrew Jones <ajones@ventanamicro.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x933.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a31;
+ envelope-from=alistair23@gmail.com; helo=mail-vk1-xa31.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -95,146 +100,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 30, 2025 at 11:47=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Fri, May 30, 2025 at 12:01=E2=80=AFAM Meng Zhuo <mengzhuo@iscas.ac.cn> w=
+rote:
 >
-> These properties were deprecated in QEMU 8.2, commit 8043effd9b.
+> This patch adds host satp mode while kvm/host cpu satp mode is not
+> set.
 >
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2931
+> Signed-off-by: Meng Zhuo <mengzhuo@iscas.ac.cn>
+> ---
+> This patch don't change the output of errno nor errno strings pattern.
+> See [v3] for further information.
+>
+> Change in v5:
+> - Adds R-B comment from Andrew Jones
+>
+> Change in v4:
+> - Adds changelog in commit message
+> - Link to v3: https://lists.nongnu.org/archive/html/qemu-devel/2025-05/ms=
+g04629.html
+>
+> Change in v3:
+> - Rebase on https://github.com/alistair23/qemu/tree/riscv-to-apply.next
+>   as requested
+> - Link to v2: https://lists.nongnu.org/archive/html/qemu-devel/2025-04/ms=
+g05203.html
+>
+> Changes in v2:
+> - use set_satp_mode_max_supported instead of hard code
+> - Link to v1: https://lists.nongnu.org/archive/html/qemu-devel/2025-04/ms=
+g05094.html
+> ---
+>  target/riscv/cpu.c         |  3 +--
+>  target/riscv/cpu.h         |  1 +
+>  target/riscv/kvm/kvm-cpu.c | 20 +++++++++++++++++++-
+>  3 files changed, 21 insertions(+), 3 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index d92874baa0..a84edd3a3b 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -433,8 +433,7 @@ const char *satp_mode_str(uint8_t satp_mode, bool is_=
+32_bit)
+>      g_assert_not_reached();
+>  }
+>
+> -static void set_satp_mode_max_supported(RISCVCPU *cpu,
+> -                                        uint8_t satp_mode)
+> +void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode)
+>  {
 
-Thanks!
-
-Applied to riscv-to-apply.next
+This function has been removed in the latest master branch, can you
+please rebase on
+https://github.com/alistair23/qemu/tree/riscv-to-apply.next
 
 Alistair
 
-> ---
->  target/riscv/cpu.c         | 17 -----------------
->  target/riscv/cpu.h         |  1 -
->  target/riscv/tcg/tcg-cpu.c | 31 +------------------------------
->  3 files changed, 1 insertion(+), 48 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index fe21e0fb44..7c6e0844d0 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1387,23 +1387,6 @@ const RISCVCPUMultiExtConfig riscv_cpu_named_featu=
-res[] =3D {
->      { },
->  };
->
-> -/* Deprecated entries marked for future removal */
-> -const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[] =3D {
-> -    MULTI_EXT_CFG_BOOL("Zifencei", ext_zifencei, true),
-> -    MULTI_EXT_CFG_BOOL("Zicsr", ext_zicsr, true),
-> -    MULTI_EXT_CFG_BOOL("Zihintntl", ext_zihintntl, true),
-> -    MULTI_EXT_CFG_BOOL("Zihintpause", ext_zihintpause, true),
-> -    MULTI_EXT_CFG_BOOL("Zawrs", ext_zawrs, true),
-> -    MULTI_EXT_CFG_BOOL("Zfa", ext_zfa, true),
-> -    MULTI_EXT_CFG_BOOL("Zfh", ext_zfh, false),
-> -    MULTI_EXT_CFG_BOOL("Zfhmin", ext_zfhmin, false),
-> -    MULTI_EXT_CFG_BOOL("Zve32f", ext_zve32f, false),
-> -    MULTI_EXT_CFG_BOOL("Zve64f", ext_zve64f, false),
-> -    MULTI_EXT_CFG_BOOL("Zve64d", ext_zve64d, false),
-> -
-> -    { },
-> -};
-> -
->  static void cpu_set_prop_err(RISCVCPU *cpu, const char *propname,
->                               Error **errp)
->  {
+>      bool rv32 =3D riscv_cpu_mxl(&cpu->env) =3D=3D MXL_RV32;
+>      const bool *valid_vm =3D rv32 ? valid_vm_1_10_32 : valid_vm_1_10_64;
 > diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 2a6793e022..17bf4e7579 100644
+> index b56d3afa69..d7136f1d72 100644
 > --- a/target/riscv/cpu.h
 > +++ b/target/riscv/cpu.h
-> @@ -951,7 +951,6 @@ extern const RISCVCPUMultiExtConfig riscv_cpu_extensi=
-ons[];
->  extern const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[];
->  extern const RISCVCPUMultiExtConfig riscv_cpu_experimental_exts[];
->  extern const RISCVCPUMultiExtConfig riscv_cpu_named_features[];
-> -extern const RISCVCPUMultiExtConfig riscv_cpu_deprecated_exts[];
+> @@ -915,6 +915,7 @@ char *riscv_cpu_get_name(RISCVCPU *cpu);
 >
->  typedef struct isa_ext_data {
->      const char *name;
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 66929f2e8d..8ebffe55bc 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -1416,25 +1416,6 @@ static void riscv_cpu_add_profiles(Object *cpu_obj=
-)
->      }
+>  void riscv_cpu_finalize_features(RISCVCPU *cpu, Error **errp);
+>  void riscv_add_satp_mode_properties(Object *obj);
+> +void set_satp_mode_max_supported(RISCVCPU *cpu, uint8_t satp_mode);
+>  bool riscv_cpu_accelerator_compatible(RISCVCPU *cpu);
+>
+>  /* CSR function table */
+> diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+> index 82f9728636..18fbca1a08 100644
+> --- a/target/riscv/kvm/kvm-cpu.c
+> +++ b/target/riscv/kvm/kvm-cpu.c
+> @@ -999,6 +999,23 @@ static void kvm_riscv_destroy_scratch_vcpu(KVMScratc=
+hCPU *scratch)
+>      close(scratch->kvmfd);
 >  }
 >
-> -static bool cpu_ext_is_deprecated(const char *ext_name)
-> -{
-> -    return isupper(ext_name[0]);
-> -}
-> -
-> -/*
-> - * String will be allocated in the heap. Caller is responsible
-> - * for freeing it.
-> - */
-> -static char *cpu_ext_to_lower(const char *ext_name)
-> -{
-> -    char *ret =3D g_malloc0(strlen(ext_name) + 1);
-> -
-> -    strcpy(ret, ext_name);
-> -    ret[0] =3D tolower(ret[0]);
-> -
-> -    return ret;
-> -}
-> -
->  static void cpu_set_multi_ext_cfg(Object *obj, Visitor *v, const char *n=
-ame,
->                                    void *opaque, Error **errp)
->  {
-> @@ -1447,13 +1428,6 @@ static void cpu_set_multi_ext_cfg(Object *obj, Vis=
-itor *v, const char *name,
->          return;
->      }
->
-> -    if (cpu_ext_is_deprecated(multi_ext_cfg->name)) {
-> -        g_autofree char *lower =3D cpu_ext_to_lower(multi_ext_cfg->name)=
+> +static void kvm_riscv_init_satp_mode(RISCVCPU *cpu, KVMScratchCPU *kvmcp=
+u)
+> +{
+> +    CPURISCVState *env =3D &cpu->env;
+> +    struct kvm_one_reg reg;
+> +    int ret;
+> +    uint64_t val;
+> +
+> +    reg.id =3D RISCV_CONFIG_REG(env, satp_mode);
+> +    reg.addr =3D (uint64_t)&val;
+> +    ret =3D ioctl(kvmcpu->cpufd, KVM_GET_ONE_REG, &reg);
+> +    if (ret !=3D 0) {
+> +        error_report("Unable to retrieve satp from host, error %d", ret)=
 ;
-> -
-> -        warn_report("CPU property '%s' is deprecated. Please use '%s' in=
-stead",
-> -                    multi_ext_cfg->name, lower);
-> -    }
-> -
->      cpu_cfg_ext_add_user_opt(multi_ext_cfg->offset, value);
->
->      prev_val =3D isa_ext_is_enabled(cpu, multi_ext_cfg->offset);
-> @@ -1489,14 +1463,13 @@ static void cpu_add_multi_ext_prop(Object *cpu_ob=
-j,
->                                     const RISCVCPUMultiExtConfig *multi_c=
-fg)
+> +    }
+> +
+> +    set_satp_mode_max_supported(cpu, val);
+> +}
+> +
+>  static void kvm_riscv_init_machine_ids(RISCVCPU *cpu, KVMScratchCPU *kvm=
+cpu)
 >  {
->      bool generic_cpu =3D riscv_cpu_is_generic(cpu_obj);
-> -    bool deprecated_ext =3D cpu_ext_is_deprecated(multi_cfg->name);
+>      struct kvm_one_reg reg;
+> @@ -1302,6 +1319,7 @@ static void riscv_init_kvm_registers(Object *cpu_ob=
+j)
+>      kvm_riscv_init_machine_ids(cpu, &kvmcpu);
+>      kvm_riscv_init_misa_ext_mask(cpu, &kvmcpu);
+>      kvm_riscv_init_cfg(cpu, &kvmcpu);
+> +    kvm_riscv_init_satp_mode(cpu, &kvmcpu);
 >
->      object_property_add(cpu_obj, multi_cfg->name, "bool",
->                          cpu_get_multi_ext_cfg,
->                          cpu_set_multi_ext_cfg,
->                          NULL, (void *)multi_cfg);
->
-> -    if (!generic_cpu || deprecated_ext) {
-> +    if (!generic_cpu) {
->          return;
+>      kvm_riscv_destroy_scratch_vcpu(&kvmcpu);
+>  }
+> @@ -1980,7 +1998,7 @@ static bool kvm_cpu_realize(CPUState *cs, Error **e=
+rrp)
+>          }
 >      }
 >
-> @@ -1539,8 +1512,6 @@ static void riscv_cpu_add_user_properties(Object *o=
-bj)
->      riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_vendor_exts);
->      riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_experimental_exts);
->
-> -    riscv_cpu_add_multiext_prop_array(obj, riscv_cpu_deprecated_exts);
-> -
->      riscv_cpu_add_profiles(obj);
+> -   return true;
+> +    return true;
 >  }
 >
+>  void riscv_kvm_cpu_finalize_features(RISCVCPU *cpu, Error **errp)
 > --
-> 2.49.0
+> 2.39.5
 >
 >
 
