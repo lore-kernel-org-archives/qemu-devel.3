@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B016C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 12:57:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DB50C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 12:58:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM4i0-0002mm-GE; Mon, 02 Jun 2025 08:56:08 -0400
+	id 1uM4k5-000440-Ef; Mon, 02 Jun 2025 08:58:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uM4hz-0002mN-1N; Mon, 02 Jun 2025 08:56:07 -0400
-Received: from dfw.source.kernel.org ([2604:1380:4641:c500::1])
+ id 1uM4k3-000433-96; Mon, 02 Jun 2025 08:58:15 -0400
+Received: from nyc.source.kernel.org ([147.75.193.91])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uM4hu-00008s-D5; Mon, 02 Jun 2025 08:56:05 -0400
+ id 1uM4k1-0000F6-Lx; Mon, 02 Jun 2025 08:58:15 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by dfw.source.kernel.org (Postfix) with ESMTP id 72E885C5C20;
- Mon,  2 Jun 2025 12:53:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F300EC4CEEB;
- Mon,  2 Jun 2025 12:55:59 +0000 (UTC)
+ by nyc.source.kernel.org (Postfix) with ESMTP id 3B8DFA4FFAD;
+ Mon,  2 Jun 2025 12:58:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D77FFC4CEEB;
+ Mon,  2 Jun 2025 12:58:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1748868960;
- bh=1y1k9L6v273vVnANqw0hHe3EnLWOX+Fa7Jbly59n7Q8=;
+ s=k20201202; t=1748869091;
+ bh=UGpf4ScskYQqBIauC9Wo+ugO/mp6oc4eJcEYr5RIoR0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=AuTUU2ETaC4zcMj2e9medq9DpK1kpQ1Z4GptW+VZfh+F0niL2wttEvT2MLo6mUH9Q
- iGtoKWqYgvlwP4M7vRgYcNy/bF67fKmEGd3PgJnJ3Qaibu2tOZmVKPkFi7v1InnG+i
- GhvVjUkiwmmDy9oxSFWraVNO2/03Fqx/O5Agz6uudV1u8Swa8LxepWWJFzShmB65z+
- F7OLADiYqScR7qVbLd/uoL6wlfQZGzMaquoiRNPN5UeqelmD+GzGJTFxysHmv96RMu
- 7KSSKOYguLx5Fv7RmZS4a1rkxSKLwqWi6e5tQMYtSlFLrY4qIase30Aa26UqS8uG7h
- icbv4+ZA/omhQ==
+ b=u8HhRNzrCqHQLjErCeTW1ab/J/WOyCqQ4162WtH2eKR1PymS4yPY6Ly2akh9ieK4C
+ +mjQnJhhT5NdJf9n2AdRXyEspFZIXMlTfHhUPgZ02+hRDIlQJFh5yVEJsHAtF7FGHu
+ gAWbVC+dxfIhrp32HBUAOjKUUkhcbTDjhL5GETxUOwEwvg/PjcR61cfP9FJRT+i/p9
+ i5If//kwZA7DkPz0K13JfvFBcYpCz0GU7uS+MBmlVPAhaxjR7SjujtA6VMQelcaaJw
+ DUTl63rJg6DoO2/sPTXEmhEqed0N7Q40LzRiojUy8aJhfX9wrOF03xJih9g/mf8p0J
+ SzO9y7fGtFF6A==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1uM4hV-000000008bf-0Wcl; Mon, 02 Jun 2025 14:55:37 +0200
+ id 1uM4jx-000000008oD-3sD1; Mon, 02 Jun 2025 14:58:09 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -48,25 +48,26 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  Shannon Zhao <shannon.zhaosl@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
  linux-kernel@vger.kernel.org
-Subject: [PATCH v10 12/26] acpi/generic_event_device: add logic to detect if
- HEST addr is available
-Date: Mon,  2 Jun 2025 14:52:30 +0200
-Message-ID: <20250602122244.081a1960@imammedo.users.ipa.redhat.com>,
- Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Subject: [PATCH v10 12/20 RESEND] acpi/generic_event_device: add logic to
+ detect if HEST addr is available
+Date: Mon,  2 Jun 2025 14:57:12 +0200
+Message-ID: <20250602122244.081a1960@imammedo.users.ipa.redhat.com>, Mauro
+	Carvalho Chehab <mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250530221810.694ce02e@foz.lan>
 References: <20250530221810.694ce02e@foz.lan>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2604:1380:4641:c500::1;
- envelope-from=mchehab+huawei@kernel.org; helo=dfw.source.kernel.org
-X-Spam_score_int: -14
-X-Spam_score: -1.5
-X-Spam_bar: -
-X-Spam_report: (-1.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+Received-SPF: pass client-ip=147.75.193.91;
+ envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
+X-Spam_score_int: -37
+X-Spam_score: -3.8
+X-Spam_bar: ---
+X-Spam_report: (-3.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- INVALID_MSGID=0.568, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ INVALID_MSGID=0.568, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,6 +82,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+Message-ID: <20250602125712.zRS3rDnUwpgBqaN6Cxy87fcfw2wsfLpc_wcW4oZ1UMI@z>
 
 Create a new property (x-has-hest-addr) and use it to detect if
 the GHES table offsets can be calculated from the HEST address
@@ -91,6 +93,9 @@ Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
+PS.: patch resent as the previous version was "12/26" instead
+of "12/20"
+
 v10:
 - rebased on the top of upstream
 
