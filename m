@@ -4,92 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 796A4C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:07:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D631CC5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:12:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMCMD-0007uj-Dv; Mon, 02 Jun 2025 17:06:09 -0400
+	id 1uMCRA-0000pS-8c; Mon, 02 Jun 2025 17:11:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uMCMB-0007u5-St
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:06:07 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMCR3-0000oD-VM
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
- id 1uMCMA-0003qF-AO
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:06:07 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMCQv-0004Og-Om
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748898364;
+ s=mimecast20190719; t=1748898656;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TPAOzMw4ShRFf2PjoWUiz74Bhb/cLQB/tGLlUw7Kpr8=;
- b=K+Vv2C/gv/nqN1bVZa/fZvN6rgg0lqG9upJqbIxX3dNpL7jZtGAOTlWTGLVUr3ItT6X/N6
- y3W42hWh7exMxqO2oDoFx4BJJJ0Ljl8dYnnSpvHWciOOLGDcIem1yocHNr97s12+yX4FHa
- /RdCx1mgonxe9V02jrdR9BfgpvxKdZ4=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=OzQhT/qXyjZ2tB40NxqOTXT2Lyi6oiwytVUne15HM9g=;
+ b=i7KOcwzB7dVN5NLkkr8ldLQMBwsnpZY/eim/j0TCFNh7M9KiOsTesQCSVGZ7A9/DEHR5Bc
+ +R6LA/LIFDT7c534JrT1C39CV5uZbKnD5hiUX0rrsd+amFm2SdIZ6UQtUPEdyZ3czC1s/U
+ zu8gEciqt6W+tdSGXTUA/5HIaTsreUE=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-491-i9wvQYc3NBGsnBzt0GESIQ-1; Mon, 02 Jun 2025 17:06:03 -0400
-X-MC-Unique: i9wvQYc3NBGsnBzt0GESIQ-1
-X-Mimecast-MFC-AGG-ID: i9wvQYc3NBGsnBzt0GESIQ_1748898362
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-7c793d573b2so842271785a.1
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:06:03 -0700 (PDT)
+ us-mta-463-dH5B7glQMkOFLqmQEoFAdQ-1; Mon, 02 Jun 2025 17:10:54 -0400
+X-MC-Unique: dH5B7glQMkOFLqmQEoFAdQ-1
+X-Mimecast-MFC-AGG-ID: dH5B7glQMkOFLqmQEoFAdQ_1748898654
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43eea5a5d80so29776055e9.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:10:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748898362; x=1749503162;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=TPAOzMw4ShRFf2PjoWUiz74Bhb/cLQB/tGLlUw7Kpr8=;
- b=Li+HhaP+bIX/2Oqus6cRwwsZfuL93739qEHtdycBW+iQHv15kqOCTKOI6LjnMTY0rB
- YQQPwTzF/wGgmnqhRRqlPPtD2VzvGyvY0uTh09eJ89j9MEDkXeSUPS3Asa3GxxRlB6SR
- vs8U1FtyFEuTTPCs1QAMOS8VClIeOBJZFyVSVIZ+6eP7v8Vi6oDtuBAvnzZFpcT2iVte
- 7xEzy9BjAno3iuq0H9l9CZDSwlFSba8HPBSVXmfsqBbRDclZ5FPwdldfXblK+x/SVwMA
- dy+TA1q1hCIhnA8/hgh7I5O+aw3B48pOiXBxRAW6csLG6JZ2blBTyhxc3iATWEzr3zWo
- bKNA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW8x2/rqWzB855XzfAy/SjYmt3uucEv3WqmG3eGsDmtlJXvqFZz11trRY+AlJes6xlVe+q2GikGceh+@nongnu.org
-X-Gm-Message-State: AOJu0YwF/X0yaOjh5rkcaqKvnIolLuQqgV028BNXys0PKzmtkaK9pmsF
- LCYFCotAxQiIyCWFkTsPznVpMHBi/bnaj3VnkJDHE8gDHcyLOGZpuKNTXuBiSYSskf7l/PtM7AW
- Je03gMtMA6uE2t6KETxglTJuSX46Z0hTFng5HzxHImTMsNPKglkj/BnQK
-X-Gm-Gg: ASbGnctzUtVd2jv7KHe1HkUdTvTdDBOnauXxPr7o7hla3rIe3+iqPPfEiE+/Fc5+W8X
- H+sOcO7oysqBXdyoZnwAe1lPPifAkk0+syX6NXrpm0L/q+JI6Kr7OagGxKb7CXoKEE2BrbaiadM
- /uZ5CxdxIewGrQuLpsexstRyUZMgFUK/6JvhMV2Xi4zHffuDp2a/eq7PKIICfues52/1g63DVl0
- sK5RA+Y5ck5V3Vd31B9l8Jf8t2R/ypGHaAFZYmhBQd9Ee2mj7+0Z5ZR8RXjWAtUjeeKA76cgdHY
- HOFNpb82gK2R
-X-Received: by 2002:a05:620a:1a26:b0:7c5:a29e:3477 with SMTP id
- af79cd13be357-7d0a20343e0mr2405040985a.53.1748898362575; 
- Mon, 02 Jun 2025 14:06:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGgGBo7BdJHpAD9PkHwc7C63wadtGTIX2f117lkD2V/ZCSjrqXHk3P3H28OmkvH11/6V3I0EA==
-X-Received: by 2002:a05:620a:1a26:b0:7c5:a29e:3477 with SMTP id
- af79cd13be357-7d0a20343e0mr2405037985a.53.1748898362300; 
- Mon, 02 Jun 2025 14:06:02 -0700 (PDT)
-Received: from [192.168.40.164] ([70.105.235.240])
+ d=1e100.net; s=20230601; t=1748898653; x=1749503453;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=OzQhT/qXyjZ2tB40NxqOTXT2Lyi6oiwytVUne15HM9g=;
+ b=wJGVSrCupIH+Y4BfkYPIAvIKW+UpnKkEhu3B8qzP0mnL55qV/zwiMSQ9TygfSbRXcT
+ esrPc/3pnXtRgXDkpnJqzn9q/nu+qaVatXCck/j79z3piT2YTSMOYU6FSjkGFDaq39c3
+ ZKgEN+YeceY58Y5sVrAqdxCwCBg7CgJFx9xr/ToPOwwZujV1ojizVXcqdS3bLd4pzCMP
+ H1TyPw8RRtTgYuNTSuPtnzhWzUrTsHfJlv6gem9WNeMSHl1lNEY7gYPvYLWhR0w0bjUI
+ f7DjB0pDqMsH6id8pvVmNyNTrK88jTZrXZEWTRgzT5EiX8zWc+BHdwSSn9LO7a6CKb4g
+ 8aBQ==
+X-Gm-Message-State: AOJu0YzBPL201tOCb7XIP/ab7dNktkH1FjUHVXTIoUMu2t0L7oGwBLg7
+ LfvvYTsd5BydiP4X8DRiNmONEuXWP8+wYC132iN+7uixGiGCPbga7VIKnlWAoxLzLkk3fjzTs07
+ zGvcc0hPBMqTagUXV2mOPXL2lKvooy9PGZcidC8R6dm+Mbp42wEnJXzII
+X-Gm-Gg: ASbGncssRP2lSZXxWpLpYEXZDKxOBAfpABSyOrC9xNzbgn8SLCXeJGXE7CCZ8dIE+Vu
+ ZJIZ8SwNLtrWfwADlwe/TDouuKsYWXbOtEnTt7AlOWDTAj4JxYdsyNCCdemotcEJHZF7aBDO3ev
+ oJtJvY3ulbjrdvL/NfTZMJjGNN73N9vF3OsYfVXnHKUmNTlsd7UIt1urFRHL7T6cm+KSVYX/IRP
+ hekng0qHTk7ZIyfvyDWP8U4QTVIVlHzFsapmVqdvlGWzk+qS7WDVWwkEvlgTbGaW4NCo4VPQn1e
+ YJp4Vj829tgE3s91pg2UQdr1pyalSLxIXzKtTKEICoBE1VlINjQOv3YlMXWHIAsJdv4nfH68CFu
+ IkhijjAXmsE05+WHFjFzGKZggSifcaZ5vCzqDlsM=
+X-Received: by 2002:a05:600c:5294:b0:43c:f513:958a with SMTP id
+ 5b1f17b1804b1-450d883b9admr121721445e9.13.1748898653530; 
+ Mon, 02 Jun 2025 14:10:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFn3HgJukX8eJRxBQZddzjAWn8SPEFrZCYlCmhbjON02y2UdyFHpnwRUCVi40uKvOcZ82Auhw==
+X-Received: by 2002:a05:600c:5294:b0:43c:f513:958a with SMTP id
+ 5b1f17b1804b1-450d883b9admr121721315e9.13.1748898653137; 
+ Mon, 02 Jun 2025 14:10:53 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f34:a300:1c2c:f35e:e8e5:488e?
+ (p200300d82f34a3001c2cf35ee8e5488e.dip0.t-ipconnect.de.
+ [2003:d8:2f34:a300:1c2c:f35e:e8e5:488e])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d09a1bb27fsm689205185a.116.2025.06.02.14.06.01
+ 5b1f17b1804b1-450d7fb00ccsm136512135e9.17.2025.06.02.14.10.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 14:06:01 -0700 (PDT)
-Message-ID: <30b4030e-fb0b-4254-9b43-8f89fe66bfe0@redhat.com>
-Date: Mon, 2 Jun 2025 17:05:32 -0400
+ Mon, 02 Jun 2025 14:10:52 -0700 (PDT)
+Message-ID: <2278c8cb-a547-4f8d-a8fb-cce38fa3b5f2@redhat.com>
+Date: Mon, 2 Jun 2025 23:10:51 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/virt: Check bypass iommu is not set for iommu-map
- DT property
+Subject: Re: [PATCH v6 4/5] ram-block-attributes: Introduce RamBlockAttributes
+ to manage RAMBlock with guest_memfd
+To: Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy
+ <aik@amd.com>, Peter Xu <peterx@redhat.com>,
+ Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250530083256.105186-1-chenyi.qiang@intel.com>
+ <20250530083256.105186-5-chenyi.qiang@intel.com>
+From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, nicolinc@nvidia.com,
- linuxarm@huawei.com
-References: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
-From: Donald Dutile <ddutile@redhat.com>
-In-Reply-To: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250530083256.105186-5-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -114,54 +167,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/2/25 7:46 AM, Shameer Kolothum wrote:
-> default_bus_bypass_iommu tells us whether the bypass_iommu is set
-> for the default PCIe root bus. Make sure we check that before adding
-> the "iommu-map" DT property.
+On 30.05.25 10:32, Chenyi Qiang wrote:
+> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
+> discard") highlighted that subsystems like VFIO may disable RAM block
+> discard. However, guest_memfd relies on discard operations for page
+> conversion between private and shared memory, potentially leading to
+> the stale IOMMU mapping issue when assigning hardware devices to
+> confidential VMs via shared memory. To address this and allow shared
+> device assignement, it is crucial to ensure the VFIO system refreshes
+> its IOMMU mappings.
 > 
-> Fixes: 6d7a85483a06 ("hw/arm/virt: Add default_bus_bypass_iommu machine option")
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> RamDiscardManager is an existing interface (used by virtio-mem) to
+> adjust VFIO mappings in relation to VM page assignment. Effectively page
+> conversion is similar to hot-removing a page in one mode and adding it
+> back in the other. Therefore, similar actions are required for page
+> conversion events. Introduce the RamDiscardManager to guest_memfd to
+> facilitate this process.
+> 
+> Since guest_memfd is not an object, it cannot directly implement the
+> RamDiscardManager interface. Implementing it in HostMemoryBackend is
+> not appropriate because guest_memfd is per RAMBlock, and some RAMBlocks
+> have a memory backend while others do not. Notably, virtual BIOS
+> RAMBlocks using memory_region_init_ram_guest_memfd() do not have a
+> backend.
+> 
+> To manage RAMBlocks with guest_memfd, define a new object named
+> RamBlockAttributes to implement the RamDiscardManager interface. This
+> object can store the guest_memfd information such as bitmap for shared
+> memory and the registered listeners for event notification. In the
+> context of RamDiscardManager, shared state is analogous to populated, and
+> private state is signified as discarded. To notify the conversion events,
+> a new state_change() helper is exported for the users to notify the
+> listeners like VFIO, so that VFIO can dynamically DMA map/unmap the
+> shared mapping.
+> 
+> Note that the memory state is tracked at the host page size granularity,
+> as the minimum conversion size can be one page per request and VFIO
+> expects the DMA mapping for a specific iova to be mapped and unmapped
+> with the same granularity. Confidential VMs may perform partial
+> conversions, such as conversions on small regions within larger ones.
+> To prevent such invalid cases and until DMA mapping cut operation
+> support is available, all operations are performed with 4K granularity.
+> 
+> In addition, memory conversion failures cause QEMU to quit instead of
+> resuming the guest or retrying the operation at present. It would be
+> future work to add more error handling or rollback mechanisms once
+> conversion failures are allowed. For example, in-place conversion of
+> guest_memfd could retry the unmap operation during the conversion from
+> shared to private. For now, keep the complex error handling out of the
+> picture as it is not required.
+> 
+> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 > ---
->   hw/arm/virt.c | 15 ++++++++++-----
->   1 file changed, 10 insertions(+), 5 deletions(-)
+> Changes in v6:
+>      - Change the object type name from RamBlockAttribute to
+>        RamBlockAttributes. (David)
+>      - Save the associated RAMBlock instead MemoryRegion in
+>        RamBlockAttributes. (David)
+>      - Squash the state_change() helper introduction in this commit as
+>        well as the mixture conversion case handling. (David)
+>      - Change the block_size type from int to size_t and some cleanup in
+>        validation check. (Alexey)
+>      - Add a tracepoint to track the state changes. (Alexey)
 > 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 9a6cd085a3..99fde5836c 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -1487,9 +1487,12 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
->       qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
->       g_free(node);
+> Changes in v5:
+>      - Revert to use RamDiscardManager interface instead of introducing
+>        new hierarchy of class to manage private/shared state, and keep
+>        using the new name of RamBlockAttribute compared with the
+>        MemoryAttributeManager in v3.
+>      - Use *simple* version of object_define and object_declare since the
+>        state_change() function is changed as an exported function instead
+>        of a virtual function in later patch.
+>      - Move the introduction of RamBlockAttribute field to this patch and
+>        rename it to ram_shared. (Alexey)
+>      - call the exit() when register/unregister failed. (Zhao)
+>      - Add the ram-block-attribute.c to Memory API related part in
+>        MAINTAINERS.
+> 
+> Changes in v4:
+>      - Change the name from memory-attribute-manager to
+>        ram-block-attribute.
+>      - Implement the newly-introduced PrivateSharedManager instead of
+>        RamDiscardManager and change related commit message.
+>      - Define the new object in ramblock.h instead of adding a new file.
+> ---
+>   MAINTAINERS                   |   1 +
+>   include/system/ramblock.h     |  21 ++
+>   system/meson.build            |   1 +
+>   system/ram-block-attributes.c | 480 ++++++++++++++++++++++++++++++++++
+>   system/trace-events           |   3 +
+>   5 files changed, 506 insertions(+)
+>   create mode 100644 system/ram-block-attributes.c
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 6dacd6d004..8ec39aa7f8 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3149,6 +3149,7 @@ F: system/memory.c
+>   F: system/memory_mapping.c
+>   F: system/physmem.c
+>   F: system/memory-internal.h
+> +F: system/ram-block-attributes.c
+>   F: scripts/coccinelle/memory-region-housekeeping.cocci
 >   
-> -    qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
-> -                           0x0, vms->iommu_phandle, 0x0, bdf,
-> -                           bdf + 1, vms->iommu_phandle, bdf + 1, 0xffff - bdf);
-> +    if (!vms->default_bus_bypass_iommu) {
-> +        qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
-> +                               0x0, vms->iommu_phandle, 0x0, bdf,
-> +                               bdf + 1, vms->iommu_phandle, bdf + 1,
-> +                               0xffff - bdf);
-> +    }
->   }
+>   Memory devices
+> diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+> index d8a116ba99..1bab9e2dac 100644
+> --- a/include/system/ramblock.h
+> +++ b/include/system/ramblock.h
+> @@ -22,6 +22,10 @@
+>   #include "exec/cpu-common.h"
+>   #include "qemu/rcu.h"
+>   #include "exec/ramlist.h"
+> +#include "system/hostmem.h"
+> +
+> +#define TYPE_RAM_BLOCK_ATTRIBUTES "ram-block-attributes"
+> +OBJECT_DECLARE_SIMPLE_TYPE(RamBlockAttributes, RAM_BLOCK_ATTRIBUTES)
 >   
->   static void create_pcie(VirtMachineState *vms)
-> @@ -1612,8 +1615,10 @@ static void create_pcie(VirtMachineState *vms)
->           switch (vms->iommu) {
->           case VIRT_IOMMU_SMMUV3:
->               create_smmu(vms, vms->bus);
-> -            qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
-> -                                   0x0, vms->iommu_phandle, 0x0, 0x10000);
-> +            if (!vms->default_bus_bypass_iommu) {
-> +                qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
-> +                                       0x0, vms->iommu_phandle, 0x0, 0x10000);
-> +            }
->               break;
->           default:
->               g_assert_not_reached();
+>   struct RAMBlock {
+>       struct rcu_head rcu;
+> @@ -91,4 +95,21 @@ struct RAMBlock {
+>       ram_addr_t postcopy_length;
+>   };
+>   
+> +struct RamBlockAttributes {
+> +    Object parent;
+> +
+> +    RAMBlock *ram_block;
+> +
+> +    /* 1-setting of the bitmap represents ram is populated (shared) */
+> +    unsigned bitmap_size;
+> +    unsigned long *bitmap;
 
-Reviewed-by: Donald Dutile <ddutile@redhat.com>
+So, initially, all memory starts out as private, correct?
+
+I guess this mimics what kvm_set_phys_mem() ends up doing, when it does 
+the kvm_set_memory_attributes_private() call.
+
+So there is a short period of inconsistency, between creating the 
+RAMBlock and mapping it into the PA space.
+
+It might be wroth spelling that out / documenting it somewhere.
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
