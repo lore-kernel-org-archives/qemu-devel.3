@@ -4,92 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CA3C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 18:40:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E75AC5B555
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 18:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMA4g-0006r6-EE; Mon, 02 Jun 2025 14:39:54 -0400
+	id 1uMA9n-00082u-RJ; Mon, 02 Jun 2025 14:45:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uMA4d-0006qW-Kj
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:39:51 -0400
-Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uMA9m-00082D-Ba
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:45:10 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uMA4a-0004jJ-BO
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:39:51 -0400
-Received: by mail-pg1-x52f.google.com with SMTP id
- 41be03b00d2f7-b200047a6a5so4755494a12.0
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 11:39:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uMA9i-0005PB-TG
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:45:10 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-604bff84741so9183539a12.2
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 11:45:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748889585; x=1749494385; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=avIwfDFHWJSxmgv/nZT8jY0ikwd0WAxvHXwz5MZ28zE=;
- b=y5Zrurg9elC+24asmnjlosBJx4DZt9hBCZVIYDEiV4PLEgvy+ZoNj0INaMtw8UGnTF
- Qe50Ei5TRfLaYflNDKhaqjVzUjT/u6PPVgqv1vw1wfjFHLbBIn4ISuLpawg2kSTFo4gz
- IGNILgBEOMKu56fjUA369pDXAOXBwu2fUg8LeOusaT1ha0b6sxnfEhCJRnTQ1u41PBPD
- 4BivPaVVSqW+pfowou6Wlh9jH+xU0loyPaCj36fgSj2tB7y0TAYVpNOf042bRvARICU0
- /72UYG0Wwxj9X6nkBv1fuWq5tlNVjxwJ30xJ3v7qCoJDkiwNf+iLp25PIXsqYmLuiSsA
- jQCQ==
+ d=gmail.com; s=20230601; t=1748889903; x=1749494703; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8CoIRgdTJ6IzAdVaqKWOUYgO7jDZqUiXBTyKExPJlE0=;
+ b=dYOGUvZY5sUB70ow/v71JGILZBqwR5YSWeyn5La0ssXx1vVmi6FqGqmeKY+EeAoA1V
+ Xqc26SQkwZhpcy4dat+WJuHvGWci6VPQjy53CYboLH3/G/LfNoDFNEQ6ifqZHQg/f3j/
+ 9r299/3osby+XRBTpkhItVxywzKnEKGTCWgW2qeqylM2dzUVSKnrdb3BDRZExX3msK8W
+ 2yp4oolYiSv/DFL+RQZjiLFF6i6sQ2nAq0iXE5XE3vJtYuPyEIw2uUJvMFCd+97Ip2gi
+ din4Aqpkphxas6CMNMBxSSFHAsVvx4tffM0PyPsbmKtB4hfnPNfe/so2Qv0n/M8T0k3i
+ ji6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748889585; x=1749494385;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=avIwfDFHWJSxmgv/nZT8jY0ikwd0WAxvHXwz5MZ28zE=;
- b=qgwBq8AzpcwReJ/lqzBIM06PPMOs9FvZMI7IlJsXIMMn9rxUz0aqUfFH6iKP5HQJB3
- aX5EqzrlU8Hct2Z/O2rk6tj0VR3jtxxGvx/oq9pDQ8c8JGV8Zv4SZKhnCLBJojtpR2vy
- VVgphgeLed9gLiUlQDdTwFTI7yNbWdwpgouZg944gv0wiaUnpVC6gmbEb9FsFDxTmIKc
- xISzevht3qQ6cgk0g/gUI1+4ZMoJF2PAby85j/4WH9f2y+Q40usPoMXxGWq25etn6i16
- bzHomF47YiOMq7fxC3VGMww4qeQiqZzqGfcmSZVsYn0jukgb45StOW5Uhvqix7Dp4xzp
- MEmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPsmWZslRJh5uFdOB+9y/8wk5fC1ma/mHSYlO6anqoROkpPdNM6NODEISQUBNrEOGyZHCPUStbrsqx@nongnu.org
-X-Gm-Message-State: AOJu0YyxumLyo4pz/ixlqIfTzH+qSMz7X8FNtkKPHNB6xJ59WXciGv2/
- 0knorOw/W9ebVJAgrWhOgiRtBCXj7v9ReIq5FnyHvW+I0as1KcMbdS3hhisOFdjuIZI=
-X-Gm-Gg: ASbGncsacy9ZA+T6obTSAMu1mgp58mVhn7xnPQNmcLynzen3BYAxzj8B/62RVn3US7C
- e588JJlSgZB2+pkdeGKfKqxyqJvIl4gL4sa7K9oc2AamjsRfuJxJgnsqRFRu0JT8ViELoOSrLBa
- zjZWZPHL7o2nkIoTaQJ6zobYmdy0dmuCi0Uae9/VDGQXT9Bboj30xwnPUYgpiMdRyKSXgZpXfA3
- L+artB5wcCxPKac3IWMijGWMVZAiX1P8IlD8fBTgQXOXz41KkcJCdBEkr9uRXzpe/BdC/9miNcI
- 8R228kmivokmNs5mPqW2xWL//PlD7zS0TVCVIPO2ii+cPP2Tic56x8VePD3aZbM9cs1rJ7ySAeI
- =
-X-Google-Smtp-Source: AGHT+IGrBO8rxR4cW5YwZlMTQeGM8GQhIPqcBGLcaYZH0BrgHfs8jafqpJwfloa5XoHeZ76gA5yGmA==
-X-Received: by 2002:a17:90b:1b44:b0:310:c8ec:4192 with SMTP id
- 98e67ed59e1d1-312e44cbe7dmr539023a91.10.1748889583472; 
- Mon, 02 Jun 2025 11:39:43 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-312e522d4dfsm48452a91.1.2025.06.02.11.39.42
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 11:39:43 -0700 (PDT)
-Message-ID: <b7e988ef-82da-43bc-8c57-3b49b3bf9529@linaro.org>
-Date: Mon, 2 Jun 2025 11:39:42 -0700
+ d=1e100.net; s=20230601; t=1748889903; x=1749494703;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=8CoIRgdTJ6IzAdVaqKWOUYgO7jDZqUiXBTyKExPJlE0=;
+ b=gmQram2UpHe8G9sbu+Bxn3rjiM5/gkKAzuf/iqwmW9zEpm5nY/8Tu0m9fGRbWSlR9P
+ I1eXw+ZdNwKtCBwIfI/sn9W4WdQk8HpGMo/zmcPDaJ6SLjJXum68Y4OgKReV7dI01j3U
+ 7LsHA51fJ2/c83SdkgVe4FSt43EELqnNadNxbUy6iy9YPLXK9YvP/kJ78BAh6+xLJmxc
+ r65EnwfNwr2G5dNApVaBPf+wJiWvaYX6BQzBrg/jwfaxlwO7nmaopPiEBGygARDbEngk
+ qsVRg8tFraCXITBxclJeOawwctRo6Tg8TIsN6P3LJUkF+h2ek8WriVMDSl58HpSGyu/L
+ izfw==
+X-Gm-Message-State: AOJu0YxJw8XiQfBE4T9Syz+5T8dPDHpCklqm9M05+/MUvBplS13rc5BS
+ xVXBc7LEgwk4pWkRRNTDPTNOgu2wJ+Vk/b4l2TFcbO5xhCHRRhB6rubzlRTce5EuvXNssg4/wnB
+ M9ZN6jjfjCLc9wafd1P2Di+5jqsFtw6o=
+X-Gm-Gg: ASbGnctAtFLZJQZUbgOM3f7Jh+eX+IcL73oGfS0jqi+C7VqDmSNBjRDvZF/wz4eyNcN
+ 2FSikIsxaDS0WQTSbCmQYqCM/zQVIFTPxMNyOJ0t1/GRZsL98Z5rWQzFDEtB3Zjulbf6c0cZNLm
+ PjjqDwF5B+jQMHZKnHPXJZLXOnrqlpXgc=
+X-Google-Smtp-Source: AGHT+IF9irVdycUOFDMMzBxL5WHXy8juMlYryocoJW5w9RCqIO06T7IikmQbYJyxy5T6va3TJK876Oiuddudm4vtVHM=
+X-Received: by 2002:a05:6402:2113:b0:605:3251:a503 with SMTP id
+ 4fb4d7f45d1cf-6057c60464amr12402366a12.20.1748889903119; Mon, 02 Jun 2025
+ 11:45:03 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/77] hw/arm: remove explicit dependencies listed
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
-References: <20250530071250.2050910-1-pbonzini@redhat.com>
- <20250530071250.2050910-3-pbonzini@redhat.com>
- <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52f.google.com
+References: <20250529085437.1479-2-oleg.tolmatcev@gmail.com>
+In-Reply-To: <20250529085437.1479-2-oleg.tolmatcev@gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 2 Jun 2025 14:44:50 -0400
+X-Gm-Features: AX0GCFvGBrnYVzQ0bw27QMmd9QvHkJmEwPNVyPpCJkA_Znd-IxM88RI4ccXwgaY
+Message-ID: <CAJSP0QVT56Sx8-T2+qF2LnFksL=feGL+v0CJPnX+ZuQ6iMMMRg@mail.gmail.com>
+Subject: Re: [PATCH v2] meson: fix Windows build
+To: oltolm <oleg.tolmatcev@gmail.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,61 +93,227 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Cédric,
+On Thu, May 29, 2025 at 4:55=E2=80=AFAM oltolm <oleg.tolmatcev@gmail.com> w=
+rote:
+>
+> The build failed when run on Windows. I replaced calls to Unix programs
+> like =C2=B4cat=C2=B4 and =C2=B4true=C2=B4 with calls to =C2=B4python=C2=
+=B4. I wrapped calls to
+> =C2=B4os.path.relpath=C2=B4 in try-except because it can fail when the tw=
+o paths
+> are on different drives. I made sure to convert the Windows paths to
+> Unix paths to prevent warnings in generated files.
+>
+> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
+> ---
+>  contrib/plugins/meson.build         | 2 +-
+>  scripts/tracetool/backend/ftrace.py | 9 ++++++++-
+>  scripts/tracetool/backend/log.py    | 9 ++++++++-
+>  scripts/tracetool/backend/syslog.py | 9 ++++++++-
+>  tests/functional/meson.build        | 4 +---
+>  tests/include/meson.build           | 2 +-
+>  tests/tcg/plugins/meson.build       | 2 +-
+>  trace/meson.build                   | 5 +++--
+>  8 files changed, 31 insertions(+), 11 deletions(-)
+>
+> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+> index fa8a426c8..1876bc784 100644
+> --- a/contrib/plugins/meson.build
+> +++ b/contrib/plugins/meson.build
+> @@ -24,7 +24,7 @@ endif
+>  if t.length() > 0
+>    alias_target('contrib-plugins', t)
+>  else
+> -  run_target('contrib-plugins', command: find_program('true'))
+> +  run_target('contrib-plugins', command: [python, '-c', ''])
+>  endif
+>
+>  plugin_modules +=3D t
+> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/back=
+end/ftrace.py
+> index baed2ae61..81a5f93b3 100644
+> --- a/scripts/tracetool/backend/ftrace.py
+> +++ b/scripts/tracetool/backend/ftrace.py
+> @@ -13,6 +13,7 @@
+>
+>
+>  import os.path
+> +from pathlib import PurePath
+>
+>  from tracetool import out
+>
+> @@ -30,6 +31,12 @@ def generate_h(event, group):
+>      if len(event.args) > 0:
+>          argnames =3D ", " + argnames
+>
+> +    try:
+> +        event_filename =3D os.path.relpath(event.filename)
+> +    except ValueError:
+> +        event_filename =3D event.filename
+> +    event_filename =3D PurePath(event_filename).as_posix()
 
-On 6/2/25 6:59 AM, Cédric Le Goater wrote:
-> Hello Pierrick,
-> 
-> On 5/30/25 09:11, Paolo Bonzini wrote:
->> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Reviewed-by: Thomas Huth <thuth@redhat.com>
->> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Link: https://lore.kernel.org/r/20250521223414.248276-3-pierrick.bouvier@linaro.org
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->> ---
->>    hw/arm/meson.build | 4 ++--
->>    1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
->> index 5098795f61d..d90be8f4c94 100644
->> --- a/hw/arm/meson.build
->> +++ b/hw/arm/meson.build
->> @@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
->>    arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
->>    arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
->>    arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
->> -arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
->> +arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [files('musicpal.c')])
->>    arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
->>    arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
->>    arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
->> @@ -79,7 +79,7 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
->>    arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
->>    arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
->>    
->> -arm_common_ss.add(fdt, files('boot.c'))
->> +arm_common_ss.add(files('boot.c'))
->>    
->>    hw_arch += {'arm': arm_ss}
->>    hw_common_arch += {'arm': arm_common_ss}
-> 
-> This commit breaks building these files on Windows:
-> 
->       hw/arm/{boot.c,vexpress.c,imx8mp-evk.c,raspi4b.c}
-> 
-> Error is :
-> 
->       fatal error: libfdt.h: No such file or directory
-> 
-> Thanks,
-> 
+Please do this in one place to avoid code duplication in the backends.
+Perhaps event.filename or a new field can hold the properly formatted
+value so backends don't need to call relpath() themselves.
 
-Is libfdt available in your windows environment? If yes, is it in a non 
-standard path?
-On my side, it built successfully, so I first need to reproduce this.
+I noticed that out_filename is also emitted with #line but, unlike
+event.filename, no special processing (relpath() or as_posix()) is
+used there. Is it possible to drop relpath() and avoid the whole
+issue?
 
-Thanks,
-Pierrick
+> +
+>      out('    {',
+>          '        char ftrace_buf[MAX_TRACE_STRLEN];',
+>          '        int unused __attribute__ ((unused));',
+> @@ -47,7 +54,7 @@ def generate_h(event, group):
+>          args=3Devent.args,
+>          event_id=3D"TRACE_" + event.name.upper(),
+>          event_lineno=3Devent.lineno,
+> -        event_filename=3Dos.path.relpath(event.filename),
+> +        event_filename=3Devent_filename,
+>          fmt=3Devent.fmt.rstrip("\n"),
+>          argnames=3Dargnames)
+>
+> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend=
+/log.py
+> index de27b7e62..241fbbbd0 100644
+> --- a/scripts/tracetool/backend/log.py
+> +++ b/scripts/tracetool/backend/log.py
+> @@ -13,6 +13,7 @@
+>
+>
+>  import os.path
+> +from pathlib import PurePath
+>
+>  from tracetool import out
+>
+> @@ -37,6 +38,12 @@ def generate_h(event, group):
+>      else:
+>          cond =3D "trace_event_get_state(%s)" % ("TRACE_" + event.name.up=
+per())
+>
+> +    try:
+> +        event_filename =3D os.path.relpath(event.filename)
+> +    except ValueError:
+> +        event_filename =3D event.filename
+> +    event_filename =3D PurePath(event_filename).as_posix()
+> +
+>      out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
+>          '        if (message_with_timestamp) {',
+>          '            struct timeval _now;',
+> @@ -55,7 +62,7 @@ def generate_h(event, group):
+>          '    }',
+>          cond=3Dcond,
+>          event_lineno=3Devent.lineno,
+> -        event_filename=3Dos.path.relpath(event.filename),
+> +        event_filename=3Devent_filename,
+>          name=3Devent.name,
+>          fmt=3Devent.fmt.rstrip("\n"),
+>          argnames=3Dargnames)
+> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/back=
+end/syslog.py
+> index 012970f6c..2e010e7c9 100644
+> --- a/scripts/tracetool/backend/syslog.py
+> +++ b/scripts/tracetool/backend/syslog.py
+> @@ -13,6 +13,7 @@
+>
+>
+>  import os.path
+> +from pathlib import PurePath
+>
+>  from tracetool import out
+>
+> @@ -36,6 +37,12 @@ def generate_h(event, group):
+>      else:
+>          cond =3D "trace_event_get_state(%s)" % ("TRACE_" + event.name.up=
+per())
+>
+> +    try:
+> +        event_filename =3D os.path.relpath(event.filename)
+> +    except ValueError:
+> +        event_filename =3D event.filename
+> +    event_filename =3D PurePath(event_filename).as_posix()
+> +
+>      out('    if (%(cond)s) {',
+>          '#line %(event_lineno)d "%(event_filename)s"',
+>          '        syslog(LOG_INFO, "%(name)s " %(fmt)s %(argnames)s);',
+> @@ -43,7 +50,7 @@ def generate_h(event, group):
+>          '    }',
+>          cond=3Dcond,
+>          event_lineno=3Devent.lineno,
+> -        event_filename=3Dos.path.relpath(event.filename),
+> +        event_filename=3Devent_filename,
+>          name=3Devent.name,
+>          fmt=3Devent.fmt.rstrip("\n"),
+>          argnames=3Dargnames)
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 52b4706cf..ee222888f 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -411,6 +411,4 @@ foreach speed : ['quick', 'thorough']
+>    endforeach
+>  endforeach
+>
+> -run_target('precache-functional',
+> -           depends: precache_all,
+> -           command: ['true'])
+> +alias_target('precache-functional', precache_all)
+> diff --git a/tests/include/meson.build b/tests/include/meson.build
+> index 9abba308f..8e8d1ec4e 100644
+> --- a/tests/include/meson.build
+> +++ b/tests/include/meson.build
+> @@ -13,4 +13,4 @@ test_qapi_outputs_extra =3D [
+>  test_qapi_files_extra =3D custom_target('QAPI test (include)',
+>                                        output: test_qapi_outputs_extra,
+>                                        input: test_qapi_files,
+> -                                      command: 'true')
+> +                                      command: [python, '-c', ''])
+> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.buil=
+d
+> index 41f02f2c7..029342282 100644
+> --- a/tests/tcg/plugins/meson.build
+> +++ b/tests/tcg/plugins/meson.build
+> @@ -17,7 +17,7 @@ endif
+>  if t.length() > 0
+>    alias_target('test-plugins', t)
+>  else
+> -  run_target('test-plugins', command: find_program('true'))
+> +  run_target('test-plugins', command: [python, '-c', ''])
+>  endif
+>
+>  plugin_modules +=3D t
+> diff --git a/trace/meson.build b/trace/meson.build
+> index 3df454935..ebce0154c 100644
+> --- a/trace/meson.build
+> +++ b/trace/meson.build
+> @@ -4,7 +4,7 @@ trace_events_files =3D []
+>  foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
+>    if item in qapi_trace_events
+>      trace_events_file =3D item
+> -    group_name =3D item.full_path().split('/')[-1].underscorify()
+> +    group_name =3D fs.name(item).underscorify()
+>    else
+>      trace_events_file =3D meson.project_source_root() / item / 'trace-ev=
+ents'
+>      group_name =3D item =3D=3D '.' ? 'root' : item.underscorify()
+> @@ -57,10 +57,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_=
+trace_events
+>    endif
+>  endforeach
+>
+> +cat =3D [ python, '-c', 'import fileinput;[print(line) for line in filei=
+nput.input()]', '@INPUT@' ]
+>  trace_events_all =3D custom_target('trace-events-all',
+>                                   output: 'trace-events-all',
+>                                   input: trace_events_files,
+> -                                 command: [ 'cat', '@INPUT@' ],
+> +                                 command: [ cat ],
+>                                   capture: true,
+>                                   install: get_option('trace_backends') !=
+=3D [ 'nop' ],
+>                                   install_dir: qemu_datadir)
+> --
+> 2.49.0.windows.1
+>
+>
 
