@@ -4,168 +4,190 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95A5DC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 13:23:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E822DC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 13:24:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM58G-0007Gv-J8; Mon, 02 Jun 2025 09:23:16 -0400
+	id 1uM59K-0007ls-Ku; Mon, 02 Jun 2025 09:24:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
- id 1uM58F-0007Gh-1f
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 09:23:15 -0400
-Received: from mail-dm6nam11on2072.outbound.protection.outlook.com
- ([40.107.223.72] helo=NAM11-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <shivankg@amd.com>)
+ id 1uM2eD-0002Dp-Sq; Mon, 02 Jun 2025 06:44:06 -0400
+Received: from mail-bn7nam10on20602.outbound.protection.outlook.com
+ ([2a01:111:f403:2009::602]
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Thomas.Lendacky@amd.com>)
- id 1uM58C-0003Ux-Km
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 09:23:14 -0400
+ (Exim 4.90_1) (envelope-from <shivankg@amd.com>)
+ id 1uM2eB-0008BD-64; Mon, 02 Jun 2025 06:44:05 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RVM+B/vABzn2p0Vb0OTILSyXL2WUXSp/Nn5gTsFfGXezNTRaFqdcQiJ3GrQTJaCT8FqiNgP0wK0FWjVIk/s6nK8v+CxETupmA7SLbpjlRXsbYLiyG6Cdv0jEr2TsNsLufO0bl9TH9B5WXCfxRMlgkTJIWYqKTnLdjNfUf/a8ZXIsTzqwoF2+/DypD6XH0dv8HWh5odHnPrAav071OkZgs619GeMXvQfp4+xDFBgHZilY6U+TkX0ezFWplCMKojNc+Yg0NKLAs4Mm+xX7vR/UrVV/1LzY4xS6VjG6CXTSaNZjzB9jo13d8okDR1jJP+n1kfXoTHwIkUvC/11iRozoYQ==
+ b=PESp0Mvx/QVv1XiyZ/Mq2nRu3V15grybqRWfLVSqfK2ycWT92pDvKM0RuzpA96CrrPBmTaySbHNwcCDil5/xTDB0EKtMSjoHfR6h6mrcOpE4VaTVsTet0I54z3pefnUqETXutweZjoGSq00a6s8eOD0rDdRsz7vU9GkSstpQQ+kc9t5Gx0QNHa8kL8EOB0YeMzmNqRhs0VUEuH7In73smJDDvn3xTRwAQEwHLHWHKf1FH2nTxGizkwMqZ5vVECpu6EdkjgMRwynMQQIZeYw60SuyunrKk3LOvS/CJwJEWndO872LNtYjC4GDJkI+vJY+ToYjoG5DefDCMzXgOlko6g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=5yOhQmz9dXcAyoYb67UiqQIertQQHHdvJ1C9WObiPdk=;
- b=ApnKlU/uYwmNeVCc9OxIQzt4G87wQfZTt6+oxKsVFt9Hr4HbVD/yBDx3Np1NmvI6Z8R/3CyGPmLQIpLXi1O+1ZJ4xBtnovUU0kxRdLCNtPQCSkPyFgcFmYs3RzeCslfRsh/VsaC81nE1JBu1WBAc1fAe2syb2CZZGDEO277GmN7scblI84sS5fbW0Y3ZuAV+2+jrFc+ybUDlZNC4PC1VJdIOkRF0RS41pFfXvRMCB0NyWAG5G6KMhlTmnFIq4GIHM2ClBG8MxQjttrqONXj05cq1f+e9FFUFyFQ1IYn/4UabZGnyQ4NxZTuFlvW/b7PuvGN4OK79lELymlc3iS8tKg==
+ bh=1VUNbzakcDQuxi60KWzekzmLSrofcG8Oe2EkvLAGHkE=;
+ b=gib4Rn/M0P3H95FzqFao7tN02fvnJVVQUnYX6NWy4mJ9Uh6QLYLrYHDj1xRtGRczl7bJ9toZpIeRqYkG1zaMVppAvkK3Ps2AUh9r+ae6keD8gPeJJrlJQc4AiIm/lWvR2DtgfHh1juR5JPq/fV4IMPnEByLedAbfiXrjXzsJ0D3WfNXSF+/N+s/+k0Agv82E2ZHTXnNI6y1EVUagiXH4T37gp/nimqJ4PbW50oQXkSoeuvwjSzkx/MpUkukltcUIygjR7+TGrthCYoGyhLIHQiV6rdntnu4dDdwxDvKn9HHekRL4ne5OkS4Q07pHDgSU2KIkRwQ5/HzyYSZWB/sb3w==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
  header.d=amd.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=5yOhQmz9dXcAyoYb67UiqQIertQQHHdvJ1C9WObiPdk=;
- b=qWVjjsrRGeCw9pAKfK/ZapFdEl4U66L0uC1e04GaZlsk0bJA6MzDtIRhubYECTIK6GPYXX3H+oItRs/QReRreibPGaqXkkD4cV+Iks4KkDVq+u3PXkWaWuFiGJV5ZNCMxAzC0tegtGliKe5WzAKbIo+fEYQgQnGVKPCxA0MEcas=
+ bh=1VUNbzakcDQuxi60KWzekzmLSrofcG8Oe2EkvLAGHkE=;
+ b=NxEJ2TjIVWO3rMNisMu2oRIOBcgU+r4QWgyXHg7K8YsTsKygDKcXdQ3Zvwo6OcHVvWhKI/pcAvoxBu4Sb0VFmXv0k6Zqg7yPM1DkCB/QG0uheMIXoGsumD1quhsBCK0WUk4xu5vQIYrLn+QMI9bPrWE2xKKbRFIKZb9bxl4arpQ=
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DM4PR12MB5070.namprd12.prod.outlook.com (2603:10b6:5:389::22)
- by SA1PR12MB8859.namprd12.prod.outlook.com (2603:10b6:806:37c::10) with
+Received: from CH2PR12MB4262.namprd12.prod.outlook.com (2603:10b6:610:af::8)
+ by LV3PR12MB9187.namprd12.prod.outlook.com (2603:10b6:408:194::20) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.36; Mon, 2 Jun
- 2025 13:18:05 +0000
-Received: from DM4PR12MB5070.namprd12.prod.outlook.com
- ([fe80::20a9:919e:fd6b:5a6e]) by DM4PR12MB5070.namprd12.prod.outlook.com
- ([fe80::20a9:919e:fd6b:5a6e%7]) with mapi id 15.20.8769.037; Mon, 2 Jun 2025
- 13:17:57 +0000
-Message-ID: <4bcfe4ff-939e-f669-8d80-4077cc7aeb60@amd.com>
-Date: Mon, 2 Jun 2025 08:17:53 -0500
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.15.1
-Subject: Re: [PATCH] i386/kvm: Prefault memory on page state change
-From: Tom Lendacky <thomas.lendacky@amd.com>
-To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "kvm@vger.kernel.org" <kvm@vger.kernel.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
- <mtosatti@redhat.com>, "Roth, Michael" <Michael.Roth@amd.com>
-References: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.31; Mon, 2 Jun
+ 2025 10:43:56 +0000
+Received: from CH2PR12MB4262.namprd12.prod.outlook.com
+ ([fe80::3bdb:bf3d:8bde:7870]) by CH2PR12MB4262.namprd12.prod.outlook.com
+ ([fe80::3bdb:bf3d:8bde:7870%5]) with mapi id 15.20.8769.035; Mon, 2 Jun 2025
+ 10:43:55 +0000
+Message-ID: <8f85fcf7-3593-46e8-b257-d0da2b7337b9@amd.com>
+Date: Mon, 2 Jun 2025 16:13:30 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 08/16] KVM: guest_memfd: Allow host to map guest_memfd
+ pages
+To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
+ linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
+Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
+ anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
+ aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
+ brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
+ xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
+ jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
+ isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
+ vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
+ david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
+ liam.merwick@oracle.com, isaku.yamahata@gmail.com,
+ kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
+ steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
+ quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
+ quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
+ quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
+ yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
+ will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
+ shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
+ jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
+ jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
+ ira.weiny@intel.com, qemu-devel@nongnu.org, qemu-discuss@nongnu.org,
+ "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>, nikunj@amd.com,
+ Bharata B Rao <bharata@amd.com>
+References: <20250527180245.1413463-1-tabba@google.com>
+ <20250527180245.1413463-9-tabba@google.com>
 Content-Language: en-US
-In-Reply-To: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
+From: Shivank Garg <shivankg@amd.com>
+In-Reply-To: <20250527180245.1413463-9-tabba@google.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BN9PR03CA0786.namprd03.prod.outlook.com
- (2603:10b6:408:13f::11) To DM4PR12MB5070.namprd12.prod.outlook.com
- (2603:10b6:5:389::22)
+X-ClientProxiedBy: BMXP287CA0003.INDP287.PROD.OUTLOOK.COM
+ (2603:1096:b00:2c::16) To CH2PR12MB4262.namprd12.prod.outlook.com
+ (2603:10b6:610:af::8)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM4PR12MB5070:EE_|SA1PR12MB8859:EE_
-X-MS-Office365-Filtering-Correlation-Id: 5c84ef0a-72be-418c-d60a-08dda1d7e3cf
+X-MS-TrafficTypeDiagnostic: CH2PR12MB4262:EE_|LV3PR12MB9187:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2192d85b-35f4-4b23-beaa-08dda1c25eba
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UEZCbzd6bktkT2N6cWhHdTlFWFI3RlFmck80NFBmdm14T1JrdXgwUHFSclVa?=
- =?utf-8?B?aitzSHJrSU04ZHlJS21Cd09sU256YnlzUHNlNU96K2wvaHFDMGpZYUF4dTZi?=
- =?utf-8?B?T2VGR25pekt2UVJTb3JxSGp4a2lPTmJIbTlUOCtxWmpQd2RaUGdNekZFaE9T?=
- =?utf-8?B?UUZGRVJxdXdjZmFsT29sU0I3NjV5cFdZS3hrVE1ZUmROWjRldzZhd3dRbUt4?=
- =?utf-8?B?K2gzRDArUFA2Qnd0MFluUUUybkhPVEljWm5pNzIveEg2UCt3T1lWWWFDV05Y?=
- =?utf-8?B?TkFvUEIrQ1h6VTFDbSt6bUJ4cUJUdWFsQmJ2d3ltSjVybWJBTzNieVZWQ2Zx?=
- =?utf-8?B?ekVKTmxuM2RDRkN6Qm9CR3JBZHdYUU10TW9iQ2Vvdjd4MHp3UVlOZXl3c3lU?=
- =?utf-8?B?ejJFZ3lqUVcwSWRKdWlPdnlJMDZFZy9TZkMxdEEzRGt4QmFZZldaMXNGOC91?=
- =?utf-8?B?TDlPY2dsQlBqdlpzRG0ydWhFR0tna1NFZ1FmeWFIRDY3K3QzdGtOdzRqRDBS?=
- =?utf-8?B?UWYrbjFVSGM2SXBkemlZWmZObDdnSkE2eWE2Um5nZjlyNkFsR1c1WEwwQm4z?=
- =?utf-8?B?Q0dYZm92eTFKZGhJc1FqOGh0U3U3M0E3dVZsNThqM2FFOVowbDZJV05FWC9q?=
- =?utf-8?B?WHV1RmpKT3lobjVXVWhiM21tQ1Y1MWxQUks2M1o4MmlYd0JISlcyNVBuWmJH?=
- =?utf-8?B?V0ZFaENRNEFucXR1akR0NFY2dXF2Q3VIbUFmMVhyZkp5cXZoTmc0K1hMZ3E1?=
- =?utf-8?B?QlRoak5aYk1CSmR2bnR4eDNTbTdwTmU3cGpGS0ZtdW04RjQ0TDN3MlhSVmkz?=
- =?utf-8?B?MisvRyt4Vm1XMTB4NitKVzlxK2RKYkpzR2U5dEFndGRBMW1jY2Y0UHJqTXR5?=
- =?utf-8?B?UmU3Wm5xbVNlaHJzSHV6aWpzaGpLemVnVXB2cm9ENlJ3aGZXZkdER1NlZVpS?=
- =?utf-8?B?c054TFE4bXRBUlNrNWQ1WkxvMk1TOUhrSmV5MVFhYSs3Z2FmTHgrWUM1Ukg3?=
- =?utf-8?B?ZGk1ZktxTGRrSDdFWWNYVThVRC9LWndDZEloTFIwUER1UHl3emEzVGQzcERP?=
- =?utf-8?B?eXZBWXlBdWZjU3dITGFhM3k4MlRQQzFIQWcya3hQS1dNZmRuQ0VWdWx1UlAr?=
- =?utf-8?B?ZlcxNXBCNHhQTHU3TzNvaXg1Qm5Wd1BLRWFSYUFIREtlQUtQK1hNWUxQVEhV?=
- =?utf-8?B?alA4Skk0dm1WRE1qVnlpbUlINkxtN0Nkc29yTnRWQUZlY2pzUmRXemROUCtu?=
- =?utf-8?B?eXVVMGY4OTJVZHM2K0J3ZFViY0ZJdjBkcGVBN3RrVVdXNkJPekVRTG5XRmIy?=
- =?utf-8?B?OE04TUZxQjFRazJXMFpxOW9vbldFL0cxcXNKQ3lzNDdHQ09nSmZGUUJPK2g3?=
- =?utf-8?B?OE9Wb3NBblBwblpLbmhFQ0N2NDBEcjBqQWlqSEkwaFREUElSRGljZGMrWFRt?=
- =?utf-8?B?M2N2Umc1d3NISCtyNDlQcTdaMFUxUWZYVWQzK3ZyQ0ZmREQyK0puSjh2bEhY?=
- =?utf-8?B?N2hXby9WaEJyWXl6ZFo3M1VhNkR5TlIyYWNEMFdvYTl1WVZ6MGRRVHhYOFNO?=
- =?utf-8?B?b2xZTSt4YlFvZ1hkUDNJYW5oMDdoUVlIYWhXNXJNRHZraDFyL1dkTU1SdDJD?=
- =?utf-8?B?MVhIbTE0amt1ZE8yaERVOVZpbmhnem1xR0YrSk1DdmdJTXRrQ3JzUmgwRlpo?=
- =?utf-8?B?RGFWMm01cmRMVmJiSnBmY0tWOWlzUXpZL1QzanFCRlhieXlPbGtBbjBVT1FR?=
- =?utf-8?B?c2FRSGRJUjRkU0VGWFNUYzdVb3JkbVExMGpOUVlrNTdSUjdVdVNlY3ljSVJ5?=
- =?utf-8?B?Q3BTK1hNTUN2R1FybWNUYk9sR3YxNHlqeFF2REpwK3JmN25ONVVXV09BZWZU?=
- =?utf-8?B?Znl6cWVCendSbkhicmpxeEJEMnBNNHNNNklRcDQvQm83cGl1MjZWR2NPM0V4?=
- =?utf-8?Q?V1U8trx4bxk=3D?=
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|1800799024|376014|7416014|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Smc0NWdGOWpWbU84dlM2Qm45dXNxWFhjblJWeWlCczlHV2dBNDJCa2xhbkNw?=
+ =?utf-8?B?N0tyN2pkbUVRdE1MalBSY3lwc0FlOHVnRlJHbDdxNGJWNFFSdkNJWk8ySFM5?=
+ =?utf-8?B?eG1wV285UWh3OHpuOEx3MitPeVk2blNQM1g4MTJVcXVQY1pGZGpLNkk1M25D?=
+ =?utf-8?B?ZjN6Um4rZjhQMUQzMnFtVUxzdk1FSDIzRDYrcmZ2b01rYUxvSm5CWHRhRjRW?=
+ =?utf-8?B?Z0RDQlJKeC90dE41RGdkTFJzb1MzODNoQjRMbGE1L0FIYlFaTzY1dWZHUnBn?=
+ =?utf-8?B?SVJEQVZaeGlYWFI3bWM0VUJCOU1Sam5yMjg2WjZiL0FSRXVtT3IzRWVxbnJ2?=
+ =?utf-8?B?Z3NUQVM5ZzFya1lPZWx0dW5URlZBby82a2RtMzFQU1NGMTFxa3V3MVFnejJO?=
+ =?utf-8?B?WDBWMUFXOTRQaTJSd291eUV0TTNKaDdRTEpsZzhnNG5NUjlsOU5jVE9FNXMz?=
+ =?utf-8?B?bU1sL3FWemMwcFVKQ2U5ZDUrNGVHUnErQzl1aHA3VGhGOFVEUStqZ2t5dktI?=
+ =?utf-8?B?NXZPQm84d292YUZSVWV6bytQeTQweXkyZENHVGRxekpwTnBtdkk4b0pjTVl5?=
+ =?utf-8?B?WkhpQnhOVXpoenM4QU1Bc1J6a1RwSVZzc0Npa0Z1cjJFeHAxUWZLbmNEdnh6?=
+ =?utf-8?B?VTVWcGh5dGhDQVpOckprMWVyOUtnWTVRNWhPYS9NRm8xdUw1emF3RCs5Slo0?=
+ =?utf-8?B?WG5KRW44b3lNZW9ZVzNNam5nWXlNYXhFR3M2WTM2QmJzWkllVFI4NlRxS0Fw?=
+ =?utf-8?B?NVQ2MjJESi9zUHF6Q2t6Z3pqejlIY0I1YjZsOHNKY2p3Nk5lcnd6ZzRPWm5O?=
+ =?utf-8?B?VWpqcDRJWVBBMU5mdm9Xbjg2UFFLTjdDWHlpT1dkTTEwNmtydEo5Qk4zTDlM?=
+ =?utf-8?B?OXQ1MjYxWGVFNWxZZG1CQXdETDVEUVB3R1V4MTR1eStGc3ozclNyeURIcDBz?=
+ =?utf-8?B?UDA4dGNsZ2RQNCs0YXYxUXJUTHBXOWxTWFlGUEdRa2t0d2RCd1ZzbHFhSnI4?=
+ =?utf-8?B?ejZTeFVQakJTZjlaS0hKUGJCYUIwM0xGYUZxdysrdHgwSzVpMk1ONVV6bnJC?=
+ =?utf-8?B?cVh4VGZUQ2JZNzBWRjJMcFkwczJlT1g3UXlyOWY4NDIxajA5SDVvaTdhRU5z?=
+ =?utf-8?B?MTQ3bUo3TEFwZXVoaUtsZ1dkWmtHOFBjcHV3dlJqSVcvRiszL2M3bHgvOWxS?=
+ =?utf-8?B?eCtwejk4NDBoMUt6ZkJMSkdCYnd4OTgwZGdFNWJneWFpdUZCVWhHeklPUXpF?=
+ =?utf-8?B?YTdIUktiOGFIQm5UVktyRDN6bktIdzV2VWFpZFoxL1E4enBHci9wRlZTMzBH?=
+ =?utf-8?B?eSs1cWV3djhyRHBJWDBLWDNQUzBJcHJ2WjErc0Q1dWF0SWlWcjV4ZHUybWtC?=
+ =?utf-8?B?S05XTEM0V1dLbUpSUWJBQUxscGw2cXJuMmFNVVpVZlNXcmNyUTB6eGMrbXN1?=
+ =?utf-8?B?TVgrNVBZSWY5N1F5Ykd6STdtVW1sSTdTcytjR0lTd2NBQ2Zmd0pGMXVkYWJa?=
+ =?utf-8?B?cnBHbmRidzlNMGtiZXdtNndONzNNeTRqQ3dpZzRVZDhqZDJJMktKMXB4cm90?=
+ =?utf-8?B?L2R4RHpGaU5nWjNhb3p2MmhNV3JXOGxHWkdSc1hna2RuUmNQSkFCbThTNmM4?=
+ =?utf-8?B?WldZdVZ6V3lWcmFUUThFRjdXK28zUkFGMW00Q0l5Z25LRXlhWm5ERW9ZMlZJ?=
+ =?utf-8?B?SVg4b0hRa01EYXJGWVA1Y3JxUFpyOHFsNG1aRkRacUpMQU1LT3Y5b0h0YkFo?=
+ =?utf-8?B?NHVuR21wbFdxZS8yMHQ3WGk5d2FuMTBSVUVzOEgxTGVQNjNDdmQzaU1vZWtX?=
+ =?utf-8?B?THFqc0tjdXdKekNBZXN2eUZ1N2hicWM3ZmlyR3lyVFRvQ1k2SmpxQWZRUkl3?=
+ =?utf-8?B?OWdnazV3YVBCSjJFank0eEp5LzRmbFpFT003U1ZqZDM4dThvNWpCakdMYnA0?=
+ =?utf-8?Q?OCufw0H9ajYA7kdaW6sFSviwk3aBtKGf?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM4PR12MB5070.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+ IPV:NLI; SFV:NSPM; H:CH2PR12MB4262.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Z2xtcm5zZjNPN3A5WEdzSUs3ZzBybXNQVTQ4RXlCTzF2azhiQVBhb3hqSlg2?=
- =?utf-8?B?dGdhcTRLdHVycGdDdVRXVUJoOEFwcVJSMjF5UGtSelVYQnM0cjVHNWZ0b3ly?=
- =?utf-8?B?TjJhSVhrUkNZbXR3aGtmMEdzY1ZLV0F6YURwdHJNYlVJTEM5LzRCQ3NWZXJj?=
- =?utf-8?B?bndhRWZxZG1BbmVwWXVkelIwdlA3S04yR2kvcnVvSnlIeGtCcHJYczVqQ0M1?=
- =?utf-8?B?VGtadkU3c3JPOUZlYStVRG1JSmFoY01ic0ovS3NWenZ2MWM3aW5GR3phdld0?=
- =?utf-8?B?SVVrT1VsQUhVSzZXNmxjeGFXNldKaGxlMXRuQlJtRnJreXRaRURxeWRHbnIx?=
- =?utf-8?B?ekxzckFnVU9TRFdqQU5vcDU3aUJnaG9PbHlDejFmRHVpcEl4bVZJaEVlNlk5?=
- =?utf-8?B?WWlxdUhWSCtDNktxRHVSTmZSVmdlUzl4c0Q3N045bGJjNHZDakl0bUJjem9B?=
- =?utf-8?B?YVYxNm93OGdtQ1FWZ2dZZTVTM2dBL3JwNnZJOVhYTVkyWUZCUVpKd1ZSQTI0?=
- =?utf-8?B?WGFqWWVvUGppR0p0U0NLQ085Zjh4MUs1VVNmU3JvSVZBUmNMaUVBZlVHZHdy?=
- =?utf-8?B?VkNvMHhsWjZjU0IyTDFQd2xnc1ExSFVtZC9lVWNtRjFuRTRXbWJMczRZTDVO?=
- =?utf-8?B?TXZadkdIaGIyaGh3QUhCMmREVDRzSjRoZWRHbVhOQVY4Y0c5bzhac2IrNlVR?=
- =?utf-8?B?QXJ6WlVqZzVGdjlJVlBIU2xsVDUwWHBwNGVDOUs4ZkNjelhEbFVBYXhaTDlK?=
- =?utf-8?B?bmdEMUFORGk0TU4weW9FWUVId0hDdEJqK3pZOG9kQ0tETytsY0FvS0c1YkVU?=
- =?utf-8?B?K0NSMklpT2VaWnRIdlBnSzlITG00Tk11T1djWDNsMzFoSWpJd01mcFcrcTg2?=
- =?utf-8?B?L0ZWanNKRGcyM3FDbVdQZVZ4L2E1Z3JiTEZOMnc1RVFuelZyK0FFaWZyR0Ux?=
- =?utf-8?B?b2pvbVdxY0o1NUptWEw4YXcrQ09VOGkyQlQ4Uk0ydUpBU2c3L1duOWFRMWpE?=
- =?utf-8?B?czFCVjdFTUFHMkdoeHA0alNNRmZ1a3lKYTB6c082TXlrNXlvV3VpRFJJSnJG?=
- =?utf-8?B?Vzc0Vzd3ZG5laDY3WXJuZmNwL2xLR1VSdzdIdHVhUlZxUDcxTHI5VkJrVEFW?=
- =?utf-8?B?eXp3VHRhdnZGeTAyMCtkaEROQk14SGNaNGgybTVHTWo3NUpMc2lKZjBybjM0?=
- =?utf-8?B?WVpIRkhJK3dqVmZQNENYemdOQTh1bjFiZCtjTEZiUDM4akNtT1BuTUJzWkh1?=
- =?utf-8?B?SWV5K2V2bWRlMkExMEc5b1RWcmZkRnZGM2hnUkdMc1pFUXQ1S3d4bHl6YmI3?=
- =?utf-8?B?TVZNbEFoRVplM2RjNmNQSUZWY0tNeEdRMmJ4djkrd0tHTTZsY1JXb1lHSWxn?=
- =?utf-8?B?Y3RnWnBWcFdsNkhSZk5rWC82VmJBVFg0V1F3dlV1cFQyUWZCaGU3U2piOU1B?=
- =?utf-8?B?eGgrSGNPQjJVTFVlU25oT3o0Y1hzdmtuWEF0YXAzV1pjaXZQT0RPYlZFdllj?=
- =?utf-8?B?YW5FaWVuYnlteExKSjVZSGFuV2N3QThhRFFHaTdNNWYxZE5FYjNMNmt6MzRI?=
- =?utf-8?B?M2k1WjZsR1pCRGc5eFhhL3JmZWlCSm5LS1hTTE9vdy9XSFJ5VGNBQk52VGJ2?=
- =?utf-8?B?cXgyRHFqN0ZLT2ZCOW1mM3JsUTFVRlJyTzdUemdzbmdKczNxR0tSNmxzTGt5?=
- =?utf-8?B?YVkrSU5qWEllMmdpNENQZWZsQTJvdkZnaW1vRVNjV0hCRDltaHVQdjhzcGxQ?=
- =?utf-8?B?MDFjek5kRlZDMlM1cWVQbFBqWW1DcHdtS1VBVHpxN1ZvcDFOS3dWMHUzaXVp?=
- =?utf-8?B?MFhIWk5GMmFKWDRTOW15dHFuQjhpRWNpMmxEMVhyUFZqZ3ZDQjI5eGNrNytC?=
- =?utf-8?B?WGF3TTY0emsycmhhSERMMWthRWpCV1BpVU9LNitBMnZZd0MzSFNoQ21Ed3Ax?=
- =?utf-8?B?Si9paUhoNFhSVmQrV1U2S1lld3FWaVBXSzdoZUVPbzBpcGREb1FSYWxaRGxh?=
- =?utf-8?B?WnI4WEo4R3NvUnJlaEVoRXl3alM5V3d3VHNDQUpLYlRYWXh3MVVOMDZGWDls?=
- =?utf-8?B?UGtxQkdEejNwdDJuVCtRcEtIMk5jNzZDY2pxcUhBeis1NVR1bHlBOU5ib0lU?=
- =?utf-8?Q?YGaIYIirettDHZFqLLJ/CLWhR?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?M2FXWG5VNHlqSkhzck9NTzJMZUNFeDJjd3hKeWQ4dGRaVVpjSGY2eGR4YWQr?=
+ =?utf-8?B?anNHQWZSWDh6c0FKb0h4cHFEcDN1UEJya050UndLMFRvbEFVdkoyMDV0K091?=
+ =?utf-8?B?UlpoLyt3cjhJTkIyc0ovQzlkaDB0UGdCajVFMUErVncwcHNWTXVuZUlJMmdx?=
+ =?utf-8?B?MUJ0TWp5bjF0eExwdWJKSmQ1Y09DVkZzcWREKzNoVTNWTE9tTFRiUUZLYTBn?=
+ =?utf-8?B?dU9CekFhQUR3ejdIRHhOVzljQlBRdlk4Y0FPZWtOUENQTDhGUCtoK0dKMkU1?=
+ =?utf-8?B?bGsyOFBIWENDazJvQnNKd1FkRVA3aExpV2NXZVU3WmJzcUxNOGhteGVPVXgw?=
+ =?utf-8?B?SlZPdldtQzNQNVhwZHkyWm5GYitYN01Qb2R1b0tSaVdmb3J2bGpMNEo0VFpG?=
+ =?utf-8?B?MVFITkVJbFVyLzVuclh0ZmJTZFBmTkhIYTJSQ3I5MUw5cG5Eb2R0S3JyY0lC?=
+ =?utf-8?B?RGtodkN3T0NZam5DTkN6UkNnK3U1cFRCMVBFKzlBY0FqczlLZitRaFNZcSto?=
+ =?utf-8?B?ZnNpdFhkc3RyUjF3TnA0b0E5Q2JVRldkei9vUUtmOFcwanJSMDRKZDZObHJG?=
+ =?utf-8?B?SWNEZzRTQ2UyMzBQSXV0UG1WT3FSRHN2YmhzeGpXSzFIc3g3SlE5U2lIc1pK?=
+ =?utf-8?B?WmVjTUZ2cHMrL2lGZ010Tkl3bU1VMFM5T2VqYjBibmFtckV5OVdCSG1rRkcr?=
+ =?utf-8?B?T0lVcGpMNFhmNEl6dmNTVHV4S2szWlFiVm5OcDZ2U0d4UklXdTdmQ2ZkbG1o?=
+ =?utf-8?B?YzczTVNXZDBIOUYzOFQySW16dXNDMFhwYWxRK3p0d2xKc05nNExMeVpzQmN2?=
+ =?utf-8?B?SmZobis3aDcwWWpTVnZxQU42SVNiRmh6c1V0ZmpUL3g3c2k2Uldja3JjZ29a?=
+ =?utf-8?B?a3B4MWNHRHNWU3Fwa04zWTRZMWU1NkU3NXJGOHRxMFZNYVRTc0djWjdxSjdL?=
+ =?utf-8?B?eWRlUEhOa0drcTBsTk1CNlRZRXRSdXZrajNEbXZvSWV0U3lSYW40ZmJncEJU?=
+ =?utf-8?B?U3poWXltYjFDWkJrbmZFTjhjS3NEMlNGak9aUUhPTTRJSUNZbzhqRk1MVEd2?=
+ =?utf-8?B?citoUnUzR3VoNXJpbTRmU1QxWWhDU0VRQ2dWSlhwMHR5NTE3STVSeXlSN0Jt?=
+ =?utf-8?B?cERwK25DM0IyY0ZQVGUrSmZOUm54ZFpVNWVUWTlrdHhCWVNKTGl0Rk1SR1Nw?=
+ =?utf-8?B?WFoxL1l1a3V3QUxxYk9SNWhENU5waHZjaFlVUHl5TjYrT1o2UUx2NGVqUUho?=
+ =?utf-8?B?Y0ZYaEFYNW9HczBKWGhxMDJ4L0hNT2dHRFpCNEZaZjNnUVVNYkVyb3dRSVRl?=
+ =?utf-8?B?SlpTdWpCN2JTOUdRT0tTWmxxNyt1eXF3allUQkZVUmhxMnJ1cDBHdjhPWlZV?=
+ =?utf-8?B?YTNsbXhNcXZWNGhseUpibmlSYjlRRllwQ3A4VENqZUhBV1lzL2JaenJFS0ho?=
+ =?utf-8?B?VEI5ZldRSW5UWHBqYzVVOEVuM2NwNWV6NDdOWEQ5NlZwMXlpZ3h1WENoeEM5?=
+ =?utf-8?B?Q0RhM0d2SWhDUzNUc1hxZCt4MnE4SlVBWnl3cTl2d0xOVDVvVlZuNEF2T0VQ?=
+ =?utf-8?B?WEY3T1QxVE80bjlvVWROOWJrQmRLOGxJSXdDNi9KODhvUHhFWndMeUJ0a0pw?=
+ =?utf-8?B?Ylp6eWc3R2dOS2Fuc2pDekRqa2x2VFI0Qnk4MDRaYitibkYzck5GZXpSK29I?=
+ =?utf-8?B?WUMwUHZ2WlZ0UVNCVkZ0SS9GK3N5YitKQWFXVGRIdVpQZ1lZSFVWNzMwNDM5?=
+ =?utf-8?B?Q2dzZFUyMWtQRTM3cDh1Z2F1MmltODFGaFRHaDM1eU5LemlQN0pjRnhGUi9X?=
+ =?utf-8?B?aHZmdTl3VUpjZWJqTktLRlVrZmJBUUFMaXdTTlRqL3dPcDYxQnlER1pGY2VH?=
+ =?utf-8?B?RzVjVUtzUWxpQ3N0UG0rb01EcCt3emF3Slc0ZXdxZ2RXTnZYSW1TNWx6cHNW?=
+ =?utf-8?B?akNXbnJvV3Y0Y0NjNE1jcngybzZtMG5lNnRYRFl3SVpWTjFVN0hXYUdwTC82?=
+ =?utf-8?B?OXVpL1pEUFJaUmRxV3VDK3hmUGlYY3YwUTBoUmcwSkdxL1dXVnNvUWNQVkly?=
+ =?utf-8?B?Rmc4aDZKVmZwaHJsejU2YW5YTUtQQ3BjWmhvZ2ppTUIvcWE1U3R2cWZNVm5x?=
+ =?utf-8?Q?bFs381nkUGdtk698CyKQ5My4K?=
 X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 5c84ef0a-72be-418c-d60a-08dda1d7e3cf
-X-MS-Exchange-CrossTenant-AuthSource: DM4PR12MB5070.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2192d85b-35f4-4b23-beaa-08dda1c25eba
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4262.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2025 13:17:57.1588 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2025 10:43:55.5133 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: iGC0EZDj9QkxHdlQJfQfymONvqTOiDMjcU39LbuKYcwkx+yzLoK/dutIUwcvZSwzT74oaA9+1jIkVExjo8+qNA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB8859
-Received-SPF: permerror client-ip=40.107.223.72;
- envelope-from=Thomas.Lendacky@amd.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+X-MS-Exchange-CrossTenant-UserPrincipalName: WLYnyWzFxPD6OEA6jKMyz/RZIeq7b1qPxe9FrShKXhuZNMkV74Uag3iUo30B66VX0OMWuF7CEGGFA5QDq5flHA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9187
+Received-SPF: permerror client-ip=2a01:111:f403:2009::602;
+ envelope-from=shivankg@amd.com;
+ helo=NAM10-BN7-obe.outbound.protection.outlook.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.071,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- NICE_REPLY_A=-2.054, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Mon, 02 Jun 2025 09:24:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -180,125 +202,298 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/28/25 15:30, Lendacky, Thomas wrote:
-> A page state change is typically followed by an access of the page(s) and
-> results in another VMEXIT in order to map the page into the nested page
-> table. Depending on the size of page state change request, this can
-> generate a number of additional VMEXITs. For example, under SNP, when
-> Linux is utilizing lazy memory acceptance, memory is typically accepted in
-> 4M chunks. A page state change request is submitted to mark the pages as
-> private, followed by validation of the memory. Since the guest_memfd
-> currently only supports 4K pages, each page validation will result in
-> VMEXIT to map the page, resulting in 1024 additional exits.
-> 
-> When performing a page state change, invoke KVM_PRE_FAULT_MEMORY for the
-> size of the page state change in order to pre-map the pages and avoid the
-> additional VMEXITs. This helps speed up boot times.
 
-Ping...
 
+On 5/27/2025 11:32 PM, Fuad Tabba wrote:
+> This patch enables support for shared memory in guest_memfd, including
+> mapping that memory at the host userspace. This support is gated by the
+> configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
+> flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
+> guest_memfd instance.
 > 
-> Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
+> Signed-off-by: Fuad Tabba <tabba@google.com>
 > ---
->  accel/kvm/kvm-all.c   |  2 ++
->  include/system/kvm.h  |  1 +
->  target/i386/kvm/kvm.c | 31 ++++++++++++++++++++++++++-----
->  3 files changed, 29 insertions(+), 5 deletions(-)
+>  arch/x86/include/asm/kvm_host.h | 10 ++++
+>  arch/x86/kvm/x86.c              |  3 +-
+>  include/linux/kvm_host.h        | 13 ++++++
+>  include/uapi/linux/kvm.h        |  1 +
+>  virt/kvm/Kconfig                |  5 ++
+>  virt/kvm/guest_memfd.c          | 81 +++++++++++++++++++++++++++++++++
+>  6 files changed, 112 insertions(+), 1 deletion(-)
 > 
-> diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-> index f89568bfa3..0cd487cea7 100644
-> --- a/accel/kvm/kvm-all.c
-> +++ b/accel/kvm/kvm-all.c
-> @@ -93,6 +93,7 @@ bool kvm_allowed;
->  bool kvm_readonly_mem_allowed;
->  bool kvm_vm_attributes_allowed;
->  bool kvm_msi_use_devid;
-> +bool kvm_pre_fault_memory_supported;
->  static bool kvm_has_guest_debug;
->  static int kvm_sstep_flags;
->  static bool kvm_immediate_exit;
-> @@ -2732,6 +2733,7 @@ static int kvm_init(MachineState *ms)
->          kvm_check_extension(s, KVM_CAP_GUEST_MEMFD) &&
->          kvm_check_extension(s, KVM_CAP_USER_MEMORY2) &&
->          (kvm_supported_memory_attributes & KVM_MEMORY_ATTRIBUTE_PRIVATE);
-> +    kvm_pre_fault_memory_supported = kvm_vm_check_extension(s, KVM_CAP_PRE_FAULT_MEMORY);
+> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
+> index 709cc2a7ba66..ce9ad4cd93c5 100644
+> --- a/arch/x86/include/asm/kvm_host.h
+> +++ b/arch/x86/include/asm/kvm_host.h
+> @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
 >  
->      if (s->kernel_irqchip_split == ON_OFF_AUTO_AUTO) {
->          s->kernel_irqchip_split = mc->default_kernel_irqchip_split ? ON_OFF_AUTO_ON : ON_OFF_AUTO_OFF;
-> diff --git a/include/system/kvm.h b/include/system/kvm.h
-> index ab17c09a55..492ea8a383 100644
-> --- a/include/system/kvm.h
-> +++ b/include/system/kvm.h
-> @@ -42,6 +42,7 @@ extern bool kvm_gsi_routing_allowed;
->  extern bool kvm_gsi_direct_mapping;
->  extern bool kvm_readonly_mem_allowed;
->  extern bool kvm_msi_use_devid;
-> +extern bool kvm_pre_fault_memory_supported;
->  
->  #define kvm_enabled()           (kvm_allowed)
->  /**
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index 6c749d4ee8..7c39d30c5f 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -5999,9 +5999,11 @@ static bool host_supports_vmx(void)
->   * because private/shared page tracking is already provided through other
->   * means, these 2 use-cases should be treated as being mutually-exclusive.
->   */
-> -static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
-> +static int kvm_handle_hc_map_gpa_range(X86CPU *cpu, struct kvm_run *run)
->  {
-> +    struct kvm_pre_fault_memory mem;
->      uint64_t gpa, size, attributes;
-> +    int ret;
->  
->      if (!machine_require_guest_memfd(current_machine))
->          return -EINVAL;
-> @@ -6012,13 +6014,32 @@ static int kvm_handle_hc_map_gpa_range(struct kvm_run *run)
->  
->      trace_kvm_hc_map_gpa_range(gpa, size, attributes, run->hypercall.flags);
->  
-> -    return kvm_convert_memory(gpa, size, attributes & KVM_MAP_GPA_RANGE_ENCRYPTED);
-> +    ret = kvm_convert_memory(gpa, size, attributes & KVM_MAP_GPA_RANGE_ENCRYPTED);
-> +    if (ret || !kvm_pre_fault_memory_supported) {
-> +        return ret;
-> +    }
+>  #ifdef CONFIG_KVM_GMEM
+>  #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
 > +
-> +    /*
-> +     * Opportunistically pre-fault memory in. Failures are ignored so that any
-> +     * errors in faulting in the memory will get captured in KVM page fault
-> +     * path when the guest first accesses the page.
-> +     */
-> +    memset(&mem, 0, sizeof(mem));
-> +    mem.gpa = gpa;
-> +    mem.size = size;
-> +    while (mem.size) {
-> +        if (kvm_vcpu_ioctl(CPU(cpu), KVM_PRE_FAULT_MEMORY, &mem)) {
-> +            break;
-> +        }
-> +    }
-> +
-> +    return 0;
->  }
->  
-> -static int kvm_handle_hypercall(struct kvm_run *run)
-> +static int kvm_handle_hypercall(X86CPU *cpu, struct kvm_run *run)
->  {
->      if (run->hypercall.nr == KVM_HC_MAP_GPA_RANGE)
-> -        return kvm_handle_hc_map_gpa_range(run);
-> +        return kvm_handle_hc_map_gpa_range(cpu, run);
->  
->      return -EINVAL;
->  }
-> @@ -6118,7 +6139,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
->          break;
+> +/*
+> + * CoCo VMs with hardware support that use guest_memfd only for backing private
+> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
+> + */
+> +#define kvm_arch_supports_gmem_shared_mem(kvm)			\
+> +	(IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&			\
+> +	 ((kvm)->arch.vm_type == KVM_X86_SW_PROTECTED_VM ||		\
+> +	  (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM))
+>  #else
+>  #define kvm_arch_supports_gmem(kvm) false
+> +#define kvm_arch_supports_gmem_shared_mem(kvm) false
 >  #endif
->      case KVM_EXIT_HYPERCALL:
-> -        ret = kvm_handle_hypercall(run);
-> +        ret = kvm_handle_hypercall(cpu, run);
->          break;
->      default:
->          fprintf(stderr, "KVM: unknown exit reason %d\n", run->exit_reason);
-> 
-> base-commit: 0f15892acaf3f50ecc20c6dad4b3ebdd701aa93e
+>  
+>  #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
+> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+> index 035ced06b2dd..2a02f2457c42 100644
+> --- a/arch/x86/kvm/x86.c
+> +++ b/arch/x86/kvm/x86.c
+> @@ -12718,7 +12718,8 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
+>  		return -EINVAL;
+>  
+>  	kvm->arch.vm_type = type;
+> -	kvm->arch.supports_gmem = (type == KVM_X86_SW_PROTECTED_VM);
+> +	kvm->arch.supports_gmem =
+> +		type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
+
+
+I've been testing this patch-series. I did not saw failure with guest_memfd selftests but encountered a regression on my system with KVM_X86_DEFAULT_VM.
+
+I'm getting below error in QEMU:
+Issue #1 - QEMU fails to start with KVM_X86_DEFAULT_VM, showing:
+
+qemu-system-x86_64: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION2 failed, slot=65536, start=0x0, size=0x80000000, flags=0x0, guest_memfd=-1, guest_memfd_offset=0x0: Invalid argument
+kvm_set_phys_mem: error registering slot: Invalid argument
+
+I did some digging to find out,
+In kvm_set_memory_region as_id >= kvm_arch_nr_memslot_as_ids(kvm) now returns true.
+(as_id:1 kvm_arch_nr_memslot_as_ids(kvm):1 id:0 KVM_MEM_SLOTS_NUM:32767)
+
+/* SMM is currently unsupported for guests with guest_memfd (esp private) memory. */
+# define kvm_arch_nr_memslot_as_ids(kvm) (kvm_arch_supports_gmem(kvm) ? 1 : 2)
+evaluates to be 1
+
+I'm still debugging to find answer to these question
+Why slot=65536 and (as_id = mem->slot >> 16 = 1) is requested for KVM_X86_DEFAULT_VM case
+which is making it fail for above check.
+Was this change intentional for KVM_X86_DEFAULT_VM? Should this be considered as KVM regression or QEMU[1] compatibility issue?
+
+---
+Issue #2: Testing challenges with QEMU changes[2] and mmap Implementation:
+Currently, QEMU only enables guest_memfd for SEV_SNP_GUEST (KVM_X86_SNP_VM) by setting require_guest_memfd=true. However, the new mmap implementation doesn't support SNP guests per kvm_arch_supports_gmem_shared_mem().
+
+static void
+sev_snp_guest_instance_init(Object *obj)
+{
+    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
+    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
+
+    cgs->require_guest_memfd = true;
+
+
+To bypass this, I did two things and failed:
+1. Enabling guest_memfd for KVM_X86_DEFAULT_VM in QEMU: Hits Issue #1 above
+2. Adding KVM_X86_SNP_VM to kvm_arch_supports_gmem_shared_mem(): mmap() succeeds but QEMU stuck during boot.
+
+
+
+My NUMA policy support for guest-memfd patch[3] depends on mmap() support and extends
+kvm_gmem_vm_ops with get_policy/set_policy operations.
+Since NUMA policy applies to both shared and private memory scenarios, what checks should
+be included in the mmap() implementation, and what's the recommended approach for
+integrating with your shared memory restrictions?
+
+
+[1] https://github.com/qemu/qemu
+[2] Snippet to QEMU changes to add mmap
+
++                new_block->guest_memfd = kvm_create_guest_memfd(
++                                           new_block->max_length, /*0 */GUEST_MEMFD_FLAG_SUPPORT_SHARED, errp);
++                if (new_block->guest_memfd < 0) {
++                        qemu_mutex_unlock_ramlist();
++                        goto out_free;
++                }
++                new_block->ptr_memfd = mmap(NULL, new_block->max_length,
++                                            PROT_READ | PROT_WRITE,
++                                            MAP_SHARED,
++                                            new_block->guest_memfd, 0);
++                if (new_block->ptr_memfd == MAP_FAILED) {
++                    error_report("Failed to mmap guest_memfd");
++                    qemu_mutex_unlock_ramlist();
++                    goto out_free;
++                }
++                printf("mmap successful\n");
++            }
+[3] https://lore.kernel.org/linux-mm/20250408112402.181574-1-shivankg@amd.com
+
+
+
+>  	/* Decided by the vendor code for other VM types.  */
+>  	kvm->arch.pre_fault_allowed =
+>  		type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
+> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
+> index 80371475818f..ba83547e62b0 100644
+> --- a/include/linux/kvm_host.h
+> +++ b/include/linux/kvm_host.h
+> @@ -729,6 +729,19 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
+>  }
+>  #endif
+>  
+> +/*
+> + * Returns true if this VM supports shared mem in guest_memfd.
+> + *
+> + * Arch code must define kvm_arch_supports_gmem_shared_mem if support for
+> + * guest_memfd is enabled.
+> + */
+> +#if !defined(kvm_arch_supports_gmem_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM)
+> +static inline bool kvm_arch_supports_gmem_shared_mem(struct kvm *kvm)
+> +{
+> +	return false;
+> +}
+> +#endif
+> +
+>  #ifndef kvm_arch_has_readonly_mem
+>  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
+>  {
+> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
+> index b6ae8ad8934b..c2714c9d1a0e 100644
+> --- a/include/uapi/linux/kvm.h
+> +++ b/include/uapi/linux/kvm.h
+> @@ -1566,6 +1566,7 @@ struct kvm_memory_attributes {
+>  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
+>  
+>  #define KVM_CREATE_GUEST_MEMFD	_IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
+> +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED	(1ULL << 0)
+>  
+>  struct kvm_create_guest_memfd {
+>  	__u64 size;
+> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
+> index 559c93ad90be..df225298ab10 100644
+> --- a/virt/kvm/Kconfig
+> +++ b/virt/kvm/Kconfig
+> @@ -128,3 +128,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
+>  config HAVE_KVM_ARCH_GMEM_INVALIDATE
+>         bool
+>         depends on KVM_GMEM
+> +
+> +config KVM_GMEM_SHARED_MEM
+> +       select KVM_GMEM
+> +       bool
+> +       prompt "Enable support for non-private (shared) memory in guest_memfd"
+> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
+> index 6db515833f61..5d34712f64fc 100644
+> --- a/virt/kvm/guest_memfd.c
+> +++ b/virt/kvm/guest_memfd.c
+> @@ -312,7 +312,81 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
+>  	return gfn - slot->base_gfn + slot->gmem.pgoff;
+>  }
+>  
+> +static bool kvm_gmem_supports_shared(struct inode *inode)
+> +{
+> +	u64 flags;
+> +
+> +	if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
+> +		return false;
+> +
+> +	flags = (u64)inode->i_private;
+> +
+> +	return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> +}
+> +
+> +
+> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
+> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
+> +{
+> +	struct inode *inode = file_inode(vmf->vma->vm_file);
+> +	struct folio *folio;
+> +	vm_fault_t ret = VM_FAULT_LOCKED;
+> +
+> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
+> +	if (IS_ERR(folio)) {
+> +		int err = PTR_ERR(folio);
+> +
+> +		if (err == -EAGAIN)
+> +			return VM_FAULT_RETRY;
+> +
+> +		return vmf_error(err);
+> +	}
+> +
+> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
+> +		ret = VM_FAULT_SIGBUS;
+> +		goto out_folio;
+> +	}
+> +
+> +	if (!folio_test_uptodate(folio)) {
+> +		clear_highpage(folio_page(folio, 0));
+> +		kvm_gmem_mark_prepared(folio);
+> +	}
+> +
+> +	vmf->page = folio_file_page(folio, vmf->pgoff);
+> +
+> +out_folio:
+> +	if (ret != VM_FAULT_LOCKED) {
+> +		folio_unlock(folio);
+> +		folio_put(folio);
+> +	}
+> +
+> +	return ret;
+> +}
+> +
+> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
+> +	.fault = kvm_gmem_fault_shared,
+> +};
+> +
+> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
+> +{
+> +	if (!kvm_gmem_supports_shared(file_inode(file)))
+> +		return -ENODEV;
+> +
+> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
+> +	    (VM_SHARED | VM_MAYSHARE)) {
+> +		return -EINVAL;
+> +	}
+> +
+> +	vma->vm_ops = &kvm_gmem_vm_ops;
+> +
+> +	return 0;
+> +}
+> +#else
+> +#define kvm_gmem_mmap NULL
+> +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
+> +
+>  static struct file_operations kvm_gmem_fops = {
+> +	.mmap		= kvm_gmem_mmap,
+>  	.open		= generic_file_open,
+>  	.release	= kvm_gmem_release,
+>  	.fallocate	= kvm_gmem_fallocate,
+> @@ -463,6 +537,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
+>  	u64 flags = args->flags;
+>  	u64 valid_flags = 0;
+>  
+> +	if (kvm_arch_supports_gmem_shared_mem(kvm))
+> +		valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
+> +
+>  	if (flags & ~valid_flags)
+>  		return -EINVAL;
+>  
+> @@ -501,6 +578,10 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
+>  	    offset + size > i_size_read(inode))
+>  		goto err;
+>  
+> +	if (kvm_gmem_supports_shared(inode) &&
+> +	    !kvm_arch_supports_gmem_shared_mem(kvm))
+> +		goto err;
+> +
+>  	filemap_invalidate_lock(inode->i_mapping);
+>  
+>  	start = offset >> PAGE_SHIFT;
+
+
+
+
+
+
+
 
