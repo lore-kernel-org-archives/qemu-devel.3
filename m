@@ -4,100 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5E3C5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26739C5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:59:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMCxH-0006Ej-5f; Mon, 02 Jun 2025 17:44:27 -0400
+	id 1uMDB8-0008PE-Aj; Mon, 02 Jun 2025 17:58:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uMCxE-0006EV-PC
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:44:24 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uMCxD-00083Y-5h
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:44:24 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b2c49373c15so3041921a12.3
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:44:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748900661; x=1749505461; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=LjBFZha3T6dxwS2Ai2OI10yYHkYGii8nPvaO9dfSaO4=;
- b=Rojmo5aOFyycQ1VeGL3BObQe5BkLl+fH8FiU9EHzEXsFZtjQsue8jvpQOAPSBERO9L
- za/URROkrO8sML6d7PVrZ3jZQ6tqnlP+GvpZWKwB+YftLEvb6pKuKw7jkfHjP8tQnthC
- qMIIh8L/yYfdFvrvFYCxm2esfy+6D10vmsL69hvVmPWhP0aD4j39SrmeqFn9GXRPcvmO
- RO//pFpM1whM7zoeAjJ5qkQ3iZJkrzWH/AvcjpVWnUkWoi29/ChWlLv01Vs01ItLxUn2
- Sf5AoElK/jAVliTCqJYmSc00v6g+UkV4909IyL1y27Bl1q0JPm8Kx0HIDxQ+rYnVnKuz
- Qm2Q==
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uMDB6-0008Oh-56
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:58:44 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uMDB3-0001OV-Kv
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:58:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748901518;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PWH6vQN/SEPfYWhKagLIW3DEQIsTcxJ72LlaHbc7hL0=;
+ b=jN9AfAD/OX1kT0iyNp5wKR1L5n2bX8V1XKZ8cQalrZ33Wb21A8dCiJc2TjRioaZnnrerCv
+ sHpdzqJ7d9tpbpSzGvHESCLHk3LgAbrOzdbY46aEJc97VJDtp+cL6cS6Bh+RHMPX4/CPzz
+ enhm0nBo90uMQRfmlZ5KdQFH4KmsUqI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-636-xapWDBZnN3y7hamGXievnw-1; Mon, 02 Jun 2025 17:58:37 -0400
+X-MC-Unique: xapWDBZnN3y7hamGXievnw-1
+X-Mimecast-MFC-AGG-ID: xapWDBZnN3y7hamGXievnw_1748901516
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-450d244bfabso35161505e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:58:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748900661; x=1749505461;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1748901516; x=1749506316;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=LjBFZha3T6dxwS2Ai2OI10yYHkYGii8nPvaO9dfSaO4=;
- b=tIRCYRV0uqgVy1UfxtY6ufcC+HKuYi/IBDerMbgkG2GMuHfVyrxgF2rnd2EEgRmRoq
- YYUdl7TMnJY9I7Zq6+Xfj+jaxJmf1D05jm5uSz3kHYBcxrddNLQkmD+mRRI3K5Nrz2QN
- 7FMhK2FTQ+K1jJgO0bMtgezR7i/lSGoIXjnsvE+0lXVNMqvEqT2lgW52/jG14ZJx9wly
- 4zwpjZddOtZqWtTXO8qPnBZ8fHEXfRym+eMPm9dNIeGod1XjkTyGTGuLjoi9N27R78cQ
- LJrO3JZUAH7eBtgduU5iNFtevG0lEHxv8+Vsrt/p8UCvvCaxO1ppas9Cj0huJvnCcEoM
- QoMw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWvAFXct7Ekj8krN+Fyuh6yGJpDDBTeTZ6lGGVjDWKqyhokJ9mtL1HYP6zwGUIsnhEshg8SUY1MW/h@nongnu.org
-X-Gm-Message-State: AOJu0Yz32hbsJB1UCuKPuZIe1kVoIFRJ/eraqC/irMM2HqrxaqA/6ZuB
- EAw5Dt24VOWQf4ZxwwTlQPqthTZcAAbmK9wT8YmQtqf5PVGs5rKBlay8
-X-Gm-Gg: ASbGnctFOUWrlc0SohVOx/zyDrqwgslyG0+y4SmKtI6Af+Lodoa79YDtSZNJhzWaldb
- LDuAl+fg5LP4V0PrNsT/MyYwVWbPSXaqkIMI7gz88yTvEB3Wt7vp9V6zDNTxFciyLpLebzljdmN
- c9aPHuqQVkFIsL5AgZTis89u/IIO6iDy/odDD85UU6OOFBQbdEGk0TVwN15Ftxnww6eN8+oTc6V
- otewAx/8dMrvte0LIzn2cCw5XL+f0rAW+ybJ1ALtAO8kf0Yqpjv4L3x83QFi9k19Ihv42TxeeUb
- I6lzVUhFoT8xdlD21IMVxCMSVPkilqDiidfoIBGQyuncVuC47/eQsaM=
-X-Google-Smtp-Source: AGHT+IFdTCNmXpNzFrfF8S335uiBBbtgUoO3DXJ4mkfBTsg6pYWFrv29GTOtlSrkONnDA9TVyVvhmw==
-X-Received: by 2002:a05:6a20:7286:b0:1f3:2e85:c052 with SMTP id
- adf61e73a8af0-21ae00c987cmr23110965637.35.1748900661478; 
- Mon, 02 Jun 2025 14:44:21 -0700 (PDT)
-Received: from [192.168.1.119] ([50.46.174.34])
+ bh=PWH6vQN/SEPfYWhKagLIW3DEQIsTcxJ72LlaHbc7hL0=;
+ b=PxNbrIjJZ7KNfUAMQfZTHS1N2Y7B6DjnHt9S8I20tSlJivHaRPEwpB89iBa0dCX74g
+ IkroFg5Rc3Bj9SGt2wAOsNxzicX1cLUPQzJOnnptpBruOxnnc57WSqhKFeqzwyCbWFZz
+ 2r99jzFN4JBOW/07iyWt1iFRa61QeuRF0S+NWNpe0xxv2YdbPn/gO9z3dP3dbruzfjYq
+ CfX/6gwo/2NE8BpmLI9iVXQStd7+hkWX02z+5t6R31InPLAuNCzQUSvOmA7/uznatqsU
+ QryY+zFigy+jbqCAxIsCmAolSskE3RWVi96a2fz0RkBuuop02jxJDXt+olBrTFZ55W51
+ ccxw==
+X-Gm-Message-State: AOJu0YxsnMlJPzSK7lLCWtOitogCc9z2kmW9kYGh4tvN7xebO5DakI2S
+ DaJ+T0QT472TpgDNmbrI5JU+tlLIr7UmsF+7ZO6xTo1Qb4ci/TuTb1CTNbaeBtKactMm421cU6/
+ a1cr1fU6vi5l89/NyruRv/dRZcEZiKMrQXjbl6qNVYR2Tsm78JNU7kICW
+X-Gm-Gg: ASbGnct4jnyhFNBngtlJ5f/icgXJKzdraRp5cQDl71FqZMgMjo1RQq3r0UKJ6z1aMWz
+ w3v4oNMeZfPHVlbaCoTrGbSwbT1EPTkaeuSeAzFpIQKHyJS8qdsjABWBEF4RIsvvbm1Pg7g1vsV
+ 3hrNHC5TqnveOgAl3+oQsLY3tB1BUcljIcmEO2/SLxoTSOJ80t7y3gxzyKVzW/J/iagFFRdmQf5
+ 8tyLcpD+uCSfgXQPN9S21/8L7HWo/5vxC8u/D1oJeJiLe9XOTJIUQBgWyTKaKLNNoRjpyPBygOA
+ BK8EXQ==
+X-Received: by 2002:a5d:5f8c:0:b0:3a4:dfaa:df8c with SMTP id
+ ffacd0b85a97d-3a4fe154a5amr7696672f8f.11.1748901516293; 
+ Mon, 02 Jun 2025 14:58:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEX99Nu6ROJ4IbaBjkGVsV7/Qg0w+L/KU1X8vEW9MRVGIQWPIIXnuV7vBhimVCUwBEGLHc5vA==
+X-Received: by 2002:a5d:5f8c:0:b0:3a4:dfaa:df8c with SMTP id
+ ffacd0b85a97d-3a4fe154a5amr7696662f8f.11.1748901515881; 
+ Mon, 02 Jun 2025 14:58:35 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-747afda8b71sm8081237b3a.0.2025.06.02.14.44.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 14:44:21 -0700 (PDT)
-Message-ID: <fc8702c6-568a-4d71-af9c-19afd037b688@gmail.com>
-Date: Mon, 2 Jun 2025 14:44:20 -0700
+ ffacd0b85a97d-3a4efe73f22sm15981047f8f.43.2025.06.02.14.58.34
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Jun 2025 14:58:35 -0700 (PDT)
+Date: Mon, 2 Jun 2025 17:58:32 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Bibo Mao <maobibo@loongson.cn>
+Subject: Re: [PULL 00/31] virtio,pci,pc: features, fixes, tests
+Message-ID: <20250602175809-mutt-send-email-mst@kernel.org>
+References: <cover.1748791463.git.mst@redhat.com>
+ <CAJSP0QUCipXvUWQ7uOm4Ct2a0O7=SFF9XZAozTFtAZfak8-EGg@mail.gmail.com>
+ <20250602135333-mutt-send-email-mst@kernel.org>
+ <CAJSP0QWvkMMcuy=5hU=4Ps4DtoE2TQ8Up4fDSLZZ8ia_+9jjEA@mail.gmail.com>
+ <20250602142634-mutt-send-email-mst@kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 3/9] plugins: Add enforcement of QEMU_PLUGIN_CB flags
- in register R/W callbacks
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-References: <20250602195706.1043662-1-rowanbhart@gmail.com>
- <20250602195706.1043662-4-rowanbhart@gmail.com>
- <7f925a2a-20d7-40e6-bf2c-ac3823912a04@linaro.org>
-Content-Language: en-US
-From: Rowan Hart <rowanbhart@gmail.com>
-In-Reply-To: <7f925a2a-20d7-40e6-bf2c-ac3823912a04@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x52e.google.com
+In-Reply-To: <20250602142634-mutt-send-email-mst@kernel.org>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,77 +111,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
->>
->> @@ -437,6 +437,10 @@ int qemu_plugin_read_register(struct 
->> qemu_plugin_register *reg, GByteArray *buf)
->>   {
->>       g_assert(current_cpu);
->>   +    if (qemu_plugin_get_cb_flags() == QEMU_PLUGIN_CB_NO_REGS) {
->> +        return -1;
->> +    }
->> +
->>       return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) 
->> - 1);
->>   }
->>   @@ -445,6 +449,10 @@ int qemu_plugin_write_register(struct 
->> qemu_plugin_register *reg,
->>   {
->>       g_assert(current_cpu);
->>   +    if (buf->len == 0 || qemu_plugin_get_cb_flags() != 
->> QEMU_PLUGIN_CB_RW_REGS) {
->> +        return 0;
->> +    }
->> +
->
-> Would it be better to return -1 for "qemu_plugin_get_cb_flags() != 
-> QEMU_PLUGIN_CB_RW_REGS", so user can notice there is something wrong 
-> with flags?
-
-Sure would, typo on my part here.
-
-
->>       return gdb_write_register(current_cpu, buf->data, 
->> GPOINTER_TO_INT(reg) - 1);
->>   }
->>   diff --git a/plugins/core.c b/plugins/core.c
->> index eb9281fe54..34bddb6c1c 100644
->> --- a/plugins/core.c
->> +++ b/plugins/core.c
->> @@ -364,14 +364,15 @@ void plugin_register_dyn_cb__udata(GArray **arr,
->>                                      enum qemu_plugin_cb_flags flags,
->>                                      void *udata)
->>   {
->> -    static TCGHelperInfo info[3] = {
->> +    static TCGHelperInfo info[4] = {
->>           [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG,
->>           [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG,
->> +        [QEMU_PLUGIN_CB_RW_REGS].flags = 0,
->>           /*
->>            * Match qemu_plugin_vcpu_udata_cb_t:
->>            *   void (*)(uint32_t, void *)
->>            */
->> -        [0 ... 2].typemask = (dh_typemask(void, 0) |
->> +        [0 ... 3].typemask = (dh_typemask(void, 0) |
->>                                 dh_typemask(i32, 1) |
->>                                 dh_typemask(ptr, 2))
->>       };
->
-> [QEMU_PLUGIN_CB_RW_REGS].flags = 0 was already set implicitly, as all 
-> elements not explicit set are initialized to 0.
-> As you can see, [0 ... 2].typemask was set, which shows we initialized 
-> the third element.
-> Adding [QEMU_PLUGIN_CB_RW_REGS].flags = 0 does not hurt, and is more 
-> explicit, but you don't need to increase array size.
->
-> This static array is used to set info field in callback struct, as
-> .info = &info[flags]. Flags being an enum qemu_plugin_cb_flags, its 
-> value is 0,1 or 2, so adding one entry is useless.
-
-Got it, for some reason I assumed this array needed a sentinel value and 
-simultaneously didn't recognize the [0 ... n] sytnax was inclusive. 
-Thanks for pointing that out!
+On Mon, Jun 02, 2025 at 02:31:19PM -0400, Michael S. Tsirkin wrote:
+> On Mon, Jun 02, 2025 at 02:25:48PM -0400, Stefan Hajnoczi wrote:
+> > On Mon, Jun 2, 2025 at 1:54 PM Michael S. Tsirkin <mst@redhat.com> wrote:
+> > >
+> > > On Mon, Jun 02, 2025 at 12:39:17PM -0400, Stefan Hajnoczi wrote:
+> > > > On Sun, Jun 1, 2025 at 11:34 AM Michael S. Tsirkin <mst@redhat.com> wrote:
+> > > > >
+> > > > > The following changes since commit d2e9b78162e31b1eaf20f3a4f563da82da56908d:
+> > > > >
+> > > > >   Merge tag 'pull-qapi-2025-05-28' of https://repo.or.cz/qemu/armbru into staging (2025-05-29 08:36:01 -0400)
+> > > > >
+> > > > > are available in the Git repository at:
+> > > > >
+> > > > >   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+> > > > >
+> > > > > for you to fetch changes up to 1c5771c092742b729e2a640be184a0f48c0b2cdb:
+> > > > >
+> > > > >   hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine (2025-06-01 08:30:09 -0400)
+> > > > >
+> > > > > ----------------------------------------------------------------
+> > > > > virtio,pci,pc: features, fixes, tests
+> > > > >
+> > > > > vhost will now no longer set a call notifier if unused
+> > > > > loongarch gained acpi tests based on bios-tables-test
+> > > > > some core pci work for SVM support in vtd
+> > > > > vhost vdpa init has been optimized for response time to QMP
+> > > > > A couple more fixes
+> > > > >
+> > > > > Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> > > >
+> > > > Please take a look at this CI failure:
+> > > > https://gitlab.com/qemu-project/qemu/-/jobs/10225580735#L4750
+> > >
+> > > Hmm must be how it interacts with something in your tree.
+> > > Which commit are you merging with?
+> > > Let me know, I'll try to rebase.
+> > 
+> > commit 25de0b9aa129b2b014a0595befef05f04511868d (HEAD -> staging)
+> > Merge: 3e82ddaa8d 6e672b2a08
+> > Author: Stefan Hajnoczi <stefanha@redhat.com>
+> > Date:   Mon Jun 2 09:56:12 2025 -0400
+> > 
+> >     Merge tag 'for_upstream' of
+> > https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging
+> > 
+> >     virtio,pci,pc: features, fixes, tests
+> > 
+> > Commit 6e672b2a08 is the one you published and 3e82ddaa8d is the
+> > qemu.git/master.
+> 
+> I could not figure it out. Must be a loongarch bug dealing
+> with s390 hosts. I dropped them from the tag for now.
+> Cc contributor to figure it out.
+> Bibo Mao pls take a look.
+> 
+> New tag:
+> 0b006153b7ec66505cb2d231235aa19ca5d2ce37
+> 
+> 
+> Thanks!
 
 
-I'll make these two changes.
+hope this is ok now. going offline for vacation. see you after the 10th!
+
+> 
+> > >
+> > > > >
+> > > > > ----------------------------------------------------------------
+> > > > > Bernhard Beschow (1):
+> > > > >       hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
+> > > > >
+> > > > > Bibo Mao (8):
+> > > > >       uefi-test-tools:: Add LoongArch64 support
+> > > > >       tests/data/uefi-boot-images: Add ISO image for LoongArch system
+> > > > >       tests/qtest/bios-tables-test: Use MiB macro rather hardcode value
+> > > > >       tests/acpi: Add empty ACPI data files for LoongArch
+> > > > >       tests/qtest/bios-tables-test: Add basic testing for LoongArch
+> > > > >       rebuild-expected-aml.sh: Add support for LoongArch
+> > > > >       tests/acpi: Fill acpi table data for LoongArch
+> > > > >       tests/acpi: Remove stale allowed tables
+> > > > >
+> > > > > CLEMENT MATHIEU--DRIF (11):
+> > > > >       pcie: Add helper to declare PASID capability for a pcie device
+> > > > >       pcie: Helper functions to check if PASID is enabled
+> > > > >       pcie: Helper function to check if ATS is enabled
+> > > > >       pcie: Add a helper to declare the PRI capability for a pcie device
+> > > > >       pcie: Helper functions to check to check if PRI is enabled
+> > > > >       pci: Cache the bus mastering status in the device
+> > > > >       pci: Add an API to get IOMMU's min page size and virtual address width
+> > > > >       memory: Store user data pointer in the IOMMU notifiers
+> > > > >       pci: Add a pci-level initialization function for IOMMU notifiers
+> > > > >       pci: Add a pci-level API for ATS
+> > > > >       pci: Add a PCI-level API for PRI
+> > > > >
+> > > > > Eugenio Pérez (7):
+> > > > >       vdpa: check for iova tree initialized at net_client_start
+> > > > >       vdpa: reorder vhost_vdpa_set_backend_cap
+> > > > >       vdpa: set backend capabilities at vhost_vdpa_init
+> > > > >       vdpa: add listener_registered
+> > > > >       vdpa: reorder listener assignment
+> > > > >       vdpa: move iova_tree allocation to net_vhost_vdpa_init
+> > > > >       vdpa: move memory listener register to vhost_vdpa_init
+> > > > >
+> > > > > Huaitong Han (1):
+> > > > >       vhost: Don't set vring call if guest notifier is unused
+> > > > >
+> > > > > Sairaj Kodilkar (1):
+> > > > >       hw/i386/amd_iommu: Fix device setup failure when PT is on.
+> > > > >
+> > > > > Vasant Hegde (1):
+> > > > >       hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+> > > > >
+> > > > > Yuri Benditovich (1):
+> > > > >       virtio: check for validity of indirect descriptors
+> > > > >
+> > > > >  include/hw/pci/pci.h                               | 316 +++++++++++++++++++++
+> > > > >  include/hw/pci/pci_device.h                        |   1 +
+> > > > >  include/hw/pci/pcie.h                              |  13 +-
+> > > > >  include/hw/pci/pcie_regs.h                         |   8 +
+> > > > >  include/hw/virtio/vhost-vdpa.h                     |  22 +-
+> > > > >  include/system/memory.h                            |   1 +
+> > > > >  hw/i386/amd_iommu.c                                |  20 +-
+> > > > >  hw/i386/pc_piix.c                                  |   5 +
+> > > > >  hw/pci/pci.c                                       | 206 +++++++++++++-
+> > > > >  hw/pci/pcie.c                                      |  78 +++++
+> > > > >  hw/virtio/vhost-vdpa.c                             | 107 ++++---
+> > > > >  hw/virtio/virtio-pci.c                             |   7 +-
+> > > > >  hw/virtio/virtio.c                                 |  11 +
+> > > > >  net/vhost-vdpa.c                                   |  34 +--
+> > > > >  tests/qtest/bios-tables-test.c                     |  99 ++++++-
+> > > > >  tests/data/acpi/loongarch64/virt/APIC              | Bin 0 -> 108 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/APIC.topology     | Bin 0 -> 213 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/DSDT              | Bin 0 -> 4641 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/DSDT.memhp        | Bin 0 -> 5862 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/DSDT.numamem      | Bin 0 -> 4647 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/DSDT.topology     | Bin 0 -> 5352 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/FACP              | Bin 0 -> 268 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/MCFG              | Bin 0 -> 60 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/PPTT              | Bin 0 -> 76 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/PPTT.topology     | Bin 0 -> 296 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/SLIT              |   0
+> > > > >  tests/data/acpi/loongarch64/virt/SLIT.numamem      | Bin 0 -> 48 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/SPCR              | Bin 0 -> 80 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/SRAT              | Bin 0 -> 104 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/SRAT.memhp        | Bin 0 -> 144 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/SRAT.numamem      | Bin 0 -> 144 bytes
+> > > > >  tests/data/acpi/loongarch64/virt/SRAT.topology     | Bin 0 -> 216 bytes
+> > > > >  tests/data/acpi/rebuild-expected-aml.sh            |   4 +-
+> > > > >  .../bios-tables-test.loongarch64.iso.qcow2         | Bin 0 -> 12800 bytes
+> > > > >  tests/qtest/meson.build                            |   1 +
+> > > > >  tests/uefi-test-tools/Makefile                     |   5 +-
+> > > > >  .../UefiTestToolsPkg/UefiTestToolsPkg.dsc          |   6 +-
+> > > > >  tests/uefi-test-tools/uefi-test-build.config       |  10 +
+> > > > >  38 files changed, 846 insertions(+), 108 deletions(-)
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/APIC
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/APIC.topology
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.memhp
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.numamem
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.topology
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/FACP
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT.topology
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT.numamem
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.memhp
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.numamem
+> > > > >  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.topology
+> > > > >  create mode 100644 tests/data/uefi-boot-images/bios-tables-test.loongarch64.iso.qcow2
+> > > > >
+> > > > >
+> > >
 
 
