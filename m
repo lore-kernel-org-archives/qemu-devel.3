@@ -4,82 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F898C5B549
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 05:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48882C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 05:48:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLy0l-00079H-U5; Mon, 02 Jun 2025 01:47:03 -0400
+	id 1uLxza-00067a-Va; Mon, 02 Jun 2025 01:45:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLy0J-0006N1-SJ; Mon, 02 Jun 2025 01:46:37 -0400
-Received: from mail-qv1-xf2c.google.com ([2607:f8b0:4864:20::f2c])
+ id 1uLxxD-0005dj-E2; Mon, 02 Jun 2025 01:43:29 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLy0I-0006mY-DJ; Mon, 02 Jun 2025 01:46:35 -0400
-Received: by mail-qv1-xf2c.google.com with SMTP id
- 6a1803df08f44-6fada2dd785so22260316d6.2; 
- Sun, 01 Jun 2025 22:46:33 -0700 (PDT)
+ id 1uLxwO-000316-1w; Mon, 02 Jun 2025 01:43:20 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-4a58d95ea53so6045921cf.0; 
+ Sun, 01 Jun 2025 22:42:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748843193; x=1749447993; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1748842949; x=1749447749; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=W48rNXSt6u8jcvm5ZiFTJv2uoY5wSZUOH3/y4WAWp+I=;
- b=NqxS/Gqs/fa3ZB98QQW7qZ6GqojgV3qOhIu+tv5tyjsCgOY52G6yFY8qLZliJqrb3E
- QmiYasubvdGYNLzi/O0whamjE/nfgN8AL0Hsfjv0kWL0JcWMZU3/B5DqI7MJOjY4XbS/
- TygCssKhWFVBGWI73LCRqwEff0BCc3Ut4Ua2RYTC15Ts8l/+SNWuatPH1aZLpX2vyeqF
- 2U3CSpvQq5ZgPM1xbVg/FLcAwPCrxCxGtv3DljSP8UdU6xeYfRAJSGdnYWQlDmPPweKw
- rGKkiGoMudrFTQhxwy5dl/E78bnyh5rV+mLQ0to5kNst6EhpFaGRax7MCC8vEOK2AKsl
- ACtQ==
+ bh=ZDjt/1Oq3qv3l1LceDFVzaa+v1qRMH9yh2FyC56g2ZI=;
+ b=aFpDnYfCRY5X8LqPX0zu556NKlk1FAr4ifpeIijlGnEJVU0411yr8VfvFeMGzpxtjl
+ WkRrNCqgZWSbfCpoTgxAAdW8KI9q3/h2VsMXkgS2pTLJwBwlAR1nOh8OeoqTecYpF7Ux
+ X5YSj3bbI1oJ/Zttruek9aZKlhqSjuvNUuC+aTeadbCKiqDpWwMYTpgFGtzrVlLFinRD
+ IqeTtKYB/Dh11VmrtX8xahlFExMcWScacaQjt3y3b1HaHn2kKuq5ikGxRbP9gc0CGXsV
+ 6r1pQ+uRiTCW0rwd6Qhxe/pnJE2N23bpZ6sX1GhVy24lc1c+o3Zc1m8D60o6k/Airfxe
+ rSTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748843193; x=1749447993;
+ d=1e100.net; s=20230601; t=1748842949; x=1749447749;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=W48rNXSt6u8jcvm5ZiFTJv2uoY5wSZUOH3/y4WAWp+I=;
- b=EBi8bjJDp01hGy92lsM4/UAAY2WOoridlDYz10ec+vPH6UpIWineitysCOFlZvubGi
- kevP4TF+v125JmfoCxdCzCd31hqOGhcGYOK9mribPusESHBGoTmF7stb26vmqtOtW60q
- 3DAcWvJ6kYO80D2ZxyVLYzMe61V2pdGU5hn7jCMeJu0Ga4ac/MrrjbOl/5oNxOA3hyrp
- oohQfYaZRMd1bcuUPur/2lJJq5wzB8bEcJDzBST1zCdH1A8Rsl73TgH2WLPoak57K9qe
- vXYcwhm4bds2ZvKOe8bHEkl5GhMrswvjVI1KI9u3kpau+fFeV8I6B4EMJMOO8RTc1i8w
- v3vQ==
+ bh=ZDjt/1Oq3qv3l1LceDFVzaa+v1qRMH9yh2FyC56g2ZI=;
+ b=WbYTwBEAmi5pwtuHCvk1Pvo2epFH4+Y9qiqSlMqDnjJM1SwTaP0mXr71zoIp1FKY/c
+ eAiExoZlAGiqty2i/+UMP2MlsN2caPvGx9CNXGKT1XIH55acLymFbEvKVVcEXdiZNGPA
+ jTteU22oRjdATt/2wfP3UsBtsGGAJaodo0HhnlHPBWg2cUPackhAwFE5iKsRdQDkoXQ9
+ lGmiW77nXJM6uspxwG/RJ9+ZKK+M25rgIJqujQu0Tq0IqgwLuYq/Li0I6tCtXahYzlJI
+ K/VGAIB5045u1lLOzQA3snErBgL3eAlPOuXG+bkn2OaB1PEDsIPcVSiedkDvcLQ2NV54
+ 5nUw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0WRWFh0rrsCSi1VhsuhCpBZmXWgzI8pNb2da1A5baqW/IX5TK3jfL6AMkEq1m7Vrem8ihqzwYVpniew==@nongnu.org,
- AJvYcCWLe0kCuw0/9m/TW9Hq9tUwoK6wXUq1V+MQ9AFYYYHoYwpVibra2lwkby2Eai/aoQrQ+0FyRj0SYz6h@nongnu.org
-X-Gm-Message-State: AOJu0YwVKCDfsYD0YEeoKxjoyJrDByNs3FVlXf+UuuLq0DCQQEyNqi4b
- fBoHIqRoDMQiLtmFlBdW/onDUK9Tmz5EEe0zIOy17Cx/H1zOzpTfz0hW90f326xNBQn1+j80MUc
- 283VMLGAMFfuXbkyRKcv5Kqa0cSchXy0I6z7u
-X-Gm-Gg: ASbGncuiT7XMeQtqJJByqee77OnyWofNq9zW53XrzPzyN/xGM6Nb2IaD+iVd8926ZEZ
- JIVPLGBEkOUr01S5Onqy59JN9mVZWn2B3H6N84YIA7HiS8LqbEp2bs4ggBjnPXukzE2fghGiNI7
- X19DaDtvr4OCBqx9Y/uUvXQDLFdM0Zk6u6jkJ+olfHM+cLPcDCWmaHPhBM1uhJfZs=
-X-Google-Smtp-Source: AGHT+IEvfiqVSLeTJ6Go885ho7Sz1nVsSa7hKhebVKATj/0B0bJAA5xUYtKTz2099qAAqSuvanS/kd5/46ZyIXcoVhM=
-X-Received: by 2002:a05:6102:3750:b0:4dd:b9bc:df71 with SMTP id
- ada2fe7eead31-4e6ecd66b88mr7811286137.10.1748841138530; Sun, 01 Jun 2025
- 22:12:18 -0700 (PDT)
+ AJvYcCWUq168/ibFoCiQdA2oMwN3l6tkmEwnrj4094mTnNne0fpdXUTKK6m+UerUi5rpFhQSSTVeYtTb0omg@nongnu.org
+X-Gm-Message-State: AOJu0YwPUVkwBxYfLzDjsbVi5r6+/EmNAThJSf6Ix4af68koy6M+zSsj
+ KZBKinK/YtJdzKFIkvztrPSWiLOHTYlzeRcVywWyJOBhuElyPQNI9rrPL+cNlw4OKTy2SFv2DlO
+ YR2jub/Emh4qDOX5bl3sTJQpVq1sSaUuZpQ==
+X-Gm-Gg: ASbGncs4mxNibvClLuWOT7Q31nXko8gDRc6IR2nqrlb6F++3dweG4iNQEU9OzZTvP01
+ O1Ep3JgE60MA5CVzykQ243niDK3Rh8Z/5UO+gjRafb/99dr+dLiUnUYzmY8TrI5Ntvsa8QvF5PE
+ IEZGCaefPG8j3Xfz97U8RiJvftYhkza73gfDQuus4fsMUbuLw5rJ7faYQYmPum7z4=
+X-Google-Smtp-Source: AGHT+IHmQPDQwS79pC52oVn8j92v/e+7jcMPCc1tTanKme/Ppxwzrw0Lj5ZHVJ1bpGFbA5gMryoNX9/yLWK9/2tfr+w=
+X-Received: by 2002:ac5:cdcd:0:b0:530:5b54:e035 with SMTP id
+ 71dfb90a1353d-530711eae2emr9482791e0c.4.1748839041791; Sun, 01 Jun 2025
+ 21:37:21 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250529092632.4367-1-liujingqi@lanxincomputing.com>
-In-Reply-To: <20250529092632.4367-1-liujingqi@lanxincomputing.com>
+References: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
+In-Reply-To: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 2 Jun 2025 15:11:52 +1000
-X-Gm-Features: AX0GCFvW2VEV8T9n9m9kUQgBjvo3aHDR0hMv9LiqGszZkuwLFIxdGxAl2OEVa0Q
-Message-ID: <CAKmqyKPKLHk97s-eVGANq7hYfny1g-WgFQA32eoNo9UYLC9ixA@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix PPN field of
- Translation-reponse register
-To: Nutty Liu <liujingqi@lanxincomputing.com>
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Tomasz Jeznach <tjeznach@rivosinc.com>, 
- Richard Henderson <richard.henderson@linaro.org>, qemu-riscv@nongnu.org,
- qemu-devel@nongnu.org
+Date: Mon, 2 Jun 2025 14:36:55 +1000
+X-Gm-Features: AX0GCFsSs9L25y-to5GFCUKk9ZnkAJM6oUPN9FKZKfYMTtSLrXngMfHXRGnQp_w
+Message-ID: <CAKmqyKPiKgnD_NxeTyQjG4i--b+vTKi3=yuYS_cC6HkCSRU1Sw@mail.gmail.com>
+Subject: Re: [qemu PATCH 0/3] target/riscv: add missing named features
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f2c;
- envelope-from=alistair23@gmail.com; helo=mail-qv1-xf2c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=alistair23@gmail.com; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,58 +95,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 29, 2025 at 10:52=E2=80=AFPM Nutty Liu
-<liujingqi@lanxincomputing.com> wrote:
+On Fri, May 30, 2025 at 6:24=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
 >
-> The original implementation incorrectly performed a bitwise AND
-> operation between the PPN of iova and PPN Mask, leading to an
-> incorrect PPN field in Translation-reponse register.
+> Hi,
 >
-> The PPN of iova should be set entirely in the PPN field of
-> Translation-reponse register.
+> These simple patches add two missing named features in riscv,isa.  Third
+> patch is a doc change I figured was worth doing.
 >
-> Signed-off-by: Nutty Liu <liujingqi@lanxincomputing.com>
-> ---
->  hw/riscv/riscv-iommu.c | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+> Drew, as far as Server SoC Reference platform goes, we don't have
+> 'sdext'. I guess we'll have to postpone the Server Soc Ref work for now.
 >
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index a877e5da84..f529a6a3d7 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -1935,8 +1935,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState=
- *s)
->              iova =3D RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault)=
- << 10);
->          } else {
->              iova =3D iotlb.translated_addr & ~iotlb.addr_mask;
-> -            iova >>=3D TARGET_PAGE_BITS;
-> -            iova &=3D RISCV_IOMMU_TR_RESPONSE_PPN;
-> +            iova =3D set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(=
-iova));
+> Daniel Henrique Barboza (3):
+>   target/riscv/cpu.c: add 'sdtrig' in riscv,isa
+>   target/riscv/cpu.c: add 'ssstrict' to riscv,isa
+>   target/riscv/cpu.c: do better with 'named features' doc
 
-I don't see how this is different.
+Thanks!
 
-PPN_DOWN(iova)
-is the same as
-iova >> TARGET_PAGE_BITS
-
-and
-
-set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(iova))
-should just return
-(0 & ~RISCV_IOMMU_TR_RESPONSE_PPN) |
-    (RISCV_IOMMU_TR_RESPONSE_PPN & PPN_DOWN(iova))
-
-Can you describe the issue with the original implementation and why
-this fixes it in the commit message?
+Applied to riscv-to-apply.next
 
 Alistair
 
 >
->              /* We do not support superpages (> 4kbs) for now */
->              iova &=3D ~RISCV_IOMMU_TR_RESPONSE_S;
+>  target/riscv/cpu.c | 16 ++++++++++++++--
+>  1 file changed, 14 insertions(+), 2 deletions(-)
+>
 > --
-> 2.49.0.windows.1
+> 2.49.0
+>
 >
 
