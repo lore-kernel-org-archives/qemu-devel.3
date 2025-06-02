@@ -4,73 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E75AC5B555
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 18:45:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6D9C5B559
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 19:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMA9n-00082u-RJ; Mon, 02 Jun 2025 14:45:11 -0400
+	id 1uMBHg-0004Nk-RA; Mon, 02 Jun 2025 15:57:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uMA9m-00082D-Ba
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:45:10 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uMBHX-0004Js-MO
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 15:57:16 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uMA9i-0005PB-TG
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 14:45:10 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-604bff84741so9183539a12.2
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 11:45:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uMBHV-0004rB-HB
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 15:57:15 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-742c7a52e97so3958489b3a.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 12:57:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748889903; x=1749494703; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1748894232; x=1749499032; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8CoIRgdTJ6IzAdVaqKWOUYgO7jDZqUiXBTyKExPJlE0=;
- b=dYOGUvZY5sUB70ow/v71JGILZBqwR5YSWeyn5La0ssXx1vVmi6FqGqmeKY+EeAoA1V
- Xqc26SQkwZhpcy4dat+WJuHvGWci6VPQjy53CYboLH3/G/LfNoDFNEQ6ifqZHQg/f3j/
- 9r299/3osby+XRBTpkhItVxywzKnEKGTCWgW2qeqylM2dzUVSKnrdb3BDRZExX3msK8W
- 2yp4oolYiSv/DFL+RQZjiLFF6i6sQ2nAq0iXE5XE3vJtYuPyEIw2uUJvMFCd+97Ip2gi
- din4Aqpkphxas6CMNMBxSSFHAsVvx4tffM0PyPsbmKtB4hfnPNfe/so2Qv0n/M8T0k3i
- ji6Q==
+ bh=R6ug1gFCpyfpjvcMN5S/Pi3gykW6YY3YOTff9t3TOc4=;
+ b=FrcEo6sh5n4dXWS5Fsj8/OGpxgeizDFULm7VrqapyTfhYCPmzpz+ATIfT2hQ4JPsPw
+ YehFpSxrgBQgVZkdAjZv/H5JkluBqE8K6+1ogv62tH2DVKmnnobmXZL/uTD09j0qN2OG
+ WhmMmAXObeJ/MlY1BQlJPwh39tKCnr7RkFu6JL7i2y8twPVBAkSIST2kAVeldpTqmI/i
+ f7FlS2jctS50ijB58ZpwPcckBqNmilW40SSgLte2zzri2hOnVqUZyc7frxycIUTojvR1
+ 0PeW5XRtcnf4jL6vAtxNXvCfVbWFOxJ7AqMrAd2YRTJwHpJFdX/G9fzyMyRFHaiLUfhZ
+ LqHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748889903; x=1749494703;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1748894232; x=1749499032;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8CoIRgdTJ6IzAdVaqKWOUYgO7jDZqUiXBTyKExPJlE0=;
- b=gmQram2UpHe8G9sbu+Bxn3rjiM5/gkKAzuf/iqwmW9zEpm5nY/8Tu0m9fGRbWSlR9P
- I1eXw+ZdNwKtCBwIfI/sn9W4WdQk8HpGMo/zmcPDaJ6SLjJXum68Y4OgKReV7dI01j3U
- 7LsHA51fJ2/c83SdkgVe4FSt43EELqnNadNxbUy6iy9YPLXK9YvP/kJ78BAh6+xLJmxc
- r65EnwfNwr2G5dNApVaBPf+wJiWvaYX6BQzBrg/jwfaxlwO7nmaopPiEBGygARDbEngk
- qsVRg8tFraCXITBxclJeOawwctRo6Tg8TIsN6P3LJUkF+h2ek8WriVMDSl58HpSGyu/L
- izfw==
-X-Gm-Message-State: AOJu0YxJw8XiQfBE4T9Syz+5T8dPDHpCklqm9M05+/MUvBplS13rc5BS
- xVXBc7LEgwk4pWkRRNTDPTNOgu2wJ+Vk/b4l2TFcbO5xhCHRRhB6rubzlRTce5EuvXNssg4/wnB
- M9ZN6jjfjCLc9wafd1P2Di+5jqsFtw6o=
-X-Gm-Gg: ASbGnctAtFLZJQZUbgOM3f7Jh+eX+IcL73oGfS0jqi+C7VqDmSNBjRDvZF/wz4eyNcN
- 2FSikIsxaDS0WQTSbCmQYqCM/zQVIFTPxMNyOJ0t1/GRZsL98Z5rWQzFDEtB3Zjulbf6c0cZNLm
- PjjqDwF5B+jQMHZKnHPXJZLXOnrqlpXgc=
-X-Google-Smtp-Source: AGHT+IF9irVdycUOFDMMzBxL5WHXy8juMlYryocoJW5w9RCqIO06T7IikmQbYJyxy5T6va3TJK876Oiuddudm4vtVHM=
-X-Received: by 2002:a05:6402:2113:b0:605:3251:a503 with SMTP id
- 4fb4d7f45d1cf-6057c60464amr12402366a12.20.1748889903119; Mon, 02 Jun 2025
- 11:45:03 -0700 (PDT)
+ bh=R6ug1gFCpyfpjvcMN5S/Pi3gykW6YY3YOTff9t3TOc4=;
+ b=ocIZhrb9zWh533ZBtao6sjQ4uHqkCw7VomLnljiDrCWekB6AWg9pfCGoNFycqAKz5U
+ A609XM5TzKElcNMPNHamAdWNv2msgCuZdM67lBUCDQjNb+rRd7i+o8EyB2zS1bbINCwy
+ NK1HFVS0niaw6oacDwERv6QUUZrYNHJ+7dFWagnf/9z483lpqEMpSbI9KeclsjwSjwLb
+ xBjlsFw8CBnsn+8XwiyQ7sUPJpGQwdSbbsn6oQlj4NYw9h7cAMAHrsZOArH+gLJ/eIQ1
+ dFiu0ilhybovZtjWWKYeUkCQVIiKEIED071IT/uKwkeLH0tomzxvwpIUbxzgPBsy2AqV
+ gPpg==
+X-Gm-Message-State: AOJu0YwTqZ3rXWyE3g+IUKg3ETOqKujQC3WK0VFJuMHa3FEpZ2/u2NWe
+ 39oQQeWoQl6ZtOl1APvFIhjoQvuHq7I9aHjrEmYPBGkHXj9ho4jZsw59o7GyA1SZdo0=
+X-Gm-Gg: ASbGnctor8g7pc3RCq53MZXRa63LqBo8pTvI8ipbDl8Y2TrF4aFzzYj6Vhe9/VIIFYX
+ opKaGTbn8dKoHr+yq4CeOnYa+AamwasYGp/gAjEjAnamQD4bnIixeZmVrKicPABT3FDuzCVG5+H
+ uqH9clD9PHJsRXyUIZXemFohppRUUzZEz+C7mMvMRZuuAztwGR0PWsh3yJixWzvVWtc1td+8Hvf
+ dUAkMLmHWATiyppGuR4KUzF1l/EYt//pEl/EeVZ926JdvofvYjTj6+IxePCNV4FEXYeqYyeFwbE
+ a+4u3lwfYdfQ+AR2aRnYcMUXxtqL8NaTiek+BGMczTdKaY06aeJfZy7wn/G2rjpmQX4e6fAb
+X-Google-Smtp-Source: AGHT+IE1Ecy2um75itrk4B2WaqaKvEZIbtgFxHJGxLZEQWVZLwI2UMeKV3NfZhiRk5DxBdB7XbJbbQ==
+X-Received: by 2002:a05:6a00:cc9:b0:740:3830:4119 with SMTP id
+ d2e1a72fcca58-747c1c2f575mr18450765b3a.18.1748894231840; 
+ Mon, 02 Jun 2025 12:57:11 -0700 (PDT)
+Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-747afeab820sm8244575b3a.60.2025.06.02.12.57.11
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Jun 2025 12:57:11 -0700 (PDT)
+From: Rowan Hart <rowanbhart@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, novafacing <rowanbhart@gmail.com>
+Subject: [PATCH v7 5/9] plugins: Add memory hardware address read/write API
+Date: Mon,  2 Jun 2025 12:57:02 -0700
+Message-ID: <20250602195706.1043662-6-rowanbhart@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250602195706.1043662-1-rowanbhart@gmail.com>
+References: <20250602195706.1043662-1-rowanbhart@gmail.com>
 MIME-Version: 1.0
-References: <20250529085437.1479-2-oleg.tolmatcev@gmail.com>
-In-Reply-To: <20250529085437.1479-2-oleg.tolmatcev@gmail.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 2 Jun 2025 14:44:50 -0400
-X-Gm-Features: AX0GCFvGBrnYVzQ0bw27QMmd9QvHkJmEwPNVyPpCJkA_Znd-IxM88RI4ccXwgaY
-Message-ID: <CAJSP0QVT56Sx8-T2+qF2LnFksL=feGL+v0CJPnX+ZuQ6iMMMRg@mail.gmail.com>
-Subject: Re: [PATCH v2] meson: fix Windows build
-To: oltolm <oleg.tolmatcev@gmail.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,227 +106,245 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 29, 2025 at 4:55=E2=80=AFAM oltolm <oleg.tolmatcev@gmail.com> w=
-rote:
->
-> The build failed when run on Windows. I replaced calls to Unix programs
-> like =C2=B4cat=C2=B4 and =C2=B4true=C2=B4 with calls to =C2=B4python=C2=
-=B4. I wrapped calls to
-> =C2=B4os.path.relpath=C2=B4 in try-except because it can fail when the tw=
-o paths
-> are on different drives. I made sure to convert the Windows paths to
-> Unix paths to prevent warnings in generated files.
->
-> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
-> ---
->  contrib/plugins/meson.build         | 2 +-
->  scripts/tracetool/backend/ftrace.py | 9 ++++++++-
->  scripts/tracetool/backend/log.py    | 9 ++++++++-
->  scripts/tracetool/backend/syslog.py | 9 ++++++++-
->  tests/functional/meson.build        | 4 +---
->  tests/include/meson.build           | 2 +-
->  tests/tcg/plugins/meson.build       | 2 +-
->  trace/meson.build                   | 5 +++--
->  8 files changed, 31 insertions(+), 11 deletions(-)
->
-> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-> index fa8a426c8..1876bc784 100644
-> --- a/contrib/plugins/meson.build
-> +++ b/contrib/plugins/meson.build
-> @@ -24,7 +24,7 @@ endif
->  if t.length() > 0
->    alias_target('contrib-plugins', t)
->  else
-> -  run_target('contrib-plugins', command: find_program('true'))
-> +  run_target('contrib-plugins', command: [python, '-c', ''])
->  endif
->
->  plugin_modules +=3D t
-> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/back=
-end/ftrace.py
-> index baed2ae61..81a5f93b3 100644
-> --- a/scripts/tracetool/backend/ftrace.py
-> +++ b/scripts/tracetool/backend/ftrace.py
-> @@ -13,6 +13,7 @@
->
->
->  import os.path
-> +from pathlib import PurePath
->
->  from tracetool import out
->
-> @@ -30,6 +31,12 @@ def generate_h(event, group):
->      if len(event.args) > 0:
->          argnames =3D ", " + argnames
->
-> +    try:
-> +        event_filename =3D os.path.relpath(event.filename)
-> +    except ValueError:
-> +        event_filename =3D event.filename
-> +    event_filename =3D PurePath(event_filename).as_posix()
+From: novafacing <rowanbhart@gmail.com>
 
-Please do this in one place to avoid code duplication in the backends.
-Perhaps event.filename or a new field can hold the properly formatted
-value so backends don't need to call relpath() themselves.
+This patch adds functions to the plugins API to allow plugins to read
+and write memory via hardware addresses. The functions use the current
+address space of the current CPU in order to avoid exposing address
+space information to users. A later patch may want to add a function to
+permit a specified address space, for example to facilitate
+architecture-specific plugins that want to operate on them, for example
+reading ARM secure memory.
 
-I noticed that out_filename is also emitted with #line but, unlike
-event.filename, no special processing (relpath() or as_posix()) is
-used there. Is it possible to drop relpath() and avoid the whole
-issue?
+Signed-off-by: novafacing <rowanbhart@gmail.com>
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+---
+ include/qemu/qemu-plugin.h | 93 ++++++++++++++++++++++++++++++++++++
+ plugins/api.c              | 97 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 190 insertions(+)
 
-> +
->      out('    {',
->          '        char ftrace_buf[MAX_TRACE_STRLEN];',
->          '        int unused __attribute__ ((unused));',
-> @@ -47,7 +54,7 @@ def generate_h(event, group):
->          args=3Devent.args,
->          event_id=3D"TRACE_" + event.name.upper(),
->          event_lineno=3Devent.lineno,
-> -        event_filename=3Dos.path.relpath(event.filename),
-> +        event_filename=3Devent_filename,
->          fmt=3Devent.fmt.rstrip("\n"),
->          argnames=3Dargnames)
->
-> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend=
-/log.py
-> index de27b7e62..241fbbbd0 100644
-> --- a/scripts/tracetool/backend/log.py
-> +++ b/scripts/tracetool/backend/log.py
-> @@ -13,6 +13,7 @@
->
->
->  import os.path
-> +from pathlib import PurePath
->
->  from tracetool import out
->
-> @@ -37,6 +38,12 @@ def generate_h(event, group):
->      else:
->          cond =3D "trace_event_get_state(%s)" % ("TRACE_" + event.name.up=
-per())
->
-> +    try:
-> +        event_filename =3D os.path.relpath(event.filename)
-> +    except ValueError:
-> +        event_filename =3D event.filename
-> +    event_filename =3D PurePath(event_filename).as_posix()
-> +
->      out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
->          '        if (message_with_timestamp) {',
->          '            struct timeval _now;',
-> @@ -55,7 +62,7 @@ def generate_h(event, group):
->          '    }',
->          cond=3Dcond,
->          event_lineno=3Devent.lineno,
-> -        event_filename=3Dos.path.relpath(event.filename),
-> +        event_filename=3Devent_filename,
->          name=3Devent.name,
->          fmt=3Devent.fmt.rstrip("\n"),
->          argnames=3Dargnames)
-> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/back=
-end/syslog.py
-> index 012970f6c..2e010e7c9 100644
-> --- a/scripts/tracetool/backend/syslog.py
-> +++ b/scripts/tracetool/backend/syslog.py
-> @@ -13,6 +13,7 @@
->
->
->  import os.path
-> +from pathlib import PurePath
->
->  from tracetool import out
->
-> @@ -36,6 +37,12 @@ def generate_h(event, group):
->      else:
->          cond =3D "trace_event_get_state(%s)" % ("TRACE_" + event.name.up=
-per())
->
-> +    try:
-> +        event_filename =3D os.path.relpath(event.filename)
-> +    except ValueError:
-> +        event_filename =3D event.filename
-> +    event_filename =3D PurePath(event_filename).as_posix()
-> +
->      out('    if (%(cond)s) {',
->          '#line %(event_lineno)d "%(event_filename)s"',
->          '        syslog(LOG_INFO, "%(name)s " %(fmt)s %(argnames)s);',
-> @@ -43,7 +50,7 @@ def generate_h(event, group):
->          '    }',
->          cond=3Dcond,
->          event_lineno=3Devent.lineno,
-> -        event_filename=3Dos.path.relpath(event.filename),
-> +        event_filename=3Devent_filename,
->          name=3Devent.name,
->          fmt=3Devent.fmt.rstrip("\n"),
->          argnames=3Dargnames)
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 52b4706cf..ee222888f 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -411,6 +411,4 @@ foreach speed : ['quick', 'thorough']
->    endforeach
->  endforeach
->
-> -run_target('precache-functional',
-> -           depends: precache_all,
-> -           command: ['true'])
-> +alias_target('precache-functional', precache_all)
-> diff --git a/tests/include/meson.build b/tests/include/meson.build
-> index 9abba308f..8e8d1ec4e 100644
-> --- a/tests/include/meson.build
-> +++ b/tests/include/meson.build
-> @@ -13,4 +13,4 @@ test_qapi_outputs_extra =3D [
->  test_qapi_files_extra =3D custom_target('QAPI test (include)',
->                                        output: test_qapi_outputs_extra,
->                                        input: test_qapi_files,
-> -                                      command: 'true')
-> +                                      command: [python, '-c', ''])
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.buil=
-d
-> index 41f02f2c7..029342282 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -17,7 +17,7 @@ endif
->  if t.length() > 0
->    alias_target('test-plugins', t)
->  else
-> -  run_target('test-plugins', command: find_program('true'))
-> +  run_target('test-plugins', command: [python, '-c', ''])
->  endif
->
->  plugin_modules +=3D t
-> diff --git a/trace/meson.build b/trace/meson.build
-> index 3df454935..ebce0154c 100644
-> --- a/trace/meson.build
-> +++ b/trace/meson.build
-> @@ -4,7 +4,7 @@ trace_events_files =3D []
->  foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
->    if item in qapi_trace_events
->      trace_events_file =3D item
-> -    group_name =3D item.full_path().split('/')[-1].underscorify()
-> +    group_name =3D fs.name(item).underscorify()
->    else
->      trace_events_file =3D meson.project_source_root() / item / 'trace-ev=
-ents'
->      group_name =3D item =3D=3D '.' ? 'root' : item.underscorify()
-> @@ -57,10 +57,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_=
-trace_events
->    endif
->  endforeach
->
-> +cat =3D [ python, '-c', 'import fileinput;[print(line) for line in filei=
-nput.input()]', '@INPUT@' ]
->  trace_events_all =3D custom_target('trace-events-all',
->                                   output: 'trace-events-all',
->                                   input: trace_events_files,
-> -                                 command: [ 'cat', '@INPUT@' ],
-> +                                 command: [ cat ],
->                                   capture: true,
->                                   install: get_option('trace_backends') !=
-=3D [ 'nop' ],
->                                   install_dir: qemu_datadir)
-> --
-> 2.49.0.windows.1
->
->
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index 8ae7758b95..2cb5de9f64 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -969,6 +969,99 @@ QEMU_PLUGIN_API
+ bool qemu_plugin_write_memory_vaddr(uint64_t addr,
+                                    GByteArray *data);
+ 
++/**
++ * enum qemu_plugin_hwaddr_operation_result - result of a memory operation
++ *
++ * @QEMU_PLUGIN_HWADDR_OPERATION_OK: hwaddr operation succeeded
++ * @QEMU_PLUGIN_HWADDR_OPERATION_ERROR: unexpected error occurred
++ * @QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR: error in memory device
++ * @QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED: permission error
++ * @QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS: address was invalid
++ * @QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE: invalid address space
++ */
++enum qemu_plugin_hwaddr_operation_result {
++    QEMU_PLUGIN_HWADDR_OPERATION_OK,
++    QEMU_PLUGIN_HWADDR_OPERATION_ERROR,
++    QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR,
++    QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED,
++    QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS,
++    QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE,
++};
++
++/**
++ * qemu_plugin_read_memory_hwaddr() - read from memory using a hardware address
++ *
++ * @addr: The physical address to read from
++ * @data: A byte array to store data into
++ * @len: The number of bytes to read, starting from @addr
++ *
++ * @len bytes of data is read from the current memory space for the current
++ * vCPU starting at @addr and stored into @data. If @data is not large enough to
++ * hold @len bytes, it will be expanded to the necessary size, reallocating if
++ * necessary. @len must be greater than 0.
++ *
++ * This function does not ensure writes are flushed prior to reading, so
++ * callers should take care when calling this function in plugin callbacks to
++ * avoid attempting to read data which may not yet be written and should use
++ * the memory callback API instead.
++ *
++ * This function is only valid for softmmu targets.
++ *
++ * Returns a qemu_plugin_hwaddr_operation_result indicating the result of the
++ * operation.
++ */
++QEMU_PLUGIN_API
++enum qemu_plugin_hwaddr_operation_result
++qemu_plugin_read_memory_hwaddr(uint64_t addr, GByteArray *data, size_t len);
++
++/**
++ * qemu_plugin_write_memory_hwaddr() - write to memory using a hardware address
++ *
++ * @addr: A physical address to write to
++ * @data: A byte array containing the data to write
++ *
++ * The contents of @data will be written to memory starting at the hardware
++ * address @addr in the current address space for the current vCPU.
++ *
++ * This function does not guarantee consistency of writes, nor does it ensure
++ * that pending writes are flushed either before or after the write takes place,
++ * so callers should take care when calling this function in plugin callbacks to
++ * avoid depending on the existence of data written using this function which
++ * may be overwritten afterward. In addition, this function requires that the
++ * pages containing the address are not locked. Practically, this means that you
++ * should not write instruction memory in a current translation block inside a
++ * callback registered with qemu_plugin_register_vcpu_tb_trans_cb.
++ *
++ * You can, for example, write instruction memory in a current translation block
++ * in a callback registered with qemu_plugin_register_vcpu_tb_exec_cb, although
++ * be aware that the write will not be flushed until after the translation block
++ * has finished executing.  In general, this function should be used to write
++ * data memory or to patch code at a known address, not in a current translation
++ * block.
++ *
++ * This function is only valid for softmmu targets.
++ *
++ * Returns a qemu_plugin_hwaddr_operation_result indicating the result of the
++ * operation.
++ */
++QEMU_PLUGIN_API
++enum qemu_plugin_hwaddr_operation_result
++qemu_plugin_write_memory_hwaddr(uint64_t addr, GByteArray *data);
++
++/**
++ * qemu_plugin_translate_vaddr() - translate virtual address for current vCPU
++ *
++ * @vaddr: virtual address to translate
++ * @hwaddr: pointer to store the physical address
++ *
++ * This function is only valid in vCPU context (i.e. in callbacks) and is only
++ * valid for softmmu targets.
++ *
++ * Returns true on success and false on failure.
++ */
++QEMU_PLUGIN_API
++bool qemu_plugin_translate_vaddr(uint64_t vaddr, uint64_t *hwaddr);
++
+ /**
+  * qemu_plugin_scoreboard_new() - alloc a new scoreboard
+  *
+diff --git a/plugins/api.c b/plugins/api.c
+index 7258b6590b..a0d980e113 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -39,6 +39,7 @@
+ #include "qemu/main-loop.h"
+ #include "qemu/plugin.h"
+ #include "qemu/log.h"
++#include "system/memory.h"
+ #include "tcg/tcg.h"
+ #include "exec/gdbstub.h"
+ #include "exec/target_page.h"
+@@ -494,6 +495,102 @@ bool qemu_plugin_write_memory_vaddr(uint64_t addr, GByteArray *data)
+     return true;
+ }
+ 
++enum qemu_plugin_hwaddr_operation_result
++qemu_plugin_read_memory_hwaddr(hwaddr addr, GByteArray *data, size_t len)
++{
++#ifdef CONFIG_SOFTMMU
++    if (len == 0) {
++        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
++    }
++
++    g_assert(current_cpu);
++
++
++    int as_idx = cpu_asidx_from_attrs(current_cpu, MEMTXATTRS_UNSPECIFIED);
++    AddressSpace *as = cpu_get_address_space(current_cpu, as_idx);
++
++    if (as == NULL) {
++        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE;
++    }
++
++    g_byte_array_set_size(data, len);
++    MemTxResult res = address_space_rw(as, addr,
++                                       MEMTXATTRS_UNSPECIFIED, data->data,
++                                       data->len, false);
++
++    switch (res) {
++    case MEMTX_OK:
++        return QEMU_PLUGIN_HWADDR_OPERATION_OK;
++    case MEMTX_ERROR:
++        return QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR;
++    case MEMTX_DECODE_ERROR:
++        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS;
++    case MEMTX_ACCESS_ERROR:
++        return QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED;
++    default:
++        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
++    }
++#else
++    return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
++#endif
++}
++
++enum qemu_plugin_hwaddr_operation_result
++qemu_plugin_write_memory_hwaddr(hwaddr addr, GByteArray *data)
++{
++#ifdef CONFIG_SOFTMMU
++    if (data->len == 0) {
++        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
++    }
++
++    g_assert(current_cpu);
++
++    int as_idx = cpu_asidx_from_attrs(current_cpu, MEMTXATTRS_UNSPECIFIED);
++    AddressSpace *as = cpu_get_address_space(current_cpu, as_idx);
++
++    if (as == NULL) {
++        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE;
++    }
++
++    MemTxResult res = address_space_rw(as, addr,
++                                       MEMTXATTRS_UNSPECIFIED, data->data,
++                                       data->len, true);
++    switch (res) {
++    case MEMTX_OK:
++        return QEMU_PLUGIN_HWADDR_OPERATION_OK;
++    case MEMTX_ERROR:
++        return QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR;
++    case MEMTX_DECODE_ERROR:
++        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS;
++    case MEMTX_ACCESS_ERROR:
++        return QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED;
++    default:
++        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
++    }
++#else
++    return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
++#endif
++}
++
++bool qemu_plugin_translate_vaddr(uint64_t vaddr, uint64_t *hwaddr)
++{
++#ifdef CONFIG_SOFTMMU
++    g_assert(current_cpu);
++
++    uint64_t res = cpu_get_phys_page_debug(current_cpu, vaddr);
++
++    if (res == (uint64_t)-1) {
++        return false;
++    }
++
++    *hwaddr = res | (vaddr & ~TARGET_PAGE_MASK);
++
++    return true;
++#else
++    return false;
++#endif
++}
++
+ struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
+ {
+     return plugin_scoreboard_new(element_size);
+-- 
+2.49.0
+
 
