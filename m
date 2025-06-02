@@ -4,82 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B09EC5B549
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 05:48:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA54AC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 05:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLy24-0000uI-Dx; Mon, 02 Jun 2025 01:48:25 -0400
+	id 1uLy5C-00025U-OI; Mon, 02 Jun 2025 01:52:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLy1i-0000Ya-AT; Mon, 02 Jun 2025 01:48:07 -0400
-Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uLy3H-0001fC-IR
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 01:49:41 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLy1f-00079W-Q4; Mon, 02 Jun 2025 01:48:02 -0400
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-7c5ba363f1aso559166085a.0; 
- Sun, 01 Jun 2025 22:47:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uLy3D-0007KU-0u
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 01:49:37 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-234fcadde3eso48036175ad.0
+ for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 22:49:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748843276; x=1749448076; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1748843365; x=1749448165; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TG0M/d5lGeso/6DJV8efcIfN29HBXUxwXNQJFtIUrag=;
- b=FVF18xTx+C9XPOYWOT57v2T2kOkIthvqcN7rrzGpqek9hlRP+H5q2c2ZBVhPQ8VOaj
- ZmrZYvaOyEsIj8qHPtZS4jVwQ1AJcoNDr91yM9bLTlprvwbHQvZsB/tVr34D5XoFM9De
- ywhko5tGM9nZ0cfVMbS2ekJffvoKLt3EkvVUczb2Gn3fVjoK6A0Gw37lHNoCXPXcUdiX
- jxNYS4Skg8g5sjKGc+gNuK/iXoU+T3dLOuIQEntDECovEWi42egkjJfQgiQJIvDlVLRJ
- jgZ2A2FzLOLVrkzZDwYLZgL54SvqPpF4wNLf7km3Mc6exXki7mMSKEsLt7CFi6rR2bEm
- MCOA==
+ bh=wVjrW993BqqXU9EpDADVH1dB+hpwPyajnX8KVD/tm+w=;
+ b=HKMURTwqZFITq4K7gO1GPMU2fn4PpsF7cvycKbMSVyJN91/ysKuevWE2F4cd2Fnuw/
+ XQmy0a/gun51Sw36GRlGR0YF91jLsQ/8MHo2xt6n02KKqiSWPSSJtYyJrNpZqXdL2iqN
+ DQkOwoOGNLfEaDzhz810zjY+YNylcmQH7YIBCSu7IexI5/FxfNGnjJqYAR/0qu35D0To
+ 5mBvmRCH/iR5+gmw2/0vIq2ijefGO8bd8KxXe1Zp6M7Oe/ZZmeB500wI436W/g4KGODm
+ ICpvXgVo39e7he/x90L6NsUVG3pNYs7yZToDhxs67xzDo6bLh1Vp/0Q3rFd8CqNA3tG9
+ iuDg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748843276; x=1749448076;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1748843365; x=1749448165;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TG0M/d5lGeso/6DJV8efcIfN29HBXUxwXNQJFtIUrag=;
- b=H7swZpJ5ZyWoQ+3oQpBdD+vqgHU6DD6yGQJOOlvMIOaqrHkng3aEmXWqBdvllcRhyu
- KglM9eDsrQT6Fa9Jx5VNsLQHWcAarBS0+IePZex3sD63h6HCzCkFdW7PO/vDeV883Qrs
- 4aJqisQqb7/BE7NBUfxdndfJHK397M+MjKkpzYzuUS9TDcnSuYUAuLQzz6uDlkSbSNzA
- uTPbUkz+JlmJyH/nvfgM6yebuUSTATVXwUbo9y6iOnVMvNc1oGjyNuklcZLRLQQlHkcg
- F7NximJExQA8fi/qHY7gZ7aBFYYkP2QiG3P3llh45jeZEU0xcwN0Wj/VJ0WK2OYheQqS
- 37/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKw/KIsDjTcUsA8zwY8dOXYOMh5VfLFOpFBeduFisEd0VlaJ7r7JJwuWyYO7A06DQXMt08LLgy7e1Z@nongnu.org
-X-Gm-Message-State: AOJu0Yy6vRz3GRx/HK2eGacu4mL8EDfAfWhUdsGqh5/BsKL6HU4banb8
- uGQ54jivmuCfkZrkuc2pxRGf7LBeAekshHdKRqEKS7mR/wd/sBXFzOVHvijjBpXII12yhwnwvLd
- QjvqjMgdIDIt85AksqdWUr/EZ/JvlE0wCZg==
-X-Gm-Gg: ASbGnctuPDouqPPy3sR1/SwcM64LKY5CCgd1i7fs6xQBzqGplkqnqPrD1avb7J9r1N8
- seA0lMqcWOkIJqNJ2wRT+GIRxMKbi6ShDWpynUKIqMW3AeNDOs8W6uzz8zaLK1kb3PYWM4zjwy9
- b6Cs1SN38FUHf28yOe1RvqSO9UEzaxJOojl4rffVi8lCGU53XYBrkEH0HsAbUyrp38CIpvAcgDi
- A==
-X-Google-Smtp-Source: AGHT+IExRxPCtmFx6OVQ7wCC4edrqy6cN/7l9+osjos9ktnIy6YqB7JwrvxadcMLGLXaiCUBE8jr5olV0wM04+GEk5o=
-X-Received: by 2002:a05:6122:caa:b0:530:5fe5:7ea4 with SMTP id
- 71dfb90a1353d-53084d9dbcfmr7992114e0c.11.1748838648524; Sun, 01 Jun 2025
- 21:30:48 -0700 (PDT)
+ bh=wVjrW993BqqXU9EpDADVH1dB+hpwPyajnX8KVD/tm+w=;
+ b=vY6wcL0CntTme47kzrWH+2oqD+iWuch1ohANC018uHAD7QPGTt8UMgcYQAiiTvDGv0
+ 3YqhrkxqFGkhYoHGMVSf/gL3XUBXPTFGhjMyU/nmAnbk96bGsomIGmS0UoMUmjhBn3R6
+ EgNj+OA1q11Y1/P1Ttn9YlILHJTX5iaBHqlUA+t/ZSX2mUaE3r9AQBPW60GoCij3ot/q
+ O+Wx1BIVt4L2xOmNAnP6Dkit92Sn/Ufm+Yvk99EOY+8Hb3U0giiKEkgr2INrCI2bTJvb
+ ooxabh22m9tBrCoa3UWU6sX6s5TgvLikRPlxHqiN9q061gwRz/zsGaxxWf1Z7w93swYW
+ iD8Q==
+X-Gm-Message-State: AOJu0Yx8YgtT/ud6QilcIj6ENS/ZWw+2UD305YQCy71YmqoSz0/aMIJN
+ eftGNxZxdRSAaR1t2RIg0Cm4JFjkFBeyED+GLxtF3OPw6NVneq0fy6+xmVYiZo+YnKc=
+X-Gm-Gg: ASbGncs+iNo3gTkvg61BZChywLwJLJZm5IT7cjgOsklmSmndUNxUvENGCnG0Ki7I9Lk
+ zbzXd+dE50UA6L0ApN5z37qX2h2d+EopPeGmAE9cV/EKYIsO3mn4s7T8nj+KzZWT/U1KcEQvViM
+ 4loKP/lLtcrGaQhy2s5yQg/YCMwFiY9OGwlrAeO0B1W2VzCtDfclDYCsQbcKwhMIOjlnUqc6UQD
+ 8TWdOADC9bvKfirnXJWaBFqNL07ObgB8T1XEdmR2EMLQvEGTU2A4r0YjT2ZUqa5R+KkUxiFkAvH
+ fxpIsVETkKcLcpPSM08ds3bZtS2XmpV20/kHN0n0s8d32cY82wo=
+X-Google-Smtp-Source: AGHT+IHdvAAwIcTA69PUaX3lJzNaij88l+EBx8zrztEDlgQi9ewOfWkzCmVYeCWp+z15gSht1C9zow==
+X-Received: by 2002:a17:902:e5d2:b0:234:8f5d:e3bd with SMTP id
+ d9443c01a7336-2355f9ef3cemr104802515ad.39.1748843364969; 
+ Sun, 01 Jun 2025 22:49:24 -0700 (PDT)
+Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23506bdce12sm63464085ad.99.2025.06.01.22.49.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sun, 01 Jun 2025 22:49:24 -0700 (PDT)
+From: Rowan Hart <rowanbhart@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Eduardo Habkost <eduardo@habkost.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Rowan Hart <rowanbhart@gmail.com>
+Subject: [PATCH v5 8/9] plugins: Remove use of qemu_plugin_read_register where
+ it is not permitted
+Date: Sun,  1 Jun 2025 22:49:15 -0700
+Message-ID: <20250602054917.302638-9-rowanbhart@gmail.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250602054917.302638-1-rowanbhart@gmail.com>
+References: <20250602054917.302638-1-rowanbhart@gmail.com>
 MIME-Version: 1.0
-References: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
- <20250529202315.1684198-2-dbarboza@ventanamicro.com>
-In-Reply-To: <20250529202315.1684198-2-dbarboza@ventanamicro.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 2 Jun 2025 14:30:22 +1000
-X-Gm-Features: AX0GCFs3LLORPMCIEwmfqBaxHwzAlI6uAvYDSpIWEDv71VyN7Z_4kFj_u8Zcnkc
-Message-ID: <CAKmqyKMtuqguqe814e6UwyOhEXXXLapAZzbuD+mP2eQoF6tjvQ@mail.gmail.com>
-Subject: Re: [qemu PATCH 1/3] target/riscv/cpu.c: add 'sdtrig' in riscv,isa
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=alistair23@gmail.com; helo=mail-qk1-x736.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x62a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -97,38 +108,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, May 30, 2025 at 6:24=E2=80=AFAM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
->
-> We have support for sdtrig for awhile but we are not advertising it. It
-> is enabled by default via the 'debug' flag. Use the same flag to also
-> advertise sdtrig.
->
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+This patch is required to make the insn plugin work after adding
+enforcement of QEMU_PLUGIN_CB_ flags in calls to read or write
+registers. Previously, these flags were not enforced and the API could
+be called from anywhere, but this was not intended as described by the
+documentation. Now, the flags are enforced and qemu_plugin_read_register
+can no longer be called from a vcpu_init callback because it does not
+request the QEMU_PLUGIN_CB_ flag (nor does it have a mechanism to do
+so).
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+---
+ tests/tcg/plugins/insn.c | 22 +---------------------
+ 1 file changed, 1 insertion(+), 21 deletions(-)
 
-Alistair
+diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
+index 0c723cb9ed..265d3ebe9e 100644
+--- a/tests/tcg/plugins/insn.c
++++ b/tests/tcg/plugins/insn.c
+@@ -81,25 +81,6 @@ static Instruction * get_insn_record(const char *disas, uint64_t vaddr, Match *m
+     return record;
+ }
+ 
+-/*
+- * Initialise a new vcpu with reading the register list
+- */
+-static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
+-{
+-    g_autoptr(GArray) reg_list = qemu_plugin_get_registers();
+-    g_autoptr(GByteArray) reg_value = g_byte_array_new();
+-
+-    if (reg_list) {
+-        for (int i = 0; i < reg_list->len; i++) {
+-            qemu_plugin_reg_descriptor *rd = &g_array_index(
+-                reg_list, qemu_plugin_reg_descriptor, i);
+-            int count = qemu_plugin_read_register(rd->handle, reg_value);
+-            g_assert(count > 0);
+-        }
+-    }
+-}
+-
+-
+ static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
+ {
+     qemu_plugin_u64_add(insn_count, cpu_index, 1);
+@@ -295,8 +276,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+     insn_count = qemu_plugin_scoreboard_u64(
+         qemu_plugin_scoreboard_new(sizeof(uint64_t)));
+ 
+-    /* Register init, translation block and exit callbacks */
+-    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
++    /* Register translation block and exit callbacks */
+     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
+     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
+     return 0;
+-- 
+2.49.0
 
-> ---
->  target/riscv/cpu.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index fe21e0fb44..9d6fae72b2 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -189,6 +189,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zvkt, PRIV_VERSION_1_12_0, ext_zvkt),
->      ISA_EXT_DATA_ENTRY(zhinx, PRIV_VERSION_1_12_0, ext_zhinx),
->      ISA_EXT_DATA_ENTRY(zhinxmin, PRIV_VERSION_1_12_0, ext_zhinxmin),
-> +    ISA_EXT_DATA_ENTRY(sdtrig, PRIV_VERSION_1_12_0, debug),
->      ISA_EXT_DATA_ENTRY(shcounterenw, PRIV_VERSION_1_12_0, has_priv_1_12)=
-,
->      ISA_EXT_DATA_ENTRY(sha, PRIV_VERSION_1_12_0, ext_sha),
->      ISA_EXT_DATA_ENTRY(shgatpa, PRIV_VERSION_1_12_0, has_priv_1_12),
-> --
-> 2.49.0
->
->
 
