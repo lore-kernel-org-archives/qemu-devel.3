@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FC2C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:17:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F0CC54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:31:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM0Lt-0002O9-IO; Mon, 02 Jun 2025 04:17:01 -0400
+	id 1uM0Yo-0004lp-5h; Mon, 02 Jun 2025 04:30:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0Ls-0002Nh-53
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:17:00 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0Lq-0000YA-39
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:16:59 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-451d54214adso9040585e9.3
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 01:16:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748852216; x=1749457016; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KdEzzvB4E53h+C2iJPAR6RjEZ/WLCvGQ9vvdjuDP3X0=;
- b=pZO//xTPRAjrZppI4LtUggFieXQRSctpjH1dCq5k/2Jwvc6G8dovNvIBcXklYuulTy
- ZJ77zO7iY57P2GWOHot9LjZrjEL75MhhAJNJhrFITJIkfgX/qRlBww8bXZk07mIP8ukH
- 2M2N8QJPwubdJFTUuVbsog8QFb/NwcNdZoAy+yzOPLayG3Bx3RYlwya8wAfgQAtnvUwH
- 5IxIarU7Ck0CeVz6UeRB/zKyO+8bgnviejsJLe9fgI8zMD7woTTdGqwiqIy5T+DNtcBl
- sLpb3mKLG8GFlj8xrGdqCJYxNA7GqPAXSEeQMLIQ/FB7F+fucIha43Nc/iwzweDFg0+e
- v3Zg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748852216; x=1749457016;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=KdEzzvB4E53h+C2iJPAR6RjEZ/WLCvGQ9vvdjuDP3X0=;
- b=iWwmL/2V50n2/xr577OplNANlujTk991pnkYwv9MAZfbO+NuiytZXZcRFMw7YnMl32
- C5cO49glyZOqEVXbzQwP1W8LYGX/IHW6lgJCe4cAvujafVuxT24UON2rDG3R3aLFt/P+
- 2ksaS+g0kZbN8Yxd9/V+DRUYZaYQab4oM97KzL7oexmHqiv/k8JnASuUBeOmSBfBcPQ2
- Si+I8prbfZheuFnnQEQXBhqoCAURoFT5NoQvMiDDIGgpyUMfF4OrrvUrOtuvy3r5cgB1
- lefMFS9QVn/DyjiIeADba4OXzldlrLwaF35g6hQGsbLH+SP5MY/CNs8j6VhgwTZ8C0c8
- 9ozg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVvRH765zXo6wNyp5JxezgcmUkEZkaKdg1p+Qrr0jTgyItUmZfvx4DSoLLbFqUOrlII8kYzUyTuCz6f@nongnu.org
-X-Gm-Message-State: AOJu0YxKrIywvg8b/XZdgluSf9TPxyZiP+uLwpQT7POqXr5pKjWKY95q
- I14v2uigfEj6s12mgp5yPf0OO0t0XfcoWzuoC+eEHN6w5cDzC1k1SpCu4OuGxTeGA/U=
-X-Gm-Gg: ASbGncs+0mJsNr+HaOhNlb/NcJNM5jV/vgrho3uuEDtsLTEvFo3z+NZbbyS/mkzl6SM
- 7a+H7MB2wIVFdhArlJwxI+eiJOJjs9/9rRo3diPK/dHKT7eakKuYtzk2SQ/p2oAeKINcaoEEJU3
- gUtWY/u8g1POP7CR3ZtJP1Szv7lnbimEJnGTiiVytq45llhCETpe+wtzdZMD7nGFZM+MsQoFXzT
- 9tgksuNr+gvBgNjRRyMEpBbSUmENhGvFX3yVtvDLnm29IawP5hR+FElIdAdtD7f9Y+o62V0TI1P
- qevcQ0ruSH2A/kOo7XmnEu+5m98yNkZz/r+I13oa5RroA7Wv2cKyC/rw9o6NETF0gqGxqe7LeCI
- Qq6v310PWyfGYWIIo7No=
-X-Google-Smtp-Source: AGHT+IH/TALBw1oWsVFS4spS7Ot003+dEDWRq9cBSxbXHzAWmVO6tvFjfbBTtLlTNBeheJu4Br7yew==
-X-Received: by 2002:a05:600c:1e06:b0:43c:ee62:33f5 with SMTP id
- 5b1f17b1804b1-450d655f86amr93206155e9.27.1748852215892; 
- Mon, 02 Jun 2025 01:16:55 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb80f6sm111435055e9.28.2025.06.02.01.16.55
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 01:16:55 -0700 (PDT)
-Message-ID: <9b906e0c-f7a3-4deb-a380-8a202955e4c6@linaro.org>
-Date: Mon, 2 Jun 2025 10:16:54 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM0Yf-0004kw-Sy
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:30:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM0Yd-0001xj-OV
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:30:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748852999;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=E5dJKPbc1c/cq7vxjhscvhuOCDFpsI7YvSwDRQlK0ro=;
+ b=ihpZBVfT2QveYVxSJ3MQ0k+TQPIuuDVwshYav5UkDx28cf56x5yrMkOXXu/y+I7cw70vfS
+ SPIR9R3uOarguPvmRhjwBtLfnfIQtAyIWEI2cMf6eAPddq2rHw2MWQaswqU24RiSoHotMC
+ tRuih1IBY9bH4HgIjv+3EYU5lFRVxHs=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-EefU8hzPPuKjeH0BEqZpJg-1; Mon,
+ 02 Jun 2025 04:29:55 -0400
+X-MC-Unique: EefU8hzPPuKjeH0BEqZpJg-1
+X-Mimecast-MFC-AGG-ID: EefU8hzPPuKjeH0BEqZpJg_1748852993
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D0231956087; Mon,  2 Jun 2025 08:29:53 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 64C48180047F; Mon,  2 Jun 2025 08:29:52 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BBFE721E6757; Mon, 02 Jun 2025 10:29:49 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Si-Wei Liu <si-wei.liu@oracle.com>
+Cc: Jason Wang <jasowang@redhat.com>,  Jonah Palmer
+ <jonah.palmer@oracle.com>,  qemu-devel@nongnu.org,  eperezma@redhat.com,
+ peterx@redhat.com,  mst@redhat.com,  lvivier@redhat.com,
+ dtatulea@nvidia.com,  leiyang@redhat.com,  parav@mellanox.com,
+ sgarzare@redhat.com,  lingshan.zhu@intel.com,  boris.ostrovsky@oracle.com
+Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
+In-Reply-To: <87o6v6muq4.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Mon, 02 Jun 2025 10:08:19 +0200")
+References: <20250507184647.15580-1-jonah.palmer@oracle.com>
+ <CACGkMEuD7n8QVpgBvHSXJv7kN-hn4cpXX9J8UO8GUCzB0Ssqaw@mail.gmail.com>
+ <87plg9ukgq.fsf@pond.sub.org>
+ <50a648fa-76ab-47bf-9f6e-c07da913cb52@oracle.com>
+ <87frgr7mvk.fsf@pond.sub.org>
+ <dcbf9e2e-9442-4439-8593-dff036a4d781@oracle.com>
+ <87o6v6muq4.fsf@pond.sub.org>
+Date: Mon, 02 Jun 2025 10:29:49 +0200
+Message-ID: <8734cimtqa.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] meson: fix Windows build
-To: oltolm <oleg.tolmatcev@gmail.com>, qemu-devel@nongnu.org
-References: <20250529085437.1479-2-oleg.tolmatcev@gmail.com>
-Content-Language: en-US
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250529085437.1479-2-oleg.tolmatcev@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -31
+X-Spam_score: -3.2
+X-Spam_bar: ---
+X-Spam_report: (-3.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.071,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,202 +96,181 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Cc'ing maintainers)
+Butterfingers...  let's try this again.
 
-On 29/5/25 10:54, oltolm wrote:
-> The build failed when run on Windows. I replaced calls to Unix programs
-> like ´cat´ and ´true´ with calls to ´python´. I wrapped calls to
-> ´os.path.relpath´ in try-except because it can fail when the two paths
-> are on different drives. I made sure to convert the Windows paths to
-> Unix paths to prevent warnings in generated files.
-> 
-> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
-> ---
->   contrib/plugins/meson.build         | 2 +-
->   scripts/tracetool/backend/ftrace.py | 9 ++++++++-
->   scripts/tracetool/backend/log.py    | 9 ++++++++-
->   scripts/tracetool/backend/syslog.py | 9 ++++++++-
->   tests/functional/meson.build        | 4 +---
->   tests/include/meson.build           | 2 +-
->   tests/tcg/plugins/meson.build       | 2 +-
->   trace/meson.build                   | 5 +++--
->   8 files changed, 31 insertions(+), 11 deletions(-)
-> 
-> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-> index fa8a426c8..1876bc784 100644
-> --- a/contrib/plugins/meson.build
-> +++ b/contrib/plugins/meson.build
-> @@ -24,7 +24,7 @@ endif
->   if t.length() > 0
->     alias_target('contrib-plugins', t)
->   else
-> -  run_target('contrib-plugins', command: find_program('true'))
-> +  run_target('contrib-plugins', command: [python, '-c', ''])
->   endif
->   
->   plugin_modules += t
-> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-> index baed2ae61..81a5f93b3 100644
-> --- a/scripts/tracetool/backend/ftrace.py
-> +++ b/scripts/tracetool/backend/ftrace.py
-> @@ -13,6 +13,7 @@
->   
->   
->   import os.path
-> +from pathlib import PurePath
->   
->   from tracetool import out
->   
-> @@ -30,6 +31,12 @@ def generate_h(event, group):
->       if len(event.args) > 0:
->           argnames = ", " + argnames
->   
-> +    try:
-> +        event_filename = os.path.relpath(event.filename)
-> +    except ValueError:
-> +        event_filename = event.filename
-> +    event_filename = PurePath(event_filename).as_posix()
-> +
->       out('    {',
->           '        char ftrace_buf[MAX_TRACE_STRLEN];',
->           '        int unused __attribute__ ((unused));',
-> @@ -47,7 +54,7 @@ def generate_h(event, group):
->           args=event.args,
->           event_id="TRACE_" + event.name.upper(),
->           event_lineno=event.lineno,
-> -        event_filename=os.path.relpath(event.filename),
-> +        event_filename=event_filename,
->           fmt=event.fmt.rstrip("\n"),
->           argnames=argnames)
->   
-> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-> index de27b7e62..241fbbbd0 100644
-> --- a/scripts/tracetool/backend/log.py
-> +++ b/scripts/tracetool/backend/log.py
-> @@ -13,6 +13,7 @@
->   
->   
->   import os.path
-> +from pathlib import PurePath
->   
->   from tracetool import out
->   
-> @@ -37,6 +38,12 @@ def generate_h(event, group):
->       else:
->           cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
->   
-> +    try:
-> +        event_filename = os.path.relpath(event.filename)
-> +    except ValueError:
-> +        event_filename = event.filename
-> +    event_filename = PurePath(event_filename).as_posix()
-> +
->       out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
->           '        if (message_with_timestamp) {',
->           '            struct timeval _now;',
-> @@ -55,7 +62,7 @@ def generate_h(event, group):
->           '    }',
->           cond=cond,
->           event_lineno=event.lineno,
-> -        event_filename=os.path.relpath(event.filename),
-> +        event_filename=event_filename,
->           name=event.name,
->           fmt=event.fmt.rstrip("\n"),
->           argnames=argnames)
-> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
-> index 012970f6c..2e010e7c9 100644
-> --- a/scripts/tracetool/backend/syslog.py
-> +++ b/scripts/tracetool/backend/syslog.py
-> @@ -13,6 +13,7 @@
->   
->   
->   import os.path
-> +from pathlib import PurePath
->   
->   from tracetool import out
->   
-> @@ -36,6 +37,12 @@ def generate_h(event, group):
->       else:
->           cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
->   
-> +    try:
-> +        event_filename = os.path.relpath(event.filename)
-> +    except ValueError:
-> +        event_filename = event.filename
-> +    event_filename = PurePath(event_filename).as_posix()
-> +
->       out('    if (%(cond)s) {',
->           '#line %(event_lineno)d "%(event_filename)s"',
->           '        syslog(LOG_INFO, "%(name)s " %(fmt)s %(argnames)s);',
-> @@ -43,7 +50,7 @@ def generate_h(event, group):
->           '    }',
->           cond=cond,
->           event_lineno=event.lineno,
-> -        event_filename=os.path.relpath(event.filename),
-> +        event_filename=event_filename,
->           name=event.name,
->           fmt=event.fmt.rstrip("\n"),
->           argnames=argnames)
-> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-> index 52b4706cf..ee222888f 100644
-> --- a/tests/functional/meson.build
-> +++ b/tests/functional/meson.build
-> @@ -411,6 +411,4 @@ foreach speed : ['quick', 'thorough']
->     endforeach
->   endforeach
->   
-> -run_target('precache-functional',
-> -           depends: precache_all,
-> -           command: ['true'])
-> +alias_target('precache-functional', precache_all)
-> diff --git a/tests/include/meson.build b/tests/include/meson.build
-> index 9abba308f..8e8d1ec4e 100644
-> --- a/tests/include/meson.build
-> +++ b/tests/include/meson.build
-> @@ -13,4 +13,4 @@ test_qapi_outputs_extra = [
->   test_qapi_files_extra = custom_target('QAPI test (include)',
->                                         output: test_qapi_outputs_extra,
->                                         input: test_qapi_files,
-> -                                      command: 'true')
-> +                                      command: [python, '-c', ''])
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-> index 41f02f2c7..029342282 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -17,7 +17,7 @@ endif
->   if t.length() > 0
->     alias_target('test-plugins', t)
->   else
-> -  run_target('test-plugins', command: find_program('true'))
-> +  run_target('test-plugins', command: [python, '-c', ''])
->   endif
->   
->   plugin_modules += t
-> diff --git a/trace/meson.build b/trace/meson.build
-> index 3df454935..ebce0154c 100644
-> --- a/trace/meson.build
-> +++ b/trace/meson.build
-> @@ -4,7 +4,7 @@ trace_events_files = []
->   foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
->     if item in qapi_trace_events
->       trace_events_file = item
-> -    group_name = item.full_path().split('/')[-1].underscorify()
-> +    group_name = fs.name(item).underscorify()
->     else
->       trace_events_file = meson.project_source_root() / item / 'trace-events'
->       group_name = item == '.' ? 'root' : item.underscorify()
-> @@ -57,10 +57,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
->     endif
->   endforeach
->   
-> +cat = [ python, '-c', 'import fileinput;[print(line) for line in fileinput.input()]', '@INPUT@' ]
->   trace_events_all = custom_target('trace-events-all',
->                                    output: 'trace-events-all',
->                                    input: trace_events_files,
-> -                                 command: [ 'cat', '@INPUT@' ],
-> +                                 command: [ cat ],
->                                    capture: true,
->                                    install: get_option('trace_backends') != [ 'nop' ],
->                                    install_dir: qemu_datadir)
+Markus Armbruster <armbru@redhat.com> writes:
+
+> Si-Wei Liu <si-wei.liu@oracle.com> writes:
+>
+>> On 5/26/2025 2:16 AM, Markus Armbruster wrote:
+>>> Si-Wei Liu <si-wei.liu@oracle.com> writes:
+>>>
+>>>> On 5/15/2025 11:40 PM, Markus Armbruster wrote:
+>>>>> Jason Wang <jasowang@redhat.com> writes:
+>>>>>
+>>>>>> On Thu, May 8, 2025 at 2:47=E2=80=AFAM Jonah Palmer <jonah.palmer@or=
+acle.com> wrote:
+>>>>>>> Current memory operations like pinning may take a lot of time at the
+>>>>>>> destination.  Currently they are done after the source of the migra=
+tion is
+>>>>>>> stopped, and before the workload is resumed at the destination.  Th=
+is is a
+>>>>>>> period where neigher traffic can flow, nor the VM workload can cont=
+inue
+>>>>>>> (downtime).
+>>>>>>>
+>>>>>>> We can do better as we know the memory layout of the guest RAM at t=
+he
+>>>>>>> destination from the moment that all devices are initializaed.  So
+>>>>>>> moving that operation allows QEMU to communicate the kernel the maps
+>>>>>>> while the workload is still running in the source, so Linux can sta=
+rt
+>>>>>>> mapping them.
+>>>>>>>
+>>>>>>> As a small drawback, there is a time in the initialization where QE=
+MU
+>>>>>>> cannot respond to QMP etc.  By some testing, this time is about
+>>>>>>> 0.2seconds.
+>>>>>> Adding Markus to see if this is a real problem or not.
+>>>>> I guess the answer is "depends", and to get a more useful one, we need
+>>>>> more information.
+>>>>>
+>>>>> When all you care is time from executing qemu-system-FOO to guest
+>>>>> finish booting, and the guest takes 10s to boot, then an extra 0.2s
+>>>>> won't matter much.
+>>>>
+>>>> There's no such delay of an extra 0.2s or higher per se, it's just shi=
+fting around the page pinning hiccup, no matter it is 0.2s or something els=
+e, from the time of guest booting up to before guest is booted. This saves =
+back guest boot time or start up delay, but in turn the same delay effectiv=
+ely will be charged to VM launch time. We follow the same model with VFIO, =
+which would see the same hiccup during launch (at an early stage where no r=
+eal mgmt software would care about).
+>>>>
+>>>>> When a management application runs qemu-system-FOO several times to
+>>>>> probe its capabilities via QMP, then even milliseconds can hurt.
+>>>>>
+>>>> Not something like that, this page pinning hiccup is one time only tha=
+t occurs in the very early stage when launching QEMU, i.e. there's no consi=
+stent delay every time when QMP is called. The delay in QMP response at tha=
+t very point depends on how much memory the VM has, but this is just specif=
+ to VM with VFIO or vDPA devices that have to pin memory for DMA. Having sa=
+id, there's no extra delay at all if QEMU args has no vDPA device assignmen=
+t, on the other hand, there's same delay or QMP hiccup when VFIO is around =
+in QEMU args.
+>>>>
+>>>>> In what scenarios exactly is QMP delayed?
+>>>>
+>>>> Having said, this is not a new problem to QEMU in particular, this QMP=
+ delay is not peculiar, it's existent on VFIO as well.
+>>>
+>>> In what scenarios exactly is QMP delayed compared to before the patch?
+>>
+>> The page pinning process now runs in a pretty early phase at
+>> qemu_init() e.g. machine_run_board_init(),
+>
+> It runs within
+>
+>     qemu_init()
+>         qmp_x_exit_preconfig()
+>             qemu_init_board()
+>                 machine_run_board_init()
+>
+> Except when --preconfig is given, it instead runs within QMP command
+> x-exit-preconfig.
+>
+> Correct?
+>
+>> before any QMP command can be serviced, the latter of which typically
+>> would be able to get run from qemu_main_loop() until the AIO gets
+>> chance to be started to get polled and dispatched to bh.
+>
+> We create the QMP monitor within qemu_create_late_backends(), which runs
+> before qmp_x_exit_preconfig(), but commands get processed only in the
+> main loop, which we enter later.
+>
+> Correct?
+>
+>> Technically it's not a real delay for specific QMP command, but rather
+>> an extended span of initialization process may take place before the
+>> very first QMP request, usually qmp_capabilities, will be
+>> serviced. It's natural for mgmt software to expect initialization
+>> delay for the first qmp_capabilities response if it has to immediately
+>> issue one after launching qemu, especially when you have a large guest
+>> with hundred GBs of memory and with passthrough device that has to pin
+>> memory for DMA e.g. VFIO, the delayed effect from the QEMU
+>> initialization process is very visible too.
+
+The work clearly needs to be done.  Whether it needs to be blocking
+other things is less clear.
+
+Even if it doesn't need to be blocking, we may choose not to avoid
+blocking for now.  That should be an informed decision, though.
+
+All I'm trying to do here is understand the tradeoffs, so I can give
+useful advice.
+
+>>                                             On the other hand, before
+>> the patch, if memory happens to be in the middle of being pinned, any
+>> ongoing QMP can't be serviced by the QEMU main loop, either.
+
+When exactly does this pinning happen before the patch?  In which
+function?
+
+>> I'd also like to highlight that without this patch, the pretty high
+>> delay due to page pinning is even visible to the guest in addition to
+>> just QMP delay, which largely affected guest boot time with vDPA
+>> device already. It is long standing, and every VM user with vDPA
+>> device would like to avoid such high delay for the first boot, which
+>> is not seen with similar device e.g. VFIO passthrough.
+
+I understand that hiding the delay from the guest could be useful.
+
+>>>> Thanks,
+>>>> -Siwei
+>>>>
+>>>>> You told us an absolute delay you observed.  What's the relative dela=
+y,
+>>>>> i.e. what's the delay with and without these patches?
+>>>
+>>> Can you answer this question?
+>>
+>> I thought I already got that answered in earlier reply. The relative
+>> delay is subject to the size of memory. Usually mgmt software won't be
+>> able to notice, unless the guest has more than 100GB of THP memory to
+>> pin, for DMA or whatever reason.
+
+Alright, what are the delays you observe with and without these patches
+for three test cases that pin 50 / 100 / 200 GiB of THP memory
+respectively?
+
+>>>>> We need QMP to become available earlier in the startup sequence for
+>>>>> other reasons.  Could we bypass the delay that way?  Please understand
+>>>>> that this would likely be quite difficult: we know from experience th=
+at
+>>>>> messing with the startup sequence is prone to introduce subtle
+>>>>> compatility breaks and even bugs.
+>>>>>
+>>>>>> (I remember VFIO has some optimization in the speed of the pinning,
+>>>>>> could vDPA do the same?)
+>>>>>
+>>>>> That's well outside my bailiwick :)
+>>
+>> Please be understood that any possible optimization is out of scope of
+>> this patch series, while there's certainly way around that already and
+>> to be carry out in the future, as Peter alluded to in earlier
+>> discussion thread:
+>>
+>> https://lore.kernel.org/qemu-devel/ZZT7wuq-_IhfN_wR@x1n/
+>> https://lore.kernel.org/qemu-devel/ZZZUNsOVxxqr-H5S@x1n/
+
+Got it.
+
+>> Thanks,
+>> -Siwei
+>>
+>>>>>
+>>>>> [...]
+>>>>>
 
 
