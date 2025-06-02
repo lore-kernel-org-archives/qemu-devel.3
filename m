@@ -4,65 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32CE8C5B549
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 09:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BABAFC5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 09:33:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM1RX-0002Uj-Al; Mon, 02 Jun 2025 05:26:55 -0400
+	id 1uM1XO-0003tu-Lv; Mon, 02 Jun 2025 05:32:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM1RV-0002UI-BP
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 05:26:53 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM1XN-0003tg-3n
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 05:32:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM1RP-0007fe-6f
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 05:26:53 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM1XL-0008Mg-KW
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 05:32:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748856404;
+ s=mimecast20190719; t=1748856774;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=WixGrqsp0huneAgOvLnHTAwfiFnaDxK9PTTSGV5BYKY=;
- b=AtcE3sTqJjY2UdaphKKlt2VF+3ZxA8DdyGI+6F1Cq8xbpvrl8+3zMK4ygnMinzTMYbyY6H
- +SqIAZbALovO8xU00mv1K6OJjhDsKo+78bN5EtSzHSvy8OcWju+UobZmrzMiGhi6G0XxYi
- WXLmuSEU22PMqo8VB0CznoGgtIQw/9A=
+ bh=4lUEal+DOXNQwKkDcpHDH93ZtylTvuHbVxCpw+PWEe4=;
+ b=D6JarXUwpfviRbtAnVedneg6zUUbaWrFIsNbRehOJKIUU3It3CW4g3pV6UQFFmFLbOfCBp
+ p02u3Q2jGbbEvYNVN9JaDILSTIimSK9GlACOmg7ohw3CjpS9KvhPyxYIejh9UKCK1uSOb6
+ 5FnroKJxTThjHgXaaSDr04CNOBlTgrw=
 Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-370-CbWC0fgiNRWVwF7a6ddreQ-1; Mon,
- 02 Jun 2025 05:26:41 -0400
-X-MC-Unique: CbWC0fgiNRWVwF7a6ddreQ-1
-X-Mimecast-MFC-AGG-ID: CbWC0fgiNRWVwF7a6ddreQ_1748856400
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-v4NimKQ8M-uJNQOBpqZ61A-1; Mon,
+ 02 Jun 2025 05:32:49 -0400
+X-MC-Unique: v4NimKQ8M-uJNQOBpqZ61A-1
+X-Mimecast-MFC-AGG-ID: v4NimKQ8M-uJNQOBpqZ61A_1748856767
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D90C1956088; Mon,  2 Jun 2025 09:26:40 +0000 (UTC)
+ id E1D0819560A6; Mon,  2 Jun 2025 09:32:46 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A4BFB19560AB; Mon,  2 Jun 2025 09:26:39 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31AF719560A7; Mon,  2 Jun 2025 09:32:46 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BCB0E21E6766; Mon, 02 Jun 2025 11:26:36 +0200 (CEST)
+ id 9134421E66C3; Mon, 02 Jun 2025 11:32:43 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org,  "Dr . David Alan Gilbert" <dave@treblig.org>,
- Alexey Perevalov <a.perevalov@samsung.com>,  Fabiano Rosas
- <farosas@suse.de>,  Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 08/13] migration/postcopy: Report fault latencies in
- blocktime
-In-Reply-To: <20250527231248.1279174-9-peterx@redhat.com> (Peter Xu's message
- of "Tue, 27 May 2025 19:12:43 -0400")
-References: <20250527231248.1279174-1-peterx@redhat.com>
- <20250527231248.1279174-9-peterx@redhat.com>
-Date: Mon, 02 Jun 2025 11:26:36 +0200
-Message-ID: <8734cilcj7.fsf@pond.sub.org>
+To: Annie Li <annie.li@oracle.com>
+Cc: qemu-devel@nongnu.org,  dave@treblig.org,  mst@redhat.com,
+ imammedo@redhat.com,  anisinha@redhat.com,  eduardo@habkost.net,
+ marcel.apfelbaum@gmail.com,  philmd@linaro.org,  wangyanan55@huawei.com,
+ zhao1.liu@intel.com,  pbonzini@redhat.com,  richard.henderson@linaro.org,
+ slp@redhat.com,  eblake@redhat.com,  armbru@redhat.com,
+ miguel.luis@oracle.com
+Subject: Re: [PATCH 13/13] acpi: hmp/qmp: Add hmp/qmp support for system_sleep
+In-Reply-To: <20250528164219.2247-1-annie.li@oracle.com> (Annie Li's message
+ of "Wed, 28 May 2025 12:42:18 -0400")
+References: <20250528163545.2143-1-annie.li@oracle.com>
+ <20250528164219.2247-1-annie.li@oracle.com>
+Date: Mon, 02 Jun 2025 11:32:43 +0200
+Message-ID: <87wm9ujxok.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
@@ -88,81 +90,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Annie Li <annie.li@oracle.com> writes:
 
-> Blocktime so far only cares about the time one vcpu (or the whole system)
-> got blocked.  It would be also be helpful if it can also report the latency
-> of page requests, which could be very sensitive during postcopy.
+> Following hmp/qmp commands are implemented for pressing virtual
+> sleep button,
 >
-> Blocktime itself is sometimes not very important, especially when one
-> thinks about KVM async PF support, which means vCPUs are literally almost
-> not blocked at all because the guest OS is smart enough to switch to
-> another task when a remote fault is needed.
+> hmp: system_sleep
+> qmp: { "execute": "system_sleep" }
 >
-> However, latency is still sensitive and important because even if the guest
-> vCPU is running on threads that do not need a remote fault, the workload
-> that accesses some missing page is still affected.
+> These commands put the guest into suspend or other power states
+> depending on the power settings inside the guest.
 >
-> Add two entries to the report, showing how long it takes to resolve a
-> remote fault.  Mention in the QAPI doc that this is not the real average
-> fault latency, but only the ones that was requested for a remote fault.
+> These hmp/qmp command are in '*_*' format, it is intended to do
+> so to align to existing 'system_*' commands.
 >
-> Unwrap get_vcpu_blocktime_list() so we don't need to walk the list twice,
-> meanwhile add the entry checks in qtests for all postcopy tests.
->
-> Cc: Markus Armbruster <armbru@redhat.com>
-> Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
->  qapi/migration.json                   | 13 +++++
->  migration/migration-hmp-cmds.c        | 70 ++++++++++++++++++---------
->  migration/postcopy-ram.c              | 48 ++++++++++++------
->  tests/qtest/migration/migration-qmp.c |  3 ++
->  4 files changed, 97 insertions(+), 37 deletions(-)
->
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 8b9c53595c..8b13cea169 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -236,6 +236,17 @@
->  #     This is only present when the postcopy-blocktime migration
->  #     capability is enabled.  (Since 3.0)
->  #
-> +# @postcopy-latency: average remote page fault latency (in us).  Note that
-> +#     this doesn't include all faults, but only the ones that require a
-> +#     remote page request.  So it should be always bigger than the real
-> +#     average page fault latency. This is only present when the
-> +#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
-> +#
-> +# @postcopy-vcpu-latency: average remote page fault latency per vCPU (in
-> +#     us).  It has the same definition of @postcopy-latency, but instead
-> +#     this is the per-vCPU statistics. This is only present when the
-
-Two spaces between sentences for consistency, please.
-
-> +#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
-
-I figure the the @i-th array element is for vCPU with index @i.  Correct?
-
-This is also only present when @postcopy-blocktime is enabled.  Correct?
-
-Could a QMP client compute @postcopy-latency from
-@postcopy-vcpu-latency?
-
-> +#
->  # @socket-address: Only used for tcp, to know what the real port is
->  #     (Since 4.0)
->  #
-> @@ -275,6 +286,8 @@
->             '*blocked-reasons': ['str'],
->             '*postcopy-blocktime': 'uint32',
->             '*postcopy-vcpu-blocktime': ['uint32'],
-> +           '*postcopy-latency': 'uint64',
-> +           '*postcopy-vcpu-latency': ['uint64'],
->             '*socket-address': ['SocketAddress'],
->             '*dirty-limit-throttle-time-per-round': 'uint64',
->             '*dirty-limit-ring-full-time': 'uint64'} }
+> Signed-off-by: Annie Li <annie.li@oracle.com>
 
 [...]
+
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index a6b8795b09..3efaf82f7d 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -361,6 +361,26 @@
+>  ##
+>  { 'command': 'system_reset' }
+>  
+> +##
+> +# @system_sleep:
+> +#
+> +# Requests that the guest perform a ACPI sleep transition by pushing
+> +# the virtual sleep button.
+> +#
+> +# Since:10.0
+
+10.1
+
+> +#
+> +# .. note:: A guest may or may not respond to this command.  This
+> +#        command returning does not indicate that a guest has
+> +#        accepted the request or that it has gone to sleep.
+
+Please indent like this for consistency:
+
+   # .. note:: A guest may or may not respond to this command.  This
+   #    command returning does not indicate that a guest has accepted the
+   #    request or that it has gone to sleep.
+
+The same note on system_powerdown additionally has "Many guests will respond to
+this command by prompting the user in some way."  I guess you did not
+copy this part, because it's not true here.  Correct?
+
+> +#
+> +# .. qmp-example::
+> +#
+> +# -> { "execute": "system_sleep" }
+> +# <- { "return": {} }
+> +#
+> +##
+> +{ 'command': 'system_sleep' }
+> +
+>  ##
+>  # @system_powerdown:
+>  #
+> diff --git a/qapi/pragma.json b/qapi/pragma.json
+> index 023a2ef7bc..285ce82e9b 100644
+> --- a/qapi/pragma.json
+> +++ b/qapi/pragma.json
+> @@ -23,6 +23,7 @@
+>          'set_password',
+>          'system_powerdown',
+>          'system_reset',
+> +        'system_sleep',
+>          'system_wakeup' ],
+>      # Commands allowed to return a non-dictionary
+>      'command-returns-exceptions': [
 
 
