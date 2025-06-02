@@ -4,71 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0E3EC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 11:29:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E367C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 11:50:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM3L6-0004pb-FR; Mon, 02 Jun 2025 07:28:24 -0400
+	id 1uM3fG-0008JQ-QI; Mon, 02 Jun 2025 07:49:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uM3L1-0004p5-Gd; Mon, 02 Jun 2025 07:28:20 -0400
-Received: from nyc.source.kernel.org ([147.75.193.91])
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uM3fD-0008In-W8; Mon, 02 Jun 2025 07:49:12 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uM3Kz-0006b6-O5; Mon, 02 Jun 2025 07:28:19 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by nyc.source.kernel.org (Postfix) with ESMTP id B8929A4FF22;
- Mon,  2 Jun 2025 11:28:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365D0C4CEEB;
- Mon,  2 Jun 2025 11:28:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1748863694;
- bh=VmXDOPNS8/S6TCwAzvLV43piHsMOAAZNLSlKbNUhKb0=;
- h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=ry/2PQ3obPGxGRr4fOPfhplXyQHvWO+zARHGGd3it7hjrz5lClSZzhRZfnV8F9ll3
- tQ4UzIvX3Ac9fEUeidWDRExcRJcZH4rMv8yROHc8FJqc4RdoPvbvOgB1Gv1N7YtVrB
- 47fMI9tOZERbgsrOPWHpuASvbqqFkuXm4RwHtLuS+NIjXDpJcEOOzO3OQllZyZ7o84
- ooZpAoHUtlBxZGld3AAOPc9KL5DxtSNy4b1bzuQh9PspXGg2ukQ+yNJ2ZbfGdCT9co
- VcoYkHL6ZrBTnQZbAuAlkt6LIBmcEt1CX7Zlz4btbaHcYmtA8cKy9VJLFhtCJeUfo9
- y9REGJHxInNqA==
-Date: Mon, 2 Jun 2025 13:28:08 +0200
-From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-To: Igor Mammedov <imammedo@redhat.com>
-Cc: "Michael S. Tsirkin" <mst@redhat.com>, Jonathan Cameron
- <Jonathan.Cameron@huawei.com>, Shiju Jose <shiju.jose@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, Philippe =?UTF-8?B?TWF0aGll?=
- =?UTF-8?B?dS1EYXVkw6k=?= <philmd@linaro.org>, Ani Sinha
- <anisinha@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Marcel
- Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>, Yanan
- Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v9 12/20] acpi/generic_event_device: add logic to detect
- if HEST addr is available
-Message-ID: <20250602132436.1e0e83aa@foz.lan>
-In-Reply-To: <20250602122244.081a1960@imammedo.users.ipa.redhat.com>
-References: <cover.1747722973.git.mchehab+huawei@kernel.org>
- <aa74b756f633dbee5442cf4baa2c1d81a669d2f9.1747722973.git.mchehab+huawei@kernel.org>
- <20250528174212.2823d3de@imammedo.users.ipa.redhat.com>
- <20250530080120-mutt-send-email-mst@kernel.org>
- <20250530164903.0f9f8444@imammedo.users.ipa.redhat.com>
- <20250530221810.694ce02e@foz.lan>
- <20250602122244.081a1960@imammedo.users.ipa.redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uM3f7-0000ky-Nq; Mon, 02 Jun 2025 07:49:11 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4b9sYb5Mtpz6GFWg;
+ Mon,  2 Jun 2025 19:48:35 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id D3DDD14027A;
+ Mon,  2 Jun 2025 19:48:45 +0800 (CST)
+Received: from A2303104131.china.huawei.com (10.203.177.241) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Mon, 2 Jun 2025 13:48:41 +0200
+To: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+CC: <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
+ <nicolinc@nvidia.com>, <ddutile@redhat.com>, <linuxarm@huawei.com>
+Subject: [PATCH] hw/arm/virt: Check bypass iommu is not set for iommu-map DT
+ property
+Date: Mon, 2 Jun 2025 12:46:55 +0100
+Message-ID: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: git-send-email 2.12.0.windows.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=147.75.193.91;
- envelope-from=mchehab+huawei@kernel.org; helo=nyc.source.kernel.org
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.241]
+X-ClientProxiedBy: kwepems500002.china.huawei.com (7.221.188.17) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) AC_FROM_MANY_DOTS=0.914, BAYES_00=-1.9,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -82,86 +65,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+From:  Shameer Kolothum via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Em Mon, 2 Jun 2025 12:22:44 +0200
-Igor Mammedov <imammedo@redhat.com> escreveu:
+default_bus_bypass_iommu tells us whether the bypass_iommu is set
+for the default PCIe root bus. Make sure we check that before adding
+the "iommu-map" DT property.
 
-> On Fri, 30 May 2025 22:18:10 +0200
-> Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> 
-> > Em Fri, 30 May 2025 16:49:03 +0200
-> > Igor Mammedov <imammedo@redhat.com> escreveu:
-> >   
-> > > On Fri, 30 May 2025 08:01:28 -0400
-> > > "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> > >     
-> > > > On Wed, May 28, 2025 at 05:42:12PM +0200, Igor Mammedov wrote:      
-> > > > > On Tue, 20 May 2025 08:41:31 +0200
-> > > > > Mauro Carvalho Chehab <mchehab+huawei@kernel.org> wrote:
-> > > > >         
-> > > > > > Create a new property (x-has-hest-addr) and use it to detect if
-> > > > > > the GHES table offsets can be calculated from the HEST address
-> > > > > > (qemu 10.0 and upper) or via the legacy way via an offset obtained
-> > > > > > from the hardware_errors firmware file.        
-> > > > > 
-> > > > > 
-> > > > > it doesn't apply to current master anymore        
-> > > > 
-> > > > indeed. Mauro?      
-> > > 
-> > > Michael,
-> > > it's trivial conflict in machine compat,
-> > > could you fix it up while applying?    
-> > 
-> > IMHO, that's the best. The thing is, as code gets merged upstream with
-> > backports, conflicts happen.
-> > 
-> > I can re-send the series, if you prefer, as I'm keeping it rebasing it
-> > from time to time at:
-> > 	https://gitlab.com/mchehab_kernel/qemu/-/tree/qemu_submitted?ref_type=heads
-> > 
-> > (it is on the top of upstream/master)
-> > 
-> > But even that might have conflicts on your test tree if you pick
-> > other patches touching this backport table:
-> >   
-> > > -GlobalProperty hw_compat_10_0[] = {};
-> > > +GlobalProperty hw_compat_10_0[] = {
-> > > +    { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
-> > > +};    
-> > 
-> > (this was the code when I sent the PR. When applying upstream,
-> > such hunk is now(*):
-> > 
-> >  GlobalProperty hw_compat_10_0[] = {
-> >      { "scsi-hd", "dpofua", "off" },
-> > +    { TYPE_ACPI_GED, "x-has-hest-addr", "false" },
-> >  };
-> > 
-> > 
-> > (*) https://gitlab.com/mchehab_kernel/qemu/-/commit/08c4859f8c6f36d7dccf2b773be88847e5d1fe0c
-> > 
-> > If you still prefer that I resubmit the entire PR, let me know.  
-> 
-> If it's the only patch that needs rebase and doesn't affect the rest,
-> I'd say there is no need to spam the list with whole series respin, 
-> just post rebased v10 12/20 as reply here
-> 
-> If it's more than that, respin series.
+Fixes: 6d7a85483a06 ("hw/arm/virt: Add default_bus_bypass_iommu machine option")
+Suggested-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+---
+ hw/arm/virt.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-This is the only patch with conflicts. I'll send a v10 of it.
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 9a6cd085a3..99fde5836c 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -1487,9 +1487,12 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
+     qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
+     g_free(node);
+ 
+-    qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
+-                           0x0, vms->iommu_phandle, 0x0, bdf,
+-                           bdf + 1, vms->iommu_phandle, bdf + 1, 0xffff - bdf);
++    if (!vms->default_bus_bypass_iommu) {
++        qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
++                               0x0, vms->iommu_phandle, 0x0, bdf,
++                               bdf + 1, vms->iommu_phandle, bdf + 1,
++                               0xffff - bdf);
++    }
+ }
+ 
+ static void create_pcie(VirtMachineState *vms)
+@@ -1612,8 +1615,10 @@ static void create_pcie(VirtMachineState *vms)
+         switch (vms->iommu) {
+         case VIRT_IOMMU_SMMUV3:
+             create_smmu(vms, vms->bus);
+-            qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
+-                                   0x0, vms->iommu_phandle, 0x0, 0x10000);
++            if (!vms->default_bus_bypass_iommu) {
++                qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
++                                       0x0, vms->iommu_phandle, 0x0, 0x10000);
++            }
+             break;
+         default:
+             g_assert_not_reached();
+-- 
+2.34.1
 
-> 
-> > 
-> > Regards,
-> > Mauro
-> >   
-> 
-
-
-
-Thanks,
-Mauro
 
