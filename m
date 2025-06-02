@@ -4,72 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBD2AC5B549
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 22:30:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5905AC5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 22:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMDf6-0000C1-M7; Mon, 02 Jun 2025 18:29:44 -0400
+	id 1uMDmV-0002rS-7q; Mon, 02 Jun 2025 18:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uMDf5-0000Be-Nw
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:29:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uMDf4-00043z-45
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:29:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748903381;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z3X5wpgZRRfInHdkT5N4NfWas7VyDtR6M7oFpRGeEAE=;
- b=VnbYIvmujMDyBGaPIFHfml8Dwe0Twkje1kjU2dXGYmpN+aeJJKVbfyQhGzr34eGJl2+aXr
- AxAYuxcrBcHTWAFmmwT6gEgSxX55FWRQUQBFnzrVchXrOpleqN6sQRVT4exb7tja0ouAhv
- SlNQFyJvza6/nactzzVBieFLEryb57g=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-DN684fXbO5q_ek2IBs9FSg-1; Mon,
- 02 Jun 2025 18:29:39 -0400
-X-MC-Unique: DN684fXbO5q_ek2IBs9FSg-1
-X-Mimecast-MFC-AGG-ID: DN684fXbO5q_ek2IBs9FSg_1748903378
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 130311956095; Mon,  2 Jun 2025 22:29:38 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.84])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 50D9530002C4; Mon,  2 Jun 2025 22:29:37 +0000 (UTC)
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Tanish Desai <tanishdesai37@gmail.com>
-Subject: [PULL 1/1] trace/simple: seperate hot paths of tracing fucntions
-Date: Mon,  2 Jun 2025 18:29:33 -0400
-Message-ID: <20250602222933.336883-2-stefanha@redhat.com>
-In-Reply-To: <20250602222933.336883-1-stefanha@redhat.com>
-References: <20250602222933.336883-1-stefanha@redhat.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uMDmS-0002qV-BI
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:37:20 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uMDmO-0004tp-U5
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 18:37:19 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-311e46d38ddso3872182a91.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 15:37:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748903835; x=1749508635; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=dW8H1hqGsiQB+qTug59UNo1hf5lIkfclvoCGfLgg2tA=;
+ b=KJrM6qYNClDcsGJvPguuHSHcAK4oaxQnCS1GC9RvJYz9mQy6N9ov7dEIvTTvPzyR95
+ 3Yr11IFUOU6Arir/yQziiLlLYe1O3+DIulg3Ue/1FnA+eOQFlWTHoo5PD9bVfO15VSiN
+ IW/RDXRSJQ/N9dGvI00YbGvSkPxWqlTNAZRFS4IyldBD+CeBFDQTb0jDVwYFmfhcrd0c
+ LDG4t0LXkv69hAZcBT5Qzuvuj7ny6YtVkeDUzizEZr6wIaJB5xsleLnYYufpD98fq9m/
+ mEHQTgPc6WThMVGrGxeau1oY+1EMqLYFZPbv5pA9DUqEWMS+tnFPH3Ly/Zwjcjs+cWrC
+ AxgQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748903835; x=1749508635;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=dW8H1hqGsiQB+qTug59UNo1hf5lIkfclvoCGfLgg2tA=;
+ b=pnDUxlNrjIjfD6EVGmQxu8nDD3OD8suSFpMyff/UX+RbXQ02kJHgFcVxT6HxYYmxMo
+ z+yNaZBzNmAZ4Z+bTXRuMAGfTgiEcLjrBEu95xBTmSZ7ALwNF6XeEWplfhnL4IUSO/O4
+ ZZLTe9FW2R8h4abUTS2D9HzzWtbwKJZ0wdkIGV8wZN5rsImmzwHznOC5ekd2MxPz2VcP
+ Mg/TU8p0a+P4i6/xzpd5S6vC8kZKX+/svod63GK9SJr/TCPL7V82LrtHPeuMn1nFCika
+ LZIS7qfY9aI3SN2qumT8XV/zuh8CfpM7p8MNEJWobFlrvb6XhD4y8LQjbcso46HvIpxC
+ gNag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXMBsCvdNNCsYUmjYnVlObXajwgHYEkCNKBVO1pPj+ih4HiuiPD8mfVxZe7p8SG+kRNScL5Fuu4IOzH@nongnu.org
+X-Gm-Message-State: AOJu0Yz1eKbcdXSYPYV601pI5qYE5rdoIG3cF9bfZRElVD2ge0+1zUTY
+ hLZ9bct/vNxL5nKbZ0m4GIiKaOCLMTOA7oP7fab3IDZPHM8KUd5c9qXmWKrKfgOw9d4=
+X-Gm-Gg: ASbGncutI8rneyStmRVxXBoUTKOf7nvMPuK0VS31JNFaRgP+ukrfA/lBP8ctrAzS3tb
+ xBLG6nA1itZapqzqQRCgELnxGLKn/x6/SyhcDKhSPSMseeQgQ2EzkyWl7nh+RvYWY+aBnVPpmOg
+ Tdt3RL4jREaC0UwkUSOBiuUGLEqjlZeWW64glooTCRA/1f1xhnAtXOcvPDlmOKhcENgbELi0dQg
+ cIJV47lvTOVmFJas1/yvgoxA6VjzN4l7bAOj7yFqNmrQdPEHzIsUpVxaBYn3DavzdOEHbSm7P2W
+ EqdlKxj3ZJm/2WPstpQaxtninu12mCKSdDdzXqSWYAVE2i97S2yerZxjApbxbZJx1020NqqwPjw
+ =
+X-Google-Smtp-Source: AGHT+IEORVvm5tfle5qubBgcPqZ7zcBWefwEEm2FXEaBnBJJ3Io+yXsB1asoo/ou43GIMHAHd01JgQ==
+X-Received: by 2002:a17:90b:1343:b0:30e:8f60:b4c with SMTP id
+ 98e67ed59e1d1-31241735a7dmr24986021a91.16.1748903835232; 
+ Mon, 02 Jun 2025 15:37:15 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3124e3c1146sm6121966a91.35.2025.06.02.15.37.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Jun 2025 15:37:14 -0700 (PDT)
+Message-ID: <c54469ce-0385-4aea-b345-47711e9e61de@linaro.org>
+Date: Mon, 2 Jun 2025 15:37:13 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 02/77] hw/arm: remove explicit dependencies listed
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Nabih Estefan <nabihestefan@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+References: <20250530071250.2050910-1-pbonzini@redhat.com>
+ <20250530071250.2050910-3-pbonzini@redhat.com>
+ <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
+ <b7e988ef-82da-43bc-8c57-3b49b3bf9529@linaro.org>
+ <CA+QoejVhjy26FraUUMRtZtNPRW6u2MM3T=6hyguttPgx8qpkpw@mail.gmail.com>
+ <e1abbc4a-7071-419e-ab49-64828e682064@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <e1abbc4a-7071-419e-ab49-64828e682064@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,91 +111,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tanish Desai <tanishdesai37@gmail.com>
+On 6/2/25 2:11 PM, Cédric Le Goater wrote:
+> On 6/2/25 22:53, Nabih Estefan wrote:
+>> Hi Pierrick,
+>>
+>> For what it's worth, those files were also breaking on Ubuntu and Debian for me.
+>> I had to explicitly `sudo apt install libfdt-dev` for it to work
+>> again. I don't believe
+>> it was installed at all previously, but QEMU was building and working correctly
+>> without it being explicitly installed.
+> 
+> yes. I had to install libfdt-dev/el on some systems too.
+> 
+> However, for the windows (on Linux) build :
+> 
+>     ./configure --cross-prefix=x86_64-w64-mingw32- --target-list=aarch64-softmmu,ppc64-softmmu,x86_64-softmmu,s390x-softmmu --disable-docs --disable-sdl
+>
 
-This change improves performance by moving the hot path of the trace_vhost_commit()(or any other trace function) logic to the header file.
-Previously, even when the trace event was disabled, the function call chain:-
-	trace_vhost_commit()(Or any other trace function) →  _nocheck__trace_vhost_commit() →  _simple_trace_vhost_commit()
-	incurred a significant function prologue overhead before checking the trace state.
+Thanks Cédric, I could reproduce it using the fedora-win64-cross 
+container. After investigation, it's related to having a target-list, 
+and in a specific order (hum, hum, feels bad). I observe the same 
+behaviour when building normally for Linux too.
 
-Disassembly of _simple_trace_vhost_commit() (from the .c file) showed that 11 out of the first 14 instructions were prologue-related, including:
-0x10	stp x29, x30, [sp, #-64]!	Prologue: allocates 64-byte frame and saves old FP (x29) & LR (x30)
-0x14	adrp x3, trace_events_enabled_count	Prologue: computes page-base of the trace-enable counter
-0x18	adrp x2, __stack_chk_guard	Important (maybe prolog don't know?)(stack-protector): starts up the stack-canary load
-0x1c	mov x29, sp	Prologue: sets new frame pointer
-0x20	ldr x3, [x3]	Prologue: loads the actual trace-enabled count
-0x24	stp x19, x20, [sp, #16]	Prologue: spills callee-saved regs used by this function (x19, x20)
-0x28	and w20, w0, #0xff	Tracepoint setup: extracts the low-8 bits of arg0 as the “event boolean”
-0x2c	ldr x2, [x2]	Prologue (cont’d): completes loading of the stack-canary value
-0x30	and w19, w1, #0xff	Tracepoint setup: extracts low-8 bits of arg1
-0x34	ldr w0, [x3]	Important: loads the current trace-enabled flag from memory
-0x38	ldr x1, [x2]	Prologue (cont’d): reads the canary
-0x3c	str x1, [sp, #56]	Prologue (cont’d): writes the canary into the new frame
-0x40	mov x1, #0	Prologue (cont’d): zeroes out x1 for the upcoming branch test
-0x44	cbnz w0, 0x88	Important: if tracing is disabled (w0==0) skip the heavy path entirely
+Those 3 commands work as expected:
+$ ./configure --target-list=aarch64-softmmu  && \
+ninja -C build libsystem_arm.a.p/hw_arm_raspi4b.c.o
+$ ./configure && \
+ninja -C build libsystem_arm.a.p/hw_arm_raspi4b.c.o
+$ ./configure --target-list=s390x-softmmu,aarch64-softmmu && \
+ninja -C build libsystem_arm.a.p/hw_arm_raspi4b.c.o
 
-The trace-enabled check happens after the prologue. This is wasteful when tracing is disabled, which is often the case in production.
-To optimize this:
-_nocheck__trace_vhost_commit() is now fully inlined in the .h file with
-the hot path.It checks trace_event_get_state() before calling into _simple_trace_vhost_commit(), which remains in .c.
-This avoids calling into the .c function altogether when the tracepoint is disabled, thereby skipping unnecessary prologue instructions.
+This one fails:
+$ ./configure --target-list=aarch64-softmmu,s390x-softmmu && \
+ninja -C build libsystem_arm.a.p/hw_arm_raspi4b.c.o
 
-This results in better performance by removing redundant instructions in the tracing fast path.
+I will investigate more, but I strongly suspect there is a bug in the 
+meson libraries patch I wrote, with a variable being reused when it 
+should not.
+Sorry for the inconvenience.
 
-Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
-Message-id: 20250528192528.3968-1-tanishdesai37@gmail.com
-Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
----
- scripts/tracetool/backend/simple.py | 23 ++++++++++-------------
- 1 file changed, 10 insertions(+), 13 deletions(-)
-
-diff --git a/scripts/tracetool/backend/simple.py b/scripts/tracetool/backend/simple.py
-index a74d61fcd6..2688d4b64b 100644
---- a/scripts/tracetool/backend/simple.py
-+++ b/scripts/tracetool/backend/simple.py
-@@ -36,8 +36,17 @@ def generate_h_begin(events, group):
- 
- 
- def generate_h(event, group):
--    out('    _simple_%(api)s(%(args)s);',
-+    event_id = 'TRACE_' + event.name.upper()
-+    if "vcpu" in event.properties:
-+        # already checked on the generic format code
-+        cond = "true"
-+    else:
-+        cond = "trace_event_get_state(%s)" % event_id
-+    out('    if (%(cond)s) {',
-+        '        _simple_%(api)s(%(args)s);',
-+        '    }',
-         api=event.api(),
-+        cond=cond,
-         args=", ".join(event.args.names()))
- 
- 
-@@ -72,22 +81,10 @@ def generate_c(event, group):
-     if len(event.args) == 0:
-         sizestr = '0'
- 
--    event_id = 'TRACE_' + event.name.upper()
--    if "vcpu" in event.properties:
--        # already checked on the generic format code
--        cond = "true"
--    else:
--        cond = "trace_event_get_state(%s)" % event_id
--
-     out('',
--        '    if (!%(cond)s) {',
--        '        return;',
--        '    }',
--        '',
-         '    if (trace_record_start(&rec, %(event_obj)s.id, %(size_str)s)) {',
-         '        return; /* Trace Buffer Full, Event Dropped ! */',
-         '    }',
--        cond=cond,
-         event_obj=event.api(event.QEMU_EVENT),
-         size_str=sizestr)
- 
--- 
-2.49.0
-
+Regards,
+Pierrick
 
