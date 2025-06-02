@@ -4,93 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E757CC5B549
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 06:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64FD0C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 06:12:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLyHj-0005Pn-Vt; Mon, 02 Jun 2025 02:04:48 -0400
+	id 1uLyOD-0007Gc-AG; Mon, 02 Jun 2025 02:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uLy3L-0001ht-Jc
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 01:50:14 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uLy5F-0002GA-97; Mon, 02 Jun 2025 01:52:07 -0400
+Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uLy3D-0007Js-FY
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 01:49:39 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-234bfe37cccso50809205ad.0
- for <qemu-devel@nongnu.org>; Sun, 01 Jun 2025 22:49:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uLy5C-00006G-6k; Mon, 02 Jun 2025 01:51:41 -0400
+Received: by mail-qv1-xf31.google.com with SMTP id
+ 6a1803df08f44-6face367320so29315356d6.3; 
+ Sun, 01 Jun 2025 22:51:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748843359; x=1749448159; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1748843495; x=1749448295; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cE/rElsE+sxHsKrFd8ZdZIhXnJuddVorLW+oNsQpqho=;
- b=BYvfUAgyLHhZCJfsEMnC8AfiyInpk2ZxX0ZYsbV95jiYftuf+piUIr7H4zCUBpv71a
- ZBXgNlcRlOnfAxy9UKn9UR26M32USJP6QUa89DiRzk3vhHc+Eef0ZItaHP2dt+mG75Ms
- zahp8WetEt0+Hj3iYRPML1WMOHHf/EK/TLjUgiBgPn2jZZCC0QIKRQZesPvkOT9Gxu89
- 201prRz6Sk9EpFglgpNfCe+jdwzHIhmd0UHfI18PgmSY3ff87rd2nSCJK/I51VM4YN++
- OYl4SeNrZfeuh0B6GHjcL899tOgQrB7wvTvhYqkfE5uGvKnY+hCoYniVsNd0lVVRyA6M
- OWUQ==
+ bh=/PY2tyVSrVtdCJOVkgykGxb6xAi/RN7Z4HUkkStkp4w=;
+ b=A/Lt/jQYUuAtUiOLnN2IPcWlmKxQ3oFUqvgYE6YzMiR/Y1iw+9arDMAhSwK84HsIDn
+ ejQmTMsg4E/Mu2n/dSBgNOJ2QUQqfAY1dZboTkcaSX/phFg6hc1by7yEcBphSfSjFpVM
+ JqHOsGffvhmgUds97LTE9GhofR+W8RELNuGlHpSuLH+VMQ4IPRmiv6sg7QGgrCsz/qyV
+ uUmKmqgVwfIxMvkZw7p3+XXU1+OoefP5XqFnb20lDAdPPygEN3hMx0alJgUdmre7+FRr
+ 7ERifiqVBvgTa3TPQTAuRQZYUyPoTvEwe78WVF+7nVTdoCCv/o9EjnlhDdbavGtoLu0o
+ hLTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748843359; x=1749448159;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1748843495; x=1749448295;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=cE/rElsE+sxHsKrFd8ZdZIhXnJuddVorLW+oNsQpqho=;
- b=AblXy6mxfyK7C+6bWQisP2mkpWTZArZiEc20iHZLsrPhCoexjrCI3oUHQVcml7iUmI
- VYQkmv8wM6LpMz0dcNm6IkyzwHmaEuUUkdqMzkcmdlMGXM+bcbZjT+/oXcDHwHXxjyDp
- WuxBzBfolGJLOtqTC+PTDGiLzve6LQUpcB+adeF+Vi9B+wA2Y5/gVWL62lAi9zDjWL0p
- n5JYvqPn7FuZcyoe7YVdolYA037sjuehuV/54riHyae6bM8m2b5waaVXhsqZVaDyVAJs
- n45la5ef9ftcHodDWVlqSU4x36R3QFg1h4TadTSaLOn/w95bdw/bT8djUPnDEiZ5dAAw
- UfMg==
-X-Gm-Message-State: AOJu0Yy9C8aNjhCF1nc3naVHVl1fQe0PFirieI5Rstp/aRxyG4uffCUo
- /blGQxIW//sCagSqd5Fu/ofii3Cou37slUMPAxcrqRI5SrixVxBJzZeYiBA2TtcAq3I=
-X-Gm-Gg: ASbGncveIAs3R94WYwK5XEqlQ1Q8imnB2X495xyliSlfyNA95qKpebXqjnZ7UNcnGcD
- Ml4ngCI+0phnDwOf0GfG4x0lwJZ0WgQ7PI12jYpxvoTwIlnISeq/bF5m/unyEvHsB+yFOKnNRfQ
- WkphDgBfP3xx/fKva7OkmehK8qXUThYXTefU0PosMo3e4w+zTa2ygsXbc/YXAld6HUp1eIV3XoT
- ZTiqyz0Q6jX2CYkoEHvfFIfDxrd5aMRR3HOj9d0NYhAORq9XdjcKY7ssDj7Ky9gTWmXoA4pie9k
- pCxc0ZDyKbnuwgOhogW0eWHMYyVwgaHIp4RjTjbIWVxMmGRORLhjq/ubR4Bibg==
-X-Google-Smtp-Source: AGHT+IF3OrWpc7OejIbVPtZtXX3Tazkp58+OYKEBr4C77IESsKlyzCZjxAI9cobLQgQsLSMOGxz2Dw==
-X-Received: by 2002:a17:902:d550:b0:234:9fee:af99 with SMTP id
- d9443c01a7336-235395e2e4cmr164576335ad.35.1748843359148; 
- Sun, 01 Jun 2025 22:49:19 -0700 (PDT)
-Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23506bdce12sm63464085ad.99.2025.06.01.22.49.18
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 01 Jun 2025 22:49:18 -0700 (PDT)
-From: Rowan Hart <rowanbhart@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Yanan Wang <wangyanan55@huawei.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Eduardo Habkost <eduardo@habkost.net>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- novafacing <rowanbhart@gmail.com>
-Subject: [PATCH v5 1/9] gdbstub: Expose gdb_write_register function to
- consumers of gdbstub
-Date: Sun,  1 Jun 2025 22:49:08 -0700
-Message-ID: <20250602054917.302638-2-rowanbhart@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250602054917.302638-1-rowanbhart@gmail.com>
-References: <20250602054917.302638-1-rowanbhart@gmail.com>
+ bh=/PY2tyVSrVtdCJOVkgykGxb6xAi/RN7Z4HUkkStkp4w=;
+ b=ddny8X46JqCTNY8pL29tQFOw5CP4r1s2KfrxHeg0S5Fiu99cxt9t5GttsE7nziaHlr
+ iTwR1/zwwmtB+eWa+dvKjGVpTRIS8ZwkSdfxlKORPdzjeXPTQz+jbHtQu+G+wXyp8JPT
+ 2bkbEs5voCXqUJ76b5zW8VmSWsg0xqImr24NTLBuM2NKHj/5dPeQK4s1kvjDc/+JkXfo
+ v/BB1SZpfLKNUCrZ8erZ/UTZvJk9KePki+g58NjKIhUKTopXw04nVCURnY3FXz9J++qt
+ 1sXwqK65yekmuKGLIknp2F3LPz9A0tdqilXCQc1YnCri5r59BN8hzTlKnQwYitUotU8k
+ jE1w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUq47h0O7iVeVrK2TThTnZqIve+A9C/P6661yosouDXZ0udsatMA03diS97cfOyypOE9VpXROoqvaf4@nongnu.org
+X-Gm-Message-State: AOJu0YzULmJluvzxdNmnnMLQ0j//he2rcO0qBd5UP2G6mmZgojZhQFgv
+ 3p9xQ0yt0Pcd4nDYVOMnrPoi4Uyj8dkHP2ZWoTfBuRI7TMmnCLSn9hxDUGndsBnWt1UoDZJf/Ik
+ mVs0nDHH8YggITEYdncLtiuyvLh/HKspwYw==
+X-Gm-Gg: ASbGnctRn4iFOLnyXaD2+nBNH2y5XpO0gwEG3jU5mztJROkQbsJbtlfG2drdNjfUhW/
+ kfmwnlICyJuvviRFtF9YHEaLhg5FKA7mn9H6WTYDDEDhtDReQWNID9h0x2DqHaSz21EuRltdjB0
+ dgLgRxligHn5m+b8ueLnsa9iATCroSJxKmdBafQ7m92eQpT2/pzddSZO6YsXvpBRY=
+X-Google-Smtp-Source: AGHT+IFh8WfbPpgZfzru18RjqPu+xNQQAVqSDc7oiPSwF+btbGEaS0qHb3dxWGvXNqIht+2MwWyYoi43/EkIlvxQLzY=
+X-Received: by 2002:a05:6102:4b0a:b0:4e5:958d:4962 with SMTP id
+ ada2fe7eead31-4e6ecd2e5a9mr8439215137.2.1748838700000; Sun, 01 Jun 2025
+ 21:31:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+References: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
+ <20250529202315.1684198-3-dbarboza@ventanamicro.com>
+In-Reply-To: <20250529202315.1684198-3-dbarboza@ventanamicro.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 2 Jun 2025 14:31:14 +1000
+X-Gm-Features: AX0GCFuLzkNcyU3FqGbhh8GacwY72o_kiNBdoHyVq8xMelxA5syDjCLlhE8qXGA
+Message-ID: <CAKmqyKPo1oH2q1vC+MQA2ce29wrMZgSo1JUEP5pzNKikLOunSg@mail.gmail.com>
+Subject: Re: [qemu PATCH 2/3] target/riscv/cpu.c: add 'ssstrict' to riscv,isa
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
+ envelope-from=alistair23@gmail.com; helo=mail-qv1-xf31.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -108,58 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: novafacing <rowanbhart@gmail.com>
+On Fri, May 30, 2025 at 6:24=E2=80=AFAM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+>
+> 'ssstrict' is a RVA23 profile-defined extension defined as follows:
+>
+> "No non-conforming extensions are present. Attempts to execute
+> unimplemented opcodes or access unimplemented CSRs in the standard or
+> reserved encoding spaces raises an illegal instruction exception that
+> results in a contained trap to the supervisor-mode trap handler."
+>
+> In short, we need to throw an exception when accessing unimplemented
+> CSRs or opcodes. We do that, so let's advertise it.
+>
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
-This patch exposes the gdb_write_register function from
-gdbstub/gdbstub.c via the exec/gdbstub.h header file to support use in
-plugins to write register contents.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-Signed-off-by: novafacing <rowanbhart@gmail.com>
-Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
----
- gdbstub/gdbstub.c      |  2 +-
- include/exec/gdbstub.h | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+Alistair
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 565f6b33a9..5846e481be 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -534,7 +534,7 @@ int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
-     return 0;
- }
- 
--static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
-+int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
- {
-     GDBRegisterState *r;
- 
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index 0675b0b646..a16c0051ce 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -124,6 +124,20 @@ const GDBFeature *gdb_find_static_feature(const char *xmlname);
-  */
- int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- 
-+/**
-+ * gdb_write_register() - Write a register associated with a CPU.
-+ * @cpu: The CPU associated with the register.
-+ * @buf: The buffer that the register contents will be set to.
-+ * @reg: The register's number returned by gdb_find_feature_register().
-+ *
-+ * The size of @buf must be at least the size of the register being
-+ * written.
-+ *
-+ * Return: The number of written bytes, or 0 if an error occurred (for
-+ * example, an unknown register was provided).
-+ */
-+int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg);
-+
- /**
-  * typedef GDBRegDesc - a register description from gdbstub
-  */
--- 
-2.49.0
-
+> ---
+>  target/riscv/cpu.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 9d6fae72b2..cd0b159ed5 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -217,6 +217,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
+>      ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
+>      ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
+> +    ISA_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_1_12),
+>      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
+>      ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
+>      ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+> --
+> 2.49.0
+>
+>
 
