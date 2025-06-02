@@ -4,74 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87F0CC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:31:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11D80C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM0Yo-0004lp-5h; Mon, 02 Jun 2025 04:30:22 -0400
+	id 1uM0hT-0006aZ-1e; Mon, 02 Jun 2025 04:39:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM0Yf-0004kw-Sy
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:30:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uM0hP-0006aI-Fp
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:39:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uM0Yd-0001xj-OV
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:30:13 -0400
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uM0hN-0002gW-Ec
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:39:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748852999;
+ s=mimecast20190719; t=1748853551;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=E5dJKPbc1c/cq7vxjhscvhuOCDFpsI7YvSwDRQlK0ro=;
- b=ihpZBVfT2QveYVxSJ3MQ0k+TQPIuuDVwshYav5UkDx28cf56x5yrMkOXXu/y+I7cw70vfS
- SPIR9R3uOarguPvmRhjwBtLfnfIQtAyIWEI2cMf6eAPddq2rHw2MWQaswqU24RiSoHotMC
- tRuih1IBY9bH4HgIjv+3EYU5lFRVxHs=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-562-EefU8hzPPuKjeH0BEqZpJg-1; Mon,
- 02 Jun 2025 04:29:55 -0400
-X-MC-Unique: EefU8hzPPuKjeH0BEqZpJg-1
-X-Mimecast-MFC-AGG-ID: EefU8hzPPuKjeH0BEqZpJg_1748852993
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D0231956087; Mon,  2 Jun 2025 08:29:53 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 64C48180047F; Mon,  2 Jun 2025 08:29:52 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BBFE721E6757; Mon, 02 Jun 2025 10:29:49 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Si-Wei Liu <si-wei.liu@oracle.com>
-Cc: Jason Wang <jasowang@redhat.com>,  Jonah Palmer
- <jonah.palmer@oracle.com>,  qemu-devel@nongnu.org,  eperezma@redhat.com,
- peterx@redhat.com,  mst@redhat.com,  lvivier@redhat.com,
- dtatulea@nvidia.com,  leiyang@redhat.com,  parav@mellanox.com,
- sgarzare@redhat.com,  lingshan.zhu@intel.com,  boris.ostrovsky@oracle.com
-Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
-In-Reply-To: <87o6v6muq4.fsf@pond.sub.org> (Markus Armbruster's message of
- "Mon, 02 Jun 2025 10:08:19 +0200")
-References: <20250507184647.15580-1-jonah.palmer@oracle.com>
- <CACGkMEuD7n8QVpgBvHSXJv7kN-hn4cpXX9J8UO8GUCzB0Ssqaw@mail.gmail.com>
- <87plg9ukgq.fsf@pond.sub.org>
- <50a648fa-76ab-47bf-9f6e-c07da913cb52@oracle.com>
- <87frgr7mvk.fsf@pond.sub.org>
- <dcbf9e2e-9442-4439-8593-dff036a4d781@oracle.com>
- <87o6v6muq4.fsf@pond.sub.org>
-Date: Mon, 02 Jun 2025 10:29:49 +0200
-Message-ID: <8734cimtqa.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ bh=nNEKmfgSpcXXR0o+h2+nHv3wfqhbFdkZQfD9wtzQH8g=;
+ b=hERN4RmgObtR/PGtqW9Yp2a0aqtL3nnv1J5ZlUEl7SWYBk9wtPI56BtKZ6SkuyIZzUCOcI
+ kZUpbj3JrohrHkbGROMHPUwPGthdPV5wHaX6UdnPrbRcLDQXFCtiOVmlXxaVCd22XoAKIR
+ LtU9F1FtwcJ4Ag7WmZRdNa+/T2diPnk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-645-UmASHx3aNVCBmgAHAUcykg-1; Mon, 02 Jun 2025 04:39:09 -0400
+X-MC-Unique: UmASHx3aNVCBmgAHAUcykg-1
+X-Mimecast-MFC-AGG-ID: UmASHx3aNVCBmgAHAUcykg_1748853549
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a50049f8eeso538760f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 01:39:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748853548; x=1749458348;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nNEKmfgSpcXXR0o+h2+nHv3wfqhbFdkZQfD9wtzQH8g=;
+ b=MXxe9w8el7MJWia9Vy+kDIc58qCLKBOUP7C7qH/RvUO8/8WUs3vqsZPLqATyPeTKOh
+ iqxua0D37+kapOQmM/0uij/FPWscRVxacf5QoBBg4TeFyrZ9h7PmGh5f8s79p/z2JAra
+ G3dV6AC6uugQJNVV1byVxOftgvAwmOdGNNK1zhtCEXfBwfz03iV+i+MGrLuocRj1sxKG
+ M93OQnpKwAbGa1dywu6gbJYdBxw2TsUAHYvQAip1PQOGn9JmiL1lsoiRZrpd2X2CjU8+
+ blqAjP7AE+qRZFXJm5pShOadwKA9dE9hOsVXe72V1vhoej6f0uf4sPffxXa3i/aJa6ZI
+ TlFQ==
+X-Gm-Message-State: AOJu0YyTzSrdPOu7M+k/u7MIY/u0a+KZr50QXdcsMtLhZof4B95AmAiB
+ XHG96LpHLqYFRE9HooKH88k9FnYhY8IraJwxTtlVq+1lopvmEgrxwpQJzOj35uH9unfmeO/Dabw
+ qpR/gPqcTxGcQhkMx7UTethPLDJRKT+wxiL38vJ9Qe2ecI4Mm5M1df7sVXQ7Jzm+vDO5RxVqY7F
+ jhVSHykkmurPJD9B2Fj7OCp3eK6IUfVgFyig==
+X-Gm-Gg: ASbGncuDSmtUOujJ9rjHd2FtOVtfeR6dooHhBWJRwONXi5vtPVLpRO5i0W/JHAMzyqg
+ 9oCW3qKxUWdshaATZgJrwabgULZMhbK+cjTP3dgQBvttNxK0TgPDBWXe+KmOxa2BHJfal+76wAJ
+ 5ooHyLKZnvWXXkkxDaA/NC1fd4YpEZ8+dn+jB5v6DPbfaUooZ4AblrSVvps3FzVb0HNDvQcXP8B
+ /xAqMIqsEXvEaUzwotJ13zOtoxfE9f7lYI/4oWv9QTh9U2zJZFTyyNURYsZHmnrb8vznY9u4akX
+ rFAkJg==
+X-Received: by 2002:a05:6000:2c10:b0:3a4:d975:7d6f with SMTP id
+ ffacd0b85a97d-3a4f89e2c0emr9280947f8f.39.1748853548225; 
+ Mon, 02 Jun 2025 01:39:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnvNt1kmvQKqcmd8y2gmSWNeJlErm+Vl3u3odcRlLIH6WLKJWm39CLuIW/yZGoUtJ9ZXf6tw==
+X-Received: by 2002:a05:6000:2c10:b0:3a4:d975:7d6f with SMTP id
+ ffacd0b85a97d-3a4f89e2c0emr9280914f8f.39.1748853547715; 
+ Mon, 02 Jun 2025 01:39:07 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d7fb0654sm113407875e9.21.2025.06.02.01.39.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 02 Jun 2025 01:39:06 -0700 (PDT)
+Date: Mon, 2 Jun 2025 04:39:04 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PULL 00/31] virtio,pci,pc: features, fixes, tests
+Message-ID: <20250602043846-mutt-send-email-mst@kernel.org>
+References: <cover.1748791463.git.mst@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <cover.1748791463.git.mst@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -31
 X-Spam_score: -3.2
@@ -96,181 +107,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Butterfingers...  let's try this again.
+On Sun, Jun 01, 2025 at 11:24:45AM -0400, Michael S. Tsirkin wrote:
+> The following changes since commit d2e9b78162e31b1eaf20f3a4f563da82da56908d:
+> 
+>   Merge tag 'pull-qapi-2025-05-28' of https://repo.or.cz/qemu/armbru into staging (2025-05-29 08:36:01 -0400)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.kernel.org/pub/scm/virt/kvm/mst/qemu.git tags/for_upstream
+> 
+> for you to fetch changes up to 1c5771c092742b729e2a640be184a0f48c0b2cdb:
+> 
+>   hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine (2025-06-01 08:30:09 -0400)
 
-Markus Armbruster <armbru@redhat.com> writes:
 
-> Si-Wei Liu <si-wei.liu@oracle.com> writes:
->
->> On 5/26/2025 2:16 AM, Markus Armbruster wrote:
->>> Si-Wei Liu <si-wei.liu@oracle.com> writes:
->>>
->>>> On 5/15/2025 11:40 PM, Markus Armbruster wrote:
->>>>> Jason Wang <jasowang@redhat.com> writes:
->>>>>
->>>>>> On Thu, May 8, 2025 at 2:47=E2=80=AFAM Jonah Palmer <jonah.palmer@or=
-acle.com> wrote:
->>>>>>> Current memory operations like pinning may take a lot of time at the
->>>>>>> destination.  Currently they are done after the source of the migra=
-tion is
->>>>>>> stopped, and before the workload is resumed at the destination.  Th=
-is is a
->>>>>>> period where neigher traffic can flow, nor the VM workload can cont=
-inue
->>>>>>> (downtime).
->>>>>>>
->>>>>>> We can do better as we know the memory layout of the guest RAM at t=
-he
->>>>>>> destination from the moment that all devices are initializaed.  So
->>>>>>> moving that operation allows QEMU to communicate the kernel the maps
->>>>>>> while the workload is still running in the source, so Linux can sta=
-rt
->>>>>>> mapping them.
->>>>>>>
->>>>>>> As a small drawback, there is a time in the initialization where QE=
-MU
->>>>>>> cannot respond to QMP etc.  By some testing, this time is about
->>>>>>> 0.2seconds.
->>>>>> Adding Markus to see if this is a real problem or not.
->>>>> I guess the answer is "depends", and to get a more useful one, we need
->>>>> more information.
->>>>>
->>>>> When all you care is time from executing qemu-system-FOO to guest
->>>>> finish booting, and the guest takes 10s to boot, then an extra 0.2s
->>>>> won't matter much.
->>>>
->>>> There's no such delay of an extra 0.2s or higher per se, it's just shi=
-fting around the page pinning hiccup, no matter it is 0.2s or something els=
-e, from the time of guest booting up to before guest is booted. This saves =
-back guest boot time or start up delay, but in turn the same delay effectiv=
-ely will be charged to VM launch time. We follow the same model with VFIO, =
-which would see the same hiccup during launch (at an early stage where no r=
-eal mgmt software would care about).
->>>>
->>>>> When a management application runs qemu-system-FOO several times to
->>>>> probe its capabilities via QMP, then even milliseconds can hurt.
->>>>>
->>>> Not something like that, this page pinning hiccup is one time only tha=
-t occurs in the very early stage when launching QEMU, i.e. there's no consi=
-stent delay every time when QMP is called. The delay in QMP response at tha=
-t very point depends on how much memory the VM has, but this is just specif=
- to VM with VFIO or vDPA devices that have to pin memory for DMA. Having sa=
-id, there's no extra delay at all if QEMU args has no vDPA device assignmen=
-t, on the other hand, there's same delay or QMP hiccup when VFIO is around =
-in QEMU args.
->>>>
->>>>> In what scenarios exactly is QMP delayed?
->>>>
->>>> Having said, this is not a new problem to QEMU in particular, this QMP=
- delay is not peculiar, it's existent on VFIO as well.
->>>
->>> In what scenarios exactly is QMP delayed compared to before the patch?
->>
->> The page pinning process now runs in a pretty early phase at
->> qemu_init() e.g. machine_run_board_init(),
->
-> It runs within
->
->     qemu_init()
->         qmp_x_exit_preconfig()
->             qemu_init_board()
->                 machine_run_board_init()
->
-> Except when --preconfig is given, it instead runs within QMP command
-> x-exit-preconfig.
->
-> Correct?
->
->> before any QMP command can be serviced, the latter of which typically
->> would be able to get run from qemu_main_loop() until the AIO gets
->> chance to be started to get polled and dispatched to bh.
->
-> We create the QMP monitor within qemu_create_late_backends(), which runs
-> before qmp_x_exit_preconfig(), but commands get processed only in the
-> main loop, which we enter later.
->
-> Correct?
->
->> Technically it's not a real delay for specific QMP command, but rather
->> an extended span of initialization process may take place before the
->> very first QMP request, usually qmp_capabilities, will be
->> serviced. It's natural for mgmt software to expect initialization
->> delay for the first qmp_capabilities response if it has to immediately
->> issue one after launching qemu, especially when you have a large guest
->> with hundred GBs of memory and with passthrough device that has to pin
->> memory for DMA e.g. VFIO, the delayed effect from the QEMU
->> initialization process is very visible too.
 
-The work clearly needs to be done.  Whether it needs to be blocking
-other things is less clear.
+6e672b2a088ad56beb076d8d19ff86502815d6a8 now - I fixed two commit logs
 
-Even if it doesn't need to be blocking, we may choose not to avoid
-blocking for now.  That should be an informed decision, though.
 
-All I'm trying to do here is understand the tradeoffs, so I can give
-useful advice.
-
->>                                             On the other hand, before
->> the patch, if memory happens to be in the middle of being pinned, any
->> ongoing QMP can't be serviced by the QEMU main loop, either.
-
-When exactly does this pinning happen before the patch?  In which
-function?
-
->> I'd also like to highlight that without this patch, the pretty high
->> delay due to page pinning is even visible to the guest in addition to
->> just QMP delay, which largely affected guest boot time with vDPA
->> device already. It is long standing, and every VM user with vDPA
->> device would like to avoid such high delay for the first boot, which
->> is not seen with similar device e.g. VFIO passthrough.
-
-I understand that hiding the delay from the guest could be useful.
-
->>>> Thanks,
->>>> -Siwei
->>>>
->>>>> You told us an absolute delay you observed.  What's the relative dela=
-y,
->>>>> i.e. what's the delay with and without these patches?
->>>
->>> Can you answer this question?
->>
->> I thought I already got that answered in earlier reply. The relative
->> delay is subject to the size of memory. Usually mgmt software won't be
->> able to notice, unless the guest has more than 100GB of THP memory to
->> pin, for DMA or whatever reason.
-
-Alright, what are the delays you observe with and without these patches
-for three test cases that pin 50 / 100 / 200 GiB of THP memory
-respectively?
-
->>>>> We need QMP to become available earlier in the startup sequence for
->>>>> other reasons.  Could we bypass the delay that way?  Please understand
->>>>> that this would likely be quite difficult: we know from experience th=
-at
->>>>> messing with the startup sequence is prone to introduce subtle
->>>>> compatility breaks and even bugs.
->>>>>
->>>>>> (I remember VFIO has some optimization in the speed of the pinning,
->>>>>> could vDPA do the same?)
->>>>>
->>>>> That's well outside my bailiwick :)
->>
->> Please be understood that any possible optimization is out of scope of
->> this patch series, while there's certainly way around that already and
->> to be carry out in the future, as Peter alluded to in earlier
->> discussion thread:
->>
->> https://lore.kernel.org/qemu-devel/ZZT7wuq-_IhfN_wR@x1n/
->> https://lore.kernel.org/qemu-devel/ZZZUNsOVxxqr-H5S@x1n/
-
-Got it.
-
->> Thanks,
->> -Siwei
->>
->>>>>
->>>>> [...]
->>>>>
+> ----------------------------------------------------------------
+> virtio,pci,pc: features, fixes, tests
+> 
+> vhost will now no longer set a call notifier if unused
+> loongarch gained acpi tests based on bios-tables-test
+> some core pci work for SVM support in vtd
+> vhost vdpa init has been optimized for response time to QMP
+> A couple more fixes
+> 
+> Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+> 
+> ----------------------------------------------------------------
+> Bernhard Beschow (1):
+>       hw/i386/pc_piix: Fix RTC ISA IRQ wiring of isapc machine
+> 
+> Bibo Mao (8):
+>       uefi-test-tools:: Add LoongArch64 support
+>       tests/data/uefi-boot-images: Add ISO image for LoongArch system
+>       tests/qtest/bios-tables-test: Use MiB macro rather hardcode value
+>       tests/acpi: Add empty ACPI data files for LoongArch
+>       tests/qtest/bios-tables-test: Add basic testing for LoongArch
+>       rebuild-expected-aml.sh: Add support for LoongArch
+>       tests/acpi: Fill acpi table data for LoongArch
+>       tests/acpi: Remove stale allowed tables
+> 
+> CLEMENT MATHIEU--DRIF (11):
+>       pcie: Add helper to declare PASID capability for a pcie device
+>       pcie: Helper functions to check if PASID is enabled
+>       pcie: Helper function to check if ATS is enabled
+>       pcie: Add a helper to declare the PRI capability for a pcie device
+>       pcie: Helper functions to check to check if PRI is enabled
+>       pci: Cache the bus mastering status in the device
+>       pci: Add an API to get IOMMU's min page size and virtual address width
+>       memory: Store user data pointer in the IOMMU notifiers
+>       pci: Add a pci-level initialization function for IOMMU notifiers
+>       pci: Add a pci-level API for ATS
+>       pci: Add a PCI-level API for PRI
+> 
+> Eugenio Pérez (7):
+>       vdpa: check for iova tree initialized at net_client_start
+>       vdpa: reorder vhost_vdpa_set_backend_cap
+>       vdpa: set backend capabilities at vhost_vdpa_init
+>       vdpa: add listener_registered
+>       vdpa: reorder listener assignment
+>       vdpa: move iova_tree allocation to net_vhost_vdpa_init
+>       vdpa: move memory listener register to vhost_vdpa_init
+> 
+> Huaitong Han (1):
+>       vhost: Don't set vring call if guest notifier is unused
+> 
+> Sairaj Kodilkar (1):
+>       hw/i386/amd_iommu: Fix device setup failure when PT is on.
+> 
+> Vasant Hegde (1):
+>       hw/i386/amd_iommu: Fix xtsup when vcpus < 255
+> 
+> Yuri Benditovich (1):
+>       virtio: check for validity of indirect descriptors
+> 
+>  include/hw/pci/pci.h                               | 316 +++++++++++++++++++++
+>  include/hw/pci/pci_device.h                        |   1 +
+>  include/hw/pci/pcie.h                              |  13 +-
+>  include/hw/pci/pcie_regs.h                         |   8 +
+>  include/hw/virtio/vhost-vdpa.h                     |  22 +-
+>  include/system/memory.h                            |   1 +
+>  hw/i386/amd_iommu.c                                |  20 +-
+>  hw/i386/pc_piix.c                                  |   5 +
+>  hw/pci/pci.c                                       | 206 +++++++++++++-
+>  hw/pci/pcie.c                                      |  78 +++++
+>  hw/virtio/vhost-vdpa.c                             | 107 ++++---
+>  hw/virtio/virtio-pci.c                             |   7 +-
+>  hw/virtio/virtio.c                                 |  11 +
+>  net/vhost-vdpa.c                                   |  34 +--
+>  tests/qtest/bios-tables-test.c                     |  99 ++++++-
+>  tests/data/acpi/loongarch64/virt/APIC              | Bin 0 -> 108 bytes
+>  tests/data/acpi/loongarch64/virt/APIC.topology     | Bin 0 -> 213 bytes
+>  tests/data/acpi/loongarch64/virt/DSDT              | Bin 0 -> 4641 bytes
+>  tests/data/acpi/loongarch64/virt/DSDT.memhp        | Bin 0 -> 5862 bytes
+>  tests/data/acpi/loongarch64/virt/DSDT.numamem      | Bin 0 -> 4647 bytes
+>  tests/data/acpi/loongarch64/virt/DSDT.topology     | Bin 0 -> 5352 bytes
+>  tests/data/acpi/loongarch64/virt/FACP              | Bin 0 -> 268 bytes
+>  tests/data/acpi/loongarch64/virt/MCFG              | Bin 0 -> 60 bytes
+>  tests/data/acpi/loongarch64/virt/PPTT              | Bin 0 -> 76 bytes
+>  tests/data/acpi/loongarch64/virt/PPTT.topology     | Bin 0 -> 296 bytes
+>  tests/data/acpi/loongarch64/virt/SLIT              |   0
+>  tests/data/acpi/loongarch64/virt/SLIT.numamem      | Bin 0 -> 48 bytes
+>  tests/data/acpi/loongarch64/virt/SPCR              | Bin 0 -> 80 bytes
+>  tests/data/acpi/loongarch64/virt/SRAT              | Bin 0 -> 104 bytes
+>  tests/data/acpi/loongarch64/virt/SRAT.memhp        | Bin 0 -> 144 bytes
+>  tests/data/acpi/loongarch64/virt/SRAT.numamem      | Bin 0 -> 144 bytes
+>  tests/data/acpi/loongarch64/virt/SRAT.topology     | Bin 0 -> 216 bytes
+>  tests/data/acpi/rebuild-expected-aml.sh            |   4 +-
+>  .../bios-tables-test.loongarch64.iso.qcow2         | Bin 0 -> 12800 bytes
+>  tests/qtest/meson.build                            |   1 +
+>  tests/uefi-test-tools/Makefile                     |   5 +-
+>  .../UefiTestToolsPkg/UefiTestToolsPkg.dsc          |   6 +-
+>  tests/uefi-test-tools/uefi-test-build.config       |  10 +
+>  38 files changed, 846 insertions(+), 108 deletions(-)
+>  create mode 100644 tests/data/acpi/loongarch64/virt/APIC
+>  create mode 100644 tests/data/acpi/loongarch64/virt/APIC.topology
+>  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT
+>  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.memhp
+>  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.numamem
+>  create mode 100644 tests/data/acpi/loongarch64/virt/DSDT.topology
+>  create mode 100644 tests/data/acpi/loongarch64/virt/FACP
+>  create mode 100644 tests/data/acpi/loongarch64/virt/MCFG
+>  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT
+>  create mode 100644 tests/data/acpi/loongarch64/virt/PPTT.topology
+>  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT
+>  create mode 100644 tests/data/acpi/loongarch64/virt/SLIT.numamem
+>  create mode 100644 tests/data/acpi/loongarch64/virt/SPCR
+>  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT
+>  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.memhp
+>  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.numamem
+>  create mode 100644 tests/data/acpi/loongarch64/virt/SRAT.topology
+>  create mode 100644 tests/data/uefi-boot-images/bios-tables-test.loongarch64.iso.qcow2
+> 
 
 
