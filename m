@@ -4,74 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0180EC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 12:03:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61B96C54FB3
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 12:27:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM3s8-0005MG-DB; Mon, 02 Jun 2025 08:02:32 -0400
+	id 1uM4Fs-0003dg-NX; Mon, 02 Jun 2025 08:27:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uM3s5-0005L3-IJ
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 08:02:29 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uM4Fj-0003cz-Ul; Mon, 02 Jun 2025 08:26:56 -0400
+Received: from mail-qv1-xf32.google.com ([2607:f8b0:4864:20::f32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jonwilson030981@googlemail.com>)
- id 1uM3s2-0002Aq-7E
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 08:02:29 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-450cfb790f7so31433745e9.0
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 05:02:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hibriansong@gmail.com>)
+ id 1uM4Fg-0005D1-Sl; Mon, 02 Jun 2025 08:26:55 -0400
+Received: by mail-qv1-xf32.google.com with SMTP id
+ 6a1803df08f44-6f0ad744811so31657186d6.1; 
+ Mon, 02 Jun 2025 05:26:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=googlemail.com; s=20230601; t=1748865741; x=1749470541; darn=nongnu.org;
- h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=ZEJFqk2F8FWRANFG2dY4a81X+NTaL96SF/qjsyS1kMk=;
- b=Brgp7eOvLJQR0QOsuBeWWEfB6tefOqN1fBftS5P2iSpAIku3kkbw0a9ssuBkkLQ68j
- wBEMysxP/SA4VfyJOXL+20SJdVmptdRGuZ2cudLZf3dK0N6REgntkdFwv/GU9GxkQ3P1
- t2yuzTFYtlum6+UIMH/qLhaHmQQEaN7049T4Egn+F9FTPBNXpoFlQ8VzECyHMwPzVVMK
- RvqgN7sqiMECHTn1vdw0QmTSugYnUaWhdU96IUU97p5THJwzZsWjq1tVDoSEKkdO7yWY
- 6/n/EMmsGgEIxgdCn1eW6Dou+okuUi/uJ0jHUoVSjn/Vm5xGIM6p3xTuAwQeY+NNDNdV
- 6vVQ==
+ d=gmail.com; s=20230601; t=1748867211; x=1749472011; darn=nongnu.org;
+ h=in-reply-to:content-language:references:cc:to:subject:from
+ :user-agent:mime-version:date:message-id:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Q8JMhavpWA/4U4YYWUWAvfRCop2v457n/RkEL4jJxBs=;
+ b=J3+36MMouLwAcZNyEw9/Q6uEtqN5FstQ/5SEBau7cEYN1Pa2II0l2MaInsASQDneel
+ u88OYERgt5QWx+FEs1ov7/m9gPkzvD63203E9lYEB19J6uVLcjlQTQQ00j3kL+x3UqN6
+ +Iz+ERQ8jMwZBi2EgZbb7drzR4iVDlCcSQLS/qreIp0QqAhCUV1CgvPBV3S8xw4iC1Hw
+ 1ypRyVEOsOqWBV26Ec1vMFyr1E06Ylu1LKapydgMDl+GXXgdimdYEPNgQjEDVvQblmeC
+ V4xirxRcpUHUI/6SFPtyiDCVuDCwN8QeecJt+ZVzpgqR2Wp8tkbMn5LVy7aZhmN1qT6y
+ 18lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748865741; x=1749470541;
- h=to:subject:message-id:date:from:mime-version:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ZEJFqk2F8FWRANFG2dY4a81X+NTaL96SF/qjsyS1kMk=;
- b=Pg0q6aT9axcEsOPv56NmKCEK9n/NkHhXcDIsxaPu17sGKnQuB53qoVsVBN9eHTRk1K
- Ey5AWQ7NCOGF3nPQJUOoo+ODI1kwEQNGVFK0xvkG4jIhqNAtePeHpa4QqEihgNil6GAb
- 1Sss3mK5+RmNJ5sCSWzPzKiwqDMW9g9LMrCVK8SC7n9zM5snJS8Sj7KJR8FZnJbgrp9N
- QmmqbYajdfLvhlHMdS0WlraZeT3Bj9HsK798TK4kTZZtKG+Mm1bPt+SKi3oKrghcNRpf
- I/GzoryqVYeRx5p/Z5DRaPftTI7tNbXKXCjjIhuUEW2bEliiXEmXXHP90WktIdMosZls
- oJTA==
-X-Gm-Message-State: AOJu0YylhizW/lcTpAjMHG6I+2KEiezV4Q1kJIirXU3Moy+zQlw497qB
- wlefQoRj8frsGheFyQCXplze62y1MMfC0Ryn+u0pGLy/6QsPqCQobOS5Qa2ofs772giBIsqibUE
- BGC0angWGvnmlT0crtcUOyCL35HcLCi6QoFsQ
-X-Gm-Gg: ASbGncv8trleWHwy4WJtPpudOLrK/WTPt4CFRXFpcVpplUSLBBPP1uJ0b/9uY/weGk1
- 3FSRKVhSfJSUp8aAQ0R17GCYEcRqGrA+gDpchM3BLEQeHQJYyKbMNQ+fiPAt/t7Awv9UmTixH4J
- 46mIe7ZbBM8s3aHIUNMbUXYW96Th41nXEw
-X-Google-Smtp-Source: AGHT+IFJJhAU13LBBUJKpj6FBR91+OZuLGNVrSSNPA9LyUHJTfHb0BgdJc5C5N95f1no/HJs/4wcaFmAW4J0DZofQUA=
-X-Received: by 2002:a05:600c:6286:b0:442:f98e:f37 with SMTP id
- 5b1f17b1804b1-450d657fbf9mr105254445e9.21.1748865739118; Mon, 02 Jun 2025
- 05:02:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748867211; x=1749472011;
+ h=in-reply-to:content-language:references:cc:to:subject:from
+ :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Q8JMhavpWA/4U4YYWUWAvfRCop2v457n/RkEL4jJxBs=;
+ b=JDowvlG9JaowvPJv6o4VSvmEvKwzP7LbfYDyTc3Ug/8/8b47IfYuY3wNgb22wwUlm+
+ y2kiVjzP7Ep8UoqQ80ganeCSJSMZOALMQCfygyDjiIBpEpacgcwDFDCakI5yEh2DqUHZ
+ lJgznyrdOXPF2L73wScso0lzn6Xa8rtUb4T4IIHVy/dKUMGluGu3tAMZ6oKBDv9DyEW1
+ bYwSNuxO4tr1JWCgH/vui7z/gQAStsbHfDXlmzkJ2xHLOhQFiRnUBBBSWP8nmy0rmIOQ
+ 5edGS7rtJk+LB5PZI1rO1MyUz98Zr6aF6F+1PPowTcdLpryE9QOor6K2xkAhY7Zfc1gU
+ CxZA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJSWw+lEUbFAm18ZB3/V9dWIg17vjBIoWmB/Z5yi3phDWnqpuuzvXI1doBa7itYajpMEQlLJSHHDOc@nongnu.org
+X-Gm-Message-State: AOJu0Yx0ZFsfrJpHjNA6UCX8ldF6g26Fc8dcANKKJDKg6DWHNvRm4qxo
+ 3E0wG0fSGpDD5GVT7BmOlROPVZdvWLHNHNlU6I9G7a2HK5z4FKmw8b5mb0u/iDdmYDE=
+X-Gm-Gg: ASbGncuaRH/tOVt79K3m9W/KFEMEr2Sp8I0UeX/47utx6DMfj53w3zKRK92GThBesbA
+ DZ2Pvr9tAapIabhwhsJl2Kviw0391jWS8qqrzqA55TXw1oB5J1kPbJtT45qLGQeND0Hp6RXVH8E
+ GduYV2yuFYaqk3geZHq4k0FTfpIXpW4jkwyzDtr8wWQCYdpmG7Y5lXlABQuLfkxDd1kWpmacBR4
+ 5aAOV/1gTTy8XokqqwnwTn0sybKUHMpx6rdu6k+RCqaR493JYSpcfUHF+EHQn4Q0OSaD1qZcfBg
+ Vkl8hsrkhlVn4arDidaE78P/W71ITbAUVGkx6dKppgF40ER+9YdeXH3PY1MoFRyWbtE2
+X-Google-Smtp-Source: AGHT+IFtCNpXsVHEfaZcDX+Y9vyNF+NXQ8PxDavIIDV60hId3d14laZLMIK1Z+4sWeugCUbl6Rp4/g==
+X-Received: by 2002:a05:6214:acc:b0:6fa:cd35:3db6 with SMTP id
+ 6a1803df08f44-6fad90abf8dmr160795466d6.18.1748867210429; 
+ Mon, 02 Jun 2025 05:26:50 -0700 (PDT)
+Received: from [192.168.2.59] ([174.92.118.198])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fac6d4d0cesm59801036d6.35.2025.06.02.05.26.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Jun 2025 05:26:50 -0700 (PDT)
+Content-Type: multipart/alternative;
+ boundary="------------uHkLPvmu8skt0mKNUTH8wScJ"
+Message-ID: <a0a98436-5e4e-46d1-9a66-b6edce5c0ecc@gmail.com>
+Date: Mon, 2 Jun 2025 08:26:39 -0400
 MIME-Version: 1.0
-From: Jon Wilson <jonwilson030981@googlemail.com>
-Date: Mon, 2 Jun 2025 13:02:08 +0100
-X-Gm-Features: AX0GCFvUAaTPm3Vntma792-3HbZZDK9keAFe0kx-CmwtWWwlXKOFtbKRcb6JaGI
-Message-ID: <CAJHT5-JwrQ31MEKKSNL-E0RPm+cg7UOiqzV5cPL-mnTOPa7eUA@mail.gmail.com>
-Subject: TCG Address Sanitizer Optimization.
-To: qemu-devel@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000023dd180636958921"
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=jonwilson030981@googlemail.com; helo=mail-wm1-x32b.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+From: Brian <hibriansong@gmail.com>
+Subject: Re: [RFC 08/11] aio-posix: gracefully handle io_uring_queue_init()
+ failure
+To: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Czenczek <hreitz@redhat.com>
+References: <20250528190916.35864-1-stefanha@redhat.com>
+ <20250528190916.35864-9-stefanha@redhat.com>
+Content-Language: en-US
+In-Reply-To: <20250528190916.35864-9-stefanha@redhat.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f32;
+ envelope-from=hibriansong@gmail.com; helo=mail-qv1-xf32.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -88,308 +103,343 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000023dd180636958921
-Content-Type: text/plain; charset="UTF-8"
+This is a multi-part message in MIME format.
+--------------uHkLPvmu8skt0mKNUTH8wScJ
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-I am attempting to optimize some TCG code which I have previously written
-for
-qemu-libafl-bridge (https://github.com/AFLplusplus/qemu-libafl-bridge), the
-component used by the LibAFL project when fuzzing binaries using QEMU to
-provide runtime instrumentation. The code is used to write additional TCG
-into
-basic blocks whenever a load or store operation is performed in order to
-provide
-address sanitizer functionality.
+On 5/28/25 3:09 PM, Stefan Hajnoczi wrote:
+> io_uring may not be available at runtime due to system policies (e.g.
+> the io_uring_disabled sysctl) or creation could fail due to file
+> descriptor resource limits.
+>
+> Handle failure scenarios as follows:
+>
+> If another AioContext already has io_uring, then fail AioContext
+> creation so that the aio_add_sqe() API is available uniformly from all
+> QEMU threads. Otherwise fall back to epoll(7) if io_uring is
+> unavailable.
+>
+> Notes:
+> - Update the comment about selecting the fastest fdmon implementation.
+>    At this point it's not about speed anymore, it's about aio_add_sqe()
+>    API availability.
+> - Uppercase the error message when converting from error_report() to
+>    error_setg_errno() for consistency (but there are instances of
+>    lowercase in the codebase).
+> - It's easier to move the #ifdefs from aio-posix.h to aio-posix.c.
+>
+> Signed-off-by: Stefan Hajnoczi<stefanha@redhat.com>
+> ---
+>   util/aio-posix.h      | 12 ++----------
+>   util/aio-posix.c      | 29 ++++++++++++++++++++++++++---
+>   util/fdmon-io_uring.c |  8 ++++----
+>   3 files changed, 32 insertions(+), 17 deletions(-)
+>
+> diff --git a/util/aio-posix.h b/util/aio-posix.h
+> index f9994ed79e..6f9d97d866 100644
+> --- a/util/aio-posix.h
+> +++ b/util/aio-posix.h
+> @@ -18,6 +18,7 @@
+>   #define AIO_POSIX_H
+>   
+>   #include "block/aio.h"
+> +#include "qapi/error.h" struct AioHandler { GPollFD pfd; @@ -72,17 +73,8 @@ static inline 
+> void fdmon_epoll_disable(AioContext *ctx) #endif /* 
+> !CONFIG_EPOLL_CREATE1 */ #ifdef CONFIG_LINUX_IO_URING -bool 
+> fdmon_io_uring_setup(AioContext *ctx); +void 
+> fdmon_io_uring_setup(AioContext *ctx, Error **errp); void 
+> fdmon_io_uring_destroy(AioContext *ctx); -#else -static inline bool 
+> fdmon_io_uring_setup(AioContext *ctx) -{ - return false; -} - -static 
+> inline void fdmon_io_uring_destroy(AioContext *ctx) -{ -} #endif /* 
+> !CONFIG_LINUX_IO_URING */ #endif /* AIO_POSIX_H */ diff --git 
+> a/util/aio-posix.c b/util/aio-posix.c index fa047fc7ad..44b3df61f9 
+> 100644 --- a/util/aio-posix.c +++ b/util/aio-posix.c @@ -16,6 +16,7 @@ 
+> #include "qemu/osdep.h"
+>   #include "block/block.h"
+>   #include "block/thread-pool.h"
+> +#include "qapi/error.h"
+>   #include "qemu/main-loop.h"
+>   #include "qemu/lockcnt.h"
+>   #include "qemu/rcu.h"
+> @@ -717,17 +718,39 @@ void aio_context_setup(AioContext *ctx, Error **errp)
+>       ctx->epollfd = -1;
+>       ctx->epollfd_tag = NULL;
+>   
+> -    /* Use the fastest fd monitoring implementation if available */
+> -    if (fdmon_io_uring_setup(ctx)) {
+> -        return;
+> +#ifdef CONFIG_LINUX_IO_URING
+> +    {
+> +        static bool need_io_uring;
+> +        Error *local_err = NULL; /* ERRP_GUARD() doesn't handle error_abort */
+> +
+> +        /* io_uring takes precedence because it provides aio_add_sqe() support */
+> +        fdmon_io_uring_setup(ctx, &local_err);
+> +        if (!local_err) {
+> +            /*
+> +             * If one AioContext gets io_uring, then all AioContexts need io_uring
+> +             * so that aio_add_sqe() support is available across all threads.
+> +             */
+> +            need_io_uring = true;
+> +            return;
+> +        }
+> +        if (need_io_uring) {
+> +            error_propagate(errp, local_err);
+> +            return;
+> +        }
+> +
+> +        warn_report_err_once(local_err); /* frees local_err */
+> +        local_err = NULL;
+>       }
+> +#endif /* CONFIG_LINUX_IO_URING */
+>   
+Is there a problem with the logic of this code snippet?
 
-Address sanitizer is quite simple and works by mapping each 8-byte region of
-address space to single byte within a region called the shadow map. The
-address
-(on a 64-bit platform) of the shadow map for a given address is:
+If we fail at fdmon_io_uring_setup, specifically at io_uring_queue_init,
+local_err (or errp) will be set to a non-NULL error value. In that case,
+need_io_uring will be set to true, but the function will return 
+immediately.
+As a result, the later if (need_io_uring) block will never be executed
 
-    Shadow = (Mem >> 3) + 0x7fff8000;
+>       fdmon_epoll_setup(ctx);
+>   }
+>   
+>   void aio_context_destroy(AioContext *ctx)
+>   {
+> +#ifdef CONFIG_LINUX_IO_URING
+>       fdmon_io_uring_destroy(ctx);
+> +#endif
+>   
+>       qemu_lockcnt_lock(&ctx->list_lock);
+>       fdmon_epoll_disable(ctx);
+> diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+> index 2092d08d24..ef1a866a03 100644
+> --- a/util/fdmon-io_uring.c
+> +++ b/util/fdmon-io_uring.c
+> @@ -45,6 +45,7 @@
+>   
+>   #include "qemu/osdep.h"
+>   #include <poll.h>
+> +#include "qapi/error.h"
+>   #include "qemu/rcu_queue.h"
+>   #include "aio-posix.h"
+>   
+> @@ -361,7 +362,7 @@ static const FDMonOps fdmon_io_uring_ops = {
+>       .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
+>   };
+>   
+> -bool fdmon_io_uring_setup(AioContext *ctx)
+> +void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+>   {
+>       int ret;
+>   
+> @@ -369,15 +370,14 @@ bool fdmon_io_uring_setup(AioContext *ctx)
+>   
+>       ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &ctx->fdmon_io_uring, 0);
+>       if (ret != 0) {
+> -        return false;
+> +        error_setg_errno(errp, -ret, "Failed to initialize io_uring");
+> +        return;
+>       }
+>   
+>       QSLIST_INIT(&ctx->submit_list);
+>       ctx->fdmon_ops = &fdmon_io_uring_ops;
+>       ctx->io_uring_fd_tag = g_source_add_unix_fd(&ctx->source,
+>               ctx->fdmon_io_uring.ring_fd, G_IO_IN);
+> -
+> -    return true;
+>   }
+>   
+>   void fdmon_io_uring_destroy(AioContext *ctx)
+--------------uHkLPvmu8skt0mKNUTH8wScJ
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-The value in the shadow map encodes the accessibility of an address:
+<!DOCTYPE html>
+<html data-lt-installed="true">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body style="padding-bottom: 1px;">
+    <div class="moz-cite-prefix">On 5/28/25 3:09 PM, Stefan Hajnoczi
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:20250528190916.35864-9-stefanha@redhat.com">
+      <pre wrap="" class="moz-quote-pre">io_uring may not be available at runtime due to system policies (e.g.
+the io_uring_disabled sysctl) or creation could fail due to file
+descriptor resource limits.
 
-    0  - The whole 8 byte region is accessible.
-    1 .. 7 - The first n bytes are accessible.
-    negative - The whole 8 byte region is inaccessible.
+Handle failure scenarios as follows:
 
-The following pseudo code shows the algorithm:
+If another AioContext already has io_uring, then fail AioContext
+creation so that the aio_add_sqe() API is available uniformly from all
+QEMU threads. Otherwise fall back to epoll(7) if io_uring is
+unavailable.
 
-////////////////////////////////////////////////////////////////////////////////
+Notes:
+- Update the comment about selecting the fastest fdmon implementation.
+  At this point it's not about speed anymore, it's about aio_add_sqe()
+  API availability.
+- Uppercase the error message when converting from error_report() to
+  error_setg_errno() for consistency (but there are instances of
+  lowercase in the codebase).
+- It's easier to move the #ifdefs from aio-posix.h to aio-posix.c.
 
-https://github.com/google/sanitizers/wiki/addresssanitizeralgorithm
+Signed-off-by: Stefan Hajnoczi <a class="moz-txt-link-rfc2396E"
+      href="mailto:stefanha@redhat.com">&lt;stefanha@redhat.com&gt;</a>
+---
+ util/aio-posix.h      | 12 ++----------
+ util/aio-posix.c      | 29 ++++++++++++++++++++++++++---
+ util/fdmon-io_uring.c |  8 ++++----
+ 3 files changed, 32 insertions(+), 17 deletions(-)
 
-byte *shadow_address = MemToShadow(address);
-byte shadow_value = *shadow_address;
-if (shadow_value) {
-  if (SlowPathCheck(shadow_value, address, kAccessSize)) {
-    ReportError(address, kAccessSize, kIsWrite);
-  }
-}
+diff --git a/util/aio-posix.h b/util/aio-posix.h
+index f9994ed79e..6f9d97d866 100644
+--- a/util/aio-posix.h
++++ b/util/aio-posix.h
+@@ -18,6 +18,7 @@
+ #define AIO_POSIX_H
+ 
+ #include "block/aio.h"
++#include "qapi/error.h<a class="moz-txt-link-rfc2396E"
+href="mailto:structAioHandler{GPollFDpfd;@@-72,17+73,8@@staticinlinevoidfdmon_epoll_disable(AioContext*ctx)#endif/*!CONFIG_EPOLL_CREATE1*/#ifdefCONFIG_LINUX_IO_URING-boolfdmon_io_uring_setup(AioContext*ctx);+voidfdmon_io_uring_setup(AioContext*ctx,Error**errp);voidfdmon_io_uring_destroy(AioContext*ctx);-#else-staticinlineboolfdmon_io_uring_setup(AioContext*ctx)-{-returnfalse;-}--staticinlinevoidfdmon_io_uring_destroy(AioContext*ctx)-{-}#endif/*!CONFIG_LINUX_IO_URING*/#endif/*AIO_POSIX_H*/diff--gita/util/aio-posix.cb/util/aio-posix.cindexfa047fc7ad..44b3df61f9100644---a/util/aio-posix.c+++b/util/aio-posix.c@@-16,6+16,7@@#include">"
+ 
+ struct AioHandler {
+     GPollFD pfd;
+@@ -72,17 +73,8 @@ static inline void fdmon_epoll_disable(AioContext *ctx)
+ #endif /* !CONFIG_EPOLL_CREATE1 */
+ 
+ #ifdef CONFIG_LINUX_IO_URING
+-bool fdmon_io_uring_setup(AioContext *ctx);
++void fdmon_io_uring_setup(AioContext *ctx, Error **errp);
+ void fdmon_io_uring_destroy(AioContext *ctx);
+-#else
+-static inline bool fdmon_io_uring_setup(AioContext *ctx)
+-{
+-    return false;
+-}
+-
+-static inline void fdmon_io_uring_destroy(AioContext *ctx)
+-{
+-}
+ #endif /* !CONFIG_LINUX_IO_URING */
+ 
+ #endif /* AIO_POSIX_H */
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index fa047fc7ad..44b3df61f9 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -16,6 +16,7 @@
+ #include "</a>qemu/osdep.h"
+ #include "block/block.h"
+ #include "block/thread-pool.h"
++#include "qapi/error.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/lockcnt.h"
+ #include "qemu/rcu.h"
+@@ -717,17 +718,39 @@ void aio_context_setup(AioContext *ctx, Error **errp)
+     ctx-&gt;epollfd = -1;
+     ctx-&gt;epollfd_tag = NULL;
+ 
+-    /* Use the fastest fd monitoring implementation if available */
+-    if (fdmon_io_uring_setup(ctx)) {
+-        return;
++#ifdef CONFIG_LINUX_IO_URING
++    {
++        static bool need_io_uring;
++        Error *local_err = NULL; /* ERRP_GUARD() doesn't handle error_abort */
++
++        /* io_uring takes precedence because it provides aio_add_sqe() support */
++        fdmon_io_uring_setup(ctx, &amp;local_err);
++        if (!local_err) {
++            /*
++             * If one AioContext gets io_uring, then all AioContexts need io_uring
++             * so that aio_add_sqe() support is available across all threads.
++             */
++            need_io_uring = true;
++            return;
++        }
++        if (need_io_uring) {
++            error_propagate(errp, local_err);
++            return;
++        }
++
++        warn_report_err_once(local_err); /* frees local_err */
++        local_err = NULL;
+     }
++#endif /* CONFIG_LINUX_IO_URING */
+ </pre>
+    </blockquote>
+    Is there a problem with the logic of this code snippet?<br>
+    <br>
+    If we fail at fdmon_io_uring_setup, specifically at
+    io_uring_queue_init, <br>
+    local_err (or errp) will be set to a non-NULL error value. In that
+    case, <br>
+    need_io_uring will be set to true, but the function will return
+    immediately. <br>
+    As a result, the later if (need_io_uring) block will never be
+    executed<br>
+    <br>
+    <blockquote type="cite"
+      cite="mid:20250528190916.35864-9-stefanha@redhat.com">
+      <pre wrap="" class="moz-quote-pre">     fdmon_epoll_setup(ctx);
+ }
+ 
+ void aio_context_destroy(AioContext *ctx)
+ {
++#ifdef CONFIG_LINUX_IO_URING
+     fdmon_io_uring_destroy(ctx);
++#endif
+ 
+     qemu_lockcnt_lock(&amp;ctx-&gt;list_lock);
+     fdmon_epoll_disable(ctx);
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index 2092d08d24..ef1a866a03 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -45,6 +45,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include &lt;poll.h&gt;
++#include "qapi/error.h"
+ #include "qemu/rcu_queue.h"
+ #include "aio-posix.h"
+ 
+@@ -361,7 +362,7 @@ static const FDMonOps fdmon_io_uring_ops = {
+     .gsource_dispatch = fdmon_io_uring_gsource_dispatch,
+ };
+ 
+-bool fdmon_io_uring_setup(AioContext *ctx)
++void fdmon_io_uring_setup(AioContext *ctx, Error **errp)
+ {
+     int ret;
+ 
+@@ -369,15 +370,14 @@ bool fdmon_io_uring_setup(AioContext *ctx)
+ 
+     ret = io_uring_queue_init(FDMON_IO_URING_ENTRIES, &amp;ctx-&gt;fdmon_io_uring, 0);
+     if (ret != 0) {
+-        return false;
++        error_setg_errno(errp, -ret, "Failed to initialize io_uring");
++        return;
+     }
+ 
+     QSLIST_INIT(&amp;ctx-&gt;submit_list);
+     ctx-&gt;fdmon_ops = &amp;fdmon_io_uring_ops;
+     ctx-&gt;io_uring_fd_tag = g_source_add_unix_fd(&amp;ctx-&gt;source,
+             ctx-&gt;fdmon_io_uring.ring_fd, G_IO_IN);
+-
+-    return true;
+ }
+ 
+ void fdmon_io_uring_destroy(AioContext *ctx)
+</pre>
+    </blockquote>
+    <lt-container></lt-container>
+  </body>
+</html>
 
-// Check the cases where we access first k bytes of the qword
-// and these k bytes are unpoisoned.
-bool SlowPathCheck(shadow_value, address, kAccessSize) {
-  last_accessed_byte = (address & 7) + kAccessSize - 1;
-  return (last_accessed_byte >= shadow_value);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-My current implementation makes use of conditional move instructions to
-trigger
-a segfault by way of null dereference in the event that the shadow map
-indicates
-that a memory access is invalid.
-
-////////////////////////////////////////////////////////////////////////////////
-
-#if TARGET_LONG_BITS == 32
-#define SHADOW_BASE (0x20000000)
-#elif TARGET_LONG_BITS == 64
-#define SHADOW_BASE (0x7fff8000)
-#else
-#error Unhandled TARGET_LONG_BITS value
-#endif
-
-void libafl_tcg_gen_asan(TCGTemp * addr, size_t size)
-{
-    if (size == 0)
-        return;
-
-    TCGv addr_val = temp_tcgv_tl(addr);
-    TCGv k = tcg_temp_new();
-    TCGv shadow_addr = tcg_temp_new();
-    TCGv_ptr shadow_ptr = tcg_temp_new_ptr();
-    TCGv shadow_val = tcg_temp_new();
-    TCGv test_addr = tcg_temp_new();
-    TCGv_ptr test_ptr = tcg_temp_new_ptr();
-
-    tcg_gen_andi_tl(k, addr_val, 7);
-    tcg_gen_addi_tl(k, k, size - 1);
-
-    tcg_gen_shri_tl(shadow_addr, addr_val, 3);
-    tcg_gen_addi_tl(shadow_addr, shadow_addr, SHADOW_BASE);
-    tcg_gen_tl_ptr(shadow_ptr, shadow_addr);
-    tcg_gen_ld8s_tl(shadow_val, shadow_ptr, 0);
-
-    /*
-     * Making conditional branches here appears to cause QEMU issues with
-dead
-     * temporaries so we will instead avoid branches. We will cause the
-guest
-     * to perform a NULL dereference in the event of an ASAN fault. Note
-that
-     * we will do this by using a store rather than a load, since the TCG
-may
-     * otherwise determine that the result of the load is unused and simply
-     * discard the operation. In the event that the shadow memory doesn't
-     * detect a fault, we will simply write the value read from the shadow
-     * memory back to it's original location. If, however, the shadow memory
-     * detects an invalid access, we will instead attempt to write the value
-     * at 0x0.
-     */
-    tcg_gen_movcond_tl(TCG_COND_EQ, test_addr,
-        shadow_val, tcg_constant_tl(0),
-        shadow_addr, tcg_constant_tl(0));
-
-    if (size < 8)
-    {
-        tcg_gen_movcond_tl(TCG_COND_GE, test_addr,
-            k, shadow_val,
-            test_addr, shadow_addr);
-    }
-
-    tcg_gen_tl_ptr(test_ptr, test_addr);
-    tcg_gen_st8_tl(shadow_val, test_ptr, 0);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-However, I would like test an implementation more like the following to see
-how
-the performance compares. Whilst this introduces branches, the fast path is
-much
-more likely to be executed than the slow path and hence bypassing the
-additional
-checks and unnecessary memory writes I am hopeful it will improve
-performance.
-
-////////////////////////////////////////////////////////////////////////////////
-
-void libafl_tcg_gen_asan(TCGTemp* addr, size_t size)
-{
-    if (size == 0) {
-        return;
-    }
-
-    if (size > 8) {
-        size = 8;
-    }
-
-    TCGLabel *done = gen_new_label();
-
-    TCGv addr_val = temp_tcgv_tl(addr);
-    TCGv shadow_addr = tcg_temp_new();
-    TCGv_ptr shadow_ptr = tcg_temp_new_ptr();
-    TCGv shadow_val = tcg_temp_new();
-    TCGv k = tcg_temp_new();
-    TCGv zero = tcg_constant_tl(0);
-    TCGv_ptr null_ptr = tcg_temp_new_ptr();
-
-    tcg_gen_shri_tl(shadow_addr, addr_val, 3);
-    tcg_gen_addi_tl(shadow_addr, shadow_addr, SHADOW_BASE);
-    tcg_gen_tl_ptr(shadow_ptr, shadow_addr);
-    tcg_gen_ld8s_tl(shadow_val, shadow_ptr, 0);
-
-    tcg_gen_brcond_tl(TCG_COND_EQ, shadow_val, zero, done);
-
-    tcg_gen_andi_tl(k, addr_val, 7);
-    tcg_gen_addi_tl(k, k, size - 1);
-
-    tcg_gen_brcond_tl(TCG_COND_LT, shadow_val, k, done);
-
-    tcg_gen_tl_ptr(null_ptr, zero);
-    tcg_gen_st8_tl(zero, null_ptr, 0);
-
-    gen_set_label(done);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-However, when I change to using this implementation, I get the following
-error.
-I have tested it with a trivial hello world implementation for x86_64
-running in
-qemu-user. It doesn't occur the first time the block is executed, therefore
-I
-think the issue is caused by the surrounding TCG in the block it is injected
-into?
-
-////////////////////////////////////////////////////////////////////////////////
-runner-x86_64: ../tcg/tcg.c:4852: tcg_reg_alloc_mov: Assertion
-`ts->val_type == TEMP_VAL_REG' failed.
-Aborted (core dumped)
-////////////////////////////////////////////////////////////////////////////////
-
-I would be very grateful for any advice of how to resolve this issue, or any
-alternative approaches I could use to optimize my original implementation.
-The
-code is obviously a very hot path and so even a tiny performance improvement
-could result in a large performance gain overall.
-
---00000000000023dd180636958921
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">I am attempting to optimize some TCG code which I have pre=
-viously written for<br><div>qemu-libafl-bridge (<a href=3D"https://github.c=
-om/AFLplusplus/qemu-libafl-bridge">https://github.com/AFLplusplus/qemu-liba=
-fl-bridge</a>), the=C2=A0</div><div>component used by the LibAFL project wh=
-en fuzzing binaries using QEMU to=C2=A0</div><div>provide runtime instrumen=
-tation. The code is used to write additional TCG into=C2=A0</div><div>basic=
- blocks whenever a load or store operation is performed in order to provide=
-</div><div>address sanitizer functionality.</div><br>Address sanitizer is q=
-uite simple and works by mapping each 8-byte region of<br>address space to =
-single byte within a region called the shadow map. The address<br>(on a 64-=
-bit platform) of the shadow map for a given address is:<br><br>=C2=A0 =C2=
-=A0 Shadow =3D (Mem &gt;&gt; 3) + 0x7fff8000;<br><br>The value in the shado=
-w map encodes the accessibility of an address:<br><br>=C2=A0 =C2=A0 0 =C2=
-=A0- The whole 8 byte region is accessible.<br>=C2=A0 =C2=A0 1 .. 7 - The f=
-irst n bytes are accessible.<br>=C2=A0 =C2=A0 negative - The whole 8 byte r=
-egion is inaccessible.<br><br>The following pseudo code shows the algorithm=
-:<br><br>//////////////////////////////////////////////////////////////////=
-//////////////<br><br><a href=3D"https://github.com/google/sanitizers/wiki/=
-addresssanitizeralgorithm">https://github.com/google/sanitizers/wiki/addres=
-ssanitizeralgorithm</a><br><br>byte *shadow_address =3D MemToShadow(address=
-);<br>byte shadow_value =3D *shadow_address;<br>if (shadow_value) {<br>=C2=
-=A0 if (SlowPathCheck(shadow_value, address, kAccessSize)) {<br>=C2=A0 =C2=
-=A0 ReportError(address, kAccessSize, kIsWrite);<br>=C2=A0 }<br>}<br><br>//=
- Check the cases where we access first k bytes of the qword<br>// and these=
- k bytes are unpoisoned.<br>bool SlowPathCheck(shadow_value, address, kAcce=
-ssSize) {<br>=C2=A0 last_accessed_byte =3D (address &amp; 7) + kAccessSize =
-- 1;<br>=C2=A0 return (last_accessed_byte &gt;=3D shadow_value);<br>}<br><b=
-r>/////////////////////////////////////////////////////////////////////////=
-///////<br><br>My current implementation makes use of conditional move inst=
-ructions to trigger<br>a segfault by way of null dereference in the event t=
-hat the shadow map indicates<br>that a memory access is invalid.<br><br>///=
-///////////////////////////////////////////////////////////////////////////=
-//<br><br>#if TARGET_LONG_BITS =3D=3D 32<br>#define SHADOW_BASE (0x20000000=
-)<br>#elif TARGET_LONG_BITS =3D=3D 64<br>#define SHADOW_BASE (0x7fff8000)<b=
-r>#else<br>#error Unhandled TARGET_LONG_BITS value<br>#endif<br><br>void li=
-bafl_tcg_gen_asan(TCGTemp * addr, size_t size)<br>{<br>=C2=A0 =C2=A0 if (si=
-ze =3D=3D 0)<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br><br>=C2=A0 =C2=A0 TC=
-Gv addr_val =3D temp_tcgv_tl(addr);<br>=C2=A0 =C2=A0 TCGv k =3D tcg_temp_ne=
-w();<br>=C2=A0 =C2=A0 TCGv shadow_addr =3D tcg_temp_new();<br>=C2=A0 =C2=A0=
- TCGv_ptr shadow_ptr =3D tcg_temp_new_ptr();<br>=C2=A0 =C2=A0 TCGv shadow_v=
-al =3D tcg_temp_new();<br>=C2=A0 =C2=A0 TCGv test_addr =3D tcg_temp_new();<=
-br>=C2=A0 =C2=A0 TCGv_ptr test_ptr =3D tcg_temp_new_ptr();<br><br>=C2=A0 =
-=C2=A0 tcg_gen_andi_tl(k, addr_val, 7);<br>=C2=A0 =C2=A0 tcg_gen_addi_tl(k,=
- k, size - 1);<br><br>=C2=A0 =C2=A0 tcg_gen_shri_tl(shadow_addr, addr_val, =
-3);<br>=C2=A0 =C2=A0 tcg_gen_addi_tl(shadow_addr, shadow_addr, SHADOW_BASE)=
-;<br>=C2=A0 =C2=A0 tcg_gen_tl_ptr(shadow_ptr, shadow_addr);<br>=C2=A0 =C2=
-=A0 tcg_gen_ld8s_tl(shadow_val, shadow_ptr, 0);<br><br>=C2=A0 =C2=A0 /*<br>=
-=C2=A0 =C2=A0 =C2=A0* Making conditional branches here appears to cause QEM=
-U issues with dead<br>=C2=A0 =C2=A0 =C2=A0* temporaries so we will instead =
-avoid branches. We will cause the guest<br>=C2=A0 =C2=A0 =C2=A0* to perform=
- a NULL dereference in the event of an ASAN fault. Note that<br>=C2=A0 =C2=
-=A0 =C2=A0* we will do this by using a store rather than a load, since the =
-TCG may<br>=C2=A0 =C2=A0 =C2=A0* otherwise determine that the result of the=
- load is unused and simply<br>=C2=A0 =C2=A0 =C2=A0* discard the operation. =
-In the event that the shadow memory doesn&#39;t<br>=C2=A0 =C2=A0 =C2=A0* de=
-tect a fault, we will simply write the value read from the shadow<br>=C2=A0=
- =C2=A0 =C2=A0* memory back to it&#39;s original location. If, however, the=
- shadow memory<br>=C2=A0 =C2=A0 =C2=A0* detects an invalid access, we will =
-instead attempt to write the value<br>=C2=A0 =C2=A0 =C2=A0* at 0x0.<br>=C2=
-=A0 =C2=A0 =C2=A0*/<br>=C2=A0 =C2=A0 tcg_gen_movcond_tl(TCG_COND_EQ, test_a=
-ddr,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 shadow_val, tcg_constant_tl(0),<br>=C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 shadow_addr, tcg_constant_tl(0));<br><br>=C2=A0 =
-=C2=A0 if (size &lt; 8)<br>=C2=A0 =C2=A0 {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 t=
-cg_gen_movcond_tl(TCG_COND_GE, test_addr,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 k, shadow_val,<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 t=
-est_addr, shadow_addr);<br>=C2=A0 =C2=A0 }<br><br>=C2=A0 =C2=A0 tcg_gen_tl_=
-ptr(test_ptr, test_addr);<br>=C2=A0 =C2=A0 tcg_gen_st8_tl(shadow_val, test_=
-ptr, 0);<br>}<br><br>//////////////////////////////////////////////////////=
-//////////////////////////<br><br>However, I would like test an implementat=
-ion more like the following to see how<br>the performance compares. Whilst =
-this introduces branches, the fast path is much<br>more likely to be execut=
-ed than the slow path and hence bypassing the additional<br>checks and unne=
-cessary memory writes I am hopeful it will improve performance.<br><br>////=
-///////////////////////////////////////////////////////////////////////////=
-/<br><br>void libafl_tcg_gen_asan(TCGTemp* addr, size_t size)<br>{<br>=C2=
-=A0 =C2=A0 if (size =3D=3D 0) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>=
-=C2=A0 =C2=A0 }<br><br>=C2=A0 =C2=A0 if (size &gt; 8) {<br>=C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 size =3D 8;<br>=C2=A0 =C2=A0 }<br><br>=C2=A0 =C2=A0 TCGLabel =
-*done =3D gen_new_label();<br><br>=C2=A0 =C2=A0 TCGv addr_val =3D temp_tcgv=
-_tl(addr);<br>=C2=A0 =C2=A0 TCGv shadow_addr =3D tcg_temp_new();<br>=C2=A0 =
-=C2=A0 TCGv_ptr shadow_ptr =3D tcg_temp_new_ptr();<br>=C2=A0 =C2=A0 TCGv sh=
-adow_val =3D tcg_temp_new();<br>=C2=A0 =C2=A0 TCGv k =3D tcg_temp_new();<br=
->=C2=A0 =C2=A0 TCGv zero =3D tcg_constant_tl(0);<br>=C2=A0 =C2=A0 TCGv_ptr =
-null_ptr =3D tcg_temp_new_ptr();<br><br>=C2=A0 =C2=A0 tcg_gen_shri_tl(shado=
-w_addr, addr_val, 3);<br>=C2=A0 =C2=A0 tcg_gen_addi_tl(shadow_addr, shadow_=
-addr, SHADOW_BASE);<br>=C2=A0 =C2=A0 tcg_gen_tl_ptr(shadow_ptr, shadow_addr=
-);<br>=C2=A0 =C2=A0 tcg_gen_ld8s_tl(shadow_val, shadow_ptr, 0);<br><br>=C2=
-=A0 =C2=A0 tcg_gen_brcond_tl(TCG_COND_EQ, shadow_val, zero, done);<br><br>=
-=C2=A0 =C2=A0 tcg_gen_andi_tl(k, addr_val, 7);<br>=C2=A0 =C2=A0 tcg_gen_add=
-i_tl(k, k, size - 1);<br><br>=C2=A0 =C2=A0 tcg_gen_brcond_tl(TCG_COND_LT, s=
-hadow_val, k, done);<br><br>=C2=A0 =C2=A0 tcg_gen_tl_ptr(null_ptr, zero);<b=
-r>=C2=A0 =C2=A0 tcg_gen_st8_tl(zero, null_ptr, 0);<br><br>=C2=A0 =C2=A0 gen=
-_set_label(done);<br>}<br><br>/////////////////////////////////////////////=
-///////////////////////////////////<br><br>However, when I change to using =
-this implementation, I get the following error.<br>I have tested it with a =
-trivial hello world implementation for x86_64 running in<br>qemu-user. It d=
-oesn&#39;t occur the first time the block is executed, therefore I<br>think=
- the issue is caused by the surrounding TCG in the block it is injected<br>=
-into?<br><br>//////////////////////////////////////////////////////////////=
-//////////////////<br>runner-x86_64: ../tcg/tcg.c:4852: tcg_reg_alloc_mov: =
-Assertion `ts-&gt;val_type =3D=3D TEMP_VAL_REG&#39; failed.<br>Aborted (cor=
-e dumped)<br>//////////////////////////////////////////////////////////////=
-//////////////////<br><br>I would be very grateful for any advice of how to=
- resolve this issue, or any<br>alternative approaches I could use to optimi=
-ze my original implementation. The<br>code is obviously a very hot path and=
- so even a tiny performance improvement<br>could result in a large performa=
-nce gain overall.<br><br><br></div>
-
---00000000000023dd180636958921--
+--------------uHkLPvmu8skt0mKNUTH8wScJ--
 
