@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF088C5B555
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 20:55:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 796A4C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:07:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMCBK-00066T-NG; Mon, 02 Jun 2025 16:54:55 -0400
+	id 1uMCMD-0007uj-Dv; Mon, 02 Jun 2025 17:06:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uMCBH-00065m-Tu; Mon, 02 Jun 2025 16:54:51 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1uMCMB-0007u5-St
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:06:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uMCBG-0002mi-1G; Mon, 02 Jun 2025 16:54:51 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8508E127467;
- Mon, 02 Jun 2025 23:54:30 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0BBAF21D564;
- Mon,  2 Jun 2025 23:54:37 +0300 (MSK)
-Message-ID: <f43d5b05-39fe-497b-9166-098e37ff65f1@tls.msk.ru>
-Date: Mon, 2 Jun 2025 23:54:36 +0300
+ (Exim 4.90_1) (envelope-from <ddutile@redhat.com>)
+ id 1uMCMA-0003qF-AO
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:06:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748898364;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TPAOzMw4ShRFf2PjoWUiz74Bhb/cLQB/tGLlUw7Kpr8=;
+ b=K+Vv2C/gv/nqN1bVZa/fZvN6rgg0lqG9upJqbIxX3dNpL7jZtGAOTlWTGLVUr3ItT6X/N6
+ y3W42hWh7exMxqO2oDoFx4BJJJ0Ljl8dYnnSpvHWciOOLGDcIem1yocHNr97s12+yX4FHa
+ /RdCx1mgonxe9V02jrdR9BfgpvxKdZ4=
+Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
+ [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-491-i9wvQYc3NBGsnBzt0GESIQ-1; Mon, 02 Jun 2025 17:06:03 -0400
+X-MC-Unique: i9wvQYc3NBGsnBzt0GESIQ-1
+X-Mimecast-MFC-AGG-ID: i9wvQYc3NBGsnBzt0GESIQ_1748898362
+Received: by mail-qk1-f198.google.com with SMTP id
+ af79cd13be357-7c793d573b2so842271785a.1
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:06:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748898362; x=1749503162;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TPAOzMw4ShRFf2PjoWUiz74Bhb/cLQB/tGLlUw7Kpr8=;
+ b=Li+HhaP+bIX/2Oqus6cRwwsZfuL93739qEHtdycBW+iQHv15kqOCTKOI6LjnMTY0rB
+ YQQPwTzF/wGgmnqhRRqlPPtD2VzvGyvY0uTh09eJ89j9MEDkXeSUPS3Asa3GxxRlB6SR
+ vs8U1FtyFEuTTPCs1QAMOS8VClIeOBJZFyVSVIZ+6eP7v8Vi6oDtuBAvnzZFpcT2iVte
+ 7xEzy9BjAno3iuq0H9l9CZDSwlFSba8HPBSVXmfsqBbRDclZ5FPwdldfXblK+x/SVwMA
+ dy+TA1q1hCIhnA8/hgh7I5O+aw3B48pOiXBxRAW6csLG6JZ2blBTyhxc3iATWEzr3zWo
+ bKNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW8x2/rqWzB855XzfAy/SjYmt3uucEv3WqmG3eGsDmtlJXvqFZz11trRY+AlJes6xlVe+q2GikGceh+@nongnu.org
+X-Gm-Message-State: AOJu0YwF/X0yaOjh5rkcaqKvnIolLuQqgV028BNXys0PKzmtkaK9pmsF
+ LCYFCotAxQiIyCWFkTsPznVpMHBi/bnaj3VnkJDHE8gDHcyLOGZpuKNTXuBiSYSskf7l/PtM7AW
+ Je03gMtMA6uE2t6KETxglTJuSX46Z0hTFng5HzxHImTMsNPKglkj/BnQK
+X-Gm-Gg: ASbGnctzUtVd2jv7KHe1HkUdTvTdDBOnauXxPr7o7hla3rIe3+iqPPfEiE+/Fc5+W8X
+ H+sOcO7oysqBXdyoZnwAe1lPPifAkk0+syX6NXrpm0L/q+JI6Kr7OagGxKb7CXoKEE2BrbaiadM
+ /uZ5CxdxIewGrQuLpsexstRyUZMgFUK/6JvhMV2Xi4zHffuDp2a/eq7PKIICfues52/1g63DVl0
+ sK5RA+Y5ck5V3Vd31B9l8Jf8t2R/ypGHaAFZYmhBQd9Ee2mj7+0Z5ZR8RXjWAtUjeeKA76cgdHY
+ HOFNpb82gK2R
+X-Received: by 2002:a05:620a:1a26:b0:7c5:a29e:3477 with SMTP id
+ af79cd13be357-7d0a20343e0mr2405040985a.53.1748898362575; 
+ Mon, 02 Jun 2025 14:06:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGgGBo7BdJHpAD9PkHwc7C63wadtGTIX2f117lkD2V/ZCSjrqXHk3P3H28OmkvH11/6V3I0EA==
+X-Received: by 2002:a05:620a:1a26:b0:7c5:a29e:3477 with SMTP id
+ af79cd13be357-7d0a20343e0mr2405037985a.53.1748898362300; 
+ Mon, 02 Jun 2025 14:06:02 -0700 (PDT)
+Received: from [192.168.40.164] ([70.105.235.240])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7d09a1bb27fsm689205185a.116.2025.06.02.14.06.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Jun 2025 14:06:01 -0700 (PDT)
+Message-ID: <30b4030e-fb0b-4254-9b43-8f89fe66bfe0@redhat.com>
+Date: Mon, 2 Jun 2025 17:05:32 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] amd_iommu: Fixes
-To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
-Cc: mst@redhat.com, marcel.apfelbaum@gmail.com, pbonzini@redhat.com,
- richard.henderson@linaro.org, eduardo@habkost.net,
- suravee.suthikulpanit@amd.com, alejandro.j.jimenez@oracle.com,
- joao.m.martins@oracle.com, qemu-stable <qemu-stable@nongnu.org>
-References: <20250516100535.4980-1-sarunkod@amd.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20250516100535.4980-1-sarunkod@amd.com>
+Subject: Re: [PATCH] hw/arm/virt: Check bypass iommu is not set for iommu-map
+ DT property
+Content-Language: en-US
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: eric.auger@redhat.com, peter.maydell@linaro.org, nicolinc@nvidia.com,
+ linuxarm@huawei.com
+References: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
+From: Donald Dutile <ddutile@redhat.com>
+In-Reply-To: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ddutile@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,42 +114,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16.05.2025 13:05, Sairaj Kodilkar wrote:
-> Fix following two issues in the amd viommu
-> 1. The guest fails to setup the passthrough device when for following setup
->     because amd iommu enables the no DMA memory region even when guest is
->     using DMA remapping mode.
-> 
->      -device amd-iommu,intremap=on,xtsup=on,pt=on \
->      -device vfio-pci,host=<DEVID> \
-> 
->      and guest forcing DMA remap mode e.g. 'iommu.passthrough=0'
-> 
->      which will cause failures from QEMU:
-> 
->      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
->      qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
->      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
->      qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad FIS receive buffer address
->      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command list buffer address
-> 
-> 
-> 2. The guest fails to boot with xtsup=on and <= 255 vCPUs, because amd_iommu
->     does not enable x2apic mode.
-> 
-> base commit 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365 (v10.0.0-rc3)
-> 
-> Sairaj Kodilkar (1):
->    hw/i386/amd_iommu: Fix device setup failure when PT is on.
-> 
-> Vasant Hegde (1):
->    hw/i386/amd_iommu: Fix xtsup when vcpus < 255
 
-Hi!
 
-Is this a qemu-stable material (for 10.0.x)?
+On 6/2/25 7:46 AM, Shameer Kolothum wrote:
+> default_bus_bypass_iommu tells us whether the bypass_iommu is set
+> for the default PCIe root bus. Make sure we check that before adding
+> the "iommu-map" DT property.
+> 
+> Fixes: 6d7a85483a06 ("hw/arm/virt: Add default_bus_bypass_iommu machine option")
+> Suggested-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>   hw/arm/virt.c | 15 ++++++++++-----
+>   1 file changed, 10 insertions(+), 5 deletions(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 9a6cd085a3..99fde5836c 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -1487,9 +1487,12 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
+>       qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
+>       g_free(node);
+>   
+> -    qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
+> -                           0x0, vms->iommu_phandle, 0x0, bdf,
+> -                           bdf + 1, vms->iommu_phandle, bdf + 1, 0xffff - bdf);
+> +    if (!vms->default_bus_bypass_iommu) {
+> +        qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
+> +                               0x0, vms->iommu_phandle, 0x0, bdf,
+> +                               bdf + 1, vms->iommu_phandle, bdf + 1,
+> +                               0xffff - bdf);
+> +    }
+>   }
+>   
+>   static void create_pcie(VirtMachineState *vms)
+> @@ -1612,8 +1615,10 @@ static void create_pcie(VirtMachineState *vms)
+>           switch (vms->iommu) {
+>           case VIRT_IOMMU_SMMUV3:
+>               create_smmu(vms, vms->bus);
+> -            qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
+> -                                   0x0, vms->iommu_phandle, 0x0, 0x10000);
+> +            if (!vms->default_bus_bypass_iommu) {
+> +                qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
+> +                                       0x0, vms->iommu_phandle, 0x0, 0x10000);
+> +            }
+>               break;
+>           default:
+>               g_assert_not_reached();
 
-Thanks,
+Reviewed-by: Donald Dutile <ddutile@redhat.com>
 
-/mjt
 
