@@ -4,190 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E822DC54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 13:24:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32267C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 14:01:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM59K-0007ls-Ku; Mon, 02 Jun 2025 09:24:25 -0400
+	id 1uM5iD-0007sL-8x; Mon, 02 Jun 2025 10:00:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivankg@amd.com>)
- id 1uM2eD-0002Dp-Sq; Mon, 02 Jun 2025 06:44:06 -0400
-Received: from mail-bn7nam10on20602.outbound.protection.outlook.com
- ([2a01:111:f403:2009::602]
- helo=NAM10-BN7-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uM5i3-0007ph-VI
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 10:00:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shivankg@amd.com>)
- id 1uM2eB-0008BD-64; Mon, 02 Jun 2025 06:44:05 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=PESp0Mvx/QVv1XiyZ/Mq2nRu3V15grybqRWfLVSqfK2ycWT92pDvKM0RuzpA96CrrPBmTaySbHNwcCDil5/xTDB0EKtMSjoHfR6h6mrcOpE4VaTVsTet0I54z3pefnUqETXutweZjoGSq00a6s8eOD0rDdRsz7vU9GkSstpQQ+kc9t5Gx0QNHa8kL8EOB0YeMzmNqRhs0VUEuH7In73smJDDvn3xTRwAQEwHLHWHKf1FH2nTxGizkwMqZ5vVECpu6EdkjgMRwynMQQIZeYw60SuyunrKk3LOvS/CJwJEWndO872LNtYjC4GDJkI+vJY+ToYjoG5DefDCMzXgOlko6g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=1VUNbzakcDQuxi60KWzekzmLSrofcG8Oe2EkvLAGHkE=;
- b=gib4Rn/M0P3H95FzqFao7tN02fvnJVVQUnYX6NWy4mJ9Uh6QLYLrYHDj1xRtGRczl7bJ9toZpIeRqYkG1zaMVppAvkK3Ps2AUh9r+ae6keD8gPeJJrlJQc4AiIm/lWvR2DtgfHh1juR5JPq/fV4IMPnEByLedAbfiXrjXzsJ0D3WfNXSF+/N+s/+k0Agv82E2ZHTXnNI6y1EVUagiXH4T37gp/nimqJ4PbW50oQXkSoeuvwjSzkx/MpUkukltcUIygjR7+TGrthCYoGyhLIHQiV6rdntnu4dDdwxDvKn9HHekRL4ne5OkS4Q07pHDgSU2KIkRwQ5/HzyYSZWB/sb3w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=1VUNbzakcDQuxi60KWzekzmLSrofcG8Oe2EkvLAGHkE=;
- b=NxEJ2TjIVWO3rMNisMu2oRIOBcgU+r4QWgyXHg7K8YsTsKygDKcXdQ3Zvwo6OcHVvWhKI/pcAvoxBu4Sb0VFmXv0k6Zqg7yPM1DkCB/QG0uheMIXoGsumD1quhsBCK0WUk4xu5vQIYrLn+QMI9bPrWE2xKKbRFIKZb9bxl4arpQ=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from CH2PR12MB4262.namprd12.prod.outlook.com (2603:10b6:610:af::8)
- by LV3PR12MB9187.namprd12.prod.outlook.com (2603:10b6:408:194::20) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.31; Mon, 2 Jun
- 2025 10:43:56 +0000
-Received: from CH2PR12MB4262.namprd12.prod.outlook.com
- ([fe80::3bdb:bf3d:8bde:7870]) by CH2PR12MB4262.namprd12.prod.outlook.com
- ([fe80::3bdb:bf3d:8bde:7870%5]) with mapi id 15.20.8769.035; Mon, 2 Jun 2025
- 10:43:55 +0000
-Message-ID: <8f85fcf7-3593-46e8-b257-d0da2b7337b9@amd.com>
-Date: Mon, 2 Jun 2025 16:13:30 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v10 08/16] KVM: guest_memfd: Allow host to map guest_memfd
- pages
-To: Fuad Tabba <tabba@google.com>, kvm@vger.kernel.org,
- linux-arm-msm@vger.kernel.org, linux-mm@kvack.org
-Cc: pbonzini@redhat.com, chenhuacai@kernel.org, mpe@ellerman.id.au,
- anup@brainfault.org, paul.walmsley@sifive.com, palmer@dabbelt.com,
- aou@eecs.berkeley.edu, seanjc@google.com, viro@zeniv.linux.org.uk,
- brauner@kernel.org, willy@infradead.org, akpm@linux-foundation.org,
- xiaoyao.li@intel.com, yilun.xu@intel.com, chao.p.peng@linux.intel.com,
- jarkko@kernel.org, amoorthy@google.com, dmatlack@google.com,
- isaku.yamahata@intel.com, mic@digikod.net, vbabka@suse.cz,
- vannapurve@google.com, ackerleytng@google.com, mail@maciej.szmigiero.name,
- david@redhat.com, michael.roth@amd.com, wei.w.wang@intel.com,
- liam.merwick@oracle.com, isaku.yamahata@gmail.com,
- kirill.shutemov@linux.intel.com, suzuki.poulose@arm.com,
- steven.price@arm.com, quic_eberman@quicinc.com, quic_mnalajal@quicinc.com,
- quic_tsoni@quicinc.com, quic_svaddagi@quicinc.com,
- quic_cvanscha@quicinc.com, quic_pderrin@quicinc.com,
- quic_pheragu@quicinc.com, catalin.marinas@arm.com, james.morse@arm.com,
- yuzenghui@huawei.com, oliver.upton@linux.dev, maz@kernel.org,
- will@kernel.org, qperret@google.com, keirf@google.com, roypat@amazon.co.uk,
- shuah@kernel.org, hch@infradead.org, jgg@nvidia.com, rientjes@google.com,
- jhubbard@nvidia.com, fvdl@google.com, hughd@google.com,
- jthoughton@google.com, peterx@redhat.com, pankaj.gupta@amd.com,
- ira.weiny@intel.com, qemu-devel@nongnu.org, qemu-discuss@nongnu.org,
- "linux-coco@lists.linux.dev" <linux-coco@lists.linux.dev>, nikunj@amd.com,
- Bharata B Rao <bharata@amd.com>
-References: <20250527180245.1413463-1-tabba@google.com>
- <20250527180245.1413463-9-tabba@google.com>
-Content-Language: en-US
-From: Shivank Garg <shivankg@amd.com>
-In-Reply-To: <20250527180245.1413463-9-tabba@google.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BMXP287CA0003.INDP287.PROD.OUTLOOK.COM
- (2603:1096:b00:2c::16) To CH2PR12MB4262.namprd12.prod.outlook.com
- (2603:10b6:610:af::8)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uM5i0-0007Wo-1m
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 10:00:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748872803;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=8QxnwFZuPL37lQK9oLt+RiMmKPNC4HugRnShmDUGihM=;
+ b=eowWaDhqGy4hKu6KeKLSrPGKY8rvEtfUNe0ZVCYsxsIXsyDaJwE/LbQUIazCzSySFC+wLE
+ YpZnLagTlGF2DDEbj5QRW/0Ufg4Y2JDxoVBt81AWxXAaiQ9byvGJIgOkENdp1pD3YBJpAS
+ 7MhFgtkzQxuyznDOyCP8/FhSuuPC5z4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-145-qLDnKg59O5unPnKcnGtoBw-1; Mon, 02 Jun 2025 10:00:01 -0400
+X-MC-Unique: qLDnKg59O5unPnKcnGtoBw-1
+X-Mimecast-MFC-AGG-ID: qLDnKg59O5unPnKcnGtoBw_1748872801
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43d5ca7c86aso26852595e9.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 07:00:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748872800; x=1749477600;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8QxnwFZuPL37lQK9oLt+RiMmKPNC4HugRnShmDUGihM=;
+ b=w4cdqf1cHKdxAEJPqzv5LCfeNla929a/FGZsdQvxU8IywL+u9APsLQaQUACXqMbMy7
+ eF/JJzLg/ApYRkNTI3qgrprf6itUYokn2TfMmoB5WD03nwtAbYEL33oatC6dms/hsVqq
+ hB5BHkvQ7dhsRCMPCuqIthOTjXn0HpjEF/KUbP5a3jcKGmCYmbhjiGVT0GmY8VKFTvtg
+ U9TIT1uN5kK5dzbPYd6xhvmnGyT9x6+Vt51V1URPK4MnMqSxpy+5kOff6Q/Vc2Odw5J5
+ E3mu7icI0s0F2oyMiExtuXAKDT7vUCpEsdTb2i+D7Ahq9ujw3tuVaotcq2r7JvOsu+GB
+ sFgA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWDXL9ZXKNf1ufpqa1C9kMFuBjUrBgr7RPdPt7QZrqGFGZUZ7iS8s18gIMEIHex2XZFgD+tyDjtSL6J@nongnu.org
+X-Gm-Message-State: AOJu0Yx488HLpunNrpoVjv4j0q4ftt8+0s3hbp/fn6PcmpyDCDY4UkbF
+ cXAxvCkVebSmW+z9xk/gnjYAz/OFRkbBhnPwtQbL5hf+8EYb9Bx27VVJdiHbIQTbN2YZtukUSIz
+ 3n+Axd68kMUcO6ZJMPct5THSYTUjXc+wJ8ltGWwwWwuIu1YlMLlyoUrRd
+X-Gm-Gg: ASbGncu/N9DbHuGJq87LeaTEb/vAfuzkXvvJ71sBadOOncFr/1OeJum/zSbEeIQ/2MZ
+ MfBha9acO2SF30vCv2pYPC0PNwLXV0mTESwDstuAu/BMD3AjOI/XENHNv6kDV8ozEMHV+cbxBAw
+ Pg8eij4xzmPsz6U6cwlPibgHnMSNAwM1HE/jjoYNbvoBMlocj7BAwOxrdAn+tvamlY0/XSr3ghw
+ l+pmhfMve11pZxWjmtk+kPcBrdupC+1EiQsTZCAjGNRkOt+bkuR0kyvax70s4dsF6+cnjkFlqeL
+ A8av/O2fvEEE67x6Groxh/pkQZItfLF38Gv0UqMoLt0nnyOAiaeLctWPF6xT
+X-Received: by 2002:a05:600c:4f46:b0:441:d437:ed19 with SMTP id
+ 5b1f17b1804b1-450d64d469amr117757305e9.11.1748872800489; 
+ Mon, 02 Jun 2025 07:00:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEUKiYrjS/e9tDTEFeGJlurzIrcrKV2YLg0KURFwoEk0vHp8o/FxFxMAqJ8XNPDhxiscVMJRw==
+X-Received: by 2002:a05:600c:4f46:b0:441:d437:ed19 with SMTP id
+ 5b1f17b1804b1-450d64d469amr117757135e9.11.1748872800139; 
+ Mon, 02 Jun 2025 07:00:00 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d7f8ed27sm128668495e9.2.2025.06.02.06.59.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 02 Jun 2025 06:59:59 -0700 (PDT)
+Message-ID: <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
+Date: Mon, 2 Jun 2025 15:59:59 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR12MB4262:EE_|LV3PR12MB9187:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2192d85b-35f4-4b23-beaa-08dda1c25eba
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|376014|7416014|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?Smc0NWdGOWpWbU84dlM2Qm45dXNxWFhjblJWeWlCczlHV2dBNDJCa2xhbkNw?=
- =?utf-8?B?N0tyN2pkbUVRdE1MalBSY3lwc0FlOHVnRlJHbDdxNGJWNFFSdkNJWk8ySFM5?=
- =?utf-8?B?eG1wV285UWh3OHpuOEx3MitPeVk2blNQM1g4MTJVcXVQY1pGZGpLNkk1M25D?=
- =?utf-8?B?ZjN6Um4rZjhQMUQzMnFtVUxzdk1FSDIzRDYrcmZ2b01rYUxvSm5CWHRhRjRW?=
- =?utf-8?B?Z0RDQlJKeC90dE41RGdkTFJzb1MzODNoQjRMbGE1L0FIYlFaTzY1dWZHUnBn?=
- =?utf-8?B?SVJEQVZaeGlYWFI3bWM0VUJCOU1Sam5yMjg2WjZiL0FSRXVtT3IzRWVxbnJ2?=
- =?utf-8?B?Z3NUQVM5ZzFya1lPZWx0dW5URlZBby82a2RtMzFQU1NGMTFxa3V3MVFnejJO?=
- =?utf-8?B?WDBWMUFXOTRQaTJSd291eUV0TTNKaDdRTEpsZzhnNG5NUjlsOU5jVE9FNXMz?=
- =?utf-8?B?bU1sL3FWemMwcFVKQ2U5ZDUrNGVHUnErQzl1aHA3VGhGOFVEUStqZ2t5dktI?=
- =?utf-8?B?NXZPQm84d292YUZSVWV6bytQeTQweXkyZENHVGRxekpwTnBtdkk4b0pjTVl5?=
- =?utf-8?B?WkhpQnhOVXpoenM4QU1Bc1J6a1RwSVZzc0Npa0Z1cjJFeHAxUWZLbmNEdnh6?=
- =?utf-8?B?VTVWcGh5dGhDQVpOckprMWVyOUtnWTVRNWhPYS9NRm8xdUw1emF3RCs5Slo0?=
- =?utf-8?B?WG5KRW44b3lNZW9ZVzNNam5nWXlNYXhFR3M2WTM2QmJzWkllVFI4NlRxS0Fw?=
- =?utf-8?B?NVQ2MjJESi9zUHF6Q2t6Z3pqejlIY0I1YjZsOHNKY2p3Nk5lcnd6ZzRPWm5O?=
- =?utf-8?B?VWpqcDRJWVBBMU5mdm9Xbjg2UFFLTjdDWHlpT1dkTTEwNmtydEo5Qk4zTDlM?=
- =?utf-8?B?OXQ1MjYxWGVFNWxZZG1CQXdETDVEUVB3R1V4MTR1eStGc3ozclNyeURIcDBz?=
- =?utf-8?B?UDA4dGNsZ2RQNCs0YXYxUXJUTHBXOWxTWFlGUEdRa2t0d2RCd1ZzbHFhSnI4?=
- =?utf-8?B?ejZTeFVQakJTZjlaS0hKUGJCYUIwM0xGYUZxdysrdHgwSzVpMk1ONVV6bnJC?=
- =?utf-8?B?cVh4VGZUQ2JZNzBWRjJMcFkwczJlT1g3UXlyOWY4NDIxajA5SDVvaTdhRU5z?=
- =?utf-8?B?MTQ3bUo3TEFwZXVoaUtsZ1dkWmtHOFBjcHV3dlJqSVcvRiszL2M3bHgvOWxS?=
- =?utf-8?B?eCtwejk4NDBoMUt6ZkJMSkdCYnd4OTgwZGdFNWJneWFpdUZCVWhHeklPUXpF?=
- =?utf-8?B?YTdIUktiOGFIQm5UVktyRDN6bktIdzV2VWFpZFoxL1E4enBHci9wRlZTMzBH?=
- =?utf-8?B?eSs1cWV3djhyRHBJWDBLWDNQUzBJcHJ2WjErc0Q1dWF0SWlWcjV4ZHUybWtC?=
- =?utf-8?B?S05XTEM0V1dLbUpSUWJBQUxscGw2cXJuMmFNVVpVZlNXcmNyUTB6eGMrbXN1?=
- =?utf-8?B?TVgrNVBZSWY5N1F5Ykd6STdtVW1sSTdTcytjR0lTd2NBQ2Zmd0pGMXVkYWJa?=
- =?utf-8?B?cnBHbmRidzlNMGtiZXdtNndONzNNeTRqQ3dpZzRVZDhqZDJJMktKMXB4cm90?=
- =?utf-8?B?L2R4RHpGaU5nWjNhb3p2MmhNV3JXOGxHWkdSc1hna2RuUmNQSkFCbThTNmM4?=
- =?utf-8?B?WldZdVZ6V3lWcmFUUThFRjdXK28zUkFGMW00Q0l5Z25LRXlhWm5ERW9ZMlZJ?=
- =?utf-8?B?SVg4b0hRa01EYXJGWVA1Y3JxUFpyOHFsNG1aRkRacUpMQU1LT3Y5b0h0YkFo?=
- =?utf-8?B?NHVuR21wbFdxZS8yMHQ3WGk5d2FuMTBSVUVzOEgxTGVQNjNDdmQzaU1vZWtX?=
- =?utf-8?B?THFqc0tjdXdKekNBZXN2eUZ1N2hicWM3ZmlyR3lyVFRvQ1k2SmpxQWZRUkl3?=
- =?utf-8?B?OWdnazV3YVBCSjJFank0eEp5LzRmbFpFT003U1ZqZDM4dThvNWpCakdMYnA0?=
- =?utf-8?Q?OCufw0H9ajYA7kdaW6sFSviwk3aBtKGf?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR12MB4262.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(7416014)(366016)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?M2FXWG5VNHlqSkhzck9NTzJMZUNFeDJjd3hKeWQ4dGRaVVpjSGY2eGR4YWQr?=
- =?utf-8?B?anNHQWZSWDh6c0FKb0h4cHFEcDN1UEJya050UndLMFRvbEFVdkoyMDV0K091?=
- =?utf-8?B?UlpoLyt3cjhJTkIyc0ovQzlkaDB0UGdCajVFMUErVncwcHNWTXVuZUlJMmdx?=
- =?utf-8?B?MUJ0TWp5bjF0eExwdWJKSmQ1Y09DVkZzcWREKzNoVTNWTE9tTFRiUUZLYTBn?=
- =?utf-8?B?dU9CekFhQUR3ejdIRHhOVzljQlBRdlk4Y0FPZWtOUENQTDhGUCtoK0dKMkU1?=
- =?utf-8?B?bGsyOFBIWENDazJvQnNKd1FkRVA3aExpV2NXZVU3WmJzcUxNOGhteGVPVXgw?=
- =?utf-8?B?SlZPdldtQzNQNVhwZHkyWm5GYitYN01Qb2R1b0tSaVdmb3J2bGpMNEo0VFpG?=
- =?utf-8?B?MVFITkVJbFVyLzVuclh0ZmJTZFBmTkhIYTJSQ3I5MUw5cG5Eb2R0S3JyY0lC?=
- =?utf-8?B?RGtodkN3T0NZam5DTkN6UkNnK3U1cFRCMVBFKzlBY0FqczlLZitRaFNZcSto?=
- =?utf-8?B?ZnNpdFhkc3RyUjF3TnA0b0E5Q2JVRldkei9vUUtmOFcwanJSMDRKZDZObHJG?=
- =?utf-8?B?SWNEZzRTQ2UyMzBQSXV0UG1WT3FSRHN2YmhzeGpXSzFIc3g3SlE5U2lIc1pK?=
- =?utf-8?B?WmVjTUZ2cHMrL2lGZ010Tkl3bU1VMFM5T2VqYjBibmFtckV5OVdCSG1rRkcr?=
- =?utf-8?B?T0lVcGpMNFhmNEl6dmNTVHV4S2szWlFiVm5OcDZ2U0d4UklXdTdmQ2ZkbG1o?=
- =?utf-8?B?YzczTVNXZDBIOUYzOFQySW16dXNDMFhwYWxRK3p0d2xKc05nNExMeVpzQmN2?=
- =?utf-8?B?SmZobis3aDcwWWpTVnZxQU42SVNiRmh6c1V0ZmpUL3g3c2k2Uldja3JjZ29a?=
- =?utf-8?B?a3B4MWNHRHNWU3Fwa04zWTRZMWU1NkU3NXJGOHRxMFZNYVRTc0djWjdxSjdL?=
- =?utf-8?B?eWRlUEhOa0drcTBsTk1CNlRZRXRSdXZrajNEbXZvSWV0U3lSYW40ZmJncEJU?=
- =?utf-8?B?U3poWXltYjFDWkJrbmZFTjhjS3NEMlNGak9aUUhPTTRJSUNZbzhqRk1MVEd2?=
- =?utf-8?B?citoUnUzR3VoNXJpbTRmU1QxWWhDU0VRQ2dWSlhwMHR5NTE3STVSeXlSN0Jt?=
- =?utf-8?B?cERwK25DM0IyY0ZQVGUrSmZOUm54ZFpVNWVUWTlrdHhCWVNKTGl0Rk1SR1Nw?=
- =?utf-8?B?WFoxL1l1a3V3QUxxYk9SNWhENU5waHZjaFlVUHl5TjYrT1o2UUx2NGVqUUho?=
- =?utf-8?B?Y0ZYaEFYNW9HczBKWGhxMDJ4L0hNT2dHRFpCNEZaZjNnUVVNYkVyb3dRSVRl?=
- =?utf-8?B?SlpTdWpCN2JTOUdRT0tTWmxxNyt1eXF3allUQkZVUmhxMnJ1cDBHdjhPWlZV?=
- =?utf-8?B?YTNsbXhNcXZWNGhseUpibmlSYjlRRllwQ3A4VENqZUhBV1lzL2JaenJFS0ho?=
- =?utf-8?B?VEI5ZldRSW5UWHBqYzVVOEVuM2NwNWV6NDdOWEQ5NlZwMXlpZ3h1WENoeEM5?=
- =?utf-8?B?Q0RhM0d2SWhDUzNUc1hxZCt4MnE4SlVBWnl3cTl2d0xOVDVvVlZuNEF2T0VQ?=
- =?utf-8?B?WEY3T1QxVE80bjlvVWROOWJrQmRLOGxJSXdDNi9KODhvUHhFWndMeUJ0a0pw?=
- =?utf-8?B?Ylp6eWc3R2dOS2Fuc2pDekRqa2x2VFI0Qnk4MDRaYitibkYzck5GZXpSK29I?=
- =?utf-8?B?WUMwUHZ2WlZ0UVNCVkZ0SS9GK3N5YitKQWFXVGRIdVpQZ1lZSFVWNzMwNDM5?=
- =?utf-8?B?Q2dzZFUyMWtQRTM3cDh1Z2F1MmltODFGaFRHaDM1eU5LemlQN0pjRnhGUi9X?=
- =?utf-8?B?aHZmdTl3VUpjZWJqTktLRlVrZmJBUUFMaXdTTlRqL3dPcDYxQnlER1pGY2VH?=
- =?utf-8?B?RzVjVUtzUWxpQ3N0UG0rb01EcCt3emF3Slc0ZXdxZ2RXTnZYSW1TNWx6cHNW?=
- =?utf-8?B?akNXbnJvV3Y0Y0NjNE1jcngybzZtMG5lNnRYRFl3SVpWTjFVN0hXYUdwTC82?=
- =?utf-8?B?OXVpL1pEUFJaUmRxV3VDK3hmUGlYY3YwUTBoUmcwSkdxL1dXVnNvUWNQVkly?=
- =?utf-8?B?Rmc4aDZKVmZwaHJsejU2YW5YTUtQQ3BjWmhvZ2ppTUIvcWE1U3R2cWZNVm5x?=
- =?utf-8?Q?bFs381nkUGdtk698CyKQ5My4K?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2192d85b-35f4-4b23-beaa-08dda1c25eba
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR12MB4262.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Jun 2025 10:43:55.5133 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: WLYnyWzFxPD6OEA6jKMyz/RZIeq7b1qPxe9FrShKXhuZNMkV74Uag3iUo30B66VX0OMWuF7CEGGFA5QDq5flHA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV3PR12MB9187
-Received-SPF: permerror client-ip=2a01:111:f403:2009::602;
- envelope-from=shivankg@amd.com;
- helo=NAM10-BN7-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 02/77] hw/arm: remove explicit dependencies listed
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
+References: <20250530071250.2050910-1-pbonzini@redhat.com>
+ <20250530071250.2050910-3-pbonzini@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
+ 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
+ yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
+ 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
+ ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
+ RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
+ gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
+ 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
+ Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
+ tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
+ IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
+ 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
+ S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
+ lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
+ EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
+ xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
+ hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
+ VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
+ k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
+ RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
+ 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
+ V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
+ pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
+ KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
+ bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
+ TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
+ CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
+ YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
+ LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
+ JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
+ jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
+ IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
+ 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
+ yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
+ hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
+ s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
+ LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
+ wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
+ XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
+ HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
+ izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250530071250.2050910-3-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.071,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 02 Jun 2025 09:24:06 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -202,298 +157,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hello Pierrick,
 
-
-On 5/27/2025 11:32 PM, Fuad Tabba wrote:
-> This patch enables support for shared memory in guest_memfd, including
-> mapping that memory at the host userspace. This support is gated by the
-> configuration option KVM_GMEM_SHARED_MEM, and toggled by the guest_memfd
-> flag GUEST_MEMFD_FLAG_SUPPORT_SHARED, which can be set when creating a
-> guest_memfd instance.
+On 5/30/25 09:11, Paolo Bonzini wrote:
+> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > 
-> Co-developed-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Ackerley Tng <ackerleytng@google.com>
-> Signed-off-by: Fuad Tabba <tabba@google.com>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Link: https://lore.kernel.org/r/20250521223414.248276-3-pierrick.bouvier@linaro.org
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 > ---
->  arch/x86/include/asm/kvm_host.h | 10 ++++
->  arch/x86/kvm/x86.c              |  3 +-
->  include/linux/kvm_host.h        | 13 ++++++
->  include/uapi/linux/kvm.h        |  1 +
->  virt/kvm/Kconfig                |  5 ++
->  virt/kvm/guest_memfd.c          | 81 +++++++++++++++++++++++++++++++++
->  6 files changed, 112 insertions(+), 1 deletion(-)
+>   hw/arm/meson.build | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 > 
-> diff --git a/arch/x86/include/asm/kvm_host.h b/arch/x86/include/asm/kvm_host.h
-> index 709cc2a7ba66..ce9ad4cd93c5 100644
-> --- a/arch/x86/include/asm/kvm_host.h
-> +++ b/arch/x86/include/asm/kvm_host.h
-> @@ -2255,8 +2255,18 @@ void kvm_configure_mmu(bool enable_tdp, int tdp_forced_root_level,
->  
->  #ifdef CONFIG_KVM_GMEM
->  #define kvm_arch_supports_gmem(kvm) ((kvm)->arch.supports_gmem)
-> +
-> +/*
-> + * CoCo VMs with hardware support that use guest_memfd only for backing private
-> + * memory, e.g., TDX, cannot use guest_memfd with userspace mapping enabled.
-> + */
-> +#define kvm_arch_supports_gmem_shared_mem(kvm)			\
-> +	(IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM) &&			\
-> +	 ((kvm)->arch.vm_type == KVM_X86_SW_PROTECTED_VM ||		\
-> +	  (kvm)->arch.vm_type == KVM_X86_DEFAULT_VM))
->  #else
->  #define kvm_arch_supports_gmem(kvm) false
-> +#define kvm_arch_supports_gmem_shared_mem(kvm) false
->  #endif
->  
->  #define kvm_arch_has_readonly_mem(kvm) (!(kvm)->arch.has_protected_state)
-> diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
-> index 035ced06b2dd..2a02f2457c42 100644
-> --- a/arch/x86/kvm/x86.c
-> +++ b/arch/x86/kvm/x86.c
-> @@ -12718,7 +12718,8 @@ int kvm_arch_init_vm(struct kvm *kvm, unsigned long type)
->  		return -EINVAL;
->  
->  	kvm->arch.vm_type = type;
-> -	kvm->arch.supports_gmem = (type == KVM_X86_SW_PROTECTED_VM);
-> +	kvm->arch.supports_gmem =
-> +		type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 5098795f61d..d90be8f4c94 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
+>   arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
+>   arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
+>   arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
+> -arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
+> +arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [files('musicpal.c')])
+>   arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
+>   arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
+>   arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
+> @@ -79,7 +79,7 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
+>   arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
+>   arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
+>   
+> -arm_common_ss.add(fdt, files('boot.c'))
+> +arm_common_ss.add(files('boot.c'))
+>   
+>   hw_arch += {'arm': arm_ss}
+>   hw_common_arch += {'arm': arm_common_ss}
 
+This commit breaks building these files on Windows:
 
-I've been testing this patch-series. I did not saw failure with guest_memfd selftests but encountered a regression on my system with KVM_X86_DEFAULT_VM.
+     hw/arm/{boot.c,vexpress.c,imx8mp-evk.c,raspi4b.c}
 
-I'm getting below error in QEMU:
-Issue #1 - QEMU fails to start with KVM_X86_DEFAULT_VM, showing:
+Error is :
 
-qemu-system-x86_64: kvm_set_user_memory_region: KVM_SET_USER_MEMORY_REGION2 failed, slot=65536, start=0x0, size=0x80000000, flags=0x0, guest_memfd=-1, guest_memfd_offset=0x0: Invalid argument
-kvm_set_phys_mem: error registering slot: Invalid argument
+     fatal error: libfdt.h: No such file or directory
 
-I did some digging to find out,
-In kvm_set_memory_region as_id >= kvm_arch_nr_memslot_as_ids(kvm) now returns true.
-(as_id:1 kvm_arch_nr_memslot_as_ids(kvm):1 id:0 KVM_MEM_SLOTS_NUM:32767)
+Thanks,
 
-/* SMM is currently unsupported for guests with guest_memfd (esp private) memory. */
-# define kvm_arch_nr_memslot_as_ids(kvm) (kvm_arch_supports_gmem(kvm) ? 1 : 2)
-evaluates to be 1
-
-I'm still debugging to find answer to these question
-Why slot=65536 and (as_id = mem->slot >> 16 = 1) is requested for KVM_X86_DEFAULT_VM case
-which is making it fail for above check.
-Was this change intentional for KVM_X86_DEFAULT_VM? Should this be considered as KVM regression or QEMU[1] compatibility issue?
-
----
-Issue #2: Testing challenges with QEMU changes[2] and mmap Implementation:
-Currently, QEMU only enables guest_memfd for SEV_SNP_GUEST (KVM_X86_SNP_VM) by setting require_guest_memfd=true. However, the new mmap implementation doesn't support SNP guests per kvm_arch_supports_gmem_shared_mem().
-
-static void
-sev_snp_guest_instance_init(Object *obj)
-{
-    ConfidentialGuestSupport *cgs = CONFIDENTIAL_GUEST_SUPPORT(obj);
-    SevSnpGuestState *sev_snp_guest = SEV_SNP_GUEST(obj);
-
-    cgs->require_guest_memfd = true;
-
-
-To bypass this, I did two things and failed:
-1. Enabling guest_memfd for KVM_X86_DEFAULT_VM in QEMU: Hits Issue #1 above
-2. Adding KVM_X86_SNP_VM to kvm_arch_supports_gmem_shared_mem(): mmap() succeeds but QEMU stuck during boot.
-
-
-
-My NUMA policy support for guest-memfd patch[3] depends on mmap() support and extends
-kvm_gmem_vm_ops with get_policy/set_policy operations.
-Since NUMA policy applies to both shared and private memory scenarios, what checks should
-be included in the mmap() implementation, and what's the recommended approach for
-integrating with your shared memory restrictions?
-
-
-[1] https://github.com/qemu/qemu
-[2] Snippet to QEMU changes to add mmap
-
-+                new_block->guest_memfd = kvm_create_guest_memfd(
-+                                           new_block->max_length, /*0 */GUEST_MEMFD_FLAG_SUPPORT_SHARED, errp);
-+                if (new_block->guest_memfd < 0) {
-+                        qemu_mutex_unlock_ramlist();
-+                        goto out_free;
-+                }
-+                new_block->ptr_memfd = mmap(NULL, new_block->max_length,
-+                                            PROT_READ | PROT_WRITE,
-+                                            MAP_SHARED,
-+                                            new_block->guest_memfd, 0);
-+                if (new_block->ptr_memfd == MAP_FAILED) {
-+                    error_report("Failed to mmap guest_memfd");
-+                    qemu_mutex_unlock_ramlist();
-+                    goto out_free;
-+                }
-+                printf("mmap successful\n");
-+            }
-[3] https://lore.kernel.org/linux-mm/20250408112402.181574-1-shivankg@amd.com
-
-
-
->  	/* Decided by the vendor code for other VM types.  */
->  	kvm->arch.pre_fault_allowed =
->  		type == KVM_X86_DEFAULT_VM || type == KVM_X86_SW_PROTECTED_VM;
-> diff --git a/include/linux/kvm_host.h b/include/linux/kvm_host.h
-> index 80371475818f..ba83547e62b0 100644
-> --- a/include/linux/kvm_host.h
-> +++ b/include/linux/kvm_host.h
-> @@ -729,6 +729,19 @@ static inline bool kvm_arch_supports_gmem(struct kvm *kvm)
->  }
->  #endif
->  
-> +/*
-> + * Returns true if this VM supports shared mem in guest_memfd.
-> + *
-> + * Arch code must define kvm_arch_supports_gmem_shared_mem if support for
-> + * guest_memfd is enabled.
-> + */
-> +#if !defined(kvm_arch_supports_gmem_shared_mem) && !IS_ENABLED(CONFIG_KVM_GMEM)
-> +static inline bool kvm_arch_supports_gmem_shared_mem(struct kvm *kvm)
-> +{
-> +	return false;
-> +}
-> +#endif
-> +
->  #ifndef kvm_arch_has_readonly_mem
->  static inline bool kvm_arch_has_readonly_mem(struct kvm *kvm)
->  {
-> diff --git a/include/uapi/linux/kvm.h b/include/uapi/linux/kvm.h
-> index b6ae8ad8934b..c2714c9d1a0e 100644
-> --- a/include/uapi/linux/kvm.h
-> +++ b/include/uapi/linux/kvm.h
-> @@ -1566,6 +1566,7 @@ struct kvm_memory_attributes {
->  #define KVM_MEMORY_ATTRIBUTE_PRIVATE           (1ULL << 3)
->  
->  #define KVM_CREATE_GUEST_MEMFD	_IOWR(KVMIO,  0xd4, struct kvm_create_guest_memfd)
-> +#define GUEST_MEMFD_FLAG_SUPPORT_SHARED	(1ULL << 0)
->  
->  struct kvm_create_guest_memfd {
->  	__u64 size;
-> diff --git a/virt/kvm/Kconfig b/virt/kvm/Kconfig
-> index 559c93ad90be..df225298ab10 100644
-> --- a/virt/kvm/Kconfig
-> +++ b/virt/kvm/Kconfig
-> @@ -128,3 +128,8 @@ config HAVE_KVM_ARCH_GMEM_PREPARE
->  config HAVE_KVM_ARCH_GMEM_INVALIDATE
->         bool
->         depends on KVM_GMEM
-> +
-> +config KVM_GMEM_SHARED_MEM
-> +       select KVM_GMEM
-> +       bool
-> +       prompt "Enable support for non-private (shared) memory in guest_memfd"
-> diff --git a/virt/kvm/guest_memfd.c b/virt/kvm/guest_memfd.c
-> index 6db515833f61..5d34712f64fc 100644
-> --- a/virt/kvm/guest_memfd.c
-> +++ b/virt/kvm/guest_memfd.c
-> @@ -312,7 +312,81 @@ static pgoff_t kvm_gmem_get_index(struct kvm_memory_slot *slot, gfn_t gfn)
->  	return gfn - slot->base_gfn + slot->gmem.pgoff;
->  }
->  
-> +static bool kvm_gmem_supports_shared(struct inode *inode)
-> +{
-> +	u64 flags;
-> +
-> +	if (!IS_ENABLED(CONFIG_KVM_GMEM_SHARED_MEM))
-> +		return false;
-> +
-> +	flags = (u64)inode->i_private;
-> +
-> +	return flags & GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +}
-> +
-> +
-> +#ifdef CONFIG_KVM_GMEM_SHARED_MEM
-> +static vm_fault_t kvm_gmem_fault_shared(struct vm_fault *vmf)
-> +{
-> +	struct inode *inode = file_inode(vmf->vma->vm_file);
-> +	struct folio *folio;
-> +	vm_fault_t ret = VM_FAULT_LOCKED;
-> +
-> +	folio = kvm_gmem_get_folio(inode, vmf->pgoff);
-> +	if (IS_ERR(folio)) {
-> +		int err = PTR_ERR(folio);
-> +
-> +		if (err == -EAGAIN)
-> +			return VM_FAULT_RETRY;
-> +
-> +		return vmf_error(err);
-> +	}
-> +
-> +	if (WARN_ON_ONCE(folio_test_large(folio))) {
-> +		ret = VM_FAULT_SIGBUS;
-> +		goto out_folio;
-> +	}
-> +
-> +	if (!folio_test_uptodate(folio)) {
-> +		clear_highpage(folio_page(folio, 0));
-> +		kvm_gmem_mark_prepared(folio);
-> +	}
-> +
-> +	vmf->page = folio_file_page(folio, vmf->pgoff);
-> +
-> +out_folio:
-> +	if (ret != VM_FAULT_LOCKED) {
-> +		folio_unlock(folio);
-> +		folio_put(folio);
-> +	}
-> +
-> +	return ret;
-> +}
-> +
-> +static const struct vm_operations_struct kvm_gmem_vm_ops = {
-> +	.fault = kvm_gmem_fault_shared,
-> +};
-> +
-> +static int kvm_gmem_mmap(struct file *file, struct vm_area_struct *vma)
-> +{
-> +	if (!kvm_gmem_supports_shared(file_inode(file)))
-> +		return -ENODEV;
-> +
-> +	if ((vma->vm_flags & (VM_SHARED | VM_MAYSHARE)) !=
-> +	    (VM_SHARED | VM_MAYSHARE)) {
-> +		return -EINVAL;
-> +	}
-> +
-> +	vma->vm_ops = &kvm_gmem_vm_ops;
-> +
-> +	return 0;
-> +}
-> +#else
-> +#define kvm_gmem_mmap NULL
-> +#endif /* CONFIG_KVM_GMEM_SHARED_MEM */
-> +
->  static struct file_operations kvm_gmem_fops = {
-> +	.mmap		= kvm_gmem_mmap,
->  	.open		= generic_file_open,
->  	.release	= kvm_gmem_release,
->  	.fallocate	= kvm_gmem_fallocate,
-> @@ -463,6 +537,9 @@ int kvm_gmem_create(struct kvm *kvm, struct kvm_create_guest_memfd *args)
->  	u64 flags = args->flags;
->  	u64 valid_flags = 0;
->  
-> +	if (kvm_arch_supports_gmem_shared_mem(kvm))
-> +		valid_flags |= GUEST_MEMFD_FLAG_SUPPORT_SHARED;
-> +
->  	if (flags & ~valid_flags)
->  		return -EINVAL;
->  
-> @@ -501,6 +578,10 @@ int kvm_gmem_bind(struct kvm *kvm, struct kvm_memory_slot *slot,
->  	    offset + size > i_size_read(inode))
->  		goto err;
->  
-> +	if (kvm_gmem_supports_shared(inode) &&
-> +	    !kvm_arch_supports_gmem_shared_mem(kvm))
-> +		goto err;
-> +
->  	filemap_invalidate_lock(inode->i_mapping);
->  
->  	start = offset >> PAGE_SHIFT;
-
-
-
-
-
+C.
 
 
 
