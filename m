@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64FD0C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 06:12:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 486F6C5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 06:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uLyOD-0007Gc-AG; Mon, 02 Jun 2025 02:11:23 -0400
+	id 1uLyPj-0008Ug-KW; Mon, 02 Jun 2025 02:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLy5F-0002GA-97; Mon, 02 Jun 2025 01:52:07 -0400
-Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
+ id 1uLy79-0002j9-Pq; Mon, 02 Jun 2025 01:53:54 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uLy5C-00006G-6k; Mon, 02 Jun 2025 01:51:41 -0400
-Received: by mail-qv1-xf31.google.com with SMTP id
- 6a1803df08f44-6face367320so29315356d6.3; 
- Sun, 01 Jun 2025 22:51:35 -0700 (PDT)
+ id 1uLy6s-0000CD-Nf; Mon, 02 Jun 2025 01:53:28 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-4a58b120bedso8901341cf.2; 
+ Sun, 01 Jun 2025 22:52:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748843495; x=1749448295; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1748843574; x=1749448374; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/PY2tyVSrVtdCJOVkgykGxb6xAi/RN7Z4HUkkStkp4w=;
- b=A/Lt/jQYUuAtUiOLnN2IPcWlmKxQ3oFUqvgYE6YzMiR/Y1iw+9arDMAhSwK84HsIDn
- ejQmTMsg4E/Mu2n/dSBgNOJ2QUQqfAY1dZboTkcaSX/phFg6hc1by7yEcBphSfSjFpVM
- JqHOsGffvhmgUds97LTE9GhofR+W8RELNuGlHpSuLH+VMQ4IPRmiv6sg7QGgrCsz/qyV
- uUmKmqgVwfIxMvkZw7p3+XXU1+OoefP5XqFnb20lDAdPPygEN3hMx0alJgUdmre7+FRr
- 7ERifiqVBvgTa3TPQTAuRQZYUyPoTvEwe78WVF+7nVTdoCCv/o9EjnlhDdbavGtoLu0o
- hLTA==
+ bh=sgPMuU93U1FMwITcOwsbLYmf1HcFNXdnE3EV9KStwoY=;
+ b=aDtZLYUPMBq7YJzVGfq9sVjAYMIFF1RlWUPhbKxNDxZkrKsqfdje0VfQiuOuGzFlbp
+ LRvKxoCJJB4OEqc9p9zyYyoS6HoVgEMqy571PFoMTK0WAU2TtTk9pWgXs13+Cq115pKU
+ xfqPbQ17HkzoiKoEX2US6HQR+Ztv7SXHhFQYy3HWY8rTk63EK3ye13PvftXLAkrWt/Lr
+ vgMtvQ9vijTzaP7Bn4b+kBMBXfrDrhZiTJLzu9VQHNyQlEU1kXy0bOcktwPw0LFp6Iwh
+ U1aDvIf2j8NHyEjsMxtFT9UjM1XV3KbfMcZ4nhXKYYzg5m/w8oMAyIP8/Ro99REgSStE
+ zwOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748843495; x=1749448295;
+ d=1e100.net; s=20230601; t=1748843574; x=1749448374;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/PY2tyVSrVtdCJOVkgykGxb6xAi/RN7Z4HUkkStkp4w=;
- b=ddny8X46JqCTNY8pL29tQFOw5CP4r1s2KfrxHeg0S5Fiu99cxt9t5GttsE7nziaHlr
- iTwR1/zwwmtB+eWa+dvKjGVpTRIS8ZwkSdfxlKORPdzjeXPTQz+jbHtQu+G+wXyp8JPT
- 2bkbEs5voCXqUJ76b5zW8VmSWsg0xqImr24NTLBuM2NKHj/5dPeQK4s1kvjDc/+JkXfo
- v/BB1SZpfLKNUCrZ8erZ/UTZvJk9KePki+g58NjKIhUKTopXw04nVCURnY3FXz9J++qt
- 1sXwqK65yekmuKGLIknp2F3LPz9A0tdqilXCQc1YnCri5r59BN8hzTlKnQwYitUotU8k
- jE1w==
+ bh=sgPMuU93U1FMwITcOwsbLYmf1HcFNXdnE3EV9KStwoY=;
+ b=XiNrOn+jNtKCpkIGzGfsfv3x/vcf9c0Y5RbOU4Zl7H+A3RIA4UpPDZchqxXmcbxksO
+ u+EYuyrCa62x/89c+vEibuLyXjErkoxJnJTQZEq6Pc8/cjdCcFIWA+1qgL5TLAFZ/tU/
+ 9+TklRNBu8GNLOYB0CnI1QsfhlXHA4jg+TgpLsFgJrZ1qVW6ZZN4vZEPwNwMc335Syf1
+ X0ztBEq5Te0gWuqa7QoWqA/J3qj78NduaGqGy3wf+OCfpBnv5J8yDPiiOLbkhIRTI7eY
+ PjKbyNL38TwbMGC4PHFLEOfsyebwL//GOV5O0shLA2T9FkiQLVk9dBiQ+B7YEAf/gdVa
+ fHhA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUq47h0O7iVeVrK2TThTnZqIve+A9C/P6661yosouDXZ0udsatMA03diS97cfOyypOE9VpXROoqvaf4@nongnu.org
-X-Gm-Message-State: AOJu0YzULmJluvzxdNmnnMLQ0j//he2rcO0qBd5UP2G6mmZgojZhQFgv
- 3p9xQ0yt0Pcd4nDYVOMnrPoi4Uyj8dkHP2ZWoTfBuRI7TMmnCLSn9hxDUGndsBnWt1UoDZJf/Ik
- mVs0nDHH8YggITEYdncLtiuyvLh/HKspwYw==
-X-Gm-Gg: ASbGnctRn4iFOLnyXaD2+nBNH2y5XpO0gwEG3jU5mztJROkQbsJbtlfG2drdNjfUhW/
- kfmwnlICyJuvviRFtF9YHEaLhg5FKA7mn9H6WTYDDEDhtDReQWNID9h0x2DqHaSz21EuRltdjB0
- dgLgRxligHn5m+b8ueLnsa9iATCroSJxKmdBafQ7m92eQpT2/pzddSZO6YsXvpBRY=
-X-Google-Smtp-Source: AGHT+IFh8WfbPpgZfzru18RjqPu+xNQQAVqSDc7oiPSwF+btbGEaS0qHb3dxWGvXNqIht+2MwWyYoi43/EkIlvxQLzY=
-X-Received: by 2002:a05:6102:4b0a:b0:4e5:958d:4962 with SMTP id
- ada2fe7eead31-4e6ecd2e5a9mr8439215137.2.1748838700000; Sun, 01 Jun 2025
- 21:31:40 -0700 (PDT)
+ AJvYcCVHLIuoR9ay2kusn2DBljwFpOXNkqVduY/RO8cMgCovVzNo/xQ93lMJOBFyEXai0hBRierEA+A3MsL2@nongnu.org
+X-Gm-Message-State: AOJu0YxEB2ELlZHwnGFzQ3hcMuRd5Mo0La++b1f7awWwFcmpTEI2OX3i
+ z15Yw2sNTfUtsIuF1Ms83hV1T0Hj8MESbACkMuVg2DBiENDnWq9f5Qmgf510C/i3wN5Qz0bAYGl
+ h6ah1gMXXGa57lGeGjO0hRYmS0YHY3KFcQA==
+X-Gm-Gg: ASbGnctCygeZ7NJhHj2z9q2e7JflW4+lqPwOzzHomb7ZALxbAf9BBY95KornpEbx+bi
+ 3CAOcyFExBA6xxQH4SXijtPnZzB9VlBBBdjiALRynCikX9xhyKSkDczW8YE6Ok3jIFdVH94HDRO
+ 8Od8nOdI0r56mdPLG3l8Nt68YROALgKgj5mriFc6yn+Ttx7V5Ah+2nYKzU6c5nxL4=
+X-Google-Smtp-Source: AGHT+IG3RlrJdylFbVkWnfXc2PzW66lcXAZJpV4rC3XdQBLaDEEz2MaaFAeJEPnEnWHKH5v8rhYtjyrDi1yJtOVjj18=
+X-Received: by 2002:a05:6102:5112:b0:4e6:df89:66c4 with SMTP id
+ ada2fe7eead31-4e701c885c7mr4215824137.15.1748838837775; Sun, 01 Jun 2025
+ 21:33:57 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250529202315.1684198-1-dbarboza@ventanamicro.com>
- <20250529202315.1684198-3-dbarboza@ventanamicro.com>
-In-Reply-To: <20250529202315.1684198-3-dbarboza@ventanamicro.com>
+ <20250529202315.1684198-4-dbarboza@ventanamicro.com>
+In-Reply-To: <20250529202315.1684198-4-dbarboza@ventanamicro.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 2 Jun 2025 14:31:14 +1000
-X-Gm-Features: AX0GCFuLzkNcyU3FqGbhh8GacwY72o_kiNBdoHyVq8xMelxA5syDjCLlhE8qXGA
-Message-ID: <CAKmqyKPo1oH2q1vC+MQA2ce29wrMZgSo1JUEP5pzNKikLOunSg@mail.gmail.com>
-Subject: Re: [qemu PATCH 2/3] target/riscv/cpu.c: add 'ssstrict' to riscv,isa
+Date: Mon, 2 Jun 2025 14:33:31 +1000
+X-Gm-Features: AX0GCFv9Hlr49_kY0JBhhcMNzhB93ECXr6rPEGH3Lwaec49t1wVkpSfnWEO2Nts
+Message-ID: <CAKmqyKPx6ugzvY=FEC9ff803U1MtKfH1jq+2kEXssSDQBqfmDA@mail.gmail.com>
+Subject: Re: [qemu PATCH 3/3] target/riscv/cpu.c: do better with 'named
+ features' doc
 To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
  liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
- envelope-from=alistair23@gmail.com; helo=mail-qv1-xf31.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=alistair23@gmail.com; helo=mail-qt1-x82e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -99,15 +100,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, May 30, 2025 at 6:24=E2=80=AFAM Daniel Henrique Barboza
 <dbarboza@ventanamicro.com> wrote:
 >
-> 'ssstrict' is a RVA23 profile-defined extension defined as follows:
->
-> "No non-conforming extensions are present. Attempts to execute
-> unimplemented opcodes or access unimplemented CSRs in the standard or
-> reserved encoding spaces raises an illegal instruction exception that
-> results in a contained trap to the supervisor-mode trap handler."
->
-> In short, we need to throw an exception when accessing unimplemented
-> CSRs or opcodes. We do that, so let's advertise it.
+> Most of the named features are added directly in isa_edata_arr[], some
+> of them are also added in riscv_cpu_named_features(). There is a reason
+> for that, and the existing docs can do better explaining it.
 >
 > Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 
@@ -116,21 +111,40 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.c | 1 +
->  1 file changed, 1 insertion(+)
+>  target/riscv/cpu.c | 14 ++++++++++++--
+>  1 file changed, 12 insertions(+), 2 deletions(-)
 >
 > diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 9d6fae72b2..cd0b159ed5 100644
+> index cd0b159ed5..fdf2eb2b1c 100644
 > --- a/target/riscv/cpu.c
 > +++ b/target/riscv/cpu.c
-> @@ -217,6 +217,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(ssnpm, PRIV_VERSION_1_13_0, ext_ssnpm),
->      ISA_EXT_DATA_ENTRY(sspm, PRIV_VERSION_1_13_0, ext_sspm),
->      ISA_EXT_DATA_ENTRY(ssstateen, PRIV_VERSION_1_12_0, ext_ssstateen),
-> +    ISA_EXT_DATA_ENTRY(ssstrict, PRIV_VERSION_1_12_0, has_priv_1_12),
->      ISA_EXT_DATA_ENTRY(sstc, PRIV_VERSION_1_12_0, ext_sstc),
->      ISA_EXT_DATA_ENTRY(sstvala, PRIV_VERSION_1_12_0, has_priv_1_12),
->      ISA_EXT_DATA_ENTRY(sstvecd, PRIV_VERSION_1_12_0, has_priv_1_12),
+> @@ -1377,13 +1377,23 @@ const RISCVCPUMultiExtConfig riscv_cpu_experiment=
+al_exts[] =3D {
+>   * 'Named features' is the name we give to extensions that we
+>   * don't want to expose to users. They are either immutable
+>   * (always enabled/disable) or they'll vary depending on
+> - * the resulting CPU state. They have riscv,isa strings
+> - * and priv_ver like regular extensions.
+> + * the resulting CPU state.
+> + *
+> + * Some of them are always enabled depending on priv version
+> + * of the CPU and are declared directly in isa_edata_arr[].
+> + * The ones listed here have special checks during finalize()
+> + * time and require their own flags like regular extensions.
+> + * See riscv_cpu_update_named_features() for more info.
+>   */
+>  const RISCVCPUMultiExtConfig riscv_cpu_named_features[] =3D {
+>      MULTI_EXT_CFG_BOOL("zic64b", ext_zic64b, true),
+>      MULTI_EXT_CFG_BOOL("ssstateen", ext_ssstateen, true),
+>      MULTI_EXT_CFG_BOOL("sha", ext_sha, true),
+> +
+> +    /*
+> +     * 'ziccrse' has its own flag because the KVM driver
+> +     * wants to enable/disable it on its own accord.
+> +     */
+>      MULTI_EXT_CFG_BOOL("ziccrse", ext_ziccrse, true),
+>
+>      { },
 > --
 > 2.49.0
 >
