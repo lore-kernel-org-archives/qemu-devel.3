@@ -4,148 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91772C5B555
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D5E3C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 21:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMCRs-00015V-WD; Mon, 02 Jun 2025 17:12:01 -0400
+	id 1uMCxH-0006Ej-5f; Mon, 02 Jun 2025 17:44:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMCRm-000147-SC
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMCRk-0004So-1N
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:11:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748898711;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IcvOov1uG1A8bgtVh3O5iliUd5dctenVeY27uWju2kk=;
- b=JQXoi8SjW8aY2Hrwca6yfIfyX1TsBzHiI9rTdSiLw/lQtl/wO2xYQv3wTEDMFeyg8RBKzK
- lKAbs6HNpHgsPO3Mmj3GvBGeZUfh7eao5nrcb7auXu7gEGVu17l4okaONfhIeeMlPXuoqZ
- BixQalXOAd1eqS8knvAFqr1k5QZi47c=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-395-p5efybtKMbO2WW2pdAoPOQ-1; Mon, 02 Jun 2025 17:11:49 -0400
-X-MC-Unique: p5efybtKMbO2WW2pdAoPOQ-1
-X-Mimecast-MFC-AGG-ID: p5efybtKMbO2WW2pdAoPOQ_1748898709
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-442dc702850so32937635e9.1
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:11:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uMCxE-0006EV-PC
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:44:24 -0400
+Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
+ id 1uMCxD-00083Y-5h
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 17:44:24 -0400
+Received: by mail-pg1-x52e.google.com with SMTP id
+ 41be03b00d2f7-b2c49373c15so3041921a12.3
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 14:44:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1748900661; x=1749505461; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LjBFZha3T6dxwS2Ai2OI10yYHkYGii8nPvaO9dfSaO4=;
+ b=Rojmo5aOFyycQ1VeGL3BObQe5BkLl+fH8FiU9EHzEXsFZtjQsue8jvpQOAPSBERO9L
+ za/URROkrO8sML6d7PVrZ3jZQ6tqnlP+GvpZWKwB+YftLEvb6pKuKw7jkfHjP8tQnthC
+ qMIIh8L/yYfdFvrvFYCxm2esfy+6D10vmsL69hvVmPWhP0aD4j39SrmeqFn9GXRPcvmO
+ RO//pFpM1whM7zoeAjJ5qkQ3iZJkrzWH/AvcjpVWnUkWoi29/ChWlLv01Vs01ItLxUn2
+ Sf5AoElK/jAVliTCqJYmSc00v6g+UkV4909IyL1y27Bl1q0JPm8Kx0HIDxQ+rYnVnKuz
+ Qm2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748898708; x=1749503508;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=IcvOov1uG1A8bgtVh3O5iliUd5dctenVeY27uWju2kk=;
- b=sY8zJLeF7ryR8NN+S81gTsqIbUSwZG8grhuFDzpVE8JZpUi9OVgrtStK9pv+ZUzKK8
- Bk5OFH3GAi3rDSdG6Kh5Gz9QOkcXjbc2C5LI8CFMVNKvb1Tu3cQzxwMkaxtOH0AX3BCo
- 1TQu9mXJ6ccuYEv58DU9uYL+jfuE5KLOaxEqN2mU/tsrsG8wdqQg8cX5f1Ktmz0X5Hbe
- B5D8+GDg4BwFRROZ6Sg6C53EwYm4JNFqDqV+2Y0Fx1EJ3W/VvCMy5GVV8+B3SjbPtJ42
- meiiP0QtC9LL38hiG+qADwgn1DPpSkgcgkxR16TA7sY/YP43Cs5H53ocCt3Aqwk1wJ15
- cevQ==
+ d=1e100.net; s=20230601; t=1748900661; x=1749505461;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LjBFZha3T6dxwS2Ai2OI10yYHkYGii8nPvaO9dfSaO4=;
+ b=tIRCYRV0uqgVy1UfxtY6ufcC+HKuYi/IBDerMbgkG2GMuHfVyrxgF2rnd2EEgRmRoq
+ YYUdl7TMnJY9I7Zq6+Xfj+jaxJmf1D05jm5uSz3kHYBcxrddNLQkmD+mRRI3K5Nrz2QN
+ 7FMhK2FTQ+K1jJgO0bMtgezR7i/lSGoIXjnsvE+0lXVNMqvEqT2lgW52/jG14ZJx9wly
+ 4zwpjZddOtZqWtTXO8qPnBZ8fHEXfRym+eMPm9dNIeGod1XjkTyGTGuLjoi9N27R78cQ
+ LJrO3JZUAH7eBtgduU5iNFtevG0lEHxv8+Vsrt/p8UCvvCaxO1ppas9Cj0huJvnCcEoM
+ QoMw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU88GWlej1DriZRt2C25kcvKH/AS6ZP3fZItgp+Aj00zYEvcVhBIMIha945EFjAKn12IaFH5/T64x/J@nongnu.org
-X-Gm-Message-State: AOJu0Yzs9r4+t6IHuruadsRU1eKnxdTqU4G7thVYFxnZ+apJO/H25VED
- EcOGmH86jKAwejAORKGsjyFkEWSsG0SFi9YfJLlhlsaFfEHBQyl2rHMU0NOA67vzfxBL5eTqn8d
- Oi49v1IruBAU7i0OQR9S/qkKqt0uXOlHYlcekKpEy1zqEfQJdgGzxLawq
-X-Gm-Gg: ASbGncsIBRrB1uBHE7D6tQKw2DrVkjdOpkKZ3cAlGBr6D/TF89jnUAH2uNR+hS30ZNh
- w2Qi/0CVF0XRRD0z9t/055hB3tbvf4pTMO3KMC6BI96emS68FKEFMu3mEdrmdArf9BKZuoZR3cV
- WSOmGrrKtEtfafOs5xiLaIN+f29HAWA7J2LXbqDiIRh0y/3rryWfCAWxplWhhpmqUcJXh0FYk6q
- ELLXnhLWsiFIWoRkYWma3JawhTgaj7kaplirXkgxgdSJBtACnGPoDjRfWsgeHbqkKQKxFgN9q6D
- /ZlNfzDuO4Xc/hzacNfpBHsHfsnUZTEdhklgm3MyDS2/thUUEw==
-X-Received: by 2002:a05:600c:1914:b0:442:e147:bea7 with SMTP id
- 5b1f17b1804b1-4512655c3bcmr80566485e9.29.1748898708382; 
- Mon, 02 Jun 2025 14:11:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGqjHDDQEpCfhY/d3gK5E2dfoZXkOVGSMU71zUgGnpy01NVbOuBl/Nz0jhO6PgwOqVesdEf0A==
-X-Received: by 2002:a05:600c:1914:b0:442:e147:bea7 with SMTP id
- 5b1f17b1804b1-4512655c3bcmr80566325e9.29.1748898707974; 
- Mon, 02 Jun 2025 14:11:47 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ AJvYcCVWvAFXct7Ekj8krN+Fyuh6yGJpDDBTeTZ6lGGVjDWKqyhokJ9mtL1HYP6zwGUIsnhEshg8SUY1MW/h@nongnu.org
+X-Gm-Message-State: AOJu0Yz32hbsJB1UCuKPuZIe1kVoIFRJ/eraqC/irMM2HqrxaqA/6ZuB
+ EAw5Dt24VOWQf4ZxwwTlQPqthTZcAAbmK9wT8YmQtqf5PVGs5rKBlay8
+X-Gm-Gg: ASbGnctFOUWrlc0SohVOx/zyDrqwgslyG0+y4SmKtI6Af+Lodoa79YDtSZNJhzWaldb
+ LDuAl+fg5LP4V0PrNsT/MyYwVWbPSXaqkIMI7gz88yTvEB3Wt7vp9V6zDNTxFciyLpLebzljdmN
+ c9aPHuqQVkFIsL5AgZTis89u/IIO6iDy/odDD85UU6OOFBQbdEGk0TVwN15Ftxnww6eN8+oTc6V
+ otewAx/8dMrvte0LIzn2cCw5XL+f0rAW+ybJ1ALtAO8kf0Yqpjv4L3x83QFi9k19Ihv42TxeeUb
+ I6lzVUhFoT8xdlD21IMVxCMSVPkilqDiidfoIBGQyuncVuC47/eQsaM=
+X-Google-Smtp-Source: AGHT+IFdTCNmXpNzFrfF8S335uiBBbtgUoO3DXJ4mkfBTsg6pYWFrv29GTOtlSrkONnDA9TVyVvhmw==
+X-Received: by 2002:a05:6a20:7286:b0:1f3:2e85:c052 with SMTP id
+ adf61e73a8af0-21ae00c987cmr23110965637.35.1748900661478; 
+ Mon, 02 Jun 2025 14:44:21 -0700 (PDT)
+Received: from [192.168.1.119] ([50.46.174.34])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d8012af3sm134480165e9.35.2025.06.02.14.11.46
+ d2e1a72fcca58-747afda8b71sm8081237b3a.0.2025.06.02.14.44.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 14:11:46 -0700 (PDT)
-Message-ID: <e1abbc4a-7071-419e-ab49-64828e682064@redhat.com>
-Date: Mon, 2 Jun 2025 23:11:45 +0200
+ Mon, 02 Jun 2025 14:44:21 -0700 (PDT)
+Message-ID: <fc8702c6-568a-4d71-af9c-19afd037b688@gmail.com>
+Date: Mon, 2 Jun 2025 14:44:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/77] hw/arm: remove explicit dependencies listed
-To: Nabih Estefan <nabihestefan@google.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>
-References: <20250530071250.2050910-1-pbonzini@redhat.com>
- <20250530071250.2050910-3-pbonzini@redhat.com>
- <153c342a-428a-4620-bf91-52ebb4507b97@redhat.com>
- <b7e988ef-82da-43bc-8c57-3b49b3bf9529@linaro.org>
- <CA+QoejVhjy26FraUUMRtZtNPRW6u2MM3T=6hyguttPgx8qpkpw@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <CA+QoejVhjy26FraUUMRtZtNPRW6u2MM3T=6hyguttPgx8qpkpw@mail.gmail.com>
+Subject: Re: [PATCH v7 3/9] plugins: Add enforcement of QEMU_PLUGIN_CB flags
+ in register R/W callbacks
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>
+References: <20250602195706.1043662-1-rowanbhart@gmail.com>
+ <20250602195706.1043662-4-rowanbhart@gmail.com>
+ <7f925a2a-20d7-40e6-bf2c-ac3823912a04@linaro.org>
+Content-Language: en-US
+From: Rowan Hart <rowanbhart@gmail.com>
+In-Reply-To: <7f925a2a-20d7-40e6-bf2c-ac3823912a04@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x52e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,101 +113,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/2/25 22:53, Nabih Estefan wrote:
-> Hi Pierrick,
-> 
-> For what it's worth, those files were also breaking on Ubuntu and Debian for me.
-> I had to explicitly `sudo apt install libfdt-dev` for it to work
-> again. I don't believe
-> it was installed at all previously, but QEMU was building and working correctly
-> without it being explicitly installed.
-
-yes. I had to install libfdt-dev/el on some systems too.
-
-However, for the windows (on Linux) build :
-
-   ./configure --cross-prefix=x86_64-w64-mingw32- --target-list=aarch64-softmmu,ppc64-softmmu,x86_64-softmmu,s390x-softmmu --disable-docs --disable-sdl
-
-It's still broken.
-
-Thanks,
-
-C.
-
-
-
-
-
-> 
-> Thanks,
-> Nabih
-> 
-> Nabih Estefan (he/him) |  Software Engineer |
-> nabihestefan@google.com |  857-308-9574
-> 
-> 
-> 
-> On Mon, Jun 2, 2025 at 11:41 AM Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
 >>
->> Hi Cédric,
->>
->> On 6/2/25 6:59 AM, Cédric Le Goater wrote:
->>> Hello Pierrick,
->>>
->>> On 5/30/25 09:11, Paolo Bonzini wrote:
->>>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
->>>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Link: https://lore.kernel.org/r/20250521223414.248276-3-pierrick.bouvier@linaro.org
->>>> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
->>>> ---
->>>>     hw/arm/meson.build | 4 ++--
->>>>     1 file changed, 2 insertions(+), 2 deletions(-)
->>>>
->>>> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
->>>> index 5098795f61d..d90be8f4c94 100644
->>>> --- a/hw/arm/meson.build
->>>> +++ b/hw/arm/meson.build
->>>> @@ -8,7 +8,7 @@ arm_common_ss.add(when: 'CONFIG_HIGHBANK', if_true: files('highbank.c'))
->>>>     arm_common_ss.add(when: 'CONFIG_INTEGRATOR', if_true: files('integratorcp.c'))
->>>>     arm_common_ss.add(when: 'CONFIG_MICROBIT', if_true: files('microbit.c'))
->>>>     arm_common_ss.add(when: 'CONFIG_MPS3R', if_true: files('mps3r.c'))
->>>> -arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [pixman, files('musicpal.c')])
->>>> +arm_common_ss.add(when: 'CONFIG_MUSICPAL', if_true: [files('musicpal.c')])
->>>>     arm_common_ss.add(when: 'CONFIG_NETDUINOPLUS2', if_true: files('netduinoplus2.c'))
->>>>     arm_common_ss.add(when: 'CONFIG_OLIMEX_STM32_H405', if_true: files('olimex-stm32-h405.c'))
->>>>     arm_common_ss.add(when: 'CONFIG_NPCM7XX', if_true: files('npcm7xx.c', 'npcm7xx_boards.c'))
->>>> @@ -79,7 +79,7 @@ arm_common_ss.add(when: 'CONFIG_SX1', if_true: files('omap_sx1.c'))
->>>>     arm_common_ss.add(when: 'CONFIG_VERSATILE', if_true: files('versatilepb.c'))
->>>>     arm_common_ss.add(when: 'CONFIG_VEXPRESS', if_true: files('vexpress.c'))
->>>>
->>>> -arm_common_ss.add(fdt, files('boot.c'))
->>>> +arm_common_ss.add(files('boot.c'))
->>>>
->>>>     hw_arch += {'arm': arm_ss}
->>>>     hw_common_arch += {'arm': arm_common_ss}
->>>
->>> This commit breaks building these files on Windows:
->>>
->>>        hw/arm/{boot.c,vexpress.c,imx8mp-evk.c,raspi4b.c}
->>>
->>> Error is :
->>>
->>>        fatal error: libfdt.h: No such file or directory
->>>
->>> Thanks,
->>>
->>
->> Is libfdt available in your windows environment? If yes, is it in a non
->> standard path?
->> On my side, it built successfully, so I first need to reproduce this.
->>
->> Thanks,
->> Pierrick
->>
-> 
+>> @@ -437,6 +437,10 @@ int qemu_plugin_read_register(struct 
+>> qemu_plugin_register *reg, GByteArray *buf)
+>>   {
+>>       g_assert(current_cpu);
+>>   +    if (qemu_plugin_get_cb_flags() == QEMU_PLUGIN_CB_NO_REGS) {
+>> +        return -1;
+>> +    }
+>> +
+>>       return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) 
+>> - 1);
+>>   }
+>>   @@ -445,6 +449,10 @@ int qemu_plugin_write_register(struct 
+>> qemu_plugin_register *reg,
+>>   {
+>>       g_assert(current_cpu);
+>>   +    if (buf->len == 0 || qemu_plugin_get_cb_flags() != 
+>> QEMU_PLUGIN_CB_RW_REGS) {
+>> +        return 0;
+>> +    }
+>> +
+>
+> Would it be better to return -1 for "qemu_plugin_get_cb_flags() != 
+> QEMU_PLUGIN_CB_RW_REGS", so user can notice there is something wrong 
+> with flags?
+
+Sure would, typo on my part here.
+
+
+>>       return gdb_write_register(current_cpu, buf->data, 
+>> GPOINTER_TO_INT(reg) - 1);
+>>   }
+>>   diff --git a/plugins/core.c b/plugins/core.c
+>> index eb9281fe54..34bddb6c1c 100644
+>> --- a/plugins/core.c
+>> +++ b/plugins/core.c
+>> @@ -364,14 +364,15 @@ void plugin_register_dyn_cb__udata(GArray **arr,
+>>                                      enum qemu_plugin_cb_flags flags,
+>>                                      void *udata)
+>>   {
+>> -    static TCGHelperInfo info[3] = {
+>> +    static TCGHelperInfo info[4] = {
+>>           [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG,
+>>           [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG,
+>> +        [QEMU_PLUGIN_CB_RW_REGS].flags = 0,
+>>           /*
+>>            * Match qemu_plugin_vcpu_udata_cb_t:
+>>            *   void (*)(uint32_t, void *)
+>>            */
+>> -        [0 ... 2].typemask = (dh_typemask(void, 0) |
+>> +        [0 ... 3].typemask = (dh_typemask(void, 0) |
+>>                                 dh_typemask(i32, 1) |
+>>                                 dh_typemask(ptr, 2))
+>>       };
+>
+> [QEMU_PLUGIN_CB_RW_REGS].flags = 0 was already set implicitly, as all 
+> elements not explicit set are initialized to 0.
+> As you can see, [0 ... 2].typemask was set, which shows we initialized 
+> the third element.
+> Adding [QEMU_PLUGIN_CB_RW_REGS].flags = 0 does not hurt, and is more 
+> explicit, but you don't need to increase array size.
+>
+> This static array is used to set info field in callback struct, as
+> .info = &info[flags]. Flags being an enum qemu_plugin_cb_flags, its 
+> value is 0,1 or 2, so adding one entry is useless.
+
+Got it, for some reason I assumed this array needed a sentinel value and 
+simultaneously didn't recognize the [0 ... n] sytnax was inclusive. 
+Thanks for pointing that out!
+
+
+I'll make these two changes.
 
 
