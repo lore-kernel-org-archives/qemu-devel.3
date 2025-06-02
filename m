@@ -4,84 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3758C54FB3
-	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:47:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A30AFC5B549
+	for <qemu-devel@archiver.kernel.org>; Mon,  2 Jun 2025 08:53:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uM0or-0000Ee-Re; Mon, 02 Jun 2025 04:46:57 -0400
+	id 1uM0v9-0001Sv-Dn; Mon, 02 Jun 2025 04:53:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uM0oo-0000DA-ML
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:46:55 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0v7-0001SP-LQ
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:53:25 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uM0om-0003ay-Af
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:46:54 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-450d668c2a1so18368865e9.0
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 01:46:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uM0v5-00046D-Vl
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 04:53:25 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-3a4fd1ba177so1151543f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 01:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748854010; x=1749458810; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748854402; x=1749459202; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=a7jyu99NtPdmf2Ia5Cr+Qyc8VQqg6GbjRm3hnIhBqmQ=;
- b=aiWhGc8hhMwopDn4vtq3KwAsYWV2srNslyS3MygQY21+QvzgGiyXL0ubIqudE6XVVb
- GjhYb28ltJQ4obrG7Ta6NmdrK8sx1sl3kQOLPFwRcuA3F6pw4J6rTLEZWUagTcvISIo3
- hOQmEOkHTpK64j8l+0vL9XDxCkNnQChsInSDdgeCeoNCG23DZiKKN94X779s2HlnfRNt
- llUP251gaIVnJ4OdqroPAEDFZPWTj6tEgQ1jC2lZZ/Ef7ioY/+zRmpGmRm4irjFa55w4
- f/S4VEx291cd9NA8iXBZKyv2FsCClHDVeEzpWozcdbpdGq8LLlEQe6GA5nPPywah49Jh
- OtHA==
+ bh=KShKhSKBioxmyYMv+moET2Xbnq5CUa8Zdx1SMT4zvyQ=;
+ b=REG95KOdy5Wl4kHimkOaFiiGgiVpPVWrUKRuJpVysQjwgKBTIFeZBoINmQezIY5UQx
+ /akNM3uHRtFHZFVGM3qepO4fK5Bg2XAG6DRI5k9nJUiBo38zOQs6qlYNWqcRZ2d4iomy
+ LVDyV6twK/wX0tqIIxmZvhmzkmI1PhtSuDaIWxk3ZK/xFeojmKtRthuCGBFpRETRbI/o
+ z1k4Z7m6occmROhxXG9qBs8oZxxjtFW1CmvQ4y1BwonPiPA2+ujaGay2O9yPqWTKIyRe
+ glIVmK+UIuC3duu88re5QIZzv/NbWIy4vq0/30TOoZnlZxJ6koLFS1042ruLsj2Qszlu
+ h46w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748854010; x=1749458810;
+ d=1e100.net; s=20230601; t=1748854402; x=1749459202;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=a7jyu99NtPdmf2Ia5Cr+Qyc8VQqg6GbjRm3hnIhBqmQ=;
- b=A8DwTJds2HBtoHM0v/8/7vU0pOBfrelvdsfz/PxBSTx//w6xstNG8HRpsBRC536whz
- XecV7lrmwaUrfocf11zUUEI3OpaU6gLo9FOL1zlag8g6gMslmgXIRYwEGtNS43vBSkBS
- QW1Cfc+CECpun65QOfWGNKNcm+b5i5ABYmQbmVH6W7Lr2nfqKWb3rQwFH4NNmO9KXr1D
- zqtJEspyljq1nMXH2WmSsVI1vNQ5IIXplcpZ8idn5uDA0ZUSBP5RiywylubYLHUi179O
- 34NdzFJotu10S+i5idqDg8YAKu7PVKGEoA+YfH2+nz7sAmc0WdvBm0IhgrYq8BumpogY
- gaug==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPtqxeSmGIlzNNWluTcrWXQHg6sOjKGjCJg4GlkevVYKQi/INZebrj8OiTLgGMb2I33Afkdhni2QO3@nongnu.org
-X-Gm-Message-State: AOJu0YziB0HEQq41l+u8isSPgqayNWSAMBQhvo53sbyh+IHJK73KI3Sn
- Wzu/id01dVNyyMl2GM9SrVnZt9qd/AuKNf7g5407SC2O6GzRJMTw7nWVkWeAnLjv+p0=
-X-Gm-Gg: ASbGncuWyTIW0pW2sQ8WGdrc8tWRbkY76cSPTZSV7HrR+CYxQvOCyKS9/7cQ7LMO4Nf
- EQuTH1S2efj1QexQCH1t07Y0qeBprRAZ904ICH6D5tH9xF7YdCLftUiFGto81qCdd1rTNOSOeFW
- RX1qT92GUxC9UZ2eewqHCAPNdA/822NXm9s9JjsW6DkS/QJF6/Gq1y0TwwmDxw2Y9T2zS0cVueU
- +Esl9wNNvMyTOKO07mOc9I4WM1bDeSxg3zHJK6Ejzmf7xo487TDWMGg1woRvP8XhufWS2cNeiSQ
- T17x1aGglpY23XdkoPXzJq3/ZXdaKlY1nGK2nF727gC1XtONf8YJ8wpFE0blv76xX8whZd8XqYZ
- opdbkDchQsQxJ2yuPB2VGZAMX+dcaN6s=
-X-Google-Smtp-Source: AGHT+IGyQIOZGSRDrPnjfN/Fy5oJfBzoR45HYVB1LZ97G0ksuqzju8t9+sUHajd1Q7RqmiZ9hSd2hg==
-X-Received: by 2002:a7b:cc81:0:b0:448:d54a:ca23 with SMTP id
- 5b1f17b1804b1-450ce8376bamr96661105e9.8.1748854010457; 
- Mon, 02 Jun 2025 01:46:50 -0700 (PDT)
-Received: from [192.168.1.127] (host-80-41-64-133.as13285.net. [80.41.64.133])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d8000d50sm112910775e9.19.2025.06.02.01.46.49
+ bh=KShKhSKBioxmyYMv+moET2Xbnq5CUa8Zdx1SMT4zvyQ=;
+ b=dgW0l/C0XbuOI0TpIO55X1/0NGjAdY6lfFep2YuOtBGwseV8gx+R1T3hU4GDlTZ0Tc
+ 9RGNy4RZU6V/BduDt35bq6k3oUGfVcQV7kXMd2AexJQg+4DEK9QuqmLFreovFGqk8pTs
+ jBWysRlGKPPc6D+5Z6Zq5AF9r+5vN2Yq17tPGwcsiNWPr6SdMtUtRyfse1Uuni2ABB06
+ aWNqStiw3TiZK1NINru6rtWWVu3x/4TZQBfEBBXF89GWp9BL6U1IPiN9UXFEUqaInbiY
+ JckMC7RG3uBmk4JFW3AAdxXZtT2LxFCfOvZ6C5tP3T5j1V7XpiPZmVMQOKCHiDsLrGT4
+ ZAmQ==
+X-Gm-Message-State: AOJu0YxOs91/wjFKJ6Qd6B8rtcnR/hYg+A6/S9Ao2/l/ZrsQIV9+cshb
+ FQQKBbsBaUuKqckIGbd72hVIZb4Wkc1efYlCQLJW1NbQJMk7olrX+tVubHmuA9sf+HA=
+X-Gm-Gg: ASbGnct9/x+4T+IER2h1B5RCwCFuk8rRUnnXTJtfVsf3NW7+anku2Y+svrxnLWK0mzH
+ bgqTW8J0piQhtdvRpGzPS26Y2Lj0LjfnXTDeTJMWJ8iAad/EM8GpHj3ns2bAkg8s/oI2lojR+/N
+ J/OyxP+dpUVLk6NPWqqBLJndqGuRWZPBUtg1iJsSvkcBggSnfFJAjHYHB4TQ1ASkqzRS/ZMDFxa
+ MAAAkMCexotz1ZKGpJPzwoYHJ/718BM8Osg9Y4AUW2jI97kmiGsVMV4694SYyKK1+8bM/mXahrF
+ UZiFImrrTfM6D4HazZnlEXf+gFlzdD5LD00Wl5ETa3WwhIrhJcbk9eG10C9G4qiiZahD7fhm8no
+ O4KjnO6r4Pjd3aEX+9pI=
+X-Google-Smtp-Source: AGHT+IFhfoQtlCYArK0IF71IRGL7lKAUtQbMQnSTRl9qOZt6mM7EtdJc7IBJj4zt12lJJiUa3DgjAg==
+X-Received: by 2002:a05:6000:1aca:b0:3a4:dfbe:2b14 with SMTP id
+ ffacd0b85a97d-3a4f798f5a4mr9455446f8f.16.1748854401679; 
+ Mon, 02 Jun 2025 01:53:21 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4f009fd9bsm13896447f8f.82.2025.06.02.01.53.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 01:46:50 -0700 (PDT)
-Message-ID: <41f75652-7242-4677-8500-686da53f3366@linaro.org>
-Date: Mon, 2 Jun 2025 09:46:47 +0100
+ Mon, 02 Jun 2025 01:53:21 -0700 (PDT)
+Message-ID: <c2999ee1-c0a1-4a09-85f8-6c10ede14584@linaro.org>
+Date: Mon, 2 Jun 2025 10:53:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/loongarch: add check for fcond
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, philmd@linaro.org, lorenz.hetterich@cispa.de,
- qemu-stable@nongnu.org
-References: <20250523011745.3833883-1-gaosong@loongson.cn>
+Subject: Re: [PATCH v4 01/27] hw/i386/pc: Remove deprecated pc-q35-2.6 and
+ pc-i440fx-2.6 machines
+To: Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ kvm@vger.kernel.org, Sergio Lopez <slp@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Laurent Vivier <lvivier@redhat.com>, Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Yi Liu <yi.l.liu@intel.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, qemu-riscv@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Amit Shah <amit@kernel.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Helge Deller <deller@gmx.de>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Ani Sinha <anisinha@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ qemu-arm@nongnu.org, =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?=
+ <marcandre.lureau@redhat.com>, Huacai Chen <chenhuacai@kernel.org>,
+ Jason Wang <jasowang@redhat.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+References: <20250508133550.81391-1-philmd@linaro.org>
+ <20250508133550.81391-2-philmd@linaro.org>
+ <20250509172336.6e73884f@imammedo.users.ipa.redhat.com>
+ <91c4bf9f-3079-4e2f-9fbb-e1a2a9c56c7b@redhat.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250523011745.3833883-1-gaosong@loongson.cn>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <91c4bf9f-3079-4e2f-9fbb-e1a2a9c56c7b@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x330.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,85 +123,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/23/25 02:17, Song Gao wrote:
-> fcond only has 22 types, add a check for fcond.
+On 2/6/25 08:13, Thomas Huth wrote:
+> On 09/05/2025 17.23, Igor Mammedov wrote:
+>> On Thu,  8 May 2025 15:35:24 +0200
+>> Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>>> These machines has been supported for a period of more than 6 years.
+>>> According to our versioned machine support policy (see commit
+>>> ce80c4fa6ff "docs: document special exception for machine type
+>>> deprecation & removal") they can now be removed.
+>>
+>> if these machine types are the last users of compat arrays,
+>> it's better to remove array at the same time, aka squash
+>> those patches later in series into this one.
+>> That leaves no illusion that compats could be used in the later patches.
 > 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2972
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/tcg/insn_trans/trans_fcmp.c.inc | 11 ++++++++---
->   target/loongarch/tcg/insn_trans/trans_vec.c.inc  |  4 ++--
->   2 files changed, 10 insertions(+), 5 deletions(-)
-> 
-> diff --git a/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc b/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
-> index 3babf69e4a..5be759d30c 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
-> @@ -4,10 +4,15 @@
->    */
->   
->   /* bit0(signaling/quiet) bit1(lt) bit2(eq) bit3(un) bit4(neq) */
-> -static uint32_t get_fcmp_flags(int cond)
-> +static uint32_t get_fcmp_flags(DisasContext *ctx, int cond)
->   {
->       uint32_t flags = 0;
->   
-> +    /*check cond , cond =[0-8,10,12] */
-> +    if ((cond > 8) &&(cond != 10) && (cond != 12)) {
-> +        generate_exception(ctx, EXCCODE_INE);
-> +    }
-> +
->       if (cond & 0x1) {
->           flags |= FCMP_LT;
->       }
-> @@ -39,7 +44,7 @@ static bool trans_fcmp_cond_s(DisasContext *ctx, arg_fcmp_cond_s *a)
->       src1 = get_fpr(ctx, a->fj);
->       src2 = get_fpr(ctx, a->fk);
->       fn = (a->fcond & 1 ? gen_helper_fcmp_s_s : gen_helper_fcmp_c_s);
-> -    flags = get_fcmp_flags(a->fcond >> 1);
-> +    flags = get_fcmp_flags(ctx, a->fcond >> 1);
+> IMHO the generic hw_compat array should be treated separately since this 
+> is independent from x86. So in case someone ever needs to backport these 
+> patches to an older branch, they can decide more easily whether they 
+> want to apply the generic hw_compat part or only the x86-specific part 
+> of this series.
 
-My same question applies for exception priority.
-
-Here it isn't possible to just inline get_fcmp_flags.  But you could, for instance, change 
-the return value to 'int' and return -1 on error.
-
-
-r~
->   
->       fn(var, tcg_env, src1, src2, tcg_constant_i32(flags));
->   
-> @@ -63,7 +68,7 @@ static bool trans_fcmp_cond_d(DisasContext *ctx, arg_fcmp_cond_d *a)
->       src1 = get_fpr(ctx, a->fj);
->       src2 = get_fpr(ctx, a->fk);
->       fn = (a->fcond & 1 ? gen_helper_fcmp_s_d : gen_helper_fcmp_c_d);
-> -    flags = get_fcmp_flags(a->fcond >> 1);
-> +    flags = get_fcmp_flags(ctx, a->fcond >> 1);
->   
->       fn(var, tcg_env, src1, src2, tcg_constant_i32(flags));
->   
-> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> index b33622ff79..0128a2398f 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> @@ -4666,7 +4666,7 @@ static bool do_vfcmp_cond_s(DisasContext *ctx, arg_vvv_fcond *a, uint32_t sz)
->       }
->   
->       fn = (a->fcond & 1 ? gen_helper_vfcmp_s_s : gen_helper_vfcmp_c_s);
-> -    flags = get_fcmp_flags(a->fcond >> 1);
-> +    flags = get_fcmp_flags(ctx, a->fcond >> 1);
->       fn(tcg_env, oprsz, vd, vj, vk, tcg_constant_i32(flags));
->   
->       return true;
-> @@ -4686,7 +4686,7 @@ static bool do_vfcmp_cond_d(DisasContext *ctx, arg_vvv_fcond *a, uint32_t sz)
->       }
->   
->       fn = (a->fcond & 1 ? gen_helper_vfcmp_s_d : gen_helper_vfcmp_c_d);
-> -    flags = get_fcmp_flags(a->fcond >> 1);
-> +    flags = get_fcmp_flags(ctx, a->fcond >> 1);
->       fn(tcg_env, oprsz, vd, vj, vk, tcg_constant_i32(flags));
->   
->       return true;
+Yes, it is clearer this way than squashed.
 
 
