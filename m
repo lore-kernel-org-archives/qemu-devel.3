@@ -4,19 +4,19 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CEA8C5AD49
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEAE3C5AE59
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 06:38:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMLHJ-00086C-HH; Tue, 03 Jun 2025 02:37:44 -0400
+	id 1uMLI6-0000MC-Ft; Tue, 03 Jun 2025 02:38:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGa-0007jS-Rw
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGb-0007jd-6n
  for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:37:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGY-0003RD-Ec
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGY-0003RI-Do
  for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:36:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1748932613;
@@ -24,45 +24,44 @@ DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=CV1+ywSWVoSgMySlXiooa7/udBbvhJS3VG2OsC4HKVg=;
- b=BJbLrdFBe/1IOccDRV1TTqHbyAEwgArhTPn5ScaCFsjM3Nnb+U1UL8BUrkvRC4St0MxX43
- twvas6r+sfk1WNuhTSxRklPlAub7B3aQwMl/Z1iKPGe7U/jmxFFZ9m/RgN0P2N0qKcXHMm
- B4gop+Evo/V0Yt/nSv2rExloRTdn56o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=jnFSGK1CctR2WtyuT5Bw9qUosWhTcg0WPez9U4gK6JE=;
+ b=cQ7pJt6I7XFmNdQcFu9IL8v4OxHAv+Utr8oOuVCxRmub5FwVOM8KZkKZ1JEMADYrCk/VD9
+ uQ+V22FeGed7RsgxLbAKBMzHakL36WHOgX5uyB+nqHzUhyJ3WpzMa23hOpHVPBKfKCstjJ
+ 4EIPfsLT/0u/s+O0nQQRX0LEzX+7tYM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-543-OhbCRxZwPYuhZs-1z8_7pw-1; Tue,
- 03 Jun 2025 02:36:51 -0400
-X-MC-Unique: OhbCRxZwPYuhZs-1z8_7pw-1
-X-Mimecast-MFC-AGG-ID: OhbCRxZwPYuhZs-1z8_7pw_1748932611
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-78-HJjqF6kYOm2QMQl3eFUQ9A-1; Tue,
+ 03 Jun 2025 02:36:52 -0400
+X-MC-Unique: HJjqF6kYOm2QMQl3eFUQ9A-1
+X-Mimecast-MFC-AGG-ID: HJjqF6kYOm2QMQl3eFUQ9A_1748932611
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC3C11956088
- for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:50 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31C3A19560AF
+ for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:51 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 878F919560AB
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCDFE1956094
  for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:50 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 16BBB21E65FD; Tue, 03 Jun 2025 08:36:45 +0200 (CEST)
+ id 1ED5E21E6540; Tue, 03 Jun 2025 08:36:45 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	Eric Blake <eblake@redhat.com>
-Subject: [PULL 11/13] qapi: Mention both job-cancel and block-job-cancel in
- doc comments
-Date: Tue,  3 Jun 2025 08:36:42 +0200
-Message-ID: <20250603063644.3953528-12-armbru@redhat.com>
+Subject: [PULL 13/13] qapi: Improve documentation around job state @concluded
+Date: Tue,  3 Jun 2025 08:36:44 +0200
+Message-ID: <20250603063644.3953528-14-armbru@redhat.com>
 In-Reply-To: <20250603063644.3953528-1-armbru@redhat.com>
 References: <20250603063644.3953528-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -87,58 +86,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Several doc comments mention block-job-cancel where the more generic
-job-cancel would also work.  Adjust them to mention both.
+We use "the query list" in a few places.  It's not entirely obvious
+what that means.  It's actually the output of query-jobs or
+query-block-jobs.
+
+Documentation of @auto-dismiss talks about the job disappearing from
+the query list when it reaches state @concluded.  This is less than
+precise.  The job doesn't merely disappear from the query list, it
+disappears, period.
+
+Documentation of JobStatus @concluded explains "the job will remain in
+the query list until it is dismissed".  Again less than precise.  It
+remains in state @concluded until dismissed.
+
+Rephrase without use of "the query list" for clarity and precision.
 
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250527073916.1243024-12-armbru@redhat.com>
+Message-ID: <20250527073916.1243024-14-armbru@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- qapi/block-core.json | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ qapi/block-core.json | 19 +++++++------------
+ qapi/job.json        |  2 +-
+ 2 files changed, 8 insertions(+), 13 deletions(-)
 
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 6e5b90d5df..ad6de151c8 100644
+index da390f85ac..1df6644f0d 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -1894,7 +1894,7 @@
- # The status of ongoing drive-backup operations can be checked with
- # query-block-jobs where the BlockJobInfo.type field has the value
- # 'backup'.  The operation can be stopped before it has completed
--# using the block-job-cancel command.
-+# using the job-cancel or block-job-cancel command.
+@@ -1417,8 +1417,8 @@
+ # @auto-finalize: Job will finalize itself when PENDING, moving to the
+ #     CONCLUDED state.  (since 2.12)
+ #
+-# @auto-dismiss: Job will dismiss itself when CONCLUDED, moving to the
+-#     NULL state and disappearing from the query list.  (since 2.12)
++# @auto-dismiss: Job will dismiss itself when CONCLUDED, and
++#     disappear.  (since 2.12)
+ #
+ # @error: Error information if the job did not complete successfully.
+ #     Not set if the job completed successfully.  (since 2.12.1)
+@@ -1614,8 +1614,7 @@
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+ #     @job-dismiss.  When true, this job will automatically disappear
+-#     from the query list without user intervention.  Defaults to
+-#     true.  (Since 2.12)
++#     without user intervention.  Defaults to true.  (Since 2.12)
+ #
+ # @filter-node-name: the node name that should be assigned to the
+ #     filter driver that the backup job inserts into the graph above
+@@ -1855,8 +1854,7 @@
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+ #     @job-dismiss.  When true, this job will automatically disappear
+-#     from the query list without user intervention.  Defaults to
+-#     true.  (Since 3.1)
++#     without user intervention.  Defaults to true.  (Since 3.1)
  #
  # Features:
  #
-@@ -1925,7 +1925,7 @@
- # The status of ongoing blockdev-backup operations can be checked with
- # query-block-jobs where the BlockJobInfo.type field has the value
- # 'backup'.  The operation can be stopped before it has completed
--# using the block-job-cancel command.
-+# using the job-cancel or block-job-cancel command.
+@@ -2219,8 +2217,7 @@
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+ #     @job-dismiss.  When true, this job will automatically disappear
+-#     from the query list without user intervention.  Defaults to
+-#     true.  (Since 3.1)
++#     without user intervention.  Defaults to true.  (Since 3.1)
+ #
+ # Since: 1.3
+ ##
+@@ -2538,8 +2535,7 @@
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+ #     @job-dismiss.  When true, this job will automatically disappear
+-#     from the query list without user intervention.  Defaults to
+-#     true.  (Since 3.1)
++#     without user intervention.  Defaults to true.  (Since 3.1)
+ #
+ # @target-is-zero: Assume the destination reads as all zeroes before
+ #     the mirror started.  Setting this to true can speed up the
+@@ -2866,8 +2862,7 @@
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+ #     @job-dismiss.  When true, this job will automatically disappear
+-#     from the query list without user intervention.  Defaults to
+-#     true.  (Since 3.1)
++#     without user intervention.  Defaults to true.  (Since 3.1)
  #
  # Errors:
- #     - If @device is not a valid block device, DeviceNotFound
-@@ -2788,7 +2788,7 @@
- # immediately once streaming has started.  The status of ongoing block
- # streaming operations can be checked with query-block-jobs.  The
- # operation can be stopped before it has completed using the
--# block-job-cancel command.
-+# job-cancel or block-job-cancel command.
+ #     - If @device does not exist, DeviceNotFound.
+diff --git a/qapi/job.json b/qapi/job.json
+index 441cd7772b..126fa5ce60 100644
+--- a/qapi/job.json
++++ b/qapi/job.json
+@@ -74,7 +74,7 @@
+ #     process.
  #
- # The node that receives the data is called the top image, can be
- # located in any part of the chain (but always above the base image;
-@@ -3075,8 +3075,8 @@
+ # @concluded: The job has finished all work.  If auto-dismiss was set
+-#     to false, the job will remain in the query list until it is
++#     to false, the job will remain in this state until it is
+ #     dismissed via @job-dismiss.
  #
- # This command will refuse to operate on any job that has not yet
- # reached its terminal state, JOB_STATUS_CONCLUDED.  For jobs that
--# make use of the BLOCK_JOB_READY event, block-job-cancel or
--# job-complete will still need to be used as appropriate.
-+# make use of the BLOCK_JOB_READY event, job-cancel, block-job-cancel
-+# or job-complete will still need to be used as appropriate.
- #
- # @id: The job identifier.
- #
+ # @null: The job is in the process of being dismantled.  This state
 -- 
 2.48.1
 
