@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C69E8C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 21:49:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8E33C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 21:50:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMZSP-0004xc-5N; Tue, 03 Jun 2025 17:46:05 -0400
+	id 1uMZS0-0004sA-8t; Tue, 03 Jun 2025 17:45:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uMZSK-0004wo-5O
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:46:00 -0400
+ id 1uMZRz-0004rg-DL
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:39 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uMZSH-00067h-CR
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:59 -0400
+ id 1uMZRx-00065N-NN
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748987156;
+ s=mimecast20190719; t=1748987136;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Zt4+xOD2JOJaGI09uyl2+blZDob3oG7L89LptgXnbA8=;
- b=WaP2LoxlbrYhoW9rrOSUht3S7CRZqkjkWIDafcRjMZxdFE9AZ7P6U3zrov7COmyqssfHFy
- RQ0xgWZtbih/ELTEtP3TaZLCwIuA4WaC7SvmYQpVmlcZXHCLZsQdreMmrBWgU4qdi9FjxB
- Ghr1bQKlyh5dsimNLrzmWVfrvqNl5Vs=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=fGbsoQ2733vAS/b3/AL2oD4PQx/clYbZJMGXnG9URjc=;
+ b=fJ6IfJSbrx4JTgISqM6fsUPcSHfW/AADZmPs0Wis/i20aLPeT3Q48DPeCE3wsOIFS0WNoN
+ TOeSLmta84CeP9llMhbOuzk/x2sSWa/1bekK8CkCfFzRXyDU09j8bZ+ew97G123cZlTYBw
+ J7hu2iNl311W2tjCmiOMHn84mWdix6g=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-529-0sfpcdbNPumjtSKFuJsBjg-1; Tue, 03 Jun 2025 17:45:55 -0400
-X-MC-Unique: 0sfpcdbNPumjtSKFuJsBjg-1
-X-Mimecast-MFC-AGG-ID: 0sfpcdbNPumjtSKFuJsBjg_1748987154
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4ea7e46dfso1938802f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 14:45:54 -0700 (PDT)
+ us-mta-523-PupRi0elMNu2clUVc7usbw-1; Tue, 03 Jun 2025 17:45:35 -0400
+X-MC-Unique: PupRi0elMNu2clUVc7usbw-1
+X-Mimecast-MFC-AGG-ID: PupRi0elMNu2clUVc7usbw_1748987134
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4edf5bb4dso3236911f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 14:45:35 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748987153; x=1749591953;
+ d=1e100.net; s=20230601; t=1748987133; x=1749591933;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Zt4+xOD2JOJaGI09uyl2+blZDob3oG7L89LptgXnbA8=;
- b=kPmdCqdumCKKyFgVAZPMt/uiExQP6XMMm552ISOsgVzSAEOlNbOaPVFGdvQYJsWQPB
- zuCS/4myniqN9VwOsyQnYfZu8rdrqhmFGYk5po1wB0mtUq7frrkfv59/MIcjqubryPNH
- h+HJqOc5dfI8zaW1VXbZP9sjgKUGy6/zil+G8wPpuOZqiPPK2ci1P6Y60OSQu6CRjjk2
- JO/z5jjO7n6CXIa3NVUf+b6OqOxKMOP8Ip4sAQRlFTf5dIhfRiUM47RFzr+6MlIB0M9H
- KTR5yEglY20nx7v1qNzcZQWfnp+TsMGBs8zV22/ohCuEEeewbJbMebl3bhw1Veb6M1LK
- XHHg==
-X-Gm-Message-State: AOJu0Yy49SE+2oTpJIii0n6TaW14Fwb/E2EFY1gQR+ZEeOapoYWfF/8D
- HELKtp4tVwLiW6EcCAx+KuXfx9gqoTKxkyZcEDxF1HgULwsR9ePKnHYCaITYM4qTiQZNa+E6cHn
- ALa1F0OjovIRTR3GQURC2E5KCR/HmC89pTNJdnfbFs6IXCcOGU063EP5OGV3y9hQAGHPwho6LU2
- wxX2ArabS6nLqyLn0ggoNxRLSeBwjn7/0sOTeWi01R
-X-Gm-Gg: ASbGnctitnfZ3/eTmUAZaSwTgxeYWXD8sSm+oLdtywfjkzt05B9t8CzEsvaArUGXLep
- 7uVcT7p/dJgxSNQRF2v8rG+/B8U2na1KYbYY6ZeuzC2/enY/9g/dLbcakn8e9LVUUgewWJJlQjg
- UAQFf9jS27JlG8SV5y3kdwKI62wvCnQnNfhk4YQ/7YA2chURVtp6tIJkdYSSZXHImMEdC78tbqN
- ICd2Fp7g16fqPbDMFR/N+Ixf9RHwyo1+AosyrGx3OF3UUwaiNgjRtWpaPtTFwXX4zfqFpGGJiji
- Hia9Zlp3Ndcj7w==
-X-Received: by 2002:a05:6000:1a8a:b0:3a4:e8bc:5aa with SMTP id
- ffacd0b85a97d-3a51d8f698dmr302927f8f.11.1748987152909; 
- Tue, 03 Jun 2025 14:45:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IExLFVSRX0TeppTiYevkt7dKUZoAqteg4RBq8dEAmD0X6xVlvOJPEnQ5Taf3C0dN49N3nKsNg==
-X-Received: by 2002:a05:6000:1a8a:b0:3a4:e8bc:5aa with SMTP id
- ffacd0b85a97d-3a51d8f698dmr302911f8f.11.1748987152469; 
- Tue, 03 Jun 2025 14:45:52 -0700 (PDT)
+ bh=fGbsoQ2733vAS/b3/AL2oD4PQx/clYbZJMGXnG9URjc=;
+ b=bwUJe5KGnyrU5oSnRO0oK6cz2ENy8EsgLzRERUilUvRu+EVA3Rif+i+mg8s3rWZLMI
+ y0yzcnF8ZkqUxMdYo0soxtxVqAToRDQRLrtpuI0DgFCLN/sTHOuUi2hbvQB/fLeI2kw7
+ NSEvcOSL9uwxYptHr1orFSEQGIRtEOLQVysFdvQjW+OrG/86t4vI2wmbMy2YmMwiztev
+ smpFJ5WARyuABhHiIrkHCjMMwQqTi2QKsN/JiHNQtn3W0t9gQ334PGbkjGtjx9gsBpV/
+ xkzgCAAK3dtDEkEH+VsuqEDWkdtzOk5EtgP9a575XUu/YopIZGmUSyBrIZy3XoPn35F8
+ gmIA==
+X-Gm-Message-State: AOJu0YyP0rh+TDK4RXxa6g1UgoNHQJXtTuC/IHbK46Wv38DpODOnCQr7
+ jIQB60l2LPb4JCWzZI+UH5hyHKYHKUTYaYY69Qph9OhWRC7zFsy5uCSmgfJ6Pi6XVC5D47HdRZN
+ +pv1uYm9r0pd76OItbkgn+40VOB4EE1Q+7K9ztN+o5SbxbznP0Ql0TNTtm4mopVXKD0+sXPlnO/
+ T74/rBD/luC0Yi9D6ChhRLS/khjDY1n5uHa/veMXgg
+X-Gm-Gg: ASbGncvwBIbpurxgkCR4cCHeLwjERlnSzp7H1xifW/KtUbPwRNzECxscIEQ5PYHxfS6
+ 6FXO3fwmdRK2d1LCX17uGS06fA5vsFVxWvSWYyIxHHyeR4atw1KskB6XWjUqSD6augEMq/7QJ/z
+ vwN+Li+CswjI1UwC3sitwsW4Vyad7BxX70XQJd04GHaLMxzrWA+PmeOTWB4U9bqEAg45VGwh3xS
+ lNzsjSTGZumFMVySG3N/0cau0i3biQNh80O0uAVY9cevT0WB/9HoUPGhhmxl1R0hZQUxHG/L34+
+ MWnCYnJip1rXkA==
+X-Received: by 2002:a05:6000:22c2:b0:3a4:e4ee:4c7b with SMTP id
+ ffacd0b85a97d-3a51d91c1e4mr254971f8f.15.1748987133004; 
+ Tue, 03 Jun 2025 14:45:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEwXvw6zLCleAHI3ZvGYVsikJagv36PEfhEkTdmBvGUhRUceKvd/WjwAZMUEZ9lPnJYiNihug==
+X-Received: by 2002:a05:6000:22c2:b0:3a4:e4ee:4c7b with SMTP id
+ ffacd0b85a97d-3a51d91c1e4mr254956f8f.15.1748987132564; 
+ Tue, 03 Jun 2025 14:45:32 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe5b892sm19825593f8f.17.2025.06.03.14.45.50
+ 5b1f17b1804b1-450d7fc1adesm181792285e9.33.2025.06.03.14.45.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 14:45:50 -0700 (PDT)
+ Tue, 03 Jun 2025 14:45:32 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Xiaoyao Li <xiaoyao.li@intel.com>
-Subject: [PULL 12/16] i386/tdx: Fix build on 32-bit host
-Date: Tue,  3 Jun 2025 23:45:19 +0200
-Message-ID: <20250603214523.131185-13-pbonzini@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>
+Subject: [PULL 03/16] rust: use "objects" for Rust executables as well
+Date: Tue,  3 Jun 2025 23:45:10 +0200
+Message-ID: <20250603214523.131185-4-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250603214523.131185-1-pbonzini@redhat.com>
 References: <20250603214523.131185-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,108 +108,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+libqemuutil is not meant be linked as a whole; if modules are enabled, doing
+so results in undefined symbols (corresponding to QMP commands) in
+rust/qemu-api/rust-qemu-api-integration.
 
-Use PRI formats where required and fix pointer cast.
+Support for "objects" in Rust executables is available in Meson 1.8.0; use it
+to switching to the same dependencies that C targets use: link_with for
+libqemuutil, and objects for everything else.
 
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/r/20250602173101.1052983-2-clg@redhat.com
+Reported-by: Bernhard Beschow <shentey@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/tdx.c | 26 +++++++++++++-------------
- 1 file changed, 13 insertions(+), 13 deletions(-)
+ docs/devel/rust.rst       |  2 --
+ rust/meson.build          |  2 ++
+ rust/qemu-api/meson.build | 27 +++++----------------------
+ 3 files changed, 7 insertions(+), 24 deletions(-)
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 0a21ae555c5..820ca3614e2 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -284,7 +284,7 @@ static void tdx_post_init_vcpus(void)
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 171d908e0b0..11328c05b45 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -66,8 +66,6 @@ be run via ``meson test`` or ``make``::
  
-     hob = tdx_get_hob_entry(tdx_guest);
-     CPU_FOREACH(cpu) {
--        tdx_vcpu_ioctl(cpu, KVM_TDX_INIT_VCPU, 0, (void *)hob->address,
-+        tdx_vcpu_ioctl(cpu, KVM_TDX_INIT_VCPU, 0, (void *)(uintptr_t)hob->address,
-                        &error_fatal);
-     }
- }
-@@ -339,7 +339,7 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
-         uint32_t flags;
+    make check-rust
  
-         region = (struct kvm_tdx_init_mem_region) {
--            .source_addr = (uint64_t)entry->mem_ptr,
-+            .source_addr = (uintptr_t)entry->mem_ptr,
-             .gpa = entry->address,
-             .nr_pages = entry->size >> 12,
-         };
-@@ -893,16 +893,16 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
- static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
- {
-     if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
--        error_setg(errp, "Invalid attributes 0x%lx for TDX VM "
--                   "(KVM supported: 0x%llx)", tdx->attributes,
--                   tdx_caps->supported_attrs);
-+        error_setg(errp, "Invalid attributes 0x%"PRIx64" for TDX VM "
-+                   "(KVM supported: 0x%"PRIx64")", tdx->attributes,
-+                   (uint64_t)tdx_caps->supported_attrs);
-         return -1;
-     }
+-Building Rust code with ``--enable-modules`` is not supported yet.
+-
+ Supported tools
+ '''''''''''''''
  
-     if (tdx->attributes & ~TDX_SUPPORTED_TD_ATTRS) {
-         error_setg(errp, "Some QEMU unsupported TD attribute bits being "
--                    "requested: 0x%lx (QEMU supported: 0x%llx)",
--                    tdx->attributes, TDX_SUPPORTED_TD_ATTRS);
-+                    "requested: 0x%"PRIx64" (QEMU supported: 0x%"PRIx64")",
-+                    tdx->attributes, (uint64_t)TDX_SUPPORTED_TD_ATTRS);
-         return -1;
-     }
+diff --git a/rust/meson.build b/rust/meson.build
+index 1f0dcce7d04..801f4374dfa 100644
+--- a/rust/meson.build
++++ b/rust/meson.build
+@@ -14,6 +14,8 @@ quote_rs_native = dependency('quote-1-rs', native: true)
+ syn_rs_native = dependency('syn-2-rs', native: true)
+ proc_macro2_rs_native = dependency('proc-macro2-1-rs', native: true)
  
-@@ -931,8 +931,8 @@ static int setup_td_xfam(X86CPU *x86cpu, Error **errp)
-            env->features[FEAT_XSAVE_XSS_HI];
++qemuutil_rs = qemuutil.partial_dependency(link_args: true, links: true)
++
+ subdir('qemu-api-macros')
+ subdir('qemu-api')
  
-     if (xfam & ~tdx_caps->supported_xfam) {
--        error_setg(errp, "Invalid XFAM 0x%lx for TDX VM (supported: 0x%llx))",
--                   xfam, tdx_caps->supported_xfam);
-+        error_setg(errp, "Invalid XFAM 0x%"PRIx64" for TDX VM (supported: 0x%"PRIx64"))",
-+                   xfam, (uint64_t)tdx_caps->supported_xfam);
-         return -1;
-     }
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 1ea86b8bbf1..62068352b0b 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -35,32 +35,15 @@ _qemu_api_rs = static_library(
+   override_options: ['rust_std=2021', 'build.rust_std=2021'],
+   rust_abi: 'rust',
+   rust_args: _qemu_api_cfg,
+-  dependencies: [libc_rs, qemu_api_macros],
++  dependencies: [libc_rs, qemu_api_macros, qemuutil_rs,
++                 qom, hwcore, chardev, migration],
+ )
  
-@@ -999,14 +999,14 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+ rust.test('rust-qemu-api-tests', _qemu_api_rs,
+           suite: ['unit', 'rust'])
  
-     if (env->tsc_khz && (env->tsc_khz < TDX_MIN_TSC_FREQUENCY_KHZ ||
-                          env->tsc_khz > TDX_MAX_TSC_FREQUENCY_KHZ)) {
--        error_setg(errp, "Invalid TSC %ld KHz, must specify cpu_frequency "
-+        error_setg(errp, "Invalid TSC %"PRId64" KHz, must specify cpu_frequency "
-                          "between [%d, %d] kHz", env->tsc_khz,
-                          TDX_MIN_TSC_FREQUENCY_KHZ, TDX_MAX_TSC_FREQUENCY_KHZ);
-        return -EINVAL;
-     }
+-qemu_api = declare_dependency(link_with: _qemu_api_rs)
+-
+-# Rust executables do not support objects, so add an intermediate step.
+-rust_qemu_api_objs = static_library(
+-    'rust_qemu_api_objs',
+-    objects: [libqom.extract_all_objects(recursive: false),
+-              libhwcore.extract_all_objects(recursive: false),
+-              libchardev.extract_all_objects(recursive: false),
+-              libcrypto.extract_all_objects(recursive: false),
+-              libauthz.extract_all_objects(recursive: false),
+-              libio.extract_all_objects(recursive: false),
+-              libmigration.extract_all_objects(recursive: false)])
+-rust_qemu_api_deps = declare_dependency(
+-    dependencies: [
+-      qom_ss.dependencies(),
+-      chardev_ss.dependencies(),
+-      crypto_ss.dependencies(),
+-      authz_ss.dependencies(),
+-      io_ss.dependencies()],
+-    link_whole: [rust_qemu_api_objs, libqemuutil])
++qemu_api = declare_dependency(link_with: [_qemu_api_rs],
++  dependencies: [qemu_api_macros, qom, hwcore, chardev, migration])
  
-     if (env->tsc_khz % (25 * 1000)) {
--        error_setg(errp, "Invalid TSC %ld KHz, it must be multiple of 25MHz",
-+        error_setg(errp, "Invalid TSC %"PRId64" KHz, it must be multiple of 25MHz",
-                    env->tsc_khz);
-         return -EINVAL;
-     }
-@@ -1014,7 +1014,7 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
-     /* it's safe even env->tsc_khz is 0. KVM uses host's tsc_khz in this case */
-     r = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
-     if (r < 0) {
--        error_setg_errno(errp, -r, "Unable to set TSC frequency to %ld kHz",
-+        error_setg_errno(errp, -r, "Unable to set TSC frequency to %"PRId64" kHz",
-                          env->tsc_khz);
-         return r;
-     }
-@@ -1139,7 +1139,7 @@ int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
-     uint64_t gpa = -1ull;
- 
-     if (error_code & 0xffff) {
--        error_report("TDX: REPORT_FATAL_ERROR: invalid error code: 0x%lx",
-+        error_report("TDX: REPORT_FATAL_ERROR: invalid error code: 0x%"PRIx64,
-                      error_code);
-         return -1;
-     }
+ test('rust-qemu-api-integration',
+     executable(
+@@ -69,7 +52,7 @@ test('rust-qemu-api-integration',
+         override_options: ['rust_std=2021', 'build.rust_std=2021'],
+         rust_args: ['--test'],
+         install: false,
+-        dependencies: [qemu_api, qemu_api_macros, rust_qemu_api_deps]),
++        dependencies: [qemu_api]),
+     args: [
+         '--test', '--test-threads', '1',
+         '--format', 'pretty',
 -- 
 2.49.0
 
