@@ -4,102 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD306C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 15:03:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C6BC5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 15:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMTAH-0000t0-Gu; Tue, 03 Jun 2025 11:02:57 -0400
+	id 1uMTDU-0002vh-4q; Tue, 03 Jun 2025 11:06:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMTAE-0000rq-3M
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:02:54 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uMTDS-0002vN-2P
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:06:14 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMTA8-0004kd-7D
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:02:53 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uMTDL-0005CT-Lm
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:06:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748962965;
+ s=mimecast20190719; t=1748963163;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=poz9VS25rKsGDeTWAk7J1Urzud3ZXyg/dyjUvIXrQ60=;
- b=JQt35z8RgFD51i5pIpDa+oAs/Tv3cTtt+uEVQ2hazucqM0o3/aM4gjK0Nz+Snql94yIBtg
- +dAhpTOZs+rGvEx0nD8GvBgnR5ceFsQDJ5L6PXFS1X1vGgGLe14laQiJrO68jiPJpcgviF
- U37D654HMLJcGgGCO/AZmIgvSQ+M4BQ=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=1IZ/LMxFnOz6iL4qEKoCw0elTKgAlsmAe4sD2ue5a60=;
+ b=DL04yp0F9henMTylZ4p1GnVkdJG2cXzP7tWuHanG45Ezh8vrgaTLepkJKT3GoO++27qMUt
+ dgNoC1zgkEeaFOnknxBillvAtvIJza6srYzVaJqNrIFF63AFgWfSVSdPaTk7UoN6Il0DpN
+ tskMvjcnuhsreG0O2vVCUBnYAb0KM7U=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-199-1ft1RLnxM6SEd-BPSxfOLg-1; Tue, 03 Jun 2025 11:02:44 -0400
-X-MC-Unique: 1ft1RLnxM6SEd-BPSxfOLg-1
-X-Mimecast-MFC-AGG-ID: 1ft1RLnxM6SEd-BPSxfOLg_1748962963
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-451dda846a0so15645575e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 08:02:44 -0700 (PDT)
+ us-mta-515-xAJu-htKONG5QpHq62T48A-1; Tue, 03 Jun 2025 11:06:02 -0400
+X-MC-Unique: xAJu-htKONG5QpHq62T48A-1
+X-Mimecast-MFC-AGG-ID: xAJu-htKONG5QpHq62T48A_1748963161
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4f8fd1847so1661629f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 08:06:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748962963; x=1749567763;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=poz9VS25rKsGDeTWAk7J1Urzud3ZXyg/dyjUvIXrQ60=;
- b=nPkt7JMlVgCvo//7I8i7ubvGOl21fX9BHbx/xf/5RrZvq0WNzxLufjXOOlBwx7B5mk
- MyRvXTCs0w8mvVqL2Ig2p+fCIAAo3kuLCxveXblcSB6QsD8sCPIoa7bYo6K4NbsZS34Q
- M9hMPHZHHIEQXq+wo0Zs+hWsCH4jgo7mHWpLA4PBr8PY9yd/aZThfyFer+LTHs24+4bG
- /DaHeBSP0zP/+Jp5VpaamdOXmN4+5x5Mz+CxeunqS5cQgN6PZSlBcqNKtuqQOoAiTO4M
- kZNFi1XDmk1j2Fu6pLbAFc3bBOS1pKwXVE8pWN0+1jdnaD0movidx/e/X0CEhoM4VOGd
- xu1A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW21Nup/WiPQWLthFaqhio0DPqhnmQoM/NG8XxoOYdmYXbp9VEORRC3Qw9Ueo9NFTjaETm9Q8xmXtnd@nongnu.org
-X-Gm-Message-State: AOJu0Yw3fDdBlminWFsjbwGgE1Drdjl7HzFxLruFGoYw1cVX+Erhrvgn
- IjYBUyrp/zOSFqc89cVrfIr3porJ8cMLFfSNkKFPgzaPsm8IGjxoRpawFwf5vT/obolkVT4Vyl0
- uE0937VIRBHhZfd+7karhJwgHc36FSOTJfa8OJmgJzJKw6LbJTS6hjil/
-X-Gm-Gg: ASbGncu/PrFdV8L3M0ZKV4DD89y/q50N2PBwluJ+RzOh5d0S9e5MVYAQf+X3uj7MY4e
- y/hXRqJXmqFHgEbXwYMhSeDTA8PXcZqnFczlE64EwNVIOk1OQ0wjmBegGntglX1VExFbCzIbRIb
- nejw+SHhL66c7ja7lob/kQodnuIkRLUtQ6y7OcE8Fwlufn2PAQMw71jWUJVfWG3cDDykIZwlAcP
- GC9bQDV3l+JiDtqe9tFBC0QNfP07cjPqvztw73x3C/GOhdafU3LuF2SHi/e4vped8cxrXKMoxt0
- 7A1Q20bikSUPs/+XYg4/76zTibRT6zQG
-X-Received: by 2002:a05:600c:1c1e:b0:450:d04e:22d6 with SMTP id
- 5b1f17b1804b1-4511ecb8a5emr104759025e9.7.1748962962939; 
- Tue, 03 Jun 2025 08:02:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHi4DQhNBW/h3xz2Zi9Yh7jJ/P2tL+6llJyWEZWT0kzv9R1SMwo/y0LbTNv8nDFs2pEUk675A==
-X-Received: by 2002:a05:600c:1c1e:b0:450:d04e:22d6 with SMTP id
- 5b1f17b1804b1-4511ecb8a5emr104758095e9.7.1748962962269; 
- Tue, 03 Jun 2025 08:02:42 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe73f83sm17948071f8f.49.2025.06.03.08.02.39
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 08:02:41 -0700 (PDT)
-Date: Tue, 3 Jun 2025 17:02:38 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, qemu-devel@nongnu.org, Yanan Wang
- <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org, Fabiano Rosas
- <farosas@suse.de>, Fam Zheng <fam@euphon.net>, Jason Wang
- <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>, Eduardo
- Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>, John Snow
- <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>
-Subject: Re: [PATCH v4 04/19] target/i386/cpu: Remove X86CPU::check_cpuid field
-Message-ID: <20250603170238.75a0f1de@imammedo.users.ipa.redhat.com>
-In-Reply-To: <aDad5elq0bgZ/tvp@intel.com>
-References: <20250512083948.39294-1-philmd@linaro.org>
- <20250512083948.39294-5-philmd@linaro.org>
- <ccf78c07-fc08-493f-85d8-5058cccbe82e@intel.com>
- <aDad5elq0bgZ/tvp@intel.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1748963161; x=1749567961;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=1IZ/LMxFnOz6iL4qEKoCw0elTKgAlsmAe4sD2ue5a60=;
+ b=sk+p8o5zZcCx6XDG88a7/V2t+Xspj0JQBD1jMDm+IlPp9iN1gDdLxsBvnLsLDkLnef
+ +vwJ5qH+b0MK2QrX1FhrRH6zQfuMo3Z0+9oSpOjSfuOXRSC4yCxNlFp2ed5Fkzn7S+ZF
+ DQMw+rW4Pg/qU8aVTEwTASlw1Dzim1kWA0uDhkaJehd7SHBD9T+VA2hgcbkGRaRPZGnd
+ QHYULe2r9PTSyiljtL1ap63ySrvGJEucP7Xdxji78vnxdyoJiEzQXTxymsbG/89k5fW3
+ sgGo/UvrWNWX/ZvZ13R5Qzm+aG1zwn+19m9MwxK7+3yXMgoqWUbyF8kF22mMXqMWTJ/M
+ eo6w==
+X-Gm-Message-State: AOJu0Yy1b/f0EjwMwTIWxLeXM018UWN28+0DYprlykEJOCy68Zo7P3u0
+ wE9LVa0A1XxMlgqTHERZbp1CG7/OXWUTrXpOt17hBgCSQgq6SUT91gSgjL0sj1C2trdc3SVY4m6
+ ymTDO5tGUlC3nmnzBEIcI+GMb8+uAz3J9oIgtO3o1qrkCYOax6xX4gf4q
+X-Gm-Gg: ASbGncuhpDHcB8rRIZF3IjQutMB0T25xgxXodh2Pafu/AGbKMSRz7J87bdgYKZB+flq
+ AJbgh/5Dpkr5bTr+TFFAsHO1YbALsBCYq5zMC2hBhxDxAx/H8VEOSTuf2kj+SgOF+Rl3iDq24xV
+ UD0AiHp/5tFtR9rTrGGTGyW8AKR728SHn5r8oZTNEJss2obF7un+f5SDRXuQiyW0JH16waahcML
+ xoNsyDosMfZ14yu9qmMJKT9aiSOxPPyVPwdHznv0hTWuhnyFaVW9juujwx/CP1MSATceL4dblcV
+ qPf2CqiCi/JNUlHYa2cC2+5J
+X-Received: by 2002:a05:6000:25ca:b0:3a3:581f:9af9 with SMTP id
+ ffacd0b85a97d-3a4f7a3dab5mr14036731f8f.7.1748963160923; 
+ Tue, 03 Jun 2025 08:06:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHq0XXSGu7SiGJd+x3FANEdqgdSaZCVP7iZvyozqB2WqrK3BQvVvX7C2oMIKPBeWO1vSq/4oQ==
+X-Received: by 2002:a05:6000:25ca:b0:3a3:581f:9af9 with SMTP id
+ ffacd0b85a97d-3a4f7a3dab5mr14036676f8f.7.1748963160406; 
+ Tue, 03 Jun 2025 08:06:00 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.64.79])
+ by smtp.googlemail.com with ESMTPSA id
+ ffacd0b85a97d-3a4efe5b7bbsm18351391f8f.4.2025.06.03.08.05.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Jun 2025 08:05:59 -0700 (PDT)
+Message-ID: <2b7be73c-d91f-4820-a8ad-6964a8331150@redhat.com>
+Date: Tue, 3 Jun 2025 17:05:59 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 06/14] rust: qemu-api: add bindings to Error
+To: Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+References: <20250530080307.2055502-1-pbonzini@redhat.com>
+ <20250530080307.2055502-7-pbonzini@redhat.com> <877c1uffj3.fsf@pond.sub.org>
+ <aD7AbxghCc5VYDhu@intel.com> <8734ch5d5c.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <8734ch5d5c.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -108,7 +131,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,61 +147,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 May 2025 13:23:49 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+On 6/3/25 12:32, Markus Armbruster wrote:
+>> Then Rust's propagate has the same behavior as C (Of course, here Rust
+>> is actually using C's error_propagate, so the two are equivalent.)
+> 
+> *If* we want propagate semantics.  I'm not sure we do.
 
-> On Wed, May 28, 2025 at 10:09:56AM +0800, Xiaoyao Li wrote:
-> > Date: Wed, 28 May 2025 10:09:56 +0800
-> > From: Xiaoyao Li <xiaoyao.li@intel.com>
-> > Subject: Re: [PATCH v4 04/19] target/i386/cpu: Remove X86CPU::check_cpu=
-id
-> >  field
-> >=20
-> > On 5/12/2025 4:39 PM, Philippe Mathieu-Daud=C3=A9 wrote: =20
-> > > The X86CPU::check_cpuid boolean was only set in the
-> > > pc_compat_2_4[] array, via the 'check=3Doff' property.
-> > > We removed all machines using that array, lets remove
-> > > that CPU property and simplify x86_cpu_realizefn(). =20
-> >=20
-> > No.
-> >=20
-> > We cannot do this. Because it changes the behavior of QEMU.
-> >=20
-> > 'check_cpuid' is true by default while 'enforce_cpuid' is false. So that
-> > QEMU emits warnings in x86_cpu_filter_features() by default when user
-> > requests unsupported CPU features. If remove "check" property and the
-> > internal 'check_cpuid', QEMU will not do it unless user sets enforce_cp=
-uid
-> > explicitly. =20
->=20
-> One option would be to have x86_cpu_filter_features() unconditionally
-> turn on verbose and print warnings, but some people might want to turn
-> off these warning prints, I don't know if anyone would, but it would be
-> possible.
->=20
-> The other option is still to keep the =E2=80=9Ccheck=E2=80=9D property.
->=20
-> IMO, the latter option is the better way to reduce Philippe's burden.
+Yes, we do.  This function is used at the Rust-to-C boundary and should 
+behave exactly like C functions would: it will get an Error ** from the 
+callers and needs to propagate the just-created Error* into it.
 
-we essentially loose warnings by default when some features aren't availabl=
-e,
-qemu still continues to run though.
+In fact, I had found this issue already last Friday, but then didn't 
+inform you because of the (long) weekend.  Apologies for that.
 
-Given that Daniel acked it from libvirt side, libvirt doesn't care about wa=
-rnings
-(it does its has its own cpu model calculation). Likely other mgmt do not c=
-are
-about it either, and if they do they probably doing something wrong and
-should use QMP to get that data.
-That leaves us with human users, for that case I'd say one should use
-enforce_cpuid if feature availability matters.
-
-so +1 to removal
-=20
->=20
-> Regards,
-> Zhao
->=20
->=20
+Paolo
 
 
