@@ -4,94 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B896FC5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A46C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPn7-00026N-NG; Tue, 03 Jun 2025 07:26:49 -0400
+	id 1uMPr3-0003OY-Rj; Tue, 03 Jun 2025 07:30:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPn2-00025r-Ba
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:26:46 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPn0-0005Pg-DZ
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:26:44 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-442ea341570so37828835e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:26:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748949999; x=1749554799; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SyZ1LsBeaOh3rlcOaw1on9A6NvryhnzwGEWTRwLQXO4=;
- b=AO0xxDTxKjo/iHy2QM2wWKKjttn7RA+pSQttx6tJkCVlwru7U9H0HtBIZkpuKcU4Kz
- uR6ioDe50Pb1P1bMXYmpr//I8xbyg1yCJdjixEPTWuqaXlukuiCliM0Zxb1HldA1X6Y/
- CTbMdVEX+IxRrgSaoRkvJB+KtJopEYoSWP18SXNqZ6y55+Q7tG3tZjB6N64r4tGpe+pk
- m50uNuA4W1AbQPnMVkKV9aJToXhcCuCGDL9mxF/W0Hd289QBdGB1gMO+tNLwHoP5hTBF
- UdDB91jQPIWqeiVNM60gK8GnEgY29tf9gI4CvWgdi7luCJxtBxI6dAGN5JPzspbr57y3
- Rb5w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748949999; x=1749554799;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=SyZ1LsBeaOh3rlcOaw1on9A6NvryhnzwGEWTRwLQXO4=;
- b=bZGPlxfBy6GblUnsP6jfTyIjCy82ntXS02qmpeSjUDULvTRQHdYGh8T+W78DP9TfcK
- YLIo/FtkRo/zK/JmK8CarPhdYZthWd76NbS+3sYJYp0sdiI3QgbbJeXKLEpjiwbxwIoT
- mBOI5OFeJ5N4p78UWOI2ZkDyIgn7wFbQ16+9eiYPEJnr7dwq2ZYWxa61jKWUtUmbAK+4
- lV++NAl83Dn2FwZ/C5r0H/e7C5N6tJL6cpOcBr+lo3hfpjS58eqn8iXBVnb2u2LTp+Fs
- E6lHEDc0SfRfNW3ft4s9JMe2hV5F3TFI3wDzoDS6hoP0lh/w1fYPVb2/jwkxWqDXWQif
- 2z1w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVVL6k9HsW0/MFodSP5c3dVrtt3YMfVhlKL9FmySoKRyXcM/zg+N3/qGoblQ9D5T+Nermw4qWlS4kEO@nongnu.org
-X-Gm-Message-State: AOJu0YyS272o308C3YLmX48KJXDL/hHi/7MuhGIG+XzjPrQNjwdCBC2w
- EDLkkKz0G33MU8tUQnlV6WWcjmPDJPiL3n2NbkJzNoST9Tgp+8ByUCFqCTxISpGZka0=
-X-Gm-Gg: ASbGncuLLeceT01DLyJo48wjNWY4twOypGKuYmM0qOdCPrLz9H8F5Ak/9lMYtCrWCBO
- y2tAXjJMMSGL2DttMYKyTntkwW6oNvTHLzCXlVXiDvS+60tfpe697uavzHaqU4NScEYDxh9FNhr
- UBLPaPR4Q8eOSk1z6RANJOL/wxBkAPQPH2NgoepoTH3+y45FnZmMkqmT13RigdixvjylgKc0kMQ
- nRBlqd/TPwEoi9V1C0FFKi5+GEyL44+pLhqMD/vuGOmv5/NT4oQgoqdjT0jaJPF92Uo8bC4IHMk
- M/izPOIxcPXDega8nUE2gSlAeyOG6MGvnp1DI9D3fY4ONAapnbrHbeDewO+w6iq5GdB/37294r4
- V38VA0BXt9fk3e/6M/tSjQ/OQKc8WEsVUt0s=
-X-Google-Smtp-Source: AGHT+IHFgEgRw3iwnsUB6ylL0OHmKbJ/4KTxGR34WlP1kUZeyYbAA48fFmu3mpp092uQFB/IWigDIA==
-X-Received: by 2002:a05:600c:46cb:b0:450:d5f6:55f5 with SMTP id
- 5b1f17b1804b1-450d882b463mr129921595e9.6.1748949999407; 
- Tue, 03 Jun 2025 04:26:39 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f0097205sm18089079f8f.79.2025.06.03.04.26.38
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 04:26:38 -0700 (PDT)
-Message-ID: <06903e8d-d729-458d-8157-5a54d324a239@linaro.org>
-Date: Tue, 3 Jun 2025 13:26:37 +0200
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uMPr1-0003ON-5e
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:30:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uMPqy-0005uX-QP
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:30:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748950245;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HOiobj3AIKiWkuUoXo62SJwe8dm8/A/y7BXGyUKJ20E=;
+ b=XO/NhvZBpk5qOrt2b2BSvBqksH1+rL+hxz/L/dTgKKIXu6O6c1g0kbIHkOKvA/l5FpkzAh
+ pYzIiQKlzi2Pfg1yEnRB0uyGglY/8zgNif28g2s54K2O1AFW0xhaOIfxTRGzGixL6D7iQH
+ +78NQApUafF+ZWorwje9/1N3szpSzOw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-GuVUiX_5MEO-4Qh9SuDmgA-1; Tue,
+ 03 Jun 2025 07:30:44 -0400
+X-MC-Unique: GuVUiX_5MEO-4Qh9SuDmgA-1
+X-Mimecast-MFC-AGG-ID: GuVUiX_5MEO-4Qh9SuDmgA_1748950243
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8FB1E195609F; Tue,  3 Jun 2025 11:30:43 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.28])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C306130002C2; Tue,  3 Jun 2025 11:30:40 +0000 (UTC)
+Date: Tue, 3 Jun 2025 12:30:37 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Subject: Re: [PULL 02/23] ui/vnc: take account of client byte order in pixman
+ format
+Message-ID: <aD7c3f5Tb_mqgkKq@redhat.com>
+References: <20250522102923.309452-1-berrange@redhat.com>
+ <20250522102923.309452-3-berrange@redhat.com>
+ <e6c7920b-8078-4d97-92ce-2efafb645953@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] i386/tdx: Fix build on 32-bit host
-To: Xiaoyao Li <xiaoyao.li@intel.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti <mtosatti@redhat.com>
-References: <20250602173101.1052983-1-clg@redhat.com>
- <20250602173101.1052983-2-clg@redhat.com>
- <b30050b0-68d3-4b42-85f3-9aeca26fb830@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <b30050b0-68d3-4b42-85f3-9aeca26fb830@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <e6c7920b-8078-4d97-92ce-2efafb645953@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,22 +91,65 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 05:04, Xiaoyao Li wrote:
-> On 6/3/2025 1:31 AM, Cédric Le Goater wrote:
->> Use PRI formats where required and fix pointer cast.
+On Tue, Jun 03, 2025 at 01:18:55PM +0200, Thomas Huth wrote:
+> On 22/05/2025 12.29, Daniel P. Berrangé wrote:
+> > The set_pixel_conversion() method is responsible for determining whether
+> > the VNC client pixel format matches the server format, and thus whether
+> > we can use the fast path "copy" impl for sending pixels, or must use
+> > the generic impl with bit swizzling.
+> > 
+> > The VNC server format is set at build time to VNC_SERVER_FB_FORMAT,
+> > which corresponds to PIXMAN_x8r8g8b8.
+> > 
+> > The qemu_pixman_get_format() method is then responsible for converting
+> > the VNC pixel format into a pixman format.
+> > 
+> > The VNC client pixel shifts are relative to the associated endianness.
+> > 
+> > The pixman formats are always relative to the host native endianness.
+> > 
+> > The qemu_pixman_get_format() method does not take into account the
+> > VNC client endianness, and is thus returning a pixman format that is
+> > only valid with the host endianness matches that of the VNC client.
+> ...
 > 
-> Maybe we can make 32-bit build exclusive with CONFIG_TDX? since TDX is 
-> not supported on 32-bit host.
-
-Yes please!
-
+>  Hi Daniel,
 > 
->> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
->> Signed-off-by: Cédric Le Goater <clg@redhat.com>
->> ---
->>   target/i386/kvm/tdx.c | 26 +++++++++++++-------------
->>   1 file changed, 13 insertions(+), 13 deletions(-)
+> this patch breaks the output in the TigerVNC viewer for me.
+> If I run "./qemu-system-x86_64 -vnc :1" on my laptop, and then connect to it
+> via "vncviewer :1", the output of the BIOS now appears in yellow letters
+> (instead of grey ones).
+> 
+> FWIW, the output of TigerVNC viewer is:
+> 
+>  TigerVNC viewer v1.15.0
+>  Built on: 2025-04-08 00:00
+>  Copyright (C) 1999-2025 TigerVNC team and many others (see README.rst)
+>  See https://www.tigervnc.org for information on TigerVNC.
+> 
+>  Tue Jun  3 13:17:50 2025
+>   DecodeManager: Detected 16 CPU core(s)
+>   DecodeManager: Creating 4 decoder thread(s)
+>   CConn:       Connected to host localhost port 5901
+>   CConnection: Server supports RFB protocol version 3.8
+>   CConnection: Using RFB protocol version 3.8
+>   CConnection: Choosing security type None(1)
+>   CConn:       Using pixel format depth 24 (32bpp) little-endian rgb888
+> 
+> Could you please have a look what's going wrong here?
+
+Yes, I can reproduce too, will check this out.
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
