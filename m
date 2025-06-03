@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB6BCC5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 10:01:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08120C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 10:16:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMORx-0003Kd-AK; Tue, 03 Jun 2025 06:00:53 -0400
+	id 1uMOgR-0005cy-CS; Tue, 03 Jun 2025 06:15:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uMORk-0003DS-VU; Tue, 03 Jun 2025 06:00:42 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>)
- id 1uMORi-0003N8-3I; Tue, 03 Jun 2025 06:00:40 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxPuO+xz5orxAKAQ--.63252S3;
- Tue, 03 Jun 2025 18:00:30 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxLse6xz5oe88GAQ--.28599S3;
- Tue, 03 Jun 2025 18:00:28 +0800 (CST)
-Subject: Re: [PATCH v4] target/loongarch: fix vldi/xvldi raise wrong error
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
- richard.henderson@linaro.org
-Cc: philmd@linaro.org, lorenz.hetterich@cispa.de, qemu-stable@nongnu.org
-References: <20250603082510.353876-1-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <289a2ea8-cf7a-e263-05e6-f4c5fc36ce8e@loongson.cn>
-Date: Tue, 3 Jun 2025 17:59:11 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMOgQ-0005cY-0k
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 06:15:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMOgO-00054s-5C
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 06:15:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748945744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=V6UyugGoJ5KQ0WbdVMn8DUL7G+nKcpnfRgoxGN1aZtk=;
+ b=Tq+aJ7oh4HJwq5NC22hrEfUzIMZyXoEgDl8TTnbQ/GuZDH13rP676jLDdlsNbvq9VUd5Iq
+ c/ypHI58fmeXAJAxIFOFS2hcSspNhrt2mbAClCDi5+5ErXNwm8c35fcIWU947lWLFcX2G/
+ SGB9Z6k2uufpo/tqgLvQceSF3YvkDKg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-wQskYtlNMxiu2l8qbg6Qtg-1; Tue,
+ 03 Jun 2025 06:15:42 -0400
+X-MC-Unique: wQskYtlNMxiu2l8qbg6Qtg-1
+X-Mimecast-MFC-AGG-ID: wQskYtlNMxiu2l8qbg6Qtg_1748945741
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 691FF1800261; Tue,  3 Jun 2025 10:15:41 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.45.226.8])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DF3CF30002C2; Tue,  3 Jun 2025 10:15:38 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>,
+	qemu-arm@nongnu.org
+Cc: qemu-devel@nongnu.org
+Subject: [PATCH] tests/functional: Add a test for the realview-eb-mpcore
+ machine
+Date: Tue,  3 Jun 2025 12:15:26 +0200
+Message-ID: <20250603101526.21217-1-thuth@redhat.com>
 MIME-Version: 1.0
-In-Reply-To: <20250603082510.353876-1-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxLse6xz5oe88GAQ--.28599S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7Ar1DKr4fXw1ftr4xtr1rKrX_yoW8ZFWxpr
- yakr4UKr48KFZ3JrZ3Xw4jyrn8uw4xtw42gFn3tasYyFWxJr1rur4Fy39FkFyxC342vr1r
- XF4Fvwn0gay2q3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9Fb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMxCIbckI1I0E14v2
- 6r1Y6r17MI8I3I0E5I8CrVAFwI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17
- CEb7AF67AKxVWUAVWUtwCIc40Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF
- 0xvE2Ix0cI8IcVCY1x0267AKxVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIx
- AIcVC2z280aVAFwI0_Jr0_Gr1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2
- KfnxnUUI43ZEXa7IU8xuctUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.054,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -81,72 +80,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Song,
+From: Thomas Huth <thuth@redhat.com>
 
-It is a little strange that patch with three version is sent in one day.
-Maybe we should keep careful and calm :-)
+Check that we can boot a Linux kernel here and that we can at
+least send one ping network packet.
 
-Regards
-Bibo Mao
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS                           |  1 +
+ tests/functional/meson.build          |  1 +
+ tests/functional/test_arm_realview.py | 47 +++++++++++++++++++++++++++
+ 3 files changed, 49 insertions(+)
+ create mode 100755 tests/functional/test_arm_realview.py
 
-On 2025/6/3 下午4:25, Song Gao wrote:
-> on qemu we got an aborted error
-> **
-> ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-> Bail out! ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-> Aborted (core dumped)
-> bu on 3A600/3A5000 we got a "Illegal instruction" error.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2971
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 14 +++++++++++---
->   1 file changed, 11 insertions(+), 3 deletions(-)
-> 
-> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> index dff92772ad..9fb72fe914 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> @@ -3465,7 +3465,7 @@ TRANS(xvmsknz_b, LASX, gen_xx, gen_helper_vmsknz_b)
->   static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
->   {
->       int mode;
-> -    uint64_t data, t;
-> +    uint64_t data = 0, t;
->   
->       /*
->        * imm bit [11:8] is mode, mode value is 0-12.
-> @@ -3568,19 +3568,27 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
->               t1 = (b7 << 9) | ((1-b6) << 8) | (b6 ? 0xff : 0);
->               data = (t1 << 54) | (t0 << 48);
->           }
-> -        break;
->       default:
-> -        generate_exception(ctx, EXCCODE_INE);
->           g_assert_not_reached();
-> +        break;
->       }
->       return data;
->   }
->   
-> +static bool check_vldi_mode(arg_vldi *a)
-> +{
-> +   return (a->imm >>8 & 0xf) <= 12;
-> +}
->   static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
->   {
->       int sel, vece;
->       uint64_t value;
->   
-> +    if (!check_vldi_mode(a)){
-> +        generate_exception(ctx, EXCCODE_INE);
-> +        return true;
-> +    }
-> +
->       if (!check_vec(ctx, oprsz)) {
->           return true;
->       }
-> 
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 16af37986a4..0d1023635ee 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -954,6 +954,7 @@ F: hw/cpu/realview_mpcore.c
+ F: hw/intc/realview_gic.c
+ F: include/hw/intc/realview_gic.h
+ F: docs/system/arm/realview.rst
++F: tests/functional/test_arm_realview.py
+ 
+ SABRELITE / i.MX6
+ M: Peter Maydell <peter.maydell@linaro.org>
+diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+index 557d59ddf4d..0de1caa0f72 100644
+--- a/tests/functional/meson.build
++++ b/tests/functional/meson.build
+@@ -135,6 +135,7 @@ tests_arm_system_thorough = [
+   'arm_orangepi',
+   'arm_quanta_gsj',
+   'arm_raspi2',
++  'arm_realview',
+   'arm_replay',
+   'arm_smdkc210',
+   'arm_stellaris',
+diff --git a/tests/functional/test_arm_realview.py b/tests/functional/test_arm_realview.py
+new file mode 100755
+index 00000000000..82cc964333e
+--- /dev/null
++++ b/tests/functional/test_arm_realview.py
+@@ -0,0 +1,47 @@
++#!/usr/bin/env python3
++#
++# Functional test that boots a Linux kernel on a realview arm machine
++# and checks the console
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
++from qemu_test import Asset
++
++
++class RealviewMachine(LinuxKernelTest):
++
++    ASSET_REALVIEW_MPCORE = Asset(
++        ('https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/'
++         'openwrt-15.05.1-realview-vmlinux-initramfs.elf'),
++        'd3a01037f33e7512d46d50975588d5c3a0e0cbf25f37afab44775c2a2be523e6')
++
++    def test_realview_ep_mpcore(self):
++        self.require_netdev('user')
++        self.set_machine('realview-eb-mpcore')
++        kernel_path = self.ASSET_REALVIEW_MPCORE.fetch()
++        self.vm.set_console()
++        kernel_param = 'console=ttyAMA0 mem=128M quiet'
++        self.vm.add_args('-kernel', kernel_path,
++                         '-append', kernel_param)
++        self.vm.launch()
++        self.wait_for_console_pattern('Please press Enter to activate')
++        prompt = ':/#'
++        exec_command_and_wait_for_pattern(self, '', prompt)
++        exec_command_and_wait_for_pattern(self, 'dmesg', kernel_param)
++        self.wait_for_console_pattern(prompt)
++        exec_command_and_wait_for_pattern(self,
++                ('while ! dmesg | grep "br-lan: port 1(eth0) entered" ;'
++                 ' do sleep 1 ; done'),
++                'entered forwarding state')
++        self.wait_for_console_pattern(prompt)
++        exec_command_and_wait_for_pattern(self,
++                'while ! ifconfig | grep "10.0.2.15" ; do sleep 1 ; done',
++                'addr:10.0.2.15')
++        self.wait_for_console_pattern(prompt)
++        exec_command_and_wait_for_pattern(self, 'ping -c 1 10.0.2.2',
++                                          '1 packets received, 0% packet loss')
++
++
++if __name__ == '__main__':
++    LinuxKernelTest.main()
+-- 
+2.49.0
 
 
