@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13142C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7E56C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPPR-000851-Dz; Tue, 03 Jun 2025 07:02:21 -0400
+	id 1uMPPN-00080H-24; Tue, 03 Jun 2025 07:02:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPJ-0007vc-7c
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:13 -0400
-Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ id 1uMPPK-0007xD-No
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:15 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPG-0002AO-BL
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:12 -0400
-Received: by mail-ed1-x52b.google.com with SMTP id
- 4fb4d7f45d1cf-60477f1a044so9281247a12.0
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:09 -0700 (PDT)
+ id 1uMPPH-0002Ao-Kz
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:14 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ad69e4f2100so814618866b.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748948529; x=1749553329; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748948530; x=1749553330; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9w35SL38CEz4mwyf3n+L8B+bqiImcbrsN6OkNuFmyxY=;
- b=Heh5sHAsFcalKjNZHPZrLqNMeiV7YqLqLvI034ne+rwP6i5Jek7gwN+XZ4O+FrcGuJ
- FMnD4hBkoK89y5NUF3Ile6UPpJSXlfvX+dBtUBz9TXJ/X7SHYa4XfKtmtvqbbeUBYIdj
- s+0WtHn9QLSwvo+ANpsy8EAP+cTcfytjY0I/GnajgbXOjRuObJNwkO2y+4GYS0yp9p0Q
- Ncjn4luTyUdRAQ1RJR8+hUGDVecy0BfX7LqnbebXReE1OcKyzlgQEzZhRXH4Z8WXHXfe
- zAsRkn4h/svNclA0BJ7AoS/SZ6o166HfBBIzaWftNzJnVhGfGlYoA6aAupxZAYlDGxGO
- oTsQ==
+ bh=LHjlw3RJVi6RLH6QmbsZL6K4pJM81iE3Xqr5dcHcjDQ=;
+ b=Ou4/uhG6tDMLPDNavJ6Raiq5f+Sxl1zvbCb2FWZ8kKrEmi11gryHMPKICuxhzth6Fr
+ UnaYT/miSwstuNb0090J9RHB/Za3qofHKHZlmI0PZ8qt9oRvEPL4AO4u5I7u/zsBbkfr
+ oVHUVCHrYtCBvgCrh02Hdyavn0dLv+DM16/qoKodFZkCRjOu2C7VtDN6l9Z3I5q2bdtb
+ jJVrhHF5TExj0CSTOt6azk7BlFT3jYbopIwRcIrFuDnYWTDHoBzL4YIGsm8+tUdmn+2S
+ MzsXJic2Raur6+YfsHLtfaIEd1GFylBgthL08HX/GVsvLU0JZh0irZQ3Iy/blU4sR4dx
+ F4Lw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748948529; x=1749553329;
+ d=1e100.net; s=20230601; t=1748948530; x=1749553330;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9w35SL38CEz4mwyf3n+L8B+bqiImcbrsN6OkNuFmyxY=;
- b=nU3BOZIJSxcFh0rPcxD19JUYyjUB1rVz/qXXSjil32JEC/XEef9LYWQzZI8kzwYRYp
- wNnvg5brAE2hSQnpVdjzzx230DVAOjdCSeYrPyZz1iKD1GgzXEIc2glYoA4zvqEMgDar
- BnTMzpQN+RZQT2tUg0h/7TcCVITw+KNMUkkBkd35f/nkyIULV4JHqEhY8fmEApvd2smM
- 02nKXR/gBB+9IurKT1wxvPg9y+DkYSt3kDCNlAlHq3GDdvYf6GbuSgbSfHo1cTYE0WKo
- W6+zpmpkNQY05LZABUDn6q/2ZJD9Y6o20B/YrhfYWCEqqWX1ZOYGA7bVRCFKU9HTFbAK
- XbPQ==
-X-Gm-Message-State: AOJu0YxOzwJiXGZGo6C7Lw9rBBEwJtFqry0fDgXxuA3bK5j218jzDo7l
- +FDbHlsn5wOGczLBwAED69LFJzj/zZRo0Ggr3ehAuBanqzz3TIBSDy3nkm8EqyfRTzE=
-X-Gm-Gg: ASbGncth3i5PWN7t/448+FcBmQhUjgTu+CdQk0Rn8KKFPh/A8ciFQzvraBdpf7ygtZc
- QgC4mfdgQNviPRCqTBJHy9v+M3w5kqNYe7Ei0hvVdsiTJdLl5Oe8abpzoOYX/3RywWcb19LJ7Fc
- etCtTlJf8R9OV4DU0YkE2HQ87HwZcJeXSlF/puT11ZNDyb+RNOHW/Vkqb2blBcRT5gyypQ+7Bkp
- AVKfx+cYKBd1ytEM+FjVHaBcK0/7jj6NmhFCFw/0PcgU42NJjQd5IdUtt6GrntHuRsfr5HS5YsV
- FGpXJdw+9E0g8L7E+jrXSV3SjtEoU003T1VzB6BgNtLwAc2zRwBS
-X-Google-Smtp-Source: AGHT+IEeT5NP9L3kpAuRmr8lXK0vvXuW7oWLDsRy91ErQM0McBRnol4TdIdZqZSJHG+QBPl3bxuDUw==
-X-Received: by 2002:a17:907:6092:b0:ad9:982f:9206 with SMTP id
- a640c23a62f3a-adb49606242mr1105047766b.61.1748948528529; 
- Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
+ bh=LHjlw3RJVi6RLH6QmbsZL6K4pJM81iE3Xqr5dcHcjDQ=;
+ b=pHucJCBpexQK3PC+BeBM99h7tYiJWG3lI53kt05HuotV5fqMKNo4K6XF7StFmGzP1S
+ bvEnkmM5TR9jhrDJ6zGYUS/ELKwh787wnBDtbUdz5DLSE4u+iXXagU5OEtZp3PEaAd7u
+ 1BVs6xauN24CoEwL5S83CM+E0EDlG7C7Wk8jMVHQ+sXACN2If98MYgcM7xLBhwTWcWKD
+ VbWUGk8nyr0VvWSLReQavNgNKALuvHAo+HLnJjUQUW56dlWEjMz2IfLRz4JA4OAwvRoL
+ HCIW4urYXum8dbQ3/oY/ZKYsWb7s1aolT2oFEOmXVz497fulW8d0ipKcD0cqyeZybAvp
+ g2+g==
+X-Gm-Message-State: AOJu0YyY4fBtvUuPyQezP53Q5MhEBOThkBx5PUU+05l+hrwT5U1/lF7R
+ AMgoNtm81YaFkyYSIsFsAmL0m3KcVGVr/qeUn7erJogLZ9b/HnO+MlbwS5LfhbTedBg=
+X-Gm-Gg: ASbGncvpYkzpPW493m5hjt8DL7q83kBmjhqaWDUwcKeQlbgKZmE97BVUUvEyCjm/pvV
+ zhOeTJOgFP0YGRXAwi98Gnltwcw6MabetYPdoTAwji9UC/BJhu05KXiDG0PBfr+KIVO4oIRZzvh
+ tKR/kcL+8TMrOplpBtZMXuMueoobepaPxbBfcLDcy0nwnxSjq39za0RqWnJ2OQ5eIA2DkqBLpzR
+ NceJZYDB8MXPesccrUkvFXQnPF4XubB5DK//axbWn9zgJTaMTPBG6A0gClSFS/C+/pxV1Nzx6BO
+ EjC5OCLQvLdm8VD/5Jc5j/kTcgE+JPw/tIrWr+6F27QvTuN4RC69CImH2ZeyIp8=
+X-Google-Smtp-Source: AGHT+IGwQ7bXeXnW9VeEGX0NTPLsK5XyWsuocW1giy69sYqWPQYvTtmF7v3uM0ysqqcMqNPEfFBq4w==
+X-Received: by 2002:a17:907:724f:b0:ad5:27f5:7183 with SMTP id
+ a640c23a62f3a-adb36bf19dcmr1330424166b.39.1748948529797; 
+ Tue, 03 Jun 2025 04:02:09 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5d84f389sm925857166b.82.2025.06.03.04.02.05
+ a640c23a62f3a-ada5d84e76csm926436966b.86.2025.06.03.04.02.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 04:02:06 -0700 (PDT)
+ Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 419AF5F9D1;
+ by draig.lan (Postfix) with ESMTP id 895C15F9DD;
  Tue, 03 Jun 2025 12:02:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -85,20 +85,18 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Nabih Estefan <nabihestefan@google.com>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PATCH v4 04/17] tests/qtest: Avoid unaligned access in IGB test
-Date: Tue,  3 Jun 2025 12:01:51 +0100
-Message-ID: <20250603110204.838117-5-alex.bennee@linaro.org>
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v4 07/17] MAINTAINERS: add myself to virtio-gpu for Odd Fixes
+Date: Tue,  3 Jun 2025 12:01:54 +0100
+Message-ID: <20250603110204.838117-8-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250603110204.838117-1-alex.bennee@linaro.org>
 References: <20250603110204.838117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -121,51 +119,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Nabih Estefan <nabihestefan@google.com>
+Seeing as I've taken a few patches to here now I might as well put
+myself forward to maintain virtio-gpu. I've marked it as Odd Fixes as
+it is not my core focus. If someone with more GPU experience comes
+forward we can always update again.
 
-  ../tests/qtest/libqos/igb.c:106:5: runtime error: load of misaligned address 0x562040be8e33 for type 'uint32_t', which requires 4 byte alignment
-
-Instead of straight casting the uint8_t array, we can use ldl_le_p and
-lduw_l_p to assure the unaligned access works properly against
-uint32_t and uint16_t.
-
-Signed-off-by: Nabih Estefan <nabihestefan@google.com>
-Reviewed-by: Laurent Vivier <lvivier@redhat.com>
-Tested-by: Laurent Vivier <lvivier@redhat.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250429155621.2028198-1-nabihestefan@google.com>
-[AJB: fix commit message, remove unneeded casts]
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 ---
-v3
-  - update commit title to Philippe's suggestion
 v2
-  - change title to reflect test that failed
-  - re-phrase ldl functions to assure unaligned works
-  - remove excess ()'s
+  - s/M:/S:/ for the maintainer entry
 ---
- tests/qtest/libqos/igb.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ MAINTAINERS | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tests/qtest/libqos/igb.c b/tests/qtest/libqos/igb.c
-index f40c4ec4cd..ab3ef6f0c3 100644
---- a/tests/qtest/libqos/igb.c
-+++ b/tests/qtest/libqos/igb.c
-@@ -104,10 +104,10 @@ static void igb_pci_start_hw(QOSGraphObject *obj)
-     e1000e_macreg_write(&d->e1000e, E1000_RDT(0), 0);
-     e1000e_macreg_write(&d->e1000e, E1000_RDH(0), 0);
-     e1000e_macreg_write(&d->e1000e, E1000_RA,
--                        le32_to_cpu(*(uint32_t *)address));
-+                        ldl_le_p(address));
-     e1000e_macreg_write(&d->e1000e, E1000_RA + 4,
-                         E1000_RAH_AV | E1000_RAH_POOL_1 |
--                        le16_to_cpu(*(uint16_t *)(address + 4)));
-+                        lduw_le_p(address + 4));
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 16af37986a..7718199979 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2668,7 +2668,8 @@ F: hw/display/ramfb*.c
+ F: include/hw/display/ramfb.h
  
-     /* Set supported receive descriptor mode */
-     e1000e_macreg_write(&d->e1000e,
+ virtio-gpu
+-S: Orphan
++M: Alex Bennée <alex.bennee@linaro.org>
++S: Odd Fixes
+ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
+ F: include/hw/virtio/virtio-gpu.h
 -- 
 2.47.2
 
