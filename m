@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF8EFC5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 06:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0048C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 06:41:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMLHW-0008BH-4d; Tue, 03 Jun 2025 02:37:55 -0400
+	id 1uMLHy-0000Ax-Bb; Tue, 03 Jun 2025 02:38:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGc-0007mf-M0
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:37:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGo-0007oO-0D
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:37:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGY-0003R9-IE
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:36:58 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGZ-0003RX-4z
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:36:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748932613;
+ s=mimecast20190719; t=1748932614;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v2ktSFvd0VWJ1vrE61b0XOZtz55d7xCquJaWYJHzxbY=;
- b=VtU34wNQAO53n+3NyYeRvDZta+K10api4BlhE92G2KP3/trFzhmZXbFFMd36OGF/p5UZ2S
- L/4aqO3wsVqEM4suZEKD6G+P1VnH73E7MI3PbK1ELM4TurrKtHT18Rc8Tccdb/VT5yuApR
- jnhmIBbMa+31d65RstbmJNO2oBiW7hw=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=d6vQ+3F9zqFptJ346LQVWbUwoL7pzMlDvFAj6XFtZ/Q=;
+ b=VaDxy+1bdfKAaImYQt6s1PKGDWuuQ8T7nn08gs5cNWw+Fu0ORzvuI49xqcob/F8AMccJ3k
+ 6lx5WfqKTxeB6t2ZIxSZuBoS4UrfO+VVP4CRAqVPDQZe2ucP0TAGtvCbnZEyeLzsE4RKSr
+ v9UAzC9wZevECOZRIGMmIkdE0A9I7KI=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-498-23wwpJZiMQ-tFfIg5oqTvQ-1; Tue,
- 03 Jun 2025 02:36:51 -0400
-X-MC-Unique: 23wwpJZiMQ-tFfIg5oqTvQ-1
-X-Mimecast-MFC-AGG-ID: 23wwpJZiMQ-tFfIg5oqTvQ_1748932611
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-241-_9lQTTBpOUKejO5nN3OAVQ-1; Tue,
+ 03 Jun 2025 02:36:52 -0400
+X-MC-Unique: _9lQTTBpOUKejO5nN3OAVQ-1
+X-Mimecast-MFC-AGG-ID: _9lQTTBpOUKejO5nN3OAVQ_1748932611
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DC0D51956087
- for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:50 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D2FE1956086
+ for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:51 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95CCC18018B3
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A2B601800361
  for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:50 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 06F2121E65E0; Tue, 03 Jun 2025 08:36:45 +0200 (CEST)
+ id 12DDD21E65EC; Tue, 03 Jun 2025 08:36:45 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	Eric Blake <eblake@redhat.com>
-Subject: [PULL 07/13] qapi: Fix capitalization in doc comments
-Date: Tue,  3 Jun 2025 08:36:38 +0200
-Message-ID: <20250603063644.3953528-8-armbru@redhat.com>
+Subject: [PULL 10/13] qapi: Refer to job-FOO instead of deprecated
+ block-job-FOO in docs
+Date: Tue,  3 Jun 2025 08:36:41 +0200
+Message-ID: <20250603063644.3953528-11-armbru@redhat.com>
 In-Reply-To: <20250603063644.3953528-1-armbru@redhat.com>
 References: <20250603063644.3953528-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,142 +87,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+We deprecated several block-job-FOO commands in commit
+b836bf2ab68 (qapi/block-core: deprecate some block-job- APIs).  Update
+the doc comments to refer to their replacements instead.
+
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250527073916.1243024-8-armbru@redhat.com>
+Message-ID: <20250527073916.1243024-11-armbru@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- qapi/block-core.json  | 6 +++---
- qapi/block.json       | 2 +-
- qapi/cryptodev.json   | 2 +-
- qapi/cxl.json         | 2 +-
- qapi/machine.json     | 2 +-
- qapi/misc-i386.json   | 2 +-
- qapi/run-state.json   | 2 +-
- qapi/transaction.json | 2 +-
- 8 files changed, 10 insertions(+), 10 deletions(-)
+ qapi/block-core.json | 57 ++++++++++++++++++++++----------------------
+ 1 file changed, 28 insertions(+), 29 deletions(-)
 
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index b6447e847e..f0faca1054 100644
+index f8f89ee2d7..6e5b90d5df 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -1337,7 +1337,7 @@
- # bitmap when used for data copy operations.
+@@ -1606,16 +1606,16 @@
+ #     copy-before-write jobs; defaults to break-guest-write.  (Since 10.1)
  #
- # @on-success: The bitmap is only synced when the operation is
--#     successful.  This is the behavior always used for 'INCREMENTAL'
-+#     successful.  This is the behavior always used for incremental
- #     backups.
+ # @auto-finalize: When false, this job will wait in a PENDING state
+-#     after it has finished its work, waiting for @block-job-finalize
+-#     before making any block graph changes.  When true, this job will
++#     after it has finished its work, waiting for @job-finalize before
++#     making any block graph changes.  When true, this job will
+ #     automatically perform its abort or commit actions.  Defaults to
+ #     true.  (Since 2.12)
  #
- # @never: The bitmap is never synchronized with the operation, and is
-@@ -1589,7 +1589,7 @@
- #
- # @bitmap-mode: Specifies the type of data the bitmap should contain
- #     after the operation concludes.  Must be present if a bitmap was
--#     provided, Must NOT be present otherwise.  (Since 4.2)
-+#     provided, must NOT be present otherwise.  (Since 4.2)
- #
- # @compress: true to compress data, if the target format supports it.
- #     (default: false) (since 2.8)
-@@ -1840,7 +1840,7 @@
- # @speed: the maximum speed, in bytes per second
- #
- # @on-error: the action to take on an error.  'ignore' means that the
--#     request should be retried.  (default: report; Since: 5.0)
-+#     request should be retried.  (default: report; since: 5.0)
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+-#     @block-job-dismiss.  When true, this job will automatically
+-#     disappear from the query list without user intervention.
+-#     Defaults to true.  (Since 2.12)
++#     @job-dismiss.  When true, this job will automatically disappear
++#     from the query list without user intervention.  Defaults to
++#     true.  (Since 2.12)
  #
  # @filter-node-name: the node name that should be assigned to the
- #     filter driver that the commit job inserts into the graph above
-diff --git a/qapi/block.json b/qapi/block.json
-index f5374bd86c..1490a1a17f 100644
---- a/qapi/block.json
-+++ b/qapi/block.json
-@@ -48,7 +48,7 @@
+ #     filter driver that the backup job inserts into the graph above
+@@ -1785,8 +1785,7 @@
+ # If top == base, that is an error.  If top has no overlays on top of
+ # it, or if it is in use by a writer, the job will not be completed by
+ # itself.  The user needs to complete the job with the
+-# block-job-complete command after getting the ready event.
+-# (Since 2.0)
++# job-complete command after getting the ready event.  (Since 2.0)
+ #
+ # If the base image is smaller than top, then the base image will be
+ # resized to be the same size as top.  If top is smaller than the base
+@@ -1848,16 +1847,16 @@
+ #     autogenerated.  (Since: 2.9)
+ #
+ # @auto-finalize: When false, this job will wait in a PENDING state
+-#     after it has finished its work, waiting for @block-job-finalize
+-#     before making any block graph changes.  When true, this job will
++#     after it has finished its work, waiting for @job-finalize before
++#     making any block graph changes.  When true, this job will
+ #     automatically perform its abort or commit actions.  Defaults to
+ #     true.  (Since 3.1)
+ #
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+-#     @block-job-dismiss.  When true, this job will automatically
+-#     disappear from the query list without user intervention.
+-#     Defaults to true.  (Since 3.1)
++#     @job-dismiss.  When true, this job will automatically disappear
++#     from the query list without user intervention.  Defaults to
++#     true.  (Since 3.1)
+ #
+ # Features:
+ #
+@@ -2212,16 +2211,16 @@
+ #     'background' (Since: 3.0)
+ #
+ # @auto-finalize: When false, this job will wait in a PENDING state
+-#     after it has finished its work, waiting for @block-job-finalize
+-#     before making any block graph changes.  When true, this job will
++#     after it has finished its work, waiting for @job-finalize before
++#     making any block graph changes.  When true, this job will
+ #     automatically perform its abort or commit actions.  Defaults to
+ #     true.  (Since 3.1)
+ #
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+-#     @block-job-dismiss.  When true, this job will automatically
+-#     disappear from the query list without user intervention.
+-#     Defaults to true.  (Since 3.1)
++#     @job-dismiss.  When true, this job will automatically disappear
++#     from the query list without user intervention.  Defaults to
++#     true.  (Since 3.1)
+ #
+ # Since: 1.3
  ##
- # @FloppyDriveType:
+@@ -2531,16 +2530,16 @@
+ #     'background' (Since: 3.0)
  #
--# Type of Floppy drive to be emulated by the Floppy Disk Controller.
-+# Type of floppy drive to be emulated by the Floppy Disk Controller.
+ # @auto-finalize: When false, this job will wait in a PENDING state
+-#     after it has finished its work, waiting for @block-job-finalize
+-#     before making any block graph changes.  When true, this job will
++#     after it has finished its work, waiting for @job-finalize before
++#     making any block graph changes.  When true, this job will
+ #     automatically perform its abort or commit actions.  Defaults to
+ #     true.  (Since 3.1)
  #
- # @144: 1.44MB 3.5" drive
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+-#     @block-job-dismiss.  When true, this job will automatically
+-#     disappear from the query list without user intervention.
+-#     Defaults to true.  (Since 3.1)
++#     @job-dismiss.  When true, this job will automatically disappear
++#     from the query list without user intervention.  Defaults to
++#     true.  (Since 3.1)
  #
-diff --git a/qapi/cryptodev.json b/qapi/cryptodev.json
-index 28b97eb3da..b13db26403 100644
---- a/qapi/cryptodev.json
-+++ b/qapi/cryptodev.json
-@@ -15,7 +15,7 @@
+ # @target-is-zero: Assume the destination reads as all zeroes before
+ #     the mirror started.  Setting this to true can speed up the
+@@ -2859,16 +2858,16 @@
+ #     autogenerated.  (Since: 6.0)
  #
- # @sym: symmetric encryption
+ # @auto-finalize: When false, this job will wait in a PENDING state
+-#     after it has finished its work, waiting for @block-job-finalize
+-#     before making any block graph changes.  When true, this job will
++#     after it has finished its work, waiting for @job-finalize before
++#     making any block graph changes.  When true, this job will
+ #     automatically perform its abort or commit actions.  Defaults to
+ #     true.  (Since 3.1)
  #
--# @asym: asymmetric Encryption
-+# @asym: asymmetric encryption
+ # @auto-dismiss: When false, this job will wait in a CONCLUDED state
+ #     after it has completely ceased all work, and awaits
+-#     @block-job-dismiss.  When true, this job will automatically
+-#     disappear from the query list without user intervention.
+-#     Defaults to true.  (Since 3.1)
++#     @job-dismiss.  When true, this job will automatically disappear
++#     from the query list without user intervention.  Defaults to
++#     true.  (Since 3.1)
  #
- # Since: 8.0
- ##
-diff --git a/qapi/cxl.json b/qapi/cxl.json
-index dd947d3bbc..8f2e9237b1 100644
---- a/qapi/cxl.json
-+++ b/qapi/cxl.json
-@@ -117,7 +117,7 @@
- # @nibble-mask: Identifies one or more nibbles that the error affects
+ # Errors:
+ #     - If @device does not exist, DeviceNotFound.
+@@ -3077,7 +3076,7 @@
+ # This command will refuse to operate on any job that has not yet
+ # reached its terminal state, JOB_STATUS_CONCLUDED.  For jobs that
+ # make use of the BLOCK_JOB_READY event, block-job-cancel or
+-# block-job-complete will still need to be used as appropriate.
++# job-complete will still need to be used as appropriate.
  #
- # @bank-group: Bank group of the memory event location, incorporating
--#     a number of Banks.
-+#     a number of banks.
+ # @id: The job identifier.
  #
- # @bank: Bank of the memory event location.  A single bank is accessed
- #     per read or write of the memory.
-diff --git a/qapi/machine.json b/qapi/machine.json
-index 230b9b20dd..0650b8de71 100644
---- a/qapi/machine.json
-+++ b/qapi/machine.json
-@@ -811,7 +811,7 @@
+@@ -5866,7 +5865,7 @@
+ # @BLOCK_JOB_PENDING:
  #
- # @policy: the write policy, none/write-back/write-through.
+ # Emitted when a block job is awaiting explicit authorization to
+-# finalize graph changes via @block-job-finalize.  If this job is part
++# finalize graph changes via @job-finalize.  If this job is part
+ # of a transaction, it will not emit this event until the transaction
+ # has converged first.
  #
--# @line: the cache Line size in bytes.
-+# @line: the cache line size in bytes.
- #
- # Since: 5.0
- ##
-diff --git a/qapi/misc-i386.json b/qapi/misc-i386.json
-index 3b5346425a..5fefa0a484 100644
---- a/qapi/misc-i386.json
-+++ b/qapi/misc-i386.json
-@@ -195,7 +195,7 @@
- #
- # @cbitpos: C-bit location in page table entry
- #
--# @reduced-phys-bits: Number of physical Address bit reduction when
-+# @reduced-phys-bits: Number of physical address bit reduction when
- #     SEV is enabled
- #
- # Since: 2.12
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index fcc00c805b..fd09beb35c 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -62,7 +62,7 @@
- ##
- # @ShutdownCause:
- #
--# An enumeration of reasons for a Shutdown.
-+# An enumeration of reasons for a shutdown.
- #
- # @none: No shutdown request pending
- #
-diff --git a/qapi/transaction.json b/qapi/transaction.json
-index 5c3394919e..9d9e7af26c 100644
---- a/qapi/transaction.json
-+++ b/qapi/transaction.json
-@@ -21,7 +21,7 @@
- ##
- # @ActionCompletionMode:
- #
--# An enumeration of Transactional completion modes.
-+# An enumeration of transactional completion modes.
- #
- # @individual: Do not attempt to cancel any other Actions if any
- #     Actions fail after the Transaction request succeeds.  All
 -- 
 2.48.1
 
