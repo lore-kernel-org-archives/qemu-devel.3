@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4483FC61CE5
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 14:26:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E15C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 14:26:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMSaL-0003Xm-Cp; Tue, 03 Jun 2025 10:25:49 -0400
+	id 1uMSaQ-0003ZN-6o; Tue, 03 Jun 2025 10:25:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMSaD-0003Wi-AF
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:25:41 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMSaF-0003XC-9H
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:25:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMSa7-0000O4-DH
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:25:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMSa7-0000Ny-Ej
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:25:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748960733;
+ s=mimecast20190719; t=1748960732;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=VfoxNP8bhflz2rzAOvREUlD600WmJKghETNfk2yIVbE=;
- b=MhsBneuF8oUZJm2qO9BV7Iy6qvmceiJNPFu89SpzBIc1cK+HZDDPRqH5ncGZ/oafFxHv+m
- q3gg1v3a5J74+0Awr3EsST+5GKunskK2O6zzYdI1D+3qABoKnJzLtsqaeJVogneGEKvmtw
- +jw7IwdPkxKWq4SWzguQK8sjcNG0GII=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding;
+ bh=llgVyl0Kx5EPUna3puzFFBYP4y3N/MXdcf5rcXVuf0Y=;
+ b=VJO3FWXfewwT3UFNpWxy60MftJIf/mkhidOoxXPJusEtJg2nL+EI0xwPeJkXjrJb0zucnb
+ yuwKjZcSItKRTlB4Dj8CKs1YjEF+KPSx5LZscBfq79ing4ROP2iG0USb+hQz33RWkmPxpD
+ b9SNUgjC18ZlS6hxEaLeVbjQ4C3qHao=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-641-Hm_piQwrPK-dWhZ_G47gmw-1; Tue,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-3NyI4WX1N3qozw7ubQ8-NA-1; Tue,
  03 Jun 2025 10:25:29 -0400
-X-MC-Unique: Hm_piQwrPK-dWhZ_G47gmw-1
-X-Mimecast-MFC-AGG-ID: Hm_piQwrPK-dWhZ_G47gmw_1748960728
+X-MC-Unique: 3NyI4WX1N3qozw7ubQ8-NA-1
+X-Mimecast-MFC-AGG-ID: 3NyI4WX1N3qozw7ubQ8-NA_1748960728
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F20F618004AD; Tue,  3 Jun 2025 14:25:27 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 120171956089; Tue,  3 Jun 2025 14:25:28 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 24A25180049D; Tue,  3 Jun 2025 14:25:26 +0000 (UTC)
+ id 55F0118008E0; Tue,  3 Jun 2025 14:25:26 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 4526021E6617; Tue, 03 Jun 2025 16:25:24 +0200 (CEST)
+ id 3810721E6766; Tue, 03 Jun 2025 16:25:24 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -58,14 +57,11 @@ Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
  Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@gmail.com>
-Subject: [PATCH v3 3/3] docs: define policy forbidding use of AI code
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 0/3] docs: define policy forbidding use of "AI" / LLM code
  generators
-Date: Tue,  3 Jun 2025 16:25:24 +0200
-Message-ID: <20250603142524.4043193-4-armbru@redhat.com>
-In-Reply-To: <20250603142524.4043193-1-armbru@redhat.com>
-References: <20250603142524.4043193-1-armbru@redhat.com>
+Date: Tue,  3 Jun 2025 16:25:21 +0200
+Message-ID: <20250603142524.4043193-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -78,8 +74,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,102 +91,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+More than a year ago, Daniel posted patches to put an AI policy in
+writing.  Reception was mostly positive.  A v2 to address feedback
+followed with some delay.  But no pull request.
 
-There has been an explosion of interest in so called AI code
-generators. Thus far though, this is has not been matched by a broadly
-accepted legal interpretation of the licensing implications for code
-generator outputs. While the vendors may claim there is no problem and
-a free choice of license is possible, they have an inherent conflict
-of interest in promoting this interpretation. More broadly there is,
-as yet, no broad consensus on the licensing implications of code
-generators trained on inputs under a wide variety of licenses
+I asked Daniel why, and he told me he was concerned it might go too
+far in its interpretation of the DCO requirements.  After a bit of
+discussion, I think Daniel's text is basically fine.  The policy it
+describes is simple and strict.  Relaxing policy is easier than
+tightening it.  I softened the phrasing slightly, addressed open
+review comments, and fixed a few minor things I found myself.
 
-The DCO requires contributors to assert they have the right to
-contribute under the designated project license. Given the lack of
-consensus on the licensing of AI code generator output, it is not
-considered credible to assert compliance with the DCO clause (b) or (c)
-where a patch includes such generated code.
+Here's Daniel's cover letter for v2:
 
-This patch thus defines a policy that the QEMU project will currently
-not accept contributions where use of AI code generators is either
-known, or suspected.
+This patch kicks the hornet's nest of AI / LLM code generators.
 
-These are early days of AI-assisted software development. The legal
-questions will be resolved eventually. The tools will mature, and we
-can expect some to become safely usable in free software projects.
-The policy we set now must be for today, and be open to revision. It's
-best to start strict and safe, then relax.
+With the increasing interest in code generators in recent times,
+it is inevitable that QEMU contributions will include AI generated
+code. Thus far we have remained silent on the matter. Given that
+everyone knows these tools exist, our current position has to be
+considered tacit acceptance of the use of AI generated code in QEMU.
 
-Meanwhile requests for exceptions can also be considered on a case by
-case basis.
+The question for the project is whether that is a good position for
+QEMU to take or not ?
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Acked-by: Stefan Hajnoczi <stefanha@gmail.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/devel/code-provenance.rst | 50 +++++++++++++++++++++++++++++++++-
- 1 file changed, 49 insertions(+), 1 deletion(-)
+IANAL, but I like to think I'm reasonably proficient at understanding
+open source licensing. I am not inherantly against the use of AI tools,
+rather I am anti-risk. I also want to see OSS licenses respected and
+complied with.
 
-diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-index c27d8fe649..261263cfba 100644
---- a/docs/devel/code-provenance.rst
-+++ b/docs/devel/code-provenance.rst
-@@ -270,4 +270,52 @@ boilerplate code template which is then filled in to produce the final patch.
- The output of such a tool would still be considered the "preferred format",
- since it is intended to be a foundation for further human authored changes.
- Such tools are acceptable to use, provided they follow a deterministic process
--and there is clearly defined copyright and licensing for their output.
-+and there is clearly defined copyright and licensing for their output. Note
-+in particular the caveats applying to AI code generators below.
-+
-+Use of AI code generators
-+~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+TL;DR:
-+
-+  **Current QEMU project policy is to DECLINE any contributions which are
-+  believed to include or derive from AI generated code. This includes ChatGPT,
-+  CoPilot, Llama and similar tools**
-+
-+The increasing prevalence of AI code generators, most notably but not limited
-+to, `Large Language Models <https://en.wikipedia.org/wiki/Large_language_model>`__
-+(LLMs) results in a number of difficult legal questions and risks for software
-+projects, including QEMU.
-+
-+The QEMU community requires that contributors certify their patch submissions
-+are made in accordance with the rules of the dco_ (DCO).
-+
-+To satisfy the DCO, the patch contributor has to fully understand the
-+copyright and license status of code they are contributing to QEMU. With AI
-+code generators, the copyright and license status of the output is ill-defined
-+with no generally accepted, settled legal foundation.
-+
-+Where the training material is known, it is common for it to include large
-+volumes of material under restrictive licensing/copyright terms. Even where
-+the training material is all known to be under open source licenses, it is
-+likely to be under a variety of terms, not all of which will be compatible
-+with QEMU's licensing requirements.
-+
-+How contributors could comply with DCO terms (b) or (c) for the output of AI
-+code generators commonly available today is unclear.  The QEMU project is not
-+willing or able to accept the legal risks of non-compliance.
-+
-+The QEMU project thus requires that contributors refrain from using AI code
-+generators on patches intended to be submitted to the project, and will
-+decline any contribution if use of AI is either known or suspected.
-+
-+Examples of tools impacted by this policy includes both GitHub's CoPilot,
-+OpenAI's ChatGPT, and Meta's Code Llama, amongst many others which are less
-+well known.
-+
-+This policy may evolve as AI tools mature and the legal situation is
-+clarifed. In the meanwhile, requests for exceptions to this policy will be
-+evaluated by the QEMU project on a case by case basis. To be granted an
-+exception, a contributor will need to demonstrate clarity of the license and
-+copyright status for the tool's output in relation to its training model and
-+code, to the satisfaction of the project maintainers.
+AFAICT at its current state of (im)maturity the question of licensing
+of AI code generator output does not have a broadly accepted / settled
+legal position. This is an inherant bias/self-interest from the vendors
+promoting their usage, who tend to minimize/dismiss the legal questions.
+>From my POV, this puts such tools in a position of elevated legal risk.
+
+Given the fuzziness over the legal position of generated code from
+such tools, I don't consider it credible (today) for a contributor
+to assert compliance with the DCO terms (b) or (c) (which is a stated
+pre-requisite for QEMU accepting patches) when a patch includes (or is
+derived from) AI generated code.
+
+By implication, I think that QEMU must (for now) explicitly decline
+to (knowingly) accept AI generated code.
+
+Perhaps a few years down the line the legal uncertainty will have
+reduced and we can re-evaluate this policy.
+
+Discuss...
+
+Changes in v3 [Markus Armbruster]:
+
+ * PATCH 1:
+   - Require "known identify" (phrasing stolen from Linux kernel docs)
+     [Peter]
+   - Clarify use of multiple addresses [Michael]
+   - Improve markup
+   - Fix a few misspellings
+   - Left for later: explain our use of Message-Id: [Alex]
+ * PATCH 2:
+   - Minor phrasing tweaks and spelling fixes
+ * PATCH 3:
+   - Don't claim DCO compliance is currently impossible, do point out
+     it's unclear how, and that we consider the legal risk not
+     acceptable.
+   - Stress that the policy is open to revision some more by adding
+     "as AI tools mature".  Also rephrase the commit message.
+   - Improve markup
+
+Changes in v2 [Daniel Berrangé]:
+
+ * Fix a huge number of typos in docs
+ * Clarify that maintainers should still add R-b where relevant, even
+   if they are already adding their own S-oB.
+ * Clarify situation when contributor re-starts previously abandoned
+   work from another contributor.
+ * Add info about Suggested-by tag
+ * Add new docs section dealing with the broad topic of "generated
+   files" (whether code generators or compilers)
+ * Simplify the section related to prohibition of AI generated files
+   and give further examples of tools considered covered
+ * Remove repeated references to "LLM" as a specific technology, just
+   use the broad "AI" term, except for one use of LLM as an example.
+ * Add note that the policy may evolve if the legal clarity improves
+ * Add note that exceptions can be requested on case-by-case basis
+   if contributor thinks they can demonstrate a credible copyright
+   and licensing status
+
+Daniel P. Berrangé (3):
+  docs: introduce dedicated page about code provenance / sign-off
+  docs: define policy limiting the inclusion of generated files
+  docs: define policy forbidding use of AI code generators
+
+ docs/devel/code-provenance.rst    | 321 ++++++++++++++++++++++++++++++
+ docs/devel/index-process.rst      |   1 +
+ docs/devel/submitting-a-patch.rst |  18 +-
+ 3 files changed, 324 insertions(+), 16 deletions(-)
+ create mode 100644 docs/devel/code-provenance.rst
+
 -- 
 2.48.1
 
