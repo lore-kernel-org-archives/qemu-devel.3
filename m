@@ -4,82 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3BC9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 15:16:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 807DAC5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 15:22:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMTLv-0004MN-3o; Tue, 03 Jun 2025 11:14:59 -0400
+	id 1uMTSX-0006Ao-NE; Tue, 03 Jun 2025 11:21:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uMTLp-0004Li-N4
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:14:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uMTSS-00069q-0O
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:21:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uMTLk-00065Q-Jc
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:14:53 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uMTSH-0007Ba-2x
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:21:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748963685;
+ s=mimecast20190719; t=1748964087;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j8B3gHHP/8JurKyH285IBxQpYEQhsELog9paMOChLMM=;
- b=fL4HpEXM2E96NBn8ENLPlQ/GlmYmbZAQrgy7jKg4MWZuxvKwxHtTvEnKp3hzXOp+zDFb93
- nTQl6eteeul8P+G0/sNn+wmXeseeLZEjuqIgb6rOMvP4dOhlZSnI2Xslnx1Z2XlDeTp2mZ
- V82XDL5OCBaKGmJx8JBoIE8Bco+d5nE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-r3WC_cJ0NJuD2YuMgUFrJA-1; Tue,
- 03 Jun 2025 11:14:39 -0400
-X-MC-Unique: r3WC_cJ0NJuD2YuMgUFrJA-1
-X-Mimecast-MFC-AGG-ID: r3WC_cJ0NJuD2YuMgUFrJA_1748963676
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B896A1801A33; Tue,  3 Jun 2025 15:14:35 +0000 (UTC)
-Received: from localhost (dhcp-192-216.str.redhat.com [10.33.192.216])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 91F44180047F; Tue,  3 Jun 2025 15:14:33 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>,
- "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
- "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "maz@kernel.org"
- <maz@kernel.org>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "sebott@redhat.com" <sebott@redhat.com>, "armbru@redhat.com"
- <armbru@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
- <jdenemar@redhat.com>
-Cc: "agraf@csgraf.de" <agraf@csgraf.de>, "shahuang@redhat.com"
- <shahuang@redhat.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>
-Subject: RE: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
- host model
-In-Reply-To: <878qmibc5a.fsf@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <de7db6bc22ad4f0a8ac1fac718c810a1@huawei.com> <87bjrfbkyz.fsf@redhat.com>
- <878qmibc5a.fsf@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Tue, 03 Jun 2025 17:14:30 +0200
-Message-ID: <87tt4wamcp.fsf@redhat.com>
+ bh=h8G2NpZWF37ZnxQMdsyXcKxzQUWp/6jyXJYYUDIwp6A=;
+ b=c1cJJl6cJyElKgh/ybrJ9oJaPZJScj64t+guj+paDTPQulLQpy0qQjWYfb1uwOh/NH573+
+ 1R8T5f1YDqgjLMht0W14oImAih1u9fdrQgCxHQXqzGV24unkG48oc84ohpLwK43yeoogqm
+ s+RWoUTBDdeDGfZsEkmxhaQTWyyMheQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-88-jeb151meOrqbnkOBiUgU_g-1; Tue, 03 Jun 2025 11:21:26 -0400
+X-MC-Unique: jeb151meOrqbnkOBiUgU_g-1
+X-Mimecast-MFC-AGG-ID: jeb151meOrqbnkOBiUgU_g_1748964084
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-450db029f2aso20073695e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 08:21:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748964084; x=1749568884;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=h8G2NpZWF37ZnxQMdsyXcKxzQUWp/6jyXJYYUDIwp6A=;
+ b=GckT6xY9ogLqp1k/Kjrkoq80D7A+RQcaeLG9VcFa0sE03E3Lhf3jZTiXuqYTOqn/gY
+ 7RQc86U0v4Nw0uz8Ynl11zHuB0nx3jI/wbtbk0go9HTp23HEnrwHev4589qUgsK8MIdC
+ +iWuIEWGKU3UvNkkzTyxZHsxVhQinL/2UwUGwr0E9oj+niA7Ej+9xTc1eiSpsRCUwkzm
+ wwoA2X39K0sl3fUOQHKOybQrr0oIf+xa/ak04L6wAnGb6AO8JQLqWFhmwhbIxb7euDAx
+ o7iOIArEj6KmxMxb+YqWNh/umtF+vIqNfgQ7Qhrc8f87XJP7P/5AK8XuqwYT4nNQwHd9
+ fvjw==
+X-Gm-Message-State: AOJu0YyDG/HLzt+9HC9Y1nBIrzh7WRo2FYz+8sr0XseaWhiFxk0fkxzR
+ taQUph4dgK6jdTuhWXjnOzhnyoiVw3VfG2H0Fre4gXb/JKmWz+kbx6DZrbNc1UXZ+nHkU/lQEFE
+ kM+9C+emYkdNqEs6ojnLZtwWGQ4uNdYenjQpoGAOHhK7CH8WeXxuXhfMO
+X-Gm-Gg: ASbGnctuUdBNEdzsBrLGAEZp5+CD3PJujpsN6oyOt1ElDbUupmwVYY8TRa5mjLeb+Ar
+ SMGzZy10itEHsjBWfGpYAfUEvZcG6Kgb1GcoXjPuv4ZcOK6Zdu4WbhZNWTp7Pip0h94fk+HpTQz
+ TTvTuNm3GdTKmH9bkYxBPuCnw9O8R64K5WQNNcsTGopwAPFk2NIcpglRexpSuMeFM6yGu8G8GC4
+ jSC2qVVIkbpE7mZ85+iNKJmjQlwnAf/p80jXTi6mv5L8QnhkulZOswnriX+cjxPdrHvV2ylbLdM
+ fgjKaL3ajyIw1/RUvGvIZkP1dGPHsLBkjKGOviUP+fg=
+X-Received: by 2002:a05:6000:4313:b0:3a4:f6f1:faef with SMTP id
+ ffacd0b85a97d-3a4f89ddd63mr12141908f8f.32.1748964083731; 
+ Tue, 03 Jun 2025 08:21:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEE45MwL+K7W37edCmani+So1RbTIOrBIHoEwkMXyO6kqF8G3s3U8wu3tGFQoABnYXIoWH4rw==
+X-Received: by 2002:a05:6000:4313:b0:3a4:f6f1:faef with SMTP id
+ ffacd0b85a97d-3a4f89ddd63mr12141888f8f.32.1748964083270; 
+ Tue, 03 Jun 2025 08:21:23 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-451e505d40csm24265605e9.0.2025.06.03.08.21.22
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Jun 2025 08:21:22 -0700 (PDT)
+Date: Tue, 3 Jun 2025 17:21:21 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif
+ <clement.mathieu--drif@eviden.com>, Zhao Liu <zhao1.liu@intel.com>, Hanna
+ Reitz <hreitz@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ qemu-block@nongnu.org, Jason Wang <jasowang@redhat.com>, Richard Henderson
+ <richard.henderson@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Ani
+ Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Thomas
+ Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf
+ <kwolf@redhat.com>, Yi Liu <yi.l.liu@intel.com>
+Subject: Re: [PATCH 01/18] hw/i386/pc: Remove deprecated pc-q35-2.8 and
+ pc-i440fx-2.8 machines
+Message-ID: <20250603172121.27141cab@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250501210456.89071-2-philmd@linaro.org>
+References: <20250501210456.89071-1-philmd@linaro.org>
+ <20250501210456.89071-2-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -87,8 +101,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,187 +118,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, May 27 2025, Cornelia Huck <cohuck@redhat.com> wrote:
+On Thu,  1 May 2025 23:04:39 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> On Mon, May 26 2025, Cornelia Huck <cohuck@redhat.com> wrote:
->
->> On Fri, May 23 2025, Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com> wrote:
->>
->>> Hi,
->>>
->>>> -----Original Message-----
->>>> From: Cornelia Huck <cohuck@redhat.com>
->>>> Sent: Monday, April 14, 2025 5:39 PM
->>>> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
->>>> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
->>>> peter.maydell@linaro.org; richard.henderson@linaro.org;
->>>> alex.bennee@linaro.org; maz@kernel.org; oliver.upton@linux.dev;
->>>> sebott@redhat.com; Shameerali Kolothum Thodi
->>>> <shameerali.kolothum.thodi@huawei.com>; armbru@redhat.com;
->>>> berrange@redhat.com; abologna@redhat.com; jdenemar@redhat.com
->>>> Cc: agraf@csgraf.de; shahuang@redhat.com; mark.rutland@arm.com;
->>>> philmd@linaro.org; pbonzini@redhat.com; Cornelia Huck
->>>> <cohuck@redhat.com>
->>>> Subject: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
->>>> host model
->>>
->>> [..]
->>>
->>> )
->>>> 
->>>> Code also available at
->>>> https://gitlab.com/cohuck/qemu/-/tree/arm-cpu-model-
->>>> rfcv3?ref_type=heads
->>>
->>> I had a spin with the above branch, but Qemu boot fails,
->>>
->>> ERROR:../target/arm/cpu64.c:57:get_sysreg_idx: code should not be reached
->>> Bail out! ERROR:../target/arm/cpu64.c:57:get_sysreg_idx: code should not be reached
->>>
->>> From a quick debug, it looks like the below path results in an invalid ID idx.
->>>
->>> kvm_arm_expose_idreg_properties()
->>>  kvm_idx_to_idregs_idx(0)
->>>   get_sysreg_idx(0xc000)  --> id_register seems to start at 0xc008
->>>
->>> Haven't debugged further.
->>>
->>> I am running against a 6.15-rc1 kernel after updating the Qemu branch by,
->>> ./update-aarch64-sysreg-code.sh  path_to_6.15-rc1
->>>
->>> Not sure I am  missing anything. Please check and let me know.
->>
->> Thanks for trying this out; I'll try to re-create this here.
->> (I think I've messed up those conversion functions often enough...)
->
-> The conversion functions are not at fault here, but we're missing
-> registers. If we have MIDR and friends writable, they show up in the
-> masks returned by the kernel, but they are not present in the kernel's
-> sysreg file where we generate our definitions from, and
-> kvm_idx_to_idregs_idx() asserts instead of returning an error, which is
-> kind of suboptimal...
->
-> So I see two possible ways to fix this:
-> - add MIDR and friends to the kernel's sysreg file
-> - add MIDR and friends in QEMU's cpu-sysregs.h.inc file, and only append
->   generated definitions there
->
-> First option means one more round trip, second options has more
-> potential for messing things up if we keep stuff local to QEMU.
+> These machines has been supported for a period of more than 6 years.
+> According to our versioned machine support policy (see commit
+> ce80c4fa6ff "docs: document special exception for machine type
+> deprecation & removal") they can now be removed.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-With the patch below, things work for me with a 6.15+ kernel. It's a bit
-messy, though, and raises questions (how do we want to handle those regs
-across accelerators, for example, or how we can make sure that the code
-is more robust when registers are added.)
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-My biggest question, however, is how this interacts with the framework
-to provide lists of MIDR/REVIDR/AIDR for errata management. The hack
-below adds properties to configure those regs, I guess we'd want to
-suppress adding the props in order to avoid conflicts.
-
-WDYT?
-
-diff --git a/scripts/gen-cpu-sysreg-properties.awk b/scripts/gen-cpu-sysreg-properties.awk
-index 6740e814f733..7afd9afd2650 100755
---- a/scripts/gen-cpu-sysreg-properties.awk
-+++ b/scripts/gen-cpu-sysreg-properties.awk
-@@ -109,6 +109,27 @@ END {
- 	if (__current_block_depth != 0)
- 		fatal("Missing terminator for " block_current() " block")
- 
-+	# Manually add MIDR/REVIDR/AIDR
-+	print ""
-+	print "    /* MIDR_EL1 */"
-+	print "    ARM64SysReg *MIDR_EL1 = arm64_sysreg_get(MIDR_EL1_IDX);"
-+	print "    MIDR_EL1->name = \"MIDR_EL1\";"
-+	print "    arm64_sysreg_add_field(MIDR_EL1, \"Implementer\", 24, 31);"
-+	print "    arm64_sysreg_add_field(MIDR_EL1, \"Variant\", 20, 23);"
-+	print "    arm64_sysreg_add_field(MIDR_EL1, \"Architecture\", 16, 19);"
-+	print "    arm64_sysreg_add_field(MIDR_EL1, \"PartNum\", 4, 15);"
-+	print "    arm64_sysreg_add_field(MIDR_EL1, \"Revision\", 0, 3);"
-+	print ""
-+	print "    /* REVIDR_EL1 */"
-+	print "    ARM64SysReg *REVIDR_EL1 = arm64_sysreg_get(REVIDR_EL1_IDX);"
-+	print "    REVIDR_EL1->name = \"REVIDR_EL1\";"
-+	print "    arm64_sysreg_add_field(REVIDR_EL1, \"IMPDEF\", 0, 63);"
-+	print ""
-+	print "    /* AIDR_EL1 */"
-+	print "    ARM64SysReg *AIDR_EL1 = arm64_sysreg_get(AIDR_EL1_IDX);"
-+	print "    AIDR_EL1->name = \"AIDR_EL1\";"
-+	print "    arm64_sysreg_add_field(AIDR_EL1, \"IMPDEF\", 0, 63);"
-+	print ""
- 	print "}"
- }
- 
-diff --git a/scripts/gen-cpu-sysregs-header.awk b/scripts/gen-cpu-sysregs-header.awk
-index 452e51035d52..2eb561b693dc 100755
---- a/scripts/gen-cpu-sysregs-header.awk
-+++ b/scripts/gen-cpu-sysregs-header.awk
-@@ -7,7 +7,10 @@
- BEGIN {
-     print ""
- } END {
--    print ""
-+    /* add MIDR, REVIDR, and AIDR */
-+    print "DEF(MIDR_EL1, 3, 0, 0, 0, 0)"
-+    print "DEF(REVIDR_EL1, 3, 0, 0, 0, 6)"
-+    print "DEF(AIDR_EL1, 3, 1, 0, 0, 7)"
- }
- 
- # skip blank lines and comment lines
-diff --git a/target/arm/cpu-sysreg-properties.c b/target/arm/cpu-sysreg-properties.c
-index 29c4c8ada115..bc1ae5e1a224 100644
---- a/target/arm/cpu-sysreg-properties.c
-+++ b/target/arm/cpu-sysreg-properties.c
-@@ -715,4 +715,24 @@ void initialize_cpu_sysreg_properties(void)
- 
- /* For S2PIR_EL2 fields see PIRx_ELx */
- 
-+
-+    /* MIDR_EL1 */
-+    ARM64SysReg *MIDR_EL1 = arm64_sysreg_get(MIDR_EL1_IDX);
-+    MIDR_EL1->name = "MIDR_EL1";
-+    arm64_sysreg_add_field(MIDR_EL1, "Implementer", 24, 31);
-+    arm64_sysreg_add_field(MIDR_EL1, "Variant", 20, 23);
-+    arm64_sysreg_add_field(MIDR_EL1, "Architecture", 16, 19);
-+    arm64_sysreg_add_field(MIDR_EL1, "PartNum", 4, 15);
-+    arm64_sysreg_add_field(MIDR_EL1, "Revision", 0, 3);
-+
-+    /* REVIDR_EL1 */
-+    ARM64SysReg *REVIDR_EL1 = arm64_sysreg_get(REVIDR_EL1_IDX);
-+    REVIDR_EL1->name = "REVIDR_EL1";
-+    arm64_sysreg_add_field(REVIDR_EL1, "IMPDEF", 0, 63);
-+
-+    /* AIDR_EL1 */
-+    ARM64SysReg *AIDR_EL1 = arm64_sysreg_get(AIDR_EL1_IDX);
-+    AIDR_EL1->name = "AIDR_EL1";
-+    arm64_sysreg_add_field(AIDR_EL1, "IMPDEF", 0, 63);
-+
- }
-diff --git a/target/arm/cpu-sysregs.h.inc b/target/arm/cpu-sysregs.h.inc
-index 02aae133eb67..8f0927ce0422 100644
---- a/target/arm/cpu-sysregs.h.inc
-+++ b/target/arm/cpu-sysregs.h.inc
-@@ -49,4 +49,6 @@ DEF(SMIDR_EL1, 3, 1, 0, 0, 6)
- DEF(CSSELR_EL1, 3, 2, 0, 0, 0)
- DEF(CTR_EL0, 3, 3, 0, 0, 1)
- DEF(DCZID_EL0, 3, 3, 0, 0, 7)
--
-+DEF(MIDR_EL1, 3, 0, 0, 0, 0)
-+DEF(REVIDR_EL1, 3, 0, 0, 0, 6)
-+DEF(AIDR_EL1, 3, 1, 0, 0, 7)
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 95bb728a77f1..7454f329157c 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -54,7 +54,7 @@ int get_sysreg_idx(ARMSysRegs sysreg)
-     switch (sysreg) {
- #include "cpu-sysregs.h.inc"
-     }
--    g_assert_not_reached();
-+    return -1;
- }
- 
- #undef DEF
+> ---
+>  hw/i386/pc_piix.c | 9 ---------
+>  hw/i386/pc_q35.c  | 9 ---------
+>  2 files changed, 18 deletions(-)
+>=20
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 98bd8d0e67b..0d6ad9db627 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -746,15 +746,6 @@ static void pc_i440fx_machine_2_9_options(MachineCla=
+ss *m)
+> =20
+>  DEFINE_I440FX_MACHINE(2, 9);
+> =20
+> -static void pc_i440fx_machine_2_8_options(MachineClass *m)
+> -{
+> -    pc_i440fx_machine_2_9_options(m);
+> -    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
+> -    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
+> -}
+> -
+> -DEFINE_I440FX_MACHINE(2, 8);
+> -
+>  #ifdef CONFIG_ISAPC
+>  static void isapc_machine_options(MachineClass *m)
+>  {
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index a1f46cd8f03..54c18100122 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -639,12 +639,3 @@ static void pc_q35_machine_2_9_options(MachineClass =
+*m)
+>  }
+> =20
+>  DEFINE_Q35_MACHINE(2, 9);
+> -
+> -static void pc_q35_machine_2_8_options(MachineClass *m)
+> -{
+> -    pc_q35_machine_2_9_options(m);
+> -    compat_props_add(m->compat_props, hw_compat_2_8, hw_compat_2_8_len);
+> -    compat_props_add(m->compat_props, pc_compat_2_8, pc_compat_2_8_len);
+> -}
+> -
+> -DEFINE_Q35_MACHINE(2, 8);
 
 
