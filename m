@@ -4,81 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0A46C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCEEC5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:31:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPr3-0003OY-Rj; Tue, 03 Jun 2025 07:30:53 -0400
+	id 1uMPrc-0003eD-P3; Tue, 03 Jun 2025 07:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMPr1-0003ON-5e
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:30:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMPqy-0005uX-QP
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:30:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748950245;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=HOiobj3AIKiWkuUoXo62SJwe8dm8/A/y7BXGyUKJ20E=;
- b=XO/NhvZBpk5qOrt2b2BSvBqksH1+rL+hxz/L/dTgKKIXu6O6c1g0kbIHkOKvA/l5FpkzAh
- pYzIiQKlzi2Pfg1yEnRB0uyGglY/8zgNif28g2s54K2O1AFW0xhaOIfxTRGzGixL6D7iQH
- +78NQApUafF+ZWorwje9/1N3szpSzOw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-319-GuVUiX_5MEO-4Qh9SuDmgA-1; Tue,
- 03 Jun 2025 07:30:44 -0400
-X-MC-Unique: GuVUiX_5MEO-4Qh9SuDmgA-1
-X-Mimecast-MFC-AGG-ID: GuVUiX_5MEO-4Qh9SuDmgA_1748950243
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8FB1E195609F; Tue,  3 Jun 2025 11:30:43 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.28])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C306130002C2; Tue,  3 Jun 2025 11:30:40 +0000 (UTC)
-Date: Tue, 3 Jun 2025 12:30:37 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PULL 02/23] ui/vnc: take account of client byte order in pixman
- format
-Message-ID: <aD7c3f5Tb_mqgkKq@redhat.com>
-References: <20250522102923.309452-1-berrange@redhat.com>
- <20250522102923.309452-3-berrange@redhat.com>
- <e6c7920b-8078-4d97-92ce-2efafb645953@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPra-0003b8-NY
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:31:26 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPrY-0005vp-MP
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:31:26 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-450ce3a2dd5so48060715e9.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:31:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748950282; x=1749555082; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=OKOwEl362d4twqQkTyMBWKi4e+TfPV5Vj4tvLOsMHV8=;
+ b=Bqua7k4VCZGYPQ4uqlkOfoRlfBV6Kq7EpLnzOj8SU79pbq6p0Sd6uuwMs8tSIUm+kZ
+ Ih2KHxjpgc9qj6XUbzW91W72H4sacH93QxRzoQ92Z0OvnpTAzySAx7+a3Kjpc1F/lNrW
+ 3xg1+aLMZFClwxDz2TMSjHhIWyvX/+Kf0gG/srm25Q5Fd/09vQnSzRFP6C84vUlxoWMm
+ aS1H3gyc5NCoPvWF4DFHATq0XosS7F2oGuwrQcLTH54Cq2iR0nD2iGcx3WmG7mJW1q+t
+ TPcflNFIsKpD2xaKQU8gA9fy/z2IUZpvz6a7W2CHJu5EONQ388+BKcE/teQjiW57csY7
+ AaJg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748950282; x=1749555082;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OKOwEl362d4twqQkTyMBWKi4e+TfPV5Vj4tvLOsMHV8=;
+ b=UMzrAIMiUpKwBZH7yrlqPhuE4gSOnHgnQv3Y6etKbUZGqe6xmCFeWqUILu3Qz+nmBF
+ u+2vcpTnOiQzqmkYVEKVsogOB1K8pPTCneGxhCcOqzkmlzkbZcXrS8A6VYFdo+jUsSTN
+ vbkflyHUOfGZy5p40lHU6yYvh58Fl+j2mXauMdCoy7tnIqH+Ewf+iRVb4w50O9WNQ4Aw
+ IWXTYhC4CjKOgQgqIUBk356BT2pDcoYSsTxN0SDAYuUw3AUI7gHyqxUzEMbpwQ8wRGpP
+ IiYlsW/Y75O2GzEmR0GlvjmVB9xdUjKyRdE1jv+zv51BOdPSPN564WfKL0OiCDfAX+Zn
+ cSDg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVJAwj1juxmMYZFhFk+yeEPRSmwi4mFxhiflvunEVSAL5FdMzxGOLcE7X0lN2DlNflq0QY/k17EYh8f@nongnu.org
+X-Gm-Message-State: AOJu0YzNNPrezz5qWh+cnEZ4ZeujIlPPWzDNE1TWVkW5FGZhLmeuazdt
+ SYNDgUSvzFp/TZ7NET1CLpZyRNO6XnQ5Jq+b8UpURjAIwWt5clN8TpiBDQvpf+etjic=
+X-Gm-Gg: ASbGncs1+xreSWyFr2iD2o8i+9mxVpRq0OGvXphOhM6Z1DvQMcA9NG0goPtn9TcFtSW
+ wPKhipSGBJKq7MmH3SHZb6QobaOJH5dXJj99tGx0QD/pfA6ppbQX74VnK6oVWo6wC/hFZeakZoI
+ fZK+QA/Vq+83p+UXvZETRnX0t/uCH1jxeXqMdI6RuLBKZuCBCxCASHR8xz4dPeHIVUwiG0zuy8G
+ +BrE0Q/i02Drr3HbpVPPdWC0LT7fBybj0kjLPGV4F2Z4HcCFAUiYuVkpvdBek2gVgS22LQ/xDBv
+ KDDyrivb8m4oE8rN29Q1xd7vRzNyNeVs3PBpU7Y0yhDAOl5nw9f+IWoBaYNRCVshg3zD7wTPy2b
+ bZILPwJnmP9EN4MmnJ76PW9A3
+X-Google-Smtp-Source: AGHT+IHyVCdfbxqsNUrBhmOkUpEETqQc9Hk6tRcouD8jz6k9+k/WMjSmy6D5KlL3KTkK2QhQuWwNAQ==
+X-Received: by 2002:a05:600c:64ca:b0:43d:1b95:6d0e with SMTP id
+ 5b1f17b1804b1-451221a31aamr90775565e9.23.1748950282601; 
+ Tue, 03 Jun 2025 04:31:22 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d8006946sm158019135e9.31.2025.06.03.04.31.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Jun 2025 04:31:21 -0700 (PDT)
+Message-ID: <0940128b-f6b4-41bf-9dc7-40e1bd953047@linaro.org>
+Date: Tue, 3 Jun 2025 13:31:20 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 01/16] hw/pci-host/raven: Remove is-legacy-prep property
+To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
+ qemu-ppc@nongnu.org
+Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <cover.1746374076.git.balaton@eik.bme.hu>
+ <0d41c18a8831bd4c8b0948eda3ef8f60f5a311f3.1746374076.git.balaton@eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <0d41c18a8831bd4c8b0948eda3ef8f60f5a311f3.1746374076.git.balaton@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <e6c7920b-8078-4d97-92ce-2efafb645953@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,65 +102,78 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 03, 2025 at 01:18:55PM +0200, Thomas Huth wrote:
-> On 22/05/2025 12.29, Daniel P. Berrangé wrote:
-> > The set_pixel_conversion() method is responsible for determining whether
-> > the VNC client pixel format matches the server format, and thus whether
-> > we can use the fast path "copy" impl for sending pixels, or must use
-> > the generic impl with bit swizzling.
-> > 
-> > The VNC server format is set at build time to VNC_SERVER_FB_FORMAT,
-> > which corresponds to PIXMAN_x8r8g8b8.
-> > 
-> > The qemu_pixman_get_format() method is then responsible for converting
-> > the VNC pixel format into a pixman format.
-> > 
-> > The VNC client pixel shifts are relative to the associated endianness.
-> > 
-> > The pixman formats are always relative to the host native endianness.
-> > 
-> > The qemu_pixman_get_format() method does not take into account the
-> > VNC client endianness, and is thus returning a pixman format that is
-> > only valid with the host endianness matches that of the VNC client.
-> ...
+On 4/5/25 18:01, BALATON Zoltan wrote:
+> This was a workaround for the prep machine that was removed 5 years
+> ago so this is no longer needed.
 > 
->  Hi Daniel,
+> Fixes: b2ce76a073 (hw/ppc/prep: Remove the deprecated "prep" machine
+>         and the OpenHackware BIOS)
+> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+> ---
+>   hw/pci-host/raven.c | 32 ++++++++++++--------------------
+>   1 file changed, 12 insertions(+), 20 deletions(-)
 > 
-> this patch breaks the output in the TigerVNC viewer for me.
-> If I run "./qemu-system-x86_64 -vnc :1" on my laptop, and then connect to it
-> via "vncviewer :1", the output of the BIOS now appears in yellow letters
-> (instead of grey ones).
-> 
-> FWIW, the output of TigerVNC viewer is:
-> 
->  TigerVNC viewer v1.15.0
->  Built on: 2025-04-08 00:00
->  Copyright (C) 1999-2025 TigerVNC team and many others (see README.rst)
->  See https://www.tigervnc.org for information on TigerVNC.
-> 
->  Tue Jun  3 13:17:50 2025
->   DecodeManager: Detected 16 CPU core(s)
->   DecodeManager: Creating 4 decoder thread(s)
->   CConn:       Connected to host localhost port 5901
->   CConnection: Server supports RFB protocol version 3.8
->   CConnection: Using RFB protocol version 3.8
->   CConnection: Choosing security type None(1)
->   CConn:       Using pixel format depth 24 (32bpp) little-endian rgb888
-> 
-> Could you please have a look what's going wrong here?
+> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+> index 21f7ca65e0..b78a8f32d3 100644
+> --- a/hw/pci-host/raven.c
+> +++ b/hw/pci-host/raven.c
+> @@ -75,7 +75,6 @@ struct PRePPCIState {
+>       RavenPCIState pci_dev;
+>   
+>       int contiguous_map;
+> -    bool is_legacy_prep;
+>   };
+>   
+>   #define BIOS_SIZE (1 * MiB)
+> @@ -243,22 +242,18 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>       MemoryRegion *address_space_mem = get_system_memory();
+>       int i;
+>   
+> -    if (s->is_legacy_prep) {
+> -        for (i = 0; i < PCI_NUM_PINS; i++) {
+> -            sysbus_init_irq(dev, &s->pci_irqs[i]);
+> -        }
+> -    } else {
+> -        /* According to PReP specification section 6.1.6 "System Interrupt
+> -         * Assignments", all PCI interrupts are routed via IRQ 15 */
+> -        s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
+> -        object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
+> -                                &error_fatal);
+> -        qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
+> -        sysbus_init_irq(dev, &s->or_irq->out_irq);
+> -
+> -        for (i = 0; i < PCI_NUM_PINS; i++) {
+> -            s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
+> -        }
+> +    /*
+> +     * According to PReP specification section 6.1.6 "System Interrupt
+> +     * Assignments", all PCI interrupts are routed via IRQ 15
+> +     */
+> +    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
+> +    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
+> +                            &error_fatal);
+> +    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
+> +    sysbus_init_irq(dev, &s->or_irq->out_irq);
+> +
+> +    for (i = 0; i < PCI_NUM_PINS; i++) {
+> +        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
+>       }
+>   
+>       qdev_init_gpio_in(d, raven_change_gpio, 1);
+> @@ -426,9 +421,6 @@ static const Property raven_pcihost_properties[] = {
+>       DEFINE_PROP_UINT32("elf-machine", PREPPCIState, pci_dev.elf_machine,
+>                          EM_NONE),
+>       DEFINE_PROP_STRING("bios-name", PREPPCIState, pci_dev.bios_name),
+> -    /* Temporary workaround until legacy prep machine is removed */
+> -    DEFINE_PROP_BOOL("is-legacy-prep", PREPPCIState, is_legacy_prep,
+> -                     false),
+>   };
+>   
+>   static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
 
-Yes, I can reproduce too, will check this out.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
