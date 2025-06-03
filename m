@@ -4,144 +4,180 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 073AAC5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 07:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D76C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 07:18:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMLos-0005E8-Jr; Tue, 03 Jun 2025 03:12:22 -0400
+	id 1uMLtr-0006WG-3N; Tue, 03 Jun 2025 03:17:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMLol-0005BX-0j
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:12:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1uMLtn-0006Vv-Vn
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:17:28 -0400
+Received: from mail-mw2nam12on20609.outbound.protection.outlook.com
+ ([2a01:111:f403:200a::609]
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMLoj-0007Qf-5G
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:12:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748934731;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nyUDjE8AiGvOJmFM9FI+4PU9IZTOPQhPpsBbbtijHto=;
- b=Smg20K61B5OEh9qr7SYZQp0/ku6t+iK4RUsN2EpcvkebxJNSE5Fyxm7tUbaYopdU0o/Dya
- PLpFf5T7S2qxaqx40FEsAvT4O+Z5XDijeGmDQU1Z1eLfnXIkMNKJGXNqtFrRXJQIRwAyAS
- h4EBqAfDOLU6o1JQMa3XrbUCxKRhdk8=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-144-8hPGoQ9wMguGcmIBzVycTw-1; Tue, 03 Jun 2025 03:12:10 -0400
-X-MC-Unique: 8hPGoQ9wMguGcmIBzVycTw-1
-X-Mimecast-MFC-AGG-ID: 8hPGoQ9wMguGcmIBzVycTw_1748934729
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4eee72969so3268629f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 00:12:10 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748934729; x=1749539529;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nyUDjE8AiGvOJmFM9FI+4PU9IZTOPQhPpsBbbtijHto=;
- b=LlyX2HeL14DTINmoQ8mKLcOBv7H5uKKBbz6Y9z895hMC5vGkTLzcrtHiILzUq6SyO9
- RXReJqPVTosfATJm2gK7jMdcP3nBMjHwmEO5uEEMlpHk/bBovG3f+/NJmHijGUZrH4y3
- j/tOnxUeoUhTJ1j6cLFYUrvlMUYOe+B/tMDSlSGPasnwPe6DuGOWhMbRvlNs1bTlTvg3
- Ue16+Hr4JMEKep86+0bIH2OVUjawaq2ICXq5/KGEwTvBubyKyeotGl2brI62NYIglGwb
- 6xBP+AMX+XnU+Xr/YccG/sFLylZEPmfPCGjOcfhoiP+K0COKqxHIHQGJE7oixofezsqI
- LRYg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXX0LWWQxUrteWSo4tp64D/5eEaT9uLGNjgD/1jm6PrrtP2TI+vC0tc2ixRFS1khS5syxMsHZ83U7Mm@nongnu.org
-X-Gm-Message-State: AOJu0YxUtRC+y3a37iA88dvdwmu4Ts7YdWl+tiQ8Dzi+h8XwEQt6DCsK
- h6D7x+HMcEoGU7g+sWY9FMovBx7jytWrFE8CqgLwmfwXzHQBlBqFQL4m81bptNIJuekdLPMpMYh
- UzxwN1UZu9iUaokXPmNmLqBI3hxsI283McNYUOdM2FIVa8YyUrvqWoxnG
-X-Gm-Gg: ASbGncvknwYVROZE3l7hm2RCZxjX/EQszrF6qGEN4EGHyjkOQV/wocSjb59x72FYRD+
- dsCBnpt5XGxNquAIh/BcILnU93Hlsu0dRc9HK7V4XNnfVJYBkv3AhtjQzjTiUH/iLX+gTpR/KsQ
- CaSFtMGJ3fH59whGAttbz6N7FtdtdmJ9CfXNR4Oa1mBmowaDxV0wxwFLnTQQdPA10ufz4V7ZmVF
- xwCyLe+5EPw7bpi17CTgjaLrALbHwpC62zMmha2vS5+OtKzR9H/Hpctry47c75z5RzBvfuVj3nG
- 02aT4Yd1H+X5CVNc0bpAIR2c8UBIC4R9nr6oSxRWoIKclt/JmhjpUiyfbQ==
-X-Received: by 2002:a05:6000:430e:b0:3a5:1222:ac64 with SMTP id
- ffacd0b85a97d-3a51222ad7amr2374750f8f.38.1748934728662; 
- Tue, 03 Jun 2025 00:12:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGAV7z6aHe9fRKX8HisNsQ4w9TCLH0/oOwNJyXhRhjhiVaPv5cYN14UZJQCb6aXFCWoxLuwVQ==
-X-Received: by 2002:a05:6000:430e:b0:3a5:1222:ac64 with SMTP id
- ffacd0b85a97d-3a51222ad7amr2374729f8f.38.1748934728263; 
- Tue, 03 Jun 2025 00:12:08 -0700 (PDT)
-Received: from ?IPV6:2a01:cb1a:26:f704:85f7:e4c6:1cb:c089?
- ([2a01:cb1a:26:f704:85f7:e4c6:1cb:c089])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7f8ed27sm155935655e9.2.2025.06.03.00.12.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 00:12:07 -0700 (PDT)
-Message-ID: <e7b64b27-f6b8-4a63-b92d-63fb49e26c92@redhat.com>
-Date: Tue, 3 Jun 2025 09:12:04 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1uMLtl-0007vf-8B
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:17:27 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=WqsFf87kAYg9q2Blc6ckluYG4NsHTr+LSGPLtvWSRX/TG4xhmvLIMM9l5UpVnjyINfdbzM4D7oqAdMcqtqKsWrtOUpGHOwQjIF7d7cSJAWLN9QgV1zeJnL2JAJ3hpr8OH0qy1X1XPOiQdMJ4N+H9tcc4ZMMtyfZC9XW0WaqAuEAnMm1aePeW/e/R1ExQNFJl3Encgrizcrxd5yQkRtRohy8n9ohg9whVjGK6CNrfCegvrsf+ECjOP3/Z3draBHLbQkHNE2IZ/ofSRq+e6/Ake5MRSdfSNq+fKbXvWz4L3kyiICFnBS+G7z0fBgivU/6OLYCXZ0b9STtpjwa2pfrFgg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=8mkK1KM0ZHueknDOO0aQVoJFHtUk/M8sT/L/rjzCqfI=;
+ b=WMVFdDC4Ird/SW3OWED7ewu0WD0Wf470RNpDBVrj0pjDZiOYqDC09hj3BYFHOLZqGi1436lRVCiY74A2fFo149cDP3VHJbq/moGtP2AU5RwaOWNEHcpD81ihMEGyJI6tz4on7uPXJHTINpeUkn3+P8VMdiwt82rYszBgV4cQEnMhuY4NdaL1RNG4EkduOZFG04bqMsmb9AIdyZQ+uihMDwW5uA7fHh+sEkAttcylmb3MTK8TOzNU+SGR5y8nVFHVWMHPfGSbzB/CpeRoGydms6ZWrD6Wp9qrW2bVZoAiGqDa5CbEAAEAUmALll//ZSxnjdB1ZiF2PmV7GdVKW1tpgw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=8mkK1KM0ZHueknDOO0aQVoJFHtUk/M8sT/L/rjzCqfI=;
+ b=bV/gXm72YPqVbrczzBHH4BnZU3sR/zCEtgzL2w+6L8Gq9TA7ONewfxDvSoARzqMI4BKXZybcUknXUpPHtjL5hJcyiS99DVX5kOQ8wqXAp3PQvfENbitTtxJ0QnhscNxIxMjuSbpXetgW02ulQVQIn1Yb+m8OPJwvDecBITTXTwc=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB8189.namprd12.prod.outlook.com (2603:10b6:208:3f0::13)
+ by PH8PR12MB6865.namprd12.prod.outlook.com (2603:10b6:510:1c8::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.32; Tue, 3 Jun
+ 2025 07:17:19 +0000
+Received: from IA1PR12MB8189.namprd12.prod.outlook.com
+ ([fe80::193b:bbfd:9894:dc48]) by IA1PR12MB8189.namprd12.prod.outlook.com
+ ([fe80::193b:bbfd:9894:dc48%4]) with mapi id 15.20.8769.031; Tue, 3 Jun 2025
+ 07:17:18 +0000
+Message-ID: <219c32d8-4a5e-4a74-add0-aee56b8dc78b@amd.com>
+Date: Tue, 3 Jun 2025 09:17:14 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: use config_base_arch for target libraries
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: nabihestefan@google.com, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+Subject: Re: [PATCH v6 4/5] ram-block-attributes: Introduce RamBlockAttributes
+ to manage RAMBlock with guest_memfd
+To: Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- thuth@redhat.com, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250602233801.2699961-1-pierrick.bouvier@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250602233801.2699961-1-pierrick.bouvier@linaro.org>
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Lindgren, Tony" <tony.lindgren@intel.com>,
+ "Maloor, Kishen" <kishen.maloor@intel.com>
+References: <20250530083256.105186-1-chenyi.qiang@intel.com>
+ <20250530083256.105186-5-chenyi.qiang@intel.com>
+ <4105d9ad-176e-423a-9b4f-8308205fe204@amd.com>
+ <9a9bb6bb-f8c0-4849-afb0-7cf5a409dab0@intel.com>
+ <d0d1bed2-c1ee-4ae7-afaf-fbd07975f52c@amd.com>
+ <c646012a-b993-4f37-ac31-d2447c7e9ab8@intel.com>
+Content-Language: en-US
+From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
+In-Reply-To: <c646012a-b993-4f37-ac31-d2447c7e9ab8@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR4P281CA0257.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:e8::11) To IA1PR12MB8189.namprd12.prod.outlook.com
+ (2603:10b6:208:3f0::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|PH8PR12MB6865:EE_
+X-MS-Office365-Filtering-Correlation-Id: 72074f4c-9404-414b-ce9c-08dda26eacc9
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?VDU1cXdPeG5XcGpOTXFCSEZIbUJaNXVwaEdOSytPWVN4czlaTnRUV2ZpR0Q2?=
+ =?utf-8?B?UHQ4WCtVSE5SbThsV25iajdDNXpKdEJhaU1WMUVOTUFLN1N5aW9IRms3eFBV?=
+ =?utf-8?B?blRMVlZuME1CenczSHhSYU1FUEUyOEIrK1p6U2RBUEViUkdCS1JwMnhGdWhR?=
+ =?utf-8?B?SDQ0b3UvS0VBWkx3RWdsTTlnelNqdjMrMEt0VnRqdk5aOFpJWHYzeHlJdDFR?=
+ =?utf-8?B?SUZWSG5XVFVtcEdhYzQrcUFBWXBWdHJnYVl4T0ttSHVvakc2R3lvc002U3Y4?=
+ =?utf-8?B?K0NmRENGNVdsT1dQYldqcEw0cUhnNGQrekZJS0RhMnlMRzBFVE9RY2hoTGVW?=
+ =?utf-8?B?QVYweC9lQ1cxakVJZU4yWVE1OWpYWnNlOVZhOXZZZmV1ZEhlRW43V0gzTXU5?=
+ =?utf-8?B?MkVKcUhjTU1rTWhqWjVKdmNmcjkxM0FHVUZMcUtLSHdtdjN4RFF2eUNrcXJk?=
+ =?utf-8?B?N2pWSS9QNnJwdFhUWTQ3ckw4Vm56aTVBdzdtdFNtdDBtbmE3UTFranhhMU9I?=
+ =?utf-8?B?d21TeFAyT2F0U3VQa0dGcWZtbDQ0dDFJYStLMjBWL2xWb3V3T0VKZVBKMnlC?=
+ =?utf-8?B?MitqOEo3YmppNzlhSmh5YjA2cHFhV2FtTHE5d042TDl5YStGZmpzK2cxc05O?=
+ =?utf-8?B?SzRaYkp4K2RkbEFQeUpnSm0yallvMUNGeXVsY3lqVlMzQjhnVUJwejI2ODhS?=
+ =?utf-8?B?dEl3NG5kVEtUb3pVSkxMZU9YSkgydG5RZUk3MElSTFF2bnF2ZlkyU0FZcENT?=
+ =?utf-8?B?aXppK3htMy9nSnA0dlE4cWh0TUdEeDh4M2phQzBPQmJ4SE4vQXdzd0lsTTN1?=
+ =?utf-8?B?eUZ3dENRMVRaZUgwRlRHS2pOSWE3RnJQRDVLamQ3dGkxUVNJeFBHTmRXY2RC?=
+ =?utf-8?B?b3p0WEdaaHZiRFliVE9OZjRPNmIvUyswUkZtNElCSDh3UTRQdjNPL25YeVdt?=
+ =?utf-8?B?REd2WU5menZscUYxZTRmenh3eDdCSVkwc3pwTkR2YXZVTEFqaUl4aHBmclZV?=
+ =?utf-8?B?N2tlNHZCZS9TMktmbGVTK3BySXBvOVdTajFFR29rMmREc1NNSUh1anlGb0xz?=
+ =?utf-8?B?Z0ZMSThWUVdmTzZ3Y3MwSE1zRlZFTkZONEtWa0Rva2NHN1JlbTBZUENVRHJ2?=
+ =?utf-8?B?Sm0ycjBCWDlSQ2s2WVdCdUZEaTQrbW0wTFFoTmxXcWpLNm1IaDNKZ3lkN1Rz?=
+ =?utf-8?B?VUZ3cjB5OUc1eEs1YjlWOXk1d0JTcnMydTltaGpEQi9mTHJzczhYeXFMd3dO?=
+ =?utf-8?B?c2JUTmYrZW5USkVQQ3c0MmRTVnRRMitPc2RwOTVJRHdsdHBRNzE5VWVnc2dV?=
+ =?utf-8?B?MTZrTjRLNEVhNVBoL1Rudkduc0Z2d29DWW1jZG84UHdIdEtnbHBJN3I4NkZ5?=
+ =?utf-8?B?eDBVOEJFdm9obTVzSHdwbUY1Q05zbkFrSHhLMyt0bWF5THY4UVpJYnYyYjlZ?=
+ =?utf-8?B?cU1KL2huZmh6OHBoV3hMZGthaS9rMGplRHVtUHJNYlkyZlMyOGttdThHVEgx?=
+ =?utf-8?B?MnVyQ3hqQzJNeVA1bVBEV2ZsdlhKUC9yVWFGcUtCdElyZ2RuV1lHd2NmcEhU?=
+ =?utf-8?B?ei9pZllsS3NUaCtVUmk4Z2QzQVBLelBjSFlKTk9iNVc0bU43RXhPM1FXOFNn?=
+ =?utf-8?B?bmVTdU40NHJJc2paVGVqU0h4anZxU0RhK25HOW9CdENrMmpyeHVJYSt6bC83?=
+ =?utf-8?B?WFloclJVZzBHSFRGMjBqaHJ3K0E5OGNWSUNRVy9jbWtDUnlxK3RZeFdCSHZk?=
+ =?utf-8?B?YjNlazdTWW1tTE9yeEtEYVVwUHo3VHpyYzhiWGk2RGhoZUV0SmtqcGZRKzNH?=
+ =?utf-8?B?MHhjMXI2NzllVE56eCtLT0xBN0tvcklHU3RlMmxDSEl5YzVxV3pzZVZxdEQ0?=
+ =?utf-8?B?cEhRRmxPaFR0aCtlaCtnTEoyVzdUUmFLblVtNVA0ajdmb3RCRWh1aGNzdGtW?=
+ =?utf-8?Q?D1ou2xIZ9PM=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR12MB8189.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aGphUk8vNHVJajBHN0s3d09mejZLQ3ZXT0VTbkZHNnBZeHk4T1ZUU1dEWWZ1?=
+ =?utf-8?B?Zms5OW1PNlgyeG51MjBIMU0yeU16NWJOYXFGd1NVRGZ6SnFrUDU5R21lNzcz?=
+ =?utf-8?B?ajFydnJqd2tRTjBpV1E3V25ObE5mQnpLMjd6dnhBVzJDc0xxcEkwMnN0UUZ6?=
+ =?utf-8?B?Zm9jeitmTDNpR0EyNllyTVRaTGg5d2s0ZWtFWE4xSGJLckFCTFl2K2VGSmtM?=
+ =?utf-8?B?NzZad25jWTFWdlJ6TGUrQlkwcXpMcGtjY1prUVc2eVM1TXZvUnp5cDdDTTJz?=
+ =?utf-8?B?MW1OVG1Yam5XakJJNTNXVi9ENW9EVC8rUVFzYUc4Q1Rlb2YwYS9LZDNMTlRJ?=
+ =?utf-8?B?OC8vVktGeGVqUk5UbUNaellBczdkQUt2M3U5ZnR6YXBzWmlKVlBLSE9RWVlv?=
+ =?utf-8?B?dWtTaTR0RkZVaWZxU2U2MTlOK2hmeTZ2VTNSOFVMSmJtazRTMDl1NG9VM0hQ?=
+ =?utf-8?B?ZGVPNW4rVDh2UzV2bUpNMWtGRXBPVUhxeXM5eXhCNzU4d2lURjA2NlM2bjRU?=
+ =?utf-8?B?VzNnNEZRc0hFMGxJUUNDTHdiZkU1WmFkQStiN0xtTjQ4MDRPUEFxdGsxcjZR?=
+ =?utf-8?B?Vm1qb0kxbkRiYUFGZGtGWStPV3dxbVpHcHNKbklvSnZoQWJTbHo5NlRpcjRT?=
+ =?utf-8?B?dGQ4czJPcmJOcDQ5d213NE9BYUNJaDZCMWg4NmswM2hrRzU0dG1ua2EybHVi?=
+ =?utf-8?B?dG9oK1lwYWVhN1dHcFo1d1hCcG5TcTFERkN4NjJFSHNwanlSc1g1d1FrM0F1?=
+ =?utf-8?B?OGh6SjR6QitDd1lqY2pSd3NQcG5obUVwWlhHQzBnNXRGQndrZDRVOEhmQUI4?=
+ =?utf-8?B?SW5FV0htaVEwV3hNQkVJY0lqS29vRWhNajA1MHFBamtZTitzdFloZEQxKzRp?=
+ =?utf-8?B?OGM2RENHb25DczI3ZnRKN0kySjJwRk11UTQvZisyTnJvN09xT1Z5SmVFeEZo?=
+ =?utf-8?B?c2pTR2tkaTA0ckxkSXEwUWJTcmllTkRtQWt2UjZmT2MySmpjeVBYVnN0TlQy?=
+ =?utf-8?B?QjVtd3lqaUgrM3FxbDEvZy9yNmFlMFZtZldtQy9EU2ZNVXRoTm5sS09DMTZv?=
+ =?utf-8?B?K0hMSm5xT3hHV3BYYWxlOFJvOUZPVWFvTjFqY1pUMm9HMEtmU0MxVGsxcnMz?=
+ =?utf-8?B?ZE9kRFFnSWpVODBxTmtpT0kxNURaSFdpMndYY0ZZcisrck9paVJqeC9uS0tL?=
+ =?utf-8?B?ZFpuM3JnN292eXB1dlhJMHYxU0ROZmFpcHVzLzNnZWV3d2pwemt4UFZJYlc4?=
+ =?utf-8?B?a3NjTHVwZmpsTHpONWI3T3NscFNGSnc5VzZFdVNnSndURHVEajJnTEpvMFpZ?=
+ =?utf-8?B?Tm9YQitCWDZESXdJengvT2hjanJnVDdWNGlqZUphdUdQY2hITG9vSVJFRkdT?=
+ =?utf-8?B?eU5PUEZsbVJoQTRIaUxtNXU4VEFldHFoKzJLa2pUekFIOUpHSHFKbElvK1FF?=
+ =?utf-8?B?MkMyZzN0cWIvekM0enRjc1U1VUdHLzdVYW54MFoxZkMvWTBTeUVEZEVrRjhp?=
+ =?utf-8?B?bVc5cFQ4NlBlNm5kbmpQTW5FL0VoT3pyeE05eWs4bFFsTWluTVBOUGxuTnM5?=
+ =?utf-8?B?UGIyeWVLelloU0dsUmxsUnhOemQ2dGtCY2ZkcnZhUmFsbXo1bkhlOVBmeE1D?=
+ =?utf-8?B?dGtXYnZHTTVhdWIxNTB5ZDRhMjQ1NVhtaVQyVHBWZmorMWJteHV4SUVpcFNU?=
+ =?utf-8?B?KzEyWC9rY0x1eTFNSUFxckh2R2psTmc4Rnh2Umg1MHppaXVhcU1meHdMcjlv?=
+ =?utf-8?B?Q2g3QXVuMWlsYnJKa0tMVU9RbFl1ZnBTRTBuejZJUUIrZWlvNjE1N0R6MXdT?=
+ =?utf-8?B?eXFmcFNMYWVtaGJtVUtFa3k2MTVNMnc0S1E1WEZyQmR1NTg5dXhjeEd0V292?=
+ =?utf-8?B?dHRWN2QvbWZHR3ZoZDB6STVoQmsrM210SXBZeWN0SG9TWmhWbllYOHhCUlRI?=
+ =?utf-8?B?MURIRmlpTWZpYTBsK1c1eFJ1b3J1ajZYaWt0Y2J3STJ5bUpmTlJLcHJhNmMw?=
+ =?utf-8?B?Wk5tS1N0TE80VEdUankxY1ZvRy81KzdNQkVnMGpicU1vMWIvVzNvOWZmK295?=
+ =?utf-8?B?dTg3WE44ZUpxTzNpV0Y1Z3puL0RISVFkbXQ1c0ZXODc5RnhITjFybkZEUWdm?=
+ =?utf-8?Q?sYn/Uh06QuIOwO+D5PN9hUisf?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 72074f4c-9404-414b-ce9c-08dda26eacc9
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8189.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2025 07:17:18.7633 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: T5xQFH7Qu1NG1OKihCWo6g9BX6zIAQ/OSU+qRSdXLTYQzdSIRKXYt8l7l5q2bLI8cIi+JeLlgVn6o5Oz6m+Vhw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6865
+Received-SPF: permerror client-ip=2a01:111:f403:200a::609;
+ envelope-from=Pankaj.Gupta@amd.com;
+ helo=NAM12-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,55 +193,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/25 01:38, Pierrick Bouvier wrote:
-> Fixed commit introduced common dependencies for target libraries. Alas,
-> it wrongly reused the 'target' variable, which was previously set from
-> another loop.
-> 
-> Thus, some dependencies were missing depending on order of target list,
-> as found here [1].
-> 
-> The fix is to use the correct config_base_arch instead.
-> Kudos to Thomas Huth who had this right, before I reimplement it, and
-> introduce this bug.
-> 
-> [1] https://lore.kernel.org/qemu-devel/c54469ce-0385-4aea-b345-47711e9e61de@linaro.org/
-> 
-> Fixes: 4fb54de823e9 (meson: build target libraries with common dependencies)
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
++CC Tony & Kishen
 
+>>>> In this patch series we are only maintaining the bitmap for Ram discard/
+>>>> populate state not for regular guest_memfd private/shared?
+>>>
+>>> As mentioned in changelog, "In the context of RamDiscardManager, shared
+>>> state is analogous to populated, and private state is signified as
+>>> discarded." To keep consistent with RamDiscardManager, I used the ram
+>>> "populated/discareded" in variable and function names.
+>>>
+>>> Of course, we can use private/shared if we rename the RamDiscardManager
+>>> to something like RamStateManager. But I haven't done it in this series.
+>>> Because I think we can also view the bitmap as the state of shared
+>>> memory (shared discard/shared populate) at present. The VFIO user only
+>>> manipulate the dma map/unmap of shared mapping. (We need to consider how
+>>> to extend the RDM framwork to manage the shared/private/discard states
+>>> in the future when need to distinguish private and discard states.)
+>>
+>> As function name 'ram_block_attributes_state_change' is generic. Maybe
+>> for now metadata update for only two states (shared/private) is enough
+>> as it also aligns with discard vs populate states?
+> 
+> Yes, it is enough to treat the shared/private states align with
+> populate/discard at present as the only user is VFIO shared mapping.
+> 
+>>
+>> As we would also need the shared vs private state metadata for other
+>> COCO operations e.g live migration, so wondering having this metadata
+>> already there would be helpful. This also will keep the legacy interface
+>> (prior to in-place conversion) consistent (As memory-attributes handling
+>> is generic operation anyway).
+> 
+> When live migration in CoCo VMs is introduced, I think it needs to
+> distinguish the difference between the states of discard and private. It
+> cannot simply skip the discard parts any more and needs special handling
+> for private parts. So still, we have to extend the interface if have to
+> make it avaiable in advance.
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
+You mean even the discard and private would need different handling and 
+we cannot use a common per RAMBlock object metadata store? That was the 
+reason I suggested in v4 to go with a base abstract class with common 
+bits and implementation can be based on specific derived class. As that 
+seemed cleaner and future extensible, otherwise we would need a major 
+overhaul in future to this code.
+
 
 Thanks,
-
-C.
-
-
-> ---
->   meson.build | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 2df89006f8b..ad9cef99ed9 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4142,13 +4142,12 @@ common_all = static_library('common',
->   target_common_arch_libs = {}
->   target_common_system_arch_libs = {}
->   foreach target_base_arch, config_base_arch : config_base_arch_mak
-> -  config_target = config_target_mak[target]
->     target_inc = [include_directories('target' / target_base_arch)]
->     inc = [common_user_inc + target_inc]
->   
-> -  target_common = common_ss.apply(config_target, strict: false)
-> -  target_system = system_ss.apply(config_target, strict: false)
-> -  target_user = user_ss.apply(config_target, strict: false)
-> +  target_common = common_ss.apply(config_base_arch, strict: false)
-> +  target_system = system_ss.apply(config_base_arch, strict: false)
-> +  target_user = user_ss.apply(config_base_arch, strict: false)
->     common_deps = []
->     system_deps = []
->     user_deps = []
+Pankaj
 
 
