@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00648C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 12:32:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77EBAC5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 12:35:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMQne-0007KZ-RJ; Tue, 03 Jun 2025 08:31:26 -0400
+	id 1uMQqr-0000Of-7I; Tue, 03 Jun 2025 08:34:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMQna-0007IS-45
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:31:23 -0400
+ id 1uMQqp-0000N3-FY
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:34:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMQnV-0007YD-Ee
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:31:20 -0400
+ id 1uMQqk-0007wX-Pr
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:34:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748953875;
+ s=mimecast20190719; t=1748954075;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=s5kVA7XHT0jpOLHqJil0HY4Ad5i6kLNREu9me6/mG0k=;
- b=IHaB8vq0eODK8q8PY3vac7IaGZCAPuG/i0Q4ZFb8yuSvDF8G7bSaFZzmcRjRtS5SaRMUvF
- dKvRuC+Bd5AKXB+H2kNrZLyo2zmq/jwPdfEGL72ueuctl+qyWn8YlbEKpdFOeS5dJDKU/h
- 3z471SwsNtA0v1KjFMKl4DTAtHiN/2Q=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=eIhGCXDv7NiJbTiC9u4z6b5iPz46vlUE2j/Ou+LZnRY=;
+ b=ZKQgzawJF5loHxmmKTHRzUfemHjCIeNCHDO0T/o/dFR2IMBDkXHxmcpM5rg7l/z8yQPdS6
+ sItl0QioVvB3yYZ/YD7h7eKSBZ+Z4N2qY1y+3j2fwS2rG3c1TjQ+NT3UjAD2w2csdwXgLx
+ bVLxaRgamVXSvj9tjXnJzyetbYpxJo4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-575-Rs3M2yIKPO-MwEGLo9wcPg-1; Tue, 03 Jun 2025 08:31:14 -0400
-X-MC-Unique: Rs3M2yIKPO-MwEGLo9wcPg-1
-X-Mimecast-MFC-AGG-ID: Rs3M2yIKPO-MwEGLo9wcPg_1748953873
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ad56c5412f2so425507166b.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 05:31:14 -0700 (PDT)
+ us-mta-49-s_iu3v0-MNieQ6PS28PSuQ-1; Tue, 03 Jun 2025 08:34:34 -0400
+X-MC-Unique: s_iu3v0-MNieQ6PS28PSuQ-1
+X-Mimecast-MFC-AGG-ID: s_iu3v0-MNieQ6PS28PSuQ_1748954073
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-450787c8626so31900835e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 05:34:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748953873; x=1749558673;
+ d=1e100.net; s=20230601; t=1748954073; x=1749558873;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=s5kVA7XHT0jpOLHqJil0HY4Ad5i6kLNREu9me6/mG0k=;
- b=jD/V6TmYgr6iy4OxrRQgu6GGayGyTR4JFnii0HpJu26ovM78DJu71fyd+FoKbi0nEK
- HGZNIOtp7J5gpzKCH+IfCVgD2s7S4hkuiHQJ7wTwQUVBlxaDuP7Q3kKQY6sI0SZHwClc
- BccnGIAVpYbxZRCtCaLo0p3v+RWx2KFKgASJ3A46J2Ka1lBQKiUolULK1/2VjwYn/VIo
- 78Q/QnQMDAgTHfH8GWLy9EZ+N4mnNSotrteM7z6M29zOhuwRSO872h3JXiTIvbeBKNAu
- WTyVc4pzNvLF7UTxJBBXorSs9NIf0lCogp0+1gZpWyHKoKNgnuPWv0ngSeWY7ivfw/ub
- 9Rpg==
-X-Gm-Message-State: AOJu0YyVK9wXGwJUF9byqFP6MSjnSGtRGcS8TYiAJMfuJa/Z1SHO8qrN
- 4KihhkqL8jn839ghX5oKMMJTVBB3WAN4SVALy6GQDUgEld4YNgsRmH4r0T/cSQA4k1xUiRrUErn
- K5eDcrxuizrcJYVkVwHgruyJjOX1VwF93rKQGopbQBKWm//uiuhyTrJ2D
-X-Gm-Gg: ASbGncvcFTjVjhJBRFog4Dp1kBgI5EFdzdI/v5WoiG+pDUi3bkorJkMXi0gN1kgkoGO
- dlMDitMXYOSxk0mBeiFBQY1+oChHflJhZ9hoIasAmK3NTuBTJeyolF+JFWo4yd/t3MsOQxUK8tr
- VdP2zYZJuAEtcMLnO7IQ3WsCyRxynYOF01LfW7Ez0+0BnpSdMUS5g8rAb0RDjd4ZZrVu8wFn3+x
- SsQ5GLIKfCs+eHQvRS0hWb9LUhHT37EcjeHXsvlcPdCp0HFuXSAQMs6EQurJrKAzocLyVy8yib2
- /Xu+3LRUqwVUvyHRriQj892wZB4oHGzTbTbawZkEVDY=
-X-Received: by 2002:a17:907:3f29:b0:ad2:2fa8:c0a7 with SMTP id
- a640c23a62f3a-adb36b4cfa8mr1474413666b.21.1748953873154; 
- Tue, 03 Jun 2025 05:31:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHZoooMPCVOZJ4A2zaBUVxMGU0BGVkmFRSQjLGB0mX2Yt/M0B63kxxQErY++jg6tKofSI6mbg==
-X-Received: by 2002:a17:907:3f29:b0:ad2:2fa8:c0a7 with SMTP id
- a640c23a62f3a-adb36b4cfa8mr1474408866b.21.1748953872581; 
- Tue, 03 Jun 2025 05:31:12 -0700 (PDT)
+ bh=eIhGCXDv7NiJbTiC9u4z6b5iPz46vlUE2j/Ou+LZnRY=;
+ b=Q8JcW0zbsk39lWAkiXJADRjQqYIm2SQTIeHCTd9BgdYMQICR1TokJmlfRqMC4qs3mN
+ LSawRrVMdngw6jEbs9cX9RJXj2pb8+N5eK1Phazju6UP5bDq/s/sWKCG/itFsRNB/+W0
+ jkT/6o2R93R8TAwfkgHjetkwHIhIsn/3RmU4aZaCrOlivAcbzf7M1H3BFdanMKoSPS6d
+ 3lWt/CM6Wh2nEIa/GmEvwf5mG6NYg5fFS5R6wP4iJUG4rxSKAV4WO56zOW5QjN9eOlvZ
+ awAGxFyLABabwCHNjMFNeMlBC89V47JtPmfbfHC8sPmHJH+0hU/g/Kjan/1TUDgWcwae
+ W9+Q==
+X-Gm-Message-State: AOJu0YxHCmFuSmQgSMOsCWZ/pZgMZWUAqwhiB35ECgu6/PZogaKjnRW5
+ OQcGD7MQpopuMAQ9GmCmESjRpNg1LWI7uTOuwsrakRe+vR0aVzIhUTzYZiGDfqu2E3/2+sfrVQA
+ 8q5G/ECtssFlHAloghGuox76XwfyRIkiX0tJb3UkaoZInBdT+7RnVyaPL
+X-Gm-Gg: ASbGncuQXb8sUuGBD3SAQs16tkkrFlvNKitcFqBIqPniJ1pvAtxgKNRFWFSFGicPH26
+ DxAEVgFXZrIIUaDHtICAHDo+W5057HYGxRkpxNo1729oYITH3O48+bus9yMEK40j5tFAhB7mC8U
+ oL3ozloT0yjmjw1eiHc109XCpTv3czifqp3q0yJaNNjU5tjJEBF7VJEZgOsvbc7nhuxf9SubVIo
+ ZZoFImI25Dh70p3HPN+PgOVd429fUJDJxPQl8iYiyOzit4Wwrx4zGPBux/7QWuCom8RnZH1/EdY
+ ZrgXRrYPS5DE+XKgigRaNcYpepV/k8AX
+X-Received: by 2002:a05:600c:500e:b0:43d:db5:7af8 with SMTP id
+ 5b1f17b1804b1-4511edd5e6fmr104680015e9.21.1748954073137; 
+ Tue, 03 Jun 2025 05:34:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNzICJ7jiQchXgpE4UAnjqnEPCMfhEnyjWD5vKQwSW5Q7salTQVIyn9d4pVPgR8Xx457uV9A==
+X-Received: by 2002:a05:600c:500e:b0:43d:db5:7af8 with SMTP id
+ 5b1f17b1804b1-4511edd5e6fmr104679755e9.21.1748954072762; 
+ Tue, 03 Jun 2025 05:34:32 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada6ad6ac28sm939262066b.164.2025.06.03.05.31.11
+ 5b1f17b1804b1-450d7fb0654sm160321495e9.21.2025.06.03.05.34.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 05:31:12 -0700 (PDT)
-Date: Tue, 3 Jun 2025 14:31:10 +0200
+ Tue, 03 Jun 2025 05:34:32 -0700 (PDT)
+Date: Tue, 3 Jun 2025 14:34:31 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Annie Li <annie.li@oracle.com>
 Cc: qemu-devel@nongnu.org, dave@treblig.org, mst@redhat.com,
@@ -79,11 +79,11 @@ Cc: qemu-devel@nongnu.org, dave@treblig.org, mst@redhat.com,
  philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
  pbonzini@redhat.com, richard.henderson@linaro.org, slp@redhat.com,
  eblake@redhat.com, armbru@redhat.com, miguel.luis@oracle.com
-Subject: Re: [PATCH 01/13] acpi: Implement control method sleep button
-Message-ID: <20250603143110.2cd22790@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250528163835.2151-1-annie.li@oracle.com>
+Subject: Re: [PATCH 05/13] acpi: Send the GPE event of sleep for x86
+Message-ID: <20250603143431.1ba917df@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250528163953.2183-1-annie.li@oracle.com>
 References: <20250528163545.2143-1-annie.li@oracle.com>
- <20250528163835.2151-1-annie.li@oracle.com>
+ <20250528163953.2183-1-annie.li@oracle.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -113,115 +113,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 May 2025 12:38:34 -0400
+On Wed, 28 May 2025 12:39:52 -0400
 Annie Li <annie.li@oracle.com> wrote:
 
-> The fixed hardware sleep button isn't appropriate for hardware
-> reduced platform. This patch implements the control method sleep
-> button in a separate source file so that the button can be added
-> for various platforms.
+> The GPE event is triggered to notify x86 guest to sleep
+> itself. The function acpi_send_sleep_event will also
+> trigger GED events on HW-reduced systems where ACPI GED
+> sleep event is supported.
 > 
-> Co-developed-by: Miguel Luis <miguel.luis@oracle.com>
 > Signed-off-by: Annie Li <annie.li@oracle.com>
 > ---
->  hw/acpi/control_method_device.c         | 38 +++++++++++++++++++++++++
->  hw/acpi/meson.build                     |  1 +
->  include/hw/acpi/control_method_device.h | 21 ++++++++++++++
->  3 files changed, 60 insertions(+)
+>  hw/acpi/core.c                       | 12 ++++++++++++
+>  include/hw/acpi/acpi.h               |  1 +
+>  include/hw/acpi/acpi_dev_interface.h |  1 +
+>  3 files changed, 14 insertions(+)
 > 
-> diff --git a/hw/acpi/control_method_device.c b/hw/acpi/control_method_device.c
-
-sleep_button would be more to the point
-
-> new file mode 100644
-> index 0000000000..f8d691ee04
-> --- /dev/null
-> +++ b/hw/acpi/control_method_device.c
-> @@ -0,0 +1,38 @@
-> +/*
-> + * Control Method Device
-> + *
-> + * Copyright (c) 2023 Oracle and/or its affiliates.
-> + *
-> + *
-> + * Authors:
-> + *     Annie Li <annie.li@oracle.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "hw/acpi/control_method_device.h"
-> +#include "hw/acpi/aml-build.h"
-> +
-> +/*
-> + * The control method sleep button[ACPI v6.5 Section 4.8.2.2.2.2]
-> + * resides in generic hardware address spaces. The sleep button
-> + * is defined as _HID("PNP0C0E") that associates with device "SLPB".
-> + */
-> +void acpi_dsdt_add_sleep_button(Aml *scope)
+> diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+> index 58f8964e13..dcabe881bf 100644
+> --- a/hw/acpi/core.c
+> +++ b/hw/acpi/core.c
+> @@ -359,6 +359,18 @@ int acpi_get_slic_oem(AcpiSlicOem *oem)
+>      return -1;
+>  }
+>  
+> +void acpi_send_sleep_event(void)
 > +{
-> +    Aml *dev = aml_device(ACPI_SLEEP_BUTTON_DEVICE);
-> +    aml_append(dev, aml_name_decl("_HID", aml_eisaid("PNP0C0E")));
-> +    /*
-> +     * No _PRW, the sleep button device is always tied to GPE L07
-> +     * event handler for x86 platform, or a GED event for other
-> +     * platforms such as virt, ARM, microvm, etc.
-> +     */
-> +    aml_append(dev, aml_operation_region("\\SLP", AML_SYSTEM_IO,
-> +                                         aml_int(0x201), 0x1));
-                                                    ^^^^^^
-                                            where does this come from?
+> +    bool ambiguous;
+> +    Object *obj = object_resolve_path_type("", TYPE_ACPI_DEVICE_IF, &ambiguous);
+> +
+> +    assert(!ambiguous);
+> +    if (obj) {
 
+Can it ever be NULL?
+If not drop condition.
 
-> +    Aml *field = aml_field("\\SLP", AML_BYTE_ACC, AML_NOLOCK,
-> +                           AML_WRITE_AS_ZEROS);
-> +    aml_append(field, aml_named_field("SBP", 1));
-> +    aml_append(dev, field);
-> +    aml_append(scope, dev);
+> +        /* Send sleep event */
+> +        acpi_send_event(DEVICE(obj), ACPI_SLEEP_STATUS);
+> +    }
 > +}
-> diff --git a/hw/acpi/meson.build b/hw/acpi/meson.build
-> index 73f02b9691..a62e625cef 100644
-> --- a/hw/acpi/meson.build
-> +++ b/hw/acpi/meson.build
-> @@ -17,6 +17,7 @@ acpi_ss.add(when: 'CONFIG_ACPI_CXL', if_true: files('cxl.c'), if_false: files('c
->  acpi_ss.add(when: 'CONFIG_ACPI_VMGENID', if_true: files('vmgenid.c'))
->  acpi_ss.add(when: 'CONFIG_ACPI_VMCLOCK', if_true: files('vmclock.c'))
->  acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('generic_event_device.c'))
-> +acpi_ss.add(when: 'CONFIG_ACPI_HW_REDUCED', if_true: files('control_method_device.c'))
-
-that would build only for microvm + arm, and pc/q35 wouldn't get it
-if microvm were disabled. 
-
->  acpi_ss.add(when: 'CONFIG_ACPI_HMAT', if_true: files('hmat.c'))
->  acpi_ss.add(when: 'CONFIG_ACPI_APEI', if_true: files('ghes.c'), if_false: files('ghes-stub.c'))
->  acpi_ss.add(when: 'CONFIG_ACPI_PIIX4', if_true: files('piix4.c'))
-> diff --git a/include/hw/acpi/control_method_device.h b/include/hw/acpi/control_method_device.h
-> new file mode 100644
-> index 0000000000..079f1a74dd
-> --- /dev/null
-> +++ b/include/hw/acpi/control_method_device.h
-> @@ -0,0 +1,21 @@
-> +/*
-> + * Control Method Device
-> + *
-> + * Copyright (c) 2023 Oracle and/or its affiliates.
-> + *
-> + *
-> + * Authors:
-> + *     Annie Li <annie.li@oracle.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
 > +
-> +
-> +#ifndef HW_ACPI_CONTROL_METHOD_DEVICE_H
-> +#define HW_ACPI_CONTROL_NETHOD_DEVICE_H
-> +
-> +#define ACPI_SLEEP_BUTTON_DEVICE "SLPB"
-> +
-> +void acpi_dsdt_add_sleep_button(Aml *scope);
-> +
-> +#endif
+>  static void acpi_notify_wakeup(Notifier *notifier, void *data)
+>  {
+>      ACPIREGS *ar = container_of(notifier, ACPIREGS, wakeup);
+> diff --git a/include/hw/acpi/acpi.h b/include/hw/acpi/acpi.h
+> index d1a4fa2af8..64d3ff78ed 100644
+> --- a/include/hw/acpi/acpi.h
+> +++ b/include/hw/acpi/acpi.h
+> @@ -184,6 +184,7 @@ uint32_t acpi_gpe_ioport_readb(ACPIREGS *ar, uint32_t addr);
+>  
+>  void acpi_send_gpe_event(ACPIREGS *ar, qemu_irq irq,
+>                           AcpiEventStatusBits status);
+> +void acpi_send_sleep_event(void);
+>  
+>  void acpi_update_sci(ACPIREGS *acpi_regs, qemu_irq irq);
+>  
+> diff --git a/include/hw/acpi/acpi_dev_interface.h b/include/hw/acpi/acpi_dev_interface.h
+> index 68d9d15f50..1cb050cd3a 100644
+> --- a/include/hw/acpi/acpi_dev_interface.h
+> +++ b/include/hw/acpi/acpi_dev_interface.h
+> @@ -13,6 +13,7 @@ typedef enum {
+>      ACPI_NVDIMM_HOTPLUG_STATUS = 16,
+>      ACPI_VMGENID_CHANGE_STATUS = 32,
+>      ACPI_POWER_DOWN_STATUS = 64,
+> +    ACPI_SLEEP_STATUS = 128,
+>  } AcpiEventStatusBits;
+>  
+>  #define TYPE_ACPI_DEVICE_IF "acpi-device-interface"
 
 
