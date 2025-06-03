@@ -4,66 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7644CC5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:03:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DD03C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:03:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPPP-00083X-9j; Tue, 03 Jun 2025 07:02:19 -0400
+	id 1uMPPS-00086B-Go; Tue, 03 Jun 2025 07:02:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPG-0007vQ-4Q
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:13 -0400
-Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
+ id 1uMPPL-0007xm-OW
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:15 -0400
+Received: from mail-ej1-x62c.google.com ([2a00:1450:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPE-00029q-7d
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:09 -0400
-Received: by mail-ed1-x52f.google.com with SMTP id
- 4fb4d7f45d1cf-602e203db66so9458115a12.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:07 -0700 (PDT)
+ id 1uMPPH-0002As-Rz
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:15 -0400
+Received: by mail-ej1-x62c.google.com with SMTP id
+ a640c23a62f3a-ad56829fabdso845097566b.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748948526; x=1749553326; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=KSCR9Zn1xzSUAQGDM52JddqlPoeyuF15P7dYaTm1EMQ=;
- b=PvYF7mUX12YtljV6QdnqHwGKiCn1RwtCG5R1e8XzfABcx50cPmk6SqwDpxf2vO0N+p
- lLuOnKJHCQr15kfQAW5+crvJdcoNJ1w76zXupaRqKu6lMBzk5TMqIK0LmemvSA1JbDJw
- fY11wu5sixItpeLlslzXiWfrZGnaWgcxeWqqg4TcwrKJChETTU2Y5WTgoFMMPfdD+/Uw
- +JHw9AyPStICK7kNidj7hy0MDlH4tjYO0oUkayVXFCjWT0MSM24Bh0hbgSY63nF3lTKc
- rEUfEqLIn1T4ba0sw1N6AhPmJKLQZ8nhgCEVDXJHX0uRjkDYq2qKSJ4FHNhe/usMKmZG
- pZoQ==
+ d=linaro.org; s=google; t=1748948530; x=1749553330; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=HSHJXxc1UhfcVCxdzAUK0Y/TOr5iYPq2Hpx36H607ZU=;
+ b=ga7fwdEJnRbs3Lu7Sng99OVV3gxLC3xh88cOr9Rk07Amc2yXS+zB151c1PnQdfAkCU
+ /kjDTB2XTMX5iAYkPRXfv2MHjgsQDtIXRqd3JbTZgELxhZ8zJokzAjZ5Gg5q4rpAGC0A
+ 7eM5GxVz6vDfdCZRHJAQyvfVqHywZpn+lNLO0kRSGXaquLMZ+M49ZdNLqxvWmFD/gsKh
+ HpApt4+rPcDho64P6ALaCVGpZcLzWGqioqiSqIKXP1TJLD3v/WDa8U0lYg0kd9sNA521
+ ExkEgNpHyC3r5qGZmoDTB/iPrenNUTYCB0wivQEN1rN69qenZ2/gMwAd8MzT7IxDMqUo
+ TPOQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748948526; x=1749553326;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=KSCR9Zn1xzSUAQGDM52JddqlPoeyuF15P7dYaTm1EMQ=;
- b=IKBejgHUmUyEQgw2ahwFj0gM8EyEHoMMyl3k9ZCTVrfh3enJBsnrxAWW/VMRsQAb95
- 4EIDNdNv0xKuUxOFFsPKOriyFK7ig6RiS7NqE5iwSBWTFrlCMMSvGpMxBqrbssB2KbzS
- NaUbrDhUp7emhU7JSJN6qTDRw0CT6BXBnDn8kZMEMTnXgZ1oxijcYcJfXa3v2P/yV1EH
- jkCfFo08rN1cKakct9bRP3pA5kc1NfdMHrxTqkkmEgCeEzfUIRccNo/HoBfTCC5TclpC
- NELCP3dCRo4O7suFLDC6xovuvIq3RPPsFpZk/I2Mzor9r2C7GaST3TYmCduT2f5cz2Hu
- ABbA==
-X-Gm-Message-State: AOJu0Yz2NYPOwj7yKfxOqBuPUx4ECe8HDgpagGIK243tU7hkL/KTRUHD
- dFEE7AEGRee1rmYRXJ4UTZ7Emk4v5Cg3RhCGYPsu+gEOIgO6hfCp3JFyrfLJbOK3+Rw=
-X-Gm-Gg: ASbGncs8XegC4uMrUiHOm8Wz1WrD/zepx3OUuklH/pl1sosvlLw0u/wqxtz/qSxDQav
- mz0gZUUW4oCiZ4Q1Q0wf1C0jNHxepBdeP6KL90ImVYJRAhiXkgf9D8C9dV34FnRQU36XoX1aL5p
- Wj5u89ooH11v0EKtOJffH9OETdFPI+LmpKOxIY4Tnbtl+fvpbSbJQEH97m7aJCzTpAzcB/8VMGO
- Df8cMGthXw0C8WO7U/w/ys6iuVlR2R8CaTjF+7WzK2gGrHgNpYWWJWvz2VAqTDP1d0xYC7njwDr
- 93TWmhh6xvM+aItb7wdlV7iX9t3ItOoawBXPVJDME0zqU1kRqSZi
-X-Google-Smtp-Source: AGHT+IFhzREmXPUrTE8Oi69Rskqkh0S+vY2UGZRTGGtRPl8RCBFklZ3LJOtpM7BcA7UowTZi2WiG2g==
-X-Received: by 2002:a05:6402:1941:b0:604:bb1d:938d with SMTP id
- 4fb4d7f45d1cf-605b7b6bf8dmr11023125a12.34.1748948526114; 
- Tue, 03 Jun 2025 04:02:06 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1748948530; x=1749553330;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HSHJXxc1UhfcVCxdzAUK0Y/TOr5iYPq2Hpx36H607ZU=;
+ b=inpTxzKTdOFGirlZKRmxX6aSOZM5NjbAKhmy4kx10nboeA1RYyQ8o1FIRs1hH38TY+
+ iMU2kEm6FdgNKXKGAShAfP4Y2D4lYXKmGSm9Og9uCPLt0AcGBKnlYF/wdZpYrLPD3ZLk
+ lYGqexJ9dsRc5Fi5WrAHlEmggHAYEpnEbtpaxLKCDdljbF9WDTFFkitoY0VDSGpXd+Me
+ ko1WqVYXGBEpRNpo/5ujaiPyGwg3tzsKCn58ilrt8bSfPRs3GXldW6d8mAnrppcfI5aO
+ wuHp0X1UmK/8h5erulFPpKaLMKes/8/VgOvqkgk/sHkoNJR8hw9wRBLLvYezSOuto7pm
+ carw==
+X-Gm-Message-State: AOJu0Yx1FaBfRhZQt5r4bKOQhS3PdrXl+BM2Uygw0MTh6FWnfMkMLzjt
+ cIOGEDIXQxf/ZNfE+DzVlkzeqBYolSoJMXbSLcSaGquQoa9+LgMSakhaLHFLrX453qU=
+X-Gm-Gg: ASbGncsRCwU7A0cQHCqC8RPTd4RdtxTBQpSz4fkWjSH/8kWPRMl0JcXCbzyWVS4GmB7
+ U97hDT1jOgbDB3/el/DcQqOCLuA4u/HO1aeGTy7EpeJj+v7sdOMNyBuiKl6VbZhnBVW4pQtFZhm
+ HY/0yndjvWKeWZPIrXRGBCvvkQ3bSw6qvVtdk4L0BtsREVnXh9NydX9XeQnfRmOUrLd9sDDlEPP
+ OkqT/zIzXohrJldwTScJtuHphk4A9FdeErr4O4R5BOdzWqt83AJhO0spE7Da4ZgJ87FMZerAMbo
+ rcEegVIJ5/UsBsZyQCZBF4B15HOXzYPdFaEfDn+2TqRR+HOvBkz1
+X-Google-Smtp-Source: AGHT+IHHrnww0ujf4PTrrfN/HfEM6b/60/TWB/wH4jdxh2msGxXJH42Ja/KmZ39S2btbHm4kh8mdmw==
+X-Received: by 2002:a17:906:dc8d:b0:ad2:3f1f:7974 with SMTP id
+ a640c23a62f3a-adb493aba1dmr1213434366b.10.1748948530095; 
+ Tue, 03 Jun 2025 04:02:10 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-605671437e0sm7347925a12.52.2025.06.03.04.02.05
+ a640c23a62f3a-ada5d82d95bsm948177666b.57.2025.06.03.04.02.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 04:02:05 -0700 (PDT)
+ Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D5B715F839;
- Tue, 03 Jun 2025 12:02:04 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 720B85F9DA;
+ Tue, 03 Jun 2025 12:02:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
@@ -85,16 +86,18 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 00/17] Maintainer updates for May (testing, plugins,
- virtio-gpu) - pre-PR
-Date: Tue,  3 Jun 2025 12:01:47 +0100
-Message-ID: <20250603110204.838117-1-alex.bennee@linaro.org>
+Subject: [PATCH v4 06/17] contrib/plugins: allow setting of instructions per
+ quantum
+Date: Tue,  3 Jun 2025 12:01:53 +0100
+Message-ID: <20250603110204.838117-7-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250603110204.838117-1-alex.bennee@linaro.org>
+References: <20250603110204.838117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -117,83 +120,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now the tree is open here is the state of my current maintainer
-queues. I've tagged the virtio-gpu changes as Cc: qemu-stable but
-given how close to release we were it didn't seem worth rushing them
-in for 10.0. I've included a MAINTAINERS patch just to make sure I can
-route any more fixes until a more full time maintainer volunteers.
+The default is we update time every 1/10th of a second or so. However
+for some cases we might want to update time more frequently. Allow
+this to be set via the command line through the ipq argument.
 
-As there is still controversy about a theoretical UAF in virtio-gpu
-I've dropped that patch for now. There were a number of other review
-comments addressed so I'm re-sending the pre-PR so I can roll the PR
-later this week.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-For v4
-  - more review comments
-  - made boot.S error handling more robust
-  - dropped virtio-gpu hang fix for TCG
-  - dropped test-plugins fix for Makefile
+---
+v4
+  - simplify error checking, don't bother with errno
+v3
+  - error checking for ipq
+v2
+  - checkpatch fixes.
+---
+ docs/about/emulation.rst |  4 ++++
+ contrib/plugins/ips.c    | 15 ++++++++++++++-
+ 2 files changed, 18 insertions(+), 1 deletion(-)
 
-For v3
-  - addressed review comments
-  - included gdb/next patches
-
-For v2
-  - addressed various comments (see bellow --- in commits)
-  - added Akihiko/Dmitry as virtio-gpu reviewers
-
-The following still need review:
-
-  tests/tcg: make aarch64 boot.S handle different starting modes
-
-Alex.
-
-Alex Bennée (11):
-  tests/docker: expose $HOME/.cache/qemu as docker volume
-  gitlab: disable debug info on CI builds
-  tests/tcg: make aarch64 boot.S handle different starting modes
-  contrib/plugins: add a scaling factor to the ips arg
-  contrib/plugins: allow setting of instructions per quantum
-  MAINTAINERS: add myself to virtio-gpu for Odd Fixes
-  MAINTAINERS: add Akihiko and Dmitry as reviewers
-  hw/display: re-arrange memory region tracking
-  include/exec: fix assert in size_memop
-  include/gdbstub: fix include guard in commands.h
-  gdbstub: assert earlier in handle_read_all_regs
-
-Dominik 'Disconnect3d' Czarnota (1):
-  gdbstub: Implement qGDBServerVersion packet
-
-Dongwon Kim (1):
-  ui/gtk-gl-area: Remove extra draw call in refresh
-
-Manos Pitsidianakis (2):
-  virtio-gpu: refactor async blob unmapping
-  gdbstub: update aarch64-core.xml
-
-Nabih Estefan (1):
-  tests/qtest: Avoid unaligned access in IGB test
-
-Yiwei Zhang (1):
-  virtio-gpu: support context init multiple timeline
-
- MAINTAINERS                               |   5 +-
- docs/about/emulation.rst                  |   4 +
- include/exec/memop.h                      |   4 +-
- include/gdbstub/commands.h                |   2 +-
- include/system/memory.h                   |   1 +
- contrib/plugins/ips.c                     |  49 +++++-
- gdbstub/gdbstub.c                         |  19 ++-
- hw/display/virtio-gpu-virgl.c             | 102 +++++++++----
- tests/qtest/libqos/igb.c                  |   4 +-
- ui/gtk-gl-area.c                          |   1 -
- .gitlab-ci.d/buildtest-template.yml       |   1 +
- gdb-xml/aarch64-core.xml                  |  52 ++++++-
- tests/docker/Makefile.include             |  10 +-
- tests/tcg/aarch64/Makefile.softmmu-target |   3 +-
- tests/tcg/aarch64/system/boot.S           | 172 +++++++++++++++++++++-
- 15 files changed, 382 insertions(+), 47 deletions(-)
-
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index a72591ee4d..456d01d5b0 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -811,6 +811,10 @@ This plugin can limit the number of Instructions Per Second that are executed::
+   * - ips=N
+     - Maximum number of instructions per cpu that can be executed in one second.
+       The plugin will sleep when the given number of instructions is reached.
++  * - ipq=N
++    - Instructions per quantum. How many instructions before we re-calculate time.
++      The lower the number the more accurate time will be, but the less efficient the plugin.
++      Defaults to ips/10
+ 
+ Other emulation features
+ ------------------------
+diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+index eb4418c25b..c9948976f6 100644
+--- a/contrib/plugins/ips.c
++++ b/contrib/plugins/ips.c
+@@ -145,6 +145,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                                            const qemu_info_t *info, int argc,
+                                            char **argv)
+ {
++    bool ipq_set = false;
++
+     for (int i = 0; i < argc; i++) {
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+@@ -175,6 +177,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                     return -1;
+                 }
+             }
++        } else if (g_strcmp0(tokens[0], "ipq") == 0) {
++            max_insn_per_quantum = g_ascii_strtoull(tokens[1], NULL, 10);
++
++            if (!max_insn_per_quantum) {
++                fprintf(stderr, "bad ipq value: %s\n", tokens[0]);
++                return -1;
++            }
++            ipq_set = true;
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", opt);
+             return -1;
+@@ -182,7 +192,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+     }
+ 
+     vcpus = qemu_plugin_scoreboard_new(sizeof(vCPUTime));
+-    max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
++
++    if (!ipq_set) {
++        max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
++    }
+ 
+     if (max_insn_per_quantum == 0) {
+         fprintf(stderr, "minimum of %d instructions per second needed\n",
 -- 
 2.47.2
 
