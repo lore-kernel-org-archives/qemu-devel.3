@@ -4,91 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F56EC5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 07:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E446EC5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 07:42:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMMGR-0001yT-VZ; Tue, 03 Jun 2025 03:40:52 -0400
+	id 1uMMHX-0002LS-1V; Tue, 03 Jun 2025 03:41:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uMMGI-0001xo-Lb
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:40:44 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uMMGF-0001mD-Dc
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:40:42 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-450cfb6a794so31831905e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 00:40:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748936437; x=1749541237; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nI5+iX1Ap1I7p2hPaIWHc8kcqMcI1xAcqyfDcopnGso=;
- b=o5ur8UBbVZh9y1fxMMH/X4YgeVGC84vl5FD9e7tDbGbo2Lu0JHFMwcW8/ElDOm2FuP
- AQvBzTm7vyCGUwEkk/H3ShTwGhVtFSX1uD+E3wQe0D+nZIxy9vJbM4Ezl1cK/GlTtW++
- 43kWtdjADKKxFb5Fu5p1VxcDUnrU42T5DA/E9E+0gBJ/M5GEWhshrcVYNfl521p1eOJV
- RWCwpVfvop2FHFWIRlhQC6J8xrwVppxqxFHdkZ/qvtEGNnjXq725ob7TRO/7rOXSoHgz
- T7Y/rE3SuX53/Zz48bH97s6J1Q1gokevyZLTkU3eHihke5IT3phymcRzV3+Js08m913e
- YtUA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748936437; x=1749541237;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=nI5+iX1Ap1I7p2hPaIWHc8kcqMcI1xAcqyfDcopnGso=;
- b=jCL4SGeUqiHFwUNpmbwxuvEZDuvqF/SqI9DLhkkgKZ3z2i40+i2wjV8laIXImBHXoj
- gOyy9NyWFGIe9jyphZE/P8mToURWwIZeDmCG0WlaF+q8WrjxZTdrj9NpKMqE57YavcrH
- mENGLJP6YU6pb5LX17t/E1tSbw9zQpxAS3fH2yvLfbVXYhV95jvS8CIhIVhdB/EOafEj
- ljZ0GYa6THmuHAzw0xkDoKaJ2qLhWjKAj2whuo+pmJSFAdXtDptdmCAUysBHBfi5mjJz
- 8BAW4EiXkiOtICNFngui9Oohc/dTf/VXD1whaYD7XsevFpixsMsjhM1ixAhGXBcwaeLw
- JL/w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX5j+CKmcBIAgkzbrOyl07b4R9vNh9tufXa1/oxR1yp3i5QhIkcldZiIDMRTSk9MjNWDivCwA9L7cQ0@nongnu.org
-X-Gm-Message-State: AOJu0YxCzsvpbPrGmxhtXTa7qmHG7tEK85fOKld0u5Yv4kUiJk/Knt7g
- lGPPLHdGi4Re6s0wIGShVcaUWqcU0UF37k3F+7wqJ1YxiLmJKjUsDLZDLV5rZTJm/M8=
-X-Gm-Gg: ASbGncvtu+4aqY2kf9z7zX+rIBSnAQTG2MdOBJ8xzE1mexfVl9n2R20NDkyttt5Kaqj
- HNc6UtVhsogKSY5JvjAZxzlPu0j8o+EbuOCN2FLpoIYvg/FL0OVp70jZoTYd8KyL4RMCZmAInmH
- oPFuhCU2EmVJkfV97iBKk7dAIIIGsE3iuP4YSfP+CZgYbgkxPDboklcAmtIktveO3bMy9wmMdQF
- K2dyf2c/pSe3gZBDistFQUiFB/cQxE+uSZ5er3baiDGjbcgsQG73SMek8HxVhFGjdkv0tDGfAXS
- A0hoph8a4pBghVSDxwIkCfigS1+i0R3WCYoCk3gno8F22+F/sQt/SKU5EMMjj3X2AwZLT/TB61X
- IFCrka4qsPW0Q5NPaC5Z0
-X-Google-Smtp-Source: AGHT+IHo3GHoSyul5hAl5f3LuZvOaakwBeA9kb0aillfCmuruGqUChSDyH5YSlsL/H9bcOtFS0SdyQ==
-X-Received: by 2002:a05:600c:8509:b0:442:ffa6:d07e with SMTP id
- 5b1f17b1804b1-450d64c31bemr123049585e9.1.1748936436752; 
- Tue, 03 Jun 2025 00:40:36 -0700 (PDT)
-Received: from [192.168.1.127] (host-80-41-64-133.as13285.net. [80.41.64.133])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-451e505d454sm12109035e9.0.2025.06.03.00.40.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 00:40:36 -0700 (PDT)
-Message-ID: <71feb259-63b6-468e-a013-d48f0c3f434d@linaro.org>
-Date: Tue, 3 Jun 2025 08:40:33 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMMHV-0002LD-1Z
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:41:57 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMMHT-00028Y-00
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:41:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748936515; x=1780472515;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=RdjSYOLIhqYxSDIPjkjRquUPKxKRqn8hTjGyKY7tIjY=;
+ b=T2KdfvHwArfL6q1dKLu18MkoG1XiinA0j8/ErQjMfaOpchBceHAV41tU
+ RkAq7HWASJ6DVHFUzGEGwuvcFPGRC8PA22d3rJD4fCCenXootOALUx34p
+ vgUlEH+Xy8xneuqlYUNGd0ZpMTg664SJerAtmdwtSi3r97V97vQxDgMjK
+ U58fMoSOsL36LF6OJBxmn3HtYsw1Uhq6xX+YuksMjzXEH7uyjaZ6u1RCz
+ 8nFWBLkpV64V+9TrYUYkAXPgjuQdN1r29ar2wbu+qVU5LAV3mJE/4N4/V
+ iXfSaV+LAEF5EKGI/YNQMA4YnVKarHNARuTz3oNFx39noYqXVHCx3bQmT Q==;
+X-CSE-ConnectionGUID: vPE+SV0TQsiuWD6F0jF5vQ==
+X-CSE-MsgGUID: lJexExmGT/aERtrKT1NwCw==
+X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="50828100"
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="50828100"
+Received: from fmviesa001.fm.intel.com ([10.60.135.141])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 00:41:53 -0700
+X-CSE-ConnectionGUID: j+uJMciYSTKKa1y07eGVnA==
+X-CSE-MsgGUID: 9pt0EXLfTPq7FkCCp/byxw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="175634245"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 00:41:50 -0700
+Message-ID: <4a757796-11c2-47f1-ae0d-335626e818fd@intel.com>
+Date: Tue, 3 Jun 2025 15:41:48 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/loongarch: add check for fcond
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
-Cc: maobibo@loongson.cn, philmd@linaro.org, lorenz.hetterich@cispa.de,
- qemu-stable@nongnu.org
-References: <20250603024810.350510-1-gaosong@loongson.cn>
+Subject: Re: [PATCH] i386/kvm: Prefault memory on page state change
+To: Tom Lendacky <thomas.lendacky@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti
+ <mtosatti@redhat.com>, Michael Roth <michael.roth@amd.com>
+References: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250603024810.350510-1-gaosong@loongson.cn>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,18 +87,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/25 03:48, Song Gao wrote:
-> fcond only has 22 types, add a check for fcond.
+On 3/29/2025 4:30 AM, Tom Lendacky wrote:
+> A page state change is typically followed by an access of the page(s) and
+> results in another VMEXIT in order to map the page into the nested page
+> table. Depending on the size of page state change request, this can
+> generate a number of additional VMEXITs. For example, under SNP, when
+> Linux is utilizing lazy memory acceptance, memory is typically accepted in
+> 4M chunks. A page state change request is submitted to mark the pages as
+> private, followed by validation of the memory. Since the guest_memfd
+> currently only supports 4K pages, each page validation will result in
+> VMEXIT to map the page, resulting in 1024 additional exits.
 > 
-> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2972
-> 
-> Signed-off-by: Song Gao<gaosong@loongson.cn>
-> ---
->   .../loongarch/tcg/insn_trans/trans_fcmp.c.inc | 25 +++++++++++++------
->   .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 +++++++++---
->   2 files changed, 30 insertions(+), 11 deletions(-)
+> When performing a page state change, invoke KVM_PRE_FAULT_MEMORY for the
+> size of the page state change in order to pre-map the pages and avoid the
+> additional VMEXITs. This helps speed up boot times.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Unfortunately, it breaks TDX guest.
 
-r~
+   kvm_hc_map_gpa_range gpa 0x80000000 size 0x200000 attributes 0x0 
+flags 0x1
+
+For TDX guest, it uses MAPGPA to maps the range [0x8000 0000, 
++0x0x200000] to shared. The call of KVM_PRE_FAULT_MEMORY on such range 
+leads to the TD being marked as bugged
+
+[353467.266761] WARNING: CPU: 109 PID: 295970 at 
+arch/x86/kvm/mmu/tdp_mmu.c:674 
+tdp_mmu_map_handle_target_level+0x301/0x460 [kvm]
+
+[353472.621399] WARNING: CPU: 109 PID: 295970 at 
+arch/x86/kvm/../../../virt/kvm/kvm_main.c:4281 
+kvm_vcpu_pre_fault_memory+0x167/0x1a0 [kvm]
+
+
+It seems the pre map on the non MR back'ed range has issue. But I'm 
+still debugging it to understand the root cause.
+
 
