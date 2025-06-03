@@ -4,196 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFBDDC5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 03:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61767C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 03:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMHxJ-0002nQ-BN; Mon, 02 Jun 2025 23:04:49 -0400
+	id 1uMHx8-0002m3-DN; Mon, 02 Jun 2025 23:04:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uMHxG-0002nB-U0
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 23:04:46 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMHx5-0002lg-MN
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 23:04:36 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uMHxF-0006tP-4I
- for qemu-devel@nongnu.org; Mon, 02 Jun 2025 23:04:46 -0400
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMHx3-0006t1-7l
+ for qemu-devel@nongnu.org; Mon, 02 Jun 2025 23:04:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748919885; x=1780455885;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=beu3uMSx0cnzQAPnabUyCFXzhh3qnPCzIFKFwa6DayE=;
- b=ZDlJaYSrvI9P5tX+PKFsjib48mmjl8GwtHkG1/J+1TznbBLnY7Z15BtC
- MKhXDlDD1mV5+zfqDMY7Gr4LpiJGYSiRztK+tpQUx9tk4tbeYnfRFRzg2
- wgKlpunR1Hlv+JTaUM/Udnz3G34a5iDYV9VTaseUhGnx2Vhe+R+OLewUE
- ZzESXaY9oB3TCQaDBflR9bi2blZZ5YlisdM13nFTnZlcs/p3kqUCbBIjM
- GytB90wd4wk4KMTGWEhyGe0fvRD6f5v6GK6eHvr0HFRYLksih02pCQmLr
- ktpYaQ/DEz/OhUjAC5YmzVYlBhco1cnpBS5jexsh69SumvunVT22YgyzL Q==;
-X-CSE-ConnectionGUID: sBKeQ2N1T/2yQHtNpuBmOw==
-X-CSE-MsgGUID: o4+Q2+JCSWCLouU0g5tf5w==
-X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="61995800"
-X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="61995800"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jun 2025 20:04:40 -0700
-X-CSE-ConnectionGUID: C0AIGxDATsicqY1WrRyk+w==
-X-CSE-MsgGUID: PoBDgfeURFGCb/lK9QPr/g==
+ t=1748919873; x=1780455873;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=4cg9VXTG81Ls7EZD64z5rtZ8DbhDt/nWF3OZTQJpi2c=;
+ b=ghOF15jJPEvMaJKJ96v1t/WuReYZR6tNz91Aq7R5MfeMtD6Pz4qUU9yj
+ l5ePIbngvK4TSNs2/YB6Wx7H9ut6q3hcrEAau2H8JQ3X0DsmoillQDvt+
+ Y8/MYE0zfG+Sx8RBJ8jtkQ35nWmQ4Rfe9o53NG3SfOmoUTw8RGQ2en7J0
+ o9CxX34itif29igy2GNFrEZ5yldCyZ+i+JTLvobL4NoLuaUSB5ePPeq/V
+ kAJl+jBFiiU3mSKF2FQPg6GTdC81ZTxPi5ehW6O2TpqX7IqiSLIN1vhzN
+ Ts9kfvPYWPvx2kSySgcWCyk7E52P1pemWB9ZZipCPuMEEajU7oWJ+da9j A==;
+X-CSE-ConnectionGUID: qVMHYPU7RWOftJuHwA5fPw==
+X-CSE-MsgGUID: 4bemAgdWQ1CnlyTgtMr+tA==
+X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="50640812"
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="50640812"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2025 20:04:20 -0700
+X-CSE-ConnectionGUID: S616NJWbTnC+900O+ExQfw==
+X-CSE-MsgGUID: 5U0jB3FhScq1q30R6cmfiw==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="144689969"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 02 Jun 2025 20:03:24 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Mon, 2 Jun 2025 20:03:23 -0700
-Received: from orsedg603.ED.cps.intel.com (10.7.248.4) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Mon, 2 Jun 2025 20:03:23 -0700
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (40.107.93.75) by
- edgegateway.intel.com (134.134.137.100) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.55; Mon, 2 Jun 2025 20:03:22 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ua5lUNxQhCi0OCRT9aAfSu3WLddHfXVxVldh1CfZQ75Ddrs0osJEurNjhvPjlfZbGDawsKWSRLvsOk1Yx58+eXvqMUaHavx3kMwH9pEYpXgodAnMOX01usI7X2D18FElr/LCvxdPu+/TEI05JqPaeE4Wl9aI2+VWUz63sAJNKiD3VApKnP7fvUgcHEXrEFliQDxrva0jTVwiyPuE8FKy/bFzLePPipneaGNW6lZATjFQxM2O6B0YI6sZfbh7q2B4FPw4Hl5orw+CnKsgPsWASeoajKKtl+2GiHwL++ukLsbZE2A6Ot4JJ+M5kO2JgxXviFDmZrqlRsGhprgLFPsjLg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qkPY2ZJkTIR5HH07iH9L10BqfnOl4/NuHH7sDaU25Uk=;
- b=VBZEfUkQ0MOpacL79WGphHRtZiiPnKYk0yj7iFyTQyoxGB5Y5xlVPr4HwiUYj6EqI2aCo1L2KkNp5RL/PfUF5tLavXj/YuQYuLmAYmYH09rB1FHxxJ40IowrFo3sHjnDx+teHynjeEw+50uI6CaQfrYDzjMy7fvtwWj/TyM45qDSfAY7A0AP7JxChpWiXi9XpLo+Ujlfza4Xt4ACGKztBSaObH/3cxo6lDrHXeJx/qasdpuMhzU8uVsdA0pmf7GwK9Lm+TI8dQjwojjkJkxKYKHfEAhcGn/8lXIISi/HzN0FayVCmty/ZUxrHrYYnsWv8NfqvVeXkG38mLfDcpd5dw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by SA2PR11MB5194.namprd11.prod.outlook.com (2603:10b6:806:118::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.34; Tue, 3 Jun
- 2025 03:03:02 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8769.037; Tue, 3 Jun 2025
- 03:03:02 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
- <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>
-Subject: RE: [PATCH v2 3/4] vfio/iommufd: Implement [at|de]tach_hwpt handlers
-Thread-Topic: [PATCH v2 3/4] vfio/iommufd: Implement [at|de]tach_hwpt handlers
-Thread-Index: AQHb0Ua6fF6ODe7WSUqxwN69+6rljbProReAgAUhJxA=
-Date: Tue, 3 Jun 2025 03:03:02 +0000
-Message-ID: <IA3PR11MB91360E167F283C667F4A6FEB926DA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250530093512.3959484-1-zhenzhong.duan@intel.com>
- <20250530093512.3959484-4-zhenzhong.duan@intel.com>
- <aDoVoaWGIdnQYenM@Asurada-Nvidia>
-In-Reply-To: <aDoVoaWGIdnQYenM@Asurada-Nvidia>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|SA2PR11MB5194:EE_
-x-ms-office365-filtering-correlation-id: b70362d4-b021-4b47-d649-08dda24b2748
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|38070700018; 
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?sHGqMKcCf6I4jVYm3Uth+Zmhg2Qbup8ZUeBG4aDCKLTBokeT5GExnCWfMJ?=
- =?iso-8859-1?Q?fd2/lO5/Kpo+NsxpR0rAwsjstoYZ0nxWM+nW+J903+UF3nYfWazCo0dksg?=
- =?iso-8859-1?Q?rCaSzm2VO56grP/OmK3GcqcAd4UgNUzHQS3qEKGLmur3FJA5bCg3ev/YIp?=
- =?iso-8859-1?Q?vlG4jt40KaiQNvJAd/pVLsoSwStgi5ICPiAovR6IiiJRiBdUSqBHP/ZUEu?=
- =?iso-8859-1?Q?ua/Ac76enrV/IK1QPZ0YA2vHk5FdU+iJFovPyIxuuWp5Anrskjbk5pHUVP?=
- =?iso-8859-1?Q?KkkVfobTl1ZD1K4rYzM3qtU5W9aFsYppFR9qac9GOhGKTwDOrdkJvpnlpS?=
- =?iso-8859-1?Q?JMQfXNP5Ltinw8HAhZjPme65yW66eQjQ5j0a8jbsUdx4nYQrjWiM1n1++a?=
- =?iso-8859-1?Q?5MU0rIjVEKhNaKansSRicRLEbwOxPYfG3xr1sJ5lsNOIrObZCR9de5r7gZ?=
- =?iso-8859-1?Q?LCReOpWeBQbj2G/hT9Pw2Wi1A6SLICDZD6Sd9KRE3sh5qqC90GhrYWBGFi?=
- =?iso-8859-1?Q?vJpjThKTcnCzkpFlZHxnInCtbrZGU+Xk7KWqsmfugCexxX9ia5LDZxLal6?=
- =?iso-8859-1?Q?A44Cggr9jgOMx3vz3toUj+zvDkjn25bweDL0nFzmjT7ZUWeMI3UzbQK6EI?=
- =?iso-8859-1?Q?StOORRsjejBjEseieXeJxjPGQi9fWwMeCGgPntENc5B7ls2wMtgXDBRs1/?=
- =?iso-8859-1?Q?kosnGeSdb4DtvTnvyKyvD5++QxF4jZJvHNOY9gIQiN4nTnvvQuFN5ji5Wc?=
- =?iso-8859-1?Q?ZZXGu6PP02oIn6K+sOZY6hTirOx+YJSAJHFVKcCIe+KsXfR35HpVlHwMjg?=
- =?iso-8859-1?Q?Hct78n1K1+xc8VFuD0ITdo/t6toR8QBi0GzHbyVhiiPrF1gzbUvOIaMtFn?=
- =?iso-8859-1?Q?6V/7g2najzHByx7aDD29D9gP5BKljHAJzus8s0XnHOD9hSAzcTZkuI9GWy?=
- =?iso-8859-1?Q?UevSC5v9CxGBZ7M8SZoLAEeEsJIrMaXH+JJL+rx9DhWn7oM8d6w3MOpuPy?=
- =?iso-8859-1?Q?uY1hBBdA+qPWOzO+fUZC1b6tIyXDQvYcMvuatZMIVQ0mZQF2W9wLxsiXBR?=
- =?iso-8859-1?Q?tnpnvNmu4Uwj7u1wRuaivMkhVv6lZUzJT6dusOMVUGv8K54ENWH4QAniDp?=
- =?iso-8859-1?Q?VoQqQbc9OcM3DQd5RXjCJ8wZ0006FFhkRkUHPZLgqOiZFN0pLk6VTH1Ve2?=
- =?iso-8859-1?Q?A7LACVDLm1QTZuXO1/cF5iXqteDlvGynJlnS1Sfdj4+PBCq3HdoPo2pSBO?=
- =?iso-8859-1?Q?s3TF9tMhoaiox3hkckEVom7nkhYjkcmfU2bLy8FSRj7F8XeUFWnbyHLclj?=
- =?iso-8859-1?Q?lvgEnBs7tHtJ6HNfT1HtpAfdQitvFhlS8MT85rYCh4KH2oSLZSN3cBzds5?=
- =?iso-8859-1?Q?+L0ONpmVZ830OBzExVn9JF3AL909Elnva/xRKZHZ7QTuHBPDkykvgxC91N?=
- =?iso-8859-1?Q?8YFK0wEOLItXIEAnmNz3o1lUFYyBvQddVigk8N4UBL+TiXAO/BOPndRrXk?=
- =?iso-8859-1?Q?vaV/sDkYAiEEcJ0wId0HdHMx0YxYJt73OOn25AIcBWIg=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?LaA3nsbycyTETfOGSxJ8x1dr3gWVgKCMNrIcXctX8nf/l+83tx6XyItGQr?=
- =?iso-8859-1?Q?Ul4+Nm1pmoSLNZbxMR8zPkixoKS9x0nhsPJo8TzTJl80/UuhDQPAsl1EZB?=
- =?iso-8859-1?Q?DHQOBggjtPDh6XdArA4chN/kM9OYW40hKrOZ6Uw2seuYGMEgfyl5QhfKtS?=
- =?iso-8859-1?Q?nMm7NLYV9BrHB5AyTRdALlsRevUV9zTq6SvhbtMp1M7cPSBIiSgT/aVkp5?=
- =?iso-8859-1?Q?yGGqDeST8SRO8/41Liw9cSzkYeTEF8tSfHAzypHvgDSLLpr8oDtEDWhKrl?=
- =?iso-8859-1?Q?caSlMvt8OOtOGBJ8oAURBPRKvYy+yfGzgr2Byc+4pa2F4FdhLkdl0hQSye?=
- =?iso-8859-1?Q?ZXM6Fye8Q5Ccdj6a/7JL9TSnrzso38QXmpxt0wrbdRnF6ENgkWujGhfmbY?=
- =?iso-8859-1?Q?J6jX0tZLCAgLYYLAeILXur0EtCiJCayfhZsxvE+d5jHOCDzf5kg5JFTyyT?=
- =?iso-8859-1?Q?b6DLEP/NovX3j0jqJ7AQvCyL1fhZNL/bYHanX38arspmRNUq1LrN/oHu/3?=
- =?iso-8859-1?Q?ggLI4/8pvGGRGkd+hWJCIAz4bzXFeu6NvKcltteKp8EkwLcSracrQvyfRl?=
- =?iso-8859-1?Q?TSaj38qc/tIgdbX7yRTLZVUfdTwShCuGdQhGhGRIA+82Z2DyjaD1GcjpMC?=
- =?iso-8859-1?Q?IBa9BAUhPnj1DrzOpxP3id1QgANj75tgJPo1PKsHib4JRomU+1NE10SsJ1?=
- =?iso-8859-1?Q?wcGs1NrLh30xVAz4rpnWb2ILwfHqw1CEsUzfzWKlhHdXYFN/1nx2y5oIIP?=
- =?iso-8859-1?Q?jQkMNVL+KeZvgN6wb9ZvkSQT2qqi6IGaR+enibcIwV+SXCxhh9A0Crz3/7?=
- =?iso-8859-1?Q?nQrddmzzl6YZouKjbTsxNJUAXdEIH1vQd5RpcmbOuI2EVxICsgWg61s/Gy?=
- =?iso-8859-1?Q?PdTM7wVllctJgOSQGELSF+dH5BscIYxL7cLkigIpj3lUym0KZfWHe+FYE7?=
- =?iso-8859-1?Q?lFrSTgrPLgTkhLh8QsstIEOgmMLIuYjwLHOmWYc6JfwSEiWEQHxqlc8y2D?=
- =?iso-8859-1?Q?J+W4NnUdd7vQXJuGkFBIS9ULy5d4UAMH0OKTAejX6eXGRMUo3TZ9upIjWE?=
- =?iso-8859-1?Q?Gm/giIXv6Ek3rAUjvJdD5kOLHPDT6G3Bok7XSHe2gg7IzYPs8vom12Ijo2?=
- =?iso-8859-1?Q?1MdkMZqlZXeIrriuXjFA1cDLiosdLtamQp14Gb450x5PblanxxcTs/vsn9?=
- =?iso-8859-1?Q?hHtDPxY4c0kWJJrPsaJVHHmZ9v0y/VPZYFBKng+2nQwN6EuS0yUvI+hBIy?=
- =?iso-8859-1?Q?/T0dBSJeDcVxbGCt4ySdYoN2J4707apoer0+YRRMW+I8KiaJDQnjxcP4WR?=
- =?iso-8859-1?Q?nSmWW0WVZM47O8qRMoN+490nxqiSLVNUYSQN/YCO6jX+STM3ZzIJFPmUsL?=
- =?iso-8859-1?Q?tdNVLGHd1xuIINYS2WiRPIxQAjHC+LAH6AtuYaRADQaVkbEswz88eZkGI2?=
- =?iso-8859-1?Q?4dBHgmZsGgGmolvue0zKawUky7wyIFLZIuIbz40EsUSSHSPooBDNh2CGT4?=
- =?iso-8859-1?Q?AIWtl0nm8MoT5plvi93IizejZ3r2WftCuMBn9Ivt5o4r00IzyPl83XccTR?=
- =?iso-8859-1?Q?N6J70WQ+BqSydvoXtPhfxlHz7OthgiGm+XwyNPUa0pmLr+liQGawxadLct?=
- =?iso-8859-1?Q?tYcq+PGxeuCmNusxKb8xgEtG3uhCOF98XQ?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="181895439"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2025 20:04:18 -0700
+Message-ID: <b30050b0-68d3-4b42-85f3-9aeca26fb830@intel.com>
+Date: Tue, 3 Jun 2025 11:04:15 +0800
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b70362d4-b021-4b47-d649-08dda24b2748
-X-MS-Exchange-CrossTenant-originalarrivaltime: 03 Jun 2025 03:03:02.1596 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: z0Eq02ioy4HQfuX3xCfPAbFMbq3avFlLPp81mvAle3GxOf9phqt4iI8M1Kd9nygCUz1MQKKIaq0oQjP6Jabeiz2f2gVmhc3UcpYgRSN5wxo=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA2PR11MB5194
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] i386/tdx: Fix build on 32-bit host
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti <mtosatti@redhat.com>
+References: <20250602173101.1052983-1-clg@redhat.com>
+ <20250602173101.1052983-2-clg@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250602173101.1052983-2-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -209,54 +89,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 6/3/2025 1:31 AM, Cédric Le Goater wrote:
+> Use PRI formats where required and fix pointer cast.
 
+Maybe we can make 32-bit build exclusive with CONFIG_TDX? since TDX is 
+not supported on 32-bit host.
 
->-----Original Message-----
->From: Nicolin Chen <nicolinc@nvidia.com>
->Subject: Re: [PATCH v2 3/4] vfio/iommufd: Implement [at|de]tach_hwpt handl=
-ers
->
->On Fri, May 30, 2025 at 05:35:11PM +0800, Zhenzhong Duan wrote:
->> Implement [at|de]tach_hwpt handlers in VFIO subsystem. vIOMMU
->> utilizes them to attach to or detach from hwpt on host side.
->>
->> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
->> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->> Reviewed-by: C=E9dric Le Goater <clg@redhat.com>
->
->Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
->
->> +static bool
->>
->+host_iommu_device_iommufd_vfio_attach_hwpt(HostIOMMUDeviceIOMMUFD
->*idev,
->> +                                           uint32_t hwpt_id, Error **er=
-rp)
->> +{
->> +    VFIODevice *vbasedev =3D HOST_IOMMU_DEVICE(idev)->agent;
->> +
->> +    return !iommufd_cdev_attach_ioas_hwpt(vbasedev, hwpt_id, errp);
->> +}
->> +
->> +static bool
->>
->+host_iommu_device_iommufd_vfio_detach_hwpt(HostIOMMUDeviceIOMMUF
->D *idev,
->> +                                           Error **errp)
->> +{
->> +    VFIODevice *vbasedev =3D HOST_IOMMU_DEVICE(idev)->agent;
->> +
->> +    return iommufd_cdev_detach_ioas_hwpt(vbasedev, errp);
->> +}
->
->Could be a separate patch though:
->
->So, we have the attach API returning "int" while the detach API
->returning "bool". Is errno returned back to the attach caller(s)
->so the attach API can be a "bool" type too?
+> Cc: Xiaoyao Li <xiaoyao.li@intel.com>
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   target/i386/kvm/tdx.c | 26 +++++++++++++-------------
+>   1 file changed, 13 insertions(+), 13 deletions(-)
+> 
+> diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+> index 0a21ae555c5c..820ca3614e27 100644
+> --- a/target/i386/kvm/tdx.c
+> +++ b/target/i386/kvm/tdx.c
+> @@ -284,7 +284,7 @@ static void tdx_post_init_vcpus(void)
+>   
+>       hob = tdx_get_hob_entry(tdx_guest);
+>       CPU_FOREACH(cpu) {
+> -        tdx_vcpu_ioctl(cpu, KVM_TDX_INIT_VCPU, 0, (void *)hob->address,
+> +        tdx_vcpu_ioctl(cpu, KVM_TDX_INIT_VCPU, 0, (void *)(uintptr_t)hob->address,
+>                          &error_fatal);
+>       }
+>   }
+> @@ -339,7 +339,7 @@ static void tdx_finalize_vm(Notifier *notifier, void *unused)
+>           uint32_t flags;
+>   
+>           region = (struct kvm_tdx_init_mem_region) {
+> -            .source_addr = (uint64_t)entry->mem_ptr,
+> +            .source_addr = (uintptr_t)entry->mem_ptr,
+>               .gpa = entry->address,
+>               .nr_pages = entry->size >> 12,
+>           };
+> @@ -893,16 +893,16 @@ static int tdx_check_features(X86ConfidentialGuest *cg, CPUState *cs)
+>   static int tdx_validate_attributes(TdxGuest *tdx, Error **errp)
+>   {
+>       if ((tdx->attributes & ~tdx_caps->supported_attrs)) {
+> -        error_setg(errp, "Invalid attributes 0x%lx for TDX VM "
+> -                   "(KVM supported: 0x%llx)", tdx->attributes,
+> -                   tdx_caps->supported_attrs);
+> +        error_setg(errp, "Invalid attributes 0x%"PRIx64" for TDX VM "
+> +                   "(KVM supported: 0x%"PRIx64")", tdx->attributes,
+> +                   (uint64_t)tdx_caps->supported_attrs);
+>           return -1;
+>       }
+>   
+>       if (tdx->attributes & ~TDX_SUPPORTED_TD_ATTRS) {
+>           error_setg(errp, "Some QEMU unsupported TD attribute bits being "
+> -                    "requested: 0x%lx (QEMU supported: 0x%llx)",
+> -                    tdx->attributes, TDX_SUPPORTED_TD_ATTRS);
+> +                    "requested: 0x%"PRIx64" (QEMU supported: 0x%"PRIx64")",
+> +                    tdx->attributes, (uint64_t)TDX_SUPPORTED_TD_ATTRS);
+>           return -1;
+>       }
+>   
+> @@ -931,8 +931,8 @@ static int setup_td_xfam(X86CPU *x86cpu, Error **errp)
+>              env->features[FEAT_XSAVE_XSS_HI];
+>   
+>       if (xfam & ~tdx_caps->supported_xfam) {
+> -        error_setg(errp, "Invalid XFAM 0x%lx for TDX VM (supported: 0x%llx))",
+> -                   xfam, tdx_caps->supported_xfam);
+> +        error_setg(errp, "Invalid XFAM 0x%"PRIx64" for TDX VM (supported: 0x%"PRIx64"))",
+> +                   xfam, (uint64_t)tdx_caps->supported_xfam);
+>           return -1;
+>       }
+>   
+> @@ -999,14 +999,14 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>   
+>       if (env->tsc_khz && (env->tsc_khz < TDX_MIN_TSC_FREQUENCY_KHZ ||
+>                            env->tsc_khz > TDX_MAX_TSC_FREQUENCY_KHZ)) {
+> -        error_setg(errp, "Invalid TSC %ld KHz, must specify cpu_frequency "
+> +        error_setg(errp, "Invalid TSC %"PRId64" KHz, must specify cpu_frequency "
+>                            "between [%d, %d] kHz", env->tsc_khz,
+>                            TDX_MIN_TSC_FREQUENCY_KHZ, TDX_MAX_TSC_FREQUENCY_KHZ);
+>          return -EINVAL;
+>       }
+>   
+>       if (env->tsc_khz % (25 * 1000)) {
+> -        error_setg(errp, "Invalid TSC %ld KHz, it must be multiple of 25MHz",
+> +        error_setg(errp, "Invalid TSC %"PRId64" KHz, it must be multiple of 25MHz",
+>                      env->tsc_khz);
+>           return -EINVAL;
+>       }
+> @@ -1014,7 +1014,7 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+>       /* it's safe even env->tsc_khz is 0. KVM uses host's tsc_khz in this case */
+>       r = kvm_vm_ioctl(kvm_state, KVM_SET_TSC_KHZ, env->tsc_khz);
+>       if (r < 0) {
+> -        error_setg_errno(errp, -r, "Unable to set TSC frequency to %ld kHz",
+> +        error_setg_errno(errp, -r, "Unable to set TSC frequency to %"PRId64" kHz",
+>                            env->tsc_khz);
+>           return r;
+>       }
+> @@ -1139,7 +1139,7 @@ int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
+>       uint64_t gpa = -1ull;
+>   
+>       if (error_code & 0xffff) {
+> -        error_report("TDX: REPORT_FATAL_ERROR: invalid error code: 0x%lx",
+> +        error_report("TDX: REPORT_FATAL_ERROR: invalid error code: 0x%"PRIx64,
+>                        error_code);
+>           return -1;
+>       }
 
-Errno is returned through errp. We didn't check errno here,
-just treat all errors as incompatible.
-
-Zhenzhong
 
