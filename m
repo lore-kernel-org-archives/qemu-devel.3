@@ -4,104 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8263C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 15:29:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFACCC5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 15:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMTZ6-0001Nc-JW; Tue, 03 Jun 2025 11:28:36 -0400
+	id 1uMTcZ-00038P-Aj; Tue, 03 Jun 2025 11:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMTZ0-0001HU-6x
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:28:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMTcU-000386-Bj
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:32:07 -0400
+Received: from mgamail.intel.com ([192.198.163.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMTYw-00087i-5i
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:28:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748964500;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AE+1gvPEAmBWuwxAr+LLK+pYLokZawpsPaPYYiN5Ho4=;
- b=Iu6fIH/Jh2TlHS2ySg5GKqiahdykoNQiFYXdnIMptXMvqZErJj2WxtO7bO5/N9WyfyIxJw
- mCX/20ZnM0946uQO4fZsT6krW9g3ZS7tue5cp68fJh9QPA9iEDjkzkjf6yspXzmGy0cXGl
- Fsfoj9U1REO6hWPFE4DicILTs9kHqYQ=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-622-lgKBLG6pPnCzjDVq-Q7HFA-1; Tue, 03 Jun 2025 11:28:17 -0400
-X-MC-Unique: lgKBLG6pPnCzjDVq-Q7HFA-1
-X-Mimecast-MFC-AGG-ID: lgKBLG6pPnCzjDVq-Q7HFA_1748964496
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-441c122fa56so29987445e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 08:28:16 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748964496; x=1749569296;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=AE+1gvPEAmBWuwxAr+LLK+pYLokZawpsPaPYYiN5Ho4=;
- b=citVIaSXBdyze4vp9Bx4ryybIBavfqYUjYN+AyromlIsdgRMkRux9R8Bdd+OcUil8j
- +9g9DD3OEls5typf3fHAo1SzRupvBNWn0Ilyb6XcpuHH+vJAWLXyKGfspPzwrLYNe3gB
- FYuw7GCjutmwD7IezT9SGxZyL/3AafO+QUziuw6EUn1rBwHvp/8BRQEhbnzMRvzFMHC5
- Ohd+pWAIfnNl6TThcSH9775XE35qsPNDVSrethkBItpLEmlAxtJ1Bx/L7kQ40EnNP0an
- H1d2uyjXTWTph5OYIbRrGTBbxs4iPITIOar5C6m39NEitqohlydkXcB+FDA7IKdKQWJd
- RLGQ==
-X-Gm-Message-State: AOJu0YzboRtZy8joBntZvCoewzTP28wUfOcuwQ9y21h1ZbnKRicGC9JV
- ONjr4GsvqPppr85Jat5wsR0cXuKoQt9pD97XeSFP1No2aETKdI8bBGVmiCHFeC78vL90N+Onet5
- bR52TAqD8V3Vwev+wPPYRYh5xWGXN7vEuQxcR1hMDTnfEf16cEPgdHQmI
-X-Gm-Gg: ASbGncsEwEKdcg7WKV2P5I0Kpb42b/Hw/JtNKB2qPnj/zrM4Rr9toaBEk+wwRv3Z1hX
- +af/DrjCGHoA8i2tmsHd1irGYZWmBuu9WYmhJ2RywljITkz051G8S53RCPBXySqkVqDzB00qH6U
- xjWGrYOBCMb9Le6CzzoPtwMQ+XpjEa/+MZ0ZXrxTw0G2NcMJwpcXVq2U2gAT4oQj7Fqn7Kpjdo0
- A5Pj1NQLQAQlpqS6uJ9kCFR6YVTqr05sQfiDBGxvR82y/jZ+G7uZ8bnKUPs5CpUyWcOm5/uYEFj
- hpt3HgZS9zQffqQGMZns7OIhVMAwMYtyyKpvsymMaMY=
-X-Received: by 2002:a05:600c:a4d:b0:442:f482:c421 with SMTP id
- 5b1f17b1804b1-450d654ff26mr126829335e9.22.1748964495650; 
- Tue, 03 Jun 2025 08:28:15 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQEUoazvRNc19Qs72cc7tuAGEEmvz0Y0yvIvJG1tutfXXXDLhRR3Rhhd/98DNTS3Px1O1V0g==
-X-Received: by 2002:a05:600c:a4d:b0:442:f482:c421 with SMTP id
- 5b1f17b1804b1-450d654ff26mr126829105e9.22.1748964495273; 
- Tue, 03 Jun 2025 08:28:15 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fa21e4sm171130225e9.11.2025.06.03.08.28.14
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 08:28:14 -0700 (PDT)
-Date: Tue, 3 Jun 2025 17:28:13 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif
- <clement.mathieu--drif@eviden.com>, Zhao Liu <zhao1.liu@intel.com>, Hanna
- Reitz <hreitz@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-block@nongnu.org, Jason Wang <jasowang@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Ani
- Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Thomas
- Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf
- <kwolf@redhat.com>, Yi Liu <yi.l.liu@intel.com>
-Subject: Re: [PATCH 05/18] hw/core/machine: Remove hw_compat_2_8[] array
-Message-ID: <20250603172813.63bd1f55@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250501210456.89071-6-philmd@linaro.org>
-References: <20250501210456.89071-1-philmd@linaro.org>
- <20250501210456.89071-6-philmd@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMTcQ-0000O1-Tk
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 11:32:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748964723; x=1780500723;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=FaKpJR92FYKwrFzDdNvsIRCSUqaTqILalsYWRqoVEog=;
+ b=LrTiO3irV9XzXbu50f7FcI1ILjkR1l/fmfdi4JxXlrLOp0XvN3Yw/Taz
+ yqITGEbmi5IVRcIvdbcFzpEZt1BDS06bNFRielJMQGJVRpja2Qv4sBj6B
+ 7Y8Y7ddV5ImPRhvWXeZxS4355F32e3YB5jX/vPES0GvymvO5b2M7pRcki
+ 41FETeD3t/GZKRgm6Ou8hXUqHHx5QJ8Hpuesu2bROMjQxRwXWRTItlpSo
+ fYxM+Bfnm2elK59xnewOBUFx2v0riBAHE69Wrv25rFT30CMfH9daHRQbN
+ D8KsmgZhGVxUTQPrcyiXw+4CshpT0OM/qFjaKekqgp5gziRCbzD0B1zZc Q==;
+X-CSE-ConnectionGUID: lRnXTSVCRfWAtLMsMvG+lA==
+X-CSE-MsgGUID: C/+yOaA3Sq+juNnrkkNrDg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11453"; a="61632046"
+X-IronPort-AV: E=Sophos;i="6.16,206,1744095600"; d="scan'208";a="61632046"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 08:31:57 -0700
+X-CSE-ConnectionGUID: kAyvpBaKQbOil1kptopFJA==
+X-CSE-MsgGUID: 0LPSJby8Tfau3DHAS0PZqQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,206,1744095600"; d="scan'208";a="149669955"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by ORVIESA003-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 08:31:55 -0700
+Message-ID: <9962b691-056e-4ee0-8345-5b5657c5376b@intel.com>
+Date: Tue, 3 Jun 2025 23:31:52 +0800
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/kvm: Prefault memory on page state change
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, Michael Roth <michael.roth@amd.com>
+References: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
+ <4a757796-11c2-47f1-ae0d-335626e818fd@intel.com>
+ <cc2dc418-8e33-4c01-9b8a-beca0a376400@intel.com>
+ <d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.11; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,57 +91,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  1 May 2025 23:04:43 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+On 6/3/2025 11:00 PM, Paolo Bonzini wrote:
+> On 6/3/25 13:47, Xiaoyao Li wrote:
+>> On 6/3/2025 3:41 PM, Xiaoyao Li wrote:
+>>> On 3/29/2025 4:30 AM, Tom Lendacky wrote:
+>>>> A page state change is typically followed by an access of the 
+>>>> page(s) and
+>>>> results in another VMEXIT in order to map the page into the nested page
+>>>> table. Depending on the size of page state change request, this can
+>>>> generate a number of additional VMEXITs. For example, under SNP, when
+>>>> Linux is utilizing lazy memory acceptance, memory is typically 
+>>>> accepted in
+>>>> 4M chunks. A page state change request is submitted to mark the 
+>>>> pages as
+>>>> private, followed by validation of the memory. Since the guest_memfd
+>>>> currently only supports 4K pages, each page validation will result in
+>>>> VMEXIT to map the page, resulting in 1024 additional exits.
+>>>>
+>>>> When performing a page state change, invoke KVM_PRE_FAULT_MEMORY for 
+>>>> the
+>>>> size of the page state change in order to pre-map the pages and 
+>>>> avoid the
+>>>> additional VMEXITs. This helps speed up boot times.
+>>>
+>>> Unfortunately, it breaks TDX guest.
+>>>
+>>>    kvm_hc_map_gpa_range gpa 0x80000000 size 0x200000 attributes 0x0 
+>>> flags 0x1
+>>>
+>>> For TDX guest, it uses MAPGPA to maps the range [0x8000 0000, 
+>>> +0x0x200000] to shared. The call of KVM_PRE_FAULT_MEMORY on such 
+>>> range leads to the TD being marked as bugged
+>>>
+>>> [353467.266761] WARNING: CPU: 109 PID: 295970 at arch/x86/kvm/mmu/ 
+>>> tdp_mmu.c:674 tdp_mmu_map_handle_target_level+0x301/0x460 [kvm]
+>>
+>> It turns out to be a KVM bug.
+>>
+>> The gpa passed in in KVM_PRE_FAULT_MEMORY, i.e., range->gpa has no 
+>> indication for share vs. private. KVM directly passes range->gpa to 
+>> kvm_tdp_map_page() in kvm_arch_vcpu_pre_fault_memory(), which is then 
+>> assigned to fault.addr
+>>
+>> However, fault.addr is supposed to be a gpa of real access in TDX 
+>> guest, which means it needs to have shared bit set if the map is for 
+>> shared access, for TDX case. tdp_mmu_get_root_for_fault() will use it 
+>> to determine which root to be used.
+>>
+>> For this case, the pre fault is on the shared memory, while the 
+>> fault.addr leads to mirror_root which is for private memory. Thus it 
+>> triggers KVM_BUG_ON().
+> So this would fix it?
+> 
+> diff --git a/arch/x86/kvm/mmu/mmu.c b/arch/x86/kvm/mmu/mmu.c
+> index 7b3f1783ab3c..66f96476fade 100644
+> --- a/arch/x86/kvm/mmu/mmu.c
+> +++ b/arch/x86/kvm/mmu/mmu.c
+> @@ -4895,6 +4895,7 @@ long kvm_arch_vcpu_pre_fault_memory(struct 
+> kvm_vcpu *vcpu,
+>   {
+>       u64 error_code = PFERR_GUEST_FINAL_MASK;
+>       u8 level = PG_LEVEL_4K;
+> +    u64 direct_bits;
+>       u64 end;
+>       int r;
+> 
+> @@ -4909,15 +4910,18 @@ long kvm_arch_vcpu_pre_fault_memory(struct 
+> kvm_vcpu *vcpu,
+>       if (r)
+>           return r;
+> 
+> +    direct_bits = 0;
+>       if (kvm_arch_has_private_mem(vcpu->kvm) &&
+>           kvm_mem_is_private(vcpu->kvm, gpa_to_gfn(range->gpa)))
+>           error_code |= PFERR_PRIVATE_ACCESS;
+> +    else
+> +        direct_bits = kvm_gfn_direct_bits(vcpu->kvm);
 
-> The hw_compat_2_8[] array was only used by the pc-q35-2.8 and
-> pc-i440fx-2.8 machines, which got removed. Remove it.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+should be
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+	direct_bits = gfn_to_gpa(kvm_gfn_direct_bits(vcpu->kvm));
 
-> ---
->  include/hw/boards.h |  3 ---
->  hw/core/machine.c   | 14 --------------
->  2 files changed, 17 deletions(-)
->=20
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 77707c4376a..84bd3735c42 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -835,7 +835,4 @@ extern const size_t hw_compat_2_10_len;
->  extern GlobalProperty hw_compat_2_9[];
->  extern const size_t hw_compat_2_9_len;
-> =20
-> -extern GlobalProperty hw_compat_2_8[];
-> -extern const size_t hw_compat_2_8_len;
-> -
->  #endif
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index bde19a2ff67..bc0606cf740 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -252,20 +252,6 @@ GlobalProperty hw_compat_2_9[] =3D {
->  };
->  const size_t hw_compat_2_9_len =3D G_N_ELEMENTS(hw_compat_2_9);
-> =20
-> -GlobalProperty hw_compat_2_8[] =3D {
-> -    { "fw_cfg_mem", "x-file-slots", "0x10" },
-> -    { "fw_cfg_io", "x-file-slots", "0x10" },
-> -    { "pflash_cfi01", "old-multiple-chip-handling", "on" },
-> -    { "pci-bridge", "shpc", "on" },
-> -    { TYPE_PCI_DEVICE, "x-pcie-extcap-init", "off" },
-> -    { "virtio-pci", "x-pcie-deverr-init", "off" },
-> -    { "virtio-pci", "x-pcie-lnkctl-init", "off" },
-> -    { "virtio-pci", "x-pcie-pm-init", "off" },
-> -    { "cirrus-vga", "vgamem_mb", "8" },
-> -    { "isa-cirrus-vga", "vgamem_mb", "8" },
-> -};
-> -const size_t hw_compat_2_8_len =3D G_N_ELEMENTS(hw_compat_2_8);
-> -
->  MachineState *current_machine;
-> =20
->  static char *machine_get_kernel(Object *obj, Error **errp)
+> 
+>       /*
+>        * Shadow paging uses GVA for kvm page fault, so restrict to
+>        * two-dimensional paging.
+>        */
+> -    r = kvm_tdp_map_page(vcpu, range->gpa, error_code, &level);
+> +    r = kvm_tdp_map_page(vcpu, range->gpa | direct_bits, error_code, 
+> &level);
+>       if (r < 0)
+>           return r;
+> 
+> 
+> 
+> I'm applying Tom's patch to get it out of his queue, but will delay sending
+> a pull request until the Linux-side fix is accepted.
+
+With above mentioned change, it can fix the issue.
+
+Me synced with Yan offline, and our fix is:
+
+diff --git a/arch/x86/kvm/mmu/tdp_mmu.h b/arch/x86/kvm/mmu/tdp_mmu.h
+index 52acf99d40a0..209103bf0f30 100644
+--- a/arch/x86/kvm/mmu/tdp_mmu.h
++++ b/arch/x86/kvm/mmu/tdp_mmu.h
+@@ -48,7 +48,7 @@ static inline enum kvm_tdp_mmu_root_types 
+kvm_gfn_range_filter_to_root_types(str
+  static inline struct kvm_mmu_page *tdp_mmu_get_root_for_fault(struct 
+kvm_vcpu *vcpu,
+                                                               struct 
+kvm_page_fault *fault)
+  {
+-       if (unlikely(!kvm_is_addr_direct(vcpu->kvm, fault->addr)))
++       if (unlikely(fault->is_private))
+                 return root_to_sp(vcpu->arch.mmu->mirror_root_hpa);
+
+         return root_to_sp(vcpu->arch.mmu->root.hpa);
+
+> Paolo
+> 
+> 
 
 
