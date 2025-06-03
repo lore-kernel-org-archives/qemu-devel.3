@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3E83C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 09:02:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99243C5B559
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 09:04:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMNWc-0002hO-0L; Tue, 03 Jun 2025 05:01:38 -0400
+	id 1uMNYg-0003Tj-HH; Tue, 03 Jun 2025 05:03:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMNWZ-0002gv-HL
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:01:36 -0400
+ id 1uMNYe-0003Ot-LK
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:03:44 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMNWX-00042s-EG
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:01:35 -0400
+ id 1uMNYc-0004Cr-PV
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748941290;
+ s=mimecast20190719; t=1748941421;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=nkvR2KXc4ovSdfv3vkWSvkxzjtwwjEsmgLiEp3byPyo=;
- b=QdStx9ReyzbTkb4P6my3wDeSI0j2V+mLRig1BL0Lo7vRP2HxcwybtG+zAqO+xcP7o7E5YT
- wNJY2j+UpT8EozLptbKPMqIe5n1/m25LtmEZ1fbmCWFdiB8SVKiiEZiG3yHYCMdezlxAsK
- zdoeTL4LmSmVeDj+C6hwKlOEC3h28c8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=ZjQBWa+JXY6WnSRLURraMFujxRJfUYnJBEfRnuogP9g=;
+ b=RZaiQ3P+fiOq//1KXYmAZsPZPmClyVK/N50X3mA55L53Y+A+FRaH8mgz3Ugpe6DtjCOjXR
+ xN6vPn1MKOTj17yQxXeoJjqlzOgschaRc7u1k91ZnKGXpoJcuRPikArWHLWxbr4VBnNZc/
+ xpvFyghhrkN1Zeb9Q8zDwVsBSCVVmfM=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-od90qrU_OFmc-snYJy-MJA-1; Tue,
- 03 Jun 2025 05:01:29 -0400
-X-MC-Unique: od90qrU_OFmc-snYJy-MJA-1
-X-Mimecast-MFC-AGG-ID: od90qrU_OFmc-snYJy-MJA_1748941288
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-328-pXB-OH26MWKwsHmGombl6Q-1; Tue,
+ 03 Jun 2025 05:03:39 -0400
+X-MC-Unique: pXB-OH26MWKwsHmGombl6Q-1
+X-Mimecast-MFC-AGG-ID: pXB-OH26MWKwsHmGombl6Q_1748941418
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5744C18001E0; Tue,  3 Jun 2025 09:01:28 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E530C195608F; Tue,  3 Jun 2025 09:03:37 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.28])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B3D8A19560AB; Tue,  3 Jun 2025 09:01:25 +0000 (UTC)
-Date: Tue, 3 Jun 2025 10:01:22 +0100
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D915019560A3; Tue,  3 Jun 2025 09:03:35 +0000 (UTC)
+Date: Tue, 3 Jun 2025 10:03:32 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Fabiano Rosas <farosas@suse.de>
 Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>,
  Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 16/21] qapi/migration: Mark that
- query/set-migrate-parameters support capabilities
-Message-ID: <aD654nsXOrCg9umj@redhat.com>
+Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
+ migration config
+Message-ID: <aD66ZLwkKDGAVleC@redhat.com>
 References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-17-farosas@suse.de>
+ <20250603013810.4772-20-farosas@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20250603013810.4772-17-farosas@suse.de>
+In-Reply-To: <20250603013810.4772-20-farosas@suse.de>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -88,73 +88,106 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 02, 2025 at 10:38:05PM -0300, Fabiano Rosas wrote:
-> Add a QAPI command feature "capabilities" that can be queried by the
-> client to check that the parameters commands now also support
-> capabilities.
+On Mon, Jun 02, 2025 at 10:38:08PM -0300, Fabiano Rosas wrote:
+> Allow the migrate and migrate_incoming commands to pass the migration
+> configuration options all at once, dispensing the use of
+> migrate-set-parameters and migrate-set-capabilities.
+> 
+> The motivation of this is to simplify the interface with the
+> management layer and avoid the usage of several command invocations to
+> configure a migration. It also avoids stale parameters from a previous
+> migration to influence the current migration.
+> 
+> The options that are changed during the migration can still be set
+> with the existing commands.
+> 
+> The order of precedence is:
+> 
+> 'config' argument > -global cmdline > defaults (migration_properties)
+> 
+> I.e. the config takes precedence over all, values not present in the
+> config assume the default values. The (debug) -global command line
+> option allows the defaults to be overridden.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->  qapi/migration.json | 20 ++++++++++++++++++--
->  1 file changed, 18 insertions(+), 2 deletions(-)
-> 
+>  migration/migration-hmp-cmds.c |  5 +++--
+>  migration/migration.c          | 29 ++++++++++++++++++++++++++---
+>  migration/migration.h          |  1 +
+>  migration/options.c            | 30 ++++++++++++++++++++++++++++++
+>  migration/options.h            |  3 +++
+>  qapi/migration.json            | 25 +++++++++++++++++++++++--
+>  system/vl.c                    |  3 ++-
+>  7 files changed, 88 insertions(+), 8 deletions(-)
+
 > diff --git a/qapi/migration.json b/qapi/migration.json
-> index 5942622ba7..557a9c523e 100644
+> index 7282e4b9eb..64a92d8d28 100644
 > --- a/qapi/migration.json
 > +++ b/qapi/migration.json
-> @@ -776,6 +776,13 @@
+> @@ -1474,9 +1474,16 @@
 >  #
->  # Set various migration parameters.
+>  # @resume: resume one paused migration, default "off".  (since 3.0)
 >  #
-> +# Features:
+> +# @config: migration configuration options, previously set via
+> +#     @migrate-set-parameters and @migrate-set-capabilities.  (since
+> +#     10.1)
 > +#
-> +# @capabilities: Indicates this command supports setting the set of
-> +# parameters previously known as capabilities.  This means this
-> +# command can (and should) be used instead of the depreacated
-> +# @migrate-set-capabilities.
-> +#
->  # Since: 2.4
+>  # Features:
 >  #
->  # .. qmp-example::
-> @@ -785,7 +792,8 @@
->  #     <- { "return": {} }
->  ##
->  { 'command': 'migrate-set-parameters', 'boxed': true,
-> -  'data': 'MigrationParameters' }
-> +  'data': 'MigrationParameters',
-> +  'features': [ 'capabilities' ] }
+>  # @deprecated: Argument @detach is deprecated.
+> +# @config: Indicates this command can receive the entire migration
+> +# configuration via the @config field, dispensing the use of
+> +# @migrate-set-parameters.
+
+There is no need to add this feature - mgmt apps can identify
+this simply by the fact that the 'config' parameter now exists
+in the QAPI schema.
+
+>  #
+>  # Since: 0.14
+>  #
+> @@ -1538,7 +1545,9 @@
+>    'data': {'*uri': 'str',
+>             '*channels': [ 'MigrationChannel' ],
+>             '*detach': { 'type': 'bool', 'features': [ 'deprecated' ] },
+> -           '*resume': 'bool' } }
+> +           '*config': 'MigrationParameters',
+> +           '*resume': 'bool' },
+> +  'features': [ 'config' ] }
 >  
 >  ##
->  # @MigrationParameters:
-> @@ -1110,6 +1118,13 @@
+>  # @migrate-incoming:
+> @@ -1557,6 +1566,16 @@
+>  #     error details could be retrieved with query-migrate.
+>  #     (since 9.1)
 >  #
->  # Returns: @MigrationParameters
->  #
+> +# @config: migration configuration options, previously set via
+> +#     @migrate-set-parameters and @migrate-set-capabilities.  (since
+> +#     10.1)
+> +#
 > +# Features:
 > +#
-> +# @capabilities: Indicates this command supports setting the set of
-> +# parameters previously known as capabilities.  This means this
-> +# command can (and should) be used instead of the depreacated
-> +# @migrate-set-capabilities.
+> +# @config: Indicates this command can receive the entire migration
+> +# configuration via the @config field, dispensing the use of
+> +# @migrate-set-parameters.
+
+Likewise redundant.
+
 > +#
->  # Since: 2.4
+>  # Since: 2.3
 >  #
->  # .. qmp-example::
-> @@ -1125,7 +1140,8 @@
->  #        }
+>  # .. admonition:: Notes
+> @@ -1610,7 +1629,9 @@
+>  { 'command': 'migrate-incoming',
+>               'data': {'*uri': 'str',
+>                        '*channels': [ 'MigrationChannel' ],
+> -                      '*exit-on-error': 'bool' } }
+> +                      '*config': 'MigrationParameters',
+> +                      '*exit-on-error': 'bool' },
+> +             'features': [ 'config' ] }
+>  
 >  ##
->  { 'command': 'query-migrate-parameters',
-> -  'returns': 'MigrationParameters' }
-> +  'returns': 'MigrationParameters',
-> +  'features': [ 'capabilities' ] }
->
-
-Adding QAPI "features" is only needed if there is no other viable
-way to detect existence of the feature. In this case, apps can
-trivially detect the feature by querying the QAPI schema and
-identifying that the MigrationParameters struct has gained a
-load of new fields. So IMHO this patch can be dropped.
-
+>  # @xen-save-devices-state:
 
 With regards,
 Daniel
