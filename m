@@ -4,77 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250F7C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 16:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E301C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 16:21:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMUFe-0000vi-Cx; Tue, 03 Jun 2025 12:12:34 -0400
+	id 1uMUNe-0002qi-Dj; Tue, 03 Jun 2025 12:20:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uMUFb-0000ut-D6
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:12:31 -0400
-Received: from mgamail.intel.com ([192.198.163.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uMUFW-0004hI-Oc
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:12:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748967146; x=1780503146;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=WOKLrG800JsNYDuenjSSGG1iYsq0yhwwkhv7Zpy4AB0=;
- b=BsUrqJauYAZzOULur67nSHDm1ICa4m1vLgd3V7SQ3IrW9nhYBBuq2H3Q
- BkBqLiTwfExgPUrC841CcJ1BpkBYyrhnOgs6eBNNyfFRkQ9Gdskh0C/QA
- Cuo5O1/coZqQt1W8cWjCYaCuFAKslAiZLu1jGilJae5Ym2rneAIkMHdVV
- YVsvYllCz01+e/b/+FvgGET0BvPFfT2h4Pm3mwMH55uF/EHyNzOlwFHY9
- d6237qll5ity2Ju4UA+v8G5K/lTKeKspwdDx2H6bCf35KUnYRcYux/X4C
- 2U+fOvoSBOhSIpAHCi/BZJRrEImSNlDayaqRi2fs+InDhwJn/aAH1gyc0 w==;
-X-CSE-ConnectionGUID: F39jUqFoSlO56Z3IlLvd5g==
-X-CSE-MsgGUID: qTVj8UvCT+eIkAqLjH5g8A==
-X-IronPort-AV: E=McAfee;i="6700,10204,11453"; a="61677740"
-X-IronPort-AV: E=Sophos;i="6.16,206,1744095600"; d="scan'208";a="61677740"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jun 2025 09:12:22 -0700
-X-CSE-ConnectionGUID: 3jX03g1PRp2jMHqq3bZA9w==
-X-CSE-MsgGUID: qrbiEWqZQAmxVHi+a8m/5Q==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,206,1744095600"; d="scan'208";a="150191559"
-Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
- ([10.124.247.1])
- by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jun 2025 09:12:20 -0700
-Message-ID: <e8a4148d-9e3e-4884-8b3c-e49bb7a4cdf5@intel.com>
-Date: Wed, 4 Jun 2025 00:12:17 +0800
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uMUNc-0002qQ-7L
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:20:48 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uMUNU-00060J-2r
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:20:47 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 78B6D2117F;
+ Tue,  3 Jun 2025 16:20:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748967634; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UAqtII0EQ7Ib922L5s/fz64H9IdXpen9avBK7MxID9s=;
+ b=OcA7SiGbgAoC4tZPW8PcmUL1kucdZz/UREgah3RtIve1HQU+gN2PXnPwc+iNJ/B8IXgv6z
+ xH4Zy5tRY5YTV67J7r/o8XGtx6JTtIEY4gVxKDpZTtefPe/2IzDihm1pqjTg5LecI7QmX+
+ /UfA5ulTP9wlQasL+HRpF6RMW1l5Cjw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748967634;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UAqtII0EQ7Ib922L5s/fz64H9IdXpen9avBK7MxID9s=;
+ b=1sXXQ2A8K0/P/gUmOuJslixukR8KNk3gRpwr4bv02t2Kums1F4w4lHihK3iOMni0dFFOt2
+ cKUPyVAYp7giMyAA==
+Authentication-Results: smtp-out1.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=OcA7SiGb;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=1sXXQ2A8
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1748967634; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UAqtII0EQ7Ib922L5s/fz64H9IdXpen9avBK7MxID9s=;
+ b=OcA7SiGbgAoC4tZPW8PcmUL1kucdZz/UREgah3RtIve1HQU+gN2PXnPwc+iNJ/B8IXgv6z
+ xH4Zy5tRY5YTV67J7r/o8XGtx6JTtIEY4gVxKDpZTtefPe/2IzDihm1pqjTg5LecI7QmX+
+ /UfA5ulTP9wlQasL+HRpF6RMW1l5Cjw=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1748967634;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=UAqtII0EQ7Ib922L5s/fz64H9IdXpen9avBK7MxID9s=;
+ b=1sXXQ2A8K0/P/gUmOuJslixukR8KNk3gRpwr4bv02t2Kums1F4w4lHihK3iOMni0dFFOt2
+ cKUPyVAYp7giMyAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ED30B13A92;
+ Tue,  3 Jun 2025 16:20:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id +BbxKtEgP2j0RwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 03 Jun 2025 16:20:33 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
+Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Alexey
+ Perevalov <a.perevalov@samsung.com>, Juraj Marcin <jmarcin@redhat.com>
+Subject: Re: [PATCH 10/13] migration/postcopy: Cache the tid->vcpu mapping
+ for blocktime
+In-Reply-To: <20250527231248.1279174-11-peterx@redhat.com>
+References: <20250527231248.1279174-1-peterx@redhat.com>
+ <20250527231248.1279174-11-peterx@redhat.com>
+Date: Tue, 03 Jun 2025 13:20:31 -0300
+Message-ID: <87zfeo3igg.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] i386/kvm: Prefault memory on page state change
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>, qemu-devel@nongnu.org,
- kvm@vger.kernel.org
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, Michael Roth <michael.roth@amd.com>
-References: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
- <4a757796-11c2-47f1-ae0d-335626e818fd@intel.com>
- <cc2dc418-8e33-4c01-9b8a-beca0a376400@intel.com>
- <d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@redhat.com>
-Content-Language: en-US
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-In-Reply-To: <d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 78B6D2117F
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ RCPT_COUNT_FIVE(0.00)[6]; MID_RHS_MATCH_FROM(0.00)[];
+ MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ DKIM_TRACE(0.00)[suse.de:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:rdns,
+ imap1.dmz-prg2.suse.org:helo, suse.de:mid, suse.de:dkim, suse.de:email]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,12 +127,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/2025 11:00 PM, Paolo Bonzini wrote:
-> I'm applying Tom's patch to get it out of his queue, but will delay sending
-> a pull request until the Linux-side fix is accepted.
+Peter Xu <peterx@redhat.com> writes:
 
-BTW, for the patch itself.
+> Looking up the vCPU index for each fault can be expensive when there're
+> hundreds of vCPUs.  Provide a cache for tid->vcpu instead with a hash
+> table, then lookup from there.
+>
+> When at it, add another counter to record how many non-vCPU faults it gets.
+> For example, the main thread can also access a guest page that was missing.
+> These kind of faults are not accounted by blocktime so far.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
-Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
 
