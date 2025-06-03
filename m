@@ -4,91 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8F28C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 12:19:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39E69C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 12:22:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMQbi-0000o5-2T; Tue, 03 Jun 2025 08:19:06 -0400
+	id 1uMQdt-0001z7-PK; Tue, 03 Jun 2025 08:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMQbg-0000nd-AI
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:19:04 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uMQdq-0001yW-6W
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:21:19 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uMQbd-0003n4-GB
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:19:03 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uMQdk-0004Sf-T1
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:21:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748953137;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1748953270;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5eb0iVseY34ZQu1KucxpS4ti1Op2BFBWowNjVgENOwk=;
- b=LNHZ1S2WtDkDWFJ9j69rtmUvlwzMy3iWUEnakfRE53OQ5B9cjv42YadW0fNSKNO7+NM18m
- yihpLQRXQU1+oj/fZAFkEffexUG9F6IuAdDVs2SyAPvF1hFbmbdRtzl3EJ2mSgPL1OQLGs
- 7G863y+cQcWaMh8ielShp0mbIxVvIwg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=scPlUq9Lfm1c8uQjYpq3LAcBd6vSM6N5SAWEMqEsnPI=;
+ b=bnm/szxOMqhRGnDH9aAvzyxNv5ZfWbNsfgIHTh//v00vNs1Rqthpz1rMapltrEGk6g4ako
+ xaghKe7keCsZtQIC/uZjmwuVQylamQaBjKwjOGvfByZ26W/Ii2xzSaMaZCG+V6BFNXfQGt
+ 7VPtvFOftApHJkgsugUU6CHiwCn8P1g=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-408-op-LOp4wPUq8SWzH7m7MeA-1; Tue, 03 Jun 2025 08:18:54 -0400
-X-MC-Unique: op-LOp4wPUq8SWzH7m7MeA-1
-X-Mimecast-MFC-AGG-ID: op-LOp4wPUq8SWzH7m7MeA_1748953133
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-440667e7f92so38476065e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 05:18:53 -0700 (PDT)
+ us-mta-612-7ceHD4v0NkCW10XpagOUjA-1; Tue, 03 Jun 2025 08:21:09 -0400
+X-MC-Unique: 7ceHD4v0NkCW10XpagOUjA-1
+X-Mimecast-MFC-AGG-ID: 7ceHD4v0NkCW10XpagOUjA_1748953268
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4eee2398bso2144569f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 05:21:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748953133; x=1749557933;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=5eb0iVseY34ZQu1KucxpS4ti1Op2BFBWowNjVgENOwk=;
- b=ER22xqvWwN8LKkJuC2q0/KUJdy18WCZBzoUcsLE89NDN2vRxKyiN4PaG1x14qdZqRD
- hA3M/yVyQnASUJAKWynhmNkdMa4pTBKCTNYjPJCsHWhdNwzJFjdfU/6LQnefVm4BnCP+
- C68n9W1LUPwsKnP0MLDDcG7bzk1z1/4MigsaVGO8YHxjtZ7hOdeTZ0gSbrNujvTsvJe0
- z9SOCsNXqihgzVC031dwNMJ8KHijTJzxuA2ytd8XwosHSOxNRvFEXWxH/yeUrenysvCd
- hIZKLzKxMx2fL3K9sDUFPxpKwl98nvpb9zNJQFucQUgyF1Yx6etdiWxDGcewMpHPrLoN
- ViaQ==
-X-Gm-Message-State: AOJu0Yxr0ljp08p7FsmdhmSXKEn7LYGTXYqcV6lGv3+g0dJNSh8Y7JSQ
- E5c88NqrMvekdzzWF1AtocYXg7zYw95hHKtvlPsyOBW39e3mNyDedIhgJ1fOzbYLtFRpZyP+scK
- g6qRNWrb0yEm667Y+iHb/ZBylDL96DZx2Vp4JxDS6VCZ3l1uJcMDvPTZl
-X-Gm-Gg: ASbGncvEm3FMxn34dZ1+dNi3KWtX7UafDwm//Tv0PZ7R3EpMIJya/cICG2MBCSuIA32
- Ef8yD/GCV0gwLjw+PIDmeSz3LCSpXdKJMcHGk7Yn6GmuXCJvPxLbs0qVZ4iEoN9I+FTQbo9xJsf
- hnx4HhxSAkvhXpDw5aWl+Dd7SPYOaL5u3ozV5GlvHXcV//yXr1yguSYkFiC+6eSp+z1WKeJv/is
- ICL9tx6VpEIYIX7ypnk7TZU0w3JIn02RFR80g8HvFIipE/ixltrCEd7+2YMO98x4D42Y3QcymyZ
- zgIoGUVc20uxApGKWfF3p1Mbp7/4RaM6
-X-Received: by 2002:a05:600c:548c:b0:43c:fe5e:f03b with SMTP id
- 5b1f17b1804b1-45126572d16mr126938095e9.30.1748953132491; 
- Tue, 03 Jun 2025 05:18:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjntnnbE+lGxhKk091dsgk8E7AwEHY5e9DHXtpHv84aiOzgKPEmJUOtAvboZLN0aPxAA8bGQ==
-X-Received: by 2002:a05:600c:548c:b0:43c:fe5e:f03b with SMTP id
- 5b1f17b1804b1-45126572d16mr126937795e9.30.1748953132073; 
- Tue, 03 Jun 2025 05:18:52 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ d=1e100.net; s=20230601; t=1748953268; x=1749558068;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=scPlUq9Lfm1c8uQjYpq3LAcBd6vSM6N5SAWEMqEsnPI=;
+ b=ipdPjPufudHaJRzbbVoDD8UKKRY/bykv91U0l61iyK8XG5+mMHMw0S2vkArk/jOD1I
+ x00opfxbvEx70rMV4bm0FdTrUbnRpoArNPnFC9vWfjwY1FUqBInGYC246DpmIUJHreHu
+ bMYmhPDnsCuFGM3vug03CIgp43a2NTqbn3bzCb03PUusozInGS1Ej9Nnhy0QDWF4BXAC
+ oSLfBPLTeKvGy3lxz/v5Fot2bmRxlTrEa7i0dJgNrrQPcCamiB4/jduaoyYvB233C33z
+ mxlVf2KkKwMiCXllGp2iVwAeJ0YrIUpMZRVtNaW7kl5zx9Bim8YmzUtTWvdrlBr6vRay
+ QvKA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWgCQPZv5LcQY3GhygeSRAuC8KpqB5XRd33rPOjZVRN0Tta/xniRNxJkMGNkeDhiQWqdhUkbQ5lLSBN@nongnu.org
+X-Gm-Message-State: AOJu0Yy1jRKyrVKZSHkg28h+taU7c13YVz5YUeGbvKy5nVOTL3TEFnV5
+ u9DSEwWfGj5u8wd07bZfjmYNd1ijLR/hmMzqBC4hqcDBYQeKQonCSrcFCRfWw1PYbQWQ23qkVKL
+ qafK8ULLo3R1ZnmCEsO7ui28sfZzT2Ug2yqh15WNrgYthBdlkbZAUxUXe
+X-Gm-Gg: ASbGnctsM5d7vvToZHAu0jDp2PGz5SMZaRWe69XSTpcMoJonFne+dBbnzUVqVO+UcTx
+ XVyI1ZH4dfEZNG52bXQldH/kLkgNuNPTfibYqAWZBjHsNM7j5TBktjXNLMS5pTHzGGqIMh8nSf7
+ nkqE2/JXmeSPw8PxM26j6rhLg/TNqoJkVGemB0kFB8VbQyBZx7RmawvU7xOUyHK5i+5oMFE4jGf
+ B0mdJLSSaQwSRhZlAnQ/xC9l8rkSB6vJD7fY6S8v9dHXn74nu2l1a9B/s6KfucjWlqdZTjhqfZ9
+ 0peQlD16aJYcAEoKEncvy0JekE3mO8b2TcAU7tUX06rpedYRWeWw+0Hlxt8=
+X-Received: by 2002:a05:6000:4205:b0:3a1:fcd9:f2ff with SMTP id
+ ffacd0b85a97d-3a4f7a0255amr12140585f8f.12.1748953267971; 
+ Tue, 03 Jun 2025 05:21:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESVfFunVkDXOlYWj/1WM5Fox07UWaQrPZc2kVKQLFM5rSOcNBDqEPKs1aV3PTxEpW9R+LK2g==
+X-Received: by 2002:a05:6000:4205:b0:3a1:fcd9:f2ff with SMTP id
+ ffacd0b85a97d-3a4f7a0255amr12140536f8f.12.1748953267488; 
+ Tue, 03 Jun 2025 05:21:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f00a1678sm18214147f8f.99.2025.06.03.05.18.51
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 05:18:51 -0700 (PDT)
-Date: Tue, 3 Jun 2025 14:18:50 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Annie Li <annie.li@oracle.com>
-Cc: qemu-devel@nongnu.org, dave@treblig.org, mst@redhat.com,
- anisinha@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
- pbonzini@redhat.com, richard.henderson@linaro.org, slp@redhat.com,
- eblake@redhat.com, armbru@redhat.com, miguel.luis@oracle.com
-Subject: Re: [PATCH 00/13] Support ACPI Control Method Sleep button
-Message-ID: <20250603141850.27d2daf0@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250528163545.2143-1-annie.li@oracle.com>
-References: <20250528163545.2143-1-annie.li@oracle.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ ffacd0b85a97d-3a4efe5b8b3sm18052148f8f.20.2025.06.03.05.21.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Jun 2025 05:21:06 -0700 (PDT)
+Message-ID: <bcec7aeb-47c2-4edf-87f4-d09362e59715@redhat.com>
+Date: Tue, 3 Jun 2025 14:21:03 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] backends/iommufd: Add a helper to invalidate
+ user-managed HWPT
+Content-Language: en-US
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20250530093512.3959484-1-zhenzhong.duan@intel.com>
+ <20250530093512.3959484-2-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250530093512.3959484-2-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -109,146 +117,101 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 May 2025 12:35:45 -0400
-Annie Li <annie.li@oracle.com> wrote:
+Hi Zhenzhong,
 
-> The ACPI sleep button can be implemented as a fixed hardware button
-> or Control Method Sleep button.
-> 
-> The patch of implementing a fixed hardware sleep button was posted
-> here 1). More discussions can be found here 2). Essentially, the
-> discussion mainly focuses on whether the sleep button is implemented
-> as a fixed hardware button or Control Method Sleep button. The latter
-> benefits various architectures since the code can be shared among
-> them.
-> 
-> This patch set implements Control Method Sleep button for both x86
-> and microvm. The RFC V1 patch set was posted previously here 3). We
-> rebase all the patches on QEMU9.1.0 and re-post RFC V2 here 4). The
-> RFC V3 patch is based on QEMU 10.0.0-rc3 at 5). This patch set here
-> is rebased on QEMU 10.0.1. The sleep button support for microvm is
-> added, however, its support for ARM platform in V2 is removed due to
-> lower interests of it and more efforts in the firmware.
+On 5/30/25 11:35 AM, Zhenzhong Duan wrote:
+> This helper passes cache invalidation request from guest to invalidate
+> stage-1 page table cache in host hardware.
+>
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  include/system/iommufd.h |  4 ++++
+>  backends/iommufd.c       | 36 ++++++++++++++++++++++++++++++++++++
+>  backends/trace-events    |  1 +
+>  3 files changed, 41 insertions(+)
+>
+> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+> index cbab75bfbf..83ab8e1e4c 100644
+> --- a/include/system/iommufd.h
+> +++ b/include/system/iommufd.h
+> @@ -61,6 +61,10 @@ bool iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>                                        uint64_t iova, ram_addr_t size,
+>                                        uint64_t page_size, uint64_t *data,
+>                                        Error **errp);
+> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+> +                                      uint32_t data_type, uint32_t entry_len,
+> +                                      uint32_t *entry_num, void *data,
+> +                                      Error **errp);
+>  
+>  #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+>  #endif
+> diff --git a/backends/iommufd.c b/backends/iommufd.c
+> index b73f75cd0b..8bcdb60fe7 100644
+> --- a/backends/iommufd.c
+> +++ b/backends/iommufd.c
+> @@ -311,6 +311,42 @@ bool iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>      return true;
+>  }
+>  
+> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+> +                                      uint32_t data_type, uint32_t entry_len,
+> +                                      uint32_t *entry_num, void *data,
+> +                                      Error **errp)
+> +{
+> +    int ret, fd = be->fd;
+> +    uint32_t total_entries = *entry_num;
+> +    struct iommu_hwpt_invalidate cache = {
+> +        .size = sizeof(cache),
+> +        .hwpt_id = id,
+> +        .data_type = data_type,
+> +        .entry_len = entry_len,
+> +        .entry_num = total_entries,
+> +        .data_uptr = (uintptr_t)data,
+> +    };
+> +
+> +    ret = ioctl(fd, IOMMU_HWPT_INVALIDATE, &cache);
+> +    trace_iommufd_backend_invalidate_cache(fd, id, data_type, entry_len,
+> +                                           total_entries, cache.entry_num,
+> +                                           (uintptr_t)data, ret ? errno : 0);
+> +    *entry_num = cache.entry_num;
+> +
+> +    if (ret) {
+> +        error_setg_errno(errp, errno, "IOMMU_HWPT_INVALIDATE failed:"
+> +                         " total %d entries, processed %d entries",
+> +                         total_entries, cache.entry_num);
+> +    } else if (total_entries != cache.entry_num) {
+> +        error_setg(errp, "IOMMU_HWPT_INVALIDATE succeed but with unprocessed"
+> +                         " entries: total %d entries, processed %d entries."
+> +                         " Kernel BUG?!", total_entries, cache.entry_num);
+Can this happen? Isn't it a failure case?
 
-here we probably need a pointer to these efforts, or some kind of description
-about what's wrong with ARM/firmare
-
-> 
-> For x86, a sleep button GPE event handler is implemented, so a GPE
-> event is triggered to indicate the OSPM the sleep button is pressed.
-> Tests have been done for Linux guest, and Windows Server guest,
-> this sleep button works as expected.
-> 
-> For microvm, a GED event is triggered to notify the OSPM. This GED
-> event is also applicable for ARM platform, as mentioned earlier, the
-> implementation for ARM platform has been removed since RFC V3 patch
-> set. Tests have been run for Linux microvm guests.
+Besides
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
 
-> System_wakeup doesn't work for microvm for now due to the missing
-> support of it. This patch set only covers system_sleep, not the
-> wakeup part.
-
-ditto (aka what's wrong with wakeup)
-
-> 
-> 1) https://lists.gnu.org/archive/html/qemu-devel/2017-07/msg06478.html
-> 2) https://lore.kernel.org/all/20210920095316.2dd133be@redhat.com/T/#mfe24f89778020deeacfe45083f3eea3cf9f55961
-> 3) https://lore.kernel.org/all/20231205002143.562-1-annie.li@oracle.com/T/
-> 4) https://patchwork.kernel.org/project/qemu-devel/cover/20240927183906.1248-1-annie.li@oracle.com/
-> 5) https://lore.kernel.org/all/20250411201912.2872-1-annie.li@oracle.com/
-> 
-> ----Changes from RFC V3----
-> Improve source code and comment based on comments on RFC V3
-> ---------------------------
-> 
-> Annie Li (12):
->   acpi: Implement control method sleep button
->   test/acpi: allow DSDT table changes for x86 platform
->   acpi: Support Control Method sleep button for x86
->   tests/qtest/bios-table-tests: Update ACPI table binaries for x86
->   acpi: Send the GPE event of sleep for x86
->   test/acpi: allow DSDT table changes for microvm
->   microvm: Add ACPI Control Method Sleep Button
->   microvm: enable sleep GED event
->   tests/qtest/bios-table-tests: Update ACPI table binaries for microvm
->   microvm: suspend the system as requested
->   microvm: enable suspend
->   acpi: hmp/qmp: Add hmp/qmp support for system_sleep
-> 
-> Miguel Luis (1):
->   hw/acpi: Add ACPI GED support for the sleep event
-> 
->  hmp-commands.hx                               |  14 +++++++
->  hw/acpi/control_method_device.c               |  38 ++++++++++++++++++
->  hw/acpi/core.c                                |  12 ++++++
->  hw/acpi/generic_event_device.c                |  12 ++++++
->  hw/acpi/meson.build                           |   1 +
->  hw/core/machine-hmp-cmds.c                    |   5 +++
->  hw/core/machine-qmp-cmds.c                    |  11 +++++
->  hw/i386/acpi-build.c                          |  24 ++++++++++-
->  hw/i386/acpi-microvm.c                        |  13 +++++-
->  hw/i386/microvm.c                             |   4 +-
->  include/hw/acpi/acpi.h                        |   1 +
->  include/hw/acpi/acpi_dev_interface.h          |   1 +
->  include/hw/acpi/control_method_device.h       |  21 ++++++++++
->  include/hw/acpi/generic_event_device.h        |   2 +
->  include/monitor/hmp.h                         |   1 +
->  qapi/machine.json                             |  20 +++++++++
->  qapi/pragma.json                              |   1 +
->  tests/data/acpi/x86/microvm/DSDT              | Bin 365 -> 442 bytes
->  tests/data/acpi/x86/microvm/DSDT.ioapic2      | Bin 365 -> 442 bytes
->  tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 3023 -> 3100 bytes
->  tests/data/acpi/x86/microvm/DSDT.rtc          | Bin 404 -> 481 bytes
->  tests/data/acpi/x86/microvm/DSDT.usb          | Bin 414 -> 491 bytes
->  tests/data/acpi/x86/pc/DSDT                   | Bin 8611 -> 8721 bytes
->  tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8522 -> 8632 bytes
->  tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9936 -> 10046 bytes
->  tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15482 -> 15592 bytes
->  tests/data/acpi/x86/pc/DSDT.cphp              | Bin 9075 -> 9185 bytes
->  tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10265 -> 10375 bytes
->  tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8562 -> 8672 bytes
->  tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5100 -> 5210 bytes
->  tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8683 -> 8793 bytes
->  tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9970 -> 10080 bytes
->  tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8469 -> 8579 bytes
->  tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8617 -> 8727 bytes
->  tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12404 -> 12514 bytes
->  tests/data/acpi/x86/q35/DSDT                  | Bin 8440 -> 8550 bytes
->  tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8457 -> 8567 bytes
->  tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9765 -> 9875 bytes
->  .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 12650 -> 12760 bytes
->  .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8719 -> 8829 bytes
->  tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8486 -> 8596 bytes
->  tests/data/acpi/x86/q35/DSDT.bridge           | Bin 12053 -> 12163 bytes
->  tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12998 -> 13108 bytes
->  tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33855 -> 33965 bytes
->  tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8904 -> 9014 bytes
->  tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13231 -> 13341 bytes
->  tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10094 -> 10204 bytes
->  tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8515 -> 8625 bytes
->  tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8528 -> 8638 bytes
->  tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8457 -> 8567 bytes
->  tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9799 -> 9909 bytes
->  tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9570 -> 9680 bytes
->  tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13293 -> 13403 bytes
->  tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8302 -> 8412 bytes
->  tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8298 -> 8408 bytes
->  tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8446 -> 8556 bytes
->  tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8541 -> 8651 bytes
->  tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12998 -> 13108 bytes
->  tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33855 -> 33965 bytes
->  tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 9046 -> 9156 bytes
->  tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 9072 -> 9182 bytes
->  tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18674 -> 18784 bytes
->  tests/data/acpi/x86/q35/DSDT.viot             | Bin 14697 -> 14807 bytes
->  tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35803 -> 35913 bytes
->  64 files changed, 178 insertions(+), 3 deletions(-)
->  create mode 100644 hw/acpi/control_method_device.c
->  create mode 100644 include/hw/acpi/control_method_device.h
-> 
+Eric
+> +        return false;
+> +    }
+> +
+> +    return !ret;
+> +}
+> +
+>  static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error **errp)
+>  {
+>      HostIOMMUDeviceCaps *caps = &hiod->caps;
+> diff --git a/backends/trace-events b/backends/trace-events
+> index 40811a3162..7278214ea5 100644
+> --- a/backends/trace-events
+> +++ b/backends/trace-events
+> @@ -18,3 +18,4 @@ iommufd_backend_alloc_hwpt(int iommufd, uint32_t dev_id, uint32_t pt_id, uint32_
+>  iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d id=%d (%d)"
+>  iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret) " iommufd=%d hwpt=%u enable=%d (%d)"
+>  iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+> +iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
 
 
