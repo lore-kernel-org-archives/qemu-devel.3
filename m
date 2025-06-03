@@ -4,91 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C0DC5B555
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 13:21:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0F40C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 13:26:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMRYW-0006a3-Q2; Tue, 03 Jun 2025 09:19:53 -0400
+	id 1uMRdn-0001Dn-5u; Tue, 03 Jun 2025 09:25:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMRYP-0006Yl-6A
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 09:19:47 -0400
+ (Exim 4.90_1) (envelope-from <1844144@gmail.com>) id 1uMRAa-0007cG-J5
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:55:08 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMRYK-0007jK-SQ
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 09:19:44 -0400
+ (Exim 4.90_1) (envelope-from <1844144@gmail.com>) id 1uMRAY-00033K-DT
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:55:08 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-451d41e1ad1so22748785e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 06:19:39 -0700 (PDT)
+ 5b1f17b1804b1-442f9043f56so33860775e9.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 05:55:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748956777; x=1749561577; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=pT2eBUGhOkjoueuI1Sf97uLzV4Sk7Vq1sawGHZtgE+c=;
- b=GMAhF1Jsg1MuKq8CtHUYY3iRazrAm4zWyV7iaEmR3gRdNrP101K76KUlsGCWWcqbuJ
- YK0CCVedr0SNXxQdxR3oUj7BAe8EVEyC0+qjdjR8ASS7D+gAEnH/nqEFFFInRINom5Hc
- KAyjEbKL2FJuccYVo0fMMhPgha2WDa7RLsyrQ/qlc04P7gFWp9aZw02ZZxCZbJgDq8bp
- wE0CXGzhikP/pO1mbMB0Y1u/EyMHlGfrB/BPXl3obpzz+qJ5cgv79c5neWftmbPyjryr
- 2bKFVTrABeCFBz3boQlMDua/FyFg6vMEd+XGJZwDSRTFbu70+OMuB8tPw/1jEj4CowHf
- puGw==
+ d=gmail.com; s=20230601; t=1748955301; x=1749560101; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=mfUayeFNj169BN3f1yPfvwWtEStFaen7smBmqFXWwJw=;
+ b=Bv8apTwhQpv+oHu0J5TKk7Up8VIyHIycklVNewsIx+9qLwJWE7ZP+ELNnE3HEknuDk
+ jTAHWKrSWaMG5WXn/m1TwpSt7WA1NB4aazVFPnGS8w0KicAUdLrcKzLchGkLKLF9qNU/
+ Yh5MrV9sLvP8ULhsmie6r2srrN5WH4Yk4OP4KseC/hnIipelPXUSHCxO8mrAeVxR7xwA
+ E6DNbXy1Q6wiyCxs4UFNbQ++oUIxoWPljsi5ztp5hN7AZIlkz4Jozz58plekYoW0E6EP
+ ZabzlmuFOufmTZBcWq1scCKM3qHx2xDBp9zphmv2flaD4l70BV/3nS1Ngl7T7UrHi7rF
+ M6Dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748956777; x=1749561577;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pT2eBUGhOkjoueuI1Sf97uLzV4Sk7Vq1sawGHZtgE+c=;
- b=XtVxaV13Cn8r3lq6s6QQ944tg0JnHC5tKpB1wH+K5WS3h33aZWBziedQo7A6Xuwn7R
- SJXMSX+IcnfZGTWn/lIh1/tlKrPuHNaGuLyYh+/fMO3kuh+z7/ovHeyhqBCaAf2Q6E0w
- OIB1CdX2WXoTuc8D8BdOrMGwpxj68FQ66D0gYWQEzGCZCyzr8TwKyKSPVFWoOdfKkbdb
- sdJjdBIdF72Uh5bp8wyCBDMk6L/WCgL0S+DEfqY+gILBoZFOgbKNNi1Ep7uPtz0c3jLR
- IMaO7QxKPnIWVOJZkawn5BOoPmZqORKP+HouFIO6dawC6X7Er7MutYCNPv9aV+c4xaxu
- 95Zw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcMHgyVvBYm+VHDDcRZTtR+3zd0MYMHo009JvIL0NbsvzpcghrIO25jz4E2+waZQdCiukGWnKy0bw5@nongnu.org
-X-Gm-Message-State: AOJu0YxBoDXMfVgfz+x9abPWE5eidB5Wrn+48rjCNxYIxwGuMnMsw0GP
- jWVw/nNDmg4f18HZIJnSrBteuLBpXj0ojfaVZCeNtXdydXCUPCodEjMM5knXlUMYBq9Hkyx3dOw
- 3ugUtOZ0=
-X-Gm-Gg: ASbGncs+dK/euQmA0SXMtbBdycOEbIr2azC8UtPiDIo4boqYLEu5Z29bbaOolFzzUxi
- 7wMrcIB4XkomoptiLgAH8QYKDd26vXHCvHHrNnXu9QOMMg51VEeEeZGUjaITgi0EXdeNe70AjrF
- 6PsBEGeyVRkOiz2bnh8hAPsxY2gnKYiknNouCUw5OBy3djhpI3MXPgyaLM48w4tr2Q+GVJxQQZm
- c53PSbZTLErsaEBknC8i8aAClv3njVS8CrjR6mUoNqNKJ//CUi6qDLOuM77mL1WGAQeGsHWGfIE
- jsSF7UL1wT9fQbXXCkU847Jo2LlnKW8jaaFMSiFIZyMZ2lESlbbh2N2hQOyC1qTm5Esg0bPfkxW
- 3/2iKSCOa4G3CVjCVRQ9XNkduFWKBggjervI=
-X-Google-Smtp-Source: AGHT+IHxQ82b6ar1O4FPf34PrTHNJY9aomusPKxyHye9JbMt+qdZ6V71eISnSz/wyRgUUcpFIDk8Yg==
-X-Received: by 2002:a05:6000:250d:b0:3a4:d7ba:941e with SMTP id
- ffacd0b85a97d-3a4f7a353e4mr13503633f8f.25.1748956776695; 
- Tue, 03 Jun 2025 06:19:36 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe5b7a5sm18465376f8f.15.2025.06.03.06.19.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 06:19:36 -0700 (PDT)
-Message-ID: <eb6bd3d7-c66b-4300-9573-c29830a3aff4@linaro.org>
-Date: Tue, 3 Jun 2025 15:19:35 +0200
+ d=1e100.net; s=20230601; t=1748955301; x=1749560101;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mfUayeFNj169BN3f1yPfvwWtEStFaen7smBmqFXWwJw=;
+ b=jKYdxN5rOH7PbNm3NOYItjC4c401dIYnj63faNBiKbY+UkB2mqhVg2NdzXSU1mqGeG
+ yxPBbkXT3XI8d7GyCaS0Q6kZEO97N4KTPCjJloEu6ABqNNAvHwqYOwTlAYnHbCGCch8V
+ XKh2tiOYVmM04Kd2YYagvcv8ixmPDFQopGwEMPJvXgswLNkLAUwDLJmYTx7pJvruFHDx
+ bDCmNnHRcVcyzObHN18iEVtv9LXWjipoO98unbQ9baEXu5OWEbyILWJwHT9VIwAGN3jO
+ A0Dcp7d5IXaPK+j0yzK1Cm73IHzMa4oNdOI7a8gqT4j6dRAueZ1+60ZISlE5CDCTd+Kw
+ NQvg==
+X-Gm-Message-State: AOJu0Yxkb4pO8voKl3hhOuEZX5BgUox5NuM1pDROC20C3VrGOOnf6xmf
+ GKko0KOniAh8RENTULlMPHow+D7Ov2kGom+OznvEsBCVjYGY356HTmbpVEvjqDoE
+X-Gm-Gg: ASbGncuC0NbSSG8q5Zkn1IhjmJtkZ4e0ARkLBFGB/ivRTvLlNfURm464vKYmcFpFtym
+ 4hOa/EoDABbgwrzYZ71NvbfQ+SVW7J1Q+h7HZyXgVhFImnserQm8DhoPlwO+KLHvslGwv8fLtUd
+ KAq3oQzXWSwa/XY2/WrHSO2CqUCuFGRY8+eb1cY6AyuVUp/OkuH+iifafMzMaBJBg+OTPGyeVec
+ 4f5U9caAx9Cjz4ghQcnTtfsD3bkXFNa/nOmNpdE2Af5g9OukKT14uM/JJU15o+mQ0s6n/f2O5Ea
+ DcwYBU2o8VlwtWxSIeOEa2pskafgdcCsTf1cAcvjhAJiTZbK0H+n/KXUspcu8sfm6KiJoV4vrg=
+ =
+X-Google-Smtp-Source: AGHT+IGUs+SyuBTefjpABJfUwg6uOHdU1q91eGY6TxI8fs+hi7/0wqrz6gVeXhB6IgoN0g2JRyeqbA==
+X-Received: by 2002:a05:600c:3544:b0:43c:f050:fed3 with SMTP id
+ 5b1f17b1804b1-4511ec9eb53mr110067645e9.11.1748955301145; 
+ Tue, 03 Jun 2025 05:55:01 -0700 (PDT)
+Received: from localhost.localdomain ([213.196.101.237])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4efe6c94dsm18407052f8f.37.2025.06.03.05.54.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Jun 2025 05:55:00 -0700 (PDT)
+From: Vladimir Lukianov <1844144@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Vladimir Lukianov <1844144@gmail.com>
+Subject: [PATCH] record/replay: fix race condition on
+ test_aarch64_reverse_debug
+Date: Tue,  3 Jun 2025 14:54:59 +0200
+Message-Id: <20250603125459.17688-1-1844144@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/kvm: implement SBI debug console (DBCN) calls
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@rivosinc.com
-References: <20240425155012.581366-1-dbarboza@ventanamicro.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20240425155012.581366-1-dbarboza@ventanamicro.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ envelope-from=1844144@gmail.com; helo=mail-wm1-x32d.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Tue, 03 Jun 2025 09:25:17 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -103,116 +98,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Daniel,
+Ensures EVENT_INSTRUCTION written to replay.bin before EVENT_SHUTDOWN_HOST_QMP
 
-(now merged as commit a6b53378f537)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2921
+Signed-off-by: Vladimir Lukianov <1844144@gmail.com>
+---
+During the record pass, test_reverse_debug writes a sequence of
+instructions to replay.bin. Presumably due to a race condition or
+host's async implementation details, the resulting file looks like:
 
-On 25/4/24 17:50, Daniel Henrique Barboza wrote:
-> SBI defines a Debug Console extension "DBCN" that will, in time, replace
-> the legacy console putchar and getchar SBI extensions.
-> 
-> The appeal of the DBCN extension is that it allows multiple bytes to be
-> read/written in the SBI console in a single SBI call.
-> 
-> As far as KVM goes, the DBCN calls are forwarded by an in-kernel KVM
-> module to userspace. But this will only happens if the KVM module
-> actually supports this SBI extension and we activate it.
-> 
-> We'll check for DBCN support during init time, checking if get-reg-list
-> is advertising KVM_RISCV_SBI_EXT_DBCN. In that case, we'll enable it via
-> kvm_set_one_reg() during kvm_arch_init_vcpu().
-> 
-> Finally, change kvm_riscv_handle_sbi() to handle the incoming calls for
-> SBI_EXT_DBCN, reading and writing as required.
-> 
-> A simple KVM guest with 'earlycon=sbi', running in an emulated RISC-V
-> host, takes around 20 seconds to boot without using DBCN. With this
-> patch we're taking around 14 seconds to boot due to the speed-up in the
-> terminal output.  There's no change in boot time if the guest isn't
-> using earlycon.
-> 
-> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-> ---
->   target/riscv/kvm/kvm-cpu.c         | 111 +++++++++++++++++++++++++++++
->   target/riscv/sbi_ecall_interface.h |  17 +++++
->   2 files changed, 128 insertions(+)
+...
+12: EVENT_CP_CLOCK_WARP_ACCOUNT(31) no additional data  
+13: EVENT_INSTRUCTION(0) + 59 -> 44298  
+14: EVENT_CP_CLOCK_WARP_ACCOUNT(31) no additional data  
+15: EVENT_SHUTDOWN_HOST_QMP_QUIT(12)  
+16: EVENT_INSTRUCTION(0) + 5587988 -> 5632286  
+17: EVENT_SHUTDOWN_HOST_SIGNAL(14)  
+18: EVENT_END(39)  
+Reached 162 of 162 bytes
 
+Here, SHUTDOWN_HOST_QMP_QUIT is written before the last instruction
+event. During the replay pass, QUIT is executed before the last
+instruction, which causes the VM to shut down. As a result, the QMP
+and GDB connections are broken, and the test cannot execute its final
+steps.
 
-> +static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
-> +{
-> +    g_autofree uint8_t *buf = NULL;
-> +    RISCVCPU *cpu = RISCV_CPU(cs);
-> +    target_ulong num_bytes;
-> +    uint64_t addr;
-> +    unsigned char ch;
-> +    int ret;
-> +
-> +    switch (run->riscv_sbi.function_id) {
-> +    case SBI_EXT_DBCN_CONSOLE_READ:
-> +    case SBI_EXT_DBCN_CONSOLE_WRITE:
-> +        num_bytes = run->riscv_sbi.args[0];
-> +
-> +        if (num_bytes == 0) {
-> +            run->riscv_sbi.ret[0] = SBI_SUCCESS;
-> +            run->riscv_sbi.ret[1] = 0;
-> +            break;
-> +        }
-> +
-> +        addr = run->riscv_sbi.args[1];
-> +
-> +        /*
-> +         * Handle the case where a 32 bit CPU is running in a
-> +         * 64 bit addressing env.
-> +         */
-> +        if (riscv_cpu_mxl(&cpu->env) == MXL_RV32) {
-> +            addr |= (uint64_t)run->riscv_sbi.args[2] << 32;
-> +        }
-> +
-> +        buf = g_malloc0(num_bytes);
-> +
-> +        if (run->riscv_sbi.function_id == SBI_EXT_DBCN_CONSOLE_READ) {
-> +            ret = qemu_chr_fe_read_all(serial_hd(0)->be, buf, num_bytes);
-> +            if (ret < 0) {
-> +                error_report("SBI_EXT_DBCN_CONSOLE_READ: error when "
-> +                             "reading chardev");
-> +                exit(1);
-> +            }
-> +
-> +            cpu_physical_memory_write(addr, buf, ret);
-> +        } else {
-> +            cpu_physical_memory_read(addr, buf, num_bytes);
-> +
-> +            ret = qemu_chr_fe_write_all(serial_hd(0)->be, buf, num_bytes);
-> +            if (ret < 0) {
-> +                error_report("SBI_EXT_DBCN_CONSOLE_WRITE: error when "
-> +                             "writing chardev");
-> +                exit(1);
-> +            }
-> +        }
-> +
-> +        run->riscv_sbi.ret[0] = SBI_SUCCESS;
-> +        run->riscv_sbi.ret[1] = ret;
-> +        break;
-> +    case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
-> +        ch = run->riscv_sbi.args[0];
-> +        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
-> +
-> +        if (ret < 0) {
-> +            error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: error when "
-> +                         "writing chardev");
-> +            exit(1);
-> +        }
+Adding replay_save_instructions ensures EVENT_INSTRUCTION is written
+before EVENT_SHUTDOWN_HOST_QMP_QUIT.
 
-We are ignoring partial writes (non-blocking call returning 0 byte
-written), is that expected? If so, is it OK to add a comment we can
-safely discard not-yet-written DBCN_CONSOLE_WRITE_BYTE?
+Tested on my arm64. This does not fix the bug on x86_64. The x86_64
+case seems similar, but slightly different.
 
-> +
-> +        run->riscv_sbi.ret[0] = SBI_SUCCESS;
-> +        run->riscv_sbi.ret[1] = 0;
-> +        break;
-> +    default:
-> +        run->riscv_sbi.ret[0] = SBI_ERR_NOT_SUPPORTED;
-> +    }
-> +}
+ replay/replay.c                                | 2 ++
+ tests/functional/test_aarch64_reverse_debug.py | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/replay/replay.c b/replay/replay.c
+index a3e24c96..b2121788 100644
+--- a/replay/replay.c
++++ b/replay/replay.c
+@@ -263,6 +263,8 @@ bool replay_has_interrupt(void)
+ 
+ void replay_shutdown_request(ShutdownCause cause)
+ {
++    replay_save_instructions();
++
+     if (replay_mode == REPLAY_MODE_RECORD) {
+         g_assert(replay_mutex_locked());
+         replay_put_event(EVENT_SHUTDOWN + cause);
+diff --git a/tests/functional/test_aarch64_reverse_debug.py b/tests/functional/test_aarch64_reverse_debug.py
+index 58d45328..0ac1ccb0 100755
+--- a/tests/functional/test_aarch64_reverse_debug.py
++++ b/tests/functional/test_aarch64_reverse_debug.py
+@@ -26,7 +26,6 @@ class ReverseDebugging_AArch64(ReverseDebugging):
+          'releases/29/Everything/aarch64/os/images/pxeboot/vmlinuz'),
+         '7e1430b81c26bdd0da025eeb8fbd77b5dc961da4364af26e771bd39f379cbbf7')
+ 
+-    @skipFlakyTest("https://gitlab.com/qemu-project/qemu/-/issues/2921")
+     def test_aarch64_virt(self):
+         self.set_machine('virt')
+         self.cpu = 'cortex-a53'
+-- 
+2.34.1
+
 
