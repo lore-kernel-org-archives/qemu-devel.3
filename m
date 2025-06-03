@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCEEC5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:31:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09AB3C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:39:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPrc-0003eD-P3; Tue, 03 Jun 2025 07:31:28 -0400
+	id 1uMPy5-00074R-AB; Tue, 03 Jun 2025 07:38:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPra-0003b8-NY
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:31:26 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPy1-00073g-C1
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:38:05 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPrY-0005vp-MP
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:31:26 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-450ce3a2dd5so48060715e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:31:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPxu-0006wK-U6
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:38:05 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ad89d8a270fso1359140366b.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:37:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748950282; x=1749555082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748950676; x=1749555476; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OKOwEl362d4twqQkTyMBWKi4e+TfPV5Vj4tvLOsMHV8=;
- b=Bqua7k4VCZGYPQ4uqlkOfoRlfBV6Kq7EpLnzOj8SU79pbq6p0Sd6uuwMs8tSIUm+kZ
- Ih2KHxjpgc9qj6XUbzW91W72H4sacH93QxRzoQ92Z0OvnpTAzySAx7+a3Kjpc1F/lNrW
- 3xg1+aLMZFClwxDz2TMSjHhIWyvX/+Kf0gG/srm25Q5Fd/09vQnSzRFP6C84vUlxoWMm
- aS1H3gyc5NCoPvWF4DFHATq0XosS7F2oGuwrQcLTH54Cq2iR0nD2iGcx3WmG7mJW1q+t
- TPcflNFIsKpD2xaKQU8gA9fy/z2IUZpvz6a7W2CHJu5EONQ388+BKcE/teQjiW57csY7
- AaJg==
+ bh=cUATE6JR4IIbTWwCxY0j9twbYtygmGAFWDRnOW8Xe7E=;
+ b=eXFPU94UoaTblmD6mCUjyYcayl+Ml7UZ3pbLP+UzcLUC8sEatbbJbwbN3eaROjeM0M
+ KurzED/xFsICp9sEJl6Wthk+1+vfxh/Wz2OU6V9kFhbfJTOdBNSPjgxENpEXHAzd88qi
+ 1XN+96QLKxkB6sbJEKCqWX7O+0fxZQVfFlT1wDwLplNMVR0LQTcmKFAtTVXG6Qi/+bDY
+ twZUCUwF5HW/uCOF5SnGE/SGEMt64SCaa7IdeSXgUqOQ2niCTDed2KERSfbdRKewnDdQ
+ RmaDlSKTSj2fRE/LRxqxa6KMojMEhMSJnB/yzuODkpiSXP947BgWkq51uBQVN7AXD3Qg
+ dzcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748950282; x=1749555082;
+ d=1e100.net; s=20230601; t=1748950676; x=1749555476;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OKOwEl362d4twqQkTyMBWKi4e+TfPV5Vj4tvLOsMHV8=;
- b=UMzrAIMiUpKwBZH7yrlqPhuE4gSOnHgnQv3Y6etKbUZGqe6xmCFeWqUILu3Qz+nmBF
- u+2vcpTnOiQzqmkYVEKVsogOB1K8pPTCneGxhCcOqzkmlzkbZcXrS8A6VYFdo+jUsSTN
- vbkflyHUOfGZy5p40lHU6yYvh58Fl+j2mXauMdCoy7tnIqH+Ewf+iRVb4w50O9WNQ4Aw
- IWXTYhC4CjKOgQgqIUBk356BT2pDcoYSsTxN0SDAYuUw3AUI7gHyqxUzEMbpwQ8wRGpP
- IiYlsW/Y75O2GzEmR0GlvjmVB9xdUjKyRdE1jv+zv51BOdPSPN564WfKL0OiCDfAX+Zn
- cSDg==
+ bh=cUATE6JR4IIbTWwCxY0j9twbYtygmGAFWDRnOW8Xe7E=;
+ b=ihlpA0r9Cl+A90AcC2GbfWzMxKuvzciHqnj+vu18nLA73zR31LeGAQ3TJcyFm9RPb8
+ TKwqa7Jc7npHGPrPdebJXbgA5pgKKrEyEiP8ls+gBMemx/pzb8l4kmC3mtNjwl1Ro/Kc
+ xeDqx5Qcme8Xg4eQTQ8v43zrpIzsrImNWmhjL0XPHJb7Cy3vN4MB/X3l1ptsiFsVLmU0
+ VuxhZp+v4LadzaaEwXeF+Apmcm4fN/2xzzEH/28s3NhtFJt2ZLvbRfFm1bJuqNBI4ntZ
+ rpF0/rE2ErymQAE3qegFrq8ZRwQevAXA2MgDDQt/3gVXyYMFuAABpNU5KlSMX9SNki6m
+ chww==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVJAwj1juxmMYZFhFk+yeEPRSmwi4mFxhiflvunEVSAL5FdMzxGOLcE7X0lN2DlNflq0QY/k17EYh8f@nongnu.org
-X-Gm-Message-State: AOJu0YzNNPrezz5qWh+cnEZ4ZeujIlPPWzDNE1TWVkW5FGZhLmeuazdt
- SYNDgUSvzFp/TZ7NET1CLpZyRNO6XnQ5Jq+b8UpURjAIwWt5clN8TpiBDQvpf+etjic=
-X-Gm-Gg: ASbGncs1+xreSWyFr2iD2o8i+9mxVpRq0OGvXphOhM6Z1DvQMcA9NG0goPtn9TcFtSW
- wPKhipSGBJKq7MmH3SHZb6QobaOJH5dXJj99tGx0QD/pfA6ppbQX74VnK6oVWo6wC/hFZeakZoI
- fZK+QA/Vq+83p+UXvZETRnX0t/uCH1jxeXqMdI6RuLBKZuCBCxCASHR8xz4dPeHIVUwiG0zuy8G
- +BrE0Q/i02Drr3HbpVPPdWC0LT7fBybj0kjLPGV4F2Z4HcCFAUiYuVkpvdBek2gVgS22LQ/xDBv
- KDDyrivb8m4oE8rN29Q1xd7vRzNyNeVs3PBpU7Y0yhDAOl5nw9f+IWoBaYNRCVshg3zD7wTPy2b
- bZILPwJnmP9EN4MmnJ76PW9A3
-X-Google-Smtp-Source: AGHT+IHyVCdfbxqsNUrBhmOkUpEETqQc9Hk6tRcouD8jz6k9+k/WMjSmy6D5KlL3KTkK2QhQuWwNAQ==
-X-Received: by 2002:a05:600c:64ca:b0:43d:1b95:6d0e with SMTP id
- 5b1f17b1804b1-451221a31aamr90775565e9.23.1748950282601; 
- Tue, 03 Jun 2025 04:31:22 -0700 (PDT)
+ AJvYcCW76OKYdznWmo7DpYSH+vesAqF6FF6Q32ClRLyg1CQhPHNFhHhA8xvPFH88WidyvnEPLCegbrDrZ6FU@nongnu.org
+X-Gm-Message-State: AOJu0YwgQghL+LnQnQTAW4MrLuKc0S2M+C/c76eRQG+6Opl114ERqlfO
+ 1+bSVfuEfR8Wd4v0gylV9/sEFntetfve+tS807sELBbVZLaxC0gNmSSnqWPZ+DGuesY=
+X-Gm-Gg: ASbGncsob+EG10CjinOEitjZOY5UWQ2qZXKHbkMtMCxSqxPB0z8qriH0RLxBaqp4Rrk
+ LF1Lgz+5gy+sFDe47xvPtLKvhtzuGreTCaf+Z2Cv7pyQs4ihaWrK5nQv1H4GznKnnaoNHVLN/mh
+ hSrQYZsBYZ5J1LYZYKpAA+iiamf/91+i1NnuT7AR8pZvLDHaPDU9kTr65xNuMqafJ2il1+WyP+p
+ GBv6dOid4kEzQM37uwFflilhaX4l9zQGoTN44bXWsxf4gtedkNTie4XchASRbzGO+XO316pvC4w
+ kkbzzY81Kn+j8e+2hwQMxH5Wq0rqykgQJJCJa6nzseePunD7gm+uDxBeQTBwxqxR3PnuSIzZ6sC
+ LfwY7Z1OauGmdTqFjQ89kdCCe
+X-Google-Smtp-Source: AGHT+IFzjUFKk+8YS7Ua0FUYntEPWE9UBnxT1KNPhnDSeSCNgg/Eg11sqKnhpeVA5w0AnlRdqYvjkw==
+X-Received: by 2002:a17:906:7312:b0:ad8:e448:6c64 with SMTP id
+ a640c23a62f3a-adde5fe16a3mr202533566b.24.1748950676203; 
+ Tue, 03 Jun 2025 04:37:56 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d8006946sm158019135e9.31.2025.06.03.04.31.21
+ a640c23a62f3a-ada6ad6ab06sm945314166b.171.2025.06.03.04.37.55
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 04:31:21 -0700 (PDT)
-Message-ID: <0940128b-f6b4-41bf-9dc7-40e1bd953047@linaro.org>
-Date: Tue, 3 Jun 2025 13:31:20 +0200
+ Tue, 03 Jun 2025 04:37:55 -0700 (PDT)
+Message-ID: <4e0e1f04-0d9b-4d2c-9131-5472c2ed37e5@linaro.org>
+Date: Tue, 3 Jun 2025 13:37:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 01/16] hw/pci-host/raven: Remove is-legacy-prep property
+Subject: Re: [PATCH 02/16] hw/pci-host/raven: Revert "raven: Move BIOS loading
+ from board code to PCI host"
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
- Thomas Huth <thuth@redhat.com>
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
 References: <cover.1746374076.git.balaton@eik.bme.hu>
- <0d41c18a8831bd4c8b0948eda3ef8f60f5a311f3.1746374076.git.balaton@eik.bme.hu>
+ <4ca4f71bf661923d9a91b7e6776a0e40726e2337.1746374076.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <0d41c18a8831bd4c8b0948eda3ef8f60f5a311f3.1746374076.git.balaton@eik.bme.hu>
+In-Reply-To: <4ca4f71bf661923d9a91b7e6776a0e40726e2337.1746374076.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=philmd@linaro.org; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,73 +106,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/5/25 18:01, BALATON Zoltan wrote:
-> This was a workaround for the prep machine that was removed 5 years
-> ago so this is no longer needed.
+> This reverts commit d0b25425749d5525b2ba6d9d966d8800a5643b35.
 > 
-> Fixes: b2ce76a073 (hw/ppc/prep: Remove the deprecated "prep" machine
->         and the OpenHackware BIOS)
+> Loading firmware from the PCI host is unusual and raven is only used
+> by one board so this does not simplify anything but rather complicates
+> it. Revert to loading firmware from board code as that is the usual
+> way and also because raven has nothing to do with ROM so it is not a
+> good place for this.
+> 
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/pci-host/raven.c | 32 ++++++++++++--------------------
->   1 file changed, 12 insertions(+), 20 deletions(-)
-> 
-> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index 21f7ca65e0..b78a8f32d3 100644
-> --- a/hw/pci-host/raven.c
-> +++ b/hw/pci-host/raven.c
-> @@ -75,7 +75,6 @@ struct PRePPCIState {
->       RavenPCIState pci_dev;
->   
->       int contiguous_map;
-> -    bool is_legacy_prep;
->   };
->   
->   #define BIOS_SIZE (1 * MiB)
-> @@ -243,22 +242,18 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
->       MemoryRegion *address_space_mem = get_system_memory();
->       int i;
->   
-> -    if (s->is_legacy_prep) {
-> -        for (i = 0; i < PCI_NUM_PINS; i++) {
-> -            sysbus_init_irq(dev, &s->pci_irqs[i]);
-> -        }
-> -    } else {
-> -        /* According to PReP specification section 6.1.6 "System Interrupt
-> -         * Assignments", all PCI interrupts are routed via IRQ 15 */
-> -        s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
-> -        object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
-> -                                &error_fatal);
-> -        qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
-> -        sysbus_init_irq(dev, &s->or_irq->out_irq);
-> -
-> -        for (i = 0; i < PCI_NUM_PINS; i++) {
-> -            s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
-> -        }
-> +    /*
-> +     * According to PReP specification section 6.1.6 "System Interrupt
-> +     * Assignments", all PCI interrupts are routed via IRQ 15
-> +     */
-> +    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
-> +    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
-> +                            &error_fatal);
-> +    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
-> +    sysbus_init_irq(dev, &s->or_irq->out_irq);
-> +
-> +    for (i = 0; i < PCI_NUM_PINS; i++) {
-> +        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
->       }
->   
->       qdev_init_gpio_in(d, raven_change_gpio, 1);
-> @@ -426,9 +421,6 @@ static const Property raven_pcihost_properties[] = {
->       DEFINE_PROP_UINT32("elf-machine", PREPPCIState, pci_dev.elf_machine,
->                          EM_NONE),
->       DEFINE_PROP_STRING("bios-name", PREPPCIState, pci_dev.bios_name),
-> -    /* Temporary workaround until legacy prep machine is removed */
-> -    DEFINE_PROP_BOOL("is-legacy-prep", PREPPCIState, is_legacy_prep,
-> -                     false),
->   };
->   
->   static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
+>   hw/pci-host/raven.c | 55 ---------------------------------------------
+>   hw/ppc/prep.c       | 27 ++++++++++++++++++++--
+>   2 files changed, 25 insertions(+), 57 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
