@@ -4,224 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49331C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 14:18:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58301C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 14:26:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMSSM-0001rt-QA; Tue, 03 Jun 2025 10:17:34 -0400
+	id 1uMSaG-0003XG-He; Tue, 03 Jun 2025 10:25:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uMSSE-0001rE-Rc
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:17:26 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMSaD-0003Wj-B0
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:25:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uMSSA-0007Ri-Av
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:17:25 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 553AElaa012343;
- Tue, 3 Jun 2025 14:17:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=jio56fKh8l7fxGFVN4UaEK/JV3DxTV6MJKis0lEqx9U=; b=
- OMBOe/Gg9FtUJg3A7Wc2x66aLBlbaJ2BHV68TwlA6BBEuEi58zGDt0vmt2r8w+PX
- yLHAN1x97Y5JTvtbPVYFnLZtKq2Q5nBunF39PD9fwqKieWY8vxNE2zMaaKul7jP6
- 3i5IyPbXZV2klJEvIBNiXbUEbBKeeUgIBawoGZDSpqRKO9skjHM0p2wLRlYi9vYl
- AID/p5L7A28uMElJ6QWWdUJuK0X2FhE0blDbLdRy95/XNsRCZedXTqU1q0kPYfb2
- GRnMUMlUB/JImXmmsc0KmkMR1jnL8vaiMhKza0I+OBtHoDHWGbrdJaqLYPCXqjn2
- TJpN0vocgB2fnuNy58VNTg==
-Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 471g8ka0ea-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 03 Jun 2025 14:17:17 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 553DdWFC016167; Tue, 3 Jun 2025 14:17:17 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11on2040.outbound.protection.outlook.com [40.107.220.40])
- by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46yr79dhej-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 03 Jun 2025 14:17:17 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wScnYiCQQiig0z1d25kmnEebn4P9m1yNaC+igW9CxibtLxJtE2t9jHpx+P3ezUR1Ffs6VX72P0YPcbwUoa4/HbiCEttnc8zYItVetcXRonMpyUj/VEqiWOBLxrEzdrjNDUS6eRhwDEkFdUTxZ45KoWhvhYcgX37UvfhbiLS1CUUHmbX43qQBpTbuYEpGz/YT59hwtPaWkGXWwwbGtPZI53iDoIBUusFC4s3nMX85rBBUhM4gNM0/Q1g0+oYLEaa3JfUwYIHg3MgshxNGWUCyH4XCpoNU7dSoeuyza85SZkRks2rufe5dbnNRgzUBrEMP6fkCxfSSmTRMnwJrSwknzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jio56fKh8l7fxGFVN4UaEK/JV3DxTV6MJKis0lEqx9U=;
- b=SQtMGEOUFBNP69YrEPDCRLsh1C90d3mVopLIkMwH5/Wah+2dW9YcRDQ37RZJswFw17oWzW7cOnNZTpdAulvz83m3IDsC2WQtI4sDr1IIlvOK4PnCcWVJqXlnZgK9JaSXYnS4EQJIwSGIaJVxSC5k7IbOLqaihcLGS5eN6f5mCUdKljEXK43fAXvBiTZ6Q07GzcWPDLmpkE4VItMnzdG31moXdaoHF0VGn5s6ptQK6ICpPLPPSEYDFuUzljf+VW7hB1p0lyQVEhYrxTEPzN4DlnlhhmiESfYm5E7MIktDpBZ8B3quZhvW/+8kgVAc0KH09JcdCh9uoOOEd+MEeYvBTg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jio56fKh8l7fxGFVN4UaEK/JV3DxTV6MJKis0lEqx9U=;
- b=M8jlVkxR4Ci5kuQKi3/M2UM1wyHZO0ltQhGcAFRPwXZhPacoxUk0AmdyoveYl50En6b9yLQhbmFrsM7imIbzV2c4R0zh2miTceF9fPddrRqZzOWawVA4ZA2Ehk149ozSza+e8LMVJaUl3ZjGFUDW6TiVhUXQunbBAG9uvwry9UE=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by SN4PR10MB5607.namprd10.prod.outlook.com (2603:10b6:806:20a::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.40; Tue, 3 Jun
- 2025 14:17:14 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8746.035; Tue, 3 Jun 2025
- 14:17:13 +0000
-Message-ID: <9dc27182-7b01-45de-9f37-6ca37cabff77@oracle.com>
-Date: Tue, 3 Jun 2025 10:17:06 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 09/43] vfio/container: register container for cpr
-From: Steven Sistare <steven.sistare@oracle.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-10-git-send-email-steven.sistare@oracle.com>
- <IA3PR11MB9136AF510081213140C10899926DA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <71730241-a6f4-47f5-b7d6-964412b4d0bd@oracle.com>
-Content-Language: en-US
-In-Reply-To: <71730241-a6f4-47f5-b7d6-964412b4d0bd@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: LO4P265CA0224.GBRP265.PROD.OUTLOOK.COM
- (2603:10a6:600:315::8) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMSa7-0000O1-EW
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:25:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748960733;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CcfHT9bCowoaWokEok+t1gaIYiIUzhMZVR6Px2zxxl8=;
+ b=CfucJP/L1481NtOVOor8VBZ/CKS24vppa+d3Rj5N6f+F3OmMztNPMm4G4gj7o1nJInApyK
+ dlN1Ar51SXOaFnUDnvKDdfN2ptoHwqNSj8vxsP7AqiCH7Nchi9S6e3H4O1u09ObNeeBVMF
+ jAZhLcBf2eSm+TeNRFIZmU3g1l3BCmM=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-33-Iery8zloPqm7nevhnDMNzw-1; Tue,
+ 03 Jun 2025 10:25:30 -0400
+X-MC-Unique: Iery8zloPqm7nevhnDMNzw-1
+X-Mimecast-MFC-AGG-ID: Iery8zloPqm7nevhnDMNzw_1748960728
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F3069195608B; Tue,  3 Jun 2025 14:25:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 31D63180047F; Tue,  3 Jun 2025 14:25:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3B73A21E66E2; Tue, 03 Jun 2025 16:25:24 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v3 1/3] docs: introduce dedicated page about code provenance /
+ sign-off
+Date: Tue,  3 Jun 2025 16:25:22 +0200
+Message-ID: <20250603142524.4043193-2-armbru@redhat.com>
+In-Reply-To: <20250603142524.4043193-1-armbru@redhat.com>
+References: <20250603142524.4043193-1-armbru@redhat.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SN4PR10MB5607:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2b212664-c955-4774-5ca9-08dda2a95635
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|376014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?RTFwVXhTeVpUMWZKMW9DRWd5SEhFemhHT0hza0wyczNXVlJ4QlE1dG42QUk2?=
- =?utf-8?B?UXgvaHU4R2NrQlBaQUVWZHp4dE5EV3ljV0pnRTR5S09GTDR6UHFwWEpFTUVl?=
- =?utf-8?B?MnNuWjlIOVl1K0R4T1RFSWVnUFFtZWlDNWNQTkErWmVEeEowQVlZUjM1bUVx?=
- =?utf-8?B?V1lWL3hwQXNBU0taNk8zRjdUWjlmSWp0L0xsUUsyWHVlWGJySXlDZWVHM3Ra?=
- =?utf-8?B?MDRNRlNNOXZXMHpaRkJ1eDBYUVU5ZWEyeHVzUWpJbWFMVlpFVStJemNLcis5?=
- =?utf-8?B?S3IwSmFWY1Q5bmJNNCtodlNUZFRkQUFkSENOVDJ0NFlkUENuZEE3eW1jZ0Iz?=
- =?utf-8?B?WHdLV0ZMa2hMYXk3Z0trdmx5YUFBMFJpNzRxQ0ZkNjJzN3VyWDdWZjdRdWVR?=
- =?utf-8?B?L3hMN2JmRVV0blcvVEFvNS9zWndlTjg0UDNYamZNL202ZUUraEhZZkZHOVU3?=
- =?utf-8?B?RDJsUXBEYURoenl2K2p5K2t2OFJIK3ZueTJIUkNlYjRiQk1DRHlDZDA0T0JE?=
- =?utf-8?B?NjRZM3BiOUFtYzdGYTN6SXNYdXEyMGtqbzBnRitMOVU2Rm1nZVdrVHJabE1E?=
- =?utf-8?B?OG0zV1hMNGpvUVk4cWxlZjhpSHdQbGYydWhJWktXWm1RbHQwdDdiMVkxalp5?=
- =?utf-8?B?NFIwOE4wVlpFRlNaa2ZkNzZuaWRzV1g1cnFUc2RFYmRkNWVhR01semNndUVP?=
- =?utf-8?B?ZWlEVkx3TDE0STBhQ3hadjVNU3pBcXo3eFFXS3NlZG1aejl4TUZ6RVRRQUpS?=
- =?utf-8?B?N3VKcUhlREtYUHFESkpveHFIdVJnQ0Q4N0sxNldmczV6Vkw3a0dBcFMvVnpn?=
- =?utf-8?B?RFZ3bW9jTHE3VFVRc1pXL0k2b2g2aVU4UzNOVnY3ZmNVaFcvRnBUR3lRVWR3?=
- =?utf-8?B?ZHBsazVxN1k1Umx5VXVYVmVNTWQ0TmxyUlZyUWp4Y3pBZUxOYXREWVYyQ2o3?=
- =?utf-8?B?aG1tNVhCUlM3dy9EdmlzMW5jNWkxZE9CWlhJeGtDaWRuNjVDc01NRmM3MVNr?=
- =?utf-8?B?MEVHNG1TZU11UVlBV0Z4N1F6S2xBMmhHSHNSQ3ZVOFh3ZjB6V29IR0tJZ2hJ?=
- =?utf-8?B?ZjNlaWpnODM0TTc4c3FUMlFmSDFiYzloTE42WndXMXplaC9KV1NqVEo4UmV5?=
- =?utf-8?B?dCtYVkVmUE1iN2gwMWppckE4TExlYlg0WmdXaTZkSTJ6bjlZQXoxYUQzMFBy?=
- =?utf-8?B?MWdKOXBzV09XODY3RklzZkdNa2NFaGFoUjA3QmFtZTdXbDFOalBmOXcvSXJ6?=
- =?utf-8?B?VmJZVDVNOE9hZlo1MEtjYWMzdkRZSUxUZnI5TExrSmp6UFpUMkk5OGVOcGps?=
- =?utf-8?B?NHRQd3haL0tPL0o5MWt0N3J3U2RQOGxKRDFYK3E3ZVphWmNRNktPYWViVHRJ?=
- =?utf-8?B?RmtIUDMxNitUN05xUVQzSUdpRWhkUjJ6a2E2ZVhZQWZ5WWRSZXRzYVBYekpE?=
- =?utf-8?B?Uk8vSzVmbUlmRi95T0pPUkdwV1ozb2RxNld4Sjh5Y2lrNXZRUmpEZCtqN3dI?=
- =?utf-8?B?K1Q0Q1ExUS9saXpQUG9qeXRjWmRsWUlwRmp5dzBndDk0WVd5ak9yOU1OZ2pM?=
- =?utf-8?B?bmxhaGFCcGFqc05GcEd4VlcrVGQrUU54a2R0NzF0TTRWUnUrSXh3aVFPSFE4?=
- =?utf-8?B?dmZVb0w5Q0lyeUZiTGZZakllcERKZXo5Z0dFVlRsMkZVZndmMVJmZjArSmhX?=
- =?utf-8?B?SmhBeE9Cb2ZmUnJGTHhFTTB1UWdTT0VlTXA3MWkwNldIYnIxUW5TVjJnK0F6?=
- =?utf-8?B?bkd2czlsYmxFeTV1eXhSQWZ3bG84cFFrbWZuejRGOWVIMDJFRVVhUjI0K0lV?=
- =?utf-8?B?eFRpMWpYQ3ZpUjFwb09BRnlSMWhyclA3R1YxV3NtclFnWnpCUEVndTN4VGVa?=
- =?utf-8?B?MnhxR2pzYnBhQzVDMnJrUG1wNitzSzdpc0VSVkZINE5LRUVmN05ZZ2RYMDhR?=
- =?utf-8?Q?gS848MKyZ6o=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OW9Da1VTcHhzTmJEd2QxZ2JKVlY0cEhLeE9WWkxiUzZxK2JyOG5MekdxNkE4?=
- =?utf-8?B?VHFrcDMxT0I4Q2xsTzZMT0x5YWZpUzVITFNNRmhRVDJmQWx5dWNUemwzakxX?=
- =?utf-8?B?b0JVRkRBM01wTHlxN0pTU0h1SVhkRjdJVjA1WlBBR0ZhSURpM0l3MUR5QnJp?=
- =?utf-8?B?QWpoL09naThhM2IwTm8zYzZrSXljUjNYUkovQTlrM3hFYm9nTVJ6OHQxNDlp?=
- =?utf-8?B?MTAzUHA0L2FVVnhVc0pvZitvcGtQTVgzUDFQS3N0ZWpCT0hlZWx3Sm80TFBH?=
- =?utf-8?B?Skk2RGQwUnNVc1ZZR0ZnRnFGWkFZZTRRWEROMFhjWnNITlBDT21NdWlpMklL?=
- =?utf-8?B?OVlvSUpRN3lZZ1VDeTlBOE91a0JxbGhCM1E2VU1HUko2aUxlNjRzR3UwVUNv?=
- =?utf-8?B?dG9sRlVQL1lZMzJVbTZzZ3p6dmsrOG1kc1RsTlgwM0xxaG5tdVZlM3BUT2RW?=
- =?utf-8?B?QlBoTDdOR2p5OEtLMVpBSWhyZFc1am05NnFXOHV3SHBCeHppYkI2YVM3WWp0?=
- =?utf-8?B?c0QzUmwxRHMwWmJLRlJBVWRNVi9ReUk4YSsyNExudlhvckhFNU9LVE9NNDMy?=
- =?utf-8?B?MU15VGxTZW4ya1djQmtyUzBvRXhBYWs0Q3lGWFIrZGtVTHN1RDVsTkREL2NJ?=
- =?utf-8?B?bzU1T3o1U3lpNU9jNVhybFlBbzFZWC9oQVFWekZYTE5ZM2J4UWZyKy9FWkxD?=
- =?utf-8?B?RUs0NmRRYWMzdlpRLzZia0c0TnRXUUwrY204ZG1HcmdKQm10d0wvM2hlb1R1?=
- =?utf-8?B?S1FoS3pwL0hzNGo4M2doYVQ1SHk4UDREYVY0dlcrWWh3WWRWbFNYampscWVx?=
- =?utf-8?B?SExLczdJV2d3NWRUV3ZaOGp4WUpIQ0VsYjV5WnZKbmkvYUZtVVBGajNRQll0?=
- =?utf-8?B?WkZSRnJlWUVXS1F2dWJzems3L2lkT3llYmVJR1VOWkdUVHN4czlZazgvWWxY?=
- =?utf-8?B?ZU1LNVN2dFVrcHg5SU5KeWNXbmVpZXAxbFNmOEZSaGlKVmc5VUlNK3lZTHAw?=
- =?utf-8?B?TUhmYkpvaEtkOTJnSWlBZ3FuSktwWGpIUFl6ZEp3Nk9FMDc4cHJ2SWpReUxm?=
- =?utf-8?B?UFBKZTJqb254Rm96K2FpdXcxYUpoaUMvYjFPREk5NlRlVWhrbWQ3MDVHVkx0?=
- =?utf-8?B?UnJCbm9TNFFsTC9Rd0tRQ0k1eWM5NGUwbDFySUFBOEtwc0Z1cFdUc08vUlNt?=
- =?utf-8?B?cWhBNVJCa2trK1E1M1JnZW9SaE51SXN6Vndjb3VFWE9IaFVjUHFSY3h1VW5h?=
- =?utf-8?B?ajZRRXM2NmpmR0lvVDl1VkFCcW9IZ1lJY0lkMHBBS2hLZmhVWGxUbEtYUjYy?=
- =?utf-8?B?TXA0Skp2U2w1SUc3Ym9xc2JQeFZxYk5PNUtFZzBZRWp2S3dJRnVhT1A1Tk5R?=
- =?utf-8?B?UWxSSkx0eDBoOXNOQ1FyUGRMb3IwSE9wdzlUWmJyR25mQUVuSm5QRFNuaWNR?=
- =?utf-8?B?S0VqOEFJUVVnV1hScWVXUXhoblZ1K2VMM0QyemtLM1U1dGtWbUIzU2NOM0NE?=
- =?utf-8?B?VndiSTZNYXM1akFuQUR6Y2QvRkNKNXRxa2ZPR1N4SkhiMGRSQjNIM3Ezd3FC?=
- =?utf-8?B?SWhLNUxNZklyYXJLVHlzckNEc21GK2xHaDZLVUd1UUpyRXk5bjU2WnNxc1FL?=
- =?utf-8?B?eW5CcHdRK1lIVFRBMWdzZzg3OHFpbU5aTnBZcXU1Rlp3dWMxdmhXY1lUb2wx?=
- =?utf-8?B?dDRrKzY5TkM2eWVRV0NzL093dUVtcFJvcWcvaW5YQ1lpRG44REY4NnlSSzlU?=
- =?utf-8?B?TjZHUGlBbFVaeGRCZ3BjYUZnMW1EY2NUcnBtbWp4NUU2L3lNNmJ5R2Rqalpo?=
- =?utf-8?B?WXQrRkNJRzFRWWV3NUh2TnIxNElZZDFQcWZYdWZOWHpMSjhPSjZlNTM5K211?=
- =?utf-8?B?Ym1UWXZXaWJwemtsNXgrMWdjekV2NDROYWw4RmVZdkdhRFBvaDdCUmdld1BG?=
- =?utf-8?B?Rjk0SUZyeW51QUpzcTlJYTJJTHRxZHdGUGFXdGhFUVdFcExtL3lVb0VSMG5Z?=
- =?utf-8?B?RC9MdTFHRjZDamZnbEI0cWMxZEhxRG5GQlNDNTNPMk45NXUrQWU3TGtVaGQx?=
- =?utf-8?B?QTJmVWIzMTZGQS9MU2xuSFA4WFZKaXE3R2RicDU1aTNZbkE4L3VuOU0yNjY4?=
- =?utf-8?B?MWNCRUZQT3ExQlFINHUrV3picjJXczRQeVdPMm1PcjNSaExDdnhMNFY3bGFG?=
- =?utf-8?B?amc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: GSI9CHkvjvg43vSJd5nuCcTEMGb9yTCiwfV5sKpXgGy3IlvH/etCJXmCujxZM/DZbtt4YkxfRCLmULwIGa9uLm2SJDqjuczYgjvhcACTTjRZQ9ZhOc2VKrA+C/8smNcw4eMwQvrzRaWhtyfzhd/Pk7HkM8eK+ZNsD3Hg/p23oAYt47QCZ0qF8s60kEh25XyO4lvWl+83WPsJcqmR0rfNvxcZkoT2xViSvsxQCxCQx80YHmR5ISX9yuwZfrT3c30yDy+YTIfM/ziKALRUaJpnUobOxW7KppH79F2gR+Uh3ZUcCvChlU7JXD6H00L1G2L7HdwBqD+HimeizgBuLeDna3a5kRj5jDy2el3SAwtgQw5WZzZnKa4Og0NmDuK/w8neHy1rk03Uv3J+B6Dq1azIWGuN7Imbaeg4BCb0FTqgq648yp1yBm9RH08Ino3LNxtbiBRxQyr/5U0Vb426w/9d/ByFrVfeCEgPOp7FfvwNcySMM6BGzYqVbRyhPQfMtDEBgNEA1aBsoIW6eb3tINBSKg9Uazaa8Xz/R46dFcQ8zbUQsqhS9kFFTuFNQ3yEfDkavEd0sSdYSTPD9mOt2lMhC9RigDIK51A9GbusDxOEJ0s=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2b212664-c955-4774-5ca9-08dda2a95635
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2025 14:17:13.8758 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rthdcYfx7W3HfCP1DgZh2cnnE/JOohkWfHnJKA4fNOEP1j1vTgsO1hE4s2SZ+7ZrfQpiUK2KrNDKk+kZy5O2PIDnI6oUfjr5wc1AU18QelI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN4PR10MB5607
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-03_01,2025-06-02_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- mlxscore=0 adultscore=0
- bulkscore=0 spamscore=0 suspectscore=0 malwarescore=0 phishscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506030123
-X-Proofpoint-GUID: Z1j3yfXNqaR2xH6P5kMdk8to3CFqcL6Z
-X-Proofpoint-ORIG-GUID: Z1j3yfXNqaR2xH6P5kMdk8to3CFqcL6Z
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjAzMDEyMyBTYWx0ZWRfX2z5QoXerea1Y
- rM6xIg+fZDXAN/w61vQShk3S1vuqxAnoPvU8bmhctaoUvBo88USatHnDdsP2TNF56tc3sqHXLWH
- gvcJbuE8xYj3sK1e6fPUrkhsjhjTcqX1Ib/0jIayXioybP0BwerlNF0RF2xTLm8vi4Vca4pXCDQ
- +elTaslyBTTvJK8vPIi1/qjWvEsUvj8Q8Fd6N7DDzGFM/7CmDJ+1guFiSHYKzjwCtuz1kAHtxM1
- zHTA4SNt7GOOFA3OOnn0sE8KXcONslRNs+6FVsEScW+OreKEXl4R2MkmJHqA3iPHlVmzMEHMRB9
- 259+psAEVjoT/pNZcm9lIEHdyUTEt1dilAC6XwHvkwcwhxN90UTv647IEoX5LMU9wVJbrBieo4H
- n5WYT7gb0L6CyzKFdh9IrwRFErNHN8MmGpzGsVXAyqFrNnDXCe9QMhjHbQFvwAIgMPiMuIxp
-X-Authority-Analysis: v=2.4 cv=FM4bx/os c=1 sm=1 tr=0 ts=683f03ed cx=c_pps
- a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=-AlQ0YkTUckXxXDdEpsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -237,146 +95,299 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/2025 10:09 AM, Steven Sistare wrote:
-> On 6/3/2025 7:57 AM, Duan, Zhenzhong wrote:
->>> -----Original Message-----
->>> From: Steve Sistare <steven.sistare@oracle.com>
->>> Subject: [PATCH V4 09/43] vfio/container: register container for cpr
->>>
->>> Register a legacy container for cpr-transfer, replacing the generic CPR
->>> register call with a more specific legacy container register call.  Add a
->>> blocker if the kernel does not support VFIO_UPDATE_VADDR or
->>> VFIO_UNMAP_ALL.
->>>
->>> This is mostly boiler plate.  The fields to to saved and restored are added
->>> in subsequent patches.
->>>
->>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>> ---
->>> include/hw/vfio/vfio-container.h |  2 ++
->>> include/hw/vfio/vfio-cpr.h       | 15 +++++++++
->>> hw/vfio/container.c              |  6 ++--
->>> hw/vfio/cpr-legacy.c             | 69
->>> ++++++++++++++++++++++++++++++++++++++++
->>> hw/vfio/cpr.c                    |  5 ++-
->>> hw/vfio/meson.build              |  1 +
->>> 6 files changed, 92 insertions(+), 6 deletions(-)
->>> create mode 100644 hw/vfio/cpr-legacy.c
->>>
->>> diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
->>> index afc498d..21e5807 100644
->>> --- a/include/hw/vfio/vfio-container.h
->>> +++ b/include/hw/vfio/vfio-container.h
->>> @@ -10,6 +10,7 @@
->>> #define HW_VFIO_CONTAINER_H
->>>
->>> #include "hw/vfio/vfio-container-base.h"
->>> +#include "hw/vfio/vfio-cpr.h"
->>
->> Now that we have this change, may we remove #include of vfio-cpr.h in hw/vfio/container.c?
->> Maybe this belong to patch8?
-> 
-> Yes, thanks.
-> Patch 8 should not add #include of vfio-cpr.h in hw/vfio/container.c
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-However, I see that Cedric has staged these patches in vfio-next.
-We can make these tweaks in a future patch.
+Currently we have a short paragraph saying that patches must include
+a Signed-off-by line, and merely link to the kernel documentation.
+The linked kernel docs have a lot of content beyond the part about
+sign-off an thus are misleading/distracting to QEMU contributors.
 
-- Steve
+This introduces a dedicated 'code-provenance' page in QEMU talking
+about why we require sign-off, explaining the other tags we commonly
+use, and what to do in some edge cases.
 
->>> typedef struct VFIOContainer VFIOContainer;
->>> typedef struct VFIODevice VFIODevice;
->>> @@ -29,6 +30,7 @@ typedef struct VFIOContainer {
->>>      int fd; /* /dev/vfio/vfio, empowered by the attached groups */
->>>      unsigned iommu_type;
->>>      QLIST_HEAD(, VFIOGroup) group_list;
->>> +    VFIOContainerCPR cpr;
->>> } VFIOContainer;
->>>
->>> OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
->>> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
->>> index 750ea5b..d4e0bd5 100644
->>> --- a/include/hw/vfio/vfio-cpr.h
->>> +++ b/include/hw/vfio/vfio-cpr.h
->>> @@ -9,8 +9,23 @@
->>> #ifndef HW_VFIO_VFIO_CPR_H
->>> #define HW_VFIO_VFIO_CPR_H
->>>
->>> +#include "migration/misc.h"
->>> +
->>> +struct VFIOContainer;
->>> struct VFIOContainerBase;
->>>
->>> +typedef struct VFIOContainerCPR {
->>> +    Error *blocker;
->>> +} VFIOContainerCPR;
->>> +
->>> +
->>> +bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
->>> +                                        Error **errp);
->>> +void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
->>> +
->>> +int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
->>> +                             Error **errp);
->>> +
->>> bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
->>>                                   Error **errp);
->>> void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
->>> diff --git a/hw/vfio/container.c b/hw/vfio/container.c
->>> index 0f948d0..7d2035c 100644
->>> --- a/hw/vfio/container.c
->>> +++ b/hw/vfio/container.c
->>> @@ -643,7 +643,7 @@ static bool vfio_container_connect(VFIOGroup *group,
->>> AddressSpace *as,
->>>      new_container = true;
->>>      bcontainer = &container->bcontainer;
->>>
->>> -    if (!vfio_cpr_register_container(bcontainer, errp)) {
->>> +    if (!vfio_legacy_cpr_register_container(container, errp)) {
->>>          goto fail;
->>>      }
->>>
->>> @@ -679,7 +679,7 @@ fail:
->>>          vioc->release(bcontainer);
->>>      }
->>>      if (new_container) {
->>> -        vfio_cpr_unregister_container(bcontainer);
->>> +        vfio_legacy_cpr_unregister_container(container);
->>>          object_unref(container);
->>>      }
->>>      if (fd >= 0) {
->>> @@ -720,7 +720,7 @@ static void vfio_container_disconnect(VFIOGroup *group)
->>>          VFIOAddressSpace *space = bcontainer->space;
->>>
->>>          trace_vfio_container_disconnect(container->fd);
->>> -        vfio_cpr_unregister_container(bcontainer);
->>> +        vfio_legacy_cpr_unregister_container(container);
->>>          close(container->fd);
->>>          object_unref(container);
->>>
->>> diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
->>> new file mode 100644
->>> index 0000000..419b9fb
->>> --- /dev/null
->>> +++ b/hw/vfio/cpr-legacy.c
->>> @@ -0,0 +1,69 @@
->>> +/*
->>> + * Copyright (c) 2021-2025 Oracle and/or its affiliates.
->>> + *
->>> + * SPDX-License-Identifier: GPL-2.0-or-later
->>> + */
->>> +
->>> +#include <sys/ioctl.h>
->>> +#include <linux/vfio.h>
->>> +#include "qemu/osdep.h"
->>> +#include "hw/vfio/vfio-container.h"
->>> +#include "hw/vfio/vfio-cpr.h"
->>
->> Ditto.
-> 
-> Yes, this #include vfio-cpr.h should be dropped from this patch.
-> 
-> - Steve
-> 
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Markus Armbruster <armbru@redhat.com>
+---
+ docs/devel/code-provenance.rst    | 218 ++++++++++++++++++++++++++++++
+ docs/devel/index-process.rst      |   1 +
+ docs/devel/submitting-a-patch.rst |  18 +--
+ 3 files changed, 221 insertions(+), 16 deletions(-)
+ create mode 100644 docs/devel/code-provenance.rst
+
+diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+new file mode 100644
+index 0000000000..4fc12061b5
+--- /dev/null
++++ b/docs/devel/code-provenance.rst
+@@ -0,0 +1,218 @@
++.. _code-provenance:
++
++Code provenance
++===============
++
++Certifying patch submissions
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++The QEMU community **mandates** all contributors to certify provenance of
++patch submissions they make to the project. To put it another way,
++contributors must indicate that they are legally permitted to contribute to
++the project.
++
++Certification is achieved with a low overhead by adding a single line to the
++bottom of every git commit::
++
++   Signed-off-by: YOUR NAME <YOUR@EMAIL>
++
++using a known identity (sorry, no anonymous contributions.)
++
++The addition of this line asserts that the author of the patch is contributing
++in accordance with the clauses specified in the
++`Developer's Certificate of Origin <https://developercertificate.org>`__:
++
++.. _dco:
++
++  Developer's Certificate of Origin 1.1
++
++  By making a contribution to this project, I certify that:
++
++  (a) The contribution was created in whole or in part by me and I
++      have the right to submit it under the open source license
++      indicated in the file; or
++
++  (b) The contribution is based upon previous work that, to the best
++      of my knowledge, is covered under an appropriate open source
++      license and I have the right under that license to submit that
++      work with modifications, whether created in whole or in part
++      by me, under the same open source license (unless I am
++      permitted to submit under a different license), as indicated
++      in the file; or
++
++  (c) The contribution was provided directly to me by some other
++      person who certified (a), (b) or (c) and I have not modified
++      it.
++
++  (d) I understand and agree that this project and the contribution
++      are public and that a record of the contribution (including all
++      personal information I submit with it, including my sign-off) is
++      maintained indefinitely and may be redistributed consistent with
++      this project or the open source license(s) involved.
++
++It is generally expected that the name and email addresses used in one of the
++``Signed-off-by`` lines, matches that of the git commit ``Author`` field.
++It's okay if you subscribe or contribute to the list via more than one
++address, but using multiple addresses in one commit just confuses
++things.
++
++If the person sending the mail is not one of the patch authors, they are
++nonetheless expected to add their own ``Signed-off-by`` to comply with the
++DCO clause (c).
++
++Multiple authorship
++~~~~~~~~~~~~~~~~~~~
++
++It is not uncommon for a patch to have contributions from multiple authors. In
++this scenario, git commits will usually be expected to have a ``Signed-off-by``
++line for each contributor involved in creation of the patch. Some edge cases:
++
++  * The non-primary author's contributions were so trivial that they can be
++    considered not subject to copyright. In this case the secondary authors
++    need not include a ``Signed-off-by``.
++
++    This case most commonly applies where QEMU reviewers give short snippets
++    of code as suggested fixes to a patch. The reviewers don't need to have
++    their own ``Signed-off-by`` added unless their code suggestion was
++    unusually large, but it is common to add ``Suggested-by`` as a credit
++    for non-trivial code.
++
++  * Both contributors work for the same employer and the employer requires
++    copyright assignment.
++
++    It can be said that in this case a ``Signed-off-by`` is indicating that
++    the person has permission to contribute from their employer who is the
++    copyright holder. It is nonetheless still preferable to include a
++    ``Signed-off-by`` for each contributor, as in some countries employees are
++    not able to assign copyright to their employer, and it also covers any
++    time invested outside working hours.
++
++When multiple ``Signed-off-by`` tags are present, they should be strictly kept
++in order of authorship, from oldest to newest.
++
++Other commit tags
++~~~~~~~~~~~~~~~~~
++
++While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
++that are commonly used during QEMU development:
++
++ * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
++   mailing list, if they consider the patch acceptable, they should send an
++   email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
++   review a patch should add this even if they are also adding their
++   ``Signed-off-by`` to the same commit.
++
++ * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
++   touches their subsystem, but intends to allow a different maintainer to
++   queue it and send a pull request, they would send a mail containing a
++   ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
++   only implies review of the maintainers' own areas of responsibility. If a
++   maintainer wants to indicate they have done a full review they should use
++   a ``Reviewed-by`` tag.
++
++ * **``Tested-by``**: when a QEMU community member has functionally tested the
++   behaviour of the patch in some manner, they should send an email reply
++   containing a ``Tested-by`` tag.
++
++ * **``Reported-by``**: when a QEMU community member reports a problem via the
++   mailing list, or some other informal channel that is not the issue tracker,
++   it is good practice to credit them by including a ``Reported-by`` tag on
++   any patch fixing the issue. When the problem is reported via the GitLab
++   issue tracker, however, it is sufficient to just include a link to the
++   issue.
++
++ * **``Suggested-by``**: when a reviewer or other 3rd party makes non-trivial
++   suggestions for how to change a patch, it is good practice to credit them
++   by including a ``Suggested-by`` tag.
++
++Subsystem maintainer requirements
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++When a subsystem maintainer accepts a patch from a contributor, in addition to
++the normal code review points, they are expected to validate the presence of
++suitable ``Signed-off-by`` tags.
++
++At the time they queue the patch in their subsystem tree, the maintainer
++**must** also then add their own ``Signed-off-by`` to indicate that they have
++done the aforementioned validation. This is in addition to any of their own
++``Reviewed-by`` tags the subsystem maintainer may wish to include.
++
++Tools for adding ``Signed-off-by``
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++There are a variety of ways tools can support adding ``Signed-off-by`` tags
++for patches, avoiding the need for contributors to manually type in this
++repetitive text each time.
++
++git commands
++^^^^^^^^^^^^
++
++When creating, or amending, a commit the ``-s`` flag to ``git commit`` will
++append a suitable line matching the configured git author details.
++
++If preparing patches using the ``git format-patch`` tool, the ``-s`` flag can
++be used to append a suitable line in the emails it creates, without modifying
++the local commits. Alternatively to modify all the local commits on a branch::
++
++  git rebase master -x 'git commit --amend --no-edit -s'
++
++emacs
++^^^^^
++
++In the file ``$HOME/.emacs.d/abbrev_defs`` add:
++
++.. code:: elisp
++
++  (define-abbrev-table 'global-abbrev-table
++    '(
++      ("8rev" "Reviewed-by: YOUR NAME <your@email.addr>" nil 1)
++      ("8ack" "Acked-by: YOUR NAME <your@email.addr>" nil 1)
++      ("8test" "Tested-by: YOUR NAME <your@email.addr>" nil 1)
++      ("8sob" "Signed-off-by: YOUR NAME <your@email.addr>" nil 1)
++     ))
++
++with this change, if you type (for example) ``8rev`` followed by ``<space>``
++or ``<enter>`` it will expand to the whole phrase.
++
++vim
++^^^
++
++In the file ``$HOME/.vimrc`` add::
++
++  iabbrev 8rev Reviewed-by: YOUR NAME <your@email.addr>
++  iabbrev 8ack Acked-by: YOUR NAME <your@email.addr>
++  iabbrev 8test Tested-by: YOUR NAME <your@email.addr>
++  iabbrev 8sob Signed-off-by: YOUR NAME <your@email.addr>
++
++with this change, if you type (for example) ``8rev`` followed by ``<space>``
++or ``<enter>`` it will expand to the whole phrase.
++
++Re-starting abandoned work
++~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++For a variety of reasons there are some patches that get submitted to QEMU but
++never merged. An unrelated contributor may decide (months or years later) to
++continue working from the abandoned patch and re-submit it with extra changes.
++
++The general principles when picking up abandoned work are:
++
++ * Continue to credit the original author for their work, by maintaining their
++   original ``Signed-off-by``
++ * Indicate where the original patch was obtained from (mailing list, bug
++   tracker, author's git repo, etc) when sending it for review
++ * Acknowledge the extra work of the new contributor by including their
++   ``Signed-off-by`` in the patch in addition to the orignal author's
++ * Indicate who is responsible for what parts of the patch. This is typically
++   done via a note in the commit message, just prior to the new contributor's
++   ``Signed-off-by``::
++
++    Signed-off-by: Some Person <some.person@example.com>
++    [Rebased and added support for 'foo']
++    Signed-off-by: New Person <new.person@mycorp.test>
++
++In complicated cases, or if otherwise unsure, ask for advice on the project
++mailing list.
++
++It is also recommended to attempt to contact the original author to let them
++know you are interested in taking over their work, in case they still intended
++to return to the work, or had any suggestions about the best way to continue.
+diff --git a/docs/devel/index-process.rst b/docs/devel/index-process.rst
+index cb7c6640fd..5807752d70 100644
+--- a/docs/devel/index-process.rst
++++ b/docs/devel/index-process.rst
+@@ -13,6 +13,7 @@ Notes about how to interact with the community and how and where to submit patch
+    maintainers
+    style
+    submitting-a-patch
++   code-provenance
+    trivial-patches
+    stable-process
+    submitting-a-pull-request
+diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
+index 65c64078cb..8624f21673 100644
+--- a/docs/devel/submitting-a-patch.rst
++++ b/docs/devel/submitting-a-patch.rst
+@@ -344,28 +344,14 @@ Patch emails must include a ``Signed-off-by:`` line
+ 
+ Your patches **must** include a Signed-off-by: line. This is a hard
+ requirement because it's how you say "I'm legally okay to contribute
+-this and happy for it to go into QEMU". The process is modelled after
+-the `Linux kernel
+-<http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/SubmittingPatches?id=f6f94e2ab1b33f0082ac22d71f66385a60d8157f#n297>`__
+-policy.
+-
+-If you wrote the patch, make sure your "From:" and "Signed-off-by:"
+-lines use the same spelling. It's okay if you subscribe or contribute to
+-the list via more than one address, but using multiple addresses in one
+-commit just confuses things. If someone else wrote the patch, git will
+-include a "From:" line in the body of the email (different from your
+-envelope From:) that will give credit to the correct author; but again,
+-that author's Signed-off-by: line is mandatory, with the same spelling.
++this and happy for it to go into QEMU". For full guidance, read the
++:ref:`code-provenance` documentation.
+ 
+ The name used with "Signed-off-by" does not need to be your legal name,
+ nor birth name, nor appear on any government ID. It is the identity you
+ choose to be known by in the community, but should not be anonymous,
+ nor misrepresent whom you are.
+ 
+-There are various tooling options for automatically adding these tags
+-include using ``git commit -s`` or ``git format-patch -s``. For more
+-information see `SubmittingPatches 1.12
+-<http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/SubmittingPatches?id=f6f94e2ab1b33f0082ac22d71f66385a60d8157f#n297>`__.
+ 
+ .. _include_a_meaningful_cover_letter:
+ 
+-- 
+2.48.1
 
 
