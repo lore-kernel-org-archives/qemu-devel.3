@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44947C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBF9C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPRa-0001ji-2e; Tue, 03 Jun 2025 07:04:37 -0400
+	id 1uMPRO-0000n5-NU; Tue, 03 Jun 2025 07:04:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPQ-00084P-Ee
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:20 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1uMPPO-00083B-PC
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:18 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPM-0002DQ-Fz
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:20 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-604f26055c6so12323801a12.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:16 -0700 (PDT)
+ id 1uMPPK-0002CR-Om
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:18 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-606b58241c9so949509a12.3
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748948535; x=1749553335; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748948533; x=1749553333; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=IDnhi2MxHDPqhcsbyRznzpXsnFp4P/npzVTkA5anp34=;
- b=hlgTSLyfu4rRRD5qdidZpRtzgYiVrgiJpU9Dh9kNDu1Jz1RjS4EDVogcFTT4bwMc4B
- ppdbkLsagSRBlsfC2nkLb9yoRQ/YjCKxD0DTL2865jxo6yFQQWhHpDiGewokW3IGp1pg
- kv8NqlBumPe1LgCyy0XWGnIql9vADyN3RcjRQqQ5mLtTc388D3nWvPb1dhpOMJr8Tt+A
- ++3u0ryF1g+KTB/WFKvO1mo12eXBYafqlOeA33SIhwIRtZG1hEQbIBQ7JZNNdxE50W8K
- C9ZuC3GgdGgc6Xz7H9Bzlvq9xUz45Ftm74rgiT7bS3W4aR9ivpgw2djsE7DRCd9cy0mD
- DJqA==
+ bh=xxDMdaIg8arEcAZqrWcxA6HfH8o9FpNz/62pOCW6kuE=;
+ b=uAfU+QNwVYabdGwPLXYx6HEuLLyVl2xpzz2dPr+9tMmKBLzczk5hi0Kt1e+9f3IwWl
+ AKrSLlBAXVM7gH5u182yxRcsBL0u1PPwMQWbrwXIA8hQYuttV7h/qw8lKW0HLcj4PyKH
+ 84CgpdNHQDy4splOsF43sJtzKZ/ChHRI+EYkAXFuXsWkumv+VngLfWgivg0zSptXQM6y
+ G0B+ORlpNkD3B9NJswCR1U5O1gBKA52mlV6KnFno0KPfCGd53nkew2GfbGvMSDijKCX6
+ JRvOYSOZGsxUBoKOexmP+wRB5aFHt2SzovZmMwmvB1KudhkcV4fNfBd+mQOv0osNxc1v
+ araA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748948535; x=1749553335;
+ d=1e100.net; s=20230601; t=1748948533; x=1749553333;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=IDnhi2MxHDPqhcsbyRznzpXsnFp4P/npzVTkA5anp34=;
- b=QKNYaowdKdRjgbYKu645bzeeXybjLQXghBZ14ZUPZcbfMAbn2piA/bicZbPbz2tovf
- rOmyV0cYN9mxgJ676eCFbQEbfXYPYBZsymyydEWSs+GxLWe0Xa+7+pdVgXpT5MNFp0/P
- /R4v/mGX5EOWtVyyRXCFm9ciRLXOntdveISvn76DneMupV1vBroVT4eM7GnhWk/L4+IX
- YKVJI+32C77rVyRynrM9/WG83kooLhme/tt7rt1oUqZ5TF2PUffj8bEzxxaVxegEEyYo
- xiK/xWH699V5NkKSrcn8cKZ54XECf6Xo7EMTu2d4u5+OHhxqmhU/f76yIARDr2vY8G/N
- Ng7Q==
-X-Gm-Message-State: AOJu0Ywo2ikls7J3BBMDQIA/lmfrcrjms7y2l9iERlGeX7Azs6WmfVK0
- E3P+vGOQPgb9gICAD7yVkgPNDurLe2CavNGDW+ebcSWeLrxBE74XdS9+743JHFZfAd8=
-X-Gm-Gg: ASbGncsX086A/RaCJTElQo1X8MQWzMLlcYaVkP5Ud+sk51l5nBSAFf4Y7Q3jHi0Ps9P
- Mkfu/3Cy+wcUAOksGtt3L0HQnRWI+WZhtpiBxhHnVhDBEwitXMTp2BhzNf3k+1oMNGUOjOenT5D
- 8dwbBaOKdjUIcPnmIDZQTJBmpo8uaomvw/hR1J0jovYUTQc3F1zXOQ3VOrHeXadTZm7bdLQGh/r
- OhmdNn8hwrIjPPmKYrL5rVPAQSTn0wdWNL5/q5aTTW6f4x6RYN0ns4JBQv9LQ/je3iR9nWhzJge
- bT4rTzuOzaVt0MvhZfZzoN7Jn9bl4aKyZ9aZtHjOQNopMlURE4ub
-X-Google-Smtp-Source: AGHT+IHef1ZTopYq/fB5trd7ww91BUE0eCRuJs5XjHevQmMiqmwMJcAcQK5aSLVnwY0zsJWOvQZsxQ==
-X-Received: by 2002:a17:907:96a0:b0:ad8:8b49:57d4 with SMTP id
- a640c23a62f3a-adde66fc817mr239693566b.28.1748948534877; 
- Tue, 03 Jun 2025 04:02:14 -0700 (PDT)
+ bh=xxDMdaIg8arEcAZqrWcxA6HfH8o9FpNz/62pOCW6kuE=;
+ b=sy0lGKAl9uFLq3ou4p9YtwLvW7fFSsD8gtZ6iSKV1yp7xz35xWyDwT3BaQNvB6kj5P
+ HpVbrlBtaCZhTHeHFf08YYuJ/jRxdmDR0eeoVXa9bdN/x1nqNpayDXWOsOCsNvNS1T4C
+ oWCgyBq2EnxY0+Th8t/qfVjq+Hjsixg5BsAQqC1EB65AMKLjWG6R0WB2z0J70CgxiRNp
+ tZ1LfhetAlza7N32bHUJUvMJxJQoXO0q3SexR7jHxs2NT+T8h6zCOrv2meJAte6iAOT3
+ HAnza2/VymsutFkRsdUG6ll4vaoWUqhUg0vUYHWqeVPB9TDNZcnyLTIJtD3589s/8kgZ
+ C2Dg==
+X-Gm-Message-State: AOJu0YxbgtzPpuui7PtsbfiqUjSQISe7Azeb/2dGmL/fVqKxYO581rzu
+ mhHqTDHo2lTQY5TAvdV6/rjEF6S1D2zHlmAvF3+ortqhVvv3HStWAF+8e8Upob8vzYU=
+X-Gm-Gg: ASbGncsaxRn5d189wgNi5Ccj75jRxr51APVguzGuYCrOG/y8VbrhBgSTVcXRxG5NFPL
+ BjNB3+Qw6Ef+OCb2XuHQlHyHZ04VXFSvnt7td8U/ynmaZhEypgVFIpA7gqskBclkZhmEQgJ19D3
+ ydMTUND+CVc9oq70x6Sbqao9hR/5igmCUNAj+CzVYT1LG/s2p69aAqbSCYHSMklLgjSOZURjz7l
+ whfw6vnFPQ6he/uZHxvCELXLkCPk+G9X1bCweC6hIuQ+gW0Fkfl/bSpDzcPTW5zux5zAZX614js
+ PAS9lGcEAvZtIWOIb8EhpRXK+FnibN1QqEBUmQOLU9tmpvPtLcrf
+X-Google-Smtp-Source: AGHT+IHfIW2Pdwvv7tPD/bQM4YVttqLyO1J4izr2UJGWTKej3lF10cPs8bcQtT/XHxP+j2ngTDKBfw==
+X-Received: by 2002:a17:907:6092:b0:ad9:982f:9206 with SMTP id
+ a640c23a62f3a-adb49606242mr1105080666b.61.1748948532999; 
+ Tue, 03 Jun 2025 04:02:12 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5d7fed8bsm939567666b.28.2025.06.03.04.02.09
+ a640c23a62f3a-ada5dd043a9sm930549066b.89.2025.06.03.04.02.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 04:02:13 -0700 (PDT)
+ Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 4D8065F9FA;
- Tue, 03 Jun 2025 12:02:06 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id A27CD5F9E1;
+ Tue, 03 Jun 2025 12:02:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
@@ -86,17 +86,17 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 15/17] gdbstub: assert earlier in handle_read_all_regs
-Date: Tue,  3 Jun 2025 12:02:02 +0100
-Message-ID: <20250603110204.838117-16-alex.bennee@linaro.org>
+Subject: [PATCH v4 08/17] MAINTAINERS: add Akihiko and Dmitry as reviewers
+Date: Tue,  3 Jun 2025 12:01:55 +0100
+Message-ID: <20250603110204.838117-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250603110204.838117-1-alex.bennee@linaro.org>
 References: <20250603110204.838117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -119,30 +119,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When things go wrong we want to assert on the register that failed to
-be able to figure out what went wrong.
+Thanks for volunteering to help.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 ---
- gdbstub/gdbstub.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ MAINTAINERS | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 565f6b33a9..6023c80d25 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -1343,8 +1343,8 @@ static void handle_read_all_regs(GArray *params, void *user_ctx)
-         len += gdb_read_register(gdbserver_state.g_cpu,
-                                  gdbserver_state.mem_buf,
-                                  reg_id);
-+        g_assert(len == gdbserver_state.mem_buf->len);
-     }
--    g_assert(len == gdbserver_state.mem_buf->len);
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 7718199979..79b1d5c0b3 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2669,6 +2669,8 @@ F: include/hw/display/ramfb.h
  
-     gdb_memtohex(gdbserver_state.str_buf, gdbserver_state.mem_buf->data, len);
-     gdb_put_strbuf();
+ virtio-gpu
+ M: Alex Bennée <alex.bennee@linaro.org>
++R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+ S: Odd Fixes
+ F: hw/display/virtio-gpu*
+ F: hw/display/virtio-vga.*
 -- 
 2.47.2
 
