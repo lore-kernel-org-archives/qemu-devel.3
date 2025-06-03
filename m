@@ -4,134 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4FF6C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 06:06:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B209C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 06:06:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMKmR-00006Q-Q1; Tue, 03 Jun 2025 02:05:48 -0400
+	id 1uMKn6-0000Cp-N8; Tue, 03 Jun 2025 02:06:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMKmN-00006B-Sx
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:05:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMKmp-000097-NP
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:06:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMKmL-0000H9-Sj
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:05:43 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMKml-0000ID-Ty
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:06:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748930739;
+ s=mimecast20190719; t=1748930766;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=NByGciD3h/JhMDoEWsHIEDjiwZjTZk/rSc27ZPGTVOo=;
- b=Y28Sgu5myTZ9qxynIRz5zKisA6iTQhr+1YW81fFYf2Sr/NxFsTtQ+qzsLZIxhJnmEl1ai2
- 3l7zAPsCK6OecTnJfOoveWi7MGXMk3JeMbr359bjO3MReUDEeZjUrO3MPIByAfW8uteLn+
- Z1w6Q6f4Gex3cjViuhORCcQrztXEpIM=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-400-JMvoaOhYNjm6PgJ_umpLYg-1; Tue, 03 Jun 2025 02:05:37 -0400
-X-MC-Unique: JMvoaOhYNjm6PgJ_umpLYg-1
-X-Mimecast-MFC-AGG-ID: JMvoaOhYNjm6PgJ_umpLYg_1748930736
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ad88ede92e2so509657366b.3
- for <qemu-devel@nongnu.org>; Mon, 02 Jun 2025 23:05:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748930736; x=1749535536;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=NByGciD3h/JhMDoEWsHIEDjiwZjTZk/rSc27ZPGTVOo=;
- b=NfWGIm4y7p1YePW7a4/wictsD0ljo3NwDMIrWCfltL9jqi2soW8XhL7W6mHk2Jae/Z
- bs5DS1C3TMYdrUJqtOKy7HugwMikbhkGTbddf7/AFFomld6Hjb1uOVpmvXHRUofQhTbM
- 7fKAINY69n+RvYVjWzFiqXqsAEU6WtX/yfhd5fcFuZnY0qRNABjwITSw08THA5Y5foAp
- ng7PL4TAFcTKxYMjv6emfBHToixzSR8956f7FQeVooECMHeRTJ+0XV4oePCvXFrQCeL3
- IGxbU7BlWU/rqF4nowBYWJ2z2ZGL9CAPgImIW75MI8bnlhLIQXjrV5bqUBeUuxft7vZa
- GKmA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVEGwopO9NBIQxoFH+E6wemJJXHTReHpLzZLJhzKm6ghGhlgovk+U8kwIm7l5KogVm1Yk/NJy84E2bR@nongnu.org
-X-Gm-Message-State: AOJu0Yz+DY822mUxcwOGqMA82yVCeO9nGd5t41cEOiB2LQ45w5pe4+FX
- gnikBRor51qUe91iy8xCl5g2i19eoTOyWYTdIxlWwfQTieCXjeA3ep25MvlVUtg40wQ49/UhvoH
- 2SVBHO6KgOcy3H0xk+RdTYmKbC5snRMGRZ2bTj+0RzJQ+EoLUl2iDr2Lk
-X-Gm-Gg: ASbGncvlydGFnN/nOL6YcecIBI2ssA2HxY2s+A1nwCGs5oya09xo02nUcM66d5+tiMx
- TMY+D7A1NJKCAbYM9KPPwAA1QSppwcC9/3YvYdcNGl8Dk34BzS9fOUn960tktb0w73/WbkUGdCc
- cxTEfZHZE9ihYNOiabxpm/1c71CbrpfmDJoOM54dSoe4Iw+MLB1EIRWYRPTbRUWZz+UHiu9scBH
- NrxfS2JvNXeDkIzCRxq+Pxzb2Rk8gJOEnpbAIbUAyn6IhttMOgvy0SeBUDw6uu6DnTMRxie0Lnf
- w4SDigevhmR79e8VNK3IDmQM1JRKpFAfO5ODKz/76b8=
-X-Received: by 2002:a17:907:1ca1:b0:ad8:9645:798c with SMTP id
- a640c23a62f3a-adb36c00eb1mr1349495266b.51.1748930735915; 
- Mon, 02 Jun 2025 23:05:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8WzfwfkGz2LDtIDAw3TN5LwuoixeJ/KK5BEjtEACPnbx5/GqPTAKq9lWc7XJ2vLUTeAQ21A==
-X-Received: by 2002:a17:907:1ca1:b0:ad8:9645:798c with SMTP id
- a640c23a62f3a-adb36c00eb1mr1349493166b.51.1748930735502; 
- Mon, 02 Jun 2025 23:05:35 -0700 (PDT)
-Received: from [192.168.0.7] (ip-109-42-50-214.web.vodafone.de.
- [109.42.50.214]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5d82ddfcsm913557966b.55.2025.06.02.23.05.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 02 Jun 2025 23:05:34 -0700 (PDT)
-Message-ID: <fb5bd578-9869-4376-a47b-b7f9e3f288a2@redhat.com>
-Date: Tue, 3 Jun 2025 08:05:32 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=YPYLXRNO091K4P0CoSnKQx3oDPoRBPQwGhemJJi4MUI=;
+ b=RUJA9MVpsiCk3vZeVQyf8U5ALBeYx9336PPt3C6yQsunppZ5EMxys1CuEGabh+NT/oQOT8
+ OABvjuuc3bTvQ1h5gyXwkzFd67Yxlv/QhQc3jNLr9MPlXPJpFEYDJAjtZQYX8hx8rov43F
+ zw57N/IN3vt4wS3g7k94CXQk5vH1aok=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-bDD3HMqhOi2r5rSO9A_VmA-1; Tue,
+ 03 Jun 2025 02:06:02 -0400
+X-MC-Unique: bDD3HMqhOi2r5rSO9A_VmA-1
+X-Mimecast-MFC-AGG-ID: bDD3HMqhOi2r5rSO9A_VmA_1748930762
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A7E081955DB0; Tue,  3 Jun 2025 06:06:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0218518004A7; Tue,  3 Jun 2025 06:06:01 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8314B21E6768; Tue, 03 Jun 2025 08:05:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Eric Blake <eblake@redhat.com>,  qemu-devel@nongnu.org,
+ qemu-block@nongnu.org,  hibriansong@gmail.com,  Kevin Wolf
+ <kwolf@redhat.com>,  Hanna Czenczek <hreitz@redhat.com>
+Subject: Re: [RFC 08/11] aio-posix: gracefully handle io_uring_queue_init()
+ failure
+In-Reply-To: <20250529153830.GB62516@fedora> (Stefan Hajnoczi's message of
+ "Thu, 29 May 2025 11:38:30 -0400")
+References: <20250528190916.35864-1-stefanha@redhat.com>
+ <20250528190916.35864-9-stefanha@redhat.com>
+ <xamle7lt6fxiphzjkjhzlc7vgid3r4s3k6nqufipruwepb6ef6@l4xjldx5ztuj>
+ <20250529153830.GB62516@fedora>
+Date: Tue, 03 Jun 2025 08:05:58 +0200
+Message-ID: <87jz5tbbqx.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] meson: use config_base_arch for target libraries
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: clg@redhat.com, nabihestefan@google.com,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250602233801.2699961-1-pierrick.bouvier@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250602233801.2699961-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -140,7 +76,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -156,53 +92,244 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 03/06/2025 01.38, Pierrick Bouvier wrote:
-> Fixed commit introduced common dependencies for target libraries. Alas,
-> it wrongly reused the 'target' variable, which was previously set from
-> another loop.
-> 
-> Thus, some dependencies were missing depending on order of target list,
-> as found here [1].
-> 
-> The fix is to use the correct config_base_arch instead.
-> Kudos to Thomas Huth who had this right, before I reimplement it, and
+Stefan Hajnoczi <stefanha@redhat.com> writes:
 
-s/Thomas Huth/Paolo Bonzini/ ... it was his patch indeed, I just was the one 
-who sent it as a proper patch to the mailing list.
+> On Wed, May 28, 2025 at 05:12:14PM -0500, Eric Blake wrote:
+>> On Wed, May 28, 2025 at 03:09:13PM -0400, Stefan Hajnoczi wrote:
+>> > io_uring may not be available at runtime due to system policies (e.g.
+>> > the io_uring_disabled sysctl) or creation could fail due to file
+>> > descriptor resource limits.
+>> >=20
+>> > Handle failure scenarios as follows:
+>> >=20
+>> > If another AioContext already has io_uring, then fail AioContext
+>> > creation so that the aio_add_sqe() API is available uniformly from all
+>> > QEMU threads. Otherwise fall back to epoll(7) if io_uring is
+>> > unavailable.
+>> >=20
+>> > Notes:
+>> > - Update the comment about selecting the fastest fdmon implementation.
+>> >   At this point it's not about speed anymore, it's about aio_add_sqe()
+>> >   API availability.
+>> > - Uppercase the error message when converting from error_report() to
+>> >   error_setg_errno() for consistency (but there are instances of
+>> >   lowercase in the codebase).
+>> > - It's easier to move the #ifdefs from aio-posix.h to aio-posix.c.
+>> >=20
+>> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+>> > ---
+>> >  util/aio-posix.h      | 12 ++----------
+>> >  util/aio-posix.c      | 29 ++++++++++++++++++++++++++---
+>> >  util/fdmon-io_uring.c |  8 ++++----
+>> >  3 files changed, 32 insertions(+), 17 deletions(-)
+>> >=20
+>> > diff --git a/util/aio-posix.h b/util/aio-posix.h
+>> > index f9994ed79e..6f9d97d866 100644
+>> > --- a/util/aio-posix.h
+>> > +++ b/util/aio-posix.h
+>> > @@ -18,6 +18,7 @@
+>> >  #define AIO_POSIX_H
+>> >=20=20
+>> >  #include "block/aio.h"
+>> > +#include "qapi/error.h"
+>> >=20=20
+>> >  struct AioHandler {
+>> >      GPollFD pfd;
+>> > @@ -72,17 +73,8 @@ static inline void fdmon_epoll_disable(AioContext *=
+ctx)
+>> >  #endif /* !CONFIG_EPOLL_CREATE1 */
+>> >=20=20
+>> >  #ifdef CONFIG_LINUX_IO_URING
+>> > -bool fdmon_io_uring_setup(AioContext *ctx);
+>> > +void fdmon_io_uring_setup(AioContext *ctx, Error **errp);
+>>=20
+>> Why change the return type to void?  That forces you to have to check
+>> errp.  If you still return bool (true for errp unchanged, false when
+>> errp set), callers might have a simpler interface.
+>
+> QEMU has both forms. I prefer void foo(Error **errp) because it
+> eliminates these awkward states:
+> 1. Return true with errp set. There is a risk of leaking errp here.
+> 2. Return false with errp NULL. This results in no error message.
+>
+> Sometimes it is handy to have a return value but I think that void is a
+> good default return type.
 
-> introduce this bug.
-> 
-> [1] https://lore.kernel.org/qemu-devel/c54469ce-0385-4aea-b345-47711e9e61de@linaro.org/
-> 
-> Fixes: 4fb54de823e9 (meson: build target libraries with common dependencies)
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   meson.build | 7 +++----
->   1 file changed, 3 insertions(+), 4 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 2df89006f8b..ad9cef99ed9 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -4142,13 +4142,12 @@ common_all = static_library('common',
->   target_common_arch_libs = {}
->   target_common_system_arch_libs = {}
->   foreach target_base_arch, config_base_arch : config_base_arch_mak
-> -  config_target = config_target_mak[target]
->     target_inc = [include_directories('target' / target_base_arch)]
->     inc = [common_user_inc + target_inc]
->   
-> -  target_common = common_ss.apply(config_target, strict: false)
-> -  target_system = system_ss.apply(config_target, strict: false)
-> -  target_user = user_ss.apply(config_target, strict: false)
-> +  target_common = common_ss.apply(config_base_arch, strict: false)
-> +  target_system = system_ss.apply(config_base_arch, strict: false)
-> +  target_user = user_ss.apply(config_base_arch, strict: false)
->     common_deps = []
->     system_deps = []
->     user_deps = []
+I used to think this way, too.  Experience changed my mind.
 
-With the patch description updated:
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+The "awkward states" are bugs.
+
+The price to avoid them is more verbose error handling.  Because such
+bugs have been rare in practice, the vebosity has turned out to be too
+much pain for too little gain.  qapi/error.h's big comment:
+
+ * =3D Rules =3D
+ [...]
+ * - Whenever practical, also return a value that indicates success /
+ *   failure.  This can make the error checking more concise, and can
+ *   avoid useless error object creation and destruction.  Note that
+ *   we still have many functions returning void.  We recommend
+ *   =E2=80=A2 bool-valued functions return true on success / false on fail=
+ure,
+ *   =E2=80=A2 pointer-valued functions return non-null / null pointer, and
+ *   =E2=80=A2 integer-valued functions return non-negative / negative.
+
+For what it's worth, this is exactly how GError wants to be used.  We
+deviated from it because we thought we were smarter, and came to regret
+it.
+
+Further down, the big comment shows example code:
+
+ * Call a function, receive an error from it, and pass it to the caller
+ * - when the function returns a value that indicates failure, say
+ *   false:
+ *     if (!foo(arg, errp)) {
+ *         handle the error...
+ *     }
+ * - when it does not, say because it is a void function:
+ *     ERRP_GUARD();
+ *     foo(arg, errp);
+ *     if (*errp) {
+ *         handle the error...
+ *     }
+ * More on ERRP_GUARD() below.
+ *
+ * Code predating ERRP_GUARD() still exists, and looks like this:
+ *     Error *err =3D NULL;
+ *     foo(arg, &err);
+ *     if (err) {
+ *         handle the error...
+ *         error_propagate(errp, err); // deprecated
+ *     }
+ * Avoid in new code.  Do *not* "optimize" it to
+ *     foo(arg, errp);
+ *     if (*errp) { // WRONG!
+ *         handle the error...
+ *     }
+ * because errp may be NULL without the ERRP_GUARD() guard.
+
+In case you think the difference in readability isn't all that big:
+error handling is *everywhere*, and any clutter adds up quickly,
+obscuring the logic.  Every line counts.
+
+> I have CCed Markus in case he has suggestions.
+
+Thanks for that!
+
+>> >  void fdmon_io_uring_destroy(AioContext *ctx);
+>> > -#else
+>> > -static inline bool fdmon_io_uring_setup(AioContext *ctx)
+>> > -{
+>> > -    return false;
+>> > -}
+>> > -
+>> > -static inline void fdmon_io_uring_destroy(AioContext *ctx)
+>> > -{
+>> > -}
+>> >  #endif /* !CONFIG_LINUX_IO_URING */
+>> >=20=20
+>> >  #endif /* AIO_POSIX_H */
+>> > diff --git a/util/aio-posix.c b/util/aio-posix.c
+>> > index fa047fc7ad..44b3df61f9 100644
+>> > --- a/util/aio-posix.c
+>> > +++ b/util/aio-posix.c
+>> > @@ -16,6 +16,7 @@
+>> >  #include "qemu/osdep.h"
+>> >  #include "block/block.h"
+>> >  #include "block/thread-pool.h"
+>> > +#include "qapi/error.h"
+>> >  #include "qemu/main-loop.h"
+>> >  #include "qemu/lockcnt.h"
+>> >  #include "qemu/rcu.h"
+>> > @@ -717,17 +718,39 @@ void aio_context_setup(AioContext *ctx, Error **=
+errp)
+>> >      ctx->epollfd =3D -1;
+>> >      ctx->epollfd_tag =3D NULL;
+>> >=20=20
+>> > -    /* Use the fastest fd monitoring implementation if available */
+>> > -    if (fdmon_io_uring_setup(ctx)) {
+>> > -        return;
+>> > +#ifdef CONFIG_LINUX_IO_URING
+>> > +    {
+>> > +        static bool need_io_uring;
+>> > +        Error *local_err =3D NULL; /* ERRP_GUARD() doesn't handle err=
+or_abort */
+>>=20
+>> Really? I thought that was part of why we added ERRP_GUARD, so that
+>> error_abort is pinned closer to the spot where the error is triggered
+>> rather than where it was chained.  But your use of errp is a bit
+>> different than usual here, so you may be correct that it doesn't
+>> handle error_abort in the way that you want (allowing a graceful
+>> downgrade to epoll if it is the first failure, but aborting if it is
+>> the second AioContext that fails).
+>
+> The ERRP_GUARD() doc comment explains why it behaves this way:
+>
+>  * Note: &error_abort is not rewritten, because that would move the
+>  * abort from the place where the error is created to the place where
+>  * it's propagated.
+
+Error propagation should be avoided when possible.  It's not possible
+here; more on that below.
+
+Why avoid?  Two reasons.  One, it degrades stack backtraces, as Eric
+pointed out.  Two, passing @errp directly is more obvious and less
+verbose, as we've seen above.
+
+>> > +
+>> > +        /* io_uring takes precedence because it provides aio_add_sqe(=
+) support */
+>> > +        fdmon_io_uring_setup(ctx, &local_err);
+>> > +        if (!local_err) {
+>> > +            /*
+>> > +             * If one AioContext gets io_uring, then all AioContexts =
+need io_uring
+>> > +             * so that aio_add_sqe() support is available across all =
+threads.
+>> > +             */
+>> > +            need_io_uring =3D true;
+>> > +            return;
+>> > +        }
+>> > +        if (need_io_uring) {
+>> > +            error_propagate(errp, local_err);
+>> > +            return;
+>> > +        }
+>> > +
+>> > +        warn_report_err_once(local_err); /* frees local_err */
+>> > +        local_err =3D NULL;
+
+This is why we can't avoid error_propagate() here: when
+fdmon_io_uring_setup() fails, we either consume the error and succeed,
+or pass it to the caller and fail.
+
+Because of the former, passing @errp to fdmon_io_uring_setup() would be
+wrong; we need to pass a &local_err.  Which we then need to propagate to
+do the latter.
+
+Similar code exists elsewhere.  It's fairly rare, though.
+
+ERRP_GUARD() is not designed for this pattern.  We have to propragate
+manually.
+
+I'd drop the /* ERRP_GUARD() doesn't handle error_abort */ comment.  To
+make sense of it, I believe you need to understand a lot more.  And if
+you do, you don't really need the comment.
+
+>> >      }
+>> > +#endif /* CONFIG_LINUX_IO_URING */
+>> >=20=20
+>> >      fdmon_epoll_setup(ctx);
+>> >  }
+>> >=20=20
+>> >  void aio_context_destroy(AioContext *ctx)
+>> >  {
+>> > +#ifdef CONFIG_LINUX_IO_URING
+>> >      fdmon_io_uring_destroy(ctx);
+>> > +#endif
+>> >=20=20
+>> >      qemu_lockcnt_lock(&ctx->list_lock);
+>> >      fdmon_epoll_disable(ctx);
+
+[...]
 
 
