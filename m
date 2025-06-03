@@ -4,180 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D76C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 07:18:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F56EC5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 07:41:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMLtr-0006WG-3N; Tue, 03 Jun 2025 03:17:31 -0400
+	id 1uMMGR-0001yT-VZ; Tue, 03 Jun 2025 03:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1uMLtn-0006Vv-Vn
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:17:28 -0400
-Received: from mail-mw2nam12on20609.outbound.protection.outlook.com
- ([2a01:111:f403:200a::609]
- helo=NAM12-MW2-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
- id 1uMLtl-0007vf-8B
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:17:27 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WqsFf87kAYg9q2Blc6ckluYG4NsHTr+LSGPLtvWSRX/TG4xhmvLIMM9l5UpVnjyINfdbzM4D7oqAdMcqtqKsWrtOUpGHOwQjIF7d7cSJAWLN9QgV1zeJnL2JAJ3hpr8OH0qy1X1XPOiQdMJ4N+H9tcc4ZMMtyfZC9XW0WaqAuEAnMm1aePeW/e/R1ExQNFJl3Encgrizcrxd5yQkRtRohy8n9ohg9whVjGK6CNrfCegvrsf+ECjOP3/Z3draBHLbQkHNE2IZ/ofSRq+e6/Ake5MRSdfSNq+fKbXvWz4L3kyiICFnBS+G7z0fBgivU/6OLYCXZ0b9STtpjwa2pfrFgg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8mkK1KM0ZHueknDOO0aQVoJFHtUk/M8sT/L/rjzCqfI=;
- b=WMVFdDC4Ird/SW3OWED7ewu0WD0Wf470RNpDBVrj0pjDZiOYqDC09hj3BYFHOLZqGi1436lRVCiY74A2fFo149cDP3VHJbq/moGtP2AU5RwaOWNEHcpD81ihMEGyJI6tz4on7uPXJHTINpeUkn3+P8VMdiwt82rYszBgV4cQEnMhuY4NdaL1RNG4EkduOZFG04bqMsmb9AIdyZQ+uihMDwW5uA7fHh+sEkAttcylmb3MTK8TOzNU+SGR5y8nVFHVWMHPfGSbzB/CpeRoGydms6ZWrD6Wp9qrW2bVZoAiGqDa5CbEAAEAUmALll//ZSxnjdB1ZiF2PmV7GdVKW1tpgw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8mkK1KM0ZHueknDOO0aQVoJFHtUk/M8sT/L/rjzCqfI=;
- b=bV/gXm72YPqVbrczzBHH4BnZU3sR/zCEtgzL2w+6L8Gq9TA7ONewfxDvSoARzqMI4BKXZybcUknXUpPHtjL5hJcyiS99DVX5kOQ8wqXAp3PQvfENbitTtxJ0QnhscNxIxMjuSbpXetgW02ulQVQIn1Yb+m8OPJwvDecBITTXTwc=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from IA1PR12MB8189.namprd12.prod.outlook.com (2603:10b6:208:3f0::13)
- by PH8PR12MB6865.namprd12.prod.outlook.com (2603:10b6:510:1c8::15)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.32; Tue, 3 Jun
- 2025 07:17:19 +0000
-Received: from IA1PR12MB8189.namprd12.prod.outlook.com
- ([fe80::193b:bbfd:9894:dc48]) by IA1PR12MB8189.namprd12.prod.outlook.com
- ([fe80::193b:bbfd:9894:dc48%4]) with mapi id 15.20.8769.031; Tue, 3 Jun 2025
- 07:17:18 +0000
-Message-ID: <219c32d8-4a5e-4a74-add0-aee56b8dc78b@amd.com>
-Date: Tue, 3 Jun 2025 09:17:14 +0200
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uMMGI-0001xo-Lb
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:40:44 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uMMGF-0001mD-Dc
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 03:40:42 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-450cfb6a794so31831905e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 00:40:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1748936437; x=1749541237; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=nI5+iX1Ap1I7p2hPaIWHc8kcqMcI1xAcqyfDcopnGso=;
+ b=o5ur8UBbVZh9y1fxMMH/X4YgeVGC84vl5FD9e7tDbGbo2Lu0JHFMwcW8/ElDOm2FuP
+ AQvBzTm7vyCGUwEkk/H3ShTwGhVtFSX1uD+E3wQe0D+nZIxy9vJbM4Ezl1cK/GlTtW++
+ 43kWtdjADKKxFb5Fu5p1VxcDUnrU42T5DA/E9E+0gBJ/M5GEWhshrcVYNfl521p1eOJV
+ RWCwpVfvop2FHFWIRlhQC6J8xrwVppxqxFHdkZ/qvtEGNnjXq725ob7TRO/7rOXSoHgz
+ T7Y/rE3SuX53/Zz48bH97s6J1Q1gokevyZLTkU3eHihke5IT3phymcRzV3+Js08m913e
+ YtUA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1748936437; x=1749541237;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=nI5+iX1Ap1I7p2hPaIWHc8kcqMcI1xAcqyfDcopnGso=;
+ b=jCL4SGeUqiHFwUNpmbwxuvEZDuvqF/SqI9DLhkkgKZ3z2i40+i2wjV8laIXImBHXoj
+ gOyy9NyWFGIe9jyphZE/P8mToURWwIZeDmCG0WlaF+q8WrjxZTdrj9NpKMqE57YavcrH
+ mENGLJP6YU6pb5LX17t/E1tSbw9zQpxAS3fH2yvLfbVXYhV95jvS8CIhIVhdB/EOafEj
+ ljZ0GYa6THmuHAzw0xkDoKaJ2qLhWjKAj2whuo+pmJSFAdXtDptdmCAUysBHBfi5mjJz
+ 8BAW4EiXkiOtICNFngui9Oohc/dTf/VXD1whaYD7XsevFpixsMsjhM1ixAhGXBcwaeLw
+ JL/w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5j+CKmcBIAgkzbrOyl07b4R9vNh9tufXa1/oxR1yp3i5QhIkcldZiIDMRTSk9MjNWDivCwA9L7cQ0@nongnu.org
+X-Gm-Message-State: AOJu0YxCzsvpbPrGmxhtXTa7qmHG7tEK85fOKld0u5Yv4kUiJk/Knt7g
+ lGPPLHdGi4Re6s0wIGShVcaUWqcU0UF37k3F+7wqJ1YxiLmJKjUsDLZDLV5rZTJm/M8=
+X-Gm-Gg: ASbGncvtu+4aqY2kf9z7zX+rIBSnAQTG2MdOBJ8xzE1mexfVl9n2R20NDkyttt5Kaqj
+ HNc6UtVhsogKSY5JvjAZxzlPu0j8o+EbuOCN2FLpoIYvg/FL0OVp70jZoTYd8KyL4RMCZmAInmH
+ oPFuhCU2EmVJkfV97iBKk7dAIIIGsE3iuP4YSfP+CZgYbgkxPDboklcAmtIktveO3bMy9wmMdQF
+ K2dyf2c/pSe3gZBDistFQUiFB/cQxE+uSZ5er3baiDGjbcgsQG73SMek8HxVhFGjdkv0tDGfAXS
+ A0hoph8a4pBghVSDxwIkCfigS1+i0R3WCYoCk3gno8F22+F/sQt/SKU5EMMjj3X2AwZLT/TB61X
+ IFCrka4qsPW0Q5NPaC5Z0
+X-Google-Smtp-Source: AGHT+IHo3GHoSyul5hAl5f3LuZvOaakwBeA9kb0aillfCmuruGqUChSDyH5YSlsL/H9bcOtFS0SdyQ==
+X-Received: by 2002:a05:600c:8509:b0:442:ffa6:d07e with SMTP id
+ 5b1f17b1804b1-450d64c31bemr123049585e9.1.1748936436752; 
+ Tue, 03 Jun 2025 00:40:36 -0700 (PDT)
+Received: from [192.168.1.127] (host-80-41-64-133.as13285.net. [80.41.64.133])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-451e505d454sm12109035e9.0.2025.06.03.00.40.35
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 03 Jun 2025 00:40:36 -0700 (PDT)
+Message-ID: <71feb259-63b6-468e-a013-d48f0c3f434d@linaro.org>
+Date: Tue, 3 Jun 2025 08:40:33 +0100
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v6 4/5] ram-block-attributes: Introduce RamBlockAttributes
- to manage RAMBlock with guest_memfd
-To: Chenyi Qiang <chenyi.qiang@intel.com>,
- David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
- Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Roth <michael.roth@amd.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
- Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
- Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Alex Williamson <alex.williamson@redhat.com>,
- "Lindgren, Tony" <tony.lindgren@intel.com>,
- "Maloor, Kishen" <kishen.maloor@intel.com>
-References: <20250530083256.105186-1-chenyi.qiang@intel.com>
- <20250530083256.105186-5-chenyi.qiang@intel.com>
- <4105d9ad-176e-423a-9b4f-8308205fe204@amd.com>
- <9a9bb6bb-f8c0-4849-afb0-7cf5a409dab0@intel.com>
- <d0d1bed2-c1ee-4ae7-afaf-fbd07975f52c@amd.com>
- <c646012a-b993-4f37-ac31-d2447c7e9ab8@intel.com>
+Subject: Re: [PATCH v2] target/loongarch: add check for fcond
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: maobibo@loongson.cn, philmd@linaro.org, lorenz.hetterich@cispa.de,
+ qemu-stable@nongnu.org
+References: <20250603024810.350510-1-gaosong@loongson.cn>
 Content-Language: en-US
-From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
-In-Reply-To: <c646012a-b993-4f37-ac31-d2447c7e9ab8@intel.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250603024810.350510-1-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0257.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e8::11) To IA1PR12MB8189.namprd12.prod.outlook.com
- (2603:10b6:208:3f0::13)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|PH8PR12MB6865:EE_
-X-MS-Office365-Filtering-Correlation-Id: 72074f4c-9404-414b-ce9c-08dda26eacc9
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?VDU1cXdPeG5XcGpOTXFCSEZIbUJaNXVwaEdOSytPWVN4czlaTnRUV2ZpR0Q2?=
- =?utf-8?B?UHQ4WCtVSE5SbThsV25iajdDNXpKdEJhaU1WMUVOTUFLN1N5aW9IRms3eFBV?=
- =?utf-8?B?blRMVlZuME1CenczSHhSYU1FUEUyOEIrK1p6U2RBUEViUkdCS1JwMnhGdWhR?=
- =?utf-8?B?SDQ0b3UvS0VBWkx3RWdsTTlnelNqdjMrMEt0VnRqdk5aOFpJWHYzeHlJdDFR?=
- =?utf-8?B?SUZWSG5XVFVtcEdhYzQrcUFBWXBWdHJnYVl4T0ttSHVvakc2R3lvc002U3Y4?=
- =?utf-8?B?K0NmRENGNVdsT1dQYldqcEw0cUhnNGQrekZJS0RhMnlMRzBFVE9RY2hoTGVW?=
- =?utf-8?B?QVYweC9lQ1cxakVJZU4yWVE1OWpYWnNlOVZhOXZZZmV1ZEhlRW43V0gzTXU5?=
- =?utf-8?B?MkVKcUhjTU1rTWhqWjVKdmNmcjkxM0FHVUZMcUtLSHdtdjN4RFF2eUNrcXJk?=
- =?utf-8?B?N2pWSS9QNnJwdFhUWTQ3ckw4Vm56aTVBdzdtdFNtdDBtbmE3UTFranhhMU9I?=
- =?utf-8?B?d21TeFAyT2F0U3VQa0dGcWZtbDQ0dDFJYStLMjBWL2xWb3V3T0VKZVBKMnlC?=
- =?utf-8?B?MitqOEo3YmppNzlhSmh5YjA2cHFhV2FtTHE5d042TDl5YStGZmpzK2cxc05O?=
- =?utf-8?B?SzRaYkp4K2RkbEFQeUpnSm0yallvMUNGeXVsY3lqVlMzQjhnVUJwejI2ODhS?=
- =?utf-8?B?dEl3NG5kVEtUb3pVSkxMZU9YSkgydG5RZUk3MElSTFF2bnF2ZlkyU0FZcENT?=
- =?utf-8?B?aXppK3htMy9nSnA0dlE4cWh0TUdEeDh4M2phQzBPQmJ4SE4vQXdzd0lsTTN1?=
- =?utf-8?B?eUZ3dENRMVRaZUgwRlRHS2pOSWE3RnJQRDVLamQ3dGkxUVNJeFBHTmRXY2RC?=
- =?utf-8?B?b3p0WEdaaHZiRFliVE9OZjRPNmIvUyswUkZtNElCSDh3UTRQdjNPL25YeVdt?=
- =?utf-8?B?REd2WU5menZscUYxZTRmenh3eDdCSVkwc3pwTkR2YXZVTEFqaUl4aHBmclZV?=
- =?utf-8?B?N2tlNHZCZS9TMktmbGVTK3BySXBvOVdTajFFR29rMmREc1NNSUh1anlGb0xz?=
- =?utf-8?B?Z0ZMSThWUVdmTzZ3Y3MwSE1zRlZFTkZONEtWa0Rva2NHN1JlbTBZUENVRHJ2?=
- =?utf-8?B?Sm0ycjBCWDlSQ2s2WVdCdUZEaTQrbW0wTFFoTmxXcWpLNm1IaDNKZ3lkN1Rz?=
- =?utf-8?B?VUZ3cjB5OUc1eEs1YjlWOXk1d0JTcnMydTltaGpEQi9mTHJzczhYeXFMd3dO?=
- =?utf-8?B?c2JUTmYrZW5USkVQQ3c0MmRTVnRRMitPc2RwOTVJRHdsdHBRNzE5VWVnc2dV?=
- =?utf-8?B?MTZrTjRLNEVhNVBoL1Rudkduc0Z2d29DWW1jZG84UHdIdEtnbHBJN3I4NkZ5?=
- =?utf-8?B?eDBVOEJFdm9obTVzSHdwbUY1Q05zbkFrSHhLMyt0bWF5THY4UVpJYnYyYjlZ?=
- =?utf-8?B?cU1KL2huZmh6OHBoV3hMZGthaS9rMGplRHVtUHJNYlkyZlMyOGttdThHVEgx?=
- =?utf-8?B?MnVyQ3hqQzJNeVA1bVBEV2ZsdlhKUC9yVWFGcUtCdElyZ2RuV1lHd2NmcEhU?=
- =?utf-8?B?ei9pZllsS3NUaCtVUmk4Z2QzQVBLelBjSFlKTk9iNVc0bU43RXhPM1FXOFNn?=
- =?utf-8?B?bmVTdU40NHJJc2paVGVqU0h4anZxU0RhK25HOW9CdENrMmpyeHVJYSt6bC83?=
- =?utf-8?B?WFloclJVZzBHSFRGMjBqaHJ3K0E5OGNWSUNRVy9jbWtDUnlxK3RZeFdCSHZk?=
- =?utf-8?B?YjNlazdTWW1tTE9yeEtEYVVwUHo3VHpyYzhiWGk2RGhoZUV0SmtqcGZRKzNH?=
- =?utf-8?B?MHhjMXI2NzllVE56eCtLT0xBN0tvcklHU3RlMmxDSEl5YzVxV3pzZVZxdEQ0?=
- =?utf-8?B?cEhRRmxPaFR0aCtlaCtnTEoyVzdUUmFLblVtNVA0ajdmb3RCRWh1aGNzdGtW?=
- =?utf-8?Q?D1ou2xIZ9PM=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR12MB8189.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(7416014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aGphUk8vNHVJajBHN0s3d09mejZLQ3ZXT0VTbkZHNnBZeHk4T1ZUU1dEWWZ1?=
- =?utf-8?B?Zms5OW1PNlgyeG51MjBIMU0yeU16NWJOYXFGd1NVRGZ6SnFrUDU5R21lNzcz?=
- =?utf-8?B?ajFydnJqd2tRTjBpV1E3V25ObE5mQnpLMjd6dnhBVzJDc0xxcEkwMnN0UUZ6?=
- =?utf-8?B?Zm9jeitmTDNpR0EyNllyTVRaTGg5d2s0ZWtFWE4xSGJLckFCTFl2K2VGSmtM?=
- =?utf-8?B?NzZad25jWTFWdlJ6TGUrQlkwcXpMcGtjY1prUVc2eVM1TXZvUnp5cDdDTTJz?=
- =?utf-8?B?MW1OVG1Yam5XakJJNTNXVi9ENW9EVC8rUVFzYUc4Q1Rlb2YwYS9LZDNMTlRJ?=
- =?utf-8?B?OC8vVktGeGVqUk5UbUNaellBczdkQUt2M3U5ZnR6YXBzWmlKVlBLSE9RWVlv?=
- =?utf-8?B?dWtTaTR0RkZVaWZxU2U2MTlOK2hmeTZ2VTNSOFVMSmJtazRTMDl1NG9VM0hQ?=
- =?utf-8?B?ZGVPNW4rVDh2UzV2bUpNMWtGRXBPVUhxeXM5eXhCNzU4d2lURjA2NlM2bjRU?=
- =?utf-8?B?VzNnNEZRc0hFMGxJUUNDTHdiZkU1WmFkQStiN0xtTjQ4MDRPUEFxdGsxcjZR?=
- =?utf-8?B?Vm1qb0kxbkRiYUFGZGtGWStPV3dxbVpHcHNKbklvSnZoQWJTbHo5NlRpcjRT?=
- =?utf-8?B?dGQ4czJPcmJOcDQ5d213NE9BYUNJaDZCMWg4NmswM2hrRzU0dG1ua2EybHVi?=
- =?utf-8?B?dG9oK1lwYWVhN1dHcFo1d1hCcG5TcTFERkN4NjJFSHNwanlSc1g1d1FrM0F1?=
- =?utf-8?B?OGh6SjR6QitDd1lqY2pSd3NQcG5obUVwWlhHQzBnNXRGQndrZDRVOEhmQUI4?=
- =?utf-8?B?SW5FV0htaVEwV3hNQkVJY0lqS29vRWhNajA1MHFBamtZTitzdFloZEQxKzRp?=
- =?utf-8?B?OGM2RENHb25DczI3ZnRKN0kySjJwRk11UTQvZisyTnJvN09xT1Z5SmVFeEZo?=
- =?utf-8?B?c2pTR2tkaTA0ckxkSXEwUWJTcmllTkRtQWt2UjZmT2MySmpjeVBYVnN0TlQy?=
- =?utf-8?B?QjVtd3lqaUgrM3FxbDEvZy9yNmFlMFZtZldtQy9EU2ZNVXRoTm5sS09DMTZv?=
- =?utf-8?B?K0hMSm5xT3hHV3BYYWxlOFJvOUZPVWFvTjFqY1pUMm9HMEtmU0MxVGsxcnMz?=
- =?utf-8?B?ZE9kRFFnSWpVODBxTmtpT0kxNURaSFdpMndYY0ZZcisrck9paVJqeC9uS0tL?=
- =?utf-8?B?ZFpuM3JnN292eXB1dlhJMHYxU0ROZmFpcHVzLzNnZWV3d2pwemt4UFZJYlc4?=
- =?utf-8?B?a3NjTHVwZmpsTHpONWI3T3NscFNGSnc5VzZFdVNnSndURHVEajJnTEpvMFpZ?=
- =?utf-8?B?Tm9YQitCWDZESXdJengvT2hjanJnVDdWNGlqZUphdUdQY2hITG9vSVJFRkdT?=
- =?utf-8?B?eU5PUEZsbVJoQTRIaUxtNXU4VEFldHFoKzJLa2pUekFIOUpHSHFKbElvK1FF?=
- =?utf-8?B?MkMyZzN0cWIvekM0enRjc1U1VUdHLzdVYW54MFoxZkMvWTBTeUVEZEVrRjhp?=
- =?utf-8?B?bVc5cFQ4NlBlNm5kbmpQTW5FL0VoT3pyeE05eWs4bFFsTWluTVBOUGxuTnM5?=
- =?utf-8?B?UGIyeWVLelloU0dsUmxsUnhOemQ2dGtCY2ZkcnZhUmFsbXo1bkhlOVBmeE1D?=
- =?utf-8?B?dGtXYnZHTTVhdWIxNTB5ZDRhMjQ1NVhtaVQyVHBWZmorMWJteHV4SUVpcFNU?=
- =?utf-8?B?KzEyWC9rY0x1eTFNSUFxckh2R2psTmc4Rnh2Umg1MHppaXVhcU1meHdMcjlv?=
- =?utf-8?B?Q2g3QXVuMWlsYnJKa0tMVU9RbFl1ZnBTRTBuejZJUUIrZWlvNjE1N0R6MXdT?=
- =?utf-8?B?eXFmcFNMYWVtaGJtVUtFa3k2MTVNMnc0S1E1WEZyQmR1NTg5dXhjeEd0V292?=
- =?utf-8?B?dHRWN2QvbWZHR3ZoZDB6STVoQmsrM210SXBZeWN0SG9TWmhWbllYOHhCUlRI?=
- =?utf-8?B?MURIRmlpTWZpYTBsK1c1eFJ1b3J1ajZYaWt0Y2J3STJ5bUpmTlJLcHJhNmMw?=
- =?utf-8?B?Wk5tS1N0TE80VEdUankxY1ZvRy81KzdNQkVnMGpicU1vMWIvVzNvOWZmK295?=
- =?utf-8?B?dTg3WE44ZUpxTzNpV0Y1Z3puL0RISVFkbXQ1c0ZXODc5RnhITjFybkZEUWdm?=
- =?utf-8?Q?sYn/Uh06QuIOwO+D5PN9hUisf?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 72074f4c-9404-414b-ce9c-08dda26eacc9
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8189.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2025 07:17:18.7633 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: T5xQFH7Qu1NG1OKihCWo6g9BX6zIAQ/OSU+qRSdXLTYQzdSIRKXYt8l7l5q2bLI8cIi+JeLlgVn6o5Oz6m+Vhw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB6865
-Received-SPF: permerror client-ip=2a01:111:f403:200a::609;
- envelope-from=Pankaj.Gupta@amd.com;
- helo=NAM12-MW2-obe.outbound.protection.outlook.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -193,53 +104,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-+CC Tony & Kishen
-
->>>> In this patch series we are only maintaining the bitmap for Ram discard/
->>>> populate state not for regular guest_memfd private/shared?
->>>
->>> As mentioned in changelog, "In the context of RamDiscardManager, shared
->>> state is analogous to populated, and private state is signified as
->>> discarded." To keep consistent with RamDiscardManager, I used the ram
->>> "populated/discareded" in variable and function names.
->>>
->>> Of course, we can use private/shared if we rename the RamDiscardManager
->>> to something like RamStateManager. But I haven't done it in this series.
->>> Because I think we can also view the bitmap as the state of shared
->>> memory (shared discard/shared populate) at present. The VFIO user only
->>> manipulate the dma map/unmap of shared mapping. (We need to consider how
->>> to extend the RDM framwork to manage the shared/private/discard states
->>> in the future when need to distinguish private and discard states.)
->>
->> As function name 'ram_block_attributes_state_change' is generic. Maybe
->> for now metadata update for only two states (shared/private) is enough
->> as it also aligns with discard vs populate states?
+On 6/3/25 03:48, Song Gao wrote:
+> fcond only has 22 types, add a check for fcond.
 > 
-> Yes, it is enough to treat the shared/private states align with
-> populate/discard at present as the only user is VFIO shared mapping.
+> Resolves:https://gitlab.com/qemu-project/qemu/-/issues/2972
 > 
->>
->> As we would also need the shared vs private state metadata for other
->> COCO operations e.g live migration, so wondering having this metadata
->> already there would be helpful. This also will keep the legacy interface
->> (prior to in-place conversion) consistent (As memory-attributes handling
->> is generic operation anyway).
-> 
-> When live migration in CoCo VMs is introduced, I think it needs to
-> distinguish the difference between the states of discard and private. It
-> cannot simply skip the discard parts any more and needs special handling
-> for private parts. So still, we have to extend the interface if have to
-> make it avaiable in advance.
+> Signed-off-by: Song Gao<gaosong@loongson.cn>
+> ---
+>   .../loongarch/tcg/insn_trans/trans_fcmp.c.inc | 25 +++++++++++++------
+>   .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 +++++++++---
+>   2 files changed, 30 insertions(+), 11 deletions(-)
 
-You mean even the discard and private would need different handling and 
-we cannot use a common per RAMBlock object metadata store? That was the 
-reason I suggested in v4 to go with a base abstract class with common 
-bits and implementation can be based on specific derived class. As that 
-seemed cleaner and future extensible, otherwise we would need a major 
-overhaul in future to this code.
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-
-Thanks,
-Pankaj
-
+r~
 
