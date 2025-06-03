@@ -4,87 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A0BC5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 21:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D2E4C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 21:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMZSL-0004x2-3F; Tue, 03 Jun 2025 17:46:01 -0400
+	id 1uMZS8-0004tY-Pw; Tue, 03 Jun 2025 17:45:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uMZSF-0004vv-V3
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:55 -0400
+ id 1uMZS5-0004t2-A4
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uMZSE-00067O-6i
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:55 -0400
+ id 1uMZS3-000660-N2
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748987153;
+ s=mimecast20190719; t=1748987142;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wF/7AMFohajP7PDXK4wy6zTmbmhbRvXmaQ09K9UIhpc=;
- b=dKQSH3nmjNIo9JCN7vlvyp1fJUpOP3TgdqXh7fAsWgkdkft+MojoCNBCiJ23a/Kg6yAB2H
- mIolOU4h/km97QG/qQvp3dOY0oOdP0Ty5gza0CDJAYw+tdKaTvqtarL/0hap0EwU/Z1TeI
- CUjuFhN7H8nyFKedLMY6BJwOReotkWg=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=+MaRtQvyQVdxiccHruMjcY+PBk/KP5Z1xfXXYJBauOQ=;
+ b=LkTWjCTn6qHX+1HVTcswP2ADoDcPHj4r8oPB9chejO4xVQG9vdkf8LkwiV3DYBQxBq0m+l
+ dyEqeuET6UM7M4JE3OlWfod7bFuZ5CJqT9P+Bm0nIWPcNv1Dg5W4i4yZnJIOkSREVl3bNF
+ 62uqX0pYituGw5/k6WVQpwNCr6ux2EE=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-373-K-98M1igM_2Ls6B2kGGl7A-1; Tue, 03 Jun 2025 17:45:52 -0400
-X-MC-Unique: K-98M1igM_2Ls6B2kGGl7A-1
-X-Mimecast-MFC-AGG-ID: K-98M1igM_2Ls6B2kGGl7A_1748987151
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450d6768d4dso32857185e9.2
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 14:45:52 -0700 (PDT)
+ us-mta-393-GYrpHMJ3N6GXjp9klJ5t1A-1; Tue, 03 Jun 2025 17:45:41 -0400
+X-MC-Unique: GYrpHMJ3N6GXjp9klJ5t1A-1
+X-Mimecast-MFC-AGG-ID: GYrpHMJ3N6GXjp9klJ5t1A_1748987141
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a5058f9ef4so1187372f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 14:45:41 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748987150; x=1749591950;
+ d=1e100.net; s=20230601; t=1748987140; x=1749591940;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=wF/7AMFohajP7PDXK4wy6zTmbmhbRvXmaQ09K9UIhpc=;
- b=oIEsC0XtH5clh0yFnbPp+cXciK/Ky0SsCU32fGrC0J4RoQoqI0VR5jgzXebK2KdpZs
- XX6WMatCKkvOzogaFCs/9T3mnL7wZUDoUKcbFgASRmU9K9shk3WgINn7/kBlqqpAkLdI
- 8MDmTBlrkYOCHvmRm/JykoA3gTTVsZ5Qpi9NnEWQ4Ei39dJt4M7+Yu0IZMoSTevEYx+x
- v+3u6/Y7z9dYw/WgPhpqhZ6ULuE4w06OWT8+Sqbpd3UrDR2b2ffqPyzb+HY9QS75DvH3
- Je3CepdJZu86SpDIqC+UaLF5wkCmD/PYZEu8qU90EveSMAxQD/Oo6TkIlMFH6PIAZvJw
- sg6g==
-X-Gm-Message-State: AOJu0Yz+S+wOuRGqVDI46F/p4lrXRGSbqz+3p0fajVPo0arUmpQzegTQ
- usmKagZUT1SFW6l6JMTzVh2iObaP5w5HLpim7UEM63JKHSlEXK8CMKHsKkmEG4JAghnibnGHjYE
- 3aPnW4TVnVn7KHugPTkogjINa/0qYQJ4RlrnyE73M4Xhya78BY9LaMLm6Qeth1C0eSJ4azxDzYY
- xvcFnL74UHN4ns0UXpfJieKf2qdDZuU52D9P35QpWV
-X-Gm-Gg: ASbGnct4hM2jzXKxIgpLsD2cExqMy/QGp4d9xZ/p/8k3xINLrI21gre1/WRBBFuWW4u
- 33/IUNRweNzi8lSrZQZjoLU8GQTjUaFH2CrTs4N97zXvZQoLh9bQCu3MA6rR2XLC8hobPzuq64M
- Pj5vIDIY/Hn+ODGiSHgQk00MwOi5eE7n5mQgBfeDDW2GsRLlnMvNYxG3idOOUidmntp8RvwlyqO
- pPVrh1YfbsE5HCjqe1DX8h2+gNH3gPKK0ByVeDQ+7VWA6Hg/msHpjUUbOtIcWtBhsIb4u82xTyl
- hDlO1Qh61l/yYA==
-X-Received: by 2002:a05:600c:c87:b0:442:ccfa:18c with SMTP id
- 5b1f17b1804b1-451f0b482ebmr1954035e9.32.1748987150256; 
- Tue, 03 Jun 2025 14:45:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH1dBDZW8QaikG+bX0OEfGehxBWpEufJBLvkClx6rM0UcrW8GuQd5th4yi4crwhqpMGVpMzNQ==
-X-Received: by 2002:a05:600c:c87:b0:442:ccfa:18c with SMTP id
- 5b1f17b1804b1-451f0b482ebmr1953885e9.32.1748987149811; 
- Tue, 03 Jun 2025 14:45:49 -0700 (PDT)
+ bh=+MaRtQvyQVdxiccHruMjcY+PBk/KP5Z1xfXXYJBauOQ=;
+ b=CukNKkhgUCfqgx0bo8lzTinU6sNqPhhzGcU0hbQp6CrAJojwYr7QiUM0cZ94ZmwK4d
+ 4fq9R7OB67SlJw9p3X2XH4Vq8+NSK8jP5BVrW4RJ9H14AuBi2g6NvI7cBS8Lm7ThGFfj
+ fhvxvtU2mvCmmol0Y0CKLibChUFz60+JTJzhTbdb2UMzpPsuYv9wvqjSr+NHY/zmXM0w
+ km/hyZSHTLc5sYWujHkZGJkg5XtBK8ieTUnBD2LYhwq1Hbwj3Zgd870xaOBDzkU5YwGK
+ K5M5sHnJh5Cc2bMZoqI7aWuWgbTBpXkgmls9QhuJALKoVWpVVImn9qE7QzmU28yhTxHE
+ hmUQ==
+X-Gm-Message-State: AOJu0YwX/lzZz7mjJxnONtcKJvQduXMh8iFantjc9sTE4k7MC+2Evmb0
+ OFpd85OPG0M6kG+yzmqFYZT2aLDab06vomXZ3NwLl7ofDw2Tlxi208hmf25jsJ5cFBJzwEMp96L
+ x068T2Hd1bMdwram23/SJOUzb2Pwv3knQ9QPV6VSHg68NxoG0RzfnUbHwg0zcNeZN3ugQeGaThY
+ 1KG3sbKhbueKPpplLs3kCKRO2PeSd6BaivaL7C2Bl3
+X-Gm-Gg: ASbGncuaQQLBXB9whfZzMlGZAQY62kumBOD8ibblvdvCt2sOcr0ZVokw9DM+lHzzCRI
+ gX2Hr1KtDD0uYWDEgQ0Ipl+JJv6SfT7OUgtePwV+trs4I6uRgakYX8PWspWWUVBucwDAChl32Um
+ RJYSIbFGRWgBslMvHbS2MX9F15ayuh/SOfzi5z+BTw6d8CQt5CzOGuzPVDqMcGROOa8z9pSCDSG
+ cm6+YNt5EdJ4b3+KY6xxc10niRaNtiBejXpHHc5E+ytY9HKTpKIJ8CR8pKs0GHaOYXz49YRSfDa
+ iqiwlF3lnn3D2OpkC4NVGn4d
+X-Received: by 2002:a05:6000:22c6:b0:3a4:dc0a:5c0a with SMTP id
+ ffacd0b85a97d-3a51dc313f1mr209952f8f.44.1748987139953; 
+ Tue, 03 Jun 2025 14:45:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG05P8ZmTqAMqGL91GlY9Y1ZdnOa6gFSEjKz6PGEymCdavJe9jauizgWoh4RLlWquSr4fro/w==
+X-Received: by 2002:a05:6000:22c6:b0:3a4:dc0a:5c0a with SMTP id
+ ffacd0b85a97d-3a51dc313f1mr209935f8f.44.1748987139486; 
+ Tue, 03 Jun 2025 14:45:39 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d8000d8csm174591435e9.24.2025.06.03.14.45.47
+ 5b1f17b1804b1-450d7f8ed27sm183202065e9.2.2025.06.03.14.45.36
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 14:45:48 -0700 (PDT)
+ Tue, 03 Jun 2025 14:45:37 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 11/16] meson: use config_base_arch for target libraries
-Date: Tue,  3 Jun 2025 23:45:18 +0200
-Message-ID: <20250603214523.131185-12-pbonzini@redhat.com>
+Subject: [PULL 06/16] rust: cell: remove support for running doctests with
+ "cargo test --doc"
+Date: Tue,  3 Jun 2025 23:45:13 +0200
+Message-ID: <20250603214523.131185-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250603214523.131185-1-pbonzini@redhat.com>
 References: <20250603214523.131185-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -111,52 +109,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This is not needed anymore now that tests link with libqemuutil.
 
-Fixed commit introduced common dependencies for target libraries. Alas,
-it wrongly reused the 'target' variable, which was previously set from
-another loop.
-
-Thus, some dependencies were missing depending on order of target list,
-as found here [1].
-
-The fix is to use the correct config_base_arch instead.
-Kudos to Thomas Huth who had this right, before I reimplement it, and
-introduce this bug.
-
-[1] https://lore.kernel.org/qemu-devel/c54469ce-0385-4aea-b345-47711e9e61de@linaro.org/
-
-Fixes: 4fb54de823e9 (meson: build target libraries with common dependencies)
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Tested-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/r/20250602233801.2699961-1-pierrick.bouvier@linaro.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ rust/qemu-api/src/cell.rs | 22 +++++++++-------------
+ 1 file changed, 9 insertions(+), 13 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 651bd4f7275..967a10e80b8 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4135,13 +4135,12 @@ common_all = static_library('common',
- target_common_arch_libs = {}
- target_common_system_arch_libs = {}
- foreach target_base_arch, config_base_arch : config_base_arch_mak
--  config_target = config_target_mak[target]
-   target_inc = [include_directories('target' / target_base_arch)]
-   inc = [common_user_inc + target_inc]
+diff --git a/rust/qemu-api/src/cell.rs b/rust/qemu-api/src/cell.rs
+index 05ce09f6cb6..27063b049d5 100644
+--- a/rust/qemu-api/src/cell.rs
++++ b/rust/qemu-api/src/cell.rs
+@@ -225,27 +225,23 @@
  
--  target_common = common_ss.apply(config_target, strict: false)
--  target_system = system_ss.apply(config_target, strict: false)
--  target_user = user_ss.apply(config_target, strict: false)
-+  target_common = common_ss.apply(config_base_arch, strict: false)
-+  target_system = system_ss.apply(config_base_arch, strict: false)
-+  target_user = user_ss.apply(config_base_arch, strict: false)
-   common_deps = []
-   system_deps = []
-   user_deps = []
+ /// An internal function that is used by doctests.
+ pub fn bql_start_test() {
+-    if cfg!(MESON) {
+-        // SAFETY: integration tests are run with --test-threads=1, while
+-        // unit tests and doctests are not multithreaded and do not have
+-        // any BQL-protected data.  Just set bql_locked to true.
+-        unsafe {
+-            bindings::rust_bql_mock_lock();
+-        }
++    // SAFETY: integration tests are run with --test-threads=1, while
++    // unit tests and doctests are not multithreaded and do not have
++    // any BQL-protected data.  Just set bql_locked to true.
++    unsafe {
++        bindings::rust_bql_mock_lock();
+     }
+ }
+ 
+ pub fn bql_locked() -> bool {
+     // SAFETY: the function does nothing but return a thread-local bool
+-    !cfg!(MESON) || unsafe { bindings::bql_locked() }
++    unsafe { bindings::bql_locked() }
+ }
+ 
+ fn bql_block_unlock(increase: bool) {
+-    if cfg!(MESON) {
+-        // SAFETY: this only adjusts a counter
+-        unsafe {
+-            bindings::bql_block_unlock(increase);
+-        }
++    // SAFETY: this only adjusts a counter
++    unsafe {
++        bindings::bql_block_unlock(increase);
+     }
+ }
+ 
 -- 
 2.49.0
 
