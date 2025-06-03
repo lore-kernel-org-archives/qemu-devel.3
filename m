@@ -4,98 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1FF6C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 12:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC51DC5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 12:53:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMQwK-0002uo-Sr; Tue, 03 Jun 2025 08:40:24 -0400
+	id 1uMR7w-0006Io-7J; Tue, 03 Jun 2025 08:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uMQwF-0002tT-7c
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:40:19 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uMR7s-0006IH-09
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:52:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uMQwC-0000nl-77
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:40:18 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uMR7m-0002fv-92
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 08:52:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748954411;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1748955130;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5k2v5Y0UwmhUgDPLYigt/iJWB7+Js6vTusTc9w0nFHY=;
- b=N2PFJw7AI+62gIlQngEdBxABxWmC5ud10VOMUT+eFfJMQwGORawBO/8NiwwidOM7cXu+nA
- GB+pHAo/1aWNT1wpMhWhRfW2RIXPfL+ArxLGvH9KxwiHcqGuv5FAuV15hK00nFvG7wzFK0
- lCEjCqt9h0kmefIUTfTCvJmFbVG1Gps=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=trUsKMFwJz0c6UejqsMV3LgBjDPpBFT6soa7gKNzj40=;
+ b=ckvMXbSgg4wBmjgdBQXhGYFB+57EJeE7K80XQAR2yt9MU+X532njiOgAAyL+66tt/5GlW4
+ lURB04A7ORrfgNk5SD4O4nW7EML8kheUmDor9cXJ1jiRXJpGntfCCoefzXnLPeNndICd9m
+ 75AgbVQaUbvUbEWJAcKow0RUASFnzTs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-668-mC3uupo7PB-8sy3ZzkzNUQ-1; Tue, 03 Jun 2025 08:40:10 -0400
-X-MC-Unique: mC3uupo7PB-8sy3ZzkzNUQ-1
-X-Mimecast-MFC-AGG-ID: mC3uupo7PB-8sy3ZzkzNUQ_1748954410
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f858bc5eso2754300f8f.0
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 05:40:10 -0700 (PDT)
+ us-mta-616-oR3mgnhtOR2vT4VOwf7nnA-1; Tue, 03 Jun 2025 08:52:09 -0400
+X-MC-Unique: oR3mgnhtOR2vT4VOwf7nnA-1
+X-Mimecast-MFC-AGG-ID: oR3mgnhtOR2vT4VOwf7nnA_1748955128
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d290d542so29765615e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 05:52:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748954409; x=1749559209;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=5k2v5Y0UwmhUgDPLYigt/iJWB7+Js6vTusTc9w0nFHY=;
- b=vt1wTCKH1niqmmwRcmlEUa1DKzCi6wqATRLT2AhonKjqz1R4EbGFfDvxmKHkRpmWHz
- rMQZPABTgc0XpmAQlJlWhy3XVPJ1ufdPgb5Xo3JuIEbmLlLCAFaNG4I5EXWD6v0Z118B
- 6HDUWKl1w9x18nxfmgN0ezj8f7KMInxyeceWvV0p7QBqWLb87T4JdJRtKZf8iBm2nvIG
- rLCZEKT4Y9/Yg94VPs90Sj9Op84KCX5baVZWsS62QVftod62v8DsSqmNR5E5LURnb6kK
- a4zpIYwTczXNp13f4pQ9TePwLqRane//qd82yRxmpNQjaFNMBsU4i86zGqz0C/ooS7Vf
- 4bdw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV5U9CSDN8QFjzWW7IDfMbsOC8D2h3jUPNBejY13yo7mpyErJkeq9lRAEdbyXo84GVr+AFmi1MEH/Qe@nongnu.org
-X-Gm-Message-State: AOJu0YwteGckRZPitEnQmMf+KCCO/8USqXe11b75QaFC0JoW7sBn9IZJ
- J6MZjWdgKus6XyM92J8KEuz2EDnv37IIEJIvPbswnhr/mSOv4/ibSkdRCyzLi5fgq70TpLjaa4e
- EVyaawRAAC0K6W0VtB0Ur7rOWtaYxgCjyeBvewic8HIV9hUz0EWF7SjYs
-X-Gm-Gg: ASbGncs69dQEaQbPJEMvLYNBLbhbgF4VPS6AfFOyDU+K2HaOGR6+AlcheCQFsD1a21j
- iBpffDY7/+gO80O5dLd3tR6R52apjp2nxDkNVUvovmkX+n57BrxsoGkvC9OVCOdPWRSLh3eGHye
- RZ9R+GaqXegYag1LGKQVbJn5JqUyuqEdD2585mmudSqCV4zmcLuPiJSaiSnkp4jAkG1f+vvq6HI
- Azz10WIdGYKyfT1X5YcvQPSOrQuvn26bE47aP3+484pEM3PFUyMfzZ/1VFohe25fQyusQX7HVut
- PaDru6TVpqF2nLPAS/gWRO1ho86RRN1AWsNGBQi2T3bQWzbWb8cUtcuNEjQ=
-X-Received: by 2002:a05:6000:2004:b0:3a3:5ae4:6e81 with SMTP id
- ffacd0b85a97d-3a4fe160ccemr9715779f8f.8.1748954409483; 
- Tue, 03 Jun 2025 05:40:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE7GbtUuUIIEESZdz0gS6tHs1aNV9xFqjNwftSsC9HccnRLnBWNEaVsbz+SIYhIzjQ9QQqOTQ==
-X-Received: by 2002:a05:6000:2004:b0:3a3:5ae4:6e81 with SMTP id
- ffacd0b85a97d-3a4fe160ccemr9715744f8f.8.1748954409064; 
- Tue, 03 Jun 2025 05:40:09 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ d=1e100.net; s=20230601; t=1748955128; x=1749559928;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=trUsKMFwJz0c6UejqsMV3LgBjDPpBFT6soa7gKNzj40=;
+ b=M6iJ4PWaBRnn7XzhY/37DSLch7ZtS0NskCSjV/F8N/U/HL76BopQ9lnqEHmcEd3vfA
+ jXEbleRDDHCJh18cblwuZn7SCE0DzKGFupY8sPYSzve8VouXPAMrdOFwkJaNAluOHAy/
+ qhXi9rB2ANgqqU9pIWyzJ0050bmC5yA5oNnUi4cujbA5QgXKT6WBIIcBzf8rdI9P1H6C
+ YLH1evTOkAmSZfrk1blcUwAL/75m/vG7gGNisphLP2Xv4mUjU1habfCkQyCHCQnffjxB
+ FP1Hw2QYu2DE+qOP0m6zRsaogX6GsdbuNL72pAO/pcCVeObScIARzc1eE6OUS4shdw9U
+ kzVw==
+X-Gm-Message-State: AOJu0YxK/KuyMuxaQfxgeR7v48EFcJj0UxUIvzS7AgOlgrLVcfk4gOFG
+ 9mPe+Tv8EmXuPZNK7DyxvaajOYtcZyq9H3zDgx+scqmlXm1CR9nc4Fg7dOpnRndGIj8lSpOf9Ii
+ TvBylnJ7LdcEcVENamcVaM62xX74oSk2spHPbqnReTgrt49S5MXLA1cjo
+X-Gm-Gg: ASbGncuGKRUSr9jYoCVGF/4ROpOrQgECa4Gl00k9MJxoOdgb7Aht4ZBifcsyLYJNBMu
+ xKKyMXum29fC3YyNrEwAB3kr0lBAsCjyfmjceAMMAHvGDSkV8vgz2DVthEzxw9OprRzW2Z+ekVA
+ BVLZ+PpDzj4AEkpIjhJ7a7i3hqgEkB5sq3mM6GpBGZn1SvqnVFKHeIwzl9Op4Ryb/SOu/AsAZ2a
+ 3fb2OaYMqcexCf8EKDa8BEo6QS6/R75eENcfmMe0iO8g95fT+BvMQAGqSgOk7+9cLk7I9eWnFBr
+ sp3/cHKuCnM3aFLG5/mjxzoKLB6MF0aA
+X-Received: by 2002:a05:600c:8119:b0:450:cc79:676 with SMTP id
+ 5b1f17b1804b1-450d6544787mr140689115e9.20.1748955128303; 
+ Tue, 03 Jun 2025 05:52:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGBXtlPAf5PbN9PnCx+aWOAAMkaQyr9CTMa9Btz4ekrvbB68QYM9g3+9EjCnhvS26XEw4Xfrw==
+X-Received: by 2002:a05:600c:8119:b0:450:cc79:676 with SMTP id
+ 5b1f17b1804b1-450d6544787mr140688835e9.20.1748955127929; 
+ Tue, 03 Jun 2025 05:52:07 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe5b8a8sm17914526f8f.5.2025.06.03.05.40.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 05:40:07 -0700 (PDT)
-Message-ID: <5fa661fe-5400-4d13-8ba8-ce15f806b017@redhat.com>
-Date: Tue, 3 Jun 2025 14:40:06 +0200
+ 5b1f17b1804b1-450d7fa23f4sm167858745e9.14.2025.06.03.05.52.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Jun 2025 05:52:07 -0700 (PDT)
+Date: Tue, 3 Jun 2025 14:52:06 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Annie Li <annie.li@oracle.com>
+Cc: qemu-devel@nongnu.org, dave@treblig.org, mst@redhat.com,
+ anisinha@redhat.com, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ pbonzini@redhat.com, richard.henderson@linaro.org, slp@redhat.com,
+ eblake@redhat.com, armbru@redhat.com, miguel.luis@oracle.com
+Subject: Re: [PATCH 03/13] acpi: Support Control Method sleep button for x86
+Message-ID: <20250603145206.4e54876e@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250528163917.2167-1-annie.li@oracle.com>
+References: <20250528163545.2143-1-annie.li@oracle.com>
+ <20250528163917.2167-1-annie.li@oracle.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] vfio/iommufd: Save vendor specific device info
-Content-Language: en-US
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
- nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-References: <20250530093512.3959484-1-zhenzhong.duan@intel.com>
- <20250530093512.3959484-5-zhenzhong.duan@intel.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250530093512.3959484-5-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -116,101 +110,76 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Zhenzhong,
+On Wed, 28 May 2025 12:39:17 -0400
+Annie Li <annie.li@oracle.com> wrote:
 
-On 5/30/25 11:35 AM, Zhenzhong Duan wrote:
-> Some device information returned by ioctl(IOMMU_GET_HW_INFO) are vendor
-> specific. Save them as raw data in a union supporting different vendors,
-> then vendor IOMMU can query the raw data with its fixed format for
-> capability directly.
->
-> Because IOMMU_GET_HW_INFO is only supported in linux, so declare those
-> capability related structures with CONFIG_LINUX.
->
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
-> Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Add Control Method Sleep button and its GPE event handler for
+> x86 platform. The GPE event handler notifies OSPM when the
+> Sleep button event is triggered.
+> 
+> Signed-off-by: Annie Li <annie.li@oracle.com>
 > ---
->  include/system/host_iommu_device.h | 11 +++++++++++
->  hw/vfio/iommufd.c                  |  8 +++-----
->  2 files changed, 14 insertions(+), 5 deletions(-)
->
-> diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-> index 809cced4ba..10fccc10be 100644
-> --- a/include/system/host_iommu_device.h
-> +++ b/include/system/host_iommu_device.h
-> @@ -14,6 +14,13 @@
->  
->  #include "qom/object.h"
->  #include "qapi/error.h"
-> +#ifdef CONFIG_LINUX
-> +#include "linux/iommufd.h"
-> +
-> +typedef union VendorCaps {
-> +    struct iommu_hw_info_vtd vtd;
-> +    struct iommu_hw_info_arm_smmuv3 smmuv3;
-> +} VendorCaps;
->  
->  /**
->   * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
-> @@ -26,7 +33,9 @@
->  typedef struct HostIOMMUDeviceCaps {
->      uint32_t type;
->      uint64_t hw_caps;
-> +    VendorCaps vendor_caps;
-missing the doc comment update for new field vendor_caps
-
-Otherwise
-
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Thanks
-
-Eric
-
-
->  } HostIOMMUDeviceCaps;
-> +#endif
->  
->  #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
->  OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVICE)
-> @@ -38,7 +47,9 @@ struct HostIOMMUDevice {
->      void *agent; /* pointer to agent device, ie. VFIO or VDPA device */
->      PCIBus *aliased_bus;
->      int aliased_devfn;
-> +#ifdef CONFIG_LINUX
->      HostIOMMUDeviceCaps caps;
-> +#endif
->  };
->  
->  /**
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index d661737c17..fbf47cab09 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -834,16 +834,14 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
->      VFIODevice *vdev = opaque;
->      HostIOMMUDeviceIOMMUFD *idev;
->      HostIOMMUDeviceCaps *caps = &hiod->caps;
-> +    VendorCaps *vendor_caps = &caps->vendor_caps;
->      enum iommu_hw_info_type type;
-> -    union {
-> -        struct iommu_hw_info_vtd vtd;
-> -    } data;
->      uint64_t hw_caps;
->  
->      hiod->agent = opaque;
->  
-> -    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
-> -                                         &type, &data, sizeof(data),
-> +    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid, &type,
-> +                                         vendor_caps, sizeof(*vendor_caps),
->                                           &hw_caps, errp)) {
->          return false;
+>  hw/i386/acpi-build.c | 24 +++++++++++++++++++++++-
+>  1 file changed, 23 insertions(+), 1 deletion(-)
+> 
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 3fffa4a332..2ddf669006 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -40,6 +40,7 @@
+>  #include "hw/acpi/acpi_aml_interface.h"
+>  #include "hw/input/i8042.h"
+>  #include "hw/acpi/memory_hotplug.h"
+> +#include "hw/acpi/control_method_device.h"
+>  #include "system/tpm.h"
+>  #include "hw/acpi/tpm.h"
+>  #include "hw/acpi/vmgenid.h"
+> @@ -1359,7 +1360,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>                                                       NULL);
+>      Object *q35 = object_resolve_type_unambiguous(TYPE_Q35_HOST_DEVICE, NULL);
+>      CrsRangeEntry *entry;
+> -    Aml *dsdt, *sb_scope, *scope, *dev, *method, *field, *pkg, *crs;
+> +    Aml *dsdt, *sb_scope, *scope, *dev, *method, *field, *pkg, *crs, *condition;
+>      CrsRangeSet crs_range_set;
+>      PCMachineState *pcms = PC_MACHINE(machine);
+>      PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(machine);
+> @@ -1465,6 +1466,27 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
 >      }
+>      aml_append(dsdt, scope);
+>  
+> +    sb_scope = aml_scope("_SB");
+> +    acpi_dsdt_add_sleep_button(sb_scope);
+> +    aml_append(dsdt, sb_scope);
+> +
+> +    /*
+> +     * The event handler for the control method sleep button is generated
+> +     * for notifying OSPM (ACPI v6.5, Section 4.8.2.2.2.2).
+> +     */
+> +    scope =  aml_scope("\\_GPE");
+> +    method = aml_method("_L07", 0, AML_NOTSERIALIZED);
+> +    condition = aml_if(aml_name("\\_SB."ACPI_SLEEP_BUTTON_DEVICE".SBP"));
+       s/condition/if_ctx/
+also use full form 'if something == something' for condtion
+
+> +    aml_append(condition,
+> +               aml_store(aml_int(1),
+> +                         aml_name("\\_SB."ACPI_SLEEP_BUTTON_DEVICE".SBP")));
+
+so what is handling this write on qemu side?
+and why it's here to begin with? (commit says that it sends event to OSMP but nothing about this write)
+
+> +    aml_append(condition,
+> +               aml_notify(aml_name("\\_SB."ACPI_SLEEP_BUTTON_DEVICE),
+> +                                    aml_int(0x80)));
+> +    aml_append(method, condition);
+> +    aml_append(scope, method);
+> +    aml_append(dsdt, scope);
+> +
+>      if (pcmc->legacy_cpu_hotplug) {
+>          build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
+>      } else {
 
 
