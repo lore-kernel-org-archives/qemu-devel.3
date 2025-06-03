@@ -4,81 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80B45C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 13:50:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 562E9C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 13:51:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMS1m-0000Sj-64; Tue, 03 Jun 2025 09:50:06 -0400
+	id 1uMS2l-0000nz-Ef; Tue, 03 Jun 2025 09:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMS1j-0000SC-1S
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 09:50:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <balaton@jedlik.phy.bme.hu>)
+ id 1uMS2O-0000g4-Ld; Tue, 03 Jun 2025 09:50:52 -0400
+Received: from jedlik.phy.bme.hu ([152.66.102.83])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMS1d-0003JA-0r
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 09:50:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748958592;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2i6VV7PI8f82RT+L1bn6PcWel3gpjRUakBS/ECk1Hcw=;
- b=QBCtxvzBke4HG5XO4Dh4otOXLcr7VMyORlHzHPLNPx2wzb4NR8+QJKoGCCw1PXvaJfJM9A
- OI8DEPe8wZZu+L/6fMLGJj8VhWwBahKb1M6TJ25HoC8dTBpLcrRfyCeBV6qT78HCfV/mSK
- nAVtEmDA+9II5Szxt+QocIoXmCXFqaM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-133-QZHggIoPNiW7dPrEPi3cKA-1; Tue,
- 03 Jun 2025 09:49:50 -0400
-X-MC-Unique: QZHggIoPNiW7dPrEPi3cKA-1
-X-Mimecast-MFC-AGG-ID: QZHggIoPNiW7dPrEPi3cKA_1748958590
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E1C0C1956046; Tue,  3 Jun 2025 13:49:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.28])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C58DC1800361; Tue,  3 Jun 2025 13:49:46 +0000 (UTC)
-Date: Tue, 3 Jun 2025 14:49:43 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
-Subject: Re: [PULL 02/23] ui/vnc: take account of client byte order in pixman
- format
-Message-ID: <aD79d0XPK_dARai_@redhat.com>
-References: <20250522102923.309452-1-berrange@redhat.com>
- <20250522102923.309452-3-berrange@redhat.com>
- <e6c7920b-8078-4d97-92ce-2efafb645953@redhat.com>
+ (Exim 4.90_1) (envelope-from <balaton@jedlik.phy.bme.hu>)
+ id 1uMS2B-0003X7-LM; Tue, 03 Jun 2025 09:50:36 -0400
+Received: by jedlik.phy.bme.hu (Postfix, from userid 1000)
+ id E5CA3A0136; Tue,  3 Jun 2025 15:50:27 +0200 (CEST)
+Date: Tue, 3 Jun 2025 15:50:27 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH 15/16] hw/pci-host/raven: Do not map regions in init method
+In-Reply-To: <bfd1359d-2a25-4c53-9eee-cec527197f8e@linaro.org>
+Message-ID: <alpine.LMD.2.03.2506031547560.13449@eik.bme.hu>
+References: <cover.1746374076.git.balaton@eik.bme.hu>
+ <1e85cddcd56f2431e349d21fcf6e539a663a64c3.1746374076.git.balaton@eik.bme.hu>
+ <bfd1359d-2a25-4c53-9eee-cec527197f8e@linaro.org>
+User-Agent: Alpine 2.03 (LMD 1266 2009-07-14)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e6c7920b-8078-4d97-92ce-2efafb645953@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: MULTIPART/MIXED;
+ BOUNDARY="1117279078-745840053-1748958627=:13449"
+Received-SPF: pass client-ip=152.66.102.83;
+ envelope-from=balaton@jedlik.phy.bme.hu; helo=jedlik.phy.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,60 +57,153 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 03, 2025 at 01:18:55PM +0200, Thomas Huth wrote:
-> On 22/05/2025 12.29, Daniel P. Berrangé wrote:
-> > The set_pixel_conversion() method is responsible for determining whether
-> > the VNC client pixel format matches the server format, and thus whether
-> > we can use the fast path "copy" impl for sending pixels, or must use
-> > the generic impl with bit swizzling.
-> > 
-> > The VNC server format is set at build time to VNC_SERVER_FB_FORMAT,
-> > which corresponds to PIXMAN_x8r8g8b8.
-> > 
-> > The qemu_pixman_get_format() method is then responsible for converting
-> > the VNC pixel format into a pixman format.
-> > 
-> > The VNC client pixel shifts are relative to the associated endianness.
-> > 
-> > The pixman formats are always relative to the host native endianness.
-> > 
-> > The qemu_pixman_get_format() method does not take into account the
-> > VNC client endianness, and is thus returning a pixman format that is
-> > only valid with the host endianness matches that of the VNC client.
-> ...
-> 
->  Hi Daniel,
-> 
-> this patch breaks the output in the TigerVNC viewer for me.
-> If I run "./qemu-system-x86_64 -vnc :1" on my laptop, and then connect to it
-> via "vncviewer :1", the output of the BIOS now appears in yellow letters
-> (instead of grey ones).
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-It turns out that historically we never set the 'client_be' flag
-when a client does NOT send a "set pixel format" message. By luck
-this was OK for little endian platforms as the default value of
-0 matched little endian.
+--1117279078-745840053-1748958627=:13449
+Content-Type: TEXT/PLAIN; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: QUOTED-PRINTABLE
 
-When I replaced 'client_be' with "client_endian", the default
-value of 0 matches neither big or little endian.
+On Tue, 3 Jun 2025, Philippe Mathieu-Daud=C3=A9 wrote:
+> On 4/5/25 18:01, BALATON Zoltan wrote:
+>> Export memory regions as sysbus mmio regions and let the board code
+>> map them.
+>>=20
+>
+> Why? The mapping belong to the host bridge, not the board...
 
-I didn't see this with remote-viewer as it unconditionally
-sends "set pixel format", but tigervnc always uses the server's
-default pixel format.
+I took inspiration from grackle that does it the same way.
 
-So this patch is fine, but it exposes a pre-existing latent
-bug there was probably causing problems on big endian platforms
-in the past, but now causes problems on little endian platforms.
+Regards,
+BALATON Zoltan
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> ---
+>>   hw/pci-host/raven.c | 37 ++++++++++++-------------------------
+>>   hw/ppc/prep.c       | 11 +++++++++--
+>>   2 files changed, 21 insertions(+), 27 deletions(-)
+>>=20
+>> diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+>> index 68d64e3a97..c9df3db401 100644
+>> --- a/hw/pci-host/raven.c
+>> +++ b/hw/pci-host/raven.c
+>> @@ -49,8 +49,6 @@ struct PREPPCIState {
+>>       AddressSpace bm_as;
+>>   };
+>>   -#define PCI_IO_BASE_ADDR    0x80000000  /* Physical address on main b=
+us=20
+>> */
+>> -
+>>   static inline uint32_t raven_idsel_to_addr(hwaddr addr)
+>>   {
+>>       return (ctz16(addr >> 11) << 11) | (addr & 0x7ff);
+>> @@ -166,7 +164,7 @@ static void raven_change_gpio(void *opaque, int n, i=
+nt=20
+>> level)
+>>       memory_region_set_enabled(&s->pci_discontiguous_io, !!level);
+>>   }
+>>   -static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>> +static void raven_pcihost_realize(DeviceState *d, Error **errp)
+>>   {
+>>       SysBusDevice *dev =3D SYS_BUS_DEVICE(d);
+>>       PCIHostState *h =3D PCI_HOST_BRIDGE(dev);
+>> @@ -176,7 +174,17 @@ static void raven_pcihost_realizefn(DeviceState *d,=
+=20
+>> Error **errp)
+>>         qdev_init_gpio_in(d, raven_change_gpio, 1);
+>>   +    memory_region_init(&s->pci_io, o, "pci-io", 0x3f800000);
+>> +    memory_region_init_io(&s->pci_discontiguous_io, o,
+>> +                          &raven_io_ops, &s->pci_io,
+>> +                          "pci-discontiguous-io", 8 * MiB);
+>> +    memory_region_init(&s->pci_memory, o, "pci-memory", 0x3f000000);
+>> +
+>> +    sysbus_init_mmio(dev, &s->pci_io);
+>> +    sysbus_init_mmio(dev, &s->pci_discontiguous_io);
+>> +    sysbus_init_mmio(dev, &s->pci_memory);
+>>       sysbus_init_irq(dev, &s->irq);
+>> +
+>>       h->bus =3D pci_register_root_bus(d, NULL, raven_set_irq, raven_map=
+_irq,
+>>                                      &s->irq, &s->pci_memory, &s->pci_io=
+,=20
+>> 0, 1,
+>>                                      TYPE_PCI_BUS);
+>> @@ -215,32 +223,12 @@ static void raven_pcihost_realizefn(DeviceState *d=
+,=20
+>> Error **errp)
+>>       pci_setup_iommu(h->bus, &raven_iommu_ops, s);
+>>   }
+>>   -static void raven_pcihost_initfn(Object *obj)
+>> -{
+>> -    PREPPCIState *s =3D RAVEN_PCI_HOST_BRIDGE(obj);
+>> -    MemoryRegion *address_space_mem =3D get_system_memory();
+>> -
+>> -    memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+>> -    memory_region_init_io(&s->pci_discontiguous_io, obj,
+>> -                          &raven_io_ops, &s->pci_io,
+>> -                          "pci-discontiguous-io", 8 * MiB);
+>> -    memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
+>> -
+>> -    /* CPU address space */
+>> -    memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+>> -                                &s->pci_io);
+>> -    memory_region_add_subregion_overlap(address_space_mem,=20
+>> PCI_IO_BASE_ADDR,
+>> -                                        &s->pci_discontiguous_io, 1);
+>> -    memory_region_set_enabled(&s->pci_discontiguous_io, false);
+>> -    memory_region_add_subregion(address_space_mem, 0xc0000000,=20
+>> &s->pci_memory);
+>> -}
+>> -
+>>   static void raven_pcihost_class_init(ObjectClass *klass, const void=20
+>> *data)
+>>   {
+>>       DeviceClass *dc =3D DEVICE_CLASS(klass);
+>>         set_bit(DEVICE_CATEGORY_BRIDGE, dc->categories);
+>> -    dc->realize =3D raven_pcihost_realizefn;
+>> +    dc->realize =3D raven_pcihost_realize;
+>>       dc->fw_name =3D "pci";
+>>   }
+>>   @@ -274,7 +262,6 @@ static const TypeInfo raven_types[] =3D {
+>>           .name =3D TYPE_RAVEN_PCI_HOST_BRIDGE,
+>>           .parent =3D TYPE_PCI_HOST_BRIDGE,
+>>           .instance_size =3D sizeof(PREPPCIState),
+>> -        .instance_init =3D raven_pcihost_initfn,
+>>           .class_init =3D raven_pcihost_class_init,
+>>       },
+>>       {
+>> diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
+>> index d3365414d2..23d0e1eeaa 100644
+>> --- a/hw/ppc/prep.c
+>> +++ b/hw/ppc/prep.c
+>> @@ -53,8 +53,11 @@
+>>     #define CFG_ADDR 0xf0000510
+>>   -#define KERNEL_LOAD_ADDR 0x01000000
+>> -#define INITRD_LOAD_ADDR 0x01800000
+>> +#define KERNEL_LOAD_ADDR  0x01000000
+>> +#define INITRD_LOAD_ADDR  0x01800000
+>> +
+>> +#define PCI_IO_BASE_ADDR  0x80000000
+>> +#define PCI_MEM_BASE_ADDR 0xc0000000
+>>     #define BIOS_ADDR         0xfff00000
+>>   #define BIOS_SIZE         (1 * MiB)
+>> @@ -293,6 +296,10 @@ static void ibm_40p_init(MachineState *machine)
+>>       pcihost =3D SYS_BUS_DEVICE(dev);
+>>       object_property_add_child(qdev_get_machine(), "raven", OBJECT(dev)=
+);
+>>       sysbus_realize_and_unref(pcihost, &error_fatal);
+>> +    sysbus_mmio_map(pcihost, 0, PCI_IO_BASE_ADDR);
+>> +    sysbus_mmio_map_overlap(pcihost, 1, PCI_IO_BASE_ADDR, 1);
+>> +    memory_region_set_enabled(sysbus_mmio_get_region(pcihost, 1), false=
+);
+>> +    sysbus_mmio_map(pcihost, 2, PCI_MEM_BASE_ADDR);
+>>       pci_bus =3D PCI_BUS(qdev_get_child_bus(dev, "pci.0"));
+>>       if (!pci_bus) {
+>>           error_report("could not create PCI host controller");
+>
+>
+--1117279078-745840053-1748958627=:13449--
 
