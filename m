@@ -4,104 +4,183 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B86C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 09:51:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16FE4C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 09:51:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMOHz-0008EP-DE; Tue, 03 Jun 2025 05:50:35 -0400
+	id 1uMOIk-0000Av-8P; Tue, 03 Jun 2025 05:51:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uMOHw-0008Dt-4J
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:50:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1uMOIg-0008Vd-4W
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:51:18 -0400
+Received: from mail-dm6nam12on2068.outbound.protection.outlook.com
+ ([40.107.243.68] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uMOHt-0002EN-Sr
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:50:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748944226;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=mv58T/W6RsypO84fxS5nOpnQQLugeAy7hvEtVnn7U8M=;
- b=Fc/Fi4X5nO94gCGENJBQPmJ2d7exFJIsjz/uHFfuTTpXS3X+7tpRHQZof4UI9Vj4W2iyyL
- pDENBcQER2BkBcvAwqqIN7d6vmLSPdYQmXQlZALIL7kyW7WA55TDDeMBj6gIrCcAtsv6Vv
- OatyGJshHWvmciC0yOnpwDbA28GNH6w=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-HJf4kIUnN9ayXPyZeKwkJg-1; Tue, 03 Jun 2025 05:50:25 -0400
-X-MC-Unique: HJf4kIUnN9ayXPyZeKwkJg-1
-X-Mimecast-MFC-AGG-ID: HJf4kIUnN9ayXPyZeKwkJg_1748944224
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450cf229025so15181765e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 02:50:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748944224; x=1749549024;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mv58T/W6RsypO84fxS5nOpnQQLugeAy7hvEtVnn7U8M=;
- b=kFl0KKOZAyfo+bX2c0K3EbNM5a3q1Xw0jSCdwE+a8Difn8IvQtBykzVbldbRg4lbxM
- AOquzUeRUDrQqa4qtgX1ovsi8oTELPtOsR4DZO9GC4/7rte36iOYGDMLBCdcdt+DEDcj
- PSYS5jHVE/PYTkQpFRhfstsFqols5lTsQg5YsG5v1gZg7b3pCrZ9B7TK1k+out+4wxsI
- 7lfBmVn73Ulfwh6r2GFuz5pElLTqyRfI34HDbLdQZ++5P+K2ZL4TxzNZr+XKu9jUxFqD
- abzyawQOlT3pZqMPHygjy5bXarTpmd7fcRfD4hmBlaAbnz7vDWir8XV6JiSgqTPd7b2v
- moUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWBxr4KwCk79iQx1pJsV45Fw9CNWcGtWuu4i1GnF8yN4FN3686yHBlfZ9oqnDFT8HK8HZuGdAKdbo3P@nongnu.org
-X-Gm-Message-State: AOJu0Yws3lZn5W1Z96olaPT0xRJUw6fkmYcpcdEZ6apsfaDrdZS8wu7s
- SQg3xJY6Gg4k6NFxpgQ9T439ojQGRSpeV+O9BZYdYv5zhJO7HczQmNOo4qeZ6ztbF+thatjUUXd
- asesLdd3ZRcVUi+3PCL4yGFoR2YCYtBbDWIOlZqwMR7Xy7ntYVGkFSr4J
-X-Gm-Gg: ASbGncudEu9mTQsX7l/w4MziIb+T3OUX5wDKZE4mxjUb+Wv+mh2mPUjhuq4UZO5pT2W
- uDlfmxx2lJYs0q3zN7gW484G2IaEX7h0rNPGRNyk9+PfPOb3eel94jnDMIA7thhJGIPp51Cftlr
- tEKFd3+b9iGMHZti0V0Gt5Avpm8E9kUs8Ya2cKwe1KoK18RTl7JiBViRgVA69RgmT46xlEkgd6t
- V0T5PkyOpTfYE2KEk0iI8TAItkp7+jplIhw1F4TDjFuf67yvehRZ1tolAsul2Q3d+pqRovPly42
- WJiZA/fBLdU/VdmvMLYSV0wGqMK9jILKQDK03QgvXeXmRMO0S9Z6/+Tis00=
-X-Received: by 2002:a05:600c:6488:b0:442:f4a3:9338 with SMTP id
- 5b1f17b1804b1-4511ee1215emr95955625e9.21.1748944223762; 
- Tue, 03 Jun 2025 02:50:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFOVYPeTq8RpTOkVgEndqZNuwmfjtPkVmKaUbIGAoSgUTFFBy8yfaDsvBXWmhvQGk63ouO5wg==
-X-Received: by 2002:a05:600c:6488:b0:442:f4a3:9338 with SMTP id
- 5b1f17b1804b1-4511ee1215emr95955345e9.21.1748944223420; 
- Tue, 03 Jun 2025 02:50:23 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7fb0467sm155256605e9.19.2025.06.03.02.50.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 02:50:22 -0700 (PDT)
-Message-ID: <ba4ac9e4-f8ca-4885-b2ab-6acdca51175b@redhat.com>
-Date: Tue, 3 Jun 2025 11:50:21 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <Pankaj.Gupta@amd.com>)
+ id 1uMOId-0002HM-1y
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 05:51:17 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PzCEnfwE3sdvoArnJPpB+fniFi6YJVqG6pW7EgytKHmzxwvK4RMcF9Onb4kVt5fjIGbYkW1waPpq0ztugfMv9zu00smIQLEL3CBjpmkr2TIhX1SVItzbxjpqkA/86us8cIL/2Fbe0RtnN6q+bsPTfjlUHZN2k8vh2kjuTTDS+CN+o8jYJo/DRnbbMk9q+u3u7Lwe3HhLYemG6KtwtiJyIDOyyyGRXOMSnorNKub9kOvTtptH/QUhoX4vwyAVDVpVSgQVwNqVgstO3y2ksOZlPYCMZxQjbyq+s/YZCbOyQ26oyKjvrULjP4Ew+ejC1m80e2JUZhg8rLZpSfoZROuGgw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=n8TUcoCnCRPbsS2q3LDm1mTQDyrG9Feu7z04+5AqtMA=;
+ b=t8SSXLYOPu3kNLfmA5lPT1B+zBwAqH+zasatNi7neqqbg4E9sHq+amH89Ui5p5oBU3gZoPLcbSeZRCDHEu/Ck4LI7mmuQ6pe7OIlIq87Z7WOgTBu+iL5QD5EDj4ekYQt5EO+tt/1KVXkVMt/yU7meOgI7mEW1KzSEdt56llRh7dtlb4V5vv+YzY6jlp/s+iQ3G5jSp5q3nqU2by7ZmTrzCnRtuU/gNRcc5Exytti710dHbuaUDVfA4pwnpdIV2xI+DRP6Z0ae4/cRyLPBKAQDOAc03svQCIjq/FPsG38qkKpfMR6esmpXSDDW9LVSEml2XXm2CTq+6A5xz3dhQsYwA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=n8TUcoCnCRPbsS2q3LDm1mTQDyrG9Feu7z04+5AqtMA=;
+ b=BawkTc2K3TR0cWcvPgjVL2yS77aELXOkRQJWhaT2JgSEaakA9H+SMx17WBGrD6jJlht2vkrAJ4Nao57P/VoHz+vHfanHymbWl04LlaIKeou6L9Bi+EEP+sGW+TrxiXy1PRFJfu0p0HhGMZvvDVom6evzxAU0CYC8BC4QcAOtr1U=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from IA1PR12MB8189.namprd12.prod.outlook.com (2603:10b6:208:3f0::13)
+ by SN7PR12MB7249.namprd12.prod.outlook.com (2603:10b6:806:2a9::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.34; Tue, 3 Jun
+ 2025 09:46:09 +0000
+Received: from IA1PR12MB8189.namprd12.prod.outlook.com
+ ([fe80::193b:bbfd:9894:dc48]) by IA1PR12MB8189.namprd12.prod.outlook.com
+ ([fe80::193b:bbfd:9894:dc48%4]) with mapi id 15.20.8769.031; Tue, 3 Jun 2025
+ 09:46:07 +0000
+Message-ID: <93d48fc1-9515-40a8-b323-d3e479d30444@amd.com>
+Date: Tue, 3 Jun 2025 11:45:53 +0200
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/virt: Check bypass iommu is not set for iommu-map
- DT property
+Subject: Re: [PATCH v6 4/5] ram-block-attributes: Introduce RamBlockAttributes
+ to manage RAMBlock with guest_memfd
+To: David Hildenbrand <david@redhat.com>,
+ Chenyi Qiang <chenyi.qiang@intel.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ "Lindgren, Tony" <tony.lindgren@intel.com>,
+ "Maloor, Kishen" <kishen.maloor@intel.com>
+References: <20250530083256.105186-1-chenyi.qiang@intel.com>
+ <20250530083256.105186-5-chenyi.qiang@intel.com>
+ <4105d9ad-176e-423a-9b4f-8308205fe204@amd.com>
+ <9a9bb6bb-f8c0-4849-afb0-7cf5a409dab0@intel.com>
+ <d0d1bed2-c1ee-4ae7-afaf-fbd07975f52c@amd.com>
+ <c646012a-b993-4f37-ac31-d2447c7e9ab8@intel.com>
+ <219c32d8-4a5e-4a74-add0-aee56b8dc78b@amd.com>
+ <828fa7bb-8519-4e3f-a334-c1b4ea27fee3@redhat.com>
 Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, nicolinc@nvidia.com, ddutile@redhat.com,
- linuxarm@huawei.com
-References: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
-Content-Type: text/plain; charset=UTF-8
+From: "Gupta, Pankaj" <pankaj.gupta@amd.com>
+In-Reply-To: <828fa7bb-8519-4e3f-a334-c1b4ea27fee3@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-ClientProxiedBy: CP7P275CA0009.ZAFP275.PROD.OUTLOOK.COM
+ (2603:1086:100:42::6) To IA1PR12MB8189.namprd12.prod.outlook.com
+ (2603:10b6:208:3f0::13)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR12MB8189:EE_|SN7PR12MB7249:EE_
+X-MS-Office365-Filtering-Correlation-Id: 794c885b-8e98-474d-ee85-08dda2837644
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TEtiYlYzbDVVUjQ2RUpJSTQ4NzJFdTRzbGdBVGpGMm9TbFc5TkorbER6VUlF?=
+ =?utf-8?B?d2NKNTdJa2RwdjFicEdpN0VVRTdVQ3F1WWZEdjhud0ozL3EvZlZoRWV3NEZt?=
+ =?utf-8?B?OTdTNTU5Yjk5VzVhamFoMUNlbFhSOWhOZHdUZkhXRFQvamtQeFRSQ0FXZ1pS?=
+ =?utf-8?B?NThFa0hRRnBuRlZ6WDdwbTlTaU5KcUhGaW56UXkzK0M2TTNja3l5ODNqbHMv?=
+ =?utf-8?B?K08vVG5Wc3FESGU4ZnQwMWhLUDNRZUIzeW1rTE1XUmhvNWFxaFFxTkJjbTk1?=
+ =?utf-8?B?TWJOMWFyUVpSUWFTeHk4ZDJwYWREMkVSblRST01VZ1U4YkJ6QlRNNERIUXB6?=
+ =?utf-8?B?cGJNVSt4MnJLN0l4a2ZuUVBqbzd0eG9mVXNmTFR4eFBqZFFSMnRPcXZkTFRE?=
+ =?utf-8?B?V05rSFVSWlJUUHpJUHpLYkZWaDhzd3JGcFBmNHIvd29hUzZUNk9TdlI0WlZD?=
+ =?utf-8?B?TmRROVlreEZtN3lxOVBKVUppNXRjUm54bngveTRvUkJMeFhLWEZSOGNtRkcr?=
+ =?utf-8?B?N1AxaytBMThNaVhVTlU3azJjQ2d1cnRNTk53WStPSXBjMFB0MHJxVWw0OUt3?=
+ =?utf-8?B?Q3FTcDdvTzl3Ni9rZldmUlBzRzF6TEpPZjE2TWRpRjNqM0tkRHpWMnY3K3FG?=
+ =?utf-8?B?SHZzVktnd0ZEbHJESHhRR1NvSitmY1hreTl4VFdUNWJJbWNUdzNQY2dtYnVZ?=
+ =?utf-8?B?OXFCU3RPSmFlZGNxTTJnT2dWY240YTBiVTFsV1JWVmJGY3VGaTFITDdBT05t?=
+ =?utf-8?B?NXRBeW5obkVCUllKbTNlNmhYUS9RRHdBbStSM011SXdUaHdDbWY1VTQ5ckRv?=
+ =?utf-8?B?TEl3dldHemNFbFovN0JQNXptSkZjZ3lMQ1FKT1YzcXFONHkwakVtSk1OdGMy?=
+ =?utf-8?B?anhjejVkcGdRelFQdWNDL2ZST2JXa29kSFBFNUlpUDNXamR2clBNMkVQSi9l?=
+ =?utf-8?B?Njg1Sy9CYlpXMXdWVkQwMW1CM1ZxMWhwNzBUWm0raUxieWdvZjBOUHpXU0Jx?=
+ =?utf-8?B?c3NkZWxOMUUrTXd4QUJOWXIrelhHRUJ0OGxGR29IdUlpaC94TkVtazYyQ25R?=
+ =?utf-8?B?WHl4aUVBZm9HNU5rVEx4YUwydUx3TEZrQnJSaWxMQUJGRTIwMGRWMnZFZE5p?=
+ =?utf-8?B?SXh3Z0EzVGRJU2RNTnZFWEhHbnFDQTVsN3I0SVdNMmpUS0N3dDg3T3hpdnlK?=
+ =?utf-8?B?c0NaS1YvTmF3MHh0TENxKzZkVGJGRng2WkRWY3ROc1NuNFVjeW9LZGdqUGNT?=
+ =?utf-8?B?RHB4WDUyWkNNb3BianVRckYrOTkwMnpZWnIySW9OaTkzSHloQnRGNWJnMU56?=
+ =?utf-8?B?YWFLbzNyU003WC9oRW0zY05STTI1RHMreFovRlo4cm9XU3pTYlhqTVo1a21n?=
+ =?utf-8?B?dUxCdENZTVNtY05WUjBGSHJIRnZpeWwvWHFhN1l6NUlKS0RSTnpMRWMxRzBF?=
+ =?utf-8?B?dWtxOEFWOHhOM3Q2eklUSnBGVjlXUzRHTlhoZW12QkJycDRnUDRXZWJtTFBE?=
+ =?utf-8?B?eWozWDhlVThUekc3NVk5N25XdVBQcmhOTXZ6ZEhFK3ZNMWpCUk9YaURhUHM0?=
+ =?utf-8?B?TkJVa1hDSGdKU0lINDZGb1R3bWhBbmdETTFkVXBpNDhKRjR0R285RGVMZnJX?=
+ =?utf-8?B?V0lKN0xXSVExVk5RZ09ZUlNQUEtKeTVrNEJtdEY4VStJL3c3RW92ZzJNTmx5?=
+ =?utf-8?B?Tjh6NklzeWt4VmdqNnNGNGFBU1ZPeHJZaTRDVmg2VldNekRsK2JUNUVvSm5I?=
+ =?utf-8?B?NHJFNUQwZWdaUGpCOHVsaTZqQmNvVDUyb0puamFrSTQ3Q3BneEtYREhBcWpR?=
+ =?utf-8?B?bWM5NjFpdjRoNjNsbEE4akVOMzlyOVFYSWRQb3RaRjZwRkM4LzFRMU9nNThu?=
+ =?utf-8?B?TDBMSkZwSk1UR0Z6bUtjUzIzQjVtNng5ZjhLcEczZ0J0Tm1XbFpxTXlhdGxv?=
+ =?utf-8?Q?yKTMMY9qdrI=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR12MB8189.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dVBnM24vTmR2UU1uZndlTWx0TjNBU2ZrdHBNYm9tWGExcmRZWmd0RnluWW83?=
+ =?utf-8?B?V3M3MVhMWU1ZbXRzcGJBd2FLYXU0clE3cnY2YVBaZHVia0RZZ1ltK3RGRGty?=
+ =?utf-8?B?VFVadlBHMDVoRlIvNjZrcFFCN052TU9IL3ZnM2ZJVmhYQjJoRWNvLzduUzl3?=
+ =?utf-8?B?RXgxNWc4U2RIdHNrVkxMUnUzRU1MNUwzeFRPNTczSjhDSjN0ZzdoeFM5TnRk?=
+ =?utf-8?B?L3Y3KzZSZit5TGRUWmh0Q2VQbSt0N1BzWW1TaFFkdUVRc084SThjcjdONWZI?=
+ =?utf-8?B?SHlFSUNUdzBaQTVkNXVYU0ltb05JKzEyWnFMRnZnWWY2R1ZvYmhtTXh2QU9s?=
+ =?utf-8?B?QnkvZFk2R21OTjRaQk9JWWlOaE4weDhMekswa2dpT2grOTZ2N3FxaVVpWVlI?=
+ =?utf-8?B?d1lURk13RFo4Y3dtQlNyWlpMdHpxYkFWQU1uSGlWQ3luVGo5dWpSY2ozUjFv?=
+ =?utf-8?B?NlpFNmNLcmtmTm5XSkZnK01ScUkrQVlXWm1oY1dLeWR1KzFPOFhlNGYxWGxs?=
+ =?utf-8?B?Nk44T1NQdzl2bUtsa2swWGR1cmhsVTVhcXZDNlJnbXdoa0RDaEVhRUpCUmE5?=
+ =?utf-8?B?NVlCTlFSTEZ5ZWx1Zk42aWw4QnJuaVJWY3hDVFpwVUhjdXJFOGVJT3h6WTE3?=
+ =?utf-8?B?V2o3bWJIVXB6NkRxTy9LVHNxekFhU295YjhJNDZybkI0MURrZHBwSWd0VWp3?=
+ =?utf-8?B?STJ0WXFQSnZER20rZEQvTk5xamo4MG1aYnBuSmFrV3lLb1ZuWHBnU0prajJU?=
+ =?utf-8?B?c0hSaWdueFFvc3dvL2d1dkkwazlkSG5jTnNCREVDUk9raEMvVk5HNTJYTVNt?=
+ =?utf-8?B?OXo5YVAyM2lqSW9QY1hKSCt5c0d4TjRmVkFmdDBGa1pLb0RHdkpnaUxWQ1lm?=
+ =?utf-8?B?NDBXMmo1dTNDSHkxcWhXKzJJT1NWZndMSzUzbjVHcU9BZ0VNSnFwSWR0Y3FQ?=
+ =?utf-8?B?aW9GRFA1aXFueTY5RERhTnVTSnR1MnpsdC94Y29yZHNQZTFVRVV5VVRyRUpp?=
+ =?utf-8?B?RmRJeE9Kdk9xTjN0bG9JS1QzNGE5Nnoyb09MNFZJaHVzb2xtMnU0WGJtUWxP?=
+ =?utf-8?B?bG1tOTBhZk15YVBUWnA4TkROL0tmMzZzUmVKQ0dBNnpxZkQ1ZGRXa0V3S0lh?=
+ =?utf-8?B?VnRJL1g2dUVCa0dWWWoxUndFdlV0b0NkTkx6SzVVdjA3c3BialRsdks3TVlk?=
+ =?utf-8?B?T2VkRHhxTm1tNk01clMxeE9mKzdQWmMyNkszZ2hKMjNHSmN4a1VPY2NFc09Q?=
+ =?utf-8?B?WDBrODFNa3NqN0hWd2ZISFN4eVhydlZpZ1VsNFlyU0N1SVYyK1ZaV0xOeERk?=
+ =?utf-8?B?RzgyYXhRUmVXeHhQNFFvMXVRMlJUNmtLK1dnZ3djYTM0ZDlrK1YzNC94M242?=
+ =?utf-8?B?bmZWL3BHb094SzNTRlFpTHY5TXpqOFhPRkxBV1pJU0tpbDZGa1FCa2Z2NWY3?=
+ =?utf-8?B?eTRoYWFyakRpRE1kR2J5MXRONzRNRTFVcGF4ditLZlRUUHFrVlhVWUNqT2hq?=
+ =?utf-8?B?UE94ZU5tYmJNZjNwb0lVVzRLUkIrUk96SFFRekdyRUVzTnhiank2OGFWSmpk?=
+ =?utf-8?B?akkyL3c4eVA5V2VMZjFzVEZWL2hYbCsyakhPNStzZDFMT2pMZnJYc3VrTHUz?=
+ =?utf-8?B?eEJmaGo1WStUeWVjak4yUXJGNG9aS1VwTmVrbXliQWlGUnBWNENkUlJGaURZ?=
+ =?utf-8?B?emRhRDBnVUNrdDJuVUlxbGduMFc1U3p3ek9ja2ZmMUFPZU8rOHFVWVd5amVH?=
+ =?utf-8?B?ZStkL01qMFZ5Qm02UlkvZzRTQlhOVXhyeXZra09udk5WdXhTT2pYTHZ6enZy?=
+ =?utf-8?B?Z3htMHBaOE5mR3pUOE1EMkxWMmw2enlWZTBzVWFlMW5XNHdmTmtHcVFteFFB?=
+ =?utf-8?B?ZlJLUjNXNC92dWw4OVM1YXYvVzN0OGZFRUNWQlNYbmJRYTFxV0NFM0d2NXhP?=
+ =?utf-8?B?MkRDbHF3L2hPYU1jNEZ1SHBjUUtBaHppb254RXUxbTFaWjR0VGFubHV2YjEy?=
+ =?utf-8?B?RUFJSVpNVGNUN1pZQy9JNWVmRENWSkprUWZEbTRvazNiZVZkUFlFSmM1RHFP?=
+ =?utf-8?B?SUMxd3A3c0szamxUVGhnVGd3RFJBdEU4ZFFhdHMvbDdyVEJrZ0FsbEhGZHpU?=
+ =?utf-8?Q?O01bF1uu5Nwn4roFLs3/RsCw2?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 794c885b-8e98-474d-ee85-08dda2837644
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR12MB8189.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 03 Jun 2025 09:46:06.9335 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: p4GtZMNUEyZ3bWMTwNej6b5AiEUWB0ZgkY4Ur9Yl7rVxhsMDTM5ih+9LQz64JYs+GtcX/w+4DZ1oOjeuGG3NKw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB7249
+Received-SPF: permerror client-ip=40.107.243.68;
+ envelope-from=Pankaj.Gupta@amd.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,61 +193,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On 6/3/2025 9:41 AM, David Hildenbrand wrote:
+> On 03.06.25 09:17, Gupta, Pankaj wrote:
+>> +CC Tony & Kishen
+>>
+>>>>>> In this patch series we are only maintaining the bitmap for Ram 
+>>>>>> discard/
+>>>>>> populate state not for regular guest_memfd private/shared?
+>>>>>
+>>>>> As mentioned in changelog, "In the context of RamDiscardManager, 
+>>>>> shared
+>>>>> state is analogous to populated, and private state is signified as
+>>>>> discarded." To keep consistent with RamDiscardManager, I used the ram
+>>>>> "populated/discareded" in variable and function names.
+>>>>>
+>>>>> Of course, we can use private/shared if we rename the 
+>>>>> RamDiscardManager
+>>>>> to something like RamStateManager. But I haven't done it in this 
+>>>>> series.
+>>>>> Because I think we can also view the bitmap as the state of shared
+>>>>> memory (shared discard/shared populate) at present. The VFIO user only
+>>>>> manipulate the dma map/unmap of shared mapping. (We need to 
+>>>>> consider how
+>>>>> to extend the RDM framwork to manage the shared/private/discard states
+>>>>> in the future when need to distinguish private and discard states.)
+>>>>
+>>>> As function name 'ram_block_attributes_state_change' is generic. Maybe
+>>>> for now metadata update for only two states (shared/private) is enough
+>>>> as it also aligns with discard vs populate states?
+>>>
+>>> Yes, it is enough to treat the shared/private states align with
+>>> populate/discard at present as the only user is VFIO shared mapping.
+>>>
+>>>>
+>>>> As we would also need the shared vs private state metadata for other
+>>>> COCO operations e.g live migration, so wondering having this metadata
+>>>> already there would be helpful. This also will keep the legacy 
+>>>> interface
+>>>> (prior to in-place conversion) consistent (As memory-attributes 
+>>>> handling
+>>>> is generic operation anyway).
+>>>
+>>> When live migration in CoCo VMs is introduced, I think it needs to
+>>> distinguish the difference between the states of discard and private. It
+>>> cannot simply skip the discard parts any more and needs special handling
+>>> for private parts. So still, we have to extend the interface if have to
+>>> make it avaiable in advance.
+>>
+>> You mean even the discard and private would need different handling
+> 
+> I am pretty sure they would in any case? Shared memory, you can simply 
+> copy, private memory has to be extracted + placed differently.
+> 
+> If we run into problems with live-migration, we can investigate how to 
+> extend the current approach.
 
-On 6/2/25 1:46 PM, Shameer Kolothum wrote:
-> default_bus_bypass_iommu tells us whether the bypass_iommu is set
-> for the default PCIe root bus. Make sure we check that before adding
-> the "iommu-map" DT property.
->
-> Fixes: 6d7a85483a06 ("hw/arm/virt: Add default_bus_bypass_iommu machine option")
-> Suggested-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Not problems. My understanding was: newly introduced per RAM BLock 
+bitmap gets maintained for RAMBlock corresponding shared <-> private 
+conversions in addition to VFIO discard <-> populate conversions.
+Since per RAMBlock bitmap set is disjoint for both the above cases,
+so can be reused for live migration use-case as well when deciding which 
+page is private vs shared.
 
-Thanks!
+Seems it was part of the series till v3 & v4(in a different design), not 
+anymore though. Of-course it can be added later :)
 
-Eric
-> ---
->  hw/arm/virt.c | 15 ++++++++++-----
->  1 file changed, 10 insertions(+), 5 deletions(-)
->
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 9a6cd085a3..99fde5836c 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -1487,9 +1487,12 @@ static void create_virtio_iommu_dt_bindings(VirtMachineState *vms)
->      qemu_fdt_setprop_cell(ms->fdt, node, "phandle", vms->iommu_phandle);
->      g_free(node);
->  
-> -    qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
-> -                           0x0, vms->iommu_phandle, 0x0, bdf,
-> -                           bdf + 1, vms->iommu_phandle, bdf + 1, 0xffff - bdf);
-> +    if (!vms->default_bus_bypass_iommu) {
-> +        qemu_fdt_setprop_cells(ms->fdt, vms->pciehb_nodename, "iommu-map",
-> +                               0x0, vms->iommu_phandle, 0x0, bdf,
-> +                               bdf + 1, vms->iommu_phandle, bdf + 1,
-> +                               0xffff - bdf);
-> +    }
->  }
->  
->  static void create_pcie(VirtMachineState *vms)
-> @@ -1612,8 +1615,10 @@ static void create_pcie(VirtMachineState *vms)
->          switch (vms->iommu) {
->          case VIRT_IOMMU_SMMUV3:
->              create_smmu(vms, vms->bus);
-> -            qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
-> -                                   0x0, vms->iommu_phandle, 0x0, 0x10000);
-> +            if (!vms->default_bus_bypass_iommu) {
-> +                qemu_fdt_setprop_cells(ms->fdt, nodename, "iommu-map",
-> +                                       0x0, vms->iommu_phandle, 0x0, 0x10000);
-> +            }
->              break;
->          default:
->              g_assert_not_reached();
+> 
+> Just like with memory hotplug / virtio-mem, I shared some ideas on how 
+> to make it work, but holding up this work when we don't even know what 
+> exactly we will exactly need for other future use cases does not sound 
+> too plausible.
+> 
 
+Of-course we should not hold this series. But Thanks  'Chenyi Qiang' for
+your efforts for trying different implementation based on information we 
+had!
+
+With or w/o shared <-> private bitmap update. Feel free to add:
+
+Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
+
+
+Thanks,
+Pankaj
 
