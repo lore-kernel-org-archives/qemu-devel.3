@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF4AC5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 21:25:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 788A6C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 21:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMZ88-00018H-88; Tue, 03 Jun 2025 17:25:08 -0400
+	id 1uMZRz-0004rf-Bs; Tue, 03 Jun 2025 17:45:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uMZ86-000183-80
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:25:06 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uMZ83-0003Uk-Og
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:25:05 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-451d41e1ad1so27344035e9.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 14:25:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1748985902; x=1749590702; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=RtJpKoIeUHfChWh5OeQlc67ki9Ve3IMlbZERDwbULI0=;
- b=UvMb0PI+T7ea2LoKRJm2HusY9xLJSZKNYfi31ByvZN/qErfXDEUCRaGTlhf3VgUgnl
- vJaRAwZGf1zzBklKy7oOrpemdDovBuuhPUTcysgK7qi4Mg8H/QNINN2Fk8ttFKtabWZq
- Lyc4eJRJArRm/dJ2vsBotxGZMwlxgxlkalwHY3iRpKi7o9e0+9IxACvpqfVCigg+GsKI
- nU8Y50gbBsSI82doyZUun2gXKgh+/izKRyzRZ92T1C4UaHkontq/6NkpkMfwLhYUg8mO
- 7OSFDPT7HDMh6sMO+xJLqAQVQJmefvsVQ8VB7gsq+XAl4fsA1/OxS2Efu9A8abmy5v4y
- HsFw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uMZRv-0004qz-IA
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uMZRq-00064j-Oo
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 17:45:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748987128;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=MdPuQlRGqNRQoffoaOmW8+rZEflww+N6r/BmIyOd8IY=;
+ b=N/u0E2QHV2x6t3gYIaAmq5xwDpmrWWrSX0L3yeJGslSiC/USP0Nv3BByYy5p3pLFppT60Q
+ 9mR15TczVBfbjNoWMAEUlhvIir7JlzT0N6YENEuNf9FfAiXycFhGGF8+VHqEICm7GSomeo
+ 4noYjasCCPnmaSHXqzsZ/9LA56mQ0rA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-96-p66BHEeEOtSWxC-4fMFWQw-1; Tue, 03 Jun 2025 17:45:27 -0400
+X-MC-Unique: p66BHEeEOtSWxC-4fMFWQw-1
+X-Mimecast-MFC-AGG-ID: p66BHEeEOtSWxC-4fMFWQw_1748987126
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f7ebfd00so2307100f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 14:45:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748985902; x=1749590702;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RtJpKoIeUHfChWh5OeQlc67ki9Ve3IMlbZERDwbULI0=;
- b=UNGGU+2TU6rBQsRiocTTR4HRmISfv4Ekw7DqKgwQ1yNzQpWze5mRYf8FuSkUVCUmEd
- xD1cnUttzwWoFiqCPYG/ANEzJmoLeDQtZom9/m8yfFxssH7BuM3PK5LxsYe7UGfkjJuV
- +vjgFUHeY4bCV2za/NhjWjbqCQAly0/L0bk8hHFekfsEBaUTcE+iRonBNvg9r8enLt/v
- Os1r9dMgKDM4gQ3xAquUt7b7fQM/ZRalUZL3GvQK7Izvr2nP8oBW13wFn/rrzYTiylCd
- 1Jg/8YIDAuWqPVibtG908qKRXRmUIVqEkikRfj9+rwVMqcZM7CC5Ez1ZWN/wi93bwfcK
- BNyA==
-X-Gm-Message-State: AOJu0YzDAjNiX1h9sa/8j2f7ozbv83h40afPyoOHMZYdaCF7fryzOY2/
- +5Po79O29tZiyce3LDdZ5xEFaTiAwTpWsI4RWrMGtRjPnurga8d7jbZl7qBEqQ==
-X-Gm-Gg: ASbGncuY2W+mCQWyKQ9mL4hbSM8Y++XlsDiWrODF5P58UEo+YWlLI/KynDM87+8nTpu
- oo0xSiEijbQEaUY+7t4/el+OzrU3DEyGZ8vGCLH+dlZWWMiX/7IpcSQlrrKEuoAQxh0JBaEjYlf
- e5XPg2mDC1rjyrua2/nQ8vTdRgshk8wKNNg/XLnkt4AnmaswmOxOdvNrknNaDnb6dG5lHhtj6Km
- mIAKcpkwTY+2SoUYP3BvDHP3NAppj90shsuPcKes/YRfbyngr+WVAJm3L7g3FkGcT+Qg9dSYwcj
- ZvC5T+ik/E7Eh4jplOenIKgDi15J6vFWO77DF/tJVzuw3eCvsupmvZaMQAWHx/GRBDPQy7Iu4sx
- 9xFIMC2yhYNZDCRLC2m9PN4CxvXqgM8SpT1PMPmvRxMoTYC2592+ixUCNZyCaNmT1
-X-Google-Smtp-Source: AGHT+IFTwEdsfLN8LEU55wJQpa2f/vPiRZZJ7AaeWkZuKUjFMswrCYs5/C8qJaMyQRbUpnJV/qQ8UA==
-X-Received: by 2002:a05:600c:3b10:b0:43b:ca39:6c75 with SMTP id
- 5b1f17b1804b1-451f0f50824mr1523045e9.16.1748985901428; 
- Tue, 03 Jun 2025 14:25:01 -0700 (PDT)
-Received: from localhost.localdomain
- (p200300ed8f334200a97623113a5c04f9.dip0.t-ipconnect.de.
- [2003:ed:8f33:4200:a976:2311:3a5c:4f9])
+ d=1e100.net; s=20230601; t=1748987125; x=1749591925;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=MdPuQlRGqNRQoffoaOmW8+rZEflww+N6r/BmIyOd8IY=;
+ b=KoEyK32VYxN+nSrWeUxOF6aIlH/04UMCql+5GcHyHsqODYrBM6nEOzt7hkm6Z8MoLZ
+ kSRrY6vQFEEf5FD0PUKKlalFyuUEPxklfDqslD6UZV27hQF9n1eJpb1hKvz1np08yTEt
+ feeF+uEsm0cyD8hHs8MENOrbZxajKN1NI+ijV5QGKP16GGL/olyL8OZkXTSy7WT1Su0K
+ ou+lLnJLLkhT75mHAFdlyBFAHby+k1BwttivwHSEwjeCDEF7lujex8UrR8ltcMmxe6u1
+ et58JNXNwPSuZMHAdJa/aDt1xHqHjWkAARUxLMTpZCqn1+Fn9E82pBJXE0wm4LQv3gmC
+ eunw==
+X-Gm-Message-State: AOJu0YxwmfSTqecNs8V+2tjLaMz9jzSP0EMCTg7yBQ61f7aEHjrKDiCl
+ DTewjESZoqo84MtTxnjxMToB2ityaoTa57OsonVLasO54cQG+kjODKsUDchdLvSNoHxivz2XNEh
+ gNDRODegPHj1iUGVtmZTTz4THwAI49qldeBpV4GE0aO+Cj1h2BIjfIzwMQ7jyUlNVzwsFJLDA/4
+ S+uCvQE3Nzr/8rfH4ytoLhfasCZBKP+NMU1I+3UvFy
+X-Gm-Gg: ASbGncub3gwYBFeiKAKp13jTk0pWOSexXWFCfdOvd2rwfpoOaTqhKXsAo9DoY2G3oVi
+ TEi2S/i8Bv8oG795TI1ig7mVa7lkgTjlhJ1I/cqlguaVSR95NbLM18sDi7v/zrZHhG2aiHHoRl2
+ 7Yikn6wme+lv9Zmw2ny50HoS8CgVCl+cBeyyQrhWueXj1OgpQ+HiwXAE9IKcvvYmxlkFILldbsN
+ oZfddPRzTbIkb7DXiAcSXkyT57C+YPzjYrBiilzA4dVlVqzCMC4zcoC+uZ242CEGxZizBI/kFFs
+ 0onvtVKP+fXXqg==
+X-Received: by 2002:a05:6000:230e:b0:3a5:1cc5:aa6f with SMTP id
+ ffacd0b85a97d-3a51d9583d8mr243101f8f.34.1748987125468; 
+ Tue, 03 Jun 2025 14:45:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdNZpswLMgYNIlIDk0ASYYrxtjDk7fxy+iT/mJDZO88OA8I1JIjd/4yVT/4surODG2qICblw==
+X-Received: by 2002:a05:6000:230e:b0:3a5:1cc5:aa6f with SMTP id
+ ffacd0b85a97d-3a51d9583d8mr243089f8f.34.1748987124995; 
+ Tue, 03 Jun 2025 14:45:24 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe6c8f5sm19062705f8f.27.2025.06.03.14.25.00
+ 5b1f17b1804b1-450d7f90c40sm177429525e9.2.2025.06.03.14.45.24
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 14:25:01 -0700 (PDT)
-From: oltolm <oleg.tolmatcev@gmail.com>
+ Tue, 03 Jun 2025 14:45:24 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: oltolm <oleg.tolmatcev@gmail.com>
-Subject: [PATCH v3] meson: fix Windows build
-Date: Tue,  3 Jun 2025 23:24:20 +0200
-Message-ID: <20250603212419.1911-2-oleg.tolmatcev@gmail.com>
-X-Mailer: git-send-email 2.49.0.windows.1
+Subject: [PULL 00/16] rust, i386 changes for 2025-06-03
+Date: Tue,  3 Jun 2025 23:45:07 +0200
+Message-ID: <20250603214523.131185-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=oleg.tolmatcev@gmail.com; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,229 +105,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The build failed when run on Windows. I replaced calls to Unix programs
-like ´cat´, ´sed´ and ´true´ with calls to ´python´. I wrapped calls to
-´os.path.relpath´ in try-except because it can fail when the two paths
-are on different drives. I made sure to convert the Windows paths to
-Unix paths to prevent warnings in generated files.
+The following changes since commit 6322b753f798337835e205b6d805356bea582c86:
 
-Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
----
- contrib/plugins/meson.build         |  2 +-
- plugins/meson.build                 |  2 +-
- scripts/tracetool/__init__.py       | 15 ++++++++++++---
- scripts/tracetool/backend/ftrace.py |  4 +---
- scripts/tracetool/backend/log.py    |  4 +---
- scripts/tracetool/backend/syslog.py |  4 +---
- tests/functional/meson.build        |  4 +---
- tests/include/meson.build           |  2 +-
- tests/tcg/plugins/meson.build       |  2 +-
- trace/meson.build                   |  5 +++--
- 10 files changed, 23 insertions(+), 21 deletions(-)
+  Merge tag 'for_upstream' of https://git.kernel.org/pub/scm/virt/kvm/mst/qemu into staging (2025-06-02 14:52:45 -0400)
 
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index fa8a426c8..1876bc784 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -24,7 +24,7 @@ endif
- if t.length() > 0
-   alias_target('contrib-plugins', t)
- else
--  run_target('contrib-plugins', command: find_program('true'))
-+  run_target('contrib-plugins', command: [python, '-c', ''])
- endif
- 
- plugin_modules += t
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 5383c7b88..cb7472df8 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -33,7 +33,7 @@ if host_os == 'windows'
-     input: qemu_plugin_symbols,
-     output: 'qemu_plugin_api.def',
-     capture: true,
--    command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-+    command: [python, '-c', 'import fileinput, re; print("EXPORTS", end=""); [print(re.sub(r"[{};]", "", line), end="") for line in fileinput.input()]', '@INPUT@'])
- 
-   # then use dlltool to assemble a delaylib.
-   # The delaylib will have an "imaginary" name (qemu.exe), that is used by the
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index bc03238c0..6dfcbf71e 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -12,12 +12,14 @@
- __email__      = "stefanha@redhat.com"
- 
- 
-+import os
- import re
- import sys
- import weakref
-+from pathlib import PurePath
- 
--import tracetool.format
- import tracetool.backend
-+import tracetool.format
- 
- 
- def error_write(*lines):
-@@ -36,7 +38,7 @@ def error(*lines):
- 
- def out_open(filename):
-     global out_filename, out_fobj
--    out_filename = filename
-+    out_filename = posix_relpath(filename)
-     out_fobj = open(filename, 'wt')
- 
- def out(*lines, **kwargs):
-@@ -308,7 +310,7 @@ def build(line_str, lineno, filename):
-             fmt = [fmt_trans, fmt]
-         args = Arguments.build(groups["args"])
- 
--        return Event(name, props, fmt, args, lineno, filename)
-+        return Event(name, props, fmt, args, lineno, posix_relpath(filename))
- 
-     def __repr__(self):
-         """Evaluable string representation for this object."""
-@@ -447,3 +449,10 @@ def generate(events, group, format, backends,
-     tracetool.backend.dtrace.PROBEPREFIX = probe_prefix
- 
-     tracetool.format.generate(events, format, backend, group)
-+
-+def posix_relpath(path, start=None):
-+    try:
-+        path = os.path.relpath(path, start)
-+    except ValueError:
-+        pass
-+    return PurePath(path).as_posix()
-diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-index baed2ae61..5fa30ccc0 100644
---- a/scripts/tracetool/backend/ftrace.py
-+++ b/scripts/tracetool/backend/ftrace.py
-@@ -12,8 +12,6 @@
- __email__      = "stefanha@redhat.com"
- 
- 
--import os.path
--
- from tracetool import out
- 
- 
-@@ -47,7 +45,7 @@ def generate_h(event, group):
-         args=event.args,
-         event_id="TRACE_" + event.name.upper(),
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=event.filename,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
- 
-diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-index de27b7e62..17ba1cd90 100644
---- a/scripts/tracetool/backend/log.py
-+++ b/scripts/tracetool/backend/log.py
-@@ -12,8 +12,6 @@
- __email__      = "stefanha@redhat.com"
- 
- 
--import os.path
--
- from tracetool import out
- 
- 
-@@ -55,7 +53,7 @@ def generate_h(event, group):
-         '    }',
-         cond=cond,
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=event.filename,
-         name=event.name,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
-diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
-index 012970f6c..5a3a00fe3 100644
---- a/scripts/tracetool/backend/syslog.py
-+++ b/scripts/tracetool/backend/syslog.py
-@@ -12,8 +12,6 @@
- __email__      = "stefanha@redhat.com"
- 
- 
--import os.path
--
- from tracetool import out
- 
- 
-@@ -43,7 +41,7 @@ def generate_h(event, group):
-         '    }',
-         cond=cond,
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=event.filename,
-         name=event.name,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 52b4706cf..ee222888f 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -411,6 +411,4 @@ foreach speed : ['quick', 'thorough']
-   endforeach
- endforeach
- 
--run_target('precache-functional',
--           depends: precache_all,
--           command: ['true'])
-+alias_target('precache-functional', precache_all)
-diff --git a/tests/include/meson.build b/tests/include/meson.build
-index 9abba308f..8e8d1ec4e 100644
---- a/tests/include/meson.build
-+++ b/tests/include/meson.build
-@@ -13,4 +13,4 @@ test_qapi_outputs_extra = [
- test_qapi_files_extra = custom_target('QAPI test (include)',
-                                       output: test_qapi_outputs_extra,
-                                       input: test_qapi_files,
--                                      command: 'true')
-+                                      command: [python, '-c', ''])
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 41f02f2c7..029342282 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -17,7 +17,7 @@ endif
- if t.length() > 0
-   alias_target('test-plugins', t)
- else
--  run_target('test-plugins', command: find_program('true'))
-+  run_target('test-plugins', command: [python, '-c', ''])
- endif
- 
- plugin_modules += t
-diff --git a/trace/meson.build b/trace/meson.build
-index 3df454935..9c42a57a0 100644
---- a/trace/meson.build
-+++ b/trace/meson.build
-@@ -4,7 +4,7 @@ trace_events_files = []
- foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-   if item in qapi_trace_events
-     trace_events_file = item
--    group_name = item.full_path().split('/')[-1].underscorify()
-+    group_name = fs.name(item).underscorify()
-   else
-     trace_events_file = meson.project_source_root() / item / 'trace-events'
-     group_name = item == '.' ? 'root' : item.underscorify()
-@@ -57,10 +57,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-   endif
- endforeach
- 
-+cat = [ python, '-c', 'import fileinput; [print(line, end="") for line in fileinput.input()]', '@INPUT@' ]
- trace_events_all = custom_target('trace-events-all',
-                                  output: 'trace-events-all',
-                                  input: trace_events_files,
--                                 command: [ 'cat', '@INPUT@' ],
-+                                 command: cat,
-                                  capture: true,
-                                  install: get_option('trace_backends') != [ 'nop' ],
-                                  install_dir: qemu_datadir)
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 214518614c1ce7eb7a002452cd43a7597f90d543:
+
+  rust: qemu-api-macros: add from_bits and into_bits to #[derive(TryInto)] (2025-06-03 22:44:40 +0200)
+
+----------------------------------------------------------------
+* rust: use native Meson support for clippy and rustdoc
+* rust: add "bits", a custom bitflags implementation
+* target/i386: Remove FRED dependency on WRMSRNS
+* target/i386: Add the immediate form MSR access instruction support
+* TDX fixes
+
+----------------------------------------------------------------
+Cédric Le Goater (2):
+      i386/tdx: Fix build on 32-bit host
+      i386/tdvf: Fix build on 32-bit host
+
+Paolo Bonzini (10):
+      rust: bindings: allow ptr_offset_with_cast
+      meson: update to version 1.8.1
+      rust: use "objects" for Rust executables as well
+      build, dockerfiles: add support for detecting rustdoc
+      rust: add qemu-api doctests to "meson test"
+      rust: cell: remove support for running doctests with "cargo test --doc"
+      rust: use native Meson support for clippy and rustdoc
+      rust: add "bits", a custom bitflags implementation
+      rust: pl011: use the bits macro
+      rust: qemu-api-macros: add from_bits and into_bits to #[derive(TryInto)]
+
+Pierrick Bouvier (1):
+      meson: use config_base_arch for target libraries
+
+Xin Li (Intel) (3):
+      target/i386: Remove FRED dependency on WRMSRNS
+      target/i386: Add a new CPU feature word for CPUID.7.1.ECX
+      target/i386: Add the immediate form MSR access instruction support
+
+ docs/devel/rust.rst                                |  12 +-
+ configure                                          |  16 +
+ meson.build                                        |  11 +-
+ target/i386/cpu.h                                  |   5 +
+ hw/i386/tdvf.c                                     |   6 +-
+ target/i386/cpu.c                                  |  27 +-
+ target/i386/kvm/tdx.c                              |  26 +-
+ .gitlab-ci.d/buildtest-template.yml                |   3 +-
+ .gitlab-ci.d/buildtest.yml                         |  11 +-
+ rust/clippy.toml => clippy.toml                    |   2 +-
+ python/scripts/vendor.py                           |   4 +-
+ python/wheels/meson-1.5.0-py3-none-any.whl         | Bin 959846 -> 0 bytes
+ python/wheels/meson-1.8.1-py3-none-any.whl         | Bin 0 -> 1013001 bytes
+ pythondeps.toml                                    |   2 +-
+ rust/Cargo.lock                                    |   8 +
+ rust/Cargo.toml                                    |   2 +-
+ rust/bits/Cargo.toml                               |  19 +
+ rust/bits/meson.build                              |  16 +
+ rust/bits/src/lib.rs                               | 443 +++++++++++++++++++++
+ rust/hw/char/pl011/Cargo.toml                      |   1 +
+ rust/hw/char/pl011/meson.build                     |   1 +
+ rust/hw/char/pl011/src/device.rs                   |  51 ++-
+ rust/hw/char/pl011/src/registers.rs                |  39 +-
+ rust/meson.build                                   |  15 +-
+ rust/qemu-api-macros/src/bits.rs                   | 229 +++++++++++
+ rust/qemu-api-macros/src/lib.rs                    |  60 ++-
+ rust/qemu-api/meson.build                          |  34 +-
+ rust/qemu-api/src/bindings.rs                      |   1 +
+ rust/qemu-api/src/cell.rs                          |  22 +-
+ scripts/rust/rustc_args.py                         |   5 +-
+ .../docker/dockerfiles/fedora-rust-nightly.docker  |   2 +
+ tests/docker/dockerfiles/ubuntu2204.docker         |   1 +
+ tests/lcitool/mappings.yml                         |   6 +-
+ tests/lcitool/refresh                              |   3 +
+ 34 files changed, 934 insertions(+), 149 deletions(-)
+ rename rust/clippy.toml => clippy.toml (55%)
+ delete mode 100644 python/wheels/meson-1.5.0-py3-none-any.whl
+ create mode 100644 python/wheels/meson-1.8.1-py3-none-any.whl
+ create mode 100644 rust/bits/Cargo.toml
+ create mode 100644 rust/bits/meson.build
+ create mode 100644 rust/bits/src/lib.rs
+ create mode 100644 rust/qemu-api-macros/src/bits.rs
 -- 
-2.49.0.windows.1
+2.49.0
 
 
