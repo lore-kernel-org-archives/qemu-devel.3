@@ -4,62 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2423CC5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 09:08:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17ED3C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 09:15:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMNd5-0005Aa-Ts; Tue, 03 Jun 2025 05:08:19 -0400
+	id 1uMNim-0006Hy-CZ; Tue, 03 Jun 2025 05:14:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uMNd4-0005A6-2g; Tue, 03 Jun 2025 05:08:18 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
+ id 1uMNij-0006H4-Q0; Tue, 03 Jun 2025 05:14:09 -0400
+Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uMNd0-0004vG-Ro; Tue, 03 Jun 2025 05:08:17 -0400
+ id 1uMNig-0005pF-V6; Tue, 03 Jun 2025 05:14:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1748941695; x=1780477695;
+ t=1748942047; x=1780478047;
  h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=WMg88f9iGVIBagom6YEmBoKZSCfdB7N97smdC3wE9Q8=;
- b=QK9Da/XmpnXxB90jaCtWgiMaFiDMookJmqLERpdBqRuCgaLcW83rpw3B
- 87ISAfiAkIEIv0VODkhF/Moimx1/q0vH+5KzB/iG0gcsJ/gELumO9vvKB
- iGWAKY8I4gnlHfiCoS+5WVSX1fEon90a749zP8GexP2LomkWv0NbgvK+8
- wGUnSDuB14GSzLjOXS1+NNxUbv0ihadQ4jNNb4oeNXZFFEhkSDqy4e1kt
- 3Kq9sQ+Gp9V74RC/t/NYnZawm82xCZU7G7BTspkNuGDMOQ7pto70VlAus
- oA5woDIimzgDsU61yyU7Bh0aScHfS99bQ4feOaFp1Np1iNZQd/njTluiF w==;
-X-CSE-ConnectionGUID: lVYFTWb+TH+QHOnVujas9w==
-X-CSE-MsgGUID: LU6b/rRmQ52MPJQs2pr7pA==
-X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="73504539"
-X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="73504539"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 03 Jun 2025 02:08:11 -0700
-X-CSE-ConnectionGUID: EmzvGMGDRWiOb5x83y25JQ==
-X-CSE-MsgGUID: 5aPSnWKKSVSBkMpF6KE4jw==
+ mime-version:in-reply-to;
+ bh=zvg6L018Ewov4eURmDaD8O4hsuuTb8Ic6w9dXXAN2f0=;
+ b=nLv1Py+vvTxt+qqQLRchG0EvpHtkRu48M31w8e95wGSmimn5saA5QTwq
+ +CkizfP6lATgQKuIQVHHy0EGrybWXIZweWhTBOxmM1P3cUCckpP4kiRvV
+ Ne+TvXe/MWTja/xJ41R/N0xYVFsvgcHN7W+26srk1bOXLMjDooxWOK5mP
+ 5CnvLXACPlpgKLrVvOLQcKPgfVEtkv//Hqk/gNsaIBgmPy0wJxgtk+07w
+ Uo20JPLlnfIOtLNGs0qa6AnJvCtfaRoG4OF6SUdUaYoIE8v0xLO2NDtgg
+ f9GbzTTqCWjlKapZ2xpHfhYMun16hq8T2hO2Ya8nGoGUd+5TeEeqWEeh+ g==;
+X-CSE-ConnectionGUID: DTm52iuoQ3KVSTU6FZvkKQ==
+X-CSE-MsgGUID: 8DnTxf5sQumYe9gQSRnp1g==
+X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="76365490"
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="76365490"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 02:14:04 -0700
+X-CSE-ConnectionGUID: Ls0kT20JRwabESDUa6YxMA==
+X-CSE-MsgGUID: tBbSOFXIS3aa6VB8pRwOQQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="149847356"
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="144775548"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa004.jf.intel.com with ESMTP; 03 Jun 2025 02:08:08 -0700
-Date: Tue, 3 Jun 2025 17:29:19 +0800
+ by fmviesa007.fm.intel.com with ESMTP; 03 Jun 2025 02:14:03 -0700
+Date: Tue, 3 Jun 2025 17:35:15 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-rust@nongnu.org
-Subject: Re: [PATCH 06/14] rust: qemu-api: add bindings to Error
-Message-ID: <aD7AbxghCc5VYDhu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH v2 00/14] rust: bindings for Error
+Message-ID: <aD7B02b1EOedrtUq@intel.com>
 References: <20250530080307.2055502-1-pbonzini@redhat.com>
- <20250530080307.2055502-7-pbonzini@redhat.com>
- <877c1uffj3.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <877c1uffj3.fsf@pond.sub.org>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20250530080307.2055502-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.7; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -43
 X-Spam_score: -4.4
@@ -84,137 +80,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> > +    /// Equivalent of the C function `error_propagate`.  Fill `*errp`
+On Fri, May 30, 2025 at 10:02:52AM +0200, Paolo Bonzini wrote:
+> Date: Fri, 30 May 2025 10:02:52 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH v2 00/14] rust: bindings for Error
+> X-Mailer: git-send-email 2.49.0
 > 
-> Uh, is it?  Let's see...
+> As explained for v1, the impetus for this series is to remove BqlCell<>
+> from HPETState::num_timers.  However, it's also an important step for QAPI:
+> error propagation is pretty central for example to QMP, and the series
+> is also a first example of two-way conversion between C and native-Rust
+> structs (i.e. not using bindgen-generated structs or their opaque wrappers).
 > 
-> > +    /// with the information container in `self` if `errp` is not NULL;
-> > +    /// then consume it.
-> > +    ///
-> > +    /// # Safety
-> > +    ///
-> > +    /// `errp` must be a valid argument to `error_propagate`;
-> 
-> Reminder for later: the valid @errp arguments for C error_propagate()
-> are
-> 
-> * NULL
-> 
-> * &error_abort
-> 
-> * &error_fatal
-> 
-> * Address of some Error * variable containing NULL
-> 
-> * Address of some Error * variable containing non-NULL
-> 
-> The last one is *not* valid with error_setg().
-> 
-> > +    /// typically it is received from C code and need not be
-> > +    /// checked further at the Rust↔C boundary.
-> > +    pub unsafe fn propagate(self, errp: *mut *mut bindings::Error) {
-> 
-> Reminder, just to avoid confusion: C error_propagate() has the arguments
-> in the opposite order.
-> 
-> > +        if errp.is_null() {
-> > +            return;
-> > +        }
-> > +
-> > +        let err = self.clone_to_foreign_ptr();
-> > +
-> > +        // SAFETY: caller guarantees errp is valid
-> > +        unsafe {
-> > +            errp.write(err);
-> > +        }
-> > +    }
-> 
-> In C, we have two subtly different ways to store into some Error **errp
-> argument: error_setg() and error_propagate().
-> 
-> Their obvious difference is that error_setg() creates the Error object
-> to store, while error_propagate() stores an existing Error object if
-> any, else does nothing.
-> 
-> Their unobvious difference is behavior when the destination already
-> contains an Error.  With error_setg(), this must not happen.
-> error_propagate() instead throws away the new error.  This permits
-> "first one wins" error accumulation.  Design mistake if you ask me.
-> 
-> Your Rust propagate() also stores an existing bindings::Error.  Note
-> that "else does nothing" doesn't apply, because we always have an
-> existing error object here, namely @self.  In the error_propagate() camp
-> so far.
-> 
-> Let's examine the other aspect: how exactly "storing" behaves.
-> 
-> error_setg() according to its contract:
-> 
->     If @errp is NULL, the error is ignored.  [...]
-> 
->     If @errp is &error_abort, print a suitable message and abort().
-> 
->     If @errp is &error_fatal, print a suitable message and exit(1).
-> 
->     If @errp is anything else, *@errp must be NULL.
-> 
-> error_propagate() according to its contract:
-> 
->     [...] if @dst_errp is NULL, errors are being ignored.  Free the
->     error object.
-> 
->     Else, if @dst_errp is &error_abort, print a suitable message and
->     abort().
-> 
->     Else, if @dst_errp is &error_fatal, print a suitable message and
->     exit(1).
-> 
->     Else, if @dst_errp already contains an error, ignore this one: free
->     the error object.
-> 
->     Else, move the error object from @local_err to *@dst_errp.
-> 
-> The second to last clause is where its storing differs from
-> error_setg().
-> 
-> What does errp.write(err) do?  I *guess* it simply stores @err in @errp.
-> Matches neither behavior.
-> 
-> If that's true, then passing &error_abort or &error_fatal to Rust does
-> not work, and neither does error accumulation.  Not equivalent of C
-> error_propagate().
+> As an aside, support for NUL-terminated file is now scheduled for
+> inclusion in Rust as "panic::Location::file_with_nul()", but it will be
+> quite a while before QEMU can use it.  For more information, see
+> https://github.com/rust-lang/rust/issues/141727.
 
-I did some simple tests. yes, &error_abort or &error_fatal doesn't work.
-Current @errp of realize() can work because @errp points to @local_err
-in device_set_realized().
+Apart from Markus's comments, the rest of the code (the specific
+implementation of error binding) looks great to me. The interaction with
+Foreign crate is quite insightful. I'll go through other patches on the
+rust-next branch.
 
-> Is "propagate" semantics what you want here?
-> 
-> If not, use another name.
-
-I guess here we should call C version's error_propagate() instead of
-write():
-
-diff --git a/rust/qemu-api/src/error.rs b/rust/qemu-api/src/error.rs
-index a91ce6fefaf4..56622065ad22 100644
---- a/rust/qemu-api/src/error.rs
-+++ b/rust/qemu-api/src/error.rs
-@@ -205,7 +205,7 @@ pub unsafe fn propagate(self, errp: *mut *mut bindings::Error) {
-
-         // SAFETY: caller guarantees errp is valid
-         unsafe {
--            errp.write(err);
-+            bindings::error_propagate(errp, err);
-         }
-     }
-
----
-
-Then Rust's propagate has the same behavior as C (Of course, here Rust
-is actually using C's error_propagate, so the two are equivalent.)
-
-Regards,
+Thanks,
 Zhao
-
 
 
