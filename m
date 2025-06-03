@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 448E0C5AE59
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CB0CC5B555
 	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:05:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPPO-00083C-RM; Tue, 03 Jun 2025 07:02:18 -0400
+	id 1uMPR9-0000f5-1v; Tue, 03 Jun 2025 07:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPH-0007vV-OI
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:13 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1uMPPO-00082v-LH
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:18 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPE-00029y-J6
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:11 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-604e2a2f200so10600476a12.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
+ id 1uMPPJ-0002Bj-Pc
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:18 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-6049431b0e9so8856349a12.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748948527; x=1749553327; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748948532; x=1749553332; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iZTP38b1AWptwD4sVw7xjWUpbGhEyHUBDnJO6tIxuSQ=;
- b=pLxV3GQpROR9w4qIiw/0C6OfnH16FSmKk2LQZQKMQyXjp75gGLluB8j+hoaA+Cu0AX
- 6Z3oVYg5+vyVmuK54C5/TuOUr6A1AQZ6TX7rxyk/CjXKDYYFKzDf1IdQ1hHmRGzjiIpo
- lEoMcPaQLQ9J78a2Eva5ZoECWzT9Qz50dMmsW86x/IBwwd06ooYBSaXvkrFb+ahSrYNB
- AAM1YA/ZWyaGIcDhu9BgIDrHqcBcxOYoihYOmZ4/MmVSh5PJUBF6lTJKE48mAEGVKfiS
- wqHk9/qTEYqk93Xpdzb8FLH4y9GObkwaX9LeJ86pcsVZhti++Fwf54b5WUpLxXJFCYuJ
- uHyQ==
+ bh=QqzHenzf9f+tp29aM4EXCHM2Myi+Q8QXd6lOEWCWJSY=;
+ b=mK8fLa7zXzF5atbbc8FFArSWt5RMPjTypOIkXuwI4SQKItr7h9mtQcunotUA/jtb0n
+ E6+dV4HhadeNxfUVT1cJvGwm6X9mqcG0FVrQqlljikVYSZCf45kxA6C4ZVGYpEAg86FA
+ ttLivympfBcDRiOKZnHz2+XFW6cbme2/lHMXMwu4IDZwB4qz31mjacknI8tWr04w4Vmy
+ P9PZ+p1IHGdOoXobbtUX0gp5ZotzNupiM4cy5VfDRg1i83N3daR/ssqBtxBHOBjLv7/s
+ 1ULyzQm3jgedOr7+bnH7FCEQcHZarUArenTTX5Y51R5rMyiXYuaq3tO70U1ql1yKQxGq
+ +rmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748948527; x=1749553327;
+ d=1e100.net; s=20230601; t=1748948532; x=1749553332;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iZTP38b1AWptwD4sVw7xjWUpbGhEyHUBDnJO6tIxuSQ=;
- b=qjUz4CiNdhgLHjK4oxWJUPDrU0f9y2nXK3+KH6xwkHRBee49myHFutHanj0Osie+Rc
- ys3OzWt14qbzE11LQNeCb0FXjGevrXKkTmdR95Pn1tMnck8Cyc+IoArp5/Q0XX21MEZM
- khfONe8yRaKfkA6qs0ylcIHkh+MixCATxfRTHPNvxD1ks6+9MeI18RGgH77r1Y2z6i3g
- YjfNLdFyRVFcUpHw6EX5F2JkF0gtg9HBrfw5LAWLMH703AWu7q7WIv1KeG9KkGQVBD3Z
- hoB5z6cjl9wkeXSHusDIDNCE0VVp4ZnbkoI+lSB67yXdhF/DKThAz2QYeIgT+cSnBdWl
- 5VKw==
-X-Gm-Message-State: AOJu0YyCk+GYogDUiJnOHj9iTglHFX5nAjSA0GQZHLBpcTpRra5KqBt5
- x9rCqPpTegD4JdCUTI7eF1ttWxEpZWHYfehaSjLCYRnr+mOk0DuM9FuMbG3nVdhQo4Q=
-X-Gm-Gg: ASbGncvA2ArShqOnsyqbDVZ3zHvykQawtM1wInQiS2YWDbk8Oqx10vbE8iSbXGGS0RF
- SyB9Tav6UR/WfLh0SP0Msfxu/hpX6qv3qjyixIG0GGsx0MlgzGQL14KhT1FMexJwoMuDGodFMti
- QwapeiVGxtmqWLdHEvnjkVQmUgll6JdOuVaMVjLoc/0P11+x6y+3S1fZW5jcPwxkV5XesPbs8l2
- ixLzJagR1XVrs2S1y7tO9VgUZatAMm5h7RMUF5MYch60k6rVEgeWl/jvq0Q1vRch9Poc46sqqFn
- rg06UZINlrD7yY4BwsDmWDmtu29wWbYBKrQ04ouHcL+Xq48ejdXCLwo+/pF3Xlo=
-X-Google-Smtp-Source: AGHT+IGIbhG+GAjx8nOIhVVBwRcqHT5lptMJcPq9DI+dJqckilH7HWrRj+B1WhGc/ghsaWLd8c5L1A==
-X-Received: by 2002:a05:6402:5205:b0:604:abcd:b176 with SMTP id
- 4fb4d7f45d1cf-605b793e26emr11879813a12.25.1748948526720; 
- Tue, 03 Jun 2025 04:02:06 -0700 (PDT)
+ bh=QqzHenzf9f+tp29aM4EXCHM2Myi+Q8QXd6lOEWCWJSY=;
+ b=azkOCjrU0z+rKkqR250ZG2AEf+FKmxm3Uf5UvncTe/RRXsFNTf1xm77jwfBWrlk5BJ
+ kPpmCwr7QMfJt45GnS8Ksdf6WOuJ+OyCFi5RgH/xihcVIAdjCIlU8Th/NO0rRRnNSc7m
+ 20aCGSijZHVSKt0PTEglEUIG0hC0p/sFJVuuiXpnwiUF7KY3ca7TLw/+I8HPQbaHsjsw
+ Hy5DSHXuV5LKsP1mnTOSz8JHzZw2MK34FdyGuFi65uxtUEwvKzuKPnrrrTXKWGoOF+jL
+ 8dMUsFKNyNKWc2aKpTFTkmuUvwt/IyllfefYsSIYlf97XFK0+0b5dFpTJECtyuol0kfw
+ 91qw==
+X-Gm-Message-State: AOJu0Yyz68TelSTSd4n4PzfNi7ZvOhWkYnMCO/K9oXzJVvCoVUYFfkBU
+ si4d3rlySFhxgz9/af7Hu1EveEKoYGVdyaEtY89xgWVLb6RshvjfwE0Bt/0rLJbHfzs=
+X-Gm-Gg: ASbGnctfSPbKz015Kz7lZO+B1BkgETvGWqy88MJYiscrdWhY48y7mrxD+cmMbXMCA5Q
+ 8EJ5MY476cMT+wZHFguG+ShIdduuzOpxqMAcjvy7k+CB//Wbp3h3JehCfpgVbqYhoq38nw8SYTr
+ sfHojWhnBrEJCAh6oVT4YsLjf71eBCLmYHp6fDgtcyM+dACHsLFPkeuYItqsIru7l2AHgYqCf5B
+ DnT2xt8/Q7yhvZfXCSnEtfCAteKu1Ty+A6i7dYlSNCxdiW+SrZKSygyPAWgyPqZ+a0MfeLXm/Ju
+ hrLCllhGvc0II6YfNRAsjqk6f0blQgOm38RDJQ9/o98QDlqpZKXj
+X-Google-Smtp-Source: AGHT+IFVv8urIwBmXLpI7hLx7Ffqaa6R1s0JG6hdH6VPNvlXw7A6Pl6O0hD3m2KYf+hdL5iYQA5qtA==
+X-Received: by 2002:a17:907:2dac:b0:ad8:a329:b490 with SMTP id
+ a640c23a62f3a-adb36b2447fmr1479784866b.23.1748948531810; 
+ Tue, 03 Jun 2025 04:02:11 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-606b128c0acsm826516a12.1.2025.06.03.04.02.05
+ a640c23a62f3a-adb497704a5sm544319666b.83.2025.06.03.04.02.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 04:02:05 -0700 (PDT)
+ Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 0F9D85F9CD;
- Tue, 03 Jun 2025 12:02:05 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 0AC585F9EB;
+ Tue, 03 Jun 2025 12:02:06 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
@@ -85,18 +85,19 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 02/17] gitlab: disable debug info on CI builds
-Date: Tue,  3 Jun 2025 12:01:49 +0100
-Message-ID: <20250603110204.838117-3-alex.bennee@linaro.org>
+ Mahmoud Mandour <ma.mandourr@gmail.com>, Yiwei Zhang <zzyiwei@gmail.com>,
+ qemu-stable@nongnu.org
+Subject: [PATCH v4 12/17] virtio-gpu: support context init multiple timeline
+Date: Tue,  3 Jun 2025 12:01:59 +0100
+Message-ID: <20250603110204.838117-13-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250603110204.838117-1-alex.bennee@linaro.org>
 References: <20250603110204.838117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -119,30 +120,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Our default build enables debug info which adds hugely to the size of
-the builds as well as the size of cached objects. Disable debug info
-across the board to save space and reduce pressure on the CI system.
-We still have a number of builds which explicitly enable debug and
-related extra asserts like --enable-debug-tcg.
+From: Yiwei Zhang <zzyiwei@gmail.com>
 
+Venus and later native contexts have their own fence context along with
+multiple timelines within. Fences wtih VIRTIO_GPU_FLAG_INFO_RING_IDX in
+the flags must be dispatched to be created on the target context. Fence
+signaling also has to be handled on the specific timeline within that
+target context.
+
+Before this change, venus fencing is completely broken if the host
+driver doesn't support implicit fencing with external memory objects.
+Frames can go backwards along with random artifacts on screen if the
+host driver doesn't attach an implicit fence to the render target. The
+symptom could be hidden by certain guest wsi backend that waits on a
+venus native VkFence object for the actual payload with limited present
+modes or under special configs. e.g. x11 mailbox or xwayland.
+
+After this change, everything related to venus fencing starts making
+sense. Confirmed this via guest and host side perfetto tracing.
+
+Cc:  <qemu-stable@nongnu.org>
+Fixes: 94d0ea1c1928 ("virtio-gpu: Support Venus context")
+Signed-off-by: Yiwei Zhang <zzyiwei@gmail.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-Id: <20250518152651.334115-1-zzyiwei@gmail.com>
+[AJB: remove version history from commit message]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 ---
- .gitlab-ci.d/buildtest-template.yml | 1 +
- 1 file changed, 1 insertion(+)
+ hw/display/virtio-gpu-virgl.c | 44 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 44 insertions(+)
 
-diff --git a/.gitlab-ci.d/buildtest-template.yml b/.gitlab-ci.d/buildtest-template.yml
-index 118371e377..19663126ca 100644
---- a/.gitlab-ci.d/buildtest-template.yml
-+++ b/.gitlab-ci.d/buildtest-template.yml
-@@ -24,6 +24,7 @@
-     - ccache --zero-stats
-     - section_start configure "Running configure"
-     - ../configure --enable-werror --disable-docs --enable-fdt=system
-+          --disable-debug-info
-           ${TARGETS:+--target-list="$TARGETS"}
-           $CONFIGURE_ARGS ||
-       { cat config.log meson-logs/meson-log.txt && exit 1; }
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index b4aa8abb96..cea2e12eb9 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -978,6 +978,15 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+     }
+ 
+     trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
++#if VIRGL_VERSION_MAJOR >= 1
++    if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
++        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
++                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
++                                            cmd->cmd_hdr.ring_idx,
++                                            cmd->cmd_hdr.fence_id);
++        return;
++    }
++#endif
+     virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+ }
+ 
+@@ -991,6 +1000,11 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+          * the guest can end up emitting fences out of order
+          * so we should check all fenced cmds not just the first one.
+          */
++#if VIRGL_VERSION_MAJOR >= 1
++        if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
++            continue;
++        }
++#endif
+         if (cmd->cmd_hdr.fence_id > fence) {
+             continue;
+         }
+@@ -1005,6 +1019,29 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+     }
+ }
+ 
++#if VIRGL_VERSION_MAJOR >= 1
++static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
++                                      uint32_t ring_idx, uint64_t fence_id) {
++    VirtIOGPU *g = opaque;
++    struct virtio_gpu_ctrl_command *cmd, *tmp;
++
++    QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
++        if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX &&
++            cmd->cmd_hdr.ctx_id == ctx_id && cmd->cmd_hdr.ring_idx == ring_idx &&
++            cmd->cmd_hdr.fence_id <= fence_id) {
++            trace_virtio_gpu_fence_resp(cmd->cmd_hdr.fence_id);
++            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
++            QTAILQ_REMOVE(&g->fenceq, cmd, next);
++            g_free(cmd);
++            g->inflight--;
++            if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
++                trace_virtio_gpu_dec_inflight_fences(g->inflight);
++            }
++        }
++    }
++}
++#endif
++
+ static virgl_renderer_gl_context
+ virgl_create_context(void *opaque, int scanout_idx,
+                      struct virgl_renderer_gl_ctx_param *params)
+@@ -1039,11 +1076,18 @@ static int virgl_make_context_current(void *opaque, int scanout_idx,
+ }
+ 
+ static struct virgl_renderer_callbacks virtio_gpu_3d_cbs = {
++#if VIRGL_VERSION_MAJOR >= 1
++    .version             = 3,
++#else
+     .version             = 1,
++#endif
+     .write_fence         = virgl_write_fence,
+     .create_gl_context   = virgl_create_context,
+     .destroy_gl_context  = virgl_destroy_context,
+     .make_current        = virgl_make_context_current,
++#if VIRGL_VERSION_MAJOR >= 1
++    .write_context_fence = virgl_write_context_fence,
++#endif
+ };
+ 
+ static void virtio_gpu_print_stats(void *opaque)
 -- 
 2.47.2
 
