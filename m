@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BE4DC5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 745CFC5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPPv-0008LV-G6; Tue, 03 Jun 2025 07:02:51 -0400
+	id 1uMPPV-00088v-6c; Tue, 03 Jun 2025 07:02:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPM-0007yK-1f
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:16 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ id 1uMPPK-0007xF-OL
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:15 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPI-0002BO-J0
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:15 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ad89d8a270fso1353020566b.1
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:12 -0700 (PDT)
+ id 1uMPPH-0002Aj-9M
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:14 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-ad56829fabdso845095566b.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748948531; x=1749553331; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748948529; x=1749553329; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZLHAXd5IM7E3LOJv3AyI9ar9t7CdHBCtSRFXruIFS18=;
- b=LWtxeGy8qX1CFGgu9eipxKYVn4919sLdlolUJmAsmi5iMp7qwslJA9JpGwyLYg7qow
- IQN6QtYm4RjKs/8JltY5hqu1pdvJrPR6HrEmZCGk+weaw4QITV9+Es66frYAHJ37BFS+
- 6V2j8ZEw8dJ7wX2IEFCamWFdhV63utK+J+U58+ag4+3t06ZJDam1tmmJ4qoCwndDIyIs
- NdaI4Ib+VvIpLucm4af25cT2BNts1VRf+4Qq8BnpUJua0vUdNDWhPKkcL68cDnaip+Rk
- UBVlDNdPJFWAnMhoRFa+a1YspT5uhc0i294EDxcxEOuOJSEdglvR4vIJEL6O5ecnNXmP
- 6GdQ==
+ bh=08HuXk3jkIVLfkToiAYT1EQvKRHMi0bIkqfvgQp9dJ8=;
+ b=OuuHSUieAI+1UZLrI6rJPpcp5e60lrMGMlAbBzZgJuMjNEENP/gRBiaWRSrXv+Y70t
+ XZ4pUKnXr/Y2Gg3cogY+uaKEyFQVKFTIYY6JaUZFBOHj7XHamqqqDT8s4JBlWgnuclg5
+ YUrMEffieZHOashrIrW6d5yvL3xMukFRN9Nn7nEvgprFcaT9t0o3quc3aPi2xFLfhqjO
+ qIpMYzNihB5TQDLvgQWbUShWzLuA604iryXHOSNMETe5PQndy3l/BnfijqmaUlpVAkZL
+ olnXkY+YamXs9aGShGPpJUNOyas5bEBWxxgduorBXbKQf01jd/MFNK9Cnl5gMim3EXCQ
+ I4AA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748948531; x=1749553331;
+ d=1e100.net; s=20230601; t=1748948529; x=1749553329;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZLHAXd5IM7E3LOJv3AyI9ar9t7CdHBCtSRFXruIFS18=;
- b=BjgKIOsUy5vWh5LzEpnFg5VHALgpBI1ZTX8SKS7Vlp4Zj8+q9RJdWZYSjHbbjixqNh
- i8epuU1gXoNYiHkgm2yMb4fm5H6dLiAQ8UFd08A0bpPTeS+pQgX+lRyG0/HusqvW10t0
- C8oWP5s3NYdkrVHpaJjktDlANmCoA341IZ8JVpd6T/SmdhU2HMK6LOMJm1305DgzEw+q
- uI+ndTpJC/hRuiqP/Cm4zeu1KlWt/CslnQvDU5mHcRnqTqBAReg9KiKNMgzys0s6ivIN
- Hlwkdz22RxE1QcS1ByM+H0Xqd+C2YaNaoGjenlUtuHyWd4ZHVg4WLXcR5k6TeqbJWmpi
- GtYQ==
-X-Gm-Message-State: AOJu0Yw5ZwGFtq5loT2LRJxb0kG/1gPbABXTg2j1FJuHHT6yNZnlxFJS
- iPN+2P43AOWMUjYM+zC2o35ysGQ4aEZnC+treUD0pVzXNYRrfYMgUv9FuIYwPX3f2E8=
-X-Gm-Gg: ASbGncv0N9DkjRHwvkKYb2uurxfFZmhkm0rR3HDhC5obN5KsPgC29sV+uGfHOaZ9sAI
- 6xZx35FeBePmSA5ppBUBeMh/umMFi/Q419mhyoZIc+RLMCGJSuNIBjGKg7d2wvoniWhjTYGwTOh
- rSPfUVGm/2aCbppcnfWKZTfqihh2Fjhcd4Fz5Effji4P+dKrkBurJzB3lXGlXWPjSabAwRNRE0c
- u3gUs68r4qBGIqv+jsafVo+admA3IICrTaJiQVGSL+zqHdk+mTd144ITucn04Lv/V514pILn2pD
- RybzkWSkvzDicmQlwD2lPVrG40/L6HgeDEHNNCzXd2JBiCGWKTjI
-X-Google-Smtp-Source: AGHT+IF/B2Yh7uAUxPJeeiVy7QhnVYMFAwL3ZHOfD5LthsL6b89cY3KgJORF8qB7DViR0EH5HevY5g==
-X-Received: by 2002:a17:907:72c7:b0:ad8:91e4:a931 with SMTP id
- a640c23a62f3a-adde66fadf7mr201145966b.26.1748948530924; 
- Tue, 03 Jun 2025 04:02:10 -0700 (PDT)
+ bh=08HuXk3jkIVLfkToiAYT1EQvKRHMi0bIkqfvgQp9dJ8=;
+ b=wb/rRNkjv7kWsqTRBDuZFzT1YEIxAKi9XCHydGQUx3JTHjtadzbmGBrD6qk9h1m6Hb
+ 2uegMnBBr0vGlf7OT1x/4xaD1YLlSPvN1IYwHpYRqW7vWH6M+4Qp7aslzK/8SAOKHC97
+ un6umpdMmqGeGITLlu5lRxPp+D43MHczCXy1q3rzBYGL2KUdv44yIxxIveis40XKoTjC
+ 3+VLqU8b3g33b0fEJd3Z7FoqaCLFhOrqjJZBrm9pXOV5mdbzJYTcLVoFYonwDDt0KS5L
+ eWbme33rJb9We6Y9Rd4m82chOdPvJvcOh806cPXhqRSWMYcxghHKTna7ts3frJzqnLxR
+ ydaQ==
+X-Gm-Message-State: AOJu0YwTZu1y0O33chAOaZ5UX655BnPon7IFNfKrCiESDBc2/uPgjJEr
+ AtU9Zk/hVxiIIer3aw6RU9JRhApN4OA+0BCpMkeqkQxK77keTuxZz6yPA3w8lFbAUtk=
+X-Gm-Gg: ASbGncvP5LGUcRI/Qqanpo80NcXtLLVhLjOTuplvZ0TnNPF6AqU8pq830eBeh66cAYV
+ 85xq207qt3xP3L3I9sn6CTQiihXxLycnPgdnljAuh7Sr1YDpO7ayv2maZc/bN6mMRypNrmXwDLB
+ kq4BRgtHx6048bkB5WnOtZ3NgCoVm0/v4/KoO/beUC29XQkaGDQbS+dRhAExv/2ahIzax94Mn3d
+ atUJqwv6kTzf4/+xtrkdWgVA0HdPIgtfyKccfc+ywVfTXxEYU4JZXe8uycuOvWgAY66ctFWxMtL
+ /gVxOTNBL95PiC5sVAoNEmilJiSCbDCmyyli7TKN4daU2EM2T9A4
+X-Google-Smtp-Source: AGHT+IFuUQ9Z5gwnAK0Ic0DyqmN6WDKF4zjEaOYv2OLPtOdGJOfZimWxycDuS9jYATKQUPiHamexWw==
+X-Received: by 2002:a17:907:9488:b0:ad8:99e7:171 with SMTP id
+ a640c23a62f3a-adb493e28f3mr1175212366b.21.1748948529161; 
+ Tue, 03 Jun 2025 04:02:09 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-adde6f4b548sm81837766b.67.2025.06.03.04.02.07
+ a640c23a62f3a-ada5d7fec86sm933025666b.7.2025.06.03.04.02.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id EB69C5F9EA;
+ by draig.lan (Postfix) with ESMTP id 59A5B5F9D2;
  Tue, 03 Jun 2025 12:02:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -85,20 +85,18 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Dongwon Kim <dongwon.kim@intel.com>,
- Vivek Kasireddy <vivek.kasireddy@intel.com>
-Subject: [PATCH v4 11/17] ui/gtk-gl-area: Remove extra draw call in refresh
-Date: Tue,  3 Jun 2025 12:01:58 +0100
-Message-ID: <20250603110204.838117-12-alex.bennee@linaro.org>
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: [PATCH v4 05/17] contrib/plugins: add a scaling factor to the ips arg
+Date: Tue,  3 Jun 2025 12:01:52 +0100
+Message-ID: <20250603110204.838117-6-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250603110204.838117-1-alex.bennee@linaro.org>
 References: <20250603110204.838117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x630.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -121,42 +119,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dongwon Kim <dongwon.kim@intel.com>
+It's easy to get lost in zeros while setting the numbers of
+instructions per second. Add a scaling suffix to make things simpler.
 
-This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
-which causes some guest display corruption when gtk-gl-area
-is used for GTK rendering (e.g. Wayland Compositor) possibly due to
-simulataneous accesses on the guest frame buffer by host compositor
-and the guest.
-
-Fixes: 77bf310084 ("ui/gtk: Draw guest frame at refresh cycle")
-Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reported-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
-Message-Id: <20250214170813.2234754-1-dongwon.kim@intel.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- ui/gtk-gl-area.c | 1 -
- 1 file changed, 1 deletion(-)
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
-diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
-index 8151cc413c..429ba914e0 100644
---- a/ui/gtk-gl-area.c
-+++ b/ui/gtk-gl-area.c
-@@ -168,7 +168,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
+---
+v2
+  - normalise the suffix before a full strcmp0
+  - check endptr actually set
+  - fix checkpatch
+  - scale_entry -> ScaleEntry
+  - drop hz from suffix
+---
+ contrib/plugins/ips.c | 34 +++++++++++++++++++++++++++++++++-
+ 1 file changed, 33 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
+index e5297dbb01..eb4418c25b 100644
+--- a/contrib/plugins/ips.c
++++ b/contrib/plugins/ips.c
+@@ -129,6 +129,18 @@ static void plugin_exit(qemu_plugin_id_t id, void *udata)
+     qemu_plugin_scoreboard_free(vcpus);
+ }
  
-     if (vc->gfx.guest_fb.dmabuf &&
-         qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
--        gd_gl_area_draw(vc);
-         return;
-     }
- 
++typedef struct {
++    const char *suffix;
++    unsigned long multipler;
++} ScaleEntry;
++
++/* a bit like units.h but not binary */
++static ScaleEntry scales[] = {
++    { "k", 1000 },
++    { "m", 1000 * 1000 },
++    { "g", 1000 * 1000 * 1000 },
++};
++
+ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+                                            const qemu_info_t *info, int argc,
+                                            char **argv)
+@@ -137,12 +149,32 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+         char *opt = argv[i];
+         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+         if (g_strcmp0(tokens[0], "ips") == 0) {
+-            max_insn_per_second = g_ascii_strtoull(tokens[1], NULL, 10);
++            char *endptr = NULL;
++            max_insn_per_second = g_ascii_strtoull(tokens[1], &endptr, 10);
+             if (!max_insn_per_second && errno) {
+                 fprintf(stderr, "%s: couldn't parse %s (%s)\n",
+                         __func__, tokens[1], g_strerror(errno));
+                 return -1;
+             }
++
++            if (endptr && *endptr != 0) {
++                g_autofree gchar *lower = g_utf8_strdown(endptr, -1);
++                unsigned long scale = 0;
++
++                for (int j = 0; j < G_N_ELEMENTS(scales); j++) {
++                    if (g_strcmp0(lower, scales[j].suffix) == 0) {
++                        scale = scales[j].multipler;
++                        break;
++                    }
++                }
++
++                if (scale) {
++                    max_insn_per_second *= scale;
++                } else {
++                    fprintf(stderr, "bad suffix: %s\n", endptr);
++                    return -1;
++                }
++            }
+         } else {
+             fprintf(stderr, "option parsing failed: %s\n", opt);
+             return -1;
 -- 
 2.47.2
 
