@@ -4,115 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D940C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 16:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250F7C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 16:13:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMUCP-0008Cu-Hg; Tue, 03 Jun 2025 12:09:13 -0400
+	id 1uMUFe-0000vi-Cx; Tue, 03 Jun 2025 12:12:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uMUCJ-00084b-UG
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:09:08 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uMUCE-0004Kh-Ga
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:09:07 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id A065821216;
- Tue,  3 Jun 2025 16:08:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1748966938; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gH0fPMGyXogjgY8zr8pXISyR55z2UtY+wSyw7iaZ3aY=;
- b=Y7/b/PGho6VDdsJDXrYmgwQzE0/DSWgapCpwxbc/4KBH2mAk7DmGJQraHNqxoEvRVofzQ5
- ZO5/B1riz9mlnVOcfCHJEtHcfVsPwrqNQTgq0yFJeqzb4jpiXgC9pL1S//HEuRy36tTT2g
- keqqwAcMDzlo/kCiv7W2hylflM8NKW8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1748966938;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gH0fPMGyXogjgY8zr8pXISyR55z2UtY+wSyw7iaZ3aY=;
- b=GxFCyvhakO0nbpiOox6ns/Tjbo3k+vDNjb9/4aWwPTBGBd7CIdqF298XemT9fB9yWlSNAc
- tOMV4Tyds1VsZTCQ==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="Y7/b/PGh";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=GxFCyvha
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1748966938; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gH0fPMGyXogjgY8zr8pXISyR55z2UtY+wSyw7iaZ3aY=;
- b=Y7/b/PGho6VDdsJDXrYmgwQzE0/DSWgapCpwxbc/4KBH2mAk7DmGJQraHNqxoEvRVofzQ5
- ZO5/B1riz9mlnVOcfCHJEtHcfVsPwrqNQTgq0yFJeqzb4jpiXgC9pL1S//HEuRy36tTT2g
- keqqwAcMDzlo/kCiv7W2hylflM8NKW8=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1748966938;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=gH0fPMGyXogjgY8zr8pXISyR55z2UtY+wSyw7iaZ3aY=;
- b=GxFCyvhakO0nbpiOox6ns/Tjbo3k+vDNjb9/4aWwPTBGBd7CIdqF298XemT9fB9yWlSNAc
- tOMV4Tyds1VsZTCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 203AC13A92;
- Tue,  3 Jun 2025 16:08:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id y1KnNBkeP2hNRAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 03 Jun 2025 16:08:57 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org
-Cc: "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com, Alexey
- Perevalov <a.perevalov@samsung.com>, Juraj Marcin <jmarcin@redhat.com>
-Subject: Re: [PATCH 09/13] migration/postcopy: Initialize blocktime context
- only until listen
-In-Reply-To: <20250527231248.1279174-10-peterx@redhat.com>
-References: <20250527231248.1279174-1-peterx@redhat.com>
- <20250527231248.1279174-10-peterx@redhat.com>
-Date: Tue, 03 Jun 2025 13:08:55 -0300
-Message-ID: <8734cg4xk8.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMUFb-0000ut-D6
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:12:31 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMUFW-0004hI-Oc
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 12:12:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748967146; x=1780503146;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=WOKLrG800JsNYDuenjSSGG1iYsq0yhwwkhv7Zpy4AB0=;
+ b=BsUrqJauYAZzOULur67nSHDm1ICa4m1vLgd3V7SQ3IrW9nhYBBuq2H3Q
+ BkBqLiTwfExgPUrC841CcJ1BpkBYyrhnOgs6eBNNyfFRkQ9Gdskh0C/QA
+ Cuo5O1/coZqQt1W8cWjCYaCuFAKslAiZLu1jGilJae5Ym2rneAIkMHdVV
+ YVsvYllCz01+e/b/+FvgGET0BvPFfT2h4Pm3mwMH55uF/EHyNzOlwFHY9
+ d6237qll5ity2Ju4UA+v8G5K/lTKeKspwdDx2H6bCf35KUnYRcYux/X4C
+ 2U+fOvoSBOhSIpAHCi/BZJRrEImSNlDayaqRi2fs+InDhwJn/aAH1gyc0 w==;
+X-CSE-ConnectionGUID: F39jUqFoSlO56Z3IlLvd5g==
+X-CSE-MsgGUID: qTVj8UvCT+eIkAqLjH5g8A==
+X-IronPort-AV: E=McAfee;i="6700,10204,11453"; a="61677740"
+X-IronPort-AV: E=Sophos;i="6.16,206,1744095600"; d="scan'208";a="61677740"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 09:12:22 -0700
+X-CSE-ConnectionGUID: 3jX03g1PRp2jMHqq3bZA9w==
+X-CSE-MsgGUID: qrbiEWqZQAmxVHi+a8m/5Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,206,1744095600"; d="scan'208";a="150191559"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by orviesa005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 09:12:20 -0700
+Message-ID: <e8a4148d-9e3e-4884-8b3c-e49bb7a4cdf5@intel.com>
+Date: Wed, 4 Jun 2025 00:12:17 +0800
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; RCVD_TLS_ALL(0.00)[];
- ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- MID_RHS_MATCH_FROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:dkim,suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:104:10:150:64:97:from,2a07:de40:b281:106:10:150:64:167:received];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: A065821216
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] i386/kvm: Prefault memory on page state change
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, Michael Roth <michael.roth@amd.com>
+References: <f5411c42340bd2f5c14972551edb4e959995e42b.1743193824.git.thomas.lendacky@amd.com>
+ <4a757796-11c2-47f1-ae0d-335626e818fd@intel.com>
+ <cc2dc418-8e33-4c01-9b8a-beca0a376400@intel.com>
+ <d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@redhat.com>
+Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,24 +90,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On 6/3/2025 11:00 PM, Paolo Bonzini wrote:
+> I'm applying Tom's patch to get it out of his queue, but will delay sending
+> a pull request until the Linux-side fix is accepted.
 
-> Before this patch, the blocktime context can be created very early, because
-> postcopy_ram_supported_by_host() <- migrate_caps_check() can happen during
-> migration object init.
->
-> The trick here is the blocktime context needs system vCPU information,
-> which seems to be possible to change after that point.  I didn't verify it,
-> but it doesn't sound right.
->
-> Now move it out and initialize the context only when postcopy listen
-> starts.  That is already during a migration so it should be guaranteed the
-> vCPU topology can never change on both sides.
->
-> While at it, assert that the ctx isn't created instead this time; the old
-> "if" trick isn't needed when we're sure it will only happen once now.
->
-> Signed-off-by: Peter Xu <peterx@redhat.com>
+BTW, for the patch itself.
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Tested-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
