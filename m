@@ -4,93 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F523C5B555
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 14:45:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38CD4C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 14:47:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMSsI-00010l-5h; Tue, 03 Jun 2025 10:44:22 -0400
+	id 1uMSup-0001qp-T6; Tue, 03 Jun 2025 10:46:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMSs9-0000zm-QQ
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:44:15 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMSs1-0002Ne-3u
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:44:12 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a365a6804eso4293875f8f.3
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 07:44:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748961839; x=1749566639; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ej1WLHRtQogBZXpAK07IGpaR+2X1F2rJXfCoNf4yQsQ=;
- b=OMh2e32/mADmHDxAsIGvQpRz7oFudgK6uMBDZdt9tB1ZhfxXWJ8w7bK7SAOhndzAke
- 7VRPv4OdJEIZwJEW98h5QZhivk5evt+libQp8WleE6s3dwQCSeGs1y3EvyX06zEdjZe+
- OGFrutQRdc7BX/FrHPJ6tXrIRvSnXMR4YM9ubVSSp2mL8WCBbXHzZTzqsCkXCGrhXKCk
- 9ZCoBWwcKKTPaoNUVnDJqY2zACtCT9GkRt2uWB1vmLFd0LBmgD+ixLTrprVzo9NgNKe8
- elXzXHDkA3laAc4t4Fq5ZAbmt1mdtrqMEP6oxtrWa2hI8K4p6o3QSKqIoVU2rqNitqNO
- P4UQ==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uMSul-0001qb-Ha
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:46:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uMSui-0002m6-NQ
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 10:46:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748962009;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=rL7JZNITIzVYoHRrpUOYJQiN5gTcywASsB1MYL+cmnY=;
+ b=DTq9P10qWjRN53YfyiljrXB3KGrB5FhWQVkVcOv4tIi7TFge92XksVG1lMk0kSUQStjaTx
+ yY73iqFs34/3guGceJ+kcTGp3sgZ9kD08I6WKqwhmOlGiSXoiOm3WhVtDPJN98w1RTpwyA
+ q39gbRJMuKCXybqxCuhI2e4XwM13smA=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-YCEDhkd0NMasQEJKiV_NyA-1; Tue, 03 Jun 2025 10:46:47 -0400
+X-MC-Unique: YCEDhkd0NMasQEJKiV_NyA-1
+X-Mimecast-MFC-AGG-ID: YCEDhkd0NMasQEJKiV_NyA_1748962006
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450cb902173so26182555e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 07:46:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748961839; x=1749566639;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=ej1WLHRtQogBZXpAK07IGpaR+2X1F2rJXfCoNf4yQsQ=;
- b=wkDoI0/lHvwSBkMlcA+EwartMO6HRH55yMP8UI/1cf3h04Weo6TqlW+t6ZjB+R3v3P
- 2KfJRH6tgkVLl/8B80uZP2PgBHIPULx0R3ac957QklMdlvmVfmcgzFFTz7dZ9PBTwhnl
- jvslNGgAfoOuFYc9dM4kW2Tt1l7To/SYvC49JuheY4/+SHdP3YWmPznidCmyp6ut9bK5
- FlmRboJ/2EeskaJ973m6QYDHx1zBycnk/U8o/w9uq93vBI24sf9Ss+FjUZuQbiT9FLfo
- IZML7FxrxMW+AG+FrmHgw5t8cQUcWmWqR4J/5Y4fYeGnqQkq3+F6BWbC0gAhxiF59jdT
- dJnQ==
-X-Gm-Message-State: AOJu0Yz2KTJNse0eqOk/XYelTNrmezH1enrS6j9YgHTFW6skGh/ahdbe
- AmKOa0hlt1n15qqkYTxRcPwL5TkB2GRC8eojVCy0z60ySOAUQoo4+uJHvjCNA9JihzE=
-X-Gm-Gg: ASbGnctWr+/2wXqp/aYyFzJdwk8jgivNq+3yDz8ElUcLljbq1nxSVEiO9T+qJsn/fhS
- H148B2ioeLYMi4G+HJK4fj7CD4UQX82mcpgj/MBTtwmAtlL4uM11JWYWfcDKkQKs6seCitwaiio
- FiezK0kzZJ5ubVEKwqC8BJXZYvPddhtwlnCDra7zQswiiX6qjrC5WSodMLaiT3c+ZFLgOuy1AJm
- /cxA3NsUh1og86yTcROrXxTD7i+9Crq59m4Q3LxZICn8udhopElvH2Cl724HKerH4P+XTCD7yxu
- ngv2Jdn1XBhlFLAGd2Lbinqyih8EZuvsWdJRcx8T488Vi54tXhq0sW4aiSPTfmKHz0yzORDgyRn
- KKDJJfBKVosVTZz2JmcwCFQsGyVTpkcV5DYLee1c/Rr15Gg==
-X-Google-Smtp-Source: AGHT+IGUNGa9PVvIW82XC2aH8Y3fOiJY3XNjxZBfp3uNXnzkFaEpwBvCheuS5mXFkBptD602oDO/cw==
-X-Received: by 2002:a05:6000:4382:b0:3a4:eef5:dece with SMTP id
- ffacd0b85a97d-3a4f7a7139emr15115324f8f.35.1748961839469; 
- Tue, 03 Jun 2025 07:43:59 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7f1b0a4sm165568315e9.0.2025.06.03.07.43.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 07:43:58 -0700 (PDT)
-Message-ID: <a2807c77-d1ae-4f17-8fdd-94bd7e94a69b@linaro.org>
-Date: Tue, 3 Jun 2025 16:43:57 +0200
+ d=1e100.net; s=20230601; t=1748962006; x=1749566806;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=rL7JZNITIzVYoHRrpUOYJQiN5gTcywASsB1MYL+cmnY=;
+ b=IDJ2GZrKM+7YAv9c+f8fJKJhlaIr9VpHul0VWXKzF85WsJzJ5y8hs7vUMBXzeyGcUo
+ bDLe9kYpq0NyJwk4lF9wnl7sRM4Z0ceAs0y9d6RoveZjXj+OyNSEcr65w3flu7zEo6w5
+ XBSnCQvqhS7JlblK/2AQLI25AwBLvpv4tNju7zXomAFxwp05TLqMsMbZNvl6gjz5dFHt
+ Yg0PY4wzEJa8izBdTKOQPi1wbg7jTCw4vH4DCVWg+vmTspWyneMmRLd8YT5SjNwcC2Q4
+ dlAjcMk7o5yJr7Dbpd2nH6MAhjJFTV2nsGxfZlSyY67R/4gOzKpKyYDzJ+ma8n4PpOU/
+ QlzA==
+X-Gm-Message-State: AOJu0YxjgGjXy2k6vWQF5A/jp0JDr+aHs+xbUmy91ltivw3sT/9PJ3As
+ wiB06S6hm0smAYdUbEQT+LHUOzZ48+c/DeC4RGDr/D+isnBIli0fwV+i8zkCCbpi1Tn2htZsi/0
+ Phv+YHJB/PKyIYN/1niBbU7nEKJUAcmpA5xWc2kmV2y72aBsD+exrqsjJ
+X-Gm-Gg: ASbGncvES9cOUzxRq7QDWVpBtf4rGo8GFyJs+2vXErK/6+r/qdtegBJPOuSDYFQmSZ6
+ pZKXKfnHae+9Pv9yunEoo9zwn9srXeW07YaxYshhQpPjPwsQ1rHCRWSykA8yo4jG/JcvCGlQzvI
+ uAmGLnI+3XBfo2+UZ/CXZ4UDHRHHuPopMEOLMr6KleslJ4x5vyvtztwl9A+zWr0Os8DsMGC+sdG
+ +07T5c/BSFvtWbD6FNZEgt1D+6JkGNWbaD53QM3Ys8vmzF+9IJ5KvFI4KsAITGrzPknphMBs7ER
+ lnJzJJnkCXYiMVWuf8jIGXFAFVHNb5yB
+X-Received: by 2002:a05:600c:3acd:b0:439:4b23:9e8e with SMTP id
+ 5b1f17b1804b1-451e659a494mr30478255e9.3.1748962006459; 
+ Tue, 03 Jun 2025 07:46:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6UxzPUvj78e/bymva1JmtEdilchoaO+XEuC+uYfKb3mpBlqVWBvAxahU8jzQ3tDT0qJHo5Q==
+X-Received: by 2002:a05:600c:3acd:b0:439:4b23:9e8e with SMTP id
+ 5b1f17b1804b1-451e659a494mr30477905e9.3.1748962006052; 
+ Tue, 03 Jun 2025 07:46:46 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4efe73f01sm18027728f8f.45.2025.06.03.07.46.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Jun 2025 07:46:45 -0700 (PDT)
+Date: Tue, 3 Jun 2025 16:46:43 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Yanan Wang <wangyanan55@huawei.com>, Kevin Wolf
+ <kwolf@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org,
+ Fabiano Rosas <farosas@suse.de>, Fam Zheng <fam@euphon.net>, Jason Wang
+ <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>, Eduardo
+ Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>, John Snow <jsnow@redhat.com>, Gerd Hoffmann
+ <kraxel@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, "Daniel P.
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, Thomas Huth
+ <thuth@redhat.com>
+Subject: Re: [PATCH v4 01/19] hw/i386/pc: Remove deprecated pc-q35-2.4 and
+ pc-i440fx-2.4 machines
+Message-ID: <20250603164643.0eb609af@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250512083948.39294-2-philmd@linaro.org>
+References: <20250512083948.39294-1-philmd@linaro.org>
+ <20250512083948.39294-2-philmd@linaro.org>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 02/23] ui/vnc: take account of client byte order in pixman
- format
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eric Blake <eblake@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-References: <20250522102923.309452-1-berrange@redhat.com>
- <20250522102923.309452-3-berrange@redhat.com>
- <e6c7920b-8078-4d97-92ce-2efafb645953@redhat.com>
- <aD79d0XPK_dARai_@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aD79d0XPK_dARai_@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_PASS=-0.001,
- T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,52 +120,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 15:49, Daniel P. Berrangé wrote:
-> On Tue, Jun 03, 2025 at 01:18:55PM +0200, Thomas Huth wrote:
->> On 22/05/2025 12.29, Daniel P. Berrangé wrote:
->>> The set_pixel_conversion() method is responsible for determining whether
->>> the VNC client pixel format matches the server format, and thus whether
->>> we can use the fast path "copy" impl for sending pixels, or must use
->>> the generic impl with bit swizzling.
->>>
->>> The VNC server format is set at build time to VNC_SERVER_FB_FORMAT,
->>> which corresponds to PIXMAN_x8r8g8b8.
->>>
->>> The qemu_pixman_get_format() method is then responsible for converting
->>> the VNC pixel format into a pixman format.
->>>
->>> The VNC client pixel shifts are relative to the associated endianness.
->>>
->>> The pixman formats are always relative to the host native endianness.
->>>
->>> The qemu_pixman_get_format() method does not take into account the
->>> VNC client endianness, and is thus returning a pixman format that is
->>> only valid with the host endianness matches that of the VNC client.
->> ...
->>
->>   Hi Daniel,
->>
->> this patch breaks the output in the TigerVNC viewer for me.
->> If I run "./qemu-system-x86_64 -vnc :1" on my laptop, and then connect to it
->> via "vncviewer :1", the output of the BIOS now appears in yellow letters
->> (instead of grey ones).
-> 
-> It turns out that historically we never set the 'client_be' flag
-> when a client does NOT send a "set pixel format" message. By luck
-> this was OK for little endian platforms as the default value of
-> 0 matched little endian.
-> 
-> When I replaced 'client_be' with "client_endian", the default
-> value of 0 matches neither big or little endian.
-> 
-> I didn't see this with remote-viewer as it unconditionally
-> sends "set pixel format", but tigervnc always uses the server's
-> default pixel format.
-> 
-> So this patch is fine, but it exposes a pre-existing latent
-> bug there was probably causing problems on big endian platforms
-> in the past, but now causes problems on little endian platforms.
+On Mon, 12 May 2025 10:39:30 +0200
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-Nice :)
+> These machines has been supported for a period of more than 6 years.
+> According to our versioned machine support policy (see commit
+> ce80c4fa6ff "docs: document special exception for machine type
+> deprecation & removal") they can now be removed.
+>=20
+> Remove the qtest in test-x86-cpuid-compat.c file.
+>=20
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+
+> ---
+>  hw/i386/pc_piix.c                   | 13 -------------
+>  hw/i386/pc_q35.c                    | 13 -------------
+>  tests/qtest/test-x86-cpuid-compat.c | 14 --------------
+>  3 files changed, 40 deletions(-)
+>=20
+> diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+> index 0dce512f184..04213b45b44 100644
+> --- a/hw/i386/pc_piix.c
+> +++ b/hw/i386/pc_piix.c
+> @@ -791,19 +791,6 @@ static void pc_i440fx_machine_2_5_options(MachineCla=
+ss *m)
+> =20
+>  DEFINE_I440FX_MACHINE(2, 5);
+> =20
+> -static void pc_i440fx_machine_2_4_options(MachineClass *m)
+> -{
+> -    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
+> -
+> -    pc_i440fx_machine_2_5_options(m);
+> -    m->hw_version =3D "2.4.0";
+> -    pcmc->broken_reserved_end =3D true;
+> -    compat_props_add(m->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+> -    compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
+> -}
+> -
+> -DEFINE_I440FX_MACHINE(2, 4);
+> -
+>  #ifdef CONFIG_ISAPC
+>  static void isapc_machine_options(MachineClass *m)
+>  {
+> diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+> index c538b3d05b4..47e12602413 100644
+> --- a/hw/i386/pc_q35.c
+> +++ b/hw/i386/pc_q35.c
+> @@ -685,16 +685,3 @@ static void pc_q35_machine_2_5_options(MachineClass =
+*m)
+>  }
+> =20
+>  DEFINE_Q35_MACHINE(2, 5);
+> -
+> -static void pc_q35_machine_2_4_options(MachineClass *m)
+> -{
+> -    PCMachineClass *pcmc =3D PC_MACHINE_CLASS(m);
+> -
+> -    pc_q35_machine_2_5_options(m);
+> -    m->hw_version =3D "2.4.0";
+> -    pcmc->broken_reserved_end =3D true;
+> -    compat_props_add(m->compat_props, hw_compat_2_4, hw_compat_2_4_len);
+> -    compat_props_add(m->compat_props, pc_compat_2_4, pc_compat_2_4_len);
+> -}
+> -
+> -DEFINE_Q35_MACHINE(2, 4);
+> diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-c=
+puid-compat.c
+> index c9de47bb269..456e2af6657 100644
+> --- a/tests/qtest/test-x86-cpuid-compat.c
+> +++ b/tests/qtest/test-x86-cpuid-compat.c
+> @@ -365,20 +365,6 @@ int main(int argc, char **argv)
+>                         "level", 10);
+>      }
+> =20
+> -    /*
+> -     * xlevel doesn't have any feature that triggers auto-level
+> -     * code on old machine-types.  Just check that the compat code
+> -     * is working correctly:
+> -     */
+> -    if (qtest_has_machine("pc-i440fx-2.4")) {
+> -        add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-off",
+> -                       "SandyBridge", NULL, "pc-i440fx-2.4",
+> -                       "xlevel", 0x80000008);
+> -        add_cpuid_test("x86/cpuid/xlevel-compat/pc-i440fx-2.4/npt-on",
+> -                       "SandyBridge", "svm=3Don,npt=3Don", "pc-i440fx-2.=
+4",
+> -                       "xlevel", 0x80000008);
+> -    }
+> -
+>      /* Test feature parsing */
+>      add_feature_test("x86/cpuid/features/plus",
+>                       "486", "+arat",
 
 
