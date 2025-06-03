@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16C1CC5B555
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:48:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6852CC5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:51:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMQ7R-0003uc-8a; Tue, 03 Jun 2025 07:47:49 -0400
+	id 1uMQAZ-0005Yu-Bf; Tue, 03 Jun 2025 07:51:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMQ7P-0003uN-Le
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:47:47 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMQAW-0005YT-Si
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:51:00 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMQ7N-00087k-Gg
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:47:47 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-451e24dfe1aso11312155e9.3
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:47:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMQAP-0008Ub-A1
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:50:57 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-442ea341570so38047345e9.1
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:50:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748951261; x=1749556061; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748951449; x=1749556249; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=bxdX57L9XEsK0QR7hOg7ft63dzQoae0gdmj7vmM2cPI=;
- b=HDWbn/Ll3o9sWWxLgBUcQLyFRxfntApkFl/urDGJjngNWIyIJtPQ4vzBcgQSw44VKF
- ByIJ/IiObf2qE0ChJVxKogX8fVjuqv10nx59PGl5ZnNm9CJlC5QFEcHf8QIb7Xp10bNV
- /Hnk4xuaFVa5MgxRFY5+c2969c5J30am8me4Z5qH9/6RB5e8A5wyIZxK7WnkCgyRWH1r
- h83TLtTGvhZClYuAMjOp97zsc8qiFeTn6GTqPSIy1QUT+P2tQB40TUD56Yi293IoPlrc
- SSd8vWAFlyT/QhnR4dNkEsLxHEWCxWsGDEURGUL4wrvOZCXbUYDuPsKAhaK1O1fVu542
- MewQ==
+ bh=Umh+HP+YIzfm01oCuEnx3dxYDMzG774+Azq2vEn7vxI=;
+ b=D9/PF/9rzc24zMgfF8Pg917LNNsYgocxVk2tZ0Qap71D4Q5WBB2nivAO5PlqOoY1fa
+ No+vLq+TL2eZ/rUZhEd1npoPDXFDZvh8tGSQqTq2XDkFw3OskOQsKLlv1E2g5Y6yP21U
+ codgBqJlFz6IwTOZ+51Phr0uRWaDNhlrOiPaofeSVBjQLd0v8nLiNziEChMzdDa57V0e
+ O/5AIoK2dadP3Bg8t9qYFesPBLrujmQlwH6g6YiNoMoVutA40nAoFG8SNuHpB9O+LfmW
+ 2Uj7hgu27N2CFC2mQxPTEeB9CzzqO89LWRiZf6IJGH0rNtmwhtNLhFNOFQYHAQX2e2Ho
+ hGpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748951261; x=1749556061;
+ d=1e100.net; s=20230601; t=1748951449; x=1749556249;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=bxdX57L9XEsK0QR7hOg7ft63dzQoae0gdmj7vmM2cPI=;
- b=ETKTEbFH/NfSiq4TnSX9ftQcXitpgepm2hjNuekAZX2zKVW5WU7XTZJ/xIZIuncBrX
- Vez971eRj2+JJKVh7rmKTwuWz710FTRK8UBrfh7h5l912iCnW79t0Uk94VfQZwKZIq0J
- jEURp10pPnDPpK4CIa/WdbnGJjw7KD58yuOR/3JTVrbaFicdLKync8yfKEa+anewl3UE
- XFz99SnN523NCHKef0BBdLFs/AVPN2hkW0H1Y+Aiet9fnMCIf6lQmnyCnY8F7KFE6/6v
- g9vEYFB9bo0CMAgdZ2PGd9hhfaLgCma0LrDr1UztXdRSdZxDwBgAPIUy+8/9TI6lEJqW
- jhVg==
+ bh=Umh+HP+YIzfm01oCuEnx3dxYDMzG774+Azq2vEn7vxI=;
+ b=uTkcTZzlWUXttWYIL9LtcwHIliAsZc6GdN8EJc+QYEdakrc1bNlqP6mfZTgThC44x6
+ v4sfVuvXYd1vaMexSXCA0Ugad1hzFPxs6beGDypMwE0VXIoWGUjwKZivuw1878gjRqPG
+ gKqL0+/Wl+boPOrT67OglA53/LhbMzZEQG/sXeKRtKv35fcMlPeqOm8Ln9rUKfJHb0CC
+ COf81s3fOQ8EQJCtu27yFh0VvOpYfidqHYv/jys+zANSPT8XboTADtExoiQbNEjmkjYd
+ aFSz14hm/KEBwcRUWnRHu6Qn58dF7ahvRw57410GCkmsiq1gLdBgHzdQ3hgAQnoFDrZ5
+ JeEA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVw750FxaLJhpDnXK8iw1PLLoPfAh+Hf7mH1JS7DayquL7lAGdybp9skV/jpMPuF8VP6JBpZaJngDnK@nongnu.org
-X-Gm-Message-State: AOJu0Yw2pCd1CfYMuO12rU2vPkylUswhvQJUbqcRSFLq7M769IZy8p6s
- rcOa+4gEeZn590YJOCgBi58laRxEV0bjBbEozNq0UVpVf4Q6DIbjVeXsjy1+5n/QbN4=
-X-Gm-Gg: ASbGncveTn3kC9M4VTddkWBzQsY7EIL6BLimbGH9wMXWOWQv1tD3LzJmcFldsVZ+9Q5
- +cVivjY3b6pIDNxnEHhnXmq8QkoT/P0+btOMiVua0r9VBXrixFFDfzfKZZAsXQI5iWcmwRHZf0c
- tMt5PjwtEzcD16wZ+ChSZqtLhfqTXyA+iCKPRYTKxeOc1SrJCa4YKYl1DEyasTHeoJ4vfdkIwMJ
- xQFoJsG6xUXUfBUCm5dP7kn5i5Pg8tsfijdSBtHtlD0VP+1laph8kMcdkbIG147sMJpmYs72cuj
- A7mqvY0vNjgDl9K6V2oWR6aZ7pXidAv+xGkSQjZHKkYwO2Q0dldvXAZmjiT/ebSGrvBzBwWfQBR
- Ndis1jMARjvXS1/asGLJlGtoZ
-X-Google-Smtp-Source: AGHT+IE9JMPwIrj8+n2biBcvXLQWduHKUoaDT1l6HRAQmR6Nx8wFcHdZxAgKh+jGzxi0ETW3DUdaHQ==
-X-Received: by 2002:a05:6000:420d:b0:3a3:7753:20ff with SMTP id
- ffacd0b85a97d-3a4f7a36f76mr13963084f8f.35.1748951261296; 
- Tue, 03 Jun 2025 04:47:41 -0700 (PDT)
+ AJvYcCUg6RYfXEByppeA8vrDXIGO2a+whuxpoAffio7+SYRbun8fse9EuPtYlJza9uy3X/NSea/raNjeFJbc@nongnu.org
+X-Gm-Message-State: AOJu0Yx9vYrHxf5Gvd5Ptzd+l+JJYq7XSnxPe085g6qAZ9u0ZCDX+KPy
+ IuAaSsowcT5B6YA9w1HNYT4hK3y3xXHVzrt88zbavI75cJ2VHAhDpEQXTMNLKZ3u1lo=
+X-Gm-Gg: ASbGncuG+fg+dB+isMVnTuDpueN3l1l8dlJettYWpTmZD++hZCnODLf68kSlPkQVuKP
+ g1b2ywgNXRWBZoOuQgptbsoh+IdLN07+Cht/J7NZUKOOJPQea+cyJefAOzn/AnIZIjJITZJiaxe
+ MQm1EYq8zWeJy1Eh7X2IqkiLAZIU/GdDE1m9YU7MKzwtLn14tqgLPYgN/4mMxG65dqctLafWisJ
+ mC+rrajkNryADtI7aDSn8QR4EdjQK++vToVUiX49f1zAiZ5Z5nCSAy6hFzUQwxTN8kcbdiN4W7T
+ 8+eZSUX8hefSFRD2mPdPV63EKFp++T894z0FA/eQjmE+mMrU35/VfcpSLh3GoIlBV2qpdMuQ+bT
+ 8rjz9xDuBBsGFaoxKD5ovxYObpDBZf3nsIZ29bf6047+3gQ==
+X-Google-Smtp-Source: AGHT+IHjt7Prro2xyKHy1I9Z+o73vAJlUU0hBjTEZNIV6Mh8F35s9SR8F77axC2yXMBK1MEg1Z2QBw==
+X-Received: by 2002:a05:600c:46cb:b0:450:d5f6:55f5 with SMTP id
+ 5b1f17b1804b1-450d882b463mr130586215e9.6.1748951449292; 
+ Tue, 03 Jun 2025 04:50:49 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe6cd15sm18300021f8f.39.2025.06.03.04.47.40
+ 5b1f17b1804b1-450d8012b09sm157144135e9.37.2025.06.03.04.50.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 04:47:40 -0700 (PDT)
-Message-ID: <edea1739-3ac8-452d-b1f6-41196be2f37f@linaro.org>
-Date: Tue, 3 Jun 2025 13:47:39 +0200
+ Tue, 03 Jun 2025 04:50:48 -0700 (PDT)
+Message-ID: <fb178d96-ee28-414c-a320-2b5b0ceee5e6@linaro.org>
+Date: Tue, 3 Jun 2025 13:50:48 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/16] hw/pci-host/raven: Use correct parameter in direct
- access ops
+Subject: Re: [PATCH 11/16] hw/pci-host/raven: Do not use parent object for
+ mmcfg region
 To: BALATON Zoltan <balaton@eik.bme.hu>, qemu-devel@nongnu.org,
  qemu-ppc@nongnu.org
 Cc: =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>
 References: <cover.1746374076.git.balaton@eik.bme.hu>
- <6205b7eb571626ccc7fb017132e705a49fa3a6ff.1746374076.git.balaton@eik.bme.hu>
+ <104976fab9e144328dd9c73efceeb75a759a83f7.1746374076.git.balaton@eik.bme.hu>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <6205b7eb571626ccc7fb017132e705a49fa3a6ff.1746374076.git.balaton@eik.bme.hu>
+In-Reply-To: <104976fab9e144328dd9c73efceeb75a759a83f7.1746374076.git.balaton@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,59 +107,60 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 4/5/25 18:01, BALATON Zoltan wrote:
-> Instead of passing unneeded enclosing objects to the config direct
-> access ops that only need the bus we can pass that directly thus
-> simplifying the functions.
+> The mmcfg field in PCIHostState is only used by raven for the PCI
+> config direct access but is not actually needed as the memory region
+> lifetime can be managed by the object given during init so use that
+> and remove the unused field from PCIHostState.
 > 
+
+Well, this is the recommended way to avoid leaking MemoryRegions.
+
+If QOM object allocates something, it should keep a reference to it,
+allowing simpler eventual implementation of DeviceUnrealize handler.
+
 > Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->   hw/pci-host/raven.c | 10 +++-------
->   1 file changed, 3 insertions(+), 7 deletions(-)
+>   hw/pci-host/raven.c       | 7 ++++---
+>   include/hw/pci/pci_host.h | 1 -
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 > 
 > diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-> index d7a0bde382..c39e95b45f 100644
+> index c39e95b45f..7550c291c6 100644
 > --- a/hw/pci-host/raven.c
 > +++ b/hw/pci-host/raven.c
-> @@ -65,16 +65,12 @@ static inline uint32_t raven_idsel_to_addr(hwaddr addr)
->   static void raven_mmcfg_write(void *opaque, hwaddr addr, uint64_t val,
->                                 unsigned int size)
->   {
-> -    PREPPCIState *s = opaque;
-> -    PCIHostState *phb = PCI_HOST_BRIDGE(s);
-> -    pci_data_write(phb->bus, raven_idsel_to_addr(addr), val, size);
-
-Something like this is clearer IMHO:
-
-        PCIBus *hbus = opaque;
-
-        pci_data_write(hbus, raven_idsel_to_addr(addr), val, size);
-
-> +    pci_data_write(opaque, raven_idsel_to_addr(addr), val, size);
->   }
+> @@ -212,7 +212,7 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+>       SysBusDevice *dev = SYS_BUS_DEVICE(d);
+>       PCIHostState *h = PCI_HOST_BRIDGE(dev);
+>       PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
+> -    MemoryRegion *address_space_mem = get_system_memory();
+> +    MemoryRegion *mr, *address_space_mem = get_system_memory();
 >   
->   static uint64_t raven_mmcfg_read(void *opaque, hwaddr addr, unsigned int size)
->   {
-> -    PREPPCIState *s = opaque;
-> -    PCIHostState *phb = PCI_HOST_BRIDGE(s);
-> -    return pci_data_read(phb->bus, raven_idsel_to_addr(addr), size);
-
-Ditto.
-
-> +    return pci_data_read(opaque, raven_idsel_to_addr(addr), size);
->   }
+>       qdev_init_gpio_in(d, raven_change_gpio, 1);
 >   
->   static const MemoryRegionOps raven_mmcfg_ops = {
-> @@ -233,7 +229,7 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+> @@ -229,9 +229,10 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
 >                             "pci-conf-data", 4);
 >       memory_region_add_subregion(&s->pci_io, 0xcfc, &h->data_mem);
 >   
-> -    memory_region_init_io(&h->mmcfg, OBJECT(s), &raven_mmcfg_ops, s,
-> +    memory_region_init_io(&h->mmcfg, OBJECT(h), &raven_mmcfg_ops, h->bus,
+> -    memory_region_init_io(&h->mmcfg, OBJECT(h), &raven_mmcfg_ops, h->bus,
+> +    mr = g_new0(MemoryRegion, 1);
+> +    memory_region_init_io(mr, OBJECT(h), &raven_mmcfg_ops, h->bus,
 >                             "pci-mmcfg", 0x00400000);
->       memory_region_add_subregion(address_space_mem, 0x80800000, &h->mmcfg);
+> -    memory_region_add_subregion(address_space_mem, 0x80800000, &h->mmcfg);
+> +    memory_region_add_subregion(address_space_mem, 0x80800000, mr);
 >   
-
-Casting the opaque:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>       memory_region_init_io(&s->pci_intack, OBJECT(s), &raven_intack_ops, s,
+>                             "pci-intack", 1);
+> diff --git a/include/hw/pci/pci_host.h b/include/hw/pci/pci_host.h
+> index e52d8ec2cd..7c0285e2ff 100644
+> --- a/include/hw/pci/pci_host.h
+> +++ b/include/hw/pci/pci_host.h
+> @@ -41,7 +41,6 @@ struct PCIHostState {
+>   
+>       MemoryRegion conf_mem;
+>       MemoryRegion data_mem;
+> -    MemoryRegion mmcfg;
+>       uint32_t config_reg;
+>       bool mig_enabled;
+>       PCIBus *bus;
 
 
