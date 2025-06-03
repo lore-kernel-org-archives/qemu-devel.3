@@ -4,63 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05DA4C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 06:39:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D148DC5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 06:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMLIC-0000d7-Ca; Tue, 03 Jun 2025 02:38:36 -0400
+	id 1uMLHa-0008Gl-7f; Tue, 03 Jun 2025 02:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGp-0007oR-0T
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:37:19 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGc-0007mg-Ob
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:37:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGZ-0003Rb-FS
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:37:00 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMLGY-0003Qp-H5
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 02:36:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748932614;
+ s=mimecast20190719; t=1748932610;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nuLy0yRA5TsWUJ3DzXHcvSr00tyeggdoG1w2BCWAr7k=;
- b=W6Oe2FoLIhUs2ULqhNkSgwv/Z0InHSgW5FK5NsamtpmAMcrf2O9TFFrF9PjU5Cem4JCjF8
- +9Xf3shV5PDI+8083HAgKQ0Cqk146FgYAoIDIdsu23IdG3MLQ0SQXzzwO6j8klhDf4+kfw
- 95foVQsD3tjcfVJERi+c4dlyQp62nV4=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=D2YePhl86TRowj1SkKU8SWy/uJo7jZBtxDAVLQln27U=;
+ b=gZl13JBG9rs9gSd99Hg3sFfICfpI2tRyXhTUSGvQQzlDw726EGsbQMoOgkdOCwZgSbFtmp
+ 2+9B0fLqpFIqkLFqiN7uF8M9gd64+3rg//lhryPA3ran/G0+yp/cRHV9u4Ld/jefVT4mN0
+ u0KT6FbMSs0tsmAPnGl0tPfzBimx7to=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-241-PxMZi2udOVKuWyBnPrxwUw-1; Tue,
- 03 Jun 2025 02:36:52 -0400
-X-MC-Unique: PxMZi2udOVKuWyBnPrxwUw-1
-X-Mimecast-MFC-AGG-ID: PxMZi2udOVKuWyBnPrxwUw_1748932611
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-193-XcvgM4CAMnmWcAQS4shljA-1; Tue,
+ 03 Jun 2025 02:36:49 -0400
+X-MC-Unique: XcvgM4CAMnmWcAQS4shljA-1
+X-Mimecast-MFC-AGG-ID: XcvgM4CAMnmWcAQS4shljA_1748932608
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28B541955DB0
- for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:51 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 43E5D1800360
+ for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:48 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9B8C8180049D
- for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:50 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A0C0F18001DA
+ for <qemu-devel@nongnu.org>; Tue,  3 Jun 2025 06:36:47 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0258421E661D; Tue, 03 Jun 2025 08:36:45 +0200 (CEST)
+ id E22EF21E66E2; Tue, 03 Jun 2025 08:36:44 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: stefanha@redhat.com,
 	Eric Blake <eblake@redhat.com>
-Subject: [PULL 06/13] qapi: Correct spelling of QEMU in doc comments
-Date: Tue,  3 Jun 2025 08:36:37 +0200
-Message-ID: <20250603063644.3953528-7-armbru@redhat.com>
+Subject: [PULL 01/13] qapi: Tidy up run-together sentences in doc comments
+Date: Tue,  3 Jun 2025 08:36:32 +0200
+Message-ID: <20250603063644.3953528-2-armbru@redhat.com>
 In-Reply-To: <20250603063644.3953528-1-armbru@redhat.com>
 References: <20250603063644.3953528-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -86,261 +86,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Improve awkward phrasing in migrate-incoming While there.
-
+Fixes: a937b6aa739f (qapi: Reformat doc comments to conform to current conventions)
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20250527073916.1243024-7-armbru@redhat.com>
+Message-ID: <20250527073916.1243024-2-armbru@redhat.com>
 Reviewed-by: Eric Blake <eblake@redhat.com>
 ---
- qapi/audio.json        |  8 ++++----
- qapi/block-core.json   | 10 +++++-----
- qapi/block-export.json |  2 +-
- qapi/char.json         |  6 +++---
- qapi/introspect.json   |  4 ++--
- qapi/migration.json    |  8 ++++----
- qapi/run-state.json    |  6 +++---
- qapi/transaction.json  |  2 +-
- qapi/uefi.json         |  2 +-
- qapi/ui.json           |  4 ++--
- 10 files changed, 26 insertions(+), 26 deletions(-)
+ qapi/acpi.json       |  2 +-
+ qapi/block-core.json | 14 +++++++-------
+ qapi/crypto.json     | 18 +++++++++---------
+ qapi/machine.json    |  4 ++--
+ qapi/migration.json  | 18 +++++++++---------
+ 5 files changed, 28 insertions(+), 28 deletions(-)
 
-diff --git a/qapi/audio.json b/qapi/audio.json
-index 8de4430578..16de231f6d 100644
---- a/qapi/audio.json
-+++ b/qapi/audio.json
-@@ -309,9 +309,9 @@
+diff --git a/qapi/acpi.json b/qapi/acpi.json
+index 045dab6228..2d53b82365 100644
+--- a/qapi/acpi.json
++++ b/qapi/acpi.json
+@@ -80,7 +80,7 @@
+ ##
+ # @ACPIOSTInfo:
  #
- # @name: name of the sink/source to use
+-# OSPM Status Indication for a device For description of possible
++# OSPM Status Indication for a device.  For description of possible
+ # values of @source and @status fields see "_OST (OSPM Status
+ # Indication)" chapter of ACPI5.0 spec.
  #
--# @stream-name: name of the PulseAudio stream created by qemu.  Can be
-+# @stream-name: name of the PulseAudio stream created by QEMU.  Can be
- #     used to identify the stream in PulseAudio when you create
--#     multiple PulseAudio devices or run multiple qemu instances
-+#     multiple PulseAudio devices or run multiple QEMU instances
- #     (default: audiodev's id, since 4.2)
- #
- # @latency: latency you want PulseAudio to achieve in microseconds
-@@ -353,9 +353,9 @@
- #
- # @name: name of the sink/source to use
- #
--# @stream-name: name of the PipeWire stream created by qemu.  Can be
-+# @stream-name: name of the PipeWire stream created by QEMU.  Can be
- #     used to identify the stream in PipeWire when you create multiple
--#     PipeWire devices or run multiple qemu instances (default:
-+#     PipeWire devices or run multiple QEMU instances (default:
- #     audiodev's id)
- #
- # @latency: latency you want PipeWire to achieve in microseconds
 diff --git a/qapi/block-core.json b/qapi/block-core.json
-index cc48fc7122..b6447e847e 100644
+index b4115113d4..29d7c1c2c9 100644
 --- a/qapi/block-core.json
 +++ b/qapi/block-core.json
-@@ -2030,7 +2030,7 @@
+@@ -2667,7 +2667,7 @@
+ # @iops-total-max: I/O operations burst
  #
- # @id: Block graph node identifier.  This @id is generated only for
- #     x-debug-query-block-graph and does not relate to any other
--#     identifiers in Qemu.
-+#     identifiers in QEMU.
+ # @iops-total-max-length: length of the iops-total-max burst period,
+-#     in seconds It must only be set if @iops-total-max is set as
++#     in seconds.  It must only be set if @iops-total-max is set as
+ #     well.
  #
- # @type: Type of graph node.  Can be one of block-backend, block-job
- #     or block-driver-state.
-@@ -2794,7 +2794,7 @@
- # The node that receives the data is called the top image, can be
- # located in any part of the chain (but always above the base image;
- # see below) and can be specified using its device or node name.
--# Earlier qemu versions only allowed 'device' to name the top level
-+# Earlier QEMU versions only allowed 'device' to name the top level
- # node; presence of the 'base-node' parameter during introspection can
- # be used as a witness of the enhanced semantics of 'device'.
+ # @iops-read: limit read operations per second
+@@ -2675,14 +2675,14 @@
+ # @iops-read-max: I/O operations read burst
  #
-@@ -3196,7 +3196,7 @@
+ # @iops-read-max-length: length of the iops-read-max burst period, in
+-#     seconds It must only be set if @iops-read-max is set as well.
++#     seconds.  It must only be set if @iops-read-max is set as well.
  #
- # Selects the AIO backend to handle I/O requests
+ # @iops-write: limit write operations per second
  #
--# @threads: Use qemu's thread pool
-+# @threads: Use QEMU's thread pool
+ # @iops-write-max: I/O operations write burst
  #
- # @native: Use native AIO backend (only Linux and Windows)
+ # @iops-write-max-length: length of the iops-write-max burst period,
+-#     in seconds It must only be set if @iops-write-max is set as
++#     in seconds.  It must only be set if @iops-write-max is set as
+ #     well.
  #
-@@ -5157,10 +5157,10 @@
- ##
- # @BlockdevQcow2Version:
+ # @bps-total: limit total bytes per second
+@@ -2697,14 +2697,14 @@
+ # @bps-read-max: total bytes read burst
  #
--# @v2: The original QCOW2 format as introduced in qemu 0.10 (version
-+# @v2: The original QCOW2 format as introduced in QEMU 0.10 (version
- #     2)
+ # @bps-read-max-length: length of the bps-read-max burst period, in
+-#     seconds It must only be set if @bps-read-max is set as well.
++#     seconds.  It must only be set if @bps-read-max is set as well.
  #
--# @v3: The extended QCOW2 format as introduced in qemu 1.1 (version 3)
-+# @v3: The extended QCOW2 format as introduced in QEMU 1.1 (version 3)
+ # @bps-write: limit write bytes per second
  #
- # Since: 2.12
- ##
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 04190b503c..ed4deb54db 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -169,7 +169,7 @@
- # @growable: Whether writes beyond the EOF should grow the block node
- #     accordingly.  (default: false)
+ # @bps-write-max: total bytes write burst
  #
--# @allow-other: If this is off, only qemu's user is allowed access to
-+# @allow-other: If this is off, only QEMU's user is allowed access to
- #     this export.  That cannot be changed even with chmod or chown.
- #     Enabling this option will allow other users access to the export
- #     with the FUSE mount option "allow_other".  Note that using
-diff --git a/qapi/char.json b/qapi/char.json
-index f79216e4d2..df6e325e2e 100644
---- a/qapi/char.json
-+++ b/qapi/char.json
-@@ -351,7 +351,7 @@
- # Configuration info for stdio chardevs.
+ # @bps-write-max-length: length of the bps-write-max burst period, in
+-#     seconds It must only be set if @bps-write-max is set as well.
++#     seconds.  It must only be set if @bps-write-max is set as well.
  #
- # @signal: Allow signals (such as SIGINT triggered by ^C) be delivered
--#     to qemu.  Default: true.
-+#     to QEMU.  Default: true.
+ # @iops-size: when limiting by iops max size of an I/O in bytes
  #
- # Since: 1.5
- ##
-@@ -443,7 +443,7 @@
- ##
- # @ChardevQemuVDAgent:
+@@ -5580,7 +5580,7 @@
+ # @x-blockdev-amend:
  #
--# Configuration info for qemu vdagent implementation.
-+# Configuration info for QEMU vdagent implementation.
+ # Starts a job to amend format specific options of an existing open
+-# block device The job is automatically finalized, but a manual
++# block device.  The job is automatically finalized, but a manual
+ # job-dismiss is required.
  #
- # @mouse: enable/disable mouse, default is enabled.
+ # @job-id: Identifier for the newly created job.
+@@ -5589,7 +5589,7 @@
  #
-@@ -656,7 +656,7 @@
- ##
- # @ChardevQemuVDAgentWrapper:
+ # @options: Options (driver specific)
  #
--# @data: Configuration info for qemu vdagent implementation
-+# @data: Configuration info for QEMU vdagent implementation
+-# @force: Allow unsafe operations, format specific For luks that
++# @force: Allow unsafe operations, format specific.  For luks that
+ #     allows erase of the last active keyslot (permanent loss of
+ #     data), and replacement of an active keyslot (possible loss of
+ #     data if IO error happens)
+diff --git a/qapi/crypto.json b/qapi/crypto.json
+index c9d967d782..fc7e294966 100644
+--- a/qapi/crypto.json
++++ b/qapi/crypto.json
+@@ -202,19 +202,19 @@
  #
- # Since: 6.1
- ##
-diff --git a/qapi/introspect.json b/qapi/introspect.json
-index 95724ee2d2..e9e0297282 100644
---- a/qapi/introspect.json
-+++ b/qapi/introspect.json
-@@ -26,9 +26,9 @@
- # the QAPI schema.
+ # The options that apply to LUKS encryption format initialization
  #
- # Furthermore, while we strive to keep the QMP wire format
--# backwards-compatible across qemu versions, the introspection output
-+# backwards-compatible across QEMU versions, the introspection output
- # is not guaranteed to have the same stability.  For example, one
--# version of qemu may list an object member as an optional
-+# version of QEMU may list an object member as an optional
- # non-variant, while another lists the same member only through the
- # object's variants; or the type of a member may change from a generic
- # string into a specific enum or from one specific type into an
+-# @cipher-alg: the cipher algorithm for data encryption Currently
++# @cipher-alg: the cipher algorithm for data encryption.  Currently
+ #     defaults to 'aes-256'.
+ #
+-# @cipher-mode: the cipher mode for data encryption Currently defaults
+-#     to 'xts'
++# @cipher-mode: the cipher mode for data encryption.  Currently
++#     defaults to 'xts'
+ #
+-# @ivgen-alg: the initialization vector generator Currently defaults
++# @ivgen-alg: the initialization vector generator.  Currently defaults
+ #     to 'plain64'
+ #
+-# @ivgen-hash-alg: the initialization vector generator hash Currently
+-#     defaults to 'sha256'
++# @ivgen-hash-alg: the initialization vector generator hash.
++#     Currently defaults to 'sha256'
+ #
+-# @hash-alg: the master key hash algorithm Currently defaults to
++# @hash-alg: the master key hash algorithm.  Currently defaults to
+ #     'sha256'
+ #
+ # @iter-time: number of milliseconds to spend in PBKDF passphrase
+@@ -370,11 +370,11 @@
+ # @new-secret: The ID of a QCryptoSecret object providing the password
+ #     to be written into added active keyslots
+ #
+-# @old-secret: Optional (for deactivation only) If given will
++# @old-secret: Optional (for deactivation only).  If given will
+ #     deactivate all keyslots that match password located in
+ #     QCryptoSecret with this ID
+ #
+-# @iter-time: Optional (for activation only) Number of milliseconds to
++# @iter-time: Optional (for activation only).  Number of milliseconds to
+ #     spend in PBKDF passphrase processing for the newly activated
+ #     keyslot.  Currently defaults to 2000.
+ #
+diff --git a/qapi/machine.json b/qapi/machine.json
+index 5373e1368c..0af2e1e0bb 100644
+--- a/qapi/machine.json
++++ b/qapi/machine.json
+@@ -1160,7 +1160,7 @@
+ #
+ # Information about the guest balloon device.
+ #
+-# @actual: the logical size of the VM in bytes Formula used:
++# @actual: the logical size of the VM in bytes.  Formula used:
+ #     logical_vm_size = vm_ram_size - balloon_size
+ #
+ # Since: 0.14
+@@ -1199,7 +1199,7 @@
+ # is equivalent to the @actual field return by the 'query-balloon'
+ # command
+ #
+-# @actual: the logical size of the VM in bytes Formula used:
++# @actual: the logical size of the VM in bytes.  Formula used:
+ #     logical_vm_size = vm_ram_size - balloon_size
+ #
+ # .. note:: This event is rate-limited.
 diff --git a/qapi/migration.json b/qapi/migration.json
-index 7d1ec06605..84edcf81e4 100644
+index 41826bde45..f5a6b35de4 100644
 --- a/qapi/migration.json
 +++ b/qapi/migration.json
-@@ -415,7 +415,7 @@
- #     on secondary side, this process is called COarse-Grain LOck
- #     Stepping (COLO) for Non-stop Service.  (since 2.8)
+@@ -760,9 +760,9 @@
+ #     auto-converge detects that migration is not making progress.
+ #     The default value is 10.  (Since 2.7)
  #
--# @release-ram: if enabled, qemu will free the migrated ram pages on
-+# @release-ram: if enabled, QEMU will free the migrated ram pages on
- #     the source during postcopy-ram migration.  (since 2.9)
+-# @cpu-throttle-tailslow: Make CPU throttling slower at tail stage At
+-#     the tail stage of throttling, the Guest is very sensitive to CPU
+-#     percentage while the @cpu-throttle -increment is excessive
++# @cpu-throttle-tailslow: Make CPU throttling slower at tail stage.
++#     At the tail stage of throttling, the Guest is very sensitive to
++#     CPU percentage while the @cpu-throttle -increment is excessive
+ #     usually at tail stage.  If this parameter is true, we will
+ #     compute the ideal CPU percentage used by the Guest, which may
+ #     exactly make the dirty rate match the dirty rate threshold.
+@@ -941,9 +941,9 @@
+ #     auto-converge detects that migration is not making progress.
+ #     The default value is 10.  (Since 2.7)
  #
- # @return-path: If enabled, migration will use the return path even
-@@ -1500,7 +1500,7 @@
- ##
- # @x-colo-lost-heartbeat:
+-# @cpu-throttle-tailslow: Make CPU throttling slower at tail stage At
+-#     the tail stage of throttling, the Guest is very sensitive to CPU
+-#     percentage while the @cpu-throttle -increment is excessive
++# @cpu-throttle-tailslow: Make CPU throttling slower at tail stage.
++#     At the tail stage of throttling, the Guest is very sensitive to
++#     CPU percentage while the @cpu-throttle -increment is excessive
+ #     usually at tail stage.  If this parameter is true, we will
+ #     compute the ideal CPU percentage used by the Guest, which may
+ #     exactly make the dirty rate match the dirty rate threshold.
+@@ -1155,9 +1155,9 @@
+ #     auto-converge detects that migration is not making progress.
+ #     (Since 2.7)
  #
--# Tell qemu that heartbeat is lost, request it to do takeover
-+# Tell QEMU that heartbeat is lost, request it to do takeover
- # procedures.  If this command is sent to the PVM, the Primary side
- # will exit COLO mode.  If sent to the Secondary, the Secondary side
- # will run failover work, then takes over server operation to become
-@@ -1729,8 +1729,8 @@
- ##
- # @migrate-incoming:
- #
--# Start an incoming migration, the qemu must have been started with
--# -incoming defer
-+# Start an incoming migration.  QEMU must have been started with
-+# -incoming defer.
- #
- # @uri: The Uniform Resource Identifier identifying the source or
- #     address to listen on
-diff --git a/qapi/run-state.json b/qapi/run-state.json
-index ebfeb669ab..fcc00c805b 100644
---- a/qapi/run-state.json
-+++ b/qapi/run-state.json
-@@ -135,19 +135,19 @@
- ##
- # @SHUTDOWN:
- #
--# Emitted when the virtual machine has shut down, indicating that qemu
-+# Emitted when the virtual machine has shut down, indicating that QEMU
- # is about to exit.
- #
- # @guest: If true, the shutdown was triggered by a guest request (such
- #     as a guest-initiated ACPI shutdown request or other
- #     hardware-specific action) rather than a host request (such as
--#     sending qemu a SIGINT).  (since 2.10)
-+#     sending QEMU a SIGINT).  (since 2.10)
- #
- # @reason: The @ShutdownCause which resulted in the SHUTDOWN.
- #     (since 4.0)
- #
- # .. note:: If the command-line option ``-no-shutdown`` has been
--#    specified, qemu will not exit, and a STOP event will eventually
-+#    specified, QEMU will not exit, and a STOP event will eventually
- #    follow the SHUTDOWN event.
- #
- # Since: 0.12
-diff --git a/qapi/transaction.json b/qapi/transaction.json
-index 021e383496..5c3394919e 100644
---- a/qapi/transaction.json
-+++ b/qapi/transaction.json
-@@ -223,7 +223,7 @@
- # exists, the request will be rejected.  Only some image formats
- # support it, for example, qcow2, and rbd,
- #
--# On failure, qemu will try delete the newly created internal snapshot
-+# On failure, QEMU will try delete the newly created internal snapshot
- # in the transaction.  When an I/O error occurs during deletion, the
- # user needs to fix it later with qemu-img or other command.
- #
-diff --git a/qapi/uefi.json b/qapi/uefi.json
-index bdfcabe1df..6592183d6c 100644
---- a/qapi/uefi.json
-+++ b/qapi/uefi.json
-@@ -5,7 +5,7 @@
- ##
- # = UEFI Variable Store
- #
--# The qemu efi variable store implementation (hw/uefi/) uses this to
-+# The QEMU efi variable store implementation (hw/uefi/) uses this to
- # store non-volatile variables in json format on disk.
- #
- # This is an existing format already supported by (at least) two other
-diff --git a/qapi/ui.json b/qapi/ui.json
-index 7cfedb3914..514fa159b1 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1526,12 +1526,12 @@
- #
- # Display (user interface) options.
- #
--# @type: Which DisplayType qemu should use.
-+# @type: Which DisplayType QEMU should use.
- #
- # @full-screen: Start user interface in fullscreen mode
- #     (default: off).
- #
--# @window-close: Allow to quit qemu with window close button
-+# @window-close: Allow to quit QEMU with window close button
- #     (default: on).
- #
- # @show-cursor: Force showing the mouse cursor (default: off).
+-# @cpu-throttle-tailslow: Make CPU throttling slower at tail stage At
+-#     the tail stage of throttling, the Guest is very sensitive to CPU
+-#     percentage while the @cpu-throttle -increment is excessive
++# @cpu-throttle-tailslow: Make CPU throttling slower at tail stage.
++#     At the tail stage of throttling, the Guest is very sensitive to
++#     CPU percentage while the @cpu-throttle -increment is excessive
+ #     usually at tail stage.  If this parameter is true, we will
+ #     compute the ideal CPU percentage used by the Guest, which may
+ #     exactly make the dirty rate match the dirty rate threshold.
 -- 
 2.48.1
 
