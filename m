@@ -4,58 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08120C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 10:16:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED8C2C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 10:33:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMOgR-0005cy-CS; Tue, 03 Jun 2025 06:15:51 -0400
+	id 1uMOwb-00080A-09; Tue, 03 Jun 2025 06:32:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMOgQ-0005cY-0k
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 06:15:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMOwV-0007zN-TY
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 06:32:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMOgO-00054s-5C
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 06:15:49 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMOwT-0007TO-GA
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 06:32:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1748945744;
+ s=mimecast20190719; t=1748946742;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=V6UyugGoJ5KQ0WbdVMn8DUL7G+nKcpnfRgoxGN1aZtk=;
- b=Tq+aJ7oh4HJwq5NC22hrEfUzIMZyXoEgDl8TTnbQ/GuZDH13rP676jLDdlsNbvq9VUd5Iq
- c/ypHI58fmeXAJAxIFOFS2hcSspNhrt2mbAClCDi5+5ErXNwm8c35fcIWU947lWLFcX2G/
- SGB9Z6k2uufpo/tqgLvQceSF3YvkDKg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=fhSZSAV/6vQipzUtXID/HCzKaZL8NDiReASoJHPQeqo=;
+ b=hpLLna93oQjRx/pYuXCdp341ebWXb8BIARDUHMxMXIFG+RzXCOiHU1csgY27rjqx4H2oUO
+ 2uXG26gTxyFQW7RKDTCy4sCg9eERSQSHQRQmNxtHTnTYpQVTmQHFafh4wfnTPgXs5TPtZD
+ TNqLXvD7QxfmjbyQLD5xrBM7kslDokU=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-422-wQskYtlNMxiu2l8qbg6Qtg-1; Tue,
- 03 Jun 2025 06:15:42 -0400
-X-MC-Unique: wQskYtlNMxiu2l8qbg6Qtg-1
-X-Mimecast-MFC-AGG-ID: wQskYtlNMxiu2l8qbg6Qtg_1748945741
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-497-SB_n5QQqM-yJsLpzK3n53A-1; Tue,
+ 03 Jun 2025 06:32:19 -0400
+X-MC-Unique: SB_n5QQqM-yJsLpzK3n53A-1
+X-Mimecast-MFC-AGG-ID: SB_n5QQqM-yJsLpzK3n53A_1748946738
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 691FF1800261; Tue,  3 Jun 2025 10:15:41 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.226.8])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DF3CF30002C2; Tue,  3 Jun 2025 10:15:38 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>,
-	qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org
-Subject: [PATCH] tests/functional: Add a test for the realview-eb-mpcore
- machine
-Date: Tue,  3 Jun 2025 12:15:26 +0200
-Message-ID: <20250603101526.21217-1-thuth@redhat.com>
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11E921956095; Tue,  3 Jun 2025 10:32:18 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BB8B1800359; Tue,  3 Jun 2025 10:32:17 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 232D521E6766; Tue, 03 Jun 2025 12:32:15 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  qemu-devel@nongnu.org,
+ qemu-rust@nongnu.org
+Subject: Re: [PATCH 06/14] rust: qemu-api: add bindings to Error
+In-Reply-To: <aD7AbxghCc5VYDhu@intel.com> (Zhao Liu's message of "Tue, 3 Jun
+ 2025 17:29:19 +0800")
+References: <20250530080307.2055502-1-pbonzini@redhat.com>
+ <20250530080307.2055502-7-pbonzini@redhat.com>
+ <877c1uffj3.fsf@pond.sub.org> <aD7AbxghCc5VYDhu@intel.com>
+Date: Tue, 03 Jun 2025 12:32:15 +0200
+Message-ID: <8734ch5d5c.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -80,97 +87,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Zhao Liu <zhao1.liu@intel.com> writes:
+> Markus Armbruster <armbru@redhat.com> writes:
 
-Check that we can boot a Linux kernel here and that we can at
-least send one ping network packet.
+[...]
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                           |  1 +
- tests/functional/meson.build          |  1 +
- tests/functional/test_arm_realview.py | 47 +++++++++++++++++++++++++++
- 3 files changed, 49 insertions(+)
- create mode 100755 tests/functional/test_arm_realview.py
+>> Let's examine the other aspect: how exactly "storing" behaves.
+>> 
+>> error_setg() according to its contract:
+>> 
+>>     If @errp is NULL, the error is ignored.  [...]
+>> 
+>>     If @errp is &error_abort, print a suitable message and abort().
+>> 
+>>     If @errp is &error_fatal, print a suitable message and exit(1).
+>> 
+>>     If @errp is anything else, *@errp must be NULL.
+>> 
+>> error_propagate() according to its contract:
+>> 
+>>     [...] if @dst_errp is NULL, errors are being ignored.  Free the
+>>     error object.
+>> 
+>>     Else, if @dst_errp is &error_abort, print a suitable message and
+>>     abort().
+>> 
+>>     Else, if @dst_errp is &error_fatal, print a suitable message and
+>>     exit(1).
+>> 
+>>     Else, if @dst_errp already contains an error, ignore this one: free
+>>     the error object.
+>> 
+>>     Else, move the error object from @local_err to *@dst_errp.
+>> 
+>> The second to last clause is where its storing differs from
+>> error_setg().
+>> 
+>> What does errp.write(err) do?  I *guess* it simply stores @err in @errp.
+>> Matches neither behavior.
+>> 
+>> If that's true, then passing &error_abort or &error_fatal to Rust does
+>> not work, and neither does error accumulation.  Not equivalent of C
+>> error_propagate().
+>
+> I did some simple tests. yes, &error_abort or &error_fatal doesn't work.
+> Current @errp of realize() can work because @errp points to @local_err
+> in device_set_realized().
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 16af37986a4..0d1023635ee 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -954,6 +954,7 @@ F: hw/cpu/realview_mpcore.c
- F: hw/intc/realview_gic.c
- F: include/hw/intc/realview_gic.h
- F: docs/system/arm/realview.rst
-+F: tests/functional/test_arm_realview.py
- 
- SABRELITE / i.MX6
- M: Peter Maydell <peter.maydell@linaro.org>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 557d59ddf4d..0de1caa0f72 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -135,6 +135,7 @@ tests_arm_system_thorough = [
-   'arm_orangepi',
-   'arm_quanta_gsj',
-   'arm_raspi2',
-+  'arm_realview',
-   'arm_replay',
-   'arm_smdkc210',
-   'arm_stellaris',
-diff --git a/tests/functional/test_arm_realview.py b/tests/functional/test_arm_realview.py
-new file mode 100755
-index 00000000000..82cc964333e
---- /dev/null
-+++ b/tests/functional/test_arm_realview.py
-@@ -0,0 +1,47 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on a realview arm machine
-+# and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
-+from qemu_test import Asset
-+
-+
-+class RealviewMachine(LinuxKernelTest):
-+
-+    ASSET_REALVIEW_MPCORE = Asset(
-+        ('https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/'
-+         'openwrt-15.05.1-realview-vmlinux-initramfs.elf'),
-+        'd3a01037f33e7512d46d50975588d5c3a0e0cbf25f37afab44775c2a2be523e6')
-+
-+    def test_realview_ep_mpcore(self):
-+        self.require_netdev('user')
-+        self.set_machine('realview-eb-mpcore')
-+        kernel_path = self.ASSET_REALVIEW_MPCORE.fetch()
-+        self.vm.set_console()
-+        kernel_param = 'console=ttyAMA0 mem=128M quiet'
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_param)
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Please press Enter to activate')
-+        prompt = ':/#'
-+        exec_command_and_wait_for_pattern(self, '', prompt)
-+        exec_command_and_wait_for_pattern(self, 'dmesg', kernel_param)
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                ('while ! dmesg | grep "br-lan: port 1(eth0) entered" ;'
-+                 ' do sleep 1 ; done'),
-+                'entered forwarding state')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                'while ! ifconfig | grep "10.0.2.15" ; do sleep 1 ; done',
-+                'addr:10.0.2.15')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self, 'ping -c 1 10.0.2.2',
-+                                          '1 packets received, 0% packet loss')
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
--- 
-2.49.0
+Thank you!
+
+>> Is "propagate" semantics what you want here?
+>> 
+>> If not, use another name.
+>
+> I guess here we should call C version's error_propagate() instead of
+> write():
+>
+> diff --git a/rust/qemu-api/src/error.rs b/rust/qemu-api/src/error.rs
+> index a91ce6fefaf4..56622065ad22 100644
+> --- a/rust/qemu-api/src/error.rs
+> +++ b/rust/qemu-api/src/error.rs
+> @@ -205,7 +205,7 @@ pub unsafe fn propagate(self, errp: *mut *mut bindings::Error) {
+>
+>          // SAFETY: caller guarantees errp is valid
+>          unsafe {
+> -            errp.write(err);
+> +            bindings::error_propagate(errp, err);
+>          }
+>      }
+>
+> ---
+>
+> Then Rust's propagate has the same behavior as C (Of course, here Rust
+> is actually using C's error_propagate, so the two are equivalent.)
+
+*If* we want propagate semantics.  I'm not sure we do.
+
+If we don't: use error_handle()?
 
 
