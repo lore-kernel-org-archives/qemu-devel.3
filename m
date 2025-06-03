@@ -4,67 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8350C5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 04:44:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CBF9C5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 05:13:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMJUC-0002uD-34; Tue, 03 Jun 2025 00:42:52 -0400
+	id 1uMJx9-0006ub-F7; Tue, 03 Jun 2025 01:12:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
- id 1uMJU7-0002tT-Fo
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 00:42:49 -0400
-Received: from sg-1-21.ptr.blmpb.com ([118.26.132.21])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
- id 1uMJU3-0000S0-BP
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 00:42:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1748925747;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=hQUJQuIiNJmjXD6aky80806PNqs5JG6X+Xg9H5Oinms=;
- b=fJ/zuLX4pq3bisT8nwxAi3It1XMdWUYn5QXP6/OwRjau4i6EXcQBo6ChRDtO7eoynh3Vej
- 3SyCYlVHIgwpBL+65Wu+Ekrr+CMmOvnGNNZbBzYiE7ZlfhEskWvwIFYTVo/wEqI61fB5BT
- o847Fv8KfUO80U/2guIyjPrRFsAuZ4bVyGPI/4x1FnGa069w+Ze2Vcq4YL5j0F43//TUWF
- WDKs8c2BoY9teRkXYxIuwcJkZUU181nu2hXyhgWEaiBx0Lykb2rsWkn9fNtlTCtU6XYErU
- vlRBf78KN1K96WKFBFtp6Sn7u/nx066bzzZH8FRuZf47nn4IF7fRzdxF9zDcpg==
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
-Cc: "Palmer Dabbelt" <palmer@dabbelt.com>, 
- "Alistair Francis" <alistair.francis@wdc.com>, 
- "Weiwei Li" <liwei1518@gmail.com>, 
- "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
- "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, 
- "Tomasz Jeznach" <tjeznach@rivosinc.com>, 
- "Richard Henderson" <richard.henderson@linaro.org>, 
- <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-Date: Tue, 3 Jun 2025 12:42:23 +0800
-Mime-Version: 1.0
-Received: from [127.0.0.1] ([180.165.23.184]) by smtp.feishu.cn with ESMTPS;
- Tue, 03 Jun 2025 12:42:24 +0800
-In-Reply-To: <CAKmqyKPKLHk97s-eVGANq7hYfny1g-WgFQA32eoNo9UYLC9ixA@mail.gmail.com>
-X-Lms-Return-Path: <lba+2683e7d31+cf118c+nongnu.org+liujingqi@lanxincomputing.com>
-To: "Alistair Francis" <alistair23@gmail.com>
-From: "liu" <liujingqi@lanxincomputing.com>
-Message-Id: <bd2323c1-b712-4db6-935e-f645e57ef134@lanxincomputing.com>
-References: <20250529092632.4367-1-liujingqi@lanxincomputing.com>
- <CAKmqyKPKLHk97s-eVGANq7hYfny1g-WgFQA32eoNo9UYLC9ixA@mail.gmail.com>
-Subject: Re: [PATCH] hw/riscv/riscv-iommu: Fix PPN field of
- Translation-reponse register
-Content-Type: text/plain; charset=UTF-8
-X-Original-From: liu <liujingqi@lanxincomputing.com>
-User-Agent: Mozilla Thunderbird
-Received-SPF: pass client-ip=118.26.132.21;
- envelope-from=liujingqi@lanxincomputing.com; helo=sg-1-21.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMJx5-0006tS-IP
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 01:12:43 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMJx4-0003OJ-1o
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 01:12:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1748927562; x=1780463562;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=/o9QMCkvz+rS2wSdoCiqmfI/zo6XBVkcN10+Q9PmT0A=;
+ b=Wts/mP7weakuQDz/y3W8PN8uApqM1FmuA28sCQwTEoy7n2qdM+FQz3wP
+ oCSftYD8nK97IIQas5ZGcZpgnwIzJ5o1AHDh411RsYxIR2QzXgpByyP9g
+ Fqvd5i116DMdw5RJZZhCJOgoJmou5VSgd9+H+e9tx4XZb9bAoNaFKp/8p
+ GaEdYXxzN5oMD6UmE9YAUPZbe1wgA4MO3i6I5Uv3WIMxndd8qcc9cwRdl
+ k1Wq8YtjyStyW7UBBCg1aUa7kEoNLBN+9w8NzynA+ufUt/5pgRzwMwpuc
+ otAdCn7M7BVmFPD0uOE1ToSyRxGjGOI/wVLMbWlNFLEaqsptNbBxZzuUh Q==;
+X-CSE-ConnectionGUID: zCdTELykRTWXF072FonCUg==
+X-CSE-MsgGUID: M1j5h+94R9iQFdvzlTZWfg==
+X-IronPort-AV: E=McAfee;i="6700,10204,11451"; a="62007527"
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="62007527"
+Received: from orviesa002.jf.intel.com ([10.64.159.142])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 02 Jun 2025 22:09:13 -0700
+X-CSE-ConnectionGUID: +zKWB90qQoeMrDvsK2ulcA==
+X-CSE-MsgGUID: u60MaGTkTt+QBCB9JYHUmg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,205,1744095600"; d="scan'208";a="175700647"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by orviesa002.jf.intel.com with ESMTP; 02 Jun 2025 22:09:11 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org
+Subject: [PATCH 2/3] i386/tdx: Fix the typo of the comment of struct TdxGuest
+Date: Tue,  3 Jun 2025 01:03:04 -0400
+Message-ID: <20250603050305.1704586-3-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250603050305.1704586-1-xiaoyao.li@intel.com>
+References: <20250603050305.1704586-1-xiaoyao.li@intel.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.13; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.015,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,100 +83,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
+Change sha348 to sha384.
 
-Thanks for your review.
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ target/i386/kvm/tdx.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-On 6/2/2025 1:11 PM, Alistair Francis wrote:
-> On Thu, May 29, 2025 at 10:52=E2=80=AFPM Nutty Liu
-> <liujingqi@lanxincomputing.com> wrote:
->> The original implementation incorrectly performed a bitwise AND
->> operation between the PPN of iova and PPN Mask, leading to an
->> incorrect PPN field in Translation-reponse register.
->>
->> The PPN of iova should be set entirely in the PPN field of
->> Translation-reponse register.
->>
->> Signed-off-by: Nutty Liu <liujingqi@lanxincomputing.com>
->> ---
->>   hw/riscv/riscv-iommu.c | 3 +--
->>   1 file changed, 1 insertion(+), 2 deletions(-)
->>
->> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
->> index a877e5da84..f529a6a3d7 100644
->> --- a/hw/riscv/riscv-iommu.c
->> +++ b/hw/riscv/riscv-iommu.c
->> @@ -1935,8 +1935,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUStat=
-e *s)
->>               iova =3D RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) faul=
-t) << 10);
->>           } else {
->>               iova =3D iotlb.translated_addr & ~iotlb.addr_mask;
->> -            iova >>=3D TARGET_PAGE_BITS;
->> -            iova &=3D RISCV_IOMMU_TR_RESPONSE_PPN;
->> +            iova =3D set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN=
-(iova));
-> I don't see how this is different.
->
-> PPN_DOWN(iova)
-> is the same as
-> iova >> TARGET_PAGE_BITS
-Yes. The results of above operations are the same.
->
-> and
->
-> set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(iova))
-> should just return
-> (0 & ~RISCV_IOMMU_TR_RESPONSE_PPN) |
->      (RISCV_IOMMU_TR_RESPONSE_PPN & PPN_DOWN(iova))
-It's not correct.Let me show the definitions of the related macros as=20
-follows.
-1) The definition of 'set_field' in 'target/riscv/cpu_bits.h' is as=20
-below:#define set_field(reg, mask, val) (((reg) & ~(uint64_t)(mask)) |=20
-\(((uint64_t)(val) * ((mask) & ~((mask) << 1))) & \(uint64_t)(mask)))2)=20
-The definition of 'RISCV_IOMMU_TR_RESPONSE_PPN'=20
-in'hw/riscv/riscv-iommu-bits.h' is as follows:#define=20
-RISCV_IOMMU_PPN_FIELD GENMASK_ULL(53, 10)#define=20
-RISCV_IOMMU_TR_RESPONSE_PPN RISCV_IOMMU_PPN_FIELD
-Let me give you an example as follows.
-With the original implementation,1) Assume:iova =3D 0x12345678;
-2) iova >>=3D TARGET_PAGE_BITS=EF=BC=9BThe result is as follows:iova =3D=20
-0x12345;It's the same as PPN_DOWN(iova). This is the correct value of PPN.
-3) iova &=3D RISCV_IOMMU_TR_RESPONSE_PPN;
-After substituting with 'iova =3D 0x12345', the result is as follows:iova=
-=20
-=3D 0x12345 & 0x3ffffffffffc00;The final 'iova' is :iova =3D 0x12000;
-This 'iova' will be set to Translation-reponse register finally by=20
-thebelow sentence.riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE,=20
-iova);
-Then the value of Translation-reponse register will be set to=20
-'0x12000'.The PPN field is between bit 10 and bit 53. So the PPN is=20
-0x48(calculated by 0x12000 >> 10 =3D 0x48).
-It's incorrect. The PPN field should be 0x12345.It should be calculated=20
-as follows:iova =3D (iova << 10) & RISCV_IOMMU_TR_RESPONSE_PPN;
-After substituting with 'iova =3D 0x12345', and the result is as=20
-follows:iova =3D (0x12345 << 10) & 0x3ffffffffffc00 =3D 0x48D1400The correc=
-t=20
-value of Translation-reponse register should be '0x48D1400'.
-4) With the new implementation,iova =3D set_field(0,=20
-RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(iova));
-It will set the bits 10 to 53 of 'iova' to PPN_DOWN(iova).After=20
-substituting with 'iova =3D 0x12345', the final 'iova' is as follows:iova=
-=20
-=3D 0x48D1400;
-And then the correct 'iova' will be set to Translation-reponse register.
->
-> Can you describe the issue with the original implementation and why
-> this fixes it in the commit message?
-Hope the above description and the example can help you understand.
-Nutty,
-Thanks
->
-> Alistair
->
->>               /* We do not support superpages (> 4kbs) for now */
->>               iova &=3D ~RISCV_IOMMU_TR_RESPONSE_S;
->> --
->> 2.49.0.windows.1
->>
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index 04b5afe199f9..8dd66e90149b 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -40,9 +40,9 @@ typedef struct TdxGuest {
+     bool initialized;
+     uint64_t attributes;    /* TD attributes */
+     uint64_t xfam;
+-    char *mrconfigid;       /* base64 encoded sha348 digest */
+-    char *mrowner;          /* base64 encoded sha348 digest */
+-    char *mrownerconfig;    /* base64 encoded sha348 digest */
++    char *mrconfigid;       /* base64 encoded sha384 digest */
++    char *mrowner;          /* base64 encoded sha384 digest */
++    char *mrownerconfig;    /* base64 encoded sha384 digest */
+ 
+     MemoryRegion *tdvf_mr;
+     TdxFirmware tdvf;
+-- 
+2.43.0
+
 
