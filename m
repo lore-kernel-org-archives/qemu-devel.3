@@ -4,91 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA44FC5AE59
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:13:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671EFC5AD49
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPZU-0005DS-Lp; Tue, 03 Jun 2025 07:12:44 -0400
+	id 1uMPc4-00068i-MY; Tue, 03 Jun 2025 07:15:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPZT-0005DI-Fa
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:12:43 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMPZR-00042S-TY
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:12:43 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3a36e090102so3147302f8f.2
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:12:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748949159; x=1749553959; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=E4tmmwWfacUcyM+hSbuy+1JhqfaP2nJVt10wYFCXcJw=;
- b=ETYHZ6BNUotssJ0GVWsX99hN986aSUH3OIJWZ/t6UaXhifOhnqoLoVZsQEqTMDdS6S
- xX2PqYH33XBNRTqc6TJCqz8k8JaUNId4yNuLixZ3QYeGdxQA9yomx0+e6q4e9UfBr0Kb
- gfCrq6Y02kk4ZGrtXi2He8Ts0hnNYsHWtVh6QOMK/YpQbVL3qpNTdfDQqpQhE/c4dsoS
- O3CIMorn4U7y9VH3kixuA9qi2wOGC1w64L2953X0XPO06zjipBPdk7+ATpXLPviOUrhb
- uutXt9M5BQKp7oc6Kw47EET47S1FGjMScuG18IG/k50y0I1o09RydChNIv0dOqAxbQd8
- 6Kew==
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1uMPbn-00064X-0r
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:15:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <dhildenb@redhat.com>)
+ id 1uMPbk-00049y-Bq
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:15:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1748949303;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=uPfiZ9GVeleSOBo5zAPPtu34oR+PCzc3sZY9U1A27WQ=;
+ b=HInzi9eoM4nlk+WL/6b2jnnMCE0eT6JN2nIfEthn11qJ6xj1SyPxUWtfl+veRUyfXWIDyh
+ fe6KMPY5WGGacv+JT/5BNuD/4gdYiCKE/3PeFS0hq/9ueePw+5Rxaw32eSMpZo9fOgsjUX
+ zOcAx0X1npXtn4L/DOi96dNKrLZkhPc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-349-W06dxNXsPkWdYzNuLkPfjg-1; Tue, 03 Jun 2025 07:13:39 -0400
+X-MC-Unique: W06dxNXsPkWdYzNuLkPfjg-1
+X-Mimecast-MFC-AGG-ID: W06dxNXsPkWdYzNuLkPfjg_1748949218
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-441c122fa56so28313595e9.2
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:13:39 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748949159; x=1749553959;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=E4tmmwWfacUcyM+hSbuy+1JhqfaP2nJVt10wYFCXcJw=;
- b=P0uYD4doP6dw221uNl/umFPOrdnLuexGgYy+rygPZ2azpWv6+Ym2cll6+e+pHmGqOE
- Hw9GbvwFeIU/wY1gDoHSYyioTikqP1zDCFcY2W4VHK0tcaqw5pZ/MlJAyVqbP4qUrbLN
- r66z66/gAUCcomJmSXOAfwWrx25qlniiOB5knOTmKkh3Fd4CyEydNekg+RJPuVVKU+4L
- hfKUn+WYnbrTb1vKohR3KDbkBfzIdupVLiUaA/EfREmzWmQ+e9SzRMM77KmAkT8x98uP
- Sj5C4dWXsvFkd4xGKzXCpXn3UahCQZHl6B27D28Hk7ZAjjshAFi4AV+aH/DbioauxAN6
- QlEQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmBKDZ8SXDJfGm1QjdtpkWDq7Iq/G0ryvjLnempKNwS5NrD9ByegFeEOcFQoBbyAqDTs+NpXakJYP0@nongnu.org
-X-Gm-Message-State: AOJu0YzTI6ph3W8VLtk1RhSXklZTR+KOxQJ77yjQirkP+yHDs4Ol9j5Q
- eUbxvIonMPJP8iCB4OB9f9dCdZIt9uUHs3Lw0rp+M760MiAiZ+CgnU0SJZZVRnda+mminbqfjG1
- qpMX9ylM=
-X-Gm-Gg: ASbGncvvEn50zIXG9wlCiRymEI7ld12Sq1mLxz9wI+FmMOXgPCjCupbPJ1zLzUhmm1w
- pdJKMrDr3ya1OPVge0v/7vZ22HUOPX9aWHGTVo7N37DrvPTjd1M4ewkoqvq/090fZG/yp93kVNV
- h6pBUqKoJ/V6aAD5xkANL8gaLD4pTCOqjaX6xpBo6qZzkE8jJzOTdT38Sn6OLLTVhdCwhfA10Ce
- Oo0NT4K5X4nZVmtXZEu5KUHuHmm5Wx6rT4K+TWtnHpZSbgDolu0AXp5qpjRmLpbSDkRDd5GX5xp
- gQWz+gKhqjvg1dR7pjaRjyXvust9j+CRS0ln/y5XOcJMjJ39I+z90WQzRQqfXBdlsirl31N2ySU
- 8uDT92bREYHvdfC5Ln/N7PUoKNPZfGdP+ph8=
-X-Google-Smtp-Source: AGHT+IEdrIsOzl+hF3cG0SD8WZE4XDKJDfsfL6RDJJwfkATz3YBEsBj9Wkz5rQEzmESiIq5f1GeJgQ==
-X-Received: by 2002:a05:6000:b4e:b0:3a4:fc3f:8d5b with SMTP id
- ffacd0b85a97d-3a4fc3f8d96mr7985347f8f.47.1748949159126; 
- Tue, 03 Jun 2025 04:12:39 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f00a0a96sm18136065f8f.96.2025.06.03.04.12.38
+ d=1e100.net; s=20230601; t=1748949218; x=1749554018;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=uPfiZ9GVeleSOBo5zAPPtu34oR+PCzc3sZY9U1A27WQ=;
+ b=FFJlVfaMWbB5jLRfU5oc4yZB807JNtgDBcYvJ39rtF+SRV6pyx4iD9YC2T+T9bZZ3u
+ PaY0YnXyhre+aTblBESnm2h//JfQR5zqqhU4iPoGA/5/Ww1QwoQu3P/LWho3G1Li5m9m
+ kFO+uKSPWaMylNnVTu6t7IcIbz/pba++23A+iT5hnEhL+ejoYPyyCqz0Z3Nm9aYNL3Tn
+ mS9kDYfbUBrZE129VT0RNueP4xalOkSeHYjvgko99qn6Gp1ev34Yae6AbkghJAm3pGsr
+ yJlpLI+I+dWEG4Sd88+q627Ebf8tPyu4lBs3Lq+XMLRQnD3TxUEVHiuO8QFVN0kRlbnm
+ 15uQ==
+X-Gm-Message-State: AOJu0YwLRDDm3iPefx2426F8aLdnfjgrSBNgl2wtxmgXPr/K9I9txuTm
+ zoPfDHLLhVcaLt/iRZMtUZRb1PB7m8UPUT96FVWIO5z7YDHsvwlgEz6xYvoiLFjU3J4Bc7k+Gwq
+ f7xd7MFcs4pvMSXDDyKDV8ivneLxTeg+jH079755CO/ywsNobiIKkQiGN0RH/pReE7I5bypPTky
+ n35wil5eLNVcawfaMNtb0qgF1hClzYE1kNOV9yHJs=
+X-Gm-Gg: ASbGncs/1oRYfUcAmQQLglO6K8glqyHofaXzvSEvw0IP1spL6EVw0iICR59Vd1Xbd5h
+ 6Ah2rj3ChBSv+vi68O1b/5ncttR7Q8lg6A3Vyj3cSJK57FVrEs0x5ta6IBZcd6YhuNvVB5mXggd
+ baN6q/+LUllXrTejAIsZt6x5tentV8Rnu7id4qqoiO0COU+EVvKsNxcrMU0NOxNqyySF+NAhGW2
+ itUopaziLx8VqY0pzc/gOE1DZVH99ZV8n5KCuXHLRLogThEobfzemD8lw0cmgL3qxM4ed9nfiXi
+ GScej/MFwegp0CHIDN3ix+aNw7bgLYQs3FECxvDIS+IBWaZDa0+9gkkJESeddLee+rSmQ3OY
+X-Received: by 2002:a05:600c:4f8b:b0:442:e9eb:cb9e with SMTP id
+ 5b1f17b1804b1-450d655559emr130604315e9.26.1748949218086; 
+ Tue, 03 Jun 2025 04:13:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHKyidGe/POT4w7wLZFNrxESnSX8pYf7grtsqg/hrybAHTE7DAqgDQhMVP+IxoFYKmk1DPODA==
+X-Received: by 2002:a05:600c:4f8b:b0:442:e9eb:cb9e with SMTP id
+ 5b1f17b1804b1-450d655559emr130604015e9.26.1748949217599; 
+ Tue, 03 Jun 2025 04:13:37 -0700 (PDT)
+Received: from localhost
+ (p200300d82f0df000eec92b8d4913f32a.dip0.t-ipconnect.de.
+ [2003:d8:2f0d:f000:eec9:2b8d:4913:f32a])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-450d7fb7dafsm155204825e9.25.2025.06.03.04.13.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 03 Jun 2025 04:12:38 -0700 (PDT)
-Message-ID: <347ecead-c511-4674-98ed-2ee356b9ebd9@linaro.org>
-Date: Tue, 3 Jun 2025 13:12:37 +0200
+ Tue, 03 Jun 2025 04:13:37 -0700 (PDT)
+From: David Hildenbrand <david@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: David Hildenbrand <david@redhat.com>,
+ yuanminghao <yuanmh12@chinatelecom.cn>,
+ Igor Mammedov <imammedo@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH v1] vhost: Fix used memslot tracking when destroying a vhost
+ device
+Date: Tue,  3 Jun 2025 13:13:36 +0200
+Message-ID: <20250603111336.1858888-1-david@redhat.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] ui/vnc: Do not copy z_stream
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- devel@daynix.com
-References: <20250603-zlib-v3-0-20b857bd8d05@rsg.ci.i.u-tokyo.ac.jp>
- <20250603-zlib-v3-1-20b857bd8d05@rsg.ci.i.u-tokyo.ac.jp>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250603-zlib-v3-1-20b857bd8d05@rsg.ci.i.u-tokyo.ac.jp>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=dhildenb@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,22 +111,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 11:18, Akihiko Odaki wrote:
-> vnc_worker_thread_loop() copies z_stream stored in its local VncState to
-> the persistent VncState, and the copied one is freed with deflateEnd()
-> later. However, deflateEnd() refuses to operate with a copied z_stream
-> and returns Z_STREAM_ERROR, leaking the allocated memory.
-> 
-> Avoid copying the zlib state to fix the memory leak.
-> 
-> Fixes: bd023f953e5e ("vnc: threaded VNC server")
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> ---
->   ui/vnc.h          |  2 +-
->   ui/vnc-enc-zlib.c | 30 +++++++++++++++---------------
->   ui/vnc.c          | 13 ++++++++++---
->   3 files changed, 26 insertions(+), 19 deletions(-)
+When we unplug a vhost device, we end up calling vhost_dev_cleanup()
+where we do a memory_listener_unregister().
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+This memory_listener_unregister() call will end up disconnecting the
+listener from the address space through listener_del_address_space().
+
+In that process, we effectively communicate the removal of all memory
+regions from that listener, resulting in region_del() + commit()
+callbacks getting triggered.
+
+So in case of vhost, we end up calling vhost_commit() with no remaining
+memory slots (0).
+
+In vhost_commit() we end up overwriting the global variables
+used_memslots / used_shared_memslots, used for detecting the number
+of free memslots. With used_memslots / used_shared_memslots set to 0
+by vhost_commit() during device removal, we'll later assume that the
+other vhost devices still have plenty of memslots left when calling
+vhost_get_free_memslots().
+
+Let's fix it by simply removing the global variables and depending
+only on the actual per-device count.
+
+Easy to reproduce by adding two vhost-user devices to a VM and then
+hot-unplugging one of them.
+
+While at it, detect unexpected underflows in vhost_get_free_memslots()
+and issue a warning.
+
+Reported-by: yuanminghao <yuanmh12@chinatelecom.cn>
+Link: https://lore.kernel.org/qemu-devel/20241121060755.164310-1-yuanmh12@chinatelecom.cn/
+Fixes: 2ce68e4cf5be ("vhost: add vhost_has_free_slot() interface")
+Cc: Igor Mammedov <imammedo@redhat.com>
+Cc: Michael S. Tsirkin <mst@redhat.com>
+Cc: Stefano Garzarella <sgarzare@redhat.com>
+Signed-off-by: David Hildenbrand <david@redhat.com>
+---
+
+I assume the problem existed in some form when used_memslots was
+introduced. However, I did not check the old behavior of memory listener
+unregistration etc.
+
+---
+ hw/virtio/vhost.c | 37 ++++++++++---------------------------
+ 1 file changed, 10 insertions(+), 27 deletions(-)
+
+diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+index fc43853704..c87861b31f 100644
+--- a/hw/virtio/vhost.c
++++ b/hw/virtio/vhost.c
+@@ -47,12 +47,6 @@ static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+ static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+ static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
+ 
+-/* Memslots used by backends that support private memslots (without an fd). */
+-static unsigned int used_memslots;
+-
+-/* Memslots used by backends that only support shared memslots (with an fd). */
+-static unsigned int used_shared_memslots;
+-
+ static QLIST_HEAD(, vhost_dev) vhost_devices =
+     QLIST_HEAD_INITIALIZER(vhost_devices);
+ 
+@@ -74,15 +68,15 @@ unsigned int vhost_get_free_memslots(void)
+ 
+     QLIST_FOREACH(hdev, &vhost_devices, entry) {
+         unsigned int r = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
+-        unsigned int cur_free;
++        unsigned int cur_free = r - hdev->mem->nregions;
+ 
+-        if (hdev->vhost_ops->vhost_backend_no_private_memslots &&
+-            hdev->vhost_ops->vhost_backend_no_private_memslots(hdev)) {
+-            cur_free = r - used_shared_memslots;
++        if (unlikely(r < hdev->mem->nregions)) {
++            warn_report_once("used (%u) vhost backend memory slots exceed"
++                             " the device limit (%u).", hdev->mem->nregions, r);
++            free = 0;
+         } else {
+-            cur_free = r - used_memslots;
++            free = MIN(free, cur_free);
+         }
+-        free = MIN(free, cur_free);
+     }
+     return free;
+ }
+@@ -666,13 +660,6 @@ static void vhost_commit(MemoryListener *listener)
+     dev->mem = g_realloc(dev->mem, regions_size);
+     dev->mem->nregions = dev->n_mem_sections;
+ 
+-    if (dev->vhost_ops->vhost_backend_no_private_memslots &&
+-        dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+-        used_shared_memslots = dev->mem->nregions;
+-    } else {
+-        used_memslots = dev->mem->nregions;
+-    }
+-
+     for (i = 0; i < dev->n_mem_sections; i++) {
+         struct vhost_memory_region *cur_vmr = dev->mem->regions + i;
+         struct MemoryRegionSection *mrs = dev->mem_sections + i;
+@@ -1619,15 +1606,11 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+     QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+ 
+     /*
+-     * The listener we registered properly updated the corresponding counter.
+-     * So we can trust that these values are accurate.
++     * The listener we registered properly setup the number of required
++     * memslots in vhost_commit().
+      */
+-    if (hdev->vhost_ops->vhost_backend_no_private_memslots &&
+-        hdev->vhost_ops->vhost_backend_no_private_memslots(hdev)) {
+-        used = used_shared_memslots;
+-    } else {
+-        used = used_memslots;
+-    }
++    used = hdev->mem->nregions;
++
+     /*
+      * We assume that all reserved memslots actually require a real memslot
+      * in our vhost backend. This might not be true, for example, if the
+-- 
+2.49.0
 
 
