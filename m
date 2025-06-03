@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CBF9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13142C5AE59
+	for <qemu-devel@archiver.kernel.org>; Tue,  3 Jun 2025 11:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMPRO-0000n5-NU; Tue, 03 Jun 2025 07:04:24 -0400
+	id 1uMPPR-000851-Dz; Tue, 03 Jun 2025 07:02:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPO-00083B-PC
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:18 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1uMPPJ-0007vc-7c
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:13 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uMPPK-0002CR-Om
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:18 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-606b58241c9so949509a12.3
- for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:14 -0700 (PDT)
+ id 1uMPPG-0002AO-BL
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 07:02:12 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-60477f1a044so9281247a12.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 04:02:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1748948533; x=1749553333; darn=nongnu.org;
+ d=linaro.org; s=google; t=1748948529; x=1749553329; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xxDMdaIg8arEcAZqrWcxA6HfH8o9FpNz/62pOCW6kuE=;
- b=uAfU+QNwVYabdGwPLXYx6HEuLLyVl2xpzz2dPr+9tMmKBLzczk5hi0Kt1e+9f3IwWl
- AKrSLlBAXVM7gH5u182yxRcsBL0u1PPwMQWbrwXIA8hQYuttV7h/qw8lKW0HLcj4PyKH
- 84CgpdNHQDy4splOsF43sJtzKZ/ChHRI+EYkAXFuXsWkumv+VngLfWgivg0zSptXQM6y
- G0B+ORlpNkD3B9NJswCR1U5O1gBKA52mlV6KnFno0KPfCGd53nkew2GfbGvMSDijKCX6
- JRvOYSOZGsxUBoKOexmP+wRB5aFHt2SzovZmMwmvB1KudhkcV4fNfBd+mQOv0osNxc1v
- araA==
+ bh=9w35SL38CEz4mwyf3n+L8B+bqiImcbrsN6OkNuFmyxY=;
+ b=Heh5sHAsFcalKjNZHPZrLqNMeiV7YqLqLvI034ne+rwP6i5Jek7gwN+XZ4O+FrcGuJ
+ FMnD4hBkoK89y5NUF3Ile6UPpJSXlfvX+dBtUBz9TXJ/X7SHYa4XfKtmtvqbbeUBYIdj
+ s+0WtHn9QLSwvo+ANpsy8EAP+cTcfytjY0I/GnajgbXOjRuObJNwkO2y+4GYS0yp9p0Q
+ Ncjn4luTyUdRAQ1RJR8+hUGDVecy0BfX7LqnbebXReE1OcKyzlgQEzZhRXH4Z8WXHXfe
+ zAsRkn4h/svNclA0BJ7AoS/SZ6o166HfBBIzaWftNzJnVhGfGlYoA6aAupxZAYlDGxGO
+ oTsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1748948533; x=1749553333;
+ d=1e100.net; s=20230601; t=1748948529; x=1749553329;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xxDMdaIg8arEcAZqrWcxA6HfH8o9FpNz/62pOCW6kuE=;
- b=sy0lGKAl9uFLq3ou4p9YtwLvW7fFSsD8gtZ6iSKV1yp7xz35xWyDwT3BaQNvB6kj5P
- HpVbrlBtaCZhTHeHFf08YYuJ/jRxdmDR0eeoVXa9bdN/x1nqNpayDXWOsOCsNvNS1T4C
- oWCgyBq2EnxY0+Th8t/qfVjq+Hjsixg5BsAQqC1EB65AMKLjWG6R0WB2z0J70CgxiRNp
- tZ1LfhetAlza7N32bHUJUvMJxJQoXO0q3SexR7jHxs2NT+T8h6zCOrv2meJAte6iAOT3
- HAnza2/VymsutFkRsdUG6ll4vaoWUqhUg0vUYHWqeVPB9TDNZcnyLTIJtD3589s/8kgZ
- C2Dg==
-X-Gm-Message-State: AOJu0YxbgtzPpuui7PtsbfiqUjSQISe7Azeb/2dGmL/fVqKxYO581rzu
- mhHqTDHo2lTQY5TAvdV6/rjEF6S1D2zHlmAvF3+ortqhVvv3HStWAF+8e8Upob8vzYU=
-X-Gm-Gg: ASbGncsaxRn5d189wgNi5Ccj75jRxr51APVguzGuYCrOG/y8VbrhBgSTVcXRxG5NFPL
- BjNB3+Qw6Ef+OCb2XuHQlHyHZ04VXFSvnt7td8U/ynmaZhEypgVFIpA7gqskBclkZhmEQgJ19D3
- ydMTUND+CVc9oq70x6Sbqao9hR/5igmCUNAj+CzVYT1LG/s2p69aAqbSCYHSMklLgjSOZURjz7l
- whfw6vnFPQ6he/uZHxvCELXLkCPk+G9X1bCweC6hIuQ+gW0Fkfl/bSpDzcPTW5zux5zAZX614js
- PAS9lGcEAvZtIWOIb8EhpRXK+FnibN1QqEBUmQOLU9tmpvPtLcrf
-X-Google-Smtp-Source: AGHT+IHfIW2Pdwvv7tPD/bQM4YVttqLyO1J4izr2UJGWTKej3lF10cPs8bcQtT/XHxP+j2ngTDKBfw==
+ bh=9w35SL38CEz4mwyf3n+L8B+bqiImcbrsN6OkNuFmyxY=;
+ b=nU3BOZIJSxcFh0rPcxD19JUYyjUB1rVz/qXXSjil32JEC/XEef9LYWQzZI8kzwYRYp
+ wNnvg5brAE2hSQnpVdjzzx230DVAOjdCSeYrPyZz1iKD1GgzXEIc2glYoA4zvqEMgDar
+ BnTMzpQN+RZQT2tUg0h/7TcCVITw+KNMUkkBkd35f/nkyIULV4JHqEhY8fmEApvd2smM
+ 02nKXR/gBB+9IurKT1wxvPg9y+DkYSt3kDCNlAlHq3GDdvYf6GbuSgbSfHo1cTYE0WKo
+ W6+zpmpkNQY05LZABUDn6q/2ZJD9Y6o20B/YrhfYWCEqqWX1ZOYGA7bVRCFKU9HTFbAK
+ XbPQ==
+X-Gm-Message-State: AOJu0YxOzwJiXGZGo6C7Lw9rBBEwJtFqry0fDgXxuA3bK5j218jzDo7l
+ +FDbHlsn5wOGczLBwAED69LFJzj/zZRo0Ggr3ehAuBanqzz3TIBSDy3nkm8EqyfRTzE=
+X-Gm-Gg: ASbGncth3i5PWN7t/448+FcBmQhUjgTu+CdQk0Rn8KKFPh/A8ciFQzvraBdpf7ygtZc
+ QgC4mfdgQNviPRCqTBJHy9v+M3w5kqNYe7Ei0hvVdsiTJdLl5Oe8abpzoOYX/3RywWcb19LJ7Fc
+ etCtTlJf8R9OV4DU0YkE2HQ87HwZcJeXSlF/puT11ZNDyb+RNOHW/Vkqb2blBcRT5gyypQ+7Bkp
+ AVKfx+cYKBd1ytEM+FjVHaBcK0/7jj6NmhFCFw/0PcgU42NJjQd5IdUtt6GrntHuRsfr5HS5YsV
+ FGpXJdw+9E0g8L7E+jrXSV3SjtEoU003T1VzB6BgNtLwAc2zRwBS
+X-Google-Smtp-Source: AGHT+IEeT5NP9L3kpAuRmr8lXK0vvXuW7oWLDsRy91ErQM0McBRnol4TdIdZqZSJHG+QBPl3bxuDUw==
 X-Received: by 2002:a17:907:6092:b0:ad9:982f:9206 with SMTP id
- a640c23a62f3a-adb49606242mr1105080666b.61.1748948532999; 
- Tue, 03 Jun 2025 04:02:12 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5dd043a9sm930549066b.89.2025.06.03.04.02.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ a640c23a62f3a-adb49606242mr1105047766b.61.1748948528529; 
  Tue, 03 Jun 2025 04:02:08 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ada5d84f389sm925857166b.82.2025.06.03.04.02.05
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 03 Jun 2025 04:02:06 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id A27CD5F9E1;
+ by draig.lan (Postfix) with ESMTP id 419AF5F9D1;
  Tue, 03 Jun 2025 12:02:05 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -85,18 +85,20 @@ Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PATCH v4 08/17] MAINTAINERS: add Akihiko and Dmitry as reviewers
-Date: Tue,  3 Jun 2025 12:01:55 +0100
-Message-ID: <20250603110204.838117-9-alex.bennee@linaro.org>
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Nabih Estefan <nabihestefan@google.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH v4 04/17] tests/qtest: Avoid unaligned access in IGB test
+Date: Tue,  3 Jun 2025 12:01:51 +0100
+Message-ID: <20250603110204.838117-5-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250603110204.838117-1-alex.bennee@linaro.org>
 References: <20250603110204.838117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -119,31 +121,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for volunteering to help.
+From: Nabih Estefan <nabihestefan@google.com>
 
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+  ../tests/qtest/libqos/igb.c:106:5: runtime error: load of misaligned address 0x562040be8e33 for type 'uint32_t', which requires 4 byte alignment
+
+Instead of straight casting the uint8_t array, we can use ldl_le_p and
+lduw_l_p to assure the unaligned access works properly against
+uint32_t and uint16_t.
+
+Signed-off-by: Nabih Estefan <nabihestefan@google.com>
+Reviewed-by: Laurent Vivier <lvivier@redhat.com>
+Tested-by: Laurent Vivier <lvivier@redhat.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250429155621.2028198-1-nabihestefan@google.com>
+[AJB: fix commit message, remove unneeded casts]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7718199979..79b1d5c0b3 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2669,6 +2669,8 @@ F: include/hw/display/ramfb.h
+---
+v3
+  - update commit title to Philippe's suggestion
+v2
+  - change title to reflect test that failed
+  - re-phrase ldl functions to assure unaligned works
+  - remove excess ()'s
+---
+ tests/qtest/libqos/igb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tests/qtest/libqos/igb.c b/tests/qtest/libqos/igb.c
+index f40c4ec4cd..ab3ef6f0c3 100644
+--- a/tests/qtest/libqos/igb.c
++++ b/tests/qtest/libqos/igb.c
+@@ -104,10 +104,10 @@ static void igb_pci_start_hw(QOSGraphObject *obj)
+     e1000e_macreg_write(&d->e1000e, E1000_RDT(0), 0);
+     e1000e_macreg_write(&d->e1000e, E1000_RDH(0), 0);
+     e1000e_macreg_write(&d->e1000e, E1000_RA,
+-                        le32_to_cpu(*(uint32_t *)address));
++                        ldl_le_p(address));
+     e1000e_macreg_write(&d->e1000e, E1000_RA + 4,
+                         E1000_RAH_AV | E1000_RAH_POOL_1 |
+-                        le16_to_cpu(*(uint16_t *)(address + 4)));
++                        lduw_le_p(address + 4));
  
- virtio-gpu
- M: Alex Bennée <alex.bennee@linaro.org>
-+R: Akihiko Odaki <akihiko.odaki@daynix.com>
-+R: Dmitry Osipenko <dmitry.osipenko@collabora.com>
- S: Odd Fixes
- F: hw/display/virtio-gpu*
- F: hw/display/virtio-vga.*
+     /* Set supported receive descriptor mode */
+     e1000e_macreg_write(&d->e1000e,
 -- 
 2.47.2
 
