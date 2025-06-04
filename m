@@ -4,93 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3472C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 17:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C742DC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 17:43:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMs4A-0000RJ-Sx; Wed, 04 Jun 2025 13:38:18 -0400
+	id 1uMs9a-0005Wt-JG; Wed, 04 Jun 2025 13:43:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uMs48-0000Qa-Um
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:38:17 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1uMs9P-0005Ug-JS
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:43:43 -0400
+Received: from mail-pf1-x443.google.com ([2607:f8b0:4864:20::443])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uMs47-0003A6-0T
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:38:16 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-234bfe37cccso1609105ad.0
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 10:38:13 -0700 (PDT)
+ id 1uMs9N-0004Ah-HU
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:43:43 -0400
+Received: by mail-pf1-x443.google.com with SMTP id
+ d2e1a72fcca58-747c2cc3419so155746b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 10:43:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749058692; x=1749663492; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=N1EvtJG5mNTqGGcNevZ83Z0Oy3cFvMJyHR4hO17x8rQ=;
- b=Wu4jROsBc2wT+vzZ9qtKr3r+TxqdoN56aGxLtTGbzXT1WDXBym0wUdHfmflQzIF1Gy
- vrXglhuPuVBcTw9GaW/jKmm00GHQwmqRrR9MzwhHLeQWvKyxQQSCkLc7IaLMBbPoaobk
- 5r2+iVUamQLcfyitfhXVSeuHNq48pbnps2WmYYjitf6fgRT6sbcQEKPFTekTqR77P3XO
- 0k9W8hssjfH4iIsIqXyFCJaKxl1LDmu2yyloXezMpEVFzPx67DXUcG1UKR2m6J80925Z
- W77FqTgyHEorDSE3M1ahU/9AIRS3kJbmh4m9wFwVRdrkuQmuJpN1d/qiu2HoFTx+3cTH
- yceQ==
+ d=ventanamicro.com; s=google; t=1749059020; x=1749663820; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=I1II+3YQnG90HksUR5dl1/2JKfZzGM6a2Go/eJtjLcU=;
+ b=IJxBcksJFgCqbuIlHjMfFqrzOLXEFWWLkz89p9uV5DC9tSr8KodR+uPWxg/Yh1kfsM
+ KtABKdd41LlClbdpqq6JBkoPtnqAxbPg6414lF+X93hCASvVamglwfX5nbwC8FRKGJwk
+ byXuRtnwtOvYOTyIuZDem6/WT2EhlbhulZKM/z8UvV9OhNk4ZUkpEzrKxIRnc6qAH/s+
+ iiW5yodgV6acznXw+OwRA32DIT5Hws/OKRJtYwNMqAFuqVpiyCGgToojrigFyp0le3a1
+ /OhOmwYhS4at3FgA3Pm+uxiW4CiP0My5MuDYsPOre2cvz5qKNc1brjm5vW49fN3ZSN5L
+ DgrQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749058692; x=1749663492;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=N1EvtJG5mNTqGGcNevZ83Z0Oy3cFvMJyHR4hO17x8rQ=;
- b=oeGO2ihIA5S3U74t/NCvMCGu9P55gvKXtTGzABZn7CZvg1ncQpeHp0i6JaBPNpg7mq
- +IzPC0vKWNJ473qqFMSIdMuoXaHQ6MTRImz4RmOKwhgAFaia8aW7XNwYArIWX0ddj4dP
- ba7arZlRGQOtzQF+J4lMhqWFLdt3gdaRrIqzOBwn5e3uJ6yVayoyhqUznxjgs7d2R3xa
- XbFT0nu76dsZzZjxnfEen/Z1tDz3sIXvPwQN9NjglUiH1wklz2wZ5OCY0DioRY+ednDt
- StAmU/pCC4LoTYE+h/QRb356kWdJ/CyoXXJEeCXMwJzrO1cniMHjl9UX2Xiid+8oDJwR
- 8xUA==
-X-Gm-Message-State: AOJu0YzoF1G2tGaYvDKC9TmrPNgiLzqSPMw/oYfZ3ZHoG3NWIDGpx5E9
- zHL3+PB9WO7C6hcT7bQUrExklbeDKrQiOYLV4xvpEd2v8X4Tis0Y1Mcsn8+/daf9uikzuPA54f4
- UkooqGgs=
-X-Gm-Gg: ASbGncsE0njxz/QcKsfATkH4P/xLGorE3wrRgNBh9TF9kz1Cu64cb6UCbEa9VTibiUJ
- DaDpBIjlCenh1T8oZQBgPWWdQDizk0mp09MfZkcVVf63AQ7friYclODeUi6Hk6fq441bDhNZKZe
- diAqfquSE2zVMTjF2W3VJCwBg1Cz1tkRNGwctX4HHCBsiOmvu+qNzWLIdifG9BM7dz59bPqFX6K
- 0luJz7eubdLid7Grzy1w3WwR/I/I+a0uellJ+DU4G7RzotFVD7CjB9Uto//mXBY+wYu0k6RC9zn
- 6Bj7ym+Ynmjb9vBlg3pVH+u1ojbS36Me68C2kBGuWWCIJNnP4B2fb8xGVIgh5Uj3gQVtHwJ9KDI
- cR6pv
-X-Google-Smtp-Source: AGHT+IGPS1f0bWfRJUqvaJHbZIcRqfojaG+q3GEpmYdOOPxpLlciRwqXYsSvnqkksYBRoRF1cUL21w==
-X-Received: by 2002:a17:902:f603:b0:234:a063:e2c1 with SMTP id
- d9443c01a7336-235e11fef00mr49640615ad.42.1749058692603; 
- Wed, 04 Jun 2025 10:38:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749059020; x=1749663820;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=I1II+3YQnG90HksUR5dl1/2JKfZzGM6a2Go/eJtjLcU=;
+ b=NJox0EUbwl9usTOA4T/BRqlL4pCXAJv1ysKzMYC0dbgPgGg62KfRNFsYyifV/iIHjG
+ gKjFM6cQHo5pRGaF6pJvzlo0x++epoajnRYv5w2gtO7UINXbpdMQuknrmJHxIwgz305P
+ zH7pM/8ZLCbN1QtamnSTQ3Q380fMhTP9uEIbQqbnXFoBlZPDV168BsxXV9mr9xJbgy28
+ wPNyfHDSDD72LFZ5dRcjYRRbGISHlIrp+Q/2sPKz8uEPfICf4xdPJzgmf0E5K2/VW5qO
+ aai1YGdgycOyqlIFgf7uEq3X+0Wb0ywwNs7M87KD5ZDVUoM6sqozINuWjjiWw7jwsc+T
+ gUIg==
+X-Gm-Message-State: AOJu0YzYTDfvAlbnUk9quhFPoE+4ySqFzhTMZwTcfrgublmF1DuMiv5b
+ TazAa+VjMpNdZw8pcsrNofflx6q1rdsT5eVgBK/zSkZk/xXvqNltbltHixhy0qyAFbvWkhXCkNE
+ UY60G6aZ6OA==
+X-Gm-Gg: ASbGncv/y4XQ8iet4GXZv+LpOXuJph2DKhOj+gbkAdzu1FFegvjtcVJ6zyfPmDHn7P/
+ l+JQKibg/uCgrt0jbRz8BHuvXZO+B2zP2nx8FSpQDXyDVIJ3aW8jmyjYRG1EGcGvPdNIHqDR0Bn
+ D84BuOgIm5WTvoUwUCIU9NopUs+amsxIjxFZA1KQSAjcsH076nMd7lnhbM4RCKNaXXzgJD+gTZ/
+ jeImUt0jdd0szfn3QgAPaGamq1WrXv0A4PJGib73t9StdXA4XFkdGruTVOUibqsHekwZZX2LQ5k
+ +qaX4LX4NqYmvSiDerkKs3LoD2cU2CrvGBUMwmDJhLRQoDrtYOyMnlgnTHieCfB3bTwvyAoAoGy
+ mwTZpBCEyDSBQswA=
+X-Google-Smtp-Source: AGHT+IHqtgoICqVAuvq4Ca0rxlMh3OSJolAgEZpAIkxQFIzjMJ1H4ssElrc+LOrrNn4k5JHCxuOtuA==
+X-Received: by 2002:a05:6a00:14ce:b0:747:ab61:e4fa with SMTP id
+ d2e1a72fcca58-7480b4972bcmr5356255b3a.14.1749059019869; 
+ Wed, 04 Jun 2025 10:43:39 -0700 (PDT)
 Received: from grind.dc1.ventanamicro.com ([177.188.133.196])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23506cfcbb9sm106913215ad.208.2025.06.04.10.38.09
+ d2e1a72fcca58-747afeab109sm11418482b3a.40.2025.06.04.10.43.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Jun 2025 10:38:12 -0700 (PDT)
+ Wed, 04 Jun 2025 10:43:39 -0700 (PDT)
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
  zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Andrew Jones <ajones@ventanamicro.com>,
- =?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@rivosinc.com>
-Subject: [PATCH v2 1/3] target/riscv/tcg: restrict satp_mode changes in
- cpu_set_profile
-Date: Wed,  4 Jun 2025 14:37:56 -0300
-Message-ID: <20250604173800.1147364-3-dbarboza@ventanamicro.com>
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH RESEND v2 0/3] target/riscv: add missing named features
+Date: Wed,  4 Jun 2025 14:43:26 -0300
+Message-ID: <20250604174329.1147549-1-dbarboza@ventanamicro.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250604173800.1147364-1-dbarboza@ventanamicro.com>
-References: <20250604173800.1147364-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::443;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x443.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,53 +99,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We're changing 'mmu' to true regardless of whether the profile is
-being enabled or not, and at the same time we're changing satp_mode to
-profile->enabled.
+Hi,
 
-This will promote a situation where we'll set mmu=on without a virtual
-memory mode, which is a mistake.
+In this version I fixed the problems caused in bios-table-test qtest by
+patches 1 and 2. 
 
-Only touch 'mmu' and satp_mode if the profile is being enabled.
+A small change was also made in patch 1 to avoid spamming "Disabling
+sdtrig due to priv spec version" warnings when running vendor CPUs
+with priv spec < 1.12.
 
-Suggested-by: Andrew Jones <ajones@ventanamicro.com>
-Fixes: 55398025e7 ("target/riscv: add satp_mode profile support")
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Reviewed-by: Björn Töpel <bjorn@rivosinc.com>
-Tested-by: Björn Töpel <bjorn@rivosinc.com>
----
- target/riscv/tcg/tcg-cpu.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+Patches based on alistair/riscv-to-apply.next. 
 
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index a84cca48fc..857c625580 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1339,16 +1339,16 @@ static void cpu_set_profile(Object *obj, Visitor *v, const char *name,
- 
-     if (profile->enabled) {
-         cpu->env.priv_ver = profile->priv_spec;
--    }
- 
- #ifndef CONFIG_USER_ONLY
--    if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
--        object_property_set_bool(obj, "mmu", true, NULL);
--        const char *satp_prop = satp_mode_str(profile->satp_mode,
--                                              riscv_cpu_is_32bit(cpu));
--        object_property_set_bool(obj, satp_prop, profile->enabled, NULL);
--    }
-+        if (profile->satp_mode != RISCV_PROFILE_ATTR_UNUSED) {
-+            object_property_set_bool(obj, "mmu", true, NULL);
-+            const char *satp_prop = satp_mode_str(profile->satp_mode,
-+                                                  riscv_cpu_is_32bit(cpu));
-+            object_property_set_bool(obj, satp_prop, true, NULL);
-+        }
- #endif
-+    }
- 
-     for (i = 0; misa_bits[i] != 0; i++) {
-         uint32_t bit = misa_bits[i];
+
+Changes from v1:
+- patch 1:
+  - skip the warning and disable of 'sdtrig' for CPUs that have priv
+    version < 1.12
+  - update bios-table-test
+- patch 2:
+  - update bios-table-test
+- v1 link: https://lore.kernel.org/qemu-riscv/20250529202315.1684198-1-dbarboza@ventanamicro.com/
+
+
+Daniel Henrique Barboza (3):
+  target/riscv/cpu.c: add 'sdtrig' in riscv,isa
+  target/riscv/cpu.c: add 'ssstrict' to riscv,isa
+  target/riscv/cpu.c: do better with 'named features' doc
+
+ target/riscv/cpu.c                |  16 ++++++++++++++--
+ target/riscv/tcg/tcg-cpu.c        |   9 +++++++++
+ tests/data/acpi/riscv64/virt/RHCT | Bin 400 -> 416 bytes
+ 3 files changed, 23 insertions(+), 2 deletions(-)
+
 -- 
 2.49.0
 
