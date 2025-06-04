@@ -4,67 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839EEC5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49BEDC5B549
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMo9s-0006TT-IW; Wed, 04 Jun 2025 09:27:56 -0400
+	id 1uMoAV-0006mp-4n; Wed, 04 Jun 2025 09:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1uMo9r-0006TH-77
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:27:55 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAS-0006lw-7j
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:28:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
- id 1uMo9m-0004fq-Fd
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:27:54 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAQ-0004iE-O6
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:28:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749043668;
+ s=mimecast20190719; t=1749043710;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=clDW1r158unwtlDsyqPL74tCSQyxdxqdEtDprNG8wHY=;
- b=NPKfllBvakTSo7GW6NhRXojDBfIF2VkzXmXSbfsu6MkQrbSAC44K/ftB2B8ewjM2fo/f0h
- lzkLjHFKD55PZA/ADoQrMl4SeKUB0C9trVlbWdUUAzV4VlEEDPHVw8N+QmteWhZeR/+nCs
- eDHImj4R4ySuyDDUmeCQ4cTBe0eIAZI=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-lNlPoC29OFamk-hxzlevLw-1; Wed,
- 04 Jun 2025 09:27:44 -0400
-X-MC-Unique: lNlPoC29OFamk-hxzlevLw-1
-X-Mimecast-MFC-AGG-ID: lNlPoC29OFamk-hxzlevLw_1749043664
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D9861180047F; Wed,  4 Jun 2025 13:27:43 +0000 (UTC)
-Received: from angien.pipo.sk (unknown [10.44.22.3])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E17E419560AE; Wed,  4 Jun 2025 13:27:41 +0000 (UTC)
-Date: Wed, 4 Jun 2025 15:27:33 +0200
-From: Peter Krempa <pkrempa@redhat.com>
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: Peter Xu <peterx@redhat.com>,
- Anushree Mathur <anushree.mathur@linux.ibm.com>,
- qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: virsh migrate fails when --copy-storage-all option is given!
-Message-ID: <aEBJxUIYRaOKBiCL@angien.pipo.sk>
-References: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
- <aDctC8i7U2J5bmyw@x1.local> <aEA_EtAKVnk0oYej@redhat.com>
+ bh=vicT1n12Q3bt43l0BKSXkJu6cLKKIkPFHwd4M2fi9jo=;
+ b=BhAKF4v6DuVQiGd9XPG5kxafKd+r0nd66DBwuy23xntv4ENPTdWdNBj9xgB7kcYbAXodlZ
+ TlRxokwgwa0JY4ql72eUJONJK2tElDOgmBtD6BAoGfhjQKNT7O4tHHXSNnm8lHpkDWZ1gS
+ ianvCgJ3Npob1i1pR5FInQ1nYJYfPIk=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-686-hM2bYuJoMUypaDvMbwXDFQ-1; Wed, 04 Jun 2025 09:28:28 -0400
+X-MC-Unique: hM2bYuJoMUypaDvMbwXDFQ-1
+X-Mimecast-MFC-AGG-ID: hM2bYuJoMUypaDvMbwXDFQ_1749043707
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a1f6c5f4f2so2513028f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:28:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749043707; x=1749648507;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vicT1n12Q3bt43l0BKSXkJu6cLKKIkPFHwd4M2fi9jo=;
+ b=WYPAigDMdsqLHvy5L5Q8PFxQ4STwMjkQlipsFkqdya++bT/qJqkE32y2a23HPjuLKi
+ ygywrUQnDdhQ0vPmlMsjL8bx0+b2CZxKTSXCUA6O6uDmGUGiBVrfqx88dDesmaU/EtZU
+ 1F/MWZzUxuWvmsmuJgdJ96VeuS4Zn/ITC1BGAOVUhr0ryiXNNFMwAfm5wMKTksEBtfVX
+ Jyf2SuVUi4YtFiOOunxsjUUnK4GxZmhQK2gYRCngUGLGMViYeOmK+nUUNHtXQvxgDs4D
+ henPR5azAAa/61QR5lIO2mcywB7j8lXg9q4PS9w9xgS/MjaftReFD/pA4WbE+/125kYe
+ vkGQ==
+X-Gm-Message-State: AOJu0YwxeZfmn7VmcOuKPFxTjCerJ++bYHNfgRmvBsZ1j5CCQlZT7UxT
+ WpGoyYj6J0yJSnXo1e57IJ0lCBwD2TEAPr21nO/9D+cXN6GAdKao+aWW2MRSQ8T5inWs3WbfyJQ
+ f3bjePHL6yaNbpGymWJhUq5J0fWnsA6MLbmChs9hWgal5XsSPwtoqObJ1
+X-Gm-Gg: ASbGncuzZ44fwLEPy23B8ftZE9T1HcSRGknLg2aLeGZ0wCnpZFQBoZ2HfiDr7f0fwPQ
+ tGS8hkQbowv3DxIBMtBetipQWZ7ixmEDq9jkonJvoh0oazy8cyAr6yZfPwWqwL+APGKx1y3IfmQ
+ v/r8Ji8qm3uJcBREdjjaQHQVTQycsYJOJ34jAFZfVZ9moz22LCPJxvZzD6M8+9HKi1xzpYGQQUE
+ yCbyyyccYJFxinNlVLeRFNp2toZIo8ZoutFbuIdcEO7oZhozloZfjEaaoPU0NFj7IEuRgufpq0E
+ 6jKnZgL7w/AMhgDzrarqe6qD8SthJp5GZAmYlzr+wsLq+kf/IqjTb8c/f5VkjsbKFQF+sA==
+X-Received: by 2002:a05:6000:25ca:b0:3a5:1c71:432a with SMTP id
+ ffacd0b85a97d-3a51d91c1f0mr2306095f8f.14.1749043707375; 
+ Wed, 04 Jun 2025 06:28:27 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFF0xxaJmacjXrte3GpDxJUUoTGlf0c5vm2WZie1r/tIy3jbFegc5ygm/LUgMoK+/ifitoM0g==
+X-Received: by 2002:a05:6000:25ca:b0:3a5:1c71:432a with SMTP id
+ ffacd0b85a97d-3a51d91c1f0mr2306066f8f.14.1749043706983; 
+ Wed, 04 Jun 2025 06:28:26 -0700 (PDT)
+Received: from localhost
+ (p200300cfd700f306503d3c798c1bf214.dip0.t-ipconnect.de.
+ [2003:cf:d700:f306:503d:3c79:8c1b:f214])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d7fc1adesm207268165e9.33.2025.06.04.06.28.24
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 04 Jun 2025 06:28:25 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
+Subject: [PATCH v2 02/21] fuse: Ensure init clean-up even with error_fatal
+Date: Wed,  4 Jun 2025 15:27:54 +0200
+Message-ID: <20250604132813.359438-3-hreitz@redhat.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250604132813.359438-1-hreitz@redhat.com>
+References: <20250604132813.359438-1-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aEA_EtAKVnk0oYej@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -89,166 +110,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 14:41:54 +0200, Kevin Wolf wrote:
-> Am 28.05.2025 um 17:34 hat Peter Xu geschrieben:
-> > Copy Kevin.
-> > 
-> > On Wed, May 28, 2025 at 07:21:12PM +0530, Anushree Mathur wrote:
-> > > Hi all,
-> > > 
-> > > 
-> > > When I am trying to migrate the guest from host1 to host2 with the command
-> > > line as follows:
-> > > 
-> > > date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
-> > > --undefinesource --persistent --auto-converge --postcopy
-> > > --copy-storage-all;date
-> > > 
-> > > and it fails with the following error message-
-> > > 
-> > > error: internal error: unable to execute QEMU command 'block-export-add':
-> > > Block node is read-only
-> > > 
-> > > HOST ENV:
-> > > 
-> > > qemu : QEMU emulator version 9.2.2
-> > > libvirt : libvirtd (libvirt) 11.1.0
-> > > Seen with upstream qemu also
-> > > 
-> > > Steps to reproduce:
-> > > 1) Start the guest1
-> > > 2) Migrate it with the command as
-> > > 
-> > > date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
-> > > --undefinesource --persistent --auto-converge --postcopy
-> > > --copy-storage-all;date
-> > > 
-> > > 3) It fails as follows:
-> > > error: internal error: unable to execute QEMU command 'block-export-add':
-> > > Block node is read-only
-> 
-> I assume this is about an inactive block node. Probably on the
-> destination, but that's not clear to me from the error message.
+When exports are created on the command line (with the storage daemon),
+errp is going to point to error_fatal.  Without ERRP_GUARD, we would
+exit immediately when *errp is set, i.e. skip the clean-up code under
+the `fail` label.  Use ERRP_GUARD so we always run that code.
 
-Yes this would be on the destination. Libvirt exports the nodes on
-destination, source connects and does the blockjob.
+As far as I know, this has no actual impact right now[1], but it is
+still better to make this right.
 
-The destination side is configured the same way as the source side so
-if the source disk is configured as read-write the destination should be
-as well
+[1] Not cleaning up the mount point is the only thing I can imagine
+    would be problematic, but that is the last thing we attempt, so if
+    it fails, it will clean itself up.
 
-> > > Things I analyzed-
-> > > 1) This issue is not happening if I give --unsafe option in the virsh
-> > > migrate command
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ block/export/fuse.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-This is weird; this shouldn't have any impact.
-
-> 
-> What does this translate to on the QEMU command line?
-> 
-> > > 2) O/P of qemu-monitor command also shows ro as false
-> > > 
-> > > virsh qemu-monitor-command guest1 --pretty --cmd '{ "execute": "query-block"
-
-it'd be impossible to execute this on the guest due to timing; you'll
-need to collect libvirt debug logs to do that:
-
-https://www.libvirt.org/kbase/debuglogs.html#tl-dr-enable-debug-logs-for-most-common-scenario
-
-I also thing this should be eventually filed in a 
-
-> > > }'
-> > > {
-> > >   "return": [
-> > >     {
-> > >       "io-status": "ok",
-> > >       "device": "",
-> > >       "locked": false,
-> > >       "removable": false,
-> > >       "inserted": {
-> > >         "iops_rd": 0,
-> > >         "detect_zeroes": "off",
-> > >         "image": {
-> > >           "virtual-size": 21474836480,
-> > >           "filename": "/home/Anu/guest_anu.qcow2",
-> > >           "cluster-size": 65536,
-> > >           "format": "qcow2",
-> > >           "actual-size": 5226561536,
-> > >           "format-specific": {
-> > >             "type": "qcow2",
-> > >             "data": {
-> > >               "compat": "1.1",
-> > >               "compression-type": "zlib",
-> > >               "lazy-refcounts": false,
-> > >               "refcount-bits": 16,
-> > >               "corrupt": false,
-> > >               "extended-l2": false
-> > >             }
-> > >           },
-> > >           "dirty-flag": false
-> > >         },
-> > >         "iops_wr": 0,
-> > >         "ro": false,
-> > >         "node-name": "libvirt-1-format",
-> > >         "backing_file_depth": 0,
-> > >         "drv": "qcow2",
-> > >         "iops": 0,
-> > >         "bps_wr": 0,
-> > >         "write_threshold": 0,
-> > >         "encrypted": false,
-> > >         "bps": 0,
-> > >         "bps_rd": 0,
-> > >         "cache": {
-> > >           "no-flush": false,
-> > >           "direct": false,
-> > >           "writeback": true
-> > >         },
-> > >         "file": "/home/Anu/guest_anu.qcow2"
-> > >       },
-> > >       "qdev": "/machine/peripheral/virtio-disk0/virtio-backend",
-> > >       "type": "unknown"
-> > >     }
-> > >   ],
-> > >   "id": "libvirt-26"
-> > > }
-> 
-> I assume this is still from the source where the image is still active.
-
-Yes; on the destination the process wouldn't be around long enough to
-call 'virsh qemu-monitor-command'
-
-> 
-> Also it doesn't contain the "active" field yet that was recently
-> introduced, which could show something about this. I believe you would
-> still get "read-only": false for an inactive image if it's supposed to
-> be read-write after the migration completes.
-> 
-> > > 
-> > > 3) Guest doesn't have any readonly
-> > > 
-> > > virsh dumpxml guest1 | grep readonly
-> > > 
-> > > 4) Tried giving the proper permissions also
-> > > 
-> > > -rwxrwxrwx. 1 qemu qemu 4.9G Apr 28 15:06 guest_anu.qcow
-
-Is this on the destination? did you pre-create it yourself? otherwise
-libvirt is pre-creating that image for-non-shared-storage migration
-(--copy-storage-all) which should have proper permissions when it's
-created
-
-> > > 
-> > > 5) Checked for the permission of the pool also that is also proper!
-> > > 
-> > > 6) Found 1 older bug similar to this, pasting the link for reference:
-> > > 
-> > > 
-> > > https://patchwork.kernel.org/project/qemu-devel/patch/20170811164854.GG4162@localhost.localdomain/
-> 
-> What's happening in detail is more of a virsh/libvirt question. CCing
-> Peter Krempa, he might have an idea.
-
-Please collect the debug log; at least from the destination side of
-migration. That should show  how the VM is prepared and qemu invoked.
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index b967e88d2b..b224ce591d 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -119,6 +119,7 @@ static int fuse_export_create(BlockExport *blk_exp,
+                               BlockExportOptions *blk_exp_args,
+                               Error **errp)
+ {
++    ERRP_GUARD(); /* ensure clean-up even with error_fatal */
+     FuseExport *exp = container_of(blk_exp, FuseExport, common);
+     BlockExportOptionsFuse *args = &blk_exp_args->u.fuse;
+     int ret;
+-- 
+2.49.0
 
 
