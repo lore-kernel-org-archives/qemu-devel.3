@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B3C0C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 08:53:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60EF8C5B552
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 09:00:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMjrY-00072a-6x; Wed, 04 Jun 2025 04:52:44 -0400
+	id 1uMjxX-0000fR-C0; Wed, 04 Jun 2025 04:58:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMjrU-00071D-Ft
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 04:52:40 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMjxT-0000dg-BK
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 04:58:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMjrR-0002IC-Mt
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 04:52:40 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMjxP-0002qg-Nb
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 04:58:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749027156;
+ s=mimecast20190719; t=1749027525;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=LMuriBF7t8o6cXbjiyQ4OTkRWlo3nRO0cd7m7x9hsiA=;
- b=IbEv2LUJtEcnu3yB9YO/9i7gULom6UroJ0E192Fl2BHi5ZiOhMoHGr9+2L9ks5QwehvHT9
- mmKSoz8s9bnnZsUwBxAAqbj7f4XdNouOGg8ErGexgJ8EioBKu/fAa39EmXAJw1YtkHIMgx
- xe2xiuu+ONyYaLOIoxcMAnWjxQ6a3R8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VP+qAzAl2Xg+sNyJ5AWfAphb/2D0+ijnaiIfXMV8SKo=;
+ b=Gl66yEQLguodUQ9UCIPr6As2nRwXuyQ8T0U6BbBcb0btlqVWVBpryF2SK2bpqNNOfha5MR
+ SGyTDbcagsG3JrAZ55OCXnPmeHYj++Cd6beHGMbKgEkUVvL+9V0X5PLf3bicnTxzfdqaVd
+ r5HDIVjjiPQOhgiQqPIo4WtPFWPMdtI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-656-H62qn7DpNouTyZqcVwpdow-1; Wed,
- 04 Jun 2025 04:52:32 -0400
-X-MC-Unique: H62qn7DpNouTyZqcVwpdow-1
-X-Mimecast-MFC-AGG-ID: H62qn7DpNouTyZqcVwpdow_1749027151
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-341-1xvVmxUkNL2aorVUXExJLQ-1; Wed,
+ 04 Jun 2025 04:58:44 -0400
+X-MC-Unique: 1xvVmxUkNL2aorVUXExJLQ-1
+X-Mimecast-MFC-AGG-ID: 1xvVmxUkNL2aorVUXExJLQ_1749027521
 Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 48DDC1809C92; Wed,  4 Jun 2025 08:52:29 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C14161801A2D; Wed,  4 Jun 2025 08:58:41 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
  by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 315421955D8A; Wed,  4 Jun 2025 08:52:18 +0000 (UTC)
+ id 33E1C19560A3; Wed,  4 Jun 2025 08:58:41 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E705621E6757; Wed, 04 Jun 2025 10:52:15 +0200 (CEST)
+ id BD4B921E6757; Wed, 04 Jun 2025 10:58:38 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org,  Daniel
- =?utf-8?Q?P=2EBerrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
- <thuth@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,  Gerd Hoffmann
- <kraxel@redhat.com>,  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Kevin Wolf <kwolf@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Graf <agraf@csgraf.de>,  Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Peter Maydell
- <peter.maydell@linaro.org>
-Subject: Re: [PATCH v3 1/3] docs: introduce dedicated page about code
- provenance / sign-off
-In-Reply-To: <37b3f3a1-bacb-4682-a9d2-7771e29fe55f@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Wed, 4 Jun 2025 09:46:59
- +0200")
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>,  qemu-devel@nongnu.org,  Thomas
+ Huth <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  "Michael
+ S . Tsirkin" <mst@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Philippe =?utf-8?Q?Mathieu-?=
+ =?utf-8?Q?Daud=C3=A9?=
+ <philmd@linaro.org>,  Kevin Wolf <kwolf@redhat.com>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Alexander Graf <agraf@csgraf.de>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 3/3] docs: define policy forbidding use of AI code
+ generators
+In-Reply-To: <aD_yhelX-w4Vdm8Z@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 4 Jun 2025 08:15:47 +0100")
 References: <20250603142524.4043193-1-armbru@redhat.com>
- <20250603142524.4043193-2-armbru@redhat.com>
- <87a56o3gxc.fsf@draig.linaro.org> <87r000ypi0.fsf@pond.sub.org>
- <37b3f3a1-bacb-4682-a9d2-7771e29fe55f@linaro.org>
-Date: Wed, 04 Jun 2025 10:52:15 +0200
-Message-ID: <87msanyjls.fsf@pond.sub.org>
+ <20250603142524.4043193-4-armbru@redhat.com>
+ <CAJSP0QUGaQEwhVh_w6Wbdm-Nqo_2kHcb+eS2Simq-x9J=-7qkg@mail.gmail.com>
+ <87a56o1154.fsf@pond.sub.org> <aD_yhelX-w4Vdm8Z@redhat.com>
+Date: Wed, 04 Jun 2025 10:58:38 +0200
+Message-ID: <87frgfyjb5.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -99,54 +100,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-> On 4/6/25 08:44, Markus Armbruster wrote:
->> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+> On Wed, Jun 04, 2025 at 08:17:27AM +0200, Markus Armbruster wrote:
+>> Stefan Hajnoczi <stefanha@gmail.com> writes:
 >>=20
->>> Markus Armbruster <armbru@redhat.com> writes:
->>>
->>>> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->>>>
->>>> Currently we have a short paragraph saying that patches must include
->>>> a Signed-off-by line, and merely link to the kernel documentation.
->>>> The linked kernel docs have a lot of content beyond the part about
->>>> sign-off an thus are misleading/distracting to QEMU contributors.
->>>>
->>>> This introduces a dedicated 'code-provenance' page in QEMU talking
->>>> about why we require sign-off, explaining the other tags we commonly
->>>> use, and what to do in some edge cases.
->>>>
->>>> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
->>>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
->>>> ---
->>>>   docs/devel/code-provenance.rst    | 218 ++++++++++++++++++++++++++++=
-++
->>>>   docs/devel/index-process.rst      |   1 +
->>>>   docs/devel/submitting-a-patch.rst |  18 +--
->>>>   3 files changed, 221 insertions(+), 16 deletions(-)
->>>>   create mode 100644 docs/devel/code-provenance.rst
+>> > On Tue, Jun 3, 2025 at 10:25=E2=80=AFAM Markus Armbruster <armbru@redh=
+at.com> wrote:
+>> >>
+>> >> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>  >> +
+>> >> +The increasing prevalence of AI code generators, most notably but no=
+t limited
+>> >
+>> > More detail is needed on what an "AI code generator" is. Coding
+>> > assistant tools range from autocompletion to linters to automatic code
+>> > generators. In addition there are other AI-related tools like ChatGPT
+>> > or Gemini as a chatbot that can people use like Stackoverflow or an
+>> > API documentation summarizer.
+>> >
+>> > I think the intent is to say: do not put code that comes from _any_ AI
+>> > tool into QEMU.
+>> >
+>> > It would be okay to use AI to research APIs, algorithms, brainstorm
+>> > ideas, debug the code, analyze the code, etc but the actual code
+>> > changes must not be generated by AI.
 >
+> The scope of the policy is around contributions we receive as
+> patches with SoB. Researching / brainstorming / analysis etc
+> are not contribution activities, so not covered by the policy
+> IMHO.
+
+Yes.  More below.
+
+>> The existing text is about "AI code generators".  However, the "most
+>> notably LLMs" that follows it could lead readers to believe it's about
+>> more than just code generation, because LLMs are in fact used for more.
+>> I figure this is your concern.
+>>=20
+>> We could instead start wide, then narrow the focus to code generation.
+>> Here's my try:
+>>=20
+>>   The increasing prevalence of AI-assisted software development results
+>>   in a number of difficult legal questions and risks for software
+>>   projects, including QEMU.  Of particular concern is code generated by
+>>   `Large Language Models
+>>   <https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
 >
->>>> +
->>>> +   Signed-off-by: YOUR NAME <YOUR@EMAIL>
->>>> +
->>>> +using a known identity (sorry, no anonymous contributions.)
->>>> +
->>>
->>> maybe "(contributions cannot be anonymous)" is more direct?
->> If we're deviating from the kernel's text (which is *fine*), let's get
->> rid of the parenthesis:
->>      using a known identity.  Contributions cannot be anonymous.
->> or in active voice:
->>      using a known identity.  We cannot accept anonymous contributions.
->
-> I'd add an anchor in the "commonly known identity" paragraph added in
-> commit 270c81b7d59 and here link to it.
+> Documentation we maintain has the same concerns as code.
+> So I'd suggest to substitute 'code' with 'code / content'.
 
 Makes sense, thanks!
 
->> I like this one the best.
+>> If we want to mention uses of AI we consider okay, I'd do so further
+>> down, to not distract from the main point here.  Perhaps:
+>>=20
+>>   The QEMU project thus requires that contributors refrain from using AI=
+ code
+>>   generators on patches intended to be submitted to the project, and will
+>>   decline any contribution if use of AI is either known or suspected.
+>>=20
+>>   This policy does not apply to other uses of AI, such as researching AP=
+Is or
+>>   algorithms, static analysis, or debugging.
+>>=20
+>>   Examples of tools impacted by this policy includes both GitHub's CoPil=
+ot,
+>>   OpenAI's ChatGPT, and Meta's Code Llama, amongst many others which are=
+ less
+>>   well known.
+>>=20
+>> The paragraph in the middle is new, the other two are unchanged.
+>>=20
+>> Thoughts?
+>
+> IMHO its redundant, as the policy is expressly around contribution of
+> code/content, and those activities as not contribution related, so
+> outside the scope already.
+
+The very first paragraph in this file already set the scope: "provenance
+of patch submissions [...] to the project", so you have a point here.
+But does repeating the scope here hurt or help?
+
+>> >> +to, `Large Language Models <https://en.wikipedia.org/wiki/Large_lang=
+uage_model>`__
+>> >> +(LLMs) results in a number of difficult legal questions and risks fo=
+r software
+>> >> +projects, including QEMU.
+>>=20
+>> Thanks!
+>>=20
+>> [...]
+>>=20
+>
+> With regards,
+> Daniel
 
 
