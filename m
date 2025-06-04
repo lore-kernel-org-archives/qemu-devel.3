@@ -4,136 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48F5EC5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 09:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 579E8C5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 09:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMk4s-0004fG-7v; Wed, 04 Jun 2025 05:06:30 -0400
+	id 1uMk90-0006EA-FF; Wed, 04 Jun 2025 05:10:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMk4a-0004Vg-Ma
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:06:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uMk8x-0006De-5b
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:10:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMk4Z-00042O-8T
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:06:12 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uMk8u-0004fo-BF
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:10:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749027969;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1749028237;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=IVHuVl5VShFvTNQwH8zG2m+ryddmqDxE9w1On46jqbc=;
- b=M4pYcRodZAXGFAZSYcKQMrKQ+APeBQkAziVnhiQOxy9IUI6tp4/YNQ7cTWFxok63QPFZT7
- iBMY8sUT7tonkAx3bYR7T7KxFUs343GXv0vz9107QP/P92UYCh0WqFhrY7hLpO/z6aZpSq
- gFMKb6wgzRl14hz7B3rAsl//GJcuIM4=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-518-6MPiI3yEMKeQvHf38h3NGw-1; Wed, 04 Jun 2025 05:06:08 -0400
-X-MC-Unique: 6MPiI3yEMKeQvHf38h3NGw-1
-X-Mimecast-MFC-AGG-ID: 6MPiI3yEMKeQvHf38h3NGw_1749027967
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451ac1b43c4so22216455e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 02:06:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749027967; x=1749632767;
- h=content-transfer-encoding:in-reply-to:organization:autocrypt
- :content-language:from:references:cc:to:subject:user-agent
- :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=IVHuVl5VShFvTNQwH8zG2m+ryddmqDxE9w1On46jqbc=;
- b=omI1FcPNuV4s4JpNhoFRBuFeuqFivSLGTxvIWGUnbLlb3X/Xhwkj5vuaTmC+Io8KHF
- +ljo6sqE6lHcnGA1hhK4RHTeaPDBGALr4MTX064TTMGBmQUriD5WBzhwpZOHE2dLkL2P
- 6W2M/qYUCOvkRu1kah320LbieJ38Hn3iSXMmlgNfAdlvhcTQMvteF5lCmU5KR7dVvPsR
- 1VCjA+PB4km18tjj3y/CRuZ0W4373GV3gMsNqKHs1KJF4gQWmPeyMu/4f4fVP6J83qIj
- iHUTcvAdNKrUl1pTAOMHp3EnWOeiPYRmy8hOo+MQ2gYra9Sg9G5VT7qcL+ycGFq53vX4
- 69SQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWzjf/5dIF0wugh1vPW32Tyfq2HffHyD0aKfqrvF83+iJ5rqhPMj7XMnkIGX8N1KkI83j1u/A0y4UmH@nongnu.org
-X-Gm-Message-State: AOJu0YzWmnsg/IfktSHLO7XfhYYj/t+w0elF0Y0LMvCkTqE0UecwkcqD
- /YcrnKBT8EiCPqMz405fUnfC8Ss6hm4u78x4IoEV6roOeqe64SLUIlJ4IBUQVN2sO9bZIH8I9BI
- poB1Vj23lFQTw6VnbqiHd3peyFMJKQR3ivqMtKbTJD2COwRhf/tVzRJHY
-X-Gm-Gg: ASbGncvjfMCwuSv5WFqgQSh/sI3rfOKkSjxAUpYvoNOmjsKzeI1WjcgPHxO0PCSgrgD
- adj0ngb54FGftexRbkSuagIune9rAOfk8zbs4tYOMlTfqy2ZGEawxnJnirPYtqPQErDgavHkATH
- wSZOo9THxylDa45mhfcyfhl9rTZE1htq1kKGWYcQ3MAyRkb+WI9koP/9G6WoNCSyWmX7jSm/DEP
- WQqChBEeoK0OR/RnwSQQVlTQRVIpZupj3FCo8dFHgoN1YNJenIoBEfurUzBsBVfFikOAPhBxGSE
- kJ2gJUY4wRPszaAZ7iMtH8MkrPdc0e/iXnlcdFUWSkGeHzcbBxSUnYPjkXwlSsJOcf7tLYSZPLQ
- YxnIHI56wJiH+OJ0lZR146IC8YqkrvgAJldJk/+I=
-X-Received: by 2002:a05:600c:3e0a:b0:43d:fa5d:9314 with SMTP id
- 5b1f17b1804b1-451f0b3f30amr15035045e9.32.1749027967036; 
- Wed, 04 Jun 2025 02:06:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGSfYuP9hi5E4i6soTjiP4i4+BSrv0qcBwaCn+F1nG5QNvYgjfvAk8S2q/ZxA+8j+3c8hXiiw==
-X-Received: by 2002:a05:600c:3e0a:b0:43d:fa5d:9314 with SMTP id
- 5b1f17b1804b1-451f0b3f30amr15034735e9.32.1749027966705; 
- Wed, 04 Jun 2025 02:06:06 -0700 (PDT)
-Received: from ?IPV6:2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf?
- (p200300d82f1bb8006fdb1af24fbd1fdf.dip0.t-ipconnect.de.
- [2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d7f8f188sm193288555e9.3.2025.06.04.02.06.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 02:06:06 -0700 (PDT)
-Message-ID: <a41716ad-c6ab-423f-9001-b0b49f46ee45@redhat.com>
-Date: Wed, 4 Jun 2025 11:06:05 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=WdtEaTsyaYFzUUKB0nSyuu9CmQZ0eO3Oi7AjctjlgCc=;
+ b=h3Te6hqyl2h1sL/0EWpGG31vC+jG3kg6Ej9bvefbSXSzwp22tgm0EyhGDpwxQgxRGiEZ6+
+ C40UNqm/E5X+xXWeVrbl/m9s+MjeIDWTeU+PGweK5keNN8G/nmyzAWFnjrl4Bsmox+McSO
+ B0jBLrCBU6CcfLNCViTVetg/rgRaPaY=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-645-aycPajiMP7GAuz6LtrkmBQ-1; Wed,
+ 04 Jun 2025 05:10:33 -0400
+X-MC-Unique: aycPajiMP7GAuz6LtrkmBQ-1
+X-Mimecast-MFC-AGG-ID: aycPajiMP7GAuz6LtrkmBQ_1749028232
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8AC4E180047F; Wed,  4 Jun 2025 09:10:32 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.60])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD58219560A3; Wed,  4 Jun 2025 09:10:26 +0000 (UTC)
+Date: Wed, 4 Jun 2025 10:10:23 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>,
+ Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 3/3] docs: define policy forbidding use of AI code
+ generators
+Message-ID: <aEANf4HkZTXn9KXN@redhat.com>
+References: <20250603142524.4043193-1-armbru@redhat.com>
+ <20250603142524.4043193-4-armbru@redhat.com>
+ <CAJSP0QUGaQEwhVh_w6Wbdm-Nqo_2kHcb+eS2Simq-x9J=-7qkg@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] virtio-mem: Fix definition of VirtIOMEMClass
-To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: chao.p.peng@intel.com, "Michael S. Tsirkin" <mst@redhat.com>
-References: <20250604084757.4035354-1-zhenzhong.duan@intel.com>
-From: David Hildenbrand <david@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=david@redhat.com; keydata=
- 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
- WNyWQQ==
-Organization: Red Hat
-In-Reply-To: <20250604084757.4035354-1-zhenzhong.duan@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAJSP0QUGaQEwhVh_w6Wbdm-Nqo_2kHcb+eS2Simq-x9J=-7qkg@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -155,35 +96,111 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.06.25 10:47, Zhenzhong Duan wrote:
-> Parent of VirtIOMEMClass is VirtioDeviceClass rather than VirtIODevice.
+On Tue, Jun 03, 2025 at 02:25:42PM -0400, Stefan Hajnoczi wrote:
+> On Tue, Jun 3, 2025 at 10:25 AM Markus Armbruster <armbru@redhat.com> wrote:
+> >
+> > From: Daniel P. Berrangé <berrange@redhat.com>
+> >
+> > There has been an explosion of interest in so called AI code
+> > generators. Thus far though, this is has not been matched by a broadly
+> > accepted legal interpretation of the licensing implications for code
+> > generator outputs. While the vendors may claim there is no problem and
+> > a free choice of license is possible, they have an inherent conflict
+> > of interest in promoting this interpretation. More broadly there is,
+> > as yet, no broad consensus on the licensing implications of code
+> > generators trained on inputs under a wide variety of licenses
+> >
+> > The DCO requires contributors to assert they have the right to
+> > contribute under the designated project license. Given the lack of
+> > consensus on the licensing of AI code generator output, it is not
+> > considered credible to assert compliance with the DCO clause (b) or (c)
+> > where a patch includes such generated code.
+> >
+> > This patch thus defines a policy that the QEMU project will currently
+> > not accept contributions where use of AI code generators is either
+> > known, or suspected.
+> >
+> > These are early days of AI-assisted software development. The legal
+> > questions will be resolved eventually. The tools will mature, and we
+> > can expect some to become safely usable in free software projects.
+> > The policy we set now must be for today, and be open to revision. It's
+> > best to start strict and safe, then relax.
+> >
+> > Meanwhile requests for exceptions can also be considered on a case by
+> > case basis.
+> >
+> > Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Acked-by: Stefan Hajnoczi <stefanha@gmail.com>
+> > Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+> > Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> > ---
+> >  docs/devel/code-provenance.rst | 50 +++++++++++++++++++++++++++++++++-
+> >  1 file changed, 49 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> > index c27d8fe649..261263cfba 100644
+> > --- a/docs/devel/code-provenance.rst
+> > +++ b/docs/devel/code-provenance.rst
+> > @@ -270,4 +270,52 @@ boilerplate code template which is then filled in to produce the final patch.
+> >  The output of such a tool would still be considered the "preferred format",
+> >  since it is intended to be a foundation for further human authored changes.
+> >  Such tools are acceptable to use, provided they follow a deterministic process
+> > -and there is clearly defined copyright and licensing for their output.
+> > +and there is clearly defined copyright and licensing for their output. Note
+> > +in particular the caveats applying to AI code generators below.
+> > +
+> > +Use of AI code generators
+> > +~~~~~~~~~~~~~~~~~~~~~~~~~
+> > +
+> > +TL;DR:
+> > +
+> > +  **Current QEMU project policy is to DECLINE any contributions which are
+> > +  believed to include or derive from AI generated code. This includes ChatGPT,
+> > +  CoPilot, Llama and similar tools**
 > 
-> Fixes: 910b25766b33 ("virtio-mem: Paravirtualized memory hot(un)plug")
-> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-> ---
->   include/hw/virtio/virtio-mem.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+> GitHub spells it "Copilot".
 > 
-> diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-mem.h
-> index bc4f787772..93fdf9e432 100644
-> --- a/include/hw/virtio/virtio-mem.h
-> +++ b/include/hw/virtio/virtio-mem.h
-> @@ -134,7 +134,7 @@ struct VirtioMemSystemReset {
->   
->   struct VirtIOMEMClass {
->       /* private */
-> -    VirtIODevice parent;
-> +    VirtioDeviceClass parent;
+> Claude is very popular for coding at the moment and probably worth mentioning.
+> 
+> > +
+> > +The increasing prevalence of AI code generators, most notably but not limited
+> 
+> More detail is needed on what an "AI code generator" is. Coding
+> assistant tools range from autocompletion to linters to automatic code
+> generators. In addition there are other AI-related tools like ChatGPT
+> or Gemini as a chatbot that can people use like Stackoverflow or an
+> API documentation summarizer.
+> 
+> I think the intent is to say: do not put code that comes from _any_ AI
+> tool into QEMU.
 
-We seem to have the same problem for VirtIOPMEMClass. Can you check the 
-other devices and send fixes? Thanks!
+Right, the intent is that any copyrightable portion of a commit must
+not have come directly from an AI/LLM tool, or from an agent which
+indirectly/internally uses an AI/LLM tool.
 
+"code generator" is possibly a little overly specific, as this is really
+about any type of tool which emits content that will make its way into
+qemu.git, whether code or non-code content (docs, images, etc).
+
+> It would be okay to use AI to research APIs, algorithms, brainstorm
+> ideas, debug the code, analyze the code, etc but the actual code
+> changes must not be generated by AI.
+
+Mostly yes - there's a fuzzy boundary in the debug/analyze use cases,
+if the tool is also suggesting code changes to fix issues.
+
+If the scope of the suggested changes meets the threshold for being
+(likely) copyrightable code, that would fall under the policy.
+
+With regards,
+Daniel
 -- 
-Cheers,
-
-David / dhildenb
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
