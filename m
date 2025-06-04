@@ -4,55 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B39CEC5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 18:00:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA784C5B552
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 18:01:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMsMV-0002ZG-LV; Wed, 04 Jun 2025 13:57:15 -0400
+	id 1uMsMR-0002XI-5c; Wed, 04 Jun 2025 13:57:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsME-0002LT-MP
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsME-0002LM-3I
  for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:56:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsMA-0000Wb-VD
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:56:58 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsM9-0000VS-1e
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:56:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749059814;
+ s=mimecast20190719; t=1749059812;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=qa2nagy+k4YUIF8BffyxJims+i6IqA1schOl/axi3A8=;
- b=Le+2CizTuZWrbBoKDIxAZRoRnAdHBN4l1v85t17qyD0CSFLQVCbLdX40cnoNr469LztUs4
- T+tmyOhp44nWlJM4L9nxVk/b92JalS2ML4Oc5XamWYvJPnt8+Ll+UtRiryn/ZhY7iaiHb8
- 623BoEYJ+SVfNAMJhH0cKGHo1FH7OLw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YaP71lX/QL+N9yRdn5gWmcHSnY/m+rE+kqYfamaKahU=;
+ b=Fl/oNuqpMpDo5ANH5PmsAAgFdhcZPiuPgxCNK50Cn77o+7P+/9IV22vzb1E30ljrZajdc+
+ xWxtnr7AqaCufJ9UpTdjDuIduuZXrvQB9kIXf10qQd4TC9x9KDEtGqUTMx3oQhhaPEe0Y7
+ bvciTHp5WhiiRFUiQrXjOvwz3hBcVjs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-124-dGwNOz07NHOdx5a8PzaVow-1; Wed,
- 04 Jun 2025 13:56:51 -0400
-X-MC-Unique: dGwNOz07NHOdx5a8PzaVow-1
-X-Mimecast-MFC-AGG-ID: dGwNOz07NHOdx5a8PzaVow_1749059810
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-442-qcNwAaThMASM7qVept-FBw-1; Wed,
+ 04 Jun 2025 13:56:49 -0400
+X-MC-Unique: qcNwAaThMASM7qVept-FBw-1
+X-Mimecast-MFC-AGG-ID: qcNwAaThMASM7qVept-FBw_1749059808
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 339C018001D6; Wed,  4 Jun 2025 17:56:50 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6FA411800A06; Wed,  4 Jun 2025 17:56:48 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.34.43])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E659518003FD; Wed,  4 Jun 2025 17:56:48 +0000 (UTC)
+ id 2B98D18003FD; Wed,  4 Jun 2025 17:56:46 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 17/24] blockdev: drain while unlocked in
- internal_snapshot_action()
-Date: Wed,  4 Jun 2025 19:56:06 +0200
-Message-ID: <20250604175613.344113-18-kwolf@redhat.com>
+Subject: [PULL 16/24] block: move drain outside of quorum_del_child()
+Date: Wed,  4 Jun 2025 19:56:05 +0200
+Message-ID: <20250604175613.344113-17-kwolf@redhat.com>
 In-Reply-To: <20250604175613.344113-1-kwolf@redhat.com>
 References: <20250604175613.344113-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -85,68 +84,74 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fiona Ebner <f.ebner@proxmox.com>
 
-This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
+The quorum_del_child() callback runs under the graph lock, so it is
+not allowed to drain. It is only called as the .bdrv_del_child()
+callback, which is only called in the bdrv_del_child() function, which
+also runs under the graph lock.
+
+The bdrv_del_child() function is called by qmp_x_blockdev_change().
+A drained section was already introduced there by commit "block: move
+drain out of quorum_add_child()".
+
+This finally finishes moving out the drain to places that are not
+under the graph lock started in "block: move draining out of
+bdrv_change_aio_context() and mark GRAPH_RDLOCK".
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20250530151125.955508-18-f.ebner@proxmox.com>
+Message-ID: <20250530151125.955508-17-f.ebner@proxmox.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- blockdev.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ include/block/block_int-common.h | 7 +++++++
+ block.c                          | 2 ++
+ block/quorum.c                   | 2 --
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/blockdev.c b/blockdev.c
-index bd5ca77619..506755bef1 100644
---- a/blockdev.c
-+++ b/blockdev.c
-@@ -1208,7 +1208,7 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
-     Error *local_err = NULL;
-     const char *device;
-     const char *name;
--    BlockDriverState *bs;
-+    BlockDriverState *bs, *check_bs;
-     QEMUSnapshotInfo old_sn, *sn;
-     bool ret;
-     int64_t rt;
-@@ -1216,7 +1216,7 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
-     int ret1;
+diff --git a/include/block/block_int-common.h b/include/block/block_int-common.h
+index f9e742f812..925a3e7353 100644
+--- a/include/block/block_int-common.h
++++ b/include/block/block_int-common.h
+@@ -406,6 +406,13 @@ struct BlockDriver {
+     void GRAPH_WRLOCK_PTR (*bdrv_add_child)(
+         BlockDriverState *parent, BlockDriverState *child, Error **errp);
  
-     GLOBAL_STATE_CODE();
--    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+    bdrv_graph_rdlock_main_loop();
++    /**
++     * Hot remove a BDS's child. Used in combination with bdrv_add_child, so the
++     * user can take a child offline when it is broken and take a new child
++     * online.
++     *
++     * All block nodes must be drained.
++     */
+     void GRAPH_WRLOCK_PTR (*bdrv_del_child)(
+         BlockDriverState *parent, BdrvChild *child, Error **errp);
  
-     tran_add(tran, &internal_snapshot_drv, state);
+diff --git a/block.c b/block.c
+index 15a8ccb822..bfd4340b24 100644
+--- a/block.c
++++ b/block.c
+@@ -8276,6 +8276,8 @@ void bdrv_add_child(BlockDriverState *parent_bs, BlockDriverState *child_bs,
+ /*
+  * Hot remove a BDS's child. Used in combination with bdrv_add_child, so the
+  * user can take a child offline when it is broken and take a new child online.
++ *
++ * All block nodes must be drained.
+  */
+ void bdrv_del_child(BlockDriverState *parent_bs, BdrvChild *child, Error **errp)
+ {
+diff --git a/block/quorum.c b/block/quorum.c
+index 81407a38ee..cc3bc5f4e7 100644
+--- a/block/quorum.c
++++ b/block/quorum.c
+@@ -1147,9 +1147,7 @@ quorum_del_child(BlockDriverState *bs, BdrvChild *child, Error **errp)
+             (s->num_children - i - 1) * sizeof(BdrvChild *));
+     s->children = g_renew(BdrvChild *, s->children, --s->num_children);
  
-@@ -1225,14 +1225,29 @@ static void internal_snapshot_action(BlockdevSnapshotInternal *internal,
+-    bdrv_drain_all_begin();
+     bdrv_unref_child(bs, child);
+-    bdrv_drain_all_end();
  
-     bs = qmp_get_root_bs(device, errp);
-     if (!bs) {
-+        bdrv_graph_rdunlock_main_loop();
-         return;
-     }
- 
-     state->bs = bs;
- 
-+    /* Need to drain while unlocked. */
-+    bdrv_graph_rdunlock_main_loop();
-     /* Paired with .clean() */
-     bdrv_drained_begin(bs);
- 
-+    GRAPH_RDLOCK_GUARD_MAINLOOP();
-+
-+    /* Make sure the root bs did not change with the drain. */
-+    check_bs = qmp_get_root_bs(device, errp);
-+    if (bs != check_bs) {
-+        if (check_bs) {
-+            error_setg(errp, "Block node of device '%s' unexpectedly changed",
-+                       device);
-+        } /* else errp is already set */
-+        return;
-+    }
-+
-     if (bdrv_op_is_blocked(bs, BLOCK_OP_TYPE_INTERNAL_SNAPSHOT, errp)) {
-         return;
-     }
+     quorum_refresh_flags(bs);
+ }
 -- 
 2.49.0
 
