@@ -4,32 +4,32 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C0FAC5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 11:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7146BC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 11:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMmfv-00017p-Gb; Wed, 04 Jun 2025 07:52:56 -0400
+	id 1uMmgB-0001F3-O2; Wed, 04 Jun 2025 07:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uMmft-00017J-0e
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:52:53 -0400
+ id 1uMmgA-0001ES-K0
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:53:10 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uMmfn-0008B0-AR
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:52:52 -0400
+ id 1uMmg8-0008C6-T3
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:53:10 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bC5WV6VGJz6HJtd;
- Wed,  4 Jun 2025 19:51:02 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bC5TM5rwxz6H85G;
+ Wed,  4 Jun 2025 19:49:11 +0800 (CST)
 Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id BC07D1402EA;
- Wed,  4 Jun 2025 19:52:35 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 4D9171402EA;
+ Wed,  4 Jun 2025 19:53:07 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.203.177.99) by
  frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 4 Jun 2025 13:52:34 +0200
+ 15.1.2507.39; Wed, 4 Jun 2025 13:53:06 +0200
 To: <mst@redhat.com>
 CC: <anisinha@redhat.com>, <imammedo@redhat.com>,
  <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>,
@@ -37,11 +37,12 @@ CC: <anisinha@redhat.com>, <imammedo@redhat.com>,
  <qemu-devel@nongnu.org>, <shameerali.kolothum.thodi@huawei.com>,
  <wangyanan55@huawei.com>, <yangyicong@hisilicon.com>, <maobibo@loongson.cn>,
  <gaosong@loongson.cn>, <jiaxun.yang@flygoat.com>
-Subject: [PATCH v6 0/4] Building PPTT with root node and identical
- implementation flag
-Date: Wed, 4 Jun 2025 12:52:29 +0100
-Message-ID: <20250604115233.1234-1-alireza.sanaee@huawei.com>
+Subject: [PATCH v6 1/4] tests: virt: Allow changes to PPTT test table
+Date: Wed, 4 Jun 2025 12:52:30 +0100
+Message-ID: <20250604115233.1234-2-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250604115233.1234-1-alireza.sanaee@huawei.com>
+References: <20250604115233.1234-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -76,43 +77,28 @@ From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-OS like Linux is using PPTT processor node's identical implementation
-flag [1] to infer whether the whole system or a certain CPU cluster is
-homogeneous or not [2]. QEMU currently only support building homogeneous
-system, set the flag to indicate the fact. Build a root node in PPTT for
-indicates the identical implementation which is needed for a
-multi-socket system. Update the related PPTT tables as well.
+From: Yicong Yang <yangyicong@hisilicon.com>
 
-We observed an issue interacting with Loongarch with this patchset, and
-there was a discussion about it in [3], and eventually thanks to Bibo we
-have a patchset that fixed the interactions with Loongarch in the [4].
+Allow changes to PPTT test table, preparing for adding identical
+implementation flags support and for adding a root node for all
+the system.
 
-History:
-    * v5->v6: Rebased on 09be8a511a2e278b45729d7b065d30c68dd699d0
-    * v4->v5: fixed a typo
-    * v3->v4: PPTT rev to 2
-    * v2->v3: rebase to 10
+Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+---
+ tests/qtest/bios-tables-test-allowed-diff.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-[1] ACPI 6.5 Table 5.158: Processor Structure Flags
-[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/acpi/pptt.c?h=v6.11-rc1#n810
-[3] https://lore.kernel.org/all/99a37f40-56dc-ab7a-86ff-1a9dcb3cc711@loongson.cn/
-[4] https://lore.kernel.org/qemu-devel/20250604065502.1114098-1-maobibo@loongson.cn/
-
-DEPEND-ON: Message-ID: <20250604065502.1114098-1-maobibo@loongson.cn>
-
-Yicong Yang (4):
-  tests: virt: Allow changes to PPTT test table
-  hw/acpi/aml-build: Set identical implementation flag for PPTT
-    processor nodes
-  hw/acpi/aml-build: Build a root node in the PPTT table
-  tests: virt: Update expected ACPI tables for virt test
-
- hw/acpi/aml-build.c                           |  24 +++++++++++++++---
- tests/data/acpi/aarch64/virt/PPTT             | Bin 76 -> 96 bytes
- .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  | Bin 156 -> 176 bytes
- tests/data/acpi/aarch64/virt/PPTT.topology    | Bin 336 -> 356 bytes
- 4 files changed, 20 insertions(+), 4 deletions(-)
-
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..e84d6c6955 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,4 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/PPTT",
++"tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt",
++"tests/data/acpi/aarch64/virt/PPTT.topology",
 -- 
 2.43.0
 
