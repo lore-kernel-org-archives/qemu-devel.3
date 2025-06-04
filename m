@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F096C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 22:00:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65207C5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 22:00:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMw7C-0002kV-Mt; Wed, 04 Jun 2025 17:57:42 -0400
+	id 1uMw87-0003VX-1u; Wed, 04 Jun 2025 17:58:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uMw77-0002gV-Rh; Wed, 04 Jun 2025 17:57:37 -0400
+ id 1uMw7M-0002q4-Rq; Wed, 04 Jun 2025 17:57:55 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uMw74-0006yj-W8; Wed, 04 Jun 2025 17:57:37 -0400
+ id 1uMw7J-00071b-W4; Wed, 04 Jun 2025 17:57:51 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 554E5G45017850;
- Wed, 4 Jun 2025 21:57:32 GMT
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 554DUSud017169;
+ Wed, 4 Jun 2025 21:57:48 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=QhDDEhXU3qE6XMeJS
- Y2xPaAT+wVQPmBi+hnGipuEepI=; b=Bp4K195uUtkbgGnzhXT9bdShIhm0Twe1x
- ImEfjStTO2cjPkJyOec92Pc81DytCoC5Ohd89jNV4FqR5yp5P9ENVlBUx6BokQ31
- l0un5G7tm3uVKCHfbJpfyLFGc6RWont33bycQVhuCxp2YOXNOCsh2/MHSXHu9Df6
- 9T64sp1OfdNXgQe0QrCqYtfio4LHpeZK2HSC1YBuFYcPLELEFNJuzYIB48DRoXZr
- 2e08WLF9/X9jRZo2DipYAxDIACbrrIfWkS8RCh1BZ34xBKS/OlPzbgryd/eAh38Q
- IBMhdSE8rOGHWu2Id+caSfxCn0WfN7bhFXsMbXHEPRf4rcHv/FZYw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 472fwums1q-1
+ :mime-version:references:subject:to; s=pp1; bh=1+5cI6lEdCaHn9Lqg
+ V5yspkSvcmQ1F9vmPI1tYE8XrM=; b=bo50PMQgctyXDfedTpz+bh6OcIO2BMuVk
+ IPA21gdmW+P+reS6i+7TfC4mFi4CY71I+MAxDMaw9WkprWB3oHH9NUz6RyB97te7
+ qUxSjamxIN7ZdShBXC3hafjEknbY/f45r9QSkc9M3l5HNhPmmp6jjU4iuns6JTDp
+ yESMwxYX3olkk292DxTR3trEHBeDxaZ9T2VLFXFvRJNq6y4r2gz8MjsGQBkM8d9i
+ EaS3/vtmbkj9lRudW7Ij3YjCn+eGJVvmIVxJJCeANWw+yG1PcYBJX8wXdaR22Pj2
+ VxuT0D7+oDCHNkrD5MUKIkJAiTE0vqLKyYxL3lyG4CFA0D51jis8A==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 472fwums26-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Jun 2025 21:57:32 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 554JC0m0019937;
- Wed, 4 Jun 2025 21:57:32 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 470d3p1urt-1
+ Wed, 04 Jun 2025 21:57:48 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 554J0g1X024904;
+ Wed, 4 Jun 2025 21:57:47 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 470dkmhs5v-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 04 Jun 2025 21:57:32 +0000
+ Wed, 04 Jun 2025 21:57:47 +0000
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 554LvUcR28770972
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 554LvknJ24380026
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 4 Jun 2025 21:57:30 GMT
+ Wed, 4 Jun 2025 21:57:46 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AF7D058050;
- Wed,  4 Jun 2025 21:57:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 086FB58050;
+ Wed,  4 Jun 2025 21:57:46 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D75D958045;
- Wed,  4 Jun 2025 21:57:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 026F958045;
+ Wed,  4 Jun 2025 21:57:44 +0000 (GMT)
 Received: from fedora-workstation.ibmuc.com (unknown [9.61.31.211])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed,  4 Jun 2025 21:57:28 +0000 (GMT)
+ Wed,  4 Jun 2025 21:57:43 +0000 (GMT)
 From: Zhuoying Cai <zycai@linux.ibm.com>
 To: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
  david@redhat.com, pbonzini@redhat.com
@@ -64,27 +64,27 @@ Cc: walling@linux.ibm.com, jjherne@linux.ibm.com, jrossi@linux.ibm.com,
  pasic@linux.ibm.com, borntraeger@linux.ibm.com, farman@linux.ibm.com,
  iii@linux.ibm.com, eblake@redhat.com, armbru@redhat.com,
  qemu-s390x@nongnu.org, qemu-devel@nongnu.org, zycai@linux.ibm.com
-Subject: [PATCH v3 11/28] crypto: Add helper functions for DIAG 508 subcode 1
-Date: Wed,  4 Jun 2025 17:56:39 -0400
-Message-ID: <20250604215657.528142-12-zycai@linux.ibm.com>
+Subject: [PATCH v3 18/28] pc-bios/s390-ccw: Refactor zipl_run()
+Date: Wed,  4 Jun 2025 17:56:46 -0400
+Message-ID: <20250604215657.528142-19-zycai@linux.ibm.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250604215657.528142-1-zycai@linux.ibm.com>
 References: <20250604215657.528142-1-zycai@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDE3NSBTYWx0ZWRfX2fWveTI048wZ
- ATJNClo3zpPGU9k50gSkYiI4jj2YcXwiy60hBo2FbCf59UgRntqsy60BRpyPRBa64FXSCxzpa1P
- 8jNeAytn6daVDV8ewYk1VaqARJ3hPDpUaFHSaTCx13TZ5Fmznlz8sOolNZ33w0ofWm3o2816Zgl
- quUno8LERA7Bv/WaXF23s7sGO4qWdDLp2Fo/kGA/o9G5Da/71oAAfG6pL6ooQQeb6ji6eLU7Lip
- pcLoV6Gjp/sSfOOw8grKLbboNl53FXmgnCadBHEpSgiAxkPGW9zdOgxeeourFDP5HYrNBPJgU0E
- RjXlUWrXFZxCMUuItYwCyySEiU9Ab7XWVOIsfeLfuyLnvuXdeXYreLRLNGpr9QI9cBqFn9S68+1
- rMg9qPc/cioc1QjHrK5HGEWwDcBH+znT+P9Nit8QSWbnD241Pp0Ss5QTJIG46NV6eT8tEruz
-X-Proofpoint-GUID: TqrvMmQdS6-37d7vHvf-i_wywm_i1hIe
-X-Proofpoint-ORIG-GUID: TqrvMmQdS6-37d7vHvf-i_wywm_i1hIe
-X-Authority-Analysis: v=2.4 cv=QtVe3Uyd c=1 sm=1 tr=0 ts=6840c14c cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=xuTDbLs7dyIwHBXvKG0A:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDE3NSBTYWx0ZWRfX2meLTDo+jKNH
+ khXlD4JUcMzP5MjFSej0rM0kZb7xUTRKBzQDtUVBW58QdDS3yluDQVpj4Ap0S3ACEx+BdgXbw2E
+ CGUf0xaxW/8KgYGZyu9yJf+aZz/vxnhSHGMeHZF+noWH3Tekb0nJ+m3Ar/bCyxSCB6ROEnLx4UO
+ gcsKuBea7rLB5xwEC/gddPF6JjR8GljM9Z8FgAyneWbtfG79DeDmCTon6LvjQmcZUxN9GFCd31t
+ NA5bhpOTBA3Q2e7wcqXaKeUxhayHZPqwyhfCNNNCH3oAhI9aEbICLk1r9GMmHlcBsrPWIa7+IGu
+ 9BLPXkOajTfkAR/DzibVGJ6lSPLpbFtGlk+U5LUQAi17+Usk48HYX+GjOAkB62gv8kZkQ4qPaN3
+ 9B4dl6k04wHK3qczC8HMU6uIufEMpVsTcDVGlELKwdGwBPBEZQhQqFR8HoSY8/ca7kQtHzk6
+X-Proofpoint-GUID: aS8lykRfVA5dsciu71KJn7xoigeTkQtR
+X-Proofpoint-ORIG-GUID: aS8lykRfVA5dsciu71KJn7xoigeTkQtR
+X-Authority-Analysis: v=2.4 cv=QtVe3Uyd c=1 sm=1 tr=0 ts=6840c15c cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=Ew_Uh9inpcQo8UAwJ4EA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-04_04,2025-06-03_02,2025-03-28_01
@@ -120,128 +120,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add helper functions for x509 certificate which will be used in the next
-patch for DIAG 508 subcode 1.
+Refactor to enhance readability before enabling secure IPL in later
+patches.
 
 Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 ---
- crypto/x509-utils.c         | 61 +++++++++++++++++++++++++++++++++++++
- include/crypto/x509-utils.h | 20 ++++++++++++
- 2 files changed, 81 insertions(+)
+ pc-bios/s390-ccw/bootmap.c | 58 ++++++++++++++++++++++----------------
+ 1 file changed, 34 insertions(+), 24 deletions(-)
 
-diff --git a/crypto/x509-utils.c b/crypto/x509-utils.c
-index dd8137210c..4c997cf5d4 100644
---- a/crypto/x509-utils.c
-+++ b/crypto/x509-utils.c
-@@ -16,6 +16,7 @@
- #include <gnutls/gnutls.h>
- #include <gnutls/crypto.h>
- #include <gnutls/x509.h>
-+#include <gnutls/pkcs7.h>
- 
- static const int qcrypto_to_gnutls_hash_alg_map[QCRYPTO_HASH_ALGO__MAX] = {
-     [QCRYPTO_HASH_ALGO_MD5] = GNUTLS_DIG_MD5,
-@@ -364,6 +365,58 @@ cleanup:
-     return ret;
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 0f8baa0198..ced5190888 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -674,6 +674,38 @@ static int zipl_load_segment(ComponentEntry *entry)
+     return 0;
  }
  
-+static int qcrypto_import_pkcs7(gnutls_pkcs7_t pkcs7, gnutls_datum_t *datum)
++static int zipl_run_normal(ComponentEntry *entry, uint8_t *tmp_sec)
 +{
-+    int rc;
++    while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
++        entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
 +
-+    rc = gnutls_pkcs7_import(pkcs7, datum , GNUTLS_X509_FMT_PEM);
-+    if (rc) {
-+        rc = gnutls_pkcs7_import(pkcs7, datum , GNUTLS_X509_FMT_DER);
++        /* Secure boot is off, so we skip signature entries */
++        if (entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
++            entry++;
++            continue;
++        }
++
++        if (zipl_load_segment(entry)) {
++            return -1;
++        }
++
++        entry++;
++
++        if ((uint8_t *)&entry[1] > tmp_sec + MAX_SECTOR_SIZE) {
++            puts("Wrong entry value");
++            return -EINVAL;
++        }
 +    }
 +
-+    return rc;
++    if (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
++        puts("No EXEC entry");
++        return -EINVAL;
++    }
++
++    write_reset_psw(entry->compdat.load_psw);
++    return 0;
 +}
 +
-+int qcrypto_verify_x509_cert(uint8_t *cert, size_t cert_size,
-+                             uint8_t *comp, size_t comp_size,
-+                             uint8_t *sig, size_t sig_size, Error **errp)
-+{
-+    int rc = -1;
-+    gnutls_x509_crt_t crt;
-+    gnutls_pkcs7_t signature;
-+    gnutls_datum_t cert_datum = {.data = cert, .size = cert_size};
-+    gnutls_datum_t data_datum = {.data = comp, .size = comp_size};
-+    gnutls_datum_t sig_datum = {.data = sig, .size = sig_size};
-+
-+    if (gnutls_x509_crt_init(&crt) < 0) {
-+        error_setg(errp, "Failed to initialize certificate");
-+        return rc;
-+    }
-+
-+    if (qcrypto_import_x509_cert(crt, &cert_datum) != 0) {
-+        error_setg(errp, "Failed to import certificate");
-+        gnutls_x509_crt_deinit(crt);
-+        return rc;
-+    }
-+
-+    if (gnutls_pkcs7_init(&signature) < 0) {
-+        error_setg(errp, "Failed to initalize pkcs7 data.");
-+        return rc;
-+    }
-+
-+    if (qcrypto_import_pkcs7(signature, &sig_datum) != 0) {
-+        error_setg(errp, "Failed to import signature");
-+        goto cleanup;
-+    }
-+
-+    rc = gnutls_pkcs7_verify_direct(signature, crt, 0, &data_datum, 0);
-+
-+cleanup:
-+    gnutls_x509_crt_deinit(crt);
-+    gnutls_pkcs7_deinit(signature);
-+    return rc;
-+}
-+
- #else /* ! CONFIG_GNUTLS */
+ /* Run a zipl program */
+ static int zipl_run(ScsiBlockPtr *pte)
+ {
+@@ -700,34 +732,12 @@ static int zipl_run(ScsiBlockPtr *pte)
  
- int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
-@@ -427,4 +480,12 @@ int qcrypto_get_x509_cert_key_id(uint8_t *cert, size_t size,
-     return -ENOTSUP;
+     /* Load image(s) into RAM */
+     entry = (ComponentEntry *)(&header[1]);
+-    while (entry->component_type == ZIPL_COMP_ENTRY_LOAD ||
+-           entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
+-
+-        /* We don't support secure boot yet, so we skip signature entries */
+-        if (entry->component_type == ZIPL_COMP_ENTRY_SIGNATURE) {
+-            entry++;
+-            continue;
+-        }
+-
+-        if (zipl_load_segment(entry)) {
+-            return -1;
+-        }
+ 
+-        entry++;
+-
+-        if ((uint8_t *)(&entry[1]) > (tmp_sec + MAX_SECTOR_SIZE)) {
+-            puts("Wrong entry value");
+-            return -EINVAL;
+-        }
+-    }
+-
+-    if (entry->component_type != ZIPL_COMP_ENTRY_EXEC) {
+-        puts("No EXEC entry");
+-        return -EINVAL;
++    if (zipl_run_normal(entry, tmp_sec)) {
++        return -1;
+     }
+ 
+     /* should not return */
+-    write_reset_psw(entry->compdat.load_psw);
+     jump_to_IPL_code(0);
+     return -1;
  }
- 
-+int qcrypto_verify_x509_cert(uint8_t *cert, size_t cert_size,
-+                             uint8_t *comp, size_t comp_size,
-+                             uint8_t *sig, size_t sig_size, Error **errp)
-+{
-+    error_setg(errp, "GNUTLS is required for signature-verification support");
-+    return -ENOTSUP;
-+}
-+
- #endif /* ! CONFIG_GNUTLS */
-diff --git a/include/crypto/x509-utils.h b/include/crypto/x509-utils.h
-index 4a9941b33d..0b698b1b08 100644
---- a/include/crypto/x509-utils.h
-+++ b/include/crypto/x509-utils.h
-@@ -136,4 +136,24 @@ int qcrypto_get_x509_cert_key_id(uint8_t *cert, size_t size,
-                                  size_t *resultlen,
-                                  Error **errp);
- 
-+/**
-+ * qcrypto_verify_x509_cert
-+ * @cert: pointer to the raw certiricate data
-+ * @cert_size: size of the certificate
-+ * @comp: pointer to the component to be verified
-+ * @comp_size: size of the component
-+ * @sig: pointer to the signature
-+ * @sig_size: size of the signature
-+ * @errp: error pointer
-+ *
-+ * Verify the provided @comp against the @sig and @cert.
-+ *
-+ * Returns: 0 on success,
-+ *          negative error code on error,
-+ *          -ENOTSUP if GNUTLS is not enabled.
-+ */
-+int qcrypto_verify_x509_cert(uint8_t *cert, size_t cert_size,
-+                             uint8_t *comp, size_t comp_size,
-+                             uint8_t *sig, size_t sig_size, Error **errp);
-+
- #endif
 -- 
 2.49.0
 
