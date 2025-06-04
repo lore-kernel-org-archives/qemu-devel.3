@@ -4,94 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29571C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96495C5B552
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:09:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMiDf-0007E8-UD; Wed, 04 Jun 2025 03:07:27 -0400
+	id 1uMiFm-0007v5-M6; Wed, 04 Jun 2025 03:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMiDc-0007Da-RT
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:07:24 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMiDa-000637-Bt
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:07:23 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-442eb5d143eso64781275e9.0
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 00:07:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749020840; x=1749625640; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=rynHoh/ptHQn79UIbvWjfxdaG778iHkl/vBKiHg1RYw=;
- b=A+tc90QrxWR3E/aHxReWBaPucWHaklx6C1qkFsltnyGDd7diw+HoL8wrTufml5Pk/0
- twwJb1MgBC5u013157CmCzYMDo6925KCiA8/y8L6yLP3fx30/HDZnFOtf7MjlFaGmkwg
- loI3Mzh7PFjkYuVGWh9HYXWmj8miVopwxn9SgtHQgfLEcCtyEGMPUGgjTwShCaFDVGct
- VfgfjAUBxa8S2jHKrsqzx9occt6bk8trSOvWoSybzp76fl03Ub2DrTGLQr9Qv9GqQ2m/
- tsZX5n451/agx3PUtNb7O2jUUKqBHeFDyTsJKyXsWjzrU4pt6vOEiMZ0WmtsH9PNj7lI
- Bp9g==
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMiFl-0007uu-RH
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:09:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uMiFk-0006PD-7J
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:09:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749020975;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=y9za2v8E9P/0GsnMmhFhe+Sa6HOR8+O5Yvbm/TqadZY=;
+ b=SziZU/925GtdbrYgo58xCQD/n7YePQTzu3BOq79urLxxw+UFa25jba++WVknZO34kKG+eu
+ EJMLUO+Hw6yHWNdWAxP1fo5ogVJvQ5k9jr2lcpXnhtBvATQ1uFXclA5ScpCFF96BAw7E4Q
+ oO0IjFaQ7tfAOtC+cT2OWhRJ7KiYVR0=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-462-OgVdD2NeO9mm_CDsmiT_LA-1; Wed, 04 Jun 2025 03:09:33 -0400
+X-MC-Unique: OgVdD2NeO9mm_CDsmiT_LA-1
+X-Mimecast-MFC-AGG-ID: OgVdD2NeO9mm_CDsmiT_LA_1749020972
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-450d64026baso27806355e9.1
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 00:09:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749020840; x=1749625640;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rynHoh/ptHQn79UIbvWjfxdaG778iHkl/vBKiHg1RYw=;
- b=E6F+Sz6i8F9lFpwIG6QXJQi0a/oYXu1F79QElJBn1Pra9T3h7tslcZZHWxdvpRP2rX
- BpkIh4L3M/X69C950hYfNrm4XtCBEfskzZWL4B8HBMWBhW6kEormHZzAeERabO0n7Z/I
- GCdv6vz3Lty0OsAJGT7T0b9F6XutXcn9RrDuRSiPoF/mM+piOx0yJzZOHxjFYDUWUPBB
- o/y6WDqlEk7OKwyFYvPtkmoKvYlGAf4/la7KfFlfRiwbaMEi4V8hIseB2kHD6A7sAL3L
- BVwgJ86pIDDVHNnk8ggOmr8xFmrAUO6zyrtBaAxc4qDpEQdo9flWvxwcy2rpeOiXCwtq
- tHpA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXOlD6FmKXivfuendTwZx+wEAHPmB0DasuLbCu5hT7oDGShanXluYygCbWP2YG8upfZBbGI4EI8CFds@nongnu.org
-X-Gm-Message-State: AOJu0YxCtupGPMjoJck8JhuNavbQ4BCJNTaRAcRcnEQ7JotyNkeyQnMK
- CrCI+oxlg67jOxxYniQUlLqq0YFBGaWhFgxGN5ToM/bxpenZq62OpsWcPC+oDuDCPHk=
-X-Gm-Gg: ASbGncsZvQD+81fpVwqBdjNarrNK8yMD3Q1cyLk/+2cedCicpzdJEndKEJXvp1M90kE
- kGyuHsq8xQlGY1MFoPeQi9Gcg7iAtwpzk+GbROyXwFI4jTdMpTlM2Xq1WhCDjrHGM6oU9EKE7TL
- rlS4/iyDu4VC5Xmj9DsGCibi4myoW+vrG6FSeYq3CnqzkMxDdukIR7nkWEfOVDN8ZxGBiB8OGy8
- ugDDJaCZg5iAVIOmuU20osxQm9+qiA4gCiYIFm5OjC7cWB4QnNOUhu3TgAJyJyoGRe9PFJway+1
- rNqR35bIbYWs/6bTjL0c9TvNvnQJAN3P81ku7c3hS8l4ehIWpw2ZrgQKmPxFjbgtXmqpuN+bTj3
- rrlKvk58l9mlKjADc6V8=
-X-Google-Smtp-Source: AGHT+IEaOQMBwhucriFQuSYHiyVKAzIs4Y+2yBVrARU//lSRgdyMwTjXS6QjfyZ4yqCU+ZcONMeUzA==
-X-Received: by 2002:a05:6000:290b:b0:3a4:f7df:baf5 with SMTP id
- ffacd0b85a97d-3a51d67f465mr1045724f8f.0.1749020839829; 
- Wed, 04 Jun 2025 00:07:19 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f009f9d6sm20540149f8f.84.2025.06.04.00.07.18
+ d=1e100.net; s=20230601; t=1749020972; x=1749625772;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y9za2v8E9P/0GsnMmhFhe+Sa6HOR8+O5Yvbm/TqadZY=;
+ b=LboyD9kPFmJ3+mP7j4V3BAQGRTasq7390hrytCsG9R9f+2Io5FnVZmy6m1kI6FQWvB
+ EXB9cIc66oTwFnFVo/rTwJE2JVNZCOOv5w8UH27vWpmbVOFPqSpcz7L/dvTYk8nfRcsR
+ VQwf5HMbJf+gNS6eupHT5YLHNqYxKgj/eLG3jKUfFoqt1MYR2V/h5K0+c4ev6J/Osm/Q
+ ztRUGN5BeUrnNAO0CiL6Xu1huTGR2xx5OlogjSATZrfOCoAbX4Hm6G4o1Srft1AWnoCP
+ So24Q68bIpXalIfHHx1/ycjHusEwiOc2A4Cai3bTDYdtGCsWSLcgnNhfrzXfRmqdM3Jz
+ XeVA==
+X-Gm-Message-State: AOJu0Ywx9ylz5YcOcLCuWKMGEGdklF8DdA75RDD/QVKY075eEzp6YIxv
+ rtcs7JeWSmOYHqxcex/3PV5XiMnYvXJyhPioqAv5UQA047C9kI46sxnFrqnk9+QoYg592eiMYOW
+ NE2Z/hldHFewXSxgwn4vHgX7kpUK0cdQAZ2nNvz3fxCB+UMKOUYA7tOoN
+X-Gm-Gg: ASbGnctF/5qNWWYuaNYSgDHm19S7i6HSjAckMM3pxN8g3GBEJprfAWp2Ixy6CfBw6fx
+ D6UB76zb+oroQPUHIBWGCz2sA5Msqzy25gWlg65xQlKuluZ0+jbwwEzeQz6rhIqIj7O60gwiRDy
+ TMhCT06YKRl3fq6Ilf4YdZnKL6VR0hE2LL2vECjQDomyKo2VWNFxJ00VdmVqLI6i4BTyxkiBROx
+ ykcrdIJSCeP5M6TKUp73ygc1OhM09e13J108YUWK9ezdQkn7AwwhGxHghPy/KuJ9O1/1yRdChJj
+ FaYDKuL5UIH4SlPEvC453mO7j5jXsGi2eCCmtsvNOdlWXFwH0CZLxH+duX9cHE8ekb2X8qJMoui
+ tFNZuvjUPJatekXE6NEAG6VMnkCJKleIYdmH3
+X-Received: by 2002:a05:600c:1991:b0:43c:e7ae:4bcf with SMTP id
+ 5b1f17b1804b1-451f09bb9f2mr14592665e9.0.1749020971906; 
+ Wed, 04 Jun 2025 00:09:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNd2mb5QrgJ/5/z+xS/9J0E2jMVnrzSo44WQZE9B+ROwrcl/F13KBjZw1FHwEBC+UDTvGmsg==
+X-Received: by 2002:a05:600c:1991:b0:43c:e7ae:4bcf with SMTP id
+ 5b1f17b1804b1-451f09bb9f2mr14592385e9.0.1749020971595; 
+ Wed, 04 Jun 2025 00:09:31 -0700 (PDT)
+Received: from ?IPV6:2a02:8428:527:dd01:97e1:f7ae:2e2c:ffab?
+ (2a02-8428-0527-dd01-97e1-f7ae-2e2c-ffab.rev.sfr.net.
+ [2a02:8428:527:dd01:97e1:f7ae:2e2c:ffab])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a5215e4c4asm554876f8f.17.2025.06.04.00.09.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 00:07:19 -0700 (PDT)
-Message-ID: <0c0545dc-6ce1-4580-9d21-6f31d39e0125@linaro.org>
-Date: Wed, 4 Jun 2025 09:07:18 +0200
+ Wed, 04 Jun 2025 00:09:30 -0700 (PDT)
+Message-ID: <0a50d630-57c7-4f05-93c7-73be8f575873@redhat.com>
+Date: Wed, 4 Jun 2025 09:09:30 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] hw/i386/pc: Remove deprecated 2.10, 2.11 and 2.12 PC
- machines
-To: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20250501223522.99772-1-philmd@linaro.org>
- <4ac8c8b0-700b-4fac-ae4c-6531fc6b682e@intel.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <4ac8c8b0-700b-4fac-ae4c-6531fc6b682e@intel.com>
+Subject: Re: [PATCH V4 16/43] pci: skip reset during cpr
+To: Steven Sistare <steven.sistare@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
+ <1748546679-154091-17-git-send-email-steven.sistare@oracle.com>
+ <d62bd9c6-1660-4d16-8d7d-5445ba6c5031@redhat.com>
+ <20250601150607-mutt-send-email-mst@kernel.org>
+ <899ee161-2c5d-4aa2-aa64-5135b26bc3ff@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <899ee161-2c5d-4aa2-aa64-5135b26bc3ff@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,34 +163,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 4/6/25 03:30, Xiaoyao Li wrote:
-> On 5/2/2025 6:35 AM, Philippe Mathieu-Daudé wrote:
->> The versioned 'pc' and 'q35' machines up to 2.12 been marked
->> as deprecated two releases ago, and are older than 6 years,
->> so according to our support policy we can remove them.
+On 6/2/25 14:36, Steven Sistare wrote:
+> On 6/1/2025 3:07 PM, Michael S. Tsirkin wrote:
+>> On Sun, Jun 01, 2025 at 06:38:43PM +0200, Cédric Le Goater wrote:
+>>> On 5/29/25 21:24, Steve Sistare wrote:
+>>>> Do not reset a vfio-pci device during CPR.
+>>>>
+>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>>>> ---
+>>>>    include/hw/pci/pci_device.h | 3 +++
+>>>>    hw/pci/pci.c                | 5 +++++
+>>>>    hw/vfio/pci.c               | 7 +++++++
+>>>>    3 files changed, 15 insertions(+)
+>>>>
+>>>> diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+>>>> index e41d95b..b481c5d 100644
+>>>> --- a/include/hw/pci/pci_device.h
+>>>> +++ b/include/hw/pci/pci_device.h
+>>>> @@ -181,6 +181,9 @@ struct PCIDevice {
+>>>>        uint32_t max_bounce_buffer_size;
+>>>>        char *sriov_pf;
+>>>> +
+>>>> +    /* CPR */
+>>>> +    bool skip_reset_on_cpr;
+>>>>    };
+>>>>    static inline int pci_intx(PCIDevice *pci_dev)
+>>>> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+>>>> index f5ab510..21eb11c 100644
+>>>> --- a/hw/pci/pci.c
+>>>> +++ b/hw/pci/pci.c
+>>>> @@ -32,6 +32,7 @@
+>>>>    #include "hw/pci/pci_host.h"
+>>>>    #include "hw/qdev-properties.h"
+>>>>    #include "hw/qdev-properties-system.h"
+>>>> +#include "migration/cpr.h"
+>>>>    #include "migration/qemu-file-types.h"
+>>>>    #include "migration/vmstate.h"
+>>>>    #include "net/net.h"
+>>>> @@ -531,6 +532,10 @@ static void pci_reset_regions(PCIDevice *dev)
+>>>>    static void pci_do_device_reset(PCIDevice *dev)
+>>>>    {
+>>>> +    if (dev->skip_reset_on_cpr && cpr_is_incoming()) {
+>>>> +        return;
+>>>> +    }
+>>>
+>>> Since ->skip_reset_on_cpr is only true for vfio-pci devices, it could be
+>>> replaced by : object_dynamic_cast(OBJECT(dev), "vfio-pci")
+>>>
+>>> Thanks,
+>>>
+>>> C.
 >>
->> This series includes the 2.10 to 2.12 machines removal.
+>> True but I don't really like driver dependent hacks.
+>> what exactly about vfio makes it survive without this reset?
 > 
-> For this series,
+> The kernel descriptors remain open and all the active kernel PCI state
+> remains in place.  The device was never quiesced or de-configured in old QEMU.
 > 
-> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
+> The cast is fine with me; it depends on what Michael wants.
+I don't see any good ways to avoid doing the reset when a cpr resume
+is in progress. I agree the cast is pretty ugly. We could keep the
+'skip_reset_on_cpr' attribute and make it a class attribute instead.
 
-Thanks!
 
-> Besides, please add more patches to remove hw_compat_2_{10,11,12}
+Which raises another question : is this specific to vfio-pci. What
+about virtio devices ?
 
-Are you asking for this series which was posted more than one month ago?
-https://lore.kernel.org/qemu-devel/20250501230129.2596-1-philmd@linaro.org/
+Thanks,
 
-> 
->> Philippe Mathieu-Daudé (8):
->>    hw/i386/pc: Remove deprecated pc-q35-2.10 and pc-i440fx-2.10 machines
->>    hw/i386/pc: Remove pc_compat_2_10[] array
->>    hw/pci-host/i440fx: Remove I440FXState::pci_hole64_fix field
->>    hw/pci-host/q35: Remove Q35PCIHost::pci_hole64_fix field
->>    hw/i386/pc: Remove deprecated pc-q35-2.11 and pc-i440fx-2.11 machines
->>    hw/i386/pc: Remove pc_compat_2_11[] array
->>    hw/i386/pc: Remove deprecated pc-q35-2.12 and pc-i440fx-2.12 machines
->>    hw/i386/pc: Remove pc_compat_2_12[] array
+C.
+
+
 
 
