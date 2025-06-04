@@ -4,61 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD3ADC5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 11:55:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AB13C5B559
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 11:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMmhr-000340-CN; Wed, 04 Jun 2025 07:54:55 -0400
+	id 1uMmkp-0005CT-9u; Wed, 04 Jun 2025 07:57:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uMmhk-0002uW-QQ
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:54:50 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uMmkn-0005C0-1Q
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:57:57 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uMmhf-0000Af-Kg
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:54:48 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bC5W96mYdz6H86B;
- Wed,  4 Jun 2025 19:50:45 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 6E2FE1400D9;
- Wed,  4 Jun 2025 19:54:41 +0800 (CST)
-Received: from a2303103017.china.huawei.com (10.203.177.99) by
- frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 4 Jun 2025 13:54:40 +0200
-To: <mst@redhat.com>
-CC: <anisinha@redhat.com>, <imammedo@redhat.com>,
- <jonathan.cameron@huawei.com>, <linuxarm@huawei.com>,
- <peter.maydell@linaro.org>, <prime.zeng@hisilicon.com>,
- <qemu-devel@nongnu.org>, <shameerali.kolothum.thodi@huawei.com>,
- <wangyanan55@huawei.com>, <yangyicong@hisilicon.com>, <maobibo@loongson.cn>,
- <gaosong@loongson.cn>, <jiaxun.yang@flygoat.com>
-Subject: [PATCH v6 4/4] tests: virt: Update expected ACPI tables for virt test
-Date: Wed, 4 Jun 2025 12:52:33 +0100
-Message-ID: <20250604115233.1234-5-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uMmkk-0000nv-Vr
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:57:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749038275; x=1780574275;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=iL6MdF/NutyJzJOosq4Y7HU+q/TMdMmP5rP3J7qCWm8=;
+ b=Pd5rIF24lN8zSCzJcuRMGBJ+rjYlAdIl3NChYaejDI/UBTt633EBRFRV
+ l8/lT5fNXtcTYVclyInJlORIjvjh5kCgPeQf16VNmah6KYsaNXIb4G9zl
+ sXgXCfr/tMwQOveCiLCgP3Zzzjt4teHwiOzXkavfQ4cOAd7BqBkt0cyPD
+ kdA++rTPTXys6xM8lR6ZNRayrBbht+GVCjX7eohLhNuc91qdSPHYvcYol
+ EsYhtJ8GNBg7a3NMUJL/BtkCsFQLGZxzx6G0mayN/eZKDDRU9rITyu8Rm
+ Wpi9L16oEp7/kal1A2s6vLRqkdsY+L4z4G/JFVh0c7kInjmVyBprD2qG5 A==;
+X-CSE-ConnectionGUID: zCWem5SuQbWmVNjuuUbn6w==
+X-CSE-MsgGUID: 3h7+Nnm+TEaPozb9kZJtUQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11454"; a="54915363"
+X-IronPort-AV: E=Sophos;i="6.16,209,1744095600"; d="scan'208";a="54915363"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jun 2025 04:57:53 -0700
+X-CSE-ConnectionGUID: A9zbaOoLTdiTij4CRtvsiQ==
+X-CSE-MsgGUID: zSu6S3xVTxCcWGoi9EiLSA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,209,1744095600"; d="scan'208";a="150048289"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by fmviesa005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 04 Jun 2025 04:57:51 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: chao.p.peng@intel.com, david@redhat.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: [PATCH v2 2/5] virtio-pmem: Fix definition of VirtIOPMEMClass
+Date: Wed,  4 Jun 2025 19:53:57 +0800
+Message-Id: <20250604115400.98905-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250604115233.1234-1-alireza.sanaee@huawei.com>
-References: <20250604115233.1234-1-alireza.sanaee@huawei.com>
+In-Reply-To: <20250604115400.98905-1-zhenzhong.duan@intel.com>
+References: <20250604115400.98905-1-zhenzhong.duan@intel.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml100003.china.huawei.com (7.191.160.210) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -72,158 +81,32 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+VirtIOPMEMClass's parent is VirtioDeviceClass rather than VirtIODevice.
 
-Update the ACPI tables according to the acpi aml_build change, also
-empty bios-tables-test-allowed-diff.h.
-
-The disassembled differences between actual and expected PPTT shows
-below. Only about the root node adding and identification flag set
-as expected.
-
- /*
-  * Intel ACPI Component Architecture
-  * AML/ASL+ Disassembler version 20200925 (64-bit version)
-  * Copyright (c) 2000 - 2020 Intel Corporation
-  *
-- * Disassembly of tests/data/acpi/aarch64/virt/PPTT, Thu Apr 24 11:02:39 2025
-+ * Disassembly of /tmp/aml-E0RF52, Thu Apr 24 11:02:39 2025
-  *
-  * ACPI Data Table [PPTT]
-  *
-  * Format: [HexOffset DecimalOffset ByteLength]  FieldName : FieldValue
-  */
-
- [000h 0000   4]                    Signature : "PPTT"    [Processor Properties Topology Table]
--[004h 0004   4]                 Table Length : 0000004C
-+[004h 0004   4]                 Table Length : 00000060
- [008h 0008   1]                     Revision : 02
--[009h 0009   1]                     Checksum : A8
-+[009h 0009   1]                     Checksum : 27
- [00Ah 0010   6]                       Oem ID : "BOCHS "
- [010h 0016   8]                 Oem Table ID : "BXPC    "
- [018h 0024   4]                 Oem Revision : 00000001
- [01Ch 0028   4]              Asl Compiler ID : "BXPC"
- [020h 0032   4]        Asl Compiler Revision : 00000001
-
- [024h 0036   1]                Subtable Type : 00 [Processor Hierarchy Node]
- [025h 0037   1]                       Length : 14
- [026h 0038   2]                     Reserved : 0000
--[028h 0040   4]        Flags (decoded below) : 00000001
-+[028h 0040   4]        Flags (decoded below) : 00000011
-                             Physical package : 1
-                      ACPI Processor ID valid : 0
-                        Processor is a thread : 0
-                               Node is a leaf : 0
--                    Identical Implementation : 0
-+                    Identical Implementation : 1
- [02Ch 0044   4]                       Parent : 00000000
- [030h 0048   4]            ACPI Processor ID : 00000000
- [034h 0052   4]      Private Resource Number : 00000000
-
- [038h 0056   1]                Subtable Type : 00 [Processor Hierarchy Node]
- [039h 0057   1]                       Length : 14
- [03Ah 0058   2]                     Reserved : 0000
--[03Ch 0060   4]        Flags (decoded below) : 0000000A
-+[03Ch 0060   4]        Flags (decoded below) : 00000011
-+                            Physical package : 1
-+                     ACPI Processor ID valid : 0
-+                       Processor is a thread : 0
-+                              Node is a leaf : 0
-+                    Identical Implementation : 1
-+[040h 0064   4]                       Parent : 00000024
-+[044h 0068   4]            ACPI Processor ID : 00000000
-+[048h 0072   4]      Private Resource Number : 00000000
-+
-+[04Ch 0076   1]                Subtable Type : 00 [Processor Hierarchy Node]
-+[04Dh 0077   1]                       Length : 14
-+[04Eh 0078   2]                     Reserved : 0000
-+[050h 0080   4]        Flags (decoded below) : 0000000A
-                             Physical package : 0
-                      ACPI Processor ID valid : 1
-                        Processor is a thread : 0
-                               Node is a leaf : 1
-                     Identical Implementation : 0
--[040h 0064   4]                       Parent : 00000024
--[044h 0068   4]            ACPI Processor ID : 00000000
--[048h 0072   4]      Private Resource Number : 00000000
-+[054h 0084   4]                       Parent : 00000038
-+[058h 0088   4]            ACPI Processor ID : 00000000
-+[05Ch 0092   4]      Private Resource Number : 00000000
-
--Raw Table Data: Length 76 (0x4C)
-+Raw Table Data: Length 96 (0x60)
-
--    0000: 50 50 54 54 4C 00 00 00 02 A8 42 4F 43 48 53 20  // PPTTL.....BOCHS
-+    0000: 50 50 54 54 60 00 00 00 02 27 42 4F 43 48 53 20  // PPTT`....'BOCHS
-     0010: 42 58 50 43 20 20 20 20 01 00 00 00 42 58 50 43  // BXPC    ....BXPC
--    0020: 01 00 00 00 00 14 00 00 01 00 00 00 00 00 00 00  // ................
--    0030: 00 00 00 00 00 00 00 00 00 14 00 00 0A 00 00 00  // ................
--    0040: 24 00 00 00 00 00 00 00 00 00 00 00              // $...........
-+    0020: 01 00 00 00 00 14 00 00 11 00 00 00 00 00 00 00  // ................
-+    0030: 00 00 00 00 00 00 00 00 00 14 00 00 11 00 00 00  // ................
-+    0040: 24 00 00 00 00 00 00 00 00 00 00 00 00 14 00 00  // $...............
-+    0050: 0A 00 00 00 38 00 00 00 00 00 00 00 00 00 00 00  // ....8...........
-
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+Fixes: 5f503cd9f388 ("virtio-pmem: add virtio device")
+Suggested-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- tests/data/acpi/aarch64/virt/PPTT              | Bin 76 -> 96 bytes
- tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt | Bin 156 -> 176 bytes
- tests/data/acpi/aarch64/virt/PPTT.topology     | Bin 336 -> 356 bytes
- tests/qtest/bios-tables-test-allowed-diff.h    |   3 ---
- 4 files changed, 3 deletions(-)
+ include/hw/virtio/virtio-pmem.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tests/data/acpi/aarch64/virt/PPTT b/tests/data/acpi/aarch64/virt/PPTT
-index 7a1258ecf123555b24462c98ccbb76b4ac1d0c2b..15598a9b8a3cc0cdd50bc1f77c73ae0ba728a272 100644
-GIT binary patch
-literal 96
-zcmWFt2nk7GU|?WUck*}k2v%^42yj*a0!E-1hz+6{L>L$ZK{PUeim9N9aRK=jNMZmJ
-Cwg&+K
-
-delta 38
-kcmYfB;R*-{3GrcIU|?D?kxP!15y)bg=qSvi0%AY`0D`Lo$p8QV
-
-diff --git a/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt b/tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt
-index 4eef303a5b6168c6bc3795c2e2c53f65b4c4cfd4..7b613ddaf4b8cfa13821aa2e835d290077221897 100644
-GIT binary patch
-literal 176
-zcmWFt2npH1z`(%7>*Vk35v<@85#X!<1dKp25F11@h%hh+f@ov_6;nYI;{x(6aEO7;
-b0?8riMHU0;EdgRCkQxvGs)LC!Lqr$=thxyS
-
-literal 156
-zcmWFt2nm_Pz`(%t&&l7}BUr&HBEVSz2pEB4AU23*5Mf{d(;zks0L8d~Y!w(EL?em8
-b)g$Re76a)`0AeN}1_P+x1R#eQBEkRwWK9VH
-
-diff --git a/tests/data/acpi/aarch64/virt/PPTT.topology b/tests/data/acpi/aarch64/virt/PPTT.topology
-index 3fbcae5ff08aaf16fedf4da45e941661d79c1174..6b864f035c9f48845e9a3beb482c5171074864a5 100644
-GIT binary patch
-literal 356
-zcmWFt2nk7HWME*L?&R<65v<@85#X!<1VAAM5F11@h%hh+f@ov_6;nYI69Dopu!#Af
-ziSYsX2{^>Sc7o)9c7V(S=|vU;>74__Oh60<Ky@%NW+X9~TafjF#BRXUfM}@RH$Wx}
-cOdLs!6-f-H7uh_Jy&6CPHY9a0F?OgJ00?&w0RR91
-
-literal 336
-zcmWFt2nh*bWME*baq@Te2v%^42yj*a0-z8Bhz+6{L>L&rG>8oYKrs+dflv?<DrSKu
-z#s}p4;1GkGi=-D>45YUMh?!vef$Csl%t&G&Cde(wdO>1GKm-gx_1*yTS+Iz)B8h>R
-aAic=uf$S9l3b27BK>%tVNQ@mK!T<mOd=3Es
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index e84d6c6955..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,4 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/aarch64/virt/PPTT",
--"tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt",
--"tests/data/acpi/aarch64/virt/PPTT.topology",
+diff --git a/include/hw/virtio/virtio-pmem.h b/include/hw/virtio/virtio-pmem.h
+index fc4fd1f7fe..9cce600d0b 100644
+--- a/include/hw/virtio/virtio-pmem.h
++++ b/include/hw/virtio/virtio-pmem.h
+@@ -36,7 +36,7 @@ struct VirtIOPMEM {
+ 
+ struct VirtIOPMEMClass {
+     /* private */
+-    VirtIODevice parent;
++    VirtioDeviceClass parent_class;
+ 
+     /* public */
+     void (*fill_device_info)(const VirtIOPMEM *pmem, VirtioPMEMDeviceInfo *vi);
 -- 
-2.43.0
+2.34.1
 
 
