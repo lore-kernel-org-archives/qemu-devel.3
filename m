@@ -4,99 +4,146 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59340C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 12:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2813C5B559
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 12:05:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMmqZ-0002Pp-HC; Wed, 04 Jun 2025 08:03:55 -0400
+	id 1uMmrf-0002qj-1v; Wed, 04 Jun 2025 08:05:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=WXta=YT=kaod.org=clg@ozlabs.org>)
- id 1uMmqU-0002Ob-6Y; Wed, 04 Jun 2025 08:03:50 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMmrc-0002oA-7U
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 08:05:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=WXta=YT=kaod.org=clg@ozlabs.org>)
- id 1uMmqQ-0001nF-LZ; Wed, 04 Jun 2025 08:03:49 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bC5p03FVCz4x8S;
- Wed,  4 Jun 2025 22:03:36 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bC5nw167mz4wcg;
- Wed,  4 Jun 2025 22:03:31 +1000 (AEST)
-Message-ID: <59acd382-726b-4ef5-b5da-0c1600098e07@kaod.org>
-Date: Wed, 4 Jun 2025 14:03:21 +0200
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uMmrZ-0001sA-0P
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 08:04:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749038694;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=c6ezQfqjAMYDvl57KBtiBvQZPIB8XZACrv2iRYXbNqQ=;
+ b=Jb5Q3F0fnxQ3lkSJ69FyVKyYhOWENsdkFJrr8/5ImwAbU1hriBnYswaSffwfJkWg7JmSe7
+ ptUqX5WMv91gkAkjvra0Chs+ogeol0Px32/sUTpB2kOlfr6cWJbxiE24EBMRTt4NJ5atCw
+ etEWCKdkCZmdSWClkMMXTmSZM6oMHLY=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-467-T5yjRyhAPw25ngor_poS_Q-1; Wed, 04 Jun 2025 08:04:53 -0400
+X-MC-Unique: T5yjRyhAPw25ngor_poS_Q-1
+X-Mimecast-MFC-AGG-ID: T5yjRyhAPw25ngor_poS_Q_1749038692
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4f6cc5332so3647751f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 05:04:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749038692; x=1749643492;
+ h=content-transfer-encoding:in-reply-to:organization:autocrypt
+ :content-language:from:references:cc:to:subject:user-agent
+ :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=c6ezQfqjAMYDvl57KBtiBvQZPIB8XZACrv2iRYXbNqQ=;
+ b=NbbDzMirFVQ4hIe1pqAjVvl/46UwN112Up7/naT+ims80qs0oyWOT9Y0sFt09Bdut8
+ gQgRYsMtNjZuDOyo77/xROISMGAybmMpGNtIEeR5wnjA+x4GsRE+T+vvMYo1Qk1z7Syr
+ U+nBgd7gg3kcMyUAPQchjURFxVhyLUn3BuU2fxYdDKN+iTwDN5c42m0evJHzNOFLW1q1
+ Lt5qrJqMVolBMa2ni9HvhhcuY8RaGLhS145nSJfBz82bgbzARkNPd6Ih+F3ByFlwN8x+
+ 49l/VcUSjiUMma05vQbQ56GTVw/caFX7qSdB+lOy1ueVA+0WTfkN2VkCPBsAM+6VFb3c
+ HTQw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXsG8BpHka235F/BpOVlWV8trQDvlLiT+OM22dWOGCoTZXsjsb9CTEgGls2pght+umwC8o/hCIqGA3M@nongnu.org
+X-Gm-Message-State: AOJu0YzYSS42cqHGw4zCN63OsMcYrR+za2LEB+LCRTymLxBBY9TSqhna
+ LcX8cAxjfR0RZGbEQuTJOBY8mex091UyE6SLEuNrYRjE6Hgw8MNJBOwlrpXLyIB8P925DJljwGa
+ Hjc4vbvMlb/GMOjfy6eHXJdwgaHFEps2GvJMh0SIjqBZtniZqmu8l/MhZ
+X-Gm-Gg: ASbGncsABX4ElJtGegw4kqcd3ovegOVW1QzXqtby4EtcfyvxSgHGIgI8MI8zE1WA9+s
+ V3A2laDf8JsNJHFdHuOVPotUvpJzSAVVcCK1zSQ15StLmyODBUtkJgQrETdUkWkIkh746kK/qa4
+ hEzJ+kWDFHeB462V6hJy4VlNJ/O16+JXXcXehIpn3ok1Vz4K9gWL/uhV34N+zBWhGpSMvB9g/Gg
+ n4+WFdktmIqS5z6aoz9MOhfOm9SZEoR5/e+91zBYi3y4SeEqLm3MLQNRnAn7w4d6MXMOfS57Rb9
+ dXNDZpVQP1nRbBRVnyScpqNCZ3DmiT7WeFADyq3aBMoOaCGZMni9kGM63p568NVaPJ/TN7nyUXD
+ QJf+YLY05oKV8NWW099PdWwaG2rl7AK9t4ruSvL5gmCgq59Lt7w==
+X-Received: by 2002:a05:6000:220d:b0:3a4:eed7:15f2 with SMTP id
+ ffacd0b85a97d-3a51d96ae39mr2060264f8f.43.1749038692039; 
+ Wed, 04 Jun 2025 05:04:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/9IgRpenAD4oxubM+nOVsn9d3mRwHDl9bf49WDLkZ7GZ18FsN6FICakqpaFZUwTjriVkjIg==
+X-Received: by 2002:a05:6000:220d:b0:3a4:eed7:15f2 with SMTP id
+ ffacd0b85a97d-3a51d96ae39mr2060238f8f.43.1749038691658; 
+ Wed, 04 Jun 2025 05:04:51 -0700 (PDT)
+Received: from ?IPV6:2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf?
+ (p200300d82f1bb8006fdb1af24fbd1fdf.dip0.t-ipconnect.de.
+ [2003:d8:2f1b:b800:6fdb:1af2:4fbd:1fdf])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d8006952sm193125115e9.32.2025.06.04.05.04.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Jun 2025 05:04:51 -0700 (PDT)
+Message-ID: <6169926c-6439-4939-913a-9081e4e8ba6b@redhat.com>
+Date: Wed, 4 Jun 2025 14:04:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/5] hw/gpio/aspeed: Fix definition of AspeedGPIOClass
+Subject: Re: [PATCH v2 2/5] virtio-pmem: Fix definition of VirtIOPMEMClass
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
-Cc: chao.p.peng@intel.com, david@redhat.com,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Cc: chao.p.peng@intel.com, "Michael S. Tsirkin" <mst@redhat.com>
 References: <20250604115400.98905-1-zhenzhong.duan@intel.com>
- <20250604115400.98905-4-zhenzhong.duan@intel.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250604115400.98905-4-zhenzhong.duan@intel.com>
+ <20250604115400.98905-3-zhenzhong.duan@intel.com>
+From: David Hildenbrand <david@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=david@redhat.com; keydata=
+ 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
+ WNyWQQ==
+Organization: Red Hat
+In-Reply-To: <20250604115400.98905-3-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=WXta=YT=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.001, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=david@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,39 +159,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/25 13:53, Zhenzhong Duan wrote:
-> AspeedGPIOClass's parent is SysBusDeviceClass rather than SysBusDevice.
+On 04.06.25 13:53, Zhenzhong Duan wrote:
+> VirtIOPMEMClass's parent is VirtioDeviceClass rather than VirtIODevice.
 > 
-> Fixes: 4b7f956862dc ("hw/gpio: Add basic Aspeed GPIO model for AST2400 and AST2500")
+> Fixes: 5f503cd9f388 ("virtio-pmem: add virtio device")
 > Suggested-by: David Hildenbrand <david@redhat.com>
+
+Reported-by: might be better, with
+
+Closes:
+
+linking to my mail
+
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-
-omg. This is super old ... version 4.2.
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-
 > ---
->   include/hw/gpio/aspeed_gpio.h | 2 +-
+>   include/hw/virtio/virtio-pmem.h | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/include/hw/gpio/aspeed_gpio.h b/include/hw/gpio/aspeed_gpio.h
-> index e1e6c54333..e6b2fe71b5 100644
-> --- a/include/hw/gpio/aspeed_gpio.h
-> +++ b/include/hw/gpio/aspeed_gpio.h
-> @@ -70,7 +70,7 @@ typedef struct AspeedGPIOReg {
->   } AspeedGPIOReg;
+> diff --git a/include/hw/virtio/virtio-pmem.h b/include/hw/virtio/virtio-pmem.h
+> index fc4fd1f7fe..9cce600d0b 100644
+> --- a/include/hw/virtio/virtio-pmem.h
+> +++ b/include/hw/virtio/virtio-pmem.h
+> @@ -36,7 +36,7 @@ struct VirtIOPMEM {
 >   
->   struct AspeedGPIOClass {
-> -    SysBusDevice parent_obj;
-> +    SysBusDeviceClass parent_class;
->       const GPIOSetProperties *props;
->       uint32_t nr_gpio_pins;
->       uint32_t nr_gpio_sets;
+>   struct VirtIOPMEMClass {
+>       /* private */
+> -    VirtIODevice parent;
+> +    VirtioDeviceClass parent_class;
+
+Reviewed-by: David Hildenbrand <david@redhat.com>
+
+-- 
+Cheers,
+
+David / dhildenb
 
 
