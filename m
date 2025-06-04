@@ -4,55 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B8F7C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 09:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E4EC5B552
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 09:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMkc0-0007AW-E4; Wed, 04 Jun 2025 05:40:44 -0400
+	id 1uMkcM-0007Ex-F9; Wed, 04 Jun 2025 05:41:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1uMkby-00079r-5v; Wed, 04 Jun 2025 05:40:42 -0400
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMkcK-0007EU-Ba
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:41:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1uMkbu-0000Do-Pj; Wed, 04 Jun 2025 05:40:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=G8xerR2KLeQs4nhDiyLncfjRmfNoajejA0Ka6/GbCgc=; b=S8ct64yAPyh8H+fYA2kbkWiWqM
- ePdoCIgNg6/Z/yASt2mUzzKURxU2HZbh8jAJmmQeuBs7jGydybh8aiM60NjTU/uSkJjKC6Z/H85xQ
- zcAYF39LL5YBLwpN2v9mHquLZKNP+UHhha3Sjrr1nGUCgQXrcJs9iIlL1lUHYRbHd5BDz3/7ZwXLP
- U/xac+jg2Vix7RdIQ65u1Oj/DTZ696cpMogrv2+/8LNXOJqvPCaieYwGIidqt8aaRpyd0a5SLQOxW
- VzXr0MJ4JghRBYKf1jGTPHI26guq8vODtk+eaHBm04x9usKNZ88jKR7FjpRFN2i3VkpvUXBccxHIf
- LyFE4HCw==;
-Received: from [167.98.27.226] (helo=codethink.office.codethink.co.uk)
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uMkbn-00C5Lb-IP; Wed, 04 Jun 2025 10:40:31 +0100
-From: Roan Richmond <roan.richmond@codethink.co.uk>
-To: qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- qemu-devel@nongnu.org, Roan Richmond <roan.richmond@codethink.co.uk>
-Subject: [PATCH v2] Add RISCV ZALASR extension
-Date: Wed,  4 Jun 2025 10:39:35 +0100
-Message-ID: <20250604093949.16070-1-roan.richmond@codethink.co.uk>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uMkcI-0000GB-Hh
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:41:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749030060;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=sSeRoDvsZtgFQKXDvRkqhjRCybJhF6ZZimN+TgbYGms=;
+ b=YoV1LFl05cr+Td46To85iJiB94tHQUbMwhSiT5AV7wGdKr/PS+ifJzFPoxpMfiTrZT+8fz
+ o9OCQOG02UFwhEeaP3L2SGQCXUZCRZOpDDcPdx2NloNXuNXeO2S+ZPame0hMIhsIghvAsa
+ WRsAO8iPhdQuR2MNB0ZzCs2aTt3TEHU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-211-Xa-WyHXmO6uZHxOTtJ50vw-1; Wed,
+ 04 Jun 2025 05:40:57 -0400
+X-MC-Unique: Xa-WyHXmO6uZHxOTtJ50vw-1
+X-Mimecast-MFC-AGG-ID: Xa-WyHXmO6uZHxOTtJ50vw_1749030056
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 07FED18004A3; Wed,  4 Jun 2025 09:40:56 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 36EC61955DDA; Wed,  4 Jun 2025 09:40:55 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8CC3B21E66C3; Wed, 04 Jun 2025 11:40:52 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Stefan Hajnoczi <stefanha@gmail.com>,  qemu-devel@nongnu.org,  Thomas
+ Huth <thuth@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  "Michael
+ S . Tsirkin" <mst@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>,  Mark
+ Cave-Ayland <mark.cave-ayland@ilande.co.uk>,  Philippe =?utf-8?Q?Mathieu-?=
+ =?utf-8?Q?Daud=C3=A9?=
+ <philmd@linaro.org>,  Kevin Wolf <kwolf@redhat.com>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Alexander Graf <agraf@csgraf.de>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 3/3] docs: define policy forbidding use of AI code
+ generators
+In-Reply-To: <aEAQZLOrJvF5rdz4@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9=22's?= message of
+ "Wed, 4 Jun 2025 10:22:44 +0100")
+References: <20250603142524.4043193-1-armbru@redhat.com>
+ <20250603142524.4043193-4-armbru@redhat.com>
+ <CAJSP0QUGaQEwhVh_w6Wbdm-Nqo_2kHcb+eS2Simq-x9J=-7qkg@mail.gmail.com>
+ <87a56o1154.fsf@pond.sub.org> <aD_yhelX-w4Vdm8Z@redhat.com>
+ <87frgfyjb5.fsf@pond.sub.org> <aEAQZLOrJvF5rdz4@redhat.com>
+Date: Wed, 04 Jun 2025 11:40:52 +0200
+Message-ID: <877c1rvo7v.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=roan.richmond@codethink.co.uk; helo=imap5.colo.codethink.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,188 +101,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is based on version v0.8.3 of the ZALASR specification [1].
-The specification is listed as in Frozen state [2].
+Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
 
-[1]: https://github.com/riscv/riscv-zalasr/tree/v0.8.3
-[2]: https://lf-riscv.atlassian.net/wiki/spaces/HOME/pages/16154882/All+RISC-V+Specifications+Under+Active+Development
+> On Wed, Jun 04, 2025 at 10:58:38AM +0200, Markus Armbruster wrote:
+>> Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
+>>=20
+>> > On Wed, Jun 04, 2025 at 08:17:27AM +0200, Markus Armbruster wrote:
+>> >> Stefan Hajnoczi <stefanha@gmail.com> writes:
+>> >>=20
+>> >> > On Tue, Jun 3, 2025 at 10:25=E2=80=AFAM Markus Armbruster <armbru@r=
+edhat.com> wrote:
+>> >> >>
+>> >> >> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>> >  >> +
+>> >> >> +The increasing prevalence of AI code generators, most notably but=
+ not limited
+>> >> >
+>> >> > More detail is needed on what an "AI code generator" is. Coding
+>> >> > assistant tools range from autocompletion to linters to automatic c=
+ode
+>> >> > generators. In addition there are other AI-related tools like ChatG=
+PT
+>> >> > or Gemini as a chatbot that can people use like Stackoverflow or an
+>> >> > API documentation summarizer.
+>> >> >
+>> >> > I think the intent is to say: do not put code that comes from _any_=
+ AI
+>> >> > tool into QEMU.
+>> >> >
+>> >> > It would be okay to use AI to research APIs, algorithms, brainstorm
+>> >> > ideas, debug the code, analyze the code, etc but the actual code
+>> >> > changes must not be generated by AI.
+>> >
+>> > The scope of the policy is around contributions we receive as
+>> > patches with SoB. Researching / brainstorming / analysis etc
+>> > are not contribution activities, so not covered by the policy
+>> > IMHO.
+>>=20
+>> Yes.  More below.
+>>=20
+>> >> The existing text is about "AI code generators".  However, the "most
+>> >> notably LLMs" that follows it could lead readers to believe it's about
+>> >> more than just code generation, because LLMs are in fact used for mor=
+e.
+>> >> I figure this is your concern.
+>> >>=20
+>> >> We could instead start wide, then narrow the focus to code generation.
+>> >> Here's my try:
+>> >>=20
+>> >>   The increasing prevalence of AI-assisted software development resul=
+ts
+>> >>   in a number of difficult legal questions and risks for software
+>> >>   projects, including QEMU.  Of particular concern is code generated =
+by
+>> >>   `Large Language Models
+>> >>   <https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
+>> >
+>> > Documentation we maintain has the same concerns as code.
+>> > So I'd suggest to substitute 'code' with 'code / content'.
+>>=20
+>> Makes sense, thanks!
+>>=20
+>> >> If we want to mention uses of AI we consider okay, I'd do so further
+>> >> down, to not distract from the main point here.  Perhaps:
+>> >>=20
+>> >>   The QEMU project thus requires that contributors refrain from using=
+ AI code
+>> >>   generators on patches intended to be submitted to the project, and =
+will
+>> >>   decline any contribution if use of AI is either known or suspected.
+>> >>=20
+>> >>   This policy does not apply to other uses of AI, such as researching=
+ APIs or
+>> >>   algorithms, static analysis, or debugging.
+>> >>=20
+>> >>   Examples of tools impacted by this policy includes both GitHub's Co=
+Pilot,
+>> >>   OpenAI's ChatGPT, and Meta's Code Llama, amongst many others which =
+are less
+>> >>   well known.
+>> >>=20
+>> >> The paragraph in the middle is new, the other two are unchanged.
+>> >>=20
+>> >> Thoughts?
+>> >
+>> > IMHO its redundant, as the policy is expressly around contribution of
+>> > code/content, and those activities as not contribution related, so
+>> > outside the scope already.
+>>=20
+>> The very first paragraph in this file already set the scope: "provenance
+>> of patch submissions [...] to the project", so you have a point here.
+>> But does repeating the scope here hurt or help?
+>
+> I guess it probably doesn't hurt to have it. Perhaps tweak to
+>
+>  This policy does not apply to other uses of AI, such as researching APIs=
+ or
+>  algorithms, static analysis, or debugging, provided their output is not
+>  to be included in contributions.
+>
+> and for the last paragraph remove 'both' and add a tailer
+>
+>    Examples of tools impacted by this policy include GitHub's CoPilot,
+>    OpenAI's ChatGPT, and Meta's Code Llama (amongst many others which are=
+ less
+>    well known), and code/content generation agents which are built on top=
+ of
+>    such tools.
 
-Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
----
-V2:
-  - rebased patch onto master branch
-  - added check for RV64() for Load Double, as pointed out by Alistair Palmer.
-
-In response to Alistair Palmer (https://lists.gnu.org/archive/html/qemu-riscv/2025-06/msg00010.html):
-"Aren't you missing a check to ensure RL is set?"
-  - There is no need to check if RL is set, as this is required by Spec for all Store Release instructions. 
-
- target/riscv/cpu.c                           |   1 +
- target/riscv/insn32.decode                   |  10 ++
- target/riscv/insn_trans/trans_rvzalasr.c.inc | 110 +++++++++++++++++++
- target/riscv/translate.c                     |   1 +
- 4 files changed, 122 insertions(+)
- create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 629ac37501..b52bbf0936 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -128,6 +128,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
-     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
-     ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
-+    ISA_EXT_DATA_ENTRY(zalasr, PRIV_VERSION_1_12_0, ext_zalasr),
-     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
-     ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
-     ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index cd23b1f3a9..c848c0c1c5 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1066,3 +1066,13 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
- amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
- amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
- amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
-+
-+# *** Zalasr Standard Extension ***
-+lb_aqrl  00110 . . ..... ..... 000 ..... 0101111 @atom_st
-+lh_aqrl  00110 . . ..... ..... 001 ..... 0101111 @atom_st
-+lw_aqrl  00110 . . ..... ..... 010 ..... 0101111 @atom_st
-+ld_aqrl  00110 . . ..... ..... 011 ..... 0101111 @atom_st
-+sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
-+sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
-+sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
-+sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
-diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-new file mode 100644
-index 0000000000..2f2934e731
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-@@ -0,0 +1,110 @@
-+/*
-+ * RISC-V translation routines for the ZALASR (Load-Aquire and Store-Release)
-+ * Extension.
-+ *
-+ * Copyright (c) 2025 Roan Richmond, roan.richmond@codethink.co.uk
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#define REQUIRE_ZALASR(ctx) do {     \
-+    if (!ctx->cfg_ptr->ext_zalasr) { \
-+        return false;                \
-+    }                                \
-+} while (0)
-+
-+static bool gen_load_acquire(DisasContext *ctx, arg_lb_aqrl *a, MemOp memop)
-+{
-+    decode_save_opc(ctx, 0);
-+
-+    TCGv addr = get_address(ctx, a->rs1, 0);
-+    TCGv dest = get_gpr(ctx, a->rd, EXT_NONE);
-+    TCGBar bar = (a->rl) ? TCG_BAR_STRL : 0;
-+
-+    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-+
-+    tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
-+    gen_set_gpr(ctx, a->rd, dest);
-+
-+    /* Add a memory barrier implied by AQ (mandatory) and RL (optional) */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ | bar);
-+
-+    return true;
-+}
-+
-+static bool trans_lb_aqrl(DisasContext *ctx, arg_lb_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_SB));
-+}
-+
-+static bool trans_lh_aqrl(DisasContext *ctx, arg_lh_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESW));
-+}
-+
-+static bool trans_lw_aqrl(DisasContext *ctx, arg_lw_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESL));
-+}
-+
-+static bool trans_ld_aqrl(DisasContext *ctx, arg_ld_aqrl *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TEUQ));
-+}
-+
-+static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp memop)
-+{
-+    decode_save_opc(ctx, 0);
-+
-+    TCGv addr = get_address(ctx, a->rs1, 0);
-+    TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGBar bar = (a->aq) ? TCG_BAR_LDAQ : 0;
-+
-+    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-+
-+    /* Add a memory barrier implied by RL (mandatory) and AQ (optional) */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL | bar);
-+
-+    tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
-+    return true;
-+}
-+
-+static bool trans_sb_aqrl(DisasContext *ctx, arg_sb_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_SB));
-+}
-+
-+static bool trans_sh_aqrl(DisasContext *ctx, arg_sh_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESW));
-+}
-+
-+static bool trans_sw_aqrl(DisasContext *ctx, arg_sw_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESL));
-+}
-+
-+static bool trans_sd_aqrl(DisasContext *ctx, arg_sd_aqrl *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TEUQ));
-+}
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index d7a6de02df..4cd2d68e46 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1183,6 +1183,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- #include "insn_trans/trans_rvzicond.c.inc"
- #include "insn_trans/trans_rvzacas.c.inc"
- #include "insn_trans/trans_rvzabha.c.inc"
-+#include "insn_trans/trans_rvzalasr.c.inc"
- #include "insn_trans/trans_rvzawrs.c.inc"
- #include "insn_trans/trans_rvzicbo.c.inc"
- #include "insn_trans/trans_rvzimop.c.inc"
--- 
-2.43.0
+Sold!
 
 
