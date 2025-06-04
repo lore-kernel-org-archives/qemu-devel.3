@@ -4,70 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D3DC5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 12:58:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E6FAC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:12:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMngt-0007Ue-6r; Wed, 04 Jun 2025 08:57:59 -0400
+	id 1uMnuK-00025w-KW; Wed, 04 Jun 2025 09:11:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMngr-0007U3-Fq
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 08:57:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMngp-0000Tj-PZ
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 08:57:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749041873;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=XSpNlgmj5ReO4/tbnxW3Q0hUhOIn5Ivq0W0vFq3MdeY=;
- b=jIIYLjwutR8sJiPuYLOWlcckQa8nKY8NOmdrPYU7jbDZqJYntyEI02372tICT927oVl4pm
- td7doJy69JgLCjetJY0dRrmeEY2hkd6kbgi3iWDWLGiGFp9bGM7NEj6JAvRPAZEJFLy0y1
- Dd3dtfkDqKN9+gmaVqcJu6z9dY6IN9I=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-36-n7d0-N_2OZqkmOixoKXh8w-1; Wed,
- 04 Jun 2025 08:57:50 -0400
-X-MC-Unique: n7d0-N_2OZqkmOixoKXh8w-1
-X-Mimecast-MFC-AGG-ID: n7d0-N_2OZqkmOixoKXh8w_1749041869
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED17E1800DA5; Wed,  4 Jun 2025 12:57:48 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.34.43])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8733B180045B; Wed,  4 Jun 2025 12:57:45 +0000 (UTC)
-Date: Wed, 4 Jun 2025 14:57:43 +0200
-From: Kevin Wolf <kwolf@redhat.com>
-To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, eduardo@habkost.net,
- berrange@redhat.com, pbonzini@redhat.com, vsementsov@virtuozzo.com
-Subject: Re: [PATCH v2] hw/core/qdev-properties-system: Add missing return in
- set_drive_helper()
-Message-ID: <aEBCxwfX7QQue1FB@redhat.com>
-References: <20250523070211.280498-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uMnuJ-00025d-73
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:11:51 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uMnuG-0002ZL-5G
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:11:50 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-604b9c53f6fso3041536a12.2
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:11:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749042704; x=1749647504; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=9z/gNYpNj9bOP6fZHD3VN0jyaVmORhn6X2CEboAKjZs=;
+ b=GjhCV9Ve0BncLS/i5uoMbAiLI/ENjI6NmryzQjagDD5ZaYKjKI60pzFHdN+q11nypz
+ Eq+zrR6Hu1TkPGxCMglE5P3aX6tvJjZaxEiEEqJ05Xb8SaH20Qu55ZUgmfCIYP6Qk63z
+ v5k9IbQkvQrLmbe/YvALhhVjo46jnBnzpH+Usiv0ExaHSNm2JF32s8H/aVv7ejZ+MdxW
+ HlwdDz4hMLbbKmAuly4uVlPMqMC/392hn+Ux8iZHVcdxVFgmWuvHWNoEpr0V6no8FSDK
+ m4HGCPvcmWs/P1LEqvEUvFz7zQ4cM5N+8E0CyM6C0pb7z8Wj3nK+hYeBp9KhZc+4a76K
+ I4wQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749042704; x=1749647504;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=9z/gNYpNj9bOP6fZHD3VN0jyaVmORhn6X2CEboAKjZs=;
+ b=mk/vDhjxFweKMJvuHBDawxGMvyrxyPLKP8WCZQpw55s8vZtpgyEYnRmJJNkk42Bgmu
+ WkfkRCyX5ZqXeMKCmFvYa+QeBQmepDEHGXe2MbUfmAjUncZHzmQpcn8wuS0QYoXvriuG
+ Vjmy+hTOTaOyBv3RUZBro6jDmhms6QVZ/jT/N4jWyJ25JKkb30tFL7yueuWmP55hg395
+ +NT8COZahES5Uk5TE0PG6QpGMG9ozyQa0PHgOa2SjDuSf9p7Bk96Q45HmyRkEypjr8nJ
+ zOJvaIhfrpKjDZ8znYUbYTcWYAOcWEzb/YuRt29oNxszBTWvZ/SjESYBpyWQvnM06Px9
+ hEBg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXeVAFC0MbgSQPD6SdEo+aR+DAlxp20PoXzZwchVGafERzICXLYUa/sOp+/XblBgLMPdBsJOPJx27+n@nongnu.org
+X-Gm-Message-State: AOJu0Yw2Kw90is1iG307YlI3GWSbvDjIsu5NoEqYBaNXxBun5gGOirYG
+ m441aQRRwR/m9j15yspxhLSQ4YPzv4IOAnCUpIOjH1W57zudam7U6uhdkNp9vtROBuTurCIOZV5
+ sbBa64xPPaq0K047FYX4mne0Y3B5smQtmxDA9
+X-Gm-Gg: ASbGncvmVmOipPielbl3uh1tSwGjB0JUfDwRL7tyvnvE4SYBWHfhHB3mtxQ/67xm3WS
+ PpefUvk6CPFxk1omDBDVkRseY5nlQo9PveWenmhrMGGDoWWH2w9hEhQnFTYfkvFBJwYYNm9xl5B
+ xsEVQyAMcX3kvfef3n3c9lGASOk/hdwjo=
+X-Google-Smtp-Source: AGHT+IGf8WmyHnsbcDSYV8bX6GWXfNCYCHORT9SjKvSTpEqDY/uZoYe94iFjSU50r7sMrPyK34YFQ4x8Efs5B8/LHNw=
+X-Received: by 2002:a17:907:60ca:b0:ad8:89c7:2735 with SMTP id
+ a640c23a62f3a-addf8fe2d0bmr265780466b.58.1749042703937; Wed, 04 Jun 2025
+ 06:11:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250523070211.280498-1-f.ebner@proxmox.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+References: <20250528100507.313906-1-thuth@redhat.com>
+ <CAJSP0QUpxsVEMEDT8opTZrhs6oFfFJk+jUqdR-dZL=TzQcYbWg@mail.gmail.com>
+ <34256440-efd5-4395-8eab-49ca5bbe0377@redhat.com>
+ <fa5f0538-9c66-46f1-b65d-d723d2006716@yandex-team.ru>
+In-Reply-To: <fa5f0538-9c66-46f1-b65d-d723d2006716@yandex-team.ru>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 4 Jun 2025 09:11:31 -0400
+X-Gm-Features: AX0GCFtVn7RnOFVOEQyZORhjM9GuMMu0buvY2toq1ZH9bs503MBFvWmTNbXdJSc
+Message-ID: <CAJSP0QX8pXNE7SL8hAOHStJy+ZYdhF9bzWX95Qts9hk6vgKseg@mail.gmail.com>
+Subject: Re: [PULL 00/27] Functional tests,
+ Microblaze endianness & pc/q35 cleanups
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org, 
+ Stefan Hajnoczi <stefanha@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,81 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 23.05.2025 um 09:02 hat Fiona Ebner geschrieben:
-> Currently, changing the 'drive' property of e.g. a scsi-hd object will
-> result in an assertion failure if the aio context of the block node
-> it's replaced with doesn't match the current aio context:
-> 
-> > bdrv_replace_child_noperm: Assertion `bdrv_get_aio_context(old_bs) ==
-> > bdrv_get_aio_context(new_bs)' failed.
-> 
-> The problematic scenario is already detected, but a 'return' statement
-> was missing.
-> 
-> Cc: qemu-stable@nongnu.org
-> Fixes: d1a58c176a ("qdev: allow setting drive property for realized device")
-> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-> ---
-> 
-> Changes in v2:
-> * Add missing condition in commit message, sorry for the noise!
+On Wed, Jun 4, 2025 at 3:51=E2=80=AFAM Alexandr Moshkov
+<dtalexundeer@yandex-team.ru> wrote:
+>
+>
+> On 5/29/25 01:12, Thomas Huth wrote:
+> > On 28/05/2025 21.23, Stefan Hajnoczi wrote:
+> >> On Wed, May 28, 2025 at 6:12=E2=80=AFAM Thomas Huth <thuth@redhat.com>=
+ wrote:
+> >>>
+> >>>   Hi!
+> >>>
+> >>> The following changes since commit
+> >>> 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e:
+> >>>
+> >>>    Merge tag 'pull-aspeed-20250526' of
+> >>> https://github.com/legoater/qemu into staging (2025-05-26 10:16:59
+> >>> -0400)
+> >>>
+> >>> are available in the Git repository at:
+> >>>
+> >>>    https://gitlab.com/thuth/qemu.git tags/pull-request-2025-05-28
+> >>>
+> >>> for you to fetch changes up to
+> >>> 9c2da02e184fddfa7cd7d7813455c2306daae99a:
+> >>>
+> >>>    tests/unit/test-util-sockets: fix mem-leak on error object
+> >>> (2025-05-28 11:59:47 +0200)
+> >>>
+> >>> ----------------------------------------------------------------
+> >>> * Functional tests improvements
+> >>> * Endianness improvements/clean-ups for the Microblaze machines
+> >>> * Remove obsolete -2.4 and -2.5 i440fx and q35 machine types and
+> >>> related code
+> >>>
+> >>> ----------------------------------------------------------------
+> >>> Alexandr Moshkov (2):
+> >>>        tests/functional: add skipLockedMemoryTest decorator
+> >>>        tests/functional: add memlock tests
+> >>
+> >> Hi Thomas and Alexandr,
+> >> The memlock tests are failing:
+> >> https://gitlab.com/qemu-project/qemu/-/jobs/10181084830#L5421
+> >> https://gitlab.com/qemu-project/qemu/-/jobs/10181084865#L5476
+> >>
+> >> Please take a look and send a new pull request. Thanks!
+> >
+> Hello! I think Stefan forgot to CC me in his reply. Only now find this
+> message)
+>
+>
+> > According to the log:
+> >
+> >  Output: qemu-system-aarch64: No machine specified, and there is no
+> > default
+> >
+> > I think it likely does not make sense to run this test with the
+> > aarch64 target... Alexandr, would it make sense to limit this to x86
+> > only?
+>
+> It looks like adding this lines to vm creation fixes all problems with
+> other targets on memlock test:
+>
+> self.set_machine('none')
+> self.vm.add_args('-nodefaults')
+>
+> What's the convenient way to fix it? Resend a new patch?
 
-Thanks, applied to the block branch.
+Hi Alexandr,
+Sorry I forgot to CC you. Since the patch in question hasn't been
+merged yet, you could send a new revision of the patch and Thomas
+could include it in his next pull request. That way the fixed patch
+will be introduced in one commit rather than a broken commit followed
+by a fix.
 
-But while we're here...
+Stefan
 
-> Reproducer:
-> 
-> #!/bin/bash
-> rm /tmp/disk0.raw
-> rm /tmp/disk1.raw
-> ./qemu-img create -f raw /tmp/disk0.raw 1G
-> ./qemu-img create -f raw /tmp/disk1.raw 1G
-> ./qemu-system-x86_64 --qmp stdio \
-> --blockdev file,node-name=node0,filename=/tmp/disk0.raw \
-> --blockdev file,node-name=node1,filename=/tmp/disk1.raw \
-> --nodefaults \
-> --object 'iothread,id=iothread0' \
-> --device 'virtio-scsi-pci,id=virtioscsi0,bus=pci.0,addr=0x3,iothread=iothread0' \
-> --device 'scsi-hd,bus=virtioscsi0.0,scsi-id=1,drive=node0,id=scsi0' \
-> <<EOF
-> {"execute": "qmp_capabilities"}
-> {"execute": "qom-set", "arguments": { "path": "/machine/peripheral/scsi0", "property": "drive", "value": "node1" } }
-> {"execute": "quit"}
-> EOF
-
-...could you put this in a qemu-iotests case as a follow-up? It looks
-like we don't have a proper test for qom-set on drive properties yet.
-
->  hw/core/qdev-properties-system.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-> index 8e11e6388b..24e145d870 100644
-> --- a/hw/core/qdev-properties-system.c
-> +++ b/hw/core/qdev-properties-system.c
-> @@ -145,6 +145,7 @@ static void set_drive_helper(Object *obj, Visitor *v, const char *name,
->          if (ctx != bdrv_get_aio_context(bs)) {
->              error_setg(errp, "Different aio context is not supported for new "
->                         "node");
-> +            return;
->          }
->  
->          blk_replace_bs(blk, bs, errp);
-
-While this is the trivial fix for what was originally meant, I'm not
-sure if that's the best way to handle the situation. I would have
-expected that we do something similar as in bdrv_attach_child_common()
-and try to move @bs into @ctx before failing.
-
-Nowadays, even on failure to move @bs, we don't strictly have to error
-out any more since the backends are properly multithreaded. But we
-haven't made that change even to bdrv_attach_child_common() yet. I
-wonder if we should only do that with a force option.
-
-We don't have to address this now, but it probably doesn't hurt to think
-a bit about what we want it to look like in the long run.
-
-Kevin
-
+>
+>
+> Best regards,
+>
+> Alexandr
+>
 
