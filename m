@@ -4,34 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B4E1C5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 12:09:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F351C5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 12:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMmui-00047p-VN; Wed, 04 Jun 2025 08:08:13 -0400
+	id 1uMmuk-0004Ax-B9; Wed, 04 Jun 2025 08:08:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uMmu5-0003yM-9P; Wed, 04 Jun 2025 08:07:35 -0400
+ id 1uMmu7-0003yU-FC; Wed, 04 Jun 2025 08:07:35 -0400
 Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uMmu0-0002Cc-GO; Wed, 04 Jun 2025 08:07:31 -0400
+ id 1uMmtz-0002Cj-HD; Wed, 04 Jun 2025 08:07:31 -0400
 Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id CB10844B15;
- Wed,  4 Jun 2025 14:07:22 +0200 (CEST)
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 5C5CE44AF3;
+ Wed,  4 Jun 2025 14:07:23 +0200 (CEST)
 From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com,
  stefanha@redhat.com, fam@euphon.net, jsnow@redhat.com,
  vsementsov@yandex-team.ru, eblake@redhat.com, kbusch@kernel.org,
  its@irrelevant.dk, foss@defmacro.it
-Subject: [PATCH 0/4] block: fix deadlock when doing blockdev-snapshot of a
- node with compress filter
-Date: Wed,  4 Jun 2025 14:07:13 +0200
-Message-Id: <20250604120717.458445-1-f.ebner@proxmox.com>
+Subject: [PATCH 4/4] iotests: add test for snapshot on top of node with
+ compress filter
+Date: Wed,  4 Jun 2025 14:07:17 +0200
+Message-Id: <20250604120717.458445-5-f.ebner@proxmox.com>
 X-Mailer: git-send-email 2.39.5
+In-Reply-To: <20250604120717.458445-1-f.ebner@proxmox.com>
+References: <20250604120717.458445-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
@@ -57,47 +59,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Patches 1/4 and 2/4 are tangentially related. See patches 3/4 and 4/4
-for the details.
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+---
+ tests/qemu-iotests/085     | 18 ++++++++++++++++++
+ tests/qemu-iotests/085.out | 21 +++++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
-I did not CC the people for the individual block drivers. Let me know
-if I should!
-
-Fiona Ebner (4):
-  block/graph-lock: fix typo in comment
-  block-coroutine-wrapper: mark generated co-wrapper as GRAPH_UNLOCKED
-  block: make calling bdrv_refresh_limits() safe while holding graph
-    lock
-  iotests: add test for snapshot on top of node with compress filter
-
- block.c                            | 14 ++++++++++----
- block/blkio.c                      |  5 ++---
- block/crypto.c                     |  8 ++++----
- block/file-posix.c                 |  7 +++----
- block/io.c                         |  4 ++--
- block/iscsi.c                      |  7 +++----
- block/mirror.c                     |  5 +++--
- block/monitor/bitmap-qmp-cmds.c    |  2 ++
- block/qcow.c                       |  5 ++---
- block/qcow2.c                      |  5 ++---
- block/qed.c                        |  5 ++---
- block/raw-format.c                 |  7 +++----
- block/rbd.c                        |  5 ++---
- block/vdi.c                        | 11 ++++++-----
- block/vhdx.c                       |  5 ++---
- block/vmdk.c                       |  5 ++---
- block/vpc.c                        |  5 ++---
- hw/nvme/ns.c                       |  2 +-
- include/block/block-io.h           |  9 +++++----
- include/block/block_int-common.h   |  4 ++--
- include/block/dirty-bitmap.h       |  2 +-
- include/block/graph-lock.h         |  2 +-
- qemu-img.c                         |  6 ++++++
- scripts/block-coroutine-wrapper.py |  2 +-
- tests/qemu-iotests/085             | 18 ++++++++++++++++++
- tests/qemu-iotests/085.out         | 21 +++++++++++++++++++++
- 26 files changed, 108 insertions(+), 63 deletions(-)
-
+diff --git a/tests/qemu-iotests/085 b/tests/qemu-iotests/085
+index 3fb7b0b5c8..5063e3e8d2 100755
+--- a/tests/qemu-iotests/085
++++ b/tests/qemu-iotests/085
+@@ -270,6 +270,24 @@ _send_qemu_cmd $h "{ 'execute': 'blockdev-snapshot',
+                                     'overlay':'snap_${SNAPSHOTS}' }
+                    }" "error"
+ 
++echo
++echo === Add snapshot in combination with compress filter ===
++echo
++
++SNAPSHOTS=$((${SNAPSHOTS}+1))
++add_snapshot_image ${SNAPSHOTS}
++
++_send_qemu_cmd $h "{ 'execute': 'blockdev-add',
++                     'arguments': { 'driver':'compress',
++                                    'node-name':'compress',
++                                    'file':'virtio0' }
++                   }" "return"
++
++_send_qemu_cmd $h "{ 'execute': 'blockdev-snapshot',
++                     'arguments': { 'node':'compress',
++                                    'overlay':'snap_${SNAPSHOTS}' }
++                   }" "return"
++
+ # success, all done
+ echo "*** done"
+ rm -f $seq.full
+diff --git a/tests/qemu-iotests/085.out b/tests/qemu-iotests/085.out
+index b543b992ff..57d68f3bb9 100644
+--- a/tests/qemu-iotests/085.out
++++ b/tests/qemu-iotests/085.out
+@@ -255,4 +255,25 @@ Formatting 'TEST_DIR/15-snapshot-v0.IMGFMT', fmt=IMGFMT size=134217728 backing_f
+                                     'overlay':'snap_15' }
+                    }
+ {"error": {"class": "GenericError", "desc": "Cannot find device='nodevice' nor node-name='nodevice'"}}
++
++=== Add snapshot in combination with compress filter ===
++
++Formatting 'TEST_DIR/16-snapshot-v0.IMGFMT', fmt=IMGFMT size=134217728 backing_file=TEST_DIR/15-snapshot-v0.IMGFMT backing_fmt=IMGFMT
++{ 'execute': 'blockdev-add', 'arguments':
++           { 'driver': 'IMGFMT', 'node-name': 'snap_16', 'backing': null,
++             'file':
++             { 'driver': 'file', 'filename': 'TEST_DIR/16-snapshot-v0.IMGFMT',
++               'node-name': 'file_16' } } }
++{"return": {}}
++{ 'execute': 'blockdev-add',
++                     'arguments': { 'driver':'compress',
++                                    'node-name':'compress',
++                                    'file':'virtio0' }
++                   }
++{"return": {}}
++{ 'execute': 'blockdev-snapshot',
++                     'arguments': { 'node':'compress',
++                                    'overlay':'snap_16' }
++                   }
++{"return": {}}
+ *** done
 -- 
 2.39.5
 
