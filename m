@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5051C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 10:17:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C17C5B552
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 10:40:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMlB8-0001x8-L3; Wed, 04 Jun 2025 06:17:02 -0400
+	id 1uMlXJ-0005vV-FK; Wed, 04 Jun 2025 06:39:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uMlB5-0001vO-V8
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 06:17:00 -0400
-Received: from mgamail.intel.com ([198.175.65.13])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uMlB3-0004f5-W9
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 06:16:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749032218; x=1780568218;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=E9YqgOv9EzBex00N/hunJwseb2GdKCE8Z1Oph+/VDqg=;
- b=CUSVPtZJnjbet6+Uj21QXjf87U/CAun5m5/paldZY33WJSQmKK0c7rsK
- A4wwUWgtibMWOBzQO3dt4VaD7Fif7lwo/qsEX/4Nx71V8gFFPQS1IgkLf
- ExY0/bAbBZJ/twbomaNoTuOEnFzkW1Snn6TfkCzC8Llc9C6s9AJBUtnn7
- tvKcB/2Z8asP56o5CelFXK2GfGBWiOMVO1wf2fjWUVBshcPY75M6xBKQB
- bS8v9RsJu9/3qQFRnJFL3W/O0d1jA1N6H5VU9wF4CgL3/w7ye7/n0oWrE
- SX3XvQSqAlnt63EHxm9oLVCOZqsuQy8hrl1mD9eDx/bOCoCOmhQUGeBzV g==;
-X-CSE-ConnectionGUID: zlmf4FVdRbepmDxTsbrH6g==
-X-CSE-MsgGUID: +BUPYg6rQqCH1CawzQCsfg==
-X-IronPort-AV: E=McAfee;i="6700,10204,11453"; a="62160449"
-X-IronPort-AV: E=Sophos;i="6.16,208,1744095600"; d="scan'208";a="62160449"
-Received: from fmviesa004.fm.intel.com ([10.60.135.144])
- by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 04 Jun 2025 03:16:56 -0700
-X-CSE-ConnectionGUID: L32H+nGcRRCNQOg2Ulu3Tw==
-X-CSE-MsgGUID: n2RbOjjvR9CIN+lzBYte7A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,208,1744095600"; d="scan'208";a="150296944"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa004.fm.intel.com with ESMTP; 04 Jun 2025 03:16:54 -0700
-Date: Wed, 4 Jun 2025 18:38:07 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Daniel P =?iso-8859-1?Q?=2E_Berrang=E9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH 3/3] i386/tdx: Clarify the error message of
- mrconfigid/mrowner/mrownerconfig
-Message-ID: <aEAiD9LOZKtoZSBx@intel.com>
-References: <20250603050305.1704586-1-xiaoyao.li@intel.com>
- <20250603050305.1704586-4-xiaoyao.li@intel.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMlXH-0005v1-ET
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 06:39:55 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMlXF-0007Hk-Uh
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 06:39:55 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-450cfb790f7so51588895e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 03:39:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749033592; x=1749638392; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Kskc/8nOyq7cZXIXOCzBhyqZtTwDOINldLWOS/GQx9g=;
+ b=UUYuCgzgWv4VenU3NRRH9WqdZfyNUp2f4Nja5SOGTQsc22YCgrWLP9hfxt4unj9fwh
+ meSOOfv0EFXoAn8NvJqH22gpi5RIKbHs8hsMPBpq8jcsTFtHvuJcop6Fk6ZZLBM78ntu
+ JQo1k+Dd2G7g5362XmOgcpjaxc8AWzporOA2yRlE48/rLPymce8VnCrMa3eaUM7TrieJ
+ mkLwdkg1M3MzqZifov7xrrOg4LacTL/vTujrmJZ716F9AgGY5G5TArC31Xe3ndE9YnFv
+ 460X16xt7EKoLYRQwTbuuBzp47OIv5nfvZ8UKiBYVaMzOKX9Privtc/OPG5w6kTkmYKm
+ 10Zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749033592; x=1749638392;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=Kskc/8nOyq7cZXIXOCzBhyqZtTwDOINldLWOS/GQx9g=;
+ b=bXDBlmTJ9GIcZJM2Sgg2fHn0hIfCMiiIR6EDmduSR3tSr46bjXRPTo459j9ZLkVQfK
+ 4DL4lORWhQrIXQQ3a1OSsXjG32XicSLiu+yHuLLLB87JdhpYRIv1nitGU404P434OJ2G
+ 0NewL+3QI7O1qrkkn4/nDxHWilSxd84lknLOwwXaKzeBltrJc/3Ca8pGYlZscAo1q3T4
+ dMvAgQNGNdW08tWysH/qfKjh8W3wlpv/kH+A1HvDWBxONG8sMWgwqM7Nrc6TVVnBuL9W
+ nceZZShZ/4DbF6gihgdRAqmoPH6QoSDyg22M/x4ah0lMpGFPS5hrGCopLqyAIU/SoPm2
+ LAYA==
+X-Gm-Message-State: AOJu0Ywvod1z+nsIFZ/sw0B72/YAX7nb9W3cuYLNAtZUmLkImQMUdhR6
+ TkYeKMSagpwoBQTWroDjrjHx55c8RLxADgUcPY1NXYnVSQXNTrnxCVIV7c8URe12568=
+X-Gm-Gg: ASbGncvBAG3GXIVI+VC1r3nu1QbMa6KUGm0A80ztHsMewi7vijosvlSij9P043z1aLY
+ 5yk96wOx9V50EIqW2++iToKQZKAG7pZv8YEtm0uIvPOwEzmrnRDn/h9RX2XJIf4ce9bebuEMqRs
+ QqNWHVlre5H6l+r92I/DSoV/JjK/owNj4QKMjAKhSieSf6IqLqK8kg8VpK9Un3pjJC242L4PSfQ
+ hPWs4HwJVDsm7jnh07NxuKer0OBI9HJVr6pfv+vqxVtfvR0GucJKZw7NFl9pTJXMKllWN+YMxw5
+ Dp8CgUClRfGY7ecdAPkF154Qu2yl9VRjRsqcFIV/Brnk7B0X13UlkF+eP/kEvBa1e5EBgemgjkH
+ aX1uj95f/+Y4MKhG73J5ZnHY3+1mIog==
+X-Google-Smtp-Source: AGHT+IFeoFQYDoejexqIYywDFExu9ZnODiMlQ5yGatCXbAGKlP7ued2N1/u8u9wrCXRKUP5LoGVM7A==
+X-Received: by 2002:a05:6000:288c:b0:3a4:d0fe:428a with SMTP id
+ ffacd0b85a97d-3a51d9691f8mr1878814f8f.28.1749033592146; 
+ Wed, 04 Jun 2025 03:39:52 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-450d8012b09sm192462605e9.37.2025.06.04.03.39.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Jun 2025 03:39:51 -0700 (PDT)
+Message-ID: <a4665454-5116-4cbb-8a1e-766467f33116@linaro.org>
+Date: Wed, 4 Jun 2025 12:39:50 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 15/16] hw/pci-host/raven: Do not map regions in init method
+To: BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, Nicholas Piggin <npiggin@gmail.com>
+References: <cover.1746374076.git.balaton@eik.bme.hu>
+ <1e85cddcd56f2431e349d21fcf6e539a663a64c3.1746374076.git.balaton@eik.bme.hu>
+ <bfd1359d-2a25-4c53-9eee-cec527197f8e@linaro.org>
+ <alpine.LMD.2.03.2506031547560.13449@eik.bme.hu>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <alpine.LMD.2.03.2506031547560.13449@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250603050305.1704586-4-xiaoyao.li@intel.com>
-Received-SPF: pass client-ip=198.175.65.13; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -87,27 +105,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 03, 2025 at 01:03:05AM -0400, Xiaoyao Li wrote:
-> Date: Tue,  3 Jun 2025 01:03:05 -0400
-> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> Subject: [PATCH 3/3] i386/tdx: Clarify the error message of
->  mrconfigid/mrowner/mrownerconfig
-> X-Mailer: git-send-email 2.43.0
-> 
-> The error message is misleading - we successfully decoded the data,
-> the decoded data was simply with the wrong length.
-> 
-> Change the error message to show it is an length check failure with both
-> the received and expected values.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-> ---
-> Suggested by Daniel at https://lore.kernel.org/qemu-devel/aBzT3TrdldaN-uqx@redhat.com/
-> ---
->  target/i386/kvm/tdx.c | 12 +++++++++---
->  1 file changed, 9 insertions(+), 3 deletions(-)
+(+Mark for Grackle)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+On 3/6/25 15:50, BALATON Zoltan wrote:
+> On Tue, 3 Jun 2025, Philippe Mathieu-DaudÃ© wrote:
+>> On 4/5/25 18:01, BALATON Zoltan wrote:
+>>> Export memory regions as sysbus mmio regions and let the board code
+>>> map them.
+>>>
+>>
+>> Why? The mapping belong to the host bridge, not the board...
+> 
+> I took inspiration from grackle that does it the same way.
+
+Well, this is a very old model, looking at commit 426f17bb0b8 in
+2009 (then updated in commit a773e64a8fd in 2018).
+
+Today I'd model PCI host bridges as keeping their PCI functions
+local (since they can not exist otherwise without the PHB),
+instanciated / wired / mapped within the PHB DeviceRealize, like
+mv64361_pcihost_realize(), the various ones in hw/pci-host/uninorth.c
+or the more complex i440fx_pcihost_realize().
+
+Anyway I can understand your frustration after waiting to get reviewed
+for over a month (I am experiencing the same). I was just trying to
+help.
+
+Regards,
+
+Phil.
 
 
