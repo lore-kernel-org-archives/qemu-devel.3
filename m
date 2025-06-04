@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D3DCC5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:29:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 637D2C5B549
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMoAY-0006s6-6s; Wed, 04 Jun 2025 09:28:38 -0400
+	id 1uMoBJ-0007ZD-KC; Wed, 04 Jun 2025 09:29:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAW-0006oY-Kr
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:28:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoB2-0007Km-D0
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:29:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAV-0004if-1I
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:28:36 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAx-0004mM-DX
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:29:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749043713;
+ s=mimecast20190719; t=1749043742;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Xnb6fY77tTZ5nf3Ugq1ke10+nz2hG2kWSwmOHbAyR9g=;
- b=D34bZEdytjANjMVJoqh5WPSx4o0v+UqbHCd3th3KZmriWBcXBE21/TNMPB48RIF/09s2B8
- NsiAFZxkAUUFtZqV0qZIwc/0/p8FVK0g2iL8Mfukhy2hlUFclUcM4iAv+Fl4MY3sHh5N6G
- zW+ci+pZG6UxHG2LBFcx+l/uYzqI53I=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2MF3nqIIquCrTW0JVJjHlVVDeW3RnH4+JqzPQaLGzH8=;
+ b=bfiOzAoNqLRBJus9QPFXAdz16U2eUokgfQrcD3guBhggWTHQWB2NXzqx6QByOGF8KJ/9qy
+ 2DHZdZ6LknkJERAFSsaFs7LwctDyct1xE3W2xSLIubjgWgDlGe4tyxpeiHvKV0vLGSA3Wc
+ Ri/4RQxgA0zKvv3bmkzuM2y5+cJtARk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-G0JCcm3XN2eV_gCRk55zqg-1; Wed, 04 Jun 2025 09:28:32 -0400
-X-MC-Unique: G0JCcm3XN2eV_gCRk55zqg-1
-X-Mimecast-MFC-AGG-ID: G0JCcm3XN2eV_gCRk55zqg_1749043711
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a5058f9ef4so1586456f8f.2
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:28:32 -0700 (PDT)
+ us-mta-3-rN9FB6WdOEy4sGK46wLNBg-1; Wed, 04 Jun 2025 09:29:01 -0400
+X-MC-Unique: rN9FB6WdOEy4sGK46wLNBg-1
+X-Mimecast-MFC-AGG-ID: rN9FB6WdOEy4sGK46wLNBg_1749043740
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-450d50eacafso37760155e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:29:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749043710; x=1749648510;
+ d=1e100.net; s=20230601; t=1749043740; x=1749648540;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Xnb6fY77tTZ5nf3Ugq1ke10+nz2hG2kWSwmOHbAyR9g=;
- b=ZmKQvMGgbOKAMEQQyvXOF+3o54Dkp0vGqYRbUTnlA8DdfZTXopHJIVwOYVI5Bflau8
- BlMtGEsm914ycnAYJ/+9NYEpHnPC1cjrwrZ+FfOty28IKLEnAxJlSJWHpjn6TIdOyzr/
- ylre1ZQSlaJDzoikR2ZAMToPQrVMWIezcu/fpIYh02bd6jcNJCfQlQnt/ymI4bqEDt2w
- pLEWWLAyD60uXUfGmgrVwVrQkPz2kZa6Mr6R3Ey3vbuvBB3LmB8KFMd/NHY52GOhkuNq
- tKBTgYFsOeHaHevon/zc7I/FLpPT+PyYw+5zDjrfggJ9Dj3vfnJZHjuW1pM3IFBmIHwQ
- GU5g==
-X-Gm-Message-State: AOJu0YxficVwMKVWZx7jVd7d2O/f45oIr7RUW91puHXWVnxJP0W/+jME
- K3K3d+cVLEsLCFX1Gi4olzvaCExCLb//e1pLKnUBm1fypPMgWfaHaXdIiDH3wpIqr08pWqShzBe
- MFSt3LwzgY+8dTjE1WPdTjh0QxdcYEcsA/y9u5dn63M7e2tGdgh0z9/bltexDXWEq
-X-Gm-Gg: ASbGnctnNXI+zUE7AnC+JWCIRNjlzOtY5wGIOWEwQLUG0Ml2YqtB8Lpix1bRR6AOUgs
- ICRwOOtjDfWUhWk67nA7R9vt506I186DLAlwifmoKnLp1gAnVGodq5lTVOYniJWlUn3Gi/NSv49
- tTxAYmsj9cHHJ1MIW4Ammahe8C7fuaciYFdMPQ9XJi2RiuxyZ32QOOMcqC629KZxnrSHWd60oDw
- ieFVB3YlUNN35S6CP/wgL1TN7uEAbRLbwrIWrmuryzizpg2gmJ6XoGaPMeBW3+9zmJNbkGosoej
- QjIhe7/PUY0Em0iF3k8CF4EKdP9nt6uNqDOc6hgg12uALHXC1Jk3wqxmgb7DeIRGg9Tztg==
-X-Received: by 2002:a05:6000:2dca:b0:3a4:edf5:b942 with SMTP id
- ffacd0b85a97d-3a51dc4c4e4mr2176762f8f.57.1749043710594; 
- Wed, 04 Jun 2025 06:28:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHcL5AVmKInEelTtThK+peHT0QG3YlWF7/tZ7/QHBq9wWF+Il6hkzBvPy2zivaRPESuEpd83Q==
-X-Received: by 2002:a05:6000:2dca:b0:3a4:edf5:b942 with SMTP id
- ffacd0b85a97d-3a51dc4c4e4mr2176727f8f.57.1749043710201; 
- Wed, 04 Jun 2025 06:28:30 -0700 (PDT)
+ bh=2MF3nqIIquCrTW0JVJjHlVVDeW3RnH4+JqzPQaLGzH8=;
+ b=c+tfAt37VduHzAvtQRVTqjac2gHZ8qiJRZyHP60gy1C6/mmI4R9V8mcF3S50v329gJ
+ LjETnWGmE/a2CmRqCxYH9Bm137i4dWguFXZRUeKtju5bLOru0fA6Q6awWdRcXA1z22La
+ 5mQ9ETrOs5aszBA1F+GXCR4sv1VcF4Qer/xp0s6E+oo05Cts/PPX/TdviWrMVPohho4X
+ 1Fi9qPAER9oFl+QXr66nqwWngjdbjwKQTBenaLIbLBXKxiaeiaf1HSDkg/wsO4CRti4l
+ 1qbNvdud3lnd6m6PBRfk/DPavND/6xQIm/IkZiWftpu9Hyhlt0gs1jxQOPJaC+2DF+rZ
+ KVPg==
+X-Gm-Message-State: AOJu0YxMESr36h9Vl4sndCuHZ9XocunMprfHUUWVScCxfnEFJh0xs1fB
+ w/0+pPR/XpSJyGVrStwyFQqYclcYh5dL4wn3l5yZFKeOeW3h4HXdd5pd9GTYN4lA5JsqrPaQcEZ
+ y9lEnAATpBXL7pxx9KQlUsYO9mUCFWFmJiKSBzwD2lQpfnXbLW3FpSepE
+X-Gm-Gg: ASbGncsfkEPFePmnFbVkgVIYcIO6wU6JAbQdXgUt7pa9A66ef26oN8rTLXvOO6/1UFl
+ T49Cli8nYLHAERmkjrm8+qxIFznc41s1WZpJm3LXgglBwexMo32X2cIl2zxHTifIXp6HdeU+A5k
+ oSZtrovdWSoDungm0wcTU8+RmXkVzEjQPEpT9+sqgnLIkooGQxgtCmwbB5GanuSbNhvC6VpG42a
+ kyKArXVUg/8vILKOqoxPkZvkFtuI3vXiwCz+S/TSFEaAAg25R44okr9qiKXFW7qalVV2uT66iI2
+ Swa3aHwW7pvSaEVvlq+6soHZbFor7zZ+0hiuVaV8dAIhDc5uM+j23xJYArf9vNr4HQq4/g==
+X-Received: by 2002:a05:600c:3e07:b0:442:cd13:f15d with SMTP id
+ 5b1f17b1804b1-451f0b2c13fmr24690635e9.29.1749043739767; 
+ Wed, 04 Jun 2025 06:28:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHNt05yWD6NpqGgyC22Y+8oXm4pFAsB/g/6b8026IPISfo5d34AZxtD6p561Kc7YKnhWCii8g==
+X-Received: by 2002:a05:600c:3e07:b0:442:cd13:f15d with SMTP id
+ 5b1f17b1804b1-451f0b2c13fmr24690405e9.29.1749043739352; 
+ Wed, 04 Jun 2025 06:28:59 -0700 (PDT)
 Received: from localhost
  (p200300cfd700f306503d3c798c1bf214.dip0.t-ipconnect.de.
  [2003:cf:d700:f306:503d:3c79:8c1b:f214])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5215e4c64sm1586316f8f.3.2025.06.04.06.28.27
+ 5b1f17b1804b1-450d8006c21sm196094225e9.33.2025.06.04.06.28.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Jun 2025 06:28:28 -0700 (PDT)
+ Wed, 04 Jun 2025 06:28:57 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v2 03/21] fuse: Remove superfluous empty line
-Date: Wed,  4 Jun 2025 15:27:55 +0200
-Message-ID: <20250604132813.359438-4-hreitz@redhat.com>
+Subject: [PATCH v2 11/21] fuse: Rename length to blk_len in fuse_write()
+Date: Wed,  4 Jun 2025 15:28:03 +0200
+Message-ID: <20250604132813.359438-12-hreitz@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250604132813.359438-1-hreitz@redhat.com>
 References: <20250604132813.359438-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -110,24 +110,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+The term "length" is ambiguous, use "blk_len" instead to be clear.
+
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c | 1 -
- 1 file changed, 1 deletion(-)
+ block/export/fuse.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
 diff --git a/block/export/fuse.c b/block/export/fuse.c
-index b224ce591d..a93316e1f4 100644
+index 044fbbf1fe..fd7887889c 100644
 --- a/block/export/fuse.c
 +++ b/block/export/fuse.c
-@@ -464,7 +464,6 @@ static int fuse_do_truncate(const FuseExport *exp, int64_t size,
+@@ -679,7 +679,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+ {
+     FuseExport *exp = fuse_req_userdata(req);
+     void *copied;
+-    int64_t length;
++    int64_t blk_len;
+     int ret;
+ 
+     /* Limited by max_write, should not happen */
+@@ -705,13 +705,13 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+      * Clients will expect short writes at EOF, so we have to limit
+      * offset+size to the image length.
+      */
+-    length = blk_getlength(exp->common.blk);
+-    if (length < 0) {
+-        fuse_reply_err(req, -length);
++    blk_len = blk_getlength(exp->common.blk);
++    if (blk_len < 0) {
++        fuse_reply_err(req, -blk_len);
+         goto free_buffer;
      }
  
-     if (add_resize_perm) {
--
-         if (!qemu_in_main_thread()) {
-             /* Changing permissions like below only works in the main thread */
-             return -EPERM;
+-    if (offset + size > length) {
++    if (offset + size > blk_len) {
+         if (exp->growable) {
+             ret = fuse_do_truncate(exp, offset + size, true, PREALLOC_MODE_OFF);
+             if (ret < 0) {
+@@ -719,7 +719,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+                 goto free_buffer;
+             }
+         } else {
+-            size = length - offset;
++            size = blk_len - offset;
+         }
+     }
+ 
 -- 
 2.49.0
 
