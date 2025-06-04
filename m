@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32734C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 18:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B81CC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 18:02:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMsMK-0002R1-Ek; Wed, 04 Jun 2025 13:57:04 -0400
+	id 1uMsMH-0002Nl-5s; Wed, 04 Jun 2025 13:57:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsM9-0002HN-2r
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:56:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsM4-0002FH-6Q
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:56:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsM3-0000Sm-U7
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:56:52 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1uMsM0-0000Pq-35
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:56:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749059805;
+ s=mimecast20190719; t=1749059789;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0Nqoo2/I0KBFtKvPJnslAMrNIaiOwhybrNX5lVaJOQk=;
- b=KFOUkUcwqm8xvLAnQ9A4R/rP9dXLUd0Y1Zet2/lD9N2rwwo62ak8IDFyq26W2dY8ShUVCp
- oRMu/VzL+/gK+txy5TwiSLbuJOCx9mfHPgfhT84aq+89WPtXqrdWjLBFUpSj/VLW6L00b2
- ZlnuMfP43kKF6KxEz+IXGzMxZYbVB5c=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ bh=rJh8u9RJAYyXP7u7wNsz7XpdpvjO7kfc6fAGQ2VLvSU=;
+ b=LDokX8swBfadLrgY9Onh1D2RzO4wnJYa1zLZ+ta5g5Jg+gPmZ1icRc1tM/hNlgzWJ60woO
+ P9kLilzV54szojHU2dXbvoyKgax7xw5BPNxLbBBVa2y+hTI/9cXltquByqRheu54cG5Nre
+ Ln9PtuJ9c6pTnGyZQWC2LAg+wM5NOdc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-618-LTiuT07hNlOopmpDHPuGdw-1; Wed,
- 04 Jun 2025 13:56:42 -0400
-X-MC-Unique: LTiuT07hNlOopmpDHPuGdw-1
-X-Mimecast-MFC-AGG-ID: LTiuT07hNlOopmpDHPuGdw_1749059801
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-GHo06sxcOMGBiHBMYYo4xw-1; Wed,
+ 04 Jun 2025 13:56:26 -0400
+X-MC-Unique: GHo06sxcOMGBiHBMYYo4xw-1
+X-Mimecast-MFC-AGG-ID: GHo06sxcOMGBiHBMYYo4xw_1749059785
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 55FCF1956086; Wed,  4 Jun 2025 17:56:41 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4F38C195608E; Wed,  4 Jun 2025 17:56:25 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.44.34.43])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 002AB18002B1; Wed,  4 Jun 2025 17:56:39 +0000 (UTC)
+ id C3D2718002A5; Wed,  4 Jun 2025 17:56:23 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 12/24] block: move drain outside of bdrv_root_attach_child()
-Date: Wed,  4 Jun 2025 19:56:01 +0200
-Message-ID: <20250604175613.344113-13-kwolf@redhat.com>
+Subject: [PULL 03/24] block/snapshot: move drain outside of read-locked
+ bdrv_snapshot_delete()
+Date: Wed,  4 Jun 2025 19:55:52 +0200
+Message-ID: <20250604175613.344113-4-kwolf@redhat.com>
 In-Reply-To: <20250604175613.344113-1-kwolf@redhat.com>
 References: <20250604175613.344113-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -66,7 +67,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,272 +85,219 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Fiona Ebner <f.ebner@proxmox.com>
 
-This is part of resolving the deadlock mentioned in commit "block:
-move draining out of bdrv_change_aio_context() and mark GRAPH_RDLOCK".
+This is in preparation to mark bdrv_drained_begin() as GRAPH_UNLOCKED.
 
-The function bdrv_root_attach_child() runs under the graph lock, so it
-is not allowed to drain. It is called by:
-1. blk_insert_bs(), where a drained section is introduced.
-2. block_job_add_bdrv(), which holds the graph lock itself.
+More granular draining is not trivially possible, because
+bdrv_snapshot_delete() can recursively call itself.
 
-block_job_add_bdrv() is called by:
-1. mirror_start_job()
-2. stream_start()
-3. commit_start()
-4. backup_job_create()
-5. block_job_create()
-6. In the test_blockjob_common_drain_node() unit test
-
-In all callers, a drained section is introduced.
+The return value of bdrv_all_delete_snapshot() changes from -1 to
+-errno propagated from failed sub-calls. This is fine for the existing
+callers of bdrv_all_delete_snapshot().
 
 Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20250530151125.955508-13-f.ebner@proxmox.com>
+Message-ID: <20250530151125.955508-4-f.ebner@proxmox.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/block/blockjob.h     | 2 ++
- block.c                      | 4 ++--
- block/backup.c               | 2 ++
- block/block-backend.c        | 2 ++
- block/commit.c               | 4 ++++
- block/mirror.c               | 5 +++++
- block/stream.c               | 4 ++++
- blockjob.c                   | 4 ++++
- tests/unit/test-bdrv-drain.c | 2 ++
- 9 files changed, 27 insertions(+), 2 deletions(-)
+ block/snapshot.c | 26 +++++++++++++++-----------
+ blockdev.c       | 25 +++++++++++++++++--------
+ qemu-img.c       |  2 ++
+ 3 files changed, 34 insertions(+), 19 deletions(-)
 
-diff --git a/include/block/blockjob.h b/include/block/blockjob.h
-index 7061ab7201..990f3e179a 100644
---- a/include/block/blockjob.h
-+++ b/include/block/blockjob.h
-@@ -137,6 +137,8 @@ BlockJob *block_job_get_locked(const char *id);
-  * Add @bs to the list of BlockDriverState that are involved in
-  * @job. This means that all operations will be blocked on @bs while
-  * @job exists.
-+ *
-+ * All block nodes must be drained.
-  */
- int GRAPH_WRLOCK
- block_job_add_bdrv(BlockJob *job, const char *name, BlockDriverState *bs,
-diff --git a/block.c b/block.c
-index e53a88e1b6..17c34dc240 100644
---- a/block.c
-+++ b/block.c
-@@ -3228,6 +3228,8 @@ bdrv_attach_child_noperm(BlockDriverState *parent_bs,
-  *
-  * On failure NULL is returned, errp is set and the reference to
-  * child_bs is also dropped.
-+ *
-+ * All block nodes must be drained.
-  */
- BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
-                                   const char *child_name,
-@@ -3242,7 +3244,6 @@ BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
+diff --git a/block/snapshot.c b/block/snapshot.c
+index 22567f1fb9..9f300a78bd 100644
+--- a/block/snapshot.c
++++ b/block/snapshot.c
+@@ -327,7 +327,7 @@ int bdrv_snapshot_goto(BlockDriverState *bs,
+ 
+ /**
+  * Delete an internal snapshot by @snapshot_id and @name.
+- * @bs: block device used in the operation
++ * @bs: block device used in the operation, must be drained
+  * @snapshot_id: unique snapshot ID, or NULL
+  * @name: snapshot name, or NULL
+  * @errp: location to store error
+@@ -358,6 +358,8 @@ int bdrv_snapshot_delete(BlockDriverState *bs,
  
      GLOBAL_STATE_CODE();
  
--    bdrv_drain_all_begin();
-     child = bdrv_attach_child_common(child_bs, child_name, child_class,
-                                    child_role, perm, shared_perm, opaque,
-                                    tran, errp);
-@@ -3255,7 +3256,6 @@ BdrvChild *bdrv_root_attach_child(BlockDriverState *child_bs,
- 
- out:
-     tran_finalize(tran, ret);
--    bdrv_drain_all_end();
- 
-     bdrv_schedule_unref(child_bs);
- 
-diff --git a/block/backup.c b/block/backup.c
-index 0151e84395..909027c17a 100644
---- a/block/backup.c
-+++ b/block/backup.c
-@@ -498,10 +498,12 @@ BlockJob *backup_job_create(const char *job_id, BlockDriverState *bs,
-     block_copy_set_speed(bcs, speed);
- 
-     /* Required permissions are taken by copy-before-write filter target */
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     block_job_add_bdrv(&job->common, "target", target, 0, BLK_PERM_ALL,
-                        &error_abort);
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     return &job->common;
- 
-diff --git a/block/block-backend.c b/block/block-backend.c
-index 6a6949edeb..24cae3cb55 100644
---- a/block/block-backend.c
-+++ b/block/block-backend.c
-@@ -904,6 +904,7 @@ int blk_insert_bs(BlockBackend *blk, BlockDriverState *bs, Error **errp)
- 
-     GLOBAL_STATE_CODE();
-     bdrv_ref(bs);
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
- 
-     if ((bs->open_flags & BDRV_O_INACTIVE) && blk_can_inactivate(blk)) {
-@@ -919,6 +920,7 @@ int blk_insert_bs(BlockBackend *blk, BlockDriverState *bs, Error **errp)
-                                        BDRV_CHILD_FILTERED | BDRV_CHILD_PRIMARY,
-                                        perm, shared_perm, blk, errp);
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
-     if (blk->root == NULL) {
-         return -EPERM;
++    assert(bs->quiesce_counter > 0);
++
+     if (!drv) {
+         error_setg(errp, "Device '%s' has no medium",
+                    bdrv_get_device_name(bs));
+@@ -368,9 +370,6 @@ int bdrv_snapshot_delete(BlockDriverState *bs,
+         return -EINVAL;
      }
-diff --git a/block/commit.c b/block/commit.c
-index 7cc8c0f0df..6c4b736ff8 100644
---- a/block/commit.c
-+++ b/block/commit.c
-@@ -392,6 +392,7 @@ void commit_start(const char *job_id, BlockDriverState *bs,
-      * this is the responsibility of the interface (i.e. whoever calls
-      * commit_start()).
-      */
+ 
+-    /* drain all pending i/o before deleting snapshot */
+-    bdrv_drained_begin(bs);
+-
+     if (drv->bdrv_snapshot_delete) {
+         ret = drv->bdrv_snapshot_delete(bs, snapshot_id, name, errp);
+     } else if (fallback_bs) {
+@@ -382,7 +381,6 @@ int bdrv_snapshot_delete(BlockDriverState *bs,
+         ret = -ENOTSUP;
+     }
+ 
+-    bdrv_drained_end(bs);
+     return ret;
+ }
+ 
+@@ -571,19 +569,22 @@ int bdrv_all_delete_snapshot(const char *name,
+     ERRP_GUARD();
+     g_autoptr(GList) bdrvs = NULL;
+     GList *iterbdrvs;
++    int ret = 0;
+ 
+     GLOBAL_STATE_CODE();
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
+ 
+-    if (bdrv_all_get_snapshot_devices(has_devices, devices, &bdrvs, errp) < 0) {
+-        return -1;
 +    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     s->base_overlay = bdrv_find_overlay(top, base);
-     assert(s->base_overlay);
-@@ -424,18 +425,21 @@ void commit_start(const char *job_id, BlockDriverState *bs,
-                                  iter_shared_perms, errp);
++    bdrv_graph_rdlock_main_loop();
++
++    ret = bdrv_all_get_snapshot_devices(has_devices, devices, &bdrvs, errp);
++    if (ret < 0) {
++        goto out;
+     }
+ 
+     iterbdrvs = bdrvs;
+     while (iterbdrvs) {
+         BlockDriverState *bs = iterbdrvs->data;
+         QEMUSnapshotInfo sn1, *snapshot = &sn1;
+-        int ret = 0;
+ 
+         if ((devices || bdrv_all_snapshots_includes_bs(bs)) &&
+             bdrv_snapshot_find(bs, snapshot, name) >= 0)
+@@ -594,13 +595,16 @@ int bdrv_all_delete_snapshot(const char *name,
          if (ret < 0) {
-             bdrv_graph_wrunlock();
-+            bdrv_drain_all_end();
-             goto fail;
+             error_prepend(errp, "Could not delete snapshot '%s' on '%s': ",
+                           name, bdrv_get_device_or_node_name(bs));
+-            return -1;
++            goto out;
          }
+ 
+         iterbdrvs = iterbdrvs->next;
      }
  
-     if (bdrv_freeze_backing_chain(commit_top_bs, base, errp) < 0) {
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
-         goto fail;
-     }
-     s->chain_frozen = true;
- 
-     ret = block_job_add_bdrv(&s->common, "base", base, 0, BLK_PERM_ALL, errp);
-     bdrv_graph_wrunlock();
+-    return 0;
++out:
++    bdrv_graph_rdunlock_main_loop();
 +    bdrv_drain_all_end();
++    return ret;
+ }
  
-     if (ret < 0) {
-         goto fail;
-diff --git a/block/mirror.c b/block/mirror.c
-index c2c5099c95..6e8caf4b49 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -2014,6 +2014,7 @@ static BlockJob *mirror_start_job(
-      */
-     bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+ 
+diff --git a/blockdev.c b/blockdev.c
+index 21443b4514..3982f9776b 100644
+--- a/blockdev.c
++++ b/blockdev.c
+@@ -1132,39 +1132,41 @@ SnapshotInfo *qmp_blockdev_snapshot_delete_internal_sync(const char *device,
+     int ret;
+ 
+     GLOBAL_STATE_CODE();
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
++
++    bdrv_drain_all_begin();
++    bdrv_graph_rdlock_main_loop();
+ 
+     bs = qmp_get_root_bs(device, errp);
+     if (!bs) {
+-        return NULL;
++        goto error;
+     }
+ 
+     if (!id && !name) {
+         error_setg(errp, "Name or id must be provided");
+-        return NULL;
++        goto error;
+     }
+ 
+     if (bdrv_op_is_blocked(bs, BLOCK_OP_TYPE_INTERNAL_SNAPSHOT_DELETE, errp)) {
+-        return NULL;
++        goto error;
+     }
+ 
+     ret = bdrv_snapshot_find_by_id_and_name(bs, id, name, &sn, &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+-        return NULL;
++        goto error;
+     }
+     if (!ret) {
+         error_setg(errp,
+                    "Snapshot with id '%s' and name '%s' does not exist on "
+                    "device '%s'",
+                    STR_OR_NULL(id), STR_OR_NULL(name), device);
+-        return NULL;
++        goto error;
+     }
+ 
+     bdrv_snapshot_delete(bs, id, name, &local_err);
+     if (local_err) {
+         error_propagate(errp, local_err);
+-        return NULL;
++        goto error;
+     }
+ 
+     info = g_new0(SnapshotInfo, 1);
+@@ -1180,6 +1182,9 @@ SnapshotInfo *qmp_blockdev_snapshot_delete_internal_sync(const char *device,
+         info->has_icount = true;
+     }
+ 
++error:
++    bdrv_graph_rdunlock_main_loop();
++    bdrv_drain_all_end();
+     return info;
+ }
+ 
+@@ -1295,12 +1300,14 @@ static void internal_snapshot_abort(void *opaque)
+     Error *local_error = NULL;
+ 
+     GLOBAL_STATE_CODE();
+-    GRAPH_RDLOCK_GUARD_MAINLOOP();
+ 
+     if (!state->created) {
+         return;
+     }
  
 +    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-@@ -2021,6 +2022,7 @@ static BlockJob *mirror_start_job(
-                              errp);
-     if (ret < 0) {
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
-         goto fail;
++    bdrv_graph_rdlock_main_loop();
++
+     if (bdrv_snapshot_delete(bs, sn->id_str, sn->name, &local_error) < 0) {
+         error_reportf_err(local_error,
+                           "Failed to delete snapshot with id '%s' and "
+@@ -1308,6 +1315,8 @@ static void internal_snapshot_abort(void *opaque)
+                           sn->id_str, sn->name,
+                           bdrv_get_device_name(bs));
      }
++    bdrv_graph_rdunlock_main_loop();
++    bdrv_drain_all_end();
+ }
  
-@@ -2066,16 +2068,19 @@ static BlockJob *mirror_start_job(
-                                      iter_shared_perms, errp);
-             if (ret < 0) {
-                 bdrv_graph_wrunlock();
-+                bdrv_drain_all_end();
-                 goto fail;
+ static void internal_snapshot_clean(void *opaque)
+diff --git a/qemu-img.c b/qemu-img.c
+index 139eeb5039..e75707180d 100644
+--- a/qemu-img.c
++++ b/qemu-img.c
+@@ -3505,6 +3505,7 @@ static int img_snapshot(int argc, char **argv)
+         break;
+ 
+     case SNAPSHOT_DELETE:
++        bdrv_drain_all_begin();
+         bdrv_graph_rdlock_main_loop();
+         ret = bdrv_snapshot_find(bs, &sn, snapshot_name);
+         if (ret < 0) {
+@@ -3520,6 +3521,7 @@ static int img_snapshot(int argc, char **argv)
              }
          }
- 
-         if (bdrv_freeze_backing_chain(mirror_top_bs, target, errp) < 0) {
-             bdrv_graph_wrunlock();
-+            bdrv_drain_all_end();
-             goto fail;
-         }
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     QTAILQ_INIT(&s->ops_in_flight);
- 
-diff --git a/block/stream.c b/block/stream.c
-index 6ba49cffd3..f5441f27f4 100644
---- a/block/stream.c
-+++ b/block/stream.c
-@@ -371,10 +371,12 @@ void stream_start(const char *job_id, BlockDriverState *bs,
-      * already have our own plans. Also don't allow resize as the image size is
-      * queried only at the job start and then cached.
-      */
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     if (block_job_add_bdrv(&s->common, "active node", bs, 0,
-                            basic_flags | BLK_PERM_WRITE, errp)) {
-         bdrv_graph_wrunlock();
+         bdrv_graph_rdunlock_main_loop();
 +        bdrv_drain_all_end();
-         goto fail;
+         break;
      }
  
-@@ -395,10 +397,12 @@ void stream_start(const char *job_id, BlockDriverState *bs,
-                                  basic_flags, errp);
-         if (ret < 0) {
-             bdrv_graph_wrunlock();
-+            bdrv_drain_all_end();
-             goto fail;
-         }
-     }
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     s->base_overlay = base_overlay;
-     s->above_base = above_base;
-diff --git a/blockjob.c b/blockjob.c
-index 34185d7715..44991e3ff7 100644
---- a/blockjob.c
-+++ b/blockjob.c
-@@ -496,6 +496,7 @@ void *block_job_create(const char *job_id, const BlockJobDriver *driver,
-     int ret;
-     GLOBAL_STATE_CODE();
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
- 
-     if (job_id == NULL && !(flags & JOB_INTERNAL)) {
-@@ -506,6 +507,7 @@ void *block_job_create(const char *job_id, const BlockJobDriver *driver,
-                      flags, cb, opaque, errp);
-     if (job == NULL) {
-         bdrv_graph_wrunlock();
-+        bdrv_drain_all_end();
-         return NULL;
-     }
- 
-@@ -544,10 +546,12 @@ void *block_job_create(const char *job_id, const BlockJobDriver *driver,
-     }
- 
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
-     return job;
- 
- fail:
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
-     job_early_fail(&job->job);
-     return NULL;
- }
-diff --git a/tests/unit/test-bdrv-drain.c b/tests/unit/test-bdrv-drain.c
-index 3185f3f429..4f3057844b 100644
---- a/tests/unit/test-bdrv-drain.c
-+++ b/tests/unit/test-bdrv-drain.c
-@@ -772,9 +772,11 @@ static void test_blockjob_common_drain_node(enum drain_type drain_type,
-     tjob->bs = src;
-     job = &tjob->common;
- 
-+    bdrv_drain_all_begin();
-     bdrv_graph_wrlock();
-     block_job_add_bdrv(job, "target", target, 0, BLK_PERM_ALL, &error_abort);
-     bdrv_graph_wrunlock();
-+    bdrv_drain_all_end();
- 
-     switch (result) {
-     case TEST_JOB_SUCCESS:
 -- 
 2.49.0
 
