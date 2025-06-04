@@ -4,61 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01508C5B552
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 20:04:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EF5CC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 20:05:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMuLM-0005tY-3l; Wed, 04 Jun 2025 16:04:12 -0400
+	id 1uMuLK-0005st-AT; Wed, 04 Jun 2025 16:04:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uMuLK-0005sg-1l
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 16:04:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uMuLI-0005sC-FL
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 16:04:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uMuLH-0008Hx-ID
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 16:04:09 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uMuLE-0008HF-F2
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 16:04:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749067445;
+ s=mimecast20190719; t=1749067442;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=x5/lVmbeVAAmKZOjTgHN0gBaVFmiqY8sn3LfygFHyzc=;
- b=bSJW9filTbQ8yzex7cH20bJD6tVZ/5y2ekJlSPmr9z9QDQFZqa/MyRsI5zbXwwbWWjA8c8
- GZxN5EhEmCOrlVvwzrPP+sC1d/cLGtx7vMSR577dknTwMiWx9P13U+Sc5mHW5GJ20BbWDx
- ltIcj79R6PR9/3VUsx3FMCVYNSz6Dzk=
+ bh=f/b85gJL7xVHanuZJX/dXUtQRv8HVdyerj2fpryzRbk=;
+ b=O9tAbcFzdW8oHHDo7FQQL6KpFuM6Pv7iVsIXR+he83J6exIg6Xvk7w9rECSiUcC7/dcCPK
+ QeFg0rt9b2yDfJ267x9zI9AQXjROw3ikNdM6py9KUm4fhkUDvcVBiNyG9OQLHa+NxgcWwE
+ +of6dyGZAcbesQS5fzfxU63sHBrwq/Y=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-BgEEmRE0M1-_vsA1eV7Rkw-1; Wed,
- 04 Jun 2025 16:04:04 -0400
-X-MC-Unique: BgEEmRE0M1-_vsA1eV7Rkw-1
-X-Mimecast-MFC-AGG-ID: BgEEmRE0M1-_vsA1eV7Rkw_1749067443
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-SZYXm1YTNvWfEpPdLJmTJQ-1; Wed,
+ 04 Jun 2025 16:04:01 -0400
+X-MC-Unique: SZYXm1YTNvWfEpPdLJmTJQ-1
+X-Mimecast-MFC-AGG-ID: SZYXm1YTNvWfEpPdLJmTJQ_1749067440
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 773741800378; Wed,  4 Jun 2025 20:04:03 +0000 (UTC)
+ id 8C1BE18002B0; Wed,  4 Jun 2025 20:04:00 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.163])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 32D3130002C3; Wed,  4 Jun 2025 20:04:02 +0000 (UTC)
+ id 393AF30002C8; Wed,  4 Jun 2025 20:03:58 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: John Snow <jsnow@redhat.com>, Michael Roth <michael.roth@amd.com>,
  Cleber Rosa <crosa@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
  Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v5 4/6] python: add qapi static analysis tests
-Date: Wed,  4 Jun 2025 16:03:52 -0400
-Message-ID: <20250604200354.459501-5-jsnow@redhat.com>
+Subject: [PATCH v5 2/6] docs/qapidoc: linting fixes
+Date: Wed,  4 Jun 2025 16:03:50 -0400
+Message-ID: <20250604200354.459501-3-jsnow@redhat.com>
 In-Reply-To: <20250604200354.459501-1-jsnow@redhat.com>
 References: <20250604200354.459501-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -83,192 +83,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update the python tests to also check QAPI and the QAPI Sphinx
-extensions. The docs/sphinx/qapidoc_legacy.py file is not included in
-these checks, as it is destined for removal soon. mypy is also not
-called on the QAPI Sphinx extensions, owing to difficulties supporting
-Sphinx 3.x - 8.x while maintaining static type checking support. mypy
-*is* called on all of the QAPI tools themselves, though.
+This restores the linting baseline in qapidoc. The order of some imports
+change slightly here due to configuring isort a little better:
+previously, isort was having difficulty understanding that "compat" and
+"qapidoc_legacy" were local modules because docs/sphinx "isn't a python
+package". Configuring this manually, isort chooses a different import
+ordering, which _is_ intentional here.
 
-flake8, isort and mypy use the tool configuration from the existing
-python directory (in setup.cfg). pylint continues to use the special
-configuration located in scripts/qapi/ - that configuration is more
-permissive. If we wish to unify the two configurations, that's a
-separate series and a discussion for a later date.
-
-The list of pylint ignores is also updated, owing again to the wide
-window of pylint version support: newer versions require pragmas to
-occasionally silence the "too many positional arguments" warning, but
-older versions do not have such a warning category and will instead yelp
-about an unrecognized option. Silence that warning, too.
-
-As a result of this patch, one would be able to run any of the following
-tests locally from the qemu.git/python directory and have it cover the
-QAPI tooling as well. All of the following options run the python tests,
-static analysis tests, and linter checks; but with different
-combinations of dependencies and interpreters.
-
-- "make check-minreqs" Run tests specifically under our oldest supported
-  Python and our oldest supported dependencies. This is the test that
-  runs on GitLab as "check-python-minreqs". This helps ensure we do not
-  regress support on older platforms accidentally.
-
-- "make check-tox" Runs the tests under the newest supported
-  dependencies, but under each supported version of Python in turn. At
-  time of writing, this is Python 3.8 to 3.13 inclusive. This test helps
-  catch bleeding-edge problems before they become problems for developer
-  workstations. This is the GitLab test "check-python-tox" and is an
-  optionally run, may-fail test due to the unpredictable nature of new
-  dependencies being released into the ecosystem that may cause
-  regressions.
-
-- "make check-dev" Runs the tests under the newest supported
-  dependencies using whatever version of Python the user happens to have
-  installed. This is a quick convenience check that does not map to any
-  particular GitLab test.
-
-  (Note! check-dev may be busted on Fedora 41 and bleeding edge versions
-  of setuptools. That's unrelated to this patch and I'll address it
-  separately and soon. Thank you for your patience, --mgmt)
-
-Finally, finally, finally: this means that QAPI tooling will be linted
-and type-checked from the GitLab pipelines.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
-
-add licenses or whatever
+Also: extra ignores are added for pylint. The most recent versions of
+pylint don't require these ignores, but the oldest versions we support
+do, so in the extra ignores go.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/setup.cfg            |  1 +
- python/tests/minreqs.txt    | 27 +++++++++++++++++++++++++++
- python/tests/qapi-flake8.sh |  6 ++++++
- python/tests/qapi-isort.sh  |  8 ++++++++
- python/tests/qapi-mypy.sh   |  4 ++++
- python/tests/qapi-pylint.sh |  8 ++++++++
- scripts/qapi/pylintrc       |  1 +
- 7 files changed, 55 insertions(+)
- create mode 100755 python/tests/qapi-flake8.sh
- create mode 100755 python/tests/qapi-isort.sh
- create mode 100755 python/tests/qapi-mypy.sh
- create mode 100755 python/tests/qapi-pylint.sh
+ docs/sphinx/qapi_domain.py | 25 ++++++++++++++-----------
+ docs/sphinx/qapidoc.py     |  5 +++--
+ 2 files changed, 17 insertions(+), 13 deletions(-)
 
-diff --git a/python/setup.cfg b/python/setup.cfg
-index c48dff280a3..d21304cadd1 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -46,6 +46,7 @@ devel =
-     urwid >= 2.1.2
-     urwid-readline >= 0.13
-     Pygments >= 2.9.0
-+    sphinx >= 3.4.3
+diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
+index c94af5719ca..ebc46a72c61 100644
+--- a/docs/sphinx/qapi_domain.py
++++ b/docs/sphinx/qapi_domain.py
+@@ -20,16 +20,6 @@
  
- # Provides qom-fuse functionality
- fuse =
-diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-index d3d53e0da81..cd2e2a81c3d 100644
---- a/python/tests/minreqs.txt
-+++ b/python/tests/minreqs.txt
-@@ -11,6 +11,15 @@
- # When adding new dependencies, pin the very oldest non-yanked version
- # on PyPI that allows the test suite to pass.
+ from docutils import nodes
+ from docutils.parsers.rst import directives
+-
+-from compat import (
+-    CompatField,
+-    CompatGroupedField,
+-    CompatTypedField,
+-    KeywordNode,
+-    ParserFix,
+-    Signature,
+-    SpaceNode,
+-)
+ from sphinx import addnodes
+ from sphinx.directives import ObjectDescription
+ from sphinx.domains import (
+@@ -44,6 +34,16 @@
+ from sphinx.util.docutils import SphinxDirective
+ from sphinx.util.nodes import make_id, make_refnode
  
-+# For some reason, the presence of packaging==14.0 below requires us to
-+# also pin setuptools to version 70 or below. Otherwise, the
-+# installation of the QEMU package itself fails, failing to find
-+# setuptools.
-+setuptools<=70
++from compat import (
++    CompatField,
++    CompatGroupedField,
++    CompatTypedField,
++    KeywordNode,
++    ParserFix,
++    Signature,
++    SpaceNode,
++)
 +
-+# Dependencies for qapidoc/qapi_domain et al
-+sphinx==3.4.3
-+
- # Dependencies for the TUI addon (Required for successful linting)
- urwid==2.1.2
- urwid-readline==0.13
-@@ -49,3 +58,21 @@ platformdirs==2.2.0
- toml==0.10.0
- tomlkit==0.10.1
- wrapt==1.14.0
-+
-+# Transitive sphinx dependencies
-+Jinja2==2.7
-+MarkupSafe==1.1.0
-+alabaster==0.7.1
-+babel==1.3
-+docutils==0.12
-+imagesize==0.5.0
-+packaging==14.0
-+pytz==2011b0
-+requests==2.5.0
-+snowballstemmer==1.1
-+sphinxcontrib-applehelp==1.0.0
-+sphinxcontrib-devhelp==1.0.0
-+sphinxcontrib-htmlhelp==1.0.0
-+sphinxcontrib-jsmath==1.0.0
-+sphinxcontrib-qthelp==1.0.0
-+sphinxcontrib-serializinghtml==1.0.0
-diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
-new file mode 100755
-index 00000000000..2211b6c7f41
---- /dev/null
-+++ b/python/tests/qapi-flake8.sh
-@@ -0,0 +1,6 @@
-+#!/bin/sh -e
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+
-+python3 -m flake8 ../scripts/qapi/ \
-+        ../docs/sphinx/qapidoc.py \
-+        ../docs/sphinx/qapi_domain.py
-diff --git a/python/tests/qapi-isort.sh b/python/tests/qapi-isort.sh
-new file mode 100755
-index 00000000000..e546f5a7b5c
---- /dev/null
-+++ b/python/tests/qapi-isort.sh
-@@ -0,0 +1,8 @@
-+#!/bin/sh -e
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+
-+python3 -m isort --sp . -c ../scripts/qapi/
-+# Force isort to recognize "compat" as a local module and not third-party
-+python3 -m isort --sp . -c -p compat -p qapidoc_legacy \
-+        ../docs/sphinx/qapi_domain.py \
-+        ../docs/sphinx/qapidoc.py
-diff --git a/python/tests/qapi-mypy.sh b/python/tests/qapi-mypy.sh
-new file mode 100755
-index 00000000000..50fb8ed1e3e
---- /dev/null
-+++ b/python/tests/qapi-mypy.sh
-@@ -0,0 +1,4 @@
-+#!/bin/sh -e
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+
-+python3 -m mypy ../scripts/qapi
-diff --git a/python/tests/qapi-pylint.sh b/python/tests/qapi-pylint.sh
-new file mode 100755
-index 00000000000..5f1b79c1883
---- /dev/null
-+++ b/python/tests/qapi-pylint.sh
-@@ -0,0 +1,8 @@
-+#!/bin/sh -e
-+# SPDX-License-Identifier: LGPL-2.1-or-later
-+
-+SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint \
-+                                --rcfile=../scripts/qapi/pylintrc \
-+                                ../scripts/qapi/ \
-+                                ../docs/sphinx/qapidoc.py \
-+                                ../docs/sphinx/qapi_domain.py
-diff --git a/scripts/qapi/pylintrc b/scripts/qapi/pylintrc
-index d24eece7411..e16283ada3d 100644
---- a/scripts/qapi/pylintrc
-+++ b/scripts/qapi/pylintrc
-@@ -19,6 +19,7 @@ disable=consider-using-f-string,
-         too-many-instance-attributes,
-         too-many-positional-arguments,
-         too-many-statements,
-+        unknown-option-value,
-         useless-option-value,
  
- [REPORTS]
+ if TYPE_CHECKING:
+     from typing import (
+@@ -56,7 +56,6 @@
+     )
+ 
+     from docutils.nodes import Element, Node
+-
+     from sphinx.addnodes import desc_signature, pending_xref
+     from sphinx.application import Sphinx
+     from sphinx.builders import Builder
+@@ -168,6 +167,8 @@ class QAPIDescription(ParserFix):
+     """
+ 
+     def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
++        # pylint: disable=unused-argument
++
+         # Do nothing. The return value here is the "name" of the entity
+         # being documented; for QAPI, this is the same as the
+         # "signature", which is just a name.
+@@ -210,6 +211,8 @@ def _get_fqn(self, name: Signature) -> str:
+     def add_target_and_index(
+         self, name: Signature, sig: str, signode: desc_signature
+     ) -> None:
++        # pylint: disable=unused-argument
++
+         # name is the return value of handle_signature.
+         # sig is the original, raw text argument to handle_signature.
+         # For QAPI, these are identical, currently.
+diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
+index 661b2c4ed0e..8011ac9efaf 100644
+--- a/docs/sphinx/qapidoc.py
++++ b/docs/sphinx/qapidoc.py
+@@ -27,6 +27,7 @@
+ 
+ from __future__ import annotations
+ 
++
+ __version__ = "2.0"
+ 
+ from contextlib import contextmanager
+@@ -56,8 +57,6 @@
+     QAPISchemaVisitor,
+ )
+ from qapi.source import QAPISourceInfo
+-
+-from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
+ from sphinx import addnodes
+ from sphinx.directives.code import CodeBlock
+ from sphinx.errors import ExtensionError
+@@ -65,6 +64,8 @@
+ from sphinx.util.docutils import SphinxDirective, switch_source_input
+ from sphinx.util.nodes import nested_parse_with_titles
+ 
++from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
++
+ 
+ if TYPE_CHECKING:
+     from typing import (
 -- 
 2.48.1
 
