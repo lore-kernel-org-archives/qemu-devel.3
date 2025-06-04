@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8613C5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:32:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27B8EC5B549
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:32:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMoBc-0007wU-LQ; Wed, 04 Jun 2025 09:29:45 -0400
+	id 1uMoBv-0001Gn-DV; Wed, 04 Jun 2025 09:30:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAr-0007A3-Er
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:29:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoBX-0007tt-Oq
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:29:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAp-0004lc-UU
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:28:57 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoBW-0004td-7R
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:29:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749043735;
+ s=mimecast20190719; t=1749043776;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/2MYp3UhabT2qS0mTPTCo+T0B/SM6NTgMC1jdFmgg9Q=;
- b=FkOLMGQZt1EmPFUE5DlpxZtfXKCoy7CwHfGSvTagSDllnM9NNVKqeI7CbvbTp9IUuJm+nQ
- ZaUR5r/ryPSmEt4sAES7rAGAnBUtbgGElTc/ZDyiDJBB/m6k3AYvQwbJyCJ5jNJLwcxEF5
- MWveq787DyXd9zIfQjkHtk8uO8SJoJ8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=UfHABRhEpJbzl+h+fF4eiSS2JzvgRNxvoo7U6hpnH8I=;
+ b=IrQnrHwD8QZepKSMPLTZUgAOTKhccDlVdY785Lbj/xE8EN9ep6qCDyKRK+Eg7bBQLHTxeS
+ fDwXiSHgFsFYvzbjVltUNZDC1jAtORVL8Sqrbu28+VPi8FFaG3gSIBvBXgSg8PindBOQWR
+ UIljnfWUANev8ATvlQboBJno1iKBHH8=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-LED5fRMyMX-VtLABjQLVjg-1; Wed, 04 Jun 2025 09:28:54 -0400
-X-MC-Unique: LED5fRMyMX-VtLABjQLVjg-1
-X-Mimecast-MFC-AGG-ID: LED5fRMyMX-VtLABjQLVjg_1749043733
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-450db029f2aso25052365e9.3
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:28:53 -0700 (PDT)
+ us-mta-251-zW96bo7DMs-ypcGPPhyZ2g-1; Wed, 04 Jun 2025 09:29:34 -0400
+X-MC-Unique: zW96bo7DMs-ypcGPPhyZ2g-1
+X-Mimecast-MFC-AGG-ID: zW96bo7DMs-ypcGPPhyZ2g_1749043773
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a523ce0bb2so245883f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:29:34 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749043733; x=1749648533;
+ d=1e100.net; s=20230601; t=1749043773; x=1749648573;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/2MYp3UhabT2qS0mTPTCo+T0B/SM6NTgMC1jdFmgg9Q=;
- b=ONvLq0jv3D9KgUsSaZyCcgfofDCHArnIh9lvv051eZGRYZX2rIHDW5qsRa31jVZ8kE
- /Sho6GJhGpSUSBBvh++w39hMKJWZ5jGGL/IiXe8UPkYZG3GPN+ILaSPN5SGbdAMuPLN6
- 0J6FncRi1uB8MbQCc7LdvHUg5CjwhmS1DK1CoeeRseOwU3fYPReMJi2wP6ldToNyNQhd
- ohlBkEs/fyceHh0cU94Q2F3d3/qWC6P405dEL89QuQCevJ86iDjCpyIYxot3uaUIS8fq
- ebY68eWtoWCm8QWfC8IJGb+xQC40XS2VYtzJ3NciTTs7MEUnC9BxyKW3z6ir5bVvDa5h
- 4aAQ==
-X-Gm-Message-State: AOJu0Yyl6fKlsfy1BVs1B/ijCSDeJjIF7NYiMwosHHmYGVlku9m+VENm
- zMWth3NuFsaTo/MbB6VTYVFZywAs4VSBtwF/vYbQqQAQpLOp3nXE74iW6AO1YjQ4Mp2VwDDNA3q
- 4WjjHSwmoHbbesd5EoRlFmdHSzrTnbPllBtpbTJGP33oOhMV+BhjDDy6A
-X-Gm-Gg: ASbGncvV8FNwQOXNaNt9RJZNB4Ma2FAW8IXoOMpGcPIOujlYQJo7fusH7XdkEi/XNW8
- vKNt/u3CyR9fYMEUKSQIWYyoi2ALZje53hlmqxz+QXx8rdFdNms1yvbSQvK/kyzFsUiyCJFhTI8
- hw+n3R9T+jV5K8/iooXXfB+Zxutx5WbYO1fmdOSB+8vO/i1g75+Go3eu71C5APsltd29+0Z6zXk
- t9zkgNk7Ig3sKbqUtcknhieT/Ci4UXy2Xz/V0KE39C5+yKluHHM7jBsYpf6IUa0vv0DDeITjBuV
- YWu8fpEXE5Wu3qEo+Bmfs4mtqeqdKsnCjIaYQ92waMWMBU0RyetGrJfH73wRVUX3pVa8XJSCdbD
- nv9jx
-X-Received: by 2002:a05:600c:1c29:b0:43d:fa5d:9315 with SMTP id
- 5b1f17b1804b1-451f0b3f724mr23329315e9.33.1749043732881; 
- Wed, 04 Jun 2025 06:28:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFnts/kD0D1GKuZC6Ir2ybxZQVv6nwJiBUsmCm2gsaCcdaMb12ux+CfUepqnITMg22G6hjJng==
-X-Received: by 2002:a05:600c:1c29:b0:43d:fa5d:9315 with SMTP id
- 5b1f17b1804b1-451f0b3f724mr23329045e9.33.1749043732503; 
- Wed, 04 Jun 2025 06:28:52 -0700 (PDT)
+ bh=UfHABRhEpJbzl+h+fF4eiSS2JzvgRNxvoo7U6hpnH8I=;
+ b=r8pps4ltRFPzVEpPUFVj2SL6jE7X1Vc8Dn/WjIYkitsHpgOtniPmfzgK0ARVBMLs1l
+ zZKlS3szxaHVqzga+0VTFauU8oRSRFMz6ma7Q51nizurKFObYSzamyUonhyZsy2OUjGY
+ lEb6qrMoElG/G7Gt8iRChCsjtnabzFwHJ/EjY753OSCH9pOoClbB9ykP2X0rKGFYV2++
+ hzDbDLTmN0Sv95buq3aO1j/ulLF5cP12cfoq10en1+xsz8mhkEWSKTYbvxSVyfwIlnwT
+ oiRVJZAz4KtCUYkl74BK0OLqtKIN19eEzcyADQkjaKsq+TThuScaw4TyrYCPVWFMXljF
+ ZRLA==
+X-Gm-Message-State: AOJu0YykZxnu6J6tqP5+qMxikHQz4/5ZAcwtOkdYfMWTl267SeOavcOx
+ hlk4GkUVj9s65xk85q5ZrYDhc8Im6do9Ra7TOZ1qfHWeJbHZXneEGP6TmZppWHXL237/mnhbwFP
+ xs+jHsX0FLGC9DePaMRRA4s9Sgp0XAe+BGtmCko/WG3dbBawRQyh3KMLR
+X-Gm-Gg: ASbGncuA8bg6UMxWtYoD9OvHWoDRYB5lU4axuwZxcnn8yTI0BeLSyKLuekr2M600LF8
+ 4lsnMFxIMKe9vMBgm+b4QlPZP0eEtxAt1x+zwNe07ao94Upe+S9u3kRCYQ5zvc4ymfgBcHocJ3o
+ 8u4pgdtUxXA2cbZtnWyo2rwFE1H0fgPrB7KPwoyKUYJoerUTRaHOsH2C5siA/QDB3Cyx1RrAhnl
+ 7t/HgMjz2cl9/ymEeJN7E0rgDgIajtGdgKHQAtc4RX5G9bMMIlfa+Q19mQKXPboE4+BAGm2Bm4f
+ qyhMTGg00A1h+teUfSGSCbP389KEQMlOLhX5Nh1G36JTKZaAqkG2uIEtduet7qzgKZo8qw==
+X-Received: by 2002:a05:6000:2207:b0:3a4:f2ed:217e with SMTP id
+ ffacd0b85a97d-3a51d9806e6mr2255124f8f.42.1749043772906; 
+ Wed, 04 Jun 2025 06:29:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGszrO/jdkZKFcplGki235Sx92rigfNCiBCTAOXZqbzJ6yQrTe5KvcCJ6rJRjtMEvggLM1hSQ==
+X-Received: by 2002:a05:6000:2207:b0:3a4:f2ed:217e with SMTP id
+ ffacd0b85a97d-3a51d9806e6mr2255100f8f.42.1749043772474; 
+ Wed, 04 Jun 2025 06:29:32 -0700 (PDT)
 Received: from localhost
  (p200300cfd700f306503d3c798c1bf214.dip0.t-ipconnect.de.
  [2003:cf:d700:f306:503d:3c79:8c1b:f214])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d8000e3esm199129705e9.22.2025.06.04.06.28.49
+ ffacd0b85a97d-3a5236d4466sm1072300f8f.100.2025.06.04.06.29.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Jun 2025 06:28:49 -0700 (PDT)
+ Wed, 04 Jun 2025 06:29:30 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v2 09/21] fuse: Introduce fuse_{inc,dec}_in_flight()
-Date: Wed,  4 Jun 2025 15:28:01 +0200
-Message-ID: <20250604132813.359438-10-hreitz@redhat.com>
+Subject: [PATCH v2 20/21] iotests/308: Add multi-threading sanity test
+Date: Wed,  4 Jun 2025 15:28:12 +0200
+Message-ID: <20250604132813.359438-21-hreitz@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250604132813.359438-1-hreitz@redhat.com>
 References: <20250604132813.359438-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -95,7 +94,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,69 +110,142 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is how vduse-blk.c does it, and it does seem better to have
-dedicated functions for it.
+Run qemu-img bench on a simple multi-threaded FUSE export to test that
+it works.
 
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c | 29 +++++++++++++++++++++--------
- 1 file changed, 21 insertions(+), 8 deletions(-)
+ tests/qemu-iotests/308     | 51 ++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/308.out | 56 ++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 107 insertions(+)
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 15ec7a5c05..bcbeaf92f4 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -78,6 +78,25 @@ static void read_from_fuse_export(void *opaque);
- static bool is_regular_file(const char *path, Error **errp);
+diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
+index 033d5cbe22..2960412285 100755
+--- a/tests/qemu-iotests/308
++++ b/tests/qemu-iotests/308
+@@ -415,6 +415,57 @@ $QEMU_IO -c 'read -P 0 0 64M' "$TEST_IMG" | _filter_qemu_io
  
+ _cleanup_test_img
  
-+static void fuse_inc_in_flight(FuseExport *exp)
-+{
-+    if (qatomic_fetch_inc(&exp->in_flight) == 0) {
-+        /* Prevent export from being deleted */
-+        blk_exp_ref(&exp->common);
-+    }
-+}
++echo
++echo '=== Multi-threading ==='
 +
-+static void fuse_dec_in_flight(FuseExport *exp)
-+{
-+    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
-+        /* Wake AIO_WAIT_WHILE() */
-+        aio_wait_kick();
++# Just set up a null block device, export it (with multi-threading), and run
++# qemu-img bench on it (to get parallel requests)
 +
-+        /* Now the export can be deleted */
-+        blk_exp_unref(&exp->common);
-+    }
-+}
++_launch_qemu
++_send_qemu_cmd $QEMU_HANDLE \
++    "{'execute': 'qmp_capabilities'}" \
++    'return'
 +
- static void fuse_attach_handlers(FuseExport *exp)
- {
-     aio_set_fd_handler(exp->common.ctx,
-@@ -297,9 +316,7 @@ static void read_from_fuse_export(void *opaque)
-     FuseExport *exp = opaque;
-     int ret;
- 
--    blk_exp_ref(&exp->common);
--
--    qatomic_inc(&exp->in_flight);
-+    fuse_inc_in_flight(exp);
- 
-     do {
-         ret = fuse_session_receive_buf(exp->fuse_session, &exp->fuse_buf);
-@@ -317,11 +334,7 @@ static void read_from_fuse_export(void *opaque)
-     fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
- 
- out:
--    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
--        aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
--    }
--
--    blk_exp_unref(&exp->common);
-+    fuse_dec_in_flight(exp);
- }
- 
- static void fuse_export_shutdown(BlockExport *blk_exp)
++_send_qemu_cmd $QEMU_HANDLE \
++    "{'execute': 'blockdev-add',
++      'arguments': {
++          'driver': 'null-co',
++          'node-name': 'null'
++      } }" \
++    'return'
++
++for id in iothread{0,1,2,3}; do
++    _send_qemu_cmd $QEMU_HANDLE \
++        "{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': '$id'
++          } }" \
++        'return'
++done
++
++echo
++
++iothreads="['iothread0', 'iothread1', 'iothread2', 'iothread3']"
++fuse_export_add \
++    'export' \
++    "'mountpoint': '$EXT_MP', 'iothread': $iothreads" \
++    'return' \
++    'null'
++
++echo
++$QEMU_IMG bench -f raw "$EXT_MP" |
++    sed -e 's/[0-9.]\+ seconds/X.XXX seconds/'
++echo
++
++fuse_export_del 'export'
++
++_send_qemu_cmd $QEMU_HANDLE \
++    "{'execute': 'quit'}" \
++    'return'
++
++wait=yes _cleanup_qemu
++
+ # success, all done
+ echo "*** done"
+ rm -f $seq.full
+diff --git a/tests/qemu-iotests/308.out b/tests/qemu-iotests/308.out
+index 2d7a38d63d..04e6913c5c 100644
+--- a/tests/qemu-iotests/308.out
++++ b/tests/qemu-iotests/308.out
+@@ -207,4 +207,60 @@ read 67108864/67108864 bytes at offset 0
+ {"return": {}}
+ read 67108864/67108864 bytes at offset 0
+ 64 MiB, X ops; XX:XX:XX.X (XXX YYY/sec and XXX ops/sec)
++
++=== Multi-threading ===
++{'execute': 'qmp_capabilities'}
++{"return": {}}
++{'execute': 'blockdev-add',
++      'arguments': {
++          'driver': 'null-co',
++          'node-name': 'null'
++      } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread0'
++          } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread1'
++          } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread2'
++          } }
++{"return": {}}
++{'execute': 'object-add',
++          'arguments': {
++              'qom-type': 'iothread',
++              'id': 'iothread3'
++          } }
++{"return": {}}
++
++{'execute': 'block-export-add',
++          'arguments': {
++              'type': 'fuse',
++              'id': 'export',
++              'node-name': 'null',
++              'mountpoint': 'TEST_DIR/t.IMGFMT.fuse', 'iothread': ['iothread0', 'iothread1', 'iothread2', 'iothread3']
++          } }
++{"return": {}}
++
++Sending 75000 read requests, 4096 bytes each, 64 in parallel (starting at offset 0, step size 4096)
++Run completed in X.XXX seconds.
++
++{'execute': 'block-export-del',
++          'arguments': {
++              'id': 'export'
++          } }
++{"return": {}}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "BLOCK_EXPORT_DELETED", "data": {"id": "export"}}
++{'execute': 'quit'}
++{"timestamp": {"seconds":  TIMESTAMP, "microseconds":  TIMESTAMP}, "event": "SHUTDOWN", "data": {"guest": false, "reason": "host-qmp-quit"}}
++{"return": {}}
+ *** done
 -- 
 2.49.0
 
