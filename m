@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A9F4C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 02:58:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42A02C5AE59
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 03:19:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMeIt-0002Ee-Au; Tue, 03 Jun 2025 22:56:35 -0400
+	id 1uMeeU-00049L-N6; Tue, 03 Jun 2025 23:18:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1uMeIp-0002Da-Kp; Tue, 03 Jun 2025 22:56:31 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <joel.stan@gmail.com>)
- id 1uMeIo-0000RH-7K; Tue, 03 Jun 2025 22:56:31 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2320d06b728so54526615ad.1; 
- Tue, 03 Jun 2025 19:56:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749005788; x=1749610588; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0cPu0mtekVksYgzSb8SFLIZhjgTCV3V/MOS6qVJu54E=;
- b=lsNyAYN/zH0nEdXLqJnBq4LGQfEcUj84Ks7nSps9uLlTw0JywAOzSlx2Q5PbPR3HPM
- i1x2zarfBHylaDdpOwgDhL55p/1RpmqW6wfscpLpcHpXQWfFVTME4WhHs1x6Cgc0m1mH
- vDK7iseiuQcwdUwS8bEQhKYdDzBrBDvm8/WsEpy30nk9RhV2lgxJKQtlOSG9wKnIy4Oy
- 8BT8HfdpQT5Nl4Igs+eSm3gPvl0o+pNa6ueFft+kzMtnVary/yqXtEw4BCy0qF+YVAYN
- IdT2Ln9dTV22+l5mw9ppYv3N3wRUmskHBaBg8YvzxeKODYn0fiIb0jcrkdx1gNbMG3j8
- bqDg==
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1uMeeT-00049A-Dt
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 23:18:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leiyang@redhat.com>)
+ id 1uMeeR-0002zC-Cg
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 23:18:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749007128;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=IkGEvgrgSDW2GFJMiKsYv7kbrRkz18QAXxKXvdpl0zw=;
+ b=R1qECK3AMhLRZBRu7Y758CcRZ7XLYRD//cTnGo4BBIfzNiFaTorKDFCTnz7MHDZoEfPYN4
+ TSS8WnD9R4BC21ogoGFkWaWpRuEbMu+dj+b9GOo3tcqzVzs+vz7jJmZ1Y7Vq+P4gmgfVBr
+ WPamxYLxJy4dgCp7BKvgDNTEtyyBF44=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-529-Phi-xt1wMUWpDxh-3XEL0g-1; Tue, 03 Jun 2025 23:18:45 -0400
+X-MC-Unique: Phi-xt1wMUWpDxh-3XEL0g-1
+X-Mimecast-MFC-AGG-ID: Phi-xt1wMUWpDxh-3XEL0g_1749007124
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-ad8adc22e88so587051466b.0
+ for <qemu-devel@nongnu.org>; Tue, 03 Jun 2025 20:18:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749005788; x=1749610588;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:sender:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0cPu0mtekVksYgzSb8SFLIZhjgTCV3V/MOS6qVJu54E=;
- b=BSveQVg8lYg7s1P2f+VdifwDsVCRfC/igjXDj8kcu7NFYjEkWeLYTAJ7dDx4f54/CC
- 0n5RKWL6hHaIWSp5CpzjTrCdeLRzA4FRtYLuoPsJcL3GwOnnrKpLq3lCB53R/AKa8gmC
- cNU+9SMfX6NJOc6wHGlhNmnU5nybEZk7TGMDeopARpwFDYrBETFrAHNVwZECA700junx
- S6SlTIZXB7mxt6+zBRLvfFez+yDfFYGuxpjrBeIMEngJSQoFGBSYmlrW18iQ++YDek0u
- tf3XYbSqlEdTi9hRPRNS4u65Gzi0n7lamTleZSTXQi+oyxoaINhQ/LsDqHZ4Ron9T/eU
- CIYg==
+ d=1e100.net; s=20230601; t=1749007124; x=1749611924;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IkGEvgrgSDW2GFJMiKsYv7kbrRkz18QAXxKXvdpl0zw=;
+ b=HXg91SXy8hSUjLBPE7pKpucPXSnrxHSo4hHs8I7nz5XL4pevsUfaHQtHLQWygsAseg
+ Wa7s6CV0nz+QLB1PTPDgEzIQRognAOrtIBzh4kJBfhR+rjhW19pZbrEyny0lNIoGeVcH
+ Ar5wwh8jOhiT9coBPKhcRAwKch5Q7cGh/RMIerS9GrKzsHJCOYw1kAedGRIZs+kTOlxi
+ Xye2FwF8/9Uhahndn8bYsnb2jWQE7fx092Np09icfUZ7BC2oHwc24c/H5bMXJlUgvHz8
+ MaT2rwLQeAf3Fdgn7mQP9Ikwqnhr5TZfjxS2A5CR+lMyZbEUYV2NFQG9g8c8H8X6fSS0
+ kqAw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCbeZ+CB5GqjOAJ0N7QQz43TvBEoqcr6RyFDZVHhZ1i5xj0r7reELfWvnBWJ6h4eWSi4iOZxoHJdQ+@nongnu.org
-X-Gm-Message-State: AOJu0Yz7ijRJEuNWsYohrRv6fIYp4xYpnfsJvDvem/0LYC5yz0VxsW7G
- XEdOaFyaBfPyjNATvDifgNa0+42CjRRn1rEqUfNAHRBofhfPJVlkaQiO
-X-Gm-Gg: ASbGnctM67WiHzNtV6kjt9RGyT6pkcR9Id9qdyJotiqMxwKXjRErPVmxBiZajQ5ftqh
- SdWyIygvTGIh4TIjMuUoNnMTsD9A2SYePtDpjzzfPCQq8m06B/3xu01mfWd5MMry0kI9k1BbSGf
- 40pDPfUzlDJHyZx8iT9XPeUeNw3Iq9XowvxqOJTjPaqja+Qql6jJybzKABfTRTrBb+slwcuZMh+
- LPfh9RWSSHzt1iWZ2YrOIFJdBNQ0pQI3dIq4xnPnNDlR3pvgcVdtRr997gVt+FYFndcoEo1afmM
- WtF6Byw1/I92TJfGh7Jf4We0/fKEZ/ktP57ae0pFYWQQDzY4FhIf/lyqQZvvjA==
-X-Google-Smtp-Source: AGHT+IFeRKR9b4x6GfqerkCJAcpkL1KCHjA7eI4OKRbTA6JHoEDzsyqprKBKr2pQIR6LQXejZnVN5A==
-X-Received: by 2002:a17:902:ccd2:b0:22e:4db0:6b2 with SMTP id
- d9443c01a7336-235e1485adfmr15698805ad.9.1749005788386; 
- Tue, 03 Jun 2025 19:56:28 -0700 (PDT)
-Received: from donnager-debian.. ([45.124.203.19])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23506d21818sm94457555ad.254.2025.06.03.19.56.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 03 Jun 2025 19:56:27 -0700 (PDT)
-From: Joel Stanley <joel@jms.id.au>
-To: Alistair Francis <alistair.francis@wdc.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-riscv@nongnu.org,
-	qemu-devel@nongnu.org
-Subject: [PATCH v2 12/12] hw/riscv/virt: Use setprop_sized_cells for pcie
-Date: Wed,  4 Jun 2025 12:24:48 +0930
-Message-ID: <20250604025450.85327-13-joel@jms.id.au>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250604025450.85327-1-joel@jms.id.au>
-References: <20250604025450.85327-1-joel@jms.id.au>
+ AJvYcCVfZusSPnFr5YbvfS2Y9JKY9SlR5d1EwH7ACqw2KQGcTngX9mvpdKmjT87BbnQLTpp8cJhmdRLNAcfe@nongnu.org
+X-Gm-Message-State: AOJu0YwlA2H+2zvHjN2BGjaxPAKxC7AACgrVaAarEJS6QAehqg5J0SL9
+ kK24hM09nTBlKmtQVAX+iBXDweqbixHKzyygdPqa9XZXmopS2l03iQQq1xg/ZjnN9l2coEk4GkR
+ /iza5jYzb90tnxcRwfby25xtzu8aAqW3Lkg0rOYfn44OH+1A2dfPTuwUurTKvGtzit0X1LwhPaL
+ uPscxbQfOILJBfSLkwM/9gcpr8DSK/lY8=
+X-Gm-Gg: ASbGnctdmxb4A6CkxsHrqyThKWBiYJSWvsZV7Rez3WuftKQSxhp5QQnWTdLYwZyTnvv
+ a1FQ8T9WSuhLQdzJJGYJrrmY9oU1T1pmwXRRVHh+92x26XUjY670L9/nr1QTkrfR6Xu31ZQ==
+X-Received: by 2002:a17:907:1ca1:b0:ad2:2dc9:e3d3 with SMTP id
+ a640c23a62f3a-addf8ffa8d4mr90864166b.57.1749007123829; 
+ Tue, 03 Jun 2025 20:18:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHAQtpTZinV1Q4NWqtUmT8jSRHIM/nZb5/Z907g34rJUtNJvKYX5DyyNzL4eP8MW3egjAsQpp1ygfKJKhy6Hsc=
+X-Received: by 2002:a17:907:1ca1:b0:ad2:2dc9:e3d3 with SMTP id
+ a640c23a62f3a-addf8ffa8d4mr90862366b.57.1749007123494; Tue, 03 Jun 2025
+ 20:18:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=joel.stan@gmail.com; helo=mail-pl1-x62b.google.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
+References: <20250530-n-v2-1-b1be546ca586@daynix.com>
+ <CACGkMEsX3HJKh_WsFaVg=5HPQBwGhLQytxvDHS-DQjeN-3zGJQ@mail.gmail.com>
+In-Reply-To: <CACGkMEsX3HJKh_WsFaVg=5HPQBwGhLQytxvDHS-DQjeN-3zGJQ@mail.gmail.com>
+From: Lei Yang <leiyang@redhat.com>
+Date: Wed, 4 Jun 2025 11:18:06 +0800
+X-Gm-Features: AX0GCFv21O1omq7g4xwFQp0SSo6z5dTzmeJ5BNskkxQg81-bGRi9uxYp2gmM04k
+Message-ID: <CAPpAL=yixs-bDdEJbPL_=29aTn18Cy2zkox-R3wkJ8FbpmUh4Q@mail.gmail.com>
+Subject: Re: [PATCH v2] virtio-net: Add queues for RSS during migration
+To: Jason Wang <jasowang@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, qemu-devel@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, devel@daynix.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=leiyang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FORGED_FROMDOMAIN=0.001,
- FREEMAIL_FROM=0.001, HEADER_FROM_DIFFERENT_DOMAINS=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,36 +105,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current device tree property uses two cells for the address (and for
-the size), but assumes the they are less than 32 bits by hard coding the
-high cell to zero.
+Tested this series of patches with virtio-net regression tests,
+everything works fine.
 
-Use qemu_fdt_setprop_sized_cells to do the job of splitting the upper
-and lower 32 bits across cells.
+Tested-by: Lei Yang <leiyang@redhat.com>
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Signed-off-by: Joel Stanley <joel@jms.id.au>
----
- hw/riscv/virt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
-
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index 67490c5c693a..47e573f85ab1 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -894,8 +894,8 @@ static void create_fdt_pcie(RISCVVirtState *s,
-     if (s->aia_type == VIRT_AIA_TYPE_APLIC_IMSIC) {
-         qemu_fdt_setprop_cell(ms->fdt, name, "msi-parent", msi_pcie_phandle);
-     }
--    qemu_fdt_setprop_cells(ms->fdt, name, "reg", 0,
--        s->memmap[VIRT_PCIE_ECAM].base, 0, s->memmap[VIRT_PCIE_ECAM].size);
-+    qemu_fdt_setprop_sized_cells(ms->fdt, name, "reg", 2,
-+        s->memmap[VIRT_PCIE_ECAM].base, 2, s->memmap[VIRT_PCIE_ECAM].size);
-     qemu_fdt_setprop_sized_cells(ms->fdt, name, "ranges",
-         1, FDT_PCI_RANGE_IOPORT, 2, 0,
-         2, s->memmap[VIRT_PCIE_PIO].base, 2, s->memmap[VIRT_PCIE_PIO].size,
--- 
-2.47.2
+On Tue, Jun 3, 2025 at 11:01=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
+ote:
+>
+> On Fri, May 30, 2025 at 1:19=E2=80=AFPM Akihiko Odaki <akihiko.odaki@dayn=
+ix.com> wrote:
+> >
+> > virtio_net_pre_load_queues() inspects vdev->guest_features to tell if
+> > VIRTIO_NET_F_RSS or VIRTIO_NET_F_MQ is enabled to infer the required
+> > number of queues. This works for VIRTIO_NET_F_MQ but it doesn't for
+> > VIRTIO_NET_F_RSS because only the lowest 32 bits of vdev->guest_feature=
+s
+> > is set at the point and VIRTIO_NET_F_RSS uses bit 60 while
+> > VIRTIO_NET_F_MQ uses bit 22.
+> >
+> > Instead of inferring the required number of queues from
+> > vdev->guest_features, use the number loaded from the vm state. This
+> > change also has a nice side effect to remove a duplicate peer queue
+> > pair change by circumventing virtio_net_set_multiqueue().
+> >
+> > Also update the comment in include/hw/virtio/virtio.h to prevent an
+> > implementation of pre_load_queues() from refering to any fields being
+> > loaded during migration by accident in the future.
+> >
+> > Fixes: 8c49756825da ("virtio-net: Add only one queue pair when realizin=
+g")
+> > Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+> > ---
+> > Changes in v2:
+> > - Updated a documentation comment of pre_load_queues() for clarity.
+> > - Link to v1: https://lore.kernel.org/qemu-devel/20250510-n-v1-1-19ee26=
+ac3ca6@daynix.com
+>
+> Queued.
+>
+> Thanks
+>
+>
 
 
