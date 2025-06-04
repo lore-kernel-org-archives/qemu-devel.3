@@ -4,101 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86771C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 10:55:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10FCCC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 10:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMllg-0001gY-3Z; Wed, 04 Jun 2025 06:54:48 -0400
+	id 1uMlq3-0002sM-Fy; Wed, 04 Jun 2025 06:59:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uMlle-0001fv-PM
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 06:54:46 -0400
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uMllc-0000WF-N3
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 06:54:46 -0400
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-87df943b6dcso1501994241.1
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 03:54:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749034483; x=1749639283; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=apmfOP4Rp497ljxAggMmJaQTwC4oUaYLeroIYEOwTrs=;
- b=BEJE7QY8LLaOHSStMD37GFeWl5H1tMCpS2gYAkjV15YGH5JJaWDX/IQiHQHzvnYIN1
- PLLDB6oVXM75e84xN4j7RblDsWc1rvIt9qey53cnToLhOyJaoatMK0y/xt4YJGEgMuCz
- GuX4iMPEQJ2ESno4qQ82aHvpldaPhgSoPfeeTpqcJopQk71QtuF6aL+lSnYyYELDcrs3
- jycfiJqlMZHClk5eBzxnyty0y0Ma/OOPF+ZIvOSxu9ppReJU6rCAGidUXtweX8//c9nu
- gDge6dN0kxgwg7MxScE0/eWBPjuQ7d6ZaS+iF66NTBjSoECmHWSKBXwYA/nmGRfKsIT3
- BIXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749034483; x=1749639283;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=apmfOP4Rp497ljxAggMmJaQTwC4oUaYLeroIYEOwTrs=;
- b=QVvOq4pG0/jqyhO0QfcKtgV4VedpvzbAtDxLbCW6Vdg+Dj2P50gky8YMDCOrJ1jo2i
- hDg3GbssVbvIwY9mivVFKI5nLYFxKZjkT7X4NOUnjJQM5/RfDlEzhP6vLM138Me/ms7U
- TtgKlLcdfuwtdadrq+L6klNJUO6OOuEeXHgFt/jW0JKvhqPEdNj7DeY+fyzUyp+hNJhz
- CpmlgpSP0SFBakYxQUizBBMwE+9b21lMo92tRz80x8Yk05JEJtpk/Le2VlH6rN/0c2dN
- FLM3aH9HJxZGGgUcMy8nSAwb6iQTfVS2OsJJKkLnfjEMhMBBMPNuXR7ZgW8JCdRhWYEq
- oqZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVRTF0DOoULKd7JZXlJTssyiDpHwECwcIz3fvEvgLyvVLLIBHiagDicxX1CN76NStCnJZFrR/+lOh4x@nongnu.org
-X-Gm-Message-State: AOJu0Yz+KvdTlKFttKlvo2Kh5ylPfZU1cB7YOvOajezBd1cdBkAqARPI
- v9fqGBlt9H8l53NnW639WOWPSujq45ynDPNKP8dWE/UYxwTFTqB6rWpXVRnRifkr4Uo=
-X-Gm-Gg: ASbGncsyt+VdPuvStGiGIMLGQ1wl22HEXm3Gjp19WPqmV2V39UROqZLYuSNaGsh+Wnt
- hwvZHXxHGyTaWkuUDK6BtFP2hdFot0NeMaKE2DiOmiGyIQ4hg3/GM/P/7RWii79szJv3Dc9+RjM
- 4zE8MLECEPFXKLZCiheUy5qgi97x3RWJiCrQv0uNAIxZrX7PSP9o0WznuxJzzlYMDObRHZp+u+R
- psr3DPveqS7b2i6aOo6PZKMTzfsz7Dx9RZjPC3Hfg2HYz4f52w/bi5zazcNG+JQyV6aWfbyYJdf
- axx5UF1SgTjtN9V8MJbktfJgjppM/F1S8m8Se58FwnXeKvFULYoiRUGoExFCjeD85qaXLCBwIah
- 444bV/QG/g8puJmlO5MQ71ruTUBtO8g==
-X-Google-Smtp-Source: AGHT+IFwEdrNUo00/5f3h09p6IwauUnqxckpH9djuKmUSeSrar4YqB9+/U/J446QsEtt233hic3oIQ==
-X-Received: by 2002:a05:6102:4406:b0:4e5:ac0f:582c with SMTP id
- ada2fe7eead31-4e746ddab63mr998957137.13.1749034482788; 
- Wed, 04 Jun 2025 03:54:42 -0700 (PDT)
-Received: from ?IPV6:2804:7f0:bcc0:8f02:a679:333c:d017:a155?
- ([2804:7f0:bcc0:8f02:a679:333c:d017:a155])
- by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-4e6444964casm9865070137.13.2025.06.04.03.54.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 03:54:42 -0700 (PDT)
-Message-ID: <c2b0fb25-8b17-4a69-a128-2f8cc9bbba76@ventanamicro.com>
-Date: Wed, 4 Jun 2025 07:54:38 -0300
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/kvm: implement SBI debug console (DBCN) calls
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-References: <20240425155012.581366-1-dbarboza@ventanamicro.com>
- <eb6bd3d7-c66b-4300-9573-c29830a3aff4@linaro.org>
- <102e2e67-4c4d-4912-a892-20f5136f241a@ventanamicro.com>
- <47327da2-be3c-4aaa-ab3d-36e8d0c25185@linaro.org>
- <0eb5bcf9-bc2e-46c6-9f54-1514039557e0@ventanamicro.com>
- <37e6fecd-948a-4840-9189-918d44c0be72@linaro.org>
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uMlq0-0002rb-54; Wed, 04 Jun 2025 06:59:16 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
+ id 1uMlpw-0000tm-5a; Wed, 04 Jun 2025 06:59:15 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bC4M71BPpz6K92t;
+ Wed,  4 Jun 2025 18:58:43 +0800 (CST)
+Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
+ by mail.maildlp.com (Postfix) with ESMTPS id 3193D1402CB;
+ Wed,  4 Jun 2025 18:58:56 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (7.182.85.71) by
+ frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 4 Jun 2025 12:58:55 +0200
+Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
+ frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
+ Wed, 4 Jun 2025 12:58:55 +0200
+To: Cornelia Huck <cohuck@redhat.com>, "eric.auger.pro@gmail.com"
+ <eric.auger.pro@gmail.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "maz@kernel.org"
+ <maz@kernel.org>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
+ "sebott@redhat.com" <sebott@redhat.com>, "armbru@redhat.com"
+ <armbru@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
+ <jdenemar@redhat.com>
+CC: "agraf@csgraf.de" <agraf@csgraf.de>, "shahuang@redhat.com"
+ <shahuang@redhat.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "pbonzini@redhat.com"
+ <pbonzini@redhat.com>
+Subject: RE: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+Thread-Topic: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
+ host model
+Thread-Index: AQHbrVvRKlWe4qTsaku+jGkyYZoxlrPgb1/QgASMGwCAAWZvgIALVkAAgAFowxA=
+Date: Wed, 4 Jun 2025 10:58:55 +0000
+Message-ID: <f11e5fbddf634bbc88ba4c07bafe3f26@huawei.com>
+References: <20250414163849.321857-1-cohuck@redhat.com>
+ <de7db6bc22ad4f0a8ac1fac718c810a1@huawei.com> <87bjrfbkyz.fsf@redhat.com>
+ <878qmibc5a.fsf@redhat.com> <87tt4wamcp.fsf@redhat.com>
+In-Reply-To: <87tt4wamcp.fsf@redhat.com>
+Accept-Language: en-GB, en-US
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <37e6fecd-948a-4840-9189-918d44c0be72@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ua1-x930.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-originating-ip: [10.203.177.241]
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=shameerali.kolothum.thodi@huawei.com;
+ helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,239 +90,142 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/4/25 6:38 AM, Philippe Mathieu-Daudé wrote:
-> (+Marc-André and Paolo who I forgot to Cc first)
-> 
-> On 4/6/25 11:17, Daniel Henrique Barboza wrote:
->>
->>
->> On 6/4/25 4:32 AM, Philippe Mathieu-Daudé wrote:
->>> On 3/6/25 20:04, Daniel Henrique Barboza wrote:
->>>>
->>>>
->>>> On 6/3/25 10:19 AM, Philippe Mathieu-Daudé wrote:
->>>>> Hi Daniel,
->>>>>
->>>>> (now merged as commit a6b53378f537)
->>>>>
->>>>> On 25/4/24 17:50, Daniel Henrique Barboza wrote:
->>>>>> SBI defines a Debug Console extension "DBCN" that will, in time, replace
->>>>>> the legacy console putchar and getchar SBI extensions.
->>>>>>
->>>>>> The appeal of the DBCN extension is that it allows multiple bytes to be
->>>>>> read/written in the SBI console in a single SBI call.
->>>>>>
->>>>>> As far as KVM goes, the DBCN calls are forwarded by an in-kernel KVM
->>>>>> module to userspace. But this will only happens if the KVM module
->>>>>> actually supports this SBI extension and we activate it.
->>>>>>
->>>>>> We'll check for DBCN support during init time, checking if get-reg- list
->>>>>> is advertising KVM_RISCV_SBI_EXT_DBCN. In that case, we'll enable it via
->>>>>> kvm_set_one_reg() during kvm_arch_init_vcpu().
->>>>>>
->>>>>> Finally, change kvm_riscv_handle_sbi() to handle the incoming calls for
->>>>>> SBI_EXT_DBCN, reading and writing as required.
->>>>>>
->>>>>> A simple KVM guest with 'earlycon=sbi', running in an emulated RISC-V
->>>>>> host, takes around 20 seconds to boot without using DBCN. With this
->>>>>> patch we're taking around 14 seconds to boot due to the speed-up in the
->>>>>> terminal output.  There's no change in boot time if the guest isn't
->>>>>> using earlycon.
->>>>>>
->>>>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>>>> ---
->>>>>>   target/riscv/kvm/kvm-cpu.c         | 111 ++++++++++++++++++++++++ +++++
->>>>>>   target/riscv/sbi_ecall_interface.h |  17 +++++
->>>>>>   2 files changed, 128 insertions(+)
->>>>>
->>>>>
->>>>>> +static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
->>>>>> +{
->>>>>> +    g_autofree uint8_t *buf = NULL;
->>>>>> +    RISCVCPU *cpu = RISCV_CPU(cs);
->>>>>> +    target_ulong num_bytes;
->>>>>> +    uint64_t addr;
->>>>>> +    unsigned char ch;
->>>>>> +    int ret;
->>>>>> +
->>>>>> +    switch (run->riscv_sbi.function_id) {
->>>>>> +    case SBI_EXT_DBCN_CONSOLE_READ:
->>>>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE:
->>>>>> +        num_bytes = run->riscv_sbi.args[0];
->>>>>> +
->>>>>> +        if (num_bytes == 0) {
->>>>>> +            run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>>>> +            run->riscv_sbi.ret[1] = 0;
->>>>>> +            break;
->>>>>> +        }
->>>>>> +
->>>>>> +        addr = run->riscv_sbi.args[1];
->>>>>> +
->>>>>> +        /*
->>>>>> +         * Handle the case where a 32 bit CPU is running in a
->>>>>> +         * 64 bit addressing env.
->>>>>> +         */
->>>>>> +        if (riscv_cpu_mxl(&cpu->env) == MXL_RV32) {
->>>>>> +            addr |= (uint64_t)run->riscv_sbi.args[2] << 32;
->>>>>> +        }
->>>>>> +
->>>>>> +        buf = g_malloc0(num_bytes);
->>>>>> +
->>>>>> +        if (run->riscv_sbi.function_id == SBI_EXT_DBCN_CONSOLE_READ) {
->>>>>> +            ret = qemu_chr_fe_read_all(serial_hd(0)->be, buf, num_bytes);
->>>>>> +            if (ret < 0) {
->>>>>> +                error_report("SBI_EXT_DBCN_CONSOLE_READ: error when "
->>>>>> +                             "reading chardev");
->>>>>> +                exit(1);
->>>>>> +            }
->>>>>> +
->>>>>> +            cpu_physical_memory_write(addr, buf, ret);
->>>>>> +        } else {
->>>>>> +            cpu_physical_memory_read(addr, buf, num_bytes);
->>>>>> +
->>>>>> +            ret = qemu_chr_fe_write_all(serial_hd(0)->be, buf, num_bytes);
->>>>>> +            if (ret < 0) {
->>>>>> +                error_report("SBI_EXT_DBCN_CONSOLE_WRITE: error when "
->>>>>> +                             "writing chardev");
->>>>>> +                exit(1);
->>>>>> +            }
->>>>>> +        }
->>>>>> +
->>>>>> +        run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>>>> +        run->riscv_sbi.ret[1] = ret;
->>>>>> +        break;
->>>>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
->>>>>> +        ch = run->riscv_sbi.args[0];
->>>>>> +        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
->>>>>> +
->>>>>> +        if (ret < 0) {
->>>>>> +            error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: error when "
->>>>>> +                         "writing chardev");
->>>>>> +            exit(1);
->>>>>> +        }
->>>>>
->>>>> We are ignoring partial writes (non-blocking call returning 0 byte
->>>>> written), is that expected? If so, is it OK to add a comment we can
->>>>> safely discard not-yet-written DBCN_CONSOLE_WRITE_BYTE?
->>>>
->>>> Not sure what you meant. IIUC qemu_chr_fe_write() returns the number
->>>> of bytes consumed, 0 if no chardev is found, and -1 on error.
->>>
->>> I'm trying to address an issue Peter reported with qemu_chr_fe_write():
->>> https://lore.kernel.org/qemu-devel/ CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
->>>
->>> Basically upon introduction in commit cd18720a294 in 2013
->>> ("char: introduce a blocking version of qemu_chr_fe_write") the API
->>> contract was "Returns: the number of bytes consumed" which could be 0,
->>> so some frontends return 0 for "wrote no bytes".
->>>
->>> Later in 2016 in commit fa394ed6257 ("char: make some qemu_chr_fe
->>> skip if no driver") the API documentation was changed:
->>>
->>> - * Returns: the number of bytes consumed
->>> + * Returns: the number of bytes consumed (0 if no assicated CharDriver)
->>>
->>> After this commit, some frontends started to handle '<=0' as error,
->>> while 0 is not an error.
->>
->> I think I got the gist of it, thanks.
->>
->> For this particular console call the spec says:
->>
->> "This is a blocking SBI call and it will only return after writing the specified
->> byte to the debug console. It will also return, with SBI_ERR_FAILED, if there are
->> I/O errors."
->>
->>
->> So I think it pairs well with the blocking version qemu_chr_fe_write_all()
->> instead. I can do this change and get out of your way in changing the callers
->> of qemu_chr_fe_write().
-> 
-> I appreciate if you post the patch (this is a 1 line change, but what
-> matters here is the justification you just provided), but if you are
-> busy I can do it, I have enough information to write the commit desc.
+> -----Original Message-----
+> From: Cornelia Huck <cohuck@redhat.com>
+> Sent: Tuesday, June 3, 2025 4:15 PM
+> To: Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com>; eric.auger.pro@gmail.com;
+> eric.auger@redhat.com; qemu-devel@nongnu.org; qemu-arm@nongnu.org;
+> kvmarm@lists.linux.dev; peter.maydell@linaro.org;
+> richard.henderson@linaro.org; alex.bennee@linaro.org; maz@kernel.org;
+> oliver.upton@linux.dev; sebott@redhat.com; armbru@redhat.com;
+> berrange@redhat.com; abologna@redhat.com; jdenemar@redhat.com
+> Cc: agraf@csgraf.de; shahuang@redhat.com; mark.rutland@arm.com;
+> philmd@linaro.org; pbonzini@redhat.com
+> Subject: RE: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64
+> KVM host model
+>=20
+> On Tue, May 27 2025, Cornelia Huck <cohuck@redhat.com> wrote:
+>=20
+> > On Mon, May 26 2025, Cornelia Huck <cohuck@redhat.com> wrote:
+> >
+> >> On Fri, May 23 2025, Shameerali Kolothum Thodi
+> <shameerali.kolothum.thodi@huawei.com> wrote:
+> >>
+> >>> Hi,
+> >>>
+> >>>> -----Original Message-----
+> >>>> From: Cornelia Huck <cohuck@redhat.com>
+> >>>> Sent: Monday, April 14, 2025 5:39 PM
+> >>>> To: eric.auger.pro@gmail.com; eric.auger@redhat.com; qemu-
+> >>>> devel@nongnu.org; qemu-arm@nongnu.org; kvmarm@lists.linux.dev;
+> >>>> peter.maydell@linaro.org; richard.henderson@linaro.org;
+> >>>> alex.bennee@linaro.org; maz@kernel.org; oliver.upton@linux.dev;
+> >>>> sebott@redhat.com; Shameerali Kolothum Thodi
+> >>>> <shameerali.kolothum.thodi@huawei.com>; armbru@redhat.com;
+> >>>> berrange@redhat.com; abologna@redhat.com;
+> jdenemar@redhat.com
+> >>>> Cc: agraf@csgraf.de; shahuang@redhat.com; mark.rutland@arm.com;
+> >>>> philmd@linaro.org; pbonzini@redhat.com; Cornelia Huck
+> >>>> <cohuck@redhat.com>
+> >>>> Subject: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64
+> >>>> KVM host model
+> >>>
+> >>> [..]
+> >>>
+> >>> )
+> >>>>
+> >>>> Code also available at
+> >>>> https://gitlab.com/cohuck/qemu/-/tree/arm-cpu-model-
+> >>>> rfcv3?ref_type=3Dheads
+> >>>
+> >>> I had a spin with the above branch, but Qemu boot fails,
+> >>>
+> >>> ERROR:../target/arm/cpu64.c:57:get_sysreg_idx: code should not be
+> >>> reached Bail out! ERROR:../target/arm/cpu64.c:57:get_sysreg_idx:
+> >>> code should not be reached
+> >>>
+> >>> From a quick debug, it looks like the below path results in an invali=
+d ID
+> idx.
+> >>>
+> >>> kvm_arm_expose_idreg_properties()
+> >>>  kvm_idx_to_idregs_idx(0)
+> >>>   get_sysreg_idx(0xc000)  --> id_register seems to start at 0xc008
+> >>>
+> >>> Haven't debugged further.
+> >>>
+> >>> I am running against a 6.15-rc1 kernel after updating the Qemu
+> >>> branch by, ./update-aarch64-sysreg-code.sh  path_to_6.15-rc1
+> >>>
+> >>> Not sure I am  missing anything. Please check and let me know.
+> >>
+> >> Thanks for trying this out; I'll try to re-create this here.
+> >> (I think I've messed up those conversion functions often enough...)
+> >
+> > The conversion functions are not at fault here, but we're missing
+> > registers. If we have MIDR and friends writable, they show up in the
+> > masks returned by the kernel, but they are not present in the kernel's
+> > sysreg file where we generate our definitions from, and
+> > kvm_idx_to_idregs_idx() asserts instead of returning an error, which
+> > is kind of suboptimal...
+> >
+> > So I see two possible ways to fix this:
+> > - add MIDR and friends to the kernel's sysreg file
+> > - add MIDR and friends in QEMU's cpu-sysregs.h.inc file, and only appen=
+d
+> >   generated definitions there
+> >
+> > First option means one more round trip, second options has more
+> > potential for messing things up if we keep stuff local to QEMU.
+>=20
+> With the patch below, things work for me with a 6.15+ kernel. It's a bit
 
-I can handle this change, don't worry about it. I'll send it out today.
+Yes works for me too now. Thanks.
 
-> 
->>
->> But I still have questions, hehe. This blocking version has the following
->> doc:
->>
->> "(...) Unlike @qemu_chr_fe_write, this function will block if the back end
->> cannot consume all of the data attempted to be written. This function is
->> thread-safe.
->>
->> Returns: the number of bytes consumed (0 if no associated Chardev)
->> or -1 on error."
->>
->> Do we have plans to change this API like we're doing with the non-blocking
->> version? Because being a blocking call that promises "block until all bytes
->> are written", and I have len  > 0, I don't expect a ret = 0 to be interpret
->> as "no bytes were written".  I am ok with ret = 0 being 'no associated chardev'
->> and not handling it as an error (for now at least) but I would like to confirm
->> that qemu_chr_fe_write_all() will not interpret ret = 0 as a zero byte write.
->> In other words, if for some reason other than "no chardev present" we ended up
->> with zero bytes written I would like a ret < 0 return.
-> 
-> Correct. Clarifying this method is in my TODO. What about this example:
-> 
-> - frontend wants to block to write 8 bytes
-> - backend writes 5 bytes, hits an unrecoverable link error
-> 
-> Should the backend support be responsible to re-establish link and retry
-> (when possible) to complete?
-> 
-> If we return -1 for error, could the frontend try to reconnect and write
-> the 8 bytes, ending with the first 5 bytes being transmitted twice?
-> 
-> Meanwhile I'm thinking to document as:
-> 
-> "Returns @len on success, or -1 on error (some data might has been written)".
-> 
+> messy, though, and raises questions (how do we want to handle those regs
+> across accelerators, for example, or how we can make sure that the code i=
+s
+> more robust when registers are added.)
+>=20
+> My biggest question, however, is how this interacts with the framework to
+> provide lists of MIDR/REVIDR/AIDR for errata management. The hack below
+> adds properties to configure those regs, I guess we'd want to suppress
+> adding the props in order to avoid conflicts.
 
-This make sense to me. It also goes in line with what Daniel mentioned in
-his reply. I'll make the change with this semantic in mind.
+Not sure how this impacts the errata management though. My initial take on
+this was, user will provide a list of target CPU ids through command line a=
+nd
+that will be used to set the target CPUs for errata management(if kernel
+supports it).
 
+Eg:
+-machine virt,.., x-target-impl-cpus=3D0xMIDR1:0xREVIDR1-0xMIDR2:REVIDR2
+
+And these will be stored in,
+
+#define MAX_TARGET_IMPL_CPUS    4
+typedef struct TargetImplCpu {
+     uint32_t midr;
+     uint32_t revidr;
+} TargetImplCpu;
+
+
+Please see the initial (a hack for testing kernel) implementation here,
+https://github.com/hisilicon/qemu/commit/a393c1180274c73d34f32eaab66764a874=
+a9ad31
+
+Please let me know if there is a better/preferred way of obtaining this
+target CPU list from user.
 
 Thanks,
-
-Daniel
-
-
-
-
-> Simpler API could be: "Returns 0 on success, otherwise -errno" but
-> we'd need to rework all the callers.
-> 
->>
->>
->> Thanks,
->>
->> Daniel
->>
->>
->>
->>>
->>>> Are you
->>>> saying that we should do a loop when there's no chardev found (ret = 0)
->>>> and wait a certain time until there's one available?
->>>>
->>>>
->>>> In fact, seeing how SBI_EXT_DBCN_CONSOLE_WRITE is written, I wonder if
->>>> we could use qemu_chr_fe_write_all() in this case too.
->>>
->>> This is certainly simpler.
->>>
->>> Regards,
->>>
->>> Phil.
->>
-> 
+Shameer
 
 
