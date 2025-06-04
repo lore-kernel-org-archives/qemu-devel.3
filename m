@@ -4,134 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2DC4FC5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 839EEC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:28:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMo2D-0004Jn-O8; Wed, 04 Jun 2025 09:20:01 -0400
+	id 1uMo9s-0006TT-IW; Wed, 04 Jun 2025 09:27:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMo2C-0004JB-7n
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:20:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1uMo9r-0006TH-77
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:27:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uMo2A-0003T4-BC
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:19:59 -0400
+ (Exim 4.90_1) (envelope-from <pkrempa@redhat.com>)
+ id 1uMo9m-0004fq-Fd
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:27:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749043195;
+ s=mimecast20190719; t=1749043668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/kTOaGtAbS5Ldm5UVnmVG/8OUS2/Q9w11jmT77JXgPA=;
- b=XUGW2RF5CLeOjLQ6FQHxAce6mpQwGWQG/H2XW/A8QiWmpRS5PhPXRNcj2Bp1uiJ9oPJttW
- VVSaEc6ecnFzDJg4iFhPGX/cV263PZzQOk58CWNI8OTKFCuxwZZoaUH+y8Jl4BhB35FPPS
- pmLl1TXWA+pR8dVTVjFLo1RZ4sB4wWM=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-247-l3OhfkZKMpC8ZyKFlatbuA-1; Wed, 04 Jun 2025 09:19:53 -0400
-X-MC-Unique: l3OhfkZKMpC8ZyKFlatbuA-1
-X-Mimecast-MFC-AGG-ID: l3OhfkZKMpC8ZyKFlatbuA_1749043193
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f55ea44dso3016366f8f.1
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:19:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749043193; x=1749647993;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/kTOaGtAbS5Ldm5UVnmVG/8OUS2/Q9w11jmT77JXgPA=;
- b=VfWUG8HadBLxDwCr4qwN05GKeSAdKlLPPqMt1VP7dx4SJHobwuZdAO9WvQu8fY7eSk
- XHWOdm4EkzvgjJHKcrPFDfr1AieTCy3KvqtnBNVjUI7INjvjwvCsEB1/l3FKZuBbvqjW
- 2Y9IeeAVbgEjk3Fhuh4+/o/fBIJRDkfMFz+zWY+CWGujvSZdOmbElmVBuDNRhMOI3vcC
- udyXJbid5SuLR+BJ3FtJEBENsr90poQihFzwBz7oS0j8yTxGreVOCwsScl4/R7sNdN0k
- OLLPr/RM65sFL5rSt2t6cbxN7aapgYjMXUVHcTlHFqWduSx4QzJB6SeAn6sPKYmB4njO
- w8dA==
-X-Gm-Message-State: AOJu0YxzvnfZ0fmjDF+c8HX8n5omTvQ/mrtvPvpWydaeZDVbqx8XhbO0
- /qPV1tORwBrV9I5gAqgPjscm5QzMwJwSSH1m7WoJRWn3V7xoX5OU6YeY2k0gqT1e57YSs1fPy4W
- 05R76C2Z8goFYUIvDdnwVRRkaHwwtqWbFd0OGV4XQCmjhSJORwIOdUyEI
-X-Gm-Gg: ASbGncvIVg38AeEkbGgiGP1pBS+J86CTWlg8fWJ3W21hqqZZgVPjlLk7DdbBRQbo3Jh
- 0Lgp1ANBBwUz/Hoh//SZHGynr59AUY3AaQswXpRZsK2Q3bW9uh+uiuzueNE12bn7B9SfV7gOtqe
- r/8u9aj/yE02g3E1XnvOsMD1WooQEykOwzxXQ0JKQa0FQ64Tj55QoNkHtwhYkEU9fncP/4u0MOd
- 6J9VQb10b8dGXF7i+ZwIVq+nTrL39nNIfNouGhaV5WHE9rem5IoRushq2ifXI6a+T7Mgqu+GuT1
- S1IuOS8I9zdKB6Gt+MpsiFagF1IaWqrjstEt
-X-Received: by 2002:a05:6000:2085:b0:3a4:f35b:d016 with SMTP id
- ffacd0b85a97d-3a51d8fa6d9mr2673753f8f.11.1749043192604; 
- Wed, 04 Jun 2025 06:19:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFLTMC14mQOgnHdQmxN842mlySzm7bq0Seb03isiHJc7GNI/r5LdlQaargnJKOAdjpRc4XtBg==
-X-Received: by 2002:a05:6000:2085:b0:3a4:f35b:d016 with SMTP id
- ffacd0b85a97d-3a51d8fa6d9mr2673720f8f.11.1749043192114; 
- Wed, 04 Jun 2025 06:19:52 -0700 (PDT)
-Received: from [10.33.192.219] (nat-pool-str-t.redhat.com. [149.14.88.106])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f009f9d6sm21577157f8f.84.2025.06.04.06.19.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 06:19:51 -0700 (PDT)
-Message-ID: <67cedb27-3f1e-4840-85c0-2ced351c9d64@redhat.com>
-Date: Wed, 4 Jun 2025 15:19:49 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=clDW1r158unwtlDsyqPL74tCSQyxdxqdEtDprNG8wHY=;
+ b=NPKfllBvakTSo7GW6NhRXojDBfIF2VkzXmXSbfsu6MkQrbSAC44K/ftB2B8ewjM2fo/f0h
+ lzkLjHFKD55PZA/ADoQrMl4SeKUB0C9trVlbWdUUAzV4VlEEDPHVw8N+QmteWhZeR/+nCs
+ eDHImj4R4ySuyDDUmeCQ4cTBe0eIAZI=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-6-lNlPoC29OFamk-hxzlevLw-1; Wed,
+ 04 Jun 2025 09:27:44 -0400
+X-MC-Unique: lNlPoC29OFamk-hxzlevLw-1
+X-Mimecast-MFC-AGG-ID: lNlPoC29OFamk-hxzlevLw_1749043664
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D9861180047F; Wed,  4 Jun 2025 13:27:43 +0000 (UTC)
+Received: from angien.pipo.sk (unknown [10.44.22.3])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E17E419560AE; Wed,  4 Jun 2025 13:27:41 +0000 (UTC)
+Date: Wed, 4 Jun 2025 15:27:33 +0200
+From: Peter Krempa <pkrempa@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>,
+ Anushree Mathur <anushree.mathur@linux.ibm.com>,
+ qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: virsh migrate fails when --copy-storage-all option is given!
+Message-ID: <aEBJxUIYRaOKBiCL@angien.pipo.sk>
+References: <31711771-7caa-4ea3-b763-45db6930e28e@linux.ibm.com>
+ <aDctC8i7U2J5bmyw@x1.local> <aEA_EtAKVnk0oYej@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/27] Functional tests, Microblaze endianness & pc/q35
- cleanups
-To: Stefan Hajnoczi <stefanha@gmail.com>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>
-References: <20250528100507.313906-1-thuth@redhat.com>
- <CAJSP0QUpxsVEMEDT8opTZrhs6oFfFJk+jUqdR-dZL=TzQcYbWg@mail.gmail.com>
- <34256440-efd5-4395-8eab-49ca5bbe0377@redhat.com>
- <fa5f0538-9c66-46f1-b65d-d723d2006716@yandex-team.ru>
- <CAJSP0QX8pXNE7SL8hAOHStJy+ZYdhF9bzWX95Qts9hk6vgKseg@mail.gmail.com>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAJSP0QX8pXNE7SL8hAOHStJy+ZYdhF9bzWX95Qts9hk6vgKseg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+In-Reply-To: <aEA_EtAKVnk0oYej@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pkrempa@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -156,88 +89,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04/06/2025 15.11, Stefan Hajnoczi wrote:
-> On Wed, Jun 4, 2025 at 3:51â€¯AM Alexandr Moshkov
-> <dtalexundeer@yandex-team.ru> wrote:
->>
->>
->> On 5/29/25 01:12, Thomas Huth wrote:
->>> On 28/05/2025 21.23, Stefan Hajnoczi wrote:
->>>> On Wed, May 28, 2025 at 6:12â€¯AM Thomas Huth <thuth@redhat.com> wrote:
->>>>>
->>>>>    Hi!
->>>>>
->>>>> The following changes since commit
->>>>> 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e:
->>>>>
->>>>>     Merge tag 'pull-aspeed-20250526' of
->>>>> https://github.com/legoater/qemu into staging (2025-05-26 10:16:59
->>>>> -0400)
->>>>>
->>>>> are available in the Git repository at:
->>>>>
->>>>>     https://gitlab.com/thuth/qemu.git tags/pull-request-2025-05-28
->>>>>
->>>>> for you to fetch changes up to
->>>>> 9c2da02e184fddfa7cd7d7813455c2306daae99a:
->>>>>
->>>>>     tests/unit/test-util-sockets: fix mem-leak on error object
->>>>> (2025-05-28 11:59:47 +0200)
->>>>>
->>>>> ----------------------------------------------------------------
->>>>> * Functional tests improvements
->>>>> * Endianness improvements/clean-ups for the Microblaze machines
->>>>> * Remove obsolete -2.4 and -2.5 i440fx and q35 machine types and
->>>>> related code
->>>>>
->>>>> ----------------------------------------------------------------
->>>>> Alexandr Moshkov (2):
->>>>>         tests/functional: add skipLockedMemoryTest decorator
->>>>>         tests/functional: add memlock tests
->>>>
->>>> Hi Thomas and Alexandr,
->>>> The memlock tests are failing:
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/10181084830#L5421
->>>> https://gitlab.com/qemu-project/qemu/-/jobs/10181084865#L5476
->>>>
->>>> Please take a look and send a new pull request. Thanks!
->>>
->> Hello! I think Stefan forgot to CC me in his reply. Only now find this
->> message)
->>
->>
->>> According to the log:
->>>
->>>   Output: qemu-system-aarch64: No machine specified, and there is no
->>> default
->>>
->>> I think it likely does not make sense to run this test with the
->>> aarch64 target... Alexandr, would it make sense to limit this to x86
->>> only?
->>
->> It looks like adding this lines to vm creation fixes all problems with
->> other targets on memlock test:
->>
->> self.set_machine('none')
->> self.vm.add_args('-nodefaults')
->>
->> What's the convenient way to fix it? Resend a new patch?
+On Wed, Jun 04, 2025 at 14:41:54 +0200, Kevin Wolf wrote:
+> Am 28.05.2025 um 17:34 hat Peter Xu geschrieben:
+> > Copy Kevin.
+> > 
+> > On Wed, May 28, 2025 at 07:21:12PM +0530, Anushree Mathur wrote:
+> > > Hi all,
+> > > 
+> > > 
+> > > When I am trying to migrate the guest from host1 to host2 with the command
+> > > line as follows:
+> > > 
+> > > date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
+> > > --undefinesource --persistent --auto-converge --postcopy
+> > > --copy-storage-all;date
+> > > 
+> > > and it fails with the following error message-
+> > > 
+> > > error: internal error: unable to execute QEMU command 'block-export-add':
+> > > Block node is read-only
+> > > 
+> > > HOST ENV:
+> > > 
+> > > qemu : QEMU emulator version 9.2.2
+> > > libvirt : libvirtd (libvirt) 11.1.0
+> > > Seen with upstream qemu also
+> > > 
+> > > Steps to reproduce:
+> > > 1) Start the guest1
+> > > 2) Migrate it with the command as
+> > > 
+> > > date;virsh migrate --live --domain guest1 qemu+ssh://dest/system --verbose
+> > > --undefinesource --persistent --auto-converge --postcopy
+> > > --copy-storage-all;date
+> > > 
+> > > 3) It fails as follows:
+> > > error: internal error: unable to execute QEMU command 'block-export-add':
+> > > Block node is read-only
 > 
-> Hi Alexandr,
-> Sorry I forgot to CC you. Since the patch in question hasn't been
-> merged yet, you could send a new revision of the patch and Thomas
-> could include it in his next pull request. That way the fixed patch
-> will be introduced in one commit rather than a broken commit followed
-> by a fix.
+> I assume this is about an inactive block node. Probably on the
+> destination, but that's not clear to me from the error message.
 
-Yes, please send a new version of the patch. Make sure to test with all 
-targets enabled, or change the hunk in meson.build to include it for the x86 
-target only. I think I'd even prefer the latter, since otherwise you might 
-run out of memory easily when doing the tests in parallel with:
+Yes this would be on the destination. Libvirt exports the nodes on
+destination, source connects and does the blockjob.
 
-  "make -j$(nproc) check-functional"
+The destination side is configured the same way as the source side so
+if the source disk is configured as read-write the destination should be
+as well
 
-Thanks,
-  Thomas
+> > > Things I analyzed-
+> > > 1) This issue is not happening if I give --unsafe option in the virsh
+> > > migrate command
+
+This is weird; this shouldn't have any impact.
+
+> 
+> What does this translate to on the QEMU command line?
+> 
+> > > 2) O/P of qemu-monitor command also shows ro as false
+> > > 
+> > > virsh qemu-monitor-command guest1 --pretty --cmd '{ "execute": "query-block"
+
+it'd be impossible to execute this on the guest due to timing; you'll
+need to collect libvirt debug logs to do that:
+
+https://www.libvirt.org/kbase/debuglogs.html#tl-dr-enable-debug-logs-for-most-common-scenario
+
+I also thing this should be eventually filed in a 
+
+> > > }'
+> > > {
+> > >   "return": [
+> > >     {
+> > >       "io-status": "ok",
+> > >       "device": "",
+> > >       "locked": false,
+> > >       "removable": false,
+> > >       "inserted": {
+> > >         "iops_rd": 0,
+> > >         "detect_zeroes": "off",
+> > >         "image": {
+> > >           "virtual-size": 21474836480,
+> > >           "filename": "/home/Anu/guest_anu.qcow2",
+> > >           "cluster-size": 65536,
+> > >           "format": "qcow2",
+> > >           "actual-size": 5226561536,
+> > >           "format-specific": {
+> > >             "type": "qcow2",
+> > >             "data": {
+> > >               "compat": "1.1",
+> > >               "compression-type": "zlib",
+> > >               "lazy-refcounts": false,
+> > >               "refcount-bits": 16,
+> > >               "corrupt": false,
+> > >               "extended-l2": false
+> > >             }
+> > >           },
+> > >           "dirty-flag": false
+> > >         },
+> > >         "iops_wr": 0,
+> > >         "ro": false,
+> > >         "node-name": "libvirt-1-format",
+> > >         "backing_file_depth": 0,
+> > >         "drv": "qcow2",
+> > >         "iops": 0,
+> > >         "bps_wr": 0,
+> > >         "write_threshold": 0,
+> > >         "encrypted": false,
+> > >         "bps": 0,
+> > >         "bps_rd": 0,
+> > >         "cache": {
+> > >           "no-flush": false,
+> > >           "direct": false,
+> > >           "writeback": true
+> > >         },
+> > >         "file": "/home/Anu/guest_anu.qcow2"
+> > >       },
+> > >       "qdev": "/machine/peripheral/virtio-disk0/virtio-backend",
+> > >       "type": "unknown"
+> > >     }
+> > >   ],
+> > >   "id": "libvirt-26"
+> > > }
+> 
+> I assume this is still from the source where the image is still active.
+
+Yes; on the destination the process wouldn't be around long enough to
+call 'virsh qemu-monitor-command'
+
+> 
+> Also it doesn't contain the "active" field yet that was recently
+> introduced, which could show something about this. I believe you would
+> still get "read-only": false for an inactive image if it's supposed to
+> be read-write after the migration completes.
+> 
+> > > 
+> > > 3) Guest doesn't have any readonly
+> > > 
+> > > virsh dumpxml guest1 | grep readonly
+> > > 
+> > > 4) Tried giving the proper permissions also
+> > > 
+> > > -rwxrwxrwx. 1 qemu qemu 4.9G Apr 28 15:06 guest_anu.qcow
+
+Is this on the destination? did you pre-create it yourself? otherwise
+libvirt is pre-creating that image for-non-shared-storage migration
+(--copy-storage-all) which should have proper permissions when it's
+created
+
+> > > 
+> > > 5) Checked for the permission of the pool also that is also proper!
+> > > 
+> > > 6) Found 1 older bug similar to this, pasting the link for reference:
+> > > 
+> > > 
+> > > https://patchwork.kernel.org/project/qemu-devel/patch/20170811164854.GG4162@localhost.localdomain/
+> 
+> What's happening in detail is more of a virsh/libvirt question. CCing
+> Peter Krempa, he might have an idea.
+
+Please collect the debug log; at least from the destination side of
+migration. That should show  how the VM is prepared and qemu invoked.
 
 
