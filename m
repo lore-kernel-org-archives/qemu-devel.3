@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB2DC5B552
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:23:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 787CEC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:24:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMiT8-0003ie-OT; Wed, 04 Jun 2025 03:23:26 -0400
+	id 1uMiTM-0003km-RQ; Wed, 04 Jun 2025 03:23:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uMiT7-0003iO-34
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:23:25 -0400
-Received: from mail-qk1-x72a.google.com ([2607:f8b0:4864:20::72a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1uMiT4-0007z8-W7
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:23:24 -0400
-Received: by mail-qk1-x72a.google.com with SMTP id
- af79cd13be357-7c922169051so346876985a.0
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 00:23:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749021801; x=1749626601; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KtiViquYzfifAHYiXsBxym8lzyMcwa/kxHqOyU88xpI=;
- b=QrdNXLfI+Ae6A8/YCp31HilpcHx2jdWnN0ySp9tfqtkHPLzAPmBv8bIa4yw8Z86zTi
- uzNdWXLdGS7GXs/Mq4ksXkHW1oApYUpG0AZ4ALGKwH67cq0dudxHXc7Xrz3h7K2GKavC
- k5rwttmnFAjvLFsWZbPkwFGyfPgTsXM6ZoS8CJvRMS9cxoGbcPTmidnfFmZz00RsbMq6
- dsAxWuGlosdMSTK7bPmRECwoamQpx7R7TZ2MBPWp1y6MObf9YJSI2wDgQAdC8PK+CRD/
- 4zssZQCzBwSbw8I/pptfaKUblVr6H7yeh+rRQGFa+yg80dpi5jlXxTOirMze8nGvFe/+
- 2i7w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749021801; x=1749626601;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=KtiViquYzfifAHYiXsBxym8lzyMcwa/kxHqOyU88xpI=;
- b=nwLSYGArIBNlKymFA8r43aRV3gtoC8AV8dGYWsZwTbhLQSTIz8TWh2WUp+YLzzg5EB
- yYygIcPqwV+AogOHvf/TJbXTQwjr7J39cfqbScOkQWJdf4BF6EQJr2fEU5/b3TdMWxOe
- lw6wdpx6tdq5qAMt/7JMIV4ErJRkXt1cCDTpn2yA+nfYp7taiVoz0DIOUDvwZQxhr2g+
- NZJST53dRR5KwEXk1LkypqVJH7vgpiIZtpngNNotJDoEkp10pc55/rPwP1ufCBi+wBvl
- 8zFeFfgYrjIxxWwpN6HrQZESR961cptueiWSMWBv8rjAe5mTXCeAM7qlTsPZqYr8MtRF
- f8sA==
-X-Gm-Message-State: AOJu0YyZbX7dVzwhXf08ZX2Ozv4iLmOVLFP66a3gmdG9tZPMKYipIO5U
- eKEo8mb87xjLlIRWeSPA1ECNnfs16MfTf0vGoGOpEWTIiaHan5jd9yGnv5uIpaxH3G7L+Xq0P3T
- 1DNZ+ARY+KOPlrsu8E4T7phaWmVTyi9w=
-X-Gm-Gg: ASbGnctKqXtDlhFEzxYAi7YIEEyDmEegDHo/SsLVgkJi2kiHhm3zV6zDG6jPgN6y/Ou
- BOiqJEctLVCNcwlJLxbtYTZ3NTlIf9nwy+q0yiYyOV++2Y/ZdgWzvwzYeYKJljXffs7y/5Rqcvp
- 4tdYDh6g2LunpzfeYA9MTcE5/PwT+uB2w3YLAPsJ8ora32WTTALbGdHpfdhuMd5E8QgNlJ3whk7
- LIO
-X-Google-Smtp-Source: AGHT+IHcAj3Bu0wRdpl/xOOO44AyWlwHVq+q6gciW4BFjkgrnXV8KH679BhRJ3X+PZSyOidoG13BIBzhY6FxGIHN0Xg=
-X-Received: by 2002:a05:620a:1918:b0:7d0:9d56:48b6 with SMTP id
- af79cd13be357-7d219819291mr300507685a.9.1749021801278; Wed, 04 Jun 2025
- 00:23:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1uMiTJ-0003js-UQ; Wed, 04 Jun 2025 03:23:37 -0400
+Received: from fout-a1-smtp.messagingengine.com ([103.168.172.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1uMiTH-000800-H8; Wed, 04 Jun 2025 03:23:37 -0400
+Received: from phl-compute-12.internal (phl-compute-12.phl.internal
+ [10.202.2.52])
+ by mailfout.phl.internal (Postfix) with ESMTP id 0186413803F0;
+ Wed,  4 Jun 2025 03:23:34 -0400 (EDT)
+Received: from phl-mailfrontend-01 ([10.202.2.162])
+ by phl-compute-12.internal (MEProxy); Wed, 04 Jun 2025 03:23:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1749021813; x=
+ 1749108213; bh=JdI6ZF9J7IRpY0GeLk5N8mugk7X11V+wlTQhe5XmziM=; b=c
+ zwyQ+G1uSQHIHIFr0o5tj9ibZeHwVWMZ6Y5+v0qcIKXE1I7/1JPiYP4H3rHyWElM
+ mk3mN4LSX9ocrlHmUtL4oF01zvUNG7cebv9p/6v2w2KLPi1GL6/36+Jwaj2MnHnM
+ vKQnWfUxUeCX33JE51wYbM+Uua8Fu96Z2sH1KPfB51OWzQcQpZmJnCVvhdW6X3ov
+ ByW9tWmdxEODbsej1y4kw0gAVVrWaZrEx2yK27gpqXRKvRXL2f2PtPcoIRDUb+vX
+ hO3BJDFOIz/d8DqxyE/t05bIDUaCDABwXPJEDSBydU1KcnsLWCep7szG2LH/mKBQ
+ stYAU0scg7xrZkoZlZqYA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1749021813; x=1749108213; bh=JdI6ZF9J7IRpY0GeLk5N8mugk7X11V+wlTQ
+ he5XmziM=; b=j35Bx/ZjdANJIm5qqadtuA2VtRimRNdFStNXXpl0fn2cURz7U7T
+ 0PJZH1NYewnYqB+j+Uc2JWU7v7vCs0MAI+A2YDz4UA77e+9+2klbfXlQfCl5ggtL
+ d6kfDfC5RbxM8nw5+WBN2U72XGxG3lovMWNtMUP5Qif/dvAvxxY24JopWGkutsUR
+ Xk+UaA4KJrICzlY0B6Pw3qkYBPyMm6VC/KXY01lPM+9E6DhyXMd0YGtjoE8VO2V9
+ 5Sq73j+Z+diPmKMfpY8WKsfaFHoyagIegIxqgdg9ZntLUqV3uXuyBY3foUOq8Hmr
+ /KIwcNUcqnhN4Ef0wWiDoAZPpZVSW2SS/hQ==
+X-ME-Sender: <xms:c_Q_aP-PfbtRvROQhjD-LrOCJypNooyvphRosXWzvnc2oC3o2rRvxg>
+ <xme:c_Q_aLuF38y0aZipErTTcAMoMcdW5PfusJMqlhGZBTNAs2iW7JnSeh61o1TlyCdFJ
+ KlXY5EgTsj_4Mlf-fE>
+X-ME-Received: <xmr:c_Q_aNBKFnfHa5AF-bHUKzsnLb1z-mqlzDFOzgkDoxpLodOuDoKEUEzhiEViWQ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddujeeiucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
+ ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
+ gukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveej
+ vedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
+ ohepkedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhhjthesthhlshdrmhhskh
+ drrhhupdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgt
+ phhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepfhhoshhsse
+ guvghfmhgrtghrohdrihhtpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhn
+ uhdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdrtghomhdprh
+ gtphhtthhopegrlhgrnhdrrggurghmshhonhesohhrrggtlhgvrdgtohhmpdhrtghpthht
+ ohepihhtshesihhrrhgvlhgvvhgrnhhtrdgukh
+X-ME-Proxy: <xmx:c_Q_aLcmWFgw6-JBcJi7bC-IIdn5BcGETD6_vg150S7K2IbhzP-jAA>
+ <xmx:c_Q_aEOqSG9yAY_qaYDH9QvG8AlGGhpznjQsXniTjtS27QhI10px8w>
+ <xmx:c_Q_aNlMkzt4Um-b9XO4rHKso5Cyhh5XHOstt2wmu8xNbQm96bodlQ>
+ <xmx:c_Q_aOs_bC2XJgYTwhbmYEOsPdW7KwCJxMwJ8rT7JC2LxQv2fFnGLg>
+ <xmx:dfQ_aKg46zgPqtmf1TRNtz5DnMWB1Ti0_-rux8ghgGTjchGQPZJ00QUb>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Jun 2025 03:23:31 -0400 (EDT)
+Date: Wed, 4 Jun 2025 09:23:30 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, Keith Busch <kbusch@kernel.org>,
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org,
+ Klaus Jensen <k.jensen@samsung.com>, Alan Adamson <alan.adamson@oracle.com>
+Subject: Re: [PATCH 0/2] hw/nvme: stable fixes
+Message-ID: <aD_0ckiBYw40-fOQ@AALNPWKJENSEN.aal.scsc.local>
+References: <20250603-nvme-fixes-v1-0-01d67258ffca@samsung.com>
+ <0bb11abb-50cc-4ee1-9d91-bcb522161f0e@tls.msk.ru>
 MIME-Version: 1.0
-References: <20250529051352.1409904-1-vivek.kasireddy@intel.com>
-In-Reply-To: <20250529051352.1409904-1-vivek.kasireddy@intel.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Wed, 4 Jun 2025 11:23:10 +0400
-X-Gm-Features: AX0GCFugzp0z3MZTvDTDS3rVMM_zPKng8tUr1HznGMDgdTq738q2cMIaQ0mjcHU
-Message-ID: <CAJ+F1CKWKEg+80PVcmytOEDzrrvCv7FjvPsHooHQrE3eiHqy1Q@mail.gmail.com>
-Subject: Re: [PATCH v5 0/7] ui/spice: Enable gl=on option for non-local or
- remote clients
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, 
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>,
- Dongwon Kim <dongwon.kim@intel.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72a;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x72a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="M78Kti55Y8EVAbG4"
+Content-Disposition: inline
+In-Reply-To: <0bb11abb-50cc-4ee1-9d91-bcb522161f0e@tls.msk.ru>
+Received-SPF: pass client-ip=103.168.172.144; envelope-from=its@irrelevant.dk;
+ helo=fout-a1-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,134 +114,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Vivek
 
-On Thu, May 29, 2025 at 9:16=E2=80=AFAM Vivek Kasireddy
-<vivek.kasireddy@intel.com> wrote:
->
-> To address the limitation that this option is incompatible with
-> remote clients, this patch series adds an option to select a
-> preferred codec and also enable gl=3Don option for clients that
-> are connected via the network. In other words, with this option
-> enabled (and the below linked Spice series merged), it would be
-> possible to have Qemu share a dmabuf fd with Spice, which would
-> then forward it to a hardware or software based encoder and
-> eventually send the data associated with the fd to a client that
-> could be located on a different machine.
->
-> Essentially, this patch series provides a hardware accelerated,
-> opensource VDI option for users using Qemu and Spice by leveraging
-> the iGPU/dGPU on the host machine to encode the Guest FB via the
-> Gstreamer framework.
->
+--M78Kti55Y8EVAbG4
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I tested the series on fedora with intel-media-driver installed from rpmfus=
-ion.
+On Jun  4 10:21, Michael Tokarev wrote:
+> On 03.06.2025 15:59, Klaus Jensen wrote:
+> > Two fixes for stable. See commits.
+>=20
+> What do you mean "for stable"?
+> Are these not for master but for stable *only*?
+>=20
+> Usually changes for qemu-stable are picked up *from*
+> master branch, unless there are major changes in
+> stable already.
+>=20
+> Thanks,
+>=20
+> /mjt
 
-Without explicit video-codecs argument I get:
-qemu-system-x86_64: warning: Spice:
-../server/dcc-send.cpp:1780:red_marshall_gl_draw_stream: No video
-encoder available for this stream
-qemu-system-x86_64: warning: spice: no gl-draw-done within one second
+Hi Michael,
 
-If I specify video-codecs=3Dgstreamer:h264, then it seems to work fine.
+I was intending to CC to qemu-stable when I do the PULL to master after
+I get reviews :) The intention was not for you to pick it up
+immediately.
 
-I wish all of this would be better documented or more explicit, as
-each step took me a while to figure out (why it didn't pick a
-compatible encoder, what was the argument for video-codecs, why gst
-didn't support h264enc, where to find the encoder, ...). I am not even
-sure I am doing all this  correctly. Maybe there should be some
-docs/interop/spice.rst to document qemu -spice and video-codecs
-usages? (and move docs/spice-port-fqdn.txt content there too)
+My apologies if the word "stable" in the subject caught your radar
+unintentionally! :)
 
-I suppose the issue with better default for video-codecs is on
-spice-server side, so for this series:
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+Thanks,
+Klaus
 
+--M78Kti55Y8EVAbG4
+Content-Type: application/pgp-signature; name="signature.asc"
 
-> v4  -> v5 (suggestions from Marc-Andr=C3=A9):
-> - Fix the errors (mostly 80 chars limit violations) identified by
->   scripts/checkpatch.pl
-> - Rename the globals to have a spice_ prefix for consistency
-> - Rename MAX_REFRESH_RATE to DEFAULT_MAX_REFRESH_RATE
-> - Added comments to explain how/when the gl_draw request is submitted
->   to spice server in the remote clients case
-> - Fix the mem_obj leak that would occur when the associated texture
->   is destroyed or when an error is encountered while creating a
->   texture from an fd (Dmitry and Michael)
-> - Merged Michael's patch to fix the mem_obj leak into this series and
->   added his Co-developed-by tag to the relevant patches
->
-> v3 -> v4 (suggestions from Marc-Andr=C3=A9):
-> - Add a new parameter to make max_refresh_rate configurable
-> - Have surface_gl_create_texture_from_fd() return bool after checking
->   for errors
-> - Remove the check for PIXMAN_r5g6b5() in spice_gl_replace_fd_texture()
-> - Report errors in spice_gl_replace_fd_texture() when someting fails
-> - Use glGetError() correctly by adding an additional (dummy) call
->   before checking for actual errors (Dmitry)
-> - Add a new patch to check fd values in egl_dmabuf_export_texture()
-> - Rebase on Qemu master
->
-> v2 -> v3:
-> - Check for errors after invoking glImportMemoryFdEXT() using
->   glGetError() and report the error to user (Dmitry)
->
-> v1 -> v2:
-> - Replace the option name preferred-codec with video-codecs (Marc-Andr=C3=
-=A9)
-> - Add a warning when an fd cannot be created from texture (Marc-Andr=C3=
-=A9)
-> - Add a new patch to blit the scanout texture into a linear one to
->   make it work with virgl
-> - Rebased and tested against the latest Spice master
->
-> Tested with the following Qemu parameters:
-> -device virtio-vga,max_outputs=3D1,xres=3D1920,yres=3D1080,blob=3Dtrue
-> -spice port=3D3001,gl=3Don,disable-ticketing=3Don,video-codecs=3Dgstreame=
-r:h264
->
-> and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.
->
-> Associated Spice server MR (merged):
-> https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229
->
-> ---
-> Cc: Gerd Hoffmann <kraxel@redhat.com>
-> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Frediano Ziglio <freddy77@gmail.com>
-> Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-> Cc: Dongwon Kim <dongwon.kim@intel.com>
-> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->
-> Vivek Kasireddy (7):
->   ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
->   ui/spice: Add an option for users to provide a preferred codec
->   ui/spice: Enable gl=3Don option for non-local or remote clients
->   ui/spice: Add an option to submit gl_draw requests at fixed rate
->   ui/console-gl: Add a helper to create a texture with linear memory
->     layout
->   ui/spice: Create a new texture with linear layout when gl=3Don is
->     enabled
->   ui/spice: Blit the scanout texture if its memory layout is not linear
->
->  include/ui/console.h       |   3 +
->  include/ui/spice-display.h |   5 +
->  include/ui/surface.h       |   1 +
->  qemu-options.hx            |  10 ++
->  ui/console-gl.c            |  54 +++++++++
->  ui/egl-helpers.c           |   6 +
->  ui/spice-core.c            |  28 +++++
->  ui/spice-display.c         | 226 ++++++++++++++++++++++++++++++++++---
->  8 files changed, 317 insertions(+), 16 deletions(-)
->
-> --
-> 2.49.0
->
->
+-----BEGIN PGP SIGNATURE-----
 
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmg/9G8ACgkQTeGvMW1P
+Dek+PQf/aAZraQX7IFa5iREXmzE6IrQ/ZSNVVqJvOPylRamTV8NWFnrKK0AxK4na
+sy9iHpcychuGWoPefuZoX1jd59A3fDyweOvWkQS2iowCeV785H5nztKY6Tcyo7MP
+eHBhqIgMGH71LsEp5es91k2AbD5afiydnfvm8ETZEPN1EkiliTM8P+OnhFESvBwj
+0Qqm2rh99UbfX0V4kwFOGCNJOBLODHtTPnGtp0xhqkyyIiwMdrKqtqi4WYCt/4Xp
+6ZlKPmztiaAgQepfK8ARLJpa92p8nqQTi2fUTvU9QdP5wi1AO8MIu+EYXTi+BmA7
+TyTvPHeGnLBCXdntDkzKtYfrY5eF0Q==
+=oK3T
+-----END PGP SIGNATURE-----
 
---=20
-Marc-Andr=C3=A9 Lureau
+--M78Kti55Y8EVAbG4--
 
