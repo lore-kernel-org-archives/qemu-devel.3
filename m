@@ -4,91 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33DBAC5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 11:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50AEDC5B552
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 11:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMm9X-0000SO-EJ; Wed, 04 Jun 2025 07:19:27 -0400
+	id 1uMmDA-0001zg-38; Wed, 04 Jun 2025 07:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uMm9W-0000Q6-0H
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:19:26 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uMm9S-0004Cm-Pp
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 07:19:25 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a51481a598so1069910f8f.3
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 04:19:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749035960; x=1749640760; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Ep35SEoqUkOR8dMfNcCXga5gHuUt360mpuJnPEtvqIA=;
- b=de0xFmxuT+mZVky8Dma1OC5jDaSenbvBWanRO44Gefrim3peCsc8AJUQ52dKhMFiOx
- 3xVebqxhJivXlI9pcGNdBGOLoDH7jpaePDoPyaF7xmBeOci+8LC12kRVuNPZN7rvUxE9
- CHXE7ESZzX0eGEjomikyacadDhKrhyYgfzg0KsbW40GJc6lfCrcYF8j3j1jbapdE5VqW
- XSZIdLF/k5JQp5MeeY8knbKhfNSgbFUsaRTLp1xGoVophT1oI7pXGt7HId5/l0eCPBo9
- RK3qul+vtdYkLNOTGkdx/wphWAm9nfSh1PennqAblOXxT3DwQ2enrXtBbhfUul3xAqa2
- AN+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749035960; x=1749640760;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ep35SEoqUkOR8dMfNcCXga5gHuUt360mpuJnPEtvqIA=;
- b=pNcJice1AOYjxOksolZ5+ZZEmh1/JLMFKRnhoHuxG/v6tFJq1QV8aaBLvXKSXW6D72
- EH1eSUt6sJSNPKlKBJcob3uPrrUv/f108caxW6SwWuWF/SGQ300X1R/oPBXtE6rE4kXH
- QJ5ul2/klKliZOlKT4mWqw+8VvB9TQWYiZ8pQb/DvWY58CclvfAYjZi8VRkUZktXStaO
- qgMe2XAxt/G5j69ttCF3jxJvA3UUWMh6/F0Ct1a0UUkwSRrtbBa6IGk7iR7UF7J5c8Aa
- XjqIsCrxJuUU7P8Xij6bVD5U0Wp0fuPcHocQCeKhDIepnRjAbvc7UuAK4SehjCui3UI7
- L0tA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUFbpnu+Mv4g2AOqFdwXbqeiU55syai8SqjQzYdK7prqOnPyF5wKX+HzWuy6N7W3iE2pAFFzJKUOJiJ@nongnu.org
-X-Gm-Message-State: AOJu0YyLAKF4FZ9hIOG4jnuq9LO7EaT48TvUpiKyC8trEN2kC5c5P2fJ
- VolPNzXCSeKThSCERi92P4N011WlrP/TMN31svZSPd1xnQRhQhjuJKaUsjLgAeSwxXg=
-X-Gm-Gg: ASbGnctoL6fX6KjIYIYNBzB3s1OOWXbxp9ju0G6pDZaLtFMHZF/FUDpM46YOGla+fib
- Zg1GMEbWiIbXjasUfTaAuBsfwVlhAGNY9lZ9+4fzusb2at3FMBLPIB9nmc69ed+9/0yCMTv++aI
- 0K1oNoRM+3WoIAkrUDfntqLrfZ//moDkPQ1I0Z3623Ct/D74Puwb+opZPBwGDwjcpFf8gG89PS/
- 7Z3j3JppzUHR7EyFhJhtiH/m31ctbQE7YZ/oJ7C9Q5DWucUhp0rVvglwYfl01Z21wbeLE+VDV+t
- ec00FxnbrhY1BW78iJxmhrQU+if/H45ygT9YPzRWXj6paiLgi+b2WH9vF2LV1Y8lcwRsB+8aVjv
- pxb8Nm91OgULB+JOh
-X-Google-Smtp-Source: AGHT+IG4M70yzbgfFGr4cLx+q6lQpgdoheKJEyYYf6kGIc7yAGQLAb2zcBsNKLW/EPAbq7QsVf/Lyg==
-X-Received: by 2002:a05:6000:1887:b0:3a4:ddd6:427f with SMTP id
- ffacd0b85a97d-3a51d9667aamr1812532f8f.35.1749035960406; 
- Wed, 04 Jun 2025 04:19:20 -0700 (PDT)
-Received: from [10.48.99.227] (88.212.189.80.dyn.plus.net. [80.189.212.88])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-450d800658csm194347005e9.27.2025.06.04.04.19.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 04:19:19 -0700 (PDT)
-Message-ID: <531bf074-f951-4d34-a83e-0c53b7a6f8d8@linaro.org>
-Date: Wed, 4 Jun 2025 12:19:17 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uMmD7-0001zM-EV; Wed, 04 Jun 2025 07:23:09 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uMmD5-0004qI-6g; Wed, 04 Jun 2025 07:23:09 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 4427D1283BE;
+ Wed, 04 Jun 2025 14:22:54 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 206E121E989;
+ Wed,  4 Jun 2025 14:23:04 +0300 (MSK)
+Message-ID: <20ee9edd-1efc-4997-a9c2-786172f3750b@tls.msk.ru>
+Date: Wed, 4 Jun 2025 14:23:03 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5] target/loongarch: fix vldi/xvldi raise wrong error
-To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org
 Cc: maobibo@loongson.cn, philmd@linaro.org, lorenz.hetterich@cispa.de,
  qemu-stable@nongnu.org
 References: <20250604084005.528539-1-gaosong@loongson.cn>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
 In-Reply-To: <20250604084005.528539-1-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,65 +105,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/25 09:40, Song Gao wrote:
-> on qemu we got an aborted error
-> **
-> ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-> Bail out! ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-> Aborted (core dumped)
-> but on 3A600/3A5000 we got a "Illegal instruction" error.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2971
-> 
-> Fixes: 29bb5d727ff ("target/loongarch: Implement vldi")
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 12 ++++++++++--
->   1 file changed, 10 insertions(+), 2 deletions(-)
+On 04.06.2025 11:40, Song Gao wrote:
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-
-r~
-> 
-> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> index dff92772ad..9d82d162a9 100644
-> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-> @@ -3465,7 +3465,7 @@ TRANS(xvmsknz_b, LASX, gen_xx, gen_helper_vmsknz_b)
->   static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
->   {
->       int mode;
-> -    uint64_t data, t;
-> +    uint64_t data = 0, t;
->   
->       /*
->        * imm bit [11:8] is mode, mode value is 0-12.
-> @@ -3570,17 +3570,25 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
->           }
->           break;
->       default:
-> -        generate_exception(ctx, EXCCODE_INE);
->           g_assert_not_reached();
->       }
->       return data;
->   }
->   
 > +static bool check_vldi_mode(arg_vldi *a)
 > +{
 > +   return (a->imm >>8 & 0xf) <= 12;
 > +}
 >   static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
 >   {
->       int sel, vece;
->       uint64_t value;
->   
-> +    if (!check_vldi_mode(a)){
-> +        generate_exception(ctx, EXCCODE_INE);
-> +        return true;
-> +    }
-> +
->       if (!check_vec(ctx, oprsz)) {
->           return true;
->       }
 
+An empty line can be added here between two functions during patch
+apply ;)
+
+/mjt
 
