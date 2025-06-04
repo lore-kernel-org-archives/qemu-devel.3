@@ -4,167 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B1C6C5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 12:14:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0103FC5B549
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 12:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMn04-00006P-O6; Wed, 04 Jun 2025 08:13:46 -0400
+	id 1uMn2N-0000wZ-4o; Wed, 04 Jun 2025 08:16:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>) id 1uMmzt-000059-WB
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 08:13:34 -0400
-Received: from mail-bn1nam02on2081.outbound.protection.outlook.com
- ([40.107.212.81] helo=NAM02-BN1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1uMn2I-0000vh-Uq; Wed, 04 Jun 2025 08:16:04 -0400
+Received: from fout-a4-smtp.messagingengine.com ([103.168.172.147])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jgg@nvidia.com>) id 1uMmzp-00034L-Cp
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 08:13:33 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kBuai2So/Ge/3o3p3gF8wFUXAhmwQu0oas2aCXuMcVkORceAT+vC96KGIWfbY1kAAqI5qRSAaFu1R1ybKpheHKj3bBhaBPeVEV83l/UUrIOoKiU+9g5JnqVEHFlChBj2rxins9RJd2YM52f5HNcRIP8mlzUlBSdnVsZjRMPaDt+xkD92BLukGeg939MZ3VuG82A89H9XFWOBRq93EUuIoSMlG1AR2N/q3Wy+OpMTpl0E6uTjRlr+JMOZtRMCPkala3lJ77NCtouUJebu5lFE4YvaQ6Vkd40BSltSpvyhZs88suYUmdf6z9+Wryq+tZ5osz3rUW2Mx18vjy8lkvF+ZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eXCYBCtEVfvGP8fC5LHCEhpgxNDHP4sBjuxIK+GctAM=;
- b=jkMsKdr/3BIuktah2H/VHQH1MaYxWxiOTTufeORaAd921D7TOCCGPNGNo3ziX2NjZIXt+E9bbrwUxpF7Tr4dG4fI88OKG1w1EQZlnLoT/rof7uqLHdPLfSjHTIO7zw/T5EtTexcn5WUA3nEF6FsZsEWiukoGWnZoExhI5hGu6PMdo2fu2hk+eGnYfJ42PyFf3Ojqxg2kIaZujtnLo96YiPonnf7f98iDJfjENhoXHeXQBLqJJn19Br+uMHGNKWGUTEmzd7LmAw+DaoQgdB/GPorP3sPHaaurHTpcnokB9eF0FvI0Sdu5aCBd3yrM4/ZFw5POmfGqbVqGgNUWdBWNoA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=eXCYBCtEVfvGP8fC5LHCEhpgxNDHP4sBjuxIK+GctAM=;
- b=YkGvw3wBinGwaWqf2L+D64TLNv2d5ypBWBzJnktFt03/ULBsWfwXLVLc17fqL87POWMWu3rMUXqM1AbraCz+Y++HwPgTDs9Ry/AbiGc+ltYNXJrohajQM0deISsbOeyQe3tucJxK0uvCmPxtG3+aGZJMCkrkLg4RhOnnQYNWd8VOz6YrFPC7t1YshZULNHK5EV+n20Wxc1XhNhJTSK7B3FRHptuY92koQdTD5r1ekM0KN/Ec25olr5UY+btNp8Jg6VdTGcF9F/pyNMNhQHVPzU80viW1mJtSe8UOfw5IvNR/4Bw0cvFL3/eoMulBhUnGM8jhdoblw+T1ytp42oTr6g==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com (2603:10b6:610:17c::13)
- by IA1PR12MB6603.namprd12.prod.outlook.com (2603:10b6:208:3a1::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8769.37; Wed, 4 Jun
- 2025 12:08:22 +0000
-Received: from CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732]) by CH3PR12MB8659.namprd12.prod.outlook.com
- ([fe80::6eb6:7d37:7b4b:1732%6]) with mapi id 15.20.8792.034; Wed, 4 Jun 2025
- 12:08:21 +0000
-Date: Wed, 4 Jun 2025 09:08:20 -0300
-From: Jason Gunthorpe <jgg@nvidia.com>
-To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
- alex.williamson@redhat.com, eric.auger@redhat.com, mst@redhat.com,
- jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
- nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
-Subject: Re: [PATCH v3 0/4] VFIO and IOMMU prerequisite stuff for IOMMU
- nesting support
-Message-ID: <20250604120820.GA5028@nvidia.com>
-References: <20250604062115.4004200-1-zhenzhong.duan@intel.com>
- <22733f4b-d759-448d-8cc0-ce25e723e859@redhat.com>
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <22733f4b-d759-448d-8cc0-ce25e723e859@redhat.com>
-X-ClientProxiedBy: BL1PR13CA0159.namprd13.prod.outlook.com
- (2603:10b6:208:2bd::14) To CH3PR12MB8659.namprd12.prod.outlook.com
- (2603:10b6:610:17c::13)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1uMn2C-0003TR-QJ; Wed, 04 Jun 2025 08:16:02 -0400
+Received: from phl-compute-04.internal (phl-compute-04.phl.internal
+ [10.202.2.44])
+ by mailfout.phl.internal (Postfix) with ESMTP id A5E3613804DC;
+ Wed,  4 Jun 2025 08:15:54 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Wed, 04 Jun 2025 08:15:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1749039354; x=
+ 1749125754; bh=Hp6zf+wxpedKJI7/+wwMFP4mY/Bi848Orhf/n7uYp20=; b=Q
+ EdIwfKpuwcOgg29eDe8NfE6vERuDzf+8pLoxEHKFsJhQMbsmCZlzW/zJFcTM8hb5
+ 9nkZlFFjW9yWqAJkQp5lP61aJujIqV5WjS5OcYHugO5mYkhg+Jn3guiVEnny/PBE
+ FvGZ9rpfOBMhD1lAXaVjyjkBXNJmkOl+uectpjBSQvgn4S+TBVZ1iXLMSZjy5TYj
+ k1xN/dSyfIpvJ7hz1t5+1UC3gMSwTNSM9GPxuEVP3l3ubmdUYNWl6z1Yvb8M6Trs
+ 5Fh8ESfW9/1n8+NiIrak8/UYFRdsKYKiNkOH23JUOeA/CxX03nmOIfcrH7qpopx5
+ sWU9OqjflESAWxkYZ78qw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1749039354; x=1749125754; bh=Hp6zf+wxpedKJI7/+wwMFP4mY/Bi848Orhf
+ /n7uYp20=; b=U+OVqcrM8joFy7hdIr2Jq51snMA2ItjBCCkkJkC/+ty7gZvnCsw
+ NFv40q++Z0tJQNgI3hahntpKt5NxqIFyRvfOYNtiCCvnoi0iaJmo/SBHmdwHjVar
+ IHJH5h2UNoNbJdf+QalrbLgkTvXLyZo+VAsoPUNoYp2x7LlnFGDLRymPHpp3QnAT
+ haCYYrvr7Rf3HNr2IUDGX2ukMEOe7A+vSamjkDNgjMIEwfei5qlIYB+Iuk/nT3YO
+ /SjFvRYVgyjczQ/BLWG2O1rgnqVrTyMG8pJmfsSTFuaa88Nvz7rQ86QUNI2qBx27
+ Q8ulJSzuUh3J/5b7BMmP5YkSkCiw3g/UZvA==
+X-ME-Sender: <xms:-DhAaCjSbDJwW8pebRySq5P0V6LtV2B71olvkcCaUQwKEZYG56YW2Q>
+ <xme:-DhAaDCH-_GeXJsxsezH_01HLp7Frb7K0ZVHGCwnKgmkLKcGecCECc4OgDawVRyoG
+ dq-uv1188-kFE12LJQ>
+X-ME-Received: <xmr:-DhAaKEHLjuikzRyE1vSHVHXKAmYmUn0bf3h7rSgHl20trStUiQKpcXfdXUUag>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugddvudefucetufdoteggodetrfdotf
+ fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdggtfgfnhhsuhgsshgtrhhisggvpdfu
+ rfetoffkrfgpnffqhgenuceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnh
+ htshculddquddttddmnecujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtjeen
+ ucfhrhhomhepmfhlrghushculfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrd
+ gukheqnecuggftrfgrthhtvghrnhepjefgjeefffdvuefhieefhffggfeuleehudekveej
+ vedtuddugeeigeetffffjeevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpe
+ hmrghilhhfrhhomhepihhtshesihhrrhgvlhgvvhgrnhhtrdgukhdpnhgspghrtghpthht
+ ohepudefpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehfrdgvsghnvghrsehprh
+ hogihmohigrdgtohhmpdhrtghpthhtohepqhgvmhhuqdgslhhotghksehnohhnghhnuhdr
+ ohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtg
+ hpthhtohepkhifohhlfhesrhgvughhrghtrdgtohhmpdhrtghpthhtohephhhrvghithii
+ sehrvgguhhgrthdrtghomhdprhgtphhtthhopehsthgvfhgrnhhhrgesrhgvughhrghtrd
+ gtohhmpdhrtghpthhtohepfhgrmhesvghuphhhohhnrdhnvghtpdhrtghpthhtohepjhhs
+ nhhofiesrhgvughhrghtrdgtohhmpdhrtghpthhtohepvhhsvghmvghnthhsohhvseihrg
+ hnuggvgidqthgvrghmrdhruh
+X-ME-Proxy: <xmx:-DhAaLRRw3hHGNRK6e6p08sHbxfAKUUUqN-bqDVEwWAbZX54HPmBIQ>
+ <xmx:-DhAaPxFxYz7OuLTiLG9OeJZ0_1cqgpSB2fXphqL9EHPZZyZFo7pkg>
+ <xmx:-DhAaJ7QFbpmWAZi34x3lmdLUvIRgFv4Zkybi0ZJzd_k2gcinQS3GA>
+ <xmx:-DhAaMxY_Zznv0dqqee-lHiiYp8uoMhwzFiwUgYM1ZDzmatNxpLFnw>
+ <xmx:-jhAaOi8Oaahn1bkZNpRf8QEWHJo_pRIvWRl6KRh4LlxYM5Q3fFKmiqK>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 4 Jun 2025 08:15:52 -0400 (EDT)
+Date: Wed, 4 Jun 2025 14:15:50 +0200
+From: Klaus Jensen <its@irrelevant.dk>
+To: Fiona Ebner <f.ebner@proxmox.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, kwolf@redhat.com,
+ hreitz@redhat.com, stefanha@redhat.com, fam@euphon.net,
+ jsnow@redhat.com, vsementsov@yandex-team.ru, eblake@redhat.com,
+ kbusch@kernel.org, foss@defmacro.it
+Subject: Re: [PATCH 3/4] block: make calling bdrv_refresh_limits() safe while
+ holding graph lock
+Message-ID: <aEA49mn6O5mwtW-J@AALNPWKJENSEN.aal.scsc.local>
+References: <20250604120717.458445-1-f.ebner@proxmox.com>
+ <20250604120717.458445-4-f.ebner@proxmox.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH3PR12MB8659:EE_|IA1PR12MB6603:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1756c5c1-c54d-44fa-508f-08dda360800b
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|7416014|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?WTNqdVNyblZac3FMWW5Md3FRdFNKWlhIN0sxOFh3Nm50Skp6dUVUV2twQ0F1?=
- =?utf-8?B?bDlmK2V2dEVpcU5MZmhFV0pjYkNHcDhuNThrcnc0N3NNRDl5NEpTeWlzZEVv?=
- =?utf-8?B?aFJHempaWVJCcGg0SlN6bjNIT1NnNU03NlFvN3Vhc3h1RmdIa3ppOG5Jc0Q0?=
- =?utf-8?B?N2k0dlUzd0RUMGw4THRuNDhjckVWTXVNcXdzZGZMWkJwcVhYWjBBM2xMRFVP?=
- =?utf-8?B?cDlqWFo4bUptV1hGd0EvVUVoTUxzSllJOFhQWGcrNkF3cjVoUlM0VmNuQ0pu?=
- =?utf-8?B?NU1FQk9aYnZCeVN5ZWg2dFZMbVl2eTIweGtrZnBucTFjaVUrS0ZUSkl2aXpC?=
- =?utf-8?B?Z0tWRFJiOW5KZGhPTU1nYStyUkg3QzlFVm4vcHc4ZTRwWVE3UHhpUnZZRnNX?=
- =?utf-8?B?MitiaUFIK0tlVVVFdFVXY3lWSktzZGt6R0FQVUNzQy9vRVNsZzROcFpMTGJC?=
- =?utf-8?B?bUhDZkJuNkI3alhPZ1lsS0JMaDc0THM0b2JqbEpMTDFlQ3pBanVtK1BERHZC?=
- =?utf-8?B?WFpHVE1XUkpYK2prUnpZQmgveTJnKzhNZHFDUVZRYzVRTys0NllCTjVHNXdW?=
- =?utf-8?B?b2xLRXVuWXkrc1U0bHV1VEd6Nng3UFdHeUpLdDNVU29nOGpUVDNlVUZBRk9r?=
- =?utf-8?B?RDZxZXdialRMSi9rU21XQkpFRUhFZjNKTnZGK2oyVGowOHhBS3FJZVpJTGk2?=
- =?utf-8?B?Vm5wY2JqTlIxVi9nYVpNdGlTYVlUQ1VlQlRuZ2JOcVRzMTQ4Ui9OTnBuMTdq?=
- =?utf-8?B?QlVBdXRsNXkxeG5nbjZBc2UyZ29CaXk4WEh3Y3g4dFhCLzJCMXRCOEw2ZzVt?=
- =?utf-8?B?K2hObXpQZm0rS295eGVtUUltYmJNbXJQcXNjRWFOcWFJanFCYXRObDJpdExH?=
- =?utf-8?B?eUt6VkZ2U0ZaTkRidDkxNXk4NTcyZjZtKzAzVG5LeUFaZ3E3ditxanZjMm0w?=
- =?utf-8?B?S2h6MEtXVWdUaElLZjlydmNZNm9JSVFRR2FxelNnSlJUWkREZFpMT093QkdI?=
- =?utf-8?B?Wk9HK0l6RjlMNmpqSEw4aDFMNWMwMFZHZEV6U0RuM0pHL085dTFCREs0K2hu?=
- =?utf-8?B?ZUhtbnQxOXQ3T1owSnNOU2FKV1ljbnozR1IwOFdLbUVjbjRGQXNuM1dySE5n?=
- =?utf-8?B?Zzdqd2hwbGhPR0Vad0FtU3lJcjVaYU1MMVlLNGRJVHFsWEs1a3AvRmhkaU9Y?=
- =?utf-8?B?d1pkNDYveFhDeDVLdFVVcWRRbUhwYkplUENmemw2ZjNjMUFrNjdkak1pRURx?=
- =?utf-8?B?aVdnS0NhY0dTNGFEb2ZBK3BEOERtL3EvbUdaWUlTaEt2a0NvUVpoTDlBdmdO?=
- =?utf-8?B?UTZvaEcvUDZ1Q3N2eUNIREZibW1jV2VCRytNZkpVbG10Vmt0MnlmdlpmUmRJ?=
- =?utf-8?B?b01JZmdWSGsxTDVoZ3psM2d6bmMyK1hMN29KcklZVU1RZW5odTN6cTdVUW42?=
- =?utf-8?B?VCtMNnBTakRudHV6NXhwdlNCNWRxeUg1TjVhRWZiN1pJWmdoZFZGYklLOUl5?=
- =?utf-8?B?bGlYQzUrMGEycmh4Y0kvcWZRNGhSRmRscldCNDBUdDAxZjNYNmdBc0RIaWxC?=
- =?utf-8?B?aU4zSHJydFI3OStQOTZVdmpRZnU4TXViR3RYUCtZRUlJVXJzWmpFVXpsc0Fh?=
- =?utf-8?B?QWVTNFByM3lhbktnUlVqYlhHL0UvRkJ0ZjRrV3NtQ2h5a0ZLeVJLanhYUUEx?=
- =?utf-8?B?UWhNVzEyWEk1K3hMZE9oUkNWUXU2c2JBU2xGUFFQTEtycWZpSWlwTCs0c3Jv?=
- =?utf-8?B?bk9EWHVTYWlxV1BlWHZtOWdxbTh4VHFrWXJGemNDU0llcXFXZFdWM0hoaVEv?=
- =?utf-8?B?RFg5YUpxM1ZsVm8rQXJOeG1DdTRSVTNmRlAyMEUvb3pHRjZ5cG4xOTVYZ1lJ?=
- =?utf-8?Q?mWy/uKs6YJm0k?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB8659.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WENHcG5QU0V3UEhJUDdBNDJwM3BUcHFVbFp5RzM0QU1UMjB6Y1lPQkJ5ek8w?=
- =?utf-8?B?MDJaY0haWDRNTkpwdFAwMUdVc3Rka09MaVNUbmNRSWpTbE5hdnhVWDBISFpU?=
- =?utf-8?B?TE9ydnV6OFBoSHU1WWxuUlEvcDVZWE95bXpCR1FTeWdBamJ2S3JvUU1FME1F?=
- =?utf-8?B?cFg2NWxFTkVNaHI0QXZaczlVUDBaMkNHbGhZc2ZOamtVRW5lN2JyNlV2ZW9E?=
- =?utf-8?B?dS9yVzhFQXdKbnVNVE1uTVEyTXZPZFI2TlB4MTBFdE1hYTN5OUx5Z3JMNFN0?=
- =?utf-8?B?cjVJZWZQa0R4WWFaSFd5QzBvMkdHNDJsMzVGZlhvS3JHYisyZmwzRkt5MFUr?=
- =?utf-8?B?MWlsUUJNKzcvM3FJOUF6WW5oSFExUmJGZ1NWTUNpQ0pOYUIzU05vcEhua1Uz?=
- =?utf-8?B?ei9QVzR1MzBMZGVUNVJnTUIrOWR1cXJyQStNOGU3TjV5ZzNrank5czVMTDFB?=
- =?utf-8?B?NnJLUkhpVnk0RW9iR3BjTnV0dU1Qc3lTelJFeFFWRmtHRkpHOFZ2TTRJbmxn?=
- =?utf-8?B?UjBDQmhPdVg5RGxwWVcyTml2N1hRbXIrdTZMZXVVL0RTM2pubW11TWg5dnN4?=
- =?utf-8?B?dlVGQmpPU0JqeFUvN05tWEo1TVVZdWNIRVVCc3BUTzdoUndSVDJLK1JBbUFn?=
- =?utf-8?B?VC84OVJZSW9zdE5QODV6aWpDbGRwSzVCNDAxeVFlLzZkemUwUkdCM2pITU5s?=
- =?utf-8?B?QmthczBkd3FXbU56QUJHc0ZOd3ErWmFPZDFMTk4zUlRXNkdkbkRXdEJ6a3RV?=
- =?utf-8?B?R2dTcEpnbWE1SzZJL0UrM1VMbDh4MUZVYWZ3WlJLd1ZJR1pnYUFwQVpEY0Zz?=
- =?utf-8?B?OFpoK2xnOU8xZjN6N1drUi9tNFgrYVNRc2d0SmxoZ0N1K0pKbU9QaXdCMkw1?=
- =?utf-8?B?REZHOU9mQm9DdG9VSVBBZ3FsSTdoOWlscUVTdFc4VU9Hd2tNbGQreFcwb25U?=
- =?utf-8?B?ZXF2cEFxZlRIRGZlaUxEblBrb08rUXorb0h4UXZXWWpZN1VTcEZSMXlNOHVw?=
- =?utf-8?B?ZGVDZkRSbG51MjdLWGpKZmRGZlYxREtxRUlnR01jbXFsK2w2d1FyM2wxbXNV?=
- =?utf-8?B?STNBeGc3VWVHNnptK1hpanBnelZhUVFkY2o3ZktWdzZQbmtDNTByZjFvaTJ6?=
- =?utf-8?B?QnBZZWpQM0lrWTArdWhPdWxLUm5GUjlmemlFcVNYSW9ySDhjQmxtR3BwRU9R?=
- =?utf-8?B?bE0ySGFOdFZ4MnVmY2o5NklQUmNFQ2gxZFhsVG4vTDBoRGcveldYbGFRbGZl?=
- =?utf-8?B?MVFCazVlbEVHdnJPMVBxTGorckZscjRJLytqWERXdllmVTh4S0lTTWlDSEpw?=
- =?utf-8?B?cWIzd3FiRzRhYWMvRWsrZTR1L1VvVm5keE9mRWhWMktaMjlwZzhIRXZPN2xI?=
- =?utf-8?B?WkpwNEZtU0pORjNRT0c1cC9haUw0cml6RnFjZ2VyaUV1VGpmU1dnVG0zdEdO?=
- =?utf-8?B?STA3OEdCdFR6ajdCaVN1THRaUHVnb05rd1U1cFlNRDcxL3pHQ09uYzRXTEpW?=
- =?utf-8?B?QzlRRW0xS1hpUC8zbk9PZzNiMWN4UVQ2MVZFMUJlSzZIZzljRVVObDJuSGNC?=
- =?utf-8?B?ZDFhaUhGOTA0aUwxZGJwZW9UMEtEWEVodG5QVUVESmFHZnMrUHhkQ1NSSWpl?=
- =?utf-8?B?QWFSdHBkOUxNekYrTUJ1a3gxQ3BoS1RERERBY29ReDdDSEFlTzFHZ0pOK1hT?=
- =?utf-8?B?MWdYOTVMVHptZ3c3TWlvNnRuakUwZi8yWXJNRXVJSVRCS0xVTDVVWkRnUmVL?=
- =?utf-8?B?OGhHVkJtNW5abEtrd0V2TVFrZzk3d3dzK0lWY1JzdENjdUp1aFhWRXAzVEtE?=
- =?utf-8?B?STJBdHdvaDhaa1dEUWljMElCM3BWcnZuUDJRNktIbkZONEpnZy9wVmFyVHhy?=
- =?utf-8?B?MTRBaGtiRVNwejlzNTBKbUc0UEllcnBoSktabjMwUFdkM0dpUm5kZTlwNzZL?=
- =?utf-8?B?NHFRdlNQRkhVWkFnMjdDVXJ3Nk9uWm1Ja0ZETEdpQXhvM2ZzU1R3VG8xS3hP?=
- =?utf-8?B?ZHlUaTdTY1MvUk9jTUlKRE85YVNFZ1A2M0lzSGRBRE9KT0hOekJEU3c3VXFr?=
- =?utf-8?B?VWJvM3ZxRW1FdzJ0RWY5ZXFqZGtaZlRWTVQ2dm1MWFRxajlubDZmTzJnK3JH?=
- =?utf-8?Q?xs2Q6uHQdEdBRsS8ztgD5zVQN?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1756c5c1-c54d-44fa-508f-08dda360800b
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB8659.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2025 12:08:21.9194 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zFNkDAhQbxlEytvJgiZlFC4vhoXXdBcWQYxaBZtdTvxQwl3HVMyQWTcJSx+fLlbP
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR12MB6603
-Received-SPF: permerror client-ip=40.107.212.81; envelope-from=jgg@nvidia.com;
- helo=NAM02-BN1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="kW9ZIhDz3WS3otbl"
+Content-Disposition: inline
+In-Reply-To: <20250604120717.458445-4-f.ebner@proxmox.com>
+Received-SPF: pass client-ip=103.168.172.147; envelope-from=its@irrelevant.dk;
+ helo=fout-a4-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -180,37 +117,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 08:59:37AM +0200, Cédric Le Goater wrote:
 
-> b4 complained for a couple of trailers :
+--kW9ZIhDz3WS3otbl
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-He re-reviewed patches he contributed to making :)
+On Jun  4 14:07, Fiona Ebner wrote:
+> The bdrv_refresh_limits() function and driver implementations are
+> called with the graph lock held. The implementation for the 'compress'
+> filter calls bdrv_get_info(), which is a generated coroutine wrapper
+> and thus polls. This can lead to a deadlock when issuing a
+> blockdev-snapshot QMP command, when bdrv_refresh_limits() is called in
+> bdrv_append() while the graph lock is held exclusively. This deadlock
+> was introduced with commit 5661a00d40 ("block: Call transaction
+> callbacks with lock held").
+>=20
+> As a solution, this reverts commit 3d47eb0a2a ("block:
+> Convert bdrv_get_info() to co_wrapper_mixed"). To do this, it is
+> necessary to have callers of bdrv_get_info() take the graph lock
+> themselves. None of the driver implementations rely on being run in
+> coroutine context and none of the callers rely on the function being
+> a coroutine.
+>=20
+> All callers except one either already hold the graph lock or can claim
+> the graph lock via bdrv_graph_rdlock_main_loop(). As part of this,
+> bdrv_get_default_bitmap_granularity() is annotated with GRAPH_RDLOCK
+> and its callers adapted where necessary.
+>=20
+> The single exception is the caller nvme_ns_init_format(), which can
+> run as a callback in an IO thread, but can also be reached via the QOM
+> realize handler nvme_ns_realize(). For this caller, a
+> bdrv_get_info_unlocked() coroutine wrapper is introduced that must be
+> called with the graph unlocked.
+>=20
 
->     Reviewed-by: Nicolin Chen <nicolinc@nvidia.com> (✗ DKIM/nvidia.com)
+> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+> index 6df2e8e7c5..ee3eabb1aa 100644
+> --- a/hw/nvme/ns.c
+> +++ b/hw/nvme/ns.c
+> @@ -50,7 +50,7 @@ void nvme_ns_init_format(NvmeNamespace *ns)
+> =20
+>      npdg =3D ns->blkconf.discard_granularity / ns->lbasz;
+> =20
+> -    ret =3D bdrv_get_info(blk_bs(ns->blkconf.blk), &bdi);
+> +    ret =3D bdrv_get_info_unlocked(blk_bs(ns->blkconf.blk), &bdi);
+>      if (ret >=3D 0 && bdi.cluster_size > ns->blkconf.discard_granularity=
+) {
+>          npdg =3D bdi.cluster_size / ns->lbasz;
+>      }
 
-But why do you have an X? The messages are properly formed leaving the
-nvidia server, I checked.. And my b4 is happy:
+Acked-by: Klaus Jensen <k.jensen@samsung.com>
 
-$ b4 am https://lore.kernel.org/qemu-devel/aBUHLWY1Qdapgl+Y@Asurada-Nvidia/
-Grabbing thread from lore.kernel.org/all/aBUHLWY1Qdapgl%2BY@Asurada-Nvidia/t.mbox.gz
-Analyzing 50 messages in the thread
-Looking for additional code-review trailers on lore.kernel.org
-Analyzing 7 code-review messages
-Checking attestation on all messages, may take a moment...
----
-  [PATCH v2 1/6] hw/arm/smmuv3: Add support to associate a PCIe RC
-    + Reviewed-by: Nicolin Chen <nicolinc@nvidia.com> (✓ DKIM/nvidia.com)
-  [PATCH v2 2/6] hw/arm/virt-acpi-build: Update IORT for multiple smmuv3 devices
-    + Reviewed-by: Nicolin Chen <nicolinc@nvidia.com> (✓ DKIM/nvidia.com)
-  [PATCH v2 3/6] hw/arm/virt: Factor out common SMMUV3 dt bindings code
-    + Reviewed-by: Nicolin Chen <nicolinc@nvidia.com> (✓ DKIM/nvidia.com)
-    + Reviewed-by: Eric Auger <eric.auger@redhat.com> (✓ DKIM/redhat.com)
-  [PATCH v2 4/6] hw/arm/virt: Add an SMMU_IO_LEN macro
-    + Reviewed-by: Eric Auger <eric.auger@redhat.com> (✓ DKIM/redhat.com)
-    + Reviewed-by: Donald Dutile <ddutile@redhat.com> (✓ DKIM/redhat.com)
-  [PATCH v2 5/6] hw/arm/virt: Add support for smmuv3 device
-  [PATCH v2 6/6] hw/arm/smmuv3: Enable smmuv3 device creation
-    + Reviewed-by: Nicolin Chen <nicolinc@nvidia.com> (✓ DKIM/nvidia.com)
+FWIW, if there is a better way to get the cluster size I'd very much
+like to change what we do in hw/nvme for that. We need it to
+infer/compute the "preferred deallocation granularity".
 
-Jason
+But maybe, it's just not the correct way to do this, and we shouldn't
+try to do it at all and not report a preferred dealllocation
+granularity. It does seem brittle, or?
+
+--kW9ZIhDz3WS3otbl
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmhAOPQACgkQTeGvMW1P
+DelBVgf/XilmLE5NkE9LWvWADiovRhD45vGwWSqksb8LpiqDuus/RhRvtt+E+uph
+1Brctc+BlgcTKs8Gjx4x+eylQnIag7uYHMaXYyZ3JD4pSyhtVkZPVzOnHlZFG7vK
+p+GTHFexGwsvXSTzkEOFRw7tfA2F1yeBj7dbD6/tAmevtWfoP568AxBJQmwl2GFT
+rY6cVoR+P1T6rbYl9gRX4lJ4GMFMDKs67vgLmrFURSJ8OrVy0O5wtoV6WrFlDj+u
+LokJHBjYiobeglIuzRgoptdPzEgU/bQO4OKsyXkNiumLjO7WMGyZ+dHFHYfPhPa4
+qfsi74jnllaKI+bxh1mBTr7Odd66dw==
+=sO/t
+-----END PGP SIGNATURE-----
+
+--kW9ZIhDz3WS3otbl--
 
