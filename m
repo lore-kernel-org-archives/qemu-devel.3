@@ -4,95 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3462CC5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 09:17:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 924BDC5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 09:19:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMkFU-00004q-VL; Wed, 04 Jun 2025 05:17:29 -0400
+	id 1uMkHM-0000oW-7V; Wed, 04 Jun 2025 05:19:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uMkFU-0008WH-89
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:17:28 -0400
-Received: from mail-ua1-x943.google.com ([2607:f8b0:4864:20::943])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMkHI-0000oA-4E
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:19:20 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uMkFR-0005oj-VD
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:17:28 -0400
-Received: by mail-ua1-x943.google.com with SMTP id
- a1e0cc1a2514c-87ded9c6eb4so569431241.0
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 02:17:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMkHE-00064S-6W
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 05:19:18 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a522224582so148693f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 02:19:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749028644; x=1749633444; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749028753; x=1749633553; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dcGOpse+45eqXstSFyZXs2NTldKwpQLkrRotxXyIqVU=;
- b=Cjpobot4BcGhTO6OfHo6T2qybyb2qJgluuM35b+jWbRjIpdEVGlkorq3USiSkdtT75
- l1yYnsbGj8/qcN0P9LIicKbXnSmwhwkAWeIg/YGyyIVvKc5fyEa/1Ev28iXi0hclllGb
- KbIcAdIeMcWJ2sUod3p2uMCqeJ9VWArGXX1It6/PGtRQ2OWSweXC/mDdWX5al42ktTKP
- roq0JpcU4xDaZJC6RPE2CWx2XrpxvjIgxSdDhjvhXdpM/q1FJ6zkYLo7+cI1q0ZCOMG3
- RW40PUpyzZ1juKYDENFfVa16IoPOvgARW0Qw5MOFLKSkv16WQ5KVzZSUz4x4bhpk5bFU
- KI1A==
+ bh=y0iaDF0wTPGluPJcZERPPEHrKL0Zzqdsi4XP1wHEdSM=;
+ b=g17K5q/wYv97oUqnS8ETFP/VhDoULVsYq7QEdgIhUvzFH6Nrgij96/ATVAQj6uDkZy
+ z2G4524B2cpRyPDpYWJCM70NGLcpe5ifIQlUxFTxKrDfP9ZEK1Pk5RPoquvyktHuYhxt
+ +geeFQWARpHxrnRfmVGubs25anb9T8EsaPpFVztUT+mPRFHLQXhRtTZkPuXsE92WIvIu
+ 4CgDJKKbWh07J6B3l+G/9NQHcSHXel4IIXgXKHZgPHq9L8DAw+uykl+JSllgLQTnIF6+
+ BYdJzCG7tRUMjllpflUv1YbKwizE4fIfe7ufO2jvU3iLBFiEPb1Qr9AlrOE8ih2CUbFB
+ TWsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749028644; x=1749633444;
+ d=1e100.net; s=20230601; t=1749028753; x=1749633553;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dcGOpse+45eqXstSFyZXs2NTldKwpQLkrRotxXyIqVU=;
- b=DH9DUulp/V1wlv5EFsm3eNU8tfuHqXMftAU5GWTDqN6XUEnUT3B9G9W2hIynsP9xjs
- 8Gov7bs2erhfX99dOxuJ0zqoCbSxUYWA1NM0V/YGV/3sJpHvVMdvxa7xMAKpZG41nctW
- y+HXU+ZIj1La1St1yP3pchPYRAV1onkTX+0tAXls1gh9H32jr9VubuYK2KfRfnrjPQiz
- prGoVR93euM6tQN/O6ETKbwrfXA5fQEdHdY2MpQACGb4yBTokt2aFDFMrrqpAdAQ2eu1
- SAg/MOyewdxUbFGZmp6BKRwtUBwmeHjjPZ1DSR5ulbwj2N05D7rtbJmhZOnApGQjn9CB
- C+vA==
+ bh=y0iaDF0wTPGluPJcZERPPEHrKL0Zzqdsi4XP1wHEdSM=;
+ b=vyo+TKwYpz8tkhpV1yAfFLV1WUaQ+Puns2Wg+J5Cg/Q61f+iGdddIWoVipBsGP9uCe
+ xFYCtqKK3zIEtf1+Exdd1dMXM40OTORwCA9UOEfceQLUtgu5hfE4n109K0UmROE95FWi
+ OVd+vZzL+E3GE8oeALssxzwA0IBgvNsZP2dI67LOqNrqtDwUFgpuizDHIShFWMxGPbxo
+ 10i89HsAIx9k1gDiSZIzuzFWJVAXGBtfm3IwdicYEIco/41AhrN5+CJhujJGHrZp7PoA
+ OCO8Az8dt9WLpDkT5FVgQocC8oWsqDaD8yLJdhogs3DL4GA9SI6rwFzFp7mWvMShTECU
+ esJA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWC2tMyx32wp6/hbWJJpO2A8VKW7o5JUvJpabgo9BsxcA6XzZgztILy/8fPeurhTuByYGf3hLI6C1Ui@nongnu.org
-X-Gm-Message-State: AOJu0Yx1Yn3saQfqUdP4X9avEqWf7TskgmnYLEeVqxwY/7jE9asfo+wS
- npRMFTAqX+hgA84LG93Z0kkhVvaFV0r2KQl5mdmd0yKYGCCuNacCZ183sfBeSohO+AE=
-X-Gm-Gg: ASbGncuRGBhqewchmV7IXRGaRCFj+wNqhDMU71eK6WRefIRg1idHW+OBxNjlLSpLfH0
- nWWTLDmee7rFhRN+OtIB6Lzh6fjLujJk5oBrH+MtpEvI5MEtu5numrd5cPWG+mDrnq4MNBcqEwj
- kgCmYy/guFiiq9FSwukELB8MFUDZZ8YjKKXP6pFARIvH/7UhKOy+PELMc0D1WVmLKdixOIJYxHn
- HwNnXxLSLdLJoSoEsvm/smnVc/dn3SdY7sloMisfPg6Q72Wkvz7z7XrvfpMvK+eUiS4F689U+lN
- t9DMFutfL8Carx6i54E+5wyBYiGCPo5docuuDYm9pGYvrplkvsyMjVcSxrcgPqCZoFY=
-X-Google-Smtp-Source: AGHT+IGjNyVY4TPhdMZxpijEyx7mVZ/4ucqEPEFRxgINW0Wbgr8CfSH35kyTAyJlhoy/++MTjTq4Iw==
-X-Received: by 2002:a05:6102:4585:b0:4e5:8d83:c50e with SMTP id
- ada2fe7eead31-4e73616269fmr3661538137.10.1749028644362; 
- Wed, 04 Jun 2025 02:17:24 -0700 (PDT)
-Received: from [192.168.68.110] ([177.188.133.196])
- by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-87ea779c389sm398113241.1.2025.06.04.02.17.21
+ AJvYcCW7Uw6YU1DEZ4gsdY/geLALhFeZr09dlr96GWN6gNLE+HUQWorm/YX8dSljXVtURPcVD7mcc1I/OFM5@nongnu.org
+X-Gm-Message-State: AOJu0YwUqqoR4hVYQKSnvcC0/G0dZv0iySRCEd7TL92spI+GlF/j0mMA
+ 1qfmtLtMvO798nkrqDn1SInjvUIcCyaWNeTNzbqA5CiVtfIlDDRGILw80r7x3EyW4B4=
+X-Gm-Gg: ASbGnctMvNaElyoMsY4Y4fw99t5EpXBaHq+VKVGF6DjCbJdrlGbqcZnrbDH4KenBYmf
+ uXjaPGvW1Ajz++w+uwQgW9htzRLpXraCbagmnjMud3rqZ7pYBdejsIRy95HSwQeNwYZqOH+Oobc
+ OXuchfs/1nhQeAb5vEarFuNA6ahSkKt7POCHZO6nzGWuwHFy0vUM1wuyxR5EPbfpyudMQ1dV9ie
+ 04qKn8NK1RhmKIRoh68l9/SroaUXSRXzWR7gZH9Vw8fkWXW13LymCgTuJODEQ5evsAvTYIsWm8t
+ eoRzflu0+uQHAlCybqh6ePQmIR4ZMOceDbM7xrsgQstkzl6Rpk8xUUvlbDYPDM0AK753+qFu+kX
+ /JaTeBXvNJBNVHSDkn6A=
+X-Google-Smtp-Source: AGHT+IEWi/LH/skZWQabOZ+TFGv/UA+uu8q1pQmn0ORzUJaWUEEE4FhAK7boRk/quFd/cRBr3jq/NQ==
+X-Received: by 2002:a5d:5f89:0:b0:3a3:7bad:29cb with SMTP id
+ ffacd0b85a97d-3a51dc4c4bfmr1535713f8f.52.1749028752692; 
+ Wed, 04 Jun 2025 02:19:12 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4f00971e4sm21403235f8f.65.2025.06.04.02.19.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 02:17:23 -0700 (PDT)
-Message-ID: <0eb5bcf9-bc2e-46c6-9f54-1514039557e0@ventanamicro.com>
-Date: Wed, 4 Jun 2025 06:17:20 -0300
+ Wed, 04 Jun 2025 02:19:12 -0700 (PDT)
+Message-ID: <3f35fb33-97f9-433e-a5bd-86d2926cf3d5@linaro.org>
+Date: Wed, 4 Jun 2025 11:19:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/kvm: implement SBI debug console (DBCN) calls
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, bmeng@tinylab.org,
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20240425155012.581366-1-dbarboza@ventanamicro.com>
- <eb6bd3d7-c66b-4300-9573-c29830a3aff4@linaro.org>
- <102e2e67-4c4d-4912-a892-20f5136f241a@ventanamicro.com>
- <47327da2-be3c-4aaa-ab3d-36e8d0c25185@linaro.org>
+Subject: Re: [PATCH v3 3/3] docs: define policy forbidding use of AI code
+ generators
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Markus Armbruster <armbru@redhat.com>,
+ Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
+ Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250603142524.4043193-1-armbru@redhat.com>
+ <20250603142524.4043193-4-armbru@redhat.com>
+ <CAJSP0QUGaQEwhVh_w6Wbdm-Nqo_2kHcb+eS2Simq-x9J=-7qkg@mail.gmail.com>
+ <87a56o1154.fsf@pond.sub.org> <aD_yhelX-w4Vdm8Z@redhat.com>
+ <3df2ae5d-c1c6-45ee-8119-ca42e17a0d98@linaro.org>
+ <aEAGadbMexZ9mm4a@redhat.com>
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <47327da2-be3c-4aaa-ab3d-36e8d0c25185@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <aEAGadbMexZ9mm4a@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::943;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ua1-x943.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,189 +117,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/4/25 4:32 AM, Philippe Mathieu-Daudé wrote:
-> On 3/6/25 20:04, Daniel Henrique Barboza wrote:
->>
->>
->> On 6/3/25 10:19 AM, Philippe Mathieu-Daudé wrote:
->>> Hi Daniel,
+On 4/6/25 10:40, Daniel P. Berrangé wrote:
+> On Wed, Jun 04, 2025 at 09:54:33AM +0200, Philippe Mathieu-Daudé wrote:
+>> On 4/6/25 09:15, Daniel P. Berrangé wrote:
+>>> On Wed, Jun 04, 2025 at 08:17:27AM +0200, Markus Armbruster wrote:
+>>>> Stefan Hajnoczi <stefanha@gmail.com> writes:
+>>>>
+>>>>> On Tue, Jun 3, 2025 at 10:25 AM Markus Armbruster <armbru@redhat.com> wrote:
+>>>>>>
+>>>>>> From: Daniel P. Berrangé <berrange@redhat.com>
+>>>    >> +
+>>>>>> +The increasing prevalence of AI code generators, most notably but not limited
+>>>>>
+>>>>> More detail is needed on what an "AI code generator" is. Coding
+>>>>> assistant tools range from autocompletion to linters to automatic code
+>>>>> generators. In addition there are other AI-related tools like ChatGPT
+>>>>> or Gemini as a chatbot that can people use like Stackoverflow or an
+>>>>> API documentation summarizer.
+>>>>>
+>>>>> I think the intent is to say: do not put code that comes from _any_ AI
+>>>>> tool into QEMU.
+>>>>>
+>>>>> It would be okay to use AI to research APIs, algorithms, brainstorm
+>>>>> ideas, debug the code, analyze the code, etc but the actual code
+>>>>> changes must not be generated by AI.
 >>>
->>> (now merged as commit a6b53378f537)
+>>> The scope of the policy is around contributions we receive as
+>>> patches with SoB. Researching / brainstorming / analysis etc
+>>> are not contribution activities, so not covered by the policy
+>>> IMHO.
 >>>
->>> On 25/4/24 17:50, Daniel Henrique Barboza wrote:
->>>> SBI defines a Debug Console extension "DBCN" that will, in time, replace
->>>> the legacy console putchar and getchar SBI extensions.
 >>>>
->>>> The appeal of the DBCN extension is that it allows multiple bytes to be
->>>> read/written in the SBI console in a single SBI call.
+>>>> The existing text is about "AI code generators".  However, the "most
+>>>> notably LLMs" that follows it could lead readers to believe it's about
+>>>> more than just code generation, because LLMs are in fact used for more.
+>>>> I figure this is your concern.
 >>>>
->>>> As far as KVM goes, the DBCN calls are forwarded by an in-kernel KVM
->>>> module to userspace. But this will only happens if the KVM module
->>>> actually supports this SBI extension and we activate it.
+>>>> We could instead start wide, then narrow the focus to code generation.
+>>>> Here's my try:
 >>>>
->>>> We'll check for DBCN support during init time, checking if get-reg-list
->>>> is advertising KVM_RISCV_SBI_EXT_DBCN. In that case, we'll enable it via
->>>> kvm_set_one_reg() during kvm_arch_init_vcpu().
->>>>
->>>> Finally, change kvm_riscv_handle_sbi() to handle the incoming calls for
->>>> SBI_EXT_DBCN, reading and writing as required.
->>>>
->>>> A simple KVM guest with 'earlycon=sbi', running in an emulated RISC-V
->>>> host, takes around 20 seconds to boot without using DBCN. With this
->>>> patch we're taking around 14 seconds to boot due to the speed-up in the
->>>> terminal output.  There's no change in boot time if the guest isn't
->>>> using earlycon.
->>>>
->>>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->>>> ---
->>>>   target/riscv/kvm/kvm-cpu.c         | 111 +++++++++++++++++++++++++++++
->>>>   target/riscv/sbi_ecall_interface.h |  17 +++++
->>>>   2 files changed, 128 insertions(+)
+>>>>     The increasing prevalence of AI-assisted software development results
+>>>>     in a number of difficult legal questions and risks for software
+>>>>     projects, including QEMU.  Of particular concern is code generated by
+>>>>     `Large Language Models
+>>>>     <https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
 >>>
->>>
->>>> +static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
->>>> +{
->>>> +    g_autofree uint8_t *buf = NULL;
->>>> +    RISCVCPU *cpu = RISCV_CPU(cs);
->>>> +    target_ulong num_bytes;
->>>> +    uint64_t addr;
->>>> +    unsigned char ch;
->>>> +    int ret;
->>>> +
->>>> +    switch (run->riscv_sbi.function_id) {
->>>> +    case SBI_EXT_DBCN_CONSOLE_READ:
->>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE:
->>>> +        num_bytes = run->riscv_sbi.args[0];
->>>> +
->>>> +        if (num_bytes == 0) {
->>>> +            run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>> +            run->riscv_sbi.ret[1] = 0;
->>>> +            break;
->>>> +        }
->>>> +
->>>> +        addr = run->riscv_sbi.args[1];
->>>> +
->>>> +        /*
->>>> +         * Handle the case where a 32 bit CPU is running in a
->>>> +         * 64 bit addressing env.
->>>> +         */
->>>> +        if (riscv_cpu_mxl(&cpu->env) == MXL_RV32) {
->>>> +            addr |= (uint64_t)run->riscv_sbi.args[2] << 32;
->>>> +        }
->>>> +
->>>> +        buf = g_malloc0(num_bytes);
->>>> +
->>>> +        if (run->riscv_sbi.function_id == SBI_EXT_DBCN_CONSOLE_READ) {
->>>> +            ret = qemu_chr_fe_read_all(serial_hd(0)->be, buf, num_bytes);
->>>> +            if (ret < 0) {
->>>> +                error_report("SBI_EXT_DBCN_CONSOLE_READ: error when "
->>>> +                             "reading chardev");
->>>> +                exit(1);
->>>> +            }
->>>> +
->>>> +            cpu_physical_memory_write(addr, buf, ret);
->>>> +        } else {
->>>> +            cpu_physical_memory_read(addr, buf, num_bytes);
->>>> +
->>>> +            ret = qemu_chr_fe_write_all(serial_hd(0)->be, buf, num_bytes);
->>>> +            if (ret < 0) {
->>>> +                error_report("SBI_EXT_DBCN_CONSOLE_WRITE: error when "
->>>> +                             "writing chardev");
->>>> +                exit(1);
->>>> +            }
->>>> +        }
->>>> +
->>>> +        run->riscv_sbi.ret[0] = SBI_SUCCESS;
->>>> +        run->riscv_sbi.ret[1] = ret;
->>>> +        break;
->>>> +    case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
->>>> +        ch = run->riscv_sbi.args[0];
->>>> +        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
->>>> +
->>>> +        if (ret < 0) {
->>>> +            error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: error when "
->>>> +                         "writing chardev");
->>>> +            exit(1);
->>>> +        }
->>>
->>> We are ignoring partial writes (non-blocking call returning 0 byte
->>> written), is that expected? If so, is it OK to add a comment we can
->>> safely discard not-yet-written DBCN_CONSOLE_WRITE_BYTE?
+>>> Documentation we maintain has the same concerns as code.
+>>> So I'd suggest to substitute 'code' with 'code / content'.
 >>
->> Not sure what you meant. IIUC qemu_chr_fe_write() returns the number
->> of bytes consumed, 0 if no chardev is found, and -1 on error.
+>> Why couldn't we accept documentation patches improved using LLM?
 > 
-> I'm trying to address an issue Peter reported with qemu_chr_fe_write():
-> https://lore.kernel.org/qemu-devel/CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
+> I would flip it around and ask why would documentation not be held
+> to the same standard as code, when it comes to licensing and legal
+> compliance ?
 > 
-> Basically upon introduction in commit cd18720a294 in 2013
-> ("char: introduce a blocking version of qemu_chr_fe_write") the API
-> contract was "Returns: the number of bytes consumed" which could be 0,
-> so some frontends return 0 for "wrote no bytes".
+> This is all copyright content that we merge & distribute under the
+> same QEMU licensing terms, and we have the same legal obligations
+> whether it is "source code" or "documentation" or other content
+> that is not traditional "source code" (images for example).
 > 
-> Later in 2016 in commit fa394ed6257 ("char: make some qemu_chr_fe
-> skip if no driver") the API documentation was changed:
 > 
-> - * Returns: the number of bytes consumed
-> + * Returns: the number of bytes consumed (0 if no assicated CharDriver)
+>> As a non-native English speaker being often stuck trying to describe
+>> function APIs, I'm very tempted to use a LLM to review my sentences
+>> and make them better understandable.
 > 
-> After this commit, some frontends started to handle '<=0' as error,
-> while 0 is not an error.
+> I can understand that desire, and it is an admittedly tricky situation
+> and tradeoff for which I don't have a great answer.
+> 
+> As a starting point we (as reviewers/maintainers) must be broadly
+> very tolerant & accepting of content that is not perfect English,
+> because we know many (probably even the majority of) contributors
+> won't have English as their first language.
+> 
+> As a reviewer I don't mind imperfect language in submissions. Even
+> if language is not perfect it is at least a direct expression of
+> the author's understanding and thus we can have a level of trust
+> in the docs based on our community experience with the contributor.
+> 
+> If docs have been altered in any significant manner by an LLM,
+> even if they are linguistically improved, IMHO, knowing that use
+> of LLM would reduce my personal trust in the technically accuracy
+> of the contribution.
+> 
+> This is straying into the debate around the accuracy of LLMs though,
+> which is interesting, but tangential from the purpose of this policy
+> which aims to focus on the code provenance / legal side.
+> 
+> 
+> 
+> So, back on track, a important point is that this policy (& the
+> legal concerns/risks it attempts to address) are implicitly
+> around contributions that can be considered copyrightable.
+> 
+> Some so called "trivial" work can be so simplistic as to not meet
+> the threshold for copyright protection, and it is thus easy for the
+> DCO requirements to be satisfied.
+> 
+> 
+> As a person, when you write the API documentation from scratch,
+> your output would generally be considered to be copyrightable
+> contribution by the author.
+> 
+> When a reviewer then suggests changes to your docs, most of the
+> time those changes are so trivial, that the reviewer wouldn't be
+> claiming copyright over the resulting work.
+> 
+> If the reviewer completely rewrites entire sentences in the
+> docs though, though would be able to claim copyright over part
+> of the resulting work.
+> 
+> 
+> The tippping point between copyrightable/non-copyrightable is
+> hard to define in a policy. It is inherantly fuzzy, and somewhat
+> of a "you'll know it when you see it" or "lets debate it in court"
+> situation...
+> 
+> 
+> So back to LLMs.
+> 
+> 
+> If you ask the LLM (or an agent using an LLM) to entirely write
+> the API docs from scratch, I think that should be expected to
+> fall under this proposed contribution policy in general.
+> 
+> 
+> If you write the API docs yourself and ask the LLM to review and
+> suggest improvements, that MAY or MAY NOT fall under this policy.
+> 
+> If the LLM suggested tweaks were minor enough to be considered
+> not to meet the threshold to be copyrightable it would be fine,
+> this is little different to a human reviewer suggesting tweaks.
 
-I think I got the gist of it, thanks.
+Good.
 
-For this particular console call the spec says:
+> If the LLM suggested large scale rewriting that would be harder
+> to draw the line, but would tend towards falling under this
+> contribution policy.
+> 
+> So it depends on the scope of what the LLM suggested as a change
+> to your docs.
+> 
+> IOW, LLM-as-sparkling-auto-correct is probably OK, but
+> LLM-as-book-editor / LLM-as-ghost-writer is probably NOT OK
 
-"This is a blocking SBI call and it will only return after writing the specified
-byte to the debug console. It will also return, with SBI_ERR_FAILED, if there are
-I/O errors."
+OK.
 
+> This is a scenario where the QEMU contributor has to use their
+> personal judgement as to whether their use of LLM in a docs context
+> is compliant with this policy, or not. I don't think we should try
+> to describe this in the policy given how fuzzy the situation is.
 
-So I think it pairs well with the blocking version qemu_chr_fe_write_all()
-instead. I can do this change and get out of your way in changing the callers
-of qemu_chr_fe_write().
-
-But I still have questions, hehe. This blocking version has the following
-doc:
-
-"(...) Unlike @qemu_chr_fe_write, this function will block if the back end
-cannot consume all of the data attempted to be written. This function is
-thread-safe.
-
-Returns: the number of bytes consumed (0 if no associated Chardev)
-or -1 on error."
-
-Do we have plans to change this API like we're doing with the non-blocking
-version? Because being a blocking call that promises "block until all bytes
-are written", and I have len  > 0, I don't expect a ret = 0 to be interpret
-as "no bytes were written".  I am ok with ret = 0 being 'no associated chardev'
-and not handling it as an error (for now at least) but I would like to confirm
-that qemu_chr_fe_write_all() will not interpret ret = 0 as a zero byte write.
-In other words, if for some reason other than "no chardev present" we ended up
-with zero bytes written I would like a ret < 0 return.
-
-
-Thanks,
-
-Daniel
-
-
+Thank you very much for this detailed explanation!
 
 > 
->> Are you
->> saying that we should do a loop when there's no chardev found (ret = 0)
->> and wait a certain time until there's one available?
->>
->>
->> In fact, seeing how SBI_EXT_DBCN_CONSOLE_WRITE is written, I wonder if
->> we could use qemu_chr_fe_write_all() in this case too.
+> NB, this copyrightable/non-copyrightable situation applies to source
+> code too, not just docs.
 > 
-> This is certainly simpler.
-> 
-> Regards,
-> 
-> Phil.
+> With regards,
+> Daniel
 
 
