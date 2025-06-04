@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13E27C5B559
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:30:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFA51C5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:30:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMoB8-00078Z-8v; Wed, 04 Jun 2025 09:29:15 -0400
+	id 1uMoBi-00006T-Df; Wed, 04 Jun 2025 09:29:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAk-00074D-Vq
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:28:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoB3-0007L4-Rq
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:29:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoAj-0004ke-DJ
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:28:50 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1uMoB2-0004mv-6f
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:29:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749043728;
+ s=mimecast20190719; t=1749043745;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=B9wF3F+3bQ/mxGLpNGnaivuKHU4J9Rkz4uaRH9vksus=;
- b=UVFukt94SboZtd6ePetoe0hP1T5+CBClWNYAx6usqM01TOFyIXkTtdG5PuM3lI27XF8L4E
- L4HG8kunh3gRTe7T/nygw/4DtQbOsfKbl0iov/NlV1VPbtvrNUxbYffrtr8edBHCyPuj+H
- oxzRoQ38as8oBmzecFRYSroTi9ClII8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Oiv9mkdGy8q617zYG7K09rWE+WhVRWSHIK3bd2uZ1Uc=;
+ b=eR6PHBZwGfz6FP5aZwwmtRdD4eKfG+eZ0vtBKQmA2ldZlV3hahYSrRDzfm4EgX24fcwGQt
+ gYsfJNI4riA0OrRDBT0ZLDgBGCtw5eBnsK0iYiNYutyIK3XhQ9XjSJLLJW8Axqj1T12wg6
+ 1WtDLcZWVqjPG1RdwTEWtTL1pYJBwlo=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-611-4u5mvGmKODaPMPeHFMF1rA-1; Wed, 04 Jun 2025 09:28:47 -0400
-X-MC-Unique: 4u5mvGmKODaPMPeHFMF1rA-1
-X-Mimecast-MFC-AGG-ID: 4u5mvGmKODaPMPeHFMF1rA_1749043726
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450df53d461so38835375e9.1
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:28:47 -0700 (PDT)
+ us-mta-588-jlcT2VBHPri96MrLMptj2Q-1; Wed, 04 Jun 2025 09:29:04 -0400
+X-MC-Unique: jlcT2VBHPri96MrLMptj2Q-1
+X-Mimecast-MFC-AGG-ID: jlcT2VBHPri96MrLMptj2Q_1749043743
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4edf5bb4dso3769794f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 06:29:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749043726; x=1749648526;
+ d=1e100.net; s=20230601; t=1749043743; x=1749648543;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=B9wF3F+3bQ/mxGLpNGnaivuKHU4J9Rkz4uaRH9vksus=;
- b=MW0eCoo5Y+7COCT4n8rONcThs0MK3MKLMp4vyZsynnRsXsrp68lc8tO5Mhc0YO01j/
- ld6N9u6WSvXm8zOEkyVePPtvr3jX5pI68xO9nCBXB1g7zeUQ24VekHoJOx3dN0da2ht6
- oaEZEX3ukoX0hOO+iWRTjZEFw6UGUG66bClcIhlZNeG6DWPr9jFIdMo1cKG8ISRM9oAZ
- O5ISNohCeAmtujlZ+3w//UWmFVVT6Tu4Ce+IfnQvM5A7u4DhZraQUwBc7+4aVfSYn6Qu
- q94a8/amafOfOyIZXFsw7AjpqTiytxzrELu711q67nhmQvc90gmk1abZ4giPwl6+NTeq
- jOXQ==
-X-Gm-Message-State: AOJu0YxyIqVba3ukh8WdjvcJUXft8z3ca7fAyY1kXv7WwAPpYXp3hgHI
- XEzv3Kk4zFEd2/YKnTr1vkMwT94wGaMocpJVCHv7Z6pEQ5294X6mlaGLs8Qnlpg7YwnVAx/DRvN
- 5J7kqDiDa9XE3+AIxVPewUUn5f5jWckMRA15n0zwZGBWFI/zzMAmY2sVY
-X-Gm-Gg: ASbGnct2bj7Mq1yQea/uII1ogc/SF816hMu7s3smp08jVPGOpYnVBlJM2lMu6M8b+KV
- W4ZXptQnLVOkqGi3GlzIzlVhikKQda5KDsWENf8N3sHmXK852Io89GTCC1D+Fv7udgoT63DnK+c
- vK4T4ua55dGmKzSotegO03nr5hZo8Y+34dGEnMEg9BwOLO1sclJUn6uTld0NItn8cMe8mud6/tg
- jamxD+PjBxKLY0EjuAo36+T6AIeRfe/4SpbqE6//2gslQ/Vwo5U9DWz9Whan75ywt5tz/KjbTm7
- oFnhLtSYncWA0uo/6WXZjz4TPHFpyX1nO+TI0xiIk+wet/gKn/r2LbPkAz3iUKiGCFfwpQ==
-X-Received: by 2002:a05:600c:8312:b0:450:d01f:de6f with SMTP id
- 5b1f17b1804b1-451f0aa72fdmr26627715e9.15.1749043726260; 
- Wed, 04 Jun 2025 06:28:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF/9KCRq5HvP1f9mV98ahM8zPG2vDkyaue+NMm575X9qf1nPJAvYe1KNS0qtHcJvvvfSK6wsA==
-X-Received: by 2002:a05:600c:8312:b0:450:d01f:de6f with SMTP id
- 5b1f17b1804b1-451f0aa72fdmr26627375e9.15.1749043725822; 
- Wed, 04 Jun 2025 06:28:45 -0700 (PDT)
+ bh=Oiv9mkdGy8q617zYG7K09rWE+WhVRWSHIK3bd2uZ1Uc=;
+ b=CiiHKOh5JHKwzQnxxWsW+PdxrCJ1T96mpmv427yv528an6oXBc+dLSjv45q1E5pLWh
+ cOHxpROcIWusPIC2ztxvkO8PYKvFAMQPaMEctLxzX2MB2m9w4GQYt6QUsvJH9EYPWGZ/
+ BwgGFcu63IQqSkWmPc9G9R4FHmgjd9j1vb9XcvAnGmpcsb3P7VB43HdwCFxXsDqETdIL
+ Q76OTRHA9ji7F7fVfuOIoo1JOLFNQ8hcjf89Gny7aVsjo8K46HWIax/b6IetQTrny4w4
+ gk5P/v5oNuodwhm82K1o2ADNTMhUylNbk6nowGEuQ0hrfRCSuxc9JeL9aGpg1OoTyjGA
+ 8amA==
+X-Gm-Message-State: AOJu0Yxo0hr7PfQdOjVclsHYvPAYyT6sty23TlaleoZNygf2f4f2PHyF
+ YVZfmQ59p9X+uq51OGLrtl/WouHzo3vNsP/jHpozbo1mJWcQIUzXlNsYd3ZtkBKbdDNNhBY6TQf
+ N8rD+qZY+0cSPKgXy4mLoCOn5iDN3fnJ2V2nDe8vVsv+uuxBqTd5ZuKgJ
+X-Gm-Gg: ASbGnctkdWAulkyTYqSdU3LXjwm7/JykA4L2oy8w1evVTkctVXxI30rkd0DCNl08It8
+ jTsZ9L5c3y9aWgsJt+TOcz7DTE8qRLiGZ/3XEnhmLrL3c3hiLP7ve1YhJV3s6iDPpGINQ74+4qn
+ u1TCN1mtI47Jbn2CrP+QBSOl0K0orz6rediyV02PZM+JCumxAtIDXvboTs6DofaxiGpR6CSPK5F
+ HUiJmJZ9yKUkWlghJeJ99IwNnQbKaBpadqGiGMPoqGsI34muNiIALp6w23XT21eJgB4kCREBFFq
+ VM248IT+JvDce4vxZMg4b0yn/Cz4InIeWWvtzPFBLx2p63dtJdTtKlS2dPpQpodGEJLkRg==
+X-Received: by 2002:a05:6000:1207:b0:3a5:2599:4163 with SMTP id
+ ffacd0b85a97d-3a525994257mr200896f8f.47.1749043743308; 
+ Wed, 04 Jun 2025 06:29:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEiQY2GgcwKnT5RKi3ZCAN7r8Se6lCeVHmNL0FrikmEyx5/wfz4rsFV5BPrwL620qh0hjJItQ==
+X-Received: by 2002:a05:6000:1207:b0:3a5:2599:4163 with SMTP id
+ ffacd0b85a97d-3a525994257mr200874f8f.47.1749043742834; 
+ Wed, 04 Jun 2025 06:29:02 -0700 (PDT)
 Received: from localhost
  (p200300cfd700f306503d3c798c1bf214.dip0.t-ipconnect.de.
  [2003:cf:d700:f306:503d:3c79:8c1b:f214])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-451e57bcb99sm40237895e9.2.2025.06.04.06.28.41
+ 5b1f17b1804b1-450d7f8ed32sm197816855e9.1.2025.06.04.06.29.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Jun 2025 06:28:41 -0700 (PDT)
+ Wed, 04 Jun 2025 06:29:01 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  Markus Armbruster <armbru@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v2 07/21] fuse: Set direct_io and parallel_direct_writes
-Date: Wed,  4 Jun 2025 15:27:59 +0200
-Message-ID: <20250604132813.359438-8-hreitz@redhat.com>
+Subject: [PATCH v2 12/21] block: Move qemu_fcntl_addfl() into osdep.c
+Date: Wed,  4 Jun 2025 15:28:04 +0200
+Message-ID: <20250604132813.359438-13-hreitz@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250604132813.359438-1-hreitz@redhat.com>
 References: <20250604132813.359438-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -110,52 +110,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In fuse_open(), set these flags:
-- direct_io: We probably actually don't want to have the host page cache
-  be used for our exports.  QEMU block exports are supposed to represent
-  the image as-is (and thus potentially changing).
-  This causes a change in iotest 308's reference output.
+Move file-posix's helper to add a flag (or a set of flags) to an FD's
+existing set of flags into osdep.c for other places to use.
 
-- parallel_direct_writes: We can (now) cope with parallel writes, so we
-  should set this flag.  For some reason, it doesn't seem to make an
-  actual performance difference with libfuse, but it does make a
-  difference without it, so let's set it.
-  (See "fuse: Copy write buffer content before polling" for further
-  discussion.)
-
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Suggested-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c        | 2 ++
- tests/qemu-iotests/308.out | 2 +-
- 2 files changed, 3 insertions(+), 1 deletion(-)
+ include/qemu/osdep.h |  1 +
+ block/file-posix.c   | 17 +----------------
+ util/osdep.c         | 18 ++++++++++++++++++
+ 3 files changed, 20 insertions(+), 16 deletions(-)
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 9d110ce949..e1134a27d6 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -576,6 +576,8 @@ static void fuse_setattr(fuse_req_t req, fuse_ino_t inode, struct stat *statbuf,
- static void fuse_open(fuse_req_t req, fuse_ino_t inode,
-                       struct fuse_file_info *fi)
- {
-+    fi->direct_io = true;
-+    fi->parallel_direct_writes = true;
-     fuse_reply_open(req, fi);
+diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+index 96fe51bc39..49b729edc1 100644
+--- a/include/qemu/osdep.h
++++ b/include/qemu/osdep.h
+@@ -774,6 +774,7 @@ static inline void qemu_reset_optind(void)
  }
  
-diff --git a/tests/qemu-iotests/308.out b/tests/qemu-iotests/308.out
-index aa96faab6d..2d7a38d63d 100644
---- a/tests/qemu-iotests/308.out
-+++ b/tests/qemu-iotests/308.out
-@@ -131,7 +131,7 @@ wrote 65536/65536 bytes at offset 1048576
+ int qemu_fdatasync(int fd);
++int qemu_fcntl_addfl(int fd, int flag);
  
- --- Try growing non-growable export ---
- (OK: Lengths of export and original are the same)
--dd: error writing 'TEST_DIR/t.IMGFMT.fuse': Input/output error
-+dd: error writing 'TEST_DIR/t.IMGFMT.fuse': No space left on device
- 1+0 records in
- 0+0 records out
+ /**
+  * qemu_close_all_open_fd:
+diff --git a/block/file-posix.c b/block/file-posix.c
+index 9b5f08ccb2..045e94d54d 100644
+--- a/block/file-posix.c
++++ b/block/file-posix.c
+@@ -1047,21 +1047,6 @@ static int raw_handle_perm_lock(BlockDriverState *bs,
+     return ret;
+ }
  
+-/* Sets a specific flag */
+-static int fcntl_setfl(int fd, int flag)
+-{
+-    int flags;
+-
+-    flags = fcntl(fd, F_GETFL);
+-    if (flags == -1) {
+-        return -errno;
+-    }
+-    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
+-        return -errno;
+-    }
+-    return 0;
+-}
+-
+ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
+                                  int *open_flags, uint64_t perm, Error **errp)
+ {
+@@ -1100,7 +1085,7 @@ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
+         /* dup the original fd */
+         fd = qemu_dup(s->fd);
+         if (fd >= 0) {
+-            ret = fcntl_setfl(fd, *open_flags);
++            ret = qemu_fcntl_addfl(fd, *open_flags);
+             if (ret) {
+                 qemu_close(fd);
+                 fd = -1;
+diff --git a/util/osdep.c b/util/osdep.c
+index 770369831b..ce5c6a7f59 100644
+--- a/util/osdep.c
++++ b/util/osdep.c
+@@ -613,3 +613,21 @@ int qemu_fdatasync(int fd)
+     return fsync(fd);
+ #endif
+ }
++
++/**
++ * Set the given flag(s) (fcntl GETFL/SETFL) on the given FD, while retaining
++ * other flags.
++ */
++int qemu_fcntl_addfl(int fd, int flag)
++{
++    int flags;
++
++    flags = fcntl(fd, F_GETFL);
++    if (flags == -1) {
++        return -errno;
++    }
++    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
++        return -errno;
++    }
++    return 0;
++}
 -- 
 2.49.0
 
