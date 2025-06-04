@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74C83C5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:16:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83A78C5B552
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:19:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMiM7-0001Qs-90; Wed, 04 Jun 2025 03:16:11 -0400
+	id 1uMiOn-0002Bc-FX; Wed, 04 Jun 2025 03:18:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMiM4-0001QW-Vm
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:16:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uMiOj-0002B7-E4
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:18:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMiLz-0007CV-68
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:16:07 -0400
+ id 1uMiOh-0007c3-Ao
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:18:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749021361;
+ s=mimecast20190719; t=1749021529;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/BhegTg/JUfjCGYVPMJvqYqOoah3FSeY1a+RbVbuSSo=;
- b=HMwGinDc7L5f57jh+MVJYa40gLyi1X7vRXz6IElBaeICFj0DppJeT0XtT+JES0mli3/obh
- X2kJb5XCBLDq0TlOnsF9GZA+CknuCLG5gRzHmiWoeGdMUBV5OBAMufIWEBzreo0alFeaq0
- hKLZWaKpT/lJbVFTeJpnAMNtVUgxNPU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=M8P6WiHru1fMUVwZCZRBDEYyu2xzDB1zXTXIJ/J/ElY=;
+ b=IEPwZbYYZT5dfHqfFFIzJ7mmH1C+oKySMKMVJCgY+/ykq3e22p7lxgqmyp/thvPQtYIn1F
+ pV109hRN3RTECHHq8VNIp+tjFZx72mx0HecC812htIcyOT3bfv+GdWPKvOVnT44flVcPYJ
+ /XUMswvO8ejh6uifSUz9aNPPDcPELSY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-167-_J3SAJZxNACKl5wd7DTTlA-1; Wed,
- 04 Jun 2025 03:15:57 -0400
-X-MC-Unique: _J3SAJZxNACKl5wd7DTTlA-1
-X-Mimecast-MFC-AGG-ID: _J3SAJZxNACKl5wd7DTTlA_1749021356
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-594-MfRaPlrNOKGRERb-hz-gBw-1; Wed,
+ 04 Jun 2025 03:18:46 -0400
+X-MC-Unique: MfRaPlrNOKGRERb-hz-gBw-1
+X-Mimecast-MFC-AGG-ID: MfRaPlrNOKGRERb-hz-gBw_1749021524
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B4D3180045B; Wed,  4 Jun 2025 07:15:56 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9BCA3195609F; Wed,  4 Jun 2025 07:18:44 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.60])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CF72C19560AE; Wed,  4 Jun 2025 07:15:50 +0000 (UTC)
-Date: Wed, 4 Jun 2025 08:15:47 +0100
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5E86A1955DDA; Wed,  4 Jun 2025 07:18:39 +0000 (UTC)
+Date: Wed, 4 Jun 2025 08:18:35 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Markus Armbruster <armbru@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>,
  "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -61,21 +60,20 @@ Cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org,
  Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v3 3/3] docs: define policy forbidding use of AI code
- generators
-Message-ID: <aD_yhelX-w4Vdm8Z@redhat.com>
+Subject: Re: [PATCH v3 1/3] docs: introduce dedicated page about code
+ provenance / sign-off
+Message-ID: <aD_zSx6qRnwKulR7@redhat.com>
 References: <20250603142524.4043193-1-armbru@redhat.com>
- <20250603142524.4043193-4-armbru@redhat.com>
- <CAJSP0QUGaQEwhVh_w6Wbdm-Nqo_2kHcb+eS2Simq-x9J=-7qkg@mail.gmail.com>
- <87a56o1154.fsf@pond.sub.org>
+ <20250603142524.4043193-2-armbru@redhat.com>
+ <87a56o3gxc.fsf@draig.linaro.org> <87r000ypi0.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <87a56o1154.fsf@pond.sub.org>
+In-Reply-To: <87r000ypi0.fsf@pond.sub.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -101,77 +99,166 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 08:17:27AM +0200, Markus Armbruster wrote:
-> Stefan Hajnoczi <stefanha@gmail.com> writes:
+On Wed, Jun 04, 2025 at 08:44:55AM +0200, Markus Armbruster wrote:
+> Alex Bennée <alex.bennee@linaro.org> writes:
 > 
-> > On Tue, Jun 3, 2025 at 10:25 AM Markus Armbruster <armbru@redhat.com> wrote:
-> >>
+> > Markus Armbruster <armbru@redhat.com> writes:
+> >
 > >> From: Daniel P. Berrangé <berrange@redhat.com>
- >> +
-> >> +The increasing prevalence of AI code generators, most notably but not limited
+> >>
+> >> Currently we have a short paragraph saying that patches must include
+> >> a Signed-off-by line, and merely link to the kernel documentation.
+> >> The linked kernel docs have a lot of content beyond the part about
+> >> sign-off an thus are misleading/distracting to QEMU contributors.
+> >>
+> >> This introduces a dedicated 'code-provenance' page in QEMU talking
+> >> about why we require sign-off, explaining the other tags we commonly
+> >> use, and what to do in some edge cases.
+> >>
+> >> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+> >> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+> >> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+> >> ---
+> >>  docs/devel/code-provenance.rst    | 218 ++++++++++++++++++++++++++++++
+> >>  docs/devel/index-process.rst      |   1 +
+> >>  docs/devel/submitting-a-patch.rst |  18 +--
+> >>  3 files changed, 221 insertions(+), 16 deletions(-)
+> >>  create mode 100644 docs/devel/code-provenance.rst
+> >>
+> >> diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+> >> new file mode 100644
+> >> index 0000000000..4fc12061b5
+> >> --- /dev/null
+> >> +++ b/docs/devel/code-provenance.rst
+
+> >> +Other commit tags
+> >> +~~~~~~~~~~~~~~~~~
+> >> +
+> >> +While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
+> >> +that are commonly used during QEMU development:
+> >> +
+> >> + * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
+> >> +   mailing list, if they consider the patch acceptable, they should send an
+> >> +   email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
+> >> +   review a patch should add this even if they are also adding their
+> >> +   ``Signed-off-by`` to the same commit.
+> >> +
+> >> + * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
+> >> +   touches their subsystem, but intends to allow a different maintainer to
+> >> +   queue it and send a pull request, they would send a mail containing a
+> >> +   ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
+> >> +   only implies review of the maintainers' own areas of responsibility. If a
+> >> +   maintainer wants to indicate they have done a full review they should use
+> >> +   a ``Reviewed-by`` tag.
+> >> +
+> >> + * **``Tested-by``**: when a QEMU community member has functionally tested the
+> >> +   behaviour of the patch in some manner, they should send an email reply
+> >> +   containing a ``Tested-by`` tag.
+> >> +
+> >> + * **``Reported-by``**: when a QEMU community member reports a problem via the
+> >> +   mailing list, or some other informal channel that is not the issue tracker,
+> >> +   it is good practice to credit them by including a ``Reported-by`` tag on
+> >> +   any patch fixing the issue. When the problem is reported via the GitLab
+> >> +   issue tracker, however, it is sufficient to just include a link to the
+> >> +   issue.
 > >
-> > More detail is needed on what an "AI code generator" is. Coding
-> > assistant tools range from autocompletion to linters to automatic code
-> > generators. In addition there are other AI-related tools like ChatGPT
-> > or Gemini as a chatbot that can people use like Stackoverflow or an
-> > API documentation summarizer.
+> > We don't mention the Link: or Message-Id: tags.
+> 
+> Yes, but should it go into code-provenance.rst or
+> submitting-a-patch.rst?
+
+I considered those other general tags to be under the scope
+of submitting-a-patch.rst, as they're not directly related
+to the legal code provenance.
+
+> 
+> You asked for guidance on use of "Message-Id:" in your review of v2.  I
+> understand the practice, and can write guidance, but I wanted to get
+> this out before my vacation next week, so I left it for later, as
+> mentioned in the cover letter.
+> 
+> How do we use "Link:"?  What about "Closes:"?
+> 
+> Here's what the kernel's submitting-patches.rst has to say:
+> 
+>     Describe your changes
+>     ---------------------
+> 
+>     [...]
+> 
+>     If related discussions or any other background information behind the change
+>     can be found on the web, add 'Link:' tags pointing to it. If the patch is a
+>     result of some earlier mailing list discussions or something documented on the
+>     web, point to it.
+> 
+>     When linking to mailing list archives, preferably use the lore.kernel.org
+>     message archiver service. To create the link URL, use the contents of the
+>     ``Message-ID`` header of the message without the surrounding angle brackets.
+>     For example::
+> 
+>         Link: https://lore.kernel.org/30th.anniversary.repost@klaava.Helsinki.FI
+> 
+>     Please check the link to make sure that it is actually working and points
+>     to the relevant message.
+> 
+>     However, try to make your explanation understandable without external
+>     resources. In addition to giving a URL to a mailing list archive or bug,
+>     summarize the relevant points of the discussion that led to the
+>     patch as submitted.
+> 
+>     In case your patch fixes a bug, use the 'Closes:' tag with a URL referencing
+>     the report in the mailing list archives or a public bug tracker. For example::
+> 
+>             Closes: https://example.com/issues/1234
+> 
+>     Some bug trackers have the ability to close issues automatically when a
+>     commit with such a tag is applied. Some bots monitoring mailing lists can
+>     also track such tags and take certain actions. Private bug trackers and
+>     invalid URLs are forbidden.
+> 
+> and
+> 
+>     Using Reported-by:, Tested-by:, Reviewed-by:, Suggested-by: and Fixes:
+>     ----------------------------------------------------------------------
+> 
+>     The Reported-by tag gives credit to people who find bugs and report them and it
+>     hopefully inspires them to help us again in the future. The tag is intended for
+>     bugs; please do not use it to credit feature requests. The tag should be
+>     followed by a Closes: tag pointing to the report, unless the report is not
+>     available on the web. The Link: tag can be used instead of Closes: if the patch
+>     fixes a part of the issue(s) being reported. Note, the Reported-by tag is one
+>     of only three tags you might be able to use without explicit permission of the
+>     person named (see 'Tagging people requires permission' below for details).
+> 
+
+> >> +git commands
+> >> +^^^^^^^^^^^^
+> >> +
+> >> +When creating, or amending, a commit the ``-s`` flag to ``git commit`` will
+> >> +append a suitable line matching the configured git author details.
+> >> +
+> >> +If preparing patches using the ``git format-patch`` tool, the ``-s`` flag can
+> >> +be used to append a suitable line in the emails it creates, without modifying
+> >> +the local commits. Alternatively to modify all the local commits on a branch::
+> >> +
+> >> +  git rebase master -x 'git commit --amend --no-edit -s'
+> >> +
 > >
-> > I think the intent is to say: do not put code that comes from _any_ AI
-> > tool into QEMU.
-> >
-> > It would be okay to use AI to research APIs, algorithms, brainstorm
-> > ideas, debug the code, analyze the code, etc but the actual code
-> > changes must not be generated by AI.
+> > Much as I love Emacs I wonder if this next section is worth it given the
+> > multiple ways you can solve this (I use yas-snippet expansions for
+> > example).
+> 
+> Showing one of them could still be useful for less experienced Emacs
+> users.  We could mention it's just of many ways.
 
-The scope of the policy is around contributions we receive as
-patches with SoB. Researching / brainstorming / analysis etc
-are not contribution activities, so not covered by the policy
-IMHO.
-
-> 
-> The existing text is about "AI code generators".  However, the "most
-> notably LLMs" that follows it could lead readers to believe it's about
-> more than just code generation, because LLMs are in fact used for more.
-> I figure this is your concern.
-> 
-> We could instead start wide, then narrow the focus to code generation.
-> Here's my try:
-> 
->   The increasing prevalence of AI-assisted software development results
->   in a number of difficult legal questions and risks for software
->   projects, including QEMU.  Of particular concern is code generated by
->   `Large Language Models
->   <https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
-
-Documentation we maintain has the same concerns as code.
-So I'd suggest to substitute 'code' with 'code / content'.
-
-> If we want to mention uses of AI we consider okay, I'd do so further
-> down, to not distract from the main point here.  Perhaps:
-> 
->   The QEMU project thus requires that contributors refrain from using AI code
->   generators on patches intended to be submitted to the project, and will
->   decline any contribution if use of AI is either known or suspected.
-> 
->   This policy does not apply to other uses of AI, such as researching APIs or
->   algorithms, static analysis, or debugging.
-> 
->   Examples of tools impacted by this policy includes both GitHub's CoPilot,
->   OpenAI's ChatGPT, and Meta's Code Llama, amongst many others which are less
->   well known.
-> 
-> The paragraph in the middle is new, the other two are unchanged.
-> 
-> Thoughts?
-
-IMHO its redundant, as the policy is expressly around contribution of
-code/content, and those activities as not contribution related, so
-outside the scope already.
+Yep, IMHO it is worth guiding users to a simple example that works.
+If they are advanced users of emacs or other editors wanting to figure
+out other options they can ignore this guidance.
 
 > 
-> >> +to, `Large Language Models <https://en.wikipedia.org/wiki/Large_language_model>`__
-> >> +(LLMs) results in a number of difficult legal questions and risks for software
-> >> +projects, including QEMU.
+> > If we do want to mention the editors we should probably also mention b4.
+> 
+> Can do if somebody contributes a suitable configuration snippet.
 > 
 > Thanks!
 > 
