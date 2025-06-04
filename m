@@ -4,73 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BD60C5AD49
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 00:47:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A0FC5AD49
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 01:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMcGj-0001N8-4p; Tue, 03 Jun 2025 20:46:13 -0400
+	id 1uMcy8-0006PF-UT; Tue, 03 Jun 2025 21:31:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uMcGh-0001Mv-3E
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 20:46:11 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uMcGe-0000rc-44
- for qemu-devel@nongnu.org; Tue, 03 Jun 2025 20:46:10 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8CxeXFIlz9oc84KAQ--.33540S3;
- Wed, 04 Jun 2025 08:46:00 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMDxvhtFlz9oZBUIAQ--.40147S3;
- Wed, 04 Jun 2025 08:45:58 +0800 (CST)
-Subject: Re: [PATCH v5 0/4] Building PPTT with root node and identical
- implementation flag
-To: Alireza Sanaee <alireza.sanaee@huawei.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, anisinha@redhat.com, imammedo@redhat.com,
- jonathan.cameron@huawei.com, linuxarm@huawei.com, peter.maydell@linaro.org,
- prime.zeng@hisilicon.com, shameerali.kolothum.thodi@huawei.com,
- wangyanan55@huawei.com, yangyicong@hisilicon.com
-References: <20250523102654.1719-1-alireza.sanaee@huawei.com>
- <20250601082826-mutt-send-email-mst@kernel.org>
- <20250603164005.00003d56.alireza.sanaee@huawei.com>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <99a37f40-56dc-ab7a-86ff-1a9dcb3cc711@loongson.cn>
-Date: Wed, 4 Jun 2025 08:44:43 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMcy6-0006NS-3Z
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 21:31:02 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uMcy2-0006KN-Mt
+ for qemu-devel@nongnu.org; Tue, 03 Jun 2025 21:31:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749000659; x=1780536659;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=IHfBvoFU6LtxKPLy7BIfFHf5uu/2TIlBFeIop9bjzJc=;
+ b=lbAG1bo/vYPyuV9GsiFqoNKR6qMD38cLbhLi1L+p4x3gBsrhg/vd3kfI
+ Q9n5vc8HvkHu7XqnVhs17ySVlUjRH8T2nuwo71BZ/mUIUlrmb1C+kYaWw
+ V5Ub9vkqeE6YNDcEuvNwGlwaPixeBsTxGsDe6Owgf5OUFbaAKVvcKsVxA
+ h3pfUvWOTy+A0i5JcU6ORXgQcY6OZshFpmzd/ETvkBm6dYUTjjO74IUCR
+ HBNjP3EQE6tvEpsUpB3P42a59JBFf6z27FAtY2QUvNKwEmm52N84qwdc1
+ PmIjrBu1fg5IR/ftKIf4fLnddSwAso1gRV06o2NTlNmQGvGWCKBLmTcBL Q==;
+X-CSE-ConnectionGUID: Yt+NN0siTK6iekJKDSgqXw==
+X-CSE-MsgGUID: 2ZPRG1mSRIWXZoZA3BXOzQ==
+X-IronPort-AV: E=McAfee;i="6700,10204,11453"; a="50922747"
+X-IronPort-AV: E=Sophos;i="6.16,207,1744095600"; d="scan'208";a="50922747"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 18:30:54 -0700
+X-CSE-ConnectionGUID: 3BPggVVoQsS12nDTzZycTA==
+X-CSE-MsgGUID: LXmr38a3QH6wZxtnICllxA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,207,1744095600"; d="scan'208";a="182201574"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.247.1])
+ ([10.124.247.1])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 03 Jun 2025 18:30:52 -0700
+Message-ID: <4ac8c8b0-700b-4fac-ae4c-6531fc6b682e@intel.com>
+Date: Wed, 4 Jun 2025 09:30:48 +0800
 MIME-Version: 1.0
-In-Reply-To: <20250603164005.00003d56.alireza.sanaee@huawei.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] hw/i386/pc: Remove deprecated 2.10, 2.11 and 2.12 PC
+ machines
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250501223522.99772-1-philmd@linaro.org>
 Content-Language: en-US
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <20250501223522.99772-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxvhtFlz9oZBUIAQ--.40147S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxJF45CFWDtryxGFyDCFy3trc_yoW5XFyUpF
- WrC3WrKr4kG3Wxur1Sgw4xAr13trZ7Ar47WryDZ34UCa909rnakr1rKry5Gay7Jws3ua1I
- 9r4vgw129ryjvagCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUU9ab4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
- xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
- 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv
- 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
- AlzVAYIcxG8wCY1x0262kKe7AKxVWUAVWUtwCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE
- 7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI
- 8E67AF67kF1VAFwI0_Jw0_GFylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWU
- CwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r
- 1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsG
- vfC2KfnxnUUI43ZEXa7IU8aZX5UUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -50
-X-Spam_score: -5.1
-X-Spam_bar: -----
-X-Spam_report: (-5.1 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-3.229,
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -34
+X-Spam_score: -3.5
+X-Spam_bar: ---
+X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,91 +91,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 5/2/2025 6:35 AM, Philippe Mathieu-Daudé wrote:
+> The versioned 'pc' and 'q35' machines up to 2.12 been marked
+> as deprecated two releases ago, and are older than 6 years,
+> so according to our support policy we can remove them.
+> 
+> This series includes the 2.10 to 2.12 machines removal.
 
+For this series,
 
-On 2025/6/3 下午11:40, Alireza Sanaee via wrote:
-> On Sun, 1 Jun 2025 08:32:52 -0400
-> "Michael S. Tsirkin" <mst@redhat.com> wrote:
-> 
->> On Fri, May 23, 2025 at 11:26:50AM +0100, Alireza Sanaee wrote:
->>> OS like Linux is using PPTT processor node's identical
->>> implementation flag [1] to infer whether the whole system or a
->>> certain CPU cluster is homogeneous or not [2]. QEMU currently only
->>> support building homogeneous system, set the flag to indicate the
->>> fact. Build a root node in PPTT for indicates the identical
->>> implementation which is needed for a multi-socket system. Update
->>> the related PPTT tables as well.
->>>
->>> [1] ACPI 6.5 Table 5.158: Processor Structure Flags
->>> [2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/acpi/pptt.c?h=v6.11-rc1#n810
->>>
->>> History:
->>>      * v4->v5: fixed a typo
->>>
->>>      * v3->v4: PPTT rev to 2
->>>
->>>      * v2->v3: rebase to 10
->>>
->>> Alireza Sanaee (2):
->>>    hw/acpi/aml-build: Build a root node in the PPTT table
->>>    tests: virt: Update expected ACPI tables for virt test
->>>
->>> Yicong Yang (2):
->>>    tests: virt: Allow changes to PPTT test table
->>>    hw/acpi/aml-build: Set identical implementation flag for PPTT
->>>      processor nodes
->>>
->>>   hw/acpi/aml-build.c                           |  24
->>> +++++++++++++++--- tests/data/acpi/aarch64/virt/PPTT             |
->>> Bin 76 -> 96 bytes .../data/acpi/aarch64/virt/PPTT.acpihmatvirt  |
->>> Bin 156 -> 176 bytes tests/data/acpi/aarch64/virt/PPTT.topology
->>> | Bin 336 -> 356 bytes 4 files changed, 20 insertions(+), 4
->>> deletions(-)
->>
->>
->> This interacts weirdly with loongarch. I tried applying patches
->> on top of that, and on loongarch, I see:
->>
->> -[0F0h 0240 004h]       Flags (decoded below) : 00000000
->> +[0F0h 0240 004h]       Flags (decoded below) : 0000000E
->>                               Physical package : 0
->> -                     ACPI Processor ID valid : 0
->> -                       Processor is a thread : 0
->> -                              Node is a leaf : 0
->> +                     ACPI Processor ID valid : 1
->> +                       Processor is a thread : 1
->> +                              Node is a leaf : 1
->>                       Identical Implementation : 0
->>
->>
->> I'm sending a pull request later today. Once merged, pls
->> rebase on top of that, updating loongarch as appropriate
->> and repost copying relevant people.
->>
->> Cc Bibo Mao for more insight.
-> Hi Micheal,
-> 
-> I am trying to reproduce this issue. I have applied the
-> patchset on the master branch now, and then run:
-> make check-qtest-loongarch64 V=2 -j, but I don't seem to get any diffs
-> on the binaries, and all tests passed.
-It is an host endian issue, only happens on big endian host machine such 
-as S390x :(  And there is problem on LoongArch virt machine code about 
-endian setting.
+Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Regards
-Bibo Mao
+Besides, please add more patches to remove hw_compat_2_{10,11,12}
+
+> Philippe Mathieu-Daudé (8):
+>    hw/i386/pc: Remove deprecated pc-q35-2.10 and pc-i440fx-2.10 machines
+>    hw/i386/pc: Remove pc_compat_2_10[] array
+>    hw/pci-host/i440fx: Remove I440FXState::pci_hole64_fix field
+>    hw/pci-host/q35: Remove Q35PCIHost::pci_hole64_fix field
+>    hw/i386/pc: Remove deprecated pc-q35-2.11 and pc-i440fx-2.11 machines
+>    hw/i386/pc: Remove pc_compat_2_11[] array
+>    hw/i386/pc: Remove deprecated pc-q35-2.12 and pc-i440fx-2.12 machines
+>    hw/i386/pc: Remove pc_compat_2_12[] array
 > 
-> May I know if that's how you noticed the problem?
-> 
-> Thanks,
-> Alireza
->>
->>
->>> -- 
->>> 2.34.1
->>
->>
+>   include/hw/i386/pc.h      |  9 ---------
+>   include/hw/pci-host/q35.h |  1 -
+>   hw/i386/pc.c              | 21 ---------------------
+>   hw/i386/pc_piix.c         | 28 ----------------------------
+>   hw/i386/pc_q35.c          | 29 -----------------------------
+>   hw/pci-host/i440fx.c      |  7 ++-----
+>   hw/pci-host/q35.c         |  6 ++----
+>   7 files changed, 4 insertions(+), 97 deletions(-)
 > 
 
 
