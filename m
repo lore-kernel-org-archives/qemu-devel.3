@@ -4,66 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52604C5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 16:24:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23EF0C5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 17:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMqtN-0002IY-8a; Wed, 04 Jun 2025 12:23:05 -0400
+	id 1uMrt2-0006pK-8P; Wed, 04 Jun 2025 13:26:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMqtL-0002I5-QX
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 12:23:03 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uMrt0-0006p2-1W
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:26:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uMqtD-0002UD-DP
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 12:23:02 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uMrsx-0007qu-IN
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 13:26:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749054174;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1749058001;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=uACqfZedCxcotnIJiXlE0dfEy76DfdVIipJCvrb56SE=;
- b=bzkxXFDnGn7YWcgBwaPwyVZi0/TRGjazTfZUUuoMIzzZ811nWVwOiArRUFlxiJA0NMqoAv
- OFu3DkSWPHpEL/J1lRIS0WNPu5SGX6DhdyHzIYDU6zn7PMagXGaMrZCczGgJ8XwGDa1h1g
- Z8YVXPAizzept4o3l9EekupWbWMDHTM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-_b5LjKWhNuKHYMmoLw5TUQ-1; Wed,
- 04 Jun 2025 12:22:52 -0400
-X-MC-Unique: _b5LjKWhNuKHYMmoLw5TUQ-1
-X-Mimecast-MFC-AGG-ID: _b5LjKWhNuKHYMmoLw5TUQ_1749054172
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1E7D61800378
- for <qemu-devel@nongnu.org>; Wed,  4 Jun 2025 16:22:52 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.42.28.60])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 58C9730002C8; Wed,  4 Jun 2025 16:22:49 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/2] ui: add trace events for all client messages
-Date: Wed,  4 Jun 2025 17:22:43 +0100
-Message-ID: <20250604162243.452791-3-berrange@redhat.com>
-In-Reply-To: <20250604162243.452791-1-berrange@redhat.com>
-References: <20250604162243.452791-1-berrange@redhat.com>
+ bh=XlaCyqpRi8MqH0aFsM4CNzlSQ7/z/97JRoHWttdujEs=;
+ b=i4w9AA/zCu8qY7MpnFdT3GTsAB6uU8cVsCKN/8dpH6Jr94nQoPAXekpHRlP7XRrFoDCw0G
+ L6VCIe4T5rq/h/CsLXzLb5eit1lWZutuUBVHp/Mq8fWGxFl8oyUjITnDGBT+0yLz0sXA6G
+ EB2TImciT7pvcXnciM2APqvtYkGyjnk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-360-wxakWK1fN4yw0pG06QnW4g-1; Wed, 04 Jun 2025 13:26:40 -0400
+X-MC-Unique: wxakWK1fN4yw0pG06QnW4g-1
+X-Mimecast-MFC-AGG-ID: wxakWK1fN4yw0pG06QnW4g_1749057999
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d50eacafso123825e9.3
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 10:26:40 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749057999; x=1749662799;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XlaCyqpRi8MqH0aFsM4CNzlSQ7/z/97JRoHWttdujEs=;
+ b=qWsNa6c4gJVYgnsC/gV7VyRJirgtYx810KA0yLhvC0gGJ2o8YemASRPgFZ7ksoF7xc
+ 3Xf1wJcbsYC+HrdbvufRBVcIB7oG+dqQ9sPOUASexMcAwSpa/oqS4a5N7GYTP2aZE0AP
+ pSLngSPAIVlA0wqjj6CS0l5mgwFaIWyqDn3DF5NOs+huIJkPognWjeYkJUmD7mA2F4RX
+ 5JZdyAWVbKXMYqAndVuqxTWe4Tpm9UbKSLa6Yql6RtTzUy4LK1clh93sh6BTsR1UTMLu
+ m5JXOKy4hl7F9vJvfOyCmts+Cm7spIZ6JjQavzXpWKbO56msM7OxTYhQuefleDEkQiUz
+ ZLnA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVS6AVlzEkxVyE1azPwCfa89PBibdM3wxLyuVTLd1q995Qvz5SwRDmDxdOknyYtbuDOQyKETBeVCFIL@nongnu.org
+X-Gm-Message-State: AOJu0Yztb42I4KAXRMVqYsylBwoBrBlVuzz5aoWbLFxd1luwxyIu0mtW
+ xBledmLZGANn8B8vTYt8Mtm0GGbL0R5s40pBRGKSI3sTyuYtydB09dKD0CWjcpkm4W9FwPA1QRi
+ ojMKoomi98IYS9dIaQiVWR34x9Q/I98oln7142zY7I9j5B3SIL7tg6tMh
+X-Gm-Gg: ASbGncu70iEIKWApc/tMyxqwbkrFWtTt54I1dOP/nAowIy9KosG41PWTaDoFCKgKRzS
+ 8N7e788w0BleK6km6bKPql5pdrfqbSFKn2JiVFOGTqNmXV0FyZu8eiBSFtuPndGzoy5e2Bb+5fi
+ su5/+kQFN9zkinKCn/o7NQrzNZSUtctEsuJMzQyIxo0AaS/9lbueblHqzVdzRpfWbGbTyqUhSWh
+ Q+UtbWNckitytkXC3uILbjJ//gvQqTzyy2ESMSTB100GTzdDPU/KHvATFy4TG1BoAeDB7RCdTYT
+ qxbIRgfDFWM2Bqc36OXSIWW/DyE6u+FZ/8SLQ6jTnECalaVGqnbUtmCY5e7Ye0G360MpGg==
+X-Received: by 2002:a05:6000:2f88:b0:3a4:e629:6518 with SMTP id
+ ffacd0b85a97d-3a51d8f603fmr3118267f8f.7.1749057999036; 
+ Wed, 04 Jun 2025 10:26:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHTndGuFGjgkPObHUkW/2g4txmv1+icdWF2BpUYwuXbJF3FCBfKR7k6yUTTvQfsWNu6k9dAlQ==
+X-Received: by 2002:a05:6000:2f88:b0:3a4:e629:6518 with SMTP id
+ ffacd0b85a97d-3a51d8f603fmr3118248f8f.7.1749057998650; 
+ Wed, 04 Jun 2025 10:26:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4efe5b79asm21945282f8f.2.2025.06.04.10.26.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Jun 2025 10:26:37 -0700 (PDT)
+Message-ID: <3474d223-8519-4575-9f8c-d64cd3682422@redhat.com>
+Date: Wed, 4 Jun 2025 19:26:35 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/4] backends/iommufd: Add a helper to invalidate
+ user-managed HWPT
+Content-Language: en-US
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>,
+ "peterx@redhat.com" <peterx@redhat.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>,
+ "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
+ "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
+ "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>
+References: <20250530093512.3959484-1-zhenzhong.duan@intel.com>
+ <20250530093512.3959484-2-zhenzhong.duan@intel.com>
+ <bcec7aeb-47c2-4edf-87f4-d09362e59715@redhat.com>
+ <IA3PR11MB9136A572E2D94B5537C26CBE926CA@IA3PR11MB9136.namprd11.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <IA3PR11MB9136A572E2D94B5537C26CBE926CA@IA3PR11MB9136.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -84,171 +127,139 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This lets us see the full flow of RFB messages received from the
-client.
+Hi Zhenzhong,
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- ui/trace-events | 14 +++++++++++++
- ui/vnc.c        | 52 +++++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 66 insertions(+)
+On 6/4/25 7:50 AM, Duan, Zhenzhong wrote:
+> Hi Eric,
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: Tuesday, June 3, 2025 8:21 PM
+>> To: Duan, Zhenzhong <zhenzhong.duan@intel.com>; qemu-devel@nongnu.org
+>> Cc: alex.williamson@redhat.com; clg@redhat.com; mst@redhat.com;
+>> jasowang@redhat.com; peterx@redhat.com; ddutile@redhat.com;
+>> jgg@nvidia.com; nicolinc@nvidia.com; shameerali.kolothum.thodi@huawei.com;
+>> joao.m.martins@oracle.com; clement.mathieu--drif@eviden.com; Tian, Kevin
+>> <kevin.tian@intel.com>; Liu, Yi L <yi.l.liu@intel.com>; Peng, Chao P
+>> <chao.p.peng@intel.com>
+>> Subject: Re: [PATCH v2 1/4] backends/iommufd: Add a helper to invalidate user-
+>> managed HWPT
+>>
+>> Hi Zhenzhong,
+>>
+>> On 5/30/25 11:35 AM, Zhenzhong Duan wrote:
+>>> This helper passes cache invalidation request from guest to invalidate
+>>> stage-1 page table cache in host hardware.
+>>>
+>>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+>>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+>>> ---
+>>>  include/system/iommufd.h |  4 ++++
+>>>  backends/iommufd.c       | 36 ++++++++++++++++++++++++++++++++++++
+>>>  backends/trace-events    |  1 +
+>>>  3 files changed, 41 insertions(+)
+>>>
+>>> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+>>> index cbab75bfbf..83ab8e1e4c 100644
+>>> --- a/include/system/iommufd.h
+>>> +++ b/include/system/iommufd.h
+>>> @@ -61,6 +61,10 @@ bool
+>> iommufd_backend_get_dirty_bitmap(IOMMUFDBackend *be, uint32_t hwpt_id,
+>>>                                        uint64_t iova, ram_addr_t size,
+>>>                                        uint64_t page_size, uint64_t *data,
+>>>                                        Error **errp);
+>>> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+>>> +                                      uint32_t data_type, uint32_t entry_len,
+>>> +                                      uint32_t *entry_num, void *data,
+>>> +                                      Error **errp);
+>>>
+>>>  #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD
+>> TYPE_HOST_IOMMU_DEVICE "-iommufd"
+>>>  #endif
+>>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>>> index b73f75cd0b..8bcdb60fe7 100644
+>>> --- a/backends/iommufd.c
+>>> +++ b/backends/iommufd.c
+>>> @@ -311,6 +311,42 @@ bool
+>> iommufd_backend_get_device_info(IOMMUFDBackend *be, uint32_t devid,
+>>>      return true;
+>>>  }
+>>>
+>>> +bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+>>> +                                      uint32_t data_type, uint32_t entry_len,
+>>> +                                      uint32_t *entry_num, void *data,
+>>> +                                      Error **errp)
+>>> +{
+>>> +    int ret, fd = be->fd;
+>>> +    uint32_t total_entries = *entry_num;
+>>> +    struct iommu_hwpt_invalidate cache = {
+>>> +        .size = sizeof(cache),
+>>> +        .hwpt_id = id,
+>>> +        .data_type = data_type,
+>>> +        .entry_len = entry_len,
+>>> +        .entry_num = total_entries,
+>>> +        .data_uptr = (uintptr_t)data,
+>>> +    };
+>>> +
+>>> +    ret = ioctl(fd, IOMMU_HWPT_INVALIDATE, &cache);
+>>> +    trace_iommufd_backend_invalidate_cache(fd, id, data_type, entry_len,
+>>> +                                           total_entries, cache.entry_num,
+>>> +                                           (uintptr_t)data, ret ? errno : 0);
+>>> +    *entry_num = cache.entry_num;
+>>> +
+>>> +    if (ret) {
+>>> +        error_setg_errno(errp, errno, "IOMMU_HWPT_INVALIDATE failed:"
+>>> +                         " total %d entries, processed %d entries",
+>>> +                         total_entries, cache.entry_num);
+>>> +    } else if (total_entries != cache.entry_num) {
+>>> +        error_setg(errp, "IOMMU_HWPT_INVALIDATE succeed but with
+>> unprocessed"
+>>> +                         " entries: total %d entries, processed %d entries."
+>>> +                         " Kernel BUG?!", total_entries, cache.entry_num);
+>> Can this happen? Isn't it a failure case?
+> It shouldn't happen except kernel has a bug. It's a failure case, so false is returned.
+OK. I missed it was an error case.
 
-diff --git a/ui/trace-events b/ui/trace-events
-index 3da0d5e280..3eba9ca3a8 100644
---- a/ui/trace-events
-+++ b/ui/trace-events
-@@ -48,13 +48,27 @@ vnc_msg_server_ext_desktop_resize(void *state, void *ioc, int width, int height,
- vnc_msg_client_audio_enable(void *state, void *ioc) "VNC client msg audio enable state=%p ioc=%p"
- vnc_msg_client_audio_disable(void *state, void *ioc) "VNC client msg audio disable state=%p ioc=%p"
- vnc_msg_client_audio_format(void *state, void *ioc, int fmt, int channels, int freq) "VNC client msg audio format state=%p ioc=%p fmt=%d channels=%d freq=%d"
-+vnc_msg_client_cut_text(void *state, void *ioc, int len) "VNC client msg cut text state=%p ioc=%p len=%u"
-+vnc_msg_client_cut_text_ext(void *state, void *ioc, int len, int flags) "VNC client msg cut text state=%p ioc=%p len=%u flags=%u"
-+vnc_msg_client_ext_key_event(void *state, void *ioc, int down, int sym, int keycode) "VNC client msg ext key event state=%p ioc=%p down=%u sym=%u keycode=%u"
-+vnc_msg_client_framebuffer_update_request(void *state, void *ioc, int incremental, int x, int y, int w, int h) "VNC client msg framebuffer update request state=%p ioc=%p incremental=%u x=%u y=%u w=%u h=%u"
-+vnc_msg_client_key_event(void *state, void *ioc, int down, int sym) "VNC client msg key event state=%p ioc=%p down=%u sym=%u"
-+vnc_msg_client_pointer_event(void *state, void *ioc, int button_mask, int x, int y) "VNC client msg pointer event state=%p ioc=%p button_mask=%u x=%u y=%u"
- vnc_msg_client_set_desktop_size(void *state, void *ioc, int width, int height, int screens) "VNC client msg set desktop size  state=%p ioc=%p size=%dx%d screens=%d"
-+vnc_msg_client_set_encodings(void *state, void *ioc, int limit) "VNC client msg set encodings state=%p ioc=%p limit=%u"
-+vnc_msg_client_set_pixel_format(void *state, void *ioc, int bpp, int big_endian, int true_color) "VNC client msg set pixel format state=%p ioc=%p bpp=%u big_endian=%u true_color=%u"
-+vnc_msg_client_set_pixel_format_rgb(void *state, void *ioc, int red_max, int green_max, int blue_max, int red_shift, int green_shift, int blue_shift) "VNC client msg set pixel format RGB state=%p ioc=%p red_max=%u green_max=%u blue_max=%u red_shift=%u green_shift=%u blue_shift=%u"
-+vnc_msg_client_xvp(void *state, void *ioc, int version, int action) "VNC client msg XVP state=%p ioc=%p version=%u action=%u"
- vnc_client_eof(void *state, void *ioc) "VNC client EOF state=%p ioc=%p"
- vnc_client_io_error(void *state, void *ioc, const char *msg) "VNC client I/O error state=%p ioc=%p errmsg=%s"
- vnc_client_connect(void *state, void *ioc) "VNC client connect state=%p ioc=%p"
- vnc_client_disconnect_start(void *state, void *ioc) "VNC client disconnect start state=%p ioc=%p"
- vnc_client_disconnect_finish(void *state, void *ioc) "VNC client disconnect finish state=%p ioc=%p"
- vnc_client_io_wrap(void *state, void *ioc, const char *type) "VNC client I/O wrap state=%p ioc=%p type=%s"
-+vnc_client_pixel_format(void *state, void *ioc, int bpp, int depth, int endian) "VNC client pixel format state=%p ioc=%p bpp=%u depth=%u endian=%u"
-+vnc_client_pixel_format_red(void *state, void *ioc, int max, int bits, int shift, int mask) "VNC client pixel format red state=%p ioc=%p max=%u bits=%u shift=%u mask=%u"
-+vnc_client_pixel_format_green(void *state, void *ioc, int max, int bits, int shift, int mask) "VNC client pixel format green state=%p ioc=%p max=%u bits=%u shift=%u mask=%u"
-+vnc_client_pixel_format_blue(void *state, void *ioc, int max, int bits, int shift, int mask) "VNC client pixel format blue state=%p ioc=%p max=%u bits=%u shift=%u mask=%u"
- vnc_client_throttle_threshold(void *state, void *ioc, size_t oldoffset, size_t offset, int client_width, int client_height, int bytes_per_pixel, void *audio_cap) "VNC client throttle threshold state=%p ioc=%p oldoffset=%zu newoffset=%zu width=%d height=%d bpp=%d audio=%p"
- vnc_client_throttle_incremental(void *state, void *ioc, int job_update, size_t offset) "VNC client throttle incremental state=%p ioc=%p job-update=%d offset=%zu"
- vnc_client_throttle_forced(void *state, void *ioc, int job_update, size_t offset) "VNC client throttle forced state=%p ioc=%p job-update=%d offset=%zu"
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 51872d1838..af173b8033 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -2314,6 +2314,25 @@ static void set_pixel_format(VncState *vs, int bits_per_pixel,
-     vs->client_pf.bytes_per_pixel = bits_per_pixel / 8;
-     vs->client_pf.depth = bits_per_pixel == 32 ? 24 : bits_per_pixel;
-     vs->client_endian = big_endian_flag ? G_BIG_ENDIAN : G_LITTLE_ENDIAN;
-+    trace_vnc_client_pixel_format(vs, vs->ioc,
-+                                  vs->client_pf.bits_per_pixel,
-+                                  vs->client_pf.depth,
-+                                  vs->client_endian);
-+    trace_vnc_client_pixel_format_red(vs, vs->ioc,
-+                                      vs->client_pf.rmax,
-+                                      vs->client_pf.rbits,
-+                                      vs->client_pf.rshift,
-+                                      vs->client_pf.rmask);
-+    trace_vnc_client_pixel_format_green(vs, vs->ioc,
-+                                        vs->client_pf.gmax,
-+                                        vs->client_pf.gbits,
-+                                        vs->client_pf.gshift,
-+                                        vs->client_pf.gmask);
-+    trace_vnc_client_pixel_format_blue(vs, vs->ioc,
-+                                       vs->client_pf.bmax,
-+                                       vs->client_pf.bbits,
-+                                       vs->client_pf.bshift,
-+                                       vs->client_pf.bmask);
- 
-     if (!true_color_flag) {
-         send_color_map(vs);
-@@ -2388,6 +2407,17 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-         if (len == 1)
-             return 20;
- 
-+        trace_vnc_msg_client_set_pixel_format(vs, vs->ioc,
-+                                              read_u8(data, 4),
-+                                              read_u8(data, 6),
-+                                              read_u8(data, 7));
-+        trace_vnc_msg_client_set_pixel_format_rgb(vs, vs->ioc,
-+                                                  read_u16(data, 8),
-+                                                  read_u16(data, 10),
-+                                                  read_u16(data, 12),
-+                                                  read_u8(data, 14),
-+                                                  read_u8(data, 15),
-+                                                  read_u8(data, 16));
-         set_pixel_format(vs, read_u8(data, 4),
-                          read_u8(data, 6), read_u8(data, 7),
-                          read_u16(data, 8), read_u16(data, 10),
-@@ -2410,12 +2440,19 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-             memcpy(data + 4 + (i * 4), &val, sizeof(val));
-         }
- 
-+        trace_vnc_msg_client_set_encodings(vs, vs->ioc, limit);
-         set_encodings(vs, (int32_t *)(data + 4), limit);
-         break;
-     case VNC_MSG_CLIENT_FRAMEBUFFER_UPDATE_REQUEST:
-         if (len == 1)
-             return 10;
- 
-+        trace_vnc_msg_client_framebuffer_update_request(vs, vs->ioc,
-+                                                        read_u8(data, 1),
-+                                                        read_u16(data, 2),
-+                                                        read_u16(data, 4),
-+                                                        read_u16(data, 6),
-+                                                        read_u16(data, 8));
-         framebuffer_update_request(vs,
-                                    read_u8(data, 1), read_u16(data, 2), read_u16(data, 4),
-                                    read_u16(data, 6), read_u16(data, 8));
-@@ -2424,12 +2461,19 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-         if (len == 1)
-             return 8;
- 
-+        trace_vnc_msg_client_key_event(vs, vs->ioc,
-+                                       read_u8(data, 1),
-+                                       read_u32(data, 4));
-         key_event(vs, read_u8(data, 1), read_u32(data, 4));
-         break;
-     case VNC_MSG_CLIENT_POINTER_EVENT:
-         if (len == 1)
-             return 6;
- 
-+        trace_vnc_msg_client_pointer_event(vs, vs->ioc,
-+                                           read_u8(data, 1),
-+                                           read_u16(data, 2),
-+                                           read_u16(data, 4));
-         pointer_event(vs, read_u8(data, 1), read_u16(data, 2), read_u16(data, 4));
-         break;
-     case VNC_MSG_CLIENT_CUT_TEXT:
-@@ -2461,9 +2505,12 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-                 vnc_client_error(vs);
-                 break;
-             }
-+            trace_vnc_msg_client_cut_text_ext(vs, vs->ioc,
-+                                              dlen, read_u32(data, 8));
-             vnc_client_cut_text_ext(vs, dlen, read_u32(data, 8), data + 12);
-             break;
-         }
-+        trace_vnc_msg_client_cut_text(vs, vs->ioc, read_u32(data, 4));
-         vnc_client_cut_text(vs, read_u32(data, 4), data + 8);
-         break;
-     case VNC_MSG_CLIENT_XVP:
-@@ -2478,6 +2525,7 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-         if (len == 4) {
-             uint8_t version = read_u8(data, 2);
-             uint8_t action = read_u8(data, 3);
-+            trace_vnc_msg_client_xvp(vs, vs->ioc, version, action);
- 
-             if (version != 1) {
-                 error_report("vnc: xvp client message version %d != 1",
-@@ -2511,6 +2559,10 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
-             if (len == 2)
-                 return 12;
- 
-+            trace_vnc_msg_client_ext_key_event(vs, vs->ioc,
-+                                               read_u16(data, 2),
-+                                               read_u32(data, 4),
-+                                               read_u32(data, 8));
-             ext_key_event(vs, read_u16(data, 2),
-                           read_u32(data, 4), read_u32(data, 8));
-             break;
--- 
-2.49.0
+Eric
+>
+> Thanks
+> Zhenzhong
+>
+>> Besides
+>> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+>>
+>>
+>> Eric
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    return !ret;
+>>> +}
+>>> +
+>>>  static int hiod_iommufd_get_cap(HostIOMMUDevice *hiod, int cap, Error
+>> **errp)
+>>>  {
+>>>      HostIOMMUDeviceCaps *caps = &hiod->caps;
+>>> diff --git a/backends/trace-events b/backends/trace-events
+>>> index 40811a3162..7278214ea5 100644
+>>> --- a/backends/trace-events
+>>> +++ b/backends/trace-events
+>>> @@ -18,3 +18,4 @@ iommufd_backend_alloc_hwpt(int iommufd, uint32_t
+>> dev_id, uint32_t pt_id, uint32_
+>>>  iommufd_backend_free_id(int iommufd, uint32_t id, int ret) " iommufd=%d
+>> id=%d (%d)"
+>>>  iommufd_backend_set_dirty(int iommufd, uint32_t hwpt_id, bool start, int ret)
+>> " iommufd=%d hwpt=%u enable=%d (%d)"
+>>>  iommufd_backend_get_dirty_bitmap(int iommufd, uint32_t hwpt_id, uint64_t
+>> iova, uint64_t size, uint64_t page_size, int ret) " iommufd=%d hwpt=%u
+>> iova=0x%"PRIx64" size=0x%"PRIx64" page_size=0x%"PRIx64" (%d)"
+>>> +iommufd_backend_invalidate_cache(int iommufd, uint32_t id, uint32_t
+>> data_type, uint32_t entry_len, uint32_t entry_num, uint32_t done_num, uint64_t
+>> data_ptr, int ret) " iommufd=%d id=%u data_type=%u entry_len=%u
+>> entry_num=%u done_num=%u data_ptr=0x%"PRIx64" (%d)"
 
 
