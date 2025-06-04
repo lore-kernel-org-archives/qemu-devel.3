@@ -4,81 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED622C5B552
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:06:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29571C5B543
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 07:07:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMiC6-0006ar-Qu; Wed, 04 Jun 2025 03:05:50 -0400
+	id 1uMiDf-0007E8-UD; Wed, 04 Jun 2025 03:07:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMiBt-0006Zr-Qk
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:05:39 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMiDc-0007Da-RT
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:07:24 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMiBr-0005yZ-UA
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:05:37 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-3a375888197so3304335f8f.0
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 00:05:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uMiDa-000637-Bt
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 03:07:23 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-442eb5d143eso64781275e9.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 00:07:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749020733; x=1749625533; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749020840; x=1749625640; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=3iqwpMsHPeTQZyO3Yb6WrCZ1/LWdOuIemu5yw9Jcnqo=;
- b=YaQGJ4WeRApo/xY8bs3vO/OeZ8A/eKvh+AUAKbKIzmMZd1fVPd4l4NFJ8sBodGE/ax
- xvDaphAKZUK7DEep1obXZIh1bbDPSf3o9E5KHvLqu040RARb1r4YqAQApaZiqii9K+Xp
- udxMxqJ4L81IV7XZoYZQ+pkUztqWy0whbf8mc2qdEO2KC2xmkctVQ2yIqyILxS8JsuHj
- c0/LUW0HeQ1F4NkjNEl94/H1k58WMrWnTQvWgckYVFHx3Cd+Q3u0TWfsH+KAQ6/W01kl
- Ey9S+s2Euvrm6aN1cf2EhMn+bZGrMSo1fuGM89JPwSQI6hShfZSPwUOmrnqPXJk93Ft/
- 8hSA==
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=rynHoh/ptHQn79UIbvWjfxdaG778iHkl/vBKiHg1RYw=;
+ b=A+tc90QrxWR3E/aHxReWBaPucWHaklx6C1qkFsltnyGDd7diw+HoL8wrTufml5Pk/0
+ twwJb1MgBC5u013157CmCzYMDo6925KCiA8/y8L6yLP3fx30/HDZnFOtf7MjlFaGmkwg
+ loI3Mzh7PFjkYuVGWh9HYXWmj8miVopwxn9SgtHQgfLEcCtyEGMPUGgjTwShCaFDVGct
+ VfgfjAUBxa8S2jHKrsqzx9occt6bk8trSOvWoSybzp76fl03Ub2DrTGLQr9Qv9GqQ2m/
+ tsZX5n451/agx3PUtNb7O2jUUKqBHeFDyTsJKyXsWjzrU4pt6vOEiMZ0WmtsH9PNj7lI
+ Bp9g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749020733; x=1749625533;
+ d=1e100.net; s=20230601; t=1749020840; x=1749625640;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=3iqwpMsHPeTQZyO3Yb6WrCZ1/LWdOuIemu5yw9Jcnqo=;
- b=Pdi43E4Mq/i3vOFZaB9VISdpLlrpJB2YW21URX6b0fbT6BTHMcMJXN3htNCasfuvOB
- XEA/fnwNSqUJn9n8/Vo/Zf5aTAM5bmBIuDaZJIHMwWbsOx7E/5lu2OAwbnHPu/EN10je
- rLMfiEjUtq2Sz4X0gHMyJnaahExs9Jab+OZDZt8N17Rpaezc6fbnpPzdFMUjbR3jRf75
- eW2V+LxCcxMF5YJQdC+55ZD56P9pm23EtgHuB4pylfTSfv2Ddz8abvXXic7sYPBKcn6/
- DPh8jbgQP8TA+mRibD2Ljv6vlWMa+5MzW/UqueqwNHE4gMzTj+ts6q0G6W1jVHO2E0E0
- pqmQ==
+ bh=rynHoh/ptHQn79UIbvWjfxdaG778iHkl/vBKiHg1RYw=;
+ b=E6F+Sz6i8F9lFpwIG6QXJQi0a/oYXu1F79QElJBn1Pra9T3h7tslcZZHWxdvpRP2rX
+ BpkIh4L3M/X69C950hYfNrm4XtCBEfskzZWL4B8HBMWBhW6kEormHZzAeERabO0n7Z/I
+ GCdv6vz3Lty0OsAJGT7T0b9F6XutXcn9RrDuRSiPoF/mM+piOx0yJzZOHxjFYDUWUPBB
+ o/y6WDqlEk7OKwyFYvPtkmoKvYlGAf4/la7KfFlfRiwbaMEi4V8hIseB2kHD6A7sAL3L
+ BVwgJ86pIDDVHNnk8ggOmr8xFmrAUO6zyrtBaAxc4qDpEQdo9flWvxwcy2rpeOiXCwtq
+ tHpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVT5x2F3vBnTaIR2LHx7RxN9t/QNGK+A5fjDgEzChGXa3MESB0qeObhxT+zGrY8SExU+OjOaumZCtnq@nongnu.org
-X-Gm-Message-State: AOJu0YyZg3tL2SAkLHRxaD/etpMi6WyAy9RT1JgBrwZZgVU0/gsNTp1z
- Yolb46J+jL2r6ZfDTXQeFfMt+NWNDN07H8o7QLuyNACmMoT4CHL9XwuZSNnrHWy49dc=
-X-Gm-Gg: ASbGncv2Z6oixE0PV7gvaRZgeGJrVkgut4NUxCm382V2ow0VIHOg1Ps55upt2CkU2Oh
- npyXRazgne8IR+0om8t7S3xJMlwlUCTm1YGkMzi8UNlgoQUr7H2sPF3G91u2D+6RnL9Z5m5w21V
- WSEb4kxy1f4qWwKk3/lF3Ay/LypF5e2XqBLP5RsQIcvo+DVtSElgp9WP5e3sTkHvlZDvLDRixd6
- TvGcTVMGh/pW3ol2CoO/7OKa1X9RAasZhCz/mkrzzQBKuSs9DJKHw3OSzIpBJ6DLqrcWbGqM71z
- w1Ah2f070dBlvhEfAmfOhfzBAbs1ULaZIG7wlUfZfRkJltGqkEGwNBdwyxWZss88HPlVhWAPcMx
- KH6g3el8m35K83tXwG1Nt0JLAy6sdRQ==
-X-Google-Smtp-Source: AGHT+IHt8+oBz6ELlTxGV3/gpsBzzTMeQ0x35K40OKpubuJAJ0Hq6WSgYF7d0z5LEA4JEZwdBUwHqQ==
-X-Received: by 2002:a05:6000:4287:b0:3a4:c590:10eb with SMTP id
- ffacd0b85a97d-3a51d975bacmr1026828f8f.48.1749020733132; 
- Wed, 04 Jun 2025 00:05:33 -0700 (PDT)
+ AJvYcCXOlD6FmKXivfuendTwZx+wEAHPmB0DasuLbCu5hT7oDGShanXluYygCbWP2YG8upfZBbGI4EI8CFds@nongnu.org
+X-Gm-Message-State: AOJu0YxCtupGPMjoJck8JhuNavbQ4BCJNTaRAcRcnEQ7JotyNkeyQnMK
+ CrCI+oxlg67jOxxYniQUlLqq0YFBGaWhFgxGN5ToM/bxpenZq62OpsWcPC+oDuDCPHk=
+X-Gm-Gg: ASbGncsZvQD+81fpVwqBdjNarrNK8yMD3Q1cyLk/+2cedCicpzdJEndKEJXvp1M90kE
+ kGyuHsq8xQlGY1MFoPeQi9Gcg7iAtwpzk+GbROyXwFI4jTdMpTlM2Xq1WhCDjrHGM6oU9EKE7TL
+ rlS4/iyDu4VC5Xmj9DsGCibi4myoW+vrG6FSeYq3CnqzkMxDdukIR7nkWEfOVDN8ZxGBiB8OGy8
+ ugDDJaCZg5iAVIOmuU20osxQm9+qiA4gCiYIFm5OjC7cWB4QnNOUhu3TgAJyJyoGRe9PFJway+1
+ rNqR35bIbYWs/6bTjL0c9TvNvnQJAN3P81ku7c3hS8l4ehIWpw2ZrgQKmPxFjbgtXmqpuN+bTj3
+ rrlKvk58l9mlKjADc6V8=
+X-Google-Smtp-Source: AGHT+IEaOQMBwhucriFQuSYHiyVKAzIs4Y+2yBVrARU//lSRgdyMwTjXS6QjfyZ4yqCU+ZcONMeUzA==
+X-Received: by 2002:a05:6000:290b:b0:3a4:f7df:baf5 with SMTP id
+ ffacd0b85a97d-3a51d67f465mr1045724f8f.0.1749020839829; 
+ Wed, 04 Jun 2025 00:07:19 -0700 (PDT)
 Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4f0097205sm20841839f8f.79.2025.06.04.00.05.32
+ ffacd0b85a97d-3a4f009f9d6sm20540149f8f.84.2025.06.04.00.07.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 00:05:32 -0700 (PDT)
-Message-ID: <89a30560-1d59-4e55-b421-4eacf355df2e@linaro.org>
-Date: Wed, 4 Jun 2025 09:05:31 +0200
+ Wed, 04 Jun 2025 00:07:19 -0700 (PDT)
+Message-ID: <0c0545dc-6ce1-4580-9d21-6f31d39e0125@linaro.org>
+Date: Wed, 4 Jun 2025 09:07:18 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional: Speed up the avr_mega2560 test
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Michael Rolnik <mrolnik@gmail.com>
-References: <20250603184710.25651-1-thuth@redhat.com>
+Subject: Re: [PATCH 0/8] hw/i386/pc: Remove deprecated 2.10, 2.11 and 2.12 PC
+ machines
+To: Xiaoyao Li <xiaoyao.li@intel.com>, qemu-devel@nongnu.org
+Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250501223522.99772-1-philmd@linaro.org>
+ <4ac8c8b0-700b-4fac-ae4c-6531fc6b682e@intel.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250603184710.25651-1-thuth@redhat.com>
+In-Reply-To: <4ac8c8b0-700b-4fac-ae4c-6531fc6b682e@intel.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,24 +107,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/6/25 20:47, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 4/6/25 03:30, Xiaoyao Li wrote:
+> On 5/2/2025 6:35 AM, Philippe Mathieu-Daudé wrote:
+>> The versioned 'pc' and 'q35' machines up to 2.12 been marked
+>> as deprecated two releases ago, and are older than 6 years,
+>> so according to our support policy we can remove them.
+>>
+>> This series includes the 2.10 to 2.12 machines removal.
 > 
-> We can simply check for the expected pattern on the console,
-> no need to wait for two seconds here to search for the pattern
-> in the log at the end.
-
-IIRC this was due to problem with console reader, now fixed.
-
-> While we're at it, also remove the obsolete "timeout" variable
-> from this test.
+> For this series,
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   tests/functional/test_avr_mega2560.py | 11 ++++-------
->   1 file changed, 4 insertions(+), 7 deletions(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
 Thanks!
+
+> Besides, please add more patches to remove hw_compat_2_{10,11,12}
+
+Are you asking for this series which was posted more than one month ago?
+https://lore.kernel.org/qemu-devel/20250501230129.2596-1-philmd@linaro.org/
+
+> 
+>> Philippe Mathieu-Daudé (8):
+>>    hw/i386/pc: Remove deprecated pc-q35-2.10 and pc-i440fx-2.10 machines
+>>    hw/i386/pc: Remove pc_compat_2_10[] array
+>>    hw/pci-host/i440fx: Remove I440FXState::pci_hole64_fix field
+>>    hw/pci-host/q35: Remove Q35PCIHost::pci_hole64_fix field
+>>    hw/i386/pc: Remove deprecated pc-q35-2.11 and pc-i440fx-2.11 machines
+>>    hw/i386/pc: Remove pc_compat_2_11[] array
+>>    hw/i386/pc: Remove deprecated pc-q35-2.12 and pc-i440fx-2.12 machines
+>>    hw/i386/pc: Remove pc_compat_2_12[] array
+
 
