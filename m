@@ -4,225 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0C5F7C5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:35:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9E4C5B549
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:35:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMoFm-0001Pr-P6; Wed, 04 Jun 2025 09:34:07 -0400
+	id 1uMoGj-0004CB-EY; Wed, 04 Jun 2025 09:35:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uMoFJ-00018r-Fa
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:33:38 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uMoGb-0003t1-EZ; Wed, 04 Jun 2025 09:34:53 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uMoF2-0005U8-Ck
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 09:33:18 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5549MtsZ025723;
- Wed, 4 Jun 2025 13:33:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=SCr9U7MNTFk971fkdwZ58UvIwIZmYmrIzUF0107PQww=; b=
- rjPkGGHDb1wHuZPSQ/T5792ziVU3XpgyGkD1CZ/D1b5EcW9ppij+l+zcRPPbEsTe
- UDkKd4UiiWJ4WoLCM7k+wRpGszeSkuhAoZCjLv44A+ryGxl3wSaUxzJjT0FUZw8K
- vlTO39yh1zgPDONRbvdLKxDbKhMnepBUtMHr8NrMooPD8UXCPP1Cb75QbalOPmME
- dsJltWSlUoC4z+b9xL+GAirkkHPRuTKzdItZJ/2fdUry5remyASp3UY068m+tksM
- uhVraGQe8dT0nQ5rFjQxPZfyiezLZgP8L3LgjjJugP/VXSrbF4iEh7+pPjKScv1O
- gLONedwJd1A1e3KIzqSw0g==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 471gahc2xg-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 04 Jun 2025 13:33:12 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 554CJuCb039184; Wed, 4 Jun 2025 13:33:11 GMT
-Received: from nam11-co1-obe.outbound.protection.outlook.com
- (mail-co1nam11on2043.outbound.protection.outlook.com [40.107.220.43])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 46yr7asyc8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 04 Jun 2025 13:33:11 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pJiInqyungOrlhVhgcFq4TAOn0UXD5ctFs3ojERkKbuJWzO44KtRprhSucH2ohKiK4rnHTByI/uflKYITks+ZNwJUeOKcbtPt8OOODEUV3wHjgi+kMgX9fEO5ri7tiuZlSDfNHIEao4GpFH6e5nrbyBWLhvdi0QeAq3uQdZMs7ooYwC/ThkpS4qTF9IX/+BDzCejHe5jHSPaLwTLudV6sc6tuKLQdIuoapsCkUCwKOGnFsOUkXrTv/MnIITmeD//ukKWwLxd2e1N4XL6JzDEmwn0djaKOJRAg6yEOr+79BePJ0X8wDp3k8pJzJ72OiNHsEgZSwiLV+I81d0NTv6zKQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=SCr9U7MNTFk971fkdwZ58UvIwIZmYmrIzUF0107PQww=;
- b=nBKSDQki7vwW9wFJirztviHb/ilJFg1pXbpMiFaYwoMXzPxhFTiotEQrUIldKahu16K+ETsUQSm7bw2pSDgXKaW549AtgTp2y9FLD/2pgPjC4M+bKHYRXZVcbui3v5Fym/3Ewlrya6xttm4QbmYqcPkj52QUu28x497agXY8XTp+BDM11JyXc8kVgZO0Cs0iA4dXX8qr5PHrSi0ngs8mT9vwoXTBXATO/BgCiZlPz9vWSeef4tP7J3nIZazx7Iws4BqKStxAyQYUb2TGZrvBdSIGthvkMOj3VXP1OPppydr7jEByX7Uqur5NVxsIrADHMoRNc0/ra3u6re089edS8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=SCr9U7MNTFk971fkdwZ58UvIwIZmYmrIzUF0107PQww=;
- b=oKktUVua+ddjtWCHgUY7TOVKQCUEAckHJNHUYXjCqLK8DXxQ0KGHpqukuE4XwT8hCFZESNfeAfqCgtdflWtD4JRWU9CftnThrqqr8BE3K21PDyZwkcnkfKzH6v2+XD4yw4mZAZdozdr5Q3AarM4tHMKz49ur6bpCG4SbUztOBs8=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by SN7PR10MB6407.namprd10.prod.outlook.com (2603:10b6:806:269::5)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.19; Wed, 4 Jun
- 2025 13:33:09 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8746.035; Wed, 4 Jun 2025
- 13:33:09 +0000
-Message-ID: <aa0c0091-7db4-46f3-956a-03a9f1362c1f@oracle.com>
-Date: Wed, 4 Jun 2025 09:33:05 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-5-git-send-email-steven.sistare@oracle.com>
- <IA3PR11MB913626075C1F4FA64AED3B63926DA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <65ebacc7-ee7e-4c44-92fb-e75a0a6490a8@oracle.com>
- <IA3PR11MB913659879C0B2EFF7358B229926CA@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <IA3PR11MB913659879C0B2EFF7358B229926CA@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BN9PR03CA0866.namprd03.prod.outlook.com
- (2603:10b6:408:13d::31) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1uMoGY-0005ko-Cv; Wed, 04 Jun 2025 09:34:53 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bC7nJ6MCCz6K9HX;
+ Wed,  4 Jun 2025 21:33:08 +0800 (CST)
+Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
+ by mail.maildlp.com (Postfix) with ESMTPS id E68F3140133;
+ Wed,  4 Jun 2025 21:34:41 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.203.177.99) by
+ frapeml500003.china.huawei.com (7.182.85.28) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Wed, 4 Jun 2025 15:34:40 +0200
+To: <mst@redhat.com>
+CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
+ <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
+ <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, <imammedo@redhat.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <linuxarm@huawei.com>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
+ <philmd@linaro.org>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
+ <richard.henderson@linaro.org>, <shameerali.kolothum.thodi@huawei.com>,
+ <shannon.zhaosl@gmail.com>, <yangyicong@hisilicon.com>,
+ <zhao1.liu@intel.com>, <maobibo@loongson.cn>
+Subject: [PATCH v12 0/6] Specifying cache topology on ARM
+Date: Wed, 4 Jun 2025 14:34:33 +0100
+Message-ID: <20250604133439.1592-1-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|SN7PR10MB6407:EE_
-X-MS-Office365-Filtering-Correlation-Id: 83b52c7c-2b61-4a1a-3879-08dda36c5863
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?eWpZSVovL0lBWVdCN0c3RFFrcER2MDFVOFR2aC8wV3BmNWcvQVRRdG5YL2Q2?=
- =?utf-8?B?blZVN0dtM0hnamc2Q2JyTjhEdXVCMHVLNHNpdnNuWmhwOHk0eVRlL2Z1QXlK?=
- =?utf-8?B?MCszNi9ldE0vRFdZV0ZqZWNlQ0g0TDV3dXBKVWF2Y0xJTVVISmpPZWd0dWg0?=
- =?utf-8?B?d1JGUlU0VG95NGk4SXVqdEVEZVk3SEg1K3BaZ0FSNXZnM1U3SDlxbzZONitJ?=
- =?utf-8?B?TW53Y1RtSHdrTldhOERkK0tQMEszRGRXbDYyQ3BGVVpLQSt3YVdTVFVhaGMx?=
- =?utf-8?B?dFI4YVRhWHNEUDgwazNXRnpiMmU1aDQrekYrZUlxQlhWTkFQM01oQ082d2lz?=
- =?utf-8?B?WHcwSExCSER5WWY2SXQ2TVFHOUliOFFkVGNGSVhYUkUzek1Ma1RkNWIrVTZ6?=
- =?utf-8?B?SG9DMUZ6blNjL3F6SHBPTm82QnNhd2dJdXJ2azQvVlRYMmdQaTd0cjN2aXBD?=
- =?utf-8?B?aDAzQTBuQmxTUDI5T2NYWHVzYXhqRlE3Uk9qRy9PNW53WXdlSUxHbzdVaEY3?=
- =?utf-8?B?Y0JBNTVEWE16b2hlRG9LN2ZycnpJMEsrWXdDMUllK21pQ3VmZ2QrQ3J3MExw?=
- =?utf-8?B?TjVRRkZkNHlTeHJFWklnZkpSeW1LRFVJTFhicmxUeThZZ2NhOFhBalowOXFz?=
- =?utf-8?B?UVo5a3p6b2piMXI4MEhHbU9yMEFlcjllTVlqOUJsRytWK2o1OU1TSE5vUUUy?=
- =?utf-8?B?VkFWbUZ5am9aaXVVZnp0ckhUdmVXV2lkc0lkYXd1dG83YTZQWC84Q3V2eWdh?=
- =?utf-8?B?ejdaeWw4OU13aGU1VGEyY0wxM3pNTkpsc1pKdXBha0hCTk5OUjJVZ3AwNG5W?=
- =?utf-8?B?ODg3a0RQUHlTRTdUMnBlb3gxMFhjMjRWVkNiTkJhQ2JSWTdjK2MwWGZwaU4y?=
- =?utf-8?B?dzJZekU0ZldLWWtCVlVCU0o5bG96R0Nhckkyb3N3dmF0STZnWk5RMmZPQ2lJ?=
- =?utf-8?B?N2VuenVlNUZqTml0bXEzL3NrMmN3cjNNUGU3SFFpQ2Q4QXhyVytzc1NqYVo1?=
- =?utf-8?B?dVRjdHBFTUJ4S2ZNOUR4TGxzdm9EaE1BZHBkWWQvbVNSNW1vTWc2akxnS1VK?=
- =?utf-8?B?cXdxKytCM2FjN1dPQ0FXM2VXTW9wNWoyalJmallCdmo4WW1IQ3VIVUFNZ1NC?=
- =?utf-8?B?dUdqUUxHNWdmR0dPTGhlV2V1L3JJK0s4MklmMzhLV0llV1h6RUVoUEYzQWoy?=
- =?utf-8?B?aUQ0ZkxLU01zNE9HOUtjTEtEOWpYU3lnL0FOa0N5Sld5WEtmQVhlbGpVZjlD?=
- =?utf-8?B?UkxhbWxIZUdxOHk3bGFqbFJPSzhVd1lBWm8yK3FpTzdwdnd3VDBnTUw4NG03?=
- =?utf-8?B?ZWMrUlZtOVdFUzN5N1E1YkxNc09VQkd2Yjh1VDRVUWdVR0lTMWNvMUxZOTVP?=
- =?utf-8?B?UVBrWFhjekhGTC9UK0xMTmpOOThvUWZ2NTFHa0IwNnJDSjdyODVyeFdITmJZ?=
- =?utf-8?B?a1ZyUVJ6eE14K2loWGRhbzY3WkF4c1hWeXdrWXFhL0svaEJWTUk4ZEFCVWt5?=
- =?utf-8?B?OU5uNm05YVZLbWVmU1l0dnhvYURoa0NOYzRiVHBUdmU3c3pyZVVaYjZXNHlt?=
- =?utf-8?B?WDRrWXhZRWV3WVEvUTJZSDFXSkZ5UUJZTEJxeGI1d1lLOVVHcnlHNDBZT2R1?=
- =?utf-8?B?UHIyUVZQQU5sdFdQVE9wN1FHYTUzMjVhbkd4ZmgxektxNkh1ZmpBNkNXTlB4?=
- =?utf-8?B?YkN0YXZNdlBvZzhmZlFQOERnd0p2NjB1VkE5encwTXZyZGpBU0dJY3ZVQUJj?=
- =?utf-8?B?VHJmaWJFVXd4cTlvdmFGYXFKcitvZ0FFVnRTQjk2N211amE3RlRMMmFFMHJm?=
- =?utf-8?B?RHNnSGFEanJCWWtvd0FUN2s1T0JmRGVuS0wwbVJGblo3WDZTZXhuMXBSVkVh?=
- =?utf-8?B?eDRtZkg5ME9ZejB2WHV6bVZGcVFJaVVVbUlHeTRsV1EvZ1VnS3lydEwrVXVL?=
- =?utf-8?Q?H/K+NgDq1AE=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?eHBQYjllcEo3bDdMcmZYYkZhbk00OWhkNVpBK0pPOW5FNUJzTktsQTBBdmVF?=
- =?utf-8?B?cFFsK1dhYzkyN0JRbll0aWN1d0cyVU44ZjQzNWcxWWpvbmdGSGhobmxCUmQ2?=
- =?utf-8?B?U2xXRnBybE9TVGdNZzhhTnc1R0dOV0FGZWpUVm5VMHAxRExXeFN1dHF3UkRo?=
- =?utf-8?B?SExHLzVuRmlMWFB5Sk5YTEV4OTZ5VGhHU2g0OG1tUU5FREFPZTMrcFAvZ0Ew?=
- =?utf-8?B?TmR6T1ptTEVtR2w2L2xwRCtZZWhOSzFBRzFPbHBhN3l2dGhSOERxcGoyd1cr?=
- =?utf-8?B?R0FoTWJBZi82dVNQQkh2Umhnd3RJOHUvZ21kL1JRbFZ4ZFU0cVp5K3FxT3FR?=
- =?utf-8?B?bE1zaWFwamYrNU1xeGZKUVU2Z0wvbGk2ZERPVzlDL0tMQ3kzVzk0NS9tMnRV?=
- =?utf-8?B?NXJGK25ySEhBdnFUV1Jia2o3SERZeE9qQUYzK0d4SG56cjZIRXZncE9xcE52?=
- =?utf-8?B?a2dZTU9aYnBmejFWN0dwOUF5NTM5Vm5VaDl3ZUk2V2dTN3VxU3ZwL3hCOUFK?=
- =?utf-8?B?YnFzRDFnZE5KU0QvMUsvNlpzaXRUTUpLcFZTVXo4RXRPM3R2UTQ5WnBXNFlT?=
- =?utf-8?B?VythbjZLVVRoSjhBMGI5UFZqUmxNT1F5Z01MTnNNNnBEU0loYmRYQ0dxdXlC?=
- =?utf-8?B?eWZnZCszWnBLdUpwWjlCTDUzd0lEcWFvL2tYS2hHQmN5RGdKR01HRkZzSTZW?=
- =?utf-8?B?YmZRSVRLK0RHVXYzd1QzTnoxOTRnazhic0FWZmU2N1pVdTdxVlpwZG5mcjd3?=
- =?utf-8?B?MngyWGZ4ajhHMzFNNUoySmQzRUVIMDlNeWJITXFDQkxrOUovWmVTSjBUN2lr?=
- =?utf-8?B?ZGVqWE5sUzVldmEyeTdSMXN1bWNwSU41Ny9IaFJxenFTZlpvTHRyZUw5S2Qv?=
- =?utf-8?B?ZXMvcFhTYVByeWEyTmRaMW00T1FzZWIxQkhnaGdkNEVIQjVjY2FNVmRBNUQy?=
- =?utf-8?B?QjlDKzlzNmYvMEZnWktSR0VyWWpnT0R5dytFNjNrUytGaENkOXgxK0s1cE9H?=
- =?utf-8?B?SFZCUFZCSENTa0p1bklWdWFrbkFWdzJVaHU1bVAvRHVVMkhWV2QxUGVLZUp3?=
- =?utf-8?B?YVpBV2ZQLzlkTGNQRE81ejliS05vL1F0MlNwVDRhK1lUN3cyaWJaODZKNlox?=
- =?utf-8?B?YVMvMDF1YXdzR25Ma2pXYUU4dVNXcWpXaTZhRVZLVU5PVjF5aXZlRnViaC9Z?=
- =?utf-8?B?OWxwM2hmYUpyZ1QxK1N2M1AvbGJhZHNFcWRnU2FIWWJramRyU3JxTFpEMDlD?=
- =?utf-8?B?RkQzZEY4SytsUUNOeHFGMUUyWlJLWUVwN29haENMU0t6dFRGUmFGQStrWWVH?=
- =?utf-8?B?UEltTnAwazdQd0FFdmF6dy9neDNWdnc2OFpkSWtUTnpFa2NsWEw0QlhjcVda?=
- =?utf-8?B?OUZmdVJiUmFlZEt5eUhsRk9oN2hFN3NHWk1najlkRWZWUkk0NXhWWUwyRU1r?=
- =?utf-8?B?SE5lSlpuWlZWd1ZWWEVyN1daSzliM2QwN05FWmt5TkNNbFNjQS9ZZlYzQlRC?=
- =?utf-8?B?VXBXUTF3ZFgxcjVlZnpTZkFmSlBDOE1XSFg4VlYxcURKRHpKdC9NaUJRMkQ3?=
- =?utf-8?B?ZllQT2ZITEZSS0NMVFhzVnlIcjg1VkR1YmlPTHFTWU5tdlFReXFibGp2R3ZF?=
- =?utf-8?B?TXdTMXg2N2VZM3V1amFQemE2YlpTMk1MY3BDVlNnZDdzcU96Q0FudC85eU51?=
- =?utf-8?B?MWpmSTIrQjJ2T1pwVzgwOXFTMzdjQWJnb2liQS9tQWpTTHVrbkIvNUlnMlQ3?=
- =?utf-8?B?WDNEbEpQVk53aDFjOUI3RXY4U3pXLyt6U0tEZTJ6WDBIV1JmVTh6bWVXOHFi?=
- =?utf-8?B?STlwSm1LV3RYdmVGZ2hVb2lEOEFkQjI2Qi91Q09BbmFIdkRBWERhNFVCeTNw?=
- =?utf-8?B?OHlMOGJKNEpiS2hLOU5HcHV1NGNHU3NXNXpFcFdiSEhlejFCazVCK1dqWXpK?=
- =?utf-8?B?UUh0US9JRk50UVhVTHdjZHRBOUt5anpJT3ZxMEIvOHZPOUYyTVZneXRqVkVO?=
- =?utf-8?B?QnVDa0xOMEl2Zm1XaktxTTE5Y0xvTjJKV2haK1o3VjVJeldDT0lTOUpnS3k1?=
- =?utf-8?B?dkZHRUZ0dzFCa0R1V0pmTG1pOCt2REJKNWhJeVgrWFlKWWF2ZGpURmhQelVU?=
- =?utf-8?B?TWhnUWhWZ1ZnWlJPYVNOWjJHSXlHa2phL1NVOU84NEhKcnUrRjdmNGk1WHA0?=
- =?utf-8?B?NWc9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: CDqMEKk8dOXvKtz6nmNa7UEczK0L6lLtb6hRhIwv0Z32y70fhDyTR23mWWEClRmUdqtudKGvr1j8T26OJ7a06oMHtKT5027d05nwr2Ni8+iqRdPiKnzQ/I7DgdrvvobeO5JCcbEzgaq01L7x9oTHJtEmCxlMQW4276BBXHJk7FgH8CDmBNkq9v716lZR3H/J9JaZA8Eg291lf+86IszFkGP8/yWNhboEggyWEPhs2eFIXCPq13SjKuJIXX4FLXtOqHW8K4WpRtCOnbkKv6aJynIiYkybNFZjuZ+TvnbI46QkMEdmac8MUtGGq1yoVfj6hM1BZvG9PedZIW/vSHKRDjqvbdUj72LKqsaO/7kWOEJUBM0gXljjkHdcsK5PxQmmj82SiNDXg57APKZ0MOkATUMeFw9kyke0OFs2Gu0XGgHiIgr/j9qHBsIxkuX68UsMkr4juAwtFof2xVmewSRhA6WQfCnjirN4UqIarevGKlDgKMly7tll+l+JTE7Hds07Ho2bP2i5WERz96Fk29Jn0UkYJ+igdHEvlGseFHYzfrr15wiZNRnpT5b8ifltlAX1CDGfjoNCseaDvunrljUWA1PsZLI0iFAe5ZSmjPru7/0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 83b52c7c-2b61-4a1a-3879-08dda36c5863
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Jun 2025 13:33:09.3154 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 7krbwYiAx7PrQuvJPuVDbnLB4NDMqJMZqWPGICwkck1IrbdaX9eBt8bWwQFD3J7wkotk+R8jo0yREI6po8uCj96W8efQYOgkQaqH+ucLW4Y=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR10MB6407
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-04_03,2025-06-03_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
- bulkscore=0 suspectscore=0
- phishscore=0 mlxlogscore=999 adultscore=0 malwarescore=0 mlxscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506040102
-X-Authority-Analysis: v=2.4 cv=aqqyCTZV c=1 sm=1 tr=0 ts=68404b18 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=YA5KhkqCfEwNnlGfxuIA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: WCVcH7BY5jJ0h8p8JaPs6XoSLIEd6t6I
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDEwMyBTYWx0ZWRfX80zD//v/6b3H
- Y5EbUMwLD66TzK1ivTIAomQzJmAIsbjDYscPja1smSCDj6GnBfE9PglR6jghjrouTODB3AWhFEB
- Rr8lZ8l34GxwohEsnMc5pdT+rATSGIH/XamBMDPskI9yb8dL5yLx6kvAoUajze8+ONk0q6Yz4Gk
- +10H9iHpYrW8+EIAhUOf8BMORsdw97+VsTVi6VscZWqyYQ/6G6lKtFiJuWobh5+ra7j4VgXSzH2
- uJXzT2xqLD7DoIAiwRfYvQGY8nMdaXYKBYLZqpZN0SFuIMF7nHrGKhrjOSCIdvAp2LwuocsaTbj
- 3g7YCO5elssVBUee7/SIjcfSpFdB0ygHe6o6DpMaxmnQ+cKwcLAXFM6OkCitm0Tmr87XBxKLlgj
- xIUPWBIkv7dZ8Op8xU3G+7NRXyUWWg/l0XGYozSNJxqlQBviUax8XVUACUIhism8x4/Eb0kI
-X-Proofpoint-ORIG-GUID: WCVcH7BY5jJ0h8p8JaPs6XoSLIEd6t6I
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
+ frapeml500003.china.huawei.com (7.182.85.28)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -235,68 +71,155 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/2025 11:55 PM, Duan, Zhenzhong wrote:
->> -----Original Message-----
->> From: Steven Sistare <steven.sistare@oracle.com>
->> Subject: Re: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
->>
->> On 6/3/2025 6:40 AM, Duan, Zhenzhong wrote:
->>>> -----Original Message-----
->>>> From: Steve Sistare <steven.sistare@oracle.com>
->>>> Subject: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
->>>>
->>>> If vfio_realize fails after vfio_device_attach, it should call
->>>> vfio_device_detach during error recovery.  If it fails after
->>>> vfio_device_get_name, it should free vbasedev->name.  If it fails
->>>> after vfio_pci_config_setup, it should free vdev->msix.
->>>>
->>>> To fix all, call vfio_pci_put_device().
->>>>
->>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>> ---
->>>> hw/vfio/pci.c | 1 +
->>>> 1 file changed, 1 insertion(+)
->>>>
->>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>>> index a1bfdfe..7d3b9ff 100644
->>>> --- a/hw/vfio/pci.c
->>>> +++ b/hw/vfio/pci.c
->>>> @@ -3296,6 +3296,7 @@ out_teardown:
->>>>       vfio_bars_exit(vdev);
->>>> error:
->>>>       error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
->>>> +    vfio_pci_put_device(vdev);
->>>
->>> Double free, vfio_pci_put_device() is also called in vfio_instance_finalize().
->>
->> If vfio_realize fails with an error, vfio_instance_finalize is not called.
->> I tested that.
-> 
-> Have you tried with hot plugged device?
+Specifying the cache layout in virtual machines is useful for
+applications and operating systems to fetch accurate information about
+the cache structure and make appropriate adjustments. Enforcing correct
+sharing information can lead to better optimizations. Patches that allow
+for an interface to express caches was landed in the prior cycles. This
+patchset uses the interface as a foundation.  Thus, the device tree and
+ACPI/PPTT table, and device tree are populated based on
+user-provided information and CPU topology.
 
-Not before, but I just tried it now, thanks for the suggestion.
-Same result -- vfio_instance_finalize is not called.
+Example:
 
-- Steve
 
->>> Early free of vdev->vbasedev.name will also break something, e.g.,
->> trace_vfio_region_finalize(region->vbasedev->name, region->nr);
->>
->> All unwinding and calling functions that might use the name is done in the
->> vfio_realize
->> failure path, and the very last operation is vfio_pci_put_device, and the last
->> operation
->> of that function is freeing the name string.
->>
->> - Steve
->>
->>>> static void vfio_instance_finalize(Object *obj)
->>>> --
->>>> 1.8.3.1
->>>
-> 
++----------------+                            +----------------+
+|    Socket 0    |                            |    Socket 1    |
+|    (L3 Cache)  |                            |    (L3 Cache)  |
++--------+-------+                            +--------+-------+
+         |                                             |
++--------+--------+                            +--------+--------+
+|   Cluster 0     |                            |   Cluster 0     |
+|   (L2 Cache)    |                            |   (L2 Cache)    |
++--------+--------+                            +--------+--------+
+         |                                             |
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+|   Core 0         | |   Core 1        |    |   Core 0        |  |   Core 1    |
+|   (L1i, L1d)     | |   (L1i, L1d)    |    |   (L1i, L1d)    |  |   (L1i, L1d)|
++--------+--------+  +--------+--------+    +--------+--------+  +--------+----+
+         |                   |                       |                   |
++--------+              +--------+              +--------+          +--------+
+|Thread 0|              |Thread 1|              |Thread 1|          |Thread 0|
++--------+              +--------+              +--------+          +--------+
+|Thread 1|              |Thread 0|              |Thread 0|          |Thread 1|
++--------+              +--------+              +--------+          +--------+
+
+
+The following command will represent the system relying on **ACPI PPTT tables**.
+
+./qemu-system-aarch64 \
+ -machine virt,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=force" \
+ -initrd rootfs.cpio.gz \
+ -bios ./edk2-aarch64-code.fd \
+ -nographic
+
+The following command will represent the system relying on **the device tree**.
+
+./qemu-system-aarch64 \
+ -machine virt,acpi=off,smp-cache.0.cache=l1i,smp-cache.0.topology=core,smp-cache.1.cache=l1d,smp-cache.1.topology=core,smp-cache.2.cache=l2,smp-cache.2.topology=cluseter,smp-cache.3.cache=l3,smp-cache.3.topology=socket \
+ -cpu max \
+ -m 2048 \
+ -smp sockets=2,clusters=1,cores=2,threads=2 \
+ -kernel ./Image.gz \
+ -append "console=ttyAMA0 root=/dev/ram rdinit=/init acpi=off" \
+ -initrd rootfs.cpio.gz \
+ -nographic
+
+Failure cases:
+    1) There are scenarios where caches exist in systems' registers but
+    left unspecified by users. In this case qemu returns failure.
+
+    2) SMT threads cannot share caches which is not very common. More
+    discussions here [1].
+
+Currently only three levels of caches are supported to be specified from
+the command line. However, increasing the value does not require
+significant changes. Further, this patch assumes l2 and l3 unified
+caches and does not allow l(2/3)(i/d). The level terminology is
+thread/core/cluster/socket right now. Hierarchy assumed in this patch:
+Socket level = Cluster level + 1 = Core level + 2 = Thread level + 3;
+
+TODO:
+  1) Making the code to work with arbitrary levels
+  2) Separated data and instruction cache at L2 and L3.
+  3) Additional cache controls.  e.g. size of L3 may not want to just
+  match the underlying system, because only some of the associated host
+  CPUs may be bound to this VM.
+
+[1] https://lore.kernel.org/devicetree-spec/20250203120527.3534-1-alireza.sanaee@huawei.com/
+
+Change Log:
+  v11->v12:
+   * Patch #4 couldn't not merge properly as the main file diverged. Now it is fixed (hopefully).
+   * Loonarch build_pptt function updated.
+   * Rebased on 09be8a511a2e278b45729d7b065d30c68dd699d0.
+
+  v10->v11:
+   * Fix some coding style issues.
+   * Rename some variables.
+
+  v9->v10:
+   * PPTT rev down to 2.
+
+  v8->v9:
+   * rebase to 10
+   * Fixed a bug in device-tree generation related to a scenario when
+        caches are shared at core in higher levels than 1.
+  v7->v8:
+   * rebase: Merge tag 'pull-nbd-2024-08-26' of https://repo.or.cz/qemu/ericb into staging
+   * I mis-included a file in patch #4 and I removed it in this one.
+
+  v6->v7:
+   * Intel stuff got pulled up, so rebase.
+   * added some discussions on device tree.
+
+  v5->v6:
+   * Minor bug fix.
+   * rebase based on new Intel patchset.
+     - https://lore.kernel.org/qemu-devel/20250110145115.1574345-1-zhao1.liu@intel.com/
+
+  v4->v5:
+    * Added Reviewed-by tags.
+    * Applied some comments.
+
+  v3->v4:
+    * Device tree added.
+
+Depends-on: Building PPTT with root node and identical implementation flag
+Depends-on: Msg-id: 20250604115233.1234-1-alireza.sanaee@huawei.com
+
+Alireza Sanaee (6):
+  target/arm/tcg: increase cache level for cpu=max
+  arm/virt.c: add cache hierarchy to device tree
+  bios-tables-test: prepare to change ARM ACPI virt PPTT
+  hw/acpi: add cache hierarchy to pptt table
+  tests/qtest/bios-table-test: testing new ARM ACPI PPTT topology
+  Update the ACPI tables based on new aml-build.c
+
+ hw/acpi/aml-build.c                        | 222 ++++++++++++-
+ hw/arm/virt-acpi-build.c                   |   8 +-
+ hw/arm/virt.c                              | 359 ++++++++++++++++++++-
+ hw/cpu/core.c                              |  92 ++++++
+ hw/loongarch/virt-acpi-build.c             |   2 +-
+ include/hw/acpi/aml-build.h                |   4 +-
+ include/hw/arm/virt.h                      |   7 +-
+ include/hw/cpu/core.h                      |  27 ++
+ target/arm/tcg/cpu64.c                     |  13 +
+ tests/data/acpi/aarch64/virt/PPTT.topology | Bin 356 -> 540 bytes
+ tests/qtest/bios-tables-test.c             |   4 +
+ 11 files changed, 725 insertions(+), 13 deletions(-)
+
+-- 
+2.43.0
 
 
