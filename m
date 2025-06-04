@@ -4,81 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2622C5B549
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:46:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1B99C5B549
+	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 13:48:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMoRe-00050x-Qw; Wed, 04 Jun 2025 09:46:19 -0400
+	id 1uMoT8-0005aM-F5; Wed, 04 Jun 2025 09:47:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uMoRZ-000508-9g; Wed, 04 Jun 2025 09:46:17 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1uMoSs-0005Vm-1E; Wed, 04 Jun 2025 09:47:35 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uMoRV-0007ji-3w; Wed, 04 Jun 2025 09:46:12 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bC82H3qZ8z6HJds;
- Wed,  4 Jun 2025 21:44:23 +0800 (CST)
-Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
- by mail.maildlp.com (Postfix) with ESMTPS id 958501402E9;
- Wed,  4 Jun 2025 21:45:56 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Wed, 4 Jun 2025 15:45:56 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Wed, 4 Jun 2025 15:45:56 +0200
-To: Cornelia Huck <cohuck@redhat.com>, "eric.auger.pro@gmail.com"
- <eric.auger.pro@gmail.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "kvmarm@lists.linux.dev" <kvmarm@lists.linux.dev>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "alex.bennee@linaro.org" <alex.bennee@linaro.org>, "maz@kernel.org"
- <maz@kernel.org>, "oliver.upton@linux.dev" <oliver.upton@linux.dev>,
- "sebott@redhat.com" <sebott@redhat.com>, "armbru@redhat.com"
- <armbru@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "abologna@redhat.com" <abologna@redhat.com>, "jdenemar@redhat.com"
- <jdenemar@redhat.com>
-CC: "agraf@csgraf.de" <agraf@csgraf.de>, "shahuang@redhat.com"
- <shahuang@redhat.com>, "mark.rutland@arm.com" <mark.rutland@arm.com>,
- "philmd@linaro.org" <philmd@linaro.org>, "pbonzini@redhat.com"
- <pbonzini@redhat.com>
-Subject: RE: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
- host model
-Thread-Topic: [PATCH v3 00/10] kvm/arm: Introduce a customizable aarch64 KVM
- host model
-Thread-Index: AQHbrVvRKlWe4qTsaku+jGkyYZoxlrPgb1/QgASMGwCAAWZvgIALVkAAgAFowxD///1FgIAAMBKg
-Date: Wed, 4 Jun 2025 13:45:56 +0000
-Message-ID: <58dee0533a40458d9cbd2049c8330c5b@huawei.com>
-References: <20250414163849.321857-1-cohuck@redhat.com>
- <de7db6bc22ad4f0a8ac1fac718c810a1@huawei.com> <87bjrfbkyz.fsf@redhat.com>
- <878qmibc5a.fsf@redhat.com> <87tt4wamcp.fsf@redhat.com>
- <f11e5fbddf634bbc88ba4c07bafe3f26@huawei.com> <87o6v3adle.fsf@redhat.com>
-In-Reply-To: <87o6v3adle.fsf@redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1uMoSp-0007pS-0S; Wed, 04 Jun 2025 09:47:33 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5543sEXu022823;
+ Wed, 4 Jun 2025 13:47:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=zF4io4
+ D8HJJgvuHUpfceWMmhTxBuH4KiDu5ePGvqgN4=; b=olkbNqFcsHauGbVgBKHGCN
+ 9e0XvlCKYkkFKSOAaxCgQRMExHkKjgnJwMmR6hnKtZ75pbNEWyaPH5Omw7WkxY5+
+ uyF7T/85s8eLgHxM8zsJ/c5t0a4T/5qR4Ru6H30wv/AyDnj3dFu23Z05IuImwqko
+ HTPxv95pK3RhbGQTlaGbs3c6RU+Pw1QGRqpzV2E96YbgHWLDe1VaW7VNTxJUGdnz
+ 1BX1W7YB6afV7FMd7qdAwezh9bU3CGFq/JaR+LAFL+5XccVcLoa758jsytpiFZug
+ sqTvdN0+YTdXvR7DGV65FXY7CoRBe6SfcXkEcN5V1mX5nYvvLOFZ3tSM37neFHLg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 471geytyvu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Jun 2025 13:47:26 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 554BrcXY022530;
+ Wed, 4 Jun 2025 13:47:25 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 470c3tg529-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 04 Jun 2025 13:47:25 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 554DlOoL27066960
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 4 Jun 2025 13:47:24 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1098F58052;
+ Wed,  4 Jun 2025 13:47:24 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B08EE5805E;
+ Wed,  4 Jun 2025 13:47:22 +0000 (GMT)
+Received: from [9.61.64.137] (unknown [9.61.64.137])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed,  4 Jun 2025 13:47:22 +0000 (GMT)
+Message-ID: <02f064f7-e400-4d7b-ba04-cb5dc6ee93f0@linux.ibm.com>
+Date: Wed, 4 Jun 2025 09:47:22 -0400
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v11 3/4] hw/vfio/ap: Storing event information for an
+ AP configuration change event
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com
+References: <20250523160338.41896-1-rreyes@linux.ibm.com>
+ <20250523160338.41896-4-rreyes@linux.ibm.com>
+ <66ad7451-b7a6-4112-8f20-1af06d5b482a@redhat.com>
+ <834be7a8-922a-4e39-8453-6c9a1957d3ac@linux.ibm.com>
+ <1a896c28-783b-4a1e-9cf5-6b8abfe8d7e4@redhat.com>
+ <adca5063-786e-4c4e-90f8-dd378a2aa71c@linux.ibm.com>
+ <5248c4f1-923e-4f6b-9c3f-ac24666fea04@redhat.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <5248c4f1-923e-4f6b-9c3f-ac24666fea04@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Pq2TbxM3 c=1 sm=1 tr=0 ts=68404e6e cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=sWKEhP36mHoA:10 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=xNgNI3Vgro7NdL7tVQwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA0MDEwMyBTYWx0ZWRfX6UHDGaLGx9Ty
+ Ji+29E11wMhyhfgZ0qTJGSBo/GUno3oSHSh/VoBcVB946mT1DPB1mYhwSUlplDySH0lnr2QaTvU
+ /Wct7L+3QSJ/0qOsQTajPXEWUWin/FVT/7/d26df3hnkkB0VeedHVRfC+Qq0qgtaX2YVl+zKqab
+ 1fKRI6mHsbtYsSmCZmWgj/C8eDqEaQ4aR8AH0B7uQBULwB5Q7xIX+LuXm+oeAyVZ1vm13+Trudn
+ yMPSci8zEbW75YFyvqbfX04Yr4uHhHdWW9/88emwj9qrVPNNA27zRBUn7xqpWWkPbo/OfEzFxm0
+ vyPSNoqFg6CbgMsj3l/PjwX/Cn+135mFHCqJruzdjcaUeoXUhN3/0ah+0h61B46sGWVQcFHdmST
+ qLVZB5O5GV3NQWgsbuIpcMA4dgzISc98FAlvdI7jWoT0sB7gtJ3TVwstKM/oOI0eF/lAdz+d
+X-Proofpoint-GUID: MTs8Zh8531XXBttFftO7BHK4j5NYz5P2
+X-Proofpoint-ORIG-GUID: MTs8Zh8531XXBttFftO7BHK4j5NYz5P2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-04_03,2025-06-03_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999
+ phishscore=0 bulkscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506040103
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,118 +129,225 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4gLS0tLS1PcmlnaW5hbCBNZXNzYWdlLS0tLS0NCj4gRnJvbTogQ29ybmVsaWEgSHVjayA8
-Y29odWNrQHJlZGhhdC5jb20+DQo+IFNlbnQ6IFdlZG5lc2RheSwgSnVuZSA0LCAyMDI1IDE6MzYg
-UE0NCj4gVG86IFNoYW1lZXJhbGkgS29sb3RodW0gVGhvZGkNCj4gPHNoYW1lZXJhbGkua29sb3Ro
-dW0udGhvZGlAaHVhd2VpLmNvbT47IGVyaWMuYXVnZXIucHJvQGdtYWlsLmNvbTsNCj4gZXJpYy5h
-dWdlckByZWRoYXQuY29tOyBxZW11LWRldmVsQG5vbmdudS5vcmc7IHFlbXUtYXJtQG5vbmdudS5v
-cmc7DQo+IGt2bWFybUBsaXN0cy5saW51eC5kZXY7IHBldGVyLm1heWRlbGxAbGluYXJvLm9yZzsN
-Cj4gcmljaGFyZC5oZW5kZXJzb25AbGluYXJvLm9yZzsgYWxleC5iZW5uZWVAbGluYXJvLm9yZzsg
-bWF6QGtlcm5lbC5vcmc7DQo+IG9saXZlci51cHRvbkBsaW51eC5kZXY7IHNlYm90dEByZWRoYXQu
-Y29tOyBhcm1icnVAcmVkaGF0LmNvbTsNCj4gYmVycmFuZ2VAcmVkaGF0LmNvbTsgYWJvbG9nbmFA
-cmVkaGF0LmNvbTsgamRlbmVtYXJAcmVkaGF0LmNvbQ0KPiBDYzogYWdyYWZAY3NncmFmLmRlOyBz
-aGFodWFuZ0ByZWRoYXQuY29tOyBtYXJrLnJ1dGxhbmRAYXJtLmNvbTsNCj4gcGhpbG1kQGxpbmFy
-by5vcmc7IHBib256aW5pQHJlZGhhdC5jb20NCj4gU3ViamVjdDogUkU6IFtQQVRDSCB2MyAwMC8x
-MF0ga3ZtL2FybTogSW50cm9kdWNlIGEgY3VzdG9taXphYmxlIGFhcmNoNjQNCj4gS1ZNIGhvc3Qg
-bW9kZWwNCj4gDQo+IE9uIFdlZCwgSnVuIDA0IDIwMjUsIFNoYW1lZXJhbGkgS29sb3RodW0gVGhv
-ZGkNCj4gPHNoYW1lZXJhbGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbT4gd3JvdGU6DQo+IA0K
-PiA+PiAtLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPiA+PiBGcm9tOiBDb3JuZWxpYSBIdWNr
-IDxjb2h1Y2tAcmVkaGF0LmNvbT4NCj4gPj4gU2VudDogVHVlc2RheSwgSnVuZSAzLCAyMDI1IDQ6
-MTUgUE0NCj4gPj4gVG86IFNoYW1lZXJhbGkgS29sb3RodW0gVGhvZGkNCj4gPj4gPHNoYW1lZXJh
-bGkua29sb3RodW0udGhvZGlAaHVhd2VpLmNvbT47IGVyaWMuYXVnZXIucHJvQGdtYWlsLmNvbTsN
-Cj4gPj4gZXJpYy5hdWdlckByZWRoYXQuY29tOyBxZW11LWRldmVsQG5vbmdudS5vcmc7IHFlbXUt
-DQo+IGFybUBub25nbnUub3JnOw0KPiA+PiBrdm1hcm1AbGlzdHMubGludXguZGV2OyBwZXRlci5t
-YXlkZWxsQGxpbmFyby5vcmc7DQo+ID4+IHJpY2hhcmQuaGVuZGVyc29uQGxpbmFyby5vcmc7IGFs
-ZXguYmVubmVlQGxpbmFyby5vcmc7DQo+IG1hekBrZXJuZWwub3JnOw0KPiA+PiBvbGl2ZXIudXB0
-b25AbGludXguZGV2OyBzZWJvdHRAcmVkaGF0LmNvbTsgYXJtYnJ1QHJlZGhhdC5jb207DQo+ID4+
-IGJlcnJhbmdlQHJlZGhhdC5jb207IGFib2xvZ25hQHJlZGhhdC5jb207IGpkZW5lbWFyQHJlZGhh
-dC5jb20NCj4gPj4gQ2M6IGFncmFmQGNzZ3JhZi5kZTsgc2hhaHVhbmdAcmVkaGF0LmNvbTsgbWFy
-ay5ydXRsYW5kQGFybS5jb207DQo+ID4+IHBoaWxtZEBsaW5hcm8ub3JnOyBwYm9uemluaUByZWRo
-YXQuY29tDQo+ID4+IFN1YmplY3Q6IFJFOiBbUEFUQ0ggdjMgMDAvMTBdIGt2bS9hcm06IEludHJv
-ZHVjZSBhIGN1c3RvbWl6YWJsZQ0KPiBhYXJjaDY0DQo+ID4+IEtWTSBob3N0IG1vZGVsDQo+ID4+
-DQo+ID4+IE9uIFR1ZSwgTWF5IDI3IDIwMjUsIENvcm5lbGlhIEh1Y2sgPGNvaHVja0ByZWRoYXQu
-Y29tPiB3cm90ZToNCj4gPj4gPiBUaGUgY29udmVyc2lvbiBmdW5jdGlvbnMgYXJlIG5vdCBhdCBm
-YXVsdCBoZXJlLCBidXQgd2UncmUgbWlzc2luZw0KPiA+PiA+IHJlZ2lzdGVycy4gSWYgd2UgaGF2
-ZSBNSURSIGFuZCBmcmllbmRzIHdyaXRhYmxlLCB0aGV5IHNob3cgdXAgaW4gdGhlDQo+ID4+ID4g
-bWFza3MgcmV0dXJuZWQgYnkgdGhlIGtlcm5lbCwgYnV0IHRoZXkgYXJlIG5vdCBwcmVzZW50IGlu
-IHRoZSBrZXJuZWwncw0KPiA+PiA+IHN5c3JlZyBmaWxlIHdoZXJlIHdlIGdlbmVyYXRlIG91ciBk
-ZWZpbml0aW9ucyBmcm9tLCBhbmQNCj4gPj4gPiBrdm1faWR4X3RvX2lkcmVnc19pZHgoKSBhc3Nl
-cnRzIGluc3RlYWQgb2YgcmV0dXJuaW5nIGFuIGVycm9yLCB3aGljaA0KPiA+PiA+IGlzIGtpbmQg
-b2Ygc3Vib3B0aW1hbC4uLg0KPiA+PiA+DQo+ID4+ID4gU28gSSBzZWUgdHdvIHBvc3NpYmxlIHdh
-eXMgdG8gZml4IHRoaXM6DQo+ID4+ID4gLSBhZGQgTUlEUiBhbmQgZnJpZW5kcyB0byB0aGUga2Vy
-bmVsJ3Mgc3lzcmVnIGZpbGUNCj4gPj4gPiAtIGFkZCBNSURSIGFuZCBmcmllbmRzIGluIFFFTVUn
-cyBjcHUtc3lzcmVncy5oLmluYyBmaWxlLCBhbmQgb25seQ0KPiBhcHBlbmQNCj4gPj4gPiAgIGdl
-bmVyYXRlZCBkZWZpbml0aW9ucyB0aGVyZQ0KPiA+PiA+DQo+ID4+ID4gRmlyc3Qgb3B0aW9uIG1l
-YW5zIG9uZSBtb3JlIHJvdW5kIHRyaXAsIHNlY29uZCBvcHRpb25zIGhhcyBtb3JlDQo+ID4+ID4g
-cG90ZW50aWFsIGZvciBtZXNzaW5nIHRoaW5ncyB1cCBpZiB3ZSBrZWVwIHN0dWZmIGxvY2FsIHRv
-IFFFTVUuDQo+ID4+DQo+ID4+IFdpdGggdGhlIHBhdGNoIGJlbG93LCB0aGluZ3Mgd29yayBmb3Ig
-bWUgd2l0aCBhIDYuMTUrIGtlcm5lbC4gSXQncyBhIGJpdA0KPiA+DQo+ID4gWWVzIHdvcmtzIGZv
-ciBtZSB0b28gbm93LiBUaGFua3MuDQo+IA0KPiBUaGFua3MgZm9yIGNoZWNraW5nLg0KPiANCj4g
-Pg0KPiA+PiBtZXNzeSwgdGhvdWdoLCBhbmQgcmFpc2VzIHF1ZXN0aW9ucyAoaG93IGRvIHdlIHdh
-bnQgdG8gaGFuZGxlIHRob3NlDQo+IHJlZ3MNCj4gPj4gYWNyb3NzIGFjY2VsZXJhdG9ycywgZm9y
-IGV4YW1wbGUsIG9yIGhvdyB3ZSBjYW4gbWFrZSBzdXJlIHRoYXQgdGhlIGNvZGUNCj4gaXMNCj4g
-Pj4gbW9yZSByb2J1c3Qgd2hlbiByZWdpc3RlcnMgYXJlIGFkZGVkLikNCj4gPj4NCj4gPj4gTXkg
-YmlnZ2VzdCBxdWVzdGlvbiwgaG93ZXZlciwgaXMgaG93IHRoaXMgaW50ZXJhY3RzIHdpdGggdGhl
-IGZyYW1ld29yaw0KPiB0bw0KPiA+PiBwcm92aWRlIGxpc3RzIG9mIE1JRFIvUkVWSURSL0FJRFIg
-Zm9yIGVycmF0YSBtYW5hZ2VtZW50LiBUaGUgaGFjaw0KPiBiZWxvdw0KPiA+PiBhZGRzIHByb3Bl
-cnRpZXMgdG8gY29uZmlndXJlIHRob3NlIHJlZ3MsIEkgZ3Vlc3Mgd2UnZCB3YW50IHRvIHN1cHBy
-ZXNzDQo+ID4+IGFkZGluZyB0aGUgcHJvcHMgaW4gb3JkZXIgdG8gYXZvaWQgY29uZmxpY3RzLg0K
-PiA+DQo+ID4gTm90IHN1cmUgaG93IHRoaXMgaW1wYWN0cyB0aGUgZXJyYXRhIG1hbmFnZW1lbnQg
-dGhvdWdoLiBNeSBpbml0aWFsIHRha2UNCj4gb24NCj4gPiB0aGlzIHdhcywgdXNlciB3aWxsIHBy
-b3ZpZGUgYSBsaXN0IG9mIHRhcmdldCBDUFUgaWRzIHRocm91Z2ggY29tbWFuZCBsaW5lDQo+IGFu
-ZA0KPiA+IHRoYXQgd2lsbCBiZSB1c2VkIHRvIHNldCB0aGUgdGFyZ2V0IENQVXMgZm9yIGVycmF0
-YSBtYW5hZ2VtZW50KGlmIGtlcm5lbA0KPiA+IHN1cHBvcnRzIGl0KS4NCj4gPg0KPiA+IEVnOg0K
-PiA+IC1tYWNoaW5lIHZpcnQsLi4sIHgtdGFyZ2V0LWltcGwtY3B1cz0weE1JRFIxOjB4UkVWSURS
-MS0weE1JRFIyOlJFVklEUjINCj4gDQo+IEknbSBhIGJpdCBjb25mdXNlZCBieSB0aGUgcmFuZ2Us
-IEknZCByYXRoZXIgZXhwZWN0IGEgbGlzdCBvZiB0dXBsZXMsDQo+IGUuZy4gPG1pZHI+OjxyZXZp
-ZHI+LDxtaWRyPjo8cmV2aWRyPiwgLi4uDQoNCkhtbS4uaXMgdGhlIGNvbmNlcm4gaGVyZSBpcyB0
-aGUgZm9ybWF0IG9yIHRoZSBudW1iZXIgb2YgZW50cmllcz8NCg0KPiANCj4gPg0KPiA+IEFuZCB0
-aGVzZSB3aWxsIGJlIHN0b3JlZCBpbiwNCj4gPg0KPiA+ICNkZWZpbmUgTUFYX1RBUkdFVF9JTVBM
-X0NQVVMgICAgNA0KPiA+IHR5cGVkZWYgc3RydWN0IFRhcmdldEltcGxDcHUgew0KPiA+ICAgICAg
-dWludDMyX3QgbWlkcjsNCj4gPiAgICAgIHVpbnQzMl90IHJldmlkcjsNCj4gDQo+IElzbid0IHJl
-dmlkciBhIDY0IGJpdCB2YWx1ZT8NCg0KWWVzLiBJbiBmYWN0IHRoZXkgYm90aCBhcmUsIHRob3Vn
-aCBNSURSIG9ubHkgdXNlcyAzMiBiaXRzIG5vdy4gV2lsbCBjaGFuZ2UuDQoNCj4gDQo+ID4gfSBU
-YXJnZXRJbXBsQ3B1Ow0KPiA+DQo+ID4NCj4gPiBQbGVhc2Ugc2VlIHRoZSBpbml0aWFsIChhIGhh
-Y2sgZm9yIHRlc3Rpbmcga2VybmVsKSBpbXBsZW1lbnRhdGlvbiBoZXJlLA0KPiA+DQo+IGh0dHBz
-Oi8vZ2l0aHViLmNvbS9oaXNpbGljb24vcWVtdS9jb21taXQvYTM5M2MxMTgwMjc0YzczZDM0ZjMy
-ZWFhYjY2DQo+IDc2NGE4NzRhOWFkMzENCj4gPg0KPiA+IFBsZWFzZSBsZXQgbWUga25vdyBpZiB0
-aGVyZSBpcyBhIGJldHRlci9wcmVmZXJyZWQgd2F5IG9mIG9idGFpbmluZyB0aGlzDQo+ID4gdGFy
-Z2V0IENQVSBsaXN0IGZyb20gdXNlci4NCj4gDQo+IEknbSBtb3N0bHkgd29uZGVyaW5nIGFib3V0
-IGNvbmZsaWN0aW5nIHZhbHVlcyBiZXR3ZWVuICJ3ZSBtYWtlIE1JRFIgZXQNCj4gYWwuIHdyaXRh
-YmxlLCBzbyB3ZSBoYXZlIGEgdmFsdWUgZGlmZmVyZW50IGZyb20gd2hhdCB0aGUgaG9zdCBzZWVz
-IiBhbmQNCj4gIndlIHByb3ZpZGUgYSBsaXN0IG9mIHBvc3NpYmxlIHZhbHVlcyB0byB0aGUgZ3Vl
-c3QsIHNvIGl0IGNhbiBwcmVwYXJlDQo+IGZvciBydW5uaW5nIG9uIHRob3NlIGhvc3RzIi4gRG8g
-d2Ugd2FudCB0byBiZSBhYmxlIHRvIHByb3ZpZGUgYSBjb21tb24NCj4gc2V0IHRvIHRoZSBndWVz
-dCwgYW5kIHRoZW4gZW5saWdodGVuIGl0IHdpdGggdGhlIGxpc3Qgb2Ygc3lzdGVtcyB0aGF0IGl0
-DQo+IGFjdHVhbGx5ICptaWdodCogcnVuIG9uPyBBIGJlbmVmaXQgd291bGQgYmUgdGhhdCBpdCBj
-b3VsZCBhbHdheXMgb2JzZXJ2ZQ0KPiB0aGUgc2FtZSAoY29uZmlndXJlZCkgcmVnaXN0ZXIgZW50
-cmllcywgcmVnYXJkbGVzcyB3aGVyZSBpdCBydW5zIChuZWVkcw0KPiBtb3JlIHBsdW1iaW5nIGlu
-IFFFTVUsIEkgdGhpbmsuKSBXZSdkIGFsc28gbmVlZCB0byBiZSBjbGVhciBhYm91dCB3aGF0DQo+
-IHdlJ2QgcmVxdWlyZSAoaS5lLiBkbyB3ZSBleHBlY3QgdGhhdCBib3RoIHRoZSByZWFsIGhvc3Qg
-dmFsdWVzIGFuZCB0aGUNCj4gY29uZmlndXJlZCB2YWx1ZXMgYXJlIHByZXNlbnQgaW4gdGhlIGxp
-c3Q/KQ0KDQpUaGUgZXhwZWN0YXRpb24gZnJvbSBrZXJuZWwgaXMgdGhhdCB3aGVuIHRhcmdldCBl
-cnJhdGEgQ1BVcyBhcmUgc3BlY2lmaWVkLA0KaXQgaW5jbHVkZXMgdGhlIGN1cnJlbnQgaG9zdCBD
-UFUgSWRzIGFzIHdlbGwuIFdlIGNvdWxkIGNoZWNrIHRvIHNlZSB0aGUgbGlzdCBpbmNsdWRlcw0K
-dGhlIGhvc3Qgb25lLiBCdXQgSSBhbSBub3Qgc3VyZSBob3cgd2UgY2FuIHZhbGlkYXRlIHRoZSBj
-b21wbGV0ZSBsaXN0IHByb3ZpZGVkDQpieSB1c2VyIHRob3VnaC4gSSB0aGluaywgIHRoZSBvbnVz
-IG9mIGRlY2lkaW5nIHdoaWNoIHBsYXRmb3JtcyB0aGlzIEd1ZXN0IFZNIGlzDQpnb2luZyB0byBy
-dW4gZHVyaW5nIGl0cyBsaWZlIHRpbWUgYW5kIHNwZWNpZnlpbmcgdGhhdCBjb3JyZWN0bHkgaXMg
-d2l0aCB0aGUgdXNlci4NCg0KPiANCj4gTm90IHN1cmUgaWYgdGhlIG1hY2hpbmUgbGV2ZWwgaXMg
-dGhlIHJpZ2h0IHBsYWNlIHRvIGNvbmZpZ3VyZSB0aGlzLCBvcg0KPiBpZiBpdCBuZWVkcyB0byBn
-byB0byB0aGUgY3B1IG9wdGlvbnMuIFdoaWxlIGl0IGlzIGEgbWFjaGluZS13aWRlDQo+IGNvbmZp
-Z3VyYXRpb24sIGl0IGFsc28gbWVhbnMgdGhhdCB3ZSBjb25maWd1cmUgc29tZSBjcHUgZmVhdHVy
-ZXMgaW4gdHdvDQo+IGRpZmZlcmVudCBwbGFjZXMgKGV2ZW4gaWYgdGhleSBzZXJ2ZSBhIGRpZmZl
-cmVudCBwdXJwb3NlLikNCg0KSSBleHBsb2l0ZWQgTWFjaGluZVN0YXRlIGZvciBlYXNlIG9mIGhh
-Y2tpbmcg8J+Yii4gQnV0IG5vdCBzdXJlIHRoaXMgYmVsb25ncyB0byBDUFUNCmVpdGhlciBhcyBp
-dCBpcyB2ZXJ5IHNwZWNpZmljIHRvIEtWTSBpcyBlbmFibGVkLCBzdXBwb3J0ZWQga2VybmVsIGV0
-Yy4NCiANCj4gV2UgY291bGQgYWxzbyBjaG9vc2UgdG8gbm90IGV4cG9zZSBwcm9wZXJ0aWVzIGZv
-ciBNSURSIGFuZCBmcmllbmRzIGF0DQo+IGFsbCwgZXZlbiBpZiB0aGV5IGFyZSB3cml0YWJsZS4N
-Cj4NCg0KRG9lcyB0aGF0IG1lYW4gUWVtdSBmaWd1cmVzIG91dCBhbGwgdGhlIHN1cHBvcnRlZCB0
-YXJnZXQgSWRzIGJhc2VkIG9uIHRoZSANCkhvc3QgQ1BVICBJZHM/DQoNClRoYW5rcywNClNoYW1l
-ZXINCiANCg0K
+
+
+
+On 6/3/25 4:30 PM, Cédric Le Goater wrote:
+> On 6/3/25 20:01, Rorie Reyes wrote:
+>>
+>> On 6/3/25 10:21 AM, Cédric Le Goater wrote:
+>>> On 6/3/25 14:58, Rorie Reyes wrote:
+>>>> Hey Cedric,
+>>>>
+>>>> You mentioned the following in my v9 patches
+>>>>
+>>>> "In that case, let's keep it simple (no mutex) and add a 
+>>>> assert(bql_locked())
+>>>> statement where we think the bql should be protecting access to shared
+>>>> resources. "
+>>>>
+>>>> Does this still apply down bellow?
+>>>
+>>> Anthony replied :
+>>>
+>>> https://lore.kernel.org/qemu-devel/ed2a2aa3-68a7-480c-a6a4-a8219af12d7b@linux.ibm.com/ 
+>>>
+>>>
+>>> Thanks,
+>>>
+>>> C.
+>>>
+>> So we'll still use WITH_QEMU_LOCK_GUARD?
+>
+> If a lock is needed to protect the list, then 
+> ap_chsc_sei_nt0_have_event()
+> should lock/unlock too. WITH_QEMU_LOCK_GUARD() is just a pratical way to
+> do so.
+
+Since ap_chsc_sei_nt0_have_event() is a single line that returns
+!QTAILQ_EMPTY(&cfg_chg_events), wouldn't it be better to just
+use the QEMU_LOCK_GUARD macro which, if I'm not mistaken,
+will unlock on the return statement?
+
+>
+>
+> Thanks,
+>
+> C.
+>
+>
+>
+>>>>
+>>>> On 5/26/25 4:40 AM, Cédric Le Goater wrote:
+>>>>> On 5/23/25 18:03, Rorie Reyes wrote:
+>>>>>> These functions can be invoked by the function that handles 
+>>>>>> interception
+>>>>>> of the CHSC SEI instruction for requests indicating the 
+>>>>>> accessibility of
+>>>>>> one or more adjunct processors has changed.
+>>>>>>
+>>>>>> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+>>>>>> ---
+>>>>>>   hw/vfio/ap.c                 | 53 
+>>>>>> ++++++++++++++++++++++++++++++++++++
+>>>>>>   include/hw/s390x/ap-bridge.h | 39 ++++++++++++++++++++++++++
+>>>>>>   2 files changed, 92 insertions(+)
+>>>>>>
+>>>>>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+>>>>>> index fc435f5c5b..97a42a575a 100644
+>>>>>> --- a/hw/vfio/ap.c
+>>>>>> +++ b/hw/vfio/ap.c
+>>>>>> @@ -10,6 +10,7 @@
+>>>>>>    * directory.
+>>>>>>    */
+>>>>>>   +#include <stdbool.h>
+>>>>>>   #include "qemu/osdep.h"
+>>>>>>   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+>>>>>>   #include <linux/vfio.h>
+>>>>>> @@ -48,6 +49,8 @@ typedef struct APConfigChgEvent {
+>>>>>>   static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+>>>>>>       QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+>>>>>>   +static QemuMutex cfg_chg_events_lock;
+>>>>>> +
+>>>>>>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>>>>>>     static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+>>>>>> @@ -96,6 +99,49 @@ static void 
+>>>>>> vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>>>>>>     }
+>>>>>>   +int ap_chsc_sei_nt0_get_event(void *res)
+>>>>>> +{
+>>>>>> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
+>>>>>> +    APConfigChgEvent *cfg_chg_event;
+>>>>>> +
+>>>>>> +    qemu_mutex_lock(&cfg_chg_events_lock);
+>>>>>
+>>>>> please consider using WITH_QEMU_LOCK_GUARD()
+>>>>>
+>>>> See note above about bql_locked
+>>>>>> +    if (!ap_chsc_sei_nt0_have_event()) {
+>>>>>> +        qemu_mutex_unlock(&cfg_chg_events_lock);
+>>>>>> +        return EVENT_INFORMATION_NOT_STORED;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
+>>>>>> +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
+>>>>>> +
+>>>>>> +    qemu_mutex_unlock(&cfg_chg_events_lock);
+>>>>>> +
+>>>>>> +    memset(nt0_res, 0, sizeof(*nt0_res));
+>>>>>> +    g_free(cfg_chg_event);
+>>>>>> +
+>>>>>> +    /*
+>>>>>> +     * If there are any AP configuration change events in the 
+>>>>>> queue,
+>>>>>> +     * indicate to the caller that there is pending event info in
+>>>>>> +     * the response block
+>>>>>> +     */
+>>>>>> +    if (ap_chsc_sei_nt0_have_event()) {
+>>>>>> +        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
+>>>>>> +    }
+>>>>>> +
+>>>>>> +    nt0_res->length = sizeof(ChscSeiNt0Res);
+>>>>>> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
+>>>>>> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
+>>>>>> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
+>>>>>> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
+>>>>>> +
+>>>>>> +    return EVENT_INFORMATION_STORED;
+>>>>>> +}
+>>>>>> +
+>>>>>> +bool ap_chsc_sei_nt0_have_event(void)
+>>>>>
+>>>>> hmm, no locking ?
+>>>>>
+>>>> See not above for bql_locked
+>>>>>> +{
+>>>>>> +    return !QTAILQ_EMPTY(&cfg_chg_events);
+>>>>>> +}
+>>>>>> +
+>>>>>>   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>>>>>>                                             unsigned int irq, 
+>>>>>> Error **errp)
+>>>>>>   {
+>>>>>> @@ -192,6 +238,13 @@ static void vfio_ap_realize(DeviceState 
+>>>>>> *dev, Error **errp)
+>>>>>>       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
+>>>>>>       VFIODevice *vbasedev = &vapdev->vdev;
+>>>>>>   +    static bool lock_initialized;
+>>>>>> +
+>>>>>> +    if (!lock_initialized) {
+>>>>>> +        qemu_mutex_init(&cfg_chg_events_lock);
+>>>>>> +        lock_initialized = true;
+>>>>>> +    }
+>>>>>
+>>>>> this could be replaced with a constructor routine. See hyperv.
+>>>>>
+>>>>>
+>>>>> Thanks,
+>>>>>
+>>>>> C.
+>>>>>
+>>>> Noted
+>>>>>
+>>>>>
+>>>>>>       if (!vfio_device_get_name(vbasedev, errp)) {
+>>>>>>           return;
+>>>>>>       }
+>>>>>> diff --git a/include/hw/s390x/ap-bridge.h 
+>>>>>> b/include/hw/s390x/ap-bridge.h
+>>>>>> index 470e439a98..7efc52928d 100644
+>>>>>> --- a/include/hw/s390x/ap-bridge.h
+>>>>>> +++ b/include/hw/s390x/ap-bridge.h
+>>>>>> @@ -16,4 +16,43 @@
+>>>>>>     void s390_init_ap(void);
+>>>>>>   +typedef struct ChscSeiNt0Res {
+>>>>>> +    uint16_t length;
+>>>>>> +    uint16_t code;
+>>>>>> +    uint8_t reserved1;
+>>>>>> +    uint16_t reserved2;
+>>>>>> +    uint8_t nt;
+>>>>>> +#define PENDING_EVENT_INFO_BITMASK 0x80;
+>>>>>> +    uint8_t flags;
+>>>>>> +    uint8_t reserved3;
+>>>>>> +    uint8_t rs;
+>>>>>> +    uint8_t cc;
+>>>>>> +} QEMU_PACKED ChscSeiNt0Res;
+>>>>>> +
+>>>>>> +#define NT0_RES_RESPONSE_CODE 1
+>>>>>> +#define NT0_RES_NT_DEFAULT    0
+>>>>>> +#define NT0_RES_RS_AP_CHANGE  5
+>>>>>> +#define NT0_RES_CC_AP_CHANGE  3
+>>>>>> +
+>>>>>> +#define EVENT_INFORMATION_NOT_STORED 1
+>>>>>> +#define EVENT_INFORMATION_STORED     0
+>>>>>> +
+>>>>>> +/**
+>>>>>> + * ap_chsc_sei_nt0_get_event - Retrieve the next pending AP config
+>>>>>> + * change event
+>>>>>> + * @res: Pointer to a ChscSeiNt0Res struct to be filled with event
+>>>>>> + * data
+>>>>>> + *
+>>>>>> + * This function checks for any pending AP config change events 
+>>>>>> and,
+>>>>>> + * if present, populates the provided response structure with the
+>>>>>> + * appropriate SEI NT0 fields.
+>>>>>> + *
+>>>>>> + * Return:
+>>>>>> + *   EVENT_INFORMATION_STORED - An event was available and 
+>>>>>> written to @res
+>>>>>> + *   EVENT_INFORMATION_NOT_STORED - No event was available
+>>>>>> + */
+>>>>>> +int ap_chsc_sei_nt0_get_event(void *res);
+>>>>>> +
+>>>>>> +bool ap_chsc_sei_nt0_have_event(void);
+>>>>>> +>   #endif
+>>>>>
+>>>>
+>>>
+>>
+>
+
 
