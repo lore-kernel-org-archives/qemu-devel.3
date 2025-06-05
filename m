@@ -4,83 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1EDEC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:44:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EF52C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN79N-0002me-Mj; Thu, 05 Jun 2025 05:44:41 -0400
+	id 1uN79r-00038V-UQ; Thu, 05 Jun 2025 05:45:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uN79K-0002mS-EX
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:44:38 -0400
-Received: from mx1.zhaoxin.com ([210.0.225.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
- id 1uN79H-0001jW-Fn
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:44:38 -0400
-X-ASG-Debug-ID: 1749116660-086e2326981c040001-jgbH7p
-Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
- mx1.zhaoxin.com with ESMTP id CBxyUvbUTMPhyFEl (version=TLSv1.2
- cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
- Thu, 05 Jun 2025 17:44:20 +0800 (CST)
-X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
- (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 5 Jun
- 2025 17:44:20 +0800
-Received: from ZXSHMBX1.zhaoxin.com ([::1]) by ZXSHMBX1.zhaoxin.com
- ([fe80::2c07:394e:4919:4dc1%7]) with mapi id 15.01.2507.044; Thu, 5 Jun 2025
- 17:44:20 +0800
-X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
-Received: from ewan-server.lan (10.28.66.62) by zxbjmbx1.zhaoxin.com
- (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 5 Jun
- 2025 14:54:45 +0800
-From: Ewan Hai <ewanhai-oc@zhaoxin.com>
-To: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <zhao1.liu@intel.com>
-CC: <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>,
- EwanHai <ewanhai-oc@zhaoxin.com>
-Subject: [PATCH v3 RESEND] target/i386/kvm: Refine VMX controls setting for
- backward compatibility
-Date: Thu, 5 Jun 2025 02:54:45 -0400
-X-ASG-Orig-Subj: [PATCH v3 RESEND] target/i386/kvm: Refine VMX controls
- setting for backward compatibility
-Message-ID: <20250605065445.30090-1-ewanhai-oc@zhaoxin.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uN79q-000365-0s
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:45:10 -0400
+Received: from mail-vk1-xa41.google.com ([2607:f8b0:4864:20::a41])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uN79n-0001xz-Vl
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:45:09 -0400
+Received: by mail-vk1-xa41.google.com with SMTP id
+ 71dfb90a1353d-52f05bb975bso291722e0c.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:45:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1749116706; x=1749721506; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=X4YDDOS7TdXLcClvvUzO/nswmz8VwaC1Nxx5tlJM6zQ=;
+ b=UOyE9nn3q8Sv/S4YDtxBNxjdnk3MwXHX7qMYElEWWqggYuAhhRJCDQobqvA7RAhRSO
+ 8JkQV6rQCPbMoQgeW0/3CVxvg8lZczp6rjNpd2FVrNZZQTWLAhPbfr9OfxujNKaROLmO
+ AFh2Nbczn+A55fejtGZXgpU9AMO9EZ87tcbvGT8u/z3kMrC8jDu7MIAiAz0n4zNPl03A
+ qv6845ltdplX1mwOjLiLJVeivWdSor6hb6zXdjzj8fAKNSCSUUYIJI/+7ZLIyn/cSoX9
+ 5Tcot8wENWbiBL+JmIp1WauNYR/9zidyV+KbuzW5bEkSKGaGGMejK8eeu94phIXrjVBW
+ vdKg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749116706; x=1749721506;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=X4YDDOS7TdXLcClvvUzO/nswmz8VwaC1Nxx5tlJM6zQ=;
+ b=wlcutGiuI4MAouywpyvhq6RK1iPMjVyDGl/a8FfdW54sjmfrJ64lAjTxjMN2TDEP/0
+ vQmbfrOxLBnDrY2Rv9rEpoZNRQp4mBt/KA4EI8I0oPchvZUQtNXoLx4pZImFmag496+8
+ BtxSItL9PF1dfmWwaqtLYvirP6s1wr1ntqOzbnUFfPIrAl+CRu8WFy6SCdVOLrlTBjpW
+ WxlxUeGxG1OfK+PZyjs51aoM61CsEZ4EL2N9e+Tn4/q946sdNYo7+Lof777iY7pIrkyB
+ PDWkYoOBln7YmmkeQ8usmg+/TZu2g9y/wKjmPnhW6Xe9ZQQDke70u84gyjLjcqd+EfO1
+ 9OCA==
+X-Gm-Message-State: AOJu0Yz8dD88G5moGoarIBTCAEly6aA/tZaI6/5FyVdzYir1DL8edAmJ
+ +4htZLKIfN1lVq/jgNrlntwiMryV3LO5WyLmn0JIEF+LFcv4j5s5YRFSd6TnLXDvf4vMvtg+QJK
+ GhIsHe9b+5Q==
+X-Gm-Gg: ASbGnctBCcIsGkyevICHM69K3sRtlpQSRsIOKrTY35lZDbPEwZBC+L8nWJkf/vues/S
+ fQWgIHCZH/nXjJ5Cf78KcrVJcjUXpfroVQbqfV4q2Dj3/B1cIzflLTgcpoXqbC7z9YYDquyvNYH
+ FEV0jSkN8ZvQAmRjAVOojEtP3VtmS+sJzWRYxTtstkiqGYMrttujOs/tKQT5YQnrmg7I3zrSYKT
+ 0JrKKbxLO2Vukn2QFWYYIoktzpTX6SVngNVzabS5yikT13yZoFnqVGIOpxrStQIsIW7NHZCtPF7
+ NAMSuSw/Ae2LOUWr9SBN3xfoqFVrTgr3OEdTo6XFXMvxBMCEApxPAtqd0QDEemmFwTOADqlqY21
+ UmI4t
+X-Google-Smtp-Source: AGHT+IHKKVAzemNkaACkiuVHvRRrBWtmS0txicfpGtCLK/YViBuRhXNQ94XklKoBSEfFYWTQKR+Waw==
+X-Received: by 2002:a05:6122:658e:b0:530:626b:7d43 with SMTP id
+ 71dfb90a1353d-530c73159a7mr5884296e0c.2.1749116706089; 
+ Thu, 05 Jun 2025 02:45:06 -0700 (PDT)
+Received: from grind.dc1.ventanamicro.com ([177.188.133.196])
+ by smtp.gmail.com with ESMTPSA id
+ a1e0cc1a2514c-87e2a2c28d8sm10063093241.15.2025.06.05.02.45.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 02:45:05 -0700 (PDT)
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, philmd@linaro.org,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Subject: [PATCH v2 1/1] target/riscv: use qemu_chr_fe_write_all() in
+ DBCN_CONSOLE_WRITE_BYTE
+Date: Thu,  5 Jun 2025 06:44:56 -0300
+Message-ID: <20250605094456.1385105-2-dbarboza@ventanamicro.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250605094456.1385105-1-dbarboza@ventanamicro.com>
+References: <20250605094456.1385105-1-dbarboza@ventanamicro.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain
-X-Originating-IP: [10.28.66.62]
-X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
- zxbjmbx1.zhaoxin.com (10.29.252.163)
-X-Moderation-Data: 6/5/2025 5:44:18 PM
-X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
-X-Barracuda-Start-Time: 1749116660
-X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
-X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
-X-Virus-Scanned: by bsmtpd at zhaoxin.com
-X-Barracuda-Scan-Msg-Size: 2924
-X-Barracuda-BRTS-Status: 1
-X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
-X-Barracuda-Spam-Score: -2.02
-X-Barracuda-Spam-Status: No,
- SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
- QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
-X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.142416
- Rule breakdown below
- pts rule name              description
- ---- ---------------------- --------------------------------------------------
-Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
- helo=mx1.zhaoxin.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a41;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-vk1-xa41.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,86 +104,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: EwanHai <ewanhai-oc@zhaoxin.com>
+The SBI spec states, for console write byte:
 
-Commit 4a910e1 ("target/i386: do not set unsupported VMX secondary
-execution controls") implemented a workaround for hosts that have
-specific CPUID features but do not support the corresponding VMX
-controls, e.g., hosts support RDSEED but do not support RDSEED-Exiting.
+"This is a blocking SBI call and it will only return after writing the
+specified byte to the debug console. It will also return, with
+SBI_ERR_FAILED, if there are I/O errors."
 
-In detail, commit 4a910e1 introduced a flag `has_msr_vmx_procbased_clts2`.
-If KVM has `MSR_IA32_VMX_PROCBASED_CTLS2` in its msr list, QEMU would
-use KVM's settings, avoiding any modifications to this MSR.
+Being a blocker call will either succeed writing the byte or error out,
+it's feasible to use the blocking qemu_chr_fe_write_all() instead of
+qemu_chr_fe_write().
 
-However, this commit (4a910e1) didn't account for cases in older Linux
-kernels(4.17~5.2) where `MSR_IA32_VMX_PROCBASED_CTLS2` is in
-`kvm_feature_msrs`-obtained by ioctl(KVM_GET_MSR_FEATURE_INDEX_LIST),
-but not in `kvm_msr_list`-obtained by ioctl(KVM_GET_MSR_INDEX_LIST).
-As a result,it did not set the `has_msr_vmx_procbased_clts2` flag based
-on `kvm_msr_list` alone, even though KVM does maintain the value of
-this MSR.
+Last but not the least, we will duck possible changes in
+qemu_chr_fe_write() where ret = 0 will have a 'zero byte written'
+semantic [1] - something that we're not ready to deal in this current
+state.
 
-This patch supplements the above logic, ensuring that
-`has_msr_vmx_procbased_clts2` is correctly set by checking both MSR
-lists, thus maintaining compatibility with older kernels.
+[1] https://lore.kernel.org/qemu-devel/CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
 
-Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
+Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
-Changes in v3:
-- Use a more precise version range in the comment, specifically "4.17~5.2"
-instead of "<5.3".
+ target/riscv/kvm/kvm-cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Changes in v2:
-- Adjusted some punctuation in the commit message as per suggestions.
-- Added comments to the newly added code to indicate that it is a compatibi=
-lity fix.
-
-v1 link:
-https://lore.kernel.org/all/20230925071453.14908-1-ewanhai-oc@zhaoxin.com/
-
-v2 link:
-https://lore.kernel.org/all/20231127034326.257596-1-ewanhai-oc@zhaoxin.com/
-
----
- target/i386/kvm/kvm.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
-
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index a6bc089d02..4ff9b5995c 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -2466,6 +2466,7 @@ void kvm_arch_do_init_vcpu(X86CPU *cpu)
- static int kvm_get_supported_feature_msrs(KVMState *s)
- {
-     int ret =3D 0;
-+    int i;
-=20
-     if (kvm_feature_msrs !=3D NULL) {
-         return 0;
-@@ -2500,6 +2501,20 @@ static int kvm_get_supported_feature_msrs(KVMState *=
-s)
-         return ret;
-     }
-=20
-+   /*
-+    * Compatibility fix:
-+    * Older Linux kernels (4.17~5.2) report MSR_IA32_VMX_PROCBASED_CTLS2
-+    * in KVM_GET_MSR_FEATURE_INDEX_LIST but not in KVM_GET_MSR_INDEX_LIST.
-+    * This leads to an issue in older kernel versions where QEMU,
-+    * through the KVM_GET_MSR_INDEX_LIST check, assumes the kernel
-+    * doesn't maintain MSR_IA32_VMX_PROCBASED_CTLS2, resulting in
-+    * incorrect settings by QEMU for this MSR.
-+    */
-+    for (i =3D 0; i < kvm_feature_msrs->nmsrs; i++) {
-+        if (kvm_feature_msrs->indices[i] =3D=3D MSR_IA32_VMX_PROCBASED_CTL=
-S2) {
-+            has_msr_vmx_procbased_ctls2 =3D true;
-+        }
-+    }
-     return 0;
- }
-=20
---=20
-2.34.1
+diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
+index e1a04be20f..86724e5c44 100644
+--- a/target/riscv/kvm/kvm-cpu.c
++++ b/target/riscv/kvm/kvm-cpu.c
+@@ -1605,7 +1605,7 @@ static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
+         break;
+     case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
+         ch = run->riscv_sbi.args[0];
+-        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
++        ret = qemu_chr_fe_write_all(serial_hd(0)->be, &ch, sizeof(ch));
+ 
+         if (ret < 0) {
+             error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: error when "
+-- 
+2.49.0
 
 
