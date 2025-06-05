@@ -4,77 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 271F2C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 13:38:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FEEDC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 13:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNAn0-0002ch-8v; Thu, 05 Jun 2025 09:37:51 -0400
+	id 1uNAmW-0001vE-Gw; Thu, 05 Jun 2025 09:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uNAmu-0002a5-B3
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 09:37:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uNAmT-0001u6-AM; Thu, 05 Jun 2025 09:37:17 -0400
+Received: from mgamail.intel.com ([198.175.65.17])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uNAmr-0008R6-Js
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 09:37:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749130651;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dcs/PgRwrP3LRRWQ9yWdU+Tj4aW+TK81BVmdebMJ6Zs=;
- b=ci782QI3+Cj8ko55X61MyuaJyUKR0cVpLNI1cwU4ivhlZoTiNKjIj3PW1/qo0EmVLS8jdB
- yo7NLx4HPNVE2Me7IbR0mYlowjg0mukMXsMIAcwFPJzqEYKbq5ePpbKiuy7xHAslra0bB0
- OL9cIE79GkraiNPX4OOlPvtwZYubF5o=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-438-BB8NhiGVNGmtRd704xwCog-1; Thu,
- 05 Jun 2025 09:37:29 -0400
-X-MC-Unique: BB8NhiGVNGmtRd704xwCog-1
-X-Mimecast-MFC-AGG-ID: BB8NhiGVNGmtRd704xwCog_1749130648
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 42EC41955F07; Thu,  5 Jun 2025 13:37:28 +0000 (UTC)
-Received: from dobby.home.kraxel.org (unknown [10.45.226.180])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 18F7A18002A5; Thu,  5 Jun 2025 13:37:27 +0000 (UTC)
-Received: by dobby.home.kraxel.org (Postfix, from userid 1000)
- id 249BB466513; Thu, 05 Jun 2025 14:21:24 +0200 (CEST)
-Date: Thu, 5 Jun 2025 14:21:24 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org, 
- Eric Auger <eauger@redhat.com>,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>,
- Alex Williamson <alex.williamson@redhat.com>, 
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1] ramfb: Add property to control if load the romfile
-Message-ID: <kep5frpl24d74evoyf367pqkyoj6xez2pirk7xlzcoompyzq4c@ouxab77sdm55>
-References: <20250605030351.2056571-1-shahuang@redhat.com>
- <746b078e-bd06-4361-aec7-2301412abb18@linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uNAmK-0008Ok-An; Thu, 05 Jun 2025 09:37:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749130629; x=1780666629;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=c3AYYTE4jXbTTJMfKgbjtc+QoEFK3LuNYXA8vE/YJ4s=;
+ b=kobbXKGecmhETP/ZDe3aWLVghSINdhOIdW3ylng21+74fHu1QpuKg7Uq
+ mpbwSZT3cnxvQCe6magBHKg6ZrzpY6aTMYWD5dt9o4m1cKS62io5WA1rs
+ Z6fmjUjFL8xADnmr9smQ/Xge5uzzgJ9EQWkmG/LcvP8oYpLucrSO5QQco
+ MnnYydwA7ZOiNl5WBfU61G8c8DwrQ8FKz8MoURlcMp2/lZN1yiUcSq6Gz
+ Bi6qH5ZAgheoy37TCyyblo9CGCvMYox1HLKmz2TvrcoLLErbs9XVouty8
+ Mk/89UPCl31zfoiFQfzl/+SEN+b1MzfIQJcGs8uMWT7mLDV13KpGw9XFZ Q==;
+X-CSE-ConnectionGUID: XLoJ0V9QTKK/jIz69iUhlg==
+X-CSE-MsgGUID: rY+HR2PzSuqF16eDH5aykQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="51246687"
+X-IronPort-AV: E=Sophos;i="6.16,212,1744095600"; d="scan'208";a="51246687"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jun 2025 06:37:05 -0700
+X-CSE-ConnectionGUID: 37ZMDUOzR9icCqmlqBuOcg==
+X-CSE-MsgGUID: b3v16a65TDSjX9lNECuymQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,212,1744095600"; d="scan'208";a="182716923"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa001.jf.intel.com with ESMTP; 05 Jun 2025 06:36:59 -0700
+Date: Thu, 5 Jun 2025 21:58:13 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+Cc: mst@redhat.com, anisinha@redhat.com, armbru@redhat.com,
+ berrange@redhat.com, dapeng1.mi@linux.intel.com,
+ eric.auger@redhat.com, farman@linux.ibm.com,
+ gustavo.romero@linaro.org, imammedo@redhat.com,
+ jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
+ linuxarm@huawei.com, mtosatti@redhat.com, peter.maydell@linaro.org,
+ philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
+ richard.henderson@linaro.org, shameerali.kolothum.thodi@huawei.com,
+ shannon.zhaosl@gmail.com, yangyicong@hisilicon.com, maobibo@loongson.cn
+Subject: Re: [PATCH v12 2/6] arm/virt.c: add cache hierarchy to device tree
+Message-ID: <aEGidafjNMYHAgiO@intel.com>
+References: <20250604133439.1592-1-alireza.sanaee@huawei.com>
+ <20250604133439.1592-3-alireza.sanaee@huawei.com>
+ <aEFnFI+wglkmLD5G@intel.com>
+ <20250605104048.00000f00.alireza.sanaee@huawei.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <746b078e-bd06-4361-aec7-2301412abb18@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+In-Reply-To: <20250605104048.00000f00.alireza.sanaee@huawei.com>
+Received-SPF: pass client-ip=198.175.65.17; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,25 +91,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+> Hi Zhao,
+> 
+> Thanks for the feedback, I was actually unsure about the structure, and
+> was looking to get some feedback here, to see where to put what! I
+> will go over the suggestions, and take note. In the meantime, let's see
+> if we can get some more review here.
 
-> > Now the ramfb will load the vgabios-ramfb.bin unconditionally, but only
-> > the x86 need the vgabios-ramfb.bin, this can cause that when use the
-> > release package on arm64 it can't find the vgabios-ramfb.bin.
+Sure! BTW, it's better to spilt the general code change (not ARM-specific
+codes) into a separate patch. Anyway, it's up to you.
 
-> Simpler to directly pass the ROM path instead of using a boolean,
-> so board (or CLI) could pass path to non-x86 rom.
-
-The rom is loaded into a fw_cfg file which only seabios will look at.
-So this rom logic is x86-specific.
-
-edk2 ships an EFI driver for ramfb, that is how ramfb is used on !x86
-platforms today, and I don't expect that to change.
-
-IMHO a bool is perfectly fine here, I don't think we will ever need the
-flexibility to specify some other rom here.
-
-take care,
-  Gerd
+Regards,
+Zhao
 
 
