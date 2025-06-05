@@ -4,65 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED7D4C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:41:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1EDEC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:44:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN764-0001q1-Ov; Thu, 05 Jun 2025 05:41:16 -0400
+	id 1uN79N-0002me-Mj; Thu, 05 Jun 2025 05:44:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uN762-0001p6-BI; Thu, 05 Jun 2025 05:41:14 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1uN79K-0002mS-EX
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:44:38 -0400
+Received: from mx1.zhaoxin.com ([210.0.225.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uN75z-0006vP-61; Thu, 05 Jun 2025 05:41:14 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bCfZd57Qdz6K9NX;
- Thu,  5 Jun 2025 17:40:41 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 292571402CB;
- Thu,  5 Jun 2025 17:40:56 +0800 (CST)
-Received: from localhost (10.45.152.198) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 5 Jun
- 2025 11:40:54 +0200
-Date: Thu, 5 Jun 2025 10:40:48 +0100
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: <mst@redhat.com>, <anisinha@redhat.com>, <armbru@redhat.com>,
- <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>, 
- <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, <imammedo@redhat.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
- <philmd@linaro.org>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
- <richard.henderson@linaro.org>, <shameerali.kolothum.thodi@huawei.com>,
- <shannon.zhaosl@gmail.com>, <yangyicong@hisilicon.com>, <maobibo@loongson.cn>
-Subject: Re: [PATCH v12 2/6] arm/virt.c: add cache hierarchy to device tree
-Message-ID: <20250605104048.00000f00.alireza.sanaee@huawei.com>
-In-Reply-To: <aEFnFI+wglkmLD5G@intel.com>
-References: <20250604133439.1592-1-alireza.sanaee@huawei.com>
- <20250604133439.1592-3-alireza.sanaee@huawei.com>
- <aEFnFI+wglkmLD5G@intel.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <EwanHai-oc@zhaoxin.com>)
+ id 1uN79H-0001jW-Fn
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:44:38 -0400
+X-ASG-Debug-ID: 1749116660-086e2326981c040001-jgbH7p
+Received: from ZXSHMBX3.zhaoxin.com (ZXSHMBX3.zhaoxin.com [10.28.252.165]) by
+ mx1.zhaoxin.com with ESMTP id CBxyUvbUTMPhyFEl (version=TLSv1.2
+ cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NO);
+ Thu, 05 Jun 2025 17:44:20 +0800 (CST)
+X-Barracuda-Envelope-From: EwanHai-oc@zhaoxin.com
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ZXSHMBX1.zhaoxin.com (10.28.252.163) by ZXSHMBX3.zhaoxin.com
+ (10.28.252.165) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 5 Jun
+ 2025 17:44:20 +0800
+Received: from ZXSHMBX1.zhaoxin.com ([::1]) by ZXSHMBX1.zhaoxin.com
+ ([fe80::2c07:394e:4919:4dc1%7]) with mapi id 15.01.2507.044; Thu, 5 Jun 2025
+ 17:44:20 +0800
+X-Barracuda-RBL-Trusted-Forwarder: 10.28.252.165
+Received: from ewan-server.lan (10.28.66.62) by zxbjmbx1.zhaoxin.com
+ (10.29.252.163) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.44; Thu, 5 Jun
+ 2025 14:54:45 +0800
+From: Ewan Hai <ewanhai-oc@zhaoxin.com>
+To: <pbonzini@redhat.com>, <mtosatti@redhat.com>, <zhao1.liu@intel.com>
+CC: <kvm@vger.kernel.org>, <qemu-devel@nongnu.org>, <ewanhai@zhaoxin.com>,
+ EwanHai <ewanhai-oc@zhaoxin.com>
+Subject: [PATCH v3 RESEND] target/i386/kvm: Refine VMX controls setting for
+ backward compatibility
+Date: Thu, 5 Jun 2025 02:54:45 -0400
+X-ASG-Orig-Subj: [PATCH v3 RESEND] target/i386/kvm: Refine VMX controls
+ setting for backward compatibility
+Message-ID: <20250605065445.30090-1-ewanhai-oc@zhaoxin.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.45.152.198]
-X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain
+X-Originating-IP: [10.28.66.62]
+X-ClientProxiedBy: zxbjmbx1.zhaoxin.com (10.29.252.163) To
+ zxbjmbx1.zhaoxin.com (10.29.252.163)
+X-Moderation-Data: 6/5/2025 5:44:18 PM
+X-Barracuda-Connect: ZXSHMBX3.zhaoxin.com[10.28.252.165]
+X-Barracuda-Start-Time: 1749116660
+X-Barracuda-Encrypted: ECDHE-RSA-AES128-GCM-SHA256
+X-Barracuda-URL: https://10.28.252.35:4443/cgi-mod/mark.cgi
+X-Virus-Scanned: by bsmtpd at zhaoxin.com
+X-Barracuda-Scan-Msg-Size: 2924
+X-Barracuda-BRTS-Status: 1
+X-Barracuda-Bayes: INNOCENT GLOBAL 0.0000 1.0000 -2.0210
+X-Barracuda-Spam-Score: -2.02
+X-Barracuda-Spam-Status: No,
+ SCORE=-2.02 using global scores of TAG_LEVEL=1000.0
+ QUARANTINE_LEVEL=1000.0 KILL_LEVEL=9.0 tests=
+X-Barracuda-Spam-Report: Code version 3.2, rules version 3.2.3.142416
+ Rule breakdown below
+ pts rule name              description
+ ---- ---------------------- --------------------------------------------------
+Received-SPF: pass client-ip=210.0.225.12; envelope-from=EwanHai-oc@zhaoxin.com;
+ helo=mx1.zhaoxin.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,257 +93,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Jun 2025 17:44:52 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+From: EwanHai <ewanhai-oc@zhaoxin.com>
 
-> Hi Ali,
-> 
-> I'm very sorry to bother you with some comments after so many
-> versions.
-> 
-> > diff --git a/hw/cpu/core.c b/hw/cpu/core.c
-> > index 5cb2e9a7f5..7339782663 100644
-> > --- a/hw/cpu/core.c
-> > +++ b/hw/cpu/core.c  
-> 
-> core.c is not the right place. It just contains the "cpu-core"
-> abstraction. So we need to move the following functions to other
-> files.
-> 
-> > @@ -102,4 +102,96 @@ static void cpu_core_register_types(void)
-> >      type_register_static(&cpu_core_type_info);
-> >  }
-> >  
-> > +bool cache_described_at(const MachineState *ms, CpuTopologyLevel
-> > level)  
-> 
-> It's better to add the comment about what this function did. (its name
-> doesn't reflect it wants to check the coresponding CPU topology
-> level.)
-> 
-> I also feel it's not a good name, what about
-> "machine_check_cache_at_topo_level"?
-> 
-> Furthermore, we can move this one to hw/core/machine-smp.c, as it is
-> about with machine's smp_cache.
-> 
-> > +{
-> > +    if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3)
-> > == level ||
-> > +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2)
-> > == level ||
-> > +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I)
-> > == level ||
-> > +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D)
-> > == level) {
-> > +        return true;
-> > +    }
-> > +    return false;
-> > +}
-> > +
-> > +int partial_cache_description(const MachineState *ms,
-> > CPUCorePPTTCaches *caches,
-> > +                              int num_caches)  
-> 
-> Because I'll suggest to move CPUCorePPTTCaches to
-> include/hw/acpi/cpu.h later, and this function accepts
-> CPUCorePPTTCaches as the argument, so I think we could move this
-> function to hw/acpi/cpu.c (if Michael and Igor don't object).
-> 
-> > +{
-> > +    int level, c;
-> > +
-> > +    for (level = 1; level < num_caches; level++) {
-> > +        for (c = 0; c < num_caches; c++) {
-> > +            if (caches[c].level != level) {
-> > +                continue;
-> > +            }
-> > +
-> > +            switch (level) {
-> > +            case 1:
-> > +                /*
-> > +                 * L1 cache is assumed to have both L1I and L1D
-> > available.
-> > +                 * Technically both need to be checked.
-> > +                 */
-> > +                if (machine_get_cache_topo_level(ms,
-> > +
-> > CACHE_LEVEL_AND_TYPE_L1I) ==
-> > +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
-> > +                    return level;
-> > +                }
-> > +                break;
-> > +            case 2:
-> > +                if (machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L2) ==
-> > +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
-> > +                    return level;
-> > +                }
-> > +                break;
-> > +            case 3:
-> > +                if (machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L3) ==
-> > +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
-> > +                    return level;
-> > +                }
-> > +                break;
-> > +            }
-> > +        }
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> > +/*
-> > + * This function assumes l3 and l2 have unified cache and l1 is
-> > split l1d
-> > + * and l1i, and further prepares the lowest cache level for a
-> > topology
-> > + * level.  The info will be fed to build_caches to create caches
-> > at the
-> > + * right level.
-> > + */
-> > +bool find_the_lowest_level_cache_defined_at_level(const
-> > MachineState *ms,
-> > +                                                  int *level_found,
-> > +                                                  CpuTopologyLevel
-> > topo_level) {  
-> 
-> This is a very long name :-).
-> 
-> Maybe we can rename it like:
-> 
-> machine_find_lowest_level_cache_at_topo_level,
-> 
-> (sorry this name doesn't shorten the length but align the naming style
-> in machine-smp.c)
-> 
-> and explain the arguments in the comment.
-> 
-> Furthermore, we can move this one to hw/core/machine-smp.c, too.
-> 
-> > +    CpuTopologyLevel level;
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L1I);
-> > +    if (level == topo_level) {
-> > +        *level_found = 1;
-> > +        return true;
-> > +    }
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L1D);
-> > +    if (level == topo_level) {
-> > +        *level_found = 1;
-> > +        return true;
-> > +    }
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L2);
-> > +    if (level == topo_level) {
-> > +        *level_found = 2;
-> > +        return true;
-> > +    }
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L3);
-> > +    if (level == topo_level) {
-> > +        *level_found = 3;
-> > +        return true;
-> > +    }
-> > +
-> > +    return false;
-> > +}
-> > +
-> >  type_init(cpu_core_register_types)  
-> 
-> ...
-> 
-> > diff --git a/include/hw/cpu/core.h b/include/hw/cpu/core.h
-> > index 98ab91647e..0f7bf8bc28 100644
-> > --- a/include/hw/cpu/core.h
-> > +++ b/include/hw/cpu/core.h
-> > @@ -11,6 +11,7 @@
-> >  
-> >  #include "hw/qdev-core.h"
-> >  #include "qom/object.h"
-> > +#include "qapi/qapi-types-machine-common.h"
-> >  
-> >  #define TYPE_CPU_CORE "cpu-core"
-> >  
-> > @@ -25,6 +26,32 @@ struct CPUCore {
-> >      int nr_threads;
-> >  };
-> >  
-> > +typedef enum CPUCacheType {
-> > +    CPU_CORE_DATA,
-> > +    CPU_CORE_INSTRUCTION,
-> > +    CPU_CORE_UNIFIED,
-> > +} CPUCoreCacheType;  
-> 
-> This is a complete duplicate of the x86's CPUCaches
-> (target/i386/cpu.h).
-> 
-> I think we can move x86's CPUCaches to include/hw/core/cpu.h.
-> 
-> > +typedef struct CPUPPTTCaches {
-> > +    CPUCoreCacheType type;
-> > +    uint32_t pptt_id;
-> > +    uint32_t sets;
-> > +    uint32_t size;
-> > +    uint32_t level;
-> > +    uint16_t linesize;
-> > +    uint8_t attributes; /* write policy: 0x0 write back, 0x1 write
-> > through */
-> > +    uint8_t associativity;
-> > +} CPUCorePPTTCaches;  
-> 
-> x86 doesn't use PPTT to describe cache so it's not necessary to reuse
-> CPUCacheInfo (target/i386/cpu.h) for PPTT.
-> 
-> But I understand it's better to place this sturct in
-> include/hw/acpi/cpu.h, since it is part of the ACPI PPTT table.
-> 
-> > +int partial_cache_description(const MachineState *ms,
-> > CPUCorePPTTCaches *caches,
-> > +                              int num_caches);  
-> 
-> Could move to include/hw/acpi/cpu.h, too.
-> 
-> > +bool cache_described_at(const MachineState *ms, CpuTopologyLevel
-> > level); +
-> > +bool find_the_lowest_level_cache_defined_at_level(const
-> > MachineState *ms,
-> > +                                                  int *level_found,
-> > +                                                  CpuTopologyLevel
-> > topo_level);
-> > +  
-> 
-> Because these 2 functions' definitions would be moved to
-> hw/core/machine-smp.c, then we need to move their declarations to
-> include/hw/boards.h.
-> 
-> 
-> Except the above nits, the general part is fine for me.
-> 
-> Thanks,
-> Zhao
-> 
-> 
-> 
+Commit 4a910e1 ("target/i386: do not set unsupported VMX secondary
+execution controls") implemented a workaround for hosts that have
+specific CPUID features but do not support the corresponding VMX
+controls, e.g., hosts support RDSEED but do not support RDSEED-Exiting.
 
-Hi Zhao,
+In detail, commit 4a910e1 introduced a flag `has_msr_vmx_procbased_clts2`.
+If KVM has `MSR_IA32_VMX_PROCBASED_CTLS2` in its msr list, QEMU would
+use KVM's settings, avoiding any modifications to this MSR.
 
-Thanks for the feedback, I was actually unsure about the structure, and
-was looking to get some feedback here, to see where to put what! I
-will go over the suggestions, and take note. In the meantime,
-let's see if we can get some more review here.
+However, this commit (4a910e1) didn't account for cases in older Linux
+kernels(4.17~5.2) where `MSR_IA32_VMX_PROCBASED_CTLS2` is in
+`kvm_feature_msrs`-obtained by ioctl(KVM_GET_MSR_FEATURE_INDEX_LIST),
+but not in `kvm_msr_list`-obtained by ioctl(KVM_GET_MSR_INDEX_LIST).
+As a result,it did not set the `has_msr_vmx_procbased_clts2` flag based
+on `kvm_msr_list` alone, even though KVM does maintain the value of
+this MSR.
 
-Alireza
+This patch supplements the above logic, ensuring that
+`has_msr_vmx_procbased_clts2` is correctly set by checking both MSR
+lists, thus maintaining compatibility with older kernels.
+
+Signed-off-by: EwanHai <ewanhai-oc@zhaoxin.com>
+---
+Changes in v3:
+- Use a more precise version range in the comment, specifically "4.17~5.2"
+instead of "<5.3".
+
+Changes in v2:
+- Adjusted some punctuation in the commit message as per suggestions.
+- Added comments to the newly added code to indicate that it is a compatibi=
+lity fix.
+
+v1 link:
+https://lore.kernel.org/all/20230925071453.14908-1-ewanhai-oc@zhaoxin.com/
+
+v2 link:
+https://lore.kernel.org/all/20231127034326.257596-1-ewanhai-oc@zhaoxin.com/
+
+---
+ target/i386/kvm/kvm.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
+
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index a6bc089d02..4ff9b5995c 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -2466,6 +2466,7 @@ void kvm_arch_do_init_vcpu(X86CPU *cpu)
+ static int kvm_get_supported_feature_msrs(KVMState *s)
+ {
+     int ret =3D 0;
++    int i;
+=20
+     if (kvm_feature_msrs !=3D NULL) {
+         return 0;
+@@ -2500,6 +2501,20 @@ static int kvm_get_supported_feature_msrs(KVMState *=
+s)
+         return ret;
+     }
+=20
++   /*
++    * Compatibility fix:
++    * Older Linux kernels (4.17~5.2) report MSR_IA32_VMX_PROCBASED_CTLS2
++    * in KVM_GET_MSR_FEATURE_INDEX_LIST but not in KVM_GET_MSR_INDEX_LIST.
++    * This leads to an issue in older kernel versions where QEMU,
++    * through the KVM_GET_MSR_INDEX_LIST check, assumes the kernel
++    * doesn't maintain MSR_IA32_VMX_PROCBASED_CTLS2, resulting in
++    * incorrect settings by QEMU for this MSR.
++    */
++    for (i =3D 0; i < kvm_feature_msrs->nmsrs; i++) {
++        if (kvm_feature_msrs->indices[i] =3D=3D MSR_IA32_VMX_PROCBASED_CTL=
+S2) {
++            has_msr_vmx_procbased_ctls2 =3D true;
++        }
++    }
+     return 0;
+ }
+=20
+--=20
+2.34.1
 
 
