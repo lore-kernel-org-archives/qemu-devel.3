@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DA18C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:45:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 902EDC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:46:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN79z-0003Pz-Ee; Thu, 05 Jun 2025 05:45:19 -0400
+	id 1uN7Ai-00042S-BS; Thu, 05 Jun 2025 05:46:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uN79w-0003Mr-PT
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:45:16 -0400
-Received: from mail-qk1-x742.google.com ([2607:f8b0:4864:20::742])
+ id 1uN7Ah-0003wr-0J
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:46:03 -0400
+Received: from mail-ua1-x944.google.com ([2607:f8b0:4864:20::944])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uN79u-0001zP-Si
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:45:16 -0400
-Received: by mail-qk1-x742.google.com with SMTP id
- af79cd13be357-7d09d4c8543so88545685a.1
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:45:14 -0700 (PDT)
+ id 1uN7Ae-00022v-7R
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:46:02 -0400
+Received: by mail-ua1-x944.google.com with SMTP id
+ a1e0cc1a2514c-87ea63be17eso588180241.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:45:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749116713; x=1749721513; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Ubn/J2LD5Dpe/hzEurxm0V+J1k3g0NG4AbGEd3fS58w=;
- b=Bp08Wn/6bA+HPDfnXyGopQcrMES1KX8Dz6XxMBJPJJccYvyKWQ4/TwVFY5gC0t5D0E
- hTq3TzkBAB9KWAQrAnKdkwnpyNw+B5NLWAoxT96JSisVVtgC1KfmyrZdXxYh0cUpgHME
- +w5Ltbx+PEIJGANsl/pzxl842UO9yMuZg8NDlpnJdErOXkzt5Zete0cKkyoKUEzY1Ssg
- VLy6L66+F+YoTJbG6KkQ0+ntiCxIVBWo/X7ikIpqMmANCuADTRsmzFupXaK2MOXNSYev
- otO6AbTKq+TQGI/3DvOfMh8Poe3ip2/5q7yaEQD5Dp/YVcsIbZNj8lHwwKIAwA1FLZmj
- R6Bg==
+ d=ventanamicro.com; s=google; t=1749116759; x=1749721559; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5uLtTHnui3FZB+pvN4W3jKkwDUlgYik0UvBfWH5ZE9E=;
+ b=UNvtoHeoCd320+RHwdWctDUK+V3Z4ug9kz192hpFN/HrgkpwcShuMdVNmUAZWIlggR
+ kZ3NS3sObwuhNtAfdm3H66a0eseEcHtSd5I/gjvGfUBAA5ASFnOj6tud6q6LMTQ9/Fs/
+ MKDHsgJWsWsFSS8/mHN8hg/EK3hzxVohvLgXFC6WFu03F0esgp1PqtU2snoj38RlOZCh
+ omwQxSRQzsG94XVdHYd64PpUSceqtv7bZxG9fp83sMefwDd80BIrlX6nHrEoU5VvKdOH
+ xR309Tps7mJgcygq+T/X9ialQidOUCCyceM/KkcZ7Kh509tUVTTFukv3DKpr8vL0hTtA
+ ytsQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749116713; x=1749721513;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ubn/J2LD5Dpe/hzEurxm0V+J1k3g0NG4AbGEd3fS58w=;
- b=QPozsD3ZxO/gfV5fQMaswcL7ogaKUaJlnl0PtGirOgQkqpc9S/z1wrqsLVWrhMJI5/
- nzqDl1Q3hRWzocp0a9w9vFhw/+7QearL41QgQanAU8ZZB+yI24h2qARhk4mB6qvxSKnO
- z/hNjEZqHIu7KiwtCu33/yzObn4rpUswbC78IPsLh7XpZmyf3FsieueV+M7/alw0INXC
- Ozd7IOitA28ZhJH2SO4S8IPF40qZU20zMbfkWjJlJX16DuDBvhR3aY2NNJ2kfKOWRgcB
- A5vbn3rIv3+liXTiajQ8kTvRqLmAWphSIirLXw48ZzOKtEFe5DKZ4vH/xqY+5r8AXd2G
- rqWw==
-X-Gm-Message-State: AOJu0Yzjc4MZVqt52gbB74q2v/qgBMVdPfcb7jn8lPnN1kABtdL9N98k
- ceC+eRvT/3vsgq1tCznO6uDEkGkkr6cdE6FcURxk1PMQ+WrH2L2a4/xJcJSggFWYrEwcYNd9IL7
- WfpaUwU4gxA==
-X-Gm-Gg: ASbGncvwwU6o96k/2/y40clCiV+hs7mzBBQc+dNpYD68EEyzok0jOMRYAh3cCKMH5gB
- iOPOgmik32gHw62MKaK6+tNWxAJhb8twYthOyy+y5CQnEGDgY8vbBPySTWW9+7gtHURT3QSwIN7
- DJyS9mReXTwUJpPhjl6JozyBT7aImDvCG/kVmcoRu7MvIVzXDlwb2xpkjIOzYl4EIAw9CZe7NMA
- 9bhl2i/tNB1iNKQI4dkur8LAT9bxGrqa3N09k2sIi5CtZWuQkAKROxgOzT4cIlXPVunXb1+wiNW
- kMhSbHUY9FWfiFkNHT2NIdEjYCa//bN+XWyDQlJQNxk2HNSeaHSlMd4Nr/CSdAVM9WcPPbiZ+Js
- h6VUPppCPhGZSbwM=
-X-Google-Smtp-Source: AGHT+IFGdS3cZUGZqayFGX32YUB7XyxvTrtGrxnbYTNW9eimRQ/Z96qxLDlRve1wnRyPrh5qqJc2UQ==
-X-Received: by 2002:a05:6102:534f:b0:4c1:9780:383e with SMTP id
- ada2fe7eead31-4e746d19f41mr4214959137.4.1749116703187; 
- Thu, 05 Jun 2025 02:45:03 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com ([177.188.133.196])
+ d=1e100.net; s=20230601; t=1749116759; x=1749721559;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5uLtTHnui3FZB+pvN4W3jKkwDUlgYik0UvBfWH5ZE9E=;
+ b=mtaaRCYb9ihyECseMNyV7G9OY1sgsJEYBTemVyZdvyjHXs2iYbpXjQuAuE+d2677fE
+ lh/Ej1p6s5tILBjatZVaOLX2l2Pw/hpUEnmlRCzDbrZbfZOdKr2akffohPEXTKib+fAo
+ kqN7uSOnnYwa5g/TzPdkYVnTDCg4fF8W1PD2prEvqqjtVs0r+zxRfvwyLPaD61p+cueJ
+ XxFbJgOrWBdRP+Exxyy26AiJv/bypXUBO6VNmzKI28JNJjIj4dweJS46iFzGc/pmFIp0
+ uI/Z70WkTGm7gL/c0GTCC4so9x5zgSNXcOxFaPHFj3ehf/MWKvKAviGQ+FGSlu/0uDv5
+ rafA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVN2+118SQYqWMmCf2vBJL28920cOoVrNcf3L4nl1ukozkMP1iq4S0inST3VdQfFFMHpiS/8RRh7vjG@nongnu.org
+X-Gm-Message-State: AOJu0YzPAm1e7h1cR01kPMFtzAnA2jqtt4LpBdzVorl4SUA5EZGaaZPI
+ 8g1CEncgg2ukUzwcIrg4f1JqQrRe7WSxdsQP4xCRL4QGZCbPUPESd5xMwsdp0r24Aag=
+X-Gm-Gg: ASbGnctZgKhFRZ+Vvxx9h4iUR1BY+o8CgtpveS3VnKz3a8tXbgFDVsaWsyI+oLJ7mAd
+ R0TO8oQ0d2yWwBFIurwZF1qOvsZFKfdQIqrvzdRBTnCAtXX2MzRp8T8oNC1SiPEPsJnfGCopPOT
+ 1d5IFXgpsfqeGEZRe16Gqb56lBIjZibEoQFCYNC1S7aFVdxPDADQTneyp5pshhfGlFauZC2JLqa
+ +LWBH+6DzyjdkoalrmqCtD438NVAY3kj1Zw+kUoTxAGbVwfqrFNVJsZCOWUEfgYCsIa1hSzRp7X
+ HwE8jAZaQTQOWmRaA5p0Vt7qtMymqzDw5qE7SnWEneedkZkmqVTrGKxEI08oH1bpuNc=
+X-Google-Smtp-Source: AGHT+IE4KVHmpyVIwQfdTHULoVRAUI+ppKQhm0O8jLD/BLfVPSq+8RqCs/k2JCS83Ej/21cj0C6ESw==
+X-Received: by 2002:a05:6102:c88:b0:4e6:d9b8:ddd5 with SMTP id
+ ada2fe7eead31-4e746e63862mr4721512137.17.1749116758962; 
+ Thu, 05 Jun 2025 02:45:58 -0700 (PDT)
+Received: from [192.168.68.110] ([177.188.133.196])
  by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-87e2a2c28d8sm10063093241.15.2025.06.05.02.45.00
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 02:45:02 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, philmd@linaro.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH v2 0/1] riscv: qemu_chr_fe_write_all() in CONSOLE_WRITE_BYTE
-Date: Thu,  5 Jun 2025 06:44:55 -0300
-Message-ID: <20250605094456.1385105-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.49.0
+ ada2fe7eead31-4e644499c7csm11249888137.15.2025.06.05.02.45.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Jun 2025 02:45:58 -0700 (PDT)
+Message-ID: <57693dc5-b624-4697-a26b-097c0fa4cce9@ventanamicro.com>
+Date: Thu, 5 Jun 2025 06:45:55 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv/kvm: use qemu_chr_fe_write_all() in
+ SBI_EXT_DBCN_CONSOLE_WRITE_BYTE
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+References: <20250605090012.1268809-1-dbarboza@ventanamicro.com>
+ <0b6b429a-a3bc-4707-9e94-67d9fe8cc363@linaro.org>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <0b6b429a-a3bc-4707-9e94-67d9fe8cc363@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::742;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x742.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::944;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-ua1-x944.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,26 +106,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-In this version I removed the reference of SBI_EXT_DBCN_CONSOLE_WRITE in
-the commit message. That API is *non-blocking*, and citing it to justify
-a change in a blocking API sounds weird. It's also uneeded since we have
-a good case without it regardless.
 
-No other changes made.
+On 6/5/25 6:26 AM, Philippe Mathieu-Daudé wrote:
+> On 5/6/25 11:00, Daniel Henrique Barboza wrote:
+>> The SBI spec states, for console write byte:
+>>
+>> "This is a blocking SBI call and it will only return after writing the
+>> specified byte to the debug console. It will also return, with
+>> SBI_ERR_FAILED, if there are I/O errors."
+>>
+>> Being a blocker call will either succeed writing the byte or error out,
+>> it's feasible to use the blocking qemu_chr_fe_write_all() instead of
+>> qemu_chr_fe_write(). This is also how SBI_EXT_DBCN_CONSOLE_WRITE is
+>> implemented, so we're also being more consistent.
+>>
+>> Last but not the least, we will duck possible changes in
+>> qemu_chr_fe_write() where ret = 0 will have a 'zero byte written'
+>> semantic [1] - something that we're not ready to deal in this current
+>> state.
+>>
+>> [1] https://lore.kernel.org/qemu-devel/ CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
+>>
+>> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+>> ---
+>>   target/riscv/kvm/kvm-cpu.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> Thank you very much Daniel!
 
-Changes from v1:
-- removed the "SBI_EXT_DBCN_CONSOLE_WRITE" bit from the commit msg
-- v1 link: https://lore.kernel.org/qemu-riscv/20250605090012.1268809-1-dbarboza@ventanamicro.com/
+No problem :)
 
-Daniel Henrique Barboza (1):
-  target/riscv: use qemu_chr_fe_write_all() in DBCN_CONSOLE_WRITE_BYTE
+FYI I just sent a v2 with a small change in the commit msg. Your ack was kept.
+Thanks,
 
- target/riscv/kvm/kvm-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
--- 
-2.49.0
+Daniel
+
+> 
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> 
 
 
