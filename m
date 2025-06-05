@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9F81C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:01:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C4D3C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:05:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN6Sa-00039H-01; Thu, 05 Jun 2025 05:00:28 -0400
+	id 1uN6XF-0004qB-4M; Thu, 05 Jun 2025 05:05:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uN6SY-00038w-C7
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:00:26 -0400
-Received: from mail-vs1-xe41.google.com ([2607:f8b0:4864:20::e41])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uN6SS-0005ZB-Pi
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:00:25 -0400
-Received: by mail-vs1-xe41.google.com with SMTP id
- ada2fe7eead31-4c9cea30173so238206137.3
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:00:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749114019; x=1749718819; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jHTTv6qaPjg9mjTN+H6fpzOa+vA+iw+s8NFNFON67iA=;
- b=BWBgDDJcFNDYUGrtlOUoNq2xSpFme0mv6GQ+JnHoYLdcf/BcogKBibCiUUD/sDe/ZF
- XCQv7Q06F0ijgnIGTqKmkWTzWUZ2E+2I6Sgb7nHoyNS44AjWRMkkIJ8nxq9o2MszsvBj
- ymRKYL6QLPQfknC2gzvAPl1Wc2+LNUojEjF4h7x3HEErA3O+DhkT7BSsH5V8N5BcNtyt
- mpPD91AshCnTrt2YGS7VmkA01o7vWfa2RRNSW+bKXFs/FkTLih9tuAMbuitLORx4bSe0
- cAWrUqU2US2UH/1O5qCmCmtqGXNn+WxvuL/KkXBjSib8MhzXVavtOgnR3cPFAknEkEzF
- Crxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749114019; x=1749718819;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jHTTv6qaPjg9mjTN+H6fpzOa+vA+iw+s8NFNFON67iA=;
- b=jn7Gzv3c14fkEPvEFqNuFtRUqEmQTxbsRj7G/ezSGec6aa8gv6+cQjRcq18n2DmSxJ
- 5cY438P520kYGexK+N79cJZQ0xGOEP9EYyhhtke6cy+s9HPVrs03fsvmZZBEBxHETpZ+
- mKeMZIhyKrPrdGB7QZrjBR5YKceKSQYEqjnpES4OuumJmOJ1YMCSW7P8W5P3u8iyrX8l
- Y3ekNngKMzlHMGNX3uV40VmZwTGmprv8+qqOsnMzXlHD1/WmFmRAqopZNrhCjUNKPs4F
- xEUmr2Mb3m6EZ1zCSXuYDlgY0YcO1+ZcOhHZZIB7u4daf0mCdMblFIBbhsKYbE4sfvtX
- YkCA==
-X-Gm-Message-State: AOJu0YzDiPteY6nRTtyRhYhdTOcpKYKDODQzUkc3pxDC8gd+SGMmPh6g
- XDYmzMlwskwuPYit14WTsjRY0med1Se8SSjCaydfAvgwb1RdHJlAdRx7jA57zl+P5KQNXRBlSSZ
- FP61rmwlo+g==
-X-Gm-Gg: ASbGncsUoBHdW26sHhoxuhDcG9Vv3ykerYqs8yrYm5jfiNx3APvwjE+LD1M+EqpQZne
- aEQqUR/y5pkPHReg+aUzcYluJb8CXqOqpiq+HtnSVBtuqApeyP9k8yl1qV3VAlpeTvLVToq6ZuH
- sIzDL/r1r+or+Xv9/v5EMwheWvQU739dG00KC4qILJlW5WMDbvX+ZMorkM0FuAoBW2oqsaOBUop
- 46D+U0wgrScIQBQUA4oIAcIcP6dfYPFJdSytWEr4qEHYS93YtkSd53wXM7wvoT7NCbM+g/Np+ly
- raKcSDGXXHl5WCwXOt/anJA3Z0WrRHODs5hJodhffPz4MNBQA2uP+qqONIsutaB3LS3g/xUGFqg
- /oI/8GkxKCyx337c=
-X-Google-Smtp-Source: AGHT+IHS9BWgKA2/DTEfD7xIQqdPXHgWBPHxHyc2LkOP8z9a3ZaTccBpxPZNfGhy7ArAG9P0zafjLQ==
-X-Received: by 2002:a05:6102:534f:b0:4de:81a:7d42 with SMTP id
- ada2fe7eead31-4e746d11581mr4674544137.1.1749114019150; 
- Thu, 05 Jun 2025 02:00:19 -0700 (PDT)
-Received: from grind.dc1.ventanamicro.com ([177.188.133.196])
- by smtp.gmail.com with ESMTPSA id
- a1e0cc1a2514c-87e2a27de8fsm10370670241.7.2025.06.05.02.00.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 02:00:17 -0700 (PDT)
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, philmd@linaro.org,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Subject: [PATCH] target/riscv/kvm: use qemu_chr_fe_write_all() in
- SBI_EXT_DBCN_CONSOLE_WRITE_BYTE
-Date: Thu,  5 Jun 2025 06:00:12 -0300
-Message-ID: <20250605090012.1268809-1-dbarboza@ventanamicro.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN6XA-0004m8-LB
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:05:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN6X8-0006H2-5U
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:05:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749114306;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=BUCGu6LPsAYg82Du/aUfuZOjyaxl2x9hZPYp0HuWulI=;
+ b=T5YDQaplFPoOYHwAmD+9R2fD9k1wiLkmq0MeFucdytlTTZeFb0/AIAjl2QjRAnVz8Lc2pk
+ 05Ud2TA7X0mH9YzbjC/Upl++ofgbwwBbYc+ajGFghFYdFfoKva+eOjU3ql9sjrk9Hif9dy
+ Q/FgmBi/Oj6pyC1HFQ9UAZRuLa4sVGc=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-373-h5S4YjtZPMmpU0SHFOCo8Q-1; Thu,
+ 05 Jun 2025 05:05:03 -0400
+X-MC-Unique: h5S4YjtZPMmpU0SHFOCo8Q-1
+X-Mimecast-MFC-AGG-ID: h5S4YjtZPMmpU0SHFOCo8Q_1749114302
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CFB1E1956095; Thu,  5 Jun 2025 09:05:01 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5C83C195E74A; Thu,  5 Jun 2025 09:05:00 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 746CA21E6768; Thu, 05 Jun 2025 11:04:58 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org,  Daniel
+ =?utf-8?Q?P=2EBerrang=C3=A9?= <berrange@redhat.com>,  Thomas Huth
+ <thuth@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>,  Gerd Hoffmann
+ <kraxel@redhat.com>,  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Kevin Wolf <kwolf@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  Peter Maydell
+ <peter.maydell@linaro.org>
+Subject: Re: [PATCH v3 1/3] docs: introduce dedicated page about code
+ provenance / sign-off
+In-Reply-To: <87msanyjls.fsf@pond.sub.org> (Markus Armbruster's message of
+ "Wed, 04 Jun 2025 10:52:15 +0200")
+References: <20250603142524.4043193-1-armbru@redhat.com>
+ <20250603142524.4043193-2-armbru@redhat.com>
+ <87a56o3gxc.fsf@draig.linaro.org> <87r000ypi0.fsf@pond.sub.org>
+ <37b3f3a1-bacb-4682-a9d2-7771e29fe55f@linaro.org>
+ <87msanyjls.fsf@pond.sub.org>
+Date: Thu, 05 Jun 2025 11:04:58 +0200
+Message-ID: <87frgek18l.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e41;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-vs1-xe41.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,43 +99,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SBI spec states, for console write byte:
+Markus Armbruster <armbru@redhat.com> writes:
 
-"This is a blocking SBI call and it will only return after writing the
-specified byte to the debug console. It will also return, with
-SBI_ERR_FAILED, if there are I/O errors."
+> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>
+>> On 4/6/25 08:44, Markus Armbruster wrote:
+>>> Alex Benn=C3=A9e <alex.bennee@linaro.org> writes:
+>>>=20
+>>>> Markus Armbruster <armbru@redhat.com> writes:
+>>>>
+>>>>> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>>>>>
+>>>>> Currently we have a short paragraph saying that patches must include
+>>>>> a Signed-off-by line, and merely link to the kernel documentation.
+>>>>> The linked kernel docs have a lot of content beyond the part about
+>>>>> sign-off an thus are misleading/distracting to QEMU contributors.
+>>>>>
+>>>>> This introduces a dedicated 'code-provenance' page in QEMU talking
+>>>>> about why we require sign-off, explaining the other tags we commonly
+>>>>> use, and what to do in some edge cases.
+>>>>>
+>>>>> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>>>>> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+>>>>> Signed-off-by: Markus Armbruster <armbru@redhat.com>
+>>>>> ---
+>>>>>   docs/devel/code-provenance.rst    | 218 +++++++++++++++++++++++++++=
++++
+>>>>>   docs/devel/index-process.rst      |   1 +
+>>>>>   docs/devel/submitting-a-patch.rst |  18 +--
+>>>>>   3 files changed, 221 insertions(+), 16 deletions(-)
+>>>>>   create mode 100644 docs/devel/code-provenance.rst
+>>
+>>
+>>>>> +
+>>>>> +   Signed-off-by: YOUR NAME <YOUR@EMAIL>
+>>>>> +
+>>>>> +using a known identity (sorry, no anonymous contributions.)
+>>>>> +
+>>>>
+>>>> maybe "(contributions cannot be anonymous)" is more direct?
+>>> If we're deviating from the kernel's text (which is *fine*), let's get
+>>> rid of the parenthesis:
+>>>      using a known identity.  Contributions cannot be anonymous.
+>>> or in active voice:
+>>>      using a known identity.  We cannot accept anonymous contributions.
+>>
+>> I'd add an anchor in the "commonly known identity" paragraph added in
+>> commit 270c81b7d59 and here link to it.
+>
+> Makes sense, thanks!
 
-Being a blocker call will either succeed writing the byte or error out,
-it's feasible to use the blocking qemu_chr_fe_write_all() instead of
-qemu_chr_fe_write(). This is also how SBI_EXT_DBCN_CONSOLE_WRITE is
-implemented, so we're also being more consistent.
+Hmm, this splits the information between code-provenance.rst and
+submitting-a-patch.rst.  The latter spot already links to the former.
+Let's move the paragraph here.
 
-Last but not the least, we will duck possible changes in
-qemu_chr_fe_write() where ret = 0 will have a 'zero byte written'
-semantic [1] - something that we're not ready to deal in this current
-state.
-
-[1] https://lore.kernel.org/qemu-devel/ CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
-
-Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
----
- target/riscv/kvm/kvm-cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/target/riscv/kvm/kvm-cpu.c b/target/riscv/kvm/kvm-cpu.c
-index e1a04be20f..86724e5c44 100644
---- a/target/riscv/kvm/kvm-cpu.c
-+++ b/target/riscv/kvm/kvm-cpu.c
-@@ -1605,7 +1605,7 @@ static void kvm_riscv_handle_sbi_dbcn(CPUState *cs, struct kvm_run *run)
-         break;
-     case SBI_EXT_DBCN_CONSOLE_WRITE_BYTE:
-         ch = run->riscv_sbi.args[0];
--        ret = qemu_chr_fe_write(serial_hd(0)->be, &ch, sizeof(ch));
-+        ret = qemu_chr_fe_write_all(serial_hd(0)->be, &ch, sizeof(ch));
- 
-         if (ret < 0) {
-             error_report("SBI_EXT_DBCN_CONSOLE_WRITE_BYTE: error when "
--- 
-2.49.0
+>>> I like this one the best.
 
 
