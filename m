@@ -4,93 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8E17C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 16:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7C52C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 16:31:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNDQm-000723-9r; Thu, 05 Jun 2025 12:27:04 -0400
+	id 1uNDUc-0005ba-NU; Thu, 05 Jun 2025 12:31:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uNDQi-0006z6-Cq
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:27:00 -0400
-Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uNDU3-0005F5-JO
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:30:32 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uNDQg-0007wL-8E
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:27:00 -0400
-Received: by mail-ej1-x62d.google.com with SMTP id
- a640c23a62f3a-adb5cb6d8f1so191091866b.3
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:26:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uNDU1-0000oP-71
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:30:26 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-708d90aa8f9so12228277b3.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:30:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749140816; x=1749745616; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1749141023; x=1749745823; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aVGmIQVUI71LwqjcHS0gv4sLRbpZFyoXIdxBn+SQNA0=;
- b=pTIgbQV0hf2+QNSUHOkWunGAd0+j2E7csHqiWeR/mHtV5QUcP2n2s4pBv/OVkjpBVa
- egr6f0E6tIMbB7vS+Wdk1+X/NoXtUgDEsAsbDbCHLLjjIIMbJ3W5zhlLVApQZCRSUdlh
- qDC2oJPKouhCF7gpzFPqY2i845wHc3+yapeXE6qCciZZo20oyiYmGs8SWGeaKE4QtXkN
- dMeHJUB4tcCUAqlu3duMbRjgex/CpaeAyJ/gx+IxrdG5LG23CX6i3BRFwA4nebNxPhfz
- +baim/IAtIX5tgcETH4kyxC+pGKeX/m4ce5DFUILk+cO6XXnqII8fpClUmMP3UCdD8uD
- bJWw==
+ bh=8VLeZXtiyN8c5iZoJYezNM+Ro1ne6h44DZkTHRNf6DE=;
+ b=PL48mwwtKMn8umaiOH4g+Yb25PuDHcf7nFfBT/KL/DZE5fDcCFc1pWnwJ3GXVoC+TV
+ mPaqn6sqAPQndA1nuExDNxvuN22wq2kkMRgx1IHoKaOp9icw2CZBx392TAvUaxdypqzM
+ WBSnQPbFoo+QNbhjhTT07kzjcmo1txZ4h4uGD4SlJvDZ4Cm5d6bxc9WN2FRwPIWMdxyU
+ iUTMUnT7OVT0mJ0vgNGmGtf9EqEeK5SOC8HbF9QY0ZwXNDTwlSe8zvzvoSB0V59U2LVP
+ qnXGjggv2F1ikKuZSjGIAvF11UxivJCFxBbkIBhxvSmGHBsNaCZYdEyV7RHSlbTA+Djj
+ /0ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749140816; x=1749745616;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1749141023; x=1749745823;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aVGmIQVUI71LwqjcHS0gv4sLRbpZFyoXIdxBn+SQNA0=;
- b=ZVt2be+Q/l7KfRnH482/qvzSgMp5WdFUXrCPA5PlS+RRFK6GU6yTEueRmwN+M7LrsZ
- 3WKC/oqcpZGAb5R75tvXvvT6lIxlWYl+M3nHCVzRhbGI5Lm+0QIDhqFoqSTthRC3AAgf
- xoQVmTtOcZRfDc5bv85kQDNyOs1LPt/N7btQRbcmWLxDQafNx4jrgBG3St47wrytfFXi
- JHrwAAqtjkokHghA2j2FGmdppV6S4y0DDVnAYRIWLFWf7qfNXOKVRsKYb783DJViSaO4
- TS8FbifQMYgAgsqjxkcMI7tbNodle4lmnDJ70U88mDEyQWMnyoD+dc/MamnxyDe+V9f5
- WxtA==
-X-Gm-Message-State: AOJu0YziPDZ6W91bboHkbfcx0ORalwcrj/421MldnBzYOylI8D+taReV
- AKYVcipTkGpGXa7ZUmsZF1Qk2M5Eqhp+l9YyoDlJDCfupBJX3ZfJdqn9gwd9IF+LT60=
-X-Gm-Gg: ASbGnctYUnt8q1tXQSH/Pf7Bz2QB+bNYzWiKt299kD/8YXFMUo/IquRw6yI/KEaO4ok
- yYBSBHETHu8T+Warg5BfLRoLx4qw4vaWXx97LwbHN5uJ0fS+nUE8Aq0q6tfayZob5k4oi5TFdmi
- zRBYpFkXatyIwKXfyJkzAe8EydL69zwEKtSkTCTweypQ9HeWPZPcLVRLIvWjeGVB2a/9fRPjq5/
- 2o6LrhbKNn3c/JdWBUvu7LvBFw3tS8GQbQUg9jfXQI9EI3dmF5tWuj+c9nuJ6PPxuUh0TwAZNIm
- 6nWbCVVHAn49tP7qA0MRuTV5cJ1QKzjKtH/rSz8ebT5jCqt10qIa
-X-Google-Smtp-Source: AGHT+IFFZqOxHLX0Ju5AyBlTOlkaVs0ym2oYyDBqBWhCEUja6Z/vfIiHnkCMTsKRC9vp4p0rUvidPg==
-X-Received: by 2002:a17:906:9fc8:b0:ad2:425c:27ce with SMTP id
- a640c23a62f3a-addf8caa33fmr708579166b.2.1749140816551; 
- Thu, 05 Jun 2025 09:26:56 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5d82ccf8sm1266512566b.44.2025.06.05.09.26.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 09:26:54 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 211EE5F829;
- Thu, 05 Jun 2025 17:26:52 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Markus Armbruster <armbru@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: [PULL 08/17] MAINTAINERS: add Akihiko and Dmitry as reviewers
-Date: Thu,  5 Jun 2025 17:26:41 +0100
-Message-ID: <20250605162651.2614401-9-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250605162651.2614401-1-alex.bennee@linaro.org>
-References: <20250605162651.2614401-1-alex.bennee@linaro.org>
+ bh=8VLeZXtiyN8c5iZoJYezNM+Ro1ne6h44DZkTHRNf6DE=;
+ b=LZBuEtRMKROlF5qDBSZTkHrRiuzgvCyjRZGXnGfW/Q5BTL7Wnczh7en/1cerSFc9MC
+ yDhjaiY2dujlVkFpKFIZNs720zCqZrbxf5LP2gIZ6f5UkeyTRySQIGP+ko4OZgXy7VVs
+ Bp0ucDjbk9LIyAfvKp+5ztXOBPTtZtHuxTmCbm3Njj2bmGdVJzDnC9C0BdTRn4Gh80P2
+ XM84a64GUsjLWTnxN3gtDdCP/uLkG4XEZi/uh9qt1YniYM0ssquxsanv6xLA4dJLF69Q
+ cl1aETDfRB2hespztyKecnyT09vIEhZclCMZRfCeh6+RmXCWCeceDZYH3zYsFDirDW2i
+ bK6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWBwYO+LQK+VxdByi3M+PJHCP/hpnRoNZQN5kbEW7LW+C1QLhiiX5TJIeNfl1Irm6GJ4tA7FFYpKVGg@nongnu.org
+X-Gm-Message-State: AOJu0YzWQsHRCcMkEGRawoMtG1tJbGvQDcBNvjd8tIVNJJr4cGQh1mjh
+ EyRrJjTJ6eLZPMYlOU3F+4mEL1ZcF5NPsxNzM/mLrHRx09mduC7gPg/adHLDY0Bv1uMcdauWJD2
+ s0i0l1L2Tkf/32PC9ByWss9a368XQpco0FXijG2B0ng==
+X-Gm-Gg: ASbGncuhvuo8Q57zNyLndNJ5Lr0k872+LCpBNJg+vi1/ilOJAt84jDB4wpHpGGTqX1R
+ VlfkQWL1gNpTRzNWk/vGIRdqUkJClcIqZ8cHylgLgr/9RNP4Q+9lqe3EYBcJt8xcj/zqwhnp35J
+ l0XvN44iqfY0wVp5LZir3f2sqMJCNtdTqKAw/Ox/jTS06r
+X-Google-Smtp-Source: AGHT+IGG0TO0LGFS0twEe0XL3TuRhRSFvGHfBKQmcOYDNyoXzTaghSXOoutOd2xO0PHcj7maX7v+YF+p+hHy5P/fzVc=
+X-Received: by 2002:a05:690c:45ca:b0:710:f74b:61ab with SMTP id
+ 00721157ae682-710f7692132mr662957b3.9.1749141022732; Thu, 05 Jun 2025
+ 09:30:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62d.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20250604191843.399309-1-stefanha@redhat.com>
+ <aEFWeZUlqqRvHsJT@redhat.com>
+ <42276df1-4267-4038-8685-c7a193259e67@linaro.org>
+ <20250605125015.GB417071@fedora>
+ <ff2a5d50-0908-4736-b664-523b2ed09f30@linaro.org>
+In-Reply-To: <ff2a5d50-0908-4736-b664-523b2ed09f30@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Jun 2025 17:30:11 +0100
+X-Gm-Features: AX0GCFt1DT-f-LR644GIw7ENXtfGWaZhU-EaC86nHdQra3NKU90bOa83dkQEN6w
+Message-ID: <CAFEAcA8LMZ6xqW_SvPFjDMiQXYUthB3cjKUVThUfaieYfPxvNw@mail.gmail.com>
+Subject: Re: [PATCH] virtio: avoid cost of -ftrivial-auto-var-init in hot path
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: Stefan Hajnoczi <stefanha@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-devel@nongnu.org, qemu-block@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,30 +102,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks for volunteering to help.
+On Thu, 5 Jun 2025 at 17:18, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
+> wrote:
+>
+> On 5/6/25 14:50, Stefan Hajnoczi wrote:
+> > On Thu, Jun 05, 2025 at 01:28:49PM +0200, Philippe Mathieu-Daud=C3=A9 w=
+rote:
+> >> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> >> index 85110bce374..b96c6ec603c 100644
+> >> --- a/hw/virtio/virtio.c
+> >> +++ b/hw/virtio/virtio.c
+> >> @@ -153,6 +153,12 @@ struct VirtQueue
+> >>       EventNotifier host_notifier;
+> >>       bool host_notifier_enabled;
+> >>       QLIST_ENTRY(VirtQueue) node;
+> >> +
+> >> +    /* Only used by virtqueue_pop() */
+> >> +    struct {
+> >> +        hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> >> +        struct iovec iov[VIRTQUEUE_MAX_SIZE];
+> >> +    } pop;
+> >
+> > This is an alternative. Using g_alloca() is another alternative.
+>
+> Not a lot of these:
+>
+> $ git grep -w g_alloca
+> backends/tpm/tpm_emulator.c:136:        buf =3D g_alloca(n);
+> tests/unit/test-char.c:1012:        be =3D g_alloca(sizeof(CharBackend));
 
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250603110204.838117-9-alex.bennee@linaro.org>
+There are also some alloca() uses, mostly ancient code in
+linux-user that should really not be using it.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 7718199979..194695c881 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -2669,6 +2669,8 @@ F: include/hw/display/ramfb.h
- 
- virtio-gpu
- M: Alex Bennée <alex.bennee@linaro.org>
-+R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-+R: Dmitry Osipenko <dmitry.osipenko@collabora.com>
- S: Odd Fixes
- F: hw/display/virtio-gpu*
- F: hw/display/virtio-vga.*
--- 
-2.47.2
+Like variable-length-arrays (which we managed to eradicate)
+use of alloca is tricky because if the allocation size is
+large then it just runs us out of stack in an uncontrolled
+way. I'm not sure it's worth trying to remove existing alloca
+use, but it would probably be preferable not to add more.
 
+(GCC has a -Walloca option, so if we ever did get rid of all
+of them we could avoid new ones creeping back in.)
+
+thanks
+-- PMM
 
