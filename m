@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F7FBC5B552
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C961C5B543
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 16:27:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNDQk-00070T-3y; Thu, 05 Jun 2025 12:27:02 -0400
+	id 1uNDQq-00075U-1H; Thu, 05 Jun 2025 12:27:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uNDQi-0006z5-CF
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:27:00 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
+ id 1uNDQm-00072B-DU
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:27:04 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uNDQf-0007w9-Gu
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:27:00 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-ad55d6aeb07so229673266b.0
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:26:57 -0700 (PDT)
+ id 1uNDQj-0007xJ-Af
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:27:04 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-60766191202so115048a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:27:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749140816; x=1749745616; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749140819; x=1749745619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GQwrdoDZTl53LB+IkPogNbh7NAW9W/1iQ9BQhh4VHRk=;
- b=o2+I/oS8bJuUmh4V0o9C2t/ccYckPszbnTRUHOgkLILK35Tyw7UIKHeyM2v8NjxRop
- LQIBm+5hkVWZFvrYzxdEuZlS+VgK7pMYY513De2WUk+ePthJR99Q+Z6pK+9BdmUNsw5v
- nQMKKJlQLGKTtc19UZKu40AR8lZen5m0x/+8LSUSDeFrDJSGbm4XVQivJZ7PywdookIw
- QUpHqI41SRQ64xBH9twMX0sZoXmAMaRHmnMjMymgc01hFM7xoF7j3rpXwFHJqTrAkmNU
- EZLk108v3qbZVfb9stOeENA8mtlRgB0o07PYz4YsQBJHJkoq7sIa5iKx6LQ/ywLf3R7x
- boMQ==
+ bh=eS23RxNURpTKdKnQyf0A+flfVwkpy5WMSUSCIe4V0wA=;
+ b=XFJLHwYTJAKwmUuyk98jaHEI8BtGduUuNr4hg+mKVtrj+iVEEKTk7pcybWMvJVRFaa
+ ID53jyBwRcXq6iuKe4IkqaorZmpXW2gKxhB6OtQuuNXijR7p3eo0e/H89YIFw/dTuq7D
+ y5dqA0LnrNvhP9nInc9BtBz4WVMvYk93Oe/AgChNN7jzVjnGzIidaARXLnS8EdM82eKp
+ tbldyJkCjteOdNg0I9wr1dPD2y+zySt/s8A/bhZAYJ6ybc38daOcthZLYaGy8AWZk8nd
+ FiYoVx5JI38CGZQehOhIRYkAJ0Sh59kYdgxnzMR360Gh1kNCN321Dmnf4Hhz+x+wwCaP
+ E+0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749140816; x=1749745616;
+ d=1e100.net; s=20230601; t=1749140819; x=1749745619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GQwrdoDZTl53LB+IkPogNbh7NAW9W/1iQ9BQhh4VHRk=;
- b=TL49xacE0zsbMzGOPfH4XTzLzidqGIexdHtVOsaLcTNpnj4hfOTCMWJm/wdv0VI689
- 9g0YBwZhuIB0WosMh5MRGEhBWx6gcNn6sXiPYAxF+aiYU8dedJkSUE7Qr5MVa4c36IuO
- 1vc1/O1NPpYwRP18/QhT0nQRJP3ZzHONbDGAB0MbMvxKmP0B/6HigYqqgIaCu43AGtB8
- zydKJ14JI6BsMN9CPTIRRD+ecqha9+B37wUo6k7ekT2hx1fT0EhNI3+iN6F/qqOCBDfE
- 3UIyb6cij+BgRMrI7okLYgT40dk6ROIaIWl5lV5lXkiSCi+tQJrWWP3C/VNGldoT/q+C
- hzxQ==
-X-Gm-Message-State: AOJu0Yx2/CHIfCo4hTQ1YG3DRQEFBTh3Vj27KSz6/JM2CG5kQlFhSqki
- WGGzaAE0byKS3vPixIKB13HoJbQvyvf8kh6dTbNSs3goZ51mRS275gBELsCwM2X4Sws=
-X-Gm-Gg: ASbGncsizhGeobaquUT5V6mEtPlExo+vpL3IJWGn1oiePL8AwB78b8V1eRA1cle+GZA
- SCXqU8rcMDgxQF8KJQIwIoVwTSgg70rd6hofVHFGHlG107lsEDdIRruT5PzPGhJy9kWKiInWdSX
- p6eHMrorjTpLOMs4wyr+Tb4vtnPQ72/caLY/rRjbzAQOuW+b9bg7/v0yZ5rCaFSkVh8wJYx5oVH
- koDFiYcZi1LSmvNgBHJVLCgvfl6X+RteiZVg2b4hoz1Y9dW1GlSmWc1jaD8Fl57FAXdCbbZXKhF
- ZgFmXY0fFQFFydbZBmgcKgaJk9zsL8e28GoRd247KFp2i6hLtZcM
-X-Google-Smtp-Source: AGHT+IHhGpOgsEPpHbuowABzQgDC0eereD7wcbln7xOKXUTivyxm1kAuIpNCrPzFnMsK89FHik0GPg==
-X-Received: by 2002:a17:907:3da3:b0:ad8:9a86:cf52 with SMTP id
- a640c23a62f3a-addf8c995c5mr769111066b.11.1749140815913; 
- Thu, 05 Jun 2025 09:26:55 -0700 (PDT)
+ bh=eS23RxNURpTKdKnQyf0A+flfVwkpy5WMSUSCIe4V0wA=;
+ b=jyKTjuBlYWSGEsFN/QW0Y+Y5IrOB0fK/6dOg+giWxMfjd59l6TvdKeS/XyjoLyuTTC
+ YPtvLfFgUsny9/48+B1b6fVhhIXww25gYuQgYTHLaEblTybV59U4OE1nVlk86gbLukkI
+ 7JyX65ITAZ3czQwy0ybB3b5/h1BhsCb3HqZsgj+e5z2U9jPTlQGQmnP43pah50zXVHZF
+ xI/0mkTYVcXsHjofNZ7n4G7zLepzyk+PJXg4DY1tOz9AHUxP0WHsNgqhae4gmpYyIYFO
+ AzvGaJvpFPlQqpSYaiEjP5M0umZClbe/Hp77hRcUJxYaHDN2i0qT1Tfi54KT7PK2+caB
+ 32fA==
+X-Gm-Message-State: AOJu0Yy2Q0EblfUz55wFyi5bvj1sRxZNyhgIeyu9rLOaeA5VyWFSqm/U
+ Wqz4RvkFfel/AFo168IQlIfQXYXeScuhuFPoSfKSdcyO5iHyVS5JlX/UT4/t/MPRjYI=
+X-Gm-Gg: ASbGncuDdQYhjPsg/OfpQmwShZSLiJRpOTdc+5UjzDqAki2f6M+eI6tZ/z6UdnGivoZ
+ x+5E41FIlvnrUFdUj3Lc77f5MUzzDz1p7i/oR7mXAr3h+rv4KY2ztq/O9+nSJqmQcxX6P9iRL7K
+ Hwifwx451SbGMUqffiMFHqY95kOTYJA6qYVY2rkME/ImnuCfS6ia6C5K9HTn5QITPrj/zOGPcc4
+ 0xhgEhz0tD4aQuTwaTtzVi/VTE5bjBm876+4RP2j5UNbiICS1C2zlg2njcBhdozQji1Ptf4lJ9s
+ vgnThaPtYd5Vj/o9FVlUHNd9e8wau0k/m/zTYc0Q/KykxZcMfm3i
+X-Google-Smtp-Source: AGHT+IGtAGUs3kILSxvdRvjqSpQvjQj/MhupKlXEcGPiNXEe3sbuJKDnoCH2rEs3a0q9A/LsGG4bEA==
+X-Received: by 2002:a05:6402:51cf:b0:5f6:fab2:9128 with SMTP id
+ 4fb4d7f45d1cf-606ea15f54fmr7812527a12.19.1749140819476; 
+ Thu, 05 Jun 2025 09:26:59 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5d7fec76sm1284384766b.20.2025.06.05.09.26.53
+ 4fb4d7f45d1cf-60566c2b301sm10779340a12.15.2025.06.05.09.26.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 09:26:54 -0700 (PDT)
+ Thu, 05 Jun 2025 09:26:57 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id E677C5F81D;
- Thu, 05 Jun 2025 17:26:51 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 69AB85F82C;
+ Thu, 05 Jun 2025 17:26:52 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-Subject: [PULL 06/17] contrib/plugins: allow setting of instructions per
- quantum
-Date: Thu,  5 Jun 2025 17:26:39 +0100
-Message-ID: <20250605162651.2614401-7-alex.bennee@linaro.org>
+Cc: Dongwon Kim <dongwon.kim@intel.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>
+Subject: [PULL 11/17] ui/gtk-gl-area: Remove extra draw call in refresh
+Date: Thu,  5 Jun 2025 17:26:44 +0100
+Message-ID: <20250605162651.2614401-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250605162651.2614401-1-alex.bennee@linaro.org>
 References: <20250605162651.2614401-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52e.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -105,69 +105,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The default is we update time every 1/10th of a second or so. However
-for some cases we might want to update time more frequently. Allow
-this to be set via the command line through the ipq argument.
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+This partially reverts commit 77bf310084dad38b3a2badf01766c659056f1cf2
+which causes some guest display corruption when gtk-gl-area
+is used for GTK rendering (e.g. Wayland Compositor) possibly due to
+simulataneous accesses on the guest frame buffer by host compositor
+and the guest.
+
+Fixes: 77bf310084 ("ui/gtk: Draw guest frame at refresh cycle")
+Reported-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reported-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Message-Id: <20250214170813.2234754-1-dongwon.kim@intel.com>
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250603110204.838117-7-alex.bennee@linaro.org>
+Message-ID: <20250603110204.838117-12-alex.bennee@linaro.org>
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index a72591ee4d..456d01d5b0 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -811,6 +811,10 @@ This plugin can limit the number of Instructions Per Second that are executed::
-   * - ips=N
-     - Maximum number of instructions per cpu that can be executed in one second.
-       The plugin will sleep when the given number of instructions is reached.
-+  * - ipq=N
-+    - Instructions per quantum. How many instructions before we re-calculate time.
-+      The lower the number the more accurate time will be, but the less efficient the plugin.
-+      Defaults to ips/10
+diff --git a/ui/gtk-gl-area.c b/ui/gtk-gl-area.c
+index 8151cc413c..429ba914e0 100644
+--- a/ui/gtk-gl-area.c
++++ b/ui/gtk-gl-area.c
+@@ -168,7 +168,6 @@ void gd_gl_area_refresh(DisplayChangeListener *dcl)
  
- Other emulation features
- ------------------------
-diff --git a/contrib/plugins/ips.c b/contrib/plugins/ips.c
-index d067971135..f110c565bc 100644
---- a/contrib/plugins/ips.c
-+++ b/contrib/plugins/ips.c
-@@ -145,6 +145,8 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                                            const qemu_info_t *info, int argc,
-                                            char **argv)
- {
-+    bool ipq_set = false;
-+
-     for (int i = 0; i < argc; i++) {
-         char *opt = argv[i];
-         g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-@@ -175,6 +177,14 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-                     return -1;
-                 }
-             }
-+        } else if (g_strcmp0(tokens[0], "ipq") == 0) {
-+            max_insn_per_quantum = g_ascii_strtoull(tokens[1], NULL, 10);
-+
-+            if (!max_insn_per_quantum) {
-+                fprintf(stderr, "bad ipq value: %s\n", tokens[0]);
-+                return -1;
-+            }
-+            ipq_set = true;
-         } else {
-             fprintf(stderr, "option parsing failed: %s\n", opt);
-             return -1;
-@@ -182,7 +192,10 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+     if (vc->gfx.guest_fb.dmabuf &&
+         qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        gd_gl_area_draw(vc);
+         return;
      }
  
-     vcpus = qemu_plugin_scoreboard_new(sizeof(vCPUTime));
--    max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
-+
-+    if (!ipq_set) {
-+        max_insn_per_quantum = max_insn_per_second / NUM_TIME_UPDATE_PER_SEC;
-+    }
- 
-     if (max_insn_per_quantum == 0) {
-         fprintf(stderr, "minimum of %d instructions per second needed\n",
 -- 
 2.47.2
 
