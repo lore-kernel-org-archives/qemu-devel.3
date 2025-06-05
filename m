@@ -4,72 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88BB2C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 18:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13653C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 18:25:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNFCa-0008Vh-Fz; Thu, 05 Jun 2025 14:20:32 -0400
+	id 1uNFH0-0004IN-FK; Thu, 05 Jun 2025 14:25:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uNFCY-0008U8-7U
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 14:20:30 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uNFGz-0004IE-7x
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 14:25:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uNFCW-0001Wl-NP
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 14:20:29 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uNFGx-00025F-Uf
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 14:25:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749147627;
+ s=mimecast20190719; t=1749147903;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dYnGFQd+8T70d72YmedPkEkOM2OzR/O/qE3BDyg8SnQ=;
- b=CpCh9ZlBXTnqG7/s/o/rgA8R1lAXIG20ydXjNVVFSNw0p43hzFLSwp7d0qcEc+oIwz9DxF
- jFaExeb6MCg3sA0EqGimq0XGvI3tHltQjRYZL+rZ8kEG5N+5DtocAkrF6valZcNJo0iFUh
- PLTw0GZfoIe09Qv9hWz3gjuc6y6XRNg=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-348-kVMxL3b0Mby7ffNZTZ9qkg-1; Thu,
- 05 Jun 2025 14:20:24 -0400
-X-MC-Unique: kVMxL3b0Mby7ffNZTZ9qkg-1
-X-Mimecast-MFC-AGG-ID: kVMxL3b0Mby7ffNZTZ9qkg_1749147623
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 137361956089; Thu,  5 Jun 2025 18:20:23 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.66.99])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7913A1956094; Thu,  5 Jun 2025 18:20:21 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>, John Snow <jsnow@redhat.com>,
- Michael Roth <michael.roth@amd.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL v2 2/6] docs/qapidoc: linting fixes
-Date: Thu,  5 Jun 2025 14:20:10 -0400
-Message-ID: <20250605182014.561172-3-jsnow@redhat.com>
-In-Reply-To: <20250605182014.561172-1-jsnow@redhat.com>
-References: <20250605182014.561172-1-jsnow@redhat.com>
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=eM3nOMHTk9YbrDgydhdfOfCdEbC02FB/FlHXz+HD8wKxFR7TVVJtDN4U/rS6yHh98WSTrR
+ 9/rDwuojQz57l8RDGVnLab4Ts9WkmBJj+RKmTDqK8NE4rEfKdUiTvgwO0JRG4dOIeW53CQ
+ 3g/gHHKw13+PnnYlGXZa62x//0mN89g=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-292-2NyXQmozOYuKnc9PTkz5sg-1; Thu, 05 Jun 2025 14:25:02 -0400
+X-MC-Unique: 2NyXQmozOYuKnc9PTkz5sg-1
+X-Mimecast-MFC-AGG-ID: 2NyXQmozOYuKnc9PTkz5sg_1749147901
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a50816cc58so520849f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 11:25:01 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749147901; x=1749752701;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=ryjcaMq6HpouzJj9pahd0g49OgCE548RvS1d+oUcZJvVabcXqvtL4ci/PvV2456/EF
+ nVQIj/dCtsLGzwMVlcyqiNILOUaYTWWEjMh4KgpSUZDp47s3/C41n6RDinQSEGkWBP5/
+ 6vCBy1MjMkV1dumWTKlmVilH5RxFCCe7vC0fSAytnwAN7r/dZQotoXnvFVEaGmf89uXM
+ witCiRkXDBBFtv1dkc0p28EO7WP8EtaPJj7ZH9STSrHLgimuLl5TSaeHqvZrQaUVESmO
+ 9q4kgNkXq1MiY5DN3J7fdBQ+sG91JjEfhrEaFJLNhZyuRy4YLrdUwMu1knjxqJlChIvI
+ BEVg==
+X-Gm-Message-State: AOJu0Yyz8uQFw4H485/B3ZnHrdQmM6hyq1ud50xfOIZnbKqAfM7k+Vlk
+ neqhxOjtWGsUkwmuLxsg2VDRAvUPyCVZSsoSwAL199NOF3w94pUUkY5X+q/TwXffPc2dyhWPchg
+ 1EGAM2Ihhm12I6I9LyoadX6yFMjukDYvCGLUn3H7hBQucIsUYiuzVK5A8
+X-Gm-Gg: ASbGncuN4DEMqE8t4LEsVZOQCs0FUYwlsho+eaOnpxnh9uGLJhBLAe9gIg3GIth2vj7
+ gdMq+POhxrsUFTA5OzoIw663UZEYKcuFE3yDxT3bkipUGwVG9KQ2qyTIVp8ro5mfZcIhc4bfPoz
+ If9nKz2y2zpCJBWUhuma28t4LsxesV/P1j58x0cjgo8/J/VeuvqgfCYzsOuIFaqhPGMb7biCoux
+ xEccpPYhWaSxcyGakpusujx6vBjsVzH11Ojfvgde234FeUtP/HvP8PvDVu1apTqwzkMwU3AMIN2
+ 1CUY+t/B4Z1kgw==
+X-Received: by 2002:a05:6000:4212:b0:3a4:e844:745d with SMTP id
+ ffacd0b85a97d-3a531cf5420mr111615f8f.56.1749147900828; 
+ Thu, 05 Jun 2025 11:25:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF5E3btI45fTIjiwP/NKAqebz5oOum5PoAfffBp7dp2nDkWuZMOJZr57RNpqO0XTRdFJxk+UA==
+X-Received: by 2002:a05:6000:4212:b0:3a4:e844:745d with SMTP id
+ ffacd0b85a97d-3a531cf5420mr111596f8f.56.1749147900453; 
+ Thu, 05 Jun 2025 11:25:00 -0700 (PDT)
+Received: from [192.168.10.48] ([151.49.64.79])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45209bc6d50sm1022355e9.5.2025.06.05.11.24.58
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 11:24:58 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v2 0/4] target/i386: Emulate ftz and denormal flag bits
+ correctly
+Date: Thu,  5 Jun 2025 20:24:56 +0200
+Message-ID: <20250605182456.464131-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250519145114.2786534-1-peter.maydell@linaro.org>
+References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,120 +109,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This restores the linting baseline in qapidoc. The order of some imports
-change slightly here due to configuring isort a little better:
-previously, isort was having difficulty understanding that "compat" and
-"qapidoc_legacy" were local modules because docs/sphinx "isn't a python
-package". Configuring this manually, isort chooses a different import
-ordering, which _is_ intentional here.
+Queued, thanks.
 
-Also: extra ignores are added for pylint. The most recent versions of
-pylint don't require these ignores, but the oldest versions we support
-do, so in the extra ignores go.
-
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-Message-id: 20250604200354.459501-3-jsnow@redhat.com
----
- docs/sphinx/qapi_domain.py | 25 ++++++++++++++-----------
- docs/sphinx/qapidoc.py     |  5 +++--
- 2 files changed, 17 insertions(+), 13 deletions(-)
-
-diff --git a/docs/sphinx/qapi_domain.py b/docs/sphinx/qapi_domain.py
-index c94af5719ca..ebc46a72c61 100644
---- a/docs/sphinx/qapi_domain.py
-+++ b/docs/sphinx/qapi_domain.py
-@@ -20,16 +20,6 @@
- 
- from docutils import nodes
- from docutils.parsers.rst import directives
--
--from compat import (
--    CompatField,
--    CompatGroupedField,
--    CompatTypedField,
--    KeywordNode,
--    ParserFix,
--    Signature,
--    SpaceNode,
--)
- from sphinx import addnodes
- from sphinx.directives import ObjectDescription
- from sphinx.domains import (
-@@ -44,6 +34,16 @@
- from sphinx.util.docutils import SphinxDirective
- from sphinx.util.nodes import make_id, make_refnode
- 
-+from compat import (
-+    CompatField,
-+    CompatGroupedField,
-+    CompatTypedField,
-+    KeywordNode,
-+    ParserFix,
-+    Signature,
-+    SpaceNode,
-+)
-+
- 
- if TYPE_CHECKING:
-     from typing import (
-@@ -56,7 +56,6 @@
-     )
- 
-     from docutils.nodes import Element, Node
--
-     from sphinx.addnodes import desc_signature, pending_xref
-     from sphinx.application import Sphinx
-     from sphinx.builders import Builder
-@@ -168,6 +167,8 @@ class QAPIDescription(ParserFix):
-     """
- 
-     def handle_signature(self, sig: str, signode: desc_signature) -> Signature:
-+        # pylint: disable=unused-argument
-+
-         # Do nothing. The return value here is the "name" of the entity
-         # being documented; for QAPI, this is the same as the
-         # "signature", which is just a name.
-@@ -210,6 +211,8 @@ def _get_fqn(self, name: Signature) -> str:
-     def add_target_and_index(
-         self, name: Signature, sig: str, signode: desc_signature
-     ) -> None:
-+        # pylint: disable=unused-argument
-+
-         # name is the return value of handle_signature.
-         # sig is the original, raw text argument to handle_signature.
-         # For QAPI, these are identical, currently.
-diff --git a/docs/sphinx/qapidoc.py b/docs/sphinx/qapidoc.py
-index 661b2c4ed0e..8011ac9efaf 100644
---- a/docs/sphinx/qapidoc.py
-+++ b/docs/sphinx/qapidoc.py
-@@ -27,6 +27,7 @@
- 
- from __future__ import annotations
- 
-+
- __version__ = "2.0"
- 
- from contextlib import contextmanager
-@@ -56,8 +57,6 @@
-     QAPISchemaVisitor,
- )
- from qapi.source import QAPISourceInfo
--
--from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
- from sphinx import addnodes
- from sphinx.directives.code import CodeBlock
- from sphinx.errors import ExtensionError
-@@ -65,6 +64,8 @@
- from sphinx.util.docutils import SphinxDirective, switch_source_input
- from sphinx.util.nodes import nested_parse_with_titles
- 
-+from qapidoc_legacy import QAPISchemaGenRSTVisitor  # type: ignore
-+
- 
- if TYPE_CHECKING:
-     from typing import (
--- 
-2.48.1
+Paolo
 
 
