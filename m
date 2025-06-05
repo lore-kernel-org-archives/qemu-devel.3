@@ -4,85 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BA93C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:12:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EAC9C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN7ZR-0003yp-CU; Thu, 05 Jun 2025 06:11:37 -0400
+	id 1uN7ZS-0003zL-V6; Thu, 05 Jun 2025 06:11:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uN7ZO-0003y4-Pb
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:11:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uN7ZP-0003yF-P2
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:11:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uN7ZM-0000To-CH
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:11:34 -0400
+ id 1uN7ZN-0000U8-MJ
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:11:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749118291;
+ s=mimecast20190719; t=1749118293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=xGJok4ar4KVyPbGQlvZ9sR0i7cZSDEGPhs8lHacKmKo=;
- b=NJJs+5h9c8SXCtG8BQult5tdhNDGtm4tDGvJndUcoYHrOdvAdBJDkjV8mA83jlN8pEiera
- mVycTHuB7Y+hirzTJiunqf6FGqk6Khug+wlJOLOjObBkKPlNBHWw9Onr5MI2aJx3X19jkB
- gK9hcO9lgnXeZ8LyjH0DcrsHP/BT1X0=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=SNmC5Do3yi81y5Ng9JdAMfDVJMpEljlycID+S3omCnY=;
+ b=AC+YH6qa350paetIb0GAFGrSRgMBC+zPWFTHqdsOqBeesx/Zmmi3T1PHBEUrorFIh46R/A
+ BL7cV665raiPRdhF/TiUJjazGzkJ0nkZBHyWu7sHaA1nF/Vebqgv4iZIETYPkVYAXhbUdX
+ /DFY0ZtFRP3dcKoIx34ja/gknvFipQY=
 Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
  [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12--EYrsoafOQqDFgynfFZwiA-1; Thu, 05 Jun 2025 06:11:29 -0400
-X-MC-Unique: -EYrsoafOQqDFgynfFZwiA-1
-X-Mimecast-MFC-AGG-ID: -EYrsoafOQqDFgynfFZwiA_1749118288
+ us-mta-53-5t4x-Ua0OLyD-phEd7G-bQ-1; Thu, 05 Jun 2025 06:11:31 -0400
+X-MC-Unique: 5t4x-Ua0OLyD-phEd7G-bQ-1
+X-Mimecast-MFC-AGG-ID: 5t4x-Ua0OLyD-phEd7G-bQ_1749118291
 Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-450cb8ff0c6so3605185e9.3
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 03:11:29 -0700 (PDT)
+ 5b1f17b1804b1-451d30992bcso6607695e9.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 03:11:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749118287; x=1749723087;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=xGJok4ar4KVyPbGQlvZ9sR0i7cZSDEGPhs8lHacKmKo=;
- b=OcP1fG5bJsguKt8UgxlRQMoo7SXc2/KnPV03s6WloxZ9JzGEq6uVRFm8s1tb2YgpTZ
- DzEJp6butefnR9pnPb+TlJbWCxo+VQQYQC2pbavFAQo1/vOlSUOXqAAudj3Wye6qTz5V
- RnL9w18eq1BphmaUikKvsuiFXBYFAc6Fh+sTLPhCBnG8pSYAAjqU2Sici5pU292WpXoy
- 2LvVqJ7O1Gqsw2nMPDi91eSZuxXgNwYVMic9mtTs49Yj6isMBbUOXB3hDeY+hp8NAk9d
- Y078DXB/eewCfDjo3/N9W4seRvMIa7+JRbPBJP+UrPrNHglJI7ojUoYFCEuTBR4F4Yl2
- 7R9g==
-X-Gm-Message-State: AOJu0Yy/SWvhrJiVgGX9x3DQA6Fb5cXJRT9OH7AFLIK9wn3GxYA4mmAm
- n5SmQcwIYzpJPLI1xmLweL0kvNU5UI0A2x34jCSDESyQE6y5pOWxUcP8ySKnk9a0gO2BhiZw9UH
- P07V8ksvnMV0XznzKXUjCopifgxQlLzB874tFKhczdnmThs7jnSH3B3P/O1+P3Pi1vzDChil+uL
- CygKuSK0A55spiUd3xLW7Jh/Omdqap58WaQqZrZKqZ
-X-Gm-Gg: ASbGnctQ5SKya7/C/lLGvJw6hm9aYjO9HlQ6VAGRDet2DW+zSzzMcKYcqVOvONVSDC6
- xTmS02TwO572oHbWav5OxiWnEDEIb2usF7qpSjz4D/s7UjVCR0hSzmFWYBUlStLCHHwr4K/XdFq
- bg8Zj+J2+6ZOwBZW2wIq+/rwu6GQAEaKkM34Fv/in+v64Yty8E3Z07O1dkFhjTnPjydTjZ8lXKz
- sUcPRmsDCyjaLvCONWAnn+9zL+K8gnrGuQVo9HcsRaCVdQTVAPVtuDaoSWeKU6JOsaEkRq+6DT8
- 6okQfN7SZCM2HyZmxwxQm9pP
-X-Received: by 2002:a05:600c:1c29:b0:441:d437:e3b8 with SMTP id
- 5b1f17b1804b1-451f0b256e6mr51276525e9.23.1749118286670; 
- Thu, 05 Jun 2025 03:11:26 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGcYpNOknwHhCDppbGuTnWbslbd758u7i1B1Whn61rsJvLpSAYC0WWvq4h43N730ICCbToKsw==
-X-Received: by 2002:a05:600c:1c29:b0:441:d437:e3b8 with SMTP id
- 5b1f17b1804b1-451f0b256e6mr51276175e9.23.1749118286143; 
- Thu, 05 Jun 2025 03:11:26 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749118290; x=1749723090;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=SNmC5Do3yi81y5Ng9JdAMfDVJMpEljlycID+S3omCnY=;
+ b=fZs5W/bUpxlrBL7QD/dQP4LnbZ/KmuWnTIG2zvqdXkQYfBc3SofEsSZAWdh43+eNiN
+ R+3agAVrYU9ployVaSIC9DYL7M/ut5CjRdhrYE9gs8X8tUbqRxilWAljHb0V8QdP757R
+ A/Own0pXzvd6pKjpmvBnfZ/Vhuazn6JeuEYsn1TJQlyC4pJ6iivjsseHWnkn6IApjl38
+ IBwY1pQtb3mJMYcztuIYuA6aksMUOENBsuDs+sRPSc8qSHkdvSiDxKxKsxxcpBJxVFS+
+ L3KzS5BUp9nKI6swVnh7atEe8+AsAUkCLE9HDlpTCNC8z+P9BtyBGCULzcroz0fwjTxQ
+ 3nZQ==
+X-Gm-Message-State: AOJu0YxvQEmrhDuFnhB6rHFhmq10H1Wb6LghxeOWSYFd9xJj5UdJjEdS
+ 9eR3mgU11C7gpPKuYZDMjwly/pn+JdQsar11rWjC8nQjMj2bGNTefJopZNBqdnPdilkqnUOXiOJ
+ vKrvIvWUNQbDfkX+MZpMzZU2LnHXAKIQ/c1Mo9+ba3XLgzW+3Dw4g4UOWA8Nk8SkPSOa6qGWj/Z
+ XrIbm8isTUTm7fRDRNLokHRGO9jC79Wa1K/sgofw9i
+X-Gm-Gg: ASbGncvopKumxpHYL352EKOHGbdc7Y+E1Q11MgBY586PtbiYUgBOUsbIBYCNijmTNsr
+ FB3m6aid7nMsmCoNBjXP8PDyGaswFuV6t6sQNQDtNIzp0uyB2mXY618cxUvr38/dXiedmpGd1NU
+ wg8skrqIs0DYc+CLA2eaAdGa//Nt4bEwnioSi9y3KNFOZk4zoAUEE4GX0BOhCImpf0e6teIv+cS
+ EO+d1VG71gkU0+nQOEtxk+CkgjYEpBHqIwoQJmlFy0gkHPNMOMLmFELjrn3z0ltfqVY8en6Xrz6
+ brKQl0kml18/KQ==
+X-Received: by 2002:a05:600c:8b21:b0:441:b698:3431 with SMTP id
+ 5b1f17b1804b1-451f0b2445dmr44914705e9.28.1749118289718; 
+ Thu, 05 Jun 2025 03:11:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGGPkeZGRoWwlpWOAPwqSV4CTlLw4HFBNC3X0Hc9EfLOzc+sfCUv0SNzfbqf7xSVUhnK1XImA==
+X-Received: by 2002:a05:600c:8b21:b0:441:b698:3431 with SMTP id
+ 5b1f17b1804b1-451f0b2445dmr44914425e9.28.1749118289295; 
+ Thu, 05 Jun 2025 03:11:29 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-451f9662cd1sm19986725e9.0.2025.06.05.03.11.24
+ ffacd0b85a97d-3a4f00a00d4sm24451285f8f.92.2025.06.05.03.11.26
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 03:11:25 -0700 (PDT)
+ Thu, 05 Jun 2025 03:11:26 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: marcandre.lureau@redhat.com, qemu-rust@nongnu.org, armbru@redhat.com,
  mkletzan@redhat.com
-Subject: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
-Date: Thu,  5 Jun 2025 12:11:21 +0200
-Message-ID: <20250605101124.367270-1-pbonzini@redhat.com>
+Subject: [PATCH 1/3] rust: make TryFrom macro more resilient
+Date: Thu,  5 Jun 2025 12:11:22 +0200
+Message-ID: <20250605101124.367270-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250605101124.367270-1-pbonzini@redhat.com>
+References: <20250605101124.367270-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -107,94 +109,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is just an extremely minimal extraction from the patches at
-https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.com/,
-limited to generating structs and enums from the QAPI schema.
-It does not include them in any crate and does not compile them.
+If the enum includes values such as "Ok", "Err", or "Error", the TryInto
+macro can cause errors.  Be careful and qualify identifiers with the full
+path, or in the case of TryFrom<>::Error do not use the associated type
+at all.
 
-While I'm not going to work on this, I was curious how much work it
-was to produce *some* kind of Rust QAPI struct, which could be a first
-step towards using serde as an interface to C visitors, like this:
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ rust/qemu-api-macros/src/lib.rs | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-trait QapiType: FreeForeign {
-    unsafe fn visit(v: bindings::Visitor, name: *const c_char, obj: *mut <Self as FreeForeign>::Foreign, errp: *mut *mut bindings::Error);
-}
-
-fn to_c<T: QAPIType>(obj: &T) -> *mut <T as FreeForeign>::Foreign {
-    let mut ptr = libc::calloc(...);
-    let mut ser = QapiSerializer::<T>::new(ptr);
-    obj.serialize(&mut ser).unwrap();
-    ptr.cast()
-}
-
-unsafe fn from_c<T: QAPIType>(obj: *const <T as FreeForeign>::Foreign) -> T {
-    let mut de = QapiDeserializer::new(T::visit, obj as *const c_void);
-    let value = de::Deserialize::deserialize(&mut de).unwrap();
-    de.end().unwrap();
-    value
-}
-
-/* Generated code below: */
-
-impl QapiType for UefiVariable {
-    unsafe fn visit(v: bindings::Visitor, name: *const c_char, obj: *mut bindings::UefiVariable, errp: *mut *mut bindings::Error) {
-        unsafe extern "C" visit_type_DumpGuestMemoryFormat(v: bindings::Visitor, name: *const c_char, obj: *mut bindings::UefiVariable, errp: *mut *mut bindings::Error) {
-        unsafe { visit_type_DumpGuestMemoryFormat(v, name, obj, errp); }
-    }
-}
-
-impl FreeForeign for UefiVariable {
-    type Foreign = bindings::UefiVariable;
-
-    unsafe fn free_foreign(p: *mut bindings::UefiVariable) {
-        unsafe extern "C" qapi_free_UefiVariable(p: *mut bindings::UefiVariable);
-        unsafe { qapi_free_UefiVariable(p); }
-    }
-}
-
-impl CloneToForeign for UefiVariable {
-    fn clone_to_foreign(&self) -> OwnedPointer<Self> {
-        OwnedPointer::new(qapi::to_c(self))
-    }
-}
-
-impl FromForeign for UefiVariable {
-    unsafe fn cloned_from_foreign(obj: *const bindings::UefiVariable) -> Self {
-        qapi::from_c(obj)
-    }
-}
-
-The FFI types could be generated by qapi-gen, as in Marc-André's
-proposal, or from bindgen.
-
-I am not sure what approach is better---whether to use serde or to
-automatically generate the marshaling and unmarshaling code; and whether
-to use bindgen or generate C-compatible FFI types---but it made sense,
-from the point of view of extracting "some" code from Marc-André's
-proof of concept and enticing other people, :) to start from high-level
-types.
-
-Paolo
-
-Marc-André Lureau (2):
-  scripts/qapi: add QAPISchemaIfCond.rsgen()
-  scripts/qapi: generate high-level Rust bindings
-
-Paolo Bonzini (1):
-  rust: make TryFrom macro more resilient
-
- meson.build                     |   4 +-
- rust/qemu-api-macros/src/lib.rs |   7 +-
- scripts/qapi/backend.py         |   4 +-
- scripts/qapi/common.py          |  16 ++
- scripts/qapi/main.py            |   4 +-
- scripts/qapi/rs.py              | 183 ++++++++++++++++++
- scripts/qapi/rs_types.py        | 320 ++++++++++++++++++++++++++++++++
- scripts/qapi/schema.py          |   4 +
- 8 files changed, 535 insertions(+), 7 deletions(-)
- create mode 100644 scripts/qapi/rs.py
- create mode 100644 scripts/qapi/rs_types.py
-
+diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/lib.rs
+index 103470785e3..c18bb4e036f 100644
+--- a/rust/qemu-api-macros/src/lib.rs
++++ b/rust/qemu-api-macros/src/lib.rs
+@@ -203,8 +203,8 @@ fn derive_tryinto_body(
+     Ok(quote! {
+         #(const #discriminants: #repr = #name::#discriminants as #repr;)*;
+         match value {
+-            #(#discriminants => Ok(#name::#discriminants),)*
+-            _ => Err(value),
++            #(#discriminants => core::result::Result::Ok(#name::#discriminants),)*
++            _ => core::result::Result::Err(value),
+         }
+     })
+ }
+@@ -236,7 +236,8 @@ pub const fn from_bits(value: #repr) -> Self {
+         impl core::convert::TryFrom<#repr> for #name {
+             type Error = #repr;
+ 
+-            fn try_from(value: #repr) -> Result<Self, Self::Error> {
++            #[allow(ambiguous_associated_items)]
++            fn try_from(value: #repr) -> Result<Self, #repr> {
+                 #body
+             }
+         }
 -- 
 2.49.0
 
