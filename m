@@ -4,90 +4,175 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9422CC5B543
-	for <qemu-devel@archiver.kernel.org>; Wed,  4 Jun 2025 22:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C16A5C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 00:36:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uMwGB-0003iu-Ly; Wed, 04 Jun 2025 18:06:59 -0400
+	id 1uMyZu-000856-7T; Wed, 04 Jun 2025 20:35:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uMwG9-0003iV-No
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 18:06:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1uMyZo-00080z-1G
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 20:35:24 -0400
+Received: from mail-dm3nam02on20619.outbound.protection.outlook.com
+ ([2a01:111:f403:2405::619]
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uMwG7-0000cU-QW
- for qemu-devel@nongnu.org; Wed, 04 Jun 2025 18:06:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749074813;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Rfy7XYRTPYXFfIFssByvydiB/s5a7ZtyoD88g0tQAJo=;
- b=QEjIAUEIbVtb5fL+CJjheRnS8z+Bz2nDWvWUzWzBRsF3bnG7qVmQ9Sx1jAfOGb7j6QPdrb
- u5LUqzeOxuUkXkT/Tua3hGIOAwNvuco1GEKkV7ZnqHWFi+Xntk4MMgInAy0p4ai9unyL5Q
- O4HwuxsnYNSybILPJmq7YYd9Lrket8Q=
-Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
- [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-433-4nMLMwV2P76OfFAjy3Cb0w-1; Wed, 04 Jun 2025 18:06:51 -0400
-X-MC-Unique: 4nMLMwV2P76OfFAjy3Cb0w-1
-X-Mimecast-MFC-AGG-ID: 4nMLMwV2P76OfFAjy3Cb0w_1749074810
-Received: by mail-pg1-f200.google.com with SMTP id
- 41be03b00d2f7-b26eec6da92so1148075a12.1
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 15:06:51 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749074810; x=1749679610;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Rfy7XYRTPYXFfIFssByvydiB/s5a7ZtyoD88g0tQAJo=;
- b=v/D5K9EVoV2Sr0OV+s5WhVP16+N7dMVskg8YEzU6Cr1xTUMQrGGFVRxm5FC+4BdT+X
- fzJT7Vcgzh/h0SMEDDjRrCvCUn1uwciD76lOiH/k16AIoZDQC+nuzCstRTKbw93EFWRB
- ka6f+3wA4l90pNAgP5DFL5A/wGmr+4H9BxqhLISSb6gKBNruu7MynuqyNces6qmceQ2I
- UxPsTlx32nHd7fYSts2qyzi4GhL9bNoJBWEvZR6krF2ssUOsYkmRIXynSZY3lthpHtss
- z6SGPutKrVzVYKbY96tk0D8lFHJK6WGswUjqZcEt0Caf3AJcG5NRnx7YfCNFdAn8ny+B
- c38w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU6bH8XsvaJ5Fc6TBoRd8/LVeUGIitakX6Zwuk59Be8PCkQlV8+R7hALj4k61kpID4U8FgCbRDcY02O@nongnu.org
-X-Gm-Message-State: AOJu0YwxUKPN6jw3VjiZ71KCdu2jLlUkM1nJdiBgm45xc3AK8a33tFLT
- GhgkiefdTUUI37ixscxkfjSPs0tiJ/0fEj5ehiYMPLq7NW/mQ0ratyzAz4zqkRQp39c/APR2fMM
- j3Cc2ehj0RFGin1QlaUaMcLiapVwmf0n7nMAGk6agrUyuyQvJDTs6ZtB8koP+KDXaiOhZ18mDv4
- f5Mh84mYsVgC4TtF9AOd1bQNNSwy9PmPo=
-X-Gm-Gg: ASbGncvi+kHdLNGyr9ZjFRGxs38B5sQZPnZYi6Qv20NFmNIVm2VEjsIXuwD8K3QJ8iI
- I9brjAOXOgdIeu+qfKvKsQ/VX87liVSplM1uwfSOeEaF2Eeyc9Ib3PDP4oMixUisZd+0GYoCEnE
- dxTNv53elKlvSy3oTvryMsNW4xE93RA5cC8zI=
-X-Received: by 2002:a17:90b:3912:b0:312:e751:8213 with SMTP id
- 98e67ed59e1d1-31328fb549dmr1480717a91.13.1749074810395; 
- Wed, 04 Jun 2025 15:06:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHAcAOxRJHQ0hYOFVmnGWTlxdP6r0vTQGtpbDLP6IOLf9U7xd0FpooddDY5sCUIYkAkkLDbiE4+h6K1RCkTvJo=
-X-Received: by 2002:a17:90b:3912:b0:312:e751:8213 with SMTP id
- 98e67ed59e1d1-31328fb549dmr1480692a91.13.1749074809990; Wed, 04 Jun 2025
- 15:06:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Alexey.Kardashevskiy@amd.com>)
+ id 1uMyZj-0000A2-PA
+ for qemu-devel@nongnu.org; Wed, 04 Jun 2025 20:35:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=t3nPgwxUz61BKrrW5vGDPugGHL7kfs4YrE0h12xTj3/L3yoVLn4DIksWYJdTwhrGowo6lR8qg1z5QXXc73pu/fPQIhRqsnS0HtjQoYBbI+nVENPPB/E+E8BI35s3MXZKlYHvsTZ9GLcGaCEAt3f0kscaweXgVKY3lIDeb8XemvmLWwWennTU3sPTN9DQ0bQ0478SokMcIWF+1TErGrxqT7nrjUFBVcHuyi2PWnJNC1XYBeQ89BSiaNuL3PI6xxTPNar6d5jfCkyYDAbCE3pMIjIGLq/62bG4TRtxfNykn+jc3/gu3Qha+lu0QtVHGvQV5dLLiX5vOhDpHQI3KOA/UQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pujCwPNLqcTJySf48Y35hJ/ze8ijOrN7I8y6qhN2/90=;
+ b=AagkMBGdAp/zE6IIGJPRxAPlifc9JHjSOL8wms9mmLWhNCHa7qYydBFHdgIKiRemd5ULAnOx9PLiPEv+dWd3DI28Yif75KTupxs9PQQQ78cyuNITnNn+gQwdq6gnGRNGmsouDlNvvseHb2LgqYfHJ/5nLFz5ysGuEPGlDyFFVAHHyy4Kh5xhwnHal4t0zO7DZpxAS8TWKqBlsN9T8hiRMNRcte/kx8bUfxZSWy9WuOCj3H3ldmc9UQK90vdrtdnaRHQFc+KhbLDzGyJK8s0D1Uf8YaJxRhSV6HJ8i//gUStVldmYEVSHO4IRGVJOghI+UE5JHsM10DNowUMsoxhR5A==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pujCwPNLqcTJySf48Y35hJ/ze8ijOrN7I8y6qhN2/90=;
+ b=lbE9Fq40JhDlN4hmSn3MxP/O82Fd1nLt4Rd9DOLxae0Jl3LPmHveVz7WbrtU54XjFMgtsECcMTDVh2N2hjyG0Z3T6iPGg6jTMNT5prOVBTrSRKBccO7wRfHYIq5YDWIzrdG8rI83Lif30ACoWVABFR/qyAoGJLjp5Y5E4Mm3AKQ=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com (2603:10b6:610:19f::7)
+ by DS0PR12MB9039.namprd12.prod.outlook.com (2603:10b6:8:de::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.34; Thu, 5 Jun
+ 2025 00:35:13 +0000
+Received: from CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f]) by CH3PR12MB9194.namprd12.prod.outlook.com
+ ([fe80::53fb:bf76:727f:d00f%5]) with mapi id 15.20.8769.037; Thu, 5 Jun 2025
+ 00:35:10 +0000
+Message-ID: <d22f7319-6748-4d06-805d-a6b1494e425f@amd.com>
+Date: Thu, 5 Jun 2025 10:35:01 +1000
+User-Agent: Mozilla Thunderbird Beta
+Subject: Re: [PATCH v6 4/5] ram-block-attributes: Introduce RamBlockAttributes
+ to manage RAMBlock with guest_memfd
+From: Alexey Kardashevskiy <aik@amd.com>
+To: Chenyi Qiang <chenyi.qiang@intel.com>,
+ David Hildenbrand <david@redhat.com>, Peter Xu <peterx@redhat.com>,
+ Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>,
+ Xu Yilun <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
+ Alex Williamson <alex.williamson@redhat.com>
+References: <20250530083256.105186-1-chenyi.qiang@intel.com>
+ <20250530083256.105186-5-chenyi.qiang@intel.com>
+ <55ebb008-a26f-4173-937a-3bb2d8a6c972@amd.com>
+Content-Language: en-US
+In-Reply-To: <55ebb008-a26f-4173-937a-3bb2d8a6c972@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SY8PR01CA0023.ausprd01.prod.outlook.com
+ (2603:10c6:10:29c::33) To CH3PR12MB9194.namprd12.prod.outlook.com
+ (2603:10b6:610:19f::7)
 MIME-Version: 1.0
-References: <20250510-sphinx72-v1-0-2358e0c68bbe@daynix.com>
- <CAFn=p-aL6OQKqq4nLp+LV2QxpRSo8yp3c0veT+DMG-Tt7aSYxg@mail.gmail.com>
-In-Reply-To: <CAFn=p-aL6OQKqq4nLp+LV2QxpRSo8yp3c0veT+DMG-Tt7aSYxg@mail.gmail.com>
-From: John Snow <jsnow@redhat.com>
-Date: Wed, 4 Jun 2025 18:06:37 -0400
-X-Gm-Features: AX0GCFs_MnMybUXspNZ3wck73YK-_jHaIZ-sToYXvXWljSdD5kPapk6_Jw8hJqo
-Message-ID: <CAFn=p-ZQ+NDFGJG=eqGF75CpBtdcwSH0j8wKjoBGtFqH8C4hag@mail.gmail.com>
-Subject: Re: [PATCH 0/3] docs: Bump sphinx to 6.2.1
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- devel@daynix.com
-Content-Type: multipart/alternative; boundary="000000000000bc56470636c63615"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH3PR12MB9194:EE_|DS0PR12MB9039:EE_
+X-MS-Office365-Filtering-Correlation-Id: 634aaa26-0c98-40aa-e77e-08dda3c8d382
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|7416014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?clNsTjJ4TUk3djA3elUzYVp3UVdMN0cvNFVsVWJ0VkNVbXM3M2tMUzdsMm40?=
+ =?utf-8?B?SnEwV0VlUVhrRWg4Z0MyY21FdlRJRm9vQXJRMDl1dnJpOFFjQXd4aHJYc1Yy?=
+ =?utf-8?B?UmtEN3NyM1V5b29oOE1xLzJUZ25FYk9TellTZzNYSkdHVzcwNFRZR1F1MXdO?=
+ =?utf-8?B?NStIT1JmSVJ5aWJwUFRZSDRLdzh4dkhUbFVoTXV4U0pHY1Vqc0oxNlNaUzR6?=
+ =?utf-8?B?d2ZVbHlPd0E5N0FSck1yYTZtSk1qQkZJc0EwejdpTnNXVVhLdnZHMmY1KzdW?=
+ =?utf-8?B?MWhUWjZIa3QzV2Vvdll5QkdNVUJqSXVkSklOTlAvTHdoRWFGbUZtR0tMdm1Y?=
+ =?utf-8?B?dEszM3E5a3g2Z0liUTdHYjVQVDZrcUNpWUJrWURqYTkybldUMmZ6UHFISnAx?=
+ =?utf-8?B?bDNXQTRrMkptd09SOUFWTE5JVEhxZy96UWgwRm9iM1RuV1dnQlhNSkpkWDM3?=
+ =?utf-8?B?cDNXKzVEZXRSN2I4K3AyR0ZnM1FJTVJvc2x5WTF1MUVnbVl5TkN5QXliQ2lM?=
+ =?utf-8?B?Q2UvNGloL1lKdEliL0w4U0pUenFWeFVVbDNuZGdTa1VqL2VGeEFOcllabm1E?=
+ =?utf-8?B?ZS9YMzBxTWlVSEZRTmNyRWh3MmQ4QUl3c2JIdHB1Q0J4UDlPNitwM2l6ckZC?=
+ =?utf-8?B?b1hvZ0NKeE9lTHFIbGtvNjU0cXFaR0M0UER5Smp4T2xqRTJic0NwWFFLbytD?=
+ =?utf-8?B?REZEYUVpak5oSUxZdS9kdHFDcndYaGNBUVkwcW0zWkRIS0hqektBM05UQk1y?=
+ =?utf-8?B?ZDlndFN5OXp5QXpXQWt6VWsydjVncEdZWjhJeVU0RlgvSUl3NVg5Zm5ya2k3?=
+ =?utf-8?B?TE5wWnBKVlBMK0ZGTDQ4RUpRZnp3Rzl4Y28vc1ZPSVU1QUZMWHp3YWFqb21v?=
+ =?utf-8?B?VXhyZGxML3UvMmgrMEQ4UExnODluRjVEQ1RXVEZsQ0Rxb2hsSTZHaHMrOTJF?=
+ =?utf-8?B?MnVZTno2d3lMU1AzNjRMdzM2RVZ4WWJEcWpnc0E3YlRxSzNDNEdNSno3SVhp?=
+ =?utf-8?B?VnlTdG5wbDFUeVBVWE4rZ0tJb1Z6SGxnbytzalljMGlrd2xnRVhqK3VqZWdD?=
+ =?utf-8?B?UkdKaE0yZVArYkY2MytEbzkwenEvaDR0bXNBMTY1a0k0VEhVRmxFZDFPeVpw?=
+ =?utf-8?B?aDlzQW5XM0wxMzYwUm9yY2VwR1VndlBLSnpnZlJER2IyN3VaQUdxUnYrN1Ft?=
+ =?utf-8?B?T2dLM1htOXpieGVrVE9lclpiR0l3RjNtb0RyUGphdkRTQUZ0cSs3emU4T0t6?=
+ =?utf-8?B?ZWVpRjRoRm5mUUVXUHFDcDNQeFRSUW5ibzNjc2cxZ1hhNTRyRGc5bmZxRE41?=
+ =?utf-8?B?NC9WYTQvUGc5NysrMWVFWFZaaW9sV09GTUx2RHluZ1JxQkkrTWVzKzc1TWFJ?=
+ =?utf-8?B?aE5DNENtN2MxVVVFY3k1OUdyY0pHMUVFZ3pPQ0w4M0xFdDZZVHdRT1hZRzEr?=
+ =?utf-8?B?QkZJcTlFRWpkMm1vQzlWRng5NUhZdzRLSWlSclNtNEJmY1czZk5Xcm9UVEhQ?=
+ =?utf-8?B?SE4zS21RTEkxU3VsVVZBbCtCMkhXdlJpRXo1bjZaZEl4Q21xSnI3QUkxWlBu?=
+ =?utf-8?B?R0kremc0cHFDV0MvUms4cHg4a3h2dGRzTW4yamFsSUxiODNPcmZtOFVXNnlD?=
+ =?utf-8?B?UlhJNWFBRHB4eHZYNFdFdHNKbWhiZ1RONGduaGR4a3FoMDNNRlRGQmtPTmhI?=
+ =?utf-8?B?eEM0OGUvWXoyQjEybFZsOW5xdUJ1ZHh5VGFIcnJRQ3J4bzZjRUIrM0VZeDF4?=
+ =?utf-8?B?VE5DVlVvcFdWSDhXT2NDSGVvWHZkWUhxNlBXcHkxb2EvOXV1QXNmakhsSmY4?=
+ =?utf-8?B?NFdoK1VubkdqbkZnRXl2OURUL25UNkRWV3Awd2lXclZqU3N5RGlQU3VTdGhy?=
+ =?utf-8?B?NmlLWWJ1K0lvNmRiUzNBQkNSVWdncld4Y2VxSTZKSEpwWFVKRUhqNXl6Vlhi?=
+ =?utf-8?Q?KkyoEEjV5kY=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB9194.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?azVKVTJQTi9PM2kxaEZNL1ZVcjlDYWpBRFdmVThKcEJPZ3RtOEg2MitneE1o?=
+ =?utf-8?B?V1pML1lDaTJtMGoyNGQ3d3E4QzFmSDczVGd1K3dGY3ltcGFERUpmbVd1ODlR?=
+ =?utf-8?B?TUxaZVkvVzhyaDRPanQ4Q3J4N1JpMEl1YXpJS2hOUEVKSk51VXhBOGs5ZWcv?=
+ =?utf-8?B?aDZlcXBXWCtOc204eEpkQlRWcUR4aTl4Qzc1WlVmQlY5UldSR3MyWDVQdm5q?=
+ =?utf-8?B?Z0FySzd5blBlN2ZUQ0l2cHVnOGlObXY3ZTRMeUNCZXJaYkppY05wM093cjVz?=
+ =?utf-8?B?MzZEbmVMdlNtMFNleTFjYUtQckJRVUNONkpFYWZ3UUtPWHh5Y3F5dTlYQjdF?=
+ =?utf-8?B?UTBYMDQzNWk1eTVlaVBLaUgwK3F5WGl6VHdJRUdXcS9QVFpPSUVlaWpKamdh?=
+ =?utf-8?B?UjNBeFdpSE9xTU5rQkl0QTNmR0F5aGVwREVreCtqZFVRRHFKNXppY3ZFWWFy?=
+ =?utf-8?B?R24rN2ZoRGRuaHN5SS95a3owQnMwUzFDeDY0SGpWM0Y5b09RcHFwdnpHUUtp?=
+ =?utf-8?B?WFlsaHZhV2hBWjhmN1pGellvTGs0NHpadHFXUGYwK0M4SksrdVh1d0hROGxy?=
+ =?utf-8?B?eUlkL2QyTERGUWtCRjhNNGh1Y1JtdjI0akdzWnhMb21FNEdtQlBrc1g0RHF1?=
+ =?utf-8?B?NnhhU2hZV1pOMFI5WFhmdGhXaEt6V2tPenJDQUt4Rk5aSVdRQlpQb3VCOXVK?=
+ =?utf-8?B?K25OZnBTZ3VjMjFLcU1jTDNMRnJpUVNZM1VqN0ExWUc0Qk1VdkhjRVhTd09m?=
+ =?utf-8?B?dXJBeFZtSy91SWVhTGM4cDJtbGRkSTE4VDNzM1pnN3ltM2tML3RJSDZnSlNx?=
+ =?utf-8?B?RjV4N0tpWGJ5RUFwbTQ0dlRHZlNsZkJHQmkwekJkL1V0U0JoanVnV2l2MFZi?=
+ =?utf-8?B?Y3ZuQ0o4a2ptZWQycm5Zbmx6ZWFRUERUU0wyRmRkY0V0N05IUDdEMWJoVXVR?=
+ =?utf-8?B?VFZ2MnhRRzlwOTBCUmhxTkFDd013Q0pJcWFIR2RCYnV1U0xJcEFPelpmdzl3?=
+ =?utf-8?B?SzhoMmIxNVlqRmFybU5CRTVWb3g3S1RVN1VpVVdSamRhclQ4UlYydVQvTldN?=
+ =?utf-8?B?b1U2U1I4OG1KOXEzSWc3UEZ2RWNhcnN2SFVBRFMrZW9NK0lCR2hvUXNJck42?=
+ =?utf-8?B?OG1rNjc4b09RUHpHYzgrRHIyZW9URWhrUW5uNkJsaFVTL3BLeEpJeXZkaWRr?=
+ =?utf-8?B?VUVwRWVuSGZ1clZaUCtQU21hU2ZwaE9wQmNTMU5HZTlSeGZVdE4zYTNMSEg0?=
+ =?utf-8?B?T1Q0L1ZXdkxFOTg4eEpMWGZwQTNqYi9ONGZWMWVTZVJyd0VKL0h0VS84Q1cz?=
+ =?utf-8?B?R2Zxa0JLVTdlL1VmWW9nUWw5RTFmdHhLeGhnTnJVZUNCM0pyNm50NzVrM3ND?=
+ =?utf-8?B?SjQ4Tmc0N0Fnd1hUaUpuYVdhaFF0UEw3RkFPMmxBS1ZHS3NORGkzWnRodlZZ?=
+ =?utf-8?B?S1F2bVgwelN6eVUzcHVUb3J3WXRBWGwvYThIQkpCZUZ6SG5LZkxiS1ZtM3U1?=
+ =?utf-8?B?TWVId1oreVFYN3AyUURpTTBKSlZ2aThVTjJJNUhDVzJqZk1YTGowNHRtby9k?=
+ =?utf-8?B?NkNCQmxWalVrRU9vYXFGR3JTaU9uMkh4WUJkTDlqcEhZemZCdHVTNEErNzN6?=
+ =?utf-8?B?TjVZR2RkSFJ6ZG9VQm80TFlBdXd2aFVZZThTa2ZwclhGbUEzMnlQY252MUxo?=
+ =?utf-8?B?V0dmY2tGNm1UTlZDQVJ5SkpkTjdIbE9jNXdOSlVlOFgxNzFEMS9mb1dSVGcr?=
+ =?utf-8?B?eGF6aFlYQm5WSngyVDZacStYZUZhaXgvRTJ2RlJxVEp5YUlFRjUzb1BvdHhs?=
+ =?utf-8?B?dzh0NmZEOHhyVDhhTHdSTDJxdkFBbHE4d0dhRnZkcW0xOUQxWVcxWlV6UFcr?=
+ =?utf-8?B?ZWZnNHJDdmc1T0EzaFNKaTVOaWwzNUswaG51WTNTSXRUNjhtZ2s3alRpdXNl?=
+ =?utf-8?B?blRqWk5yV0tjcUVtam5vM2Y3VTFpOS90UHhoMEdpUHJZdjNuYjluSjU4bjJR?=
+ =?utf-8?B?dmxWTW5LcVYvYTEzU09yTHhUY1ppQXE0ZjFnWlFNUXB5QTFacnJTODJQeHRS?=
+ =?utf-8?B?WktVZlgwSDRwUzZZalNlZXAzbkRVSGtEVDhSYk1CTUgvWHhud1ZXUkFUWFBo?=
+ =?utf-8?Q?GciYJMVc0FsMPCIzw0taShZcS?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 634aaa26-0c98-40aa-e77e-08dda3c8d382
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB9194.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 05 Jun 2025 00:35:09.8481 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: mjVhU8BQOSfKgKNvheMrONomHhNNEK1Hc9GRzzY+EfhZ3kBnmp7fkM0A29w92Mgp6o0fJ8sNFLu6x77XJ8KedQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR12MB9039
+Received-SPF: permerror client-ip=2a01:111:f403:2405::619;
+ envelope-from=Alexey.Kardashevskiy@amd.com;
+ helo=NAM02-DM3-obe.outbound.protection.outlook.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,170 +188,732 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bc56470636c63615
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, May 19, 2025 at 1:47=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
 
->
->
-> On Sat, May 10, 2025 at 2:17=E2=80=AFAM Akihiko Odaki <akihiko.odaki@dayn=
-ix.com>
-> wrote:
->
->> Supersedes: <20250505-sphinx82-v1-0-85f2418b33b1@daynix.com>
->> ("[PATCH 0/2] docs: Bump sphinx to 8.2.3")
+On 4/6/25 21:04, Alexey Kardashevskiy wrote:
+> 
+> 
+> On 30/5/25 18:32, Chenyi Qiang wrote:
+>> Commit 852f0048f3 ("RAMBlock: make guest_memfd require uncoordinated
+>> discard") highlighted that subsystems like VFIO may disable RAM block
+>> discard. However, guest_memfd relies on discard operations for page
+>> conversion between private and shared memory, potentially leading to
+>> the stale IOMMU mapping issue when assigning hardware devices to
+>> confidential VMs via shared memory. To address this and allow shared
+>> device assignement, it is crucial to ensure the VFIO system refreshes
+>> its IOMMU mappings.
 >>
->> sphinx 5.3.0 fails with Python 3.13.1:
+>> RamDiscardManager is an existing interface (used by virtio-mem) to
+>> adjust VFIO mappings in relation to VM page assignment. Effectively page
+>> conversion is similar to hot-removing a page in one mode and adding it
+>> back in the other. Therefore, similar actions are required for page
+>> conversion events. Introduce the RamDiscardManager to guest_memfd to
+>> facilitate this process.
 >>
->> ../docs/meson.build:37: WARNING:
->> /home/me/qemu/build/pyvenv/bin/sphinx-build:
->> Extension error:
->> Could not import extension sphinx.builders.epub3 (exception: No module
->> named 'imghdr')
+>> Since guest_memfd is not an object, it cannot directly implement the
+>> RamDiscardManager interface. Implementing it in HostMemoryBackend is
+>> not appropriate because guest_memfd is per RAMBlock, and some RAMBlocks
+>> have a memory backend while others do not. Notably, virtual BIOS
+>> RAMBlocks using memory_region_init_ram_guest_memfd() do not have a
+>> backend.
 >>
->> ../docs/meson.build:39:6: ERROR: Problem encountered: Install a Python 3
->> version of python-sphinx and the readthedoc theme
+>> To manage RAMBlocks with guest_memfd, define a new object named
+>> RamBlockAttributes to implement the RamDiscardManager interface. This
+>> object can store the guest_memfd information such as bitmap for shared
+>> memory and the registered listeners for event notification. In the
+>> context of RamDiscardManager, shared state is analogous to populated, and
+>> private state is signified as discarded. To notify the conversion events,
+>> a new state_change() helper is exported for the users to notify the
+>> listeners like VFIO, so that VFIO can dynamically DMA map/unmap the
+>> shared mapping.
 >>
->> Bump sphinx to 6.2.1 and also sphinx_rtd_theme as required for the new
->> sphinx version.
+>> Note that the memory state is tracked at the host page size granularity,
+>> as the minimum conversion size can be one page per request and VFIO
+>> expects the DMA mapping for a specific iova to be mapped and unmapped
+>> with the same granularity. Confidential VMs may perform partial
+>> conversions, such as conversions on small regions within larger ones.
+>> To prevent such invalid cases and until DMA mapping cut operation
+>> support is available, all operations are performed with 4K granularity.
 >>
->> Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+>> In addition, memory conversion failures cause QEMU to quit instead of
+>> resuming the guest or retrying the operation at present. It would be
+>> future work to add more error handling or rollback mechanisms once
+>> conversion failures are allowed. For example, in-place conversion of
+>> guest_memfd could retry the unmap operation during the conversion from
+>> shared to private. For now, keep the complex error handling out of the
+>> picture as it is not required.
 >>
->
-> Reviewed-by: John Snow <jsnow@redhat.com>
->
-> I figure if this causes issues, this early in the development cycle we ca=
-n
-> roll it back or pursue alternate solutions if necessary. I figure because
-> this touches so much stuff I wrote, it probably ought to go through my
-> tree, so I'll stage this tentatively.
->
-> (Paolo, Peter: But if you want to stage it instead, be my guest.)
->
-> ---
->> Akihiko Odaki (3):
->>       docs: Bump sphinx to 6.2.1
->>       docs: Require sphinx>=3D6.2
->>       MAINTAINERS: Add docs/requirements.txt
->>
->>  MAINTAINERS                |   1 +
->>  docs/requirements.txt      |   4 +-
->>  docs/sphinx/compat.py      | 230
->> ---------------------------------------------
->>
->
-> Oh, thank you so much O:-) how beautiful...
->
->
->>  docs/sphinx/qapi_domain.py |  33 +++----
->>  pythondeps.toml            |   4 +-
->>  5 files changed, 20 insertions(+), 252 deletions(-)
+>> Signed-off-by: Chenyi Qiang <chenyi.qiang@intel.com>
 >> ---
->> base-commit: 1da8f3a3c53b604edfe0d55e475102640490549e
->> change-id: 20250508-sphinx72-400c521af710
+>> Changes in v6:
+>>      - Change the object type name from RamBlockAttribute to
+>>        RamBlockAttributes. (David)
+>>      - Save the associated RAMBlock instead MemoryRegion in
+>>        RamBlockAttributes. (David)
+>>      - Squash the state_change() helper introduction in this commit as
+>>        well as the mixture conversion case handling. (David)
+>>      - Change the block_size type from int to size_t and some cleanup in
+>>        validation check. (Alexey)
+>>      - Add a tracepoint to track the state changes. (Alexey)
 >>
->> Best regards,
->> --
->> Akihiko Odaki <akihiko.odaki@daynix.com>
->
->
-Just a note to say that I started staging and testing this and found a few
-problems -- many are minor and I have patched them up accordingly, but I am
-currently having an issue with debian claiming it can't find the
-sphinxcontrib-jquery extension:
+>> Changes in v5:
+>>      - Revert to use RamDiscardManager interface instead of introducing
+>>        new hierarchy of class to manage private/shared state, and keep
+>>        using the new name of RamBlockAttribute compared with the
+>>        MemoryAttributeManager in v3.
+>>      - Use *simple* version of object_define and object_declare since the
+>>        state_change() function is changed as an exported function instead
+>>        of a virtual function in later patch.
+>>      - Move the introduction of RamBlockAttribute field to this patch and
+>>        rename it to ram_shared. (Alexey)
+>>      - call the exit() when register/unregister failed. (Zhao)
+>>      - Add the ram-block-attribute.c to Memory API related part in
+>>        MAINTAINERS.
+>>
+>> Changes in v4:
+>>      - Change the name from memory-attribute-manager to
+>>        ram-block-attribute.
+>>      - Implement the newly-introduced PrivateSharedManager instead of
+>>        RamDiscardManager and change related commit message.
+>>      - Define the new object in ramblock.h instead of adding a new file.
+>> ---
+>>   MAINTAINERS                   |   1 +
+>>   include/system/ramblock.h     |  21 ++
+>>   system/meson.build            |   1 +
+>>   system/ram-block-attributes.c | 480 ++++++++++++++++++++++++++++++++++
+>>   system/trace-events           |   3 +
+>>   5 files changed, 506 insertions(+)
+>>   create mode 100644 system/ram-block-attributes.c
+>>
+>> diff --git a/MAINTAINERS b/MAINTAINERS
+>> index 6dacd6d004..8ec39aa7f8 100644
+>> --- a/MAINTAINERS
+>> +++ b/MAINTAINERS
+>> @@ -3149,6 +3149,7 @@ F: system/memory.c
+>>   F: system/memory_mapping.c
+>>   F: system/physmem.c
+>>   F: system/memory-internal.h
+>> +F: system/ram-block-attributes.c
+>>   F: scripts/coccinelle/memory-region-housekeeping.cocci
+>>   Memory devices
+>> diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+>> index d8a116ba99..1bab9e2dac 100644
+>> --- a/include/system/ramblock.h
+>> +++ b/include/system/ramblock.h
+>> @@ -22,6 +22,10 @@
+>>   #include "exec/cpu-common.h"
+>>   #include "qemu/rcu.h"
+>>   #include "exec/ramlist.h"
+>> +#include "system/hostmem.h"
+>> +
+>> +#define TYPE_RAM_BLOCK_ATTRIBUTES "ram-block-attributes"
+>> +OBJECT_DECLARE_SIMPLE_TYPE(RamBlockAttributes, RAM_BLOCK_ATTRIBUTES)
+>>   struct RAMBlock {
+>>       struct rcu_head rcu;
+>> @@ -91,4 +95,21 @@ struct RAMBlock {
+>>       ram_addr_t postcopy_length;
+>>   };
+>> +struct RamBlockAttributes {
+>> +    Object parent;
+>> +
+>> +    RAMBlock *ram_block;
+>> +
+>> +    /* 1-setting of the bitmap represents ram is populated (shared) */
+>> +    unsigned bitmap_size;
+>> +    unsigned long *bitmap;
+>> +
+>> +    QLIST_HEAD(, RamDiscardListener) rdl_list;
+>> +};
+>> +
+>> +RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block);
+>> +void ram_block_attributes_destroy(RamBlockAttributes *attr);
+>> +int ram_block_attributes_state_change(RamBlockAttributes *attr, uint64_t offset,
+>> +                                      uint64_t size, bool to_discard);
+>> +
+>>   #endif
+>> diff --git a/system/meson.build b/system/meson.build
+>> index c2f0082766..2747dbde80 100644
+>> --- a/system/meson.build
+>> +++ b/system/meson.build
+>> @@ -17,6 +17,7 @@ libsystem_ss.add(files(
+>>     'dma-helpers.c',
+>>     'globals.c',
+>>     'ioport.c',
+>> +  'ram-block-attributes.c',
+>>     'memory_mapping.c',
+>>     'memory.c',
+>>     'physmem.c',
+>> diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+>> new file mode 100644
+>> index 0000000000..514252413f
+>> --- /dev/null
+>> +++ b/system/ram-block-attributes.c
+>> @@ -0,0 +1,480 @@
+>> +/*
+>> + * QEMU ram block attributes
+>> + *
+>> + * Copyright Intel
+>> + *
+>> + * Author:
+>> + *      Chenyi Qiang <chenyi.qiang@intel.com>
+>> + *
+>> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+>> + * See the COPYING file in the top-level directory
+>> + *
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qemu/error-report.h"
+>> +#include "system/ramblock.h"
+>> +#include "trace.h"
+>> +
+>> +OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(RamBlockAttributes,
+>> +                                          ram_block_attributes,
+>> +                                          RAM_BLOCK_ATTRIBUTES,
+>> +                                          OBJECT,
+>> +                                          { TYPE_RAM_DISCARD_MANAGER },
+>> +                                          { })
+>> +
+>> +static size_t
+>> +ram_block_attributes_get_block_size(const RamBlockAttributes *attr)
+>> +{
+>> +    /*
+>> +     * Because page conversion could be manipulated in the size of at least 4K
+>> +     * or 4K aligned, Use the host page size as the granularity to track the
+>> +     * memory attribute.
+>> +     */
+>> +    g_assert(attr && attr->ram_block);
+>> +    g_assert(attr->ram_block->page_size == qemu_real_host_page_size());
+>> +    return attr->ram_block->page_size;
+>> +}
+>> +
+>> +
+>> +static bool
+>> +ram_block_attributes_rdm_is_populated(const RamDiscardManager *rdm,
+>> +                                      const MemoryRegionSection *section)
+>> +{
+>> +    const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+>> +    const size_t block_size = ram_block_attributes_get_block_size(attr);
+>> +    const uint64_t first_bit = section->offset_within_region / block_size;
+>> +    const uint64_t last_bit = first_bit + int128_get64(section->size) / block_size - 1;
+>> +    unsigned long first_discarded_bit;
+>> +
+>> +    first_discarded_bit = find_next_zero_bit(attr->bitmap, last_bit + 1,
+>> +                                           first_bit);
+>> +    return first_discarded_bit > last_bit;
+>> +}
+>> +
+>> +typedef int (*ram_block_attributes_section_cb)(MemoryRegionSection *s,
+>> +                                               void *arg);
+>> +
+>> +static int
+>> +ram_block_attributes_notify_populate_cb(MemoryRegionSection *section,
+>> +                                        void *arg)
+>> +{
+>> +    RamDiscardListener *rdl = arg;
+>> +
+>> +    return rdl->notify_populate(rdl, section);
+>> +}
+>> +
+>> +static int
+>> +ram_block_attributes_notify_discard_cb(MemoryRegionSection *section,
+>> +                                       void *arg)
+>> +{
+>> +    RamDiscardListener *rdl = arg;
+>> +
+>> +    rdl->notify_discard(rdl, section);
+>> +    return 0;
+>> +}
+>> +
+>> +static int
+>> +ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
+>> +                                                MemoryRegionSection *section,
+>> +                                                void *arg,
+>> +                                                ram_block_attributes_section_cb cb)
+>> +{
+>> +    unsigned long first_bit, last_bit;
+>> +    uint64_t offset, size;
+>> +    const size_t block_size = ram_block_attributes_get_block_size(attr);
+>> +    int ret = 0;
+>> +
+>> +    first_bit = section->offset_within_region / block_size;
+>> +    first_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
+>> +                              first_bit);
+>> +
+>> +    while (first_bit < attr->bitmap_size) {
+>> +        MemoryRegionSection tmp = *section;
+>> +
+>> +        offset = first_bit * block_size;
+>> +        last_bit = find_next_zero_bit(attr->bitmap, attr->bitmap_size,
+>> +                                      first_bit + 1) - 1;
+>> +        size = (last_bit - first_bit + 1) * block_size;
+>> +
+>> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>> +            break;
+>> +        }
+>> +
+>> +        ret = cb(&tmp, arg);
+>> +        if (ret) {
+>> +            error_report("%s: Failed to notify RAM discard listener: %s",
+>> +                         __func__, strerror(-ret));
+>> +            break;
+>> +        }
+>> +
+>> +        first_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
+>> +                                  last_bit + 2);
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static int
+>> +ram_block_attributes_for_each_discarded_section(const RamBlockAttributes *attr,
+>> +                                                MemoryRegionSection *section,
+>> +                                                void *arg,
+>> +                                                ram_block_attributes_section_cb cb)
+>> +{
+>> +    unsigned long first_bit, last_bit;
+>> +    uint64_t offset, size;
+>> +    const size_t block_size = ram_block_attributes_get_block_size(attr);
+>> +    int ret = 0;
+>> +
+>> +    first_bit = section->offset_within_region / block_size;
+>> +    first_bit = find_next_zero_bit(attr->bitmap, attr->bitmap_size,
+>> +                                   first_bit);
+>> +
+>> +    while (first_bit < attr->bitmap_size) {
+>> +        MemoryRegionSection tmp = *section;
+>> +
+>> +        offset = first_bit * block_size;
+>> +        last_bit = find_next_bit(attr->bitmap, attr->bitmap_size,
+>> +                                 first_bit + 1) - 1;
+>> +        size = (last_bit - first_bit + 1) * block_size;
+>> +
+>> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>> +            break;
+>> +        }
+>> +
+>> +        ret = cb(&tmp, arg);
+>> +        if (ret) {
+>> +            error_report("%s: Failed to notify RAM discard listener: %s",
+>> +                         __func__, strerror(-ret));
+>> +            break;
+>> +        }
+>> +
+>> +        first_bit = find_next_zero_bit(attr->bitmap,
+>> +                                       attr->bitmap_size,
+>> +                                       last_bit + 2);
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static uint64_t
+>> +ram_block_attributes_rdm_get_min_granularity(const RamDiscardManager *rdm,
+>> +                                             const MemoryRegion *mr)
+>> +{
+>> +    const RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+>> +
+>> +    g_assert(mr == attr->ram_block->mr);
+>> +    return ram_block_attributes_get_block_size(attr);
+>> +}
+>> +
+>> +static void
+>> +ram_block_attributes_rdm_register_listener(RamDiscardManager *rdm,
+>> +                                           RamDiscardListener *rdl,
+>> +                                           MemoryRegionSection *section)
+>> +{
+>> +    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+>> +    int ret;
+>> +
+>> +    g_assert(section->mr == attr->ram_block->mr);
+>> +    rdl->section = memory_region_section_new_copy(section);
+>> +
+>> +    QLIST_INSERT_HEAD(&attr->rdl_list, rdl, next);
+>> +
+>> +    ret = ram_block_attributes_for_each_populated_section(attr, section, rdl,
+>> +                                    ram_block_attributes_notify_populate_cb);
+>> +    if (ret) {
+>> +        error_report("%s: Failed to register RAM discard listener: %s",
+>> +                     __func__, strerror(-ret));
+>> +        exit(1);
+>> +    }
+>> +}
+>> +
+>> +static void
+>> +ram_block_attributes_rdm_unregister_listener(RamDiscardManager *rdm,
+>> +                                             RamDiscardListener *rdl)
+>> +{
+>> +    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+>> +    int ret;
+>> +
+>> +    g_assert(rdl->section);
+>> +    g_assert(rdl->section->mr == attr->ram_block->mr);
+>> +
+>> +    if (rdl->double_discard_supported) {
+>> +        rdl->notify_discard(rdl, rdl->section);
+>> +    } else {
+>> +        ret = ram_block_attributes_for_each_populated_section(attr,
+>> +                rdl->section, rdl, ram_block_attributes_notify_discard_cb);
+>> +        if (ret) {
+>> +            error_report("%s: Failed to unregister RAM discard listener: %s",
+>> +                         __func__, strerror(-ret));
+>> +            exit(1);
+>> +        }
+>> +    }
+>> +
+>> +    memory_region_section_free_copy(rdl->section);
+>> +    rdl->section = NULL;
+>> +    QLIST_REMOVE(rdl, next);
+>> +}
+>> +
+>> +typedef struct RamBlockAttributesReplayData {
+>> +    ReplayRamDiscardState fn;
+>> +    void *opaque;
+>> +} RamBlockAttributesReplayData;
+>> +
+>> +static int ram_block_attributes_rdm_replay_cb(MemoryRegionSection *section,
+>> +                                              void *arg)
+>> +{
+>> +    RamBlockAttributesReplayData *data = arg;
+>> +
+>> +    return data->fn(section, data->opaque);
+>> +}
+>> +
+>> +static int
+>> +ram_block_attributes_rdm_replay_populated(const RamDiscardManager *rdm,
+>> +                                          MemoryRegionSection *section,
+>> +                                          ReplayRamDiscardState replay_fn,
+>> +                                          void *opaque)
+>> +{
+>> +    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+>> +    RamBlockAttributesReplayData data = { .fn = replay_fn, .opaque = opaque };
+>> +
+>> +    g_assert(section->mr == attr->ram_block->mr);
+>> +    return ram_block_attributes_for_each_populated_section(attr, section, &data,
+>> +                                            ram_block_attributes_rdm_replay_cb);
+>> +}
+>> +
+>> +static int
+>> +ram_block_attributes_rdm_replay_discarded(const RamDiscardManager *rdm,
+>> +                                          MemoryRegionSection *section,
+>> +                                          ReplayRamDiscardState replay_fn,
+>> +                                          void *opaque)
+>> +{
+>> +    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+>> +    RamBlockAttributesReplayData data = { .fn = replay_fn, .opaque = opaque };
+>> +
+>> +    g_assert(section->mr == attr->ram_block->mr);
+>> +    return ram_block_attributes_for_each_discarded_section(attr, section, &data,
+>> +                                            ram_block_attributes_rdm_replay_cb);
+>> +}
+>> +
+>> +static bool
+>> +ram_block_attributes_is_valid_range(RamBlockAttributes *attr, uint64_t offset,
+>> +                                    uint64_t size)
+>> +{
+>> +    MemoryRegion *mr = attr->ram_block->mr;
+>> +
+>> +    g_assert(mr);
+>> +
+>> +    uint64_t region_size = memory_region_size(mr);
+>> +    const size_t block_size = ram_block_attributes_get_block_size(attr);
+>> +
+>> +    if (!QEMU_IS_ALIGNED(offset, block_size) ||
+>> +        !QEMU_IS_ALIGNED(size, block_size)) {
+>> +        return false;
+>> +    }
+>> +    if (offset + size <= offset) {
+>> +        return false;
+>> +    }
+>> +    if (offset + size > region_size) {
+>> +        return false;
+>> +    }
+>> +    return true;
+>> +}
+>> +
+>> +static void ram_block_attributes_notify_discard(RamBlockAttributes *attr,
+>> +                                                uint64_t offset,
+>> +                                                uint64_t size)
+>> +{
+>> +    RamDiscardListener *rdl;
+>> +
+>> +    QLIST_FOREACH(rdl, &attr->rdl_list, next) {
+>> +        MemoryRegionSection tmp = *rdl->section;
+>> +
+>> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>> +            continue;
+>> +        }
+>> +        rdl->notify_discard(rdl, &tmp);
+>> +    }
+>> +}
+>> +
+>> +static int
+>> +ram_block_attributes_notify_populate(RamBlockAttributes *attr,
+>> +                                     uint64_t offset, uint64_t size)
+>> +{
+>> +    RamDiscardListener *rdl;
+>> +    int ret = 0;
+>> +
+>> +    QLIST_FOREACH(rdl, &attr->rdl_list, next) {
+>> +        MemoryRegionSection tmp = *rdl->section;
+>> +
+>> +        if (!memory_region_section_intersect_range(&tmp, offset, size)) {
+>> +            continue;
+>> +        }
+>> +        ret = rdl->notify_populate(rdl, &tmp);
+>> +        if (ret) {
+>> +            break;
+>> +        }
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +static bool ram_block_attributes_is_range_populated(RamBlockAttributes *attr,
+>> +                                                    uint64_t offset,
+>> +                                                    uint64_t size)
+>> +{
+>> +    const size_t block_size = ram_block_attributes_get_block_size(attr);
+>> +    const unsigned long first_bit = offset / block_size;
+>> +    const unsigned long last_bit = first_bit + (size / block_size) - 1;
+>> +    unsigned long found_bit;
+>> +
+>> +    found_bit = find_next_zero_bit(attr->bitmap, last_bit + 1,
+>> +                                   first_bit);
+>> +    return found_bit > last_bit;
+>> +}
+>> +
+>> +static bool
+>> +ram_block_attributes_is_range_discarded(RamBlockAttributes *attr,
+>> +                                        uint64_t offset, uint64_t size)
+>> +{
+>> +    const size_t block_size = ram_block_attributes_get_block_size(attr);
+>> +    const unsigned long first_bit = offset / block_size;
+>> +    const unsigned long last_bit = first_bit + (size / block_size) - 1;
+>> +    unsigned long found_bit;
+>> +
+>> +    found_bit = find_next_bit(attr->bitmap, last_bit + 1, first_bit);
+>> +    return found_bit > last_bit;
+>> +}
+>> +
+>> +int ram_block_attributes_state_change(RamBlockAttributes *attr,
+>> +                                      uint64_t offset, uint64_t size,
+>> +                                      bool to_discard)
+>> +{
+>> +    const size_t block_size = ram_block_attributes_get_block_size(attr);
+>> +    const unsigned long first_bit = offset / block_size;
+>> +    const unsigned long nbits = size / block_size;
+>> +    bool is_range_discarded, is_range_populated;
+> 
+> Can be reduced to "discarded" and "populated".
+> 
+>> +    const uint64_t end = offset + size;
+>> +    unsigned long bit;
+>> +    uint64_t cur;
+>> +    int ret = 0;
+>> +
+>> +    if (!ram_block_attributes_is_valid_range(attr, offset, size)) {
+>> +        error_report("%s, invalid range: offset 0x%lx, size 0x%lx",
+>> +                     __func__, offset, size);
+>> +        return -EINVAL;
+>> +    }
+>> +
+>> +    is_range_discarded = ram_block_attributes_is_range_discarded(attr, offset,
+>> +                                                                 size);
+> 
+> See - needlessly long line.
+> 
+>> +    is_range_populated = ram_block_attributes_is_range_populated(attr, offset,
+>> +                                                                 size);
+> 
+> If ram_block_attributes_is_range_populated() returned (found_bit*block_size), you could tell from a single call if it is populated (found_bit == size) or discarded (found_bit == 0), otherwise it is a mix (and dump just this number in the tracepoint below).
+> 
+> And then ditch ram_block_attributes_is_range_discarded() which is practically cut-n-paste. And then open code ram_block_attributes_is_range_populated().
 
-https://gitlab.com/jsnow/qemu/-/jobs/10257469021
+oops, cannot just drop find_next_bit(), my bad, need both find_next_bit() and find_next_zero_bit(). My point still stands though - if this is coded right here without helpers - it will look simpler. Thanks,
 
-It might be the case that we need to install the dependencies too, but that
-might pose problems for offline source distributions. I haven't fixed this
-yet, but I will continue looking into it.
 
-Thanks,
---js
+> 
+> These two are not used elsewhere anyway.
+> 
+>> +
+>> +    trace_ram_block_attributes_state_change(offset, size,
+>> +                                            is_range_discarded ? "discarded" :
+>> +                                            is_range_populated ? "populated" :
+>> +                                            "mixture",
+>> +                                            to_discard ? "discarded" :
+>> +                                            "populated");
+> 
+> 
+> I'd just dump 3 numbers (is_range_discarded, is_range_populated, to_discard) in the tracepoint as:
+> 
+> ram_block_attributes_state_change(uint64_t offset, uint64_t size, int discarded, int populated, int to_discard) "offset 0x%"PRIx64" size 0x%"PRIx64" discarded=%d populated=%d to_discard=%d"
+> 
+> 
+> 
+>> +    if (to_discard) {
+>> +        if (is_range_discarded) {
+>> +            /* Already private */
+>> +        } else if (is_range_populated) {
+>> +            /* Completely shared */
+>> +            bitmap_clear(attr->bitmap, first_bit, nbits);
+>> +            ram_block_attributes_notify_discard(attr, offset, size);
+>> +        } else {
+>> +            /* Unexpected mixture: process individual blocks */
+>> +            for (cur = offset; cur < end; cur += block_size) {
+> 
+> imho a little bit more accurate to:
+> 
+> for (bit = first_bit; bit < first_bit + nbits; ++bit) {
+> 
+> as you already have calculated first_bit, nbits...
+> 
+>> +                bit = cur / block_size;
+> 
+> ... and drop this ...
+> 
+>> +                if (!test_bit(bit, attr->bitmap)) {
+>> +                    continue;
+>> +                }
+>> +                clear_bit(bit, attr->bitmap);
+>> +                ram_block_attributes_notify_discard(attr, cur, block_size);
+> 
+> .. and do: ram_block_attributes_notify_discard(attr, bit * block_size, block_size);
+> 
+> Then you can drop @cur which is used in one place inside the loop.
+> 
+> 
+>> +            }
+>> +        }
+>> +    } else {
+>> +        if (is_range_populated) {
+>> +            /* Already shared */
+>> +        } else if (is_range_discarded) {
+>> +            /* Complete private */
+> 
+> s/Complete/Completely/
+> 
+>> +            bitmap_set(attr->bitmap, first_bit, nbits);
+>> +            ret = ram_block_attributes_notify_populate(attr, offset, size);
+>> +        } else {
+>> +            /* Unexpected mixture: process individual blocks */
+>> +            for (cur = offset; cur < end; cur += block_size) {
+>> +                bit = cur / block_size;
+>> +                if (test_bit(bit, attr->bitmap)) {
+>> +                    continue;
+>> +                }
+>> +                set_bit(bit, attr->bitmap);
+>> +                ret = ram_block_attributes_notify_populate(attr, cur,
+>> +                                                           block_size);
+>> +                if (ret) {
+>> +                    break;
+>> +                }
+>> +            }
+>> +        }
+>> +    }
+>> +
+>> +    return ret;
+>> +}
+>> +
+>> +RamBlockAttributes *ram_block_attributes_create(RAMBlock *ram_block)
+>> +{
+>> +    uint64_t bitmap_size;
+> 
+> Not really needed.
+> 
+>> +    const int block_size  = qemu_real_host_page_size();
+>> +    RamBlockAttributes *attr;
+>> +    int ret;
+>> +    MemoryRegion *mr = ram_block->mr;
+>> +
+>> +    attr = RAM_BLOCK_ATTRIBUTES(object_new(TYPE_RAM_BLOCK_ATTRIBUTES));
+>> +
+>> +    attr->ram_block = ram_block;
+>> +    ret = memory_region_set_ram_discard_manager(mr, RAM_DISCARD_MANAGER(attr));
+>> +    if (ret) {
+> 
+> Could just "if (memory_region_set_ram_discard_manager(...))".
+> 
+>> +        object_unref(OBJECT(attr));
+>> +        return NULL;
+>> +    }
+>> +    bitmap_size = ROUND_UP(mr->size, block_size) / block_size;
+>> +    attr->bitmap_size = bitmap_size;
+>> +    attr->bitmap = bitmap_new(bitmap_size);
+>> +
+>> +    return attr;
+>> +}
+>> +
+>> +void ram_block_attributes_destroy(RamBlockAttributes *attr)
+>> +{
+>> +    if (!attr) {
+> 
+> 
+> Rather g_assert().
+> 
+> 
+>> +        return;
+>> +    }
+>> +
+>> +    g_free(attr->bitmap);
+>> +    memory_region_set_ram_discard_manager(attr->ram_block->mr, NULL);
+>> +    object_unref(OBJECT(attr));
+>> +}
+>> +
+>> +static void ram_block_attributes_init(Object *obj)
+>> +{
+>> +    RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(obj);
+>> +
+>> +    QLIST_INIT(&attr->rdl_list);
+>> +}
+> 
+> Not used.
+> 
+>> +
+>> +static void ram_block_attributes_finalize(Object *obj)
+> 
+> Not used.
+> 
+> Besides these two, feel free to ignore other comments :)
+> 
+> Otherwise,
+> 
+> Tested-by: Alexey Kardashevskiy <aik@amd.com>
+> Reviewed-by: Alexey Kardashevskiy <aik@amd.com>
+> 
+> 
+>> +{
+>> +}
+>> +
+>> +static void ram_block_attributes_class_init(ObjectClass *klass,
+>> +                                            const void *data)
+>> +{
+>> +    RamDiscardManagerClass *rdmc = RAM_DISCARD_MANAGER_CLASS(klass);
+>> +
+>> +    rdmc->get_min_granularity = ram_block_attributes_rdm_get_min_granularity;
+>> +    rdmc->register_listener = ram_block_attributes_rdm_register_listener;
+>> +    rdmc->unregister_listener = ram_block_attributes_rdm_unregister_listener;
+>> +    rdmc->is_populated = ram_block_attributes_rdm_is_populated;
+>> +    rdmc->replay_populated = ram_block_attributes_rdm_replay_populated;
+>> +    rdmc->replay_discarded = ram_block_attributes_rdm_replay_discarded;
+>> +}
+>> diff --git a/system/trace-events b/system/trace-events
+>> index be12ebfb41..82856e44f2 100644
+>> --- a/system/trace-events
+>> +++ b/system/trace-events
+>> @@ -52,3 +52,6 @@ dirtylimit_state_finalize(void)
+>>   dirtylimit_throttle_pct(int cpu_index, uint64_t pct, int64_t time_us) "CPU[%d] throttle percent: %" PRIu64 ", throttle adjust time %"PRIi64 " us"
+>>   dirtylimit_set_vcpu(int cpu_index, uint64_t quota) "CPU[%d] set dirty page rate limit %"PRIu64
+>>   dirtylimit_vcpu_execute(int cpu_index, int64_t sleep_time_us) "CPU[%d] sleep %"PRIi64 " us"
+>> +
+>> +# ram-block-attributes.c
+>> +ram_block_attributes_state_change(uint64_t offset, uint64_t size, const char *from, const char *to) "offset 0x%"PRIx64" size 0x%"PRIx64" from '%s' to '%s'"
+> 
+> 
+> 
 
---000000000000bc56470636c63615
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, May 19,=
- 2025 at 1:47=E2=80=AFPM John Snow &lt;<a href=3D"mailto:jsnow@redhat.com">=
-jsnow@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=
-=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, May 10, 2025=
- at 2:17=E2=80=AFAM Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@dayni=
-x.com" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt; wrote:<br></div><=
-blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
-eft:1px solid rgb(204,204,204);padding-left:1ex">Supersedes: &lt;<a href=3D=
-"mailto:20250505-sphinx82-v1-0-85f2418b33b1@daynix.com" target=3D"_blank">2=
-0250505-sphinx82-v1-0-85f2418b33b1@daynix.com</a>&gt;<br>
-(&quot;[PATCH 0/2] docs: Bump sphinx to 8.2.3&quot;)<br>
-<br>
-sphinx 5.3.0 fails with Python 3.13.1:<br>
-<br>
-../docs/meson.build:37: WARNING: /home/me/qemu/build/pyvenv/bin/sphinx-buil=
-d:<br>
-Extension error:<br>
-Could not import extension sphinx.builders.epub3 (exception: No module name=
-d &#39;imghdr&#39;)<br>
-<br>
-../docs/meson.build:39:6: ERROR: Problem encountered: Install a Python 3 ve=
-rsion of python-sphinx and the readthedoc theme<br>
-<br>
-Bump sphinx to 6.2.1 and also sphinx_rtd_theme as required for the new<br>
-sphinx version.<br>
-<br>
-Signed-off-by: Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com=
-" target=3D"_blank">akihiko.odaki@daynix.com</a>&gt;<br></blockquote><div><=
-br></div><div>Reviewed-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com=
-" target=3D"_blank">jsnow@redhat.com</a>&gt;</div><div><br></div><div>I fig=
-ure if this causes issues, this early in the development cycle we can roll =
-it back or pursue alternate solutions if necessary. I figure because this t=
-ouches so much stuff I wrote, it probably ought to go through my tree, so I=
-&#39;ll stage this tentatively.</div><div><br></div><div>(Paolo, Peter: But=
- if you want to stage it instead, be my guest.)</div><div><br></div><blockq=
-uote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1p=
-x solid rgb(204,204,204);padding-left:1ex">
----<br>
-Akihiko Odaki (3):<br>
-=C2=A0 =C2=A0 =C2=A0 docs: Bump sphinx to 6.2.1<br>
-=C2=A0 =C2=A0 =C2=A0 docs: Require sphinx&gt;=3D6.2<br>
-=C2=A0 =C2=A0 =C2=A0 MAINTAINERS: Add docs/requirements.txt<br>
-<br>
-=C2=A0MAINTAINERS=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=
-=C2=A0 =C2=A01 +<br>
-=C2=A0docs/requirements.txt=C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A04 +-<br>
-=C2=A0docs/sphinx/compat.py=C2=A0 =C2=A0 =C2=A0 | 230 ---------------------=
-------------------------<br></blockquote><div><br></div><div>Oh, thank you =
-so much O:-) how beautiful...</div><div>=C2=A0</div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-=C2=A0docs/sphinx/qapi_domain.py |=C2=A0 33 +++----<br>
-=C2=A0pythondeps.toml=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=
-=A04 +-<br>
-=C2=A05 files changed, 20 insertions(+), 252 deletions(-)<br>
----<br>
-base-commit: 1da8f3a3c53b604edfe0d55e475102640490549e<br>
-change-id: 20250508-sphinx72-400c521af710<br>
-<br>
-Best regards,<br>
--- <br>
-Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@daynix.com" target=3D"_bl=
-ank">akihiko.odaki@daynix.com</a>&gt;</blockquote></div></div></blockquote>=
-<div><br></div><div>Just a note to say that I started staging and testing t=
-his and found a few problems -- many are minor and I have patched them up a=
-ccordingly, but I am currently having an issue with debian claiming it can&=
-#39;t find the sphinxcontrib-jquery extension:</div><div><br></div><div><a =
-href=3D"https://gitlab.com/jsnow/qemu/-/jobs/10257469021">https://gitlab.co=
-m/jsnow/qemu/-/jobs/10257469021</a></div><div><br></div><div>It might be th=
-e case that we need to install the dependencies too, but that might pose pr=
-oblems for offline source distributions. I haven&#39;t fixed this yet, but =
-I will continue looking into it.</div><div><br></div><div>Thanks,</div><div=
->--js <br></div></div></div>
-
---000000000000bc56470636c63615--
+-- 
+Alexey
 
 
