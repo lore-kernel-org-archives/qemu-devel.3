@@ -4,76 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C81A7C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A151C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:27:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN6r1-00021l-56; Thu, 05 Jun 2025 05:25:43 -0400
+	id 1uN6ry-0003Af-M2; Thu, 05 Jun 2025 05:26:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uN6qv-0001yo-3A; Thu, 05 Jun 2025 05:25:37 -0400
-Received: from mgamail.intel.com ([192.198.163.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uN6qt-0003Bk-8G; Thu, 05 Jun 2025 05:25:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749115535; x=1780651535;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=6gcqC2RNFKk8w35jVZyxPY8r9CAuU5Rebn8W7k05UwU=;
- b=fRLoEj9u1RFdR/vA7RFYyyzmX7ZZCdQ675BZ0fJESzjjmr+uaxG9DlO1
- pibl6OQeOXmKigWd3Z9Rzw8f4/mgN+0ReXhul9DbbP4RLH3IlI6vFPv9r
- TlQpYBzKT2xGJawE6FqUFSqwHzmVs4WvJCs2Cj4PZ2nDqs4nSYG+knDGi
- eQN+kAFickhGE/uZyOm9cHnIW8TXiPLFW5sWlSW51+3nwqq4xSp9G/WVs
- P3Sg+HKR85Q2fwwUm+IbVbW5mh9gR0aeDp7XMbQhixAAEqCsgKXdPj6IF
- edSo6MZJUMZ2TZY+0M7UOaiznMUp4TCQfv5LFYLshsCpz5c5nXCgNemq6 w==;
-X-CSE-ConnectionGUID: 9ERmceTZR8aqFngDzQg+5w==
-X-CSE-MsgGUID: ojPv6zgBQ+e9zR91IOCF4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11454"; a="50464009"
-X-IronPort-AV: E=Sophos;i="6.16,211,1744095600"; d="scan'208";a="50464009"
-Received: from orviesa001.jf.intel.com ([10.64.159.141])
- by fmvoesa112.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jun 2025 02:25:32 -0700
-X-CSE-ConnectionGUID: IYhamantQ56dn2/LnifzdA==
-X-CSE-MsgGUID: eF6omVKUTCSLIo68uDvO0g==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,211,1744095600"; d="scan'208";a="182663019"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa001.jf.intel.com with ESMTP; 05 Jun 2025 02:25:28 -0700
-Date: Thu, 5 Jun 2025 17:46:40 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: mst@redhat.com, anisinha@redhat.com, armbru@redhat.com,
- berrange@redhat.com, dapeng1.mi@linux.intel.com,
- eric.auger@redhat.com, farman@linux.ibm.com,
- gustavo.romero@linaro.org, imammedo@redhat.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- linuxarm@huawei.com, mtosatti@redhat.com, peter.maydell@linaro.org,
- philmd@linaro.org, qemu-arm@nongnu.org, qemu-devel@nongnu.org,
- richard.henderson@linaro.org, shameerali.kolothum.thodi@huawei.com,
- shannon.zhaosl@gmail.com, yangyicong@hisilicon.com, maobibo@loongson.cn
-Subject: Re: [PATCH v12 5/6] tests/qtest/bios-table-test: testing new ARM
- ACPI PPTT topology
-Message-ID: <aEFngNQBQlfyfkci@intel.com>
-References: <20250604133439.1592-1-alireza.sanaee@huawei.com>
- <20250604133439.1592-6-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uN6rl-00036G-Nu
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:26:30 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uN6rj-0003FP-K2
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:26:29 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a5096158dcso610469f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:26:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749115586; x=1749720386; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=pracb5qXlBkFu3b5DbhIEZ21YPoA0bxcZgfKbvcNdtQ=;
+ b=hlNQV6KZU3nDn1RsRU6bqV/A85T6nI3GfktOiTNnVE8mM9b9PhjiiVI+P7Y0LdsMtc
+ vnMXTGBYg5g6/zAhok6Loo4RZlUcntBM1H/jq5x9k9yC+ALbLPskpL1hMh2Uk33/pTrn
+ mPAhY1ArsShT/VQhVIquU3XS0jzpMAiDQb8cBpgWXJ1eoIeIhvam4qTFrRAKcLJotA7f
+ O2S05aEuRSNXKDnism6EjFs5ksHBX2qVxoqubjaANVe48iyAR9+I9ozaAhs1xrXRnK5M
+ PjEtLaRmn1IMINdBeZXvG9fuSJY3qc7MJ74Qly1Bdix3l2XiJQ/CYcj4hX53884bHldS
+ wTcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749115586; x=1749720386;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=pracb5qXlBkFu3b5DbhIEZ21YPoA0bxcZgfKbvcNdtQ=;
+ b=QoC8GnOEaCitOXcVRAvUhzWGTGoZh3CHOBQS4b8/6pOlJ4vkogXMclmWAXdREY02f3
+ /a/kbrBm7y6u8OrJku4c5mrGmNLk9kTJAlTHOI/w8hCZN3qxk3UABSmVugiXPefY8fuW
+ AWmVv7mri7thkhZsYjdSYf91dXi4mkgt7OUQn2zmBrvuc5IXKpXxTZJv6JPD3g0/5V2b
+ Nc12StfH3OIRfeMn3uSNdyZ5lxsQSj6upFuNItTpBa0FpmYw170WKyNgN61MfVlrIj6D
+ wcRw0uo7Tm0EwgYaubtWs8Zv5YE4a8avwMk4KtHgR3Ne6TFz85COv+wnJe/DDSJ6u6t6
+ IoHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXa5EZk0szXZrfVXlPq0EP1joFT3sXCxh3kLxf+joMEFDXLZ12Jn6aXxqowlZX9h75xyY6wEm/8PeQ1@nongnu.org
+X-Gm-Message-State: AOJu0YwUVuMbgjmJRO8MhkT1ILGxGnX8ahuE7sbfic2fGrpsUAeHCDun
+ +2c1jzW4NRjjL8iGOEuqaj1yBxILKqVUnSG8WKA2zWppFki1x4/2vUKw9occkT0bYBAThV8Esjb
+ vM2rBTfI=
+X-Gm-Gg: ASbGnct6aLn5D7dzCsvbh//UZ9QZFdjCvAgxzeNNI/CeOpHElZsjFhDE5FeIJ6c9Kp7
+ U1ZRBpgcLkN3bl4Qal6q9oPx2kh6yLwcnfaDBm4ZqbUJ+JU8nhIJddRnZ0vC4W9kZ7Lf3TnG/aG
+ 7Jpy5L/LsKKWj9jeY48yV1XDGLpbY/6Q3Cs9P1yk2cGlNbcoot79mKlOsv4Lz8b7qtzzKTr5ZoL
+ k+qYa5nYZw0lITF+G56jwkGIErL+leXwx4LLIkd6v9PogWxoZizcPuO2R4qK9fiWXA3oYzReZKX
+ ibX8rg74ntCr+gtL2SyPocVngOI3w6/LdEKk7Rb4tp8FwKvmdWCVTNfpNDuZ5cewnFuLiy4sGGN
+ pnotbnAXQsta+Q0DllRhnXwfmDsHmuA==
+X-Google-Smtp-Source: AGHT+IG3AF0Pep3vWPVa77ctNAZKYiXLcEOtaiIkYUGkRx3lfmxIEK1IaQLEiaTJJLrlixxZf0grBA==
+X-Received: by 2002:a05:6000:2089:b0:3a4:f7d9:3f56 with SMTP id
+ ffacd0b85a97d-3a51d9249aemr4978428f8f.2.1749115585669; 
+ Thu, 05 Jun 2025 02:26:25 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-451fb177afcsm12576965e9.9.2025.06.05.02.26.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Jun 2025 02:26:25 -0700 (PDT)
+Message-ID: <0b6b429a-a3bc-4707-9e94-67d9fe8cc363@linaro.org>
+Date: Thu, 5 Jun 2025 11:26:24 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250604133439.1592-6-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=192.198.163.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/riscv/kvm: use qemu_chr_fe_write_all() in
+ SBI_EXT_DBCN_CONSOLE_WRITE_BYTE
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-devel@nongnu.org
+Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
+References: <20250605090012.1268809-1-dbarboza@ventanamicro.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250605090012.1268809-1-dbarboza@ventanamicro.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -90,21 +104,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 02:34:38PM +0100, Alireza Sanaee wrote:
-> Date: Wed, 4 Jun 2025 14:34:38 +0100
-> From: Alireza Sanaee <alireza.sanaee@huawei.com>
-> Subject: [PATCH v12 5/6] tests/qtest/bios-table-test: testing new ARM ACPI
->  PPTT topology
-> X-Mailer: git-send-email 2.34.1
+On 5/6/25 11:00, Daniel Henrique Barboza wrote:
+> The SBI spec states, for console write byte:
 > 
-> Test new PPTT topolopy with cache representation.
+> "This is a blocking SBI call and it will only return after writing the
+> specified byte to the debug console. It will also return, with
+> SBI_ERR_FAILED, if there are I/O errors."
 > 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+> Being a blocker call will either succeed writing the byte or error out,
+> it's feasible to use the blocking qemu_chr_fe_write_all() instead of
+> qemu_chr_fe_write(). This is also how SBI_EXT_DBCN_CONSOLE_WRITE is
+> implemented, so we're also being more consistent.
+> 
+> Last but not the least, we will duck possible changes in
+> qemu_chr_fe_write() where ret = 0 will have a 'zero byte written'
+> semantic [1] - something that we're not ready to deal in this current
+> state.
+> 
+> [1] https://lore.kernel.org/qemu-devel/ CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
+> 
+> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  tests/qtest/bios-tables-test.c | 4 ++++
->  1 file changed, 4 insertions(+)> 
+>   target/riscv/kvm/kvm-cpu.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Thank you very much Daniel!
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
