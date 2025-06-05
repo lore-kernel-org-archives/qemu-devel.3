@@ -4,105 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B700CC5AE59
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AAAC61CE7
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 08:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN64j-0002Vi-6x; Thu, 05 Jun 2025 04:35:49 -0400
+	id 1uN644-0001ks-2l; Thu, 05 Jun 2025 04:35:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uN64T-0002GL-Rr
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:35:35 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uN64Q-0006w9-95
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:35:31 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-231e98e46c0so6816975ad.3
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 01:35:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1749112528; x=1749717328;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0u3uA5JSpAEXaIO1NqCEQjYLy9eO7xSUc0BO/e3CoiU=;
- b=WC9gUponyFVI30n+55xBqJEQ+udy87fd1pPGsPLtn3dMD2T+f/LyBnk453do9YlHKE
- ZbSChS54PoOwpQR3hrE1+UeHSCDAsDcqG6/jI1Temv2XsaLnODzS1FbER8ONJX0Rwz9f
- 8FfgdS/R3e/Mf2rV0KAynTNnPf4NISSqGVIs8F91rLoYEF4SXibrBCAj8zbUZGvr6PlH
- U5ptiswKM/5pRyNTWAoWOU5AHjwFTMYLiV0dQAGuA87ePrHyJD3j5GuDvml7islXni90
- cK+I0iAOmBJpzoZosg/F7+kOf5uD6IhcpV8t8mKgKb5DEld9od0/Mk5SV0/Dcjcq+N6F
- 1Few==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749112528; x=1749717328;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0u3uA5JSpAEXaIO1NqCEQjYLy9eO7xSUc0BO/e3CoiU=;
- b=qz0DLkKmtvw5UHV284uIRGOX514UkG/p+nMma05XXaZFTl4eKTHkcgrG6VY9nwOVYt
- tHSdLtH/fU5U2Oo8VJb2Wf1oniZwJO+geVU/a2uoKy048hIa81uapEn0x7l1N8I9k3tF
- lvsBluh4C018/Tt51hV/UitaQ3mDi4GngxY9N7d3/bPcJXBcx6tMtkOaZ6iFDy8JM8Mg
- kF1H8aalyk17Tt+v9Nnj1EQTicll1nbagBXVzn7cIPSezG5+Q0B4q0qSsjASwHD18voA
- jSwNyWMDzf0IASfwkZ4GBYD0JKHjZzFU3EB42+iHYRwjZ7ZjOQjd+jyaxKrG02voQ4Zi
- zzxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXFywOeBFdtq4TCkhqYEFBxBGM+GU0EIL9bpVJhXRR5jbE1TRPQhNX90J8R1n9uj+PUQoj2O2JF5JaM@nongnu.org
-X-Gm-Message-State: AOJu0YyZWhWyiFcrCN8NQdb4VBcF1PeB/bxfYuZW8nGU08dnfzzHcgAK
- 5DgGRYvjxwmIx5lLMYg3NgtilkchjbkUKsb0JIAFCCntlZGevIN/ReqQ3I54lwL8uIk=
-X-Gm-Gg: ASbGncv4yEL5Z3R4/vVl2pzpvzzYxQkj1AJpO7VGTyRsC3tJtrFFw1pZYE7FGredIrk
- wYfcl7rcDVKmqH04Mlt3++wKxvlZTnQLxft2E+IwWRFXzoY0/Tvxicb2k8KKu/C8VomDM6b5wc5
- 0M9vr9wERVw3qpL8pTU0A3Dv2WpHas2z347MC4Uz+O2CFPNMQQv0lz2oUtaaXZ70yr0wkO4jryX
- xFN9ekzaE0KlJkUaFMSqeHlZNxDnTkxxfZM8cM5MT7d/ElPdfe6uxD59jlbs9TdpFjVsmWZUss4
- 09WyzzZ58D4xvCI7pRfVgUIysCjycUDysEV9JM3if1mUfJkzp0Bbj10qQnX67Hdq
-X-Google-Smtp-Source: AGHT+IGjp6Pm19QxT9iOLUpHQ8WVqM7TqpwHB8wLa/3Zj4KSKc2MQp/mN1JvyfH6aMJJyPjNJivX7g==
-X-Received: by 2002:a17:902:d488:b0:234:f182:a735 with SMTP id
- d9443c01a7336-235e11e5ef3mr88171765ad.34.1749112528438; 
- Thu, 05 Jun 2025 01:35:28 -0700 (PDT)
-Received: from [157.82.203.223] ([157.82.203.223])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23506cd3438sm114946755ad.136.2025.06.05.01.35.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Jun 2025 01:35:28 -0700 (PDT)
-Message-ID: <e8b93b0b-461b-4029-9ed2-939ae51e3f81@daynix.com>
-Date: Thu, 5 Jun 2025 17:35:23 +0900
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1uN63u-0001dq-NQ; Thu, 05 Jun 2025 04:35:02 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1uN63s-0006gw-8r; Thu, 05 Jun 2025 04:34:58 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 554L1vVD029308;
+ Thu, 5 Jun 2025 08:34:51 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=UpRoQV
+ jCmj1gavOpTeWieVIk1lGhFV5evf/S0QigwRc=; b=SShJAbg+XW+ua7OCG3f4st
+ 4RM69V/p0YQFb22fTqwFyH6rNd3QayfHF/PHFWdO+EpaTVKtxoQUoULFXbfS2x4R
+ ggeWiAs7g86/aWKXJdR8Fln6lDM4bj4neEuZflWFOTHL1wUPO4YVyFM6s6s9T70Z
+ PAeQqg9i+rL/rCXiAaoSVXnwC2MIywXs559biHProWMx9vlJSrdUEAd7IJoY/Ekh
+ L90ob7p07thN924F1Ly6qhHlpsAU8YAI8FA4M7/eKzT0wp3TLQoyIRQ0d5CdERAr
+ ucaj5MHn8Zc4zdcq6d0FmWYQdJzqjceyj1AP+aafO6H/SrrX8q/G0Ux/JJW2+tmA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 471geyfmtc-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Jun 2025 08:34:51 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5554GuEW012569;
+ Thu, 5 Jun 2025 08:34:50 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 470et2kjgk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Jun 2025 08:34:50 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5558Yjiv23134652
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Jun 2025 08:34:46 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D75062004E;
+ Thu,  5 Jun 2025 08:34:45 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 815B320040;
+ Thu,  5 Jun 2025 08:34:45 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.111.39.61]) by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Jun 2025 08:34:45 +0000 (GMT)
+Message-ID: <9bf3dbd97aea3e8811e3064c4f1f79ab3ba65ecd.camel@linux.ibm.com>
+Subject: Re: [PATCH v5 2/3] hw/s390x: add Control-Program Identification to QOM
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>, qemu-s390x
+ mailing list <qemu-s390x@nongnu.org>, Thomas Huth <thuth@redhat.com>
+Cc: Daniel Berrange <berrange@redhat.com>, qemu-devel mailing list
+ <qemu-devel@nongnu.org>, Hendrik Brueckner <brueckner@linux.ibm.com>
+Date: Thu, 05 Jun 2025 10:34:44 +0200
+In-Reply-To: <20250603135655.595602-3-shalini@linux.ibm.com>
+References: <20250603135655.595602-1-shalini@linux.ibm.com>
+ <20250603135655.595602-3-shalini@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1 (3.56.1-1.fc42) 
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 08/17] MAINTAINERS: add Akihiko and Dmitry as reviewers
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20250603110204.838117-1-alex.bennee@linaro.org>
- <20250603110204.838117-9-alex.bennee@linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <20250603110204.838117-9-alex.bennee@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pl1-x630.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=684156ab cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=Deb6QIgZBvp3a0EnJhoA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: SuoX7UuILO-WI1PU7gNPVPTkjHXkTqxP
+X-Proofpoint-ORIG-GUID: SuoX7UuILO-WI1PU7gNPVPTkjHXkTqxP
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA1MDA3NCBTYWx0ZWRfX7fvEWRodfYsI
+ cA/aTb7/0Efmk5BqMTGrT23gR42SvJOBFyHfbBvH+skX7ezA2dDwemXTTMlZHTVrKlYvl2o71YW
+ EuuKmrSqDgO6MlbwY3JIP0wi1+dfDWa+nkPLgu0XpcFCDCZhV1gcwEB1gGkHUjab/gP0wbuULiS
+ 4ITho6eNjNmwcqEWW88Tcl/odaL6b99jqM9UNOO1Y68lRQpHyOs1t242xDK/EHe8mW7aJrdfVsz
+ S++5Xs+KDd1xijcrpfxJLHlBQd534JdI9cpzt4/2gE5vHFVah9kCoY/kDv+1m79orVz+S7PNMem
+ lP+6m3gucXSeb7eDK8LDEzJvr7MyIf/73EQDW/P5v9LUSeNJbDNfhu8+T8bdVg1Vuep/5QaGGqV
+ 9IOvQkQQMppHWN5w1AzbF1ZzMHx3FYOboAumPk3IaonkHQudKDLoU50I4fNF4jrcVAPZqj8Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-05_02,2025-06-03_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 bulkscore=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 phishscore=0 mlxscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506050074
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,35 +122,150 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/06/03 20:01, Alex Bennée wrote:
-> Thanks for volunteering to help.
-> 
-> Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Reviewed-by: Markus Armbruster <armbru@redhat.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+On Tue, 2025-06-03 at 15:56 +0200, Shalini Chellathurai Saroja wrote:
+> Add Control-Program Identification (CPI) data to the QEMU Object
+> Model (QOM), along with the timestamp in which the data was received
+> as shown below.
+
+[...]
+>=20
+> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
 > ---
->   MAINTAINERS | 2 ++
->   1 file changed, 2 insertions(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 7718199979..79b1d5c0b3 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2669,6 +2669,8 @@ F: include/hw/display/ramfb.h
->   
->   virtio-gpu
->   M: Alex Bennée <alex.bennee@linaro.org>
-> +R: Akihiko Odaki <akihiko.odaki@daynix.com>
+>  hw/s390x/sclpcpi.c                | 47 +++++++++++++++++++++++++
+>  include/hw/s390x/event-facility.h |  5 +++
+>  qapi/machine.json                 | 58 +++++++++++++++++++++++++++++++
+>  3 files changed, 110 insertions(+)
+>=20
+> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
+> index 935fa87acd..ec711e2291 100644
+> --- a/hw/s390x/sclpcpi.c
+> +++ b/hw/s390x/sclpcpi.c
+> @@ -15,7 +15,9 @@
+>    */
 
-Please update my email address according to:
-https://lore.kernel.org/qemu-devel/20250531-rsg-v1-1-e0bae1e1d90e@rsg.ci.i.u-tokyo.ac.jp/
+[...]
+> =20
+> +static void cpi_init(Object *obj)
+> +{
+> +    SCLPEventCPI *e =3D SCLP_EVENT_CPI(obj);
+> +
+> +    object_property_add_str(obj, "system_type", get_system_type, NULL);
+> +    object_property_add_str(obj, "system_name", get_system_name, NULL);
+> +    object_property_add_str(obj, "sysplex_name", get_sysplex_name, NULL)=
+;
+> +    object_property_add_uint64_ptr(obj, "system_level", &(e->system_leve=
+l),
+> +                                   OBJ_PROP_FLAG_READ);
+> +    object_property_add_uint64_ptr(obj, "timestamp", &(e->timestamp),
+> +                                   OBJ_PROP_FLAG_READ);
+> +}
 
-> +R: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->   S: Odd Fixes
->   F: hw/display/virtio-gpu*
->   F: hw/display/virtio-vga.*
+I think it would be cleaner if those were class properties.
+You could use object_class_property_add_str in cpi_class_init,
+but I think it'd be nice to use DEFINE_PROP_(STR|UINT64) and
+device_class_set_props.
+I'm not sure if DEFINE_PROP_STR can be used with a char array,
+in any case you'd need to allocate the extra null byte.
+If it doesn't work with the array just go ahead an heap allocate
+the strings.
+(You could also define a DEFINE_PROP for fixed size strings/char arrays,
+which would be useful to have in general, this has come up before)
+> +
+>  static const TypeInfo sclp_cpi_info =3D {
+>      .name          =3D TYPE_SCLP_EVENT_CPI,
+>      .parent        =3D TYPE_SCLP_EVENT,
+>      .instance_size =3D sizeof(SCLPEventCPI),
+> +    .instance_init =3D cpi_init,
+>      .class_init    =3D cpi_class_init,
+>  };
 
+[...]
+
+> diff --git a/qapi/machine.json b/qapi/machine.json
+> index 5373e1368c..1f2db68032 100644
+> --- a/qapi/machine.json
+> +++ b/qapi/machine.json
+> @@ -2279,3 +2279,61 @@
+>  # Since: 1.2
+>  ##
+>  { 'command': 'query-cpu-definitions', 'returns': ['CpuDefinitionInfo'] }
+> +
+> +##
+> +# @S390ControlProgramId:
+> +#
+> +# Control-program identifiers provide data about the guest operating sys=
+tem.
+> +# The control-program identifiers are: system type, system name, system =
+level
+> +# and sysplex name.
+> +#
+> +# In Linux, all the control-program identifiers are user configurable. T=
+he
+> +# system type, system name, and sysplex name use EBCDIC characters from
+> +# this set: capital A-Z, 0-9, $, @, #, and blank.  In Linux, the system =
+type,
+> +# system name and sysplex name are arbitrary free-form texts.
+> +#
+> +# In Linux, the 8-byte hexadecimal system-level has the format
+> +# 0x<a><b><cc><dd><eeee><ff><gg><hh>, where:
+> +# <a>: is one hexadecimal byte, its most significant bit indicates hyper=
+visor
+> +# use
+> +# <b>: is one digit that represents Linux distributions as follows
+> +# 0: generic Linux
+> +# 1: Red Hat Enterprise Linux
+> +# 2: SUSE Linux Enterprise Server
+> +# 3: Canonical Ubuntu
+> +# 4: Fedora
+> +# 5: openSUSE Leap
+> +# 6: Debian GNU/Linux
+> +# 7: Red Hat Enterprise Linux CoreOS
+> +# <cc>: are two digits for a distribution-specific encoding of the major=
+ version
+> +# of the distribution
+> +# <dd>: are two digits for a distribution-specific encoding of the minor=
+ version
+> +# of the distribution
+> +# <eeee>: are four digits for the patch level of the distribution
+> +# <ff>: are two digits for the major version of the kernel
+> +# <gg>: are two digits for the minor version of the kernel
+> +# <hh>: are two digits for the stable version of the kernel
+> +# (e.g. 74872343805430528, when converted to hex is 0x010a000000060b00).=
+ On
+> +# machines prior to z16, some of the values are not available to display=
+.
+> +#
+> +# Sysplex refers to a cluster of logical partitions that communicates an=
+d
+> +# co-operates with each other.
+> +#
+> +# @system-type: operating system (e.g. "LINUX   ")
+> +#
+> +# @system-name: user configurable name of the VM (e.g. "TESTVM  ")
+> +#
+> +# @system-level: distribution and kernel version in Linux
+> +#
+> +# @sysplex-name: sysplex which the VM belongs to, if any (e.g. "PLEX ")
+> +#
+> +# @timestamp: latest update of CPI data in nanoseconds since the UNIX EP=
+OCH
+> +#
+> +# Since: 10.1
+> +##
+> +{ 'struct': 'S390ControlProgramId', 'data': {
+> +     'system-type': 'str',
+> +     'system-name': 'str',
+> +     'system-level': 'uint64',
+> +     'sysplex-name': 'str',
+> +     'timestamp': 'uint64' } }
+
+This is unused now, so you can get rid of it and put the
+documentation sclpcpi.c.
+
+--=20
+IBM Deutschland Research & Development GmbH
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Gesch=C3=A4ftsf=C3=BChrung: David Faller
+Sitz der Gesellschaft: B=C3=B6blingen / Registergericht: Amtsgericht Stuttg=
+art, HRB 243294
 
