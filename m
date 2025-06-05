@@ -4,62 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44EACC5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:49:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E4BEC5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:51:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNA2J-0004Vj-VC; Thu, 05 Jun 2025 08:49:35 -0400
+	id 1uNA3T-0004xB-ET; Thu, 05 Jun 2025 08:50:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
- id 1uNA2H-0004VR-5Q
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:49:33 -0400
-Received: from sg-1-12.ptr.blmpb.com ([118.26.132.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <liujingqi@lanxincomputing.com>)
- id 1uNA2C-0002uz-0P
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:49:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=s1; d=lanxincomputing-com.20200927.dkim.feishu.cn; t=1749127755;
- h=from:subject:mime-version:from:date:message-id:subject:to:cc:
- reply-to:content-type:mime-version:in-reply-to:message-id;
- bh=BwT03PuYNPx6ZhnFlEBVIWTkbTJBcigSSkfhmsOlP0w=;
- b=apSQOcWClLk6rQmNu32bJlGzGghJmgrteRxWawnq9qiGd1tScKhF1HosbZZK8EeReLarZ0
- R7aL4V5k87OHJLPCmnlXaV6PJ/K85Yi6jdhyOnDLfDLyxt8bnjpcDSpLL0RZcgxZoV3GHq
- C9vti7GRvJW86T8z1p20VRSo60xwYRIJvyLApEDcVYDm2nIaTzbkiqbypCwDKtx1IXTQtT
- ZT9CNJ4ZWzm6XOiZBxdbE1s9GFD0/b3pmP0XhDnLmNbmd9tUNzogyKCkPnq12rs/gZUA72
- iE9gYzLp9u15gbvr1NjGQA33LP4282kDKY7Qk4QJRAxEv/HyufUGfGv64HYYoA==
-Content-Transfer-Encoding: 7bit
-Cc: "Nutty Liu" <liujingqi@lanxincomputing.com>, 
- "Tomasz Jeznach" <tjeznach@rivosinc.com>
-X-Original-From: Nutty Liu <liujingqi@lanxincomputing.com>
-X-Mailer: git-send-email 2.49.0.windows.1
-Received: from localhost.localdomain ([180.165.23.184]) by smtp.feishu.cn with
- ESMTP; Thu, 05 Jun 2025 20:49:12 +0800
-Mime-Version: 1.0
-Message-Id: <20250605124848.1248-1-liujingqi@lanxincomputing.com>
-X-Lms-Return-Path: <lba+268419249+a25c3e+nongnu.org+liujingqi@lanxincomputing.com>
-Content-Type: text/plain; charset=UTF-8
-Date: Thu,  5 Jun 2025 20:48:48 +0800
-From: "Nutty Liu" <liujingqi@lanxincomputing.com>
-Subject: [PATCH v2] hw/riscv/riscv-iommu: Fix PPN field of Translation-reponse
- register
-To: "Palmer Dabbelt" <palmer@dabbelt.com>, 
- "Alistair Francis" <alistair.francis@wdc.com>, 
- "Weiwei Li" <liwei1518@gmail.com>, 
- "Daniel Henrique Barboza" <dbarboza@ventanamicro.com>, 
- "Liu Zhiwei" <zhiwei_liu@linux.alibaba.com>, <qemu-riscv@nongnu.org>, 
- <qemu-devel@nongnu.org>
-Received-SPF: pass client-ip=118.26.132.12;
- envelope-from=liujingqi@lanxincomputing.com; helo=sg-1-12.ptr.blmpb.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uNA3A-0004nt-0U
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:50:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uNA37-00031G-VI
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:50:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749127823;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0KWI0IDEuAZuCxiKgUVUMPGvr+uxq9EnajIgGMe81vE=;
+ b=Y2eesxeOS9DoZdYly+F8qWIcJ+cZy4wlo1qdn/JhqPNs2sUhbIo5bLRmC9JdAmXp7BpcPs
+ lQYwMxXO0CxszBDWnMQC+DNtHZA9lhu067QfCwDZjIdgBlZ8g6h68+4wdgQro16NiviLp9
+ nWwlHjQJhLYx24kR0IFlBDQKNXeECok=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-649-VLvDLTj3PzmQ8mD4xin3SA-1; Thu,
+ 05 Jun 2025 08:50:18 -0400
+X-MC-Unique: VLvDLTj3PzmQ8mD4xin3SA-1
+X-Mimecast-MFC-AGG-ID: VLvDLTj3PzmQ8mD4xin3SA_1749127818
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFF3B18001E3; Thu,  5 Jun 2025 12:50:17 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.91])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F1137195E74A; Thu,  5 Jun 2025 12:50:16 +0000 (UTC)
+Date: Thu, 5 Jun 2025 08:50:15 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
+Cc: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH] virtio: avoid cost of -ftrivial-auto-var-init in hot path
+Message-ID: <20250605125015.GB417071@fedora>
+References: <20250604191843.399309-1-stefanha@redhat.com>
+ <aEFWeZUlqqRvHsJT@redhat.com>
+ <42276df1-4267-4038-8685-c7a193259e67@linaro.org>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="aSsrzZzEi6U0HPse"
+Content-Disposition: inline
+In-Reply-To: <42276df1-4267-4038-8685-c7a193259e67@linaro.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,44 +88,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The original implementation incorrectly performed a bitwise AND
-operation between the PPN of iova and PPN Mask, leading to an
-incorrect PPN field in Translation-reponse register.
 
-The PPN of iova should be set entirely in the PPN field of
-Translation-reponse register.
+--aSsrzZzEi6U0HPse
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Also remove the code that was used to clear S field since this
-field is already zero.
+On Thu, Jun 05, 2025 at 01:28:49PM +0200, Philippe Mathieu-Daud=E9 wrote:
+> On 5/6/25 10:34, Daniel P. Berrang=E9 wrote:
+> > On Wed, Jun 04, 2025 at 03:18:43PM -0400, Stefan Hajnoczi wrote:
+> > > Since commit 7ff9ff039380 ("meson: mitigate against use of uninitiali=
+ze
+> > > stack for exploits") the -ftrivial-auto-var-init=3Dzero compiler opti=
+on is
+> > > used to zero local variables. While this reduces security risks
+> > > associated with uninitialized stack data, it introduced a measurable
+> > > bottleneck in the virtqueue_split_pop() and virtqueue_packed_pop()
+> > > functions.
+> > >=20
+> > > These virtqueue functions are in the hot path. They are called for ea=
+ch
+> > > element (request) that is popped from a VIRTIO device's virtqueue. Us=
+ing
+> > > __attribute__((uninitialized)) on large stack variables in these
+> > > functions improves fio randread bs=3D4k iodepth=3D64 performance from=
+ 304k
+> > > to 332k IOPS (+9%).
+> >=20
+> > IIUC, the 'hwaddr addr' variable is 8k in size, and the 'struct iovec i=
+ov'
+> > array is 16k in size, so we have 24k on the stack that we're clearing a=
+nd
+> > then later writing the real value. Makes sense that this would have a
+> > perf impact in a hotpath.
+> >=20
+> > > This issue was found using perf-top(1). virtqueue_split_pop() was one=
+ of
+> > > the top CPU consumers and the "annotate" feature showed that the memo=
+ry
+> > > zeroing instructions at the beginning of the functions were hot.
+> >=20
+> > When you say you found it with 'perf-top' was that just discovered by
+> > accident, or was this usage of perf-top in response to users reporting
+> > a performance degradation vs earlier QEMU ?
+>=20
+> Would it make sense to move these to VirtQueue (since the structure
+> definition is local anyway)?
+>=20
+> -- >8 --
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 85110bce374..b96c6ec603c 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -153,6 +153,12 @@ struct VirtQueue
+>      EventNotifier host_notifier;
+>      bool host_notifier_enabled;
+>      QLIST_ENTRY(VirtQueue) node;
+> +
+> +    /* Only used by virtqueue_pop() */
+> +    struct {
+> +        hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> +        struct iovec iov[VIRTQUEUE_MAX_SIZE];
+> +    } pop;
 
-Signed-off-by: Nutty Liu <liujingqi@lanxincomputing.com>
-Reviewed-by: Tomasz Jeznach <tjeznach@rivosinc.com>
----
-V1 -> V2:
- - Commented by Alistair
- - Reviewed by Tomasz
- - Remove the extra code
----
- hw/riscv/riscv-iommu.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+This is an alternative. Using g_alloca() is another alternative.
 
-diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-index a877e5da84..d8b1cb03a8 100644
---- a/hw/riscv/riscv-iommu.c
-+++ b/hw/riscv/riscv-iommu.c
-@@ -1935,11 +1935,7 @@ static void riscv_iommu_process_dbg(RISCVIOMMUState *s)
-             iova = RISCV_IOMMU_TR_RESPONSE_FAULT | (((uint64_t) fault) << 10);
-         } else {
-             iova = iotlb.translated_addr & ~iotlb.addr_mask;
--            iova >>= TARGET_PAGE_BITS;
--            iova &= RISCV_IOMMU_TR_RESPONSE_PPN;
--
--            /* We do not support superpages (> 4kbs) for now */
--            iova &= ~RISCV_IOMMU_TR_RESPONSE_S;
-+            iova = set_field(0, RISCV_IOMMU_TR_RESPONSE_PPN, PPN_DOWN(iova));
-         }
-         riscv_iommu_reg_set64(s, RISCV_IOMMU_REG_TR_RESPONSE, iova);
-     }
--- 
-2.49.0.windows.1
+I chose __attribute__((uninitialized)) because it clearly documents the
+reason why these variables need special treatment. In your patch the
+"Only used by virtqueue_pop()" comment isn't enough to explain why these
+variables should be located here. Someone might accidentally move them
+back into virtqueue_pop() functions in the future if they are unaware of
+the reason.
+
+I'm happy to change approaches based on the pros/cons. Why do you prefer
+moving the local variables into VirtQueue?
+
+>  };
+>=20
+>  const char *virtio_device_names[] =3D {
+> @@ -1680,8 +1686,8 @@ static void *virtqueue_split_pop(VirtQueue *vq, siz=
+e_t
+> sz)
+>      VirtIODevice *vdev =3D vq->vdev;
+>      VirtQueueElement *elem =3D NULL;
+>      unsigned out_num, in_num, elem_entries;
+> -    hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> -    struct iovec iov[VIRTQUEUE_MAX_SIZE];
+> +    hwaddr *addr =3D vq->pop.addr;
+> +    struct iovec *iov =3D vq->pop.iov;
+>      VRingDesc desc;
+>      int rc;
+>=20
+> @@ -1826,8 +1832,8 @@ static void *virtqueue_packed_pop(VirtQueue *vq,
+> size_t sz)
+>      VirtIODevice *vdev =3D vq->vdev;
+>      VirtQueueElement *elem =3D NULL;
+>      unsigned out_num, in_num, elem_entries;
+> -    hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> -    struct iovec iov[VIRTQUEUE_MAX_SIZE];
+> +    hwaddr *addr =3D vq->pop.addr;
+> +    struct iovec *iov =3D vq->pop.iov;
+>      VRingPackedDesc desc;
+>      uint16_t id;
+>      int rc;
+> ---
+>=20
+> >=20
+> > >=20
+> > > Fixes: 7ff9ff039380 ("meson: mitigate against use of uninitialize sta=
+ck for exploits")
+> > > Cc: Daniel P. Berrang=E9 <berrange@redhat.com>
+> > > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> > > ---
+> > >   include/qemu/compiler.h | 12 ++++++++++++
+> > >   hw/virtio/virtio.c      |  8 ++++----
+> > >   2 files changed, 16 insertions(+), 4 deletions(-)
+>=20
+
+--aSsrzZzEi6U0HPse
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhBkocACgkQnKSrs4Gr
+c8iteQgAvN/LqF5HY24nfMJZ5WGIWc71nJ+g583XWuhDa2YnfBABYJTc7lsZZ9Dj
+LW2355EQuLxFnSUqOFq0R730kaY+UpbP/I8n1HAOSbCTqkQwZod5hSN8VEVLJCro
+ze97tyIpvlhrPRdEen8/uxlQBi7/w5iGsWf3p8ZIZbqItcBnyuFZKJsX/sa9Vhqi
+nQVpvq1e+3x5KnpSC9RvEzcDagghcIhknjt6YdCXxpzUqyjzk8Ksoxvc73KuCs0W
+1VNs80vjAjJ6pQ/JxiG4dAPT1nyEEiwA/faCrXPEF+eKrpgfWCpEDdHm3Ogzy2SM
+h91uLigbBLZwMfqJpYIWrl6+NPJpfg==
+=ZFq8
+-----END PGP SIGNATURE-----
+
+--aSsrzZzEi6U0HPse--
+
 
