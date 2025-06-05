@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB677C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 08:36:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DA5DC5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 08:37:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN63P-0001SA-Io; Thu, 05 Jun 2025 04:34:27 -0400
+	id 1uN65o-0005Aa-Es; Thu, 05 Jun 2025 04:36:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uN63H-0001R0-2y
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:34:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uN65n-0005AK-7S
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:36:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uN63E-0006e8-ED
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:34:18 -0400
+ id 1uN65l-000730-KI
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:36:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749112455;
+ s=mimecast20190719; t=1749112611;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=01E7vXHsd8DJFiPRdr2AncfqlZyUgCRn4a6z6Rjb2AQ=;
- b=Xyy0wcU4JyMMO99ijVpB7JrXot9KlvUv13D3E0rwuHUjCxf9NkbZlvKP5jbT3pt7INvHqO
- +Pp2s/wZKNmJcDvLx1gG9D0NR4GH7YLvGjdhID3qYglHVqRDnRf078/Ct28xVq3YNghZgB
- 1KkL6WNDYnkyUO6+60Lmi5EyuJXVoOg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=3x3FxLU30MF7ZMaK47pkskaPAWFt/ytFGXLThMUCswM=;
+ b=D6l8cz0zgm4u9vl1ORU52QWEPalf0j5XPAyh5hgVNeBqeEVVyMrUPFt43ACzOqnP+wOFnf
+ rdAePWXSsKsQA0CfUcSu1ixwFOpzLpbA1+IBVZe03/U92Ss4vItB2frkpaTVW1YeL/bY/c
+ pQA+1Sh8PFElQ8A3rbG+M+5BQpTV5Q8=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-_WjjoJnIOkOiWtWY2sgoOg-1; Thu,
- 05 Jun 2025 04:34:08 -0400
-X-MC-Unique: _WjjoJnIOkOiWtWY2sgoOg-1
-X-Mimecast-MFC-AGG-ID: _WjjoJnIOkOiWtWY2sgoOg_1749112448
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-rYziKKgzNNSxmScuW51EqA-1; Thu,
+ 05 Jun 2025 04:36:50 -0400
+X-MC-Unique: rYziKKgzNNSxmScuW51EqA-1
+X-Mimecast-MFC-AGG-ID: rYziKKgzNNSxmScuW51EqA_1749112609
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D178618004A3; Thu,  5 Jun 2025 08:34:07 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1C658195608B; Thu,  5 Jun 2025 08:36:48 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.159])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 953FA30002C0; Thu,  5 Jun 2025 08:34:05 +0000 (UTC)
-Date: Thu, 5 Jun 2025 09:34:01 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A04D1956048; Thu,  5 Jun 2025 08:36:45 +0000 (UTC)
+Date: Thu, 5 Jun 2025 09:36:41 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
- "Michael S. Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH] virtio: avoid cost of -ftrivial-auto-var-init in hot path
-Message-ID: <aEFWeZUlqqRvHsJT@redhat.com>
-References: <20250604191843.399309-1-stefanha@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org,
+ Michael Roth <michael.roth@amd.com>, Cleber Rosa <crosa@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH v5 4/6] python: add qapi static analysis tests
+Message-ID: <aEFXGXhqHkIioTOH@redhat.com>
+References: <20250604200354.459501-1-jsnow@redhat.com>
+ <20250604200354.459501-5-jsnow@redhat.com>
+ <87frgen1dj.fsf@pond.sub.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250604191843.399309-1-stefanha@redhat.com>
+In-Reply-To: <87frgen1dj.fsf@pond.sub.org>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -89,120 +89,24 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 03:18:43PM -0400, Stefan Hajnoczi wrote:
-> Since commit 7ff9ff039380 ("meson: mitigate against use of uninitialize
-> stack for exploits") the -ftrivial-auto-var-init=zero compiler option is
-> used to zero local variables. While this reduces security risks
-> associated with uninitialized stack data, it introduced a measurable
-> bottleneck in the virtqueue_split_pop() and virtqueue_packed_pop()
-> functions.
+On Thu, Jun 05, 2025 at 08:33:44AM +0200, Markus Armbruster wrote:
+> John Snow <jsnow@redhat.com> writes:
 > 
-> These virtqueue functions are in the hot path. They are called for each
-> element (request) that is popped from a VIRTIO device's virtqueue. Using
-> __attribute__((uninitialized)) on large stack variables in these
-> functions improves fio randread bs=4k iodepth=64 performance from 304k
-> to 332k IOPS (+9%).
-
-IIUC, the 'hwaddr addr' variable is 8k in size, and the 'struct iovec iov'
-array is 16k in size, so we have 24k on the stack that we're clearing and
-then later writing the real value. Makes sense that this would have a
-perf impact in a hotpath.
-
-> This issue was found using perf-top(1). virtqueue_split_pop() was one of
-> the top CPU consumers and the "annotate" feature showed that the memory
-> zeroing instructions at the beginning of the functions were hot.
-
-When you say you found it with 'perf-top' was that just discovered by
-accident, or was this usage of perf-top in response to users reporting
-a performance degradation vs earlier QEMU ?
-
+> [...]
 > 
-> Fixes: 7ff9ff039380 ("meson: mitigate against use of uninitialize stack for exploits")
-> Cc: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> ---
->  include/qemu/compiler.h | 12 ++++++++++++
->  hw/virtio/virtio.c      |  8 ++++----
->  2 files changed, 16 insertions(+), 4 deletions(-)
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-
-
+> > diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
+> > new file mode 100755
+> > index 00000000000..2211b6c7f41
+> > --- /dev/null
+> > +++ b/python/tests/qapi-flake8.sh
+> > @@ -0,0 +1,6 @@
+> > +#!/bin/sh -e
+> > +# SPDX-License-Identifier: LGPL-2.1-or-later
 > 
-> diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
-> index 496dac5ac1..fabd540b02 100644
-> --- a/include/qemu/compiler.h
-> +++ b/include/qemu/compiler.h
-> @@ -207,6 +207,18 @@
->  # define QEMU_USED
->  #endif
->  
-> +/*
-> + * Disable -ftrivial-auto-var-init on a local variable. Use this in rare cases
-> + * when the compiler zeroes a large on-stack variable and this causes a
-> + * performance bottleneck. Only use it when performance data indicates this is
-> + * necessary since security risks increase with uninitialized stack variables.
-> + */
-> +#if __has_attribute(uninitialized)
-> +# define QEMU_UNINITIALIZED __attribute__((uninitialized))
-> +#else
-> +# define QEMU_UNINITIALIZED
-> +#endif
+> Why not GPL-2.0-or-later?
 
-For the benefit of other reviewers, this attribute is specifically
-intended for this very purpose:
-
-[quote "info gcc"]
-  ‘uninitialized’
-     This attribute, attached to a variable with automatic storage,
-     means that the variable should not be automatically initialized by
-     the compiler when the option ‘-ftrivial-auto-var-init’ presents.
-
-     With the option ‘-ftrivial-auto-var-init’, all the automatic
-     variables that do not have explicit initializers will be
-     initialized by the compiler.  These additional compiler
-     initializations might incur run-time overhead, sometimes
-     dramatically.  This attribute can be used to mark some variables to
-     be excluded from such automatic initialization in order to reduce
-     runtime overhead.
-
-     This attribute has no effect when the option
-     ‘-ftrivial-auto-var-init’ is not present.
-[/quote]
-
-> +
->  /*
->   * http://clang.llvm.org/docs/ThreadSafetyAnalysis.html
->   *
-> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> index 5534251e01..82a285a31d 100644
-> --- a/hw/virtio/virtio.c
-> +++ b/hw/virtio/virtio.c
-> @@ -1689,8 +1689,8 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
->      VirtIODevice *vdev = vq->vdev;
->      VirtQueueElement *elem = NULL;
->      unsigned out_num, in_num, elem_entries;
-> -    hwaddr addr[VIRTQUEUE_MAX_SIZE];
-> -    struct iovec iov[VIRTQUEUE_MAX_SIZE];
-> +    hwaddr QEMU_UNINITIALIZED addr[VIRTQUEUE_MAX_SIZE];
-> +    struct iovec QEMU_UNINITIALIZED iov[VIRTQUEUE_MAX_SIZE];
->      VRingDesc desc;
->      int rc;
->  
-> @@ -1836,8 +1836,8 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
->      VirtIODevice *vdev = vq->vdev;
->      VirtQueueElement *elem = NULL;
->      unsigned out_num, in_num, elem_entries;
-> -    hwaddr addr[VIRTQUEUE_MAX_SIZE];
-> -    struct iovec iov[VIRTQUEUE_MAX_SIZE];
-> +    hwaddr QEMU_UNINITIALIZED addr[VIRTQUEUE_MAX_SIZE];
-> +    struct iovec QEMU_UNINITIALIZED iov[VIRTQUEUE_MAX_SIZE];
->      VRingPackedDesc desc;
->      uint16_t id;
->      int rc;
-> -- 
-> 2.49.0
-> 
+Indeed, checkpatch.pl should be warning about this choice, and requesting
+that it be explained in the commit message.
 
 With regards,
 Daniel
