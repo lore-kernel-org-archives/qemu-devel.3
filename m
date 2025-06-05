@@ -4,73 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51FA1C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 17:53:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E3B8C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 17:59:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNElW-0001bA-BV; Thu, 05 Jun 2025 13:52:34 -0400
+	id 1uNErR-0003Ey-Ay; Thu, 05 Jun 2025 13:58:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uNElT-0001ah-UW
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 13:52:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uNErO-0003EF-6u; Thu, 05 Jun 2025 13:58:38 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uNElS-0003Iq-27
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 13:52:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749145948;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=hmV21X3n5ywQmHSeeY0T9URNLQ50FOneY37fYVmnTPw=;
- b=Q3048zBQ6pkIcoAMaz2KpCG41b7VIMKAltqqpLLAXfjSVScDf4eqMFf6Beneg0esMLUsFt
- c2ZXU6CARuoFbCIdFlpYICyb+RNEUZ2gM1FFvjbI10HjEBQE2B1W0svpbIJGKR8OFL8ChG
- ibVTLdr3fGT/6xBGiZMP3UQcKe8/bGM=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-359-tBQBwwkNO96p5L9WWgPjhA-1; Thu,
- 05 Jun 2025 13:52:27 -0400
-X-MC-Unique: tBQBwwkNO96p5L9WWgPjhA-1
-X-Mimecast-MFC-AGG-ID: tBQBwwkNO96p5L9WWgPjhA_1749145946
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1EEF018002B5; Thu,  5 Jun 2025 17:52:26 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.172])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9B1F6195E74A; Thu,  5 Jun 2025 17:52:25 +0000 (UTC)
-Date: Thu, 5 Jun 2025 13:52:24 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Eric Blake <eblake@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, hibriansong@gmail.com,
- Kevin Wolf <kwolf@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
-Subject: Re: [RFC 09/11] aio-posix: add aio_add_sqe() API for user-defined
- io_uring requests
-Message-ID: <20250605175224.GA481264@fedora>
-References: <20250528190916.35864-1-stefanha@redhat.com>
- <20250528190916.35864-10-stefanha@redhat.com>
- <lwn6k4zy3rovxboe4lia46islqxaagpklba2mggqxinsvy2u7k@yhthtmjlh2mn>
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uNErL-00047B-Bu; Thu, 05 Jun 2025 13:58:37 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 555BvIww022805;
+ Thu, 5 Jun 2025 17:58:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=kthNty
+ eSzxz5bVRAXkFgaWV6bHWpeP684adgEwGy1P0=; b=sqSGVt7AzfzaSiU45jkFsE
+ puzQ5QW3WfA35NJQIJz+ZoBrCskQCg72Bp+1Kn7NpTvct9CzFLH41+2aw0OOtt2L
+ P7voUq/zvzSUV1BJqCCl6XANUJXo8A3QLMSzftNacqp0sXQnfX49Z48aEvAV+xwe
+ ITbvvb01FDYhK46whjZcHYrDVDI3QhWW3b2g3N3BIL0WAFBWNP9ZC9cRcjxPATYS
+ GIjMJ+mxs5WWp1mxpetDWvOUuRONpj03JDEKd3YEkUT8nVGO/UlyRCGnGmHrpD7i
+ XWez6bE/1s2jYzYnrRhm84BTOLh2+gAQ+aD+S1Rfo+hU+At1OmFHxrTsmA+7cg7A
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 471gf028wx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Jun 2025 17:58:00 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 555GsIxC019883;
+ Thu, 5 Jun 2025 17:57:59 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 470d3p5ur4-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Jun 2025 17:57:59 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 555HvvlR17564346
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Jun 2025 17:57:58 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9E6215804B;
+ Thu,  5 Jun 2025 17:57:57 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8917958059;
+ Thu,  5 Jun 2025 17:57:56 +0000 (GMT)
+Received: from [9.12.78.227] (unknown [9.12.78.227])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Jun 2025 17:57:56 +0000 (GMT)
+Message-ID: <5888d51f-a85e-454c-971e-7d1f6f18dbe3@linux.ibm.com>
+Date: Thu, 5 Jun 2025 13:57:56 -0400
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="C+HwCitDK/rRcK4f"
-Content-Disposition: inline
-In-Reply-To: <lwn6k4zy3rovxboe4lia46islqxaagpklba2mggqxinsvy2u7k@yhthtmjlh2mn>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v11 3/4] hw/vfio/ap: Storing event information for an
+ AP configuration change event
+To: Anthony Krowiak <akrowiak@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com
+References: <20250523160338.41896-1-rreyes@linux.ibm.com>
+ <20250523160338.41896-4-rreyes@linux.ibm.com>
+ <66ad7451-b7a6-4112-8f20-1af06d5b482a@redhat.com>
+ <834be7a8-922a-4e39-8453-6c9a1957d3ac@linux.ibm.com>
+ <1a896c28-783b-4a1e-9cf5-6b8abfe8d7e4@redhat.com>
+ <adca5063-786e-4c4e-90f8-dd378a2aa71c@linux.ibm.com>
+ <5248c4f1-923e-4f6b-9c3f-ac24666fea04@redhat.com>
+ <02f064f7-e400-4d7b-ba04-cb5dc6ee93f0@linux.ibm.com>
+Content-Language: en-US
+From: Rorie Reyes <rreyes@linux.ibm.com>
+In-Reply-To: <02f064f7-e400-4d7b-ba04-cb5dc6ee93f0@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Pq2TbxM3 c=1 sm=1 tr=0 ts=6841daa8 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=sWKEhP36mHoA:10 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=cr2wzx3KPTEgbwcgCGcA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA1MDE1NSBTYWx0ZWRfX4q+87J73/PhH
+ sp2dGV+YrWziDV8N+w7wbViT7ElI6TZBMfOVqyzsKAS+dpdtmB4ZRcilw12EulOkqH6YZdXJL4O
+ +kFoiKfV1EGU1gBTNr6aZOaN1/SvujbA/wTMXs1DJapVznL0b2z5W5Fdqi4JSXXoZbSrSnPSC8R
+ 1ODE5CpWITtYGawlBys25OoMJ/VCAY7aJw8JTnviDlWbAKKQYPr4ziPGS1iXrQJRm2dZe290Qjx
+ ngOlU2C5U3u67l8v88RhaFL6QwgDpbqGWRZmM/eaBJXzKDUUTLi2Id5jd87IXzQztV1opgmthpI
+ mg1UmCLAFzXnNcSipsSDJWQFB34/oo/lxeuAMTdlnjSbPIO0uICkAVlJkIXpDLKNsRA1DlwZKYc
+ BDr/oVSO2AQc/hFD00uU7PlBtiCsIfsVT4osYHjJpB1iHnfOcJLnvkukzLcJ/XXU9DWr2/7h
+X-Proofpoint-GUID: ZqBS0otn4uFGCq-Vw72nceB2X-1gAj6p
+X-Proofpoint-ORIG-GUID: ZqBS0otn4uFGCq-Vw72nceB2X-1gAj6p
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-05_04,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0
+ lowpriorityscore=0 clxscore=1015 malwarescore=0 mlxlogscore=999
+ phishscore=0 bulkscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ mlxscore=0 adultscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506050155
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -89,194 +134,147 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---C+HwCitDK/rRcK4f
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, May 29, 2025 at 03:02:16PM -0500, Eric Blake wrote:
-> On Wed, May 28, 2025 at 03:09:14PM -0400, Stefan Hajnoczi wrote:
-> > Introduce the aio_add_sqe() API for submitting io_uring requests in the
-> > current AioContext. This allows other components in QEMU, like the block
-> > layer, to take advantage of io_uring features without creating their own
-> > io_uring context.
-> >=20
-> > This API supports nested event loops just like file descriptor
-> > monitoring and BHs do. This comes at a complexity cost: a BH is required
-> > to dispatch CQE callbacks and they are placed on a list so that a nested
-> > event loop can invoke its parent's pending CQE callbacks. If you're
-> > wondering why CqeHandler exists instead of just a callback function
-> > pointer, this is why.
-> >=20
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > ---
->=20
-> Large patch.  I found a couple of nits, but the overall design looks
-> sound.
->=20
-> Reviewed-by: Eric Blake <eblake@redhat.com>
->=20
-> >  include/block/aio.h   |  82 ++++++++++++++++++++++++
-> >  util/aio-posix.h      |   1 +
-> >  util/aio-posix.c      |   9 +++
-> >  util/fdmon-io_uring.c | 145 +++++++++++++++++++++++++++++++-----------
-> >  4 files changed, 200 insertions(+), 37 deletions(-)
-> >=20
-> > diff --git a/include/block/aio.h b/include/block/aio.h
-> > index d919d7c8f4..95beef28c3 100644
-> > --- a/include/block/aio.h
-> > +++ b/include/block/aio.h
-> > @@ -61,6 +61,27 @@ typedef struct LuringState LuringState;
-> >  /* Is polling disabled? */
-> >  bool aio_poll_disabled(AioContext *ctx);
-> > =20
-> > +#ifdef CONFIG_LINUX_IO_URING
-> > +/*
-> > + * Each io_uring request must have a unique CqeHandler that processes =
-the cqe.
-> > + * The lifetime of a CqeHandler must be at least from aio_add_sqe() un=
-til
-> > + * ->cb() invocation.
-> > + */
-> > +typedef struct CqeHandler CqeHandler;
-> > +struct CqeHandler {
-> > +    /* Called by the AioContext when the request has completed */
-> > +    void (*cb)(CqeHandler *handler);
->=20
-> I see an opaque callback pointer in prep_cqe below, but not one here.
-> Is that because callers can write their own struct that includes a
-> CqeHandler as its first member, if more state is needed?
-
-Yes.
-
->=20
-> > +
-> > +    /* Used internally, do not access this */
-> > +    QSIMPLEQ_ENTRY(CqeHandler) next;
-> > +
-> > +    /* This field is filled in before ->cb() is called */
-> > +    struct io_uring_cqe cqe;
-> > +};
-> > +
-> > +typedef QSIMPLEQ_HEAD(, CqeHandler) CqeHandlerSimpleQ;
-> > +#endif /* CONFIG_LINUX_IO_URING */
-> > +
-> >  /* Callbacks for file descriptor monitoring implementations */
-> >  typedef struct {
-> >      /*
-> > @@ -138,6 +159,27 @@ typedef struct {
-> >       * Called with list_lock incremented.
-> >       */
-> >      void (*gsource_dispatch)(AioContext *ctx, AioHandlerList *ready_li=
-st);
-> > +
-> > +#ifdef CONFIG_LINUX_IO_URING
-> > +    /**
-> > +     * aio_add_sqe: Add an io_uring sqe for submission.
-> > +     * @prep_sqe: invoked with an sqe that should be prepared for subm=
-ission
-> > +     * @opaque: user-defined argument to @prep_sqe()
-> > +     * @cqe_handler: the unique cqe handler associated with this reque=
-st
-> > +     *
-> > +     * The caller's @prep_sqe() function is invoked to fill in the det=
-ails of
-> > +     * the sqe. Do not call io_uring_sqe_set_data() on this sqe.
-> > +     *
-> > +     * The kernel may see the sqe as soon as @pre_sqe() returns or it =
-may take
->=20
-> prep_sqe
-
-Oops, will fix.
-
->=20
-> > +     * until the next event loop iteration.
-> > +     *
-> > +     * This function is called from the current AioContext and is not
-> > +     * thread-safe.
-> > +     */
-> > +    void (*add_sqe)(AioContext *ctx,
-> > +                    void (*prep_sqe)(struct io_uring_sqe *sqe, void *o=
-paque),
-> > +                    void *opaque, CqeHandler *cqe_handler);
-> > +#endif /* CONFIG_LINUX_IO_URING */
-> >  } FDMonOps;
-> > =20
-> >  /*
-> > @@ -255,6 +297,10 @@ struct AioContext {
-> >      struct io_uring fdmon_io_uring;
-> >      AioHandlerSList submit_list;
-> >      gpointer io_uring_fd_tag;
-> > +
-> > +    /* Pending callback state for cqe handlers */
-> > +    CqeHandlerSimpleQ cqe_handler_ready_list;
-> > +    QEMUBH *cqe_handler_bh;
-> >  #endif
->=20
-> While here, is it worth adding a comment to state which matching #if
-> it ends (similar to what you did above in FDMonOps add_sqe)?
-
-Sounds good.
-
->=20
-> > =20
-> >      /* TimerLists for calling timers - one per clock type.  Has its own
-> > @@ -761,4 +807,40 @@ void aio_context_set_aio_params(AioContext *ctx, i=
-nt64_t max_batch);
-> >   */
-> >  void aio_context_set_thread_pool_params(AioContext *ctx, int64_t min,
-> >                                          int64_t max, Error **errp);
-> > +
-> > +#ifdef CONFIG_LINUX_IO_URING
-> > +/**
-> > + * aio_has_io_uring: Return whether io_uring is available.
-> > + *
-> > + * io_uring is either available in all AioContexts or in none, so this=
- only
-> > + * needs to be called once from within any thread's AioContext.
-> > + */
-> > +static inline bool aio_has_io_uring(void)
-> > +{
-> > +    AioContext *ctx =3D qemu_get_current_aio_context();
-> > +    return ctx->fdmon_ops->add_sqe;
-> > +}
-> > +
-> > +/**
-> > + * aio_add_sqe: Add an io_uring sqe for submission.
-> > + * @prep_sqe: invoked with an sqe that should be prepared for submissi=
-on
-> > + * @opaque: user-defined argument to @prep_sqe()
-> > + * @cqe_handler: the unique cqe handler associated with this request
-> > + *
-> > + * The caller's @prep_sqe() function is invoked to fill in the details=
- of the
-> > + * sqe. Do not call io_uring_sqe_set_data() on this sqe.
-> > + *
-> > + * The sqe is submitted by the current AioContext. The kernel may see =
-the sqe
-> > + * as soon as @pre_sqe() returns or it may take until the next event l=
-oop
->=20
-> prep_sqe
-
-Will fix.
-
---C+HwCitDK/rRcK4f
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhB2VgACgkQnKSrs4Gr
-c8hxhQgAw26cqYLCYcIv2LvplPKNSUQvdcql0prvdYFNVgfs6BhYlCT19Hhpl6u2
-rfCFAAeGYrsQSCjOfu26UOJ4KWJ+u5PdD2oiiD94o5FVMOpow3ZkrZXODIoldkqf
-L0OLsQsU34NJ4cNjbse26sWiEi+2UMe2VIwE++jOr2yDTLBPzkjVlP+h7P2kiU4U
-cm8iGHi+uS+Gz4J08nZmkezyxH+WMENfgkYpQgYuskCJLWUXF8e8Upl5S6PBuwMC
-ew19K4JWOYZ3I5W5GBABWoAVMTD7d+xemkvr+LZ0Dqny/zG4BTmkzLVUfGinuxJU
-+GuGAgdTzrW4K5UbNF0QX4Ko0G1nmg==
-=2mUG
------END PGP SIGNATURE-----
-
---C+HwCitDK/rRcK4f--
-
+On 6/4/25 9:47 AM, Anthony Krowiak wrote:
+>
+>
+>
+> On 6/3/25 4:30 PM, Cédric Le Goater wrote:
+>> On 6/3/25 20:01, Rorie Reyes wrote:
+>>>
+>>> On 6/3/25 10:21 AM, Cédric Le Goater wrote:
+>>>> On 6/3/25 14:58, Rorie Reyes wrote:
+>>>>> Hey Cedric,
+>>>>>
+>>>>> You mentioned the following in my v9 patches
+>>>>>
+>>>>> "In that case, let's keep it simple (no mutex) and add a 
+>>>>> assert(bql_locked())
+>>>>> statement where we think the bql should be protecting access to 
+>>>>> shared
+>>>>> resources. "
+>>>>>
+>>>>> Does this still apply down bellow?
+>>>>
+>>>> Anthony replied :
+>>>>
+>>>> https://lore.kernel.org/qemu-devel/ed2a2aa3-68a7-480c-a6a4-a8219af12d7b@linux.ibm.com/ 
+>>>>
+>>>>
+>>>> Thanks,
+>>>>
+>>>> C.
+>>>>
+>>> So we'll still use WITH_QEMU_LOCK_GUARD?
+>>
+>> If a lock is needed to protect the list, then 
+>> ap_chsc_sei_nt0_have_event()
+>> should lock/unlock too. WITH_QEMU_LOCK_GUARD() is just a pratical way to
+>> do so.
+>
+> Since ap_chsc_sei_nt0_have_event() is a single line that returns
+> !QTAILQ_EMPTY(&cfg_chg_events), wouldn't it be better to just
+> use the QEMU_LOCK_GUARD macro which, if I'm not mistaken,
+> will unlock on the return statement?
+>>
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>
+>>
+>>>>>
+>>>>> On 5/26/25 4:40 AM, Cédric Le Goater wrote:
+>>>>>> On 5/23/25 18:03, Rorie Reyes wrote:
+>>>>>>> These functions can be invoked by the function that handles 
+>>>>>>> interception
+>>>>>>> of the CHSC SEI instruction for requests indicating the 
+>>>>>>> accessibility of
+>>>>>>> one or more adjunct processors has changed.
+>>>>>>>
+>>>>>>> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+>>>>>>> ---
+>>>>>>>   hw/vfio/ap.c                 | 53 
+>>>>>>> ++++++++++++++++++++++++++++++++++++
+>>>>>>>   include/hw/s390x/ap-bridge.h | 39 ++++++++++++++++++++++++++
+>>>>>>>   2 files changed, 92 insertions(+)
+>>>>>>>
+>>>>>>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+>>>>>>> index fc435f5c5b..97a42a575a 100644
+>>>>>>> --- a/hw/vfio/ap.c
+>>>>>>> +++ b/hw/vfio/ap.c
+>>>>>>> @@ -10,6 +10,7 @@
+>>>>>>>    * directory.
+>>>>>>>    */
+>>>>>>>   +#include <stdbool.h>
+>>>>>>>   #include "qemu/osdep.h"
+>>>>>>>   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+>>>>>>>   #include <linux/vfio.h>
+>>>>>>> @@ -48,6 +49,8 @@ typedef struct APConfigChgEvent {
+>>>>>>>   static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+>>>>>>>       QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+>>>>>>>   +static QemuMutex cfg_chg_events_lock;
+>>>>>>> +
+>>>>>>>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>>>>>>>     static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+>>>>>>> @@ -96,6 +99,49 @@ static void 
+>>>>>>> vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>>>>>>>     }
+>>>>>>>   +int ap_chsc_sei_nt0_get_event(void *res)
+>>>>>>> +{
+>>>>>>> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
+>>>>>>> +    APConfigChgEvent *cfg_chg_event;
+>>>>>>> +
+>>>>>>> +    qemu_mutex_lock(&cfg_chg_events_lock);
+>>>>>>
+>>>>>> please consider using WITH_QEMU_LOCK_GUARD()
+>>>>>>
+>>>>> See note above about bql_locked
+>>>>>>> +    if (!ap_chsc_sei_nt0_have_event()) {
+>>>>>>> +        qemu_mutex_unlock(&cfg_chg_events_lock);
+>>>>>>> +        return EVENT_INFORMATION_NOT_STORED;
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
+>>>>>>> +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
+>>>>>>> +
+>>>>>>> +    qemu_mutex_unlock(&cfg_chg_events_lock);
+>>>>>>> +
+>>>>>>> +    memset(nt0_res, 0, sizeof(*nt0_res));
+>>>>>>> +    g_free(cfg_chg_event);
+>>>>>>> +
+>>>>>>> +    /*
+>>>>>>> +     * If there are any AP configuration change events in the 
+>>>>>>> queue,
+>>>>>>> +     * indicate to the caller that there is pending event info in
+>>>>>>> +     * the response block
+>>>>>>> +     */
+>>>>>>> +    if (ap_chsc_sei_nt0_have_event()) {
+>>>>>>> +        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
+>>>>>>> +    }
+>>>>>>> +
+>>>>>>> +    nt0_res->length = sizeof(ChscSeiNt0Res);
+>>>>>>> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
+>>>>>>> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
+>>>>>>> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
+>>>>>>> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
+>>>>>>> +
+>>>>>>> +    return EVENT_INFORMATION_STORED;
+>>>>>>> +}
+>>>>>>> +
+>>>>>>> +bool ap_chsc_sei_nt0_have_event(void)
+>>>>>>
+>>>>>> hmm, no locking ?
+>>>>>>
+How important do we need to lock this? When I lock this method my guest 
+freezes every time. But when I only lock the get event, my code 
+continues to work as designed
+>>>>> See not above for bql_locked
+>>>>>>> +{
+>>>>>>> +    return !QTAILQ_EMPTY(&cfg_chg_events);
+>>>>>>> +}
+>>>>>>> +
+>>>>>>>   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>>>>>>>                                             unsigned int irq, 
+>>>>>>> Error **errp)
 
