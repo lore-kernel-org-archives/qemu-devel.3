@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 21356C5B543
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B861C5B559
 	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:28:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN7oy-0001hv-1y; Thu, 05 Jun 2025 06:27:41 -0400
+	id 1uN7pY-00026l-Py; Thu, 05 Jun 2025 06:28:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uN7oX-0001dG-G2
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:27:16 -0400
+ id 1uN7oc-0001eZ-1i; Thu, 05 Jun 2025 06:27:18 -0400
 Received: from mgamail.intel.com ([192.198.163.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uN7oV-00054A-1N
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:27:12 -0400
+ id 1uN7oX-00053b-Rp; Thu, 05 Jun 2025 06:27:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749119231; x=1780655231;
+ t=1749119234; x=1780655234;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=Q1xJF8Ah52Uw0aW5slqBi90Q1Dc1bkj0gSplaCj/C9o=;
- b=Q7hWL0sIzC0A7weKEquGLzjKuWMp9K9EQSDhMVaM8EiWUuddYXJelAO0
- aTnjjPzvyGZs28zZOX1O6qKdA5XQpJzOH5SkMwEmxL4ueQSiTWncQoUhs
- L8xkM+RJkue0KnHyQMQ8FbH1cnYV8vkFid2fEuq1ZrGDInGegp0GCriVc
- rsgNg2S5cV/1m8lbsfGMiSLHKaeuvUZOF2N7GgUHZ8dtE1HpvDeTQgrtr
- nHvkbc3vZwRtUxaRQrx+D1sBLHqWlEUg0Bd452tX3T1UdW4Q4NTSmpAc2
- 5mXh8q7z0fk8QlGb1ctmq/lx7ZEFk40UGhyVKb3pjXQxvUuZ1JkFarftx Q==;
-X-CSE-ConnectionGUID: 2o5rNx4TRW+D5AvHMoCn2w==
-X-CSE-MsgGUID: ZlZttwJWS/uElnlYhs9w1Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11454"; a="51325337"
-X-IronPort-AV: E=Sophos;i="6.16,211,1744095600"; d="scan'208";a="51325337"
+ bh=GX0cPQ9XJQ7H69tzYQWRo7jVHSXVP4HmaFDD1Lk7T+A=;
+ b=eEz83p2t4J7v/ZwnMMz+k+kaqtHGA63y95hiA6T08/LZsqXaFRdsQmtt
+ nKwO4GUfD96eFSYeCuX0nOoUs6t8wj3EAzOVrilCqKPrb2B8OIvq0Okok
+ 6T93rprfj6KN0fdimsXzKqhMqSQcCaM1vwjN+fE2CC0HlffgNJd049TgF
+ xoY2yCpT4T6IzctPMH3OYQnwBcZJXU44qInW8y6iIDt7v9gKNwo3fF9k5
+ axxGhXa/YNJD9Qu7Ethcu05Yc2XLrrFFE3e+mGWYdjWIlg8k4R80LraUr
+ TOZG/utQSiVeLGuRvRKFJPTFscFWfEoQfot/TbKy0PA1Tyzu4wfrVWBJ2 Q==;
+X-CSE-ConnectionGUID: LSIdDzCPTRS/Ik3ai5VnkQ==
+X-CSE-MsgGUID: mQ8jEfrQR2+nkmYV/MFhTQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11454"; a="51325343"
+X-IronPort-AV: E=Sophos;i="6.16,211,1744095600"; d="scan'208";a="51325343"
 Received: from fmviesa008.fm.intel.com ([10.60.135.148])
  by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jun 2025 03:27:09 -0700
-X-CSE-ConnectionGUID: M7+t4JrpTTmcYiZprAZkHg==
-X-CSE-MsgGUID: FBK4F8mMR5mI+G3kbd9OlA==
+ 05 Jun 2025 03:27:12 -0700
+X-CSE-ConnectionGUID: lw3u3sniRgaKqvSwd4C8DA==
+X-CSE-MsgGUID: B/WLO1BuSOO5TWwSm+4E+Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,211,1744095600"; d="scan'208";a="145808672"
+X-IronPort-AV: E=Sophos;i="6.16,211,1744095600"; d="scan'208";a="145808691"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by fmviesa008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 05 Jun 2025 03:27:07 -0700
+ 05 Jun 2025 03:27:09 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: chao.p.peng@intel.com, david@redhat.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>,
- Magnus Damm <magnus.damm@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH v3 4/5] hw/char/sh_serial: Remove dummy definition of
- SH_SERIAL class
-Date: Thu,  5 Jun 2025 18:23:10 +0800
-Message-Id: <20250605102311.148171-5-zhenzhong.duan@intel.com>
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [PATCH v3 5/5] hw/riscv/riscv-iommu: Remove definition of
+ RISCVIOMMU[Pci|Sys]Class
+Date: Thu,  5 Jun 2025 18:23:11 +0800
+Message-Id: <20250605102311.148171-6-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250605102311.148171-1-zhenzhong.duan@intel.com>
 References: <20250605102311.148171-1-zhenzhong.duan@intel.com>
@@ -88,33 +88,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-SH_SERIAL is declared with OBJECT_DECLARE_SIMPLE_TYPE but defined with
-OBJECT_DEFINE_TYPE, SHSerialStateClass is also a dummy class which
-missed its parent.
+RISCVIOMMUPciClass and RISCVIOMMUSysClass are defined with missed
+parent class, class_init on them may corrupt their parent class
+fields.
 
-Change to use OBJECT_DEFINE_SIMPLE_TYPE and remove SHSerialStateClass.
+It's lucky that parent_realize and parent_phases are not initialized
+or used until now, so just remove the definitions. They can be added
+back when really necessary.
 
-Closes: https://lists.gnu.org/archive/html/qemu-devel/2025-06/msg00586.html
-Suggested-by: David Hildenbrand <david@redhat.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/char/sh_serial.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ include/hw/riscv/iommu.h   | 6 ++----
+ hw/riscv/riscv-iommu-pci.c | 6 ------
+ hw/riscv/riscv-iommu-sys.c | 6 ------
+ 3 files changed, 2 insertions(+), 16 deletions(-)
 
-diff --git a/hw/char/sh_serial.c b/hw/char/sh_serial.c
-index 6abd80386f..8ccc2234ba 100644
---- a/hw/char/sh_serial.c
-+++ b/hw/char/sh_serial.c
-@@ -78,9 +78,7 @@ struct SHSerialState {
-     qemu_irq bri;
+diff --git a/include/hw/riscv/iommu.h b/include/hw/riscv/iommu.h
+index b03339d75c..8a8acfc3f0 100644
+--- a/include/hw/riscv/iommu.h
++++ b/include/hw/riscv/iommu.h
+@@ -30,14 +30,12 @@ typedef struct RISCVIOMMUState RISCVIOMMUState;
+ typedef struct RISCVIOMMUSpace RISCVIOMMUSpace;
+ 
+ #define TYPE_RISCV_IOMMU_PCI "riscv-iommu-pci"
+-OBJECT_DECLARE_TYPE(RISCVIOMMUStatePci, RISCVIOMMUPciClass, RISCV_IOMMU_PCI)
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStatePci, RISCV_IOMMU_PCI)
+ typedef struct RISCVIOMMUStatePci RISCVIOMMUStatePci;
+-typedef struct RISCVIOMMUPciClass RISCVIOMMUPciClass;
+ 
+ #define TYPE_RISCV_IOMMU_SYS "riscv-iommu-device"
+-OBJECT_DECLARE_TYPE(RISCVIOMMUStateSys, RISCVIOMMUSysClass, RISCV_IOMMU_SYS)
++OBJECT_DECLARE_SIMPLE_TYPE(RISCVIOMMUStateSys, RISCV_IOMMU_SYS)
+ typedef struct RISCVIOMMUStateSys RISCVIOMMUStateSys;
+-typedef struct RISCVIOMMUSysClass RISCVIOMMUSysClass;
+ 
+ #define FDT_IRQ_TYPE_EDGE_LOW 1
+ 
+diff --git a/hw/riscv/riscv-iommu-pci.c b/hw/riscv/riscv-iommu-pci.c
+index 1f44eef74e..cdb4a7a8f0 100644
+--- a/hw/riscv/riscv-iommu-pci.c
++++ b/hw/riscv/riscv-iommu-pci.c
+@@ -68,12 +68,6 @@ typedef struct RISCVIOMMUStatePci {
+     RISCVIOMMUState  iommu;   /* common IOMMU state */
+ } RISCVIOMMUStatePci;
+ 
+-struct RISCVIOMMUPciClass {
+-    /*< public >*/
+-    DeviceRealize parent_realize;
+-    ResettablePhases parent_phases;
+-};
+-
+ /* interrupt delivery callback */
+ static void riscv_iommu_pci_notify(RISCVIOMMUState *iommu, unsigned vector)
+ {
+diff --git a/hw/riscv/riscv-iommu-sys.c b/hw/riscv/riscv-iommu-sys.c
+index 74e76b94a5..e34d00aef6 100644
+--- a/hw/riscv/riscv-iommu-sys.c
++++ b/hw/riscv/riscv-iommu-sys.c
+@@ -53,12 +53,6 @@ struct RISCVIOMMUStateSys {
+     uint8_t *msix_pba;
  };
  
--typedef struct {} SHSerialStateClass;
+-struct RISCVIOMMUSysClass {
+-    /*< public >*/
+-    DeviceRealize parent_realize;
+-    ResettablePhases parent_phases;
+-};
 -
--OBJECT_DEFINE_TYPE(SHSerialState, sh_serial, SH_SERIAL, SYS_BUS_DEVICE)
-+OBJECT_DEFINE_SIMPLE_TYPE(SHSerialState, sh_serial, SH_SERIAL, SYS_BUS_DEVICE)
- 
- static void sh_serial_clear_fifo(SHSerialState *s)
+ static uint64_t msix_table_mmio_read(void *opaque, hwaddr addr,
+                                      unsigned size)
  {
 -- 
 2.34.1
