@@ -4,96 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 285D6C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 21:15:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0460CC5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 21:16:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNHvY-0005eR-U1; Thu, 05 Jun 2025 17:15:08 -0400
+	id 1uNHwb-0005rC-6U; Thu, 05 Jun 2025 17:16:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uNHvW-0005cO-DX
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 17:15:06 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uNHwa-0005qz-4Q
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 17:16:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uNHvU-0005n2-Dv
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 17:15:05 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uNHwX-00061r-Pp
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 17:16:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749158101;
+ s=mimecast20190719; t=1749158168;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=3Z+dg0awtdZ1Vp377tncwTRIfl8+FAY5C98N27KWHKE=;
- b=MV0I/dsMcSat5Cgsj+RSQYtkQSXXEPEXwuiVw0tWcqXv3U2R2vxDGV8GkUYAtq6bVyXpO3
- Up6Yhs7mmWmlANfYr5pDALIbnKwTKsbzEHcQnSsnIlISiFuYl7AHMfpx/pVJaXa7eIoLQo
- ok1ZbMiPIWIYUsLHIjHYqvkI8iO4lPs=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y0mMjRNpEOXOgPHyg5Wv4mVsgV0X6mVLCW0mTrsKsxY=;
+ b=GHBlxahntIOJabnelN7XY7tLjlQJtXQPDJWAWWeXNBuyXLA/fLeFvV0WS1Nd/u+36qeBHE
+ q1vwU2MHN7Bkb4te1VtP4ZShNcc2h8wvzHBnVUM5Ew8ci7AenmNpm3Fjsmhw9wzI33MBVs
+ l8NGBjmRZj73UE2LrEDz5/5qPHncH7Y=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-541-VQlxrgIEOwiVJVmYy-PT6g-1; Thu, 05 Jun 2025 17:15:00 -0400
-X-MC-Unique: VQlxrgIEOwiVJVmYy-PT6g-1
-X-Mimecast-MFC-AGG-ID: VQlxrgIEOwiVJVmYy-PT6g_1749158099
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-450787c8626so7833125e9.1
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 14:15:00 -0700 (PDT)
+ us-mta-575--bdayKIXNP626C14l_krvQ-1; Thu, 05 Jun 2025 17:16:07 -0400
+X-MC-Unique: -bdayKIXNP626C14l_krvQ-1
+X-Mimecast-MFC-AGG-ID: -bdayKIXNP626C14l_krvQ_1749158166
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-450dada0f83so11288465e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 14:16:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749158099; x=1749762899;
+ d=1e100.net; s=20230601; t=1749158166; x=1749762966;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=3Z+dg0awtdZ1Vp377tncwTRIfl8+FAY5C98N27KWHKE=;
- b=l7g5oRdfchqKwDwhq/jPMehtPzSrnWpS17a/S0l8ate2ecR+ocOftSh0T9bJ9gi7vf
- nloPLxQFqGLLIhm7Y/oKOqcqVdgvwrzHBqumxJ3jQOsZg+Pw0TX6EOS/9zcambunzMAe
- Gnr76VjXi78eq10YjzWtwP+JthOPLGyI0Q3TOA/WN1WREvF2Xr0i/2m8tYR5u9AJZI1G
- w48bOpUSflH2JsTGiHfOvFbYTHBOC5nQRbL8NoSmb5ic7jBHhfCBrPtQ/rAk+mH+xHHn
- Ny54ZrXKURo4a9tSKHNwaUmKUadw4nmKlPSa2EOJbbUwP5hgS3nx0a9W1HS7GIZyglm0
- D2aQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX3IZn816ZxWSN/hxrsOhArKvAa4P5vr/y0teILVAsZSx1U1vnOb8onYMLzcDNNvkHFIcFmteY6WqZi@nongnu.org
-X-Gm-Message-State: AOJu0Yye/Q2A+2AaiqRRjzl9esH213SJwC/DTKkaePhzBoh6EX9+0WLx
- mIoT+0wtL+L5lamcb7XRZiHwGYw60Kh1V2+Vgpz6MthlOQfjQl5E4B8MWSIvCK9u9mYm8Dqdb69
- hyb7N5RB/uGNtanGwRfNrHXo0scC4GU7abcFK8ur+QMMyX9C+5BKe/flt
-X-Gm-Gg: ASbGnct4D6cwd/YO9uGx32OqBy3SZiBSlCwIrW8lXTZwhDAiZM7P7WLnwQNXXYvTszL
- D43P41DA30bIWk/83YSBYiV9/+85Peax6lAFtJs5aXkY283NgardALZOY7x9R2jvILiTS5LZr/P
- e0uIyYBP6EtHogTG0YJxTRyTdsgjLoF/4Lk+uyMFMcfe6kA05eiWjbFLczrLJTjuPC2DIfj/mYD
- zpx+dvDijapqvzaacWaolnaNCYSw2dzCxaSIc504uu5eZpcg05aApAe8+K3dJUxcj5IYc1xga8Q
- aF48G6bNQykonfxoDKDMGJMr2YMlDvBYU8IPwff7Jdruy43k0JrqQXUm4J9x
-X-Received: by 2002:a05:600c:1c1b:b0:44b:1f5b:8c85 with SMTP id
- 5b1f17b1804b1-4520139c741mr9991645e9.13.1749158099297; 
- Thu, 05 Jun 2025 14:14:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHW5zD7UDdtrQhqs2/Xo7hVN7WDN31ArRqBqiqo5+AVIrw+ITgnuSmafKFy3C09hFGHSyBpoQ==
-X-Received: by 2002:a05:600c:1c1b:b0:44b:1f5b:8c85 with SMTP id
- 5b1f17b1804b1-4520139c741mr9991395e9.13.1749158098945; 
- Thu, 05 Jun 2025 14:14:58 -0700 (PDT)
+ bh=y0mMjRNpEOXOgPHyg5Wv4mVsgV0X6mVLCW0mTrsKsxY=;
+ b=SLC20/Gv31cUJ/dRhA3lt+ceCB4z+99AqQkuG0rpO8SbHgfAt2PIsWpyQSzfUhTNy/
+ jVhpyzSWCJpUfDvw2CBzt51fJy3mqcvUXs9uzH7RJJgCdiVeDmXSIGJmsUWAhgkuXcwQ
+ AFGmAfU7//5JHhT8jK8tioBds4AcDlo+T3E0h7MrRQZsD3icDhLoUyM/Am3gOD93xKts
+ 4TOE5HYzSdIU7XmngFpzxXSMJ2ifwXtBjHzhMhq64NW13cFWlXlpidWEk4H4U9QCP1mQ
+ vuxmpwnIcnHLFLIFsM4irKywQaoO7SIxQarK5IeN1+Vj2LYwINL6TP3QbwvJrqaJivGE
+ sblg==
+X-Gm-Message-State: AOJu0YxoHzlfenf5jYxAk/9UycO3TH4+OMfT2KpyIuszUzcIDVkfPBcd
+ y4ErbWu4z5BVC90UWIQJ7ThrlNsUjskEwZzp5c4gRaOKKt+IYDAtHT6/EtgdvXvRn2x1086b8MK
+ yDNO1OW37MLEAtvUwFS/06xJtCYxKBE91SCNNGM4ebzrwHi4nz/j65kTk
+X-Gm-Gg: ASbGncv06bYp6/UaKuW6KVwt0E2pxsd42YsvXBUqIpk4dIbHHr/6jVnfNXKVyuqvspM
+ m5NhBQshIhScmj3Qw+N8LafIHROvBGayobrsxZ2om938iSJKvj10umnhu6kPqVrFQeW5V/SFuAW
+ KeH/n0n7vdnQgupNzjBfOtpbSgyyTf35zkMYYisoWMvj58MemHHqt3fZwp2XPixT88D9b3ijwWv
+ ZM/M2R01teZx9z+oAiSmz7/9N3kE/vk+1PbK9sDR2RWOymh8dPUkCyXRefL0FaSiFuk2Sus6nho
+ j/o4+DH5cb1A1Ci3b3pB9oIknyGs/DAJof4J7imd8pFF9m3jeOC62Eq33A4u
+X-Received: by 2002:a05:600c:6205:b0:441:d2d8:bd8b with SMTP id
+ 5b1f17b1804b1-452013864d9mr10277325e9.8.1749158166117; 
+ Thu, 05 Jun 2025 14:16:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH7aPr9Qaz56jNgXmbREhcrkYrsrFilAjQEmad6WpniYY4MvAjelTJMPqLQM+FMyDLhyLxFrw==
+X-Received: by 2002:a05:600c:6205:b0:441:d2d8:bd8b with SMTP id
+ 5b1f17b1804b1-452013864d9mr10277065e9.8.1749158165709; 
+ Thu, 05 Jun 2025 14:16:05 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-452669ada25sm1654315e9.0.2025.06.05.14.14.58
+ 5b1f17b1804b1-45213759fb2sm4034205e9.38.2025.06.05.14.16.04
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Jun 2025 14:14:58 -0700 (PDT)
-Message-ID: <7cf59908-89a2-4603-b0bc-29df40f2fd13@redhat.com>
-Date: Thu, 5 Jun 2025 23:14:57 +0200
+ Thu, 05 Jun 2025 14:16:04 -0700 (PDT)
+Message-ID: <9e4d6072-7eeb-48ec-95e6-d7b74eccbe31@redhat.com>
+Date: Thu, 5 Jun 2025 23:16:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
-To: Steven Sistare <steven.sistare@oracle.com>,
- "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- "Liu, Yi L" <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+Subject: Re: [PATCH v2 00/29] vfio-user client
+To: John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-5-git-send-email-steven.sistare@oracle.com>
- <IA3PR11MB913626075C1F4FA64AED3B63926DA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <65ebacc7-ee7e-4c44-92fb-e75a0a6490a8@oracle.com>
- <IA3PR11MB913659879C0B2EFF7358B229926CA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <aa0c0091-7db4-46f3-956a-03a9f1362c1f@oracle.com>
- <IA3PR11MB9136014A45DEE58E09ED31F0926FA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <b44ea0e5-340e-4baf-872b-0ab8fcb0fea2@oracle.com>
+ Thanos Makatos <thanos.makatos@nutanix.com>
+References: <20250520150419.2172078-1-john.levon@nutanix.com>
+ <ef917520-09c6-40c0-b432-b500f030a2c4@redhat.com> <aDWOGrQ7Qf7BfBjm@lent>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -139,7 +133,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <b44ea0e5-340e-4baf-872b-0ab8fcb0fea2@oracle.com>
+In-Reply-To: <aDWOGrQ7Qf7BfBjm@lent>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
@@ -167,53 +161,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/25 17:16, Steven Sistare wrote:
-> On 6/4/2025 11:02 PM, Duan, Zhenzhong wrote:
->>> -----Original Message-----
->>> From: Steven Sistare <steven.sistare@oracle.com>
->>> Subject: Re: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
->>>
->>> On 6/3/2025 11:55 PM, Duan, Zhenzhong wrote:
->>>>> -----Original Message-----
->>>>> From: Steven Sistare <steven.sistare@oracle.com>
->>>>> Subject: Re: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
->>>>>
->>>>> On 6/3/2025 6:40 AM, Duan, Zhenzhong wrote:
->>>>>>> -----Original Message-----
->>>>>>> From: Steve Sistare <steven.sistare@oracle.com>
->>>>>>> Subject: [PATCH V4 04/43] vfio/pci: vfio_pci_put_device on failure
->>>>>>>
->>>>>>> If vfio_realize fails after vfio_device_attach, it should call
->>>>>>> vfio_device_detach during error recovery.  If it fails after
->>>>>>> vfio_device_get_name, it should free vbasedev->name.  If it fails
->>>>>>> after vfio_pci_config_setup, it should free vdev->msix.
->>>>>>>
->>>>>>> To fix all, call vfio_pci_put_device().
->>>>>>>
->>>>>>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
->>>>>>> ---
->>>>>>> hw/vfio/pci.c | 1 +
->>>>>>> 1 file changed, 1 insertion(+)
->>>>>>>
->>>>>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>>>>>> index a1bfdfe..7d3b9ff 100644
->>>>>>> --- a/hw/vfio/pci.c
->>>>>>> +++ b/hw/vfio/pci.c
->>>>>>> @@ -3296,6 +3296,7 @@ out_teardown:
->>>>>>>        vfio_bars_exit(vdev);
->>>>>>> error:
->>>>>>>        error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
->>>>>>> +    vfio_pci_put_device(vdev);
->>>>>>
->>>>>> Double free, vfio_pci_put_device() is also called in vfio_instance_finalize().
+On 5/27/25 12:04, John Levon wrote:
+> On Tue, May 27, 2025 at 11:39:48AM +0200, Cédric Le Goater wrote:
 > 
-> Agreed, this line must be deleted.
-> Cedric, this must be fixed in vfio-next.
+>> On 5/20/25 17:03, John Levon wrote:
+>>> The series contains an implement of a vfio-user client in QEMU, along with a few
+>>> more preparatory patches.
+>>
+>> I am planning to take first patches 2,3,4 in vfio-next. The rest
+>> either requires rework or conflicts with the live update series.
+>> Tell me if you are ok with that.
+> 
+> Sure, I'm fine with that.
+> 
+> thanks
+> john
+> 
 
 
-yes. It was not merged.
+John, could you resend a v3 on top of upstream please ?
 
-Thanks to you both for the analysis. I lacked the time.
+Thanks,
 
 C.
 
