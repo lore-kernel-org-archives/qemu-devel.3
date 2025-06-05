@@ -4,88 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C6FDC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 16:36:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F812C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 17:07:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNDa1-00037m-DN; Thu, 05 Jun 2025 12:36:37 -0400
+	id 1uNE3U-0000te-OQ; Thu, 05 Jun 2025 13:07:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uNDZq-00034x-Ob
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:36:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uNE3P-0000t8-Pc
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 13:07:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uNDZn-0002AG-Ra
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:36:26 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uNE3M-0001lW-KL
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 13:06:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749141382;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1749143215;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=11CLacksM1BhpU+Hs16yXDObr01e/HZjlyOVUKUkByg=;
- b=fResaSu1ybWTKpW9LXGY2fmVWfNvWJVyLe1f2994OAESFYM0Lm6q6Xwgkl3MW1RTh5egxk
- FQ3Y2/mKVTdcdeeHNe16d+tyD/KGPjuGBHf3k66J36Hn7HzKgKV88WvE1we4htJJRWhlXg
- f5+sOvH41zR4zxq1xc/yJ7Z8gBEqbps=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=s15N0T4/xnYnO7RKr5aWAWdsH88cqDAnX2oSjGhvUi0=;
+ b=eK22pm8k3S6/sW20f9q5kIXeOiPvkYLWC1QQYT7B/e0ocmQeeXhbJlKiKzMuBDhvlLsP4K
+ Srwi7uahJYVTRQ61NcnLGDrFSX3ykAsFIHIeaqz2DlDylCBBrvVrt13SSMXN03dxaTnQdq
+ wbpAJT9H7go0ujL8vxL9nGUkOWhrFlQ=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-500--u1asB4qOaejURoU76j0mA-1; Thu, 05 Jun 2025 12:36:20 -0400
-X-MC-Unique: -u1asB4qOaejURoU76j0mA-1
-X-Mimecast-MFC-AGG-ID: -u1asB4qOaejURoU76j0mA_1749141380
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-311d067b3faso2034516a91.1
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:36:20 -0700 (PDT)
+ us-mta-191-WRc3i1CTOBa93oUx4Hs8Lw-1; Thu, 05 Jun 2025 13:06:52 -0400
+X-MC-Unique: WRc3i1CTOBa93oUx4Hs8Lw-1
+X-Mimecast-MFC-AGG-ID: WRc3i1CTOBa93oUx4Hs8Lw_1749143210
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4edf5bb4dso819864f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 10:06:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749141379; x=1749746179;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1749143210; x=1749748010;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=11CLacksM1BhpU+Hs16yXDObr01e/HZjlyOVUKUkByg=;
- b=DhtYovRa3Mncge5ZZXfafd3H+yH/RWpYWNw83/Eo0hUfqdsQsGmbIKpZFp/ngClR+h
- TT3jwNhfDGDgajKLT4aJnny5giAGgS832DOR1KBrBu14L/5hw5T/c/E3ysNj2xvUCQsp
- uoOVGMtv2wvCWhnM4VuNTO+MHNnUmTa6nV40yXGVUvaKQOGCtSPuigU+AzxkADsHIgN9
- 9toLqWloawxTiZZqLSbdHHKCa0S4nrirQX31iwTBtZ/itUf4Oxs0QKQSw/7UbBJ/lkSq
- zNN6MM6fKhtd5mJkBciuhShqsmR4kqntkx3hmmTfTdn5n/Da9CpA4fnHWtNLXDo26Oor
- xzGg==
-X-Gm-Message-State: AOJu0YyKDUMedQ9XSp+pxhynvK5j0KiJNInrcSrHPyR0a/CH2ZYHcIHf
- QWz0+3OVWIljNVzHBL7wbZ1h8NQ9be4GJgDmvk0//ZvoQ++317kPC28EVY4NYmzELH18rEgH6L9
- Z3m0uLp4oUgi/NU9MCw2EkdL5cnAJCiuSZeZxB9pHONzLvZJ1ZhjwdZSahO240AQ4eN0WNy24fM
- YTfS9YwkQhWKt6E+KEz50W4OsVDVXQ8ZaZI6eXQM96AQ==
-X-Gm-Gg: ASbGncsQUy+H43pDq1yJZdJN/3aeK+sMP2VnpwObLvWYvJlP7H3rrZ2EjWtG/GwudfH
- FXA3iTcDTDWwPHAPpodF8qv4eIoappmpq05lVyMNmdiLxNWAMU1HWHppcgXyyDWrV3RSLVr7j1j
- PRcjMORbwNUnqLUPth4mHoabsf
-X-Received: by 2002:a17:90b:2252:b0:312:1c83:58ec with SMTP id
- 98e67ed59e1d1-31346b2a382mr679933a91.12.1749141378969; 
- Thu, 05 Jun 2025 09:36:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGeALc0uVQAKHf0Uij+KTSujEMzHJ53YjlES/2Dw7b4vyww0tc6PH/UQXR/ckUqYEjJpVBf4RNEmungmyg6qdw=
-X-Received: by 2002:a17:90b:2252:b0:312:1c83:58ec with SMTP id
- 98e67ed59e1d1-31346b2a382mr679882a91.12.1749141378369; Thu, 05 Jun 2025
- 09:36:18 -0700 (PDT)
+ bh=s15N0T4/xnYnO7RKr5aWAWdsH88cqDAnX2oSjGhvUi0=;
+ b=KJeDuTmZschJwNvU3UWD7pv/co01oC2BK+aAVbMY7bQW2SC/E8Yk9jUWmGm//LIXPA
+ jWZ0BcLCljf+oGWDrj9W+KULJAaJZ50VaR/s/YdbkZtu/us0K2PDRD7svl+FLT5ZAArI
+ 3emXBfDUR/RR3yzPyF5EFVqfhrSKvO1P/xK4s4dHUOoSLSxTeLW2crvUbHhi0i2ZRQYt
+ e0JkiuZsuBhN3pI1kiWNcr9uLHf7lsQmJBhlxDIxJ6b8Ybs0y3AuKiG+Y4rljys6GJpX
+ FldgQcMEJlyYucYrjgxFz5guk7Cm0+3XmQ3amR5IvGohXrrkf8WNK9Jun6EkoQd/mpQ/
+ Tb6w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWtqs5HKjtVr26jR3DMZ+2Nu7vlG3SywclMFHgM/L5b2lNBJIkqlMU9jAtEks8aNEos8k0OKcvvJh/n@nongnu.org
+X-Gm-Message-State: AOJu0Yx9vcnPCImgDCW7UBHgrxsUzKu//gMAMsNdwWrvrxLl90w8r6YM
+ ES2aB7B9D5yf3chz7ns/FeOG0voSQc/v4xFWeE/39Cc626Y3JLvrs+FjPuQC0xLLRCtArIgKmlh
+ ElzA0145rg/eUynGEWj/jd8sOvI8gj/zhhuEwIZgbUQT1hAETt5GIxE2E
+X-Gm-Gg: ASbGnctb9fhEu2HM/QPo33bW27DWWbigZaadb7898lca1kwsXzNNf8HYn34sVvwm/nc
+ MLx9xfIoUhzEW4sHmCgoS2dTqOI+G9psWmtL5tkD/7EByNrPBI5ZuyzaLRkWMieipppuSyqQU9v
+ TUj6WggzLbWTc6E8FsrKxfQ4qYa2rm/zXT+Sfy8uFoqmdwClEhIddHqA/+arwJQD64gRHIq3Tdt
+ Olnpg0wdUAZIxHKujoAoYtCpGjTw/LTfrEJdY1fqFCgyuTbpB4EnePvRcZQqJ667R7uOZzu8Udi
+ gwGFNyz2h5nMfCq1H+MCthEDJPpFQEQYAEB+K3wUElw66bMfTrfJyE5Rbus=
+X-Received: by 2002:a5d:5f51:0:b0:3a4:e667:9242 with SMTP id
+ ffacd0b85a97d-3a51d8f60famr7209317f8f.3.1749143209720; 
+ Thu, 05 Jun 2025 10:06:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE18Cic9dlXErikMrRIYjk6Jf/utDhUA0fzFvmn7s3YNyPtrjgWUmTgeXSL7FcFfoyOdpdRdw==
+X-Received: by 2002:a5d:5f51:0:b0:3a4:e667:9242 with SMTP id
+ ffacd0b85a97d-3a51d8f60famr7209248f8f.3.1749143209095; 
+ Thu, 05 Jun 2025 10:06:49 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-451f9816ccfsm31408505e9.15.2025.06.05.10.06.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Jun 2025 10:06:47 -0700 (PDT)
+Message-ID: <7033bbc1-2f65-4cf6-a64d-df0bace9a555@redhat.com>
+Date: Thu, 5 Jun 2025 19:06:44 +0200
 MIME-Version: 1.0
-References: <20250523180809.41211-1-jsnow@redhat.com>
- <20250523180809.41211-2-jsnow@redhat.com>
- <aD2IBR5FTFCSrV8x@redhat.com>
-In-Reply-To: <aD2IBR5FTFCSrV8x@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Thu, 5 Jun 2025 12:36:06 -0400
-X-Gm-Features: AX0GCFsCDxOJX2AXKvxWs7EMADxceXAmC6wlg87YupbYVAE0y79U59jjzviR5YI
-Message-ID: <CAFn=p-bNR3vTkqc9n9xqdyT7b1uE4V2mdP6UkXbjjAn1hbXZtw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] docs/qapi-domain: Improve QAPI indices
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000008538380636d5b6f9"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/25] hw/i386/acpi-build: Introduce
+ build_append_pcihp_resources() helper
+Content-Language: en-US
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
+ anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
+ pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-12-eric.auger@redhat.com>
+ <20250530111719.00005714@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250530111719.00005714@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,366 +117,113 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008538380636d5b6f9
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Jonathan,
 
-On Mon, Jun 2, 2025 at 7:16=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@re=
-dhat.com>
-wrote:
-
-> On Fri, May 23, 2025 at 02:08:09PM -0400, John Snow wrote:
-> > This patch changes the "by type" categorization in favor of using
-> > sub-categories of a literal "By type" category instead. A new "By
-> > module" categorization is also added that follows a similar pattern.
+On 5/30/25 12:17 PM, Jonathan Cameron wrote:
+> On Tue, 27 May 2025 09:40:13 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
 >
-> I'm not much of a fan of this. IMHO unless you are looking at the
-> module(s) for the subsystem you are the maintainer of, the split
-> of definitions across modules comes across as somewhat arbitrary
-> and unpredictable.
+>> Extract the code that reserves resources for ACPI PCI hotplug
+>> into a new helper named build_append_pcihp_resources() and
+>> move it to pcihp.c. We will reuse it on ARM.
+>>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Trivial comment inline.
 >
-
-I'm assuming here that you are opposing the "by module" categorization
-specifically.
-
-Fair enough. Markus has said similar things; that the split by module is
-more of a sin of necessity than a genuine categorization. I suppose in my
-mind's eye it is my hope that they WOULD be useful for grouping like
-commands, structures, and events by topic. I admit they are not necessarily
-strictly adherent to that idea at the moment.
-
-However, I think it's *conceptually* useful to group together, say, "block
-related things" into a block topic. Modules may not fit this 1:1 at
-current, but it's the best we have.
-
-If there's opposition to doing it in this manner, I cede, but still
-maintain that grouping things by topic would be superior to a flat list of
-just absolutely everything.
-
-
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 >
-> Looking at this from the POV of a consumer of QMP, our entrypoint
-> to research is either a command name or an event name.
+>> ---
+>>  include/hw/acpi/pcihp.h |  2 ++
+>>  hw/acpi/pcihp.c         | 20 ++++++++++++++++++++
+>>  hw/i386/acpi-build.c    | 15 ++-------------
+>>  3 files changed, 24 insertions(+), 13 deletions(-)
+>>
+>> diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
+>> index 971451e8ea..8a46a414cc 100644
+>> --- a/include/hw/acpi/pcihp.h
+>> +++ b/include/hw/acpi/pcihp.h
+>> @@ -75,6 +75,8 @@ void acpi_pcihp_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+>>  
+>>  void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr);
+>>  void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar);
+>> +void build_append_pcihp_resources(Aml *table,
+>> +                                  uint64_t io_addr, uint64_t io_len);
+>>  
+>>  /* Called on reset */
+>>  void acpi_pcihp_reset(AcpiPciHpState *s);
+>> diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+>> index e0260f67e6..fb54c31f77 100644
+>> --- a/hw/acpi/pcihp.c
+>> +++ b/hw/acpi/pcihp.c
+>> @@ -685,6 +685,26 @@ void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
+>>      aml_append(table, scope);
+>>  }
+>>  
+>> +/* Reserve PCIHP resources */
+>> +void build_append_pcihp_resources(Aml *scope /* \\_SB.PCI0 */,
+>> +                                  uint64_t io_addr, uint64_t io_len)
+>> +{
+>> +    Aml *dev, *crs;
+>> +
+>> +    dev = aml_device("PHPR");
+>> +    aml_append(dev, aml_name_decl("_HID", aml_string("PNP0A06")));
+>> +    aml_append(dev,
+>> +               aml_name_decl("_UID", aml_string("PCI Hotplug resources")));
+>> +    /* device present, functioning, decoding, not shown in UI */
+>> +    aml_append(dev, aml_name_decl("_STA", aml_int(0xB)));
+>> +    crs = aml_resource_template();
+>> +    aml_append(crs,
+>> +        aml_io(AML_DECODE16, io_addr, io_addr, 1, io_len)
+>> +    );
+> Trivial but this doesn't match local style.  It is even inconsistent with
+> the _UID line above.
+>> +    aml_append(crs,
+>> +               aml_io(AML_DECODE16, io_addr, io_addr, 1, io_len));
+> maybe?
+
+definivitely. Will be fixed in next version
+
+Thanks!
+
+Eric
 >
-> The data type names of enums/alternates/objects are an internal
-> QEMU detail that's not part of the public API.
->
-
-Keep in mind that once the "inliner" is merged, the great majority of
-"internal" structures will be omitted from this index. The exact definition
-of what is elided is hard for me to describe formally, but: Any object that
-is currently referenced only via "...The members of ..." will be omitted,
-as the information relating to that definition will be inlined into the
-appropriate command/event instead.
-
-This will also by definition exclude entities that aren't referenced at
-all, such as internal definitions we use for QOM/QDEV and similar purposes.
-
-Due to a limitation in how I present alternates (i.e. via reference to the
-type and not by inlining the choices/types), alternates are one of the few
-types whose internal details remain even after the inliner is merged. This
-isn't a fundamental barrier, just where the cutting room knife made the
-excision, and can be remedied in the future.
-
-The algorithm for what is visible is something like the following:
-
-1. All entities are hidden by default.
-2. All commands and events are marked visible.
-3. All member types belonging to a visible entity (commands, events) are
-marked as visible; i.e. if an event uses an enum or a command takes a
-compound object as an argument, those entities become visible in the
-documentation, even though the name of that type is an "internal detail".
-This is because I do not have a system in place for presenting recursive
-structures, and it is currently easiest to link to these types by
-reference, necessitating their visibility. This marking is carried out
-recursively.
-4. All return types, currently, are marked visible. In the future we may
-inline return structures in a manner similar to members, but we do not do
-so, yet.
-
-This isn't enough to remove *all* internal types, but it does get a lion's
-share of them and thins the documentation considerably. I don't have
-numbers on hand at present, but when I get these prerequisite series out of
-the way, I can enumerate them.
-
-
->
-> If we consider the index currently:
->
->   Alternates | Commands | Enums | Events | Modules | Objects | A | .... |=
- Z
->
-> The A ... Z bits link to a mix of all type names, which is a bit
-> overwhealming.
->
-> At the same time the page is twice as big as it needs to be
-> as the same info is repeated under the A-Z index and the
-> other per-type indexes.
->
-
-Yes; but that's how indices are at times: multiple things are listed in
-multiple places to facilitate lookup. It is not really meant to be space
-efficient.
-
-In my case, the things I really truly care about are:
-
-(1) A true alphabetical list of all symbols we have documented, and
-(2) A list of all events and commands, specifically.
-
-Everything else more or less just comes along for the ride by parallel;
-making an index for events/commands inherently creates an index for
-objects, enums, etc. I didn't see a need to specifically exclude them.
-
-
->
-> I think what would help would be to make the index dynamic
->
-> eg
->
->   A | B | C | D | E | ... | X | Y | Z
->
->   [ ] Show internal types
->
-
-> The A-Z index would default to showing commands and events.
-> Selecting the "Types" checkbox would toggle display of the
-> alternate/enum/object names, which could be done via having
-> a CSS class on each index entry, and javascript which just
-> toggles 'display: none' / 'display: block' CSS property on
-> the elements with the given class. I'm not convinced we need
-> the modules in the index.
->
-
-That'd be cool! Unfortunately I'm going to reply here with the dreaded
-"patches welcome". I'm worried I don't have the mandate to spend much more
-time on this project than I already have... :(
-
-If you'd like to take a crack at it, I would be happy to advise.
-
-
->
->
-> > Alphabetical sorting has been improved and will sort in a case
-> > insensitive manner for all categories, now.
->
-> This is trivial and nice and could be a standalone fix ?
->
-
-Maybe! This patchset is one of those cases where I went to fix one thing
-and got carried away... If I can extract just this fix by its lonesome I
-will do so. I admit that I forget right now how easy that is to do, or if
-it relies on my restructuring of other elements.
-
-... It's probably easy enough to rewrite, anyway.
-
-
->
-> > Lastly, the "main" QAPI Index (qapi-index.html) is altered to index
-> > *everything* from all namespaces, adding disambiguation where necessary
-> > to do so.
->
-> This looks a bit wierd having the same types and modules repeated
-> multiple times.
->
-
-I suppose so. If we do not find the master index useful, we could go the
-other route and eliminate it entirely, leaving only the domain-specific
-indices. I recall Markus at one point assumed the master index to work as
-this patch makes it work, so I just closed the loop here. The way it
-currently actually works is that the master index only indexes items that
-have no associated domain, which turns out to be essentially nothing.
-
-
->
->
-> With regards,
-> Daniel
-> --
-> |: https://berrange.com      -o-
-> https://www.flickr.com/photos/dberrange :|
-> |: https://libvirt.org         -o-
-> https://fstop138.berrange.com :|
-> |: https://entangle-photo.org    -o-
-> https://www.instagram.com/dberrange :|
->
->
-
---0000000000008538380636d5b6f9
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 2, =
-2025 at 7:16=E2=80=AFAM Daniel P. Berrang=C3=A9 &lt;<a href=3D"mailto:berra=
-nge@redhat.com">berrange@redhat.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">On Fri, May 23, 2025 at 02:08:09PM -0400=
-, John Snow wrote:<br>
-&gt; This patch changes the &quot;by type&quot; categorization in favor of =
-using<br>
-&gt; sub-categories of a literal &quot;By type&quot; category instead. A ne=
-w &quot;By<br>
-&gt; module&quot; categorization is also added that follows a similar patte=
-rn.<br>
-<br>
-I&#39;m not much of a fan of this. IMHO unless you are looking at the<br>
-module(s) for the subsystem you are the maintainer of, the split<br>
-of definitions across modules comes across as somewhat arbitrary<br>
-and unpredictable.<br></blockquote><div><br></div><div>I&#39;m assuming her=
-e that you are opposing the &quot;by module&quot; categorization specifical=
-ly. <br></div><div><br></div><div>Fair enough. Markus has said similar thin=
-gs; that the split by module is more of a sin of necessity than a genuine c=
-ategorization. I suppose in my mind&#39;s eye it is my hope that they WOULD=
- be useful for grouping like commands, structures, and events by topic. I a=
-dmit they are not necessarily strictly adherent to that idea at the moment.=
-</div><div><br></div><div>However, I think it&#39;s *conceptually* useful t=
-o group together, say, &quot;block related things&quot; into a block topic.=
- Modules may not fit this 1:1 at current, but it&#39;s the best we have.</d=
-iv><div><br></div><div>If there&#39;s opposition to doing it in this manner=
-, I cede, but still maintain that grouping things by topic would be superio=
-r to a flat list of just absolutely everything.</div><div>=C2=A0</div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-Looking at this from the POV of a consumer of QMP, our entrypoint<br>
-to research is either a command name or an event name.<br>
-<br>
-The data type names of enums/alternates/objects are an internal<br>
-QEMU detail that&#39;s not part of the public API.<br></blockquote><div><br=
-></div><div>Keep in mind that once the &quot;inliner&quot; is merged, the g=
-reat majority
- of &quot;internal&quot; structures will be omitted from this index. The ex=
-act definition of what is elided is hard for me to describe formally, but: =
-Any object that is currently referenced only via &quot;...The members of ..=
-.&quot; will be omitted, as the information relating to that definition wil=
-l be inlined into the appropriate command/event instead.</div><div><br></di=
-v><div>This will also by definition exclude entities that aren&#39;t refere=
-nced at all, such as internal definitions we use for QOM/QDEV and similar p=
-urposes.</div><div><br></div><div>Due to a limitation in how I present alte=
-rnates (i.e. via reference to the type and not by inlining the choices/type=
-s), alternates are one of the few types whose internal details remain even =
-after the inliner is merged. This isn&#39;t a fundamental barrier, just whe=
-re the cutting room knife made the excision, and can be remedied in the fut=
-ure.</div><div><br></div><div>The algorithm for what is visible is somethin=
-g like the following:</div><div><br></div><div>1. All entities are hidden b=
-y default.</div><div>2. All commands and events are marked visible.</div><d=
-iv>3. All member types belonging to a visible entity (commands, events) are=
- marked as visible; i.e. if an event uses an enum or a command takes a comp=
-ound object as an argument, those entities become visible in the documentat=
-ion, even though the name of that type is an &quot;internal detail&quot;. T=
-his is because I do not have a system in place for presenting recursive str=
-uctures, and it is currently easiest to link to these types by reference, n=
-ecessitating their visibility. This marking is carried out recursively.</di=
-v><div>4. All return types, currently, are marked visible. In the future we=
- may inline return structures in a manner similar to members, but we do not=
- do so, yet.</div><div><br></div><div>This isn&#39;t enough to remove *all*=
- internal types, but it does get a lion&#39;s share of them and thins the d=
-ocumentation considerably. I don&#39;t have numbers on hand at present, but=
- when I get these prerequisite series out of the way, I can enumerate them.=
-</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-If we consider the index currently:<br>
-<br>
-=C2=A0 Alternates | Commands | Enums | Events | Modules | Objects | A | ...=
-. | Z<br>
-<br>
-The A ... Z bits link to a mix of all type names, which is a bit<br>
-overwhealming.<br>
-<br>
-At the same time the page is twice as big as it needs to be<br>
-as the same info is repeated under the A-Z index and the<br>
-other per-type indexes.<br></blockquote><div><br></div><div>Yes; but that&#=
-39;s how indices are at times: multiple things are listed in multiple place=
-s to facilitate lookup. It is not really meant to be space efficient.</div>=
-<div><br></div><div>In my case, the things I really truly care about are:</=
-div><div><br></div><div>(1) A true alphabetical list of all symbols we have=
- documented, and</div><div>(2) A list of all events and commands, specifica=
-lly.</div><div><br></div><div>Everything else more or less just comes along=
- for the ride by parallel; making an index for events/commands inherently c=
-reates an index for objects, enums, etc. I didn&#39;t see a need to specifi=
-cally exclude them.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">
-<br>
-I think what would help would be to make the index dynamic<br>
-<br>
-eg<br>
-<br>
-=C2=A0 A | B | C | D | E | ... | X | Y | Z<br>
-<br>
-=C2=A0 [ ] Show internal types <br></blockquote><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">
-<br>
-The A-Z index would default to showing commands and events.<br>
-Selecting the &quot;Types&quot; checkbox would toggle display of the<br>
-alternate/enum/object names, which could be done via having<br>
-a CSS class on each index entry, and javascript which just<br>
-toggles &#39;display: none&#39; / &#39;display: block&#39; CSS property on<=
-br>
-the elements with the given class. I&#39;m not convinced we need<br>
-the modules in the index.<br></blockquote><div><br></div><div>That&#39;d be=
- cool! Unfortunately I&#39;m going to reply here with the dreaded &quot;pat=
-ches welcome&quot;. I&#39;m worried I don&#39;t have the mandate to spend m=
-uch more time on this project than I already have... :(</div><div><br></div=
-><div>If you&#39;d like to take a crack at it, I would be happy to advise.<=
-/div><div></div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D=
-"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-le=
-ft:1ex">
-<br>
-<br>
-&gt; Alphabetical sorting has been improved and will sort in a case<br>
-&gt; insensitive manner for all categories, now.<br>
-<br>
-This is trivial and nice and could be a standalone fix ?<br></blockquote><d=
-iv><br></div><div>Maybe! This patchset is one of those cases where I went t=
-o fix one thing and got carried away... If I can extract just this fix by i=
-ts lonesome I will do so. I admit that I forget right now how easy that is =
-to do, or if it relies on my restructuring of other elements.</div><div><br=
-></div><div>... It&#39;s probably easy enough to rewrite, anyway.</div><div=
->=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px =
-0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; Lastly, the &quot;main&quot; QAPI Index (qapi-index.html) is altered t=
-o index<br>
-&gt; *everything* from all namespaces, adding disambiguation where necessar=
-y<br>
-&gt; to do so.<br>
-<br>
-This looks a bit wierd having the same types and modules repeated<br>
-multiple times.<br></blockquote><div><br></div><div>I suppose so. If we do =
-not find the master index useful, we could go the other route and eliminate=
- it entirely, leaving only the domain-specific indices. I recall Markus at =
-one point assumed the master index to work as this patch makes it work, so =
-I just closed the loop here. The way it currently actually works is that th=
-e master index only indexes items that have no associated domain, which tur=
-ns out to be essentially nothing.</div><div>=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-<br>
-<br>
-With regards,<br>
-Daniel<br>
--- <br>
-|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
-tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D"http=
-s://www.flickr.com/photos/dberrange" rel=3D"noreferrer" target=3D"_blank">h=
-ttps://www.flickr.com/photos/dberrange</a> :|<br>
-|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
-ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0-o-=C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 <a href=3D"https://fstop138.berrange.com" rel=3D"n=
-oreferrer" target=3D"_blank">https://fstop138.berrange.com</a> :|<br>
-|: <a href=3D"https://entangle-photo.org" rel=3D"noreferrer" target=3D"_bla=
-nk">https://entangle-photo.org</a>=C2=A0 =C2=A0 -o-=C2=A0 =C2=A0 <a href=3D=
-"https://www.instagram.com/dberrange" rel=3D"noreferrer" target=3D"_blank">=
-https://www.instagram.com/dberrange</a> :|<br>
-<br>
-</blockquote></div></div>
-
---0000000000008538380636d5b6f9--
+>> +    aml_append(dev, aml_name_decl("_CRS", crs));
+>> +    aml_append(scope, dev);
+>> +}
+>> +
+>>  const VMStateDescription vmstate_acpi_pcihp_pci_status = {
+>>      .name = "acpi_pcihp_pci_status",
+>>      .version_id = 1,
+>> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+>> index 91945f716c..52cef834ed 100644
+>> --- a/hw/i386/acpi-build.c
+>> +++ b/hw/i386/acpi-build.c
+>> @@ -1432,19 +1432,8 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>>  
+>>      /* reserve PCIHP resources */
+>>      if (pm->pcihp_io_len && (pm->pcihp_bridge_en || pm->pcihp_root_en)) {
+>> -        dev = aml_device("PHPR");
+>> -        aml_append(dev, aml_name_decl("_HID", aml_string("PNP0A06")));
+>> -        aml_append(dev,
+>> -            aml_name_decl("_UID", aml_string("PCI Hotplug resources")));
+>> -        /* device present, functioning, decoding, not shown in UI */
+>> -        aml_append(dev, aml_name_decl("_STA", aml_int(0xB)));
+>> -        crs = aml_resource_template();
+>> -        aml_append(crs,
+>> -            aml_io(AML_DECODE16, pm->pcihp_io_base, pm->pcihp_io_base, 1,
+>> -                   pm->pcihp_io_len)
+>> -        );
+>> -        aml_append(dev, aml_name_decl("_CRS", crs));
+>> -        aml_append(scope, dev);
+>> +        build_append_pcihp_resources(scope,
+>> +                                      pm->pcihp_io_base, pm->pcihp_io_len);
+>>      }
+>>      aml_append(dsdt, scope);
+>>  
 
 
