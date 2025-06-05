@@ -4,108 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E218AC5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:02:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CC43C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:03:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN7QR-0000pp-3F; Thu, 05 Jun 2025 06:02:19 -0400
+	id 1uN7R8-0001Ma-3o; Thu, 05 Jun 2025 06:03:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uN7QL-0000oz-V8
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:02:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1uN7R5-0001I6-Om
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:02:59 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uN7QK-0004aB-6O
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:02:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749117729;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=/HEoOMSqXtdi0Q51L1Ph5UeJyMg5C6Ya+67lIbUsoJY=;
- b=MUu2mK2hnbL8FW9sSSBo9v+nyUaqmo87R4yLYm0fLNkmvObi9cmVN+pyYFlwMw4EFgEEdG
- dWtgw+G1vGdtQBj1HrYMM+m5L40Iq04vkiW4kt572QHK3VN3QZ7v2Ie8vGYsE79ngjmP+W
- MCrC0M1BP4pW0h6zO7iu/7HlR6/6FBM=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-390-6dQlZC6_O5iXI6qT57fD7Q-1; Thu, 05 Jun 2025 06:02:08 -0400
-X-MC-Unique: 6dQlZC6_O5iXI6qT57fD7Q-1
-X-Mimecast-MFC-AGG-ID: 6dQlZC6_O5iXI6qT57fD7Q_1749117727
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-451d2037f1eso4622485e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 03:02:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749117727; x=1749722527;
- h=content-transfer-encoding:in-reply-to:references:reply-to:cc:to
- :from:content-language:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/HEoOMSqXtdi0Q51L1Ph5UeJyMg5C6Ya+67lIbUsoJY=;
- b=lqUcE2Jg3xVbn3HMkM8ItB1fVr8PwM9CTlaoDNyH7esBoiitCuWN4c02WFezg/dSw6
- bIM9tH63Pl9Y+B1Aj8RAdRwRWuWjrCYv1YW0kAGYtuTCCQukxd2ZvtjF5CmhWYSao32a
- 2AyrleqGT9A3O8d8pR5YlRdyhew2LGIMl5tDIfyfBuJ9U0+sTMz2gwNK6GJZ9UfHDKxN
- /t+j9LHftiomX+0I1lIgBhKCZe7Gmfu3zR5t7Lf1iGLjTFM4uJ3f/Ix83HLeV4ON/APM
- UmLgB6baaDBsoo5yczoJ0+LEhDoeB8JTPVnV5gi74vttI/+P3F3Kj0hmo0R/sAoUXzan
- ruZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUL6G8c8WfmN1McS1MnY6N0sCUfSZrW+OfNYm4rwTYdxVRatxwgH0s4n7+bssYJszytgtYeeJXVT6U4@nongnu.org
-X-Gm-Message-State: AOJu0YxnNyoO0ojja0hM3l00F13zUEJuiyvEw55RW28RqqAhv5nHpf32
- e2qGleDCCDQgG6PGG/lRttYCGYcDRISXtZSWV6iukD+dZqisxCjwfzEcdMOChV2a6xuQvtkjrDq
- Z2HyrQt9IzqrwxfppHc5Z3ns4067v21u9nSpIgMRxrOXwXy9bnSn+PvqX
-X-Gm-Gg: ASbGncvL/dbaOGfE7QZGTe0pmx1emeSOfzf3nXrUafN4m8+hWP8UVCd+/Ane1tVcpYu
- o9n4uTTQSkDb23ap5sEd9hgCJQ/vzdx/GPyd2fkOKV3+fF019+uvTi20a+h75Oc+9jVR9FqVDHN
- ZJz6zn3wESNx1L2GE61O6QmJSJ1FmDAf7Gj0jD2+2gtOLuelBpIR/+dwRUF9RJd6dNlz/IlWD8n
- bJ5+0NmYP6OxdC+scDqkYTgMXQnBaNXN56QeqaDwpQoVlsDlQWMN1mM8w9xKqiqzIdrewBJE9L1
- NwBuDi5EIEJsst40VUnEKqbhTuMazouhtisbRc3ME+FWQaQK44oE1JiZtJk=
-X-Received: by 2002:a05:600c:1c97:b0:450:d3b9:4ba4 with SMTP id
- 5b1f17b1804b1-451f0a6073fmr56892525e9.2.1749117727086; 
- Thu, 05 Jun 2025 03:02:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEiA0BbJ/+M95XitwyYDsL+toQfTVT8QzO9r7bwKeBgpymVTvE40I4D06ZFUSI0HCxjom1lpw==
-X-Received: by 2002:a05:600c:1c97:b0:450:d3b9:4ba4 with SMTP id
- 5b1f17b1804b1-451f0a6073fmr56891785e9.2.1749117726422; 
- Thu, 05 Jun 2025 03:02:06 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-451f9924a6esm18909195e9.38.2025.06.05.03.02.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Jun 2025 03:02:05 -0700 (PDT)
-Message-ID: <cb2a688d-fbf2-497e-8baf-f28352766105@redhat.com>
-Date: Thu, 5 Jun 2025 12:02:04 +0200
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1uN7R2-0004cW-Qp
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:02:59 -0400
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 555A2eLO005843
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Jun 2025 18:02:40 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from ethan84-VirtualBox (10.0.12.74) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Thu, 5 Jun 2025
+ 18:02:40 +0800
+Date: Thu, 5 Jun 2025 18:02:29 +0800
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+CC: <qemu-devel@nongnu.org>, <richard.henderson@linaro.org>,
+ <pbonzini@redhat.com>
+Subject: Re: [PATCH] accel/tcg: Make round-robin kick period configurable
+Message-ID: <aEFrNTMKkQgQ6kSf@ethan84-VirtualBox>
+References: <20250605061852.2081342-1-ethan84@andestech.com>
+ <369151f7-cde7-4065-ac0a-5364214e8d2c@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root Complex
- association
-Content-Language: en-US
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
- ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
- mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
- wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
- jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
-References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
- <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
- <15b1fd04-2dd0-4191-8958-9d8db8dff7c9@redhat.com>
-In-Reply-To: <15b1fd04-2dd0-4191-8958-9d8db8dff7c9@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="utf-8"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <369151f7-cde7-4065-ac0a-5364214e8d2c@linaro.org>
+User-Agent: Mutt/2.1.4 (2021-12-11)
+X-Originating-IP: [10.0.12.74]
+X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 555A2eLO005843
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, PDS_RDNS_DYNAMIC_FP=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,63 +68,167 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  eric.auger@redhat.com
-X-ACL-Warn: ,  Eric Auger <eric.auger@redhat.com>
-From:  Eric Auger via <qemu-devel@nongnu.org>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Philippe,
 
+Thank you for your response.
 
-On 6/5/25 11:53 AM, Eric Auger wrote:
+Since TCGState is currently defined only in tcg-all.c, we’re unable to access
+rr_kick_delay_ns from other .c files through the struct.
+
+One potential approach would be to introduce a tcg-all.h header and move the
+TCGState definition there. This would allow us to access the struct in other
+components by including the header and using TCG_STATE(current_accel()).
+
+Would you be open to this direction, or do you have any alternative 
+suggestions?
+
+Thanks,
+Ethan
+
+On Thu, Jun 05, 2025 at 09:21:55AM +0200, Philippe Mathieu-Daudé wrote:
+> Hi Ethan,
+> 
+> On 5/6/25 08:18, Ethan Chen via wrote:
+> > This change introduces a configurable round-robin kick period, giving users the
+> > flexibility to balance SMP simulation accuracy and performance according to
+> > their specific needs.
+> > 
+> > The round-robin kick period is the time one vCPU can run before scheduler
+> > switches to another vCPU when using a single thread TCG. The default value of
+> > 0.1 seconds may allow one vCPU to run for too long before the scheduler
+> > switches to another. This behavior may not be suitable for workloads with
+> > strict timing requirements.
+> > 
+> > Reducing the period can improve the fidelity of SMP simulation by allowing
+> > more frequent vCPU switching, though it may negatively impact overall
+> > simulation performance.
+> > 
+> > Signed-off-by: Ethan Chen <ethan84@andestech.com>
+> > ---
+> >   accel/tcg/tcg-accel-ops-rr.c |  2 +-
+> >   accel/tcg/tcg-accel-ops-rr.h |  2 +-
+> >   accel/tcg/tcg-all.c          | 35 +++++++++++++++++++++++++++++++++++
+> >   qemu-options.hx              |  9 ++++++++-
+> >   4 files changed, 45 insertions(+), 3 deletions(-)
 > 
 > 
-> On 6/2/25 5:41 PM, Shameer Kolothum wrote:
->> Although this change does not affect functionality at present, it is
->> required when we add support for user-creatable SMMUv3 devices in
->> future patches.
->>
->> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
->> ---
->>  hw/arm/smmuv3.c | 8 ++++++++
->>  1 file changed, 8 insertions(+)
->>
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index ab67972353..7e934336c2 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -24,6 +24,7 @@
->>  #include "hw/qdev-properties.h"
->>  #include "hw/qdev-core.h"
->>  #include "hw/pci/pci.h"
->> +#include "hw/pci/pci_bridge.h"
->>  #include "cpu.h"
->>  #include "exec/target_page.h"
->>  #include "trace.h"
->> @@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error **errp)
->>      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
->>      SysBusDevice *dev = SYS_BUS_DEVICE(d);
->>      Error *local_err = NULL;
->> +    Object *bus;
->> +
->> +    bus = object_property_get_link(OBJECT(d), "primary-bus", &error_abort);
->> +    if (!bus || !object_dynamic_cast(bus->parent, TYPE_PCI_HOST_BRIDGE)) {
->> +        error_setg(errp, "SMMUv3 is not attached to any PCIe Root Complex!");
->> +        return;
->> +    }
-> shouldn't you check as well that !pci_bus_bypass_iommu(bus)?
-
-I see you do the check in 6/6 and I think this is the correct way
-because in case of legacy SMMU it is allowed to have
-pci_bus_bypass_iommu set on the root bus to let the SMMU apply only on
-pxb buses only. So please ignore this comment.
-
-Eric
+> > diff --git a/accel/tcg/tcg-accel-ops-rr.h b/accel/tcg/tcg-accel-ops-rr.h
+> > index 2a76a29612..324bb772cb 100644
+> > --- a/accel/tcg/tcg-accel-ops-rr.h
+> > +++ b/accel/tcg/tcg-accel-ops-rr.h
+> > @@ -10,7 +10,7 @@
+> >   #ifndef TCG_ACCEL_OPS_RR_H
+> >   #define TCG_ACCEL_OPS_RR_H
+> > 
+> > -#define TCG_KICK_PERIOD (NANOSECONDS_PER_SECOND / 10)
+> > +extern uint64_t rr_kick_period;
 > 
-> Eric
->>  
->>      c->parent_realize(d, &local_err);
->>      if (local_err) {
+> No need for another extern, pass it as argument:
 > 
-
+> -- >8 --
+> diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+> index f62cf24e1d4..551864b5509 100644
+> --- a/accel/tcg/tcg-accel-ops-rr.c
+> +++ b/accel/tcg/tcg-accel-ops-rr.c
+> @@ -62,9 +62,9 @@ void rr_kick_vcpu_thread(CPUState *unused)
+>  static QEMUTimer *rr_kick_vcpu_timer;
+>  static CPUState *rr_current_cpu;
+> 
+> -static inline int64_t rr_next_kick_time(void)
+> +static inline int64_t rr_next_kick_time(uint64_t kick_delay_ns)
+>  {
+> -    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + TCG_KICK_PERIOD;
+> +    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + kick_delay_ns;
+>  }
+> 
+>  /* Kick the currently round-robin scheduled vCPU to next */
+> @@ -83,15 +83,20 @@ static void rr_kick_next_cpu(void)
+> 
+>  static void rr_kick_thread(void *opaque)
+>  {
+> -    timer_mod(rr_kick_vcpu_timer, rr_next_kick_time());
+> +    CPUState *cpu = opaque;
+> +
+> +    // here use rr_next_kick_time(cpu->accel->rr_kick_delay_ns):
+> +    timer_mod(rr_kick_vcpu_timer, rr_next_kick_time(TCG_KICK_PERIOD));
+>      rr_kick_next_cpu();
+>  }
+> 
+>  static void rr_start_kick_timer(void)
+>  {
+> -    if (!rr_kick_vcpu_timer && CPU_NEXT(first_cpu)) {
+> +    CPUState *next_cpu = CPU_NEXT(first_cpu);
+> +
+> +    if (!rr_kick_vcpu_timer && next_cpu) {
+>          rr_kick_vcpu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+> -                                           rr_kick_thread, NULL);
+> +                                           rr_kick_thread, next_cpu);
+>      }
+>      if (rr_kick_vcpu_timer && !timer_pending(rr_kick_vcpu_timer)) {
+>          timer_mod(rr_kick_vcpu_timer, rr_next_kick_time());
+> ---
+> 
+> > diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+> > index 6e5dc333d5..69390020aa 100644
+> > --- a/accel/tcg/tcg-all.c
+> > +++ b/accel/tcg/tcg-all.c
+> > @@ -36,6 +36,7 @@
+> >   #include "qapi/qapi-builtin-visit.h"
+> >   #include "qemu/units.h"
+> >   #include "qemu/target-info.h"
+> > +#include "qemu/timer.h"
+> >   #ifndef CONFIG_USER_ONLY
+> >   #include "hw/boards.h"
+> >   #endif
+> > @@ -50,6 +51,7 @@ struct TCGState {
+> >       bool one_insn_per_tb;
+> >       int splitwx_enabled;
+> >       unsigned long tb_size;
+> > +    uint64_t rr_kick_period;
+> 
+> 'rr_kick_delay_ns' seems more accurate.
+> 
+> >   };
+> >   typedef struct TCGState TCGState;
+> > 
+> > @@ -76,9 +78,11 @@ static void tcg_accel_instance_init(Object *obj)
+> >   #else
+> >       s->splitwx_enabled = 0;
+> >   #endif
+> > +    s->rr_kick_period = NANOSECONDS_PER_SECOND / 10;
+> >   }
+> > 
+> >   bool one_insn_per_tb;
+> > +uint64_t rr_kick_period;
+> 
+> (Drop)
+> 
+> > 
+> >   static int tcg_init_machine(MachineState *ms)
+> >   {
+> > @@ -125,6 +129,7 @@ static int tcg_init_machine(MachineState *ms)
+> >   #endif
+> > 
+> >       tcg_allowed = true;
+> > +    rr_kick_period = s->rr_kick_period;
+> 
+> (Drop)
+> 
+> > 
+> >       page_init();
+> >       tb_htable_init();
+> > @@ -234,6 +239,30 @@ static int tcg_gdbstub_supported_sstep_flags(void)
+> >       }
+> >   }
+> 
+> Patch LGTM otherwise.
+> 
+> Regards,
+> 
+> Phil.
 
