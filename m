@@ -4,103 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17136C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 14:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F74C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 14:48:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNBsE-0005Za-Le; Thu, 05 Jun 2025 10:47:18 -0400
+	id 1uNBsZ-0005cd-CZ; Thu, 05 Jun 2025 10:47:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uNBsD-0005ZQ-Gl
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 10:47:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uNBsC-0000dr-24
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 10:47:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749134835;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yPYCLM8pAN7C74E4v3iESVSdHeZjLAEBg/qIHEQDtBc=;
- b=Z2lw6QHeM86sfDS6l0o6STrkvGTD+owUEV6JHiTVIhas4YKeGH0tMwXz7G/HB+hQf/o+9t
- NunGGb8s/I3JqxkNkn5PxCHQWZIjFG3OPewkZ8UVopQx8RImWZ1SeOksmdJ6ONLQlKXrAp
- ml4azB+rpK4wf0fn7o3kNeBRqVOmi6s=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-480-7gfE6tftNQORITftCxn7QA-1; Thu, 05 Jun 2025 10:47:11 -0400
-X-MC-Unique: 7gfE6tftNQORITftCxn7QA-1
-X-Mimecast-MFC-AGG-ID: 7gfE6tftNQORITftCxn7QA_1749134829
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a1f6c5f4f2so519762f8f.2
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 07:47:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <cocotroupe20@gmail.com>)
+ id 1uNBcw-0003CD-Ce; Thu, 05 Jun 2025 10:31:38 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <cocotroupe20@gmail.com>)
+ id 1uNBcu-0003Tf-9X; Thu, 05 Jun 2025 10:31:30 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-442fda876a6so8448255e9.0; 
+ Thu, 05 Jun 2025 07:31:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749133884; x=1749738684; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=pJ8Ss0xzwWF59ezoHUUP4X8z0cf+5bPuYM3CJxB7hEo=;
+ b=AQlLV7gjuggp5U+NXd5sUwgWVB/EyW8wk+ap5eNhu1G+DlSyYwgcguWUiWzastv/bH
+ 0Qx0yxA73ztzCyqXe4aKd6JGY08gGZPamuWkDsu3ZtCIUHB53yfJridaSUo5kAHn/b12
+ idA7rI+eK2xPdw7/laDsvxWIaqozm0sT2QZ7Oo4NAbcHtwijQhIKsDO6XPu1w137nWUE
+ hoxjbWSnsesOrG/Ndx/3pjoovLav+Ckz+UajNy7gWAKzmNlz3NDEO/7sAiVoAZRzkovi
+ /daS6hW6bXWgWzm7OC/Mc6whukcl86w7SA3voznV2va2drc2Cd3N42rVIFBbwQunvHhq
+ SevA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749134829; x=1749739629;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1749133884; x=1749738684;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=yPYCLM8pAN7C74E4v3iESVSdHeZjLAEBg/qIHEQDtBc=;
- b=SWEmGYiFh4zauiwpu1YrLv1lxhE0IFOMOB5gO+qm86TZ2u6M0tzyagghFlguB9b+aB
- KaEhVM1/bnCuC1vwOLxJzQPlH0NurTRmpGDf+YZbU3b8ZRm0bIE16h7cUZxVBGx78QtS
- ovqgu32G45thMu1AEXzcrf3slfyI8jGZuWY6lT/Ij0nL9IjtJdLCFYo1P4G28LEELPak
- q40qc9oJHZEEGMh9jgLow8PNxtWbrJqBWB0siyt6k/Qv8JHcLb44qfiNr+kt8f8ca6B9
- iNIq2nBnOiF76WocOpH/4UfyXDDqaPZ11csxPdTt10UUkmHVSmJrO2Blo04zIL1duEuR
- o9MA==
+ bh=pJ8Ss0xzwWF59ezoHUUP4X8z0cf+5bPuYM3CJxB7hEo=;
+ b=e6/Wis2OWpE/HDTWeA6aKYwVBy2C4j7Wk6Kno1/iTIJ3b1e5WLLKfTJqRqmcqgeLYv
+ 6GL4Te9DshwRvEuQPkrehspYTOTrIekoS6pus5U15yA5xhxR1fBQclqkmU7GqkXZK5dc
+ o4pTrCfR7nuAYYsjdGCsiexPTQi6UQtFJQjYZYnGSCWinaqaamObLWPi8lCScmxoNhVo
+ HQk6OZCcEH5efEiHmiUZ+dsP5vXh5elKh8uaxuVInZ9MNYgn1SVOfBYPb2/8PF9JX96o
+ AfMOiMg+yADmhd6CCz5OwJl5ziSdOTacAvLPRtInAQQbxHiwmmyKv4TIgjpm/5Rudlq0
+ QCbw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOZc3llSZFcNDyOy5TnQX88gTQjGWhBTs7ZFsQlJ4gf3UOlsQSOyNADnXEl0ENlTT3QWYeWjnY+Fi0@nongnu.org
-X-Gm-Message-State: AOJu0YzW61tcNH7GiPMpmOJS0f/s4PjHTe88XrmnNp3ulXIvRXDqHvQv
- sF4nmR9F7JJLo+VFjXDiHVxkAK2uBkQExmacaqrkadooHOFCXOgXo6Xnt9SWCmYxyUHNGFqrd3O
- ceSUYN2vREr4MBhleC+4ySXlrNZu23lLzfTPzpAq2QzhwutP4xLibCNP6
-X-Gm-Gg: ASbGncu0xGRzR5GK/WhOs3tTtcPVa46tP86yDG/tCJkA0FXR3UaD6g/nWg0xkAKRrlp
- xLrTQCEia89YOg2r+ZPHn4hGb0ijVnB4CwZM6SoXQdFxNS0yr+6bJ8e7d4U0pMlJT6qfrzG2mPa
- B/xPs4y8aE9l5gBdOVMTHKKJMTTfX+kJF4e4z284BvqgUDp5EX8ywuCvGAVro39guU2IoL5wZif
- JQf0UeK816EiKKwlpqT2aR8n9hT3fdjRjje9+q+m/xWLFW9Tq1UzuiyLvJNlyBHZ2QW85TkHlJg
- xHoKadwBJaXHeapt5P4f0g3cCb98AFhAQiGhxBmfqrKhhpN1eLI6C+8rZRI=
-X-Received: by 2002:a5d:5f85:0:b0:3a4:f90c:31e3 with SMTP id
- ffacd0b85a97d-3a51d961747mr5500374f8f.31.1749134828726; 
- Thu, 05 Jun 2025 07:47:08 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHBbwXFluF8WwdHVbSwmvHPTI6CB1kWdsFS7cDZMhGowlafZMazZUkZTIpuJ6yEug3A72WpAQ==
-X-Received: by 2002:a5d:5f85:0:b0:3a4:f90c:31e3 with SMTP id
- ffacd0b85a97d-3a51d961747mr5500348f8f.31.1749134828334; 
- Thu, 05 Jun 2025 07:47:08 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-451f99196efsm27015635e9.28.2025.06.05.07.47.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Jun 2025 07:47:07 -0700 (PDT)
-Message-ID: <ac3db5f0-d3e9-4c8a-ba8c-1c691d99ec99@redhat.com>
-Date: Thu, 5 Jun 2025 16:47:06 +0200
+ AJvYcCUXmf2HLCrCwwbJGKCfVNXi4VIa0vjYB+4kaMem9PAju30pasiiZ3U+uFJahrGj37hHf5MHlaVnwAn6QKo=@nongnu.org,
+ AJvYcCWzEPQzVD6We7ELJR6dkJBnndkXwl47MJtDPixqr3dqQriEgSpsgXcA8R0Dl965XLnFphfB0HxHYY6I@nongnu.org
+X-Gm-Message-State: AOJu0YxjR10M6uvYJNK7E8WCQvRR7mBnbIrFcnw3KwBRb6gf6B0gPeoT
+ M3Sa7CjT9Y6iT6Mf9RGST2NwPeAa2pCo4z/UW4pscYA2LfVj2YzVko4eWM53OYbh79n092pM/Ft
+ eYGVFxBkdurdV82/VrDBfzG5QJ+RPieo=
+X-Gm-Gg: ASbGncv9X3q5OsfT2Zjmus8eCcEDa1xoD7hyVMnZADg05AHo1LM7//CkOhpq8kOTs6x
+ AJF6OkDRzKzBn/d24a3c9ylo1OhKBSSGNuJfZZ0lVTxHLELUC8xgOJrivZjApTcNoyGCr5QJpNC
+ LT2zFz+9xnYyST0snPLKktBSENWnMZ1BIa+Q==
+X-Google-Smtp-Source: AGHT+IHPRzu/HcUXTGMC1iFsNmbRt03+9gNQrHmVpdSpip/YEEI5x2XWsbsEt64e4SI+vzucSRv3XLl8WSiO3JnnJak=
+X-Received: by 2002:a05:600c:1c15:b0:442:cab1:e092 with SMTP id
+ 5b1f17b1804b1-451f0aa1786mr67991845e9.11.1749133883743; Thu, 05 Jun 2025
+ 07:31:23 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0
- register
-Content-Language: en-US
-To: taotang2025@gmail.com, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, qemu-arm@nongnu.org
-References: <20250605022640.598308-1-taotang2025@gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250605022640.598308-1-taotang2025@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+References: <20250605141801.1083266-1-peter.maydell@linaro.org>
+ <CAFEAcA9++obh-vtp7P9MZ9GHBTjuWGY419Dmp+P8iFJhCJiYHQ@mail.gmail.com>
+In-Reply-To: <CAFEAcA9++obh-vtp7P9MZ9GHBTjuWGY419Dmp+P8iFJhCJiYHQ@mail.gmail.com>
+From: Corentin GENDRE <cocotroupe20@gmail.com>
+Date: Thu, 5 Jun 2025 16:31:11 +0200
+X-Gm-Features: AX0GCFvYgP0bCQncPASA2UU07AmIGfRRFVixQDS4IhrNCYp3uj8fZr4G8N09Fb8
+Message-ID: <CAPwCrcNTgzmOSTRqDRpHXM7zoMZiC3E5Z_W3OFVCBcNbp2WUTQ@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/mps2: Configure the AN500 CPU with 16 MPU regions
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ce22140636d3f705"
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=cocotroupe20@gmail.com; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Thu, 05 Jun 2025 10:47:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -112,54 +92,131 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+--000000000000ce22140636d3f705
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/5/25 4:26 AM, taotang2025@gmail.com wrote:
-> From: Tao Tang <taotang2025@gmail.com>
+Fixed!
+
+Le jeu. 5 juin 2025 =C3=A0 16:22, Peter Maydell <peter.maydell@linaro.org> =
+a
+=C3=A9crit :
+
+> On Thu, 5 Jun 2025 at 15:18, Peter Maydell <peter.maydell@linaro.org>
+> wrote:
+> >
+> > The AN500 application note documents that it configures the Cortex-M7
+> > CPU to have 16 MPU regions. We weren't doing this in our emulation,
+> > so the CPU had only the default 8 MPU regions. Set the mpu-ns-regions
+> > property to 16 for this board.
+> >
+> > This bug doesn't affect any of the other board types we model in
+> > this source file, because they all use either the Cortex-M3 or
+> > Cortex-M4. Those CPUs do not have an RTL configurable number of
+> > MPU regions, and always provide 8 regions if the MPU is built in.
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Reported-by: Corentin GENDRE <cocotroupe20@gmail.com>
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> >  hw/arm/mps2.c | 4 ++++
+> >  1 file changed, 4 insertions(+)
+> >
+> > diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
+> > index 58efb41e6db..50e1a1c1c80 100644
+> > --- a/hw/arm/mps2.c
+> > +++ b/hw/arm/mps2.c
+> > @@ -224,7 +224,11 @@ static void mps2_common_init(MachineState *machine=
+)
+> >      switch (mmc->fpga_type) {
+> >      case FPGA_AN385:
+> >      case FPGA_AN386:
+> > +        qdev_prop_set_uint32(armv7m, "num-irq", 32);
+> > +        break;
+> >      case FPGA_AN500:
+> > +        /* The AN500 configures its Cortex-M7 with 16 MPU regions */
+> > +        qdev_prop_set_uint32(armv7m, "mpu-ns-dregions", 16);
 >
-> The current definition of the SMMU_CR0_RESERVED mask is incorrect.
-> It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
-> treating bit 9 (RES0) as an implemented bit.
+> Rats, I failed to actually refresh the git commit with a
+> fix for a bug that "make check" caught before I sent it out.
+> This should be "mpu-ns-regions", without the "d".
 >
-> According to the SMMU architecture specification, the layout for CR0 is:
-> | 31:11| RES0           |
-> | 10   | DPT_WALK_EN    |
-> | 9    | RES0           |
-> | 8:6  | VMW            |
-> | 5    | RES0           |
-> | 4    | ATSCHK         |
-> | 3    | CMDQEN         |
-> | 2    | EVENTQEN       |
-> | 1    | PRIQEN         |
-> | 0    | SMMUEN         |
+> >          qdev_prop_set_uint32(armv7m, "num-irq", 32);
+> >          break;
+> >      case FPGA_AN511:
 >
-> Signed-off-by: Tao Tang <taotang2025@gmail.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Thanks!
-
-Eric
-
-> ---
->  hw/arm/smmuv3-internal.h | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> -- PMM
 >
-> diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-> index b6b7399347..42ac77e654 100644
-> --- a/hw/arm/smmuv3-internal.h
-> +++ b/hw/arm/smmuv3-internal.h
-> @@ -120,7 +120,7 @@ REG32(CR0,                 0x20)
->      FIELD(CR0, EVENTQEN,      2, 1)
->      FIELD(CR0, CMDQEN,        3, 1)
->  
-> -#define SMMU_CR0_RESERVED 0xFFFFFC20
-> +#define SMMU_CR0_RESERVED 0xFFFFFA20
->  
->  REG32(CR0ACK,              0x24)
->  REG32(CR1,                 0x28)
 
+--000000000000ce22140636d3f705
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">Fixed!=C2=A0<br></div><br><div class=3D"gmail_quote gmail_=
+quote_container"><div dir=3D"ltr" class=3D"gmail_attr">Le=C2=A0jeu. 5 juin =
+2025 =C3=A0=C2=A016:22, Peter Maydell &lt;<a href=3D"mailto:peter.maydell@l=
+inaro.org">peter.maydell@linaro.org</a>&gt; a =C3=A9crit=C2=A0:<br></div><b=
+lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
+ft:1px solid rgb(204,204,204);padding-left:1ex">On Thu, 5 Jun 2025 at 15:18=
+, Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_=
+blank">peter.maydell@linaro.org</a>&gt; wrote:<br>
+&gt;<br>
+&gt; The AN500 application note documents that it configures the Cortex-M7<=
+br>
+&gt; CPU to have 16 MPU regions. We weren&#39;t doing this in our emulation=
+,<br>
+&gt; so the CPU had only the default 8 MPU regions. Set the mpu-ns-regions<=
+br>
+&gt; property to 16 for this board.<br>
+&gt;<br>
+&gt; This bug doesn&#39;t affect any of the other board types we model in<b=
+r>
+&gt; this source file, because they all use either the Cortex-M3 or<br>
+&gt; Cortex-M4. Those CPUs do not have an RTL configurable number of<br>
+&gt; MPU regions, and always provide 8 regions if the MPU is built in.<br>
+&gt;<br>
+&gt; Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-s=
+table@nongnu.org</a><br>
+&gt; Reported-by: Corentin GENDRE &lt;<a href=3D"mailto:cocotroupe20@gmail.=
+com" target=3D"_blank">cocotroupe20@gmail.com</a>&gt;<br>
+&gt; Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linar=
+o.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 hw/arm/mps2.c | 4 ++++<br>
+&gt;=C2=A0 1 file changed, 4 insertions(+)<br>
+&gt;<br>
+&gt; diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c<br>
+&gt; index 58efb41e6db..50e1a1c1c80 100644<br>
+&gt; --- a/hw/arm/mps2.c<br>
+&gt; +++ b/hw/arm/mps2.c<br>
+&gt; @@ -224,7 +224,11 @@ static void mps2_common_init(MachineState *machin=
+e)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 switch (mmc-&gt;fpga_type) {<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN385:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN386:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint32(armv7m, &quot;num-ir=
+q&quot;, 32);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN500:<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* The AN500 configures its Cortex-M7 wit=
+h 16 MPU regions */<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint32(armv7m, &quot;mpu-ns=
+-dregions&quot;, 16);<br>
+<br>
+Rats, I failed to actually refresh the git commit with a<br>
+fix for a bug that &quot;make check&quot; caught before I sent it out.<br>
+This should be &quot;mpu-ns-regions&quot;, without the &quot;d&quot;.<br>
+<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint32(armv7m, &quot;n=
+um-irq&quot;, 32);<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN511:<br>
+<br>
+-- PMM<br>
+</blockquote></div>
+
+--000000000000ce22140636d3f705--
 
