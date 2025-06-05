@@ -4,105 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18DF5C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 23:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7230C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 23:43:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNJhK-0003yB-LE; Thu, 05 Jun 2025 19:08:34 -0400
+	id 1uNKES-0000Ox-VL; Thu, 05 Jun 2025 19:42:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uNJhI-0003xj-21
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 19:08:32 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uNJhE-0005dA-KT
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 19:08:31 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 555DbCQt008118;
- Thu, 5 Jun 2025 23:08:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=Aev6lqh3nmqk2ryh4iJFfKFa6gRm46Sw+r6R0gl8/
- SI=; b=DUpDNZv+3cZtrkffh0vq0J9CS4swMDzjXh6PuCCFD2Y9/ziFxkbRUiMtm
- tLJYnSxNMNZOmwklKcegNO1yOyOwXOAiygsjb+gkClnzMw0fICCVLLglmokkAE67
- wwh5L1rmHa0p8J4GB5LDGr4jDY+eJqhTyHO0IcN9jdN2C8gtrmha+E/I2w0VpBUS
- Eyi6HNb1cyyjtDZx3vq++q0MPgc6YXF2ljEfUlniwi4kg0UaexE9k1aoVAjzRL0n
- 6VrCm+K7oi+QycNiPf6lCVbovmyalZ6pBxNRkWR8+pPDLvvrKXVjGepQiyiMUKm/
- +Shez4ONDjUzXb+krLoCn8v/ldmSw==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47332yn4ks-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Jun 2025 23:08:24 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 555KQtFB028434;
- Thu, 5 Jun 2025 23:08:23 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 470eakppbf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 05 Jun 2025 23:08:23 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 555N8LTw62587218
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 5 Jun 2025 23:08:22 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D273058068;
- Thu,  5 Jun 2025 23:08:21 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 921A05805D;
- Thu,  5 Jun 2025 23:08:21 +0000 (GMT)
-Received: from IBM-GLTZVH3.ibm.com (unknown [9.61.248.176])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Thu,  5 Jun 2025 23:08:21 +0000 (GMT)
-From: Jaehoon Kim <jhkim@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uNKES-0000Om-2y
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 19:42:48 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uNKEQ-0004hu-BR
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 19:42:47 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-74801bc6dc5so1350086b3a.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 16:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749166965; x=1749771765; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cIr/2qSPqm5D7ejDBEP4TNOxs/6xpDxN+a3iMpOZeX8=;
+ b=mOl8CrjLqiIRKAlDSrzblfkYPhnkhpgVGcbsQd2VNIoKPInSS5BggOwYz1QlB0djFR
+ 3ygyqxyumOawGJv3OYgDxOvYhUNwLwOvAg/9ePIxzPkXvj346B7beoZkjyD9wXSraZ24
+ VJtZvEcUgRdP/E1Uzw32+pzadNZ6E5avx169tZCKlOsZPxuNZKBm2lcoavA9kZPdCqJP
+ /py+6axorateOoqfqEqI1N/sPgad7sC38+CM50f1ngdTefh1RS829/WQCRcKmlFgzFJ9
+ oLa1wkCG0jT1A5Os3gciwMCf1hZgzYnAtzCzUuQTcoSNhoZ/B8cdG1tnyZhDD1vxOByQ
+ wYIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749166965; x=1749771765;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=cIr/2qSPqm5D7ejDBEP4TNOxs/6xpDxN+a3iMpOZeX8=;
+ b=Z/MGh+u71/VDOa/Fb/J1MTbNp7dWCvmQIPVCr4Ii8KaWQ0HVBfNV3tpkRn4PS9DtZs
+ CUoPAJQSR1ht75c81zYiz1r1PcYpJDf47jfI0Ki9r5S2bewmvmdNdtuJhmZs3BHe4D9l
+ LLaEbK0jbaYPLqKNw0wzw6dZ3pHrg2y/nAv8lWk7Iix4BjUHAZmLSGdcmGXUmbiob3bc
+ 1ML1qbjKQgVKxjZyg6PhicMk/Ne8tlj7RoQ0NZ27yx4OmfvBQ4+uIG3DiWj4YQ9On27r
+ jdU62/+E2JEG/HtUTtTymtl+PkuL/kj4hhxsbaVOQxh9PBre0WytciMoO/UwA8KrvMiQ
+ jMVw==
+X-Gm-Message-State: AOJu0Yyu/cF/tm8tT++MfjtGbh+mWAadIB9QT3Tk2ofU0rqnusEFQG6s
+ lhntVLwf5QZWz6Yx/F1AD8eDwJiQJp09xtT/pc+RFsx7XaqXvqjaXyVN1bqLLA==
+X-Gm-Gg: ASbGncvnHYa5VDocAWlxQZHhTdNfzRPM9Yd8pqReagOTgQPJP5Uy3J01xMrIREC3VP8
+ GulFykJNMRxr3BTuWuizDmWRDS3xx1ea9qWSn+MhLqrUIUqdzTRKwluIvFxM+CXmUWSUQJDKuEf
+ uKjnU1lrTOhHLp0png7+CFg5EigZnCt22ARVBDdQ67ArFGXIiJN2Jpu2bdqO94qOA1M6WXV27t7
+ mYlS6q3Rmf84DZrsAhYjnRZ2ceYohoDwk0iKr458MzOLX0HTd65eJcvIK8erQBkro1qclHN6f3y
+ DwzWhuTp3qEBqsVfCq0wu6BYx/yAacdO70VSsRCkxDaKl4DLqWzSoAwNB/T/0gHqnjlPt0Xk
+X-Google-Smtp-Source: AGHT+IFXzk+l4XDIkFhBEz/32lu2jSG/mj1KBR4DKloZp5r7ELS19AopKD8TKtCQirz8ZNZ6zStR4Q==
+X-Received: by 2002:a05:6a00:840e:b0:746:1d29:5892 with SMTP id
+ d2e1a72fcca58-7482c25fe78mr437109b3a.4.1749166964994; 
+ Thu, 05 Jun 2025 16:42:44 -0700 (PDT)
+Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7482b0847b9sm213916b3a.104.2025.06.05.16.42.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 16:42:44 -0700 (PDT)
+From: anisa.su887@gmail.com
 To: qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, steven.sistare@oracle.com, peterx@redhat.com,
- farosas@suse.de, Jaehoon Kim <jhkim@linux.ibm.com>
-Subject: [PATCH v1] migration: Wait for cpr.sock file to appear before
- connecting
-Date: Thu,  5 Jun 2025 18:08:08 -0500
-Message-ID: <20250605230808.1278840-1-jhkim@linux.ibm.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
+ linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
+Subject: [QEMU PATCH v3 9/9] cxl-mailbox-utils: 0x5605 - FMAPI Initiate DC
+ Release
+Date: Thu,  5 Jun 2025 23:42:23 +0000
+Message-ID: <20250605234227.970187-10-anisa.su887@gmail.com>
+X-Mailer: git-send-email 2.47.2
+In-Reply-To: <20250605234227.970187-1-anisa.su887@gmail.com>
+References: <20250605234227.970187-1-anisa.su887@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: zTeEF8xpOOH3xyNIFKN-XBu3n9j6o81o
-X-Proofpoint-ORIG-GUID: zTeEF8xpOOH3xyNIFKN-XBu3n9j6o81o
-X-Authority-Analysis: v=2.4 cv=SO9CVPvH c=1 sm=1 tr=0 ts=68422368 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=fBJVdqey-f1LBL7MPT8A:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA1MDIwOSBTYWx0ZWRfX2OMdIi+NuzLp
- UZVamUceQhzXaklxptbRl4KCJgozFRASpcRhFfPCvtzjwuT1WdxNGF++gBrLb666KYa7RwUJfo7
- EuCC4uwu3VdsBGTmfAVyUqkKBw8qQYkakf6bTAjwy1s/uElz77azWIBsj7wtHsCJgu9v/STQWwG
- X1d/xOCNgbKeq5UWDDdndFde6mokfjTBGDaD29dGrV+ywYl26fH0HaUKjrsnsTRClruDuxzdTAa
- nCN2Lgdb/QWaajQMWDDhtRROcINDXp1dADgYQyYQxdfAqAXZnDTRftcy0fw/vpeODrXdwo2she0
- MbVQX8DDzTAhDtMkp/xtFnF6XQIJDsK/Gri01R6xvNL4kZHpqdowDLI+IWtQxliu2VnYNmXrM3F
- WtsqIuuFa4oVTbdf36z1L1Qb0mrFlemxwxBoJCJAUMeA1IvvjqGvse+9W1kLGbRj/G6IMW19
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-05_07,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0
- impostorscore=0 phishscore=0 priorityscore=1501 adultscore=0
- mlxlogscore=999 clxscore=1011 spamscore=0 lowpriorityscore=0 bulkscore=0
- mlxscore=0 suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506050209
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x42e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,89 +101,103 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When the source VM attempts to connect to the destination VM's Unix
-domain socket(cpr.sock) during CPR transfer, the socket file might not
-yet be exist if the destination side hasn't completed the bind
-operation. This can lead to connection failures when running tests with
-the qtest framework.
+From: Anisa Su <anisa.su@samsung.com>
 
-To address this, add cpr_validate_socket_path(), which wait for the
-socket file to appear. This avoids intermittent qtest failures caused by
-early connection attempts.
+FM DCD Managment command 0x5605 implemented per CXL r3.2 Spec Section 7.6.7.6.6
 
-Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+Signed-off-by: Anisa Su <anisa.su@samsung.com>
 ---
- include/migration/cpr.h  |  1 +
- migration/cpr-transfer.c | 35 +++++++++++++++++++++++++++++++++++
- 2 files changed, 36 insertions(+)
+ hw/cxl/cxl-mailbox-utils.c | 62 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 62 insertions(+)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index 7561fc75ad..cc9384b4f9 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -23,6 +23,7 @@ MigMode cpr_get_incoming_mode(void);
- void cpr_set_incoming_mode(MigMode mode);
- bool cpr_is_incoming(void);
+diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+index 7ee5be00bc..6c57e0deac 100644
+--- a/hw/cxl/cxl-mailbox-utils.c
++++ b/hw/cxl/cxl-mailbox-utils.c
+@@ -124,6 +124,7 @@ enum {
+         #define SET_DC_REGION_CONFIG        0x2
+         #define GET_DC_REGION_EXTENT_LIST   0x3
+         #define INITIATE_DC_ADD             0x4
++        #define INITIATE_DC_RELEASE         0x5
+ };
  
-+bool cpr_validate_socket_path(const char *path, Error **errp);
- int cpr_state_save(MigrationChannel *channel, Error **errp);
- int cpr_state_load(MigrationChannel *channel, Error **errp);
- void cpr_state_close(void);
-diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-index e1f140359c..3088ed323f 100644
---- a/migration/cpr-transfer.c
-+++ b/migration/cpr-transfer.c
-@@ -17,6 +17,33 @@
- #include "migration/vmstate.h"
- #include "trace.h"
+ /* CCI Message Format CXL r3.1 Figure 7-19 */
+@@ -3685,6 +3686,60 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
+     return CXL_MBOX_SUCCESS;
+ }
  
-+#define CPR_MAX_RETRIES     50     /* Retry for up to 5 seconds */
-+#define CPR_RETRY_DELAY_US  100000 /* 100 ms per retry */
-+
-+bool cpr_validate_socket_path(const char *path, Error **errp)
++#define CXL_EXTENT_REMOVAL_POLICY_MASK 0x7
++/* CXL r3.2 Section 7.6.7.6.6 Initiate Dynamic Capacity Release (Opcode 5605h) */
++static CXLRetCode cmd_fm_initiate_dc_release(const struct cxl_cmd *cmd,
++                                             uint8_t *payload_in,
++                                             size_t len_in,
++                                             uint8_t *payload_out,
++                                             size_t *len_out,
++                                             CXLCCI *cci)
 +{
-+    struct stat st;
-+    int retries = CPR_MAX_RETRIES;
++    struct {
++        uint16_t host_id;
++        uint8_t flags;
++        uint8_t reg_num;
++        uint64_t length;
++        uint8_t tag[0x10];
++        uint32_t ext_count;
++        CXLDCExtentRaw extents[];
++    } QEMU_PACKED *in = (void *)payload_in;
++    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
++    CXLUpdateDCExtentListInPl *list;
++    CXLDCExtentList updated_list;
++    uint32_t updated_list_size;
++    int rc;
 +
-+    do {
-+        if (!stat(path, &st) && S_ISSOCK(st.st_mode)) {
-+            return true;
++    switch (in->flags & CXL_EXTENT_REMOVAL_POLICY_MASK) {
++    case CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE:
++        list = calloc(1, (sizeof(*list) +
++                          in->ext_count * sizeof(*list->updated_entries)));
++        convert_raw_extents(in->extents, list, in->ext_count);
++        rc = cxl_detect_malformed_extent_list(ct3d, list);
++        if (rc) {
++            return rc;
 +        }
-+
-+        if (errno == ENOENT) {
-+            usleep(CPR_RETRY_DELAY_US);
-+        } else {
-+            error_setg_errno(errp, errno,
-+                "Unable to check status of socket path '%s'", path);
-+            return false;
++        rc = cxl_dc_extent_release_dry_run(ct3d,
++                                           list,
++                                           &updated_list,
++                                           &updated_list_size);
++        if (rc) {
++            return rc;
 +        }
-+    } while (--retries > 0);
++        cxl_mbox_create_dc_event_records_for_extents(ct3d,
++                                                     DC_EVENT_RELEASE_CAPACITY,
++                                                     in->extents,
++                                                     in->ext_count);
++        return CXL_MBOX_SUCCESS;
++    default:
++        qemu_log_mask(LOG_UNIMP,
++            "CXL extent selection policy not supported.\n");
++        return CXL_MBOX_INVALID_INPUT;
++    }
 +
-+    error_setg(errp, "Socket path '%s' not found after %d retries",
-+                                            path, CPR_MAX_RETRIES);
-+    return false;
++    return CXL_MBOX_SUCCESS;
 +}
 +
- QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
- {
-     MigrationAddress *addr = channel->addr;
-@@ -28,6 +55,14 @@ QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp)
-         QIOChannel *ioc = QIO_CHANNEL(sioc);
-         SocketAddress *saddr = &addr->u.socket;
+ static const struct cxl_cmd cxl_cmd_set[256][256] = {
+     [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+         cmd_infostat_bg_op_abort, 0, 0 },
+@@ -3819,6 +3874,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
++    [FMAPI_DCD_MGMT][INITIATE_DC_RELEASE] = { "INIT_DC_RELEASE",
++        cmd_fm_initiate_dc_release, ~0,
++        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
++         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
++         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
++         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
++         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+ };
  
-+        /*
-+         * Verify that the cpr.sock Unix domain socket file exists and is ready
-+         * before proceeding with the connection.
-+         */
-+        if (!cpr_validate_socket_path(addr->u.socket.u.q_unix.path, errp)) {
-+            return NULL;
-+        }
-+
-         if (qio_channel_socket_connect_sync(sioc, saddr, errp) < 0) {
-             return NULL;
-         }
+ /*
 -- 
-2.49.0
+2.47.2
 
 
