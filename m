@@ -4,86 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2561C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 13:12:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D656AC5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 13:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNANv-0002Kx-0q; Thu, 05 Jun 2025 09:11:55 -0400
+	id 1uNANo-0002Fa-3t; Thu, 05 Jun 2025 09:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <taotang2025@gmail.com>)
- id 1uN0Jh-00089x-62; Wed, 04 Jun 2025 22:26:53 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <taotang2025@gmail.com>)
- id 1uN0Jf-0008MP-N6; Wed, 04 Jun 2025 22:26:52 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-235ea292956so4950065ad.1; 
- Wed, 04 Jun 2025 19:26:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749090409; x=1749695209; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=K75aSCyzs9q5zyzmveX5d6CIqDix0KE2if+KVjMGA+I=;
- b=TBUG62KgYIZAUk08SXzF3Y9ycrEZ+2mvnxRzv4Y3Si2L4M0RCCpD8XzzWSjHxZ0qRd
- fvya5iGFx4Fm85VJP3InDNA5lq1BRi5awN527L2BC/y4w6W30rh9CssQPybAyHJxVx7U
- y9Pz2k81AJlw8m8POsnzPIY1xWAy1/wDtkpsAMYzE2rw0eJgph8crtsqGVLOqoojNvWA
- pacNd10oSSEHm7ZVbKLpv4J0MAtKYEJuzH9gEPq5SnYU4f9M3IMROzSUXdRiuh4qxGBO
- AYrvVcOPvrDSUaaRVx/4XM3g9KV/YCP2eQ9vUyRVk1LURc3cgR53t7+uagj45JLXBIvL
- 7jdw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749090409; x=1749695209;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=K75aSCyzs9q5zyzmveX5d6CIqDix0KE2if+KVjMGA+I=;
- b=scIDbeNbQdAtQP2Kcd7O/INIOCkW9wL7/mqmSh+VFrJc0oN1mba5x+FvLeq/QqJKCa
- gMOXBYklK8YBHO00lZxGdBW48wx9Wdxb//2THjlD/hWinaB8s606DwFYI5L4aVBIah8g
- 1zO3ZHNb8KGfgPO0z//JsuPp3SoaXWd1R+m85YpzrQrGrIfvVZGegyhewdmjN8vmmlfh
- bBkTSijt6OzO/hFsoFmYDtNrLeuRrId3KNP0yARmRYvvrdAZnESp2/pyxPm3NBGodoZO
- 7VfCPAeMTzbtSCNB2l/tRppHPeYSV7FiPuX1qg/Y6fcR/EmkTzNPXy1m6fFtrSdGhO9g
- S7gA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWjDGtK7q8CNbOnz76IvIruULp3Trpqjzql7oAdxD6usac/o984rgD7P6sn1RDC2E87eqVi49QpbQ==@nongnu.org
-X-Gm-Message-State: AOJu0YwII+hrcO5RK3rsrrqVbnvYRTESqffoix1pxX+tvrlRUI+3kSz0
- SNM9xCSLzu3k2CZG0xjUu1U7i7WVtqGZhehodfg9aH+M/t0iKYKpl/oDK3svuc/prpc1Bg==
-X-Gm-Gg: ASbGncsLIilEHkpQJCEl3X3J9FuJok+w0YNfstoWidQ1f9Fdsa+hJy/yy2v3s5PkTCq
- MX/ISvMQv17YUmB4+xQSF5JgyBF9/K0qpBpTFtp6J9P4JEpsX9G00KqzT8K2JKXUE92flDQLhWu
- ZE2xD9KblIFv7hPnDxLCm/HnwtJVYIZHFEoQV9YiOWcYs6urIIwPMLtahqXiQxCJT1nlT1RQmF2
- Fz/FW8V91Yd8hHUDnE/J722LDZWyjr7dvjm9gCtqBGE5q94VYqZGeiyp//eeSFnddD3KyZPNEmG
- D6TB4Q3BEob8JJJ/xxt6lUkQGBOFt6ysOG9+jBFRmQcI0+lljH4z2L2gr/A=
-X-Google-Smtp-Source: AGHT+IH8OPNSpwxBrUdUqJj2+994aSNoyODfmzm1dEquwe0Z7OMJgpOejAjOM0KUOjB9KYRyfdTXYQ==
-X-Received: by 2002:a17:902:c94d:b0:234:9cdd:ffd5 with SMTP id
- d9443c01a7336-235e11e5c3amr65613585ad.25.1749090409026; 
- Wed, 04 Jun 2025 19:26:49 -0700 (PDT)
-Received: from huawei.. ([218.76.62.144]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23506cd3506sm110296125ad.156.2025.06.04.19.26.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 04 Jun 2025 19:26:48 -0700 (PDT)
-From: taotang2025@gmail.com
-To: qemu-devel@nongnu.org
-Cc: eric.auger@redhat.com, peter.maydell@linaro.org, qemu-arm@nongnu.org,
- Tao Tang <taotang2025@gmail.com>
-Subject: [PATCH] hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0
- register
-Date: Thu,  5 Jun 2025 10:26:40 +0800
-Message-Id: <20250605022640.598308-1-taotang2025@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uNANm-0002EA-M3; Thu, 05 Jun 2025 09:11:46 -0400
+Received: from mgamail.intel.com ([192.198.163.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uNANh-0006TL-Jr; Thu, 05 Jun 2025 09:11:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749129101; x=1780665101;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=xa8+LxgCMzkYjHiAGIqcU7vYGCd726rIkIvYKgcBOII=;
+ b=NnuGnjszVY+j1XdN135bOAgh03D2p7XmyXvhxWucvKI0PsnYmlvV8zNK
+ RZyQ2AmxFiOTZe9FPQMG9/4tuOE1zp2Z7CcZ/4CP8yDn/FgLXN5k1Kjxu
+ FaTMkc56iWWQfugTgcr2x6WEdEpJ3YS8FlQ80fLHANkprZUyurvUxVBxQ
+ +e0Ken7HG4SdahfM8qsYR2y5li6vSKFB56UTCAzpAsAK99s/q7VKb0PHF
+ jRHoACMeKfXHUqTkBcbtIdhiNxf/c47ayM9hd6w+V5Vv+mBjkfiJC1Khs
+ lw4wKTGnarqGD8ax9SXgTc0JXvkD4+uuvJJ7KD6xFKapWxsGNY4ZiHGIl w==;
+X-CSE-ConnectionGUID: ypUE6xOzRri1W/ZxBYU9Sg==
+X-CSE-MsgGUID: K0qi2XQBTDq4tWIpZxCdiw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="61909319"
+X-IronPort-AV: E=Sophos;i="6.16,212,1744095600"; d="scan'208";a="61909319"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by fmvoesa103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 05 Jun 2025 06:11:38 -0700
+X-CSE-ConnectionGUID: AMQMf3ReRma0EM02Vv1JpA==
+X-CSE-MsgGUID: SlACTmYTSyO5ibUTAOL32Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,212,1744095600"; d="scan'208";a="150384292"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa005.fm.intel.com with ESMTP; 05 Jun 2025 06:11:37 -0700
+Date: Thu, 5 Jun 2025 21:32:51 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, qemu-rust@nongnu.org
+Subject: Re: [PATCH 04/14] util/error: allow non-NUL-terminated err->src
+Message-ID: <aEGcg/vj/WTgAIta@intel.com>
+References: <20250605101544.368953-1-pbonzini@redhat.com>
+ <20250605101544.368953-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=taotang2025@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250605101544.368953-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.9; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 05 Jun 2025 09:11:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -98,43 +81,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Tang <taotang2025@gmail.com>
+On Thu, Jun 05, 2025 at 12:15:33PM +0200, Paolo Bonzini wrote:
+> Date: Thu,  5 Jun 2025 12:15:33 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 04/14] util/error: allow non-NUL-terminated err->src
+> X-Mailer: git-send-email 2.49.0
+> 
+> Rust makes the current file available as a statically-allocated string,
+> but without a NUL terminator.  Allow this by storing an optional maximum
+> length in the Error.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  include/qapi/error-internal.h | 9 ++++++++-
+>  util/error.c                  | 5 +++--
+>  2 files changed, 11 insertions(+), 3 deletions(-)
 
-The current definition of the SMMU_CR0_RESERVED mask is incorrect.
-It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit while
-treating bit 9 (RES0) as an implemented bit.
-
-According to the SMMU architecture specification, the layout for CR0 is:
-| 31:11| RES0           |
-| 10   | DPT_WALK_EN    |
-| 9    | RES0           |
-| 8:6  | VMW            |
-| 5    | RES0           |
-| 4    | ATSCHK         |
-| 3    | CMDQEN         |
-| 2    | EVENTQEN       |
-| 1    | PRIQEN         |
-| 0    | SMMUEN         |
-
-Signed-off-by: Tao Tang <taotang2025@gmail.com>
----
- hw/arm/smmuv3-internal.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/hw/arm/smmuv3-internal.h b/hw/arm/smmuv3-internal.h
-index b6b7399347..42ac77e654 100644
---- a/hw/arm/smmuv3-internal.h
-+++ b/hw/arm/smmuv3-internal.h
-@@ -120,7 +120,7 @@ REG32(CR0,                 0x20)
-     FIELD(CR0, EVENTQEN,      2, 1)
-     FIELD(CR0, CMDQEN,        3, 1)
- 
--#define SMMU_CR0_RESERVED 0xFFFFFC20
-+#define SMMU_CR0_RESERVED 0xFFFFFA20
- 
- REG32(CR0ACK,              0x24)
- REG32(CR1,                 0x28)
--- 
-2.34.1
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
 
