@@ -4,75 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 673ECC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 11:30:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 519B2C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 11:38:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN8nh-0004LK-Bi; Thu, 05 Jun 2025 07:30:25 -0400
+	id 1uN8vU-0006Sm-GM; Thu, 05 Jun 2025 07:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uN8nU-0004Ag-Qw; Thu, 05 Jun 2025 07:30:19 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uN8nP-0006lm-VW; Thu, 05 Jun 2025 07:30:11 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bCj0T1DzLz6K91p;
- Thu,  5 Jun 2025 19:29:45 +0800 (CST)
-Received: from frapeml100006.china.huawei.com (unknown [7.182.85.201])
- by mail.maildlp.com (Postfix) with ESMTPS id A6B2E1402CB;
- Thu,  5 Jun 2025 19:29:59 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100006.china.huawei.com (7.182.85.201) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 5 Jun 2025 13:29:59 +0200
-Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
- frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Thu, 5 Jun 2025 13:29:59 +0200
-To: Igor Mammedov <imammedo@redhat.com>, Shameer Kolothum via
- <qemu-devel@nongnu.org>
-CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "eric.auger@redhat.com"
- <eric.auger@redhat.com>, "peter.maydell@linaro.org"
- <peter.maydell@linaro.org>, "jgg@nvidia.com" <jgg@nvidia.com>,
- "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "ddutile@redhat.com"
- <ddutile@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
- "nathanc@nvidia.com" <nathanc@nvidia.com>, "mochs@nvidia.com"
- <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>, Linuxarm
- <linuxarm@huawei.com>, "Wangzhou (B)" <wangzhou1@hisilicon.com>, jiangkunkun
- <jiangkunkun@huawei.com>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root Complex
- association
-Thread-Topic: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root Complex
- association
-Thread-Index: AQHb09UMySB7lOszwECrIiqSkZXavbP0R3UAgAAnHLA=
-Date: Thu, 5 Jun 2025 11:29:59 +0000
-Message-ID: <065bbd4ee15442b58e15b298614cf5dd@huawei.com>
-References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
- <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
- <20250605125518.138f5172@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250605125518.138f5172@imammedo.users.ipa.redhat.com>
-Accept-Language: en-GB, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-originating-ip: [10.203.177.241]
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uN8vR-0006SZ-F8
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 07:38:25 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uN8vP-0000Hu-Sw
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 07:38:25 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-710f39f5cb9so676357b3.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 04:38:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749123501; x=1749728301; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LLMim8Dm3/2RszCHofQnDp5uTAz8hZYooBll09GpQI8=;
+ b=ped+lFUZh2W73SYC9Q2M2jwBLMlryABDTrOIXd2QH9ph7Bk2smN/b8MatZ1vAtibKr
+ 6LVyfqfTLcC6mZ+JRCef1FOJ8vHbCsG9ZgE1/ueL65c6HJ80k79+AMK2Dm6VlNyZbl8I
+ h+tkk0m0a/kCMPzqF0BQKpuuJXWnNpQBxYnIuItW5Fj9K2uqtTm7kbuIyi1ugTbegFya
+ 1WbVb9DkpyFCi4C7bzGvo6DvSQ4/+7OKiQdXHkN5r9IFexqTieaNVTEhZpudIPYck2dP
+ cBKaMbJxUBRr/CNv8fAqA4YG+dE3BxXVqf5S5OO5xw+GkLYz2WyJVUa5YboXZNlo27mp
+ 4IkQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749123501; x=1749728301;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LLMim8Dm3/2RszCHofQnDp5uTAz8hZYooBll09GpQI8=;
+ b=cxdf57+2czwbdZSijK1Fg4XyKGRRvPb/mBgGFEYEjFg7egOevFUozJqHzcvdEDjp6X
+ AWs/YZ3Szhrtl5r0E7za5tLeQtvzloctNNuRuMcGGjqc7D3lzy3jIeQJbvAJQ+Z00biE
+ Fth+s73j7cTw6U3BCiayvZQ2PvsiPlax2TTQDAVMlps1nCd8ZRoYJ+kuOhLmhHFnzsbZ
+ zOMe/kYYJqed92pWlTZF+OW7RVmo8Is0p0T2K2IwwWNl/6bS04EAOfQwDkS2RrFyur4T
+ r72JH4jqYqnibkS77RD5Hqc0wSktCmt/XBNXU3ikq41Mx22kPiilmLcwMDp+axNBbxrl
+ C8BA==
+X-Gm-Message-State: AOJu0YyeUHa+8zX4dBwg1oMj+TsTAmjLgvtS4w/DWtAkLAGpcKLQ+NHe
+ emcf+aCnjhRhM3LAd33ND2nP3D2Qtil+r4kBJo6pM9T3R7aLDpaD0sunD94wheWsfl65nO9NquB
+ sAducFkwG5dZ+RFCnAP6UXnkU1DjlZuK64nv2pq33BQ==
+X-Gm-Gg: ASbGncugGjj+nz+VxhnIgr8fudcanIotn7VViAkxjQ9AMe9oY/4DFgRCEAg/A0m3ZJ+
+ H1z3J9cc+klpsMfZNhydu9Oybqb8QjPq8KXNU6uVugsCav08tnYnLt3tOczmvZvrakbIyQtnEIB
+ ztqvLd8McAccu1afLnm8QiCdHk/CXJRx89mw==
+X-Google-Smtp-Source: AGHT+IHmtONFkVGC0ZBJosABOGG6pyctDDI7u3UTRIBY2jZD7A7zRyGDIt7pH69EQeKHMWN7y6O9F4bk7yQIQJZZMcY=
+X-Received: by 2002:a05:690c:3345:b0:70e:73ce:80de with SMTP id
+ 00721157ae682-710da25e564mr81664467b3.25.1749123501194; Thu, 05 Jun 2025
+ 04:38:21 -0700 (PDT)
 MIME-Version: 1.0
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=shameerali.kolothum.thodi@huawei.com;
- helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+References: <20250605105219.261925-1-armbru@redhat.com>
+ <20250605105219.261925-3-armbru@redhat.com>
+In-Reply-To: <20250605105219.261925-3-armbru@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 5 Jun 2025 12:38:09 +0100
+X-Gm-Features: AX0GCFvM9KpwK4LM-Dwe9HjVn1IhLpYszhVDn3NBFt5ywcW1574UtNFzQ7JCf5I
+Message-ID: <CAFEAcA-QPO4jPEs9ZbS3ed0LARe4caFnNC54zi=+XsFdS0Wz7g@mail.gmail.com>
+Subject: Re: [PATCH v4 2/3] docs: define policy limiting the inclusion of
+ generated files
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -86,90 +99,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-From:  Shameerali Kolothum Thodi via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 5 Jun 2025 at 11:52, Markus Armbruster <armbru@redhat.com> wrote:
+> +At times contributors may use or create scripts/tools to generate an initial
+> +boilerplate code template which is then filled in to produce the final patch.
+> +The output of such a tool would still be considered the "preferred format",
+> +since it is intended to be a foundation for further human authored changes.
+> +Such tools are acceptable to use, provided they follow a deterministic process
+> +and there is clearly defined copyright and licensing for their output.
 
+For the case where there's a one-off generation step and then the
+intent is purely human-authored changes from there onwards, why
+do we care whether the tool followed a deterministic process or
+not? As long as the copyright/licensing situation is clear and
+the submitter has checked tha the generation is what they want,
+what does determinism get us?
 
-> -----Original Message-----
-> From: Igor Mammedov <imammedo@redhat.com>
-> Sent: Thursday, June 5, 2025 11:55 AM
-> To: Shameer Kolothum via <qemu-devel@nongnu.org>
-> Cc: Shameerali Kolothum Thodi
-> <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
-> eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
-> nicolinc@nvidia.com; ddutile@redhat.com; berrange@redhat.com;
-> nathanc@nvidia.com; mochs@nvidia.com; smostafa@google.com; Linuxarm
-> <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
-> jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
-> <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
-> Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root
-> Complex association
->=20
-> On Mon, 2 Jun 2025 16:41:05 +0100
-> Shameer Kolothum via <qemu-devel@nongnu.org> wrote:
->=20
-> > Although this change does not affect functionality at present, it is
-> > required when we add support for user-creatable SMMUv3 devices in
-> > future patches.
-> >
-> > Signed-off-by: Shameer Kolothum
-> <shameerali.kolothum.thodi@huawei.com>
-> > ---
-> >  hw/arm/smmuv3.c | 8 ++++++++
-> >  1 file changed, 8 insertions(+)
-> >
-> > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> > index ab67972353..7e934336c2 100644
-> > --- a/hw/arm/smmuv3.c
-> > +++ b/hw/arm/smmuv3.c
-> > @@ -24,6 +24,7 @@
-> >  #include "hw/qdev-properties.h"
-> >  #include "hw/qdev-core.h"
-> >  #include "hw/pci/pci.h"
-> > +#include "hw/pci/pci_bridge.h"
-> >  #include "cpu.h"
-> >  #include "exec/target_page.h"
-> >  #include "trace.h"
-> > @@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error
-> **errp)
-> >      SMMUv3Class *c =3D ARM_SMMUV3_GET_CLASS(s);
-> >      SysBusDevice *dev =3D SYS_BUS_DEVICE(d);
-> >      Error *local_err =3D NULL;
-> > +    Object *bus;
-> > +
-> > +    bus =3D object_property_get_link(OBJECT(d), "primary-bus",
-> &error_abort);
-> I'd replace this with direct field access like in smmu_base_realize
+As a trivial example, this rules out a hacky one-off python
+script that produces output by iterating through a hashtable
+if you forgot to add a "sort" to that ordering to make it
+deterministic.
 
-Ok.
-=20
-> in QEMU with PCI, usually we specify bus to attach to with 'bus' property=
-,
-> wouldn't it better to rename "primary-bus" to 'bus' to be consistent with
-> the rest of PCI code (and before "primary-bus" shows up as a CLI option,
-> so far (before this series) it looks like it's an internal property)?
-
-That was tried in v2 and since SMMUv3 is not a pci device by itself(it is a=
-=20
-sysbus device) reusing the default "bus" property to establish an associati=
-on
-with a PCI bus created problems,
-https://lore.kernel.org/qemu-devel/877c2ut0zk.fsf@pond.sub.org/
-
-=20
-> > +    if (!bus || !object_dynamic_cast(bus->parent,
-> TYPE_PCI_HOST_BRIDGE)) {
-> Also looking at smmu_base_realize, it has NULL pointer check already.
-> Which also rises question, shouldn't smmu_base_realize check for
-> TYPE_PCI_HOST_BRIDGE as well (aka can smmu be attached to anything
-> else but a host bridge)?
-
-Not at the moment in Qemu. Though the SMMUv3 specification allows it to
-be associated with non-pci devices as well.
-
-Thanks,
-Shameer
+-- PMM
 
