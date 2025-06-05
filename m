@@ -4,98 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B7FC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3C62C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:20:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN9Te-0003LU-7P; Thu, 05 Jun 2025 08:13:46 -0400
+	id 1uN9Ze-00058N-LZ; Thu, 05 Jun 2025 08:19:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uN9TW-0003Ke-4t; Thu, 05 Jun 2025 08:13:38 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uN9ZV-00057X-1i
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:19:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1uN9TT-0001sI-FD; Thu, 05 Jun 2025 08:13:37 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0231A128D94;
- Thu, 05 Jun 2025 15:13:08 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9E46021F1AB;
- Thu,  5 Jun 2025 15:13:19 +0300 (MSK)
-Message-ID: <548f2427-a48c-44be-8063-0de3796e967c@tls.msk.ru>
-Date: Thu, 5 Jun 2025 15:13:19 +0300
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uN9ZK-0002ZH-Bu
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:19:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749125976;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=P15UNYtaWqC98xkia4uszjquNEcwMlFZgR/PvlOmpIk=;
+ b=gS90AynjZnXIc88szqiraHXdg/QZdYrCLGy24fCwv76kXCTiHfVp/maqvvitvXxKOLdLy0
+ gdJL4XfhQMkKerkIyEjecSDJdD/gE56/uAmaUWizR1CIMkFrFaK/bS2XbMEeKgTub0Xfnj
+ dS8memT33b8IHo/vXbB1kDXSNpSG/OM=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-648-ZkvD3wLjPZ-zI2hQrHodmA-1; Thu, 05 Jun 2025 08:19:35 -0400
+X-MC-Unique: ZkvD3wLjPZ-zI2hQrHodmA-1
+X-Mimecast-MFC-AGG-ID: ZkvD3wLjPZ-zI2hQrHodmA_1749125974
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so516794f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 05:19:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749125974; x=1749730774;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P15UNYtaWqC98xkia4uszjquNEcwMlFZgR/PvlOmpIk=;
+ b=daoKKU3Yx8NEDO03xCznLY17C0l2Xz4+wwA3u3pi6rDxeY0DvDlYVt1IRLHsW7cGye
+ R+lM3WgIiU7KiZ5V5mx8b8kKVdYN0Yqss4K2iXaBj/XrypK1q+4IPQgCTPvVhz2ezZY1
+ r8dni6sodbFksiZfVmtYJXPeaik4NipnSokrGAZJuKlaZfkSvkwJqLx2eqsnU1ZtVcpE
+ vNqoWyY5b3S4WPDJ48viO10a+wqr07iWszDZ9m3WkaMNUiIKxxxODOa3mIezB1lKixQb
+ gkgLjaIRzwOjVrDtTt0eb1sYdxgh+i+mSDirvsi5+YNNNkl11Me6bYpphU4QhHYCZWy4
+ 3m2g==
+X-Gm-Message-State: AOJu0Yw/3hhUKutzCAThwWIbEsnfCOV+SKZC6AEdnB1RBytB//beCLfH
+ nTLYK1u9AfjrzeN/AGI+93r1CpKidwtAlOfGbdirFgeZVqieU6S/7/qYgWoAlO7UiLQpkpHeGNI
+ SbaeugeO8yR9nxHvuNMlKSO0wVwE4YXOSGONBheeOv+6sKu2ixSaVp/33
+X-Gm-Gg: ASbGncsW5dZRZY0HCeJlvk9ndtpDyi6tmdYWoDZZEg0TjCIRV5DPahJiR8yd9v0KJBJ
+ ugBViR4KHVjvcBHF4nFXLuGFI/4VGnzECRSg1bNRbu5NK2LAH7HOu0Ax9Eb2Dgr13KE8dEUkE6H
+ W9DOnFvs/GBGzTSGiJhu475X1biYZyOLB3BOEkFVDFNNRWe69B/DxWktG8kQrroLwTff07cFA4h
+ k7qIUuQ7suaGEPtA1ihV5YyoPFm7+W9yrK4PonPtaOf9li9/OK/bJ9WwU8qdWgLHPFHU/P9Ueio
+ 1myQyPwd2DfhG1Ao0PcE0mu9tcCUTt3Z
+X-Received: by 2002:a05:6000:144e:b0:3a4:f607:a5ad with SMTP id
+ ffacd0b85a97d-3a526e0cc7bmr3033432f8f.19.1749125973760; 
+ Thu, 05 Jun 2025 05:19:33 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IElML9sr2srhmhIUCJyt2TvAU18mUm8eQ1A0TpG0YrurUY5t7NbyXej345Qgd2WdlEDUPqhGw==
+X-Received: by 2002:a05:6000:144e:b0:3a4:f607:a5ad with SMTP id
+ ffacd0b85a97d-3a526e0cc7bmr3033406f8f.19.1749125973382; 
+ Thu, 05 Jun 2025 05:19:33 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a4efe740bbsm24463605f8f.54.2025.06.05.05.19.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 05:19:32 -0700 (PDT)
+Date: Thu, 5 Jun 2025 14:19:31 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: Shameer Kolothum via <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "jgg@nvidia.com"
+ <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "berrange@redhat.com"
+ <berrange@redhat.com>, "nathanc@nvidia.com" <nathanc@nvidia.com>,
+ "mochs@nvidia.com" <mochs@nvidia.com>, "smostafa@google.com"
+ <smostafa@google.com>, Linuxarm <linuxarm@huawei.com>, "Wangzhou (B)"
+ <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>, Jonathan
+ Cameron <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root
+ Complex association
+Message-ID: <20250605141931.1704c6a5@imammedo.users.ipa.redhat.com>
+In-Reply-To: <065bbd4ee15442b58e15b298614cf5dd@huawei.com>
+References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
+ <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
+ <20250605125518.138f5172@imammedo.users.ipa.redhat.com>
+ <065bbd4ee15442b58e15b298614cf5dd@huawei.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/7] audio related fixes for 10.1
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- qemu-stable <qemu-stable@nongnu.org>
-References: <0bb1a55e-70f1-410b-8b59-78eed7f4c8f7@t-online.de>
- <f5d8c3ef-d667-4849-8ff6-55a8b594b3dd@tls.msk.ru>
-Content-Language: en-US, ru-RU
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <f5d8c3ef-d667-4849-8ff6-55a8b594b3dd@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,41 +122,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 29.05.2025 10:26, Michael Tokarev wrote:
-> On 15.05.2025 08:42, Volker Rümelin wrote:
->> A few audio related fixes for 10.1.
->>
->> The virtio-sound device is the first QEMU audio front end that 
->> supports floating point samples. The audio subsystem is only partially 
->> prepared for this. The commit message of patch 7/7 "audio: add float 
->> sample endianness converters" has the details. The new code paths in 
->> patch 7/7 are only compile tested. I don't have a big endian host to 
->> test.
-> ..
->> Volker Rümelin (7):
->>    tests/functional: use 'none' audio driver for q800 tests
->>    audio: fix SIGSEGV in AUD_get_buffer_size_out()
->>    audio: fix size calculation in AUD_get_buffer_size_out()
->>    hw/audio/asc: fix SIGSEGV in asc_realize()
->>    hw/audio/asc: replace g_malloc0() with g_malloc()
->>    audio/mixeng: remove unnecessary pointer type casts
->>    audio: add float sample endianness converters
+On Thu, 5 Jun 2025 11:29:59 +0000
+Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com> wrote:
+
+> > -----Original Message-----
+> > From: Igor Mammedov <imammedo@redhat.com>
+> > Sent: Thursday, June 5, 2025 11:55 AM
+> > To: Shameer Kolothum via <qemu-devel@nongnu.org>
+> > Cc: Shameerali Kolothum Thodi
+> > <shameerali.kolothum.thodi@huawei.com>; qemu-arm@nongnu.org;
+> > eric.auger@redhat.com; peter.maydell@linaro.org; jgg@nvidia.com;
+> > nicolinc@nvidia.com; ddutile@redhat.com; berrange@redhat.com;
+> > nathanc@nvidia.com; mochs@nvidia.com; smostafa@google.com; Linuxarm
+> > <linuxarm@huawei.com>; Wangzhou (B) <wangzhou1@hisilicon.com>;
+> > jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
+> > <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
+> > Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root
+> > Complex association
+> > 
+> > On Mon, 2 Jun 2025 16:41:05 +0100
+> > Shameer Kolothum via <qemu-devel@nongnu.org> wrote:
+> >   
+> > > Although this change does not affect functionality at present, it is
+> > > required when we add support for user-creatable SMMUv3 devices in
+> > > future patches.
+> > >
+> > > Signed-off-by: Shameer Kolothum  
+> > <shameerali.kolothum.thodi@huawei.com>  
+> > > ---
+> > >  hw/arm/smmuv3.c | 8 ++++++++
+> > >  1 file changed, 8 insertions(+)
+> > >
+> > > diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> > > index ab67972353..7e934336c2 100644
+> > > --- a/hw/arm/smmuv3.c
+> > > +++ b/hw/arm/smmuv3.c
+> > > @@ -24,6 +24,7 @@
+> > >  #include "hw/qdev-properties.h"
+> > >  #include "hw/qdev-core.h"
+> > >  #include "hw/pci/pci.h"
+> > > +#include "hw/pci/pci_bridge.h"
+> > >  #include "cpu.h"
+> > >  #include "exec/target_page.h"
+> > >  #include "trace.h"
+> > > @@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error  
+> > **errp)  
+> > >      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
+> > >      SysBusDevice *dev = SYS_BUS_DEVICE(d);
+> > >      Error *local_err = NULL;
+> > > +    Object *bus;
+> > > +
+> > > +    bus = object_property_get_link(OBJECT(d), "primary-bus",  
+> > &error_abort);
+> > I'd replace this with direct field access like in smmu_base_realize  
 > 
-> Is there anything here which is worth to apply to qemu-stable?
-> (10.0.x is supposed to be an LTS series).
+> Ok.
+>  
+> > in QEMU with PCI, usually we specify bus to attach to with 'bus' property,
+> > wouldn't it better to rename "primary-bus" to 'bus' to be consistent with
+> > the rest of PCI code (and before "primary-bus" shows up as a CLI option,
+> > so far (before this series) it looks like it's an internal property)?  
+> 
+> That was tried in v2 and since SMMUv3 is not a pci device by itself(it is a 
+> sysbus device) reusing the default "bus" property to establish an association
+> with a PCI bus created problems,
+> https://lore.kernel.org/qemu-devel/877c2ut0zk.fsf@pond.sub.org/
 
-I'm picking up
+that was an approach was trying to workaround by patching dc->bus_type,
+which is obviously wrong.
 
-     audio: fix SIGSEGV in AUD_get_buffer_size_out()
-     audio: fix size calculation in AUD_get_buffer_size_out()
-     hw/audio/asc: fix SIGSEGV in asc_realize()
+I'm not talking about changing device type or something similar,
+but about renaming 'primary-bus' property name to 'bus'
+so it would be consistent interface wise with PCI or other QEMU devices
+that are attached to a bus.
 
-for the stable series.  Please let me know if I shouldn't.
+> > > +    if (!bus || !object_dynamic_cast(bus->parent,  
+> > TYPE_PCI_HOST_BRIDGE)) {
+> > Also looking at smmu_base_realize, it has NULL pointer check already.
+> > Which also rises question, shouldn't smmu_base_realize check for
+> > TYPE_PCI_HOST_BRIDGE as well (aka can smmu be attached to anything
+> > else but a host bridge)?  
+> 
+> Not at the moment in Qemu. Though the SMMUv3 specification allows it to
+> be associated with non-pci devices as well.
 
-BTW, Volker, it looks like email from me to your address @t-online
-does not work.
+then perhaps move, the check to smmu_base_realize() for now?
 
-Thanks,
+if smmu + non-pci ever materialize, it can be refactored at that time. 
+ 
+> Thanks,
+> Shameer
+> 
 
-/mjt
 
