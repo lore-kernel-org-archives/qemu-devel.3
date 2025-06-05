@@ -4,72 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5557C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 07:00:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BCCBC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 07:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN4Zl-0006CE-Df; Thu, 05 Jun 2025 02:59:45 -0400
+	id 1uN4vM-0002ze-Om; Thu, 05 Jun 2025 03:22:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uN4Zj-0006Bw-FS
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:59:43 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
- id 1uN4Zh-00039b-Nc
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:59:43 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:471f:0:640:3878:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A32D360D7D;
- Thu,  5 Jun 2025 09:59:38 +0300 (MSK)
-Received: from dtalexundeer-nx.yandex-team.ru (unknown
- [2a02:6bf:8080:976::1:1f])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id LxWRjF5FYqM0-YrxgxWaH; Thu, 05 Jun 2025 09:59:37 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1749106777;
- bh=PARyZLPgpNjNVOuTGwALJSxPCyPsA06okdw1uAwF4+4=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=0+QUgiPDd+Yh0Ks1kEkYg5TUDwdfC3athSLof464nZ9qmQbNuVRXm5NonJ4cwt0q2
- brgWJ44QI5gTCT9InmFzRsGgPfH4B/DLZ+Ax04I1L+Ubibg/if22ctySFvcZSdah08
- cAKu6hGc3MTDGJuSg4zZS9yJv/fdyIToAZ2Oh7G8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-To: qemu-devel@nongnu.org
-Cc: Cleber Rosa <crosa@redhat.com>,
- "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Subject: [PATCH v9 1/2] tests/functional: add skipLockedMemoryTest decorator
-Date: Thu,  5 Jun 2025 11:59:09 +0500
-Message-Id: <20250605065908.299979-2-dtalexundeer@yandex-team.ru>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250605065908.299979-1-dtalexundeer@yandex-team.ru>
-References: <20250605065908.299979-1-dtalexundeer@yandex-team.ru>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uN4vJ-0002zJ-Im
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 03:22:02 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uN4vH-0002Ty-MV
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 03:22:01 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a36748920cso667492f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 00:21:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749108117; x=1749712917; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=eszciaitP2kB1wQYPJUOg1SRbq5XGBMAmIFs1ludgkA=;
+ b=hlMxv35u2gWf/GL1xEOkESLvAhTmg0uMV45gCwq/bPd+CLHqWLcBVxHHKi/51mGYfe
+ +lba866j99oK91XZ72baHNaSi+NS9MYbA/EcOcsNhg9Whkp0d9+n6dDz3/+dwLcYSz7a
+ dd6wrxYglLhJ7S1RTthD8pUxFUkMKICE1MaTEDY1dIlLRe7Vk39W+odHgvY/1Qc8UO50
+ oM5aljAw11IwQa46SnxlHdR7XTlZRMkssPMeWXGoGmyvoKY+nro9xb1xRpaDwIPZ7YoO
+ 5/XsoqEwmB9iNbrMR+aOc31dfjmgMGbfqB/Nd0j2OUdOkYz/DlAXvlNLDRFZCgw1o6BP
+ LYmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749108117; x=1749712917;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=eszciaitP2kB1wQYPJUOg1SRbq5XGBMAmIFs1ludgkA=;
+ b=MiCZwx1Xob38tuZbkeqQ9hY3+cDd+lS2Q8/nO9CnWUGvhNhDkriIeSPDuOquFwZgyW
+ euzn8iHv+mlTnOA9eQphO8xrZee5NyzEOjVLGoed0jz/kbMDSpI231D+PfXBtfPaDhCG
+ qSKHJdz9Ph4Pe0fCkewJLigXT2RTY2ud5HI2ABwdSkK/InHJzNeobvDVYBdrLZ9SOiPm
+ OBh0LZlw7uSHdGZu3OOSqMzKqEENeaVrQedu8i33z85Al4lpwMGzGGCif9HNEXgBNtSc
+ 5awlCY5mlINcdVzdLsos2TIlytVK0TCZTJoBKh/uC4MQULSgzEWlpa11VKVE9ZTzxJl8
+ Rn4w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVZ2DMWHnh8rBBqlL75ueuVsTVsbpueob3KiTQ9uDeqdMJKdTySiQSs5x7sEIGxYyp8ROGqLCor5z+v@nongnu.org
+X-Gm-Message-State: AOJu0YxOXhlyB1xlIQTbd7zm+CkLzrJOz4m+/WeaUOygNYezANoYVsNO
+ 7TJDMorAEXXOywtSeIqpIrE19/jXjTEohi+cAnw7tQvuTQMyhvgnz9PbY314+Ze++N0=
+X-Gm-Gg: ASbGncvTvVyN7xuvWW/8GNxVfjt1sop7NC2cXDNELXA35BQldPcPDFgjFU3+eBe0DmH
+ WwJL069tNKakEbdQNJL4ODhMod6oCg1gaiUPcIKewuQdyKhtLcwesgk1gFrZu02IKCIhrEMsTlG
+ U2Y6R70VziDsuhOWyjzFhSxLnSelDDSfU6HLV+Elg9H1e8IWuiZQVbFDU3p431HUzvU0Msp6f+3
+ wUzHOjusXj2Q26RPUKLzy2Hq9g+gylGVvA/Fm7b5mJf13QzHKCp9jjfai+OFsVwRppmN8B1Zf4K
+ oV2VHT9NSQXuSun2ztOgm4dw8vf3ZIUOelTwUZTDtnvEz3fJ4KvIFSHFPjY286pOUfcpQnbY75c
+ FBmJbVe1fW4c/FPEVcwU=
+X-Google-Smtp-Source: AGHT+IEjOL6smuYYX/DA1Fzx74mxQwdM687BoooY6oqtJyW85/jq0UTol/UeHovN19xIRHNpfYvqyQ==
+X-Received: by 2002:a05:6000:25c4:b0:3a4:fc3f:ed28 with SMTP id
+ ffacd0b85a97d-3a51d95dfc4mr4608934f8f.29.1749108117271; 
+ Thu, 05 Jun 2025 00:21:57 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-451f990cffasm14408375e9.19.2025.06.05.00.21.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Jun 2025 00:21:56 -0700 (PDT)
+Message-ID: <369151f7-cde7-4065-ac0a-5364214e8d2c@linaro.org>
+Date: Thu, 5 Jun 2025 09:21:55 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/tcg: Make round-robin kick period configurable
+To: Ethan Chen <ethan84@andestech.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, pbonzini@redhat.com
+References: <20250605061852.2081342-1-ethan84@andestech.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250605061852.2081342-1-ethan84@andestech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -81,62 +101,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Used in future commit to skipping execution of a tests if the system's
-locked memory limit is below the required threshold.
+Hi Ethan,
 
-Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On 5/6/25 08:18, Ethan Chen via wrote:
+> This change introduces a configurable round-robin kick period, giving users the
+> flexibility to balance SMP simulation accuracy and performance according to
+> their specific needs.
+> 
+> The round-robin kick period is the time one vCPU can run before scheduler
+> switches to another vCPU when using a single thread TCG. The default value of
+> 0.1 seconds may allow one vCPU to run for too long before the scheduler
+> switches to another. This behavior may not be suitable for workloads with
+> strict timing requirements.
+> 
+> Reducing the period can improve the fidelity of SMP simulation by allowing
+> more frequent vCPU switching, though it may negatively impact overall
+> simulation performance.
+> 
+> Signed-off-by: Ethan Chen <ethan84@andestech.com>
+> ---
+>   accel/tcg/tcg-accel-ops-rr.c |  2 +-
+>   accel/tcg/tcg-accel-ops-rr.h |  2 +-
+>   accel/tcg/tcg-all.c          | 35 +++++++++++++++++++++++++++++++++++
+>   qemu-options.hx              |  9 ++++++++-
+>   4 files changed, 45 insertions(+), 3 deletions(-)
+
+
+> diff --git a/accel/tcg/tcg-accel-ops-rr.h b/accel/tcg/tcg-accel-ops-rr.h
+> index 2a76a29612..324bb772cb 100644
+> --- a/accel/tcg/tcg-accel-ops-rr.h
+> +++ b/accel/tcg/tcg-accel-ops-rr.h
+> @@ -10,7 +10,7 @@
+>   #ifndef TCG_ACCEL_OPS_RR_H
+>   #define TCG_ACCEL_OPS_RR_H
+>   
+> -#define TCG_KICK_PERIOD (NANOSECONDS_PER_SECOND / 10)
+> +extern uint64_t rr_kick_period;
+
+No need for another extern, pass it as argument:
+
+-- >8 --
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index f62cf24e1d4..551864b5509 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -62,9 +62,9 @@ void rr_kick_vcpu_thread(CPUState *unused)
+  static QEMUTimer *rr_kick_vcpu_timer;
+  static CPUState *rr_current_cpu;
+
+-static inline int64_t rr_next_kick_time(void)
++static inline int64_t rr_next_kick_time(uint64_t kick_delay_ns)
+  {
+-    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + TCG_KICK_PERIOD;
++    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + kick_delay_ns;
+  }
+
+  /* Kick the currently round-robin scheduled vCPU to next */
+@@ -83,15 +83,20 @@ static void rr_kick_next_cpu(void)
+
+  static void rr_kick_thread(void *opaque)
+  {
+-    timer_mod(rr_kick_vcpu_timer, rr_next_kick_time());
++    CPUState *cpu = opaque;
++
++    // here use rr_next_kick_time(cpu->accel->rr_kick_delay_ns):
++    timer_mod(rr_kick_vcpu_timer, rr_next_kick_time(TCG_KICK_PERIOD));
+      rr_kick_next_cpu();
+  }
+
+  static void rr_start_kick_timer(void)
+  {
+-    if (!rr_kick_vcpu_timer && CPU_NEXT(first_cpu)) {
++    CPUState *next_cpu = CPU_NEXT(first_cpu);
++
++    if (!rr_kick_vcpu_timer && next_cpu) {
+          rr_kick_vcpu_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                           rr_kick_thread, NULL);
++                                           rr_kick_thread, next_cpu);
+      }
+      if (rr_kick_vcpu_timer && !timer_pending(rr_kick_vcpu_timer)) {
+          timer_mod(rr_kick_vcpu_timer, rr_next_kick_time());
 ---
- tests/functional/qemu_test/__init__.py   |  2 +-
- tests/functional/qemu_test/decorators.py | 18 ++++++++++++++++++
- 2 files changed, 19 insertions(+), 1 deletion(-)
 
-diff --git a/tests/functional/qemu_test/__init__.py b/tests/functional/qemu_test/__init__.py
-index af41c2c6a2..6e666a059f 100644
---- a/tests/functional/qemu_test/__init__.py
-+++ b/tests/functional/qemu_test/__init__.py
-@@ -15,6 +15,6 @@
- from .linuxkernel import LinuxKernelTest
- from .decorators import skipIfMissingCommands, skipIfNotMachine, \
-     skipFlakyTest, skipUntrustedTest, skipBigDataTest, skipSlowTest, \
--    skipIfMissingImports, skipIfOperatingSystem
-+    skipIfMissingImports, skipIfOperatingSystem, skipLockedMemoryTest
- from .archive import archive_extract
- from .uncompress import uncompress
-diff --git a/tests/functional/qemu_test/decorators.py b/tests/functional/qemu_test/decorators.py
-index 50d29de533..c0d1567b14 100644
---- a/tests/functional/qemu_test/decorators.py
-+++ b/tests/functional/qemu_test/decorators.py
-@@ -5,6 +5,7 @@
- import importlib
- import os
- import platform
-+import resource
- from unittest import skipIf, skipUnless
- 
- from .cmd import which
-@@ -131,3 +132,20 @@ def skipIfMissingImports(*args):
- 
-     return skipUnless(has_imports, 'required import(s) "%s" not installed' %
-                                    ", ".join(args))
-+
-+'''
-+Decorator to skip execution of a test if the system's
-+locked memory limit is below the required threshold.
-+Takes required locked memory threshold in kB.
-+Example:
-+
-+  @skipLockedMemoryTest(2_097_152)
-+'''
-+def skipLockedMemoryTest(locked_memory):
-+    # get memlock hard limit in bytes
-+    _, ulimit_memory = resource.getrlimit(resource.RLIMIT_MEMLOCK)
-+
-+    return skipUnless(
-+        ulimit_memory == resource.RLIM_INFINITY or ulimit_memory >= locked_memory * 1024,
-+        f'Test required {locked_memory} kB of available locked memory',
-+    )
--- 
-2.34.1
+> diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+> index 6e5dc333d5..69390020aa 100644
+> --- a/accel/tcg/tcg-all.c
+> +++ b/accel/tcg/tcg-all.c
+> @@ -36,6 +36,7 @@
+>   #include "qapi/qapi-builtin-visit.h"
+>   #include "qemu/units.h"
+>   #include "qemu/target-info.h"
+> +#include "qemu/timer.h"
+>   #ifndef CONFIG_USER_ONLY
+>   #include "hw/boards.h"
+>   #endif
+> @@ -50,6 +51,7 @@ struct TCGState {
+>       bool one_insn_per_tb;
+>       int splitwx_enabled;
+>       unsigned long tb_size;
+> +    uint64_t rr_kick_period;
 
+'rr_kick_delay_ns' seems more accurate.
+
+>   };
+>   typedef struct TCGState TCGState;
+>   
+> @@ -76,9 +78,11 @@ static void tcg_accel_instance_init(Object *obj)
+>   #else
+>       s->splitwx_enabled = 0;
+>   #endif
+> +    s->rr_kick_period = NANOSECONDS_PER_SECOND / 10;
+>   }
+>   
+>   bool one_insn_per_tb;
+> +uint64_t rr_kick_period;
+
+(Drop)
+
+>   
+>   static int tcg_init_machine(MachineState *ms)
+>   {
+> @@ -125,6 +129,7 @@ static int tcg_init_machine(MachineState *ms)
+>   #endif
+>   
+>       tcg_allowed = true;
+> +    rr_kick_period = s->rr_kick_period;
+
+(Drop)
+
+>   
+>       page_init();
+>       tb_htable_init();
+> @@ -234,6 +239,30 @@ static int tcg_gdbstub_supported_sstep_flags(void)
+>       }
+>   }
+
+Patch LGTM otherwise.
+
+Regards,
+
+Phil.
 
