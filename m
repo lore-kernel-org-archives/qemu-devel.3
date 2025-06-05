@@ -4,78 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE8F0C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 06:15:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEBD7C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 06:20:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN3sm-0002AS-2W; Thu, 05 Jun 2025 02:15:21 -0400
+	id 1uN3wq-0004Nn-94; Thu, 05 Jun 2025 02:19:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN3sc-000271-S1
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:15:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1uN3wm-0004MC-Qf
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:19:28 -0400
+Received: from 60-248-80-70.hinet-ip.hinet.net ([60.248.80.70]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN3sW-0006bt-M1
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:15:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749104102;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tvDqb7b+GASIgWQw0Bv2dNLd5laAlpyt2nE6+HcEUZE=;
- b=al8RSCqiVRycTbBq1sKDRuw5cEAx7WMzDPIl15TJs8dBKKkMQEUkMgNdTsaWNTy4iuhcHQ
- SrqrcQTOm+rZqO2ycHH3d6I+zs0CtCCzhXWEeb8ZnBsPPbQgP4d5Y7WFDAlLvaNL/fVntf
- EosvFUg88yfVWQs+M6wx8v+Fk5O9HAU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-fo1DTLRpNmCW-r0ckVIM7A-1; Thu,
- 05 Jun 2025 02:15:01 -0400
-X-MC-Unique: fo1DTLRpNmCW-r0ckVIM7A-1
-X-Mimecast-MFC-AGG-ID: fo1DTLRpNmCW-r0ckVIM7A_1749104100
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8C6C19560B7; Thu,  5 Jun 2025 06:14:59 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0958B30002C0; Thu,  5 Jun 2025 06:14:59 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 55C6A21E6757; Thu, 05 Jun 2025 08:14:56 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>,  qemu-devel@nongnu.org,
- qemu-rust@nongnu.org
-Subject: Re: [PATCH 06/14] rust: qemu-api: add bindings to Error
-In-Reply-To: <97b16175-8d2f-41f9-b305-a532acbad095@redhat.com> (Paolo
- Bonzini's message of "Wed, 4 Jun 2025 21:19:32 +0200")
-References: <20250530080307.2055502-1-pbonzini@redhat.com>
- <20250530080307.2055502-7-pbonzini@redhat.com>
- <877c1uffj3.fsf@pond.sub.org> <aD7AbxghCc5VYDhu@intel.com>
- <8734ch5d5c.fsf@pond.sub.org>
- <2b7be73c-d91f-4820-a8ad-6964a8331150@redhat.com>
- <871ps02j8u.fsf@pond.sub.org>
- <97b16175-8d2f-41f9-b305-a532acbad095@redhat.com>
-Date: Thu, 05 Jun 2025 08:14:56 +0200
-Message-ID: <875xhaogtb.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <ethan84@andestech.com>)
+ id 1uN3wj-0008Ba-OG
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:19:28 -0400
+Received: from mail.andestech.com (ATCPCS31.andestech.com [10.0.1.89])
+ by Atcsqr.andestech.com with ESMTPS id 5556J758084126
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Jun 2025 14:19:07 +0800 (+08)
+ (envelope-from ethan84@andestech.com)
+Received: from atcpcw16.andestech.com (10.0.1.106) by ATCPCS31.andestech.com
+ (10.0.1.89) with Microsoft SMTP Server (TLS) id 14.3.498.0; Thu, 5 Jun 2025
+ 14:19:07 +0800
+To: <qemu-devel@nongnu.org>
+CC: <richard.henderson@linaro.org>, <pbonzini@redhat.com>, Ethan Chen
+ <ethan84@andestech.com>
+Subject: [PATCH] accel/tcg: Make round-robin kick period configurable
+Date: Thu, 5 Jun 2025 14:18:52 +0800
+Message-ID: <20250605061852.2081342-1-ethan84@andestech.com>
+X-Mailer: git-send-email 2.42.0.345.gaab89be2eb.dirty
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Originating-IP: [10.0.1.106]
+X-DKIM-Results: atcpcs31.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 5556J758084126
+Received-SPF: pass client-ip=60.248.80.70; envelope-from=ethan84@andestech.com;
+ helo=Atcsqr.andestech.com
+X-Spam_score_int: -8
+X-Spam_score: -0.9
+X-Spam_bar: /
+X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, PDS_RDNS_DYNAMIC_FP=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_DYNAMIC=0.982, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ TVD_RCVD_IP=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,72 +64,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Ethan Chen <ethan84@andestech.com>
+From:  Ethan Chen via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+This change introduces a configurable round-robin kick period, giving users the
+flexibility to balance SMP simulation accuracy and performance according to
+their specific needs.
 
-> On 6/4/25 07:01, Markus Armbruster wrote:
->> This is what your FOO_or_propagate() functions are for.
->> 
->> The rule glosses over a subtle detail: the difference between
->> error_setg() and error_propagate() isn't just create a new error vs. use
->> an existing one, namely error_setg() makes the precondition violation
->> mentioned above a programming error, whereas error_propagate() does not,
->> it instead *ignores* the error it's supposed to propagate.
->> 
->> I consider this difference a design mistake.  Note that GError avoids
->> this mistake: g_error_propagate() requieres the destination to NULL or
->> point to NULL.  We deviated from GError, because we thought we were
->> smarter.  We weren't.
->> 
->> Mostly harmless in practice, as behavior is identical for callers that
->> satisfy the preconditions.
->> 
->> [...]
->> 
->> So here's the bottom line.  We want a Rust function to use C Error
->> according to its written rules.  Due to a design mistake, C functions
->> can behave in two different ways when their caller violates a certain
->> precondition, depending on how the function transmits the error to the
->> caller.  For Rust functions, we can
->> 
->> * Always behave the more common way, i.e. like a C function using
->>   error_setg() to transmit.
->> 
->> * Always behave the less common way, i.e. like a C function using
->>   error_propagate() to transmit.
->> 
->> * Sometimes one way, sometimes the other way.
->> 
->> This is actually in order of decreasing personal preference.  But what
->> do *you* think?
->>
-> I agree that there are arguments for both.  The reason to use 
-> error_setg() is that, even though these functions "propagate" a 
-> qemu_api::Error into a C Error**, the error is born in the Rust callback 
-> and therefore there is no error_setg() anywhere that could check for 
-> non-NULL abort().  There is a bigger risk of triggering 
-> error_propagate()'s weird behavior.
+The round-robin kick period is the time one vCPU can run before scheduler
+switches to another vCPU when using a single thread TCG. The default value of
+0.1 seconds may allow one vCPU to run for too long before the scheduler
+switches to another. This behavior may not be suitable for workloads with
+strict timing requirements.
 
-Yes.
+Reducing the period can improve the fidelity of SMP simulation by allowing
+more frequent vCPU switching, though it may negatively impact overall
+simulation performance.
 
-> The reason to use error_propagate() is that these functions do look a 
-> lot more like error_propagate() than error_setg().
+Signed-off-by: Ethan Chen <ethan84@andestech.com>
+---
+ accel/tcg/tcg-accel-ops-rr.c |  2 +-
+ accel/tcg/tcg-accel-ops-rr.h |  2 +-
+ accel/tcg/tcg-all.c          | 35 +++++++++++++++++++++++++++++++++++
+ qemu-options.hx              |  9 ++++++++-
+ 4 files changed, 45 insertions(+), 3 deletions(-)
 
-True.
-
->                                                     I'm undecided.  I 
-> think I'll keep the error_setg() semantics, which is essentially
->
->      assert_eq!(unsafe { *errp }, ptr::null_mut());
->
-> followed by calling bindings::error_propagate().
-
-Works for me.
-
-The error_propagate() then does nothing but call error_handle().
-However, error_handle() is static, and making it available for Rust
-just to cut out a harmless middleman seems hardly worth the bother.
+diff --git a/accel/tcg/tcg-accel-ops-rr.c b/accel/tcg/tcg-accel-ops-rr.c
+index 6eec5c9eee..65d8ed87a7 100644
+--- a/accel/tcg/tcg-accel-ops-rr.c
++++ b/accel/tcg/tcg-accel-ops-rr.c
+@@ -64,7 +64,7 @@ static CPUState *rr_current_cpu;
+ 
+ static inline int64_t rr_next_kick_time(void)
+ {
+-    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + TCG_KICK_PERIOD;
++    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) + rr_kick_period;
+ }
+ 
+ /* Kick the currently round-robin scheduled vCPU to next */
+diff --git a/accel/tcg/tcg-accel-ops-rr.h b/accel/tcg/tcg-accel-ops-rr.h
+index 2a76a29612..324bb772cb 100644
+--- a/accel/tcg/tcg-accel-ops-rr.h
++++ b/accel/tcg/tcg-accel-ops-rr.h
+@@ -10,7 +10,7 @@
+ #ifndef TCG_ACCEL_OPS_RR_H
+ #define TCG_ACCEL_OPS_RR_H
+ 
+-#define TCG_KICK_PERIOD (NANOSECONDS_PER_SECOND / 10)
++extern uint64_t rr_kick_period;
+ 
+ /* Kick all RR vCPUs. */
+ void rr_kick_vcpu_thread(CPUState *unused);
+diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
+index 6e5dc333d5..69390020aa 100644
+--- a/accel/tcg/tcg-all.c
++++ b/accel/tcg/tcg-all.c
+@@ -36,6 +36,7 @@
+ #include "qapi/qapi-builtin-visit.h"
+ #include "qemu/units.h"
+ #include "qemu/target-info.h"
++#include "qemu/timer.h"
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/boards.h"
+ #endif
+@@ -50,6 +51,7 @@ struct TCGState {
+     bool one_insn_per_tb;
+     int splitwx_enabled;
+     unsigned long tb_size;
++    uint64_t rr_kick_period;
+ };
+ typedef struct TCGState TCGState;
+ 
+@@ -76,9 +78,11 @@ static void tcg_accel_instance_init(Object *obj)
+ #else
+     s->splitwx_enabled = 0;
+ #endif
++    s->rr_kick_period = NANOSECONDS_PER_SECOND / 10;
+ }
+ 
+ bool one_insn_per_tb;
++uint64_t rr_kick_period;
+ 
+ static int tcg_init_machine(MachineState *ms)
+ {
+@@ -125,6 +129,7 @@ static int tcg_init_machine(MachineState *ms)
+ #endif
+ 
+     tcg_allowed = true;
++    rr_kick_period = s->rr_kick_period;
+ 
+     page_init();
+     tb_htable_init();
+@@ -234,6 +239,30 @@ static int tcg_gdbstub_supported_sstep_flags(void)
+     }
+ }
+ 
++static void tcg_get_rr_kick_period(Object *obj, Visitor *v,
++                                   const char *name, void *opaque,
++                                   Error **errp)
++{
++    TCGState *s = TCG_STATE(obj);
++    uint64_t value = s->rr_kick_period;
++
++    visit_type_uint64(v, name, &value, errp);
++}
++
++static void tcg_set_rr_kick_period(Object *obj, Visitor *v,
++                                   const char *name, void *opaque,
++                                   Error **errp)
++{
++    TCGState *s = TCG_STATE(obj);
++    uint64_t value;
++
++    if (!visit_type_uint64(v, name, &value, errp)) {
++        return;
++    }
++
++    s->rr_kick_period = value;
++}
++
+ static void tcg_accel_class_init(ObjectClass *oc, const void *data)
+ {
+     AccelClass *ac = ACCEL_CLASS(oc);
+@@ -264,6 +293,12 @@ static void tcg_accel_class_init(ObjectClass *oc, const void *data)
+                                    tcg_set_one_insn_per_tb);
+     object_class_property_set_description(oc, "one-insn-per-tb",
+         "Only put one guest insn in each translation block");
++
++    object_class_property_add(oc, "rr-kick-period", "uint64",
++        tcg_get_rr_kick_period, tcg_set_rr_kick_period,
++        NULL, NULL);
++    object_class_property_set_description(oc, "rr-kick-period",
++        "TCG round robin kick period in nanoseconds");
+ }
+ 
+ static const TypeInfo tcg_accel_type = {
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 7eb8e02b4b..ec8ba79e37 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -232,7 +232,8 @@ DEF("accel", HAS_ARG, QEMU_OPTION_accel,
+     "                eager-split-size=n (KVM Eager Page Split chunk size, default 0, disabled. ARM only)\n"
+     "                notify-vmexit=run|internal-error|disable,notify-window=n (enable notify VM exit and set notify window, x86 only)\n"
+     "                thread=single|multi (enable multi-threaded TCG)\n"
+-    "                device=path (KVM device path, default /dev/kvm)\n", QEMU_ARCH_ALL)
++    "                device=path (KVM device path, default /dev/kvm)\n"
++    "                rr-kick-period=time (TCG round-robin kick period in nanoseconds)\n", QEMU_ARCH_ALL)
+ SRST
+ ``-accel name[,prop=value[,...]]``
+     This is used to enable an accelerator. Depending on the target
+@@ -318,6 +319,12 @@ SRST
+         option can be used to pass the KVM device to use via a file descriptor
+         by setting the value to ``/dev/fdset/NN``.
+ 
++    ``rr-kick-period=time``
++        Controls the TCG round-robin kick period in nanoseconds. This option is
++        only effective when using single-threaded TCG. Reducing the period
++        can improve the fidelity of SMP simulation by allowing more frequent
++        vCPU switching, though it may negatively impact overall simulation
++        performance.
+ ERST
+ 
+ DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+-- 
+2.34.1
 
 
