@@ -4,105 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 381FAC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 994B4C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:14:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN6bX-0005n4-9a; Thu, 05 Jun 2025 05:09:43 -0400
+	id 1uN6fF-0006yE-B0; Thu, 05 Jun 2025 05:13:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uN6bT-0005mm-6Z
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:09:39 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uN6f8-0006xH-Ke
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:13:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uN6bR-0006yl-F0
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:09:38 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uN6f6-0000jV-Kb
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:13:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749114575;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1749114802;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=vd0QeYnHOALaYoA1gjpXNQ+h+NBgVf2zg7/YA3j8XC4=;
- b=Q6Dst4MpMaVegxhcUT3u+vKmubACyachY7IZDz6G+T1JgXKI2eyJwhNXjEkTrpmi9VhNxf
- MMLLOKvy4Yqdu2UC4KQWNdss/X6e0pgM4RBvc/kr1qXl7uqH57gKIiTS/vdYMR5NbOQrkN
- insR0XUGlgpJcG3qnKzmLZYtvD/GEmg=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mcVuqByWhcIeIPikzMkKDKFUX7b6Fi548juUgAk9raU=;
+ b=VD8IRQ6F09WDRNB1H1v/Nc7ZcrmKE2I/NBvk+N7/z+LYYLK851aawUVNCtINV3yRGcjrMH
+ OkxsEMXMtqKWf1mkR7Q30zMmLScu1YKtZtx3tLd28/743W3ST0znoyJRosBgULzeO6ETFe
+ iGcs2ur4XFIIucHabgdjRwmUBjdkstA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-103-Kycm2LemMyi_eP3kmQs5Nw-1; Thu, 05 Jun 2025 05:09:34 -0400
-X-MC-Unique: Kycm2LemMyi_eP3kmQs5Nw-1
-X-Mimecast-MFC-AGG-ID: Kycm2LemMyi_eP3kmQs5Nw_1749114573
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-450d886b9d5so2473815e9.3
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:09:34 -0700 (PDT)
+ us-mta-341-VyLjXyI1OumhT_MTZ9NxUw-1; Thu, 05 Jun 2025 05:13:21 -0400
+X-MC-Unique: VyLjXyI1OumhT_MTZ9NxUw-1
+X-Mimecast-MFC-AGG-ID: VyLjXyI1OumhT_MTZ9NxUw_1749114800
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a503f28b09so371803f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:13:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749114573; x=1749719373;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=vd0QeYnHOALaYoA1gjpXNQ+h+NBgVf2zg7/YA3j8XC4=;
- b=DKcqxVwDg6o2Cx1AGWduKedeD9yYiTGeIrxVEcImwPVkpQbTF15MdB21bTQqP+Tqtr
- pfvr9FVx+PpjBjRw6sKtLMsbhk+jVXICDnjF0Dg5+1o8fyGsvcc9KdtgmGq1I0KP7lCR
- 970omlkCjHkGdbZO6HYxn+IgeoNjT6GgD4NOBk1zI5dVoOPTJxqQ8u58J/BCFAUmlpql
- YOcexD3uoSdbRg82RFNc0R4KJ0hsR3OHmpSklfJ0s1/3nsajMVy1QO04i+sQk1hQC13K
- fXZ56q/OYQxLlC8sinxjss1U9QR9nwmeqCmtx5wPTIxS1CDeDQTy5vQ5smyeJ7A9Vzxf
- 9mbQ==
+ d=1e100.net; s=20230601; t=1749114800; x=1749719600;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mcVuqByWhcIeIPikzMkKDKFUX7b6Fi548juUgAk9raU=;
+ b=F+xgIDIASIXdPD6+p6hgBT3NkxPlryZg42KlAHYjhstSfwE0GuhKdwO2bJbJIinuRc
+ H5FeITUe1nIwaSpND9EjwhS9FVkOmKXd7NK53hD/mQcw1fd1npNJ0t/Mij88OJHLSHlw
+ Zbir4Xsitwl/XWO3vwu/e13UYI6bAyzRBLYp65cY99PyxtpWKYLOCEaIoR35RS4pHE4P
+ vb38xqOSphSAGlHHHsSRPgM/FnC2YuAdoPwAJNZgDbNqH57yxYLlLvG+4Z9mhEpPGMCr
+ ObCUrgRbhRIq5pP13L0qVyryFQnHFWp1t6b5JDwbySqj+1f6SEhkJy5hVVv/27A+ciqL
+ BoQA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXFcW9e8Z2+VUlcQ61zZGc5wt+AdvRmxoxikFNrZVwmOoZZw90HzDxl5+nMkRC3xOZLxO7fRgeRUDDS@nongnu.org
-X-Gm-Message-State: AOJu0Yx5WG808xZbD7pTX4NYm8RsLOEPippmoxwKifXaL6k1GlRj8yMJ
- JkjwzBG6kG/cXDDGPWNKS+tzhjt0LbiTVkCQxZFnBVIPHDvWXBazwSRJCoeKvA+e/nyMKDHdT1c
- Rda3g9GON0eFSST2Cr8b5wr4INs3/sajdjLrVgCoUnsLAadmbsZoMg/ku
-X-Gm-Gg: ASbGnctyMRiK0fwna9OZhc2KCn7e8nsvx37fSMxlhH85JghH8ntfCpGNHrIoj1w0d03
- MS5MmJbNEKdQWHvOl1na5ueoNhZvQ5sRMX2LjSfL62WjSFFVNld8r8tVxjr5Lw8S/XxLLi+BnsA
- YCVW9PerW25ZavfGSMTwxxAJZsl8WLooCJZ4XnnMKacX9/DpXXKFjEKjEaIa3awhpXL38ihYLls
- aV+abKr18+PhZkTFKwoq1bju/nQPAWyFJHppMU/8hAFwqNECdbZIySAIZcWF1L3iy7uEhU7aR1t
- haFP/Xy2uCru6KGM0uRAYxYYERHh50Jj
-X-Received: by 2002:a05:600c:1c0b:b0:43c:f81d:34 with SMTP id
- 5b1f17b1804b1-451f0f2cf85mr59708865e9.9.1749114572995; 
- Thu, 05 Jun 2025 02:09:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFBLggd5edrGRUFlcZGYz/xOL07jXRe9T5RSKpFq4O15Vol9eJqkISYQyHF32JFYS+mf7r0EA==
-X-Received: by 2002:a05:600c:1c0b:b0:43c:f81d:34 with SMTP id
- 5b1f17b1804b1-451f0f2cf85mr59708495e9.9.1749114572552; 
- Thu, 05 Jun 2025 02:09:32 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ AJvYcCUF0EtgiBHXUcVn01dbM5e7Y/SOIxstjUYWoOX4YLbENogsOdUD55f5wpOaUJPLWQsU7t7+C9WDMfsc@nongnu.org
+X-Gm-Message-State: AOJu0Yy994ZHKGD3ULtXwSIKtZTCdDi7SJRTtmH87rn376duK2z6wd3Z
+ ygzeCLm18IjPXrTTePHj07bJQmfeY4+fqZkR0QIcxyC9O6bZ3IwcSdKHczxXPujFCx+j9QYCPde
+ Wf8HoaLOlcFbH1WiBNJt9vNZ1FuH5d+p2l1JEDKYZ/HvQNhTH1vWegIfP
+X-Gm-Gg: ASbGncs+c9MmXN6ZBhlRSDeJO2YTz0ptIUsP3iN6DZvLuxhFLtmQ2AUt3xxzorsw9wt
+ EBQhxOEui6S0jOlfmuZO9DlNHIsV0aG2Z6IZEh9yfBirhOKDj3mWjzdCBlOER+g4SjQS+Rtdckh
+ piKZMUNpFb9dQiop7HU2sNYuAV31n7RRhI2zEE9u2I+va7qRZ2gGs5DsaRbiPI8kxfaBaDL1qEB
+ azVgMpLvJ8oXKl0foY/aao95eSTWUYz6eR8e5iWcp0cjcLGzNCMFXjnP6xPfmPHJCJtuZRB6IYs
+ x/OJEwievcUpMIFz5RXKm9Ut1lrczZ2UdmUwUg96HlzGQFcavIwTOXnDeik=
+X-Received: by 2002:a05:6000:2302:b0:3a3:6478:e08 with SMTP id
+ ffacd0b85a97d-3a526e13838mr2493538f8f.23.1749114799854; 
+ Thu, 05 Jun 2025 02:13:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGxEPTcYEkPVX2O7YwmyEAviHVQsmEs1TBaKGhjReBhaf3tu0YCh8hpxHBW00Jwstik03Gm9w==
+X-Received: by 2002:a05:6000:2302:b0:3a3:6478:e08 with SMTP id
+ ffacd0b85a97d-3a526e13838mr2493498f8f.23.1749114799394; 
+ Thu, 05 Jun 2025 02:13:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-451f97f772csm18393715e9.5.2025.06.05.02.09.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 02:09:32 -0700 (PDT)
-Date: Thu, 5 Jun 2025 11:09:30 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>, Philippe =?UTF-8?B?TWF0aGlldS1EYXVk?=
- =?UTF-8?B?w6k=?= <philmd@linaro.org>, qemu-devel@nongnu.org, Yanan Wang
- <wangyanan55@huawei.com>, Kevin Wolf <kwolf@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>, qemu-block@nongnu.org, Fabiano Rosas
- <farosas@suse.de>, Fam Zheng <fam@euphon.net>, Jason Wang
- <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Dmitry Fleytman <dmitry.fleytman@gmail.com>, Eduardo
- Habkost <eduardo@habkost.net>, Hanna Reitz <hreitz@redhat.com>, John Snow
- <jsnow@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, "Daniel P. =?UTF-8?B?QmVycmFuZ8Op?="
- <berrange@redhat.com>
-Subject: Re: [PATCH v4 04/19] target/i386/cpu: Remove X86CPU::check_cpuid field
-Message-ID: <20250605110930.7659fa39@imammedo.users.ipa.redhat.com>
-In-Reply-To: <973e1fb8-e138-44bd-be73-9d53d9bed75c@intel.com>
-References: <20250512083948.39294-1-philmd@linaro.org>
- <20250512083948.39294-5-philmd@linaro.org>
- <ccf78c07-fc08-493f-85d8-5058cccbe82e@intel.com>
- <aDad5elq0bgZ/tvp@intel.com>
- <20250603170238.75a0f1de@imammedo.users.ipa.redhat.com>
- <973e1fb8-e138-44bd-be73-9d53d9bed75c@intel.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ ffacd0b85a97d-3a4efe6cd15sm24351195f8f.39.2025.06.05.02.13.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 05 Jun 2025 02:13:18 -0700 (PDT)
+Message-ID: <9a9c70eb-6b2e-4bd5-b665-8b91ae06ae43@redhat.com>
+Date: Thu, 5 Jun 2025 11:13:17 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root Complex
+ association
+Content-Language: en-US
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
+ <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
@@ -123,102 +118,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Jun 2025 23:54:19 +0800
-Xiaoyao Li <xiaoyao.li@intel.com> wrote:
+Hi Shameer,
 
-> On 6/3/2025 11:02 PM, Igor Mammedov wrote:
-> > On Wed, 28 May 2025 13:23:49 +0800
-> > Zhao Liu <zhao1.liu@intel.com> wrote:
-> >  =20
-> >> On Wed, May 28, 2025 at 10:09:56AM +0800, Xiaoyao Li wrote: =20
-> >>> Date: Wed, 28 May 2025 10:09:56 +0800
-> >>> From: Xiaoyao Li <xiaoyao.li@intel.com>
-> >>> Subject: Re: [PATCH v4 04/19] target/i386/cpu: Remove X86CPU::check_c=
-puid
-> >>>   field
-> >>>
-> >>> On 5/12/2025 4:39 PM, Philippe Mathieu-Daud=C3=A9 wrote: =20
-> >>>> The X86CPU::check_cpuid boolean was only set in the
-> >>>> pc_compat_2_4[] array, via the 'check=3Doff' property.
-> >>>> We removed all machines using that array, lets remove
-> >>>> that CPU property and simplify x86_cpu_realizefn(). =20
-> >>>
-> >>> No.
-> >>>
-> >>> We cannot do this. Because it changes the behavior of QEMU.
-> >>>
-> >>> 'check_cpuid' is true by default while 'enforce_cpuid' is false. So t=
-hat
-> >>> QEMU emits warnings in x86_cpu_filter_features() by default when user
-> >>> requests unsupported CPU features. If remove "check" property and the
-> >>> internal 'check_cpuid', QEMU will not do it unless user sets enforce_=
-cpuid
-> >>> explicitly. =20
-> >>
-> >> One option would be to have x86_cpu_filter_features() unconditionally
-> >> turn on verbose and print warnings, but some people might want to turn
-> >> off these warning prints, I don't know if anyone would, but it would be
-> >> possible.
-> >>
-> >> The other option is still to keep the =E2=80=9Ccheck=E2=80=9D property.
-> >>
-> >> IMO, the latter option is the better way to reduce Philippe's burden. =
-=20
-> >=20
-> > we essentially loose warnings by default when some features aren't avai=
-lable,
-> > qemu still continues to run though.
-> >=20
-> > Given that Daniel acked it from libvirt side, libvirt doesn't care abou=
-t warnings
-> > (it does its has its own cpu model calculation). Likely other mgmt do n=
-ot care
-> > about it either, and if they do they probably doing something wrong and
-> > should use QMP to get that data.
-> > That leaves us with human users, for that case I'd say one should use
-> > enforce_cpuid if feature availability matters. =20
->=20
-> But with "check", it allows the VM to continue running with the=20
-> unsupported bits cleared and warnings to inform users. This is really=20
-> friendly.
+On 6/2/25 5:41 PM, Shameer Kolothum wrote:
+> Although this change does not affect functionality at present, it is
+> required when we add support for user-creatable SMMUv3 devices in
+> future patches.
+>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-it's friendly for human users (mostly developers), but for upper layers
-is doesn't make a difference, since it's noise in logs nobody reads until
-qemu somehow works.
-
-the 1st category can and should use enforce flag instead to get what they a=
-sk for
-if they care about it.
-If missing feature bits do not matter then it warnings shouldn't matter eit=
-her.
-What I'm advocating for is being more strict/deterministic on QEMU side,
-  1. you get what you asked for with enforce or fix you CLI explicitly
-     to be clear on what you are missing out.
-  2. you don't care if some features are missing, but then you don't really=
- care
-     about warnings either. (I'd still get missing features filtered out th=
-ough,
-     just silently). If one cares about missing features, one can use #1
-
-I admit, It's a tiny bit of code but removing it, cleans up code a little b=
-it
-and helps readability/in reviews. Doing such small cleanups here and there
-have a cumulative effect on the codebase.
-
-Anyways it's not something I'd fight for, so if you insist on keeping it
-it's ok as well.
-
-> > so +1 to removal
-> >    =20
-> >>
-> >> Regards,
-> >> Zhao
-> >>
-> >> =20
-> >  =20
->=20
+Eric
+> ---
+>  hw/arm/smmuv3.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index ab67972353..7e934336c2 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -24,6 +24,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/qdev-core.h"
+>  #include "hw/pci/pci.h"
+> +#include "hw/pci/pci_bridge.h"
+>  #include "cpu.h"
+>  #include "exec/target_page.h"
+>  #include "trace.h"
+> @@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error **errp)
+>      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
+>      SysBusDevice *dev = SYS_BUS_DEVICE(d);
+>      Error *local_err = NULL;
+> +    Object *bus;
+> +
+> +    bus = object_property_get_link(OBJECT(d), "primary-bus", &error_abort);
+> +    if (!bus || !object_dynamic_cast(bus->parent, TYPE_PCI_HOST_BRIDGE)) {
+> +        error_setg(errp, "SMMUv3 is not attached to any PCIe Root Complex!");
+> +        return;
+> +    }
+>  
+>      c->parent_realize(d, &local_err);
+>      if (local_err) {
 
 
