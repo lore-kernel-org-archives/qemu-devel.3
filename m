@@ -4,145 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD68EC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 06:53:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55040C5B559
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 06:59:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN4T9-0004yW-1n; Thu, 05 Jun 2025 02:52:55 -0400
+	id 1uN4Ze-0006Ba-Ud; Thu, 05 Jun 2025 02:59:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uN4T7-0004y3-57
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:52:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1uN4Zc-0006B9-Az
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:59:36 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uN4T5-00019X-1h
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:52:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749106369;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=8qxelnSse5rapuj+2Nw93Nio8dw7MNX2AQ81J5FPQDc=;
- b=Lug/gZMyoeIpWCQlzzaPi2PSGdx1UFD9TBDGJ4AIJmWGCx/b5cyCsLnSsqJIpqR70esh9p
- sfqfXh6mWiM/BgLIRi1XPN7PPvHfhDXhf++gwH7RzM+umiedq5XlNnStKl4yhX3VGIzzmY
- yvEqCgDncrdlMeouyLh2JBoJc5kiJxY=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-439-S58FyI0vN_2kZuinN_v7EQ-1; Thu, 05 Jun 2025 02:52:47 -0400
-X-MC-Unique: S58FyI0vN_2kZuinN_v7EQ-1
-X-Mimecast-MFC-AGG-ID: S58FyI0vN_2kZuinN_v7EQ_1749106366
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ad56a52edc5so55492466b.0
- for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 23:52:47 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749106366; x=1749711166;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8qxelnSse5rapuj+2Nw93Nio8dw7MNX2AQ81J5FPQDc=;
- b=Xov20zvpQNNchoR127yAvg2Y5xCpdm5LuMwdObakbn1C7flAE4391QoySfLx/8oU6j
- lMK7ovtzaRR0c9ddCbDMg0ouyxYMTDk+tPGiKGRTtUvPjJmS4t+BocNz8Mu4MUcjVsPP
- tL5VRLWOEvAaQNHnVL77t+lTI1yezj9l/+BZl9hzvpnAQt981kuju+QgfFm+IbuZeUg4
- HXxaLRwE+FqZjklepuADhV0CZjWf6USDMiKJ95dtQJMRksrx6dXqCcjQvrvN4irtCP/A
- v3DWMEoRVPu+oD68/nTV35cy4unQk4WiytsFoe8cXitK5PmVFhExrwPhLzw5Pjn37lOu
- gc4A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU82v4ZevktEFBxoBdIEa4JkfD9YkKQzUZOGlilawyXQ++yM/smAurv38LW7JP327M/wS71EqKlGFFj@nongnu.org
-X-Gm-Message-State: AOJu0Yyp9pZWwu+vrNr8gXJ2PcHc5aGTNC1JoUI4eFO5Ekz+uVXejqK2
- 503gtfxdktBLvMNzHaDG7X9mWRhE2k3qgRZWg9ZWsKyN7iTIWlrRmfZFwxlMyWXCrszGNCopJqv
- WywggUVJPA464qUuQyBgW5FGSlJLJnzxJEmf8YP8cEG4IUccTSjh7RVEe
-X-Gm-Gg: ASbGncuuAWxnGR/kp3F2PaVaKuGOAob/j64Va9Yki7UD2ESZAWd3+nob7+m9TPCmDlM
- APP2qk2XRqA0PlowL/ZaBQPTRkODUP5hDzoLMn93u266Z3izbwFyng4L+LbmS1y+dwxBocyYsF1
- JRdZkz3AfoVKzxAfEDV/+6IHf90cCnYM15lrtSc1XilP2Sbqy8lsbDGfL9agbCEMXjxJjCNC3Sb
- K4eat+Xtz7OL/ZUiuprnyvDGvGK+rcUopNLdjSi8cU9Q8uLPu2Mza3LDoJey5yPyvRKfk58Yuy7
- tPT/vWSS0KmyzJKVi+tkN2ZO5+zRU4eZNpFwqei8hiIjPmOl4nqm+g==
-X-Received: by 2002:a17:907:60ca:b0:ad8:89c7:2735 with SMTP id
- a640c23a62f3a-addf8fe2d0bmr580286266b.58.1749106366315; 
- Wed, 04 Jun 2025 23:52:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGxRtF8POw4Hyd7k7hKJIpt1QbKoeel/o+jrsY/gkZEbwvVVFJfxHGSwSk/snWwM+lJv96hvw==
-X-Received: by 2002:a17:907:60ca:b0:ad8:89c7:2735 with SMTP id
- a640c23a62f3a-addf8fe2d0bmr580284966b.58.1749106365962; 
- Wed, 04 Jun 2025 23:52:45 -0700 (PDT)
-Received: from [192.168.0.4] (ip-109-42-50-214.web.vodafone.de.
- [109.42.50.214]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ada5dd043edsm1226692166b.96.2025.06.04.23.52.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 04 Jun 2025 23:52:45 -0700 (PDT)
-Message-ID: <58abce8b-c5c2-4fd1-a32c-2d887445097d@redhat.com>
-Date: Thu, 5 Jun 2025 08:52:44 +0200
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1uN4Za-000391-9K
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 02:59:36 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:471f:0:640:3878:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id AA38860A22;
+ Thu,  5 Jun 2025 09:59:28 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6bf:8080:976::1:1f])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id LxWRjF5FYqM0-CpjY7Rtr; Thu, 05 Jun 2025 09:59:27 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1749106768;
+ bh=ig1NU7fC86EK4kPQdQqVe1BbrlEmZOq9hDiSU4y6BY4=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=rxwBuOtCeQQ7y5NNPibxMnAtDkE+ifMnLhPbIZRurOY/8xaobDJe1K4YEilD3/jQX
+ 71vu6grZ02AKI21PuUSzQ4E5gov6SzVRRdYUySfWZVrKEfAv/lDS0iJP/tSQWyx0LM
+ xAi8V46V1vjN3k9J/42NJdRLFjE9YC6HrWUimjVM=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: Cleber Rosa <crosa@redhat.com>,
+ "yc-core @ yandex-team . ru" <yc-core@yandex-team.ru>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v9 0/2] tests/functional: add memlock tests
+Date: Thu,  5 Jun 2025 11:59:07 +0500
+Message-Id: <20250605065908.299979-1-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: ppc kvm: support of 64K guest page size with 4K host pagesize?
-To: Michael Tokarev <mjt@tls.msk.ru>, QEMU Development
- <qemu-devel@nongnu.org>, David Gibson <david@gibson.dropbear.id.au>
-Cc: qemu-ppc@nongnu.org, =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Greg Kurz <groug@kaod.org>
-References: <0392df3f-c9fc-4372-a131-f0a7c3313c9c@tls.msk.ru>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <0392df3f-c9fc-4372-a131-f0a7c3313c9c@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -154,26 +79,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/06/2025 08.34, Michael Tokarev wrote:
-> There's a bug report filed in debian against qemu,
-> https://bugs.debian.org/1107288 - saying kvm on ppc does not
-> work on debian (anymore) due to qemu requesting unrealistic
-> (non-existing) page size of 64K on a host which only has 4K.
-> 
-> I don't know much about PPC, - what's the issue here? Should
-> qemu use the same page size for kvm as on the host?
+Add new tests to check the correctness of the `-overcommit memlock`
+option (possible values: off, on, on-fault) by using
+`/proc/{qemu_pid}/status` file to check in VmSize, VmRSS and VmLck values:
 
-Looking at
+* if `memlock=off`, then VmLck = 0;
+* if `memlock=on`, then VmLck > 0 and almost all memory is resident;
+* if `memlock=on-fault`, then VmLck > 0 and only few memory is resident.
 
-  https://gitlab.com/qemu-project/qemu/-/commit/2309832afdaf8d6451ebc2e81bace8eb8ea41293
+On `memlock=on` and `memlock=on-fault` VmLck will be the same.
 
-it seems like this was done on purpose? David, do you remember why 
-auto-detecting was not a good idea here?
+---
+v8 -> v9:
+* meson.build: move test to x86 system quick list
+* improve comment in memlock test
 
-Anyway, seems like there is a hpt-max-page-size property that could be used 
-to set the value manually - maybe you could suggest that to the user as a 
-work-around?
+v7 -> v8:
+* rewrite test, using process status file instead of smaps
+for checking overcommit option;
+* change error handling on opening status file;
+* add SPDX identifier.
 
-  Thomas
+v6 -> v7:
+* add skipTest if can't open smaps file of qemu process
+
+v5 -> v6:
+* add python3 shebang to tests/functional/test_memlock.py
+
+v4 -> v5:
+* refactor skipLockedMemoryTest decorator: using resource.getrlimit()
+  function instead of spawning a process
+
+v3 -> v4:
+* add skipLockedMemoryTest decorator to skip test if system's locked
+  memory limit is below the required threashold;
+* add to MemlockTest skipLockedMemoryTest decorator with 2 GB limit.
+
+v2 -> v3:
+Move tests to tests/functional dir, as the tests/avocado dir is being
+phased out.
+v2 was [PATCH v2] tests/avocado: add memlock tests.
+Supersedes: <20250414075702.9248-1-dtalexundeer@yandex-team.ru>
+
+v1 -> v2:
+In the previous send, i forgot to specify new patch version (v2)
+So i resend previous patch with version specified.
+
+
+Alexandr Moshkov (2):
+  tests/functional: add skipLockedMemoryTest decorator
+  tests/functional: add memlock tests
+
+ tests/functional/meson.build             |  1 +
+ tests/functional/qemu_test/__init__.py   |  2 +-
+ tests/functional/qemu_test/decorators.py | 18 ++++++
+ tests/functional/test_memlock.py         | 79 ++++++++++++++++++++++++
+ 4 files changed, 99 insertions(+), 1 deletion(-)
+ create mode 100755 tests/functional/test_memlock.py
+
+-- 
+2.34.1
 
 
