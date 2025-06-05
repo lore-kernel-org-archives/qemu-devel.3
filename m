@@ -4,93 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 902EDC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:46:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8192C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 09:53:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN7Ai-00042S-BS; Thu, 05 Jun 2025 05:46:04 -0400
+	id 1uN7He-0006ld-BI; Thu, 05 Jun 2025 05:53:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uN7Ah-0003wr-0J
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:46:03 -0400
-Received: from mail-ua1-x944.google.com ([2607:f8b0:4864:20::944])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uN7Ae-00022v-7R
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:46:02 -0400
-Received: by mail-ua1-x944.google.com with SMTP id
- a1e0cc1a2514c-87ea63be17eso588180241.1
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:45:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749116759; x=1749721559; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=5uLtTHnui3FZB+pvN4W3jKkwDUlgYik0UvBfWH5ZE9E=;
- b=UNvtoHeoCd320+RHwdWctDUK+V3Z4ug9kz192hpFN/HrgkpwcShuMdVNmUAZWIlggR
- kZ3NS3sObwuhNtAfdm3H66a0eseEcHtSd5I/gjvGfUBAA5ASFnOj6tud6q6LMTQ9/Fs/
- MKDHsgJWsWsFSS8/mHN8hg/EK3hzxVohvLgXFC6WFu03F0esgp1PqtU2snoj38RlOZCh
- omwQxSRQzsG94XVdHYd64PpUSceqtv7bZxG9fp83sMefwDd80BIrlX6nHrEoU5VvKdOH
- xR309Tps7mJgcygq+T/X9ialQidOUCCyceM/KkcZ7Kh509tUVTTFukv3DKpr8vL0hTtA
- ytsQ==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uN7Hb-0006kt-Bo
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:53:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uN7HZ-0002q3-U7
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 05:53:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749117186;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yFqkuWNIjNZJCTXr6GVjp6ZBu3pwiLlyN+Nhg61CpMM=;
+ b=MVBL2olT37j1DaSOtg8OVt7bAw0BnQSdP8HYzxLV/DuSeeLnqn+vU5QrBHYg1FWTWuQY8d
+ 1BKSp5VFY8hpx4oVh6iE4nFoVunJZytZJpf57ZoLqmWfgJZx15ljyOK6RzWAJyBTV8bU0u
+ cvtAyRiomwjmaKpdg/HaD+0vKM50MJc=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687--FBT2YhdNLyN2_AaB6EKCw-1; Thu, 05 Jun 2025 05:53:05 -0400
+X-MC-Unique: -FBT2YhdNLyN2_AaB6EKCw-1
+X-Mimecast-MFC-AGG-ID: -FBT2YhdNLyN2_AaB6EKCw_1749117184
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-442e0e6eb84so4796245e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 02:53:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749116759; x=1749721559;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=5uLtTHnui3FZB+pvN4W3jKkwDUlgYik0UvBfWH5ZE9E=;
- b=mtaaRCYb9ihyECseMNyV7G9OY1sgsJEYBTemVyZdvyjHXs2iYbpXjQuAuE+d2677fE
- lh/Ej1p6s5tILBjatZVaOLX2l2Pw/hpUEnmlRCzDbrZbfZOdKr2akffohPEXTKib+fAo
- kqN7uSOnnYwa5g/TzPdkYVnTDCg4fF8W1PD2prEvqqjtVs0r+zxRfvwyLPaD61p+cueJ
- XxFbJgOrWBdRP+Exxyy26AiJv/bypXUBO6VNmzKI28JNJjIj4dweJS46iFzGc/pmFIp0
- uI/Z70WkTGm7gL/c0GTCC4so9x5zgSNXcOxFaPHFj3ehf/MWKvKAviGQ+FGSlu/0uDv5
- rafA==
+ d=1e100.net; s=20230601; t=1749117184; x=1749721984;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yFqkuWNIjNZJCTXr6GVjp6ZBu3pwiLlyN+Nhg61CpMM=;
+ b=ndhPy8dEqfyaiNil/gxUrjmDxxxbfLb6zdq7vT78HOpuTRMRMBn2wOjI6df1qv/IEr
+ brTvbchF3OL4NhQU8Dt+RDILVmwtS6zqcJ5msn0KOpv9VOxItjK3yBGteeXPc9lb9Jtv
+ 0b21+juiV6unVkr8HAA0H9L1eRyQPccBB68JMYJw9pJjPDZLOv/cYeX0+5YKTo6mpz9Z
+ tn3BKTQxALSpIcCYPY/UCqusAzZnSn9oH9z9X9NpmrNN9wXFzh3fgoq+1jCZAP0ffKur
+ 2QNqxF7i0TdVajNklpE12nq22l0of+PhmvfyFEr8er6l9s1hg+uxecTppaSDY9JkXRX9
+ RpGA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVN2+118SQYqWMmCf2vBJL28920cOoVrNcf3L4nl1ukozkMP1iq4S0inST3VdQfFFMHpiS/8RRh7vjG@nongnu.org
-X-Gm-Message-State: AOJu0YzPAm1e7h1cR01kPMFtzAnA2jqtt4LpBdzVorl4SUA5EZGaaZPI
- 8g1CEncgg2ukUzwcIrg4f1JqQrRe7WSxdsQP4xCRL4QGZCbPUPESd5xMwsdp0r24Aag=
-X-Gm-Gg: ASbGnctZgKhFRZ+Vvxx9h4iUR1BY+o8CgtpveS3VnKz3a8tXbgFDVsaWsyI+oLJ7mAd
- R0TO8oQ0d2yWwBFIurwZF1qOvsZFKfdQIqrvzdRBTnCAtXX2MzRp8T8oNC1SiPEPsJnfGCopPOT
- 1d5IFXgpsfqeGEZRe16Gqb56lBIjZibEoQFCYNC1S7aFVdxPDADQTneyp5pshhfGlFauZC2JLqa
- +LWBH+6DzyjdkoalrmqCtD438NVAY3kj1Zw+kUoTxAGbVwfqrFNVJsZCOWUEfgYCsIa1hSzRp7X
- HwE8jAZaQTQOWmRaA5p0Vt7qtMymqzDw5qE7SnWEneedkZkmqVTrGKxEI08oH1bpuNc=
-X-Google-Smtp-Source: AGHT+IE4KVHmpyVIwQfdTHULoVRAUI+ppKQhm0O8jLD/BLfVPSq+8RqCs/k2JCS83Ej/21cj0C6ESw==
-X-Received: by 2002:a05:6102:c88:b0:4e6:d9b8:ddd5 with SMTP id
- ada2fe7eead31-4e746e63862mr4721512137.17.1749116758962; 
- Thu, 05 Jun 2025 02:45:58 -0700 (PDT)
-Received: from [192.168.68.110] ([177.188.133.196])
+ AJvYcCXJfmTZU0g0ye25tr9FmOPr16h+eIiFB8wAYb6H3I92O8DYhxbqF5FGKWA++3OVXbnExVBQgNJD/c4T@nongnu.org
+X-Gm-Message-State: AOJu0YwIKRc5pjGMsYDB46bWcjey8940Fv8Ci7frEMa4ULt66miAl+2n
+ Ly9zDHOQ4Z1E0uLaN+wyxUvU2C5N1PSYnk4gt+Z4usA6dXtyUVanMV3FCyKq9Zyf+NDzeE+0vSD
+ VgnJsGwLTidEE/yj1olF9rHughgGSWFAKvhBRP/j2LFGjSZ5TaoZnx/p1
+X-Gm-Gg: ASbGnct+mAGgWSpeNh+NO8c1xbsADozvKtM6la5ckmze6ZDoI8q5uwczKtmHpgGs9rP
+ K9P8P8y7duKvzR+NMLMCW4WX2Vo3cV6hvaC3vN9YdRgP5dUEZKKGI9y04m+6WOHwCkY1FNWa7cs
+ kLVw0RNG3t+swtvg9mqhhQdZQL1kmmnK96n/sT8Xsqjb+Jq+D6myStW0SEbOU4NyiygFKt8YxpB
+ JWj1FqmaHOQWjBxXbdIoU/jQC+GBXwWp7xwknk6VB9aq0KEymtP6tAsUHPdn9ASSJhCpTxLViPp
+ mYdES9zUN8ElXaBTES5xRetcTtWWsHRF/ir2OSeE6jhMKSkxxWLkNWpERN0=
+X-Received: by 2002:a05:6000:258a:b0:3a1:fe77:9e1d with SMTP id
+ ffacd0b85a97d-3a51d91faf2mr4742375f8f.16.1749117183877; 
+ Thu, 05 Jun 2025 02:53:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEaLMsQPlWmjli03d5TEu+Gn9qoT2rpZLuTO7LXCJC8QyhdE0YVXhiHFAZwDGPJy+gpz7Nhjw==
+X-Received: by 2002:a05:6000:258a:b0:3a1:fe77:9e1d with SMTP id
+ ffacd0b85a97d-3a51d91faf2mr4742343f8f.16.1749117183435; 
+ Thu, 05 Jun 2025 02:53:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-4e644499c7csm11249888137.15.2025.06.05.02.45.56
+ ffacd0b85a97d-3a4f00a0421sm24319058f8f.97.2025.06.05.02.53.02
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Jun 2025 02:45:58 -0700 (PDT)
-Message-ID: <57693dc5-b624-4697-a26b-097c0fa4cce9@ventanamicro.com>
-Date: Thu, 5 Jun 2025 06:45:55 -0300
+ Thu, 05 Jun 2025 02:53:02 -0700 (PDT)
+Message-ID: <15b1fd04-2dd0-4191-8958-9d8db8dff7c9@redhat.com>
+Date: Thu, 5 Jun 2025 11:53:01 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/riscv/kvm: use qemu_chr_fe_write_all() in
- SBI_EXT_DBCN_CONSOLE_WRITE_BYTE
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-riscv@nongnu.org, alistair.francis@wdc.com, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com
-References: <20250605090012.1268809-1-dbarboza@ventanamicro.com>
- <0b6b429a-a3bc-4707-9e94-67d9fe8cc363@linaro.org>
+Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root Complex
+ association
 Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <0b6b429a-a3bc-4707-9e94-67d9fe8cc363@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::944;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-ua1-x944.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, nathanc@nvidia.com,
+ mochs@nvidia.com, smostafa@google.com, linuxarm@huawei.com,
+ wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
+ <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,48 +118,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/5/25 6:26 AM, Philippe Mathieu-Daudé wrote:
-> On 5/6/25 11:00, Daniel Henrique Barboza wrote:
->> The SBI spec states, for console write byte:
->>
->> "This is a blocking SBI call and it will only return after writing the
->> specified byte to the debug console. It will also return, with
->> SBI_ERR_FAILED, if there are I/O errors."
->>
->> Being a blocker call will either succeed writing the byte or error out,
->> it's feasible to use the blocking qemu_chr_fe_write_all() instead of
->> qemu_chr_fe_write(). This is also how SBI_EXT_DBCN_CONSOLE_WRITE is
->> implemented, so we're also being more consistent.
->>
->> Last but not the least, we will duck possible changes in
->> qemu_chr_fe_write() where ret = 0 will have a 'zero byte written'
->> semantic [1] - something that we're not ready to deal in this current
->> state.
->>
->> [1] https://lore.kernel.org/qemu-devel/ CAFEAcA_kEndvNtw4EHySXWwQPoGs029yAzZGGBcV=zGHaj7KUQ@mail.gmail.com/
->>
->> Signed-off-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   target/riscv/kvm/kvm-cpu.c | 2 +-
->>   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> Thank you very much Daniel!
+On 6/2/25 5:41 PM, Shameer Kolothum wrote:
+> Although this change does not affect functionality at present, it is
+> required when we add support for user-creatable SMMUv3 devices in
+> future patches.
+>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/smmuv3.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+>
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index ab67972353..7e934336c2 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -24,6 +24,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/qdev-core.h"
+>  #include "hw/pci/pci.h"
+> +#include "hw/pci/pci_bridge.h"
+>  #include "cpu.h"
+>  #include "exec/target_page.h"
+>  #include "trace.h"
+> @@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error **errp)
+>      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
+>      SysBusDevice *dev = SYS_BUS_DEVICE(d);
+>      Error *local_err = NULL;
+> +    Object *bus;
+> +
+> +    bus = object_property_get_link(OBJECT(d), "primary-bus", &error_abort);
+> +    if (!bus || !object_dynamic_cast(bus->parent, TYPE_PCI_HOST_BRIDGE)) {
+> +        error_setg(errp, "SMMUv3 is not attached to any PCIe Root Complex!");
+> +        return;
+> +    }
+shouldn't you check as well that !pci_bus_bypass_iommu(bus)?
 
-No problem :)
-
-FYI I just sent a v2 with a small change in the commit msg. Your ack was kept.
-Thanks,
-
-
-Daniel
-
-> 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+Eric
+>  
+>      c->parent_realize(d, &local_err);
+>      if (local_err) {
 
 
