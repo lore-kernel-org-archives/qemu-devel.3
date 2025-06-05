@@ -4,72 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F04C5C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6150C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:56:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN8DA-0002YE-Mg; Thu, 05 Jun 2025 06:52:40 -0400
+	id 1uN8G0-00053W-G7; Thu, 05 Jun 2025 06:55:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN8D1-0002Wv-PE
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:52:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uN8Fs-000533-59
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:55:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN8Cz-00032z-5Q
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:52:31 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uN8Fq-0005KY-Hc
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:55:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749120747;
+ s=mimecast20190719; t=1749120924;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sMNH6fNyC2j0eiDL6wqECtgjp/mDJhgiG6hCviMseBQ=;
- b=N4MAoFDJ46QtY1kta7jmFTtt16DKweFTc9AeO+RaPr+dCiNcZH7xM3aZ4lbS34TMeEcOdZ
- FgZJEABHoCaV5fXURL156QS4frXls6uhkDEvPI+OzOSDwp9IMh+CWfGN8d8EeBUbjjsRSE
- Me+q5CUgXk2pauSS7xQwSTEN8joOVEg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-575-GuHcMEYkM8GGF_aoQhhr6g-1; Thu,
- 05 Jun 2025 06:52:24 -0400
-X-MC-Unique: GuHcMEYkM8GGF_aoQhhr6g-1
-X-Mimecast-MFC-AGG-ID: GuHcMEYkM8GGF_aoQhhr6g_1749120743
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D68251800871; Thu,  5 Jun 2025 10:52:22 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2130018003FD; Thu,  5 Jun 2025 10:52:21 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1ADAB21E66E2; Thu, 05 Jun 2025 12:52:19 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
- Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v4 1/3] docs: introduce dedicated page about code provenance /
- sign-off
-Date: Thu,  5 Jun 2025 12:52:17 +0200
-Message-ID: <20250605105219.261925-2-armbru@redhat.com>
-In-Reply-To: <20250605105219.261925-1-armbru@redhat.com>
-References: <20250605105219.261925-1-armbru@redhat.com>
+ bh=sWe/II1jYF8dDFyyN4/C5OjrhZ31snk7yFE94qDZKKw=;
+ b=iAFrb1B6HM5MSKw8oQADKLBhOtWcM+V135xdQr/pIqj5ye3045U5SzqQjfvHQusoa5y9AO
+ BSSrez2eSKr7wF212VWIG/ugMpxOhc4PgquC1ssOemOhp2MZbq25gIdZ9x08rcyNZ7ro43
+ UTYskbxy1TjdLNn7kzfi++cPj79daGE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-516-RqE8M95PO2ieMhApf4vzeQ-1; Thu, 05 Jun 2025 06:55:23 -0400
+X-MC-Unique: RqE8M95PO2ieMhApf4vzeQ-1
+X-Mimecast-MFC-AGG-ID: RqE8M95PO2ieMhApf4vzeQ_1749120922
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a50049f8eeso530734f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 03:55:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749120922; x=1749725722;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=sWe/II1jYF8dDFyyN4/C5OjrhZ31snk7yFE94qDZKKw=;
+ b=mxVZBQY59UYE1OZKq0OTb7rqooTNVg4HgT/pDfke+QRDPhQcO7aMeTkfxsrQxYs7/E
+ n+ceg29rBFqemekLFZDiOvNNx6jgtoKKQ9/qYnOAYGYZwXUTZhEMIRuF2Rr1DUm7i5tP
+ 7mPhZ5uQT4YkiaeW8wkexZ+FlWNnrw3RWQ+tnpXUTbtSMgCLXmMKO+GakCkYuKmMyz2x
+ V4Ozg9Dpk1ZgebdRziGz0EydHpx4kmgOIny2GFZlQlIVAMnoD7Nq0dziUPczyLLHvhtB
+ 7zhEjrj1yzwcdErLaoDFK6QB9j7oDHhltFShpqnoikhPCjhO6oiBkAdzeMqW400wRABe
+ P8Qw==
+X-Gm-Message-State: AOJu0Yztn7FZNPRv1i8y9RgEYIOFpfe8WkeguvfVO1gJBjTnrhx123Dx
+ DqEmHgSkiiyHJ/we0OaJK1NS5OcOQIZYR3T7YyQia2zYB/7PPeX5ehcHnm7837U3yVsSItIPQAe
+ 6Brn/1Rtpa+p7Ym2IDOLMEhthPgYiQyYCgKQoqVFtpzbkVZy3t4xA69mJ49m2GWUY62jGbNHFX9
+ PIZWEdzR4y0pQQnWZAxQe/Ze8Qtjxsq5ebpaPzgYekKOs=
+X-Gm-Gg: ASbGnctLpUdzqX8A935mGlMgnEMPq+yHCbtKKTzCrpvDmb62fdbhg2o/C0rY8yasWW/
+ gS8NUACUuV50Z3dNgOOwlCVced+uB+G+NSh8DtlXwtC4kQf3mBaLFW8g/0c2dojzmEbHnsscIXl
+ s1nm2Rk+kUtNw+Xje2vDq7dqNELh99vqL3nVtD+vdmz2lY33CEy8zTvUQ7B4DW+96HR0xfQa4pL
+ 0hlOsgm9rdsNtxj9jrWgFVWGjyf/x8bVn4JcAr5kQumnUIgR6fQ9uh6PouU0GTZ/3BdQW0a9Ot1
+ 4s60dwyESvQSN0yMMXb5vXljipD73CJ3
+X-Received: by 2002:a05:6000:240b:b0:3a4:fc75:d017 with SMTP id
+ ffacd0b85a97d-3a51d92fd37mr5504314f8f.26.1749120921866; 
+ Thu, 05 Jun 2025 03:55:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGsrD//UwnD60aio34OUUI1Ozj3KNkr51W/rwVXZHZKRb4IWuKcNuU6VB3V1b2EZ4G2GWtfSg==
+X-Received: by 2002:a05:6000:240b:b0:3a4:fc75:d017 with SMTP id
+ ffacd0b85a97d-3a51d92fd37mr5504272f8f.26.1749120921349; 
+ Thu, 05 Jun 2025 03:55:21 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a526ddb8afsm2070206f8f.0.2025.06.05.03.55.19
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 03:55:20 -0700 (PDT)
+Date: Thu, 5 Jun 2025 12:55:18 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Shameer Kolothum via <qemu-devel@nongnu.org>
+Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ <qemu-arm@nongnu.org>, <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
+ <jgg@nvidia.com>, <nicolinc@nvidia.com>, <ddutile@redhat.com>,
+ <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
+ <smostafa@google.com>, <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>,
+ <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
+ <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root
+ Complex association
+Message-ID: <20250605125518.138f5172@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
+References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
+ <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -78,8 +101,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,311 +117,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+On Mon, 2 Jun 2025 16:41:05 +0100
+Shameer Kolothum via <qemu-devel@nongnu.org> wrote:
 
-Currently we have a short paragraph saying that patches must include
-a Signed-off-by line, and merely link to the kernel documentation.
-The linked kernel docs have a lot of content beyond the part about
-sign-off an thus are misleading/distracting to QEMU contributors.
+> Although this change does not affect functionality at present, it is
+> required when we add support for user-creatable SMMUv3 devices in
+> future patches.
+> 
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/smmuv3.c | 8 ++++++++
+>  1 file changed, 8 insertions(+)
+> 
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index ab67972353..7e934336c2 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -24,6 +24,7 @@
+>  #include "hw/qdev-properties.h"
+>  #include "hw/qdev-core.h"
+>  #include "hw/pci/pci.h"
+> +#include "hw/pci/pci_bridge.h"
+>  #include "cpu.h"
+>  #include "exec/target_page.h"
+>  #include "trace.h"
+> @@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error **errp)
+>      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
+>      SysBusDevice *dev = SYS_BUS_DEVICE(d);
+>      Error *local_err = NULL;
+> +    Object *bus;
+> +
+> +    bus = object_property_get_link(OBJECT(d), "primary-bus", &error_abort);
+I'd replace this with direct field access like in smmu_base_realize
 
-This introduces a dedicated 'code-provenance' page in QEMU talking
-about why we require sign-off, explaining the other tags we commonly
-use, and what to do in some edge cases.
+in QEMU with PCI, usually we specify bus to attach to with 'bus' property,
+wouldn't it better to rename "primary-bus" to 'bus' to be consistent with
+the rest of PCI code (and before "primary-bus" shows up as a CLI option,
+so far (before this series) it looks like it's an internal property)?
 
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Markus Armbruster <armbru@redhat.com>
----
- docs/devel/code-provenance.rst    | 230 ++++++++++++++++++++++++++++++
- docs/devel/index-process.rst      |   1 +
- docs/devel/submitting-a-patch.rst |  23 +--
- 3 files changed, 233 insertions(+), 21 deletions(-)
- create mode 100644 docs/devel/code-provenance.rst
+> +    if (!bus || !object_dynamic_cast(bus->parent, TYPE_PCI_HOST_BRIDGE)) {
+Also looking at smmu_base_realize, it has NULL pointer check already.
+Which also rises question, shouldn't smmu_base_realize check for
+TYPE_PCI_HOST_BRIDGE as well (aka can smmu be attached to anything else but a host bridge)?
 
-diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-new file mode 100644
-index 0000000000..95b2dd34e2
---- /dev/null
-+++ b/docs/devel/code-provenance.rst
-@@ -0,0 +1,230 @@
-+.. _code-provenance:
-+
-+Code provenance
-+===============
-+
-+Certifying patch submissions
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+The QEMU community **mandates** all contributors to certify provenance of
-+patch submissions they make to the project. To put it another way,
-+contributors must indicate that they are legally permitted to contribute to
-+the project.
-+
-+Certification is achieved with a low overhead by adding a single line to the
-+bottom of every git commit::
-+
-+   Signed-off-by: YOUR NAME <YOUR@EMAIL>
-+
-+The addition of this line asserts that the author of the patch is contributing
-+in accordance with the clauses specified in the
-+`Developer's Certificate of Origin <https://developercertificate.org>`__:
-+
-+.. _dco:
-+
-+  Developer's Certificate of Origin 1.1
-+
-+  By making a contribution to this project, I certify that:
-+
-+  (a) The contribution was created in whole or in part by me and I
-+      have the right to submit it under the open source license
-+      indicated in the file; or
-+
-+  (b) The contribution is based upon previous work that, to the best
-+      of my knowledge, is covered under an appropriate open source
-+      license and I have the right under that license to submit that
-+      work with modifications, whether created in whole or in part
-+      by me, under the same open source license (unless I am
-+      permitted to submit under a different license), as indicated
-+      in the file; or
-+
-+  (c) The contribution was provided directly to me by some other
-+      person who certified (a), (b) or (c) and I have not modified
-+      it.
-+
-+  (d) I understand and agree that this project and the contribution
-+      are public and that a record of the contribution (including all
-+      personal information I submit with it, including my sign-off) is
-+      maintained indefinitely and may be redistributed consistent with
-+      this project or the open source license(s) involved.
-+
-+The name used with "Signed-off-by" does not need to be your legal name, nor
-+birth name, nor appear on any government ID. It is the identity you choose to
-+be known by in the community, but should not be anonymous, nor misrepresent
-+whom you are.
-+
-+It is generally expected that the name and email addresses used in one of the
-+``Signed-off-by`` lines, matches that of the git commit ``Author`` field.
-+It's okay if you subscribe or contribute to the list via more than one
-+address, but using multiple addresses in one commit just confuses
-+things.
-+
-+If the person sending the mail is not one of the patch authors, they are
-+nonetheless expected to add their own ``Signed-off-by`` to comply with the
-+DCO clause (c).
-+
-+Multiple authorship
-+~~~~~~~~~~~~~~~~~~~
-+
-+It is not uncommon for a patch to have contributions from multiple authors. In
-+this scenario, git commits will usually be expected to have a ``Signed-off-by``
-+line for each contributor involved in creation of the patch. Some edge cases:
-+
-+  * The non-primary author's contributions were so trivial that they can be
-+    considered not subject to copyright. In this case the secondary authors
-+    need not include a ``Signed-off-by``.
-+
-+    This case most commonly applies where QEMU reviewers give short snippets
-+    of code as suggested fixes to a patch. The reviewers don't need to have
-+    their own ``Signed-off-by`` added unless their code suggestion was
-+    unusually large, but it is common to add ``Suggested-by`` as a credit
-+    for non-trivial code.
-+
-+  * Both contributors work for the same employer and the employer requires
-+    copyright assignment.
-+
-+    It can be said that in this case a ``Signed-off-by`` is indicating that
-+    the person has permission to contribute from their employer who is the
-+    copyright holder. It is nonetheless still preferable to include a
-+    ``Signed-off-by`` for each contributor, as in some countries employees are
-+    not able to assign copyright to their employer, and it also covers any
-+    time invested outside working hours.
-+
-+When multiple ``Signed-off-by`` tags are present, they should be strictly kept
-+in order of authorship, from oldest to newest.
-+
-+Other commit tags
-+~~~~~~~~~~~~~~~~~
-+
-+While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
-+that are commonly used during QEMU development:
-+
-+ * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
-+   mailing list, if they consider the patch acceptable, they should send an
-+   email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
-+   review a patch should add this even if they are also adding their
-+   ``Signed-off-by`` to the same commit.
-+
-+ * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
-+   touches their subsystem, but intends to allow a different maintainer to
-+   queue it and send a pull request, they would send a mail containing a
-+   ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
-+   only implies review of the maintainers' own areas of responsibility. If a
-+   maintainer wants to indicate they have done a full review they should use
-+   a ``Reviewed-by`` tag.
-+
-+ * **``Tested-by``**: when a QEMU community member has functionally tested the
-+   behaviour of the patch in some manner, they should send an email reply
-+   containing a ``Tested-by`` tag.
-+
-+ * **``Reported-by``**: when a QEMU community member reports a problem via the
-+   mailing list, or some other informal channel that is not the issue tracker,
-+   it is good practice to credit them by including a ``Reported-by`` tag on
-+   any patch fixing the issue. When the problem is reported via the GitLab
-+   issue tracker, however, it is sufficient to just include a link to the
-+   issue.
-+
-+ * **``Suggested-by``**: when a reviewer or other 3rd party makes non-trivial
-+   suggestions for how to change a patch, it is good practice to credit them
-+   by including a ``Suggested-by`` tag.
-+
-+Subsystem maintainer requirements
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+When a subsystem maintainer accepts a patch from a contributor, in addition to
-+the normal code review points, they are expected to validate the presence of
-+suitable ``Signed-off-by`` tags.
-+
-+At the time they queue the patch in their subsystem tree, the maintainer
-+**must** also then add their own ``Signed-off-by`` to indicate that they have
-+done the aforementioned validation. This is in addition to any of their own
-+``Reviewed-by`` tags the subsystem maintainer may wish to include.
-+
-+When the maintainer modifies the patch after pulling into their tree, they
-+should record their contribution.  This is typically done via a note in the
-+commit message, just prior to the maintainer's ``Signed-off-by``::
-+
-+    Signed-off-by: Cory Contributor <cory.contributor@example.com>
-+    [Comment rephrased for clarity]
-+    Signed-off-by: Mary Maintainer <mary.maintainer@mycorp.test>
-+
-+
-+Tools for adding ``Signed-off-by``
-+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+There are a variety of ways tools can support adding ``Signed-off-by`` tags
-+for patches, avoiding the need for contributors to manually type in this
-+repetitive text each time.
-+
-+git commands
-+^^^^^^^^^^^^
-+
-+When creating, or amending, a commit the ``-s`` flag to ``git commit`` will
-+append a suitable line matching the configured git author details.
-+
-+If preparing patches using the ``git format-patch`` tool, the ``-s`` flag can
-+be used to append a suitable line in the emails it creates, without modifying
-+the local commits. Alternatively to modify all the local commits on a branch::
-+
-+  git rebase master -x 'git commit --amend --no-edit -s'
-+
-+emacs
-+^^^^^
-+
-+In the file ``$HOME/.emacs.d/abbrev_defs`` add:
-+
-+.. code:: elisp
-+
-+  (define-abbrev-table 'global-abbrev-table
-+    '(
-+      ("8rev" "Reviewed-by: YOUR NAME <your@email.addr>" nil 1)
-+      ("8ack" "Acked-by: YOUR NAME <your@email.addr>" nil 1)
-+      ("8test" "Tested-by: YOUR NAME <your@email.addr>" nil 1)
-+      ("8sob" "Signed-off-by: YOUR NAME <your@email.addr>" nil 1)
-+     ))
-+
-+with this change, if you type (for example) ``8rev`` followed by ``<space>``
-+or ``<enter>`` it will expand to the whole phrase.
-+
-+vim
-+^^^
-+
-+In the file ``$HOME/.vimrc`` add::
-+
-+  iabbrev 8rev Reviewed-by: YOUR NAME <your@email.addr>
-+  iabbrev 8ack Acked-by: YOUR NAME <your@email.addr>
-+  iabbrev 8test Tested-by: YOUR NAME <your@email.addr>
-+  iabbrev 8sob Signed-off-by: YOUR NAME <your@email.addr>
-+
-+with this change, if you type (for example) ``8rev`` followed by ``<space>``
-+or ``<enter>`` it will expand to the whole phrase.
-+
-+Re-starting abandoned work
-+~~~~~~~~~~~~~~~~~~~~~~~~~~
-+
-+For a variety of reasons there are some patches that get submitted to QEMU but
-+never merged. An unrelated contributor may decide (months or years later) to
-+continue working from the abandoned patch and re-submit it with extra changes.
-+
-+The general principles when picking up abandoned work are:
-+
-+ * Continue to credit the original author for their work, by maintaining their
-+   original ``Signed-off-by``
-+ * Indicate where the original patch was obtained from (mailing list, bug
-+   tracker, author's git repo, etc) when sending it for review
-+ * Acknowledge the extra work of the new contributor by including their
-+   ``Signed-off-by`` in the patch in addition to the orignal author's
-+ * Indicate who is responsible for what parts of the patch. This is typically
-+   done via a note in the commit message, just prior to the new contributor's
-+   ``Signed-off-by``::
-+
-+    Signed-off-by: Some Person <some.person@example.com>
-+    [Rebased and added support for 'foo']
-+    Signed-off-by: New Person <new.person@mycorp.test>
-+
-+In complicated cases, or if otherwise unsure, ask for advice on the project
-+mailing list.
-+
-+It is also recommended to attempt to contact the original author to let them
-+know you are interested in taking over their work, in case they still intended
-+to return to the work, or had any suggestions about the best way to continue.
-diff --git a/docs/devel/index-process.rst b/docs/devel/index-process.rst
-index cb7c6640fd..5807752d70 100644
---- a/docs/devel/index-process.rst
-+++ b/docs/devel/index-process.rst
-@@ -13,6 +13,7 @@ Notes about how to interact with the community and how and where to submit patch
-    maintainers
-    style
-    submitting-a-patch
-+   code-provenance
-    trivial-patches
-    stable-process
-    submitting-a-pull-request
-diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
-index 65c64078cb..f7917b899f 100644
---- a/docs/devel/submitting-a-patch.rst
-+++ b/docs/devel/submitting-a-patch.rst
-@@ -344,28 +344,9 @@ Patch emails must include a ``Signed-off-by:`` line
- 
- Your patches **must** include a Signed-off-by: line. This is a hard
- requirement because it's how you say "I'm legally okay to contribute
--this and happy for it to go into QEMU". The process is modelled after
--the `Linux kernel
--<http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/SubmittingPatches?id=f6f94e2ab1b33f0082ac22d71f66385a60d8157f#n297>`__
--policy.
-+this and happy for it to go into QEMU". For full guidance, read the
-+:ref:`code-provenance` documentation.
- 
--If you wrote the patch, make sure your "From:" and "Signed-off-by:"
--lines use the same spelling. It's okay if you subscribe or contribute to
--the list via more than one address, but using multiple addresses in one
--commit just confuses things. If someone else wrote the patch, git will
--include a "From:" line in the body of the email (different from your
--envelope From:) that will give credit to the correct author; but again,
--that author's Signed-off-by: line is mandatory, with the same spelling.
--
--The name used with "Signed-off-by" does not need to be your legal name,
--nor birth name, nor appear on any government ID. It is the identity you
--choose to be known by in the community, but should not be anonymous,
--nor misrepresent whom you are.
--
--There are various tooling options for automatically adding these tags
--include using ``git commit -s`` or ``git format-patch -s``. For more
--information see `SubmittingPatches 1.12
--<http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/SubmittingPatches?id=f6f94e2ab1b33f0082ac22d71f66385a60d8157f#n297>`__.
- 
- .. _include_a_meaningful_cover_letter:
- 
--- 
-2.48.1
+
+> +        error_setg(errp, "SMMUv3 is not attached to any PCIe Root Complex!");
+> +        return;
+> +    }
+>  
+>      c->parent_realize(d, &local_err);
+>      if (local_err) {
 
 
