@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E54DC5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:04:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E7BC5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:04:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN9Ja-0007LD-Mh; Thu, 05 Jun 2025 08:03:23 -0400
+	id 1uN9Kc-00086w-VE; Thu, 05 Jun 2025 08:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uN9JW-0007L2-Ds
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:03:18 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uN9KW-0007yc-US
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:04:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uN9JU-00074i-E2
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:03:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uN9KT-0007CS-MR
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:04:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749124994;
+ s=mimecast20190719; t=1749125056;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xxUSL9AAETHy8Gj5MVLvxJfKj65M/HmZ3WhW6W97gqw=;
- b=h0VF+2TbQsRR2IB+OFl0OGs4ZRqlFBSSF9pbGrU00oPwXeoF32YrkdSHh3GPEr/9CvUG8F
- o5LfPgwRWMm0+wtkkkMLXKJlhmWDmJynAPmEneFvonf9gROseWgRc0AjJIojEpBEPtJ/GC
- lKgx4vKQaAIUiTv66Z7Gi12B1dlA39o=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=U3TmmfE+IodnI5UiZfT/vpVHYJ+cd4mDwRSSx19gVLo=;
+ b=H20zZVuVSrcEXhnm/W+BhnB6NnDoyUaDTHqU8DHySnU5y9chH4n4T7ghBHRHll+tlDYtSR
+ rftlgiwq6W/UjN+Xc3UD9lyvuWjRYduFHdeinwe7zHbR/XcVGHjk7VZkBTtJurvzMKhhGO
+ xkY+UemCHgaMBScUiPGniWw+WeQMYjM=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-684-7HwaK7u2PtSrkCDJUSi9tA-1; Thu, 05 Jun 2025 08:03:13 -0400
-X-MC-Unique: 7HwaK7u2PtSrkCDJUSi9tA-1
-X-Mimecast-MFC-AGG-ID: 7HwaK7u2PtSrkCDJUSi9tA_1749124992
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4ff581df3so503862f8f.1
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 05:03:12 -0700 (PDT)
+ us-mta-214-A3_CJld0NeOaZTOqF58Wbg-1; Thu, 05 Jun 2025 08:04:15 -0400
+X-MC-Unique: A3_CJld0NeOaZTOqF58Wbg-1
+X-Mimecast-MFC-AGG-ID: A3_CJld0NeOaZTOqF58Wbg_1749125054
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-451ac1b43c4so5148995e9.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 05:04:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749124992; x=1749729792;
+ d=1e100.net; s=20230601; t=1749125054; x=1749729854;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
+ :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xxUSL9AAETHy8Gj5MVLvxJfKj65M/HmZ3WhW6W97gqw=;
- b=jDwtrDpS+lfqHtawiYH2771SmspsguHR4ShOrmiMTLft+E+WzFgF6RiIPX7nzHmkL/
- /I6bB7G4W4kFJ8RN9bPNk1s0pHFBCRA2ovnVRxgT5Pfkr4gNfeCf1BIYFdkXjAIkf96+
- v4KGOB6BUHrPGkomGSy7ZBzI2Y6ai9ZSWMJ0npD7+41LTORKDxsT1zNwSgQBWJOH0G6u
- f06OH65GHNYm/EMx/auA9gDT08v0gY3KLHpI55sBs2kVXnVCToN246Ep9ZAWJu5Jfof6
- vDF35eiXRWtck+ZQSQupzYbUg816uk4/1UeEBpDOCjj2qBNeVK24/D1DIkwK/3EFLZx0
- 9yFA==
+ bh=U3TmmfE+IodnI5UiZfT/vpVHYJ+cd4mDwRSSx19gVLo=;
+ b=mmjjXSGDWeSZYzLXaD0fuMRbSDap8Qp9RVyGW+0s8XmBlqC8yiShI3892JodXb+kir
+ jRxtAN37ZgqI6Waa+NNLCcjp+47ANB1qCz7rI822MAbf+Ia9ryn34EH5tJs6Cxatzp6x
+ cGgVX/q7Xt6VDp1/oB7SjC+aWIM64NjwrrY7FtMLmVcRcuDypAd2jOa3j2HTnVzgMURg
+ H6BZBoig6vKe2hw5fvQyX5g/ylEYyN6igE8MumE1PHSgy0YYbFgMXOUg8NA6yNDr9q8E
+ Xkj/0gmpTlZtgroL/eZfM0nBgqXxDOTC/oS1Y+zj4yqlx6Ufp81tGLvXHje8tr2s3AcM
+ 2P0g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVtz7Yd+sXbQJV53JxJZHlUcgmmQjvg7nlevM8bDeELz8fpvNGdwlWLFp739tB5Sza1RJ7MV04dX+TJ@nongnu.org
-X-Gm-Message-State: AOJu0Yx0OWpB/1M/A46vPgXYFiZLq82h/GpPpxO+NodtCls4yAgeLlUU
- sMTO/X4ExPLCzM6KkFB33EJ7K4mcMpMbfH8dDPNSJ6z71crwS8j8JQ/m3zi/H3TnggUv5CFIvBN
- 7hF5sICZDsCacidB+sSGrLdhLkSrrPzeCNAVrNox1+sFBBjzjsSSumjZS
-X-Gm-Gg: ASbGnctf3T/ofDQ/9uShxGwrFsjrucrxTPGidJ/kT7SD5nRQSF4133/AnauPZJP40sc
- yWvu42CVJ/tDU6dVF6wsZlAyxZRXvIXVHxA/OAYEGIAoQ2/S52P+Lq8DmqV8hA9lYIQY7n2SG2b
- +ykBP20AWRlLdiPM/9CfVq6O1bxe+644fDj9INfxdcS8xPp5srkZ2OyzpArUJzeH1NB1iE+DAkn
- IX1PmqvEsAYmdVTLWIgwVz0V/aDOjpPPh7SReDU6UrCzbEuAruUR3YxRLdVSwIr/0vnOBGcHih5
- 0BHoMjTqJiNzwG8Y26ZS1cJAtO8doxUiemI/lFQRIf8=
-X-Received: by 2002:a05:6000:2890:b0:3a5:23c6:eeee with SMTP id
- ffacd0b85a97d-3a526e03916mr3276795f8f.21.1749124991693; 
- Thu, 05 Jun 2025 05:03:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFMgjSzRphxHRIqCD2qCokV/MLvJGLT+BNS5UW3XfrdeYxL+MKMZ8Z/Gkyuvn9aDaYrFtTTNw==
-X-Received: by 2002:a05:6000:2890:b0:3a5:23c6:eeee with SMTP id
- ffacd0b85a97d-3a526e03916mr3276728f8f.21.1749124991214; 
- Thu, 05 Jun 2025 05:03:11 -0700 (PDT)
+ AJvYcCVK0P8x77WJp/wB9E5Wc45GWY7+XHWDdT085vwD8KUvnPzQ6kyF8uCBr7kH8TrM2N2k8jVrsmXaZ6gF@nongnu.org
+X-Gm-Message-State: AOJu0YxopN8uAcMUuu8vnkOCyZjjqkNxjDVPFeUqqFic0DLU/vKxCUuq
+ lio4VskplO3dgkN6RBNg4Iq77/jtOSHKAG5/t2wzfRv8z/geSYihWl4xwJAFEok9KpPFqKqePpT
+ 6dQLomciKJrcWteRFEbI0AfdQWa4ofIWrMSLtQnaaTRIfd7Q6SMrwIX0v
+X-Gm-Gg: ASbGnctFB46SSNDXu33vusQIPpO8Bsny4flcyfPpYlhOuDP9n/BIGOcPnpXe0Tp7h4K
+ WJGwheeFw3qTOaoT7a9TY9on5m3iEKJYvp23uWsligT0fR1nivpWuTTatqPdh2OV8ZyGI+9nx55
+ We3nn3FqeiNgwzNlyng+Um1qGYHVXXGbyvJJfYpPs8qA2clu9uXZWPpqL/PGApUgVJ4vecK4lBu
+ 0dA3bVmn/uVcphVlm6PLxTjYJg2NALI1imPcRxkeK3R6bzUx0VhcaCnScM+vMHhHQ+b0GiwoQeY
+ XHxiTz/+TheAIQSEFNWU1NODct17cQw4Bw9NHMH28VYdKHzDYe3ZVA==
+X-Received: by 2002:a05:600c:3e0a:b0:43d:fa5d:9314 with SMTP id
+ 5b1f17b1804b1-451f0b3f30amr56214655e9.32.1749125053716; 
+ Thu, 05 Jun 2025 05:04:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG9br3c2SrIoJqxQDDhL9VLRA16hzDUpmQGc5lmdAZoDZx28ePPZaxm8eUTxCzUbgyMBE+PjQ==
+X-Received: by 2002:a05:600c:3e0a:b0:43d:fa5d:9314 with SMTP id
+ 5b1f17b1804b1-451f0b3f30amr56213985e9.32.1749125053215; 
+ Thu, 05 Jun 2025 05:04:13 -0700 (PDT)
 Received: from [192.168.0.4] (ip-109-42-50-214.web.vodafone.de.
  [109.42.50.214]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe6c8b4sm24844617f8f.36.2025.06.05.05.03.10
+ ffacd0b85a97d-3a4f009fd7csm24194854f8f.88.2025.06.05.05.04.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Jun 2025 05:03:10 -0700 (PDT)
-Message-ID: <00c7e7f0-1c94-4f6f-aa08-5e557bbb91aa@redhat.com>
-Date: Thu, 5 Jun 2025 14:03:09 +0200
+ Thu, 05 Jun 2025 05:04:12 -0700 (PDT)
+Message-ID: <b383753d-419b-4351-987f-eb3acbe8a156@redhat.com>
+Date: Thu, 5 Jun 2025 14:04:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 2/3] hw/s390x: add Control-Program Identification to QOM
-From: Thomas Huth <thuth@redhat.com>
-To: Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
+Subject: Re: [PATCH v5 3/3] hw/s390x: support migration of CPI data
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>,
  qemu-s390x mailing list <qemu-s390x@nongnu.org>
 Cc: Daniel Berrange <berrange@redhat.com>,
  qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
  Hendrik Brueckner <brueckner@linux.ibm.com>
 References: <20250603135655.595602-1-shalini@linux.ibm.com>
- <20250603135655.595602-3-shalini@linux.ibm.com>
- <9bf3dbd97aea3e8811e3064c4f1f79ab3ba65ecd.camel@linux.ibm.com>
- <581bb44f-6549-44cc-9466-ef4172fe6ddc@redhat.com>
+ <20250603135655.595602-4-shalini@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -131,9 +129,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <581bb44f-6549-44cc-9466-ef4172fe6ddc@redhat.com>
+In-Reply-To: <20250603135655.595602-4-shalini@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -159,61 +157,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 05/06/2025 13.56, Thomas Huth wrote:
-> On 05/06/2025 10.34, Nina Schoetterl-Glausch wrote:
->> On Tue, 2025-06-03 at 15:56 +0200, Shalini Chellathurai Saroja wrote:
->>> Add Control-Program Identification (CPI) data to the QEMU Object
->>> Model (QOM), along with the timestamp in which the data was received
->>> as shown below.
->>
->> [...]
->>>
->>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
->>> ---
->>>   hw/s390x/sclpcpi.c                | 47 +++++++++++++++++++++++++
->>>   include/hw/s390x/event-facility.h |  5 +++
->>>   qapi/machine.json                 | 58 +++++++++++++++++++++++++++++++
->>>   3 files changed, 110 insertions(+)
->>>
->>> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
->>> index 935fa87acd..ec711e2291 100644
->>> --- a/hw/s390x/sclpcpi.c
->>> +++ b/hw/s390x/sclpcpi.c
->>> @@ -15,7 +15,9 @@
->>>     */
->>
->> [...]
->>> +static void cpi_init(Object *obj)
->>> +{
->>> +    SCLPEventCPI *e = SCLP_EVENT_CPI(obj);
->>> +
->>> +    object_property_add_str(obj, "system_type", get_system_type, NULL);
->>> +    object_property_add_str(obj, "system_name", get_system_name, NULL);
->>> +    object_property_add_str(obj, "sysplex_name", get_sysplex_name, NULL);
->>> +    object_property_add_uint64_ptr(obj, "system_level", &(e->system_level),
->>> +                                   OBJ_PROP_FLAG_READ);
->>> +    object_property_add_uint64_ptr(obj, "timestamp", &(e->timestamp),
->>> +                                   OBJ_PROP_FLAG_READ);
->>> +}
->>
->> I think it would be cleaner if those were class properties.
->> You could use object_class_property_add_str in cpi_class_init,
->> but I think it'd be nice to use DEFINE_PROP_(STR|UINT64) and
->> device_class_set_props.
+On 03/06/2025 15.56, Shalini Chellathurai Saroja wrote:
+> Register Control-Program Identification data with the live
+> migration infrastructure.
 > 
-> For "normal" properties I'd say "yes" ... but in this case, this would also 
-> allow the user to set the properties from the host side - which would be a 
-> little bit weird? So I think it might be cleaner to keep it this way here 
-> without the "setter" functions? WDYT?
+> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+> Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+> ---
+>   hw/s390x/sclpcpi.c | 15 +++++++++++++++
+>   1 file changed, 15 insertions(+)
 
-By the way, Shalini, could you please add a description of the properties 
-via object_property_set_description() here, please?
-
-  Thanks,
-   Thomas
-
-PS: FWIW, Markus recently also provided a nice summery about the different 
-property types here:
-  https://lore.kernel.org/qemu-devel/87o6vfzdig.fsf@pond.sub.org/
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
