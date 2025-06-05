@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 854ADC5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 16:35:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D5AC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 16:35:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNDYe-0001lR-4y; Thu, 05 Jun 2025 12:35:12 -0400
+	id 1uNDYh-0001mA-83; Thu, 05 Jun 2025 12:35:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uNDYZ-0001iJ-9J
+ id 1uNDYZ-0001iH-95
  for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:35:07 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uNDYX-0001xm-9X
+ id 1uNDYX-00021B-9m
  for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:35:07 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ad55d6aeb07so231206266b.0
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:35:03 -0700 (PDT)
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-60768f080d8so122982a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:35:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749141302; x=1749746102; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749141303; x=1749746103; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fx+h3SENZYZcIW0j7iWtLqNsUxD93YY5SPZuT4qG2WE=;
- b=zZJKRzAAPN5nr3zqJH5Ugp+Z193i38dxDLpXfN/lmlq9kr7dMglkfAKgftVbLnOpBF
- q1W5VzoO1QbLUrPPy8uEb164jpwdTjf9jTBpCXjVMcq5CoOF0Y02WtxLtimk+W7YXHQP
- YdSHGxftvHd2pGwGQnupYnxlzdchHAUbrm4XUeNMLu91z3rJbat9JjzpPM+g7T1gO4HE
- JaSv4Fk3cIE4A3c/JL3XaTc/ywJH0Vc9r1UQYgFd0wA8Sbaab3eK+1UwRFpTMzHZqKSL
- c0iAd7TxvvmAn9iyK2P7/loazOPao8ue007DoJ8jKDXC9raDBZDp2C2j8olaX/Zswm3M
- TSWQ==
+ bh=uVzzb/76JOFY7jHX5yCZIpFfAYYIv9oWrL8sx1vZiVw=;
+ b=O33EUgDuNxSyJljJhqFroVIFQpgKLQ5P4yHGe4Ltd6M9Qg0W3cawU5qZfSS0FxkcbH
+ /680NtJ2V83OEcxqfNQ1rp6fAJToCNkKF+wU5gT802Lq81ybOE6wqgaowWzvwqEBGtQc
+ ymub6ubXYpaV2QDWJPQEyJX8SnXj2Ae3AJj/YrPaKvcg5O5E0wRCWpsPw162jmM/Yrcj
+ R8PGuf8dgCiOBc8T73cmFSedJ3nqrsLSL7GC2hitANdG54lW+ddkHixXQc4kyZaVafrs
+ F9N+KSsSuUp9RGOA+yGZ8rILW7mAzaRxTxCBrSSVBykqcnvTaKaBVcQCoIcD3j/GZ0kq
+ pqYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749141302; x=1749746102;
+ d=1e100.net; s=20230601; t=1749141303; x=1749746103;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fx+h3SENZYZcIW0j7iWtLqNsUxD93YY5SPZuT4qG2WE=;
- b=qR5/I/ss2H8xGRmLn06Dedk9pFOr/nA7MyF6SiWvuTt1pSUpLYmepg/cT9O/W0QyF/
- BptOGv0E67UqB+BNbr9MO8PQV7PaV6a/3WrVrhQanV+4ZD5w4vmovXVoB/+TTg/tfJa/
- AZlw2N1cw8QHvda447AXjwLwwvAXIdhp8y4P05ZhM7NM/aZxLAEb/6RCTqOkFfczKj3f
- Qp6JfmxV39B7fLXzeASY+Ozl5g7xBCLf3JaLoYSEsDSVfNG6qGIC0W6TxWmu3uVVsL0R
- 3Rtrtffjq7fUy745iv92yttmal/z7qZ+1NiRJB+5AtcCtNrz79xECWfA4C46hWyMMi0p
- mVvw==
-X-Gm-Message-State: AOJu0YyZV4wom33CXyIfLtqLTYBsq8HJdkoTB8deXn5lOPfXp33gJBQf
- lYb142p0a6KAYkJn9XnDPFat8cIuavZowjH3wF5O4MCF8LrjVFvtaolQh1aIYAac/t0=
-X-Gm-Gg: ASbGnctwQdJLVmXpCwFk1NRtAsQtVTaz4SIvxgrKecpVtTG0cKHews5r36K7Ucj1TWO
- K/TgKXs8x4lwWBJEOublUKJV5/qchAkPcLuaPk0Gc8AjdSPEMw+LPMNcCrhjFE3R5cNT8OxsfcW
- joThto8tEd46cramUQz9lX7WcXc3lSEzYSyK9GzuyWatSbsmuYz0m/XFoABp58Cq0/87ALT386p
- FBF7eO0f3As5bz49i+VAoJekD5KCbEV0fhL3987rwvQXW+p8SAtfkxVBn0+i+m6GksCY6XfURac
- tlErvPHiOTshV0UKD8nwp4c53ny6fb7/UcRsUAfYQB7Mq/TKrogV
-X-Google-Smtp-Source: AGHT+IFOBwj7p0eclQBemWtGplgkdZCMD0ofYYJrG+mgEOSnew5Hs17S1TSTGJzg5nb9QaVgbAMzMQ==
-X-Received: by 2002:a17:907:7f8b:b0:ad5:1c28:3c4b with SMTP id
- a640c23a62f3a-addf8fac686mr721005666b.52.1749141302469; 
+ bh=uVzzb/76JOFY7jHX5yCZIpFfAYYIv9oWrL8sx1vZiVw=;
+ b=KQeY4idsv5nIFyxv/9PIBiyakZE6HZ9ynlvXy4IJZndZ1dagGDTTuo61AXpkGGaM71
+ 57wsTlwwehwmcri8JM8KaiQoh9jPH+t/pFKLPciE8kuomRFhIT+sA5+NFVHpS92o/lCG
+ u49i5AqHYMS30Ilf7TGepVno5jP1HieZM5bHhP9F2d0FeaG7+KCu2AJo0rbtI94Gh7qm
+ +8IcprfPjtflHAE3JftTTbK4qCUE2NX8OdBJVyo4TN57MeHXlMvc0ucl3zmmhm35PuC/
+ vV1OIvM36fzE5EzaAXuk3q6tuvkQxQpx1OB+FVLc/f8NBzCKUDEVbVfbhCp2skgsSaoi
+ /k/Q==
+X-Gm-Message-State: AOJu0YzTJtKG34DcYq5+EuFQQ55iksyMflljLGt+6Z+OP2jov3rT7bJ0
+ 4aVoS155rwfVLBB4sHK7RhWqraWx78s7Ydb73FRR9MpPZ7zXKsem6ycXgYOR5z0QGDAH4L7YgmN
+ PrMR+OAQ=
+X-Gm-Gg: ASbGnct92R5VLFmd8eVtw7memvAf7Lz9+68an8a1xJWgONnQIMluriYsNXUkEm+ny5D
+ s5L5ZesbFsatIeaiDNTubWaHn0xkOW1vdagmkl5UN2A6MZUdzPltVM1ZUe8KQ0VMk2PVof+eDTV
+ 6GCDq4l9T9JlOioKx3576b8VtgMU3/18lJLpJ288nTEm4ZEFNOaSSXbbh6VsWybbtktXrLO/r/R
+ jYyT5qod2LWpslHZhQ+hAv6NdHq04KVkqz2BGc54wJwogKQHr5aTsUudEb6oPqQtiTAKYXwwF+6
+ ZqavBw8tn/O/G0FOCKinopouLbalSz1LppV37EAK5n66+OJsjiQJ
+X-Google-Smtp-Source: AGHT+IHIqhLdsBeU6p42YdSWaeQrc/RKmjkBpwQIRbz+o+GY7YKi9Zo2Sf4MAqv7/SvGK14AFpDj/g==
+X-Received: by 2002:a05:6402:5248:b0:5fa:fcda:bf57 with SMTP id
+ 4fb4d7f45d1cf-606ea3b6b89mr7300232a12.17.1749141302761; 
  Thu, 05 Jun 2025 09:35:02 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-adb35af4456sm1079335766b.182.2025.06.05.09.35.01
+ 4fb4d7f45d1cf-60730b1ec8fsm859243a12.43.2025.06.05.09.35.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Thu, 05 Jun 2025 09:35:01 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id D99BB5F833;
+ by draig.lan (Postfix) with ESMTP id EF49E5F834;
  Thu, 05 Jun 2025 17:26:52 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>,
- Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>,
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 16/17] gdbstub: Implement qGDBServerVersion packet
-Date: Thu,  5 Jun 2025 17:26:49 +0100
-Message-ID: <20250605162651.2614401-17-alex.bennee@linaro.org>
+Subject: [PULL 17/17] gdbstub: update aarch64-core.xml
+Date: Thu,  5 Jun 2025 17:26:50 +0100
+Message-ID: <20250605162651.2614401-18-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250605162651.2614401-1-alex.bennee@linaro.org>
 References: <20250605162651.2614401-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -104,70 +104,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-This commit adds support for the `qGDBServerVersion` packet to the qemu
-gdbstub  which could be used by clients to detect the QEMU version
-(and, e.g., use a workaround for known bugs).
+Update aarch64-core.xml to include field definitions for PSTATE, which
+in gdb is modelled in the cpsr (current program status register)
+pseudo-register, named after the actual cpsr register in armv7.
 
-This packet is not documented/standarized by GDB but it was implemented
-by LLDB gdbstub [0] and is helpful for projects like Pwndbg [1].
+Defining the fields layout of the register allows easy inspection of for
+example, the current exception level (EL):
 
-This has been implemented by Patryk, who I included in Co-authored-by
-and who asked me to send the patch.
+For example. Before booting a Linux guest, EL=2, but after booting and
+Ctrl-C'ing in gdb, we get EL=0:
 
-[0] https://lldb.llvm.org/resources/lldbgdbremote.html#qgdbserverversion
-[1] https://github.com/pwndbg/pwndbg/issues/2648
+  (gdb) info registers $cpsr
+  cpsr           0x20402009          [ SP EL=2 BTYPE=0 PAN C ]
+  (gdb) cont
+  Continuing.
+  ^C
+  Thread 2 received signal SIGINT, Interrupt.
+  0x0000ffffaaff286c in ?? ()
+  (gdb) info registers $cpsr
+  cpsr           0x20001000          [ EL=0 BTYPE=0 SSBS C ]
 
-Co-authored-by: Patryk 'patryk4815' Sondej <patryk.sondej@gmail.com>
-Signed-off-by: Dominik 'Disconnect3d' Czarnota <dominik.b.czarnota@gmail.com>
-Message-Id: <20250403191340.53343-1-dominik.b.czarnota@gmail.com>
-[AJB: fix include, checkpatch linewrap]
+The aarch64-core.xml has been updated to match exactly the version
+retrieved from upstream gdb, retrieved in 2025-05-19 from HEAD commit
+9f4dc0b137c86f6ff2098cb1ab69442c69d6023d.
+
+Link: https://sourceware.org/git/?p=binutils-gdb.git;a=blob;f=gdb/features/aarch64-core.xml;h=b8046510b9a085d30463d37b3ecc8d435f5fb7a4;hb=HEAD
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-Id: <20250519-gdbstub-aarch64-pstate-xml-v1-1-b4dbe87fe7c6@linaro.org>
+[AJB: expanded upstream link]
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Message-ID: <20250603110204.838117-17-alex.bennee@linaro.org>
+Message-ID: <20250603110204.838117-18-alex.bennee@linaro.org>
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 6023c80d25..def0b7e877 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -28,6 +28,7 @@
- #include "qemu/cutils.h"
- #include "qemu/module.h"
- #include "qemu/error-report.h"
-+#include "qemu/target-info.h"
- #include "trace.h"
- #include "exec/gdbstub.h"
- #include "gdbstub/commands.h"
-@@ -1597,6 +1598,18 @@ static void handle_query_threads(GArray *params, void *user_ctx)
-     gdbserver_state.query_cpu = gdb_next_attached_cpu(gdbserver_state.query_cpu);
- }
+diff --git a/gdb-xml/aarch64-core.xml b/gdb-xml/aarch64-core.xml
+index e1e9dc3f91..b8046510b9 100644
+--- a/gdb-xml/aarch64-core.xml
++++ b/gdb-xml/aarch64-core.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0"?>
+-<!-- Copyright (C) 2009-2012 Free Software Foundation, Inc.
++<!-- Copyright (C) 2009-2025 Free Software Foundation, Inc.
+      Contributed by ARM Ltd.
  
-+static void handle_query_gdb_server_version(GArray *params, void *user_ctx)
-+{
-+#if defined(CONFIG_USER_ONLY)
-+    g_string_printf(gdbserver_state.str_buf, "name:qemu-%s;version:%s;",
-+                    target_name(), QEMU_VERSION);
-+#else
-+    g_string_printf(gdbserver_state.str_buf, "name:qemu-system-%s;version:%s;",
-+                    target_name(), QEMU_VERSION);
-+#endif
-+    gdb_put_strbuf();
-+}
+      Copying and distribution of this file, with or without modification,
+@@ -42,5 +42,53 @@
+   <reg name="sp" bitsize="64" type="data_ptr"/>
+ 
+   <reg name="pc" bitsize="64" type="code_ptr"/>
+-  <reg name="cpsr" bitsize="32"/>
 +
- static void handle_query_first_threads(GArray *params, void *user_ctx)
- {
-     gdbserver_state.query_cpu = gdb_first_attached_cpu();
-@@ -1842,6 +1855,10 @@ static const GdbCmdParseEntry gdb_gen_query_table[] = {
-         .handler = handle_query_threads,
-         .cmd = "sThreadInfo",
-     },
-+    {
-+        .handler = handle_query_gdb_server_version,
-+        .cmd = "GDBServerVersion",
-+    },
-     {
-         .handler = handle_query_first_threads,
-         .cmd = "fThreadInfo",
++  <flags id="cpsr_flags" size="4">
++    <!-- Stack Pointer.  -->
++    <field name="SP" start="0" end="0"/>
++
++    <!-- Exception Level.  -->
++    <field name="EL" start="2" end="3"/>
++    <!-- Execution state.  -->
++    <field name="nRW" start="4" end="4"/>
++
++    <!-- FIQ interrupt mask.  -->
++    <field name="F" start="6" end="6"/>
++    <!-- IRQ interrupt mask.  -->
++    <field name="I" start="7" end="7"/>
++    <!-- SError interrupt mask.  -->
++    <field name="A" start="8" end="8"/>
++    <!-- Debug exception mask.  -->
++    <field name="D" start="9" end="9"/>
++
++    <!-- ARMv8.5-A: Branch Target Identification BTYPE.  -->
++    <field name="BTYPE" start="10" end="11"/>
++
++    <!-- ARMv8.0-A: Speculative Store Bypass.  -->
++    <field name="SSBS" start="12" end="12"/>
++
++    <!-- Illegal Execution state.  -->
++    <field name="IL" start="20" end="20"/>
++    <!-- Software Step.  -->
++    <field name="SS" start="21" end="21"/>
++    <!-- ARMv8.1-A: Privileged Access Never.  -->
++    <field name="PAN" start="22" end="22"/>
++    <!-- ARMv8.2-A: User Access Override.  -->
++    <field name="UAO" start="23" end="23"/>
++    <!-- ARMv8.4-A: Data Independent Timing.  -->
++    <field name="DIT" start="24" end="24"/>
++    <!-- ARMv8.5-A: Tag Check Override.  -->
++    <field name="TCO" start="25" end="25"/>
++
++    <!-- Overflow Condition flag.  -->
++    <field name="V" start="28" end="28"/>
++    <!-- Carry Condition flag.  -->
++    <field name="C" start="29" end="29"/>
++    <!-- Zero Condition flag.  -->
++    <field name="Z" start="30" end="30"/>
++    <!-- Negative Condition flag.  -->
++    <field name="N" start="31" end="31"/>
++  </flags>
++  <reg name="cpsr" bitsize="32" type="cpsr_flags"/>
++
+ </feature>
 -- 
 2.47.2
 
