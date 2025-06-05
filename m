@@ -4,95 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6150C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:56:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85306C5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 10:58:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN8G0-00053W-G7; Thu, 05 Jun 2025 06:55:36 -0400
+	id 1uN8IV-0006Lu-5J; Thu, 05 Jun 2025 06:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uN8Fs-000533-59
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:55:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN8IO-0006L7-12
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:58:04 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uN8Fq-0005KY-Hc
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:55:27 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN8IM-0005Xb-Cj
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 06:58:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749120924;
+ s=mimecast20190719; t=1749121080;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sWe/II1jYF8dDFyyN4/C5OjrhZ31snk7yFE94qDZKKw=;
- b=iAFrb1B6HM5MSKw8oQADKLBhOtWcM+V135xdQr/pIqj5ye3045U5SzqQjfvHQusoa5y9AO
- BSSrez2eSKr7wF212VWIG/ugMpxOhc4PgquC1ssOemOhp2MZbq25gIdZ9x08rcyNZ7ro43
- UTYskbxy1TjdLNn7kzfi++cPj79daGE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-516-RqE8M95PO2ieMhApf4vzeQ-1; Thu, 05 Jun 2025 06:55:23 -0400
-X-MC-Unique: RqE8M95PO2ieMhApf4vzeQ-1
-X-Mimecast-MFC-AGG-ID: RqE8M95PO2ieMhApf4vzeQ_1749120922
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a50049f8eeso530734f8f.3
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 03:55:23 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749120922; x=1749725722;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sWe/II1jYF8dDFyyN4/C5OjrhZ31snk7yFE94qDZKKw=;
- b=mxVZBQY59UYE1OZKq0OTb7rqooTNVg4HgT/pDfke+QRDPhQcO7aMeTkfxsrQxYs7/E
- n+ceg29rBFqemekLFZDiOvNNx6jgtoKKQ9/qYnOAYGYZwXUTZhEMIRuF2Rr1DUm7i5tP
- 7mPhZ5uQT4YkiaeW8wkexZ+FlWNnrw3RWQ+tnpXUTbtSMgCLXmMKO+GakCkYuKmMyz2x
- V4Ozg9Dpk1ZgebdRziGz0EydHpx4kmgOIny2GFZlQlIVAMnoD7Nq0dziUPczyLLHvhtB
- 7zhEjrj1yzwcdErLaoDFK6QB9j7oDHhltFShpqnoikhPCjhO6oiBkAdzeMqW400wRABe
- P8Qw==
-X-Gm-Message-State: AOJu0Yztn7FZNPRv1i8y9RgEYIOFpfe8WkeguvfVO1gJBjTnrhx123Dx
- DqEmHgSkiiyHJ/we0OaJK1NS5OcOQIZYR3T7YyQia2zYB/7PPeX5ehcHnm7837U3yVsSItIPQAe
- 6Brn/1Rtpa+p7Ym2IDOLMEhthPgYiQyYCgKQoqVFtpzbkVZy3t4xA69mJ49m2GWUY62jGbNHFX9
- PIZWEdzR4y0pQQnWZAxQe/Ze8Qtjxsq5ebpaPzgYekKOs=
-X-Gm-Gg: ASbGnctLpUdzqX8A935mGlMgnEMPq+yHCbtKKTzCrpvDmb62fdbhg2o/C0rY8yasWW/
- gS8NUACUuV50Z3dNgOOwlCVced+uB+G+NSh8DtlXwtC4kQf3mBaLFW8g/0c2dojzmEbHnsscIXl
- s1nm2Rk+kUtNw+Xje2vDq7dqNELh99vqL3nVtD+vdmz2lY33CEy8zTvUQ7B4DW+96HR0xfQa4pL
- 0hlOsgm9rdsNtxj9jrWgFVWGjyf/x8bVn4JcAr5kQumnUIgR6fQ9uh6PouU0GTZ/3BdQW0a9Ot1
- 4s60dwyESvQSN0yMMXb5vXljipD73CJ3
-X-Received: by 2002:a05:6000:240b:b0:3a4:fc75:d017 with SMTP id
- ffacd0b85a97d-3a51d92fd37mr5504314f8f.26.1749120921866; 
- Thu, 05 Jun 2025 03:55:21 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGsrD//UwnD60aio34OUUI1Ozj3KNkr51W/rwVXZHZKRb4IWuKcNuU6VB3V1b2EZ4G2GWtfSg==
-X-Received: by 2002:a05:6000:240b:b0:3a4:fc75:d017 with SMTP id
- ffacd0b85a97d-3a51d92fd37mr5504272f8f.26.1749120921349; 
- Thu, 05 Jun 2025 03:55:21 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a526ddb8afsm2070206f8f.0.2025.06.05.03.55.19
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 03:55:20 -0700 (PDT)
-Date: Thu, 5 Jun 2025 12:55:18 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Shameer Kolothum via <qemu-devel@nongnu.org>
-Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <qemu-arm@nongnu.org>, <eric.auger@redhat.com>, <peter.maydell@linaro.org>,
- <jgg@nvidia.com>, <nicolinc@nvidia.com>, <ddutile@redhat.com>,
- <berrange@redhat.com>, <nathanc@nvidia.com>, <mochs@nvidia.com>,
- <smostafa@google.com>, <linuxarm@huawei.com>, <wangzhou1@hisilicon.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v3 1/6] hw/arm/smmuv3: Check SMMUv3 has PCIe Root
- Complex association
-Message-ID: <20250605125518.138f5172@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
-References: <20250602154110.48392-1-shameerali.kolothum.thodi@huawei.com>
- <20250602154110.48392-2-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ bh=8C6P2q45ormWMPSV3e5vCsO70p1lFYkJDL7sXSAhYaw=;
+ b=do3rkKDPzB4ppayFI7kFw3+BxWsGKhNgLz7/0kHRmec/kpAWqO2e5GRfMZvhaWO//pEoU1
+ 1bUsGMfo5IrlkrcR17Jt+bZTKgRX5eO0p/Up9urZsJMfMaEcbPBJtalIYpoefReo75mBv7
+ vXPrUxQ3+9UidhY18tziQusf3ET+8/4=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-517-51fIg8loNGqN1X3ZA3GrWQ-1; Thu,
+ 05 Jun 2025 06:57:57 -0400
+X-MC-Unique: 51fIg8loNGqN1X3ZA3GrWQ-1
+X-Mimecast-MFC-AGG-ID: 51fIg8loNGqN1X3ZA3GrWQ_1749121076
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EE90D195608B; Thu,  5 Jun 2025 10:57:55 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A5AE51956094; Thu,  5 Jun 2025 10:57:55 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 066ED21E6757; Thu, 05 Jun 2025 12:57:53 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>
+Cc: qemu-devel@nongnu.org,  chao.p.peng@intel.com,  david@redhat.com,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  "Michael S.
+ Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH v3 1/5] virtio-mem: Fix definition of VirtIOMEMClass
+In-Reply-To: <20250605102311.148171-2-zhenzhong.duan@intel.com> (Zhenzhong
+ Duan's message of "Thu, 5 Jun 2025 18:23:07 +0800")
+References: <20250605102311.148171-1-zhenzhong.duan@intel.com>
+ <20250605102311.148171-2-zhenzhong.duan@intel.com>
+Date: Thu, 05 Jun 2025 12:57:52 +0200
+Message-ID: <87cybiihfz.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -117,55 +89,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Jun 2025 16:41:05 +0100
-Shameer Kolothum via <qemu-devel@nongnu.org> wrote:
+Zhenzhong Duan <zhenzhong.duan@intel.com> writes:
 
-> Although this change does not affect functionality at present, it is
-> required when we add support for user-creatable SMMUv3 devices in
-> future patches.
-> 
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> Parent of VirtIOMEMClass is VirtioDeviceClass rather than VirtIODevice.
+>
+> Fixes: 910b25766b33 ("virtio-mem: Paravirtualized memory hot(un)plug")
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> Reviewed-by: David Hildenbrand <david@redhat.com>
+> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 > ---
->  hw/arm/smmuv3.c | 8 ++++++++
->  1 file changed, 8 insertions(+)
-> 
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index ab67972353..7e934336c2 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -24,6 +24,7 @@
->  #include "hw/qdev-properties.h"
->  #include "hw/qdev-core.h"
->  #include "hw/pci/pci.h"
-> +#include "hw/pci/pci_bridge.h"
->  #include "cpu.h"
->  #include "exec/target_page.h"
->  #include "trace.h"
-> @@ -1881,6 +1882,13 @@ static void smmu_realize(DeviceState *d, Error **errp)
->      SMMUv3Class *c = ARM_SMMUV3_GET_CLASS(s);
->      SysBusDevice *dev = SYS_BUS_DEVICE(d);
->      Error *local_err = NULL;
-> +    Object *bus;
-> +
-> +    bus = object_property_get_link(OBJECT(d), "primary-bus", &error_abort);
-I'd replace this with direct field access like in smmu_base_realize
+>  include/hw/virtio/virtio-mem.h | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/include/hw/virtio/virtio-mem.h b/include/hw/virtio/virtio-me=
+m.h
+> index bc4f787772..e0ab31b45a 100644
+> --- a/include/hw/virtio/virtio-mem.h
+> +++ b/include/hw/virtio/virtio-mem.h
+> @@ -134,7 +134,7 @@ struct VirtioMemSystemReset {
+>=20=20
+>  struct VirtIOMEMClass {
+>      /* private */
+> -    VirtIODevice parent;
+> +    VirtioDeviceClass parent_class;
+>=20=20
+>      /* public */
+>      void (*fill_device_info)(const VirtIOMEM *vmen, VirtioMEMDeviceInfo =
+*vi);
 
-in QEMU with PCI, usually we specify bus to attach to with 'bus' property,
-wouldn't it better to rename "primary-bus" to 'bus' to be consistent with
-the rest of PCI code (and before "primary-bus" shows up as a CLI option,
-so far (before this series) it looks like it's an internal property)?
+*Ouch*
 
-> +    if (!bus || !object_dynamic_cast(bus->parent, TYPE_PCI_HOST_BRIDGE)) {
-Also looking at smmu_base_realize, it has NULL pointer check already.
-Which also rises question, shouldn't smmu_base_realize check for
-TYPE_PCI_HOST_BRIDGE as well (aka can smmu be attached to anything else but a host bridge)?
+I guess this isn't catastrophic only because sizeof(VirtIODevice) >
+sizeof(VirtioDeviceClass).  Suggest to mention that in the commit
+message.
 
-
-> +        error_setg(errp, "SMMUv3 is not attached to any PCIe Root Complex!");
-> +        return;
-> +    }
->  
->      c->parent_realize(d, &local_err);
->      if (local_err) {
+Out of scope for this patch, but I'd really, really appreciate more
+consistent spelling of VirtIO.
 
 
