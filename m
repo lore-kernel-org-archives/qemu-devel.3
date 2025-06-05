@@ -4,70 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6D98EC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 08:46:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F134C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 08:48:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN6CO-0006s2-P8; Thu, 05 Jun 2025 04:43:44 -0400
+	id 1uN6FC-00059w-TC; Thu, 05 Jun 2025 04:46:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uN6CD-0006ed-Ul
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:43:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1uN6Ei-0004ff-Ql; Thu, 05 Jun 2025 04:46:10 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uN6CC-0008I5-89
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 04:43:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749113011;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qX+tCSJYfWs63N+/z1dQMGx/2W56gRX4Ps/q3xO9Pv8=;
- b=R09NUYeXyIH0qkXpLMoYD5QhUx8cGPDZYSgJb/M0PyAHG+/d7zDKFrO9X+yedAQelQYjrx
- Mkh9lF425Pb6QDEyJLP9ow9KtrPWlXjRhJ4yiYksJOCbKyd0b5aNaDwP/r4Mto2CRWs6er
- EKJH48j2zKb3nSIijvcjbYDZNIDHuTA=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-551-o1ahmAMsMm2aMxYGdt6lww-1; Thu,
- 05 Jun 2025 04:43:28 -0400
-X-MC-Unique: o1ahmAMsMm2aMxYGdt6lww-1
-X-Mimecast-MFC-AGG-ID: o1ahmAMsMm2aMxYGdt6lww_1749113007
-Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 51822195608F; Thu,  5 Jun 2025 08:43:27 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.77])
- by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id EDCE71954B3C; Thu,  5 Jun 2025 08:43:24 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Nicolin Chen <nicolinc@nvidia.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 13/16] vfio/iommufd: Save vendor specific device info
-Date: Thu,  5 Jun 2025 10:42:42 +0200
-Message-ID: <20250605084245.1520562-14-clg@redhat.com>
-In-Reply-To: <20250605084245.1520562-1-clg@redhat.com>
-References: <20250605084245.1520562-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1uN6Ee-0001qi-Q8; Thu, 05 Jun 2025 04:46:08 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5558hHD3028846;
+ Thu, 5 Jun 2025 08:46:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pj68p8
+ JQD4J1HZOfTDk8PbzVkKme7SXTopC5MNetVds=; b=EuvV6uJ861v4UTPb3MacUC
+ r25yJ667SvS4yp2TlPgKIgbf6+jKnTSxJZXdlVNj66Eoo5dPVcia1pVKF30OTMMF
+ /C1WpetOzb/cJa8kwHZEgyqs4tKS3LcupPTtfl+uhO5cgg6XILcg+mlpDa3BRi+Y
+ iEYhqxYsxI9IOGCuDHAGYmrLHwOw6EySug+JFru0YGDikBVitnNFHsELIlCNzH9d
+ 8ZRRhz2BCZ8A3hsPafqcy2T3yolWnX7rclUeRuaH4lTEE9Fp05q9wGIv8R/qidKC
+ THy8JDVAhrPJbX4pEVFhwJkaxtoSVURi6UePjibDDNsJcJFgA7dQwSyefe+sl2xw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 471geyfp7c-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Jun 2025 08:46:01 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5554fl0B012508;
+ Thu, 5 Jun 2025 08:46:00 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 470et2kkfu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 05 Jun 2025 08:46:00 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 5558juMT34013750
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 5 Jun 2025 08:45:56 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 737E12004B;
+ Thu,  5 Jun 2025 08:45:56 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 208C520040;
+ Thu,  5 Jun 2025 08:45:56 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.111.39.61]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu,  5 Jun 2025 08:45:56 +0000 (GMT)
+Message-ID: <beb12864fd3571a929eba525fcb40f0619f32729.camel@linux.ibm.com>
+Subject: Re: [PATCH v5 1/3] hw/s390x: add SCLP event type CPI
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Shalini Chellathurai Saroja <shalini@linux.ibm.com>, qemu-s390x
+ mailing list <qemu-s390x@nongnu.org>, Thomas Huth <thuth@redhat.com>
+Cc: Daniel Berrange <berrange@redhat.com>, qemu-devel mailing list
+ <qemu-devel@nongnu.org>, Hendrik Brueckner <brueckner@linux.ibm.com>
+Date: Thu, 05 Jun 2025 10:45:55 +0200
+In-Reply-To: <20250603135655.595602-2-shalini@linux.ibm.com>
+References: <20250603135655.595602-1-shalini@linux.ibm.com>
+ <20250603135655.595602-2-shalini@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.1 (3.56.1-1.fc42) 
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ea09f6EH c=1 sm=1 tr=0 ts=68415949 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=d4LToudSVkjQPbQJ9YAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: L2zaBfgCmKY82Xh-7TdznkRGXo0IK9sn
+X-Proofpoint-ORIG-GUID: L2zaBfgCmKY82Xh-7TdznkRGXo0IK9sn
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA1MDA3NCBTYWx0ZWRfX9QGIBmaQR9hT
+ KbBJPXZFgLrg7tX0qroA2bUDOFYALamU1c5YVP/wxhbX2DzOAa7CxyHcaeQ5wlV+ZaoIo6LE5j0
+ OFEQS/TZWeBJ9/ZKiXmSjyuFdb09o+0a5+X3Mp4mkYP7yY28ElsdWnrIGtLda54h4JBo0O2+MWw
+ S9s6XUBMC+HGee5Njrdyqj7460XVLfOpEtXXP+6yH4MycVKJ4QUEHnn0itrEF03PtmsziTsxn1a
+ X9xmw/vvLKEzXdGbpVh9B+JM/QYzoGXwmxDRkJxxCZoeyU8fGlikAoI28SWh1rbZB4tiZjdy71A
+ 3kSkQUOUTtZxoLI0HYKmroaw7BkXmweG4XLR2gEhRn2UKDV+imtpz3O1uxC5T50hbcvPIO75/wH
+ vuCMnYIB94VonNPjbNzJaKMsbt1yuugCeraZGne3llAxVgL9+t74Py9G+pYhoSoad4rUSc+H
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-05_02,2025-06-03_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 bulkscore=0
+ spamscore=0 suspectscore=0 lowpriorityscore=0 malwarescore=0
+ impostorscore=0 phishscore=0 mlxscore=0 adultscore=0 clxscore=1015
+ priorityscore=1501 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506050074
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.128,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -85,99 +122,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+On Tue, 2025-06-03 at 15:56 +0200, Shalini Chellathurai Saroja wrote:
+> Implement the Service-Call Logical Processor (SCLP) event
+> type Control-Program Identification (CPI) in QEMU. This
+> event is used to send CPI identifiers from the guest to the
+> host. The CPI identifiers are: system type, system name,
+> system level and sysplex name.
+>=20
+> System type: operating system of the guest (e.g. "LINUX").
+> System name: user configurable name of the guest (e.g. "TESTVM").
+> System level: distribution and kernel version, if the system type is Linu=
+x
+> (e.g. 0x50e00).
+> Sysplex name: name of the cluster which the guest belongs to (if any)
+> (e.g. "PLEX").
+>=20
+> The SCLP event CPI is supported only from "s390-ccw-virtio-10.1" machine
+> and higher.
+>=20
+> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-Some device information returned by ioctl(IOMMU_GET_HW_INFO) are vendor
-specific. Save them as raw data in a union supporting different vendors,
-then vendor IOMMU can query the raw data with its fixed format for
-capability directly.
+Reviewed-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
-Because IOMMU_GET_HW_INFO is only supported in linux, so declare those
-capability related structures with CONFIG_LINUX.
-
-Suggested-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Nicolin Chen <nicolinc@nvidia.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250604062115.4004200-5-zhenzhong.duan@intel.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- include/system/host_iommu_device.h | 15 +++++++++++++++
- hw/vfio/iommufd.c                  |  8 +++-----
- 2 files changed, 18 insertions(+), 5 deletions(-)
-
-diff --git a/include/system/host_iommu_device.h b/include/system/host_iommu_device.h
-index 809cced4ba5c56263132b474a382e4bd0ffdd3cd..ab849a4a82d5f2a2a09c7924791b93c26d9ff902 100644
---- a/include/system/host_iommu_device.h
-+++ b/include/system/host_iommu_device.h
-@@ -14,6 +14,13 @@
- 
- #include "qom/object.h"
- #include "qapi/error.h"
-+#ifdef CONFIG_LINUX
-+#include "linux/iommufd.h"
-+
-+typedef union VendorCaps {
-+    struct iommu_hw_info_vtd vtd;
-+    struct iommu_hw_info_arm_smmuv3 smmuv3;
-+} VendorCaps;
- 
- /**
-  * struct HostIOMMUDeviceCaps - Define host IOMMU device capabilities.
-@@ -22,11 +29,17 @@
-  *
-  * @hw_caps: host platform IOMMU capabilities (e.g. on IOMMUFD this represents
-  *           the @out_capabilities value returned from IOMMU_GET_HW_INFO ioctl)
-+ *
-+ * @vendor_caps: host platform IOMMU vendor specific capabilities (e.g. on
-+ *               IOMMUFD this represents a user-space buffer filled by kernel
-+ *               with host IOMMU @type specific hardware information data)
-  */
- typedef struct HostIOMMUDeviceCaps {
-     uint32_t type;
-     uint64_t hw_caps;
-+    VendorCaps vendor_caps;
- } HostIOMMUDeviceCaps;
-+#endif
- 
- #define TYPE_HOST_IOMMU_DEVICE "host-iommu-device"
- OBJECT_DECLARE_TYPE(HostIOMMUDevice, HostIOMMUDeviceClass, HOST_IOMMU_DEVICE)
-@@ -38,7 +51,9 @@ struct HostIOMMUDevice {
-     void *agent; /* pointer to agent device, ie. VFIO or VDPA device */
-     PCIBus *aliased_bus;
-     int aliased_devfn;
-+#ifdef CONFIG_LINUX
-     HostIOMMUDeviceCaps caps;
-+#endif
- };
- 
- /**
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 59033028373c82a22b1aaf092503d037a6d7e9b6..c4bbf36241d3ee5c46bca9601688afd742e471f7 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -839,16 +839,14 @@ static bool hiod_iommufd_vfio_realize(HostIOMMUDevice *hiod, void *opaque,
-     VFIODevice *vdev = opaque;
-     HostIOMMUDeviceIOMMUFD *idev;
-     HostIOMMUDeviceCaps *caps = &hiod->caps;
-+    VendorCaps *vendor_caps = &caps->vendor_caps;
-     enum iommu_hw_info_type type;
--    union {
--        struct iommu_hw_info_vtd vtd;
--    } data;
-     uint64_t hw_caps;
- 
-     hiod->agent = opaque;
- 
--    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid,
--                                         &type, &data, sizeof(data),
-+    if (!iommufd_backend_get_device_info(vdev->iommufd, vdev->devid, &type,
-+                                         vendor_caps, sizeof(*vendor_caps),
-                                          &hw_caps, errp)) {
-         return false;
-     }
--- 
-2.49.0
-
+--=20
+IBM Deutschland Research & Development GmbH
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Gesch=C3=A4ftsf=C3=BChrung: David Faller
+Sitz der Gesellschaft: B=C3=B6blingen / Registergericht: Amtsgericht Stuttg=
+art, HRB 243294
 
