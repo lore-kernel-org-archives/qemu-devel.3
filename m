@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22624C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 19:37:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FF7C5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 20:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNGNh-0006lj-P2; Thu, 05 Jun 2025 15:36:05 -0400
+	id 1uNHZG-00065c-Lu; Thu, 05 Jun 2025 16:52:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNGNa-0006iG-6e
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 15:35:59 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNGNX-00016q-Fk
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 15:35:57 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-442f4a3a4d6so8270095e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 12:35:54 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749152153; x=1749756953; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=83yRFqQDqtEfhfQYce2Osef2dywXWD24VcAWbnFp9Kk=;
- b=Oqcb+mrQWvq4iZ1eAEj0YztXidNZ9xREngt3tFL5TMElowPNHfSg54rx8V9GgVwGCP
- 9Y9FZGTzPkUIYyX0bWPgF9YCMyrbhpc+SyB2RVgIqjio+ZdKzFLfJXMFhajZtazfGRyt
- eKTIJCv6kDI0Q4ex4fzA7qtYMggbn5XFEFnFOmV6BfZQHqtjC4JyowI1oCg0eP3RiWxP
- 4Bd6nAGcoEIv70jSsK/+syRWJ+Fe+94qjD3pNDCpB5MCiWhMAuVBsmfA3QkVHQI6C1kL
- 9vr/SD72ukDLhUKoP78365XuuKOZkjUSuXKwCabYFYxyuGOWoUe8yk6km/dvILoV0GXA
- sChQ==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNHZC-00065A-T3
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 16:52:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNHZ8-0000h0-UX
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 16:52:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749156716;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=NtS4M20Y3exLxGd5ILSxDqyzf0b39YV0H2jB74eMxIY=;
+ b=WIYOhMt+nAvMTuCnLcCz5Ck3TENeO1JETl/TWwjOSboO3RfCzjXrsIiEmtPrBN03s20eRo
+ 5+ouByZQ+t6LxHQNw22ommrr2H1XPcyyStTu7ISdoU2FkPm835bb+tnBNpQ2vwMscxikWE
+ oBFd+sPtHPfJE9oqEqJeIT0yh69farU=
+Received: from mail-ua1-f72.google.com (mail-ua1-f72.google.com
+ [209.85.222.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-244-KPdiLK9qNquqEBQc0IkwQQ-1; Thu, 05 Jun 2025 16:51:55 -0400
+X-MC-Unique: KPdiLK9qNquqEBQc0IkwQQ-1
+X-Mimecast-MFC-AGG-ID: KPdiLK9qNquqEBQc0IkwQQ_1749156714
+Received: by mail-ua1-f72.google.com with SMTP id
+ a1e0cc1a2514c-87e8668f1ffso976915241.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 13:51:55 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749152153; x=1749756953;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=83yRFqQDqtEfhfQYce2Osef2dywXWD24VcAWbnFp9Kk=;
- b=BRzX5ofqRQbekSixqYBLHUlnzDLjEVxEvl10zNiQtp7oTTj+2ipC66jVHHmCv8Zqvn
- Mr8QMw7puH+AYHOIZp1jsYCXKA1c1/AArWV1piyGFuNdOsG+HH9Nit0ss0KCaJBKj1nG
- 8m1bLNL4BzVaoqIDwGhue99AQgi6c91gL20dJ1zLgcjx9Ivaq2D4ltg66aBN86lA6DUv
- NyJE7N0xLacE241Rg61fKqQ4L4hnsnxY+Gmym/WkliZtHJPyz1SVMYByxgWYXOgFR5La
- P54UGxhwin7iSVaxUoRxmmN3vpiaP18aUXMXEWX1UVfpM6nobax25xn4zp55Y/jIdtWp
- TnXg==
-X-Gm-Message-State: AOJu0Yy7Bvlkm99bF9GX/ODtW0mBEsvJRuCc7r0R257On4qLDRS+2+4B
- +FIm1pWnNnON/3wN573Frvsor7vWSLFQUrNtZ3AQdzULEUbLPtxwNT4UeadJktpPZJCSVpB8adx
- 4Zi1RfSg=
-X-Gm-Gg: ASbGncuNwc8Icrw4+Ac1gkzQqqkCREJgXUd6bSzz/lzUBHKBV3dfPBmjDMz91AHUCW+
- zwTLpGe5pHHYeW8RsWJsgCdyxZIviCiGni/DfsBDedxS1duQOAFzAHHyDQWibAO3Z2ddbcHt64t
- uHA37XQXCMMhYIUNtw5gIlxUPMxldSQ1Z/duFAk5rMxvoR+zAVZC/EoaMn9gDKiQB/7ZWDG+6HK
- p3PNcN1TBmjfy7iHnnmK6qff4K2e25ESxvAGhecA8L+qcWfxawvWUQrEjJ2LRlAh/b67HVSV/k1
- DEo5KTfUuHV14X0J6aJvNHR9D1xpKhmxu0rShuBdUIxZYJGQps07xeo692AEBpvGg4zN/lq2xFf
- 1VGVCK31QkXDujHEqPvj1qsDURoYX78GXfDJz
-X-Google-Smtp-Source: AGHT+IEwwg1icoF6ZnxFG0lbDu28dQaCv3Q4Tq0/L1LJKc8Joism/TsTRg9wQoqo6DYinr3mSHfX6g==
-X-Received: by 2002:a05:600c:458a:b0:450:d3a1:95e2 with SMTP id
- 5b1f17b1804b1-451f8855f11mr44862745e9.9.1749152153306; 
- Thu, 05 Jun 2025 12:35:53 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45209ce1f34sm2477585e9.14.2025.06.05.12.35.52
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 05 Jun 2025 12:35:52 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 2/4] backends/tpmL Avoid using g_alloca()
-Date: Thu,  5 Jun 2025 21:35:38 +0200
-Message-ID: <20250605193540.59874-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250605193540.59874-1-philmd@linaro.org>
-References: <20250605193540.59874-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1749156713; x=1749761513;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NtS4M20Y3exLxGd5ILSxDqyzf0b39YV0H2jB74eMxIY=;
+ b=tHaFfNorf6QbRxq6HFfWi6XOMfeNc3kXj1aCB8xs0ExqzjOSIyZBeXBKV15sUkhjNE
+ /nuLsKiNuOZ8PRLeuK73GMZCwwmcL8bRF9BToaLUNPI3dmrX9Gxke/kRDnSz6bcRXtTv
+ VlRhFgr/s/9FbtwGYw/oC/E3ykg0yVwdkTcKp68JR95IO6oYDtFzJ0QNCaBSkECQ1BVF
+ n+IEo5Oyj4KvTv/LE5t2v/DCondV9LDihkRUi4sfgw4OS3AbFrlf339LO8DIHAOYaGeQ
+ oICY1wsrIX/Zust7GLwMptjsgEl0YDs7egq5OG+eEuh0TPiExzLfjlqB+iyLntPBBHAz
+ PYLw==
+X-Gm-Message-State: AOJu0Ywql9WbmRJ/pQcO73k8RfuyF3QEd4+3UkrDfQ7Vz6iLSPTaKcnz
+ EQuDL0RaMXXmwky16ZMzvOMzckd5kwi9PgR6GyuAg0YU3xn6j3OT0NvNEKC6sbP1nixUJKj3ZcR
+ 42koYZIzo8YeRi9GXzI0ZwF8YBXWZ4wdgcfT8eEFmm4AIfG2VOIP/Xoxy1tsi+PZO
+X-Gm-Gg: ASbGnctnAUWetDXpJfd7GVy1Mett3fkIqvgaITEVRKRZ+/4+g5/+Ef+xHuOU5wcjw6V
+ tzA3UOq6N9ZdNWIptTYicZpcPLZCWxfeIIx4cuE639yHqqHEPw4uHwyzR/vaSuJtXOKsv/gdaCg
+ 0ZPY+EyF6en/9bheJA25C0s7JDBJ7Tt8ahnMBIsmuSCKYNZi7RyNaeTS17slAjICEwoJA4ktD2G
+ 7AptuOKGs/DOWsI+G8BSocFwO9HVgC3imAeMbYaLai9Yzhf+OXZQa1u1aQ9cpdEKsjE/J16mEEW
+ f7Q=
+X-Received: by 2002:a05:6102:1591:b0:4e4:f503:6675 with SMTP id
+ ada2fe7eead31-4e772a6ba32mr1024864137.18.1749156713332; 
+ Thu, 05 Jun 2025 13:51:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFGsht4eIvT6RNAbpZMcgl0T1Kr1RU4cReK0Pz6Sq8BM7uzLgsw/UhgANw9f6lpj8Gqn7LpEw==
+X-Received: by 2002:a05:622a:410d:b0:494:b3eb:a4b9 with SMTP id
+ d75a77b69052e-4a5b9db8c40mr17702071cf.51.1749156702545; 
+ Thu, 05 Jun 2025 13:51:42 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4a61117d0a7sm1081651cf.33.2025.06.05.13.51.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 13:51:41 -0700 (PDT)
+Date: Thu, 5 Jun 2025 16:51:39 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 01/21] migration: Normalize tls arguments
+Message-ID: <aEIDW3gVi9LF4FTQ@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-2-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250603013810.4772-2-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,34 +105,443 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-tpm_emulator_ctrlcmd() is not in hot path.
-Use the heap instead of the stack, removing
-the g_alloca() call.
+On Mon, Jun 02, 2025 at 10:37:50PM -0300, Fabiano Rosas wrote:
+> The migration parameters tls_creds, tls_authz and tls_hostname
+> currently have a non-uniform handling. When used as arguments to
+> migrate-set-parameters, their type is StrOrNull and when used as
+> return value from query-migrate-parameters, their type is a plain
+> string.
+> 
+> Not only having to convert between the types is cumbersome, but it
+> also creates the issue of requiring two different QAPI types to be
+> used, one for each command. MigrateSetParameters is used for
+> migrate-set-parameters with the TLS arguments as StrOrNull while
+> MigrationParameters is used for query-migrate-parameters with the TLS
+> arguments as str.
+> 
+> Since StrOrNull could be considered a superset of str, change the type
+> of the TLS arguments in MigrationParameters to StrOrNull and add a
+> helper to ensure they're never actually used as QTYPE_QNULL.
+> 
+> This will allow the type duplication to be removed in the next
+> patches.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- backends/tpm/tpm_emulator.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Definitely a progress if we can finally merge the two!
 
-diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
-index 43d350e895d..4a234ab2c0b 100644
---- a/backends/tpm/tpm_emulator.c
-+++ b/backends/tpm/tpm_emulator.c
-@@ -129,11 +129,11 @@ static int tpm_emulator_ctrlcmd(TPMEmulator *tpm, unsigned long cmd, void *msg,
-     CharBackend *dev = &tpm->ctrl_chr;
-     uint32_t cmd_no = cpu_to_be32(cmd);
-     ssize_t n = sizeof(uint32_t) + msg_len_in;
--    uint8_t *buf = NULL;
-     ptm_res res;
- 
-     WITH_QEMU_LOCK_GUARD(&tpm->mutex) {
--        buf = g_alloca(n);
-+        g_autofree uint8_t *buf = g_malloc(n);
-+
-         memcpy(buf, &cmd_no, sizeof(cmd_no));
-         memcpy(buf + sizeof(cmd_no), msg, msg_len_in);
- 
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/migration-hmp-cmds.c |   8 +-
+>  migration/migration.c          |   2 +
+>  migration/options.c            | 149 ++++++++++++++++++++-------------
+>  migration/options.h            |   1 +
+>  migration/tls.c                |   2 +-
+>  qapi/migration.json            |   6 +-
+>  6 files changed, 99 insertions(+), 69 deletions(-)
+> 
+> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
+> index e8a563c7d8..bc8179c582 100644
+> --- a/migration/migration-hmp-cmds.c
+> +++ b/migration/migration-hmp-cmds.c
+> @@ -276,14 +276,12 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>          monitor_printf(mon, "%s: %u\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_MAX_CPU_THROTTLE),
+>              params->max_cpu_throttle);
+> -        assert(params->tls_creds);
+>          monitor_printf(mon, "%s: '%s'\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_CREDS),
+> -            params->tls_creds);
+> -        assert(params->tls_hostname);
+> +                       params->tls_creds ? params->tls_creds->u.s : "");
+>          monitor_printf(mon, "%s: '%s'\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_HOSTNAME),
+> -            params->tls_hostname);
+> +                       params->tls_hostname ? params->tls_hostname->u.s : "");
+>          assert(params->has_max_bandwidth);
+>          monitor_printf(mon, "%s: %" PRIu64 " bytes/second\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_MAX_BANDWIDTH),
+> @@ -319,7 +317,7 @@ void hmp_info_migrate_parameters(Monitor *mon, const QDict *qdict)
+>              params->max_postcopy_bandwidth);
+>          monitor_printf(mon, "%s: '%s'\n",
+>              MigrationParameter_str(MIGRATION_PARAMETER_TLS_AUTHZ),
+> -            params->tls_authz);
+> +                       params->tls_authz ? params->tls_authz->u.s : "");
+>  
+>          if (params->has_block_bitmap_mapping) {
+>              const BitmapMigrationNodeAliasList *bmnal;
+> diff --git a/migration/migration.c b/migration/migration.c
+> index 4697732bef..f65cb81b6d 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -4053,6 +4053,8 @@ static void migration_instance_finalize(Object *obj)
+>  {
+>      MigrationState *ms = MIGRATION_OBJ(obj);
+>  
+> +    migrate_tls_opts_free(&ms->parameters);
+
+Does this line imply that maybe it's time we make MigrationState.parameters
+a pointer instead of embeded struct anymore?
+
+We already used to have tls_* strings hence that idea should be already
+applicable even before.. but this work just made me think about it more.
+
+So instead of freeing sub-fields if we add more to MigrationParameters, we
+could then do:
+
+  g_clear_pointer(&ms->parameters, qapi_free_MigrationParameters);
+
+> +
+>      qemu_mutex_destroy(&ms->error_mutex);
+>      qemu_mutex_destroy(&ms->qemu_file_lock);
+>      qemu_sem_destroy(&ms->wait_unplug_sem);
+> diff --git a/migration/options.c b/migration/options.c
+> index 162c72cda4..45a95dc6da 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -162,9 +162,11 @@ const Property migration_properties[] = {
+>      DEFINE_PROP_SIZE("announce-step", MigrationState,
+>                        parameters.announce_step,
+>                        DEFAULT_MIGRATE_ANNOUNCE_STEP),
+> -    DEFINE_PROP_STRING("tls-creds", MigrationState, parameters.tls_creds),
+> -    DEFINE_PROP_STRING("tls-hostname", MigrationState, parameters.tls_hostname),
+> -    DEFINE_PROP_STRING("tls-authz", MigrationState, parameters.tls_authz),
+> +    /*
+> +     * tls-creds, tls-hostname and tls-authz are of type StrOrNull,
+> +     * which can't be easily handled (if at all) by qdev. So these
+> +     * will not be exposed as global migration options (-global).
+> +     */
+>      DEFINE_PROP_UINT64("x-vcpu-dirty-limit-period", MigrationState,
+>                         parameters.x_vcpu_dirty_limit_period,
+>                         DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD),
+> @@ -379,13 +381,6 @@ bool migrate_rdma(void)
+>      return s->rdma_migration;
+>  }
+>  
+> -bool migrate_tls(void)
+> -{
+> -    MigrationState *s = migrate_get_current();
+> -
+> -    return s->parameters.tls_creds && *s->parameters.tls_creds;
+> -}
+> -
+>  typedef enum WriteTrackingSupport {
+>      WT_SUPPORT_UNKNOWN = 0,
+>      WT_SUPPORT_ABSENT,
+> @@ -834,21 +829,44 @@ const char *migrate_tls_authz(void)
+>  {
+>      MigrationState *s = migrate_get_current();
+>  
+> -    return s->parameters.tls_authz;
+> +    if (s->parameters.tls_authz &&
+> +        s->parameters.tls_authz->type == QTYPE_QSTRING &&
+> +        *s->parameters.tls_authz->u.s) {
+> +        return s->parameters.tls_authz->u.s;
+> +    }
+
+Nitpick: some deduplication would be nice?  E.g.
+
+  bool StrOrNull_str_valid(StrOrNull *obj)
+  {
+      return obj && obj->type == QTYPE_QSTRING && *obj->u.s;
+  }
+
+  const char *StrOrNull_str_get(StrOrNull *obj)
+  {
+      assert(obj && obj->type == QTYPE_QSTRING);
+      return obj->u.s;
+  }
+
+  const char *StrOrNull_to_str(StrOrNull *obj)
+  {
+      return StrOrNull_str_valid(obj) ? StrOrNull_str_get(obj) : NULL;
+  }
+
+Then:
+
+const char *migrate_tls_authz(void)
+{
+    return StrOrNull_to_str(s->parameters.tls_authz);
+}
+
+Then apply below.
+
+> +
+> +    return NULL;
+>  }
+>  
+>  const char *migrate_tls_creds(void)
+>  {
+>      MigrationState *s = migrate_get_current();
+>  
+> -    return s->parameters.tls_creds;
+> +    if (s->parameters.tls_creds &&
+> +        s->parameters.tls_creds->type == QTYPE_QSTRING &&
+> +        *s->parameters.tls_creds->u.s) {
+> +        return s->parameters.tls_creds->u.s;
+> +    }
+> +
+> +    return NULL;
+>  }
+>  
+>  const char *migrate_tls_hostname(void)
+>  {
+>      MigrationState *s = migrate_get_current();
+>  
+> -    return s->parameters.tls_hostname;
+> +    if (s->parameters.tls_hostname &&
+> +        s->parameters.tls_hostname->type == QTYPE_QSTRING &&
+> +        *s->parameters.tls_hostname->u.s) {
+> +        return s->parameters.tls_hostname->u.s;
+> +    }
+> +
+> +    return NULL;
+> +}
+> +
+> +bool migrate_tls(void)
+> +{
+> +    return !!migrate_tls_creds();
+>  }
+>  
+>  uint64_t migrate_vcpu_dirty_limit_period(void)
+> @@ -888,6 +906,36 @@ AnnounceParameters *migrate_announce_params(void)
+>      return &ap;
+>  }
+>  
+> +void migrate_tls_opts_free(MigrationParameters *params)
+> +{
+> +    qapi_free_StrOrNull(params->tls_creds);
+> +    qapi_free_StrOrNull(params->tls_hostname);
+> +    qapi_free_StrOrNull(params->tls_authz);
+> +}
+> +
+> +/* needs BQL if dst is part of s->parameters */
+> +static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
+
+Nitpick: set_str made me think that the internal objects will be stolen.
+Maybe tls_option_copy()?
+
+> +{
+> +    StrOrNull *dst = *dstp;
+> +
+> +    assert(!dst);
+> +
+> +    dst = *dstp = g_new0(StrOrNull, 1);
+> +    dst->type = QTYPE_QSTRING;
+> +
+> +    if (!src) {
+> +        dst->u.s = g_strdup("");
+> +        return;
+> +    }
+> +
+> +    if (src->type == QTYPE_QSTRING) {
+> +        dst->u.s = g_strdup(src->u.s);
+> +    } else {
+> +        assert(src->type == QTYPE_QNULL);
+> +        dst->u.s = g_strdup("");
+> +    }
+> +}
+> +
+>  MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>  {
+>      MigrationParameters *params;
+> @@ -903,10 +951,11 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>      params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
+>      params->has_cpu_throttle_tailslow = true;
+>      params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
+> -    params->tls_creds = g_strdup(s->parameters.tls_creds);
+> -    params->tls_hostname = g_strdup(s->parameters.tls_hostname);
+> -    params->tls_authz = g_strdup(s->parameters.tls_authz ?
+> -                                 s->parameters.tls_authz : "");
+> +
+> +    tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
+> +    tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
+> +    tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
+> +
+>      params->has_max_bandwidth = true;
+>      params->max_bandwidth = s->parameters.max_bandwidth;
+>      params->has_avail_switchover_bandwidth = true;
+> @@ -963,9 +1012,6 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>  
+>  void migrate_params_init(MigrationParameters *params)
+>  {
+> -    params->tls_hostname = g_strdup("");
+> -    params->tls_creds = g_strdup("");
+> -
+>      /* Set has_* up only for parameter checks */
+>      params->has_throttle_trigger_threshold = true;
+>      params->has_cpu_throttle_initial = true;
+> @@ -1142,7 +1188,8 @@ bool migrate_params_check(MigrationParameters *params, Error **errp)
+>  #ifdef CONFIG_LINUX
+>      if (migrate_zero_copy_send() &&
+>          ((params->has_multifd_compression && params->multifd_compression) ||
+> -         (params->tls_creds && *params->tls_creds))) {
+> +         (params->tls_creds && params->tls_creds->type == QTYPE_QSTRING &&
+> +          *params->tls_creds->u.s))) {
+
+Nitpick: StrOrNull_str_valid() candidate.
+
+>          error_setg(errp,
+>                     "Zero copy only available for non-compressed non-TLS multifd migration");
+>          return false;
+> @@ -1204,18 +1251,24 @@ static void migrate_params_test_apply(MigrateSetParameters *params,
+>      }
+>  
+>      if (params->tls_creds) {
+> -        assert(params->tls_creds->type == QTYPE_QSTRING);
+> -        dest->tls_creds = params->tls_creds->u.s;
+> +        tls_option_set_str(&dest->tls_creds, params->tls_creds);
+> +    } else {
+> +        /* drop the reference, it's owned by s->parameters */
+> +        dest->tls_creds = NULL;
+>      }
+
+This looks ok, but smells tricky, because before this line, "params" can
+contain something that it doesn't own..
+
+If above idea of "making MigrationState->parameters a real QAPI object"
+works out, here IIUC we can also make "params" a real QAPI object by
+QAPI_CLONE(MigrationState->parameters), then when reaching here:
+
+       if (params->tls_creds) {
+          qapi_free_StrOrNull(params->tls_creds);
+          params->tls_creds = QAPI_CLONE(params->tls_creds);
+       }
+
+It avoids the tricky "else" where we need to remember to clear something it
+doesn't ever own.  Same to the rest.
+
+>  
+>      if (params->tls_hostname) {
+> -        assert(params->tls_hostname->type == QTYPE_QSTRING);
+> -        dest->tls_hostname = params->tls_hostname->u.s;
+> +        tls_option_set_str(&dest->tls_hostname, params->tls_hostname);
+> +    } else {
+> +        /* drop the reference, it's owned by s->parameters */
+> +        dest->tls_hostname = NULL;
+>      }
+>  
+>      if (params->tls_authz) {
+> -        assert(params->tls_authz->type == QTYPE_QSTRING);
+> -        dest->tls_authz = params->tls_authz->u.s;
+> +        tls_option_set_str(&dest->tls_authz, params->tls_authz);
+> +    } else {
+> +        /* drop the reference, it's owned by s->parameters */
+> +        dest->tls_authz = NULL;
+>      }
+>  
+>      if (params->has_max_bandwidth) {
+> @@ -1320,21 +1373,18 @@ static void migrate_params_apply(MigrateSetParameters *params, Error **errp)
+>      }
+>  
+>      if (params->tls_creds) {
+> -        g_free(s->parameters.tls_creds);
+> -        assert(params->tls_creds->type == QTYPE_QSTRING);
+> -        s->parameters.tls_creds = g_strdup(params->tls_creds->u.s);
+> +        qapi_free_StrOrNull(s->parameters.tls_creds);
+> +        tls_option_set_str(&s->parameters.tls_creds, params->tls_creds);
+
+Yeah, exactly like this one..
+
+>      }
+>  
+>      if (params->tls_hostname) {
+> -        g_free(s->parameters.tls_hostname);
+> -        assert(params->tls_hostname->type == QTYPE_QSTRING);
+> -        s->parameters.tls_hostname = g_strdup(params->tls_hostname->u.s);
+> +        qapi_free_StrOrNull(s->parameters.tls_hostname);
+> +        tls_option_set_str(&s->parameters.tls_hostname, params->tls_hostname);
+>      }
+>  
+>      if (params->tls_authz) {
+> -        g_free(s->parameters.tls_authz);
+> -        assert(params->tls_authz->type == QTYPE_QSTRING);
+> -        s->parameters.tls_authz = g_strdup(params->tls_authz->u.s);
+> +        qapi_free_StrOrNull(s->parameters.tls_authz);
+> +        tls_option_set_str(&s->parameters.tls_authz, params->tls_authz);
+>      }
+>  
+>      if (params->has_max_bandwidth) {
+> @@ -1433,32 +1483,11 @@ void qmp_migrate_set_parameters(MigrateSetParameters *params, Error **errp)
+>  {
+>      MigrationParameters tmp;
+>  
+> -    /* TODO Rewrite "" to null instead for all three tls_* parameters */
+> -    if (params->tls_creds
+> -        && params->tls_creds->type == QTYPE_QNULL) {
+> -        qobject_unref(params->tls_creds->u.n);
+> -        params->tls_creds->type = QTYPE_QSTRING;
+> -        params->tls_creds->u.s = strdup("");
+> -    }
+> -    if (params->tls_hostname
+> -        && params->tls_hostname->type == QTYPE_QNULL) {
+> -        qobject_unref(params->tls_hostname->u.n);
+> -        params->tls_hostname->type = QTYPE_QSTRING;
+> -        params->tls_hostname->u.s = strdup("");
+> -    }
+> -    if (params->tls_authz
+> -        && params->tls_authz->type == QTYPE_QNULL) {
+> -        qobject_unref(params->tls_authz->u.n);
+> -        params->tls_authz->type = QTYPE_QSTRING;
+> -        params->tls_authz->u.s = strdup("");
+> -    }
+> -
+>      migrate_params_test_apply(params, &tmp);
+>  
+> -    if (!migrate_params_check(&tmp, errp)) {
+> -        /* Invalid parameter */
+> -        return;
+> +    if (migrate_params_check(&tmp, errp)) {
+> +        migrate_params_apply(params, errp);
+>      }
+>  
+> -    migrate_params_apply(params, errp);
+> +    migrate_tls_opts_free(&tmp);
+>  }
+> diff --git a/migration/options.h b/migration/options.h
+> index 82d839709e..999eee6f3b 100644
+> --- a/migration/options.h
+> +++ b/migration/options.h
+> @@ -91,4 +91,5 @@ ZeroPageDetection migrate_zero_page_detection(void);
+>  
+>  bool migrate_params_check(MigrationParameters *params, Error **errp);
+>  void migrate_params_init(MigrationParameters *params);
+> +void migrate_tls_opts_free(MigrationParameters *params);
+>  #endif
+> diff --git a/migration/tls.c b/migration/tls.c
+> index 5cbf952383..8a89d3f767 100644
+> --- a/migration/tls.c
+> +++ b/migration/tls.c
+> @@ -126,7 +126,7 @@ QIOChannelTLS *migration_tls_client_create(QIOChannel *ioc,
+>      }
+>  
+>      const char *tls_hostname = migrate_tls_hostname();
+> -    if (tls_hostname && *tls_hostname) {
+> +    if (tls_hostname) {
+>          hostname = tls_hostname;
+>      }
+>  
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index 41826bde45..fa42d94810 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -1293,9 +1293,9 @@
+>              '*cpu-throttle-initial': 'uint8',
+>              '*cpu-throttle-increment': 'uint8',
+>              '*cpu-throttle-tailslow': 'bool',
+> -            '*tls-creds': 'str',
+> -            '*tls-hostname': 'str',
+> -            '*tls-authz': 'str',
+> +            '*tls-creds': 'StrOrNull',
+> +            '*tls-hostname': 'StrOrNull',
+> +            '*tls-authz': 'StrOrNull',
+>              '*max-bandwidth': 'size',
+>              '*avail-switchover-bandwidth': 'size',
+>              '*downtime-limit': 'uint64',
+> -- 
+> 2.35.3
+> 
+
 -- 
-2.49.0
+Peter Xu
 
 
