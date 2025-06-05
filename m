@@ -4,104 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1F12C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 15:15:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F79C61CE7
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 16:04:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNCJE-0007ID-MD; Thu, 05 Jun 2025 11:15:12 -0400
+	id 1uND1W-0007FM-GP; Thu, 05 Jun 2025 12:00:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uNCJ3-0007Ad-9z
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 11:15:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uND16-00074X-UQ
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:00:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uNCJ1-00072g-8C
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 11:15:00 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uND15-0000nW-2Z
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 12:00:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749136498;
+ s=mimecast20190719; t=1749139226;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jCidGWgWn2ryADMpNaK1bwwhGJAeaoXLr8AYUb05Ou0=;
- b=Wp+dVIgAxLWhB778h/xpsGZ24EsqKXY873VBMN3/8ACQ/sCJphJqiSt5NKYEjoaxG8vt0g
- bJBBpAv44W3lZ8RLqReaXrG7aNkHe+YVEyzXYT1KcqDcohE1FsceoA1B4D5SGVSay1DOHH
- M3m6MO+V5BS/f/yNUAvJIg7i+2YiSeA=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2arhQkSqQ5QDu2ry/bbqpb4fS7bGF/7rT2F4p3Z2sBs=;
+ b=Roay3l1NmgkhOR1absN1Ctt2iOGrkiyrEyvlcVAlFRRTCG7CvDvKYT012CLxqJ07GnEiWS
+ ukeVvSlFWRJjSN6Ck5cvbMe3uIhCxCWf3zVeFHnbnJqsgY0Jx026IlbdkfCUOpIIkAu+Y/
+ BqJGGWqde4xxRwjvRpR1vaDNntvTtPA=
+Received: from mail-pg1-f200.google.com (mail-pg1-f200.google.com
+ [209.85.215.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-106-MTO0cZrAOV-F9f8Hkcnc8g-1; Thu, 05 Jun 2025 11:14:56 -0400
-X-MC-Unique: MTO0cZrAOV-F9f8Hkcnc8g-1
-X-Mimecast-MFC-AGG-ID: MTO0cZrAOV-F9f8Hkcnc8g_1749136496
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-39ee4b91d1cso1129970f8f.0
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 08:14:56 -0700 (PDT)
+ us-mta-329-dZGQJTJdPcGf7VFpIxx73w-1; Thu, 05 Jun 2025 12:00:24 -0400
+X-MC-Unique: dZGQJTJdPcGf7VFpIxx73w-1
+X-Mimecast-MFC-AGG-ID: dZGQJTJdPcGf7VFpIxx73w_1749139224
+Received: by mail-pg1-f200.google.com with SMTP id
+ 41be03b00d2f7-b26e73d375aso1156420a12.2
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 09:00:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749136495; x=1749741295;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jCidGWgWn2ryADMpNaK1bwwhGJAeaoXLr8AYUb05Ou0=;
- b=sU95N5wW0xuVxQarQD8BFaO3yuPu6Uy8A3I4iiWpGmBY833Hl+jgUiccGil8iywlcE
- uaYSU1t0HiriWalrLPQFvJBZxE3hzRZLheLEMOpN6JTvYP60f1dVdT338fZ+cvAvJ7r7
- F/aiot3KRZOLyasGJkFvW4+dyXjfiL0wJ5bFawuO9c+mpySkwR449WbhTLSyFQ010tbS
- XmSukkiLH69d4slvH5gJ+YGneT6qtfMxOM0Uk4FRNxslA3lcTzY7hS4UeClayTtDVH1y
- W/W8wWC2kGaHMakgVcR7oNMByBD8YIU0xDf8s+iWDFmz6FQiiNReY7peEPITLVs86OvC
- +BWA==
-X-Gm-Message-State: AOJu0YyZ9wlUujw0YdKwsigXZVE0NW4pJpMH+t6a2uF8jLoWN6xKY6/j
- gXdzQtFOWsOEmtCYFMcFXIO3t9xgWcGUudAz6nSszG6b+YrWbRBXEOIxX/3UsiZrjN1PSjspDQC
- AyuV2UsL2z5UDvUxmgYLB3+/LHoEECJFVqupj0PWw30UAQvdeP7Y1hE85
-X-Gm-Gg: ASbGncujIMgjlrtC3XWNpdq87OaSQlUxyX8MvlAue+9yrF+Us1BKi+/ZfQ1dPtt34D/
- l9nwJKQZcSqXUqdTafoM0PCFIs3YtYZNxqMWTjidzOXeRvMx2OPWRRZWOgbY0BsIaLXyCbIounw
- KN4SOiSsQAR4Nv560JTUkeDCLo9vrCQZGpRCU3Ec/YVeNF3KtMNdNMpXmxm3Pu+eEMG2yk7wL/P
- qIZkvDq+MGPDIKzlQE0BGeCyLpwuekEMUa+sC+1gW1hFMZd4UGN4PZAVDjPtyjwlURp6B0pn4Mf
- EyJBaQ+ZRxcV0G4/naFgYjtQ7ZKYp2IM
-X-Received: by 2002:a05:6000:288c:b0:3a1:f724:eb15 with SMTP id
- ffacd0b85a97d-3a526dd9b8emr3541197f8f.2.1749136495120; 
- Thu, 05 Jun 2025 08:14:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEOt2l+v+ODRv/9H3x8lVMQwIBsINZoU63Mhwm5xd+L0ByfnQUy/Jtq8G62V8VdO50+X4ukdA==
-X-Received: by 2002:a05:6000:288c:b0:3a1:f724:eb15 with SMTP id
- ffacd0b85a97d-3a526dd9b8emr3541146f8f.2.1749136494620; 
- Thu, 05 Jun 2025 08:14:54 -0700 (PDT)
-Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe73eadsm24423953f8f.41.2025.06.05.08.14.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 08:14:54 -0700 (PDT)
-Date: Thu, 5 Jun 2025 17:14:52 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif
- <clement.mathieu--drif@eviden.com>, Zhao Liu <zhao1.liu@intel.com>, Hanna
- Reitz <hreitz@redhat.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- qemu-block@nongnu.org, Jason Wang <jasowang@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Yanan Wang <wangyanan55@huawei.com>, Ani
- Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Thomas
- Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf
- <kwolf@redhat.com>, Yi Liu <yi.l.liu@intel.com>
-Subject: Re: [PATCH 07/18] hw/pci/pcie: Remove QEMU_PCIE_EXTCAP_INIT definition
-Message-ID: <20250605171452.6ca919f3@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250501210456.89071-8-philmd@linaro.org>
-References: <20250501210456.89071-1-philmd@linaro.org>
- <20250501210456.89071-8-philmd@linaro.org>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1749139224; x=1749744024;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2arhQkSqQ5QDu2ry/bbqpb4fS7bGF/7rT2F4p3Z2sBs=;
+ b=LyMagOtZZX6jZUeldtAlNPmfDNxnAEVwu7zA3DWglm2pviFWghRw1AtoZjrHCKjsPz
+ yKl3NZphbJvVvK7LWMYYKFklOdxTS1md3jvWF+etjr+4VTQxMdFkzuZeurbY0LS+RZrx
+ Z4yovAqa1ShfHGOA9KHSHg+O1UqK6GlV9SDb3GnGrWppQCVOTiEKvxekBW8J73Kdqu1m
+ uCzrMcEAkhPOu5G1ddif1nCJm1XVF0pced1bP5MoRPbmQZPZ5BWhwn1vqFc7GJlT9WME
+ j2i+ibj315NCBprwl9JZNNR+bIr3Y8kXdKsixN3/izP6Lns6b99lEnGmNgmMmkvNqVdg
+ fwOw==
+X-Gm-Message-State: AOJu0YwX5yfjnYsD9P+H17QelbPCIg2tENWMMVnD1ClTa2V2UITnxDRe
+ GGTkNiyEFrQWH2NYSnjnYKYtRz8W8kNMp73kiedqGHbbQAms8H3siEcJ0x5CgSGoPqLFz7F61oG
+ QElsbl+aDGi5lbXhzjH0CCq9IvlzNMXS4jadhL/ADnfJmEWAU7be2Hqpjk8aeuDWpIph9WKzKHk
+ CGtqbl3FYwh5yTidAYPodzoduZJ5fRrjw=
+X-Gm-Gg: ASbGncvXs+QitawW8FK48oFgh2lj99I0xhar4hjTdF3Jom+4dI2ZkJhYlPN6A50DvSa
+ tziKXfgvrZQANYJS3gP5lHNMBbl/sl1kYTItkzhe3wdYtpEKlFpS3mXS4zhSNRUz/QW0q4yj9al
+ C3etMUaRsp2u5Vk4JhwkueeyDU
+X-Received: by 2002:a17:90a:dfcd:b0:2f4:4003:f3ea with SMTP id
+ 98e67ed59e1d1-31347699392mr325166a91.33.1749139223691; 
+ Thu, 05 Jun 2025 09:00:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEAj5t5IjjCQ+2OmSq5qjFfTSQrEdxb5URaYKmEctfMeVeFQql6fG7lDFIcRUZXredr3YYrmLavy7MeYzuFxRQ=
+X-Received: by 2002:a17:90a:dfcd:b0:2f4:4003:f3ea with SMTP id
+ 98e67ed59e1d1-31347699392mr325064a91.33.1749139222874; Thu, 05 Jun 2025
+ 09:00:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+References: <20250604200354.459501-1-jsnow@redhat.com>
+ <87bjr2n1as.fsf@pond.sub.org>
+In-Reply-To: <87bjr2n1as.fsf@pond.sub.org>
+From: John Snow <jsnow@redhat.com>
+Date: Thu, 5 Jun 2025 12:00:10 -0400
+X-Gm-Features: AX0GCFtiv1q3mXRIOlXY6VAOEG96dtIWR0gAtQD97EWv1oyvJNiBlVHu3562BGI
+Message-ID: <CAFn=p-Yxm1-yGCdNzEfmuUsTL2tzyb_eppxsQTpgkft+T_x6jw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/6] python: add QAPI and qapidoc et al to python tests
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>, 
+ Cleber Rosa <crosa@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
+Content-Type: multipart/alternative; boundary="0000000000000af6380636d5367b"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
 X-Spam_bar: --
 X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,70 +101,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  1 May 2025 23:04:45 +0200
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
+--0000000000000af6380636d5367b
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> QEMU_PCIE_EXTCAP_INIT was only used by the hw_compat_2_8[]
-> array, via the 'x-pcie-extcap-init=3Doff' property. We removed
-> all machines using that array, lets remove all the code around
-> QEMU_PCIE_EXTCAP_INIT.
->=20
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  include/hw/pci/pci.h | 2 --
->  hw/pci/pci.c         | 2 --
->  hw/pci/pcie.c        | 5 -----
->  3 files changed, 9 deletions(-)
->=20
-> diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-> index c2fe6caa2c6..6c72a61c4b6 100644
-> --- a/include/hw/pci/pci.h
-> +++ b/include/hw/pci/pci.h
-> @@ -210,8 +210,6 @@ enum {
->      /* Link active status in endpoint capability is always set */
->  #define QEMU_PCIE_LNKSTA_DLLLA_BITNR 8
->      QEMU_PCIE_LNKSTA_DLLLA =3D (1 << QEMU_PCIE_LNKSTA_DLLLA_BITNR),
-> -#define QEMU_PCIE_EXTCAP_INIT_BITNR 9
-> -    QEMU_PCIE_EXTCAP_INIT =3D (1 << QEMU_PCIE_EXTCAP_INIT_BITNR),
->  #define QEMU_PCIE_CXL_BITNR 10
->      QEMU_PCIE_CAP_CXL =3D (1 << QEMU_PCIE_CXL_BITNR),
->  #define QEMU_PCIE_ERR_UNC_MASK_BITNR 11
-> diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-> index fe38c4c0287..36206c77b7c 100644
-> --- a/hw/pci/pci.c
-> +++ b/hw/pci/pci.c
-> @@ -90,8 +90,6 @@ static const Property pci_props[] =3D {
->                      QEMU_PCI_CAP_MULTIFUNCTION_BITNR, false),
->      DEFINE_PROP_BIT("x-pcie-lnksta-dllla", PCIDevice, cap_present,
->                      QEMU_PCIE_LNKSTA_DLLLA_BITNR, true),
-> -    DEFINE_PROP_BIT("x-pcie-extcap-init", PCIDevice, cap_present,
-> -                    QEMU_PCIE_EXTCAP_INIT_BITNR, true),
->      DEFINE_PROP_STRING("failover_pair_id", PCIDevice,
->                         failover_pair_id),
->      DEFINE_PROP_UINT32("acpi-index",  PCIDevice, acpi_index, 0),
-> diff --git a/hw/pci/pcie.c b/hw/pci/pcie.c
-> index 1b12db6fa29..a3969423bd3 100644
-> --- a/hw/pci/pcie.c
-> +++ b/hw/pci/pcie.c
-> @@ -245,11 +245,6 @@ int pcie_cap_init(PCIDevice *dev, uint8_t offset,
-> =20
->      pci_set_word(dev->wmask + pos + PCI_EXP_DEVCTL2, PCI_EXP_DEVCTL2_EET=
-LPPB);
-> =20
-> -    if (dev->cap_present & QEMU_PCIE_EXTCAP_INIT) {
+On Thu, Jun 5, 2025 at 2:35=E2=80=AFAM Markus Armbruster <armbru@redhat.com=
+> wrote:
 
-so this one is true by default, and with knob removed
-anything inside block should be called unconditionally (i.e. not like diff =
-below),
-aren't it?
+> John Snow <jsnow@redhat.com> writes:
+>
+> > Hiya, this series turns on automated linting for scripts/qapi,
+> > docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.
+> >
+> > This includes flake8/isort/pylint/mypy for scripts/qapi, but omits mypy
+> > from the Sphinx plugins owing to my inability to strictly type the
+> > extensions given the wide versions of Sphinx we actually support.
+> >
+> > [Maybe this will change soon, but it's not true just yet.]
+> >
+> > Though I have been using black in my own development, I have not yet
+> > enabled it anywhere automatically. Maybe soon.
+>
+> You lost my series
+> Reviewed-by: Markus Armbruster <armbru@redhat.com>
+>
+> :)
 
-> -        /* read-only to behave like a 'NULL' Extended Capability Header =
-*/
-> -        pci_set_long(dev->wmask + PCI_CONFIG_SPACE_SIZE, 0);
-> -    }
-> -
->      return pos;
->  }
-> =20
+
+Didn't expect to need to manually copy it forward to a v5 ...!
+
+Thanks,
+--js
+
+--0000000000000af6380636d5367b
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 5, =
+2025 at 2:35=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@redh=
+at.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" =
+target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
+<br>
+&gt; Hiya, this series turns on automated linting for scripts/qapi,<br>
+&gt; docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py.<br>
+&gt;<br>
+&gt; This includes flake8/isort/pylint/mypy for scripts/qapi, but omits myp=
+y<br>
+&gt; from the Sphinx plugins owing to my inability to strictly type the<br>
+&gt; extensions given the wide versions of Sphinx we actually support.<br>
+&gt;<br>
+&gt; [Maybe this will change soon, but it&#39;s not true just yet.]<br>
+&gt;<br>
+&gt; Though I have been using black in my own development, I have not yet<b=
+r>
+&gt; enabled it anywhere automatically. Maybe soon.<br>
+<br>
+You lost my series<br>
+Reviewed-by: Markus Armbruster &lt;<a href=3D"mailto:armbru@redhat.com" tar=
+get=3D"_blank">armbru@redhat.com</a>&gt;<br>
+<br>
+:)</blockquote><div><br></div><div>Didn&#39;t expect to need to manually co=
+py it forward to a v5 ...!</div><div><br></div><div>Thanks,</div><div>--js =
+<br></div></div></div>
+
+--0000000000000af6380636d5367b--
 
 
