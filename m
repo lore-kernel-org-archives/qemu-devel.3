@@ -4,135 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D1AAC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 13:57:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 485ACC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 13:59:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNB5u-0008I2-9C; Thu, 05 Jun 2025 09:57:22 -0400
+	id 1uNB7c-0001JB-3o; Thu, 05 Jun 2025 09:59:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNB5s-0008Ho-UJ
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 09:57:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNB5q-0004Xn-Us
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 09:57:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749131836;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=hzwJlPhN1IkmLBR5NQjQjfGm4Y1d+HJXFgR2jlQyObY=;
- b=Si6xmd3FBX/gGDJ2GhHTeGdw7isTgzWgRgTbcvk61+SIP/q5iOYTpjjqrTiXjMnGrdEt/6
- 0G4Phk1xZAIQaE2QDMezELwMmygBJTn8jymI8TR2Gw+U4pNz5rnj9vWbsDfhLqMWm6okDA
- 3JY8u2Ein2jrZTSvJtCVLqrq6ufbNk4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-634-vT6ZpS4zNIOP6fdM7R5KxQ-1; Thu, 05 Jun 2025 09:57:14 -0400
-X-MC-Unique: vT6ZpS4zNIOP6fdM7R5KxQ-1
-X-Mimecast-MFC-AGG-ID: vT6ZpS4zNIOP6fdM7R5KxQ_1749131833
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a1f6c5f4f2so496864f8f.2
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 06:57:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNB7a-0001IM-DN
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 09:59:06 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNB7U-00055x-T8
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 09:59:02 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-606fdbd20afso1943952a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 06:59:00 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749131939; x=1749736739; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uUg03zcbNxZ6kqV2FHZ/pzV/KffKuFq0brd2f7OP50Q=;
+ b=fjEgi6UAFKdU/7tv8PSM88nNyHQV7e0MIiU503ny28QuNsI1OuMnPFSAy4LMpmajG1
+ NPQQdF9swu/btldZXnMgGeffHgIBjiUJIwF2NvxBAj9fjVWO8Ayz4uuSbfgd4UwWmxFk
+ WO7dFayR6CfwCfm0z4r7j3WXbM02VObfNpigFfObm58t3L5OuWAt2xwuJxsmyP7Vlbtt
+ Lq6LNyctxjLEs8d9wu7X8yYEAsmAQDrollRcGOr7W5ygwHMNrr5tqlVM0T01nrY1gQUg
+ +Wzz1mPdOZp/F59gZm0mkwsgLvAbdr0haL2Jace7HGzZrg26Zi9jkMQx6psCa6KHH9mW
+ 1Bjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749131833; x=1749736633;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hzwJlPhN1IkmLBR5NQjQjfGm4Y1d+HJXFgR2jlQyObY=;
- b=IkqNObjupidJi5U/G5ODtHolZsLA0GyGjC2mmWG2Iw3DYjItwuyouccDV2kudt3MPe
- CXBD6Cf2hp258iUBeIps87Qj1rUqwfO9Jtn1LGyzDhmCTELhbGba8vZacMtq7oijv1TC
- 6Y4EuWvmWBdrS0fuc/VM3fQJoXlSpka/8Gm3D7ZZWtcyEe/YGEbgYv9G1SjybsVYowtZ
- ZpNTmZ2cLyQ/luZNWqSRKkBs2PGTaC5GVxEYUgUew7647Lbt3ipxn+nuRAoyzNFUsxZv
- etEtzxUkw2Wn6IEUHYl6K71lMKuCt/QcUnnYizOp2iOtdMh24URmuBOzdZKD7E3efpmJ
- u9Gw==
-X-Gm-Message-State: AOJu0Ywl+i7FPVZs5CtqRSKx1oBPePpk7iek4Se4xiXMWvq3tq1EXvUU
- j8YDT2FsrJXl/WRHtI96Je1DFcfkXki/2LaGRRDO7b4G3suS+OTVTlie/9O/M79cqP0aOgHSC4x
- j0+dsiFitvpjl38ZuDwBqhzg0H3VBvtPf42JaUFcN9rI85aC43a3JFJOL
-X-Gm-Gg: ASbGncteWAU1x+C1OkDAmC7yV6zJf4svC9qU55lVsPL0NBFxbEdgWSsI8Tfgv+hw55W
- 5tqcHxfN8MHXDmgyan7tryjNjQp0fFxANCjU6FpGfJ3OqsV70GJzb7Mgtj20jACvwdAZ00vsZz7
- 2ZZahdRNdoi4acyUHVJw5SKbC96b5teD3zKDowO0IpTQNBJFlDl4wwnKIE3W9Y0x6Z7n9JtLAGA
- 1fIR+vCuE4NQYw8SK9TBwFWYGYPGwQRNsaW7U7EK6FCWKxruuOEd9FaQETr5MvihKwGMjPIQTFq
- hFUHbAoKKDyFKA==
-X-Received: by 2002:a05:6000:4287:b0:3a3:67bb:8f46 with SMTP id
- ffacd0b85a97d-3a51d98072dmr5941824f8f.57.1749131833277; 
- Thu, 05 Jun 2025 06:57:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG7QJAh3XJIR/mYhQxxpFA3is2B8Gn/ETVZIT9sxx+aB0IzR1KYNiGeYIHWTH3iTkTqWg0v5A==
-X-Received: by 2002:a05:6000:4287:b0:3a3:67bb:8f46 with SMTP id
- ffacd0b85a97d-3a51d98072dmr5941790f8f.57.1749131832856; 
- Thu, 05 Jun 2025 06:57:12 -0700 (PDT)
-Received: from [192.168.10.81] ([151.49.64.79])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3a4efe7415asm24790915f8f.57.2025.06.05.06.57.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 05 Jun 2025 06:57:12 -0700 (PDT)
-Message-ID: <7f4eefa2-9e00-4ba2-898f-c480c2123904@redhat.com>
-Date: Thu, 5 Jun 2025 15:57:11 +0200
+ d=1e100.net; s=20230601; t=1749131939; x=1749736739;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=uUg03zcbNxZ6kqV2FHZ/pzV/KffKuFq0brd2f7OP50Q=;
+ b=seHUOPD5QpKabQYdUoKBCmu465fyFTE4zPlGa0+4Qclgo3XdsgKbt/WZKGkYo0a7/P
+ YhBpXZh3noy0XMC9YAx8JCW4E+R0hsMLQqjkbwOQTBJW6w70IudjdKFeR6j7zIahRw5G
+ 5EPGIHgYmZZXnMtRyjDJvN1QFZM73D+xHp6Q44SCcvrKpKd2B8/v4VPf+ToKC9fVhNQW
+ +PE6olaGCGPGT23lQSTVGQ97JSxs2Yd9e7rHq0OH0SYyOjJ28SDPDKHJYhGcAFN2/lNw
+ 85gri094c5Ccsu5hOsXQ+bhYIIOQRgBAg4/kxNDQIcygrTk7kwu8pjii98cq/fGvd2qT
+ DLpg==
+X-Gm-Message-State: AOJu0YwCT4UMAJLLxKeMplZQeAyATshOGJ5+xpLE4/2aDqM7rMB4lX0+
+ 3xxdIOre7aIaOUs79vevDaLKzRSCqNhbMvpxQaDUSo0uVfUnxW3oXKODZCvPdV/jyz0=
+X-Gm-Gg: ASbGncv34P87+nqLxK+q9NurD4zjsWYEBMrIw5Wk71L02bko1fFGSK0WZAEBlYx/kX2
+ aaAZihzm1yuxKRy5qrkbJJ+w+WU/DpjKFF/udIdf5bN3m68Ibti4JubJnen9ERN7tDWngoTLShb
+ tEkuFVvaH9eQlTDA+344epkqVle3a/eGsTmNji1trSx2VL5yEgOtbUaSm9eEmg5+yS71cKcZh81
+ HfCMCy1PTSeurB1/0+ydtsvq6ViirS+39ijt74bL8ygFe8YXkYj8Egz9uAUPo7G4XhfrQG6qKTd
+ vwP5SzPoBVlQfc5E7hFFCbdVuBEt+uYRCbjZV8uhq80Hr1GH6dkr
+X-Google-Smtp-Source: AGHT+IFvS48CMm0W7XpgNc1n35yUw1W4A+uJE4wq5bR/PMbxPq5dq/c1DoeyNE+0rOqK4jOsA9+vJg==
+X-Received: by 2002:a05:6402:2684:b0:602:1d01:286a with SMTP id
+ 4fb4d7f45d1cf-606e944ee43mr6771155a12.6.1749131938702; 
+ Thu, 05 Jun 2025 06:58:58 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-606f93ae786sm2210158a12.24.2025.06.05.06.58.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 06:58:57 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 486315F782;
+ Thu, 05 Jun 2025 14:58:57 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org,  Daniel P . =?utf-8?Q?Berrang=C3=A9?=
+ <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>,  "Michael S . Tsirkin" <mst@redhat.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,  Mark Cave-Ayland
+ <mark.cave-ayland@ilande.co.uk>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Kevin Wolf <kwolf@redhat.com>,  Stefan Hajnoczi
+ <stefanha@redhat.com>,  Alexander Graf <agraf@csgraf.de>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,  Stefan Hajnoczi
+ <stefanha@gmail.com>
+Subject: Re: [PATCH v4 3/3] docs: define policy forbidding use of AI code
+ generators
+In-Reply-To: <20250605105219.261925-4-armbru@redhat.com> (Markus Armbruster's
+ message of "Thu, 5 Jun 2025 12:52:19 +0200")
+References: <20250605105219.261925-1-armbru@redhat.com>
+ <20250605105219.261925-4-armbru@redhat.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Thu, 05 Jun 2025 14:58:57 +0100
+Message-ID: <87y0u65ly6.fsf@draig.linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] trace/ftrace: seperate cold paths of tracing functions
-To: Stefan Hajnoczi <stefanha@redhat.com>,
- Tanish Desai <tanishdesai37@gmail.com>
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>
-References: <20250601181231.3461-1-tanishdesai37@gmail.com>
- <20250601181231.3461-3-tanishdesai37@gmail.com>
- <20250602222434.GB320269@fedora>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250602222434.GB320269@fedora>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x530.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,139 +113,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/3/25 00:24, Stefan Hajnoczi wrote:
-> On Sun, Jun 01, 2025 at 06:12:30PM +0000, Tanish Desai wrote:
->> Moved rarely used (cold) code from the header file to the C file to avoid
->> unnecessary inlining and reduce binary size.
-> 
-> How much of a binary size reduction do you measure? Most trace events
-> are only called once, so the difference in code size is likely to be
-> small.
+Markus Armbruster <armbru@redhat.com> writes:
 
-Indeed I don't think there would be much reduction.  I expect a bigger 
-benefit in terms of improved register allocation when tracepoints are 
-disabled, keeping unused tracepoint code out of the TLB, and the like.
+> From: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+>
+> There has been an explosion of interest in so called AI code
+> generators. Thus far though, this is has not been matched by a broadly
+> accepted legal interpretation of the licensing implications for code
+> generator outputs. While the vendors may claim there is no problem and
+> a free choice of license is possible, they have an inherent conflict
+> of interest in promoting this interpretation. More broadly there is,
+> as yet, no broad consensus on the licensing implications of code
+> generators trained on inputs under a wide variety of licenses
+>
+> The DCO requires contributors to assert they have the right to
+> contribute under the designated project license. Given the lack of
+> consensus on the licensing of AI code generator output, it is not
+> considered credible to assert compliance with the DCO clause (b) or (c)
+> where a patch includes such generated code.
+>
+> This patch thus defines a policy that the QEMU project will currently
+> not accept contributions where use of AI code generators is either
+> known, or suspected.
+>
+> These are early days of AI-assisted software development. The legal
+> questions will be resolved eventually. The tools will mature, and we
+> can expect some to become safely usable in free software projects.
+> The policy we set now must be for today, and be open to revision. It's
+> best to start strict and safe, then relax.
+>
+> Meanwhile requests for exceptions can also be considered on a case by
+> case basis.
+>
+> Signed-off-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
+> Acked-by: Stefan Hajnoczi <stefanha@gmail.com>
+> Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+> Signed-off-by: Markus Armbruster <armbru@redhat.com>
 
-That is, the difference in code size would be in the functions that 
-include tracepoints, not in QEMU overall.  That's a bit difficult to 
-measure because you would have to isolate tracepoint code in the 
-"before" .o files, but we can try.
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
->> This improves code organization
->> and follows good practices for managing cold paths.
-> 
-> It's easier to understand the code generator and the generated code when
-> each trace event is implemented as a single function in the header file.
-> Splitting the trace event up adds complexity. I don't think this is a
-> step in the right direction.
-
-I am not sure I agree on that; something like
-
-static inline void trace_smmu_config_cache_inv(uint32_t sid)
-{
-     if (trace_event_get_state(TRACE_SMMU_CONFIG_CACHE_INV)) {
-         _simple__trace_smmu_config_cache_inv(sid);
-         _log__trace_smmu_config_cache_inv(sid);
-     }
-     QEMU_SMMU_CONFIG_CACHE_INV(sid);
-     tracepoint(qemu, smmu_config_cache_inv(sid));
-}
-
-and one function per backend seems the most readable way to format the 
-code in the headers.  I understand that most of the time you'll have 
-only one backend enabled, but still the above seems pretty good and 
-clarifies the difference between efficient backends like dtrace and UST 
-and the others.
-
-This series doesn't go all the way to something like the above, but it 
-does go in that direction.
-
-Now, in all honesty the main reason to do this was to allow reusing the 
-C code generator when it's Rust code that is using tracepoints; but I do 
-believe that these changes make sense on their own, and I didn't want to 
-make these a blocker for Rust enablement as well (Tanish has already 
-looked into generating Rust code for the simple backend, for example).
-
-Paolo
-
-
->> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
->> ---
->>   scripts/tracetool/backend/ftrace.py | 44 +++++++++++++++++++++--------
->>   1 file changed, 32 insertions(+), 12 deletions(-)
->>
->> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
->> index baed2ae61c..c9717d7b42 100644
->> --- a/scripts/tracetool/backend/ftrace.py
->> +++ b/scripts/tracetool/backend/ftrace.py
->> @@ -23,6 +23,10 @@
->>   def generate_h_begin(events, group):
->>       out('#include "trace/ftrace.h"',
->>           '')
->> +    for event in events:
->> +        out('void _ftrace_%(api)s(%(args)s);',
->> +            api=event.api(),
->> +            args=event.args)
->>   
->>   
->>   def generate_h(event, group):
->> @@ -30,26 +34,42 @@ def generate_h(event, group):
->>       if len(event.args) > 0:
->>           argnames = ", " + argnames
->>   
->> -    out('    {',
->> +    out('        if (trace_event_get_state(%(event_id)s)) {',
->> +        '           _ftrace_%(api)s(%(args)s);',
->> +        '        }',
->> +        name=event.name,
->> +        args=", ".join(event.args.names()),
->> +        event_id="TRACE_" + event.name.upper(),
->> +        event_lineno=event.lineno,
->> +        event_filename=os.path.relpath(event.filename),
->> +        fmt=event.fmt.rstrip("\n"),
->> +        argnames=argnames,
->> +        api=event.api()
->> +        )
->> +
->> +
->> +def generate_c(event, group):
->> +        argnames = ", ".join(event.args.names())
->> +        if len(event.args) > 0:
->> +            argnames = ", " + argnames
->> +        out('void _ftrace_%(api)s(%(args)s){',
->>           '        char ftrace_buf[MAX_TRACE_STRLEN];',
->>           '        int unused __attribute__ ((unused));',
->>           '        int trlen;',
->> -        '        if (trace_event_get_state(%(event_id)s)) {',
->>           '#line %(event_lineno)d "%(event_filename)s"',
->> -        '            trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
->> -        '                             "%(name)s " %(fmt)s "\\n" %(argnames)s);',
->> +        '       trlen = snprintf(ftrace_buf, MAX_TRACE_STRLEN,',
->>           '#line %(out_next_lineno)d "%(out_filename)s"',
->> -        '            trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
->> -        '            unused = write(trace_marker_fd, ftrace_buf, trlen);',
->> -        '        }',
->> -        '    }',
->> -        name=event.name,
->> -        args=event.args,
->> -        event_id="TRACE_" + event.name.upper(),
->> +        '                       "%(name)s " %(fmt)s "\\n" %(argnames)s);',
->> +        '       trlen = MIN(trlen, MAX_TRACE_STRLEN - 1);',
->> +        '       unused = write(trace_marker_fd, ftrace_buf, trlen);',
->> +        '}',
->>           event_lineno=event.lineno,
->>           event_filename=os.path.relpath(event.filename),
->> +        name=event.name,
->>           fmt=event.fmt.rstrip("\n"),
->> -        argnames=argnames)
->> +        argnames=argnames,
->> +        api=event.api(),
->> +        args=event.args)
->>   
->>   
->>   def generate_h_backend_dstate(event, group):
->> -- 
->> 2.34.1
->>
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
