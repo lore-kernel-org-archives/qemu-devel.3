@@ -4,84 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A52DCC61DB8
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 04:23:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DE9AC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 05:06:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN27G-0004OS-Q7; Thu, 05 Jun 2025 00:22:10 -0400
+	id 1uN2n3-0001wS-TK; Thu, 05 Jun 2025 01:05:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uN27E-0004Np-Tn; Thu, 05 Jun 2025 00:22:09 -0400
-Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uN2n1-0001uD-Nq
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 01:05:19 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uN27C-0003Xr-U5; Thu, 05 Jun 2025 00:22:08 -0400
-Received: by mail-ua1-x935.google.com with SMTP id
- a1e0cc1a2514c-87ea6361feeso183770241.3; 
- Wed, 04 Jun 2025 21:22:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uN2n0-0007GO-41
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 01:05:19 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a36efcadb8so416354f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 04 Jun 2025 22:05:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749097325; x=1749702125; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sibqm5Y47hMcrQiWaTMqQo7CiZui8P4lp3R71v2KIpg=;
- b=ELP13NKN/+/5Klds50ignt4zwYe64cQGcfXvtkuGEmqRDziY21IG1OSzDO0FqruEZz
- 2SVcnccMkKvKC8PvZiVIUFIsTdNe0e7uMNOsmbyM9s7CtXCuhi2oPnQ0pPeF9+sqtzBg
- GkMTULTYpUjk7kZBJX3SXh51ETHAOZHyObkFX9SKWPSOPMmUSKI1tGiVFahOju3FPoea
- AnmkuqQbDOH2hOhpn+cN7chsmkNLxJAj6Ytsw66d82VGEY5pLy6+UJITvWHpmj8ls0zo
- m8jpDOLvAnX3OQLAOgv9QZ18ELXI2A6AzU9sFKZWlGAna31d3MjPIQ/YUaMOalgv4ffM
- K8yA==
+ d=linaro.org; s=google; t=1749099916; x=1749704716; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4ky+9e+gWc04bcyNuHemdLzWttMt011MDaus1yaf2M8=;
+ b=lgykpN/BvsZU3WWoy8UKxLWv1wdJuWl9gS4qqHbsaVbRtjbnOM7JZ6fSiSEdaQeE12
+ 8Co9NcrW1Gtoo6BaL/HOum9sGs/l2OOOWsjJKwaYfT0rOiijYCFvHoJyZeABNAJ5xWGZ
+ gJZo1B/T73rTRZlPIhcM6FkuRsqU5TpvsqPm3suee7Q2GcZl4NICPxBQbZaHaCL4jLPR
+ zu9LexP6rtnag7dfeRIvcz8buj1uNtsps4+3OjnpwjmmAzb7tISSQup4VLDSbBNikDRS
+ 1pQdaScq9Jd/dSjxPhK/iwOZIi4Wj5EblmZW1SjiN6z3Lyf7kSkvRpUD3BYrpXdbrDhb
+ 3nRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749097325; x=1749702125;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=sibqm5Y47hMcrQiWaTMqQo7CiZui8P4lp3R71v2KIpg=;
- b=MTrsk9Zqo0C51HZpYoIIGburdz1g7HE8G7EqrHnWUfslohZB7cnV6PXucOjlGl4INI
- O01hFtpKwkQ1B0liXEN6PHK9uKs7wEC8sLwNWdPAVxC7GdRvQcWXvezBTwC6bRPFZL+q
- h0/lSt4B3AFk7RarXUY1bOq5WP8iR/wnaoWJ7GxshanIQ99QPHN/wK4NUixd6AJoARez
- u9As8KOh1sIQHnMZBSDwjv9Xk9tUntO642KR0oA/5KEK0l1aqC6MoaCjFtzmmEVABajc
- 7skFyRl8PbBWYk0Jbh3FqTAgbw5XAQA85nvjHqbVrYI09EdpmFod9YpTugNcemUglR0V
- 7RMA==
+ d=1e100.net; s=20230601; t=1749099916; x=1749704716;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=4ky+9e+gWc04bcyNuHemdLzWttMt011MDaus1yaf2M8=;
+ b=h2ocPWxOb/i+BifufFsoWDWNy1udomGbx8Cykc2izhBdLxgpN8hwTSewomFInl2on7
+ ZoeNL/vQSQV1BF80GhXVUvWh2eJcyA0GvttCIzgZcI7kBQCA5cHXVOo0JHQsV1yG/mc7
+ /RFbqTMWbbFWpUTPX8iuqzDLSL2oPYVucZSmgG8ra5xcGSGqwTQa/JaqrznIE0A5iRF6
+ lTwlO4T/Qh0xIt5zR0qB0YE7OpxLzBXFCyeApn+JeAAp+EgjcJRkhdEjFIvncR/4e5hK
+ wi4tS70KYSWShOhP0yu4FyFpOz3MBvlvqOPkioZy7bVwfoXH9cY2JgRleYGxkVXJKzHS
+ TTEw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW0agqQuWbMNU52ZsXsDUXqIYxJ9GdBs1YX2E9lDQ4o9Y0VvordM/4+ZRzTFKvfB+PTwuNgR7sEtdLS@nongnu.org
-X-Gm-Message-State: AOJu0YygFaZxQ0wwvqcA2X0jBvXNn3R+f0L4D1lmp0hWZo3MjjgoDwzM
- U+YHFsP3/rnurQSvgKtr2bI2KCbgAFXuxd1vyNPv/2Smj5Ur4m2iVvvNUL2qnYf9cpvA9FFiDGp
- VtTai3KpB0YzTpFmkJmzWiU3tMogBQNU=
-X-Gm-Gg: ASbGnctNKq0FYw2c9tvYYeKxrgCMRnnFemc1yX9xH5+lKBLt9f/m1tMBU89KBj/u7yJ
- 8szHkcSrxn9TQrtta9L1ELF6eBajp9mEXinJp9zEDuHjStyHh8/jYdM+uOwPRg51AYIt/zlMzlV
- gWzOitjxKWmR6AC2mzuv8obLv2UqxNBP5r/6Dc2sY/0Y8a8YTEIC2Sx/65naZLyh4=
-X-Google-Smtp-Source: AGHT+IFfG/GUGWa49Kr+3fpmHFr8ujQmRh1xtuSi+Z9eTr/ROdzrMkAdw4xpdpdnJNQU71NPjy3eND0tYlBLpnc66wY=
-X-Received: by 2002:a05:6102:3c8e:b0:4e1:52fa:748d with SMTP id
- ada2fe7eead31-4e746de0982mr4740183137.15.1749097325112; Wed, 04 Jun 2025
- 21:22:05 -0700 (PDT)
+ AJvYcCVXemrz83SOzpoTpr82QYgazBweats4YHtiRSO2xjIRVfR8kDEeRDCekBrQMyDXfCYTDBRBx0hLMQWu@nongnu.org
+X-Gm-Message-State: AOJu0YzZ7SajDKoncle/ZHRSjnN4sHQx7wUTtBFju7eyWkTn6gUidoy5
+ 92AtvpRt2LK5GpYPBzk7bDho/nxAiPrW7doA8atzdiz0wS8NiSC/6hhWRBZHqzmPsSA=
+X-Gm-Gg: ASbGncuBms4NfsNfQ4eSDQkKIlRHS19oCqnvR0S6AIpxe9BpIhage1WtJ1Ygy0eBtiF
+ ATNOU+f2Ujkvz9eaw44AL6mMFfZL/HR/hZfjKdsPKMngOCAZkh5P74nNrWiib624kzsT5L4PNoi
+ 0lu6RessyX1YUlKMxqGsUbKRM1jOaCq87tPX6zUvFbz6BiYxJsctfMkkjiK4+obk/tdsibz43pB
+ JRHK/xI8CCftfvudakRrhDaIlP9u4bFy3abin8oifqk8bYyeJqmrRoR0ON4Hs1s0RGv6c4N4vsm
+ CxEltZbwAtqzx1bcWFkNF3tBeiL8GVtpqZCT8/e2zKgvoN0U5zbopfGElVkTJzxjw6jVsoUn3D8
+ Ml53KooqytC41SSHyry4=
+X-Google-Smtp-Source: AGHT+IETOhSPYv4PYTVLK044YdEBHEtNaC/qw6MLdCmZjpKiU8htCZmPmTeByoHsZEmvCunZW2X8Jw==
+X-Received: by 2002:a05:6000:1a87:b0:3a4:f7f3:2840 with SMTP id
+ ffacd0b85a97d-3a51d8f60c3mr4608047f8f.1.1749099916328; 
+ Wed, 04 Jun 2025 22:05:16 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-451fb16943fsm5674515e9.6.2025.06.04.22.05.15
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 04 Jun 2025 22:05:15 -0700 (PDT)
+Message-ID: <717196e0-14c6-4cae-a852-7460c8fb8277@linaro.org>
+Date: Thu, 5 Jun 2025 07:05:14 +0200
 MIME-Version: 1.0
-References: <20250508094838.19394-1-jim.shu@sifive.com>
-In-Reply-To: <20250508094838.19394-1-jim.shu@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 5 Jun 2025 14:21:38 +1000
-X-Gm-Features: AX0GCFu_Z9QcqosB5eu325pLp-aLvI8DWrvK5qPXahas4Syls2PejG49Jlx0YMs
-Message-ID: <CAKmqyKMr+2anHt8ff0f0NfrrNs5z+7TEhXwj_oQPHqiA_XnX0A@mail.gmail.com>
-Subject: Re: [PATCH v2] target/riscv: support atomic instruction fetch (Ziccif)
-To: Jim Shu <jim.shu@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] ui: fix VNC endian regression & improve tracing
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+References: <20250604162243.452791-1-berrange@redhat.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250604162243.452791-1-berrange@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -99,132 +103,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, May 8, 2025 at 7:49=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote:
->
-> Support 4-byte atomic instruction fetch when instruction is natural
-> aligned.
->
-> Current implementation is not atomic because it loads instruction twice
-> for first and last 2 bytes. We load 4 bytes at once to keep the
-> atomicity. This instruction preload method only applys when instruction
-> is 4-byte aligned. If instruction is unaligned, it could be across pages
-> so that preload will trigger additional page fault.
->
-> We encounter this issue when doing pressure test of enabling & disabling
-> Linux kernel ftrace. Ftrace with kernel preemption requires concurrent
-> modification and execution of instruction, so non-atomic instruction
-> fetch will cause the race condition. We may fetch the wrong instruction
-> which is the mixing of 2 instructions.
->
-> Also, RISC-V Profile wants to provide this feature by HW. RVA20U64
-> Ziccif protects the atomicity of instruction fetch when it is
-> natural aligned.
->
-> This commit depends on the atomic read support of translator_ld in
-> the commit 6a9dfe1984b0c593fb0ddb52d4e70832e6201dd6.
->
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+On 4/6/25 18:22, Daniel P. Berrangé wrote:
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+> Daniel P. Berrangé (2):
+>    ui: fix setting client_endian field defaults
+>    ui: add trace events for all client messages
 
-Alistair
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-> ---
->  target/riscv/translate.c | 46 +++++++++++++++++++++++++++++-----------
->  1 file changed, 34 insertions(+), 12 deletions(-)
->
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 85128f997b..77edf04803 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -1222,13 +1222,35 @@ const RISCVDecoder decoder_table[] =3D {
->
->  const size_t decoder_table_size =3D ARRAY_SIZE(decoder_table);
->
-> -static void decode_opc(CPURISCVState *env, DisasContext *ctx, uint16_t o=
-pcode)
-> +static void decode_opc(CPURISCVState *env, DisasContext *ctx)
->  {
-> +    uint32_t opcode;
-> +    bool pc_is_4byte_align =3D ((ctx->base.pc_next % 4) =3D=3D 0);
-> +
->      ctx->virt_inst_excp =3D false;
-> -    ctx->cur_insn_len =3D insn_len(opcode);
-> +    if (pc_is_4byte_align) {
-> +        /*
-> +         * Load 4 bytes at once to make instruction fetch atomically.
-> +         *
-> +         * Note: When pc is 4-byte aligned, 4-byte instruction wouldn't =
-be
-> +         * across pages. We could preload 4 bytes instruction no matter
-> +         * real one is 2 or 4 bytes. Instruction preload wouldn't trigge=
-r
-> +         * additional page fault.
-> +         */
-> +        opcode =3D translator_ldl(env, &ctx->base, ctx->base.pc_next);
-> +    } else {
-> +        /*
-> +         * For unaligned pc, instruction preload may trigger additional
-> +         * page fault so we only load 2 bytes here.
-> +         */
-> +        opcode =3D (uint32_t) translator_lduw(env, &ctx->base, ctx->base=
-.pc_next);
-> +    }
-> +    ctx->ol =3D ctx->xl;
-> +
-> +    ctx->cur_insn_len =3D insn_len((uint16_t)opcode);
->      /* Check for compressed insn */
->      if (ctx->cur_insn_len =3D=3D 2) {
-> -        ctx->opcode =3D opcode;
-> +        ctx->opcode =3D (uint16_t)opcode;
->          /*
->           * The Zca extension is added as way to refer to instructions in=
- the C
->           * extension that do not include the floating-point loads and st=
-ores
-> @@ -1238,15 +1260,17 @@ static void decode_opc(CPURISCVState *env, DisasC=
-ontext *ctx, uint16_t opcode)
->              return;
->          }
->      } else {
-> -        uint32_t opcode32 =3D opcode;
-> -        opcode32 =3D deposit32(opcode32, 16, 16,
-> -                             translator_lduw(env, &ctx->base,
-> -                                             ctx->base.pc_next + 2));
-> -        ctx->opcode =3D opcode32;
-> +        if (!pc_is_4byte_align) {
-> +            /* Load last 2 bytes of instruction here */
-> +            opcode =3D deposit32(opcode, 16, 16,
-> +                               translator_lduw(env, &ctx->base,
-> +                                               ctx->base.pc_next + 2));
-> +        }
-> +        ctx->opcode =3D opcode;
->
->          for (guint i =3D 0; i < ctx->decoders->len; ++i) {
->              riscv_cpu_decode_fn func =3D g_ptr_array_index(ctx->decoders=
-, i);
-> -            if (func(ctx, opcode32)) {
-> +            if (func(ctx, opcode)) {
->                  return;
->              }
->          }
-> @@ -1324,10 +1348,8 @@ static void riscv_tr_translate_insn(DisasContextBa=
-se *dcbase, CPUState *cpu)
->  {
->      DisasContext *ctx =3D container_of(dcbase, DisasContext, base);
->      CPURISCVState *env =3D cpu_env(cpu);
-> -    uint16_t opcode16 =3D translator_lduw(env, &ctx->base, ctx->base.pc_=
-next);
->
-> -    ctx->ol =3D ctx->xl;
-> -    decode_opc(env, ctx, opcode16);
-> +    decode_opc(env, ctx);
->      ctx->base.pc_next +=3D ctx->cur_insn_len;
->
->      /*
-> --
-> 2.17.1
->
->
 
