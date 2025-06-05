@@ -4,72 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4530CC5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53B7FC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 12:14:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uN9N3-0001Pm-Na; Thu, 05 Jun 2025 08:06:57 -0400
+	id 1uN9Te-0003LU-7P; Thu, 05 Jun 2025 08:13:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN9Mw-0001N2-4L
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:06:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uN9TW-0003Ke-4t; Thu, 05 Jun 2025 08:13:38 -0400
+Received: from isrv.corpit.ru ([86.62.121.231])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uN9Mu-0000Ul-92
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 08:06:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749125206;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Hjq7PRBrGKH+pUaHF5VWFOYtWfvMXQv7b8Sj1cP1SmM=;
- b=dgkY7iOeHZ12MrMZyLplpYH7GG7XH0xmgOuW7C/948/r3OB5vVs7zChpyBQDSMleAXHab1
- vcrH4nQQvebGA+pT/zIQHMvxoYRWHrymvHoZ2jCrQ6Qov4GGTUo7mIQBhwGVRU+Ci4vxTe
- 8Ub5JfaM0jfvuudbG4Xxra6GkqCRY1c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-92-w5_cI8MwPt2Hr2GZb7HWqA-1; Thu,
- 05 Jun 2025 08:06:42 -0400
-X-MC-Unique: w5_cI8MwPt2Hr2GZb7HWqA-1
-X-Mimecast-MFC-AGG-ID: w5_cI8MwPt2Hr2GZb7HWqA_1749125201
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A89691956095; Thu,  5 Jun 2025 12:06:41 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.38])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 602BE18002A5; Thu,  5 Jun 2025 12:06:41 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id BD6B321E6766; Thu, 05 Jun 2025 14:06:38 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,  zhao1.liu@intel.com,  qemu-rust@nongnu.org
-Subject: Re: [PATCH 06/14] rust: qemu-api: add bindings to Error
-In-Reply-To: <20250605101544.368953-7-pbonzini@redhat.com> (Paolo Bonzini's
- message of "Thu, 5 Jun 2025 12:15:35 +0200")
-References: <20250605101544.368953-1-pbonzini@redhat.com>
- <20250605101544.368953-7-pbonzini@redhat.com>
-Date: Thu, 05 Jun 2025 14:06:38 +0200
-Message-ID: <87o6v2fl4h.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1uN9TT-0001sI-FD; Thu, 05 Jun 2025 08:13:37 -0400
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 0231A128D94;
+ Thu, 05 Jun 2025 15:13:08 +0300 (MSK)
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9E46021F1AB;
+ Thu,  5 Jun 2025 15:13:19 +0300 (MSK)
+Message-ID: <548f2427-a48c-44be-8063-0de3796e967c@tls.msk.ru>
+Date: Thu, 5 Jun 2025 15:13:19 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/7] audio related fixes for 10.1
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: =?UTF-8?Q?Volker_R=C3=BCmelin?= <vr_qemu@t-online.de>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Laurent Vivier <laurent@vivier.eu>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <0bb1a55e-70f1-410b-8b59-78eed7f4c8f7@t-online.de>
+ <f5d8c3ef-d667-4849-8ff6-55a8b594b3dd@tls.msk.ru>
+Content-Language: en-US, ru-RU
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <f5d8c3ef-d667-4849-8ff6-55a8b594b3dd@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -68
+X-Spam_score: -6.9
+X-Spam_bar: ------
+X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,77 +111,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Paolo Bonzini <pbonzini@redhat.com> writes:
+On 29.05.2025 10:26, Michael Tokarev wrote:
+> On 15.05.2025 08:42, Volker Rümelin wrote:
+>> A few audio related fixes for 10.1.
+>>
+>> The virtio-sound device is the first QEMU audio front end that 
+>> supports floating point samples. The audio subsystem is only partially 
+>> prepared for this. The commit message of patch 7/7 "audio: add float 
+>> sample endianness converters" has the details. The new code paths in 
+>> patch 7/7 are only compile tested. I don't have a big endian host to 
+>> test.
+> ..
+>> Volker Rümelin (7):
+>>    tests/functional: use 'none' audio driver for q800 tests
+>>    audio: fix SIGSEGV in AUD_get_buffer_size_out()
+>>    audio: fix size calculation in AUD_get_buffer_size_out()
+>>    hw/audio/asc: fix SIGSEGV in asc_realize()
+>>    hw/audio/asc: replace g_malloc0() with g_malloc()
+>>    audio/mixeng: remove unnecessary pointer type casts
+>>    audio: add float sample endianness converters
+> 
+> Is there anything here which is worth to apply to qemu-stable?
+> (10.0.x is supposed to be an LTS series).
 
-> Provide an implementation of std::error::Error that bridges the Rust
-> anyhow::Error and std::panic::Location types with QEMU's Error*.
->
-> It also has several utility methods, analogous to error_propagate(),
-> that convert a Result into a return value + Error** pair.  One important
-> difference is that these propagation methods *panic* if *errp is NULL,
-> unlike error_propagate() which eats subsequent errors[1].  The reason
-> for this is that in C you have an error_set*() call at the site where
-> the error is created, and calls to error_propagate() are relatively rare.
->
-> In Rust instead, even though these functions do "propagate" a
-> qemu_api::Error into a C Error**, there is no error_setg() anywhere that
-> could check for non-NULL errp and call abort().  error_propagate()'s
-> behavior of ignoring subsequent errors is generally considered weird,
-> and there would be a bigger risk of triggering it from Rust code.
->
-> [1] This is actually a violation of the preconditions of error_propagate(=
-),
->     so it should not happen.  But you never know...
->
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+I'm picking up
 
-[...]
+     audio: fix SIGSEGV in AUD_get_buffer_size_out()
+     audio: fix size calculation in AUD_get_buffer_size_out()
+     hw/audio/asc: fix SIGSEGV in asc_realize()
 
-> diff --git a/rust/qemu-api/src/error.rs b/rust/qemu-api/src/error.rs
-> new file mode 100644
-> index 00000000000..80157f6ea1b
-> --- /dev/null
-> +++ b/rust/qemu-api/src/error.rs
+for the stable series.  Please let me know if I shouldn't.
 
-[...]
+BTW, Volker, it looks like email from me to your address @t-online
+does not work.
 
-> +    /// Equivalent of the C function `error_propagate`.  Fill `*errp`
-> +    /// with the information container in `self` if `errp` is not NULL;
-> +    /// then consume it.
-> +    ///
-> +    /// This is similar to the C API `error_propagate`, but it panics if
-> +    /// `*errp` is not `NULL`.
-> +    ///
-> +    /// # Safety
-> +    ///
-> +    /// `errp` must be a valid argument to `error_propagate`; it can be
-> +    /// `NULL` or it can point to any of:
-> +    /// * `error_abort`
-> +    /// * `error_fatal`
-> +    /// * a local variable of (C) type `Error *`
+Thanks,
 
-This local variable must contain NULL.
-
-> +    ///
-> +    /// Typically `errp` is received from C code and need not be
-> +    /// checked further at the Rust=E2=86=94C boundary.
-> +    pub unsafe fn propagate(self, errp: *mut *mut bindings::Error) {
-> +        if errp.is_null() {
-> +            return;
-> +        }
-> +
-> +        // SAFETY: caller guarantees that errp and *errp are valid
-> +        unsafe {
-> +            assert_eq!(*errp, ptr::null_mut());
-> +            bindings::error_propagate(errp, self.clone_to_foreign_ptr());
-> +        }
-> +    }
-
-[...]
-
-With the comment tightened:
-Reviewed-by: Markus Armbruster <armbru@redhat.com>
-
-The commit message and comment improvements are lovely!
-
+/mjt
 
