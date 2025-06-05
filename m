@@ -4,83 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34F74C5AE59
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 14:48:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24C1AC5B543
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 14:49:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNBsZ-0005cd-CZ; Thu, 05 Jun 2025 10:47:39 -0400
+	id 1uNBu1-0007iS-Al; Thu, 05 Jun 2025 10:49:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cocotroupe20@gmail.com>)
- id 1uNBcw-0003CD-Ce; Thu, 05 Jun 2025 10:31:38 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNBtz-0007iG-6Y
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 10:49:07 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <cocotroupe20@gmail.com>)
- id 1uNBcu-0003Tf-9X; Thu, 05 Jun 2025 10:31:30 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-442fda876a6so8448255e9.0; 
- Thu, 05 Jun 2025 07:31:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNBtx-0000mT-2Q
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 10:49:06 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-60727e46168so1614532a12.0
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 07:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749133884; x=1749738684; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=pJ8Ss0xzwWF59ezoHUUP4X8z0cf+5bPuYM3CJxB7hEo=;
- b=AQlLV7gjuggp5U+NXd5sUwgWVB/EyW8wk+ap5eNhu1G+DlSyYwgcguWUiWzastv/bH
- 0Qx0yxA73ztzCyqXe4aKd6JGY08gGZPamuWkDsu3ZtCIUHB53yfJridaSUo5kAHn/b12
- idA7rI+eK2xPdw7/laDsvxWIaqozm0sT2QZ7Oo4NAbcHtwijQhIKsDO6XPu1w137nWUE
- hoxjbWSnsesOrG/Ndx/3pjoovLav+Ckz+UajNy7gWAKzmNlz3NDEO/7sAiVoAZRzkovi
- /daS6hW6bXWgWzm7OC/Mc6whukcl86w7SA3voznV2va2drc2Cd3N42rVIFBbwQunvHhq
- SevA==
+ d=linaro.org; s=google; t=1749134943; x=1749739743; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y61MfMWBbSElkqB7wWRk7kLD7Hhi736GzVo4lvOVLTI=;
+ b=AqnOBL/5nU1u4Bx0NA9NL7tbcFMNCr5OsF1N9SpLkZ0xJltPzuk8WBs7Fin9n4qlsO
+ D6QQH2WvL3/M7Qcy1IDkDJMJ4x5/kBrYaY2mFAuAmWGTcCDc9+TNMHaWx42bbHDWlXBN
+ Xi9hrcOtB5BoPedTkoPJ4mJD+9RU6136ZUEWKCyw5xMgnI4fosCa4t3DVyB09vsQIxi3
+ ZR1ZBmKhkNMs2v06+FMlXbdxTCRBtK0SGoKD10VTCjo/4GkJjFijbEbhDkW6VJBr9MEw
+ e7PA16P/bGCgutdnAYR7blOjWq/n6en2cZ0C6OILp+RNcwnAXJ3EqlWGtL0UTFeUh6qA
+ 5FBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749133884; x=1749738684;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=pJ8Ss0xzwWF59ezoHUUP4X8z0cf+5bPuYM3CJxB7hEo=;
- b=e6/Wis2OWpE/HDTWeA6aKYwVBy2C4j7Wk6Kno1/iTIJ3b1e5WLLKfTJqRqmcqgeLYv
- 6GL4Te9DshwRvEuQPkrehspYTOTrIekoS6pus5U15yA5xhxR1fBQclqkmU7GqkXZK5dc
- o4pTrCfR7nuAYYsjdGCsiexPTQi6UQtFJQjYZYnGSCWinaqaamObLWPi8lCScmxoNhVo
- HQk6OZCcEH5efEiHmiUZ+dsP5vXh5elKh8uaxuVInZ9MNYgn1SVOfBYPb2/8PF9JX96o
- AfMOiMg+yADmhd6CCz5OwJl5ziSdOTacAvLPRtInAQQbxHiwmmyKv4TIgjpm/5Rudlq0
- QCbw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUXmf2HLCrCwwbJGKCfVNXi4VIa0vjYB+4kaMem9PAju30pasiiZ3U+uFJahrGj37hHf5MHlaVnwAn6QKo=@nongnu.org,
- AJvYcCWzEPQzVD6We7ELJR6dkJBnndkXwl47MJtDPixqr3dqQriEgSpsgXcA8R0Dl965XLnFphfB0HxHYY6I@nongnu.org
-X-Gm-Message-State: AOJu0YxjR10M6uvYJNK7E8WCQvRR7mBnbIrFcnw3KwBRb6gf6B0gPeoT
- M3Sa7CjT9Y6iT6Mf9RGST2NwPeAa2pCo4z/UW4pscYA2LfVj2YzVko4eWM53OYbh79n092pM/Ft
- eYGVFxBkdurdV82/VrDBfzG5QJ+RPieo=
-X-Gm-Gg: ASbGncv9X3q5OsfT2Zjmus8eCcEDa1xoD7hyVMnZADg05AHo1LM7//CkOhpq8kOTs6x
- AJF6OkDRzKzBn/d24a3c9ylo1OhKBSSGNuJfZZ0lVTxHLELUC8xgOJrivZjApTcNoyGCr5QJpNC
- LT2zFz+9xnYyST0snPLKktBSENWnMZ1BIa+Q==
-X-Google-Smtp-Source: AGHT+IHPRzu/HcUXTGMC1iFsNmbRt03+9gNQrHmVpdSpip/YEEI5x2XWsbsEt64e4SI+vzucSRv3XLl8WSiO3JnnJak=
-X-Received: by 2002:a05:600c:1c15:b0:442:cab1:e092 with SMTP id
- 5b1f17b1804b1-451f0aa1786mr67991845e9.11.1749133883743; Thu, 05 Jun 2025
- 07:31:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749134943; x=1749739743;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=y61MfMWBbSElkqB7wWRk7kLD7Hhi736GzVo4lvOVLTI=;
+ b=EoVz0YofvuXVjy5EJx/YuEEQmdk0bk/+TAAkC4EI/e/HOome9QvvKMVcVEttKEamoB
+ ChKR8L7i6An7KtCK9o4Xs44eUS7oMEkHL6PwVyiODD4IABpjjQGYPO6RFwHxM5z1537p
+ Mu/xYb4kzS+Cd5c8i7oLtCMFftBrCxS/ZmxxBbPTrCoj/iEGLi0yH3ZHQO5QLGwQrtec
+ 19b2ipwR1cf5amh1vSe1SiG++Lb5t8Xu24Dy59tVfASiTWiP9+IvCpVSEhXXgNAv37uo
+ 8zWkt4PpTrB2nDKjS5FYjQ2DPqOrufNz3/yiZY19JOxKVJz3DyGBKwCAZhCteggZZjpR
+ LsMA==
+X-Gm-Message-State: AOJu0YwXzOfXEsQ+Yotq8nPg9ttOdPHppvuOILb4gnHh/yZIl3UbTrlI
+ c+tp7xPKC0TweMiYZgUg75jKggMEjxyGxxVcO7TdisoiR04aqxBpxlyD63XCAiL2BPw=
+X-Gm-Gg: ASbGnct70rMATP/nhGzfWdq2pG/B7LLo7xJ4KwEYI+hTdIu9uxIk1njGFGQx3EgDcmT
+ jIDDavZd78P7nAbbAywMmUeO1A5s6nkD4sYjEUeEG7AxXSwxskcpkhDQ6ZsnHZcMxp9hCRV51DK
+ OP3+1+H2zne+fp1mLqC3qPKozs7wizwuhP7Kh1Vdil/F9SQ5076iEcZgtC9Jp4ZJlYPgw72OCsJ
+ hSEmrm5w68kNzUrNyfsVvL11lNWeA9DC09zwxvf4o7Ci9M5yYPo+Cw1F3PtFHlIgPChkTuqbHbR
+ p5ZcmPCnMWr7Jd/GcGVEtQhJhMf945RoGl/6bDNBkYK+NCSwO03xAfvFdjiuDsQ=
+X-Google-Smtp-Source: AGHT+IFQV6nGWVf1X1erklSrZiLj9tKq706Lwe/xTLlaA02ffEtkpM2PFHOkHsjpBVyIbSXGpxR3sQ==
+X-Received: by 2002:a05:6402:350e:b0:607:6324:8da2 with SMTP id
+ 4fb4d7f45d1cf-60763248e5cmr59580a12.24.1749134943038; 
+ Thu, 05 Jun 2025 07:49:03 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6073184a7dfsm688509a12.9.2025.06.05.07.49.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 05 Jun 2025 07:49:02 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id ABB1E5F782;
+ Thu, 05 Jun 2025 15:49:01 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Cc: qemu-devel@nongnu.org,  Gerd Hoffmann <kraxel@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  Frediano Ziglio <freddy77@gmail.com>,
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>,  Dongwon Kim
+ <dongwon.kim@intel.com>
+Subject: Re: [PATCH v5 0/7] ui/spice: Enable gl=on option for non-local or
+ remote clients
+In-Reply-To: <20250529051352.1409904-1-vivek.kasireddy@intel.com> (Vivek
+ Kasireddy's message of "Wed, 28 May 2025 22:11:11 -0700")
+References: <20250529051352.1409904-1-vivek.kasireddy@intel.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Thu, 05 Jun 2025 15:49:01 +0100
+Message-ID: <87seke5jmq.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20250605141801.1083266-1-peter.maydell@linaro.org>
- <CAFEAcA9++obh-vtp7P9MZ9GHBTjuWGY419Dmp+P8iFJhCJiYHQ@mail.gmail.com>
-In-Reply-To: <CAFEAcA9++obh-vtp7P9MZ9GHBTjuWGY419Dmp+P8iFJhCJiYHQ@mail.gmail.com>
-From: Corentin GENDRE <cocotroupe20@gmail.com>
-Date: Thu, 5 Jun 2025 16:31:11 +0200
-X-Gm-Features: AX0GCFvYgP0bCQncPASA2UU07AmIGfRRFVixQDS4IhrNCYp3uj8fZr4G8N09Fb8
-Message-ID: <CAPwCrcNTgzmOSTRqDRpHXM7zoMZiC3E5Z_W3OFVCBcNbp2WUTQ@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/mps2: Configure the AN500 CPU with 16 MPU regions
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="000000000000ce22140636d3f705"
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=cocotroupe20@gmail.com; helo=mail-wm1-x329.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x531.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 05 Jun 2025 10:47:38 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,128 +108,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000ce22140636d3f705
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Vivek Kasireddy <vivek.kasireddy@intel.com> writes:
 
-Fixed!
-
-Le jeu. 5 juin 2025 =C3=A0 16:22, Peter Maydell <peter.maydell@linaro.org> =
-a
-=C3=A9crit :
-
-> On Thu, 5 Jun 2025 at 15:18, Peter Maydell <peter.maydell@linaro.org>
-> wrote:
-> >
-> > The AN500 application note documents that it configures the Cortex-M7
-> > CPU to have 16 MPU regions. We weren't doing this in our emulation,
-> > so the CPU had only the default 8 MPU regions. Set the mpu-ns-regions
-> > property to 16 for this board.
-> >
-> > This bug doesn't affect any of the other board types we model in
-> > this source file, because they all use either the Cortex-M3 or
-> > Cortex-M4. Those CPUs do not have an RTL configurable number of
-> > MPU regions, and always provide 8 regions if the MPU is built in.
-> >
-> > Cc: qemu-stable@nongnu.org
-> > Reported-by: Corentin GENDRE <cocotroupe20@gmail.com>
-> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> > ---
-> >  hw/arm/mps2.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-> > index 58efb41e6db..50e1a1c1c80 100644
-> > --- a/hw/arm/mps2.c
-> > +++ b/hw/arm/mps2.c
-> > @@ -224,7 +224,11 @@ static void mps2_common_init(MachineState *machine=
-)
-> >      switch (mmc->fpga_type) {
-> >      case FPGA_AN385:
-> >      case FPGA_AN386:
-> > +        qdev_prop_set_uint32(armv7m, "num-irq", 32);
-> > +        break;
-> >      case FPGA_AN500:
-> > +        /* The AN500 configures its Cortex-M7 with 16 MPU regions */
-> > +        qdev_prop_set_uint32(armv7m, "mpu-ns-dregions", 16);
+> To address the limitation that this option is incompatible with
+> remote clients, this patch series adds an option to select a
+> preferred codec and also enable gl=3Don option for clients that
+> are connected via the network. In other words, with this option
+> enabled (and the below linked Spice series merged), it would be
+> possible to have Qemu share a dmabuf fd with Spice, which would
+> then forward it to a hardware or software based encoder and
+> eventually send the data associated with the fd to a client that
+> could be located on a different machine.
 >
-> Rats, I failed to actually refresh the git commit with a
-> fix for a bug that "make check" caught before I sent it out.
-> This should be "mpu-ns-regions", without the "d".
+> Essentially, this patch series provides a hardware accelerated,
+> opensource VDI option for users using Qemu and Spice by leveraging
+> the iGPU/dGPU on the host machine to encode the Guest FB via the
+> Gstreamer framework.
 >
-> >          qdev_prop_set_uint32(armv7m, "num-irq", 32);
-> >          break;
-> >      case FPGA_AN511:
+> v4 -> v5 (suggestions from Marc-Andr=C3=A9):
+> - Fix the errors (mostly 80 chars limit violations) identified by
+>   scripts/checkpatch.pl
+> - Rename the globals to have a spice_ prefix for consistency
+> - Rename MAX_REFRESH_RATE to DEFAULT_MAX_REFRESH_RATE
+> - Added comments to explain how/when the gl_draw request is submitted
+>   to spice server in the remote clients case
+> - Fix the mem_obj leak that would occur when the associated texture
+>   is destroyed or when an error is encountered while creating a
+>   texture from an fd (Dmitry and Michael)
+> - Merged Michael's patch to fix the mem_obj leak into this series and
+>   added his Co-developed-by tag to the relevant patches
 >
-> -- PMM
+> v3 -> v4 (suggestions from Marc-Andr=C3=A9):
+> - Add a new parameter to make max_refresh_rate configurable
+> - Have surface_gl_create_texture_from_fd() return bool after checking
+>   for errors
+> - Remove the check for PIXMAN_r5g6b5() in spice_gl_replace_fd_texture()
+> - Report errors in spice_gl_replace_fd_texture() when someting fails
+> - Use glGetError() correctly by adding an additional (dummy) call
+>   before checking for actual errors (Dmitry)
+> - Add a new patch to check fd values in egl_dmabuf_export_texture()
+> - Rebase on Qemu master
 >
+> v2 -> v3:
+> - Check for errors after invoking glImportMemoryFdEXT() using
+>   glGetError() and report the error to user (Dmitry)
+>
+> v1 -> v2:
+> - Replace the option name preferred-codec with video-codecs (Marc-Andr=C3=
+=A9)
+> - Add a warning when an fd cannot be created from texture (Marc-Andr=C3=
+=A9)
+> - Add a new patch to blit the scanout texture into a linear one to
+>   make it work with virgl
+> - Rebased and tested against the latest Spice master
+>
+> Tested with the following Qemu parameters:
+> -device virtio-vga,max_outputs=3D1,xres=3D1920,yres=3D1080,blob=3Dtrue
+> -spice port=3D3001,gl=3Don,disable-ticketing=3Don,video-codecs=3Dgstreame=
+r:h264
+>
+> and remote-viewer --spice-debug spice://x.x.x.x:3001 on the client side.
+>
+> Associated Spice server MR (merged):
+> https://gitlab.freedesktop.org/spice/spice/-/merge_requests/229
+>
+> ---
+> Cc: Gerd Hoffmann <kraxel@redhat.com>
+> Cc: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Cc: Frediano Ziglio <freddy77@gmail.com>
+> Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+> Cc: Dongwon Kim <dongwon.kim@intel.com>
+> Cc: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>
+> Vivek Kasireddy (7):
+>   ui/egl-helpers: Error check the fds in egl_dmabuf_export_texture()
+>   ui/spice: Add an option for users to provide a preferred codec
+>   ui/spice: Enable gl=3Don option for non-local or remote clients
+>   ui/spice: Add an option to submit gl_draw requests at fixed rate
+>   ui/console-gl: Add a helper to create a texture with linear memory
+>     layout
+>   ui/spice: Create a new texture with linear layout when gl=3Don is
+>     enabled
+>   ui/spice: Blit the scanout texture if its memory layout is not linear
+>
+>  include/ui/console.h       |   3 +
+>  include/ui/spice-display.h |   5 +
+>  include/ui/surface.h       |   1 +
+>  qemu-options.hx            |  10 ++
 
---000000000000ce22140636d3f705
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Aside from the qemu-options we don't see a lot about SPICE in the docs.
+Could we add a section to cover the configuration or maybe just expand
+system/devices/virtio-gpu with information about how acceleration works
+with remote SPICE viewers?
 
-<div dir=3D"ltr">Fixed!=C2=A0<br></div><br><div class=3D"gmail_quote gmail_=
-quote_container"><div dir=3D"ltr" class=3D"gmail_attr">Le=C2=A0jeu. 5 juin =
-2025 =C3=A0=C2=A016:22, Peter Maydell &lt;<a href=3D"mailto:peter.maydell@l=
-inaro.org">peter.maydell@linaro.org</a>&gt; a =C3=A9crit=C2=A0:<br></div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">On Thu, 5 Jun 2025 at 15:18=
-, Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org" target=3D"_=
-blank">peter.maydell@linaro.org</a>&gt; wrote:<br>
-&gt;<br>
-&gt; The AN500 application note documents that it configures the Cortex-M7<=
-br>
-&gt; CPU to have 16 MPU regions. We weren&#39;t doing this in our emulation=
-,<br>
-&gt; so the CPU had only the default 8 MPU regions. Set the mpu-ns-regions<=
-br>
-&gt; property to 16 for this board.<br>
-&gt;<br>
-&gt; This bug doesn&#39;t affect any of the other board types we model in<b=
-r>
-&gt; this source file, because they all use either the Cortex-M3 or<br>
-&gt; Cortex-M4. Those CPUs do not have an RTL configurable number of<br>
-&gt; MPU regions, and always provide 8 regions if the MPU is built in.<br>
-&gt;<br>
-&gt; Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-s=
-table@nongnu.org</a><br>
-&gt; Reported-by: Corentin GENDRE &lt;<a href=3D"mailto:cocotroupe20@gmail.=
-com" target=3D"_blank">cocotroupe20@gmail.com</a>&gt;<br>
-&gt; Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linar=
-o.org" target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 hw/arm/mps2.c | 4 ++++<br>
-&gt;=C2=A0 1 file changed, 4 insertions(+)<br>
-&gt;<br>
-&gt; diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c<br>
-&gt; index 58efb41e6db..50e1a1c1c80 100644<br>
-&gt; --- a/hw/arm/mps2.c<br>
-&gt; +++ b/hw/arm/mps2.c<br>
-&gt; @@ -224,7 +224,11 @@ static void mps2_common_init(MachineState *machin=
-e)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 switch (mmc-&gt;fpga_type) {<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN385:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN386:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint32(armv7m, &quot;num-ir=
-q&quot;, 32);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN500:<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* The AN500 configures its Cortex-M7 wit=
-h 16 MPU regions */<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint32(armv7m, &quot;mpu-ns=
--dregions&quot;, 16);<br>
-<br>
-Rats, I failed to actually refresh the git commit with a<br>
-fix for a bug that &quot;make check&quot; caught before I sent it out.<br>
-This should be &quot;mpu-ns-regions&quot;, without the &quot;d&quot;.<br>
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qdev_prop_set_uint32(armv7m, &quot;n=
-um-irq&quot;, 32);<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 case FPGA_AN511:<br>
-<br>
--- PMM<br>
-</blockquote></div>
-
---000000000000ce22140636d3f705--
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
