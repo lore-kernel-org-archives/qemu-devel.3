@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27004C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 19:36:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CB9BC5AE59
+	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 19:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNGNo-0006oj-K7; Thu, 05 Jun 2025 15:36:12 -0400
+	id 1uNGNj-0006mD-8H; Thu, 05 Jun 2025 15:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNGNl-0006n5-1Z
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 15:36:09 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNGNf-0006kn-Ca
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 15:36:03 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNGNi-00018X-J0
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 15:36:08 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-450cea01b9cso4672745e9.0
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 12:36:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNGNc-00017o-S8
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 15:36:03 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a531fcaa05so35612f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 12:35:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749152165; x=1749756965; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749152158; x=1749756958; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rl1Q+tx40XbBr5+knuEz+9jWMcm+8B54eODQxezOx1g=;
- b=kUBllly4LO2LIc/Kh7eZ/AZg5veY02yZ7suMxHAPpCWvFUsheBPee5x1ZYoJDdpFsN
- +vrFVPtoKcL2zMOqsVWeU83UpaYxfDZQQdorIUnzi/wE0d2cENpOurmbHihw/1agQBcg
- WEiVWg0dEN2xQLU0+uuNiVfT72IvLng+RV25c+tDzUr/LwbNICNmH81ln0wSci0Jyhlu
- bofxJRK17elnZQ0y5pKFqkL1SK/hNmGylDfyCZjANpOO/tGldd2OPFSViOLItbQfjIRF
- 9iuVZCVaTgkVm7GYNgCTnSC6qsAIWGAAUeioU294+EXOAeF3AamTME/CM7Y4/hG6pB/c
- GTxg==
+ bh=0H5JejayswNFHuNqdTgm/gmscONTNKgClj6tOp77taE=;
+ b=MPJVzBorwr+KwcPCwwXI0/edacaAKd1su9dFvRHqAbc1Ly49UrxFBNE5Q20wK/0v+Z
+ 5XhSWlZ3LM94cBhYyqUaO9cSQULa0plEmXbkbbH/Ii6PDyrOsuBFk071us8KZBoxOyEN
+ WjaWB4h+dwdez5Gw5cI+jSHGSSk5GyaOwNq2macnlFB4sc2HqvcaZNojRicPl4jL4Rrn
+ vpGcTd/PtGr4ZV/Ta4JCiKyDuXAgQdNGgZuS3UjE5PgvIKwGEzxkRPt3wfnxqUiM8p33
+ 8KGRENZDXavIyPJ8Vi+um4Vd5O7XlxvH8rOsPCU4sKJW2lk00RPkjZf6N3JuEuO8ided
+ ty6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749152165; x=1749756965;
+ d=1e100.net; s=20230601; t=1749152158; x=1749756958;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=rl1Q+tx40XbBr5+knuEz+9jWMcm+8B54eODQxezOx1g=;
- b=Tugr9JD5+eTRYp667aoii9T1VfHIZlfOXBCY84t7EeryesuBNZh5gCdIdYgEOB4oV+
- Z1nnUMZWHc1RFEsaIVrChuG0XohSgQ2/XB+/vH1lNePBjFoG39pGFnFm7mQZZPyMHLHF
- a9rXK6S+RFbJ2B/U2b6twMWDmNxaDI6wjDSOTAAkNnOMgMx0oSBlWHp9Cfu0qBCuDt+6
- 9lSr0zs4ZLHh8vu+CR+eks9+D69akge3KsS5bKop73hICbeg2IJX8OPi05DJbsHyFwV0
- Hl3SWv+Lrhmx8zi5vCdYbL3lkqX4eR/Q5Tl+kH4x56nm5N2pBAIru6AvMWFCpTsjgubD
- IFTg==
-X-Gm-Message-State: AOJu0YxeiJi83yMpeCD8V93qKltYD4EhU5JiJiatp2QYWzYJFMui13GV
- 1LjQnpONOAGEYkwjo3fsyRoFGbmWLQNMWy8ruCqOUuU580Yo5BR+WEsxcaLl9t3gnNqsN5J9jF+
- RSIC32Ds=
-X-Gm-Gg: ASbGncsMBiwc0KvA+AN9661BQcceU6eCecEOoCltxkU2pbZR4GJNDbH958FzgIUMdfR
- Ky6InlOjiRk2MC72mZXIffGOT9UUwZIgm5ej8ipQVTmzJOjj8WA3MoknGBR84KAlWEU3ItM8F5v
- TN/w9D2lquY5c53mHvH55WEi/BKsWkf10H6HbBtj9FqHvdYeD7cuJjgeQ5SDSnUlaMp3QTAJDpl
- VX2iuqeuSCOhfTT1eTyXB+T5Q6DiZspJiCCVB/692djBicKtRIbuAH5+rclA792mOiNgmEkUSLG
- nXyMjp/1UT63/EIU5jKqbN/8981VixNVy11+aoWd2COYSrpGA1Zr/yyGonYOtggoVL6ZvJWeqP/
- m4l+4GZITXV2trall4I6slwC25lBEhurOHD19
-X-Google-Smtp-Source: AGHT+IHngvxzU4PUDV0Uup5trNoZ4ZlhKEuRRfnCUoHwKu1DvNLPY/l/UWbiAr7tFZSI0B2oAwy7Zg==
-X-Received: by 2002:a05:6000:1ac6:b0:3a5:2f23:377d with SMTP id
- ffacd0b85a97d-3a531cb1037mr317670f8f.50.1749152164760; 
- Thu, 05 Jun 2025 12:36:04 -0700 (PDT)
+ bh=0H5JejayswNFHuNqdTgm/gmscONTNKgClj6tOp77taE=;
+ b=xGPiUC4hvvWurMK29xu5zLor4W5yKeZW9o7PsuvFyx22vZ5/znM7Hs19rwLiAg8vRW
+ 51KAQK9v3TliuFYE7XMIgRKaxxJlO5b/RAiQhUQC0dF2OuY6CtUicGb50XDWkJOtS14R
+ BQ3v+k5RRRKi6NoqKa0S/DCw71G0HhZvoRJAePuBIJRegZwp5+Kn9lc/J6qm5cXwzYoQ
+ On2PjA7Qzljbqp168Nc3tMK0G2o2fZLxFEVfCxZG350mHRo9K8CrvR/2pAG8+UbFsbTg
+ QeLYcdMwHclOd3v/MjDDZ1q3KcuSoQMHFX3oTxVGo9R2kBIkm4D1YJDDAT6o0Z+wGNw0
+ CrBg==
+X-Gm-Message-State: AOJu0YyHyO+7nOBdz3h+Izeb7LzASJNtIDigtYGzRKjDakktVfreFWMb
+ QC++8L9Epi2NmfwkGuw0IRLYxkIT00qrjeXmeF9N8HJgwbi5beZzGmbCUHWjVMZsEbFnItpJjIR
+ k+4Ve9CY=
+X-Gm-Gg: ASbGncvxHdgEwGgPzqKpXmMVnr8fJTakPK3HoommRqcTPepdwkOUGuQCfmepJ5DDnaO
+ D9hAdAy3WnLwTg72njlkejgsBTuvzWNqHd185UiOjf5Bi70WgGtXTmaI2sJbgYQq8LhPCre9dlY
+ DJRQ2hzK1xz1Q4dBzu+zZqHnSYZxqjcmxt5fn3rXlnT6blWnmz2n7PjY168U9519RKTaPgSfn6j
+ A+WLFxUiC8Lg03CDW3Ehmwv5WaZIpNQ1dPGZFDuewvOMTGc7b0wBzqBNnZ3CPG95tr5JHy5YlDl
+ isZrD/K+MCwFBVyXqImsA1/9/dtsCTsGMorK4r9JGnDUA5Gb7f4oiohnuJQ932nfb4bHnpTdOzH
+ JVROgH+1BUTQyMaD5t6qfvy5k4gyalkEDsHZ0
+X-Google-Smtp-Source: AGHT+IHG2xTkNtnDvYs8on+sG/fSFtbgIXpf3ChqwXTbBWdIJvHOFqY6usxBDZaDSOxzZ+lYsviOHA==
+X-Received: by 2002:a05:6000:220d:b0:3a4:f744:e013 with SMTP id
+ ffacd0b85a97d-3a531cb8521mr290974f8f.30.1749152158248; 
+ Thu, 05 Jun 2025 12:35:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-452137258bdsm2246645e9.27.2025.06.05.12.36.02
+ ffacd0b85a97d-3a53244df06sm59169f8f.69.2025.06.05.12.35.57
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 05 Jun 2025 12:36:03 -0700 (PDT)
+ Thu, 05 Jun 2025 12:35:57 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
@@ -73,17 +73,17 @@ Cc: qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [RFC PATCH 4/4] buildsys: Prohibit alloca() use on system code
-Date: Thu,  5 Jun 2025 21:35:40 +0200
-Message-ID: <20250605193540.59874-5-philmd@linaro.org>
+Subject: [PATCH 3/4] tests/unit/test-char: Avoid using g_alloca()
+Date: Thu,  5 Jun 2025 21:35:39 +0200
+Message-ID: <20250605193540.59874-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250605193540.59874-1-philmd@linaro.org>
 References: <20250605193540.59874-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,32 +106,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Similarly to commit 64c1a544352 ("meson: Enable -Wvla") with
-variable length arrays, forbid alloca() uses on system code.
-
-There are few uses on ancient linux-user code, do not bother
-there.
+Do not use g_alloca(), simply allocate the CharBackend
+structure on the stack.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- meson.build | 4 ++++
- 1 file changed, 4 insertions(+)
+ tests/unit/test-char.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index ef994676fe9..8c6ccb03c71 100644
---- a/meson.build
-+++ b/meson.build
-@@ -774,6 +774,10 @@ if host_os != 'darwin'
-   endif
- endif
+diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
+index 60a843b79d9..f30a39f61ff 100644
+--- a/tests/unit/test-char.c
++++ b/tests/unit/test-char.c
+@@ -993,7 +993,7 @@ static void char_udp_test_internal(Chardev *reuse_chr, int sock)
+     struct sockaddr_in other;
+     SocketIdleData d = { 0, };
+     Chardev *chr;
+-    CharBackend *be;
++    CharBackend stack_be, *be = &stack_be;
+     socklen_t alen = sizeof(other);
+     int ret;
+     char buf[10];
+@@ -1009,7 +1009,6 @@ static void char_udp_test_internal(Chardev *reuse_chr, int sock)
+         chr = qemu_chr_new("client", tmp, NULL);
+         g_assert_nonnull(chr);
  
-+if have_system
-+  warn_flags += ['-Walloca']
-+endif
-+
- # Set up C++ compiler flags
- qemu_cxxflags = []
- if 'cpp' in all_languages
+-        be = g_alloca(sizeof(CharBackend));
+         qemu_chr_fe_init(be, chr, &error_abort);
+     }
+ 
 -- 
 2.49.0
 
