@@ -4,92 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48C59C61CE7
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 16:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B996C61CE7
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 16:22:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNZmF-0004gf-8v; Fri, 06 Jun 2025 12:18:44 -0400
+	id 1uNZph-0005gU-Qk; Fri, 06 Jun 2025 12:22:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uNZmB-0004gA-Cu
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:18:39 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ id 1uNZpg-0005fy-AZ
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:22:16 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uNZm9-0007pF-RA
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:18:39 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-742c7a52e97so2045938b3a.3
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 09:18:37 -0700 (PDT)
+ id 1uNZpa-0008GO-Ft
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:22:14 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-74800b81f1bso1908093b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 09:22:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749226716; x=1749831516; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749226929; x=1749831729; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7b7GfhmSNpYAm204tVlseTvlPS7fdpMp975RzEXDCtM=;
- b=PfUr/w/DZ5E0+buWLiTog0Wc4us8s5U9k/LgnBlE4g14JBPAr+RQA2uvLwI/Ho0TiJ
- Iu8tsUOKx0TMf4Fb3LK71nkIpnsNcBiRzvSVtBskI5zdIj6R5sAd5OnklXqxxs5PSy5y
- 2fveqqE/60swOxZ4sle4R7yrVgPuH9RGKec5neIL0AH0dflltJobgU1PoOTyHa+iAhw9
- 9Lthh2iNOIdYVGo1PbfzSiiyiA1k77ikl8t+oYlG9tLD7+iCRJVG0Q7C9JBbBjs7hX7y
- PGVyeAM/ZnYQpeyGaCkzweghOnxMOac1JtWLzPtVw55oga491XEfU+WWUchjfqwxBUdt
- YzKw==
+ bh=7SYTdlE/fJXOVY6ynl4ET3geGWrAb8cvhJwwq/SC4jQ=;
+ b=zCr1n4S/24HOLqCh+n7zfY3do2elwaWDvjZf0LOINn36Mq71w4goNolt25gcjsXSo5
+ tL9B2dG9zPxyHVL6Tmx3By5vwIgjkNs+zo2ld8JTIskkyW/cy+O67O632781qCE+kwII
+ 1K6W5Pimmky5BjQ3u+Fd3Inrdy8Tj8Xdq2my3YX+TeY5n/ZI8WGBMA5v9P088zUGRnrp
+ H3qTQzZScuncXOmp35ERUdS0A+dGnVVl+7ckfAW2P0uwRukSuDGRK/sZFP4h8y20oEUQ
+ ZAOXx7imHfwtKBeqQZumuw8BsSYiEjK1e7x+Gz4hSnpV5qaZwjJdOnXkvXuzy5bqE5RR
+ jpug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749226716; x=1749831516;
+ d=1e100.net; s=20230601; t=1749226929; x=1749831729;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7b7GfhmSNpYAm204tVlseTvlPS7fdpMp975RzEXDCtM=;
- b=DxSFJp2rrwuGis9r4Xc9oUsl2orYDzd3aFxGC7jMetkNadXKn1WJgNb3KnbtNPxsbh
- 3Hrcl1lyPqNvwywZVogsSJ65jJHtGrs+Atk5+DWAOUpc5rh++FsPFkARe/O1JUqTne7s
- kZelBdvcT2tvxJBoZRRLUNfFRCpE6DeAfdErMVRv3Z55pKjYjtF8DUsmHbolJFtoWhdz
- rbXX6fBi7cvLQA2iF64pdJuJQmLUd6SBwr4II+uHdU7tMNEM7cnLkSrj8sfurLxT4GQO
- UKW8aFl+BJ/fwNGpBb0GRT//t9oNYfhLnX37sGyOf93O0TAik32u87oHSfyPaSoJ6H1u
- a3oA==
+ bh=7SYTdlE/fJXOVY6ynl4ET3geGWrAb8cvhJwwq/SC4jQ=;
+ b=tu5lHcSEAR9xuPyffQgVQzj1pjHhmWIa5HYMJt1BTfA48a34Hg6wJc4MvRvk25+fME
+ u4Qc8KfTdI7AS8fWhjwp3GCMcxwxH02ypInQXERYFPleT5QgTRSCtcGEZyEddbt+Iz6y
+ YKKlnMraFySUNqsaCYXf/76TET7GBtkZU1uDou3MyMBkYME7ZJ8zO+F6h0EzLhxuQ1Yr
+ UPOxQ0cBh+vppN+2rz0ffV4MU2sQntmewjZIz9S4QIUzmCGdyOLVjoVNjKr62hpQuB79
+ Qxse2J5zwDph3ICgsbLiP1IMJdvvRrsaddwU9RKoR4GxCBDWMTYSI2p+v635HuIeGnCQ
+ nOFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWlvry/19Ze6wFMUXYsdBN3o/85OooeJMpnvgSokLNeY6ms512bRXBvo1Kmd0paJ4Trn/5fN5lTdCc0@nongnu.org
-X-Gm-Message-State: AOJu0Yy5oi08CAMFwwU9jLaXlSucE4ziqXq7mZ1oKNm1spCxKJlmf2Wi
- 5/F3yqCm/GTtDdV2Gh8tYCgdWw7UgmI6T4u0W7BxC6WYVl8gtpEZelpqbHmt413Ucxk=
-X-Gm-Gg: ASbGncuC+3iyDQFKdt/BL3cBlZSp2p9zvKncoKriYZF1BrcWumoYjK9esiQAYR/Cldm
- P3xskO1Ps5znN66zU2ABBnLMcP2a2yk/xNT/vKiI3oO0hzhCe5OKncU/y01p6YLHWCTXxW33Q+a
- b1Iz8AAkaDDfKEh2As/NiyVhqUdmVZ19qtU1dN8mbLyapjwiRrSt6F2RFVs65eqxMuYeOD+u8jT
- pfuAZyWA8LNc16RjQZiZG0oAKEfJCfk/2UqjKTxZjR31IH1SPfeBUZlzMCzpCVN02rO1YEvMTjY
- YniTDIUh1XBzxS0Gdy22HLexyzr1gNNphjM6tFGIJe7104jDvALIGVYlNpN1nInb
-X-Google-Smtp-Source: AGHT+IGVZ3EE9U2MIt6QYR1bhaMHVedZ8Xts2vPxfZJ+LUWdkXxdBmLYaBMNL9liu1gCHCN3PDJ1kg==
-X-Received: by 2002:a05:6a00:244f:b0:740:596e:1489 with SMTP id
- d2e1a72fcca58-74827f3d35emr5636940b3a.23.1749226715869; 
- Fri, 06 Jun 2025 09:18:35 -0700 (PDT)
+ AJvYcCX0PRFdBNFq495+99YXhsGKfPFQ29KH+APbLDgedof5BNUMBSuCvSOOPGYjL/aJWSxFRvKtKSN793/7@nongnu.org
+X-Gm-Message-State: AOJu0YzHqtgSkU2B6ZJKapUO8idx96pehUE7mL3e7L3OyNEVur4uDuUQ
+ 7HRJBQTpW+9IDr9z/jtKgziLK1fL6FaRtO57tCGMUxAUWpnkpfL9XbcLPL8BrQOcMxo=
+X-Gm-Gg: ASbGncuYbvdam3GrMSMorMJ8nS0ixO8/frfrpdmRz7ftG/rDYFyIYUdsS/m3DrHTXiZ
+ i1ZcOG7LLn6lxI282fb/ekbQZnOCnIeN4/pNCQMgHhpjxeL+Q4fL23SwCLTCdtUQkGL3Kwyyj3E
+ incKAbV1iuA55AZ2Lg5MWnlElgNVsU0LbqiWPMvU9naAxIm7x83FZTGIixQy/CHeS2dvQwfiZm3
+ 6BkX7rGVfEdME8FSSUqrEyTPMy4hF8+kG7KZ94J4+mDz/uunfPCrc/YwbRyTzzAO1l9ZDZ7v5m0
+ 37TtNhQzv38An49/Z6xWVlWjxWqYneo/jmGwwHJFqe3uJV25Ww6HnlpI72dhtW0F/VoaE4T5no0
+ =
+X-Google-Smtp-Source: AGHT+IGjNym0gikeObc/XVXl6dvxSz6Qhr+BYtz2Iz0Af39IPxWYrECHbX5B+0L0Mnvrx415OpDvsg==
+X-Received: by 2002:a05:6a21:2d8f:b0:1f5:8dea:bb93 with SMTP id
+ adf61e73a8af0-21ee24fd015mr5968341637.7.1749226928946; 
+ Fri, 06 Jun 2025 09:22:08 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7482b0e9c3csm1447469b3a.153.2025.06.06.09.18.35
+ d2e1a72fcca58-7482af7a90dsm1504256b3a.57.2025.06.06.09.22.08
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Jun 2025 09:18:35 -0700 (PDT)
-Message-ID: <811aa1ec-352d-40cb-a42b-2bca5dcf64cd@linaro.org>
-Date: Fri, 6 Jun 2025 09:18:34 -0700
+ Fri, 06 Jun 2025 09:22:08 -0700 (PDT)
+Message-ID: <ae7090c3-37e4-4f10-8267-d7106aa5e259@linaro.org>
+Date: Fri, 6 Jun 2025 09:22:07 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] tests/unit/test-char: Avoid using g_alloca()
+Subject: Re: [PATCH v2] ramfb: Add property to control if load the romfile
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250605193540.59874-1-philmd@linaro.org>
- <20250605193540.59874-4-philmd@linaro.org>
- <7832d31a-2707-4cc4-9838-f2ea4b6b2cea@linaro.org>
- <0f7673d9-31f4-495b-a118-f53ed6c6fc37@linaro.org>
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Shaoqin Huang <shahuang@redhat.com>
+Cc: qemu-arm@nongnu.org, Eric Auger <eauger@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+References: <20250606070234.2063451-1-shahuang@redhat.com>
+ <aEKeNSc8mAZ8vhGj@redhat.com>
+ <9b083ae2-3afb-43f4-8929-fc693b581a0d@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <0f7673d9-31f4-495b-a118-f53ed6c6fc37@linaro.org>
+In-Reply-To: <9b083ae2-3afb-43f4-8929-fc693b581a0d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -112,72 +110,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/5/25 11:09 PM, Philippe Mathieu-Daudé wrote:
-> On 5/6/25 22:53, Pierrick Bouvier wrote:
->> On 6/5/25 12:35 PM, Philippe Mathieu-Daudé wrote:
->>> Do not use g_alloca(), simply allocate the CharBackend
->>> structure on the stack.
+On 6/6/25 2:04 AM, Philippe Mathieu-Daudé wrote:
+> On 6/6/25 09:52, Daniel P. Berrangé wrote:
+>> On Fri, Jun 06, 2025 at 03:02:34AM -0400, Shaoqin Huang wrote:
+>>> Now the ramfb will load the vgabios-ramfb.bin unconditionally, but only
+>>> the x86 need the vgabios-ramfb.bin, this can cause that when use the
+>>> release package on arm64 it can't find the vgabios-ramfb.bin.
 >>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>>    tests/unit/test-char.c | 3 +--
->>>    1 file changed, 1 insertion(+), 2 deletions(-)
+>>> Because only seabios will use the vgabios-ramfb.bin, load the rom logic
+>>> is x86-specific. For other !x86 platforms, the edk2 ships an EFI driver
+>>> for ramfb, so they don't need to load the romfile.
 >>>
->>> diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
->>> index 60a843b79d9..f30a39f61ff 100644
->>> --- a/tests/unit/test-char.c
->>> +++ b/tests/unit/test-char.c
->>> @@ -993,7 +993,7 @@ static void char_udp_test_internal(Chardev
->>> *reuse_chr, int sock)
->>>        struct sockaddr_in other;
->>>        SocketIdleData d = { 0, };
->>>        Chardev *chr;
->>> -    CharBackend *be;
->>> +    CharBackend stack_be, *be = &stack_be;
->>>        socklen_t alen = sizeof(other);
->>>        int ret;
->>>        char buf[10];
->>> @@ -1009,7 +1009,6 @@ static void char_udp_test_internal(Chardev
->>> *reuse_chr, int sock)
->>>            chr = qemu_chr_new("client", tmp, NULL);
->>>            g_assert_nonnull(chr);
->>> -        be = g_alloca(sizeof(CharBackend));
->>>            qemu_chr_fe_init(be, chr, &error_abort);
->>>        }
+>>> So add a new property use_legacy_x86_rom in both ramfb and vfio_pci
+>>> device, because the vfio display also use the ramfb_setup() to load
+>>> the vgabios-ramfb.bin file.
+>>>
+>>> After have this property, the machine type can set the compatibility to
+>>> not load the vgabios-ramfb.bin if the arch doesn't need it.
 >>
->> Would that be more simple to declare the variable, and use &be in the
->> function code?
+>> Can you make this a series, with an additional patch that updates the
+>> current in-dev machine types to use this new property, so we're clear
+>> about the proposed usage.
+>>
+>>>
+>>> Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
+>>> ---
+>>>    hw/display/ramfb-standalone.c | 4 +++-
+>>>    hw/display/ramfb-stubs.c      | 2 +-
+>>>    hw/display/ramfb.c            | 6 ++++--
+>>>    hw/vfio/display.c             | 4 ++--
+>>>    hw/vfio/pci.c                 | 1 +
+>>>    hw/vfio/pci.h                 | 1 +
+>>>    include/hw/display/ramfb.h    | 2 +-
+>>>    7 files changed, 13 insertions(+), 7 deletions(-)
 > 
-> More context (see reuse_chr ladder):
+> 
+>>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+>>> index 7f1532fbed..4e4759c954 100644
+>>> --- a/hw/vfio/pci.c
+>>> +++ b/hw/vfio/pci.c
+>>> @@ -3564,6 +3564,7 @@ static const TypeInfo vfio_pci_dev_info = {
+>>>    
+>>>    static const Property vfio_pci_dev_nohotplug_properties[] = {
+>>>        DEFINE_PROP_BOOL("ramfb", VFIOPCIDevice, enable_ramfb, false),
+>>> +    DEFINE_PROP_BOOL("use_legacy_x86_rom", VFIOPCIDevice, use_legacy_x86_rom, true),
+>>>        DEFINE_PROP_ON_OFF_AUTO("x-ramfb-migrate", VFIOPCIDevice, ramfb_migrate,
+>>>                                ON_OFF_AUTO_AUTO),
+>>>    };
+> 
+> Alternatively with target-info API:
 > 
 > -- >8 --
-> @@ -991,45 +991,44 @@ static int make_udp_socket(int *port)
->    static void char_udp_test_internal(Chardev *reuse_chr, int sock)
->    {
->        struct sockaddr_in other;
->        SocketIdleData d = { 0, };
->        Chardev *chr;
-> -    CharBackend *be;
-> +    CharBackend stack_be, *be = &stack_be;
->        socklen_t alen = sizeof(other);
->        int ret;
->        char buf[10];
->        char *tmp = NULL;
+> diff --git a/hw/display/ramfb.c b/hw/display/ramfb.c
+> index 8c0f907673d..689f10625f8 100644
+> --- a/hw/display/ramfb.c
+> +++ b/hw/display/ramfb.c
+> @@ -12,6 +12,7 @@
+>     */
 > 
->        if (reuse_chr) {
->            chr = reuse_chr;
->            be = chr->be;
->        } else {
->            int port;
->            sock = make_udp_socket(&port);
->            tmp = g_strdup_printf("udp:127.0.0.1:%d", port);
->            chr = qemu_chr_new("client", tmp, NULL);
->            g_assert_nonnull(chr);
+>    #include "qemu/osdep.h"
+> +#include "qemu/target-info.h"
+>    #include "qapi/error.h"
+>    #include "hw/loader.h"
+>    #include "hw/display/ramfb.h"
+> @@ -147,7 +148,15 @@ RAMFBState *ramfb_setup(Error **errp)
 > 
-> -        be = g_alloca(sizeof(CharBackend));
->            qemu_chr_fe_init(be, chr, &error_abort);
->        }
+>        s = g_new0(RAMFBState, 1);
+> 
+> -    rom_add_vga("vgabios-ramfb.bin");
+> +    switch (target_system_arch()) {
+> +    case SYS_EMU_TARGET_I386:
+> +    case SYS_EMU_TARGET_X86_64:
+> +        rom_add_vga("vgabios-ramfb.bin");
+> +        break;
+> +    default:
+> +        break;
+> +    }
+> +
+>        fw_cfg_add_file_callback(fw_cfg, "etc/ramfb",
+>                                 NULL, ramfb_fw_cfg_write, s,
+>                                 &s->cfg, sizeof(s->cfg), false);
 > ---
+> 
+> Recent work event introduces target_base_FOO() so that'd be:
+> 
+> -- >8 --
+> diff --git a/hw/display/ramfb.c b/hw/display/ramfb.c
+> index 8c0f907673d..2aa3b309010 100644
+> --- a/hw/display/ramfb.c
+> +++ b/hw/display/ramfb.c
+> @@ -12,6 +12,7 @@
+>     */
+> 
+>    #include "qemu/osdep.h"
+> +#include "qemu/target-info.h"
+>    #include "qapi/error.h"
+>    #include "hw/loader.h"
+>    #include "hw/display/ramfb.h"
+> @@ -147,7 +148,10 @@ RAMFBState *ramfb_setup(Error **errp)
+> 
+>        s = g_new0(RAMFBState, 1);
+> 
+> -    rom_add_vga("vgabios-ramfb.bin");
+> +    if (target_base_x86()) {
+> +        rom_add_vga("vgabios-ramfb.bin");
+> +    }
+> +
+>        fw_cfg_add_file_callback(fw_cfg, "etc/ramfb",
+>                                 NULL, ramfb_fw_cfg_write, s,
+>                                 &s->cfg, sizeof(s->cfg), false);
+> ---
+> 
+> Unfortunately I had to focus on more urgent stuff so this isn't
+> merged yet (besides I hurt a finger yesterday and am now typing
+> slower). I hope I'd be able to respin that next week.
 
-Ok!
+In case it's too much effort to respin all the series in a close future, 
+maybe it could be a good idea to just send target_system_arch(), so that 
+people can start using it.
+ From there, people can add target_base_FOO() easily on a as needed 
+basis, without any hard conflict issue.
+
+Thanks,
+Pierrick
 
