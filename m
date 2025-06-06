@@ -4,229 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C24EDC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 16:22:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53DBC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 16:27:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNZpl-0005hU-Tu; Fri, 06 Jun 2025 12:22:22 -0400
+	id 1uNZuU-0007ep-HT; Fri, 06 Jun 2025 12:27:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uNZpj-0005gz-EL
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:22:19 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1uNZpf-0008GU-1u
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:22:19 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5565Nd5l003840;
- Fri, 6 Jun 2025 16:22:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=corp-2025-04-25; bh=q58dhK6zVhvPJFK3jv
- XmWC4SSx8XY6Td9CdJknJRCQ8=; b=lNVs05WbajI1RdNinMniL5YxAk+AqnRB/W
- 7vTYmTFAVSL38wmcxdy1oQz+eX7CY5nvRNfOL+/KvgyJ2OpP/z7MU64kuXcG29cW
- 7fFiKEGgWlo4eG5wapcbHD9YEeB7/N01INclKm1Lrq3ntsu1IsUFZ0rX7FfB2vKv
- n/v+p9yDtJfijpgnp3QMH4JcGrHmoZJ605wo2FctEe21MjhOR6wEjt8eBJe6HFsj
- yLnklO9tjOjOPxw9Me8e3N4hR1VbKe2MfI4MYnb7fcPVHvuPks4fcMcTSp4+wVul
- 6xKYjdI4saDFBUHKYZEZao+Mr28PbfoWuYsYJQ9eadbOwp8zhb1g==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 471gahgd39-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 06 Jun 2025 16:22:06 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 556Fcvi6034516; Fri, 6 Jun 2025 16:22:05 GMT
-Received: from nam02-sn1-obe.outbound.protection.outlook.com
- (mail-sn1nam02on2060.outbound.protection.outlook.com [40.107.96.60])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46yr7dexqn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 06 Jun 2025 16:22:05 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=uZ7zZKhUAdiuy4+7xXh57gRyBhsAbNqEMLn2DUZUPd/ZIxLBqejfxv1BmphQwI3b+Tkhoqr8wmZ2c/E620TbnaBRuSxesCf67ThFCoJiKrly8jMjODKraFZnRm1zkKitPwLz1Vemesi0B2Nu61Rx06qslojx9W4R7qWMO9dinPsBwJ9lgmsTpWfAfExBTe5jCqQEpXjRBAsvnD+Xo5UEtqitViaQLs8N1ghi2kyzzPfMGRg9TTw+2PqFvI8405DjQxSNLFK1DuNCZwZ8CLWCzjNDuQ56TTqvSxf1mnBmY2czb+Dc0I40jTBt2ZSqROy/RrDn7gz1p3xIjPn8Pmds8w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=q58dhK6zVhvPJFK3jvXmWC4SSx8XY6Td9CdJknJRCQ8=;
- b=tkWqyQphL8IV6YYEVu5D5W3jVqeG6/oGdV41Mxmeodsj58aO3NzB6DG7esnTWqaWQ2ow1oqHrGiQG5Jv6GMcShs8V+DpyPw2gYM698NIAXcF8Q01W4FXssMtsciU2kwlVaPpdAhU7n21otXwtXViHnXygPtzazqlq9Q4LbsBCC0ZOsrIGsN0rax5dc2wRkalKyFkDJOqV88tEY5Rt9A99+n2C1Iy9GBp6gedERPJgO/jLm3si9apCiRwHGxLp00A6N1JItZ+XsweejpGF+tRZt/9Y4Bctp/ky/VdlmW4I90QHnB2dj4d2DipXjhhSMLqc+rAcevtRlja1YXdcVJihQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uNZuS-0007eK-Pm
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:27:12 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
+ id 1uNZuQ-0000MO-Qm
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:27:12 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-313154270bbso2465715a91.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 09:27:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=q58dhK6zVhvPJFK3jvXmWC4SSx8XY6Td9CdJknJRCQ8=;
- b=mGW4S6AzRueiATKOWTpCMhvWOrIbhR9/9nYhyp9Q0wJAsNffLajq6/fDw8SP+bLNNcYBUezF1dOKE+3u+41ZJOxoZos2bifTTAfuaPZVqstSbdkLQjLwNHLgWDb0OD94YHYTeyUISHKB3moZOoMIKCY2P0dk6XpCSH7iDedY3Lc=
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com (2603:10b6:510:41::11)
- by MW4PR10MB6582.namprd10.prod.outlook.com (2603:10b6:303:229::19)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.20; Fri, 6 Jun
- 2025 16:22:01 +0000
-Received: from PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::7635:ba00:5d5:c935]) by PH0PR10MB4664.namprd10.prod.outlook.com
- ([fe80::7635:ba00:5d5:c935%6]) with mapi id 15.20.8813.018; Fri, 6 Jun 2025
- 16:22:01 +0000
-Content-Type: multipart/alternative;
- boundary="------------jgqvomhN5UK4CknRbfgGa61v"
-Message-ID: <1e58dd8c-3418-4843-9620-3819e9ee31f3@oracle.com>
-Date: Fri, 6 Jun 2025 12:21:59 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/7] Move memory listener register to vhost_vdpa_init
-To: Markus Armbruster <armbru@redhat.com>
-Cc: Jason Wang <jasowang@redhat.com>, qemu-devel@nongnu.org,
- eperezma@redhat.com, peterx@redhat.com, mst@redhat.com,
- lvivier@redhat.com, dtatulea@nvidia.com, leiyang@redhat.com,
- parav@mellanox.com, sgarzare@redhat.com, lingshan.zhu@intel.com,
- boris.ostrovsky@oracle.com, Si-Wei Liu <si-wei.liu@oracle.com>
-References: <20250507184647.15580-1-jonah.palmer@oracle.com>
- <CACGkMEuD7n8QVpgBvHSXJv7kN-hn4cpXX9J8UO8GUCzB0Ssqaw@mail.gmail.com>
- <87plg9ukgq.fsf@pond.sub.org>
- <50a648fa-76ab-47bf-9f6e-c07da913cb52@oracle.com>
- <87frgr7mvk.fsf@pond.sub.org>
- <dcbf9e2e-9442-4439-8593-dff036a4d781@oracle.com>
- <87o6v6muq4.fsf@pond.sub.org> <8734cimtqa.fsf@pond.sub.org>
-Content-Language: en-US
-From: Jonah Palmer <jonah.palmer@oracle.com>
-In-Reply-To: <8734cimtqa.fsf@pond.sub.org>
-X-ClientProxiedBy: BN9PR03CA0607.namprd03.prod.outlook.com
- (2603:10b6:408:106::12) To PH0PR10MB4664.namprd10.prod.outlook.com
- (2603:10b6:510:41::11)
+ d=gmail.com; s=20230601; t=1749227229; x=1749832029; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:date:from:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=LJo/2H61aEcasih2UA9s9opFRItpP5BcPNNKHiIMYyI=;
+ b=Kg+YRDgTNKR0kSVD9lXjEcs2iTOPO5a2Bc+NDVKTxjcwK9ZcDKoM3usa0BRDkpzsHz
+ 73Dq74hf2j+x2Yz4Sme8KYD/7zvOTd2Pfqd73eF6Qg0lLRh0b5PVcM9KGbrOIJU6fUXW
+ H3yxLBYhng0z+Fyx4P1BsQ74Tu241m9Rek5eX94WNl07ejVOthiWcUn47qHPbbEc2rDc
+ 5TG5ZZh+URJDNycA0l2eLa1YYbDJqiZVyepNlBfbu6OXyZw1FN6ay9MJ4Vk7B0lREoZ6
+ hwAixtgqBDCIN4dMbbPQuH24sGxWJqys6HmtoSlTQ6e3bcwAkgfNZZo9jGfJp9awQAnG
+ k6MA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749227229; x=1749832029;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:date:from
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=LJo/2H61aEcasih2UA9s9opFRItpP5BcPNNKHiIMYyI=;
+ b=QYeGp0Iseoh6BDd4V3zv4M7uiNaQyz9Ko7becDNuCctpoZqh2jvqfPAYDLRyOem2GF
+ ypFlNb5LsXoDQGCQAQNIG0Mqu80rMjB/b3P0ri366akUl33aAbKWRHx0NdycStGI5bOP
+ OXs3ifIgLweUnmRDxGgi8cUs5QrKqWWlIjG023kDxnWuRh1vOTrqS3A2gC2POx2qOWmQ
+ MNTKxBwBUeo/Bi955oK/xejoblAADO1bjNQDZR8LD4yTwW7bsMokodEPqgGmDunNqvb8
+ BKIcihdGkmmTnV+J5Y6r9aCRvp2gcKXvK2arlAIgJACOXORQXHI40LrMD9jZGnR0cLYO
+ G+1w==
+X-Gm-Message-State: AOJu0YzK59jmPsFqbYumQT0y7iXj+3XuM0PkJe6CvCerz6qzgAMTx9T6
+ /SN6dQWMGJ+X4Q7lkjzUFwmCC6UWfZwOHRQCWDUmqtp5OSH8Wq0yzIso
+X-Gm-Gg: ASbGncsSbUUsz5gfz4WBG40AwXwIDIaLfZjlrFo3ff7v0Mgml0FuqzqY/uwMoHawYn5
+ snjcR3PMveZujxxh9QXgkqknEe8xmUbfgnlH+g/ME0V3n6LPBE6jH5CL3PGo11H1P8r6MPppkWK
+ CGvIVgAymomxwOXnSWwWiF6sRWL22K84eM+yvHTJv2R3fqiSQ7LFaMZExYGESsBcxj1fRoSHlb+
+ oMeDLQVAjjxv+KqUAhZqdrJzMoMYD54UUz3LR8ohxoQrm24D16ewArvkTZ1d0WM2Ff5SFXPFLe0
+ 92923N3ZW2K45e3MbAsNL3PXcdB6hMxbmtuk2JXRQAMjrA==
+X-Google-Smtp-Source: AGHT+IEKi6kelnMID7Y/svXIB+jik0hfOHx3xJYctF6Pu+ddRZqnbbb0d7EMCaz4F2yl+M80M3Uyug==
+X-Received: by 2002:a17:90b:1646:b0:311:f05b:869a with SMTP id
+ 98e67ed59e1d1-313472eb280mr5905063a91.8.1749227228714; 
+ Fri, 06 Jun 2025 09:27:08 -0700 (PDT)
+Received: from debian ([2601:646:8f03:9fee:5e33:e006:dcd5:852d])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-31349f35284sm1514066a91.17.2025.06.06.09.27.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Jun 2025 09:27:08 -0700 (PDT)
+From: Fan Ni <nifan.cxl@gmail.com>
+X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
+Date: Fri, 6 Jun 2025 09:27:05 -0700
+To: anisa.su887@gmail.com
+Cc: qemu-devel@nongnu.org, Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org,
+ Anisa Su <anisa.su@samsung.com>
+Subject: Re: [QEMU PATCH v3 6/9] cxl-mailbox-utils: 0x5602 - FMAPI Set DC
+ Region Config
+Message-ID: <aEMW2SDuAE10Iyuf@debian>
+References: <20250605234227.970187-1-anisa.su887@gmail.com>
+ <20250605234227.970187-7-anisa.su887@gmail.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: PH0PR10MB4664:EE_|MW4PR10MB6582:EE_
-X-MS-Office365-Filtering-Correlation-Id: 24ce193a-ac01-418b-b29b-08dda516446d
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|1800799024|376014|366016|7053199007|13003099007|8096899003;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?THEzekJiRE14RHpzNGZCanp5bnpYYlZsTlZwWm1UTjV4enFoVWowcnNBSVlB?=
- =?utf-8?B?NEdSa25qYmJmNDZ4c0hxbzNnanAvbHlySmpTbTZoTVFuNWNMaUo5blJORG5N?=
- =?utf-8?B?WlR1RWdjU08wS2pYNnNxNlI0Z0EyQ2p3ZDFrL0VyOVRmNTV4WHVOdUtzbHJa?=
- =?utf-8?B?cHlDUDJjVnVIMEFQRkEvS1hQS3l3VWZHVG1oV1E2RDJyeGdCR3gvOTh3TVBL?=
- =?utf-8?B?czE4Yk8xdE5wSTh1Q01sMENWd044b1dJRWV3d1JPaDVWTEJSb1BIcWtUcmZW?=
- =?utf-8?B?bjJ0LzhTblFwc0d1bTM4Mjk3VlhTWFk3eWM5QWxtL1lacU1OWkttMDQ4MVk5?=
- =?utf-8?B?WnRIYjVSUEg1VGxsS2JDK0N5SklCR3IzQjM4UXZFbGhwWSs1VEYwRm1UYkI5?=
- =?utf-8?B?OWloYTIva05DSWFwb0M1dWNad2tOSXA1NkdKdWFrbGxGRVgrQmY4Znc1M0NZ?=
- =?utf-8?B?dnBRVFJEdWVPK25PSC8yQnhnNnE2dEplVWtIK1h4dHNiUjFnMndTcWhxd2pN?=
- =?utf-8?B?ZStxaG1qVVdIK1VKcXk1MHlTNDJqSzBlN1FYcEpHNGdXaHBlenY0aS9KQUFG?=
- =?utf-8?B?amcvU0ZqSGplVzJ2S240RFBwZVdnaUE5MS9KcUppb3RxRTVUWEt4VlBQNGpu?=
- =?utf-8?B?Y0xObUFxMG9MS09KWHBLem5zSlJZb3grTTRwbFFzUFNDSDlJVFEvZ29xb29Q?=
- =?utf-8?B?UlVpdUZ4S24rckxkTTFkTGhnMTJQcEpGUmlrK3Z5dW1BOWhyV3FmaklpRGlI?=
- =?utf-8?B?UkFlVi93N0ZyRGVZNCtFNHVsMTJkYlFxM1BlM042VkFBaXA1NlBrRW5MbzRw?=
- =?utf-8?B?VDZuZU5lZjhIaFNpaFdoTmcwZFdvK05xQzh3NzdpRHFSRUFET0ZLVENFOCtk?=
- =?utf-8?B?WHpvdkZEZ1lTcXdzSmpkYytRTkovOFpLQzk4QnNwNmZTTGVOWG5nVS8yVWJY?=
- =?utf-8?B?OTU2NU16eVVpVWR5SmJaMmRsdnh5VEE5MUxEbEx1a0xHYjBYTUFFc3NHVHRY?=
- =?utf-8?B?dHRXNVZTcXBWMXljRjZLL0dTdWJaRkVFVllKbzJZOGVMemNzL2dSUEZwdHNo?=
- =?utf-8?B?TnNpNWxvUFRtVytjR1ZyTnlCbXlJcVdHczdHa3BVb0pCQ0IvcHQya2VCdVZN?=
- =?utf-8?B?YlZER0ZkakxxdUxmVnlubW5IWTBGMVErNm4zR1BUZzFqRjg3dzFvdnBYU1lF?=
- =?utf-8?B?TWFTZkNuL1dOaWpLYytTWHJLNE9CVmozZ2s5SVJOZVgxcEpvWXdYTUlwUTcx?=
- =?utf-8?B?VjBlbExNTCszdHJscEdQQjdROFdpWEVNeE0yWURodTRZa0d3YjJYbHZjb2VZ?=
- =?utf-8?B?NHBvdk82YjI5N2N2VWg4L3B5ZlI0aFh6eFhHR1l6UHI3Ti9FZ2IzZnNxWmdk?=
- =?utf-8?B?bk00eCtMZC9rRHdUQnVuV2lub2lqZnljbTQ5MlNHeGQyK05XbThPR2NUKyt3?=
- =?utf-8?B?eFdrczV5YTNzeU4xSmh6Qkk0UkJXQmlwUkNWa2tqUUd0L3pIazNYbTJlRk9J?=
- =?utf-8?B?SnVkNGdXVDB2c0VTVUdVajdha2dVMVkvbHk2S0tIUS9FZFVTWURHNHhaWGtS?=
- =?utf-8?B?MUN0NGNaZUh2UmpqZ2pUWU4vZi9nWE9xL3JqT2tZdW9WOTl1UVM2QmtZdHJ5?=
- =?utf-8?B?azlWY0c5aDhhc2hYcFA0S0hOczYvV3hUNks2WVNDeTVzRzdBdGg4TW4wSDFy?=
- =?utf-8?B?MVJkR1ViUTJIUTNYZE8rTE1GRExWQW0xUmYvSVcvVElZK1pMMk12bmIvSkRz?=
- =?utf-8?B?VjRZbE5MU2tZUDQyM1F1L05OQkFFb1NuTkZrWDI0VW0rVGhsVEszWlJRL3Yz?=
- =?utf-8?B?WENaY2xFeXFnUi94TjBYNG9rOFBGWUJLeGNxcFYvMWdNMXhwZUdSVnFxLzBP?=
- =?utf-8?B?ZC9jcUxOYXR6Yzk4YnlTS0xPSndDOEozWUdSTmYxbzhOVlNiTEpDV2lhbkRW?=
- =?utf-8?Q?w57LbCKMw5CkCJ1ashj463EUs2IUJG7V?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:PH0PR10MB4664.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(376014)(366016)(7053199007)(13003099007)(8096899003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dzhPUVVKK3AwQUZhb1RUR2MxdDRGYzRGeU11eFlSVy85UzR2V2RhNit0ZFZ4?=
- =?utf-8?B?TTFJWklqa0k1TTdqSVhERGVpRFhXWUx1OEZWMXdrNXcrckpHc0QzUnl3SU0y?=
- =?utf-8?B?WDhtQUJ5dzBXYlAyN0pOZlVXSTVqcDA5aGVHcU5pY3d6K1oyVmxrTVZsVGM5?=
- =?utf-8?B?aktFUXRXTklnbUpXbVpkQndLNFU0ZlpCWXg1V0xZaUtsS1QyS3B6RzJMKzVS?=
- =?utf-8?B?eXc0emE2QXZyMndZVUhBZk5xNURiOTRrZGI3MVJENnZyR2ppYTlHdW0zUy9n?=
- =?utf-8?B?ay9vMlBEa0F2U1Z0YUNtWXU2WjNEcFIxZTFYQzVWMDRkRHBuZGg0WjVZS0pu?=
- =?utf-8?B?Y0xWb29GcDJjWDI4WmQrRThOd1ZQQkpqK0VzNCtuN3FxWUtyWkZKUXV3T2Vx?=
- =?utf-8?B?M3ZuMEFPVk5EblBNUUxnTUdtdUlDMEtVOVpNdFpkQmRRZk1WSFVTTjd3Q29U?=
- =?utf-8?B?aVpjUXJQWEJyWXNCRHBDWlkrWjV6OTY1dzZmaWhGRkFNYUErNTQwazJMVVFS?=
- =?utf-8?B?aC92dXRYN1V3VW54dWw3TlAyL3B0d2xzek5UUTlHK3hMdDNlRXpoU0dXVnBO?=
- =?utf-8?B?Sk1RTUErMSt1dFBrZVdpWEtLaHU1RW5aakNTN2FJQ1VYRk5HVVlsLzdQenJB?=
- =?utf-8?B?anVYcTkrUjdLZDViR2dYWktvKzdjN2U3K05jNEI4QnJNM1JIeEY2VkN2UUZl?=
- =?utf-8?B?UVhEU0c4Q1B3enlkcWl2RUwzUi9UaHFRSElmd2lQYWxMTFpXejZzNzNMNlBQ?=
- =?utf-8?B?blE1YytJaXM2WHVjVUJhQXZYRVFoa0VJSW1JZWZETk05NDZwNkQyTnVlT0h6?=
- =?utf-8?B?TzhUUmFtdXZKWGpySGlTV1RJZzVTa2EzeFVEcXVjY0Z1VjBqbFhuM0VpM1hU?=
- =?utf-8?B?anJnemFNUHJRWlFjc3g5czY4ampkT1Fpb1JxYUx0alc5eklVT1JLaEV3c2hp?=
- =?utf-8?B?aEdnMzJXWVNHZXc5ZHZsSGQ0b1NRVWlFSE9qQXVLRDBKSEhhYmFrZ09QWXpa?=
- =?utf-8?B?c3RDN0FuSDdMRU5qeWRNWjVmNGR6czlNbWFVMjdGU2NWSUtpSWo4WXF1a1Zu?=
- =?utf-8?B?WVFWR01iR3hrTk9MQzNxSjZFc3FMVjBocnVFTzU0SlRhUVJwNVhFTVhSOUpi?=
- =?utf-8?B?aHhnOXNjc05VYnF4RlJjR2FBaERTaGdOSFZRdlBxb3dGRjhQdU1qVmoybVdT?=
- =?utf-8?B?cWVoZFhmSStTTnV0ekNkOStrdVFSY0h1YTVMZU56enpWRXk1L3p5SG5LVU8w?=
- =?utf-8?B?R0dtOThneFM4Y0tiZ3M0SW91TmR2WUZJOFZmQno4NGcwejVwOEpYTDBHU0FD?=
- =?utf-8?B?TEREL0Y3VEkwanVuelk0ekdUWkpST3JGZlpLM1o5NHFRYW1WWlp4Wk45WitG?=
- =?utf-8?B?MkxJdkV2TzdZVngyRlFDMEdlclBYU2NYZXRrMzNZN3poUVQxRFltWkJMclpm?=
- =?utf-8?B?amFNVzc5OW9vSFNUMnFFMWhjWXdzUldyWnNIcGxZVGZEQlR6dVhWVVNQZ1Vk?=
- =?utf-8?B?QUdFa3A0R0tGTUZKZjFGeXNneGVEWnZMajlnWUViSzM5ZEJhNVBuTWI3UE1i?=
- =?utf-8?B?ZExBV0ZtMXE1VkkvNEJzODhRblNHdVRDMDlPTThqV0tVZ2lIQXNxYUVOTllq?=
- =?utf-8?B?a1hLWW1NUWJrUjY2T3hLQnExeGRqNy8zblg3eWhxWVdIdVRPelUwbko3Mjl2?=
- =?utf-8?B?TFNoZEdIaXk4VlorZDkveTV4ekVWVHNRWGc1MEZ3c1BjTWJWaWR1UTdCdS91?=
- =?utf-8?B?b2hZS2FPUTRISGZCYm9YYTVTNVlKa1J5OGJ6U2hMYzA5NE5COXN3dVVXbHhs?=
- =?utf-8?B?YlExS0p6SXBGelpxR240QmgyNHJ3cVFIdy9ZNFBRQmo0SURYcmlPbi83citV?=
- =?utf-8?B?TllWVktLK1lvOCs3ZmxXR3psY1IyRDEzcldUVzZISWtxMUN1QjFIUDJZV0Yx?=
- =?utf-8?B?cEovZlJpRmVsSWJaNXM1U0Y2OGlCSFJzS2h6L3IyQUZqQkNrNXBTS3hhMENW?=
- =?utf-8?B?Y0ZQK3g5Uk9GcEVkb2V2QmNhTzRiVFpwUHd5QWR5Y0hnZGJ6R2p4Y0hDOGwy?=
- =?utf-8?B?UGxhdHlHLzc0ZFZNTUlCd3ptNmNET0hKQkNPdGJIekJPNUJVMXM1RHpoTmsy?=
- =?utf-8?Q?TEVH27utfg/dJqKI2D+S41MxD?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: FAW5FxAYLgG8MS+1kGMnlr7F/L2DBDuhJ0SP6BGdec0kpKztf4rGlIUYEpt/L3GI3sOeDQ7ex7qWEdRG2BB7uP+BvFYiPorjYsB5M7JMnTUiQxKp/51Y0cbngpqGTaHNNpYNGSm/d9ypOzBA+GKEjjFlj33NLgX5oH5BD7Hk3o9NJyCHoF7KuO6UnbmrVJ7QlEBVOF5Q33ylqKGKJ/TsRluQIY5j6WawArX7/5ZY1TyAqVjotbk3EE5QE13eS6oqo6jzA0KTC8Zs2fJZ3fRRchh5l3in52APtH2T60IvF06JE23btUsIwmhF/Mv56x9L3qNZpRpqXurecvphYI1uoh4eqdwVFi8VZe4r+GSp09EheoBEAUdUnB9a4R7HwIjHo7kD9qIK9iZBJnNArxvHb8QTndjHMACOgXlm6TBVbCJps1ifhI9mcwW8qrzukIQxqx+dZu1N2qNQKDR5yM3vvJeGRJk7ZIeBnmLNORIdnz6UvA5rt82/dxJgoJ3fl8rVrtTqJIyM75b7DxDYdcHDHmG3aw8RP1mQuzQiesIx5InZ5cmAD1aCkvzN1y/fRYdaLEyQh9PM4uOKc8YFD02eC9s3WsfVbhW8QQTG7Y+zmA0=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 24ce193a-ac01-418b-b29b-08dda516446d
-X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4664.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2025 16:22:01.4796 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: IS+DaUrRzKQ5+/9jpmDTU9SQqqjRmVPUlxV5K4G3NY7N+8zV7Oppxz+mWPt3YUaM+y8ymfzJc6EHRvHFICUEMw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR10MB6582
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-06_05,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0 bulkscore=0
- mlxscore=0 phishscore=0 suspectscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506060143
-X-Authority-Analysis: v=2.4 cv=aqqyCTZV c=1 sm=1 tr=0 ts=684315ae b=1 cx=c_pps
- a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10
- a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=20KFwNOVAAAA:8 a=yPCof4ZbAAAA:8
- a=p_4QU5vNXezN15V6ZOMA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=ZiMIAIO6AAAA:8
- a=41g0X3kjVq8E-Y2vLjAA:9
- a=ZbHWSrVHvFga-G1N:21 a=_W_S_7VecoQA:10 a=lqcHg5cX4UMA:10
- a=KohFQSMcaiS2QNUyYz07:22 cc=ntf awl=host:13207
-X-Proofpoint-GUID: nXiLTfNd3p1xM74xQA9NsSrNHf78v0zo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDE0MyBTYWx0ZWRfX4LKhIY3uK0zm
- 7aYjLd/Op0YUWFgEenmcjMoGjfSXW3tDnrZwOSHocQfouHdO2uEmpW9N5685RIqZHrj4qjzVWj/
- pXRBzC10MNf9S6BuAqmWvuX2aZHDhROmmNyxmBxhC/DqdgU4INpcolP29ULtKJzjKDpHdYB49NQ
- CQU/RERJ23E/98d91h7/Wi1gkXRR6kMzByfg/NImpDdGXMmMa8Dr/0kMJ+TclR7CI/ZPA7NQXah
- YGqR2uRONfLI1UNqiBiWlWrTUNlb8eVYFj3X6Z0lJ86SxNuAfmTFWQ4fbpQZTjvsFJalmebWoWJ
- mSEUZKWzpTbPxdtVipY8MrSxHrmqWWds/4T/Y3Kvir77spu8qiSYu1qgwpDowmYcUTFeGvXyJXG
- IPCThNe0SvAUeUiaVwWUv+Z2FrH/gTIIdu2NZQyNjY1F5wVYCK0W/l6u0zmtCKFCaZjI9Nao
-X-Proofpoint-ORIG-GUID: nXiLTfNd3p1xM74xQA9NsSrNHf78v0zo
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=jonah.palmer@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250605234227.970187-7-anisa.su887@gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=nifan.cxl@gmail.com; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -242,563 +104,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---------------jgqvomhN5UK4CknRbfgGa61v
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+On Thu, Jun 05, 2025 at 11:42:20PM +0000, anisa.su887@gmail.com wrote:
+> From: Anisa Su <anisa.su@samsung.com>
+> 
+> FM DCD Management command 0x5602 implemented per CXL r3.2 Spec Section 7.6.7.6.3
+> 
+> Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> ---
 
+One minor comment, otherwise LGTM.
 
-On 6/2/25 4:29 AM, Markus Armbruster wrote:
-> Butterfingers...  let's try this again.
->
-> Markus Armbruster<armbru@redhat.com> writes:
->
->> Si-Wei Liu<si-wei.liu@oracle.com> writes:
->>
->>> On 5/26/2025 2:16 AM, Markus Armbruster wrote:
->>>> Si-Wei Liu<si-wei.liu@oracle.com> writes:
->>>>
->>>>> On 5/15/2025 11:40 PM, Markus Armbruster wrote:
->>>>>> Jason Wang<jasowang@redhat.com> writes:
->>>>>>
->>>>>>> On Thu, May 8, 2025 at 2:47 AM Jonah Palmer<jonah.palmer@oracle.com> wrote:
->>>>>>>> Current memory operations like pinning may take a lot of time at the
->>>>>>>> destination.  Currently they are done after the source of the migration is
->>>>>>>> stopped, and before the workload is resumed at the destination.  This is a
->>>>>>>> period where neigher traffic can flow, nor the VM workload can continue
->>>>>>>> (downtime).
->>>>>>>>
->>>>>>>> We can do better as we know the memory layout of the guest RAM at the
->>>>>>>> destination from the moment that all devices are initializaed.  So
->>>>>>>> moving that operation allows QEMU to communicate the kernel the maps
->>>>>>>> while the workload is still running in the source, so Linux can start
->>>>>>>> mapping them.
->>>>>>>>
->>>>>>>> As a small drawback, there is a time in the initialization where QEMU
->>>>>>>> cannot respond to QMP etc.  By some testing, this time is about
->>>>>>>> 0.2seconds.
->>>>>>> Adding Markus to see if this is a real problem or not.
->>>>>> I guess the answer is "depends", and to get a more useful one, we need
->>>>>> more information.
->>>>>>
->>>>>> When all you care is time from executing qemu-system-FOO to guest
->>>>>> finish booting, and the guest takes 10s to boot, then an extra 0.2s
->>>>>> won't matter much.
->>>>> There's no such delay of an extra 0.2s or higher per se, it's just shifting around the page pinning hiccup, no matter it is 0.2s or something else, from the time of guest booting up to before guest is booted. This saves back guest boot time or start up delay, but in turn the same delay effectively will be charged to VM launch time. We follow the same model with VFIO, which would see the same hiccup during launch (at an early stage where no real mgmt software would care about).
->>>>>
->>>>>> When a management application runs qemu-system-FOO several times to
->>>>>> probe its capabilities via QMP, then even milliseconds can hurt.
->>>>>>
->>>>> Not something like that, this page pinning hiccup is one time only that occurs in the very early stage when launching QEMU, i.e. there's no consistent delay every time when QMP is called. The delay in QMP response at that very point depends on how much memory the VM has, but this is just specif to VM with VFIO or vDPA devices that have to pin memory for DMA. Having said, there's no extra delay at all if QEMU args has no vDPA device assignment, on the other hand, there's same delay or QMP hiccup when VFIO is around in QEMU args.
->>>>>
->>>>>> In what scenarios exactly is QMP delayed?
->>>>> Having said, this is not a new problem to QEMU in particular, this QMP delay is not peculiar, it's existent on VFIO as well.
->>>> In what scenarios exactly is QMP delayed compared to before the patch?
->>> The page pinning process now runs in a pretty early phase at
->>> qemu_init() e.g. machine_run_board_init(),
->> It runs within
->>
->>      qemu_init()
->>          qmp_x_exit_preconfig()
->>              qemu_init_board()
->>                  machine_run_board_init()
->>
->> Except when --preconfig is given, it instead runs within QMP command
->> x-exit-preconfig.
->>
->> Correct?
->>
->>> before any QMP command can be serviced, the latter of which typically
->>> would be able to get run from qemu_main_loop() until the AIO gets
->>> chance to be started to get polled and dispatched to bh.
->> We create the QMP monitor within qemu_create_late_backends(), which runs
->> before qmp_x_exit_preconfig(), but commands get processed only in the
->> main loop, which we enter later.
->>
->> Correct?
->>
->>> Technically it's not a real delay for specific QMP command, but rather
->>> an extended span of initialization process may take place before the
->>> very first QMP request, usually qmp_capabilities, will be
->>> serviced. It's natural for mgmt software to expect initialization
->>> delay for the first qmp_capabilities response if it has to immediately
->>> issue one after launching qemu, especially when you have a large guest
->>> with hundred GBs of memory and with passthrough device that has to pin
->>> memory for DMA e.g. VFIO, the delayed effect from the QEMU
->>> initialization process is very visible too.
-> The work clearly needs to be done.  Whether it needs to be blocking
-> other things is less clear.
->
-> Even if it doesn't need to be blocking, we may choose not to avoid
-> blocking for now.  That should be an informed decision, though.
->
-> All I'm trying to do here is understand the tradeoffs, so I can give
-> useful advice.
->
->>>                                              On the other hand, before
->>> the patch, if memory happens to be in the middle of being pinned, any
->>> ongoing QMP can't be serviced by the QEMU main loop, either.
-> When exactly does this pinning happen before the patch?  In which
-> function?
+>  hw/cxl/cxl-mailbox-utils.c   | 86 ++++++++++++++++++++++++++++++++++++
+>  hw/mem/cxl_type3.c           |  6 +--
+>  include/hw/cxl/cxl_device.h  |  3 ++
+>  include/hw/cxl/cxl_mailbox.h |  6 +++
+>  4 files changed, 98 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 1b5c7216f9..47b1509a0e 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -121,6 +121,7 @@ enum {
+>      FMAPI_DCD_MGMT = 0x56,
+>          #define GET_DCD_INFO    0x0
+>          #define GET_HOST_DC_REGION_CONFIG   0x1
+> +        #define SET_DC_REGION_CONFIG        0x2
+>  };
+>  
+>  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> @@ -3387,6 +3388,84 @@ static CXLRetCode cmd_fm_get_host_dc_region_config(const struct cxl_cmd *cmd,
+>      return CXL_MBOX_SUCCESS;
+>  }
+>  
+> +/* CXL r3.2 section 7.6.7.6.3: Set Host DC Region Configuration (Opcode 5602) */
+> +static CXLRetCode cmd_fm_set_dc_region_config(const struct cxl_cmd *cmd,
+> +                                              uint8_t *payload_in,
+> +                                              size_t len_in,
+> +                                              uint8_t *payload_out,
+> +                                              size_t *len_out,
+> +                                              CXLCCI *cci)
+> +{
+> +    struct {
+> +        uint8_t reg_id;
+> +        uint8_t rsvd[3];
+> +        uint64_t block_sz;
+> +        uint8_t flags;
+> +        uint8_t rsvd2[3];
+> +    } QEMU_PACKED *in = (void *)payload_in;
+> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> +    CXLEventDynamicCapacity dcEvent = {};
+> +    CXLDCRegion *region = &ct3d->dc.regions[in->reg_id];
+> +
+> +    /*
+> +     * CXL r3.2 7.6.7.6.3: Set DC Region Configuration
+> +     * This command shall fail with Unsupported when the Sanitize on Release
+> +     * field does not match the region’s configuration... and the device
+> +     * does not support reconfiguration of the Sanitize on Release setting.
+> +     *
+> +     * Currently not reconfigurable, so always fail if sanitize bit (bit 0)
+> +     * doesn't match.
+> +     */
+> +    if ((in->flags & 0x1) != (region->flags & 0x1)) {
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
+> +
+> +    if (in->reg_id >= DCD_MAX_NUM_REGION) {
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
+> +
+> +    /* Return success if new block size == current block size */
+> +    if (in->block_sz == region->block_size) {
+> +        return CXL_MBOX_SUCCESS;
+> +    }
 
-Before the patches, the memory listener was registered in
-vhost_vdpa_dev_start(), well after device initialization.
+Should we move this below, after checking the bitmap?
 
-And by device initialization here I mean the
-qemu_create_late_backends() function.
-
-With these patches, the memory listener is now being
-registered in vhost_vdpa_set_owner(), called from
-vhost_dev_init(), which is part of the device
-initialization phase.
-
-However, even though the memory_listener_register() is
-called during the device initialization phase, the actual
-pinning happens (very shortly) after
-qemu_create_late_backends() returns (due to RAM being
-initialized later).
-
----
-
-So, without these patches, and based on my measurements,
-memory pinning starts ~2.9s after qemu_create_late_backends()
-returns.
-
-With these patches, memory pinning starts ~0.003s after
-qemu_create_late_backends() returns.
-
->>> I'd also like to highlight that without this patch, the pretty high
->>> delay due to page pinning is even visible to the guest in addition to
->>> just QMP delay, which largely affected guest boot time with vDPA
->>> device already. It is long standing, and every VM user with vDPA
->>> device would like to avoid such high delay for the first boot, which
->>> is not seen with similar device e.g. VFIO passthrough.
-> I understand that hiding the delay from the guest could be useful.
->
->>>>> Thanks,
->>>>> -Siwei
->>>>>
->>>>>> You told us an absolute delay you observed.  What's the relative delay,
->>>>>> i.e. what's the delay with and without these patches?
->>>> Can you answer this question?
->>> I thought I already got that answered in earlier reply. The relative
->>> delay is subject to the size of memory. Usually mgmt software won't be
->>> able to notice, unless the guest has more than 100GB of THP memory to
->>> pin, for DMA or whatever reason.
-> Alright, what are the delays you observe with and without these patches
-> for three test cases that pin 50 / 100 / 200 GiB of THP memory
-> respectively?
-
-So with THP memory specifically, these are my measurements below.
-For these measurements, I simply started up a guest, traced the
-vhost_vdpa_listener_region_add() calls, and found the difference
-in time between the first and last calls. In other words, this is
-roughly the time it took to pin all of guest memory. I did 5 runs
-for each memory size:
-
-Before patches:
-===============
-50G:   7.652s,  7.992s,  7.981s,  7.631s,  7.953s (Avg.  7.841s)
-100G:  8.990s,  8.656s,  9.003s,  8.683s,  8.669s (Avg.  8.800s)
-200G: 10.705s, 10.841s, 10.816s, 10.772s, 10.818s (Avg. 10.790s)
-
-After patches:
-==============
-50G:  12.091s, 11.685s, 11.626s, 11.952s, 11.656s (Avg. 11.802s)
-100G: 14.121s, 14.079s, 13.700s, 14.023s, 14.130s (Avg. 14.010s)
-200G: 18.134s, 18.350s, 18.387s, 17.800s, 18.401s (Avg. 18.214s)
-
-The reason we're seeing a jump here may be that with the memory
-pinning happening earlier, the pinning happens before Qemu has
-fully faulted in the guest's RAM.
-
-As far as I understand, before these patches, by the time we
-reached vhost_vdpa_dev_start(), all pages were already resident
-(and THP splits already happened with the prealloc=on step), so
-get_user_pages() pinned "warm" pages much faster.
-
-With these patches, the memory listener is running on cold memory.
-Every get_user_pages() call would fault in its 4KiB subpage (and
-if THP was folded, split a 2MiB hugepage) before handing in a
-'struct page'.
-
-I believe this to be the case since in my measurements I noticed
-some larger time gaps (fault + split overhead) in between some of
-the vhost_vdpa_listener_region_add() calls.
-
-However I'm still learning some of these memory pinning details,
-so please let me know if I'm misunderstanding anything here.
-
-Jonah
-
->>>>>> We need QMP to become available earlier in the startup sequence for
->>>>>> other reasons.  Could we bypass the delay that way?  Please understand
->>>>>> that this would likely be quite difficult: we know from experience that
->>>>>> messing with the startup sequence is prone to introduce subtle
->>>>>> compatility breaks and even bugs.
->>>>>>
->>>>>>> (I remember VFIO has some optimization in the speed of the pinning,
->>>>>>> could vDPA do the same?)
->>>>>> That's well outside my bailiwick :)
->>> Please be understood that any possible optimization is out of scope of
->>> this patch series, while there's certainly way around that already and
->>> to be carry out in the future, as Peter alluded to in earlier
->>> discussion thread:
->>>
->>> https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/ZZT7wuq-_IhfN_wR@x1n/__;!!ACWV5N9M2RV99hQ!Kf05aVONsyUTIqQv0RRYw5IaU2V4k0KB6Fur5X_ocHbuT0SQV-xMr4tjggz6NJ4qgkUfONJVoswPoECB$ 
->>> https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/ZZZUNsOVxxqr-H5S@x1n/__;!!ACWV5N9M2RV99hQ!Kf05aVONsyUTIqQv0RRYw5IaU2V4k0KB6Fur5X_ocHbuT0SQV-xMr4tjggz6NJ4qgkUfONJVovdnMan-$ 
-> Got it.
->
->>> Thanks,
->>> -Siwei
->>>
->>>>>> [...]
->>>>>>
---------------jgqvomhN5UK4CknRbfgGa61v
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-<!DOCTYPE html><html><head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 6/2/25 4:29 AM, Markus Armbruster
-      wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:8734cimtqa.fsf@pond.sub.org">
-      <pre wrap="" class="moz-quote-pre">Butterfingers...  let's try this again.
-
-Markus Armbruster <a class="moz-txt-link-rfc2396E" href="mailto:armbru@redhat.com">&lt;armbru@redhat.com&gt;</a> writes:
-
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">Si-Wei Liu <a class="moz-txt-link-rfc2396E" href="mailto:si-wei.liu@oracle.com">&lt;si-wei.liu@oracle.com&gt;</a> writes:
-
-</pre>
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">On 5/26/2025 2:16 AM, Markus Armbruster wrote:
-</pre>
-          <blockquote type="cite">
-            <pre wrap="" class="moz-quote-pre">Si-Wei Liu <a class="moz-txt-link-rfc2396E" href="mailto:si-wei.liu@oracle.com">&lt;si-wei.liu@oracle.com&gt;</a> writes:
-
-</pre>
-            <blockquote type="cite">
-              <pre wrap="" class="moz-quote-pre">On 5/15/2025 11:40 PM, Markus Armbruster wrote:
-</pre>
-              <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">Jason Wang <a class="moz-txt-link-rfc2396E" href="mailto:jasowang@redhat.com">&lt;jasowang@redhat.com&gt;</a> writes:
-
-</pre>
-                <blockquote type="cite">
-                  <pre wrap="" class="moz-quote-pre">On Thu, May 8, 2025 at 2:47 AM Jonah Palmer <a class="moz-txt-link-rfc2396E" href="mailto:jonah.palmer@oracle.com">&lt;jonah.palmer@oracle.com&gt;</a> wrote:
-</pre>
-                  <blockquote type="cite">
-                    <pre wrap="" class="moz-quote-pre">Current memory operations like pinning may take a lot of time at the
-destination.  Currently they are done after the source of the migration is
-stopped, and before the workload is resumed at the destination.  This is a
-period where neigher traffic can flow, nor the VM workload can continue
-(downtime).
-
-We can do better as we know the memory layout of the guest RAM at the
-destination from the moment that all devices are initializaed.  So
-moving that operation allows QEMU to communicate the kernel the maps
-while the workload is still running in the source, so Linux can start
-mapping them.
-
-As a small drawback, there is a time in the initialization where QEMU
-cannot respond to QMP etc.  By some testing, this time is about
-0.2seconds.
-</pre>
-                  </blockquote>
-                  <pre wrap="" class="moz-quote-pre">Adding Markus to see if this is a real problem or not.
-</pre>
-                </blockquote>
-                <pre wrap="" class="moz-quote-pre">I guess the answer is &quot;depends&quot;, and to get a more useful one, we need
-more information.
-
-When all you care is time from executing qemu-system-FOO to guest
-finish booting, and the guest takes 10s to boot, then an extra 0.2s
-won't matter much.
-</pre>
-              </blockquote>
-              <pre wrap="" class="moz-quote-pre">
-There's no such delay of an extra 0.2s or higher per se, it's just shifting around the page pinning hiccup, no matter it is 0.2s or something else, from the time of guest booting up to before guest is booted. This saves back guest boot time or start up delay, but in turn the same delay effectively will be charged to VM launch time. We follow the same model with VFIO, which would see the same hiccup during launch (at an early stage where no real mgmt software would care about).
-
-</pre>
-              <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">When a management application runs qemu-system-FOO several times to
-probe its capabilities via QMP, then even milliseconds can hurt.
-
-</pre>
-              </blockquote>
-              <pre wrap="" class="moz-quote-pre">Not something like that, this page pinning hiccup is one time only that occurs in the very early stage when launching QEMU, i.e. there's no consistent delay every time when QMP is called. The delay in QMP response at that very point depends on how much memory the VM has, but this is just specif to VM with VFIO or vDPA devices that have to pin memory for DMA. Having said, there's no extra delay at all if QEMU args has no vDPA device assignment, on the other hand, there's same delay or QMP hiccup when VFIO is around in QEMU args.
-
-</pre>
-              <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">In what scenarios exactly is QMP delayed?
-</pre>
-              </blockquote>
-              <pre wrap="" class="moz-quote-pre">
-Having said, this is not a new problem to QEMU in particular, this QMP delay is not peculiar, it's existent on VFIO as well.
-</pre>
-            </blockquote>
-            <pre wrap="" class="moz-quote-pre">
-In what scenarios exactly is QMP delayed compared to before the patch?
-</pre>
-          </blockquote>
-          <pre wrap="" class="moz-quote-pre">
-The page pinning process now runs in a pretty early phase at
-qemu_init() e.g. machine_run_board_init(),
-</pre>
-        </blockquote>
-        <pre wrap="" class="moz-quote-pre">
-It runs within
-
-    qemu_init()
-        qmp_x_exit_preconfig()
-            qemu_init_board()
-                machine_run_board_init()
-
-Except when --preconfig is given, it instead runs within QMP command
-x-exit-preconfig.
-
-Correct?
-
-</pre>
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">before any QMP command can be serviced, the latter of which typically
-would be able to get run from qemu_main_loop() until the AIO gets
-chance to be started to get polled and dispatched to bh.
-</pre>
-        </blockquote>
-        <pre wrap="" class="moz-quote-pre">
-We create the QMP monitor within qemu_create_late_backends(), which runs
-before qmp_x_exit_preconfig(), but commands get processed only in the
-main loop, which we enter later.
-
-Correct?
-
-</pre>
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">Technically it's not a real delay for specific QMP command, but rather
-an extended span of initialization process may take place before the
-very first QMP request, usually qmp_capabilities, will be
-serviced. It's natural for mgmt software to expect initialization
-delay for the first qmp_capabilities response if it has to immediately
-issue one after launching qemu, especially when you have a large guest
-with hundred GBs of memory and with passthrough device that has to pin
-memory for DMA e.g. VFIO, the delayed effect from the QEMU
-initialization process is very visible too.
-</pre>
-        </blockquote>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-The work clearly needs to be done.  Whether it needs to be blocking
-other things is less clear.
-
-Even if it doesn't need to be blocking, we may choose not to avoid
-blocking for now.  That should be an informed decision, though.
-
-All I'm trying to do here is understand the tradeoffs, so I can give
-useful advice.
-
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">                                            On the other hand, before
-the patch, if memory happens to be in the middle of being pinned, any
-ongoing QMP can't be serviced by the QEMU main loop, either.
-</pre>
-        </blockquote>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-When exactly does this pinning happen before the patch?  In which
-function?
-</pre>
-    </blockquote>
-    <pre>Before the patches, the memory listener was registered in
-vhost_vdpa_dev_start(), well after device initialization.
-
-And by device initialization here I mean the
-qemu_create_late_backends() function.
-
-With these patches, the memory listener is now being
-registered in vhost_vdpa_set_owner(), called from
-vhost_dev_init(), which is part of the device
-initialization phase.
-
-However, even though the memory_listener_register() is
-called during the device initialization phase, the actual
-pinning happens (very shortly) after
-qemu_create_late_backends() returns (due to RAM being
-initialized later).
-
----
-
-So, without these patches, and based on my measurements,
-memory pinning starts ~2.9s after qemu_create_late_backends()
-returns.
-
-With these patches, memory pinning starts ~0.003s after
-qemu_create_late_backends() returns.
-</pre>
-    <blockquote type="cite" cite="mid:8734cimtqa.fsf@pond.sub.org">
-      <pre wrap="" class="moz-quote-pre">
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">I'd also like to highlight that without this patch, the pretty high
-delay due to page pinning is even visible to the guest in addition to
-just QMP delay, which largely affected guest boot time with vDPA
-device already. It is long standing, and every VM user with vDPA
-device would like to avoid such high delay for the first boot, which
-is not seen with similar device e.g. VFIO passthrough.
-</pre>
-        </blockquote>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-I understand that hiding the delay from the guest could be useful.
-
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <blockquote type="cite">
-            <blockquote type="cite">
-              <pre wrap="" class="moz-quote-pre">Thanks,
--Siwei
-
-</pre>
-              <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">You told us an absolute delay you observed.  What's the relative delay,
-i.e. what's the delay with and without these patches?
-</pre>
-              </blockquote>
-            </blockquote>
-            <pre wrap="" class="moz-quote-pre">
-Can you answer this question?
-</pre>
-          </blockquote>
-          <pre wrap="" class="moz-quote-pre">
-I thought I already got that answered in earlier reply. The relative
-delay is subject to the size of memory. Usually mgmt software won't be
-able to notice, unless the guest has more than 100GB of THP memory to
-pin, for DMA or whatever reason.
-</pre>
-        </blockquote>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Alright, what are the delays you observe with and without these patches
-for three test cases that pin 50 / 100 / 200 GiB of THP memory
-respectively?
-</pre>
-    </blockquote>
-    <pre>So with THP memory specifically, these are my measurements below.
-For these measurements, I simply started up a guest, traced the
-vhost_vdpa_listener_region_add() calls, and found the difference
-in time between the first and last calls. In other words, this is
-roughly the time it took to pin all of guest memory. I did 5 runs
-for each memory size:
-
-Before patches:
-===============
-50G:   7.652s,  7.992s,  7.981s,  7.631s,  7.953s (Avg.  7.841s)
-100G:  8.990s,  8.656s,  9.003s,  8.683s,  8.669s (Avg.  8.800s)
-200G: 10.705s, 10.841s, 10.816s, 10.772s, 10.818s (Avg. 10.790s)
-
-After patches:
-==============
-50G:  12.091s, 11.685s, 11.626s, 11.952s, 11.656s (Avg. 11.802s)
-100G: 14.121s, 14.079s, 13.700s, 14.023s, 14.130s (Avg. 14.010s)
-200G: 18.134s, 18.350s, 18.387s, 17.800s, 18.401s (Avg. 18.214s)
-
-The reason we're seeing a jump here may be that with the memory
-pinning happening earlier, the pinning happens before Qemu has
-fully faulted in the guest's RAM.
-
-As far as I understand, before these patches, by the time we
-reached vhost_vdpa_dev_start(), all pages were already resident
-(and THP splits already happened with the prealloc=on step), so
-get_user_pages() pinned &quot;warm&quot; pages much faster.
-
-With these patches, the memory listener is running on cold memory.
-Every get_user_pages() call would fault in its 4KiB subpage (and
-if THP was folded, split a 2MiB hugepage) before handing in a
-'struct page'.
-
-I believe this to be the case since in my measurements I noticed
-some larger time gaps (fault + split overhead) in between some of
-the vhost_vdpa_listener_region_add() calls.
-
-However I'm still learning some of these memory pinning details,
-so please let me know if I'm misunderstanding anything here.
-
-Jonah
-</pre>
-    <blockquote type="cite" cite="mid:8734cimtqa.fsf@pond.sub.org">
-      <pre wrap="" class="moz-quote-pre">
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <blockquote type="cite">
-            <blockquote type="cite">
-              <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">We need QMP to become available earlier in the startup sequence for
-other reasons.  Could we bypass the delay that way?  Please understand
-that this would likely be quite difficult: we know from experience that
-messing with the startup sequence is prone to introduce subtle
-compatility breaks and even bugs.
-
-</pre>
-                <blockquote type="cite">
-                  <pre wrap="" class="moz-quote-pre">(I remember VFIO has some optimization in the speed of the pinning,
-could vDPA do the same?)
-</pre>
-                </blockquote>
-                <pre wrap="" class="moz-quote-pre">
-That's well outside my bailiwick :)
-</pre>
-              </blockquote>
-            </blockquote>
-          </blockquote>
-          <pre wrap="" class="moz-quote-pre">
-Please be understood that any possible optimization is out of scope of
-this patch series, while there's certainly way around that already and
-to be carry out in the future, as Peter alluded to in earlier
-discussion thread:
-
-<a class="moz-txt-link-freetext" href="https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/ZZT7wuq-_IhfN_wR@x1n/__;!!ACWV5N9M2RV99hQ!Kf05aVONsyUTIqQv0RRYw5IaU2V4k0KB6Fur5X_ocHbuT0SQV-xMr4tjggz6NJ4qgkUfONJVoswPoECB$">https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/ZZT7wuq-_IhfN_wR@x1n/__;!!ACWV5N9M2RV99hQ!Kf05aVONsyUTIqQv0RRYw5IaU2V4k0KB6Fur5X_ocHbuT0SQV-xMr4tjggz6NJ4qgkUfONJVoswPoECB$</a> 
-<a class="moz-txt-link-freetext" href="https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/ZZZUNsOVxxqr-H5S@x1n/__;!!ACWV5N9M2RV99hQ!Kf05aVONsyUTIqQv0RRYw5IaU2V4k0KB6Fur5X_ocHbuT0SQV-xMr4tjggz6NJ4qgkUfONJVovdnMan-$">https://urldefense.com/v3/__https://lore.kernel.org/qemu-devel/ZZZUNsOVxxqr-H5S@x1n/__;!!ACWV5N9M2RV99hQ!Kf05aVONsyUTIqQv0RRYw5IaU2V4k0KB6Fur5X_ocHbuT0SQV-xMr4tjggz6NJ4qgkUfONJVovdnMan-$</a> 
-</pre>
-        </blockquote>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-Got it.
-
-</pre>
-      <blockquote type="cite">
-        <blockquote type="cite">
-          <pre wrap="" class="moz-quote-pre">Thanks,
--Siwei
-
-</pre>
-          <blockquote type="cite">
-            <blockquote type="cite">
-              <blockquote type="cite">
-                <pre wrap="" class="moz-quote-pre">
-[...]
-
-</pre>
-              </blockquote>
-            </blockquote>
-          </blockquote>
-        </blockquote>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-</pre>
-    </blockquote>
-  </body>
-</html>
-
---------------jgqvomhN5UK4CknRbfgGa61v--
+Fan
+> +
+> +    /* Check that no extents are in the region being reconfigured */
+> +    if (!bitmap_empty(region->blk_bitmap, region->len / region->block_size)) {
+> +        return CXL_MBOX_UNSUPPORTED;
+> +    }
+> +
+> +    /* Check that new block size is supported */
+> +    if (!test_bit(BIT((int) log2(in->block_sz)),
+> +                  &region->supported_blk_size_bitmask)) {
+> +        return CXL_MBOX_INVALID_INPUT;
+> +    }
+> +
+> +    /* Free bitmap and create new one for new block size. */
+> +    qemu_mutex_lock(&region->bitmap_lock);
+> +    g_free(region->blk_bitmap);
+> +    region->blk_bitmap = bitmap_new(region->len / in->block_sz);
+> +    qemu_mutex_unlock(&region->bitmap_lock);
+> +    region->block_size = in->block_sz;
+> +
+> +    /* Create event record and insert into event log */
+> +    cxl_assign_event_header(&dcEvent.hdr,
+> +                            &dynamic_capacity_uuid,
+> +                            (1 << CXL_EVENT_TYPE_INFO),
+> +                            sizeof(dcEvent),
+> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
+> +    dcEvent.type = DC_EVENT_REGION_CONFIG_UPDATED;
+> +    dcEvent.validity_flags = 1;
+> +    dcEvent.host_id = 0;
+> +    dcEvent.updated_region_id = in->reg_id;
+> +
+> +    if (cxl_event_insert(&ct3d->cxl_dstate,
+> +                         CXL_EVENT_TYPE_DYNAMIC_CAP,
+> +                         (CXLEventRecordRaw *)&dcEvent)) {
+> +        cxl_event_irq_assert(ct3d);
+> +    }
+> +    return CXL_MBOX_SUCCESS;
+> +}
+> +
+>  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+>      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+>          cmd_infostat_bg_op_abort, 0, 0 },
+> @@ -3505,6 +3584,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+>          cmd_fm_get_dcd_info, 0, 0 },
+>      [FMAPI_DCD_MGMT][GET_HOST_DC_REGION_CONFIG] = { "GET_HOST_DC_REGION_CONFIG",
+>          cmd_fm_get_host_dc_region_config, 4, 0 },
+> +    [FMAPI_DCD_MGMT][SET_DC_REGION_CONFIG] = { "SET_DC_REGION_CONFIG",
+> +        cmd_fm_set_dc_region_config, 16,
+> +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
+> +         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
+> +         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+> +         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+> +         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+>  };
+>  
+>  /*
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index b872a26173..ee554a77be 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -1590,9 +1590,9 @@ void qmp_cxl_inject_correctable_error(const char *path, CxlCorErrorType type,
+>      pcie_aer_inject_error(PCI_DEVICE(obj), &err);
+>  }
+>  
+> -static void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+> -                                    const QemuUUID *uuid, uint32_t flags,
+> -                                    uint8_t length, uint64_t timestamp)
+> +void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+> +                             const QemuUUID *uuid, uint32_t flags,
+> +                             uint8_t length, uint64_t timestamp)
+>  {
+>      st24_le_p(&hdr->flags, flags);
+>      hdr->length = length;
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 96ef9be444..76af75d2d0 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -721,4 +721,7 @@ void ct3_clear_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+>                                     uint64_t len);
+>  bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+>                                    uint64_t len);
+> +void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+> +                             const QemuUUID *uuid, uint32_t flags,
+> +                             uint8_t length, uint64_t timestamp);
+>  #endif
+> diff --git a/include/hw/cxl/cxl_mailbox.h b/include/hw/cxl/cxl_mailbox.h
+> index 9008402d1c..a05d7cb5b7 100644
+> --- a/include/hw/cxl/cxl_mailbox.h
+> +++ b/include/hw/cxl/cxl_mailbox.h
+> @@ -8,6 +8,7 @@
+>  #ifndef CXL_MAILBOX_H
+>  #define CXL_MAILBOX_H
+>  
+> +#define CXL_MBOX_CONFIG_CHANGE_COLD_RESET (1)
+>  #define CXL_MBOX_IMMEDIATE_CONFIG_CHANGE (1 << 1)
+>  #define CXL_MBOX_IMMEDIATE_DATA_CHANGE (1 << 2)
+>  #define CXL_MBOX_IMMEDIATE_POLICY_CHANGE (1 << 3)
+> @@ -15,5 +16,10 @@
+>  #define CXL_MBOX_SECURITY_STATE_CHANGE (1 << 5)
+>  #define CXL_MBOX_BACKGROUND_OPERATION (1 << 6)
+>  #define CXL_MBOX_BACKGROUND_OPERATION_ABORT (1 << 7)
+> +#define CXL_MBOX_SECONDARY_MBOX_SUPPORTED (1 << 8)
+> +#define CXL_MBOX_REQUEST_ABORT_BACKGROUND_OP_SUPPORTED (1 << 9)
+> +#define CXL_MBOX_CEL_10_TO_11_VALID (1 << 10)
+> +#define CXL_MBOX_CONFIG_CHANGE_CONV_RESET (1 << 11)
+> +#define CXL_MBOX_CONFIG_CHANGE_CXL_RESET (1 << 12)
+>  
+>  #endif
+> -- 
+> 2.47.2
+> 
 
