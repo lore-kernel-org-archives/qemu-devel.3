@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B421C61CE7
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 18:49:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEEE4C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 18:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNc7O-0000ZC-J8; Fri, 06 Jun 2025 14:48:42 -0400
+	id 1uNcBG-0001aj-8e; Fri, 06 Jun 2025 14:52:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uNc7L-0000Z0-Fv
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 14:48:40 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <nifan.cxl@gmail.com>)
- id 1uNc7J-00016r-QH
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 14:48:39 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-742c27df0daso2332137b3a.1
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 11:48:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749235716; x=1749840516; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=4XzwZXcFFnUPpq5lmaEWt4YpLE6Y/sVwaVTV0zUmG5U=;
- b=YkjgHzHlL6tHimjPg2ssTFPxOj1QG4rqIrWbwX3M2H64oXkcmCvNm/GBukZxnoeoSd
- lWEJvXSh3HF3D9zX0FjU6p53/9SqgU4vz1PWa0Z89mup8lKAqMygdARw/hV0raJlyMY5
- DQBl2Jp+bQEf2Jcksxs/YEEFgYrElDnGxVnYRoQEy9KmDHnoPDlTbC9STmw76UliSwVZ
- H4oa5KZ5QlFUHDKrTdy3wYZ1y89mv+4GIH96cdf1+GPJgDNk/33Cj2Qy8WY1QEH8qzn6
- fEclT4ZYmD2vdKHp6+o3FCq1o4AvX62x9mx8wbhESUPzEwCnQDfhVwowOmInis2pSkwu
- iDPg==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNcBE-0001aa-83
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 14:52:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNcBB-0001VQ-4f
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 14:52:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749235955;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Bn9Jf6xH+0pQpdnInWVsMZBNdWd8BOISDCqRTZOVrmc=;
+ b=GC0DsgXPj+qCd0/jFIgZpW5FaBiDInEcUYVHevrNalkGUCWBg24EgpjfOyf5YweEw2fXEn
+ R6215LSPR0S5RScqOKj8hAwwxip5pEBOZf2ynYVfGqqgupSVSmWMaQBbgvovfYAaLjeUz1
+ pL1Q1hG8RV0wYLZGdeeF2d8PxJkYEf8=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-34-fpTWQI_HNEu9CCOynYhRZQ-1; Fri, 06 Jun 2025 14:52:33 -0400
+X-MC-Unique: fpTWQI_HNEu9CCOynYhRZQ-1
+X-Mimecast-MFC-AGG-ID: fpTWQI_HNEu9CCOynYhRZQ_1749235953
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6fac4b26c69so22872796d6.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 11:52:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749235716; x=1749840516;
+ d=1e100.net; s=20230601; t=1749235953; x=1749840753;
  h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4XzwZXcFFnUPpq5lmaEWt4YpLE6Y/sVwaVTV0zUmG5U=;
- b=kDOOCOIeEJhCQl1ndwjNq4L6C+VKYDHs3KBCbHmfb1E9USxlhK4J4citJrGXWWVyln
- CydVSwVJq5jWlaCRE1NU+1bkeux+YAFNCWjvtoBGsNmZPrKsOoMwJJaaaAaiwwB+EKeg
- SGWSsNJw5DDJVG2UtHVf8MDye/0CTs/kUJlzi6NmaF/aiXL3BhbS++4nooWU+uQtDCd6
- wPa1DzFU52u3OkLsrySRwuKdCyO2llfK9tVXIyPYcMK6Ne01a1/L9NwQfmWDApcxwQke
- AzKnY/qkGpaY8oqwMPfCyR8ByA+cj/uBIYQ5yDpGcsmXqJJRlN3tmD2m64ipQVd6NdXs
- NAag==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVPU6uwVqWpOeNAJn/J/uILvvIgQ+KSfjvq7NwAXnKgmgWeun033pqlJ10ueWCZqy3lN+2o0VuPs8Wt@nongnu.org
-X-Gm-Message-State: AOJu0YxvHeR7V7VPDL7YzRVPFuyKM8DdawcJJekYONutN/Zlesk7sJp+
- AkvyMKxN7nj1PCu/WkT5/MrnS+eZrqjdN1PgfkB/5Z5otkfgHuCGXcQv
-X-Gm-Gg: ASbGnctmA2b/bCMR45Wtkof0KkRWXLFAuFKG9TCAX3LJPb2ROX0UzvAnB8eBZjgUcKn
- uc9gLmYPleqDYpgWOsit886pPiTVQJ5Ly84UfKWiMKfPQGs9dv4LVnRMTjxG0Oz//c9KHV10fY2
- rMEYjTfTvwbnNLgxr4pcSfcCuhmjVCuf0KQuk10w7rurDVlxTR7zCW5KWf25qz0iaSOTeBNkNR/
- Uehnn7eNdK2yAzwWJgJu+cslaFuuQc6hUa8biiawXMljgtdFgHhg/94DgVrN5aOc3KUmI7/8h+w
- mYwqRWDqfBHkn3kDgsudptS+137rIzCkNuVx0NeyKqaIIQ==
-X-Google-Smtp-Source: AGHT+IG7V6H7umOyHTIJ1kyAYCca9dapZ1XD5673yteXoMhB/jDmMw8PnzXl7Ms6He6T8s7GJJdUog==
-X-Received: by 2002:a05:6a20:9191:b0:21c:faa4:9ab9 with SMTP id
- adf61e73a8af0-21ee25489a7mr6168623637.22.1749235716004; 
- Fri, 06 Jun 2025 11:48:36 -0700 (PDT)
-Received: from debian ([2601:646:8f03:9fee:5e33:e006:dcd5:852d])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7482b0e9efasm1643162b3a.147.2025.06.06.11.48.34
+ bh=Bn9Jf6xH+0pQpdnInWVsMZBNdWd8BOISDCqRTZOVrmc=;
+ b=sNEITZHBUZmnjb34jjt49ZetHXgLnbni7ZlAAk2HiH5yvt4fiSdiHO8dTiTuUqQuEq
+ QC/CkxSMh5TntyXGdcEYi5bhOCia8r1dnTUEbMwuIZpKclvt3LcUxrC2JrAmyWbjzDdh
+ U9QrCMXuNFPbJ1OPqlQqeMBWKlXKi+9om7MAAIO8dc6rZDpD26nB4cfKusmvfSWfWwGM
+ 9KiJy8bbv4vXkAoO6070Qnc1XdojQl9e1WELM1zBQM1HDKetqcZj4meDSgX25Equ7ubT
+ 12EKbLbFzAjk5Uk1xDyO+W8URUfv/o6vMW2fneJZiHk04O2lFPpNL4iZzybn4X8JIF18
+ Xv+A==
+X-Gm-Message-State: AOJu0Yz3/gjduwH9MDG7VLuW+m8WrzlyCwRgUbs166fsHbQqwnGNbbQA
+ PlyoX/v/2m1vpJJOohCBCUM+dL9C1TCZu3WuIudDC2uBDhyDkOVpLDDhed9JVKCzIYu8DeTlvan
+ 4RBh439BqdWnmeciTVk6jreyimPtfO2hp1sCDlfRzAkmcHfEs8vxzc+6C
+X-Gm-Gg: ASbGncur3CyOf5X2ibXjsZ/vFLDuYAWxuSJ6tyFiiDtOcR1y5gS+3aL2GbgUrZG7Lj3
+ /iQ2WY2gUqdJhBDysTOcYsIV4sQBqnA9XGzLaU99+cBvlLMrmSCJycNjZmrVpUFXe1JvHdmY0Pv
+ oarJL1V/OJWi98SGFJqH1qysUf51oSspQW+RJ7e+yW2SaqFYPZyho2+Uzx3X7eW7t7BqS25nqXK
+ RKQFmLaO5jf3lF6zEwNEFg8p4CcHpUJeF5ok4a1W8JxrYxBFeCNz/5Eaqs+S+O2F7q6zs2f3weT
+ q/BrieA0jYtBMg==
+X-Received: by 2002:a05:6214:194d:b0:6fa:c8c7:82f7 with SMTP id
+ 6a1803df08f44-6fb08f5bcd7mr65560476d6.20.1749235952816; 
+ Fri, 06 Jun 2025 11:52:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IESCn5/1nrHAAN12BSILCXmfToSEpPtyttZYns1f557eodRtRKaeUQ59oYWXAsuDJZmtdrjjQ==
+X-Received: by 2002:a05:6214:194d:b0:6fa:c8c7:82f7 with SMTP id
+ 6a1803df08f44-6fb08f5bcd7mr65560216d6.20.1749235952530; 
+ Fri, 06 Jun 2025 11:52:32 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fb09b2a090sm14994446d6.98.2025.06.06.11.52.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 11:48:35 -0700 (PDT)
-From: Fan Ni <nifan.cxl@gmail.com>
-X-Google-Original-From: Fan Ni <fan.ni@samsung.com>
-Date: Fri, 6 Jun 2025 11:48:33 -0700
-To: Fan Ni <nifan.cxl@gmail.com>
-Cc: anisa.su887@gmail.com, qemu-devel@nongnu.org,
- Jonathan.Cameron@huawei.com, dave@stgolabs.net,
- linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
-Subject: Re: [QEMU PATCH v3 9/9] cxl-mailbox-utils: 0x5605 - FMAPI Initiate
- DC Release
-Message-ID: <aEM4AXOJLMq7nqZp@debian>
-References: <20250605234227.970187-1-anisa.su887@gmail.com>
- <20250605234227.970187-10-anisa.su887@gmail.com>
- <aEM25yCeErixfi0l@debian>
+ Fri, 06 Jun 2025 11:52:31 -0700 (PDT)
+Date: Fri, 6 Jun 2025 14:52:29 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 14/21] migration: Cleanup hmp_info_migrate_parameters
+Message-ID: <aEM47QLg6a-mlzWK@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-15-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aEM25yCeErixfi0l@debian>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=nifan.cxl@gmail.com; helo=mail-pf1-x42a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <20250603013810.4772-15-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,141 +105,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 06, 2025 at 11:43:51AM -0700, Fan Ni wrote:
-> On Thu, Jun 05, 2025 at 11:42:23PM +0000, anisa.su887@gmail.com wrote:
-> > From: Anisa Su <anisa.su@samsung.com>
-> > 
-> > FM DCD Managment command 0x5605 implemented per CXL r3.2 Spec Section 7.6.7.6.6
-> > 
-> > Signed-off-by: Anisa Su <anisa.su@samsung.com>
+On Mon, Jun 02, 2025 at 10:38:03PM -0300, Fabiano Rosas wrote:
+> Do a cleanup of hmp_info_migrate_parameters() before adding more lines
+> into it:
 > 
-> See below ..
+> - Make sure every parameter asserts that the has_* field is
+>   set. qmp_query_migrate_parameters should have set them all.
 > 
-> > ---
-> >  hw/cxl/cxl-mailbox-utils.c | 62 ++++++++++++++++++++++++++++++++++++++
-> >  1 file changed, 62 insertions(+)
-> > 
-> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > index 7ee5be00bc..6c57e0deac 100644
-> > --- a/hw/cxl/cxl-mailbox-utils.c
-> > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > @@ -124,6 +124,7 @@ enum {
-> >          #define SET_DC_REGION_CONFIG        0x2
-> >          #define GET_DC_REGION_EXTENT_LIST   0x3
-> >          #define INITIATE_DC_ADD             0x4
-> > +        #define INITIATE_DC_RELEASE         0x5
-> >  };
-> >  
-> >  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> > @@ -3685,6 +3686,60 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
-> >      return CXL_MBOX_SUCCESS;
-> >  }
-> >  
-> > +#define CXL_EXTENT_REMOVAL_POLICY_MASK 0x7
-> > +/* CXL r3.2 Section 7.6.7.6.6 Initiate Dynamic Capacity Release (Opcode 5605h) */
-> > +static CXLRetCode cmd_fm_initiate_dc_release(const struct cxl_cmd *cmd,
-> > +                                             uint8_t *payload_in,
-> > +                                             size_t len_in,
-> > +                                             uint8_t *payload_out,
-> > +                                             size_t *len_out,
-> > +                                             CXLCCI *cci)
-> > +{
-> > +    struct {
-> > +        uint16_t host_id;
-> > +        uint8_t flags;
-> > +        uint8_t reg_num;
-> > +        uint64_t length;
-> > +        uint8_t tag[0x10];
-> > +        uint32_t ext_count;
-> > +        CXLDCExtentRaw extents[];
-> > +    } QEMU_PACKED *in = (void *)payload_in;
-> > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> > +    CXLUpdateDCExtentListInPl *list;
-> > +    CXLDCExtentList updated_list;
-> > +    uint32_t updated_list_size;
-> > +    int rc;
-> > +
-> > +    switch (in->flags & CXL_EXTENT_REMOVAL_POLICY_MASK) {
-> > +    case CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE:
-> > +        list = calloc(1, (sizeof(*list) +
-> > +                          in->ext_count * sizeof(*list->updated_entries)));
+> - Remove the if (params), qmp_query_migrate_parameters never returns
+>   NULL.
 > 
-> Use g_malloc() and free with g_free();
+> - Add a macro to encapsulate boilerplate.
 > 
-> > +        convert_raw_extents(in->extents, list, in->ext_count);
-> > +        rc = cxl_detect_malformed_extent_list(ct3d, list);
-> > +        if (rc) {
-> > +            return rc;
-> > +        }
-> > +        rc = cxl_dc_extent_release_dry_run(ct3d,
-> > +                                           list,
-> > +                                           &updated_list,
-> > +                                           &updated_list_size);
+> - Line breaks for legibility.
 > 
-> This seems not right.
-> this is only fm issue dc release request, not host release dc extents to device.
-> So we should follow what we did in the qmp_cxl_process_dynamic_capacity_prescriptive()
-> for release case.
-> 
-> One thing that I can see that making the workflow is different is that, we check
-> the extent list with the pending list to make sure fm is not trying to remove
-> non-accepted extents, but the host release extent workflow does not need to do
-> that as it is filtered out in the first place when fm sends the request if it is
-> from FM.
-> I have to admit, existing qmp interface can be improved to remove some condition
-> checks as they are kind of duplicate.
-> For example, if an extent is still pending, it will not be set in the bitmap, so
-> we can still tigger the error if it happens by removing the pending list check.
-> One justification is that the error message is different for a non-existing
-> extent and a pending extent, which is useful for a dmp interface.
-> 
-> 
-> Also, the case to detect exhausted resouces is not different, FM can request to
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-s/is not different/is different/
-I am not sure what I was thinking..
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-Fan
-> release a lot of extents, but what the host actually does can be a subset or
-> none.
-> 
-> Fan
-> 
-> > +        if (rc) {
-> > +            return rc;
-> > +        }
-> > +        cxl_mbox_create_dc_event_records_for_extents(ct3d,
-> > +                                                     DC_EVENT_RELEASE_CAPACITY,
-> > +                                                     in->extents,
-> > +                                                     in->ext_count);
-> > +        return CXL_MBOX_SUCCESS;
-> > +    default:
-> > +        qemu_log_mask(LOG_UNIMP,
-> > +            "CXL extent selection policy not supported.\n");
-> > +        return CXL_MBOX_INVALID_INPUT;
-> > +    }
-> > +
-> > +    return CXL_MBOX_SUCCESS;
-> > +}
-> > +
-> >  static const struct cxl_cmd cxl_cmd_set[256][256] = {
-> >      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
-> >          cmd_infostat_bg_op_abort, 0, 0 },
-> > @@ -3819,6 +3874,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-> >          CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> >          CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> >          CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> > +    [FMAPI_DCD_MGMT][INITIATE_DC_RELEASE] = { "INIT_DC_RELEASE",
-> > +        cmd_fm_initiate_dc_release, ~0,
-> > +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-> > +         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-> > +         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> > +         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> > +         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> >  };
-> >  
-> >  /*
-> > -- 
-> > 2.47.2
-> > 
+-- 
+Peter Xu
+
 
