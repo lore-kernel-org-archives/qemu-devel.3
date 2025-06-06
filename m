@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72E47C5B549
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 06:32:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98CF9C5B549
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 06:32:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNQbq-00077e-8D; Fri, 06 Jun 2025 02:31:22 -0400
+	id 1uNQbq-00077f-AH; Fri, 06 Jun 2025 02:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uNQbP-00071I-Gw
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 02:30:58 -0400
+ id 1uNQbZ-000727-UN
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 02:31:08 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uNQbN-0007QF-CE
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 02:30:55 -0400
+ (envelope-from <maobibo@loongson.cn>) id 1uNQbV-0007RA-Ue
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 02:31:04 -0400
 Received: from loongson.cn (unknown [10.2.5.213])
- by gateway (Coremail) with SMTP id _____8AxHHIbi0JoKb8NAQ--.38592S3;
- Fri, 06 Jun 2025 14:30:51 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8BxrnIji0JoM78NAQ--.39358S3;
+ Fri, 06 Jun 2025 14:30:59 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.213])
- by front1 (Coremail) with SMTP id qMiowMDxu8QNi0JoJcYMAQ--.37752S7;
- Fri, 06 Jun 2025 14:30:51 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMDxu8QNi0JoJcYMAQ--.37752S10;
+ Fri, 06 Jun 2025 14:30:59 +0800 (CST)
 From: Bibo Mao <maobibo@loongson.cn>
 To: Song Gao <gaosong@loongson.cn>
 Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen <chenhuacai@kernel.org>,
  qemu-devel@nongnu.org, Xianglai Li <lixianglai@loongson.cn>
-Subject: [PATCH v3 05/13] hw/intc/loongarch_ipi: Add kernel irqchip save and
+Subject: [PATCH v3 08/13] hw/intc/loongarch_pch: Add kernel irqchip save and
  restore function
-Date: Fri,  6 Jun 2025 14:30:25 +0800
-Message-Id: <20250606063033.2557365-6-maobibo@loongson.cn>
+Date: Fri,  6 Jun 2025 14:30:28 +0800
+Message-Id: <20250606063033.2557365-9-maobibo@loongson.cn>
 X-Mailer: git-send-email 2.39.3
 In-Reply-To: <20250606063033.2557365-1-maobibo@loongson.cn>
 References: <20250606063033.2557365-1-maobibo@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMDxu8QNi0JoJcYMAQ--.37752S7
+X-CM-TRANSID: qMiowMDxu8QNi0JoJcYMAQ--.37752S10
 X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -67,130 +67,141 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Add save and store funtction if kvm_irqchip_in_kernel() return true,
-it is to get and set IPI irqchip state from KVM kernel.
+it is to get and set PCH PCI irqchip state from KVM kernel.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 ---
- hw/intc/loongarch_ipi.c         | 20 ++++++++++++
- hw/intc/loongarch_ipi_kvm.c     | 54 +++++++++++++++++++++++++++++++++
- include/hw/intc/loongarch_ipi.h |  2 ++
- 3 files changed, 76 insertions(+)
+ hw/intc/loongarch_pch_pic.c            | 22 ++++++++++++
+ hw/intc/loongarch_pic_kvm.c            | 47 ++++++++++++++++++++++++++
+ include/hw/intc/loongarch_pch_pic.h    |  2 ++
+ include/hw/intc/loongarch_pic_common.h |  1 +
+ 4 files changed, 72 insertions(+)
 
-diff --git a/hw/intc/loongarch_ipi.c b/hw/intc/loongarch_ipi.c
-index 159ba91fb6..0ea91ea054 100644
---- a/hw/intc/loongarch_ipi.c
-+++ b/hw/intc/loongarch_ipi.c
-@@ -171,6 +171,24 @@ static void loongarch_ipi_cpu_unplug(HotplugHandler *hotplug_dev,
-     core->cpu = NULL;
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index 01fe6a1a39..4d232f4cca 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -287,16 +287,38 @@ static void loongarch_pic_realize(DeviceState *dev, Error **errp)
+     }
  }
  
-+static int loongarch_ipi_pre_save(void *opaque)
++static int loongarch_pic_pre_save(LoongArchPICCommonState *opaque)
 +{
 +    if (kvm_irqchip_in_kernel()) {
-+        return kvm_ipi_get(opaque);
++        return kvm_pic_get(opaque);
 +    }
 +
 +    return 0;
 +}
 +
-+static int loongarch_ipi_post_load(void *opaque, int version_id)
++static int loongarch_pic_post_load(LoongArchPICCommonState *opaque,
++                                   int version_id)
 +{
 +    if (kvm_irqchip_in_kernel()) {
-+        return kvm_ipi_put(opaque, version_id);
++        return kvm_pic_put(opaque, version_id);
 +    }
 +
 +    return 0;
 +}
 +
- static void loongarch_ipi_class_init(ObjectClass *klass, const void *data)
+ static void loongarch_pic_class_init(ObjectClass *klass, const void *data)
  {
-     LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_CLASS(klass);
-@@ -187,6 +205,8 @@ static void loongarch_ipi_class_init(ObjectClass *klass, const void *data)
-     licc->cpu_by_arch_id = loongarch_cpu_by_arch_id;
-     hc->plug = loongarch_ipi_cpu_plug;
-     hc->unplug = loongarch_ipi_cpu_unplug;
-+    licc->pre_save = loongarch_ipi_pre_save;
-+    licc->post_load = loongarch_ipi_post_load;
+     DeviceClass *dc = DEVICE_CLASS(klass);
+     LoongarchPICClass *lpc = LOONGARCH_PIC_CLASS(klass);
++    LoongArchPICCommonClass *lpcc = LOONGARCH_PIC_COMMON_CLASS(klass);
+     ResettableClass *rc = RESETTABLE_CLASS(klass);
+ 
+     resettable_class_set_parent_phases(rc, NULL, loongarch_pic_reset_hold,
+                                        NULL, &lpc->parent_phases);
+     device_class_set_parent_realize(dc, loongarch_pic_realize,
+                                     &lpc->parent_realize);
++    lpcc->pre_save = loongarch_pic_pre_save;
++    lpcc->post_load = loongarch_pic_post_load;
  }
  
- static const TypeInfo loongarch_ipi_types[] = {
-diff --git a/hw/intc/loongarch_ipi_kvm.c b/hw/intc/loongarch_ipi_kvm.c
-index 51e9c7ed1e..b615060d83 100644
---- a/hw/intc/loongarch_ipi_kvm.c
-+++ b/hw/intc/loongarch_ipi_kvm.c
-@@ -11,6 +11,60 @@
+ static const TypeInfo loongarch_pic_types[] = {
+diff --git a/hw/intc/loongarch_pic_kvm.c b/hw/intc/loongarch_pic_kvm.c
+index ee77f04a13..3eef81a9bb 100644
+--- a/hw/intc/loongarch_pic_kvm.c
++++ b/hw/intc/loongarch_pic_kvm.c
+@@ -13,6 +13,53 @@
+ #include "hw/pci-host/ls7a.h"
  #include "system/kvm.h"
- #include "target/loongarch/cpu.h"
  
-+static void kvm_ipi_access_reg(int fd, uint64_t addr, uint32_t *val, bool write)
++static void kvm_pch_pic_access_reg(int fd, uint64_t addr, void *val, bool write)
 +{
-+    kvm_device_access(fd, KVM_DEV_LOONGARCH_IPI_GRP_REGS,
++    kvm_device_access(fd, KVM_DEV_LOONGARCH_PCH_PIC_GRP_REGS,
 +                      addr, val, write, &error_abort);
 +}
 +
-+static void kvm_ipi_access_regs(void *opaque, bool write)
++static void kvm_pch_pic_access(void *opaque, bool write)
 +{
-+    LoongsonIPICommonState *ipi = (LoongsonIPICommonState *)opaque;
-+    LoongarchIPIState *lis = LOONGARCH_IPI(opaque);
-+    IPICore *core;
-+    uint64_t attr;
-+    int cpu, fd = lis->dev_fd;
++    LoongArchPICCommonState *s = LOONGARCH_PIC_COMMON(opaque);
++    LoongarchPICState *lps = LOONGARCH_PIC(opaque);
++    int fd = lps->dev_fd;
++    int addr, offset;
 +
-+    for (cpu = 0; cpu < ipi->num_cpu; cpu++) {
-+        core = &ipi->cpu[cpu];
-+        attr = (cpu << 16) | CORE_STATUS_OFF;
-+        kvm_ipi_access_reg(fd, attr, &core->status, write);
++    kvm_pch_pic_access_reg(fd, PCH_PIC_INT_MASK, &s->int_mask, write);
++    kvm_pch_pic_access_reg(fd, PCH_PIC_HTMSI_EN, &s->htmsi_en, write);
++    kvm_pch_pic_access_reg(fd, PCH_PIC_INT_EDGE, &s->intedge, write);
++    kvm_pch_pic_access_reg(fd, PCH_PIC_AUTO_CTRL0, &s->auto_crtl0, write);
++    kvm_pch_pic_access_reg(fd, PCH_PIC_AUTO_CTRL1, &s->auto_crtl1, write);
 +
-+        attr = (cpu << 16) | CORE_EN_OFF;
-+        kvm_ipi_access_reg(fd, attr, &core->en, write);
-+
-+        attr = (cpu << 16) | CORE_SET_OFF;
-+        kvm_ipi_access_reg(fd, attr, &core->set, write);
-+
-+        attr = (cpu << 16) | CORE_CLEAR_OFF;
-+        kvm_ipi_access_reg(fd, attr, &core->clear, write);
-+
-+        attr = (cpu << 16) | CORE_BUF_20;
-+        kvm_ipi_access_reg(fd, attr, &core->buf[0], write);
-+
-+        attr = (cpu << 16) | CORE_BUF_28;
-+        kvm_ipi_access_reg(fd, attr, &core->buf[2], write);
-+
-+        attr = (cpu << 16) | CORE_BUF_30;
-+        kvm_ipi_access_reg(fd, attr, &core->buf[4], write);
-+
-+        attr = (cpu << 16) | CORE_BUF_38;
-+        kvm_ipi_access_reg(fd, attr, &core->buf[6], write);
++    for (addr = PCH_PIC_ROUTE_ENTRY;
++        addr < PCH_PIC_ROUTE_ENTRY_END; addr++) {
++        offset = addr - PCH_PIC_ROUTE_ENTRY;
++        kvm_pch_pic_access_reg(fd, addr, &s->route_entry[offset], write);
 +    }
++
++    for (addr = PCH_PIC_HTMSI_VEC; addr < PCH_PIC_HTMSI_VEC_END; addr++) {
++        offset = addr - PCH_PIC_HTMSI_VEC;
++        kvm_pch_pic_access_reg(fd, addr, &s->htmsi_vector[offset], write);
++    }
++
++    kvm_pch_pic_access_reg(fd, PCH_PIC_INT_REQUEST, &s->intirr, write);
++    kvm_pch_pic_access_reg(fd, PCH_PIC_INT_STATUS, &s->intisr, write);
++    kvm_pch_pic_access_reg(fd, PCH_PIC_INT_POL, &s->int_polarity, write);
 +}
 +
-+int kvm_ipi_get(void *opaque)
++int kvm_pic_get(void *opaque)
 +{
-+    kvm_ipi_access_regs(opaque, false);
++    kvm_pch_pic_access(opaque, false);
 +    return 0;
 +}
 +
-+int kvm_ipi_put(void *opaque, int version_id)
++int kvm_pic_put(void *opaque, int version_id)
 +{
-+    kvm_ipi_access_regs(opaque, true);
++    kvm_pch_pic_access(opaque, true);
 +    return 0;
 +}
 +
- void kvm_ipi_realize(DeviceState *dev, Error **errp)
+ void kvm_pic_realize(DeviceState *dev, Error **errp)
  {
-     LoongarchIPIState *lis = LOONGARCH_IPI(dev);
-diff --git a/include/hw/intc/loongarch_ipi.h b/include/hw/intc/loongarch_ipi.h
-index 608cd09a78..5175a6b004 100644
---- a/include/hw/intc/loongarch_ipi.h
-+++ b/include/hw/intc/loongarch_ipi.h
-@@ -26,5 +26,7 @@ struct LoongarchIPIClass {
+     LoongarchPICState *lps = LOONGARCH_PIC(dev);
+diff --git a/include/hw/intc/loongarch_pch_pic.h b/include/hw/intc/loongarch_pch_pic.h
+index 4b52f1165f..a46b6f8985 100644
+--- a/include/hw/intc/loongarch_pch_pic.h
++++ b/include/hw/intc/loongarch_pch_pic.h
+@@ -27,5 +27,7 @@ struct LoongarchPICClass {
  };
  
- void kvm_ipi_realize(DeviceState *dev, Error **errp);
-+int kvm_ipi_get(void *opaque);
-+int kvm_ipi_put(void *opaque, int version_id);
+ void kvm_pic_realize(DeviceState *dev, Error **errp);
++int kvm_pic_get(void *opaque);
++int kvm_pic_put(void *opaque, int version_id);
  
- #endif
+ #endif /* HW_LOONGARCH_PCH_PIC_H */
+diff --git a/include/hw/intc/loongarch_pic_common.h b/include/hw/intc/loongarch_pic_common.h
+index 9349a055d0..f774c975d4 100644
+--- a/include/hw/intc/loongarch_pic_common.h
++++ b/include/hw/intc/loongarch_pic_common.h
+@@ -23,6 +23,7 @@
+ #define PCH_PIC_ROUTE_ENTRY_END         0x13f
+ #define PCH_PIC_HTMSI_VEC               0x200
+ #define PCH_PIC_HTMSI_VEC_END           0x23f
++#define PCH_PIC_INT_REQUEST             0x380
+ #define PCH_PIC_INT_STATUS              0x3a0
+ #define PCH_PIC_INT_POL                 0x3e0
+ 
 -- 
 2.39.3
 
