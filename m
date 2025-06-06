@@ -4,113 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5DE9C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 09:35:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F89DC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 09:38:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNTTJ-000318-Jv; Fri, 06 Jun 2025 05:34:45 -0400
+	id 1uNTWy-0004oC-DX; Fri, 06 Jun 2025 05:38:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uNTTG-0002zG-RT; Fri, 06 Jun 2025 05:34:42 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uNTTD-0002Iu-I4; Fri, 06 Jun 2025 05:34:42 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5563humB026579;
- Fri, 6 Jun 2025 09:34:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=d8t4Rs
- WCiyKxz9rBqJiypIeYyyZ2kuwKKk5UJyvq+9g=; b=GcFG3xU/nqglgjT2iHMHCl
- m+VBRDeww/PIdEYWxMHpOOsedufZg2kJZX5eue+zl2Yzw1g7g/gdhXOmP/bl/7Ol
- kw0IuEaMLpX6ZngDVlZPanKEAeNFUB4T/4i+1A8S662lLlRXET9Dh9qDVTLzRnNz
- FiqJxDvQ07FgWZaR3ZaFjxddSN4fdZjv3bmAOKFUbk7EBporM/2+IgS82ki5EhVz
- Co6kFZJA/FWlquRpOI8m3/daluU73PJIgIBd7D1tD7VeyASs/X+NI4clK31yaLNW
- XNua3mwWl5T8oxLyIATgY6FaLmPcY5EqVJ8mRxZdReMsaiYSTA5d8/cpmv9J4DhQ
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 472fwuw07s-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Jun 2025 09:34:24 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5566riXY019889;
- Fri, 6 Jun 2025 09:34:23 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 470d3p8tkt-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Jun 2025 09:34:23 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 5569YMHE29426212
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Jun 2025 09:34:22 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6AABD58054;
- Fri,  6 Jun 2025 09:34:22 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D4DDD5803F;
- Fri,  6 Jun 2025 09:34:21 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Jun 2025 09:34:21 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNTWw-0004nu-T0
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:38:30 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uNTWv-0002ny-1t
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:38:30 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-450cfb790f7so14690285e9.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 02:38:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749202707; x=1749807507; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=oFOC02zVYZ8GEKW6KPKOoUyDIZPBuO6Qih5KVduNdNs=;
+ b=dUqw4iLpYRo5/jeCB5ga4D1wffDKmuNapAMoRgXburH8jyWCo2eDyGR9zHLwYweJRf
+ ZN+lMyRYLInDMIsXmvJ+xHrgurf4dO+Pjs4yGsbnSUjNGrYgBIP0AmOq777Kg0p14K78
+ 6DAJUQO4bEczbq5qjvB9Cii3KYvDLhNWIfXqEtjkLAbPM+3uG/iY52Nj0qi5Gxtbryb8
+ UFh1bWaoWsqMNI+uxU0rAagmhErYqDafOBK8SSI1eAm0NjHFafJvEC7Zo/IMvpDP1ZoI
+ +CG72pbTjAYS8F3N79QI8YMF/FcTkErHfhYByscBNDHd4NXXIblI4KsLYrS423AHNWmx
+ FsHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749202707; x=1749807507;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=oFOC02zVYZ8GEKW6KPKOoUyDIZPBuO6Qih5KVduNdNs=;
+ b=aLX5NE3nOYRLcF93x+up/YF2LPo71SHrXINkhEFcX6SONEP5P04lJaQub/fYGQY+Ro
+ SREci05xggk/m+eRdbZYfrK3AzbV0UtHlypnxEkXwWL2itc+2gH3v2fx43eG332rmOME
+ 02x2G64mTCZaQHOWuvW20S5Gd4AU0Nb9pkj8MJte2Ghl+ZoOUEzrQ6V1SW+o3VCvumrL
+ UDsCTJkVhtNzmSNIN19vLghD0ZZqrC60LjBGXG7sZPAr9SxuvbUUMDKJIWAjvyGnP4Gu
+ fstV7NT3yr3NO+vuZwMgNBCZD7sJWXI43uP+rREtaZ0EuchpQLPclJ3V4Jg7H0+exQFs
+ ILJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU3OqtIw7B48SmZ0v0mY2IJqw/oVUVSipt32V4cgmPwjDEU96SsYY4ZOeCpawkD1k//Cy9tgJ0MZafs@nongnu.org
+X-Gm-Message-State: AOJu0YwgM3hpczZfbn449vjHV909OFJ8K8FDD4O7ptyTQG68/vPOFHlb
+ 9ftqVraxjNSb8YlQND3tYHmQCm6Ku/VATrMxBw1m1tRf3McgsuUX5JC77a0KfCsWh8o=
+X-Gm-Gg: ASbGnct+4Mff/G70KvNNBg7YgqjSMesYDjaB9jJdf8imf++TFfOt1Rt65kJ+6ODIO50
+ b5pQyBs+5qj0nI4n0L9Fa2pGM8WnRRJ3cfWq3faNRjoz75LjbrX2mV4MtnICXks5906QMPOzZg7
+ ybs+4VnDlTbyL6xQkrl+Z9qO+gzQKVFRnvw4iEIMo/gRZheKGZ8hFwlvRED0vJC5bpzuq75cRZ0
+ NZ2Fh0iOJWoVlWfw9JYn1v/Z/QKEUt4qHLMIjgrROphBbKHSDgm9WfDkenil1T9Rnl//j1AJTcz
+ sNK79TMAs8OJkhQ8NPsjp+29e7H0vO9hDE/c8Qzt4kxcOctvckp3wOT4yLepQe5liKRA4iZf3LN
+ sSZIC00xCszPKrq81c7bkn+fClwfsPqN5rFbYlAp9
+X-Google-Smtp-Source: AGHT+IGc07YjkGi4IbOcCx2T9VaIkh4KkapFRjAAvIvDSy4lZkEoSKnTCQBhDNrGU3Fr4dKOQJQLuA==
+X-Received: by 2002:a05:600c:1d8d:b0:450:ddb7:ee4d with SMTP id
+ 5b1f17b1804b1-4520140ceccmr27494915e9.24.1749202706745; 
+ Fri, 06 Jun 2025 02:38:26 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4524d8af1f3sm16295005e9.1.2025.06.06.02.38.25
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 06 Jun 2025 02:38:26 -0700 (PDT)
+Message-ID: <d0eb5075-0f68-4430-ae0e-fb41646f2734@linaro.org>
+Date: Fri, 6 Jun 2025 11:38:25 +0200
 MIME-Version: 1.0
-Date: Fri, 06 Jun 2025 11:34:21 +0200
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>, Nina Schoetterl-Glausch <nsg@linux.ibm.com>
-Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Daniel Berrange
- <berrange@redhat.com>, qemu-devel mailing list <qemu-devel@nongnu.org>,
- Hendrik Brueckner <brueckner@linux.ibm.com>
-Subject: Re: [PATCH v5 2/3] hw/s390x: add Control-Program Identification to QOM
-In-Reply-To: <581bb44f-6549-44cc-9466-ef4172fe6ddc@redhat.com>
-References: <20250603135655.595602-1-shalini@linux.ibm.com>
- <20250603135655.595602-3-shalini@linux.ibm.com>
- <9bf3dbd97aea3e8811e3064c4f1f79ab3ba65ecd.camel@linux.ibm.com>
- <581bb44f-6549-44cc-9466-ef4172fe6ddc@redhat.com>
-Message-ID: <7052f152ca5ce5c15275c9a57067a571@linux.ibm.com>
-X-Sender: shalini@linux.ibm.com
-Organization: IBM Deutschland Research & Development GmbH
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] i386/tdx: Fix build on 32-bit host
+To: Xiaoyao Li <xiaoyao.li@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: "Michael S. Tsirkin" <mst@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Marcelo Tosatti <mtosatti@redhat.com>
+References: <20250602173101.1052983-1-clg@redhat.com>
+ <20250602173101.1052983-2-clg@redhat.com>
+ <b30050b0-68d3-4b42-85f3-9aeca26fb830@intel.com>
+ <06903e8d-d729-458d-8157-5a54d324a239@linaro.org>
+ <a838e7cc-968e-4ca4-ba60-bbf201d689aa@redhat.com>
+ <5fb2a861-26c9-4a48-9de7-6d872ac1e234@intel.com>
+ <d22baf31-2722-4b89-ae99-475d6c5e4f33@linaro.org>
+ <fde03bbf-415a-466f-a3cd-fac4f952c531@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <fde03bbf-415a-466f-a3cd-fac4f952c531@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDA4MiBTYWx0ZWRfX3pTrzwDKX8fI
- 05rtoaksmt2qADeRRFenbAOtnQBznnZSLLTiTEax56CtmSLRwHBs2If1kT/wv2Cf4qxzO1L9hi/
- APQw3Qluhov+/ej3YbzjKiSpONfyYTucKDM1sh/ERJXTkoKGPazgpsK39Th/I8LWZpTeorOhixb
- zQcSJjwOUIkbrX4xz5a+KtCBuxoRPzec7ojEWUZ/ciTfVJJTy4hhb2/Qr+p8uZqRqhSpDJ6w+a2
- UZJn+WIXwJ61Uo56S/eQLZi/dcbLPvlae7YceuXp2gGw7no1DekJ0ApBIPGn5Q5qf/vCvsmvOUK
- oRoKm+PTgaA1XrKPebwwktfRUtdZunFlwelrhFp4Spsz4B6OIi7GDw7mKOK5H2z+zpMmnWjlems
- qeMohV9Mo0+aZsrjkavskq88oPSwseuqqmsoxJCvdrSV/KpioU5RmFgB3nOP5KKNd6p03eBI
-X-Proofpoint-GUID: lPSv9-gklqi02OnH7MSUz2mbQK-V9W70
-X-Proofpoint-ORIG-GUID: lPSv9-gklqi02OnH7MSUz2mbQK-V9W70
-X-Authority-Analysis: v=2.4 cv=QtVe3Uyd c=1 sm=1 tr=0 ts=6842b620 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=LIxmkEhz09HK_Sj9jhYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-06_02,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 suspectscore=0
- bulkscore=0 adultscore=0 phishscore=0 impostorscore=0 malwarescore=0
- priorityscore=1501 mlxlogscore=999 lowpriorityscore=0 spamscore=0
- clxscore=1015 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506060082
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=shalini@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,91 +112,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-06-05 13:56, Thomas Huth wrote:
-> On 05/06/2025 10.34, Nina Schoetterl-Glausch wrote:
->> On Tue, 2025-06-03 at 15:56 +0200, Shalini Chellathurai Saroja wrote:
->>> Add Control-Program Identification (CPI) data to the QEMU Object
->>> Model (QOM), along with the timestamp in which the data was received
->>> as shown below.
->> 
->> [...]
->>> 
->>> Signed-off-by: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
->>> ---
->>>   hw/s390x/sclpcpi.c                | 47 +++++++++++++++++++++++++
->>>   include/hw/s390x/event-facility.h |  5 +++
->>>   qapi/machine.json                 | 58 
->>> +++++++++++++++++++++++++++++++
->>>   3 files changed, 110 insertions(+)
->>> 
->>> diff --git a/hw/s390x/sclpcpi.c b/hw/s390x/sclpcpi.c
->>> index 935fa87acd..ec711e2291 100644
->>> --- a/hw/s390x/sclpcpi.c
->>> +++ b/hw/s390x/sclpcpi.c
->>> @@ -15,7 +15,9 @@
->>>     */
->> 
->> [...]
->>>   +static void cpi_init(Object *obj)
->>> +{
->>> +    SCLPEventCPI *e = SCLP_EVENT_CPI(obj);
->>> +
->>> +    object_property_add_str(obj, "system_type", get_system_type, 
->>> NULL);
->>> +    object_property_add_str(obj, "system_name", get_system_name, 
->>> NULL);
->>> +    object_property_add_str(obj, "sysplex_name", get_sysplex_name, 
->>> NULL);
->>> +    object_property_add_uint64_ptr(obj, "system_level", 
->>> &(e->system_level),
->>> +                                   OBJ_PROP_FLAG_READ);
->>> +    object_property_add_uint64_ptr(obj, "timestamp", 
->>> &(e->timestamp),
->>> +                                   OBJ_PROP_FLAG_READ);
->>> +}
->> 
->> I think it would be cleaner if those were class properties.
->> You could use object_class_property_add_str in cpi_class_init,
->> but I think it'd be nice to use DEFINE_PROP_(STR|UINT64) and
->> device_class_set_props.
+On 6/6/25 11:28, Xiaoyao Li wrote:
+> On 6/6/2025 5:19 PM, Philippe Mathieu-Daudé wrote:
+>> On 6/6/25 10:49, Xiaoyao Li wrote:
+>>> On 6/3/2025 10:53 PM, Paolo Bonzini wrote:
+>>>> On 6/3/25 13:26, Philippe Mathieu-Daudé wrote:
+>>>>> On 3/6/25 05:04, Xiaoyao Li wrote:
+>>>>>> On 6/3/2025 1:31 AM, Cédric Le Goater wrote:
+>>>>>>> Use PRI formats where required and fix pointer cast.
+>>>>>>
+>>>>>> Maybe we can make 32-bit build exclusive with CONFIG_TDX? since 
+>>>>>> TDX is not supported on 32-bit host.
+>>>>>
+>>>>> Yes please!
+>>>>
+>>>> No objections, but I'm still applying these first to fix the build.
+>>>
+>>> Can anyone guide how to implement it? Or directly help cook a patch?
+>>>
+>>> I'm struggling to learn the 32-bit build stuff and create a 32-bit 
+>>> environment.
+>>
+>> -- >8 --
+>> diff --git a/hw/i386/Kconfig b/hw/i386/Kconfig
+>> index eb65bda6e07..b5970f9a1f3 100644
+>> --- a/hw/i386/Kconfig
+>> +++ b/hw/i386/Kconfig
+>> @@ -13,7 +13,7 @@ config SGX
+>>   config TDX
+>>       bool
+>>       select X86_FW_OVMF
+>> -    depends on KVM
+>> +    depends on KVM && !I386
+>>
+>> ---
 > 
-> For "normal" properties I'd say "yes" ... but in this case, this would
-> also allow the user to set the properties from the host side - which
-> would be a little bit weird? So I think it might be cleaner to keep it
-> this way here without the "setter" functions? WDYT?
+> CONFIG_X86_64 selects I386 in target/i386/Kconfig, so above change will 
+> just leads to CONFIG_TDX always being 0.
 > 
->>> +{ 'struct': 'S390ControlProgramId', 'data': {
->>> +     'system-type': 'str',
->>> +     'system-name': 'str',
->>> +     'system-level': 'uint64',
->>> +     'sysplex-name': 'str',
->>> +     'timestamp': 'uint64' } }
->> 
->> This is unused now, so you can get rid of it and put the
->> documentation sclpcpi.c.
-> 
-> Agreed, that looks like it could be cleaned up now, indeed.
-> 
+> config X86_64
+>      bool
+>      select I386
 
-Hello Thomas, Nina,
-
-Yes, I will do this. I am sorry that I missed to do this earlier.
-Thank you very much for the quick review.
-
-
-
->  Thomas
-
-
--- 
-Mit freundlichen Grüßen / Kind regards
-Shalini Chellathurai Saroja
-Software Developer
-Linux on IBM Z & KVM Development
-IBM Deutschland Research & Development GmbH
-Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
-Stuttgart, HRB 243294
+Doh. We could expose TARGET_LONG_BITS to Kconfig (see commit 
+bae3e3a5c6b, "meson: make target endianneess available to Kconfig"),
+but there is likely a clever way.
 
