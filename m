@@ -4,80 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34039C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 09:54:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9EA2C5B559
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 09:55:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNTlW-0002QX-F3; Fri, 06 Jun 2025 05:53:34 -0400
+	id 1uNTml-0003jN-Bi; Fri, 06 Jun 2025 05:54:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uNTlS-0002QE-Td
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:53:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uNTlQ-0004up-He
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:53:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749203605;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=587k/XgzXZDVRc17FBl8LYWYXXgKDx/cGubX/1kvN5I=;
- b=MzpeKnZHmDHhQiwpsM1nWuVCcQ3AW4RbXouIGxDKXvMoXKcjIhW8O23ji5Qbw+XYFUCR23
- qidWd8JF5id7fCo40Ra+IQ/O0RxJvBjZWMkxDF5BmH3sHtsR+z4MeH6PqO9xhck+avuF71
- TPkc9HyA3DV5wYVp6dQG1AIso2elXHM=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-460-35AzavJdMMC8zE3OqGrBDA-1; Fri,
- 06 Jun 2025 05:53:22 -0400
-X-MC-Unique: 35AzavJdMMC8zE3OqGrBDA-1
-X-Mimecast-MFC-AGG-ID: 35AzavJdMMC8zE3OqGrBDA_1749203600
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 935931956080; Fri,  6 Jun 2025 09:53:19 +0000 (UTC)
-Received: from localhost (dhcp-192-175.str.redhat.com [10.33.192.175])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DEF23180035E; Fri,  6 Jun 2025 09:53:17 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com
-Subject: Re: [PATCH v7 00/14] arm: rework id register storage
-In-Reply-To: <20250515153907.151174-1-cohuck@redhat.com>
-Organization: "Red Hat GmbH, Sitz: Werner-von-Siemens-Ring 12, D-85630
- Grasbrunn, Handelsregister: Amtsgericht =?utf-8?Q?M=C3=BCnchen=2C?= HRB
- 153243,
- =?utf-8?Q?Gesch=C3=A4ftsf=C3=BChrer=3A?= Ryan Barnhart, Charles Cachera,
- Michael O'Neill, Amy Ross"
-References: <20250515153907.151174-1-cohuck@redhat.com>
-User-Agent: Notmuch/0.38.3 (https://notmuchmail.org)
-Date: Fri, 06 Jun 2025 11:53:15 +0200
-Message-ID: <87ikl99oxg.fsf@redhat.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNTmk-0003j7-5E
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:54:50 -0400
+Received: from mail-ed1-x52d.google.com ([2a00:1450:4864:20::52d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNTmh-000518-VV
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:54:49 -0400
+Received: by mail-ed1-x52d.google.com with SMTP id
+ 4fb4d7f45d1cf-60768e108baso1438467a12.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 02:54:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749203686; x=1749808486; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=dju44UsTwp8Dau7vS87f3K8r5WJGYDGhrOX1qfm10+g=;
+ b=Q+4IZ2kiMaCkk5/DGrXfS1D1SGYpUQbSX8XxQ7fQFN0V3yNwvA8d7ANPu5L8e4Zxs8
+ URm2H59sCHUNts5Fjr2v1F34Gxif5D5tOtNlD2sgl0dINeIa6wod6qMdaoYyus92Bw5u
+ 4xfhjnRRIrCQ/PqnT+EbvW1KFKMOq5Wrhx/0lg/Fj5eQ46TZUQvWdvN8WY9czrCmxDvJ
+ 9c7R7FLtfhdPW8RoASuVqabnM0UGdqKlsKNAU6mOpFrwv2He01jJYMhpuXzgNkZ+uX/B
+ dRnV3KuxXmYRdaUQ+jn/R30lGFtnRvYswbFR8d499LrvoelLvsR9fwH2Eky+4lI72hlo
+ ZGPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749203686; x=1749808486;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=dju44UsTwp8Dau7vS87f3K8r5WJGYDGhrOX1qfm10+g=;
+ b=qOktI2ixDv2/xo8JRqnsQNin5eA6coDFgKPS62z9PTGTY6lQGHIqfaTIe5HmdAsnhJ
+ +lOIofkrgTtNhByT/JRPXqV7C2mRhXp1ALHoIffxgIACgUQfHSDLwcOJUuDy/8unAnrV
+ PdAO0MCedLuRiNcw/A//SSWj/usaAkB5ZFAoNmw2A52XHP5U9Qyjfx+YM0XGXVAkeQp2
+ 0KOqluD+SDD+/plK0RuAZlo0C8B3jCdx+Bm7uyGCLCGR+yItuaOXSmraf+ie3Yj0VPzl
+ wyDaDX6SWdFsV5JVCTTnpYXFfPC/B6C5+j1/H8AQS9FHsiHGwVtga6ZstsjNDOktZx3t
+ 02YA==
+X-Gm-Message-State: AOJu0Yzjf2sWecMELk8K2nY9L36UMn/KRzMrbpEM19xBqsaySOExXAS1
+ U24tD0/I4dGqEKU0gP8azId2kuTWdY6njWciyu6nP1XUZgqoFx5u4kYRzvP4mDg0egE=
+X-Gm-Gg: ASbGnctioAYW7dYDawig9MDvK6v6BxbuUdItW1LCPTUlNVdtVQuY7ZGPWuU6zWoY5Up
+ okoo3FUKa10Qxvs0WZ0z/5AZ4S6W34vAbU3cuKQGwEhPu2cGBO5awj9abtpxAJw5Xd85A9ylSAr
+ wsYHVUtTcnojEt5y6iUdw59otLpA4CZuPKnJCSOoE6gLlkG1oZ4j+ISmNsJcrTfvpMOMT89YY1X
+ dSYpEf0cVuNfGhzXaXc1KdLaOUOoCl2u5xiz+OfWvC+AOwSUzfIqr4ceVeNYe1uV6+Ql5LgUWYM
+ icLq3NDC8dmQnScB7kPw89lLl8pTGlF+b0CziHdr3/iP/7qWu0oshyu2oKObSM7sZ0kK7OdI0g=
+ =
+X-Google-Smtp-Source: AGHT+IFQSk/GWvDxii0E0KjRh3bUPkId8AI/TrlQhlj2xoC0m30zUZsAqdFzFIAByM3tm3kmtmNIIw==
+X-Received: by 2002:a05:6402:2694:b0:601:89d4:968e with SMTP id
+ 4fb4d7f45d1cf-607748987c4mr2494413a12.27.1749203685731; 
+ Fri, 06 Jun 2025 02:54:45 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-607783c062dsm811675a12.42.2025.06.06.02.54.45
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Jun 2025 02:54:45 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6760A5F7E1;
+ Fri, 06 Jun 2025 10:54:44 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  qemu-stable@nongnu.org,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PULL 09/17] hw/display: re-arrange memory region tracking
+In-Reply-To: <ee5115ab-b818-4746-8806-5056f3570011@rsg.ci.i.u-tokyo.ac.jp>
+ (Akihiko Odaki's message of "Fri, 6 Jun 2025 14:17:41 +0900")
+References: <20250605162651.2614401-1-alex.bennee@linaro.org>
+ <20250605162651.2614401-10-alex.bennee@linaro.org>
+ <ee5115ab-b818-4746-8806-5056f3570011@rsg.ci.i.u-tokyo.ac.jp>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Fri, 06 Jun 2025 10:54:44 +0100
+Message-ID: <875xh95h5n.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52d.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
 X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -94,163 +110,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Friendly ping... anything else that needs to happen here?
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 
-On Thu, May 15 2025, Cornelia Huck <cohuck@redhat.com> wrote:
+> On 2025/06/06 1:26, Alex Benn=C3=A9e wrote:
+>> QOM objects can be embedded in other QOM objects and managed as part
+>> of their lifetime but this isn't the case for
+>> virtio_gpu_virgl_hostmem_region. However before we can split it out we
+>> need some other way of associating the wider data structure with the
+>> memory region.
+>> Fortunately MemoryRegion has an opaque pointer. This is passed down
+>> to
+>> MemoryRegionOps for device type regions but is unused in the
+>> memory_region_init_ram_ptr() case. Use the opaque to carry the
+>> reference and allow the final MemoryRegion object to be reaped when
+>> its reference count is cleared.
+>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>> Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+>> Cc: qemu-stable@nongnu.org
+>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>> Message-ID: <20250603110204.838117-10-alex.bennee@linaro.org>
+>
+> I have told you that you should address all comments before sending a
+> series again a few times[1][2], but you haven't done that.
 
-> Some small fixes, including fixing up/adding SPDX identifiers, keeping the
-> series bisectable, and updating MAINTAINERS (please check if that's ok.)
->
-> Also available at
-> https://gitlab.com/cohuck/qemu/-/commits/arm-rework-idreg-storage-v7
->
-> <v6 cover letter>
-> Just some small changes:
-> - fixed up some botched conversions noted by Eric (thanks!)
-> - rebased to current master
-> - new patch with a small cleanup suggested by Eric
->
-> <v5 cover letter>
-> Just a quick respin to fix a missed conversion in hvf.c.
->
-> <v4 cover letter>
-> Next iteration of the id register patches; only small changes.
->
-> Changed from v3:
-> - added R-bs (thanks!)
-> - added missing SPDX header
-> - merged patch introducing accessors for kvm to the first user
-> - skip over sysregs outside of the id register range when generating
->   register definitions again
->
-> Also available at
-> https://gitlab.com/cohuck/qemu/-/commits/arm-rework-idreg-storage-v4
->
-> <v3 cover letter>
-> Yet another update of the id register series, less changes this time
-> around.
->
-> Changed from v2:
-> - changed generation of the various register defines via the "DEF"
->   magic suggested by Richard
-> - some kvm-only code moved to kvm.c; some code potentially useful to
->   non-kvm code stayed out of there (the cpu model code will make use
->   of it, and that one should be extendable outside of kvm -- a
->   revised version of those patches is still in the works, but I'll be
->   off for a few days and rather wanted to get this one out first)
->
-> Also available at
-> https://gitlab.com/cohuck/qemu/-/commits/arm-rework-idreg-storage-v3
->
-> <v2 cover letter>
->
-> Changed from v1:
-> - Noticed that we missed the hvf code. Converted, compiled, but not tested
->   as I'm lacking an environment for testing.
-> - Hopefully incorporated most of the suggested changes -- if I missed
->   something, it was unintentional unless mentioned below.
->   - fixed repeated inclusion of definitions
->   - hopefully made macros more robust
->   - removed distinction between reading 32/64 values, which was mostly
->     adding churn for little value
->   - postponed generating property definitions to the cpu model patches,
->     where they are actually used
->   - juggled hunks and moved them to the right patches
->   - fixed some typos
-> - rebased to a more recent code base
->
-> NOT changed from v1:
-> - definitions are still generated from the Linux sysregs file
->   - I still think updating the generated files on demand (so that we can
->     double check the result) is the right thing to do
->   - I'm open to changing the source of the definitions from the sysregs
->     file to the JSON definitions published by Arm; however, I first wanted
->     to get the code using it right -- we can switch out the code generating
->     the file to use a different source easily later on, and I'd also like
->     to steal parts of the script from Linux once integrated (which I think
->     hasn't happened yet?)
->
-> <v1 cover letter>
->
-> [Note: I've kept the cc list from the last round of cpu model patches;
-> so if you're confused as to why you're cc:ed here, take it as a
-> heads-up that a new cpu model series will come along soon]
->
-> This patch series contains patches extracted from the larger cpu model
-> series (RFC v2 last posted at
-> https://lore.kernel.org/qemu-devel/20241206112213.88394-1-cohuck@redhat.com/)
-> and aims at providing a base upon which we can continue with building
-> support for cpu models, but which is hopefully already an improvement
-> on its own.
->
-> Main changes from the patches in that series include:
-> - post-pone the changes to handle KVM writable ID registers for cpu models
->   (I have a series including that on top of this one)
-> - change how we store the list of ID registers, and access them
->   basically, use an enum for indexing, and an enum doing encodings in a
->   pattern similar to cpregs
-> - move some hunks to different patches
-> - update the scripts to generate the register descriptions, and run
->   them against a recent Linux sysregs file
->
-> What I've kept:
-> - generating the register descriptions from the Linux sysregs file
->   I think that file is still our best bet to generate the descriptions
->   easily, and updating the definitions is a manual step that can be checked
->   for unintended changes
-> - most of the hard work that Eric had been doing; all new bugs in there
->   are my own :)
->
-> </v1 cover letter>
-> </v2 cover letter>
-> </v3 cover letter>
-> </v4 cover letter>
-> </v5 cover letter>
-> </v6 cover letter>
->
-> Cornelia Huck (2):
->   arm/cpu: switch to a generated cpu-sysregs.h.inc
->   arm/kvm: use fd instead of fdarray[2]
->
-> Eric Auger (12):
->   arm/cpu: Add sysreg definitions in cpu-sysregs.h
->   arm/cpu: Store aa64isar0/aa64zfr0 into the idregs arrays
->   arm/cpu: Store aa64isar1/2 into the idregs array
->   arm/cpu: Store aa64pfr0/1 into the idregs array
->   arm/cpu: Store aa64mmfr0-3 into the idregs array
->   arm/cpu: Store aa64dfr0/1 into the idregs array
->   arm/cpu: Store aa64smfr0 into the idregs array
->   arm/cpu: Store id_isar0-7 into the idregs array
->   arm/cpu: Store id_pfr0/1/2 into the idregs array
->   arm/cpu: Store id_dfr0/1 into the idregs array
->   arm/cpu: Store id_mmfr0-5 into the idregs array
->   arm/cpu: Add sysreg generation scripts
->
->  MAINTAINERS                           |   1 +
->  hw/intc/armv7m_nvic.c                 |  27 +-
->  scripts/gen-cpu-sysregs-header.awk    |  35 ++
->  scripts/update-aarch64-sysreg-code.sh |  26 ++
->  target/arm/cpu-features.h             | 317 +++++++++---------
->  target/arm/cpu-sysregs.h              |  42 +++
->  target/arm/cpu-sysregs.h.inc          |  52 +++
->  target/arm/cpu.c                      | 111 +++----
->  target/arm/cpu.h                      |  80 +++--
->  target/arm/cpu64.c                    | 128 +++----
->  target/arm/helper.c                   |  68 ++--
->  target/arm/hvf/hvf.c                  |  39 ++-
->  target/arm/internals.h                |   6 +-
->  target/arm/kvm.c                      | 139 ++++----
->  target/arm/ptw.c                      |   6 +-
->  target/arm/tcg/cpu-v7m.c              | 174 +++++-----
->  target/arm/tcg/cpu32.c                | 320 +++++++++---------
->  target/arm/tcg/cpu64.c                | 459 +++++++++++++-------------
->  18 files changed, 1105 insertions(+), 925 deletions(-)
->  create mode 100755 scripts/gen-cpu-sysregs-header.awk
->  create mode 100755 scripts/update-aarch64-sysreg-code.sh
->  create mode 100644 target/arm/cpu-sysregs.h
->  create mode 100644 target/arm/cpu-sysregs.h.inc
->
-> -- 
-> 2.49.0
+I've given reasons. Thanks for your review but you don't get to veto.
 
+> I pointed out it has no effect (fixing or improving something) other
+> than adding a memory allocation, but you didn't make a reply to prove
+> otherwise.
+
+I explained the commit cover what it is doing.
+
+>
+> I also pointed out it leaks memory and you asked for a test case[4],
+> but you made this pull request without giving me 24 hours to reply to
+> it.
+
+You keep bringing up theoretical issues. We have passing test cases now
+and we have plenty of time to address any bugs we might discover. But
+holding onto these patches is slowing down other work getting in and I
+don't deem it a risk to merge as is.
+
+>
+> The situation of "[PULL 03/17] tests/tcg: make aarch64 boot.S handle
+> different starting modes" is also similar. I added a comment about
+> symbol naming and you gave a reasoning, but I didn't get time to
+> review it either[5]. Besides, I also had a suggestion to make the code
+> shorter for the past version, but it is also dismissed.
+>
+> I also pointed out "[PULL 11/17] ui/gtk-gl-area: Remove extra draw
+> call in refresh" has an undressed comment[2][7].
+>
+> I would like to see improvements in how comments are addressed before
+> a series is resent.
+
+No - I'm sorry you don't get to veto a pull request because it doesn't
+meet your particular standards.
+
+I'm happy with the other review and level of testing of the patches to
+put it in a pull request. I held off the other well tested patch in the
+series out of an abundance of caution but will keep it in the
+virtio-gpu/next tree and re-post once I've done my next sweep for my
+maintainer trees.
+
+<snip>
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
