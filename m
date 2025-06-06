@@ -4,95 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D403C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5BAC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:53:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNZMY-00024B-J7; Fri, 06 Jun 2025 11:52:10 -0400
+	id 1uNZNX-0002un-92; Fri, 06 Jun 2025 11:53:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uNZMU-00022J-Mc
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:52:08 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uNZNV-0002uf-Ox
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:53:09 -0400
 Received: from smtp-out1.suse.de ([195.135.223.130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uNZMS-0003Do-LX
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:52:06 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uNZNT-0003IR-Uq
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:53:09 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 17A1F211B8;
- Fri,  6 Jun 2025 15:52:02 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id 94A0E21114;
+ Fri,  6 Jun 2025 15:53:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749225122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1749225186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=TnJoEFZfS6KEI5B0ojtrZ6dMHEwolt17H57Oe0CWYzc=;
- b=k8v2GNEIy7/HwhR2D9s3dg7e6Du2jTfdIla11g0BYkSlz6B4PFD60WUsE0on+amGI/kkpw
- N0VjwQc2PxsvhgiGCl7SodDaBXKvZAAEW9/xnsSmSyfEQgZKTIn+KsIctp4yCXRZSCc+9B
- dE/90QkmdGo8wTIVmv0FdUYNyn3hlv8=
+ bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
+ b=k8C3HcloMT4UotIKQVFDrGSPAeVsFdB6vxe/XOTE9pQn/wccQb4OTlPU8Gs3V+X2zJX4nC
+ 0vcF1AzITI8MHtxO6H/qP7W5CmfZwP2Q0gJePZbwT0jmEfB+RvRFR1Awq7kolrxJnwgQku
+ 13XvUMi97W6H5TWHOuckPQVmOvG9aUM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749225122;
+ s=susede2_ed25519; t=1749225186;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=TnJoEFZfS6KEI5B0ojtrZ6dMHEwolt17H57Oe0CWYzc=;
- b=6qtfwcVjj44LnvFca2WovVbYeS06cr5LDafkzUFz/Et179iAZACrkQkHnOuD075iT8arYc
- fkk4fI4dNGGkk5DA==
+ bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
+ b=S60fIn9o5fQsKXoo8l0zGCHtbTOtgo4UKqhU9J0OnGij7MjhsQ7w6HjUEoPeQxjnsGnS9X
+ B4+HrgH4VLA8LYCA==
 Authentication-Results: smtp-out1.suse.de;
-	none
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=k8C3Hclo;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=S60fIn9o
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749225122; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1749225186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=TnJoEFZfS6KEI5B0ojtrZ6dMHEwolt17H57Oe0CWYzc=;
- b=k8v2GNEIy7/HwhR2D9s3dg7e6Du2jTfdIla11g0BYkSlz6B4PFD60WUsE0on+amGI/kkpw
- N0VjwQc2PxsvhgiGCl7SodDaBXKvZAAEW9/xnsSmSyfEQgZKTIn+KsIctp4yCXRZSCc+9B
- dE/90QkmdGo8wTIVmv0FdUYNyn3hlv8=
+ bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
+ b=k8C3HcloMT4UotIKQVFDrGSPAeVsFdB6vxe/XOTE9pQn/wccQb4OTlPU8Gs3V+X2zJX4nC
+ 0vcF1AzITI8MHtxO6H/qP7W5CmfZwP2Q0gJePZbwT0jmEfB+RvRFR1Awq7kolrxJnwgQku
+ 13XvUMi97W6H5TWHOuckPQVmOvG9aUM=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749225122;
+ s=susede2_ed25519; t=1749225186;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=TnJoEFZfS6KEI5B0ojtrZ6dMHEwolt17H57Oe0CWYzc=;
- b=6qtfwcVjj44LnvFca2WovVbYeS06cr5LDafkzUFz/Et179iAZACrkQkHnOuD075iT8arYc
- fkk4fI4dNGGkk5DA==
+ bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
+ b=S60fIn9o5fQsKXoo8l0zGCHtbTOtgo4UKqhU9J0OnGij7MjhsQ7w6HjUEoPeQxjnsGnS9X
+ B4+HrgH4VLA8LYCA==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7EE861336F;
- Fri,  6 Jun 2025 15:52:01 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 152031336F;
+ Fri,  6 Jun 2025 15:53:05 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id FXqOD6EOQ2jmMgAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Jun 2025 15:52:01 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ngAbMuEOQ2g3MwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 06 Jun 2025 15:53:05 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: Peter Xu <peterx@redhat.com>
 Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
  =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 09/21] migration: Extract code to mark all parameters as
- present
-In-Reply-To: <aEMIkKbRsmW_DEMM@x1.local>
+Subject: Re: [PATCH 10/21] migration: Use QAPI_CLONE_MEMBERS in
+ query_migrate_parameters
+In-Reply-To: <aEMJacJqDHLrdkgn@x1.local>
 References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-10-farosas@suse.de> <aEMIkKbRsmW_DEMM@x1.local>
-Date: Fri, 06 Jun 2025 12:51:58 -0300
-Message-ID: <87cybgx3z5.fsf@suse.de>
+ <20250603013810.4772-11-farosas@suse.de> <aEMJacJqDHLrdkgn@x1.local>
+Date: Fri, 06 Jun 2025 12:53:03 -0300
+Message-ID: <87a56kx3xc.fsf@suse.de>
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: 94A0E21114
+X-Rspamd-Action: no action
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
  NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
  NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
+ MISSING_XM_UA(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ TO_DN_SOME(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
  FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
  RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo, suse.de:email,
- suse.de:mid]
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
 Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
  helo=smtp-out1.suse.de
 X-Spam_score_int: -43
@@ -120,97 +130,87 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Peter Xu <peterx@redhat.com> writes:
 
-> On Mon, Jun 02, 2025 at 10:37:58PM -0300, Fabiano Rosas wrote:
->> MigrationParameters needs to have all of its has_* fields marked as
->> true when used as the return of query_migrate_parameters because the
->> corresponding QMP command has all of its members non-optional by
->> design, despite them being marked as optional in migration.json.
+> On Mon, Jun 02, 2025 at 10:37:59PM -0300, Fabiano Rosas wrote:
+>> QAPI_CLONE_MEMBERS is a better option than copying parameters one by
+>> one because it operates on the entire struct and follows pointers. It
+>> also avoids the need to alter this function every time a new parameter
+>> is added.
 >> 
->> Extract this code into a function and make it assert if any field is
->> missing. With this we ensure future changes will not inadvertently
->> leave any parameters missing.
->> 
->> Also assert that s->parameters _does not_ have any of its has_* fields
->> set. This structure is internal to the migration code and it should
->> not rely on the QAPI-generate has_* fields. We might want to store
->> migration parameters differently in the future.
+>> Note, since this is a deep clone, now we must free the TLS strings
+>> before assignment.
 >> 
 >> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 >> ---
->>  migration/options.c | 74 ++++++++++++++++++++++++++++-----------------
->>  1 file changed, 46 insertions(+), 28 deletions(-)
+>>  migration/options.c | 31 ++++---------------------------
+>>  1 file changed, 4 insertions(+), 27 deletions(-)
 >> 
 >> diff --git a/migration/options.c b/migration/options.c
->> index e2e3ab717f..dd62e726cb 100644
+>> index dd62e726cb..0a2a3050ec 100644
 >> --- a/migration/options.c
 >> +++ b/migration/options.c
->> @@ -936,6 +936,40 @@ static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
->>      }
->>  }
+>> @@ -918,7 +918,9 @@ static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
+>>  {
+>>      StrOrNull *dst = *dstp;
 >>  
->> +static void migrate_mark_all_params_present(MigrationParameters *p)
->> +{
->> +    int len, n_str_args = 3; /* tls-creds, tls-hostname, tls-authz */
+>> -    assert(!dst);
+>> +    if (dst) {
+>> +        qapi_free_StrOrNull(dst);
+>> +    }
+>>  
+>>      dst = *dstp = g_new0(StrOrNull, 1);
+>>      dst->type = QTYPE_QSTRING;
+>> @@ -975,42 +977,17 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>>      MigrationParameters *params;
+>>      MigrationState *s = migrate_get_current();
+>>  
+>> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
+>>      params = g_malloc0(sizeof(*params));
+>>  
+>> -    params->throttle_trigger_threshold = s->parameters.throttle_trigger_threshold;
+>> -    params->cpu_throttle_initial = s->parameters.cpu_throttle_initial;
+>> -    params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
+>> -    params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
+>> +    QAPI_CLONE_MEMBERS(MigrationParameters, params, &s->parameters);
+>>  
+>>      tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
+>>      tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
+>>      tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
+>>  
+>> -    params->max_bandwidth = s->parameters.max_bandwidth;
+>> -    params->avail_switchover_bandwidth = s->parameters.avail_switchover_bandwidth;
+>> -    params->downtime_limit = s->parameters.downtime_limit;
+>> -    params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
+>> -    params->multifd_channels = s->parameters.multifd_channels;
+>> -    params->multifd_compression = s->parameters.multifd_compression;
+>> -    params->multifd_zlib_level = s->parameters.multifd_zlib_level;
+>> -    params->multifd_qatzip_level = s->parameters.multifd_qatzip_level;
+>> -    params->multifd_zstd_level = s->parameters.multifd_zstd_level;
+>> -    params->xbzrle_cache_size = s->parameters.xbzrle_cache_size;
+>> -    params->max_postcopy_bandwidth = s->parameters.max_postcopy_bandwidth;
+>> -    params->max_cpu_throttle = s->parameters.max_cpu_throttle;
+>> -    params->announce_initial = s->parameters.announce_initial;
+>> -    params->announce_max = s->parameters.announce_max;
+>> -    params->announce_rounds = s->parameters.announce_rounds;
+>> -    params->announce_step = s->parameters.announce_step;
+>>      params->block_bitmap_mapping =
+>>          QAPI_CLONE(BitmapMigrationNodeAliasList,
+>>                     s->parameters.block_bitmap_mapping);
 >
-> Could you remind me why we don't set has_*=true for these three?
->
-
-I doesn't exist. These are StrOrNull so their presence is supposed to be
-determined by checking against NULL pointer.
-
->> +    bool *has_fields[] = {
->> +        &p->has_throttle_trigger_threshold, &p->has_cpu_throttle_initial,
->> +        &p->has_cpu_throttle_increment, &p->has_cpu_throttle_tailslow,
->> +        &p->has_max_bandwidth, &p->has_avail_switchover_bandwidth,
->> +        &p->has_downtime_limit, &p->has_x_checkpoint_delay,
->> +        &p->has_multifd_channels, &p->has_multifd_compression,
->> +        &p->has_multifd_zlib_level, &p->has_multifd_qatzip_level,
->> +        &p->has_multifd_zstd_level, &p->has_xbzrle_cache_size,
->> +        &p->has_max_postcopy_bandwidth, &p->has_max_cpu_throttle,
->> +        &p->has_announce_initial, &p->has_announce_max, &p->has_announce_rounds,
->> +        &p->has_announce_step, &p->has_block_bitmap_mapping,
->> +        &p->has_x_vcpu_dirty_limit_period, &p->has_vcpu_dirty_limit,
->> +        &p->has_mode, &p->has_zero_page_detection, &p->has_direct_io,
->> +    };
->> +
->> +    /*
->> +     * The has_* fields of MigrationParameters are used by QAPI to
->> +     * inform whether an optional struct member is present. Keep this
->> +     * decoupled from the internal usage (not QAPI) by leaving the
->> +     * has_* fields of s->parameters unused.
->> +     */
->> +    assert(p != &(migrate_get_current())->parameters);
->
-> This is OK, I'm not sure whether we're over-cautious though.. but..
->
-
-Hopefully after this series the code will be encapsulated enough that we
-don't need to think about this, but before this series the situation is
-definitely confusing enough that we need to know which fields are used
-for what.
-
-I don't want to see people passing s->parameters into here thinking it's
-all the same, because it isn't. The has_* fields should be used only for
-QAPI stuff, user input validation, etc, while s->parameters is the thing
-that stores all that after validation and there's not reason to be
-messing with has_* since we know that's just an consequence of the fact
-that we're choosing to use the same QAPI type for user input/output and
-internal storage.
-
-I guess what I'm trying to do is take the pain points where I got
-confused while working on the current code and introduce some hard rules
-to it.
-
->> +
->> +    len = ARRAY_SIZE(has_fields);
->> +    assert(len + n_str_args == MIGRATION_PARAMETER__MAX);
->
-> .. I definitely like this assert.
+> Wouldn't the QAPI_CLONE_MEMBERS() have deep cloned this too?
 >
 
-Yep, we can't at the moment get rid of the enum because HMP needs it, so
-let's put it to good use. I think this is specially useful for new
-contributors, so they don't need to guess what needs to be changed when
-adding a new parameter.
+Hmm, I think it should. But it definitely broke something without this
+line. I'll double check.
 
+>> -    params->x_vcpu_dirty_limit_period = s->parameters.x_vcpu_dirty_limit_period;
+>> -    params->vcpu_dirty_limit = s->parameters.vcpu_dirty_limit;
+>> -    params->mode = s->parameters.mode;
+>> -    params->zero_page_detection = s->parameters.zero_page_detection;
+>> -    params->direct_io = s->parameters.direct_io;
+>>  
+>>      /*
+>>       * query-migrate-parameters expects all members of
+>> -- 
+>> 2.35.3
+>> 
 
