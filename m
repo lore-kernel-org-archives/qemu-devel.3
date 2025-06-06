@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED723C5B555
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 13:34:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA44BC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 13:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNXCV-00036q-CZ; Fri, 06 Jun 2025 09:33:39 -0400
+	id 1uNXE0-0003vf-DR; Fri, 06 Jun 2025 09:35:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uNXCS-00032P-KJ
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:33:36 -0400
+ id 1uNXDt-0003ui-5l
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:35:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uNXCL-00043t-8q
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:33:36 -0400
+ id 1uNXDr-00049m-92
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:35:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749216805;
+ s=mimecast20190719; t=1749216900;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0keCZ9QPpmhiB8UXi8ytnZY3tXCCSEg46DvrrRqB83E=;
- b=i1tdSMAzNlJsGV0uKRqB931K0UkTOip52mU+k8JV3SH4hpTkQ3sXnWxX4lMNIX+naw+1Ba
- karbmjfPnVMJ/tToz9QqzV0XqnhK6s/YFzsYNedQqtWbvcPDMIUog/pp90KAQenISTyPtM
- 83Q+gaLs+ylQ/GLVoAFYQEx2j/ThB5Q=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=mZ74hc4iEj411NfV/46/lfwIMMQ4WTft/lCCfGK9Vo0=;
+ b=fTw0uzQeaGMVwXbBoPrcs950wSFNpLtHzWIj5SzlwHmRUbc2/uolYRo+M+Lo9PJpUitsRM
+ n7u83Xl0nYiaoJJbUKPDl48MdFp3RlhO5SgApQiiOFogzEe8C9OfJG3VN6lEopefuRi3Wv
+ Gdh0/MhcwwIKveq+5FRSTlsSKjH4osM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-252-eeos0e9DNUOV_l8AX0fBWA-1; Fri, 06 Jun 2025 09:33:23 -0400
-X-MC-Unique: eeos0e9DNUOV_l8AX0fBWA-1
-X-Mimecast-MFC-AGG-ID: eeos0e9DNUOV_l8AX0fBWA_1749216802
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451d7de4ae3so13788805e9.2
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 06:33:23 -0700 (PDT)
+ us-mta-186-cg7r87KyMyOJzwV5uPNooQ-1; Fri, 06 Jun 2025 09:34:59 -0400
+X-MC-Unique: cg7r87KyMyOJzwV5uPNooQ-1
+X-Mimecast-MFC-AGG-ID: cg7r87KyMyOJzwV5uPNooQ_1749216898
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a523ce0bb2so1243835f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 06:34:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749216802; x=1749821602;
+ d=1e100.net; s=20230601; t=1749216898; x=1749821698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0keCZ9QPpmhiB8UXi8ytnZY3tXCCSEg46DvrrRqB83E=;
- b=vcFW/Nbg1PwbBvh/bUTxcZIrh4UrtGlZzGGOjmKRU+02AtfDq+z7Ze8c/bvN6gtrh2
- 6jaLPZIrpi4Eg1ZxM7czS1VXNGylfRpWT6SFFG1Mo7M+aTixsvb7clMCpVGU6LG0Zvje
- UL9WY0lBodHAAXiYtgmPN0I0QkkD4YvzREcYyY31BM40JqZ/hcUDNMmSLBBgrUnpmlrs
- q1s6r8Ulmi6071ow5m/o1SBTKVn8+92Wgh4n84yV+OQponfy80trArSqOAf/aTREP5EF
- BkutSwyRQTq1cqdCk6JKugVpDsLM1NAENC+TVkpiK4pfFN4bHtuuVS2Zhr1XFUTGvhYH
- S1EA==
-X-Gm-Message-State: AOJu0Yygs/2SP/7z/Hi9LhOOV2AroSZynaHDjYVhr+qZ/PegNZURzZkN
- C3+g8HZjFbX28tAbh/qBwcuI0jjHQwpwFqH8DgvCZTBRZqyezSD3RSPOrq0dCfXxBwh9189rZov
- yep4KvsbK0MkXHQTHNFX70QU8LTdOuny76Z8EWNQKQWHpg4j2JpSA1tLo
-X-Gm-Gg: ASbGncs2kqKUdeTrc6PENFCxVDTTbZ/ZUpKuMfJ1w5drgAC3kcgVxAAYJQ61efQLl8k
- g+87RSMvi8RLvH7gyc2Yz0mAuHboxNGhPrWH9JQAZM8Ci1UT5j0AbWO2SbaRQmuvgEvsrC58uha
- ERR2Hh8w0yyqu4svZICKMITRpSZZBNKf7LiLApePS/7ePps/jB4GzrnwWEKzD3Q125FqW5DM4ie
- D7Vxqxz7ewl4JhxX7bLMkJkwmHnmGrqcmJOYI3yvZl535AZgwyWes1hDP5HaTfFSYzvQ6oGKY/I
- TmbXoSCf6aTaiCP3TiSg+unW33JJDGHA
-X-Received: by 2002:a05:600c:c163:b0:43c:fd27:a216 with SMTP id
- 5b1f17b1804b1-452fa7ed515mr15929255e9.23.1749216802098; 
- Fri, 06 Jun 2025 06:33:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFjxOX6WigG+14PIXGGAlvOp/hOqUJNdprun6Lc6UkRpgJMNqt013y+hPA/GDAYkEXrgzZaRA==
-X-Received: by 2002:a05:600c:c163:b0:43c:fd27:a216 with SMTP id
- 5b1f17b1804b1-452fa7ed515mr15928945e9.23.1749216801646; 
- Fri, 06 Jun 2025 06:33:21 -0700 (PDT)
+ bh=mZ74hc4iEj411NfV/46/lfwIMMQ4WTft/lCCfGK9Vo0=;
+ b=PofKUO4k8xUXypKvMZaBYdPP6xVzy0cQ/D3CrOS1UIqgwkGKo6MP+aESSgltKX1TW3
+ GzS12XBDz2oyVYDRqB/aGkYQWjIYJuBImGUVerT59SJCJ0yTkQHydBpUG0gktYaJMUwF
+ LePfMEJo+oQFdBAKCvQMsCfojxi1mSvHCVgFCuc7Sq771XFgLdAC0ReJb2D6dVHwErDE
+ oJwrNmbj/avzmczS2Q6kPN9tdcgvejgzA0xeHLKn/M5RPVV1leNldYrGrJ9MUXKT19eO
+ z/gaCowYdkXa9GgNMzUt1bRRJ/oQFdh9Ogg5sQWlu1VR/AfxIIQuwAZxsdZVQyosQ+an
+ 96aQ==
+X-Gm-Message-State: AOJu0YwSBTlt3W6sv3Nk5cSXmNgsCjimr2xGARgRNqUz1+p6PU7Cy5g0
+ AIGEMHlVyeKjfvwRwnzlR9QL3deT/ug8Y7oEgy7ye/qXlsuXr84gVe3XQ1IQYkNFoNsEOIGWmQr
+ Z/vgTyF4oOxv2M5KejOCFq97aDhh0jD+Y+KKCzFaGy8ALmzVrfnya07LE
+X-Gm-Gg: ASbGnctRK3hzw/H+pPElwKu6/0F0OOIKwuE2lSJz32MlbCycT9CqfLP6JzKQrl/abES
+ Xxgi6NF1fw7W99edFBpkspgxAKAU1O9vMt4a01cEIOnN57eLk6akoHT/gujxGQO3msNu3WB4GUS
+ G/+MCkmhSaW+L+06cCycnRUom0c//5S3P3nG7+v2uqt4lbss+CQ1gjlgm0A2tOWMmAco1wIQqCG
+ vr3vRU4XfTj+makizCDqDJKa5oZTVZgxjP6eBpC3c95X3pvD7jtJj5pzedEzIg70iFmwTmLF/8Q
+ jmTGsIfihe1RFadacqd3Vw8iFmyP1xgw
+X-Received: by 2002:a05:6000:18ab:b0:3a3:7baf:f06a with SMTP id
+ ffacd0b85a97d-3a531ce1060mr2698467f8f.37.1749216897820; 
+ Fri, 06 Jun 2025 06:34:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvoC4NGYCkXGuJ3tsDdZySd/58lhnaDHDoozhnfUYtqke6GUp29x88s4mSdDkqM8csOLZrLw==
+X-Received: by 2002:a05:6000:18ab:b0:3a3:7baf:f06a with SMTP id
+ ffacd0b85a97d-3a531ce1060mr2698453f8f.37.1749216897432; 
+ Fri, 06 Jun 2025 06:34:57 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-452730b9beasm21266245e9.22.2025.06.06.06.33.20
+ ffacd0b85a97d-3a53244f0cbsm1875524f8f.81.2025.06.06.06.34.56
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 06:33:21 -0700 (PDT)
-Date: Fri, 6 Jun 2025 15:33:20 +0200
+ Fri, 06 Jun 2025 06:34:57 -0700 (PDT)
+Date: Fri, 6 Jun 2025 15:34:55 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif
@@ -83,12 +83,12 @@ Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif
  Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Thomas
  Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf
  <kwolf@redhat.com>, Yi Liu <yi.l.liu@intel.com>
-Subject: Re: [PATCH 16/18] hw/net/virtio-net: Remove
- VirtIONet::mtu_bypass_backend field
-Message-ID: <20250606153320.0ea64de4@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250501210456.89071-17-philmd@linaro.org>
+Subject: Re: [PATCH 17/18] hw/pci-bridge/gen_pcie_rp: Remove
+ GenPCIERootPort::migrate_msix field
+Message-ID: <20250606153455.53803404@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250501210456.89071-18-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
- <20250501210456.89071-17-philmd@linaro.org>
+ <20250501210456.89071-18-philmd@linaro.org>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
@@ -102,7 +102,7 @@ X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,73 +118,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  1 May 2025 23:04:54 +0200
+On Thu,  1 May 2025 23:04:55 +0200
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> The VirtIONet::mtu_bypass_backend boolean was only set in
-> the hw_compat_2_9[] array, via the 'x-mtu-bypass-backend=3Doff'
-> property. We removed all machines using that array, lets remove
-> that property and all the code around it.
+> The GenPCIERootPort::migrate_msix boolean was only set in
+> the hw_compat_2_9[] array, via the 'x-migrate-msix=3Dfalse'
+> property. We removed all machines using that array, lets
+> remove that property and all the code around it.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
->  include/hw/virtio/virtio-net.h | 1 -
->  hw/net/virtio-net.c            | 8 ++------
->  2 files changed, 2 insertions(+), 7 deletions(-)
+> ---
+>  hw/pci-bridge/gen_pcie_root_port.c | 16 ++--------------
+>  1 file changed, 2 insertions(+), 14 deletions(-)
 >=20
-> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-ne=
-t.h
-> index b9ea9e824e3..353e872f677 100644
-> --- a/include/hw/virtio/virtio-net.h
-> +++ b/include/hw/virtio/virtio-net.h
-> @@ -214,7 +214,6 @@ struct VirtIONet {
->      uint64_t saved_guest_offloads;
->      AnnounceTimer announce_timer;
->      bool needs_vnet_hdr_swap;
-> -    bool mtu_bypass_backend;
->      /* primary failover device is hidden*/
->      bool failover_primary_hidden;
->      bool failover;
-> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-> index 2de037c2736..a8a43ffa242 100644
-> --- a/hw/net/virtio-net.c
-> +++ b/hw/net/virtio-net.c
-> @@ -801,8 +801,7 @@ static uint64_t virtio_net_get_features(VirtIODevice =
-*vdev, uint64_t features,
->      features =3D vhost_net_get_features(get_vhost_net(nc->peer), feature=
-s);
->      vdev->backend_features =3D features;
+> diff --git a/hw/pci-bridge/gen_pcie_root_port.c b/hw/pci-bridge/gen_pcie_=
+root_port.c
+> index d9078e783bf..831d21225e9 100644
+> --- a/hw/pci-bridge/gen_pcie_root_port.c
+> +++ b/hw/pci-bridge/gen_pcie_root_port.c
+> @@ -35,8 +35,6 @@ struct GenPCIERootPort {
+>      PCIESlot parent_obj;
+>      /*< public >*/
 > =20
-> -    if (n->mtu_bypass_backend &&
-> -            (n->host_features & 1ULL << VIRTIO_NET_F_MTU)) {
-> +    if (n->host_features & (1ULL << VIRTIO_NET_F_MTU)) {
->          features |=3D (1ULL << VIRTIO_NET_F_MTU);
+> -    bool migrate_msix;
+> -
+>      /* additional resources to reserve */
+>      PCIResReserve res_reserve;
+>  };
+> @@ -66,13 +64,6 @@ static void gen_rp_interrupts_uninit(PCIDevice *d)
+>      msix_uninit_exclusive_bar(d);
+>  }
+> =20
+> -static bool gen_rp_test_migrate_msix(void *opaque, int version_id)
+> -{
+> -    GenPCIERootPort *rp =3D opaque;
+> -
+> -    return rp->migrate_msix;
+> -}
+> -
+>  static void gen_rp_realize(DeviceState *dev, Error **errp)
+>  {
+>      PCIDevice *d =3D PCI_DEVICE(dev);
+> @@ -121,16 +112,13 @@ static const VMStateDescription vmstate_rp_dev =3D {
+>          VMSTATE_PCI_DEVICE(parent_obj.parent_obj.parent_obj, PCIESlot),
+>          VMSTATE_STRUCT(parent_obj.parent_obj.parent_obj.exp.aer_log,
+>                         PCIESlot, 0, vmstate_pcie_aer_log, PCIEAERLog),
+> -        VMSTATE_MSIX_TEST(parent_obj.parent_obj.parent_obj.parent_obj,
+> -                          GenPCIERootPort,
+> -                          gen_rp_test_migrate_msix),
+> +        VMSTATE_MSIX(parent_obj.parent_obj.parent_obj.parent_obj,
+> +                     GenPCIERootPort),
+>          VMSTATE_END_OF_LIST()
 >      }
+>  };
 > =20
-> @@ -953,8 +952,7 @@ static void virtio_net_set_features(VirtIODevice *vde=
-v, uint64_t features)
->      Error *err =3D NULL;
->      int i;
-> =20
-> -    if (n->mtu_bypass_backend &&
-> -            !virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU=
-)) {
-> +    if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
->          features &=3D ~(1ULL << VIRTIO_NET_F_MTU);
->      }
-> =20
-> @@ -4121,8 +4119,6 @@ static const Property virtio_net_properties[] =3D {
->      DEFINE_PROP_UINT16("tx_queue_size", VirtIONet, net_conf.tx_queue_siz=
-e,
->                         VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE),
->      DEFINE_PROP_UINT16("host_mtu", VirtIONet, net_conf.mtu, 0),
-> -    DEFINE_PROP_BOOL("x-mtu-bypass-backend", VirtIONet, mtu_bypass_backe=
-nd,
-> -                     true),
->      DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
->      DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
->      DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
+>  static const Property gen_rp_props[] =3D {
+> -    DEFINE_PROP_BOOL("x-migrate-msix", GenPCIERootPort,
+> -                     migrate_msix, true),
+>      DEFINE_PROP_UINT32("bus-reserve", GenPCIERootPort,
+>                         res_reserve.bus, -1),
+>      DEFINE_PROP_SIZE("io-reserve", GenPCIERootPort,
 
 
