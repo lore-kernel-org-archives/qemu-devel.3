@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F617C61CE8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB23C5AD49
 	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNU00-0008FN-Ua; Fri, 06 Jun 2025 06:08:32 -0400
+	id 1uNU0w-0000mG-8r; Fri, 06 Jun 2025 06:09:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uNTzy-0008Ew-Oo
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:08:30 -0400
+ id 1uNU0t-0000gr-37
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:27 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uNTzw-0007bB-T2
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:08:30 -0400
+ id 1uNU0r-0007i7-3x
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749204509; x=1780740509;
+ t=1749204565; x=1780740565;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=00ulHnX+eKrjlinzOFfSjfiSc0O3w1RoRaW+r7uKRUY=;
- b=Jy6jrSH62ctn6ciymyjoDyOD7LTAi+xTZ4HIQ724HI8RYV41bt+IqDpz
- OeHpLw/7zW8DYIm7GZcpmQR57bJV8REzRJmuqbOdl5vJ746G+TNRzt9yP
- /rej6Y1fHM9IzP0tD9lQPSiqiCWZ7s2f91jBBGPucz40e+0JFNvFx3rAE
- psQAVPNHNvtNb7BLkSsyAJocpfCyTglxVO4QA48C+dVK7+Bz+DtNfbzlo
- p7qyZpUccc6rCwzVY15kdRyKpo296VFieJdLPB7U56+q/sRbCT4rZhGY6
- P2HVQKJ7odS99mBaO95lqRR0zSYStLZBuMzXHzUlSSMxAlcnC7M04KaY5 g==;
-X-CSE-ConnectionGUID: Nx6zYI8TQO6XDyQ3yi6Jrw==
-X-CSE-MsgGUID: 8VmAJ3ZOQie8Kj30yfGngw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="76747196"
-X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="76747196"
+ bh=MwqvMEQzo4CbL5t0IoG9sS/GIbwM3ObDhtoFzCH2qNA=;
+ b=cruosfrXPtdvILoOJ/mycWnTSArpctbHFygcdz8NezGjgz+2dt3f7hea
+ poJun3FvowC96nCrQfswoER3G/LJ6Gnx7rdtQRMSkCv4lmbDzVscIDPDq
+ nUC25mr+scLRj9836z+HEkUT+5Q9eCxgZdVHkb6CXx7DHWP4Rx/fKRyBE
+ E6GI68s1qtO0A/I/hTIKhXmhdefO2lBRpLcrRbZXUSjlsVAvlIOP85s6y
+ oTr6A3R8odai8rzLUpJVwgnjj8LgPNoeOgC272cKCA/H1ancM58tqPmbn
+ 52Nm+n1rK1S0R5XzYW2KOJPeWxF3fYY8BwSmvJh0jSMWBFM1CIg22HhQ4 w==;
+X-CSE-ConnectionGUID: 6sQlWZebTimOK98cde9Urg==
+X-CSE-MsgGUID: mlOiUBruRomOEdQ2jhE3/A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="76747366"
+X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="76747366"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jun 2025 03:08:26 -0700
-X-CSE-ConnectionGUID: DRatuZK/QU6G5F3jqy93rA==
-X-CSE-MsgGUID: mPp+9POqQRa//LHS3Y691A==
+ 06 Jun 2025 03:09:23 -0700
+X-CSE-ConnectionGUID: TquY0+CNTyeB8LSwrIL34w==
+X-CSE-MsgGUID: T1JwbOBvT/WvuNnghesbmQ==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="146759063"
+X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="146759254"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jun 2025 03:08:22 -0700
+ 06 Jun 2025 03:09:19 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -58,10 +58,10 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v1 03/15] intel_iommu: Check for compatibility with IOMMUFD
- backed device when x-flts=on
-Date: Fri,  6 Jun 2025 18:04:04 +0800
-Message-Id: <20250606100416.346132-4-zhenzhong.duan@intel.com>
+Subject: [PATCH v1 13/15] intel_iommu: Refresh pasid bind when either SRTP or
+ TE bit is changed
+Date: Fri,  6 Jun 2025 18:04:14 +0800
+Message-Id: <20250606100416.346132-14-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250606100416.346132-1-zhenzhong.duan@intel.com>
 References: <20250606100416.346132-1-zhenzhong.duan@intel.com>
@@ -92,79 +92,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When vIOMMU is configured x-flts=on in scalable mode, stage-1 page table
-is passed to host to construct nested page table. We need to check
-compatibility of some critical IOMMU capabilities between vIOMMU and
-host IOMMU to ensure guest stage-1 page table could be used by host.
+From: Yi Liu <yi.l.liu@intel.com>
 
-For instance, vIOMMU supports stage-1 1GB huge page mapping, but host
-does not, then this IOMMUFD backed device should be failed.
+When either 'Set Root Table Pointer' or 'Translation Enable' bit is changed,
+the pasid bindings on host side become stale and need to be updated.
+
+Introduce a helper function vtd_refresh_pasid_bind() for that purpose.
 
 Signed-off-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu_internal.h |  1 +
- hw/i386/intel_iommu.c          | 28 ++++++++++++++++++++++++++++
- 2 files changed, 29 insertions(+)
+ hw/i386/intel_iommu.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index e8b211e8b0..2cda744786 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -191,6 +191,7 @@
- #define VTD_ECAP_PT                 (1ULL << 6)
- #define VTD_ECAP_SC                 (1ULL << 7)
- #define VTD_ECAP_MHMV               (15ULL << 20)
-+#define VTD_ECAP_NEST               (1ULL << 26)
- #define VTD_ECAP_SRS                (1ULL << 31)
- #define VTD_ECAP_PASID              (1ULL << 40)
- #define VTD_ECAP_SMTS               (1ULL << 43)
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index a2f3250724..c42ef83ddc 100644
+index 79e1cda364..ec8b0ff13a 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -39,6 +39,7 @@
- #include "kvm/kvm_i386.h"
- #include "migration/vmstate.h"
- #include "trace.h"
-+#include "system/iommufd.h"
+@@ -89,6 +89,7 @@ struct vtd_iotlb_key {
  
- /* context entry operations */
- #define VTD_CE_GET_RID2PASID(ce) \
-@@ -4361,6 +4362,33 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
-         return true;
-     }
+ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
+ static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
++static void vtd_refresh_pasid_bind(IntelIOMMUState *s);
  
-+#ifdef CONFIG_IOMMUFD
-+    struct HostIOMMUDeviceCaps *caps = &hiod->caps;
-+    struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
-+
-+    /* Remaining checks are all stage-1 translation specific */
-+    if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
-+        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
-+        return false;
-+    }
-+
-+    if (caps->type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
-+        error_setg(errp, "Incompatible host platform IOMMU type %d",
-+                   caps->type);
-+        return false;
-+    }
-+
-+    if (!(vtd->ecap_reg & VTD_ECAP_NEST)) {
-+        error_setg(errp, "Host IOMMU doesn't support nested translation");
-+        return false;
-+    }
-+
-+    if (s->fs1gp && !(vtd->cap_reg & VTD_CAP_FS1GP)) {
-+        error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
-+        return false;
-+    }
-+#endif
-+
-     error_setg(errp, "host device is uncompatible with stage-1 translation");
-     return false;
+ static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
+ static void vtd_pasid_cache_sync(IntelIOMMUState *s,
+@@ -3362,6 +3363,7 @@ static void vtd_handle_gcmd_srtp(IntelIOMMUState *s)
+     vtd_set_clear_mask_long(s, DMAR_GSTS_REG, 0, VTD_GSTS_RTPS);
+     vtd_reset_caches(s);
+     vtd_address_space_refresh_all(s);
++    vtd_refresh_pasid_bind(s);
  }
+ 
+ /* Set Interrupt Remap Table Pointer */
+@@ -3396,6 +3398,7 @@ static void vtd_handle_gcmd_te(IntelIOMMUState *s, bool en)
+ 
+     vtd_reset_caches(s);
+     vtd_address_space_refresh_all(s);
++    vtd_refresh_pasid_bind(s);
+ }
+ 
+ /* Handle Interrupt Remap Enable/Disable */
+@@ -4111,6 +4114,26 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
+     }
+ }
+ 
++static void vtd_refresh_pasid_bind(IntelIOMMUState *s)
++{
++    VTDPASIDCacheInfo pc_info = { .error_happened = false,
++                                  .type = VTD_PASID_CACHE_GLOBAL_INV };
++
++    /*
++     * Only when dmar is enabled, should pasid bindings replayed,
++     * otherwise no need to replay.
++     */
++    if (!s->dmar_enabled) {
++        return;
++    }
++
++    if (!s->flts || !s->root_scalable) {
++        return;
++    }
++
++    vtd_replay_guest_pasid_bindings(s, &pc_info);
++}
++
+ /*
+  * This function syncs the pasid bindings between guest and host.
+  * It includes updating the pasid cache in vIOMMU and updating the
 -- 
 2.34.1
 
