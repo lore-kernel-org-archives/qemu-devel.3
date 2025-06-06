@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39D23C61CE7
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 19:29:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A6D2C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 19:37:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNckV-0005Nv-4m; Fri, 06 Jun 2025 15:29:07 -0400
+	id 1uNcsg-0007NA-SO; Fri, 06 Jun 2025 15:37:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNckT-0005Nf-6L
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 15:29:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNckQ-0005RC-Jo
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 15:29:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749238140;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=b9N7eG2oR301wezo8bMBBYMrnBDxVs7Im563sgr8UQA=;
- b=bYlGDmgCn/PqCEuED2JDwjrpab/gUMO9fUSCI8OpjBIdZIUNVZQGE5A72CLU6Ektd1fYpu
- c04+ulRj6wIDKRV/fWSVGF//4+t+BAVC75AzIa3fpTYkM9yqcSITXhL08pZGcIckXvhl/7
- CMqh3aWO7esLgUkox5kr3M/U7fs4ymU=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-303-OqpW7I_nNcyksJZJSIj8ww-1; Fri, 06 Jun 2025 15:28:57 -0400
-X-MC-Unique: OqpW7I_nNcyksJZJSIj8ww-1
-X-Mimecast-MFC-AGG-ID: OqpW7I_nNcyksJZJSIj8ww_1749238137
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6fae67a352bso35518346d6.1
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 12:28:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749238136; x=1749842936;
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uNcsf-0007Mh-8j
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 15:37:33 -0400
+Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
+ id 1uNcsX-0006Xa-Uu
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 15:37:32 -0400
+Received: by mail-pf1-x430.google.com with SMTP id
+ d2e1a72fcca58-74800b81f1bso2040809b3a.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 12:37:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749238644; x=1749843444; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/Jp+ZmHZi5JCiUXvLUvDXRKSUfFO3Yl8SYrgOARBxt0=;
+ b=daHqQu4ybgguUtwj5VXLHWnEZV2PN9+mqxomJAA5P1NSeFdKeN64WN3b3MvL++V0u0
+ WYvsUNODXXKO4zhdjIFvGQIEg4coBLdomFNuzIi2ROBll67E2t586teLOPKvgle5wr8e
+ MTcgIM1HBEm7Dav/MHaRCmi5Yjd8wgjuY57/R61DDamjczU2BBCEUMtLw6Z88VR3ZluX
+ k9ZaZLjaoCDCSdb+H99fWJXMcLiWsQ3sxkEMS7e99LkpcBfXffI5KBnqGZTL26bdN4Hp
+ g8c+HRQ6ziM1vYfp6dEN5805PMrwqIjazqqrr74ustr32ofRZW9YS1TxiCwWrN8Byl/2
+ y4zg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749238644; x=1749843444;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=b9N7eG2oR301wezo8bMBBYMrnBDxVs7Im563sgr8UQA=;
- b=UrM0WMqaRceOwmp8nACYp3JpmPFO2qeA4RRcKumSFfKLyep5poY5uQ+pmHsTPH864t
- GG2p5Rq63ct7rhzKgasQVDuSEQK7rRAy98SSyGNRPDp4VeSU5jjIGqDBFEQ23Ftl6Thz
- IAtyDeUeZuWTE7maeYQ1B0Dw1HMVYqTAxNqUhg5+f3HGuyLwf00zovCHY3ODtAhW/+FY
- wPI8mTpgIKSM5b5jQJ6ea65uSs9NiGBP+rkjXm1R4a+Qk+rqvOY/1Q2SXDqH6dKeD/0w
- jMA7XPxW7Qh/mbaxKJWx9ONpHepeEPdpTJONc16QvuXpW4g1znVkZOQ76AbB4MonTbpb
- rn0g==
-X-Gm-Message-State: AOJu0Yym9RQzEIpHahiSoXSAcbr1L0MWkaJj9vbErd0qwBVJnwHwoQnO
- 33TFALOPBwHslC0NvTKvvbxXnwWlkqYdvNPgg99vOZtWN2s8KUl3inDuFOP/2LcrAiO7Io2K+s/
- 4E1diGnjquCBeuhwZxNNBwBfeJRFM75FPKoW1PDqkhqCaxnzgOByUdS8z
-X-Gm-Gg: ASbGncvtF3QZiVdy54FBzxY+bCFZ/WzR2/h6ZbIF0LQ1ERF1kABOyF7E603tOYp1C1Q
- gGq3mEj2YUVdEVR0uzzq6kediVeUrdhD7tXHaZ8vFXbp11FqxOtpKYNPUxqsykA3jybrIAZXGEt
- mmp6nnI+JM0wMQCnADSw5PKkS4lwSDFCKklx4mpeEOuxHOfTGzgjjArA8NtpTkA+r6+HQAbtxVH
- fDtnW7tC6D+EmiUp53GPed0yeCCBAcaBZbtlqBxhKRVRj7sS2RI6oZKw3xG1deve8pyBOVhhPLd
- mx6Zj8YUh6IzNQ==
-X-Received: by 2002:ad4:5ba4:0:b0:6fa:cd35:3da6 with SMTP id
- 6a1803df08f44-6fb08f8e578mr67642486d6.41.1749238136574; 
- Fri, 06 Jun 2025 12:28:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFWurApIhbygeFeHtZi9u2iROd+ld5CzllefEPFY1pj9S5m5pCG69ebgZFDkl+gRdkEjtx9mA==
-X-Received: by 2002:ad4:5ba4:0:b0:6fa:cd35:3da6 with SMTP id
- 6a1803df08f44-6fb08f8e578mr67642246d6.41.1749238136181; 
- Fri, 06 Jun 2025 12:28:56 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fb09b1d1d0sm15855786d6.77.2025.06.06.12.28.55
+ bh=/Jp+ZmHZi5JCiUXvLUvDXRKSUfFO3Yl8SYrgOARBxt0=;
+ b=aJOBHMZzm+09CYg0SPC0x3Ic/oDEZ7H58303XeRNY0V3dsPKdMRwUNWifc/X9a4Pq4
+ ldhx4VkM+xYBf2IKUInEUczern3bjAx/eH80ztPTy2xwOir/1Y/IwJvCUf7xBHuN1ZrY
+ 9s3+5CmnVzEbmP83WY9WuaoQteZ1vSWBuFAwcfgTQ2LqNqSis8xoF90//kAoO/CIxJch
+ aSZUXF8RkFGqPRpQwQVORcZBeJHDjXnhOzc0RQ6jCns6qyEAjMVn23TmebX1YkhAb9Xe
+ v81eVEMEgb/N7GYY1Ra+58qDxaAdxW2cE9lwoHDocy/WydwChHCoB4XJOctA61whxg/w
+ CaGg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXynA8maWnKJhQAg6ab/hQ37juGW/y1NmyO/sYexbg7z0EIcsVgxMlOEibpjC4YF77qn3w+lUXCMjdg@nongnu.org
+X-Gm-Message-State: AOJu0YysogXYAxLbE8KdkBac52La81sfoWmcKDRHIgX+h3dYozwiA9J0
+ 0NFs/psmVD+OYT4dgGY5BOUHpN1obVv4RHMChvzt2KcZq3YgANVBabXP
+X-Gm-Gg: ASbGncuuuJ9WRLuCCi3SSA9Mk5hDS2/HHMZDR9P1L5hL5B38eGPilTOjd40nPaakxjC
+ 139oAmjSS3Nhh3ub8O0ZQz67ABgG4JB8ALdfuBItrRJoDQWa7igzHJ/VY27oqD8lgWwHAk3DSXf
+ 2ySU5Bl/Pab1qLA0OkFO3Q944qrts7axSj3ykicJmjX0+kVrvWkeSm/5n0gurBHdUtv76Yaq1ok
+ HTdQ1IXMjQV2HPhVSR+732IGwhlQTW3Mw9j22aln2KFkcHVYvB1l4yDwXCl2odwJvra1XGYf5Vu
+ vlZpzHDQCS76ZDJbW9lMPVBao7lXWw8ZOoUaOLAslRUZcUyeCye3U3Zts0quT9Jy7qqtwU/8PbC
+ o6y06Q2LkCx+v
+X-Google-Smtp-Source: AGHT+IGGrpMX4eZ8myDehK2P4WTu+9wq9+Cnj/ct+GvCo4Qd6LZ+zhGTokm9xiJA51HFXf0P4wZt+A==
+X-Received: by 2002:a05:6a00:488b:b0:748:2eb7:8cc7 with SMTP id
+ d2e1a72fcca58-7482eb793b6mr3073279b3a.21.1749238639431; 
+ Fri, 06 Jun 2025 12:37:19 -0700 (PDT)
+Received: from deb-101020-bm01.eng.stellus.in ([149.97.161.244])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7482b083abcsm1695664b3a.92.2025.06.06.12.37.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 12:28:55 -0700 (PDT)
-Date: Fri, 6 Jun 2025 15:28:53 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
- migration config
-Message-ID: <aENBda_y3v3y4ptS@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-20-farosas@suse.de>
+ Fri, 06 Jun 2025 12:37:19 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Fri, 6 Jun 2025 19:37:17 +0000
+To: Fan Ni <nifan.cxl@gmail.com>
+Cc: anisa.su887@gmail.com, qemu-devel@nongnu.org,
+ Jonathan.Cameron@huawei.com, dave@stgolabs.net, linux-cxl@vger.kernel.org
+Subject: Re: [QEMU PATCH v3 9/9] cxl-mailbox-utils: 0x5605 - FMAPI Initiate
+ DC Release
+Message-ID: <aENDbaFuj4df46eA@deb-101020-bm01.eng.stellus.in>
+References: <20250605234227.970187-1-anisa.su887@gmail.com>
+ <20250605234227.970187-10-anisa.su887@gmail.com>
+ <aEM25yCeErixfi0l@debian> <aEM4AXOJLMq7nqZp@debian>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20250603013810.4772-20-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <aEM4AXOJLMq7nqZp@debian>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x430.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,283 +105,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 02, 2025 at 10:38:08PM -0300, Fabiano Rosas wrote:
-> Allow the migrate and migrate_incoming commands to pass the migration
-> configuration options all at once, dispensing the use of
-> migrate-set-parameters and migrate-set-capabilities.
+On Fri, Jun 06, 2025 at 11:48:33AM -0700, Fan Ni wrote:
+> On Fri, Jun 06, 2025 at 11:43:51AM -0700, Fan Ni wrote:
+> > On Thu, Jun 05, 2025 at 11:42:23PM +0000, anisa.su887@gmail.com wrote:
+> > > From: Anisa Su <anisa.su@samsung.com>
+> > > 
+> > > FM DCD Managment command 0x5605 implemented per CXL r3.2 Spec Section 7.6.7.6.6
+> > > 
+> > > Signed-off-by: Anisa Su <anisa.su@samsung.com>
+> > 
+> > See below ..
+> > 
+> > > ---
+> > >  hw/cxl/cxl-mailbox-utils.c | 62 ++++++++++++++++++++++++++++++++++++++
+> > >  1 file changed, 62 insertions(+)
+> > > 
+> > > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > > index 7ee5be00bc..6c57e0deac 100644
+> > > --- a/hw/cxl/cxl-mailbox-utils.c
+> > > +++ b/hw/cxl/cxl-mailbox-utils.c
+> > > @@ -124,6 +124,7 @@ enum {
+> > >          #define SET_DC_REGION_CONFIG        0x2
+> > >          #define GET_DC_REGION_EXTENT_LIST   0x3
+> > >          #define INITIATE_DC_ADD             0x4
+> > > +        #define INITIATE_DC_RELEASE         0x5
+> > >  };
+> > >  
+> > >  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> > > @@ -3685,6 +3686,60 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
+> > >      return CXL_MBOX_SUCCESS;
+> > >  }
+> > >  
+> > > +#define CXL_EXTENT_REMOVAL_POLICY_MASK 0x7
+> > > +/* CXL r3.2 Section 7.6.7.6.6 Initiate Dynamic Capacity Release (Opcode 5605h) */
+> > > +static CXLRetCode cmd_fm_initiate_dc_release(const struct cxl_cmd *cmd,
+> > > +                                             uint8_t *payload_in,
+> > > +                                             size_t len_in,
+> > > +                                             uint8_t *payload_out,
+> > > +                                             size_t *len_out,
+> > > +                                             CXLCCI *cci)
+> > > +{
+> > > +    struct {
+> > > +        uint16_t host_id;
+> > > +        uint8_t flags;
+> > > +        uint8_t reg_num;
+> > > +        uint64_t length;
+> > > +        uint8_t tag[0x10];
+> > > +        uint32_t ext_count;
+> > > +        CXLDCExtentRaw extents[];
+> > > +    } QEMU_PACKED *in = (void *)payload_in;
+> > > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> > > +    CXLUpdateDCExtentListInPl *list;
+> > > +    CXLDCExtentList updated_list;
+> > > +    uint32_t updated_list_size;
+> > > +    int rc;
+> > > +
+> > > +    switch (in->flags & CXL_EXTENT_REMOVAL_POLICY_MASK) {
+> > > +    case CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE:
+> > > +        list = calloc(1, (sizeof(*list) +
+> > > +                          in->ext_count * sizeof(*list->updated_entries)));
+> > 
+> > Use g_malloc() and free with g_free();
+> > 
+> > > +        convert_raw_extents(in->extents, list, in->ext_count);
+> > > +        rc = cxl_detect_malformed_extent_list(ct3d, list);
+> > > +        if (rc) {
+> > > +            return rc;
+> > > +        }
+> > > +        rc = cxl_dc_extent_release_dry_run(ct3d,
+> > > +                                           list,
+> > > +                                           &updated_list,
+> > > +                                           &updated_list_size);
+> > 
+> > This seems not right.
+> > this is only fm issue dc release request, not host release dc extents to device.
+> > So we should follow what we did in the qmp_cxl_process_dynamic_capacity_prescriptive()
+> > for release case.
+> > 
+> > One thing that I can see that making the workflow is different is that, we check
+> > the extent list with the pending list to make sure fm is not trying to remove
+> > non-accepted extents, but the host release extent workflow does not need to do
+> > that as it is filtered out in the first place when fm sends the request if it is
+> > from FM.
+> > I have to admit, existing qmp interface can be improved to remove some condition
+> > checks as they are kind of duplicate.
+> > For example, if an extent is still pending, it will not be set in the bitmap, so
+> > we can still tigger the error if it happens by removing the pending list check.
+> > One justification is that the error message is different for a non-existing
+> > extent and a pending extent, which is useful for a dmp interface.
+> > 
+> > 
+> > Also, the case to detect exhausted resouces is not different, FM can request to
 > 
-> The motivation of this is to simplify the interface with the
-> management layer and avoid the usage of several command invocations to
-> configure a migration. It also avoids stale parameters from a previous
-> migration to influence the current migration.
+> s/is not different/is different/
+> I am not sure what I was thinking..
 > 
-> The options that are changed during the migration can still be set
-> with the existing commands.
-> 
-> The order of precedence is:
-> 
-> 'config' argument > -global cmdline > defaults (migration_properties)
+> Fan
+I'm confused though because in the 3.2 spec it says "The command shall fail with
+Resources Exhausted if the Extent List would cause the device to exceed its
+extent or tag tracking ability" (Section 7.6.7.6.6).
 
-Could we still keep the QMP migrate-set-parameters values?
+The only way that releasing an extent can cause the number of extents to
+increase is if the middle section of an existing extent is released,
+which is why I used cxl_dc_extent_release_dry_run(), since it already
+detects that case.
 
-  'config' argument > QMP setups using migrate-set-parameters >
-    -global cmdline > defaults (migration_properties)
-
-I asked this before, maybe I forgot the answer..
-
-> 
-> I.e. the config takes precedence over all, values not present in the
-> config assume the default values. The (debug) -global command line
-> option allows the defaults to be overridden.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/migration-hmp-cmds.c |  5 +++--
->  migration/migration.c          | 29 ++++++++++++++++++++++++++---
->  migration/migration.h          |  1 +
->  migration/options.c            | 30 ++++++++++++++++++++++++++++++
->  migration/options.h            |  3 +++
->  qapi/migration.json            | 25 +++++++++++++++++++++++--
->  system/vl.c                    |  3 ++-
->  7 files changed, 88 insertions(+), 8 deletions(-)
-> 
-> diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index a8c3515e9d..38b289e8d8 100644
-> --- a/migration/migration-hmp-cmds.c
-> +++ b/migration/migration-hmp-cmds.c
-> @@ -575,7 +575,7 @@ void hmp_migrate_incoming(Monitor *mon, const QDict *qdict)
->      }
->      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
->  
-> -    qmp_migrate_incoming(NULL, true, caps, true, false, &err);
-> +    qmp_migrate_incoming(NULL, true, caps, NULL, true, false, &err);
->      qapi_free_MigrationChannelList(caps);
->  
->  end:
-> @@ -952,7 +952,8 @@ void hmp_migrate(Monitor *mon, const QDict *qdict)
->      }
->      QAPI_LIST_PREPEND(caps, g_steal_pointer(&channel));
->  
-> -    qmp_migrate(NULL, true, caps, false, false, true, resume, &err);
-> +    qmp_migrate(NULL, true, caps, NULL, false, false, true, resume,
-> +                &err);
->      if (hmp_handle_error(mon, err)) {
->          return;
->      }
-> diff --git a/migration/migration.c b/migration/migration.c
-> index 75c4ec9a95..7b450b8836 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -335,6 +335,7 @@ void migration_object_init(void)
->      current_incoming->exit_on_error = INMIGRATE_DEFAULT_EXIT_ON_ERROR;
->  
->      migration_object_check(current_migration, &error_fatal);
-> +    migrate_params_store_defaults(current_migration);
->  
->      ram_mig_init();
->      dirty_bitmap_mig_init();
-> @@ -1916,13 +1917,24 @@ void migrate_del_blocker(Error **reasonp)
->  
->  void qmp_migrate_incoming(const char *uri, bool has_channels,
->                            MigrationChannelList *channels,
-> -                          bool has_exit_on_error, bool exit_on_error,
-> -                          Error **errp)
-> +                          MigrationParameters *config, bool has_exit_on_error,
-> +                          bool exit_on_error, Error **errp)
->  {
->      Error *local_err = NULL;
->      static bool once = true;
-> +    MigrationState *s = migrate_get_current();
->      MigrationIncomingState *mis = migration_incoming_get_current();
->  
-> +    if (config) {
-> +        /*
-> +         * If a config was provided, all options set previously get
-> +         * ignored.
-> +         */
-> +        if (!migrate_params_override(s, config, errp)) {
-> +            return;
-> +        }
-> +    }
-> +
->      if (!once) {
->          error_setg(errp, "The incoming migration has already been started");
->          return;
-> @@ -2182,7 +2194,8 @@ static gboolean qmp_migrate_finish_cb(QIOChannel *channel,
->  }
->  
->  void qmp_migrate(const char *uri, bool has_channels,
-> -                 MigrationChannelList *channels, bool has_detach, bool detach,
-> +                 MigrationChannelList *channels,
-> +                 bool has_detach, bool detach, MigrationParameters *config,
->                   bool has_resume, bool resume, Error **errp)
->  {
->      bool resume_requested;
-> @@ -2193,6 +2206,16 @@ void qmp_migrate(const char *uri, bool has_channels,
->      MigrationChannel *channelv[MIGRATION_CHANNEL_TYPE__MAX] = { NULL };
->      MigrationChannel *cpr_channel = NULL;
->  
-> +    if (config) {
-> +        /*
-> +         * If a config was provided, all options set previously get
-> +         * ignored.
-> +         */
-> +        if (!migrate_params_override(s, config, errp)) {
-> +            return;
-> +        }
-> +    }
-> +
->      /*
->       * Having preliminary checks for uri and channel
->       */
-> diff --git a/migration/migration.h b/migration/migration.h
-> index 993d51aedd..49761f4699 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -319,6 +319,7 @@ struct MigrationState {
->  
->      /* params from 'migrate-set-parameters' */
->      MigrationParameters parameters;
-> +    MigrationParameters defaults;
-
-This is also prone to be a pointer; I still think embeded qapi objects are
-too error prone.  Since it's new, make it a pointer from start?
-
->  
->      MigrationStatus state;
->  
-> diff --git a/migration/options.c b/migration/options.c
-> index fa3f7035c8..dd2288187d 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -1333,6 +1333,36 @@ static void migrate_params_apply(MigrationParameters *params)
->                                             params->block_bitmap_mapping);
->  }
->  
-> +void migrate_params_store_defaults(MigrationState *s)
-> +{
-> +    /*
-> +     * The defaults set for each qdev property in migration_properties
-> +     * will be stored as the default values for each migration
-> +     * parameter. For debugging, using -global can override the
-> +     * defaults.
-> +     */
-> +    QAPI_CLONE_MEMBERS(MigrationParameters, &s->defaults, &s->parameters);
-> +}
-> +
-> +bool migrate_params_override(MigrationState *s, MigrationParameters *new,
-> +                             Error **errp)
-> +{
-> +    ERRP_GUARD();
-> +
-> +    assert(bql_locked());
-> +
-> +    /* reset to default parameters */
-> +    migrate_params_apply(&s->defaults);
-> +
-> +    /* overwrite with the new ones */
-> +    qmp_migrate_set_parameters(new, errp);
-> +    if (*errp) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
->  {
->      MigrationParameters *tmp = g_new0(MigrationParameters, 1);
-> diff --git a/migration/options.h b/migration/options.h
-> index fcfd120cd7..3630c2a0dd 100644
-> --- a/migration/options.h
-> +++ b/migration/options.h
-> @@ -83,4 +83,7 @@ void migrate_capability_set_compat(MigrationParameters *params, int i,
->  void migrate_capabilities_set_compat(MigrationParameters *params,
->                                       MigrationCapabilityStatusList *caps);
->  bool migrate_caps_check(MigrationParameters *new, Error **errp);
-> +void migrate_params_store_defaults(MigrationState *s);
-> +bool migrate_params_override(MigrationState *s, MigrationParameters *new,
-> +                             Error **errp);
->  #endif
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 7282e4b9eb..64a92d8d28 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -1474,9 +1474,16 @@
->  #
->  # @resume: resume one paused migration, default "off".  (since 3.0)
->  #
-> +# @config: migration configuration options, previously set via
-> +#     @migrate-set-parameters and @migrate-set-capabilities.  (since
-> +#     10.1)
-> +#
->  # Features:
->  #
->  # @deprecated: Argument @detach is deprecated.
-> +# @config: Indicates this command can receive the entire migration
-> +# configuration via the @config field, dispensing the use of
-> +# @migrate-set-parameters.
->  #
->  # Since: 0.14
->  #
-> @@ -1538,7 +1545,9 @@
->    'data': {'*uri': 'str',
->             '*channels': [ 'MigrationChannel' ],
->             '*detach': { 'type': 'bool', 'features': [ 'deprecated' ] },
-> -           '*resume': 'bool' } }
-> +           '*config': 'MigrationParameters',
-> +           '*resume': 'bool' },
-> +  'features': [ 'config' ] }
->  
->  ##
->  # @migrate-incoming:
-> @@ -1557,6 +1566,16 @@
->  #     error details could be retrieved with query-migrate.
->  #     (since 9.1)
->  #
-> +# @config: migration configuration options, previously set via
-> +#     @migrate-set-parameters and @migrate-set-capabilities.  (since
-> +#     10.1)
-> +#
-> +# Features:
-> +#
-> +# @config: Indicates this command can receive the entire migration
-> +# configuration via the @config field, dispensing the use of
-> +# @migrate-set-parameters.
-> +#
->  # Since: 2.3
->  #
->  # .. admonition:: Notes
-> @@ -1610,7 +1629,9 @@
->  { 'command': 'migrate-incoming',
->               'data': {'*uri': 'str',
->                        '*channels': [ 'MigrationChannel' ],
-> -                      '*exit-on-error': 'bool' } }
-> +                      '*config': 'MigrationParameters',
-> +                      '*exit-on-error': 'bool' },
-> +             'features': [ 'config' ] }
->  
->  ##
->  # @xen-save-devices-state:
-> diff --git a/system/vl.c b/system/vl.c
-> index 3b7057e6c6..b29fd24d08 100644
-> --- a/system/vl.c
-> +++ b/system/vl.c
-> @@ -2823,7 +2823,8 @@ void qmp_x_exit_preconfig(Error **errp)
->                  g_new0(MigrationChannelList, 1);
->  
->              channels->value = incoming_channels[MIGRATION_CHANNEL_TYPE_MAIN];
-> -            qmp_migrate_incoming(NULL, true, channels, true, true, &local_err);
-> +            qmp_migrate_incoming(NULL, true, channels, NULL, true, true,
-> +                                 &local_err);
->              if (local_err) {
->                  error_reportf_err(local_err, "-incoming %s: ", incoming);
->                  exit(1);
-> -- 
-> 2.35.3
-> 
-
--- 
-Peter Xu
-
+Anisa
+> > release a lot of extents, but what the host actually does can be a
+> > subset or
+> > none.
+> > 
+> > Fan
+> > 
+> > > +        if (rc) {
+> > > +            return rc;
+> > > +        }
+> > > +        cxl_mbox_create_dc_event_records_for_extents(ct3d,
+> > > +                                                     DC_EVENT_RELEASE_CAPACITY,
+> > > +                                                     in->extents,
+> > > +                                                     in->ext_count);
+> > > +        return CXL_MBOX_SUCCESS;
+> > > +    default:
+> > > +        qemu_log_mask(LOG_UNIMP,
+> > > +            "CXL extent selection policy not supported.\n");
+> > > +        return CXL_MBOX_INVALID_INPUT;
+> > > +    }
+> > > +
+> > > +    return CXL_MBOX_SUCCESS;
+> > > +}
+> > > +
+> > >  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+> > >      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+> > >          cmd_infostat_bg_op_abort, 0, 0 },
+> > > @@ -3819,6 +3874,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+> > >          CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+> > >          CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+> > >          CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+> > > +    [FMAPI_DCD_MGMT][INITIATE_DC_RELEASE] = { "INIT_DC_RELEASE",
+> > > +        cmd_fm_initiate_dc_release, ~0,
+> > > +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
+> > > +         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
+> > > +         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+> > > +         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+> > > +         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+> > >  };
+> > >  
+> > >  /*
+> > > -- 
+> > > 2.47.2
+> > > 
 
