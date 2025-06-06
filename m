@@ -4,80 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B52D7C5B559
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:11:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EEACC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:15:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNU0n-0000U4-8t; Fri, 06 Jun 2025 06:09:21 -0400
+	id 1uNU61-0001Z0-9b; Fri, 06 Jun 2025 06:14:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uNU0k-0000QR-Ix
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:18 -0400
-Received: from mgamail.intel.com ([192.198.163.7])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uNU5x-0001Xt-KG
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:14:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uNU0e-0007c5-OE
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749204553; x=1780740553;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=DI58VuIQqxrYvarl8DuQleqUhqpMUprKQCWrJbzMfio=;
- b=M287VRwRBijDo04+OlpzvFHugQrkW4aUJD7EKkjTs/4lV3PGfXWMgxvp
- /cOE2x9t2qm4ufofSgPlc4Kjtj4GMf7i5qaTno9zU03ij6p4hsDt7T202
- gOplC/hP1SmIedI8ko0xMEVBV2G7aSqI4Hp1QDJM1W8S+XiMA9w+Jji44
- mw/E5UTluqgxoNSzGkKgn1mnRjL5xFzE/h35UZkFI//8SVM88JmhVDwSZ
- yKFoZrx6fgHeL6MJG6P+bEbarFFaVUkAtYzoCcn7AnLKSRoXiGWaLZY3o
- nSUStHweSK0W8diHW9yogNvHYKpUFser48FcVVpgc04hLeiUydRWLybGl A==;
-X-CSE-ConnectionGUID: u3En/imuS4+StmDViT7llw==
-X-CSE-MsgGUID: GtR3HeK6TYa3mEFBOOgT4g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="76747339"
-X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="76747339"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jun 2025 03:09:12 -0700
-X-CSE-ConnectionGUID: he7PI6gUTqeW8o23ou8t5Q==
-X-CSE-MsgGUID: +JnliCuuQX+GuCUoD5ioig==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="146759208"
-Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jun 2025 03:09:07 -0700
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
-To: qemu-devel@nongnu.org
-Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
- mst@redhat.com, jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com,
- jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
- joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
- kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Yi Sun <yi.y.sun@linux.intel.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v1 11/15] intel_iommu: Replay pasid binds after context cache
- invalidation
-Date: Fri,  6 Jun 2025 18:04:12 +0800
-Message-Id: <20250606100416.346132-12-zhenzhong.duan@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20250606100416.346132-1-zhenzhong.duan@intel.com>
-References: <20250606100416.346132-1-zhenzhong.duan@intel.com>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uNU5v-0000F8-0S
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:14:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749204876;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=BCbIyiqEhxKCXJZHwh71NMDxqKoyGU9R+wWtHoALYqo=;
+ b=JEida8XWdQG38ai/8gkFo9uDmlzVvuU253SKNOJi0cl66Pwb9kHoHbZA1TQwP4k2KvTJcq
+ KivtMHDirJBdp9EXu6p3qFyDf12VIxg8xKovLI3aI/xmkjcHm76BnaZ1DqaHd89XDxFW9Q
+ FT0DjG8P9vtZUISIlVS4z9MGigeZYl8=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-AZZvhBU2MA-PzB3gBHZIKg-1; Fri,
+ 06 Jun 2025 06:14:33 -0400
+X-MC-Unique: AZZvhBU2MA-PzB3gBHZIKg-1
+X-Mimecast-MFC-AGG-ID: AZZvhBU2MA-PzB3gBHZIKg_1749204871
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D206218002BD; Fri,  6 Jun 2025 10:14:31 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79976195E74A; Fri,  6 Jun 2025 10:14:26 +0000 (UTC)
+Date: Fri, 6 Jun 2025 11:14:23 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Zhuoying Cai <zycai@linux.ibm.com>
+Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
+ pbonzini@redhat.com, walling@linux.ibm.com, jjherne@linux.ibm.com,
+ jrossi@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, armbru@redhat.com, qemu-s390x@nongnu.org,
+ qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
+ certificate store
+Message-ID: <aEK_f57-kymX4_Iu@redhat.com>
+References: <20250604215657.528142-1-zycai@linux.ibm.com>
+ <20250604215657.528142-3-zycai@linux.ibm.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.7;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -44
-X-Spam_score: -4.5
-X-Spam_bar: ----
-X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250604215657.528142-3-zycai@linux.ibm.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,161 +88,126 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yi Liu <yi.l.liu@intel.com>
+On Wed, Jun 04, 2025 at 05:56:30PM -0400, Zhuoying Cai wrote:
+> Add helper functions for x509 certificate which will be used in the next
+> patch for the certificate store.
+> 
+> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+> ---
+>  crypto/meson.build          |   5 +-
+>  crypto/x509-utils.c         | 166 ++++++++++++++++++++++++++++++++++++
+>  include/crypto/x509-utils.h |  54 ++++++++++++
+>  qapi/crypto.json            |  80 +++++++++++++++++
+>  4 files changed, 301 insertions(+), 4 deletions(-)
 
-This replays guest pasid attachments after context cache invalidation.
-This is a behavior to ensure safety. Actually, programmer should issue
-pasid cache invalidation with proper granularity after issuing a context
-cache invalidation.
 
-Signed-off-by: Yi Liu <yi.l.liu@intel.com>
-Signed-off-by: Yi Sun <yi.y.sun@linux.intel.com>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- hw/i386/intel_iommu_internal.h |  1 +
- hw/i386/intel_iommu.c          | 51 ++++++++++++++++++++++++++++++++--
- hw/i386/trace-events           |  1 +
- 3 files changed, 51 insertions(+), 2 deletions(-)
+> +int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
+> +                                QCryptoCertFmt fmt, Error **errp)
+> +{
+> +    int rc;
+> +    int ret = -1;
+> +    gnutls_x509_crt_t crt;
+> +    gnutls_datum_t datum = {.data = cert, .size = size};
+> +
+> +    if (fmt >= G_N_ELEMENTS(qcrypto_to_gnutls_cert_fmt_map)) {
+> +        error_setg(errp, "Unknown certificate format");
+> +        return ret;
+> +    }
+> +
+> +    if (gnutls_x509_crt_init(&crt) < 0) {
+> +        error_setg(errp, "Failed to initialize certificate");
+> +        return ret;
+> +    }
+> +
+> +    rc = gnutls_x509_crt_import(crt, &datum, qcrypto_to_gnutls_cert_fmt_map[fmt]);
+> +    if (rc == GNUTLS_E_ASN1_TAG_ERROR) {
+> +        goto cleanup;
+> +    }
+> +
+> +    ret = 0;
+> +
+> +cleanup:
+> +    gnutls_x509_crt_deinit(crt);
+> +    return ret;
+> +}
 
-diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
-index 75d840f9fe..198726b48f 100644
---- a/hw/i386/intel_iommu_internal.h
-+++ b/hw/i386/intel_iommu_internal.h
-@@ -575,6 +575,7 @@ typedef enum VTDPCInvType {
-     VTD_PASID_CACHE_FORCE_RESET = 0,
-     /* pasid cache invalidation rely on guest PASID entry */
-     VTD_PASID_CACHE_GLOBAL_INV, /* pasid cache global invalidation */
-+    VTD_PASID_CACHE_DEVSI,      /* pasid cache device selective invalidation */
-     VTD_PASID_CACHE_DOMSI,      /* pasid cache domain selective invalidation */
-     VTD_PASID_CACHE_PASIDSI,    /* pasid cache pasid selective invalidation */
- } VTDPCInvType;
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index b8c0d0dd2e..275b8bafef 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -91,6 +91,10 @@ static void vtd_address_space_refresh_all(IntelIOMMUState *s);
- static void vtd_address_space_unmap(VTDAddressSpace *as, IOMMUNotifier *n);
- 
- static void vtd_pasid_cache_reset_locked(IntelIOMMUState *s);
-+static void vtd_pasid_cache_sync(IntelIOMMUState *s,
-+                                 VTDPASIDCacheInfo *pc_info);
-+static void vtd_pasid_cache_devsi(IntelIOMMUState *s,
-+                                  PCIBus *bus, uint16_t devfn);
- 
- static void vtd_panic_require_caching_mode(void)
- {
-@@ -2417,6 +2421,8 @@ static void vtd_iommu_replay_all(IntelIOMMUState *s)
- 
- static void vtd_context_global_invalidate(IntelIOMMUState *s)
- {
-+    VTDPASIDCacheInfo pc_info = { .error_happened = false, };
-+
-     trace_vtd_inv_desc_cc_global();
-     /* Protects context cache */
-     vtd_iommu_lock(s);
-@@ -2434,6 +2440,9 @@ static void vtd_context_global_invalidate(IntelIOMMUState *s)
-      * VT-d emulation codes.
-      */
-     vtd_iommu_replay_all(s);
-+
-+    pc_info.type = VTD_PASID_CACHE_GLOBAL_INV;
-+    vtd_pasid_cache_sync(s, &pc_info);
- }
- 
- #ifdef CONFIG_IOMMUFD
-@@ -2989,6 +2998,21 @@ static void vtd_context_device_invalidate(IntelIOMMUState *s,
-              * happened.
-              */
-             vtd_address_space_sync(vtd_as);
-+            /*
-+             * Per spec, context flush should also followed with PASID
-+             * cache and iotlb flush. Regards to a device selective
-+             * context cache invalidation:
-+             * if (emaulted_device)
-+             *    invalidate pasid cache and pasid-based iotlb
-+             * else if (assigned_device)
-+             *    check if the device has been bound to any pasid
-+             *    invoke pasid_unbind regards to each bound pasid
-+             * Here, we have vtd_pasid_cache_devsi() to invalidate pasid
-+             * caches, while for piotlb in QEMU, we don't have it yet, so
-+             * no handling. For assigned device, host iommu driver would
-+             * flush piotlb when a pasid unbind is pass down to it.
-+             */
-+             vtd_pasid_cache_devsi(s, vtd_as->bus, devfn);
-         }
-     }
- }
-@@ -3737,6 +3761,11 @@ static gboolean vtd_flush_pasid(gpointer key, gpointer value,
-         /* Fall through */
-     case VTD_PASID_CACHE_GLOBAL_INV:
-         break;
-+    case VTD_PASID_CACHE_DEVSI:
-+        if (pc_info->bus != vtd_as->bus || pc_info->devfn != vtd_as->devfn) {
-+            return false;
-+        }
-+        break;
-     default:
-         error_report("invalid pc_info->type");
-         abort();
-@@ -3933,6 +3962,11 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
-     case VTD_PASID_CACHE_GLOBAL_INV:
-         /* loop all assigned devices */
-         break;
-+    case VTD_PASID_CACHE_DEVSI:
-+        walk_info.bus = pc_info->bus;
-+        walk_info.devfn = pc_info->devfn;
-+        vtd_replay_pasid_bind_for_dev(s, start, end, &walk_info);
-+        return;
-     case VTD_PASID_CACHE_FORCE_RESET:
-         /* For force reset, no need to go further replay */
-         return;
-@@ -3968,8 +4002,7 @@ static void vtd_replay_guest_pasid_bindings(IntelIOMMUState *s,
-  * It includes updating the pasid cache in vIOMMU and updating the
-  * pasid bindings per guest's latest pasid entry presence.
-  */
--static void vtd_pasid_cache_sync(IntelIOMMUState *s,
--                                 VTDPASIDCacheInfo *pc_info)
-+static void vtd_pasid_cache_sync(IntelIOMMUState *s, VTDPASIDCacheInfo *pc_info)
- {
-     if (!s->flts || !s->root_scalable || !s->dmar_enabled) {
-         return;
-@@ -4030,6 +4063,20 @@ static void vtd_pasid_cache_sync(IntelIOMMUState *s,
-     vtd_replay_guest_pasid_bindings(s, pc_info);
- }
- 
-+static void vtd_pasid_cache_devsi(IntelIOMMUState *s,
-+                                  PCIBus *bus, uint16_t devfn)
-+{
-+    VTDPASIDCacheInfo pc_info = { .error_happened = false, };
-+
-+    trace_vtd_pasid_cache_devsi(devfn);
-+
-+    pc_info.type = VTD_PASID_CACHE_DEVSI;
-+    pc_info.bus = bus;
-+    pc_info.devfn = devfn;
-+
-+    vtd_pasid_cache_sync(s, &pc_info);
-+}
-+
- static bool vtd_process_pasid_desc(IntelIOMMUState *s,
-                                    VTDInvDesc *inv_desc)
- {
-diff --git a/hw/i386/trace-events b/hw/i386/trace-events
-index de903a0033..f001b820d9 100644
---- a/hw/i386/trace-events
-+++ b/hw/i386/trace-events
-@@ -28,6 +28,7 @@ vtd_pasid_cache_reset(void) ""
- vtd_pasid_cache_gsi(void) ""
- vtd_pasid_cache_dsi(uint16_t domain) "Domain selective PC invalidation domain 0x%"PRIx16
- vtd_pasid_cache_psi(uint16_t domain, uint32_t pasid) "PASID selective PC invalidation domain 0x%"PRIx16" pasid 0x%"PRIx32
-+vtd_pasid_cache_devsi(uint16_t devfn) "Dev selective PC invalidation dev: 0x%"PRIx16
- vtd_re_not_present(uint8_t bus) "Root entry bus %"PRIu8" not present"
- vtd_ce_not_present(uint8_t bus, uint8_t devfn) "Context entry bus %"PRIu8" devfn %"PRIu8" not present"
- vtd_iotlb_page_hit(uint16_t sid, uint64_t addr, uint64_t slpte, uint16_t domain) "IOTLB page hit sid 0x%"PRIx16" iova 0x%"PRIx64" slpte 0x%"PRIx64" domain 0x%"PRIx16
+On reflection I think this method should be removed entirely.
+In terms of QEMU command line we should exclusively allow
+certs in PEM format only. If we need DER format internally,
+we can use gnutls to convert from PEM to DER.
+
+> +
+> +int qcrypto_get_x509_hash_len(QCryptoHashAlgo alg)
+> +{
+> +    if (alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
+> +        return 0;
+> +    }
+> +
+> +    return gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
+> +}
+> +
+> +int qcrypto_get_x509_keyid_len(QCryptoKeyidFlags flag)
+> +{
+> +    QCryptoHashAlgo alg;
+> +
+> +    if (flag >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map)) {
+> +        return 0;
+> +    }
+> +
+> +    alg = QCRYPTO_HASH_ALGO_SHA1;
+> +    if ((flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_SHA512]) ||
+> +        (flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_BEST_KNOWN])) {
+> +        alg = QCRYPTO_HASH_ALGO_SHA512;
+> +    } else if (flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_SHA256]) {
+> +        alg = QCRYPTO_HASH_ALGO_SHA256;
+> +    }
+> +
+> +    return qcrypto_get_x509_hash_len(alg);
+> +}
+> +
+> +static int qcrypto_import_x509_cert(gnutls_x509_crt_t crt, gnutls_datum_t *datum)
+> +{
+> +    int rc;
+> +
+> +    rc = gnutls_x509_crt_import(crt, datum, GNUTLS_X509_FMT_PEM);
+> +    if (rc) {
+> +        rc = gnutls_x509_crt_import(crt, datum, GNUTLS_X509_FMT_DER);
+> +    }
+> +
+> +    return rc;
+> +}
+
+This method can go away too if we declare the public interface
+is exclusively PEM.
+
+
+> +
+> +##
+> +# @QCryptoCertFmt:
+> +#
+> +# The supported certificate encoding formats
+> +#
+> +# @der: DER
+> +#
+> +# @pem: PEM
+> +#
+> +# Since: 10.1
+> +##
+> +{ 'enum': 'QCryptoCertFmt',
+> +  'data': ['der', 'pem']}
+
+This can go away too if we declare we only use PEM.
+
+
+With regards,
+Daniel
 -- 
-2.34.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
