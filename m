@@ -4,110 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6F93C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:03:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 597FFC5B555
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:04:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNYak-00024x-Db; Fri, 06 Jun 2025 11:02:46 -0400
+	id 1uNYbq-0002VE-5U; Fri, 06 Jun 2025 11:03:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uNYai-00024Q-Fg
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:02:44 -0400
-Received: from mail-qv1-xf30.google.com ([2607:f8b0:4864:20::f30])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uNYag-0005U0-0K
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:02:44 -0400
-Received: by mail-qv1-xf30.google.com with SMTP id
- 6a1803df08f44-6fafb6899c2so25075666d6.0
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 08:02:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1749222160; x=1749826960;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9BAMIL9hV8jWW4Q8+lqzUQSMZs1DJJaHIjLDQyZEqT8=;
- b=QFCbqC3kEZl4zJ7lMUDe0bsVGiOKuF+FKsYTkyJpCwipdV8/cZu66zEHWgZgrEZ26X
- dL1ZbIfNIS6C7dhlX/jkoQ+bMQlqtyNIO4pF8PeTB5xCVpahltAkgTblPYn8jWa8M9DB
- A/F7sdA3d1lpeH4xN4fUjoxDYojwiiE7G6I1OVtIV06fpXybXE8Xb04Grl1aJYKsiB27
- jdCamp7At2+xllh84vfBfhRzoP6jSwgNnAaqUpZuE85u7Q917yLYK88ou1lMt8S9v0aU
- 1csELoSIKMm2xRKc2QqM0xJ/2r4D1zKGgXPXDO8jstMjKaIjz3m/eUJzZ3p3U/Nn04o3
- 39pw==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNYbo-0002UE-MF
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:03:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNYbl-0005d4-UQ
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:03:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749222228;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=r87iIoHCj+uPpvMRVjqA6ckhLdJfscRFr6C1qLT91lY=;
+ b=fajLNOxJZukHFihjOWb74VRz4udvYQOAmKQDSEiwpyGlL2EXciYO1ZZ6Me915OSKeYtnxs
+ /TJlDCJofs9P7ANra1eVRcDen+FWi1nNgNFyPkYyRMq9cSdVY+gR5zxkabIlLvQNcjIm11
+ l1PtSiRq74fA1KvrkxxgJPF9PpGn6I0=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-96-kretdHDFO2GKa5lQRPD1Wg-1; Fri, 06 Jun 2025 11:03:45 -0400
+X-MC-Unique: kretdHDFO2GKa5lQRPD1Wg-1
+X-Mimecast-MFC-AGG-ID: kretdHDFO2GKa5lQRPD1Wg_1749222225
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-4a43c1e1e6bso42012511cf.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 08:03:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749222160; x=1749826960;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9BAMIL9hV8jWW4Q8+lqzUQSMZs1DJJaHIjLDQyZEqT8=;
- b=XMIvjqDu9OdL8iPhwx6sIrOcSVSPEeUZPICcRz2qpLUtDWjqjTnGp9cvABVb7a/oRx
- q0L6SqNOUTlvuZp54tBUUBBsxO3QKH3wPoqf+H1eUfisV8mhgnnkxGIBKh3zruR9ql6O
- 3S/TMsoAHxu6Rd6jfNSiV6ADoUXAI2Lf/b1LMcVjDTtGTlWv6JlSImniS8t1eU6RKuRY
- Y5lsZmsMeVRimo6wfkbekUcm2K9khbH7uh+3u4cdt8Bs9m4aNYSm3a+wKYuYmbfFn7yh
- w70tV8fjYRGlwE8EmR5Y5YlgaGv+QSm5aJVsdpciIexxSq2jHe8iRQgOEukvx1QkUyVf
- 0tuQ==
-X-Gm-Message-State: AOJu0YzhWDpFNNMx63CG1gJf9GgvwOt6Y7gGPubdN7PVcAKupRkxQXsd
- jBK9T+L/RgsjHUlwgKkoUHOUxaFgQd/7bs9OLFxayg2bCJWecb+VA9ulPb6mGEApgaN/hVIMPIV
- WnWKQ
-X-Gm-Gg: ASbGncs9Cz85zCoMe2Sp0UJyqKbs31FLp00tScJTml5DKKIcMdJeU5nAwhO+EtKz/9E
- Dw4i6kCEKhd0jymBBN1tgtQitnmDI1D2xzKX+xNCTAeYTHAcqprSKadOg0i+mEI1WCyCKTBvoUZ
- TmA2WVtxIPxHWBihi8zn7zOcRCOJRumeOcennKSoioddhLBdpClkEePpUzDZwymUHSx3GJPT9MB
- bNZtEMSChuJ48KL9iwLrLy8V92di9DxNpCD14msn79/4QLnbyzJtukbwmcLvHmKvSEfr+5+wmwH
- psJ1m269QPIsnK8SADB1uLzqPUG8pbMEHOuBU6GJ3NvlZG7XfVucNhiR0PpJ3A9wTK3E6gH0DPo
- qfFb8NQ5EtWW1P1udnFIn9nNZvHZd+MmmvQeK2504
-X-Google-Smtp-Source: AGHT+IHWyJvGJD7tHxI9Bm35mwMFBmkqDB72n+i5KCq+24/nbdhBoqk9bvjxESqCTUobnQpJF8RhHg==
-X-Received: by 2002:a17:902:ccc8:b0:234:595d:a58e with SMTP id
- d9443c01a7336-23603a651cdmr44734015ad.25.1749222149796; 
- Fri, 06 Jun 2025 08:02:29 -0700 (PDT)
-Received: from ?IPV6:2400:4050:b783:b00:4952:3c52:120a:27e9?
- ([2400:4050:b783:b00:4952:3c52:120a:27e9])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-236030926a5sm13333645ad.58.2025.06.06.08.02.24
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 06 Jun 2025 08:02:29 -0700 (PDT)
-Message-ID: <69ab9a77-0e31-4c3a-91de-d8bea9d87a0a@daynix.com>
-Date: Sat, 7 Jun 2025 00:02:23 +0900
+ d=1e100.net; s=20230601; t=1749222225; x=1749827025;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=r87iIoHCj+uPpvMRVjqA6ckhLdJfscRFr6C1qLT91lY=;
+ b=idfHeJ/wFiZmsnAMzVji3I7CZy5SDWAPPqqq9u6Ebedeiq3dwntOY6daS7lVzLasxh
+ SV96yfx2yrJmzw+7LD2FulbLsG5DAM6CDvZf7pG+NpA4+rqHdSlSrnKYBFwdgoupCXmT
+ G3P8CNt/KgxRKNretG0xJMin/QQxsk6to96xKrZinU0LaqeuTgeXyM/sFgadqtw6Q0lq
+ Z9JpUFUeOE7U+9Jcwm91cx7Pi0558pINyRshyAwBz2p5fX8kOpLl7wAmrprEfG5Y8lbl
+ eulsfamcajeYox0kPw6saoV7Th6hduebrVYZdzBs2z3n7REnajob1jqSrRVlOP67MzRS
+ cgqQ==
+X-Gm-Message-State: AOJu0YwOMDhHaYn/WUT9+LWvb2gcqYumlZWgFKlDwseFDKhYbdjSHtjA
+ 6vKLNUbr9kPMWg0nAlW6hAsRhsM+rdAYG0o4t4vSbz2aDKktKH+zlDuANscP9ojLJn6NC6YgrPa
+ sO2DOOF8MmiEe5n56lTI+R38JNVmjyL2xfO0SVNu/L7O2k3itTmhNFaEb
+X-Gm-Gg: ASbGncs7nIlX32gUv5nkU4q81hX+ncVm8X4tDhrnDzO515ZKOeOz3Cy0iFtxNcPr22f
+ pUwcPmFzpGDw0xi3F62mh1tt8Qu3VW8k1f5ZE4gRaiIXDd/gLcD6/QdcPMcX61e1Kqc8QdlskSB
+ QV6s1jEhTXUOzfyFVJ9/Nmui6rLk6Yci2ZWYWmN/arGMB7ODEt12uY4Puw9ueHdt/LM+9CMM9ds
+ tbYh8o/jdwnGSx4Sk8JycOwrOt7qFmPzfreN/Qew4KD4Z66tQnNSb2zxEHIB5xgVRVwohJdg1NW
+ 3tm1H06WZnVr7A==
+X-Received: by 2002:a05:622a:400e:b0:4a4:2d36:51d8 with SMTP id
+ d75a77b69052e-4a5b9e38af4mr61585471cf.22.1749222225257; 
+ Fri, 06 Jun 2025 08:03:45 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE/EFqWNbhBmG8KuA3jL9uaJdJgX3slmR30bLVOd9ljYg8b5VdGfnlioLU3dDWaR1YgB5LlDA==
+X-Received: by 2002:a05:622a:400e:b0:4a4:2d36:51d8 with SMTP id
+ d75a77b69052e-4a5b9e38af4mr61585061cf.22.1749222224795; 
+ Fri, 06 Jun 2025 08:03:44 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4a61117dc98sm13878791cf.35.2025.06.06.08.03.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Jun 2025 08:03:44 -0700 (PDT)
+Date: Fri, 6 Jun 2025 11:03:42 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 05/21] migration: Add a flag to track
+ block-bitmap-mapping input
+Message-ID: <aEMDTl7yaDGSv33I@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-6-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 09/17] hw/display: re-arrange memory region tracking
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, Sriram Yagnaraman
- <sriram.yagnaraman@ericsson.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, John Snow <jsnow@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, Peter Xu
- <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>, qemu-arm@nongnu.org,
- Thomas Huth <thuth@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Markus Armbruster <armbru@redhat.com>, David Hildenbrand <david@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Laurent Vivier <lvivier@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-stable@nongnu.org
-References: <20250603110204.838117-1-alex.bennee@linaro.org>
- <20250603110204.838117-10-alex.bennee@linaro.org>
- <1a86b86d-145a-44fc-9f87-2804767fb109@daynix.com>
- <87o6v2764e.fsf@draig.linaro.org>
- <5f91c8a2-06ce-45f8-97bd-0602a52e0d21@daynix.com>
- <87tt4t41kr.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <87tt4t41kr.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f30;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-qv1-xf30.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250603013810.4772-6-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,139 +106,187 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 2025/06/06 19:16, Alex Bennée wrote:
-> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+On Mon, Jun 02, 2025 at 10:37:54PM -0300, Fabiano Rosas wrote:
+> The QAPI converts an empty list on the block-bitmap-mapping input into
+> a NULL BitmapMigrationNodeAliasList. The empty list is a valid input
+> for the block-bitmap-mapping option, so commit 3cba22c9ad ("migration:
+> Fix block_bitmap_mapping migration") started using the
+> s->parameters.has_block_bitmap_mapping field to tell when the user has
+> passed in an empty list vs. when no list has been passed at all.
 > 
->> On 2025/06/05 20:57, Alex Bennée wrote:
->>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
->>>
->>>> On 2025/06/03 20:01, Alex Bennée wrote:
->>>>> QOM objects can be embedded in other QOM objects and managed as part
->>>>> of their lifetime but this isn't the case for
->>>>> virtio_gpu_virgl_hostmem_region. However before we can split it out we
->>>>> need some other way of associating the wider data structure with the
->>>>> memory region.
->>>>> Fortunately MemoryRegion has an opaque pointer. This is passed down
->>>>> to
->>>>> MemoryRegionOps for device type regions but is unused in the
->>>>> memory_region_init_ram_ptr() case. Use the opaque to carry the
->>>>> reference and allow the final MemoryRegion object to be reaped when
->>>>> its reference count is cleared.
->>>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
->>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
->>>>> Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
->>>>> Cc: qemu-stable@nongnu.org
->>>>> ---
->>>>>     include/system/memory.h       |  1 +
->>>>>     hw/display/virtio-gpu-virgl.c | 23 ++++++++---------------
->>>>>     2 files changed, 9 insertions(+), 15 deletions(-)
->>>>> diff --git a/include/system/memory.h b/include/system/memory.h
->>>>> index fc35a0dcad..90715ff44a 100644
->>>>> --- a/include/system/memory.h
->>>>> +++ b/include/system/memory.h
->>>>> @@ -784,6 +784,7 @@ struct MemoryRegion {
->>>>>         DeviceState *dev;
->>>>>           const MemoryRegionOps *ops;
->>>>> +    /* opaque data, used by backends like @ops */
->>>>>         void *opaque;
->>>>>         MemoryRegion *container;
->>>>>         int mapped_via_alias; /* Mapped via an alias, container might be NULL */
->>>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
->>>>> index 145a0b3879..71a7500de9 100644
->>>>> --- a/hw/display/virtio-gpu-virgl.c
->>>>> +++ b/hw/display/virtio-gpu-virgl.c
->>>>> @@ -52,17 +52,11 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
->>>>>       #if VIRGL_VERSION_MAJOR >= 1
->>>>>     struct virtio_gpu_virgl_hostmem_region {
->>>>> -    MemoryRegion mr;
->>>>> +    MemoryRegion *mr;
->>>>>         struct VirtIOGPU *g;
->>>>>         bool finish_unmapping;
->>>>>     };
->>>>>     -static struct virtio_gpu_virgl_hostmem_region *
->>>>> -to_hostmem_region(MemoryRegion *mr)
->>>>> -{
->>>>> -    return container_of(mr, struct virtio_gpu_virgl_hostmem_region, mr);
->>>>> -}
->>>>> -
->>>>>     static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
->>>>>     {
->>>>>         VirtIOGPU *g = opaque;
->>>>> @@ -73,14 +67,12 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
->>>>>     static void virtio_gpu_virgl_hostmem_region_free(void *obj)
->>>>>     {
->>>>>         MemoryRegion *mr = MEMORY_REGION(obj);
->>>>> -    struct virtio_gpu_virgl_hostmem_region *vmr;
->>>>> +    struct virtio_gpu_virgl_hostmem_region *vmr = mr->opaque;
->>>>>         VirtIOGPUBase *b;
->>>>>         VirtIOGPUGL *gl;
->>>>>     -    vmr = to_hostmem_region(mr);
->>>>> -    vmr->finish_unmapping = true;
->>>>> -
->>>>>         b = VIRTIO_GPU_BASE(vmr->g);
->>>>> +    vmr->finish_unmapping = true;
->>>>>         b->renderer_blocked--;
->>>>>           /*
->>>>> @@ -118,8 +110,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
->>>>>           vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
->>>>>         vmr->g = g;
->>>>> +    mr = g_new0(MemoryRegion, 1);
->>>>
->>>> This patch does nothing more than adding a separate allocation for
->>>> MemoryRegion. Besides there is no corresponding g_free(). This patch
->>>> can be simply dropped.
->>> As the patch says the MemoryRegion is now free'd when it is
->>> de-referenced. Do you have a test case showing it leaking?
->>
->> "De-referenced" is confusing and sounds like pointer dereferencing.
->>
->> OBJECT(mr)->free, which has virtio_gpu_virgl_hostmem_region_free() as
->> its value, will be called to free mr when the references of mr are
->> removed. This patch however does not add a corresponding g_free() call
->> to virtio_gpu_virgl_hostmem_region_free(), leaking mr.
->>
->> AddressSanitizer will catch the memory leak.
+> However, using the has_block_bitmap_mapping field of s->parameters is
+> only possible because MigrationParameters has had its members made
+> optional due to historical reasons.
 > 
-> Example invocation?
+> In order to make improvements to the way configuration options are set
+> for a migration, we'd like to reduce the usage of the has_* fields of
+> the global configuration object (s->parameters).
 > 
-> I ran the AddressSantizier against all the virtio-gpu tests yesterday
-> and it did not complain.
+> Add a separate boolean to track the status of the block_bitmap_mapping
+> option.
+> 
+> (this was verified to not regress iotest 300, which is the test that
+> 3cba22c9ad refers to)
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> ---
+>  migration/migration.h | 7 +++++++
+>  migration/options.c   | 6 +++---
+>  2 files changed, 10 insertions(+), 3 deletions(-)
+> 
+> diff --git a/migration/migration.h b/migration/migration.h
+> index d53f7cad84..ab797540b0 100644
+> --- a/migration/migration.h
+> +++ b/migration/migration.h
+> @@ -510,6 +510,13 @@ struct MigrationState {
+>      bool rdma_migration;
+>  
+>      GSource *hup_source;
+> +
+> +    /*
+> +     * The block-bitmap-mapping option is allowed to be an emtpy list,
+> +     * therefore we need a way to know wheter the user has given
+> +     * anything as input.
+> +     */
+> +    bool has_block_bitmap_mapping;
+>  };
+>  
+>  void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+> diff --git a/migration/options.c b/migration/options.c
+> index f64e141394..cf77826204 100644
+> --- a/migration/options.c
+> +++ b/migration/options.c
+> @@ -685,7 +685,7 @@ bool migrate_has_block_bitmap_mapping(void)
+>  {
+>      MigrationState *s = migrate_get_current();
+>  
+> -    return s->parameters.has_block_bitmap_mapping;
+> +    return s->has_block_bitmap_mapping;
+>  }
+>  
+>  uint32_t migrate_checkpoint_delay(void)
+> @@ -989,7 +989,7 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>      params->has_announce_step = true;
+>      params->announce_step = s->parameters.announce_step;
+>  
+> -    if (s->parameters.has_block_bitmap_mapping) {
+> +    if (s->has_block_bitmap_mapping) {
+>          params->has_block_bitmap_mapping = true;
+>          params->block_bitmap_mapping =
+>              QAPI_CLONE(BitmapMigrationNodeAliasList,
+> @@ -1469,7 +1469,7 @@ static void migrate_params_apply(MigrationParameters *params)
+>          qapi_free_BitmapMigrationNodeAliasList(
+>              s->parameters.block_bitmap_mapping);
+>  
+> -        s->parameters.has_block_bitmap_mapping = true;
+> +        s->has_block_bitmap_mapping = true;
+>          s->parameters.block_bitmap_mapping =
+>              QAPI_CLONE(BitmapMigrationNodeAliasList,
+>                         params->block_bitmap_mapping);
+> -- 
+> 2.35.3
+> 
 
-The following command line triggered the memory leak. The image is a 
-clean Debian 12 installation. I booted the installation, and shut down 
-it by pressing the button on the booted GDM:
+This is definitely unfortunate, and I'm still scratching my head on
+understanding why it's necessary.
 
-build/qemu-system-x86_64 -drive file=debian12.qcow2 -m 8G -smp 8 -device 
-virtio-vga-gl,blob=on,hostmem=1G -display egl-headless,gl=on -vnc :0 -M 
-q35,accel=kvm
-==361968==WARNING: ASan doesn't fully support makecontext/swapcontext 
-functions and may produce false positives in some cases!
-==361968==WARNING: ASan is ignoring requested __asan_handle_no_return: 
-stack type: default top: 0x7bf41d2b8380; bottom 0x7bf2e0f4c000; size: 
-0x00013c36c380 (5305189248)
-False positive error reports may follow
-For details see https://github.com/google/sanitizers/issues/189
+E.g. I tried to revert this patch manually and iotest 300 passed, with:
 
-=================================================================
-==361968==ERROR: LeakSanitizer: detected memory leaks
+===8<===
+From a952479805d8bdfe532ad4e0c0092f758991af08 Mon Sep 17 00:00:00 2001
+From: Peter Xu <peterx@redhat.com>
+Date: Fri, 6 Jun 2025 10:44:37 -0400
+Subject: [PATCH] Revert "migration: Add a flag to track block-bitmap-mapping
+ input"
 
-Direct leak of 816 byte(s) in 3 object(s) allocated from:
-     #0 0x7ff640f50a43 in calloc (/lib64/libasan.so.8+0xe6a43) (BuildId: 
-6a82bb83b1f19d3f3a2118085acf79daa3b52371)
-     #1 0x7ff64077c901 in g_malloc0 (/lib64/libglib-2.0.so.0+0x48901) 
-(BuildId: 6827394d759bc44f207f57e7ab5f8e6b17e82c1c)
-     #2 0x557fa8080dc5 in virtio_gpu_virgl_map_resource_blob 
-../hw/display/virtio-gpu-virgl.c:113
-     #3 0x557fa8080dc5 in virgl_cmd_resource_map_blob 
-../hw/display/virtio-gpu-virgl.c:772
-     #4 0x557fa8080dc5 in virtio_gpu_virgl_process_cmd 
-../hw/display/virtio-gpu-virgl.c:952
+This reverts commit fd755a53c0e4ce9739d20d7cdd69400b2a37102c.
 
-SUMMARY: AddressSanitizer: 816 byte(s) leaked in 3 allocation(s).
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/migration.h | 7 -------
+ migration/options.c   | 4 ++--
+ 2 files changed, 2 insertions(+), 9 deletions(-)
 
-Regards,
-Akihiko Odaki
+diff --git a/migration/migration.h b/migration/migration.h
+index 49761f4699..e710c421f8 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -510,13 +510,6 @@ struct MigrationState {
+     bool rdma_migration;
+ 
+     GSource *hup_source;
+-
+-    /*
+-     * The block-bitmap-mapping option is allowed to be an emtpy list,
+-     * therefore we need a way to know wheter the user has given
+-     * anything as input.
+-     */
+-    bool has_block_bitmap_mapping;
+ };
+ 
+ void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
+diff --git a/migration/options.c b/migration/options.c
+index dd2288187d..e71a57764d 100644
+--- a/migration/options.c
++++ b/migration/options.c
+@@ -765,7 +765,7 @@ bool migrate_has_block_bitmap_mapping(void)
+ {
+     MigrationState *s = migrate_get_current();
+ 
+-    return s->has_block_bitmap_mapping;
++    return s->parameters.has_block_bitmap_mapping;
+ }
+ 
+ uint32_t migrate_checkpoint_delay(void)
+@@ -1376,7 +1376,7 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
+      * params structure with the user input around.
+      */
+     if (params->has_block_bitmap_mapping) {
+-        migrate_get_current()->has_block_bitmap_mapping = true;
++        migrate_get_current()->parameters.has_block_bitmap_mapping = true;
+     }
+ 
+     if (migrate_params_check(tmp, errp)) {
+-- 
+2.49.0
+===8<===
+
+I'm staring at commit 3cba22c9ad now, looks like what it wants to do is
+making sure construct_alias_map() will be invoked even if the block bitmap
+mapping is NULL itself.  But then right below the code, it has:
+
+static int init_dirty_bitmap_migration(DBMSaveState *s, Error **errp)
+{
+    ...
+    if (migrate_has_block_bitmap_mapping()) {
+        alias_map = construct_alias_map(migrate_block_bitmap_mapping(), true,
+                                        &error_abort);
+    }
+    ...
+    if (!alias_map) {
+    ...
+    }
+}
+
+Looks like it's also ready for !alias_map anyway.  I'm definitely puzzled
+by this code.
+
+Even if so, IIUC the question can still be asked on whether we can always
+assume has_block_bitmap_mapping to be always true, then here instead of:
+
+    if (migrate_has_block_bitmap_mapping()) {
+        alias_map = construct_alias_map(migrate_block_bitmap_mapping(), true,
+                                        &error_abort);
+    }
+
+We do:
+
+    alias_map = construct_alias_map(migrate_block_bitmap_mapping(), true,
+                                    &error_abort);
+
+After all it looks like construct_alias_map() takes NULL too..
+
+-- 
+Peter Xu
+
 
