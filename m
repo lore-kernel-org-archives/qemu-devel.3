@@ -4,80 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08EE4C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 11:05:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB50FC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 11:32:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNUsr-00023o-JQ; Fri, 06 Jun 2025 07:05:13 -0400
+	id 1uNVI8-0007GH-Hs; Fri, 06 Jun 2025 07:31:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNUsp-00020w-1R
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 07:05:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNUsn-0000HH-Cf
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 07:05:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749207908;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=U+v8bDHp5o65XUKeYn6DgDSvsAfj5GnOYZfdW60wu9E=;
- b=QyYfgpEAALu9KsQqAac2gHdrj9f3Uc6GKWR1tN+6Kr8MHNdBIdOGGbTXU4q3Jrx0+DquoQ
- 368bRTe3P+Wd+18Sy+zIiC/ecYFUJWZ1pXOg74BmVLY9TIHr1BElPaAaF6mh7sfpDcm6V5
- Sl/ILjjT0j+VjAEeR4a/Vg8TpRoix04=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-ZlxfyU8-NKaKaA78RtO3Zw-1; Fri,
- 06 Jun 2025 07:05:05 -0400
-X-MC-Unique: ZlxfyU8-NKaKaA78RtO3Zw-1
-X-Mimecast-MFC-AGG-ID: ZlxfyU8-NKaKaA78RtO3Zw_1749207903
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 929361800EC5; Fri,  6 Jun 2025 11:05:03 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E70FA18002B3; Fri,  6 Jun 2025 11:04:57 +0000 (UTC)
-Date: Fri, 6 Jun 2025 12:04:54 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>
-Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, walling@linux.ibm.com, jjherne@linux.ibm.com,
- jrossi@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 28/28] docs: Add secure IPL documentation
-Message-ID: <aELLViTblm9chFke@redhat.com>
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-29-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNVI3-0007Fs-Mr
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 07:31:17 -0400
+Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNVI1-0005K2-DC
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 07:31:15 -0400
+Received: by mail-ed1-x536.google.com with SMTP id
+ 4fb4d7f45d1cf-604bff84741so3960916a12.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 04:31:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749209469; x=1749814269; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=XjTsbK4wtIzn/jKCSOg8StG+XuUFcrrGPQe+iPfN0n0=;
+ b=AGX0KihMsjnNRcRJCSDT0aJYYyH/qTV2cEuAf0QpmRLXTtwgmsILwE11wJCn3iCyA7
+ 3YFmtUPfJTrsUQZVzDCEMv4A7v23Z2MZrG1WQCOs7uy8vuA33Ibx0BuxKtfS8GkTRvtR
+ 5sIrnrDT4qbpRnBjo7qK31NuXEBCr9PPzigK3YKSPnBr/tou6WfbjARmreth4MeHP8VH
+ +bVoItv5R0R66iPBYbuyed+fTPIedxM4qs5FNLXavHSAGklnDmxFs09wX9nDQo6kQ6pD
+ okbXJnsC/XPVXR+6eAv86m4dboI59XeEGHUP7d9T6dBATFPT9D5nZ8v8eBLGHPy8qRyW
+ V3Hw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749209469; x=1749814269;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XjTsbK4wtIzn/jKCSOg8StG+XuUFcrrGPQe+iPfN0n0=;
+ b=I96B7hK7t4BmdcM8ltQFVZTJyHowsaVhOXgZhp+b7iZ+FLZ5L4flneRDCyFv0enemb
+ St6P8kbIxKFF3aFbBHCRfLwD89Oyg14VzPLrJ3tkJzMgJO7PlOG3l6y+Mz0c37ORHW88
+ 1yFtFKArmYnlxciKRVj6ru/3fCafDt34mFkdK+yQBS657LKn7aYQs7T3T2uewELhaXb6
+ Ffur++G8u/e9M/cNVR/du6TKplfQ29fN5WY472qzB4Jcq79FZ+lxOvci5BMvkBn5RgNu
+ xCdUq5tbf6+rAXXNXSOqPIx0JBjW8m7Xh3+b7/PRL4suixFYOiHV0ZmZiSvrkuACp8tt
+ tUAA==
+X-Gm-Message-State: AOJu0Yxw2sPlE+sOvLIhgtq5CPe6L+LERZYFoaxkLJm3VF7x8Y8qBayr
+ lnfK4xk4d3ycV0rZclN1EZGsNNv8woJ8A2SdgBQe2lFgyxjMyGWeqB4x/DCmxli5OuE=
+X-Gm-Gg: ASbGnctL0O4rXNADC1UqV/M/61oSIfA4bZM/wc2qhgkYvG32AdCMpr8WYpJbbjESpMq
+ E944R3/zxfhLY0D0oUnh7JKvWNprS3e50uhFaBC9mRiKivBUiYoRhJMOoua9FcUFt7SoRbzAsSK
+ CNIqV7TASq7PWXB8tcHyL+UNTPqzW0r4qgsJzoRmv1QhGs/DjEuPf0rZYnsWPKjJA87bkJPvsjN
+ LToDQLm84UFKiucprUE1E/D+/3uDzzoPVIEM8psNSWuO1VnOqCHQqZp5D034PZFZcgsQQZaJmaE
+ lXAdyG/25XNe/KmdqACDLd/1YMRUTKKtGDGG7dU27qspQgnx/+0CC6iCSB/07DE=
+X-Google-Smtp-Source: AGHT+IHqnNl8ajV4tJMjspXbM1+QLBi5+QAtZ5KTwvlDXIBETxQ0F4j9SC6qUd4NybGvddoKgg7Ajg==
+X-Received: by 2002:a17:907:968c:b0:ad5:8594:652e with SMTP id
+ a640c23a62f3a-ade1aa4879fmr245116766b.35.1749209469187; 
+ Fri, 06 Jun 2025 04:31:09 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ade1dc1c4c9sm102865266b.108.2025.06.06.04.31.08
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Jun 2025 04:31:08 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E505E5F7D2;
+ Fri, 06 Jun 2025 12:31:07 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: qemu-devel@nongnu.org,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  qemu-stable@nongnu.org,  Dmitry Osipenko
+ <dmitry.osipenko@collabora.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+Subject: Re: [PULL 09/17] hw/display: re-arrange memory region tracking
+In-Reply-To: <59bed3d3-f641-4b78-96bf-8fec25d74a35@rsg.ci.i.u-tokyo.ac.jp>
+ (Akihiko Odaki's message of "Fri, 6 Jun 2025 19:31:44 +0900")
+References: <20250605162651.2614401-1-alex.bennee@linaro.org>
+ <20250605162651.2614401-10-alex.bennee@linaro.org>
+ <ee5115ab-b818-4746-8806-5056f3570011@rsg.ci.i.u-tokyo.ac.jp>
+ <875xh95h5n.fsf@draig.linaro.org>
+ <59bed3d3-f641-4b78-96bf-8fec25d74a35@rsg.ci.i.u-tokyo.ac.jp>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Fri, 06 Jun 2025 12:31:07 +0100
+Message-ID: <87o6v13y4k.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250604215657.528142-29-zycai@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::536;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x536.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,51 +108,53 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 05:56:56PM -0400, Zhuoying Cai wrote:
-> Add documentation for secure IPL
-> 
-> Signed-off-by: Collin Walling <walling@linux.ibm.com>
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  docs/specs/s390x-secure-ipl.rst  | 145 +++++++++++++++++++++++++++++++
->  docs/system/s390x/secure-ipl.rst | 129 +++++++++++++++++++++++++++
->  2 files changed, 274 insertions(+)
->  create mode 100644 docs/specs/s390x-secure-ipl.rst
->  create mode 100644 docs/system/s390x/secure-ipl.rst
-> 
+Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 
-> +Secure IPL Quickstart
-> +=====================
-> +
-> +Build QEMU with gnutls enabled:
-> +
-> +.. code-block:: shell
-> +
-> +    ./configure … --enable-gnutls
-> +
-> +Generate certificate (e.g. via openssl):
-> +
-> +.. code-block:: shell
-> +
-> +    openssl req -new -x509 -newkey rsa:2048 -keyout mykey.priv \
-> +                -outform DER -out mycert.der -days 36500 \
-> +                -subj "/CN=My Name/" -nodes
+> On 2025/06/06 18:54, Alex Benn=C3=A9e wrote:
+>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
+>>=20
+>>> On 2025/06/06 1:26, Alex Benn=C3=A9e wrote:
+>>>> QOM objects can be embedded in other QOM objects and managed as part
+>>>> of their lifetime but this isn't the case for
+>>>> virtio_gpu_virgl_hostmem_region. However before we can split it out we
+>>>> need some other way of associating the wider data structure with the
+>>>> memory region.
+>>>> Fortunately MemoryRegion has an opaque pointer. This is passed down
+>>>> to
+>>>> MemoryRegionOps for device type regions but is unused in the
+>>>> memory_region_init_ram_ptr() case. Use the opaque to carry the
+>>>> reference and allow the final MemoryRegion object to be reaped when
+>>>> its reference count is cleared.
+>>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>>> Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+>>>> Cc: qemu-stable@nongnu.org
+>>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>>> Message-ID: <20250603110204.838117-10-alex.bennee@linaro.org>
+>>>
+>>> I have told you that you should address all comments before sending a
+>>> series again a few times[1][2], but you haven't done that.
+>> I've given reasons. Thanks for your review but you don't get to
+>> veto.
+>>=20
+>>> I pointed out it has no effect (fixing or improving something) other
+>>> than adding a memory allocation, but you didn't make a reply to prove
+>>> otherwise.
+>> I explained the commit cover what it is doing.
+>
+> It still doesn't explain the motivation.
+>
+<snip>
 
-Please illustrate with gnutls 'certtool' for consistency
-with other cert creation docs we have at:
+It fixes the anti-pattern of embedding a QOM object into a non-QOM
+container. It enables in the following patches the lifetime of the MR to
+be covered controlled purely by its references and not be so tangled up
+with virglrenderers internals.
 
-  https://www.qemu.org/docs/master/system/tls.html
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
