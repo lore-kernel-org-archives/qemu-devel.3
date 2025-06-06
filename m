@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E769C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A47C61CE8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:10:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNU13-0001JY-6q; Fri, 06 Jun 2025 06:09:38 -0400
+	id 1uNU1C-000256-Ie; Fri, 06 Jun 2025 06:09:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uNU10-00016T-83
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:34 -0400
+ id 1uNU17-0001lm-PP
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:42 -0400
 Received: from mgamail.intel.com ([192.198.163.7])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uNU0w-0007i7-Nu
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:33 -0400
+ id 1uNU11-0007i7-GG
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:09:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749204571; x=1780740571;
+ t=1749204576; x=1780740576;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=6flmb2buVOzoFCEGsjS4ClTvDrhO72/0u5VsbJ6oxno=;
- b=RgKERAsbxeSiEtkMkxCACyd+IXBLaUWhW0uf+IVyoNk/UepoIE9ntoDe
- gLgDX9tfKkbbcFd+sobNmgDujwsSD825gp6Lx1LY+UdzGuQlLPLraoX1I
- Ych+RJKmIV7YelW7gqizzuUA4n/PLe//5XCztTTiV8AIpnA5iKhNKba26
- QcF4TzhzXICQj9G+ieT62GVGFSE8SG1llEjwzR36edfZr6Tep9sgSjDVN
- h8LSEKXc3kCso6ENvhQPHmLjeVe/xHgnJaQLkUuOSt/6I6uhXcSRYfoM0
- my5uQ81ofGsbOwqfYLxXcu6rr9LLlV3wrktsHIFNPZeTdFOEq/rK52BL5 A==;
-X-CSE-ConnectionGUID: KNtgIB82QrGDeXEI9i/yww==
-X-CSE-MsgGUID: wPhV00BURnq/ATwPRBE4vg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="76747377"
-X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="76747377"
+ bh=nBrp6tgFc6v/6yO9PWU6WxZehXvpkuKA2N+NwoCjvnU=;
+ b=AQXVXk/DfhpIwHEfYR6n7NgpJEXB487pHVM5us2TLeifnH8VPRcpvlYB
+ ZyrHTWPSdHTyYykipeeySmy9PacLUxzB+bVlc4us5e04x6NxE08dvJPFT
+ Qo0calP7ilYMo4UZ2Zj+lymzRPlX15HW1F6pE90gEYwd1c7iNgN5RsnJ4
+ ZvSaQKqJ84OIBDdLtmQ6q2XmLaXAiYUCVKoMP5S4jj2ioV9+YmVHbTCJ+
+ ppRFGEzSYqXrLB2Qoi0lbdZeFsY3WEhJqGpsy8ispcauvwN8i3/1m6ed/
+ iDKE8VEMUJzj6by+V4Y3jJZXj4lZVUGoDHRrutizH5ZZK29BsD+FqpRQO A==;
+X-CSE-ConnectionGUID: oqJefj8bQQOMYjdOHtavIQ==
+X-CSE-MsgGUID: IeN/H/lTQFug9/WCbSn5bg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="76747389"
+X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="76747389"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by fmvoesa101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jun 2025 03:09:29 -0700
-X-CSE-ConnectionGUID: q/07CYEmQYWYCUxvvffMmg==
-X-CSE-MsgGUID: 8U5ub6UwT3KLukXxUjwy5g==
+ 06 Jun 2025 03:09:34 -0700
+X-CSE-ConnectionGUID: Hc88ue5fQpKmaPcCi7oBxQ==
+X-CSE-MsgGUID: rC4Alo+3QQG+IIBescqeJg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="146759264"
+X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="146759289"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 06 Jun 2025 03:09:24 -0700
+ 06 Jun 2025 03:09:30 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,13 +54,14 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v1 14/15] intel_iommu: Bypass replay in stage-1 page table mode
-Date: Fri,  6 Jun 2025 18:04:15 +0800
-Message-Id: <20250606100416.346132-15-zhenzhong.duan@intel.com>
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v1 15/15] intel_iommu: Enable host device when x-flts=on in
+ scalable mode
+Date: Fri,  6 Jun 2025 18:04:16 +0800
+Message-Id: <20250606100416.346132-16-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250606100416.346132-1-zhenzhong.duan@intel.com>
 References: <20250606100416.346132-1-zhenzhong.duan@intel.com>
@@ -91,34 +92,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VFIO utilizes replay to setup initial shadow iommu mappings.
-But when stage-1 page table is configured, it is passed to
-host to construct nested page table, there is no replay needed.
+Now that all infrastructures of supporting passthrough device running
+with stage-1 translation are there, enable it now.
 
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- hw/i386/intel_iommu.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ hw/i386/intel_iommu.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index ec8b0ff13a..165998896c 100644
+index 165998896c..1df861ba90 100644
 --- a/hw/i386/intel_iommu.c
 +++ b/hw/i386/intel_iommu.c
-@@ -5759,6 +5759,14 @@ static void vtd_iommu_replay(IOMMUMemoryRegion *iommu_mr, IOMMUNotifier *n)
-     VTDContextEntry ce;
-     DMAMap map = { .iova = 0, .size = HWADDR_MAX };
+@@ -5597,6 +5597,7 @@ static bool vtd_check_hiod(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+     }
  
-+    /*
-+     * Replay on stage-1 page table is meaningless as stage-1 page table
-+     * is passthroughed to host to construct nested page table
-+     */
-+    if (s->flts && s->root_scalable) {
-+        return;
-+    }
-+
-     /* replay is protected by BQL, page walk will re-setup it safely */
-     iova_tree_remove(vtd_as->iova_tree, map);
+     vtd_hiod->errata = vtd->flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17;
++    return true;
+ #endif
  
+     error_setg(errp, "host device is uncompatible with stage-1 translation");
 -- 
 2.34.1
 
