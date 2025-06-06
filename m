@@ -4,78 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C287C5B555
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 14:00:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04C37C5B555
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 14:04:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNXcf-00085u-5t; Fri, 06 Jun 2025 10:00:41 -0400
+	id 1uNXfa-0001M3-AI; Fri, 06 Jun 2025 10:03:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNXcX-00082P-BE
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 10:00:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNXcU-0007SW-8s
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 10:00:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749218427;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=1DOWjtFGNOiNd39ETu+hWPfpxH3ng1XZNtIFFOYp18s=;
- b=V6dt1WGghre14x+DtKMbysi6Ms4C3X6bOOBq3h8AFberwXlLp6BuUO8iAYTV0YhLZIZtSZ
- Lu1hOFwsTYkD00dES08uHbRv9D1L3NtpQGl9/wu2kOjUe1gJg3YdT2CQE/DZv+wVJBoW1d
- 91a3V9Hs0MHQW1jEYXwbrb9ngkhHrtk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-j_1oI6qIMK-lW7USqtjrBA-1; Fri,
- 06 Jun 2025 10:00:24 -0400
-X-MC-Unique: j_1oI6qIMK-lW7USqtjrBA-1
-X-Mimecast-MFC-AGG-ID: j_1oI6qIMK-lW7USqtjrBA_1749218422
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9F96B1800A00; Fri,  6 Jun 2025 14:00:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1816018003FC; Fri,  6 Jun 2025 14:00:16 +0000 (UTC)
-Date: Fri, 6 Jun 2025 15:00:13 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>
-Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, walling@linux.ibm.com, jjherne@linux.ibm.com,
- jrossi@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 01/28] Add boot-certificates to s390-ccw-virtio
- machine type option
-Message-ID: <aEL0bVhOFaCQbiBS@redhat.com>
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-2-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uNXfX-0001L1-7V
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 10:03:39 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uNXfR-0007hE-13
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 10:03:35 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-450cf0120cdso20503885e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 07:03:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749218610; x=1749823410; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=E4Dx7676jG+vk71RZAOcqaNYjWAoli2CcW2FAti80KI=;
+ b=P5RI//wkgCeDAYop3APp7lTVL/zpRk1PX36UP6As+B2XRqb1RcrXlkL3afT0PQRjZU
+ 6qNnmiWQELIsln6XRJSrUFl09ie+k/vAjhzoOP1hy9FuPNVfJM0DIiGQxn8lUujVXZgM
+ V5SJRnEuZwxX7FPp8hbTE41L+WRIHpTN5jHBFyqTcUzRu//zMlFB2PUWOWDHBSxvMRGA
+ L6bQmlo4bbscUc64xVkC/qsPijLEPklZh6bInVptpXLbDh20glEhUmaz4rFzXwwqppmw
+ rnQWgPBjhPHBqsh4PIv45AR0puBUPlV5i5YOS3GEukj47ayS58O5XJbzoEPE5NrJcG7C
+ K8Og==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749218610; x=1749823410;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=E4Dx7676jG+vk71RZAOcqaNYjWAoli2CcW2FAti80KI=;
+ b=qmBKkd0E+F8ZZfW4RCdZAxSNC40N0RRDp4MP4aqkZ+Q6AgMNcjSxow4iC6zNgfV1No
+ jnpDANUzJvS1V0Cn25sQj+6etLzdoQ/sob4GDTXdA3QY1khKhFDYzbFI9bDU0Ce8KVow
+ hHCpm0VLNWWasnDlkI61NLTL29mBa8es1Uz1GeuCpnhji9W96IdOZrQAaV6xShrxtcXu
+ BfK8LZKGIVDjGPu2mCQWwH+Hwl6OpAEYXpB3+tCHf1u+sGwa/8waI+XYyD/3lTLwcesp
+ s4ypXOK41Rz2TvfcmCgf1fNxdMLyp1slipP5AH8UuAwAAxYcU4pGaJU6ooFzZ54sY+d+
+ 0n2w==
+X-Gm-Message-State: AOJu0YwNNeKIwFiHwQ2sP4YVD68oq5UMWOtctPxYRqUGAmXSWi4XL/6o
+ s4DS71soqApDmmMzWBVYJz4ynjj1ZldIr6R7A7lQJ6mp5CdrJHQlTqmn+bfhxALh1etOFK92PBx
+ ny3kv
+X-Gm-Gg: ASbGnctRiBvGyvedkWfA17v2hfZybAESfAN+gX9dtrIuV7yTo7sC1DdTvMUcWknrqo7
+ iveE0kcM8T32A0i6nUQfKt+lWuebgFz4aWKyrpdjx2V1nkI/cN6utirmA3njBc2VwzHlLIyidV6
+ 61UR3xtiOu8CMarYYyv5po5f1RdPT/F3hX9PPXe4anJL56+Fp5i0Xux6aDDF4MYatd6oc/BYTqM
+ jwWRxyJw+G1+7/pMTFaOTabaJAWSV6JNDMMyPupgvQcuJBl0XWi+imKp7guQGQJlXpVLWP+Ff7w
+ 9YashHvNDUTuvXELq+KmVACNmEQphg246V7rc8HdRq3m6Mw1BhwcN5Ypv3ZWLihjiojX
+X-Google-Smtp-Source: AGHT+IFYFJn3fkJZPOFNqJUmKht7wl8xcj38FioE+Ow+xPwWZ/8m0FtiE89z1wkkqf3vzmiuq+gLmw==
+X-Received: by 2002:a05:6000:420c:b0:3a4:f6ba:51c8 with SMTP id
+ ffacd0b85a97d-3a531ca732bmr2953716f8f.14.1749218609987; 
+ Fri, 06 Jun 2025 07:03:29 -0700 (PDT)
+Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a5324364f1sm2030346f8f.58.2025.06.06.07.03.28
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Jun 2025 07:03:29 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH] hw/core: Permit devices to define an array of link properties
+Date: Fri,  6 Jun 2025 15:03:27 +0100
+Message-ID: <20250606140327.1289993-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250604215657.528142-2-zycai@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,118 +97,345 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 05:56:29PM -0400, Zhuoying Cai wrote:
-> Add boot-certificates as a parameter of s390-ccw-virtio machine type option.
-> 
-> The `boot-certificates=/path/dir:/path/file` parameter is implemented
-> to provide path to either a directory or a single certificate.
-> 
-> Multiple paths can be delineated using a colon.
+Currently we allow devices to define "link properties" with
+DEFINE_PROP_LINK(): these are a way to give a device a pointer to
+another QOM object.  (Under the hood this is done by handing it the
+canonical QOM path for the object.)
 
-How do users specify paths which contain a colon as a valid
-character ?
+We also allow devices to define "array properties" with
+DEFINE_PROP_ARRAY(): these are a way to give a device a
+variable-length array of properties.
 
-Ideally we should be using array properties when we need
-a list of parameters.
+However, there is no way to define an array of link properties.  If
+you try to do it by passing qdev_prop_link as the arrayprop argument
+to DEFINE_PROP_ARRAY() you will get a crash because qdev_prop_link
+does not provide the .set and .get methods in its PropertyInfo
+struct.
 
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  hw/s390x/s390-virtio-ccw.c         | 22 ++++++++++++++++++++++
->  include/hw/s390x/s390-virtio-ccw.h |  1 +
->  qemu-options.hx                    |  7 ++++++-
->  3 files changed, 29 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-> index f20e02de9f..144ef52f34 100644
-> --- a/hw/s390x/s390-virtio-ccw.c
-> +++ b/hw/s390x/s390-virtio-ccw.c
-> @@ -798,6 +798,22 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
->      g_free(val);
->  }
->  
-> +static inline char *machine_get_boot_certificates(Object *obj, Error **errp)
-> +{
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-> +
-> +    return g_strdup(ms->boot_certificates);
-> +}
-> +
-> +static void machine_set_boot_certificates(Object *obj, const char *str,
-> +                                          Error **errp)
-> +{
-> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
-> +
-> +    g_free(ms->boot_certificates);
-> +    ms->boot_certificates = g_strdup(str);
-> +}
-> +
->  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->  {
->      MachineClass *mc = MACHINE_CLASS(oc);
-> @@ -851,6 +867,12 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->              "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
->              " to upper case) to pass to machine loader, boot manager,"
->              " and guest kernel");
-> +
-> +    object_class_property_add_str(oc, "boot-certificates",
-> +                                  machine_get_boot_certificates,
-> +                                  machine_set_boot_certificates);
-> +    object_class_property_set_description(oc, "boot-certificates",
-> +            "provide path to a directory or a single certificate for secure boot");
->  }
->  
->  static inline void s390_machine_initfn(Object *obj)
-> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
-> index 526078a4e2..45adc8bce6 100644
-> --- a/include/hw/s390x/s390-virtio-ccw.h
-> +++ b/include/hw/s390x/s390-virtio-ccw.h
-> @@ -31,6 +31,7 @@ struct S390CcwMachineState {
->      uint8_t loadparm[8];
->      uint64_t memory_limit;
->      uint64_t max_pagesize;
-> +    char *boot_certificates;
->  
->      SCLPDevice *sclp;
->  };
-> diff --git a/qemu-options.hx b/qemu-options.hx
-> index 7eb8e02b4b..6d01f8c4b2 100644
-> --- a/qemu-options.hx
-> +++ b/qemu-options.hx
-> @@ -43,7 +43,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->  #endif
->      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
-> -    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
-> +    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n"
-> +    "                boot-certificates='/path/directory:/path/file' provide a path to a directory or a boot certificate\n",
->      QEMU_ARCH_ALL)
->  SRST
->  ``-machine [type=]name[,prop=value[,...]]``
-> @@ -200,6 +201,10 @@ SRST
->          ::
->  
->              -machine smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core
-> +
-> +    ``boot-certificates='/path/directory:/path/file'``
-> +        Provide a path to a directory or a boot certificate on the host [s390x only].
-> +        A colon may be used to delineate multiple paths.
->  ERST
->  
->  DEF("M", HAS_ARG, QEMU_OPTION_M,
-> -- 
-> 2.49.0
-> 
+This patch implements a new DEFINE_PROP_LINK_ARRAY(). In
+a device you can use it like this:
 
-With regards,
-Daniel
+struct MyDevice {
+    ...
+    uint32_t num_cpus;
+    ARMCPU **cpus;
+}
+
+and in your Property array:
+    DEFINE_PROP_LINK_ARRAY("cpus", MyDevice, num_cpus, cpus,
+                           TYPE_ARM_CPU, ARMCPU *),
+
+The array property code will fill in s->num_cpus, allocate memory in
+s->cpus, and populate it with pointers.
+
+On the device-creation side you set the property in the same way as
+the existing array properties, using the new qlist_append_link()
+function to append to the QList:
+
+    QList *cpulist = qlist_new();
+    for (int i = 0; i < cpus; i++) {
+        qlist_append_link(cpulist, OBJECT(cpu[i]));
+    }
+    qdev_prop_set_array(mydev, "cpus", cpulist);
+
+The implementation is mostly in the provision of the .set and
+.get methods to the qdev_prop_link PropertyInfo struct. The
+code of these methods parallels the code in
+object_set_link_property() and object_get_link_property().  We can't
+completely share the code with those functions because of differences
+in where we get the information like the target QOM type, but I have
+pulled out a new function object_resolve_and_typecheck() for the
+shared "given a QOM path and a type, give me the object or an error"
+code.
+
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+I want this specifically for the GICv5 interrupt controller device
+I'm working on.  I'd like to be able to pass in links to the CPUs
+connected to the GIC, so that we don't have to have the code assume
+that it's connected to CPU numbers 0,1,2... the way the current
+GICv3 code does.
+
+I think Phil also had a proposed series a while back that wanted
+to do something similar with one of the existing devices.
+
+I figured I'd post this early for review, though obviously it's a
+little unmotivated until I have my new GICv5 code into enough shape
+to submit. This is tested, but with my work-in-progress code.
+---
+ include/hw/qdev-properties.h | 40 ++++++++++++++++++
+ include/qom/object.h         | 19 +++++++++
+ hw/core/qdev-properties.c    | 80 ++++++++++++++++++++++++++++++++++++
+ qom/object.c                 | 42 +++++++++++--------
+ 4 files changed, 163 insertions(+), 18 deletions(-)
+
+diff --git a/include/hw/qdev-properties.h b/include/hw/qdev-properties.h
+index 2c99856caac..8be8ca293fe 100644
+--- a/include/hw/qdev-properties.h
++++ b/include/hw/qdev-properties.h
+@@ -150,6 +150,31 @@ extern const PropertyInfo qdev_prop_link;
+     DEFINE_PROP(_name, _state, _field, qdev_prop_link, _ptr_type,     \
+                 .link_type  = _type)
+ 
++/**
++ * DEFINE_PROP_LINK_ARRAY:
++ * @_name: name of the array
++ * @_state: name of the device state structure type
++ * @_field: uint32_t field in @_state to hold the array length
++ * @_arrayfield: field in @_state (of type '@_arraytype *') which
++ *               will point to the array
++ * @_linktype: QOM type name of the link type
++ * @_arraytype: C type of the array elements
++ *
++ * Define device properties for a variable-length array _name of links
++ * (i.e. this is the array version of DEFINE_PROP_LINK).
++ * The array is represented as a list of QStrings in the visitor interface,
++ * where each string is the QOM path of the object to be linked.
++ */
++#define DEFINE_PROP_LINK_ARRAY(_name, _state, _field, _arrayfield,      \
++                               _linktype, _arraytype)                   \
++    DEFINE_PROP(_name, _state, _field, qdev_prop_array, uint32_t,       \
++                .set_default = true,                                    \
++                .defval.u = 0,                                          \
++                .arrayinfo = &qdev_prop_link,                           \
++                .arrayfieldsize = sizeof(_arraytype),                   \
++                .arrayoffset = offsetof(_state, _arrayfield),           \
++                .link_type = _linktype)
++
+ #define DEFINE_PROP_UINT8(_n, _s, _f, _d)                       \
+     DEFINE_PROP_UNSIGNED(_n, _s, _f, _d, qdev_prop_uint8, uint8_t)
+ #define DEFINE_PROP_UINT16(_n, _s, _f, _d)                      \
+@@ -201,6 +226,21 @@ void qdev_prop_set_enum(DeviceState *dev, const char *name, int value);
+ /* Takes ownership of @values */
+ void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values);
+ 
++/**
++ * qlist_append_link: Add a QOM object to a QList of link properties
++ * @qlist: list to append to
++ * @obj: object to append
++ *
++ * This is a helper function for constructing a QList to pass to
++ * qdev_prop_set_array() when the qdev property array is an array of link
++ * properties (i.e. one defined with DEFINE_PROP_LINK_ARRAY).
++ *
++ * The object is encoded into the list as a QString which is the
++ * canonical path of the object; this is the same encoding that
++ * object_set_link_property() and object_get_link_property() use.
++ */
++void qlist_append_link(QList *qlist, Object *obj);
++
+ void *object_field_prop_ptr(Object *obj, const Property *prop);
+ 
+ void qdev_prop_register_global(GlobalProperty *prop);
+diff --git a/include/qom/object.h b/include/qom/object.h
+index 26df6137b91..48fdbf353ee 100644
+--- a/include/qom/object.h
++++ b/include/qom/object.h
+@@ -1750,6 +1750,25 @@ ObjectProperty *object_class_property_add_link(ObjectClass *oc,
+                                             Object *val, Error **errp),
+                               ObjectPropertyLinkFlags flags);
+ 
++
++/**
++ * object_resolve_and_typecheck:
++ * @path: path to look up
++ * @name: name of property we are resolving for (used only in error messages)
++ * @target_type: QOM type we expect @path to resolve to
++ * @errp: error
++ *
++ * Look up the object at @path and return it. If it does not have
++ * the correct type @target_type, return NULL and set @errp.
++ *
++ * This is similar to object_resolve_path_type(), but it insists on
++ * a non-ambiguous path and it produces error messages that are specialised
++ * to the use case of setting a link property on an object.
++ */
++Object *object_resolve_and_typecheck(const char *path,
++                                     const char *name,
++                                     const char *target_type, Error **errp);
++
+ /**
+  * object_property_add_str:
+  * @obj: the object to add a property to
+diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
+index 147b3ffd16e..47142769179 100644
+--- a/hw/core/qdev-properties.c
++++ b/hw/core/qdev-properties.c
+@@ -601,6 +601,7 @@ static Property array_elem_prop(Object *obj, const Property *parent_prop,
+          * being inside the device struct.
+          */
+         .offset = (uintptr_t)elem - (uintptr_t)obj,
++        .link_type = parent_prop->link_type,
+     };
+ }
+ 
+@@ -883,6 +884,12 @@ void qdev_prop_set_array(DeviceState *dev, const char *name, QList *values)
+     qobject_unref(values);
+ }
+ 
++void qlist_append_link(QList *qlist, Object *obj)
++{
++    g_autofree char *path = object_get_canonical_path(obj);
++    qlist_append_str(qlist, path);
++}
++
+ static GPtrArray *global_props(void)
+ {
+     static GPtrArray *gp;
+@@ -992,9 +999,82 @@ static ObjectProperty *create_link_property(ObjectClass *oc, const char *name,
+                                           OBJ_PROP_LINK_STRONG);
+ }
+ 
++/*
++ * The logic in these get_link() and set_link() functions is similar
++ * to that used for single-element link properties in the
++ * object_get_link_property() and object_set_link_property() functions.
++ * The difference is largely in how we get the expected type of the
++ * link: for us it is in the Property struct, and for a single link
++ * property it is part of the property name on the object.
++ */
++static void get_link(Object *obj, Visitor *v, const char *name, void *opaque,
++                     Error **errp)
++{
++    const Property *prop = opaque;
++    Object **targetp = object_field_prop_ptr(obj, prop);
++    g_autofree char *path = NULL;
++
++    if (*targetp) {
++        path = object_get_canonical_path(*targetp);
++        visit_type_str(v, name, &path, errp);
++    } else {
++        path = g_strdup("");
++        visit_type_str(v, name, &path, errp);
++    }
++}
++
++static void set_link(Object *obj, Visitor *v, const char *name, void *opaque,
++                     Error **errp)
++{
++    const Property *prop = opaque;
++    Object **targetp = object_field_prop_ptr(obj, prop);
++    g_autofree char *path = NULL;
++    Object *new_target, *old_target = *targetp;
++
++    ERRP_GUARD();
++
++    /* Get the path to the object we want to set the link to */
++    if (!visit_type_str(v, name, &path, errp)) {
++        return;
++    }
++    printf("got path %s ptr %p\n", path, targetp);
++
++    /* Now get the pointer to the actual object */
++    if (*path) {
++        new_target = object_resolve_and_typecheck(path, prop->name,
++                                                  prop->link_type, errp);
++        if (!new_target) {
++            return;
++        }
++    } else {
++        new_target = NULL;
++    }
++    printf("got new_target %p\n", new_target);
++
++    /*
++     * Our link properties are always OBJ_PROP_LINK_STRONG and
++     * have the allow_set_link_before_realize check.
++     */
++    qdev_prop_allow_set_link_before_realize(obj, prop->name, new_target, errp);
++    if (*errp) {
++        return;
++    }
++
++    *targetp = new_target;
++    object_ref(new_target);
++    object_unref(old_target);
++}
++
+ const PropertyInfo qdev_prop_link = {
+     .type = "link",
+     .create = create_link_property,
++    /*
++     * Since we have a create method, the get and set are used
++     * only in get_prop_array() and set_prop_array() for the case
++     * where we have an array of link properties.
++     */
++    .get = get_link,
++    .set = set_link,
+ };
+ 
+ void qdev_property_add_static(DeviceState *dev, const Property *prop)
+diff --git a/qom/object.c b/qom/object.c
+index 1856bb36c74..6490548bcb1 100644
+--- a/qom/object.c
++++ b/qom/object.c
+@@ -1894,26 +1894,13 @@ static void object_get_link_property(Object *obj, Visitor *v,
+     }
+ }
+ 
+-/*
+- * object_resolve_link:
+- *
+- * Lookup an object and ensure its type matches the link property type.  This
+- * is similar to object_resolve_path() except type verification against the
+- * link property is performed.
+- *
+- * Returns: The matched object or NULL on path lookup failures.
+- */
+-static Object *object_resolve_link(Object *obj, const char *name,
+-                                   const char *path, Error **errp)
++Object *object_resolve_and_typecheck(const char *path,
++                                     const char *name,
++                                     const char *target_type, Error **errp)
+ {
+-    const char *type;
+-    char *target_type;
+     bool ambiguous = false;
+     Object *target;
+ 
+-    /* Go from link<FOO> to FOO.  */
+-    type = object_property_get_type(obj, name, NULL);
+-    target_type = g_strndup(&type[5], strlen(type) - 6);
+     target = object_resolve_path_type(path, target_type, &ambiguous);
+ 
+     if (ambiguous) {
+@@ -1930,11 +1917,30 @@ static Object *object_resolve_link(Object *obj, const char *name,
+         }
+         target = NULL;
+     }
+-    g_free(target_type);
+-
+     return target;
+ }
+ 
++/*
++ * object_resolve_link:
++ *
++ * Lookup an object and ensure its type matches the link property type.  This
++ * is similar to object_resolve_path() except type verification against the
++ * link property is performed.
++ *
++ * Returns: The matched object or NULL on path lookup failures.
++ */
++static Object *object_resolve_link(Object *obj, const char *name,
++                                   const char *path, Error **errp)
++{
++    const char *type;
++    g_autofree char *target_type = NULL;
++
++    /* Go from link<FOO> to FOO.  */
++    type = object_property_get_type(obj, name, NULL);
++    target_type = g_strndup(&type[5], strlen(type) - 6);
++    return object_resolve_and_typecheck(path, name, target_type, errp);
++}
++
+ static void object_set_link_property(Object *obj, Visitor *v,
+                                      const char *name, void *opaque,
+                                      Error **errp)
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
