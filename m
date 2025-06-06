@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46363C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:44:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B70BCC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:44:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNWM8-00063I-2l; Fri, 06 Jun 2025 08:39:34 -0400
+	id 1uNWL6-0004tA-OG; Fri, 06 Jun 2025 08:38:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWJO-0003qT-ND
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uNWJ7-0003V1-5J
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWJL-00061U-2i
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:42 -0400
+ id 1uNWJ4-000602-NI
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749213396;
+ s=mimecast20190719; t=1749213381;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=GrcwJxyFvjJ8kIq5UYIgWeREzkk5jO+by21HvIVwTtM=;
- b=hdE5GyQB3U66rAEYXse0da4YkoYSeiQbl4gn9oTJ1QPHSO3SnLmfATanXz40603fbjwGL+
- n5zAIuTNL/Odno+gZLd4o+OyDDTtxwcXV+KuZnTV9dw+xC2I8mmqJm1Q8+rGmxgYqmN+US
- 53NFFB9AvtiS2l3VdV/sD0VEf5mK+20=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=h/OYOGxT4Py9fvxqOnTI/FCsh6WbDenbHkCr+dNtijQ=;
+ b=ihIbijZyOc2X2ORVR8PepIpUz0G3VPktrZdlTa3X52DdtuwF4vk/Og7+lRKyy739sRFJFZ
+ XHgDV64Eriglqf2HFFa/tTDaXafZXRus+I6PqWvHy5yDjN4Nl5Pu2D6/mbO1bYl08ET264
+ 5Dad0jNOMg+0yrgWI1oRJPfYrxoHPWE=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-gRytHlH6ND-WcFN1RucwlQ-1; Fri, 06 Jun 2025 08:36:35 -0400
-X-MC-Unique: gRytHlH6ND-WcFN1RucwlQ-1
-X-Mimecast-MFC-AGG-ID: gRytHlH6ND-WcFN1RucwlQ_1749213393
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451d3f03b74so12344825e9.3
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:36:34 -0700 (PDT)
+ us-mta-651-9tbwzWm_N_WHix40W91UDA-1; Fri, 06 Jun 2025 08:36:20 -0400
+X-MC-Unique: 9tbwzWm_N_WHix40W91UDA-1
+X-Mimecast-MFC-AGG-ID: 9tbwzWm_N_WHix40W91UDA_1749213379
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so1152330f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:36:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749213392; x=1749818192;
+ d=1e100.net; s=20230601; t=1749213378; x=1749818178;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=GrcwJxyFvjJ8kIq5UYIgWeREzkk5jO+by21HvIVwTtM=;
- b=e1yxD19P2ePCqBLpJfZVvlbs06UnvpP1fynQwCsZvHHYPvYXO5XmYz8KtKepSEISp/
- JYuxl4KC0wdkqQeUP9rj6Ss7uLa2NFH+tO+M4Sd4tRx1blUqK6OcdAtFWKu02a0YiYGX
- fwci/wnjd5y6c/jHCf/7hnB9B4T8Sl7ZO63x7e7DzFjw07h7PN4xrPg6B8J6OF0zoZH3
- +r0DyHPU3b8MJbEaR1ktcRr2QmDNkMQ9AkJdB29UU6EaPCKrsowj7gWPQSBXAdmY36J+
- yUs5xgx3/+gwFXMI64dUX+9emWOlXkAbi9uAowxnlp5NWt2iU+Ntwg5orTp7dYv5qqEp
- ROEg==
-X-Gm-Message-State: AOJu0YywIjd2P8Aszi5uHvl6nBM1WoBnKw+8/Hxj9SLDIeookCoUQV7J
- pVyiMhDviBGu7KgsgL/z6kEcPQaQt0+FNBMmZ0b+quJpff8hIl1WAr/oQGriPaCS4CxL3THX1U0
- WMp/P1ONMm3ZrnlNoK68s+6nGA3PZVOy45+glPkb+hRGhU8IvKRnIvrpgLv783ur9HMbR4v4kG/
- 5U/3gLUjBX07NW6Ez97H28lEljhYA46CJN+1OsPt8v
-X-Gm-Gg: ASbGncsk+HOVQnHmAwsiPUgs3z0S8q284vRsjbN9QMTNiLfeUQ/2J64vaytqOroTXhU
- 7NDDAoEYsWP8dE10690FxJlPWkftwzvqic+x3pk5A+6/9XAT16tZB0GPM3x2zjpKUUG7aX6yPd7
- zJRLhW+plLN6zfa5T95pBPe5Oh2cw+sQRhwHQM54Jt1uVE90NvM2dK6b+AlbrR5OPHjZmvJNuAN
- u2rPGXXWxGf7JVtRfoYjPNCJEP/kM7ElK9ZhT04hfQVviPereHcKDnBbi3kkaiqrH1+I1mj76VF
- a9J/7EX+DLICK0KvuS6J56vL
-X-Received: by 2002:a05:600c:3b10:b0:450:cd25:e69c with SMTP id
- 5b1f17b1804b1-452013d1f6bmr31345665e9.21.1749213392101; 
- Fri, 06 Jun 2025 05:36:32 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHfbZihIa9Rh3GABVmBSKBEfUJZ1x5TXRHRY/BgNF90pG55/pNnUc/4JiikKeF2sItBhv59hg==
-X-Received: by 2002:a05:600c:3b10:b0:450:cd25:e69c with SMTP id
- 5b1f17b1804b1-452013d1f6bmr31345405e9.21.1749213391615; 
- Fri, 06 Jun 2025 05:36:31 -0700 (PDT)
+ bh=h/OYOGxT4Py9fvxqOnTI/FCsh6WbDenbHkCr+dNtijQ=;
+ b=P9KRfka7Z4byUDtnlig7BjLlaYJuemz8wjobSB3BOzlkl0tMI7P+BzltiExB6HRl5M
+ newQHUaCZuGGqeDNan7NtljezLM5Y1lWisMtGtILEgtPZWXgdXh/Cwh/rE7QKcrkWSlz
+ FVXnImHex4YcHz3nunjRnqPbutcRPviVP3BJVIAmKQCkp19Ew0v7KUOItL9s8pNhk8tY
+ OV0Fhul5oDUy1gmu5M9sk8qepfN5Z8LLsAEw7rxe4Jr+xOkrmo737GWgB6+cGE2u0W1P
+ 3TDnuQ4amm0RDq2g5u0D/g93g3XKzz1kN9rKyD4DId2vP707jip6XkxX4ziNW2APJNr2
+ 9sHA==
+X-Gm-Message-State: AOJu0Yw8olq3jKLrBQBCJePjZEK1qf/vpXA2yewy/3z2IEAgJ8wFadW2
+ GDVXgw3Z71/zOSWiQBf7zbL0DTzGNZ8Ios9UT00yLX8Po4xUl8DsvEg1W3z9Wv/17HvuZkCAr9E
+ EpMlfz+M7B7MrfYMmY/8SIoI5s3Iewe/9Z86UsuZTseXX8IeAW/g9eDz0lAoBtivtrNH+/mJp/l
+ fdW86WnRaBkfhR2303sHIQo6QvaRGwQ/87J4zRXa6T
+X-Gm-Gg: ASbGncuPOFVtHZ4qIMmxHbOrp0VohOLmAX0HVO3t2Yhjk6Xn2bsx5H7u8KSt5SwogFS
+ eosA9BzBJg7cyze4Vn6C5K1u+x+0+r7s6bliLgsSq0i9vxNs+AmZ/v379R5PMFlS+ZoVT5k9+C+
+ FiQU7QnjU1n5GkUYFoAKQD0RWJDRmHNoYFmp+U3haG0w8SBF/HCPoR+ac6JUsMy3RcTvTxoTbd5
+ kuP6r2K7fbjhHLSNlC+WeNZTSo9VPynjoWTn/Up8IxEU3vG8LWWNgp5YiwMrH852miMRvIJHI3o
+ pypRgGdYo8fU9hbOyXbKuG5k
+X-Received: by 2002:a05:6000:2310:b0:3a4:cec5:b59c with SMTP id
+ ffacd0b85a97d-3a526e1cf0fmr7369632f8f.25.1749213378074; 
+ Fri, 06 Jun 2025 05:36:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE6hqdQ12+B5TulpjL/iF1elf9cft/7dagENTRrTamCfJa6piTmN0lDIEn5rk8txKqMVlXHGQ==
+X-Received: by 2002:a05:6000:2310:b0:3a4:cec5:b59c with SMTP id
+ ffacd0b85a97d-3a526e1cf0fmr7369611f8f.25.1749213377501; 
+ Fri, 06 Jun 2025 05:36:17 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4521370936esm22684215e9.20.2025.06.06.05.36.29
+ 5b1f17b1804b1-45213709729sm22626255e9.19.2025.06.06.05.36.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 05:36:29 -0700 (PDT)
+ Fri, 06 Jun 2025 05:36:15 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 30/31] target/i386: Wire up MXCSR.DE and FPUS.DE correctly
-Date: Fri,  6 Jun 2025 14:34:44 +0200
-Message-ID: <20250606123447.538131-31-pbonzini@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PULL 26/31] migration/postcopy: Replace QemuSemaphore with QemuEvent
+Date: Fri,  6 Jun 2025 14:34:40 +0200
+Message-ID: <20250606123447.538131-27-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250606123447.538131-1-pbonzini@redhat.com>
 References: <20250606123447.538131-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -109,62 +108,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-The x86 DE bit in the FPU and MXCSR status is supposed to be set
-when an input denormal is consumed. We didn't previously report
-this from softfloat, so the x86 code either simply didn't set
-the DE bit or else incorrectly wired it up to denormal_flushed,
-depending on which register you looked at.
+thread_sync_sem is an one-shot event so it can be converted into
+QemuEvent, which is more lightweight.
 
-Now we have input_denormal_used we can wire up these DE bits
-with the semantics they are supposed to have.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Link: https://lore.kernel.org/r/20250519145114.2786534-4-peter.maydell@linaro.org
+Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Link: https://lore.kernel.org/r/20250529-event-v5-9-53b285203794@daynix.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/fpu_helper.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ migration/migration.h    |  4 ++--
+ migration/postcopy-ram.c | 10 +++++-----
+ migration/savevm.c       |  2 +-
+ 3 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/target/i386/tcg/fpu_helper.c b/target/i386/tcg/fpu_helper.c
-index 4732b718129..b3b23823fda 100644
---- a/target/i386/tcg/fpu_helper.c
-+++ b/target/i386/tcg/fpu_helper.c
-@@ -215,7 +215,7 @@ static void merge_exception_flags(CPUX86State *env, int old_flags)
-                        (new_flags & float_flag_overflow ? FPUS_OE : 0) |
-                        (new_flags & float_flag_underflow ? FPUS_UE : 0) |
-                        (new_flags & float_flag_inexact ? FPUS_PE : 0) |
--                       (new_flags & float_flag_input_denormal_flushed ? FPUS_DE : 0)));
-+                       (new_flags & float_flag_input_denormal_used ? FPUS_DE : 0)));
+diff --git a/migration/migration.h b/migration/migration.h
+index aaec471c00f..739289de934 100644
+--- a/migration/migration.h
++++ b/migration/migration.h
+@@ -98,9 +98,9 @@ struct MigrationIncomingState {
+     void (*transport_cleanup)(void *data);
+     /*
+      * Used to sync thread creations.  Note that we can't create threads in
+-     * parallel with this sem.
++     * parallel with this event.
+      */
+-    QemuSemaphore  thread_sync_sem;
++    QemuEvent  thread_sync_event;
+     /*
+      * Free at the start of the main state load, set as the main thread finishes
+      * loading state.
+diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
+index 995614b38c9..75fd310fb2b 100644
+--- a/migration/postcopy-ram.c
++++ b/migration/postcopy-ram.c
+@@ -90,10 +90,10 @@ void postcopy_thread_create(MigrationIncomingState *mis,
+                             QemuThread *thread, const char *name,
+                             void *(*fn)(void *), int joinable)
+ {
+-    qemu_sem_init(&mis->thread_sync_sem, 0);
++    qemu_event_init(&mis->thread_sync_event, false);
+     qemu_thread_create(thread, name, fn, mis, joinable);
+-    qemu_sem_wait(&mis->thread_sync_sem);
+-    qemu_sem_destroy(&mis->thread_sync_sem);
++    qemu_event_wait(&mis->thread_sync_event);
++    qemu_event_destroy(&mis->thread_sync_event);
  }
  
- static inline floatx80 helper_fdiv(CPUX86State *env, floatx80 a, floatx80 b)
-@@ -3254,6 +3254,7 @@ void update_mxcsr_status(CPUX86State *env)
+ /* Postcopy needs to detect accesses to pages that haven't yet been copied
+@@ -964,7 +964,7 @@ static void *postcopy_ram_fault_thread(void *opaque)
+     trace_postcopy_ram_fault_thread_entry();
+     rcu_register_thread();
+     mis->last_rb = NULL; /* last RAMBlock we sent part of */
+-    qemu_sem_post(&mis->thread_sync_sem);
++    qemu_event_set(&mis->thread_sync_event);
  
-     /* Set exception flags.  */
-     set_float_exception_flags((mxcsr & FPUS_IE ? float_flag_invalid : 0) |
-+                              (mxcsr & FPUS_DE ? float_flag_input_denormal_used : 0) |
-                               (mxcsr & FPUS_ZE ? float_flag_divbyzero : 0) |
-                               (mxcsr & FPUS_OE ? float_flag_overflow : 0) |
-                               (mxcsr & FPUS_UE ? float_flag_underflow : 0) |
-@@ -3270,14 +3271,8 @@ void update_mxcsr_status(CPUX86State *env)
- void update_mxcsr_from_sse_status(CPUX86State *env)
- {
-     int flags = get_float_exception_flags(&env->sse_status);
--    /*
--     * The MXCSR denormal flag has opposite semantics to
--     * float_flag_input_denormal_flushed (the softfloat code sets that flag
--     * only when flushing input denormals to zero, but SSE sets it
--     * only when not flushing them to zero), so is not converted
--     * here.
--     */
-     env->mxcsr |= ((flags & float_flag_invalid ? FPUS_IE : 0) |
-+                   (flags & float_flag_input_denormal_used ? FPUS_DE : 0) |
-                    (flags & float_flag_divbyzero ? FPUS_ZE : 0) |
-                    (flags & float_flag_overflow ? FPUS_OE : 0) |
-                    (flags & float_flag_underflow ? FPUS_UE : 0) |
+     struct pollfd *pfd;
+     size_t pfd_len = 2 + mis->postcopy_remote_fds->len;
+@@ -1716,7 +1716,7 @@ void *postcopy_preempt_thread(void *opaque)
+ 
+     rcu_register_thread();
+ 
+-    qemu_sem_post(&mis->thread_sync_sem);
++    qemu_event_set(&mis->thread_sync_event);
+ 
+     /*
+      * The preempt channel is established in asynchronous way.  Wait
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 006514c3e30..52105dd2f10 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2078,7 +2078,7 @@ static void *postcopy_ram_listen_thread(void *opaque)
+ 
+     migrate_set_state(&mis->state, MIGRATION_STATUS_ACTIVE,
+                                    MIGRATION_STATUS_POSTCOPY_ACTIVE);
+-    qemu_sem_post(&mis->thread_sync_sem);
++    qemu_event_set(&mis->thread_sync_event);
+     trace_postcopy_ram_listen_thread_start();
+ 
+     rcu_register_thread();
 -- 
 2.49.0
 
