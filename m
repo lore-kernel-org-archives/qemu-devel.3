@@ -4,78 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EEACC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:15:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFB23C5B559
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:17:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNU61-0001Z0-9b; Fri, 06 Jun 2025 06:14:45 -0400
+	id 1uNU8C-0002aO-RW; Fri, 06 Jun 2025 06:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNU5x-0001Xt-KG
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:14:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNU5v-0000F8-0S
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:14:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749204876;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=BCbIyiqEhxKCXJZHwh71NMDxqKoyGU9R+wWtHoALYqo=;
- b=JEida8XWdQG38ai/8gkFo9uDmlzVvuU253SKNOJi0cl66Pwb9kHoHbZA1TQwP4k2KvTJcq
- KivtMHDirJBdp9EXu6p3qFyDf12VIxg8xKovLI3aI/xmkjcHm76BnaZ1DqaHd89XDxFW9Q
- FT0DjG8P9vtZUISIlVS4z9MGigeZYl8=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-223-AZZvhBU2MA-PzB3gBHZIKg-1; Fri,
- 06 Jun 2025 06:14:33 -0400
-X-MC-Unique: AZZvhBU2MA-PzB3gBHZIKg-1
-X-Mimecast-MFC-AGG-ID: AZZvhBU2MA-PzB3gBHZIKg_1749204871
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D206218002BD; Fri,  6 Jun 2025 10:14:31 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79976195E74A; Fri,  6 Jun 2025 10:14:26 +0000 (UTC)
-Date: Fri, 6 Jun 2025 11:14:23 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>
-Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, walling@linux.ibm.com, jjherne@linux.ibm.com,
- jrossi@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
- certificate store
-Message-ID: <aEK_f57-kymX4_Iu@redhat.com>
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-3-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNU88-0002Z5-Am
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:16:59 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNU84-0000nB-Sg
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:16:54 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-604f26055c6so6024349a12.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 03:16:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749205011; x=1749809811; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UikEJ81MNENXFoo/Ycn310wAJxzi7CV52YomLicIYtc=;
+ b=zg2G0gs0pdyYvtu+jxyvjfKuj34IM3ZB8CoaMIHUCOFz+0Ela1p7KP6ERaMFsjCT2W
+ z0rqhuMqxBvWOW6KtdXJjq8iChB8h3g+b3x43G2FpHDGPuo1O8CKNT5/J+XFRhAgQxXL
+ GruMgYcYNdWxxj2HbaA3YhofxShK8U/Ag4pS8Gb6sPNtbYJb8Vvqj8w5Eq+F+8lGLioj
+ xwBzeEI4av/DRGbNnpJKcO+MrqC3QQd2who4JiERUfv61qPS4c+byIRz0MvbsuFm7Cs6
+ qjSuAQ2n+oEdSJmhDJ7vYFmCA2ilK45OfV8TpptjOH2OPG0hZeArT3u4+ibycUdBVCnK
+ 6Tbg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749205011; x=1749809811;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=UikEJ81MNENXFoo/Ycn310wAJxzi7CV52YomLicIYtc=;
+ b=DRE4SBw+OqBeg4smv+3eEwcNQ1YZ/ON9Mku0FJ2Nr5nh7yWP0zRdzkbYrBfWyjjbSz
+ e3WilxZsF5598koPUrocqj7pSXWR7Z5scUZMGr3dnqAy4FO5g2mrLzX1pFbKq36QaDuA
+ voQaNo1GPCXgcitQ2EDLkZt6L4GmIuIkOAVVAxmcWYEnVU1MNos/31Jax/RlQSZubzsD
+ JpqwbSRTw1VH7jY4XpY9YFwDL5H9eK/Pxdi/v0ZrV3Lqxsik6iyaOY0J2JLqDEx43DPN
+ jaaPwljItsWgxr8kyb5ZsWhpkG11/3hk1SV3oxe2nuu7y6HXiLuVzUCyr9UGh26u1B5C
+ ERTw==
+X-Gm-Message-State: AOJu0YwFnI8pPjU6iJEpK8kxs0DTHLKdhlDrcjCjMumtlWVrW80HQVEF
+ FsrdX8EBsnEqxCPMUz8J9KyJzgSRFqjj+2QG21kKPRgPFhVdLYZ+GnyLrWoNrIi0GJNPEa7gPXp
+ QljvXtK8=
+X-Gm-Gg: ASbGnctcv1a+l443IZmbkDhEMRMP7iGQguQ4WSDLG1537c9yyP4L0DssMQoZEtrn19t
+ 93zChLw8ExVt0mTPUvDtxRq/wnI6NMmOc8h3tf1h9HxZNUw2Zm8/xOvod+5Ryldxi6m07+Deuz1
+ Kf6GBkwjtUEL/qYHn3Xplr4YPuLZaHArBJOkJPT1fWw1rkxyhfcemxvGv5+wIryWuPqO0l4V4dB
+ IkYzS5EPX4nNDzT7U3xjAPdiP/ZdGHItUj4pajNPMapY4hbhTE/8S7sdTi/5WiJzmJyaGBXKeDb
+ Iioa0WAEQAeoIHIZg0y9rYfudTO2g+Qbfk/LoBUiW1sx0MEFEN8jwAj2kI80QtM=
+X-Google-Smtp-Source: AGHT+IF9tbwwADZS/N8zhsgA6iNmMmf7EL+DxRkXLTGBEwjneswhb2tGWWQ5eP8u2NusSai/TJKdTA==
+X-Received: by 2002:a17:907:7ba1:b0:ad8:93a3:29a0 with SMTP id
+ a640c23a62f3a-ade1a9de788mr247876966b.18.1749204997675; 
+ Fri, 06 Jun 2025 03:16:37 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ade1dc7b202sm91694966b.161.2025.06.06.03.16.36
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Jun 2025 03:16:37 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 6905C5F7E1;
+ Fri, 06 Jun 2025 11:16:36 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org,  Sriram Yagnaraman
+ <sriram.yagnaraman@ericsson.com>,  "Michael S. Tsirkin" <mst@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,  Paolo Bonzini
+ <pbonzini@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,  John
+ Snow <jsnow@redhat.com>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Peter Xu
+ <peterx@redhat.com>,  Fabiano Rosas <farosas@suse.de>,
+ qemu-arm@nongnu.org,  Thomas Huth <thuth@redhat.com>,  Alexandre Iooss
+ <erdnaxe@crans.org>,  Gustavo Romero <gustavo.romero@linaro.org>,  Markus
+ Armbruster <armbru@redhat.com>,  David Hildenbrand <david@redhat.com>,
+ Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Laurent Vivier
+ <lvivier@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,  Manos Pitsidianakis
+ <manos.pitsidianakis@linaro.org>,  qemu-stable@nongnu.org
+Subject: Re: [PATCH v4 09/17] hw/display: re-arrange memory region tracking
+In-Reply-To: <5f91c8a2-06ce-45f8-97bd-0602a52e0d21@daynix.com> (Akihiko
+ Odaki's message of "Fri, 6 Jun 2025 18:40:06 +0900")
+References: <20250603110204.838117-1-alex.bennee@linaro.org>
+ <20250603110204.838117-10-alex.bennee@linaro.org>
+ <1a86b86d-145a-44fc-9f87-2804767fb109@daynix.com>
+ <87o6v2764e.fsf@draig.linaro.org>
+ <5f91c8a2-06ce-45f8-97bd-0602a52e0d21@daynix.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Fri, 06 Jun 2025 11:16:36 +0100
+Message-ID: <87tt4t41kr.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250604215657.528142-3-zycai@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
-X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,126 +119,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 05:56:30PM -0400, Zhuoying Cai wrote:
-> Add helper functions for x509 certificate which will be used in the next
-> patch for the certificate store.
-> 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  crypto/meson.build          |   5 +-
->  crypto/x509-utils.c         | 166 ++++++++++++++++++++++++++++++++++++
->  include/crypto/x509-utils.h |  54 ++++++++++++
->  qapi/crypto.json            |  80 +++++++++++++++++
->  4 files changed, 301 insertions(+), 4 deletions(-)
+Akihiko Odaki <akihiko.odaki@daynix.com> writes:
 
+> On 2025/06/05 20:57, Alex Benn=C3=A9e wrote:
+>> Akihiko Odaki <akihiko.odaki@daynix.com> writes:
+>>=20
+>>> On 2025/06/03 20:01, Alex Benn=C3=A9e wrote:
+>>>> QOM objects can be embedded in other QOM objects and managed as part
+>>>> of their lifetime but this isn't the case for
+>>>> virtio_gpu_virgl_hostmem_region. However before we can split it out we
+>>>> need some other way of associating the wider data structure with the
+>>>> memory region.
+>>>> Fortunately MemoryRegion has an opaque pointer. This is passed down
+>>>> to
+>>>> MemoryRegionOps for device type regions but is unused in the
+>>>> memory_region_init_ram_ptr() case. Use the opaque to carry the
+>>>> reference and allow the final MemoryRegion object to be reaped when
+>>>> its reference count is cleared.
+>>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+>>>> Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+>>>> Cc: qemu-stable@nongnu.org
+>>>> ---
+>>>>    include/system/memory.h       |  1 +
+>>>>    hw/display/virtio-gpu-virgl.c | 23 ++++++++---------------
+>>>>    2 files changed, 9 insertions(+), 15 deletions(-)
+>>>> diff --git a/include/system/memory.h b/include/system/memory.h
+>>>> index fc35a0dcad..90715ff44a 100644
+>>>> --- a/include/system/memory.h
+>>>> +++ b/include/system/memory.h
+>>>> @@ -784,6 +784,7 @@ struct MemoryRegion {
+>>>>        DeviceState *dev;
+>>>>          const MemoryRegionOps *ops;
+>>>> +    /* opaque data, used by backends like @ops */
+>>>>        void *opaque;
+>>>>        MemoryRegion *container;
+>>>>        int mapped_via_alias; /* Mapped via an alias, container might b=
+e NULL */
+>>>> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-vir=
+gl.c
+>>>> index 145a0b3879..71a7500de9 100644
+>>>> --- a/hw/display/virtio-gpu-virgl.c
+>>>> +++ b/hw/display/virtio-gpu-virgl.c
+>>>> @@ -52,17 +52,11 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+>>>>      #if VIRGL_VERSION_MAJOR >=3D 1
+>>>>    struct virtio_gpu_virgl_hostmem_region {
+>>>> -    MemoryRegion mr;
+>>>> +    MemoryRegion *mr;
+>>>>        struct VirtIOGPU *g;
+>>>>        bool finish_unmapping;
+>>>>    };
+>>>>    -static struct virtio_gpu_virgl_hostmem_region *
+>>>> -to_hostmem_region(MemoryRegion *mr)
+>>>> -{
+>>>> -    return container_of(mr, struct virtio_gpu_virgl_hostmem_region, m=
+r);
+>>>> -}
+>>>> -
+>>>>    static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+>>>>    {
+>>>>        VirtIOGPU *g =3D opaque;
+>>>> @@ -73,14 +67,12 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *=
+opaque)
+>>>>    static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+>>>>    {
+>>>>        MemoryRegion *mr =3D MEMORY_REGION(obj);
+>>>> -    struct virtio_gpu_virgl_hostmem_region *vmr;
+>>>> +    struct virtio_gpu_virgl_hostmem_region *vmr =3D mr->opaque;
+>>>>        VirtIOGPUBase *b;
+>>>>        VirtIOGPUGL *gl;
+>>>>    -    vmr =3D to_hostmem_region(mr);
+>>>> -    vmr->finish_unmapping =3D true;
+>>>> -
+>>>>        b =3D VIRTIO_GPU_BASE(vmr->g);
+>>>> +    vmr->finish_unmapping =3D true;
+>>>>        b->renderer_blocked--;
+>>>>          /*
+>>>> @@ -118,8 +110,8 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+>>>>          vmr =3D g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
+>>>>        vmr->g =3D g;
+>>>> +    mr =3D g_new0(MemoryRegion, 1);
+>>>
+>>> This patch does nothing more than adding a separate allocation for
+>>> MemoryRegion. Besides there is no corresponding g_free(). This patch
+>>> can be simply dropped.
+>> As the patch says the MemoryRegion is now free'd when it is
+>> de-referenced. Do you have a test case showing it leaking?
+>
+> "De-referenced" is confusing and sounds like pointer dereferencing.
+>
+> OBJECT(mr)->free, which has virtio_gpu_virgl_hostmem_region_free() as
+> its value, will be called to free mr when the references of mr are
+> removed. This patch however does not add a corresponding g_free() call
+> to virtio_gpu_virgl_hostmem_region_free(), leaking mr.
+>
+> AddressSanitizer will catch the memory leak.
 
-> +int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
-> +                                QCryptoCertFmt fmt, Error **errp)
-> +{
-> +    int rc;
-> +    int ret = -1;
-> +    gnutls_x509_crt_t crt;
-> +    gnutls_datum_t datum = {.data = cert, .size = size};
-> +
-> +    if (fmt >= G_N_ELEMENTS(qcrypto_to_gnutls_cert_fmt_map)) {
-> +        error_setg(errp, "Unknown certificate format");
-> +        return ret;
-> +    }
-> +
-> +    if (gnutls_x509_crt_init(&crt) < 0) {
-> +        error_setg(errp, "Failed to initialize certificate");
-> +        return ret;
-> +    }
-> +
-> +    rc = gnutls_x509_crt_import(crt, &datum, qcrypto_to_gnutls_cert_fmt_map[fmt]);
-> +    if (rc == GNUTLS_E_ASN1_TAG_ERROR) {
-> +        goto cleanup;
-> +    }
-> +
-> +    ret = 0;
-> +
-> +cleanup:
-> +    gnutls_x509_crt_deinit(crt);
-> +    return ret;
-> +}
+Example invocation?
 
-On reflection I think this method should be removed entirely.
-In terms of QEMU command line we should exclusively allow
-certs in PEM format only. If we need DER format internally,
-we can use gnutls to convert from PEM to DER.
+I ran the AddressSantizier against all the virtio-gpu tests yesterday
+and it did not complain.
 
-> +
-> +int qcrypto_get_x509_hash_len(QCryptoHashAlgo alg)
-> +{
-> +    if (alg >= G_N_ELEMENTS(qcrypto_to_gnutls_hash_alg_map)) {
-> +        return 0;
-> +    }
-> +
-> +    return gnutls_hash_get_len(qcrypto_to_gnutls_hash_alg_map[alg]);
-> +}
-> +
-> +int qcrypto_get_x509_keyid_len(QCryptoKeyidFlags flag)
-> +{
-> +    QCryptoHashAlgo alg;
-> +
-> +    if (flag >= G_N_ELEMENTS(qcrypto_to_gnutls_keyid_flags_map)) {
-> +        return 0;
-> +    }
-> +
-> +    alg = QCRYPTO_HASH_ALGO_SHA1;
-> +    if ((flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_SHA512]) ||
-> +        (flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_BEST_KNOWN])) {
-> +        alg = QCRYPTO_HASH_ALGO_SHA512;
-> +    } else if (flag & qcrypto_to_gnutls_keyid_flags_map[QCRYPTO_KEYID_FLAGS_SHA256]) {
-> +        alg = QCRYPTO_HASH_ALGO_SHA256;
-> +    }
-> +
-> +    return qcrypto_get_x509_hash_len(alg);
-> +}
-> +
-> +static int qcrypto_import_x509_cert(gnutls_x509_crt_t crt, gnutls_datum_t *datum)
-> +{
-> +    int rc;
-> +
-> +    rc = gnutls_x509_crt_import(crt, datum, GNUTLS_X509_FMT_PEM);
-> +    if (rc) {
-> +        rc = gnutls_x509_crt_import(crt, datum, GNUTLS_X509_FMT_DER);
-> +    }
-> +
-> +    return rc;
-> +}
+>
+> Regards,
+> Akihiko Odaki
 
-This method can go away too if we declare the public interface
-is exclusively PEM.
-
-
-> +
-> +##
-> +# @QCryptoCertFmt:
-> +#
-> +# The supported certificate encoding formats
-> +#
-> +# @der: DER
-> +#
-> +# @pem: PEM
-> +#
-> +# Since: 10.1
-> +##
-> +{ 'enum': 'QCryptoCertFmt',
-> +  'data': ['der', 'pem']}
-
-This can go away too if we declare we only use PEM.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
