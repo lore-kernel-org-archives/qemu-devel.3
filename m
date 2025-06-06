@@ -4,115 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7B5BAC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BD1AC61CE7
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 16:06:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNZNX-0002un-92; Fri, 06 Jun 2025 11:53:11 -0400
+	id 1uNZaF-00016l-6V; Fri, 06 Jun 2025 12:06:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uNZNV-0002uf-Ox
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:53:09 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uNZNT-0003IR-Uq
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:53:09 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uNZaC-000162-1r
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:06:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uNZa9-00069a-Lt
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 12:06:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749225969;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2lF8RCKT2vYzPb2tvZFRZb1NgpoqlwqymajuTMOOhn4=;
+ b=QYpSX3/H0zqo9W0RJYjiZhlMu99BcjibdJ2VPj4/+5z8nBw/nV3Rddp8aFmNWTrLG2yyvw
+ wzY6Zhj10B0n5u4qynmVGRICoiDaISAAfAxObCytoqLA/k+aVT9pnoOGgNJmJtOy8DY1We
+ d1nnmUsDDWWs92ZPTaVoAoAZ5V1vAOs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-zaTOTwR8NIWY7LTq1ZHcIw-1; Fri,
+ 06 Jun 2025 12:06:08 -0400
+X-MC-Unique: zaTOTwR8NIWY7LTq1ZHcIw-1
+X-Mimecast-MFC-AGG-ID: zaTOTwR8NIWY7LTq1ZHcIw_1749225967
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 94A0E21114;
- Fri,  6 Jun 2025 15:53:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749225186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
- b=k8C3HcloMT4UotIKQVFDrGSPAeVsFdB6vxe/XOTE9pQn/wccQb4OTlPU8Gs3V+X2zJX4nC
- 0vcF1AzITI8MHtxO6H/qP7W5CmfZwP2Q0gJePZbwT0jmEfB+RvRFR1Awq7kolrxJnwgQku
- 13XvUMi97W6H5TWHOuckPQVmOvG9aUM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749225186;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
- b=S60fIn9o5fQsKXoo8l0zGCHtbTOtgo4UKqhU9J0OnGij7MjhsQ7w6HjUEoPeQxjnsGnS9X
- B4+HrgH4VLA8LYCA==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=k8C3Hclo;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=S60fIn9o
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749225186; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
- b=k8C3HcloMT4UotIKQVFDrGSPAeVsFdB6vxe/XOTE9pQn/wccQb4OTlPU8Gs3V+X2zJX4nC
- 0vcF1AzITI8MHtxO6H/qP7W5CmfZwP2Q0gJePZbwT0jmEfB+RvRFR1Awq7kolrxJnwgQku
- 13XvUMi97W6H5TWHOuckPQVmOvG9aUM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749225186;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=eW4PgkcU+hT9kAZ16+h5G11LLhU0pnWGXB1G3V53Jwc=;
- b=S60fIn9o5fQsKXoo8l0zGCHtbTOtgo4UKqhU9J0OnGij7MjhsQ7w6HjUEoPeQxjnsGnS9X
- B4+HrgH4VLA8LYCA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 152031336F;
- Fri,  6 Jun 2025 15:53:05 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ngAbMuEOQ2g3MwAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 06 Jun 2025 15:53:05 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 10/21] migration: Use QAPI_CLONE_MEMBERS in
- query_migrate_parameters
-In-Reply-To: <aEMJacJqDHLrdkgn@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-11-farosas@suse.de> <aEMJacJqDHLrdkgn@x1.local>
-Date: Fri, 06 Jun 2025 12:53:03 -0300
-Message-ID: <87a56kx3xc.fsf@suse.de>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2902F18002BD; Fri,  6 Jun 2025 16:06:07 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.55])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEDCD18003FC; Fri,  6 Jun 2025 16:06:04 +0000 (UTC)
+Date: Fri, 6 Jun 2025 17:06:01 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: JAEHOON KIM <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
+ jjherne@linux.ibm.com, peterx@redhat.com, farosas@suse.de
+Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
+ connecting
+Message-ID: <aEMR6Xjs8tRJ8_sp@redhat.com>
+References: <20250605230808.1278840-1-jhkim@linux.ibm.com>
+ <aELy8_1ssb1jTSTa@redhat.com>
+ <2f36bf89-9664-4552-86c0-646db01b7f1f@oracle.com>
+ <2c8d3cb2-b3ee-4738-871a-0dea2bff0e84@linux.ibm.com>
+ <3004c91e-d515-4e22-902c-42cea83ce64b@oracle.com>
+ <760af012-1265-4845-b7d2-793fe75c3a51@linux.ibm.com>
+ <aEMMjtsKZLX_Bi03@redhat.com>
+ <7dc8d42d-47f1-49c1-9bff-ab2d09d0b6f3@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 94A0E21114
-X-Rspamd-Action: no action
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- RCVD_TLS_ALL(0.00)[]; MIME_TRACE(0.00)[0:+];
- MISSING_XM_UA(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MID_RHS_MATCH_FROM(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:rdns,imap1.dmz-prg2.suse.org:helo];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <7dc8d42d-47f1-49c1-9bff-ab2d09d0b6f3@oracle.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
+X-Spam_bar: --
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,92 +93,119 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Fri, Jun 06, 2025 at 11:50:10AM -0400, Steven Sistare wrote:
+> On 6/6/2025 11:43 AM, Daniel P. Berrangé wrote:
+> > On Fri, Jun 06, 2025 at 10:37:28AM -0500, JAEHOON KIM wrote:
+> > > On 6/6/2025 10:12 AM, Steven Sistare wrote:
+> > > > On 6/6/2025 11:06 AM, JAEHOON KIM wrote:
+> > > > > On 6/6/2025 9:14 AM, Steven Sistare wrote:
+> > > > > > On 6/6/2025 9:53 AM, Daniel P. Berrangé wrote:
+> > > > > > > On Thu, Jun 05, 2025 at 06:08:08PM -0500, Jaehoon Kim wrote:
+> > > > > > > > When the source VM attempts to connect to the destination VM's Unix
+> > > > > > > > domain socket(cpr.sock) during CPR transfer, the socket
+> > > > > > > > file might not
+> > > > > > > > yet be exist if the destination side hasn't completed the bind
+> > > > > > > > operation. This can lead to connection failures when
+> > > > > > > > running tests with
+> > > > > > > > the qtest framework.
+> > > > > > > 
+> > > > > > > This sounds like a flawed test impl to me - whatever is initiating
+> > > > > > > the cpr operation on the source has done so prematurely - it should
+> > > > > > > ensure the dest is ready before starting the operation.
+> > > > > > > 
+> > > > > > > > To address this, add cpr_validate_socket_path(), which wait for the
+> > > > > > > > socket file to appear. This avoids intermittent qtest
+> > > > > > > > failures caused by
+> > > > > > > > early connection attempts.
+> > > > > > > 
+> > > > > > > IMHO it is dubious to special case cpr in this way.
+> > > > > > 
+> > > > > > I agree with Daniel, and unfortunately it is not just a test issue;
+> > > > > > every management framework that supports cpr-transfer must add logic to
+> > > > > > wait for the cpr socket to appear in the target before proceeding.
+> > > > > > 
+> > > > > > This is analogous to waiting for the monitor socket to appear before
+> > > > > > connecting to it.
+> > > > > > 
+> > > > > > - Steve
+> > > > > 
+> > > > > Thank you very much for your valuable review and feedback.
+> > > > > 
+> > > > > Just to clarify, the added cpr_validate_socket_path() function is
+> > > > > not limited to the test framework.
+> > > > > It is part of the actual CPR implementation and is intended to
+> > > > > ensure correct behavior in all cases, including outside of tests.
+> > > > > 
+> > > > > I mentioned the qtest failure simply as an example where this issue
+> > > > > became apparent.
+> > > > 
+> > > > Yes, I understand that you understand :)
+> > > > Are you willing to move your fix to the qtest?
+> > > > 
+> > > > - Steve
+> > > 
+> > > Thank you for your question and feedback.
+> > > 
+> > > I agree that the issue could be addressed within the qtest framework to
+> > > improve stability.
+> > > 
+> > > However, this socket readiness check is a fundamental part of CPR transfer
+> > > process,
+> > > and I believe that incorporating cpr_validate_socket_path() directly into
+> > > the CPR implementation helps ensure more reliable behavior
+> > > across all environments - not only during testing.
+> > > 
+> > > Just from my perspective, adding this logic to the CPR code does not
+> > > introduce significant overhead or side effects.
+> > > I would appreciate if you could share more details about your concerns, so I
+> > > can better address them.
+> > 
+> > Requiring a busy wait like this is a sign of a design problem.
+> > 
+> > There needs to be a way to setup the incoming socket listener
+> > without resorting to busy waiting - that's showing a lack of
+> > synchronization.
+> 
+> How is this a design problem?  If I start a program that creates a listening unix
+> domain socket, I cannot attempt to connect to it until the socket is created and
+> listening. Clients face the same issue when starting qemu and connecting to the
+> monitor socket.
 
-> On Mon, Jun 02, 2025 at 10:37:59PM -0300, Fabiano Rosas wrote:
->> QAPI_CLONE_MEMBERS is a better option than copying parameters one by
->> one because it operates on the entire struct and follows pointers. It
->> also avoids the need to alter this function every time a new parameter
->> is added.
->> 
->> Note, since this is a deep clone, now we must free the TLS strings
->> before assignment.
->> 
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  migration/options.c | 31 ++++---------------------------
->>  1 file changed, 4 insertions(+), 27 deletions(-)
->> 
->> diff --git a/migration/options.c b/migration/options.c
->> index dd62e726cb..0a2a3050ec 100644
->> --- a/migration/options.c
->> +++ b/migration/options.c
->> @@ -918,7 +918,9 @@ static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
->>  {
->>      StrOrNull *dst = *dstp;
->>  
->> -    assert(!dst);
->> +    if (dst) {
->> +        qapi_free_StrOrNull(dst);
->> +    }
->>  
->>      dst = *dstp = g_new0(StrOrNull, 1);
->>      dst->type = QTYPE_QSTRING;
->> @@ -975,42 +977,17 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
->>      MigrationParameters *params;
->>      MigrationState *s = migrate_get_current();
->>  
->> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
->>      params = g_malloc0(sizeof(*params));
->>  
->> -    params->throttle_trigger_threshold = s->parameters.throttle_trigger_threshold;
->> -    params->cpu_throttle_initial = s->parameters.cpu_throttle_initial;
->> -    params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
->> -    params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
->> +    QAPI_CLONE_MEMBERS(MigrationParameters, params, &s->parameters);
->>  
->>      tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
->>      tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
->>      tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
->>  
->> -    params->max_bandwidth = s->parameters.max_bandwidth;
->> -    params->avail_switchover_bandwidth = s->parameters.avail_switchover_bandwidth;
->> -    params->downtime_limit = s->parameters.downtime_limit;
->> -    params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
->> -    params->multifd_channels = s->parameters.multifd_channels;
->> -    params->multifd_compression = s->parameters.multifd_compression;
->> -    params->multifd_zlib_level = s->parameters.multifd_zlib_level;
->> -    params->multifd_qatzip_level = s->parameters.multifd_qatzip_level;
->> -    params->multifd_zstd_level = s->parameters.multifd_zstd_level;
->> -    params->xbzrle_cache_size = s->parameters.xbzrle_cache_size;
->> -    params->max_postcopy_bandwidth = s->parameters.max_postcopy_bandwidth;
->> -    params->max_cpu_throttle = s->parameters.max_cpu_throttle;
->> -    params->announce_initial = s->parameters.announce_initial;
->> -    params->announce_max = s->parameters.announce_max;
->> -    params->announce_rounds = s->parameters.announce_rounds;
->> -    params->announce_step = s->parameters.announce_step;
->>      params->block_bitmap_mapping =
->>          QAPI_CLONE(BitmapMigrationNodeAliasList,
->>                     s->parameters.block_bitmap_mapping);
->
-> Wouldn't the QAPI_CLONE_MEMBERS() have deep cloned this too?
->
+Yes, the monitor has the same conceptual problem, and this caused problems
+for libvirt starting QEMU for many years.
 
-Hmm, I think it should. But it definitely broke something without this
-line. I'll double check.
+With the busy wait you risk looping forever if the child (target) QEMU
+already exited for some reason without ever creating the socket. You
+can mitigate this by using 'kill($PID, 0)' in the loop and looking
+for -ERSCH, but this only works if you know the pid involved.
 
->> -    params->x_vcpu_dirty_limit_period = s->parameters.x_vcpu_dirty_limit_period;
->> -    params->vcpu_dirty_limit = s->parameters.vcpu_dirty_limit;
->> -    params->mode = s->parameters.mode;
->> -    params->zero_page_detection = s->parameters.zero_page_detection;
->> -    params->direct_io = s->parameters.direct_io;
->>  
->>      /*
->>       * query-migrate-parameters expects all members of
->> -- 
->> 2.35.3
->> 
+
+One option is to use 'daemonize' such that when the parent sees the initial
+QEMU process leader exit, the parent has a guarantee that the daemonized
+QEMU already has the UNIX listener open, and any failure indicates QEMU
+already quit.
+
+
+The other option is to use FD passing such that QEMU is not responsible
+for opening the listener socket - it gets passed a pre-opened listener
+FD, so the parent has a guarantee it can successfull connect immediately
+and any failure indicates QEMU already quit.
+
+
+For the tests, passing a pre-opened UNIX socket FD could work, but I'm
+still curious why this is only a problem for the CPR tests, and not
+the other migration tests which don't use 'defer'. What has made CPR
+special to expose a race ?
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
