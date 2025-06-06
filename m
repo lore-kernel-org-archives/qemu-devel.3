@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 767A9C61CE8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:42:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3DBC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:42:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNWIf-0002vV-Lq; Fri, 06 Jun 2025 08:35:57 -0400
+	id 1uNWIO-0002gI-0q; Fri, 06 Jun 2025 08:35:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWIe-0002ul-09
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:56 -0400
+ id 1uNWIM-0002fm-5m
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWIb-0005wi-Km
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:55 -0400
+ id 1uNWIJ-0005uG-Mz
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749213352;
+ s=mimecast20190719; t=1749213333;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xz1XhOu9Eds1DlIWIBiFtM0oXrj8OabBoECKhWUXSz8=;
- b=cC+4byohULvtlQkneiAebt9dmpgplmwFVHYga7WJIgtxZBGBJNp2LrGW3XrRVfYSG5ALkC
- EjH8B6eNeyepYyZeXaUCtxhsSC9R8KjETZ7R03Z7b4M7MdaljWe8TPHOjmNEXDNy963jNZ
- U34NBHPTwMuYyGVHSTnRfpMFSBD4IEw=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=GD5j4iIBSM/wWOplLwp2FFPFSX88IRGEIBS2r4z9frY=;
+ b=KcZHqcc2fOCPi3s3KrsP+HlOuuy79wBnUSj7l9TDPODl4q+ZhR/4Jtxy367CXX2jHepulE
+ 7swmDjciUBVM1mNvs1kkuQUj997x7g4QE3SUxEr6QPJSVbM+pe/24KhFVaa3XpXQEaOb2M
+ MpP4P6vzOlCx0785uPCD/j+YBurcd2g=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-669-15Jqb6BhMwG0reYxJYmn1A-1; Fri, 06 Jun 2025 08:35:51 -0400
-X-MC-Unique: 15Jqb6BhMwG0reYxJYmn1A-1
-X-Mimecast-MFC-AGG-ID: 15Jqb6BhMwG0reYxJYmn1A_1749213350
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4f8fd1856so971079f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:35:50 -0700 (PDT)
+ us-mta-267-nJfguWtEP92j_gpLoA7Qgg-1; Fri, 06 Jun 2025 08:35:32 -0400
+X-MC-Unique: nJfguWtEP92j_gpLoA7Qgg-1
+X-Mimecast-MFC-AGG-ID: nJfguWtEP92j_gpLoA7Qgg_1749213330
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4eb9c80deso988743f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:35:31 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749213349; x=1749818149;
+ d=1e100.net; s=20230601; t=1749213330; x=1749818130;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xz1XhOu9Eds1DlIWIBiFtM0oXrj8OabBoECKhWUXSz8=;
- b=MOlDWwP1rEaxG2QVjboreol/7EZIpIMqDY4qQ9VoOzin+DwnDjxNUD9HJHNlqsT9z1
- hJRdaFEJsoTMpDNXU2t3vtBl7Spnho74oXqEM3sbnsXPxpDsj0GiizTk0MuAvhw/CB6c
- seSwllaD1+6LX/Gcvo59ePSFlMhLhR4WYNNiX2OblciwTVj68G2D1sXvbIIOVaaMyHL2
- Cd5H8l/y/2CdWxohmKYFOp7kI1GCZWlmcBtrzNw8o24RKsJSfvSnzvRS2dE28JTeD503
- YL1xHrjh6wgUc1uzwkmh1l00vYb0Ek+r7u87Ynczj1UryPCJ0BycLJsxx2SgYNq9fkeK
- nKXw==
-X-Gm-Message-State: AOJu0YyQJJVUBOAGBUAj80Rm6xmsK3KCzfu1mVQHSsE3CRYYmWDlzMvn
- g9IRtsTYwt2kfx3z5i+iHtC+fqCH26vv5BQZH/qf+CoG1reJiu6cGIYUZ+/vf8XYPLfya015JHR
- hkblUBv9vu7Opjr118z/k2JvdGqKU5le2FHLMSHA9u2PVHX8cWFdoFsJh3zhquxjWN6ZtvMnk0R
- Bpv+SUUG8lOHA78Gd5/QOuxNhlHuokqgRnWil8XNrS
-X-Gm-Gg: ASbGncvHFRWtkF5wGAA5r4VJ0oKfEGrJkK+/Y6p9v2wN3p8XkFUaIT+34I8FrYIgCWM
- zRen0wv/bmNDK2W0/H9/+CA/AagTXWqV1jeg+pS52So59jKeVCm0O0njqXVeKKtWFGii86o9N9S
- TA5DSs85U4X7YFenYrfOBw0D7eu2JIYVgLBYJVu+9KtRI/EF3XYEdSBcVnFRCjNT5hQsAXFErpY
- BPgO13vQSjaGMLGvgw2Fma4ykl4b9dR4WBH7HVKJj1HYdxkX/5N53cE5NfHWEqbprUi6gebRnj6
- WS78H8YhvXmDkTeAI1wiJXV4
-X-Received: by 2002:a5d:64c6:0:b0:3a4:ec23:dba7 with SMTP id
- ffacd0b85a97d-3a531886727mr2966282f8f.31.1749213348993; 
- Fri, 06 Jun 2025 05:35:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9LKKDUvwCZIrike6sHrjM4DZJ2uu7Ka13AMvogPQieP5NLNRm4QesFLdnADablQoyXsc1Eg==
-X-Received: by 2002:a5d:64c6:0:b0:3a4:ec23:dba7 with SMTP id
- ffacd0b85a97d-3a531886727mr2966260f8f.31.1749213348493; 
- Fri, 06 Jun 2025 05:35:48 -0700 (PDT)
+ bh=GD5j4iIBSM/wWOplLwp2FFPFSX88IRGEIBS2r4z9frY=;
+ b=PPK2HH9YIaFNMtVPj6wspGdjkL/vx/6VX+8Rq4nYmi5gFRvdEGy8PNmTp9hH3S5JZ3
+ +DeyPQAYRRI/iD9yJaD8t5JAgUWWS3mwS4SzoIQZd1MA6WvDTg8J/tYkHP/DVZkZ+bp6
+ xbFiA5Hwn7BxsBFv30MVeP5kMM1tcJnlE6E478vf4VyoBi3J3Di4A925WaEy3SwnI5Ka
+ ZcfKY3lPTb5y5G/0OJ4SkID10Z2qN5Jd5Yr9JTK+efJ1bUlASVpXsOOCEjt/yde5CFXK
+ nVfdVDPORFzgD2ORvyDhNGT/bWRdS4QP0VaYSk49IfFhyETvqzFfzOw81Ueyvh/IAhiz
+ otXQ==
+X-Gm-Message-State: AOJu0Yz03u/EjsXFejDSTQ+ko7b1BoTIA5FzzWpAsNrRRt6xed/9vbtb
+ A1rifZdD8AzWO1d2qEufNgD4vjkJflXOB774lV1HlBOetlV/sIwQHG7ZUT0TUuAzxMyCe69wTn6
+ 0OTz5o48Q9w7F6wy02hD8ofpLsQxgUmF8wCecWv2BeZBwTigO01OuhrCBPpdcAfWRx7dJ50xg3u
+ 727wH0CkY1JAYh3siZM6uQIZmWR9RY11Gs63+0RcfG
+X-Gm-Gg: ASbGncu2Z/9gkhNZQdCRbMSToQZlCVQewYtyVeR+7ybbg/ZPMUVuNBDs+ko6dIrFBEG
+ uW/uD9JdFytHfwMQ193BKpJREu9pUs5Zq4n29zU5usPa4cyXkgyG2hRCmfXOSZC3NvKZcn/hHdF
+ X9VqGJyTyZO8BWndE+IjxzGgikFN26ZPAATJZP3F1L7O6d9gcrv2V3onc3ax1qUY/L2JBFmEPdw
+ Ou8KUwPwXhsP9R6kXU9X7YyBf9JCBHTNgxF0Zt//Cd8JsvZ2FOFwI8O4Ufx6/ZzXgViLbcHeeGV
+ KQ67JYc9V8/uJg==
+X-Received: by 2002:a05:6000:1a88:b0:3a5:2f23:3780 with SMTP id
+ ffacd0b85a97d-3a531caa458mr2755848f8f.18.1749213329596; 
+ Fri, 06 Jun 2025 05:35:29 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8obiB+K6zbjNoVhf6oxiXuoc8LmtlcwiOxBTWLPZFiXB8L0wrKFOVX6MNSQVnSoY/T1HmqQ==
+X-Received: by 2002:a05:6000:1a88:b0:3a5:2f23:3780 with SMTP id
+ ffacd0b85a97d-3a531caa458mr2755819f8f.18.1749213329154; 
+ Fri, 06 Jun 2025 05:35:29 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5323b59d0sm1812308f8f.38.2025.06.06.05.35.46
+ ffacd0b85a97d-3a53244ee34sm1786042f8f.72.2025.06.06.05.35.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 05:35:46 -0700 (PDT)
+ Fri, 06 Jun 2025 05:35:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PULL 18/31] futex: Support Windows
-Date: Fri,  6 Jun 2025 14:34:32 +0200
-Message-ID: <20250606123447.538131-19-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 12/31] rust/hpet: return errors from realize if properties are
+ incorrect
+Date: Fri,  6 Jun 2025 14:34:26 +0200
+Message-ID: <20250606123447.538131-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250606123447.538131-1-pbonzini@redhat.com>
 References: <20250606123447.538131-1-pbonzini@redhat.com>
@@ -108,193 +109,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
+Match the code in hpet.c; this also allows removing the
+BqlCell from the num_timers field.
 
-Windows supports futex-like APIs since Windows 8 and Windows Server
-2012.
-
-Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Link: https://lore.kernel.org/r/20250529-event-v5-2-53b285203794@daynix.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build                       |  7 ++++
- include/qemu/futex.h              | 53 ++++++++++++++++++++++++-------
- tests/unit/test-aio-multithread.c |  2 +-
- util/lockcnt.c                    |  2 +-
- util/qemu-thread-posix.c          |  4 +--
- util/meson.build                  |  2 +-
- 6 files changed, 53 insertions(+), 17 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 16 +++++++---------
+ rust/hw/timer/hpet/src/fw_cfg.rs |  7 +++----
+ 2 files changed, 10 insertions(+), 13 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 967a10e80b8..34729c2a3dd 100644
---- a/meson.build
-+++ b/meson.build
-@@ -838,11 +838,18 @@ emulator_link_args = []
- midl = not_found
- widl = not_found
- pathcch = not_found
-+synchronization = not_found
- host_dsosuf = '.so'
- if host_os == 'windows'
-   midl = find_program('midl', required: false)
-   widl = find_program('widl', required: false)
-   pathcch = cc.find_library('pathcch')
-+  synchronization = cc.find_library('Synchronization', required: false)
-+  if not synchronization.found()
-+    # The library name is lowercase on mingw
-+    synchronization = cc.find_library('synchronization', required: true)
-+  endif
-+
-   socket = cc.find_library('ws2_32')
-   winmm = cc.find_library('winmm')
- 
-diff --git a/include/qemu/futex.h b/include/qemu/futex.h
-index f5777400533..607613eec83 100644
---- a/include/qemu/futex.h
-+++ b/include/qemu/futex.h
-@@ -1,5 +1,5 @@
- /*
-- * Wrappers around Linux futex syscall
-+ * Wrappers around Linux futex syscall and similar
-  *
-  * Copyright Red Hat, Inc. 2017
-  *
-@@ -11,28 +11,37 @@
-  *
-  */
- 
-+/*
-+ * Note that a wake-up can also be caused by common futex usage patterns in
-+ * unrelated code that happened to have previously used the futex word's
-+ * memory location (e.g., typical futex-based implementations of Pthreads
-+ * mutexes can cause this under some conditions).  Therefore, qemu_futex_wait()
-+ * callers should always conservatively assume that it is a spurious wake-up,
-+ * and use the futex word's value (i.e., the user-space synchronization scheme)
-+ * to decide whether to continue to block or not.
-+ */
-+
- #ifndef QEMU_FUTEX_H
- #define QEMU_FUTEX_H
- 
-+#define HAVE_FUTEX
-+
-+#ifdef CONFIG_LINUX
- #include <sys/syscall.h>
- #include <linux/futex.h>
- 
- #define qemu_futex(...)              syscall(__NR_futex, __VA_ARGS__)
- 
--static inline void qemu_futex_wake(void *f, int n)
-+static inline void qemu_futex_wake_all(void *f)
- {
--    qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
-+    qemu_futex(f, FUTEX_WAKE, INT_MAX, NULL, NULL, 0);
-+}
-+
-+static inline void qemu_futex_wake_single(void *f)
-+{
-+    qemu_futex(f, FUTEX_WAKE, 1, NULL, NULL, 0);
- }
- 
--/*
-- * Note that a wake-up can also be caused by common futex usage patterns in
-- * unrelated code that happened to have previously used the futex word's
-- * memory location (e.g., typical futex-based implementations of Pthreads
-- * mutexes can cause this under some conditions).  Therefore, callers should
-- * always conservatively assume that it is a spurious wake-up, and use the futex
-- * word's value (i.e., the user-space synchronization scheme) to decide whether
-- * to continue to block or not.
-- */
- static inline void qemu_futex_wait(void *f, unsigned val)
- {
-     while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
-@@ -46,5 +55,25 @@ static inline void qemu_futex_wait(void *f, unsigned val)
-         }
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index a957de1e767..cd439f90b7e 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -725,18 +725,16 @@ fn post_init(&self) {
      }
- }
-+#elif defined(CONFIG_WIN32)
-+#include <synchapi.h>
-+
-+static inline void qemu_futex_wake_all(void *f)
-+{
-+    WakeByAddressAll(f);
-+}
-+
-+static inline void qemu_futex_wake_single(void *f)
-+{
-+    WakeByAddressSingle(f);
-+}
-+
-+static inline void qemu_futex_wait(void *f, unsigned val)
-+{
-+    WaitOnAddress(f, &val, sizeof(val), INFINITE);
-+}
-+#else
-+#undef HAVE_FUTEX
-+#endif
  
- #endif /* QEMU_FUTEX_H */
-diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
-index 8c2e41545a2..0ead6bf34ad 100644
---- a/tests/unit/test-aio-multithread.c
-+++ b/tests/unit/test-aio-multithread.c
-@@ -330,7 +330,7 @@ static void mcs_mutex_unlock(void)
-     /* Wake up the next in line.  */
-     next = qatomic_read(&nodes[id].next);
-     nodes[next].locked = 0;
--    qemu_futex_wake(&nodes[next].locked, 1);
-+    qemu_futex_wake_single(&nodes[next].locked);
- }
- 
- static void test_multi_fair_mutex_entry(void *opaque)
-diff --git a/util/lockcnt.c b/util/lockcnt.c
-index d07c6cc5cee..ca27d8e61a5 100644
---- a/util/lockcnt.c
-+++ b/util/lockcnt.c
-@@ -106,7 +106,7 @@ static bool qemu_lockcnt_cmpxchg_or_wait(QemuLockCnt *lockcnt, int *val,
- static void lockcnt_wake(QemuLockCnt *lockcnt)
- {
-     trace_lockcnt_futex_wake(lockcnt);
--    qemu_futex_wake(&lockcnt->count, 1);
-+    qemu_futex_wake_single(&lockcnt->count);
- }
- 
- void qemu_lockcnt_inc(QemuLockCnt *lockcnt)
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index f81fca5c116..f80f564e762 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -345,7 +345,7 @@ static inline void qemu_futex_wait(QemuEvent *ev, unsigned val)
- 
- /* Valid transitions:
-  * - free->set, when setting the event
-- * - busy->set, when setting the event, followed by qemu_futex_wake
-+ * - busy->set, when setting the event, followed by qemu_futex_wake_all
-  * - set->free, when resetting the event
-  * - free->busy, when waiting
-  *
-@@ -400,7 +400,7 @@ void qemu_event_set(QemuEvent *ev)
-         smp_mb__after_rmw();
-         if (old == EV_BUSY) {
-             /* There were waiters, wake them up.  */
--            qemu_futex_wake(ev, INT_MAX);
-+            qemu_futex_wake_all(ev);
+     fn realize(&self) -> qemu_api::Result<()> {
++        if self.num_timers.get() < HPET_MIN_TIMERS || self.num_timers.get() > HPET_MAX_TIMERS {
++            Err(format!(
++                "hpet.num_timers must be between {HPET_MIN_TIMERS} and {HPET_MAX_TIMERS}"
++            ))?;
++        }
+         if self.int_route_cap == 0 {
+-            // TODO: Add error binding: warn_report()
+-            println!("Hpet's hpet-intcap property not initialized");
++            Err("hpet.hpet-intcap property not initialized")?;
          }
+ 
+-        self.hpet_id.set(HPETFwConfig::assign_hpet_id());
+-
+-        if self.num_timers.get() < HPET_MIN_TIMERS {
+-            self.num_timers.set(HPET_MIN_TIMERS);
+-        } else if self.num_timers.get() > HPET_MAX_TIMERS {
+-            self.num_timers.set(HPET_MAX_TIMERS);
+-        }
++        self.hpet_id.set(HPETFwConfig::assign_hpet_id()?);
+ 
+         self.init_timer();
+         // 64-bit General Capabilities and ID Register; LegacyReplacementRoute.
+diff --git a/rust/hw/timer/hpet/src/fw_cfg.rs b/rust/hw/timer/hpet/src/fw_cfg.rs
+index 6c10316104c..619d662ee1e 100644
+--- a/rust/hw/timer/hpet/src/fw_cfg.rs
++++ b/rust/hw/timer/hpet/src/fw_cfg.rs
+@@ -36,7 +36,7 @@ unsafe impl Zeroable for HPETFwConfig {}
+ };
+ 
+ impl HPETFwConfig {
+-    pub(crate) fn assign_hpet_id() -> usize {
++    pub(crate) fn assign_hpet_id() -> Result<usize, &'static str> {
+         assert!(bql_locked());
+         // SAFETY: all accesses go through these methods, which guarantee
+         // that the accesses are protected by the BQL.
+@@ -48,13 +48,12 @@ pub(crate) fn assign_hpet_id() -> usize {
+         }
+ 
+         if fw_cfg.count == 8 {
+-            // TODO: Add error binding: error_setg()
+-            panic!("Only 8 instances of HPET is allowed");
++            Err("Only 8 instances of HPET are allowed")?;
+         }
+ 
+         let id: usize = fw_cfg.count.into();
+         fw_cfg.count += 1;
+-        id
++        Ok(id)
      }
- }
-diff --git a/util/meson.build b/util/meson.build
-index 1adff96ebd5..5735f65f199 100644
---- a/util/meson.build
-+++ b/util/meson.build
-@@ -27,7 +27,7 @@ else
-   util_ss.add(files('event_notifier-win32.c'))
-   util_ss.add(files('oslib-win32.c'))
-   util_ss.add(files('qemu-thread-win32.c'))
--  util_ss.add(winmm, pathcch)
-+  util_ss.add(winmm, pathcch, synchronization)
- endif
- util_ss.add(when: linux_io_uring, if_true: files('fdmon-io_uring.c'))
- if glib_has_gslice
+ 
+     pub(crate) fn update_hpet_cfg(hpet_id: usize, timer_block_id: u32, address: u64) {
 -- 
 2.49.0
 
