@@ -4,114 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 528F3C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BAB1C5B555
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:07:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNYeE-0004A9-1w; Fri, 06 Jun 2025 11:06:22 -0400
+	id 1uNYf5-0004ak-Or; Fri, 06 Jun 2025 11:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uNYe7-00049G-9B
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:06:15 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uNYeX-0004JK-ON; Fri, 06 Jun 2025 11:06:46 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uNYdz-00066M-Hl
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:06:13 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 556E0fHY032426;
- Fri, 6 Jun 2025 15:06:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=IHGQzE
- aNz/ouWt8OdkorbVEx5QEVjrGPOKq/DMtfkjk=; b=h2//RPeY40rdKuZXuALmAg
- M4mqA0kyAVTdKIFuPl9ZlfHBUP2/jJx3jv0VoG6qv8c7xeMVasPE6TxWRCyirlZZ
- adhTf8DMgd8pvhPHO9Cv1uwH8OiMHVstZRObKY8jA7/Vng298UbzT4prvRTGMwaj
- IUN+IZOcsjnsNa89vg+nbyDSKE7lie5ErPK6XihighaR/M0Hc2VThjsEtiROh+Cd
- xaMvYE4nPY1Zu5awAv1Ko01WxovVIB6H/GwAl5xsR2av7lyWDVVdTQDVkYzxVPAt
- G8Vn+p9fDLGx9HLOs+3ye62iEBkZaD6Rrl4uibdIk371nY0IiFQOQS8Vm3517p6w
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 473j1y49jj-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Jun 2025 15:06:05 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 556BpPe1022569;
- Fri, 6 Jun 2025 15:06:04 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 470c3tt5m5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Jun 2025 15:06:04 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 556F63AF28508680
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Jun 2025 15:06:04 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D7F3B58055;
- Fri,  6 Jun 2025 15:06:03 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7E8A85804B;
- Fri,  6 Jun 2025 15:06:03 +0000 (GMT)
-Received: from [9.61.255.24] (unknown [9.61.255.24])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Jun 2025 15:06:03 +0000 (GMT)
-Message-ID: <2c8d3cb2-b3ee-4738-871a-0dea2bff0e84@linux.ibm.com>
-Date: Fri, 6 Jun 2025 10:06:02 -0500
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uNYeT-00067y-DA; Fri, 06 Jun 2025 11:06:40 -0400
+Received: from [192.168.10.111] (p865013-ipoe.ipoe.ocn.ne.jp [153.242.222.12])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 556F6LtG013754
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sat, 7 Jun 2025 00:06:22 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=mLdeIBoUTvP7RARx5cbLlYotSPKc6vbCJqw+tA4RIbc=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1749222382; v=1;
+ b=maWk8xkIjccHgQqKJiZT+r7rTzadf8Exh8XI37oVhQ2GzB6mvKN+QP8S2NnzGTvw
+ PiyEB52K5p0998UP30Ue1MYI8l0E4VjazxroBq/vTn8Peh5aDwdWQiL6CWYXnyDO
+ P5DBhPK0hKIIBR86Jex+zq+seB0OHmtUiP/1BA+6Xm0Cj6Lv+2XO5q8hizGksC8N
+ U6giqEZreo5FA8Bod5h7p584DUHsu5bHWE04dHX5FcBjagNCImDcwT55bneRZlZj
+ PhmqDZMLpdZWzV0W/KvCgBdskUh3AsJZ/kgrQcHOoKUJZowuhj3CfxWc/Qx6tFf8
+ sHdmIfDr9M0UJAS0E8/n3g==
+Message-ID: <5db836df-048a-4f93-86d3-df9fd363d6c8@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 7 Jun 2025 00:06:21 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
- connecting
-To: Steven Sistare <steven.sistare@oracle.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, jjherne@linux.ibm.com, peterx@redhat.com,
- farosas@suse.de
-References: <20250605230808.1278840-1-jhkim@linux.ibm.com>
- <aELy8_1ssb1jTSTa@redhat.com>
- <2f36bf89-9664-4552-86c0-646db01b7f1f@oracle.com>
+Subject: Re: [PULL 09/17] hw/display: re-arrange memory region tracking
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20250605162651.2614401-1-alex.bennee@linaro.org>
+ <20250605162651.2614401-10-alex.bennee@linaro.org>
+ <ee5115ab-b818-4746-8806-5056f3570011@rsg.ci.i.u-tokyo.ac.jp>
+ <875xh95h5n.fsf@draig.linaro.org>
+ <59bed3d3-f641-4b78-96bf-8fec25d74a35@rsg.ci.i.u-tokyo.ac.jp>
+ <87o6v13y4k.fsf@draig.linaro.org>
 Content-Language: en-US
-From: JAEHOON KIM <jhkim@linux.ibm.com>
-In-Reply-To: <2f36bf89-9664-4552-86c0-646db01b7f1f@oracle.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <87o6v13y4k.fsf@draig.linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Nezm13D4 c=1 sm=1 tr=0 ts=684303dd cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=Ln4hQe_N6IWAe5r7zdsA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: sM1-MSgYyRRCzfDZzv9rD-9DyQdbxoJF
-X-Proofpoint-ORIG-GUID: sM1-MSgYyRRCzfDZzv9rD-9DyQdbxoJF
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDEzMiBTYWx0ZWRfXyX9ub6i/nebK
- /Kl1bIGmNkrU1Q1wC5Hx2UrZ620PMeiwkdANZvzM+HMWCu1LhIBO39JY75wSW575eslCMZyeutY
- ku7HcMzZrTUutQvUjr3fGhe9Ta9gh0SEX8eaBxdGaiIIhMFIhko77M0QdkVHy4pdUy3VT7ixuM9
- ZWEQ9CMbcWGEq9vykncJ6tubhHHPM7GEKVrqJIeOYO/YIF96c1kUNNNFo9jSAiPLUGuIQJ5RT4z
- nEDYmNo1UwREbJ8gW6ESWmGG8NecyAwcf2YmsBKMF7iq+gillAe/8ylRjO9l6UaXt+XfXUZYwB+
- mVL/EPDW4ZHU69sKZXW2E/Nv2xUW4KWVanFcIvCG5kYjKmkRCicSfY/R9OjZLcEq/E4yWrc94xF
- kLJvobbR3O8RVXizpRnn8ar0zf2dfEEdbuosiqDyZWTrvThZ2fBuyBmi0N9/EOWfUtmmH4z/
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-06_05,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 clxscore=1011
- bulkscore=0 phishscore=0 spamscore=0 mlxscore=0 malwarescore=0
- suspectscore=0 mlxlogscore=999 lowpriorityscore=0 priorityscore=1501
- adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506060132
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,127 +82,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-On 6/6/2025 9:14 AM, Steven Sistare wrote:
-> On 6/6/2025 9:53 AM, Daniel P. Berrangé wrote:
->> On Thu, Jun 05, 2025 at 06:08:08PM -0500, Jaehoon Kim wrote:
->>> When the source VM attempts to connect to the destination VM's Unix
->>> domain socket(cpr.sock) during CPR transfer, the socket file might not
->>> yet be exist if the destination side hasn't completed the bind
->>> operation. This can lead to connection failures when running tests with
->>> the qtest framework.
->>
->> This sounds like a flawed test impl to me - whatever is initiating
->> the cpr operation on the source has done so prematurely - it should
->> ensure the dest is ready before starting the operation.
->>
->>> To address this, add cpr_validate_socket_path(), which wait for the
->>> socket file to appear. This avoids intermittent qtest failures 
->>> caused by
->>> early connection attempts.
->>
->> IMHO it is dubious to special case cpr in this way.
->
-> I agree with Daniel, and unfortunately it is not just a test issue;
-> every management framework that supports cpr-transfer must add logic to
-> wait for the cpr socket to appear in the target before proceeding.
->
-> This is analogous to waiting for the monitor socket to appear before
-> connecting to it.
->
-> - Steve
-
-Thank you very much for your valuable review and feedback.
-
-Just to clarify, the added cpr_validate_socket_path() function is not 
-limited to the test framework.
-It is part of the actual CPR implementation and is intended to ensure 
-correct behavior in all cases, including outside of tests.
-
-I mentioned the qtest failure simply as an example where this issue 
-became apparent.
-
--Jaehoon Kim
->>> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
->>> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
->>> ---
->>>   include/migration/cpr.h  |  1 +
->>>   migration/cpr-transfer.c | 35 +++++++++++++++++++++++++++++++++++
->>>   2 files changed, 36 insertions(+)
+On 2025/06/06 20:31, Alex Bennée wrote:
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
+> 
+>> On 2025/06/06 18:54, Alex Bennée wrote:
+>>> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 >>>
->>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
->>> index 7561fc75ad..cc9384b4f9 100644
->>> --- a/include/migration/cpr.h
->>> +++ b/include/migration/cpr.h
->>> @@ -23,6 +23,7 @@ MigMode cpr_get_incoming_mode(void);
->>>   void cpr_set_incoming_mode(MigMode mode);
->>>   bool cpr_is_incoming(void);
->>>   +bool cpr_validate_socket_path(const char *path, Error **errp);
->>>   int cpr_state_save(MigrationChannel *channel, Error **errp);
->>>   int cpr_state_load(MigrationChannel *channel, Error **errp);
->>>   void cpr_state_close(void);
->>> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
->>> index e1f140359c..3088ed323f 100644
->>> --- a/migration/cpr-transfer.c
->>> +++ b/migration/cpr-transfer.c
->>> @@ -17,6 +17,33 @@
->>>   #include "migration/vmstate.h"
->>>   #include "trace.h"
->>>   +#define CPR_MAX_RETRIES     50     /* Retry for up to 5 seconds */
->>> +#define CPR_RETRY_DELAY_US  100000 /* 100 ms per retry */
->>> +
->>> +bool cpr_validate_socket_path(const char *path, Error **errp)
->>> +{
->>> +    struct stat st;
->>> +    int retries = CPR_MAX_RETRIES;
->>> +
->>> +    do {
->>> +        if (!stat(path, &st) && S_ISSOCK(st.st_mode)) {
->>> +            return true;
->>> +        }
->>> +
->>> +        if (errno == ENOENT) {
->>> +            usleep(CPR_RETRY_DELAY_US);
->>> +        } else {
->>> +            error_setg_errno(errp, errno,
->>> +                "Unable to check status of socket path '%s'", path);
->>> +            return false;
->>> +        }
->>> +    } while (--retries > 0);
->>> +
->>> +    error_setg(errp, "Socket path '%s' not found after %d retries",
->>> +                                            path, CPR_MAX_RETRIES);
->>> +    return false;
->>> +}
->>> +
->>>   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error 
->>> **errp)
->>>   {
->>>       MigrationAddress *addr = channel->addr;
->>> @@ -28,6 +55,14 @@ QEMUFile *cpr_transfer_output(MigrationChannel 
->>> *channel, Error **errp)
->>>           QIOChannel *ioc = QIO_CHANNEL(sioc);
->>>           SocketAddress *saddr = &addr->u.socket;
->>>   +        /*
->>> +         * Verify that the cpr.sock Unix domain socket file exists 
->>> and is ready
->>> +         * before proceeding with the connection.
->>> +         */
->>> +        if (!cpr_validate_socket_path(addr->u.socket.u.q_unix.path, 
->>> errp)) {
->>> +            return NULL;
->>> +        }
->>> +
->>>           if (qio_channel_socket_connect_sync(sioc, saddr, errp) < 0) {
->>>               return NULL;
->>>           }
->>> -- 
->>> 2.49.0
+>>>> On 2025/06/06 1:26, Alex Bennée wrote:
+>>>>> QOM objects can be embedded in other QOM objects and managed as part
+>>>>> of their lifetime but this isn't the case for
+>>>>> virtio_gpu_virgl_hostmem_region. However before we can split it out we
+>>>>> need some other way of associating the wider data structure with the
+>>>>> memory region.
+>>>>> Fortunately MemoryRegion has an opaque pointer. This is passed down
+>>>>> to
+>>>>> MemoryRegionOps for device type regions but is unused in the
+>>>>> memory_region_init_ram_ptr() case. Use the opaque to carry the
+>>>>> reference and allow the final MemoryRegion object to be reaped when
+>>>>> its reference count is cleared.
+>>>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>>> Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+>>>>> Cc: qemu-stable@nongnu.org
+>>>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>>>> Message-ID: <20250603110204.838117-10-alex.bennee@linaro.org>
+>>>>
+>>>> I have told you that you should address all comments before sending a
+>>>> series again a few times[1][2], but you haven't done that.
+>>> I've given reasons. Thanks for your review but you don't get to
+>>> veto.
 >>>
->>>
+>>>> I pointed out it has no effect (fixing or improving something) other
+>>>> than adding a memory allocation, but you didn't make a reply to prove
+>>>> otherwise.
+>>> I explained the commit cover what it is doing.
 >>
->> With regards,
->> Daniel
->
->
+>> It still doesn't explain the motivation.
+>>
+> <snip>
+> 
+> It fixes the anti-pattern of embedding a QOM object into a non-QOM
+> container. It enables in the following patches the lifetime of the MR to
+> be covered controlled purely by its references and not be so tangled up
+> with virglrenderers internals.
+
+The "container" is just a memory allocation made by g_new0() and this 
+patch doesn't change that.
+
+I haven't reviewed "[PULL 10/17] virtio-gpu: refactor async blob 
+unmapping" yet, but it apparently it doesn't depend on this patch.
+
+The virglrenderer's internals are irrelevant; both 
+virtio_gpu_virgl_hostmem_region and MemoryRegion are QEMU-specific 
+structures.
+
+Regards,
+Akihiko Odaki
 
