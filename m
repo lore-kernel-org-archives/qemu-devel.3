@@ -4,87 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53771C61CE7
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 20:39:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A025C61CE7
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 20:50:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNdpk-00062B-HC; Fri, 06 Jun 2025 16:38:37 -0400
+	id 1uNe1B-0000jb-TT; Fri, 06 Jun 2025 16:50:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNdpe-00061j-98
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 16:38:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uNe17-0000iI-6E
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 16:50:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNdpc-0005OG-Ln
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 16:38:29 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uNe14-0006oV-Ui
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 16:50:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749242306;
+ s=mimecast20190719; t=1749243015;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2cEaHHF39zwOaGSf8oP9Urzl+JS+gL8hfVK/Xc7PD+4=;
- b=eK3si5T/7uWmyt3Y+j5Kpycxkujhw8/S7PvcAdtt78taZ20hgk3V6EJv0IPpa6SnigY9j9
- PkJbTKeL88IcCZ5DnGQomKQM5P7mAbwoMcJjEkLwO1wMf1SOtT503o2+/wW6v/x4hxMRjI
- RIzLSugjDUjEiYcm/vvQd2KXUNCpJak=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-249-k3FZIA6GNGWAgMBjur4ZZA-1; Fri, 06 Jun 2025 16:38:25 -0400
-X-MC-Unique: k3FZIA6GNGWAgMBjur4ZZA-1
-X-Mimecast-MFC-AGG-ID: k3FZIA6GNGWAgMBjur4ZZA_1749242304
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4eec544c6so1264971f8f.0
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 13:38:25 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749242304; x=1749847104;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2cEaHHF39zwOaGSf8oP9Urzl+JS+gL8hfVK/Xc7PD+4=;
- b=Ene+EB0eCmchmyIzfLq0Pk9luoI/e5nTATscCUNVFynrCbZAffVAw4W3rXZp2tIzdL
- ZYYfTyWRGFYjKmAcx58Gf9hFT5eux5GWbniihj8+vxNL1dcrzT4CaTAKS/0X6uZEkaiI
- NE6Ti9/cTERP80JGc2HE5xT1M9tMJmUvCsevbTSN1ZB0ScQHBzPOVRkQDHTZXFS0wLBP
- G7IBYOhGUZ2G690HHALz6YpJTMMb9LNUCqKx/hr7YjJFLCP4f92Kezrdyxt/cQJLPlZO
- 8yP33ZEmwnG8Ov3v6/vMyKLU2CT1U16Xtan+LiQ7/3LbBz5o2nxkwwcEAnvr5VRBzGNd
- GKvA==
-X-Gm-Message-State: AOJu0YyAIN8eGirAiw6W/GbRnYk2hcr7Hljl0eOBrJIbZksenrCYj5xo
- 3+E+urK2wuU5pXDJ7png0WhYwiOqRTXw2uN73X9au8mdNicKGbgSBVmlMb2T4rkmXUFmJqtWzIh
- RGaZgzuYLbDiFBHaf3KbB2BPFAQhJCAHpTbSj5/Loyx3JtgnN40YPEdJjg/NC+XkECqPdWX3QMo
- drlzcRkh7UamLvp4GAVNnfCty3/RDKXQQ=
-X-Gm-Gg: ASbGnctQ1mHtYoMoagcQvT7UD2IUnDh7SYGO0ku9m80+n08deyqmqDqkEEALzMTgusM
- mjW8Y5Y3keMgHg30ITFsHthHx0KKNprtdQGPN3OapsV8PWl4iN9Qr+Am58exMYfsZo0dNkPla3o
- dwmw==
-X-Received: by 2002:a05:6000:3110:b0:3a4:e002:5f97 with SMTP id
- ffacd0b85a97d-3a5319b4c50mr4028737f8f.1.1749242304391; 
- Fri, 06 Jun 2025 13:38:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGRyXt5rWxjHsvtIWzLRYBIq4BveHy9Qsa73+yCDBaN9HHU8oNJkyU4RXHaWlIrNY+J1MCgaF1kko3+D8zce5k=
-X-Received: by 2002:a05:6000:3110:b0:3a4:e002:5f97 with SMTP id
- ffacd0b85a97d-3a5319b4c50mr4028719f8f.1.1749242304011; Fri, 06 Jun 2025
- 13:38:24 -0700 (PDT)
+ bh=GRhGqsdjHlcdtOThhMwkVpv7y+rIn5IxVqeOj32kKGs=;
+ b=gSb2cr6JMSaeRxNjTgqCTDL9h7BDO3rK8hYuqbfV1KVFdop7DleFyMVNOXczE80qVM2ybT
+ 1kLRQe4lsyjuJlYehsQ/86kWr5WhqqXwWrXirT2alqhUEUp0/TpmrtQLViARYv8QoZcaCT
+ dhmvI+3NkpwjZuxlzITCfmzC9juXf4w=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-114-G2qu1HA2MbKkqyoHvUMdxg-1; Fri,
+ 06 Jun 2025 16:50:14 -0400
+X-MC-Unique: G2qu1HA2MbKkqyoHvUMdxg-1
+X-Mimecast-MFC-AGG-ID: G2qu1HA2MbKkqyoHvUMdxg_1749243013
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C3CC9180047F; Fri,  6 Jun 2025 20:50:12 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.64.2])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C2E0430001B7; Fri,  6 Jun 2025 20:50:11 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Akihiko Odaki <akihiko.odaki@daynix.com>, Cleber Rosa <crosa@redhat.com>
+Subject: [PATCH 1/4] python: update requirements for Sphinx
+Date: Fri,  6 Jun 2025 16:50:06 -0400
+Message-ID: <20250606205009.584615-2-jsnow@redhat.com>
+In-Reply-To: <20250606205009.584615-1-jsnow@redhat.com>
+References: <20250606205009.584615-1-jsnow@redhat.com>
 MIME-Version: 1.0
-References: <20250605132427.404551-1-pbonzini@redhat.com>
- <b41eb6f4-96b8-47bf-90cf-e4918a613dcf@daynix.com>
-In-Reply-To: <b41eb6f4-96b8-47bf-90cf-e4918a613dcf@daynix.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Fri, 6 Jun 2025 22:38:12 +0200
-X-Gm-Features: AX0GCFve54j8UsQtotGRBeyIIQJBVAk_ayq4bXMXKOI3udX0_3BHmiI9rEzzl-E
-Message-ID: <CABgObfYZ2mH5ogfjPG3Xmp7jpay7CPHh7L=phSTXzT344VWhgA@mail.gmail.com>
-Subject: Re: [PATCH v5 00/13] Improve futex usage
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, Stefan Weil <sw@weilnetz.de>,
- Peter Xu <peterx@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Hailiang Zhang <zhanghailiang@xfusion.com>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, devel@daynix.com, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -109,18 +82,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 6, 2025 at 11:46=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix=
-.com> wrote:
-> This conditional is unnecessary; docs/about/build-platforms.rst says we
-> only supports MinGW.
->
-> I failed to catch this problem because I ran MinGW on Windows, which is
-> case-insensitive. Since it is case-insensitive, the lowercase name will
-> work for the OS too.
+In advance of actually bumping the build system requirements for Sphinx,
+bump the version used for the static analysis tests. Update the minimum
+requirements accordingly.
 
-Possibly, but better safe than sorry... The official name is the uppercase =
-one.
+This changes the test environment without actually changing the build
+requirements, and no extra changes are needed for the tests to continue
+passing.
 
-Paolo
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ python/setup.cfg         |  2 +-
+ python/tests/minreqs.txt | 36 +++++++++++++++++++++---------------
+ 2 files changed, 22 insertions(+), 16 deletions(-)
+
+diff --git a/python/setup.cfg b/python/setup.cfg
+index d7f5dc7bafe..dc9615c1173 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -46,7 +46,7 @@ devel =
+     urwid >= 2.1.2
+     urwid-readline >= 0.13
+     Pygments >= 2.9.0
+-    sphinx >= 3.4.3
++    sphinx >= 6.2.1
+ 
+ # Provides qom-fuse functionality
+ fuse =
+diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+index cd2e2a81c3d..fd7ec40929b 100644
+--- a/python/tests/minreqs.txt
++++ b/python/tests/minreqs.txt
+@@ -11,19 +11,19 @@
+ # When adding new dependencies, pin the very oldest non-yanked version
+ # on PyPI that allows the test suite to pass.
+ 
+-# For some reason, the presence of packaging==14.0 below requires us to
++# For some reason, the presence of packaging==21.0 below requires us to
+ # also pin setuptools to version 70 or below. Otherwise, the
+ # installation of the QEMU package itself fails, failing to find
+ # setuptools.
+ setuptools<=70
+ 
+ # Dependencies for qapidoc/qapi_domain et al
+-sphinx==3.4.3
++sphinx==6.2.1
+ 
+ # Dependencies for the TUI addon (Required for successful linting)
+ urwid==2.1.2
+ urwid-readline==0.13
+-Pygments==2.9.0
++Pygments==2.13.0
+ 
+ # Dependencies for mkvenv
+ distlib==0.3.6
+@@ -55,24 +55,30 @@ astroid==2.15.4
+ dill==0.2
+ lazy-object-proxy==1.4.0
+ platformdirs==2.2.0
+-toml==0.10.0
+ tomlkit==0.10.1
+ wrapt==1.14.0
+ 
+ # Transitive sphinx dependencies
+-Jinja2==2.7
+-MarkupSafe==1.1.0
++Jinja2==3.0
++MarkupSafe==2.0.0
+ alabaster==0.7.1
+-babel==1.3
+-docutils==0.12
+-imagesize==0.5.0
+-packaging==14.0
+-pytz==2011b0
+-requests==2.5.0
+-snowballstemmer==1.1
++babel==2.9
++certifi==2017.4.17
++chardet==3.0.2
++docutils==0.18.1
++idna==2.5
++imagesize==1.3
++importlib-metadata==4.8.1
++packaging==21.0
++pyparsing==2.0.2
++pytz==2015.7
++requests==2.25.0
++snowballstemmer==2.0
+ sphinxcontrib-applehelp==1.0.0
+ sphinxcontrib-devhelp==1.0.0
+-sphinxcontrib-htmlhelp==1.0.0
++sphinxcontrib-htmlhelp==2.0.0
+ sphinxcontrib-jsmath==1.0.0
+ sphinxcontrib-qthelp==1.0.0
+-sphinxcontrib-serializinghtml==1.0.0
++sphinxcontrib-serializinghtml==1.1.5
++urllib3==1.21.1
++zipp==0.5
+-- 
+2.48.1
 
 
