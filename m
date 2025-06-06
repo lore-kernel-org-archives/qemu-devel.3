@@ -4,87 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97CABC61CE8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1727AC61CE8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:44:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNWKH-0004Py-1V; Fri, 06 Jun 2025 08:37:40 -0400
+	id 1uNWJ0-0003CR-6n; Fri, 06 Jun 2025 08:36:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWJD-0003dk-WB
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:37 -0400
+ id 1uNWIx-00039N-AV
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:15 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWJA-00060T-IL
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:30 -0400
+ id 1uNWIu-0005z2-Kn
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749213385;
+ s=mimecast20190719; t=1749213370;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nqN2/3dN5WRDFyaAoAC2T45y6AZxZzkgkMVTfl+kruc=;
- b=GM9htjXkTdRK45eAXeh1T+1cbBJfBt7jNucIy7X1kGfOD2lZE/eLJspt/GBIWewqxR4u8O
- 2hDiUaWz6XAquy6ZSpX+vkPljD2MX7GS+4uTATaOfV++VBoJCxYpM7oHk6P32Xq8lQYkPn
- tGZ2lIVNb46XCD+gjt/6mR1r9yZdUZk=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=r6T2UdLZ98T4mEFrrnkCvZZaWql+Pj2cZBNd8iq7JhE=;
+ b=daA+JJy5XgclajL0xHN/Vpd4HjoeSEVKAimuiAI1F66lNR76kfnlgNU2DR3NTXrCtFF+Hs
+ y1e1VShyH9uOBUehEyMNRH19V+3YcdtAlPesLG7/MBCkkfT+MGUSTRzEcatq/eCdTJOEuw
+ LF0u/QX+1BDxVRuAerr0Frqn+jQliJw=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-296-39zIrIMrNly-ZpX0YgeLZQ-1; Fri, 06 Jun 2025 08:36:24 -0400
-X-MC-Unique: 39zIrIMrNly-ZpX0YgeLZQ-1
-X-Mimecast-MFC-AGG-ID: 39zIrIMrNly-ZpX0YgeLZQ_1749213383
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a3696a0d3aso857858f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:36:23 -0700 (PDT)
+ us-mta-146-ZK5QGKgXOAGEeWXVamvdmg-1; Fri, 06 Jun 2025 08:36:09 -0400
+X-MC-Unique: ZK5QGKgXOAGEeWXVamvdmg-1
+X-Mimecast-MFC-AGG-ID: ZK5QGKgXOAGEeWXVamvdmg_1749213368
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d6768d4dso13428505e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:36:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749213382; x=1749818182;
+ d=1e100.net; s=20230601; t=1749213367; x=1749818167;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=nqN2/3dN5WRDFyaAoAC2T45y6AZxZzkgkMVTfl+kruc=;
- b=hhMPrTZ7Su1bm0x3IbXyYfqjSbFL+p7JSL1W+BpCbq8HVkpQDKq/4A69/tq9GbbYMe
- pXDMa9vpOGGLl4w2Et53RAGBBEBhEdTE9eSVJoeQR35Cv9xUVeJBwEqq6gsfTvozATGj
- YSH3Te/1N0W71wlBqY5tX0RqHlFl0DD9EzgIGK8C5XpMQEhHa9BI2y+DqMullS1vC0gT
- 7ClK+nPcIij7xKeDY0DnL7/0sy/YyAqjze25NcgWFbDR5A1awpirXyXdLteZIKO6QTOr
- /c1Bjti7URjEcF9womz1JJyPlp6s8Q7Y6VPencf6BF5mlfkQbi36CW0uAQIau4fWyuSI
- 1BKg==
-X-Gm-Message-State: AOJu0Yz8WJCATocfq6w9VtjlU6vMNZ+91pOMzZU0L9KVbLDkDxaQ+Z59
- h4EKZl7NUMOsUpgS8GKXawFe1sY7ASkp2jzWNIiOcyoVb8h9Ou1D0KnJdJRfHSX0Cb7KcegKMKm
- UCaw5VWMAM6A7YH4xR6zAWMTVAt5vnrV6/v6VMse85QdB+8yX2XqykCPrhQV4aKqD06h0RILJwl
- 4h9ClQGM+k4Vg7Ech3RyyljJNYzCx2xmmi/rih43ge
-X-Gm-Gg: ASbGncuJLCjPiMBKse8xHKFAACxKGaLPLeZuEqVmBuzVD0TRJo2raPhajvR20yjYxC9
- F3u9AWfw2uvuXbIuf9AgoBhXkK4YtZCIkylnxhLIjC5hlLPeZmXuQr0l+tHvCZcCoUgkYI3wd0w
- A/oDIfprppGtrGWDdZt2XwcIRiDYMigDwqfa0wnHlqLfbI591qoHLXxxKwcbxc2e1m/015pEWah
- klmZDSoT7bWaoO7Ux39dz/ehtn8aQmgLBaGfoYNAEPknAkyG3VYbAcPJZApC0Fe5y7UcNGGwa1c
- fQMjKgv1AeG2EQ==
-X-Received: by 2002:a05:6000:2082:b0:3a4:e8bc:594 with SMTP id
- ffacd0b85a97d-3a5319b9ab5mr2634788f8f.8.1749213382181; 
- Fri, 06 Jun 2025 05:36:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFxpUYtLAXmS4ySsjqrnbDvzJlU5UuctilfsfEbmAQwZ3I83ofxTllRY+Am+3jBs2eAsSK++A==
-X-Received: by 2002:a05:6000:2082:b0:3a4:e8bc:594 with SMTP id
- ffacd0b85a97d-3a5319b9ab5mr2634767f8f.8.1749213381702; 
- Fri, 06 Jun 2025 05:36:21 -0700 (PDT)
+ bh=r6T2UdLZ98T4mEFrrnkCvZZaWql+Pj2cZBNd8iq7JhE=;
+ b=uYFQEqyYRTm3RckWillkZXdo54/00COOdCNS+HE8PuOgvA8bSWX8B9WfSXa1IfTqMe
+ bSqFAxJ45rVKEBHjkX6h2akpQ3yjTCIseuGVCHl0QRkPsqWMny0qBGemSCbTw2QYlXqP
+ 3k2KRAz3LYNhENL2YuuP+a81yJjqdKeISFj8UtUqrLlLPDl+Y1FvPptwWgb7BWoKDlJO
+ S79nnUBxG0UzCCiPIE6k6GRykny+X0wCK/Fe0vPdYGfwR2JfFpbagS6pPpio8dRq670E
+ OijZdgmdA5/jx2QoR715+Y1aDVmikkrBN000vWCrpp3wSey+gd/FT+e8Dl8N0uE46t42
+ HU2Q==
+X-Gm-Message-State: AOJu0YzfBsWoZs0SOH2+eLC9iDpNfWHVaR7wYUhrDBE4jTYg+1ifdTnH
+ 29PmiEhMTDVPZlvazDCzm85Dvr+glol6qe9n3hrqrHkF4dWT08L7GQ7UYGWN+tEQr7MnY5tuFbV
+ 5OJdbNoAuDBo0nxur8O1Lp3RKgOja2kS00V4qjju/QhtiyLUgrbA2Pl2//y3AQHBfY/9+3NzAsf
+ r+mgzYJB17aD3w3AmpYIUuJSOyU7WEHgs38FFf232S
+X-Gm-Gg: ASbGncvQWlDbzZ2HzotUk0DJEZq8H3YnZyQAMKfZ/XIWy8GD5gpXrPTtbbCr/Epjmlc
+ XD0YUQB6b8uCx0+GONv2kzT+0BcsvgsW02euiVieR9NVwnCi1DoVi1NWbT+RW20JJ4MaZIbcV0l
+ 7L7vFEBATgdtRd+cJao0bfSzEUI+jTkRh+AMsZGa3+1w9IRdYClIHLFm2MfIFtCiNjsCKTeyTZn
+ 3IAaCaUw01Lrd3gC+pTY3eEXrjCl3CVpL7+31GJOpbZb53TA21ZZhBOApsPzd2f+vGpGuLET7Dq
+ 77zol/Sugck0Nw==
+X-Received: by 2002:a05:600c:310a:b0:441:d4e8:76cd with SMTP id
+ 5b1f17b1804b1-452014235d1mr32936825e9.29.1749213367447; 
+ Fri, 06 Jun 2025 05:36:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE424q/EwXJFAssQxY2eCPg3Fsp78gspcYwg612N1I05o9/1GG7qSkOkP+1NgweuT2WF32sew==
+X-Received: by 2002:a05:600c:310a:b0:441:d4e8:76cd with SMTP id
+ 5b1f17b1804b1-452014235d1mr32936535e9.29.1749213366894; 
+ Fri, 06 Jun 2025 05:36:06 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-452730c7756sm19981615e9.33.2025.06.06.05.36.18
+ ffacd0b85a97d-3a53243664fsm1786344f8f.65.2025.06.06.05.36.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 05:36:18 -0700 (PDT)
+ Fri, 06 Jun 2025 05:36:04 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 27/31] hw/display/apple-gfx: Replace QemuSemaphore with
- QemuEvent
-Date: Fri,  6 Jun 2025 14:34:41 +0200
-Message-ID: <20250606123447.538131-28-pbonzini@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
+Subject: [PULL 23/31] qemu-thread: Document QemuEvent
+Date: Fri,  6 Jun 2025 14:34:37 +0200
+Message-ID: <20250606123447.538131-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250606123447.538131-1-pbonzini@redhat.com>
 References: <20250606123447.538131-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -113,54 +110,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-sem in AppleGFXReadMemoryJob is an one-shot event so it can be converted
-into QemuEvent, which is more specialized for such a use case.
+Document QemuEvent to help choose an appropriate synchronization
+primitive.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Link: https://lore.kernel.org/r/20250529-event-v5-10-53b285203794@daynix.com
+Link: https://lore.kernel.org/r/20250529-event-v5-12-53b285203794@daynix.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- hw/display/apple-gfx.m | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ include/qemu/thread.h | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
-index 8dde1f138dc..174d56ae05b 100644
---- a/hw/display/apple-gfx.m
-+++ b/hw/display/apple-gfx.m
-@@ -454,7 +454,7 @@ static void set_cursor_glyph(void *opaque)
- /* ------ DMA (device reading system memory) ------ */
+diff --git a/include/qemu/thread.h b/include/qemu/thread.h
+index 573f8c9ede2..f0302ed01fd 100644
+--- a/include/qemu/thread.h
++++ b/include/qemu/thread.h
+@@ -10,6 +10,16 @@ typedef struct QemuSemaphore QemuSemaphore;
+ typedef struct QemuLockCnt QemuLockCnt;
+ typedef struct QemuThread QemuThread;
  
- typedef struct AppleGFXReadMemoryJob {
--    QemuSemaphore sem;
-+    QemuEvent event;
-     hwaddr physical_address;
-     uint64_t length;
-     void *dst;
-@@ -470,7 +470,7 @@ static void apple_gfx_do_read_memory(void *opaque)
-                         job->dst, job->length, MEMTXATTRS_UNSPECIFIED);
-     job->success = (r == MEMTX_OK);
- 
--    qemu_sem_post(&job->sem);
-+    qemu_event_set(&job->event);
- }
- 
- static bool apple_gfx_read_memory(AppleGFXState *s, hwaddr physical_address,
-@@ -483,11 +483,11 @@ static bool apple_gfx_read_memory(AppleGFXState *s, hwaddr physical_address,
-     trace_apple_gfx_read_memory(physical_address, length, dst);
- 
-     /* Performing DMA requires BQL, so do it in a BH. */
--    qemu_sem_init(&job.sem, 0);
-+    qemu_event_init(&job.event, 0);
-     aio_bh_schedule_oneshot(qemu_get_aio_context(),
-                             apple_gfx_do_read_memory, &job);
--    qemu_sem_wait(&job.sem);
--    qemu_sem_destroy(&job.sem);
-+    qemu_event_wait(&job.event);
-+    qemu_event_destroy(&job.event);
-     return job.success;
- }
- 
++/*
++ * QemuEvent
++ * =========
++ *
++ * QemuEvent is an implementation of Win32 manual-reset event object.
++ * For details, refer to:
++ * https://learn.microsoft.com/en-us/windows/win32/sync/using-event-objects
++ *
++ * QemuEvent is more lightweight than QemuSemaphore when HAVE_FUTEX is defined.
++ */
+ typedef struct QemuEvent {
+ #ifndef HAVE_FUTEX
+     pthread_mutex_t lock;
 -- 
 2.49.0
 
