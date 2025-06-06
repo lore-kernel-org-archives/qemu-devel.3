@@ -4,91 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B100C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:30:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 631EFC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:38:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNZ11-0003iA-AB; Fri, 06 Jun 2025 11:29:55 -0400
+	id 1uNZ8T-00054K-9O; Fri, 06 Jun 2025 11:37:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNZ0y-0003hk-N5
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:29:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uNZ8R-000547-4R
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:37:35 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNZ0x-0000U3-5R
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:29:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749223789;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=g1rLBVmmwtzcGtQeXXpcni6kRPHbqy7xWU4y65nGhgw=;
- b=fbHA3nauBQmt5fXkRYtP00Yh6EC9g64CJuK4yUiaqSFgbyZUCj35KscEQiSWvW2YoZfsCk
- OT0QS4VBnRT9+bz4uMAJhU44USWBTqSWFewA0WV6X4qYIR4pbBdPxO0tcNvk07KsMRE5Pp
- Cs6WiASd657Oc1mPa/fdtL9ONAQbZvk=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-616-BsCKZNGdP2-3kH4T60nmbA-1; Fri, 06 Jun 2025 11:29:48 -0400
-X-MC-Unique: BsCKZNGdP2-3kH4T60nmbA-1
-X-Mimecast-MFC-AGG-ID: BsCKZNGdP2-3kH4T60nmbA_1749223788
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4a43988c314so35321491cf.2
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 08:29:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749223788; x=1749828588;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=g1rLBVmmwtzcGtQeXXpcni6kRPHbqy7xWU4y65nGhgw=;
- b=rdgtu9s6fDKLNOL7ptfM/+ve9msoM8GvDZSe+dT7NYQ4OrzZRArQ40rw/NrBtSbMHZ
- t1p4lz8qTRGH2T+MyHugUehQYx1+wswsOkz1RpsqickISeJx5EqK9k/fI3lMlWd1PmcQ
- UIQGaoi1GAo7r2Yr9f8MyxkMBdUH4OIz/lUInlllYQaYy+R9GAm+SN89e5UOdhAXQ1uT
- 4bXN3HHS0oPSpe+fcNdjsnzcgOkhkqvnaZdGXaOg8XBzEXhl8IATYuPzVxzn7XPVUnL4
- eviuaHE+13FiDQBgio0ij14jhD0PKQzDqQLGNTydoc7QkT0+StjrqTHxIxFcCn+NIaHQ
- 0pKg==
-X-Gm-Message-State: AOJu0Yw+GW4dKTBY5PEE7oGzgz4mi8c3ZEi4uGNmeJzt2oJVX/XK7wtX
- bDLUuaf1R9hrsldoJKp80Ec1j1vyWKHXHQqgsYyTLuJ8Usu2jV5p2135+70oVbEPd2/855eiwyA
- beMOA1qUPslgc+S9YpXhse5YQuUpKnHW7ZcDSEUKfBNOyQQAoWE9FVUC1Xwlfvrma
-X-Gm-Gg: ASbGncv1jXfEAa50GU3naOA61UGvvgTOHnNQC6EO5V/6XqcGKAdKlPxFibUZKQ+oquw
- g2qA33kiM4RLUSKzm+TTsYg322q0qoj6qAqRQ/kkdfa4xSy8axjhJWhJArbhEarxGxJ41t7X4RA
- jR7uxedzov8TstUUU9SmuAywb9u/52B+A2wK4um5r/Ie8LF03iqMVhWmGWck8/05pw96RQ3Tb6o
- 2saP9DxSup0JBg7tWepGgwCND56Y331v3Z00ClwEdAIDGKPe7JaFhAOZRpeuwfDHFEEh0+zmbEK
- rYy5OEzxop1zNQ==
-X-Received: by 2002:a05:6214:f2a:b0:6fa:ccb6:603d with SMTP id
- 6a1803df08f44-6fb08f560bcmr64274076d6.16.1749223788012; 
- Fri, 06 Jun 2025 08:29:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHefazEO0zqBtBNOQv9nqr5EwfAutLj3hfjJgYxWbJjHzezlqLrSwLFZq0si6D+jMj1cpn4qg==
-X-Received: by 2002:a05:6214:f2a:b0:6fa:ccb6:603d with SMTP id
- 6a1803df08f44-6fb08f560bcmr64273746d6.16.1749223787670; 
- Fri, 06 Jun 2025 08:29:47 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fb09ac84cbsm12605096d6.32.2025.06.06.08.29.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 08:29:47 -0700 (PDT)
-Date: Fri, 6 Jun 2025 11:29:45 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 10/21] migration: Use QAPI_CLONE_MEMBERS in
- query_migrate_parameters
-Message-ID: <aEMJacJqDHLrdkgn@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-11-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uNZ8P-0001R9-8E
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:37:34 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 556EDaAH011152;
+ Fri, 6 Jun 2025 15:37:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=WZi9OY
+ XSD/cZHqJbinupZ3/HwwqyX74Y7sJxMQt0ldw=; b=WOKez6aTQZP0skLkZQwMtS
+ 39DBlOvTF2F6OxvL7quXn4keIL01EOJ0CqEQQsyZsdLDbl+hvBFXHEK6TZpvy+Nj
+ A0KNqCArCEn0+TSiXMaDrfhENQCypTQXmFTmAB0vJS7LNW0uUhH0/FDEU+R42+r0
+ 3NEvzb2Wn1BR+Dr+nIX3ZRA0DS8DzrL1V2ezcrSNatc7Uka7GVIWqOJQ4Wrq0uUJ
+ 7d+1Gf12CCm/k6RgJYJ/cT8escsS+/SUYYIQaIhhWZXTgnogD1DB4ND/7/ThHAKm
+ K2ZvGMuGKjAdGxdf0a5t6V0Q8vthY4v5/Ad+jtnewEwmJ4uc4JR+0b+H6xWFSfgA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 471gf07102-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Jun 2025 15:37:31 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 556FEeUg022550;
+ Fri, 6 Jun 2025 15:37:30 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 470c3tt95d-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Jun 2025 15:37:30 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 556FbPY148890204
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Jun 2025 15:37:25 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D646F58063;
+ Fri,  6 Jun 2025 15:37:29 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7ADB058055;
+ Fri,  6 Jun 2025 15:37:29 +0000 (GMT)
+Received: from [9.61.255.24] (unknown [9.61.255.24])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Jun 2025 15:37:29 +0000 (GMT)
+Message-ID: <760af012-1265-4845-b7d2-793fe75c3a51@linux.ibm.com>
+Date: Fri, 6 Jun 2025 10:37:28 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250603013810.4772-11-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
+ connecting
+To: Steven Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, jjherne@linux.ibm.com, peterx@redhat.com,
+ farosas@suse.de
+References: <20250605230808.1278840-1-jhkim@linux.ibm.com>
+ <aELy8_1ssb1jTSTa@redhat.com>
+ <2f36bf89-9664-4552-86c0-646db01b7f1f@oracle.com>
+ <2c8d3cb2-b3ee-4738-871a-0dea2bff0e84@linux.ibm.com>
+ <3004c91e-d515-4e22-902c-42cea83ce64b@oracle.com>
+Content-Language: en-US
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <3004c91e-d515-4e22-902c-42cea83ce64b@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 0E3XCpJ4GLiYTnxPIFYMN2iET_wpvRhu
+X-Proofpoint-ORIG-GUID: 0E3XCpJ4GLiYTnxPIFYMN2iET_wpvRhu
+X-Authority-Analysis: v=2.4 cv=X4dSKHTe c=1 sm=1 tr=0 ts=68430b3b cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=ZRWfNBs9nIcWNDPEzxEA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDEzNyBTYWx0ZWRfXyuYtOHkMMu/M
+ 9eimDncrengXMwT63HXmf7tWjm2MQ5WXlLOiZeAYxNMCpQihz+Lb9Mbt3KZgMmoIrwTIM8/pI0X
+ UH/7qLjwk3WUIK4QX0oeqvHaOIXdPcnsmrmDHss6OkWQXXG+l8RiBMZ7uLgGaRRnYlGt35mdSMh
+ Upz8Cix9u51bJ/berkMU3nF97iJKuxKQgCTUPRRmjfHLvb/F06IG3Fe2LPk/tRJdRcTWlZfta57
+ yYymha0QZXzr1LDFHioHlhxuS8bfKGylY0ZrMxH6BSiHPlwz5uD4h7+CMgD6qfQJiT4mQzuV7BG
+ t19tFeN4IYNH3QJ2MvFUkfQGqjNLLaTfXgDcoyPgk1OIWoTTOd7u9sYPL865P35XIlwrxUR58hW
+ 477FZ7j4k681xuzFjwHCb19IjSWW4veeEx5AQsKvXr+6NzfHMh/LIDC7Ty1fzW9+V/THb5D3
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-06_05,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506060137
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,87 +129,156 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 02, 2025 at 10:37:59PM -0300, Fabiano Rosas wrote:
-> QAPI_CLONE_MEMBERS is a better option than copying parameters one by
-> one because it operates on the entire struct and follows pointers. It
-> also avoids the need to alter this function every time a new parameter
-> is added.
-> 
-> Note, since this is a deep clone, now we must free the TLS strings
-> before assignment.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/options.c | 31 ++++---------------------------
->  1 file changed, 4 insertions(+), 27 deletions(-)
-> 
-> diff --git a/migration/options.c b/migration/options.c
-> index dd62e726cb..0a2a3050ec 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -918,7 +918,9 @@ static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
->  {
->      StrOrNull *dst = *dstp;
->  
-> -    assert(!dst);
-> +    if (dst) {
-> +        qapi_free_StrOrNull(dst);
-> +    }
->  
->      dst = *dstp = g_new0(StrOrNull, 1);
->      dst->type = QTYPE_QSTRING;
-> @@ -975,42 +977,17 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
->      MigrationParameters *params;
->      MigrationState *s = migrate_get_current();
->  
-> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
->      params = g_malloc0(sizeof(*params));
->  
-> -    params->throttle_trigger_threshold = s->parameters.throttle_trigger_threshold;
-> -    params->cpu_throttle_initial = s->parameters.cpu_throttle_initial;
-> -    params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
-> -    params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
-> +    QAPI_CLONE_MEMBERS(MigrationParameters, params, &s->parameters);
->  
->      tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
->      tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
->      tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
->  
-> -    params->max_bandwidth = s->parameters.max_bandwidth;
-> -    params->avail_switchover_bandwidth = s->parameters.avail_switchover_bandwidth;
-> -    params->downtime_limit = s->parameters.downtime_limit;
-> -    params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
-> -    params->multifd_channels = s->parameters.multifd_channels;
-> -    params->multifd_compression = s->parameters.multifd_compression;
-> -    params->multifd_zlib_level = s->parameters.multifd_zlib_level;
-> -    params->multifd_qatzip_level = s->parameters.multifd_qatzip_level;
-> -    params->multifd_zstd_level = s->parameters.multifd_zstd_level;
-> -    params->xbzrle_cache_size = s->parameters.xbzrle_cache_size;
-> -    params->max_postcopy_bandwidth = s->parameters.max_postcopy_bandwidth;
-> -    params->max_cpu_throttle = s->parameters.max_cpu_throttle;
-> -    params->announce_initial = s->parameters.announce_initial;
-> -    params->announce_max = s->parameters.announce_max;
-> -    params->announce_rounds = s->parameters.announce_rounds;
-> -    params->announce_step = s->parameters.announce_step;
->      params->block_bitmap_mapping =
->          QAPI_CLONE(BitmapMigrationNodeAliasList,
->                     s->parameters.block_bitmap_mapping);
 
-Wouldn't the QAPI_CLONE_MEMBERS() have deep cloned this too?
+On 6/6/2025 10:12 AM, Steven Sistare wrote:
+> On 6/6/2025 11:06 AM, JAEHOON KIM wrote:
+>> On 6/6/2025 9:14 AM, Steven Sistare wrote:
+>>> On 6/6/2025 9:53 AM, Daniel P. Berrangé wrote:
+>>>> On Thu, Jun 05, 2025 at 06:08:08PM -0500, Jaehoon Kim wrote:
+>>>>> When the source VM attempts to connect to the destination VM's Unix
+>>>>> domain socket(cpr.sock) during CPR transfer, the socket file might 
+>>>>> not
+>>>>> yet be exist if the destination side hasn't completed the bind
+>>>>> operation. This can lead to connection failures when running tests 
+>>>>> with
+>>>>> the qtest framework.
+>>>>
+>>>> This sounds like a flawed test impl to me - whatever is initiating
+>>>> the cpr operation on the source has done so prematurely - it should
+>>>> ensure the dest is ready before starting the operation.
+>>>>
+>>>>> To address this, add cpr_validate_socket_path(), which wait for the
+>>>>> socket file to appear. This avoids intermittent qtest failures 
+>>>>> caused by
+>>>>> early connection attempts.
+>>>>
+>>>> IMHO it is dubious to special case cpr in this way.
+>>>
+>>> I agree with Daniel, and unfortunately it is not just a test issue;
+>>> every management framework that supports cpr-transfer must add logic to
+>>> wait for the cpr socket to appear in the target before proceeding.
+>>>
+>>> This is analogous to waiting for the monitor socket to appear before
+>>> connecting to it.
+>>>
+>>> - Steve
+>>
+>> Thank you very much for your valuable review and feedback.
+>>
+>> Just to clarify, the added cpr_validate_socket_path() function is not 
+>> limited to the test framework.
+>> It is part of the actual CPR implementation and is intended to ensure 
+>> correct behavior in all cases, including outside of tests.
+>>
+>> I mentioned the qtest failure simply as an example where this issue 
+>> became apparent.
+>
+> Yes, I understand that you understand :)
+> Are you willing to move your fix to the qtest?
+>
+> - Steve
 
-> -    params->x_vcpu_dirty_limit_period = s->parameters.x_vcpu_dirty_limit_period;
-> -    params->vcpu_dirty_limit = s->parameters.vcpu_dirty_limit;
-> -    params->mode = s->parameters.mode;
-> -    params->zero_page_detection = s->parameters.zero_page_detection;
-> -    params->direct_io = s->parameters.direct_io;
->  
->      /*
->       * query-migrate-parameters expects all members of
-> -- 
-> 2.35.3
-> 
+Thank you for your question and feedback.
 
--- 
-Peter Xu
+I agree that the issue could be addressed within the qtest framework to 
+improve stability.
 
+However, this socket readiness check is a fundamental part of CPR 
+transfer process,
+and I believe that incorporating cpr_validate_socket_path() directly 
+into the CPR implementation helps ensure more reliable behavior
+across all environments - not only during testing.
+
+Just from my perspective, adding this logic to the CPR code does not 
+introduce significant overhead or side effects.
+I would appreciate if you could share more details about your concerns, 
+so I can better address them.
+
+- Jaehoon Kim
+
+>
+>>>>> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+>>>>> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+>>>>> ---
+>>>>>   include/migration/cpr.h  |  1 +
+>>>>>   migration/cpr-transfer.c | 35 +++++++++++++++++++++++++++++++++++
+>>>>>   2 files changed, 36 insertions(+)
+>>>>>
+>>>>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+>>>>> index 7561fc75ad..cc9384b4f9 100644
+>>>>> --- a/include/migration/cpr.h
+>>>>> +++ b/include/migration/cpr.h
+>>>>> @@ -23,6 +23,7 @@ MigMode cpr_get_incoming_mode(void);
+>>>>>   void cpr_set_incoming_mode(MigMode mode);
+>>>>>   bool cpr_is_incoming(void);
+>>>>>   +bool cpr_validate_socket_path(const char *path, Error **errp);
+>>>>>   int cpr_state_save(MigrationChannel *channel, Error **errp);
+>>>>>   int cpr_state_load(MigrationChannel *channel, Error **errp);
+>>>>>   void cpr_state_close(void);
+>>>>> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
+>>>>> index e1f140359c..3088ed323f 100644
+>>>>> --- a/migration/cpr-transfer.c
+>>>>> +++ b/migration/cpr-transfer.c
+>>>>> @@ -17,6 +17,33 @@
+>>>>>   #include "migration/vmstate.h"
+>>>>>   #include "trace.h"
+>>>>>   +#define CPR_MAX_RETRIES     50     /* Retry for up to 5 seconds */
+>>>>> +#define CPR_RETRY_DELAY_US  100000 /* 100 ms per retry */
+>>>>> +
+>>>>> +bool cpr_validate_socket_path(const char *path, Error **errp)
+>>>>> +{
+>>>>> +    struct stat st;
+>>>>> +    int retries = CPR_MAX_RETRIES;
+>>>>> +
+>>>>> +    do {
+>>>>> +        if (!stat(path, &st) && S_ISSOCK(st.st_mode)) {
+>>>>> +            return true;
+>>>>> +        }
+>>>>> +
+>>>>> +        if (errno == ENOENT) {
+>>>>> +            usleep(CPR_RETRY_DELAY_US);
+>>>>> +        } else {
+>>>>> +            error_setg_errno(errp, errno,
+>>>>> +                "Unable to check status of socket path '%s'", path);
+>>>>> +            return false;
+>>>>> +        }
+>>>>> +    } while (--retries > 0);
+>>>>> +
+>>>>> +    error_setg(errp, "Socket path '%s' not found after %d retries",
+>>>>> +                                            path, CPR_MAX_RETRIES);
+>>>>> +    return false;
+>>>>> +}
+>>>>> +
+>>>>>   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error 
+>>>>> **errp)
+>>>>>   {
+>>>>>       MigrationAddress *addr = channel->addr;
+>>>>> @@ -28,6 +55,14 @@ QEMUFile *cpr_transfer_output(MigrationChannel 
+>>>>> *channel, Error **errp)
+>>>>>           QIOChannel *ioc = QIO_CHANNEL(sioc);
+>>>>>           SocketAddress *saddr = &addr->u.socket;
+>>>>>   +        /*
+>>>>> +         * Verify that the cpr.sock Unix domain socket file 
+>>>>> exists and is ready
+>>>>> +         * before proceeding with the connection.
+>>>>> +         */
+>>>>> +        if 
+>>>>> (!cpr_validate_socket_path(addr->u.socket.u.q_unix.path, errp)) {
+>>>>> +            return NULL;
+>>>>> +        }
+>>>>> +
+>>>>>           if (qio_channel_socket_connect_sync(sioc, saddr, errp) < 
+>>>>> 0) {
+>>>>>               return NULL;
+>>>>>           }
+>>>>> -- 
+>>>>> 2.49.0
+>>>>>
+>>>>>
+>>>>
+>>>> With regards,
+>>>> Daniel
+>>>
+>>>
+>
 
