@@ -4,120 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F5F2C61CE8
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 11:50:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F82CC5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:31:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNVZJ-0001sU-4B; Fri, 06 Jun 2025 07:49:05 -0400
+	id 1uNWDB-0000sx-LF; Fri, 06 Jun 2025 08:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1uNVZD-0001rU-V7; Fri, 06 Jun 2025 07:49:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uNWDA-0000qm-3J
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:30:16 -0400
+Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1uNVZA-0007zZ-Bj; Fri, 06 Jun 2025 07:48:59 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5563h4Vw019429;
- Fri, 6 Jun 2025 11:48:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=GhJgtV
- EdB3b50S0HLz4l8jOFo70bx/9J/VFaC3lSEHg=; b=YmsnZcUGXYpmuOhkkWvEOf
- C8HFiQvOl32/n1O14oDDXloBA5GprLPS8rMla/NjzQoLMOCT6Xm8i38qPn+v7yYE
- 04Hs+jGTVeUsvMh8LDz1Y8JUPgWJODaogmY3YI399bUCG9FObynck/yoI9hjtnFD
- UveamqTEG8OFFEHH6SZWwD4vAYxKM8ayFShe0DlkdXn1TjZWdjCuMmLK4UIrjlMN
- /PlZsOYTuX8W+rKrD8tt8Bpmc9ENFzLLzYWxA92K/glpQEgSHCd2+IP4rEO1fWm1
- 9Y/9hoXmvx/EYoh0JBFl7AXmmO5WOyArYNwC6hyaY79wWLRx9geOCM5rWlyQfcJQ
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 471gf068fh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Jun 2025 11:48:19 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 556BfpxB022527;
- Fri, 6 Jun 2025 11:48:18 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 470c3tsfn1-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Jun 2025 11:48:18 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 556BmGA630868096
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 6 Jun 2025 11:48:16 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 85C375803F;
- Fri,  6 Jun 2025 11:48:16 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 57D9758055;
- Fri,  6 Jun 2025 11:48:15 +0000 (GMT)
-Received: from [9.61.64.137] (unknown [9.61.64.137])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri,  6 Jun 2025 11:48:15 +0000 (GMT)
-Message-ID: <17677999-305c-4488-92fe-49af3b08cae3@linux.ibm.com>
-Date: Fri, 6 Jun 2025 07:48:14 -0400
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uNWCx-0004wA-3p
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:30:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
+ ; s=bytemarkmx;
+ h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
+ :Subject; bh=TP9zixZc6p07lO6UHxKLDUvYWlj6E2NNyB/0TPwLe1M=; b=mfgoESb3+WRUHZj1
+ dzcYoyZYdBBx405BSPdW/MHgInHMgRMVO8lnEjhBk1dwoZjCkQ9Li7rjgvlJVCHamfUDkJX9ZssNj
+ fc7HmngbrOZski5wk1JdBki6oAXlQQhmj2VKjed1t6SGf7w+8oU1e+sXAGWwnaQGYncVBn/VuiA0t
+ q6FjU8MffD2UuwLyBTSuxSC83qqzURvWBAmFpupjJ5SAv7sp+kLqI1/eBqfQlqQv79lIKNdVdFhy0
+ bW8R8kwHmqNZbO6P9NdtzakjR/Za6rUozjU4SRxVw29m7yp5+SJbGUSlOM4+YF7XEJD4DECjRb1eR
+ P8sgg/kluKluvagVYg==;
+Received: from dg by mx.treblig.org with local (Exim 4.96)
+ (envelope-from <dg@treblig.org>) id 1uNWCk-0082bL-2P;
+ Fri, 06 Jun 2025 12:29:50 +0000
+Date: Fri, 6 Jun 2025 12:29:50 +0000
+From: "Dr. David Alan Gilbert" <dave@treblig.org>
+To: Babu Moger <babu.moger@amd.com>
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, davydov-max@yandex-team.ru
+Subject: Re: [PATCH v7 4/6] target/i386: Add couple of feature bits in
+ CPUID_Fn80000021_EAX
+Message-ID: <aELfPr7snDmIirNk@gallifrey>
+References: <cover.1746734284.git.babu.moger@amd.com>
+ <a5f6283a59579b09ac345b3f21ecb3b3b2d92451.1746734284.git.babu.moger@amd.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v11 3/4] hw/vfio/ap: Storing event information for an
- AP configuration change event
-To: Rorie Reyes <rreyes@linux.ibm.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, qemu-devel@nongnu.org, qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, thuth@redhat.com
-References: <20250523160338.41896-1-rreyes@linux.ibm.com>
- <20250523160338.41896-4-rreyes@linux.ibm.com>
- <66ad7451-b7a6-4112-8f20-1af06d5b482a@redhat.com>
- <834be7a8-922a-4e39-8453-6c9a1957d3ac@linux.ibm.com>
- <1a896c28-783b-4a1e-9cf5-6b8abfe8d7e4@redhat.com>
- <adca5063-786e-4c4e-90f8-dd378a2aa71c@linux.ibm.com>
- <5248c4f1-923e-4f6b-9c3f-ac24666fea04@redhat.com>
- <02f064f7-e400-4d7b-ba04-cb5dc6ee93f0@linux.ibm.com>
- <5888d51f-a85e-454c-971e-7d1f6f18dbe3@linux.ibm.com>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <5888d51f-a85e-454c-971e-7d1f6f18dbe3@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: XxBqw3a7ipSgxbAMS_Od1Tm9fBDosc1t
-X-Authority-Analysis: v=2.4 cv=DYMXqutW c=1 sm=1 tr=0 ts=6842d583 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=sWKEhP36mHoA:10 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=Urs5WllyQESC8Q30aFYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: XxBqw3a7ipSgxbAMS_Od1Tm9fBDosc1t
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDEwNCBTYWx0ZWRfXyyX6TWL7JOsa
- FaUDQWrmOLXKh6fgtwN6lv6MJwITo3xyz4Rs05lNQXNVJ5F51yQwzPQ9zkLFawSit+6o1dsPpMb
- +gFFCPfLSQY787m7CUqhF7XsmCfNlS2w12TYgjpT9dDP3xn4HZFHlCG723tjbwdFr/wp2FqDPU1
- ivzdbbQC9l2HK1X6oTWQykShQk7hGHSM671jn7J+iZw7AF1ds7VykAZcxXycVpjlvhKbwdjNrDC
- 43Wl5OAHye+jY++fsohn0eUme9XOpbDsVH+7YI9mzax9GQPKbRCz5Fwp2mndh+sFPFXEhrILSar
- 7poFnAO0GGqm9wTSLLrMIWHHuQppWvhXPCX4LrcwSXbkZNTcqhcin0XGQTAFAYrWLvM/QeZCeKK
- OyeH36zKWRnkl173GkNLifSAoLv7I0PkpZOmjGeAjax64oTJcoVCv8S/7d/nr68ujcAS89zo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-06_03,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0
- lowpriorityscore=0 suspectscore=0 spamscore=0 mlxscore=0
- priorityscore=1501 clxscore=1015 phishscore=0 mlxlogscore=999 adultscore=0
- malwarescore=0 bulkscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506060104
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+In-Reply-To: <a5f6283a59579b09ac345b3f21ecb3b3b2d92451.1746734284.git.babu.moger@amd.com>
+X-Chocolate: 70 percent or better cocoa solids preferably
+X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
+X-Uptime: 12:28:21 up 39 days, 20:41,  2 users,  load average: 0.00, 0.01, 0.00
+User-Agent: Mutt/2.2.12 (2023-09-09)
+Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
+ helo=mx.treblig.org
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ T_SPF_HELO_TEMPERROR=0.01,
+ T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,162 +72,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+* Babu Moger (babu.moger@amd.com) wrote:
+> Add CPUID bit indicates that a WRMSR to MSR_FS_BASE, MSR_GS_BASE, or
+> MSR_KERNEL_GS_BASE is non-serializing amd PREFETCHI that the indicates
+> support for IC prefetch.
+> 
+> CPUID_Fn80000021_EAX
+> Bit    Feature description
+> 20     Indicates support for IC prefetch.
+> 1      FsGsKernelGsBaseNonSerializing.
 
+I'm curious about this:
+  a) Is this new CPUs are non-serialising on that write?
+  b) If so, what happens if you run existing kernels/firmware on them?
+  c) Bonus migration question; what happens if you live migrate from a host
+     that claims to be serialising to one that has the extra non-serialising
+     flag but is disabled in the emulated CPU model.
 
+Dave
 
-On 6/5/25 1:57 PM, Rorie Reyes wrote:
->
-> On 6/4/25 9:47 AM, Anthony Krowiak wrote:
->>
->>
->>
->> On 6/3/25 4:30 PM, Cédric Le Goater wrote:
->>> On 6/3/25 20:01, Rorie Reyes wrote:
->>>>
->>>> On 6/3/25 10:21 AM, Cédric Le Goater wrote:
->>>>> On 6/3/25 14:58, Rorie Reyes wrote:
->>>>>> Hey Cedric,
->>>>>>
->>>>>> You mentioned the following in my v9 patches
->>>>>>
->>>>>> "In that case, let's keep it simple (no mutex) and add a 
->>>>>> assert(bql_locked())
->>>>>> statement where we think the bql should be protecting access to 
->>>>>> shared
->>>>>> resources. "
->>>>>>
->>>>>> Does this still apply down bellow?
->>>>>
->>>>> Anthony replied :
->>>>>
->>>>> https://lore.kernel.org/qemu-devel/ed2a2aa3-68a7-480c-a6a4-a8219af12d7b@linux.ibm.com/ 
->>>>>
->>>>>
->>>>> Thanks,
->>>>>
->>>>> C.
->>>>>
->>>> So we'll still use WITH_QEMU_LOCK_GUARD?
->>>
->>> If a lock is needed to protect the list, then 
->>> ap_chsc_sei_nt0_have_event()
->>> should lock/unlock too. WITH_QEMU_LOCK_GUARD() is just a pratical 
->>> way to
->>> do so.
->>
->> Since ap_chsc_sei_nt0_have_event() is a single line that returns
->> !QTAILQ_EMPTY(&cfg_chg_events), wouldn't it be better to just
->> use the QEMU_LOCK_GUARD macro which, if I'm not mistaken,
->> will unlock on the return statement?
->>>
->>>
->>> Thanks,
->>>
->>> C.
->>>
->>>
->>>
->>>>>>
->>>>>> On 5/26/25 4:40 AM, Cédric Le Goater wrote:
->>>>>>> On 5/23/25 18:03, Rorie Reyes wrote:
->>>>>>>> These functions can be invoked by the function that handles 
->>>>>>>> interception
->>>>>>>> of the CHSC SEI instruction for requests indicating the 
->>>>>>>> accessibility of
->>>>>>>> one or more adjunct processors has changed.
->>>>>>>>
->>>>>>>> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
->>>>>>>> ---
->>>>>>>>   hw/vfio/ap.c                 | 53 
->>>>>>>> ++++++++++++++++++++++++++++++++++++
->>>>>>>>   include/hw/s390x/ap-bridge.h | 39 ++++++++++++++++++++++++++
->>>>>>>>   2 files changed, 92 insertions(+)
->>>>>>>>
->>>>>>>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
->>>>>>>> index fc435f5c5b..97a42a575a 100644
->>>>>>>> --- a/hw/vfio/ap.c
->>>>>>>> +++ b/hw/vfio/ap.c
->>>>>>>> @@ -10,6 +10,7 @@
->>>>>>>>    * directory.
->>>>>>>>    */
->>>>>>>>   +#include <stdbool.h>
->>>>>>>>   #include "qemu/osdep.h"
->>>>>>>>   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
->>>>>>>>   #include <linux/vfio.h>
->>>>>>>> @@ -48,6 +49,8 @@ typedef struct APConfigChgEvent {
->>>>>>>>   static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
->>>>>>>>       QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
->>>>>>>>   +static QemuMutex cfg_chg_events_lock;
->>>>>>>> +
->>>>>>>>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
->>>>>>>>     static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
->>>>>>>> @@ -96,6 +99,49 @@ static void 
->>>>>>>> vfio_ap_cfg_chg_notifier_handler(void *opaque)
->>>>>>>>     }
->>>>>>>>   +int ap_chsc_sei_nt0_get_event(void *res)
->>>>>>>> +{
->>>>>>>> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
->>>>>>>> +    APConfigChgEvent *cfg_chg_event;
->>>>>>>> +
->>>>>>>> +    qemu_mutex_lock(&cfg_chg_events_lock);
->>>>>>>
->>>>>>> please consider using WITH_QEMU_LOCK_GUARD()
->>>>>>>
->>>>>> See note above about bql_locked
->>>>>>>> +    if (!ap_chsc_sei_nt0_have_event()) {
->>>>>>>> + qemu_mutex_unlock(&cfg_chg_events_lock);
->>>>>>>> +        return EVENT_INFORMATION_NOT_STORED;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
->>>>>>>> +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
->>>>>>>> +
->>>>>>>> +    qemu_mutex_unlock(&cfg_chg_events_lock);
->>>>>>>> +
->>>>>>>> +    memset(nt0_res, 0, sizeof(*nt0_res));
->>>>>>>> +    g_free(cfg_chg_event);
->>>>>>>> +
->>>>>>>> +    /*
->>>>>>>> +     * If there are any AP configuration change events in the 
->>>>>>>> queue,
->>>>>>>> +     * indicate to the caller that there is pending event info in
->>>>>>>> +     * the response block
->>>>>>>> +     */
->>>>>>>> +    if (ap_chsc_sei_nt0_have_event()) {
->>>>>>>> +        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
->>>>>>>> +    }
->>>>>>>> +
->>>>>>>> +    nt0_res->length = sizeof(ChscSeiNt0Res);
->>>>>>>> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
->>>>>>>> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
->>>>>>>> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
->>>>>>>> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
->>>>>>>> +
->>>>>>>> +    return EVENT_INFORMATION_STORED;
->>>>>>>> +}
->>>>>>>> +
->>>>>>>> +bool ap_chsc_sei_nt0_have_event(void)
->>>>>>>
->>>>>>> hmm, no locking ?
->>>>>>>
-> How important do we need to lock this? When I lock this method my 
-> guest freezes every time. But when I only lock the get event, my code 
-> continues to work as designed
-
-Try locking in both functions, but instead of calling the have event 
-function from the get event function, use
-!QTAILQ_EMPTY(&cfg_chg_events) in the get event function. If you are 
-holding the lock when you call the have event function, you will be 
-locking the same lock twice and it will hang when you lock the second 
-time because the lock is already held.
-
->>>>>> See not above for bql_locked
->>>>>>>> +{
->>>>>>>> +    return !QTAILQ_EMPTY(&cfg_chg_events);
->>>>>>>> +}
->>>>>>>> +
->>>>>>>>   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->>>>>>>>                                             unsigned int irq, 
->>>>>>>> Error **errp)
-
+>        WRMSR to FS_BASE, GS_BASE and KernelGSbase are non-serializing.
+> 
+> Link: https://www.amd.com/content/dam/amd/en/documents/epyc-technical-docs/programmer-references/57238.zip
+> Signed-off-by: Babu Moger <babu.moger@amd.com>
+> Reviewed-by: Maksim Davydov <davydov-max@yandex-team.ru>
+> Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>  target/i386/cpu.c | 4 ++--
+>  target/i386/cpu.h | 4 ++++
+>  2 files changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 98fad3a2f9..741be0eaa8 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -1239,12 +1239,12 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
+>      [FEAT_8000_0021_EAX] = {
+>          .type = CPUID_FEATURE_WORD,
+>          .feat_names = {
+> -            "no-nested-data-bp", NULL, "lfence-always-serializing", NULL,
+> +            "no-nested-data-bp", "fs-gs-base-ns", "lfence-always-serializing", NULL,
+>              NULL, NULL, "null-sel-clr-base", NULL,
+>              "auto-ibrs", NULL, NULL, NULL,
+>              NULL, NULL, NULL, NULL,
+>              NULL, NULL, NULL, NULL,
+> -            NULL, NULL, NULL, NULL,
+> +            "prefetchi", NULL, NULL, NULL,
+>              "eraps", NULL, NULL, "sbpb",
+>              "ibpb-brtype", "srso-no", "srso-user-kernel-no", NULL,
+>          },
+> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+> index 4f8ed8868e..d251e32ae9 100644
+> --- a/target/i386/cpu.h
+> +++ b/target/i386/cpu.h
+> @@ -1070,12 +1070,16 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w);
+>  
+>  /* Processor ignores nested data breakpoints */
+>  #define CPUID_8000_0021_EAX_NO_NESTED_DATA_BP            (1U << 0)
+> +/* WRMSR to FS_BASE, GS_BASE, or KERNEL_GS_BASE is non-serializing */
+> +#define CPUID_8000_0021_EAX_FS_GS_BASE_NS                (1U << 1)
+>  /* LFENCE is always serializing */
+>  #define CPUID_8000_0021_EAX_LFENCE_ALWAYS_SERIALIZING    (1U << 2)
+>  /* Null Selector Clears Base */
+>  #define CPUID_8000_0021_EAX_NULL_SEL_CLR_BASE            (1U << 6)
+>  /* Automatic IBRS */
+>  #define CPUID_8000_0021_EAX_AUTO_IBRS                    (1U << 8)
+> +/* Indicates support for IC prefetch */
+> +#define CPUID_8000_0021_EAX_PREFETCHI                    (1U << 20)
+>  /* Enhanced Return Address Predictor Scurity */
+>  #define CPUID_8000_0021_EAX_ERAPS                        (1U << 24)
+>  /* Selective Branch Predictor Barrier */
+> -- 
+> 2.34.1
+> 
+> 
+-- 
+ -----Open up your eyes, open up your mind, open up your code -------   
+/ Dr. David Alan Gilbert    |       Running GNU/Linux       | Happy  \ 
+\        dave @ treblig.org |                               | In Hex /
+ \ _________________________|_____ http://www.treblig.org   |_______/
 
