@@ -4,71 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56375C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:44:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87755C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:48:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNZEA-0006LX-4W; Fri, 06 Jun 2025 11:43:30 -0400
+	id 1uNZIi-0008Vy-Mr; Fri, 06 Jun 2025 11:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNZE7-0006L0-6i
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:43:27 -0400
+ id 1uNZIg-0008Vj-4R
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:48:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNZE4-000255-OT
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:43:26 -0400
+ id 1uNZIe-0002hu-G4
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:48:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749224603;
+ s=mimecast20190719; t=1749224887;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jImJgUIawBZnVXVa3ylGS29FiGJTmf/6EI2tleBz+bM=;
- b=FRSNkXM5Y/qNAgqdwg3h5E6d8DqEy4TaTQUxz/GhXILUxTkiyNcHt+levekNqboktqPzJZ
- ZBz7lsK0a0ixFgs6vHB7Mn4zNKkG32IyBIIftB/q/rDloTlFo9EPa3HA05eLQeqmwD7NIX
- LdK/g54SGE5QZUnVdgBqipOXZqH8wl0=
+ bh=ScYKysA/aFPDA/diWe5BA2GYW1b333PRuX+VsYidxVA=;
+ b=eipbr69ZAu3YoBblPxeopJRYi8cAh5K4P3ZNaEqpl3AjvSbciPYyOG89EiFJD4mSzhImTO
+ Vt/XkGrg54+g/c6ycwGhYCbgUq45dfxERjh8hOXN4gP1AP3oco6DN0fEJHs5ZAvv2rqzvP
+ WDqYpkFL9gQI+IYIiV5dnta3ajaideM=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-WCgKaTmVO3aDMMyM-4LixQ-1; Fri,
- 06 Jun 2025 11:43:17 -0400
-X-MC-Unique: WCgKaTmVO3aDMMyM-4LixQ-1
-X-Mimecast-MFC-AGG-ID: WCgKaTmVO3aDMMyM-4LixQ_1749224596
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-QdcsKXj4PIeiWaTC_GJoXg-1; Fri,
+ 06 Jun 2025 11:48:04 -0400
+X-MC-Unique: QdcsKXj4PIeiWaTC_GJoXg-1
+X-Mimecast-MFC-AGG-ID: QdcsKXj4PIeiWaTC_GJoXg_1749224883
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AAF91801A00; Fri,  6 Jun 2025 15:43:16 +0000 (UTC)
+ id 46751180883C; Fri,  6 Jun 2025 15:48:00 +0000 (UTC)
 Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A14C919560AE; Fri,  6 Jun 2025 15:43:13 +0000 (UTC)
-Date: Fri, 6 Jun 2025 16:43:10 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3853618002BA; Fri,  6 Jun 2025 15:47:58 +0000 (UTC)
+Date: Fri, 6 Jun 2025 16:47:55 +0100
 From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: JAEHOON KIM <jhkim@linux.ibm.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- jjherne@linux.ibm.com, peterx@redhat.com, farosas@suse.de
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ jjherne@linux.ibm.com, steven.sistare@oracle.com, peterx@redhat.com
 Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
  connecting
-Message-ID: <aEMMjtsKZLX_Bi03@redhat.com>
+Message-ID: <aEMNq8QveADZ_kD0@redhat.com>
 References: <20250605230808.1278840-1-jhkim@linux.ibm.com>
- <aELy8_1ssb1jTSTa@redhat.com>
- <2f36bf89-9664-4552-86c0-646db01b7f1f@oracle.com>
- <2c8d3cb2-b3ee-4738-871a-0dea2bff0e84@linux.ibm.com>
- <3004c91e-d515-4e22-902c-42cea83ce64b@oracle.com>
- <760af012-1265-4845-b7d2-793fe75c3a51@linux.ibm.com>
+ <87plfhvvig.fsf@suse.de>
+ <9da21b91-3e4c-4a74-8e90-6d70eadf314c@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <760af012-1265-4845-b7d2-793fe75c3a51@linux.ibm.com>
+In-Reply-To: <9da21b91-3e4c-4a74-8e90-6d70eadf314c@linux.ibm.com>
 User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
@@ -95,78 +92,50 @@ Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 06, 2025 at 10:37:28AM -0500, JAEHOON KIM wrote:
+On Fri, Jun 06, 2025 at 09:48:41AM -0500, JAEHOON KIM wrote:
 > 
-> On 6/6/2025 10:12 AM, Steven Sistare wrote:
-> > On 6/6/2025 11:06 AM, JAEHOON KIM wrote:
-> > > On 6/6/2025 9:14 AM, Steven Sistare wrote:
-> > > > On 6/6/2025 9:53 AM, Daniel P. Berrangé wrote:
-> > > > > On Thu, Jun 05, 2025 at 06:08:08PM -0500, Jaehoon Kim wrote:
-> > > > > > When the source VM attempts to connect to the destination VM's Unix
-> > > > > > domain socket(cpr.sock) during CPR transfer, the socket
-> > > > > > file might not
-> > > > > > yet be exist if the destination side hasn't completed the bind
-> > > > > > operation. This can lead to connection failures when
-> > > > > > running tests with
-> > > > > > the qtest framework.
-> > > > > 
-> > > > > This sounds like a flawed test impl to me - whatever is initiating
-> > > > > the cpr operation on the source has done so prematurely - it should
-> > > > > ensure the dest is ready before starting the operation.
-> > > > > 
-> > > > > > To address this, add cpr_validate_socket_path(), which wait for the
-> > > > > > socket file to appear. This avoids intermittent qtest
-> > > > > > failures caused by
-> > > > > > early connection attempts.
-> > > > > 
-> > > > > IMHO it is dubious to special case cpr in this way.
-> > > > 
-> > > > I agree with Daniel, and unfortunately it is not just a test issue;
-> > > > every management framework that supports cpr-transfer must add logic to
-> > > > wait for the cpr socket to appear in the target before proceeding.
-> > > > 
-> > > > This is analogous to waiting for the monitor socket to appear before
-> > > > connecting to it.
-> > > > 
-> > > > - Steve
-> > > 
-> > > Thank you very much for your valuable review and feedback.
-> > > 
-> > > Just to clarify, the added cpr_validate_socket_path() function is
-> > > not limited to the test framework.
-> > > It is part of the actual CPR implementation and is intended to
-> > > ensure correct behavior in all cases, including outside of tests.
-> > > 
-> > > I mentioned the qtest failure simply as an example where this issue
-> > > became apparent.
+> On 6/6/2025 8:40 AM, Fabiano Rosas wrote:
+> > Jaehoon Kim<jhkim@linux.ibm.com> writes:
 > > 
-> > Yes, I understand that you understand :)
-> > Are you willing to move your fix to the qtest?
-> > 
-> > - Steve
+> > > When the source VM attempts to connect to the destination VM's Unix
+> > > domain socket(cpr.sock) during CPR transfer, the socket file might not
+> > > yet be exist if the destination side hasn't completed the bind
+> > > operation. This can lead to connection failures when running tests with
+> > > the qtest framework.
+> > > 
+> > Could you provide us the output of qtest in this case? Are you simply running
+> > make check or something else?
 > 
-> Thank you for your question and feedback.
+> Yes, I'm simply running 'make check-qtest-s390x'.
 > 
-> I agree that the issue could be addressed within the qtest framework to
-> improve stability.
-> 
-> However, this socket readiness check is a fundamental part of CPR transfer
-> process,
-> and I believe that incorporating cpr_validate_socket_path() directly into
-> the CPR implementation helps ensure more reliable behavior
-> across all environments - not only during testing.
-> 
-> Just from my perspective, adding this logic to the CPR code does not
-> introduce significant overhead or side effects.
-> I would appreciate if you could share more details about your concerns, so I
-> can better address them.
+> Here's the qtest output from the failure:
+>  # {
+>  #     "error": {
+>  #         "class": "GenericError",
+>  #         "desc": "Failed to connect to '/tmp/migration-test-ZC7Z72/cpr.sock': No such file or directory"
+>  #     }
+>  # }
+>  not ok /s390x/migration/mode/transfer - ERROR:../tests/qtest/libqtest.c:1453:qtest_vqmp_assert_success_ref: assertion failed: (qdict_haskey(response, "return"))
+>  Bail out!
 
-Requiring a busy wait like this is a sign of a design problem.
+So this is showing a failure when using
 
-There needs to be a way to setup the incoming socket listener
-without resorting to busy waiting - that's showing a lack of
-synchronization.
+  $QEMU -incoming cpr:...address...
 
+as opposed to
+
+  $QEMU -incoming cpr:defer
+
+I presume in the former case, the test is spawning QEMU, but the startup
+of QEMU & its listening on the UNIX socket is not synchronized with the
+parent process.
+
+In the latter case usnig 'defer', listening will be synchronized by the
+QMP command used to setup the incoming socket.
+
+
+So why do we see a race with "-incoming cpr:..address", but not
+with a traditional "-incoming ...address.." for non-CPR code ?
 
 With regards,
 Daniel
