@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62750C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:35:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6023AC61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:35:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNWHw-0002TZ-S3; Fri, 06 Jun 2025 08:35:12 -0400
+	id 1uNWIJ-0002dj-Ta; Fri, 06 Jun 2025 08:35:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWHu-0002Qw-I6
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:10 -0400
+ id 1uNWIG-0002cd-CZ
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:32 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWHs-0005om-L9
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:10 -0400
+ id 1uNWIE-0005tY-8i
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749213306;
+ s=mimecast20190719; t=1749213326;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=D0N4/ek3rDKnJspa+pZ+XlKtcNsZl6mQsa0mbBdxvXA=;
- b=Wz3LGnz3pB0+DYA1nhWvoVmEAX2bQO8z6HJmxW1eqWsSAGof6BvN0ggU/8stWSJMQLnP92
- msVDOinif6AmWabAbiCcE/Ea+7QqplINJDW8+NqYChdo9UjE1dckRB+86KlVfWNYnPA1lW
- pEB+upWV9wd2X+AHjyd2f8ESJ6gWcog=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MfaojDveYu66HwFkWgBRf71Aj3k7FgV+E+U33pqpFC4=;
+ b=RZxkIgMlJrGunJdoQBiodeWuoTpscR98qCV03eiBC9tPxea/DH8QgUjd/5+WqzDYI4oFfm
+ JU8RtW+oT0o+9hmKhld5a6a3a1/snx9GYGL5PlGsSP9ZgZ8w3yd6VjaM8FgN9d7Zh65m2j
+ shFeLPCptfu8nNPP6q8eDpZj5Ng1Rjw=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-459-GQgCsEUvP_iDzVLWeGt5TA-1; Fri, 06 Jun 2025 08:35:04 -0400
-X-MC-Unique: GQgCsEUvP_iDzVLWeGt5TA-1
-X-Mimecast-MFC-AGG-ID: GQgCsEUvP_iDzVLWeGt5TA_1749213304
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a3696a0d3aso857198f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:35:04 -0700 (PDT)
+ us-mta-641-if_vEaZCMQOtGhKfG-fCjg-1; Fri, 06 Jun 2025 08:35:25 -0400
+X-MC-Unique: if_vEaZCMQOtGhKfG-fCjg-1
+X-Mimecast-MFC-AGG-ID: if_vEaZCMQOtGhKfG-fCjg_1749213324
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f6cc5332so1321925f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:35:24 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749213303; x=1749818103;
+ d=1e100.net; s=20230601; t=1749213323; x=1749818123;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=D0N4/ek3rDKnJspa+pZ+XlKtcNsZl6mQsa0mbBdxvXA=;
- b=MHTsQjEUW2xuQyQOLBPNt0qxydIKmcpEdREP4o+BD8jLZ+EhzNyjQfokf6ApbgpdOY
- qJ06QJoLsVwK1P1AtgdvvCxJSBGpeG9QYQtfi9FsaWtpfqnxq1tcRF+f2IjVgsj1ULEf
- +px+dkIMMbnS42jK9WlAQTcY/bRGQusMcgEg2ZphXnMPxYSrs/Q9GQa2oNXfoMR99C4y
- VNhsbkMObmt9mlLTMgC9m78Og/znHUleVQeYbY2qWP8S/Rnq6NOQ0MrkGMoTshPmBVsv
- Ifd7tV98ypHmXn38JLxq3BViaZ6HBpjmjcQT711pxRr2tjgrdldpqN2b/HCEsMdzSTjD
- Ec2Q==
-X-Gm-Message-State: AOJu0YzVCqi6aceiY/pHGyuEkyfsgUVkZY2BqtqV3KrVvc8F7OkD/PTB
- Ca1u+CVYiWOGXk86o3sDabqHsqb7TbBUM0VaDpjjXVuvnk99Bekck0FHcfyXDOwp1mK5FGosFdk
- g7WC3eT3oyOYTw/Igg2k0iGqM6VcJHuVk59j+z1p8SIDqJCTTjNjPTPBhgTKqLcwoNuB1qi9Irh
- gfUiUzN8C9XEfz6fKhMAIaJt6KCF/IplyU4pNf1jDN
-X-Gm-Gg: ASbGnctVsDFtBh9wp6zv//Xhn0C+CAee4SS9Eh+h+CKc+8Fy3xtqkyhGVCUaatzrsL6
- bCEH4Y82TvREKF6zFYZwi8uTOlzpdNpooRASuit30D9yBB6jaJMS8IR2hLxO/SNZ9V3wLrgZNtp
- 2fYUVV2RYEirEvknWPCRyXuu2zTJL5HRyqd5HRwWQR8Mf/t0wefaQUkPvJhJTVQIOMGzejnTDuY
- EytC5SFd+a0UwhHhU/J8buQ1lPkJb1jewhW6WVam9ijQcQkgoPmUnHuRQvCz+KMwrKlEmppDBl+
- E9YEAIXgV49pwsneuu7f6p+X
-X-Received: by 2002:a5d:5f86:0:b0:3a3:64fb:304d with SMTP id
- ffacd0b85a97d-3a5319ba166mr2505374f8f.12.1749213303315; 
- Fri, 06 Jun 2025 05:35:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEit2lgWsoW1LrwVsoSu/pU3Rft5jOX9vhL7tfrd3aY8ggHwSJ8mPzA2caOAgOc25jVUf1WZQ==
-X-Received: by 2002:a5d:5f86:0:b0:3a3:64fb:304d with SMTP id
- ffacd0b85a97d-3a5319ba166mr2505342f8f.12.1749213302764; 
- Fri, 06 Jun 2025 05:35:02 -0700 (PDT)
+ bh=MfaojDveYu66HwFkWgBRf71Aj3k7FgV+E+U33pqpFC4=;
+ b=Ag303TyRP6r8ShN44AiQHS+esm8GYDEhYP39pSce6/vj/ejM57aZ3BJUKtaLFPxWZj
+ ZJgJ+dtvOtVSwcItzrAZ3HLL6XP5/s73Q67fk6qnzF74UU7ArE5JCG6/nJpdieNObY0q
+ 8CMlZly9Wv0Mdz4GA/XFTVjwsMGXSQEi41V6iELFPOIAAuAozyCIBSDliddhCbD/orbp
+ WbDfa0Yu/nPA/ARe+3ufDYrtLQdKkHutGc3uWkh9kct1xg2FBJ+Wsimsvec0io4RW74T
+ NmEPPa5stfZrqyxJabPKI+eoEW/ZM9upwHNaKM9j4Yvvic/qh9WN9wX3LX0AiKSkW2z2
+ 5EeQ==
+X-Gm-Message-State: AOJu0Yx0dPxfpPmYeqyH3EOZSNFpqbRW0jbmom2Hk0yBGpBRYknY7HTW
+ 9wTUoKA/G2moiFOkQGKXeeCEFW2Z1eW/l1A9l1Qw2R1Lm6VxqYdKYUPsUh3EZhsrwW/i1jEJJ3P
+ Obi11CQgkN+o05GBWiENBH8mLkOVUgUhn+GzZiAy0E7h06S3jWuI/Q41FeY4eDyCDQ6oI5/vwtE
+ MTIGUBxAzjCvH3Kw+jdRxycODzB3qh2Js6QJj5V5aJ
+X-Gm-Gg: ASbGnctPZFZdetXLo4a0vhNt5qFpf6o7qzPt1VKYbL9glwIBBFgi2JVVxEzQZB9AfnF
+ 6/d7tJFv/7xv3B1Ea66PhgKNzjVvPiScnhx9xodG1yU3JuQ7baPkPpeFnozRnQ26ZcI+Hn9jvDp
+ xdFdzWGCti9/n2DN44yVK/Y0ZQct9egQ3vhuGfN3OY3GgEPQal8oL4cKHgQhhNQebYndfAKK1qK
+ 0WhLAWXGwtTnh68TRxwEZN91D75ecCgUwM9zgieOnki0ZjiXRV+COPpNDjbieDz2VRQP5pnjfSD
+ tIxC0M2iYQqUwVcjnD96R2EX
+X-Received: by 2002:a5d:5f42:0:b0:3a4:e7d3:bd9c with SMTP id
+ ffacd0b85a97d-3a53188d69amr2880595f8f.17.1749213323580; 
+ Fri, 06 Jun 2025 05:35:23 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGs4qeu95fGypwqTy19ecMaPiJ3D3U3rHNtkgB1KByPfTqAyvJRcG7AdXpa3zmoqPh3HZBYJA==
+X-Received: by 2002:a5d:5f42:0:b0:3a4:e7d3:bd9c with SMTP id
+ ffacd0b85a97d-3a53188d69amr2880562f8f.17.1749213323093; 
+ Fri, 06 Jun 2025 05:35:23 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53244df34sm1789580f8f.71.2025.06.06.05.34.59
+ ffacd0b85a97d-3a5323b3992sm1778932f8f.35.2025.06.06.05.35.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 05:35:00 -0700 (PDT)
+ Fri, 06 Jun 2025 05:35:20 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 04/31] util/error: allow non-NUL-terminated err->src
-Date: Fri,  6 Jun 2025 14:34:18 +0200
-Message-ID: <20250606123447.538131-5-pbonzini@redhat.com>
+Subject: [PULL 10/31] hpet: adjust VMState for consistency with Rust version
+Date: Fri,  6 Jun 2025 14:34:24 +0200
+Message-ID: <20250606123447.538131-11-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250606123447.538131-1-pbonzini@redhat.com>
 References: <20250606123447.538131-1-pbonzini@redhat.com>
@@ -108,60 +108,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rust makes the current file available as a statically-allocated string,
-but without a NUL terminator.  Allow this by storing an optional maximum
-length in the Error.
+No functional change intended.
 
+Suggested-by: Zhao Liu <zhao1.liu@intel.com>
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qapi/error-internal.h | 9 ++++++++-
- util/error.c                  | 5 +++--
- 2 files changed, 11 insertions(+), 3 deletions(-)
+ hw/timer/hpet.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/qapi/error-internal.h b/include/qapi/error-internal.h
-index d5c3904adec..1ec3ceb40f0 100644
---- a/include/qapi/error-internal.h
-+++ b/include/qapi/error-internal.h
-@@ -18,7 +18,14 @@ struct Error
- {
-     char *msg;
-     ErrorClass err_class;
--    const char *src, *func;
-+    const char *func;
-+
-+    /*
-+     * src might be NUL-terminated or not.  If it is, src_len is negative.
-+     * If it is not, src_len is the length.
-+     */
-+    const char *src;
-+    int src_len;
-     int line;
-     GString *hint;
- };
-diff --git a/util/error.c b/util/error.c
-index e5bcb7c0225..3449ecc0b92 100644
---- a/util/error.c
-+++ b/util/error.c
-@@ -24,8 +24,8 @@ Error *error_warn;
- static void error_handle(Error **errp, Error *err)
- {
-     if (errp == &error_abort) {
--        fprintf(stderr, "Unexpected error in %s() at %s:%d:\n",
--                err->func, err->src, err->line);
-+        fprintf(stderr, "Unexpected error in %s() at %.*s:%d:\n",
-+                err->func, err->src_len, err->src, err->line);
-         error_report("%s", error_get_pretty(err));
-         if (err->hint) {
-             error_printf("%s", err->hint->str);
-@@ -67,6 +67,7 @@ static void error_setv(Error **errp,
-         g_free(msg);
-     }
-     err->err_class = err_class;
-+    err->src_len = -1;
-     err->src = src;
-     err->line = line;
-     err->func = func;
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 0fd1337a156..9db027cf76f 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -328,16 +328,16 @@ static const VMStateDescription vmstate_hpet_timer = {
+ static const VMStateDescription vmstate_hpet = {
+     .name = "hpet",
+     .version_id = 2,
+-    .minimum_version_id = 1,
++    .minimum_version_id = 2,
+     .pre_save = hpet_pre_save,
+     .post_load = hpet_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT64(config, HPETState),
+         VMSTATE_UINT64(isr, HPETState),
+         VMSTATE_UINT64(hpet_counter, HPETState),
+-        VMSTATE_UINT8_V(num_timers_save, HPETState, 2),
++        VMSTATE_UINT8(num_timers_save, HPETState),
+         VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
+-        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers, 0,
++        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers_save, 0,
+                                     vmstate_hpet_timer, HPETTimer),
+         VMSTATE_END_OF_LIST()
+     },
 -- 
 2.49.0
 
