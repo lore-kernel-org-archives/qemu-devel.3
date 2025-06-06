@@ -4,74 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F95FC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 13:32:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED723C5B555
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 13:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNXBN-00021N-GY; Fri, 06 Jun 2025 09:32:29 -0400
+	id 1uNXCV-00036q-CZ; Fri, 06 Jun 2025 09:33:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uNXB1-0001uD-U4
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:32:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uNXCS-00032P-KJ
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:33:36 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uNXAv-0003xT-NE
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:32:07 -0400
+ id 1uNXCL-00043t-8q
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 09:33:36 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749216716;
+ s=mimecast20190719; t=1749216805;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=WaA9wd6AGUeKsA9MsczcRO+4cmfggMWFyWPdKnjVHGg=;
- b=LFbLPFvEZCn+gcQS0ht/7vJ52qYAaJlQqj/i6KF4UNvng6XMS3sUJSrUfI0FsxFDUm1WNh
- FRTn4nG8BXG/B7wetzoiTGum+NGWmjP2wH+d9wwbKLbwx/1FlJ78Q7zvkgm8s8nIdWhwI6
- P6X8zIrgXo4X47a6bxl+d6wQi4+IuIE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0keCZ9QPpmhiB8UXi8ytnZY3tXCCSEg46DvrrRqB83E=;
+ b=i1tdSMAzNlJsGV0uKRqB931K0UkTOip52mU+k8JV3SH4hpTkQ3sXnWxX4lMNIX+naw+1Ba
+ karbmjfPnVMJ/tToz9QqzV0XqnhK6s/YFzsYNedQqtWbvcPDMIUog/pp90KAQenISTyPtM
+ 83Q+gaLs+ylQ/GLVoAFYQEx2j/ThB5Q=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-661-KdupeaXJN06cBxB0a1PvBA-1; Fri, 06 Jun 2025 09:31:55 -0400
-X-MC-Unique: KdupeaXJN06cBxB0a1PvBA-1
-X-Mimecast-MFC-AGG-ID: KdupeaXJN06cBxB0a1PvBA_1749216714
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4f8fd1856so991915f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 06:31:55 -0700 (PDT)
+ us-mta-252-eeos0e9DNUOV_l8AX0fBWA-1; Fri, 06 Jun 2025 09:33:23 -0400
+X-MC-Unique: eeos0e9DNUOV_l8AX0fBWA-1
+X-Mimecast-MFC-AGG-ID: eeos0e9DNUOV_l8AX0fBWA_1749216802
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-451d7de4ae3so13788805e9.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 06:33:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749216714; x=1749821514;
+ d=1e100.net; s=20230601; t=1749216802; x=1749821602;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=WaA9wd6AGUeKsA9MsczcRO+4cmfggMWFyWPdKnjVHGg=;
- b=B8m2exJG/HE/w2gaQivSgtGLWU3hCqRuv3VkAd6ggucaEuY+p87L4yhPwBlpg/XvJu
- VmxAKCkqgqsONeow+KLwu+Sc7ZLBlgfVDPpKQnpiZ2kMoDzgXHwPiXW6Sh3AuFJ7xInh
- kfTe4J89CAn4v3dAKahQZfCb2RIk6KY18plt33aXmeDwiKG91Fk6nMdu2WFLTHX4ea7G
- upLv3CsV0gOLpzA0YLUBf4I3ch0KiPIrvl2xZYPkNR6BUzSmfWLW6Rx6DMLCYlI3Y3BT
- gUrGRZqhUs0J6wN3OKzki95Qo1iV5lPELutoGE/i06dPtbAEL97OOTYtYchTQpxTnC1p
- RfqQ==
-X-Gm-Message-State: AOJu0YxxflhkaLBWA7SPOmHaK6Avr/f6g2s+52gaR7ER54foVkQ0ASAh
- XWO0uXGeqqW27XPjai52NBfq1Cow8Vy3164LlN8Cpr5P8sKYh9heHr8AqSa71dfC0oAo3IBdpYW
- 0NeJepEi/EUpLyA+dBvEVKiyRyDRAEDwVk8duUaOaejCeejN7pZVsl6ok
-X-Gm-Gg: ASbGncsxLJ7JGTaRgx1s3YrWPBhz1OEvQkLrWY5eGUPEmwVsepPgJ3Sh75xt5IspW7B
- EXk7IWrjGEkGvnlb5tol5EkUzzif2jPIGFwUucFPC/7Z4xsD5m80Gj11s9IIhqW3lQXuXy6Zjdf
- c6LADmcZ7QczlcrxPXF5jPoJaKooE+uKHQcJ6Y5QC5wudCQcPf1JQnb6RUJwHNDKy9drBGCw04f
- vvT6/gK7JsxALzOj67SJ76zh7k0KJFlT1v4CMFdbuTQcCO63NCWTH7ZiAvhGN8Hr8+5upVkcrga
- axkyehCzJGdieJBAH8Ycu6C2Xmh9W9pp
-X-Received: by 2002:a05:6000:18a5:b0:3a5:24a9:a5c2 with SMTP id
- ffacd0b85a97d-3a5314417admr3084571f8f.0.1749216714451; 
- Fri, 06 Jun 2025 06:31:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH+0B6QQs6YeCGNMilN0Vgsc5FDrekyc4YguUGqXo4XBWBikzS9C9W+u7bdrMKFiTWMfp4pQQ==
-X-Received: by 2002:a05:6000:18a5:b0:3a5:24a9:a5c2 with SMTP id
- ffacd0b85a97d-3a5314417admr3084468f8f.0.1749216713536; 
- Fri, 06 Jun 2025 06:31:53 -0700 (PDT)
+ bh=0keCZ9QPpmhiB8UXi8ytnZY3tXCCSEg46DvrrRqB83E=;
+ b=vcFW/Nbg1PwbBvh/bUTxcZIrh4UrtGlZzGGOjmKRU+02AtfDq+z7Ze8c/bvN6gtrh2
+ 6jaLPZIrpi4Eg1ZxM7czS1VXNGylfRpWT6SFFG1Mo7M+aTixsvb7clMCpVGU6LG0Zvje
+ UL9WY0lBodHAAXiYtgmPN0I0QkkD4YvzREcYyY31BM40JqZ/hcUDNMmSLBBgrUnpmlrs
+ q1s6r8Ulmi6071ow5m/o1SBTKVn8+92Wgh4n84yV+OQponfy80trArSqOAf/aTREP5EF
+ BkutSwyRQTq1cqdCk6JKugVpDsLM1NAENC+TVkpiK4pfFN4bHtuuVS2Zhr1XFUTGvhYH
+ S1EA==
+X-Gm-Message-State: AOJu0Yygs/2SP/7z/Hi9LhOOV2AroSZynaHDjYVhr+qZ/PegNZURzZkN
+ C3+g8HZjFbX28tAbh/qBwcuI0jjHQwpwFqH8DgvCZTBRZqyezSD3RSPOrq0dCfXxBwh9189rZov
+ yep4KvsbK0MkXHQTHNFX70QU8LTdOuny76Z8EWNQKQWHpg4j2JpSA1tLo
+X-Gm-Gg: ASbGncs2kqKUdeTrc6PENFCxVDTTbZ/ZUpKuMfJ1w5drgAC3kcgVxAAYJQ61efQLl8k
+ g+87RSMvi8RLvH7gyc2Yz0mAuHboxNGhPrWH9JQAZM8Ci1UT5j0AbWO2SbaRQmuvgEvsrC58uha
+ ERR2Hh8w0yyqu4svZICKMITRpSZZBNKf7LiLApePS/7ePps/jB4GzrnwWEKzD3Q125FqW5DM4ie
+ D7Vxqxz7ewl4JhxX7bLMkJkwmHnmGrqcmJOYI3yvZl535AZgwyWes1hDP5HaTfFSYzvQ6oGKY/I
+ TmbXoSCf6aTaiCP3TiSg+unW33JJDGHA
+X-Received: by 2002:a05:600c:c163:b0:43c:fd27:a216 with SMTP id
+ 5b1f17b1804b1-452fa7ed515mr15929255e9.23.1749216802098; 
+ Fri, 06 Jun 2025 06:33:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFjxOX6WigG+14PIXGGAlvOp/hOqUJNdprun6Lc6UkRpgJMNqt013y+hPA/GDAYkEXrgzZaRA==
+X-Received: by 2002:a05:600c:c163:b0:43c:fd27:a216 with SMTP id
+ 5b1f17b1804b1-452fa7ed515mr15928945e9.23.1749216801646; 
+ Fri, 06 Jun 2025 06:33:21 -0700 (PDT)
 Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45209ce132csm24469385e9.12.2025.06.06.06.31.51
+ 5b1f17b1804b1-452730b9beasm21266245e9.22.2025.06.06.06.33.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 06:31:53 -0700 (PDT)
-Date: Fri, 6 Jun 2025 15:31:51 +0200
+ Fri, 06 Jun 2025 06:33:21 -0700 (PDT)
+Date: Fri, 6 Jun 2025 15:33:20 +0200
 From: Igor Mammedov <imammedo@redhat.com>
 To: Philippe =?UTF-8?B?TWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif
@@ -83,16 +83,17 @@ Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q2zDqW1lbnQ=?= Mathieu--Drif
  Sinha <anisinha@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>, Thomas
  Huth <thuth@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>, Kevin Wolf
  <kwolf@redhat.com>, Yi Liu <yi.l.liu@intel.com>
-Subject: Re: [PATCH 15/18] hw/core/machine: Remove hw_compat_2_9[] array
-Message-ID: <20250606153151.35435d64@imammedo.users.ipa.redhat.com>
-In-Reply-To: <20250501210456.89071-16-philmd@linaro.org>
+Subject: Re: [PATCH 16/18] hw/net/virtio-net: Remove
+ VirtIONet::mtu_bypass_backend field
+Message-ID: <20250606153320.0ea64de4@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250501210456.89071-17-philmd@linaro.org>
 References: <20250501210456.89071-1-philmd@linaro.org>
- <20250501210456.89071-16-philmd@linaro.org>
+ <20250501210456.89071-17-philmd@linaro.org>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -117,51 +118,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu,  1 May 2025 23:04:53 +0200
+On Thu,  1 May 2025 23:04:54 +0200
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> wrote:
 
-> The hw_compat_2_9[] array was only used by the pc-q35-2.9 and
-> pc-i440fx-2.9 machines, which got removed. Remove it.
+> The VirtIONet::mtu_bypass_backend boolean was only set in
+> the hw_compat_2_9[] array, via the 'x-mtu-bypass-backend=3Doff'
+> property. We removed all machines using that array, lets remove
+> that property and all the code around it.
 >=20
 > Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
 Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-> ---
->  include/hw/boards.h | 3 ---
->  hw/core/machine.c   | 8 --------
->  2 files changed, 11 deletions(-)
+>  include/hw/virtio/virtio-net.h | 1 -
+>  hw/net/virtio-net.c            | 8 ++------
+>  2 files changed, 2 insertions(+), 7 deletions(-)
 >=20
-> diff --git a/include/hw/boards.h b/include/hw/boards.h
-> index 84bd3735c42..513eb2a54fd 100644
-> --- a/include/hw/boards.h
-> +++ b/include/hw/boards.h
-> @@ -832,7 +832,4 @@ extern const size_t hw_compat_2_11_len;
->  extern GlobalProperty hw_compat_2_10[];
->  extern const size_t hw_compat_2_10_len;
+> diff --git a/include/hw/virtio/virtio-net.h b/include/hw/virtio/virtio-ne=
+t.h
+> index b9ea9e824e3..353e872f677 100644
+> --- a/include/hw/virtio/virtio-net.h
+> +++ b/include/hw/virtio/virtio-net.h
+> @@ -214,7 +214,6 @@ struct VirtIONet {
+>      uint64_t saved_guest_offloads;
+>      AnnounceTimer announce_timer;
+>      bool needs_vnet_hdr_swap;
+> -    bool mtu_bypass_backend;
+>      /* primary failover device is hidden*/
+>      bool failover_primary_hidden;
+>      bool failover;
+> diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
+> index 2de037c2736..a8a43ffa242 100644
+> --- a/hw/net/virtio-net.c
+> +++ b/hw/net/virtio-net.c
+> @@ -801,8 +801,7 @@ static uint64_t virtio_net_get_features(VirtIODevice =
+*vdev, uint64_t features,
+>      features =3D vhost_net_get_features(get_vhost_net(nc->peer), feature=
+s);
+>      vdev->backend_features =3D features;
 > =20
-> -extern GlobalProperty hw_compat_2_9[];
-> -extern const size_t hw_compat_2_9_len;
-> -
->  #endif
-> diff --git a/hw/core/machine.c b/hw/core/machine.c
-> index bc0606cf740..486d1adb4b9 100644
-> --- a/hw/core/machine.c
-> +++ b/hw/core/machine.c
-> @@ -244,14 +244,6 @@ GlobalProperty hw_compat_2_10[] =3D {
->  };
->  const size_t hw_compat_2_10_len =3D G_N_ELEMENTS(hw_compat_2_10);
+> -    if (n->mtu_bypass_backend &&
+> -            (n->host_features & 1ULL << VIRTIO_NET_F_MTU)) {
+> +    if (n->host_features & (1ULL << VIRTIO_NET_F_MTU)) {
+>          features |=3D (1ULL << VIRTIO_NET_F_MTU);
+>      }
 > =20
-> -GlobalProperty hw_compat_2_9[] =3D {
-> -    { "pci-bridge", "shpc", "off" },
-> -    { "intel-iommu", "pt", "off" },
-> -    { "virtio-net-device", "x-mtu-bypass-backend", "off" },
-> -    { "pcie-root-port", "x-migrate-msix", "false" },
-> -};
-> -const size_t hw_compat_2_9_len =3D G_N_ELEMENTS(hw_compat_2_9);
-> -
->  MachineState *current_machine;
+> @@ -953,8 +952,7 @@ static void virtio_net_set_features(VirtIODevice *vde=
+v, uint64_t features)
+>      Error *err =3D NULL;
+>      int i;
 > =20
->  static char *machine_get_kernel(Object *obj, Error **errp)
+> -    if (n->mtu_bypass_backend &&
+> -            !virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU=
+)) {
+> +    if (!virtio_has_feature(vdev->backend_features, VIRTIO_NET_F_MTU)) {
+>          features &=3D ~(1ULL << VIRTIO_NET_F_MTU);
+>      }
+> =20
+> @@ -4121,8 +4119,6 @@ static const Property virtio_net_properties[] =3D {
+>      DEFINE_PROP_UINT16("tx_queue_size", VirtIONet, net_conf.tx_queue_siz=
+e,
+>                         VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE),
+>      DEFINE_PROP_UINT16("host_mtu", VirtIONet, net_conf.mtu, 0),
+> -    DEFINE_PROP_BOOL("x-mtu-bypass-backend", VirtIONet, mtu_bypass_backe=
+nd,
+> -                     true),
+>      DEFINE_PROP_INT32("speed", VirtIONet, net_conf.speed, SPEED_UNKNOWN),
+>      DEFINE_PROP_STRING("duplex", VirtIONet, net_conf.duplex_str),
+>      DEFINE_PROP_BOOL("failover", VirtIONet, failover, false),
 
 
