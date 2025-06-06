@@ -4,91 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 597FFC5B555
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 528F3C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 15:06:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNYbq-0002VE-5U; Fri, 06 Jun 2025 11:03:54 -0400
+	id 1uNYeE-0004A9-1w; Fri, 06 Jun 2025 11:06:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNYbo-0002UE-MF
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:03:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uNYe7-00049G-9B
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:06:15 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uNYbl-0005d4-UQ
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:03:52 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749222228;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r87iIoHCj+uPpvMRVjqA6ckhLdJfscRFr6C1qLT91lY=;
- b=fajLNOxJZukHFihjOWb74VRz4udvYQOAmKQDSEiwpyGlL2EXciYO1ZZ6Me915OSKeYtnxs
- /TJlDCJofs9P7ANra1eVRcDen+FWi1nNgNFyPkYyRMq9cSdVY+gR5zxkabIlLvQNcjIm11
- l1PtSiRq74fA1KvrkxxgJPF9PpGn6I0=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-96-kretdHDFO2GKa5lQRPD1Wg-1; Fri, 06 Jun 2025 11:03:45 -0400
-X-MC-Unique: kretdHDFO2GKa5lQRPD1Wg-1
-X-Mimecast-MFC-AGG-ID: kretdHDFO2GKa5lQRPD1Wg_1749222225
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4a43c1e1e6bso42012511cf.3
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 08:03:45 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749222225; x=1749827025;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=r87iIoHCj+uPpvMRVjqA6ckhLdJfscRFr6C1qLT91lY=;
- b=idfHeJ/wFiZmsnAMzVji3I7CZy5SDWAPPqqq9u6Ebedeiq3dwntOY6daS7lVzLasxh
- SV96yfx2yrJmzw+7LD2FulbLsG5DAM6CDvZf7pG+NpA4+rqHdSlSrnKYBFwdgoupCXmT
- G3P8CNt/KgxRKNretG0xJMin/QQxsk6to96xKrZinU0LaqeuTgeXyM/sFgadqtw6Q0lq
- Z9JpUFUeOE7U+9Jcwm91cx7Pi0558pINyRshyAwBz2p5fX8kOpLl7wAmrprEfG5Y8lbl
- eulsfamcajeYox0kPw6saoV7Th6hduebrVYZdzBs2z3n7REnajob1jqSrRVlOP67MzRS
- cgqQ==
-X-Gm-Message-State: AOJu0YwOMDhHaYn/WUT9+LWvb2gcqYumlZWgFKlDwseFDKhYbdjSHtjA
- 6vKLNUbr9kPMWg0nAlW6hAsRhsM+rdAYG0o4t4vSbz2aDKktKH+zlDuANscP9ojLJn6NC6YgrPa
- sO2DOOF8MmiEe5n56lTI+R38JNVmjyL2xfO0SVNu/L7O2k3itTmhNFaEb
-X-Gm-Gg: ASbGncs7nIlX32gUv5nkU4q81hX+ncVm8X4tDhrnDzO515ZKOeOz3Cy0iFtxNcPr22f
- pUwcPmFzpGDw0xi3F62mh1tt8Qu3VW8k1f5ZE4gRaiIXDd/gLcD6/QdcPMcX61e1Kqc8QdlskSB
- QV6s1jEhTXUOzfyFVJ9/Nmui6rLk6Yci2ZWYWmN/arGMB7ODEt12uY4Puw9ueHdt/LM+9CMM9ds
- tbYh8o/jdwnGSx4Sk8JycOwrOt7qFmPzfreN/Qew4KD4Z66tQnNSb2zxEHIB5xgVRVwohJdg1NW
- 3tm1H06WZnVr7A==
-X-Received: by 2002:a05:622a:400e:b0:4a4:2d36:51d8 with SMTP id
- d75a77b69052e-4a5b9e38af4mr61585471cf.22.1749222225257; 
- Fri, 06 Jun 2025 08:03:45 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE/EFqWNbhBmG8KuA3jL9uaJdJgX3slmR30bLVOd9ljYg8b5VdGfnlioLU3dDWaR1YgB5LlDA==
-X-Received: by 2002:a05:622a:400e:b0:4a4:2d36:51d8 with SMTP id
- d75a77b69052e-4a5b9e38af4mr61585061cf.22.1749222224795; 
- Fri, 06 Jun 2025 08:03:44 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a61117dc98sm13878791cf.35.2025.06.06.08.03.43
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 08:03:44 -0700 (PDT)
-Date: Fri, 6 Jun 2025 11:03:42 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 05/21] migration: Add a flag to track
- block-bitmap-mapping input
-Message-ID: <aEMDTl7yaDGSv33I@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-6-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uNYdz-00066M-Hl
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 11:06:13 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 556E0fHY032426;
+ Fri, 6 Jun 2025 15:06:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=IHGQzE
+ aNz/ouWt8OdkorbVEx5QEVjrGPOKq/DMtfkjk=; b=h2//RPeY40rdKuZXuALmAg
+ M4mqA0kyAVTdKIFuPl9ZlfHBUP2/jJx3jv0VoG6qv8c7xeMVasPE6TxWRCyirlZZ
+ adhTf8DMgd8pvhPHO9Cv1uwH8OiMHVstZRObKY8jA7/Vng298UbzT4prvRTGMwaj
+ IUN+IZOcsjnsNa89vg+nbyDSKE7lie5ErPK6XihighaR/M0Hc2VThjsEtiROh+Cd
+ xaMvYE4nPY1Zu5awAv1Ko01WxovVIB6H/GwAl5xsR2av7lyWDVVdTQDVkYzxVPAt
+ G8Vn+p9fDLGx9HLOs+3ye62iEBkZaD6Rrl4uibdIk371nY0IiFQOQS8Vm3517p6w
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 473j1y49jj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Jun 2025 15:06:05 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 556BpPe1022569;
+ Fri, 6 Jun 2025 15:06:04 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 470c3tt5m5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Jun 2025 15:06:04 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 556F63AF28508680
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Jun 2025 15:06:04 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D7F3B58055;
+ Fri,  6 Jun 2025 15:06:03 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7E8A85804B;
+ Fri,  6 Jun 2025 15:06:03 +0000 (GMT)
+Received: from [9.61.255.24] (unknown [9.61.255.24])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Jun 2025 15:06:03 +0000 (GMT)
+Message-ID: <2c8d3cb2-b3ee-4738-871a-0dea2bff0e84@linux.ibm.com>
+Date: Fri, 6 Jun 2025 10:06:02 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250603013810.4772-6-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -21
-X-Spam_score: -2.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
+ connecting
+To: Steven Sistare <steven.sistare@oracle.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, jjherne@linux.ibm.com, peterx@redhat.com,
+ farosas@suse.de
+References: <20250605230808.1278840-1-jhkim@linux.ibm.com>
+ <aELy8_1ssb1jTSTa@redhat.com>
+ <2f36bf89-9664-4552-86c0-646db01b7f1f@oracle.com>
+Content-Language: en-US
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <2f36bf89-9664-4552-86c0-646db01b7f1f@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Nezm13D4 c=1 sm=1 tr=0 ts=684303dd cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=Ln4hQe_N6IWAe5r7zdsA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: sM1-MSgYyRRCzfDZzv9rD-9DyQdbxoJF
+X-Proofpoint-ORIG-GUID: sM1-MSgYyRRCzfDZzv9rD-9DyQdbxoJF
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDEzMiBTYWx0ZWRfXyX9ub6i/nebK
+ /Kl1bIGmNkrU1Q1wC5Hx2UrZ620PMeiwkdANZvzM+HMWCu1LhIBO39JY75wSW575eslCMZyeutY
+ ku7HcMzZrTUutQvUjr3fGhe9Ta9gh0SEX8eaBxdGaiIIhMFIhko77M0QdkVHy4pdUy3VT7ixuM9
+ ZWEQ9CMbcWGEq9vykncJ6tubhHHPM7GEKVrqJIeOYO/YIF96c1kUNNNFo9jSAiPLUGuIQJ5RT4z
+ nEDYmNo1UwREbJ8gW6ESWmGG8NecyAwcf2YmsBKMF7iq+gillAe/8ylRjO9l6UaXt+XfXUZYwB+
+ mVL/EPDW4ZHU69sKZXW2E/Nv2xUW4KWVanFcIvCG5kYjKmkRCicSfY/R9OjZLcEq/E4yWrc94xF
+ kLJvobbR3O8RVXizpRnn8ar0zf2dfEEdbuosiqDyZWTrvThZ2fBuyBmi0N9/EOWfUtmmH4z/
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-06_05,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 clxscore=1011
+ bulkscore=0 phishscore=0 spamscore=0 mlxscore=0 malwarescore=0
+ suspectscore=0 mlxlogscore=999 lowpriorityscore=0 priorityscore=1501
+ adultscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506060132
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.104,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -106,187 +127,127 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 02, 2025 at 10:37:54PM -0300, Fabiano Rosas wrote:
-> The QAPI converts an empty list on the block-bitmap-mapping input into
-> a NULL BitmapMigrationNodeAliasList. The empty list is a valid input
-> for the block-bitmap-mapping option, so commit 3cba22c9ad ("migration:
-> Fix block_bitmap_mapping migration") started using the
-> s->parameters.has_block_bitmap_mapping field to tell when the user has
-> passed in an empty list vs. when no list has been passed at all.
-> 
-> However, using the has_block_bitmap_mapping field of s->parameters is
-> only possible because MigrationParameters has had its members made
-> optional due to historical reasons.
-> 
-> In order to make improvements to the way configuration options are set
-> for a migration, we'd like to reduce the usage of the has_* fields of
-> the global configuration object (s->parameters).
-> 
-> Add a separate boolean to track the status of the block_bitmap_mapping
-> option.
-> 
-> (this was verified to not regress iotest 300, which is the test that
-> 3cba22c9ad refers to)
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/migration.h | 7 +++++++
->  migration/options.c   | 6 +++---
->  2 files changed, 10 insertions(+), 3 deletions(-)
-> 
-> diff --git a/migration/migration.h b/migration/migration.h
-> index d53f7cad84..ab797540b0 100644
-> --- a/migration/migration.h
-> +++ b/migration/migration.h
-> @@ -510,6 +510,13 @@ struct MigrationState {
->      bool rdma_migration;
->  
->      GSource *hup_source;
-> +
-> +    /*
-> +     * The block-bitmap-mapping option is allowed to be an emtpy list,
-> +     * therefore we need a way to know wheter the user has given
-> +     * anything as input.
-> +     */
-> +    bool has_block_bitmap_mapping;
->  };
->  
->  void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
-> diff --git a/migration/options.c b/migration/options.c
-> index f64e141394..cf77826204 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -685,7 +685,7 @@ bool migrate_has_block_bitmap_mapping(void)
->  {
->      MigrationState *s = migrate_get_current();
->  
-> -    return s->parameters.has_block_bitmap_mapping;
-> +    return s->has_block_bitmap_mapping;
->  }
->  
->  uint32_t migrate_checkpoint_delay(void)
-> @@ -989,7 +989,7 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
->      params->has_announce_step = true;
->      params->announce_step = s->parameters.announce_step;
->  
-> -    if (s->parameters.has_block_bitmap_mapping) {
-> +    if (s->has_block_bitmap_mapping) {
->          params->has_block_bitmap_mapping = true;
->          params->block_bitmap_mapping =
->              QAPI_CLONE(BitmapMigrationNodeAliasList,
-> @@ -1469,7 +1469,7 @@ static void migrate_params_apply(MigrationParameters *params)
->          qapi_free_BitmapMigrationNodeAliasList(
->              s->parameters.block_bitmap_mapping);
->  
-> -        s->parameters.has_block_bitmap_mapping = true;
-> +        s->has_block_bitmap_mapping = true;
->          s->parameters.block_bitmap_mapping =
->              QAPI_CLONE(BitmapMigrationNodeAliasList,
->                         params->block_bitmap_mapping);
-> -- 
-> 2.35.3
-> 
 
-This is definitely unfortunate, and I'm still scratching my head on
-understanding why it's necessary.
+On 6/6/2025 9:14 AM, Steven Sistare wrote:
+> On 6/6/2025 9:53 AM, Daniel P. Berrangé wrote:
+>> On Thu, Jun 05, 2025 at 06:08:08PM -0500, Jaehoon Kim wrote:
+>>> When the source VM attempts to connect to the destination VM's Unix
+>>> domain socket(cpr.sock) during CPR transfer, the socket file might not
+>>> yet be exist if the destination side hasn't completed the bind
+>>> operation. This can lead to connection failures when running tests with
+>>> the qtest framework.
+>>
+>> This sounds like a flawed test impl to me - whatever is initiating
+>> the cpr operation on the source has done so prematurely - it should
+>> ensure the dest is ready before starting the operation.
+>>
+>>> To address this, add cpr_validate_socket_path(), which wait for the
+>>> socket file to appear. This avoids intermittent qtest failures 
+>>> caused by
+>>> early connection attempts.
+>>
+>> IMHO it is dubious to special case cpr in this way.
+>
+> I agree with Daniel, and unfortunately it is not just a test issue;
+> every management framework that supports cpr-transfer must add logic to
+> wait for the cpr socket to appear in the target before proceeding.
+>
+> This is analogous to waiting for the monitor socket to appear before
+> connecting to it.
+>
+> - Steve
 
-E.g. I tried to revert this patch manually and iotest 300 passed, with:
+Thank you very much for your valuable review and feedback.
 
-===8<===
-From a952479805d8bdfe532ad4e0c0092f758991af08 Mon Sep 17 00:00:00 2001
-From: Peter Xu <peterx@redhat.com>
-Date: Fri, 6 Jun 2025 10:44:37 -0400
-Subject: [PATCH] Revert "migration: Add a flag to track block-bitmap-mapping
- input"
+Just to clarify, the added cpr_validate_socket_path() function is not 
+limited to the test framework.
+It is part of the actual CPR implementation and is intended to ensure 
+correct behavior in all cases, including outside of tests.
 
-This reverts commit fd755a53c0e4ce9739d20d7cdd69400b2a37102c.
+I mentioned the qtest failure simply as an example where this issue 
+became apparent.
 
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/migration.h | 7 -------
- migration/options.c   | 4 ++--
- 2 files changed, 2 insertions(+), 9 deletions(-)
-
-diff --git a/migration/migration.h b/migration/migration.h
-index 49761f4699..e710c421f8 100644
---- a/migration/migration.h
-+++ b/migration/migration.h
-@@ -510,13 +510,6 @@ struct MigrationState {
-     bool rdma_migration;
- 
-     GSource *hup_source;
--
--    /*
--     * The block-bitmap-mapping option is allowed to be an emtpy list,
--     * therefore we need a way to know wheter the user has given
--     * anything as input.
--     */
--    bool has_block_bitmap_mapping;
- };
- 
- void migrate_set_state(MigrationStatus *state, MigrationStatus old_state,
-diff --git a/migration/options.c b/migration/options.c
-index dd2288187d..e71a57764d 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -765,7 +765,7 @@ bool migrate_has_block_bitmap_mapping(void)
- {
-     MigrationState *s = migrate_get_current();
- 
--    return s->has_block_bitmap_mapping;
-+    return s->parameters.has_block_bitmap_mapping;
- }
- 
- uint32_t migrate_checkpoint_delay(void)
-@@ -1376,7 +1376,7 @@ void qmp_migrate_set_parameters(MigrationParameters *params, Error **errp)
-      * params structure with the user input around.
-      */
-     if (params->has_block_bitmap_mapping) {
--        migrate_get_current()->has_block_bitmap_mapping = true;
-+        migrate_get_current()->parameters.has_block_bitmap_mapping = true;
-     }
- 
-     if (migrate_params_check(tmp, errp)) {
--- 
-2.49.0
-===8<===
-
-I'm staring at commit 3cba22c9ad now, looks like what it wants to do is
-making sure construct_alias_map() will be invoked even if the block bitmap
-mapping is NULL itself.  But then right below the code, it has:
-
-static int init_dirty_bitmap_migration(DBMSaveState *s, Error **errp)
-{
-    ...
-    if (migrate_has_block_bitmap_mapping()) {
-        alias_map = construct_alias_map(migrate_block_bitmap_mapping(), true,
-                                        &error_abort);
-    }
-    ...
-    if (!alias_map) {
-    ...
-    }
-}
-
-Looks like it's also ready for !alias_map anyway.  I'm definitely puzzled
-by this code.
-
-Even if so, IIUC the question can still be asked on whether we can always
-assume has_block_bitmap_mapping to be always true, then here instead of:
-
-    if (migrate_has_block_bitmap_mapping()) {
-        alias_map = construct_alias_map(migrate_block_bitmap_mapping(), true,
-                                        &error_abort);
-    }
-
-We do:
-
-    alias_map = construct_alias_map(migrate_block_bitmap_mapping(), true,
-                                    &error_abort);
-
-After all it looks like construct_alias_map() takes NULL too..
-
--- 
-Peter Xu
-
+-Jaehoon Kim
+>>> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
+>>> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+>>> ---
+>>>   include/migration/cpr.h  |  1 +
+>>>   migration/cpr-transfer.c | 35 +++++++++++++++++++++++++++++++++++
+>>>   2 files changed, 36 insertions(+)
+>>>
+>>> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+>>> index 7561fc75ad..cc9384b4f9 100644
+>>> --- a/include/migration/cpr.h
+>>> +++ b/include/migration/cpr.h
+>>> @@ -23,6 +23,7 @@ MigMode cpr_get_incoming_mode(void);
+>>>   void cpr_set_incoming_mode(MigMode mode);
+>>>   bool cpr_is_incoming(void);
+>>>   +bool cpr_validate_socket_path(const char *path, Error **errp);
+>>>   int cpr_state_save(MigrationChannel *channel, Error **errp);
+>>>   int cpr_state_load(MigrationChannel *channel, Error **errp);
+>>>   void cpr_state_close(void);
+>>> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
+>>> index e1f140359c..3088ed323f 100644
+>>> --- a/migration/cpr-transfer.c
+>>> +++ b/migration/cpr-transfer.c
+>>> @@ -17,6 +17,33 @@
+>>>   #include "migration/vmstate.h"
+>>>   #include "trace.h"
+>>>   +#define CPR_MAX_RETRIES     50     /* Retry for up to 5 seconds */
+>>> +#define CPR_RETRY_DELAY_US  100000 /* 100 ms per retry */
+>>> +
+>>> +bool cpr_validate_socket_path(const char *path, Error **errp)
+>>> +{
+>>> +    struct stat st;
+>>> +    int retries = CPR_MAX_RETRIES;
+>>> +
+>>> +    do {
+>>> +        if (!stat(path, &st) && S_ISSOCK(st.st_mode)) {
+>>> +            return true;
+>>> +        }
+>>> +
+>>> +        if (errno == ENOENT) {
+>>> +            usleep(CPR_RETRY_DELAY_US);
+>>> +        } else {
+>>> +            error_setg_errno(errp, errno,
+>>> +                "Unable to check status of socket path '%s'", path);
+>>> +            return false;
+>>> +        }
+>>> +    } while (--retries > 0);
+>>> +
+>>> +    error_setg(errp, "Socket path '%s' not found after %d retries",
+>>> +                                            path, CPR_MAX_RETRIES);
+>>> +    return false;
+>>> +}
+>>> +
+>>>   QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error 
+>>> **errp)
+>>>   {
+>>>       MigrationAddress *addr = channel->addr;
+>>> @@ -28,6 +55,14 @@ QEMUFile *cpr_transfer_output(MigrationChannel 
+>>> *channel, Error **errp)
+>>>           QIOChannel *ioc = QIO_CHANNEL(sioc);
+>>>           SocketAddress *saddr = &addr->u.socket;
+>>>   +        /*
+>>> +         * Verify that the cpr.sock Unix domain socket file exists 
+>>> and is ready
+>>> +         * before proceeding with the connection.
+>>> +         */
+>>> +        if (!cpr_validate_socket_path(addr->u.socket.u.q_unix.path, 
+>>> errp)) {
+>>> +            return NULL;
+>>> +        }
+>>> +
+>>>           if (qio_channel_socket_connect_sync(sioc, saddr, errp) < 0) {
+>>>               return NULL;
+>>>           }
+>>> -- 
+>>> 2.49.0
+>>>
+>>>
+>>
+>> With regards,
+>> Daniel
+>
+>
 
