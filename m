@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6023AC61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:35:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9D1C61CE8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNWIJ-0002dj-Ta; Fri, 06 Jun 2025 08:35:36 -0400
+	id 1uNWHp-0002Pq-Vj; Fri, 06 Jun 2025 08:35:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWIG-0002cd-CZ
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uNWHn-0002PX-46
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWIE-0005tY-8i
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:31 -0400
+ id 1uNWHg-0005a3-Cy
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749213326;
+ s=mimecast20190719; t=1749213293;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=MfaojDveYu66HwFkWgBRf71Aj3k7FgV+E+U33pqpFC4=;
- b=RZxkIgMlJrGunJdoQBiodeWuoTpscR98qCV03eiBC9tPxea/DH8QgUjd/5+WqzDYI4oFfm
- JU8RtW+oT0o+9hmKhld5a6a3a1/snx9GYGL5PlGsSP9ZgZ8w3yd6VjaM8FgN9d7Zh65m2j
- shFeLPCptfu8nNPP6q8eDpZj5Ng1Rjw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=GFT03fcVdCBPNH84iXV0ut6Ea/ANt9t4v0l5zOU9j1A=;
+ b=Q00GeohBujVm69T3piqfJ2QAj/KnJuDH90J7FMlu68hE3sP2INBplxd/1HWBL8/Ywl81qB
+ c7HAqzompIMHd5nvaLlAG2//tWd8STiH128+1SJMSARe5TZRpQjqPHXZnhQbT43vJaJ86D
+ TTM4it7nVvO/cdhT+D7hfb0p13NNbxY=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-if_vEaZCMQOtGhKfG-fCjg-1; Fri, 06 Jun 2025 08:35:25 -0400
-X-MC-Unique: if_vEaZCMQOtGhKfG-fCjg-1
-X-Mimecast-MFC-AGG-ID: if_vEaZCMQOtGhKfG-fCjg_1749213324
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f6cc5332so1321925f8f.2
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:35:24 -0700 (PDT)
+ us-mta-304-cf15VCUiMBGbgZL-ZCid_Q-1; Fri, 06 Jun 2025 08:34:52 -0400
+X-MC-Unique: cf15VCUiMBGbgZL-ZCid_Q-1
+X-Mimecast-MFC-AGG-ID: cf15VCUiMBGbgZL-ZCid_Q_1749213291
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-43eea5a5d80so11361945e9.1
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:34:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749213323; x=1749818123;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=MfaojDveYu66HwFkWgBRf71Aj3k7FgV+E+U33pqpFC4=;
- b=Ag303TyRP6r8ShN44AiQHS+esm8GYDEhYP39pSce6/vj/ejM57aZ3BJUKtaLFPxWZj
- ZJgJ+dtvOtVSwcItzrAZ3HLL6XP5/s73Q67fk6qnzF74UU7ArE5JCG6/nJpdieNObY0q
- 8CMlZly9Wv0Mdz4GA/XFTVjwsMGXSQEi41V6iELFPOIAAuAozyCIBSDliddhCbD/orbp
- WbDfa0Yu/nPA/ARe+3ufDYrtLQdKkHutGc3uWkh9kct1xg2FBJ+Wsimsvec0io4RW74T
- NmEPPa5stfZrqyxJabPKI+eoEW/ZM9upwHNaKM9j4Yvvic/qh9WN9wX3LX0AiKSkW2z2
- 5EeQ==
-X-Gm-Message-State: AOJu0Yx0dPxfpPmYeqyH3EOZSNFpqbRW0jbmom2Hk0yBGpBRYknY7HTW
- 9wTUoKA/G2moiFOkQGKXeeCEFW2Z1eW/l1A9l1Qw2R1Lm6VxqYdKYUPsUh3EZhsrwW/i1jEJJ3P
- Obi11CQgkN+o05GBWiENBH8mLkOVUgUhn+GzZiAy0E7h06S3jWuI/Q41FeY4eDyCDQ6oI5/vwtE
- MTIGUBxAzjCvH3Kw+jdRxycODzB3qh2Js6QJj5V5aJ
-X-Gm-Gg: ASbGnctPZFZdetXLo4a0vhNt5qFpf6o7qzPt1VKYbL9glwIBBFgi2JVVxEzQZB9AfnF
- 6/d7tJFv/7xv3B1Ea66PhgKNzjVvPiScnhx9xodG1yU3JuQ7baPkPpeFnozRnQ26ZcI+Hn9jvDp
- xdFdzWGCti9/n2DN44yVK/Y0ZQct9egQ3vhuGfN3OY3GgEPQal8oL4cKHgQhhNQebYndfAKK1qK
- 0WhLAWXGwtTnh68TRxwEZN91D75ecCgUwM9zgieOnki0ZjiXRV+COPpNDjbieDz2VRQP5pnjfSD
- tIxC0M2iYQqUwVcjnD96R2EX
-X-Received: by 2002:a5d:5f42:0:b0:3a4:e7d3:bd9c with SMTP id
- ffacd0b85a97d-3a53188d69amr2880595f8f.17.1749213323580; 
- Fri, 06 Jun 2025 05:35:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGs4qeu95fGypwqTy19ecMaPiJ3D3U3rHNtkgB1KByPfTqAyvJRcG7AdXpa3zmoqPh3HZBYJA==
-X-Received: by 2002:a5d:5f42:0:b0:3a4:e7d3:bd9c with SMTP id
- ffacd0b85a97d-3a53188d69amr2880562f8f.17.1749213323093; 
- Fri, 06 Jun 2025 05:35:23 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749213290; x=1749818090;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GFT03fcVdCBPNH84iXV0ut6Ea/ANt9t4v0l5zOU9j1A=;
+ b=axhQeoLqyoRUe2E3tH9UU9SZxyyvBRtXPDdbeJep+R6dI3Pis1XPPN/2BsIsOvqesD
+ Dqq6yqRQnZVPQVKtxj+azjopSP0XROOOioyDw7Qe1aHf0txS6AfgAO5WWibc6HbbLXZL
+ QkuJ4ojo7056b+zzCVDIkkMEC9vi3OA3uDMJhwVZdegXmwPJ/4ITJUfmr9wRwrX0nXsZ
+ hD9+ryrv+tOo/X08nPg/OWEimQfy8DUruHwqEfIOpGb8ImJsYbtAYqTlVUO2soklpdWe
+ Ls3VFuif7G6/OEI/6jJ/wtueXhLubeRJspElzrC+1uaPFtjLCvJxFOFMAtsLHhp+JCAH
+ I/Qg==
+X-Gm-Message-State: AOJu0Yw07RROK7gblUI9Q85WG+azL7ZzlQUNU0N8qUciST4j+oppTyCG
+ ajZOk8qTWDEkCCgtPwdCsqCbMJ/6rihWxhBqijm9OqlekCj/1Zu/2nyi5mhTKPfu0YUyvLsO0lT
+ 9Q40r+t0r5cok7M6AijERAZw3vuGlokBbdGzS8bVnZivWx2/oohqcbR6gh3X2gRrEldolQiCJSE
+ GhSKQYrpkC9SwVmeXwBvKsFv60urmA0wAIjxEluR8q
+X-Gm-Gg: ASbGncvQMHAskGaaioaWMcOvQJr5ZrTnpfvLVKLXL2oMH2X58WMBvw3qpEz4OOccCQn
+ 3wJKsjeGJ0n07VKuYK4ppFFIeEQ8bxTWcpRwe3dZb+RS30kh7Q/mTnWSl/BVDrAQv8WWS0Q8CIB
+ SQsfK3DASak411RkytyBzacslqwGZJjIPbGgU3k6HZYBqXa3n2CMCiSewMuRKunpE36copKQFMJ
+ AM7+8lK69ahLruahKnkocGKqAX7BzkltT4SD2Yo3KVUC9MBQVGHpN4Si9FtXGLkAL9FQMpEfTdP
+ +XDHX96lAOc6GjDBnmOelDGO
+X-Received: by 2002:a05:600c:1c99:b0:44a:b793:9e4f with SMTP id
+ 5b1f17b1804b1-4520143724fmr28490745e9.19.1749213290248; 
+ Fri, 06 Jun 2025 05:34:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGMYizOQEw61QO/2MSSdQ3fgfaBp/WY9/Q/RXGc0Ghoq0oWJn2sgRwTt6QTcarIo6ZgFH2m3w==
+X-Received: by 2002:a05:600c:1c99:b0:44a:b793:9e4f with SMTP id
+ 5b1f17b1804b1-4520143724fmr28490455e9.19.1749213289618; 
+ Fri, 06 Jun 2025 05:34:49 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5323b3992sm1778932f8f.35.2025.06.06.05.35.20
+ 5b1f17b1804b1-45209ce0b97sm22704255e9.9.2025.06.06.05.34.48
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 05:35:20 -0700 (PDT)
+ Fri, 06 Jun 2025 05:34:48 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 10/31] hpet: adjust VMState for consistency with Rust version
-Date: Fri,  6 Jun 2025 14:34:24 +0200
-Message-ID: <20250606123447.538131-11-pbonzini@redhat.com>
+Subject: [PULL 00/31] Threading, Rust, i386 changes for 2025-06-06
+Date: Fri,  6 Jun 2025 14:34:14 +0200
+Message-ID: <20250606123447.538131-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250606123447.538131-1-pbonzini@redhat.com>
-References: <20250606123447.538131-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -21
 X-Spam_score: -2.2
@@ -108,39 +105,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-No functional change intended.
+The following changes since commit f8a113701dd2d28f3bedb216e59125ddcb77fd05:
 
-Suggested-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/timer/hpet.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-06-04 11:43:31 -0400)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 0fd1337a156..9db027cf76f 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -328,16 +328,16 @@ static const VMStateDescription vmstate_hpet_timer = {
- static const VMStateDescription vmstate_hpet = {
-     .name = "hpet",
-     .version_id = 2,
--    .minimum_version_id = 1,
-+    .minimum_version_id = 2,
-     .pre_save = hpet_pre_save,
-     .post_load = hpet_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT64(config, HPETState),
-         VMSTATE_UINT64(isr, HPETState),
-         VMSTATE_UINT64(hpet_counter, HPETState),
--        VMSTATE_UINT8_V(num_timers_save, HPETState, 2),
-+        VMSTATE_UINT8(num_timers_save, HPETState),
-         VMSTATE_VALIDATE("num_timers must match", hpet_validate_num_timers),
--        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers, 0,
-+        VMSTATE_STRUCT_VARRAY_UINT8(timer, HPETState, num_timers_save, 0,
-                                     vmstate_hpet_timer, HPETTimer),
-         VMSTATE_END_OF_LIST()
-     },
+are available in the Git repository at:
+
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to 3f9bdfb0dc8162cbc080c868625336178ddcda56:
+
+  tests/tcg/x86_64/fma: add test for exact-denormal output (2025-06-06 14:32:55 +0200)
+
+----------------------------------------------------------------
+* futex: support Windows
+* qemu-thread: Avoid futex abstraction for non-Linux
+* migration, hw/display/apple-gfx: replace QemuSemaphore with QemuEvent
+* rust: bindings for Error
+* hpet, rust/hpet: return errors from realize if properties are incorrect
+* rust/hpet: Drop BqlCell wrapper for num_timers
+* target/i386: Emulate ftz and denormal flag bits correctly
+* i386/kvm: Prefault memory on page state change
+
+----------------------------------------------------------------
+Akihiko Odaki (11):
+      futex: Check value after qemu_futex_wait()
+      futex: Support Windows
+      qemu-thread: Replace __linux__ with CONFIG_LINUX
+      qemu-thread: Avoid futex abstraction for non-Linux
+      qemu-thread: Use futex for QemuEvent on Windows
+      qemu-thread: Use futex if available for QemuLockCnt
+      qemu-thread: Document QemuEvent
+      migration: Replace QemuSemaphore with QemuEvent
+      migration/colo: Replace QemuSemaphore with QemuEvent
+      migration/postcopy: Replace QemuSemaphore with QemuEvent
+      hw/display/apple-gfx: Replace QemuSemaphore with QemuEvent
+
+Paolo Bonzini (14):
+      subprojects: add the anyhow crate
+      subprojects: add the foreign crate
+      util/error: expose Error definition to Rust code
+      util/error: allow non-NUL-terminated err->src
+      util/error: make func optional
+      rust: qemu-api: add bindings to Error
+      rust: qemu-api: add tests for Error bindings
+      rust: qdev: support returning errors from realize
+      rust/hpet: change type of num_timers to usize
+      hpet: adjust VMState for consistency with Rust version
+      hpet: return errors from realize if properties are incorrect
+      rust/hpet: return errors from realize if properties are incorrect
+      docs: update Rust module status
+      rust: make TryFrom macro more resilient
+
+Peter Maydell (4):
+      target/i386: Detect flush-to-zero after rounding
+      target/i386: Use correct type for get_float_exception_flags() values
+      target/i386: Wire up MXCSR.DE and FPUS.DE correctly
+      tests/tcg/x86_64/fma: add test for exact-denormal output
+
+Tom Lendacky (1):
+      i386/kvm: Prefault memory on page state change
+
+Zhao Liu (1):
+      rust/hpet: Drop BqlCell wrapper for num_timers
+
+ docs/devel/rust.rst                                |   7 +-
+ meson.build                                        |   7 +
+ include/qapi/error-internal.h                      |  35 ++
+ include/qemu/futex.h                               |  44 ++-
+ include/qemu/lockcnt.h                             |   2 +-
+ include/qemu/thread-posix.h                        |   9 -
+ include/qemu/thread-win32.h                        |   6 -
+ include/qemu/thread.h                              |  21 +-
+ include/system/kvm.h                               |   1 +
+ migration/migration.h                              |  12 +-
+ rust/wrapper.h                                     |   1 +
+ target/i386/ops_sse.h                              |  16 +-
+ accel/kvm/kvm-all.c                                |   2 +
+ hw/timer/hpet.c                                    |  21 +-
+ migration/colo.c                                   |  20 +-
+ migration/migration.c                              |  21 +-
+ migration/postcopy-ram.c                           |  10 +-
+ migration/savevm.c                                 |   2 +-
+ target/i386/kvm/kvm.c                              |  31 +-
+ target/i386/tcg/fpu_helper.c                       | 101 +++--
+ tests/tcg/x86_64/fma.c                             |  17 +-
+ tests/unit/test-aio-multithread.c                  |   6 +-
+ util/error.c                                       |  20 +-
+ util/event.c                                       | 171 +++++++++
+ util/lockcnt.c                                     |   9 +-
+ util/qemu-thread-posix.c                           | 148 --------
+ util/qemu-thread-win32.c                           | 129 -------
+ hw/display/apple-gfx.m                             |  10 +-
+ rust/Cargo.lock                                    |  17 +
+ rust/Cargo.toml                                    |   1 +
+ rust/hw/char/pl011/src/device.rs                   |   5 +-
+ rust/hw/timer/hpet/src/device.rs                   |  62 ++-
+ rust/hw/timer/hpet/src/fw_cfg.rs                   |   7 +-
+ rust/meson.build                                   |   4 +
+ rust/qemu-api-macros/src/lib.rs                    |   7 +-
+ rust/qemu-api/Cargo.toml                           |   2 +
+ rust/qemu-api/meson.build                          |   3 +-
+ rust/qemu-api/src/error.rs                         | 416 +++++++++++++++++++++
+ rust/qemu-api/src/lib.rs                           |   3 +
+ rust/qemu-api/src/qdev.rs                          |  12 +-
+ scripts/archive-source.sh                          |   5 +-
+ scripts/make-release                               |   5 +-
+ subprojects/.gitignore                             |   2 +
+ subprojects/anyhow-1-rs.wrap                       |   7 +
+ subprojects/foreign-0.3-rs.wrap                    |   7 +
+ subprojects/packagefiles/anyhow-1-rs/meson.build   |  33 ++
+ .../packagefiles/foreign-0.3-rs/meson.build        |  26 ++
+ util/meson.build                                   |   3 +-
+ 48 files changed, 1018 insertions(+), 488 deletions(-)
+ create mode 100644 include/qapi/error-internal.h
+ create mode 100644 util/event.c
+ create mode 100644 rust/qemu-api/src/error.rs
+ create mode 100644 subprojects/anyhow-1-rs.wrap
+ create mode 100644 subprojects/foreign-0.3-rs.wrap
+ create mode 100644 subprojects/packagefiles/anyhow-1-rs/meson.build
+ create mode 100644 subprojects/packagefiles/foreign-0.3-rs/meson.build
 -- 
 2.49.0
 
