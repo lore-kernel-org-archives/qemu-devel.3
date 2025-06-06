@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68343C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 09:21:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05E86C5AD49
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 09:29:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNTFm-0004Es-Km; Fri, 06 Jun 2025 05:20:46 -0400
+	id 1uNTMw-0005lz-54; Fri, 06 Jun 2025 05:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uNTFk-0004ET-Ve
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:20:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uNTMr-0005lR-RX
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:28:06 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uNTFj-0000Pm-ER
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:20:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749201641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=3NGrwn/gRKcPkgS4QfdvKe7fsx4O+WSlyH7us22lwi8=;
- b=IrmiMLvilsZgxYxUpLxl0R9tknYiEH5bM65s0FjYMPZ/HOGIyc+9NDPfJGtvnQNr768Tef
- FYWF0e2aXRt8NrEWsB+QPjlwiXk3lIFwgnKZr93K7tScqsZMfiIjdOA0bhOJTRXG91xSY8
- LpldSs34W1RtY3iG8MevFqBc7QnYimw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-643-baBMBcj0NRisgFgvP7WaVw-1; Fri,
- 06 Jun 2025 05:20:39 -0400
-X-MC-Unique: baBMBcj0NRisgFgvP7WaVw-1
-X-Mimecast-MFC-AGG-ID: baBMBcj0NRisgFgvP7WaVw_1749201638
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 832411956088; Fri,  6 Jun 2025 09:20:38 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.225.83])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9DD7F180049D; Fri,  6 Jun 2025 09:20:35 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, qemu-devel@nongnu.org
-Subject: [PATCH] tests/functional/test_pc_cpu_hotplug_props: Set 'pc' machine
- type explicitly
-Date: Fri,  6 Jun 2025 11:20:33 +0200
-Message-ID: <20250606092033.506736-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uNTMo-00019f-50
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 05:28:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749202083; x=1780738083;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=Cgk3pwLgAi3s/hlGuQgw1WuaGUeAlciqJY644sEy8wA=;
+ b=VSBurueubTEe157FM+htuCncwFJ9ARzRYnhplO0ANViITk/c86VTmC0m
+ N4bj/Ljwu5Y8hIkcPSASht1xRnQZ/bjz8+HiJelG7y1theiFGdtQfNkV9
+ YbRtKmqB6PSVCzX5dB+PK77Ah8GxBr+kGxIeEUepv5yA20wwgsdbhwuAb
+ m/IrLCv4v8NSahXHZuclq7F0yN4IzKkTW09XO8h80IKuTp6VIt8gJg/bx
+ zd+eTWYyg8RcA2EfaMmLHKMVxWmqMcWROOmPH4YZnVS7OZsOqO2oB9Zmm
+ mJ8+MeNG59HXpxlSciX6j1k+CY1j2IZw58Jy9zWkRgo8uuF72UIXZlFe3 Q==;
+X-CSE-ConnectionGUID: 6bJtpe4PSXy4TMEMW7H63w==
+X-CSE-MsgGUID: 54l8Hz//TD2qOt5BMzI2mQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11455"; a="55154591"
+X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="55154591"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jun 2025 02:27:56 -0700
+X-CSE-ConnectionGUID: 1BZ+EQILSRmJwksrRQ7bnw==
+X-CSE-MsgGUID: Zd6XU3sHSMuj8majH1T2Dw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,214,1744095600"; d="scan'208";a="145706169"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by fmviesa007-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 06 Jun 2025 02:27:53 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: chao.p.peng@intel.com, david@redhat.com, armbru@redhat.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>
+Subject: [PATCH v4 0/5] Fix definition of classes with wrong parent
+Date: Fri,  6 Jun 2025 17:24:01 +0800
+Message-Id: <20250606092406.229833-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,31 +81,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Hi,
 
-In case the default machine has not been compiled into the QEMU
-binary, the cpu_hotplug_props test is currently failing. Add a
-set_machine('pc') here to make sure that the tests are correctly
-skipped in case the machine is not available.
+This fix definition of some classes with wrong parent.
+Used below script to get a list, hoping all are addressed.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- tests/functional/test_pc_cpu_hotplug_props.py | 1 +
- 1 file changed, 1 insertion(+)
+find "$directory" -type d \( -name "roms" -o -name "build" \) -prune -o -type f \( -name "*.c" -o -name "*.h" \) -print | while read -r file; do
+    awk '/^(struct |typedef struct )/ { 
+        first = $0;
+        getline second; 
+        getline third; 
+        if (first ~ /[Cc]lass/ && !(second ~ /Class/) && !(third ~ /Class/)) {
+            print FILENAME ":" NR-2 ": " first; 
+            print FILENAME ":" NR-1 ": " second; 
+            print FILENAME ":" NR ": " third;
+        }
+    }' "$file"
+done
 
-diff --git a/tests/functional/test_pc_cpu_hotplug_props.py b/tests/functional/test_pc_cpu_hotplug_props.py
-index 9d5a37cb170..2bed8ada023 100755
---- a/tests/functional/test_pc_cpu_hotplug_props.py
-+++ b/tests/functional/test_pc_cpu_hotplug_props.py
-@@ -26,6 +26,7 @@
- class OmittedCPUProps(QemuSystemTest):
- 
-     def test_no_die_id(self):
-+        self.set_machine('pc')
-         self.vm.add_args('-nodefaults', '-S')
-         self.vm.add_args('-smp', '1,sockets=2,cores=2,threads=2,maxcpus=8')
-         self.vm.add_args('-device', 'qemu64-x86_64-cpu,socket-id=1,core-id=0,thread-id=0')
+patch4/5 are more like cleanups instead of fixes as those class_size are not
+initialized so class definition doesn't take effect, so no Fixes tag for them.
+
+Thanks
+Zhenzhong
+
+Changelog:
+v4:
+- add comments 'this isn't catastrophic only because sizeof(VirtIODevice) >
+  sizeof(VirtioDeviceClass).' to patch1/2/3 (Markus)
+- collect RB for patch5
+
+v3:
+- s/Suggested-by/Reported-by on patch2 (David)
+- add Closes: tag (David)
+- collect RB
+
+v2:
+- add more fixes per David
+
+Zhenzhong Duan (5):
+  virtio-mem: Fix definition of VirtIOMEMClass
+  virtio-pmem: Fix definition of VirtIOPMEMClass
+  hw/gpio/aspeed: Fix definition of AspeedGPIOClass
+  hw/char/sh_serial: Remove dummy definition of SH_SERIAL class
+  hw/riscv/riscv-iommu: Remove definition of RISCVIOMMU[Pci|Sys]Class
+
+ include/hw/gpio/aspeed_gpio.h   | 2 +-
+ include/hw/riscv/iommu.h        | 6 ++----
+ include/hw/virtio/virtio-mem.h  | 2 +-
+ include/hw/virtio/virtio-pmem.h | 2 +-
+ hw/char/sh_serial.c             | 4 +---
+ hw/riscv/riscv-iommu-pci.c      | 6 ------
+ hw/riscv/riscv-iommu-sys.c      | 6 ------
+ 7 files changed, 6 insertions(+), 22 deletions(-)
+
 -- 
-2.49.0
+2.34.1
 
 
