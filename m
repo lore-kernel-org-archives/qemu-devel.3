@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3385C5B543
-	for <qemu-devel@archiver.kernel.org>; Thu,  5 Jun 2025 23:44:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3266CC5B555
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 00:29:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNKEP-0000NY-Il; Thu, 05 Jun 2025 19:42:45 -0400
+	id 1uNKwz-0003Ou-JI; Thu, 05 Jun 2025 20:28:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uNKEN-0000N1-Fo
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 19:42:43 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1uNKwy-0003Oh-Cl
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 20:28:48 -0400
+Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <anisa.su887@gmail.com>)
- id 1uNKEL-0004gu-Tk
- for qemu-devel@nongnu.org; Thu, 05 Jun 2025 19:42:43 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-73c17c770a7so1636681b3a.2
- for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 16:42:41 -0700 (PDT)
+ id 1uNKww-0005j1-HC
+ for qemu-devel@nongnu.org; Thu, 05 Jun 2025 20:28:48 -0400
+Received: by mail-pg1-x534.google.com with SMTP id
+ 41be03b00d2f7-b2efa17ed25so2326447a12.1
+ for <qemu-devel@nongnu.org>; Thu, 05 Jun 2025 17:28:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749166960; x=1749771760; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dlJ/ihmtY/Bs+6QNasQQE5ci8/VnkGAsX6ch1ZEqQ/Y=;
- b=WrY/svPiQNbfbyJ4iPRBB7r1UTG5xxWHAzUKIlDI/l8bl3PTuUGLQZJ+hXqP5y9+kL
- g24OOWL5fY92eBy9iSBCnFI5J8VYrzZV2t+rpqBl6nL5TdHeUZuAt4K75vjOpejqXIJQ
- zFPUuOGOCidlOoCjlvibVabQosXSdwalmVZWlOicYlIThA9rrTl+WcGsRQcwQ0B1LufC
- VYDpwZIKy2VY46v4DUACeB009YVhSX0q1HNzohV0uW28S9DkWMVI0zlPnjb2ViM/v+gX
- euxQD1YQw5OFEvjiATKsFNuzqiZEEh6kx47zcAIfwKqvqUM9csT8gv//QWiv3MAJWuK0
- kuCg==
+ d=gmail.com; s=20230601; t=1749169725; x=1749774525; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=i3TxrRqR0I76iLnt2ucZkJXg4dmyNRw//DeN8cjiWKA=;
+ b=Y0rF5Ibnq6ltA8KHZJjkQKSYsttBOyOriTWGihHWJKeQuxU4FU9ZHRXkfXHMCpdBdK
+ q9qRupOkw3PM3q+QWEqd1EKojCzWQQ0odXJCiNBAKyeLHtSG8w/WpsScKeA+4YkSyieX
+ 63CGNgV0yDtF/B1zPkvU+j+dZRLhiAO73goMREJ3S9zJha+RBh7aeAqkCB/GkBnSgymw
+ 1E/3/925rQgTDP5YAb1ylCdIYVfmP3JbFGuG3Vhu1LZciqp6vSH+555LeKczOKQQc9rc
+ ZeaqIdqF9VcQwOdMayDXHANj0kbNaU+3bamWvOeSFHU5HpG0/2RXjF3g2G1hQYfLIc9c
+ EkPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749166960; x=1749771760;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dlJ/ihmtY/Bs+6QNasQQE5ci8/VnkGAsX6ch1ZEqQ/Y=;
- b=i+kpUNFTkiyZ1q4ab6S/yxGijJfgEEUron9g8ud2oyXOCHGR5lLNndarGdls7eIe4W
- gmZVb652uzXO5YgQReU8ZhAMv3NvHXZGVF7z1wIE6CNcZzi0IdItFeeQlo6dJfJWbtBy
- VLfrmmBNOfnW3A3+JDWo7Mc4vUSS1PbIJrAVitgACwoSegH1osZWNb2LCnrY0BSLJFZF
- 6VB9/EmGZvHG6z5mM/KG5PO1RbLqm8rUVl0EsAb2DziX11F78mQCX8GGtYh81hjOtlZa
- pLUvTsbkeHBIYsatx8fg9RiHy0AtVAcYwidOLb4HSfmGNrBTcjyrMi1ju/8gQSWquxvr
- Rfgw==
-X-Gm-Message-State: AOJu0Yy7/km5HFqH3+onTl0ycdAy6jb6cx/F/SGcCFgX55B/gD3LC+3W
- jQo5OoCXI1btINaGOgiui9FC5ZmZZn4opLeV/MysVuoK1Z8k0ccSbMNO+gLJ2A==
-X-Gm-Gg: ASbGncukvCk9RoOML8uo7evjEmhun4PAoi9tW78YY06PgG5TUUjcRY07/kY5wrAuPxR
- eGS3aIdaXZ12HjbWyEoU47lPzbbi7lDFFz3cWi/oFqHyMe5TOYHc8cS2edU0F/DsFGQEKp15Ufs
- DsRzzT3gOZBTQwi8pMpwZQ6ScpDq4cyqo5TxP7BC6Umc8AfX3EuN5EL+E9ktngo6Mo+Nb0Xm2v9
- Jx9T9jHiRT8rh/jIM3oK3fUzIM4wlBN00h8RroJG4nihUAvVtz1DcsPQxdHlxj7z+krO+J5qL8I
- oPphVisqpzWW7jou3qBUb4YdSD8no5d2AgpXQAxEmbXNsxAbIvle/7/jZYPQ86d5YFS4qMcCYm1
- rbmf2gjg=
-X-Google-Smtp-Source: AGHT+IFyjKedcs1IVdYVe/iobdhpu7k14FKeOftOEpSx+HSKmjoGcM6e9GvPLeuTgwROj4K4xaTPug==
-X-Received: by 2002:a05:6a00:b85:b0:742:da7c:3f30 with SMTP id
- d2e1a72fcca58-74827f10920mr2042558b3a.19.1749166960438; 
- Thu, 05 Jun 2025 16:42:40 -0700 (PDT)
-Received: from deb-101020-bm01.dtc.local ([149.97.161.244])
+ d=1e100.net; s=20230601; t=1749169725; x=1749774525;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:date:from:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=i3TxrRqR0I76iLnt2ucZkJXg4dmyNRw//DeN8cjiWKA=;
+ b=b77kHJDz6XrQbHOB9irJqeiAPI+2CAHnTj7WW2iF1YBfL+vbFT5ZSoUFCZGD98r9FZ
+ R0BzMk8oI2ltA0zkiQ+2qF78OdESPc9ycJGSq44Mln0fsmJ/J9RfSCxp9L087QYtUo5P
+ cJeILYn4/M13TaaWg3Nu+UpvTO536QIJP1ZtDGnsryvnddi+feffBsP3hcnyJp7CmG4b
+ jmTKvD/Eaz4fKbkEB1sGhTEmJHtfgEON2GGQzcoiQ7jBRfz1X/vWr1ddZDY4sJCLUypd
+ d5/4V2oGmWG+T6U0SwuChOCfTup83ZfaJhfRVAuPSewEBvwau3HmtGcNe7fjHur539gx
+ L/LQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUkBNASFXStHU+/K8djgx1Qpw07G4hRJu83ojRdCNs838Zp6AhUg8j/h1SA4JYk1OzG1zDavJapdJGj@nongnu.org
+X-Gm-Message-State: AOJu0YxsaBvx6Q9IhS3rMJ7bng3m0Mojv6mrbfBVJhG6+3oy6+PbD2Qx
+ OTu3t+2mhpIQ9Y8fQX3Hsd/Q0kTSVCiruTslegPIS268pIkuT01c5Om+
+X-Gm-Gg: ASbGncvNqh4wOGjLiEuJrsboCLJsSzPkJnz3PbSoSVK8yyouC88RBiBNI7W+EVPyPbM
+ NRFAzWiy7c0t9+xXIDK2e72se5VtLj6fkuMew/4lZR0nWYF1iRVRqOm5+0dxQuY1DTUWucO4ifL
+ BQceyfoJi8Jxkdfn5SJJh21TlvNqWEiZUfd3MzUpA6fsKuNM8bDFZzSLDAXXZdiAPuGgrOVCnFx
+ uyDyi7Z9xpk36l/zz76ZLhXvSnNmzHvRAbTrUxzL1giEG1dor4B7f7wa9XaeunYCgT96uwnhkz9
+ AXvOZdKf2EG2RMu9j0E/8O5ksJJCl481SCWmeWeH+aF2P7IU7NzVWKeQF4aBn2fyR354YPEEkWE
+ DVi/yek8Tuv4W
+X-Google-Smtp-Source: AGHT+IHhXDTTL9IQxG6AeE/7Rhc+nTeeWJszgfYp5mAP+Tad2iQqBJ0bjydFNuMUl8FB8KiS/+Y1pg==
+X-Received: by 2002:a17:90b:1a8b:b0:30e:9b31:9495 with SMTP id
+ 98e67ed59e1d1-3134cfc9fd0mr624175a91.9.1749169724848; 
+ Thu, 05 Jun 2025 17:28:44 -0700 (PDT)
+Received: from deb-101020-bm01.eng.stellus.in ([149.97.161.244])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7482b0847b9sm213916b3a.104.2025.06.05.16.42.39
+ d9443c01a7336-23603506d4dsm1778845ad.235.2025.06.05.17.28.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 05 Jun 2025 16:42:40 -0700 (PDT)
-From: anisa.su887@gmail.com
-To: qemu-devel@nongnu.org
-Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
- linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>,
- Fan Ni <fan.ni@samsung.com>
-Subject: [QEMU PATCH v3 4/9] cxl_events.h: Move definition for
- dynamic_capacity_uuid and enum for DC event types
-Date: Thu,  5 Jun 2025 23:42:18 +0000
-Message-ID: <20250605234227.970187-5-anisa.su887@gmail.com>
-X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250605234227.970187-1-anisa.su887@gmail.com>
-References: <20250605234227.970187-1-anisa.su887@gmail.com>
+ Thu, 05 Jun 2025 17:28:44 -0700 (PDT)
+From: Anisa Su <anisa.su887@gmail.com>
+X-Google-Original-From: Anisa Su <anisa.su@samsung.com>
+Date: Fri, 6 Jun 2025 00:28:42 +0000
+To: Anisa Su <anisa.su887@gmail.com>
+Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+ Jonathan Cameron via <qemu-devel@nongnu.org>, nifan.cxl@gmail.com,
+ dave@stgolabs.net, linux-cxl@vger.kernel.org
+Subject: Re: [PATCH v2 00/10] CXL: FMAPI DCD Management Commands 0x5600-0x5605
+Message-ID: <aEI2OqYwgTLw4KsY@deb-101020-bm01.eng.stellus.in>
+References: <20250508001754.122180-1-anisa.su887@gmail.com>
+ <20250520143947.00000337@huawei.com>
+ <20250530152655.00007132@huawei.com>
+ <aD3jkRBHmbdc9QmD@deb-101020-bm01.eng.stellus.in>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=anisa.su887@gmail.com; helo=mail-pf1-x436.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aD3jkRBHmbdc9QmD@deb-101020-bm01.eng.stellus.in>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
+ envelope-from=anisa.su887@gmail.com; helo=mail-pg1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,68 +107,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Anisa Su <anisa.su@samsung.com>
+On Mon, Jun 02, 2025 at 05:46:57PM +0000, Anisa Su wrote:
+> On Fri, May 30, 2025 at 03:26:55PM +0100, Jonathan Cameron wrote:
+> > On Tue, 20 May 2025 14:39:47 +0100
+> > Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+> > 
+> > > On Thu,  8 May 2025 00:00:56 +0000
+> > > anisa.su887@gmail.com wrote:
+> > > 
+> > > > From: Anisa Su <anisa.su@samsung.com>
+> > > > 
+snip 
+> > Anisa,
+> > 
+> > Ideally I'd like to get the majority of this upstream once you post
+> > a v3.  To do that I'd like to break the dependence on mctp_i2c in patch 2.
+> > These commands are equally valid via a switch-cci (and that path to the
+> > fm owned ld_mctpcci is already upstream).
+> > 
+> > If you could send it as two series. One of which sits on upstream and
+> > doesn't include the i2c_mctp part and the other of which is applied once
+> > that support is available in my tree that would be great. I'll squash
+> > the i2c_mctp part into the patch that adds support for that in the
+> > first place.
+> > 
+> > I'll deal with rebasing needed for other command introductions etc.
+> > 
+Hi Jonathan,
 
-Move definition/enum to cxl_events.h for shared use in next patch
+I applied the v3 patches (which are based on ToT master) on your latest
+published branch cxl-2025-03-20 + Fan's patch fixing dc extent tracking
+and then edited the first patch to add the i2c_mctp stuff and rebased
+the remaining patches on top.
 
-Reviewed-by: Fan Ni <fan.ni@samsung.com>
-Signed-off-by: Anisa Su <anisa.su@samsung.com>
----
- hw/mem/cxl_type3.c          | 15 ---------------
- include/hw/cxl/cxl_events.h | 15 +++++++++++++++
- 2 files changed, 15 insertions(+), 15 deletions(-)
+Would it be easier for you if I send you those?
 
-diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 0fccd22800..cdd60079c4 100644
---- a/hw/mem/cxl_type3.c
-+++ b/hw/mem/cxl_type3.c
-@@ -1876,21 +1876,6 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-     }
- }
- 
--/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
--static const QemuUUID dynamic_capacity_uuid = {
--    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
--                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
--};
--
--typedef enum CXLDCEventType {
--    DC_EVENT_ADD_CAPACITY = 0x0,
--    DC_EVENT_RELEASE_CAPACITY = 0x1,
--    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
--    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
--    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
--    DC_EVENT_CAPACITY_RELEASED = 0x5,
--} CXLDCEventType;
--
- /*
-  * Check whether the range [dpa, dpa + len - 1] has overlaps with extents in
-  * the list.
-diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-index 38cadaa0f3..758b075a64 100644
---- a/include/hw/cxl/cxl_events.h
-+++ b/include/hw/cxl/cxl_events.h
-@@ -184,4 +184,19 @@ typedef struct CXLEventDynamicCapacity {
-     uint32_t tags_avail;
- } QEMU_PACKED CXLEventDynamicCapacity;
- 
-+/* CXL r3.1 Table 8-50: Dynamic Capacity Event Record */
-+static const QemuUUID dynamic_capacity_uuid = {
-+    .data = UUID(0xca95afa7, 0xf183, 0x4018, 0x8c, 0x2f,
-+                 0x95, 0x26, 0x8e, 0x10, 0x1a, 0x2a),
-+};
-+
-+typedef enum CXLDCEventType {
-+    DC_EVENT_ADD_CAPACITY = 0x0,
-+    DC_EVENT_RELEASE_CAPACITY = 0x1,
-+    DC_EVENT_FORCED_RELEASE_CAPACITY = 0x2,
-+    DC_EVENT_REGION_CONFIG_UPDATED = 0x3,
-+    DC_EVENT_ADD_CAPACITY_RSP = 0x4,
-+    DC_EVENT_CAPACITY_RELEASED = 0x5,
-+} CXLDCEventType;
-+
- #endif /* CXL_EVENTS_H */
--- 
-2.47.2
+Let me know, thanks!
+Anisa
 
+> > There are just enough open questions in this series that I haven't done
+> > this rework directly (though I did start doing it - hence the missing
+> > include note in one of the patches).
+> > 
+> > Thanks,
+> > 
+> Sounds good, will do :)
+> 
+> Thanks,
+> Anisa
+> > Jonathan
+> > > 
+> > > Jonathan
+> > > 
+> > > 
+> > > 
+snip
+> > > > Anisa Su (10):
+> > > >   cxl-mailbox-utils: Move opcodes enum to new header file
+> > > >   cxl-mailbox-utils: 0x5600 - FMAPI Get DCD Info
+> > > >   cxl/type3: Add dsmas_flags to CXLDCRegion struct
+> > > >   cxl-mailbox-utils: 0x5601 - FMAPI Get Host Region Config
+> > > >   cxl_events.h: Move definition for dynamic_capacity_uuid and enum for
+> > > >     DC event types
+> > > >   hw/cxl_type3: Add DC Region bitmap lock
+> > > >   cxl-mailbox-utils: 0x5602 - FMAPI Set DC Region Config
+> > > >   cxl-mailbox-utils: 0x5603 - FMAPI Get DC Region Extent Lists
+> > > >   cxl-mailbox-utils: 0x5604 - FMAPI Initiate DC Add
+> > > >   cxl-mailbox-utils: 0x5605 - FMAPI Initiate DC Release
+> > > > 
+> > > >  hw/cxl/cxl-mailbox-utils.c   | 649 +++++++++++++++++++++++++++++++----
+> > > >  hw/cxl/i2c_mctp_cxl.c        |   6 +-
+> > > >  hw/mem/cxl_type3.c           |  41 ++-
+> > > >  include/hw/cxl/cxl_device.h  |  24 ++
+> > > >  include/hw/cxl/cxl_events.h  |  15 +
+> > > >  include/hw/cxl/cxl_mailbox.h |   6 +
+> > > >  include/hw/cxl/cxl_opcodes.h |  72 ++++
+> > > >  7 files changed, 724 insertions(+), 89 deletions(-)
+> > > >  create mode 100644 include/hw/cxl/cxl_opcodes.h
+> > > >   
+> > > 
+> > > 
+> > 
 
