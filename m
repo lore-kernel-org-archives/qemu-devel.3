@@ -4,218 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57E7FC5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30B4AC61CE8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 13:03:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNWca-0006K9-EK; Fri, 06 Jun 2025 08:56:33 -0400
+	id 1uNWiY-00082B-J0; Fri, 06 Jun 2025 09:02:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alok.a.tiwari@oracle.com>)
- id 1uNWcP-0006Iw-9M
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:56:23 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uNWhc-0007w1-Fa; Fri, 06 Jun 2025 09:01:49 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alok.a.tiwari@oracle.com>)
- id 1uNWcH-000885-Ha
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:56:21 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5565NDfn021672;
- Fri, 6 Jun 2025 12:56:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uNWhY-0000E4-Fw; Fri, 06 Jun 2025 09:01:42 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5563hlUr012122;
+ Fri, 6 Jun 2025 13:01:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=12koHugNwmdb9464lin6/mhSttlEsrVRVBOF9REsdLM=; b=
- hM+6WzRP3xSgZ7akZtZSZEgIM2mw569CCh0zfZzI6fc3K6oaCXhUS4GQXyUvbKhG
- KvoSe2RoILGoOuoYF+meX3kvL6eIFklg/FnlVNJ3EhSlYEXIbavHA3tOUgrMplKb
- iyuQ+1JoZUQ4Z3iVQBtlP1a+Il7KHn0lBg/seYEFxc0WIut9EEn5IyC81Be1Akd3
- T7fUvmy9FBCpnEpWcp9lymMyZcUL8d6keMJyc30HjdntCYsOM7emfCaFIZqipvlm
- u44A4WTaT5D4bo++FW5ShvyVVFoalcTJO1UsGaXKmMchPWIKh4dCaug+YQ94jEkN
- HSXPsfruZd6fWZhnl4BLSQ==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 471g8bqwdw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 06 Jun 2025 12:56:00 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 556Aq4vm034966; Fri, 6 Jun 2025 12:55:59 GMT
-Received: from cy7pr03cu001.outbound.protection.outlook.com
- (mail-westcentralusazon11012014.outbound.protection.outlook.com
- [40.93.200.14])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 46yr7d8dmy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 06 Jun 2025 12:55:59 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=MsaOGTB3kHPeiw6HW7Hy8tCSVBvUEOfPdsik5y/2cIL7BB96Jt9TANGQcfsygsBtX15k4nESHQ0YQ7uEtFTZ/k+2UU857XEXqmBc9gzZj/bZaGTP4ypwhRl/T5tvJutDbAgeGUCrVGCA8Yk0KwLeYsN0o5/TkIzMG3Gu7GYX3416/jZAo/VxsbtYVJgTnXwSHhlatE2rzBrRn1blt1Vm2U9pwO5zethCTN+ddhDgYeGc+vrf1InMWVACT2K72Kf/LaE8W+oWjiXAfUQx+GEFPKDScqaJNUQHT6fNoQO8Upv2DutzfhLShlibqtcEzAnrjbm79L1A9I91o6K9vh+W4Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=12koHugNwmdb9464lin6/mhSttlEsrVRVBOF9REsdLM=;
- b=vpImTrQfGvhxVisSHCy1iq5AJ7uYoiYqEVdtOG1j4DWG4y1iN2KR2iSj+IUHM1wn4XzI6EbJAo9QUSUFz+yKkw1pecl/lfs/4uc5fnshqXbywP1WXghhCKeViX0isl/fuTysc69JkIXz11u2Wh4YxuoLUJBG12lp7mrpGn+Di1sP0myL7ATQt4FUSTYFjXEzb80dsBWNO5ul0aiEUpNogM5TPc5x01u5x3JgqX95Ua6M0Kce+RCz2lWmj3acZyiqMT5hRG7bT3xpt4HypFPeqoBtbbW+rqtZtTClHC9bIpjOTkBHemrPPH2F5j7FzY/qsUhuNcBXScJ3iriI+FC0lQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=12koHugNwmdb9464lin6/mhSttlEsrVRVBOF9REsdLM=;
- b=h50KDC2kks7JWPnNrG7WWjctbVF0RrEv0xr/sn+9Gge3jspBgBCAZzOkwRPSrU0cXP+T8IaIDuaifS92owyLCqGPQQBn5RHQ7Q5P1HbXDYzRsW25nsKqliJO+DW/FNDeR6xr1zGm7fy+FmUatgdHbPjfreGx5BFdTKFJZShrXbs=
-Received: from DS7PR10MB5328.namprd10.prod.outlook.com (2603:10b6:5:3a6::12)
- by SJ5PPF2BC420A1B.namprd10.prod.outlook.com (2603:10b6:a0f:fc02::797) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8746.40; Fri, 6 Jun
- 2025 12:55:56 +0000
-Received: from DS7PR10MB5328.namprd10.prod.outlook.com
- ([fe80::ea13:c6c1:9956:b29c]) by DS7PR10MB5328.namprd10.prod.outlook.com
- ([fe80::ea13:c6c1:9956:b29c%2]) with mapi id 15.20.8813.022; Fri, 6 Jun 2025
- 12:55:56 +0000
-Message-ID: <2bdf06d2-64b4-4626-8782-882bc6c1e60e@oracle.com>
-Date: Fri, 6 Jun 2025 18:25:49 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [QEMU PATCH v3 9/9] cxl-mailbox-utils: 0x5605 - FMAPI Initiate DC
- Release
-To: anisa.su887@gmail.com, qemu-devel@nongnu.org
-Cc: Jonathan.Cameron@huawei.com, nifan.cxl@gmail.com, dave@stgolabs.net,
- linux-cxl@vger.kernel.org, Anisa Su <anisa.su@samsung.com>
-References: <20250605234227.970187-1-anisa.su887@gmail.com>
- <20250605234227.970187-10-anisa.su887@gmail.com>
-Content-Language: en-US
-From: ALOK TIWARI <alok.a.tiwari@oracle.com>
-In-Reply-To: <20250605234227.970187-10-anisa.su887@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SI2PR01CA0013.apcprd01.prod.exchangelabs.com
- (2603:1096:4:191::9) To DS7PR10MB5328.namprd10.prod.outlook.com
- (2603:10b6:5:3a6::12)
+ :message-id:mime-version:references:subject:to; s=pp1; bh=goA0Fh
+ mckQH4adWKXQhHiffRixMBPdAJ1FHvCdtxHWg=; b=pnyL/ZitBXIMMR1LIAN1ji
+ Jnd9jyG07zirqZkr2QmVL+Bfxdh9S3KaN3U+eMdofMG3Dj2SzPmpfztyGoCpcnDb
+ sqjyDbQ3O4Bc3copI0YkFy2qYRjqAdo1oC1G1vYL0w7xFYMzcEcL23zftPBHwzw7
+ YXk4YEoFO+8Pips6HeZtwnOTltmS4sppXzqVetfxuQ+AmOfKd1TeVxjFFZQfQLHb
+ MRp07j1ozMIfH/dMZVJZPGyeDzw0TQmPrvM9HrGWS2j3v8oAhrw/eRKcU5WBj3xK
+ sP+T2HPPpbX8LFd+YXx2ygajdA5uORR+8r3tgVtDl/f8iUGojCNy4ctYXq+vHrpQ
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 471gf068sx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Jun 2025 13:01:38 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 556Awaqs022550;
+ Fri, 6 Jun 2025 13:01:37 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 470c3tsqrb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 06 Jun 2025 13:01:37 +0000
+Received: from smtpav05.wdc07v.mail.ibm.com (smtpav05.wdc07v.mail.ibm.com
+ [10.39.53.232])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 556D1aE98454870
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 6 Jun 2025 13:01:36 GMT
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 43D375805F;
+ Fri,  6 Jun 2025 13:01:36 +0000 (GMT)
+Received: from smtpav05.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4427C58043;
+ Fri,  6 Jun 2025 13:01:35 +0000 (GMT)
+Received: from [9.61.255.166] (unknown [9.61.255.166])
+ by smtpav05.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri,  6 Jun 2025 13:01:35 +0000 (GMT)
+Message-ID: <ae5c3a57-0439-4807-a924-c174563a451d@linux.ibm.com>
+Date: Fri, 6 Jun 2025 09:01:34 -0400
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR10MB5328:EE_|SJ5PPF2BC420A1B:EE_
-X-MS-Office365-Filtering-Correlation-Id: d83a8f4f-66b0-4ddb-2b70-08dda4f979ff
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|1800799024|376014|7053199007;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?UWszT0ZOKzI5alFLVG1JNkVEUmtHYUptelNBSjZpS1pFWkZWVmYyVTg2bnMv?=
- =?utf-8?B?OUtaMllEY0ZMZE1kOE5zZDEyNHFOZlpFNUhYVEhYaW4wdVJYTlV3TzVOMjB1?=
- =?utf-8?B?c1U0cnlqY0NoTVIrbVRIdkJhUFJmSWFtVytodTRmeXZRTlV1bDNob3FzWTBU?=
- =?utf-8?B?Mzc3eXJGUHd3dnRFSHhOeWxCeDhESWp2T3BtZGRLT1g1aWthMyt0amRJY205?=
- =?utf-8?B?YStJVzZDYXQ2d1J2bUlVSVFvRWlldXVoTEMwdnVJQVZ1Z1d4WFA5T0VJL3hl?=
- =?utf-8?B?cGJxOSsza2NoVVhFTjRDSjY3RVRVT2xLNjhXKzFQdURwMmZpTGNSNE0yNWky?=
- =?utf-8?B?MlpjTWNZaFBxMzdDOEVwR0lmZ1d6TjV0NzhRZXFhY1kzMS9oRWlVTFNOUkl2?=
- =?utf-8?B?L1UrWGF1c1ovWnlmUVVHYUZSbkJ0dDR3aThGMkJLeDNqRW40OVRHbW9VMStz?=
- =?utf-8?B?MDFWT1lxWlNkZUhncFFNb2daWExLOFpFLzNXNmhBaTUzaXZlQUVTU1hvMXI1?=
- =?utf-8?B?VXBpakl6OXBlRmpjOVdmT2RRelVPZTRIc2xyK25ZdlRFWnNMeGV1NTBhY1hE?=
- =?utf-8?B?ZXEzb2U4SU5nS0oxOXQ1MkRFS0owaG5ZVEdpNHM4d2p2SG0yajhXbmJuRUZY?=
- =?utf-8?B?cHZWZjVVcWI5VmJURlRnbzFjZUJWTTl5VlNlS3h4dk5VYkNYM2h4dXlVa2lQ?=
- =?utf-8?B?VXRub1J0S2tiVmhpWiswaTZRdzYzM0VwWTVzd1NJOWlzd00zWUlLa1N1OXFn?=
- =?utf-8?B?RzF4dTZUTjlIMUJTa1o3ZVo5VzFnV1BOSk80MHNOMHlJaC91VDQ4UkUxOHNi?=
- =?utf-8?B?M0VGcVZxNmpuOVZ2d0taM1pYYzNzUks1aHovUHpUV1pydmh5YVpUdnh1ZnJt?=
- =?utf-8?B?d0xtcGNEeC9FdjlBNkFJRk8rNXVvUnB0d2xPbnliMXhjWkxYTDg4UnBReTBs?=
- =?utf-8?B?U3NWYWE0ODdqQUh6Q1NhZWhYVmwydkRhZkJJbjZvWG5Mc2kxcTJCZU52N0o3?=
- =?utf-8?B?M0xxY1NOSHNzWDVET2F2ZHdlUGM2bXk5c2xIUkdQVW1UYnJpSmhwTnZIMmk5?=
- =?utf-8?B?M3Y2emJmcVNGVVRXTEo4ZUFMWS9nejFvUk1NMW42UlhaSHRkUWlnM3pta0Er?=
- =?utf-8?B?ZEo2MG80TE9YSE5Kbmt0SGczUjd3UUhvTnZrL0d4b3Z6SEFFUFdiSE01by9r?=
- =?utf-8?B?ODNjWnZDS0o5a2N1MlNnZXFLSjhuWkk3VWU2RkpmZWhPdm1aSG0rcU1EclFI?=
- =?utf-8?B?MnE5akwzSjY1RXloMHVkTmJoR2dONEx1RkhEVlNzalJydlcvelJteVhvRFdD?=
- =?utf-8?B?Q2VFT0l1NklBTE1DTVNJbjM0cDVjR1ovZHVWN3pFZ0RXZFd5dWR6RnV4WTc4?=
- =?utf-8?B?SlVvL0NpZzNzV25HUFZIN1FNZkpKZjhBdmNQK1dxRGRJR1pqbmpEQm53MWhF?=
- =?utf-8?B?OUJzTHorYm9lbnMxZW84WUF0ZjN2VWNBZWh6K0lKWjlZb1g5VVFJY2U2M3gx?=
- =?utf-8?B?aGRyNk1TVU5VTTdoaFBGSUtscm51R0loSWhWLzJmUDFaT1pPWTk4Z1RNbTJz?=
- =?utf-8?B?N1pEVkJUWDcvRzRLa3l2Q1NzSk00a0xMc0E3WW04VzNDWStYc1EybEZvRmJY?=
- =?utf-8?B?TFNYM1JnNXRKNjg5ZXFPRzJub01CRmFPRk9xZUtJUXloT3pUV1lhNU8zWUZY?=
- =?utf-8?B?eDN3Z3JJMmtpV3k2cDh6SzV6ek5KaFMzM2pQbnE0UUp4ODRwSmVtT3VpenFL?=
- =?utf-8?B?MVNxU1QzY3JyK3ZKMVFPRmxtVisyY2VRL3J6TFhXSHU2MGR4WnhRUVdPdTdo?=
- =?utf-8?B?aCtRcWVKSW8wQitGTXMveUtyTE41azRjbEhLMVlwOSs2d25Wa1A3TU96WnRW?=
- =?utf-8?B?TkFwOG1yZk9lUjFIVk5XL0dUcmhURCtQQ2FjaURTRXY2S0Q0RDFNNCtnU1o4?=
- =?utf-8?Q?4RRLO1w0dxg=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS7PR10MB5328.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(7053199007); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YnBVNkp5VzgwbHZuNlBJVXB2ejFFM3BqVHVRcnhUdHZ6RVZVY2FmM1pTeFQv?=
- =?utf-8?B?dTlvNGFvZDVEc1FSU0lpYmFTRndKN1M3ZlZ0MmFoM1B5ajE3akFtWGtoUVo5?=
- =?utf-8?B?WHFKYk0wdG5vU2RqSzI4K0V2RDYrcXlTeXhmTU43ZkFBMlkwd2VxRnZGSVJH?=
- =?utf-8?B?V3pPZUMxR29XeXYzQkI5SG5ja1QyTkxWZFBIZUZIVGd0SGxpRXJCMHltd2sz?=
- =?utf-8?B?WklsL2VTeGNBNXRNRnpETzBOSlNJOGtBL1M5NE1DMDdJYTNidlY4cnVLSklz?=
- =?utf-8?B?OWJiUlhVN3YwMFZneFJyQ25peHBlU2g2eXFCNmtObnEyQWR6b3BzL1FMVTlH?=
- =?utf-8?B?U2hxcXNqb3oxMGdiZEFKZ3ZZOTdQUVdESGxXakZWTTkvTkxOdTRYTkQwRUlt?=
- =?utf-8?B?N0JvQzRwTFoxVnBZWWpiaGpCZ2FPaXJtS0F3NE8zMTFsdVpmaGF6TTF3SVhJ?=
- =?utf-8?B?OFNpTm1DRUxVNWxwdUZBM2p4UkJrTDBYWVN3TmtKeFZJeE0yUk1wR09ueGxZ?=
- =?utf-8?B?a3BjYnlWWkRlUTFFS1BHR2F1ZExHZHpOZTZaM2RrUzlMcTlwYTZ0SDJBREo1?=
- =?utf-8?B?MWZBMUp5SEptWkZRZEs0aGVqb2UvOFM4anYrVlUvYUYrR2FmK2ZoNFpsUW1B?=
- =?utf-8?B?YnJsSEd2SndzdXk1dVQyanBtTW1rREQxSERFaCtxTHhvZWxHQXlGS2l2b0ZO?=
- =?utf-8?B?Qk9FMUxodEg5ckozUXpYTEFoR1pnV29YbisrU0VzQitML1ZkZ0lpbmwwTWM5?=
- =?utf-8?B?dVlab2RxU09iaHU0dHBSa2ZYTmZxYVpPZVlySm1RbnNwUEdZR3c3Z2krVTB0?=
- =?utf-8?B?TzVVSm1sUERPVXVzeWxlc0R0SkNaREVkRHJncHZ3WmFxUWxxaDBwWlMweTNL?=
- =?utf-8?B?cWtrUVBwbEhZcmlXRVpjV0gwaE1kT1Z0eVltanRvQnVxTktnbUd1Um5IOExx?=
- =?utf-8?B?Smdoamx1U2VWQTYxMFYvcTE5RXJ5czVRUjRVM1Y2bUJpZE85ZFZQcEUvcWc1?=
- =?utf-8?B?Rko1QjBnTXF2VFQ1R1M0MTV3UWRkMW9RN05FZndtYTlpNnBmakNFYjJRRWFP?=
- =?utf-8?B?TnZDSTZ4TDExVnVLK0hKNU54cTFZMzJLTGhWK05nZ3ErZ3NXbDNlb2tmNFZk?=
- =?utf-8?B?SWxqVXVuNlFCcmNXeE10dVprb2Rna3ZMbHp1UmhpK3N4QS8wa1NHNEErMVgz?=
- =?utf-8?B?TUwzRjdtM2hWMGdkUnZDTGpHWDlONHdoSjFDT2NuOTF5RmZlRWJmalpYWWVZ?=
- =?utf-8?B?NTE5UHZxOCszWlZ6ZU5TRjJKa29lVm11WjdhZkc0WUEwY1VhY1BGamFQTHZE?=
- =?utf-8?B?Nm1SSnlNN05kRWN6dDlBYzRQNHVGMitEMFRuZ2plRG5CN0wybkkxSWxoNHVs?=
- =?utf-8?B?b2FFMnB2VlRoU3dPWnJoays5MWU4dHNMQkpRRk45clBwc2c3dThiNUYxOC80?=
- =?utf-8?B?WVVJaTJMaHlaVlJhejBMUW44N3lSdWhsKzhtNjcxRmFaT3RaUFlHTDdoOFlw?=
- =?utf-8?B?S1JTV0JNbjF6Qi9QOVphT3M3UHFUcjBpUFR0V3JtanpnV25vVjZHZ3BSTWpE?=
- =?utf-8?B?ekZJNW80djNCZjlsNDhuQTREbk9QT1puaDJKZW9lRGFVS1FXZXI1Yk90WllY?=
- =?utf-8?B?bmFRSUxGRnNKdTQrbXFDOGhNRzdlWmtaK3o2UmdjYWlmVDVLK05BM21tUSsy?=
- =?utf-8?B?WEdqREp5eG5LcHlRa0toREYyWDY4a2JVeUlyVXByRzl6UHVrTGVoc0xhbGRq?=
- =?utf-8?B?ZHJGRm9hclRpbjl0TTUyOG5zbEh2ZFBsSkwzWEtROHRGd3U0cHhKS2lZMCtL?=
- =?utf-8?B?WnZIdFhTNXcrYmJ6ZkRMQ1F2c3J5UXJCclpWNVZJV3k1MEduN0FFSFN3cll3?=
- =?utf-8?B?U2U1dGJoVmI1S2hWY3FGZ0hwMHM3c1RwTGpLb1N0b0VrMDZWajNIU3JDak0r?=
- =?utf-8?B?eU9aaTlOM0t4NURwcE5kQU1abEU1bnNxaklXbFpzcWJjaGVsL25EQXFhdlpr?=
- =?utf-8?B?THJvRkVmc3hPUWYxQ3JqaVBkd3YyYVliYmJzRDNJQlRpdWVKSmxoV3daUmZz?=
- =?utf-8?B?OFI4a1BRYnFpb3hXZnNkYlJsVHRWeTd3T3g5ejFvb1NoRlNjZGhQak5CNU94?=
- =?utf-8?B?c3JjZVQ4VHNkQVUxRkdESnQ4QjVvUzNkVlpEc0I4MTExSnBYV1NMdncvQ2ky?=
- =?utf-8?B?Y1E9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: h1en/1xXkPuQAs25eOOYEfXiD+fQy0v0jFbCY/GmCrIpVOiiAqYfiFn7Ny9EecezuR1dQGn2KLufOI2/kYt7Ir7Za5l90UQHq8zPDwVqR/1cpEl3eaIBDqYBUacloj8WTdULgQPNR+5S1Xc1pl9XQtEoPTUtWQPNlxiXMIHeUblONdYuMkw91GlFPdiAtROUDEEwH4NGH7OXz21xOAofcX5yqi/IubyG1DMMJSzf7LsMe09yeHPnAb6CWb+kuI7SuI76T/OKB9SzLZglOtprx2okKZc3T272WCHtq3fUhHs3QJIyTWH/KQSYpsM37s8RTF1gVm9vliHVLfNAx++22kNANocnx6FjtWZwTo1T1fYe9tm2I3z1sjDTlELqL6iBVGebQ+5fLqm4reg/kt6SI/SqAgusKDIpkjGtQ0h5ffWmmB1n8Bzhuw5zwOGVoCHK58aFKuVgNe6FCuEyNFH97GdJCIsXdXBcjzLRJCIgeergrLUoNpAYuShLQomxvhLTTqW5fXZlx2ZtsOJsb2wy6kzAgU2yJsmLIRkyO/trCNwXsd/842y6xloqWChoXpdof3Sukc9+KTMhNQt+TGYSnGbhs+3NKqlvjU5768z9SUY=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d83a8f4f-66b0-4ddb-2b70-08dda4f979ff
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5328.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 06 Jun 2025 12:55:56.1271 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: T0ouhmILZNXwGJtSZ+EZNozowQu48CrO8bp/sFMzPqrT7b6EcCVy/26wcDbv3qMZrxWEtzAqe/y2CXPqKoL6Smalb03KTlw3xa9J8To4JiI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ5PPF2BC420A1B
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v11 3/4] hw/vfio/ap: Storing event information for an
+ AP configuration change event
+To: Anthony Krowiak <akrowiak@linux.ibm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com
+References: <20250523160338.41896-1-rreyes@linux.ibm.com>
+ <20250523160338.41896-4-rreyes@linux.ibm.com>
+ <66ad7451-b7a6-4112-8f20-1af06d5b482a@redhat.com>
+ <834be7a8-922a-4e39-8453-6c9a1957d3ac@linux.ibm.com>
+ <1a896c28-783b-4a1e-9cf5-6b8abfe8d7e4@redhat.com>
+ <adca5063-786e-4c4e-90f8-dd378a2aa71c@linux.ibm.com>
+ <5248c4f1-923e-4f6b-9c3f-ac24666fea04@redhat.com>
+ <02f064f7-e400-4d7b-ba04-cb5dc6ee93f0@linux.ibm.com>
+ <5888d51f-a85e-454c-971e-7d1f6f18dbe3@linux.ibm.com>
+ <17677999-305c-4488-92fe-49af3b08cae3@linux.ibm.com>
+Content-Language: en-US
+From: Rorie Reyes <rreyes@linux.ibm.com>
+In-Reply-To: <17677999-305c-4488-92fe-49af3b08cae3@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: IbqwXTjCKAWx_wURKe6Zl1g4ZrbmkrFd
+X-Proofpoint-ORIG-GUID: IbqwXTjCKAWx_wURKe6Zl1g4ZrbmkrFd
+X-Authority-Analysis: v=2.4 cv=X4dSKHTe c=1 sm=1 tr=0 ts=6842e6b2 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=sWKEhP36mHoA:10 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=33CObVDmz2fUbzhVBlMA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDExNCBTYWx0ZWRfX8NUfPNbUQ95p
+ /fvDU2USvVn6Ybbai6ZvfVw611Y6WBtPTuKuy9VjFIWS1YtPqnjGeV1m3NnPXyBL1n4Hzv6PmYc
+ sjvqbWeCAUwdLv1X4B3Q6KfOyWHKxs6QlCNI1D/jLmNRgTGneQDiNlouZUv6hM6oEEx6KepxIha
+ 7xSqUtH+Bl2NPLAUMuNFbXDCrHcOGoL+jxSefGMDi8qVEEDiZTpjwpUDu3n2huMoDpod1YZU8VQ
+ w+HCuit8loSSQlGfaT22yxk/lSszKoS/thb58gMUieiKi2hckM9kr5rtAoEmRXV2mgS878oot+y
+ GssgRh7tZwhejJjR1BvxhhDxjg8hcw/Pcysla+K8bSbgzquHD+F3/iNV4y00O+VXhlC3qj6UfKy
+ c6ygbqrVCSjKlE2HErS+C+VhWDPwDKn0JnY40SIIR7CYujdpRT1igMX/59BlJqpsfrDbgAF3
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-06_04,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0 bulkscore=0
- mlxscore=0 phishscore=0 suspectscore=0 mlxlogscore=999 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506060117
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDExNiBTYWx0ZWRfX6tuVDJQVtHAo
- 9+6+T6eflaLqorxOmWVzzek9YE8NbJ7MeehnWYdrly2XR5cLoTjliaScHPAH7GL7uf3JoMSyGZo
- JroKBPWRa8O3tRhuLp1M4DELPq1rzrFJuP7ofMZ12iVNPCrSpLCn3GWh9MlSSQH2e2Y+MJdIlQf
- +XNhzXhHCcbOZZapq43cnDXh9H4eUOs282Fbn5n0s2PMNaZPUw2oRTXNa3aNlGI4cdELiYbn6gk
- iAxTBviqQOZGoKa4TH3C0qM9XxpNmkYkw3spmvE9PK9Kvn8CtgLqEBP8Ko/h0TTWYxAymjoukY8
- OSdSDZE89AuVi1TcQz4O2fDkELoEtRjLZ36KSYDtEWl5RYmGnGcz3VtWiDVlfLgQdc8ZeOaNcJ0
- TKU1pGE8SDPFhwfmVTzT9H+JT+p7HBnALARLn9x5OM9439bQUA3FLwQKfJ1/nfXGIAUwxUGZ
-X-Proofpoint-GUID: MyKdzqiKRHkCmIDXY1gbLN8OAgFVWDOu
-X-Proofpoint-ORIG-GUID: MyKdzqiKRHkCmIDXY1gbLN8OAgFVWDOu
-X-Authority-Analysis: v=2.4 cv=H+Dbw/Yi c=1 sm=1 tr=0 ts=6842e560 b=1 cx=c_pps
- a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=pGLkceISAAAA:8 a=hD80L64hAAAA:8
- a=r8ry419ZFL2ft1S7DNAA:9 a=QEXdDO2ut3YA:10 cc=ntf awl=host:13207
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=alok.a.tiwari@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 mlxscore=0 impostorscore=0
+ mlxlogscore=999 adultscore=0 clxscore=1015 phishscore=0 bulkscore=0
+ malwarescore=0 spamscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506060114
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -234,115 +136,164 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
-
-On 06-06-2025 05:12, anisa.su887@gmail.com wrote:
-> From: Anisa Su <anisa.su@samsung.com>
-> 
-> FM DCD Managment command 0x5605 implemented per CXL r3.2 Spec Section 7.6.7.6.6
-
-typo Managment
-
-> 
-> Signed-off-by: Anisa Su <anisa.su@samsung.com>
-> ---
->   hw/cxl/cxl-mailbox-utils.c | 62 ++++++++++++++++++++++++++++++++++++++
->   1 file changed, 62 insertions(+)
-> 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 7ee5be00bc..6c57e0deac 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -124,6 +124,7 @@ enum {
->           #define SET_DC_REGION_CONFIG        0x2
->           #define GET_DC_REGION_EXTENT_LIST   0x3
->           #define INITIATE_DC_ADD             0x4
-> +        #define INITIATE_DC_RELEASE         0x5
->   };
->   
->   /* CCI Message Format CXL r3.1 Figure 7-19 */
-> @@ -3685,6 +3686,60 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
->       return CXL_MBOX_SUCCESS;
->   }
->   
-> +#define CXL_EXTENT_REMOVAL_POLICY_MASK 0x7
-> +/* CXL r3.2 Section 7.6.7.6.6 Initiate Dynamic Capacity Release (Opcode 5605h) */
-> +static CXLRetCode cmd_fm_initiate_dc_release(const struct cxl_cmd *cmd,
-> +                                             uint8_t *payload_in,
-> +                                             size_t len_in,
-> +                                             uint8_t *payload_out,
-> +                                             size_t *len_out,
-> +                                             CXLCCI *cci)
-> +{
-> +    struct {
-> +        uint16_t host_id;
-> +        uint8_t flags;
-> +        uint8_t reg_num;
-> +        uint64_t length;
-> +        uint8_t tag[0x10];
-> +        uint32_t ext_count;
-> +        CXLDCExtentRaw extents[];
-> +    } QEMU_PACKED *in = (void *)payload_in;
-> +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> +    CXLUpdateDCExtentListInPl *list;
-> +    CXLDCExtentList updated_list;
-> +    uint32_t updated_list_size;
-> +    int rc;
-> +
-> +    switch (in->flags & CXL_EXTENT_REMOVAL_POLICY_MASK) {
-> +    case CXL_EXTENT_REMOVAL_POLICY_PRESCRIPTIVE:
-> +        list = calloc(1, (sizeof(*list) +
-> +                          in->ext_count * sizeof(*list->updated_entries)));
-> +        convert_raw_extents(in->extents, list, in->ext_count);
-> +        rc = cxl_detect_malformed_extent_list(ct3d, list);
-> +        if (rc) {
-> +            return rc;
-> +        }
-> +        rc = cxl_dc_extent_release_dry_run(ct3d,
-> +                                           list,
-> +                                           &updated_list,
-> +                                           &updated_list_size);
-> +        if (rc) {
-> +            return rc;
-
-list free ?
-
-> +        }
-> +        cxl_mbox_create_dc_event_records_for_extents(ct3d,
-> +                                                     DC_EVENT_RELEASE_CAPACITY,
-> +                                                     in->extents,
-> +                                                     in->ext_count);
-> +        return CXL_MBOX_SUCCESS;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP,
-> +            "CXL extent selection policy not supported.\n");
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    return CXL_MBOX_SUCCESS;
-
-unreachable
-
-> +}
-> +
->   static const struct cxl_cmd cxl_cmd_set[256][256] = {
->       [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
->           cmd_infostat_bg_op_abort, 0, 0 },
-> @@ -3819,6 +3874,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
->           CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
->           CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
->           CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> +    [FMAPI_DCD_MGMT][INITIATE_DC_RELEASE] = { "INIT_DC_RELEASE",
-> +        cmd_fm_initiate_dc_release, ~0,
-> +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-> +         CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-> +         CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> +         CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> +         CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
->   };
->   
->   /*
-
-
-Thanks,
-Alok
+On 6/6/25 7:48 AM, Anthony Krowiak wrote:
+>
+>
+>
+> On 6/5/25 1:57 PM, Rorie Reyes wrote:
+>>
+>> On 6/4/25 9:47 AM, Anthony Krowiak wrote:
+>>>
+>>>
+>>>
+>>> On 6/3/25 4:30 PM, Cédric Le Goater wrote:
+>>>> On 6/3/25 20:01, Rorie Reyes wrote:
+>>>>>
+>>>>> On 6/3/25 10:21 AM, Cédric Le Goater wrote:
+>>>>>> On 6/3/25 14:58, Rorie Reyes wrote:
+>>>>>>> Hey Cedric,
+>>>>>>>
+>>>>>>> You mentioned the following in my v9 patches
+>>>>>>>
+>>>>>>> "In that case, let's keep it simple (no mutex) and add a 
+>>>>>>> assert(bql_locked())
+>>>>>>> statement where we think the bql should be protecting access to 
+>>>>>>> shared
+>>>>>>> resources. "
+>>>>>>>
+>>>>>>> Does this still apply down bellow?
+>>>>>>
+>>>>>> Anthony replied :
+>>>>>>
+>>>>>> https://lore.kernel.org/qemu-devel/ed2a2aa3-68a7-480c-a6a4-a8219af12d7b@linux.ibm.com/ 
+>>>>>>
+>>>>>>
+>>>>>> Thanks,
+>>>>>>
+>>>>>> C.
+>>>>>>
+>>>>> So we'll still use WITH_QEMU_LOCK_GUARD?
+>>>>
+>>>> If a lock is needed to protect the list, then 
+>>>> ap_chsc_sei_nt0_have_event()
+>>>> should lock/unlock too. WITH_QEMU_LOCK_GUARD() is just a pratical 
+>>>> way to
+>>>> do so.
+>>>
+>>> Since ap_chsc_sei_nt0_have_event() is a single line that returns
+>>> !QTAILQ_EMPTY(&cfg_chg_events), wouldn't it be better to just
+>>> use the QEMU_LOCK_GUARD macro which, if I'm not mistaken,
+>>> will unlock on the return statement?
+>>>>
+>>>>
+>>>> Thanks,
+>>>>
+>>>> C.
+>>>>
+>>>>
+>>>>
+>>>>>>>
+>>>>>>> On 5/26/25 4:40 AM, Cédric Le Goater wrote:
+>>>>>>>> On 5/23/25 18:03, Rorie Reyes wrote:
+>>>>>>>>> These functions can be invoked by the function that handles 
+>>>>>>>>> interception
+>>>>>>>>> of the CHSC SEI instruction for requests indicating the 
+>>>>>>>>> accessibility of
+>>>>>>>>> one or more adjunct processors has changed.
+>>>>>>>>>
+>>>>>>>>> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+>>>>>>>>> ---
+>>>>>>>>>   hw/vfio/ap.c                 | 53 
+>>>>>>>>> ++++++++++++++++++++++++++++++++++++
+>>>>>>>>>   include/hw/s390x/ap-bridge.h | 39 ++++++++++++++++++++++++++
+>>>>>>>>>   2 files changed, 92 insertions(+)
+>>>>>>>>>
+>>>>>>>>> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+>>>>>>>>> index fc435f5c5b..97a42a575a 100644
+>>>>>>>>> --- a/hw/vfio/ap.c
+>>>>>>>>> +++ b/hw/vfio/ap.c
+>>>>>>>>> @@ -10,6 +10,7 @@
+>>>>>>>>>    * directory.
+>>>>>>>>>    */
+>>>>>>>>>   +#include <stdbool.h>
+>>>>>>>>>   #include "qemu/osdep.h"
+>>>>>>>>>   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+>>>>>>>>>   #include <linux/vfio.h>
+>>>>>>>>> @@ -48,6 +49,8 @@ typedef struct APConfigChgEvent {
+>>>>>>>>>   static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+>>>>>>>>>       QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+>>>>>>>>>   +static QemuMutex cfg_chg_events_lock;
+>>>>>>>>> +
+>>>>>>>>>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>>>>>>>>>     static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+>>>>>>>>> @@ -96,6 +99,49 @@ static void 
+>>>>>>>>> vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>>>>>>>>>     }
+>>>>>>>>>   +int ap_chsc_sei_nt0_get_event(void *res)
+>>>>>>>>> +{
+>>>>>>>>> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
+>>>>>>>>> +    APConfigChgEvent *cfg_chg_event;
+>>>>>>>>> +
+>>>>>>>>> +    qemu_mutex_lock(&cfg_chg_events_lock);
+>>>>>>>>
+>>>>>>>> please consider using WITH_QEMU_LOCK_GUARD()
+>>>>>>>>
+>>>>>>> See note above about bql_locked
+>>>>>>>>> +    if (!ap_chsc_sei_nt0_have_event()) {
+>>>>>>>>> + qemu_mutex_unlock(&cfg_chg_events_lock);
+>>>>>>>>> +        return EVENT_INFORMATION_NOT_STORED;
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>> +    cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
+>>>>>>>>> +    QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
+>>>>>>>>> +
+>>>>>>>>> +    qemu_mutex_unlock(&cfg_chg_events_lock);
+>>>>>>>>> +
+>>>>>>>>> +    memset(nt0_res, 0, sizeof(*nt0_res));
+>>>>>>>>> +    g_free(cfg_chg_event);
+>>>>>>>>> +
+>>>>>>>>> +    /*
+>>>>>>>>> +     * If there are any AP configuration change events in the 
+>>>>>>>>> queue,
+>>>>>>>>> +     * indicate to the caller that there is pending event 
+>>>>>>>>> info in
+>>>>>>>>> +     * the response block
+>>>>>>>>> +     */
+>>>>>>>>> +    if (ap_chsc_sei_nt0_have_event()) {
+>>>>>>>>> +        nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
+>>>>>>>>> +    }
+>>>>>>>>> +
+>>>>>>>>> +    nt0_res->length = sizeof(ChscSeiNt0Res);
+>>>>>>>>> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
+>>>>>>>>> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
+>>>>>>>>> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
+>>>>>>>>> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
+>>>>>>>>> +
+>>>>>>>>> +    return EVENT_INFORMATION_STORED;
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>> +bool ap_chsc_sei_nt0_have_event(void)
+>>>>>>>>
+>>>>>>>> hmm, no locking ?
+>>>>>>>>
+>> How important do we need to lock this? When I lock this method my 
+>> guest freezes every time. But when I only lock the get event, my code 
+>> continues to work as designed
+>
+> Try locking in both functions, but instead of calling the have event 
+> function from the get event function, use
+> !QTAILQ_EMPTY(&cfg_chg_events) in the get event function. If you are 
+> holding the lock when you call the have event function, you will be 
+> locking the same lock twice and it will hang when you lock the second 
+> time because the lock is already held.
+>
+Let me give that a shot. Thanks Tony
+>>>>>>> See not above for bql_locked
+>>>>>>>>> +{
+>>>>>>>>> +    return !QTAILQ_EMPTY(&cfg_chg_events);
+>>>>>>>>> +}
+>>>>>>>>> +
+>>>>>>>>>   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>>>>>>>>> unsigned int irq, Error **errp)
+>
 
