@@ -4,76 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7739EC5B559
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:32:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB37EC61CE8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 10:32:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNUMY-0006qp-RB; Fri, 06 Jun 2025 06:31:50 -0400
+	id 1uNUMs-00076h-Rw; Fri, 06 Jun 2025 06:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNUMW-0006qM-Sa
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:31:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uNUMk-0006rz-LL; Fri, 06 Jun 2025 06:32:04 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uNUMR-0003bh-D6
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 06:31:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749205900;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=re6D9Mnn4uUD2o5P2eOsLIeZuhC38pkAIhr2AMi3YOU=;
- b=SZZp2oVGRXd/4sOU2lU4SuYqBnmr7UQf74F71vlJBiWigSXoYjKhadPEwJTPkuWi7o+5Xm
- DRAvx+lc6GK7epTYl01va8CBvxAG59gVDO9RM9+6pG6+9Tkv20JvetO0xkhwI44pzTkpaA
- j75B+IFm11a6HcxQqNSQOO6s5kQQpi8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-NIM_OcvzPf-y_muddnuKHA-1; Fri,
- 06 Jun 2025 06:31:37 -0400
-X-MC-Unique: NIM_OcvzPf-y_muddnuKHA-1
-X-Mimecast-MFC-AGG-ID: NIM_OcvzPf-y_muddnuKHA_1749205895
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B8A471956051; Fri,  6 Jun 2025 10:31:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.55])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C4715180035E; Fri,  6 Jun 2025 10:31:30 +0000 (UTC)
-Date: Fri, 6 Jun 2025 11:31:27 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>
-Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, walling@linux.ibm.com, jjherne@linux.ibm.com,
- jrossi@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, armbru@redhat.com, qemu-s390x@nongnu.org,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 03/28] hw/s390x/ipl: Create certificate store
-Message-ID: <aELDf8--oCzcfhFI@redhat.com>
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-4-zycai@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uNUMg-0003cf-Fe; Fri, 06 Jun 2025 06:32:02 -0400
+Received: from [157.82.203.223] ([157.82.203.223]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 556AViXI099832
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Fri, 6 Jun 2025 19:31:44 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=B3jZ6yJteua5tR2gDlua9AgfYUbM3qIIhcySSsnToeA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1749205905; v=1;
+ b=nBzXlnv7kgmAKTSh8iXKck7k44K6HYqjs9Ndv7Yu3tKLmPV8hsm1L1NiKBMgfD2s
+ pqMFmnbL4JhV2d5USLBdAJV2gUG7vZ3m+H4+1i5rLee8OZXp8IsJefad//4ejKle
+ oF7Qpk4kjNgWEBPkQDxUvLqBVjJagwgO7SBcEKbWQJR9gR7MvjKnLHdie8M0rJvu
+ vA0aoqgRZPj8896x7L1pcs4mShkxNlqvmq5kA+VUz03jxk2IRx+0928HFuETdn5v
+ 0i1pXW7C7KDFpBezRzYNW1HiAEgc2LH5H3F1cyrZ4sMZtYN2BvyepiLehQ9ZggP0
+ pdBPzgDiwjo+ZJ9hSoAoGA==
+Message-ID: <59bed3d3-f641-4b78-96bf-8fec25d74a35@rsg.ci.i.u-tokyo.ac.jp>
+Date: Fri, 6 Jun 2025 19:31:44 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250604215657.528142-4-zycai@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.132,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 09/17] hw/display: re-arrange memory region tracking
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>
+References: <20250605162651.2614401-1-alex.bennee@linaro.org>
+ <20250605162651.2614401-10-alex.bennee@linaro.org>
+ <ee5115ab-b818-4746-8806-5056f3570011@rsg.ci.i.u-tokyo.ac.jp>
+ <875xh95h5n.fsf@draig.linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <875xh95h5n.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -88,384 +76,110 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 05:56:31PM -0400, Zhuoying Cai wrote:
-> Create a certificate store for boot certificates used for secure IPL.
+On 2025/06/06 18:54, Alex Bennée wrote:
+> Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> writes:
 > 
-> Load certificates from the boot-certificate parameter of s390-ccw-virtio
-> machine type option into the cert store.
+>> On 2025/06/06 1:26, Alex Bennée wrote:
+>>> QOM objects can be embedded in other QOM objects and managed as part
+>>> of their lifetime but this isn't the case for
+>>> virtio_gpu_virgl_hostmem_region. However before we can split it out we
+>>> need some other way of associating the wider data structure with the
+>>> memory region.
+>>> Fortunately MemoryRegion has an opaque pointer. This is passed down
+>>> to
+>>> MemoryRegionOps for device type regions but is unused in the
+>>> memory_region_init_ram_ptr() case. Use the opaque to carry the
+>>> reference and allow the final MemoryRegion object to be reaped when
+>>> its reference count is cleared.
+>>> Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Message-Id: <20250410122643.1747913-2-manos.pitsidianakis@linaro.org>
+>>> Cc: qemu-stable@nongnu.org
+>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>> Message-ID: <20250603110204.838117-10-alex.bennee@linaro.org>
+>>
+>> I have told you that you should address all comments before sending a
+>> series again a few times[1][2], but you haven't done that.
 > 
-> Currently, only x509 certificates in DER format and uses SHA-256 hashing
-> algorithm are supported, as these are the types required for secure boot
-> on s390.
+> I've given reasons. Thanks for your review but you don't get to veto.
 > 
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> ---
->  hw/s390x/cert-store.c       | 247 ++++++++++++++++++++++++++++++++++++
->  hw/s390x/cert-store.h       |  39 ++++++
->  hw/s390x/ipl.c              |   9 ++
->  hw/s390x/ipl.h              |   3 +
->  hw/s390x/meson.build        |   1 +
->  include/hw/s390x/ipl/qipl.h |   3 +
->  6 files changed, 302 insertions(+)
->  create mode 100644 hw/s390x/cert-store.c
->  create mode 100644 hw/s390x/cert-store.h
+>> I pointed out it has no effect (fixing or improving something) other
+>> than adding a memory allocation, but you didn't make a reply to prove
+>> otherwise.
 > 
-> diff --git a/hw/s390x/cert-store.c b/hw/s390x/cert-store.c
-> new file mode 100644
-> index 0000000000..562fa22241
-> --- /dev/null
-> +++ b/hw/s390x/cert-store.c
-> @@ -0,0 +1,247 @@
-> +/*
-> + * S390 certificate store implementation
-> + *
-> + * Copyright 2025 IBM Corp.
-> + * Author(s): Zhuoying Cai <zycai@linux.ibm.com>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "cert-store.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/option.h"
-> +#include "qemu/config-file.h"
-> +#include "hw/s390x/ebcdic.h"
-> +#include "hw/s390x/s390-virtio-ccw.h"
-> +#include "qemu/cutils.h"
-> +#include "crypto/x509-utils.h"
-> +
-> +static const char *s390_get_boot_certificates(void)
-> +{
-> +    return S390_CCW_MACHINE(qdev_get_machine())->boot_certificates;
-> +}
-> +
-> +static size_t cert2buf(char *path, size_t max_size, char **cert_buf)
-> +{
-> +    size_t size;
-> +
-> +    /*
-> +     * maximum allowed size of the certificate file to avoid consuming excessive memory
-> +     * (malformed or maliciously large files)
-> +     */
-> +    if (!g_file_get_contents(path, cert_buf, &size, NULL) ||
-> +        size == 0 || size > max_size) {
+> I explained the commit cover what it is doing.
 
-By the time this 'size > max_size' check is performed, the file
-is already loaded into memory, which is fairly pointless. In
-existing code loading certs we don't enforce any max size. This
-data comes from the host admin who QEMU has to assume is trusted,
-so the size check is not required.
+It still doesn't explain the motivation.
 
-> +        return 0;
-> +    }
-> +
-> +    return size;
-> +}
-> +
-> +static S390IPLCertificate *init_cert_x509_der(size_t size, char *raw)
-> +{
-> +    S390IPLCertificate *q_cert = NULL;
-> +    int key_id_size;
-> +    int hash_size;
-> +    int is_der;
-> +    int hash_type;
-> +    Error *err = NULL;
-> +
-> +    is_der = qcrypto_check_x509_cert_fmt((uint8_t *)raw, size,
-> +                                         QCRYPTO_CERT_FMT_DER, &err);
-> +    /* return early if GNUTLS is not enabled */
-> +    if (is_der == -ENOTSUP) {
-> +        error_report("GNUTLS is not enabled");
-> +        return NULL;
-> +    }
-> +    if (is_der != 0) {
-> +        error_report("The certificate is not in DER format");
-> +        return NULL;
-> +    }
+For example, "[PULL 01/17] tests/docker: expose $HOME/.cache/qemu as 
+docker volume" does explain its motivation. It says:
 
-As mentioned in the other patch, we should exclusively accept PEM
-format as the public interface. If we need DER format internllay,
-gnutls_x509_cert_export can convert it into DER for us.
+ > If you want to run functional tests we should share .cache/qemu so we
+ > don't force containers to continually re-download images.
 
-> +
-> +    hash_type = qcrypto_get_x509_signature_algorithm((uint8_t *)raw, size, &err);
-> +    if (hash_type != QCRYPTO_SIG_ALGO_RSA_SHA256) {
-> +        error_report("The certificate does not use SHA-256 hashing");
-> +        return NULL;
-> +    }
-> +
-> +    key_id_size = qcrypto_get_x509_keyid_len(QCRYPTO_KEYID_FLAGS_SHA256);
-> +    if (key_id_size == 0) {
-> +        error_report("Failed to get certificate key ID size");
-> +        return NULL;
-> +    }
-> +
-> +    hash_size = qcrypto_get_x509_hash_len(QCRYPTO_HASH_ALGO_SHA256);
-> +    if (hash_size == 0) {
-> +        error_report("Failed to get certificate hash size");
-> +        return NULL;
-> +    }
+So, with the patch, containers will no longer require continually 
+re-downloading images, which is nice.
 
-Pointless method call when we have a QCRYPTO_HASH_DIGEST_LEN_SHA256
-constant.
+Back to this memory region patch, what does it contribute? What's nice 
+with this patch?
 
-> +
-> +    q_cert = g_new(S390IPLCertificate, 1);
+> 
+>>
+>> I also pointed out it leaks memory and you asked for a test case[4],
+>> but you made this pull request without giving me 24 hours to reply to
+>> it.
+> 
+> You keep bringing up theoretical issues. We have passing test cases now
+> and we have plenty of time to address any bugs we might discover. But
+> holding onto these patches is slowing down other work getting in and I
+> don't deem it a risk to merge as is.
 
-g_new0 to guarantee zero initialization of all fields.
+Things that involve concurrency and memory safety will often become 
+theoretical.
 
-> +    q_cert->size = size;
-> +    q_cert->key_id_size = key_id_size;
-> +    q_cert->hash_size = hash_size;
-> +    q_cert->raw = raw;
-> +    q_cert->format = QCRYPTO_CERT_FMT_DER;
-> +    q_cert->hash_type = QCRYPTO_SIG_ALGO_RSA_SHA256;
-> +
-> +    return q_cert;
-> +}
-> +
-> +static int check_path_type(const char *path)
-> +{
-> +    struct stat path_stat;
-> +
-> +    if (stat(path, &path_stat) != 0) {
-> +        perror("stat");
-> +        return -1;
-> +    }
-> +
-> +    if (S_ISDIR(path_stat.st_mode)) {
-> +        return S_IFDIR;
-> +    } else if (S_ISREG(path_stat.st_mode)) {
-> +        return S_IFREG;
-> +    } else {
-> +        return -1;
-> +    }
-> +}
+For example, I recently changed a concurrency algorithm with the 
+following patch:
+https://lore.kernel.org/qemu-devel/20250526-event-v4-0-5b784cc8e1de@daynix.com/
 
-This helper isn't making the code any simpler - use the
-stat() & S_ISXXX checks inline where needed.
+All reviews were theoretical and did not provide any test case. These 
+reviews still matter and I replied them by providing my theory, which 
+eventually materialized as a documentation patch:
+https://lore.kernel.org/qemu-devel/b41eb6f4-96b8-47bf-90cf-e4918a613dcf@daynix.com/T/#m2603d613d8d8cbbe87b4dce63fd2663c58d52e55
 
-> +static S390IPLCertificate *init_cert(char *paths)
+> 
+>>
+>> The situation of "[PULL 03/17] tests/tcg: make aarch64 boot.S handle
+>> different starting modes" is also similar. I added a comment about
+>> symbol naming and you gave a reasoning, but I didn't get time to
+>> review it either[5]. Besides, I also had a suggestion to make the code
+>> shorter for the past version, but it is also dismissed.
+>>
+>> I also pointed out "[PULL 11/17] ui/gtk-gl-area: Remove extra draw
+>> call in refresh" has an undressed comment[2][7].
+>>
+>> I would like to see improvements in how comments are addressed before
+>> a series is resent.
+> 
+> No - I'm sorry you don't get to veto a pull request because it doesn't
+> meet your particular standards.
 
-s/paths/path/ as this is a single file being used.
+The standards are not mine, but documented in:
+docs/devel/submitting-a-patch.rst
 
-> +{
-> +    char *buf;
-> +    char vc_name[VC_NAME_LEN_BYTES];
-> +    g_autofree gchar *filename;
+> 
+> I'm happy with the other review and level of testing of the patches to
+> put it in a pull request. I held off the other well tested patch in the
+> series out of an abundance of caution but will keep it in the
+> virtio-gpu/next tree and re-post once I've done my next sweep for my
+> maintainer trees.
 
-All g_autofree variables *must* be initialized at time
-of declaration. 
+A reviewer don't have a right to veto but the mentioned documentation 
+says they can still get a submitter's counterargument when the submitter 
+disagrees with them. Reviews should not be just silently ignored.
 
-> +    size_t size;
-> +    S390IPLCertificate *qcert = NULL;
-> +
-> +    filename = g_path_get_basename(paths);
-> +
-> +    size = cert2buf(paths, CERT_MAX_SIZE, &buf);
-> +    if (size == 0) {
-> +        error_report("Failed to load certificate: %s", paths);
-> +        g_free(buf);
-> +        return NULL;
-> +    }
-> +
-> +    qcert = init_cert_x509_der(size, buf);
-> +    if (qcert == NULL) {
-> +        error_report("Failed to initialize certificate: %s", paths);
-> +        g_free(buf);
-> +        return NULL;
-> +    }
-> +
-> +    /*
-> +     * Left justified certificate name with padding on the right with blanks.
-> +     * Convert certificate name to EBCDIC.
-> +     */
-> +    strpadcpy(vc_name, VC_NAME_LEN_BYTES, filename, ' ');
-
-What purpose does the 'vc_name' serve ? Are there expectations
-on the user for naming of the cert fiels ?
-
-> +    ebcdic_put(qcert->vc_name, vc_name, VC_NAME_LEN_BYTES);
-> +
-> +    return qcert;
-> +}
-> +
-> +static void update_cert_store(S390IPLCertificateStore *cert_store,
-> +                              S390IPLCertificate *qcert)
-> +{
-> +    size_t data_buf_size;
-> +    size_t keyid_buf_size;
-> +    size_t hash_buf_size;
-> +    size_t cert_buf_size;
-> +
-> +    /* length field is word aligned for later DIAG use */
-> +    keyid_buf_size = ROUND_UP(qcert->key_id_size, 4);
-> +    hash_buf_size = ROUND_UP(qcert->hash_size, 4);
-> +    cert_buf_size = ROUND_UP(qcert->size, 4);
-> +    data_buf_size = keyid_buf_size + hash_buf_size + cert_buf_size;
-> +
-> +    if (cert_store->max_cert_size < data_buf_size) {
-> +        cert_store->max_cert_size = data_buf_size;
-> +    }
-> +
-> +    cert_store->certs[cert_store->count] = *qcert;
-> +    cert_store->total_bytes += data_buf_size;
-> +    cert_store->count++;
-> +}
-> +
-> +static GPtrArray *get_cert_paths(void)
-> +{
-> +    const char *path;
-> +    gchar **paths;
-
-g_auto(GStrv) paths = NULL;
-
-to automatically free this
-
-> +    gchar **paths_copy;
-
-and use this as the working variable
-
-> +    int path_type;
-> +    GDir *dir = NULL;
-> +    gchar *cert_path;
-> +    const gchar *filename;
-> +    GPtrArray *cert_path_builder;
-> +
-> +    cert_path_builder = g_ptr_array_new();
-
-g_autoptr(GPtrArray) cert_path_builder = g_ptr_array_new_fill(0, g_free)
-
-so that this get freed automatically in error paths, along
-with any paths stored within it.
-
-> +
-> +    path = s390_get_boot_certificates();
-> +    if (path == NULL) {
-> +        return cert_path_builder;
-> +    }
-
-Calling this variable 'path' is misleading given it is
-a list of paths.
-
-> +
-> +    paths = g_strsplit(path, ":", -1);
-> +    /* save the original pointer for freeing later */
-> +    paths_copy = paths;
-> +    while (*paths) {
-> +        /* skip empty certificate path */
-> +        if (!strcmp(*paths, "")) {
-
-IMHO this should be reported as a fatal user configuration
-error.
-
-> +            paths += 1;
-> +            continue;
-> +        }
-> +
-> +        cert_path = NULL;
-> +        path_type = check_path_type(*paths);
-
-Just call stat() directly here, and report a fatal error
-if returns non-zero instead of ignoring the error
-
-> +        if (path_type == S_IFREG) {
-> +            cert_path = g_strdup(*paths);
-> +            g_ptr_array_add(cert_path_builder, cert_path);
-
-Drop the intermediate cert_path variable as it
-serves no purpose
-
-> +        } else if (path_type == S_IFDIR) {
-> +            dir = g_dir_open(*paths, 0, NULL);
-
-Pass an "GError" object not NULL and treat failure as
-fatal.
-
-> +
-> +            if (dir) {
-> +                while ((filename = g_dir_read_name(dir))) {
-> +                    cert_path = g_build_filename(*paths, filename, NULL);
-> +                    g_ptr_array_add(cert_path_builder, (gpointer) cert_path);
-> +                }
-
-The (gpointer) cast serves no purpose.
-
-> +
-> +                g_dir_close(dir);
-> +            }
-> +        }
-
-
-> +
-> +        paths += 1;
-> +    }
-> +
-> +    g_strfreev(paths_copy);
-
-Redundant when using g_auto
-
-> +    return cert_path_builder;
-
-return g_steal_pointer(&cert_path_builder)
-
-
-> +}
-> +
-> +void s390_ipl_create_cert_store(S390IPLCertificateStore *cert_store)
-> +{
-> +    GPtrArray *cert_path_builder;
-> +
-> +    cert_path_builder = get_cert_paths();
-> +    if (cert_path_builder->len == 0) {
-> +        g_ptr_array_free(cert_path_builder, true);
-
-s/true/TRUE/ - GLib does not accept stdbool constants
-
-> +        return;
-> +    }
-> +
-> +    cert_store->max_cert_size = 0;
-> +    cert_store->total_bytes = 0;
-> +
-> +    for (int i = 0; i < cert_path_builder->len; i++) {
-> +        if (i > MAX_CERTIFICATES - 1) {
-> +            printf("Warning: Maximum %d certificates are allowed,"
-> +                            " ignoring certificate #%d and beyond\n",
-> +                            MAX_CERTIFICATES, i + 1);
-
-Is this limit mandated by some s390x hardware design spec ?
-
-If so, this should be a fatal error, not a warning.
-
-If not, then it would be better to accept all the user
-provided certs, no matter how many.
-
-> +            break;
-> +        }
-
-
-
-> +
-> +        S390IPLCertificate *qcert = init_cert((char *) cert_path_builder->pdata[i]);
-> +        if (qcert) {
-> +            update_cert_store(cert_store, qcert);
-> +        }
-> +    }
-> +
-> +    g_ptr_array_free(cert_path_builder, true);
-> +}
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+Regards,
+Akihiko Odaki
 
