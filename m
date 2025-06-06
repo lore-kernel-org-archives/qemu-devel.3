@@ -4,84 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79837C5AD49
-	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:43:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97CABC61CE8
+	for <qemu-devel@archiver.kernel.org>; Fri,  6 Jun 2025 12:43:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNWIh-0002wE-JP; Fri, 06 Jun 2025 08:35:59 -0400
+	id 1uNWKH-0004Py-1V; Fri, 06 Jun 2025 08:37:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWIe-0002v5-Vu
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:57 -0400
+ id 1uNWJD-0003dk-WB
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uNWIZ-0005wb-RS
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:35:56 -0400
+ id 1uNWJA-00060T-IL
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 08:36:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749213349;
+ s=mimecast20190719; t=1749213385;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zXS5VDWwj+BpJo5fLFxeSHega56zD1JR/w7S6SSKz+k=;
- b=gHrJ0yU1Z50bIv3UFFuCOjfWYHo9zCPZHa2NB/pUYEK6FvaaG6iRYQ5fvNiLMRP46B1KY5
- wfimF/o/3c8veEISaJBt48Ju4OyIKB5azZwkm3b4xmSWJFho992ECwzruNfejx14qBYN+S
- 4MPPRUiLJD1+yBw03jH7GG8U29nPXqA=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=nqN2/3dN5WRDFyaAoAC2T45y6AZxZzkgkMVTfl+kruc=;
+ b=GM9htjXkTdRK45eAXeh1T+1cbBJfBt7jNucIy7X1kGfOD2lZE/eLJspt/GBIWewqxR4u8O
+ 2hDiUaWz6XAquy6ZSpX+vkPljD2MX7GS+4uTATaOfV++VBoJCxYpM7oHk6P32Xq8lQYkPn
+ tGZ2lIVNb46XCD+gjt/6mR1r9yZdUZk=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-372-5jDzXeYbMFWZwTmfK0yOOg-1; Fri, 06 Jun 2025 08:35:48 -0400
-X-MC-Unique: 5jDzXeYbMFWZwTmfK0yOOg-1
-X-Mimecast-MFC-AGG-ID: 5jDzXeYbMFWZwTmfK0yOOg_1749213347
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a37a0d1005so1432104f8f.3
- for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:35:48 -0700 (PDT)
+ us-mta-296-39zIrIMrNly-ZpX0YgeLZQ-1; Fri, 06 Jun 2025 08:36:24 -0400
+X-MC-Unique: 39zIrIMrNly-ZpX0YgeLZQ-1
+X-Mimecast-MFC-AGG-ID: 39zIrIMrNly-ZpX0YgeLZQ_1749213383
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a3696a0d3aso857858f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 05:36:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749213346; x=1749818146;
+ d=1e100.net; s=20230601; t=1749213382; x=1749818182;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zXS5VDWwj+BpJo5fLFxeSHega56zD1JR/w7S6SSKz+k=;
- b=NDRKOh2Z49GJdeBMrn0FgsV6UKGVZ3XmEX5gZGB51qo+y3RnqWM/jIa32bvehg7Swc
- iocR3OmaPl/f/OgQiRqTJqd1jBMYpnJWAnQ2bG/LmM+iveYQgaHBl7UWqLI1cqe4KIWy
- svPP5g1kHLj1fYPokho0sH1afPPzP9uansJQFoKp9BaXRQ50UqdDSJqF4XDqRZWUf6aB
- kdIxHaOmQjcx2GaDHucHpPsl/n6F0U0/A9BOjzi9oxj+FngFfcJMzKoRNien2lOWk39h
- XJeLKt56Bfo3Vi/k6K/A1lWaQqoY/GUMmXfUiMYy3loU9qam57lyKnOd8GwLY4ACacQf
- H/7Q==
-X-Gm-Message-State: AOJu0YwM3kX2cGjP76O2XWkENu5jkHZaIpZPQZhu9xB3+odCcbrZpVOY
- cUVYjhGDFHArNSMQ2NVhr5DGcdU1CKIl8dmsk77p/azwqkoOW2tip/kX6GO8nvxhMHlAa/bPXUO
- XRJtVlhC0YtAGnOBoCe3kfYV8MKb75pzffb7VX/4odPmZVOOtXJ7LcAo4riWY/kuh5xPEAtJ0Eq
- oKnQ1Hdk/5bF22KOYw4a/3nmjiKS37HEJZzDT+4Jks
-X-Gm-Gg: ASbGncsnDpGamjt+EdR/dNKGnBEe4eWm1ursapsm+QVe7dO9YhI3XkmdlRV/8gTAvVj
- kNik8n/cnMbiQMyVotXSAI/GOBuzVFmX6ZomDx9EKRgeHprYk4tXOXJj23rnz286iQLpdi1RovI
- RClwRgOC5fVHvo83+ycTYXzUG7mtN9IhlEUywkCqIrd0CNfHGdJ8MLhNBFXCDpRlcblNqp3vGs5
- QwONezLE62dGESy+PExLwOV9hiD60pH86sOEueIaK+PGfKTXMLX/art+qpQsRVFppV1knNIRneI
- 0CgD1B9uBDqA9SzqpiEXWPh8
-X-Received: by 2002:a05:6000:250e:b0:3a5:2670:e220 with SMTP id
- ffacd0b85a97d-3a531cb01b7mr2696763f8f.32.1749213346246; 
- Fri, 06 Jun 2025 05:35:46 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHmx9UXbyEE/Lm2PGVfGxFfy+2ui3LU67C/6o/SXEI3mQNyZ1OKh6SgXHzucZW3J2ugAsYNWg==
-X-Received: by 2002:a05:6000:250e:b0:3a5:2670:e220 with SMTP id
- ffacd0b85a97d-3a531cb01b7mr2696745f8f.32.1749213345711; 
- Fri, 06 Jun 2025 05:35:45 -0700 (PDT)
+ bh=nqN2/3dN5WRDFyaAoAC2T45y6AZxZzkgkMVTfl+kruc=;
+ b=hhMPrTZ7Su1bm0x3IbXyYfqjSbFL+p7JSL1W+BpCbq8HVkpQDKq/4A69/tq9GbbYMe
+ pXDMa9vpOGGLl4w2Et53RAGBBEBhEdTE9eSVJoeQR35Cv9xUVeJBwEqq6gsfTvozATGj
+ YSH3Te/1N0W71wlBqY5tX0RqHlFl0DD9EzgIGK8C5XpMQEhHa9BI2y+DqMullS1vC0gT
+ 7ClK+nPcIij7xKeDY0DnL7/0sy/YyAqjze25NcgWFbDR5A1awpirXyXdLteZIKO6QTOr
+ /c1Bjti7URjEcF9womz1JJyPlp6s8Q7Y6VPencf6BF5mlfkQbi36CW0uAQIau4fWyuSI
+ 1BKg==
+X-Gm-Message-State: AOJu0Yz8WJCATocfq6w9VtjlU6vMNZ+91pOMzZU0L9KVbLDkDxaQ+Z59
+ h4EKZl7NUMOsUpgS8GKXawFe1sY7ASkp2jzWNIiOcyoVb8h9Ou1D0KnJdJRfHSX0Cb7KcegKMKm
+ UCaw5VWMAM6A7YH4xR6zAWMTVAt5vnrV6/v6VMse85QdB+8yX2XqykCPrhQV4aKqD06h0RILJwl
+ 4h9ClQGM+k4Vg7Ech3RyyljJNYzCx2xmmi/rih43ge
+X-Gm-Gg: ASbGncuJLCjPiMBKse8xHKFAACxKGaLPLeZuEqVmBuzVD0TRJo2raPhajvR20yjYxC9
+ F3u9AWfw2uvuXbIuf9AgoBhXkK4YtZCIkylnxhLIjC5hlLPeZmXuQr0l+tHvCZcCoUgkYI3wd0w
+ A/oDIfprppGtrGWDdZt2XwcIRiDYMigDwqfa0wnHlqLfbI591qoHLXxxKwcbxc2e1m/015pEWah
+ klmZDSoT7bWaoO7Ux39dz/ehtn8aQmgLBaGfoYNAEPknAkyG3VYbAcPJZApC0Fe5y7UcNGGwa1c
+ fQMjKgv1AeG2EQ==
+X-Received: by 2002:a05:6000:2082:b0:3a4:e8bc:594 with SMTP id
+ ffacd0b85a97d-3a5319b9ab5mr2634788f8f.8.1749213382181; 
+ Fri, 06 Jun 2025 05:36:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFxpUYtLAXmS4ySsjqrnbDvzJlU5UuctilfsfEbmAQwZ3I83ofxTllRY+Am+3jBs2eAsSK++A==
+X-Received: by 2002:a05:6000:2082:b0:3a4:e8bc:594 with SMTP id
+ ffacd0b85a97d-3a5319b9ab5mr2634767f8f.8.1749213381702; 
+ Fri, 06 Jun 2025 05:36:21 -0700 (PDT)
 Received: from [192.168.10.48] ([151.49.64.79])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5323b3992sm1779863f8f.35.2025.06.06.05.35.43
+ 5b1f17b1804b1-452730c7756sm19981615e9.33.2025.06.06.05.36.18
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 06 Jun 2025 05:35:44 -0700 (PDT)
+ Fri, 06 Jun 2025 05:36:18 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Akihiko Odaki <akihiko.odaki@daynix.com>
-Subject: [PULL 17/31] futex: Check value after qemu_futex_wait()
-Date: Fri,  6 Jun 2025 14:34:31 +0200
-Message-ID: <20250606123447.538131-18-pbonzini@redhat.com>
+Cc: Akihiko Odaki <akihiko.odaki@daynix.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 27/31] hw/display/apple-gfx: Replace QemuSemaphore with
+ QemuEvent
+Date: Fri,  6 Jun 2025 14:34:41 +0200
+Message-ID: <20250606123447.538131-28-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250606123447.538131-1-pbonzini@redhat.com>
 References: <20250606123447.538131-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,102 +113,53 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <akihiko.odaki@daynix.com>
 
-futex(2) - Linux manual page
-https://man7.org/linux/man-pages/man2/futex.2.html
-> Note that a wake-up can also be caused by common futex usage patterns
-> in unrelated code that happened to have previously used the futex
-> word's memory location (e.g., typical futex-based implementations of
-> Pthreads mutexes can cause this under some conditions).  Therefore,
-> callers should always conservatively assume that a return value of 0
-> can mean a spurious wake-up, and use the futex word's value (i.e.,
-> the user-space synchronization scheme) to decide whether to continue
-> to block or not.
+sem in AppleGFXReadMemoryJob is an one-shot event so it can be converted
+into QemuEvent, which is more specialized for such a use case.
 
 Signed-off-by: Akihiko Odaki <akihiko.odaki@daynix.com>
-Link: https://lore.kernel.org/r/20250529-event-v5-1-53b285203794@daynix.com
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Link: https://lore.kernel.org/r/20250529-event-v5-10-53b285203794@daynix.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/qemu/futex.h              |  9 +++++++++
- tests/unit/test-aio-multithread.c |  4 +++-
- util/qemu-thread-posix.c          | 24 ++++++++++++------------
- 3 files changed, 24 insertions(+), 13 deletions(-)
+ hw/display/apple-gfx.m | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/include/qemu/futex.h b/include/qemu/futex.h
-index 91ae88966e1..f5777400533 100644
---- a/include/qemu/futex.h
-+++ b/include/qemu/futex.h
-@@ -24,6 +24,15 @@ static inline void qemu_futex_wake(void *f, int n)
-     qemu_futex(f, FUTEX_WAKE, n, NULL, NULL, 0);
+diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+index 8dde1f138dc..174d56ae05b 100644
+--- a/hw/display/apple-gfx.m
++++ b/hw/display/apple-gfx.m
+@@ -454,7 +454,7 @@ static void set_cursor_glyph(void *opaque)
+ /* ------ DMA (device reading system memory) ------ */
+ 
+ typedef struct AppleGFXReadMemoryJob {
+-    QemuSemaphore sem;
++    QemuEvent event;
+     hwaddr physical_address;
+     uint64_t length;
+     void *dst;
+@@ -470,7 +470,7 @@ static void apple_gfx_do_read_memory(void *opaque)
+                         job->dst, job->length, MEMTXATTRS_UNSPECIFIED);
+     job->success = (r == MEMTX_OK);
+ 
+-    qemu_sem_post(&job->sem);
++    qemu_event_set(&job->event);
  }
  
-+/*
-+ * Note that a wake-up can also be caused by common futex usage patterns in
-+ * unrelated code that happened to have previously used the futex word's
-+ * memory location (e.g., typical futex-based implementations of Pthreads
-+ * mutexes can cause this under some conditions).  Therefore, callers should
-+ * always conservatively assume that it is a spurious wake-up, and use the futex
-+ * word's value (i.e., the user-space synchronization scheme) to decide whether
-+ * to continue to block or not.
-+ */
- static inline void qemu_futex_wait(void *f, unsigned val)
- {
-     while (qemu_futex(f, FUTEX_WAIT, (int) val, NULL, NULL, 0)) {
-diff --git a/tests/unit/test-aio-multithread.c b/tests/unit/test-aio-multithread.c
-index 08d4570ccb1..8c2e41545a2 100644
---- a/tests/unit/test-aio-multithread.c
-+++ b/tests/unit/test-aio-multithread.c
-@@ -305,7 +305,9 @@ static void mcs_mutex_lock(void)
-     prev = qatomic_xchg(&mutex_head, id);
-     if (prev != -1) {
-         qatomic_set(&nodes[prev].next, id);
--        qemu_futex_wait(&nodes[id].locked, 1);
-+        while (qatomic_read(&nodes[id].locked) == 1) {
-+            qemu_futex_wait(&nodes[id].locked, 1);
-+        }
-     }
+ static bool apple_gfx_read_memory(AppleGFXState *s, hwaddr physical_address,
+@@ -483,11 +483,11 @@ static bool apple_gfx_read_memory(AppleGFXState *s, hwaddr physical_address,
+     trace_apple_gfx_read_memory(physical_address, length, dst);
+ 
+     /* Performing DMA requires BQL, so do it in a BH. */
+-    qemu_sem_init(&job.sem, 0);
++    qemu_event_init(&job.event, 0);
+     aio_bh_schedule_oneshot(qemu_get_aio_context(),
+                             apple_gfx_do_read_memory, &job);
+-    qemu_sem_wait(&job.sem);
+-    qemu_sem_destroy(&job.sem);
++    qemu_event_wait(&job.event);
++    qemu_event_destroy(&job.event);
+     return job.success;
  }
- 
-diff --git a/util/qemu-thread-posix.c b/util/qemu-thread-posix.c
-index b2e26e21205..f81fca5c116 100644
---- a/util/qemu-thread-posix.c
-+++ b/util/qemu-thread-posix.c
-@@ -428,17 +428,17 @@ void qemu_event_wait(QemuEvent *ev)
- 
-     assert(ev->initialized);
- 
--    /*
--     * qemu_event_wait must synchronize with qemu_event_set even if it does
--     * not go down the slow path, so this load-acquire is needed that
--     * synchronizes with the first memory barrier in qemu_event_set().
--     *
--     * If we do go down the slow path, there is no requirement at all: we
--     * might miss a qemu_event_set() here but ultimately the memory barrier in
--     * qemu_futex_wait() will ensure the check is done correctly.
--     */
--    value = qatomic_load_acquire(&ev->value);
--    if (value != EV_SET) {
-+    while (true) {
-+        /*
-+         * qemu_event_wait must synchronize with qemu_event_set even if it does
-+         * not go down the slow path, so this load-acquire is needed that
-+         * synchronizes with the first memory barrier in qemu_event_set().
-+         */
-+        value = qatomic_load_acquire(&ev->value);
-+        if (value == EV_SET) {
-+            break;
-+        }
-+
-         if (value == EV_FREE) {
-             /*
-              * Leave the event reset and tell qemu_event_set that there are
-@@ -452,7 +452,7 @@ void qemu_event_wait(QemuEvent *ev)
-              * like the load above.
-              */
-             if (qatomic_cmpxchg(&ev->value, EV_FREE, EV_BUSY) == EV_SET) {
--                return;
-+                break;
-             }
-         }
  
 -- 
 2.49.0
