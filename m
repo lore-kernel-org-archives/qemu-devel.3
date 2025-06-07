@@ -4,93 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84CF2C5B543
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 17:55:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AA1CC61CE8
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 19:07:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNxkW-0002Bj-Ge; Sat, 07 Jun 2025 13:54:32 -0400
+	id 1uNysb-0005IR-65; Sat, 07 Jun 2025 15:06:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uNxkU-0002B7-90
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 13:54:30 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uNxkS-0005wS-7y
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 13:54:30 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-73bf5aa95e7so2332973b3a.1
- for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 10:54:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749318866; x=1749923666; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=pIpT6/xTK019InUvYp5+Ol+QzS6xA0SyF2xfYpHC8ZY=;
- b=a1BMY7xWOQtuTviW/Egmazj1m4BRo27DxIVC5lm3gpc3yPDOZSm4iRuYhipnpKo7uk
- QXQjoyaW6YOxndvpAJSixWS0WYlAlfQ37RAmyFhUj1geN0PqaxP4lZWIvNGiFDVD5lM0
- FeP8KDx9I9sTNv/8tKYH8nklVnHjHsnGyRguSI82++JC7Y7YvzT0HK3aSS1qTze6WpKC
- XaGuDLmJg2LTtC1kOOzVH0iACoskofoK4Wjvc/vmHhWsxBgXPh/yeigsPKrpkeiy/V0j
- jhIg246EcJA3ikGHFrAF3dVCIlz1xTrPaapnqhC5TfHGAARxoBcggfSfIptwi3HTPTxZ
- 4xAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749318866; x=1749923666;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=pIpT6/xTK019InUvYp5+Ol+QzS6xA0SyF2xfYpHC8ZY=;
- b=GwGnCk4GDiMOw10CINLexxTZZSOQxzHuTX4TTubS8DlujAaKLyWBIZR1KVo/unYeK9
- VJbxgnJhBZNXybdl4ogIIYObx5w7PHKs2kFJds4ybBdQRcAhTGVU61K3TlxrgKnU3f0w
- KTIjI/UhjQD/sMd+JW7WqMqiEas3Rtu745nyiOdbeM0Se1etwIiAoXm2B73zEr4TCQYl
- tvpgofc2Fik36Bs22+4nNYb7ce2QM/TT5/Y15n+4/hMpRh4z8Bwn8eSMZ0c5dVJRFMa4
- mZH8Bfx4bVJp1VRIoHS/BqgB5oQm90XAplFrbsHcaFN3+irgGxpAjRhuPU0KfYFsS379
- ydHQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXhz+83o9YYV7gPhBl/lT8y0zGUQA2/C4ckdNryIQZydpcKiyV6MkbbwTTsr42FIqJ3VdDNRHqqZ2xl@nongnu.org
-X-Gm-Message-State: AOJu0Yywf7LHCSPnkb0FDmm2hEPigyQw58YL6zfgjRptntAq3ce+NGin
- v5OtB8leFq2jjARQT6estVg5gaSon3p11F8hIGrZYJf4q9sZVBSIoKpWfT48vU5IFpA=
-X-Gm-Gg: ASbGncttaggP5eKVJW4gBlsnaTEfuc8BloW0DApj7574XtmAx1uY+iM1bwgKDkiRy0h
- OZ0IH02Glyu3peBD1jxZMunXOSEkb76B9es8g2JKxEoYzc6vjPw4M7gL8OKhJCXHiNbINyI7HhG
- VBk3qK1dU5D1Mlr/ftbtUVFVMV9eaw1p1FM4t4U/L80QVaBZBHSSol6ullvF2/esq+OkQwjIWRE
- OTv90oBXfdcm5jppWPm8q34bbb0wIN5NyRVwxSoEgLOOSq6qHcUFEOvdX6zt79Y87QIc7NXLNbO
- U9UyWdf7aelHh8DRqAwVVkhtJI2YA519CFxU2RUXrHkkefpVmgkEU7XP9nxgtbMApdY=
-X-Google-Smtp-Source: AGHT+IHLfVGY+QCrSdmil3ZmGvabX1UegVfq5sAD7zMWl+cwuNu7t36AUVwVYpzaBe2TqruMv4Fgmg==
-X-Received: by 2002:a05:6a00:9284:b0:740:afda:a742 with SMTP id
- d2e1a72fcca58-74827cfaca5mr11394656b3a.0.1749318865603; 
- Sat, 07 Jun 2025 10:54:25 -0700 (PDT)
-Received: from [192.168.68.110] ([177.188.133.196])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7482af3b6c8sm2995624b3a.8.2025.06.07.10.54.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Jun 2025 10:54:25 -0700 (PDT)
-Message-ID: <4990220d-a4a6-49b4-a8db-929cf1100e31@ventanamicro.com>
-Date: Sat, 7 Jun 2025 14:54:21 -0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uNysY-0005Hu-AM
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 15:06:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uNysV-000649-KT
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 15:06:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749323208;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5mr5heC5UQwcw47vHSkF3u0PP+MfDKePi0fW6jLj7uE=;
+ b=X5nRAoBnhHkzbhCmPK4OIsoovi+E0zprapsmX0FN4Vbp6aIxHhh6crMxhC1egIxCzrfRLK
+ E6RY72sx7fmJyH1FmINVX5DLUh30c1mvgYz60XTT7EH1wwjKailIxYXOv9qrI+XMF7f4sE
+ zX7UvZnQn2vtrXNdZzwXwvan2jMX0YU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-757epamdPpe0LN6ESHXcdw-1; Sat,
+ 07 Jun 2025 15:06:46 -0400
+X-MC-Unique: 757epamdPpe0LN6ESHXcdw-1
+X-Mimecast-MFC-AGG-ID: 757epamdPpe0LN6ESHXcdw_1749323205
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C043C180047F; Sat,  7 Jun 2025 19:06:44 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.24])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 7C41319560AB; Sat,  7 Jun 2025 19:06:43 +0000 (UTC)
+Date: Sat, 7 Jun 2025 15:06:42 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: oltolm <oleg.tolmatcev@gmail.com>
+Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Subject: Re: [PATCH RESEND v3] meson: fix Windows build
+Message-ID: <20250607190642.GA553743@fedora>
+References: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target: riscv: Add Svrsw60t59b extension support
-To: Alexandre Ghiti <alexghiti@rivosinc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Bin Meng <bin.meng@windriver.com>, Weiwei Li <liwei1518@gmail.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, debug@rivosinc.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20250605142126.1939798-1-alexghiti@rivosinc.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250605142126.1939798-1-alexghiti@rivosinc.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="7PG5qxreoCWyJadF"
+Content-Disposition: inline
+In-Reply-To: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -21
+X-Spam_score: -2.2
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.2 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,186 +89,276 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--7PG5qxreoCWyJadF
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-On 6/5/25 11:21 AM, Alexandre Ghiti wrote:
-> The Svrsw60t59b extension allows to free the PTE reserved bits 60 and 59
-> for software to use.
-> 
-> Signed-off-by: Alexandre Ghiti <alexghiti@rivosinc.com>
+On Sat, Jun 07, 2025 at 11:45:04AM +0200, oltolm wrote:
+> Sorry, I forgot to cc the maintainers.
+>=20
+> The build failed when run on Windows. I replaced calls to Unix programs
+> like =B4cat=B4, =B4sed=B4 and =B4true=B4 with calls to =B4python=B4. I wr=
+apped calls to
+> =B4os.path.relpath=B4 in try-except because it can fail when the two paths
+> are on different drives. I made sure to convert the Windows paths to
+> Unix paths to prevent warnings in generated files.
+>=20
+> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
 > ---
-> 
-> Changes in v2:
->   - Add support for IOMMU
->   - Make svrsw60t59b depend on sv39 (deepak)
-> 
-> Open question: svrsw60t59b in IOMMU should also depend on 64bit, but I
-> did not find an easy to way in riscv_iommu_realize() to detect that, how
-> should I do?
+>  contrib/plugins/meson.build         |  2 +-
+>  plugins/meson.build                 |  2 +-
+>  scripts/tracetool/__init__.py       | 15 ++++++++++++---
+>  scripts/tracetool/backend/ftrace.py |  4 +---
+>  scripts/tracetool/backend/log.py    |  4 +---
+>  scripts/tracetool/backend/syslog.py |  4 +---
+>  tests/functional/meson.build        |  4 +---
+>  tests/include/meson.build           |  2 +-
+>  tests/tcg/plugins/meson.build       |  2 +-
+>  trace/meson.build                   |  5 +++--
+>  10 files changed, 23 insertions(+), 21 deletions(-)
 
+Thank you for the tracing changes!
 
-What controls the IOMMU behavior is the set of IOMMU capabilities that the driver
-chooses to use. Other than that the device should be oblivious to the CPU word
-size.
+I have CCed Paolo for general meson knowledge and the plugins
+maintainers/reviewers. If no one responds by Wednesday I will merge it
+through my tracing tree.
 
- From what I see in this patch you did the right thing: you added a new capability
-to be advertised to software and that's it. It's up to software to decide whether
-it's going to use it or not. You can advertise a 64 bit only IOMMU capability running
-in a 32 bit CPU and it's up to the OS to not use/ignore it. In fact we already do
-that: satp_mode related caps (e.g. RISCV_IOMMU_CAP_SV32X4) are 32/64 bits exclusive
-but are always advertised.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-
-
-Now, Svrsw60t59b being a 32 bit only extension requires special handling in
-riscv_init_max_cpu_extensions() because the 'max' CPU has a 32 bit variant and
-enabled everything by default. You can use this diff:
-
-
-diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-index f93cd53f37..96201e15c6 100644
---- a/target/riscv/tcg/tcg-cpu.c
-+++ b/target/riscv/tcg/tcg-cpu.c
-@@ -1612,6 +1612,8 @@ static void riscv_init_max_cpu_extensions(Object *obj)
-  
-      if (env->misa_mxl != MXL_RV32) {
-          isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_zcf), false);
-+    } else {
-+        isa_ext_update_enabled(cpu, CPU_CFG_OFFSET(ext_svrsw60t59b), false);
-      }
-  
-      /*
-
-
-To fix this test break in 'make check-functional':
-
-	Command: /home/danielhb/work/qemu/build/qemu-system-riscv32 -display none -vga none -chardev socket,id=mon,fd=5 -mon chardev=mon,mode=control -machine virt -chardev socket,id=console,fd=10 -serial chardev:console -cpu max -kernel /home/danielhb/.cache/qemu/download/872bc8f8e0d4661825d5f47f7bec64988e9d0a8bd5db8917d57e16f66d83b329 -append printk.time=0 root=/dev/vda console=ttyS0 -blockdev driver=raw,file.driver=file,file.filename=/home/danielhb/work/qemu/build/tests/functional/riscv32/test_riscv32_tuxrun.TuxRunRiscV32Test.test_riscv32_maxcpu/scratch/511ad34e63222db08d6c1da16fad224970de36517a784110956ba6a24a0ee5f6,node-name=hd0 -device virtio-blk-device,drive=hd0
-	Output: qemu-system-riscv32: svrsw60t59b is not supported on RV32 and MMU-less platforms
-
-
-Thanks,
-
-Daniel
-
-
-> 
->   hw/riscv/riscv-iommu-bits.h       | 1 +
->   hw/riscv/riscv-iommu.c            | 3 ++-
->   target/riscv/cpu.c                | 2 ++
->   target/riscv/cpu_bits.h           | 3 ++-
->   target/riscv/cpu_cfg_fields.h.inc | 1 +
->   target/riscv/cpu_helper.c         | 3 ++-
->   target/riscv/tcg/tcg-cpu.c        | 6 ++++++
->   7 files changed, 16 insertions(+), 3 deletions(-)
-> 
-> diff --git a/hw/riscv/riscv-iommu-bits.h b/hw/riscv/riscv-iommu-bits.h
-> index 1017d73fc6..47fe01bee5 100644
-> --- a/hw/riscv/riscv-iommu-bits.h
-> +++ b/hw/riscv/riscv-iommu-bits.h
-> @@ -79,6 +79,7 @@ struct riscv_iommu_pq_record {
->   #define RISCV_IOMMU_CAP_SV39            BIT_ULL(9)
->   #define RISCV_IOMMU_CAP_SV48            BIT_ULL(10)
->   #define RISCV_IOMMU_CAP_SV57            BIT_ULL(11)
-> +#define RISCV_IOMMU_CAP_SVRSW60T59B     BIT_ULL(14)
->   #define RISCV_IOMMU_CAP_SV32X4          BIT_ULL(16)
->   #define RISCV_IOMMU_CAP_SV39X4          BIT_ULL(17)
->   #define RISCV_IOMMU_CAP_SV48X4          BIT_ULL(18)
-> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
-> index a877e5da84..36eda95a1c 100644
-> --- a/hw/riscv/riscv-iommu.c
-> +++ b/hw/riscv/riscv-iommu.c
-> @@ -2355,7 +2355,8 @@ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
->       }
->       if (s->enable_g_stage) {
->           s->cap |= RISCV_IOMMU_CAP_SV32X4 | RISCV_IOMMU_CAP_SV39X4 |
-> -                  RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4;
-> +                  RISCV_IOMMU_CAP_SV48X4 | RISCV_IOMMU_CAP_SV57X4 |
-> +                  RISCV_IOMMU_CAP_SVRSW60T59B;
->       }
->   
->       if (s->hpm_cntrs > 0) {
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 629ac37501..13f1f56d95 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -228,6 +228,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
->       ISA_EXT_DATA_ENTRY(svinval, PRIV_VERSION_1_12_0, ext_svinval),
->       ISA_EXT_DATA_ENTRY(svnapot, PRIV_VERSION_1_12_0, ext_svnapot),
->       ISA_EXT_DATA_ENTRY(svpbmt, PRIV_VERSION_1_12_0, ext_svpbmt),
-> +    ISA_EXT_DATA_ENTRY(svrsw60t59b, PRIV_VERSION_1_13_0, ext_svrsw60t59b),
->       ISA_EXT_DATA_ENTRY(svukte, PRIV_VERSION_1_13_0, ext_svukte),
->       ISA_EXT_DATA_ENTRY(svvptc, PRIV_VERSION_1_13_0, ext_svvptc),
->       ISA_EXT_DATA_ENTRY(xtheadba, PRIV_VERSION_1_11_0, ext_xtheadba),
-> @@ -1282,6 +1283,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[] = {
->       MULTI_EXT_CFG_BOOL("svinval", ext_svinval, false),
->       MULTI_EXT_CFG_BOOL("svnapot", ext_svnapot, false),
->       MULTI_EXT_CFG_BOOL("svpbmt", ext_svpbmt, false),
-> +    MULTI_EXT_CFG_BOOL("svrsw60t59b", ext_svrsw60t59b, false),
->       MULTI_EXT_CFG_BOOL("svvptc", ext_svvptc, true),
->   
->       MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
-> diff --git a/target/riscv/cpu_bits.h b/target/riscv/cpu_bits.h
-> index a30317c617..51eb7114da 100644
-> --- a/target/riscv/cpu_bits.h
-> +++ b/target/riscv/cpu_bits.h
-> @@ -675,7 +675,8 @@ typedef enum {
->   #define PTE_SOFT            0x300 /* Reserved for Software */
->   #define PTE_PBMT            0x6000000000000000ULL /* Page-based memory types */
->   #define PTE_N               0x8000000000000000ULL /* NAPOT translation */
-> -#define PTE_RESERVED        0x1FC0000000000000ULL /* Reserved bits */
-> +#define PTE_RESERVED(svrsw60t59b)		\
-> +		(svrsw60t59b ? 0x07C0000000000000ULL : 0x1FC0000000000000ULL) /* Reserved bits */
->   #define PTE_ATTR            (PTE_N | PTE_PBMT) /* All attributes bits */
->   
->   /* Page table PPN shift amount */
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index 59f134a419..ab61c1ccf2 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -57,6 +57,7 @@ BOOL_FIELD(ext_svadu)
->   BOOL_FIELD(ext_svinval)
->   BOOL_FIELD(ext_svnapot)
->   BOOL_FIELD(ext_svpbmt)
-> +BOOL_FIELD(ext_svrsw60t59b)
->   BOOL_FIELD(ext_svvptc)
->   BOOL_FIELD(ext_svukte)
->   BOOL_FIELD(ext_zdinx)
-> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-> index 2ed69d7c2d..3479a62cc7 100644
-> --- a/target/riscv/cpu_helper.c
-> +++ b/target/riscv/cpu_helper.c
-> @@ -1309,6 +1309,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->       bool svade = riscv_cpu_cfg(env)->ext_svade;
->       bool svadu = riscv_cpu_cfg(env)->ext_svadu;
->       bool adue = svadu ? env->menvcfg & MENVCFG_ADUE : !svade;
-> +    bool svrsw60t59b = riscv_cpu_cfg(env)->ext_svrsw60t59b;
->   
->       if (first_stage && two_stage && env->virt_enabled) {
->           pbmte = pbmte && (env->henvcfg & HENVCFG_PBMTE);
-> @@ -1376,7 +1377,7 @@ static int get_physical_address(CPURISCVState *env, hwaddr *physical,
->           if (riscv_cpu_sxl(env) == MXL_RV32) {
->               ppn = pte >> PTE_PPN_SHIFT;
->           } else {
-> -            if (pte & PTE_RESERVED) {
-> +            if (pte & PTE_RESERVED(svrsw60t59b)) {
->                   qemu_log_mask(LOG_GUEST_ERROR, "%s: reserved bits set in PTE: "
->                                 "addr: 0x%" HWADDR_PRIx " pte: 0x" TARGET_FMT_lx "\n",
->                                 __func__, pte_addr, pte);
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 305912b8dd..886006abc3 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -804,6 +804,12 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu, Error **errp)
->           cpu->cfg.ext_ssctr = false;
->       }
->   
-> +    if (cpu->cfg.ext_svrsw60t59b &&
-> +        (!cpu->cfg.mmu || mcc->def->misa_mxl_max == MXL_RV32)) {
-> +        error_setg(errp, "svrsw60t59b is not supported on RV32 and MMU-less platforms");
-> +        return;
-> +    }
+>=20
+> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
+> index fa8a426c8..1876bc784 100644
+> --- a/contrib/plugins/meson.build
+> +++ b/contrib/plugins/meson.build
+> @@ -24,7 +24,7 @@ endif
+>  if t.length() > 0
+>    alias_target('contrib-plugins', t)
+>  else
+> -  run_target('contrib-plugins', command: find_program('true'))
+> +  run_target('contrib-plugins', command: [python, '-c', ''])
+>  endif
+> =20
+>  plugin_modules +=3D t
+> diff --git a/plugins/meson.build b/plugins/meson.build
+> index 5383c7b88..cb7472df8 100644
+> --- a/plugins/meson.build
+> +++ b/plugins/meson.build
+> @@ -33,7 +33,7 @@ if host_os =3D=3D 'windows'
+>      input: qemu_plugin_symbols,
+>      output: 'qemu_plugin_api.def',
+>      capture: true,
+> -    command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
+> +    command: [python, '-c', 'import fileinput, re; print("EXPORTS", end=
+=3D""); [print(re.sub(r"[{};]", "", line), end=3D"") for line in fileinput.=
+input()]', '@INPUT@'])
+> =20
+>    # then use dlltool to assemble a delaylib.
+>    # The delaylib will have an "imaginary" name (qemu.exe), that is used =
+by the
+> diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
+> index bc03238c0..6dfcbf71e 100644
+> --- a/scripts/tracetool/__init__.py
+> +++ b/scripts/tracetool/__init__.py
+> @@ -12,12 +12,14 @@
+>  __email__      =3D "stefanha@redhat.com"
+> =20
+> =20
+> +import os
+>  import re
+>  import sys
+>  import weakref
+> +from pathlib import PurePath
+> =20
+> -import tracetool.format
+>  import tracetool.backend
+> +import tracetool.format
+> =20
+> =20
+>  def error_write(*lines):
+> @@ -36,7 +38,7 @@ def error(*lines):
+> =20
+>  def out_open(filename):
+>      global out_filename, out_fobj
+> -    out_filename =3D filename
+> +    out_filename =3D posix_relpath(filename)
+>      out_fobj =3D open(filename, 'wt')
+> =20
+>  def out(*lines, **kwargs):
+> @@ -308,7 +310,7 @@ def build(line_str, lineno, filename):
+>              fmt =3D [fmt_trans, fmt]
+>          args =3D Arguments.build(groups["args"])
+> =20
+> -        return Event(name, props, fmt, args, lineno, filename)
+> +        return Event(name, props, fmt, args, lineno, posix_relpath(filen=
+ame))
+> =20
+>      def __repr__(self):
+>          """Evaluable string representation for this object."""
+> @@ -447,3 +449,10 @@ def generate(events, group, format, backends,
+>      tracetool.backend.dtrace.PROBEPREFIX =3D probe_prefix
+> =20
+>      tracetool.format.generate(events, format, backend, group)
 > +
->       /*
->        * Disable isa extensions based on priv spec after we
->        * validated and set everything we need.
+> +def posix_relpath(path, start=3DNone):
+> +    try:
+> +        path =3D os.path.relpath(path, start)
+> +    except ValueError:
+> +        pass
+> +    return PurePath(path).as_posix()
+> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/back=
+end/ftrace.py
+> index baed2ae61..5fa30ccc0 100644
+> --- a/scripts/tracetool/backend/ftrace.py
+> +++ b/scripts/tracetool/backend/ftrace.py
+> @@ -12,8 +12,6 @@
+>  __email__      =3D "stefanha@redhat.com"
+> =20
+> =20
+> -import os.path
+> -
+>  from tracetool import out
+> =20
+> =20
+> @@ -47,7 +45,7 @@ def generate_h(event, group):
+>          args=3Devent.args,
+>          event_id=3D"TRACE_" + event.name.upper(),
+>          event_lineno=3Devent.lineno,
+> -        event_filename=3Dos.path.relpath(event.filename),
+> +        event_filename=3Devent.filename,
+>          fmt=3Devent.fmt.rstrip("\n"),
+>          argnames=3Dargnames)
+> =20
+> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend=
+/log.py
+> index de27b7e62..17ba1cd90 100644
+> --- a/scripts/tracetool/backend/log.py
+> +++ b/scripts/tracetool/backend/log.py
+> @@ -12,8 +12,6 @@
+>  __email__      =3D "stefanha@redhat.com"
+> =20
+> =20
+> -import os.path
+> -
+>  from tracetool import out
+> =20
+> =20
+> @@ -55,7 +53,7 @@ def generate_h(event, group):
+>          '    }',
+>          cond=3Dcond,
+>          event_lineno=3Devent.lineno,
+> -        event_filename=3Dos.path.relpath(event.filename),
+> +        event_filename=3Devent.filename,
+>          name=3Devent.name,
+>          fmt=3Devent.fmt.rstrip("\n"),
+>          argnames=3Dargnames)
+> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/back=
+end/syslog.py
+> index 012970f6c..5a3a00fe3 100644
+> --- a/scripts/tracetool/backend/syslog.py
+> +++ b/scripts/tracetool/backend/syslog.py
+> @@ -12,8 +12,6 @@
+>  __email__      =3D "stefanha@redhat.com"
+> =20
+> =20
+> -import os.path
+> -
+>  from tracetool import out
+> =20
+> =20
+> @@ -43,7 +41,7 @@ def generate_h(event, group):
+>          '    }',
+>          cond=3Dcond,
+>          event_lineno=3Devent.lineno,
+> -        event_filename=3Dos.path.relpath(event.filename),
+> +        event_filename=3Devent.filename,
+>          name=3Devent.name,
+>          fmt=3Devent.fmt.rstrip("\n"),
+>          argnames=3Dargnames)
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index 52b4706cf..ee222888f 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -411,6 +411,4 @@ foreach speed : ['quick', 'thorough']
+>    endforeach
+>  endforeach
+> =20
+> -run_target('precache-functional',
+> -           depends: precache_all,
+> -           command: ['true'])
+> +alias_target('precache-functional', precache_all)
+> diff --git a/tests/include/meson.build b/tests/include/meson.build
+> index 9abba308f..8e8d1ec4e 100644
+> --- a/tests/include/meson.build
+> +++ b/tests/include/meson.build
+> @@ -13,4 +13,4 @@ test_qapi_outputs_extra =3D [
+>  test_qapi_files_extra =3D custom_target('QAPI test (include)',
+>                                        output: test_qapi_outputs_extra,
+>                                        input: test_qapi_files,
+> -                                      command: 'true')
+> +                                      command: [python, '-c', ''])
+> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+> index 41f02f2c7..029342282 100644
+> --- a/tests/tcg/plugins/meson.build
+> +++ b/tests/tcg/plugins/meson.build
+> @@ -17,7 +17,7 @@ endif
+>  if t.length() > 0
+>    alias_target('test-plugins', t)
+>  else
+> -  run_target('test-plugins', command: find_program('true'))
+> +  run_target('test-plugins', command: [python, '-c', ''])
+>  endif
+> =20
+>  plugin_modules +=3D t
+> diff --git a/trace/meson.build b/trace/meson.build
+> index 3df454935..9c42a57a0 100644
+> --- a/trace/meson.build
+> +++ b/trace/meson.build
+> @@ -4,7 +4,7 @@ trace_events_files =3D []
+>  foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
+>    if item in qapi_trace_events
+>      trace_events_file =3D item
+> -    group_name =3D item.full_path().split('/')[-1].underscorify()
+> +    group_name =3D fs.name(item).underscorify()
+>    else
+>      trace_events_file =3D meson.project_source_root() / item / 'trace-ev=
+ents'
+>      group_name =3D item =3D=3D '.' ? 'root' : item.underscorify()
+> @@ -57,10 +57,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_=
+trace_events
+>    endif
+>  endforeach
+> =20
+> +cat =3D [ python, '-c', 'import fileinput; [print(line, end=3D"") for li=
+ne in fileinput.input()]', '@INPUT@' ]
+>  trace_events_all =3D custom_target('trace-events-all',
+>                                   output: 'trace-events-all',
+>                                   input: trace_events_files,
+> -                                 command: [ 'cat', '@INPUT@' ],
+> +                                 command: cat,
+>                                   capture: true,
+>                                   install: get_option('trace_backends') !=
+=3D [ 'nop' ],
+>                                   install_dir: qemu_datadir)
+> --=20
+> 2.49.0.windows.1
+>=20
+
+--7PG5qxreoCWyJadF
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhEjcIACgkQnKSrs4Gr
+c8jDIgf9FQz4pwUeMjTHVNoemA0bYbLreCh2D4m4dUsgr5yROQ8krQUNOmgg8fPV
+Q844gqOAq7WQm7Prwm2BHTjAg2OehcFO3QJuL8OcXDYWeCqq2VfML7riqgP9Als4
+ZonXyh8e1YpXlBnNPNPCAOdr33sT6xxSuUrZW7ftdtH4uV2+qZ8x1gm0nGHzG681
+BQmNaNt7GWGugWJ3zyxDsmruqcoaSEYUnBxZaptOzdVYXSNNmJr4bbWGBzmjk7KW
+Iea8HkrLzZIZ/3hJFfZoLJ+JpvWy9j+AqkNG7Voghw1Kc1ILTpK/b+VbV3MPILgK
+p9SbuPnpF9T/MvEesrcR3QOituzYKg==
+=iy/Z
+-----END PGP SIGNATURE-----
+
+--7PG5qxreoCWyJadF--
 
 
