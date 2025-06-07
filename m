@@ -4,73 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72439C5B543
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 19:13:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D1B7C61CE8
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 20:18:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNyy6-0006Mh-AI; Sat, 07 Jun 2025 15:12:38 -0400
+	id 1uNzyp-0005lL-7Y; Sat, 07 Jun 2025 16:17:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uNyy4-0006MV-NE
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 15:12:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uNyy2-0006Q8-Qn
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 15:12:36 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749323553;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=t00YIjzsNIYHLmGiMhTe9V3Pql7Pt0bmSYFK730tYIg=;
- b=M9Jylb9kVGrHZvOtZ/LR6dGTUYxif6KsgA7JTMB4AbvNL2CfcdZHSeq7qhOEuaHJnSjLT3
- mY1RSUIiN6TaQqK/5mGtg3FGKNGvhdTVfjE4PIbW8fzfV1cjN0OCHd+APwqKgK/WuHu3Dj
- 1/YOdOYbYV3hlpHa3+Wit00d0SNC4Ok=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-176--vr29Ci7ORypv5nd2OUOng-1; Sat,
- 07 Jun 2025 15:12:29 -0400
-X-MC-Unique: -vr29Ci7ORypv5nd2OUOng-1
-X-Mimecast-MFC-AGG-ID: -vr29Ci7ORypv5nd2OUOng_1749323548
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC39A19560A2; Sat,  7 Jun 2025 19:12:28 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.24])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 2DF93195608F; Sat,  7 Jun 2025 19:12:27 +0000 (UTC)
-Date: Sat, 7 Jun 2025 15:12:26 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: oltolm <oleg.tolmatcev@gmail.com>
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH RESEND v3] meson: fix Windows build
-Message-ID: <20250607191226.GA554948@fedora>
-References: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uNzym-0005l0-Ow
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 16:17:24 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uNzyk-0004DQ-Ot
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 16:17:24 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-b0db0b6a677so2322720a12.2
+ for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 13:17:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1749327441; x=1749932241; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sk1uj3MF6YasjSJT1hBdiG4s7UY2rjon8O7m3fL3rRQ=;
+ b=IvE3ngr2k/GosI9vblokDCTGPrpjISsitcbGpHMTtPovphk0LjHP9119UFIXNjoQ6i
+ /WARYF22LjqiFLomQtVb60M69xq4ObuayKYXI7TgtlbnypTXgw+Ect2Mm2OJA5j/FrPa
+ HSLuDDLNg3x4uq6xUUaH6erVOZLmxrLM13/PVrRQp4kHTbLuTzQNb1tg4rSdLQKwzBSM
+ 8DQKz5MX8mQ/F/xrqwKO4wRhWRZBuzErWcNfFKjLy/YLZ3LipFco0rGi3t5Fc532oYUk
+ AMbCuhmmof+Tg8IBR6A39QQq5AStZzJUG6ek24KsdUd2eUhF0Xz3mRWW+UM9A3+/w5Cd
+ NG8w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749327441; x=1749932241;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sk1uj3MF6YasjSJT1hBdiG4s7UY2rjon8O7m3fL3rRQ=;
+ b=qWWKPcMrF6U4FFwCKMn2SUARpMZgE66LqUrwvI6RXnV1VRUSHGOSr3dCOIFW93rE5l
+ 56Xe7pulnFdrUKaABSXHNPECrSlzEyayB45ifJdimkS3i+d5trl30HwXq44ya2XNrHag
+ MA6FxEFE67qNkU3c9I4z4DndSQEktX/CGQMdDepDNP9pJ+q2ilRpTOEjqpmg89j+8iKr
+ eFED9sUrWdEzj0bogE2sUpY0CpJhrD2ZVazHrlyXtt355FTPW9n4CskEe6sLRC/YDAfI
+ i2qVQZpGSMW0U849i9J2xndzLD8ORq6zEGMc9JxTYvuj4fr/zPbMALuwglNQfU98GMvy
+ cvSA==
+X-Gm-Message-State: AOJu0YyNy1W1Ghh9iPSowzghzowxU4GFQkZA3GJKOZvdTtDhNpTcdozr
+ lWYQnEjxjlCThHHx6/qiXQuJpXUy9oxbeNdhNVJHQfd9FcPjRW3vIMqmVIw1PxzzWjI=
+X-Gm-Gg: ASbGncvDviwSeyUdbKVoTtaoWGNE426wgOA9MauKBP2LglrSql+vgibTy5cFKijV4GS
+ pGhMkxdvjoq6jjyOStWEu1mVnFWXGwtxpRSyKToXkGDqdiPzyxi6oyaO6AlSu152SKv2+ABA/hd
+ dtF6rd0n8HtLMg8963M3nnhunbmGKhhVReln6VQENt37Uwi7eJiwAN2zhps9RmGW8jlRL7Q0wiR
+ 8+x8YEXVeONPMhMRVnd1tGzSmUQpoXsdzeqAWlmBAnISGJcWx7otQCvALxWY4ti7Kp90Hxa9LoI
+ 3XhFOUC+aS1Ei8vKT+eLzEFxVvIu5s7Y5NvQb3zaI5ej3Lq6MiTPxZMKYRtR4d2ynv8=
+X-Google-Smtp-Source: AGHT+IEngYO/5INFFrpaUA0tGXZKn2Pf75JQ2YDQBhAcVUlq3il7+5BBOL7gJMCEmfEp5bfB5HgO4g==
+X-Received: by 2002:a17:902:ced0:b0:224:24d3:6103 with SMTP id
+ d9443c01a7336-23601d7129bmr123354305ad.35.1749327440763; 
+ Sat, 07 Jun 2025 13:17:20 -0700 (PDT)
+Received: from [192.168.68.110] ([177.188.133.196])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-23603406ac5sm30614685ad.176.2025.06.07.13.17.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Jun 2025 13:17:20 -0700 (PDT)
+Message-ID: <ef6c7b15-04a7-42cf-a89b-c2674388810f@ventanamicro.com>
+Date: Sat, 7 Jun 2025 17:17:16 -0300
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="cd7Vo+GLtmoVpD+Q"
-Content-Disposition: inline
-In-Reply-To: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: 11
-X-Spam_score: 1.1
-X-Spam_bar: +
-X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] target/riscv: add cva6 core type
+To: Ben Dooks <ben.dooks@codethink.co.uk>, nazar.kazakov@codethink.co.uk,
+ joseph.baker@codethink.co.uk, fran.redondo@codethink.co.uk,
+ lawrence.hunter@codethink.co.uk, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
+ <20250527112437.291445-3-ben.dooks@codethink.co.uk>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250527112437.291445-3-ben.dooks@codethink.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,93 +105,87 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
---cd7Vo+GLtmoVpD+Q
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 
-On Sat, Jun 07, 2025 at 11:45:04AM +0200, oltolm wrote:
-> Sorry, I forgot to cc the maintainers.
->=20
-> The build failed when run on Windows. I replaced calls to Unix programs
-> like =B4cat=B4, =B4sed=B4 and =B4true=B4 with calls to =B4python=B4. I wr=
-apped calls to
-> =B4os.path.relpath=B4 in try-except because it can fail when the two paths
-> are on different drives. I made sure to convert the Windows paths to
-> Unix paths to prevent warnings in generated files.
->=20
-> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
+On 5/27/25 8:24 AM, Ben Dooks wrote:
+> Add TYPE_RISCV_CPU_CVA6 for the CVA6 core
+> 
+> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
 > ---
->  contrib/plugins/meson.build         |  2 +-
->  plugins/meson.build                 |  2 +-
->  scripts/tracetool/__init__.py       | 15 ++++++++++++---
->  scripts/tracetool/backend/ftrace.py |  4 +---
->  scripts/tracetool/backend/log.py    |  4 +---
->  scripts/tracetool/backend/syslog.py |  4 +---
->  tests/functional/meson.build        |  4 +---
->  tests/include/meson.build           |  2 +-
->  tests/tcg/plugins/meson.build       |  2 +-
->  trace/meson.build                   |  5 +++--
->  10 files changed, 23 insertions(+), 21 deletions(-)
->=20
-> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-> index fa8a426c8..1876bc784 100644
-> --- a/contrib/plugins/meson.build
-> +++ b/contrib/plugins/meson.build
-> @@ -24,7 +24,7 @@ endif
->  if t.length() > 0
->    alias_target('contrib-plugins', t)
->  else
-> -  run_target('contrib-plugins', command: find_program('true'))
-> +  run_target('contrib-plugins', command: [python, '-c', ''])
->  endif
-> =20
->  plugin_modules +=3D t
-> diff --git a/plugins/meson.build b/plugins/meson.build
-> index 5383c7b88..cb7472df8 100644
-> --- a/plugins/meson.build
-> +++ b/plugins/meson.build
-> @@ -33,7 +33,7 @@ if host_os =3D=3D 'windows'
->      input: qemu_plugin_symbols,
->      output: 'qemu_plugin_api.def',
->      capture: true,
-> -    command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-> +    command: [python, '-c', 'import fileinput, re; print("EXPORTS", end=
-=3D""); [print(re.sub(r"[{};]", "", line), end=3D"") for line in fileinput.=
-input()]', '@INPUT@'])
+>   target/riscv/cpu-qom.h |  1 +
+>   target/riscv/cpu.c     | 11 +++++++++++
+>   2 files changed, 12 insertions(+)
+> 
+> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+> index 1ee05eb393..3daf75568c 100644
+> --- a/target/riscv/cpu-qom.h
+> +++ b/target/riscv/cpu-qom.h
+> @@ -34,6 +34,7 @@
+>   #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
+>   #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
+>   #define TYPE_RISCV_CPU_BASE128          RISCV_CPU_TYPE_NAME("x-rv128")
+> +#define TYPE_RISCV_CPU_CVA6             RISCV_CPU_TYPE_NAME("cva6")
+>   #define TYPE_RISCV_CPU_RV32I            RISCV_CPU_TYPE_NAME("rv32i")
+>   #define TYPE_RISCV_CPU_RV32E            RISCV_CPU_TYPE_NAME("rv32e")
+>   #define TYPE_RISCV_CPU_RV64I            RISCV_CPU_TYPE_NAME("rv64i")
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 629ac37501..fca45dc9d9 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -3009,6 +3009,17 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>           .misa_mxl_max = MXL_RV64,
+>       ),
+>   
+> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_CVA6, TYPE_RISCV_VENDOR_CPU,
+> +        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVS | RVU,
+> +        .misa_mxl_max = MXL_RV64,
+> +        .cfg.max_satp_mode = VM_1_10_SV39,
+> +        .priv_spec = PRIV_VERSION_1_12_0,
+> +        .cfg.pmp = true,
+> +        .cfg.mmu = true,
+> +        .cfg.ext_zifencei = true,
+> +        .cfg.ext_zicsr = true,
+> +    ),
+> +
 
-On second thought, is print("EXPORTS", end=3D"") correct? Unlike the lines
-coming from fileinput, there is no line ending. I though that .def files
-look like this:
+The CPU is being added inside a "#if defined(TARGET_RISCV64)" block, meaning
+that it's a 64-bit CPU only. But the CVA6 board added in patch 1 is being
+added for both 32 and 64 bit emulations in hw/riscv/Kconfig:
 
-EXPORTS
-  ...
-  ...
+config CVA6
+     bool
+     default y
+     depends on RISCV32 || RISCV64  <------------------
 
-So maybe end=3D"" should be dropped for EXPORTS to correctly format the
-=2Edef file?
+This setup (after patch 3 is added) triggered a test failure in 'check-qtest',
+when polling all available boards in qemu-system-riscv32, because it didn't find
+a default 32 bit CPU for the cva6 board:
 
-(I didn't have a Windows build environment to check myself, but it
-should be easy to diff the before/after files to verify whether there
-are any changes.)
+# starting QEMU: exec ./qemu-system-riscv32 -qtest unix:/tmp/qtest-1683816.sock -qtest-log /dev/null -chardev socket,path=/tmp/qtest-1683816.qmp,id=char0 -mon chardev=char0,mode=control -display none -audio none -machine cva6 -accel qtest
+----------------------------------- stderr -----------------------------------
+qemu-system-riscv32: ../hw/core/machine.c:1574: is_cpu_type_supported: Assertion `cc != NULL' failed.
+Broken pipe
+../tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from signal 6 (Aborted) (core dumped)
 
-Stefan
 
---cd7Vo+GLtmoVpD+Q
-Content-Type: application/pgp-signature; name=signature.asc
 
------BEGIN PGP SIGNATURE-----
+We have 2 options here:
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhEjxoACgkQnKSrs4Gr
-c8iogAf9GRipI1N0/ns5re2+Y73zmIbebpGN6Lf1lXmAKegAazzRjcmaxotN3HOq
-XlbtGE8dxHAKVsqsxCIS01AE22ZUUsct4M8tQXNbZX+534t4ADKrjdbqFRFSMZU6
-nVrll5dw1PkG1JQxD3DmA0j2Y5pCUL8ngZ45tJLSWU14gwsNV6r7EpxfcC/B9cFJ
-US0QvhGA8Cl7p093YNsJ2MoH7JHeCLHNbNoN5YfIjm93dA/LcTR3L9wDgPTnOrVY
-s8Hy5Atyu3bm3ezohR0Z/trDDKYz3cBvUUuajyBSiPIH11WoJD1AdR6cbWetm8Nt
-y8VawQCvAcu8FjUZr5f6mh1MAdezSw==
-=imGJ
------END PGP SIGNATURE-----
+- if the CVA6 board is supposed to run in RISCV32 and RISCV64, then its default
+CPU must be 32 bit compliant too. The CPU declaration in this patch must be moved
+outside the "#if defined(TARGET_RISCV64)" block (e.g right after
+TYPE_RISCV_CPU_SIFIVE_U);
 
---cd7Vo+GLtmoVpD+Q--
+- if the board is 64 bit only then the CPU declaration is fine, and we need to
+change the board hw/riscv/Kconfig entry to "depends on RISCV64".
+
+
+Thanks,
+
+Daniel
+
+
+>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E51, TYPE_RISCV_CPU_SIFIVE_E,
+>           .misa_mxl_max = MXL_RV64
+>       ),
 
 
