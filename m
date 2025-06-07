@@ -4,91 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2E1FC5B543
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 20:23:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A842C5B543
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 20:46:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uO04K-0006un-GC; Sat, 07 Jun 2025 16:23:08 -0400
+	id 1uO0Pz-0002x7-Qm; Sat, 07 Jun 2025 16:45:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uO04I-0006u6-MN
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 16:23:06 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uO04G-0004ob-Jh
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 16:23:06 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-747fc7506d4so3118634b3a.0
- for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 13:23:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749327783; x=1749932583; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wczXwPZF+Dth98BaigjlVITS4r/S+WORdPUCXau7N0M=;
- b=iyC2yoaFOINmWjJr+e0R9z/N6tFEHaPBI3GjHCfA6Te/MRLV3kNt6VAdojzTfqRl4S
- hZmFtdnzng07qUkK5+yPzOMPR0+EbcUKI2Sk9f+luVGQwDlyfjTIdOQtoDvXyFjWuROm
- 7tYDZEx0P1gUUpdU1GJCN8mvHmfrNO2j4oyxNTeAL1qWyk7htJ2pVcKlcZFJ+uVNXjeh
- zppXu9A/I7GBGTaPU4KA+sJtyh4he8o5Cg5WlBlPUNhhDibaOKc43q/3x4gKI1UkNslP
- B6yZkfD+QAnkAcIJu5YXK2DLKNyRo+v4x2Hhed4h1mQGvrYBfK1Q19n9GKd5uXZ1lmsj
- sG+Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749327783; x=1749932583;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wczXwPZF+Dth98BaigjlVITS4r/S+WORdPUCXau7N0M=;
- b=PTVbKsUcnBK4bsxD84Rk7VMOLgIQBsaYTBdNu5KpEAavNnZFwofvQPoLbOU6nem+U9
- eqtW7jHukL7HwSwrWxKm3eVGezpYKf4gglX+mgJ8ZytHsz1q8h5pG4xBgW/bzJ/uwuED
- UzW0dueUMBot1lg4Xy4ZOyCf4Gg3FGifWCObUHbAYSnoC9GUCwUD8v4Ni28yvDMC6CbG
- mZmViej689vh6zHgXew2sSbObMgb7ZNT9W9qATysAizQeAjbZdj6wET76fUtBPzewzUX
- frV3W7Ob5N5ru4LaiJeNeaMoUeAaapiaPFj49TsJKPMqhmEytp4mQUmIYHBygrKjHuyt
- 2leg==
-X-Gm-Message-State: AOJu0YwtUSr+VPDAcgctzFBunOkGxNWdDTqVOEwPm5HhxNzlPZM+VGlv
- cFoiDww/2sefhIcPH8l6OeF0i2pYE417zg7XdFLwsWHOKLIzIjxP8mSM7vx8xXlaayM=
-X-Gm-Gg: ASbGncuCOmkO8SeTOEK2HVlyZbk99yWZghQF1QbLMpL74SzSkfeHC1GeLHtfo+LnJOO
- hD9r28TYXSQGAhCxgFeCzMrrzZjyw8HA6+6QQ3LslSppPt6mzgxrhPP7hIW8C/u54Poi3JGrntP
- dRAeE41i4okCi5oA0BJE1PheDjNxQQFstDBs7CIJsgFIWRJaEhPxklo7bhqWl+TDvo2zIBN/gf3
- zTRG2Z65McPmlbUSp8Dz0MLTqj8mVI4RTjoXsAOVCqGLunGrs6vuiwCWqmjaCVXLnGF75eYVHij
- 9ulInzGXfLsDw2LDGP0rCr7Rr5aq/11xal3WNmPLbYzsCEZ7xlYBiuBy+shGumtjIBWXzct0n/1
- 7ng==
-X-Google-Smtp-Source: AGHT+IElMjCWPC3DhY2dJQ7a1twf8SPH+E2iOJcv68fEK8JWevSdRjh6Geb1YscpJISGsul3/7YTsg==
-X-Received: by 2002:a05:6a00:4f8e:b0:747:ee09:1fdf with SMTP id
- d2e1a72fcca58-74827e50c52mr10678904b3a.4.1749327782772; 
- Sat, 07 Jun 2025 13:23:02 -0700 (PDT)
-Received: from [192.168.68.110] ([177.188.133.196])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7482b0c7da0sm3198529b3a.139.2025.06.07.13.22.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Jun 2025 13:23:02 -0700 (PDT)
-Message-ID: <97fafc36-0d76-46b1-a74f-a109217cb287@ventanamicro.com>
-Date: Sat, 7 Jun 2025 17:22:58 -0300
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uO0Pw-0002wr-8o
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 16:45:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uO0Pt-0007UB-VF
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 16:45:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749329122;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=LNhCUSkYlJ2eCuzMZO1A6x4PCyMyRT929ivTnos7d64=;
+ b=ManfYhR/a4WhRmYJsv/oYocu4clnuu7oHD5k5vVsPZMhcH1nSXEjj3eoE4D5IkBVsW1RW7
+ +ctU12tYMGi6Q2A6UflCJ65/0RbMl2Mo/qA/KVhelPZQRk1Q0KZuWAkjm5ubL/DF+Chyx7
+ 4sRZuQKchPnZW/6JihQEwv9n6cEesA0=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-whpZgus5OMKWXBZ3RNBB3w-1; Sat,
+ 07 Jun 2025 16:45:18 -0400
+X-MC-Unique: whpZgus5OMKWXBZ3RNBB3w-1
+X-Mimecast-MFC-AGG-ID: whpZgus5OMKWXBZ3RNBB3w_1749329118
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A89A3195608C; Sat,  7 Jun 2025 20:45:17 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.24])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 127EE18003FC; Sat,  7 Jun 2025 20:45:16 +0000 (UTC)
+Date: Sat, 7 Jun 2025 16:45:15 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PULL v2 00/11] maintainer updates for May (testing, plugins)
+Message-ID: <20250607204515.GA556960@fedora>
+References: <20250607154404.3810570-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Add initial CVA6 implementaiton
-To: Ben Dooks <ben.dooks@codethink.co.uk>, nazar.kazakov@codethink.co.uk,
- joseph.baker@codethink.co.uk, fran.redondo@codethink.co.uk,
- lawrence.hunter@codethink.co.uk, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>
-References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="AUeulAnv4Tji0S5J"
+Content-Disposition: inline
+In-Reply-To: <20250607154404.3810570-1-alex.bennee@linaro.org>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 11
+X-Spam_score: 1.1
+X-Spam_bar: +
+X-Spam_report: (1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.126,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_SBL_CSS=3.335, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,29 +86,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
 
-(added Alistair in CC)
+--AUeulAnv4Tji0S5J
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-I suggest adding the RISC-V maintainer, Alistair, in the CC for the next
-posting. It helps in the series visibility.
+Applied, thanks.
 
-It would also be nice to add a RISC-V reference in the subject, e.g.
-"RISCV: Add initial CVA6 implementation", to help ppl from the common
-qemu-devel ML to quickly identify what the series is about.
+Please update the changelog at https://wiki.qemu.org/ChangeLog/10.1 for any user-visible changes.
 
+--AUeulAnv4Tji0S5J
+Content-Type: application/pgp-signature; name=signature.asc
 
+-----BEGIN PGP SIGNATURE-----
 
-Thanks,
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhEpNsACgkQnKSrs4Gr
+c8iYIwf7B/3ZMZFmLkvnQ+J02ByvJVnhoe+vWVV0wl+d4fjPwtOhYV6u5WSDmfJ9
+x5N0rzWpO2Szx+ro0XrTaRyQbIKosZOc4JHC7bfe9XNEutm84PjJTNMYlnOCQByH
+hmFV8bSUqZG4NmxbpMFXz+eCGF3hZb73yEy9r9ueUAwl2543kt0TLhJZa5MVHEtW
+TTh49Yguafu1fpOup+cvVki2zaqw4+hJ283SbjpfymAZkUDjuHUHXlud4JbogRBI
+reBGiNxWO+FtNile5AgXay/L1jZPpUZuj2J2P6eyYZscOa5V2INa5Q1fp2CMMhoM
+sDVw+Kb+mXSF9t73DrCxHfImklQhnQ==
+=Mdb1
+-----END PGP SIGNATURE-----
 
-Daniel
-
-On 5/27/25 8:24 AM, Ben Dooks wrote:
-> This implements the CVA6 (the corev_apu from the fpga) model.
-> 
-> v2:
-> - fixed whitespace and rebased patches
-> 
-> 
+--AUeulAnv4Tji0S5J--
 
 
