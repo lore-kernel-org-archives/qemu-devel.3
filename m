@@ -4,95 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EE90C5B543
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 13:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E369EC5B543
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 13:33:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNte9-0007YT-Rd; Sat, 07 Jun 2025 09:31:41 -0400
+	id 1uNtfJ-0008PV-4r; Sat, 07 Jun 2025 09:32:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uNte7-0007YA-EB
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 09:31:39 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <hasueng@gmail.com>) id 1uNmfz-0001a2-HD
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 02:05:07 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uNte5-0003Vr-Td
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 09:31:39 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a522224582so1821726f8f.3
- for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 06:31:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hasueng@gmail.com>) id 1uNmfx-0003PC-W0
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 02:05:07 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-235a6b89dfaso4725415ad.3
+ for <qemu-devel@nongnu.org>; Fri, 06 Jun 2025 23:05:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749303096; x=1749907896; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=vxtL87VtW2DLMTiqjgdhgQWLW2xyK9nlnwQnTjoRGCU=;
- b=Guke7zdlJUzMV7vld/dkkE1xjotgaIskt7vWDoTNDrmL3SiDSDkypuMJLRdD1ac23E
- kdESp4ffqxd4GEr/Ji/UpIWFUmiSFLCMyEwL/ykAZ1a4lq0o/J4roT9xK1xYz6xAk6En
- aBcTe88b/nENZGYjupey9HuxiPPLNZLFbMT8fvytUmkNhoMoJSL6KJoVh5fjw4/CN8Il
- DOwgjG+pevkZAruTGTmwZBIaMJsReYxGn/nEl9/M79jKXABOxi3e3jNiCBPCwniyPzqq
- vy+rTZGupD2vqanhcOSVj+xLRVYsOqk/6OJFGeD6IcOP5sQmfkm5WYwkbc26noo+kjnC
- Cy5w==
+ d=gmail.com; s=20230601; t=1749276304; x=1749881104; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=cfDoMuhI7Gldw7nCdfYIkXAF3bm6PbFrhph+ITePBMQ=;
+ b=ePCFSrKpvvfYo17dDxJS4htNHXJsTy4KjW/ZrBuWD4BkEO5rIKeYMj2Ul97ZFe4anN
+ Ya8sI3JhysuHGtbR+PsjIHgG2V0kK1V5D6eETjbFq8oCqsLF58K3EEIdEBj9I1qLfE8Z
+ OX0ANyX4dC7XMf+B8Rj42ujTYm67S3QGQdceQaa7B2pUdTxmJOrF+Ncqa1eIU9FseFI0
+ jSF03rCJrSGszxg05LO09E+gR3RC4J5VH8Of0Jyb7eL4ffSbsSsN94dtCpRUN/lV6hLz
+ iWcACfXFdQQh/jda9O72GViq3tl0hGumNFweu766W5AvGzGZ7j15kG451pmbXKYM8MH/
+ OUBg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749303096; x=1749907896;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=vxtL87VtW2DLMTiqjgdhgQWLW2xyK9nlnwQnTjoRGCU=;
- b=YL9uJ/5OCy3ALCk95O6eqPC/FzekgqVxFNIrFlBeL0tbE9l9UjlJbDhQ+SPJPPr54f
- z6SD7Sq/Bi7yAoQOBf2vSRLUgGUAHb1SfqW5paMaXV29GRSGpqdDS93kByuDsyLDCJYX
- X2G8Jrvu6qhStbFN7BIHs4+l5Sr+4AtS9/i2SW3u9N8oYD5d9OtNv4WzZjNF5ru2MwMt
- h48XYN6WQBctpa5B+KIi5MNDikHrAQUsDi6RaJG62D0KEg/8ENxxsoHGtecuF5sJA+fH
- bSqlZzrxRS9aQ/frbYE4tB3cIuZYl2Lrr+Q4S6kRxvYmHdXUPKiEIjDLmKaKp6u9T7J7
- qR9Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVNnWj3/giOWhLNQ0P3kJ/Xpn27bi04pGFe//cyi/pTohMGR12Pord3mP3V1xSah/1ICqGuDvqsegfh@nongnu.org
-X-Gm-Message-State: AOJu0YyUsPPGbhXNkbqb4/30c61xWxMF/e49qrcGi0nrBh7B0Ro9MRjh
- LQfUWYp5WxKU2qT3QEJ0bUh8yZmdsZJpqfmNUDa6e5k4wXS1nLmXVOlmrqZFx6nM4Rk=
-X-Gm-Gg: ASbGncstMeZUPo0YJRI7SLE7tbwS5eHzpdcKxUPrYbkMgwGQXsf8RR07Ht+7zgdLwe2
- UAMChYpp1M2JD4+BzxP4WOFQQoYpNaBL3Qvoj3gQGmfCwyltF9mbT8F0IYNbgQA/mZ4o4f7Eq4X
- TKlftXZMvjdvv9SL2xHqgmw6FZAJsNLQoLUwsiqa/2cF7foEhu7kdvS3Bpemsq1KvjYsc7b4mkK
- /X4PbZoFTMqtaTt0v55FgtUJBM87plGMCu6xnGnSQYGxJbxvJ1oF8c+SekV5DYNkL7d6D2YVCyN
- XgTt4BGzENOr8PdGmOYUWTyHBIV2kQQVzbaWdWHwQ2a26iWSD/+7YoG9c8QpcH+4fO1yE2NGldM
- K4LjdXftHDOqhWc4V0cVUvk4YaJjN1jJv2inBgSmFmLIlp6F1rw==
-X-Google-Smtp-Source: AGHT+IGzKBcgyBwNKAR3mUUK4CNcJKAOhhiSKxCYFoxmqh47l5cKzqG9nNVCtuJ5czkQ2gfe2kllXg==
-X-Received: by 2002:a05:6000:1a8f:b0:3a4:cfbf:51a0 with SMTP id
- ffacd0b85a97d-3a53189bc76mr6773956f8f.21.1749303096502; 
- Sat, 07 Jun 2025 06:31:36 -0700 (PDT)
-Received: from [10.10.12.33] (cust-west-lon-46-193-226-34.cust.wifirst.net.
- [46.193.226.34]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53244d15asm4744661f8f.66.2025.06.07.06.31.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Jun 2025 06:31:36 -0700 (PDT)
-Message-ID: <314a3a1c-ee78-45f4-9e24-17196f5a3185@linaro.org>
-Date: Sat, 7 Jun 2025 14:31:34 +0100
+ d=1e100.net; s=20230601; t=1749276304; x=1749881104;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=cfDoMuhI7Gldw7nCdfYIkXAF3bm6PbFrhph+ITePBMQ=;
+ b=vuITqZ/ABQXJFyCcACp4cKYtxiGEdvhaap3TKytyUtvPY1D5NGhlhqXONiZbRrmtXV
+ IuPGixlYQjo7kyKOgLde2m7aP5hG8hqL9mVhXcHXZJDVC66UJ8veNuHXmCvbICF67h0r
+ Q021dQXGlPxyETf5gK/oa3ecqrlFn0UUVqXxZ66gxwHm36o0lenFoyEZtICqkOZeHHyJ
+ Pc5NiwUFkWxHRtZTCzHcnzIf3xwBL1FwpzQcYnmkdAn/nlxgmXK38jrmyj6+aEsF65r5
+ QAZ4Z29CzZKxoQQLrONzRWHa7oEIpALKTAgC24iI/tqke+Yeefx86S/SqW/DSimCDHRI
+ C7AA==
+X-Gm-Message-State: AOJu0Yw2DCEoUEFBEfARR8tG7ssKksDezgQKPbh4PjuTjdjHgfMWyioc
+ CXKKVs/X/VHmqZf63RUl3G+1rJBTr8URpetXgJp1rAXE7ENijVWu0jv7QuUgsRaXd2Ugnw==
+X-Gm-Gg: ASbGncujB3NbreeL8GUHrC0GjWnuDMd4TDyp42iCnsMv7cpXEqXO3TNveruAdfIndnY
+ LauAmgS3BIpfcqTZ1khXaON8m2NN/uxut7tHLISsAAIQQ4cyEheyMBqCEzVIkmgFxLeDglAP9J/
+ GAxASILYbdr/MIxm8CeMJVfaVQknfU/RWGagp745rrC7vC7AcvofmFFy2UjhieDCOz3SIxZOJ1q
+ lAw2C/eYp20LoUldUNWS4N/RWzYwaIoLAzp1nMwL0B5qEgmNc5rUmCc/VxLSJEhef/GkTZn91xo
+ tjjtkXxeoC0MyB9w549Cyt+xozB6SLo5g0ToVq9p7nb34CWzLSHlwyGh
+X-Google-Smtp-Source: AGHT+IHtYtiHdUOYQtjFhQ8PlvkLbB9NJeagIrgPQMFF1b6/+80CrqZe9xaKTNPfNcQtnH+LdakYKQ==
+X-Received: by 2002:a17:90b:4f47:b0:311:9c9a:58db with SMTP id
+ 98e67ed59e1d1-3134e3123ebmr2876229a91.1.1749276304012; 
+ Fri, 06 Jun 2025 23:05:04 -0700 (PDT)
+Received: from bong-com.. ([210.97.55.153]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3134b128dc7sm2135597a91.23.2025.06.06.23.05.02
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 06 Jun 2025 23:05:03 -0700 (PDT)
+From: Haseung Bong <hasueng@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: alex.bennee@linaro.org, philmd@linaro.org, thuth@redhat.com,
+ "haseung.bong" <hasueng@gmail.com>
+Subject: [PATCH] tests/vm/README: fix documentation path in tests/vm/README
+Date: Sat,  7 Jun 2025 15:04:56 +0900
+Message-ID: <20250607060456.28902-1-hasueng@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 04/19] accel: Propagate AccelState to
- AccelClass::init_machine()
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250606164418.98655-1-philmd@linaro.org>
- <20250606164418.98655-5-philmd@linaro.org>
-Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <20250606164418.98655-5-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=hasueng@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sat, 07 Jun 2025 09:32:51 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,25 +94,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/6/25 17:44, Philippe Mathieu-Daudé wrote:
-> In order to avoid init_machine() to call current_accel(),
-> pass AccelState along.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé<philmd@linaro.org>
-> ---
->   include/qemu/accel.h        | 2 +-
->   accel/accel-system.c        | 2 +-
->   accel/hvf/hvf-accel-ops.c   | 2 +-
->   accel/kvm/kvm-all.c         | 2 +-
->   accel/qtest/qtest.c         | 2 +-
->   accel/tcg/tcg-all.c         | 2 +-
->   bsd-user/main.c             | 2 +-
->   linux-user/main.c           | 2 +-
->   target/i386/nvmm/nvmm-all.c | 2 +-
->   target/i386/whpx/whpx-all.c | 2 +-
->   10 files changed, 10 insertions(+), 10 deletions(-)
+From: "haseung.bong" <hasueng@gmail.com>
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+The README file in tests/vm/ points to a non-existent file,
+docs/devel/testing.rst. Update the README to point to
+docs/devel/testing/main.rst, which now contains information
+about VM testing.
 
-r~
+Signed-off-by: Haseung Bong <hasueng@gmail.com>
+---
+ tests/vm/README | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/vm/README b/tests/vm/README
+index f9c04cc0e7..14ac323309 100644
+--- a/tests/vm/README
++++ b/tests/vm/README
+@@ -1 +1 @@
+-See docs/devel/testing.rst for help.
++See docs/devel/testing/main.rst for help.
+-- 
+2.43.0
+
 
