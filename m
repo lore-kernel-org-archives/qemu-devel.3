@@ -4,121 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B003C61CE7
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 11:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35A3BC5B543
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 13:19:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNrMR-0004DW-GP; Sat, 07 Jun 2025 07:05:15 -0400
+	id 1uNtRo-0003qE-WC; Sat, 07 Jun 2025 09:18:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1uNrMN-00049v-To; Sat, 07 Jun 2025 07:05:11 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1uNrMM-0002Vq-AL; Sat, 07 Jun 2025 07:05:11 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5573lKix010918;
- Sat, 7 Jun 2025 11:05:06 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=t8v6U1
- 27aAgXbPZYKy5zFASpgwt4eW+UI1hTU5MsnI8=; b=m42dMQAr86pquS4EeueyMT
- yYbb44u6MCtdcF5kIjN1xXV6WT7Y8efS+O92kO5URVR6Gq7SAHKvufJ/TUvPM1FK
- V7I4nz8khatwfCQvOhISi9s/2hbXLMhftobO/0ZaiVuVPyuYCC+EpXo5NCeM3Zmq
- xV8BOF0V/L97xt2dChw0UvzhgG0R5BsmsQ6n6C7VRbpydxD9Bh/lLce3t5VtMPlf
- j0fQIIIe8fHEzJkLYkLGGn8SbKyqdGzoHWKMeY/7jCtwCurpTkuJV/uJ1FwZCgJ7
- lPfo6TT8wOYskyN42VeGMMJYe5UUh9TqeOlRXE1bJJ2IwSTS9FYWNVEaSsg1En8A
- ==
-Received: from pps.reinject (localhost [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474d31s4ub-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 07 Jun 2025 11:05:05 +0000 (GMT)
-Received: from m0360072.ppops.net (m0360072.ppops.net [127.0.0.1])
- by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 557B55a0018615;
- Sat, 7 Jun 2025 11:05:05 GMT
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474d31s4u7-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 07 Jun 2025 11:05:05 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 557AeCLL012569;
- Sat, 7 Jun 2025 11:05:04 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 470et2w94t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 07 Jun 2025 11:05:04 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 557B51mc48955814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 7 Jun 2025 11:05:01 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E91E420040;
- Sat,  7 Jun 2025 11:05:00 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1064120049;
- Sat,  7 Jun 2025 11:04:58 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com.com (unknown
- [9.124.216.13]) by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat,  7 Jun 2025 11:04:57 +0000 (GMT)
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Nicholas Piggin <npiggin@gmail.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Mahesh J Salgaonkar <mahesh@linux.ibm.com>,
- Madhavan Srinivasan <maddy@linux.ibm.com>, <qemu-devel@nongnu.org>,
- <qemu-ppc@nongnu.org>, =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>
-Subject: [PATCH v7 2/2] target/ppc: Deprecate Power8E and Power8NVL
-Date: Sat,  7 Jun 2025 16:34:12 +0530
-Message-ID: <20250607110412.2342511-3-adityag@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250607110412.2342511-1-adityag@linux.ibm.com>
-References: <20250607110412.2342511-1-adityag@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uNtRn-0003pm-CK
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 09:18:55 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1uNtRl-00021g-PZ
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 09:18:55 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-442ea341570so19571005e9.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 06:18:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749302331; x=1749907131; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=3ePg38LiS5w3b2VlVxskKODQ6Zy9P66ZgWxbmNeO9Vg=;
+ b=TKtJ5TPHrzCV2g7VgRTX40gJcYFc/tGo8MwB+663ndi+QRoQLcEqozj1Zco5lVp6pD
+ sD7DK5z84aFElsnerXhFDoW3Dfq7xJuhQXUwAW8zrMxdfvHGX1+LfFT1/77ukRvqkf/q
+ jPL9YW/yOkLFyTgogdZYUqoDJlw/HZHsSjET6e7rm86oS/cCmDIKrLelM8XjvXDEcqRP
+ +ZS4mLcz0dEkYVPoNyUwoCjo0rn3D2E1RgrfmRgs8ksd6nCsBX+lAaWTKqcDd7JG6s3/
+ L+IwZStnKK5xrvIb1Z1iK9VW8HrGGat5u0EzRIqe06cDMVQegDLCEmjDwugf9v9j8r5w
+ WM5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749302331; x=1749907131;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=3ePg38LiS5w3b2VlVxskKODQ6Zy9P66ZgWxbmNeO9Vg=;
+ b=b0SrfG+D3rlB/JgBs13I9eJVORb4tz2XGE7uFppnLzCwPGST2R57nGttP8mPvrewI4
+ +fkwyU7pSqOTymV4OEOIlAsmtpgMLnaKZ0gjjiru+VpPiepJo9OXuBQEqeumXTD57zRM
+ ZLOB4YACZ9jWoheoNd6sCURrGSZ4zGOa9CzHiUqkCXdZUZCkrs5GNedUdo6brP9kVXwN
+ U9tG1F+P6jSVAArgL+0iuhUs+OLHmJBO8xeMJdlqpTheY/6qEnz+qx+qTBsCxN+s7XMh
+ n78WjusmTlsNRTqqvGxIvq2sJYKBEcrOtDF+OKu8WbzIHeQUqw9LTA3ErqR9RBFEa/D7
+ Y0ig==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUh56ksiQduO1HnlUsRVdccA3vdo+x1IXOcIo3tHr9P8X02dfZNXh7KLTMAdw3VxeM+YjoaLRxz9BG/@nongnu.org
+X-Gm-Message-State: AOJu0YxA2Bytr9H22pN2VrUWfCtahe9T25/XFGC+iOXNp7R3id//D7nk
+ ZJXHCpICnTJTIvxj1d2XKjI94Cjr2AnfU7zY8ghW7iVMYgYkULgqDIDZWI/igpRhRCs=
+X-Gm-Gg: ASbGncuRVppGjW1BoNyHTQEHOfoqHpG4msqApGbujGE/anggfMOwZb4aAGLSLIcYoCP
+ 8Al2MWixspNLCVCEzTjjdMjGCHlltITXsLtxFkdQoluBXjmzi2wZTJbOpSGexuyKfiypXK6Hq7W
+ Z2VUEQyg0IXtHIVT4oBNX7GaMsdXMCkw7lD3bJAswmAGznoOvsiqji/PoyhKZ7IQKopxN7DRVx0
+ Fse1i7euXdv0W9anIBg9hlGfiHEriR8LYZnNzvLCNeDLx3g0q9+0ysuKsGFluTYB2ersUnhcb+Q
+ 2cd38Zuvh2Y2qTivf9719QVneBaeJkd4/MNi9oZIx6qefMTIlQYBQFHBST0xttk3XKRuZTgrEhC
+ aK2fhzX1gs/rA5kcOstewXL++yj8g68fAZx2M7Yg=
+X-Google-Smtp-Source: AGHT+IGNN6Ih+Ld+th5hGG6NyeNEkpsr8sR3SMOyxYKNr1CrW4mw7ZjXMOf/F/Suenuon/r3iI1MYA==
+X-Received: by 2002:a05:600c:6205:b0:43d:563:6fef with SMTP id
+ 5b1f17b1804b1-4520140c06dmr61967115e9.21.1749302331334; 
+ Sat, 07 Jun 2025 06:18:51 -0700 (PDT)
+Received: from [10.10.12.33] (cust-west-lon-46-193-226-34.cust.wifirst.net.
+ [46.193.226.34]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45209bc6d50sm56653035e9.5.2025.06.07.06.18.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 07 Jun 2025 06:18:50 -0700 (PDT)
+Message-ID: <388434ee-1940-48bb-9b38-52efcf7a4a11@linaro.org>
+Date: Sat, 7 Jun 2025 14:18:48 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 01/19] hw/arm/virt: Only require TCG || QTest to use
+ virtualization extension
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20250606164418.98655-1-philmd@linaro.org>
+ <20250606164418.98655-2-philmd@linaro.org>
+Content-Language: en-US
+From: Richard Henderson <richard.henderson@linaro.org>
+In-Reply-To: <20250606164418.98655-2-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA3MDA3NyBTYWx0ZWRfX2qRAyP2NdkFA
- Ge/JazTTBoe/DKXirpvdlukE2Zkx5nb5gseFkqgCN3iwy5tRflBSdaiAYSGqhN9lh57VXQrIZm+
- a8Ohy+3VjUBuYaLFXZQJgEbl42NkpzzQeBPTD9eI5lHf3cCTvni35TX9jfeOpu/uri9q9iLJzwR
- 2M0CzfeOoGP5a2xwKa+zSMxyEYIrxWd5g1vcYwD8ViqgRqlthahkPQp5ruCtTyEbMkfXra9LtAg
- RoyZtiGjCV48SoOOnVQE8+ynGVUlsbRqqQrL70cDOeRsDM63t2xyCxgZrbQ7fYt52V0pMUjDiQm
- WeZpoRtd3os3jfdF80AuVoY2qNnFl5ASA4WgpF2mpVzuZlQqyv1jMja/JPm9ZNEhPBwN4NhFJiC
- o3vTpQCitjqzXchlUIKd8KBstP6YBfoPzTJ3r4Qv2kwwVz1yFMUqO7uPB8ACDsZxC+n4fk9G
-X-Authority-Analysis: v=2.4 cv=XOcwSRhE c=1 sm=1 tr=0 ts=68441ce2 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=aow-egSQAAAA:8 a=KKAkSRfTAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8
- a=SYv8DMXN2cHv4ii3y3oA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=gFNbaldVC-z-bsjSTzMo:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: mQ5tMEfzQQ8ifJasxCGhA71NfU8AWLQ6
-X-Proofpoint-GUID: 1lpRKti5SBSFxmRD37caCfDbZy2ibVKW
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-07_04,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015
- malwarescore=0 lowpriorityscore=0 spamscore=0 bulkscore=0 adultscore=0
- priorityscore=1501 mlxlogscore=999 impostorscore=0 suspectscore=0
- phishscore=0 classifier=spam authscore=0 authtc=n/a authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506070077
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=richard.henderson@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,67 +107,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Power8E and Power8NVL variants are not of much use in QEMU now, and not
-being maintained either.
+On 6/6/25 17:44, Philippe Mathieu-Daudé wrote:
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/arm/virt.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 9a6cd085a37..d55ce2c0f4e 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2205,7 +2205,7 @@ static void machvirt_init(MachineState *machine)
+>           exit(1);
+>       }
+>   
+> -    if (vms->virt && (kvm_enabled() || hvf_enabled())) {
+> +    if (vms->virt && !tcg_enabled() && !qtest_enabled()) {
+>           error_report("mach-virt: %s does not support providing "
+>                        "Virtualization extensions to the guest CPU",
+>                        current_accel_name());
 
-Power8NVL CPU doesn't boot since skiboot v7.0, or following skiboot commit
-to be exact:
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-    commit c5424f683ee3 ("Remove support for POWER8 DD1")
-
-Deprecate the 8E and 8NVL variants.
-
-Suggested-by: Cédric Le Goater <clg@kaod.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
----
- docs/about/deprecated.rst | 9 +++++++++
- target/ppc/cpu-models.c   | 8 ++++----
- 2 files changed, 13 insertions(+), 4 deletions(-)
-
-diff --git a/docs/about/deprecated.rst b/docs/about/deprecated.rst
-index 42037131de12..11fdd5c0409a 100644
---- a/docs/about/deprecated.rst
-+++ b/docs/about/deprecated.rst
-@@ -297,6 +297,15 @@ embedded 405 for power management (OCC) and other internal tasks, it
- is theoretically possible to use QEMU to model them. Let's keep the
- CPU implementation for a while before removing all support.
- 
-+Power8E and Power8NVL CPUs and corresponding Pnv chips (since 10.1)
-+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-+
-+The Power8E and Power8NVL variants of Power8 are not really useful anymore
-+in qemu, and are old and unmaintained now.
-+
-+The CPUs as well as corresponding Power8NVL and Power8E PnvChips will also
-+be considered deprecated.
-+
- System emulator machines
- ------------------------
- 
-diff --git a/target/ppc/cpu-models.c b/target/ppc/cpu-models.c
-index bc3f9586cb67..66001c5ac06d 100644
---- a/target/ppc/cpu-models.c
-+++ b/target/ppc/cpu-models.c
-@@ -732,12 +732,12 @@
-                 "POWER7 v2.3")
-     POWERPC_DEF("power7p_v2.1",  CPU_POWERPC_POWER7P_v21,            POWER7,
-                 "POWER7+ v2.1")
--    POWERPC_DEF("power8e_v2.1",  CPU_POWERPC_POWER8E_v21,            POWER8,
--                "POWER8E v2.1")
-+    POWERPC_DEPRECATED_CPU("power8e_v2.1",  CPU_POWERPC_POWER8E_v21, POWER8,
-+                "POWER8E v2.1", "CPU is unmaintained.")
-     POWERPC_DEF("power8_v2.0",   CPU_POWERPC_POWER8_v20,             POWER8,
-                 "POWER8 v2.0")
--    POWERPC_DEF("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10,         POWER8,
--                "POWER8NVL v1.0")
-+    POWERPC_DEPRECATED_CPU("power8nvl_v1.0", CPU_POWERPC_POWER8NVL_v10, POWER8,
-+                "POWER8NVL v1.0", "CPU is unmaintained.")
-     POWERPC_DEF("power9_v2.0",   CPU_POWERPC_POWER9_DD20,            POWER9,
-                 "POWER9 v2.0")
-     POWERPC_DEF("power9_v2.2",   CPU_POWERPC_POWER9_DD22,            POWER9,
--- 
-2.49.0
-
+r~
 
