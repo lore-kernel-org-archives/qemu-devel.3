@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7DDC5AD49
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 00:15:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B14C61CE7
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 00:15:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNhA1-00034T-Ey; Fri, 06 Jun 2025 20:11:45 -0400
+	id 1uNh9a-0002xQ-AW; Fri, 06 Jun 2025 20:11:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uNh9z-000347-SI
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 20:11:43 -0400
+ id 1uNh9X-0002vw-Ek
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 20:11:15 -0400
 Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uNh9w-0006Qu-Je
- for qemu-devel@nongnu.org; Fri, 06 Jun 2025 20:11:42 -0400
+ id 1uNh9U-0006OM-Pn
+ for qemu-devel@nongnu.org; Fri, 06 Jun 2025 20:11:15 -0400
 Received: from pps.filterd (m0127841.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 556N0Rt8023133;
- Fri, 6 Jun 2025 17:11:29 -0700
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 556NqBwU023142;
+ Fri, 6 Jun 2025 17:11:11 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=H+XM4/n1ESevLcnSCydVtUso4uc22MDK1snAtVmW6
- KU=; b=t8UApXzU25K3U+f/iGiO3sr0KyVxAeH68AHpV+1NkX0enqSx7SEvY/0qE
- eX+RnTzPcvn0xpigy4A7avERpVUXZPgW/1xrUUBddWOY5Z2eLlRD/GZYUHRE2juJ
- HoQDKmSAzHnrAmnihOJfm68U16k/FD1NmGKnD3EKVC/lJ3LfqSd29c71iCkTU/gF
- nNGAxBzFOb+SzUQbDlRNbx9sS92BjmFPDYg2nLQ2c/NlJgqLffyuKO3xamMkWnaM
- A/lal5d6z/LzOH/zU1FZ4Nxese1QPzqI2AvFrPEAvExAGqu1M9FNLJlOfO74Pa2C
- RNIfFWZiFEq5sNip7Ym58+Hfeap/w==
-Received: from nam02-bn1-obe.outbound.protection.outlook.com
- (mail-bn1nam02on2126.outbound.protection.outlook.com [40.107.212.126])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 472njsxqb2-3
+ proofpoint20171006; bh=Lfi3fqoZwgLm7PZmiEhG+WX0QYLAq3BqEjm16KRZu
+ qc=; b=skYCn+eoOjZUCzaFDv1pVfNUf0yuVZaOfOvoC4NPcdV1k0b/BitqL5kum
+ GzPmV+Ss1NQn+JaK1r+6yxzHPOydN34SSJiU5Bh+zPgQoWNvQQly93vnC2Yq4Ju+
+ Fl8QOHqf5Rxa9d9IECFXKFkVdWu5jZGzODGLdCtHN5A9ECf/Pc+jpfy7FoJoTsLc
+ 37/1FAsOY1s0LL3sGu/oczUoMGNyJyRlLk1yTC/raHmM7rbFookEbZKaNdEgKm8N
+ fWmltrfqXHcizOSDQmjpkmc36HVlOyU60j92gNSQ4UJ5DNjpyVxgCSWk6G9rK1hN
+ Cm0hOBf4UZr5qA2aDniWsBiXIwVnA==
+Received: from nam11-dm6-obe.outbound.protection.outlook.com
+ (mail-dm6nam11on2122.outbound.protection.outlook.com [40.107.223.122])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 472njsxqan-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 06 Jun 2025 17:11:29 -0700 (PDT)
+ Fri, 06 Jun 2025 17:11:10 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=eyK9+VGvMIETB7TWPrt4LPMYnFGIM3sdTjhvatxWjOe44Y4OOJT/2zW7UP9fUbqaeP0DD960iFz+ry665jbJcOor1tFXf/s9deskFWZJ4J6vEBQt9ATItR/KayAtX7lpoNUFYkmU+3sIKWtWTIgF5lBmjzizpAdC/AWn/84m6JMU6PJPnGOw/Pt9JbdjWwSSwSii6BtI7Z77JyjZ510BU6G8Y3PJ26J+yNo4o2ZD26aoA9etDU0SsnkJHYKfBnNERYvF5TZJg0kMfJA9K/7mZ9fHbpZjPdP04vnFYLP1N5xuQ4bVb9mEvB7QU0IDYxQUxzJd6DZ+dHorb7394QupkA==
+ b=HdsvwanH7XOLGiR4S9szyg70LmwiEjOrKJd2qv1n/uh3JdWoYl9EkLclDuquiUBdOMkfPj0kK3fmM+VIQTvWxsx6SzvsuZsALJfvP9uDQaMhCOUnMFrDNC0K49OeB2tiPiOY3o1Y9Sw2j8nQGmWkoRChAWquwlS91yVcomSSoevEFPgezGtGx87G0hxU0eBDePB07b/DhgeBDU7GLCGGuEhJs4UytLkexBDC78DN5sgUIrLW2X8EWNHg62k+UcKI1nbAOr9XsX9+ymB8uAOXnUOeqf6S9phT577zrHyvzsp3HqtFBROcm0U22u9wdN24giUXzcnilRRQdjxl+gA0MQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=H+XM4/n1ESevLcnSCydVtUso4uc22MDK1snAtVmW6KU=;
- b=fqLtvPFU3ysDMZQLz7lyfTwskk1vOei5sgGXZkqYVAERTF9d2yUdyGAkfBFPiaL4HumOVPDgdjRGqXVM3re6nmD0F609WhzBM5KT8pnGihwFSH/tV867ixQMi1yWgyDj75eVkvvGPamz7Asn+db0B7NRnfrARN4bSFor4AWoPzJxP6yARDV+fn0L6Dty06PjG4HXmkIewcaAHPLupMDkNSnEBvfeMjtUj8bcHyJWWbfGtcb56G+ErXL7KM6GKOKxG49+lCNhn2Ry3l0Y2PqvQVpxcmhONK6KDy43G87lM4dGrV3TUfoIxKShBmA9XBZJB+L6pQDGMZPZWHKN8IFkhw==
+ bh=Lfi3fqoZwgLm7PZmiEhG+WX0QYLAq3BqEjm16KRZuqc=;
+ b=kQ/YCI7Z48AtIxttoMit8p81nJzU9R5zYx3OeT/ij8ZfcTByi+AYgF/QBWL/VKuG/lMZc6vUwQ+dBbBiwT6+9l/D6Bu9AMXLhOj8ebFiuEqtA+3NY5JHiaqDjI3nKNvF4oaV/PwdOb8PUQEf+jTMu+ss8IqTZG67urCwsSLkU390d86VPWuch5Lg6wMxGXAYR8OnWV6XrB8XaClBsQEBFuCSS9Guu7HSZIX0iS1rHbhSdSfpOq3EkjGDjI/8pF0r/X/p9Kk5ZPysZdfDK849HEDG099lAqbyDLCO5OgJHnOXBotGQK/WrwMzkrz2ETPH4VRqY+vheG5/naBOC+bsEA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=H+XM4/n1ESevLcnSCydVtUso4uc22MDK1snAtVmW6KU=;
- b=QpcndXHRdisuh7K36dVM9mxELGAUiNsF0/C7xBqyHWwIkU+Oh4wLE3E54UMWJUs/90oQuA01lLbjspGYS0gyy/Nt95G9PSo5OLSLkS/9Gq7EBJ19wo9K2XhZgL7XiIEYoGtAVrljic0y2rkQxW+FZwiA6xvRQ6Azp62VwfL4R6qy3xLOqnYiCp13zysJQ29Xnvz1WhAxKb4Rs0TY/3N4QCKyz45NkMWWb50TAPtTtdemakrAxP899N3QNvsX1OikZ6cCqiQjOHrybWYPwubsRPGt6SVWJJk2mcatEcwKQkZMmt6PC/9yxKemze8a4JVeompEPn+3tIBw6bUYjd/ztw==
+ bh=Lfi3fqoZwgLm7PZmiEhG+WX0QYLAq3BqEjm16KRZuqc=;
+ b=WQBZDQXICz6OOOkUEZuv5nUo1qdl6niWctyoxpt6mg/C8Yg0A3lkJxMy41rd+N24VKpvSDR44Zk9DMXoqJBUl9O4fOxiPcYIeiQwKKmBmteZtdbCBmPCe42ObuKMMxheyhiIGFPuuRlZtSDPTSBBNqiaQEvMJHRg0Q+oHp1zZkPlqzfhvCkv43KUymoeLKGHAe46vE3Px0QJdA71zkAHN87g9DH9lKJAZsNc2R6OpwnXNR1RIZN0LK0V/I3MMIsOG7DbG7aIXXIpRqTaR9uHZoZvoeA4jSizxnp6A0D+xcrIPwqkEqF6D1PMtG80r8/UjPPiOKDlrMQgdZJhNtdrCg==
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by CO1PR02MB8441.namprd02.prod.outlook.com (2603:10b6:303:154::20) with
+ by PH0PR02MB8715.namprd02.prod.outlook.com (2603:10b6:510:da::18) with
  Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.17; Sat, 7 Jun
- 2025 00:11:26 +0000
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.21; Sat, 7 Jun
+ 2025 00:11:08 +0000
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51%2]) with mapi id 15.20.8813.016; Sat, 7 Jun 2025
- 00:11:26 +0000
+ 00:11:08 +0000
 From: John Levon <john.levon@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -75,105 +75,124 @@ Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  John Johnson <john.g.johnson@oracle.com>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  Jagannathan Raman <jag.raman@oracle.com>
-Subject: [PATCH v3 19/23] vfio-user: implement VFIO_USER_DMA_READ/WRITE
-Date: Fri,  6 Jun 2025 17:10:51 -0700
-Message-ID: <20250607001056.335310-20-john.levon@nutanix.com>
+Subject: [PATCH v3 07/23] vfio-user: connect vfio proxy to remote server
+Date: Fri,  6 Jun 2025 17:10:39 -0700
+Message-ID: <20250607001056.335310-8-john.levon@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250607001056.335310-1-john.levon@nutanix.com>
 References: <20250607001056.335310-1-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
 X-ClientProxiedBy: PH8PR22CA0004.namprd22.prod.outlook.com
  (2603:10b6:510:2d1::19) To CH2PR02MB6760.namprd02.prod.outlook.com
  (2603:10b6:610:7f::9)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|CO1PR02MB8441:EE_
-X-MS-Office365-Filtering-Correlation-Id: f926a1f2-69ee-450f-26b1-08dda557d818
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB8715:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8adf2060-d392-43de-c991-08dda557cd8e
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|366016|376014|7416014;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?MQoZ73ZJrrDruM+3l76JyqiwiprCehFOCLKwI8Wqj+LYF/sIuPlaN8xIxKT8?=
- =?us-ascii?Q?U8msPO4rpwMyRqW/oczLiLMGZ96oixy3CXbI415h5bhDw7yBHgUK86jUDQDq?=
- =?us-ascii?Q?sYKUJVLX45Vg7B7T0rR+i+zG0px3ULEm07cTI5YIkT/C+OooFG9Q5Lx9O+hj?=
- =?us-ascii?Q?87GsZr6gVZG4Pw2tPhyVcDek1E7JU+M7+C2IEusTkt2j0oGsLGSFvTD7nvpE?=
- =?us-ascii?Q?GYYBqIuE6vu7SYMLEepFhgtgxJT+Sm5gW7dwFnvy9AfzuJlfOMwwITB6rv/r?=
- =?us-ascii?Q?1E0/I6VLpLEfvUv5pdQSjsxAoOOIirKY1Dg+Qux37xzTWWKEkIC2bd30LVhU?=
- =?us-ascii?Q?rUov8AUhYJ8gNVTh0F+8/eST/HAmG2peuZ+1o4v+0CU8a8f/rEnScmAxnJbz?=
- =?us-ascii?Q?7s7JY/H7uT51nf2YJyUyTy4/4DyRyZFssBZV13vHxuk7hDXLiHt351wRldfc?=
- =?us-ascii?Q?QGOsVVi7SabBV4LbLcdhdPctANDHez50ospYDTcIMNmqeW22ZE2ljS0zZnaK?=
- =?us-ascii?Q?SGW80aB2y+v9NxOY7MfCCGSfWct02U6uu7A2nYQB/KZ50DOoM6mrNlLArRp5?=
- =?us-ascii?Q?lXoCFLipbYRCRrBPQINJlREtUq0PtIXv7qrgVWRDV+mJ7XHKS6jgZUxLdPf4?=
- =?us-ascii?Q?qBxl9X+2wjQ42LasvPGGVbfcXN+QqOnbslvHy95R8Mhm6IcX7wpFG0eGz7c/?=
- =?us-ascii?Q?5CDZ6D1QoqSLMZqNQXusfKQ8UJahSnhbhYsXlkfDjYzaKA0mRRk+KdgHGp0S?=
- =?us-ascii?Q?LQziLNpjpcg81yOufb87wed2UNoIWvc6oaNItGnbU5NYlG1Ikvgz2KkTJhjK?=
- =?us-ascii?Q?qRXZNs4l655/xQ2ULAax5nDYbsL19syozKmXkc1pFCHvwAVpN0aempkobA4K?=
- =?us-ascii?Q?cfoGJfQpakKPkztpaur13dsbVp6JsCBepvPGx75uRBWtyemMWu/gseRSmO26?=
- =?us-ascii?Q?0CbOxK6MHmAvNMml7e+gnjXaWVh5eckpuJFmtHfkxVveqb3TramZPmqTbi7n?=
- =?us-ascii?Q?WmyQtovMffCqxpAAu9iW96dq5SJKJ3W57vbIiZi2UKTDmtogQnerNmXSCoP4?=
- =?us-ascii?Q?4imgnMtE637shlpJhYly5o9KlscdNd/u4zzYkJBTHuBX1OgrSmgLkJVJTNi9?=
- =?us-ascii?Q?5hcPUHE6Boc+810sJV/kOq1O5o6uLKFBPmKmxFj8sRHcjbLL2GoiOphJxi6z?=
- =?us-ascii?Q?IIT9dPkFAbeu2TxoQuuH6ZX8AKebwy5tVFXeuq/AukVsg0nc2m9ZrqTsRmMx?=
- =?us-ascii?Q?7loQDCibgz0wl0bUuGEa/toEvBNML6jcO3J8IiQrVpqxsZbrEEJQqzrI9rWX?=
- =?us-ascii?Q?hUO0nqlxexqjkI04UahQm8W5Jl+Od31toTT1IsH9qRVkpwtBi+6318TgtL2f?=
- =?us-ascii?Q?yZ9QqyUx2km50KxO1b3oABUwX/sMAG67FDoeuhaUv4wQD/4DEg=3D=3D?=
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|7416014|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?M3JhQzZPN1dpTHJkSll6S0lXUURTbkdRRlhRdnlIU2tuQVBwTnRsdmphVUFR?=
+ =?utf-8?B?b1I1Wm5UQXZjSThUNllNU2E5TllwZ3p3VkRlcElEVXRqMGtFcHR6MmNCQkRT?=
+ =?utf-8?B?ODRyYXVaV0F1c1pqcE50TEppZE9lTS9ZV1VQK25Bd2tFSlAvbHhuR0Q0VDdM?=
+ =?utf-8?B?bTcvdUNDOTFvaXArNURWL3haYjJrdE1FOGs3Rllkc0xDOGJmSzNwYUNhKzdD?=
+ =?utf-8?B?M2JvMVM3T0xGSlJhSmpCWTRyWlNzSDJWUWd1VEtNbTROZGsrc2J6c1VpS2Jo?=
+ =?utf-8?B?ZEwvRXVBMTR1Q0R3cDgxS1RUdmdHVndRMmNZOXNheFRnU2dIM1VQUStwSEtZ?=
+ =?utf-8?B?WGRyNEJLTG1nYzIvSUpKRTVRbllDUDBmaXNVT2RwM3dBTGhjckxlcnBRcjhO?=
+ =?utf-8?B?QXlBV28zV2x2cmpHVHZNWlZaam1LR0l6ZWgvUzZCK1RjWU1KZjMzOFV3WDVD?=
+ =?utf-8?B?eWhUeVBxWllUYUxOVWhVSkxQOHJjTDNrMjVCNlk0MmxJVExsS2FiNDhvcDVz?=
+ =?utf-8?B?NC9MN3Zlanp4UFZNN1NhUk5VLzVsRTgyYUJaejRpYmEwZTVwZnpPbHRKWDh5?=
+ =?utf-8?B?bVk3ZUorNTVudjBqVUlMTE9tbzJSYmNMWXVKQ3NOWWdSL2wvZWExNnNiQWlX?=
+ =?utf-8?B?ZnFKUldCVk1HSEgzcmRKRGlHQnBQTjB1dW4zYTdtZGVZaWJRYnpjTHFoQXpP?=
+ =?utf-8?B?SFpUUk0zWEUzaVFmNXBDeVdKd3doTE5EUms4WjBmNTVPMWIzOEVIZVhaQ3Jw?=
+ =?utf-8?B?eDVmVkk0bEQzOWtKeXp3RzhzRE04TTBkeVVJMThCVGJ2Mi9paGhUdlZJSGZS?=
+ =?utf-8?B?M1owTE9IMkVSTXB3ZThqTmorRmNEYkViUEdQOG9FTXNUTWswREpUQi9QOEVB?=
+ =?utf-8?B?NDVTbzZ0UzRhMGlGQ1RIK2ZiS3grVXd1Z3JyRHdaN3MrUXloY2VGK2VnZVJx?=
+ =?utf-8?B?ZGd4RUNaUVdlSUNkNGpRUk0zR1dnWjNQbTdSS3RQUnJQR2dEU1J0Q1FtaXJr?=
+ =?utf-8?B?RnBMTEtURVdJTjd1eUxvajdtekwrUUhPQnVtRDk4TWRhV3g5dUdudkJNcGUy?=
+ =?utf-8?B?Q0hiVEc0U1ZVUURZREd1RDZxMkhYRWl1MytVQU9ML0Z0N2tVUUY4S01FNVZq?=
+ =?utf-8?B?c2FMNjNUZTEwdWRxVU13V3JiRmxsOGd2MzRqWkdOVzk1NW1sWkJDZDZlbWt2?=
+ =?utf-8?B?aTN4QlNoYUZYRUdlWDBseVdjdkNpeVd0ejRrRkNyTmRhRTlaY1EvL3hySDNa?=
+ =?utf-8?B?bFNYNUxZT2l4aERkNnFkSW42KzRPYjk1QkpLcTBpVm5RLzRraStaWkl5V082?=
+ =?utf-8?B?bmVCVlJUVkovcERicW9tek9NZDAzbE40Y2JkS0lLcUkwMlpzV3h6V0NyRkdT?=
+ =?utf-8?B?WGZLNmNYTWxEV3J1eEhqYTBkbHdoMmJPclY4OWw5VWZzNGF5cXBwa3NGcDBH?=
+ =?utf-8?B?RkZ1cVVaVGNrU1ZGUkhDZEN6amY1VU9POGhoZ3prdGRhVHZrMnFtM2dOM0lZ?=
+ =?utf-8?B?bERuN1FJTG5iZXpJZFBEYXM5cCtVZG01dGxJcDhhTkZLM295b0xidzNNTjRT?=
+ =?utf-8?B?dUcyV25UWXVMRHVwckQxOU1EN2Rvd3paS2lrZE8xay9nelFoVkhvMlRrYkZM?=
+ =?utf-8?B?Uy9WbmRMLzNLaTlTSjZHUHYwMzFhRmNqaFJYU04rcVdidlA1QXptWHBrSkhi?=
+ =?utf-8?B?eHpjZzlTR2ZVaWlXRGJnV3N4MDU3M2hMeEdxQVVJcHZPQXBFVUw4MFlIcVFv?=
+ =?utf-8?B?MzhZQ3ArUWc4TDJkemlibEw5WXVkVExrQkNidUpyQjJZVFR2cnlyNGtSTjM3?=
+ =?utf-8?B?ZGtHZWVOUUZqbzFZa0xGRE1JVFF4VEtjL2JmOHdKTzIxaE9xZyt4OXRoTWto?=
+ =?utf-8?B?dFpldEZQMlVoQUZUb0ZGWithWGR4WkJyVkdhS3ZBYXd6WG9mUzRiN1d4UDI2?=
+ =?utf-8?Q?mSS3YymiLYA=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(7416014); DIR:OUT; SFP:1102; 
+ SFS:(13230040)(1800799024)(7416014)(376014)(366016); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?/4Wyywoqk6kxSEJW/baCrP5KuEbU4H+KB791X8zCgB3lrcpsQArHa4CwKw/2?=
- =?us-ascii?Q?5WEThMTxXqnFRJEll2EqcRrRk11cUf0uDmo+Q3bf6MpEfIQqI52JB6Uev5sW?=
- =?us-ascii?Q?QreLtO12k7vfpJi3N6j6wkxf5or8Egh1+rpwSs+vaLdBmdqZDqmJXxEwJqgU?=
- =?us-ascii?Q?gpyh/Nm0k/+tJnRXEyCipI7+t+FCFgzfN5ifZs7J0WA18KvmLga5GR74tTwO?=
- =?us-ascii?Q?S7yRljIfFegLoY+nMHFD1MkNLaiX38ENr2/NTkcYH+jnuMyCcquVuf95Ddc9?=
- =?us-ascii?Q?OtOngRqKEoGVTtMYdCDbUrhkRtIYaOAuKadJyUaEfcusmYjnzkZGR7I9QKym?=
- =?us-ascii?Q?vSYdkurdh7On3NJBDhMj7GTuf8HeMeAymW1tYZJ2AYjgmiHm9VVpfjpGG7uX?=
- =?us-ascii?Q?e1XIyqyRKVUOkOStcD42BI4ZM9gQqhZlaCq8sIOEEu5h5OEaIzHNJMk4zcwE?=
- =?us-ascii?Q?ksnoBiJ8kk7sFgONi/o5WRCAc4e9MUILEwmUGXVsFgluDZR3DdlkKJy6Deam?=
- =?us-ascii?Q?qbWrwseIP+CQs2BfQD/MCfT5IZ5miTXAwmXLnWP7uaOC1mDjAGyDvUU6kn9J?=
- =?us-ascii?Q?YZTuXQx3CPT7RfdB0vnlRg+CC7qDZLFJiy+8Em9NH/2pIRv27bj/F5A3hWVz?=
- =?us-ascii?Q?sywZVNkn0V2+1laSBKiDScyj5r+sl2XBflY0oepXTL/SoVuoQBZmZwJ+9Rug?=
- =?us-ascii?Q?5PZN+UZnE657qaUy6cIx6x1RjT+kEqO71p5gViXiZallncRYgrg+13YhcSoa?=
- =?us-ascii?Q?uGdxr/tu1OM+6C1Xgz6zsvEK5mn2jWO6d1odyxV06pVFH+VgGUI4YIRPPtcp?=
- =?us-ascii?Q?dRFVqdVT0nUf58dD/snWREnprWLLlQCaVwMMxv4bHgMmrFvDFQL4Rn6vMEw6?=
- =?us-ascii?Q?n4fkrb6NBNnb+qVSA2d4gS5//em3pQvCSGURz6FrUXVJDPay7o9n1OMY97m1?=
- =?us-ascii?Q?kLMNB7yV2m6Ssj+70bfm4t6BBDiIV/kS6TK75l477DCDZwhlMl9X0xZKzmhN?=
- =?us-ascii?Q?hB4grXxAbS6AlKnTPs/irdhXI6RuqnX/VuaPBpgc6Rl/d87mzpUifE8azLsK?=
- =?us-ascii?Q?mXf04A7HQPrXqy2IrvqZPv/ty/rdWkBwidw1iioXweggDIPbX8rMj+eii5Yt?=
- =?us-ascii?Q?Pukvda3HleMoP1JadxMA9rk8Hak8i9LviHDq4dXGv3gIF/ux5OLHBm063mVj?=
- =?us-ascii?Q?lt9Pl6I7T2pJ3x2KdVxXHPx1TcyzljPWY+0Q1EOV0Ge6dvBuIx6OVIjFZM6g?=
- =?us-ascii?Q?TluQme4rj9SMl+1A5tnZhFUlvcSX9JbYQHxSRdh/2UtHQvHrDqyLRDFzj0ub?=
- =?us-ascii?Q?E/7HfhPm57lPGHg4rzr5eaL5N9UiQZfNGGMlONLAu1BKPkMyNxRoCyhrI0PB?=
- =?us-ascii?Q?HeAthUzIFed7MtZUCQCJdSgP+IBF4j+3oQQ0cbWG8LDAQLpVVhnS2jzYYD3V?=
- =?us-ascii?Q?q8BdIZEoTQDzVe97+g7D5Engk7l2l3dNh2UXzanF88YK5He2q6S53Mll/I3T?=
- =?us-ascii?Q?0zBSNFU3hHRpRLOPOQnrtw1TUjpiQhenMovg0cKjvsvG9Ru4ahNE+A8HU87d?=
- =?us-ascii?Q?wYOQc8mP+B7CBzB3exo+VE/VMHNhaNaZ5bkC4WJ9?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?THArQXBoZ2QzQVRaMDNnV0RjOWliUE9mWjJicVdCU0NrT0NCb0VHK0pMUmhi?=
+ =?utf-8?B?UUlweTA1WmJOMnZVWGtjT3RleTJhRk1YM2VZbFBVSEFsWHNKTFByeWxuRlpy?=
+ =?utf-8?B?NDI1S0VFMTBLTGk4bkZLQ1FpSFExLzl3Q2o2TWc2dThNSGE4OENrZHZoQjhN?=
+ =?utf-8?B?MUpjbXdCVThRenlZS1kxTHAybkwxY2dNcjN3aE5CVk53bVNweGMxS1d5bEJa?=
+ =?utf-8?B?THhIc0pxbUtuV1NlbHMrS1YvT3BlTlp1WUZKRDRDUmNhczU1aVE1S2VGVnNw?=
+ =?utf-8?B?WnU5aUo0bUFlaWZXMTJuQUozTE9oKzJtS1RlOEltS29vVmtyK0ZUOWpsUlJ5?=
+ =?utf-8?B?bmJuaEtaUUpLWjJjekVPUGFDTFhiWklqN1NGN3ZsMG16OXdNTEQwM0VNMHJ4?=
+ =?utf-8?B?cGo5aTMvWGM2M1pHaWlReFR0M3JRL0NLT1FqNzQ1QjZ6T3pyaW54bXNpWHE3?=
+ =?utf-8?B?UjBiUkUrMEJtUVdsYk1yS3hvMXZkOXl5YVdOY2gyL3lianJuY2xFNzZpLytG?=
+ =?utf-8?B?VWtQdSt0WEpMa082SzdFaEsxTHBZV1Rpc3pZQUYyNTFWLy9yaWNGZk9yNHlF?=
+ =?utf-8?B?Rno3MlZ6MnBqMXVzODVXM3FWak9nWkk4SXVETEtYQ09QYmVLNjNtS0cwaEYy?=
+ =?utf-8?B?MGNnNGIwdWlBamlKQjBBNDhZUk5GT1A2RGtXOEdCb0F4WEJzZEJkQjl3SnFR?=
+ =?utf-8?B?NEJnejVrN2p5NUw5WERFbjZ4emZYTnV0N0JCbWVhOUFnSm5XWHMzL0paL0Nh?=
+ =?utf-8?B?T1lkeWVCNkJGYzFVY0dIRTNiRHNFdVZFMXlNZ2NXYVI4Z0RKMzhQN3Vxa3Ft?=
+ =?utf-8?B?Q2JzTjBGa1ZUM25nLzFQeFhnazVYblhvbDM5SWxvWGdjTjR2bFR4dHpiQWxJ?=
+ =?utf-8?B?R0wwcm5MejlmaXpjQmtuZFdwbUxtSjdzN3Rxc1lXU1VhZGNSWkU2eEphaXQ2?=
+ =?utf-8?B?QVZQaHY1UE1RNk4wYnNBR3RHbzJWTmNsQTA0bWQyUGJUdlhyaWl5OFNhVnFL?=
+ =?utf-8?B?TjBGZ005Z1ZUc29mUnpIWEFBaStxcXJGc0lVRjRFQUp0Z3NhQUVkcXVQRnp5?=
+ =?utf-8?B?d0RuaWNwaFpxT3NMQ2NkSlMzVTloVmJDcThxYnd0UFNjTTNaUitwWG1STlAx?=
+ =?utf-8?B?bDErNHB0aGNKQ0FHMHIxaGRKYWNJektaaWZDT1owRW12b3U3RGhXamF1MzVQ?=
+ =?utf-8?B?Z1RocElOVTN4QTYrVllrTzFuTkl0OGVQRHRTQVZqL2pKcTJIdlRUR1dXeGc0?=
+ =?utf-8?B?cUljalQxanNHdDlsR2N0Y1hnVW9ZcnBJSlptZGowbk8zaXYwVG9KLzlKVVFj?=
+ =?utf-8?B?MDJPR2Njd3VaVzd6ZExmS2MxRkhyVVhIaG9ORVNzdGJmU2xuOUswM3U0SFk5?=
+ =?utf-8?B?bVQ1SjYxWDdSMTU3WVVEalpOb3kvVXJlV3dsNXczekllWVpVczZKckpUa2Vo?=
+ =?utf-8?B?SWh0LzVYMmR6Q2VGQ29wT3Ztd3lwV0ZzdU9mMDJ4R0hNNGxUZVpEN1Q2b0JG?=
+ =?utf-8?B?RUFpWGJxendLOTN4S29CZklsSE9OTzl2cFpSZWZGWW1EK2k1K1FJNisrZ3Vy?=
+ =?utf-8?B?a0w1c0hSWjhSR09kQ1RnMnB5YmRuUUdkY1Rkc29MSU1TM3gvT3l4blQ5K0ov?=
+ =?utf-8?B?L2dxUmI3dlVNMlk0Qm5wSFFHL3FmZVBMN3FQeEpMT1R3VklXdUlHR1ZSc3dC?=
+ =?utf-8?B?QmxUSGhSclhLWFo3RmRZUDRMcGtNVi9aZE5TcHJHb0QrUVJRdG1FOUNpSHNB?=
+ =?utf-8?B?b211emowWWtyUFczWlVoWTc5NnphQmIvOTByc3I3ZHB1emtkZ3BmVDI3V0k1?=
+ =?utf-8?B?aXNUelZQNFZwcVR5OUZxTmFjUGZpcXc4VGVRTVJPYkluTWoza0JKUkhRamRn?=
+ =?utf-8?B?Zzl4SkZuYThiN28rbkNoYnR5c2YxeTJJaE1iWWlsb1pVcGRMbjFRUWxQbks0?=
+ =?utf-8?B?aEt1a2JwQVBuM1I2TmVsb2hWbWhaT0NDM0s5QVYway9BKzUwL1VrS0RzMm1a?=
+ =?utf-8?B?aFdHMW9LMFhLdFZPYzNTYTBYK1JGbTdia1VmcXh2dy96d1h1WHRvRHBrcWhq?=
+ =?utf-8?B?UEkyVHdQd0NzZ2o5bEpYaFlHVTFNcDAxUjd2aWdSNktkVVFQRkRTdkxFTWZk?=
+ =?utf-8?Q?RFz46UGlst4x1BXVK4w4LRQ24?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f926a1f2-69ee-450f-26b1-08dda557d818
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8adf2060-d392-43de-c991-08dda557cd8e
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2025 00:11:26.4248 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Jun 2025 00:11:08.7640 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: zEiHmPe5mTt80KoddCTipnd/+rhcRqnL8tcyX2ursboMjSQJLX0hgQrURiPyulW9VH7tDpNlqgWX+UC/fckfIg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR02MB8441
-X-Authority-Analysis: v=2.4 cv=f9JIBPyM c=1 sm=1 tr=0 ts=684383b1 cx=c_pps
- a=JomqzcHDjT5Ni/tnCvtrfQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+X-MS-Exchange-CrossTenant-UserPrincipalName: nNKQU9lLHhczih8+APq1XGkl0sSQG2qHSsilExV0WbHt5nh+jrkVibVfdjhbDXqEoFE9QRjGWIhQanf84HOIvA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB8715
+X-Authority-Analysis: v=2.4 cv=f9JIBPyM c=1 sm=1 tr=0 ts=6843839e cx=c_pps
+ a=E00YimykegQh2ruOzwX4zg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10 a=yPCof4ZbAAAA:8
- a=64Cc0HZtAAAA:8 a=qTvU7B1ccVJYr7cy3AMA:9
-X-Proofpoint-GUID: eQkxP92-Yq8lGAZvZgPkf5ut6Q9fyEbW
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDE5OSBTYWx0ZWRfX9nILEL4K9GMh
- 1EdNSs5o6GabZdRqFXymaFFVPce87jkRupEbv80JjbTzhepQtJttJBTHk8sSE+Ai9mag15KwKYH
- K2/GkHWeR323X8S/1oGmyQAOOG9Za41KC/uK0BMvcFlYWnVe63qSbUqDsw0aQBgm7HV0RJVk89r
- vvvzqkuTmsewsSwWRVRyBmxFLV/7K/fuFkWCaYaA2tRk6qXPtO+/+wyjihcsSNO7mqbjSJrpquX
- orEAREnswUBbmogNOjWcNL6EKO9cF1dHbwDgeqfXipEWPYpGEbzqHAUQXGHyT8uScZqxYKN3W5H
- mSLo6St9BpNKCsVj22K0pyTK1uqGgkEe9YneSpFCXGgLvtndhzO4u0iSEKZR4VAqjjEzrC7qw1j
- 1LPurT+ZE2rzYO2mUlH8lZIm9XO+zH+asfhpmusIr+eeGlvHgJlmDlyr/TxGlFOfqtbgQibI
-X-Proofpoint-ORIG-GUID: eQkxP92-Yq8lGAZvZgPkf5ut6Q9fyEbW
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10
+ a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8 a=vhHEnE-nI2wpHcbFAcgA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: dcrF1k0oejixIN6JznsyFcSZlsLdW-bX
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA2MDE5OSBTYWx0ZWRfX5zxuADkksZ2Q
+ f5XSz0x5cnlei9mo8SBGH5hnlW53FoWehYiSXacgU9xdarSOmZdLxMDiYnOwJ4ydfAhcGtvD3EH
+ YNg+xmAYRbMrsqc11TLSGWkoKp/IG+H9DaT76Cz7aq2r77z5FnAGypJVBguObzyeqKhCEypDZ2O
+ F5/un80cdelewoxrVuRMyiwp1CkKBnQl2SKl9z+4uZosN5K4d/220TAustTDluv41oiD7Vhhgxu
+ vjnbbJApH6GvoDIpVta1JFgPcx025InG+VMy/mkq9vLIhLaRVDbqfVtoDHk14tkJdjytZA5VEVU
+ uXqi7F9KgT08OKNhso3jMtZDL3EIZO/uMg3Al9oyuYzb6cHIrmr9oBLEGFDicPNsnDqKrM0Y0Ra
+ PkyAGav/AnMEGQXgU/PHWZvFAhA2sDmgnWhH8u0e+j03o3Iw4EOoFrk4f+ywzb036i4bmGqR
+X-Proofpoint-ORIG-GUID: dcrF1k0oejixIN6JznsyFcSZlsLdW-bX
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-06_09,2025-06-05_01,2025-03-28_01
@@ -203,311 +222,369 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unlike most other messages, this is a server->client message, for when a
-server wants to do "DMA"; this is slow, so normally the server has
-memory directly mapped instead.
+Introduce the vfio-user "proxy": this is the client code responsible for
+sending and receiving vfio-user messages across the control socket.
+
+The new files hw/vfio-user/proxy.[ch] contain some basic plumbing for
+managing the proxy; initialize the proxy during realization of the
+VFIOUserPCIDevice instance.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
 Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio-user/protocol.h |  13 ++++-
- hw/vfio-user/proxy.h    |   3 ++
- hw/vfio-user/pci.c      | 111 ++++++++++++++++++++++++++++++++++++++++
- hw/vfio-user/proxy.c    |  84 ++++++++++++++++++++++++++++++
- 4 files changed, 210 insertions(+), 1 deletion(-)
+ hw/vfio-user/proxy.h          |  82 +++++++++++++++++
+ include/hw/vfio/vfio-device.h |   2 +
+ hw/vfio-user/pci.c            |  17 ++++
+ hw/vfio-user/proxy.c          | 165 ++++++++++++++++++++++++++++++++++
+ hw/vfio-user/meson.build      |   1 +
+ 5 files changed, 267 insertions(+)
+ create mode 100644 hw/vfio-user/proxy.h
+ create mode 100644 hw/vfio-user/proxy.c
 
-diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
-index 4fa6d03b3f..8f589faef4 100644
---- a/hw/vfio-user/protocol.h
-+++ b/hw/vfio-user/protocol.h
-@@ -203,7 +203,18 @@ typedef struct {
-     char data[];
- } VFIOUserRegionRW;
- 
--/*imported from struct vfio_bitmap */
-+/*
-+ * VFIO_USER_DMA_READ
-+ * VFIO_USER_DMA_WRITE
-+ */
-+typedef struct {
-+    VFIOUserHdr hdr;
-+    uint64_t offset;
-+    uint32_t count;
-+    char data[];
-+} VFIOUserDMARW;
-+
-+/* imported from struct vfio_bitmap */
- typedef struct {
-     uint64_t pgsize;
-     uint64_t size;
 diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
-index 01fed3f17d..8f2d529846 100644
---- a/hw/vfio-user/proxy.h
+new file mode 100644
+index 0000000000..60fe3e0b6d
+--- /dev/null
 +++ b/hw/vfio-user/proxy.h
-@@ -104,6 +104,7 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
- bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp);
+@@ -0,0 +1,82 @@
++#ifndef VFIO_USER_PROXY_H
++#define VFIO_USER_PROXY_H
++
++/*
++ * vfio protocol over a UNIX socket.
++ *
++ * Copyright © 2018, 2021 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2.  See
++ * the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "io/channel.h"
++#include "io/channel-socket.h"
++
++typedef struct {
++    int send_fds;
++    int recv_fds;
++    int *fds;
++} VFIOUserFDs;
++
++enum msg_type {
++    VFIO_MSG_NONE,
++    VFIO_MSG_ASYNC,
++    VFIO_MSG_WAIT,
++    VFIO_MSG_NOWAIT,
++    VFIO_MSG_REQ,
++};
++
++typedef struct VFIOUserMsg {
++    QTAILQ_ENTRY(VFIOUserMsg) next;
++    VFIOUserFDs *fds;
++    uint32_t rsize;
++    uint32_t id;
++    QemuCond cv;
++    bool complete;
++    enum msg_type type;
++} VFIOUserMsg;
++
++
++enum proxy_state {
++    VFIO_PROXY_CONNECTED = 1,
++    VFIO_PROXY_ERROR = 2,
++    VFIO_PROXY_CLOSING = 3,
++    VFIO_PROXY_CLOSED = 4,
++};
++
++typedef QTAILQ_HEAD(VFIOUserMsgQ, VFIOUserMsg) VFIOUserMsgQ;
++
++typedef struct VFIOUserProxy {
++    QLIST_ENTRY(VFIOUserProxy) next;
++    char *sockname;
++    struct QIOChannel *ioc;
++    void (*request)(void *opaque, VFIOUserMsg *msg);
++    void *req_arg;
++    int flags;
++    QemuCond close_cv;
++    AioContext *ctx;
++    QEMUBH *req_bh;
++
++    /*
++     * above only changed when BQL is held
++     * below are protected by per-proxy lock
++     */
++    QemuMutex lock;
++    VFIOUserMsgQ free;
++    VFIOUserMsgQ pending;
++    VFIOUserMsgQ incoming;
++    VFIOUserMsgQ outgoing;
++    VFIOUserMsg *last_nowait;
++    enum proxy_state state;
++} VFIOUserProxy;
++
++/* VFIOProxy flags */
++#define VFIO_PROXY_CLIENT        0x1
++
++VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp);
++void vfio_user_disconnect(VFIOUserProxy *proxy);
++
++#endif /* VFIO_USER_PROXY_H */
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index a23ef4ea13..09f1a21bf8 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -46,6 +46,7 @@ typedef struct VFIOMigration VFIOMigration;
  
- VFIOUserFDs *vfio_user_getfds(int numfds);
-+void vfio_user_putfds(VFIOUserMsg *msg);
+ typedef struct IOMMUFDBackend IOMMUFDBackend;
+ typedef struct VFIOIOASHwpt VFIOIOASHwpt;
++typedef struct VFIOUserProxy VFIOUserProxy;
  
- void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
-                            uint32_t size, uint32_t flags);
-@@ -112,5 +113,7 @@ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                          VFIOUserFDs *fds, int rsize);
- void vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-                            VFIOUserFDs *fds, int rsize);
-+void vfio_user_send_reply(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int size);
-+void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error);
+ typedef struct VFIODevice {
+     QLIST_ENTRY(VFIODevice) next;
+@@ -86,6 +87,7 @@ typedef struct VFIODevice {
+     QLIST_ENTRY(VFIODevice) hwpt_next;
+     struct vfio_region_info **reginfo;
+     int *region_fds;
++    VFIOUserProxy *proxy;
+ } VFIODevice;
  
- #endif /* VFIO_USER_PROXY_H */
+ struct VFIODeviceOps {
 diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
-index 2bc71b9b54..095f32604d 100644
+index 74b0c61f9b..f1a2d4374d 100644
 --- a/hw/vfio-user/pci.c
 +++ b/hw/vfio-user/pci.c
-@@ -11,6 +11,7 @@
- 
- #include <sys/ioctl.h>
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
+@@ -14,6 +14,7 @@
  
  #include "hw/qdev-properties.h"
  #include "hw/vfio/pci.h"
-@@ -82,6 +83,95 @@ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
-     vdev->msix->pba_region = NULL;
- }
++#include "hw/vfio-user/proxy.h"
  
-+static void vfio_user_dma_read(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
-+{
-+    PCIDevice *pdev = &vdev->pdev;
-+    VFIOUserProxy *proxy = vdev->vbasedev.proxy;
-+    VFIOUserDMARW *res;
-+    MemTxResult r;
-+    size_t size;
-+
-+    if (msg->hdr.size < sizeof(*msg)) {
-+        vfio_user_send_error(proxy, &msg->hdr, EINVAL);
+ #define TYPE_VFIO_USER_PCI "vfio-user-pci"
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
+@@ -55,6 +56,8 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+     VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
+     VFIODevice *vbasedev = &vdev->vbasedev;
+     AddressSpace *as;
++    SocketAddress addr;
++    VFIOUserProxy *proxy;
+ 
+     /*
+      * TODO: make option parser understand SocketAddress
+@@ -67,6 +70,15 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         return;
+     }
+ 
++    memset(&addr, 0, sizeof(addr));
++    addr.type = SOCKET_ADDRESS_TYPE_UNIX;
++    addr.u.q_unix.path = udev->sock_name;
++    proxy = vfio_user_connect_dev(&addr, errp);
++    if (!proxy) {
 +        return;
 +    }
-+    if (msg->count > proxy->max_xfer_size) {
-+        vfio_user_send_error(proxy, &msg->hdr, E2BIG);
-+        return;
-+    }
++    vbasedev->proxy = proxy;
 +
-+    /* switch to our own message buffer */
-+    size = msg->count + sizeof(VFIOUserDMARW);
-+    res = g_malloc0(size);
-+    memcpy(res, msg, sizeof(*res));
-+    g_free(msg);
-+
-+    r = pci_dma_read(pdev, res->offset, &res->data, res->count);
-+
-+    switch (r) {
-+    case MEMTX_OK:
-+        if (res->hdr.flags & VFIO_USER_NO_REPLY) {
-+            g_free(res);
-+            return;
-+        }
-+        vfio_user_send_reply(proxy, &res->hdr, size);
-+        break;
-+    case MEMTX_ERROR:
-+        vfio_user_send_error(proxy, &res->hdr, EFAULT);
-+        break;
-+    case MEMTX_DECODE_ERROR:
-+        vfio_user_send_error(proxy, &res->hdr, ENODEV);
-+        break;
-+    case MEMTX_ACCESS_ERROR:
-+        vfio_user_send_error(proxy, &res->hdr, EPERM);
-+        break;
-+    default:
-+        error_printf("vfio_user_dma_read unknown error %d\n", r);
-+        vfio_user_send_error(vdev->vbasedev.proxy, &res->hdr, EINVAL);
-+    }
-+}
-+
-+static void vfio_user_dma_write(VFIOPCIDevice *vdev, VFIOUserDMARW *msg)
-+{
-+    PCIDevice *pdev = &vdev->pdev;
-+    VFIOUserProxy *proxy = vdev->vbasedev.proxy;
-+    MemTxResult r;
-+
-+    if (msg->hdr.size < sizeof(*msg)) {
-+        vfio_user_send_error(proxy, &msg->hdr, EINVAL);
-+        return;
-+    }
-+    /* make sure transfer count isn't larger than the message data */
-+    if (msg->count > msg->hdr.size - sizeof(*msg)) {
-+        vfio_user_send_error(proxy, &msg->hdr, E2BIG);
-+        return;
-+    }
-+
-+    r = pci_dma_write(pdev, msg->offset, &msg->data, msg->count);
-+
-+    switch (r) {
-+    case MEMTX_OK:
-+        if ((msg->hdr.flags & VFIO_USER_NO_REPLY) == 0) {
-+            vfio_user_send_reply(proxy, &msg->hdr, sizeof(msg->hdr));
-+        } else {
-+            g_free(msg);
-+        }
-+        break;
-+    case MEMTX_ERROR:
-+        vfio_user_send_error(proxy, &msg->hdr, EFAULT);
-+        break;
-+    case MEMTX_DECODE_ERROR:
-+        vfio_user_send_error(proxy, &msg->hdr, ENODEV);
-+        break;
-+    case MEMTX_ACCESS_ERROR:
-+        vfio_user_send_error(proxy, &msg->hdr, EPERM);
-+        break;
-+    default:
-+        error_printf("vfio_user_dma_write unknown error %d\n", r);
-+        vfio_user_send_error(vdev->vbasedev.proxy, &msg->hdr, EINVAL);
-+    }
-+}
-+
- /*
-  * Incoming request message callback.
-  *
-@@ -89,7 +179,28 @@ static void vfio_user_msix_teardown(VFIOPCIDevice *vdev)
-  */
- static void vfio_user_pci_process_req(void *opaque, VFIOUserMsg *msg)
+     vbasedev->name = g_strdup_printf("VFIO user <%s>", udev->sock_name);
+ 
+     /*
+@@ -112,8 +124,13 @@ static void vfio_user_instance_init(Object *obj)
+ static void vfio_user_instance_finalize(Object *obj)
  {
-+    VFIOPCIDevice *vdev = opaque;
-+    VFIOUserHdr *hdr = msg->hdr;
-+
-+    /* no incoming PCI requests pass FDs */
-+    if (msg->fds != NULL) {
-+        vfio_user_send_error(vdev->vbasedev.proxy, hdr, EINVAL);
-+        vfio_user_putfds(msg);
-+        return;
-+    }
+     VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
++    VFIODevice *vbasedev = &vdev->vbasedev;
  
-+    switch (hdr->command) {
-+    case VFIO_USER_DMA_READ:
-+        vfio_user_dma_read(vdev, (VFIOUserDMARW *)hdr);
-+        break;
-+    case VFIO_USER_DMA_WRITE:
-+        vfio_user_dma_write(vdev, (VFIOUserDMARW *)hdr);
-+        break;
-+    default:
-+        error_printf("vfio_user_pci_process_req unknown cmd %d\n",
-+                     hdr->command);
-+        vfio_user_send_error(vdev->vbasedev.proxy, hdr, ENOSYS);
+     vfio_pci_put_device(vdev);
++
++    if (vbasedev->proxy != NULL) {
++        vfio_user_disconnect(vbasedev->proxy);
 +    }
  }
  
- /*
+ static const Property vfio_user_pci_dev_properties[] = {
 diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 6d1446c38b..0935b72e9f 100644
---- a/hw/vfio-user/proxy.c
+new file mode 100644
+index 0000000000..ac481553ba
+--- /dev/null
 +++ b/hw/vfio-user/proxy.c
-@@ -362,6 +362,10 @@ static int vfio_user_recv_one(VFIOUserProxy *proxy)
-         *msg->hdr = hdr;
-         data = (char *)msg->hdr + sizeof(hdr);
-     } else {
-+        if (hdr.size > proxy->max_xfer_size + sizeof(VFIOUserDMARW)) {
-+            error_setg(&local_err, "vfio_user_recv request larger than max");
-+            goto err;
-+        }
-         buf = g_malloc0(hdr.size);
-         memcpy(buf, &hdr, sizeof(hdr));
-         data = buf + sizeof(hdr);
-@@ -676,6 +680,33 @@ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-     qemu_mutex_unlock(&proxy->lock);
- }
- 
+@@ -0,0 +1,165 @@
 +/*
-+ * async send - msg can be queued, but will be freed when sent
++ * vfio protocol over a UNIX socket.
++ *
++ * Copyright © 2018, 2021 Oracle and/or its affiliates.
++ *
++ * This work is licensed under the terms of the GNU GPL, version 2 or later.
++ * See the COPYING file in the top-level directory.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
-+static void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
-+                                 VFIOUserFDs *fds)
-+{
-+    VFIOUserMsg *msg;
-+    int ret;
 +
-+    if (!(hdr->flags & (VFIO_USER_NO_REPLY | VFIO_USER_REPLY))) {
-+        error_printf("vfio_user_send_async on sync message\n");
-+        return;
-+    }
++#include "qemu/osdep.h"
++#include <sys/ioctl.h>
++
++#include "hw/vfio/vfio-device.h"
++#include "hw/vfio-user/proxy.h"
++#include "qapi/error.h"
++#include "qemu/error-report.h"
++#include "qemu/lockable.h"
++#include "system/iothread.h"
++
++static IOThread *vfio_user_iothread;
++
++static void vfio_user_shutdown(VFIOUserProxy *proxy);
++
++
++/*
++ * Functions called by main, CPU, or iothread threads
++ */
++
++static void vfio_user_shutdown(VFIOUserProxy *proxy)
++{
++    qio_channel_shutdown(proxy->ioc, QIO_CHANNEL_SHUTDOWN_READ, NULL);
++    qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx, NULL,
++                                   proxy->ctx, NULL, NULL);
++}
++
++/*
++ * Functions only called by iothread
++ */
++
++static void vfio_user_cb(void *opaque)
++{
++    VFIOUserProxy *proxy = opaque;
 +
 +    QEMU_LOCK_GUARD(&proxy->lock);
 +
-+    msg = vfio_user_getmsg(proxy, hdr, fds);
-+    msg->id = hdr->id;
-+    msg->rsize = 0;
-+    msg->type = VFIO_MSG_ASYNC;
-+
-+    ret = vfio_user_send_queued(proxy, msg);
-+    if (ret < 0) {
-+        vfio_user_recycle(proxy, msg);
-+    }
++    proxy->state = VFIO_PROXY_CLOSED;
++    qemu_cond_signal(&proxy->close_cv);
 +}
 +
- void vfio_user_wait_reqs(VFIOUserProxy *proxy)
- {
-     VFIOUserMsg *msg;
-@@ -720,6 +751,59 @@ void vfio_user_wait_reqs(VFIOUserProxy *proxy)
-     qemu_mutex_unlock(&proxy->lock);
- }
- 
-+/*
-+ * Reply to an incoming request.
-+ */
-+void vfio_user_send_reply(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int size)
-+{
 +
-+    if (size < sizeof(VFIOUserHdr)) {
-+        error_printf("vfio_user_send_reply - size too small\n");
-+        g_free(hdr);
-+        return;
++/*
++ * Functions called by main or CPU threads
++ */
++
++static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
++    QLIST_HEAD_INITIALIZER(vfio_user_sockets);
++
++VFIOUserProxy *vfio_user_connect_dev(SocketAddress *addr, Error **errp)
++{
++    VFIOUserProxy *proxy;
++    QIOChannelSocket *sioc;
++    QIOChannel *ioc;
++    char *sockname;
++
++    if (addr->type != SOCKET_ADDRESS_TYPE_UNIX) {
++        error_setg(errp, "vfio_user_connect - bad address family");
++        return NULL;
++    }
++    sockname = addr->u.q_unix.path;
++
++    sioc = qio_channel_socket_new();
++    ioc = QIO_CHANNEL(sioc);
++    if (qio_channel_socket_connect_sync(sioc, addr, errp)) {
++        object_unref(OBJECT(ioc));
++        return NULL;
++    }
++    qio_channel_set_blocking(ioc, false, NULL);
++
++    proxy = g_malloc0(sizeof(VFIOUserProxy));
++    proxy->sockname = g_strdup_printf("unix:%s", sockname);
++    proxy->ioc = ioc;
++    proxy->flags = VFIO_PROXY_CLIENT;
++    proxy->state = VFIO_PROXY_CONNECTED;
++
++    qemu_mutex_init(&proxy->lock);
++    qemu_cond_init(&proxy->close_cv);
++
++    if (vfio_user_iothread == NULL) {
++        vfio_user_iothread = iothread_create("VFIO user", errp);
++    }
++
++    proxy->ctx = iothread_get_aio_context(vfio_user_iothread);
++
++    QTAILQ_INIT(&proxy->outgoing);
++    QTAILQ_INIT(&proxy->incoming);
++    QTAILQ_INIT(&proxy->free);
++    QTAILQ_INIT(&proxy->pending);
++    QLIST_INSERT_HEAD(&vfio_user_sockets, proxy, next);
++
++    return proxy;
++}
++
++void vfio_user_disconnect(VFIOUserProxy *proxy)
++{
++    VFIOUserMsg *r1, *r2;
++
++    qemu_mutex_lock(&proxy->lock);
++
++    /* our side is quitting */
++    if (proxy->state == VFIO_PROXY_CONNECTED) {
++        vfio_user_shutdown(proxy);
++        if (!QTAILQ_EMPTY(&proxy->pending)) {
++            error_printf("vfio_user_disconnect: outstanding requests\n");
++        }
++    }
++    object_unref(OBJECT(proxy->ioc));
++    proxy->ioc = NULL;
++
++    proxy->state = VFIO_PROXY_CLOSING;
++    QTAILQ_FOREACH_SAFE(r1, &proxy->outgoing, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->outgoing, r1, next);
++        g_free(r1);
++    }
++    QTAILQ_FOREACH_SAFE(r1, &proxy->incoming, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->incoming, r1, next);
++        g_free(r1);
++    }
++    QTAILQ_FOREACH_SAFE(r1, &proxy->pending, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->pending, r1, next);
++        g_free(r1);
++    }
++    QTAILQ_FOREACH_SAFE(r1, &proxy->free, next, r2) {
++        qemu_cond_destroy(&r1->cv);
++        QTAILQ_REMOVE(&proxy->free, r1, next);
++        g_free(r1);
 +    }
 +
 +    /*
-+     * convert header to associated reply
++     * Make sure the iothread isn't blocking anywhere
++     * with a ref to this proxy by waiting for a BH
++     * handler to run after the proxy fd handlers were
++     * deleted above.
 +     */
-+    hdr->flags = VFIO_USER_REPLY;
-+    hdr->size = size;
++    aio_bh_schedule_oneshot(proxy->ctx, vfio_user_cb, proxy);
++    qemu_cond_wait(&proxy->close_cv, &proxy->lock);
 +
-+    vfio_user_send_async(proxy, hdr, NULL);
-+}
++    /* we now hold the only ref to proxy */
++    qemu_mutex_unlock(&proxy->lock);
++    qemu_cond_destroy(&proxy->close_cv);
++    qemu_mutex_destroy(&proxy->lock);
 +
-+/*
-+ * Send an error reply to an incoming request.
-+ */
-+void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error)
-+{
-+
-+    /*
-+     * convert header to associated reply
-+     */
-+    hdr->flags = VFIO_USER_REPLY;
-+    hdr->flags |= VFIO_USER_ERROR;
-+    hdr->error_reply = error;
-+    hdr->size = sizeof(*hdr);
-+
-+    vfio_user_send_async(proxy, hdr, NULL);
-+}
-+
-+/*
-+ * Close FDs erroneously received in an incoming request.
-+ */
-+void vfio_user_putfds(VFIOUserMsg *msg)
-+{
-+    VFIOUserFDs *fds = msg->fds;
-+    int i;
-+
-+    for (i = 0; i < fds->recv_fds; i++) {
-+        close(fds->fds[i]);
++    QLIST_REMOVE(proxy, next);
++    if (QLIST_EMPTY(&vfio_user_sockets)) {
++        iothread_destroy(vfio_user_iothread);
++        vfio_user_iothread = NULL;
 +    }
-+    g_free(fds);
-+    msg->fds = NULL;
-+}
 +
- static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
-     QLIST_HEAD_INITIALIZER(vfio_user_sockets);
++    g_free(proxy->sockname);
++    g_free(proxy);
++}
+diff --git a/hw/vfio-user/meson.build b/hw/vfio-user/meson.build
+index f1fee70c85..695b341547 100644
+--- a/hw/vfio-user/meson.build
++++ b/hw/vfio-user/meson.build
+@@ -2,6 +2,7 @@ vfio_user_ss = ss.source_set()
+ vfio_user_ss.add(files(
+   'container.c',
+   'pci.c',
++  'proxy.c',
+ ))
  
+ if get_option('vfio_user_client').enabled()
 -- 
 2.43.0
 
