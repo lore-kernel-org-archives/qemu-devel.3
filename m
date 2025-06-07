@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF4B8C5B543
-	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 15:29:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC670C5B543
+	for <qemu-devel@archiver.kernel.org>; Sat,  7 Jun 2025 15:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uNvSu-0003Ih-Ee; Sat, 07 Jun 2025 11:28:12 -0400
+	id 1uNviZ-0006NK-Q4; Sat, 07 Jun 2025 11:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1uNvSt-0003IY-2d
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 11:28:11 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNviY-0006Lj-SR
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 11:44:22 -0400
+Received: from mail-ed1-x52f.google.com ([2a00:1450:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <soumyajyotisarkar23@gmail.com>)
- id 1uNvSr-0005fe-8A
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 11:28:10 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-2320d06b728so26936725ad.1
- for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 08:28:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uNviX-0007HE-21
+ for qemu-devel@nongnu.org; Sat, 07 Jun 2025 11:44:22 -0400
+Received: by mail-ed1-x52f.google.com with SMTP id
+ 4fb4d7f45d1cf-60497d07279so5748504a12.3
+ for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 08:44:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749310086; x=1749914886; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749311058; x=1749915858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=EzYnQmoGbQ2h6nQSY4r3TBQzxLCj7EIHz8l20WcIL+w=;
- b=gFNBRVqKGwqr/CF4wxiL0v235+2ufcQ9QsJ/jXoyUodZd6s0mMiozljN9XY05Dgt6O
- +mkpq5TbhxmwAPzmHCVuRfujDW5o4tEaNw3sn/ViCvRzH5oHVYj60qx2Ax78qSwjbozu
- 5AhoR3WURVotiPhgsy6m6x9j2AvfCo1Xv7TPbJTIEujcDsO2nHSjsKm3zntzBtJ85uau
- +rjQXFhe52m8/3rBNKZrwE5LcNRFWzOhlR3YZ1F/Ktv1XyIj0iPcGA6DvVyOm0GnbWsa
- PRmeFHCXYvObensHUUK9YVrbdik+tvQDKeJLOl5Mq7AzyTUNT7BeFukmFffG5xhwRd38
- k0rw==
+ bh=awUk7VHW441ttOgOO2rNu2sbd3lzhXNGbbsQWfUwbtw=;
+ b=O/BtHzIV7LWalB0Wie69p6Ifzxos2+TuF1oBdIBkNtr/Q0XnrpZggjxEnNMEyD0EQU
+ JktpIoaUm0hwb7/XtKcSpIiBgV1jgu/eSAhv9N5Oy6sylpGOxjqreNHlwwnlL2u7gbOG
+ ZWz5b0fx/jxcqCFCqDTApmAUBDqz+ruythfPUN/fUal4dMEzbTLXNedfzTv9FOztDsqk
+ sJtVzihDrs7XJ5MsFxWpsznbvSGIAQnu6TOOcTQ3DXYJQCBixT7wCSEtWvv9Uu57sCMa
+ quleCxMGpNflY/UZeYkQcEVvNxCR9zhzn7eh6NNWWv/G6/1CIRKhT0+cSeTOHWjR1UFm
+ 42aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749310086; x=1749914886;
+ d=1e100.net; s=20230601; t=1749311058; x=1749915858;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=EzYnQmoGbQ2h6nQSY4r3TBQzxLCj7EIHz8l20WcIL+w=;
- b=jnDJkoN63FPxV2V8v5fTsRCnVxGMKcLAYgO/yb9lGzkKiZrmuOfj/wm+qxixh30uJZ
- HWQyWSOJ048eY/7Bi3laJeOvp4MgeCv5YRdUhM+BqgShPuTOJLjBM3ULR50yiU7+IU3s
- pkgcueoD5A11oYYSlwnI+PKLXAyD65EIk2n1TegR8BW48xd1b3n0mHutL8lQPZ6+9dAS
- BkwwYC00UakPDCHejRw8Sa3EG2F7AUZDMMX7GoBLF4KfYq4rb+MCdtb6FOyPpCXoEhGa
- aievPLJd13Ppy6p6ZJYMUzWO83FhffKLZHewQJtnUTV3YZqg26qX4FDalhobN2XCeBLI
- lmAg==
-X-Gm-Message-State: AOJu0YzPUoeOpCj7AjzDL8pJPrbfa5OgP41ZC0E+5m1hzCbqAu1DQP6G
- FVlj63n0QNt4eJQh0pgVfsbeW+KjgkSEh3nXN0Du76N1q+73OE5KapjbikvH6i9g
-X-Gm-Gg: ASbGnctROHMaVFiP+/v1zRafo846WrO/hpLFb4oNlJc+YKlABb9hNOAz5FtzT1NY/qg
- c+Y679c7O3PJo+LftHdKdt/SUgFYEY4mAbPu1jXlyR3cx2fXu+5Gtq6OsGULypE93NVxgLd5+7U
- Ap+3jzAKqyda0A3eRxYctiQAa8zVAjqaMwI3oxBJXTecYtnt9Etv+zY4Z6X1iqc86VL/if6pR9P
- Te/QyEEEuEluZi8C6YhXA58ndjbfHHXsqeluPLCjEoSa4NRUfecByB2xARXLn5wZGIOD0rqeGd9
- xHdwMvmAhVscS6/gP+k45ayYt0xTOHvaiK00l2D0U3DmcB/jrtjTBweqP9O7jWxPHdJYJ6Ib/is
- 19C+XeUJpsDA=
-X-Google-Smtp-Source: AGHT+IGForq+xkYj9dOi6MMixZIZ13EN8BgVljycHu6wHSBlu2yQTei9GpEi12ytzrEtqKq9mUtSQQ==
-X-Received: by 2002:a17:903:41c8:b0:235:f632:a4d5 with SMTP id
- d9443c01a7336-23601cf096emr110078985ad.9.1749310086451; 
- Sat, 07 Jun 2025 08:28:06 -0700 (PDT)
-Received: from fedora.. ([2401:4900:33b6:a3ce:f010:b127:16d4:dabd])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-236039cb6dasm27796565ad.140.2025.06.07.08.28.01
+ bh=awUk7VHW441ttOgOO2rNu2sbd3lzhXNGbbsQWfUwbtw=;
+ b=Q3kRbl2c4om88tjkBASm9GU0t5iwKWNq2gy/WEdhuPNam65ln8Lr/HFyFVBKIaqb0o
+ uedAN//ggRofsvr1Yif3c3NM7iuDxu8TCb9T7vRTHlEquTkd3XEw8XOoSb1AnCCIc9CY
+ 7VNhoNvYhfmrnaKMzbLmkhO5lj2YQw1r15Qi1/OLFniwp3dwS3qNuyyuWJf4O0xRE+9C
+ PvXPE+v4pMTGBZBSoLuP/kDYGMrOSITi1OkvcAyrE2/PYkXmzooQ5e1j6WMaaJ32sAwW
+ lS4XiXtpsBSKPXgSk5v4+Y0BKaY+FD7zwrgI0s9xYLYxSGoILa7AAdGBiVi/tljEU3qC
+ HPkA==
+X-Gm-Message-State: AOJu0YzExlJcLdUQSVxSv8fpPmzYkpEwA4kBm3KvQ6IkCbxN6P8BudIS
+ tHpQ75pj27JmlNyfjrbzRx7nKfXB3CkgcbzS61cTuOVzNs+B80ZewtFhd3bptLeK0/sZFJxo2vh
+ LYeaVGE0=
+X-Gm-Gg: ASbGnctM4/sETRaJtO0PYs4YhgcKUGDhXJ97OJCaJhhC1G51q77VtFX0fSGM/qcK5Qa
+ sr3WEZaIexot4CBjTYfeB/dutHaEKt3rM+xbMV2dDv22S0TV9pNn/LBgk7+pQqhZInLkrjMacue
+ 6qf8JAzjwMAMLhFj/o7km/o0c4TGMHRSUFvEUHssWmKGPM2P4jRzMualglDRJ7dL1Z3K6rLYNh1
+ AuO6DTuqyuD91uPLNqUn2JpvAYUPm4EOQSkB7hhwBcPOTfhsHbNXfniviq1hJUGm2Tx3H4FiKKh
+ 4i35yu9odjg6kX1EiqvkVFUY2MAUq5V1adpBBS+YCvOJqTv6UawlCONy9yIWtO4=
+X-Google-Smtp-Source: AGHT+IHKFF139SsqPelNmu8ESbEV4qVoRWK/pBvaEAyZYmeVIOhutWPH7v07NlyEr1UM/9un1d+1hA==
+X-Received: by 2002:a17:907:3f23:b0:ad5:27f5:717c with SMTP id
+ a640c23a62f3a-ade1a8da3b0mr652671966b.10.1749311047301; 
+ Sat, 07 Jun 2025 08:44:07 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ade1d753abfsm295417066b.19.2025.06.07.08.44.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 07 Jun 2025 08:28:05 -0700 (PDT)
-From: tank0nf <soumyajyotisarkar23@gmail.com>
+ Sat, 07 Jun 2025 08:44:06 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 0228D5F86B;
+ Sat, 07 Jun 2025 16:44:04 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: richard.henderson@linaro.org, deller@gmx.de, jasowang@redhat.com,
- Soumyajyotii_Ssarkar <soumyajyotisarkar23@gmail.com>
-Subject: [PATCH] hw/net/i82596:changed assets link + abstracted configure
- function.
-Date: Sat,  7 Jun 2025 20:57:12 +0530
-Message-ID: <20250607152711.108914-2-soumyajyotisarkar23@gmail.com>
-X-Mailer: git-send-email 2.49.0
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PULL v2 00/11] maintainer updates for May (testing, plugins)
+Date: Sat,  7 Jun 2025 16:44:04 +0100
+Message-ID: <20250607154404.3810570-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=soumyajyotisarkar23@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52f;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x52f.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,88 +99,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Soumyajyotii_Ssarkar <soumyajyotisarkar23@gmail.com>
+The following changes since commit 96215036f47403438c7c7869b7cd419bd7a11f82:
 
-1. Changed the asset link to one which is working from the PARISC website
-2. Abstracted the configure function.
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2025-06-06 09:42:59 -0400)
 
-Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+are available in the Git repository at:
 
----
- hw/net/i82596.c | 38 ++++++++++++++++++++++----------------
- 1 file changed, 22 insertions(+), 16 deletions(-)
+  https://gitlab.com/stsquad/qemu.git tags/pull-10.1-maintainer-may-2025-070625-1
 
-diff --git a/hw/net/i82596.c b/hw/net/i82596.c
-index a5ed66fe47..55d330d3fc 100644
---- a/hw/net/i82596.c
-+++ b/hw/net/i82596.c
-@@ -5,7 +5,7 @@
-  * This work is licensed under the GNU GPL license version 2 or later.
-  *
-  * This software was written to be compatible with the specification:
-- * https://www.intel.com/assets/pdf/general/82596ca.pdf
-+ * https://parisc.docs.kernel.org/en/latest/_downloads/96672be0650d9fc046bbcea40b92482f/82596CA.pdf
-  */
+for you to fetch changes up to 63070ce368e1a2d430b9022a9db46f1817628efc:
 
- #include "qemu/osdep.h"
-@@ -178,6 +178,26 @@ static void set_individual_address(I82596State *s, uint32_t addr)
-     trace_i82596_new_mac(nc->info_str);
- }
+  gdbstub: update aarch64-core.xml (2025-06-07 16:40:44 +0100)
 
-+static void i82596_configure(I82596State *s, uint32_t addr)
-+{
-+    uint8_t byte_cnt;
-+    byte_cnt = get_byte(addr + 8) & 0x0f;
-+
-+    byte_cnt = MAX(byte_cnt, 4);
-+    byte_cnt = MIN(byte_cnt, sizeof(s->config));
-+    /* copy byte_cnt max. */
-+    address_space_read(&address_space_memory, addr + 8,
-+                       MEMTXATTRS_UNSPECIFIED, s->config, byte_cnt);
-+    /* config byte according to page 35ff */
-+    s->config[2] &= 0x82; /* mask valid bits */
-+    s->config[2] |= 0x40;
-+    s->config[7]  &= 0xf7; /* clear zero bit */
-+    assert(I596_NOCRC_INS == 0); /* do CRC insertion */
-+    s->config[10] = MAX(s->config[10], 5); /* min frame length */
-+    s->config[12] &= 0x40; /* only full duplex field valid */
-+    s->config[13] |= 0x3f; /* set ones in byte 13 */
-+}
-+
- static void set_multicast_list(I82596State *s, uint32_t addr)
- {
-     uint16_t mc_count, i;
-@@ -235,7 +255,6 @@ static void command_loop(I82596State *s)
- {
-     uint16_t cmd;
-     uint16_t status;
--    uint8_t byte_cnt;
+----------------------------------------------------------------
+maintainer updates for May (testing, plugins)
 
-     DBG(printf("STARTING COMMAND LOOP cmd_p=%08x\n", s->cmd_p));
+  - expose ~/.cache/qemu to container builds
+  - disable debug info in CI
+  - allow boot.S to handle target el mode selection
+  - new arguments for ips plugin
+  - cleanup assets in size_memop
+  - fix include guard in gdbstub
+  - introduce qGDBServerVersion gdbstub query
+  - update gdb aarch64-core.xml to support bitfields
 
-@@ -255,20 +274,7 @@ static void command_loop(I82596State *s)
-             set_individual_address(s, s->cmd_p);
-             break;
-         case CmdConfigure:
--            byte_cnt = get_byte(s->cmd_p + 8) & 0x0f;
--            byte_cnt = MAX(byte_cnt, 4);
--            byte_cnt = MIN(byte_cnt, sizeof(s->config));
--            /* copy byte_cnt max. */
--            address_space_read(&address_space_memory, s->cmd_p + 8,
--                               MEMTXATTRS_UNSPECIFIED, s->config, byte_cnt);
--            /* config byte according to page 35ff */
--            s->config[2] &= 0x82; /* mask valid bits */
--            s->config[2] |= 0x40;
--            s->config[7]  &= 0xf7; /* clear zero bit */
--            assert(I596_NOCRC_INS == 0); /* do CRC insertion */
--            s->config[10] = MAX(s->config[10], 5); /* min frame length */
--            s->config[12] &= 0x40; /* only full duplex field valid */
--            s->config[13] |= 0x3f; /* set ones in byte 13 */
-+            i82596_configure(s, s->cmd_p);
-             break;
-         case CmdTDR:
-             /* get signal LINK */
---
-2.49.0
+----------------------------------------------------------------
+Alex Bennée (8):
+      tests/docker: expose $HOME/.cache/qemu as docker volume
+      gitlab: disable debug info on CI builds
+      tests/tcg: make aarch64 boot.S handle different starting modes
+      contrib/plugins: add a scaling factor to the ips arg
+      contrib/plugins: allow setting of instructions per quantum
+      include/exec: fix assert in size_memop
+      include/gdbstub: fix include guard in commands.h
+      gdbstub: assert earlier in handle_read_all_regs
+
+Dominik 'Disconnect3d' Czarnota (1):
+      gdbstub: Implement qGDBServerVersion packet
+
+Manos Pitsidianakis (1):
+      gdbstub: update aarch64-core.xml
+
+Nabih Estefan (1):
+      tests/qtest: Avoid unaligned access in IGB test
+
+ docs/about/emulation.rst                  |   4 +
+ include/exec/memop.h                      |   4 +-
+ include/gdbstub/commands.h                |   2 +-
+ contrib/plugins/ips.c                     |  49 ++++++++-
+ gdbstub/gdbstub.c                         |  19 +++-
+ tests/qtest/libqos/igb.c                  |   4 +-
+ .gitlab-ci.d/buildtest-template.yml       |   1 +
+ gdb-xml/aarch64-core.xml                  |  52 ++++++++-
+ tests/docker/Makefile.include             |  10 +-
+ tests/tcg/aarch64/Makefile.softmmu-target |   3 +-
+ tests/tcg/aarch64/system/boot.S           | 172 +++++++++++++++++++++++++++++-
+ 11 files changed, 300 insertions(+), 20 deletions(-)
+
+-- 
+2.47.2
 
 
