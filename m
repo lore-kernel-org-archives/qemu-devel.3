@@ -4,83 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890D3C5AD49
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 08:23:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71837C61CE8
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 08:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOBJP-0001Is-BF; Sun, 08 Jun 2025 04:23:27 -0400
+	id 1uOBKH-0001uI-LJ; Sun, 08 Jun 2025 04:24:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uOBJN-0001Ii-M0
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 04:23:25 -0400
-Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uOBJL-0008UE-Vr
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 04:23:25 -0400
-Received: by mail-lf1-x12c.google.com with SMTP id
- 2adb3069b0e04-54b09cb06b0so4057435e87.1
- for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 01:23:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749371002; x=1749975802; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=qhuTqEJHVq0IQXwL1zAbw52oRmEOu1jWaD8FSlZiSfA=;
- b=F5ZFHmMokLFB+B2jgZ88KrsJdFx2txFa/WfzugA9qvN2UG5Ic3A59K49OnOq/ZwNRd
- 9JijVdU6lPPxsloJRNuNQgJFV6h4r4qViEgB+UtmNvNYwuGyqSyY48ctFAAxskSwmr+Q
- VFfLZzDA6P2SAJ53sRoQGlDMsvO12oTK/VA6Dsx8kKC8Q9EHxa1+7ozD+u+Q9IXclUBf
- ANtIGo7Td7T0JOpJtGpAoxGegjJJ9/1rf5AwKN62gTuQLRspdlIu/VggTByzoAQUJmh7
- dSetyBAr7gCc2qGWiNDOjlES2IDsfFE9vF0yRHenoYh/HI1EX01XNWdZRPPZJLOI26aC
- 2v2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749371002; x=1749975802;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qhuTqEJHVq0IQXwL1zAbw52oRmEOu1jWaD8FSlZiSfA=;
- b=WCPpdo4pqRSiA6ufPNC3w0/GC76S8GhJwjI7cX4Jgqrzh+qrENoJieFMS7UIIi1Z12
- asFMBzUjL5pE9izs61OFDMr8DKGZx/aRq18IZkDvCMxALsw/Oa44QDEfnR4gvBpdqUnW
- wrv9EtqWWB3Og54RzbdiQxO9sfnR37AxfVXw93o1Fqo24GPQYZxvf++Z18ZmoqqRWxJu
- BNC+nW5Dftkpn0tSJAMQpsRAPVBXQ9rAXhB/Aa9X2BMn6nKNCHjIH49adjds2rKsIzlx
- ma+6dNZs3vJ/Uu043dAyDDZNnJya5vs3Xs7+it7c0BoxqEaJ3VkF7AG4kE9iARwttG7p
- Jnkw==
-X-Gm-Message-State: AOJu0Yxx4KYx1kcLlpM2F1spG6lPhRXOaHMJN4CqPXZvWKaKNhI1sBKT
- IQJA+Un0Pw0uqFVaQNnhOE82oticLGUd7keUGXOwwQbfHoFC/mdbF+g2ITCyxxMqz5YOdeR4EJW
- lFqZFPBoDfkHefTwJen8sNmkpydUhN2M=
-X-Gm-Gg: ASbGncsao80EqymJuzsNPPMBcy/rek7U4IqPCFQH/2GXTUT/nzTairEcbZh0TTIWRwT
- 3SztQkz+vpt9TSu3ss4KwaK8BUhUbYrDz9zMl0lkto8FIJDuaTrngddIgERkgCyduGGCqznOfqN
- p8PDnxfHl4s51fZxya3xuCWfVduf1LszV4nK0Mq22ZToxy0FjLpORkf1BYkY1BDXQT24Takj3j4
- W0=
-X-Google-Smtp-Source: AGHT+IGZUWQ0kd8iWzJWV+/AI5UvZ9OzAomedCiouvo1ZEJ8iEpXIbUUhQGT0YQYPc6zn/9ZlmbRi5a+IITYSCW34Es=
-X-Received: by 2002:a05:651c:b12:b0:32a:7d4a:6182 with SMTP id
- 38308e7fff4ca-32adfb417c9mr23660821fa.10.1749371001513; Sun, 08 Jun 2025
- 01:23:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uOBKB-0001ro-HD; Sun, 08 Jun 2025 04:24:15 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1uOBK8-00006n-BW; Sun, 08 Jun 2025 04:24:15 -0400
+Received: from [157.82.203.223] ([157.82.203.223]) (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 5588NtIg024287
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Sun, 8 Jun 2025 17:23:55 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=5snAGZ1Sb2OalI/nwdKBEvqHjfEVYUGDrha5Ss4p2UA=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=Message-ID:Date:Subject:To:From;
+ s=rs20250326; t=1749371035; v=1;
+ b=AAsVg3GQZzyqcx08XG/iGMSEp+3obDRlOUVL39YRcRJeOQRdrhZLdoNuTPjj02dm
+ G+3yv7TtCxkvckoy9b7Yifibnr0VDXzSntKQNwF00QU1incAeWYY3iNTDG1+O6Ls
+ YAOtq36nFeLrA+sfrwMLUbh72g5z/YuwvseET/dHqJh+EsDtOJK8BB3CMj2y4iZj
+ 6juy2wtauM4jz3GX9Vldoe0T69NHfTyp2cJv5pm4GabWLCy5Q2PBlxgwqSZZyjWX
+ +/vqjXQg38CGQlp3tlOjKGqDAdvniPjIpgEZI5nlpxNhWC09dy9mWPbPV3qaHluc
+ +mqd+eGb0NymCxO7YmitwQ==
+Message-ID: <d504e5de-cb7f-4eda-a046-9edef5d23749@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sun, 8 Jun 2025 17:23:54 +0900
 MIME-Version: 1.0
-References: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
- <878ac7c5-6729-4930-a64f-19cf0e10f7f2@linaro.org>
-In-Reply-To: <878ac7c5-6729-4930-a64f-19cf0e10f7f2@linaro.org>
-From: Oleg Tolmatcev <oleg.tolmatcev@gmail.com>
-Date: Sun, 8 Jun 2025 10:23:09 +0200
-X-Gm-Features: AX0GCFuFFU4JYzvOV1kqgLwnSioz0hfbCsjyRlYCGwGTwEDlFrUarp5RAlXMZ64
-Message-ID: <CACcXsZgSdLNUovP_Cz7vAU+E=KzaJ6tLCKFhm1xQpQpKO5h=2Q@mail.gmail.com>
-Subject: Re: [PATCH RESEND v3] meson: fix Windows build
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Mads Ynddal <mads@ynddal.dk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
- envelope-from=oleg.tolmatcev@gmail.com; helo=mail-lf1-x12c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 12/17] virtio-gpu: support context init multiple timeline
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yiwei Zhang <zzyiwei@gmail.com>, qemu-stable@nongnu.org,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20250605162651.2614401-1-alex.bennee@linaro.org>
+ <20250605162651.2614401-13-alex.bennee@linaro.org>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <20250605162651.2614401-13-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,45 +74,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am So., 8. Juni 2025 um 02:43 Uhr schrieb Pierrick Bouvier
-<pierrick.bouvier@linaro.org>:
->
-> On 6/7/25 2:45 AM, oltolm wrote:
-> > Sorry, I forgot to cc the maintainers.
-> >
-> > The build failed when run on Windows. I replaced calls to Unix programs
-> > like =C2=B4cat=C2=B4, =C2=B4sed=C2=B4 and =C2=B4true=C2=B4 with calls t=
-o =C2=B4python=C2=B4. I wrapped calls to
-> > =C2=B4os.path.relpath=C2=B4 in try-except because it can fail when the =
-two paths
-> > are on different drives. I made sure to convert the Windows paths to
-> > Unix paths to prevent warnings in generated files.
-> >
-> > Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
-> > ---
-> >   contrib/plugins/meson.build         |  2 +-
-> >   plugins/meson.build                 |  2 +-
-> >   scripts/tracetool/__init__.py       | 15 ++++++++++++---
-> >   scripts/tracetool/backend/ftrace.py |  4 +---
-> >   scripts/tracetool/backend/log.py    |  4 +---
-> >   scripts/tracetool/backend/syslog.py |  4 +---
-> >   tests/functional/meson.build        |  4 +---
-> >   tests/include/meson.build           |  2 +-
-> >   tests/tcg/plugins/meson.build       |  2 +-
-> >   trace/meson.build                   |  5 +++--
-> >   10 files changed, 23 insertions(+), 21 deletions(-)
->
-> Are you building using msys2, or another environment on Windows? I'm
-> curious to know in which configuration the build is failing.
->
-> In case you use msys2, maybe you're simply missing some packages. Our
-> documentation explains what to install [1].
-> Building out of msys2 on Windows is not recommended, as this is the only
-> maintained setup (tested in our CI, and maintained as an msys2 package
-> by msys2 maintainers) for this system.
->
-> [1] https://www.qemu.org/docs/master/devel/build-environment.html
+On 2025/06/06 1:26, Alex Bennée wrote:
+> From: Yiwei Zhang <zzyiwei@gmail.com>
+> 
+> Venus and later native contexts have their own fence context along with
+> multiple timelines within. Fences wtih VIRTIO_GPU_FLAG_INFO_RING_IDX in
+> the flags must be dispatched to be created on the target context. Fence
+> signaling also has to be handled on the specific timeline within that
+> target context.
+> 
+> Before this change, venus fencing is completely broken if the host
+> driver doesn't support implicit fencing with external memory objects.
+> Frames can go backwards along with random artifacts on screen if the
+> host driver doesn't attach an implicit fence to the render target. The
+> symptom could be hidden by certain guest wsi backend that waits on a
+> venus native VkFence object for the actual payload with limited present
+> modes or under special configs. e.g. x11 mailbox or xwayland.
+> 
+> After this change, everything related to venus fencing starts making
+> sense. Confirmed this via guest and host side perfetto tracing.
+> 
+> Cc: qemu-stable@nongnu.org
+> Fixes: 94d0ea1c1928 ("virtio-gpu: Support Venus context")
 
-Yes I do use msys2, but I only use bash for the initial configuration.
-Afterwards I just call meson and ninja from "cmd" not from bash.
+I suggest moving this in the front of the patch series to ease backporting.
+
+I also wonder if "[PULL 11/17] ui/gtk-gl-area: Remove extra draw call in 
+refresh" requires Cc: qemu-stable@nongnu.org. Fixing -display gtk,gl=on 
+for Wayland sounds as important as this patch.
+
+Regards,
+Akihiko Odaki
+
+> Signed-off-by: Yiwei Zhang <zzyiwei@gmail.com>
+> Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Message-Id: <20250518152651.334115-1-zzyiwei@gmail.com>
+> [AJB: remove version history from commit message]
+> Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> Message-ID: <20250603110204.838117-13-alex.bennee@linaro.org>
+> 
+> diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+> index b4aa8abb96..cea2e12eb9 100644
+> --- a/hw/display/virtio-gpu-virgl.c
+> +++ b/hw/display/virtio-gpu-virgl.c
+> @@ -978,6 +978,15 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+>       }
+>   
+>       trace_virtio_gpu_fence_ctrl(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+> +        virgl_renderer_context_create_fence(cmd->cmd_hdr.ctx_id,
+> +                                            VIRGL_RENDERER_FENCE_FLAG_MERGEABLE,
+> +                                            cmd->cmd_hdr.ring_idx,
+> +                                            cmd->cmd_hdr.fence_id);
+> +        return;
+> +    }
+> +#endif
+>       virgl_renderer_create_fence(cmd->cmd_hdr.fence_id, cmd->cmd_hdr.type);
+>   }
+>   
+> @@ -991,6 +1000,11 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+>            * the guest can end up emitting fences out of order
+>            * so we should check all fenced cmds not just the first one.
+>            */
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +        if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX) {
+> +            continue;
+> +        }
+> +#endif
+>           if (cmd->cmd_hdr.fence_id > fence) {
+>               continue;
+>           }
+> @@ -1005,6 +1019,29 @@ static void virgl_write_fence(void *opaque, uint32_t fence)
+>       }
+>   }
+>   
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +static void virgl_write_context_fence(void *opaque, uint32_t ctx_id,
+> +                                      uint32_t ring_idx, uint64_t fence_id) {
+> +    VirtIOGPU *g = opaque;
+> +    struct virtio_gpu_ctrl_command *cmd, *tmp;
+> +
+> +    QTAILQ_FOREACH_SAFE(cmd, &g->fenceq, next, tmp) {
+> +        if (cmd->cmd_hdr.flags & VIRTIO_GPU_FLAG_INFO_RING_IDX &&
+> +            cmd->cmd_hdr.ctx_id == ctx_id && cmd->cmd_hdr.ring_idx == ring_idx &&
+> +            cmd->cmd_hdr.fence_id <= fence_id) {
+> +            trace_virtio_gpu_fence_resp(cmd->cmd_hdr.fence_id);
+> +            virtio_gpu_ctrl_response_nodata(g, cmd, VIRTIO_GPU_RESP_OK_NODATA);
+> +            QTAILQ_REMOVE(&g->fenceq, cmd, next);
+> +            g_free(cmd);
+> +            g->inflight--;
+> +            if (virtio_gpu_stats_enabled(g->parent_obj.conf)) {
+> +                trace_virtio_gpu_dec_inflight_fences(g->inflight);
+> +            }
+> +        }
+> +    }
+> +}
+> +#endif
+> +
+>   static virgl_renderer_gl_context
+>   virgl_create_context(void *opaque, int scanout_idx,
+>                        struct virgl_renderer_gl_ctx_param *params)
+> @@ -1039,11 +1076,18 @@ static int virgl_make_context_current(void *opaque, int scanout_idx,
+>   }
+>   
+>   static struct virgl_renderer_callbacks virtio_gpu_3d_cbs = {
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    .version             = 3,
+> +#else
+>       .version             = 1,
+> +#endif
+>       .write_fence         = virgl_write_fence,
+>       .create_gl_context   = virgl_create_context,
+>       .destroy_gl_context  = virgl_destroy_context,
+>       .make_current        = virgl_make_context_current,
+> +#if VIRGL_VERSION_MAJOR >= 1
+> +    .write_context_fence = virgl_write_context_fence,
+> +#endif
+>   };
+>   
+>   static void virtio_gpu_print_stats(void *opaque)
+
 
