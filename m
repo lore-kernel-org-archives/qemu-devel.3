@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2941BC61CE8
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 22:52:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA639C61CE7
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 22:52:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOOri-00058N-Qq; Sun, 08 Jun 2025 18:51:47 -0400
+	id 1uOOrh-00058D-UG; Sun, 08 Jun 2025 18:51:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOOrf-00057U-7G
+ id 1uOOrf-00057T-7I
  for qemu-devel@nongnu.org; Sun, 08 Jun 2025 18:51:43 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOOrc-000309-J8
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 18:51:41 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-3122a63201bso3010341a91.0
- for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 15:51:40 -0700 (PDT)
+ id 1uOOrc-000307-H3
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 18:51:42 -0400
+Received: by mail-pg1-x533.google.com with SMTP id
+ 41be03b00d2f7-b2f62bbb5d6so1431837a12.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 15:51:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749423099; x=1750027899; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1ysiNB3jN3pm4xSzw9lWbP2QG1HmR4QbzZmy+B07iUo=;
- b=Mff03rR9YNiOaZ38fYrFVTjmoOR450PIz0tXmQLV4hiFVbfODJqIfLFtJay81D7oCX
- vBOlOZYzJAekoNQ3LTbzBU3WuqrdfPMJJxVALxicjLunZwKUpGfub92mPUWeDpApDYDR
- xpqrHueCLt638nBVI0pZT2Wt6el8hSaxSm16i8t25+2a4nDbJ2VOr0B+/o6HGrKyqIPd
- YPNRb7CyFsfqtJa+DzaFXC+JtzndIK7659KB55UujDK9u7U57xGvpMV5cbeU8N0d6PF7
- QMvhP499a5U2I5tvdq3aRwgJEKtKaPI+txjlMHCnE6jGhLLOdmc9arp0iWjiNVvAAQ8O
- bWBA==
+ d=gmail.com; s=20230601; t=1749423098; x=1750027898; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wK2hm3ApSt7J5Cm2cd5SCgqF8ZdrraNEuFOEFuj/8LM=;
+ b=kX3tThDQbIuZxTqKscKhAW6l/McbzqVSSsOH+9GFvAxxW+kcU7EX48MsCFdGpRdqv7
+ D5WfPRwtofM/yCElM2E7tNky5I7ZQvrZSOK8gOD5iQp11ssphyIxiVHrM+ISv1BNnged
+ +QAYwEnn6CfzNQAkcLIaLVBxosCbwMlZtAJaBTiC+EHB/d99W3Jm1SzLM4x32Cx75XyR
+ 9Y/4AseaP59q7Y1TKeRXC0cLiuhLDn4rUbzuWYNgWJbL3qh6lGDlctlfsS0V19Ch3rtT
+ mmHExRhmG/XFSAyqHqJy6cINXYtQYJdm2/s32oZfjOB99a2jR7cvoZxGJ5EeqdmK4NJX
+ oauw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749423099; x=1750027899;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1ysiNB3jN3pm4xSzw9lWbP2QG1HmR4QbzZmy+B07iUo=;
- b=U5DQ6cfUuXbJEvcuabE4Z7geZ6GyTEwKpNjmhH1iD4MQCuBvtzIbEMPN5vNqHIPswL
- uI/5iGBoSWxQDep5wnpa6S5nh4cIiBqawgApjnoLOdY+6ko1SRO5sH73SacUG8IBi+go
- CownZ1n2mUhT7qoKbxRhMAZrSq0CQmpMkToVxz+3s67Q57Kf/6dOUSpLB9YOaUyCVdQx
- VJGtCBDO0SzUEo1NbnhSuPrSX8gigDsczm4RMYFQ2fzcSG5v0BfAIFKBw7F+zodle6vY
- 4xOUmWAWKRx3U+ceTLbihwpPgnaTa4qmkXZ2RkVCfKJGbPKfZlXmY+aPoOOinAvLR61u
- rmAQ==
-X-Gm-Message-State: AOJu0YwPMf8SjNagzheWetBu4kdRt+IcGHoBpXaXiOLVsxjMKw8CJkLB
- qDFIOLRoFg01sUgIfriG2OuoalLtt73fMwu2FR017pFAv4oCTj9agfWQF1IwuTi8Cqk=
-X-Gm-Gg: ASbGncsW8HUXSlNuTZFjai7gurtEkp4ug+pTP89CecGdIXnlP18M/7YRHCgEeOaraQL
- yHCEcURgQmlI9HBUJHH05FnHAw9jpod9/fDQcHM+x4xfaY+mbxjR2Qd3I/ke/BMpcNlQ+ZfUDwy
- Hltkj4753ViKC+BiSwK7Hk+9yU1l9Zn/UwkQl8RWOpSotAfmf6uEumLCSiu9nO3IC9/ZtJYdcpC
- kGgDbBWmc2zg/3uphSdiaO2hXmEd3CJ6kX+iDQLinOmz8N2JoDqotW0tOHPjLCRJ/TEjbvLtPaX
- LHQxoJj1xK1q9yJGgCwkG12FmEh+mIrWQg6XVXj2o6JgYxDxvSI=
-X-Google-Smtp-Source: AGHT+IErVpP7YaBcze7lzkII2h36SlBlCu955KhO1nGI2Svwwj8WL4Yx/zmGM/+Ba+foGtVvWtzw+Q==
-X-Received: by 2002:a17:90b:1d87:b0:312:2bb:aa89 with SMTP id
- 98e67ed59e1d1-3134740ba49mr15153408a91.20.1749423098855; 
+ d=1e100.net; s=20230601; t=1749423098; x=1750027898;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wK2hm3ApSt7J5Cm2cd5SCgqF8ZdrraNEuFOEFuj/8LM=;
+ b=jbviA3fOHH1yERjixCU08DAuUa2bNHAd0pXdzdoBr7durMwCStw03FjyDmhD3rGq8q
+ lUF3a5Q8hBJ4bKJVP19qwW9OAswvIleB3L2IEagk1HAzqXncwMzdmV2mp3LmIBUCLhvW
+ GXhilnnoMj0RXWJrSNLfFE6yuwbv4tfjWDuEjuLlmwz7AMPFJL21AI6b+yQeNnk7nGLe
+ v8WQzD3pv1ocx6oQ3UP6cFkVrtJu3SOPNeZ2LyTz+0KEF+1wlcoakxNMaIpKohjdqc7X
+ tz07FNaHrRxr8cYqZmY/vyLxmFFyIIcjCZGZdkE0JHHO2DAlDgDqE7CtGP2s0kM8HIdD
+ i6LA==
+X-Gm-Message-State: AOJu0YylaAFlnh2ypn+OVFlzPd3ZDalFcCFcNSImGTJJB+2aqs8lDPyS
+ 1E0cE8bI2x5p0wWALHvnkMvzr2ZWrPcfXmf4sFzgMzjejZA3Tjk+etiBxVVRbELn1Zk=
+X-Gm-Gg: ASbGncuICOZ4hCGPWFB+cGIcC7cOPmuIHdd8x6FB4dF/FBGbAn/ybmZaxeS9oisQP1G
+ mFptHkcqILlCA+Qg6l4UZ5XcA2G/lkajSyjKnpK7f7ZXop/yQv3BWtgsY9yPGdH4k6U+xMHzFsF
+ YIbKeha2XQ2Fiyvr5lzplJv2KAL7Ij2BrWdXq2e7EmtE8vbTeHsdAMNn+1eyp7oa5MMA6GKPL/e
+ jE3JfxBkeR4NCJVSKsu7RCH8QjNDhy1aHrcOwxyQUBWelP7t35ndpo9rAgBpWcH0yQcUF02P71W
+ wkKmPpLsDn3JUO47/7C+enU7bZJZ2hGndQqNGd9xzKdCt5tnuyP7GSZzGE23C5NYRMaaaMYN
+X-Google-Smtp-Source: AGHT+IE5Zgj9irgywKVrAt3sSyLWOZUlH0Xjazt+CmzUg54wi84l4810pBxCov2PGccUbyLMVpSyKA==
+X-Received: by 2002:a17:90a:dfcb:b0:312:959:dc4f with SMTP id
+ 98e67ed59e1d1-313472b6a6dmr14869308a91.5.1749423098162; 
  Sun, 08 Jun 2025 15:51:38 -0700 (PDT)
 Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3134b128012sm4395970a91.32.2025.06.08.15.51.38
+ 98e67ed59e1d1-3134b128012sm4395970a91.32.2025.06.08.15.51.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Jun 2025 15:51:38 -0700 (PDT)
+ Sun, 08 Jun 2025 15:51:37 -0700 (PDT)
 From: Rowan Hart <rowanbhart@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
@@ -73,20 +72,17 @@ Cc: Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Zhao Liu <zhao1.liu@intel.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, novafacing <rowanbhart@gmail.com>,
- Julian Ganz <neither@nut.email>
-Subject: [PATCH v8 1/9] gdbstub: Expose gdb_write_register function to
- consumers of gdbstub
-Date: Sun,  8 Jun 2025 15:51:28 -0700
-Message-ID: <20250608225136.3340370-2-rowanbhart@gmail.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Rowan Hart <rowanbhart@gmail.com>
+Subject: [PATCH v8 0/9] Add additional plugin API functions to read and write
+ memory and registers
+Date: Sun,  8 Jun 2025 15:51:27 -0700
+Message-ID: <20250608225136.3340370-1-rowanbhart@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250608225136.3340370-1-rowanbhart@gmail.com>
-References: <20250608225136.3340370-1-rowanbhart@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=rowanbhart@gmail.com; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x533.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,59 +105,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: novafacing <rowanbhart@gmail.com>
+This patch series adds several new API functions focused on enabling use
+cases around reading and writing guest memory from QEMU plugins. To support
+these new APIs, some utility functionality around retrieving information about
+address spaces is added as well.
 
-This patch exposes the gdb_write_register function from
-gdbstub/gdbstub.c via the exec/gdbstub.h header file to support use in
-plugins to write register contents.
+The new qemu_plugin_write_register utilizes gdb_write_register, which is now
+declared in gdbstub.h for this purpose instead of being static.
 
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Julian Ganz <neither@nut.email>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
----
- gdbstub/gdbstub.c      |  2 +-
- include/exec/gdbstub.h | 14 ++++++++++++++
- 2 files changed, 15 insertions(+), 1 deletion(-)
+qemu_plugin_write_memory_vaddr utilizes cpu_memory_rw_debug much the same as
+the existing read_memory_vaddr function does.
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 565f6b33a9..5846e481be 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -534,7 +534,7 @@ int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg)
-     return 0;
- }
- 
--static int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
-+int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg)
- {
-     GDBRegisterState *r;
- 
-diff --git a/include/exec/gdbstub.h b/include/exec/gdbstub.h
-index 0675b0b646..a16c0051ce 100644
---- a/include/exec/gdbstub.h
-+++ b/include/exec/gdbstub.h
-@@ -124,6 +124,20 @@ const GDBFeature *gdb_find_static_feature(const char *xmlname);
-  */
- int gdb_read_register(CPUState *cpu, GByteArray *buf, int reg);
- 
-+/**
-+ * gdb_write_register() - Write a register associated with a CPU.
-+ * @cpu: The CPU associated with the register.
-+ * @buf: The buffer that the register contents will be set to.
-+ * @reg: The register's number returned by gdb_find_feature_register().
-+ *
-+ * The size of @buf must be at least the size of the register being
-+ * written.
-+ *
-+ * Return: The number of written bytes, or 0 if an error occurred (for
-+ * example, an unknown register was provided).
-+ */
-+int gdb_write_register(CPUState *cpu, uint8_t *mem_buf, int reg);
-+
- /**
-  * typedef GDBRegDesc - a register description from gdbstub
-  */
+The read and write_hwaddr functions are the most different. These functions
+use address_space_rw, which works well in most cases. There is an important
+caveat that for writes, the page being written will be set dirty by the
+write operation. This dirty setting requires locking the page range,
+which can contend with an already held lock in page_collection_lock
+when called in a tb translate callback with a write to the instruction
+memory in the tb. The doc comments warn against doing this, and it's unlikely
+anyone would want to do this.
+
+I've also added two test plugins: one that implements a simple hypercall
+interface that guest code can use to communicate with the plugin in a
+structured way with a test to ensure that this hypercall works and writing
+virtual memory works. And one that implements a simple patch utility to patch
+memory at runtime. The test for the second plugin ensures the patch applies
+successfully to instruction memory, and can use both hw and vaddr methods.
+
+For v3, I've had a few comments from the last submission that I've addressed,
+and some that I haven't for one reason or another:
+
+- Enforce QEMU_PLUGIN_CB_ flags in register read/write operations: done!
+- Fix my commit messages and add long messages describing commits: done!
+- Un-expose AS internals: done! Functions operate on current vCPU, current AS.
+- Clean up use of current_cpu: done!
+- Make functions take a vcpu_idx: not done. May revisit but it allows footguns.
+  Even for translation, seems best to not do this now. We can easily add _vcpu
+  versions of these functions in the future if we change our minds!
+
+For v5, I've just updated the enforcement of the QEMU_PLUGIN_CB_ flags to just
+use immediate stores, which simplifies the implementation quite a lot and
+should be more efficient too. Thanks Pierrick for the suggestion!
+
+v6 is a formatting pass, I left some whitespace that needed removal, some
+license text was wrong, and so forth.
+
+v8 reverts a mistake I made extending the size of arrays of TCGHelperInfo
+structs, as I misunderstood their sizes. It preserves adding an explicit
+zero as the last entry for clarity, however.
+
+Rowan Hart (2):
+  plugins: Add enforcement of QEMU_PLUGIN_CB flags in register R/W
+    callbacks
+  plugins: Remove use of qemu_plugin_read_register where it is not
+    permitted
+
+novafacing (7):
+  gdbstub: Expose gdb_write_register function to consumers of gdbstub
+  plugins: Add register write API
+  plugins: Add memory virtual address write API
+  plugins: Add memory hardware address read/write API
+  plugins: Add patcher plugin and test
+  plugins: Add hypercalls plugin and test
+  plugins: Update plugin version and add notes
+
+ accel/tcg/plugin-gen.c                        |  30 +
+ gdbstub/gdbstub.c                             |   2 +-
+ include/exec/gdbstub.h                        |  14 +
+ include/hw/core/cpu.h                         |   1 +
+ include/qemu/plugin.h                         |   4 +
+ include/qemu/qemu-plugin.h                    | 166 +++++-
+ plugins/api.c                                 | 135 ++++-
+ plugins/core.c                                |  20 +
+ tests/tcg/Makefile.target                     |   2 +
+ tests/tcg/plugins/hypercalls.c                | 547 ++++++++++++++++++
+ tests/tcg/plugins/insn.c                      |  22 +-
+ tests/tcg/plugins/meson.build                 |   2 +-
+ tests/tcg/plugins/patch.c                     | 297 ++++++++++
+ tests/tcg/x86_64/Makefile.softmmu-target      |  36 +-
+ tests/tcg/x86_64/system/hypercalls-target.c   |  40 ++
+ tests/tcg/x86_64/system/patch-target.c        |  27 +
+ .../tcg/x86_64/system/validate-hypercalls.py  |  40 ++
+ tests/tcg/x86_64/system/validate-patch.py     |  39 ++
+ 18 files changed, 1380 insertions(+), 44 deletions(-)
+ create mode 100644 tests/tcg/plugins/hypercalls.c
+ create mode 100644 tests/tcg/plugins/patch.c
+ create mode 100644 tests/tcg/x86_64/system/hypercalls-target.c
+ create mode 100644 tests/tcg/x86_64/system/patch-target.c
+ create mode 100755 tests/tcg/x86_64/system/validate-hypercalls.py
+ create mode 100755 tests/tcg/x86_64/system/validate-patch.py
+
 -- 
 2.49.0
 
