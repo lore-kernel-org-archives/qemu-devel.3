@@ -4,63 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFEC0C67861
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 23:09:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 851F2C5AD49
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 23:09:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOP7q-0005r9-1s; Sun, 08 Jun 2025 19:08:26 -0400
+	id 1uOP7u-0005te-MU; Sun, 08 Jun 2025 19:08:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOP7o-0005qY-1N
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:08:24 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uOP7t-0005tF-IF
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:08:29 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOP7m-0004aq-70
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:08:23 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-235d6de331fso44139265ad.3
- for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 16:08:21 -0700 (PDT)
+ id 1uOP7q-0004c1-VY
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:08:29 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-231e8553248so36903495ad.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 16:08:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749424100; x=1750028900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Su9cLDj5vrjdDFPIPvdmXxTbluw+kYjNW80Y6MYbCcs=;
- b=HZEm4phdLgMLgUXJZN/0JKgzi7H2enxCPPV5Enqwc6N3kSFpWrFd0xZqfwkVSt6Z7W
- +ahdkZkZHcHtF0kwp7EhqNrfAKaJcGjfmgHR5Lz6q9YzwbRlexp6XgKiA4FvsGoEVcMY
- 8J0kcTaqYop/NVcy9IivJ5J6Y99fZC0kE0BJd/wogRbWVtPSSVp954N8aboY/J4vFol+
- eY8BKTCB5xlzzhMYWAkKIFGrTsKNe0JKpmapkurkw8Sg5bokkg+/kM7tgrUiLs+ywsk8
- ywFN2JHb4d7+S2IskuhVOrhk3MM6DAhMawOLSdZN2a1xvz3UNnMtXzohYXOb0eikmdi/
- M9Yg==
+ d=gmail.com; s=20230601; t=1749424105; x=1750028905; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2ap6I1EkC90RWD1sn5nrnpOFuEPRFLgHmwY9jqJf898=;
+ b=gXSs+/E4hRvoIGNxMsYodxCxKbZp10v8MRD/OPO+hOLecs91NrHwT6ET4vSVDxH1DO
+ 5fE85WD/sEKkAShHerPg6qJcZE//0BuMwDmwixkcRRfKsRaYL1t9omQFE2jrv2f06mqF
+ jZg4BCe19J8LCPUoxW2VO1ZCwG4BGG5VqQ48WGv7UH3QQbgQXr/ApD4QKHAQtX6A26TF
+ XuxoR6ponowp635IrgicDJt9OtId3JDNpNqcJ/utn1n4Q21LjQa4NoVDewZC/pIXo9ED
+ mCmQYJbzs5TneGfsN0veDBaPNOKVl/j+6fI18NV/qeOUcWfaTXUSnoUot2AFkkpR6bBL
+ danQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749424100; x=1750028900;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Su9cLDj5vrjdDFPIPvdmXxTbluw+kYjNW80Y6MYbCcs=;
- b=WBKTc9/ts/fHVu4jf72inO3Eo+rFYvmI5fI5+Yi0kGK8O4AzZAlEJ1HEDa1sd+MCqS
- cCpxNsL0k015U4esUaDuhULhcUhPXEqM9Fpda43df5Pu/HkeHNgb8tRN4PujNWIaddD+
- 28ZI3yCicHSYQPrP6tTZuEWbz8yfmwqr6QSrKSTyk+SolMh9mdHzmMXZNCHvyqaqgji8
- PT/qVOBDnaxAPj7qUCafhWqj36Nj78f46XkbhL1QYqkvG2BCc+v8Ruoy1UNXR1hxVhs4
- gAz8qUHRyieqKPM2fjmGWbKTegEWbz9SndCihsJfJFAZcJ0IZqdMdiJAJZd5i3KrYyFK
- R6Jw==
-X-Gm-Message-State: AOJu0YyY95WdRRAGNMQhqT58/D6kTk+fK9fq2SnwgtG9thJZStgPD9xb
- d3XRndy5QQ+ViQRW6vhnZHG3E4NLXzeZqnFkSgJJ0ghEsPslbHiwNSqnzwK5LHDNkXU=
-X-Gm-Gg: ASbGncvL9hIuxgMqDb/HZzDwtuu9xYqjzfvEVlVcqtwiAg8R1u6pbxaozSHAbL4jw4c
- K+ZbamTMT5W/QM/E94ytrxjwZsrXijZexTOeL1GHcWgxkvKKgg3oluFAoxxFezmdo9UWnkxBCp2
- 7/Dg706YMJO3VLBfdgcGi2Fc0Lh6Tyww2mSH7ahGYHS/X2zc/Cd2VxN/tnzioEOmAypXGQca70S
- XPIyj2EC2hQVxfNP1DRF08TY8eHuNItxY7BJPebIgKdw24ROP2eHIeN90WsKIbdg13P0LxkKkg4
- uILNrRwiVMQCCH/lQFDXRPTxBc7CQojC9iq92JuGdss0WDxUgSM=
-X-Google-Smtp-Source: AGHT+IG8dLykXIC6c3D5nHr9nWOSrf+/3fc/3l0kxGRKRN3f72cKBcoT0Sjj9XvXdx5wVhFNbd1evw==
-X-Received: by 2002:a17:902:ea0d:b0:235:eb8b:9968 with SMTP id
- d9443c01a7336-23601d71213mr162651405ad.36.1749424100418; 
- Sun, 08 Jun 2025 16:08:20 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749424105; x=1750028905;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=2ap6I1EkC90RWD1sn5nrnpOFuEPRFLgHmwY9jqJf898=;
+ b=Y+EtQ4sAG/rh2Vpbhy80MuI1Yk34/+6UAUOZ1uBOC/NNExJTyZrJ+1n+4rr5ImyFy6
+ R4bOHBx2BgK781uQGnWC0QXt5WWDMDQMZ5CPUgS6kKMlyabFuT8i4qVzokXkM0IIZV9A
+ brEZhvyU3yPbbGpxY1ofJi4DniNQuNxYGeFTqh0wNTUwbeJPi+xRfUYbTiTt7E9T+S9m
+ e/WzzhFTeeatospZDv+D5lq8CxGscBBRekhaKYrd29QJY3KNbG4xModb9N8LlT8ifDzh
+ PXWm7qpKmkMR25leG31NcfueuyaJ9Jkn+ffFXC7BGOS+DMKpqlRH4VrUd41i2wagR1Tn
+ inlQ==
+X-Gm-Message-State: AOJu0Yyv37o4Uy3LQQebQyyv8rWUFU+w5YzP7R92BUvZUIJ/02ICTnHo
+ BGo1q839yS2TXAvwrAjG1z5LZbZw/jesve8G55WqlMjd4tSTPto7cOv5oIxZ6Az8RJ8=
+X-Gm-Gg: ASbGnctkOTG7ZQ7vnOKgUeev7YSxzx/PEZM/tWmnAzPC9/vBuO1JGqKGCNFIDuJHKO+
+ 0R+ydl89SjIGJTvnr//6Poa6xjfPsRh51JJtdxKVVny9mZjCQ5XbpoXIOjIxauDOXHvqZgCyNQp
+ QugBoDKE57T6XnECRhWgHoBpkDQn5i4Y5Gv/dMDuO2WTvUS4B4xAho/tobztXgTF4hZArJNuvSe
+ I1532BNmGHIZEaETesFEpTvyeMEhN4cTZEonp32vcGIhfVB5tamf/n0hvxnA7D541acXtDYAVlD
+ BSNatASRqJUAssbkMePT86uzV+QZVhCUxgvHyCudS9Eiu6dfenQy9eJLefJTFg==
+X-Google-Smtp-Source: AGHT+IHM6FVoWBOf5Ljta+xCEpehNXZsM7sk1yoQwjuTUCtuQGbeHOIu2jZ/+iIr+U4aQB7/TwDi6g==
+X-Received: by 2002:a17:903:228e:b0:235:1962:1c13 with SMTP id
+ d9443c01a7336-23601d01c97mr153195505ad.14.1749424105226; 
+ Sun, 08 Jun 2025 16:08:25 -0700 (PDT)
 Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23603504f09sm43421325ad.223.2025.06.08.16.08.19
+ d9443c01a7336-23603504f09sm43421325ad.223.2025.06.08.16.08.24
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Jun 2025 16:08:20 -0700 (PDT)
+ Sun, 08 Jun 2025 16:08:24 -0700 (PDT)
 From: Rowan Hart <rowanbhart@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -72,17 +73,17 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Rowan Hart <rowanbhart@gmail.com>
-Subject: [PATCH v9 0/9] Add additional plugin API functions to read and write
- memory and registers
-Date: Sun,  8 Jun 2025 16:08:10 -0700
-Message-ID: <20250608230819.3382527-1-rowanbhart@gmail.com>
+ Alexandre Iooss <erdnaxe@crans.org>, novafacing <rowanbhart@gmail.com>
+Subject: [PATCH v9 6/9] plugins: Add patcher plugin and test
+Date: Sun,  8 Jun 2025 16:08:16 -0700
+Message-ID: <20250608230819.3382527-7-rowanbhart@gmail.com>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250608230819.3382527-1-rowanbhart@gmail.com>
+References: <20250608230819.3382527-1-rowanbhart@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,99 +106,494 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch series adds several new API functions focused on enabling use
-cases around reading and writing guest memory from QEMU plugins. To support
-these new APIs, some utility functionality around retrieving information about
-address spaces is added as well.
+From: novafacing <rowanbhart@gmail.com>
 
-The new qemu_plugin_write_register utilizes gdb_write_register, which is now
-declared in gdbstub.h for this purpose instead of being static.
+This patch adds a plugin that exercises the virtual and hardware memory
+read-write API functions added in a previous patch. The plugin takes a
+target and patch byte sequence, and will overwrite any instruction
+matching the target byte sequence with the patch.
 
-qemu_plugin_write_memory_vaddr utilizes cpu_memory_rw_debug much the same as
-the existing read_memory_vaddr function does.
-
-The read and write_hwaddr functions are the most different. These functions
-use address_space_rw, which works well in most cases. There is an important
-caveat that for writes, the page being written will be set dirty by the
-write operation. This dirty setting requires locking the page range,
-which can contend with an already held lock in page_collection_lock
-when called in a tb translate callback with a write to the instruction
-memory in the tb. The doc comments warn against doing this, and it's unlikely
-anyone would want to do this.
-
-I've also added two test plugins: one that implements a simple hypercall
-interface that guest code can use to communicate with the plugin in a
-structured way with a test to ensure that this hypercall works and writing
-virtual memory works. And one that implements a simple patch utility to patch
-memory at runtime. The test for the second plugin ensures the patch applies
-successfully to instruction memory, and can use both hw and vaddr methods.
-
-For v3, I've had a few comments from the last submission that I've addressed,
-and some that I haven't for one reason or another:
-
-- Enforce QEMU_PLUGIN_CB_ flags in register read/write operations: done!
-- Fix my commit messages and add long messages describing commits: done!
-- Un-expose AS internals: done! Functions operate on current vCPU, current AS.
-- Clean up use of current_cpu: done!
-- Make functions take a vcpu_idx: not done. May revisit but it allows footguns.
-  Even for translation, seems best to not do this now. We can easily add _vcpu
-  versions of these functions in the future if we change our minds!
-
-For v5, I've just updated the enforcement of the QEMU_PLUGIN_CB_ flags to just
-use immediate stores, which simplifies the implementation quite a lot and
-should be more efficient too. Thanks Pierrick for the suggestion!
-
-v6 is a formatting pass, I left some whitespace that needed removal, some
-license text was wrong, and so forth.
-
-v8 reverts a mistake I made extending the size of arrays of TCGHelperInfo
-structs, as I misunderstood their sizes. It preserves adding an explicit
-zero as the last entry for clarity, however.
-
-v9 fixes qemu_plugin_read_register to return -1 on parameter or flag state
-error instead of 0.
-
-Rowan Hart (2):
-  plugins: Add enforcement of QEMU_PLUGIN_CB flags in register R/W
-    callbacks
-  plugins: Remove use of qemu_plugin_read_register where it is not
-    permitted
-
-novafacing (7):
-  gdbstub: Expose gdb_write_register function to consumers of gdbstub
-  plugins: Add register write API
-  plugins: Add memory virtual address write API
-  plugins: Add memory hardware address read/write API
-  plugins: Add patcher plugin and test
-  plugins: Add hypercalls plugin and test
-  plugins: Update plugin version and add notes
-
- accel/tcg/plugin-gen.c                        |  30 +
- gdbstub/gdbstub.c                             |   2 +-
- include/exec/gdbstub.h                        |  14 +
- include/hw/core/cpu.h                         |   1 +
- include/qemu/plugin.h                         |   4 +
- include/qemu/qemu-plugin.h                    | 166 +++++-
- plugins/api.c                                 | 135 ++++-
- plugins/core.c                                |  20 +
- tests/tcg/Makefile.target                     |   2 +
- tests/tcg/plugins/hypercalls.c                | 547 ++++++++++++++++++
- tests/tcg/plugins/insn.c                      |  22 +-
- tests/tcg/plugins/meson.build                 |   2 +-
- tests/tcg/plugins/patch.c                     | 297 ++++++++++
- tests/tcg/x86_64/Makefile.softmmu-target      |  36 +-
- tests/tcg/x86_64/system/hypercalls-target.c   |  40 ++
- tests/tcg/x86_64/system/patch-target.c        |  27 +
- .../tcg/x86_64/system/validate-hypercalls.py  |  40 ++
- tests/tcg/x86_64/system/validate-patch.py     |  39 ++
- 18 files changed, 1380 insertions(+), 44 deletions(-)
- create mode 100644 tests/tcg/plugins/hypercalls.c
+Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+---
+ tests/tcg/Makefile.target                 |   1 +
+ tests/tcg/plugins/meson.build             |   2 +-
+ tests/tcg/plugins/patch.c                 | 297 ++++++++++++++++++++++
+ tests/tcg/x86_64/Makefile.softmmu-target  |  32 ++-
+ tests/tcg/x86_64/system/patch-target.c    |  27 ++
+ tests/tcg/x86_64/system/validate-patch.py |  39 +++
+ 6 files changed, 392 insertions(+), 6 deletions(-)
  create mode 100644 tests/tcg/plugins/patch.c
- create mode 100644 tests/tcg/x86_64/system/hypercalls-target.c
  create mode 100644 tests/tcg/x86_64/system/patch-target.c
- create mode 100755 tests/tcg/x86_64/system/validate-hypercalls.py
  create mode 100755 tests/tcg/x86_64/system/validate-patch.py
 
+diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+index 95ff76ea44..4b709a9d18 100644
+--- a/tests/tcg/Makefile.target
++++ b/tests/tcg/Makefile.target
+@@ -176,6 +176,7 @@ RUN_TESTS+=$(EXTRA_RUNS)
+ # Some plugins need additional arguments above the default to fully
+ # exercise things. We can define them on a per-test basis here.
+ run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
++run-plugin-%-with-libpatch.so: PLUGIN_ARGS=$(COMMA)target=ffffffff$(COMMA)patch=00000000
+ 
+ ifeq ($(filter %-softmmu, $(TARGET)),)
+ run-%: %
+diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+index 41f02f2c7f..163042e601 100644
+--- a/tests/tcg/plugins/meson.build
++++ b/tests/tcg/plugins/meson.build
+@@ -1,6 +1,6 @@
+ t = []
+ if get_option('plugins')
+-  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall']
++  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
+     if host_os == 'windows'
+       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
+                         include_directories: '../../../include/qemu',
+diff --git a/tests/tcg/plugins/patch.c b/tests/tcg/plugins/patch.c
+new file mode 100644
+index 0000000000..6e83418b85
+--- /dev/null
++++ b/tests/tcg/plugins/patch.c
+@@ -0,0 +1,297 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This plugin patches instructions matching a pattern to a different
++ * instruction as they execute
++ *
++ */
++
++#include "glib.h"
++#include "glibconfig.h"
++
++#include <qemu-plugin.h>
++#include <string.h>
++#include <stdio.h>
++
++QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
++
++static bool use_hwaddr;
++static bool debug_insns;
++static GByteArray *target_data;
++static GByteArray *patch_data;
++
++/**
++ * Parse a string of hexadecimal digits into a GByteArray. The string must be
++ * even length
++ */
++static GByteArray *str_to_bytes(const char *str)
++{
++    GByteArray *bytes = g_byte_array_new();
++    char byte[3] = {0};
++    size_t len = strlen(str);
++    guint8 value = 0;
++
++    if (len % 2 != 0) {
++        g_byte_array_free(bytes, true);
++        return NULL;
++    }
++
++    for (size_t i = 0; i < len; i += 2) {
++        byte[0] = str[i];
++        byte[1] = str[i + 1];
++        value = (guint8)g_ascii_strtoull(byte, NULL, 16);
++        g_byte_array_append(bytes, &value, 1);
++    }
++
++    return bytes;
++}
++
++static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
++{
++    uint64_t addr = (uint64_t)userdata;
++    GString *str = g_string_new(NULL);
++    g_string_printf(str, "patching: @0x%"
++                    PRIx64 "\n",
++                    addr);
++    qemu_plugin_outs(str->str);
++    g_string_free(str, true);
++
++    enum qemu_plugin_hwaddr_operation_result result =
++        qemu_plugin_write_memory_hwaddr(addr, patch_data);
++
++
++    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
++        GString *errmsg = g_string_new(NULL);
++        g_string_printf(errmsg, "Failed to write memory: %d\n", result);
++        qemu_plugin_outs(errmsg->str);
++        g_string_free(errmsg, true);
++        return;
++    }
++
++    GByteArray *read_data = g_byte_array_new();
++
++    result = qemu_plugin_read_memory_hwaddr(addr, read_data,
++                                            patch_data->len);
++
++    qemu_plugin_outs("Reading memory...\n");
++
++    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
++        GString *errmsg = g_string_new(NULL);
++        g_string_printf(errmsg, "Failed to read memory: %d\n", result);
++        qemu_plugin_outs(errmsg->str);
++        g_string_free(errmsg, true);
++        return;
++    }
++
++    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
++        qemu_plugin_outs("Failed to read back written data\n");
++    }
++
++    qemu_plugin_outs("Success!\n");
++
++    return;
++}
++
++static void patch_vaddr(unsigned int vcpu_index, void *userdata)
++{
++    uint64_t addr = (uint64_t)userdata;
++    uint64_t hwaddr = 0;
++    if (!qemu_plugin_translate_vaddr(addr, &hwaddr)) {
++        qemu_plugin_outs("Failed to translate vaddr\n");
++        return;
++    }
++    GString *str = g_string_new(NULL);
++    g_string_printf(str, "patching: @0x%"
++                    PRIx64 " hw: @0x%" PRIx64 "\n",
++                    addr, hwaddr);
++    qemu_plugin_outs(str->str);
++    g_string_free(str, true);
++
++    qemu_plugin_outs("Writing memory (vaddr)...\n");
++
++    if (!qemu_plugin_write_memory_vaddr(addr, patch_data)) {
++        qemu_plugin_outs("Failed to write memory\n");
++        return;
++    }
++
++    qemu_plugin_outs("Reading memory (vaddr)...\n");
++
++
++    GByteArray *read_data = g_byte_array_new();
++
++    if (!qemu_plugin_read_memory_vaddr(addr, read_data, patch_data->len)) {
++        qemu_plugin_outs("Failed to read memory\n");
++        return;
++    }
++
++    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
++        qemu_plugin_outs("Failed to read back written data\n");
++    }
++
++    qemu_plugin_outs("Success!\n");
++
++    return;
++}
++
++static void debug_disas(unsigned int vcpu_index, void *userdata)
++{
++    GString *debug_info = (GString *)userdata;
++    qemu_plugin_outs(debug_info->str);
++}
++
++static void debug_print_newline(unsigned int vcpu_index, void *userdata)
++{
++    qemu_plugin_outs("\n");
++}
++
++/*
++ * Callback on translation of a translation block.
++ */
++static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
++{
++    uint64_t addr = 0;
++    GByteArray *insn_data = g_byte_array_new();
++    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
++        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
++
++        if (use_hwaddr) {
++            uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
++            if (!qemu_plugin_translate_vaddr(vaddr, &addr)) {
++                qemu_plugin_outs("Failed to translate vaddr\n");
++                continue;
++            }
++        } else {
++            addr = qemu_plugin_insn_vaddr(insn);
++        }
++
++        g_byte_array_set_size(insn_data, qemu_plugin_insn_size(insn));
++        qemu_plugin_insn_data(insn, insn_data->data, insn_data->len);
++
++        if (insn_data->len >= target_data->len &&
++            !memcmp(insn_data->data, target_data->data,
++                    MIN(target_data->len, insn_data->len))) {
++            if (use_hwaddr) {
++                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_hwaddr,
++                                                     QEMU_PLUGIN_CB_NO_REGS,
++                                                     (void *)addr);
++            } else {
++                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_vaddr,
++                                                     QEMU_PLUGIN_CB_NO_REGS,
++                                                     (void *)addr);
++            }
++        }
++    }
++    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
++        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
++        uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
++        uint64_t hwaddr = (uint64_t)qemu_plugin_insn_haddr(insn);
++        uint64_t translated_hwaddr = 0;
++        if (!qemu_plugin_translate_vaddr(vaddr, &translated_hwaddr)) {
++            qemu_plugin_outs("Failed to translate vaddr\n");
++            continue;
++        }
++        char *disas = qemu_plugin_insn_disas(insn);
++        GString *str = g_string_new(NULL);
++        g_string_printf(str,
++                        "vaddr: 0x%" PRIx64 " hwaddr: 0x%" PRIx64
++                        " translated: 0x%" PRIx64 " : %s\n",
++                        vaddr, hwaddr, translated_hwaddr, disas);
++        g_free(disas);
++        if (debug_insns) {
++            qemu_plugin_register_vcpu_insn_exec_cb(insn, debug_disas,
++                                                   QEMU_PLUGIN_CB_NO_REGS,
++                                                   str);
++        }
++
++    }
++
++    if (debug_insns) {
++        qemu_plugin_register_vcpu_tb_exec_cb(tb, debug_print_newline,
++                                             QEMU_PLUGIN_CB_NO_REGS,
++                                             NULL);
++    }
++
++    g_byte_array_free(insn_data, true);
++}
++
++static void usage(void)
++{
++    fprintf(stderr, "Usage: <lib>,target=<target>,patch=<patch>"
++            "[,use_hwaddr=<use_hwaddr>]"
++            "[,debug_insns=<debug_insns>]\n");
++}
++
++/*
++ * Called when the plugin is installed
++ */
++QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
++                                           const qemu_info_t *info, int argc,
++                                           char **argv)
++{
++
++    use_hwaddr = true;
++    debug_insns = false;
++    target_data = NULL;
++    patch_data = NULL;
++
++    if (argc > 4) {
++        usage();
++        return -1;
++    }
++
++    for (size_t i = 0; i < argc; i++) {
++        char *opt = argv[i];
++        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
++        if (g_strcmp0(tokens[0], "use_hwaddr") == 0) {
++            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &use_hwaddr)) {
++                fprintf(stderr,
++                        "Failed to parse boolean argument use_hwaddr\n");
++                return -1;
++            }
++        } else if (g_strcmp0(tokens[0], "debug_insns") == 0) {
++            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &debug_insns)) {
++                fprintf(stderr,
++                        "Failed to parse boolean argument debug_insns\n");
++                return -1;
++            }
++        } else if (g_strcmp0(tokens[0], "target") == 0) {
++            target_data = str_to_bytes(tokens[1]);
++            if (!target_data) {
++                fprintf(stderr,
++                         "Failed to parse target bytes.\n");
++                return -1;
++            }
++        } else if (g_strcmp0(tokens[0], "patch") == 0) {
++            patch_data = str_to_bytes(tokens[1]);
++            if (!patch_data) {
++                fprintf(stderr, "Failed to parse patch bytes.\n");
++                return -1;
++            }
++        } else {
++            fprintf(stderr, "Unknown argument: %s\n", tokens[0]);
++            usage();
++            return -1;
++        }
++    }
++
++    if (!target_data) {
++        fprintf(stderr, "target argument is required\n");
++        usage();
++        return -1;
++    }
++
++    if (!patch_data) {
++        fprintf(stderr, "patch argument is required\n");
++        usage();
++        return -1;
++    }
++
++    if (target_data->len != patch_data->len) {
++        fprintf(stderr, "Target and patch data must be the same length\n");
++        return -1;
++    }
++
++    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
++
++    return 0;
++}
+diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
+index ef6bcb4dc7..8d3a067c33 100644
+--- a/tests/tcg/x86_64/Makefile.softmmu-target
++++ b/tests/tcg/x86_64/Makefile.softmmu-target
+@@ -7,18 +7,27 @@
+ #
+ 
+ I386_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/i386/system
+-X64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
++X86_64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
+ 
+ # These objects provide the basic boot code and helper functions for all tests
+ CRT_OBJS=boot.o
+ 
+-CRT_PATH=$(X64_SYSTEM_SRC)
+-LINK_SCRIPT=$(X64_SYSTEM_SRC)/kernel.ld
++X86_64_TEST_C_SRCS=$(wildcard $(X86_64_SYSTEM_SRC)/*.c)
++X86_64_TEST_S_SRCS=
++
++X86_64_C_TESTS = $(patsubst $(X86_64_SYSTEM_SRC)/%.c, %, $(X86_64_TEST_C_SRCS))
++X86_64_S_TESTS = $(patsubst $(X86_64_SYSTEM_SRC)/%.S, %, $(X86_64_TEST_S_SRCS))
++
++X86_64_TESTS = $(X86_64_C_TESTS)
++X86_64_TESTS += $(X86_64_S_TESTS)
++
++CRT_PATH=$(X86_64_SYSTEM_SRC)
++LINK_SCRIPT=$(X86_64_SYSTEM_SRC)/kernel.ld
+ LDFLAGS=-Wl,-T$(LINK_SCRIPT) -Wl,-melf_x86_64
+ CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
+ LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+ 
+-TESTS+=$(MULTIARCH_TESTS)
++TESTS+=$(X86_64_TESTS) $(MULTIARCH_TESTS)
+ EXTRA_RUNS+=$(MULTIARCH_RUNS)
+ 
+ # building head blobs
+@@ -27,11 +36,24 @@ EXTRA_RUNS+=$(MULTIARCH_RUNS)
+ %.o: $(CRT_PATH)/%.S
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
+ 
+-# Build and link the tests
++# Build and link the multiarch tests
+ %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+ 	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+ 
++# Build and link the arch tests
++%: $(X86_64_SYSTEM_SRC)/%.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
++	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
++
+ memory: CFLAGS+=-DCHECK_UNALIGNED=1
++patch-target: CFLAGS+=-O0
+ 
+ # Running
+ QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
++
++# Add patch-target to ADDITIONAL_PLUGINS_TESTS
++ADDITIONAL_PLUGINS_TESTS += patch-target
++
++run-plugin-patch-target-with-libpatch.so:		\
++	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true$(COMMA)debug_insns=false
++run-plugin-patch-target-with-libpatch.so:		\
++	CHECK_PLUGIN_OUTPUT_COMMAND=$(X86_64_SYSTEM_SRC)/validate-patch.py $@.out
+\ No newline at end of file
+diff --git a/tests/tcg/x86_64/system/patch-target.c b/tests/tcg/x86_64/system/patch-target.c
+new file mode 100644
+index 0000000000..8a7c0a0ae8
+--- /dev/null
++++ b/tests/tcg/x86_64/system/patch-target.c
+@@ -0,0 +1,27 @@
++/*
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ *
++ * This test target increments a value 100 times. The patcher converts the
++ * inc instruction to a nop, so it only increments the value once.
++ *
++ */
++#include <minilib.h>
++
++int main(void)
++{
++    ml_printf("Running test...\n");
++#if defined(__x86_64__)
++    ml_printf("Testing insn memory read/write...\n");
++    unsigned int x = 0;
++    for (int i = 0; i < 100; i++) {
++        asm volatile (
++            "inc %[x]"
++            : [x] "+a" (x)
++        );
++    }
++    ml_printf("Value: %d\n", x);
++#else
++    #error "This test is only valid for x86_64 architecture."
++#endif
++    return 0;
++}
+diff --git a/tests/tcg/x86_64/system/validate-patch.py b/tests/tcg/x86_64/system/validate-patch.py
+new file mode 100755
+index 0000000000..700950eae5
+--- /dev/null
++++ b/tests/tcg/x86_64/system/validate-patch.py
+@@ -0,0 +1,39 @@
++#!/usr/bin/env python3
++#
++# validate-patch.py: check the patch applies
++#
++# This program takes two inputs:
++#   - the plugin output
++#   - the binary output
++#
++# Copyright (C) 2024
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++
++import sys
++from argparse import ArgumentParser
++
++def main() -> None:
++    """
++    Process the arguments, injest the program and plugin out and
++    verify they match up and report if they do not.
++    """
++    parser = ArgumentParser(description="Validate patch")
++    parser.add_argument('test_output',
++                        help="The output from the test itself")
++    parser.add_argument('plugin_output',
++                        help="The output from plugin")
++    args = parser.parse_args()
++
++    with open(args.test_output, 'r') as f:
++        test_data = f.read()
++    with open(args.plugin_output, 'r') as f:
++        plugin_data = f.read()
++    if "Value: 1" in test_data:
++        sys.exit(0)
++    else:
++        sys.exit(1)
++
++if __name__ == "__main__":
++    main()
++
 -- 
 2.49.0
 
