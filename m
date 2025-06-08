@@ -4,87 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 919B7C61CE7
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 23:10:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2501C61CE7
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 23:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOP7x-0005ve-O5; Sun, 08 Jun 2025 19:08:33 -0400
+	id 1uOPNL-0004ff-GA; Sun, 08 Jun 2025 19:24:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOP7u-0005tY-9O
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:08:30 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1uOPNJ-0004fN-L1
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:24:25 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOP7s-0004cb-Nt
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:08:30 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-234b9dfb842so32754995ad.1
- for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 16:08:28 -0700 (PDT)
+ id 1uOPNI-0006MP-2a
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 19:24:25 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-742c46611b6so4684820b3a.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 16:24:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749424107; x=1750028907; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wVjrW993BqqXU9EpDADVH1dB+hpwPyajnX8KVD/tm+w=;
- b=cXPsQnuikzBeKv7tm84EknZNb6ikvwjwMS3dd9AjvKSksNolz3/OD8pqG0JSsSvseQ
- qTO7IFOy8eR11bpMNrnmiq/fZUlfYPRg0/FqTcq8ursbAw5oxRMqF2WyRyKd15j8lwH3
- Eam6YMGxL4pX+rgS9snk04jpGF4mHh85bzgBaYCRajz6sRaQvuuNbQ5bh3rcELnNPSq4
- aASyrozFjI6c9DQORaUQ/rrM/sbD8MpjtpwvPpzgW04sOUWXGgmEPCB/gPNAIyB/R9tg
- NYzjUK80ptRmuQiqHjI3m95DZoA9fhmpFZLxCuDB61t6FcUeIhZioVfhZw8W0nO2pdCG
- yt+A==
+ d=gmail.com; s=20230601; t=1749425062; x=1750029862; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=5eD+u1ZW3Lr8a+vGQaEredxT+am7OpXo7NrfN7WV1J0=;
+ b=jeDh1jeV7P3g9OV7+nJbfhPfqLrr7UXU3gsieCSeZgX5EVAxW6YfTY5vbm9Hy8n9xF
+ r4CPHafzHI/YTSWs3dC2yz4FJOKolpCAAy4QICUAn6KFTX6UfYWr4GNrM5hrH/CnS7iw
+ baqw1Re7F+wIz1LrVSQgv7OsKSJB+XHRFGHOjUtNYdiqINu4VFRxlLzGOqm29lntZK2c
+ YncscMKSS+1s2NEKHY9Cj52x2pjxXLcob3R+H0vjl8hPv3BzZDIquPVSPycL1rQKfvij
+ dpEGzoCuapK5Z8JxF+7KczFMnJf/R2pTmOOtd9kpDx9Yozyb9Mm3pAdo4ta9+oNXnqt/
+ RchA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749424107; x=1750028907;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=wVjrW993BqqXU9EpDADVH1dB+hpwPyajnX8KVD/tm+w=;
- b=FFfP8JfSOdgKtSDTjBjzgOne2Lmsbip/YVfkWsp4e6U9Pt0QPwLO6ayCS0wMUcyyFb
- b8rXMXEpXTp/G1A/v/80RL1a+Sn9qx+cHg7+wgeMsSKBJ0eLj+to6BZb4HBLB/oeGXsP
- g/LKK0dmjEkmc09L4sNciqzgdIe2R0V2FVBT9Ok9fcjTXAeMFjGfzjNBf3fhoGCbX/9Z
- /SncGW5IUPZZkM7QZ+dlKV0vaQfvqPNb1ND9kXfa0t72E5se94YFqI0HpnvY5zq2aJ28
- uC6zzlqa6drZBZYCbiq/yfQ1G92Kkj5hmz6bgDnO1bodcqfGDXb/441BYwOkDMneINJ0
- dRMA==
-X-Gm-Message-State: AOJu0Yzm8K20Z5QURzas+PSQOarO8exe1zBXnPbrd5i36TTq/IHRUwws
- skFJswbIBJNbbnHOn0bz5QSVQ4J+LQLpdV1W2oiXfjQUee92boYLORVCEPACzMXSQaQ=
-X-Gm-Gg: ASbGncukW7GSFaR73JxUsBShMlEV6aOrI65mQfEpYhGYS9DoB1/brkGRgwp4tr9whcQ
- +vrm3YhdUQzjhHj46nRI4gx8YK0fsqHQH3y3iIWrRFbTwMX4+7LFCtPWCqq0QVQX2j+/E+4pieb
- tx04H+c2LrdaTB6Qu1Pu+FbftPl52H7FHlfTA3O+EYiGjaStLp/A4T8ePgbeiGRXwRKSWxvCtZ1
- if/sRjMpoVCjepOA28yg2hAtttls56ddhw8HImxzLX7EhYkHh17/Jrl0g77wnlhwSEVYGCBoAv5
- kzrT+HqsUJhBFrZXStMFmKqc5Lrnj6r12Xir3RYkf26qcjDAK1s=
-X-Google-Smtp-Source: AGHT+IGebaTfb1WoGeAaYjsLagsI8MCz2O/rML5iqD+1MggiVIVHkkDN+xaIeZtMl01QFQs1YPhHfA==
-X-Received: by 2002:a17:902:dacb:b0:235:1ff0:369f with SMTP id
- d9443c01a7336-23601cf11e1mr157802175ad.5.1749424107055; 
- Sun, 08 Jun 2025 16:08:27 -0700 (PDT)
-Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23603504f09sm43421325ad.223.2025.06.08.16.08.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Jun 2025 16:08:26 -0700 (PDT)
-From: Rowan Hart <rowanbhart@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Rowan Hart <rowanbhart@gmail.com>
-Subject: [PATCH v9 8/9] plugins: Remove use of qemu_plugin_read_register where
- it is not permitted
-Date: Sun,  8 Jun 2025 16:08:18 -0700
-Message-ID: <20250608230819.3382527-9-rowanbhart@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250608230819.3382527-1-rowanbhart@gmail.com>
-References: <20250608230819.3382527-1-rowanbhart@gmail.com>
+ d=1e100.net; s=20230601; t=1749425062; x=1750029862;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=5eD+u1ZW3Lr8a+vGQaEredxT+am7OpXo7NrfN7WV1J0=;
+ b=aAcHB6tAnZOUaSysJUY1T2dyFLpMU+80ZRVwdweGlrE9R1jVCFDq6TifwtPD9ZhBA4
+ l2KcGT+zl4KpErLzj62S+9UFDsJ1d+vRswk33zip2fNmj2qFjbeio9VKzFJVolq07h18
+ 0fjGBLuchuZZH3D1r1wyB42m9K1GkhHKGwvw24jPA34BJEYjX9j511GEkdPXDuCPK6rE
+ mv00+ot99oS0HG+VFVOKUwxrb4wRqavQpV9Zg9BaECAu9BC1TmyD/P0Ed1klUc4e1Wok
+ fn7Wd3j/7KnXqR9VJeSu80SvhWnz32aumSj4g39O6pyfDOUlsTArnjF7Be4F4mZ+Xjpg
+ Fg+w==
+X-Gm-Message-State: AOJu0YztQRdT34FIO8YbG8t5EqMifKN6xG5uMS75qkGeMH86ZgNtS61d
+ 6efQefFL0SN0YkoAot6FWsXwjvNYNRvHJSuJDtORJkWNgvqPDo+AW1nsuY9cccciH1s=
+X-Gm-Gg: ASbGnctFeQWDub/44kHQToP+P3VuCXUCgL2BM7mQePOtz1nnLXEsFX8QETd6uUOHUII
+ vNHjxcGojK/xauld3Vzw99egd/JSAQWo3MKLKHstXfSm7wHjuHKu2OAH0/wppe3Jv8r3UO31q7n
+ 81LBIjRw9PDEx4VJUf287X7l231l7QL8PPG8zXdWaIt9lrNLRjaWldtS91KIL7O7dbtMFJElou+
+ bJx7K/f67mhXFcliUpGwHhb8J8HyATIr6z+sd+QyEuo53ejgA1wGZf3Yuo0t1yHyLZQUeymEeqL
+ qUxhGNoMxZr/DE/2sPxXb5BQAMRL/PKXthv2X7VZtxJ4kS4LVYAZBvg=
+X-Google-Smtp-Source: AGHT+IGfgKkwDNv1SSIsGICDhijZZpFKwTx0nRTVtkdOGqHWfeVjARjTpDjy3vIx+3Upnh8GhZu05w==
+X-Received: by 2002:a05:6a00:b42:b0:748:33f3:8da8 with SMTP id
+ d2e1a72fcca58-74833f38e49mr9478411b3a.5.1749425062322; 
+ Sun, 08 Jun 2025 16:24:22 -0700 (PDT)
+Received: from [192.168.1.119] ([50.46.174.34])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7482af7a216sm4454530b3a.40.2025.06.08.16.24.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 08 Jun 2025 16:24:22 -0700 (PDT)
+Message-ID: <2a61d08c-97de-4500-85d2-06fd8ba8e583@gmail.com>
+Date: Sun, 8 Jun 2025 16:24:21 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x633.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v8 0/9] Add additional plugin API functions to read and
+ write memory and registers
+To: qemu-devel@nongnu.org
+Cc: Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>, 
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+References: <20250608225136.3340370-1-rowanbhart@gmail.com>
+Content-Language: en-US
+From: Rowan Hart <rowanbhart@gmail.com>
+In-Reply-To: <20250608225136.3340370-1-rowanbhart@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,61 +109,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch is required to make the insn plugin work after adding
-enforcement of QEMU_PLUGIN_CB_ flags in calls to read or write
-registers. Previously, these flags were not enforced and the API could
-be called from anywhere, but this was not intended as described by the
-documentation. Now, the flags are enforced and qemu_plugin_read_register
-can no longer be called from a vcpu_init callback because it does not
-request the QEMU_PLUGIN_CB_ flag (nor does it have a mechanism to do
-so).
+I added another update I missed to v9, so please disregard this version 
+and check 
+https://lore.kernel.org/qemu-devel/20250608230819.3382527-1-rowanbhart@gmail.com/T/#t 
+instead.
 
-Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
----
- tests/tcg/plugins/insn.c | 22 +---------------------
- 1 file changed, 1 insertion(+), 21 deletions(-)
 
-diff --git a/tests/tcg/plugins/insn.c b/tests/tcg/plugins/insn.c
-index 0c723cb9ed..265d3ebe9e 100644
---- a/tests/tcg/plugins/insn.c
-+++ b/tests/tcg/plugins/insn.c
-@@ -81,25 +81,6 @@ static Instruction * get_insn_record(const char *disas, uint64_t vaddr, Match *m
-     return record;
- }
- 
--/*
-- * Initialise a new vcpu with reading the register list
-- */
--static void vcpu_init(qemu_plugin_id_t id, unsigned int vcpu_index)
--{
--    g_autoptr(GArray) reg_list = qemu_plugin_get_registers();
--    g_autoptr(GByteArray) reg_value = g_byte_array_new();
--
--    if (reg_list) {
--        for (int i = 0; i < reg_list->len; i++) {
--            qemu_plugin_reg_descriptor *rd = &g_array_index(
--                reg_list, qemu_plugin_reg_descriptor, i);
--            int count = qemu_plugin_read_register(rd->handle, reg_value);
--            g_assert(count > 0);
--        }
--    }
--}
--
--
- static void vcpu_insn_exec_before(unsigned int cpu_index, void *udata)
- {
-     qemu_plugin_u64_add(insn_count, cpu_index, 1);
-@@ -295,8 +276,7 @@ QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-     insn_count = qemu_plugin_scoreboard_u64(
-         qemu_plugin_scoreboard_new(sizeof(uint64_t)));
- 
--    /* Register init, translation block and exit callbacks */
--    qemu_plugin_register_vcpu_init_cb(id, vcpu_init);
-+    /* Register translation block and exit callbacks */
-     qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans);
-     qemu_plugin_register_atexit_cb(id, plugin_exit, NULL);
-     return 0;
--- 
-2.49.0
+-Rowan
 
 
