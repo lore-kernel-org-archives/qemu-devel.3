@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 198DEC5AD49
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 08:20:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890D3C5AD49
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 08:23:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOBGO-0000Z8-7p; Sun, 08 Jun 2025 04:20:20 -0400
+	id 1uOBJP-0001Is-BF; Sun, 08 Jun 2025 04:23:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uOBGL-0000YJ-VH
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 04:20:18 -0400
-Received: from mail-lj1-x232.google.com ([2a00:1450:4864:20::232])
+ id 1uOBJN-0001Ii-M0
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 04:23:25 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uOBGA-0008HQ-61
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 04:20:17 -0400
-Received: by mail-lj1-x232.google.com with SMTP id
- 38308e7fff4ca-32a72cb7e4dso32229971fa.0
- for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 01:20:05 -0700 (PDT)
+ id 1uOBJL-0008UE-Vr
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 04:23:25 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-54b09cb06b0so4057435e87.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 01:23:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749370804; x=1749975604; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1749371002; x=1749975802; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UgKQiuggoUk9E0kKs0i87d5sCG+2bdwKjkdLVrKjcFE=;
- b=g/MrOuWRxz2SHY8/ToIsoVD/bkaaqaeBVhh6D168WM5OI9XObgxie46Mxot0ppp2Mu
- zchHth8TRjhiwDmsA7O/hBYepOuSOM2XDHDFkG8xGBRMdW0beNaaPmQf4yX6536iNUQE
- GgDALMxYdceuT896JKv7Zv90DvPo3kinW+MKG2zYYDzsNJqD2/N93tPMpLuj2DSvymWE
- bbpX7JWEEHdju4/75MssRObiiaFy9zPP7nyb6uFp1c9c5ZpTZwEhNb5iO0+0Xb2ZJCOl
- s9q0DjkONmKK4hTBIDdCOIQOz5lIIGwZJCvq8Kxyg3M6hqxzNftoU77yiyeMTOgp0K4O
- 5QtA==
+ bh=qhuTqEJHVq0IQXwL1zAbw52oRmEOu1jWaD8FSlZiSfA=;
+ b=F5ZFHmMokLFB+B2jgZ88KrsJdFx2txFa/WfzugA9qvN2UG5Ic3A59K49OnOq/ZwNRd
+ 9JijVdU6lPPxsloJRNuNQgJFV6h4r4qViEgB+UtmNvNYwuGyqSyY48ctFAAxskSwmr+Q
+ VFfLZzDA6P2SAJ53sRoQGlDMsvO12oTK/VA6Dsx8kKC8Q9EHxa1+7ozD+u+Q9IXclUBf
+ ANtIGo7Td7T0JOpJtGpAoxGegjJJ9/1rf5AwKN62gTuQLRspdlIu/VggTByzoAQUJmh7
+ dSetyBAr7gCc2qGWiNDOjlES2IDsfFE9vF0yRHenoYh/HI1EX01XNWdZRPPZJLOI26aC
+ 2v2A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749370804; x=1749975604;
+ d=1e100.net; s=20230601; t=1749371002; x=1749975802;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UgKQiuggoUk9E0kKs0i87d5sCG+2bdwKjkdLVrKjcFE=;
- b=w4iNTTNc13TpHjlKDrvXRfP3V9a3KpO23tcoilzDOcCwino5DrvasJv/ZRu6gIXkC6
- rrKTvnZa1QeDOg7M6GBKPKFB5KxZC60zshNONNa4vavib0SNXUcrGip6oLGqhPtE28Lh
- qLldhDvYDXZF/1i82g0ZfXXUD+uLRC4QYfNH8abzKT9ftKLSCy+u6y+/fVkzGNK34Vql
- p/aTeCOYIRLa207fR6bFwuyI0zxcP4UKK/U3gMFWQi4dJxuXky3ExQDOUaBBPRkivDRk
- dgDEtkVhEtSKYXrtvB1R4ux/Yxbrz6dH+VXgVc25UikjxD+G3zyPaNfNpHyo86vbhBls
- dccg==
-X-Gm-Message-State: AOJu0YyubQnfx3rTZlgwUpBEFuPjmaKUcxKOEPmIOWfp29cXJ5D+XpF9
- zOLjsjx3ywnsZ3WysxnA+t6PtqmTy4OmmG7X2GYQWRUzVU4H1CfkfF8Qu9PRvCUmdV9x+QabO/q
- leqvQ4o/M/lR9d4RtGMm5Zi0IC3XyhGQ=
-X-Gm-Gg: ASbGncvGdADVLneh65TBk6gZXNc9wdh3VJLYLpuBiwcD7EjwG0l0HCpcKCHuXEIE5qB
- Dw7JZGyLzRDfMSlvYcYcDLehGvc86ikagQyEfOvzW+Fbcqeer5+8ME0P8FoeHol3NeU1gfO7XHE
- zAG/kMrKUYztCejEjfRwUFrTj41jPwILGeJ8MvXDfGkmeZNtz6TS4bVfYjRzLfXs60
-X-Google-Smtp-Source: AGHT+IG9qyoEy+QUT2gWR8852lB5bvIErtvca2pzG4EAjXRJtiu4WXrRb3TpiOQp125QJPVUNWt6RWvqnT3XWbEwEk4=
-X-Received: by 2002:a2e:a545:0:b0:32a:7951:554 with SMTP id
- 38308e7fff4ca-32adfc7fee4mr22072851fa.11.1749370803594; Sun, 08 Jun 2025
- 01:20:03 -0700 (PDT)
+ bh=qhuTqEJHVq0IQXwL1zAbw52oRmEOu1jWaD8FSlZiSfA=;
+ b=WCPpdo4pqRSiA6ufPNC3w0/GC76S8GhJwjI7cX4Jgqrzh+qrENoJieFMS7UIIi1Z12
+ asFMBzUjL5pE9izs61OFDMr8DKGZx/aRq18IZkDvCMxALsw/Oa44QDEfnR4gvBpdqUnW
+ wrv9EtqWWB3Og54RzbdiQxO9sfnR37AxfVXw93o1Fqo24GPQYZxvf++Z18ZmoqqRWxJu
+ BNC+nW5Dftkpn0tSJAMQpsRAPVBXQ9rAXhB/Aa9X2BMn6nKNCHjIH49adjds2rKsIzlx
+ ma+6dNZs3vJ/Uu043dAyDDZNnJya5vs3Xs7+it7c0BoxqEaJ3VkF7AG4kE9iARwttG7p
+ Jnkw==
+X-Gm-Message-State: AOJu0Yxx4KYx1kcLlpM2F1spG6lPhRXOaHMJN4CqPXZvWKaKNhI1sBKT
+ IQJA+Un0Pw0uqFVaQNnhOE82oticLGUd7keUGXOwwQbfHoFC/mdbF+g2ITCyxxMqz5YOdeR4EJW
+ lFqZFPBoDfkHefTwJen8sNmkpydUhN2M=
+X-Gm-Gg: ASbGncsao80EqymJuzsNPPMBcy/rek7U4IqPCFQH/2GXTUT/nzTairEcbZh0TTIWRwT
+ 3SztQkz+vpt9TSu3ss4KwaK8BUhUbYrDz9zMl0lkto8FIJDuaTrngddIgERkgCyduGGCqznOfqN
+ p8PDnxfHl4s51fZxya3xuCWfVduf1LszV4nK0Mq22ZToxy0FjLpORkf1BYkY1BDXQT24Takj3j4
+ W0=
+X-Google-Smtp-Source: AGHT+IGZUWQ0kd8iWzJWV+/AI5UvZ9OzAomedCiouvo1ZEJ8iEpXIbUUhQGT0YQYPc6zn/9ZlmbRi5a+IITYSCW34Es=
+X-Received: by 2002:a05:651c:b12:b0:32a:7d4a:6182 with SMTP id
+ 38308e7fff4ca-32adfb417c9mr23660821fa.10.1749371001513; Sun, 08 Jun 2025
+ 01:23:21 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
- <20250607191226.GA554948@fedora>
-In-Reply-To: <20250607191226.GA554948@fedora>
+ <878ac7c5-6729-4930-a64f-19cf0e10f7f2@linaro.org>
+In-Reply-To: <878ac7c5-6729-4930-a64f-19cf0e10f7f2@linaro.org>
 From: Oleg Tolmatcev <oleg.tolmatcev@gmail.com>
-Date: Sun, 8 Jun 2025 10:19:51 +0200
-X-Gm-Features: AX0GCFsBpYZibYMr4N8y6n6lva0oP7E3SSZ5VUu3oL-tVJuHPuT49BY0h1XiZCI
-Message-ID: <CACcXsZgGtXLTZg2yev6Z6rMEiuabu-h9EBxwoQz=-QH+Ye6NHw@mail.gmail.com>
+Date: Sun, 8 Jun 2025 10:23:09 +0200
+X-Gm-Features: AX0GCFuFFU4JYzvOV1kqgLwnSioz0hfbCsjyRlYCGwGTwEDlFrUarp5RAlXMZ64
+Message-ID: <CACcXsZgSdLNUovP_Cz7vAU+E=KzaJ6tLCKFhm1xQpQpKO5h=2Q@mail.gmail.com>
 Subject: Re: [PATCH RESEND v3] meson: fix Windows build
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, Mads Ynddal <mads@ynddal.dk>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Mads Ynddal <mads@ynddal.dk>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::232;
- envelope-from=oleg.tolmatcev@gmail.com; helo=mail-lj1-x232.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=oleg.tolmatcev@gmail.com; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,10 +96,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Sa., 7. Juni 2025 um 21:12 Uhr schrieb Stefan Hajnoczi <stefanha@redhat.=
-com>:
+Am So., 8. Juni 2025 um 02:43 Uhr schrieb Pierrick Bouvier
+<pierrick.bouvier@linaro.org>:
 >
-> On Sat, Jun 07, 2025 at 11:45:04AM +0200, oltolm wrote:
+> On 6/7/25 2:45 AM, oltolm wrote:
 > > Sorry, I forgot to cc the maintainers.
 > >
 > > The build failed when run on Windows. I replaced calls to Unix programs
@@ -111,60 +112,29 @@ two paths
 > >
 > > Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
 > > ---
-> >  contrib/plugins/meson.build         |  2 +-
-> >  plugins/meson.build                 |  2 +-
-> >  scripts/tracetool/__init__.py       | 15 ++++++++++++---
-> >  scripts/tracetool/backend/ftrace.py |  4 +---
-> >  scripts/tracetool/backend/log.py    |  4 +---
-> >  scripts/tracetool/backend/syslog.py |  4 +---
-> >  tests/functional/meson.build        |  4 +---
-> >  tests/include/meson.build           |  2 +-
-> >  tests/tcg/plugins/meson.build       |  2 +-
-> >  trace/meson.build                   |  5 +++--
-> >  10 files changed, 23 insertions(+), 21 deletions(-)
-> >
-> > diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-> > index fa8a426c8..1876bc784 100644
-> > --- a/contrib/plugins/meson.build
-> > +++ b/contrib/plugins/meson.build
-> > @@ -24,7 +24,7 @@ endif
-> >  if t.length() > 0
-> >    alias_target('contrib-plugins', t)
-> >  else
-> > -  run_target('contrib-plugins', command: find_program('true'))
-> > +  run_target('contrib-plugins', command: [python, '-c', ''])
-> >  endif
-> >
-> >  plugin_modules +=3D t
-> > diff --git a/plugins/meson.build b/plugins/meson.build
-> > index 5383c7b88..cb7472df8 100644
-> > --- a/plugins/meson.build
-> > +++ b/plugins/meson.build
-> > @@ -33,7 +33,7 @@ if host_os =3D=3D 'windows'
-> >      input: qemu_plugin_symbols,
-> >      output: 'qemu_plugin_api.def',
-> >      capture: true,
-> > -    command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-> > +    command: [python, '-c', 'import fileinput, re; print("EXPORTS", en=
-d=3D""); [print(re.sub(r"[{};]", "", line), end=3D"") for line in fileinput=
-.input()]', '@INPUT@'])
+> >   contrib/plugins/meson.build         |  2 +-
+> >   plugins/meson.build                 |  2 +-
+> >   scripts/tracetool/__init__.py       | 15 ++++++++++++---
+> >   scripts/tracetool/backend/ftrace.py |  4 +---
+> >   scripts/tracetool/backend/log.py    |  4 +---
+> >   scripts/tracetool/backend/syslog.py |  4 +---
+> >   tests/functional/meson.build        |  4 +---
+> >   tests/include/meson.build           |  2 +-
+> >   tests/tcg/plugins/meson.build       |  2 +-
+> >   trace/meson.build                   |  5 +++--
+> >   10 files changed, 23 insertions(+), 21 deletions(-)
 >
-> On second thought, is print("EXPORTS", end=3D"") correct? Unlike the line=
-s
-> coming from fileinput, there is no line ending. I though that .def files
-> look like this:
+> Are you building using msys2, or another environment on Windows? I'm
+> curious to know in which configuration the build is failing.
 >
-> EXPORTS
->   ...
->   ...
+> In case you use msys2, maybe you're simply missing some packages. Our
+> documentation explains what to install [1].
+> Building out of msys2 on Windows is not recommended, as this is the only
+> maintained setup (tested in our CI, and maintained as an msys2 package
+> by msys2 maintainers) for this system.
 >
-> So maybe end=3D"" should be dropped for EXPORTS to correctly format the
-> .def file?
->
-> (I didn't have a Windows build environment to check myself, but it
-> should be easy to diff the before/after files to verify whether there
-> are any changes.)
+> [1] https://www.qemu.org/docs/master/devel/build-environment.html
 
-I already did that. It produces the same output.
-Oleg
+Yes I do use msys2, but I only use bash for the initial configuration.
+Afterwards I just call meson and ninja from "cmd" not from bash.
 
