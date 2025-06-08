@@ -4,117 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 528F8C5AD49
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 19:09:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F3B0C5B552
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 21:25:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOLOR-0000jZ-Cv; Sun, 08 Jun 2025 15:09:19 -0400
+	id 1uONVu-0008He-J0; Sun, 08 Jun 2025 17:25:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1uOLOP-0000iu-FR; Sun, 08 Jun 2025 15:09:17 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1uOLOM-0005OZ-Kh; Sun, 08 Jun 2025 15:09:17 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 5588sPrB028419;
- Sun, 8 Jun 2025 19:09:11 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=Qq+lEp
- 1YoGkRbzPXwNOBaxmRfYbjrFLkRy016WclZUM=; b=HEffpmTpB/0OB2fEZirNft
- tbG2j7AVHPrTC9STHE6ofEIaShCDpJTOIya7WGVV/BNBV5rmIAD0pT6RGMlR5JIo
- erYVcOxGTqlS/53QdWqcYMMZwjhz2dK3dQ+yJ4ZGdgTv+/w1+HF/E86BX7ds6qmR
- ph6jgP+ODkC+WbxIv5Cpebxwb+I2EhNjgi6QXdHKKm8B/rz1ZPXrgqRmL+P4G4kt
- t4YXSIZCIdosPwUhKQ3Rw9W5cLNHGd0dJQCApTsx6S81fD6NQE1o3/Vw02p3xF0p
- CKRDAUUQPiy6E0tlV7XAaUp3PjG1xuouWSgIrMG7yRrT2gOaMtFj3/EILqbq7Uog
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474hhdmstn-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 08 Jun 2025 19:09:11 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 558IQdFN028110;
- Sun, 8 Jun 2025 19:09:09 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47518m2qev-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sun, 08 Jun 2025 19:09:09 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 558J99GD22938328
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sun, 8 Jun 2025 19:09:09 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2D7B85805D;
- Sun,  8 Jun 2025 19:09:09 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 78E3558043;
- Sun,  8 Jun 2025 19:09:08 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Sun,  8 Jun 2025 19:09:08 +0000 (GMT)
-Message-ID: <11f23b91-7ab3-4908-b1bc-3fa90bf643a7@linux.ibm.com>
-Date: Sun, 8 Jun 2025 15:09:08 -0400
+ (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
+ id 1uONVq-0008HP-Hy
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 17:25:06 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <conte.souleymane@gmail.com>)
+ id 1uONVl-0002g2-VN
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 17:25:05 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a376ba6f08so2021339f8f.1
+ for <qemu-devel@nongnu.org>; Sun, 08 Jun 2025 14:25:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749417900; x=1750022700; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=sHxEGaKaurq8gnYpbl97Cu18xzOmBhJ/171kNl9SP04=;
+ b=EwKOeshcgaKhEn7hw0cice5Renz5dYyxI1LEIXvpcgRMDOW2HVxsFFRw5XTAr/DQTh
+ V06B2s5iht76f86KhETrGCOBe2c6ZKgTNTQ4lq5+9fznpFOZHAPDmIGNHSCxfKmd4h8Y
+ 7HHrJAbk9LPj6M/jHrin0WEAkHfKHM37DIPqfuIZB2JKh6IPtqTsuwKCdXWOHXXyHyil
+ SQjuvu0DUgX4coZMraP1OPtwksYrTcNxFnvqmpYkZcZVjE041ByMzXOiB9FoOUoAeTqd
+ /DpLhGTk5cgKsEiIX4D49caXf/b5Y+UyzhVfTfTTEAMspK3Xu1VOMgO98S4GkXThheTL
+ nxBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749417900; x=1750022700;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sHxEGaKaurq8gnYpbl97Cu18xzOmBhJ/171kNl9SP04=;
+ b=nISa3UYB0JaoRooGDcVcZgWk+6lRLw4cXydnFSamS/03lVsnmJh5LA9e90hamwjdC6
+ dUwPyPVHktYg+dvbWuqZUhIm/D6ttFXleO8M8B7iJ0DxKg9LFvM2YDCva2+axzKhP5Q9
+ 89EXtJVbRvUjyuDyp7ntDqBpXWUmIky8Ob/ZX+nTaMUjCzE/qizSJZm63SgrFXhBMm6L
+ ItmVuXV0aMXoRNf9mRlyWIU1F9VfVskxMc87CFnLsF+69ojC/JK5bfVmklikcopOKDRG
+ /Q2Li3Ph2aYedWnlO2R3A+2WH2DFNVcUIV49FRJ/Mc1DhHpKcCKGjr5ZjBa5sb5Aea80
+ pCyA==
+X-Gm-Message-State: AOJu0YwtyogCJ4aKSJJH4AxqxwPNsCHPRp44+FwnL14p3buuj2WS6tte
+ 9Qd/IGg3PqU4ptkmuAs/YdON6wxNJB+jcO50JlmjSzEfZidv3rGKXLdo1JMwMHOGg7Q=
+X-Gm-Gg: ASbGncv7wZvKzKQSuBWIj91KpWivlSMTBrd5TxLCxwsnEd6WTZDuQLLHulq1VQH7GKr
+ +OtxxkMxMxfdAmt+ARsgPpb0ldZ1SdCkevgVnZ0rrxKvZnv+FJ6gTq5KrqMMAw57ReZ5EaGBd2F
+ dI1iczInbixK4QlYdPqe7M30LfTi/fLfI+vzHb/PmBHF2YtDNvc+zROFRrkPh8z9+qrA75SBtSW
+ 6AilvvRdoxLrIy0BTEVfanz+G9OiCYByKPEqVqKhrenDiVsvljCwM7hr9sFQuKSs17y74j0uMoD
+ vkZTjtwZrzuvVdr0ld+u65LerPHevuMX7B0ExpeuTZyiEhIPfduavy3lO0wJryN5a7Kvv5LPrYe
+ 6VuJdsmxZbmkOGcs2vuB3FtUjxMGun5bY6OjU5LoZ7C6hXNIpPd8=
+X-Google-Smtp-Source: AGHT+IGY/pPCJBAaEIdXcje5A2hR1yrlXMOW9OsR1eoLgZjfx0v4CCZhLEuT0+aSoblzi+L0Qqp8Kg==
+X-Received: by 2002:a05:6000:2010:b0:3a4:dc93:1e87 with SMTP id
+ ffacd0b85a97d-3a531684002mr9131860f8f.1.1749417899792; 
+ Sun, 08 Jun 2025 14:24:59 -0700 (PDT)
+Received: from localhost (mac76-h03-89-88-247-135.dsl.sta.abo.bbox.fr.
+ [89.88.247.135]) by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-45209bc6d6dsm93348415e9.3.2025.06.08.14.24.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 08 Jun 2025 14:24:59 -0700 (PDT)
+From: conte.souleymane@gmail.com
+To: qemu-devel@nongnu.org
+Cc: eblake@redhat.com, jsnow@redhat.com, peter.maydell@linaro.org,
+ Souleymane Conte <conte.souleymane@gmail.com>
+Subject: [PATCH] docs/devel: Convert image-fuzzer.txt to restructredText format
+Date: Sun,  8 Jun 2025 21:24:32 +0000
+Message-ID: <20250608212432.72724-1-conte.souleymane@gmail.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] backends/tpmL Avoid using g_alloca()
-To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, Glenn Miles <milesg@linux.ibm.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Stefan Hajnoczi <stefanha@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20250605193540.59874-1-philmd@linaro.org>
- <20250605193540.59874-3-philmd@linaro.org>
- <6f9cd053-0701-4f7e-9d04-3f8d92ece5fb@redhat.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <6f9cd053-0701-4f7e-9d04-3f8d92ece5fb@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=DLGP4zNb c=1 sm=1 tr=0 ts=6845dfd7 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=KKAkSRfTAAAA:8 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=6pZFX1M33iGIBM9FK-gA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: 8Piv50XowLKQyE1HWC1_YwoMOfWBfmzf
-X-Proofpoint-ORIG-GUID: 8Piv50XowLKQyE1HWC1_YwoMOfWBfmzf
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA4MDE1MSBTYWx0ZWRfX9EEFXd9rechd
- fxo0ytBlQpm44ElYaUmzIQMgzmOK1q5Wo5Vw4ZKRTpnKuW8uu+tgZTn9H9m5uLTbRUOFcIxDgOl
- ADCjgD46rqjBudPsCoQ8Zqit309Ng4LjPKaJdvGE8lc/8nTNvAxTI3XC5Bp2Sjg4DpEVhhhR56w
- EQ2/7ODpZ5bBramJG9FavXfxsvUwuh0zvcUZEcMH/GAno97+evMAKZXhE3oFpHYKAbUcLL2aqaQ
- nU1sE/nqT9ichXI3JKdFgBO/+oI5wJirL7Pm+qbkA1BGSl5uRMsEH7ZYrA+FbzRtAEyL7AhTQBW
- Y4T8juyQp/hnbUX8zI5nIL0LoW6ibuZhWs5QhjhEg70D4YbKwdEnCL3UZVsC85HSfO2/QhdHZHC
- nkF6XrY7XzCDTr8IBRuXoO9b1sJQsej+02rC0yytdcP1b+GepXrfxu4Bgfb0WiAo/c3k/qhV
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-08_03,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 mlxlogscore=983 lowpriorityscore=0 clxscore=1015
- adultscore=0 mlxscore=0 spamscore=0 bulkscore=0 impostorscore=0
- suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506080151
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -36
-X-Spam_score: -3.7
-X-Spam_bar: ---
-X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=conte.souleymane@gmail.com; helo=mail-wr1-x435.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,42 +97,545 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+From: Souleymane Conte <conte.souleymane@gmail.com>
 
+buglink: https://gitlab.com/qemu-project/qemu/-/issues/527
+Signed-off-by: Souleymane Conte <conte.souleymane@gmail.com>
+---
+This patch convert image-fuzzer.txt to restructuredText format. Here are
+the main updates:
+- Move file to docs/devel/testing directory
+- Properly structured sections with RST headings
+- Uses cross-references for key glossary terms
 
-On 6/6/25 4:14 AM, Thomas Huth wrote:
-> On 05/06/2025 21.35, Philippe Mathieu-Daudé wrote:
->> tpm_emulator_ctrlcmd() is not in hot path.
->> Use the heap instead of the stack, removing
->> the g_alloca() call.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   backends/tpm/tpm_emulator.c | 4 ++--
->>   1 file changed, 2 insertions(+), 2 deletions(-)
->>
->> diff --git a/backends/tpm/tpm_emulator.c b/backends/tpm/tpm_emulator.c
->> index 43d350e895d..4a234ab2c0b 100644
->> --- a/backends/tpm/tpm_emulator.c
->> +++ b/backends/tpm/tpm_emulator.c
->> @@ -129,11 +129,11 @@ static int tpm_emulator_ctrlcmd(TPMEmulator 
->> *tpm, unsigned long cmd, void *msg,
->>       CharBackend *dev = &tpm->ctrl_chr;
->>       uint32_t cmd_no = cpu_to_be32(cmd);
->>       ssize_t n = sizeof(uint32_t) + msg_len_in;
->> -    uint8_t *buf = NULL;
->>       ptm_res res;
->>       WITH_QEMU_LOCK_GUARD(&tpm->mutex) {
->> -        buf = g_alloca(n);
->> +        g_autofree uint8_t *buf = g_malloc(n);
->> +
->>           memcpy(buf, &cmd_no, sizeof(cmd_no));
->>           memcpy(buf + sizeof(cmd_no), msg, msg_len_in);
-> 
-> With the typo fixed:
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+ docs/devel/testing/image-fuzzer.rst | 260 ++++++++++++++++++++++++++++
+ docs/devel/testing/index.rst        |   1 +
+ docs/image-fuzzer.txt               | 239 -------------------------
+ 3 files changed, 261 insertions(+), 239 deletions(-)
+ create mode 100644 docs/devel/testing/image-fuzzer.rst
+ delete mode 100644 docs/image-fuzzer.txt
 
-> 
-> 
+diff --git a/docs/devel/testing/image-fuzzer.rst b/docs/devel/testing/image-fuzzer.rst
+new file mode 100644
+index 0000000000..1a42a7fe3f
+--- /dev/null
++++ b/docs/devel/testing/image-fuzzer.rst
+@@ -0,0 +1,260 @@
++..
++  Specification for the fuzz testing tool
++
++  Copyright (C) 2014 Maria Kustova <maria.k@catit.be>
++
++  This program is free software: you can redistribute it and/or modify
++  it under the terms of the GNU General Public License as published by
++  the Free Software Foundation, either version 2 of the License, or
++  (at your option) any later version.
++
++  This program is distributed in the hope that it will be useful,
++  but WITHOUT ANY WARRANTY; without even the implied warranty of
++  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
++  GNU General Public License for more details.
++
++  You should have received a copy of the GNU General Public License
++  along with this program.  If not, see <http://www.gnu.org/licenses/>.
++
++============
++Image fuzzer
++============
++
++Description
++===========
++
++The goal of the image fuzzer is to catch crashes of ``qemu-io/qemu-img``
++by providing to them randomly corrupted images. :ref:`Test images <test-image>`
++are generated from scratch and have valid inner structure with some elements,
++e.g. L1/L2 tables, having random invalid values.
++
++Test runner
++===========
++
++The test runner generates test images, executes tests utilizing generated
++images, indicates their results and collects all test related artifacts (logs,
++core dumps, test images, backing files).
++The test means execution of all available commands under test with the same
++generated test image.
++By default, the test runner generates new tests and executes them until
++keyboard interruption. But if a test seed is specified via the ``--seed`` runner
++parameter, then only one test with this seed will be executed, after its finish
++the runner will exit.
++
++The runner uses an external image fuzzer to generate test images. An image
++generator should be specified as a mandatory parameter of the test runner.
++Details about interactions between the runner and fuzzers see :ref:`Module
++interfaces <module-interfaces>`.
++
++The runner activates generation of core dumps during test executions, but it
++assumes that core dumps will be generated in the current working directory.
++For comprehensive test results, please, set up your test environment
++properly.
++
++Paths to binaries under test (SUTs) ``qemu-img`` and ``qemu-io`` are retrieved
++from environment variables. If the environment check fails the runner will
++use SUTs installed in system paths.
++``qemu-img`` is required for creation of backing files, so it's mandatory to set
++the related environment variable if it's not installed in the system path.
++For details about environment variables see ``qemu-iotests/check``.
++
++The runner accepts a JSON array of fields expected to be fuzzed via the
++``--config`` argument, e.g.
++
++.. code::
++
++    [["feature_name_table"],
++     ["header", "l1_table_offset"]]
++
++Each sublist can have one or two strings defining image structure elements.
++In the latter case a parent element should be placed on the first position,
++and a field name on the second one.
++
++The runner accepts a list of commands under test as a JSON array via
++the ``--command`` argument. Each command is a list containing a SUT and all its
++arguments, e.g.
++
++.. code::
++
++    runner.py -c '[["qemu-io", "$test_img", "-c", "write $off $len"]]' /tmp/test ../qcow2
++
++For variable arguments next aliases can be used:
++
++    - ``$test_img`` for a fuzzed img
++    - ``$off`` for an offset in the fuzzed image
++    - ``$len`` for a data size
++
++Values for last two aliases will be generated based on a size of a virtual
++disk of the generated image.
++In case when no commands are specified the runner will execute commands from
++the default list:
++
++    - ``qemu-img check``
++    - ``qemu-img info``
++    - ``qemu-img convert``
++    - ``qemu-io -c read``
++    - ``qemu-io -c write``
++    - ``qemu-io -c aio_read``
++    - ``qemu-io -c aio_write``
++    - ``qemu-io -c flush``
++    - ``qemu-io -c discard``
++    - ``qemu-io -c truncate``
++
++Qcow2 image generator
++=====================
++
++The ``qcow2`` generator is a Python package providing ``create_image`` method as
++a single public API. See details in :ref:`Test runner/image fuzzer <test-runner-image-fuzzer>`
++chapter of :ref:`Module interfaces <module-interfaces>`.
++
++Qcow2 contains two submodules: ``fuzz.py`` and ``layout.py``.
++
++- ``fuzz.py`` contains all fuzzing functions, one per image field. It's assumed
++  that after code analysis every field will have own constraints for its value.
++  For now only universal potentially dangerous values are used, e.g. type limits
++  for integers or unsafe symbols as ``%s`` for strings. For bitmasks random amount
++  of bits are set to ones. All fuzzed values are checked on non-equality to the
++  current valid value of the field. In case of equality the value will be
++  regenerated.
++
++- ``layout.py`` creates a random valid image, fuzzes a random subset of the image
++  fields by ``fuzz.py`` module and writes a fuzzed image to the file specified.
++  If a fuzzer configuration is specified, then it has the next interpretation:
++
++    1. If a list contains a parent image element only, then some random portion
++       of fields of this element will be fuzzed every test.
++       The same behavior is applied for the entire image if no configuration is
++       used. This case is useful for the test specialization.
++
++    2. If a list contains a parent element and a field name, then a field
++       will be always fuzzed for every test. This case is useful for regression
++       testing.
++
++The generator can create header fields, header extensions, L1/L2 tables and
++refcount table and blocks.
++
++.. _module-interfaces:
++
++Module interfaces
++=================
++
++.. _test-runner-image-fuzzer:
++
++Test runner/image fuzzer
++------------------------
++
++The runner calls an image generator specifying the path to a test image file,
++path to a backing file and its format and a fuzzer configuration.
++An image generator is expected to provide a ``create_image(test_img_path,
++backing_file_path=None, backing_file_format=None, fuzz_config=None)`` method 
++that creates a test image, writes it to the specified file and returns
++the size of the virtual disk. The file should be created if it doesn't exist
++or overwritten otherwise. ``fuzz_config`` has a form of a list of lists.
++Every sublist can have one or two elements: first element is a name of a
++parent image element, second one if exists is a name of a field in this element.
++Example::
++    
++    [['header', 'l1_table_offset'],
++     ['header', 'nb_snapshots'],
++     ['feature_name_table']]
++
++Random seed is set by the runner at every test execution for the regression
++purpose, so an image generator is not recommended to modify it internally.
++
++
++Overall fuzzer requirements
++===========================
++
++Input data:
++-----------
++
++ - :ref:`image template <image-template>` (generator)
++ - work directory
++ - :ref:`action vector <action-vector>` (optional)
++ - seed (optional)
++ - SUT and its arguments (optional)
++
++
++Fuzzer requirements:
++--------------------
++
++1.  Should be able to inject random data
++2.  Should be able to select a random value from the manually pregenerated
++    vector (boundary values, e.g. max/min cluster size)
++3.  Image template should describe a general structure invariant for all
++    test images (image format description)
++4.  Image template should be autonomous and other fuzzer parts should not
++    rely on it
++5.  Image template should contain reference rules (not only block+size
++    description)
++6.  Should generate the test image with the correct structure based on an image
++    template
++7.  Should accept a seed as an argument (for regression purpose)
++8.  Should generate a seed if it is not specified as an input parameter.
++9.  The same seed should generate the same image for the same action vector,
++    specified or generated.
++10. Should accept a vector of actions as an argument (for test reproducing and
++    for test case specification, e.g. group of tests for header structure,
++    group of test for snapshots, etc)
++11. Action vector should be randomly generated from the pool of available
++    actions, if it is not specified as an input parameter
++12. :ref:`Pool of actions <action-pool>` should be defined automatically based on
++    an image template
++13. Should accept a SUT and its call parameters as an argument or select them
++    randomly otherwise. As far as it's expected to be rarely changed, the list
++    of all possible test commands can be available in the test runner
++    internally.
++14. Should support an external cancellation of a test run
++15. Seed should be logged (for regression purpose)
++16. All files related to a test result should be collected: a test image,
++    SUT logs, fuzzer logs and crash dumps
++17. Should be compatible with python version 2.4-2.7
++18. Usage of external libraries should be limited as much as possible.
++
++
++Image formats:
++--------------
++
++Main target image format is ``qcow2``, but support of image templates should
++provide an ability to add any other image format.
++
++
++Effectiveness:
++--------------
++
++The fuzzer can be controlled via template, seed and action vector; it makes
++the fuzzer itself invariant to an image format and test logic.
++It should be able to perform rather complex and precise tests, that can be
++specified via an action vector. Otherwise, knowledge about an image structure
++allows the fuzzer to generate the pool of all available areas can be fuzzed
++and randomly select some of them and so compose its own action vector.
++Also complexity of a template defines complexity of the fuzzer, so its
++functionality can be varied from simple model-independent fuzzing to smart
++model-based one.
++
++
++Glossary:
++=========
++
++.. _action-vector:
++
++Action vector
++  A sequence of structure elements retrieved from an image
++  format, each of them will be fuzzed for the test image. It's a subset of
++  elements of the action pool. Example: header, refcount table, etc.
++
++.. _action-pool:
++
++Action pool
++  All available elements of an image structure that generated automatically
++  from an image template.
++
++.. _image-template:
++
++Image template
++  A formal description of an image structure and relations between image blocks.
++
++.. _test-image:
++
++Test image
++  An output image of the fuzzer defined by the current seed and action vector.
+diff --git a/docs/devel/testing/index.rst b/docs/devel/testing/index.rst
+index 1171f7db8f..953677cd03 100644
+--- a/docs/devel/testing/index.rst
++++ b/docs/devel/testing/index.rst
+@@ -16,3 +16,4 @@ testing infrastructure.
+    fuzzing
+    blkdebug
+    blkverify
++   image-fuzzer
+diff --git a/docs/image-fuzzer.txt b/docs/image-fuzzer.txt
+deleted file mode 100644
+index 279cc8c807..0000000000
+--- a/docs/image-fuzzer.txt
++++ /dev/null
+@@ -1,239 +0,0 @@
+-# Specification for the fuzz testing tool
+-#
+-# Copyright (C) 2014 Maria Kustova <maria.k@catit.be>
+-#
+-# This program is free software: you can redistribute it and/or modify
+-# it under the terms of the GNU General Public License as published by
+-# the Free Software Foundation, either version 2 of the License, or
+-# (at your option) any later version.
+-#
+-# This program is distributed in the hope that it will be useful,
+-# but WITHOUT ANY WARRANTY; without even the implied warranty of
+-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+-# GNU General Public License for more details.
+-#
+-# You should have received a copy of the GNU General Public License
+-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-
+-
+-Image fuzzer
+-============
+-
+-Description
+------------
+-
+-The goal of the image fuzzer is to catch crashes of qemu-io/qemu-img
+-by providing to them randomly corrupted images.
+-Test images are generated from scratch and have valid inner structure with some
+-elements, e.g. L1/L2 tables, having random invalid values.
+-
+-
+-Test runner
+------------
+-
+-The test runner generates test images, executes tests utilizing generated
+-images, indicates their results and collects all test related artifacts (logs,
+-core dumps, test images, backing files).
+-The test means execution of all available commands under test with the same
+-generated test image.
+-By default, the test runner generates new tests and executes them until
+-keyboard interruption. But if a test seed is specified via the '--seed' runner
+-parameter, then only one test with this seed will be executed, after its finish
+-the runner will exit.
+-
+-The runner uses an external image fuzzer to generate test images. An image
+-generator should be specified as a mandatory parameter of the test runner.
+-Details about interactions between the runner and fuzzers see "Module
+-interfaces".
+-
+-The runner activates generation of core dumps during test executions, but it
+-assumes that core dumps will be generated in the current working directory.
+-For comprehensive test results, please, set up your test environment
+-properly.
+-
+-Paths to binaries under test (SUTs) ``qemu-img`` and ``qemu-io`` are retrieved
+-from environment variables. If the environment check fails the runner will
+-use SUTs installed in system paths.
+-``qemu-img`` is required for creation of backing files, so it's mandatory to set
+-the related environment variable if it's not installed in the system path.
+-For details about environment variables see qemu-iotests/check.
+-
+-The runner accepts a JSON array of fields expected to be fuzzed via the
+-'--config' argument, e.g.
+-
+-       '[["feature_name_table"], ["header", "l1_table_offset"]]'
+-
+-Each sublist can have one or two strings defining image structure elements.
+-In the latter case a parent element should be placed on the first position,
+-and a field name on the second one.
+-
+-The runner accepts a list of commands under test as a JSON array via
+-the '--command' argument. Each command is a list containing a SUT and all its
+-arguments, e.g.
+-
+-       runner.py -c '[["qemu-io", "$test_img", "-c", "write $off $len"]]'
+-     /tmp/test ../qcow2
+-
+-For variable arguments next aliases can be used:
+-    - $test_img for a fuzzed img
+-    - $off for an offset in the fuzzed image
+-    - $len for a data size
+-
+-Values for last two aliases will be generated based on a size of a virtual
+-disk of the generated image.
+-In case when no commands are specified the runner will execute commands from
+-the default list:
+-    - qemu-img check
+-    - qemu-img info
+-    - qemu-img convert
+-    - qemu-io -c read
+-    - qemu-io -c write
+-    - qemu-io -c aio_read
+-    - qemu-io -c aio_write
+-    - qemu-io -c flush
+-    - qemu-io -c discard
+-    - qemu-io -c truncate
+-
+-
+-Qcow2 image generator
+----------------------
+-
+-The 'qcow2' generator is a Python package providing 'create_image' method as
+-a single public API. See details in 'Test runner/image fuzzer' chapter of
+-'Module interfaces'.
+-
+-Qcow2 contains two submodules: fuzz.py and layout.py.
+-
+-'fuzz.py' contains all fuzzing functions, one per image field. It's assumed
+-that after code analysis every field will have own constraints for its value.
+-For now only universal potentially dangerous values are used, e.g. type limits
+-for integers or unsafe symbols as '%s' for strings. For bitmasks random amount
+-of bits are set to ones. All fuzzed values are checked on non-equality to the
+-current valid value of the field. In case of equality the value will be
+-regenerated.
+-
+-'layout.py' creates a random valid image, fuzzes a random subset of the image
+-fields by 'fuzz.py' module and writes a fuzzed image to the file specified.
+-If a fuzzer configuration is specified, then it has the next interpretation:
+-
+-    1. If a list contains a parent image element only, then some random portion
+-    of fields of this element will be fuzzed every test.
+-    The same behavior is applied for the entire image if no configuration is
+-    used. This case is useful for the test specialization.
+-
+-    2. If a list contains a parent element and a field name, then a field
+-    will be always fuzzed for every test. This case is useful for regression
+-    testing.
+-
+-The generator can create header fields, header extensions, L1/L2 tables and
+-refcount table and blocks.
+-
+-Module interfaces
+------------------
+-
+-* Test runner/image fuzzer
+-
+-The runner calls an image generator specifying the path to a test image file,
+-path to a backing file and its format and a fuzzer configuration.
+-An image generator is expected to provide a
+-
+-   'create_image(test_img_path, backing_file_path=None,
+-                 backing_file_format=None, fuzz_config=None)'
+-
+-method that creates a test image, writes it to the specified file and returns
+-the size of the virtual disk.
+-The file should be created if it doesn't exist or overwritten otherwise.
+-fuzz_config has a form of a list of lists. Every sublist can have one
+-or two elements: first element is a name of a parent image element, second one
+-if exists is a name of a field in this element.
+-Example,
+-        [['header', 'l1_table_offset'],
+-         ['header', 'nb_snapshots'],
+-         ['feature_name_table']]
+-
+-Random seed is set by the runner at every test execution for the regression
+-purpose, so an image generator is not recommended to modify it internally.
+-
+-
+-Overall fuzzer requirements
+-===========================
+-
+-Input data:
+-----------
+-
+- - image template (generator)
+- - work directory
+- - action vector (optional)
+- - seed (optional)
+- - SUT and its arguments (optional)
+-
+-
+-Fuzzer requirements:
+--------------------
+-
+-1.  Should be able to inject random data
+-2.  Should be able to select a random value from the manually pregenerated
+-    vector (boundary values, e.g. max/min cluster size)
+-3.  Image template should describe a general structure invariant for all
+-    test images (image format description)
+-4.  Image template should be autonomous and other fuzzer parts should not
+-    rely on it
+-5.  Image template should contain reference rules (not only block+size
+-    description)
+-6.  Should generate the test image with the correct structure based on an image
+-    template
+-7.  Should accept a seed as an argument (for regression purpose)
+-8.  Should generate a seed if it is not specified as an input parameter.
+-9.  The same seed should generate the same image for the same action vector,
+-    specified or generated.
+-10. Should accept a vector of actions as an argument (for test reproducing and
+-    for test case specification, e.g. group of tests for header structure,
+-    group of test for snapshots, etc)
+-11. Action vector should be randomly generated from the pool of available
+-    actions, if it is not specified as an input parameter
+-12. Pool of actions should be defined automatically based on an image template
+-13. Should accept a SUT and its call parameters as an argument or select them
+-    randomly otherwise. As far as it's expected to be rarely changed, the list
+-    of all possible test commands can be available in the test runner
+-    internally.
+-14. Should support an external cancellation of a test run
+-15. Seed should be logged (for regression purpose)
+-16. All files related to a test result should be collected: a test image,
+-    SUT logs, fuzzer logs and crash dumps
+-17. Should be compatible with python version 2.4-2.7
+-18. Usage of external libraries should be limited as much as possible.
+-
+-
+-Image formats:
+--------------
+-
+-Main target image format is qcow2, but support of image templates should
+-provide an ability to add any other image format.
+-
+-
+-Effectiveness:
+--------------
+-
+-The fuzzer can be controlled via template, seed and action vector;
+-it makes the fuzzer itself invariant to an image format and test logic.
+-It should be able to perform rather complex and precise tests, that can be
+-specified via an action vector. Otherwise, knowledge about an image structure
+-allows the fuzzer to generate the pool of all available areas can be fuzzed
+-and randomly select some of them and so compose its own action vector.
+-Also complexity of a template defines complexity of the fuzzer, so its
+-functionality can be varied from simple model-independent fuzzing to smart
+-model-based one.
+-
+-
+-Glossary:
+---------
+-
+-Action vector is a sequence of structure elements retrieved from an image
+-format, each of them will be fuzzed for the test image. It's a subset of
+-elements of the action pool. Example: header, refcount table, etc.
+-Action pool is all available elements of an image structure that generated
+-automatically from an image template.
+-Image template is a formal description of an image structure and relations
+-between image blocks.
+-Test image is an output image of the fuzzer defined by the current seed and
+-action vector.
+-- 
+2.49.0
 
 
