@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A877BC5B543
-	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 00:43:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8A45C5AD49
+	for <qemu-devel@archiver.kernel.org>; Sun,  8 Jun 2025 05:26:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uO47u-00058y-35; Sat, 07 Jun 2025 20:43:06 -0400
+	id 1uO8Y2-0005NS-RT; Sun, 08 Jun 2025 01:26:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uO47t-00058q-4K
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 20:43:05 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uO8Xs-0005N7-9a
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 01:26:13 -0400
+Received: from mail-pg1-x52d.google.com ([2607:f8b0:4864:20::52d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uO47r-00005B-8Y
- for qemu-devel@nongnu.org; Sat, 07 Jun 2025 20:43:04 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-7424ccbef4eso2909707b3a.2
- for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 17:43:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uO8Xp-00078p-2A
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 01:26:12 -0400
+Received: by mail-pg1-x52d.google.com with SMTP id
+ 41be03b00d2f7-b2c40a7ca6eso3067484a12.1
+ for <qemu-devel@nongnu.org>; Sat, 07 Jun 2025 22:26:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749343381; x=1749948181; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1749360365; x=1749965165;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=7/kuxSFW0fFozybcFEj4uNFZs1Kif3vsTBAe1Okrpfs=;
- b=ZNo7U7rtIXNoJj7WVg+uYuT2D90nX0JDDIJ6UAmBpwnMNqUQtoW3J/H5TVjPFe9GZH
- TAnYrrbRaSQPpIFLPKUf59fN+9dHTTTLYN7kvZh6HtF74842016hga35xwwaChteqDOy
- gYTmRd/f6RgLx9g0vdVQ2BU5n2wSCmrIeUBtn3OZn4DzWbCkQU5Va716PUEz8kjg2d4X
- Pf5+h8eMLoGKx7ZpwZ/73AyYTOetipV4yTb40bUJeBODMikCDlb5ZoG6EFzxKoqYwiKe
- Uo6FT2+0lzvcbDsZWnl6oNoS7b13dSGVv41A2llKFFjJJKZXXefoSuakXIEnZ2wQaKoB
- OAPQ==
+ bh=0VyhX7QEujmW9qFjeBb8iBB0P1skzbjozZWhYvWxj90=;
+ b=idUKg1WdZN2q4nqrpU95dbaYEioLyASxl1BYcGIh9Iznt4wf8ofq1b2Ic1oZtkzE2T
+ ZU5dYIC4Sohyz7KzXWLctKul80WGUYizBOVNBbQmPVGOiz7BZwLNyMThCmqi8QuFwNHn
+ TA1lMPMRJmE/S/Gvp4/tIp0gDQprmJ9kAgVFudtrXPZRUNU6kXwb89yXAkN+Tkqc4VAq
+ 6vOL9ocv9okwzdtaNjwkUPBoJ7Va5g7eU1jjT1OY+aSH1EQHK5t56WJTTV9p/a46yfQY
+ NQFl5GzJo/C4ABKJNkB13NyXdnV+2rFI11e8l05LcAsXJNF6PbPWULgcLrg8DywNyAvk
+ xAYQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749343381; x=1749948181;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1749360365; x=1749965165;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=7/kuxSFW0fFozybcFEj4uNFZs1Kif3vsTBAe1Okrpfs=;
- b=fXxNbgZvuex+p/VWqxKaR6SJ6CLCnFMPmZqkJZpI3A+fHByRdlyCh/2tR0bvosU+0N
- dBiXme68tetHoxDbRQo/k/pmaUA0xfyAyX/mNcHTmMSyyIDoxTAAWLqC1h6jiA6rRJoK
- AO3alVs+CpI91NZ4muMfdztWnKHeT67CuJP4/i9yLdhrE4EUKNw/1CDeljvD/1cVzTOT
- LZNzpAM60bypFSNo3JenLnq7tdt9w+bwxbD3WhGHuuBu4I5mIAkmJW/AUFbTTj2JZ7xs
- 2pJG8fBH7P2L86lmWcYFgBstY2qzAI4Py+fJeWXNWulYdF/pLwLEYEIXaEftXIv9mcb6
- /Z3Q==
+ bh=0VyhX7QEujmW9qFjeBb8iBB0P1skzbjozZWhYvWxj90=;
+ b=ejHQpZZLW0z8eL5KcK8reAC4KVWT/BU49/Z+qZTR4W8/rJ0hDv0lfSzMDL5BfPh3E4
+ HBzX0aokPoE7mLxc6g+Ct0v6zh1H2IoxqiaoiPhe0CVhTRIDCUkljC1rK9RgRowKayyy
+ Tb5luYITj6VgMynEhgWnVbUxn7TjdVDMdtVxzeHBWRy7HIXDByFvGY/jxoqJws/Kpk13
+ RrzHc7WWgh8NfH53f28xNpHeY7DrPcAMzswY71h9Ee+pnuI4Ar1WS8a1OWcbwF0h44nL
+ 5j8/N4iAH7NHoTT6j9RCfn2a+dR9gAoRCfX6u9k/2mHIOjsl91Vaz2bzH52+jbq5+n3W
+ fQpA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWg5HIKxgQbgraYygSx5wvmOtS5/jSm/Ju7dvEk6HFAh01U1UaZQKE4BPMbr/sDt1sFkG531PT99OPR@nongnu.org
-X-Gm-Message-State: AOJu0YxbML+AMsY5nfmjqzGSy0X7S7PCwGalrw9Z1T0BZPu4uhCk+lph
- SxX1BzwHLMemIzErzLeCsUDbtZIvJblwXqCmIV2pW3dwoHfgOYVDpMuDkMMsiFNgX70=
-X-Gm-Gg: ASbGncvwQNy7W91c/OXIll46OSVyIbZtSKP5UHFaah8ch/qblmOiWYzjfUXxpZAEMYv
- ESQ/JAokCi8WE5QIFlEMS4QFlxV2uCrzfuYKh485dXc2+rb+QMgVBsOmieXSwR8LpGH1Bu/Ux5r
- 8Lz3lKjtA64wgAa8roXnFbS/8dqpsYMbLo5c7GCF+BlHkfCFHpLdRse7A6P7vbVr5X4eC9+zq6e
- 8Z/0xGMlAvSw4+Qayn5uUJVKYls0ITxtg2hQB2R54+7pQw51Dl8jLnm8RkgVS/wdy5n+3x9CTbH
- 4tZdk+bs2phvjbNyUu0X/B36r3iUhzQd482NdFPQ1kKhg2bRSJUV2e1DqvhwPqRIXwMNzM29UUv
- zLLiYG6TT3A==
-X-Google-Smtp-Source: AGHT+IFaFSTZf3vYXux2x+e2ISsReRv3Pe1uXc/oNaCpZouH3jAfnbTVTD0x1rCYoe/oBjzfbE3lHA==
-X-Received: by 2002:a05:6a20:db0c:b0:215:e818:9fe5 with SMTP id
- adf61e73a8af0-21ee2500408mr11978948637.18.1749343380831; 
- Sat, 07 Jun 2025 17:43:00 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ AJvYcCX4uol7VpTCiY5BTmzaB/0YIosnH+qwKdOnuhP3isSlmuKiGDfq4UJ9tYPx4iYawauwQaAHGyEqyI8R@nongnu.org
+X-Gm-Message-State: AOJu0YzEiIqkxetBtl0KULreVKdgZgE2Jzoq7QJyPKHDZjH+MdOkwMzS
+ l5uGLepEkpQeCi9FSOKYI7kA9MlbdD7/HJ9zR+V3dG2oSDDda12PR5BjfKrQjscyGnw=
+X-Gm-Gg: ASbGncukc3mUxSzc9TBl7V8Gmvw8EwM6Fyy75jLlQznoE3sjlgXzSZ5nr7T8iXAf1Mt
+ 3ZDnbY1SPkKqEkALbqhukI/vld4anJGhFSsItH2iQlEcX40qke8ulL93iPf+EG6mvREpEo9AXbM
+ teHvn8QfhcHL0kLFBViTWkMf53r4zFgMLmaDB7urvuZpRYw4cINvQnlKNBInmkDcpgeAdoYWPis
+ vmF5Z5Q2CUrAvtVcDFYRPblQyaWgWxdYI9q9zgLxPW31kiN3s1+2xQBKfNABHYBSjxeymn1aYnZ
+ 9Lx6V4eC8PZ+Ps6IIhnssHii05KOFnqOCMnWXW+It1qqsBhYxL1CHz8e0Y1WZqSTKZzuqRAnH3o
+ SqT2/S5vIzw==
+X-Google-Smtp-Source: AGHT+IEI+nPUxasnAC0LSIQWWQs/fUY4MJ20Qbz50rB5otllGes//Xb+7DcseYw/rrGZdjvwMTrlqQ==
+X-Received: by 2002:a17:902:f54f:b0:234:8ec1:4ad3 with SMTP id
+ d9443c01a7336-23601d71b8bmr139977065ad.40.1749360365622; 
+ Sat, 07 Jun 2025 22:26:05 -0700 (PDT)
+Received: from [157.82.203.223] ([157.82.203.223])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7482b0c23f6sm3286660b3a.119.2025.06.07.17.43.00
+ 98e67ed59e1d1-31349f1910fsm3607595a91.1.2025.06.07.22.26.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 07 Jun 2025 17:43:00 -0700 (PDT)
-Message-ID: <878ac7c5-6729-4930-a64f-19cf0e10f7f2@linaro.org>
-Date: Sat, 7 Jun 2025 17:42:59 -0700
+ Sat, 07 Jun 2025 22:26:04 -0700 (PDT)
+Message-ID: <d1a5fe06-599d-4a04-a550-1c9927495516@daynix.com>
+Date: Sun, 8 Jun 2025 14:26:02 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RESEND v3] meson: fix Windows build
+Subject: Re: [PATCH 1/4] python: update requirements for Sphinx
+To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>
+References: <20250606205009.584615-1-jsnow@redhat.com>
+ <20250606205009.584615-2-jsnow@redhat.com>
 Content-Language: en-US
-To: oltolm <oleg.tolmatcev@gmail.com>, qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>
-References: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <20250606205009.584615-2-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52d;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x52d.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,40 +104,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/25 2:45 AM, oltolm wrote:
-> Sorry, I forgot to cc the maintainers.
+On 2025/06/07 5:50, John Snow wrote:
+> In advance of actually bumping the build system requirements for Sphinx,
+> bump the version used for the static analysis tests. Update the minimum
+> requirements accordingly.
 > 
-> The build failed when run on Windows. I replaced calls to Unix programs
-> like ´cat´, ´sed´ and ´true´ with calls to ´python´. I wrapped calls to
-> ´os.path.relpath´ in try-except because it can fail when the two paths
-> are on different drives. I made sure to convert the Windows paths to
-> Unix paths to prevent warnings in generated files.
+> This changes the test environment without actually changing the build
+> requirements, and no extra changes are needed for the tests to continue
+> passing.
 > 
-> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
-> ---
->   contrib/plugins/meson.build         |  2 +-
->   plugins/meson.build                 |  2 +-
->   scripts/tracetool/__init__.py       | 15 ++++++++++++---
->   scripts/tracetool/backend/ftrace.py |  4 +---
->   scripts/tracetool/backend/log.py    |  4 +---
->   scripts/tracetool/backend/syslog.py |  4 +---
->   tests/functional/meson.build        |  4 +---
->   tests/include/meson.build           |  2 +-
->   tests/tcg/plugins/meson.build       |  2 +-
->   trace/meson.build                   |  5 +++--
->   10 files changed, 23 insertions(+), 21 deletions(-)
+> Signed-off-by: John Snow <jsnow@redhat.com>
 
-Are you building using msys2, or another environment on Windows? I'm
-curious to know in which configuration the build is failing.
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-In case you use msys2, maybe you're simply missing some packages. Our
-documentation explains what to install [1].
-Building out of msys2 on Windows is not recommended, as this is the only
-maintained setup (tested in our CI, and maintained as an msys2 package
-by msys2 maintainers) for this system.
-
-[1] https://www.qemu.org/docs/master/devel/build-environment.html
+I didn't notice these files. Perhaps they are better to be documented 
+with pythondeps.toml.
 
 Regards,
-Pierrick
+Akihiko Odaki
 
