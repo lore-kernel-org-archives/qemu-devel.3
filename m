@@ -4,63 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AF18C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 13:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DCEC5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 13:21:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOcNq-0001KU-Bv; Mon, 09 Jun 2025 09:17:50 -0400
+	id 1uOcRA-0004sG-Ds; Mon, 09 Jun 2025 09:21:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uOcNn-00019v-EP; Mon, 09 Jun 2025 09:17:47 -0400
-Received: from imap4.hz.codethink.co.uk ([188.40.203.114])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOcR5-0004rf-VX
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:21:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <srv_ts003@codethink.com>)
- id 1uOcNl-0006eX-KF; Mon, 09 Jun 2025 09:17:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap4-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
- Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=G7xMA/pAQ1KrAyhQNxLPVgWOWyjEHeR5P5B+3oY4j+s=; b=c+gYFnZCAgyPnyVJmMD/tJIqet
- c7gu464Lzvce8975tQMJYsMejB2y08ySciJKEGMCiAqyOyzCbn+Vyhm+Octnft5WMzDymgZUoJSnz
- TSv3aqkkGk2ZVB/PSClFk75VR6UaPwXYGFi9eK7QnZ45EtcRvQKAflq5teYQrnBu0S1q+R2QdHysb
- D83d0rk08ypaD0APHjc5wnFbojBQh6HTy6VkffU6OpDehpv0Ds5GZOs7j0imgEY8QgRi4q4FCdHJe
- edZ90/01wf4PtidMin8dyR1BFnHve+MacC1VsY3SghksH6anBHTWRNe3PuD0XVcVgia0e682cAfp7
- Lq+fzIwg==;
-Received: from [63.135.74.212] (helo=rainbowdash)
- by imap4.hz.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uOcNZ-00BKI0-A2; Mon, 09 Jun 2025 14:17:33 +0100
-Received: from ben by rainbowdash with local (Exim 4.98.2)
- (envelope-from <ben@rainbowdash>) id 1uOcNY-0000000696C-2yXX;
- Mon, 09 Jun 2025 14:17:32 +0100
-From: Ben Dooks <ben.dooks@codethink.co.uk>
-To: nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
- fran.redondo@codethink.co.uk, lawrence.hunter@codethink.co.uk,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, alistair.francis@wdc.com,
- qemu-riscv@nongnu.org
-Cc: ben.dooks@codethink.co.uk,
-	qemu-devel@nongnu.org
-Subject: [PATCH v3 2/3] target/riscv: add cva6 core type
-Date: Mon,  9 Jun 2025 14:17:30 +0100
-Message-Id: <20250609131731.1464616-3-ben.dooks@codethink.co.uk>
-X-Mailer: git-send-email 2.37.2.352.g3c44437643
-In-Reply-To: <20250609131731.1464616-1-ben.dooks@codethink.co.uk>
-References: <20250609131731.1464616-1-ben.dooks@codethink.co.uk>
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOcR3-0007I1-04
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:21:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749475266;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/ot59GsmA0h1+ooIuG8wBIHrM4zzwGkJA1OziySa4kA=;
+ b=Ukx4k2n++GOxeiIhqJWKyYjJL+RCAU8fxFI3X2E335tPyzHg8JNLbuWwre9nLxMp/3kJqD
+ spFye+9FSJRkfhmc/sx+X44yfA8TDfDiLqIQ6N2b4HR8ujfMXOqHjebOa5fwxg+FBK5aUG
+ xL4hD/7jiBF1iUGqF/jqPthb/x6+ZNE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-203-r6ENYNb1POClnLOHwrqjSw-1; Mon,
+ 09 Jun 2025 09:21:03 -0400
+X-MC-Unique: r6ENYNb1POClnLOHwrqjSw-1
+X-Mimecast-MFC-AGG-ID: r6ENYNb1POClnLOHwrqjSw_1749475262
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3170619560A2; Mon,  9 Jun 2025 13:21:02 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.45])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B198B180045C; Mon,  9 Jun 2025 13:20:59 +0000 (UTC)
+Date: Mon, 9 Jun 2025 14:20:56 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: JAEHOON KIM <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
+ jjherne@linux.ibm.com, peterx@redhat.com, farosas@suse.de
+Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
+ connecting
+Message-ID: <aEbfuM681MJh2S-b@redhat.com>
+References: <3004c91e-d515-4e22-902c-42cea83ce64b@oracle.com>
+ <760af012-1265-4845-b7d2-793fe75c3a51@linux.ibm.com>
+ <aEMMjtsKZLX_Bi03@redhat.com>
+ <7dc8d42d-47f1-49c1-9bff-ab2d09d0b6f3@oracle.com>
+ <aEMR6Xjs8tRJ8_sp@redhat.com>
+ <b2d90921-0991-4a57-a141-ad0c830f8618@oracle.com>
+ <5f211f67-17f7-4b1d-a60a-4ff62645fbfa@linux.ibm.com>
+ <ad638089-af36-4f3e-8f3d-61549e9bed06@oracle.com>
+ <aEaWC_Lc6c1g821f@redhat.com>
+ <f46393bb-115a-489f-aa8d-08348e89d25e@oracle.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=188.40.203.114;
- envelope-from=srv_ts003@codethink.com; helo=imap4.hz.codethink.co.uk
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, HEADER_FROM_DIFFERENT_DOMAINS=0.097,
+In-Reply-To: <f46393bb-115a-489f-aa8d-08348e89d25e@oracle.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,52 +95,64 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add TYPE_RISCV_CPU_CVA6 for the CVA6 core
+On Mon, Jun 09, 2025 at 09:12:27AM -0400, Steven Sistare wrote:
+> On 6/9/2025 4:06 AM, Daniel P. Berrangé wrote:
+> > On Fri, Jun 06, 2025 at 03:37:56PM -0400, Steven Sistare wrote:
+> > > 
+> > > The easiest solution, with no interface changes, is adding wait_for_socket() in qtest,
+> > > with this addition from Daniel:
+> > > 
+> > >    "With the busy wait you risk looping forever if the child (target) QEMU
+> > >    already exited for some reason without ever creating the socket. You
+> > >    can mitigate this by using 'kill($PID, 0)' in the loop and looking
+> > >    for -ERSCH, but this only works if you know the pid involved."
+> > > 
+> > > Daniel also suggested:
+> > >    "For the tests, passing a pre-opened UNIX socket FD could work"
+> > > 
+> > > Note we can not use any of the standard chardev options to specify such a socket,
+> > > because the cpr socket is created before chardevs are created.
+> > > 
+> > > Perhaps we could specify the fd in an extension of the MigrationChannel MigrationAddress.
+> > > { 'union': 'MigrationAddress',
+> > >    'base': { 'transport' : 'MigrationAddressType'},
+> > >    'discriminator': 'transport',
+> > >    'data': {
+> > >      'socket': 'SocketAddress',
+> > >      'exec': 'MigrationExecCommand',
+> > >      'rdma': 'InetSocketAddress',
+> > >      'file': 'FileMigrationArgs',
+> > >      'fd':   'FdMigrationArgs' } }           <-- add this
+> > > 
+> > > That would be useful for all clients, but this is asking a lot from you,
+> > > when you are just trying to fix the tests.
+> > 
+> > Note, 'SocketAddress' already has an option for declaring a FD that
+> > represents a socket.
+> 
+> Yes, but if I understand, you proposed passing an fd that represents a
+> pre-listened socket, which requires target qemu to accept() first.  The
+> existing FdSocketAddress is ready to read.  We could add a boolean to enable
+> the new behavior.
 
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
----
- target/riscv/cpu-qom.h |  1 +
- target/riscv/cpu.c     | 11 +++++++++++
- 2 files changed, 12 insertions(+)
+It can do both actually - it depends on what APIs the QEMU uses the
+SocketAddress with.
 
-diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
-index 1ee05eb393..3daf75568c 100644
---- a/target/riscv/cpu-qom.h
-+++ b/target/riscv/cpu-qom.h
-@@ -34,6 +34,7 @@
- #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
- #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
- #define TYPE_RISCV_CPU_BASE128          RISCV_CPU_TYPE_NAME("x-rv128")
-+#define TYPE_RISCV_CPU_CVA6             RISCV_CPU_TYPE_NAME("cva6")
- #define TYPE_RISCV_CPU_RV32I            RISCV_CPU_TYPE_NAME("rv32i")
- #define TYPE_RISCV_CPU_RV32E            RISCV_CPU_TYPE_NAME("rv32e")
- #define TYPE_RISCV_CPU_RV64I            RISCV_CPU_TYPE_NAME("rv64i")
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 629ac37501..fca45dc9d9 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -3009,6 +3009,17 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .misa_mxl_max = MXL_RV64,
-     ),
- 
-+    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_CVA6, TYPE_RISCV_VENDOR_CPU,
-+        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVS | RVU,
-+        .misa_mxl_max = MXL_RV64,
-+        .cfg.max_satp_mode = VM_1_10_SV39,
-+        .priv_spec = PRIV_VERSION_1_12_0,
-+        .cfg.pmp = true,
-+        .cfg.mmu = true,
-+        .cfg.ext_zifencei = true,
-+        .cfg.ext_zicsr = true,
-+    ),
-+
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E51, TYPE_RISCV_CPU_SIFIVE_E,
-         .misa_mxl_max = MXL_RV64
-     ),
+If it is used with qio_channel_socket_connect* the FD must be an
+active peer connection.
+
+If it is used with qio_channel_socket_listen*/qio_net_listener* the
+FD must be listener socket.
+
+With regards,
+Daniel
 -- 
-2.37.2.352.g3c44437643
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
