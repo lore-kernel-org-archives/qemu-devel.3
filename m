@@ -4,209 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB8D6C61CE7
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1565C61CE8
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 03:07:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOSqT-0005f0-3f; Sun, 08 Jun 2025 23:06:45 -0400
+	id 1uOSpg-0005Ni-5D; Sun, 08 Jun 2025 23:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uOSqR-0005cx-1V
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 23:06:43 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uOSqN-0001i7-5V
- for qemu-devel@nongnu.org; Sun, 08 Jun 2025 23:06:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749438399; x=1780974399;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=QTnWuZs1gbwoTgjE5GUeNPknBZiMwXoTmnBcc+4jo0g=;
- b=cJ/wITmf3wEw/UIob4npdA/YWG1zwoEhL9kuYU42Z7vAr8JFUDGCf5h1
- af4PDdKHRNuY4IIFPSxGlEyLPtCJXZbrVxyGprt250H3OXqeDx4f4lq3T
- jOCFJez5vS+2Z1VfDzlRsk8LRqgoVSfIoE6QAlI/ohxPR+3UR8yLIxhMX
- 4kFHCGkmhaj8NZQZA9f81VxpzgVBBmZ/hBNqifEc7/ufSHh4eko29JlO2
- lrhJ/SYD7dJaXQGt6Mc3uXUZyON+XX3XcLKchghnXNCdL14FLKJhgAGJW
- kyBC94G7fkegyIdLi+pHfqgA1E2mxC5B0IG1MHc4Gt2CnVwR61NRCaI2K w==;
-X-CSE-ConnectionGUID: XVs0kPekS6q1mTkSFiOF4A==
-X-CSE-MsgGUID: eMLPTV/kQNCTLsWJAy5V0Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11458"; a="68954987"
-X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; d="scan'208";a="68954987"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jun 2025 20:06:31 -0700
-X-CSE-ConnectionGUID: x3OzgspfRIO1kFERFqFO4Q==
-X-CSE-MsgGUID: jyCFZmX6Sbumw8ucGE+Oyw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; d="scan'208";a="151625447"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by orviesa005.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 08 Jun 2025 20:06:26 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Sun, 8 Jun 2025 20:06:22 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Sun, 8 Jun 2025 20:06:22 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (40.107.223.56)
- by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Sun, 8 Jun 2025 20:06:22 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=BZiblpURB4HiANAEUGrGXw7bWWPNpvRV8pqhwnooAY/V50Fi0LHnU8q8Rn467NXXtjgdULaNeWJGMlXl9E+Wb+sxepyCk8AAoYi3atgjc4AYJZYd8oCy9I4ho8Q3CFusLqw8L/rB39xKOFJF4e3Ffon8Y1DAgy4zggQL+VPkJBVWG2ngev/q4TumKuFhoxSgeLtyh1st5xWI67UNG/Bg6JnnaHAZvbex+TZk9hHvSyl30R/f8AbqFg5k6+P9aXAk8L9xs6kKvVdUCOOQwAZaVXnkdwj1H9gRxTjDnVL6carRpsRxGhvFK4KmlOQazK2owcaN15WikfuaCG4f1BlZ3A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=QTnWuZs1gbwoTgjE5GUeNPknBZiMwXoTmnBcc+4jo0g=;
- b=pLIic3CzkALVVn17gGNsyeKYla2WWLtozzhh2cL8vUfkLmExo4yjHjZa1wkDgqVVsO7pohwS93CkNGIm0kb6b4pAQT0i5qBGM3hM5SdhopgxAqFYEdByRTFkIPGr6/WuwzLS65q4FcwsppxXqo/t6FRG5l9ZBEjYjaWsMEP/Amr4TWTQ0tfDtMCwC2mZcoR/O2Ox4JPeNoP5ajS1D5acngiXzLmDucqpKwXzHDsN3sSlFS7U0wVpcGM42kxujKj6C04RgpCDoQDcBENZ/9IDREeNFeEopwSbmphIgRacbN99pVn0qt6i3oVhL96NgSbUM3CDZDwymCgDbKpYsp18uQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by BN9PR11MB5291.namprd11.prod.outlook.com (2603:10b6:408:118::10)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.27; Mon, 9 Jun
- 2025 03:06:01 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8813.021; Mon, 9 Jun 2025
- 03:06:00 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?UGhpbGlwcGUgTWF0aGlldS1EYXVkw6k=?= <philmd@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "Peng, Chao P" <chao.p.peng@intel.com>, "david@redhat.com"
- <david@redhat.com>, "armbru@redhat.com" <armbru@redhat.com>, Yoshinori Sato
- <ysato@users.sourceforge.jp>, Magnus Damm <magnus.damm@gmail.com>,
- =?utf-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, "Paolo
- Bonzini" <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Subject: RE: [PATCH v4 4/5] hw/char/sh_serial: Remove dummy definition of
- SH_SERIAL class
-Thread-Topic: [PATCH v4 4/5] hw/char/sh_serial: Remove dummy definition of
- SH_SERIAL class
-Thread-Index: AQHb1sVT39mcgWnFu0S233Fx2tsQW7P18TEAgAACdQCABCUBUA==
-Date: Mon, 9 Jun 2025 03:06:00 +0000
-Message-ID: <IA3PR11MB91369147EE755DBD984539CA926BA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250606092406.229833-1-zhenzhong.duan@intel.com>
- <20250606092406.229833-5-zhenzhong.duan@intel.com>
- <22f73acc-bc5e-4cf5-bbd9-c2c94bec9d33@linaro.org>
- <10e43884-d147-4031-bcec-0a7c528e3103@linaro.org>
-In-Reply-To: <10e43884-d147-4031-bcec-0a7c528e3103@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|BN9PR11MB5291:EE_
-x-ms-office365-filtering-correlation-id: b4a9f7b5-6681-4c07-d3c7-08dda7029038
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|376014|366016|7053199007|38070700018; 
-x-microsoft-antispam-message-info: =?utf-8?B?d2F5dDBjVXpqcGZrWGIxWFN5MmIxOW1WSC9EcSsyWnlYekRadUlGUnpvcU5h?=
- =?utf-8?B?WmNnYkRGK0pyTlpPR0R4a04vRDJxVFBnRTJRS2RvUkNXOHRRVzVrUXR3TkY2?=
- =?utf-8?B?d3d0SjE0N1hKUXcvajhnUXc3bVRTY0dBNHdoNHgyVmVsemY2QmdqSkl0d0Rk?=
- =?utf-8?B?S2VSb3J0czZzTUFWbkFWcFVUbkxWUFJlMlZYeGdTd0UxU1JLWkx6akdwOUVu?=
- =?utf-8?B?Wnpzd2dDdkFoS2lwR2R3SE4xR3dJSlVUNFRGcTd0ZUJSVHAwYmw5cVBxc05a?=
- =?utf-8?B?U05DYTVCZjVEbitpQkg2S29na3h0cHVEZCtjcTVTODl5YU1QajAvc0hvL2dZ?=
- =?utf-8?B?TEY4U2t0Y0lHOEx4bTFKbEM1MFQ2dG1ZRXpzNTJDUDV3NGM2ZUtrNXh5eThu?=
- =?utf-8?B?UUoxWDVEV1BRSWdjR0RyajI1VlVOZ0hqM05QeWw0MmNvWnk3Q2ZTYnFMT1ow?=
- =?utf-8?B?MGZhcjROdVpJcXB6VUFSUGJUU2RXUVIxYzd2TTVSSHBrWWY2dE9qVTVEczNz?=
- =?utf-8?B?SGFxS0FRVmVuRXZsNUkxU2dWZktxamFISzhsQ1RlMEdUQkNURnIzeHN2R2g2?=
- =?utf-8?B?NVJLSUFZYTBDeEsyRmwzTy9neDBEV3pFdUsxTnJRZ3diQWpwWmQ5N09UWnpF?=
- =?utf-8?B?UCt3TmFsdHl4bHZaZ1h1ZUVuSENxRGtpRG04WmVRM2VibjE3VGJ3MzZtZk9u?=
- =?utf-8?B?bEJ4VGVDdkk2Q2pQN3dWREszM2d1N1Z5QnlETTBDNEFtdHZhM2Z3WGRIaTgx?=
- =?utf-8?B?TjlFektRSWx6UGVYV1FSRkxLbDZEUVZVdm0rYTdvSS96Ym8vZ0hPU2xhN2lY?=
- =?utf-8?B?NlRkS3IzcGU3YVdOcmgzenNvQm9CQ0krd212M3BONExNZjAzbGNZODBSVEgv?=
- =?utf-8?B?TUttMGNnSGtRaUFlZU4xSjVKU0tRT3NqcXE4N0huK1dFTW9zTm5tZTJ4V3NT?=
- =?utf-8?B?ZkFrSDVoQ2dWS25IbERhMkdLWnZ6c3l2bTdYN1QvbERuV21CTGlHMFVBaWhv?=
- =?utf-8?B?a09iaTJjK0ZqYVZyUXVoTmE5anFXTlNSVytncUhzeFZMdzZWdDJkQjV5aDdD?=
- =?utf-8?B?QmVHL0RXYmVUbHBTcjlJejFiS3I4SldFL05PRTNHODg1MXprdUI4NUo2V09q?=
- =?utf-8?B?SUJRc2E3WFhrZEh3MzZyeFBaZVpaek9LOFlqMTFLMS8zcmpCV2xWcjU3bldv?=
- =?utf-8?B?UVcvNGZMc0lUcWprS1pIenJJSDl5a0RVQWJZQTY5c042TGdnZHplZEZDZkJx?=
- =?utf-8?B?ZEZmWE94SXdyL0pzNTBJMmxwaDA3ZklqY2VYWnZpSXJNRENpVXFIcWpNVmtn?=
- =?utf-8?B?MENqSkdkRTNvcWpsN1hSRGRLTjNQM1ovNDBtVS95ZTQ2ck1hVGxjdm5Rd0VQ?=
- =?utf-8?B?ZmFzZWRGUHkzVEtFMDFqdGVkMWM1Q0xOYXBUdXJZRG56ck5iaXNOTlFwei84?=
- =?utf-8?B?WWZNL3dwM2dyS1F5RURQVEFDNEpsM2ZjWS9XWFlVNFVXakd0WHhpQ1JKcXIz?=
- =?utf-8?B?S2duemlYWi9nRWdSdmR4aFNxSDNGcHpXL1FyRC9ZeURzS053dzdBc1I3N29W?=
- =?utf-8?B?cDZUTVdGTWRJMXJrcmpFVnl3dWNQdEtJSmxxWGljODNOUVE1LzhsWm1NcmpR?=
- =?utf-8?B?NVl0RTIrRmtITldhajZrSUhGY1pZYVoxQlhCbUx6ZzlSckJmWDgwUEpLNXJX?=
- =?utf-8?B?RUo4VEUzcEVRKzVZTGxGYk9RdG91c29TOUlvMVh4MjQ4Q0pDbmJOUmsvZnhL?=
- =?utf-8?B?MHAxbElXdzZWZ2c2dkUxbjlYWjNQQTRmZ3kzM3VNR1lMVWVYNys2WWxsRkY0?=
- =?utf-8?B?ZzdDc3pOL1Urai9qdytCeVJNUXFBQngwOU04c0NVVVFkb1hlQWJrUWJ0SUpw?=
- =?utf-8?B?Y0pmak5WT1FIVWZrekt3K3BSN0s4ODNNZ3JRVlphK0RiVlE4UWNSQWdPaUty?=
- =?utf-8?B?S29hMUlyS3RRTklRbDhKZHRpUUpTQnpQd08xWjJxT3hnWDlhbjhhUjFybnUx?=
- =?utf-8?Q?681rXiSUPQqQ/xR+6x2MDO6N2HPKqU=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(376014)(366016)(7053199007)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?UXV5WjZoK05HbDVkWjVnQVhGeGFTZVRaYTZBZ2RsaE8vZDJOQ1JjekR4Vmd3?=
- =?utf-8?B?eSt6VkxpVXdPSFNpMno0bVdpZDBEbFNwWWx3WWY3RjhuSVpwVk1yYzNBc20x?=
- =?utf-8?B?YnBCQnoxNEtmbjZoRks0YTRqajhFRFJBU1RWUzlXNkM4MWNGWXhVaHZKM0t1?=
- =?utf-8?B?NjNjL3p3NllFME5Qdi9jT25tYkovZTdkbkxkYk8wRTlpYkRneFM0bHhwMWhW?=
- =?utf-8?B?V01QMTVWK2xLb1lTQ3hMSGxiVk5ZSEViOGU3Sm9uTktjNVY2RzN6bjNZUW5j?=
- =?utf-8?B?MFBnNEZMVkJsRWlZOE9FU0p2cCszUVdDQlFTMFlZcDhPemZmVDhNRDNqMFhK?=
- =?utf-8?B?dDRlUlJuODJMbVFqTzZFa2psWlk1RVpRZk4xaUhlWG1pK2ZoT3ZWMEFqY1pV?=
- =?utf-8?B?K2U0ZjJidDV6SUFkRng4SmNaT1RkTThpTXVGV1FLcXhoM2F4bkVuN3ZHL2RR?=
- =?utf-8?B?SStSQVp0MVV1STNySFZvc0dZcE1tTHNQMzJZeWVoTkVCVGNyQXdsMW9RU2pq?=
- =?utf-8?B?QzBjYlhuZzkwTzR4RGsxa0MxcVVkTjAzSUE4eHBCVXpuODhwK1NvYmgvWTRY?=
- =?utf-8?B?L2RUNDZIQm1DVDZVZHRUNEdkOFB1alZJck5ZZ01hOE9DaldaSTUyT2FoZkor?=
- =?utf-8?B?V0t2T095TktCSHF6bXQrMGRCS1Ixc1U4VnI4UDhUNit5Yzg5MkJJV3NUdGpF?=
- =?utf-8?B?VFhWTEZMdVF3ejNiVUhnM2o0QmR6Yk85Q1FlTjZmVlNibGk4Qkl2ZXpyK2xw?=
- =?utf-8?B?L01WcUlYYUdRMGVobllEMHU4eGtqb3NIemgvbkZQQ1gzdGhNdVlwUnBtVjlx?=
- =?utf-8?B?Qi80RitxWHFtdWZ0UDJvd2UxL2ExUDlvVkh4bWttU2pXTlRpSE9KYWNYZklY?=
- =?utf-8?B?a3ZCZ2ZQUitJM1dSUHJNTlVUQnBlaWlwekhocDk3OFN0RS9zQ2FHekhZbXEw?=
- =?utf-8?B?RnhJb3d3U1NXVWNUeS9sVjhEUHc2TGRQbGhwR004N1pWRnBpU0ZRcy8rZFRJ?=
- =?utf-8?B?YXd1MWNyNzRMaklabTBnZ3RSejdOWkc5V2Fqc24yNDBSeUI5NjR4ci9jMDJx?=
- =?utf-8?B?NEw0VFhIZTk0RVVieUx5R0dWWFJ4RGthZmYrVHVvTitCNGt6cldQeGhUS2RM?=
- =?utf-8?B?OUZpcEdJLzZ3NmpiTkZWVDVqZ3N5bERObUZoL1lOendUR281bDVhSDljS00z?=
- =?utf-8?B?RW5wM3lNWFpkYkRYL3hSaTJJNXllM0pQbVRqaWNJMGZNLzZYUW1WVTlieGhv?=
- =?utf-8?B?Zi8xUEdKR0RxR0JXa09kYzRVcmpLWGcxbUVTMGwzVTJUNStITktyUFFpR0gx?=
- =?utf-8?B?cFdubXZXYS8xVXVuUy9uT05jTm1Kc09MQlJJOERpckg5dXBzQTZwTzlCNGIw?=
- =?utf-8?B?aWV5eG8vdnlvekpnZnREbkU1NUQvMUIwVXgwejJBS1NVa0R0VURpN1FIOWN0?=
- =?utf-8?B?cFNPVGhwRlB1YVdVUFZtOEV3Rmt1c0c1NHo1d3cxS3llMkNUeGI0OWFHNFB4?=
- =?utf-8?B?R3ZXZVp3alBtT2t6aU5INlJZYlNaKzk3M21zWnMwL2xjdWt2bTk5M0l2R0hm?=
- =?utf-8?B?KytQelI4SGIwUFQyaTlEZkRHM2w2dkNJZFl2eGIwNE5JRE13K3BsMGdCV20z?=
- =?utf-8?B?eWw2dHpLbXMyQVlQNlNBZmFUc05yc2t1b3IwNXdSNU5qSnFFcFRxM0FaUGdy?=
- =?utf-8?B?S2NiYnhyMUVNWXg3QWNhb2t5UlJDaDIvaDZtdmRtVW82UG1PbWhDd0pVN0dI?=
- =?utf-8?B?M2FIR014YWNEMzlFM2FCVjduMUJ2ZTNFbkthMVBRNVloOHlJTmlVQmJuOXla?=
- =?utf-8?B?YVhicDhlRWpnMi9LZjE1clM2SlpSREp4Z3I5NXNDcHdDM3g4T2ljSVY0YU4x?=
- =?utf-8?B?ajgxTFZtTkNJTnZkeUs0L3NGMDRQdGpiSHlMT1ZONU9Ib3VmWnBET3ZhN1ZE?=
- =?utf-8?B?bDEyUitmdDI4NnZ1TDh0VmxicTA1NkpJM0p0c1JpMlloanp0dU00MlY3c0dM?=
- =?utf-8?B?czBCMUV0VkZhWTA4Nm5iQUE1dHBzR0dCVTdlcERnWll6MU9hZkRtaVZ0eWpJ?=
- =?utf-8?B?UEd0RlE4b3dMNHhqS2VBWFladDJQNFpxS1MxNU02bnloS3Fhd3VGOU01b3R6?=
- =?utf-8?Q?Uekt5UJJlG+U5fmzZ6hCLrHzC?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uOSpc-0005N6-Uj; Sun, 08 Jun 2025 23:05:53 -0400
+Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uOSpa-0001de-Dg; Sun, 08 Jun 2025 23:05:52 -0400
+Received: by mail-ua1-x930.google.com with SMTP id
+ a1e0cc1a2514c-86d587dbc15so2621328241.1; 
+ Sun, 08 Jun 2025 20:05:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749438349; x=1750043149; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UWdwOqJQKm/jipyjXRGp6HsbSnxuxhfCklEvD3H3piA=;
+ b=NUZ8xD2b8+WYb2/aBDPVVOsrBdT3+8Ixy6kLWnuXM7jxId+d0+NQdG/3+zeaypYzh7
+ H9/g2OCX7A48etpYbJ9kLMjrz3TtQHIJnp3pwFPLSE9SJu7b6YGKGGpBLiM1z2c/g5e0
+ pBjMQ1sm+o3ymN1Np0EZiccQbEcMSOEgt/FQ4a0fmGjSqVmWEuV/Aot1G5c6S48qQAUp
+ QasAKN9KpZdZ1GsYUrgOPVI6pqdFnZ7WYjYYiTtR9cje8SNXiRNq0K+8uje1zhqEw7i4
+ fNIZ3nmsRJTf72K9z/5lONhILI1ADwMhnEqDlI34PUjKb4kvWkIceYDujg8zmdYETm1r
+ rU6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749438349; x=1750043149;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UWdwOqJQKm/jipyjXRGp6HsbSnxuxhfCklEvD3H3piA=;
+ b=xIYg/G++X2AzTYJN96QSvNTQZg+S5M6wj8ipSdokRClXdNPJvX/CnXv9yRFGxemqms
+ BAyRs5KCpBoTh6D7PlVDujikPN4LhgrkVK3ZKuaWXRNSz5V/54M+diyNosBeSTszf3Zi
+ 6vT3V6B7rRtm1Y6G6WRddVVOrx4vDKCfQ1f/6YmcoL5Cpr4UVE/We3GASv5KDbUfkJgL
+ 5DvD9lXbJ0uHIX6bnTDB1vU6Vwlhu4qZaKed+te6+jse45pp0NCkx5G/mug6zz0ubkWJ
+ bAFvfbTo7xncgvX2yH0HxSbQ8Vv8khPvLTw47YgQ9OuHY/0suoOgWSSAr9sp+L1G9avL
+ WfAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU87AncMnGJrK/f9/u/Q/zonGF9LnF69GFDi/x4XOPTkOVPWcHGz4OmJ96YD5+QsX1VmbOzUXuOGzom@nongnu.org
+X-Gm-Message-State: AOJu0YzBMNo5NgmdxMiiAb4glQub6dKDhzlIS+9AVCSzyXRjs7bCRFgi
+ 7GTdmjPfdLERo/69Q82ohvE9MiwoxkWhAbieFl6Wyo41toPdtm3Sk9fAhfteW4KTIcAfTZryMH5
+ D7TXropRVpD+bf2cPo0lP+bSc/BN7eew=
+X-Gm-Gg: ASbGncvsw3DMnuADRiCP0EHjRTLDFroP6673HuhB5P3gj2baEJAWbp5gbQYoW6dxVju
+ k//+/jjIah+uiw59gkUQrzKIozpQ81AVtWI7VsVV57nIF217HgYRrmCxGxctd1VswLYdV7uu8r+
+ 4mZmMCFfUHspVgXj05CeA9KNWpxMtwB8sVxxEkwt2DC7l0OUzFXQHgRDyEpODD3r0=
+X-Google-Smtp-Source: AGHT+IEuxvaYBd7EeJaN6RzqVIrOUJO6LKsPbB7Xho3oZ/dm1sqXX4vjm3pfiDWDkmtlqjNEl6aHRMxV5z0inRxIHuk=
+X-Received: by 2002:a05:6102:149f:b0:4e2:83c4:9298 with SMTP id
+ ada2fe7eead31-4e772b8a941mr10728768137.3.1749438348690; Sun, 08 Jun 2025
+ 20:05:48 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: b4a9f7b5-6681-4c07-d3c7-08dda7029038
-X-MS-Exchange-CrossTenant-originalarrivaltime: 09 Jun 2025 03:06:00.7791 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: tubWeXZJRjN5PK8s3faO66VKaCj6wLp5Z1a1oMLTGQ7olR5e+23j4J+qxRXk4E9MDaMrM3hz/fn6SaEYu1RtYd0LOdCbFDTUIjp/b3EhsR8=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5291
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.10;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+References: <20250606072525.17313-1-jay.chang@sifive.com>
+ <20250606072525.17313-3-jay.chang@sifive.com>
+In-Reply-To: <20250606072525.17313-3-jay.chang@sifive.com>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Mon, 9 Jun 2025 13:05:22 +1000
+X-Gm-Features: AX0GCFud4mVyUzYIS9INibOi8Zk-3jfrQhzuZhB2WevWYK-vbc_fwo4VbMtV9VA
+Message-ID: <CAKmqyKOt+QJgWPH9osWQsioFch4icJzExR69kM1vCCx6qxk_0g@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] target/riscv: Make PMP region count configurable
+To: Jay Chang <jay.chang@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Frank Chang <frank.chang@sifive.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -223,34 +100,333 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFBoaWxpcHBlIE1hdGhpZXUt
-RGF1ZMOpIDxwaGlsbWRAbGluYXJvLm9yZz4NCj5TdWJqZWN0OiBSZTogW1BBVENIIHY0IDQvNV0g
-aHcvY2hhci9zaF9zZXJpYWw6IFJlbW92ZSBkdW1teSBkZWZpbml0aW9uIG9mDQo+U0hfU0VSSUFM
-IGNsYXNzDQo+DQo+T24gNi82LzI1IDEyOjQwLCBQaGlsaXBwZSBNYXRoaWV1LURhdWTDqSB3cm90
-ZToNCj4+IE9uIDYvNi8yNSAxMToyNCwgWmhlbnpob25nIER1YW4gd3JvdGU6DQo+Pj4gU0hfU0VS
-SUFMIGlzIGRlY2xhcmVkIHdpdGggT0JKRUNUX0RFQ0xBUkVfU0lNUExFX1RZUEUgYnV0IGRlZmlu
-ZWQgd2l0aA0KPj4+IE9CSkVDVF9ERUZJTkVfVFlQRSwgU0hTZXJpYWxTdGF0ZUNsYXNzIGlzIGFs
-c28gYSBkdW1teSBjbGFzcyB3aGljaA0KPj4+IG1pc3NlZCBpdHMgcGFyZW50Lg0KPj4+DQo+Pj4g
-Q2hhbmdlIHRvIHVzZSBPQkpFQ1RfREVGSU5FX1NJTVBMRV9UWVBFIGFuZCByZW1vdmUgU0hTZXJp
-YWxTdGF0ZUNsYXNzLg0KPj4+DQo+Pj4gQ2xvc2VzOiBodHRwczovL2xpc3RzLmdudS5vcmcvYXJj
-aGl2ZS9odG1sL3FlbXUtZGV2ZWwvMjAyNS0wNi8NCj4+PiBtc2cwMDU4Ni5odG1sDQo+Pj4gU3Vn
-Z2VzdGVkLWJ5OiBEYXZpZCBIaWxkZW5icmFuZCA8ZGF2aWRAcmVkaGF0LmNvbT4NCj4+PiBTaWdu
-ZWQtb2ZmLWJ5OiBaaGVuemhvbmcgRHVhbiA8emhlbnpob25nLmR1YW5AaW50ZWwuY29tPg0KPj4+
-IC0tLQ0KPj4+IMKgIGh3L2NoYXIvc2hfc2VyaWFsLmMgfCA0ICstLS0NCj4+PiDCoCAxIGZpbGUg
-Y2hhbmdlZCwgMSBpbnNlcnRpb24oKyksIDMgZGVsZXRpb25zKC0pDQo+Pj4NCj4+PiBkaWZmIC0t
-Z2l0IGEvaHcvY2hhci9zaF9zZXJpYWwuYyBiL2h3L2NoYXIvc2hfc2VyaWFsLmMNCj4+PiBpbmRl
-eCA2YWJkODAzODZmLi44Y2NjMjIzNGJhIDEwMDY0NA0KPj4+IC0tLSBhL2h3L2NoYXIvc2hfc2Vy
-aWFsLmMNCj4+PiArKysgYi9ody9jaGFyL3NoX3NlcmlhbC5jDQo+Pj4gQEAgLTc4LDkgKzc4LDcg
-QEAgc3RydWN0IFNIU2VyaWFsU3RhdGUgew0KPj4+IMKgwqDCoMKgwqAgcWVtdV9pcnEgYnJpOw0K
-Pj4+IMKgIH07DQo+Pj4gLXR5cGVkZWYgc3RydWN0IHt9IFNIU2VyaWFsU3RhdGVDbGFzczsNCj4+
-PiAtDQo+Pj4gLU9CSkVDVF9ERUZJTkVfVFlQRShTSFNlcmlhbFN0YXRlLCBzaF9zZXJpYWwsIFNI
-X1NFUklBTCwgU1lTX0JVU19ERVZJQ0UpDQo+Pj4gK09CSkVDVF9ERUZJTkVfU0lNUExFX1RZUEUo
-U0hTZXJpYWxTdGF0ZSwgc2hfc2VyaWFsLCBTSF9TRVJJQUwsDQo+Pj4gU1lTX0JVU19ERVZJQ0Up
-DQo+Pg0KPj4gSSdtIHN1cnByaXNlZCB0aGlzIGlzIHRoZSBmaXJzdCB0aW1lIHdlIHVzZSBPQkpF
-Q1RfREVGSU5FX1NJTVBMRV9UWVBFLg0KDQpBaCwgeWVzLg0KDQo+DQo+QWN0dWFsbHkgSSBhbHJl
-YWR5IHBvc3RlZCBhIHBhdGNoIGNsZWFuaW5nIHRoYXQuLi46DQo+DQo+aHR0cHM6Ly9sb3JlLmtl
-cm5lbC5vcmcvcWVtdS1kZXZlbC8yMDI1MDEyNDE3NTA1My43NDQ2MS0xLQ0KPnBoaWxtZEBsaW5h
-cm8ub3JnLw0KDQpHb29kIHRvIHNlZS4NCg0KPg0KPkFsc28gSSBub3cgbm90aWNlIEkgbmV2ZXIg
-cmVwbGllZCB0byBQZXRlcidzIHF1ZXN0aW9ucy4gSSdsbCBhbmQNCj5xdWV1ZSB0aGUgc2VyaWVz
-LCBhbG9uZyB3aXRoIHlvdXJzLg0KVGhhbmtzLg0KDQpCUnMsDQpaaGVuemhvbmcNCg==
+On Fri, Jun 6, 2025 at 5:28=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wro=
+te:
+>
+> Previously, the number of PMP regions was hardcoded to 16 in QEMU.
+> This patch replaces the fixed value with a new `pmp_regions` field,
+> allowing platforms to configure the number of PMP regions.
+>
+> If no specific value is provided, the default number of PMP regions
+> remains 16 to preserve the existing behavior.
+>
+> A new CPU parameter num-pmp-regions has been introduced to the QEMU
+> command line. For example:
+>
+>         -cpu rv64, g=3Dtrue, c=3Dtrue, pmp=3Dtrue, num-pmp-regions=3D8
+>
+> Signed-off-by: Jay Chang <jay.chang@sifive.com>
+> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+
+Thanks!
+
+Applied to riscv-to-apply.next
+
+Alistair
+
+> ---
+>  target/riscv/cpu.c                | 48 +++++++++++++++++++++++++++++--
+>  target/riscv/cpu.h                |  3 +-
+>  target/riscv/cpu_cfg_fields.h.inc |  1 +
+>  target/riscv/csr.c                |  5 +++-
+>  target/riscv/machine.c            |  3 +-
+>  target/riscv/pmp.c                | 28 ++++++++++++------
+>  6 files changed, 74 insertions(+), 14 deletions(-)
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 629ac37501..f4a09ae70f 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1117,6 +1117,7 @@ static void riscv_cpu_init(Object *obj)
+>      cpu->cfg.cbom_blocksize =3D 64;
+>      cpu->cfg.cbop_blocksize =3D 64;
+>      cpu->cfg.cboz_blocksize =3D 64;
+> +    cpu->cfg.pmp_regions =3D 16;
+>      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
+>      cpu->cfg.max_satp_mode =3D -1;
+>
+> @@ -1568,6 +1569,46 @@ static const PropertyInfo prop_pmp =3D {
+>      .set =3D prop_pmp_set,
+>  };
+>
+> +static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char=
+ *name,
+> +                                     void *opaque, Error **errp)
+> +{
+> +    RISCVCPU *cpu =3D RISCV_CPU(obj);
+> +    uint8_t value;
+> +
+> +    visit_type_uint8(v, name, &value, errp);
+> +
+> +    if (cpu->cfg.pmp_regions !=3D value && riscv_cpu_is_vendor(obj)) {
+> +        cpu_set_prop_err(cpu, name, errp);
+> +        return;
+> +    }
+> +
+> +    if (cpu->env.priv_ver < PRIV_VERSION_1_12_0 && value > OLD_MAX_RISCV=
+_PMPS) {
+> +        error_setg(errp, "Number of PMP regions exceeds maximum availabl=
+e");
+> +        return;
+> +    } else if (value > MAX_RISCV_PMPS) {
+> +        error_setg(errp, "Number of PMP regions exceeds maximum availabl=
+e");
+> +        return;
+> +    }
+> +
+> +    cpu_option_add_user_setting(name, value);
+> +    cpu->cfg.pmp_regions =3D value;
+> +}
+> +
+> +static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char=
+ *name,
+> +                                     void *opaque, Error **errp)
+> +{
+> +    uint8_t value =3D RISCV_CPU(obj)->cfg.pmp_regions;
+> +
+> +    visit_type_uint8(v, name, &value, errp);
+> +}
+> +
+> +static const PropertyInfo prop_num_pmp_regions =3D {
+> +    .type =3D "uint8",
+> +    .description =3D "num-pmp-regions",
+> +    .get =3D prop_num_pmp_regions_get,
+> +    .set =3D prop_num_pmp_regions_set,
+> +};
+> +
+>  static int priv_spec_from_str(const char *priv_spec_str)
+>  {
+>      int priv_version =3D -1;
+> @@ -2567,6 +2608,7 @@ static const Property riscv_cpu_properties[] =3D {
+>
+>      {.name =3D "mmu", .info =3D &prop_mmu},
+>      {.name =3D "pmp", .info =3D &prop_pmp},
+> +    {.name =3D "num-pmp-regions", .info =3D &prop_num_pmp_regions},
+>
+>      {.name =3D "priv_spec", .info =3D &prop_priv_spec},
+>      {.name =3D "vext_spec", .info =3D &prop_vext_spec},
+> @@ -2937,7 +2979,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>          .cfg.max_satp_mode =3D VM_1_10_MBARE,
+>          .cfg.ext_zifencei =3D true,
+>          .cfg.ext_zicsr =3D true,
+> -        .cfg.pmp =3D true
+> +        .cfg.pmp =3D true,
+> +        .cfg.pmp_regions =3D 8
+>      ),
+>
+>      DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U, TYPE_RISCV_VENDOR=
+_CPU,
+> @@ -2948,7 +2991,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>          .cfg.ext_zifencei =3D true,
+>          .cfg.ext_zicsr =3D true,
+>          .cfg.mmu =3D true,
+> -        .cfg.pmp =3D true
+> +        .cfg.pmp =3D true,
+> +        .cfg.pmp_regions =3D 8
+>      ),
+>
+>  #if defined(TARGET_RISCV32) || \
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 229ade9ed9..67323a7d9d 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -159,7 +159,8 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_impli=
+ed_rules[];
+>
+>  #define MMU_USER_IDX 3
+>
+> -#define MAX_RISCV_PMPS (16)
+> +#define MAX_RISCV_PMPS (64)
+> +#define OLD_MAX_RISCV_PMPS (16)
+>
+>  #if !defined(CONFIG_USER_ONLY)
+>  #include "pmp.h"
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
+lds.h.inc
+> index 59f134a419..33c4f9bac8 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -163,6 +163,7 @@ TYPED_FIELD(uint16_t, elen, 0)
+>  TYPED_FIELD(uint16_t, cbom_blocksize, 0)
+>  TYPED_FIELD(uint16_t, cbop_blocksize, 0)
+>  TYPED_FIELD(uint16_t, cboz_blocksize, 0)
+> +TYPED_FIELD(uint8_t,  pmp_regions, 0)
+>
+>  TYPED_FIELD(int8_t, max_satp_mode, -1)
+>
+> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+> index d6cd441133..6296ecd1e1 100644
+> --- a/target/riscv/csr.c
+> +++ b/target/riscv/csr.c
+> @@ -738,7 +738,10 @@ static RISCVException dbltrp_hmode(CPURISCVState *en=
+v, int csrno)
+>  static RISCVException pmp(CPURISCVState *env, int csrno)
+>  {
+>      if (riscv_cpu_cfg(env)->pmp) {
+> -        if (csrno <=3D CSR_PMPCFG3) {
+> +        int max_pmpcfg =3D (env->priv_ver >=3D PRIV_VERSION_1_12_0) ?
+> ++                              CSR_PMPCFG15 : CSR_PMPCFG3;
+> +
+> +        if (csrno <=3D max_pmpcfg) {
+>              uint32_t reg_index =3D csrno - CSR_PMPCFG0;
+>
+>              /* TODO: RV128 restriction check */
+> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
+> index c97e9ce9df..1600ec44f0 100644
+> --- a/target/riscv/machine.c
+> +++ b/target/riscv/machine.c
+> @@ -36,8 +36,9 @@ static int pmp_post_load(void *opaque, int version_id)
+>      RISCVCPU *cpu =3D opaque;
+>      CPURISCVState *env =3D &cpu->env;
+>      int i;
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+>
+> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
+> +    for (i =3D 0; i < pmp_regions; i++) {
+>          pmp_update_rule_addr(env, i);
+>      }
+>      pmp_update_rule_nums(env);
+> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
+> index 5af295e410..3540327c9a 100644
+> --- a/target/riscv/pmp.c
+> +++ b/target/riscv/pmp.c
+> @@ -122,7 +122,9 @@ uint32_t pmp_get_num_rules(CPURISCVState *env)
+>   */
+>  static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_inde=
+x)
+>  {
+> -    if (pmp_index < MAX_RISCV_PMPS) {
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+> +
+> +    if (pmp_index < pmp_regions) {
+>          return env->pmp_state.pmp[pmp_index].cfg_reg;
+>      }
+>
+> @@ -136,7 +138,9 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env=
+, uint32_t pmp_index)
+>   */
+>  static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_=
+t val)
+>  {
+> -    if (pmp_index < MAX_RISCV_PMPS) {
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+> +
+> +    if (pmp_index < pmp_regions) {
+>          if (env->pmp_state.pmp[pmp_index].cfg_reg =3D=3D val) {
+>              /* no change */
+>              return false;
+> @@ -236,9 +240,10 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32=
+_t pmp_index)
+>  void pmp_update_rule_nums(CPURISCVState *env)
+>  {
+>      int i;
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+>
+>      env->pmp_state.num_rules =3D 0;
+> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
+> +    for (i =3D 0; i < pmp_regions; i++) {
+>          const uint8_t a_field =3D
+>              pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg);
+>          if (PMP_AMATCH_OFF !=3D a_field) {
+> @@ -332,6 +337,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr ad=
+dr,
+>      int pmp_size =3D 0;
+>      hwaddr s =3D 0;
+>      hwaddr e =3D 0;
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+>
+>      /* Short cut if no rules */
+>      if (0 =3D=3D pmp_get_num_rules(env)) {
+> @@ -356,7 +362,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr ad=
+dr,
+>       * 1.10 draft priv spec states there is an implicit order
+>       * from low to high
+>       */
+> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
+> +    for (i =3D 0; i < pmp_regions; i++) {
+>          s =3D pmp_is_in_range(env, i, addr);
+>          e =3D pmp_is_in_range(env, i, addr + pmp_size - 1);
+>
+> @@ -527,8 +533,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
+ddr_index,
+>  {
+>      trace_pmpaddr_csr_write(env->mhartid, addr_index, val);
+>      bool is_next_cfg_tor =3D false;
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+>
+> -    if (addr_index < MAX_RISCV_PMPS) {
+> +    if (addr_index < pmp_regions) {
+>          if (env->pmp_state.pmp[addr_index].addr_reg =3D=3D val) {
+>              /* no change */
+>              return;
+> @@ -538,7 +545,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
+ddr_index,
+>           * In TOR mode, need to check the lock bit of the next pmp
+>           * (if there is a next).
+>           */
+> -        if (addr_index + 1 < MAX_RISCV_PMPS) {
+> +        if (addr_index + 1 < pmp_regions) {
+>              uint8_t pmp_cfg =3D env->pmp_state.pmp[addr_index + 1].cfg_r=
+eg;
+>              is_next_cfg_tor =3D PMP_AMATCH_TOR =3D=3D pmp_get_a_field(pm=
+p_cfg);
+>
+> @@ -573,8 +580,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
+ddr_index,
+>  target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
+>  {
+>      target_ulong val =3D 0;
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+>
+> -    if (addr_index < MAX_RISCV_PMPS) {
+> +    if (addr_index < pmp_regions) {
+>          val =3D env->pmp_state.pmp[addr_index].addr_reg;
+>          trace_pmpaddr_csr_read(env->mhartid, addr_index, val);
+>      } else {
+> @@ -592,6 +600,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulo=
+ng val)
+>  {
+>      int i;
+>      uint64_t mask =3D MSECCFG_MMWP | MSECCFG_MML;
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+>      /* Update PMM field only if the value is valid according to Zjpm v1.=
+0 */
+>      if (riscv_cpu_cfg(env)->ext_smmpm &&
+>          riscv_cpu_mxl(env) =3D=3D MXL_RV64 &&
+> @@ -603,7 +612,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulo=
+ng val)
+>
+>      /* RLB cannot be enabled if it's already 0 and if any regions are lo=
+cked */
+>      if (!MSECCFG_RLB_ISSET(env)) {
+> -        for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
+> +        for (i =3D 0; i < pmp_regions; i++) {
+>              if (pmp_is_locked(env, i)) {
+>                  val &=3D ~MSECCFG_RLB;
+>                  break;
+> @@ -659,6 +668,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwa=
+ddr addr)
+>      hwaddr tlb_sa =3D addr & ~(TARGET_PAGE_SIZE - 1);
+>      hwaddr tlb_ea =3D tlb_sa + TARGET_PAGE_SIZE - 1;
+>      int i;
+> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
+>
+>      /*
+>       * If PMP is not supported or there are no PMP rules, the TLB page w=
+ill not
+> @@ -669,7 +679,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwa=
+ddr addr)
+>          return TARGET_PAGE_SIZE;
+>      }
+>
+> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
+> +    for (i =3D 0; i < pmp_regions; i++) {
+>          if (pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg) =3D=3D PMP_AM=
+ATCH_OFF) {
+>              continue;
+>          }
+> --
+> 2.48.1
+>
+>
 
