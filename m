@@ -4,73 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53BD3C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:50:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEE2C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:53:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOdoQ-0005Tv-6i; Mon, 09 Jun 2025 10:49:22 -0400
+	id 1uOdrp-0001yu-Dc; Mon, 09 Jun 2025 10:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1uOdoF-0005LL-Cw
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:49:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uOdrn-0001yI-5o; Mon, 09 Jun 2025 10:52:51 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <aesteve@redhat.com>)
- id 1uOdoB-0008Py-B4
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:49:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749480546;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=KT3vvxjLk6V9gUarKGHNRXLEYA8GLmdNyr7W4+VtIG0=;
- b=G3EzMDyfkJASP7oLHo/AXHQQHTU+Ej7FT2TKPcL13HpohS2eBDmAL/IxnEUWhc4D3W+sKc
- DOcg9Or+cc3p9RZBAcF/k5c/tK8PTXx8o2jHjgz0A84BOJ1KkQs64jeLmM6tuXF2jZDaZ8
- 5v5gKkMbilE1YETtbBH99U7eUR6QEk4=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-501-I1uB4aFqNIGNQR0brSJLzg-1; Mon,
- 09 Jun 2025 10:47:58 -0400
-X-MC-Unique: I1uB4aFqNIGNQR0brSJLzg-1
-X-Mimecast-MFC-AGG-ID: I1uB4aFqNIGNQR0brSJLzg_1749480477
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DDF41955F3B; Mon,  9 Jun 2025 14:47:57 +0000 (UTC)
-Received: from fedora.redhat.com (unknown [10.44.33.48])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A840019560A3; Mon,  9 Jun 2025 14:47:52 +0000 (UTC)
-From: Albert Esteve <aesteve@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, slp@redhat.com, david@redhat.com,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, jasowang@redhat.com,
- stevensd@chromium.org, hi@alyssa.is,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Albert Esteve <aesteve@redhat.com>
-Subject: [PATCH v5 4/7] vhost_user: Add frontend get_shmem_config command
-Date: Mon,  9 Jun 2025 16:47:26 +0200
-Message-ID: <20250609144729.884027-5-aesteve@redhat.com>
-In-Reply-To: <20250609144729.884027-1-aesteve@redhat.com>
-References: <20250609144729.884027-1-aesteve@redhat.com>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1uOdrk-0000xi-KZ; Mon, 09 Jun 2025 10:52:50 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c15:2b89:0:640:9815:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 732B260CDF;
+ Mon,  9 Jun 2025 17:52:44 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:a98::1:26] (unknown
+ [2a02:6bf:8080:a98::1:26])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id hqiHwO8FeW20-wwA4giur; Mon, 09 Jun 2025 17:52:43 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1749480763;
+ bh=qqlL+gfILre4QunlojxfP1/EQMHxxZuLkpi1dGwyrhY=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=iVqQwvBtzkIderxhy9h3DaWnyilA/FHkVNArwKNCsfafUCn3RNlFWmK9p9WsHYw58
+ kwAjI/FSGm/y5chO6gQA6s6kT8Xc+7IjYr6GgJgHS4qeMvNPc4At7u1k6nNUcAKL74
+ Gkkz9UVrk7SdbgfO3YVnymDmCA2KXr+rSU7aHJ58=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <26000017-b3d4-4383-aeb3-557306aa0703@yandex-team.ru>
+Date: Mon, 9 Jun 2025 17:52:43 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=aesteve@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 4/4] block/copy-before-write: report partial block
+ status to snapshot
+To: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>, eblake@redhat.com
+Cc: qemu-block@nongnu.org, jsnow@redhat.com, kwolf@redhat.com,
+ hreitz@redhat.com, qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com,
+ den@virtuozzo.com
+References: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
+ <20250528120732.2247150-5-andrey.zhadchenko@virtuozzo.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <20250528120732.2247150-5-andrey.zhadchenko@virtuozzo.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -88,157 +78,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The frontend can use this command to retrieve
-VirtIO Shared Memory Regions configuration from
-the backend. The response contains the number of
-shared memory regions, their size, and shmid.
+On 28.05.25 15:07, Andrey Zhadchenko wrote:
+> until the non-accessible area
 
-This is useful when the frontend is unaware of
-specific backend type and configuration,
-for example, in the `vhost-user-device` case.
+Please write a bit more: what, why and how. What is the scenario when this change helps? I think the client of snapshot-access, should not try to read/get-block-status from "denied" areas?
 
-Signed-off-by: Albert Esteve <aesteve@redhat.com>
----
- hw/virtio/vhost-user.c            | 43 +++++++++++++++++++++++++++++++
- include/hw/virtio/vhost-backend.h | 10 +++++++
- include/hw/virtio/vhost-user.h    |  1 +
- include/hw/virtio/virtio.h        |  2 ++
- 4 files changed, 56 insertions(+)
+Also, it's a lot more comfortable to read messages, starting from a full sentence, not just continuing a sentence of subject. It's OK to repeat the subject, may be in more detailed form.
 
-diff --git a/hw/virtio/vhost-user.c b/hw/virtio/vhost-user.c
-index 9c635fb928..f32da60ac4 100644
---- a/hw/virtio/vhost-user.c
-+++ b/hw/virtio/vhost-user.c
-@@ -104,6 +104,7 @@ typedef enum VhostUserRequest {
-     VHOST_USER_GET_SHARED_OBJECT = 41,
-     VHOST_USER_SET_DEVICE_STATE_FD = 42,
-     VHOST_USER_CHECK_DEVICE_STATE = 43,
-+    VHOST_USER_GET_SHMEM_CONFIG = 44,
-     VHOST_USER_MAX
- } VhostUserRequest;
- 
-@@ -138,6 +139,12 @@ typedef struct VhostUserMemRegMsg {
-     VhostUserMemoryRegion region;
- } VhostUserMemRegMsg;
- 
-+typedef struct VhostUserShMemConfig {
-+    uint32_t nregions;
-+    uint32_t padding;
-+    uint64_t memory_sizes[VIRTIO_MAX_SHMEM_REGIONS];
-+} VhostUserShMemConfig;
-+
- typedef struct VhostUserLog {
-     uint64_t mmap_size;
-     uint64_t mmap_offset;
-@@ -244,6 +251,7 @@ typedef union {
-         VhostUserShared object;
-         VhostUserTransferDeviceState transfer_state;
-         VhostUserMMap mmap;
-+        VhostUserShMemConfig shmem;
- } VhostUserPayload;
- 
- typedef struct VhostUserMsg {
-@@ -3160,6 +3168,40 @@ static int vhost_user_check_device_state(struct vhost_dev *dev, Error **errp)
-     return 0;
- }
- 
-+static int vhost_user_get_shmem_config(struct vhost_dev *dev,
-+                                       int *nregions,
-+                                       uint64_t *memory_sizes,
-+                                       Error **errp)
-+{
-+    int ret;
-+    VhostUserMsg msg = {
-+        .hdr.request = VHOST_USER_GET_SHMEM_CONFIG,
-+        .hdr.flags = VHOST_USER_VERSION,
-+    };
-+
-+    if (!virtio_has_feature(dev->protocol_features,
-+                            VHOST_USER_PROTOCOL_F_SHMEM)) {
-+        return 0;
-+    }
-+
-+    ret = vhost_user_write(dev, &msg, NULL, 0);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    ret = vhost_user_read(dev, &msg);
-+    if (ret < 0) {
-+        return ret;
-+    }
-+
-+    assert(msg.payload.shmem.nregions <= VIRTIO_MAX_SHMEM_REGIONS);
-+    *nregions = msg.payload.shmem.nregions;
-+    memcpy(memory_sizes,
-+           &msg.payload.shmem.memory_sizes,
-+           sizeof(uint64_t) * msg.payload.shmem.nregions);
-+    return 0;
-+}
-+
- const VhostOps user_ops = {
-         .backend_type = VHOST_BACKEND_TYPE_USER,
-         .vhost_backend_init = vhost_user_backend_init,
-@@ -3198,4 +3240,5 @@ const VhostOps user_ops = {
-         .vhost_supports_device_state = vhost_user_supports_device_state,
-         .vhost_set_device_state_fd = vhost_user_set_device_state_fd,
-         .vhost_check_device_state = vhost_user_check_device_state,
-+        .vhost_get_shmem_config = vhost_user_get_shmem_config,
- };
-diff --git a/include/hw/virtio/vhost-backend.h b/include/hw/virtio/vhost-backend.h
-index d6df209a2f..42400b276e 100644
---- a/include/hw/virtio/vhost-backend.h
-+++ b/include/hw/virtio/vhost-backend.h
-@@ -159,6 +159,15 @@ typedef int (*vhost_set_device_state_fd_op)(struct vhost_dev *dev,
-                                             int *reply_fd,
-                                             Error **errp);
- typedef int (*vhost_check_device_state_op)(struct vhost_dev *dev, Error **errp);
-+/*
-+ * Max regions is VIRTIO_MAX_SHMEM_REGIONS, so that is the maximum
-+ * number of memory_sizes that will be accepted.
-+ */
-+typedef int (*vhost_get_shmem_config_op)(struct vhost_dev *dev,
-+                                         int *nregions,
-+                                         uint64_t *memory_sizes,
-+                                         Error **errp);
-+
- 
- typedef struct VhostOps {
-     VhostBackendType backend_type;
-@@ -214,6 +223,7 @@ typedef struct VhostOps {
-     vhost_supports_device_state_op vhost_supports_device_state;
-     vhost_set_device_state_fd_op vhost_set_device_state_fd;
-     vhost_check_device_state_op vhost_check_device_state;
-+    vhost_get_shmem_config_op vhost_get_shmem_config;
- } VhostOps;
- 
- int vhost_backend_update_device_iotlb(struct vhost_dev *dev,
-diff --git a/include/hw/virtio/vhost-user.h b/include/hw/virtio/vhost-user.h
-index 9a3f238b43..bacc7d184c 100644
---- a/include/hw/virtio/vhost-user.h
-+++ b/include/hw/virtio/vhost-user.h
-@@ -32,6 +32,7 @@ enum VhostUserProtocolFeature {
-     /* Feature 17 reserved for VHOST_USER_PROTOCOL_F_XEN_MMAP. */
-     VHOST_USER_PROTOCOL_F_SHARED_OBJECT = 18,
-     VHOST_USER_PROTOCOL_F_DEVICE_STATE = 19,
-+    VHOST_USER_PROTOCOL_F_SHMEM = 20,
-     VHOST_USER_PROTOCOL_F_MAX
- };
- 
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 331dbcfbe0..5d0c084f57 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -81,6 +81,8 @@ typedef struct VirtQueueElement
- 
- #define VIRTIO_NO_VECTOR 0xffff
- 
-+#define VIRTIO_MAX_SHMEM_REGIONS 256
-+
- /* special index value used internally for config irqs */
- #define VIRTIO_CONFIG_IRQ_IDX -1
- 
+> 
+> Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
+> ---
+>   block/copy-before-write.c | 18 ++++++++++++------
+>   1 file changed, 12 insertions(+), 6 deletions(-)
+> 
+> diff --git a/block/copy-before-write.c b/block/copy-before-write.c
+> index 7e074ad569..c5e6e1c112 100644
+> --- a/block/copy-before-write.c
+> +++ b/block/copy-before-write.c
+> @@ -207,10 +207,11 @@ static int coroutine_fn GRAPH_RDLOCK cbw_co_flush(BlockDriverState *bs)
+>    */
+
+the comment above the function should be updated to cover new logic
+
+>   static BlockReq * coroutine_fn GRAPH_RDLOCK
+>   cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
+> -                       int64_t *pnum, BdrvChild **file)
+> +                       int64_t *pnum, BdrvChild **file, bool query)
+>   {
+>       BDRVCopyBeforeWriteState *s = bs->opaque;
+>       BlockReq *req = g_new(BlockReq, 1);
+> +    int64_t next_dirty;
+>       bool done;
+>   
+>       QEMU_LOCK_GUARD(&s->lock);
+> @@ -220,9 +221,13 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>           return NULL;
+>       }
+>   
+> -    if (bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes) != -1) {
+> -        g_free(req);
+> -        return NULL;
+> +    next_dirty = bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes);
+> +    if (next_dirty != -1) {
+> +        if (!query || next_dirty == offset) {
+> +            g_free(req);
+> +            return NULL;
+> +        }
+> +        bytes = offset + bytes - next_dirty;
+
+I don't follow. Shouldn't this be
+
+     bytes = next_dirty - offset
+
+I.e., number of bytes from offset up to first "denied" byte.
+
+>       }
+>   
+>       done = bdrv_dirty_bitmap_status(s->done_bitmap, offset, bytes, pnum);
+> @@ -270,7 +275,8 @@ cbw_co_preadv_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes,
+>       while (bytes) {
+>           int64_t cur_bytes;
+>   
+> -        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file);
+> +        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file,
+> +                                     false);
+>           if (!req) {
+>               return -EACCES;
+>           }
+> @@ -302,7 +308,7 @@ cbw_co_snapshot_block_status(BlockDriverState *bs,
+>       int64_t cur_bytes;
+>       BdrvChild *child;
+>   
+> -    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child);
+> +    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child, true);
+>       if (!req) {
+>           return -EACCES;
+>       }
+
 -- 
-2.49.0
+Best regards,
+Vladimir
 
 
