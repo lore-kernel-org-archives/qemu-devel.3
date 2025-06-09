@@ -4,77 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93EA4C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 13:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15FF2C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:01:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOd19-0008SF-7Q; Mon, 09 Jun 2025 09:58:27 -0400
+	id 1uOd3Y-0000xg-AB; Mon, 09 Jun 2025 10:00:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uOd13-0008Rp-KK
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:58:23 -0400
-Received: from mailgate02.uberspace.is ([2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <neither@nut.email>) id 1uOd11-0004gy-H7
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:58:21 -0400
-Received: from skiff.uberspace.de (skiff.uberspace.de [185.26.156.131])
- by mailgate02.uberspace.is (Postfix) with ESMTPS id 803251801AC
- for <qemu-devel@nongnu.org>; Mon,  9 Jun 2025 15:58:07 +0200 (CEST)
-Received: (qmail 13608 invoked by uid 990); 9 Jun 2025 13:58:07 -0000
-Authentication-Results: skiff.uberspace.de;
-	auth=pass (plain)
-Received: from unknown (HELO unkown) (::1)
- by skiff.uberspace.de (Haraka/3.0.1) with ESMTPSA;
- Mon, 09 Jun 2025 15:58:07 +0200
-From: Julian Ganz <neither@nut.email>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: Julian Ganz <neither@nut.email>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v9 3/9] plugins: Add enforcement of QEMU_PLUGIN_CB flags
- in register R/W callbacks
-Date: Mon,  9 Jun 2025 15:56:26 +0200
-Message-ID: <20250609135636.22368-1-neither@nut.email>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250608230819.3382527-4-rowanbhart@gmail.com>
-References: <20250608230819.3382527-1-rowanbhart@gmail.com>
- <20250608230819.3382527-4-rowanbhart@gmail.com>
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uOd3T-0000uG-6T; Mon, 09 Jun 2025 10:00:51 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uOd3H-0005Tc-MM; Mon, 09 Jun 2025 10:00:43 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 559BFgwq017921;
+ Mon, 9 Jun 2025 14:00:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=/dYtdl5CAJyiz3iBu+TGRrQj/C/HXi
+ 1GZdezvEFGSIk=; b=X+d4ja5lkE4K7KLiyAYN65Z2h7bg0SENVKolq6oSbQH1/Z
+ LW8vEXbWYf6frTJOEy6jsw4n2aPxUve1eb27cpz9l5lNDol2zkiI3x/GEvVtAsOh
+ IIk7hDGVBCNlBq3qZDJlNcvYXEV7bbwlZtq2eZcAq8i0bS0vg+afT1UYUQ4Zcsk5
+ m2V944Yy544h8oFiI5Jlz9b4oorgF+Y75F5wRLsxKTE+9zoH9UHQyGEm7SKDSmqf
+ g2OvdhZr7ySB15DKriscoITsw3WV/yB8KU78h6uQk8EUACjJzqad8L+a0Wr80Z0E
+ P5lVbCyqa3xirRHJjEx86etGdIMeX6BUaEaiO6YA==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474hgu83b1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 14:00:30 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 559AEp7q014908;
+ Mon, 9 Jun 2025 14:00:29 GMT
+Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4750rnwyrt-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 14:00:29 +0000
+Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
+ [10.39.53.228])
+ by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 559E0Sn821496404
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Jun 2025 14:00:28 GMT
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4B8D15805B;
+ Mon,  9 Jun 2025 14:00:28 +0000 (GMT)
+Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4BDA85804B;
+ Mon,  9 Jun 2025 14:00:27 +0000 (GMT)
+Received: from [9.61.253.10] (unknown [9.61.253.10])
+ by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Jun 2025 14:00:27 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------KH4AIrsVKO6SHSsIeHhTbSEq"
+Message-ID: <8b806b24-62fe-4769-80fc-f6afe479e455@linux.ibm.com>
+Date: Mon, 9 Jun 2025 10:00:26 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Bar: ++
-X-Rspamd-Report: SUSPICIOUS_RECIPS(1.5) BAYES_HAM(-0.299493)
- MID_CONTAINS_FROM(1) MIME_GOOD(-0.1) R_MISSING_CHARSET(0.5)
-X-Rspamd-Score: 2.600506
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=nut.email; s=uberspace;
- h=from:to:cc:subject:date;
- bh=J1YRTkhMBlbFlWiqsNBJntGS5HH7XiG2HNH7gVW69ac=;
- b=EIDdkXQEvkfumEWKnalj9f/o3vbKvA0JhaMPo6XHPVpyQ7JKbssh8H3pNvhEl9K4mHBb7OLXE+
- /VQhEEPEIook3WXu3FWnRU/4/DapCCbvLXZy5GhT1jgHEKOEQTlNMu8MXJLN5HVkRXmEJxwI5NpJ
- iFXysvUVifvvybnGtQEd+AHe4awSc/6JjY+dcvbEl8GG4u+NRSBcOBBUsH2FGRNvmm4KcPr2gQ3d
- DUBw5ae4KPqbUJfNjKNAgTwwkEPi6b2Z8MRtkheFKeFqqx+GmswHMH2MDffJgjYWsFXn8ClaLn/X
- sN/ESaFPNNdwoC8XHhC6+LRQ5XjQgV9KAUTQWii3H6KD8x7CLGHS7FK6GpV25wcd3Jf6XbYcv/lj
- B1nJQ7rr84azEmeSq5S2WUdECZEiCLGw6IOpJkyFjpXgvaJ3TPYSn8zSwRyvbzOTUl711MtTyiV0
- wH2kxS3kHDZeNhdoS0itKoKkYxiCQQBxkccfMjIe4ihIpwyl3/XtDjz9uVu/zRFgOvoFRoYigFnR
- Dw1BpYl3OFN5LQLUz5s/rru8t7AnnBeXOKO5mnw9eVW3swsaBsmPIKbm0wHJgxlsTlnHDWumU8t9
- ecaZlBjSs+alnItRNKdHkzBKNkYJeQaG9F93ClLE95yh7G1PjWoGsX0NLLuDaU614Ltz9no55khR
- c=
-Received-SPF: pass client-ip=2a00:d0c0:200:0:1c7b:a6ff:fee0:8ea4;
- envelope-from=neither@nut.email; helo=mailgate02.uberspace.is
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v12 2/4] hw/vfio/ap: store object indicating AP config
+ changed in a queue
+To: Anthony Krowiak <akrowiak@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
+References: <20250606183716.26152-1-rreyes@linux.ibm.com>
+ <20250606183716.26152-3-rreyes@linux.ibm.com>
+ <fb9f5bf3-68d4-4a2f-9f8a-e781e5059475@linux.ibm.com>
+Content-Language: en-US
+From: Rorie Reyes <rreyes@linux.ibm.com>
+In-Reply-To: <fb9f5bf3-68d4-4a2f-9f8a-e781e5059475@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Pfr/hjhd c=1 sm=1 tr=0 ts=6846e8fe cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=6IFa9wvqVegA:10 a=r77TgQKjGQsHNAKrUKIA:9 a=KeeneK6JeJdpitq1VIcA:9
+ a=QEXdDO2ut3YA:10 a=VnNF1IyMAAAA:8
+ a=JBATKl5ZXXqN6Tk8RncA:9 a=BLlm6C102OIL0WYt:21 a=_W_S_7VecoQA:10
+ a=3ZKOabzyN94A:10
+X-Proofpoint-GUID: 2a2d9cGVdsUN7zahbx9aCvlTv26RG26D
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDEwMSBTYWx0ZWRfX6cFf6riBVtvG
+ 36EeyEj5RIEMlN7zl2D7FZpwSIP2nWDsotnqUICn+jcSSJzVkXJ1JvCXrweU0BzfahS3mXgILn2
+ aIo1PQOXJNSHDN8mfHQ6tMs2QGruvMc4b9UErIndNvX3SgbEGXI4tNq5pgeI/MYLgXDdDhkew2C
+ LQdF0tJXE4woU7IEPAuZt6buMN0PIaddUJ/vp6av3ZTlQqQ4yPVCXyAWkDofqapLBuznIQjotOj
+ 4QhZIzKe6bSLHez4YDWygDDwH89QEKMq5vu/+uGTT86NEa7LpEStq7EOsFO8BqxlAnR9H5X+lIo
+ 5KVasMlMQ0MX9+l5b9RUkH6D2abtEWNiVFSnsKCuLDJzkC0KDsog2AW/AvmXywEyzdESk7M3P2M
+ rVMS6pXojJl815AxTQxTTzTDMBzjlosgz5febSvY8wjxQOaxz5VfXnpujdlKF+8bVB73DDOs
+X-Proofpoint-ORIG-GUID: 2a2d9cGVdsUN7zahbx9aCvlTv26RG26D
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_05,2025-06-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0
+ priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0
+ clxscore=1015 phishscore=0 bulkscore=0 malwarescore=0 mlxlogscore=865
+ mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
+ authcc= route=outbound adjust=0 reason=mlx scancount=1
+ engine=8.19.0-2505280000 definitions=main-2506090101
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,36 +127,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Rowan,
+This is a multi-part message in MIME format.
+--------------KH4AIrsVKO6SHSsIeHhTbSEq
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-> This patch adds functionality to enforce the requested QEMU_PLUGIN_CB_
-> flags level passed when registering a callback function using the
-> plugins API. Each time a callback is about to be invoked, a thread-local
-> variable will be updated with the level that callback requested. Then,
-> called API functions (in particular, the register read and write API)
-> will call qemu_plugin_get_cb_flags() to check the level is at least the
-> level they require.
 
-IIUC this patch also forbids using qemu_plugin_read_register in several
-callbacks that are not called from translated blocks, such as VCPU reset
-and init. And you do remove one of those from a plugin in patch 8 of
-this series, stating that this usage was not intended.
+On 6/9/25 6:19 AM, Anthony Krowiak wrote:
+>> + QTAILQ_INSERT_TAIL(&cfg_chg_events, cfg_chg_event, next);
+>
+> Need locking here:
+>
+> WITH_QEMU_LOCK_GUARD(&cfg_chg_events_lock) {
+>
+> QTAILQ_INSERT_TAIL(&cfg_chg_events, cfg_chg_event, next);
+>
+> }
+Wouldn't QEMU_LOCK_GUARD(&cfg_chg_events_lock) be better since it's a 
+one line? Or the fact there's no return here makes it insufficient?
+--------------KH4AIrsVKO6SHSsIeHhTbSEq
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-However, it should be safe at least for a subset of those callbacks and
-I believe there are very valid use-cases for allowing such usage. For
-example, we are currently working on a plugin API exposing traps. In
-those callbacks, users may want to peek at some registers such as
-"ecause" and "tval" (on RISC-V). We certainly will want to do so for the
-use-case we are pushing that API for.
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 6/9/25 6:19 AM, Anthony Krowiak
+      wrote:<br>
+    </div>
+    <blockquote type="cite"
+      cite="mid:fb9f5bf3-68d4-4a2f-9f8a-e781e5059475@linux.ibm.com">
+      <blockquote type="cite" style="color: #007cff;">+   
+        QTAILQ_INSERT_TAIL(&amp;cfg_chg_events, cfg_chg_event, next);
+        <br>
+      </blockquote>
+      <br>
+      Need locking here:
+      <br>
+      <br>
+      WITH_QEMU_LOCK_GUARD(&amp;cfg_chg_events_lock) {
+      <br>
+      <br>
+      QTAILQ_INSERT_TAIL(&amp;cfg_chg_events, cfg_chg_event, next);
+      <br>
+      <br>
+      }</blockquote>
+    Wouldn't QEMU_LOCK_GUARD(&amp;cfg_chg_events_lock) be better since
+    it's a one line? Or the fact there's no return here makes it
+    insufficient?<br>
+  </body>
+</html>
 
-We could add a QEMU_PLUGIN_CB flag parameter to the respective
-registration functions. But since they are not run from translated
-blocks but _outside_ that context, I feel they would just clutter the
-API without introducing any real benefit. That is, if there is no valid
-safety or correctness concern that I'm not aware of.
+--------------KH4AIrsVKO6SHSsIeHhTbSEq--
 
-Sorry for bringing this up this late.
-
-Regards,
-Julian
 
