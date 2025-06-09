@@ -4,75 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4261FC5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 09:10:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39440C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 10:20:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOYWT-00066p-Gt; Mon, 09 Jun 2025 05:10:29 -0400
+	id 1uOZb2-0000HM-H8; Mon, 09 Jun 2025 06:19:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOYWQ-000660-5J
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 05:10:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1uOZb0-0000Gw-2L; Mon, 09 Jun 2025 06:19:14 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOYWO-0008Vd-JE
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 05:10:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749460223;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=Kn8ec7xGLUDt4PSLBqUMuRPROR1nOuR1fmR99U4wpjE=;
- b=Wzubf3ZgJPXfj2E/D7OsTOETAbKRBoN9YfNMGSSxN0u/I3c/WCpJFKA02isThVXItJDdPi
- UXs1kRxTWbYJxMO0nR6gJhcL+F8qy9gIUcxqhTUSrZa0NORJDL1A4C2Qig05BcbSTiAW2u
- mlW52fy7jPXbdpaKpCilzDKTp82vJiE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-630-JXjU0RC3PcqjVnaZyI5tPg-1; Mon,
- 09 Jun 2025 05:10:18 -0400
-X-MC-Unique: JXjU0RC3PcqjVnaZyI5tPg-1
-X-Mimecast-MFC-AGG-ID: JXjU0RC3PcqjVnaZyI5tPg_1749460217
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0C5E81956057; Mon,  9 Jun 2025 09:10:17 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.45])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82A771806D3E; Mon,  9 Jun 2025 09:10:13 +0000 (UTC)
-Date: Mon, 9 Jun 2025 10:10:10 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>, Eric Auger <eauger@redhat.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 2/2] hw/arm: Add the romfile compatatibility
-Message-ID: <aEak8utPPkHepVfR@redhat.com>
-References: <20250609073408.2083831-1-shahuang@redhat.com>
- <20250609073408.2083831-3-shahuang@redhat.com>
- <CAFEAcA8eA2wX1oQeNJfNBYq1NhHgoemYJ-ybOYAgBq2-t9ZPzw@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1uOZax-0000nQ-Rs; Mon, 09 Jun 2025 06:19:13 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 558LtddS015822;
+ Mon, 9 Jun 2025 10:19:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=cSq2tc
+ SGFprBBtt2yJmlCt5lU8OE60Dwpkzlt5bxcgg=; b=quSnFPYLL02TUfi5Ckmit/
+ jSxk8U8HzbiJbCz+X2Pt4SaI1fDh3gPb20nVr2QiK7A2MkJ20AGgwJXT1Ot4XdkV
+ y5Hrg4+lvcGkUjdxrF+oMMfO5A+6K9XmRQZ8cW8PeytxXIZHq+IZiNQgzHts62eE
+ 0/mrEqfSpMfoWvf+s7mCAn9rNUNVv593TeOB0Tgx21Zk47B9L0xAJqHfPpAzftrW
+ Ha60T1RLjrNjzVQSZV05jbA4BNSDGj/E1sslQHl3VLIXX7hjaJmg1Hb3ZoiA9j0Y
+ ZBkeiZR8oOPntzyO8D3FdzpJUdgQv+QfdT6RGmkEs2LSf/JnRo6mYFUhTnTwA3vg
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474x4kw5t0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 10:19:07 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 559AGPXP014912;
+ Mon, 9 Jun 2025 10:19:07 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4750rnw8a5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 10:19:06 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 559AJ5Ah32375336
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Jun 2025 10:19:05 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C33758060;
+ Mon,  9 Jun 2025 10:19:05 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EE7195803F;
+ Mon,  9 Jun 2025 10:19:03 +0000 (GMT)
+Received: from [9.61.64.137] (unknown [9.61.64.137])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Jun 2025 10:19:03 +0000 (GMT)
+Message-ID: <fb9f5bf3-68d4-4a2f-9f8a-e781e5059475@linux.ibm.com>
+Date: Mon, 9 Jun 2025 06:19:03 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA8eA2wX1oQeNJfNBYq1NhHgoemYJ-ybOYAgBq2-t9ZPzw@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -30
-X-Spam_score: -3.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH v12 2/4] hw/vfio/ap: store object indicating AP config
+ changed in a queue
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
+References: <20250606183716.26152-1-rreyes@linux.ibm.com>
+ <20250606183716.26152-3-rreyes@linux.ibm.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20250606183716.26152-3-rreyes@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=Y4X4sgeN c=1 sm=1 tr=0 ts=6846b51b cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=5v0q2DLhJsiMCMKXfuEA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 3D86bnPixVU-Nri5P8xXrf-p5U4UzupC
+X-Proofpoint-ORIG-GUID: 3D86bnPixVU-Nri5P8xXrf-p5U4UzupC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA3OCBTYWx0ZWRfX1klzXMBzPz95
+ tforhUV4Ak+ZIwmoGCIU0AajIMw6xrcGjSgJ/NXmtOyUwdKXX3k3/Ag6RiyYwFvjHg+HM7eyPS6
+ K60iRtRKh403HZf8TOTABzPKugtq/MKosP0MOvg4OjaX/FZ7vADzfoNhZXL0svcPpuSoG/0ZkAO
+ QqznkgeCr6B3UN6Kt4LqbVdqpi6ujvmgwG5AwkMPxGOHaCtMjWMNz2TCzhNQwfujC35xNmjBPXD
+ g/2sfHTmm81VMVMPbMo8I05dR/KKsAvW6o5ShGQLdhOUOHSbKjTjuLKTUKE3kE+kBhwMKAj8iQJ
+ teeCTjlSYE676+rUEX4RL/sndExJ40CIZxNI4vlzYSajInud8AakbHUaRCP+9W6Q8guO+KZ6Oeb
+ d7rGVLr3Cwxvttr8+qibB15avpk/Rl9Bp+qa4FBYKgUcj6f9Fb5ZHgvhF5AxlhyBjE70Vudj
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_04,2025-06-05_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ mlxlogscore=999 spamscore=0
+ clxscore=1015 lowpriorityscore=0 malwarescore=0 bulkscore=0 adultscore=0
+ impostorscore=0 suspectscore=0 phishscore=0 mlxscore=0 priorityscore=1501
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506090078
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -36
+X-Spam_score: -3.7
 X-Spam_bar: ---
-X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+X-Spam_report: (-3.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,63 +122,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025 at 09:48:36AM +0100, Peter Maydell wrote:
-> On Mon, 9 Jun 2025 at 08:34, Shaoqin Huang <shahuang@redhat.com> wrote:
-> >
-> > On arm64, it doesn't use the vgabios-ramfb.bin, so set the property
-> > "use-legacy-x86-rom" to false, thus the ramfb won't load the
-> > vgabios-ramfb.bin.
-> >
-> > This can mitigate the problem that on release version the qemu can't
-> > find the vgabios-ramfb.bin if it use the ramfb.
-> >
-> > Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
-> > ---
-> >  hw/arm/virt.c | 3 +++
-> >  1 file changed, 3 insertions(+)
-> >
-> > diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> > index a96452f17a..5f94f7a2ca 100644
-> > --- a/hw/arm/virt.c
-> > +++ b/hw/arm/virt.c
-> > @@ -38,6 +38,7 @@
-> >  #include "hw/arm/primecell.h"
-> >  #include "hw/arm/virt.h"
-> >  #include "hw/block/flash.h"
-> > +#include "hw/vfio/pci.h"
-> >  #include "hw/vfio/vfio-calxeda-xgmac.h"
-> >  #include "hw/vfio/vfio-amd-xgbe.h"
-> >  #include "hw/display/ramfb.h"
-> > @@ -90,6 +91,8 @@
-> >
-> >  static GlobalProperty arm_virt_compat[] = {
-> >      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-> > +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "false" },
-> > +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "false" },
-> 
-> I think we should find a way to make this default to "false"
-> and only be set "true" for x86. Otherwise every single non-x86
-> board that ever adds support for ramfb and virtio will have
-> to add these two lines, which is a source of future bugs.
-> (Whereas if you forget to mark a new x86 board as needing
-> the legacy rom you'll find out about it pretty quickly.)
-
-Yes, going forward we this to default to true only on x86.
-
-For non-x86, historical versioned machine types will need
-likely it set to true, in order to avoid the memory layout
-being changed IIUC.
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
+On 6/6/25 2:37 PM, Rorie Reyes wrote:
+> Creates an object indicating that an AP configuration change event
+> has been received and stores it in a queue. These objects will later
+> be used to store event information for an AP configuration change
+> when the CHSC instruction is intercepted.
+>
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+
+See comment below. With that change made:
+
+Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+
+> ---
+>   hw/vfio/ap.c | 12 ++++++++++++
+>   1 file changed, 12 insertions(+)
+>
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 93c74ebedb..fc435f5c5b 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -41,6 +41,13 @@ struct VFIOAPDevice {
+>       EventNotifier cfg_notifier;
+>   };
+>   
+> +typedef struct APConfigChgEvent {
+> +    QTAILQ_ENTRY(APConfigChgEvent) next;
+> +} APConfigChgEvent;
+> +
+> +static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+> +    QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
+> +
+>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+>   
+>   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+> @@ -74,12 +81,17 @@ static void vfio_ap_req_notifier_handler(void *opaque)
+>   
+>   static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>   {
+> +    APConfigChgEvent *cfg_chg_event;
+>       VFIOAPDevice *vapdev = opaque;
+>   
+>       if (!event_notifier_test_and_clear(&vapdev->cfg_notifier)) {
+>           return;
+>       }
+>   
+> +    cfg_chg_event = g_new0(APConfigChgEvent, 1);
+> +
+> +    QTAILQ_INSERT_TAIL(&cfg_chg_events, cfg_chg_event, next);
+
+Need locking here:
+
+WITH_QEMU_LOCK_GUARD(&cfg_chg_events_lock) {
+
+QTAILQ_INSERT_TAIL(&cfg_chg_events, cfg_chg_event, next);
+
+}
+
+
+
+> +
+>       css_generate_css_crws(0);
+>   
+>   }
 
 
