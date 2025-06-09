@@ -4,64 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0DDEC61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:25:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6797BC5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:25:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOi6F-0007x9-Tm; Mon, 09 Jun 2025 15:24:03 -0400
+	id 1uOi6B-0007w5-PL; Mon, 09 Jun 2025 15:24:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOi6B-0007vh-9E
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:59 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ id 1uOi64-0007sz-Tw
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:52 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOi62-0002Ra-SC
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:59 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-b1fde81de05so2406906a12.1
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:23:50 -0700 (PDT)
+ id 1uOi5y-0002Qs-06
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:51 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-879d2e419b9so3974622a12.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749497029; x=1750101829; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Z0nlYktoATC6j3lpIaHBr3lSUsxpIXbgJCeWazuE310=;
- b=HN9v2+WAUHNhfETJOkL/A+9tvpG1+nfrkonRT2oytZVatYSQNMy3Q8Q0HcAsfGJ9Eg
- J5jCjdi4n8ex7Fqm7Dh7pfNBMNvfS6mPuIhFetddKmz5szoTQEFO/NKzy6RpeAnzTqe/
- qp3IHZ6VfUAJGeblOYXKM0pVhjz8z1QHATomJjJiYyxKAN9fB6BULSXxKb7UL8fdcM83
- p8dgzOrQL9M+LtHgAc886ZSCvXaqnCkqOGvWDAuGE7El7fTGnfFqxjHGdx5AsWi1G4y2
- G8UnPeIMebJNHAtKMTuz3CzTLe6PomxMqVIi7EX5o96bo39i6bEeP+BeF1bKldDbbJDa
- OA2w==
+ d=gmail.com; s=20230601; t=1749497023; x=1750101823; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=qxWMjtr1fM1T4IMQK/JrfZ1AeXTPMKTKhrkuHqf2sac=;
+ b=BnGZuZAK0a9RYLvpFEjeR+LNJwoKsm0koI4BIbleeuoEUf6YmC+MmkKQR1jSYAUVkx
+ I/Yul2cQTBfuM66dBTSX4zQlEmo8ooC7cJFu3B8GdWDrZt/a9EqsTO87hvDEBCrh7pTF
+ 2Y+4DLKZaZpId87ZHQFa44sb+/SlIPVC/CTp76/UHw4jn+09lWKT3lUWm689YCY5S2NG
+ 8jbeshJglt4WHbMN7zWf2bbmcUR8fIGSsP67vhpzZ+hS5EyDa7pAwYsNfXBfOzzX2ZAF
+ D+605J/uTVC4JUgSbLCph8B7OVJf2YWgdKhlROC+IilpsNGwOS7FKFC1iV6N0rZER9Kc
+ 8ogQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749497029; x=1750101829;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Z0nlYktoATC6j3lpIaHBr3lSUsxpIXbgJCeWazuE310=;
- b=EQqnb/miRkrc+WX17izFOihszYZzK+ZUeSRa0gz9WGEwSsL2p7XEbDAnFJwdEOqu/d
- FbTQmE1N264HbwzGJzopak3J6xhkqzbbZSK2EFztlSiB20kkeP+tXQRT50vxxkaMetoo
- sOaJkCkSx4m1SrHKsxt7IXi33ZmU2uWD4jHZve0wdTx9axU/81UG0vy+Vel6sgWdNczQ
- XjN2wso4Foa8C/U154aBLZNDbO1G1SRjap+bj4QWd0ju+kPiFnbB1BetGigQEw7srZET
- xMUv6AB8zYVlQC99IWKpODCNrRsPgxyo2ecL4FXsvOMmvAdP5GuOZxDLWMoFAhDkzWdz
- TaqA==
-X-Gm-Message-State: AOJu0Yx5czA1Z6vzW6X4Z7cO4LCbideroFVn7d/5RiOLDnZJc54RHUAk
- lAj/UbssOBV+RO4bgLfdqGpvH8iz3AjLQAb8IY1zMwTcbnAmYNMt2dYw0b6wiydH
-X-Gm-Gg: ASbGncvuQcCIqiLSPo3Rp5nP1YU/JSCeWkdahoOeUyeI76981Utj0HGNieLDf1AY+WN
- 5ZuSt/k54TP05aD6s84sUiwQr1B1gctsuaww1Ad0CRoyHULA9jiI34l+2sTKx9IYFjnjPwhEFPU
- oTynSfTvEivNHg9woFeQ3fmsGd2nWgGo1OmtejA/6H7hkxkejVKT5fazNhHrJiHYl4wYHKFfxLT
- hbSHbwoCugCJdlCizwraTiOFCB2THOPVKKv+EcRDaMXakMcgGjeuysFquq3kmSwphbtvG3GBLvx
- gRM1G8hpOmSX4Sv0pWriwslFLYhtNwhSIpzCEG2AP+4cclCBBHIwqXS/P7kwUw==
-X-Google-Smtp-Source: AGHT+IFcOxaj0CtCk9LTBIGhB+H7YyjNSagZlFLkKpSQH4aLPc6qiB6oFbRKAx1lMJNEzNdiUxGRCA==
-X-Received: by 2002:a17:90b:164a:b0:301:9f62:a944 with SMTP id
- 98e67ed59e1d1-3134769f73dmr21816353a91.33.1749497028681; 
- Mon, 09 Jun 2025 12:23:48 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749497023; x=1750101823;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=qxWMjtr1fM1T4IMQK/JrfZ1AeXTPMKTKhrkuHqf2sac=;
+ b=TxboqzONWSpHsLvlbRPlJ3ic5QL7irnDIAL8WTHVPjZFcXDe4npg4T7bEcO5e91AqV
+ wG7INvDTh0gCBS9X/gLR+d0jttGG8o+tQ4q+Rx//sxPYMW393MEFJpwl1oB9qFDO0jv9
+ BcOOLtyvk9mhR4ApbnhL56bSGU6Gooraa26kE8Glc3BmK6UnwBz8nGirezecwVZWsciN
+ p6UPoTqn8h6oKcLy7TRUfLLxyrUcU0rvP2KwEk60lJU82R/64eXdkVzKG5YmRO49uuuf
+ URPIY2nozujJxpnKhfwGg4iCZ+PYiAs6IRmCGXkJKLg7rAt46VWgY+L3ZVtwA1M2SgRr
+ HlqA==
+X-Gm-Message-State: AOJu0YzMoRwcKWOsaDMDK83HX9A4iNZlIwQzD6oRgK5ghjay2wXWfVth
+ lMrXjGcxBUyF4bDWVYhMuvYT9eH4eu980UET40fGBk4B6TDRHZI3OuoYGktuap0L
+X-Gm-Gg: ASbGncsiihVrx9K6rMBwXTL4GA3J+1tAU54JBrYK+ugYPtLcIWY8XEtl1IY6TmaYPi3
+ MbDslPDXRAZKS6GesBzVuP6LnQTaXiRmWSW9sMyBK9UOkzTiag82iZILPB5yVtkzT32Q5mNlVXo
+ K4RPti3rCsbnyoXic33a8JFYnKIg9vSoIDQHaciaps9y8dHKcjWkfCc7yRmilN/iFrOHvXZ9af7
+ +G9fs9nD8WyyB5t3iNNRtmTu0/5z6ItJ3wL4+zvmF17jtWL7T2y2O/GS7X567LathfOsOJPyLAx
+ JkfbVRpmjklxVhICcwyrYJNLHlr6ge6a63UvcxvyU5cpNbHRtUQRQLfM3YpfjQ==
+X-Google-Smtp-Source: AGHT+IF8Wzpvy1cvLHw29iL3xD7M4sPYr3D05VpqjSC/+OlgRM7KCvhdwjv2naK56fUCOGX7Xlq6iQ==
+X-Received: by 2002:a17:90b:1d43:b0:311:c970:c9bc with SMTP id
+ 98e67ed59e1d1-31347077300mr20625274a91.30.1749497023449; 
+ Mon, 09 Jun 2025 12:23:43 -0700 (PDT)
 Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3134b044ef2sm6057658a91.3.2025.06.09.12.23.48
+ 98e67ed59e1d1-3134b044ef2sm6057658a91.3.2025.06.09.12.23.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 12:23:48 -0700 (PDT)
+ Mon, 09 Jun 2025 12:23:43 -0700 (PDT)
 From: Rowan Hart <rowanbhart@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -73,17 +72,17 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
- novafacing <rowanbhart@gmail.com>
-Subject: [PATCH v10 7/8] plugins: Add hypercalls plugin and test
-Date: Mon,  9 Jun 2025 12:23:41 -0700
-Message-ID: <20250609192342.316156-8-rowanbhart@gmail.com>
+ Rowan Hart <rowanbhart@gmail.com>
+Subject: [PATCH v10 0/8] Add additional plugin API functions to read and write
+ memory and registers
+Date: Mon,  9 Jun 2025 12:23:34 -0700
+Message-ID: <20250609192342.316156-1-rowanbhart@gmail.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250609192342.316156-1-rowanbhart@gmail.com>
-References: <20250609192342.316156-1-rowanbhart@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x52a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pg1-x529.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,719 +105,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: novafacing <rowanbhart@gmail.com>
+This patch series adds several new API functions focused on enabling use
+cases around reading and writing guest memory from QEMU plugins. To support
+these new APIs, some utility functionality around retrieving information about
+address spaces is added as well.
 
-This patch adds a plugin that implements a simple form of hypercalls
-from guest code to the plugin by using the register read API. It accepts
-only one hypercall, which writes a magic value to guest memory.
+The new qemu_plugin_write_register utilizes gdb_write_register, which is now
+declared in gdbstub.h for this purpose instead of being static.
 
-Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
----
- tests/tcg/Makefile.target                     |   1 +
+qemu_plugin_write_memory_vaddr utilizes cpu_memory_rw_debug much the same as
+the existing read_memory_vaddr function does.
+
+The read and write_hwaddr functions are the most different. These functions
+use address_space_rw, which works well in most cases. There is an important
+caveat that for writes, the page being written will be set dirty by the
+write operation. This dirty setting requires locking the page range,
+which can contend with an already held lock in page_collection_lock
+when called in a tb translate callback with a write to the instruction
+memory in the tb. The doc comments warn against doing this, and it's unlikely
+anyone would want to do this.
+
+I've also added two test plugins: one that implements a simple hypercall
+interface that guest code can use to communicate with the plugin in a
+structured way with a test to ensure that this hypercall works and writing
+virtual memory works. And one that implements a simple patch utility to patch
+memory at runtime. The test for the second plugin ensures the patch applies
+successfully to instruction memory, and can use both hw and vaddr methods.
+
+For v3, I've had a few comments from the last submission that I've addressed,
+and some that I haven't for one reason or another:
+
+- Enforce QEMU_PLUGIN_CB_ flags in register read/write operations: done!
+- Fix my commit messages and add long messages describing commits: done!
+- Un-expose AS internals: done! Functions operate on current vCPU, current AS.
+- Clean up use of current_cpu: done!
+- Make functions take a vcpu_idx: not done. May revisit but it allows footguns.
+  Even for translation, seems best to not do this now. We can easily add _vcpu
+  versions of these functions in the future if we change our minds!
+
+For v5, I've just updated the enforcement of the QEMU_PLUGIN_CB_ flags to just
+use immediate stores, which simplifies the implementation quite a lot and
+should be more efficient too. Thanks Pierrick for the suggestion!
+
+v6 is a formatting pass, I left some whitespace that needed removal, some
+license text was wrong, and so forth.
+
+v8 reverts a mistake I made extending the size of arrays of TCGHelperInfo
+structs, as I misunderstood their sizes. It preserves adding an explicit
+zero as the last entry for clarity, however.
+
+v9 fixes qemu_plugin_read_register to return -1 on parameter or flag state
+error instead of 0.
+
+In v10, I relaxed the restriction on when the register r/w functions can be
+called, allowing all them to be used from any callback where the CPU is not
+currently executing, with additional notes in the documentation for exceptions
+(atexit and flush, which do not operate on a specific CPU and in which
+current_cpu is not set).
+
+Rowan Hart (1):
+  plugins: Add enforcement of QEMU_PLUGIN_CB flags in register R/W
+    callbacks
+
+novafacing (7):
+  gdbstub: Expose gdb_write_register function to consumers of gdbstub
+  plugins: Add register write API
+  plugins: Add memory virtual address write API
+  plugins: Add memory hardware address read/write API
+  plugins: Add patcher plugin and test
+  plugins: Add hypercalls plugin and test
+  plugins: Update plugin version and add notes
+
+ accel/tcg/plugin-gen.c                        |  30 +
+ gdbstub/gdbstub.c                             |   2 +-
+ include/exec/gdbstub.h                        |  14 +
+ include/hw/core/cpu.h                         |   1 +
+ include/qemu/plugin.h                         |   6 +
+ include/qemu/qemu-plugin.h                    | 176 +++++-
+ plugins/api.c                                 | 135 ++++-
+ plugins/core.c                                |  45 ++
+ tests/tcg/Makefile.target                     |   2 +
  tests/tcg/plugins/hypercalls.c                | 547 ++++++++++++++++++
  tests/tcg/plugins/meson.build                 |   2 +-
- tests/tcg/x86_64/Makefile.softmmu-target      |   6 +-
+ tests/tcg/plugins/patch.c                     | 297 ++++++++++
+ tests/tcg/x86_64/Makefile.softmmu-target      |  36 +-
  tests/tcg/x86_64/system/hypercalls-target.c   |  40 ++
+ tests/tcg/x86_64/system/patch-target.c        |  27 +
  .../tcg/x86_64/system/validate-hypercalls.py  |  40 ++
- 6 files changed, 634 insertions(+), 2 deletions(-)
+ tests/tcg/x86_64/system/validate-patch.py     |  39 ++
+ 17 files changed, 1416 insertions(+), 23 deletions(-)
  create mode 100644 tests/tcg/plugins/hypercalls.c
+ create mode 100644 tests/tcg/plugins/patch.c
  create mode 100644 tests/tcg/x86_64/system/hypercalls-target.c
+ create mode 100644 tests/tcg/x86_64/system/patch-target.c
  create mode 100755 tests/tcg/x86_64/system/validate-hypercalls.py
+ create mode 100755 tests/tcg/x86_64/system/validate-patch.py
 
-diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-index 4b709a9d18..5ac9638102 100644
---- a/tests/tcg/Makefile.target
-+++ b/tests/tcg/Makefile.target
-@@ -177,6 +177,7 @@ RUN_TESTS+=$(EXTRA_RUNS)
- # exercise things. We can define them on a per-test basis here.
- run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
- run-plugin-%-with-libpatch.so: PLUGIN_ARGS=$(COMMA)target=ffffffff$(COMMA)patch=00000000
-+run-plugin-%-with-libhypercalls.so: PLUGIN_ARGS=$(COMMA)ignore_unsupported=true
- 
- ifeq ($(filter %-softmmu, $(TARGET)),)
- run-%: %
-diff --git a/tests/tcg/plugins/hypercalls.c b/tests/tcg/plugins/hypercalls.c
-new file mode 100644
-index 0000000000..3214bb8ee5
---- /dev/null
-+++ b/tests/tcg/plugins/hypercalls.c
-@@ -0,0 +1,547 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This plugin implements a simple hypercall interface for guests (both system
-+ * and user mode) to call certain operations from the host.
-+ */
-+#include "glib.h"
-+#include "glibconfig.h"
-+#include <assert.h>
-+#include <inttypes.h>
-+#include <stdio.h>
-+#include <stdlib.h>
-+#include <string.h>
-+#include <sys/types.h>
-+#include <unistd.h>
-+
-+#include <qemu-plugin.h>
-+
-+QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
-+
-+#define AARCH64_N_HYPERCALL_INSNS  (28)
-+#define AARCH64_HYPERCALL_INSN_LEN (4)
-+#define AARCH64_HYPERCALL_MAX (AARCH64_N_HYPERCALL_INSNS)
-+#define ARM_N_HYPERCALL_INSNS  (12)
-+#define ARM_HYPERCALL_INSN_LEN (4)
-+#define ARM_HYPERCALL_MAX (ARM_N_HYPERCALL_INSNS)
-+#define X86_HYPERCALL_INSN_LEN (2)
-+#define X86_HYPERCALL_VALUE_BASE (0x4711)
-+#define X86_HYPERCALL_MAX (0x10000)
-+#define N_HYPERCALL_ARGS (4)
-+
-+static bool ignore_unsupported;
-+
-+static struct qemu_plugin_register *get_register(const char *name);
-+static uint64_t byte_array_to_uint64(GByteArray *buf);
-+
-+enum HypercallInsnType {
-+    CONSTANT,
-+    CALLBACK,
-+};
-+
-+
-+/*
-+ * Checks an instruction and returns its hypercall number, if it is
-+ * a hypercall instruction, or -1 if it is not. Called at execution
-+ * time.
-+ */
-+typedef int32_t (*hypercall_nr_cb)(GByteArray *);
-+
-+/*
-+ * Checks an instruction and returns whether it is a hypercall, or -1 if it is
-+ * not. Called at execution time.
-+ */
-+typedef bool (*is_hypercall_cb)(GByteArray *);
-+
-+/*
-+ * Specifies a Hypercall for an architecture:
-+ *
-+ * - Architecture name
-+ * - Whether it is enabled
-+ * - The hypercall instruction
-+ * - The register names to pass the hypercall # and args
-+ */
-+struct HypercallSpec {
-+    const bool enabled;
-+    const char *name;
-+    const bool le;
-+    const char *args[N_HYPERCALL_ARGS];
-+    const hypercall_nr_cb hypercall_nr_cb;
-+    const is_hypercall_cb is_hypercall_cb;
-+};
-+
-+static int32_t aarch64_hypercall_nr_cb(GByteArray *insn)
-+{
-+    if (insn->len != AARCH64_HYPERCALL_INSN_LEN) {
-+        return -1;
-+    }
-+
-+    static const uint8_t
-+    hypercall_insns[AARCH64_N_HYPERCALL_INSNS][AARCH64_HYPERCALL_INSN_LEN] = {
-+        { 0xaa, 0x4, 0x0, 0x84 },
-+        { 0xaa, 0x5, 0x0, 0xa5 },
-+        { 0xaa, 0x6, 0x0, 0xc6 },
-+        { 0xaa, 0x7, 0x0, 0xe7 },
-+        { 0xaa, 0x8, 0x1, 0x8 },
-+        { 0xaa, 0x9, 0x1, 0x29 },
-+        { 0xaa, 0xa, 0x1, 0x4a },
-+        { 0xaa, 0xb, 0x1, 0x6b },
-+        { 0xaa, 0xc, 0x1, 0x8c },
-+        { 0xaa, 0xd, 0x1, 0xad },
-+        { 0xaa, 0xe, 0x1, 0xce },
-+        { 0xaa, 0xf, 0x1, 0xef },
-+        { 0xaa, 0x10, 0x2, 0x10 },
-+        { 0xaa, 0x11, 0x2, 0x31 },
-+        { 0xaa, 0x12, 0x2, 0x52 },
-+        { 0xaa, 0x13, 0x2, 0x73 },
-+        { 0xaa, 0x14, 0x2, 0x94 },
-+        { 0xaa, 0x15, 0x2, 0xb5 },
-+        { 0xaa, 0x16, 0x2, 0xd6 },
-+        { 0xaa, 0x17, 0x2, 0xf7 },
-+        { 0xaa, 0x18, 0x3, 0x18 },
-+        { 0xaa, 0x19, 0x3, 0x39 },
-+        { 0xaa, 0x1a, 0x3, 0x5a },
-+        { 0xaa, 0x1b, 0x3, 0x7b },
-+        { 0xaa, 0x1c, 0x3, 0x9c },
-+        { 0xaa, 0x1d, 0x3, 0xbd },
-+        { 0xaa, 0x1e, 0x3, 0xde },
-+        { 0xaa, 0x1f, 0x3, 0xff },
-+    };
-+
-+    for (int32_t i = 0; i < AARCH64_N_HYPERCALL_INSNS; i++) {
-+        if (!memcmp(hypercall_insns[i], insn->data, insn->len)) {
-+            return i;
-+        }
-+    }
-+    return -1;
-+}
-+
-+static bool aarch64_is_hypercall_cb(GByteArray *insn)
-+{
-+    return aarch64_hypercall_nr_cb(insn) < 0;
-+}
-+
-+
-+static int32_t aarch64_be_hypercall_nr_cb(GByteArray *insn)
-+{
-+    if (insn->len != AARCH64_HYPERCALL_INSN_LEN) {
-+        return -1;
-+    }
-+
-+    static const uint8_t
-+    hypercall_insns[AARCH64_N_HYPERCALL_INSNS][AARCH64_HYPERCALL_INSN_LEN] = {
-+        {0x84, 0x0, 0x4, 0xaa},
-+        {0xa5, 0x0, 0x5, 0xaa},
-+        {0xc6, 0x0, 0x6, 0xaa},
-+        {0xe7, 0x0, 0x7, 0xaa},
-+        {0x8, 0x1, 0x8, 0xaa},
-+        {0x29, 0x1, 0x9, 0xaa},
-+        {0x4a, 0x1, 0xa, 0xaa},
-+        {0x6b, 0x1, 0xb, 0xaa},
-+        {0x8c, 0x1, 0xc, 0xaa},
-+        {0xad, 0x1, 0xd, 0xaa},
-+        {0xce, 0x1, 0xe, 0xaa},
-+        {0xef, 0x1, 0xf, 0xaa},
-+        {0x10, 0x2, 0x10, 0xaa},
-+        {0x31, 0x2, 0x11, 0xaa},
-+        {0x52, 0x2, 0x12, 0xaa},
-+        {0x73, 0x2, 0x13, 0xaa},
-+        {0x94, 0x2, 0x14, 0xaa},
-+        {0xb5, 0x2, 0x15, 0xaa},
-+        {0xd6, 0x2, 0x16, 0xaa},
-+        {0xf7, 0x2, 0x17, 0xaa},
-+        {0x18, 0x3, 0x18, 0xaa},
-+        {0x39, 0x3, 0x19, 0xaa},
-+        {0x5a, 0x3, 0x1a, 0xaa},
-+        {0x7b, 0x3, 0x1b, 0xaa},
-+        {0x9c, 0x3, 0x1c, 0xaa},
-+        {0xbd, 0x3, 0x1d, 0xaa},
-+        {0xde, 0x3, 0x1e, 0xaa},
-+        {0xff, 0x3, 0x1f, 0xaa},
-+    };
-+
-+    for (int32_t i = 0; i < AARCH64_N_HYPERCALL_INSNS; i++) {
-+        if (!memcmp(hypercall_insns[i], insn->data, insn->len)) {
-+            return i;
-+        }
-+    }
-+    return -1;
-+}
-+
-+static bool aarch64_be_is_hypercall_cb(GByteArray *insn)
-+{
-+    return aarch64_be_hypercall_nr_cb(insn) < 0;
-+}
-+
-+
-+static int32_t arm_hypercall_nr_cb(GByteArray *insn)
-+{
-+    if (insn->len != ARM_HYPERCALL_INSN_LEN) {
-+        return -1;
-+    }
-+
-+    static const uint8_t
-+    hypercall_insns[ARM_N_HYPERCALL_INSNS][ARM_HYPERCALL_INSN_LEN] = {
-+        { 0xe1, 0x84, 0x40, 0x4 },
-+        { 0xe1, 0x85, 0x50, 0x5 },
-+        { 0xe1, 0x86, 0x60, 0x6 },
-+        { 0xe1, 0x87, 0x70, 0x7 },
-+        { 0xe1, 0x88, 0x80, 0x8 },
-+        { 0xe1, 0x89, 0x90, 0x9 },
-+        { 0xe1, 0x8a, 0xa0, 0xa },
-+        { 0xe1, 0x8b, 0xb0, 0xb },
-+        { 0xe1, 0x8c, 0xc0, 0xc },
-+        { 0xe1, 0x8d, 0xd0, 0xd },
-+        { 0xe1, 0x8e, 0xe0, 0xe },
-+        { 0xe1, 0x8f, 0xf0, 0xf },
-+    };
-+
-+    for (int32_t i = 0; i < ARM_N_HYPERCALL_INSNS; i++) {
-+        if (!memcmp(hypercall_insns[i], insn->data, insn->len)) {
-+            return i;
-+        }
-+    }
-+    return -1;
-+}
-+
-+static bool arm_is_hypercall_cb(GByteArray *insn)
-+{
-+    return arm_hypercall_nr_cb(insn) < 0;
-+}
-+
-+static int32_t arm_be_hypercall_nr_cb(GByteArray *insn)
-+{
-+    if (insn->len != ARM_HYPERCALL_INSN_LEN) {
-+        return -1;
-+    }
-+
-+    static const uint8_t
-+    hypercall_insns[ARM_N_HYPERCALL_INSNS][ARM_HYPERCALL_INSN_LEN] = {
-+        {0x4, 0x40, 0x84, 0xe1},
-+        {0x5, 0x50, 0x85, 0xe1},
-+        {0x6, 0x60, 0x86, 0xe1},
-+        {0x7, 0x70, 0x87, 0xe1},
-+        {0x8, 0x80, 0x88, 0xe1},
-+        {0x9, 0x90, 0x89, 0xe1},
-+        {0xa, 0xa0, 0x8a, 0xe1},
-+        {0xb, 0xb0, 0x8b, 0xe1},
-+        {0xc, 0xc0, 0x8c, 0xe1},
-+        {0xd, 0xd0, 0x8d, 0xe1},
-+        {0xe, 0xe0, 0x8e, 0xe1},
-+        {0xf, 0xf0, 0x8f, 0xe1},
-+    };
-+
-+    for (int32_t i = 0; i < ARM_N_HYPERCALL_INSNS; i++) {
-+        if (!memcmp(hypercall_insns[i], insn->data, insn->len)) {
-+            return i;
-+        }
-+    }
-+    return -1;
-+}
-+
-+static bool arm_be_is_hypercall_cb(GByteArray *insn)
-+{
-+    return arm_be_hypercall_nr_cb(insn) < 0;
-+}
-+
-+static int32_t x86_64_hypercall_nr_cb(GByteArray *insn)
-+{
-+    if (insn->len != X86_HYPERCALL_INSN_LEN) {
-+        return -1;
-+    }
-+
-+    uint8_t cpuid[] = { 0x0f, 0xa2 };
-+    if (!memcmp(cpuid, insn->data, insn->len)) {
-+        GByteArray *reg = g_byte_array_new();
-+        qemu_plugin_read_register(get_register("rax"), reg);
-+        uint64_t value = byte_array_to_uint64(reg);
-+        g_byte_array_free(reg, true);
-+
-+        if (!(value & X86_HYPERCALL_VALUE_BASE)) {
-+            return -1;
-+        }
-+
-+        value = (value >> 16) & 0xffff;
-+
-+        if (value >= X86_HYPERCALL_MAX) {
-+            return -1;
-+        }
-+
-+        return (int32_t)value;
-+    }
-+
-+    return -1;
-+}
-+
-+static bool x86_64_is_hypercall_cb(GByteArray *insn)
-+{
-+    if (insn->len != X86_HYPERCALL_INSN_LEN) {
-+        return false;
-+    }
-+
-+    uint8_t cpuid[] = { 0x0f, 0xa2 };
-+    if (!memcmp(cpuid, insn->data, insn->len)) {
-+        return true;
-+    }
-+
-+    return false;
-+}
-+
-+static int32_t i386_hypercall_nr_cb(GByteArray *insn)
-+{
-+    if (insn->len != X86_HYPERCALL_INSN_LEN) {
-+        return -1;
-+    }
-+
-+    uint8_t cpuid[] = { 0x0f, 0xa2 };
-+    if (!memcmp(cpuid, insn->data, insn->len)) {
-+        GByteArray *reg = g_byte_array_new();
-+        qemu_plugin_read_register(get_register("eax"), reg);
-+        uint64_t value = byte_array_to_uint64(reg);
-+        g_byte_array_free(reg, true);
-+
-+        if (!(value & X86_HYPERCALL_VALUE_BASE)) {
-+            return -1;
-+        }
-+
-+        value = (value >> 16) & 0xffff;
-+
-+        if (value >= X86_HYPERCALL_MAX) {
-+            return -1;
-+        }
-+        return (int32_t)value;
-+    }
-+
-+    return -1;
-+
-+}
-+
-+static bool i386_is_hypercall_cb(GByteArray *insn)
-+{
-+    if (insn->len != X86_HYPERCALL_INSN_LEN) {
-+        return false;
-+    }
-+
-+    uint8_t cpuid[] = { 0x0f, 0xa2 };
-+    if (!memcmp(cpuid, insn->data, insn->len)) {
-+        return true;
-+    }
-+
-+    return false;
-+
-+}
-+
-+static const struct HypercallSpec *hypercall_spec;
-+
-+static const struct HypercallSpec hypercall_specs[] = {
-+    { true, "aarch64", true, {
-+            "x0", "x1", "x2", "x3",
-+        }, aarch64_hypercall_nr_cb, aarch64_is_hypercall_cb
-+    },
-+    { true, "aarch64_be", false,  {
-+            "x0", "x1", "x2", "x3",
-+        }, aarch64_be_hypercall_nr_cb, aarch64_be_is_hypercall_cb
-+    },
-+    { true, "arm", true,  {
-+            "r0", "r1", "r2", "r3",
-+        }, arm_hypercall_nr_cb, arm_is_hypercall_cb
-+    },
-+    { true, "armeb", false,  {
-+            "r0", "r1", "r2", "r3"
-+        }, arm_be_hypercall_nr_cb, arm_be_is_hypercall_cb
-+    },
-+    { true, "i386", true, {
-+            "edi", "esi", "edx", "ecx"
-+        }, i386_hypercall_nr_cb, i386_is_hypercall_cb
-+    },
-+    { true, "x86_64", true, {
-+            "rdi", "rsi", "rdx", "rcx"
-+
-+        }, x86_64_hypercall_nr_cb, x86_64_is_hypercall_cb
-+    },
-+    { false, NULL, .le = false,  {NULL, NULL, NULL, NULL}, NULL},
-+};
-+
-+static GArray *hypercall_insns;
-+
-+/*
-+ * Returns a handle to a register with a given name, or NULL if there is no
-+ * such register.
-+ */
-+static struct qemu_plugin_register *get_register(const char *name)
-+{
-+    GArray *registers = qemu_plugin_get_registers();
-+
-+    struct qemu_plugin_register *handle = NULL;
-+
-+    qemu_plugin_reg_descriptor *reg_descriptors =
-+        (qemu_plugin_reg_descriptor *)registers->data;
-+
-+    for (size_t i = 0; i < registers->len; i++) {
-+        if (!strcmp(reg_descriptors[i].name, name)) {
-+            handle = reg_descriptors[i].handle;
-+        }
-+    }
-+
-+    g_array_free(registers, true);
-+
-+    return handle;
-+}
-+
-+/*
-+ * Transforms a byte array with at most 8 entries into a uint64_t
-+ * depending on the target machine's endianness.
-+ */
-+static uint64_t byte_array_to_uint64(GByteArray *buf)
-+{
-+    uint64_t value = 0;
-+    if (hypercall_spec->le) {
-+        for (int i = 0; i < buf->len && i < sizeof(uint64_t); i++) {
-+            value |= ((uint64_t)buf->data[i]) << (i * 8);
-+        }
-+    } else {
-+        for (int i = 0; i < buf->len && i < sizeof(uint64_t); i++) {
-+            value |= ((uint64_t)buf->data[i]) << ((buf->len - 1 - i) * 8);
-+        }
-+    }
-+    return value;
-+}
-+
-+/*
-+ * Handle a "hypercall" instruction, which has some special meaning for this
-+ * plugin.
-+ */
-+static void hypercall(unsigned int vcpu_index, void *userdata)
-+{
-+    GByteArray *insn_data = (GByteArray *)userdata;
-+    int32_t hypercall_nr = hypercall_spec->hypercall_nr_cb(insn_data);
-+
-+    if (hypercall_nr < 0) {
-+        return;
-+    }
-+
-+    uint64_t args[N_HYPERCALL_ARGS] = {0};
-+    GByteArray *buf = g_byte_array_new();
-+    for (size_t i = 0; i < N_HYPERCALL_ARGS; i++) {
-+        g_byte_array_set_size(buf, 0);
-+        struct qemu_plugin_register *reg =
-+            get_register(hypercall_spec->args[i]);
-+        qemu_plugin_read_register(reg, buf);
-+        args[i] = byte_array_to_uint64(buf);
-+    }
-+    g_byte_array_free(buf, true);
-+
-+    switch (hypercall_nr) {
-+    /*
-+     * The write hypercall (#0x01) tells the plugin to write random bytes
-+     * of a given size into the memory of the emulated system at a particular
-+     * vaddr
-+     */
-+    case 1: {
-+        GByteArray *data = g_byte_array_new();
-+        g_byte_array_set_size(data, args[1]);
-+        for (uint64_t i = 0; i < args[1]; i++) {
-+            data->data[i] = (uint8_t)g_random_int();
-+        }
-+        qemu_plugin_write_memory_vaddr(args[0], data);
-+        break;
-+    }
-+    default:
-+        break;
-+    }
-+}
-+
-+/*
-+ * Callback on translation of a translation block.
-+ */
-+static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
-+{
-+    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
-+        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
-+        GByteArray *insn_data = g_byte_array_new();
-+        size_t insn_len = qemu_plugin_insn_size(insn);
-+        g_byte_array_set_size(insn_data, insn_len);
-+        qemu_plugin_insn_data(insn, insn_data->data, insn_data->len);
-+
-+        if (hypercall_spec->is_hypercall_cb(insn_data)) {
-+            g_array_append_val(hypercall_insns, insn_data);
-+            qemu_plugin_register_vcpu_insn_exec_cb(insn, hypercall,
-+                                                   QEMU_PLUGIN_CB_R_REGS,
-+                                                   (void *)insn_data);
-+        } else {
-+            g_byte_array_free(insn_data, true);
-+        }
-+
-+    }
-+}
-+
-+static void atexit_cb(qemu_plugin_id_t id, void *userdata)
-+{
-+    for (size_t i = 0; i < hypercall_insns->len; i++) {
-+        g_byte_array_free(g_array_index(hypercall_insns, GByteArray *, i),
-+                          true);
-+    }
-+
-+    g_array_free(hypercall_insns, true);
-+}
-+
-+static void usage(void)
-+{
-+    fprintf(stderr,
-+            "Usage: <lib>,[ignore_unsupported=<ignore_unsupported>]");
-+}
-+
-+/*
-+ * Called when the plugin is installed
-+ */
-+QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-+                                           const qemu_info_t *info, int argc,
-+                                           char **argv)
-+{
-+    if (argc > 1) {
-+        usage();
-+        return -1;
-+    }
-+
-+    for (size_t i = 0; i < argc; i++) {
-+        char *opt = argv[i];
-+        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
-+        if (g_strcmp0(tokens[0], "ignore_unsupported") == 0) {
-+            if (!qemu_plugin_bool_parse(tokens[0],
-+                                    tokens[1], &ignore_unsupported)) {
-+                fprintf(stderr,
-+                        "Failed to parse argument ignore_unsupported\n");
-+                return -1;
-+            }
-+        } else {
-+            fprintf(stderr, "Unknown argument: %s\n", tokens[0]);
-+            usage();
-+            return -1;
-+        }
-+    }
-+
-+
-+    hypercall_spec = &hypercall_specs[0];
-+
-+    while (hypercall_spec->name != NULL) {
-+        if (!strcmp(hypercall_spec->name, info->target_name)) {
-+            break;
-+        }
-+        hypercall_spec++;
-+    }
-+
-+    if (hypercall_spec->name == NULL || !hypercall_spec->enabled) {
-+        qemu_plugin_outs("Error: no hypercall spec.");
-+        if (ignore_unsupported) {
-+            return 0;
-+        }
-+        return -1;
-+    }
-+
-+    hypercall_insns = g_array_new(true, true, sizeof(GByteArray *));
-+
-+    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
-+    qemu_plugin_register_atexit_cb(id, atexit_cb, NULL);
-+
-+    return 0;
-+}
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 163042e601..909bf3005a 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -1,6 +1,6 @@
- t = []
- if get_option('plugins')
--  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
-+  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'hypercalls', 'patch']
-     if host_os == 'windows'
-       t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
-                         include_directories: '../../../include/qemu',
-diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
-index 8d3a067c33..8cb2a19461 100644
---- a/tests/tcg/x86_64/Makefile.softmmu-target
-+++ b/tests/tcg/x86_64/Makefile.softmmu-target
-@@ -46,14 +46,18 @@ EXTRA_RUNS+=$(MULTIARCH_RUNS)
- 
- memory: CFLAGS+=-DCHECK_UNALIGNED=1
- patch-target: CFLAGS+=-O0
-+hypercalls-target: CFLAGS+=-O0
- 
- # Running
- QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
- 
- # Add patch-target to ADDITIONAL_PLUGINS_TESTS
- ADDITIONAL_PLUGINS_TESTS += patch-target
-+ADDITIONAL_PLUGINS_TESTS += hypercalls-target
- 
- run-plugin-patch-target-with-libpatch.so:		\
- 	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true$(COMMA)debug_insns=false
- run-plugin-patch-target-with-libpatch.so:		\
--	CHECK_PLUGIN_OUTPUT_COMMAND=$(X86_64_SYSTEM_SRC)/validate-patch.py $@.out
-\ No newline at end of file
-+	CHECK_PLUGIN_OUTPUT_COMMAND=$(X86_64_SYSTEM_SRC)/validate-patch.py $@.out
-+run-plugin-hypercalls-target-with-libhypercalls.so:		\
-+	CHECK_PLUGIN_OUTPUT_COMMAND=$(X86_64_SYSTEM_SRC)/validate-hypercalls.py $@.out
-diff --git a/tests/tcg/x86_64/system/hypercalls-target.c b/tests/tcg/x86_64/system/hypercalls-target.c
-new file mode 100644
-index 0000000000..acb6d695f2
---- /dev/null
-+++ b/tests/tcg/x86_64/system/hypercalls-target.c
-@@ -0,0 +1,40 @@
-+/*
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ *
-+ * This test target invokes a hypercall to write the value 0x1337 to a
-+ * variable.
-+ *
-+ */
-+#include <stddef.h>
-+#include <stdint.h>
-+#include <minilib.h>
-+
-+#define _hypercall(num, arg0, arg1, arg2, arg3)                      \
-+    unsigned int a __attribute__((unused)) = 0;                     \
-+    unsigned int b __attribute__((unused)) = 0;                     \
-+    unsigned int c __attribute__((unused)) = 0;                     \
-+    unsigned int d __attribute__((unused)) = 0;                     \
-+    __asm__ __volatile__("cpuid\n\t"                                \
-+                         : "=a"(a), "=b"(b), "=c"(c), "=d"(d)       \
-+                         : "a"(num), "D"(arg0), "S"(arg1), \
-+                           "d"(arg2), "c"(arg3));
-+
-+#define hypercall(num, arg0, arg1, arg2, arg3) \
-+    { \
-+        unsigned int __num = 0x4711 | (num << 16); \
-+        _hypercall(__num, arg0, arg1, arg2, arg3); \
-+    }
-+
-+int main(void)
-+{
-+    uint16_t value = 0;
-+
-+    for (size_t i = 0; i < 1000000; i++) {
-+        hypercall(1, &value, sizeof(value), 0, 0);
-+        if (value == 0x1337) {
-+            ml_printf("Victory!\n");
-+            return 0;
-+        }
-+    }
-+    return 0;
-+}
-diff --git a/tests/tcg/x86_64/system/validate-hypercalls.py b/tests/tcg/x86_64/system/validate-hypercalls.py
-new file mode 100755
-index 0000000000..6e7c980706
---- /dev/null
-+++ b/tests/tcg/x86_64/system/validate-hypercalls.py
-@@ -0,0 +1,40 @@
-+#!/usr/bin/env python3
-+#
-+# validate-patch.py: check the patch applies
-+#
-+# This program takes two inputs:
-+#   - the plugin output
-+#   - the binary output
-+#
-+# Copyright (C) 2024
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import sys
-+from argparse import ArgumentParser
-+
-+def main() -> None:
-+    """
-+    Process the arguments, injest the program and plugin out and
-+    verify they match up and report if they do not.
-+    """
-+    parser = ArgumentParser(description="Validate patch")
-+    parser.add_argument('test_output',
-+                        help="The output from the test itself")
-+    parser.add_argument('plugin_output',
-+                        help="The output from plugin")
-+    args = parser.parse_args()
-+
-+    with open(args.test_output, 'r') as f:
-+        test_data = f.read()
-+    with open(args.plugin_output, 'r') as f:
-+        plugin_data = f.read()
-+
-+    if "Victory" in test_data:
-+        sys.exit(0)
-+    else:
-+        sys.exit(1)
-+
-+if __name__ == "__main__":
-+    main()
-+
 -- 
 2.49.0
 
