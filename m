@@ -4,53 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD600C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:03:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 554DFC61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:03:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOaPN-0005Cy-Do; Mon, 09 Jun 2025 07:11:17 -0400
+	id 1uObDj-0007yb-B2; Mon, 09 Jun 2025 08:03:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uOaPJ-0005C8-Tg
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:13 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uOaPG-00075S-Tm
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:13 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxDeNIwUZoUm4RAQ--.8877S3;
- Mon, 09 Jun 2025 19:11:04 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAxzxtFwUZoiU0SAQ--.4222S7;
- Mon, 09 Jun 2025 19:11:04 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	philmd@linaro.org,
-	jiaxun.yang@flygoat.com
-Subject: [PATCH 05/10] hw/loongarch: AVEC controller add a MemoryRegion
-Date: Mon,  9 Jun 2025 18:48:28 +0800
-Message-Id: <20250609104833.839811-6-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250609104833.839811-1-gaosong@loongson.cn>
-References: <20250609104833.839811-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uObDh-0007yJ-6k
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 08:03:17 -0400
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uObDd-0005hB-9u
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 08:03:16 -0400
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-22c33677183so33841975ad.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 05:03:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1749470590; x=1750075390; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=usPCwdu/bUNpbZgZnZVpiDvJ1pWA3Uq4f0/0dWe1wEY=;
+ b=h6II8FDV2rMMSBlpXHbVMbR9dSiJXtU1nznYXeU6ojEbkpKMRIyyfwzxHgE7WFDJgb
+ MVDPAkmaekO7KuHTpInEwzqJP0ua02m+j3uarZsZ1nQ2g9aq+Sbtkz7we5tKXvPKvKBI
+ liDCMMkwObjtCGnP6EeqI19bqVlE4wZ9+7bFNN9UU5XVH8U3JOy7EYQ9PpJjgGFbxqs1
+ LxRE+X1HeEUt0i1WSiuQ8okH43x+bR5nOl/eDJooXCUVL7Red1B7CYBkaSYV2BGs62Ql
+ a/QaAIh3ByMnqi7DKcXEcxoBrY/mT1JzlAIrdTRqfV60oRcDy8GfRoxHZuU0aub3hzG+
+ 0cSQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749470590; x=1750075390;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=usPCwdu/bUNpbZgZnZVpiDvJ1pWA3Uq4f0/0dWe1wEY=;
+ b=EaMa1VBWZVC/3dVeK7LoFoK1lOCC+uqiJNqf5oUiuDxPutt20dFuqRTewKy4A+yl+f
+ i/ptfVy4Qa70Xzs7X6vAOSKXX7xbq3ghMjFr/JU6dZbTsW4S8CmYQCBmatk34FCRFP6s
+ TUQwxwFkoGnKDqLqx/hAVgbYb5M8/gP4EkiAQnQ6Afp6mr+/uMHDu7ocRo/XPXFOWz2/
+ Hh0CCthYMf3juteB6udVXiuJpC7tM0L1d5iJcDOu1zFviaUEEuwS2ffIhUav/dyd3oSe
+ rmSoLdeEJkKVyJXlGlX9gb5aCXp+HRK2tBsWI80s3o/o92LUd7+8dI1Mp1K9UizQB7q+
+ qLrg==
+X-Gm-Message-State: AOJu0YxSftKZ3Bi/ONRylZmcBBfrHLUDNvW47iS4R3pmsa9EhFlslcO2
+ 9suBbvnzAy7dtyRdg2hz5aSPGde8HNdKDLPDDc8Ua/DozuqEB/JtL4rEFYWfO8eImrg=
+X-Gm-Gg: ASbGncvXN755WDSp+S5FfUoczfYVEXpV2XM9pYwuGP2xWc3UgMBtOR418eSLh7q7EAb
+ eXP99pivyxj6ocr9OM8qsJI7S+GPyU+J6Zdwb1q4PYP5lBlKjsLTImwAdeOQxsr5HTAdAdfz4GQ
+ UxV30LJfp7kg4miVbaaYZtLwLbt/tvytErUSzKp71WYJTH+9Q9IJ8qgk9EHUlHLa9Z+G/Lc9qQo
+ nRBMT2ouVbsusXIfdQak2xn169Nz9z6ggsT2Z0CfXCOi12m51LOCqfYry0Qj2VzWbV5A6UQk7ZP
+ 6qoAENTZxpS5OtbWhTEqk5wUupVFTsqsCOq4FrOysSJN9+RLYZ+cueh4Te4+S03J24D9Gn5lDZQ
+ =
+X-Google-Smtp-Source: AGHT+IGXF7JPu0VMaW4oMjKdhH1qKPHKVeZns53qaJ1DEXGIBNxmJM33sYw+DJKwBsAQ/ysOP02wzg==
+X-Received: by 2002:a17:902:ce8e:b0:235:225d:3087 with SMTP id
+ d9443c01a7336-23601d4ed7amr170531285ad.30.1749470589693; 
+ Mon, 09 Jun 2025 05:03:09 -0700 (PDT)
+Received: from [192.168.68.110] ([179.93.21.192])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-236032fcd40sm53240035ad.125.2025.06.09.05.03.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Jun 2025 05:03:09 -0700 (PDT)
+Message-ID: <ed76d0a7-bfb2-4c22-9e9d-093703f41296@ventanamicro.com>
+Date: Mon, 9 Jun 2025 09:03:05 -0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxzxtFwUZoiU0SAQ--.4222S7
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/3] hw/riscv: add CVA6 machine
+To: Ben Dooks <ben.dooks@codethink.co.uk>, nazar.kazakov@codethink.co.uk,
+ joseph.baker@codethink.co.uk, fran.redondo@codethink.co.uk,
+ lawrence.hunter@codethink.co.uk, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
+ <20250527112437.291445-2-ben.dooks@codethink.co.uk>
+ <ca6cc5a3-029a-4e6c-8dfb-076b910bfbb5@ventanamicro.com>
+ <110336ae-4f0d-4e27-8bd4-5cd336c7fb4c@codethink.co.uk>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <110336ae-4f0d-4e27-8bd4-5cd336c7fb4c@codethink.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x641.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,155 +107,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the AVEC controller use 2ff00000-2fffffff Memory.
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/intc/loongarch_avec.c         | 25 ++++++++++++++++++++
- hw/loongarch/virt.c              | 39 +++++++++++++++++++++++++++++++-
- include/hw/intc/loongarch_avec.h |  1 +
- include/hw/loongarch/virt.h      |  1 +
- 4 files changed, 65 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-index 5a3e7ecc03..50956e7e4e 100644
---- a/hw/intc/loongarch_avec.c
-+++ b/hw/intc/loongarch_avec.c
-@@ -17,6 +17,24 @@
- #include "trace.h"
- #include "hw/qdev-properties.h"
- 
-+static uint64_t loongarch_avec_mem_read(void *opaque,
-+                                        hwaddr addr, unsigned size)
-+{
-+    return 0;
-+}
-+
-+static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
-+                                     uint64_t val, unsigned size)
-+{
-+    return;
-+}
-+
-+
-+static const MemoryRegionOps loongarch_avec_ops = {
-+    .read = loongarch_avec_mem_read,
-+    .write = loongarch_avec_mem_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
- 
- static void loongarch_avec_realize(DeviceState *dev, Error **errp)
- {
-@@ -39,6 +57,13 @@ static void loongarch_avec_unrealize(DeviceState *dev)
- 
- static void loongarch_avec_init(Object *obj)
- {
-+    LoongArchAVECState *s = LOONGARCH_AVEC(obj);
-+    SysBusDevice *shd = SYS_BUS_DEVICE(obj);
-+    memory_region_init_io(&s->avec_mmio, OBJECT(s), &loongarch_avec_ops,
-+                          s, TYPE_LOONGARCH_AVEC, 0x100000);
-+    sysbus_init_mmio(shd, &s->avec_mmio);
-+    msi_nonbroken = true;
-+
-     return;
- }
- 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 35643a4e0b..272355da2d 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -28,6 +28,7 @@
- #include "hw/intc/loongarch_extioi.h"
- #include "hw/intc/loongarch_pch_pic.h"
- #include "hw/intc/loongarch_pch_msi.h"
-+#include "hw/intc/loongarch_avec.h"
- #include "hw/pci-host/ls7a.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/misc/unimp.h"
-@@ -365,7 +366,7 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
- static void virt_irq_init(LoongArchVirtMachineState *lvms)
- {
-     DeviceState *pch_pic, *pch_msi;
--    DeviceState *ipi, *extioi;
-+    DeviceState *ipi, *extioi, *avec;
-     SysBusDevice *d;
-     int i, start, num;
- 
-@@ -411,6 +412,33 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-      *    +--------+ +---------+ +---------+
-      *    | UARTs  | | Devices | | Devices |
-      *    +--------+ +---------+ +---------+
-+     *
-+     *
-+     *  Advanced Extended IRQ model
-+     *
-+     *  +-----+     +-----------------------+     +-------+
-+     *  | IPI | --> |        CPUINTC        | <-- | Timer |
-+     *  +-----+     +-----------------------+     +-------+
-+     *               ^          ^          ^
-+     *               |          |          |
-+     *        +---------+ +----------+ +---------+     +-------+
-+     *        | EIOINTC | | AVECINTC | | LIOINTC | <-- | UARTs |
-+     *        +---------+ +----------+ +---------+     +-------+
-+     *             ^            ^
-+     *             |            |
-+     *        +---------+  +---------+
-+     *        | PCH-PIC |  | PCH-MSI |
-+     *        +---------+  +---------+
-+     *          ^     ^           ^
-+     *          |     |           |
-+     *  +---------+ +---------+ +---------+
-+     *  | Devices | | PCH-LPC | | Devices |
-+     *  +---------+ +---------+ +---------+
-+     *                  ^
-+     *                  |
-+     *             +---------+
-+     *             | Devices |
-+     *             +---------+
-      */
- 
-     /* Create IPI device */
-@@ -424,6 +452,15 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-     memory_region_add_subregion(&lvms->system_iocsr, MAIL_SEND_ADDR,
-                    sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
- 
-+    /* Create AVEC device*/
-+    if (virt_is_avecintc_enabled(lvms)) {
-+        avec = qdev_new(TYPE_LOONGARCH_AVEC);
-+        lvms->avec = avec;
-+        sysbus_realize_and_unref(SYS_BUS_DEVICE(avec), &error_fatal);
-+        memory_region_add_subregion(get_system_memory(), VIRT_PCH_MSI_ADDR_LOW,
-+                        sysbus_mmio_get_region(SYS_BUS_DEVICE(avec), 0));
-+    }
-+
-     /* Create EXTIOI device */
-     extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
-     lvms->extioi = extioi;
-diff --git a/include/hw/intc/loongarch_avec.h b/include/hw/intc/loongarch_avec.h
-index 3c68593a7c..274b284641 100644
---- a/include/hw/intc/loongarch_avec.h
-+++ b/include/hw/intc/loongarch_avec.h
-@@ -23,6 +23,7 @@ typedef struct AVECCore {
- 
- struct LoongArchAVECState {
-     SysBusDevice parent_obj;
-+    MemoryRegion avec_mmio;
-     AVECCore *cpu;
-     uint32_t num_cpu;
- };
-diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-index 3a81f048e8..172f40711d 100644
---- a/include/hw/loongarch/virt.h
-+++ b/include/hw/loongarch/virt.h
-@@ -64,6 +64,7 @@ struct LoongArchVirtMachineState {
-     struct loongarch_boot_info bootinfo;
-     DeviceState *ipi;
-     DeviceState *extioi;
-+    DeviceState *avec;
- };
- 
- #define TYPE_LOONGARCH_VIRT_MACHINE  MACHINE_TYPE_NAME("virt")
--- 
-2.34.1
+On 6/9/25 8:32 AM, Ben Dooks wrote:
+> On 09/06/2025 12:24, Daniel Henrique Barboza wrote:
+>>
+>>
+>> On 5/27/25 8:24 AM, Ben Dooks wrote:
+>>> Add a (currently Genesy2 based) CVA6 machine.
+>>>
+>>> Has SPI and UART, the GPIO and Ethernet are currently black-holed
+>>> as there is no hardware model for them (lowRISC ethernet and Xilinx
+>>> GPIO)
+>>>
+>>> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+>>> ---
+>>> v2:
+> 
+> Apologie,s looks like it this got rebased out of the release
+> 
+>>> +/* plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv */
+>>> +
+>>
+>> I believe you've missed my comment in v1:
+>>
+> 
+> would this be ok
+> 
+> /*
+> * plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv
+> * https://github.com/pulp-platform/rv_plic/blob/master/rtl/plic_regmap.sv
+> */
+
+LGTM.
+
+
+Thanks,
+
+Daniel
+
+> 
 
 
