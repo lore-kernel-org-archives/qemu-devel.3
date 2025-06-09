@@ -4,88 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7F8FC5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D95CFC61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:42:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOfXy-0008Ok-Cn; Mon, 09 Jun 2025 12:40:32 -0400
+	id 1uOfZO-0000Yw-Ii; Mon, 09 Jun 2025 12:42:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3Sw5HaAYKCswAws51uy66y3w.u648w4C-vwDw3565y5C.69y@flex--seanjc.bounces.google.com>)
- id 1uOfXI-0008Dm-VZ
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:39:57 -0400
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3Sw5HaAYKCswAws51uy66y3w.u648w4C-vwDw3565y5C.69y@flex--seanjc.bounces.google.com>)
- id 1uOfXC-0002n6-Ax
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:39:47 -0400
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-b2eea1c2e97so3142316a12.2
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:39:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1749487179; x=1750091979; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:from:to:cc:subject:date:message-id
- :reply-to; bh=WMQ8PN6884DW9W1jNjmty1PvTsBAocPOjKWRL+Dgqsk=;
- b=P3Q2PYuPKC8n24K1iwaSrhrd2THhR/Q3WfmwqeBgN4poM7FiOjF1GgWVCgPYtYdmhW
- 5t5Pz17/1qcIIXaD22xbHo3mzv13PK9ps2Ta4oBYkZkpFL5G8RkebqQh8J/rcRL7+YJu
- MRULSIGft5FBd5tTtlG7FVLyJASfl7LCFK0AqH1F4O119wYaIuO4NL3hkDPKaHFGZvTe
- iqjKnbaSvCu1u8Nmwtt9PGsFX261rtuO4aKxqT9smbra9FSkDO4arHkJhoEi2Wt+UD3s
- 5TQI4k/DIjtry3Zr7WOC36PLEX7wmXbPKtVfWpxkN7+N8TmvAIFJNcDLf5+Minxl7uGr
- r9QA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfYh-0000Ni-OC
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:41:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfYd-0003Bj-RG
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:41:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749487270;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=uJWx48rl+iFB4unyUn1eSDebiMFEFhc1TPIHeodkvPA=;
+ b=gnx9adiFf5RRCfioU/2tNrBmc2EwUU8EWcXxs97JtsSiQpx1yPfQiqUI5qPI69FqVcETVW
+ BJAKuGMTIxN1p+Vxt3AxOHBZnydf249O9086uFcaKafWtNniY319dWJcZnT0Kl6uvyeBda
+ Yqq+HE3EjFhC/nidUa6Zy+PdaaZQdrE=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-231-ZUSpzZcMNjCR_POiqS1Fow-1; Mon, 09 Jun 2025 12:41:08 -0400
+X-MC-Unique: ZUSpzZcMNjCR_POiqS1Fow-1
+X-Mimecast-MFC-AGG-ID: ZUSpzZcMNjCR_POiqS1Fow_1749487268
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4a587a96f0aso125670831cf.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:41:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749487179; x=1750091979;
- h=content-transfer-encoding:cc:to:from:subject:message-id:references
- :mime-version:in-reply-to:date:x-gm-message-state:from:to:cc:subject
- :date:message-id:reply-to;
- bh=WMQ8PN6884DW9W1jNjmty1PvTsBAocPOjKWRL+Dgqsk=;
- b=jdtiZ4sKth8Mn/MRO5fYK1F9xTbpuuV88SqbQLzuGdW+wxhexa3onWH2vA+qr7EjEV
- 19LcHj2vet5G7U+biZRKoYf+bM6+mb1sagKQh5oJebQVaVXpR32rAC82xiMhjbpmqhvv
- N3FM4XdhIr8LUwvX7REexMExOP8EYwbDRA+fPT8kbcvDO6G8+NaY6kRXtieL36YrH2oM
- hREp6i6qkaCa/rmzPAuQ1eKg7iUa7PtUK7IT7rDyQ6ID84HDvuetHl9w7w2TWhxfFYna
- liX8RD667IlMZ+8OUW6uLJRDNMZkFoLWRPG0H2RJpSGtIVatsKNqkMxYaQ+df5rbcjgC
- enOQ==
+ d=1e100.net; s=20230601; t=1749487268; x=1750092068;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=uJWx48rl+iFB4unyUn1eSDebiMFEFhc1TPIHeodkvPA=;
+ b=M/58y+5CbiQ+rNVg8JjrPoWgnUd+iKBRoDI6DGrKmA5lPqBJ63gz5b8UdGnFKy+KmI
+ tSJlruXIqD7whdgTEL2XZ1xRs0q4iuS0bhpK/1d8Ne2YRDppAs4Yrp5Xr6yGBazAxKdI
+ F8zU5YPN7qHca2FT8YIfBtOUXNY0GQ4pKG886MSlzjo3K1892LH8X0BkAOe1fAKAitYJ
+ uEENtBQ2NbzZ8BpbvVE1fcvPilvmgFvhpF3NHVhBoFu5oR5nGgEkfSkj17zH2p2lFlvJ
+ dJ8v7SKCO/+FMxOZfRwqgWKmrPEvq0c8u/ZAnW2F4nh8LWbhz155cP4YwC4VjLa7w+lq
+ vnZw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXNQtptbKLof7g0rVtA2jvptHdGWvAZexnAcCbRWlxPJCROPr1lHeRXPOg0z/VfbWdHE17DY/OC1m0i@nongnu.org
-X-Gm-Message-State: AOJu0YxXsyo7BJsVl00aekuzTjKvh2ae+LzEghjZ/unOJoZVZFhMWOy/
- Mx4xcKQc+O83ap0W77qM4GmsBP7pYVs3iKqHLmqIY+gw0O1yh87pqvwMd/hRlqrs0pdKaJAA8Gx
- F+oSCRA==
-X-Google-Smtp-Source: AGHT+IHfDLIrS/svY0wyQaqGHXC5W4UuRgfimO7Q5quxSh0AY5WdDRwhCyELO5fMyH4vF7a7e9Oz94gvduI=
-X-Received: from pfhx29.prod.google.com ([2002:a05:6a00:189d:b0:746:1857:3be6])
- (user=seanjc job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:50f:b0:21a:de8e:44b1
- with SMTP id adf61e73a8af0-21ee686203dmr20638459637.34.1749487179116; Mon, 09
- Jun 2025 09:39:39 -0700 (PDT)
-Date: Mon, 9 Jun 2025 09:39:37 -0700
-In-Reply-To: <4f19c78f-a843-49c9-8d19-f1dc1e2c4468@virtuozzo.com>
-Mime-Version: 1.0
-References: <20250609132347.3254285-2-andrey.zhadchenko@virtuozzo.com>
- <7ce603ad-33c7-4dcd-9c63-1f724db9978e@redhat.com>
- <4f19c78f-a843-49c9-8d19-f1dc1e2c4468@virtuozzo.com>
-Message-ID: <aEcOSd-KBjOW61Rt@google.com>
-Subject: Re: [PATCH] target/i386: KVM: add hack for Windows vCPU hotplug with
- SGX
-From: Sean Christopherson <seanjc@google.com>
-To: "Denis V. Lunev" <den@virtuozzo.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, 
- Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>, zhao1.liu@intel.com,
- mtosatti@redhat.com, 
- qemu-devel@nongnu.org, kvm@vger.kernel.org, andrey.drobyshev@virtuozzo.com
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3Sw5HaAYKCswAws51uy66y3w.u648w4C-vwDw3565y5C.69y@flex--seanjc.bounces.google.com;
- helo=mail-pg1-x54a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ AJvYcCWMupc7F96F6Ua+nX9jUBNvii1/uWG8bVNHVel33UhddfgIGRciabzDs6t33mxNU+OHJQuqunKkt+TY@nongnu.org
+X-Gm-Message-State: AOJu0YxcK6jHtZcWL6sDcjttSpBfiUsGo9SeifRpu6y4Y4ju6/oYEYTq
+ LEiUpFgTrAZv1oV3SY/U7DQcavvobUCCt8qcisa7YxDA0X2fQKd7j0Tv9Hdc//u/X7wf10z31Sx
+ iqpWkwujFVk/2NlujDgUptnXz7+3hKxbBzur5M0O1GM8ge1Xf4+RmT8r0btjA0wOa
+X-Gm-Gg: ASbGncsChjIoeERNEPVwTsl1GWYWNfdDIIURYn/uQwYj8vO3bBsE9TpJIAH7UOkSYud
+ 26lIQn6S9ocx46erRY+QNUnxU0FHaNcMUo7ZDzib36wyQZ6WU3m7KeTwSKLOJ4cyNIfBZPduom9
+ KED9VJ0C6TgcvVq0ins9OO/1Sf8eyTIX5tz/RMkbm4rv4sMjHBj7yGyayRA4dyCvmV4P5m2hHTR
+ ukm/TvKWdJs2YxQF9h4u3WuwDiPP8Zxuj2O5sEVRZjTyI9DZSa+Fby66SWmfLhdfh3GijaqbLjY
+ gso8b3taTKNaDQ==
+X-Received: by 2002:a05:622a:544b:b0:47a:eade:95eb with SMTP id
+ d75a77b69052e-4a5b9d8deacmr237086791cf.40.1749487268010; 
+ Mon, 09 Jun 2025 09:41:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFJpE4PHkT58TL36JNa1izx7yLBtKxJ8RP6+MsH/EdP7pSwFUv9FDGuT01BbcGXIpRS+Rkg2w==
+X-Received: by 2002:a05:622a:544b:b0:47a:eade:95eb with SMTP id
+ d75a77b69052e-4a5b9d8deacmr237086381cf.40.1749487267580; 
+ Mon, 09 Jun 2025 09:41:07 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-4a61116b831sm59816761cf.22.2025.06.09.09.41.06
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Jun 2025 09:41:06 -0700 (PDT)
+Date: Mon, 9 Jun 2025 12:41:04 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
+ migration config
+Message-ID: <aEcOoJbPv-x-xDwh@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-20-farosas@suse.de>
+ <aENBda_y3v3y4ptS@x1.local> <874iwswrex.fsf@suse.de>
+ <aENUrociiqlFuPpz@x1.local> <aEb3pRkQK30JBf04@redhat.com>
+ <aEb-umgh0VP2sKGW@x1.local> <aEcBLLwB9vZ33k8Q@redhat.com>
+ <aEcDi6Z7pDeiRqDe@x1.local> <aEcIr2Xjv__M_J0O@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <aEcIr2Xjv__M_J0O@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,55 +114,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025, Denis V. Lunev wrote:
-> On 6/9/25 18:12, Paolo Bonzini wrote:
-> > On 6/9/25 15:23, Andrey Zhadchenko wrote:
-> > > When hotplugging vCPUs to the Windows vms, we observed strange instan=
-ce
-> > > crash on Intel(R) Xeon(R) CPU E3-1230 v6:
-> > > panic hyper-v: arg1=3D'0x3e', arg2=3D'0x46d359bbdff',
-> > > arg3=3D'0x56d359bbdff', arg4=3D'0x0', arg5=3D'0x0'
-> > >=20
-> > > Presumably, Windows thinks that hotplugged CPU is not "equivalent
-> > > enough"
-> > > to the previous ones. The problem lies within msr 3a. During the
-> > > startup,
-> > > Windows assigns some value to this register. During the hotplug it
-> > > expects similar value on the new vCPU in msr 3a. But by default it
-> > > is zero.
-> >=20
-> > If I understand correctly, you checked that it's Windows that writes
-> > 0x40005 to the MSR on non-hotplugged CPUs.
+On Mon, Jun 09, 2025 at 05:15:43PM +0100, Daniel P. Berrangé wrote:
+> On Mon, Jun 09, 2025 at 11:53:47AM -0400, Peter Xu wrote:
+> > On Mon, Jun 09, 2025 at 04:43:40PM +0100, Daniel P. Berrangé wrote:
+> > > On Mon, Jun 09, 2025 at 11:33:14AM -0400, Peter Xu wrote:
+> > > > 
+> > > > Now I think I know part of what I've missed: I used to think the "config"
+> > > > of per-QMP-migrate-command can be totally temporary for a specific
+> > > > migration request, but then we need another MigrationState.parameters_2 to
+> > > > cache the old or vice versa; that's probably not necessary.  Now I think it
+> > > > makes sense to overwrite any settings directly, hence I think I changed my
+> > > > mind on question (1), YES is fine here.
+> > > > 
+> > > > For (2), why it would introduce any uncertainty for mgmt?
+> > > > 
+> > > > If the mgmt app can both: (1) query from qapi schema knowing all the
+> > > > parameters supported, then (2) specify all the parameters in QMP migrate's
+> > > > "option" parameter.  Then it's literally overwritting all the parameters,
+> > > > so it's predictable with or without completely removing global settings as
+> > > > an idea?
+> > > 
+> > > That is relying on the mgmt app specifiying absolutely every config
+> > > parameter that exists. If they miss anything, then the behaviour is
+> > > not well defined, as external global state still affects things.
+> > > 
+> > > This is the same situation we already have with migrate-set-parameter,
+> > > where mgmt apps have to know to call migrate-set-parameter over & over
+> > > with every possible parameter to get back to a well known starting point.
+> > > 
+> > > The command needs to run with the parameters provided in 'config' and
+> > > no external global state, whether from -global or any prior call of
+> > > migrate-set-parameter
+> > 
+> > So libvirt does not probe the qapi schema for all possible parameters?  Why
+> > not do that once on QEMU boot up, then when migration is needed use a
+> > sequence of commands to make sure everything will be setup before
+> > "migrate"?  It'll definitely take a few rounds of QMP commands, but the
+> > core issue is whether there can be any real atomic issues of that.
+> 
+> Probing the QAPI schema tells you what parameters exist. It does not tell
+> you what values you should set for parameters, if you don't already know
 
-...
+If Libvirt is looking for some suggested value to set a parameter, it
+should just leave it empty, using the default provided by QEMU?  I was
+expecting Libvirt to only specify anything it explicitly knows the answer.
 
-> > > Bit #18 probably means that Intel SGX is supported, because disabling
-> > > it via CPU arguments results is successfull hotplug (and msr value 0x=
-5).
-> >=20
-> > What is the trace like in this case?=C2=A0 Does Windows "accept" 0x0 an=
-d
-> > write 0x5?
-> >=20
-> > Does anything in edk2 run during the hotplug process (on real hardware
-> > it does, because the whole hotplug is managed via SMM)? If so maybe tha=
-t
-> > could be a better place to write the value.
+> what the semantics of that parameter are. Such a requirement to probe
+> all parameters & set them all manually is again making migration into a
+> special case that is not following the normal QMP design, and there's
+> no justification for that other than the historical design mistakes in
+> migration QMP which were copied from HMP.
 
-Yeah, I would expect firmware to write and lock IA32_FEATURE_CONTROL.
+I agree migration is special cased.. I also agree if we design the
+interface today it may not be like that.  I suppose it means it's only the
+"API cleaness" issue.  That matches my understanding, even if I wished I
+missed something else..
 
-> > So many questions, but I'd really prefer to avoid this hack if the only
-> > reason for it is SGX...
+That'll be a hassle for all mgmt for sure whenever an old libvirt might
+still have a chance to run on a newer QEMU.
 
-Does your setup actually support SGX?  I.e. expose EPC sections to the gues=
-t?
-If not, can't you simply disable SGX in CPUID?
+That'll also be a hassle for any downstream if some Y+1 branch starts to
+drop the global-set way completely then downstream might need to take care
+of keeping that instead for the major release until the last Y, otherwise
+if someone installs some X.Y+1 package on X.Y it might break similarly.
+All that for "let's make the interface look better".
 
-> Linux by itself handles this well and assigns MSRs properly (we observe
-> corresponding set_msr on the hotplugged CPU).
+I sincerely could be wrong, but I keep my skeptical view of this whole
+effort; it's only about after this series (while this series still makes
+sense to me to have caps being able to set as params, and the "config" in
+general).  I would say we could at least prioritize and invest other more
+important things, for example on handshakes, which could provide functional
+differences (removing src/dst param dependency, removing hackish channel
+establishments all over the places, early failure of device state mismatch
+rather than late failure on converge, etc.).
 
-Linux is much more tolerant of oddities, and quite a bit of effort went int=
-o
-making sure that IA32_FEATURE_CONTROL was initialized if firmware left it u=
-nlocked.
+Thanks,
+
+-- 
+Peter Xu
+
 
