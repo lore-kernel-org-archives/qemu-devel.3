@@ -4,86 +4,204 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1565C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 03:07:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B809C61CE7
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 03:24:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOSpg-0005Ni-5D; Sun, 08 Jun 2025 23:05:56 -0400
+	id 1uOT7G-0000CH-Gu; Sun, 08 Jun 2025 23:24:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uOSpc-0005N6-Uj; Sun, 08 Jun 2025 23:05:53 -0400
-Received: from mail-ua1-x930.google.com ([2607:f8b0:4864:20::930])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uOSpa-0001de-Dg; Sun, 08 Jun 2025 23:05:52 -0400
-Received: by mail-ua1-x930.google.com with SMTP id
- a1e0cc1a2514c-86d587dbc15so2621328241.1; 
- Sun, 08 Jun 2025 20:05:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749438349; x=1750043149; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UWdwOqJQKm/jipyjXRGp6HsbSnxuxhfCklEvD3H3piA=;
- b=NUZ8xD2b8+WYb2/aBDPVVOsrBdT3+8Ixy6kLWnuXM7jxId+d0+NQdG/3+zeaypYzh7
- H9/g2OCX7A48etpYbJ9kLMjrz3TtQHIJnp3pwFPLSE9SJu7b6YGKGGpBLiM1z2c/g5e0
- pBjMQ1sm+o3ymN1Np0EZiccQbEcMSOEgt/FQ4a0fmGjSqVmWEuV/Aot1G5c6S48qQAUp
- QasAKN9KpZdZ1GsYUrgOPVI6pqdFnZ7WYjYYiTtR9cje8SNXiRNq0K+8uje1zhqEw7i4
- fNIZ3nmsRJTf72K9z/5lONhILI1ADwMhnEqDlI34PUjKb4kvWkIceYDujg8zmdYETm1r
- rU6A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749438349; x=1750043149;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UWdwOqJQKm/jipyjXRGp6HsbSnxuxhfCklEvD3H3piA=;
- b=xIYg/G++X2AzTYJN96QSvNTQZg+S5M6wj8ipSdokRClXdNPJvX/CnXv9yRFGxemqms
- BAyRs5KCpBoTh6D7PlVDujikPN4LhgrkVK3ZKuaWXRNSz5V/54M+diyNosBeSTszf3Zi
- 6vT3V6B7rRtm1Y6G6WRddVVOrx4vDKCfQ1f/6YmcoL5Cpr4UVE/We3GASv5KDbUfkJgL
- 5DvD9lXbJ0uHIX6bnTDB1vU6Vwlhu4qZaKed+te6+jse45pp0NCkx5G/mug6zz0ubkWJ
- bAFvfbTo7xncgvX2yH0HxSbQ8Vv8khPvLTw47YgQ9OuHY/0suoOgWSSAr9sp+L1G9avL
- WfAg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU87AncMnGJrK/f9/u/Q/zonGF9LnF69GFDi/x4XOPTkOVPWcHGz4OmJ96YD5+QsX1VmbOzUXuOGzom@nongnu.org
-X-Gm-Message-State: AOJu0YzBMNo5NgmdxMiiAb4glQub6dKDhzlIS+9AVCSzyXRjs7bCRFgi
- 7GTdmjPfdLERo/69Q82ohvE9MiwoxkWhAbieFl6Wyo41toPdtm3Sk9fAhfteW4KTIcAfTZryMH5
- D7TXropRVpD+bf2cPo0lP+bSc/BN7eew=
-X-Gm-Gg: ASbGncvsw3DMnuADRiCP0EHjRTLDFroP6673HuhB5P3gj2baEJAWbp5gbQYoW6dxVju
- k//+/jjIah+uiw59gkUQrzKIozpQ81AVtWI7VsVV57nIF217HgYRrmCxGxctd1VswLYdV7uu8r+
- 4mZmMCFfUHspVgXj05CeA9KNWpxMtwB8sVxxEkwt2DC7l0OUzFXQHgRDyEpODD3r0=
-X-Google-Smtp-Source: AGHT+IEuxvaYBd7EeJaN6RzqVIrOUJO6LKsPbB7Xho3oZ/dm1sqXX4vjm3pfiDWDkmtlqjNEl6aHRMxV5z0inRxIHuk=
-X-Received: by 2002:a05:6102:149f:b0:4e2:83c4:9298 with SMTP id
- ada2fe7eead31-4e772b8a941mr10728768137.3.1749438348690; Sun, 08 Jun 2025
- 20:05:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250606072525.17313-1-jay.chang@sifive.com>
- <20250606072525.17313-3-jay.chang@sifive.com>
-In-Reply-To: <20250606072525.17313-3-jay.chang@sifive.com>
-From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Jun 2025 13:05:22 +1000
-X-Gm-Features: AX0GCFud4mVyUzYIS9INibOi8Zk-3jfrQhzuZhB2WevWYK-vbc_fwo4VbMtV9VA
-Message-ID: <CAKmqyKOt+QJgWPH9osWQsioFch4icJzExR69kM1vCCx6qxk_0g@mail.gmail.com>
-Subject: Re: [PATCH v5 2/2] target/riscv: Make PMP region count configurable
-To: Jay Chang <jay.chang@sifive.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Frank Chang <frank.chang@sifive.com>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uOT7A-0000Bj-RO
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 23:24:00 -0400
+Received: from mgamail.intel.com ([198.175.65.9])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uOT76-0003YQ-JK
+ for qemu-devel@nongnu.org; Sun, 08 Jun 2025 23:24:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749439437; x=1780975437;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=M/BaNv6IXttF0Oape6DS04/aTOAyiIbLJ9WcC5xbV7s=;
+ b=naV4BMmQ+YaI3SGQ+pFTLvxZPc0etWVsUYVD1Pi/79gpZ7gSxFQ/T1R1
+ feTkA4upgB1xgtjHDtixmnIaFYbLzDu4RSMnhe1ybRdAWbah1OaV1aggR
+ lcdPWgSirOT2CwuR2qHfXLmz9NXuj82x4fpP5PJLcp2EOVpO6fl8Hm2rh
+ vEttYnDDByUZoQKPyN9wxPQDwMcF+9FI8JBma0zDPtYYCVL4PBdrdiaW7
+ XD7fOm/RMJLCWQEo8DOzXMcxEyU6kAUMlJo/9Hz2Hl3sXtDJXD7lGyO1U
+ 4BLf/Kdfu6/YxEUmpfIrJYHYl0qXCluXJ/N+ml4eGhIylf3YyIEjEmZmY w==;
+X-CSE-ConnectionGUID: 0NGyTu7FQRG/lZ+Da3aXnQ==
+X-CSE-MsgGUID: 5onbkRVoQHuR9/G5SLI0Rw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11458"; a="74039879"
+X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; d="scan'208";a="74039879"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jun 2025 20:23:51 -0700
+X-CSE-ConnectionGUID: sT69WmYYSu+ANq05YN1mSA==
+X-CSE-MsgGUID: 9IDLvjYrQbyxkioJNbRdTw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,221,1744095600"; d="scan'208";a="147361901"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 08 Jun 2025 20:23:50 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Sun, 8 Jun 2025 20:23:50 -0700
+Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Sun, 8 Jun 2025 20:23:50 -0700
+Received: from NAM11-BN8-obe.outbound.protection.outlook.com (40.107.236.80)
+ by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.55; Sun, 8 Jun 2025 20:23:49 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=SGYAf9YbKXUmaXX6wlWFnvjU8rSFGBlCohSaLvXWCRpDr462ZTvalgbqc7vdxIxA4M+337Xb60Xf3+L/JfXFuQ3jxEfwZXwuVjVxTwjlWpL68Z/n5dy6zLOXiZDX9tVu0Wddner2KX1BvEDdA63RypGiOZ6bR0WjfnW8t3YWPLqd6KuXU1HaDNBgaYqRqpGVPg5H/NW1JpFSLazw6Wvoq+bjggMb/daXrbiqNVpao5TzajHCqKgwxj3JcYj+uNN9SqvaGMoI6Q7TyXJrAwYMXN5KgwLVgl5dJsjlAva2BSmU54306xy66GSDjdeeDp+yvy/wk2wESTmRzEtMFKf94A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JYgyDxGqxtCGFd++6sYGpd91wGowBv1HRWbG5zrsBtQ=;
+ b=QTWs/Xsoxzslxl/Ip6VDC508bmk5fMayVa0CSxY4K7T4JBAe1vM2lUlk2y0cy+Oj4oqJvISlUdHQCSQ8a88bt3poUEHbnFY8Glj9Sq98zITLX91uaPZ+kRRxW0YauYCp31J44GfKpTHndG+ghF+T3nVAPGL/JZL2EH5Ru/5+ehgRzT9LOdHi7kuWudXb3Jdt7r2AmYBq7CXv5RwxbQcdMIsNZJcf7pUXj+iAoU9Mn7ABFlGOc+qOHfxIBhkSE/sAW7ldVNZBW3kfYdolkJSOSmH7XKwp+L3ZxiJ5aioJo1zigzp4ASptOfE9CJ8exTljgRiV0Sk8XlPV6AykjI79Fg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ DM3PR11MB8684.namprd11.prod.outlook.com (2603:10b6:0:4a::21) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8813.27; Mon, 9 Jun 2025 03:23:45 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8813.024; Mon, 9 Jun 2025
+ 03:23:45 +0000
+Message-ID: <c2474abf-bf90-4908-a2a7-04e4eb9ee821@intel.com>
+Date: Mon, 9 Jun 2025 11:23:30 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v6 0/5] Enable shared device assignment
+To: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, 
+ Peter Xu <peterx@redhat.com>, Gupta Pankaj <pankaj.gupta@amd.com>, "Paolo
+ Bonzini" <pbonzini@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Michael Roth <michael.roth@amd.com>
+CC: <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>, Williams Dan J
+ <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>, Baolu Lu
+ <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Alex Williamson
+ <alex.williamson@redhat.com>
+References: <20250530083256.105186-1-chenyi.qiang@intel.com>
+Content-Language: en-US
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+In-Reply-To: <20250530083256.105186-1-chenyi.qiang@intel.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::930;
- envelope-from=alistair23@gmail.com; helo=mail-ua1-x930.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0003.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::16) To CYXPR11MB8729.namprd11.prod.outlook.com
+ (2603:10b6:930:dc::17)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|DM3PR11MB8684:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7b4ab085-43f5-432f-1ef5-08dda7050a67
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?aXRocWZHMHRyV0NQbnZrOVU3aFUrNE8yZm1LdEEzdVA1VlRaVHVZakpFK1kr?=
+ =?utf-8?B?VDBLOTBWY1NYVlpBUFNVazJsQWpDeDJnQ29VS3Q4Sy83Zms1Q0VFM2pwcWRa?=
+ =?utf-8?B?b0xVMjFWOS9QUE5tZnRpd25xN2VCWTg2V3JVbHNGY0c2bHJTT0lNempXcGVa?=
+ =?utf-8?B?MlJTL0FWMWlKemRUUmpsQ0kyTk5yVUM5R2FOKytNTm9QNlRTOWxEbTh2REoy?=
+ =?utf-8?B?TzlmVHdFVW9YQUQveldwMkFTU1djZHhNYW9TZFpyK1d4Sm1CdTkvN2FKWkx6?=
+ =?utf-8?B?YUNxVThHNlVNb05EbG1kTVZObXM5cDJzSGlGd2cyL3lnWkhxWTdEM1QvcDI2?=
+ =?utf-8?B?Smd2bkR2Vzcya2lYRDJsTEF0T1ROcndRdzEvNmVidzVzemo1Ulo1OHRiSUZz?=
+ =?utf-8?B?cE5sNEJUdHFVdDZZYzk4dnhXVkFWUmw3NGprWWg5N1VURzc4UU83TDExV1lR?=
+ =?utf-8?B?SUU5R2Y4MTg4MkpPQ0xXbW1FMXdYK2ptc1RhSXM5cDBhMVFGZ0tXSm5LN252?=
+ =?utf-8?B?MDRGb1dVNmZ1Mk9kWm05NWZkR0o5T0hvZDlOMG5SVFRWYklBMWlkU2ZYM2xx?=
+ =?utf-8?B?S0Z6NHB1ZXVnYitrbWJBeVgxOWF3K1hNd1FkRG1pa3MwQzFuV0pHbk9yVnhK?=
+ =?utf-8?B?YlJUZ2ZQMEhkbzVKSjV0cVZTN2Y5K3hLc2NoRHU1SXRnbEYybmJDYW00MnRk?=
+ =?utf-8?B?eXVlVEpvR3ljYURPSVJ4Y042U1NTanNhM2tjYWxNOWRwWms4cXlBekVJUjF3?=
+ =?utf-8?B?TCtUWmgwcVFocUNPWnQ4TDdPTlUvYzNXM3FKTFhiemV5OUtQVDRybFZuMkxG?=
+ =?utf-8?B?NGRPZitqSmNZMlh4OEpJU3g0YnV4RldweUpkcklGVzlEQVlRekdKSFFneTJo?=
+ =?utf-8?B?dTYvL1FYUjROSzUrc0hmYjM0UDF6VUo1Vm16K2JaUWMySVl1SGhTU01GTko1?=
+ =?utf-8?B?VytBa05ZNi9weU1BdDJrTkZVRlNvMzJsMVViSFhDNFBFY0I4emtMRzVIZUFY?=
+ =?utf-8?B?eG1NdDFyTldwdXF3S2xON3JTcmdJeGtNTFdURUtXcVFSK0pHeW16NzBXak8r?=
+ =?utf-8?B?ai9kUGZVYTFCMnZHbTlyVEp5VnMxWHpaeUFFYXhLaHJpT3l5Z0l4d3pkQUpa?=
+ =?utf-8?B?MnVORndEYjlFVUx3VjNVNWlybmJPQWx5T054T2FyY3hqd2t6NG53Q1U2UkRE?=
+ =?utf-8?B?bEVUMHk3VTYzaUJjbFNlSVBKTjhPbmNMTW9JeTRxLzZiZXRCWC9mdWVrdXJi?=
+ =?utf-8?B?Nm0vL0Z2Z0NqTUppQms3L0VXcXdlZVpDMHJDMUVVZERyaHlCUWNYN3lham1n?=
+ =?utf-8?B?eE9QS0tGSWZyMlM1anpCMzRLMDJOZnFkNUZFdHA1eUQ4UGNkbnpVYStRa0tB?=
+ =?utf-8?B?Rm9SSjVxVzZpTkdQVGlIb1NLRWdJSkJwaDQ5V3lzSmVVYytsUGV0alh0Y0dS?=
+ =?utf-8?B?TjBpdVNFS3hvbjRTTmNLV3EvZ2NqaUVBQWp0YlpySnNmVUhUYlNja2ZOMjBk?=
+ =?utf-8?B?T0l2ZHhpdVRkV2xrcUUydnJpTFVVS0ltazVmUDZsODNzazBXZFkrZWt1ZGJ3?=
+ =?utf-8?B?Q3lidk5RamRtT09nL2pmVjVPQS96TzBrTlFMT29zQlFJQ0FCdUJIb3dhUmpR?=
+ =?utf-8?B?Y1NaTVphVERXK2pMZDNpbVdGZkRWYWNyNGx4MkJON015Tms2OGhaWW1Oejdn?=
+ =?utf-8?B?NW1KRXo5S3BybnUzQy9YUVhwTWk0RHU5YTU5T0U2YjM1WlpYSTZlUXMxK0Vj?=
+ =?utf-8?B?dURHM0ZBbjlQd1dBTUN2bWtkN1VLaEk2U2VZcGRuUEhmUkMvcElxdWl2eGZS?=
+ =?utf-8?B?UGhiN1ZCWEdMcmUvSXdTTGtUeldtQWJRcjVNcFFGT0Q2dlRvVC9VS0tUNnRF?=
+ =?utf-8?B?dHk3ZXRRSytPbFRFWm5SSXJhT2pZWGx2SDRMT3VscXRDSmhHRlY5RGRCU1lm?=
+ =?utf-8?Q?4pYNI/VxsXQ=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?QmQ5cUpIZFJueStQQ29sVHRSQU44R3V6MlhHbm5GUHVBOTBNSFR6UlZNQmVl?=
+ =?utf-8?B?T2FFWFM0dCtTcC9USkF2N3ZManF3ME05bVJtb2V3Q2FNWkZ5ZUlRVDFEWkJj?=
+ =?utf-8?B?TWhXZjNSdjdKc1pIRmg2QmxIQnZOYm5jSG1PcTZzak4zUXpDTElqbmRTNHdw?=
+ =?utf-8?B?andCQ3RoS0ZjNVg0dnJNWVd6YVpWeFRkTlR5STNCRVU4RGpLWnVmZmRhZHVD?=
+ =?utf-8?B?RUNDMXN4Vk5JOEpvNTVmWU90NVRpTmJwWFNFbUd1NDZVdndUTHRlVHB2NTJI?=
+ =?utf-8?B?NFVXKzg0OW9yUDZZbHo4cDZpMDc5Z2JwSEU2TEVDYTNoN29NZnNZdlFpSXlp?=
+ =?utf-8?B?QkVZcWo3N0xFdjlPRHNjeUVCZ3hPTzhzRGV5RU4xbDhycUxLNXFVM3c1bWMr?=
+ =?utf-8?B?eGlGNXpaK3FaQ3VZZit6dDNXbytJdVNBaCsrUmhzNVh3cEtNQkU5M1NKMS9n?=
+ =?utf-8?B?QlRjSFllTU9qSmE1Q2x5TTRvWTJwWVM5UDlNWVdOUUwxYTZnbTlldldOZGI4?=
+ =?utf-8?B?dDc4SnJoRUw0Ykx2bmFzdWF2YVpBUnc5NHo4Vnl2RmxzWnZuWmp2bUNKOWlL?=
+ =?utf-8?B?cWkxSEl0Qk1CYUlWOUEwRmlOaDhBa3dzRWNVcUhrdGtML0NxLzdLQkNEcGlE?=
+ =?utf-8?B?WGE0dnpVMkljS29xczAwR1NteStKblZMbEtlN0QvTHE4dmpHYWtiUnBrZmwx?=
+ =?utf-8?B?ZlRNalZUNm9hb1EzWElYT3gwVnoybG1wYk0wUHZ5REpLSFNkZkRlWWZlY0Jj?=
+ =?utf-8?B?QXJyUlJLald2dWd3aklwRVlUc2FQb0hJQ3Rqb3lNOHl1dzZnSlNVaEhYbEUx?=
+ =?utf-8?B?OW9UV3BMeHgwbTFMR3lFcTI1ckhjTG9FU2hJbVFHa25DS28zT1ZTMTgrTWxN?=
+ =?utf-8?B?eTRTdFhSajc4b0p2cHZUUEdwU1ExeHMxaFJIUllqbVl4RVhUWlAzYWw4Lzl6?=
+ =?utf-8?B?WEE3MTNjOFJhY0gxcjN0cVBuTlVFTG1HOW9oU2wvcW53NGt6aFFBOEdGWGVt?=
+ =?utf-8?B?YVR0RkJCenlWZWdad29BZjFMNGRGRjBCSlEwaTdkZDUwZ3RxTC9qWWVjRllO?=
+ =?utf-8?B?Y0VrV2V6WUxhR082ZTVENmRkclFoT2dTaktLVWM4UHYvVS9RSCs4SC9wZ2NF?=
+ =?utf-8?B?WUpIVldNTzB0UUNxeEJjb0QzenNwUGhxRGtVU0YrSFBMNkNvNWVCUzVPVGp0?=
+ =?utf-8?B?OGhEOFJXdlYvN1ZVM3p5bTJUVmcwT3lIQURvN25YR2ovdjdkUnIwWGFFQm9O?=
+ =?utf-8?B?dHJrRzVZVGQ3eXF5aVlpbTAzUVM5NkpibjFSVit1cDZxZkUwWFViRTRpZTU4?=
+ =?utf-8?B?RnJ0YmJ6b3BqR1lQbGNBcndPZ0RyS3pGZU96ZVIyR2J3TStlMzQ2ZG9wQW8y?=
+ =?utf-8?B?SHU0Q2V2bk1mbGoyK0FBSEhSNDhCZmliZCt0YjFpZDhIOUw4ZmNMejN1VklS?=
+ =?utf-8?B?SitDTWcxSHJ2WncycVNpM1Q3WGxvZlBTWFdzanhsMHVWWFEwVjlYcnNudUhG?=
+ =?utf-8?B?bTRVd2ZQWEt5MVBDYVYzdExEL0NYL0g0UXlybVZVQytVOTNWTjRLeHhzT1Aw?=
+ =?utf-8?B?WmcrUVIrTFlmMTZBRjVEejhmMmtFa0p4N1BJTE5IR0JxNGVnTzh6bUg1RWUy?=
+ =?utf-8?B?M3NlSSthRHdlWGRTNFl1WHIvS0VOaHJEYXlZQlk4clJvQk1JYVdidDNsTE10?=
+ =?utf-8?B?Z04yMXJIQXFLUHNMeTRyTGlSM1RsSFlnbGtseHVNVHlmMHVoOUhsNWgxZHVI?=
+ =?utf-8?B?R000NEhnYm12WE5XZXVXUDloOFdwVzlkSnRRaDNjbDVLT0dNMEtJRnRQMlZL?=
+ =?utf-8?B?VFV5OTk4NS9kOFBMWU1CdVczQzcvRWhDZWNoZTliNURSVXpTQWY0STBaUkZ3?=
+ =?utf-8?B?UzNnM01ndUpYNnQxSDFXdUZNVk1SakxpekNpYWdIQis3RVZXZmpyQ0FPc29v?=
+ =?utf-8?B?THV1cHdwWkh6bHNxYTNjZTZSTDlFQlF0VnV5T0xHSjl6cEVUeXdMZVBFK3VN?=
+ =?utf-8?B?b2FHSDlpZk4zQzA2SDBJOFZ1WHI3SUhXeDZlSTZBNVZDVXA5SmZtK3prckVm?=
+ =?utf-8?B?eXdnbGc5YTJRMHJIWExxenhjYXRvQmx6VE16a2FObkQrMWkwZFMycnNMMnl0?=
+ =?utf-8?B?VlJrVmlMdFk1cUxVdXIzbi9NbUd6TWFzY0hhYmN4UTVOcWpxL1NXd2h3WVhs?=
+ =?utf-8?B?Z1E9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b4ab085-43f5-432f-1ef5-08dda7050a67
+X-MS-Exchange-CrossTenant-AuthSource: CYXPR11MB8729.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2025 03:23:45.3921 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: kXD6CAh20yEcKFbdIWiZzD28C0KX7DY3MsazGuc8Usu9Ea8TSokBDQeCOm6+yxCwqMPi2VZhh9w+ojN4WljcwA==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM3PR11MB8684
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.9; envelope-from=chenyi.qiang@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,333 +218,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 6, 2025 at 5:28=E2=80=AFPM Jay Chang <jay.chang@sifive.com> wro=
-te:
->
-> Previously, the number of PMP regions was hardcoded to 16 in QEMU.
-> This patch replaces the fixed value with a new `pmp_regions` field,
-> allowing platforms to configure the number of PMP regions.
->
-> If no specific value is provided, the default number of PMP regions
-> remains 16 to preserve the existing behavior.
->
-> A new CPU parameter num-pmp-regions has been introduced to the QEMU
-> command line. For example:
->
->         -cpu rv64, g=3Dtrue, c=3Dtrue, pmp=3Dtrue, num-pmp-regions=3D8
->
-> Signed-off-by: Jay Chang <jay.chang@sifive.com>
-> Reviewed-by: Frank Chang <frank.chang@sifive.com>
+Hi Paolo,
 
-Thanks!
+Since this series has received Reviewed-by/Acked-by on all patches,
+besides some coding style comments from Alexey and the suggestion to
+document the bitmap consistency from David in patch #4, Any other
+comments? Or I would send the next version to resolve them.
 
-Applied to riscv-to-apply.next
+Thanks
+Chenyi
 
-Alistair
-
+On 5/30/2025 4:32 PM, Chenyi Qiang wrote:
+> This is the v6 series of the shared device assignment support.
+> 
+> Compared with the last version [1], this series retains the basic support
+> and removes the additional complex error handling, which can be added
+> back when necessary. Meanwhile, the patchset has been re-organized to
+> be clearer.
+> 
+> Overview of this series:
+> 
+> - Patch 1-3: Preparation patches. These include function exposure and
+>   some function prototype changes.
+> - Patch 4: Introduce a new object to implement RamDiscardManager
+>   interface and a helper to notify the shared/private state change.
+> - Patch 5: Enable coordinated discarding of RAM with guest_memfd through
+>   the RamDiscardManager interface.
+> 
+> More small changes or details can be found in the individual patches.
+> 
 > ---
->  target/riscv/cpu.c                | 48 +++++++++++++++++++++++++++++--
->  target/riscv/cpu.h                |  3 +-
->  target/riscv/cpu_cfg_fields.h.inc |  1 +
->  target/riscv/csr.c                |  5 +++-
->  target/riscv/machine.c            |  3 +-
->  target/riscv/pmp.c                | 28 ++++++++++++------
->  6 files changed, 74 insertions(+), 14 deletions(-)
->
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 629ac37501..f4a09ae70f 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1117,6 +1117,7 @@ static void riscv_cpu_init(Object *obj)
->      cpu->cfg.cbom_blocksize =3D 64;
->      cpu->cfg.cbop_blocksize =3D 64;
->      cpu->cfg.cboz_blocksize =3D 64;
-> +    cpu->cfg.pmp_regions =3D 16;
->      cpu->env.vext_ver =3D VEXT_VERSION_1_00_0;
->      cpu->cfg.max_satp_mode =3D -1;
->
-> @@ -1568,6 +1569,46 @@ static const PropertyInfo prop_pmp =3D {
->      .set =3D prop_pmp_set,
->  };
->
-> +static void prop_num_pmp_regions_set(Object *obj, Visitor *v, const char=
- *name,
-> +                                     void *opaque, Error **errp)
-> +{
-> +    RISCVCPU *cpu =3D RISCV_CPU(obj);
-> +    uint8_t value;
-> +
-> +    visit_type_uint8(v, name, &value, errp);
-> +
-> +    if (cpu->cfg.pmp_regions !=3D value && riscv_cpu_is_vendor(obj)) {
-> +        cpu_set_prop_err(cpu, name, errp);
-> +        return;
-> +    }
-> +
-> +    if (cpu->env.priv_ver < PRIV_VERSION_1_12_0 && value > OLD_MAX_RISCV=
-_PMPS) {
-> +        error_setg(errp, "Number of PMP regions exceeds maximum availabl=
-e");
-> +        return;
-> +    } else if (value > MAX_RISCV_PMPS) {
-> +        error_setg(errp, "Number of PMP regions exceeds maximum availabl=
-e");
-> +        return;
-> +    }
-> +
-> +    cpu_option_add_user_setting(name, value);
-> +    cpu->cfg.pmp_regions =3D value;
-> +}
-> +
-> +static void prop_num_pmp_regions_get(Object *obj, Visitor *v, const char=
- *name,
-> +                                     void *opaque, Error **errp)
-> +{
-> +    uint8_t value =3D RISCV_CPU(obj)->cfg.pmp_regions;
-> +
-> +    visit_type_uint8(v, name, &value, errp);
-> +}
-> +
-> +static const PropertyInfo prop_num_pmp_regions =3D {
-> +    .type =3D "uint8",
-> +    .description =3D "num-pmp-regions",
-> +    .get =3D prop_num_pmp_regions_get,
-> +    .set =3D prop_num_pmp_regions_set,
-> +};
-> +
->  static int priv_spec_from_str(const char *priv_spec_str)
->  {
->      int priv_version =3D -1;
-> @@ -2567,6 +2608,7 @@ static const Property riscv_cpu_properties[] =3D {
->
->      {.name =3D "mmu", .info =3D &prop_mmu},
->      {.name =3D "pmp", .info =3D &prop_pmp},
-> +    {.name =3D "num-pmp-regions", .info =3D &prop_num_pmp_regions},
->
->      {.name =3D "priv_spec", .info =3D &prop_priv_spec},
->      {.name =3D "vext_spec", .info =3D &prop_vext_spec},
-> @@ -2937,7 +2979,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.max_satp_mode =3D VM_1_10_MBARE,
->          .cfg.ext_zifencei =3D true,
->          .cfg.ext_zicsr =3D true,
-> -        .cfg.pmp =3D true
-> +        .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8
->      ),
->
->      DEFINE_ABSTRACT_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_U, TYPE_RISCV_VENDOR=
-_CPU,
-> @@ -2948,7 +2991,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
->          .cfg.ext_zifencei =3D true,
->          .cfg.ext_zicsr =3D true,
->          .cfg.mmu =3D true,
-> -        .cfg.pmp =3D true
-> +        .cfg.pmp =3D true,
-> +        .cfg.pmp_regions =3D 8
->      ),
->
->  #if defined(TARGET_RISCV32) || \
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 229ade9ed9..67323a7d9d 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -159,7 +159,8 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_impli=
-ed_rules[];
->
->  #define MMU_USER_IDX 3
->
-> -#define MAX_RISCV_PMPS (16)
-> +#define MAX_RISCV_PMPS (64)
-> +#define OLD_MAX_RISCV_PMPS (16)
->
->  #if !defined(CONFIG_USER_ONLY)
->  #include "pmp.h"
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
-lds.h.inc
-> index 59f134a419..33c4f9bac8 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -163,6 +163,7 @@ TYPED_FIELD(uint16_t, elen, 0)
->  TYPED_FIELD(uint16_t, cbom_blocksize, 0)
->  TYPED_FIELD(uint16_t, cbop_blocksize, 0)
->  TYPED_FIELD(uint16_t, cboz_blocksize, 0)
-> +TYPED_FIELD(uint8_t,  pmp_regions, 0)
->
->  TYPED_FIELD(int8_t, max_satp_mode, -1)
->
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index d6cd441133..6296ecd1e1 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -738,7 +738,10 @@ static RISCVException dbltrp_hmode(CPURISCVState *en=
-v, int csrno)
->  static RISCVException pmp(CPURISCVState *env, int csrno)
->  {
->      if (riscv_cpu_cfg(env)->pmp) {
-> -        if (csrno <=3D CSR_PMPCFG3) {
-> +        int max_pmpcfg =3D (env->priv_ver >=3D PRIV_VERSION_1_12_0) ?
-> ++                              CSR_PMPCFG15 : CSR_PMPCFG3;
-> +
-> +        if (csrno <=3D max_pmpcfg) {
->              uint32_t reg_index =3D csrno - CSR_PMPCFG0;
->
->              /* TODO: RV128 restriction check */
-> diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-> index c97e9ce9df..1600ec44f0 100644
-> --- a/target/riscv/machine.c
-> +++ b/target/riscv/machine.c
-> @@ -36,8 +36,9 @@ static int pmp_post_load(void *opaque, int version_id)
->      RISCVCPU *cpu =3D opaque;
->      CPURISCVState *env =3D &cpu->env;
->      int i;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          pmp_update_rule_addr(env, i);
->      }
->      pmp_update_rule_nums(env);
-> diff --git a/target/riscv/pmp.c b/target/riscv/pmp.c
-> index 5af295e410..3540327c9a 100644
-> --- a/target/riscv/pmp.c
-> +++ b/target/riscv/pmp.c
-> @@ -122,7 +122,9 @@ uint32_t pmp_get_num_rules(CPURISCVState *env)
->   */
->  static inline uint8_t pmp_read_cfg(CPURISCVState *env, uint32_t pmp_inde=
-x)
->  {
-> -    if (pmp_index < MAX_RISCV_PMPS) {
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
-> +
-> +    if (pmp_index < pmp_regions) {
->          return env->pmp_state.pmp[pmp_index].cfg_reg;
->      }
->
-> @@ -136,7 +138,9 @@ static inline uint8_t pmp_read_cfg(CPURISCVState *env=
-, uint32_t pmp_index)
->   */
->  static bool pmp_write_cfg(CPURISCVState *env, uint32_t pmp_index, uint8_=
-t val)
->  {
-> -    if (pmp_index < MAX_RISCV_PMPS) {
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
-> +
-> +    if (pmp_index < pmp_regions) {
->          if (env->pmp_state.pmp[pmp_index].cfg_reg =3D=3D val) {
->              /* no change */
->              return false;
-> @@ -236,9 +240,10 @@ void pmp_update_rule_addr(CPURISCVState *env, uint32=
-_t pmp_index)
->  void pmp_update_rule_nums(CPURISCVState *env)
->  {
->      int i;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
->      env->pmp_state.num_rules =3D 0;
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          const uint8_t a_field =3D
->              pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg);
->          if (PMP_AMATCH_OFF !=3D a_field) {
-> @@ -332,6 +337,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr ad=
-dr,
->      int pmp_size =3D 0;
->      hwaddr s =3D 0;
->      hwaddr e =3D 0;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
->      /* Short cut if no rules */
->      if (0 =3D=3D pmp_get_num_rules(env)) {
-> @@ -356,7 +362,7 @@ bool pmp_hart_has_privs(CPURISCVState *env, hwaddr ad=
-dr,
->       * 1.10 draft priv spec states there is an implicit order
->       * from low to high
->       */
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          s =3D pmp_is_in_range(env, i, addr);
->          e =3D pmp_is_in_range(env, i, addr + pmp_size - 1);
->
-> @@ -527,8 +533,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
-ddr_index,
->  {
->      trace_pmpaddr_csr_write(env->mhartid, addr_index, val);
->      bool is_next_cfg_tor =3D false;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
-> -    if (addr_index < MAX_RISCV_PMPS) {
-> +    if (addr_index < pmp_regions) {
->          if (env->pmp_state.pmp[addr_index].addr_reg =3D=3D val) {
->              /* no change */
->              return;
-> @@ -538,7 +545,7 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
-ddr_index,
->           * In TOR mode, need to check the lock bit of the next pmp
->           * (if there is a next).
->           */
-> -        if (addr_index + 1 < MAX_RISCV_PMPS) {
-> +        if (addr_index + 1 < pmp_regions) {
->              uint8_t pmp_cfg =3D env->pmp_state.pmp[addr_index + 1].cfg_r=
-eg;
->              is_next_cfg_tor =3D PMP_AMATCH_TOR =3D=3D pmp_get_a_field(pm=
-p_cfg);
->
-> @@ -573,8 +580,9 @@ void pmpaddr_csr_write(CPURISCVState *env, uint32_t a=
-ddr_index,
->  target_ulong pmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
->  {
->      target_ulong val =3D 0;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
-> -    if (addr_index < MAX_RISCV_PMPS) {
-> +    if (addr_index < pmp_regions) {
->          val =3D env->pmp_state.pmp[addr_index].addr_reg;
->          trace_pmpaddr_csr_read(env->mhartid, addr_index, val);
->      } else {
-> @@ -592,6 +600,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulo=
-ng val)
->  {
->      int i;
->      uint64_t mask =3D MSECCFG_MMWP | MSECCFG_MML;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->      /* Update PMM field only if the value is valid according to Zjpm v1.=
-0 */
->      if (riscv_cpu_cfg(env)->ext_smmpm &&
->          riscv_cpu_mxl(env) =3D=3D MXL_RV64 &&
-> @@ -603,7 +612,7 @@ void mseccfg_csr_write(CPURISCVState *env, target_ulo=
-ng val)
->
->      /* RLB cannot be enabled if it's already 0 and if any regions are lo=
-cked */
->      if (!MSECCFG_RLB_ISSET(env)) {
-> -        for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +        for (i =3D 0; i < pmp_regions; i++) {
->              if (pmp_is_locked(env, i)) {
->                  val &=3D ~MSECCFG_RLB;
->                  break;
-> @@ -659,6 +668,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwa=
-ddr addr)
->      hwaddr tlb_sa =3D addr & ~(TARGET_PAGE_SIZE - 1);
->      hwaddr tlb_ea =3D tlb_sa + TARGET_PAGE_SIZE - 1;
->      int i;
-> +    uint8_t pmp_regions =3D riscv_cpu_cfg(env)->pmp_regions;
->
->      /*
->       * If PMP is not supported or there are no PMP rules, the TLB page w=
-ill not
-> @@ -669,7 +679,7 @@ target_ulong pmp_get_tlb_size(CPURISCVState *env, hwa=
-ddr addr)
->          return TARGET_PAGE_SIZE;
->      }
->
-> -    for (i =3D 0; i < MAX_RISCV_PMPS; i++) {
-> +    for (i =3D 0; i < pmp_regions; i++) {
->          if (pmp_get_a_field(env->pmp_state.pmp[i].cfg_reg) =3D=3D PMP_AM=
-ATCH_OFF) {
->              continue;
->          }
-> --
-> 2.48.1
->
->
+> 
+> Background
+> ==========
+> Confidential VMs have two classes of memory: shared and private memory.
+> Shared memory is accessible from the host/VMM while private memory is
+> not. Confidential VMs can decide which memory is shared/private and
+> convert memory between shared and private at runtime.
+> 
+> "guest_memfd" is a new kind of fd whose primary goal is to serve guest
+> private memory. In current implementation, shared memory is allocated
+> with normal methods (e.g. mmap or fallocate) while private memory is
+> allocated from guest_memfd. When a VM performs memory conversions, QEMU
+> frees pages via madvise or via PUNCH_HOLE on memfd or guest_memfd from
+> one side, and allocates new pages from the other side. This will cause a
+> stale IOMMU mapping issue mentioned in [2] when we try to enable shared
+> device assignment in confidential VMs.
+> 
+> Solution
+> ========
+> The key to enable shared device assignment is to update the IOMMU mappings
+> on page conversion. RamDiscardManager, an existing interface currently
+> utilized by virtio-mem, offers a means to modify IOMMU mappings in
+> accordance with VM page assignment. Page conversions is similar to
+> hot-removing a page in one mode and adding it back in the other.
+> 
+> This series implements a RamDiscardmanager for confidential VMs and
+> utilizes its infrastructure to notify VFIO of page conversions.
+> 
+> Limitation and future extension
+> ===============================
+> This series only supports the basic shared device assignment functionality.
+> There are still some limitations and areas that can be extended and
+> optimized in the future.
+> 
+> Relationship with in-place conversion
+> -------------------------------------
+> In-place page conversion is the ongoing work to allow mmap() of
+> guest_memfd to userspace so that both private and shared memory can use
+> the same physical memory as the backend. This new design eliminates the
+> need to discard pages during shared/private conversions. When it is
+> ready, shared device assignment needs be adjusted to achieve an
+> unmap-before-conversion-to-private and map-after-conversion-to-shared
+> sequence to be compatible with the change.
+> 
+> Partial unmap limitation
+> ------------------------
+> VFIO expects the DMA mapping for a specific IOVA to be mapped and
+> unmapped with the same granularity. The guest may perform partial
+> conversion, such as converting a small region within a larger one. To
+> prevent such invalid cases, current operations are performed with 4K
+> granularity. This could be optimized after DMA mapping cut operation
+> [3] is introduced in the future. We can always perform a
+> split-before-unmap if partial conversions happens. If the split
+> succeeds, the unmap will succeed and be atomic. If the split fails, the
+> unmap process fails.
+> 
+> More attributes management
+> --------------------------
+> Current RamDiscardManager can only manage a pair of opposite states like
+> populated/discared or shared/private. If more states need to be
+> considered, for example, support virtio-mem in confidential VMs, three
+> states would be possible (shared populated/private populated/discard).
+> Current framework cannot handle such scenario and we need to think of
+> some new framework at that time [4].
+> 
+> Memory overhead optimization
+> ----------------------------
+> A comment from Baolu [5] suggests considering using Maple Tree or a generic
+> interval tree to manage private/shared state instead of a bitmap, which
+> can reduce memory consumption. This optmization can also be considered
+> in other bitmap use cases like dirty bitmaps for guest RAM.
+> 
+> Testing
+> =======
+> This patch series is tested based on mainline kernel since TDX base
+> support has been merged. The QEMU repo is available at
+> QEMU: https://github.com/intel-staging/qemu-tdx/tree/tdx-upstream-snapshot-2025-05-30-v2
+> 
+> To facilitate shared device assignment with the NIC, employ the legacy
+> type1 VFIO with the QEMU command:
+> 
+> qemu-system-x86_64 [...]
+>     -device vfio-pci,host=XX:XX.X
+> 
+> The parameter of dma_entry_limit needs to be adjusted. For example, a
+> 16GB guest needs to adjust the parameter like
+> vfio_iommu_type1.dma_entry_limit=4194304.
+> 
+> If use the iommufd-backed VFIO with the qemu command:
+> 
+> qemu-system-x86_64 [...]
+>     -object iommufd,id=iommufd0 \
+>     -device vfio-pci,host=XX:XX.X,iommufd=iommufd0
+> 
+> 
+> Because the new features like cut_mapping operation will only be support in iommufd.
+> It is more recommended to use the iommufd-backed VFIO.
+> 
+> Related link
+> ============
+> [1] https://lore.kernel.org/qemu-devel/20250520102856.132417-1-chenyi.qiang@intel.com/
+> [2] https://lore.kernel.org/qemu-devel/20240423150951.41600-54-pbonzini@redhat.com/
+> [3] https://lore.kernel.org/linux-iommu/0-v2-5c26bde5c22d+58b-iommu_pt_jgg@nvidia.com/
+> [4] https://lore.kernel.org/qemu-devel/d1a71e00-243b-4751-ab73-c05a4e090d58@redhat.com/
+> [5] https://lore.kernel.org/qemu-devel/013b36a9-9310-4073-b54c-9c511f23decf@linux.intel.com/
+> 
+> Chenyi Qiang (5):
+>   memory: Export a helper to get intersection of a MemoryRegionSection
+>     with a given range
+>   memory: Change memory_region_set_ram_discard_manager() to return the
+>     result
+>   memory: Unify the definiton of ReplayRamPopulate() and
+>     ReplayRamDiscard()
+>   ram-block-attributes: Introduce RamBlockAttributes to manage RAMBlock
+>     with guest_memfd
+>   physmem: Support coordinated discarding of RAM with guest_memfd
+> 
+>  MAINTAINERS                   |   1 +
+>  accel/kvm/kvm-all.c           |   9 +
+>  hw/virtio/virtio-mem.c        |  83 +++---
+>  include/system/memory.h       | 100 +++++--
+>  include/system/ramblock.h     |  22 ++
+>  migration/ram.c               |   5 +-
+>  system/memory.c               |  22 +-
+>  system/meson.build            |   1 +
+>  system/physmem.c              |  18 +-
+>  system/ram-block-attributes.c | 480 ++++++++++++++++++++++++++++++++++
+>  system/trace-events           |   3 +
+>  11 files changed, 660 insertions(+), 84 deletions(-)
+>  create mode 100644 system/ram-block-attributes.c
+> 
+
 
