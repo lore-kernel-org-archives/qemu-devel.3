@@ -4,102 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E83CBC5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 15:21:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0C24C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 15:32:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOeIy-0002Gx-Pw; Mon, 09 Jun 2025 11:20:56 -0400
+	id 1uOeU5-0005Vn-5C; Mon, 09 Jun 2025 11:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uOeIw-0002Gb-JX
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 11:20:54 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uOeIu-0005EC-Uy
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 11:20:54 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-ad51ba0af48so1023384666b.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 08:20:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749482450; x=1750087250; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RoJBL9/VH36x7L7yxNUA09PGKcLBXC7kOFv0XLXZ1Uw=;
- b=IcwYeBma9ZROPxaBcK6Hcg3vQDUqboSkPqwtBq3FOVusg2c5wCUmtaFvB7lAMD5Bby
- iXABk6l+5ecPyqS9rLQThft8Ti/NfgDrKJwq0aF4cRbEb30a2SqemyPbNe/WWBKebb3d
- SwTfQMV0yPZfEfDQBtp3BN0UToNTeLtDoSwFvskXdksEB1pCs/yMlobLVTl6pXVo1rEm
- GhEFtiQK1Q+8JsEBroNo3MHnHDYIaCw4sLGDGN1tonYWMI5iGoY3K6viO84NG2nADr1t
- PwryPfeYpTdKidC0aDFiOLb5qHLCi7FbtzIwEmYeNOiXNM1BLiYinHzuXRpZkHHc0/gC
- LVTQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749482450; x=1750087250;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RoJBL9/VH36x7L7yxNUA09PGKcLBXC7kOFv0XLXZ1Uw=;
- b=Xxdk9N6ztQxWRcTjN1/HS3pWagTrALD7UyRvebDNZP4fdYrNTwmNK0xRl44JSDs9M8
- 0Yjn8OtaCcMXFuq1eSb9gN24KRr03D1ZOLFi+IyjR2oQzYvEy5fjwMDbVOvYyIyvGRxI
- uek5kNpLvWlLkbHkH2Gl7Km9Y2XGfdaOF2/6LYi66PAC+EvW9dYMoxue/L7a40+0CBfN
- cAxi5l0k+rALcdYnFA6Wfh3nY+9Up2ODhywcy2bIHj0q6Ayl8NFFZZrmzHFEDXsyAC+6
- TSJrowvLb5kO1+kUgkzpBLmMJGVtEUd9akgACZFCxaEyCA1UtP3xQELo8hp5nkk9g2ee
- VE+A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUvJJ2BcJ5ZweTO2dmB0FBrvUKDd6l1TMN4hTdxTo8zz/KrjZRSeZeqEgQInBXlr240ielAjxjGtGC9@nongnu.org
-X-Gm-Message-State: AOJu0YzJ67IFd5ozbi7esoiujN5hve0NjbOjDcTXgKUCE0H4G6Q1h0GN
- jF/vgbwVBUbiTNO1k/AK6vyAMLLIWZTBOPyEbQ0SBXBQbo4VsR8VNsKsduEGAHbQYzQ=
-X-Gm-Gg: ASbGncvAtHdhpZi/rWN4TmShdpFwd21+56PoTOqU4CDFGuB9TaLXHVckS1Y9tzX/ut1
- B1jgKN31oDvO/sXZNvX9d4aA73giYu0GkgofkkkA4AqfWc7DKZg1KjZiaw3UnLh/do01yY/uRdL
- 3pGchj6iCFjwPceqE5wjbOQiz8cs7pOutCzI+Vv8ilbV1HehWcfXNCbBP2M2t7I7RhltiipsS/G
- d+GJiEiByCGJRagQLob8rz6pGDcTEuLY1dGexNCnm0hlDyJdLaMKuWk8/KgfRp9nsErVTfsR8W2
- CPnQ8Qn96oiViY1cgMioULdvnnirP4QBIQgkaVSAyKkf2KBQvOsMhRwbifk6aa0=
-X-Google-Smtp-Source: AGHT+IFqlmC+qud0pH413xd/2V3+GqO4o+Av7iF7f2pkxY41nByWHywUEKrcxAjaDXmIApwM6Nap2w==
-X-Received: by 2002:a17:907:7f03:b0:ad8:ace9:e280 with SMTP id
- a640c23a62f3a-ade75f6263bmr29870466b.5.1749482450079; 
- Mon, 09 Jun 2025 08:20:50 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ade1dc7c765sm571607466b.178.2025.06.09.08.20.49
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 08:20:49 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 849BE5F8A4;
- Mon, 09 Jun 2025 16:20:48 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: Julian Ganz <neither@nut.email>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Mahmoud Mandour <ma.mandourr@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,  Eduardo Habkost
- <eduardo@habkost.net>,  Yanan Wang <wangyanan55@huawei.com>,  Pierrick
- Bouvier <pierrick.bouvier@linaro.org>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Zhao Liu <zhao1.liu@intel.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Alexandre Iooss
- <erdnaxe@crans.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v9 3/9] plugins: Add enforcement of QEMU_PLUGIN_CB flags
- in register R/W callbacks
-In-Reply-To: <CAE5MsNZG2S2s=bqJ_kAj=p65_mNf7s0UTpAN1vt75iwm2+YD8A@mail.gmail.com>
- (Rowan Hart's message of "Mon, 9 Jun 2025 07:55:18 -0700")
-References: <20250608230819.3382527-1-rowanbhart@gmail.com>
- <20250608230819.3382527-4-rowanbhart@gmail.com>
- <20250609135636.22368-1-neither@nut.email>
- <CAE5MsNZG2S2s=bqJ_kAj=p65_mNf7s0UTpAN1vt75iwm2+YD8A@mail.gmail.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Mon, 09 Jun 2025 16:20:48 +0100
-Message-ID: <87ikl5kkkv.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uOeU3-0005Vc-5j
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 11:32:23 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uOeU0-0006UT-Cc
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 11:32:22 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 559D8bT5015039;
+ Mon, 9 Jun 2025 15:32:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=VB/DCi
+ obJWyUhyq0EE93TEWuPSYXNmdhqVHxNtxB6c8=; b=nUpnTqFUCNl5+w05y95ENg
+ dK2C6pSqoSm9A6g4sGxq9jzucYdnCSCOIe0FwlF8uq7qWi9Y/QO/7MpYMrxQI2xt
+ 8p5hsRZsNBK/JkLdQEaRstzkq2xngp0vF30Jl/UxImPFTD9kzDQ0Qr5tkZA4ALom
+ Ku1toSYTxCOBDZrVK5lEGmW6GRzEfZPuLCuP+yfCfOCicM0cHfRTd1ACWjW5E72+
+ PXLqwAamU1vhHEiGYnCoOwudpjsK5rzBq6hyG+DgH3tU7p/Br9q3phf/2wl9uAyG
+ +n7jXS1jjOh/nUBgZi4IFKaNP5joLF029IUDwgtAXQ5KhOcvGyYHM85RvLn9Feaw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474hhdrp1e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 15:32:17 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 559DMY9I015180;
+ Mon, 9 Jun 2025 15:32:16 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 474yrt6hg7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 15:32:16 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 559FWGaM21824060
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Jun 2025 15:32:16 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 508CF58069;
+ Mon,  9 Jun 2025 15:32:16 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BD5EB5805D;
+ Mon,  9 Jun 2025 15:32:15 +0000 (GMT)
+Received: from [9.61.254.209] (unknown [9.61.254.209])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Jun 2025 15:32:15 +0000 (GMT)
+Message-ID: <8d8b48eb-32d1-4263-bb19-14179b82ee9a@linux.ibm.com>
+Date: Mon, 9 Jun 2025 10:32:13 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
+ connecting
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
+ jjherne@linux.ibm.com, peterx@redhat.com, farosas@suse.de
+References: <aEMR6Xjs8tRJ8_sp@redhat.com>
+ <b2d90921-0991-4a57-a141-ad0c830f8618@oracle.com>
+ <5f211f67-17f7-4b1d-a60a-4ff62645fbfa@linux.ibm.com>
+ <ad638089-af36-4f3e-8f3d-61549e9bed06@oracle.com>
+ <aEaWC_Lc6c1g821f@redhat.com>
+ <f46393bb-115a-489f-aa8d-08348e89d25e@oracle.com>
+ <aEbfuM681MJh2S-b@redhat.com>
+ <881cb07a-95c7-4f3b-8012-352873e88d64@oracle.com>
+ <aEbmvQXyCLMKSy_8@redhat.com>
+ <45458e9f-ef59-43e3-abd6-5d923575afa4@linux.ibm.com>
+ <aEb2aaOpn4aahXcM@redhat.com>
+Content-Language: en-US
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <aEb2aaOpn4aahXcM@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=DLGP4zNb c=1 sm=1 tr=0 ts=6846fe81 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=dqTSvHTbF_JwFlo1G-AA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: bJUP_hMS8yxoPweCFNxSAu04Z5oG22jg
+X-Proofpoint-ORIG-GUID: bJUP_hMS8yxoPweCFNxSAu04Z5oG22jg
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDExMyBTYWx0ZWRfX93YPJgPdEIjQ
+ pVZEUxIbl0f+nv4iz8sDXSFbCOcr2UlmqOvDppzgJhsXiuWqOFsUmtZgyqJuwMbxpKbhff17R/+
+ Vs2JkL6CIGFOd5+uLhg8CDeuBTL7q5Zd4lnjl4e1kUnXzHixdloMZYpoU8kspDZjJ0madBvmuuo
+ NgK+A481BHddlWc/73XP13KU59AQnbIHhnjTx+z0aVl8pSGEP7fewumFhlScfUJVOR1b4f0uf6w
+ n/QEBWMT33eRcgHq3NKOVT5VJXoKeU34xGx7rJ71gnQ46SObq4QChgqXVY4NbiYK0ecyiXLBhUr
+ 1Ci+1t7+SBwErFF8x/SrUfuDW3uPrzkEvDp2YIpXRoCgPAvfHPrih76gcm5SLmeq4D+1Yq8Rqex
+ iDQTvtKxklTnIr1jbI0/Wc74vB4Mg7RYv+a1kruiF8JEDmHFxybfHTG+ZhvVpNrm8R7zCrrV
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_05,2025-06-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 mlxlogscore=999 lowpriorityscore=0 clxscore=1015
+ adultscore=0 mlxscore=0 spamscore=0 bulkscore=0 impostorscore=0
+ suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506090113
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,43 +134,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rowan Hart <rowanbhart@gmail.com> writes:
 
->  However, it should be safe at least for a subset of those callbacks and
+On 6/9/2025 9:57 AM, Daniel P. Berrangé wrote:
+> On Mon, Jun 09, 2025 at 09:54:02AM -0500, JAEHOON KIM wrote:
+>> On 6/9/2025 8:50 AM, Daniel P. Berrangé wrote:
+>>> On Mon, Jun 09, 2025 at 09:39:48AM -0400, Steven Sistare wrote:
+>>>> On 6/9/2025 9:20 AM, Daniel P. Berrangé wrote:
+>>>>> On Mon, Jun 09, 2025 at 09:12:27AM -0400, Steven Sistare wrote:
+>>>>>> On 6/9/2025 4:06 AM, Daniel P. Berrangé wrote:
+>>>>>>> On Fri, Jun 06, 2025 at 03:37:56PM -0400, Steven Sistare wrote:
+>>>>>>>> The easiest solution, with no interface changes, is adding wait_for_socket() in qtest,
+>>>>>>>> with this addition from Daniel:
+>>>>>>>>
+>>>>>>>>       "With the busy wait you risk looping forever if the child (target) QEMU
+>>>>>>>>       already exited for some reason without ever creating the socket. You
+>>>>>>>>       can mitigate this by using 'kill($PID, 0)' in the loop and looking
+>>>>>>>>       for -ERSCH, but this only works if you know the pid involved."
+>>>>>>>>
+>>>>>>>> Daniel also suggested:
+>>>>>>>>       "For the tests, passing a pre-opened UNIX socket FD could work"
+>>>>>>>>
+>>>>>>>> Note we can not use any of the standard chardev options to specify such a socket,
+>>>>>>>> because the cpr socket is created before chardevs are created.
+>>>>>>>>
+>>>>>>>> Perhaps we could specify the fd in an extension of the MigrationChannel MigrationAddress.
+>>>>>>>> { 'union': 'MigrationAddress',
+>>>>>>>>       'base': { 'transport' : 'MigrationAddressType'},
+>>>>>>>>       'discriminator': 'transport',
+>>>>>>>>       'data': {
+>>>>>>>>         'socket': 'SocketAddress',
+>>>>>>>>         'exec': 'MigrationExecCommand',
+>>>>>>>>         'rdma': 'InetSocketAddress',
+>>>>>>>>         'file': 'FileMigrationArgs',
+>>>>>>>>         'fd':   'FdMigrationArgs' } }           <-- add this
+>>>>>>>>
+>>>>>>>> That would be useful for all clients, but this is asking a lot from you,
+>>>>>>>> when you are just trying to fix the tests.
+>>>>>>> Note, 'SocketAddress' already has an option for declaring a FD that
+>>>>>>> represents a socket.
+>>>>>> Yes, but if I understand, you proposed passing an fd that represents a
+>>>>>> pre-listened socket, which requires target qemu to accept() first.  The
+>>>>>> existing FdSocketAddress is ready to read.  We could add a boolean to enable
+>>>>>> the new behavior.
+>>>>> It can do both actually - it depends on what APIs the QEMU uses the
+>>>>> SocketAddress with.
+>>>>>
+>>>>> If it is used with qio_channel_socket_connect* the FD must be an
+>>>>> active peer connection.
+>>>>>
+>>>>> If it is used with qio_channel_socket_listen*/qio_net_listener* the
+>>>>> FD must be listener socket.
+>>>> Fair enough.  cpr currently listens here, and we could add a case for the FD:
+>>>>
+>>>>     QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
+>>>>     {
+>>>>       MigrationAddress *addr = channel->addr;
+>>>>
+>>>>       if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
+>>>>           addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
+>>>>           ...
+>>>>           g_autoptr(QIONetListener) listener = qio_net_listener_new();
+>>>>
+>>>> Or to use my socketpair() suggestion, that function would also need changes,
+>>>> calling qio_channel_socket_connect.
+>>>>
+>>>> Which do you think is better for clients -- socketpair or pre-listened?
+>>> Please just use the existing SocketAddress functionality, as that's used
+>>> throughout QEMU - a special case with socketpair for migration is not
+>>> desirable.
+>>>
+>>> The SocketAddress stuff is what libvirt's used for many years now to
+>>> address the race condition with QMP listeners.
+>> Dear Daniel and Steve,
+>>
+>> Thank you both for your valuable insights.
+>>
+>> To clarify regarding the socket handling approach:
+>> If I do not use socketpair() and instead pass a pre-listened FD to the target, which then calls accept(),
+>> it seems this could mitigate some race condition. However, isn't there still a risk that the old QEMU might try to
+>> connect before the target QEMU calls accept(), thereby resulting in the same race condition?
+> No, that's fine. The kernel will queue all incoming connections
+> until accept() is called. So essentially the source QEMU connect()
+> will get blocked until dst QEMU accept()s, which is exactly the
+> semantics we want.
 >
->  I believe there are very valid use-cases for allowing such usage. For
->  example, we are currently working on a plugin API exposing traps. In
->  those callbacks, users may want to peek at some registers such as
->  "ecause" and "tval" (on RISC-V). We certainly will want to do so for the
->  use-case we are pushing that API for.
->
->  We could add a QEMU_PLUGIN_CB flag parameter to the respective
->  registration functions. But since they are not run from translated
->  blocks but _outside_ that context, I feel they would just clutter the
->  API without introducing any real benefit. That is, if there is no valid
->  safety or correctness concern that I'm not aware of.
->
-> This makes sense, I think we could just set QEMU_PLUGIN_CB_RW_REGS for th=
-ese callbacks if they're always called in a state
-> where the stated requirements are met (I think they are). This would avoi=
-d breaking compatibility while maintaining the
-> functionality. Same as you, I looked around and it seems like the vcpu_(i=
-nit|idle|exit) locations are definitely okay, I'll check
-> into the tb_trans callback, I'm not entirely sure about it.
+> With regards,
+> Daniel
+Thank you for the clarification.
 
-It should be OK here too.
+If, as you said, the kernel queues incoming connections until accept() 
+is called, then the race condition should not occur.
+I'll take this approach into consideration.
 
-The CB_RW_REGS flags are only needed for callback from within the
-translated code - much like their cousins the TCG helpers. All register
-state should rectified if we are no longer running translated code -
-indeed currently it is rectified by the time we leave the translated
-block and before we start the next one.
+- Jaehoon Kim.
 
-There are some edge cases when we handle exceptions but we should have
-fixed up any register state before we longjmp back to the start of the
-run loop.
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
