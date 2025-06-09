@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9794CC5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:13:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80501C61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:13:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOhvu-0006OE-C8; Mon, 09 Jun 2025 15:13:22 -0400
+	id 1uOhvk-0006LP-Tf; Mon, 09 Jun 2025 15:13:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhvs-0006NW-4A
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:13:20 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhvh-0006Kg-06
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:13:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhvk-0000pj-De
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:13:19 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhve-0000ob-RQ
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:13:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749496391;
+ s=mimecast20190719; t=1749496385;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IV12Wf4LkVZLaVKBOcF5oGfPlhOljDoxLX6j8/o5TFE=;
- b=X6pvGyzzoNgKYnB87uHW1fAW643oRKWvN06UEhFOpN+Oyx4IsridfqtFoHhmraGUAJPFUR
- ChKI2Sq2QBT1P43OVRdPvTggwQoKmVnDqo/Vzv6SSRd0Gg/KyuUdwxX32V7nkBr0XgAnON
- d196OvSsQTQKJIcTZQBZSjV4TtQ6WYg=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=U8CTxz+21qcNLENbNka1N6PoXA41RrpTkAYYixXhEq4=;
+ b=MP3XuzjMlJeQHhP+5GQL3ttBmo155AShUo36lR/0oIkvMXtts8AQMTnaDJjFil+3A6go7T
+ ZHVNpZO43oojJU9hi4rWHxwoOAv7eShLqWnbqzq4bsEVXHWU11nItYzQZ9FNgiogFlIEtD
+ PJSVkxeUJHlM97SaKVddlBB94XnsRHM=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-284-SIdxoNnUMpKjuvpUR4SZTw-1; Mon, 09 Jun 2025 15:13:10 -0400
-X-MC-Unique: SIdxoNnUMpKjuvpUR4SZTw-1
-X-Mimecast-MFC-AGG-ID: SIdxoNnUMpKjuvpUR4SZTw_1749496390
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7d21fc72219so323009185a.1
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:13:10 -0700 (PDT)
+ us-mta-590-DJK1UVaROgqq2UYIVaBcFA-1; Mon, 09 Jun 2025 15:13:04 -0400
+X-MC-Unique: DJK1UVaROgqq2UYIVaBcFA-1
+X-Mimecast-MFC-AGG-ID: DJK1UVaROgqq2UYIVaBcFA_1749496384
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-6fad5f1e70fso88543456d6.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:13:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749496390; x=1750101190;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=IV12Wf4LkVZLaVKBOcF5oGfPlhOljDoxLX6j8/o5TFE=;
- b=jpJ5SKw02yN0Ughaw8dit/RP79MDD+/RLrQeELrON1GnZrpqSwWpBnbtcIEZqPkIRJ
- 4qzifEQoQSfSUPlI7bNB2CHOJf8P2gjVZOTvRNIWYjb9kDq/pi+ynkKENpQ1vHbADBkX
- A8ZyMdbW9h1loZbFKsNoGZ3Frpt8EFdNP6syxGmsN6dNK3odLeUFhhR3s7dxLVkrE/vO
- 4yu9qRXdkaHwupuDKTrmx1O4SKyLwjJVSltd45dv5oZdrqCpapDx6AGdXmKPfbYAqsXb
- bPWcW8mFrhNlGdtz+h1d/g6eHaMprOHMo3hfS1wbMZsK+DP8tGZ8ppemEFj/KiA0l/pb
- 3m3w==
-X-Gm-Message-State: AOJu0YwqIHa9gX8jh0Bm3RaUDeRYpn1USUXtBDtOU7Hx4RtaqvV8cFPe
- uhAJbfRgKUN05am7Lw3gfq8wbdMN5eKL2LeXFWASW2zZf2vC5893mtgtS2f+rHccmZA4wpYSjih
- 3+AhXb7ZSd1/uhHBszBRgq8VkQDqgq6jBbSSpKZXiYpzFrnno0lJgnfPEFgIQ8gufpP6fiW0Ero
- +HTiEmBOdKQLeG0oOsk2WQC65Pz90COvgrDm4YDQ==
-X-Gm-Gg: ASbGncuokVPaW2/Fo/feF7lhiCRrcwYGavDOD8efMT97/jL2f5elpGwO0CCNm+AcrgY
- XZpAtsTB474cxfpNuvf1/Pc8tJwpoqnszUDUpSiD6+hFzI0rUJ14b49ugDVPjNImh59SXf3RmRW
- 85NvNS7pf1QGXEhW3WOuSP71+e7+qv7jL6dr0IsoYkk0Kxz1lUR2zNJbHaJeSF0Wnta2wqviQFL
- Iu+hao7WoLd22nwJ1Gqv6p1gb78daGI5xnE2BpyNLKwgoL4IgBVe9ffYz45P9hLwU6FYk3OoyZ/
- LaA=
-X-Received: by 2002:a05:620a:2496:b0:7c5:6678:ab18 with SMTP id
- af79cd13be357-7d2299b1ebdmr2006940585a.42.1749496389800; 
- Mon, 09 Jun 2025 12:13:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG0Qsb1PKl+U09/IS69Dg7ONXcI42UiKTGzh4v1Eb2J5b1ZHxDhEP85ILim6lKoIDT+j1Ihkw==
-X-Received: by 2002:a05:620a:2496:b0:7c5:6678:ab18 with SMTP id
- af79cd13be357-7d2299b1ebdmr2006936185a.42.1749496389390; 
- Mon, 09 Jun 2025 12:13:09 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749496383; x=1750101183;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=U8CTxz+21qcNLENbNka1N6PoXA41RrpTkAYYixXhEq4=;
+ b=FU8ZDNThHp7XPtmSb97XFuEpRLsXxthvkE1avdusKWeQh9nVn9+lFHpsGpToV1PxbA
+ Y+fIbBAZ6ppRDyqYdBulzwEFFv1XNk9JnUuCqiXvodkHGOQR43KoVXzYCwLN2ONA3Htp
+ Z/lVOm1dKsKzCkmC9utSmrF0Tym47F4+lghOX4X6sGZ96tfVA/FtXtv0cwX1nVVsoHnQ
+ iCMymvuVxzQizVsDyKjO/FrsH6eorqh1/AqmxCbfZqpgWreGwoXxEODkp6eJDKa7CgZ4
+ QKdahDJg6zocc11fdworeqxuZ5Er4Vo1CVOrIyPOc2Y6tLjOn6cZrhj7LV4uqleQYukD
+ btKw==
+X-Gm-Message-State: AOJu0YyWQM5S3Er1+Jy5DRP+ZuQGkle6gXWEMCyw5RWuxxSgoloYHTAl
+ 5SBazJ1tt0DfdkvnWHqg8jhDfUB3QTrc3IlPqiV3nAF8W28sEYVh+IlFNFsusX5IPBQJMAr0Ezk
+ hew3JGlcaiBWe3ziYfQnSVD/3P8cooj6/r1ne431KS5k23BZUmS0/UGDfdeLjQS2l8AVP88Uv1v
+ gxv1RTRTyuk9EM3iWO1I9cQMaoWorAcU91yEbLZw==
+X-Gm-Gg: ASbGnctpdqpcF9yrcJAk5NZLyPM8//VhIUqO9Zal1VTdd7nt1LsHjnxuM2Jtqq3MZ7J
+ mUTXM3/Rrf6eLEvpo3itw2DJNDQwnZdpMg0L3Tj8nNoBtWte77RRJ4Dj1vSUj0IEEeV0NPAgQTL
+ 0NfzB6BwitESh4BfVDUgDI4g7DUu+898mP6kDJ0IdRm900lOuqCq2kdcm5YTCQLc3xDADmRAuXz
+ jV9k44EhJFB4ZxzhHW1xgWhVvB7FH4RwQCXxPfCmCZ7iCbnX6ImfLe0CfvpQSwXu2hHJJxNkVxi
+ XDCBKSdGgshxyA==
+X-Received: by 2002:ad4:5f4a:0:b0:6f8:997d:fc82 with SMTP id
+ 6a1803df08f44-6fb08f69daamr220189886d6.3.1749496383246; 
+ Mon, 09 Jun 2025 12:13:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+6jULIkQNGrusXm1u9+YBVB83drIGj+Plmf5lDwbZ+148bw1S4Lkjw2uTWWT7qSWz/Hl62A==
+X-Received: by 2002:ad4:5f4a:0:b0:6f8:997d:fc82 with SMTP id
+ 6a1803df08f44-6fb08f69daamr220189316d6.3.1749496382717; 
+ Mon, 09 Jun 2025 12:13:02 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fb09b1cc24sm55178856d6.72.2025.06.09.12.13.08
+ 6a1803df08f44-6fb09b1cc24sm55178856d6.72.2025.06.09.12.13.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 12:13:08 -0700 (PDT)
+ Mon, 09 Jun 2025 12:13:02 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alexey Perevalov <a.perevalov@samsung.com>,
  Juraj Marcin <jmarcin@redhat.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 05/13] migration/postcopy: Drop
- PostcopyBlocktimeContext.start_time
-Date: Mon,  9 Jun 2025 15:12:51 -0400
-Message-ID: <20250609191259.9053-6-peterx@redhat.com>
+Subject: [PATCH v2 00/13] migration/postcopy: Blocktime tracking overhaul
+Date: Mon,  9 Jun 2025 15:12:46 -0400
+Message-ID: <20250609191259.9053-1-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250609191259.9053-1-peterx@redhat.com>
-References: <20250609191259.9053-1-peterx@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
@@ -92,8 +89,8 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,67 +106,155 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Now with 64bits, the offseting using start_time is not needed anymore,
-because the array can always remember the whole timestamp.
+This series is based on the other series I posted here:
 
-Then drop the unused parameter in get_low_time_offset() altogether.
+Based-on: <20250609161855.6603-1-peterx@redhat.com>
+https://lore.kernel.org/r/20250609161855.6603-1-peterx@redhat.com
 
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Peter Xu <peterx@redhat.com>
----
- migration/postcopy-ram.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+v2:
+- Collect tags
+- Use two spaces always in qapi/ documentations for patch 8/13 [Markus]
+- English error fix (s/system-wise/system-wide/) [Fabiano]
 
-diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index ec91821b85..e9acb4ef6e 100644
---- a/migration/postcopy-ram.c
-+++ b/migration/postcopy-ram.c
-@@ -123,7 +123,6 @@ typedef struct PostcopyBlocktimeContext {
-     uint64_t last_begin;
-     /* number of vCPU are suspended */
-     int smp_cpus_down;
--    uint64_t start_time;
- 
-     /*
-      * Handler for exit event, necessary for
-@@ -157,7 +156,6 @@ static struct PostcopyBlocktimeContext *blocktime_context_new(void)
-     ctx->vcpu_blocktime_total = g_new0(uint64_t, smp_cpus);
-     ctx->vcpu_addr = g_new0(uintptr_t, smp_cpus);
-     ctx->exit_notifier.notify = migration_exit_cb;
--    ctx->start_time = qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
-     qemu_add_exit_notifier(&ctx->exit_notifier);
- 
-     return ctx;
-@@ -818,9 +816,9 @@ static int get_mem_fault_cpu_index(uint32_t pid)
-     return -1;
- }
- 
--static uint64_t get_low_time_offset(PostcopyBlocktimeContext *dc)
-+static uint64_t get_low_time_offset(void)
- {
--    return (uint64_t)qemu_clock_get_ms(QEMU_CLOCK_REALTIME) - dc->start_time;
-+    return (uint64_t)qemu_clock_get_ms(QEMU_CLOCK_REALTIME);
- }
- 
- /*
-@@ -847,7 +845,7 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-         return;
-     }
- 
--    low_time_offset = get_low_time_offset(dc);
-+    low_time_offset = get_low_time_offset();
-     if (dc->vcpu_addr[cpu] == 0) {
-         dc->smp_cpus_down++;
-     }
-@@ -907,7 +905,7 @@ static void mark_postcopy_blocktime_end(uintptr_t addr)
-         return;
-     }
- 
--    low_time_offset = get_low_time_offset(dc);
-+    low_time_offset = get_low_time_offset();
-     /* lookup cpu, to clear it,
-      * that algorithm looks straightforward, but it's not
-      * optimal, more optimal algorithm is keeping tree or hash
+Overview
+========
+
+This series almost rewrites the blocktime feature.  It is a postcopy
+feature which can track how long a vCPU got blocked, and how long the whole
+system got blocked.  I'm wildly guessing most people are not aware of it,
+or tried to use it.
+
+Recently, when I was doing some postcopy tests using my normal scripts for
+traps, I remembered once again that we have the blocktime feature.  I
+decided to bite the bullet this time to make this feature more useful.
+
+The feature in general isn't extremely helpful before.  One major reason
+might be the existance of KVM async page fault (which is also on by default
+in many environments).  KVM async page fault allows guest OSes to schedule
+some guest threads out when they're accessing a missing page.  It means the
+vCPUs will _not_ be blocked even if they're accessing a missing page.
+However blocktime reporting all close to zeros may not really mean the
+guest is not affected: the workload is definitely impacted.  That's also
+why I normally measure page fault latencies instead for most postcopy
+tests, because they're more critical to me.
+
+Said that, the blocktime layer is actually close to what we want to do
+here, on trapping fault latencies too.  So I added it in this series.  Also
+I added non-vCPU threads tracking too, so that at least the latency results
+are valid even if KVM async PF is ON.
+
+When at it, I found so many things missing in this feature.  I tackled
+every single one of them with separate patches.  One can have a quick look
+at what has changed in the follow up section.
+
+Major Changes
+=============
+
+- Locking refactor: remove atomic ops, rely on page request mutex instead
+
+  It used to rely on atomic ops but probably not correct either..  I have a
+  paragraph in patch "migration/postcopy: Optimize blocktime fault tracking
+  with hashtable" explaining why it is buggy.
+
+- Extend all blocktime records internally from 32 bits to 64 bits
+
+  Do this almost to support microsecond trackings (which used to be in
+  milliseconds).  Note this does not change existing results reported in
+  QMP in the past because it is ABI, however we'll use microseconds for any
+  new results to be reported later.
+
+- Added support to report fault average latencies (globally, per-vCPU,
+  non-vCPU), results are in microseconds.
+
+- Initialize blocktime reliably only when POSTCOPY_LISTEN
+
+  Rather than hack-init it when creating any userfaultfd..
+
+- Provide tid->vcpu cache
+
+  Add a quick cache for tid->vcpu hash mapping.  It used to be a for loop
+  looking for the CPU index, which is unwanted.
+
+- Replace fault record arrays with a hashtable
+
+  This is an optimization for fast inject/lookup of fault records.
+
+  Again, it used to be yet another array keeping all vCPU data.  It's not
+  only less performant when vCPUs can be a lot (especially on the lookups,
+  which is another for loop..), but also buggy.  It's because in reality
+  each vCPU can receive more than one fault sometimes.
+
+  Please see the patch "migration/postcopy: Optimize blocktime fault
+  tracking with hashtable" for more information.
+
+- Added support for non-vCPU fault trackings
+
+  This will be extremely useful when e.g. KVM async page fault is enabled,
+  because vCPUs almost never block.
+
+Test Results
+============
+
+I did quite some tests with the feature after the rewrote.  It looks pretty
+well so far and I plan to throw my scripts away until proven more useful.
+
+I was testing on a 80 vCPUs VM with 16GB memory, best I can find at hand.
+The page latencies overhead is almost negligible:
+
+  Disabled:
+  Average: 236.00 (+-4.66%)
+
+  Enabled:
+  Average: 232.67 (+-2.01%)
+
+It was average results out of three runs for each.  Enabling the feature
+even makes the latency to be smaller?  Well that's probably noise..
+
+Surprisingly, I did also try the old code, the overhead is also almost not
+mesurable comparing to the faults.  I guess it's because a few "for loop"s
+over some arrays of 80 elements isn't much of a hurdle when the round trip
+is still ~200us.  But still, it's not only about perf, but other things
+too, on such rewrites.  For example, arrays won't be able to trap non-vCPU
+faults.  The hash is still pretty much needed, one way or another.
+
+I think it means we should be able to enable this feature altogether with
+postcopy-ram if we want, and unless the VM is extremely huge we shouldn't
+expect much overhead.  Actually I'd bet it should work all fine even with
+hundreds of vCPUs especially after this rewrite.  If add preempt mode into
+picture, I think one should enable all three features for postcopy by
+default at some point.
+
+TODO: we may also add buckets to provide better statistics for the latency
+report, e.g. how many faults were resolved in (2^N, 2^(N+1)) us window, etc.
+
+Comments welcomed, thanks.
+
+Peter Xu (13):
+  migration: Add option to set postcopy-blocktime
+  migration/postcopy: Push blocktime start/end into page req mutex
+  migration/postcopy: Drop all atomic ops in blocktime feature
+  migration/postcopy: Make all blocktime vars 64bits
+  migration/postcopy: Drop PostcopyBlocktimeContext.start_time
+  migration/postcopy: Bring blocktime layer to us level
+  migration/postcopy: Add blocktime fault counts per-vcpu
+  migration/postcopy: Report fault latencies in blocktime
+  migration/postcopy: Initialize blocktime context only until listen
+  migration/postcopy: Cache the tid->vcpu mapping for blocktime
+  migration/postcopy: Cleanup the total blocktime accounting
+  migration/postcopy: Optimize blocktime fault tracking with hashtable
+  migration/postcopy: blocktime allows track / report non-vCPU faults
+
+ qapi/migration.json                   |  20 +
+ migration/migration.h                 |   2 +-
+ migration/postcopy-ram.h              |   2 +
+ migration/migration-hmp-cmds.c        |  73 ++--
+ migration/migration.c                 |  24 +-
+ migration/options.c                   |   2 +
+ migration/postcopy-ram.c              | 518 ++++++++++++++++++++------
+ tests/qtest/migration/migration-qmp.c |   4 +
+ migration/trace-events                |   8 +-
+ 9 files changed, 496 insertions(+), 157 deletions(-)
+
 -- 
 2.49.0
 
