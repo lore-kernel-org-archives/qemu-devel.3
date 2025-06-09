@@ -4,112 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C78D5C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 18:18:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89886C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 18:22:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOh4M-0006Ky-MQ; Mon, 09 Jun 2025 14:18:02 -0400
+	id 1uOh8A-0007bb-BF; Mon, 09 Jun 2025 14:21:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uOh3s-0006Jh-B4
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:17:32 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uOh88-0007bQ-Dm
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:21:56 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uOh3q-0002lk-Ek
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:17:32 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 8C2F01F46E;
- Mon,  9 Jun 2025 18:17:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749493048; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Z7AIPV13Vke9xbPCGXzLNZ6FG77nKOJq1crtYxZdE2o=;
- b=biCJeh3WH1tA0cqqKE4bS0SiLi4oV0q0s2lBUDW3tJtf9aPSCby28T0hznZQbD/KoZIaND
- kvGGwBrvzpUSdFk0fzp9sJXiJeBb3/Qd4+e2UsKuymyNZxhCo3HiPvnsjEluSjKcOR0X0e
- /jNC42Np1Kdp/vbSql7uXUGx/NtXH8Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749493048;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Z7AIPV13Vke9xbPCGXzLNZ6FG77nKOJq1crtYxZdE2o=;
- b=XB6H/WS0Md1QkhwMeeG4Q+pUrnwnhZyk98YPar3K+z5fkmzmxFfihiWpwCWwhwLbge6u4B
- QOPcYdBKEnKG+RBA==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749493048; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Z7AIPV13Vke9xbPCGXzLNZ6FG77nKOJq1crtYxZdE2o=;
- b=biCJeh3WH1tA0cqqKE4bS0SiLi4oV0q0s2lBUDW3tJtf9aPSCby28T0hznZQbD/KoZIaND
- kvGGwBrvzpUSdFk0fzp9sJXiJeBb3/Qd4+e2UsKuymyNZxhCo3HiPvnsjEluSjKcOR0X0e
- /jNC42Np1Kdp/vbSql7uXUGx/NtXH8Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749493048;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Z7AIPV13Vke9xbPCGXzLNZ6FG77nKOJq1crtYxZdE2o=;
- b=XB6H/WS0Md1QkhwMeeG4Q+pUrnwnhZyk98YPar3K+z5fkmzmxFfihiWpwCWwhwLbge6u4B
- QOPcYdBKEnKG+RBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id F410D13A1D;
- Mon,  9 Jun 2025 18:17:27 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id BlDzKjclR2gRLwAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 09 Jun 2025 18:17:27 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>, =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
- migration config
-In-Reply-To: <aEcQj_XLnnnS9FKv@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-20-farosas@suse.de> <aENBda_y3v3y4ptS@x1.local>
- <874iwswrex.fsf@suse.de> <aENUrociiqlFuPpz@x1.local>
- <87y0u1ugkx.fsf@suse.de> <aEcC9X5i6eV4N7An@x1.local>
- <aEcIDNpXJHGAhwmK@redhat.com> <aEcQj_XLnnnS9FKv@x1.local>
-Date: Mon, 09 Jun 2025 15:17:25 -0300
-Message-ID: <87sek8vky2.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uOh86-0003PG-Lp
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:21:56 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-3138e64b3fcso816735a91.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 11:21:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749493312; x=1750098112; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=nxpiaOnOBTTIbdk7Y8S1B3jd7cKgGacR2QM0LlKQKQc=;
+ b=N1zOiBr54hZcPWnEXrHYA7nYOmXezPuNnmjWAczKE3yOIIMCN9lK3kcwjDtX4uXZAG
+ UEw6A2jya2bRioaZezV8VQijLGPKBd7uwSs74hPF5wvSWXPWim+hN1X1GDQxlZIhZWLT
+ 6tGHXeFRnMpufsGIJcvLFMTsDL+0pHUcSq0SFIPDThuA17Uw6STAWyW67b3Ij75uOeWB
+ b3siDH3NDv7tFu2H7jkIRULjXfZi1/28a5yOLDg2uWrfeplJoGG/3pQTEAuDqzJ0TcGS
+ q3k7Dt96EBKjGuu71QNhLG+HWTRue1dVLVWQI72U7nK91E7jOFT/DIkzz1D0dZOPptmx
+ SFAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749493312; x=1750098112;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=nxpiaOnOBTTIbdk7Y8S1B3jd7cKgGacR2QM0LlKQKQc=;
+ b=KnpL7qfVasaKgsTiBvSHzkVhbheWyLd4s4zGnDNJpJQFiyWs7Y9T0URQfpv0vflyGT
+ cQzt8mEiiaDkNugnKoQA39jJhvSNfaLVAYglNj6FFZG4g3LrhjMZLr6nOam7+SMuV+T/
+ iwK54DjWwdzhR7Hx/yGazo/Rq9DCKA+EmvnO20+L1xdrPfV0ZU49p6fPACMyu5PspsWo
+ pkYA3Wl7FBikaCKjDzW+2rCXu8uXj/Xq3d1YyylRqss4/MLypItjmzwCHpH4O31tJoxx
+ vtVnl4DuCnS5jpjoO2bOgDoy1UPV2KdvWvJ0nMGpTFiRR5i0EhO/2IzkM9I6YeQPEvlX
+ pM2g==
+X-Gm-Message-State: AOJu0YzC1xD6rA6KoemsqlKOttZ3QG+Jv6z0nJgwaaNXNCqjW+UwTclU
+ 1DSgtgiAfhMb+gFhc4Z5yA9tIMh5DDDvv5ENJ2yjVT6B4t8kvyICSD2JOiht+6wvvF1AgA==
+X-Gm-Gg: ASbGncsSgnoLDh++W2R9F9nbL8cgO+T1aPKAy7Z27en3M83zvfoEmcOFEyU5zRwVzDO
+ bDRQ3Val3rRopKuM8lki3sOnQUOobU3HgLpbDVBUxN2Yv/snjdGIVPCHgVuqKeTuebMLcJMeMzy
+ JNadjp9WJBffiyhbQ9QXrANRCDBJpA0jf4ssuhahvPv/jZ9Tx/a5SZN6nkK+/b3K08N9L/pYUbA
+ 63HEN2LLeBG6J5tpJFCSp4BA6POYHuotiNQMK2Hwyg82kkbMIIAz4lgbJ0ZkFDEC4gcUN1sx1NZ
+ JYRjb+cASaFjuDY5KvRZoBiRzVbqaPkv96PZZnzx+tY8Kws856vCw+uSexjfUwx2WgYW48l1
+X-Google-Smtp-Source: AGHT+IFV6UkG8Pke8bGaSocejm/40sl+fdiMCVC7STnOAicYwcmS2+fAZ2fmHPXYnB1sCzE/XnLOoQ==
+X-Received: by 2002:a17:90b:5203:b0:313:352f:6620 with SMTP id
+ 98e67ed59e1d1-313472c0109mr19779187a91.4.1749493311966; 
+ Mon, 09 Jun 2025 11:21:51 -0700 (PDT)
+Received: from ubuntu.. ([49.207.57.103]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-3134b044e2bsm6009440a91.5.2025.06.09.11.21.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Jun 2025 11:21:51 -0700 (PDT)
+From: Tanish Desai <tanishdesai37@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, stefanha@gmail.com, mads@ynddal.dk,
+ balaton@eik.bme.hu, philmd@linaro.org, peter.maydell@linaro.org,
+ Tanish Desai <tanishdesai37@gmail.com>
+Subject: [PATCH] utils/log: add qemu_log_timestamp() to encapsulate timestamp
+ logging
+Date: Mon,  9 Jun 2025 18:20:45 +0000
+Message-Id: <20250609182044.21703-1-tanishdesai37@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- TO_DN_SOME(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; MISSING_XM_UA(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_BLOCKED(0.00)[rspamd.com]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
- RCVD_COUNT_TWO(0.00)[2];
- URIBL_BLOCKED(0.00)[imap1.dmz-prg2.suse.org:helo,suse.de:mid];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=tanishdesai37@gmail.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -126,62 +98,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+Moved the logic for timestamped logging (~6 lines) from a_nocheck__trace_foo(header) into a new qemu_log_timestamp() function in util/log.c. This avoids code duplication across binaries and enables reuse as a standalone utility.
+Encapsulation helps reduce build size significantly, particularly when many trace points are present. On Ubuntu 22 with
+./configure --target-list=aarch64-softmmu --enable-kvm --enable-trace-backends=log,
+this change reduced the build directory size from ~1435.27 MB to ~1412 MB (~23 MB saved).
+Notable reductions include:
+    trace/: ~2.6 MB
+    libqemuutil.a.p: ~3 MB
+A detailed report of size changes (in bytes) for relevant folders and subfolders will follow in a trailing mail.
 
-> (I had a reply in the other thread, that might have covered most of the
->  points but maybe not this one..)
->
-> On Mon, Jun 09, 2025 at 05:13:00PM +0100, Daniel P. Berrang=C3=A9 wrote:
->> Even if only a single mgmt app is involved this is still beneficial
->> because the migration infrastructure is used for distinct use cases
->> inside QEMU - live migration, CPR, save/restore, and savevm/loadvm.
->
-> I assume CPR is save/restore, so indeed we have 3 ways to use migration
-> core.
->
->> Any time code any one of those uses cases starts using a new parameter,
->> apps have to make sure they don't inadvertantly have its effects apply
->> to the other use cases.
->
-> AFAICT, that's not affected by "whether we allow global settings", that is
-> still a concern internally as long as they use migration core.
->
-> One thing to mention is CPR is really a fine citizen here, AFAICT it is
-> exactly live migration using all the proper caps/params.  We _could_ split
-> it as many things do not apply like postcopy, but we could still just reu=
-se
-> everything and ignoring the rest.  It'll be again a cleaness issue to me,
-> and even if CPR reuses everything it looks still clean enough, especially
-> comparing to savevm/loadvm.
->
-> savevm/loadvm is another story.. however afaiu if we want to decouple it,
-> it should be done not from the interface level, but internally first.
-> E.g., we should allow taking parameters as a temp pointer passing to
-> migration core, so that will be passed over by savevm setting all caps of=
-f,
-> for example, ignoring the global config.  The interface alone should, IMH=
-O,
-> be done only later.
->
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+---
+ include/qemu/log-for-trace.h     |  3 +++
+ scripts/tracetool/backend/log.py | 13 +------------
+ util/log.c                       | 18 ++++++++++++++++++
+ 3 files changed, 22 insertions(+), 12 deletions(-)
 
-This is simple to do, just reset all of s->parameters to (the new)
-s->defaults. We never decided if any migration parameters do make sense
-to use with savevm. If some of them does or is added later, then
-snapshot_save would gain a "config" argument.
+diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
+index d47c9cd446..680f30a8a9 100644
+--- a/include/qemu/log-for-trace.h
++++ b/include/qemu/log-for-trace.h
+@@ -32,4 +32,7 @@ static inline bool qemu_loglevel_mask(int mask)
+ /* main logging function */
+ void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
+ 
++/* main logging function with timestamp */
++void G_GNUC_PRINTF(1, 2) qemu_log_timestamp(const char *fmt, ...);
++
+ #endif
+diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+index de27b7e62e..3358afb43a 100644
+--- a/scripts/tracetool/backend/log.py
++++ b/scripts/tracetool/backend/log.py
+@@ -38,20 +38,9 @@ def generate_h(event, group):
+         cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
+ 
+     out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
+-        '        if (message_with_timestamp) {',
+-        '            struct timeval _now;',
+-        '            gettimeofday(&_now, NULL);',
+         '#line %(event_lineno)d "%(event_filename)s"',
+-        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",',
+-        '                     qemu_get_thread_id(),',
+-        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
+-        '                     %(argnames)s);',
++        '            qemu_log_timestamp("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+         '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '        } else {',
+-        '#line %(event_lineno)d "%(event_filename)s"',
+-        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+-        '#line %(out_next_lineno)d "%(out_filename)s"',
+-        '        }',
+         '    }',
+         cond=cond,
+         event_lineno=event.lineno,
+diff --git a/util/log.c b/util/log.c
+index b87d399e4c..996530fe7e 100644
+--- a/util/log.c
++++ b/util/log.c
+@@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)
+     }
+ }
+ 
++
++void qemu_log_timestamp(const char *fmt, ...)
++{
++    FILE *f = qemu_log_trylock();
++    if (f) {
++        va_list ap;
++        if(message_with_timestamp){
++            struct timeval _now;
++            gettimeofday(&_now, NULL);
++            fprintf(f,"%d@%zu.%06zu:",qemu_get_thread_id(),(size_t)_now.tv_sec, (size_t)_now.tv_usec);
++        }
++        va_start(ap, fmt);
++        vfprintf(f, fmt, ap);
++        va_end(ap);
++    }
++    qemu_log_unlock(f);
++}
++
+ void qemu_log(const char *fmt, ...)
+ {
+     FILE *f = qemu_log_trylock();
+-- 
+2.34.1
 
-> Meanwhile, even if that, IMO we can't avoid the need to think any new par=
-am
-> affecting savevm, as long as it's still using migration core.  I don't kn=
-ow
-> whether we need to do that one step even further to decouple savevm: I
-> would think the other way round to obsolete savevm completely if necessary
-> when we have fine "file:" migrations now, especially with mapped-ram.
-
-savevm is a weird case. It supports a wider range of setups than regular
-migration. I don't know what to make of this. I would also like to make
-it "just migration" but it will need a bunch of special-casing. Anyway,
-we can discuss, but that's definitely for another day.
-
->
-> Thanks,
 
