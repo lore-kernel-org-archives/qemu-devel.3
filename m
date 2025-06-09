@@ -4,112 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAB83C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 10:41:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA095C61DB2
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 10:41:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOZvf-0003PX-4D; Mon, 09 Jun 2025 06:40:35 -0400
+	id 1uOZvz-0003S8-Hg; Mon, 09 Jun 2025 06:40:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1uOZvb-0003P1-0e; Mon, 09 Jun 2025 06:40:32 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
+ id 1uOZvw-0003Qr-TW; Mon, 09 Jun 2025 06:40:52 -0400
+Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1uOZvY-0003Oa-NI; Mon, 09 Jun 2025 06:40:30 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 558LjDEA022766;
- Mon, 9 Jun 2025 10:40:26 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=gEyupa
- /+JUQHH0dXScCpckR9Z/SWME+PFQcOUv9nbHQ=; b=U3fLiaL+fAZLUaAu4R9iAP
- EBXvPc8ugFDd4fzPTs0HG4GiVVfkXIuy+0XDTRPFFDeHGJZPY3cGFcYYubtjvpWP
- wJKpqCdJ4phOsgpdCmjJxJc01JsXuBQBWpCqZX7EeKFS9eaSgZucgI4/JHPbC7Ze
- vskvYwd3DCR66X3SUzAR6boYthxXyBJ22gkcV4T4P4q30cDbQEjXXBpcI4mDgKgZ
- iuXj8NRw9SWhfpl6pddTSmRqF/CjShyU7AIIPNrjEOqV/hK3IBAfBuG9SWiNCW/h
- 7cnWq7qLCCGcuoGI0og5GEtsQpu38kfOe6YJvBl9nDgE1/1rA2t70MZcce1abNgQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474hhdqckr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Jun 2025 10:40:25 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 5596WXad003347;
- Mon, 9 Jun 2025 10:40:24 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4751ykd4bk-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Jun 2025 10:40:24 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 559AeNas56688990
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Jun 2025 10:40:23 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 21E2C58055;
- Mon,  9 Jun 2025 10:40:23 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D32C158056;
- Mon,  9 Jun 2025 10:40:21 +0000 (GMT)
-Received: from [9.61.64.137] (unknown [9.61.64.137])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Jun 2025 10:40:21 +0000 (GMT)
-Message-ID: <d8cbf0f5-3d3b-4d67-9986-d96179d2665b@linux.ibm.com>
-Date: Mon, 9 Jun 2025 06:40:21 -0400
+ (Exim 4.90_1) (envelope-from <ben.dooks@codethink.co.uk>)
+ id 1uOZvu-0003QB-Pw; Mon, 09 Jun 2025 06:40:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
+ Content-Type:In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:
+ Message-ID:Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=/jvXeGUNmt0KOjdur3S/SoFm1b7dpO4x5a6GuO+2xIo=; b=uiRDXTMQt3jDqSvhWw1aRYRnDv
+ cNjiX3tpCBvPws43h43FuruNJUoOyipjPy+5NqxbOIZmRIG7uLavDXRJNQSH7QWVJOfuwMHWN4bOU
+ 7vDDWYIUrDqbM21w5edJgFW89e6TcBcv71maOadBjGOSYFP9uDtvG2cKWiS85qNCeA6etEWB381pW
+ VuLPFhEZTWjXypPqic7z2CR0EeHTLgi+7JoLbd6bCU7G2aXFnrDKVgQZU1AD4UujxqT7ULjgWHqEg
+ 4KH5KYNnyapiRatv2+/lWhpmYZAJkFypEORAAmrc3HtkMxCvJNYQoJucdR3lN3ni033YTI+CFFghh
+ UhRh3DaQ==;
+Received: from [63.135.74.212] (helo=[192.168.1.249])
+ by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
+ id 1uOZvj-00FL9O-P3; Mon, 09 Jun 2025 11:40:39 +0100
+Message-ID: <06323162-66b9-4165-ab2e-86ec6272aca8@codethink.co.uk>
+Date: Mon, 9 Jun 2025 11:40:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v12 3/4] hw/vfio/ap: Storing event information for an
- AP configuration change event
-To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com
-References: <20250606183716.26152-1-rreyes@linux.ibm.com>
- <20250606183716.26152-4-rreyes@linux.ibm.com>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20250606183716.26152-4-rreyes@linux.ibm.com>
+Subject: Re: [PATCH v2 2/3] target/riscv: add cva6 core type
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ nazar.kazakov@codethink.co.uk, joseph.baker@codethink.co.uk,
+ fran.redondo@codethink.co.uk, lawrence.hunter@codethink.co.uk,
+ liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
+ <20250527112437.291445-3-ben.dooks@codethink.co.uk>
+ <ef6c7b15-04a7-42cf-a89b-c2674388810f@ventanamicro.com>
+Content-Language: en-GB
+From: Ben Dooks <ben.dooks@codethink.co.uk>
+Organization: Codethink Limited.
+In-Reply-To: <ef6c7b15-04a7-42cf-a89b-c2674388810f@ventanamicro.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=DLGP4zNb c=1 sm=1 tr=0 ts=6846ba19 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=sWKEhP36mHoA:10 a=VnNF1IyMAAAA:8
- a=PI68f2b3-64nHHLPdM8A:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: fEHm0-ID9KWXA2wOulvD5TkuCts4ASXr
-X-Proofpoint-ORIG-GUID: fEHm0-ID9KWXA2wOulvD5TkuCts4ASXr
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDA3OCBTYWx0ZWRfX2s/q1qYhtxT/
- tS7YAHzei8rro50/GCye/F+7M2Hm4ZshaJ2FUkVeioQyv8LmJPKie+/J5joG18zcMzcYCTbPEzj
- u+3n4Qoy2lLy3cfONk3MOm/wQUs1bbghws5scZLQ5nToUJq2EbiKATt5DvltPurLeXPZTUfFBCG
- llGF7q4FUC4ctTBFWTF+0DT2ic1IC9lNzJBF6yu9sggpTHLe9VTKWRzOv88OLTiX7n7Rm9huC76
- nE1dVCLepeTraxZuN0CXCZH3MollLTpu+AOxa+YT8jPg5rHeUBnyN7Lh8m4kNz8sIhYgDUmYxe1
- g2qtUjH34p+gaDo2QE3DXM1cS8pVcvpoqHsm1qPDaLKIUSis/4gnLqOm2v175RVGHQdWwz0HEfx
- dJqcbJLqKOWmjY/0CCcE8hAjIqq/h+AuIxfZjqGcgRd0IQqb2My7jXDkAwFf9zqhYlmTGj/p
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-09_04,2025-06-05_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 mlxlogscore=999 lowpriorityscore=0 clxscore=1015
- adultscore=0 mlxscore=0 spamscore=0 bulkscore=0 impostorscore=0
- suspectscore=0 phishscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506090078
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=78.40.148.171;
+ envelope-from=ben.dooks@codethink.co.uk; helo=imap5.colo.codethink.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,152 +76,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 07/06/2025 21:17, Daniel Henrique Barboza wrote:
+> 
+> 
+> On 5/27/25 8:24 AM, Ben Dooks wrote:
+>> Add TYPE_RISCV_CPU_CVA6 for the CVA6 core
+>>
+>> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+>> ---
+>>   target/riscv/cpu-qom.h |  1 +
+>>   target/riscv/cpu.c     | 11 +++++++++++
+>>   2 files changed, 12 insertions(+)
+>>
+>> diff --git a/target/riscv/cpu-qom.h b/target/riscv/cpu-qom.h
+>> index 1ee05eb393..3daf75568c 100644
+>> --- a/target/riscv/cpu-qom.h
+>> +++ b/target/riscv/cpu-qom.h
+>> @@ -34,6 +34,7 @@
+>>   #define TYPE_RISCV_CPU_BASE32           RISCV_CPU_TYPE_NAME("rv32")
+>>   #define TYPE_RISCV_CPU_BASE64           RISCV_CPU_TYPE_NAME("rv64")
+>>   #define TYPE_RISCV_CPU_BASE128          RISCV_CPU_TYPE_NAME("x-rv128")
+>> +#define TYPE_RISCV_CPU_CVA6             RISCV_CPU_TYPE_NAME("cva6")
+>>   #define TYPE_RISCV_CPU_RV32I            RISCV_CPU_TYPE_NAME("rv32i")
+>>   #define TYPE_RISCV_CPU_RV32E            RISCV_CPU_TYPE_NAME("rv32e")
+>>   #define TYPE_RISCV_CPU_RV64I            RISCV_CPU_TYPE_NAME("rv64i")
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index 629ac37501..fca45dc9d9 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -3009,6 +3009,17 @@ static const TypeInfo riscv_cpu_type_infos[] = {
+>>           .misa_mxl_max = MXL_RV64,
+>>       ),
+>> +    DEFINE_RISCV_CPU(TYPE_RISCV_CPU_CVA6, TYPE_RISCV_VENDOR_CPU,
+>> +        .misa_ext = RVI | RVM | RVA | RVF | RVD | RVC | RVB | RVS | RVU,
+>> +        .misa_mxl_max = MXL_RV64,
+>> +        .cfg.max_satp_mode = VM_1_10_SV39,
+>> +        .priv_spec = PRIV_VERSION_1_12_0,
+>> +        .cfg.pmp = true,
+>> +        .cfg.mmu = true,
+>> +        .cfg.ext_zifencei = true,
+>> +        .cfg.ext_zicsr = true,
+>> +    ),
+>> +
+> 
+> The CPU is being added inside a "#if defined(TARGET_RISCV64)" block, 
+> meaning
+> that it's a 64-bit CPU only. But the CVA6 board added in patch 1 is being
+> added for both 32 and 64 bit emulations in hw/riscv/Kconfig:
+
+Ah yes, it is possible to make a cva6 32bit, is it ok just to ove this
+into a different place or is there anything else needed to allow 32 or 
+64bit?
+
+I've only been building a 64bit userland to test so didn't notice the
+lack of 32bit was an issue.
+
+> config CVA6
+>      bool
+>      default y
+>      depends on RISCV32 || RISCV64  <------------------
+> 
+> This setup (after patch 3 is added) triggered a test failure in 'check- 
+> qtest',
+> when polling all available boards in qemu-system-riscv32, because it 
+> didn't find
+> a default 32 bit CPU for the cva6 board:
+> 
+> # starting QEMU: exec ./qemu-system-riscv32 -qtest unix:/tmp/ 
+> qtest-1683816.sock -qtest-log /dev/null -chardev socket,path=/tmp/ 
+> qtest-1683816.qmp,id=char0 -mon chardev=char0,mode=control -display none 
+> -audio none -machine cva6 -accel qtest
+> ----------------------------------- stderr 
+> -----------------------------------
+> qemu-system-riscv32: ../hw/core/machine.c:1574: is_cpu_type_supported: 
+> Assertion `cc != NULL' failed.
+> Broken pipe
+> ../tests/qtest/libqtest.c:208: kill_qemu() detected QEMU death from 
+> signal 6 (Aborted) (core dumped)
+> 
+> 
+> 
+> We have 2 options here:
+> 
+> - if the CVA6 board is supposed to run in RISCV32 and RISCV64, then its 
+> default
+> CPU must be 32 bit compliant too. The CPU declaration in this patch must 
+> be moved
+> outside the "#if defined(TARGET_RISCV64)" block (e.g right after
+> TYPE_RISCV_CPU_SIFIVE_U);
+> 
+> - if the board is 64 bit only then the CPU declaration is fine, and we 
+> need to
+> change the board hw/riscv/Kconfig entry to "depends on RISCV64".
+> 
+
+As long as it is just the #ifdef block I will move it.
+
+Should I just re-send this change?
+
+> Thanks,
+> 
+> Daniel
+> 
+> 
+>>       DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E51, 
+>> TYPE_RISCV_CPU_SIFIVE_E,
+>>           .misa_mxl_max = MXL_RV64
+>>       ),
+> 
+> 
 
 
+-- 
+Ben Dooks				http://www.codethink.co.uk/
+Senior Engineer				Codethink - Providing Genius
 
-On 6/6/25 2:37 PM, Rorie Reyes wrote:
-> These functions can be invoked by the function that handles interception
-> of the CHSC SEI instruction for requests indicating the accessibility of
-> one or more adjunct processors has changed.
->
-> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-
-Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-
-> ---
->   hw/vfio/ap.c                 | 43 ++++++++++++++++++++++++++++++++++++
->   include/hw/s390x/ap-bridge.h | 39 ++++++++++++++++++++++++++++++++
->   2 files changed, 82 insertions(+)
->
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index fc435f5c5b..7e3c6278b3 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -10,6 +10,7 @@
->    * directory.
->    */
->   
-> +#include <stdbool.h>
->   #include "qemu/osdep.h"
->   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
->   #include <linux/vfio.h>
-> @@ -21,6 +22,7 @@
->   #include "hw/s390x/css.h"
->   #include "qemu/error-report.h"
->   #include "qemu/event_notifier.h"
-> +#include "qemu/lockable.h"
->   #include "qemu/main-loop.h"
->   #include "qemu/module.h"
->   #include "qemu/option.h"
-> @@ -48,6 +50,8 @@ typedef struct APConfigChgEvent {
->   static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
->       QTAILQ_HEAD_INITIALIZER(cfg_chg_events);
->   
-> +static QemuMutex cfg_chg_events_lock;
-> +
->   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
->   
->   static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
-> @@ -96,6 +100,38 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
->   
->   }
->   
-> +int ap_chsc_sei_nt0_get_event(void *res)
-> +{
-> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
-> +    APConfigChgEvent *cfg_chg_event;
-> +
-> +    WITH_QEMU_LOCK_GUARD(&cfg_chg_events_lock) {
-> +        if (QTAILQ_EMPTY(&cfg_chg_events)) {
-> +            return EVENT_INFORMATION_NOT_STORED;
-> +        }
-> +
-> +        cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
-> +        QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
-> +    }
-> +
-> +    memset(nt0_res, 0, sizeof(*nt0_res));
-> +    g_free(cfg_chg_event);
-> +    nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
-> +    nt0_res->length = sizeof(ChscSeiNt0Res);
-> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
-> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
-> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
-> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
-> +
-> +    return EVENT_INFORMATION_STORED;
-> +}
-> +
-> +bool ap_chsc_sei_nt0_have_event(void)
-> +{
-> +    QEMU_LOCK_GUARD(&cfg_chg_events_lock);
-> +    return !QTAILQ_EMPTY(&cfg_chg_events);
-> +}
-> +
->   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->                                             unsigned int irq, Error **errp)
->   {
-> @@ -192,6 +228,13 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
->       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
->       VFIODevice *vbasedev = &vapdev->vdev;
->   
-> +    static bool lock_initialized;
-> +
-> +    if (!lock_initialized) {
-> +        qemu_mutex_init(&cfg_chg_events_lock);
-> +        lock_initialized = true;
-> +    }
-> +
->       if (!vfio_device_get_name(vbasedev, errp)) {
->           return;
->       }
-> diff --git a/include/hw/s390x/ap-bridge.h b/include/hw/s390x/ap-bridge.h
-> index 470e439a98..7efc52928d 100644
-> --- a/include/hw/s390x/ap-bridge.h
-> +++ b/include/hw/s390x/ap-bridge.h
-> @@ -16,4 +16,43 @@
->   
->   void s390_init_ap(void);
->   
-> +typedef struct ChscSeiNt0Res {
-> +    uint16_t length;
-> +    uint16_t code;
-> +    uint8_t reserved1;
-> +    uint16_t reserved2;
-> +    uint8_t nt;
-> +#define PENDING_EVENT_INFO_BITMASK 0x80;
-> +    uint8_t flags;
-> +    uint8_t reserved3;
-> +    uint8_t rs;
-> +    uint8_t cc;
-> +} QEMU_PACKED ChscSeiNt0Res;
-> +
-> +#define NT0_RES_RESPONSE_CODE 1
-> +#define NT0_RES_NT_DEFAULT    0
-> +#define NT0_RES_RS_AP_CHANGE  5
-> +#define NT0_RES_CC_AP_CHANGE  3
-> +
-> +#define EVENT_INFORMATION_NOT_STORED 1
-> +#define EVENT_INFORMATION_STORED     0
-> +
-> +/**
-> + * ap_chsc_sei_nt0_get_event - Retrieve the next pending AP config
-> + * change event
-> + * @res: Pointer to a ChscSeiNt0Res struct to be filled with event
-> + * data
-> + *
-> + * This function checks for any pending AP config change events and,
-> + * if present, populates the provided response structure with the
-> + * appropriate SEI NT0 fields.
-> + *
-> + * Return:
-> + *   EVENT_INFORMATION_STORED - An event was available and written to @res
-> + *   EVENT_INFORMATION_NOT_STORED - No event was available
-> + */
-> +int ap_chsc_sei_nt0_get_event(void *res);
-> +
-> +bool ap_chsc_sei_nt0_have_event(void);
-> +
->   #endif
-
+https://www.codethink.co.uk/privacy.html
 
