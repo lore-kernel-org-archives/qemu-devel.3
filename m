@@ -4,96 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1EDC5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:06:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2283AC61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOhoG-0003RQ-FT; Mon, 09 Jun 2025 15:05:28 -0400
+	id 1uOhqG-0004Rj-Lp; Mon, 09 Jun 2025 15:07:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhoD-0003Qp-Gh
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:05:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uOhqE-0004RP-Sz
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:07:31 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhoB-0008Rp-9h
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:05:25 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uOhqC-0000HN-U8
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:07:30 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749495920;
+ s=mimecast20190719; t=1749496042;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=yGxQqWowTDEz9lxPYUzPQK1sEvnmEr6RojRqKwGES+E=;
- b=J2zkR3K3duY28ww52CqQINmqf+AXIO5pOWuuimdNAapxmc0WjuKX/t9yhyVMO0Nm3wkaTN
- A1a9h6u56y2Z5JoyF9nx5d1s4H2jl1/gcwik7b/iJbF66mlO98Rl9/TrCKMoLIQBsqb37G
- HNxUAf+HeAKBHiMTeqd2qeVdRp6Gt+c=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JcUESyfIUIhBV36QKnBkAR2wu1H+tLhR7qJurWYI7aE=;
+ b=LpL+SwLxeC/+G0XV7WFB47VvihSsqKvkfOXqRiO3G8R+M6b8RuVzeW3KrHdl+PVqHVvVRo
+ cxx01f7Uwd9UwXbSJnAj6n2xHozvhrGhA23KyFBSKCCj2Qs2SU+i5NoYa6L14ejoCIbp1r
+ 1jUCGzvwD9x51JpPdtwgM3TYvXFr7X8=
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
+ [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-X9antZMcNmK41S4COq_xdw-1; Mon, 09 Jun 2025 15:05:17 -0400
-X-MC-Unique: X9antZMcNmK41S4COq_xdw-1
-X-Mimecast-MFC-AGG-ID: X9antZMcNmK41S4COq_xdw_1749495916
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-7cd06c31ad6so852042485a.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:05:17 -0700 (PDT)
+ us-mta-680-ajXhGHZKPkWSq6wHwpulDA-1; Mon, 09 Jun 2025 15:07:21 -0400
+X-MC-Unique: ajXhGHZKPkWSq6wHwpulDA-1
+X-Mimecast-MFC-AGG-ID: ajXhGHZKPkWSq6wHwpulDA_1749496040
+Received: by mail-pl1-f200.google.com with SMTP id
+ d9443c01a7336-235dd77d11fso38783265ad.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:07:20 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749495916; x=1750100716;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yGxQqWowTDEz9lxPYUzPQK1sEvnmEr6RojRqKwGES+E=;
- b=j6QqGDXxOATvz3oTpXLfIk5gCpjuuuYD6sWVz0MlUXXTOv58nI1VxwF2kDvVZ3fwkp
- /u0J6ljLj2hRnjpe3PlXnOmCkejKinckU39WFlozcq5aSD4M2YpdDflcLFKig5oiB8sB
- gQ/fvG3Z4WHwMOZoeLoGhMHJvy2sdGfHLzCHPkge1KC/zS9eYHgJKSmWicZXi89jq3sk
- YnPjaC/YAumImAl3Z3vbCsQr8rWMYAGlcu7LPj1eekE1asWU4007JtsFKAiFRM+uI6/1
- xHOWkJPUp4BQcz895HDOsx2nueR9aWW5y9tRyt/u6Tu8wQVLhyGWQ0YcgesMLpzg+SXi
- pdvw==
-X-Gm-Message-State: AOJu0YxgsdNqZbiuzCP7NQBxOm8vfWUF8sV8hixnhy7qowq3vOyl9BOz
- t8rzYVRZ7oQCxSi4TtKmy3VSzfAdLpnyGKcxfdnZ+YkR72aqIg+o9Zn10CA3tLwxeiM6BK1m4Ip
- OQuhqwJqYAg3RS6SvlfJtb+MIcvVFFe5w7a1VKrRuz5lHoMVa8uf62/vy
-X-Gm-Gg: ASbGnctq6a7Va7fbM0Ovxd5yAu7oOwT5e+GAXaIHlVKpnWbPSY/8mf0ffd2u4zRDk0l
- 9CA/EX+dNcTqoSz77Cyayi8l6jJGYZHQOzN+EfxPMgZaNPwFAAwPb1RG7bVo5Sn6uboR58sPV5S
- a6Fi4HqrC2WyZMn9yEzATG2NkXn3kNGlJfTRm0f/Eh/RHZwQdF3cILfVW2Cbgjym2jHdSWLu4gR
- 3t76Ce0ZURp8grwRMZO+CVGdUeiOoT0M+d5LNlZgPVAmVkC32mQzeRfmmrfbobLOdhlEt0fxoFG
- LQfx/CsYMj3XVA==
-X-Received: by 2002:a05:620a:460b:b0:7cd:1b4b:e5fb with SMTP id
- af79cd13be357-7d39d8f25bemr99542885a.21.1749495916547; 
- Mon, 09 Jun 2025 12:05:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGt8M3+IDNVo8nXf1G0uFnX02Ps5qqcvCJ7mLCCTPEMud8Qq2lC8LFFmU1hbQFX+1sF9TTNfw==
-X-Received: by 2002:a05:620a:460b:b0:7cd:1b4b:e5fb with SMTP id
- af79cd13be357-7d39d8f25bemr99538085a.21.1749495916108; 
- Mon, 09 Jun 2025 12:05:16 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d25a608d6esm579230285a.71.2025.06.09.12.05.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 12:05:15 -0700 (PDT)
-Date: Mon, 9 Jun 2025 15:05:13 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
- migration config
-Message-ID: <aEcwaZFSyarnFTPv@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-20-farosas@suse.de>
- <aENBda_y3v3y4ptS@x1.local> <874iwswrex.fsf@suse.de>
- <aENUrociiqlFuPpz@x1.local> <87y0u1ugkx.fsf@suse.de>
- <aEcC9X5i6eV4N7An@x1.local> <87v7p4vlnl.fsf@suse.de>
+ d=1e100.net; s=20230601; t=1749496040; x=1750100840;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JcUESyfIUIhBV36QKnBkAR2wu1H+tLhR7qJurWYI7aE=;
+ b=f4PlqKAFZ/2/7t1Tg02w+ma2CsrcOq3ZNiywICGz+owhrUqV9xyFSORUbfDS+q+4Rf
+ Cca3RLdHMB0X6aTYueBORhXkqirGrL+XW3vDP3GfovIhUpi80oLf2CqkpYQ4R01dg4i9
+ 4y1dSVjnTkl64Bub0U3EYMq6iVuYUGT1w+2x3eI7Hz4SiB8NNCFs9uE+yFUf+wQO4KpM
+ mS8872TGNHZ5JaDdvdVLkdrFBKTYYixYHBlZ81d07WL1Gn+QthAjZrTw9OX57KtHDw47
+ ylgPRdWyKCAP50lQUBwTtyyKYmvJKJ1VHrmHfxY1hF6QNjzv3itp85y4/JN3qBfBvy+B
+ bJhA==
+X-Gm-Message-State: AOJu0YwZpQioWnGhEcBNnFCGziMgd/50GlWGzzhiMnRpz0gZL3avwGG8
+ hQzDUcx5jAowp/XmCJNqkVAGCWr0B62RsrK0Xv1Zovof/flamb6PRBZgI0eaURtjUUexySP0P2I
+ A1/QVTNXomaf6JywzitDHIs4fdJdT0tIW2q/tE7rJV7d4lpJbhojtJ/iCC5UjuFkX2tWwIKF13H
+ NmewTk5nbQ1Chk3xgdJThKUuaBFOF/mf4=
+X-Gm-Gg: ASbGncttvD5UfAXofrLKTvs29ZHsydJzSN2GxDl7F10wX5Ix9cv+Zks0c5+iPj1GkEx
+ 9Qn0nVc0KHslAZdLXFlvw1mnIjDPc0YuNd3ZvjNuvPchDzczXLoYIOss98dXRo3SE26dmYnMmB/
+ xpU94ciPt/n2QtOXHWHRSKus2M
+X-Received: by 2002:a17:90a:dfc6:b0:313:17ec:80ec with SMTP id
+ 98e67ed59e1d1-31346f5ac9bmr16389014a91.26.1749496039900; 
+ Mon, 09 Jun 2025 12:07:19 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2xKKlg75zuo/IELfLzeoA7u6tQWMYZbDl1FRAav00+bbFqRx0DWoxSPz0/T87DOguiANF961HyY49Rs8Dc3E=
+X-Received: by 2002:a17:90a:dfc6:b0:313:17ec:80ec with SMTP id
+ 98e67ed59e1d1-31346f5ac9bmr16388994a91.26.1749496039605; Mon, 09 Jun 2025
+ 12:07:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87v7p4vlnl.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+References: <20250606205009.584615-1-jsnow@redhat.com>
+ <20250606205009.584615-2-jsnow@redhat.com>
+ <d1a5fe06-599d-4a04-a550-1c9927495516@daynix.com>
+In-Reply-To: <d1a5fe06-599d-4a04-a550-1c9927495516@daynix.com>
+From: John Snow <jsnow@redhat.com>
+Date: Mon, 9 Jun 2025 15:07:08 -0400
+X-Gm-Features: AX0GCFusqFHqbZFeTPUi0ZuHO9WvnIwJdzgn_jO6ON0wztvHbCuSeaNePXSqMBs
+Message-ID: <CAFn=p-bk9ZdTdqNT6Z2d-28-nkqk+V7JjK+FZjfcyPJZYhoFHQ@mail.gmail.com>
+Subject: Re: [PATCH 1/4] python: update requirements for Sphinx
+To: Akihiko Odaki <akihiko.odaki@daynix.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Cleber Rosa <crosa@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000fa2c6106372849aa"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,201 +102,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025 at 03:02:06PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
-> 
-> > On Mon, Jun 09, 2025 at 11:37:02AM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Fri, Jun 06, 2025 at 05:23:18PM -0300, Fabiano Rosas wrote:
-> >> >> Peter Xu <peterx@redhat.com> writes:
-> >> >> 
-> >> >> > On Mon, Jun 02, 2025 at 10:38:08PM -0300, Fabiano Rosas wrote:
-> >> >> >> Allow the migrate and migrate_incoming commands to pass the migration
-> >> >> >> configuration options all at once, dispensing the use of
-> >> >> >> migrate-set-parameters and migrate-set-capabilities.
-> >> >> >> 
-> >> >> >> The motivation of this is to simplify the interface with the
-> >> >> >> management layer and avoid the usage of several command invocations to
-> >> >> >> configure a migration. It also avoids stale parameters from a previous
-> >> >> >> migration to influence the current migration.
-> >> >> >> 
-> >> >> >> The options that are changed during the migration can still be set
-> >> >> >> with the existing commands.
-> >> >> >> 
-> >> >> >> The order of precedence is:
-> >> >> >> 
-> >> >> >> 'config' argument > -global cmdline > defaults (migration_properties)
-> >> >> >
-> >> >> > Could we still keep the QMP migrate-set-parameters values?
-> >> >> >
-> >> >> >   'config' argument > QMP setups using migrate-set-parameters >
-> >> >> >     -global cmdline > defaults (migration_properties)
-> >> >> >
-> >> >> 
-> >> >> That's the case. I failed to mention it in the commit message. IOW it
-> >> >> behaves just like today, but the new 'config' way takes precedence over
-> >> >> all.
-> >> >
-> >> > Referring to below chunk of code:
-> >> >
-> >> > [...]
-> >> >
-> >> >> >> +bool migrate_params_override(MigrationState *s, MigrationParameters *new,
-> >> >> >> +                             Error **errp)
-> >> >> >> +{
-> >> >> >> +    ERRP_GUARD();
-> >> >> >> +
-> >> >> >> +    assert(bql_locked());
-> >> >> >> +
-> >> >> >> +    /* reset to default parameters */
-> >> >> >> +    migrate_params_apply(&s->defaults);
-> >> >
-> >> > IIUC here it'll reset all global parameters using the initial defaults
-> >> > first, then apply the "config" specified in "migrate" QMP command?
-> >> >
-> >> 
-> >> Yes, this is so any previously set parameter via migrate-set-parameter
-> >> gets erased. I think what we want (but feel free to disagree) is to have
-> >> the migrate-set-parameter _eventually_ only handle parameters that need
-> >> to be modifed during migration runtime. Anything else can be done via
-> >> passing config to qmp_migrate.
-> >> 
-> >> For -global, I don't have a preference. Having -global take precedence
-> >> over all would require a way to know which options were present in the
-> >> command-line and which are just the defaults seet in
-> >> migration_properties. I currently don't know how to do that. If it is at
-> >> all possible (within reason) we could make the change, no worries.
-> >> 
-> >> > I think there're actually two separate questions to be asked, to make it
-> >> > clearer, they are:
-> >> 
-> >> Here it got ambiguous when you say "global", I've been using -global to
-> >> refer to the cmdline -global migration.foo, but others have used global
-> >> to mean s->parameters (which has an extended lifetime). Could you
-> >> clarify?
+--000000000000fa2c6106372849aa
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+On Sun, Jun 8, 2025 at 1:26=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix.=
+com>
+wrote:
+
+> On 2025/06/07 5:50, John Snow wrote:
+> > In advance of actually bumping the build system requirements for Sphinx=
+,
+> > bump the version used for the static analysis tests. Update the minimum
+> > requirements accordingly.
 > >
-> > I meant the -global, and the global setups via migrate-set-parameters.
+> > This changes the test environment without actually changing the build
+> > requirements, and no extra changes are needed for the tests to continue
+> > passing.
 > >
-> > As replied to Dan in the other email, I changed my mind on question (1); I
-> > think it makes sense to have it YES.  I left my pure question on (2) there
-> > too.
-> >
-> > Do we really want to disable migrate-set-parameters setting most of the
-> > parameters, and only allow it to be set during migration on a few things
-> > like bandwidth or so?
-> >
-> 
-> Well, if we decide we have reasons to introduce the "config" concept,
-> then I think we should not present two ways of doing the same
-> thing. User calls qmp_migrate with its arguments and that's the
-> migration. No other ways of setting parameters.
-> 
-> Since we do have parameters that are set in "runtime" I though of
-> keeping migrate-set-parameters around to minimize the interface
-> change. Maybe those should have been separate knobs on their own after
-> all... But in any case, we can't reject migrate-set-parameters because
-> it might happen way earlier than the actual migration command. So I
-> don't think anything changes regarding the API.
-> 
-> > I just don't really see the major benefit of that yet.  I would think it
-> > make more sense if we don't need to change any parameters in migration,
-> > then provide that in one shot in QMP migrate "config".  Maybe making more
-> > sense if migration is not heavily thread-based but having its aiocontext so
-> > we could even move to Jobs.
-> >
-> > Now after all we'll need to allow setting something like bandwidth even
-> > during migration alive, and we have all the things ready allowing to set
-> > before migration starts, I'm not 100% sure whether we need to bother even
-> > if it does look cleaner, because we'll still break mgmt used to be working
-> > for years.. I could be over-cautious on breaking things, but I still want
-> > to understand better on the benefits.
-> >
-> 
-> Makes sense. We'd say either use the old way or the new way. If both are
-> mixed, then the new way takes precedence. That keeps older apps working
-> and allows new code to transition into the new way.
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+>
+> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>
+> I didn't notice these files. Perhaps they are better to be documented
+> with pythondeps.toml.
+>
 
-Fair enough.  Yes whenever the new way is chosen it can work in anyway we
-define it.
+You didn't miss them, they were added after you submitted your patch :)
 
-It's just that if the global list of parameters will still be around then
-it seems to have no good reason to not build the migration parameters on
-top of the global list of parameters.  After all, anything can be
-overwritten in the QMP migrate if needed.
+The python tests checking anything to do with sphinx are very recent. The
+relationship between pythondeps.toml and python/setup.cfg and
+python/tests/minreqs.txt is still tenuous, but I'll keep in mind that we
+may need to better document the relationships.
 
-> 
-> > One step back, on this "allow migrate to specify 'config'" request: I
-> > think we can definitely do that as it still provides some kind of
-> > atomicity.  But frankly speaking I never see it a "real problem" - do
-> > we really have report or use case showing that Libvirt can trigger
-> > "migrate" with some global settings touched by other apps at all?
-> >
-> 
-> I don't think other apps is the problem, but libvirt itself maybe
-> attempting two migrations in sequence after one of them fails.
-> 
-> There always the possibility that the user is poking around, which of
-> course is not advisable, but if a weird migration bug shows up it's
-> difficult to confirm that other app/user hasn't changed the parameters.
+(Sphinx and its dependencies are installed only for the sake of pylint and
+mypy to check docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py, as
+those packages need to be present in order for the static type analysis to
+work fully. We don't actually *run* Sphinx from those tests, we just use
+them as "headers", effectively.)
 
-That's almost what I think the current patch is useful on providing some
-kind of atomicity.
+Thanks again,
+--js
 
-If we want to make debugging easy, we could also consider returning the
-finalized migration setup in the response of QMP "migrate" with all
-parameters, by defining "returns" for QMP "migrate".
 
-> 
-> > To me, it was yet an illutionary problem, I never know the answer of that.
-> > If Libvirt is still the owner of QEMU instance via the QMP channel, I
-> > actually don't really see why the atomicity would even help, even though we
-> > can still provide that as it's pretty easy as something optional; like what
-> > this patch does without too much hassle.
-> >
-> 
-> We can provide it, but I'd rather not unless we agree that is the way
-> forward. We don't need another way of doing the same as existing
-> commands.
+>
+> Regards,
+> Akihiko Odaki
+>
+>
 
-OK, it might be me that misunderstood the request initially.
+--000000000000fa2c6106372849aa
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> 
-> > Then if to move one step further to remove all global settings, we face
-> > breaking debugging scripts, and breaking of any old libvirt and non-libvirt
-> > mgmt apps.  Frankly I really don't yet know whether it's a good idea.  I
-> > could miss some important reasoning of why we want to do it - it needs to
-> > be something not relevant to "making the code cleaner", IMHO..
-> 
-> I don't see it as breaking the old stuff. Because any old users would
-> still be using migrate-set-parameters as usual. So I think your concern
-> is about calling migrate the new way and also keeping -global
-> working. As I said, personally I don't mind if put some ifs around to
-> keep -global working.
-> 
-> Could we add another parameter that says allow-globals (or w/e) and make
-> everyone happy?
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Jun 8, =
+2025 at 1:26=E2=80=AFAM Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@d=
+aynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br></div><blockquote cla=
+ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
+rgb(204,204,204);padding-left:1ex">On 2025/06/07 5:50, John Snow wrote:<br>
+&gt; In advance of actually bumping the build system requirements for Sphin=
+x,<br>
+&gt; bump the version used for the static analysis tests. Update the minimu=
+m<br>
+&gt; requirements accordingly.<br>
+&gt; <br>
+&gt; This changes the test environment without actually changing the build<=
+br>
+&gt; requirements, and no extra changes are needed for the tests to continu=
+e<br>
+&gt; passing.<br>
+&gt; <br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+<br>
+Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:odaki@rsg.ci.i.u-tokyo.ac.=
+jp" target=3D"_blank">odaki@rsg.ci.i.u-tokyo.ac.jp</a>&gt;<br>
+<br>
+I didn&#39;t notice these files. Perhaps they are better to be documented <=
+br>
+with pythondeps.toml.<br></blockquote><div><br></div><div>You didn&#39;t mi=
+ss them, they were added after you submitted your patch :)</div><div><br></=
+div><div>The python tests checking anything to do with sphinx are very rece=
+nt. The relationship between pythondeps.toml and python/setup.cfg and pytho=
+n/tests/minreqs.txt is still tenuous, but I&#39;ll keep in mind that we may=
+ need to better document the relationships.</div><div><br></div><div>(Sphin=
+x and its dependencies are installed only for the sake of pylint and mypy t=
+o check docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py, as those pac=
+kages need to be present in order for the static type analysis to work full=
+y. We don&#39;t actually *run* Sphinx from those tests, we just use them as=
+ &quot;headers&quot;, effectively.)</div><div><br></div><div>Thanks again,<=
+/div><div>--js</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" styl=
+e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
+g-left:1ex">
+<br>
+Regards,<br>
+Akihiko Odaki<br>
+<br>
+</blockquote></div></div>
 
-That's not needed if it's about making me happy. :) My happiness alone
-isn't that important, I can change any of my script, and I'm OK whatever
-ABI changes, but as long as the downstream won't be a mess..
-
-If we want to either do nothing or making it a bundle, then we can decide
-what's the bundle now.
-
-For example, do we plan to have this, then drop migrate-set-parameters &
-capabilities finally (or at least failing non-runtime-modifi-able ones)?
-
-How fast do we want to do this, and how do we manage downstream to not be
-affected by having new QEMU's migrate-set-* commands completely gone, would
-be the follow up questions..
-
-Maybe I worked much enough on Linux so I pay a lot of attention trying to
-think such trade-off, then if I see not much benefit normally I'll try to
-not break any ABI.  But if that's everyone's wish (except myself.. even if
-it only makes the interface better..) then we can discuss before moving on.
-
--- 
-Peter Xu
+--000000000000fa2c6106372849aa--
 
 
