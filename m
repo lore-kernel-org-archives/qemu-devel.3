@@ -4,63 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CEE2C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:53:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3612C61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOdrp-0001yu-Dc; Mon, 09 Jun 2025 10:52:53 -0400
+	id 1uOdt9-0002cw-Tx; Mon, 09 Jun 2025 10:54:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uOdrn-0001yI-5o; Mon, 09 Jun 2025 10:52:51 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uOdt8-0002cm-3F
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:54:14 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uOdrk-0000xi-KZ; Mon, 09 Jun 2025 10:52:50 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c15:2b89:0:640:9815:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 732B260CDF;
- Mon,  9 Jun 2025 17:52:44 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a98::1:26] (unknown
- [2a02:6bf:8080:a98::1:26])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id hqiHwO8FeW20-wwA4giur; Mon, 09 Jun 2025 17:52:43 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1749480763;
- bh=qqlL+gfILre4QunlojxfP1/EQMHxxZuLkpi1dGwyrhY=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=iVqQwvBtzkIderxhy9h3DaWnyilA/FHkVNArwKNCsfafUCn3RNlFWmK9p9WsHYw58
- kwAjI/FSGm/y5chO6gQA6s6kT8Xc+7IjYr6GgJgHS4qeMvNPc4At7u1k6nNUcAKL74
- Gkkz9UVrk7SdbgfO3YVnymDmCA2KXr+rSU7aHJ58=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <26000017-b3d4-4383-aeb3-557306aa0703@yandex-team.ru>
-Date: Mon, 9 Jun 2025 17:52:43 +0300
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uOdt2-0001Hp-PT
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:54:12 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 559DF68g029062;
+ Mon, 9 Jun 2025 14:54:06 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=UuVyOK/rdWWmfxjpGTPYY2Ls8f71d+
+ 7vttuayoQHvEM=; b=eGXMBpZnqt4KrsaebPpzB3vCmkxFnlzRuS0Eej5BmPAQz1
+ fnZ8SR++IvrmQwrQpnjwOzDzTDIeydfQ+Dp1R7QWVVCiOKKs9DtSC8WbJU7lNxOr
+ FvOCosvXLTGmGRLenCCMQQx6p2MZZkdaoGYEP9n40pj1Q6R6nOD1laieXUkJW6jh
+ 8yOut5OCHIRaAtunpkZM3pcWIWxLscX0oT/XQQcPjg1mNsQHnvch31gOT3KbxQ00
+ pCsGORxxz68he9Bkut6sUeCmQTLkNDLdep4XdBoiS393IATStShxx0u7putUWgS5
+ lDFaZu4yYJyoK3yf9KEKgHxmyQ/8EwsMJCGdUjlg==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474cxj199b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 14:54:06 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 559DLZZa015191;
+ Mon, 9 Jun 2025 14:54:05 GMT
+Received: from smtprelay01.wdc07v.mail.ibm.com ([172.16.1.68])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 474yrt6d0v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Jun 2025 14:54:05 +0000
+Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
+ [10.241.53.104])
+ by smtprelay01.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 559Es42S19267932
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Jun 2025 14:54:04 GMT
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6096758067;
+ Mon,  9 Jun 2025 14:54:04 +0000 (GMT)
+Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A86AF58052;
+ Mon,  9 Jun 2025 14:54:03 +0000 (GMT)
+Received: from [9.61.254.209] (unknown [9.61.254.209])
+ by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Jun 2025 14:54:03 +0000 (GMT)
+Content-Type: multipart/alternative;
+ boundary="------------Ka5T9qEUR6voDjSgeMI5B4Qg"
+Message-ID: <45458e9f-ef59-43e3-abd6-5d923575afa4@linux.ibm.com>
+Date: Mon, 9 Jun 2025 09:54:02 -0500
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 4/4] block/copy-before-write: report partial block
- status to snapshot
-To: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>, eblake@redhat.com
-Cc: qemu-block@nongnu.org, jsnow@redhat.com, kwolf@redhat.com,
- hreitz@redhat.com, qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com,
- den@virtuozzo.com
-References: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
- <20250528120732.2247150-5-andrey.zhadchenko@virtuozzo.com>
+Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
+ connecting
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Steven Sistare <steven.sistare@oracle.com>
+Cc: qemu-devel@nongnu.org, jjherne@linux.ibm.com, peterx@redhat.com,
+ farosas@suse.de
+References: <aEMMjtsKZLX_Bi03@redhat.com>
+ <7dc8d42d-47f1-49c1-9bff-ab2d09d0b6f3@oracle.com>
+ <aEMR6Xjs8tRJ8_sp@redhat.com>
+ <b2d90921-0991-4a57-a141-ad0c830f8618@oracle.com>
+ <5f211f67-17f7-4b1d-a60a-4ff62645fbfa@linux.ibm.com>
+ <ad638089-af36-4f3e-8f3d-61549e9bed06@oracle.com>
+ <aEaWC_Lc6c1g821f@redhat.com>
+ <f46393bb-115a-489f-aa8d-08348e89d25e@oracle.com>
+ <aEbfuM681MJh2S-b@redhat.com>
+ <881cb07a-95c7-4f3b-8012-352873e88d64@oracle.com>
+ <aEbmvQXyCLMKSy_8@redhat.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250528120732.2247150-5-andrey.zhadchenko@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.72;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+From: JAEHOON KIM <jhkim@linux.ibm.com>
+In-Reply-To: <aEbmvQXyCLMKSy_8@redhat.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: 7wOsiTE4QaGhI4Tp4U4YMecvRwM2_HFI
+X-Proofpoint-GUID: 7wOsiTE4QaGhI4Tp4U4YMecvRwM2_HFI
+X-Authority-Analysis: v=2.4 cv=fZWty1QF c=1 sm=1 tr=0 ts=6846f58e cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=6IFa9wvqVegA:10 a=r77TgQKjGQsHNAKrUKIA:9 a=dqTSvHTbF_JwFlo1G-AA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=20KFwNOVAAAA:8
+ a=c258J1mwZ68sw83ccFIA:9 a=mRI2mt6nTbyK08zs:21 a=_W_S_7VecoQA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDEwNSBTYWx0ZWRfX0WaiX2SIed4P
+ 0EqPl0RtAVI9y6ZYR5c95syeiY2ykMXvQsL9worI2XEVaVaOLFvkf4swLXWIA9JkohTIBOAn4QC
+ FtwwwL4IB+blV73CdCgp5bmGK1Mcqc5jnc3R2J8gfaaVvexsTpwkpoYRf8ABI+6WvMQl7eGHOWi
+ eLBFSbRrBaRtmgYqtV2XT8eBemWHVd+KpoZoWXx/PZPTH1W8TXMQM+GY7igRIBYWXJzyEA5KoVN
+ E3GTodTw3gSYbvAXIMMBQtCcYfKbF7j3LCYVH72fSBhD9fARdqmg6WfkGLjLbcnTyIUbpuGY2Vu
+ 4f3XLlNatvmXkvSUrTiL0GDvb531QJKrgz5bCioA7z2ccwByUN1s5PfkNep3Hw7X/yvhNCC8sB+
+ kI5Ouf9QoB4V+0qaeUB7N7QiqBb+U4rioJC8T1bDftEMx8wLkzbow9IWceXlXXi5Nc6jH5/+
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_05,2025-06-09_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ adultscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506090105
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -78,85 +135,248 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.05.25 15:07, Andrey Zhadchenko wrote:
-> until the non-accessible area
+This is a multi-part message in MIME format.
+--------------Ka5T9qEUR6voDjSgeMI5B4Qg
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-Please write a bit more: what, why and how. What is the scenario when this change helps? I think the client of snapshot-access, should not try to read/get-block-status from "denied" areas?
 
-Also, it's a lot more comfortable to read messages, starting from a full sentence, not just continuing a sentence of subject. It's OK to repeat the subject, may be in more detailed form.
+On 6/9/2025 8:50 AM, Daniel P. Berrangé wrote:
+> On Mon, Jun 09, 2025 at 09:39:48AM -0400, Steven Sistare wrote:
+>> On 6/9/2025 9:20 AM, Daniel P. Berrangé wrote:
+>>> On Mon, Jun 09, 2025 at 09:12:27AM -0400, Steven Sistare wrote:
+>>>> On 6/9/2025 4:06 AM, Daniel P. Berrangé wrote:
+>>>>> On Fri, Jun 06, 2025 at 03:37:56PM -0400, Steven Sistare wrote:
+>>>>>> The easiest solution, with no interface changes, is adding wait_for_socket() in qtest,
+>>>>>> with this addition from Daniel:
+>>>>>>
+>>>>>>      "With the busy wait you risk looping forever if the child (target) QEMU
+>>>>>>      already exited for some reason without ever creating the socket. You
+>>>>>>      can mitigate this by using 'kill($PID, 0)' in the loop and looking
+>>>>>>      for -ERSCH, but this only works if you know the pid involved."
+>>>>>>
+>>>>>> Daniel also suggested:
+>>>>>>      "For the tests, passing a pre-opened UNIX socket FD could work"
+>>>>>>
+>>>>>> Note we can not use any of the standard chardev options to specify such a socket,
+>>>>>> because the cpr socket is created before chardevs are created.
+>>>>>>
+>>>>>> Perhaps we could specify the fd in an extension of the MigrationChannel MigrationAddress.
+>>>>>> { 'union': 'MigrationAddress',
+>>>>>>      'base': { 'transport' : 'MigrationAddressType'},
+>>>>>>      'discriminator': 'transport',
+>>>>>>      'data': {
+>>>>>>        'socket': 'SocketAddress',
+>>>>>>        'exec': 'MigrationExecCommand',
+>>>>>>        'rdma': 'InetSocketAddress',
+>>>>>>        'file': 'FileMigrationArgs',
+>>>>>>        'fd':   'FdMigrationArgs' } }           <-- add this
+>>>>>>
+>>>>>> That would be useful for all clients, but this is asking a lot from you,
+>>>>>> when you are just trying to fix the tests.
+>>>>> Note, 'SocketAddress' already has an option for declaring a FD that
+>>>>> represents a socket.
+>>>> Yes, but if I understand, you proposed passing an fd that represents a
+>>>> pre-listened socket, which requires target qemu to accept() first.  The
+>>>> existing FdSocketAddress is ready to read.  We could add a boolean to enable
+>>>> the new behavior.
+>>> It can do both actually - it depends on what APIs the QEMU uses the
+>>> SocketAddress with.
+>>>
+>>> If it is used with qio_channel_socket_connect* the FD must be an
+>>> active peer connection.
+>>>
+>>> If it is used with qio_channel_socket_listen*/qio_net_listener* the
+>>> FD must be listener socket.
+>> Fair enough.  cpr currently listens here, and we could add a case for the FD:
+>>
+>>    QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
+>>    {
+>>      MigrationAddress *addr = channel->addr;
+>>
+>>      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
+>>          addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
+>>          ...
+>>          g_autoptr(QIONetListener) listener = qio_net_listener_new();
+>>
+>> Or to use my socketpair() suggestion, that function would also need changes,
+>> calling qio_channel_socket_connect.
+>>
+>> Which do you think is better for clients -- socketpair or pre-listened?
+> Please just use the existing SocketAddress functionality, as that's used
+> throughout QEMU - a special case with socketpair for migration is not
+> desirable.
+>
+> The SocketAddress stuff is what libvirt's used for many years now to
+> address the race condition with QMP listeners.
+>
+> With regards,
+> Daniel
 
-> 
-> Signed-off-by: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
-> ---
->   block/copy-before-write.c | 18 ++++++++++++------
->   1 file changed, 12 insertions(+), 6 deletions(-)
-> 
-> diff --git a/block/copy-before-write.c b/block/copy-before-write.c
-> index 7e074ad569..c5e6e1c112 100644
-> --- a/block/copy-before-write.c
-> +++ b/block/copy-before-write.c
-> @@ -207,10 +207,11 @@ static int coroutine_fn GRAPH_RDLOCK cbw_co_flush(BlockDriverState *bs)
->    */
+Dear Daniel and Steve,
 
-the comment above the function should be updated to cover new logic
+Thank you both for your valuable insights.
 
->   static BlockReq * coroutine_fn GRAPH_RDLOCK
->   cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
-> -                       int64_t *pnum, BdrvChild **file)
-> +                       int64_t *pnum, BdrvChild **file, bool query)
->   {
->       BDRVCopyBeforeWriteState *s = bs->opaque;
->       BlockReq *req = g_new(BlockReq, 1);
-> +    int64_t next_dirty;
->       bool done;
->   
->       QEMU_LOCK_GUARD(&s->lock);
-> @@ -220,9 +221,13 @@ cbw_snapshot_read_lock(BlockDriverState *bs, int64_t offset, int64_t bytes,
->           return NULL;
->       }
->   
-> -    if (bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes) != -1) {
-> -        g_free(req);
-> -        return NULL;
-> +    next_dirty = bdrv_dirty_bitmap_next_dirty(s->access_bitmap, offset, bytes);
-> +    if (next_dirty != -1) {
-> +        if (!query || next_dirty == offset) {
-> +            g_free(req);
-> +            return NULL;
-> +        }
-> +        bytes = offset + bytes - next_dirty;
+To clarify regarding the socket handling approach:
+If I do not use socketpair() and instead pass a pre-listened FD to the target, which then calls accept(),
+it seems this could mitigate some race condition. However, isn't there still a risk that the old QEMU might try to
+connect before the target QEMU calls accept(), thereby resulting in the same race condition?
 
-I don't follow. Shouldn't this be
+If I only consider the qtest environment, it seems to me that waiting for the target to create cpr.sock inside qtest framework
+- along with checking the process status {kill(pid,0)} - might be the most efficient way to handle this.
 
-     bytes = next_dirty - offset
+I checked and found that the QTestState structure already has a "pid_t qemu_pid" field,
+so it should be straightforward to check the target's PID.
 
-I.e., number of bytes from offset up to first "denied" byte.
+ From your experience,
+which approach do you consider the most effective to solve the current race condition issue?
 
->       }
->   
->       done = bdrv_dirty_bitmap_status(s->done_bitmap, offset, bytes, pnum);
-> @@ -270,7 +275,8 @@ cbw_co_preadv_snapshot(BlockDriverState *bs, int64_t offset, int64_t bytes,
->       while (bytes) {
->           int64_t cur_bytes;
->   
-> -        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file);
-> +        req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &file,
-> +                                     false);
->           if (!req) {
->               return -EACCES;
->           }
-> @@ -302,7 +308,7 @@ cbw_co_snapshot_block_status(BlockDriverState *bs,
->       int64_t cur_bytes;
->       BdrvChild *child;
->   
-> -    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child);
-> +    req = cbw_snapshot_read_lock(bs, offset, bytes, &cur_bytes, &child, true);
->       if (!req) {
->           return -EACCES;
->       }
+I would appreciate your thoughts.
 
--- 
-Best regards,
-Vladimir
+- Jaehoon Kim
+
+--------------Ka5T9qEUR6voDjSgeMI5B4Qg
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 6/9/2025 8:50 AM, Daniel P. Berrangé
+      wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:aEbmvQXyCLMKSy_8@redhat.com">
+      <pre wrap="" class="moz-quote-pre">On Mon, Jun 09, 2025 at 09:39:48AM -0400, Steven Sistare wrote:
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">On 6/9/2025 9:20 AM, Daniel P. Berrangé wrote:
+</pre>
+        <blockquote type="cite">
+          <pre wrap="" class="moz-quote-pre">On Mon, Jun 09, 2025 at 09:12:27AM -0400, Steven Sistare wrote:
+</pre>
+          <blockquote type="cite">
+            <pre wrap="" class="moz-quote-pre">On 6/9/2025 4:06 AM, Daniel P. Berrangé wrote:
+</pre>
+            <blockquote type="cite">
+              <pre wrap="" class="moz-quote-pre">On Fri, Jun 06, 2025 at 03:37:56PM -0400, Steven Sistare wrote:
+</pre>
+              <blockquote type="cite">
+                <pre wrap="" class="moz-quote-pre">
+The easiest solution, with no interface changes, is adding wait_for_socket() in qtest,
+with this addition from Daniel:
+
+    "With the busy wait you risk looping forever if the child (target) QEMU
+    already exited for some reason without ever creating the socket. You
+    can mitigate this by using 'kill($PID, 0)' in the loop and looking
+    for -ERSCH, but this only works if you know the pid involved."
+
+Daniel also suggested:
+    "For the tests, passing a pre-opened UNIX socket FD could work"
+
+Note we can not use any of the standard chardev options to specify such a socket,
+because the cpr socket is created before chardevs are created.
+
+Perhaps we could specify the fd in an extension of the MigrationChannel MigrationAddress.
+{ 'union': 'MigrationAddress',
+    'base': { 'transport' : 'MigrationAddressType'},
+    'discriminator': 'transport',
+    'data': {
+      'socket': 'SocketAddress',
+      'exec': 'MigrationExecCommand',
+      'rdma': 'InetSocketAddress',
+      'file': 'FileMigrationArgs',
+      'fd':   'FdMigrationArgs' } }           &lt;-- add this
+
+That would be useful for all clients, but this is asking a lot from you,
+when you are just trying to fix the tests.
+</pre>
+              </blockquote>
+              <pre wrap="" class="moz-quote-pre">
+Note, 'SocketAddress' already has an option for declaring a FD that
+represents a socket.
+</pre>
+            </blockquote>
+            <pre wrap="" class="moz-quote-pre">
+Yes, but if I understand, you proposed passing an fd that represents a
+pre-listened socket, which requires target qemu to accept() first.  The
+existing FdSocketAddress is ready to read.  We could add a boolean to enable
+the new behavior.
+</pre>
+          </blockquote>
+          <pre wrap="" class="moz-quote-pre">
+It can do both actually - it depends on what APIs the QEMU uses the
+SocketAddress with.
+
+If it is used with qio_channel_socket_connect* the FD must be an
+active peer connection.
+
+If it is used with qio_channel_socket_listen*/qio_net_listener* the
+FD must be listener socket.
+</pre>
+        </blockquote>
+        <pre wrap="" class="moz-quote-pre">
+Fair enough.  cpr currently listens here, and we could add a case for the FD:
+
+  QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
+  {
+    MigrationAddress *addr = channel-&gt;addr;
+
+    if (addr-&gt;transport == MIGRATION_ADDRESS_TYPE_SOCKET &amp;&amp;
+        addr-&gt;u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
+        ...
+        g_autoptr(QIONetListener) listener = qio_net_listener_new();
+
+Or to use my socketpair() suggestion, that function would also need changes,
+calling qio_channel_socket_connect.
+
+Which do you think is better for clients -- socketpair or pre-listened?
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Please just use the existing SocketAddress functionality, as that's used
+throughout QEMU - a special case with socketpair for migration is not
+desirable.
+
+The SocketAddress stuff is what libvirt's used for many years now to
+address the race condition with QMP listeners.
+
+With regards,
+Daniel</pre>
+    </blockquote>
+    <pre>Dear Daniel and Steve,
+
+Thank you both for your valuable insights.
+
+To clarify regarding the socket handling approach:
+If I do not use socketpair() and instead pass a pre-listened FD to the target, which then calls accept(),
+it seems this could mitigate some race condition. However, isn't there still a risk that the old QEMU might try to
+connect before the target QEMU calls accept(), thereby resulting in the same race condition?
+
+If I only consider the qtest environment, it seems to me that waiting for the target to create cpr.sock inside qtest framework
+- along with checking the process status {kill(pid,0)} - might be the most efficient way to handle this.
+
+I checked and found that the QTestState structure already has a "pid_t qemu_pid" field,
+so it should be straightforward to check the target's PID.
+
+From your experience,
+which approach do you consider the most effective to solve the current race condition issue?
+
+I would appreciate your thoughts.
+
+- Jaehoon Kim
+</pre>
+    <blockquote type="cite" cite="mid:aEbmvQXyCLMKSy_8@redhat.com">
+      <pre wrap="" class="moz-quote-pre">
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------Ka5T9qEUR6voDjSgeMI5B4Qg--
 
 
