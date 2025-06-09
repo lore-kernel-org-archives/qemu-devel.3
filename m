@@ -4,95 +4,222 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E5CC61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 20:36:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2579AC5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 20:48:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOjDP-0008VB-FA; Mon, 09 Jun 2025 16:35:31 -0400
+	id 1uOjP4-0002lo-9g; Mon, 09 Jun 2025 16:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOjDJ-0008Uq-Us
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 16:35:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uOjOz-0002lH-Kt
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 16:47:29 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOjDH-0002Ap-7t
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 16:35:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749501321;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=HyMfFid+3h1tNDbg8oO9+ELgXZpPxLVQB6uhDWUdLkw=;
- b=Oe8eNYXxrPBx1A63/2nj7cvVTSufk9NygL8LK5Noo1kVRs8dcHlIUCtyep+VVx00Rj0vxZ
- uDz7jqNtom3+PYe9xXV/8XdBIS6tTJxP5MpOp8tmxKEu/xBM4cHZfDcj02nuzrUOPGOS50
- ZUUAWjFPITDoZQ3SnZgGcrIqhxGXMkU=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-475-Z5ZRik7GPp-gJFipNWjHNA-1; Mon, 09 Jun 2025 16:35:20 -0400
-X-MC-Unique: Z5ZRik7GPp-gJFipNWjHNA-1
-X-Mimecast-MFC-AGG-ID: Z5ZRik7GPp-gJFipNWjHNA_1749501320
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-4a6ef72a544so48650851cf.1
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 13:35:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749501319; x=1750106119;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=HyMfFid+3h1tNDbg8oO9+ELgXZpPxLVQB6uhDWUdLkw=;
- b=O7yXg93ZcQ1H/pQBBT4/vwU6cG5mEafXJMKRgli7MI113F2lsEmpdMXltxl5rgvu9t
- lE24J/jj7Q1opb212BtmpaGrzyWWMufrNO7xhbv6nMR9ea9vvJjoJxIYYIWWd3i3cTHh
- sgo4yVhEfeEpJvtoWDVJYv4bwiqgMc+A/005GjATllqgoNr/vaw9AVRCYT8WA+0uQ528
- fEsNqgZpvD+fj0Wht6MrO5aAyLgO1fDS/irt23eQJ7R9dMF95IJDcaWc/BilxzzpRmvn
- NgsAVF5OmBYQvc9+1wF5qhvoLSKNYvNCv7sBKk/LAV1otGFYtGkVGRxU+suNYapmraTc
- oMCg==
-X-Gm-Message-State: AOJu0Yw/phmnuHJlKFy5HS6ye421+M6QwbuUv4QDr/ukSLfIKPrdQZ0m
- mmwwkreXDtbAQl/QGNvOTYOYRlJ6FO9XHA+NoQcyWj7EEluHDD5PkqfPwflY2CV6ZdBy3zxrFh6
- G/xIEtkdUWY2TBEytPZZkwL/tsajJOywLhtltQBAcy0RYUHfnPyoTg4knES7tUhnA
-X-Gm-Gg: ASbGncurtVnGpD27sxJZPMpz9Jd+BJrM7tZ27/po6TmdQHzFQKHFnAkz3eQDaGdl3TH
- OQKQRHheeRwQq8u5E2UCu74O0yGYoPULv9igxEq5LAGeb0UoEtYLu5tYrFwymr1UgkSCAzxIcEl
- uhejzoCdqR6s6F8xby9FHVTleJT+w/7yQHLODM4avE/vppRdl5VEbIEb147kVrRNgt9JHUAiwzz
- wc8VH1/GELufKMDDMn+ZcJHOtpikoAFyIbGSh655UXkyNd8D6+7Ku0xoqXzX8RMMD9c/gPEi46l
- 4PbBxgrDJECU1A==
-X-Received: by 2002:a05:622a:5a8a:b0:4a4:3d6e:57c8 with SMTP id
- d75a77b69052e-4a5b9ececd0mr247957331cf.34.1749501318431; 
- Mon, 09 Jun 2025 13:35:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFEwpsPY025kVKPBYQH0jUrsnwweU7M1ttcupwce2TMA1kujH0pRsrrUw/xNdlvSwuXiG13Vg==
-X-Received: by 2002:a05:622a:5a8a:b0:4a4:3d6e:57c8 with SMTP id
- d75a77b69052e-4a5b9ececd0mr247957041cf.34.1749501317860; 
- Mon, 09 Jun 2025 13:35:17 -0700 (PDT)
-Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a61115048fsm60422801cf.9.2025.06.09.13.35.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 13:35:17 -0700 (PDT)
-Date: Mon, 9 Jun 2025 16:35:14 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
- migration config
-Message-ID: <aEdFgjAAuagXUyT9@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-20-farosas@suse.de>
- <aENBda_y3v3y4ptS@x1.local> <874iwswrex.fsf@suse.de>
- <aENUrociiqlFuPpz@x1.local> <87y0u1ugkx.fsf@suse.de>
- <aEcC9X5i6eV4N7An@x1.local> <87v7p4vlnl.fsf@suse.de>
- <aEcwaZFSyarnFTPv@x1.local> <87plfcvh2l.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uOjOu-0003V5-A6
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 16:47:26 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 559FcPRe018914;
+ Mon, 9 Jun 2025 20:47:20 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=pZ/7QJ9rskaZSRN49gE/Qg3TAVMARQzjSKbGJDP3HDQ=; b=
+ hpkFUIpaZZTUUMU3YsoJ622/qU8L72xqkOO2HnwYP7JGJr273OoeFajLD43Nx5mt
+ dGzDmZRmkkxEwEuRGoYQCfXXLVh6Ta3Ub1a7LsEnd97InxC3oxYNr9TraUY1y/Rt
+ ypl4CP5Z/oaeCihPxGDb2zcDAm7Ht0ouQkQWPIT2zEwcHs2MBEWinxvlM7JUg2EF
+ GbRGTgezclt3WZ+Jo1xOaRyd9+tM1OurpZV3ik4a7brWt8Lvqv/82Z8THFIGsWor
+ YZlbWlsQZoSlLsEx3PiHRV2ABOPKxfU3FYRgEaV6Y58Z5R2iOCCbA4wTXnzBBXHR
+ 209CJ7uk5SLM5BRn547W6Q==
+Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c74tyyr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 09 Jun 2025 20:47:20 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 559JZM24020262; Mon, 9 Jun 2025 20:47:19 GMT
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazon11012054.outbound.protection.outlook.com
+ [40.107.200.54])
+ by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bve56q2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 09 Jun 2025 20:47:19 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=vBZA5ybBYK1dPhBVVTOJWtsHq1pAqpp+VLoBiyzFpjEcmjXl+L+QEK+QjBlEOPH46MT+Cq68V/ctAlx9sx+saWdvNHaop5XQ4bUuCL53cT8MJT4rsV0qZtXjjv6hfa/3jW+3cW5agXJGcuKudRNRk1Daff2yBNGy/ZuImW4SgStqO+Iy5zsLxlock3c1h4Ii2B08w0j9GpNlm4mbtiL/JyH/4YGLm2BE7Llxzuzwa8a937sH8vfqJq7sLyAiGMVTUG77q8zN8sySjAXJ6vsVnidjhyacmYjBpPjRT4p5dQ6cgFU5ErDAOYT2kS9JlZi8IPyq2ON4FPFP1664BgXm8g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=pZ/7QJ9rskaZSRN49gE/Qg3TAVMARQzjSKbGJDP3HDQ=;
+ b=lpQGins4NR4l3EjDHY82aJHQ2wQ3wdw+8bDRgverSCChFNT8zsSgEdCbcS0Pbm7TdpBgqi57zqdCDJgtg1Tz1v0Ua9z9I7SwAtPwKAXSnmiPIP+Gm2u1Zw5qp6d5SkCNRzuwjFqbW8ZnuN453hrTOAutV69OMAo3I9he4q6Ux2ZezJhq3g9PYWzh/d1ePpKiTmPnZKk6u+hr7hAhM5kbESgE/nSVF12TKUTzCYB9v1NGCh2mK3bMRqGcWbiEOCpdzIegXR/IkU+wWNGQ0bDho42zxB/LVpcPOuBh6NmnSmD++SPVqC7cwP6eko80pk4YQ+UKG+YH0klRYHVqCrwUIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=pZ/7QJ9rskaZSRN49gE/Qg3TAVMARQzjSKbGJDP3HDQ=;
+ b=crm1OYBl6gb6qJOMr1bEA+KsKZIDGCgmGpGKaqYKrpvY7tifWh4y7+UkIZDmCMWANhKsyOODzHjhc+2uzsTeyFvNYxxBJmyvSnRDjKtBLaKCzDbkxLhcsTJy3FcTQtiFpf0e6r5o+MOD1tAHPaOYStkHcbOfiOuX1Slb7+PCo7E=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by PH7PR10MB5830.namprd10.prod.outlook.com (2603:10b6:510:127::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.27; Mon, 9 Jun
+ 2025 20:47:17 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8813.024; Mon, 9 Jun 2025
+ 20:47:17 +0000
+Message-ID: <a97f25cb-b543-44ad-b38d-76a086c55606@oracle.com>
+Date: Mon, 9 Jun 2025 16:47:11 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V4 35/43] vfio/iommufd: register container for cpr
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
+ <1748546679-154091-36-git-send-email-steven.sistare@oracle.com>
+ <d94fc70b-2275-4c69-b163-6a3e3ff40f88@redhat.com>
+Content-Language: en-US
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <d94fc70b-2275-4c69-b163-6a3e3ff40f88@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: BY5PR17CA0050.namprd17.prod.outlook.com
+ (2603:10b6:a03:167::27) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <87plfcvh2l.fsf@suse.de>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|PH7PR10MB5830:EE_
+X-MS-Office365-Filtering-Correlation-Id: 342facce-d5c1-49f6-56fb-08dda796d203
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|7416014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?SVI3TjVVMm9tRldTZ2tBaWNtd1lVcTVERGRPQk5nQkpzTUVDMU5BSnp2NWdp?=
+ =?utf-8?B?TkhNMEhQVHhXYkc4NWtEV3VqTEZDemszdVExTG92L0dPVk8rUFh2NWhWZmds?=
+ =?utf-8?B?ODQrN0VkYXRaQ2NMbGdQa3k1MWp5Mjh6R1VjNWhJSUFpa3FqV1dEekxuMnJN?=
+ =?utf-8?B?VmRObHVLZkk1d0JJR3NDaTJWUGFWUUZDNlRUMVN0QlFuY3ZmbmQ3amozajFM?=
+ =?utf-8?B?NkNnajI0dlJPM0dJYzJrYmRsT2NkZ1JqYTlVZlhWZDlTdlNUdDM3WkNCVXVZ?=
+ =?utf-8?B?V0NmS0pJWFJVeUgxaVc5TGtIRDJMWmxRREcyR3R6d2JhdE81WUtxM1pJYkl0?=
+ =?utf-8?B?VklUY25NQzhsQWJFNmtCUDdhTWlGdURaRjRadXdwMUJuN0gyVEJPNGE2ZWNv?=
+ =?utf-8?B?c3pMSkxFckdkbDIvUzRrQXVVc0hySnZsYmRQd2kxL0prdlhQOG1CaCs5N0hk?=
+ =?utf-8?B?cUN5YVpXVXhXZDBJR051Z1lGdlpBMnk3VXgxZU8zdE5CVUxKNlFBU0d5SkpP?=
+ =?utf-8?B?TStCSWNwZ253V1RBM3A4VGVqelltbFBLbGdRWGVnN2VUZVRaWjRsbkk0djl1?=
+ =?utf-8?B?RGlxWkNUalErVmZ6SnJVMDVFSkZheDdYc3l1bWhTOHEvc3lYS0tIMEFUVlNM?=
+ =?utf-8?B?Y0d0ZFlpbVhNOFg2Q0EwSXZWTDQxN2ExbldrL09CK3RDaGJxNVFsdkZhNlhS?=
+ =?utf-8?B?ak12TzErMndFeFlBVGhYc2txVnJ4RmxoNXNMOVlIZ0NrRERjVXIwKzRoVlQz?=
+ =?utf-8?B?WWFWTkxTQUF2R0s5TDAzL0NZSnljZ2QwL0Q2TzhhRHJIWCtCc0NXMDN0ZElL?=
+ =?utf-8?B?T0V2SHV2SFBVTzYvVFUrQ0prN3I2Y3pSOXRRbCtJODFDRzlyeHlKWGZzRTdy?=
+ =?utf-8?B?QTllOGpWcFJTemNjSDFCWUdWRjBFRlZDbFVMVWhMSVc0bEpzczV4bVFJMnBL?=
+ =?utf-8?B?NHdkT2ErRnVSVnBMUkpMMDQvVzBXY2t4Uk5XWGxuM0xIQ1NMd2ErY0lrbmlS?=
+ =?utf-8?B?QkV3WU5kTkllVXNlRFplbG53emViQkdxdzJuYmxmb1VOYkR3VU9rcHQrK1J5?=
+ =?utf-8?B?UTZYM0V3MmZhSUJCRlBzdHBaVnJYNXZHdW5Ea0RUeC9vaGd2VzhncUlTVzZ3?=
+ =?utf-8?B?bC94aWxndTdya0pOUVgyQ2I4UTl5UGl6NzZVOXQ3Q0xKa3JoMEd0ckNIcUhz?=
+ =?utf-8?B?MUE2TmkrQTBreVF0QTZ1dDl6Qzg1eS9ZVXNjZE5oTmJQcWpGUnBRSGFET05l?=
+ =?utf-8?B?NVZxRmc1aDRXS3lENytiL2I2bCtiU2I3elRYRldSbWZ0a0VnYWYxR2dTa0tF?=
+ =?utf-8?B?TTBpSkNBd0QrMGc5andUZEVpV0twSHg1dG43YW50anR4WDQxelBhZnpobGNV?=
+ =?utf-8?B?REhUTWYxaTRzOFZkZjFpdnJwL2dhaDFPMWVTd09OV3hWdUhrd3p4OWRqakg1?=
+ =?utf-8?B?UHFud1RoYmhWRXBTMnZMQXRZaFllOWowRkNZYVRhUjMyaXFLTXdiSCtxdEF5?=
+ =?utf-8?B?RkI4K3gwNi9ENVhkR2N0VG1CVlZFNEh3ZFNRVWY2ZmZwR2I2TmZwbzVDZFFJ?=
+ =?utf-8?B?Qnk1MUk3aXNjL0x2UkgwUHhVemdUMGtScDk0NHJsdmhLUHNiSmpFOWZNcU0y?=
+ =?utf-8?B?b1JObnBjUkRFdHZaVnVUem1rdFdzZEd4bUZOMkd5V2VGdmxSM09yWXhQNUV4?=
+ =?utf-8?B?UU9qbkRiL2RTTjgrVVRpR0NLUVByd2Y2b2FGV0h0cHJuUlkvVTJudVJlK0w0?=
+ =?utf-8?B?VnNkM2J6anJFdEpWaVdyQ3VnMkx6bXF2Z29MUGRmakFEeXBCOUpJR0JVNFZm?=
+ =?utf-8?B?OXJ0MVdYSE55V2ZMQUFYczNNOHJMNXVsMFBsVnFVb21RNEpxNDBKSHlkZk84?=
+ =?utf-8?B?SlBvN2hOdjRUNnRVSnpTYjE4RldBa0doZGJ1ZENaMkZKWmR3OE9YbGo0elBn?=
+ =?utf-8?Q?vdY8XF8vMSM=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(7416014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?d0Uva1FNNjhicWxmaEVIVkpNMnJyd2hVQ3pmaHJPbk5WeEg0TTBvdGw1SXVq?=
+ =?utf-8?B?UFBXbkk4VE12TmpNMVNDTXdWVUhVSEM3aDhpZkYyUExSdDVXM3dqMktQSzBU?=
+ =?utf-8?B?RWZGamRWTUR1OEhidmdMaVJLVGlmU1ZvU2xMQlNaaWQ1NUJ0NXBEVjFLWjdY?=
+ =?utf-8?B?VDZOMWpMRFRvY1IzcU9scFlGWU1sWlJOV1plRS9ERkZiTzdnQjdyR0wwN05t?=
+ =?utf-8?B?WTJXTytIRUNkMVowYy9Rb0J4Z2tucGZNQ3RXSENtR0ZSUW9HNnAzbndDRzJ1?=
+ =?utf-8?B?Skx4N2VJcXEzd0g2N09oM2EzMFNoR0JoUEQyUlBRRzdHT2lBZUE5c3RpVy9y?=
+ =?utf-8?B?U2pxQnZyNG9pZFFkWEowbGJWc0RzRTRobWRVc3ZscDVUWjM5U2FaVjNlTG5w?=
+ =?utf-8?B?WDlOT2VRNnkrQ1JHWFlLRllEMTdkTEM1ckxRZW1tcUJTSkZYQUgzaWdRK052?=
+ =?utf-8?B?NmdsVjNSb2ZldXJ5OExVdDZpRm50c1d1aUJVQjRZUWlsWkVxOUxmbVVRY1Rk?=
+ =?utf-8?B?UENOc1Rnb3NaZUtUcmY1K252RE1VZWplZmlFaDhxY2FwVzFRdlE3T0p1T0pX?=
+ =?utf-8?B?cmZRVklZUnJmOWpJSUJORnBVbHFXQ3JaRXpvaUpwRGV4UFREYjRGOW43Q2gx?=
+ =?utf-8?B?a0lxaXhVNDRDU1FzZ1p1eUlUMEhDQmdIVWZzNkRBdlpkeG1TNGs5dUNwbk1n?=
+ =?utf-8?B?TjFUdmlFa1hoakJJSXR2clNQbjlicjV4Nit1b1U0aFVUVWtjRXloN053SXUv?=
+ =?utf-8?B?WEZ0dTBNdnFReFEvdWpwYzFsTGxvWWxQM1lLSC9FaDJDcnNUeVFkT2xrSjVL?=
+ =?utf-8?B?cGt2UXJ6SENCajl6ZXBuMllNc3daS3BpNCtXd3E1cE1JOWVnUkMwTWhTNzlT?=
+ =?utf-8?B?VGVpNW05WHdsS2R3SUtMNHdubWpyY0gvZmgxSnZoUWowaUNyMzZkM2dUVFo3?=
+ =?utf-8?B?TG56dUhZZ0Z0dkNxcXJYVE81bEZDMVJnM3NwcC8zMUdhTzNGekc4QVFnYUJT?=
+ =?utf-8?B?dGdzMCtCc0pPYmRTNndhclNaaFFHWXZ6WTVmMG9QbC82d2hLM1lkMm5FZ3Ra?=
+ =?utf-8?B?YjZ0TGFhNGVPVFU0QlNBM2xjUFFmblJPZW1YR1grUlpubGJPUEdqK09Pdktv?=
+ =?utf-8?B?ampCQW9IcmtoNHFtWmgxRk4xV29udkdpUyt4RVh2eEtDQXB0eElnWC90eUww?=
+ =?utf-8?B?VGhwSm44T042ZWdBWlU5cGo1eGt3OUcrTnQzQzBKSi9qd3VQUHEydFo3clpM?=
+ =?utf-8?B?dFhUQkJKdjZsR3lCQTdBK3VWK20wVTB3M050TFIrR2FnMDZDaUJTSkZ6MVV1?=
+ =?utf-8?B?M2w4Qk1hQjhVOHhTcnJwdXZYUFl4SWVoTmRmL3h3QWNzaWQyMG9xNWduYTIr?=
+ =?utf-8?B?a2dXVGFnQkFQOFdsUHc2RWs2Z3V3dWtNczBkUUp1Y2NHOTJiWloranRRZ0VQ?=
+ =?utf-8?B?RE5DWnIzOGhYenlNOFIvL2cwQ01sUVFKSUx0VXI1ZmlDeVpIbVFCQXZKNXJp?=
+ =?utf-8?B?TzMvTXAvLzBhNFRtblVORmVDMWRMbytyOVl4enlEQ3plSTFwdVNUTTBGOWRH?=
+ =?utf-8?B?Zlo3ZUdaTUV6N1NVYmlreElGOUJ3b0FBR3ZzNkV4dEpNem1Ka0Q0TWsyaUJ2?=
+ =?utf-8?B?QkVPbGlCVDZ5ckpGaWdXK1c1MkVSMGJCY3pPaWtCZ0FrNUpuZGlVSzNUeGFV?=
+ =?utf-8?B?cTZWY3J4QmtvcmtmRFpOZEVOYVNjcWJiQS9mbFlINzVDWmFlZzJ0SmZSZkdv?=
+ =?utf-8?B?RFE5bVQwZ2YxSUQ5azVDMGVLMyt4b0hkekZCOHp0Wk02U3ZUWlJzSTk1MVM1?=
+ =?utf-8?B?Mmt4TU0rbEppMENzZWxCNWNpR3ZnMkgvaW1ySzdMSE4xUTFTY3lRSllrKzdE?=
+ =?utf-8?B?TGg1ZVBJWWVRNk9zWU0vUDY3ZDJVSkNQVDB5WEpRRFBmYjhrNEJSeWdwTUQ4?=
+ =?utf-8?B?b3Voam0yRkxNcWVYc1BDRDBBU3huT0NCQ0xqNkoyTDlha1pIS1gvd1lwNHhm?=
+ =?utf-8?B?V09iU0VqZmszVFA0MFpySmJ0ZGFYdFIzc0puZ0xwUlVFZ1ZKdW84TnloandR?=
+ =?utf-8?B?eHhhWXltNktLcm82d0Z3QXdEVEZDbnYwdXo1VnVrZDlNQnpTLzA0VTRwZWVr?=
+ =?utf-8?B?T2tvSzAxS0dPOWt1Mk15em5ob0NuNDlmNXI1NVRsSVJ6TXFTYmtkeHd3aW12?=
+ =?utf-8?B?NkE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: XFY93foxkTYcDJudKwKdJi/BajcZTvo1X/RMN+etsKAggFWyfafQEi0SzL4rIz4Ur8EfquicQmCvQSReB1Yb0qC2YqGRL3H6pdxT8m371Yft/dL5QTXLrzcBBhEyMPnCTglS0CC6fKFZmSNWQwoWjaZ30UllvxevJutuTtdlyHALhsgT3FBShrmnzcPE73Opq+FYWYHj9F9IOsJs8E9yctkrQNkTZUg/CEMlcYmC6+G6FOxSdc5B4ts77erMxhx9AjBlmZOlx9fViqcwp9imW8zVOJ04DPk9jtGG5JaktphpIEaPlD8/VwPwyvkx+Di+pCLmt4k7lSCdFsu4BvxMvnyaEu1oPctLQfKkTP+ta9CNiHTTLxhngZzQPnu4zF+j5Kiu6/o4BKqIyC4HnDFjh0asK1a89u02p+DXGiqZSf2Jc8XyKxxVAqHwf3cyqXtFoD6/7Tvv7f7K3p0Tj84DFmfdI8Dsz9EU8EbfrRdCxzjCKzRMu1xgWneaBE7DJ8LKJsSkHEVtN0xBYTYj815W7h52RRCIMwOV7H7F8m0d/UGjEDhptORtAKNMnBcHbAB7+xF4Vth6Qr7jMfBGwSfIDgC7n4xE1mrdXaBry3G2LBs=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 342facce-d5c1-49f6-56fb-08dda796d203
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Jun 2025 20:47:16.9952 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: dMVlRB8SW9rEXpYOnB2zLN4EyPHhb33PCHwHWYZcJzTMnPvO5YgItZ3UL4b8j+AhWnhDHDAQCldJe0JvfehLtn0i2wJ2FaFbr0Ml+dy/a2M=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR10MB5830
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-09_08,2025-06-09_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0
+ mlxscore=0 mlxlogscore=999
+ bulkscore=0 adultscore=0 suspectscore=0 malwarescore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506090158
+X-Authority-Analysis: v=2.4 cv=LIpmQIW9 c=1 sm=1 tr=0 ts=68474858 b=1 cx=c_pps
+ a=qoll8+KPOyaMroiJ2sR5sw==:117 a=qoll8+KPOyaMroiJ2sR5sw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=yPCof4ZbAAAA:8 a=H5Zmno9YOv--405hJhQA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 cc=ntf awl=host:13207
+X-Proofpoint-ORIG-GUID: 6m6bpbYUwNtfgpGBbnvTxWVwSuyRz5M7
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjA5MDE1OCBTYWx0ZWRfX4NZVmU463Srw
+ GkpXAsHBnDnw+p5bZlHH3HwgeQdJKe+OD34eQ4ldc0cq+sasowMQIlcRYatFtAAjfTomJKPWhze
+ rw6/PpCv1l7L8/yvHplkulUs+wOHYWpiYeEoHiuzxZ8YUrv1CmF32lG05SWrs9Q2K8xcZyAtSb6
+ FmSUZSlojajFKQhQ0ClcSVVMbwq35iHUXjd4PkftLYKsOXyYHDuSMazCHIcLAB1TzjIWokwo7ZW
+ wiG2+lZm7Mzd1h9eLbpR7ORakVMKoLNnAW4obyaiSnqdZOK08G0L7QjT8LJFr/Qh/MQfBEnkXFP
+ JZz0KLfzojCuGxceldGsyNceTEAZ+w34rvZr7egnS2AkGg2yO/TpM9gaRNfie8Ixh2hd++Z3lGA
+ 66h3dcdDgkq/0pL8g3JQMcC03QOvkI7+rD+5qXIfnMFwv5LVKBZBjwJsKme8MguLxlXBgilA
+X-Proofpoint-GUID: 6m6bpbYUwNtfgpGBbnvTxWVwSuyRz5M7
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -110,357 +237,230 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025 at 04:41:06PM -0300, Fabiano Rosas wrote:
-> Peter Xu <peterx@redhat.com> writes:
+On 6/9/2025 4:30 PM, Cédric Le Goater wrote:
+> On 5/29/25 21:24, Steve Sistare wrote:
+>> Register a vfio iommufd container and device for CPR, replacing the generic
+>> CPR register call with a more specific iommufd register call.  Add a
+>> blocker if the kernel does not support IOMMU_IOAS_CHANGE_PROCESS.
+>>
+>> This is mostly boiler plate.  The fields to to saved and restored are added
+>> in subsequent patches.
+>>
+>> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+>> ---
+>>   include/hw/vfio/vfio-cpr.h | 12 +++++++
+>>   include/system/iommufd.h   |  1 +
+>>   backends/iommufd.c         | 10 ++++++
+>>   hw/vfio/cpr-iommufd.c      | 84 ++++++++++++++++++++++++++++++++++++++++++++++
+>>   hw/vfio/iommufd.c          |  6 ++--
+>>   hw/vfio/meson.build        |  1 +
+>>   6 files changed, 112 insertions(+), 2 deletions(-)
+>>   create mode 100644 hw/vfio/cpr-iommufd.c
+>>
+>> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+>> index 170a116..b9b77ae 100644
+>> --- a/include/hw/vfio/vfio-cpr.h
+>> +++ b/include/hw/vfio/vfio-cpr.h
+>> @@ -15,7 +15,10 @@
+>>   struct VFIOContainer;
+>>   struct VFIOContainerBase;
+>>   struct VFIOGroup;
+>> +struct VFIODevice;
+>>   struct VFIOPCIDevice;
+>> +struct VFIOIOMMUFDContainer;
+>> +struct IOMMUFDBackend;
+>>   typedef struct VFIOContainerCPR {
+>>       Error *blocker;
+>> @@ -43,6 +46,15 @@ bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
+>>                                    Error **errp);
+>>   void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
+>> +bool vfio_iommufd_cpr_register_container(struct VFIOIOMMUFDContainer *container,
+>> +                                         Error **errp);
+>> +void vfio_iommufd_cpr_unregister_container(
+>> +    struct VFIOIOMMUFDContainer *container);
+>> +bool vfio_iommufd_cpr_register_iommufd(struct IOMMUFDBackend *be, Error **errp);
+>> +void vfio_iommufd_cpr_unregister_iommufd(struct IOMMUFDBackend *be);
+>> +void vfio_iommufd_cpr_register_device(struct VFIODevice *vbasedev);
+>> +void vfio_iommufd_cpr_unregister_device(struct VFIODevice *vbasedev);
+>> +
+>>   int vfio_cpr_group_get_device_fd(int d, const char *name);
+>>   bool vfio_cpr_container_match(struct VFIOContainer *container,
+>> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+>> index db9ed53..3c58ea8 100644
+>> --- a/include/system/iommufd.h
+>> +++ b/include/system/iommufd.h
+>> @@ -32,6 +32,7 @@ struct IOMMUFDBackend {
+>>       /*< protected >*/
+>>       int fd;            /* /dev/iommu file descriptor */
+>>       bool owned;        /* is the /dev/iommu opened internally */
+>> +    Error *cpr_blocker;/* set if be does not support CPR */
+>>       uint32_t users;
+>>       /*< public >*/
+>> diff --git a/backends/iommufd.c b/backends/iommufd.c
+>> index ed8bb4c..2e9d6cb 100644
+>> --- a/backends/iommufd.c
+>> +++ b/backends/iommufd.c
+>> @@ -108,6 +108,13 @@ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
+>>           }
+>>           be->fd = fd;
+>>       }
+>> +    if (!be->users && !vfio_iommufd_cpr_register_iommufd(be, errp)) {
+>> +        if (be->owned) {
+>> +            close(be->fd);
+>> +            be->fd = -1;
+>> +        }
+>> +        return false;
+>> +    }
+>>       be->users++;
+>>       trace_iommufd_backend_connect(be->fd, be->owned, be->users);
+>> @@ -125,6 +132,9 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be)
+>>           be->fd = -1;
+>>       }
+>>   out:
+>> +    if (!be->users) {
+>> +        vfio_iommufd_cpr_unregister_iommufd(be);
+>> +    }
+>>       trace_iommufd_backend_disconnect(be->fd, be->users);
+>>   }
+>> diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+>> new file mode 100644
+>> index 0000000..60bd7e8
+>> --- /dev/null
+>> +++ b/hw/vfio/cpr-iommufd.c
+>> @@ -0,0 +1,84 @@
+>> +/*
+>> + * Copyright (c) 2024-2025 Oracle and/or its affiliates.
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qapi/error.h"
+>> +#include "hw/vfio/vfio-cpr.h"
+>> +#include "migration/blocker.h"
+>> +#include "migration/cpr.h"
+>> +#include "migration/migration.h"
+>> +#include "migration/vmstate.h"
+>> +#include "system/iommufd.h"
+>> +#include "vfio-iommufd.h"
+>> +
+>> +static bool vfio_cpr_supported(IOMMUFDBackend *be, Error **errp)
+>> +{
+>> +    if (!iommufd_change_process_capable(be)) {
+>> +        if (errp) {
+>> +            error_setg(errp, "vfio iommufd backend does not support "
+>> +                       "IOMMU_IOAS_CHANGE_PROCESS");
+>> +        }
+>> +        return false;
+>> +    }
+>> +    return true;
+>> +}
+>> +
+>> +static const VMStateDescription iommufd_cpr_vmstate = {
+>> +    .name = "iommufd",
+>> +    .version_id = 0,
+>> +    .minimum_version_id = 0,
+>> +    .needed = cpr_incoming_needed,
+>> +    .fields = (VMStateField[]) {
+>> +        VMSTATE_END_OF_LIST()
+>> +    }
+>> +};
+>> +
+>> +bool vfio_iommufd_cpr_register_iommufd(IOMMUFDBackend *be, Error **errp)
+>> +{
+>> +    Error **cpr_blocker = &be->cpr_blocker;
+>> +
+>> +    if (!vfio_cpr_supported(be, cpr_blocker)) {
+>> +        return migrate_add_blocker_modes(cpr_blocker, errp,
+>> +                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
+>> +    }
+>> +
+>> +    vmstate_register(NULL, -1, &iommufd_cpr_vmstate, be);
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +void vfio_iommufd_cpr_unregister_iommufd(IOMMUFDBackend *be)
+>> +{
+>> +    vmstate_unregister(NULL, &iommufd_cpr_vmstate, be);
+>> +    migrate_del_blocker(&be->cpr_blocker);
+>> +}
+>> +
+>> +bool vfio_iommufd_cpr_register_container(VFIOIOMMUFDContainer *container,
+>> +                                         Error **errp)
+>> +{
+>> +    VFIOContainerBase *bcontainer = &container->bcontainer;
+>> +
+>> +    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
+>> +                                vfio_cpr_reboot_notifier,
+>> +                                MIG_MODE_CPR_REBOOT);
+>> +
+>> +    return true;
+>> +}
+>> +
+>> +void vfio_iommufd_cpr_unregister_container(VFIOIOMMUFDContainer *container)
+>> +{
+>> +    VFIOContainerBase *bcontainer = &container->bcontainer;
+>> +
+>> +    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
+>> +}
+>> +
+>> +void vfio_iommufd_cpr_register_device(VFIODevice *vbasedev)
+>> +{
+>> +}
+>> +
+>> +void vfio_iommufd_cpr_unregister_device(VFIODevice *vbasedev)
+>> +{
+>> +}
+>> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+>> index ca00d08..c690c2c 100644
+>> --- a/hw/vfio/iommufd.c
+>> +++ b/hw/vfio/iommufd.c
+>> @@ -446,7 +446,7 @@ static void iommufd_cdev_container_destroy(VFIOIOMMUFDContainer *container)
+>>       if (!QLIST_EMPTY(&bcontainer->device_list)) {
+>>           return;
+>>       }
+>> -    vfio_cpr_unregister_container(bcontainer);
+>> +    vfio_iommufd_cpr_unregister_container(container);
+>>       vfio_listener_unregister(bcontainer);
+>>       iommufd_backend_free_id(container->be, container->ioas_id);
+>>       object_unref(container);
+>> @@ -592,7 +592,7 @@ static bool iommufd_cdev_attach(const char *name, VFIODevice *vbasedev,
+>>           goto err_listener_register;
+>>       }
+>> -    if (!vfio_cpr_register_container(bcontainer, errp)) {
+>> +    if (!vfio_iommufd_cpr_register_container(container, errp)) {
+>>           goto err_listener_register;
+>>       }
+>> @@ -619,6 +619,7 @@ found_container:
+>>       }
+>>       vfio_device_prepare(vbasedev, bcontainer, &dev_info);
+>> +    vfio_iommufd_cpr_register_device(vbasedev);
+>>       trace_iommufd_cdev_device_info(vbasedev->name, devfd, vbasedev->num_irqs,
+>>                                      vbasedev->num_regions, vbasedev->flags);
+>> @@ -656,6 +657,7 @@ static void iommufd_cdev_detach(VFIODevice *vbasedev)
+>>       iommufd_cdev_container_destroy(container);
+>>       vfio_address_space_put(space);
+>> +    vfio_iommufd_cpr_unregister_device(vbasedev);
+>>       iommufd_cdev_unbind_and_disconnect(vbasedev);
+>>       close(vbasedev->fd);
+>>   }
+>> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+>> index 98134a7..12711fb 100644
+>> --- a/hw/vfio/meson.build
+>> +++ b/hw/vfio/meson.build
+>> @@ -23,6 +23,7 @@ system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
+>>   system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
+>>   system_ss.add(when: 'CONFIG_VFIO', if_true: files(
+>>     'cpr.c',
+>> +  'cpr-iommufd.c',
 > 
-> > On Mon, Jun 09, 2025 at 03:02:06PM -0300, Fabiano Rosas wrote:
-> >> Peter Xu <peterx@redhat.com> writes:
-> >> 
-> >> > On Mon, Jun 09, 2025 at 11:37:02AM -0300, Fabiano Rosas wrote:
-> >> >> Peter Xu <peterx@redhat.com> writes:
-> >> >> 
-> >> >> > On Fri, Jun 06, 2025 at 05:23:18PM -0300, Fabiano Rosas wrote:
-> >> >> >> Peter Xu <peterx@redhat.com> writes:
-> >> >> >> 
-> >> >> >> > On Mon, Jun 02, 2025 at 10:38:08PM -0300, Fabiano Rosas wrote:
-> >> >> >> >> Allow the migrate and migrate_incoming commands to pass the migration
-> >> >> >> >> configuration options all at once, dispensing the use of
-> >> >> >> >> migrate-set-parameters and migrate-set-capabilities.
-> >> >> >> >> 
-> >> >> >> >> The motivation of this is to simplify the interface with the
-> >> >> >> >> management layer and avoid the usage of several command invocations to
-> >> >> >> >> configure a migration. It also avoids stale parameters from a previous
-> >> >> >> >> migration to influence the current migration.
-> >> >> >> >> 
-> >> >> >> >> The options that are changed during the migration can still be set
-> >> >> >> >> with the existing commands.
-> >> >> >> >> 
-> >> >> >> >> The order of precedence is:
-> >> >> >> >> 
-> >> >> >> >> 'config' argument > -global cmdline > defaults (migration_properties)
-> >> >> >> >
-> >> >> >> > Could we still keep the QMP migrate-set-parameters values?
-> >> >> >> >
-> >> >> >> >   'config' argument > QMP setups using migrate-set-parameters >
-> >> >> >> >     -global cmdline > defaults (migration_properties)
-> >> >> >> >
-> >> >> >> 
-> >> >> >> That's the case. I failed to mention it in the commit message. IOW it
-> >> >> >> behaves just like today, but the new 'config' way takes precedence over
-> >> >> >> all.
-> >> >> >
-> >> >> > Referring to below chunk of code:
-> >> >> >
-> >> >> > [...]
-> >> >> >
-> >> >> >> >> +bool migrate_params_override(MigrationState *s, MigrationParameters *new,
-> >> >> >> >> +                             Error **errp)
-> >> >> >> >> +{
-> >> >> >> >> +    ERRP_GUARD();
-> >> >> >> >> +
-> >> >> >> >> +    assert(bql_locked());
-> >> >> >> >> +
-> >> >> >> >> +    /* reset to default parameters */
-> >> >> >> >> +    migrate_params_apply(&s->defaults);
-> >> >> >
-> >> >> > IIUC here it'll reset all global parameters using the initial defaults
-> >> >> > first, then apply the "config" specified in "migrate" QMP command?
-> >> >> >
-> >> >> 
-> >> >> Yes, this is so any previously set parameter via migrate-set-parameter
-> >> >> gets erased. I think what we want (but feel free to disagree) is to have
-> >> >> the migrate-set-parameter _eventually_ only handle parameters that need
-> >> >> to be modifed during migration runtime. Anything else can be done via
-> >> >> passing config to qmp_migrate.
-> >> >> 
-> >> >> For -global, I don't have a preference. Having -global take precedence
-> >> >> over all would require a way to know which options were present in the
-> >> >> command-line and which are just the defaults seet in
-> >> >> migration_properties. I currently don't know how to do that. If it is at
-> >> >> all possible (within reason) we could make the change, no worries.
-> >> >> 
-> >> >> > I think there're actually two separate questions to be asked, to make it
-> >> >> > clearer, they are:
-> >> >> 
-> >> >> Here it got ambiguous when you say "global", I've been using -global to
-> >> >> refer to the cmdline -global migration.foo, but others have used global
-> >> >> to mean s->parameters (which has an extended lifetime). Could you
-> >> >> clarify?
-> >> >
-> >> > I meant the -global, and the global setups via migrate-set-parameters.
-> >> >
-> >> > As replied to Dan in the other email, I changed my mind on question (1); I
-> >> > think it makes sense to have it YES.  I left my pure question on (2) there
-> >> > too.
-> >> >
-> >> > Do we really want to disable migrate-set-parameters setting most of the
-> >> > parameters, and only allow it to be set during migration on a few things
-> >> > like bandwidth or so?
-> >> >
-> >> 
-> >> Well, if we decide we have reasons to introduce the "config" concept,
-> >> then I think we should not present two ways of doing the same
-> >> thing. User calls qmp_migrate with its arguments and that's the
-> >> migration. No other ways of setting parameters.
-> >> 
-> >> Since we do have parameters that are set in "runtime" I though of
-> >> keeping migrate-set-parameters around to minimize the interface
-> >> change. Maybe those should have been separate knobs on their own after
-> >> all... But in any case, we can't reject migrate-set-parameters because
-> >> it might happen way earlier than the actual migration command. So I
-> >> don't think anything changes regarding the API.
-> >> 
-> >> > I just don't really see the major benefit of that yet.  I would think it
-> >> > make more sense if we don't need to change any parameters in migration,
-> >> > then provide that in one shot in QMP migrate "config".  Maybe making more
-> >> > sense if migration is not heavily thread-based but having its aiocontext so
-> >> > we could even move to Jobs.
-> >> >
-> >> > Now after all we'll need to allow setting something like bandwidth even
-> >> > during migration alive, and we have all the things ready allowing to set
-> >> > before migration starts, I'm not 100% sure whether we need to bother even
-> >> > if it does look cleaner, because we'll still break mgmt used to be working
-> >> > for years.. I could be over-cautious on breaking things, but I still want
-> >> > to understand better on the benefits.
-> >> >
-> >> 
-> >> Makes sense. We'd say either use the old way or the new way. If both are
-> >> mixed, then the new way takes precedence. That keeps older apps working
-> >> and allows new code to transition into the new way.
-> >
-> > Fair enough.  Yes whenever the new way is chosen it can work in anyway we
-> > define it.
-> >
-> > It's just that if the global list of parameters will still be around then
-> > it seems to have no good reason to not build the migration parameters on
-> > top of the global list of parameters.  After all, anything can be
-> > overwritten in the QMP migrate if needed.
-> >
-> 
-> If we had a way to detect that the user has modified some parameters via
-> the cmdline, then we could merge that with the s->defaults and restore
-> it before applying config, that would achieve what you want. I'm in
-> favor, -global should only be used for debugging, I think it's fine if
-> we let it go through. But anything set by migrate-set-parameters
-> definitely needs to be reset. I just need a way to differentiate between
-> "default parameter" vs. "default parameter that got overwritten by
-> -global". I'll try to figure something out.
+> This file should be compiled under CONFIG_IOMMUFD.
 
-I think I see what you meant.  Ignoring -global is ok.  I agree with you
-that should be pure debugging, and feel free to keep it like that if you
-can't find anything to persist it - it may not justify your time spent if
-it grows too much.
+Sure, will fix.
+Tomorrow I plan to rebase to the lastest master, add this and the few other
+comments that came up for V4, and send V5.  Sound OK?
 
-> 
-> >> 
-> >> > One step back, on this "allow migrate to specify 'config'" request: I
-> >> > think we can definitely do that as it still provides some kind of
-> >> > atomicity.  But frankly speaking I never see it a "real problem" - do
-> >> > we really have report or use case showing that Libvirt can trigger
-> >> > "migrate" with some global settings touched by other apps at all?
-> >> >
-> >> 
-> >> I don't think other apps is the problem, but libvirt itself maybe
-> >> attempting two migrations in sequence after one of them fails.
-> >> 
-> >> There always the possibility that the user is poking around, which of
-> >> course is not advisable, but if a weird migration bug shows up it's
-> >> difficult to confirm that other app/user hasn't changed the parameters.
-> >
-> > That's almost what I think the current patch is useful on providing some
-> > kind of atomicity.
-> >
-> > If we want to make debugging easy, we could also consider returning the
-> > finalized migration setup in the response of QMP "migrate" with all
-> > parameters, by defining "returns" for QMP "migrate".
-> >
-> 
-> Isn't query-migrate-parameters that already?
-
-The important part is still "atomicity".  Consider right after Libvirt
-sends a "migrate" command someone quickly cancelled it and invoked another
-one using another "config".  Yes there will still be events generated to
-Libvirt but I think that'll be asynchronous anyway so its arrival might
-have been after the other one migrating VM again.
-
-Attach to that to "returns" provides atomicity making sure if Libvirt
-invoking a "migrate" command and get the returns, if that succeeded Libvirt
-knows the returned setup is 100% the one that is running now.  It might be
-cancelled too but the finalized setup will match what Libvirt triggers.
-
-Said that, not that I think any of such would ever happen.. but that idea
-does match with atomicity provided by QMP "migrate" with "config".
-
-> 
-> >> 
-> >> > To me, it was yet an illutionary problem, I never know the answer of that.
-> >> > If Libvirt is still the owner of QEMU instance via the QMP channel, I
-> >> > actually don't really see why the atomicity would even help, even though we
-> >> > can still provide that as it's pretty easy as something optional; like what
-> >> > this patch does without too much hassle.
-> >> >
-> >> 
-> >> We can provide it, but I'd rather not unless we agree that is the way
-> >> forward. We don't need another way of doing the same as existing
-> >> commands.
-> >
-> > OK, it might be me that misunderstood the request initially.
-> >
-> >> 
-> >> > Then if to move one step further to remove all global settings, we face
-> >> > breaking debugging scripts, and breaking of any old libvirt and non-libvirt
-> >> > mgmt apps.  Frankly I really don't yet know whether it's a good idea.  I
-> >> > could miss some important reasoning of why we want to do it - it needs to
-> >> > be something not relevant to "making the code cleaner", IMHO..
-> >> 
-> >> I don't see it as breaking the old stuff. Because any old users would
-> >> still be using migrate-set-parameters as usual. So I think your concern
-> >> is about calling migrate the new way and also keeping -global
-> >> working. As I said, personally I don't mind if put some ifs around to
-> >> keep -global working.
-> >> 
-> >> Could we add another parameter that says allow-globals (or w/e) and make
-> >> everyone happy?
-> >
-> > That's not needed if it's about making me happy. :) My happiness alone
-> > isn't that important, I can change any of my script, and I'm OK whatever
-> > ABI changes, but as long as the downstream won't be a mess..
-> >
-> 
-> At this point you've probably done more migrations than any single
-> person. So of course your use-case is important. I don't think an extra
-> knob is too much to ask. Could even be -global only.
-> 
-> However, if we're going to keep both requirements working: 1) overwrite
-> migrate-set-params; 2) do not overwrite -global; as I said we need a way
-> to detect a parameter changed via -global... and then we don't need a
-> new knob because that would already tell us.
-
-Let's not bother; I'm totally OK ignoring -global.  When one's testing
-manually, one won't be using "config" in "migrate" normally so it's fine.
-
-> 
-> > If we want to either do nothing or making it a bundle, then we can decide
-> > what's the bundle now.
-> >
-> > For example, do we plan to have this, then drop migrate-set-parameters &
-> > capabilities finally (or at least failing non-runtime-modifi-able ones)?
-> >
-> 
-> Good question, I don't think we've decided. Those last few patches could
-> have kept the RFC tag. I say we:
-> 
-> - Merge params+caps and deprecate migrate-set-capabilities now.
-> 
->   One is an internal change and the other is a normal command
->   deprecation, AFAIK.
-
-Agree.  Maybe we could still keep the interface for more than two releases.
-Maybe we don't need to rush removing the support, and keep it deprecate for
-long enough, until we figure out when it's safe.
-
-> 
-> - Make sure we agree on how config is going to work and introduce it
->   then (possibly this release).
-> 
->   We also need to make sure this is the right thing for savevm, cpr,
->   etc. It would be good to have all of them uniformly prepared to take
->   (or not) the config parameter.
-
-CPR is still live migration, I hope we can reach consensus.  It uses
-exactly the caps/params it needs, but it's migrating the same as live
-migration would do, except it migrates some more fds.
-
-It could be more special if it was based on fork(), there're tons of
-uncertainties over fork() with a multi-threaded app, but now we're going
-scm rights, much better I'd say. Same reason, it is still live migration
-when it's using generic unix sockets.
-
-savevm - we don't plan to yet support any migration cap/param on it, right?
-
-I remember the other use case for enabling mapped-ram, but per my memory
-there is much better way to go for that use case rather than building it on
-top of savevm, so I'd still think savevm doesn't need any extension, and it
-should take zero parameters even in the near future.
-
-What it can do is reset all parameters right before start, then "recover"
-the parameters right after, taking BQL for the whole process.  Logically if
-we know it's a new libvirt we don't even need to bother on the "recover"
-part, but we may still want to consider the old libvirts too as long as
-there's compat concerns.
-
-> 
-> - Leave migrate-set-parameters as is.
->   (this wasn't my original intention, but this discussion changed my
->   mind)
-> 
->   As I said, we can't predict whether the user will call
->   migrate-set-parameters before calling migrate. So I don't think we can
->   say:
-> 
->     "Only use this if you're not using the new 'config' option OR if
->      you're using the new 'config' option plus setting runtime parameters"
-> 
->   It also gives us the ability to say that nothing changes with
->   migrate-set-parameter except that it now takes caps as well.
-
-Yep.  For this one keeping it as-is is simpler.  We can wait for Dan/Markus
-and others to chime in when there's other opinions.
-
-> 
-> > How fast do we want to do this, and how do we manage downstream to not be
-> > affected by having new QEMU's migrate-set-* commands completely gone, would
-> > be the follow up questions..
-> >
-> 
-> - The migrate-set-parameters change is just an addition of options. We
->   do this anytime a new feature is added and I don't think there are
->   issues downstream. Are there?
-
-Adding caps into it is all fine; I don't see anything would break.
-
-> 
-> - Dropping migrate-set-capabilities would be covered by the deprecation
->   period. We shouldn't have to think about it. But let's say we _are_
->   going to think about it: a libvirt from before the removal of the
->   command would have trouble with a QEMU from after the
->   removal. Converting between the two may not be trivial because caps
->   today take a MigrationCapabilityList which is a more complex data
->   structure than just key=value as MigrationParameters.
-
-Yes, this is discussed above as well.  The worst case is we can keep the
-deprecation for as long as how we deprecate machine types.  Logically
-that was defined partly as "max major release cycle on guaranteed ABI",
-then we may assume whatever to be rebased on the current release in any
-downstream would have new libvirt ready.  Again, we can discuss this later,
-marking deprecation can be done first.
-
-> 
-> - The 'config' change is supported by keeping migrate-set-parameters
->   around, so it wouldn't affect anything. Just don't use the new API.
-> 
-> I think that's it? Am I being too simplistic?
-
-Nop; so far so good to me.
-
-> 
-> > Maybe I worked much enough on Linux so I pay a lot of attention trying to
-> > think such trade-off, then if I see not much benefit normally I'll try to
-> > not break any ABI.  But if that's everyone's wish (except myself.. even if
-> > it only makes the interface better..) then we can discuss before
-> > moving on.
-> 
-> I think we can do this without breaking anything. We could bring more
-> people into the discussion to double-check. Let's just agree between
-> ourselves on some of these other details.
-> 
-> I don't discard the possibility of simply dropping it. But I see Daniel
-> (and Markus on the previous version) making compelling points.
-
-Yeah I was absent for quite a while, and I may have missed some points.  We
-can wait for some more inputs.
-
--- 
-Peter Xu
+- Steve
 
 
