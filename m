@@ -4,42 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40144C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:22:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA81C61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:27:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOaPQ-0005Ek-E5; Mon, 09 Jun 2025 07:11:20 -0400
+	id 1uOaPT-0005GC-RB; Mon, 09 Jun 2025 07:11:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uOaPL-0005CW-6k
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:15 -0400
+ id 1uOaPN-0005Dx-WE
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:18 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uOaPH-00075U-3l
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:14 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uOaPH-00075c-TT
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:16 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxbKxJwUZoWG4RAQ--.44350S3;
+ by gateway (Coremail) with SMTP id _____8Ax3eJJwUZoXm4RAQ--.5636S3;
  Mon, 09 Jun 2025 19:11:05 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAxzxtFwUZoiU0SAQ--.4222S9;
- Mon, 09 Jun 2025 19:11:04 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxzxtFwUZoiU0SAQ--.4222S10;
+ Mon, 09 Jun 2025 19:11:05 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: maobibo@loongson.cn
 Cc: qemu-devel@nongnu.org,
 	philmd@linaro.org,
 	jiaxun.yang@flygoat.com
-Subject: [PATCH 07/10] hw/loongarch: connect pch_msi controller to avec
- controller
-Date: Mon,  9 Jun 2025 18:48:30 +0800
-Message-Id: <20250609104833.839811-8-gaosong@loongson.cn>
+Subject: [PATCH 08/10] hw/loongarch: Implement avec set_irq
+Date: Mon,  9 Jun 2025 18:48:31 +0800
+Message-Id: <20250609104833.839811-9-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250609104833.839811-1-gaosong@loongson.cn>
 References: <20250609104833.839811-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxzxtFwUZoiU0SAQ--.4222S9
+X-CM-TRANSID: qMiowMAxzxtFwUZoiU0SAQ--.4222S10
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -69,38 +68,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/loongarch/virt.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ hw/intc/loongarch_avec.c | 37 ++++++++++++++++++++++++++++++++++---
+ 1 file changed, 34 insertions(+), 3 deletions(-)
 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 718b5b4f92..6b670e7936 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -503,11 +503,19 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms, MachineState *ms)
-     qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
-     d = SYS_BUS_DEVICE(pch_msi);
-     sysbus_realize_and_unref(d, &error_fatal);
--    sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
--    for (i = 0; i < num; i++) {
--        /* Connect pch_msi irqs to extioi */
--        qdev_connect_gpio_out(DEVICE(d), i,
--                              qdev_get_gpio_in(extioi, i + start));
-+    if (virt_is_avecintc_enabled(lvms)) {
-+        for (i = 0; i < num; i++) {
-+            /* Connect pch_msi irqs to avec */
-+            qdev_connect_gpio_out(DEVICE(d), i,
-+                                 qdev_get_gpio_in(avec, i + start));
-+        }
-+    } else {
-+        sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
-+        for (i = 0; i < num; i++) {
-+            /* Connect pch_msi irqs to extioi */
-+            qdev_connect_gpio_out(DEVICE(d), i,
-+                                  qdev_get_gpio_in(extioi, i + start));
-+        }
-     }
+diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
+index c692fef43c..f609ed9aaa 100644
+--- a/hw/intc/loongarch_avec.c
++++ b/hw/intc/loongarch_avec.c
+@@ -16,6 +16,12 @@
+ #include "migration/vmstate.h"
+ #include "trace.h"
+ #include "hw/qdev-properties.h"
++#include "target/loongarch/cpu.h"
++
++/* msg addr field */
++FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
++FIELD(MSG_ADDR, CPU_NUM, 12, 8)
++FIELD(MSG_ADDR, FIX, 28, 12)
  
-     virt_devices_init(pch_pic, lvms);
+ static uint64_t loongarch_avec_mem_read(void *opaque,
+                                         hwaddr addr, unsigned size)
+@@ -23,12 +29,32 @@ static uint64_t loongarch_avec_mem_read(void *opaque,
+     return 0;
+ }
+ 
++static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int irq_num, int level)
++{
++   MachineState *machine = MACHINE(qdev_get_machine());
++   MachineClass *mc = MACHINE_GET_CLASS(machine);
++   const CPUArchIdList *id_list = NULL;
++
++   assert(mc->possible_cpu_arch_ids(machine));
++   id_list = mc->possible_cpu_arch_ids(machine);
++   CPUState *cpu = id_list->cpus[cpu_num].cpu;
++   CPULoongArchState *env = &LOONGARCH_CPU(cpu)->env;
++   set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
++   qemu_set_irq(s->cpu[cpu_num].parent_irq[irq_num], 1);
++}
++
+ static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
+                                      uint64_t val, unsigned size)
+ {
+-    return;
+-}
++    int irq_num, cpu_num = 0;
++    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
++    uint64_t msg_addr = addr + VIRT_PCH_MSI_ADDR_LOW;
++
++    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
++    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
+ 
++    avec_set_irq(s, cpu_num, irq_num, 1);
++}
+ 
+ static const MemoryRegionOps loongarch_avec_ops = {
+     .read = loongarch_avec_mem_read,
+@@ -38,7 +64,12 @@ static const MemoryRegionOps loongarch_avec_ops = {
+ 
+ static void avec_irq_handler(void *opaque, int irq, int level)
+ {
+-    return;
++    int cpu_num, irq_num = 0;
++    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
++    cpu_num = irq / 256;
++    irq_num = irq % 256;
++
++    avec_set_irq(s, cpu_num, irq_num, level);
+ }
+ 
+ static void loongarch_avec_realize(DeviceState *dev, Error **errp)
 -- 
 2.34.1
 
