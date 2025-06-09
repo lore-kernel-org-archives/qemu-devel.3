@@ -4,85 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5203DC61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 13:49:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F25F0C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 13:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOcrV-0003XJ-BK; Mon, 09 Jun 2025 09:48:29 -0400
+	id 1uOcu8-0005Cc-LP; Mon, 09 Jun 2025 09:51:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOcrD-0003Pc-V6
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:48:13 -0400
-Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOcrB-00028G-SI
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:48:11 -0400
-Received: by mail-yw1-x1130.google.com with SMTP id
- 00721157ae682-70e5e6ab7b8so35758947b3.1
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 06:48:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749476887; x=1750081687; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=lOSZrvfgJd9riTfUFV+Ro6aNaGSy/IkCeAcZS0qVoa0=;
- b=g9/0sgLOQRNcdslC+55G5EXEONgDs7NCTQvkWPxsdtd4PcQiPVADCkxyWapWXg97b5
- 0dMuEt9ZbUdPLOSCeMHAllreR2xsg4Ux/9eLK1ldFB2vTrRDwgt/i0Mx1ubnFdfAFNRr
- 64bp33EbUMMYcdh/xxRvirnJkEVTJ1dVlERLxaeCW3BoJm3Ypw7LJy1XFeaZ0R4k7PWL
- pUEsdTH3Y2wUuuoJmVSqP3cFBm+9TLnOwtsGb9/AZ+6Bj2YhJoJt/4i72wB9xVHByFYT
- ZdhAc/JO+dxLd/S1wSzvu8c6DJMNeWSGpjPEqKgJQUN90G+cBZ3xJZch8ujodVxPpFWg
- LoxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749476887; x=1750081687;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=lOSZrvfgJd9riTfUFV+Ro6aNaGSy/IkCeAcZS0qVoa0=;
- b=TArDHAxk4GeaQyZpRRBpFG4p5M5zT7k75gjKlAiQPSws7WrnrRhvYDY6Etksq/B4Wl
- 5POSaGIvuAhUowjPr1TpfxbVvKs2ks7Nj70o6HTbuOMigVxx0Y8OLMdqp+WMsjo1PfRy
- a6AsTA/DZdcYKGNsvDA3/bAOWPjV/08vuh/P9NmWqktqrdZJpFmeqqCHxNte4bJqAAq7
- mxMhV0kDyuuxlUMvFPeB5eJzYXJ6/vxp+9C91/aRs9PFVkyRxozmHmFthGV9+v++QCbF
- NNtVjUrGLjNu47cShOIW8pJeP2bLmVK4icFe3g8GEer5I2REifQymLDrNxjZCpAyUUcX
- C+FQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXj1oEZglGIGhLLmlmZkKESR0rj43xciWsH8xJaEPRWIQfa+6oe+OrDoInHVFXaoj6/5UYhj728wU4X@nongnu.org
-X-Gm-Message-State: AOJu0YyYnk0+trSWwnAJx+RlTraWnuyPur1vCQzzes1hp28dcLdxSwAH
- guAZ4NLdUPDytm29XuyoR2Kqj4RhdLI3cH/dt63YbBsBBM3Ve8xLSXaGbycYS8hSPzIvF5MwWhd
- PBjFj8H7rpXPUKz7Jjhe/WS1LXFhwViUR2NitSqlObg==
-X-Gm-Gg: ASbGnct4T77QX4GW9dKRyueokCwqSuKU5Kn+6xpnFDtnRfdaSaUhZC+Ot8OLZ0dr7jb
- NDtJxPvRDOJ7LAPMn2FORHbgwY6+wA+OF0G6JyXyzbbhtpcRTgazDZ/fNpBPXm7vaKMrYMhwRyF
- q3H53+s4DY6iKEFnIf3uB8Pj0+jvwYe8yWIA==
-X-Google-Smtp-Source: AGHT+IG3llqunLEfhPG1F0/5WyxW4xvROpJQLP/9yzaX6FFX8ckA7A/A65Sui65P5/DV7N5mnoE5Z95d0QpoPObxBT8=
-X-Received: by 2002:a05:690c:6904:b0:70d:f237:6a6a with SMTP id
- 00721157ae682-710f76e77demr198382917b3.11.1749476887503; Mon, 09 Jun 2025
- 06:48:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOcu4-0005CF-GG
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:51:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOcu2-0002y7-BS
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 09:51:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749477063;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=q404t1FMSYXSf5BY7h6gmKe0mHDCAvX+l6Tv0jbWDBI=;
+ b=PFQXWKsAXv2mI7/L7ZdKXX19I6+oFxVsEtqVruozEFOAFoo3+STDIa8YgDWRhl5plTM38Y
+ yWrW8zkvkIy7TGh+Y4DwZ8esGEfQkzEf+cUZFEIAIi7wWddRHwuUkfXxpgktZg7msxbCwO
+ HsYjrrHUBKFFlKe34N9LxP5futAhb18=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-619-Ps8N7Kt-Pz2tmPuYR0dsqw-1; Mon,
+ 09 Jun 2025 09:51:00 -0400
+X-MC-Unique: Ps8N7Kt-Pz2tmPuYR0dsqw-1
+X-Mimecast-MFC-AGG-ID: Ps8N7Kt-Pz2tmPuYR0dsqw_1749477058
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8D6C71809C9D; Mon,  9 Jun 2025 13:50:58 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.45])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7B9CE18003FC; Mon,  9 Jun 2025 13:50:56 +0000 (UTC)
+Date: Mon, 9 Jun 2025 14:50:53 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Steven Sistare <steven.sistare@oracle.com>
+Cc: JAEHOON KIM <jhkim@linux.ibm.com>, qemu-devel@nongnu.org,
+ jjherne@linux.ibm.com, peterx@redhat.com, farosas@suse.de
+Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
+ connecting
+Message-ID: <aEbmvQXyCLMKSy_8@redhat.com>
+References: <aEMMjtsKZLX_Bi03@redhat.com>
+ <7dc8d42d-47f1-49c1-9bff-ab2d09d0b6f3@oracle.com>
+ <aEMR6Xjs8tRJ8_sp@redhat.com>
+ <b2d90921-0991-4a57-a141-ad0c830f8618@oracle.com>
+ <5f211f67-17f7-4b1d-a60a-4ff62645fbfa@linux.ibm.com>
+ <ad638089-af36-4f3e-8f3d-61549e9bed06@oracle.com>
+ <aEaWC_Lc6c1g821f@redhat.com>
+ <f46393bb-115a-489f-aa8d-08348e89d25e@oracle.com>
+ <aEbfuM681MJh2S-b@redhat.com>
+ <881cb07a-95c7-4f3b-8012-352873e88d64@oracle.com>
 MIME-Version: 1.0
-References: <20250602114655.42920-1-shameerali.kolothum.thodi@huawei.com>
- <ba4ac9e4-f8ca-4885-b2ab-6acdca51175b@redhat.com>
-In-Reply-To: <ba4ac9e4-f8ca-4885-b2ab-6acdca51175b@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Jun 2025 14:47:55 +0100
-X-Gm-Features: AX0GCFsKl-Lx1CJCKQBEEGz54q1AHFyL_tfCaXG8LI3cVh7LD1JwGu1ji1pKT-o
-Message-ID: <CAFEAcA_PLOkpk4zVJ7YFgturG1ToxR4k=uRhOeQxA_NQu+TFCw@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/virt: Check bypass iommu is not set for iommu-map
- DT property
-To: eric.auger@redhat.com
-Cc: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- qemu-arm@nongnu.org, 
- qemu-devel@nongnu.org, nicolinc@nvidia.com, ddutile@redhat.com, 
- linuxarm@huawei.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <881cb07a-95c7-4f3b-8012-352873e88d64@oracle.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,27 +95,89 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 3 Jun 2025 at 10:50, Eric Auger <eric.auger@redhat.com> wrote:
->
-> Hi Shameer,
->
-> On 6/2/25 1:46 PM, Shameer Kolothum wrote:
-> > default_bus_bypass_iommu tells us whether the bypass_iommu is set
-> > for the default PCIe root bus. Make sure we check that before adding
-> > the "iommu-map" DT property.
-> >
-> > Fixes: 6d7a85483a06 ("hw/arm/virt: Add default_bus_bypass_iommu machine option")
-> > Suggested-by: Eric Auger <eric.auger@redhat.com>
-> > Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
->
+On Mon, Jun 09, 2025 at 09:39:48AM -0400, Steven Sistare wrote:
+> On 6/9/2025 9:20 AM, Daniel P. Berrangé wrote:
+> > On Mon, Jun 09, 2025 at 09:12:27AM -0400, Steven Sistare wrote:
+> > > On 6/9/2025 4:06 AM, Daniel P. Berrangé wrote:
+> > > > On Fri, Jun 06, 2025 at 03:37:56PM -0400, Steven Sistare wrote:
+> > > > > 
+> > > > > The easiest solution, with no interface changes, is adding wait_for_socket() in qtest,
+> > > > > with this addition from Daniel:
+> > > > > 
+> > > > >     "With the busy wait you risk looping forever if the child (target) QEMU
+> > > > >     already exited for some reason without ever creating the socket. You
+> > > > >     can mitigate this by using 'kill($PID, 0)' in the loop and looking
+> > > > >     for -ERSCH, but this only works if you know the pid involved."
+> > > > > 
+> > > > > Daniel also suggested:
+> > > > >     "For the tests, passing a pre-opened UNIX socket FD could work"
+> > > > > 
+> > > > > Note we can not use any of the standard chardev options to specify such a socket,
+> > > > > because the cpr socket is created before chardevs are created.
+> > > > > 
+> > > > > Perhaps we could specify the fd in an extension of the MigrationChannel MigrationAddress.
+> > > > > { 'union': 'MigrationAddress',
+> > > > >     'base': { 'transport' : 'MigrationAddressType'},
+> > > > >     'discriminator': 'transport',
+> > > > >     'data': {
+> > > > >       'socket': 'SocketAddress',
+> > > > >       'exec': 'MigrationExecCommand',
+> > > > >       'rdma': 'InetSocketAddress',
+> > > > >       'file': 'FileMigrationArgs',
+> > > > >       'fd':   'FdMigrationArgs' } }           <-- add this
+> > > > > 
+> > > > > That would be useful for all clients, but this is asking a lot from you,
+> > > > > when you are just trying to fix the tests.
+> > > > 
+> > > > Note, 'SocketAddress' already has an option for declaring a FD that
+> > > > represents a socket.
+> > > 
+> > > Yes, but if I understand, you proposed passing an fd that represents a
+> > > pre-listened socket, which requires target qemu to accept() first.  The
+> > > existing FdSocketAddress is ready to read.  We could add a boolean to enable
+> > > the new behavior.
+> > 
+> > It can do both actually - it depends on what APIs the QEMU uses the
+> > SocketAddress with.
+> > 
+> > If it is used with qio_channel_socket_connect* the FD must be an
+> > active peer connection.
+> > 
+> > If it is used with qio_channel_socket_listen*/qio_net_listener* the
+> > FD must be listener socket.
+> 
+> Fair enough.  cpr currently listens here, and we could add a case for the FD:
+> 
+>   QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
+>   {
+>     MigrationAddress *addr = channel->addr;
+> 
+>     if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
+>         addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
+>         ...
+>         g_autoptr(QIONetListener) listener = qio_net_listener_new();
+> 
+> Or to use my socketpair() suggestion, that function would also need changes,
+> calling qio_channel_socket_connect.
+> 
+> Which do you think is better for clients -- socketpair or pre-listened?
 
-I guess we should cc stable as a bugfix?
+Please just use the existing SocketAddress functionality, as that's used
+throughout QEMU - a special case with socketpair for migration is not
+desirable.
 
-Applied to target-arm.next, thanks.
+The SocketAddress stuff is what libvirt's used for many years now to
+address the race condition with QMP listeners.
 
--- PMM
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
