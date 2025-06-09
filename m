@@ -4,76 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CC82C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1DDBC5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 15:03:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOdwo-00057r-I5; Mon, 09 Jun 2025 10:58:02 -0400
+	id 1uOe25-0006Pr-Td; Mon, 09 Jun 2025 11:03:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOdwm-00055b-ID
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:58:00 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uOe1w-0006Ny-L0
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 11:03:21 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOdwk-000293-8K
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:58:00 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uOe1u-0002v7-5w
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 11:03:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749481076;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1749481397;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=Sg1nfnhEfylTDAb6cjEuaXj3riRspKAwcF3uOY23jHs=;
- b=CqAu4aJ5g/yz1pI6VMZY5YAmGQ3r0j/xGQnwEIOcnA2wJSGdwPFrZYgiAQLO7xRoXCfXGD
- Gqx+6FeLP5dQBgDqjjTNg8IDE1MW9RbdQuF30gwRktjMb3yFR7wiTHHB0ZIxI/usTpZBEh
- 1ODgexAFP2nN1oSqDmjm0zjBizm+o4k=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ebaWM8LDMAhvO11U8ObZgocVzRhMNHWfUiUufJWdeVY=;
+ b=TinAQK+WeCZkcdALQvuxom/D/FfCgE8xLjnDvnekeEo4hXcKb6OSCN4Bdzx9f0K+uA7E9V
+ G867pipGgzCOLdBBkWy4aNJFDq/nul8luq1rpMp71dkDmnXyWtgYgiaHiYoSFDiBRdLHgx
+ KGQcsyOfLijX0iMV0UNHbDq2FJe/sL4=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-13-23EQmwaUMRa0zYuv8kBJ4Q-1; Mon,
- 09 Jun 2025 10:57:52 -0400
-X-MC-Unique: 23EQmwaUMRa0zYuv8kBJ4Q-1
-X-Mimecast-MFC-AGG-ID: 23EQmwaUMRa0zYuv8kBJ4Q_1749481071
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-5ekLP5UdON-vIfWTN2_bhg-1; Mon,
+ 09 Jun 2025 11:03:13 -0400
+X-MC-Unique: 5ekLP5UdON-vIfWTN2_bhg-1
+X-Mimecast-MFC-AGG-ID: 5ekLP5UdON-vIfWTN2_bhg_1749481392
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8447C1955F45; Mon,  9 Jun 2025 14:57:51 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.45])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DF2E30001B1; Mon,  9 Jun 2025 14:57:48 +0000 (UTC)
-Date: Mon, 9 Jun 2025 15:57:45 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: JAEHOON KIM <jhkim@linux.ibm.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- jjherne@linux.ibm.com, peterx@redhat.com, farosas@suse.de
-Subject: Re: [PATCH v1] migration: Wait for cpr.sock file to appear before
- connecting
-Message-ID: <aEb2aaOpn4aahXcM@redhat.com>
-References: <aEMR6Xjs8tRJ8_sp@redhat.com>
- <b2d90921-0991-4a57-a141-ad0c830f8618@oracle.com>
- <5f211f67-17f7-4b1d-a60a-4ff62645fbfa@linux.ibm.com>
- <ad638089-af36-4f3e-8f3d-61549e9bed06@oracle.com>
- <aEaWC_Lc6c1g821f@redhat.com>
- <f46393bb-115a-489f-aa8d-08348e89d25e@oracle.com>
- <aEbfuM681MJh2S-b@redhat.com>
- <881cb07a-95c7-4f3b-8012-352873e88d64@oracle.com>
- <aEbmvQXyCLMKSy_8@redhat.com>
- <45458e9f-ef59-43e3-abd6-5d923575afa4@linux.ibm.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 140C31800298; Mon,  9 Jun 2025 15:03:12 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.92])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 9FBC518003FC; Mon,  9 Jun 2025 15:03:11 +0000 (UTC)
+Date: Mon, 9 Jun 2025 11:03:10 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Brian Song <hibriansong@gmail.com>
+Subject: Re: [PATCH v2 12/21] block: Move qemu_fcntl_addfl() into osdep.c
+Message-ID: <20250609150310.GF29452@fedora>
+References: <20250604132813.359438-1-hreitz@redhat.com>
+ <20250604132813.359438-13-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="R/sC28YuqQrhXtg8"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <45458e9f-ef59-43e3-abd6-5d923575afa4@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20250604132813.359438-13-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,100 +84,164 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025 at 09:54:02AM -0500, JAEHOON KIM wrote:
-> 
-> On 6/9/2025 8:50 AM, Daniel P. Berrangé wrote:
-> > On Mon, Jun 09, 2025 at 09:39:48AM -0400, Steven Sistare wrote:
-> > > On 6/9/2025 9:20 AM, Daniel P. Berrangé wrote:
-> > > > On Mon, Jun 09, 2025 at 09:12:27AM -0400, Steven Sistare wrote:
-> > > > > On 6/9/2025 4:06 AM, Daniel P. Berrangé wrote:
-> > > > > > On Fri, Jun 06, 2025 at 03:37:56PM -0400, Steven Sistare wrote:
-> > > > > > > The easiest solution, with no interface changes, is adding wait_for_socket() in qtest,
-> > > > > > > with this addition from Daniel:
-> > > > > > > 
-> > > > > > >      "With the busy wait you risk looping forever if the child (target) QEMU
-> > > > > > >      already exited for some reason without ever creating the socket. You
-> > > > > > >      can mitigate this by using 'kill($PID, 0)' in the loop and looking
-> > > > > > >      for -ERSCH, but this only works if you know the pid involved."
-> > > > > > > 
-> > > > > > > Daniel also suggested:
-> > > > > > >      "For the tests, passing a pre-opened UNIX socket FD could work"
-> > > > > > > 
-> > > > > > > Note we can not use any of the standard chardev options to specify such a socket,
-> > > > > > > because the cpr socket is created before chardevs are created.
-> > > > > > > 
-> > > > > > > Perhaps we could specify the fd in an extension of the MigrationChannel MigrationAddress.
-> > > > > > > { 'union': 'MigrationAddress',
-> > > > > > >      'base': { 'transport' : 'MigrationAddressType'},
-> > > > > > >      'discriminator': 'transport',
-> > > > > > >      'data': {
-> > > > > > >        'socket': 'SocketAddress',
-> > > > > > >        'exec': 'MigrationExecCommand',
-> > > > > > >        'rdma': 'InetSocketAddress',
-> > > > > > >        'file': 'FileMigrationArgs',
-> > > > > > >        'fd':   'FdMigrationArgs' } }           <-- add this
-> > > > > > > 
-> > > > > > > That would be useful for all clients, but this is asking a lot from you,
-> > > > > > > when you are just trying to fix the tests.
-> > > > > > Note, 'SocketAddress' already has an option for declaring a FD that
-> > > > > > represents a socket.
-> > > > > Yes, but if I understand, you proposed passing an fd that represents a
-> > > > > pre-listened socket, which requires target qemu to accept() first.  The
-> > > > > existing FdSocketAddress is ready to read.  We could add a boolean to enable
-> > > > > the new behavior.
-> > > > It can do both actually - it depends on what APIs the QEMU uses the
-> > > > SocketAddress with.
-> > > > 
-> > > > If it is used with qio_channel_socket_connect* the FD must be an
-> > > > active peer connection.
-> > > > 
-> > > > If it is used with qio_channel_socket_listen*/qio_net_listener* the
-> > > > FD must be listener socket.
-> > > Fair enough.  cpr currently listens here, and we could add a case for the FD:
-> > > 
-> > >    QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
-> > >    {
-> > >      MigrationAddress *addr = channel->addr;
-> > > 
-> > >      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
-> > >          addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
-> > >          ...
-> > >          g_autoptr(QIONetListener) listener = qio_net_listener_new();
-> > > 
-> > > Or to use my socketpair() suggestion, that function would also need changes,
-> > > calling qio_channel_socket_connect.
-> > > 
-> > > Which do you think is better for clients -- socketpair or pre-listened?
-> > Please just use the existing SocketAddress functionality, as that's used
-> > throughout QEMU - a special case with socketpair for migration is not
-> > desirable.
-> > 
-> > The SocketAddress stuff is what libvirt's used for many years now to
-> > address the race condition with QMP listeners.
-> 
-> Dear Daniel and Steve,
-> 
-> Thank you both for your valuable insights.
-> 
-> To clarify regarding the socket handling approach:
-> If I do not use socketpair() and instead pass a pre-listened FD to the target, which then calls accept(),
-> it seems this could mitigate some race condition. However, isn't there still a risk that the old QEMU might try to
-> connect before the target QEMU calls accept(), thereby resulting in the same race condition?
 
-No, that's fine. The kernel will queue all incoming connections
-until accept() is called. So essentially the source QEMU connect()
-will get blocked until dst QEMU accept()s, which is exactly the
-semantics we want.
+--R/sC28YuqQrhXtg8
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+On Wed, Jun 04, 2025 at 03:28:04PM +0200, Hanna Czenczek wrote:
+> Move file-posix's helper to add a flag (or a set of flags) to an FD's
+> existing set of flags into osdep.c for other places to use.
+>=20
+> Suggested-by: Eric Blake <eblake@redhat.com>
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  include/qemu/osdep.h |  1 +
+>  block/file-posix.c   | 17 +----------------
+>  util/osdep.c         | 18 ++++++++++++++++++
+>  3 files changed, 20 insertions(+), 16 deletions(-)
+
+I was curious if putting POSIX fcntl(2) in osdep.c would work on
+Windows. It does not:
+
+x86_64-w64-mingw32-gcc -m64 -Ilibqemuutil.a.p -I. -I.. -Iqapi -Itrace -Iui =
+-Iui/shader -I/usr/x86_64-w64-mingw32/sys-root/mingw/include/glib-2.0 -I/us=
+r/x86_64-w64-mingw32/sys-root/mingw/lib/glib-2.0/include -fdiagnostics-colo=
+r=3Dauto -Wall -Winvalid-pch -Werror -std=3Dgnu11 -O2 -g -fstack-protector-=
+strong -Wempty-body -Wendif-labels -Wexpansion-to-defined -Wformat-security=
+ -Wformat-y2k -Wignored-qualifiers -Wimplicit-fallthrough=3D2 -Winit-self -=
+Wmissing-format-attribute -Wmissing-prototypes -Wnested-externs -Wold-style=
+-declaration -Wold-style-definition -Wredundant-decls -Wshadow=3Dlocal -Wst=
+rict-prototypes -Wtype-limits -Wundef -Wvla -Wwrite-strings -Wno-missing-in=
+clude-dirs -Wno-psabi -Wno-shift-negative-value -iquote . -iquote /home/ste=
+fanha/qemu -iquote /home/stefanha/qemu/include -iquote /home/stefanha/qemu/=
+host/include/x86_64 -iquote /home/stefanha/qemu/host/include/generic -iquot=
+e /home/stefanha/qemu/tcg/i386 -mms-bitfields -mms-bitfields -mcx16 -msse2 =
+-D_GNU_SOURCE -D_FILE_OFFSET_BITS=3D64 -D_LARGEFILE_SOURCE -fno-strict-alia=
+sing -fno-common -fwrapv -fno-pie -no-pie -ftrivial-auto-var-init=3Dzero -f=
+zero-call-used-regs=3Dused-gpr -mms-bitfields -mms-bitfields -pthread -mms-=
+bitfields -MD -MQ libqemuutil.a.p/util_osdep.c.obj -MF libqemuutil.a.p/util=
+_osdep.c.obj.d -o libqemuutil.a.p/util_osdep.c.obj -c ../util/osdep.c
+=2E./util/osdep.c: In function 'qemu_fcntl_addfl':
+=2E./util/osdep.c:625:13: error: implicit declaration of function 'fcntl' [=
+-Wimplicit-function-declaration]
+  625 |     flags =3D fcntl(fd, F_GETFL);
+      |             ^~~~~
+=2E./util/osdep.c:625:13: error: nested extern declaration of 'fcntl' [-Wer=
+ror=3Dnested-externs]
+=2E./util/osdep.c:625:23: error: 'F_GETFL' undeclared (first use in this fu=
+nction)
+  625 |     flags =3D fcntl(fd, F_GETFL);
+      |                       ^~~~~~~
+=2E./util/osdep.c:625:23: note: each undeclared identifier is reported only=
+ once for each function it appears in
+=2E./util/osdep.c:629:19: error: 'F_SETFL' undeclared (first use in this fu=
+nction)
+  629 |     if (fcntl(fd, F_SETFL, flags | flag) =3D=3D -1) {
+      |                   ^~~~~~~
+cc1: all warnings being treated as errors
+
+>=20
+> diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
+> index 96fe51bc39..49b729edc1 100644
+> --- a/include/qemu/osdep.h
+> +++ b/include/qemu/osdep.h
+> @@ -774,6 +774,7 @@ static inline void qemu_reset_optind(void)
+>  }
+> =20
+>  int qemu_fdatasync(int fd);
+> +int qemu_fcntl_addfl(int fd, int flag);
+> =20
+>  /**
+>   * qemu_close_all_open_fd:
+> diff --git a/block/file-posix.c b/block/file-posix.c
+> index 9b5f08ccb2..045e94d54d 100644
+> --- a/block/file-posix.c
+> +++ b/block/file-posix.c
+> @@ -1047,21 +1047,6 @@ static int raw_handle_perm_lock(BlockDriverState *=
+bs,
+>      return ret;
+>  }
+> =20
+> -/* Sets a specific flag */
+> -static int fcntl_setfl(int fd, int flag)
+> -{
+> -    int flags;
+> -
+> -    flags =3D fcntl(fd, F_GETFL);
+> -    if (flags =3D=3D -1) {
+> -        return -errno;
+> -    }
+> -    if (fcntl(fd, F_SETFL, flags | flag) =3D=3D -1) {
+> -        return -errno;
+> -    }
+> -    return 0;
+> -}
+> -
+>  static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
+>                                   int *open_flags, uint64_t perm, Error *=
+*errp)
+>  {
+> @@ -1100,7 +1085,7 @@ static int raw_reconfigure_getfd(BlockDriverState *=
+bs, int flags,
+>          /* dup the original fd */
+>          fd =3D qemu_dup(s->fd);
+>          if (fd >=3D 0) {
+> -            ret =3D fcntl_setfl(fd, *open_flags);
+> +            ret =3D qemu_fcntl_addfl(fd, *open_flags);
+>              if (ret) {
+>                  qemu_close(fd);
+>                  fd =3D -1;
+> diff --git a/util/osdep.c b/util/osdep.c
+> index 770369831b..ce5c6a7f59 100644
+> --- a/util/osdep.c
+> +++ b/util/osdep.c
+> @@ -613,3 +613,21 @@ int qemu_fdatasync(int fd)
+>      return fsync(fd);
+>  #endif
+>  }
+> +
+> +/**
+> + * Set the given flag(s) (fcntl GETFL/SETFL) on the given FD, while reta=
+ining
+> + * other flags.
+> + */
+> +int qemu_fcntl_addfl(int fd, int flag)
+> +{
+> +    int flags;
+> +
+> +    flags =3D fcntl(fd, F_GETFL);
+> +    if (flags =3D=3D -1) {
+> +        return -errno;
+> +    }
+> +    if (fcntl(fd, F_SETFL, flags | flag) =3D=3D -1) {
+> +        return -errno;
+> +    }
+> +    return 0;
+> +}
+> --=20
+> 2.49.0
+>=20
+
+--R/sC28YuqQrhXtg8
+Content-Type: application/pgp-signature; name=signature.asc
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhG964ACgkQnKSrs4Gr
+c8iRMgf/WJSd6+2f8LrVdWTH5crT0UubctE2kLj4U2TD9dMPLMyy8YVNjPUM5jTm
+O+bJbWFCulh4gd7xp3B5xJIJjHTiNIeiKxA49s5Rpo2XWtsZL9LnKT7lc7YBQ3O/
+kRNcZojX/obOxdIL3Z3+G3NdFls/9a14BmCGKDY4Ffb6LfWuYZPLAi9E5VEh+51g
+UuaWSuUGUAUN0346k7JjpgnwMTb6IJznQ8++VFyp9JDJAn7SaqCTfEjT1/z/qbeO
+ERu1pdhjappNF4byFZ7d6IjSpBwx3ZuiH66mYCsYiPSr6jhraFVI8cimgkFkH69H
+ETls42TaYN7UU+uE87HPKUt38rqzOA==
+=+t5X
+-----END PGP SIGNATURE-----
+
+--R/sC28YuqQrhXtg8--
 
 
