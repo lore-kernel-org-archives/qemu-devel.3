@@ -4,94 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 554DFC61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:03:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD8F7C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uObDj-0007yb-B2; Mon, 09 Jun 2025 08:03:19 -0400
+	id 1uOaPN-0005CV-Do; Mon, 09 Jun 2025 07:11:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uObDh-0007yJ-6k
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 08:03:17 -0400
-Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uObDd-0005hB-9u
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 08:03:16 -0400
-Received: by mail-pl1-x641.google.com with SMTP id
- d9443c01a7336-22c33677183so33841975ad.2
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 05:03:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1749470590; x=1750075390; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=usPCwdu/bUNpbZgZnZVpiDvJ1pWA3Uq4f0/0dWe1wEY=;
- b=h6II8FDV2rMMSBlpXHbVMbR9dSiJXtU1nznYXeU6ojEbkpKMRIyyfwzxHgE7WFDJgb
- MVDPAkmaekO7KuHTpInEwzqJP0ua02m+j3uarZsZ1nQ2g9aq+Sbtkz7we5tKXvPKvKBI
- liDCMMkwObjtCGnP6EeqI19bqVlE4wZ9+7bFNN9UU5XVH8U3JOy7EYQ9PpJjgGFbxqs1
- LxRE+X1HeEUt0i1WSiuQ8okH43x+bR5nOl/eDJooXCUVL7Red1B7CYBkaSYV2BGs62Ql
- a/QaAIh3ByMnqi7DKcXEcxoBrY/mT1JzlAIrdTRqfV60oRcDy8GfRoxHZuU0aub3hzG+
- 0cSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749470590; x=1750075390;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=usPCwdu/bUNpbZgZnZVpiDvJ1pWA3Uq4f0/0dWe1wEY=;
- b=EaMa1VBWZVC/3dVeK7LoFoK1lOCC+uqiJNqf5oUiuDxPutt20dFuqRTewKy4A+yl+f
- i/ptfVy4Qa70Xzs7X6vAOSKXX7xbq3ghMjFr/JU6dZbTsW4S8CmYQCBmatk34FCRFP6s
- TUQwxwFkoGnKDqLqx/hAVgbYb5M8/gP4EkiAQnQ6Afp6mr+/uMHDu7ocRo/XPXFOWz2/
- Hh0CCthYMf3juteB6udVXiuJpC7tM0L1d5iJcDOu1zFviaUEEuwS2ffIhUav/dyd3oSe
- rmSoLdeEJkKVyJXlGlX9gb5aCXp+HRK2tBsWI80s3o/o92LUd7+8dI1Mp1K9UizQB7q+
- qLrg==
-X-Gm-Message-State: AOJu0YxSftKZ3Bi/ONRylZmcBBfrHLUDNvW47iS4R3pmsa9EhFlslcO2
- 9suBbvnzAy7dtyRdg2hz5aSPGde8HNdKDLPDDc8Ua/DozuqEB/JtL4rEFYWfO8eImrg=
-X-Gm-Gg: ASbGncvXN755WDSp+S5FfUoczfYVEXpV2XM9pYwuGP2xWc3UgMBtOR418eSLh7q7EAb
- eXP99pivyxj6ocr9OM8qsJI7S+GPyU+J6Zdwb1q4PYP5lBlKjsLTImwAdeOQxsr5HTAdAdfz4GQ
- UxV30LJfp7kg4miVbaaYZtLwLbt/tvytErUSzKp71WYJTH+9Q9IJ8qgk9EHUlHLa9Z+G/Lc9qQo
- nRBMT2ouVbsusXIfdQak2xn169Nz9z6ggsT2Z0CfXCOi12m51LOCqfYry0Qj2VzWbV5A6UQk7ZP
- 6qoAENTZxpS5OtbWhTEqk5wUupVFTsqsCOq4FrOysSJN9+RLYZ+cueh4Te4+S03J24D9Gn5lDZQ
- =
-X-Google-Smtp-Source: AGHT+IGXF7JPu0VMaW4oMjKdhH1qKPHKVeZns53qaJ1DEXGIBNxmJM33sYw+DJKwBsAQ/ysOP02wzg==
-X-Received: by 2002:a17:902:ce8e:b0:235:225d:3087 with SMTP id
- d9443c01a7336-23601d4ed7amr170531285ad.30.1749470589693; 
- Mon, 09 Jun 2025 05:03:09 -0700 (PDT)
-Received: from [192.168.68.110] ([179.93.21.192])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-236032fcd40sm53240035ad.125.2025.06.09.05.03.06
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Jun 2025 05:03:09 -0700 (PDT)
-Message-ID: <ed76d0a7-bfb2-4c22-9e9d-093703f41296@ventanamicro.com>
-Date: Mon, 9 Jun 2025 09:03:05 -0300
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uOaPJ-0005C6-RN
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:13 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uOaPH-00075e-49
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:13 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8DxCeFJwUZoYW4RAQ--.3066S3;
+ Mon, 09 Jun 2025 19:11:05 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMAxzxtFwUZoiU0SAQ--.4222S12;
+ Mon, 09 Jun 2025 19:11:05 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org,
+	philmd@linaro.org,
+	jiaxun.yang@flygoat.com
+Subject: [PATCH 10/10] target/loongarch: cpu do interrupt support msg
+ interrupt.
+Date: Mon,  9 Jun 2025 18:48:33 +0800
+Message-Id: <20250609104833.839811-11-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250609104833.839811-1-gaosong@loongson.cn>
+References: <20250609104833.839811-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/3] hw/riscv: add CVA6 machine
-To: Ben Dooks <ben.dooks@codethink.co.uk>, nazar.kazakov@codethink.co.uk,
- joseph.baker@codethink.co.uk, fran.redondo@codethink.co.uk,
- lawrence.hunter@codethink.co.uk, liwei1518@gmail.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org
-References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
- <20250527112437.291445-2-ben.dooks@codethink.co.uk>
- <ca6cc5a3-029a-4e6c-8dfb-076b910bfbb5@ventanamicro.com>
- <110336ae-4f0d-4e27-8bd4-5cd336c7fb4c@codethink.co.uk>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <110336ae-4f0d-4e27-8bd4-5cd336c7fb4c@codethink.co.uk>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x641.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxzxtFwUZoiU0SAQ--.4222S12
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,45 +67,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+we use CSR_ESTAT and CSR_ECFG bit 15 for msg interrupt.
+and loongarch_cpu_do_interrupt support msg interrupts.
 
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ target/loongarch/cpu-csr.h |  3 ++-
+ target/loongarch/cpu.c     | 35 ++++++++++++++++++++++++++++++-----
+ 2 files changed, 32 insertions(+), 6 deletions(-)
 
-On 6/9/25 8:32 AM, Ben Dooks wrote:
-> On 09/06/2025 12:24, Daniel Henrique Barboza wrote:
->>
->>
->> On 5/27/25 8:24 AM, Ben Dooks wrote:
->>> Add a (currently Genesy2 based) CVA6 machine.
->>>
->>> Has SPI and UART, the GPIO and Ethernet are currently black-holed
->>> as there is no hardware model for them (lowRISC ethernet and Xilinx
->>> GPIO)
->>>
->>> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
->>> ---
->>> v2:
-> 
-> Apologie,s looks like it this got rebased out of the release
-> 
->>> +/* plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv */
->>> +
->>
->> I believe you've missed my comment in v1:
->>
-> 
-> would this be ok
-> 
-> /*
-> * plic register interface in corev_apu/rv_plic/rtl/plic_regmap.sv
-> * https://github.com/pulp-platform/rv_plic/blob/master/rtl/plic_regmap.sv
-> */
-
-LGTM.
-
-
-Thanks,
-
-Daniel
-
-> 
+diff --git a/target/loongarch/cpu-csr.h b/target/loongarch/cpu-csr.h
+index 83f6cb081a..5a00cf3366 100644
+--- a/target/loongarch/cpu-csr.h
++++ b/target/loongarch/cpu-csr.h
+@@ -35,11 +35,12 @@ FIELD(CSR_MISC, DWPL, 16, 3)
+ 
+ #define LOONGARCH_CSR_ECFG           0x4 /* Exception config */
+ FIELD(CSR_ECFG, LIE, 0, 13)
++FIELD(CSR_ECFG, MSGINT, 14, 1)      /* used for msg */
+ FIELD(CSR_ECFG, VS, 16, 3)
+ 
+ #define LOONGARCH_CSR_ESTAT          0x5 /* Exception status */
+ FIELD(CSR_ESTAT, IS, 0, 13)
+-FIELD(CSR_ESTAT, MSGINT, 14, 1)
++FIELD(CSR_ESTAT, MSGINT, 14, 1)    /* used for msg */
+ FIELD(CSR_ESTAT, ECODE, 16, 6)
+ FIELD(CSR_ESTAT, ESUBCODE, 22, 9)
+ 
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 207d11266f..b92463101e 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -117,6 +117,13 @@ static vaddr loongarch_cpu_get_pc(CPUState *cs)
+ #ifndef CONFIG_USER_ONLY
+ #include "hw/loongarch/virt.h"
+ 
++static uint32_t loongarch_cpu_has_interrupt(CPULoongArchState *env)
++{
++    uint32_t ret = 0;
++    ret = FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS);
++    ret |= FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, MSGINT);
++    return ret;
++}
+ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+ {
+     LoongArchCPU *cpu = opaque;
+@@ -134,21 +141,20 @@ void loongarch_cpu_set_irq(void *opaque, int irq, int level)
+                 env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, INTNUM, i);
+                 env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, ACTIVE, 0);
+                 env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 1);
+-                cpu_interrupt(cs, CPU_INTERRUPT_HARD);
++                env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, MSGINT, 1);
+                 clear_bit(i, &(env->CSR_MSGIS[i / 64]));
+             }
+         }
+     } else {
+        env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
+-       env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, ACTIVE, 1);
+-       return;
++       env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, MSGINT, 0);
+     }
+ 
+     if (kvm_enabled()) {
+         kvm_loongarch_set_interrupt(cpu, irq, level);
+     } else if (tcg_enabled()) {
+         env->CSR_ESTAT = deposit64(env->CSR_ESTAT, irq, 1, level != 0);
+-        if (FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS)) {
++        if (loongarch_cpu_has_interrupt(env)) {
+             cpu_interrupt(cs, CPU_INTERRUPT_HARD);
+         } else {
+             cpu_reset_interrupt(cs, CPU_INTERRUPT_HARD);
+@@ -166,12 +172,24 @@ static inline bool cpu_loongarch_hw_interrupts_enabled(CPULoongArchState *env)
+     return ret;
+ }
+ 
++static inline bool cpu_loongarch_hw_interrupt_msg_pending(CPULoongArchState *env)
++{
++    bool pending_msg = 0;
++    bool status_msg = 0;
++
++    pending_msg = FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, MSGINT);
++    status_msg = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, MSGINT);
++
++    return (pending_msg & status_msg) != 0;
++}
+ /* Check if there is pending and not masked out interrupt */
+ static inline bool cpu_loongarch_hw_interrupts_pending(CPULoongArchState *env)
+ {
+     uint32_t pending;
+     uint32_t status;
+-
++    if (cpu_loongarch_hw_interrupt_msg_pending(env)) {
++        return true;
++    }
+     pending = FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS);
+     status  = FIELD_EX64(env->CSR_ECFG, CSR_ECFG, LIE);
+ 
+@@ -285,6 +303,13 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         uint32_t vector = 0;
+         uint32_t pending = FIELD_EX64(env->CSR_ESTAT, CSR_ESTAT, IS);
+         pending &= FIELD_EX64(env->CSR_ECFG, CSR_ECFG, LIE);
++        if (cpu_loongarch_hw_interrupt_msg_pending(env)) {
++            env->CSR_ESTAT = FIELD_DP64(env->CSR_ESTAT, CSR_ESTAT, MSGINT, 0);
++            env->CSR_ECFG = FIELD_DP64(env->CSR_ECFG, CSR_ECFG, MSGINT, 0);
++            set_pc(env, env->CSR_EENTRY + \
++                   (EXCCODE_EXTERNAL_INT + INT_AVEC) * vec_size);
++            return;
++        }
+ 
+         /* Find the highest-priority interrupt. */
+         vector = 31 - clz32(pending);
+-- 
+2.34.1
 
 
