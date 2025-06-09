@@ -4,84 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 594DDC5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 08:49:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C917C61DB2
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 09:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOYBZ-0002f4-7k; Mon, 09 Jun 2025 04:48:53 -0400
+	id 1uOYTh-00057i-6T; Mon, 09 Jun 2025 05:07:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOYBX-0002eS-F0
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 04:48:51 -0400
-Received: from mail-yw1-x112d.google.com ([2607:f8b0:4864:20::112d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOYBV-0005ty-RZ
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 04:48:51 -0400
-Received: by mail-yw1-x112d.google.com with SMTP id
- 00721157ae682-70e4043c5b7so32890457b3.1
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 01:48:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749458928; x=1750063728; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=hbwXZu7dCaQwi0jnqyIdBXAsk/U+tvhL7FIzvPqBYGI=;
- b=ko7XjX9aZaFH7j9j/e7MTCkKuJxdE1tgkA/eZe4wcvBqWMsCxtYDWwKb2G20suEaFa
- 9J4RcNg16tiqE6woR1Xt8r0Qo0vRbMpgTwgjpmoUmlyn2ASBLQEw4Fbt6BYQd6BMd1EM
- nnU+jYsoVLuYtStYmiz9CmDJ2Om5ffTUYVZw8JyIZ8SI4nvvph8DUnYv5edPkGMrH9b4
- v+gocvwPDNOHQciCL8FiUr62ZkOHmlYGc3L+9yUlXASMaGkTLrMyIU0RkMWmTKRjgdLT
- rZ/WCE9bXZpQi2NlT8TZqvIi0Dc0wx2X076zGBdwN3WdWPBZPPkDFGhmk9V298FPxAdA
- hNXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749458928; x=1750063728;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=hbwXZu7dCaQwi0jnqyIdBXAsk/U+tvhL7FIzvPqBYGI=;
- b=l6Lqk1TKd40O9E5QPcEgkV3Ng20ufdtEVV4Tgj38ahQXg7dVKLaPUGjIPYgfa62h1m
- ZcxwAdCPP4UrYjyDDio4tHYsEWTVIXzKJZaHsfgyMI0jZihKhbbNAI7jcOL88q/5hNSy
- 3tJphVUmiOLOzHOq8ayh4weiYprOcFM8JpG0Bj+4UMwoD/XBz0bSbmIW6ktNuD1sF8PQ
- E+BZdHo5LZZl6RrTiLYDAqw5UTF8MAoV1bzxcpIm6rAs0R2JcEsv/oZbwj4i2AYcVafl
- UG+SD2jjCLzsFIsySQxnRRIlYYMlikpin09mQzvM5arxR6JobTXJYog1b59ad3HbB3cO
- tUEA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLPzTK4ozl0YqH5ZP7lzc04fnVVjWBbV0SJBHTpe0F5RLIAVBFqhA5SYU14YPMoDBkfa9eWh9vvOY5@nongnu.org
-X-Gm-Message-State: AOJu0Yyip2PtSjIHET18nIayLbL3aZUDkil9b2LQgmVAkyvnVbRs9eL/
- OlY2m7rzvdr8y2TvrS5B4UGnXyXKx5F6VUZ5qjnoKuHshoRGKiyljwt5nZlSdLF5P0h/xeivQNH
- 0XnxD4GcaBkbzbdY5v0HHrh1H5O7BpZja03UniGOcXA==
-X-Gm-Gg: ASbGncth1Koe0PBkxI/7e0bgIjugVOzAUcjBLX1ZnpdTUlsILIJ2VVNAIKxeMhhbfTc
- UdQyLP/jiKVZj1lSpBD3GsWl9d+wReIv9RwcQBlsVScUbUkXnDOH6jy80xC2tXUbVVUjNPKt9/x
- TDvE0En7gDu/lC3O6H+l9ZivvpQzyAo46BN+TeBlTyp1Ty
-X-Google-Smtp-Source: AGHT+IFYD/vM7wYCEjhK1XU1rkygFLgWYQLQbGhNUNn7orzdw0frQERDYCyBNS8y+09TRpnBbB63IC3Jzozk0uwGcA0=
-X-Received: by 2002:a05:690c:6203:b0:70f:83ef:de07 with SMTP id
- 00721157ae682-710f773609cmr166789277b3.33.1749458927819; Mon, 09 Jun 2025
- 01:48:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250609073408.2083831-1-shahuang@redhat.com>
- <20250609073408.2083831-3-shahuang@redhat.com>
-In-Reply-To: <20250609073408.2083831-3-shahuang@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Jun 2025 09:48:36 +0100
-X-Gm-Features: AX0GCFunjYxq39f4fJ_ibRVrdhrcQ5C0AytFQLXHhrRaKMKNB6e56Maos0OVy2I
-Message-ID: <CAFEAcA8eA2wX1oQeNJfNBYq1NhHgoemYJ-ybOYAgBq2-t9ZPzw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/2] hw/arm: Add the romfile compatatibility
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOYTY-00056a-2X
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 05:07:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOYTV-000888-1j
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 05:07:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749460044;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=thpea/1JNZH7PBugbUbosQMVELieY5KDrCh67UmZqlI=;
+ b=b6EMFJio84dlJDGyvvHOTOQZomhoqT+IbEQUYGy/7hENcBfT+hOnKa46CmHrUGUhPnzSB4
+ hjdMPD8D6CayiVfpb7V1NkhShcfe/yV41SxXfJTN+XNbGIDGxV7O1L0ORXmJOSyjpWSa2S
+ gATZK8lvmLasz8mFDKxk91gVYF1oKpM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-279-yC8uf6jbPAO34lI0mQeriw-1; Mon,
+ 09 Jun 2025 05:07:20 -0400
+X-MC-Unique: yC8uf6jbPAO34lI0mQeriw-1
+X-Mimecast-MFC-AGG-ID: yC8uf6jbPAO34lI0mQeriw_1749460039
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF70119560BE; Mon,  9 Jun 2025 09:07:18 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.45])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D92218003FC; Mon,  9 Jun 2025 09:07:14 +0000 (UTC)
+Date: Mon, 9 Jun 2025 10:07:11 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 To: Shaoqin Huang <shahuang@redhat.com>
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
  Gerd Hoffmann <kraxel@redhat.com>, Eric Auger <eauger@redhat.com>,
- qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/2] ramfb: Add property to control if load the romfile
+Message-ID: <aEakP3rDTyBqDXA5@redhat.com>
+References: <20250609073408.2083831-1-shahuang@redhat.com>
+ <20250609073408.2083831-2-shahuang@redhat.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250609073408.2083831-2-shahuang@redhat.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -30
+X-Spam_score: -3.1
+X-Spam_bar: ---
+X-Spam_report: (-3.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=-1, RCVD_IN_MSPIKE_WL=-0.01,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,49 +85,117 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Jun 2025 at 08:34, Shaoqin Huang <shahuang@redhat.com> wrote:
->
-> On arm64, it doesn't use the vgabios-ramfb.bin, so set the property
-> "use-legacy-x86-rom" to false, thus the ramfb won't load the
-> vgabios-ramfb.bin.
->
-> This can mitigate the problem that on release version the qemu can't
-> find the vgabios-ramfb.bin if it use the ramfb.
->
+On Mon, Jun 09, 2025 at 03:34:07AM -0400, Shaoqin Huang wrote:
+> Now the ramfb will load the vgabios-ramfb.bin unconditionally, but only
+> the x86 need the vgabios-ramfb.bin, this can cause that when use the
+> release package on arm64 it can't find the vgabios-ramfb.bin.
+> 
+> Because only seabios will use the vgabios-ramfb.bin, load the rom logic
+> is x86-specific. For other !x86 platforms, the edk2 ships an EFI driver
+> for ramfb, so they don't need to load the romfile.
+
+vgabios-ramfb.bin is just one of many VGA BIOS ROMs in QEMU
+
+$ git grep vgabios hw/
+../hw/display/ati.c:    k->romfile = "vgabios-ati.bin";
+../hw/display/bochs-display.c:    k->romfile   = "vgabios-bochs-display.bin";
+../hw/display/qxl.c:    k->romfile = "vgabios-qxl.bin";
+../hw/display/ramfb.c:    rom_add_vga("vgabios-ramfb.bin");
+../hw/display/vga-pci.c:    k->romfile = "vgabios-stdvga.bin";
+../hw/display/vga_int.h:#define VGABIOS_FILENAME "vgabios.bin"
+../hw/display/vga_int.h:#define VGABIOS_CIRRUS_FILENAME "vgabios-cirrus.bin"
+../hw/display/virtio-vga.c:    pcidev_k->romfile = "vgabios-virtio.bin";
+../hw/display/vmware_vga.c:    k->romfile = "vgabios-vmware.bin";
+../hw/ppc/amigaone.c: * BIOS emulator in firmware cannot run QEMU vgabios and hangs on it, use
+../hw/ppc/amigaone.c: * from http://www.nongnu.org/vgabios/ instead.
+../hw/xen/xen_pt_graphics.c:static void *get_vgabios(XenPCIPassthroughState *s, int *size,
+../hw/xen/xen_pt_graphics.c:    bios = get_vgabios(s, &bios_size, dev);
+
+
+At least some of these devices are built into non-x86 system
+emulators, and would show the same behaviour if the ROM is not
+installed
+
+$ qemu-system-aarch64  -machine virt -cpu max -device ati-vga
+qemu-system-aarch64: -device ati-vga: failed to find romfile "vgabios-ati.bin"
+$ qemu-system-aarch64  -machine virt -cpu max -device cirrus-vga
+qemu-system-aarch64: -device cirrus-vga: failed to find romfile "vgabios-cirrus.bin"
+$ qemu-system-aarch64  -machine virt -cpu max -device VGA
+qemu-system-aarch64: -device VGA: failed to find romfile "vgabios-stdvga.bin"
+
+Perhaps some of these devices are non-functional for other
+reasons ?
+
+None the less if the device is built for non-x86 targets, and
+the ROM files contain x86-only code that is to be executed by
+SeaBIOS only, then conceptually this fix should apply to all
+devices use a VGA BIOS ROM, not just ramfb.
+
+If we're introducing a property to control this usage, then
+we should fix all devices at once, so we don't need to add
+separate properties for other devices in future.
+
+> 
+> So add a new property use_legacy_x86_rom in both ramfb and vfio_pci
+> device, because the vfio display also use the ramfb_setup() to load
+> the vgabios-ramfb.bin file.
+> 
+> After have this property, the machine type can set the compatibility to
+> not load the vgabios-ramfb.bin if the arch doesn't need it.
+> 
 > Signed-off-by: Shaoqin Huang <shahuang@redhat.com>
 > ---
->  hw/arm/virt.c | 3 +++
->  1 file changed, 3 insertions(+)
->
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index a96452f17a..5f94f7a2ca 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -38,6 +38,7 @@
->  #include "hw/arm/primecell.h"
->  #include "hw/arm/virt.h"
->  #include "hw/block/flash.h"
-> +#include "hw/vfio/pci.h"
->  #include "hw/vfio/vfio-calxeda-xgmac.h"
->  #include "hw/vfio/vfio-amd-xgbe.h"
->  #include "hw/display/ramfb.h"
-> @@ -90,6 +91,8 @@
->
->  static GlobalProperty arm_virt_compat[] = {
->      { TYPE_VIRTIO_IOMMU_PCI, "aw-bits", "48" },
-> +    { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "false" },
-> +    { TYPE_VFIO_PCI, "use-legacy-x86-rom", "false" },
+>  hw/display/ramfb-standalone.c | 4 +++-
+>  hw/display/ramfb-stubs.c      | 2 +-
+>  hw/display/ramfb.c            | 6 ++++--
+>  hw/vfio/display.c             | 4 ++--
+>  hw/vfio/pci.c                 | 1 +
+>  hw/vfio/pci.h                 | 1 +
+>  include/hw/display/ramfb.h    | 2 +-
+>  7 files changed, 13 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/display/ramfb-standalone.c b/hw/display/ramfb-standalone.c
+> index 1be106b57f..af1175bf96 100644
+> --- a/hw/display/ramfb-standalone.c
+> +++ b/hw/display/ramfb-standalone.c
+> @@ -17,6 +17,7 @@ struct RAMFBStandaloneState {
+>      QemuConsole *con;
+>      RAMFBState *state;
+>      bool migrate;
+> +    bool use_legacy_x86_rom;
+>  };
+>  
+>  static void display_update_wrapper(void *dev)
+> @@ -39,7 +40,7 @@ static void ramfb_realizefn(DeviceState *dev, Error **errp)
+>      RAMFBStandaloneState *ramfb = RAMFB(dev);
+>  
+>      ramfb->con = graphic_console_init(dev, 0, &wrapper_ops, dev);
+> -    ramfb->state = ramfb_setup(errp);
+> +    ramfb->state = ramfb_setup(ramfb->use_legacy_x86_rom, errp);
+>  }
+>  
+>  static bool migrate_needed(void *opaque)
+> @@ -62,6 +63,7 @@ static const VMStateDescription ramfb_dev_vmstate = {
+>  
+>  static const Property ramfb_properties[] = {
+>      DEFINE_PROP_BOOL("x-migrate", RAMFBStandaloneState, migrate,  true),
+> +    DEFINE_PROP_BOOL("use-legacy-x86-rom", RAMFBStandaloneState, use_legacy_x86_rom, true),
 
-I think we should find a way to make this default to "false"
-and only be set "true" for x86. Otherwise every single non-x86
-board that ever adds support for ramfb and virtio will have
-to add these two lines, which is a source of future bugs.
-(Whereas if you forget to mark a new x86 board as needing
-the legacy rom you'll find out about it pretty quickly.)
+There are lots of ROMs, so this property name should include
+some reference to vgabios, perhaps
 
-thanks
--- PMM
+  'use-legacy-vgabios-rom'
+
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
