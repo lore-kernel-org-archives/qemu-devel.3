@@ -4,88 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADD19C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 18:27:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE064C61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 18:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOhDb-0001qd-HA; Mon, 09 Jun 2025 14:27:35 -0400
+	id 1uOhHL-00031T-Gg; Mon, 09 Jun 2025 14:31:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uOhDX-0001qE-4Z
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:27:31 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uOhDV-0003vd-8C
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:27:30 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-acbb85ce788so769383066b.3
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 11:27:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749493646; x=1750098446; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nGrwTS0B43FIImIC09i/Xm+524QL3xw7ybR/hvWOpfM=;
- b=ZRgQ+scMzWtI32cJb5C5Xkw6v42whgeO/zsXNKYmNyxUpQjwH+rgpdEATPkFFiKiBS
- b8VCFafBCRD1td59nU+1s4qN7IerU7lEHQlWCAo2y3ZBEonpgkrZKSAHT32JikIwWF3u
- /xCJfCTdiC+sG93Up5qAjMev6/KK/748G9RMZWS3zW67rMuRyC7mwI9PGO906kQbhlSi
- HiwqSi6dawqvOykS8LBKCJxZxyYaS6cCIMmaM09TLKmR03YgSzIz3FHQX77I9Y3m9u1G
- GzU9dO6zLQYSdtcP/BHoOo2M+4F6fgDNlEnfiPBroiVjWEKXIFQL0BjsDTX4Qs8RmFaN
- hCng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749493646; x=1750098446;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=nGrwTS0B43FIImIC09i/Xm+524QL3xw7ybR/hvWOpfM=;
- b=xI8iMlqSneTNQhG5Z9DuEDwn0YazEqvy9zaRlduUkuDA1djXuaqFmTQ5Bo82BXx6KJ
- IvZS7qZVgzw+cGZ6DaKQVEa43wUVX3tBoh/81LOlQMtznOSj5OZJY3+TIbcpgOSo6XOs
- hvMXHChOv2dPySsSRc08GUpoYG79DgfjQThh+qOdI8AL2vyHt6quOWHsnXC90L45rERh
- N8gds6VUt4PhIltbsRmS23ggHmOO/Y8ug5WwPf27GBKhlpGQ5xG6xKrCZxy4vS+k/BiW
- 1dG9CqYqcaDT9lN3hP5r66wQTxHwgHupLXQtQqC9b3Ke+zPlCjlCj35u5EPV2CTaL5nT
- 0qIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAdYAw7dYxldVC3lCQbRUaaVIlxKO/dYctYZYgJTbR9RxWU1SoTR5oT1F/u8SrzzyNOcVsWcTUkSwI@nongnu.org
-X-Gm-Message-State: AOJu0YzRIqvY4soBKY1FQth7+jDiTPChOKUSuF+NAHoCmv+5GP8q+MMW
- iVLNd6jQUoXm9lOEGu7zg5Tc5thMYy0cqo2Ot0RPmVFGRS0c1Rxu45S1c5GXAEDxDBDyhp50Qir
- A4espjN4UFI/Gw79vFd1ErFqZGIEKDVE=
-X-Gm-Gg: ASbGncvhJwKD019tHv6BW6aeXVRCaI6U+zGi1UVHU6XXyV+pTmnWWOhI1jaVJHY/JmM
- nZYlEIjoI3aWRwvUHjLJxs3nkKoNiJrTDOiwhn82ynU7kv8kves0esNITgxWWJ/1UXRjj/sha9d
- SMgc07hjqF0Zt4cJSBL/D9W8bcbLqvckj14aydbfMZTQ==
-X-Google-Smtp-Source: AGHT+IEmpTpW0v0GnAC9Wjj7uhn/9XUPsQpvMp14CHGk0Mc3wy+RF0dqRB2NF+Um1IkDpxIcvGLY/ebQQzKdFBwJL1A=
-X-Received: by 2002:a17:907:3f1e:b0:ad8:9909:20ac with SMTP id
- a640c23a62f3a-ade1aa0f3e7mr1263610066b.50.1749493646184; Mon, 09 Jun 2025
- 11:27:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uOhHD-00031C-9b
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:31:20 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uOhH8-0004W3-TA
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:31:18 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 8436955BC02;
+ Mon, 09 Jun 2025 20:31:08 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 9_0yeTSgeMpY; Mon,  9 Jun 2025 20:31:02 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 7CD2855BC03; Mon, 09 Jun 2025 20:31:02 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7A847745682;
+ Mon, 09 Jun 2025 20:31:02 +0200 (CEST)
+Date: Mon, 9 Jun 2025 20:31:02 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Tanish Desai <tanishdesai37@gmail.com>
+cc: qemu-devel@nongnu.org, pbonzini@redhat.com, stefanha@gmail.com, 
+ mads@ynddal.dk, philmd@linaro.org, peter.maydell@linaro.org
+Subject: Re: [PATCH] utils/log: add qemu_log_timestamp() to encapsulate
+ timestamp logging
+In-Reply-To: <20250609182044.21703-1-tanishdesai37@gmail.com>
+Message-ID: <36063c9f-f1f6-f4f7-8be5-735694a7f8c9@eik.bme.hu>
+References: <20250609182044.21703-1-tanishdesai37@gmail.com>
 MIME-Version: 1.0
-References: <20250601181231.3461-1-tanishdesai37@gmail.com>
- <20250601181231.3461-3-tanishdesai37@gmail.com>
- <20250602222434.GB320269@fedora>
- <7f4eefa2-9e00-4ba2-898f-c480c2123904@redhat.com>
- <CAJSP0QX=e3GkB5L0rpAf8YfkJDKOZYJcx553tut+7Hp2NK3XYg@mail.gmail.com>
- <03c067fc-2a47-4fc5-9204-1ac6ded4301b@redhat.com>
-In-Reply-To: <03c067fc-2a47-4fc5-9204-1ac6ded4301b@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 9 Jun 2025 14:27:13 -0400
-X-Gm-Features: AX0GCFtWTRfLqkemyTIGS3d5ZlpiWkBhPciH84opK1G81sj6Wh_C8erIIvyAsvw
-Message-ID: <CAJSP0QULzQsJEN7q-QiG+Tj0ngstKcu_=0fyTytx11uMUDXmrw@mail.gmail.com>
-Subject: Re: [PATCH 2/3] trace/ftrace: seperate cold paths of tracing functions
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Tanish Desai <tanishdesai37@gmail.com>, qemu-devel@nongnu.org, 
- Mads Ynddal <mads@ynddal.dk>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,88 +66,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 5, 2025 at 2:49=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
-wrote:
->
-> On 6/5/25 20:37, Stefan Hajnoczi wrote:
-> > On Thu, Jun 5, 2025 at 9:57=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.c=
-om> wrote:
-> >>> It's easier to understand the code generator and the generated code w=
-hen
-> >>> each trace event is implemented as a single function in the header fi=
-le.
-> >>> Splitting the trace event up adds complexity. I don't think this is a
-> >>> step in the right direction.
-> >>
-> >> I am not sure I agree on that; something like
-> >>
-> >> static inline void trace_smmu_config_cache_inv(uint32_t sid)
-> >> {
-> >>       if (trace_event_get_state(TRACE_SMMU_CONFIG_CACHE_INV)) {
-> >>           _simple__trace_smmu_config_cache_inv(sid);
-> >>           _log__trace_smmu_config_cache_inv(sid);
-> >>       }
-> >>       QEMU_SMMU_CONFIG_CACHE_INV(sid);
-> >>       tracepoint(qemu, smmu_config_cache_inv(sid));
-> >> }
-> >>
-> >> and one function per backend seems the most readable way to format the
-> >> code in the headers.  I understand that most of the time you'll have
-> >> only one backend enabled, but still the above seems pretty good and
-> >> clarifies the difference between efficient backends like dtrace and US=
-T
-> >> and the others.
-> >>
-> >> This series doesn't go all the way to something like the above, but it
-> >> does go in that direction.
-> >
-> > It's nice to share a single trace_event_get_state() conditional
-> > between all backends that use it. There is no need to move the
-> > generated code from .h into a .c file to achieve this though.
->
-> Ok, I see what you mean.  Personally I like that the backend code is
-> completely out of sight and you only have a single line of code per
-> backend; but it's a matter of taste I guess.
->
-> > In the absence of performance data this patch series seems like
-> > premature optimization and code churn to me.
-> >
-> >> Now, in all honesty the main reason to do this was to allow reusing th=
-e
-> >> C code generator when it's Rust code that is using tracepoints; but I =
-do
-> >> believe that these changes make sense on their own, and I didn't want =
-to
-> >> make these a blocker for Rust enablement as well (Tanish has already
-> >> looked into generating Rust code for the simple backend, for example).
-> >
-> > How is this patch series related to Rust tracing? If generated code
-> > needs to be restructured so Rust can call it, then that's a strong
-> > justification.
-> Well, moving code to the .c file would make it possible to call it in
-> Rust without duplicating code generation for the various backends (other
-> than the "if" and function calls, of course, but those are easy).
-> However, this is only handy and not absolutely necessary for the Rust
-> tracing project.
->
-> If you disagree with this change we can certainly live without them---I
-> asked Tanish to start with this as an exercise to get familiar with
-> tracetool, and he's learnt a bunch of things around git anyway so it's
-> all good.
+On Mon, 9 Jun 2025, Tanish Desai wrote:
+> Moved the logic for timestamped logging (~6 lines) from a_nocheck__trace_foo(header) into a new qemu_log_timestamp() function in util/log.c. This avoids code duplication across binaries and enables reuse as a standalone utility.
+> Encapsulation helps reduce build size significantly, particularly when many trace points are present. On Ubuntu 22 with
+> ./configure --target-list=aarch64-softmmu --enable-kvm --enable-trace-backends=log,
+> this change reduced the build directory size from ~1435.27 MB to ~1412 MB (~23 MB saved).
+> Notable reductions include:
+>    trace/: ~2.6 MB
+>    libqemuutil.a.p: ~3 MB
+> A detailed report of size changes (in bytes) for relevant folders and subfolders will follow in a trailing mail.
 
-A maintainer's life is easy when patches have a clear motivation. With
-this patch series I'm not convinced there is a clear motivation, and
-that makes me hesitate about applying them.
+I think this is inline to avoid overhead of function call at runtime when 
+logging is not enabled which is more important than saving build time or 
+disk space but I could be wrong.
 
-If it's okay with you, Tanish and Paolo, please hold on to the patches
-and let's see how they fit into the larger goal of Rust tracing
-support. If they help with that then I would be happy to merge them
-together with Rust tracing patches.
+Regards,
+BALATON Zoltan
 
+> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
+> ---
+> include/qemu/log-for-trace.h     |  3 +++
+> scripts/tracetool/backend/log.py | 13 +------------
+> util/log.c                       | 18 ++++++++++++++++++
+> 3 files changed, 22 insertions(+), 12 deletions(-)
 >
-> We'll also try to take a look at the code that is generated in the
-> function that invokes the tracepoint, to see if it's improved.
+> diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
+> index d47c9cd446..680f30a8a9 100644
+> --- a/include/qemu/log-for-trace.h
+> +++ b/include/qemu/log-for-trace.h
+> @@ -32,4 +32,7 @@ static inline bool qemu_loglevel_mask(int mask)
+> /* main logging function */
+> void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
 >
-> Paolo
+> +/* main logging function with timestamp */
+> +void G_GNUC_PRINTF(1, 2) qemu_log_timestamp(const char *fmt, ...);
+> +
+> #endif
+> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
+> index de27b7e62e..3358afb43a 100644
+> --- a/scripts/tracetool/backend/log.py
+> +++ b/scripts/tracetool/backend/log.py
+> @@ -38,20 +38,9 @@ def generate_h(event, group):
+>         cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
+>
+>     out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
+> -        '        if (message_with_timestamp) {',
+> -        '            struct timeval _now;',
+> -        '            gettimeofday(&_now, NULL);',
+>         '#line %(event_lineno)d "%(event_filename)s"',
+> -        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",',
+> -        '                     qemu_get_thread_id(),',
+> -        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
+> -        '                     %(argnames)s);',
+> +        '            qemu_log_timestamp("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+>         '#line %(out_next_lineno)d "%(out_filename)s"',
+> -        '        } else {',
+> -        '#line %(event_lineno)d "%(event_filename)s"',
+> -        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
+> -        '#line %(out_next_lineno)d "%(out_filename)s"',
+> -        '        }',
+>         '    }',
+>         cond=cond,
+>         event_lineno=event.lineno,
+> diff --git a/util/log.c b/util/log.c
+> index b87d399e4c..996530fe7e 100644
+> --- a/util/log.c
+> +++ b/util/log.c
+> @@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)
+>     }
+> }
+>
+> +
+> +void qemu_log_timestamp(const char *fmt, ...)
+> +{
+> +    FILE *f = qemu_log_trylock();
+> +    if (f) {
+> +        va_list ap;
+> +        if(message_with_timestamp){
+> +            struct timeval _now;
+> +            gettimeofday(&_now, NULL);
+> +            fprintf(f,"%d@%zu.%06zu:",qemu_get_thread_id(),(size_t)_now.tv_sec, (size_t)_now.tv_usec);
+> +        }
+> +        va_start(ap, fmt);
+> +        vfprintf(f, fmt, ap);
+> +        va_end(ap);
+> +    }
+> +    qemu_log_unlock(f);
+> +}
+> +
+> void qemu_log(const char *fmt, ...)
+> {
+>     FILE *f = qemu_log_trylock();
 >
 
