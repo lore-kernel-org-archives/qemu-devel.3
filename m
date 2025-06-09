@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F97C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:16:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 606CFC61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOfAp-0007RU-7Q; Mon, 09 Jun 2025 12:16:38 -0400
+	id 1uOfCf-00086p-5s; Mon, 09 Jun 2025 12:18:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOfAM-0007N0-0O
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:16:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOfAH-00041a-5M
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:16:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749485753;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=YbT53elsD8+UxF8iZrU3sTV5Ox2WXHgVAWG0UpMmMDc=;
- b=eS6taHGcskZ1a/mV2yN6Uj0w0FDxqAbwwJlQ9wAmnrfn9vcOkbFw6z55qOmg/lQYK227Ne
- JAHk0tGxyEwgILiILKVkspBgVPFQz7TugCTQ4TE1Jzhs7zc9XIq90OEn8AgA04xyPcEUPb
- 4dSfL8raXWtG0UqnlnB/AIlK7h4Svvw=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-139-ZCYhbjq9Nyee3ISrWI752A-1; Mon,
- 09 Jun 2025 12:15:50 -0400
-X-MC-Unique: ZCYhbjq9Nyee3ISrWI752A-1
-X-Mimecast-MFC-AGG-ID: ZCYhbjq9Nyee3ISrWI752A_1749485749
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 25C52180029D; Mon,  9 Jun 2025 16:15:49 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.45])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6A8F3180045C; Mon,  9 Jun 2025 16:15:46 +0000 (UTC)
-Date: Mon, 9 Jun 2025 17:15:43 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
- migration config
-Message-ID: <aEcIr2Xjv__M_J0O@redhat.com>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-20-farosas@suse.de>
- <aENBda_y3v3y4ptS@x1.local> <874iwswrex.fsf@suse.de>
- <aENUrociiqlFuPpz@x1.local> <aEb3pRkQK30JBf04@redhat.com>
- <aEb-umgh0VP2sKGW@x1.local> <aEcBLLwB9vZ33k8Q@redhat.com>
- <aEcDi6Z7pDeiRqDe@x1.local>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uOfCd-00086Z-Fp
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:18:27 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uOfCb-0004P1-O4
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:18:27 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-710fe491842so18504777b3.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:18:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749485904; x=1750090704; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3mm5+Hv4PJ/2ax2Q59tytVi3aZSjSz9V46wWFNPrrzA=;
+ b=ZDFwyxPLR0oNbZb1aekifkjJ8f9gMSHRmeHvrPhqrOpoiRw2KYSKP9i3b0EfFbLtd7
+ JbGe8oU5/heMlWHBDClEkJny6mZzP1roIGQfEuljgsjEDW99Cit+pMqdP8WGE4mV5BGY
+ wc/uQ4++u2hkdxqBWgXD79VmNzWAVGryA9epivELB2idUhJrCSlapSza0l91HFj13DU1
+ +r3BB+W+Q8qxZBx3CHSQtGBvSeiRk+wpWi6DcaNTlWB7GFln79hh0TOhwoNwOIb+Yt+M
+ 1iiggAL5ikqe13FL1rqOQkI/MnO1O8Z1VAnVwH704v53U1rzLez6ZxEL+t8hVGM20CKz
+ 4CBQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749485904; x=1750090704;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3mm5+Hv4PJ/2ax2Q59tytVi3aZSjSz9V46wWFNPrrzA=;
+ b=bgAT9mJRGVgwj8QyK/3qcmUX8+75qDtinyjuk/eXULZZUNS1K/twX4TGFxr3z8Nb2I
+ UpRDFipgAwPC7kIkC8DlG6YYnOCL74QKIo+x503AqZ6/FvtpzUnoAbrpxNISTelXJl8w
+ 2m0h/8HiXM/AdTnWGa5BXlXKtuToMKmlgcVVnk+RzNVsdAEkVCEEhZ13pA2n4oM69tMa
+ EFxIMDs+qK2xVsgf1+5pWeMF/MsiG5UVFv1EBhZKnFpwPefqONAxPksMgIBwhlR7IDoM
+ 3B0fun8pKW0X5QpiRln+tidsc9ZBYvPI7DL1RhBG/rV+/QM4zrgFbAIh5eVmglLWL127
+ amSA==
+X-Gm-Message-State: AOJu0YwVxwnMffH9QYDO4JWx4GbK77CO9XVlRED+t936COt4F3ouKWlS
+ QZSbixMl+UXNRS30wTkkFp83ak/Jph58V7HomvFPIopgDzr8SW1RYRfmQIiEMIO8M8OsHWghC+T
+ FvsX82ZmvjXnEfQAL5BBu3u/to+8ddvEG6GMwEulfi1eUwHi9njwP
+X-Gm-Gg: ASbGncu/rx6MAw24/wi2uN5L282QQqNE5TM9mgQMQ+wA2tv8LGFsgvdPtPwQZaCpjEA
+ cZbQdFybModomkIl2Ye4geB32WeR5XIMWp7Umqdhb+4czAzPv/0P27/UeOyQK8SthsJiA/opeLm
+ HIqYca9XjHxg8TpR1OQFRjhVkYNs038DazU92ZoXPXU+e9
+X-Google-Smtp-Source: AGHT+IHeIogcoc6PWeikAkiN1+z6Mhu66/kmmlEDXmlSG0nJSsG2QyBbFexvK3Ct8FJK7Emwy5R/dbC8MNSsd6voSwQ=
+X-Received: by 2002:a05:690c:6801:b0:710:e9b1:485f with SMTP id
+ 00721157ae682-710f7701044mr190802997b3.20.1749485904209; Mon, 09 Jun 2025
+ 09:18:24 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <aEcDi6Z7pDeiRqDe@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250429163212.618953-1-peter.maydell@linaro.org>
+ <CAFEAcA_hV=962gFfKc-7D91X-MXxVs=VrKQVzOKaLS2gJDt5Lw@mail.gmail.com>
+In-Reply-To: <CAFEAcA_hV=962gFfKc-7D91X-MXxVs=VrKQVzOKaLS2gJDt5Lw@mail.gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Jun 2025 17:18:13 +0100
+X-Gm-Features: AX0GCFtmIcEJ2SgcH-ufEb6azb1SNvl50i_KaJUuglerQEv2-IIh92Kz9iYRGnQ
+Message-ID: <CAFEAcA98gbjUX08NccePxGB2k0S+fjFArgz4WjFc5CZdDQ0ezg@mail.gmail.com>
+Subject: Re: [PATCH 0/2] docs: Avoid duplicate labels with a sphinx extn
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,60 +90,93 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 09, 2025 at 11:53:47AM -0400, Peter Xu wrote:
-> On Mon, Jun 09, 2025 at 04:43:40PM +0100, Daniel P. Berrangé wrote:
-> > On Mon, Jun 09, 2025 at 11:33:14AM -0400, Peter Xu wrote:
-> > > 
-> > > Now I think I know part of what I've missed: I used to think the "config"
-> > > of per-QMP-migrate-command can be totally temporary for a specific
-> > > migration request, but then we need another MigrationState.parameters_2 to
-> > > cache the old or vice versa; that's probably not necessary.  Now I think it
-> > > makes sense to overwrite any settings directly, hence I think I changed my
-> > > mind on question (1), YES is fine here.
-> > > 
-> > > For (2), why it would introduce any uncertainty for mgmt?
-> > > 
-> > > If the mgmt app can both: (1) query from qapi schema knowing all the
-> > > parameters supported, then (2) specify all the parameters in QMP migrate's
-> > > "option" parameter.  Then it's literally overwritting all the parameters,
-> > > so it's predictable with or without completely removing global settings as
-> > > an idea?
-> > 
-> > That is relying on the mgmt app specifiying absolutely every config
-> > parameter that exists. If they miss anything, then the behaviour is
-> > not well defined, as external global state still affects things.
-> > 
-> > This is the same situation we already have with migrate-set-parameter,
-> > where mgmt apps have to know to call migrate-set-parameter over & over
-> > with every possible parameter to get back to a well known starting point.
-> > 
-> > The command needs to run with the parameters provided in 'config' and
-> > no external global state, whether from -global or any prior call of
-> > migrate-set-parameter
-> 
-> So libvirt does not probe the qapi schema for all possible parameters?  Why
-> not do that once on QEMU boot up, then when migration is needed use a
-> sequence of commands to make sure everything will be setup before
-> "migrate"?  It'll definitely take a few rounds of QMP commands, but the
-> core issue is whether there can be any real atomic issues of that.
+Ping^2 on this one?
 
-Probing the QAPI schema tells you what parameters exist. It does not tell
-you what values you should set for parameters, if you don't already know
-what the semantics of that parameter are. Such a requirement to probe
-all parameters & set them all manually is again making migration into a
-special case that is not following the normal QMP design, and there's
-no justification for that other than the historical design mistakes in
-migration QMP which were copied from HMP.
+-- PMM
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
-
+On Mon, 19 May 2025 at 15:32, Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> Ping? Any opinions on this?
+>
+> In the interim we've applied commit 82707dd4f0 to drop
+> the specific duplicate-label that is causing problems
+> right now, so patch 2 here will need the obvious trivial
+> update. But I do think this is a better approach than
+> forever avoiding defining labels in .rst.inc files...
+>
+> thanks
+> -- PMM
+>
+> On Tue, 29 Apr 2025 at 17:32, Peter Maydell <peter.maydell@linaro.org> wrote:
+> >
+> > Sphinx requires that labels within documents are unique across the
+> > whole manual.  This is because the "create a hyperlink" directive
+> > specifies only the name of the label, not a filename+label.  Some
+> > Sphinx versions will warn about duplicate labels, but even if there
+> > is no warning there is still an ambiguity and no guarantee that the
+> > hyperlink will be created to the intended target.
+> >
+> > For QEMU this is awkward, because we have various .rst.inc fragments
+> > which we include into multiple .rst files.  If you define a label in
+> > the .rst.inc file then it will be a duplicate label.  We have mostly
+> > worked around this by not putting labels into those .rst.inc files,
+> > or by adding "insert a label" functionality into the hxtool extension
+> > (see commit 1eeb432a953b0 "doc/sphinx/hxtool.py: add optional label
+> > argument to SRST directive"). However, we let one into the codebase
+> > without initially noticing, in commit 7f6314427e ("docs/devel: add a
+> > codebase section"), because not all versions of Sphinx warn about
+> > the duplicate labels.
+> >
+> > This patchset resolves the problem by implementing a small Sphinx
+> > extension. The extension lets you write in a .rst.inc:
+> >
+> >   .. uniquelabel:: mylabel
+> >
+> > and it will be as if you had written:
+> >
+> >   .. _foo/bar-mylabel
+> >
+> > where foo/bar.rst is the top level document that includes the
+> > .rst.inc file.
+> >
+> > Patch 1 is the extension; patch 2 is the use of it to fix the
+> > problem in qemu-block-drivers.rst.inc. (Concretely, the result is
+> > that instead of an ambiguous "nbd" label, we now have separate
+> > "system/images-nbd" and "system/qemu-block-drivers-nbd" labels.
+> > We want to link to the former, because the latter is in the
+> > manpage, not the proper HTML manual.)
+> >
+> > This patchset is a bit RFC quality -- I have not tested it
+> > super thoroughly, and the extension itself is written based on
+> > our existing ones, because I'm neither a Python nor a Sphinx
+> > expert. I figured I'd send it out to see if people agreed that
+> > it was the right way to solve this problem.
+> >
+> > (In theory we could remove the SRST(label) functionality from
+> > the hxtool extension and have the .hx files use uniquelabel.
+> > Not sure that's worthwhile at this point.)
+> >
+> > PS: I find that our extensions are confused about whether they
+> > should set "required_arguments = 1" or "required_argument = 1";
+> > probably the latter are all bugs that happen to have no bad
+> > side effects...
+> >
+> > thanks
+> > -- PMM
+> >
+> > Peter Maydell (2):
+> >   docs: Create a uniquelabel Sphinx extension
+> >   docs: Use uniquelabel in qemu-block-drivers.rst.inc
+> >
+> >  docs/conf.py                           |  1 +
+> >  docs/devel/codebase.rst                |  2 +-
+> >  docs/sphinx/uniquelabel.py             | 74 ++++++++++++++++++++++++++
+> >  docs/system/qemu-block-drivers.rst.inc |  2 +-
+> >  4 files changed, 77 insertions(+), 2 deletions(-)
+> >  create mode 100644 docs/sphinx/uniquelabel.py
+> >
+> > --
 
