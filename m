@@ -4,54 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1236C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:30:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A4EBC5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 12:32:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOaPP-0005Ef-R7; Mon, 09 Jun 2025 07:11:19 -0400
+	id 1uObed-0005w7-5T; Mon, 09 Jun 2025 08:31:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uOaPL-0005CY-9Q
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:15 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uOaPH-00075T-0Y
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 07:11:15 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxQK9IwUZoVW4RAQ--.9089S3;
- Mon, 09 Jun 2025 19:11:04 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAxzxtFwUZoiU0SAQ--.4222S8;
- Mon, 09 Jun 2025 19:11:04 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org,
-	philmd@linaro.org,
-	jiaxun.yang@flygoat.com
-Subject: [PATCH 06/10] hw/loongarch: Implement avec controller imput and
- output pins
-Date: Mon,  9 Jun 2025 18:48:29 +0800
-Message-Id: <20250609104833.839811-7-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20250609104833.839811-1-gaosong@loongson.cn>
-References: <20250609104833.839811-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uObeZ-0005vP-Bx
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 08:31:03 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uObeS-0000jq-V3
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 08:31:02 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso3575805b3a.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 05:30:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1749472253; x=1750077053; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/azUsPlgQ0qnNuRghzS6BtLGc4+GWDUgZUUWcnIh2vo=;
+ b=mkRfHxd+0qX4jn+TY46OpSD2/9f2BU1JAF2ulMrSQpaJOSrCIPcdA54T9cR0oIkEYN
+ 8NRNjvcI11q9lF2/SGw9SWVMuHCwuQmMo2SJi91lrnJbt5p5WwC01gzH8PpmgWrX3YKO
+ qxfX3ds5eAFXWPrbCo0vAc83GAohbUGc60yFWi29mKAwsBaWEZCl8HiN4US727uA8Nnt
+ 4I+JhQTm+7KPEt5LLLAqWY8BBiAjg45WZb4x+OKebGED/p6YXWTze283sNMOdcR9ww8u
+ LdSVRR2EmxN5xBgN+i9I/9NsYwU/AKP3rxXAQvSqzsZ0VF3o6iT6z0IEZ0pWpePrBgYr
+ FKTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749472253; x=1750077053;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/azUsPlgQ0qnNuRghzS6BtLGc4+GWDUgZUUWcnIh2vo=;
+ b=tzDRgje8nYrAOjuHSK+7fihR9j0jrG/QyC/26kXjhFvh9au7eUCE/5D1ShPTs93pY4
+ HFbZhYiLvNCHQpHWV2ekYbqUSGhdTgDMSAsvqRodIjVNzrMGjjGX7rrE47AOkrjEu1IV
+ 0QGe04K7h3rBQ8hTzICa5Nmr86YFat1AT8F7z0nliwF9H3aEp38ndFm4hKMW3ADubvxF
+ 8dWs3xshS5K8M6SmBYv3FmV2nlST3Zo5VoygoZSh/gTgsIEbb0FoplVdleQp54t9KPJN
+ mTjjxsg+7WOWVfvfJQYEgHlkUU7iWeyqGDo/OHyZ9XUzNFpWwuNQ/iwyCKM9YQLosOCf
+ idwQ==
+X-Gm-Message-State: AOJu0YwiQ994HLJLNaitu7KCILA1ySfpOrzYzzQakEp1vbiXFwzUl2kv
+ iG7QMvRwr1ZRpxXEsKc7gO+FaAhIhLaaJJXw88amTMeeBHEK6F0HtRWpU3knIcmQxUw=
+X-Gm-Gg: ASbGncs7qRKRE/b4QC/A3ZIX0onFmg91T1aAr55DdJ6SKXC+x68Fuihv3G4T1EGWUcY
+ Lgei2gHted2VbqF1Qjuwpp5fRVho66xY72KVVel0ZKomIJF5r0f8T/JjVYcge5CWnWuxvJ/IRB7
+ uV/SnmGbCN0pJkbINIMX9r8cQv6L/bnrcYaJwtY61T9A6fDfxXJ5NsnwX05nmktPiS+bGDgOgMV
+ VTVTHTBxzIDOdOeosvnb8ppGB/rnVbtVjbUfl+k3yrki4i6Bjn/U4k4A+3krpEwsLpAiKFaP1fD
+ 1waLpnoTDNgyLrsPmZWYDPsgEJSQ4iU5H7QR9aa1gHYIjRmYDhmnKmaIXRT8lVaW
+X-Google-Smtp-Source: AGHT+IENljqOWWZNwNJwClbgGMOmjfoluvhx3ZbH5nVIU4gChRFrYhJ86MbLwEOXuElijfLRH83ZVw==
+X-Received: by 2002:a05:6a00:22d1:b0:742:3cc1:9485 with SMTP id
+ d2e1a72fcca58-74827e9c914mr16024452b3a.12.1749472252711; 
+ Mon, 09 Jun 2025 05:30:52 -0700 (PDT)
+Received: from [192.168.68.110] ([179.93.21.192])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7482b0c00d5sm5573765b3a.120.2025.06.09.05.30.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Jun 2025 05:30:52 -0700 (PDT)
+Message-ID: <f6a3a6d7-6a3b-4d90-8bd1-6954b90c9fe0@ventanamicro.com>
+Date: Mon, 9 Jun 2025 09:30:48 -0300
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/3] target/riscv: add cva6 core type
+To: Ben Dooks <ben.dooks@codethink.co.uk>, nazar.kazakov@codethink.co.uk,
+ joseph.baker@codethink.co.uk, fran.redondo@codethink.co.uk,
+ lawrence.hunter@codethink.co.uk, liwei1518@gmail.com,
+ zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org
+References: <20250527112437.291445-1-ben.dooks@codethink.co.uk>
+ <20250527112437.291445-3-ben.dooks@codethink.co.uk>
+ <ef6c7b15-04a7-42cf-a89b-c2674388810f@ventanamicro.com>
+ <06323162-66b9-4165-ab2e-86ec6272aca8@codethink.co.uk>
+ <341224e9-d335-40ac-af98-6395b3aede84@ventanamicro.com>
+ <5663397f-e1b6-46fa-953d-fb21d1a700df@codethink.co.uk>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <5663397f-e1b6-46fa-953d-fb21d1a700df@codethink.co.uk>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxzxtFwUZoiU0SAQ--.4222S8
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,117 +108,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the AVEC controller supports 256*256 irqs, all the irqs connect CPU INT_AVEC irq
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/intc/loongarch_avec.c | 28 ++++++++++++++++++++++++++++
- hw/loongarch/virt.c      | 11 +++++++++--
- target/loongarch/cpu.h   |  3 ++-
- 3 files changed, 39 insertions(+), 3 deletions(-)
 
-diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-index 50956e7e4e..c692fef43c 100644
---- a/hw/intc/loongarch_avec.c
-+++ b/hw/intc/loongarch_avec.c
-@@ -36,9 +36,19 @@ static const MemoryRegionOps loongarch_avec_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
-+static void avec_irq_handler(void *opaque, int irq, int level)
-+{
-+    return;
-+}
-+
- static void loongarch_avec_realize(DeviceState *dev, Error **errp)
- {
-+    LoongArchAVECState *s = LOONGARCH_AVEC(dev);
-     LoongArchAVECClass *lac = LOONGARCH_AVEC_GET_CLASS(dev);
-+    MachineState *machine = MACHINE(qdev_get_machine());
-+    MachineClass *mc = MACHINE_GET_CLASS(machine);
-+    const CPUArchIdList  *id_list;
-+    int i, irq;
- 
-     Error *local_err = NULL;
-     lac->parent_realize(dev, &local_err);
-@@ -47,6 +57,24 @@ static void loongarch_avec_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    assert(mc->possible_cpu_arch_ids);
-+    id_list = mc->possible_cpu_arch_ids(machine);
-+    s->num_cpu = id_list->len;
-+    s->cpu = g_new(AVECCore, s->num_cpu);
-+    if (s->cpu == NULL) {
-+        error_setg(errp, "Memory allocation for AVECCore fail");
-+        return;
-+    }
-+
-+    for (i = 0; i < s->num_cpu; i++) {
-+        s->cpu[i].arch_id = id_list->cpus[i].arch_id;
-+        s->cpu[i].cpu = CPU(id_list->cpus[i].cpu);
-+        for (irq = 0; irq < NR_VECTORS; irq++) {
-+            qdev_init_gpio_out(dev, &s->cpu[i].parent_irq[irq], 1);
-+        }
-+    }
-+    qdev_init_gpio_in(dev, avec_irq_handler, NR_VECTORS * s->num_cpu);
-+
-     return;
- }
- 
-diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-index 272355da2d..718b5b4f92 100644
---- a/hw/loongarch/virt.c
-+++ b/hw/loongarch/virt.c
-@@ -363,7 +363,7 @@ static void virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
-     }
- }
- 
--static void virt_irq_init(LoongArchVirtMachineState *lvms)
-+static void virt_irq_init(LoongArchVirtMachineState *lvms, MachineState *ms)
- {
-     DeviceState *pch_pic, *pch_msi;
-     DeviceState *ipi, *extioi, *avec;
-@@ -459,6 +459,13 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(avec), &error_fatal);
-         memory_region_add_subregion(get_system_memory(), VIRT_PCH_MSI_ADDR_LOW,
-                         sysbus_mmio_get_region(SYS_BUS_DEVICE(avec), 0));
-+        CPUState *cpu_state;
-+        DeviceState *cpudev;
-+        for (int cpu = 0; cpu < ms->smp.cpus; cpu++) {
-+            cpu_state = qemu_get_cpu(cpu);
-+            cpudev = DEVICE(cpu_state);
-+            qdev_connect_gpio_out(avec, cpu, qdev_get_gpio_in(cpudev, INT_AVEC));
-+        }
-     }
- 
-     /* Create EXTIOI device */
-@@ -799,7 +806,7 @@ static void virt_init(MachineState *machine)
-     }
- 
-     /* Initialize the IO interrupt subsystem */
--    virt_irq_init(lvms);
-+    virt_irq_init(lvms, machine);
-     lvms->machine_done.notify = virt_done;
-     qemu_add_machine_init_done_notifier(&lvms->machine_done);
-      /* connect powerdown request */
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index a1918a85da..b96df1cb2a 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -240,9 +240,10 @@ FIELD(CSR_CRMD, WE, 9, 1)
- extern const char * const regnames[32];
- extern const char * const fregnames[32];
- 
--#define N_IRQS      13
-+#define N_IRQS      15
- #define IRQ_TIMER   11
- #define IRQ_IPI     12
-+#define INT_AVEC    14
- 
- #define LOONGARCH_STLB         2048 /* 2048 STLB */
- #define LOONGARCH_MTLB         64   /* 64 MTLB */
--- 
-2.34.1
+On 6/9/25 8:59 AM, Ben Dooks wrote:
+> On 09/06/2025 12:30, Daniel Henrique Barboza wrote:
+>>
+>>
+>> On 6/9/25 7:40 AM, Ben Dooks wrote:
+>>> On 07/06/2025 21:17, Daniel Henrique Barboza wrote:
+>>>>
+>>>>
+>>>> On 5/27/25 8:24 AM, Ben Dooks wrote:
+>>>>> Add TYPE_RISCV_CPU_CVA6 for the CVA6 core
+>>>>>
+>>>>> Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+>>>>> ---
+> 
+>> The README states right at the start:
+>>
+>>
+>> "CVA6 is a 6-stage, single-issue, in-order CPU which implements the 64- bit RISC-V instruction set."
+>>
+>>
+>> So this means that CVA6 is a 64-bit CPU only. This means that we want the second
+>> option: the CPU declaration is fine, but the CVA6 board must be built only for 64
+>> bits. In patch 1, this line:
+>>
+>>
+>>>> config CVA6
+>>>>      bool
+>>>>      default y
+>>>>      depends on RISCV32 || RISCV64  <------------------
+>>
+>>
+>> Should be "depends on RISCV64".
+> 
+> 
+> I think given the confusion, let's go with the RISCV64 for now and if
+> it turns out there is an 32-bit build option we can always add it in
+> later and change anything else around.
+
+Just sent a reply making this same suggestion. I agree.
+
+
+Daniel
+
+> 
+> 
 
 
