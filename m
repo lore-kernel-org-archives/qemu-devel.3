@@ -4,76 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57ADDC5AD49
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 04:04:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 278A6C5AD49
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 04:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOTjq-0001rS-TJ; Mon, 09 Jun 2025 00:04:00 -0400
+	id 1uOTqq-000323-Pi; Mon, 09 Jun 2025 00:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uOTje-0001qk-CO; Mon, 09 Jun 2025 00:03:48 -0400
-Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
+ id 1uOTqm-00031l-Bq; Mon, 09 Jun 2025 00:11:08 -0400
+Received: from mail-ua1-x935.google.com ([2607:f8b0:4864:20::935])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uOTjb-0007lw-TP; Mon, 09 Jun 2025 00:03:45 -0400
-Received: by mail-vk1-xa2f.google.com with SMTP id
- 71dfb90a1353d-530f9edd032so810837e0c.0; 
- Sun, 08 Jun 2025 21:03:42 -0700 (PDT)
+ id 1uOTqk-000088-LB; Mon, 09 Jun 2025 00:11:08 -0400
+Received: by mail-ua1-x935.google.com with SMTP id
+ a1e0cc1a2514c-87ed4300327so73605241.2; 
+ Sun, 08 Jun 2025 21:11:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749441822; x=1750046622; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1749442265; x=1750047065; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hlrUkjAp/tFxlo5BE0oDwFUKPVrIEu4NSaBeyNriy2s=;
- b=fBfNLfwrPjtZof3mmsog5/xq0SZGrEsEx6ihVG1vYpcasF76Zu36vT7473wPYbk7GW
- dhwzZqGfUQQ+2Ga30hwAoeXNCX6FwdYmvCWniMt2+EUKkIFLxzy6LsGckVk3byRqklFP
- TXjnX2itHOrnXsFySMlpCJdMTwrGngLYbM5DVv0q57T0C0lBKQCwv9IuM9X9YyOtM3gE
- luYcyUX5rPrXGQLy8yvHXk+pV/BB33zYZ3/qS8wkqrXLumrHPOIAQ8RM4lyulGUsbzKt
- 2WfVJ9NDFfq1C30+qsiFDu4qJ5O/HNgqMswBNt803z2WK1OHTStFBjju61XyiLy3zDDm
- MI6w==
+ bh=bWghqZmTEEdtbZHCe8oisQ0794XSXS7tj1zZcQw0FqQ=;
+ b=lOZhlF5Zb6p2u9KjnwD080dlXus0d8nDq+uK8QEsi4LrqCDlIGuuQknm1PPRfI/+CP
+ 47YShMrDM9mSTRXLQfYV5wXR92FN9RlWQiA76P168DNbNzSu6cvztn3bpvtlNA4gYdqE
+ u4a5eJcfz+YXB7OM3ADKkCdZM2KB/r3DrzHvKAub+FsVN4YcVPGi8lUlrKtiEy+fHf5d
+ M6292lO7ew9InyzdJteB4Uns/em4stCIHGGpfjOSAK5lqc63nbxX1ohACyaLK2EqEjAE
+ V9rEfE4ECJ3uVOhr32pouZ5qsbZR5BdaVIJyIwdwCqhqRee4rbhv+7tUl1/ZSSYzHMSr
+ DDNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749441822; x=1750046622;
+ d=1e100.net; s=20230601; t=1749442265; x=1750047065;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=hlrUkjAp/tFxlo5BE0oDwFUKPVrIEu4NSaBeyNriy2s=;
- b=TSqSLKcGijv5eXxrtv7SpCgn/5PXkN/CNI1DXFsAUcEfK11RUhQpvjODABullTxS8P
- T+1P+ZTfyO7bplfFhQELKxRpwCI/H+LvBaGCGuBJeMhr1sMhFzTRVhIYXSi+acFKBxJX
- DEqOCbWMNNQ0gu4WgKtWk+envA5C18llI31ZD+htx9DSVn8KMXZ2MrvCQsH0RXhVYJRX
- CLwS2utOuFuDuh3pHlN9urfjk9HE/aDl2DpYh1wXST1i7jYJGsBRgbllVpsHx4BzHvh7
- Rg8TAnbM+fxdq4ivVjADVBml5SIkiuq9calhrBd2KRiAaou9yDLHbS7HKQdVy+w4RUFp
- Zg/A==
+ bh=bWghqZmTEEdtbZHCe8oisQ0794XSXS7tj1zZcQw0FqQ=;
+ b=UMcGSFSAnH8+st9pRcyo+aiw9DVkNu0EXoG95XUXaQYhswDCXoJNGa6EDAdUYkXbQC
+ zS3kjOlLhjtCRp2821K6MwTI4TqI4sm+aRLfIhPvf7SJXsgMKK/getA8a2A0mSVX/un2
+ He85UIIlJHXOjvLe3mswTxWuM2RUmkcy4teZekRKFNl4iekFFycE8jhn7OyCu2UXR8N3
+ DFp601S+FrntyqyEx8eQTgMFVL5V5Nm5uG7RvM3kQe0ga3eC5JCPSrjum7wiPNTh8A6k
+ 88SWcNLKDmB3eduQTpA1/V8x4XR2pygBx5Se11z58tCAtaZnLf3W1Haey7WNCWw3BWsF
+ /KbA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXCJAo0cEZfecwY0WoRcGV/++3E+7fuSTTz6QhukkG6YZtCYlFewDHWad2U/saoaQeebNw/3/4KuiIR@nongnu.org
-X-Gm-Message-State: AOJu0Yywp4sK50GuWMzQ8kX1hlilVkhE5lMFhcQCx5JrjcAtBXb/3dTu
- hzvOWAOBndqftTcls9BIhqXmmIj6U6NIKBYlpXzq0VvfP2sM3jzEv9oiVpsyaiKXmvmJ8xaRoPe
- 4bUEVT1buKKGYc5lzqeeqDUlW9hDWPLY=
-X-Gm-Gg: ASbGncsFmW1EO/RDYy1IB1qsgMzrZ35t/osDAuUKOgdO/TLoRre/0kiDiGbdOxF2hTH
- 2UJ34QVTwtzQIJ8niTuAQa4fHEkiDrcUxA7k3VHvwwcRmXTSQD5ihM+wGwW58eRp0QI5429eNSs
- 7kUvOQ508lbFm+QqpbSNQvawJpKzKSgbqpSBdgwC6bMCKKB7BKFONGCg9s2nTgC/Y=
-X-Google-Smtp-Source: AGHT+IEUrH1vV2ycR8vropwv7t3pmSz+RNBkiXJbEoMpPqAzc10Jf95FrHQ+co6Ua2rMreOa3KIHRSdruNfxAmymGqE=
-X-Received: by 2002:a05:6122:3d12:b0:527:b7a3:dda8 with SMTP id
- 71dfb90a1353d-530e5278a6emr9249963e0c.7.1749441821991; Sun, 08 Jun 2025
- 21:03:41 -0700 (PDT)
+ AJvYcCVnAbjZ5zh0RqDgRuO7hduE51zTYqGxibL+FZnn5CgYjw1eSY2hS88K/rfiAHxbLQWi/5PvPFar41z8@nongnu.org,
+ AJvYcCWLTHA5djyu4vqKj5LKfT7IqewRF1MzW8Eyxe73RARM0T4tqMjPCiQ1QG0YSfjKOIU5ipFIReaPslGVdw==@nongnu.org
+X-Gm-Message-State: AOJu0YyNosp81McjsCYRrtySYmtdED+DZ8Uw77e64EL0Zf40VWYFFLLL
+ UA5i5b4aM2NFrw/0Xsy4XxSb23Oy8OWjWgpLe8BSm4C5YVBsF0oKtOX25+COl7c0lq/XHhMrLFm
+ 3urQg9xRpEIrAtORn05ScLyI/W4pu1PJHzw==
+X-Gm-Gg: ASbGncv4OA3y6xV61zi13buYaqcW4UvyaY5/USbBdhcrNQQYfFh+EKQVHI5d5hlKEB3
+ QPzgjwfjCkxRaIe2ORO6G220udakn1QQNbM/qRZ/jsW4OCDQUmfEvOSZUlUywqVEIoKp17E0Jkp
+ f9/FArpA8GLmxXov0CzgXgy/unVlgakJMiRbSnDieoy2OkoT6PZlt8FQNDDA3g7FSNrOvzQVgLr
+ A==
+X-Google-Smtp-Source: AGHT+IFX4jllI2Ae3+LefjkUJ9epbbDPNI7grP9hrAtrU7pjUj6Z7i7AbhD9RyO++FFULjys29rCFLZJTH9xl2921ZE=
+X-Received: by 2002:a05:6102:41ab:b0:4e6:f86b:141f with SMTP id
+ ada2fe7eead31-4e772978e16mr9442812137.12.1749442265077; Sun, 08 Jun 2025
+ 21:11:05 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250605094456.1385105-1-dbarboza@ventanamicro.com>
-In-Reply-To: <20250605094456.1385105-1-dbarboza@ventanamicro.com>
+References: <cover.1749224867.git.chao.liu@yeah.net>
+ <e4750730e723642922021767946bf277765201a1.1749224867.git.chao.liu@yeah.net>
+In-Reply-To: <e4750730e723642922021767946bf277765201a1.1749224867.git.chao.liu@yeah.net>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Jun 2025 14:03:15 +1000
-X-Gm-Features: AX0GCFvK3bQunVphgRq9qu8MvQybAeKNrtH6eWNe-oVT9RQoHbTNfMWWt6Swruk
-Message-ID: <CAKmqyKN8UGgHhQNSKvBSGjeXNz2t5ho1avzE=MZe_BCGrHOp_Q@mail.gmail.com>
-Subject: Re: [PATCH v2 0/1] riscv: qemu_chr_fe_write_all() in
- CONSOLE_WRITE_BYTE
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, alistair.francis@wdc.com, 
- liwei1518@gmail.com, zhiwei_liu@linux.alibaba.com, palmer@dabbelt.com, 
- philmd@linaro.org
+Date: Mon, 9 Jun 2025 14:10:39 +1000
+X-Gm-Features: AX0GCFttifY-AqEwqGdI7z8tthazKAWWyCfXv5BIltU-2I7YnPIkmr52YmP37Ec
+Message-ID: <CAKmqyKN6dL6-qXGzHqxrHfBBC34YrD-HwhLyb8RdTqdw6KsrmA@mail.gmail.com>
+Subject: Re: [PATCH v5 1/1] hw/riscv: fix PLIC hart topology configuration
+ string when not getting CPUState correctly
+To: Chao Liu <chao.liu@yeah.net>
+Cc: dbarboza@ventanamicro.com, palmer@dabbelt.com, 
+ zhiwei_liu@linux.alibaba.com, alistair.francis@wdc.com, liwei1518@gmail.com, 
+ zhangtj@tecorigin.com, qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Chao Liu <lc00631@tecorigin.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
- envelope-from=alistair23@gmail.com; helo=mail-vk1-xa2f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::935;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x935.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,36 +101,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 5, 2025 at 7:45=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
+On Sat, Jun 7, 2025 at 12:13=E2=80=AFPM Chao Liu <chao.liu@yeah.net> wrote:
 >
-> Hi,
+> riscv_plic_hart_config_string() when getting CPUState via qemu_get_cpu()
+> should be consistent with keeping sifive_plic_realize()
+> by hartid_base + cpu_index.
 >
-> In this version I removed the reference of SBI_EXT_DBCN_CONSOLE_WRITE in
-> the commit message. That API is *non-blocking*, and citing it to justify
-> a change in a blocking API sounds weird. It's also uneeded since we have
-> a good case without it regardless.
+> A better approach is to use cpu_by_arch_id() instead of qemu_get_cpu(),
+> in riscv cpu_by_arch_id() uses the mhartid.
 >
-> No other changes made.
+> For non-numa or single-cluster machines, hartid_base should be 0.
 >
-> Changes from v1:
-> - removed the "SBI_EXT_DBCN_CONSOLE_WRITE" bit from the commit msg
-> - v1 link: https://lore.kernel.org/qemu-riscv/20250605090012.1268809-1-db=
-arboza@ventanamicro.com/
->
-> Daniel Henrique Barboza (1):
->   target/riscv: use qemu_chr_fe_write_all() in DBCN_CONSOLE_WRITE_BYTE
+> Signed-off-by: Chao Liu <lc00631@tecorigin.com>
+> Reviewed-by: Tingjian Zhang <zhangtj@tecorigin.com>
 
-Thanks!
-
-Applied to riscv-to-apply.next
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
 Alistair
 
+> ---
+>  hw/intc/sifive_plic.c      | 4 ++--
+>  hw/riscv/boot.c            | 4 ++--
+>  hw/riscv/microchip_pfsoc.c | 2 +-
+>  hw/riscv/sifive_u.c        | 2 +-
+>  hw/riscv/virt.c            | 2 +-
+>  include/hw/riscv/boot.h    | 2 +-
+>  6 files changed, 8 insertions(+), 8 deletions(-)
 >
->  target/riscv/kvm/kvm-cpu.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> diff --git a/hw/intc/sifive_plic.c b/hw/intc/sifive_plic.c
+> index 3160b216fd..8e7ebc0655 100644
+> --- a/hw/intc/sifive_plic.c
+> +++ b/hw/intc/sifive_plic.c
+> @@ -399,7 +399,7 @@ static void sifive_plic_realize(DeviceState *dev, Err=
+or **errp)
+>       * hardware controlled when a PLIC is attached.
+>       */
+>      for (i =3D 0; i < s->num_harts; i++) {
+> -        RISCVCPU *cpu =3D RISCV_CPU(qemu_get_cpu(s->hartid_base + i));
+> +        RISCVCPU *cpu =3D RISCV_CPU(cpu_by_arch_id(s->hartid_base + i));
+>          if (riscv_cpu_claim_interrupts(cpu, MIP_SEIP) < 0) {
+>              error_setg(errp, "SEIP already claimed");
+>              return;
+> @@ -505,7 +505,7 @@ DeviceState *sifive_plic_create(hwaddr addr, char *ha=
+rt_config,
 >
+>      for (i =3D 0; i < plic->num_addrs; i++) {
+>          int cpu_num =3D plic->addr_config[i].hartid;
+> -        CPUState *cpu =3D qemu_get_cpu(cpu_num);
+> +        CPUState *cpu =3D cpu_by_arch_id(cpu_num);
+>
+>          if (plic->addr_config[i].mode =3D=3D PLICMode_M) {
+>              qdev_connect_gpio_out(dev, cpu_num - hartid_base + num_harts=
+,
+> diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
+> index 828a867be3..aa775e846c 100644
+> --- a/hw/riscv/boot.c
+> +++ b/hw/riscv/boot.c
+> @@ -44,13 +44,13 @@ bool riscv_is_32bit(RISCVHartArrayState *harts)
+>   * Return the per-socket PLIC hart topology configuration string
+>   * (caller must free with g_free())
+>   */
+> -char *riscv_plic_hart_config_string(int hart_count)
+> +char *riscv_plic_hart_config_string(int hart_base, int hart_count)
+>  {
+>      g_autofree const char **vals =3D g_new(const char *, hart_count + 1)=
+;
+>      int i;
+>
+>      for (i =3D 0; i < hart_count; i++) {
+> -        CPUState *cs =3D qemu_get_cpu(i);
+> +        CPUState *cs =3D cpu_by_arch_id(hart_base + i);
+>          CPURISCVState *env =3D &RISCV_CPU(cs)->env;
+>
+>          if (kvm_enabled()) {
+> diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
+> index 2e74783fce..6c0e3b22af 100644
+> --- a/hw/riscv/microchip_pfsoc.c
+> +++ b/hw/riscv/microchip_pfsoc.c
+> @@ -274,7 +274,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *=
+dev, Error **errp)
+>                                  l2lim_mem);
+>
+>      /* create PLIC hart topology configuration string */
+> -    plic_hart_config =3D riscv_plic_hart_config_string(ms->smp.cpus);
+> +    plic_hart_config =3D riscv_plic_hart_config_string(0, ms->smp.cpus);
+>
+>      /* PLIC */
+>      s->plic =3D sifive_plic_create(memmap[MICROCHIP_PFSOC_PLIC].base,
+> diff --git a/hw/riscv/sifive_u.c b/hw/riscv/sifive_u.c
+> index d69f942cfb..c89dac0f21 100644
+> --- a/hw/riscv/sifive_u.c
+> +++ b/hw/riscv/sifive_u.c
+> @@ -829,7 +829,7 @@ static void sifive_u_soc_realize(DeviceState *dev, Er=
+ror **errp)
+>                                  l2lim_mem);
+>
+>      /* create PLIC hart topology configuration string */
+> -    plic_hart_config =3D riscv_plic_hart_config_string(ms->smp.cpus);
+> +    plic_hart_config =3D riscv_plic_hart_config_string(0, ms->smp.cpus);
+>
+>      /* MMIO */
+>      s->plic =3D sifive_plic_create(memmap[SIFIVE_U_DEV_PLIC].base,
+> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+> index cf280a92e5..d094bd186b 100644
+> --- a/hw/riscv/virt.c
+> +++ b/hw/riscv/virt.c
+> @@ -1289,7 +1289,7 @@ static DeviceState *virt_create_plic(const MemMapEn=
+try *memmap, int socket,
+>      g_autofree char *plic_hart_config =3D NULL;
+>
+>      /* Per-socket PLIC hart topology configuration string */
+> -    plic_hart_config =3D riscv_plic_hart_config_string(hart_count);
+> +    plic_hart_config =3D riscv_plic_hart_config_string(base_hartid, hart=
+_count);
+>
+>      /* Per-socket PLIC */
+>      return sifive_plic_create(
+> diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
+> index 7d59b2e6c6..5937298646 100644
+> --- a/include/hw/riscv/boot.h
+> +++ b/include/hw/riscv/boot.h
+> @@ -40,7 +40,7 @@ typedef struct RISCVBootInfo {
+>
+>  bool riscv_is_32bit(RISCVHartArrayState *harts);
+>
+> -char *riscv_plic_hart_config_string(int hart_count);
+> +char *riscv_plic_hart_config_string(int hart_base, int hart_count);
+>
+>  void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartArrayState *hart=
+s);
+>  target_ulong riscv_calc_kernel_start_addr(RISCVBootInfo *info,
 > --
 > 2.49.0
 >
