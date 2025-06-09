@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE080C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:20:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A58FC5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:20:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOfDb-0000Yq-5l; Mon, 09 Jun 2025 12:19:27 -0400
+	id 1uOfDO-000072-HU; Mon, 09 Jun 2025 12:19:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDZ-0000Xr-5E
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDM-0008TN-1s
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDS-0004Vt-2K
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:24 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDK-0004UT-7q
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749485957;
+ s=mimecast20190719; t=1749485949;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=0gBjc7m16rQwKWYyV/3t//9MlDB/n3QsWgc67i1f8wg=;
- b=DS4hoQDR7zFbYdxigv5w/qKLDKLf/ki5p0elC284IKi+87iGjIYo5Bl8QRrP2asACfMHLq
- ZWcru46bhowzUwSvHTllusSx7bOn699BXzaElB6RLy5lVLuZqPnxY1WURE2atzhlMS5CEi
- ayN/MRHVSzlZwHO5sGCztfXVkGEmc1s=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=E2XIrWaj9CYKaBSgFOHuJujnQV0+UP1da/Qg7ZHotwM=;
+ b=iRcNtdtFA3xo5EZvrLdoZIA68Td1aQ6wWz9KUv97kC8a8Fkeus/3/D0LTpCACnu9m0oLlN
+ ikkXWJdPQyS9kK/sQo3bF4OL0R/4cYhWcphayHFoQCDcCmI4IFgGQO9ZxRbSMx776EBmpX
+ /MRDFXr6W6TiCztoU7UXGxfgsQGiTSE=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-630-SZkohqQKPgy8BwyZrae3Ng-1; Mon, 09 Jun 2025 12:19:11 -0400
-X-MC-Unique: SZkohqQKPgy8BwyZrae3Ng-1
-X-Mimecast-MFC-AGG-ID: SZkohqQKPgy8BwyZrae3Ng_1749485950
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6fafb2f0a33so68835986d6.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:19:11 -0700 (PDT)
+ us-mta-467-mrFf8H7uNkS7B5Ikl1564A-1; Mon, 09 Jun 2025 12:19:08 -0400
+X-MC-Unique: mrFf8H7uNkS7B5Ikl1564A-1
+X-Mimecast-MFC-AGG-ID: mrFf8H7uNkS7B5Ikl1564A_1749485948
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4a589edc51aso110240671cf.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:19:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749485950; x=1750090750;
+ d=1e100.net; s=20230601; t=1749485947; x=1750090747;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0gBjc7m16rQwKWYyV/3t//9MlDB/n3QsWgc67i1f8wg=;
- b=ARtEdp6uTAQZdo43CsnOcBUo/PumWy/u34IkT03nN6KlE7vsam8loIZlZH1WvCtdEh
- JFc/5DBqZSdXeBPQ6f88nYrfPP54jNTIf/Ib4Vl3Eq5TfwJ43uSA212esI5z+BN80YVY
- wq4wFSNjXY/VudRSfvDeymzk/mX9Ap9y0XH2quC4FAgOzE7W1nO1nU9XDxt3zkdt44xn
- 51MgFGQbeG09R3tbNjhSopDCabsXUkIZ5J+cuF/Ai2CNIB+YclDJvDWppejxJ5rpHavq
- OM71VV5C0NNZgUKRuqYMoUE9N2DJYnBTRVZVdh//mceAul1Q2wqZ96oaccKYzUjeuMmN
- Yjzg==
-X-Gm-Message-State: AOJu0Yzc2xId8nd6ld6puIaZxFVw2n1MgoWm4MS+iYOcQqJLbzxcEGOh
- SPBFULh4iLFgyo6RymRmZyZVVRjYHURK6Vh7221No2AxyFsAsgYr/eVntL+wik+j5FQ/eskxD5C
- x2tEuR+qHQnFTNrTCPUZ4L3fi7Uf/2mh+JbMxzph76eHnt23uUaTanHSt/Egt/gTTZsTJyyHAAf
- UCb7ATu3HrQ8wUtu+I7pbYFu1n1j3fPHWIEM8GLg==
-X-Gm-Gg: ASbGncv2vHK/KphOQeDifQAu5lC0wh4v7ciHCNdo4f1DJhTgy6H6Xoy/s6JERMsZL0g
- A7I/b47vau/FXaWHdL7YPhvQtQKzBINqNYXixkeUWf+VIDpoqIy/R+hzkHbeFr3ubohd5HrX0sM
- tADMNAHnj6Du1CKDrZHwdWBosTRzA1OArdvMREO55889VWNVogrI4LACD4Nq/x+SB+DiYXJz6iq
- 40LwgN1Do9Soc97T0ucvTMtmbxCPgoO0YxsZSOy9LcFdlOl0xgK3lhl2/aW65t9Z2AfBXQwsh/B
- HtU+NTMz0IC08g==
-X-Received: by 2002:a05:6214:518f:b0:6f8:b4aa:2a4b with SMTP id
- 6a1803df08f44-6fb08fbb540mr235601096d6.28.1749485950156; 
- Mon, 09 Jun 2025 09:19:10 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IG+JhK2D+zRr0c/sToY/ET/YTchuQuXkch4HwDCvB3BqTZlY0Ak2NSVjJqvEf+pZscQeAF6OA==
-X-Received: by 2002:a05:6214:518f:b0:6f8:b4aa:2a4b with SMTP id
- 6a1803df08f44-6fb08fbb540mr235600506d6.28.1749485949666; 
- Mon, 09 Jun 2025 09:19:09 -0700 (PDT)
+ bh=E2XIrWaj9CYKaBSgFOHuJujnQV0+UP1da/Qg7ZHotwM=;
+ b=ZhH7T1ykyDbvboivUPZnJHovMhnFrufq5tIZQxKfXpipMjwlX8Uea7Uo3OfdB+5bJu
+ w3ME4VyTCoGBZDgCN4tZOXQOVuGUT/ryyz/dpM6srrGZ6qCcVneL2DSYMxoKLm6VR8ut
+ Ibjb+UgnkrlXDJiRbtE6xBBuPYKxbYBXQciFBqPLk4t8AU9DymEzyXYxAYuECyLIk/C+
+ U2n6UzDeatzWzq8hW2rnDSpXbhS1XgSwiTN7uevawE8UtHUK5m6f66uZzwN2yDaHTSci
+ VDd9By8dNkl6mT063MsW9k9LHIlw4C2pSI4h7w0ERVcfsOty/uSCnV9jhNAvO6cKEFYv
+ hLSQ==
+X-Gm-Message-State: AOJu0YwPI+sOuUTcmSBTPEVKM4IsG4AZS83YZrIMd8i7tCA3uNuoNTl/
+ vtoWKLEFCwA0NBQoWZAije4ynLLbv9/rkZwT7FBUmQYoXj33dvpdAQ4iVHGAsi/kF6Q7Ni/4go0
+ 5wvtqGm9ra9JlEpAxbIwBa1QO5Stj27ct0k3Q/vAJc515zkYliRczdpsc97jKm0olXJplyMx7H+
+ 6hhD3os/6kQupioeMw2WvPiAR1aJkzPcHUnYcHIA==
+X-Gm-Gg: ASbGncvuI7NCwWHaSLtxFMf+Jgy4oY/by0k8n4UhljlVn1/YiuQTiP7fVVMf9mZ3PbB
+ syyAKg7G3kMk2veazCSN0Dc4pmpb5vhWkCQhh5iA2UI5DRI3+F4fBxVhOATWz2biREzzly+yf6i
+ 24Vr3rAWuX066SeQw+DagjrULqrWQR1FbJYmz/fFygD8XMHDhTos2amasTDLtTr9cFdBp+xDJko
+ lgtAq1y21lrGy7YLqcHOFUwh7csIXQjyQ18fole7UO9nL9FQrk4CjuZCo7DfsIvbRpjtzNOE5ky
+ xpA=
+X-Received: by 2002:a05:6214:20c7:b0:6fa:ce1e:3a4a with SMTP id
+ 6a1803df08f44-6fb08fc6ec0mr195196896d6.6.1749485947350; 
+ Mon, 09 Jun 2025 09:19:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF3Li2VPoezz6Q8AEAfKnkYbp58kYo0Z7wiDWd8H64XkJPG1gTnWt2uB8ibeo/qWHffpb8ucg==
+X-Received: by 2002:a05:6214:20c7:b0:6fa:ce1e:3a4a with SMTP id
+ 6a1803df08f44-6fb08fc6ec0mr195196436d6.6.1749485946943; 
+ Mon, 09 Jun 2025 09:19:06 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fb09ab95c1sm53420546d6.15.2025.06.09.09.19.08
+ 6a1803df08f44-6fb09ab95c1sm53420546d6.15.2025.06.09.09.19.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 09:19:09 -0700 (PDT)
+ Mon, 09 Jun 2025 09:19:06 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 08/11] migration/ram: One less indent for
- ram_find_and_save_block()
-Date: Mon,  9 Jun 2025 12:18:52 -0400
-Message-ID: <20250609161855.6603-9-peterx@redhat.com>
+Subject: [PATCH v2 06/11] migration: Rename save_live_complete_precopy to
+ save_complete
+Date: Mon,  9 Jun 2025 12:18:50 -0400
+Message-ID: <20250609161855.6603-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250609161855.6603-1-peterx@redhat.com>
 References: <20250609161855.6603-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,47 +108,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The check over PAGE_DIRTY_FOUND isn't necessary. We could indent one less
-and assert that instead.
+Now after merging the precopy and postcopy version of complete() hook,
+rename the precopy version from save_live_complete_precopy() to
+save_complete().
 
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
+Dropping the "live" when at it, because it's in most cases not live when
+happening (in precopy).
+
+No functional change intended.
+
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/ram.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ include/migration/register.h   | 4 ++--
+ hw/ppc/spapr.c                 | 2 +-
+ hw/s390x/s390-stattrib.c       | 2 +-
+ hw/vfio/migration.c            | 2 +-
+ migration/block-dirty-bitmap.c | 2 +-
+ migration/ram.c                | 2 +-
+ migration/savevm.c             | 8 ++++----
+ 7 files changed, 11 insertions(+), 11 deletions(-)
 
+diff --git a/include/migration/register.h b/include/migration/register.h
+index e022195785..0510534515 100644
+--- a/include/migration/register.h
++++ b/include/migration/register.h
+@@ -78,7 +78,7 @@ typedef struct SaveVMHandlers {
+     void (*save_cleanup)(void *opaque);
+ 
+     /**
+-     * @save_live_complete_precopy
++     * @save_complete
+      *
+      * Transmits the last section for the device containing any
+      * remaining data at the end phase of migration.
+@@ -95,7 +95,7 @@ typedef struct SaveVMHandlers {
+      *
+      * Returns zero to indicate success and negative for error
+      */
+-    int (*save_live_complete_precopy)(QEMUFile *f, void *opaque);
++    int (*save_complete)(QEMUFile *f, void *opaque);
+ 
+     /**
+      * @save_live_complete_precopy_thread (invoked in a separate thread)
+diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
+index 702f774cda..c5d30f2ebd 100644
+--- a/hw/ppc/spapr.c
++++ b/hw/ppc/spapr.c
+@@ -2518,7 +2518,7 @@ static void htab_save_cleanup(void *opaque)
+ static SaveVMHandlers savevm_htab_handlers = {
+     .save_setup = htab_save_setup,
+     .save_live_iterate = htab_save_iterate,
+-    .save_live_complete_precopy = htab_save_complete,
++    .save_complete = htab_save_complete,
+     .save_cleanup = htab_save_cleanup,
+     .load_state = htab_load,
+ };
+diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
+index f74cf32636..13a678a803 100644
+--- a/hw/s390x/s390-stattrib.c
++++ b/hw/s390x/s390-stattrib.c
+@@ -338,7 +338,7 @@ static const TypeInfo qemu_s390_stattrib_info = {
+ static SaveVMHandlers savevm_s390_stattrib_handlers = {
+     .save_setup = cmma_save_setup,
+     .save_live_iterate = cmma_save_iterate,
+-    .save_live_complete_precopy = cmma_save_complete,
++    .save_complete = cmma_save_complete,
+     .state_pending_exact = cmma_state_pending,
+     .state_pending_estimate = cmma_state_pending,
+     .save_cleanup = cmma_save_cleanup,
+diff --git a/hw/vfio/migration.c b/hw/vfio/migration.c
+index b76697bd1a..33a71f8999 100644
+--- a/hw/vfio/migration.c
++++ b/hw/vfio/migration.c
+@@ -824,7 +824,7 @@ static const SaveVMHandlers savevm_vfio_handlers = {
+     .state_pending_exact = vfio_state_pending_exact,
+     .is_active_iterate = vfio_is_active_iterate,
+     .save_live_iterate = vfio_save_iterate,
+-    .save_live_complete_precopy = vfio_save_complete_precopy,
++    .save_complete = vfio_save_complete_precopy,
+     .save_state = vfio_save_state,
+     .load_setup = vfio_load_setup,
+     .load_cleanup = vfio_load_cleanup,
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index 6ee3c32a76..a061aad817 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -1248,7 +1248,7 @@ static bool dirty_bitmap_has_postcopy(void *opaque)
+ 
+ static SaveVMHandlers savevm_dirty_bitmap_handlers = {
+     .save_setup = dirty_bitmap_save_setup,
+-    .save_live_complete_precopy = dirty_bitmap_save_complete,
++    .save_complete = dirty_bitmap_save_complete,
+     .has_postcopy = dirty_bitmap_has_postcopy,
+     .state_pending_exact = dirty_bitmap_state_pending,
+     .state_pending_estimate = dirty_bitmap_state_pending,
 diff --git a/migration/ram.c b/migration/ram.c
-index ed380ac86f..c66ad3cf8b 100644
+index 8b43b9e1e8..ed380ac86f 100644
 --- a/migration/ram.c
 +++ b/migration/ram.c
-@@ -2285,16 +2285,18 @@ static int ram_find_and_save_block(RAMState *rs)
-         if (!get_queued_page(rs, pss)) {
-             /* priority queue empty, so just search for something dirty */
-             int res = find_dirty_block(rs, pss);
--            if (res != PAGE_DIRTY_FOUND) {
--                if (res == PAGE_ALL_CLEAN) {
--                    break;
--                } else if (res == PAGE_TRY_AGAIN) {
--                    continue;
--                } else if (res < 0) {
--                    pages = res;
--                    break;
--                }
-+
-+            if (res == PAGE_ALL_CLEAN) {
-+                break;
-+            } else if (res == PAGE_TRY_AGAIN) {
-+                continue;
-+            } else if (res < 0) {
-+                pages = res;
-+                break;
-             }
-+
-+            /* Otherwise we must have a dirty page to move */
-+            assert(res == PAGE_DIRTY_FOUND);
+@@ -4545,7 +4545,7 @@ void postcopy_preempt_shutdown_file(MigrationState *s)
+ static SaveVMHandlers savevm_ram_handlers = {
+     .save_setup = ram_save_setup,
+     .save_live_iterate = ram_save_iterate,
+-    .save_live_complete_precopy = ram_save_complete,
++    .save_complete = ram_save_complete,
+     .has_postcopy = ram_has_postcopy,
+     .state_pending_exact = ram_state_pending_exact,
+     .state_pending_estimate = ram_state_pending_estimate,
+diff --git a/migration/savevm.c b/migration/savevm.c
+index dfb67bf679..7dba367d33 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1496,7 +1496,7 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
+     int ret;
+ 
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+-        if (!se->ops || !se->ops->save_live_complete_precopy) {
++        if (!se->ops || !se->ops->save_complete) {
+             continue;
          }
-         pages = ram_save_host_page(rs, pss);
-         if (pages) {
+         if (se->ops->is_active) {
+@@ -1509,7 +1509,7 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
+         qemu_put_byte(f, QEMU_VM_SECTION_END);
+         qemu_put_be32(f, se->section_id);
+ 
+-        ret = se->ops->save_live_complete_precopy(f, se->opaque);
++        ret = se->ops->save_complete(f, se->opaque);
+         trace_savevm_section_end(se->idstr, se->section_id, ret);
+         save_section_footer(f, se);
+         if (ret < 0) {
+@@ -1583,7 +1583,7 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
+         if (!se->ops ||
+             (in_postcopy && se->ops->has_postcopy &&
+              se->ops->has_postcopy(se->opaque)) ||
+-            !se->ops->save_live_complete_precopy) {
++            !se->ops->save_complete) {
+             continue;
+         }
+ 
+@@ -1598,7 +1598,7 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
+ 
+         save_section_header(f, se, QEMU_VM_SECTION_END);
+ 
+-        ret = se->ops->save_live_complete_precopy(f, se->opaque);
++        ret = se->ops->save_complete(f, se->opaque);
+         trace_savevm_section_end(se->idstr, se->section_id, ret);
+         save_section_footer(f, se);
+         if (ret < 0) {
 -- 
 2.49.0
 
