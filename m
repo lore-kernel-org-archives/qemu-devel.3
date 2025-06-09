@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CD93C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:20:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE080C61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOfDP-0000Ak-Sg; Mon, 09 Jun 2025 12:19:15 -0400
+	id 1uOfDb-0000Yq-5l; Mon, 09 Jun 2025 12:19:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDO-00006N-3U
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:14 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDZ-0000Xr-5E
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDM-0004Uo-49
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDS-0004Vt-2K
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749485951;
+ s=mimecast20190719; t=1749485957;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=T6ZiNs2bgrN2dGehujOdvcshHA/0Ols9u+/LIQfENg0=;
- b=L0220/VRlMrT0yUOdtCDQNLpkabQxzxcN2b2A7KbXNxoXOTGGjopNVOUZwa4nh2kqGkStu
- DVkR/iCh4tYHSZ+nHdYu2eFrVGL9b7H/aR3Tsyii3Q/aF2/J6yWpqhPNV7Dv/gfyd0lw1J
- NS2MV2PefCXYkaAczbWDtWxvdAf7bvE=
+ bh=0gBjc7m16rQwKWYyV/3t//9MlDB/n3QsWgc67i1f8wg=;
+ b=DS4hoQDR7zFbYdxigv5w/qKLDKLf/ki5p0elC284IKi+87iGjIYo5Bl8QRrP2asACfMHLq
+ ZWcru46bhowzUwSvHTllusSx7bOn699BXzaElB6RLy5lVLuZqPnxY1WURE2atzhlMS5CEi
+ ayN/MRHVSzlZwHO5sGCztfXVkGEmc1s=
 Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
  [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-662-pqN-4fL8Or26qGWnpxHZiA-1; Mon, 09 Jun 2025 12:19:10 -0400
-X-MC-Unique: pqN-4fL8Or26qGWnpxHZiA-1
-X-Mimecast-MFC-AGG-ID: pqN-4fL8Or26qGWnpxHZiA_1749485950
+ us-mta-630-SZkohqQKPgy8BwyZrae3Ng-1; Mon, 09 Jun 2025 12:19:11 -0400
+X-MC-Unique: SZkohqQKPgy8BwyZrae3Ng-1
+X-Mimecast-MFC-AGG-ID: SZkohqQKPgy8BwyZrae3Ng_1749485950
 Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6fad1f7f175so77168456d6.1
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:19:10 -0700 (PDT)
+ 6a1803df08f44-6fafb2f0a33so68835986d6.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:19:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749485949; x=1750090749;
+ d=1e100.net; s=20230601; t=1749485950; x=1750090750;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=T6ZiNs2bgrN2dGehujOdvcshHA/0Ols9u+/LIQfENg0=;
- b=NNJ2SJ+qE6thFjyEcKByQDAcdkwtQ5kiKOqPwMAcK9+zHpxK5Sn3QyNErwYUb/UP1B
- k5pgQ8JIuta2EAUJLPnC5pMPuGCiezohHyC0ydmvtO5Sr5iEoOPXERV1wcGzzbPK/Kuk
- 0XnA53d/Yg38HvSAZtVWU7a1EwTeVBogSwogVEo1oZuTQqcRKEIxhQYbJFKsbuignTiX
- rXLA/yqQ7/eOdc1qwteJDQ+KqdYi17HvGfyalVsH3zuruhIRUfUtVg0oWWghjAoPZ+GQ
- awfvXcN95PVwQNXCk6tA9dMvaJSzGFN0Sa+nHlmu55ll2XsF4HS4l+nwHLm4PIWAnIcQ
- WlZw==
-X-Gm-Message-State: AOJu0YzlROJx7UP39jmFjeW0W6wOnAGdmc8f8UF+Ya/+iE79xB9uPGdd
- bT34+LsSHUc2d2EQMLMXDs1VU8tH/ttlwkZ23eFV3EJsDC56fO6KbXDYsALem0ubDqSSb4MMb9s
- EvIr/lk2DVvFAYgUAyVUWea3knZLxDYfAtFFm4kYEiYOD8hyjwZyec6vFUo/J0J91RnT68lGWlm
- OgS5hP1SojvDKO+LN3r/C0Vq9pVa889sWVY8kJPw==
-X-Gm-Gg: ASbGncv6MJueXGTkCxjQ7BEwJiFABhw6ni+/+BqX+a3JF0SE1Nv0xeDSMJoG1+sXVJX
- QWI3glnOZPUScAfXNPtDU4DAcfNGsHw0+Dv5Cftnq59yeg0/3VnxXjDMv4V+1Aao5Drwpmg19Yr
- jkZO0JdMblRz1y7NruXtrQkDMIIAzE0gKlMoTre4GWFt/lynA9uvPtsMxwdU1KTvaiLEK8HGPgt
- Za134IEWXZb3JCQfbfRmUADbGHFxPlvfRulKMihIhYvIFNy+IcOi4M2RBfgcOfag3/FM/we50yh
- Zrw=
-X-Received: by 2002:a05:6214:258c:b0:6fa:f59f:f349 with SMTP id
- 6a1803df08f44-6fb2395ffa3mr1973206d6.10.1749485949244; 
+ bh=0gBjc7m16rQwKWYyV/3t//9MlDB/n3QsWgc67i1f8wg=;
+ b=ARtEdp6uTAQZdo43CsnOcBUo/PumWy/u34IkT03nN6KlE7vsam8loIZlZH1WvCtdEh
+ JFc/5DBqZSdXeBPQ6f88nYrfPP54jNTIf/Ib4Vl3Eq5TfwJ43uSA212esI5z+BN80YVY
+ wq4wFSNjXY/VudRSfvDeymzk/mX9Ap9y0XH2quC4FAgOzE7W1nO1nU9XDxt3zkdt44xn
+ 51MgFGQbeG09R3tbNjhSopDCabsXUkIZ5J+cuF/Ai2CNIB+YclDJvDWppejxJ5rpHavq
+ OM71VV5C0NNZgUKRuqYMoUE9N2DJYnBTRVZVdh//mceAul1Q2wqZ96oaccKYzUjeuMmN
+ Yjzg==
+X-Gm-Message-State: AOJu0Yzc2xId8nd6ld6puIaZxFVw2n1MgoWm4MS+iYOcQqJLbzxcEGOh
+ SPBFULh4iLFgyo6RymRmZyZVVRjYHURK6Vh7221No2AxyFsAsgYr/eVntL+wik+j5FQ/eskxD5C
+ x2tEuR+qHQnFTNrTCPUZ4L3fi7Uf/2mh+JbMxzph76eHnt23uUaTanHSt/Egt/gTTZsTJyyHAAf
+ UCb7ATu3HrQ8wUtu+I7pbYFu1n1j3fPHWIEM8GLg==
+X-Gm-Gg: ASbGncv2vHK/KphOQeDifQAu5lC0wh4v7ciHCNdo4f1DJhTgy6H6Xoy/s6JERMsZL0g
+ A7I/b47vau/FXaWHdL7YPhvQtQKzBINqNYXixkeUWf+VIDpoqIy/R+hzkHbeFr3ubohd5HrX0sM
+ tADMNAHnj6Du1CKDrZHwdWBosTRzA1OArdvMREO55889VWNVogrI4LACD4Nq/x+SB+DiYXJz6iq
+ 40LwgN1Do9Soc97T0ucvTMtmbxCPgoO0YxsZSOy9LcFdlOl0xgK3lhl2/aW65t9Z2AfBXQwsh/B
+ HtU+NTMz0IC08g==
+X-Received: by 2002:a05:6214:518f:b0:6f8:b4aa:2a4b with SMTP id
+ 6a1803df08f44-6fb08fbb540mr235601096d6.28.1749485950156; 
+ Mon, 09 Jun 2025 09:19:10 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG+JhK2D+zRr0c/sToY/ET/YTchuQuXkch4HwDCvB3BqTZlY0Ak2NSVjJqvEf+pZscQeAF6OA==
+X-Received: by 2002:a05:6214:518f:b0:6f8:b4aa:2a4b with SMTP id
+ 6a1803df08f44-6fb08fbb540mr235600506d6.28.1749485949666; 
  Mon, 09 Jun 2025 09:19:09 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFpRSwIUU2Efg/nXmnddzEdx3XMbZeLoql8rlEuZOZOxFK85+5nmFzXHeZieTvJnPG+JjM8tg==
-X-Received: by 2002:a05:6214:258c:b0:6fa:f59f:f349 with SMTP id
- 6a1803df08f44-6fb2395ffa3mr1972456d6.10.1749485948578; 
- Mon, 09 Jun 2025 09:19:08 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fb09ab95c1sm53420546d6.15.2025.06.09.09.19.07
+ 6a1803df08f44-6fb09ab95c1sm53420546d6.15.2025.06.09.09.19.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 09:19:07 -0700 (PDT)
+ Mon, 09 Jun 2025 09:19:09 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 07/11] migration: qemu_savevm_complete*() helpers
-Date: Mon,  9 Jun 2025 12:18:51 -0400
-Message-ID: <20250609161855.6603-8-peterx@redhat.com>
+Subject: [PATCH v2 08/11] migration/ram: One less indent for
+ ram_find_and_save_block()
+Date: Mon,  9 Jun 2025 12:18:52 -0400
+Message-ID: <20250609161855.6603-9-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250609161855.6603-1-peterx@redhat.com>
 References: <20250609161855.6603-1-peterx@redhat.com>
@@ -89,7 +90,6 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -107,138 +107,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since we use the same save_complete() hook for both precopy and postcopy,
-add a set of helpers to invoke the hook() to dedup the code.
+The check over PAGE_DIRTY_FOUND isn't necessary. We could indent one less
+and assert that instead.
 
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/savevm.c | 78 ++++++++++++++++++++++++++--------------------
- 1 file changed, 44 insertions(+), 34 deletions(-)
+ migration/ram.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 7dba367d33..1efb7199c0 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -1484,6 +1484,38 @@ bool should_send_vmdesc(void)
-     return !machine->suppress_vmdesc;
- }
- 
-+static bool qemu_savevm_complete_exists(SaveStateEntry *se)
-+{
-+    return se->ops && se->ops->save_complete;
-+}
+diff --git a/migration/ram.c b/migration/ram.c
+index ed380ac86f..c66ad3cf8b 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -2285,16 +2285,18 @@ static int ram_find_and_save_block(RAMState *rs)
+         if (!get_queued_page(rs, pss)) {
+             /* priority queue empty, so just search for something dirty */
+             int res = find_dirty_block(rs, pss);
+-            if (res != PAGE_DIRTY_FOUND) {
+-                if (res == PAGE_ALL_CLEAN) {
+-                    break;
+-                } else if (res == PAGE_TRY_AGAIN) {
+-                    continue;
+-                } else if (res < 0) {
+-                    pages = res;
+-                    break;
+-                }
 +
-+/*
-+ * Invoke the ->save_complete() if necessary.
-+ * Returns: 0 if skip the current SE or succeeded, <0 if error happened.
-+ */
-+static int qemu_savevm_complete(SaveStateEntry *se, QEMUFile *f)
-+{
-+    int ret;
++            if (res == PAGE_ALL_CLEAN) {
++                break;
++            } else if (res == PAGE_TRY_AGAIN) {
++                continue;
++            } else if (res < 0) {
++                pages = res;
++                break;
+             }
 +
-+    if (se->ops->is_active) {
-+        if (!se->ops->is_active(se->opaque)) {
-+            return 0;
-+        }
-+    }
-+
-+    trace_savevm_section_start(se->idstr, se->section_id);
-+    save_section_header(f, se, QEMU_VM_SECTION_END);
-+    ret = se->ops->save_complete(f, se->opaque);
-+    trace_savevm_section_end(se->idstr, se->section_id, ret);
-+    save_section_footer(f, se);
-+
-+    if (ret < 0) {
-+        qemu_file_set_error(f, ret);
-+    }
-+
-+    return ret;
-+}
-+
- /*
-  * Complete saving any postcopy-able devices.
-  *
-@@ -1493,27 +1525,13 @@ bool should_send_vmdesc(void)
- void qemu_savevm_state_complete_postcopy(QEMUFile *f)
- {
-     SaveStateEntry *se;
--    int ret;
- 
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
--        if (!se->ops || !se->ops->save_complete) {
-+        if (!qemu_savevm_complete_exists(se)) {
-             continue;
++            /* Otherwise we must have a dirty page to move */
++            assert(res == PAGE_DIRTY_FOUND);
          }
--        if (se->ops->is_active) {
--            if (!se->ops->is_active(se->opaque)) {
--                continue;
--            }
--        }
--        trace_savevm_section_start(se->idstr, se->section_id);
--        /* Section type */
--        qemu_put_byte(f, QEMU_VM_SECTION_END);
--        qemu_put_be32(f, se->section_id);
- 
--        ret = se->ops->save_complete(f, se->opaque);
--        trace_savevm_section_end(se->idstr, se->section_id, ret);
--        save_section_footer(f, se);
--        if (ret < 0) {
--            qemu_file_set_error(f, ret);
-+        if (qemu_savevm_complete(se, f) < 0) {
-             return;
-         }
-     }
-@@ -1559,7 +1577,6 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
- {
-     int64_t start_ts_each, end_ts_each;
-     SaveStateEntry *se;
--    int ret;
-     bool multifd_device_state = multifd_device_state_supported();
- 
-     if (multifd_device_state) {
-@@ -1580,32 +1597,25 @@ int qemu_savevm_state_complete_precopy_iterable(QEMUFile *f, bool in_postcopy)
-     }
- 
-     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
--        if (!se->ops ||
--            (in_postcopy && se->ops->has_postcopy &&
--             se->ops->has_postcopy(se->opaque)) ||
--            !se->ops->save_complete) {
-+        if (!qemu_savevm_complete_exists(se)) {
-             continue;
-         }
- 
--        if (se->ops->is_active) {
--            if (!se->ops->is_active(se->opaque)) {
--                continue;
--            }
-+        if (in_postcopy && se->ops->has_postcopy &&
-+            se->ops->has_postcopy(se->opaque)) {
-+            /*
-+             * If postcopy will start soon, and if the SE supports
-+             * postcopy, then we can skip the SE for the postcopy phase.
-+             */
-+            continue;
-         }
- 
-         start_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
--        trace_savevm_section_start(se->idstr, se->section_id);
--
--        save_section_header(f, se, QEMU_VM_SECTION_END);
--
--        ret = se->ops->save_complete(f, se->opaque);
--        trace_savevm_section_end(se->idstr, se->section_id, ret);
--        save_section_footer(f, se);
--        if (ret < 0) {
--            qemu_file_set_error(f, ret);
-+        if (qemu_savevm_complete(se, f) < 0) {
-             goto ret_fail_abort_threads;
-         }
-         end_ts_each = qemu_clock_get_us(QEMU_CLOCK_REALTIME);
-+
-         trace_vmstate_downtime_save("iterable", se->idstr, se->instance_id,
-                                     end_ts_each - start_ts_each);
-     }
+         pages = ram_save_host_page(rs, pss);
+         if (pages) {
 -- 
 2.49.0
 
