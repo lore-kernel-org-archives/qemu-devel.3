@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A3EC5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:26:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22557C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOi6K-0007yJ-85; Mon, 09 Jun 2025 15:24:08 -0400
+	id 1uOi6Q-00081z-9c; Mon, 09 Jun 2025 15:24:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOi6A-0007v7-Gm
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:59 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1uOi64-0007t0-UG
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:53 -0400
+Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uOi63-0002Qy-Jt
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:58 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-3138b2f0249so1018210a91.2
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:23:48 -0700 (PDT)
+ id 1uOi60-0002R5-Ma
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:23:52 -0400
+Received: by mail-pl1-x629.google.com with SMTP id
+ d9443c01a7336-2351227b098so35513325ad.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:23:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749497025; x=1750101825; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1749497026; x=1750101826; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DkzAOT9KPhbXdwiYkwrjtSXHJRVHCh65cjh/wF+xrzM=;
- b=jy6V1mHQTXQXL5t6tWQZrMmD8C3gNlVay0Upeo1gCjtN4TeeceKadCcsNEFJHirpld
- bhDpVl5GLtOAqOFGyjQd4aA8JelzrGM3I3BLe6rLPeU1kk87U68WFi46dQEP4lvylrzT
- mZi9GyZOEa7Y7/2SL70mX4nbuoLPCMXgJx1YcbUI8wtCbUMw26vui6B3oWa3GD6/AlFI
- 9VaHwwBqqTaubwNHzwtRGJsxaGSWN7WQQYd2ZUN6mSt/ynBF+m4NNleDIGxgtCzbmUee
- uQwT2rEcNL3bUGcEBXtSj0XB38FK72EjbNz2dvSVefS31VmkLbFHEq68F7xACuiAtXZQ
- HE3w==
+ bh=wJSraaVGwKFPMPq56zo7N8lheZJz4Mz0YwSZtDSPAJo=;
+ b=h080FJ1QpfNLLOX0FqWwqJuhJtoKg2thgnThE5KarEM84/L9rVckrF93AcDrSomb7t
+ NTBmPXRZvahD+NDuVQVcodZ9aHEeFsiNxWl7M83PlZgoJZmTAOecAXPRQI+9diujli80
+ bX3kPeMSGvtasavYDoH6HNxQt2qdAKVpHXrVIduPnTzJELh/lPeQMeN7AbouhzfnYjCG
+ /yjkAN0ltyQJvzpyW999jc+9bljSXAnQBiKN+dLdjK8ty2ZhSfznyuK4etYPdy4Tlg8o
+ EkkInQEoAbQtEj9SOdUy/7f/6r7oaqloPRvK7T+qB58RDL1ZHJRlq029yJDMi6kqHJGW
+ lGqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749497025; x=1750101825;
+ d=1e100.net; s=20230601; t=1749497026; x=1750101826;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=DkzAOT9KPhbXdwiYkwrjtSXHJRVHCh65cjh/wF+xrzM=;
- b=Ax2vzRylaUj29lGmsUy54TEYWxC5p0uU7h+Rv95UGCII2cJIMbDh8B6wL02pqarDNo
- jkgJd5JQl3Oh5Z34VAnfcuqvqRqs+2MYyWY/K2eYfBKduaMw2f/2mk+XfTwbp5eUBQbO
- pwULHWKO+5PndKNyTyP7W6UY8onFegJHqjYJSN9yeloFQW5yzmchauVfms+xQsFbJy4F
- P/49ilHlAhmkwU8RtCTUDPpMNuxnM0xne2SUut1pQzzXAku0dVghRadvnnlkWpdWBfYr
- xTVVUqXblTaNmbne4zbQTS9TtH8P03w11wg8S9QhRQKZ6jedVCqZvXHgZXfumFoNfdbo
- to3g==
-X-Gm-Message-State: AOJu0YyjCXDVGMKbebybcyuowiu0ef5TmkFI/C0M8Qgp94b8FARZGDU6
- fxHazp2ClArAshv8McGbw2kAx+iOfEcHZ5UvOb+cPy2JkYwkHQMRzryhJH9otTyo
-X-Gm-Gg: ASbGncuf138xmKk+n4R2rpCTraJNKZ/qLmfOTyiTa/KPbWzoYhlxc6jX3FkveBHmmid
- MOkEE6HWW2QCKYgBuI/lfmqsQrjvAAHBfhfYFdmjgWEkfBxvfpBCUNagU/mUt+bEjZlgB98Mk6L
- I1v8IN+yfh0eXqy1a9Xzu+sw2XMdKjLVJYzLgDTenLingOu/ttMiSmAVkEeA5ouRpGb9ARWKHA2
- 9Is5vFsnL7NpoSlMolpChI+Wg4CWm2tENESHW0rqbw50fLm0XDdusQe8K+lqxThpcPWheQV0dfX
- ZG2weq20Y5p0yvPjx6i1Dw1vt/gm5ovs5AY9ZvtS4xIYbT3mDiHJtlaw05eNsg==
-X-Google-Smtp-Source: AGHT+IH+lioVgAIzxFPFBDM1KuAiFdLLJje1Cqxh8//98quc1UAneREJJ33jKG+wUtvFkWVSsyFRxg==
-X-Received: by 2002:a17:90b:164a:b0:301:9f62:a944 with SMTP id
- 98e67ed59e1d1-3134769f73dmr21816151a91.33.1749497024938; 
- Mon, 09 Jun 2025 12:23:44 -0700 (PDT)
+ bh=wJSraaVGwKFPMPq56zo7N8lheZJz4Mz0YwSZtDSPAJo=;
+ b=l5GjbfCEDiBzcI/hSlJpWqSow6zS062FAP2h3cJyZmEhtXU8egj2b5+/DpFUv259Eq
+ eUW4DZ/MatqQJ+o37K2DHP6d2AtDVxy20cus1Ha2zCc/CvoR4Dxdl5MHeTYo89qAMXro
+ nl9FaU28GIW5sjM4OaZlwrVZI/6tSzi3C8sGa/UaooZ/J3iQdJNRtalatEU5xHoWTddQ
+ vrje+7zpV2QUdqbvWHwXvg/1LeQnGU2hjCnX9t6L6VyFuOs5rP8d55SxcAxQIy+hUIui
+ fNd7mifxy/l95W0aol0avsgs/xMN1WBPvGdy0U9pCk5YPXCLPVCPn/B2v9ItzluBUkMM
+ dNug==
+X-Gm-Message-State: AOJu0Yx5VLBeY49S2ym+KCcMXvh1c8tbqYh5PK6+LL7//Mmy7ptlMDuN
+ 0p7KKM8n8vYfztX9rXd0Zyr943WSPNda/Csz1X+ACsoIzppYgDksijvyC+s4aQW/fF4=
+X-Gm-Gg: ASbGncvEHdS2xZusyjmL9zslfLHzVGNyAvBCpxn/g+xEFXu+JV1iqNCO/X3ojjqr/SC
+ gnglzn9TyM7nC0FL2LG25aGl88yc3bsVeGmWVvuh4LbofrwPaHPAUDt0ro5sSygqRw12tGZwoGq
+ VXY5beGCfiGNuQyIMlWJUPvFOt/I30bORMX5IfOr0XS86C5Jv+ceZVsszG8eMc8hT0uzs73Uon5
+ K5GUjcpp2eu6KQmLkjUvbsdnx6hd/UcOSOo3XVXVZFhNAJ7sr9SbQU96xkuKtfEN+e+dN/b9RxJ
+ ij1OKxpI1Q/vdiJUZmNM0Ljft7Gke/XUaJW9jb1NrU+L4FOKGt8=
+X-Google-Smtp-Source: AGHT+IFQOxlBJlGR/lqdsMylUgjvi/t9euh52bwBdLBKJUAa9Gw4kvHzayBlYdWMKH4e64vlpB1ulQ==
+X-Received: by 2002:a17:90a:e7c1:b0:311:b3e7:fb31 with SMTP id
+ 98e67ed59e1d1-31346c4c5admr22535862a91.0.1749497025805; 
+ Mon, 09 Jun 2025 12:23:45 -0700 (PDT)
 Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-3134b044ef2sm6057658a91.3.2025.06.09.12.23.44
+ 98e67ed59e1d1-3134b044ef2sm6057658a91.3.2025.06.09.12.23.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 12:23:44 -0700 (PDT)
+ Mon, 09 Jun 2025 12:23:45 -0700 (PDT)
 From: Rowan Hart <rowanbhart@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -73,17 +73,18 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
- novafacing <rowanbhart@gmail.com>
-Subject: [PATCH v10 2/8] plugins: Add register write API
-Date: Mon,  9 Jun 2025 12:23:36 -0700
-Message-ID: <20250609192342.316156-3-rowanbhart@gmail.com>
+ Rowan Hart <rowanbhart@gmail.com>
+Subject: [PATCH v10 3/8] plugins: Add enforcement of QEMU_PLUGIN_CB flags in
+ register R/W callbacks
+Date: Mon,  9 Jun 2025 12:23:37 -0700
+Message-ID: <20250609192342.316156-4-rowanbhart@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250609192342.316156-1-rowanbhart@gmail.com>
 References: <20250609192342.316156-1-rowanbhart@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=rowanbhart@gmail.com; helo=mail-pj1-x102b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
+ envelope-from=rowanbhart@gmail.com; helo=mail-pl1-x629.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,142 +107,327 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: novafacing <rowanbhart@gmail.com>
+This patch adds functionality to enforce the requested QEMU_PLUGIN_CB_
+flags level passed when registering a callback function using the
+plugins API. Each time a callback is about to be invoked, a thread-local
+variable will be updated with the level that callback requested. Then,
+called API functions (in particular, the register read and write API)
+will call qemu_plugin_get_cb_flags() to check the level is at least the
+level they require.
 
-This patch adds a function to the plugins API to allow plugins to write
-register contents. It also moves the qemu_plugin_read_register function
-so all the register-related functions are grouped together in the file.
-
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
 ---
- include/qemu/qemu-plugin.h | 54 ++++++++++++++++++++++++++------------
- plugins/api.c              | 26 +++++++++++++-----
- 2 files changed, 56 insertions(+), 24 deletions(-)
+ accel/tcg/plugin-gen.c     | 30 +++++++++++++++++++++++++
+ include/hw/core/cpu.h      |  1 +
+ include/qemu/plugin.h      |  6 +++++
+ include/qemu/qemu-plugin.h | 19 +++++++++++-----
+ plugins/api.c              |  4 ++++
+ plugins/core.c             | 45 ++++++++++++++++++++++++++++++++++++++
+ 6 files changed, 99 insertions(+), 6 deletions(-)
 
-diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 3a850aa216..cfe1692ecb 100644
---- a/include/qemu/qemu-plugin.h
-+++ b/include/qemu/qemu-plugin.h
-@@ -871,7 +871,8 @@ struct qemu_plugin_register;
- /**
-  * typedef qemu_plugin_reg_descriptor - register descriptions
-  *
-- * @handle: opaque handle for retrieving value with qemu_plugin_read_register
-+ * @handle: opaque handle for retrieving value with qemu_plugin_read_register or
-+ *          writing value with qemu_plugin_write_register
-  * @name: register name
-  * @feature: optional feature descriptor, can be NULL
-  */
-@@ -893,6 +894,41 @@ typedef struct {
- QEMU_PLUGIN_API
- GArray *qemu_plugin_get_registers(void);
- 
-+/**
-+ * qemu_plugin_read_register() - read register for current vCPU
-+ *
-+ * @handle: a @qemu_plugin_reg_handle handle
-+ * @buf: A GByteArray for the data owned by the plugin
-+ *
-+ * This function is only available in a context that register read access is
-+ * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
-+ *
-+ * Returns the size of the read register. The content of @buf is in target byte
-+ * order. On failure returns -1.
-+ */
-+QEMU_PLUGIN_API
-+int qemu_plugin_read_register(struct qemu_plugin_register *handle,
-+                              GByteArray *buf);
-+
-+/**
-+ * qemu_plugin_write_register() - write register for current vCPU
-+ *
-+ * @handle: a @qemu_plugin_reg_handle handle
-+ * @buf: A GByteArray for the data owned by the plugin
-+ *
-+ * This function is only available in a context that register write access is
-+ * explicitly requested via the QEMU_PLUGIN_CB_RW_REGS flag.
-+ *
-+ * The size of @buf must be at least the size of the requested register.
-+ * Attempting to write a register with @buf smaller than the register size
-+ * will result in a crash or other undesired behavior.
-+ *
-+ * Returns the number of bytes written. On failure returns 0.
-+ */
-+QEMU_PLUGIN_API
-+int qemu_plugin_write_register(struct qemu_plugin_register *handle,
-+                              GByteArray *buf);
-+
- /**
-  * qemu_plugin_read_memory_vaddr() - read from memory using a virtual address
-  *
-@@ -915,22 +951,6 @@ QEMU_PLUGIN_API
- bool qemu_plugin_read_memory_vaddr(uint64_t addr,
-                                    GByteArray *data, size_t len);
- 
--/**
-- * qemu_plugin_read_register() - read register for current vCPU
-- *
-- * @handle: a @qemu_plugin_reg_handle handle
-- * @buf: A GByteArray for the data owned by the plugin
-- *
-- * This function is only available in a context that register read access is
-- * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
-- *
-- * Returns the size of the read register. The content of @buf is in target byte
-- * order. On failure returns -1.
-- */
--QEMU_PLUGIN_API
--int qemu_plugin_read_register(struct qemu_plugin_register *handle,
--                              GByteArray *buf);
--
- /**
-  * qemu_plugin_scoreboard_new() - alloc a new scoreboard
-  *
-diff --git a/plugins/api.c b/plugins/api.c
-index 3c9d4832e9..6514f2c76a 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -433,6 +433,25 @@ GArray *qemu_plugin_get_registers(void)
-     return create_register_handles(regs);
+diff --git a/accel/tcg/plugin-gen.c b/accel/tcg/plugin-gen.c
+index c1da753894..9920381a84 100644
+--- a/accel/tcg/plugin-gen.c
++++ b/accel/tcg/plugin-gen.c
+@@ -117,10 +117,20 @@ static TCGv_i32 gen_cpu_index(void)
+ static void gen_udata_cb(struct qemu_plugin_regular_cb *cb)
+ {
+     TCGv_i32 cpu_index = gen_cpu_index();
++    enum qemu_plugin_cb_flags cb_flags =
++        tcg_call_to_qemu_plugin_cb_flags(cb->info->flags);
++    TCGv_i32 flags = tcg_constant_i32(cb_flags);
++    TCGv_i32 clear_flags = tcg_constant_i32(QEMU_PLUGIN_CB_NO_REGS);
++    tcg_gen_st_i32(flags, tcg_env,
++           offsetof(CPUState, neg.plugin_cb_flags) - sizeof(CPUState));
+     tcg_gen_call2(cb->f.vcpu_udata, cb->info, NULL,
+                   tcgv_i32_temp(cpu_index),
+                   tcgv_ptr_temp(tcg_constant_ptr(cb->userp)));
++    tcg_gen_st_i32(clear_flags, tcg_env,
++           offsetof(CPUState, neg.plugin_cb_flags) - sizeof(CPUState));
+     tcg_temp_free_i32(cpu_index);
++    tcg_temp_free_i32(flags);
++    tcg_temp_free_i32(clear_flags);
  }
  
-+int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
-+{
-+    g_assert(current_cpu);
+ static TCGv_ptr gen_plugin_u64_ptr(qemu_plugin_u64 entry)
+@@ -173,10 +183,20 @@ static void gen_udata_cond_cb(struct qemu_plugin_conditional_cb *cb)
+     tcg_gen_ld_i64(val, ptr, 0);
+     tcg_gen_brcondi_i64(cond, val, cb->imm, after_cb);
+     TCGv_i32 cpu_index = gen_cpu_index();
++    enum qemu_plugin_cb_flags cb_flags =
++        tcg_call_to_qemu_plugin_cb_flags(cb->info->flags);
++    TCGv_i32 flags = tcg_constant_i32(cb_flags);
++    TCGv_i32 clear_flags = tcg_constant_i32(QEMU_PLUGIN_CB_NO_REGS);
++    tcg_gen_st_i32(flags, tcg_env,
++           offsetof(CPUState, neg.plugin_cb_flags) - sizeof(CPUState));
+     tcg_gen_call2(cb->f.vcpu_udata, cb->info, NULL,
+                   tcgv_i32_temp(cpu_index),
+                   tcgv_ptr_temp(tcg_constant_ptr(cb->userp)));
++    tcg_gen_st_i32(clear_flags, tcg_env,
++           offsetof(CPUState, neg.plugin_cb_flags) - sizeof(CPUState));
+     tcg_temp_free_i32(cpu_index);
++    tcg_temp_free_i32(flags);
++    tcg_temp_free_i32(clear_flags);
+     gen_set_label(after_cb);
+ 
+     tcg_temp_free_i64(val);
+@@ -210,12 +230,22 @@ static void gen_mem_cb(struct qemu_plugin_regular_cb *cb,
+                        qemu_plugin_meminfo_t meminfo, TCGv_i64 addr)
+ {
+     TCGv_i32 cpu_index = gen_cpu_index();
++    enum qemu_plugin_cb_flags cb_flags =
++        tcg_call_to_qemu_plugin_cb_flags(cb->info->flags);
++    TCGv_i32 flags = tcg_constant_i32(cb_flags);
++    TCGv_i32 clear_flags = tcg_constant_i32(QEMU_PLUGIN_CB_NO_REGS);
++    tcg_gen_st_i32(flags, tcg_env,
++           offsetof(CPUState, neg.plugin_cb_flags) - sizeof(CPUState));
+     tcg_gen_call4(cb->f.vcpu_mem, cb->info, NULL,
+                   tcgv_i32_temp(cpu_index),
+                   tcgv_i32_temp(tcg_constant_i32(meminfo)),
+                   tcgv_i64_temp(addr),
+                   tcgv_ptr_temp(tcg_constant_ptr(cb->userp)));
++    tcg_gen_st_i32(clear_flags, tcg_env,
++           offsetof(CPUState, neg.plugin_cb_flags) - sizeof(CPUState));
+     tcg_temp_free_i32(cpu_index);
++    tcg_temp_free_i32(flags);
++    tcg_temp_free_i32(clear_flags);
+ }
+ 
+ static void inject_cb(struct qemu_plugin_dyn_cb *cb)
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 1e87f7d393..d3cc9a5224 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -368,6 +368,7 @@ typedef struct CPUNegativeOffsetState {
+     GArray *plugin_mem_cbs;
+     uint64_t plugin_mem_value_low;
+     uint64_t plugin_mem_value_high;
++    int32_t plugin_cb_flags;
+ #endif
+     IcountDecr icount_decr;
+     bool can_do_io;
+diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
+index 9726a9ebf3..0ea79170f7 100644
+--- a/include/qemu/plugin.h
++++ b/include/qemu/plugin.h
+@@ -209,6 +209,12 @@ void qemu_plugin_user_prefork_lock(void);
+  */
+ void qemu_plugin_user_postfork(bool is_child);
+ 
++enum qemu_plugin_cb_flags tcg_call_to_qemu_plugin_cb_flags(int flags);
 +
-+    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
-+}
++void qemu_plugin_set_cb_flags(CPUState *cpu, enum qemu_plugin_cb_flags flags);
 +
-+int qemu_plugin_write_register(struct qemu_plugin_register *reg,
-+                               GByteArray *buf)
-+{
-+    g_assert(current_cpu);
++enum qemu_plugin_cb_flags qemu_plugin_get_cb_flags(void);
 +
-+    if (buf->len == 0 || qemu_plugin_get_cb_flags() != QEMU_PLUGIN_CB_RW_REGS) {
+ #else /* !CONFIG_PLUGIN */
+ 
+ static inline void qemu_plugin_add_opts(void)
+diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
+index cfe1692ecb..9c9ebf6ce0 100644
+--- a/include/qemu/qemu-plugin.h
++++ b/include/qemu/qemu-plugin.h
+@@ -254,9 +254,6 @@ typedef struct {
+  * @QEMU_PLUGIN_CB_NO_REGS: callback does not access the CPU's regs
+  * @QEMU_PLUGIN_CB_R_REGS: callback reads the CPU's regs
+  * @QEMU_PLUGIN_CB_RW_REGS: callback reads and writes the CPU's regs
+- *
+- * Note: currently QEMU_PLUGIN_CB_RW_REGS is unused, plugins cannot change
+- * system register state.
+  */
+ enum qemu_plugin_cb_flags {
+     QEMU_PLUGIN_CB_NO_REGS,
+@@ -901,7 +898,12 @@ GArray *qemu_plugin_get_registers(void);
+  * @buf: A GByteArray for the data owned by the plugin
+  *
+  * This function is only available in a context that register read access is
+- * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag.
++ * explicitly requested via the QEMU_PLUGIN_CB_R_REGS flag, if called inside a
++ * callback that can be registered with a qemu_plugin_cb_flags argument. This
++ * function can also be used in any callback context that does not use a flags
++ * argument, such as in a callback registered with
++ * qemu_plugin_register_vcpu_init_cb(), except for callbacks registered with
++ * qemu_plugin_register_atexit_cb() and qemu_plugin_register_flush_cb().
+  *
+  * Returns the size of the read register. The content of @buf is in target byte
+  * order. On failure returns -1.
+@@ -916,8 +918,13 @@ int qemu_plugin_read_register(struct qemu_plugin_register *handle,
+  * @handle: a @qemu_plugin_reg_handle handle
+  * @buf: A GByteArray for the data owned by the plugin
+  *
+- * This function is only available in a context that register write access is
+- * explicitly requested via the QEMU_PLUGIN_CB_RW_REGS flag.
++ * This function is only available in a context that register read access is
++ * explicitly requested via the QEMU_PLUGIN_CB_RW_REGS flag, if called inside a
++ * callback that can be registered with a qemu_plugin_cb_flags argument. This
++ * function can also be used in any callback context that does not use a flags
++ * argument, such as in a callback registered with
++ * qemu_plugin_register_vcpu_init_cb(), except for callbacks registered with
++ * qemu_plugin_register_atexit_cb() and qemu_plugin_register_flush_cb().
+  *
+  * The size of @buf must be at least the size of the requested register.
+  * Attempting to write a register with @buf smaller than the register size
+diff --git a/plugins/api.c b/plugins/api.c
+index 6514f2c76a..3f04399c26 100644
+--- a/plugins/api.c
++++ b/plugins/api.c
+@@ -437,6 +437,10 @@ int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
+ {
+     g_assert(current_cpu);
+ 
++    if (qemu_plugin_get_cb_flags() == QEMU_PLUGIN_CB_NO_REGS) {
 +        return -1;
 +    }
 +
-+    return gdb_write_register(current_cpu, buf->data, GPOINTER_TO_INT(reg) - 1);
-+}
-+
- bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size_t len)
- {
-     g_assert(current_cpu);
-@@ -453,13 +472,6 @@ bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size_t len)
-     return true;
+     return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
  }
  
--int qemu_plugin_read_register(struct qemu_plugin_register *reg, GByteArray *buf)
--{
--    g_assert(current_cpu);
--
--    return gdb_read_register(current_cpu, buf, GPOINTER_TO_INT(reg) - 1);
--}
--
- struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
+diff --git a/plugins/core.c b/plugins/core.c
+index eb9281fe54..26c97b3179 100644
+--- a/plugins/core.c
++++ b/plugins/core.c
+@@ -15,6 +15,7 @@
+ #include "qemu/lockable.h"
+ #include "qemu/option.h"
+ #include "qemu/plugin.h"
++#include "qemu/qemu-plugin.h"
+ #include "qemu/queue.h"
+ #include "qemu/rcu_queue.h"
+ #include "qemu/rcu.h"
+@@ -266,7 +267,9 @@ static void qemu_plugin_vcpu_init__async(CPUState *cpu, run_on_cpu_data unused)
+     plugin_grow_scoreboards__locked(cpu);
+     qemu_rec_mutex_unlock(&plugin.lock);
+ 
++    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
+     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_INIT);
++    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+ }
+ 
+ void qemu_plugin_vcpu_init_hook(CPUState *cpu)
+@@ -279,7 +282,9 @@ void qemu_plugin_vcpu_exit_hook(CPUState *cpu)
  {
-     return plugin_scoreboard_new(element_size);
+     bool success;
+ 
++    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
+     plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_EXIT);
++    qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+ 
+     assert(cpu->cpu_index != UNASSIGNED_CPU_INDEX);
+     qemu_rec_mutex_lock(&plugin.lock);
+@@ -367,6 +372,7 @@ void plugin_register_dyn_cb__udata(GArray **arr,
+     static TCGHelperInfo info[3] = {
+         [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG,
+         [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG,
++        [QEMU_PLUGIN_CB_RW_REGS].flags = 0,
+         /*
+          * Match qemu_plugin_vcpu_udata_cb_t:
+          *   void (*)(uint32_t, void *)
+@@ -396,6 +402,7 @@ void plugin_register_dyn_cond_cb__udata(GArray **arr,
+     static TCGHelperInfo info[3] = {
+         [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG,
+         [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG,
++        [QEMU_PLUGIN_CB_RW_REGS].flags = 0,
+         /*
+          * Match qemu_plugin_vcpu_udata_cb_t:
+          *   void (*)(uint32_t, void *)
+@@ -434,6 +441,7 @@ void plugin_register_vcpu_mem_cb(GArray **arr,
+     static TCGHelperInfo info[3] = {
+         [QEMU_PLUGIN_CB_NO_REGS].flags = TCG_CALL_NO_RWG,
+         [QEMU_PLUGIN_CB_R_REGS].flags = TCG_CALL_NO_WG,
++        [QEMU_PLUGIN_CB_RW_REGS].flags = 0,
+         /*
+          * Match qemu_plugin_vcpu_mem_cb_t:
+          *   void (*)(uint32_t, qemu_plugin_meminfo_t, uint64_t, void *)
+@@ -473,7 +481,9 @@ void qemu_plugin_tb_trans_cb(CPUState *cpu, struct qemu_plugin_tb *tb)
+     QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+         qemu_plugin_vcpu_tb_trans_cb_t func = cb->f.vcpu_tb_trans;
+ 
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
+         func(cb->ctx->id, tb);
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+     }
+ }
+ 
+@@ -498,7 +508,9 @@ qemu_plugin_vcpu_syscall(CPUState *cpu, int64_t num, uint64_t a1, uint64_t a2,
+     QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+         qemu_plugin_vcpu_syscall_cb_t func = cb->f.vcpu_syscall;
+ 
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
+         func(cb->ctx->id, cpu->cpu_index, num, a1, a2, a3, a4, a5, a6, a7, a8);
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+     }
+ }
+ 
+@@ -520,7 +532,9 @@ void qemu_plugin_vcpu_syscall_ret(CPUState *cpu, int64_t num, int64_t ret)
+     QLIST_FOREACH_SAFE_RCU(cb, &plugin.cb_lists[ev], entry, next) {
+         qemu_plugin_vcpu_syscall_ret_cb_t func = cb->f.vcpu_syscall_ret;
+ 
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
+         func(cb->ctx->id, cpu->cpu_index, num, ret);
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+     }
+ }
+ 
+@@ -528,14 +542,18 @@ void qemu_plugin_vcpu_idle_cb(CPUState *cpu)
+ {
+     /* idle and resume cb may be called before init, ignore in this case */
+     if (cpu->cpu_index < plugin.num_vcpus) {
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
+         plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_IDLE);
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+     }
+ }
+ 
+ void qemu_plugin_vcpu_resume_cb(CPUState *cpu)
+ {
+     if (cpu->cpu_index < plugin.num_vcpus) {
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_RW_REGS);
+         plugin_vcpu_cb__simple(cpu, QEMU_PLUGIN_EV_VCPU_RESUME);
++        qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+     }
+ }
+ 
+@@ -615,9 +633,13 @@ void qemu_plugin_vcpu_mem_cb(CPUState *cpu, uint64_t vaddr,
+         switch (cb->type) {
+         case PLUGIN_CB_MEM_REGULAR:
+             if (rw & cb->regular.rw) {
++                qemu_plugin_set_cb_flags(cpu,
++                    tcg_call_to_qemu_plugin_cb_flags(cb->regular.info->flags));
++
+                 cb->regular.f.vcpu_mem(cpu->cpu_index,
+                                        make_plugin_meminfo(oi, rw),
+                                        vaddr, cb->regular.userp);
++                qemu_plugin_set_cb_flags(cpu, QEMU_PLUGIN_CB_NO_REGS);
+             }
+             break;
+         case PLUGIN_CB_INLINE_ADD_U64:
+@@ -760,3 +782,26 @@ void plugin_scoreboard_free(struct qemu_plugin_scoreboard *score)
+     g_array_free(score->data, TRUE);
+     g_free(score);
+ }
++
++enum qemu_plugin_cb_flags tcg_call_to_qemu_plugin_cb_flags(int flags)
++{
++    if (flags & TCG_CALL_NO_RWG) {
++        return QEMU_PLUGIN_CB_NO_REGS;
++    } else if (flags & TCG_CALL_NO_WG) {
++        return QEMU_PLUGIN_CB_R_REGS;
++    } else {
++        return QEMU_PLUGIN_CB_RW_REGS;
++    }
++}
++
++void qemu_plugin_set_cb_flags(CPUState *cpu, enum qemu_plugin_cb_flags flags)
++{
++    assert(cpu);
++    current_cpu->neg.plugin_cb_flags = flags;
++}
++
++enum qemu_plugin_cb_flags qemu_plugin_get_cb_flags(void)
++{
++    assert(current_cpu);
++    return current_cpu->neg.plugin_cb_flags;
++}
 -- 
 2.49.0
 
