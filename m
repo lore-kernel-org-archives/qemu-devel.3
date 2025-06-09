@@ -4,114 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45AE7C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:37:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05219C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:46:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOdcm-00022s-3S; Mon, 09 Jun 2025 10:37:20 -0400
+	id 1uOdkk-0003e3-PB; Mon, 09 Jun 2025 10:45:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uOdcj-00022h-ES
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:37:17 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uOdcd-00060Q-Pq
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:37:16 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uOdki-0003dY-NX
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:45:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1uOdkg-0007iG-Qg
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:45:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749480330;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=HVmTIGueD+jVw0J1onyWshU08PG/lW/jCzJxqrKQ0eQ=;
+ b=B4G4QamBv9qHyLl1bnaRs5P5yefWPAI7r3ivLfyhGQSAb0Y0gSlvLogbecxe+QamjYRqNW
+ WyHcEmqNe5wu6LTDs3/FHDDT+6/dfFytTHk210sxE+PIKdIUK+n+kZEE+Flc0+04rmVQSH
+ UA5el6gOntFwdj0JhBFK+BKugr657dk=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-216-RJFE20AwMDStTN5uVC1ZAw-1; Mon,
+ 09 Jun 2025 10:45:27 -0400
+X-MC-Unique: RJFE20AwMDStTN5uVC1ZAw-1
+X-Mimecast-MFC-AGG-ID: RJFE20AwMDStTN5uVC1ZAw_1749480325
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D1F2D1F456;
- Mon,  9 Jun 2025 14:37:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749479826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
- b=HGRJjtGyPr/Petu7HNtoR/xtkxJGtpqEC8tAb28X6K3PYIrbfpxGwTeBGD9DhgY0tgIlNO
- TAs9xDTLhjHwEY6/BGhIJPsTHuQ4+VKOf/VGhfwwoJV9ARNMCi3UvbuJslF6DcpOI2hYXj
- AuwR+GU1NX29aRCB/9YpQU0R7Mh5Zp4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749479826;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
- b=hKe8BAqSpzgJ87g+SVy5omNx7vZ2oBqImSqVe1ZI9MR5UqceI8faSG/HD7c9VS4xjSn4wk
- DvI9WKMeU6037CCA==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DQiYfpfA;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=n7REgAUU
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749479825; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
- b=DQiYfpfAgcX5vKpKQy2x0bDu4xm4yYxVmiwc+Q7ApI8NW7ZxJAhCd2M2QVQmTst6wN/RUa
- Z1FcvOQVXq7Ut4LXuQoUkuLNrJZLAErqxok/Kkz0gFp0H8qFp+BhT9oqdg7ENFivB0jdGJ
- fsWiPNxjgvM2n1A6V6CidFv8G74kyKs=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749479825;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
- b=n7REgAUUfTiFpkV6zO1vOgBQ2K7BZgAxi/WkjW9lQO3bpmc4CU0VrqxKKiJVrj1r2Vg7zZ
- cWcd9a9Ln5T6jZBA==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D12F13A1D;
- Mon,  9 Jun 2025 14:37:05 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id nxxYA5HxRmghcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Mon, 09 Jun 2025 14:37:05 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
- migration config
-In-Reply-To: <aENUrociiqlFuPpz@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-20-farosas@suse.de> <aENBda_y3v3y4ptS@x1.local>
- <874iwswrex.fsf@suse.de> <aENUrociiqlFuPpz@x1.local>
-Date: Mon, 09 Jun 2025 11:37:02 -0300
-Message-ID: <87y0u1ugkx.fsf@suse.de>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9E4C01800287; Mon,  9 Jun 2025 14:45:25 +0000 (UTC)
+Received: from localhost (unknown [10.2.16.92])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CDB3819560A3; Mon,  9 Jun 2025 14:45:24 +0000 (UTC)
+Date: Mon, 9 Jun 2025 10:45:23 -0400
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Hanna Czenczek <hreitz@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Kevin Wolf <kwolf@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Brian Song <hibriansong@gmail.com>
+Subject: Re: [PATCH v2 01/21] fuse: Copy write buffer content before polling
+Message-ID: <20250609144523.GD29452@fedora>
+References: <20250604132813.359438-1-hreitz@redhat.com>
+ <20250604132813.359438-2-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MISSING_XM_UA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
- TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- RCVD_TLS_ALL(0.00)[];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
- FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: D1F2D1F456
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="hqmh3syZhVVH+iG3"
+Content-Disposition: inline
+In-Reply-To: <20250604132813.359438-2-hreitz@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,93 +87,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
 
-> On Fri, Jun 06, 2025 at 05:23:18PM -0300, Fabiano Rosas wrote:
->> Peter Xu <peterx@redhat.com> writes:
->> 
->> > On Mon, Jun 02, 2025 at 10:38:08PM -0300, Fabiano Rosas wrote:
->> >> Allow the migrate and migrate_incoming commands to pass the migration
->> >> configuration options all at once, dispensing the use of
->> >> migrate-set-parameters and migrate-set-capabilities.
->> >> 
->> >> The motivation of this is to simplify the interface with the
->> >> management layer and avoid the usage of several command invocations to
->> >> configure a migration. It also avoids stale parameters from a previous
->> >> migration to influence the current migration.
->> >> 
->> >> The options that are changed during the migration can still be set
->> >> with the existing commands.
->> >> 
->> >> The order of precedence is:
->> >> 
->> >> 'config' argument > -global cmdline > defaults (migration_properties)
->> >
->> > Could we still keep the QMP migrate-set-parameters values?
->> >
->> >   'config' argument > QMP setups using migrate-set-parameters >
->> >     -global cmdline > defaults (migration_properties)
->> >
->> 
->> That's the case. I failed to mention it in the commit message. IOW it
->> behaves just like today, but the new 'config' way takes precedence over
->> all.
->
-> Referring to below chunk of code:
->
-> [...]
->
->> >> +bool migrate_params_override(MigrationState *s, MigrationParameters *new,
->> >> +                             Error **errp)
->> >> +{
->> >> +    ERRP_GUARD();
->> >> +
->> >> +    assert(bql_locked());
->> >> +
->> >> +    /* reset to default parameters */
->> >> +    migrate_params_apply(&s->defaults);
->
-> IIUC here it'll reset all global parameters using the initial defaults
-> first, then apply the "config" specified in "migrate" QMP command?
->
+--hqmh3syZhVVH+iG3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Yes, this is so any previously set parameter via migrate-set-parameter
-gets erased. I think what we want (but feel free to disagree) is to have
-the migrate-set-parameter _eventually_ only handle parameters that need
-to be modifed during migration runtime. Anything else can be done via
-passing config to qmp_migrate.
+On Wed, Jun 04, 2025 at 03:27:53PM +0200, Hanna Czenczek wrote:
+> aio_poll() in I/O functions can lead to nested read_from_fuse_export()
+> calls, overwriting the request buffer's content.  The only function
+> affected by this is fuse_write(), which therefore must use a bounce
+> buffer or corruption may occur.
+>=20
+> Note that in addition we do not know whether libfuse-internal structures
+> can cope with this nesting, and even if we did, we probably cannot rely
+> on it in the future.  This is the main reason why we want to remove
+> libfuse from the I/O path.
+>=20
+> I do not have a good reproducer for this other than:
+>=20
+> $ dd if=3D/dev/urandom of=3Dimage bs=3D1M count=3D4096
+> $ dd if=3D/dev/zero of=3Dcopy bs=3D1M count=3D4096
+> $ touch fuse-export
+> $ qemu-storage-daemon \
+>     --blockdev file,node-name=3Dfile,filename=3Dcopy \
+>     --export \
+>     fuse,id=3Dexp,node-name=3Dfile,mountpoint=3Dfuse-export,writable=3Dtr=
+ue \
+>     &
+>=20
+> Other shell:
+> $ qemu-img convert -p -n -f raw -O raw -t none image fuse-export
+> $ killall -SIGINT qemu-storage-daemon
+> $ qemu-img compare image copy
+> Content mismatch at offset 0!
+>=20
+> (The -t none in qemu-img convert is important.)
+>=20
+> I tried reproducing this with throttle and small aio_write requests from
+> another qemu-io instance, but for some reason all requests are perfectly
+> serialized then.
+>=20
+> I think in theory we should get parallel writes only if we set
+> fi->parallel_direct_writes in fuse_open().  In fact, I can confirm that
+> if we do that, that throttle-based reproducer works (i.e. does get
+> parallel (nested) write requests).  I have no idea why we still get
+> parallel requests with qemu-img convert anyway.
+>=20
+> Also, a later patch in this series will set fi->parallel_direct_writes
+> and note that it makes basically no difference when running fio on the
+> current libfuse-based version of our code.  It does make a difference
+> without libfuse.  So something quite fishy is going on.
+>=20
+> I will try to investigate further what the root cause is, but I think
+> for now let's assume that calling blk_pwrite() can invalidate the buffer
+> contents through nested polling.
+>=20
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+> ---
+>  block/export/fuse.c | 24 +++++++++++++++++++++---
+>  1 file changed, 21 insertions(+), 3 deletions(-)
 
-For -global, I don't have a preference. Having -global take precedence
-over all would require a way to know which options were present in the
-command-line and which are just the defaults seet in
-migration_properties. I currently don't know how to do that. If it is at
-all possible (within reason) we could make the change, no worries.
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 
-> I think there're actually two separate questions to be asked, to make it
-> clearer, they are:
+--hqmh3syZhVVH+iG3
+Content-Type: application/pgp-signature; name=signature.asc
 
-Here it got ambiguous when you say "global", I've been using -global to
-refer to the cmdline -global migration.foo, but others have used global
-to mean s->parameters (which has an extended lifetime). Could you
-clarify?
+-----BEGIN PGP SIGNATURE-----
 
->
->   (1) Whether we should allow QMP "migrate" 'config' parameter to overwrite
->       global setup?
->
->   (2) Whether we should allow previous QMP global setup to be used even if
->       QMP "migrate" provided 'config' parameter?
->
-> So IIUC the patch does (1) YES (2) NO, while what I think might be more
-> intuitive is (1) NO (2) YES.
->
->> >> +
->> >> +    /* overwrite with the new ones */
->> >> +    qmp_migrate_set_parameters(new, errp);
->> >> +    if (*errp) {
->> >> +        return false;
->> >> +    }
->> >> +
->> >> +    return true;
->> >> +}
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhG84MACgkQnKSrs4Gr
+c8hQXQgAuksQqKt83+9A7jq/UzhrNkFAscpsmUjLojwkAmZH1Qg7CKVSOKvuxrwu
+AqYRTOrF6TTti8MmZ5m3XFKMpNXPcORaQKDTPVFZB8meH9Ek+prowszCuOjHjTt3
+LPCzqdP+lM9vzgAaqUcIzsMCKlQMypA/mgWRn1ROamxkGLlY/GeZJQuOtNe3XBr1
+o40NS6Zc19FpLHQaNalUp4puOHLT0C1SOinFQEQ2gOiDYzIOs2udbk8qV1iULpuY
+d/eX2xCYipxnEH9S5DSiIlGWxTaq2w09JUwoTtvmiAxh+4rkUsWHNfcgwB0qgCvR
+tS1zhhSvGFU2nClbwE2tnhjP4vIM+g==
+=Ybrd
+-----END PGP SIGNATURE-----
+
+--hqmh3syZhVVH+iG3--
+
 
