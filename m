@@ -4,78 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5591C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:33:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45AE7C61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOdY5-00013x-SD; Mon, 09 Jun 2025 10:32:29 -0400
+	id 1uOdcm-00022s-3S; Mon, 09 Jun 2025 10:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOdY4-00013D-1R
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:32:28 -0400
-Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uOdcj-00022h-ES
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:37:17 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOdY2-00054v-36
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:32:27 -0400
-Received: by mail-yb1-xb30.google.com with SMTP id
- 3f1490d57ef6-e7dc89108bfso3570145276.3
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 07:32:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749479544; x=1750084344; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3rG5HcsB4hpidPPhVtVmmdnh1ZPkuyYuDe3/kjf3D8w=;
- b=XzNByj3kBlg98kky8zYly6Bikrlvb+E0n2ASnBReNKH2mmFgAdrDmHsyKmrriu+TQC
- 1zFDwAtBxegM9TZNOq4SDOGYRWMunGtK4+K/LngHeTgD43OKW++Yhm4x5NZE82/NPYs8
- NvP66XnzVwutSdB+V7XK9tHuWKJhvnLxsjQ5NeJR2XCetF7CaSL9cr9W2nrLSeFj2Gma
- 2aPhGxC9Uw8VK+ihdBVH33ogANu1JkKHP6V4O6iemulj8Hc3pnlGSphd/+uEbVx9AaSz
- xE6/C13D+aoD/5GOsJccMYsSM0Sj4a0nHm9ZRGE5ubZtO+yIFs8lqS+m8yJpzIEv8yo3
- CrwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749479544; x=1750084344;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3rG5HcsB4hpidPPhVtVmmdnh1ZPkuyYuDe3/kjf3D8w=;
- b=odJew5RC8kZcxSbICobIfPY9aP2bTiKcABwUONoXcDR7pyTb15DpKl9Gamdspji594
- p+2wBED+QWTN23AuHyqD1B2/tIKnSTbmeEu14uCYr6nLnXCQEVRrLuOE0j0q3BA/pOT4
- cwkPmVDBi6pWrLoItjG8KNP2zsg1ScrYcTEQv2bWI3MVYazieMB6WfgNOU4Vc/zDWBVl
- jX81L9Qx/UgLiey8EEz9bLB2G+KlfgGPRzL3OWKtSD10TKzynEfGOIVdMPquJU2hiEEn
- EBftZN6EXM5ququWEMU3+71u/JcEUTq+WPCQWoLpGS9nKN2SrnTzh7huL7rKOuRybt3P
- ohag==
-X-Gm-Message-State: AOJu0YzT1Dyfz7KSgbTS/sLK6Z4HKzHyftNhc+0YdnHuhcx6qWPGHpk/
- LbvdypnMrFX9+Kgkk9fySI1qB3MiskVzU9CKGU0gFRfQ0q65WLKWTNibK3/5IM6R0DAHucMjubc
- 7nPO1pSgmWUKRHPiJGT1yEjjDpBeLKFtiOdLSKSwmTA==
-X-Gm-Gg: ASbGncsoEeDzaOEOkCwb6+amQVAh02f4tdvoPgrD2l5EgMbp25dO9UCgjJL9xyVIYNu
- 93RVbztkQQwA1u1uw7k9UA2/ujH4vN7afh90JtQVg8VXe5jvrWgbKYUmuLFpXeBC3ntIapBOorS
- lDqRQHc+B1mrc4TNDAgbCDPJUMSaInrpORVk9mCWm8Wy4Q
-X-Google-Smtp-Source: AGHT+IH8qK4MD6w7pHT7NqE/59mfe2g4WtaQ66QEJbAu8axcbWZ4MaIlAPSFQjgXVCI5n8HjqaagR+cErPMuRfmb/Bc=
-X-Received: by 2002:a05:690c:3685:b0:6f9:7a3c:1fe with SMTP id
- 00721157ae682-710f776cc31mr177351737b3.23.1749479544111; Mon, 09 Jun 2025
- 07:32:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uOdcd-00060Q-Pq
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:37:16 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D1F2D1F456;
+ Mon,  9 Jun 2025 14:37:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1749479826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
+ b=HGRJjtGyPr/Petu7HNtoR/xtkxJGtpqEC8tAb28X6K3PYIrbfpxGwTeBGD9DhgY0tgIlNO
+ TAs9xDTLhjHwEY6/BGhIJPsTHuQ4+VKOf/VGhfwwoJV9ARNMCi3UvbuJslF6DcpOI2hYXj
+ AuwR+GU1NX29aRCB/9YpQU0R7Mh5Zp4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1749479826;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
+ b=hKe8BAqSpzgJ87g+SVy5omNx7vZ2oBqImSqVe1ZI9MR5UqceI8faSG/HD7c9VS4xjSn4wk
+ DvI9WKMeU6037CCA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=DQiYfpfA;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=n7REgAUU
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1749479825; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
+ b=DQiYfpfAgcX5vKpKQy2x0bDu4xm4yYxVmiwc+Q7ApI8NW7ZxJAhCd2M2QVQmTst6wN/RUa
+ Z1FcvOQVXq7Ut4LXuQoUkuLNrJZLAErqxok/Kkz0gFp0H8qFp+BhT9oqdg7ENFivB0jdGJ
+ fsWiPNxjgvM2n1A6V6CidFv8G74kyKs=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1749479825;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=dlENU0vUNNqRgnMiptc3u6MIMrT0xqk2bCUiNY092ws=;
+ b=n7REgAUUfTiFpkV6zO1vOgBQ2K7BZgAxi/WkjW9lQO3bpmc4CU0VrqxKKiJVrj1r2Vg7zZ
+ cWcd9a9Ln5T6jZBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 4D12F13A1D;
+ Mon,  9 Jun 2025 14:37:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id nxxYA5HxRmghcQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 09 Jun 2025 14:37:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
+ migration config
+In-Reply-To: <aENUrociiqlFuPpz@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-20-farosas@suse.de> <aENBda_y3v3y4ptS@x1.local>
+ <874iwswrex.fsf@suse.de> <aENUrociiqlFuPpz@x1.local>
+Date: Mon, 09 Jun 2025 11:37:02 -0300
+Message-ID: <87y0u1ugkx.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250605022640.598308-1-taotang2025@gmail.com>
-In-Reply-To: <20250605022640.598308-1-taotang2025@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Jun 2025 15:32:12 +0100
-X-Gm-Features: AX0GCFuMAXdGQ5vQ3w_Y8wVfZPOV4HIAcF6G11ihjE5nH6imX74MHr0kdzHydSM
-Message-ID: <CAFEAcA-B2o+weobCK8F7TmynexmsJ_JC+Ccr4ELbPYkPJ34D8Q@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0
- register
-To: taotang2025@gmail.com
-Cc: qemu-devel@nongnu.org, eric.auger@redhat.com, qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; FUZZY_BLOCKED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[];
+ DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:dkim,suse.de:mid];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Queue-Id: D1F2D1F456
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -92,30 +127,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Jun 2025 at 03:26, <taotang2025@gmail.com> wrote:
+Peter Xu <peterx@redhat.com> writes:
+
+> On Fri, Jun 06, 2025 at 05:23:18PM -0300, Fabiano Rosas wrote:
+>> Peter Xu <peterx@redhat.com> writes:
+>> 
+>> > On Mon, Jun 02, 2025 at 10:38:08PM -0300, Fabiano Rosas wrote:
+>> >> Allow the migrate and migrate_incoming commands to pass the migration
+>> >> configuration options all at once, dispensing the use of
+>> >> migrate-set-parameters and migrate-set-capabilities.
+>> >> 
+>> >> The motivation of this is to simplify the interface with the
+>> >> management layer and avoid the usage of several command invocations to
+>> >> configure a migration. It also avoids stale parameters from a previous
+>> >> migration to influence the current migration.
+>> >> 
+>> >> The options that are changed during the migration can still be set
+>> >> with the existing commands.
+>> >> 
+>> >> The order of precedence is:
+>> >> 
+>> >> 'config' argument > -global cmdline > defaults (migration_properties)
+>> >
+>> > Could we still keep the QMP migrate-set-parameters values?
+>> >
+>> >   'config' argument > QMP setups using migrate-set-parameters >
+>> >     -global cmdline > defaults (migration_properties)
+>> >
+>> 
+>> That's the case. I failed to mention it in the commit message. IOW it
+>> behaves just like today, but the new 'config' way takes precedence over
+>> all.
 >
-> From: Tao Tang <taotang2025@gmail.com>
+> Referring to below chunk of code:
 >
-> The current definition of the SMMU_CR0_RESERVED mask is incorrect.
-> It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit
+> [...]
+>
+>> >> +bool migrate_params_override(MigrationState *s, MigrationParameters *new,
+>> >> +                             Error **errp)
+>> >> +{
+>> >> +    ERRP_GUARD();
+>> >> +
+>> >> +    assert(bql_locked());
+>> >> +
+>> >> +    /* reset to default parameters */
+>> >> +    migrate_params_apply(&s->defaults);
+>
+> IIUC here it'll reset all global parameters using the initial defaults
+> first, then apply the "config" specified in "migrate" QMP command?
+>
 
-This is because our implementation pre-dates the revision
-of the SMMUv3 spec which adds the DPT and this DPT_WALK_EN bit.
-So for us it is/was legitimately reserved. We use this constant
-value to update SMMU_CR0ACK when the guest writes to SMMU_CR0,
-so ideally we shouldn't mark bits as non-reserved unless we
-actually implement the feature that they correspond to.
+Yes, this is so any previously set parameter via migrate-set-parameter
+gets erased. I think what we want (but feel free to disagree) is to have
+the migrate-set-parameter _eventually_ only handle parameters that need
+to be modifed during migration runtime. Anything else can be done via
+passing config to qmp_migrate.
 
-We don't get this right for VMW and ATSCHK, which are both
-"RES0 unless the ID register indicates presence of some
-feature" fields, but which we allow the guest to write to
-(and cause updates to CR0ACK) anyway.
+For -global, I don't have a preference. Having -global take precedence
+over all would require a way to know which options were present in the
+command-line and which are just the defaults seet in
+migration_properties. I currently don't know how to do that. If it is at
+all possible (within reason) we could make the change, no worries.
 
-> while
-> treating bit 9 (RES0) as an implemented bit.
+> I think there're actually two separate questions to be asked, to make it
+> clearer, they are:
 
-This part is a bug; nice catch.
+Here it got ambiguous when you say "global", I've been using -global to
+refer to the cmdline -global migration.foo, but others have used global
+to mean s->parameters (which has an extended lifetime). Could you
+clarify?
 
-thanks
--- PMM
+>
+>   (1) Whether we should allow QMP "migrate" 'config' parameter to overwrite
+>       global setup?
+>
+>   (2) Whether we should allow previous QMP global setup to be used even if
+>       QMP "migrate" provided 'config' parameter?
+>
+> So IIUC the patch does (1) YES (2) NO, while what I think might be more
+> intuitive is (1) NO (2) YES.
+>
+>> >> +
+>> >> +    /* overwrite with the new ones */
+>> >> +    qmp_migrate_set_parameters(new, errp);
+>> >> +    if (*errp) {
+>> >> +        return false;
+>> >> +    }
+>> >> +
+>> >> +    return true;
+>> >> +}
 
