@@ -4,64 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D71C5B552
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:31:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5591C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 14:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOdWg-0000Of-Vz; Mon, 09 Jun 2025 10:31:03 -0400
+	id 1uOdY5-00013x-SD; Mon, 09 Jun 2025 10:32:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uOdWV-0000NE-0b; Mon, 09 Jun 2025 10:30:55 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1uOdWS-0004pD-5l; Mon, 09 Jun 2025 10:30:50 -0400
-Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:471f:0:640:3878:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id E789A60B77;
- Mon,  9 Jun 2025 17:30:41 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:a98::1:26] (unknown
- [2a02:6bf:8080:a98::1:26])
- by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id fUiOGE8FfGk0-R7itS2JV; Mon, 09 Jun 2025 17:30:41 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1749479441;
- bh=a/BTirhYqd7bOq4ECVFJVG5c4kJmFsa1B/lVFv3GNrI=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=aTx7XP3u4bBVkLpkC8y2JRTeaiBnNIg87znXLxp+AmgqhEe0rw8wP9wLZdyJKc7vk
- 2A4uRNdMTPFliksN+v8Ij/B6l56BVexgflZfzZaiLIy0ybNktq40DvR7BxCW59P6uC
- ySfZb5DpLF+e2K0KXI3Gr9Y9kHKCZPhJbzfZTBS8=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <249ea968-82fb-41d6-b724-1aada58ce460@yandex-team.ru>
-Date: Mon, 9 Jun 2025 17:30:41 +0300
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uOdY4-00013D-1R
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:32:28 -0400
+Received: from mail-yb1-xb30.google.com ([2607:f8b0:4864:20::b30])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uOdY2-00054v-36
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 10:32:27 -0400
+Received: by mail-yb1-xb30.google.com with SMTP id
+ 3f1490d57ef6-e7dc89108bfso3570145276.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 07:32:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749479544; x=1750084344; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=3rG5HcsB4hpidPPhVtVmmdnh1ZPkuyYuDe3/kjf3D8w=;
+ b=XzNByj3kBlg98kky8zYly6Bikrlvb+E0n2ASnBReNKH2mmFgAdrDmHsyKmrriu+TQC
+ 1zFDwAtBxegM9TZNOq4SDOGYRWMunGtK4+K/LngHeTgD43OKW++Yhm4x5NZE82/NPYs8
+ NvP66XnzVwutSdB+V7XK9tHuWKJhvnLxsjQ5NeJR2XCetF7CaSL9cr9W2nrLSeFj2Gma
+ 2aPhGxC9Uw8VK+ihdBVH33ogANu1JkKHP6V4O6iemulj8Hc3pnlGSphd/+uEbVx9AaSz
+ xE6/C13D+aoD/5GOsJccMYsSM0Sj4a0nHm9ZRGE5ubZtO+yIFs8lqS+m8yJpzIEv8yo3
+ CrwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749479544; x=1750084344;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3rG5HcsB4hpidPPhVtVmmdnh1ZPkuyYuDe3/kjf3D8w=;
+ b=odJew5RC8kZcxSbICobIfPY9aP2bTiKcABwUONoXcDR7pyTb15DpKl9Gamdspji594
+ p+2wBED+QWTN23AuHyqD1B2/tIKnSTbmeEu14uCYr6nLnXCQEVRrLuOE0j0q3BA/pOT4
+ cwkPmVDBi6pWrLoItjG8KNP2zsg1ScrYcTEQv2bWI3MVYazieMB6WfgNOU4Vc/zDWBVl
+ jX81L9Qx/UgLiey8EEz9bLB2G+KlfgGPRzL3OWKtSD10TKzynEfGOIVdMPquJU2hiEEn
+ EBftZN6EXM5ququWEMU3+71u/JcEUTq+WPCQWoLpGS9nKN2SrnTzh7huL7rKOuRybt3P
+ ohag==
+X-Gm-Message-State: AOJu0YzT1Dyfz7KSgbTS/sLK6Z4HKzHyftNhc+0YdnHuhcx6qWPGHpk/
+ LbvdypnMrFX9+Kgkk9fySI1qB3MiskVzU9CKGU0gFRfQ0q65WLKWTNibK3/5IM6R0DAHucMjubc
+ 7nPO1pSgmWUKRHPiJGT1yEjjDpBeLKFtiOdLSKSwmTA==
+X-Gm-Gg: ASbGncsoEeDzaOEOkCwb6+amQVAh02f4tdvoPgrD2l5EgMbp25dO9UCgjJL9xyVIYNu
+ 93RVbztkQQwA1u1uw7k9UA2/ujH4vN7afh90JtQVg8VXe5jvrWgbKYUmuLFpXeBC3ntIapBOorS
+ lDqRQHc+B1mrc4TNDAgbCDPJUMSaInrpORVk9mCWm8Wy4Q
+X-Google-Smtp-Source: AGHT+IH8qK4MD6w7pHT7NqE/59mfe2g4WtaQ66QEJbAu8axcbWZ4MaIlAPSFQjgXVCI5n8HjqaagR+cErPMuRfmb/Bc=
+X-Received: by 2002:a05:690c:3685:b0:6f9:7a3c:1fe with SMTP id
+ 00721157ae682-710f776cc31mr177351737b3.23.1749479544111; Mon, 09 Jun 2025
+ 07:32:24 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] block/copy-before-write: inverse access bitmap
-To: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>, eblake@redhat.com
-Cc: qemu-block@nongnu.org, jsnow@redhat.com, kwolf@redhat.com,
- hreitz@redhat.com, qemu-devel@nongnu.org, andrey.drobyshev@virtuozzo.com,
- den@virtuozzo.com
-References: <20250528120732.2247150-1-andrey.zhadchenko@virtuozzo.com>
- <20250528120732.2247150-4-andrey.zhadchenko@virtuozzo.com>
-Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <20250528120732.2247150-4-andrey.zhadchenko@virtuozzo.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1d.mail.yandex.net
+References: <20250605022640.598308-1-taotang2025@gmail.com>
+In-Reply-To: <20250605022640.598308-1-taotang2025@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Jun 2025 15:32:12 +0100
+X-Gm-Features: AX0GCFuMAXdGQ5vQ3w_Y8wVfZPOV4HIAcF6G11ihjE5nH6imX74MHr0kdzHydSM
+Message-ID: <CAFEAcA-B2o+weobCK8F7TmynexmsJ_JC+Ccr4ELbPYkPJ34D8Q@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/smmuv3: Fix incorrect reserved mask for SMMU CR0
+ register
+To: taotang2025@gmail.com
+Cc: qemu-devel@nongnu.org, eric.auger@redhat.com, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b30;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb30.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -78,40 +92,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 28.05.25 15:07, Andrey Zhadchenko wrote:
-> HBitmaps allow us to search set bits pretty fast. On the contrary,
-> when searching zeroes, we may be forced to fully traverse the lower
-> level.
-> When we run blockdev-backup with mode=full on top of snapshot filter
-> + cbw filter, the job fills copy bitmap by calling block_status()
-> with range (X, virtual_size). The problem is that we check for zeroes
-> in this whole range. We also hit the worst case here, as access
-> bitmap is fully set and we need to scan the entire lowest level.
-> After scanning the full bitmap we actually ask the block status of
-> original image, which may return significantly lower amount of empty
-> clusters.
-> Beacuse of this, the backup job 'hangs' on block copy initializaiton
-> for a long time with 100% CPU.
-> 
-> Example copy bitmap buildup time for image with clu_size=65536 and
-> preallocated metadata
-> size                 10T   11T
-> blockdev-backup      52s   57s
-> cbw + snap           325s  413s
-> cbw + snap + patch   55s   61s
-> 
-> To fix it, inverse the access bitmap in cbw filter: rather set it
-> when the user is not allowed to read the cluster.
-> 
-> Update qemu-iotest 257: now access bitmap have count 0 instead of
-> the image size 67108864
-> 
-> Signed-off-by: Andrey Zhadchenko<andrey.zhadchenko@virtuozzo.com>
+On Thu, 5 Jun 2025 at 03:26, <taotang2025@gmail.com> wrote:
+>
+> From: Tao Tang <taotang2025@gmail.com>
+>
+> The current definition of the SMMU_CR0_RESERVED mask is incorrect.
+> It mistakenly treats bit 10 (DPT_WALK_EN) as a reserved bit
 
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+This is because our implementation pre-dates the revision
+of the SMMUv3 spec which adds the DPT and this DPT_WALK_EN bit.
+So for us it is/was legitimately reserved. We use this constant
+value to update SMMU_CR0ACK when the guest writes to SMMU_CR0,
+so ideally we shouldn't mark bits as non-reserved unless we
+actually implement the feature that they correspond to.
 
--- 
-Best regards,
-Vladimir
+We don't get this right for VMW and ATSCHK, which are both
+"RES0 unless the ID register indicates presence of some
+feature" fields, but which we allow the guest to write to
+(and cause updates to CR0ACK) anyway.
 
+> while
+> treating bit 9 (RES0) as an implemented bit.
+
+This part is a bug; nice catch.
+
+thanks
+-- PMM
 
