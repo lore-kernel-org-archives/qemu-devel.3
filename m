@@ -4,88 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2283AC61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE5C1C5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOhqG-0004Rj-Lp; Mon, 09 Jun 2025 15:07:32 -0400
+	id 1uOhqi-0004o6-Hg; Mon, 09 Jun 2025 15:08:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uOhqE-0004RP-Sz
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:07:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uOhqC-0000HN-U8
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:07:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749496042;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=JcUESyfIUIhBV36QKnBkAR2wu1H+tLhR7qJurWYI7aE=;
- b=LpL+SwLxeC/+G0XV7WFB47VvihSsqKvkfOXqRiO3G8R+M6b8RuVzeW3KrHdl+PVqHVvVRo
- cxx01f7Uwd9UwXbSJnAj6n2xHozvhrGhA23KyFBSKCCj2Qs2SU+i5NoYa6L14ejoCIbp1r
- 1jUCGzvwD9x51JpPdtwgM3TYvXFr7X8=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-680-ajXhGHZKPkWSq6wHwpulDA-1; Mon, 09 Jun 2025 15:07:21 -0400
-X-MC-Unique: ajXhGHZKPkWSq6wHwpulDA-1
-X-Mimecast-MFC-AGG-ID: ajXhGHZKPkWSq6wHwpulDA_1749496040
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-235dd77d11fso38783265ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:07:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uOhqe-0004jE-NB
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:07:56 -0400
+Received: from mail-ed1-x52b.google.com ([2a00:1450:4864:20::52b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uOhqb-0000Jd-SD
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:07:56 -0400
+Received: by mail-ed1-x52b.google.com with SMTP id
+ 4fb4d7f45d1cf-60780d74bbaso4772083a12.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:07:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749496070; x=1750100870; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t21bvGf4H94FB6zPREklA6T9O4YNkducOlCBGUgMQJs=;
+ b=P3b97XA3isPgQl1wgvJIJtNIKCaAs0Ph5gTnaH4RnXAqwqJ4EB87c8UkQNgtWs1cDt
+ 1/0ry04KRi4r68vYo3NtfwydBOhGbhs3dNSAE/M7LeSlwrT5CZFTC8q9708w/GFTVBjE
+ Fu3YH8lvWKJsJSnz9yxY8OcEAImHPnEB//5PvCj6JaGq2ZWJzWve1z3pla/PoZR4ts5M
+ pgPOQ2IF7PmQh22z/T5PRsPLfili5JOo22t7Ax5jYL196XqsprHRkYH9XOkGHj5l6BgS
+ RJlSA/vS0l5sXNUNUgUkeHwH5cE1UJSGdfWxybX0Yfr6LTIAl439UNa6EVDORU1L6u2T
+ tSeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749496040; x=1750100840;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JcUESyfIUIhBV36QKnBkAR2wu1H+tLhR7qJurWYI7aE=;
- b=f4PlqKAFZ/2/7t1Tg02w+ma2CsrcOq3ZNiywICGz+owhrUqV9xyFSORUbfDS+q+4Rf
- Cca3RLdHMB0X6aTYueBORhXkqirGrL+XW3vDP3GfovIhUpi80oLf2CqkpYQ4R01dg4i9
- 4y1dSVjnTkl64Bub0U3EYMq6iVuYUGT1w+2x3eI7Hz4SiB8NNCFs9uE+yFUf+wQO4KpM
- mS8872TGNHZ5JaDdvdVLkdrFBKTYYixYHBlZ81d07WL1Gn+QthAjZrTw9OX57KtHDw47
- ylgPRdWyKCAP50lQUBwTtyyKYmvJKJ1VHrmHfxY1hF6QNjzv3itp85y4/JN3qBfBvy+B
- bJhA==
-X-Gm-Message-State: AOJu0YwZpQioWnGhEcBNnFCGziMgd/50GlWGzzhiMnRpz0gZL3avwGG8
- hQzDUcx5jAowp/XmCJNqkVAGCWr0B62RsrK0Xv1Zovof/flamb6PRBZgI0eaURtjUUexySP0P2I
- A1/QVTNXomaf6JywzitDHIs4fdJdT0tIW2q/tE7rJV7d4lpJbhojtJ/iCC5UjuFkX2tWwIKF13H
- NmewTk5nbQ1Chk3xgdJThKUuaBFOF/mf4=
-X-Gm-Gg: ASbGncttvD5UfAXofrLKTvs29ZHsydJzSN2GxDl7F10wX5Ix9cv+Zks0c5+iPj1GkEx
- 9Qn0nVc0KHslAZdLXFlvw1mnIjDPc0YuNd3ZvjNuvPchDzczXLoYIOss98dXRo3SE26dmYnMmB/
- xpU94ciPt/n2QtOXHWHRSKus2M
-X-Received: by 2002:a17:90a:dfc6:b0:313:17ec:80ec with SMTP id
- 98e67ed59e1d1-31346f5ac9bmr16389014a91.26.1749496039900; 
- Mon, 09 Jun 2025 12:07:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF2xKKlg75zuo/IELfLzeoA7u6tQWMYZbDl1FRAav00+bbFqRx0DWoxSPz0/T87DOguiANF961HyY49Rs8Dc3E=
-X-Received: by 2002:a17:90a:dfc6:b0:313:17ec:80ec with SMTP id
- 98e67ed59e1d1-31346f5ac9bmr16388994a91.26.1749496039605; Mon, 09 Jun 2025
- 12:07:19 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749496070; x=1750100870;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=t21bvGf4H94FB6zPREklA6T9O4YNkducOlCBGUgMQJs=;
+ b=BuIvGltYB/CLrTEhtAtBuUbCjL5/GxQUmCkviaI8KjBQWQ3BVzK4ktHrBBMsJ2Eg5i
+ bWcqCCXzpoCbQt0YALtzVqAujv1FILdm8ZLT/5KpRVq4siP8RyA9H9ChHJ43egCMIWTv
+ VhS7MUWEqDqARbXUOegxFA71mnVFqOYcsL3806Hg6MEdOBzU3UwoEwIK/LzUZ0v29VrP
+ lUpTSxMVDpfG7BE2HH2tJPgSerY9ZaU1w/J5AV3osOzM8jcZLWt4+DtI6qwIQF71/0lz
+ 96jmKvDHL1QUJ6hQwP3/G9wsjEq7yUhfim6U2JDzNB8Acvxg02ApgF2PbbYMzeKAiO0L
+ Pubw==
+X-Gm-Message-State: AOJu0YzjZB9+UnUOSaMa9rdgaBe+iwFJ/coC/kBZnbPyTy5RiFOBEj+Z
+ 3Rt7aeIsLlPjrrbem2b5FOPR1v+vryNMTVXKwdbg/kvxnhr1pVr1IqNIb4wXQQwpnAZFWyNiK3h
+ 9IsV/jST6Jq9jCZy9C961E9gDYWT92dY=
+X-Gm-Gg: ASbGnctaVemq4fAnQNZSsPhnh5Cicq6bcB4ZIz+IEjAWL0necDYjv3zXLHwFMMHaWWH
+ CHvyv+bv88eWH3jYUkfyFMBEMeYkSTf/Ki6VyE6WhP3SSee45RpMlwTpQTIU8nlRRC4q3FRXJRA
+ xyYBmvQ1H1DGVzezIOi6p/+zPa68FZGmEpVWUIjqynvw==
+X-Google-Smtp-Source: AGHT+IGWH8oHw0etQfKSBq1daD4rxHYt+lOqvPjmHKAeMeV0J6vfSnzioz2OE2tmu/ywB/V1NevnTmWQPn5b8kfheLo=
+X-Received: by 2002:a50:c350:0:b0:608:199e:df25 with SMTP id
+ 4fb4d7f45d1cf-608199ee164mr341159a12.2.1749496070271; Mon, 09 Jun 2025
+ 12:07:50 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250606205009.584615-1-jsnow@redhat.com>
- <20250606205009.584615-2-jsnow@redhat.com>
- <d1a5fe06-599d-4a04-a550-1c9927495516@daynix.com>
-In-Reply-To: <d1a5fe06-599d-4a04-a550-1c9927495516@daynix.com>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 9 Jun 2025 15:07:08 -0400
-X-Gm-Features: AX0GCFusqFHqbZFeTPUi0ZuHO9WvnIwJdzgn_jO6ON0wztvHbCuSeaNePXSqMBs
-Message-ID: <CAFn=p-bk9ZdTdqNT6Z2d-28-nkqk+V7JjK+FZjfcyPJZYhoFHQ@mail.gmail.com>
-Subject: Re: [PATCH 1/4] python: update requirements for Sphinx
-To: Akihiko Odaki <akihiko.odaki@daynix.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Cleber Rosa <crosa@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000fa2c6106372849aa"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250609182044.21703-1-tanishdesai37@gmail.com>
+In-Reply-To: <20250609182044.21703-1-tanishdesai37@gmail.com>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Mon, 9 Jun 2025 15:07:38 -0400
+X-Gm-Features: AX0GCFsoV9MiKKSsTXxhr9URgiajdp34GnJun9qrr8ZXbndStTfDa05XktVFUdc
+Message-ID: <CAJSP0QXRPcTBHsCPnFfUAKGRa7aqJ+nsiR4buawAeXXh_3p8Ng@mail.gmail.com>
+Subject: Re: [PATCH] utils/log: add qemu_log_timestamp() to encapsulate
+ timestamp logging
+To: Tanish Desai <tanishdesai37@gmail.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mads@ynddal.dk, 
+ balaton@eik.bme.hu, philmd@linaro.org, peter.maydell@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52b;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x52b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,105 +95,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000fa2c6106372849aa
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Sun, Jun 8, 2025 at 1:26=E2=80=AFAM Akihiko Odaki <akihiko.odaki@daynix.=
-com>
-wrote:
-
-> On 2025/06/07 5:50, John Snow wrote:
-> > In advance of actually bumping the build system requirements for Sphinx=
-,
-> > bump the version used for the static analysis tests. Update the minimum
-> > requirements accordingly.
-> >
-> > This changes the test environment without actually changing the build
-> > requirements, and no extra changes are needed for the tests to continue
-> > passing.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
+On Mon, Jun 9, 2025 at 2:21=E2=80=AFPM Tanish Desai <tanishdesai37@gmail.co=
+m> wrote:
 >
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> Moved the logic for timestamped logging (~6 lines) from a_nocheck__trace_=
+foo(header) into a new qemu_log_timestamp() function in util/log.c. This av=
+oids code duplication across binaries and enables reuse as a standalone uti=
+lity.
+> Encapsulation helps reduce build size significantly, particularly when ma=
+ny trace points are present. On Ubuntu 22 with
+> ./configure --target-list=3Daarch64-softmmu --enable-kvm --enable-trace-b=
+ackends=3Dlog,
+> this change reduced the build directory size from ~1435.27 MB to ~1412 MB=
+ (~23 MB saved).
+> Notable reductions include:
+>     trace/: ~2.6 MB
+>     libqemuutil.a.p: ~3 MB
+> A detailed report of size changes (in bytes) for relevant folders and sub=
+folders will follow in a trailing mail.
+
+Nice, the output of size(1) on qemu-system-x86_64 is reduced by 3%
+(839 KB) when built with gcc 15.1.1 on x86_64:
+
+   text    data     bss     dec     hex filename
+14712231        13652904         149496 28514631        1b31947 before
+13852879        13652904         149496 27655279        1a5fc6f after
+
+That is in the same ballpark as the change in build directory size you meas=
+ured.
+
+> diff --git a/util/log.c b/util/log.c
+> index b87d399e4c..996530fe7e 100644
+> --- a/util/log.c
+> +++ b/util/log.c
+> @@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)
+>      }
+>  }
 >
-> I didn't notice these files. Perhaps they are better to be documented
-> with pythondeps.toml.
->
+> +
+> +void qemu_log_timestamp(const char *fmt, ...)
+> +{
+> +    FILE *f =3D qemu_log_trylock();
+> +    if (f) {
+> +        va_list ap;
+> +        if(message_with_timestamp){
+> +            struct timeval _now;
+> +            gettimeofday(&_now, NULL);
+> +            fprintf(f,"%d@%zu.%06zu:",qemu_get_thread_id(),(size_t)_now.=
+tv_sec, (size_t)_now.tv_usec);
+> +        }
+> +        va_start(ap, fmt);
+> +        vfprintf(f, fmt, ap);
+> +        va_end(ap);
+> +    }
+> +    qemu_log_unlock(f);
 
-You didn't miss them, they were added after you submitted your patch :)
+Although calling qemu_log_unlock(NULL) is safe, existing callers
+invoke this function inside the if (f) { ... } body. Please follow
+that approach for consistency.
 
-The python tests checking anything to do with sphinx are very recent. The
-relationship between pythondeps.toml and python/setup.cfg and
-python/tests/minreqs.txt is still tenuous, but I'll keep in mind that we
-may need to better document the relationships.
-
-(Sphinx and its dependencies are installed only for the sake of pylint and
-mypy to check docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py, as
-those packages need to be present in order for the static type analysis to
-work fully. We don't actually *run* Sphinx from those tests, we just use
-them as "headers", effectively.)
-
-Thanks again,
---js
-
-
->
-> Regards,
-> Akihiko Odaki
->
->
-
---000000000000fa2c6106372849aa
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sun, Jun 8, =
-2025 at 1:26=E2=80=AFAM Akihiko Odaki &lt;<a href=3D"mailto:akihiko.odaki@d=
-aynix.com">akihiko.odaki@daynix.com</a>&gt; wrote:<br></div><blockquote cla=
-ss=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid =
-rgb(204,204,204);padding-left:1ex">On 2025/06/07 5:50, John Snow wrote:<br>
-&gt; In advance of actually bumping the build system requirements for Sphin=
-x,<br>
-&gt; bump the version used for the static analysis tests. Update the minimu=
-m<br>
-&gt; requirements accordingly.<br>
-&gt; <br>
-&gt; This changes the test environment without actually changing the build<=
-br>
-&gt; requirements, and no extra changes are needed for the tests to continu=
-e<br>
-&gt; passing.<br>
-&gt; <br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-Reviewed-by: Akihiko Odaki &lt;<a href=3D"mailto:odaki@rsg.ci.i.u-tokyo.ac.=
-jp" target=3D"_blank">odaki@rsg.ci.i.u-tokyo.ac.jp</a>&gt;<br>
-<br>
-I didn&#39;t notice these files. Perhaps they are better to be documented <=
-br>
-with pythondeps.toml.<br></blockquote><div><br></div><div>You didn&#39;t mi=
-ss them, they were added after you submitted your patch :)</div><div><br></=
-div><div>The python tests checking anything to do with sphinx are very rece=
-nt. The relationship between pythondeps.toml and python/setup.cfg and pytho=
-n/tests/minreqs.txt is still tenuous, but I&#39;ll keep in mind that we may=
- need to better document the relationships.</div><div><br></div><div>(Sphin=
-x and its dependencies are installed only for the sake of pylint and mypy t=
-o check docs/sphinx/qapidoc.py and docs/sphinx/qapi_domain.py, as those pac=
-kages need to be present in order for the static type analysis to work full=
-y. We don&#39;t actually *run* Sphinx from those tests, we just use them as=
- &quot;headers&quot;, effectively.)</div><div><br></div><div>Thanks again,<=
-/div><div>--js</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" styl=
-e=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);paddin=
-g-left:1ex">
-<br>
-Regards,<br>
-Akihiko Odaki<br>
-<br>
-</blockquote></div></div>
-
---000000000000fa2c6106372849aa--
-
+Looks good aside from that.
 
