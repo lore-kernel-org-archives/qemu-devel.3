@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1018EC61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FE66C61CE8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 16:20:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOfEC-00014p-S8; Mon, 09 Jun 2025 12:20:05 -0400
+	id 1uOfDN-00004z-KH; Mon, 09 Jun 2025 12:19:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDo-0000me-R3
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:42 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDL-0008Q7-59
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDm-0004Xd-GB
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:40 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOfDJ-0004UI-E8
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 12:19:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749485977;
+ s=mimecast20190719; t=1749485948;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=+tgiVBDvopoht8yBW2Hx5L1ZBKRLyR84q/WVPp5DRwQ=;
- b=A0BZjc3TINdzSsARY2J9/1Xdg3+t4sR6AFOGD/zsD1HtaOux58VUzWkZBUwZQsBj2/5Upf
- OFLjaAgBtceltpRwzgPfwlgCua3/XUu4VzYT82LUiLfVRiCNR/b8Fr6dWTOf2iJv5mAxEz
- ql8tCnQXIViZMgH834f/px0hUPJQCkg=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=NnxHrY3AJ2xlwMfJ+++pzxNv1sP7IaifMp2sR6DUt4w=;
+ b=LqQt5ZI/NDBIORlrqazF147A1CtocWiU2kuR9VBi65SbB/3wEj5gxDGaO9/Izd2fQ0tMjM
+ kWTsYtWedEsouhEoVM4CE0dAJ5aNs5iFhkN0SPaCVLeZ2ls1TBdvDekSs4a0BOwWFB5L73
+ 7xma5ZQSMpVSMzPVNI0x22wPxFJ+o9g=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-620-4GLsOqpJPVqAviSdVGbEnA-1; Mon, 09 Jun 2025 12:19:36 -0400
-X-MC-Unique: 4GLsOqpJPVqAviSdVGbEnA-1
-X-Mimecast-MFC-AGG-ID: 4GLsOqpJPVqAviSdVGbEnA_1749485976
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-31218e2d5b0so6612744a91.2
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:19:36 -0700 (PDT)
+ us-mta-636-kNc7-JLBOoqqQJU6hkdtpg-1; Mon, 09 Jun 2025 12:19:07 -0400
+X-MC-Unique: kNc7-JLBOoqqQJU6hkdtpg-1
+X-Mimecast-MFC-AGG-ID: kNc7-JLBOoqqQJU6hkdtpg_1749485947
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-6fac71417c2so74564106d6.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 09:19:07 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749485975; x=1750090775;
+ d=1e100.net; s=20230601; t=1749485947; x=1750090747;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=+tgiVBDvopoht8yBW2Hx5L1ZBKRLyR84q/WVPp5DRwQ=;
- b=wKPW4DQxovZihtGwo6TlKXj5Kj8pizLncMTN5JIDSvytezGg0SxfxtBxEW2jWD6NOs
- Jzh7SxD4zUw4XRR4rHb4d0RQR8iX2PzwaoR0qw8p5psWVrHvOfwEuZlT5XroqobQMfpW
- jeyQDEGxzGghDuAMhYYsmDYkVHUbABKobcEzjxMJXHo+gtdA3AjKlnIcXmsL8F6K78fm
- VMrm1d1CejSwTRf51LZuYoJBOyo48gNra5djQRW9vcfBd2NYSxWWuWpJgKalkZXWm6Jz
- l7FEsqLZ8FJDoU/mG/slaDuZLkU3OHy1vEkpdBJOhz7nYLK5b9lmzXe3/2o/Sv71Yz9t
- +OIw==
-X-Gm-Message-State: AOJu0Yz9HS0uyoq7scxXlgNBWDRkPCLcCQwWNg3qLQpAPpM2IR/M2mqv
- I5ZSGdOQhPFyml6XXpM/Z+tFlDEVhztDoPR1srkWaQc7PVQSTtEeDmDyYq+jKAe3YWnuY2e/n5x
- 0BWaqXnzUJGk9QnTqToA5dMWALdZWBMOc8YkzvHF6wY5enHCFO6O4+Fmk6lf+dVj+lehFa84/SF
- oONFgrHuJbZrYDuUwo65bsP9Gq/NiCiWtB9wkfvg==
-X-Gm-Gg: ASbGncsMct1jD5bwQ5St/+am5AmPekGZrl8p01pMNoy/qmk+neZQ5JGHR9EmBLsbpfx
- 7vdoH+sEioRtGg3UtRF9wh/wiW7S5gFiaaGncqU7iw6esJfKhr5xba66uCHMeZPAMzo5/USpMA5
- BMvM5iskb/cb2PFnZnb8CuvWiIp4XP+5yMYMoTtCUra7bUlDkeuBM/j+Gpd0LZosKh/fl3utkAx
- z6m/RfEImRancF7G78TEZ2fJtqBkHlSA62XbX1MGx7A5oBxI+WKpXpZdWlh2Tu4K/Ln01xCfLNA
- VbY=
-X-Received: by 2002:ad4:5b8f:0:b0:6fa:c634:dc01 with SMTP id
- 6a1803df08f44-6fb08f78beamr245544716d6.16.1749485964558; 
- Mon, 09 Jun 2025 09:19:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH84b24kYpwH0Sm4PXEe56IVnjhbSnvBe1JkUQyzp59RNmkh6ntSVVw70R0QzitjXRZmR49+w==
-X-Received: by 2002:a05:6214:b6b:b0:6fa:b42b:2bd9 with SMTP id
- 6a1803df08f44-6fb08fe37eamr253861546d6.37.1749485952825; 
- Mon, 09 Jun 2025 09:19:12 -0700 (PDT)
+ bh=NnxHrY3AJ2xlwMfJ+++pzxNv1sP7IaifMp2sR6DUt4w=;
+ b=GfR48ndmMOTddUZaZv9Hoikr0Sh/H5EN9ifqCXdF3NVidfFiHDc74ET8cqJqUrjmFY
+ kdskUInFpVx/AYAH6+ZdlCedN7xGx7QXsI+1IT390orvlATco5YZ4xoA2gLMJ6wpxGe9
+ kOMemh9HzChmvthXQOboJeEh4+3AZB5C6DH6d9ZXCHwGQVwiBs81qshyyJIwkD+azB6q
+ BiN5fj9gSQiYkhxVUg54IEy5ZaoZgCBWouMuey3b22GMf+UlF6tgAcP+iN4GurR72E8D
+ h6toGJ8eIynwlMU4zNWlRHBR8MbKNc3vK26GpbeAIjuwYrJbgizYktIfux1WqwEt7vGQ
+ yLUw==
+X-Gm-Message-State: AOJu0YwIfvgytETQ1bDhuX5oldFiIBpVj7YH4oaStWnmkCLJ92JcjN5j
+ tvjx/Gv8OmTej4lvHj5WTFD8C27GCFORAZ2h7gkKtRPkAVVxsOCe6SGlnk5z8xpQtQ+kuhVUHqo
+ NSi6IscXNtgQ5PN5PNO1YR+kG4dcuerjkg8WoZ2JQpqMpOQZ+ennZm08iqk35ZUTnlJT6AX25Jz
+ oIiU+HsFXRpnZLyPcLGGi5MVK5Dwk2pEiOCYBSEA==
+X-Gm-Gg: ASbGnctqZV1A7Onq6OqpVlEazpxHCR+nzxApndAPjnYe3AITjOsceQJdUr5AiIDjhuI
+ HBbT6ljV0n975cYPnbd6YVEDHgjjX55fyloqi/TtLy67+O61ASm9o66dPOXwW6XH0YRFqjrWEg7
+ dsIwohDEAe9XHiUgN+ezkcma9wZ7O98WJ6/5kda5qXW4KvkuLlgerrZxO5uCh+DGAJmwkDwfVHh
+ uQcLq+r7EktQQkkswcf8o9NCP4MlsfSC0F7zcu2mkUJeUrEHVF7GSm/1AhcuOUrpVud3akueVr0
+ laNFwUYCv/8rzA==
+X-Received: by 2002:a05:6214:2426:b0:6fa:ba15:e8a with SMTP id
+ 6a1803df08f44-6fb08f528f2mr247163246d6.8.1749485946435; 
+ Mon, 09 Jun 2025 09:19:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFdR9M9mqDnSkJ0Ov1KR09buxe0cj4YRwBACfz3UNZTaymfuPunJEKUtdyFpauNG2MC8rRDtg==
+X-Received: by 2002:a05:6214:2426:b0:6fa:ba15:e8a with SMTP id
+ 6a1803df08f44-6fb08f528f2mr247162256d6.8.1749485945689; 
+ Mon, 09 Jun 2025 09:19:05 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-6fb09ab95c1sm53420546d6.15.2025.06.09.09.19.11
+ 6a1803df08f44-6fb09ab95c1sm53420546d6.15.2025.06.09.09.19.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Jun 2025 09:19:11 -0700 (PDT)
+ Mon, 09 Jun 2025 09:19:04 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
  "Dr . David Alan Gilbert" <dave@treblig.org>,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH v2 10/11] migration: Rewrite the migration complete detect
- logic
-Date: Mon,  9 Jun 2025 12:18:54 -0400
-Message-ID: <20250609161855.6603-11-peterx@redhat.com>
+Subject: [PATCH v2 05/11] migration: Drop save_live_complete_postcopy hook
+Date: Mon,  9 Jun 2025 12:18:49 -0400
+Message-ID: <20250609161855.6603-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250609161855.6603-1-peterx@redhat.com>
 References: <20250609161855.6603-1-peterx@redhat.com>
@@ -108,165 +107,117 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There're a few things off here in that logic, rewrite it.  When at it, add
-rich comment to explain each of the decisions.
+The hook is only defined in two vmstate users ("ram" and "block dirty
+bitmap"), meanwhile both of them define the hook exactly the same as the
+precopy version.  Hence, this postcopy version isn't needed.
 
-Since this is very sensitive path for migration, below are the list of
-things changed with their reasonings.
+No functional change intended.
 
-  (1) Exact pending size is only needed for precopy not postcopy
-
-      Fundamentally it's because "exact" version only does one more deep
-      sync to fetch the pending results, while in postcopy's case it's
-      never going to sync anything more than estimate as the VM on source
-      is stopped.
-
-  (2) Do _not_ rely on threshold_size anymore to decide whether postcopy
-      should complete
-
-      threshold_size was calculated from the expected downtime and
-      bandwidth only during precopy as an efficient way to decide when to
-      switchover.  It's not sensible to rely on threshold_size in postcopy.
-
-      For precopy, if switchover is decided, the migration will complete
-      soon.  It's not true for postcopy.  Logically speaking, postcopy
-      should only complete the migration if all pending data is flushed.
-
-      Here it used to work because save_complete() used to implicitly
-      contain save_live_iterate() when there's pending size.
-
-      Even if that looks benign, having RAMs to be migrated in postcopy's
-      save_complete() has other bad side effects:
-
-      (a) Since save_complete() needs to be run once at a time, it means
-      when moving RAM there's no way moving other things (rather than
-      round-robin iterating the vmstate handlers like what we do with
-      ITERABLE phase).  Not an immediate concern, but it may stop working
-      in the future when there're more than one iterables (e.g. vfio
-      postcopy).
-
-      (b) postcopy recovery, unfortunately, only works during ITERABLE
-      phase. IOW, if src QEMU moves RAM during postcopy's save_complete()
-      and network failed, then it'll crash both QEMUs... OTOH if it failed
-      during iteration it'll still be recoverable.  IOW, this change should
-      further reduce the window QEMU split brain and crash in extreme cases.
-
-      If we enable the ram_save_complete() tracepoints, we'll see this
-      before this patch:
-
-      1267959@1748381938.294066:ram_save_complete dirty=9627, done=0
-      1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-
-      It means in this migration there're 9627 pages migrated at complete()
-      of postcopy phase.
-
-      After this change, all the postcopy RAM should be migrated in iterable
-      phase, rather than save_complete():
-
-      1267959@1748381938.294066:ram_save_complete dirty=0, done=0
-      1267959@1748381938.308884:ram_save_complete dirty=0, done=1
-
-  (3) Adjust when to decide to switch to postcopy
-
-      This shouldn't be super important, the movement makes sure there's
-      only one in_postcopy check, then we are clear on what we do with the
-      two completely differnt use cases (precopy v.s. postcopy).
-
-  (4) Trivial touch up on threshold_size comparision
-
-      Which changes:
-
-      "(!pending_size || pending_size < s->threshold_size)"
-
-      into:
-
-      "(pending_size <= s->threshold_size)"
-
-Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration.c | 56 +++++++++++++++++++++++++++++++------------
- 1 file changed, 41 insertions(+), 15 deletions(-)
+ include/migration/register.h   | 24 ++++++++----------------
+ migration/block-dirty-bitmap.c |  1 -
+ migration/ram.c                |  1 -
+ migration/savevm.c             |  9 ++++-----
+ 4 files changed, 12 insertions(+), 23 deletions(-)
 
-diff --git a/migration/migration.c b/migration/migration.c
-index e33e39ac74..1a26a4bfef 100644
---- a/migration/migration.c
-+++ b/migration/migration.c
-@@ -3436,33 +3436,59 @@ static MigIterateState migration_iteration_run(MigrationState *s)
-     Error *local_err = NULL;
-     bool in_postcopy = s->state == MIGRATION_STATUS_POSTCOPY_ACTIVE;
-     bool can_switchover = migration_can_switchover(s);
-+    bool complete_ready;
+diff --git a/include/migration/register.h b/include/migration/register.h
+index b79dc81b8d..e022195785 100644
+--- a/include/migration/register.h
++++ b/include/migration/register.h
+@@ -77,26 +77,18 @@ typedef struct SaveVMHandlers {
+      */
+     void (*save_cleanup)(void *opaque);
  
-+    /* Fast path - get the estimated amount of pending data */
-     qemu_savevm_state_pending_estimate(&must_precopy, &can_postcopy);
-     pending_size = must_precopy + can_postcopy;
-     trace_migrate_pending_estimate(pending_size, must_precopy, can_postcopy);
- 
--    if (pending_size < s->threshold_size) {
--        qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
--        pending_size = must_precopy + can_postcopy;
--        trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
-+    if (in_postcopy) {
-+        /*
-+         * Iterate in postcopy until all pending data flushed.  Note that
-+         * postcopy completion doesn't rely on can_switchover, because when
-+         * POSTCOPY_ACTIVE it means switchover already happened.
-+         */
-+        complete_ready = !pending_size;
-+    } else {
-+        /*
-+         * Exact pending reporting is only needed for precopy.  Taking RAM
-+         * as example, there'll be no extra dirty information after
-+         * postcopy started, so ESTIMATE should always match with EXACT
-+         * during postcopy phase.
-+         */
-+        if (pending_size < s->threshold_size) {
-+            qemu_savevm_state_pending_exact(&must_precopy, &can_postcopy);
-+            pending_size = must_precopy + can_postcopy;
-+            trace_migrate_pending_exact(pending_size, must_precopy, can_postcopy);
-+        }
-+
-+        /* Should we switch to postcopy now? */
-+        if (must_precopy <= s->threshold_size &&
-+            can_switchover && qatomic_read(&s->start_postcopy)) {
-+            if (postcopy_start(s, &local_err)) {
-+                migrate_set_error(s, local_err);
-+                error_report_err(local_err);
-+            }
-+            return MIG_ITERATE_SKIP;
-+        }
-+
-+        /*
-+         * For precopy, migration can complete only if:
-+         *
-+         * (1) Switchover is acknowledged by destination
-+         * (2) Pending size is no more than the threshold specified
-+         *     (which was calculated from expected downtime)
-+         */
-+        complete_ready = can_switchover && (pending_size <= s->threshold_size);
-     }
- 
--    if ((!pending_size || pending_size < s->threshold_size) && can_switchover) {
-+    if (complete_ready) {
-         trace_migration_thread_low_pending(pending_size);
-         migration_completion(s);
-         return MIG_ITERATE_BREAK;
-     }
- 
--    /* Still a significant amount to transfer */
--    if (!in_postcopy && must_precopy <= s->threshold_size && can_switchover &&
--        qatomic_read(&s->start_postcopy)) {
--        if (postcopy_start(s, &local_err)) {
--            migrate_set_error(s, local_err);
--            error_report_err(local_err);
--        }
--        return MIG_ITERATE_SKIP;
--    }
+-    /**
+-     * @save_live_complete_postcopy
+-     *
+-     * Called at the end of postcopy for all postcopyable devices.
+-     *
+-     * @f: QEMUFile where to send the data
+-     * @opaque: data pointer passed to register_savevm_live()
+-     *
+-     * Returns zero to indicate success and negative for error
+-     */
+-    int (*save_live_complete_postcopy)(QEMUFile *f, void *opaque);
 -
-     /* Just another iteration step */
-     qemu_savevm_state_iterate(s->to_dst_file, in_postcopy);
-     return MIG_ITERATE_RESUME;
+     /**
+      * @save_live_complete_precopy
+      *
+      * Transmits the last section for the device containing any
+-     * remaining data at the end of a precopy phase. When postcopy is
+-     * enabled, devices that support postcopy will skip this step,
+-     * where the final data will be flushed at the end of postcopy via
+-     * @save_live_complete_postcopy instead.
++     * remaining data at the end phase of migration.
++     *
++     * For precopy, this will be invoked _during_ the switchover phase
++     * after source VM is stopped.
++     *
++     * For postcopy, this will be invoked _after_ the switchover phase
++     * (except some very unusual cases, like PMEM ramblocks), while
++     * destination VM can be running.
+      *
+      * @f: QEMUFile where to send the data
+      * @opaque: data pointer passed to register_savevm_live()
+diff --git a/migration/block-dirty-bitmap.c b/migration/block-dirty-bitmap.c
+index f2c352d4a7..6ee3c32a76 100644
+--- a/migration/block-dirty-bitmap.c
++++ b/migration/block-dirty-bitmap.c
+@@ -1248,7 +1248,6 @@ static bool dirty_bitmap_has_postcopy(void *opaque)
+ 
+ static SaveVMHandlers savevm_dirty_bitmap_handlers = {
+     .save_setup = dirty_bitmap_save_setup,
+-    .save_live_complete_postcopy = dirty_bitmap_save_complete,
+     .save_live_complete_precopy = dirty_bitmap_save_complete,
+     .has_postcopy = dirty_bitmap_has_postcopy,
+     .state_pending_exact = dirty_bitmap_state_pending,
+diff --git a/migration/ram.c b/migration/ram.c
+index fd8d83b63c..8b43b9e1e8 100644
+--- a/migration/ram.c
++++ b/migration/ram.c
+@@ -4545,7 +4545,6 @@ void postcopy_preempt_shutdown_file(MigrationState *s)
+ static SaveVMHandlers savevm_ram_handlers = {
+     .save_setup = ram_save_setup,
+     .save_live_iterate = ram_save_iterate,
+-    .save_live_complete_postcopy = ram_save_complete,
+     .save_live_complete_precopy = ram_save_complete,
+     .has_postcopy = ram_has_postcopy,
+     .state_pending_exact = ram_state_pending_exact,
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 52105dd2f1..dfb67bf679 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1485,9 +1485,8 @@ bool should_send_vmdesc(void)
+ }
+ 
+ /*
+- * Calls the save_live_complete_postcopy methods
+- * causing the last few pages to be sent immediately and doing any associated
+- * cleanup.
++ * Complete saving any postcopy-able devices.
++ *
+  * Note postcopy also calls qemu_savevm_state_complete_precopy to complete
+  * all the other devices, but that happens at the point we switch to postcopy.
+  */
+@@ -1497,7 +1496,7 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
+     int ret;
+ 
+     QTAILQ_FOREACH(se, &savevm_state.handlers, entry) {
+-        if (!se->ops || !se->ops->save_live_complete_postcopy) {
++        if (!se->ops || !se->ops->save_live_complete_precopy) {
+             continue;
+         }
+         if (se->ops->is_active) {
+@@ -1510,7 +1509,7 @@ void qemu_savevm_state_complete_postcopy(QEMUFile *f)
+         qemu_put_byte(f, QEMU_VM_SECTION_END);
+         qemu_put_be32(f, se->section_id);
+ 
+-        ret = se->ops->save_live_complete_postcopy(f, se->opaque);
++        ret = se->ops->save_live_complete_precopy(f, se->opaque);
+         trace_savevm_section_end(se->idstr, se->section_id, ret);
+         save_section_footer(f, se);
+         if (ret < 0) {
 -- 
 2.49.0
 
