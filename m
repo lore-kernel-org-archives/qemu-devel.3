@@ -4,98 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1B23C61CE8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 18:52:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C1EDC5B552
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Jun 2025 19:06:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOhaa-0008Qv-U3; Mon, 09 Jun 2025 14:51:22 -0400
+	id 1uOhoG-0003RQ-FT; Mon, 09 Jun 2025 15:05:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uOhaT-0008QJ-ID
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:51:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhoD-0003Qp-Gh
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:05:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uOhaR-0006vt-62
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 14:51:13 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOhoB-0008Rp-9h
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 15:05:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749495068;
+ s=mimecast20190719; t=1749495920;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=k85Yk3+IdxmfnPuABqvl6pFP/vpTKiIkw4UDNk4Pf0I=;
- b=OxrXQtDTthfA2pyhPlIQD+yy3Gj2auwq5Vwz9Yg76DgC4UOUX4MrM7V9aJqkmFNJUtgOwm
- 4+j0gyw3LNi2vdMQrwbWA/pTRz/d6OL3bOfo2pKBnFQmg2uPDBO1eYfzKpoLolaq+G6f//
- JdJRqHjUQh9n+1ftSfykBO4IE0AcQxA=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=yGxQqWowTDEz9lxPYUzPQK1sEvnmEr6RojRqKwGES+E=;
+ b=J2zkR3K3duY28ww52CqQINmqf+AXIO5pOWuuimdNAapxmc0WjuKX/t9yhyVMO0Nm3wkaTN
+ A1a9h6u56y2Z5JoyF9nx5d1s4H2jl1/gcwik7b/iJbF66mlO98Rl9/TrCKMoLIQBsqb37G
+ HNxUAf+HeAKBHiMTeqd2qeVdRp6Gt+c=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-686-_fpZc7DhPcSvvTxeJH6mXA-1; Mon, 09 Jun 2025 14:51:04 -0400
-X-MC-Unique: _fpZc7DhPcSvvTxeJH6mXA-1
-X-Mimecast-MFC-AGG-ID: _fpZc7DhPcSvvTxeJH6mXA_1749495063
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a37a0d1005so3103628f8f.3
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 11:51:04 -0700 (PDT)
+ us-mta-553-X9antZMcNmK41S4COq_xdw-1; Mon, 09 Jun 2025 15:05:17 -0400
+X-MC-Unique: X9antZMcNmK41S4COq_xdw-1
+X-Mimecast-MFC-AGG-ID: X9antZMcNmK41S4COq_xdw_1749495916
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-7cd06c31ad6so852042485a.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 12:05:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749495063; x=1750099863;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=k85Yk3+IdxmfnPuABqvl6pFP/vpTKiIkw4UDNk4Pf0I=;
- b=vMJi4nkBOwRpiVBZRIoE4P9yTFzNeVouda++o0E5bMtAnii+0AG0aq7rfO0+T8ufa3
- bRrEHOm5gTd3zPWCVTtCOCtqW5IuPE7Tip4v2iaOVyFA3lBPzhPLbRDgBp7vbxdj67iH
- FVgLY0nRtVLq7dPL6dPuJClvKv1pdNJSgxrygxeL3z5G4uohubbl3u+UdNm8PDJAJVfv
- VRL6JcdkvX27jHxL/JEnnqHErczOcrHxuXwDO+tHSKUaFVqLuFvhzfgV9yMLElqrazfv
- 96+XOIwbWa/JH4H/loAHZQRaXb4/yDvntsRM9zffHLeuTO4zX/ZLnelaK2ENPTDib61D
- VtVw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUuoesYPyzf2R9QZh65THU2BppmUquSADfqYwt5njA/mkMsQPpVYb8SUnxBJOS6EBDrv8sLQgJpqfWD@nongnu.org
-X-Gm-Message-State: AOJu0YwQfqV0TxqFC6tpjPm0/4Cdfl4zN+Mk3DazYEQIV+BngsI16jLN
- bKojI5/VSXKWT8UTX2S+GFIzPU/p+jZwxw8iZABeaJUwqx1aXMTEwezn+Clb8R+30q08h4GGokL
- vUXXlt2IKlN9NHHZ2dnQjbTEkj3SUqCAAti5oTTRQRAHa/6rXh0mbdyr/zraQvzWY/ZmoD4sksC
- 9QFaVzP126YkdZfO3L9ScAQMco/5d6dlU=
-X-Gm-Gg: ASbGncuEzcardLkVrr+38+Fvqj9wKJtEW1jXnIt8N/T6EeUl4xAVjZVF0XTBKpiYEEy
- sBJcFa62wwCRZ3u5DfGGeIGfp6vTxuFJdw/nGYGmKlihV/5PlWSjnCmkjfpTBagq1+WVoBsL6Cq
- Q+Sw==
-X-Received: by 2002:a5d:584d:0:b0:3a4:e6e6:a026 with SMTP id
- ffacd0b85a97d-3a531caffd6mr11435018f8f.28.1749495063472; 
- Mon, 09 Jun 2025 11:51:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH7ivnqZlC9DkR/SKkK+mr2lq0CBjTYxppSOsF8lHx417Lbm1ER9jumoJWE+SvBXRNYWkSjZDahjgiq1EXtvZM=
-X-Received: by 2002:a5d:584d:0:b0:3a4:e6e6:a026 with SMTP id
- ffacd0b85a97d-3a531caffd6mr11435008f8f.28.1749495063148; Mon, 09 Jun 2025
- 11:51:03 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749495916; x=1750100716;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yGxQqWowTDEz9lxPYUzPQK1sEvnmEr6RojRqKwGES+E=;
+ b=j6QqGDXxOATvz3oTpXLfIk5gCpjuuuYD6sWVz0MlUXXTOv58nI1VxwF2kDvVZ3fwkp
+ /u0J6ljLj2hRnjpe3PlXnOmCkejKinckU39WFlozcq5aSD4M2YpdDflcLFKig5oiB8sB
+ gQ/fvG3Z4WHwMOZoeLoGhMHJvy2sdGfHLzCHPkge1KC/zS9eYHgJKSmWicZXi89jq3sk
+ YnPjaC/YAumImAl3Z3vbCsQr8rWMYAGlcu7LPj1eekE1asWU4007JtsFKAiFRM+uI6/1
+ xHOWkJPUp4BQcz895HDOsx2nueR9aWW5y9tRyt/u6Tu8wQVLhyGWQ0YcgesMLpzg+SXi
+ pdvw==
+X-Gm-Message-State: AOJu0YxgsdNqZbiuzCP7NQBxOm8vfWUF8sV8hixnhy7qowq3vOyl9BOz
+ t8rzYVRZ7oQCxSi4TtKmy3VSzfAdLpnyGKcxfdnZ+YkR72aqIg+o9Zn10CA3tLwxeiM6BK1m4Ip
+ OQuhqwJqYAg3RS6SvlfJtb+MIcvVFFe5w7a1VKrRuz5lHoMVa8uf62/vy
+X-Gm-Gg: ASbGnctq6a7Va7fbM0Ovxd5yAu7oOwT5e+GAXaIHlVKpnWbPSY/8mf0ffd2u4zRDk0l
+ 9CA/EX+dNcTqoSz77Cyayi8l6jJGYZHQOzN+EfxPMgZaNPwFAAwPb1RG7bVo5Sn6uboR58sPV5S
+ a6Fi4HqrC2WyZMn9yEzATG2NkXn3kNGlJfTRm0f/Eh/RHZwQdF3cILfVW2Cbgjym2jHdSWLu4gR
+ 3t76Ce0ZURp8grwRMZO+CVGdUeiOoT0M+d5LNlZgPVAmVkC32mQzeRfmmrfbobLOdhlEt0fxoFG
+ LQfx/CsYMj3XVA==
+X-Received: by 2002:a05:620a:460b:b0:7cd:1b4b:e5fb with SMTP id
+ af79cd13be357-7d39d8f25bemr99542885a.21.1749495916547; 
+ Mon, 09 Jun 2025 12:05:16 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGt8M3+IDNVo8nXf1G0uFnX02Ps5qqcvCJ7mLCCTPEMud8Qq2lC8LFFmU1hbQFX+1sF9TTNfw==
+X-Received: by 2002:a05:620a:460b:b0:7cd:1b4b:e5fb with SMTP id
+ af79cd13be357-7d39d8f25bemr99538085a.21.1749495916108; 
+ Mon, 09 Jun 2025 12:05:16 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7d25a608d6esm579230285a.71.2025.06.09.12.05.15
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Jun 2025 12:05:15 -0700 (PDT)
+Date: Mon, 9 Jun 2025 15:05:13 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 19/21] migration: Allow migrate commands to provide the
+ migration config
+Message-ID: <aEcwaZFSyarnFTPv@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-20-farosas@suse.de>
+ <aENBda_y3v3y4ptS@x1.local> <874iwswrex.fsf@suse.de>
+ <aENUrociiqlFuPpz@x1.local> <87y0u1ugkx.fsf@suse.de>
+ <aEcC9X5i6eV4N7An@x1.local> <87v7p4vlnl.fsf@suse.de>
 MIME-Version: 1.0
-References: <20250601181231.3461-1-tanishdesai37@gmail.com>
- <20250601181231.3461-3-tanishdesai37@gmail.com>
- <20250602222434.GB320269@fedora>
- <7f4eefa2-9e00-4ba2-898f-c480c2123904@redhat.com>
- <CAJSP0QX=e3GkB5L0rpAf8YfkJDKOZYJcx553tut+7Hp2NK3XYg@mail.gmail.com>
- <03c067fc-2a47-4fc5-9204-1ac6ded4301b@redhat.com>
- <CAJSP0QULzQsJEN7q-QiG+Tj0ngstKcu_=0fyTytx11uMUDXmrw@mail.gmail.com>
-In-Reply-To: <CAJSP0QULzQsJEN7q-QiG+Tj0ngstKcu_=0fyTytx11uMUDXmrw@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Mon, 9 Jun 2025 20:50:51 +0200
-X-Gm-Features: AX0GCFtcWM5TSMJG_1DsdxZIOBg5MWZ-Y-z8qS-KpkofKi0KPQBnrGuLLyzSAOM
-Message-ID: <CABgObfY80S95N_qJ-LJwQb5q0i0oFMFaRdQ8o+c-O8LkUHxGwQ@mail.gmail.com>
-Subject: Re: [PATCH 2/3] trace/ftrace: seperate cold paths of tracing functions
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- Tanish Desai <tanishdesai37@gmail.com>, 
- qemu-devel <qemu-devel@nongnu.org>, Mads Ynddal <mads@ynddal.dk>
-Content-Type: multipart/alternative; boundary="000000000000c68e8e0637280fdc"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87v7p4vlnl.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,84 +109,201 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000c68e8e0637280fdc
-Content-Type: text/plain; charset="UTF-8"
-
-Il lun 9 giu 2025, 20:27 Stefan Hajnoczi <stefanha@gmail.com> ha scritto:
-
-> > If you disagree with this change we can certainly live without them---I
-> > asked Tanish to start with this as an exercise to get familiar with
-> > tracetool, and he's learnt a bunch of things around git anyway so it's
-> > all good.
->
-> A maintainer's life is easy when patches have a clear motivation. With
-> this patch series I'm not convinced there is a clear motivation, and
-> that makes me hesitate about applying them.
->
-
-Indeed. Tanish just posted a patch that should get basically all of the
-benefit without the downsides, so thanks for hesitating. :)
-
-Paolo
-
-If it's okay with you, Tanish and Paolo, please hold on to the patches
-> and let's see how they fit into the larger goal of Rust tracing
-> support. If they help with that then I would be happy to merge them
-> together with Rust tracing patches.
->
+On Mon, Jun 09, 2025 at 03:02:06PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
+> 
+> > On Mon, Jun 09, 2025 at 11:37:02AM -0300, Fabiano Rosas wrote:
+> >> Peter Xu <peterx@redhat.com> writes:
+> >> 
+> >> > On Fri, Jun 06, 2025 at 05:23:18PM -0300, Fabiano Rosas wrote:
+> >> >> Peter Xu <peterx@redhat.com> writes:
+> >> >> 
+> >> >> > On Mon, Jun 02, 2025 at 10:38:08PM -0300, Fabiano Rosas wrote:
+> >> >> >> Allow the migrate and migrate_incoming commands to pass the migration
+> >> >> >> configuration options all at once, dispensing the use of
+> >> >> >> migrate-set-parameters and migrate-set-capabilities.
+> >> >> >> 
+> >> >> >> The motivation of this is to simplify the interface with the
+> >> >> >> management layer and avoid the usage of several command invocations to
+> >> >> >> configure a migration. It also avoids stale parameters from a previous
+> >> >> >> migration to influence the current migration.
+> >> >> >> 
+> >> >> >> The options that are changed during the migration can still be set
+> >> >> >> with the existing commands.
+> >> >> >> 
+> >> >> >> The order of precedence is:
+> >> >> >> 
+> >> >> >> 'config' argument > -global cmdline > defaults (migration_properties)
+> >> >> >
+> >> >> > Could we still keep the QMP migrate-set-parameters values?
+> >> >> >
+> >> >> >   'config' argument > QMP setups using migrate-set-parameters >
+> >> >> >     -global cmdline > defaults (migration_properties)
+> >> >> >
+> >> >> 
+> >> >> That's the case. I failed to mention it in the commit message. IOW it
+> >> >> behaves just like today, but the new 'config' way takes precedence over
+> >> >> all.
+> >> >
+> >> > Referring to below chunk of code:
+> >> >
+> >> > [...]
+> >> >
+> >> >> >> +bool migrate_params_override(MigrationState *s, MigrationParameters *new,
+> >> >> >> +                             Error **errp)
+> >> >> >> +{
+> >> >> >> +    ERRP_GUARD();
+> >> >> >> +
+> >> >> >> +    assert(bql_locked());
+> >> >> >> +
+> >> >> >> +    /* reset to default parameters */
+> >> >> >> +    migrate_params_apply(&s->defaults);
+> >> >
+> >> > IIUC here it'll reset all global parameters using the initial defaults
+> >> > first, then apply the "config" specified in "migrate" QMP command?
+> >> >
+> >> 
+> >> Yes, this is so any previously set parameter via migrate-set-parameter
+> >> gets erased. I think what we want (but feel free to disagree) is to have
+> >> the migrate-set-parameter _eventually_ only handle parameters that need
+> >> to be modifed during migration runtime. Anything else can be done via
+> >> passing config to qmp_migrate.
+> >> 
+> >> For -global, I don't have a preference. Having -global take precedence
+> >> over all would require a way to know which options were present in the
+> >> command-line and which are just the defaults seet in
+> >> migration_properties. I currently don't know how to do that. If it is at
+> >> all possible (within reason) we could make the change, no worries.
+> >> 
+> >> > I think there're actually two separate questions to be asked, to make it
+> >> > clearer, they are:
+> >> 
+> >> Here it got ambiguous when you say "global", I've been using -global to
+> >> refer to the cmdline -global migration.foo, but others have used global
+> >> to mean s->parameters (which has an extended lifetime). Could you
+> >> clarify?
 > >
-> > We'll also try to take a look at the code that is generated in the
-> > function that invokes the tracepoint, to see if it's improved.
+> > I meant the -global, and the global setups via migrate-set-parameters.
 > >
-> > Paolo
+> > As replied to Dan in the other email, I changed my mind on question (1); I
+> > think it makes sense to have it YES.  I left my pure question on (2) there
+> > too.
 > >
->
->
+> > Do we really want to disable migrate-set-parameters setting most of the
+> > parameters, and only allow it to be set during migration on a few things
+> > like bandwidth or so?
+> >
+> 
+> Well, if we decide we have reasons to introduce the "config" concept,
+> then I think we should not present two ways of doing the same
+> thing. User calls qmp_migrate with its arguments and that's the
+> migration. No other ways of setting parameters.
+> 
+> Since we do have parameters that are set in "runtime" I though of
+> keeping migrate-set-parameters around to minimize the interface
+> change. Maybe those should have been separate knobs on their own after
+> all... But in any case, we can't reject migrate-set-parameters because
+> it might happen way earlier than the actual migration command. So I
+> don't think anything changes regarding the API.
+> 
+> > I just don't really see the major benefit of that yet.  I would think it
+> > make more sense if we don't need to change any parameters in migration,
+> > then provide that in one shot in QMP migrate "config".  Maybe making more
+> > sense if migration is not heavily thread-based but having its aiocontext so
+> > we could even move to Jobs.
+> >
+> > Now after all we'll need to allow setting something like bandwidth even
+> > during migration alive, and we have all the things ready allowing to set
+> > before migration starts, I'm not 100% sure whether we need to bother even
+> > if it does look cleaner, because we'll still break mgmt used to be working
+> > for years.. I could be over-cautious on breaking things, but I still want
+> > to understand better on the benefits.
+> >
+> 
+> Makes sense. We'd say either use the old way or the new way. If both are
+> mixed, then the new way takes precedence. That keeps older apps working
+> and allows new code to transition into the new way.
 
---000000000000c68e8e0637280fdc
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Fair enough.  Yes whenever the new way is chosen it can work in anyway we
+define it.
 
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il lun 9 giu 2025, 20:27 Stefan =
-Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com">stefanha@gmail.com</a>&g=
-t; ha scritto:</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0=
-px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt; If you disagree with this change we can certainly live without them---=
-I<br>
-&gt; asked Tanish to start with this as an exercise to get familiar with<br=
->
-&gt; tracetool, and he&#39;s learnt a bunch of things around git anyway so =
-it&#39;s<br>
-&gt; all good.<br>
-<br>
-A maintainer&#39;s life is easy when patches have a clear motivation. With<=
-br>
-this patch series I&#39;m not convinced there is a clear motivation, and<br=
->
-that makes me hesitate about applying them.<br></blockquote></div></div><di=
-v dir=3D"auto"><br></div><div dir=3D"auto">Indeed. Tanish just posted a pat=
-ch that should get basically all of the benefit without the downsides, so t=
-hanks for hesitating. :)</div><div dir=3D"auto"><br></div><div dir=3D"auto"=
->Paolo</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"gma=
-il_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex">If it&#39;s okay with you, Tanish and Paolo, please hold on to the p=
-atches<br>
-and let&#39;s see how they fit into the larger goal of Rust tracing<br>
-support. If they help with that then I would be happy to merge them<br>
-together with Rust tracing patches.<br>
-<br>
-&gt;<br>
-&gt; We&#39;ll also try to take a look at the code that is generated in the=
-<br>
-&gt; function that invokes the tracepoint, to see if it&#39;s improved.<br>
-&gt;<br>
-&gt; Paolo<br>
-&gt;<br>
-<br>
-</blockquote></div></div></div>
+It's just that if the global list of parameters will still be around then
+it seems to have no good reason to not build the migration parameters on
+top of the global list of parameters.  After all, anything can be
+overwritten in the QMP migrate if needed.
 
---000000000000c68e8e0637280fdc--
+> 
+> > One step back, on this "allow migrate to specify 'config'" request: I
+> > think we can definitely do that as it still provides some kind of
+> > atomicity.  But frankly speaking I never see it a "real problem" - do
+> > we really have report or use case showing that Libvirt can trigger
+> > "migrate" with some global settings touched by other apps at all?
+> >
+> 
+> I don't think other apps is the problem, but libvirt itself maybe
+> attempting two migrations in sequence after one of them fails.
+> 
+> There always the possibility that the user is poking around, which of
+> course is not advisable, but if a weird migration bug shows up it's
+> difficult to confirm that other app/user hasn't changed the parameters.
+
+That's almost what I think the current patch is useful on providing some
+kind of atomicity.
+
+If we want to make debugging easy, we could also consider returning the
+finalized migration setup in the response of QMP "migrate" with all
+parameters, by defining "returns" for QMP "migrate".
+
+> 
+> > To me, it was yet an illutionary problem, I never know the answer of that.
+> > If Libvirt is still the owner of QEMU instance via the QMP channel, I
+> > actually don't really see why the atomicity would even help, even though we
+> > can still provide that as it's pretty easy as something optional; like what
+> > this patch does without too much hassle.
+> >
+> 
+> We can provide it, but I'd rather not unless we agree that is the way
+> forward. We don't need another way of doing the same as existing
+> commands.
+
+OK, it might be me that misunderstood the request initially.
+
+> 
+> > Then if to move one step further to remove all global settings, we face
+> > breaking debugging scripts, and breaking of any old libvirt and non-libvirt
+> > mgmt apps.  Frankly I really don't yet know whether it's a good idea.  I
+> > could miss some important reasoning of why we want to do it - it needs to
+> > be something not relevant to "making the code cleaner", IMHO..
+> 
+> I don't see it as breaking the old stuff. Because any old users would
+> still be using migrate-set-parameters as usual. So I think your concern
+> is about calling migrate the new way and also keeping -global
+> working. As I said, personally I don't mind if put some ifs around to
+> keep -global working.
+> 
+> Could we add another parameter that says allow-globals (or w/e) and make
+> everyone happy?
+
+That's not needed if it's about making me happy. :) My happiness alone
+isn't that important, I can change any of my script, and I'm OK whatever
+ABI changes, but as long as the downstream won't be a mess..
+
+If we want to either do nothing or making it a bundle, then we can decide
+what's the bundle now.
+
+For example, do we plan to have this, then drop migrate-set-parameters &
+capabilities finally (or at least failing non-runtime-modifi-able ones)?
+
+How fast do we want to do this, and how do we manage downstream to not be
+affected by having new QEMU's migrate-set-* commands completely gone, would
+be the follow up questions..
+
+Maybe I worked much enough on Linux so I pay a lot of attention trying to
+think such trade-off, then if I see not much benefit normally I'll try to
+not break any ABI.  But if that's everyone's wish (except myself.. even if
+it only makes the interface better..) then we can discuss before moving on.
+
+-- 
+Peter Xu
 
 
