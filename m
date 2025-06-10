@@ -4,105 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC5E6C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:52:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0D5C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:52:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27g-0002bR-2r; Tue, 10 Jun 2025 12:46:52 -0400
+	id 1uP27k-0002p2-1w; Tue, 10 Jun 2025 12:46:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP154-0004Kx-22
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:07 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uP1ZB-00033Q-GS
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:11:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP151-0005wt-Me
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:05 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXcE6029102;
- Tue, 10 Jun 2025 15:40:01 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=QnGuW4hcU/XJS+xc3fDPbOyS4InUHfZYKM64dhVjRnA=; b=
- PLX09mCKpMM+V1EvR7AFyB8xTFWjqRDhqKtd3riTfSIMdfdAsDPoYSmM+SuI5pG5
- LY72gyNGP5K0CJonDGWSEDDYlneCHbJbYaJUbUVUjOM5mDIvZ0mPUPdQz23lR6p3
- D6NljN33PwRvo1eg8WhnZAXTi9y7OOaab7h1dT/zAJboVal8TQMpuyRHcnKK9rJ5
- mKstH1cejUQuagpJAFDaxjm18hoYxSCQKQbSAiEUjnkrE+AvLeng+EAzq4IFTuoT
- /vP/70bp7o8htfYKSrZf3EEt/vYGVUGlvFGaFzLy1mWK0B3mfv9RPuYc0XOpe4By
- C5eFULuleD/kVubNBO8EiQ==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474d1v4jfc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:00 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AEZpro003330; Tue, 10 Jun 2025 15:40:00 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wapy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:00 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfH028825;
- Tue, 10 Jun 2025 15:39:59 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-6; Tue, 10 Jun 2025 15:39:59 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 05/38] vfio/container: discard old DMA vaddr
-Date: Tue, 10 Jun 2025 08:39:18 -0700
-Message-Id: <1749569991-25171-6-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uP1Z5-0001eu-QL
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:11:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749571862;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Lw4KCgn5AuZvkE6iDhSORyprWcfTe4OMDLQGuKVdJ68=;
+ b=K/JPED1DWreLh6dNLi1Ky/KwB86/2PlF5N0I/zKkUZNOTtwG1XKB7dyZRuRLrMMu5K1qCR
+ DRFNjaXSrONTHGbIDzuMovjEkYku4/oljRmjNzSjqnijojmdGNndqDjY2KKYpjdN+IAzBa
+ cxXIlfdRmP2xYnN8JBUTpxUac1MTvlM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-335-_TOcaThQOzCPbBoPH1Cn6Q-1; Tue, 10 Jun 2025 12:11:00 -0400
+X-MC-Unique: _TOcaThQOzCPbBoPH1Cn6Q-1
+X-Mimecast-MFC-AGG-ID: _TOcaThQOzCPbBoPH1Cn6Q_1749571859
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a50049f8eeso2558901f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:11:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749571859; x=1750176659;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Lw4KCgn5AuZvkE6iDhSORyprWcfTe4OMDLQGuKVdJ68=;
+ b=ZosxGoMOjKNuKkOjMs5y4B4ml+OvVt92p9ZSRxtgKI2xucZH96QRJBmOuTzr29YOzm
+ QlKIJ8bRsDoF7lytzPcIJLlWLEpJ82GRRp2s7gKhHJobk/rjk1iDogIN33F2i6ihf8Qr
+ jEGv9Dp735Yexb+GJMBrAahXEr6e+UbdyN+2ZSxYCM2kM9Du8gIC/XYBM9JfVhVEbz1n
+ jtaIkCDn8ZLkRry7dOKIVCHI9p/YH/C4v28UN9NvGdARVlp6tRcjD77xSsSqP7alRgx+
+ qfTpGBpx3LmF66zIn9B/c5YfeNgHjB2Eqw4lixJm7kwn1K3YEEyjxMsAj/cR1teU7Kg/
+ 69+A==
+X-Gm-Message-State: AOJu0YwTmBMNBBiTT20+pk/FLVv+5TPgfZPI+P9BwZh6gVcco+6X4jzn
+ Nx5atZ5AWJJY17DPyeH76RK7C1XsT5qNk78FLuNKcK7YOQjMO65cPfHzIj8FFJQrzPrDsfinPaz
+ OH2zSW6z9tCsuxfKiZAUfDNG7hmoIExJSFKvSVryAGgLrwdzS2Id+aXmbNVI6SnyVZnAOyWWrIS
+ dlm5tgAtMeTW7vb+x+kLJwvypuMAvj7aE=
+X-Gm-Gg: ASbGncticym5frAPbPvFkueO+ZqRWYVZKICDD+dKfqiO62bcNLyqaeVBUGsG2uqEc71
+ ZapxBop2icIvS5qBSNzvZgnmH+mjZ+6wn6uvlb4bCRl9uDKs3Q7kQbFNX6ZcZkzH9hblqgi/B/a
+ brfQ==
+X-Received: by 2002:adf:f58c:0:b0:3a5:39d7:3f17 with SMTP id
+ ffacd0b85a97d-3a539d73f90mr9783997f8f.47.1749571859468; 
+ Tue, 10 Jun 2025 09:10:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF8rvEMsKyQJ+gIF14zjTJ0VBycm1tLlvb9Fi2AQvxcIw7deQAd1I27kyWkq0ZOiMcEThd5tumYH8vB1D0U1VQ=
+X-Received: by 2002:adf:f58c:0:b0:3a5:39d7:3f17 with SMTP id
+ ffacd0b85a97d-3a539d73f90mr9783966f8f.47.1749571859026; Tue, 10 Jun 2025
+ 09:10:59 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506100125
-X-Proofpoint-GUID: Sqb2E5S6oJpsLGM9RUHLJsxuMbq9p7up
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX+Smx1FlrJwGQ
- wDFwXdMLg0ZtjDMBKEleu/RhB3tctmPCndpfFVE/70fYYe+stoPWpLiydf1/8qTzDyhVNF8WtuM
- CqFVg4letbCgPVu4eD4nkkntjLJ2Ci8R9w6bEQFyUzuehIWhg2++XpZXX5E7geuNJCak0FH8QMG
- 4voHSy8qfRGIGUimJEgwl81Hb5XI+d7wWRs99ul9bf3eEjM9yGSU4Tv8a5IiCpqGXO+dKkkkO8a
- xnCPLFCRTsByTftpyxfc3RnXih6/La4d8wYkSdi3LPexSGhAvpmqkz/sNkM1caCmNXCaU/Z9STW
- +NNwGZAppL1AO4atpgRED7953SWY2TZsXESmVU5MFKQDr3+NOVoXdSE8+OBPr5jBd74bKv/OFhN
- +Gm/KVCnt0EK9IRGeSe4LRCkNKLOQScyMEkk8iFx4yow7kdy6nbo0NhSxzILXUKVbujuqam5
-X-Proofpoint-ORIG-GUID: Sqb2E5S6oJpsLGM9RUHLJsxuMbq9p7up
-X-Authority-Analysis: v=2.4 cv=d731yQjE c=1 sm=1 tr=0 ts=684851d1 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
- a=PtZ4Ye-5RDd9JDMWK00A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10 cc=ntf awl=host:14714
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20250605101124.367270-1-pbonzini@redhat.com>
+ <CAMxuvazN2OMc1VANJVMgj0nQ1KCCop46A151uAUe0mdATrQjCg@mail.gmail.com>
+In-Reply-To: <CAMxuvazN2OMc1VANJVMgj0nQ1KCCop46A151uAUe0mdATrQjCg@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Tue, 10 Jun 2025 18:10:47 +0200
+X-Gm-Features: AX0GCFsdiMxgV9drCac9melcjaVIHtck4Y6vTQFlL7mrYgE6AYChETUHOZm5-z8
+Message-ID: <CABgObfYt=Gg=R6cekCTbYhmF+2P-9DoOCSeaaWHHGbMmew2ZyQ@mail.gmail.com>
+Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
+To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com, 
+ mkletzan@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,69 +104,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the container pre_save handler, discard the virtual addresses in DMA
-mappings with VFIO_DMA_UNMAP_FLAG_VADDR, because guest RAM will be
-remapped at a different VA after in new QEMU.  DMA to already-mapped
-pages continues.
+On Tue, Jun 10, 2025 at 3:53=E2=80=AFPM Marc-Andr=C3=A9 Lureau
+<marcandre.lureau@redhat.com> wrote:
+> On Thu, Jun 5, 2025 at 2:11=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
+> wrote:
+>> This is just an extremely minimal extraction from the patches at
+>> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redha=
+t.com/,
+>> limited to generating structs and enums from the QAPI schema.
+>> It does not include them in any crate and does not compile them.
+>
+> Do you keep an up to date branch for those patches?
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
----
- hw/vfio/cpr-legacy.c | 29 +++++++++++++++++++++++++++++
- 1 file changed, 29 insertions(+)
+I can add them to my rust-next branch but they can in theory just be
+applied to upstream/master.
 
-diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
-index ac4a9ab..ef106d0 100644
---- a/hw/vfio/cpr-legacy.c
-+++ b/hw/vfio/cpr-legacy.c
-@@ -15,6 +15,22 @@
- #include "migration/vmstate.h"
- #include "qapi/error.h"
- 
-+static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
-+{
-+    struct vfio_iommu_type1_dma_unmap unmap = {
-+        .argsz = sizeof(unmap),
-+        .flags = VFIO_DMA_UNMAP_FLAG_VADDR | VFIO_DMA_UNMAP_FLAG_ALL,
-+        .iova = 0,
-+        .size = 0,
-+    };
-+    if (ioctl(container->fd, VFIO_IOMMU_UNMAP_DMA, &unmap)) {
-+        error_setg_errno(errp, errno, "vfio_dma_unmap_vaddr_all");
-+        return false;
-+    }
-+    return true;
-+}
-+
-+
- static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
- {
-     if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
-@@ -30,10 +46,23 @@ static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
-     }
- }
- 
-+static int vfio_container_pre_save(void *opaque)
-+{
-+    VFIOContainer *container = opaque;
-+    Error *local_err = NULL;
-+
-+    if (!vfio_dma_unmap_vaddr_all(container, &local_err)) {
-+        error_report_err(local_err);
-+        return -1;
-+    }
-+    return 0;
-+}
-+
- static const VMStateDescription vfio_container_vmstate = {
-     .name = "vfio-container",
-     .version_id = 0,
-     .minimum_version_id = 0,
-+    .pre_save = vfio_container_pre_save,
-     .needed = cpr_incoming_needed,
-     .fields = (VMStateField[]) {
-         VMSTATE_END_OF_LIST()
--- 
-1.8.3.1
+> I fail to understand the advantage of going through Serde to deserialize/=
+serialize from C when you can have C types in Rust - having less generated =
+code?
+
+It's indeed trading generated Rust code for generic serializers and
+deserializers + #[derive(Serializer, Deserializer)]. It's not the
+primary reason but the size of your code generator patches was a bit
+scary indeed and I don't want to inflict too much review effort on
+QAPI maintainers.
+
+But also, I'm not sure that the C types are needed at all for
+implementing QAPI commands. The QAPI command generator could have a
+directive like 'rust': 'qga::qmp'" directive (or maybe just
+'language': 'rust', I don't know) that would generate Rust
+marshaling/unmarshaling functions:
+
+pub extern "C" fn qmp_guest_get_host_name(
+        args: *mut QDict,
+        ret: *mut *mut QObject,
+        errp: *mut *mut bindings::Error) {
+    let args =3D unsafe { from_qobject::<()>(args) };
+    match ::qga::qmp::guest_get_host_name(args) {
+        Ok(ref v) =3D> unsafe { *ret =3D to_qobject::<GuestHostName>(v); },
+        Err(err) =3D> unsafe { err.propagate(errp); }
+    }
+}
+
+and this (more specifically from_qobject/to_qobject) could also use
+serde, this time to go directly from QObject to Rust and back. A
+QObject serializer/deserializer should be easier to write (and very
+similar to existing code in serde_json for
+https://docs.rs/serde_json/latest/serde_json/enum.Value.html), so you
+could reach the stage of your old posting with qapi-gen changes that
+are little more than these two patches.
+
+> I also do not fully understand how that would work.
+
+To be honest neither do I entirely. But what I understood is that
+Serde is based on a visitor API that is very similar to what we have
+in QEMU. See the above serde_json link where it implements Serializer
+and Deserializer, and the blog post at
+https://ohadravid.github.io/posts/2025-05-serde-reflect/ should be a
+good introduction too.
+
+That said: the *possibility* of using Serde is why I started from the
+native structs. I'm not wed to it and generating/converting the C
+types remains a possibility as well.
+
+Paolo
 
 
