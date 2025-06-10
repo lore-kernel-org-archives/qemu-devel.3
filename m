@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 493CEC5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:47:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1871BC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:47:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27q-00036K-Dj; Tue, 10 Jun 2025 12:47:02 -0400
+	id 1uP279-0001wD-JD; Tue, 10 Jun 2025 12:46:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15X-0004VJ-1O
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:35 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uP157-0004Lz-W1
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:10 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15R-0006DR-OV
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:31 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXe9x027922;
- Tue, 10 Jun 2025 15:40:26 GMT
+ id 1uP155-00068u-V3
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:09 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXdpX006986;
+ Tue, 10 Jun 2025 15:40:05 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=ZBnuRiGNb3IW9ufqKm9Mzf1gmIUYumg/Y7/g89K/NSs=; b=
- SNZ14tfRjkdN3OCtYIHor5bz9hgve8oOLT6RV3OJS0VOWVe1mpA3BTA6z26jWIco
- 7UYccMtTTlFP5+fpeCJTUun1Fz1miqTaLimkM/eK2ZK5592xJltjZTIV4fCAv+g1
- rRATlI9eL7QAJogsT6xHwP7FFNi5kIGuDdn9I4F7ZCHGyazLvF1xcfnkLp2NdbDY
- xPjxlvzqq1ohG0lJDbm6sDCIltCMP8c3rq+7wMTAr1lZVNkssiXZeZ+6WpdKtkT2
- b7ZcLU3KbBpLfiN9PLbblpXxt8ZDME7d56nY4l7jqn+OznpH3++I1AiPjdyca/LA
- kNhwYbnhjQh8m6Nym3kbkA==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=QUU0fKUJ7eNNO48YhuYUW7qhsp8+PgVI/Q0OcQpjfqI=; b=
+ r4XODh20IZdXrMQTSDqEZjVaRjIDd47Hv+mKEBrRAQAYzf0pqFnlwbRbBv8g2Oow
+ XzLrMoun67UFtQzh0fY/EHFgAPWwZpQiZ+wCSWUVjHfFwy0B+IMpLQe1HCTBQyn8
+ 6QAqdJrRsGOQTLB2PUC3fJQS2BUYSVL4QptafU4vY2FwjHSXTmchNlW3RPeFyLB1
+ yNf6N/CUcW+qjcjwclbdwAyeKjuxg9LvBlYVeQZqXYN+frOpbMMHO1o5fB3U54T0
+ Vl+GHGAOwinGgAqweXKSOphT44S/h4TP1e6MI3cFphUmnwe+/rQPFOcx9yh0/0Ju
+ 4YgNKPRP1VKiOzCWm3vxDg==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474cbech65-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c74vjq7-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:26 +0000 (GMT)
+ Tue, 10 Jun 2025 15:40:05 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AEd5F8003908; Tue, 10 Jun 2025 15:40:25 GMT
+ with ESMTP id 55AEQr8j004067; Tue, 10 Jun 2025 15:40:04 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wbeg-1
+ 474bv8waty-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:24 +0000
+ Tue, 10 Jun 2025 15:40:04 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfn028825;
- Tue, 10 Jun 2025 15:40:24 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfN028825;
+ Tue, 10 Jun 2025 15:40:03 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-22; Tue, 10 Jun 2025 15:40:24 +0000
+ ESMTP id 474bv8wak1-9; Tue, 10 Jun 2025 15:40:03 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,12 +64,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 21/38] migration: cpr_get_fd_param helper
-Date: Tue, 10 Jun 2025 08:39:34 -0700
-Message-Id: <1749569991-25171-22-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V5 08/38] vfio/container: recover from unmap-all-vaddr failure
+Date: Tue, 10 Jun 2025 08:39:21 -0700
+Message-Id: <1749569991-25171-9-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
 References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
@@ -77,21 +81,22 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2506100125
-X-Proofpoint-GUID: r4IfMKFQT3qOfnrppFwKkisYREvsDPjM
-X-Authority-Analysis: v=2.4 cv=BffY0qt2 c=1 sm=1 tr=0 ts=684851ea b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=LIpmQIW9 c=1 sm=1 tr=0 ts=684851d5 b=1 cx=c_pps
  a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=xj5pLq7tU-gV2qsf3bMA:9 cc=ntf
- awl=host:14714
-X-Proofpoint-ORIG-GUID: r4IfMKFQT3qOfnrppFwKkisYREvsDPjM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfXzVMP7iLaOLzO
- Uv0KOTpL8nLXDwkVMZvgNNEFttUxAZiI4p8W8MHkDHpWMgRuBjLBupePiiHQPLxn8d/6zjDZZCS
- c4hL9jMn9JgclrfVJerqbHReEh/8DmgIOFrT3S3MY7vnRhucDWRVBUEFF6MhnJZ/HJdOpho71zb
- f5dp5FxMRmaz8WjeM5LRaA3oZevIAsohANPtyQI3dOpyAGP+d7oAANedRO7mfjgW3/cBYWn/wH3
- fPXG0noiwGlARzlEdVeqO9bOO5fnC8WO2R1gDheBZ9NQWrnp3GPAhVjPBJF9a5Y7XP1MzQ160Qa
- z2O6MbmF6fKSvb4P06Y/tSJq1N+G+p6Oyby3Lfgh81iInqmgADcyF3jYcgGjVD4/5wGJPzNXHPB
- l04FxjFz0GkoV5aLwzfQGj2wWTGuUB6XW/bAMWhSrfcLF1eQ1u+aNKqJkeKq5JqGNhIW7ClX
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
+ a=bXQ6ZcJOO1ukfLjjEFYA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:14714
+X-Proofpoint-ORIG-GUID: g_iLs4awUVLYLUVocTkLYb4eayf8aNwK
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX9f5NqtiM2aTp
+ PwzAg2jOBGWvo4mKFzA0ZGlAQOB0LBIoiEtV8iltinZ/aKN3u14fvXQ5cItKXN5/5zlQRtJSanI
+ Q+bqAI4Ujyi++Lq2qDAPbpdrTngiaSzY0Mf39NM7Hh73+drNpZM12cl46RHUAPHle0jAmvgN59u
+ 2jZAVfHHoT1KYWPwjt7BX3c+CtaEoIGoEEikmpoYLusnfAVUKvk9bRu3LRifa+u54M3CoTZU0KA
+ ymKKmf9+rVAaLztKn9Adehx3wfL68cgpQE/eOc7GRpSnHadYEwSAG6dWi3nh4WNIhF/SzYera+2
+ ppp/+vG286Y8mHr/lSfQhrhfH70bb00wofSMKKshxS+4G0KzV1l0ez8ff6c1k4Gbdg/Z9EcChAt
+ 2nyFti5SzhcAW0yw7E0cHT7+pSWS0ysJF1OAuAr7ZhAnx69V9STPAXTrSPXyIFurzrvH2wq7
+X-Proofpoint-GUID: g_iLs4awUVLYLUVocTkLYb4eayf8aNwK
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -115,94 +120,241 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the helper function cpr_get_fd_param, to use when preserving
-a file descriptor that is opened externally and passed to QEMU.
-cpr_get_fd_param returns a descriptor number either from a QEMU
-command-line parameter, from a getfd command, or from CPR state.
-
-When a descriptor is passed to new QEMU via SCM_RIGHTS, its number
-changes.  Hence, during CPR, the command-line parameter is ignored
-in new QEMU, and over-ridden by the value found in CPR state.
-
-Similarly, if the descriptor was originally specified by a getfd
-command in old QEMU, the fd number is not known outside of QEMU,
-and it changes when sent to new QEMU via SCM_RIGHTS.  Hence the
-user cannot send getfd to new QEMU, but when the user sends a
-hotplug command that references the fd, cpr_get_fd_param finds
-its value in CPR state.
+If there are multiple containers and unmap-all fails for some container, we
+need to remap vaddr for the other containers for which unmap-all succeeded.
+Recover by walking all address ranges of all containers to restore the vaddr
+for each.  Do so by invoking the vfio listener callback, and passing a new
+"remap" flag that tells it to restore a mapping without re-allocating new
+userland data structures.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- include/migration/cpr.h |  2 ++
- migration/cpr.c         | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 39 insertions(+)
+ include/hw/vfio/vfio-container-base.h |  3 ++
+ include/hw/vfio/vfio-cpr.h            | 10 ++++
+ hw/vfio/cpr-legacy.c                  | 91 +++++++++++++++++++++++++++++++++++
+ hw/vfio/listener.c                    | 19 +++++++-
+ 4 files changed, 122 insertions(+), 1 deletion(-)
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index d09b657..7fd8065 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -33,6 +33,8 @@ struct QIOChannel *cpr_state_ioc(void);
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 9d37f86..f023265 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -256,4 +256,7 @@ struct VFIOIOMMUClass {
+ VFIORamDiscardListener *vfio_find_ram_discard_listener(
+     VFIOContainerBase *bcontainer, MemoryRegionSection *section);
  
- bool cpr_incoming_needed(void *opaque);
- void cpr_kvm_close(void);
-+int cpr_get_fd_param(const char *name, const char *fdname, int index,
-+                     Error **errp);
++void vfio_container_region_add(VFIOContainerBase *bcontainer,
++                               MemoryRegionSection *section, bool cpr_remap);
++
+ #endif /* HW_VFIO_VFIO_CONTAINER_BASE_H */
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index b83dd42..56ede04 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -10,6 +10,7 @@
+ #define HW_VFIO_VFIO_CPR_H
  
- void cpr_transfer_init(void);
- QEMUFile *cpr_transfer_output(MigrationChannel *channel, Error **errp);
-diff --git a/migration/cpr.c b/migration/cpr.c
-index 49fb0a5..4574608 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -14,6 +14,7 @@
- #include "migration/qemu-file.h"
- #include "migration/savevm.h"
- #include "migration/vmstate.h"
-+#include "monitor/monitor.h"
- #include "system/kvm.h"
- #include "system/runstate.h"
- #include "trace.h"
-@@ -272,3 +273,39 @@ void cpr_kvm_close(void)
-     kvm_close();
-     vfio_kvm_device_close();
+ #include "migration/misc.h"
++#include "system/memory.h"
+ 
+ struct VFIOContainer;
+ struct VFIOContainerBase;
+@@ -17,6 +18,9 @@ struct VFIOGroup;
+ 
+ typedef struct VFIOContainerCPR {
+     Error *blocker;
++    bool vaddr_unmapped;
++    NotifierWithReturn transfer_notifier;
++    MemoryListener remap_listener;
+     int (*saved_dma_map)(const struct VFIOContainerBase *bcontainer,
+                          hwaddr iova, ram_addr_t size,
+                          void *vaddr, bool readonly, MemoryRegion *mr);
+@@ -42,4 +46,10 @@ int vfio_cpr_group_get_device_fd(int d, const char *name);
+ bool vfio_cpr_container_match(struct VFIOContainer *container,
+                               struct VFIOGroup *group, int fd);
+ 
++void vfio_cpr_giommu_remap(struct VFIOContainerBase *bcontainer,
++                           MemoryRegionSection *section);
++
++bool vfio_cpr_ram_discard_register_listener(
++    struct VFIOContainerBase *bcontainer, MemoryRegionSection *section);
++
+ #endif /* HW_VFIO_VFIO_CPR_H */
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index 2fd8348..a84c324 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -29,6 +29,7 @@ static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
+         error_setg_errno(errp, errno, "vfio_dma_unmap_vaddr_all");
+         return false;
+     }
++    container->cpr.vaddr_unmapped = true;
+     return true;
  }
+ 
+@@ -59,6 +60,14 @@ static int vfio_legacy_cpr_dma_map(const VFIOContainerBase *bcontainer,
+     return 0;
+ }
+ 
++static void vfio_region_remap(MemoryListener *listener,
++                              MemoryRegionSection *section)
++{
++    VFIOContainer *container = container_of(listener, VFIOContainer,
++                                            cpr.remap_listener);
++    vfio_container_region_add(&container->bcontainer, section, true);
++}
++
+ static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
+ {
+     if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
+@@ -120,6 +129,40 @@ static const VMStateDescription vfio_container_vmstate = {
+     }
+ };
+ 
++static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
++                                  MigrationEvent *e, Error **errp)
++{
++    VFIOContainer *container =
++        container_of(notifier, VFIOContainer, cpr.transfer_notifier);
++    VFIOContainerBase *bcontainer = &container->bcontainer;
++
++    if (e->type != MIG_EVENT_PRECOPY_FAILED) {
++        return 0;
++    }
++
++    if (container->cpr.vaddr_unmapped) {
++        /*
++         * Force a call to vfio_region_remap for each mapped section by
++         * temporarily registering a listener, and temporarily diverting
++         * dma_map to vfio_legacy_cpr_dma_map.  The latter restores vaddr.
++         */
++
++        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++        vioc->dma_map = vfio_legacy_cpr_dma_map;
++
++        container->cpr.remap_listener = (MemoryListener) {
++            .name = "vfio cpr recover",
++            .region_add = vfio_region_remap
++        };
++        memory_listener_register(&container->cpr.remap_listener,
++                                 bcontainer->space->as);
++        memory_listener_unregister(&container->cpr.remap_listener);
++        container->cpr.vaddr_unmapped = false;
++        vioc->dma_map = container->cpr.saved_dma_map;
++    }
++    return 0;
++}
++
+ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
+ {
+     VFIOContainerBase *bcontainer = &container->bcontainer;
+@@ -142,6 +185,10 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
+         container->cpr.saved_dma_map = vioc->dma_map;
+         vioc->dma_map = vfio_legacy_cpr_dma_map;
+     }
++
++    migration_add_notifier_mode(&container->cpr.transfer_notifier,
++                                vfio_cpr_fail_notifier,
++                                MIG_MODE_CPR_TRANSFER);
+     return true;
+ }
+ 
+@@ -152,6 +199,50 @@ void vfio_legacy_cpr_unregister_container(VFIOContainer *container)
+     migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
+     migrate_del_blocker(&container->cpr.blocker);
+     vmstate_unregister(NULL, &vfio_container_vmstate, container);
++    migration_remove_notifier(&container->cpr.transfer_notifier);
++}
 +
 +/*
-+ * cpr_get_fd_param: find a descriptor and return its value.
++ * In old QEMU, VFIO_DMA_UNMAP_FLAG_VADDR may fail on some mapping after
++ * succeeding for others, so the latter have lost their vaddr.  Call this
++ * to restore vaddr for a section with a giommu.
 + *
-+ * @name: CPR name for the descriptor
-+ * @fdname: An integer-valued string, or a name passed to a getfd command
-+ * @index: CPR index of the descriptor
-+ * @errp: returned error message
-+ *
-+ * If CPR is not being performed, then use @fdname to find the fd.
-+ * If CPR is being performed, then ignore @fdname, and look for @name
-+ * and @index in CPR state.
-+ *
-+ * On success returns the fd value, else returns -1.
++ * The giommu already exists.  Find it and replay it, which calls
++ * vfio_legacy_cpr_dma_map further down the stack.
 + */
-+int cpr_get_fd_param(const char *name, const char *fdname, int index,
-+                     Error **errp)
++void vfio_cpr_giommu_remap(VFIOContainerBase *bcontainer,
++                           MemoryRegionSection *section)
 +{
-+    ERRP_GUARD();
-+    int fd;
++    VFIOGuestIOMMU *giommu = NULL;
++    hwaddr as_offset = section->offset_within_address_space;
++    hwaddr iommu_offset = as_offset - section->offset_within_region;
 +
-+    if (cpr_is_incoming()) {
-+        fd = cpr_find_fd(name, index);
-+        if (fd < 0) {
-+            error_setg(errp, "cannot find saved value for fd %s", fdname);
-+        }
-+    } else {
-+        fd = monitor_fd_param(monitor_cur(), fdname, errp);
-+        if (fd >= 0) {
-+            cpr_save_fd(name, index, fd);
-+        } else {
-+            error_prepend(errp, "Could not parse object fd %s:", fdname);
++    QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
++        if (giommu->iommu_mr == IOMMU_MEMORY_REGION(section->mr) &&
++            giommu->iommu_offset == iommu_offset) {
++            break;
 +        }
 +    }
-+    return fd;
++    g_assert(giommu);
++    memory_region_iommu_replay(giommu->iommu_mr, &giommu->n);
 +}
++
++/*
++ * In old QEMU, VFIO_DMA_UNMAP_FLAG_VADDR may fail on some mapping after
++ * succeeding for others, so the latter have lost their vaddr.  Call this
++ * to restore vaddr for a section with a RamDiscardManager.
++ *
++ * The ram discard listener already exists.  Call its populate function
++ * directly, which calls vfio_legacy_cpr_dma_map.
++ */
++bool vfio_cpr_ram_discard_register_listener(VFIOContainerBase *bcontainer,
++                                            MemoryRegionSection *section)
++{
++    VFIORamDiscardListener *vrdl =
++        vfio_find_ram_discard_listener(bcontainer, section);
++
++    g_assert(vrdl);
++    return vrdl->listener.notify_populate(&vrdl->listener, section) == 0;
+ }
+ 
+ int vfio_cpr_group_get_device_fd(int d, const char *name)
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 203ed03..2e57986 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -481,6 +481,13 @@ static void vfio_listener_region_add(MemoryListener *listener,
+ {
+     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+                                                  listener);
++    vfio_container_region_add(bcontainer, section, false);
++}
++
++void vfio_container_region_add(VFIOContainerBase *bcontainer,
++                               MemoryRegionSection *section,
++                               bool cpr_remap)
++{
+     hwaddr iova, end;
+     Int128 llend, llsize;
+     void *vaddr;
+@@ -516,6 +523,11 @@ static void vfio_listener_region_add(MemoryListener *listener,
+         int iommu_idx;
+ 
+         trace_vfio_listener_region_add_iommu(section->mr->name, iova, end);
++
++        if (cpr_remap) {
++            vfio_cpr_giommu_remap(bcontainer, section);
++        }
++
+         /*
+          * FIXME: For VFIO iommu types which have KVM acceleration to
+          * avoid bouncing all map/unmaps through qemu this way, this
+@@ -558,7 +570,12 @@ static void vfio_listener_region_add(MemoryListener *listener,
+      * about changes.
+      */
+     if (memory_region_has_ram_discard_manager(section->mr)) {
+-        vfio_ram_discard_register_listener(bcontainer, section);
++        if (!cpr_remap) {
++            vfio_ram_discard_register_listener(bcontainer, section);
++        } else if (!vfio_cpr_ram_discard_register_listener(bcontainer,
++                                                           section)) {
++            goto fail;
++        }
+         return;
+     }
+ 
 -- 
 1.8.3.1
 
