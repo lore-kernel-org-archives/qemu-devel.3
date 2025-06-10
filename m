@@ -4,86 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D811CC5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:57:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3D8EC71130
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:57:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27j-0002m9-BS; Tue, 10 Jun 2025 12:46:55 -0400
+	id 1uP27f-0002YX-DT; Tue, 10 Jun 2025 12:46:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOzeL-0004HY-LQ
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 10:08:25 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uP1RL-00071z-Te
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:03:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uOzeE-0002my-WA
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 10:08:22 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uP1RK-0000LN-Fr
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:03:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749564495;
+ s=mimecast20190719; t=1749571384;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=dIr303QJUW0o2vgHIFICfqu91Hv6YzHVoizhZsQAHBY=;
- b=jEjX98T0ul2TdkyUXtD1S4ksBBlPwqkckDVq6U/GiqmI2gYqpO8aB0pBpwII4Bb7z9+tUk
- IviT3UP7ginyE/OCCS/eBOGNgWqhpo8Dd2IhvStv05bXvgfh7v9sYtI3snI5THiY6Gr0PG
- NgjJimthAJJWNu5ag0DjZIya3xqCui4=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rtT0IHU1UsqC6SynSODcmb8WSOW/YHF9wPm6k+JvGCc=;
+ b=cgY+CoS1WWdZq70REhcy4d9v0HWxbGSZ0PM1Wjvn3jCYLcn8COh6YtILG4wJBl0cNWqrRu
+ 4CRL7+D3Zy7iDM+lBDppkDihrI/FoLiHgcWDN6+N1jfhatdXrO6yFkHD6DFnUXlm8z0Jbt
+ 6YPT36BqbF8/VQhwFX6/iKKNTOBL2Vg=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-7-F_Vwh1hrMqCfRqsuT1Ppkg-1; Tue, 10 Jun 2025 10:08:14 -0400
-X-MC-Unique: F_Vwh1hrMqCfRqsuT1Ppkg-1
-X-Mimecast-MFC-AGG-ID: F_Vwh1hrMqCfRqsuT1Ppkg_1749564494
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-7d38fe2eff2so442343085a.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 07:08:14 -0700 (PDT)
+ us-mta-255-hk-u2ys9NamT8_DdIOHhUA-1; Tue, 10 Jun 2025 12:03:01 -0400
+X-MC-Unique: hk-u2ys9NamT8_DdIOHhUA-1
+X-Mimecast-MFC-AGG-ID: hk-u2ys9NamT8_DdIOHhUA_1749571381
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-4a6e9182fbaso68297211cf.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:03:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749564494; x=1750169294;
+ d=1e100.net; s=20230601; t=1749571381; x=1750176181;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dIr303QJUW0o2vgHIFICfqu91Hv6YzHVoizhZsQAHBY=;
- b=PliA7HWbk2UHvTa+nWHbkRPLv4oA3t99kseZ8JKh7PhO9ZSDePymehvG1XswooXrEg
- sSFZdNroYuEWfCHUXH9U3sMucgoFz8M2N14xa21BAg2Pcp98LHb+em4D07vuVtCOnk+X
- ZFRsX/7nuHAb9+17bllDja9udhTUuKSBfqzFIaefw4hMqsDkEhfHl/cpCTPWanF4KtKR
- fZ0V8GOCKtIN+JNLPR+aVReTtHouPHweLEQbL5DQtLXHcqwvulFwpoXpBwWeBe8n71Zc
- LphK4ZoSNGvlgsGh4n+wDGATMR2d00RaROidU5zyePVdAADvQLmErh2UL1rYiYXmGhZQ
- 4tag==
-X-Gm-Message-State: AOJu0Yx/nbVSmYq/DJP71YYe7bAErFA6HmnXr1QggPp63UGOLedXTDdO
- tqCOdavP+GqKE1j1CasFCsvL3+bDNx0c+gzoeA1/gH5k3a3R3+VdN+IoYNZP1KJUPHkKQh1ScB4
- eba4LpHTry+2R1AnNrkW1ouIb6oc/qKMHogREdmvL1uWMyVcR5dg5tIs+
-X-Gm-Gg: ASbGncuhDcKoGrwuftYzfJhCqTB6i8qDWI1emWrw0DcOP6LBU6YvNS9iYsLI+plvN3F
- 7ARK9Qv9juT82E1NoAvqA8WA8kMPa00Yd+g3PRVt3TWSdo3bogoX8N1oggqVpUJk4rvKzE/OPKe
- cCepQT3Afmo6JjcgcC3pD3fF9r630KHqsHeJMtEijitSejmktB+SOylB+HT5AE/knLOP3pZ9nuE
- fDAvzFyQIQeKHGNz3BL3kbg4yWHJPbX8Iaypm9tYE6ZE+0G0qvy5oKKRxiNvRg6kCeLa3mplHDJ
- 3iZiaLbXOEVxuw==
-X-Received: by 2002:a05:620a:84c4:b0:7d2:15f:f976 with SMTP id
- af79cd13be357-7d39f65b4fbmr413938285a.52.1749564493600; 
- Tue, 10 Jun 2025 07:08:13 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHONfdQLSyuS+//Immg8bqzZZWdRf/UXWf50Kwr5hTNv4bS7RFr/JLGXIbT1wG9I7oNVPBfIQ==
-X-Received: by 2002:a05:620a:84c4:b0:7d2:15f:f976 with SMTP id
- af79cd13be357-7d39f65b4fbmr413933785a.52.1749564493180; 
- Tue, 10 Jun 2025 07:08:13 -0700 (PDT)
+ bh=rtT0IHU1UsqC6SynSODcmb8WSOW/YHF9wPm6k+JvGCc=;
+ b=DRFQlvW6WEGTU7Ut5lsynjFowginOPN3alQ/qLRKrJ69acywUYldOeFchSUwOPD243
+ tlnZRo2qs4DrWLqWNKyVri0pls+i2vdwLUXxRxKhgfi9oKesUz3fXxGkUsd17a6miH9z
+ OFOKGvP9Lw9s/tsQr+Ps7YtbOu7y2lBq+yA9btryxG4rGKMgljTWjHzvPx9+qjLPFiR5
+ JKbo2dhJfqxrypOe/LiEcHFtmygug21uUaQ59vicFkdNis1HFahwuH+KZBoKy9Ho7rRQ
+ AzyHknqXPytPY8Ex04gnJK+VhHX3a42AGju0fz2eQ9PXlcU4LGecu5UD1DFfrq5tpIRd
+ Ve3w==
+X-Gm-Message-State: AOJu0YzeCrjbqTpgv4L5xolHki8zr0BBKbNaA1wbLFrWOohAl7OZhMke
+ SGyLv24vr+8aHaOB3KQI+x2dxQM8/+p2o2lr4fAGj0bQguHLYuUHUVENIidMJJ3IAFgLQV3uYyu
+ NyZf1YlNhBK2RMJ1uoSfmpcWhc/3/Pa/lkQQkedzAWh2CJjrf20GhdGs7
+X-Gm-Gg: ASbGnctCYXqaWFowYmyE2prgplQfBPNGdUhAUo9KqGtFRgsuGypfcc+Go0HgKpabBqz
+ vB0U6yprAaVvo9KuYYI5E8uqXkWR0TGMJGmzfsmca+wlL/nxUtWX+U/yD/t/l/6P6ZkpCG6uwzh
+ mb3utvAaSjUUZ6NEyZ93jSUAilAbqK73llY3yimvopB9g3y2BM3uzs5/CTJVuuaqGZeWG+4z89x
+ x/R4alK/ZhbIYs/Hs/N4SmUeizM30mw0UeOBMQu65bxQk80aZslz0h9NIWnQ/GdgJHZ1Cf3Hips
+ Iil3CQWbBnr0DQ==
+X-Received: by 2002:a05:622a:2303:b0:4a6:f9e3:b08a with SMTP id
+ d75a77b69052e-4a708dd2c18mr71796681cf.26.1749571380733; 
+ Tue, 10 Jun 2025 09:03:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFl++5DIbbNqxYdn2eZCN0IJLKc9soaUXaED6uFceZT4C/KWmXjWHSx7FMluarA0NzvmKpJMQ==
+X-Received: by 2002:a05:622a:2303:b0:4a6:f9e3:b08a with SMTP id
+ d75a77b69052e-4a708dd2c18mr71796171cf.26.1749571380286; 
+ Tue, 10 Jun 2025 09:03:00 -0700 (PDT)
 Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-7d3916294e4sm356748385a.4.2025.06.10.07.08.12
+ d75a77b69052e-4a611150830sm73064281cf.10.2025.06.10.09.02.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Jun 2025 07:08:12 -0700 (PDT)
-Date: Tue, 10 Jun 2025 10:08:09 -0400
+ Tue, 10 Jun 2025 09:02:59 -0700 (PDT)
+Date: Tue, 10 Jun 2025 12:02:56 -0400
 From: Peter Xu <peterx@redhat.com>
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: qemu-devel@nongnu.org, Alexey Perevalov <a.perevalov@samsung.com>,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 08/13] migration/postcopy: Report fault latencies in
- blocktime
-Message-ID: <aEg8SbNKY0MzLBr4@x1.local>
-References: <20250609191259.9053-1-peterx@redhat.com>
- <20250609191259.9053-9-peterx@redhat.com>
- <aEd3d07hQYXWc4eq@gallifrey> <aEg1iP9iXlYsQP0C@x1.local>
- <aEg45Bptc4QGq5gK@gallifrey>
+To: Jaehoon Kim <jhkim@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, jjherne@linux.ibm.com, steven.sistare@oracle.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
+Subject: Re: [PATCH v2] migration: Setup pre-listened cpr.sock to remove
+ race-condition.
+Message-ID: <aEhXMCuztHlUEhqb@x1.local>
+References: <20250610150849.326194-1-jhkim@linux.ibm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <aEg45Bptc4QGq5gK@gallifrey>
+In-Reply-To: <20250610150849.326194-1-jhkim@linux.ibm.com>
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -109,61 +105,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 10, 2025 at 01:53:40PM +0000, Dr. David Alan Gilbert wrote:
-> * Peter Xu (peterx@redhat.com) wrote:
-> > On Tue, Jun 10, 2025 at 12:08:23AM +0000, Dr. David Alan Gilbert wrote:
-> > > > diff --git a/qapi/migration.json b/qapi/migration.json
-> > > > index 4963f6ca12..e95b7402cb 100644
-> > > > --- a/qapi/migration.json
-> > > > +++ b/qapi/migration.json
-> > > > @@ -236,6 +236,17 @@
-> > > >  #     This is only present when the postcopy-blocktime migration
-> > > >  #     capability is enabled.  (Since 3.0)
-> > > >  #
-> > > > +# @postcopy-latency: average remote page fault latency (in us).  Note that
-> > > > +#     this doesn't include all faults, but only the ones that require a
-> > > > +#     remote page request.  So it should be always bigger than the real
-> > > > +#     average page fault latency. This is only present when the
-> > > > +#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
-> > > > +#
-> > > > +# @postcopy-vcpu-latency: average remote page fault latency per vCPU (in
-> > > > +#     us).  It has the same definition of @postcopy-latency, but instead
-> > > > +#     this is the per-vCPU statistics.  This is only present when the
-> > > > +#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
-> > > 
-> > > I wonder if even 'us' is too big; given you have 64bits to play with, and your
-> > > examples show some samples landing in under 10us, perhaps it's best
-> > > to at least define the qapi  fields as ns, even if you keep with the same
-> > > buckets for now?
-> > 
-> > The few <10us ones should pretty much be outliers, I'd expect it happened
-> > because some faulted pages got lucky to be migrated (in the background
-> > stream rather than the preempt stream) right after sending the request.
-> > 
-> > But it's still a fair point, especially if there's nothing to lose to
-> > switch to nanoseconds here when we have 64bits fields.. I also did a quick
-> > check online, looks like RDMA over 100Gbps NIC may actually do a fast
-> > round-robin transaction within a few microseconds indeed at least with zero
-> > loads..
-> > 
-> > Let me do the switch in v3.
-> > 
-> > While at it, when thinking of possible future unit/format changes in the
-> > report, maybe I should also mark all of these fields experimental from the
-> > start? So we don't necessarily need to maintain the ABI - the expectation
-> > is even if a mgmt would like to fetch those they should only fetch and dump
-> > it into log so that human can read later only for debugging purposes.
+On Tue, Jun 10, 2025 at 10:08:49AM -0500, Jaehoon Kim wrote:
+> When the source VM attempts to connect to the destination VM's Unix
+> domain socket (cpr.sock) during a cpr-transfer test, race conditions can
+> occur if the socket file isn't ready. This can lead to connection
+> failures when running tests.
 > 
-> Yeh I think that's OK, although perhaps another way would be to add
-> a field indicating the time of the first bucket; i.e. you could specify
-> that all the values are in ns, but have first-bucket=1000 to be exactly
-> the same as you have it now.
+> This patch creates and listens on the socket in advance, and passes the
+> pre-listened FD directly. This avoids timing issues and improves the
+> reliability of CPR tests.
+> 
+> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
 
-Right, that should also be better than the current.  Marking experimental
-could be slightly more flexible though, e.g. once we want to report in
-other formats other than power-of-two buckets.  I'll think about it.
+One quick comment while we can wait for others to look at the details: when
+it involves both qemu and tests changes, please consider splitting that
+into two patches. The test patch can be prefixed with "tests/migration:".
 
-Thanks for the input!
+Thanks,
 
 -- 
 Peter Xu
