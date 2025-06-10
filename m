@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBCAC678DA
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:57:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34C25C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:58:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyXY-0006np-0g; Tue, 10 Jun 2025 08:57:20 -0400
+	id 1uOyXs-0006qL-7b; Tue, 10 Jun 2025 08:57:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXX-0006nY-6R
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:19 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXg-0006pU-Iu
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:30 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXU-0002cM-Rr
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:18 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a375e72473so2757534f8f.0
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXb-0002dJ-O9
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:28 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a3798794d3so4649078f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749560231; x=1750165031; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749560241; x=1750165041; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pACGd9aRRNLDY6rAI3jpVfxGD06wCRoRsQs9qD7T4XI=;
- b=B3FCq3OVioCshWL3BsMS3hEzeaEC3pMYbjFhMJKxLUIJS+MmIVxWN2oTyJFCVC06jA
- 6m7S5szdwVxK+XvUQPtcQ04c5OfAXelRoaRcfOgH/tm5bUjV4jgVB1aJE6bH1d8d90BH
- mfLdWvUDy5TGHaBop5hPTPg5zLoyjy3C/bgIU3uvLwCF4wAZXIL7uv5PvsyxhlP0+8cn
- SvTOt9mu3kxSHLm6t8WypoeB4uzCPsGteZ1yFnQ+eZoEtU6FdtHRK0Y2ISM1t7Ff4k+8
- ZAViZjysk8r8GTEycALU2X5X75b3563nv7vSbnKHliqhlX6WNpC6sLr+dgGMqPNMYG+f
- oruQ==
+ bh=nPmJc92lIzdWkVRDqUj3SpAKD/Q77Fm/aYA6SSL5Z8Q=;
+ b=NSRWm/vKXhTfMeGAjSHfoj7Qe2mej7L0pyhAEXbb0Pz/51c+Eurox45fAJZ+8ps6m+
+ ECKlneZxYxv9Z0WJbEMizUC4pxAIyqsBqdXLcMR02iLlY1qX62L7u/N5EuxO1kXDitye
+ q/CY+lrT8zFagl3Afi5dsL6tvkKiSzxntueF0VvvEV8YhO3HehppsUd6gAi5gmAMSaKJ
+ wNicg+l+8aTX05h/DmaF4+tbXDYya2Y84LU4pTwarbNdGMHH4JYYLKS2gaUkcc/1bMyI
+ Km9KlqLVndeY07oXNbeBaPGaThWfmJWWOJKaptAAGckN6Cv46BDm5IkQZ4KNbA7FR96u
+ 7PpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749560231; x=1750165031;
+ d=1e100.net; s=20230601; t=1749560241; x=1750165041;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=pACGd9aRRNLDY6rAI3jpVfxGD06wCRoRsQs9qD7T4XI=;
- b=VGeE1//f/HG6z1dVBXkHZDKNfj7dFhW/oZ7b7FhagFaFQ3/S8jol4fXvvWf1DjKZ+2
- 3kw1Rid3S0WJ47dGTaQ4/4hl9kRqk2bTJ0ouRQh+dJtz3P2V5QgwXgdm+m6ACwxkosmb
- 3hli01N1mHFIwtibJNfAnZzVSO0987vyCT4ZC3MH7bVKY0Vjfb5nZEAQYCwE+6/4JZHn
- 2yI1E4q0wXaLWoWvoeqraerRzBnNXa4kaYhuEwieXXboOV/+YbTTZUwemGoJO1tr+bg0
- 9eWovdWuTeiF01qcRcJ3Die9Nzdw1EmdITRoFNHVuxgwUqh+fPErp6pPbZB6xW2RxXW3
- Xo7A==
-X-Gm-Message-State: AOJu0YyngUQvPVzEZr2eGMFZ0GIbHc0gmWiW53isNrWhVTeDpXlCdgVk
- ubK+7e78wvNpqVid1klBa/X/tBXXfziIUxnarLyogW6OPY+VHbswHL4pPRy6erv5VuOvTVW8IiF
- /ITuCDWg=
-X-Gm-Gg: ASbGncvlj1z48YhsT7KzYMyShWdRzF1yW342q9jd2VUIoYRix7J7ioVf+1CNbSEn8PR
- mRkMNyI6LQ/2gHbVziuQwCIbA2Q+iELfCML4eV2rcs6PBTzlY2hIRSVW1DKBNTD5ECsQ22QMTiF
- q+XlcGXnLwGGeMdUGkDBWqBh/xd03l9SIYQ9w1+XLVMWdrSAutTqE+y4Z+CyS3R43T2+DUS4qn1
- 0PiYKEeOd5FWSPCgOJU+ZBVKH+086ye5t2iz3zPAfZ79sS08FdKzm0AhTJ984v+BkQPsrzhH3eW
- wUbYuuFRJofpB9vAsgf/q9cf+74uJTFTugQzHtSvouke3tvdAJuHpIfEaC9BljsjX0KO5CSGNOm
- MPlcWL/Zgp8YgTTzo/vsxh+wlm9mj1j2PRMtHe+TbsA==
-X-Google-Smtp-Source: AGHT+IG8N8MmoWXo7meZRdTzxnuNX0XgZdFlC+CiHi5F/ZvEr48gEOhaetKBNyb1O2o7zl5EOGB03A==
-X-Received: by 2002:a05:6000:290c:b0:3a4:d8b6:ca3f with SMTP id
- ffacd0b85a97d-3a5318a7c04mr11661952f8f.30.1749560231443; 
- Tue, 10 Jun 2025 05:57:11 -0700 (PDT)
+ bh=nPmJc92lIzdWkVRDqUj3SpAKD/Q77Fm/aYA6SSL5Z8Q=;
+ b=W1RRLXrcIzsu65YxrGDc2xB401Pw0+26+wrcl8uAHhATnd9fKfMvUlVa6JpwK9J6Ld
+ baMfcQcp+1eAofa0yxana8cWPMXfoW1VV4Yd1090PSodqsYPCLFYIovE4RMBA3hb6/ob
+ Qmqx1zfzYcnurNqAJohbQhpArHPbHLsivrzLtNRCLgBTpeEIy5Vwxv6WbABZQjjKbKqa
+ Y9d7n6MiuFrqtT5tfkJiOaNLp+Dhp0FaEbukQw4bDaZXo8zodoxCNFrvMP47fGbTPKfv
+ 3avjoYy5utn33QBvFGMgo/tbrosrFU5C+b2x2a4V40X9laBjMlSB74X9r3w+9/Bsxrl+
+ n5Pw==
+X-Gm-Message-State: AOJu0Yy+hcLA9iesD+JwTJR06PLlJl7cl5n6kkwdjK/JiUPFln1t/v+j
+ AEFAER4rllE4sOvnu3Uy6I3Hhr3tGbXGx2XgfEMbM7RetvixJ19rOuhxBgPaPNI08nHved6kCn/
+ JuupmHQg=
+X-Gm-Gg: ASbGncuCj4pPIibUJ0aoVQnShFU2F44/SoyHGjMWwAI1oESABB1pzMC2Jc0DWF1tbIv
+ LV+Jt8rlebZpUgtuWGiU07nmgOZxlZMZ47xmc+39m/yKrarm+IOQlvkDvbRd19wBNcK6tz8ozs8
+ gqtR3xwH25KYWE35RH/hEAQ+otgxnKDGzVNG0SFF7IXfXKIs9PJMZU7DJZo/ONTtuXXJ023U8D1
+ SlBwhENE4+Waygnw35EVMzKPjE8L1rlyjGv2ShkEJ4WmKdsLIXwBvrvwi+gJr4uV7d03aHIxtrS
+ SUyAoZiWRYr2Sa04C85DYVOOLEqbcRGryP8OrtakhGSbKJc/9R65PzVj7Kos2YklSWvB/QzIRl8
+ PHbpCFJL0n8pgTDZwk6eVu7xcAizKMfikjMNymQsqag==
+X-Google-Smtp-Source: AGHT+IEU1+LvNWoW0KzES8IwdL5liaSDBBn2aM68LsBKWLwDs6Y3NdsbhEv/agPdn8CX8u/SX89+aQ==
+X-Received: by 2002:a05:6000:4313:b0:3a5:25e4:264f with SMTP id
+ ffacd0b85a97d-3a531cb01acmr14319771f8f.31.1749560241380; 
+ Tue, 10 Jun 2025 05:57:21 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5323bee86sm11989585f8f.43.2025.06.10.05.57.10
+ ffacd0b85a97d-3a53229ddf6sm12079422f8f.2.2025.06.10.05.57.20
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Jun 2025 05:57:11 -0700 (PDT)
+ Tue, 10 Jun 2025 05:57:20 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>,
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Helge Deller <deller@gmx.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 08/24] hw/net/fsl_etsec: Set default MAC address
-Date: Tue, 10 Jun 2025 14:56:17 +0200
-Message-ID: <20250610125633.24411-9-philmd@linaro.org>
+Subject: [PULL 10/24] pc-bios: ensure installed ROMs don't have execute
+ permissions
+Date: Tue, 10 Jun 2025 14:56:19 +0200
+Message-ID: <20250610125633.24411-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250610125633.24411-1-philmd@linaro.org>
 References: <20250610125633.24411-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,32 +102,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Use default MAC address if none is specified by property as done by
-most other network interface models.
+We have been inconsistent about whether ROMS stored in git have
+execute permission set, and by default meson will preserve source
+file permissions when installing files. This has caused periodic
+problems in RPM packaging as executable binary files get analysed
+by various tools/linters, which can trip up on the ROMs.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Bernhard Beschow <shentey@gmail.com>
-Acked-by: Bernhard Beschow <shentey@gmail.com>
-Message-ID: <8bd7ca691bd502b5fd761615d9af805e783fba36.1748012109.git.balaton@eik.bme.hu>
+Tell meson explicitly that all the ROMs should be without execute
+permission when installed.
+
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Tested-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250530152118.65030-1-berrange@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/net/fsl_etsec/etsec.c | 1 +
- 1 file changed, 1 insertion(+)
+ pc-bios/meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
-index d14cb2a1015..846f6cbc5d9 100644
---- a/hw/net/fsl_etsec/etsec.c
-+++ b/hw/net/fsl_etsec/etsec.c
-@@ -389,6 +389,7 @@ static void etsec_realize(DeviceState *dev, Error **errp)
- {
-     eTSEC        *etsec = ETSEC_COMMON(dev);
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index 79bb2e18008..3c41620044a 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -88,7 +88,7 @@ blobs = [
+ ]
  
-+    qemu_macaddr_default_if_unset(&etsec->conf.macaddr);
-     etsec->nic = qemu_new_nic(&net_etsec_info, &etsec->conf,
-                               object_get_typename(OBJECT(dev)), dev->id,
-                               &dev->mem_reentrancy_guard, etsec);
+ if get_option('install_blobs')
+-  install_data(blobs, install_dir: qemu_datadir)
++  install_data(blobs, install_dir: qemu_datadir, install_mode: 'rw-r--r--')
+ endif
+ 
+ subdir('descriptors')
 -- 
 2.49.0
 
