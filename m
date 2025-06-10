@@ -4,55 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06F7DC5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:01:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CAD65C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:02:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27y-0003f7-1D; Tue, 10 Jun 2025 12:47:10 -0400
+	id 1uP27P-000231-Q1; Tue, 10 Jun 2025 12:46:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15y-0004bl-UD
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:41:03 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ id 1uP155-0004L0-JT
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:07 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15v-0006FS-6X
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:41:01 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXbKw030408;
- Tue, 10 Jun 2025 15:40:45 GMT
+ id 1uP153-00066K-GE
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:07 -0400
+Received: from pps.filterd (m0246630.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXhFv003474;
+ Tue, 10 Jun 2025 15:40:02 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=2Q+lus6ZQOkU1qFt3aRUPnGZy4Qw4GAoZXuObms1bJ4=; b=
- buw1DBtAW2HXO5RH9qYDGoRtS7o/WcUJ1b6UvTpG89OpaCCXL5WZbxyLzpNBxLbS
- X7vHWpQwFHmqs4lVQBvBeTmcrcyEnipT+fl0JjetsHL2lwO1iSzX0Ou9QL1NfPKf
- uFqHrK9WqrEjUROWOP2iImI9gwoWZwYZnc+z9d2Wl9RmhpKinJdXQaNr+a0GTnlQ
- 29JVfLTE8+cVuhDXI1aKLM7odvuKaUfKpse9OPHjbWOlNP1g1JkYu4S15mbwsGdT
- BoX2obuJ4q/wnwBnTOGpqW4059frCoGyreTrOp6CGeoY1nDpgCwbGyrDVT9QoBfM
- z0Obz/AoHwgIRvCClt344g==
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=TGdgbhbw+gjdR3rxNiYgbPBijyVvtbeEpfVISlZwIfw=; b=
+ rOMGWo86hbJEIGXyFBiXFhycLDRIZBA7O4+RUgAse5X3VXz4B8MPBRN+wcZD9Y5I
+ JL6gIF3T5KJjpCqfB5mf66aveS+B/92wy/HIESvl3gJ1eywcTFAFxKES+f1Vkuf5
+ MBOMOElsCHnTECupbUABscL7Q9v1vZIaWtVHdjnofy32JiZewwwYOiLJLJyw8na0
+ r+Fht4h9+UO5OHO76y6EBWTZ/kBiTtJmCoD8UkDgGo1DoSSWF8EroC3NyjhICihP
+ xRK+M1TlKnJB2gVHFDnCIRBCPB1udzzuZDaeHszM4WRP0vkLG5eoeQLVyzWrrszp
+ NXEGH3YQinwfBddxZU7CSw==
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c14cgxc-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474buf4hww-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:45 +0000 (GMT)
+ Tue, 10 Jun 2025 15:40:02 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AF52CT003304; Tue, 10 Jun 2025 15:40:44 GMT
+ with ESMTP id 55AEn3EL003965; Tue, 10 Jun 2025 15:40:01 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wbxu-1
+ 474bv8wara-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:44 +0000
+ Tue, 10 Jun 2025 15:40:01 +0000
 Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrgB028825;
- Tue, 10 Jun 2025 15:40:43 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfJ028825;
+ Tue, 10 Jun 2025 15:40:01 GMT
 Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
  by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-33; Tue, 10 Jun 2025 15:40:43 +0000
+ ESMTP id 474bv8wak1-7; Tue, 10 Jun 2025 15:40:01 +0000
 From: Steve Sistare <steven.sistare@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
@@ -63,12 +64,15 @@ Cc: Alex Williamson <alex.williamson@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
  Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 32/38] vfio/iommufd: preserve descriptors
-Date: Tue, 10 Jun 2025 08:39:45 -0700
-Message-Id: <1749569991-25171-33-git-send-email-steven.sistare@oracle.com>
+Subject: [PATCH V5 06/38] vfio/container: restore DMA vaddr
+Date: Tue, 10 Jun 2025 08:39:19 -0700
+Message-Id: <1749569991-25171-7-git-send-email-steven.sistare@oracle.com>
 X-Mailer: git-send-email 1.8.3.1
 In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
 References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
@@ -77,21 +81,22 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
  definitions=main-2506100125
-X-Proofpoint-GUID: KBEesrKLH791ltuhS3QUJnSeMPKHIX2u
-X-Authority-Analysis: v=2.4 cv=GcEXnRXL c=1 sm=1 tr=0 ts=684851fd b=1 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=RZGQC0tv c=1 sm=1 tr=0 ts=684851d2 b=1 cx=c_pps
  a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=I2KNaNdY-GqYJbIdq80A:9 cc=ntf
- awl=host:14714
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX6ujhrmsrb/uE
- syVB8m4Xmx4VUduEqeirvO3zg3tSIt+i8Q7Lo+sV+wsQVxT72oKihink/smAfT84KyN/SKd5zAY
- YJCISKuNUSGuf8xtQSwRbgTOw696aFw/UIO8ZigIG+EVDyqPksSJhOc4Jt6Fjxj9/1PYjjk4IeH
- VoHuFM72dXjCMJXCd3mVt5Ppwa1W4e4KLjbTnXwKq4R9y6ZpNK4R5XgzKE8q16TewG5e5JK8PUf
- RcLTmi9j/Z276dbS0VMMDwqUhNUYpSFSmhUqMkA1LoNUAFNOqzKqeg9jmQn4oa4Oq8iBnsl2nQM
- jtglJXgmUP4Iorz773nGKrUifQXkp5fNsux6IJi8nr/tFam7iCN2/xTE8A1VeCKbKBRktzql07x
- kc/UBuiQh6h38q5tsz1XND3+Ux3ltUpYH9xDMQmLyyWASIuLMED3Ql1/nwRR0giOQYsxfBfk
-X-Proofpoint-ORIG-GUID: KBEesrKLH791ltuhS3QUJnSeMPKHIX2u
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
+ a=626zc_ahws52PzRrjaMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:14714
+X-Proofpoint-GUID: 7jQzU-Own2fEckjTBJK_M9-rC6pygnU8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX1ZiytNolkF1a
+ WAT6YYEx9YCgNBLcAjqg8M5jFvcGx1Ki1ry4QkkiMF/1oVRjg1ieghU7lLi6QOrak9M/5j/40v0
+ DPN1t80sOg2Xu/JPL/y8B2bh9EPpbfRGNkpTOfYfJee4v16e3uG5178AN8yWVBhLkFjrRY9KTst
+ KMRCxQtmH31iHU3k3TXG3wi9DjQbgctQyEXP/aTfQRh9WLmGRovVdE4xW6QBVm+65XXfiw0kJOr
+ PvtngZaQwEOuDP5ccqALUbN0wMMAI2ZSerPqZkfMnhMdQr1HtM7SOjHoEJirHgC6SC67vQGob9n
+ /og7pTvPJAAD02PKsgA2GnwRjeA0MKJL+3oSpL7P52etkiwMRQBX4TWMqQ5IELYytrcyDmx3Gl7
+ UO3ykXHm9NUh84bUXjT+eaBVqNANm/EIbib5XlhsPo4TqsB5/Rq1svBmfY5YiZQEEiLcR9Gh
+X-Proofpoint-ORIG-GUID: 7jQzU-Own2fEckjTBJK_M9-rC6pygnU8
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
@@ -115,136 +120,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Save the iommu and vfio device fd in CPR state when it is created.
-After CPR, the fd number is found in CPR state and reused.
+In new QEMU, do not register the memory listener at device creation time.
+Register it later, in the container post_load handler, after all vmstate
+that may affect regions and mapping boundaries has been loaded.  The
+post_load registration will cause the listener to invoke its callback on
+each flat section, and the calls will match the mappings remembered by the
+kernel.
+
+The listener calls a special dma_map handler that passes the new VA of each
+section to the kernel using VFIO_DMA_MAP_FLAG_VADDR.  Restore the normal
+handler at the end.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 ---
- backends/iommufd.c    | 25 ++++++++++++++++++++++++-
- hw/vfio/cpr-iommufd.c | 10 ++++++++++
- hw/vfio/device.c      |  9 +--------
- 3 files changed, 35 insertions(+), 9 deletions(-)
+ include/hw/vfio/vfio-cpr.h |  3 +++
+ hw/vfio/container.c        | 15 ++++++++++--
+ hw/vfio/cpr-legacy.c       | 57 ++++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 73 insertions(+), 2 deletions(-)
 
-diff --git a/backends/iommufd.c b/backends/iommufd.c
-index c554ce5..e02f06e 100644
---- a/backends/iommufd.c
-+++ b/backends/iommufd.c
-@@ -16,12 +16,18 @@
- #include "qemu/module.h"
- #include "qom/object_interfaces.h"
- #include "qemu/error-report.h"
-+#include "migration/cpr.h"
- #include "monitor/monitor.h"
- #include "trace.h"
- #include "hw/vfio/vfio-device.h"
- #include <sys/ioctl.h>
- #include <linux/iommufd.h>
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index 5a2e5f6..0462447 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -17,6 +17,9 @@ struct VFIOGroup;
  
-+static const char *iommufd_fd_name(IOMMUFDBackend *be)
-+{
-+    return object_get_canonical_path_component(OBJECT(be));
-+}
-+
- static void iommufd_backend_init(Object *obj)
- {
-     IOMMUFDBackend *be = IOMMUFD_BACKEND(obj);
-@@ -64,11 +70,27 @@ static bool iommufd_backend_can_be_deleted(UserCreatable *uc)
-     return !be->users;
- }
+ typedef struct VFIOContainerCPR {
+     Error *blocker;
++    int (*saved_dma_map)(const struct VFIOContainerBase *bcontainer,
++                         hwaddr iova, ram_addr_t size,
++                         void *vaddr, bool readonly, MemoryRegion *mr);
+ } VFIOContainerCPR;
  
-+static void iommufd_backend_complete(UserCreatable *uc, Error **errp)
-+{
-+    IOMMUFDBackend *be = IOMMUFD_BACKEND(uc);
-+    const char *name = iommufd_fd_name(be);
+ 
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 5caae4c..936ce37 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -136,6 +136,8 @@ static int vfio_legacy_dma_unmap_one(const VFIOContainerBase *bcontainer,
+     int ret;
+     Error *local_err = NULL;
+ 
++    g_assert(!cpr_is_incoming());
 +
-+    if (!be->owned) {
-+        /* fd came from the command line. Fetch updated value from cpr state. */
-+        if (cpr_is_incoming()) {
-+            be->fd = cpr_find_fd(name, 0);
-+        } else {
-+            cpr_save_fd(name, 0, be->fd);
+     if (iotlb && vfio_container_dirty_tracking_is_started(bcontainer)) {
+         if (!vfio_container_devices_dirty_tracking_is_supported(bcontainer) &&
+             bcontainer->dirty_pages_supported) {
+@@ -690,8 +692,17 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+     }
+     group_was_added = true;
+ 
+-    if (!vfio_listener_register(bcontainer, errp)) {
+-        goto fail;
++    /*
++     * If CPR, register the listener later, after all state that may
++     * affect regions and mapping boundaries has been cpr load'ed.  Later,
++     * the listener will invoke its callback on each flat section and call
++     * dma_map to supply the new vaddr, and the calls will match the mappings
++     * remembered by the kernel.
++     */
++    if (!cpr_is_incoming()) {
++        if (!vfio_listener_register(bcontainer, errp)) {
++            goto fail;
 +        }
+     }
+ 
+     bcontainer->initialized = true;
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index ef106d0..2fd8348 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -9,11 +9,13 @@
+ #include "qemu/osdep.h"
+ #include "hw/vfio/vfio-container.h"
+ #include "hw/vfio/vfio-device.h"
++#include "hw/vfio/vfio-listener.h"
+ #include "migration/blocker.h"
+ #include "migration/cpr.h"
+ #include "migration/migration.h"
+ #include "migration/vmstate.h"
+ #include "qapi/error.h"
++#include "qemu/error-report.h"
+ 
+ static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
+ {
+@@ -30,6 +32,32 @@ static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
+     return true;
+ }
+ 
++/*
++ * Set the new @vaddr for any mappings registered during cpr load.
++ * The incoming state is cleared thereafter.
++ */
++static int vfio_legacy_cpr_dma_map(const VFIOContainerBase *bcontainer,
++                                   hwaddr iova, ram_addr_t size, void *vaddr,
++                                   bool readonly, MemoryRegion *mr)
++{
++    const VFIOContainer *container = container_of(bcontainer, VFIOContainer,
++                                                  bcontainer);
++    struct vfio_iommu_type1_dma_map map = {
++        .argsz = sizeof(map),
++        .flags = VFIO_DMA_MAP_FLAG_VADDR,
++        .vaddr = (__u64)(uintptr_t)vaddr,
++        .iova = iova,
++        .size = size,
++    };
++
++    g_assert(cpr_is_incoming());
++
++    if (ioctl(container->fd, VFIO_IOMMU_MAP_DMA, &map)) {
++        return -errno;
 +    }
++
++    return 0;
++}
+ 
+ static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
+ {
+@@ -58,11 +86,34 @@ static int vfio_container_pre_save(void *opaque)
+     return 0;
+ }
+ 
++static int vfio_container_post_load(void *opaque, int version_id)
++{
++    VFIOContainer *container = opaque;
++    VFIOContainerBase *bcontainer = &container->bcontainer;
++    VFIOGroup *group;
++    Error *local_err = NULL;
++
++    if (!vfio_listener_register(bcontainer, &local_err)) {
++        error_report_err(local_err);
++        return -1;
++    }
++
++    QLIST_FOREACH(group, &container->group_list, container_next) {
++        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++
++        /* Restore original dma_map function */
++        vioc->dma_map = container->cpr.saved_dma_map;
++    }
++    return 0;
 +}
 +
- static void iommufd_backend_class_init(ObjectClass *oc, const void *data)
- {
-     UserCreatableClass *ucc = USER_CREATABLE_CLASS(oc);
+ static const VMStateDescription vfio_container_vmstate = {
+     .name = "vfio-container",
+     .version_id = 0,
+     .minimum_version_id = 0,
++    .priority = MIG_PRI_LOW,  /* Must happen after devices and groups */
+     .pre_save = vfio_container_pre_save,
++    .post_load = vfio_container_post_load,
+     .needed = cpr_incoming_needed,
+     .fields = (VMStateField[]) {
+         VMSTATE_END_OF_LIST()
+@@ -85,6 +136,12 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
  
-     ucc->can_be_deleted = iommufd_backend_can_be_deleted;
-+    ucc->complete = iommufd_backend_complete;
+     vmstate_register(NULL, -1, &vfio_container_vmstate, container);
  
-     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
- }
-@@ -102,7 +124,7 @@ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
-     int fd;
- 
-     if (be->owned && !be->users) {
--        fd = qemu_open("/dev/iommu", O_RDWR, errp);
-+        fd = cpr_open_fd("/dev/iommu", O_RDWR, iommufd_fd_name(be), 0, errp);
-         if (fd < 0) {
-             return false;
-         }
-@@ -134,6 +156,7 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be)
- out:
-     if (!be->users) {
-         vfio_iommufd_cpr_unregister_iommufd(be);
-+        cpr_delete_fd(iommufd_fd_name(be), 0);
-     }
-     trace_iommufd_backend_disconnect(be->fd, be->users);
- }
-diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
-index 2eca8a6..152a661 100644
---- a/hw/vfio/cpr-iommufd.c
-+++ b/hw/vfio/cpr-iommufd.c
-@@ -162,17 +162,27 @@ void vfio_iommufd_cpr_unregister_container(VFIOIOMMUFDContainer *container)
- void vfio_iommufd_cpr_register_device(VFIODevice *vbasedev)
- {
-     if (!cpr_is_incoming()) {
-+        /*
-+         * Beware fd may have already been saved by vfio_device_set_fd,
-+         * so call resave to avoid a duplicate entry.
-+         */
-+        cpr_resave_fd(vbasedev->name, 0, vbasedev->fd);
-         vfio_cpr_save_device(vbasedev);
-     }
- }
- 
- void vfio_iommufd_cpr_unregister_device(VFIODevice *vbasedev)
- {
-+    cpr_delete_fd(vbasedev->name, 0);
-     vfio_cpr_delete_device(vbasedev->name);
- }
- 
- void vfio_cpr_load_device(VFIODevice *vbasedev)
- {
-+    if (vbasedev->fd < 0) {
-+        vbasedev->fd = cpr_find_fd(vbasedev->name, 0);
++    /* During incoming CPR, divert calls to dma_map. */
++    if (cpr_is_incoming()) {
++        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++        container->cpr.saved_dma_map = vioc->dma_map;
++        vioc->dma_map = vfio_legacy_cpr_dma_map;
 +    }
-+
-     if (cpr_is_incoming()) {
-         bool ret = vfio_cpr_find_device(vbasedev);
-         g_assert(ret);
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 8c3835b..6bcc65c 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -335,14 +335,7 @@ void vfio_device_free_name(VFIODevice *vbasedev)
- 
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
- {
--    ERRP_GUARD();
--    int fd = monitor_fd_param(monitor_cur(), str, errp);
--
--    if (fd < 0) {
--        error_prepend(errp, "Could not parse remote object fd %s:", str);
--        return;
--    }
--    vbasedev->fd = fd;
-+    vbasedev->fd = cpr_get_fd_param(vbasedev->dev->id, str, 0, errp);
+     return true;
  }
  
- static VFIODeviceIOOps vfio_device_io_ops_ioctl;
 -- 
 1.8.3.1
 
