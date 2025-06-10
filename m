@@ -4,102 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA2A7C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FECFC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP276-0001uU-1z; Tue, 10 Jun 2025 12:46:16 -0400
+	id 1uP29G-0006jM-6T; Tue, 10 Jun 2025 12:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15j-0004YW-TN
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:48 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15h-0006E7-FH
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:47 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXbJP030402;
- Tue, 10 Jun 2025 15:40:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=fxDcFwFeZtL4RvB4l4f1LNOH5ChDVZEc60qqlx6krBw=; b=
- ADpXgaAg8d5IkNkkqEINBFv7dw9ouj766Y0SPfdY/JZSopWNPZqkJzQEt8xxmb3Z
- D97MIOhuXgrh/Im+o8NNMdftnTEF+ln5aPgxbfUX3DvhFDxYhDzJ9Sj2PdW107T2
- G4gBtLUGz+lA2FF825Ox9XOG6vY3qKGSJuhZa+v8ep66P7xb8e2iOTPFdTrr7NFY
- LIedgAZkr3yGJga1iFfSbF8NxaWPUHlIrk/+1BHdT9lZJjq8CCCZilFbzB5xBatn
- zRnP+Uik+QqqUGpZDdXhs2acymSaE3N8qbjBo9x7pSV3HL08Yvy+YVfWystHAqff
- 0efRqayEa4bxC5nOMuiKEA==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c14cgws-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:32 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AF4Wbt003213; Tue, 10 Jun 2025 15:40:31 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wbm8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:31 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrft028825;
- Tue, 10 Jun 2025 15:40:30 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-25; Tue, 10 Jun 2025 15:40:30 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 24/38] physmem: qemu_ram_get_fd_offset
-Date: Tue, 10 Jun 2025 08:39:37 -0700
-Message-Id: <1749569991-25171-25-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506100125
-X-Proofpoint-GUID: bTjJ6ELv-kOEFq31V_Dt3x-Wj9mtM15q
-X-Authority-Analysis: v=2.4 cv=GcEXnRXL c=1 sm=1 tr=0 ts=684851f0 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8
- a=s_ck3szjhOtuhh_aLR8A:9 cc=ntf awl=host:14714
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX8zd8fyzOByzS
- PUgYMwFsAmJa+8qCSXaAohdCWv4cptWWrF3ds755s5Pql50Tu2WOQgZhsaEU08+9jXTsb+kAQhA
- w9pHh8dU0n0uQiRzUkuEXB0iXRVbWeSjYB89+lUIDaQDwb8QDKmrgT6YpycWo0VtC2byGmCDP/C
- Vk7Mi4ilU/6sChXro/nTXeWd5hXRdrs+WaTM1GuTbbSv7DIXddL2C1ZhShorlMyC1p/LYcPfFOZ
- 19CvEaoeWEAMgFUcz3+mG+x0ztA0QmnUH68gB8KlAVozC7h6JtoDSwXZ4+iW7bVOQMHDx6KOLpH
- zQHJVWvsI3A52gGFgq2V2/iqP++2i4MJ6sEtFGfJeGqWznjPzRdU1KKDoTMlfXUwohaPQSIrZYw
- OrtMlPuVl+U5VHCJ9cy5S8eRWFrKuJ4nFqpisCpqJhR5gySGpKUVK7EmqGPJyzZVIvr9S4mU
-X-Proofpoint-ORIG-GUID: bTjJ6ELv-kOEFq31V_Dt3x-Wj9mtM15q
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uOzV2-0002uw-1s
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 09:58:48 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uOzV0-0001XH-4C
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 09:58:47 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-70e77831d68so52077367b3.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 06:58:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749563924; x=1750168724; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Tn5YmeUOssp9njr5/DLp437/HWWmTrAYEkvk2kK3IbY=;
+ b=m7uWBcTVUZib2i1fALHMDMahRUsZIqyJcf0IFEV1XQmKa181MJRIvPi/nWRHdEPIIi
+ NEQ1WW4RVe1I9CFtq+E14KhRQgXBRmKHdzS6iJ49CMmq+kAXxpSut7yyIzO0skbwjno3
+ 9RNs+R+AsEFDv0dJJAoZjnGkXikOaJs3sletm6psODvMh/HN3+ugyBNomHGrFMTutEuK
+ AeiruFmRITmOcbn8MSNxoOSAQKqp7yQn9vw3b5nGK3JCY1s97TTdG4vQQEqjAPRn0clt
+ 4mHk1SzEe/pSvdnJG27kuoF75E/Hx81zXzFNWS0cAbaaVZothVpihHJMyfOLM+I1jORw
+ qOcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749563924; x=1750168724;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Tn5YmeUOssp9njr5/DLp437/HWWmTrAYEkvk2kK3IbY=;
+ b=qkHmzcWyBt8MgbrGIhRPAj1H7632XPNMj0CkUIaOrcS4aU65TEKGIHenEkHQYQj1rQ
+ frPoQhlIW9DgOzIQFNve1N5hx5ifa7QedLtykyYkvQ1yit3mVxlcdJEhdvN5VB5bvUSx
+ hbTepnrXdGBcZaf6b2Vxp08zHEWf7cygheKj2GSL2ySSIkJ7QfTFPKBS5OdNoPWXl1J/
+ 2wQ2JRjZlFqA+SQLNmkA/4ne7wvjeLaUukwoB60LJ8ZRp0X30UCYvICfPa1SUjxhrApj
+ AmXLyAiRMpSzkQbeAUJ07KZvT/WmWTbSM3fLOskse/drzWVG8HNadkU726SshjqtGEvI
+ ms1A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUz3+fuzJPkbw/0jENrNxRfohMfkXlf8pSxededIJ5l5JqibNStd2Oqvqm9nmLEAHVxXWQGvE6eNL1i@nongnu.org
+X-Gm-Message-State: AOJu0YxDjLfmrpTnnRv1Jt2nH70IoCXhHq+5to3OCt4fCAqfOkvwSy+D
+ RFvwuwuNeDw2YmuhCxlendLJNS/VU/FL6jfrYar58DuthxvudkM8CMz+Pi5ERWD+QIxhZAZpcdM
+ 49L/xVQQ948pMD8s0BAramQIYI9kzwcAAvdXkGrHzJA==
+X-Gm-Gg: ASbGnctnmRtqwl/7SjNZJxSF+1u+Df3g+cNVHxu8G9YppCt+4lOxYxSAlMUBeKjM+m9
+ aWsqNiYhdGZOaaWojZYrDgxivu6C1W9vQ0uXaNYpRFC9QP3PZcwqcuDsVIo6hbhl+QzvuFYbIay
+ vAvMafrgqkDKrTir+01m55U3nbtkyY/FZrKH3Y/Qy25USJ
+X-Google-Smtp-Source: AGHT+IHyI/gYx7+Y/KXYz0D34FrpiW6RdQEgX7kEcxXdXIFwqUuRMpUUFlr6Tx4Ugj4MJeHvRqoqQ4EBpelXgyW1SKY=
+X-Received: by 2002:a05:690c:1c:b0:70f:83af:7dab with SMTP id
+ 00721157ae682-710f762d432mr220003697b3.4.1749563923702; Tue, 10 Jun 2025
+ 06:58:43 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250610012851.1627715-1-linux@roeck-us.net>
+ <CAFEAcA-aznHrcSk9xfmLHkpJTiabjd4oX2KnvC5TXkkLgW6n8A@mail.gmail.com>
+ <50464a50-1ddc-410b-bc5b-ec68b895b797@roeck-us.net>
+In-Reply-To: <50464a50-1ddc-410b-bc5b-ec68b895b797@roeck-us.net>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Jun 2025 14:58:31 +0100
+X-Gm-Features: AX0GCFsUd9430EAQHL8DAZPHE2TpbvRHRYfiYqun59rrgCCqagK1Fn99e1MNJAE
+Message-ID: <CAFEAcA9CWeEmrZ5vTr7M-UZfH3cp5Y9EZUeGPfc2s75Tz2-K9g@mail.gmail.com>
+Subject: Re: [PATCH] hw/arm/npcm7xx_boards: Add support for specifying SPI
+ flash model
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,46 +97,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define qemu_ram_get_fd_offset, so CPR can map a memory region using
-IOMMU_IOAS_MAP_FILE in a subsequent patch.
+On Tue, 10 Jun 2025 at 14:31, Guenter Roeck <linux@roeck-us.net> wrote:
+>
+> On 6/10/25 01:42, Peter Maydell wrote:
+> > I think the question I would have here is "is this the flash
+> > device the hardware actually has?". If QEMU's using the wrong
+> > flash type, we should fix that. If QEMU's modelling the right
+> > flash type and the kernel doesn't implement it, then that's
+> > a kernel bug and the right fix is to get the kernel to
+> > handle that flash type.
+> >
+>
+> That isn't the point.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
----
- include/exec/cpu-common.h | 1 +
- system/physmem.c          | 5 +++++
- 2 files changed, 6 insertions(+)
+It is the point from my perspective. This board type is
+supposed to be modelling real hardware, and therefore in
+determining how it should behave we start by saying "so
+what does the real hardware do?". Adding extra behaviour
+that the real hardware does not have is something that
+has a tendency to lead into unspecified, untested and hard
+to maintain complexity.
 
-diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
-index a684855..9b658a3 100644
---- a/include/exec/cpu-common.h
-+++ b/include/exec/cpu-common.h
-@@ -85,6 +85,7 @@ void qemu_ram_unset_idstr(RAMBlock *block);
- const char *qemu_ram_get_idstr(RAMBlock *rb);
- void *qemu_ram_get_host_addr(RAMBlock *rb);
- ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
- ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
- bool qemu_ram_is_shared(RAMBlock *rb);
-diff --git a/system/physmem.c b/system/physmem.c
-index a8a9ca3..18684a4 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1593,6 +1593,11 @@ ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
-     return rb->offset;
- }
- 
-+ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
-+{
-+    return rb->fd_offset;
-+}
-+
- ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
- {
-     return rb->used_length;
--- 
-1.8.3.1
+> Yes, one is that qemu's emulation is broken, the other is
+> that I wanted to be able to test with other flash types anyway. I understand
+> that this 'violates' the idea of exactly emulating some hardware, but I want
+> to be able to use qemu beyond that.
 
+Why this machine type in particular, though? You say in the commit
+message that aspeed lets you specify the flash type.
+
+> Either case, I did some debugging: For flashes with sfdp data (mx25l25635e),
+> qemu returns bad sfdp data (at least with quanta-gsj), causing the kernel
+> (as of v6.16-rc1) to bail out. For other flashes (mx66u51235f) it returns
+> no sfdp data, but the upstream kernel now depends on it.
+
+That sounds like a bug we should fix. Would one of the Nuvoton
+maintainers like to take a look?
+
+thanks
+-- PMM
 
