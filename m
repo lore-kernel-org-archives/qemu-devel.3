@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4CB7C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:12:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AE1EC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:14:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOsDp-0006IO-Dp; Tue, 10 Jun 2025 02:12:33 -0400
+	id 1uOsFs-0007fy-BP; Tue, 10 Jun 2025 02:14:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsDh-0006FL-Vz
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:12:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsFg-0007dQ-9g
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:14:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsDf-0008Mm-LV
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:12:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsFX-0008T3-9Q
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:14:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749535941;
+ s=mimecast20190719; t=1749536058;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ASEwdbdxQ1/LXoFqHlFdlRv7hwH7nB1r8lHS6KwYzyw=;
- b=C2D8WTwg+S1HNg9eqL2DroyeECjz9OwJWV04kguw8wVvX29ay2p/FOoMSOfbGJ5oqIpE1d
- dlAb0YWywz8doVx+i401KF7ZRPZyzjrl+Iv4+Th8ZxuU/71Qzujk9F11rdBPL2quTkys0D
- BG59ECNXC+OBugf1wndomyUJymTWAjQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=XM6cr50Uw71vV6d8xFm7k8rykU5qkUL63/ip0GCndag=;
+ b=CkFteufpAlCsxV75A+EXaU3CARfNUdk1R+3Dm7PSUVPVneXq52Uc0ZywjnIL0QUbPsWC6T
+ LwZyeAFjf37yvQ/K8bQWdSVJFQZMkCDeTCKuOCEWNN8vBiVX8bEITNt9ShbJNJdkfHfROo
+ ZfpQUZLqbrzbc17MEjVIbNV4C9a9aJs=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-375-S-fWomeINi6psAisk_9Y3Q-1; Tue, 10 Jun 2025 02:12:19 -0400
-X-MC-Unique: S-fWomeINi6psAisk_9Y3Q-1
-X-Mimecast-MFC-AGG-ID: S-fWomeINi6psAisk_9Y3Q_1749535938
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-453145854a6so8982455e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:12:19 -0700 (PDT)
+ us-mta-564--fgjrH3sOJ2Jt2o0AWwc1w-1; Tue, 10 Jun 2025 02:14:15 -0400
+X-MC-Unique: -fgjrH3sOJ2Jt2o0AWwc1w-1
+X-Mimecast-MFC-AGG-ID: -fgjrH3sOJ2Jt2o0AWwc1w_1749536054
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d64026baso31119925e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:14:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749535938; x=1750140738;
+ d=1e100.net; s=20230601; t=1749536054; x=1750140854;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ASEwdbdxQ1/LXoFqHlFdlRv7hwH7nB1r8lHS6KwYzyw=;
- b=WNyHOcA011MwIRu3Sc7n+N8/8JLsb8c7wVxf8c7nuHec/v3vq+hjEnZRFQ2RlpS/r8
- 8ZkmmS9CVoIbsk41RJsXsk4sCwjPwdVPRv6+JhiAF1vefB1iYD53o0MmOeKuiGdRm6KA
- 2qnhMpdTJYjFxcSef83tV/LOV7ILe+u7tiq0w17Kj4KvU8dD89EqSWFKHwMOqAfY8fem
- SPZNQ5qvjQhSIhZDZhp0S4v1Ela69BSbB6aOnJgxAJfMY9aiE5CE8IWiYqtivkyS0Vcf
- c/FvbEEzbqEn45jDFtX0YG6RzSes2bsO3tBO4IU0gdDQZa2wP6fTGRstaZkwEyrh9JY7
- 4BCQ==
+ bh=XM6cr50Uw71vV6d8xFm7k8rykU5qkUL63/ip0GCndag=;
+ b=IAPNGdSbu8yhMaGWTZNyadLIKHJ76ZWjmB9eFJ8yxp5gAP4zBdkYx37OjJGDd1UiL0
+ 9sHelJMurV0ppol1d6ldirklwWV/CP1rn5P0QAJRpM4BROLGin6LaebKvkNRpHjHMdVV
+ Kirb9oQHNOo+p1W9HVE0fuhZx9R/IPq13rcHAUYVuI3zRvaQrYDcowkj9f4e/i8qeSdk
+ YGnAV9S0kpIX9F/LKD+Ey5XrFxhtejUYJeTxdeKLT2uOr/rxQf/Q3o+3/FNzmew1nS31
+ 6LOKteRtQjYZIYJbrWZEa7CirpKL2ad9tr8px/ntFIjj9lO8iWup0HUQErVV8+dnU0ic
+ mPtg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV8LG/PJrNW/H05z1hrr6uexTBN7Xv07KoxP1VgHwonGs0jlZnZ3bVJZuZcIHkHwImE5o1V/TyqHosf@nongnu.org
-X-Gm-Message-State: AOJu0YyGfphrrH8z9jzvqvykhxKJEUv3p7h31LJzvupd/zybeLF1FFhe
- wJWSqU+rXKrlOs3l8AQp+xpY9KD7pIeWZIqha1aPNKZ9pUPX0L/ObrclPbS89UKh4DP/rZRR14l
- 6Yf8xQS0ZZiYP/aFCb8fIMaTaqvRG08v0BQ6gKx7nMDc0L30seS7qt6yv
-X-Gm-Gg: ASbGnct6+s4+7VxFpC8LJz+6FexXfTYBmyAsCG519MhdZjDYtrY1P1Zu0v1KBQMfJEs
- z8AGPJIJFppgcK69PHKVfpGQkqMv5SpaqVzkl3fFpcIhSib1TD5lJpET1j/PD0YKMZt/cQAXUrB
- 98RaC6d5cJ6Ufo/Zq0MslENdOQK46BWsRAErynLCsmYbQjr/AL6oAnW38yGPytQBEkbmw6ebBgG
- MFgkQQHZxo1gfth6v6oniGVMkFhCGlaawD+YbU82u4RFCUCEfASfncxU+cv93fV/axO3ITX7Tvl
- OHHFDm0gYBsSEPYyiL6sm7FUiorscq0uuoWO+QsDleIO6rFmfIPp6How2qDf
-X-Received: by 2002:a05:600c:8b06:b0:453:9b7:c214 with SMTP id
- 5b1f17b1804b1-4531dea9cb5mr9607115e9.29.1749535938456; 
- Mon, 09 Jun 2025 23:12:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXRY/SG9RovhwDj4yoZOrKO/VzcuPQQ40IUWmt6RbWhwhNGf8i1edYB/w7dAVcA9cwgYV23w==
-X-Received: by 2002:a05:600c:8b06:b0:453:9b7:c214 with SMTP id
- 5b1f17b1804b1-4531dea9cb5mr9606905e9.29.1749535938079; 
- Mon, 09 Jun 2025 23:12:18 -0700 (PDT)
+ AJvYcCVpB712vrNWcSqrohHEcbrUBsPOCdc/DF1kM2mdTIz+rKqFQhzetHVD6wPlIgPDHeO91VNY8mPAlPaa@nongnu.org
+X-Gm-Message-State: AOJu0Ywp0MiRSSXA0FdCmUJwgpxpS0ThjogbLojkayIldZWzOgdAfyJD
+ Shk3ws3jjDz4tQopHonJUpMT2OXD+JW1u4OHV4vqniF+1DLWeNNwx0qEzOgSXuTpllhqGUTdVK3
+ nMkiwYCWrc9HvRbq2ATscOWcGoH1Byf/xiOyof0zoNOUfEk3CJPwVA/00
+X-Gm-Gg: ASbGncvg5dXBQRpZ+JbDKQQEW2yfyTa2S2fGA4mxQXv6O/D5Ln/zxvlBiCEANL8uC+S
+ PbHUi0O9GhXH97mmoPwEtK0mM6gjePdEHmo4eEzRFpn9cbOs9ICwfrfVG8At1ReZErq/Tai3jw/
+ kDm3KaXbRe9Y3l/bMAvTE2zFIHm4aMF1nIz1ZZoyePHi3xrsAaA17yBZu0rDn5ihkA0ViEmS3qB
+ hUZjpqZdtzkXrUefO6AfRoNCyrw+frKZpdp97DjCbbgy+SkbSrFWk1D9QMSg65NL0K0iqeBJsHL
+ Wzm4N8TWRM9vMriQXYcdhS/kGTMzoC5rtmkevXK+Q9N9e2T9W+jAQVSsdUGd
+X-Received: by 2002:a05:6000:4201:b0:3a4:e844:745d with SMTP id
+ ffacd0b85a97d-3a5522cd41emr945730f8f.56.1749536054207; 
+ Mon, 09 Jun 2025 23:14:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG3UPd0wPLDz4s28mSR9a8CAX0mLV+yEzxBMyB091/Bsv/ck3mImu/8TFjZexW9EW+tTbkdZg==
+X-Received: by 2002:a05:6000:4201:b0:3a4:e844:745d with SMTP id
+ ffacd0b85a97d-3a5522cd41emr945701f8f.56.1749536053729; 
+ Mon, 09 Jun 2025 23:14:13 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45213709670sm130265845e9.25.2025.06.09.23.12.17
+ ffacd0b85a97d-3a53229de70sm11037249f8f.5.2025.06.09.23.14.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Jun 2025 23:12:17 -0700 (PDT)
-Message-ID: <bd8e520b-bfa5-426d-98fa-5a4e4f14cd56@redhat.com>
-Date: Tue, 10 Jun 2025 08:12:16 +0200
+ Mon, 09 Jun 2025 23:14:13 -0700 (PDT)
+Message-ID: <9a38e926-4f6c-49be-acc3-36af2b48b6ec@redhat.com>
+Date: Tue, 10 Jun 2025 08:14:12 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 33/43] vfio/iommufd: add vfio_device_free_name
+Subject: Re: [PATCH V4 36/43] migration: vfio cpr state hook
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -86,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-34-git-send-email-steven.sistare@oracle.com>
+ <1748546679-154091-37-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1748546679-154091-34-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1748546679-154091-37-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -161,107 +161,128 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 5/29/25 21:24, Steve Sistare wrote:
-> Define vfio_device_free_name to free the name created by
-> vfio_device_get_name.  A subsequent patch will do more there.
-> No functional change.
+> Define a list of vfio devices in CPR state, in a subsection so that
+> older QEMU can be live updated to this version.  However, new QEMU
+> will not be live updateable to old QEMU.  This is acceptable because
+> CPR is not yet commonly used, and updates to older versions are unusual.
+> 
+> The contents of each device object will be defined by the vfio subsystem
+> in a subsequent patch.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 > ---
->   include/hw/vfio/vfio-device.h | 1 +
->   hw/vfio/ap.c                  | 2 +-
->   hw/vfio/ccw.c                 | 2 +-
->   hw/vfio/device.c              | 5 +++++
->   hw/vfio/pci.c                 | 2 +-
->   hw/vfio/platform.c            | 2 +-
->   6 files changed, 10 insertions(+), 4 deletions(-)
+>   include/hw/vfio/vfio-cpr.h |  1 +
+>   include/migration/cpr.h    | 12 ++++++++++++
+>   hw/vfio/cpr-iommufd.c      |  2 ++
+>   migration/cpr.c            | 14 +++++---------
+>   4 files changed, 20 insertions(+), 9 deletions(-)
 > 
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 6eb6f21..321b442 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -227,6 +227,7 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+> index b9b77ae..619af07 100644
+> --- a/include/hw/vfio/vfio-cpr.h
+> +++ b/include/hw/vfio/vfio-cpr.h
+> @@ -74,5 +74,6 @@ void vfio_cpr_delete_vector_fd(struct VFIOPCIDevice *vdev, const char *name,
+>                                  int nr);
 >   
->   /* Returns 0 on success, or a negative errno. */
->   bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-> +void vfio_device_free_name(VFIODevice *vbasedev);
->   void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
->   void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
->                         DeviceState *dev, bool ram_discard);
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 785c0a0..013bd59 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -180,7 +180,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+>   extern const VMStateDescription vfio_cpr_pci_vmstate;
+> +extern const VMStateDescription vmstate_cpr_vfio_devices;
 >   
->   error:
->       error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
-> -    g_free(vbasedev->name);
-> +    vfio_device_free_name(vbasedev);
->   }
+>   #endif /* HW_VFIO_VFIO_CPR_H */
+> diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+> index 7fd8065..8fd8bfe 100644
+> --- a/include/migration/cpr.h
+> +++ b/include/migration/cpr.h
+> @@ -9,11 +9,23 @@
+>   #define MIGRATION_CPR_H
 >   
->   static void vfio_ap_unrealize(DeviceState *dev)
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index cea9d6e..903b8b0 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -619,7 +619,7 @@ out_io_notifier_err:
->   out_region_err:
->       vfio_device_detach(vbasedev);
->   out_attach_dev_err:
-> -    g_free(vbasedev->name);
-> +    vfio_device_free_name(vbasedev);
->   out_unrealize:
->       if (cdc->unrealize) {
->           cdc->unrealize(cdev);
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 71fa9f4..151c618 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -317,6 +317,11 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
->       return true;
->   }
+>   #include "qapi/qapi-types-migration.h"
+> +#include "qemu/queue.h"
 >   
-> +void vfio_device_free_name(VFIODevice *vbasedev)
-> +{
-> +    g_free(vbasedev->name);
+>   #define MIG_MODE_NONE           -1
+>   
+>   #define QEMU_CPR_FILE_MAGIC     0x51435052
+>   #define QEMU_CPR_FILE_VERSION   0x00000001
+> +#define CPR_STATE "CprState"
+> +
+> +typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
+> +typedef QLIST_HEAD(CprVFIODeviceList, CprVFIODevice) CprVFIODeviceList;
+> +
+> +typedef struct CprState {
+> +    CprFdList fds;
+> +    CprVFIODeviceList vfio_devices;
+> +} CprState;
+> +
+> +extern CprState cpr_state;
+>   
+>   void cpr_save_fd(const char *name, int id, int fd);
+>   void cpr_delete_fd(const char *name, int id);
+> diff --git a/hw/vfio/cpr-iommufd.c b/hw/vfio/cpr-iommufd.c
+> index 60bd7e8..3e78265 100644
+> --- a/hw/vfio/cpr-iommufd.c
+> +++ b/hw/vfio/cpr-iommufd.c
+> @@ -14,6 +14,8 @@
+>   #include "system/iommufd.h"
+>   #include "vfio-iommufd.h"
+>   
+> +const VMStateDescription vmstate_cpr_vfio_devices;  /* TBD in a later patch */
+> +
 
-you could use g_clear_pointer().
+So vmstate_cpr_vfio_devices should be only compiled if CONFIG_IOMMUFD
+is set but ...
+
+>   static bool vfio_cpr_supported(IOMMUFDBackend *be, Error **errp)
+>   {
+>       if (!iommufd_change_process_capable(be)) {
+> diff --git a/migration/cpr.c b/migration/cpr.c
+> index 4574608..47898ab 100644
+> --- a/migration/cpr.c
+> +++ b/migration/cpr.c
+> @@ -22,13 +22,7 @@
+>   /*************************************************************************/
+>   /* cpr state container for all information to be saved. */
+>   
+> -typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
+> -
+> -typedef struct CprState {
+> -    CprFdList fds;
+> -} CprState;
+> -
+> -static CprState cpr_state;
+> +CprState cpr_state;
+>   
+>   /****************************************************************************/
+>   
+> @@ -129,8 +123,6 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+>   }
+>   
+>   /*************************************************************************/
+> -#define CPR_STATE "CprState"
+> -
+>   static const VMStateDescription vmstate_cpr_state = {
+>       .name = CPR_STATE,
+>       .version_id = 1,
+> @@ -138,6 +130,10 @@ static const VMStateDescription vmstate_cpr_state = {
+>       .fields = (VMStateField[]) {
+>           VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
+>           VMSTATE_END_OF_LIST()
+> +    },
+> +    .subsections = (const VMStateDescription * const []) {
+> +        &vmstate_cpr_vfio_devices,
+
+... vmstate_cpr_vfio_devices is also used when CONFIG_IOMMUFD is not set.
+
 
 Thanks,
 
 C.
 
-  
-> +}
-> +
->   void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
->   {
->       ERRP_GUARD();
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c8d6ee0..7da7a9c 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2949,7 +2949,7 @@ static void vfio_pci_put_device(VFIOPCIDevice *vdev)
->   {
->       vfio_device_detach(&vdev->vbasedev);
->   
-> -    g_free(vdev->vbasedev.name);
-> +    vfio_device_free_name(&vdev->vbasedev);
->       g_free(vdev->msix);
->   }
->   
-> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-> index 9a21f2e..5c1795a 100644
-> --- a/hw/vfio/platform.c
-> +++ b/hw/vfio/platform.c
-> @@ -530,7 +530,7 @@ static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
->   {
->       /* @fd takes precedence over @sysfsdev which takes precedence over @host */
->       if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
-> -        g_free(vbasedev->name);
-> +        vfio_device_free_name(vbasedev);
->           vbasedev->name = g_path_get_basename(vbasedev->sysfsdev);
->       } else if (vbasedev->fd < 0) {
->           if (!vbasedev->name || strchr(vbasedev->name, '/')) {
+
+
+
+
+> +        NULL
+>       }
+>   };
+>   /*************************************************************************/
 
 
