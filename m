@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 317A3C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA2A7C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2Bv-00026F-Rv; Tue, 10 Jun 2025 12:51:24 -0400
+	id 1uP276-0001uU-1z; Tue, 10 Jun 2025 12:46:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uP1PH-0005Tj-JT
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:01:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15j-0004YW-TN
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:48 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
- id 1uP1PE-0000DY-01
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:00:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749571251;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Dp64+H62dto2vYWHN2pdtS9nRn/63AVOPtYCyVP++rg=;
- b=Apq7XWXO07ylwc6h+0+86EPlemLpufyAspTvZA29x5BZjzSc2pO6eIpD7UgWXrZYQogJ1Q
- jilkF8D7R1N3FNTLILxbsHI7+gozHmPHKswzwcSoSGL9BuvvCYj4g3cZtagz56AWxkKQtW
- FbJU88EwlQg4iBH24eEDZBExZXnOeMw=
-Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
- [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-iiNsd2h2P42GfvAxL-orvw-1; Tue, 10 Jun 2025 12:00:50 -0400
-X-MC-Unique: iiNsd2h2P42GfvAxL-orvw-1
-X-Mimecast-MFC-AGG-ID: iiNsd2h2P42GfvAxL-orvw_1749571249
-Received: by mail-il1-f198.google.com with SMTP id
- e9e14a558f8ab-3dde751641aso3220765ab.0
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:00:50 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749571249; x=1750176049;
- h=content-transfer-encoding:mime-version:organization:references
- :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Dp64+H62dto2vYWHN2pdtS9nRn/63AVOPtYCyVP++rg=;
- b=BvBVR2UM/3SpRkoTDBtTnRhRRx8KF2CQwOVYTDQP5Dffocb070UYqXONd3mV40hZA5
- 3vyiQE2InD0TAJscEmvGnrjO17HaqVeoPncvIiikSRZBLQE4/Wd64ltH3oQXNnxbIi5l
- o0ci8hSJ/ST8j/WP36Va0EklzlPEhhywzH2TndX8mUVCHbBiDpL1AvgatlKx82c8Pm/U
- AJBggSmILogBRlYY5dtsk3xMPeSgRM9/awyWm6vvryB6r9F2VxNA9UJjXPzdT0v0UZJM
- c/pxo7r+RL+NRM0pByyTr6HemorpE0nNV2xf19RFPcG/lYM0vDYLzg/abw03ffYHcTDt
- oEmg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUMFYpAonk4fN9SKI7VWCAPp3N8BQavIosvEuOpK801piVcp+a1gQtpvY+8qqNfzYTiip4zD1tv0XNk@nongnu.org
-X-Gm-Message-State: AOJu0YwbNroyysOqz7AUAdEGdqxZVnu7Pe8tp/JNBpfO2MHj9hOCcmw6
- +FZuaPBHZGZrI+pfve9AE1y72mXG/pdbjgXShyqo4j5HFW4glhdxPB49Q1ZgWTktVUhnmuNtiiO
- Vk32QNBbUd2PXcKOw1W7s9DsuTaNz0AQO7AL1+qQLbhXW1oYKiIqx9MZH
-X-Gm-Gg: ASbGncsy2SKNXnGWXarbb1nX13ERjWmA7gwb7gRoDbS+7YXKY/Ww81nMK8fej7XP+Av
- YodiLn9hHEWUXqdOcfmwOaB+xbT5AdiPKmA8wOSr6zq/Ks0TGT4HgyHn4DMWXyf8NUYETQiDAnQ
- Cfr2a+1urWHlFY5n6+jAC9nFKCKf4PXW7yVn32eO5GQdWX+dmVvBwDtGqeEG59c2A/3t+xKMgz4
- gWRCqzXjZ6DdoCnVllmCQL7aDLJVU8iEaw5x+OhXjgpFqL4jfj6U9w91grEi82NszNdj5ljNtXR
- Lm3E/NHN+h8BYyEn31aGqQ/Zvw==
-X-Received: by 2002:a05:6e02:b48:b0:3dc:7c9e:c3d6 with SMTP id
- e9e14a558f8ab-3ddcfd32d99mr43155705ab.5.1749571249261; 
- Tue, 10 Jun 2025 09:00:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEA7RGe+25nJWCQsKDje7z2DCuw4/cUv4FPKY3ATl+CaD9HVcSp5+YZhP17uzT+1APqn+QhgQ==
-X-Received: by 2002:a05:6e02:b48:b0:3dc:7c9e:c3d6 with SMTP id
- e9e14a558f8ab-3ddcfd32d99mr43155245ab.5.1749571248051; 
- Tue, 10 Jun 2025 09:00:48 -0700 (PDT)
-Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
- 8926c6da1cb9f-500df3f606asm2397415173.24.2025.06.10.09.00.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Jun 2025 09:00:47 -0700 (PDT)
-Date: Tue, 10 Jun 2025 10:00:46 -0600
-From: Alex Williamson <alex.williamson@redhat.com>
-To: Shaoqin Huang <shahuang@redhat.com>
-Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, "Daniel P.
- =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, qemu-arm@nongnu.org, Eric
- Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Gerd
- Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v2] ramfb: Add property to control if load the romfile
-Message-ID: <20250610100046.3577ee29.alex.williamson@redhat.com>
-In-Reply-To: <c2e0ece0-1ee1-4867-b01c-20e847ef6af3@redhat.com>
-References: <20250606070234.2063451-1-shahuang@redhat.com>
- <aEKeNSc8mAZ8vhGj@redhat.com>
- <cf34f5b2-d422-453f-85d4-15938ae59e9f@redhat.com>
- <c373ee81-d094-4b40-93c9-5ece6e24e520@redhat.com>
- <c2e0ece0-1ee1-4867-b01c-20e847ef6af3@redhat.com>
-Organization: Red Hat
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=alex.williamson@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15h-0006E7-FH
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:47 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXbJP030402;
+ Tue, 10 Jun 2025 15:40:32 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=fxDcFwFeZtL4RvB4l4f1LNOH5ChDVZEc60qqlx6krBw=; b=
+ ADpXgaAg8d5IkNkkqEINBFv7dw9ouj766Y0SPfdY/JZSopWNPZqkJzQEt8xxmb3Z
+ D97MIOhuXgrh/Im+o8NNMdftnTEF+ln5aPgxbfUX3DvhFDxYhDzJ9Sj2PdW107T2
+ G4gBtLUGz+lA2FF825Ox9XOG6vY3qKGSJuhZa+v8ep66P7xb8e2iOTPFdTrr7NFY
+ LIedgAZkr3yGJga1iFfSbF8NxaWPUHlIrk/+1BHdT9lZJjq8CCCZilFbzB5xBatn
+ zRnP+Uik+QqqUGpZDdXhs2acymSaE3N8qbjBo9x7pSV3HL08Yvy+YVfWystHAqff
+ 0efRqayEa4bxC5nOMuiKEA==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c14cgws-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:32 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55AF4Wbt003213; Tue, 10 Jun 2025 15:40:31 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bv8wbm8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:31 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrft028825;
+ Tue, 10 Jun 2025 15:40:30 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 474bv8wak1-25; Tue, 10 Jun 2025 15:40:30 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5 24/38] physmem: qemu_ram_get_fd_offset
+Date: Tue, 10 Jun 2025 08:39:37 -0700
+Message-Id: <1749569991-25171-25-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506100125
+X-Proofpoint-GUID: bTjJ6ELv-kOEFq31V_Dt3x-Wj9mtM15q
+X-Authority-Analysis: v=2.4 cv=GcEXnRXL c=1 sm=1 tr=0 ts=684851f0 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8 a=QyXUC8HyAAAA:8
+ a=s_ck3szjhOtuhh_aLR8A:9 cc=ntf awl=host:14714
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX8zd8fyzOByzS
+ PUgYMwFsAmJa+8qCSXaAohdCWv4cptWWrF3ds755s5Pql50Tu2WOQgZhsaEU08+9jXTsb+kAQhA
+ w9pHh8dU0n0uQiRzUkuEXB0iXRVbWeSjYB89+lUIDaQDwb8QDKmrgT6YpycWo0VtC2byGmCDP/C
+ Vk7Mi4ilU/6sChXro/nTXeWd5hXRdrs+WaTM1GuTbbSv7DIXddL2C1ZhShorlMyC1p/LYcPfFOZ
+ 19CvEaoeWEAMgFUcz3+mG+x0ztA0QmnUH68gB8KlAVozC7h6JtoDSwXZ4+iW7bVOQMHDx6KOLpH
+ zQHJVWvsI3A52gGFgq2V2/iqP++2i4MJ6sEtFGfJeGqWznjPzRdU1KKDoTMlfXUwohaPQSIrZYw
+ OrtMlPuVl+U5VHCJ9cy5S8eRWFrKuJ4nFqpisCpqJhR5gySGpKUVK7EmqGPJyzZVIvr9S4mU
+X-Proofpoint-ORIG-GUID: bTjJ6ELv-kOEFq31V_Dt3x-Wj9mtM15q
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,47 +115,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Jun 2025 13:16:14 +0800
-Shaoqin Huang <shahuang@redhat.com> wrote:
+Define qemu_ram_get_fd_offset, so CPR can map a memory region using
+IOMMU_IOAS_MAP_FILE in a subsequent patch.
 
-> On 6/6/25 4:07 PM, C=C3=A9dric Le Goater wrote:
-> > On 6/6/25 10:06, C=C3=A9dric Le Goater wrote: =20
-> >> On 6/6/25 09:52, Daniel P. Berrang=C3=A9 wrote: =20
-> >>> On Fri, Jun 06, 2025 at 03:02:34AM -0400, Shaoqin Huang wrote: =20
-> >>>> Now the ramfb will load the vgabios-ramfb.bin unconditionally, but o=
-nly
-> >>>> the x86 need the vgabios-ramfb.bin, this can cause that when use the
-> >>>> release package on arm64 it can't find the vgabios-ramfb.bin.
-> >>>>
-> >>>> Because only seabios will use the vgabios-ramfb.bin, load the rom lo=
-gic
-> >>>> is x86-specific. For other !x86 platforms, the edk2 ships an EFI dri=
-ver
-> >>>> for ramfb, so they don't need to load the romfile.
-> >>>>
-> >>>> So add a new property use_legacy_x86_rom in both ramfb and vfio_pci
-> >>>> device, because the vfio display also use the ramfb_setup() to load
-> >>>> the vgabios-ramfb.bin file.
-> >>>>
-> >>>> After have this property, the machine type can set the compatibility=
- to
-> >>>> not load the vgabios-ramfb.bin if the arch doesn't need it. =20
-> >>>
-> >>> Can you make this a series, with an additional patch that updates the
-> >>> current in-dev machine types to use this new property, so we're clear
-> >>> about the proposed usage. =20
-> >>
-> >> yes. And please change the vfio-pci property name to use underscores. =
-=20
-> >=20
-> > Sorry, to *not* use underscores : use-legacy-x86-rom =20
->=20
-> Thanks for pointing out it. Will fix it.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ include/exec/cpu-common.h | 1 +
+ system/physmem.c          | 5 +++++
+ 2 files changed, 6 insertions(+)
 
-It's also not evident from the property that this is restricted to
-ramfb behavior.  Should the option on the vfio-pci device be prefixed
-with ramfb?  Thanks,
-
-Alex
+diff --git a/include/exec/cpu-common.h b/include/exec/cpu-common.h
+index a684855..9b658a3 100644
+--- a/include/exec/cpu-common.h
++++ b/include/exec/cpu-common.h
+@@ -85,6 +85,7 @@ void qemu_ram_unset_idstr(RAMBlock *block);
+ const char *qemu_ram_get_idstr(RAMBlock *rb);
+ void *qemu_ram_get_host_addr(RAMBlock *rb);
+ ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
++ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
+ ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
+ ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
+ bool qemu_ram_is_shared(RAMBlock *rb);
+diff --git a/system/physmem.c b/system/physmem.c
+index a8a9ca3..18684a4 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1593,6 +1593,11 @@ ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
+     return rb->offset;
+ }
+ 
++ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
++{
++    return rb->fd_offset;
++}
++
+ ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
+ {
+     return rb->used_length;
+-- 
+1.8.3.1
 
 
