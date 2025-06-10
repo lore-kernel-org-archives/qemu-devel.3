@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DED2AC5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:41:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 084ECC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:41:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyGH-0003Oc-KT; Tue, 10 Jun 2025 08:39:29 -0400
+	id 1uOyHM-0004lZ-Ql; Tue, 10 Jun 2025 08:40:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOyFZ-0001dz-Lc
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:47 -0400
+ id 1uOyF4-0001KO-7Z
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOyFU-0000VQ-DX
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:45 -0400
+ id 1uOyEy-0000Rm-1G
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749559107;
+ s=mimecast20190719; t=1749559082;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=eRb8u3MCQzztN/Eso5RxlBL5Gee0g9LlE7ej57jd6yU=;
- b=UiiHBL3VLXEZU2ETZpULZJknOZZOAiHf2bruHVoX1Elx3kcTlL5zkUFDLFKnQpidkiz6/K
- YLoQe1zBZYRpsrh0kBMxZmoi4a7AQp1gNvln++PlQiMW6pYc5LWCiplijdSkQqy1ORIBtr
- HN+mNBDC6ilsqZyeGTLykgPWOUG9TLo=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=YqfPIljuTinekI8XR0VCo3C+NV5GGVafjw/OiPlNF6g=;
+ b=OHs+8O2XoZYJt2CaRoBPMeIk0ip+xlyPg13uxGONhDaOlfN49yGlR9wErOtUWimsFsMCax
+ 3grgHR8KZiMdFko//UpNEvivuVc6bVKASBxWXZzp9vQjD3dycUVN9FTE1XnqQfUFFDAMBb
+ o8nTWIEn8kIHb0BKmonzjtXtMj5tfm4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-646-VcCG9XT4M4aUA_Efeonrxw-1; Tue,
- 10 Jun 2025 08:38:25 -0400
-X-MC-Unique: VcCG9XT4M4aUA_Efeonrxw-1
-X-Mimecast-MFC-AGG-ID: VcCG9XT4M4aUA_Efeonrxw_1749559104
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-pBCpXKm0MR-jMJxc3Lb4Cg-1; Tue,
+ 10 Jun 2025 08:37:59 -0400
+X-MC-Unique: pBCpXKm0MR-jMJxc3Lb4Cg-1
+X-Mimecast-MFC-AGG-ID: pBCpXKm0MR-jMJxc3Lb4Cg_1749559078
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5EE3195608C; Tue, 10 Jun 2025 12:38:24 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DF55219560B4; Tue, 10 Jun 2025 12:37:57 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.87])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B5FF430002CC; Tue, 10 Jun 2025 12:38:22 +0000 (UTC)
+ id BE74B30001B1; Tue, 10 Jun 2025 12:37:55 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,10 +54,10 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 27/31] hw/scsi/lsi53c895a: skip automatic zero-init of large
+Subject: [PATCH 17/31] hw/hyperv/syndbg: skip automatic zero-init of large
  array
-Date: Tue, 10 Jun 2025 13:37:05 +0100
-Message-ID: <20250610123709.835102-28-berrange@redhat.com>
+Date: Tue, 10 Jun 2025 13:36:55 +0100
+Message-ID: <20250610123709.835102-18-berrange@redhat.com>
 In-Reply-To: <20250610123709.835102-1-berrange@redhat.com>
 References: <20250610123709.835102-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -89,30 +89,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'lsi_memcpy' method has a 4k byte array used for copying data
-to/from the device. Skip the automatic zero-init of this array to
-eliminate the performance overhead in the I/O hot path.
+The 'handle_recv_msg' method has a 4k byte array used for copying
+data between the network socket and guest memory. Skip the automatic
+zero-init of this array to eliminate the performance overhead in the
+I/O hot path.
 
-The 'buf' array will be fully initialized when data is copied.
+The 'data_buf' array will be fully initialized when data is read
+off the network socket.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/scsi/lsi53c895a.c | 2 +-
+ hw/hyperv/syndbg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/scsi/lsi53c895a.c b/hw/scsi/lsi53c895a.c
-index f4f2ef321e..9ea4aa0a85 100644
---- a/hw/scsi/lsi53c895a.c
-+++ b/hw/scsi/lsi53c895a.c
-@@ -1112,7 +1112,7 @@ bad:
- static void lsi_memcpy(LSIState *s, uint32_t dest, uint32_t src, int count)
+diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
+index 8b8a14750d..ac7e15f6f1 100644
+--- a/hw/hyperv/syndbg.c
++++ b/hw/hyperv/syndbg.c
+@@ -192,7 +192,7 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
  {
-     int n;
--    uint8_t buf[LSI_BUF_SIZE];
-+    QEMU_UNINITIALIZED uint8_t buf[LSI_BUF_SIZE];
- 
-     trace_lsi_memcpy(dest, src, count);
-     while (count) {
+     uint16_t ret;
+     g_assert(MSG_BUFSZ >= qemu_target_page_size());
+-    uint8_t data_buf[MSG_BUFSZ];
++    QEMU_UNINITIALIZED uint8_t data_buf[MSG_BUFSZ];
+     hwaddr out_len;
+     void *out_data;
+     ssize_t recv_byte_count;
 -- 
 2.49.0
 
