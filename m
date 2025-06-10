@@ -4,130 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC7E7C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 05:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64C33C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 05:38:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOrFJ-0003V7-Pi; Tue, 10 Jun 2025 01:10:01 -0400
+	id 1uOrgC-0008EP-7E; Tue, 10 Jun 2025 01:37:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uOrFE-0003Uj-Ky
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 01:09:59 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uOrgA-0008E6-Ja
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 01:37:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uOrFB-0001hH-MM
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 01:09:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uOrg8-0004Y4-Px
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 01:37:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749532191;
+ s=mimecast20190719; t=1749533862;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=+248UnzV8yO4jL0RAICBGO+mBON+Mkj3YBEMhQUCcwI=;
- b=KlkS6prNJiRdrcbkQenJKolMs3ZhrAGo9zhHCbsSeLUF/AqcZwaVeYk3TajSq4z0JT5ehL
- +TfEJe2oYMa/vYcJDgkMgwxqEGsfjl/zsqzqDT34gjpqt1UnMIAIP9+i9E7lqocm/0o8YF
- X3GEuggwGuvNlFn2RBqidterBH3S9qo=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-J62TaWwOPs6FPAee6W3FvQ-1; Tue, 10 Jun 2025 01:09:49 -0400
-X-MC-Unique: J62TaWwOPs6FPAee6W3FvQ-1
-X-Mimecast-MFC-AGG-ID: J62TaWwOPs6FPAee6W3FvQ_1749532188
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a523ce0bb2so2642887f8f.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 22:09:49 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749532188; x=1750136988;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+248UnzV8yO4jL0RAICBGO+mBON+Mkj3YBEMhQUCcwI=;
- b=Om2pyIanx4Egl+rReKFh4MLF447HFtGO5DqmDZcvdfDP+bKfS4LbQFSyVOhhUNMi3A
- MpSMkvPz1j0OPOVMGghwMVud7B218dQnJ4m850pf+3kGOmUl+jfR5bqkDx64d2EBSbqh
- xklglykBxYhNJ+QOMdFQ3zVFD65oA9glJSWShyPl9/3IKdXax8obc1pUwcbPDtW/hyWX
- 8LKu3uz9xwArwSxUZLb4KusfJPFZsXcfvYOoBTuWsdkwLSWruXGTPGpLHDYJyRVE9csi
- /+8Pb/0SuDz020x8uYgr2RhZxvpRoDtVv2OMXYP6pgF80WPIrNimb8clAJdIQ0qk383T
- 3oiA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXBN0WtrxtP+hU0UUQFsExURGfyPmuoIYfMfZ8QMRhc0g7zYWqP9yWPNoTzfrDq7IIwOB/vTJVh/Wf/@nongnu.org
-X-Gm-Message-State: AOJu0Yw9dC34uHxYFdOUHtZzV/HTP0iSz8WeLoP/sQuNllSDGbkxNh+n
- bGmuyi2eTN1ejGPlLJFeqr7iDhCTT4gQEYAZnJ9r0BrgCrYMY8mIhclu2YNPl/tKmYEysITAML0
- VPrJPGgGDT+3dvhUSVUwpmTsGhG5uQFpX6qDAeyspwYFwwLKTdOch2H5y
-X-Gm-Gg: ASbGncsI92BcCFfjusUWyTfSPnHTyLjI8oFRBa/YawynwhIx9G+Glnn9huH/1aQ4t/K
- zKW4fSi7ZBg8HULAEWbvJhDwd2t0HlSen0rp+6Fq8FiApChI1IJpGHhBWjEz/0S/+b/0dB81k5T
- Lu8TnUk2/U3PqynN4c7EHni5wQoXog3T1OplAhtxJUhY7Q2ImyWCw78eJ8Dcyt67aLbH4PsdAfk
- 6DCjE+1IQxOpzMn1l31LkPaiUSejr96yKfHkp/XK3BeG3amxVXp+XYrtHt2CoWhCmdK1n6QqFRL
- Ii2TMNSRJSkH5Gg/I1Q8aVWpKBtGeilRaBk22ZTz+nqolZqsvV0KDEICay4G2Pk=
-X-Received: by 2002:a05:6000:430e:b0:3a4:dd8e:e16d with SMTP id
- ffacd0b85a97d-3a531ca73e9mr13063697f8f.15.1749532188454; 
- Mon, 09 Jun 2025 22:09:48 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IERHeSwzan0m4p0g5SM/qX7/MLjuu6umfvjLBlSvkvfbSgCNRBGeFH+BgkIHDhGNdvzFx6Vug==
-X-Received: by 2002:a05:6000:430e:b0:3a4:dd8e:e16d with SMTP id
- ffacd0b85a97d-3a531ca73e9mr13063680f8f.15.1749532188072; 
- Mon, 09 Jun 2025 22:09:48 -0700 (PDT)
-Received: from [192.168.0.4] (ltea-047-064-115-122.pools.arcor-ip.net.
- [47.64.115.122]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532464581sm11317093f8f.95.2025.06.09.22.09.47
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Jun 2025 22:09:47 -0700 (PDT)
-Message-ID: <14134b70-8e40-4e3f-9376-9fc8344115ae@redhat.com>
-Date: Tue, 10 Jun 2025 07:09:46 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/vm/README: fix documentation path in tests/vm/README
-To: Haseung Bong <hasueng@gmail.com>, qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org
-References: <20250607060456.28902-1-hasueng@gmail.com>
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=v2C8GH3lVaNBGfmpsZ4A1PfcLtOzDYsdLR5L03RtDLA=;
+ b=fp0lR61HsXws6XsBtsXQNBQKJFnnQDyX/Pljq7v3yFevJnPrBSxOAaOK/f5S9deHEBe1RJ
+ uPlKb2i9+HXjycKBIOfYD80Xq3aqd5Th/PE5+Enzh0Xcw+2ejoM/CLFpExRJQ6J57u1zhM
+ MFgPmeOu7zkvBTzurZEAxioERD3kUQk=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-100-E8g5uJYIOmWOA_2IHlJSgw-1; Tue,
+ 10 Jun 2025 01:37:40 -0400
+X-MC-Unique: E8g5uJYIOmWOA_2IHlJSgw-1
+X-Mimecast-MFC-AGG-ID: E8g5uJYIOmWOA_2IHlJSgw_1749533858
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id ABC9519560AA; Tue, 10 Jun 2025 05:37:38 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.89])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C1D3030001B1; Tue, 10 Jun 2025 05:37:35 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20250607060456.28902-1-hasueng@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+To: qemu-devel@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>, Alexander Bulekov <alxndr@bu.edu>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH] MAINTAINERS: Update the paths to the testing documentation
+ files
+Date: Tue, 10 Jun 2025 07:37:34 +0200
+Message-ID: <20250610053734.10417-1-thuth@redhat.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -152,29 +83,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/06/2025 08.04, Haseung Bong wrote:
-> From: "haseung.bong" <hasueng@gmail.com>
-> 
-> The README file in tests/vm/ points to a non-existent file,
-> docs/devel/testing.rst. Update the README to point to
-> docs/devel/testing/main.rst, which now contains information
-> about VM testing.
-> 
-> Signed-off-by: Haseung Bong <hasueng@gmail.com>
-> ---
->   tests/vm/README | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/tests/vm/README b/tests/vm/README
-> index f9c04cc0e7..14ac323309 100644
-> --- a/tests/vm/README
-> +++ b/tests/vm/README
-> @@ -1 +1 @@
-> -See docs/devel/testing.rst for help.
-> +See docs/devel/testing/main.rst for help.
+From: Thomas Huth <thuth@redhat.com>
 
-Fixes: ff41da50308 ("docs/devel: Split testing docs from the build docs and 
-move to separate folder")
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+When the testing docs were moved to a separate subfolder, the entries
+in the MAINTAINERS file were missed. Update them now.
+
+Fixes: ff41da50308 ("docs/devel: Split testing docs from the build docs and move to separate folder")
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS | 15 ++++++++-------
+ 1 file changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index aa6763077ea..eb2b338fb11 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2124,7 +2124,7 @@ M: Michael S. Tsirkin <mst@redhat.com>
+ S: Supported
+ F: tests/functional/acpi-bits/*
+ F: tests/functional/test_acpi_bits.py
+-F: docs/devel/acpi-bits.rst
++F: docs/devel/testing/acpi-bits.rst
+ 
+ ACPI/HEST/GHES
+ R: Dongjiu Geng <gengdongjiu1@gmail.com>
+@@ -3440,8 +3440,8 @@ F: system/qtest.c
+ F: include/system/qtest.h
+ F: accel/qtest/
+ F: tests/qtest/
+-F: docs/devel/qgraph.rst
+-F: docs/devel/qtest.rst
++F: docs/devel/testing/qgraph.rst
++F: docs/devel/testing/qtest.rst
+ X: tests/qtest/bios-tables-test*
+ X: tests/qtest/migration-*
+ 
+@@ -3459,7 +3459,7 @@ F: tests/qtest/fuzz-*test.c
+ F: tests/docker/test-fuzz
+ F: scripts/oss-fuzz/
+ F: hw/mem/sparse-mem.c
+-F: docs/devel/fuzzing.rst
++F: docs/devel/testing/fuzzing.rst
+ 
+ Register API
+ M: Alistair Francis <alistair@alistair23.me>
+@@ -4078,7 +4078,7 @@ M: Stefan Hajnoczi <stefanha@redhat.com>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: block/blkverify.c
+-F: docs/devel/blkverify.rst
++F: docs/devel/testing/blkverify.rst
+ 
+ bochs
+ M: Stefan Hajnoczi <stefanha@redhat.com>
+@@ -4156,7 +4156,7 @@ M: Hanna Reitz <hreitz@redhat.com>
+ L: qemu-block@nongnu.org
+ S: Supported
+ F: block/blkdebug.c
+-F: docs/devel/blkdebug.rst
++F: docs/devel/testing/blkdebug.rst
+ 
+ vpc
+ M: Kevin Wolf <kwolf@redhat.com>
+@@ -4276,7 +4276,8 @@ F: tests/vm/
+ F: tests/lcitool/
+ F: tests/functional/test_*_tuxrun.py
+ F: scripts/archive-source.sh
+-F: docs/devel/testing.rst
++F: docs/devel/testing/ci*
++F: docs/devel/testing/main.rst
+ W: https://gitlab.com/qemu-project/qemu/pipelines
+ W: https://travis-ci.org/qemu/qemu
+ 
+-- 
+2.49.0
 
 
