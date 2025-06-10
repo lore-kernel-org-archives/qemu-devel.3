@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A51C5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:18:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B20FBC5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:18:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOu9v-0004oz-Ia; Tue, 10 Jun 2025 04:16:39 -0400
+	id 1uOu9u-0004oy-Rp; Tue, 10 Jun 2025 04:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uOu9q-0004ms-2d
+ id 1uOu9q-0004mr-2T
  for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:16:35 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uOu9m-0000Sr-AC
+ (envelope-from <gaosong@loongson.cn>) id 1uOu9m-0000Sq-9x
  for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:16:33 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxPuPa6Udob30SAQ--.10787S3;
+ by gateway (Coremail) with SMTP id _____8Bx63Ha6UdobH0SAQ--.46118S3;
  Tue, 10 Jun 2025 16:16:26 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxb8fT6UdojgwUAQ--.58593S5;
- Tue, 10 Jun 2025 16:16:26 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxb8fT6UdojgwUAQ--.58593S4;
+ Tue, 10 Jun 2025 16:16:25 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 3/7] hw/intc/loongarch_extioi: Fix typo issue about register
- EXTIOI_COREISR_END
-Date: Tue, 10 Jun 2025 15:53:46 +0800
-Message-Id: <20250610075350.865626-4-gaosong@loongson.cn>
+Subject: [PULL 2/7] hw/intc/loongarch_pch: Convert to little endian with ID
+ register
+Date: Tue, 10 Jun 2025 15:53:45 +0800
+Message-Id: <20250610075350.865626-3-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250610075350.865626-1-gaosong@loongson.cn>
 References: <20250610075350.865626-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8fT6UdojgwUAQ--.58593S5
+X-CM-TRANSID: qMiowMBxb8fT6UdojgwUAQ--.58593S4
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,32 +68,48 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Interrupt controller extioi supports 256 vectors, register EXTIOI_COREISR
-records pending interrupt status with bitmap method. Size of EXTIOI_COREISR
-is 256 / 8 = 0x20 bytes, EXTIOI_COREISR_END should be EXTIOI_COREISR_START
-+ 0x20 rather than 0xB20.
+With PCH ID register, it is defined as union type as follows:
+union LoongArchPIC_ID {
+    struct {
+        uint8_t _reserved_0[3];
+        uint8_t id;
+        uint8_t version;
+        uint8_t _reserved_1;
+        uint8_t irq_num;
+        uint8_t _reserved_2;
+    } QEMU_PACKED desc;
+    uint64_t data;
+}
+
+And with pch driver in virt machine irq_number is parsed with little
+endian method:
+  vec_count = ((readq(priv->base) >> 48) & 0xff) + 1
+
+So the value of ID register should be converted to little endian.
+With this patch, linux kernel passes to run on S390 big endian host
+machine with TCG method.
 
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
 Reviewed-by: Song Gao <gaosong@loongson.cn>
-Message-Id: <20250605092848.1550985-1-maobibo@loongson.cn>
+Message-Id: <20250604065502.1114098-3-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- include/hw/intc/loongarch_extioi_common.h | 2 +-
+ hw/intc/loongarch_pch_pic.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/intc/loongarch_extioi_common.h b/include/hw/intc/loongarch_extioi_common.h
-index 735bfee80a..dca25ff893 100644
---- a/include/hw/intc/loongarch_extioi_common.h
-+++ b/include/hw/intc/loongarch_extioi_common.h
-@@ -35,7 +35,7 @@
- #define EXTIOI_ISR_START             (0x700 - APIC_OFFSET)
- #define EXTIOI_ISR_END               (0x720 - APIC_OFFSET)
- #define EXTIOI_COREISR_START         (0x800 - APIC_OFFSET)
--#define EXTIOI_COREISR_END           (0xB20 - APIC_OFFSET)
-+#define EXTIOI_COREISR_END           (0x820 - APIC_OFFSET)
- #define EXTIOI_COREMAP_START         (0xC00 - APIC_OFFSET)
- #define EXTIOI_COREMAP_END           (0xD00 - APIC_OFFSET)
- #define EXTIOI_SIZE                  0x800
+diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
+index cbba2fc284..ebb33ed0b0 100644
+--- a/hw/intc/loongarch_pch_pic.c
++++ b/hw/intc/loongarch_pch_pic.c
+@@ -82,7 +82,7 @@ static uint64_t pch_pic_read(void *opaque, hwaddr addr, uint64_t field_mask)
+     addr -= offset;
+     switch (addr) {
+     case PCH_PIC_INT_ID:
+-        val = s->id.data;
++        val = cpu_to_le64(s->id.data);
+         break;
+     case PCH_PIC_INT_MASK:
+         val = s->int_mask;
 -- 
 2.34.1
 
