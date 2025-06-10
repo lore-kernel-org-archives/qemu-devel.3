@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15DE3C61DB2
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:14:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36D8C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:16:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOxr3-0000WG-Np; Tue, 10 Jun 2025 08:13:26 -0400
+	id 1uOxty-000243-Gh; Tue, 10 Jun 2025 08:16:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxr1-0000W4-SF
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:13:23 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxtg-0001xU-OC
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:16:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxqw-0005GD-Ch
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:13:23 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxtW-0005iq-0A
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:16:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749557595;
+ s=mimecast20190719; t=1749557754;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XvhYnDYzchmaL7Ov8AGsyBtlz+x5f7NbwFv04NeQiUE=;
- b=CSJWEgOIwzJnc5jZr1kuNckHtbOGGlDsYZEsqEKYMJ4bvgKp/7nBB1ZTtPgXBfBKxRAHmg
- Y42zGBA6cWk69gy1MPC5dTMcf55e6xz9zVcTTN7AJqiNamL7NA2PISmWrr7ffKenLLdngv
- CdMHL8coBIq+Pv3kMNeOu9CIg8XxnC8=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZwC9UDQ4MhLr8/jFXSDmikgsYg12hjN6NmEFQ+rdPno=;
+ b=Jf0buEfO4PtrxNWyKwsrURWx5Lu+C3zN5Bizo/TsbHOA/ILh43SlMV/nIuFFcUWmDmpkH7
+ BD/ERkjC0b36hbGt9B2Ugy3jWgZn14aROrNR7aTs8e/98d7Kg0STWs8FudEQAlaL9Xpmo3
+ NKZggIdW0L1IoM/lmTf01j319Sr0qLQ=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-9xpDfnOZNeCb1RYLqSi3WQ-1; Tue, 10 Jun 2025 08:13:13 -0400
-X-MC-Unique: 9xpDfnOZNeCb1RYLqSi3WQ-1
-X-Mimecast-MFC-AGG-ID: 9xpDfnOZNeCb1RYLqSi3WQ_1749557592
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f85f31d9so2376571f8f.1
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:13:13 -0700 (PDT)
+ us-mta-374-G2dzV34xMi2ji8LPwLg6RQ-1; Tue, 10 Jun 2025 08:15:53 -0400
+X-MC-Unique: G2dzV34xMi2ji8LPwLg6RQ-1
+X-Mimecast-MFC-AGG-ID: G2dzV34xMi2ji8LPwLg6RQ_1749557752
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a5058f9ef4so2593848f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:15:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749557592; x=1750162392;
+ d=1e100.net; s=20230601; t=1749557752; x=1750162552;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=XvhYnDYzchmaL7Ov8AGsyBtlz+x5f7NbwFv04NeQiUE=;
- b=IIYzgvJJrCIbzBj4Pj/Aq5SiGxo8Ko/BXKM1ypfjTdDWfnW+61ZsTeX1oFtd/aXevU
- qMSeeAAAkqlwlNPB1FchLH2C8iJnR2QqcpEg6tYo17NYyw4E1/3g4rT2SJaYHncVLS5M
- LGbMZNkJ4WabPoOwpDszvinAzHzzz1BTXADmz8U6gGRpqw8vmVD5K9b5UtmpqeT0zrsm
- upu5RMQcgk/5pgz4v4uVSaJy7yRKVvPpLfe7fj80EVA+D0U+efjeItPTF+4VuMHtdRdP
- nfWV77InDqFHcIch8xrQ+Ni7tlWkSbCtHEDj5MYBpfuazyZAOaQn0WgezTJNhsmz8qVI
- i3ZA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWFoE+UsVqeRdKt4ZGpCw5jBnz8/jrHbay5VjXg2i1ol8pMKZtlY35yQiEbDOlkqdxMgMwkEkwZTfqs@nongnu.org
-X-Gm-Message-State: AOJu0YxDrNh81TMXkRk+LBnys+uvRKVe7bpT1X9o7Xb5eFSwcU+tqaBG
- wZxzdS3qv+Cu1uypJ0q/kfjpKhhjJnvrDtMz1hzMh2Otn+FPoygRkVKfeAuaaZHwJd2RSGW5/4a
- CsLvrrhkqIPbbAmklODVWHEtyWb16Gt1zoq2/aR8d9jt9jXxYshBA5x/C
-X-Gm-Gg: ASbGncu/RVDrXyBZjgB9NKOwJWIyhu3V5XU7ocYLDvJqhlUWXjNlTXTTs7PhpXlc523
- w/cPSiK7iTfStoGgT2QGUl52YueSPgm2Jf2uFgN7F4Oiw9H2vAFLl1iUL/t0+ZjpyWPRvWyFfyO
- cgRG3W8X00jljnDs+itKp8HQoXOLreYvsgy3QjrO6pEifEKQ4HctLg4k52Vt/h59s9zdVbAzBPM
- n+juzQUcM/44VP/9PNuWbZNRdTxN9C/Wrw8Ad8uk96E0797dGgjI8+0ae75/Hf3YrNKeEP1eQ3I
- M+Xv8koxc4DRfNdI7yGy0rFYvbsiHLtoR0pfyY+vfyH1jbBTUBF2S5yxiTsl
-X-Received: by 2002:a05:6000:4283:b0:3a5:1241:ce99 with SMTP id
- ffacd0b85a97d-3a53188d3famr12749629f8f.24.1749557591785; 
- Tue, 10 Jun 2025 05:13:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH3wjQMQPYswEs3pg67QQJw8urVhcaB9VkPxXbJFMYuz3wdwlCn7CvH2DWXuXB9zTzBCiLv/g==
-X-Received: by 2002:a05:6000:4283:b0:3a5:1241:ce99 with SMTP id
- ffacd0b85a97d-3a53188d3famr12749580f8f.24.1749557591186; 
- Tue, 10 Jun 2025 05:13:11 -0700 (PDT)
+ bh=ZwC9UDQ4MhLr8/jFXSDmikgsYg12hjN6NmEFQ+rdPno=;
+ b=ub9xR1BE0w8jJ7cgDk0QnkK/Ow8kgqEPwZWDWjUcxJ/1Nv0IlOm18oF17lZSueV40i
+ 01Iqyfh19ehT+TQTnitOcepRTSlfPj8jPWMgo4xYRjwsjd1dZsS/20Gmy+6ppCs8RypE
+ 1yYJGV6zUZTbBURyt9/kh/r4+bNFWidJ1sL61CHEX54gAldO8GzsZGjzVSEU12B+9nkP
+ KIqoxxzM2kgAUJzvemkJfD8J3heNADX378ulMxotY9uBqMHZrqelkfVDfoEDOyduaPxt
+ vvOD0lDZ6RBZmF2XVz2Po/wh8RUVco/CcxqGMgf2ZjXAnuQE68Kaqnx4KzY8Xeo3L3+E
+ zM2g==
+X-Gm-Message-State: AOJu0YwsCD/uUYKyS73XFMo8tiXjj+er6x/LS4d8KCLuqN+hICW3SEBp
+ W5ojxsb31aDFZQsND/W3J8k7Ll6KuGlDbDyZbcxV7HWNGz7Qx5ZzJKRUJJ6Jl1qZh+DwAZEps82
+ MQN8CZZWSAfU3wp0BhfF0XCv6hoYXVKD5DJ9xWM0fOKdjqqrn5SM0JMfQ
+X-Gm-Gg: ASbGnctfQeo6Bbw09yHCas+6rEsSRgFzxTE2u/t6dfO+AdUJA6sEDPxgPjzVa0ZSpFs
+ E05JfHs8jstXX1FPMeDRq50T/XUPnO6OqA0WpMykNvJUkLSZSKfKESvqah81ClFpDUoQMj6crKt
+ wfC1qFrdofpcschrc9Znpcc8pczhObokq7CMDd4A73QH4p7V5KE+8nVdxWPqe/mQZmJ4LmvWdb3
+ qYnnAlE2MKdHAnD1EyFjphSRvJbqaUQ4c9xWFY3Ub1dKbThuR2N4EF81b+Lv2LA8AeMVr02cjNU
+ EH8EMqwxjnRMdZIN+jhtA/pE2WpSUekBtKR9aKvJuvpwOtOXSj3Am0u8xL15
+X-Received: by 2002:a05:6000:1a8f:b0:3a4:cfbf:51a0 with SMTP id
+ ffacd0b85a97d-3a53189bc76mr15576386f8f.21.1749557751819; 
+ Tue, 10 Jun 2025 05:15:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGd/KQY8A02EMGDNtFhF4zDZHoBv+KnXtVh1ZSPu1dnC7ddprJ0C0NTvRSX2df7rfmIBJ+UeQ==
+X-Received: by 2002:a05:6000:1a8f:b0:3a4:cfbf:51a0 with SMTP id
+ ffacd0b85a97d-3a53189bc76mr15576354f8f.21.1749557751406; 
+ Tue, 10 Jun 2025 05:15:51 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4530f7ed8cfsm67937565e9.11.2025.06.10.05.13.09
+ 5b1f17b1804b1-4526e0563b6sm138621765e9.7.2025.06.10.05.15.50
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 05:13:10 -0700 (PDT)
-Message-ID: <44c3e893-3ab3-4bbf-bcb2-853b1e9fc352@redhat.com>
-Date: Tue, 10 Jun 2025 14:13:09 +0200
+ Tue, 10 Jun 2025 05:15:50 -0700 (PDT)
+Message-ID: <9b0f9720-cc46-4102-aa97-7664b57a05ef@redhat.com>
+Date: Tue, 10 Jun 2025 14:15:49 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 06/23] vfio-user: add vfio-user class and container
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
+To: John Levon <john.levon@nutanix.com>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
@@ -91,7 +89,7 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Jagannathan Raman <jag.raman@oracle.com>
 References: <20250607001056.335310-1-john.levon@nutanix.com>
  <20250607001056.335310-7-john.levon@nutanix.com>
- <f1a03beb-3667-485e-aca3-5a8f4990f67a@nutanix.com>
+ <f1a03beb-3667-485e-aca3-5a8f4990f67a@nutanix.com> <aEgdcfh-OBklhGFg@lent>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -137,7 +135,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <f1a03beb-3667-485e-aca3-5a8f4990f67a@nutanix.com>
+In-Reply-To: <aEgdcfh-OBklhGFg@lent>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -165,603 +163,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 13:42, Mark Cave-Ayland wrote:
-> On 07/06/2025 01:10, John Levon wrote:
+On 6/10/25 13:56, John Levon wrote:
+> On Tue, Jun 10, 2025 at 12:42:35PM +0100, Mark Cave-Ayland wrote:
 > 
->> Introduce basic plumbing for vfio-user behind a new
->> --enable-vfio-user-client option.
->>
->> We introduce VFIOUserContainer in hw/vfio-user/container.c, which is a
->> container type for the "IOMMU" type "vfio-iommu-user", and share some
->> common container code from hw/vfio/container.c.
->>
->> Add hw/vfio-user/pci.c for instantiating VFIOUserPCIDevice objects,
->> sharing some common code from hw/vfio/pci.c.
->>
->> Originally-by: John Johnson <john.g.johnson@oracle.com>
->> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
->> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
->> Signed-off-by: John Levon <john.levon@nutanix.com>
->> ---
->>   MAINTAINERS                           |   2 +
->>   hw/vfio-user/container.h              |  25 +++
->>   include/hw/vfio/vfio-container-base.h |   1 +
->>   hw/vfio-user/container.c              | 212 ++++++++++++++++++++++++++
->>   hw/vfio-user/pci.c                    | 155 +++++++++++++++++++
->>   hw/meson.build                        |   1 +
->>   hw/vfio-user/meson.build              |   9 ++
->>   meson_options.txt                     |   2 +
->>   scripts/meson-buildoptions.sh         |   4 +
->>   9 files changed, 411 insertions(+)
->>   create mode 100644 hw/vfio-user/container.h
->>   create mode 100644 hw/vfio-user/container.c
->>   create mode 100644 hw/vfio-user/pci.c
->>   create mode 100644 hw/vfio-user/meson.build
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index dbc393989a..328bab8d19 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -4252,6 +4252,8 @@ M: John Levon <john.levon@nutanix.com>
->>   M: Thanos Makatos <thanos.makatos@nutanix.com>
->>   S: Supported
->>   F: docs/devel/vfio-user.rst
->> +F: hw/vfio-user/*
->> +F: include/hw/vfio-user/*
->>   F: subprojects/libvfio-user
+>> Question: how do you see the division between hw/vfio and hw/vfio-user? My
+>> initial feeling is that there is substantial sharing between the two, in
+>> which case I'd expect the files to be in hw/vfio as e.g.
+>> hw/vfio/container-user.c etc. instead of its own directory.
 > 
-> Question: how do you see the division between hw/vfio and hw/vfio-user? My initial feeling is that there is substantial sharing between the two, in which case I'd expect the files to be in hw/vfio as e.g. hw/vfio/container-user.c etc. instead of its own directory.
-> 
-> Cédric, what are your thoughts here?
+> That was also in the earlier patchsets! Cédric asked for hw/vfio-user - and I
+> think I actually prefer it myself. The amount we export from hw/vfio is actually
+> fairly minimal (now).
 
-The vfio devices are very dependent on the bus they depend on.
-My idea is to keep under hw/vfio the initial implementation of
-the vfio-pci device and the common services for other "complex"
-vfio devices like vfio-user-pci. Which give us :
-
-	hw/vfio/*		17323 lines
-	hw/vfio-user/*		2955 lines
-
-vfio-ap and vfio-ccw are small but I might still move them under
-s390x. vfio-platform will be removed in the next QEMU cycle.
-
-Also, util/vfio-helpers.c, on which is built the nvme BlockDriver,
-should be merged under the common services, so under hw/vfio.
-
+yes. It looks much better. The interfaces between the core VFIO framework
+and the new vfio-user-pci device are clear. This is easier for maintenance
+too.
 
 Thanks,
 
 C.
-
-
-
-> 
->>   EBPF:
->> diff --git a/hw/vfio-user/container.h b/hw/vfio-user/container.h
->> new file mode 100644
->> index 0000000000..3cd3303e68
->> --- /dev/null
->> +++ b/hw/vfio-user/container.h
->> @@ -0,0 +1,25 @@
->> +/*
->> + * vfio-user specific definitions.
->> + *
->> + * This work is licensed under the terms of the GNU GPL, version 2.  See
->> + * the COPYING file in the top-level directory.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#ifndef HW_VFIO_USER_CONTAINER_H
->> +#define HW_VFIO_USER_CONTAINER_H
->> +
->> +#include <inttypes.h>
->> +#include <stdbool.h>
-> 
-> These shouldn't be included directly: you probably just want:
-> 
-> #include "qemu/osdep.h"
-> 
-> instead.
-> 
->> +#include "hw/vfio/vfio-container-base.h"
->> +
->> +/* MMU container sub-class for vfio-user. */
->> +typedef struct VFIOUserContainer {
->> +    VFIOContainerBase bcontainer;
->> +} VFIOUserContainer;
->> +
->> +OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserContainer, VFIO_IOMMU_USER);
-> 
-> As per the documentation at https://qemu-project.gitlab.io/qemu/devel/style.html#qemu-object-model-declarations the parent object should always be named parent_obj and struct shouldn't have a typedef i.e.
-> 
-> /* MMU container sub-class for vfio-user. */
-> struct VFIOUserContainer {
->      VFIOContainerBase parent_obj;
-> };
-> 
-> OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserContainer, VFIO_IOMMU_USER);
-> 
->> +#endif /* HW_VFIO_USER_CONTAINER_H */
->> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
->> index 9d37f86115..28899ca0a6 100644
->> --- a/include/hw/vfio/vfio-container-base.h
->> +++ b/include/hw/vfio/vfio-container-base.h
->> @@ -109,6 +109,7 @@ vfio_container_get_page_size_mask(const VFIOContainerBase *bcontainer)
->>   #define TYPE_VFIO_IOMMU_LEGACY TYPE_VFIO_IOMMU "-legacy"
->>   #define TYPE_VFIO_IOMMU_SPAPR TYPE_VFIO_IOMMU "-spapr"
->>   #define TYPE_VFIO_IOMMU_IOMMUFD TYPE_VFIO_IOMMU "-iommufd"
->> +#define TYPE_VFIO_IOMMU_USER TYPE_VFIO_IOMMU "-user"
->>   OBJECT_DECLARE_TYPE(VFIOContainerBase, VFIOIOMMUClass, VFIO_IOMMU)
->> diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
->> new file mode 100644
->> index 0000000000..2892845b4f
->> --- /dev/null
->> +++ b/hw/vfio-user/container.c
->> @@ -0,0 +1,212 @@
->> +/*
->> + * Container for vfio-user IOMMU type: rather than communicating with the kernel
->> + * vfio driver, we communicate over a socket to a server using the vfio-user
->> + * protocol.
->> + *
->> + * This work is licensed under the terms of the GNU GPL, version 2.  See
->> + * the COPYING file in the top-level directory.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include <sys/ioctl.h>
->> +#include <linux/vfio.h>
->> +#include "qemu/osdep.h"
->> +
->> +#include "hw/vfio-user/container.h"
->> +#include "hw/vfio/vfio-cpr.h"
->> +#include "hw/vfio/vfio-device.h"
->> +#include "hw/vfio/vfio-listener.h"
->> +#include "qapi/error.h"
->> +#include "trace.h"
->> +
->> +static int vfio_user_dma_unmap(const VFIOContainerBase *bcontainer,
->> +                               hwaddr iova, ram_addr_t size,
->> +                               IOMMUTLBEntry *iotlb, bool unmap_all)
->> +{
->> +    return -ENOTSUP;
->> +}
->> +
->> +static int vfio_user_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
->> +                             ram_addr_t size, void *vaddr, bool readonly,
->> +                             MemoryRegion *mrp)
->> +{
->> +    return -ENOTSUP;
->> +}
->> +
->> +static int
->> +vfio_user_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
->> +                                    bool start, Error **errp)
->> +{
->> +    error_setg_errno(errp, ENOTSUP, "Not supported");
->> +    return -ENOTSUP;
->> +}
->> +
->> +static int vfio_user_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
->> +                                         VFIOBitmap *vbmap, hwaddr iova,
->> +                                         hwaddr size, Error **errp)
->> +{
->> +    error_setg_errno(errp, ENOTSUP, "Not supported");
->> +    return -ENOTSUP;
->> +}
->> +
->> +static bool vfio_user_setup(VFIOContainerBase *bcontainer, Error **errp)
->> +{
->> +    error_setg_errno(errp, ENOTSUP, "Not supported");
->> +    return -ENOTSUP;
->> +}
->> +
->> +static VFIOUserContainer *vfio_user_create_container(Error **errp)
->> +{
->> +    VFIOUserContainer *container;
->> +
->> +    container = VFIO_IOMMU_USER(object_new(TYPE_VFIO_IOMMU_USER));
->> +    return container;
->> +}
->> +
->> +/*
->> + * Try to mirror vfio_container_connect() as much as possible.
->> + */
->> +static VFIOUserContainer *
->> +vfio_user_container_connect(AddressSpace *as, Error **errp)
->> +{
->> +    VFIOContainerBase *bcontainer;
->> +    VFIOUserContainer *container;
->> +    VFIOAddressSpace *space;
->> +    VFIOIOMMUClass *vioc;
->> +
->> +    space = vfio_address_space_get(as);
->> +
->> +    container = vfio_user_create_container(errp);
->> +    if (!container) {
->> +        goto put_space_exit;
->> +    }
->> +
->> +    bcontainer = &container->bcontainer;
-> 
-> References to the object hierarchy should always be done with the automatically generated QOM cast macros since they are easier to read, and also ensure type safety e.g.:
-> 
->         bcontainer = VFIO_IOMMU(container);
-> 
->> +    if (!vfio_cpr_register_container(bcontainer, errp)) {
->> +        goto free_container_exit;
->> +    }
->> +
->> +    vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
->> +    assert(vioc->setup);
->> +
->> +    if (!vioc->setup(bcontainer, errp)) {
->> +        goto unregister_container_exit;
->> +    }
->> +
->> +    vfio_address_space_insert(space, bcontainer);
->> +
->> +    if (!vfio_listener_register(bcontainer, errp)) {
->> +        goto listener_release_exit;
->> +    }
->> +
->> +    bcontainer->initialized = true;
->> +
->> +    return container;
->> +
->> +listener_release_exit:
->> +    vfio_listener_unregister(bcontainer);
->> +    if (vioc->release) {
->> +        vioc->release(bcontainer);
->> +    }
->> +
->> +unregister_container_exit:
->> +    vfio_cpr_unregister_container(bcontainer);
->> +
->> +free_container_exit:
->> +    object_unref(container);
->> +
->> +put_space_exit:
->> +    vfio_address_space_put(space);
->> +
->> +    return NULL;
->> +}
->> +
->> +static void vfio_user_container_disconnect(VFIOUserContainer *container)
->> +{
->> +    VFIOContainerBase *bcontainer = &container->bcontainer;
-> 
-> Use a QOM cast here.
-> 
->> +    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
->> +
->> +    vfio_listener_unregister(bcontainer);
->> +    if (vioc->release) {
->> +        vioc->release(bcontainer);
->> +    }
->> +
->> +    VFIOAddressSpace *space = bcontainer->space;
->> +
->> +    vfio_cpr_unregister_container(bcontainer);
->> +    object_unref(container);
->> +
->> +    vfio_address_space_put(space);
->> +}
->> +
->> +static bool vfio_user_device_get(VFIOUserContainer *container,
->> +                                 VFIODevice *vbasedev, Error **errp)
->> +{
->> +    struct vfio_device_info info = { 0 };
->> +
->> +    vbasedev->fd = -1;
->> +
->> +    vfio_device_prepare(vbasedev, &container->bcontainer, &info);
-> 
-> Use a QOM cast here.
-> 
->> +    return true;
->> +}
->> +
->> +/*
->> + * vfio_user_device_attach: attach a device to a new container.
->> + */
->> +static bool vfio_user_device_attach(const char *name, VFIODevice *vbasedev,
->> +                                    AddressSpace *as, Error **errp)
->> +{
->> +    VFIOUserContainer *container;
->> +
->> +    container = vfio_user_container_connect(as, errp);
->> +    if (container == NULL) {
->> +        error_prepend(errp, "failed to connect proxy");
->> +        return false;
->> +    }
->> +
->> +    return vfio_user_device_get(container, vbasedev, errp);
->> +}
->> +
->> +static void vfio_user_device_detach(VFIODevice *vbasedev)
->> +{
->> +    VFIOUserContainer *container = container_of(vbasedev->bcontainer,
->> +                                                VFIOUserContainer, bcontainer);
->> +
->> +    vfio_device_unprepare(vbasedev);
->> +
->> +    vfio_user_container_disconnect(container);
->> +}
->> +
->> +static int vfio_user_pci_hot_reset(VFIODevice *vbasedev, bool single)
->> +{
->> +    /* ->needs_reset is always false for vfio-user. */
->> +    return 0;
->> +}
->> +
->> +static void vfio_iommu_user_class_init(ObjectClass *klass, const void *data)
->> +{
->> +    VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
->> +
->> +    vioc->setup = vfio_user_setup;
->> +    vioc->dma_map = vfio_user_dma_map;
->> +    vioc->dma_unmap = vfio_user_dma_unmap;
->> +    vioc->attach_device = vfio_user_device_attach;
->> +    vioc->detach_device = vfio_user_device_detach;
->> +    vioc->set_dirty_page_tracking = vfio_user_set_dirty_page_tracking;
->> +    vioc->query_dirty_bitmap = vfio_user_query_dirty_bitmap;
->> +    vioc->pci_hot_reset = vfio_user_pci_hot_reset;
->> +};
->> +
->> +static const TypeInfo types[] = {
->> +    {
->> +        .name = TYPE_VFIO_IOMMU_USER,
->> +        .parent = TYPE_VFIO_IOMMU,
->> +        .instance_size = sizeof(VFIOUserContainer),
->> +        .class_init = vfio_iommu_user_class_init,
->> +    },
->> +};
->> +
->> +DEFINE_TYPES(types)
->> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
->> new file mode 100644
->> index 0000000000..74b0c61f9b
->> --- /dev/null
->> +++ b/hw/vfio-user/pci.c
->> @@ -0,0 +1,155 @@
->> +/*
->> + * vfio PCI device over a UNIX socket.
->> + *
->> + * Copyright © 2018, 2021 Oracle and/or its affiliates.
->> + *
->> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
->> + * See the COPYING file in the top-level directory.
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include <sys/ioctl.h>
->> +#include "qemu/osdep.h"
->> +
->> +#include "hw/qdev-properties.h"
->> +#include "hw/vfio/pci.h"
->> +
->> +#define TYPE_VFIO_USER_PCI "vfio-user-pci"
->> +OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
->> +
->> +struct VFIOUserPCIDevice {
->> +    VFIOPCIDevice device;
->> +    char *sock_name;
->> +};
-> 
-> Again as per the documentation link above, device should be called parent_obj plus there should be a empty line between parent_obj and the other members i.e.
-> 
-> struct VFIOUserPCIDevice {
->      VFIOPCIDevice parent_obj;
-> 
->      char *sock_name;
-> }
-> 
-> Note that by using QOM casts the name of the parent object member is not exposed to the remainder of the code.
-> 
->> +/*
->> + * Emulated devices don't use host hot reset
->> + */
->> +static void vfio_user_compute_needs_reset(VFIODevice *vbasedev)
->> +{
->> +    vbasedev->needs_reset = false;
->> +}
->> +
->> +static Object *vfio_user_pci_get_object(VFIODevice *vbasedev)
->> +{
->> +    VFIOUserPCIDevice *vdev = container_of(vbasedev, VFIOUserPCIDevice,
->> +                                           device.vbasedev);
-> 
-> Hmmm. Not for this series but this may suggest VFIODevice should be QOMified.
-> 
->> +    return OBJECT(vdev);
->> +}
->  >   > +static VFIODeviceOps vfio_user_pci_ops = {
->> +    .vfio_compute_needs_reset = vfio_user_compute_needs_reset,
->> +    .vfio_eoi = vfio_pci_intx_eoi,
->> +    .vfio_get_object = vfio_user_pci_get_object,
->> +    /* No live migration support yet. */
->> +    .vfio_save_config = NULL,
->> +    .vfio_load_config = NULL,
->> +};
->> +
->> +static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
->> +{
->> +    ERRP_GUARD();
->> +    VFIOUserPCIDevice *udev = VFIO_USER_PCI(pdev);
->> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
->> +    VFIODevice *vbasedev = &vdev->vbasedev;
->> +    AddressSpace *as;
->> +
->> +    /*
->> +     * TODO: make option parser understand SocketAddress
->> +     * and use that instead of having scalar options
->> +     * for each socket type.
->> +     */
->> +    if (!udev->sock_name) {
->> +        error_setg(errp, "No socket specified");
->> +        error_append_hint(errp, "Use -device vfio-user-pci,socket=<name>\n");
->> +        return;
->> +    }
->> +
->> +    vbasedev->name = g_strdup_printf("VFIO user <%s>", udev->sock_name);
->> +
->> +    /*
->> +     * vfio-user devices are effectively mdevs (don't use a host iommu).
->> +     */
->> +    vbasedev->mdev = true;
->> +
->> +    as = pci_device_iommu_address_space(pdev);
->> +    if (!vfio_device_attach_by_iommu_type(TYPE_VFIO_IOMMU_USER,
->> +                                          vbasedev->name, vbasedev,
->> +                                          as, errp)) {
->> +        error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
->> +        return;
->> +    }
->> +}
->> +
->> +static void vfio_user_instance_init(Object *obj)
->> +{
->> +    PCIDevice *pci_dev = PCI_DEVICE(obj);
->> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
->> +    VFIODevice *vbasedev = &vdev->vbasedev;
->> +
->> +    device_add_bootindex_property(obj, &vdev->bootindex,
->> +                                  "bootindex", NULL,
->> +                                  &pci_dev->qdev);
->> +    vdev->host.domain = ~0U;
->> +    vdev->host.bus = ~0U;
->> +    vdev->host.slot = ~0U;
->> +    vdev->host.function = ~0U;
->> +
->> +    vfio_device_init(vbasedev, VFIO_DEVICE_TYPE_PCI, &vfio_user_pci_ops,
->> +                     DEVICE(vdev), false);
->> +
->> +    vdev->nv_gpudirect_clique = 0xFF;
->> +
->> +    /*
->> +     * QEMU_PCI_CAP_EXPRESS initialization does not depend on QEMU command
->> +     * line, therefore, no need to wait to realize like other devices.
->> +     */
->> +    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
->> +}
->> +
->> +static void vfio_user_instance_finalize(Object *obj)
->> +{
->> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
->> +
->> +    vfio_pci_put_device(vdev);
->> +}
->> +
->> +static const Property vfio_user_pci_dev_properties[] = {
->> +    DEFINE_PROP_UINT32("x-pci-vendor-id", VFIOPCIDevice,
->> +                       vendor_id, PCI_ANY_ID),
->> +    DEFINE_PROP_UINT32("x-pci-device-id", VFIOPCIDevice,
->> +                       device_id, PCI_ANY_ID),
->> +    DEFINE_PROP_UINT32("x-pci-sub-vendor-id", VFIOPCIDevice,
->> +                       sub_vendor_id, PCI_ANY_ID),
->> +    DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
->> +                       sub_device_id, PCI_ANY_ID),
->> +    DEFINE_PROP_STRING("socket", VFIOUserPCIDevice, sock_name),
->> +};
->> +
->> +static void vfio_user_pci_dev_class_init(ObjectClass *klass, const void *data)
->> +{
->> +    DeviceClass *dc = DEVICE_CLASS(klass);
->> +    PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
->> +
->> +    device_class_set_props(dc, vfio_user_pci_dev_properties);
->> +    dc->desc = "VFIO over socket PCI device assignment";
->> +    pdc->realize = vfio_user_pci_realize;
->> +}
->> +
->> +static const TypeInfo vfio_user_pci_dev_info = {
->> +    .name = TYPE_VFIO_USER_PCI,
->> +    .parent = TYPE_VFIO_PCI_BASE,
->> +    .instance_size = sizeof(VFIOUserPCIDevice),
->> +    .class_init = vfio_user_pci_dev_class_init,
->> +    .instance_init = vfio_user_instance_init,
->> +    .instance_finalize = vfio_user_instance_finalize,
->> +};
->> +
->> +static void register_vfio_user_dev_type(void)
->> +{
->> +    type_register_static(&vfio_user_pci_dev_info);
->> +}
->> +
->> + type_init(register_vfio_user_dev_type)
-> 
-> Use DEFINE_TYPES as you've already done above instead of type_init() here.
-> 
->> diff --git a/hw/meson.build b/hw/meson.build
->> index b91f761fe0..791ce21ab4 100644
->> --- a/hw/meson.build
->> +++ b/hw/meson.build
->> @@ -39,6 +39,7 @@ subdir('uefi')
->>   subdir('ufs')
->>   subdir('usb')
->>   subdir('vfio')
->> +subdir('vfio-user')
->>   subdir('virtio')
->>   subdir('vmapple')
->>   subdir('watchdog')
->> diff --git a/hw/vfio-user/meson.build b/hw/vfio-user/meson.build
->> new file mode 100644
->> index 0000000000..f1fee70c85
->> --- /dev/null
->> +++ b/hw/vfio-user/meson.build
->> @@ -0,0 +1,9 @@
->> +vfio_user_ss = ss.source_set()
->> +vfio_user_ss.add(files(
->> +  'container.c',
->> +  'pci.c',
->> +))
->> +
->> +if get_option('vfio_user_client').enabled()
->> +  specific_ss.add_all(vfio_user_ss)
->> +endif
->> diff --git a/meson_options.txt b/meson_options.txt
->> index a442be2995..97d3db44cd 100644
->> --- a/meson_options.txt
->> +++ b/meson_options.txt
->> @@ -109,6 +109,8 @@ option('multiprocess', type: 'feature', value: 'auto',
->>          description: 'Out of process device emulation support')
->>   option('relocatable', type : 'boolean', value : true,
->>          description: 'toggle relocatable install')
->> +option('vfio_user_client', type: 'feature', value: 'disabled',
->> +       description: 'vfio-user client support')
->>   option('vfio_user_server', type: 'feature', value: 'disabled',
->>          description: 'vfio-user server support')
->>   option('dbus_display', type: 'feature', value: 'auto',
->> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
->> index f09ef9604f..2c5673769a 100644
->> --- a/scripts/meson-buildoptions.sh
->> +++ b/scripts/meson-buildoptions.sh
->> @@ -201,6 +201,8 @@ meson_options_help() {
->>     printf "%s\n" '  vdi             vdi image format support'
->>     printf "%s\n" '  vduse-blk-export'
->>     printf "%s\n" '                  VDUSE block export support'
->> +  printf "%s\n" '  vfio-user-client'
->> +  printf "%s\n" '                  vfio-user client support'
->>     printf "%s\n" '  vfio-user-server'
->>     printf "%s\n" '                  vfio-user server support'
->>     printf "%s\n" '  vhdx            vhdx image format support'
->> @@ -529,6 +531,8 @@ _meson_option_parse() {
->>       --disable-vdi) printf "%s" -Dvdi=disabled ;;
->>       --enable-vduse-blk-export) printf "%s" -Dvduse_blk_export=enabled ;;
->>       --disable-vduse-blk-export) printf "%s" -Dvduse_blk_export=disabled ;;
->> +    --enable-vfio-user-client) printf "%s" -Dvfio_user_client=enabled ;;
->> +    --disable-vfio-user-client) printf "%s" -Dvfio_user_client=disabled ;;
->>       --enable-vfio-user-server) printf "%s" -Dvfio_user_server=enabled ;;
->>       --disable-vfio-user-server) printf "%s" -Dvfio_user_server=disabled ;;
->>       --enable-vhdx) printf "%s" -Dvhdx=enabled ;;
-> 
-> 
-> ATB,
-> 
-> Mark.
-> 
 
 
