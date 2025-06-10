@@ -4,61 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60847C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:58:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31C39C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:59:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2AU-0000hu-Vy; Tue, 10 Jun 2025 12:49:47 -0400
+	id 1uP29V-0007YJ-UZ; Tue, 10 Jun 2025 12:48:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uP0sT-00028o-5y
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:27:06 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uP22D-0000wc-PR
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:41:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uP0sL-0004Ya-Ij
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:27:03 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bGszc06Nkz6HJlk;
- Tue, 10 Jun 2025 23:25:00 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 0F115140373;
- Tue, 10 Jun 2025 23:26:50 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 10 Jun
- 2025 17:26:49 +0200
-Date: Tue, 10 Jun 2025 16:26:48 +0100
-To: Fan Ni <nifan.cxl@gmail.com>
-CC: <anisa.su887@gmail.com>, <qemu-devel@nongnu.org>, <dave@stgolabs.net>,
- <linux-cxl@vger.kernel.org>, Anisa Su <anisa.su@samsung.com>
-Subject: Re: [QEMU PATCH v3 8/9] cxl-mailbox-utils: 0x5604 - FMAPI Initiate
- DC Add
-Message-ID: <20250610162648.000071a2@huawei.com>
-In-Reply-To: <aEMxlAvukxhWXhw1@debian>
-References: <20250605234227.970187-1-anisa.su887@gmail.com>
- <20250605234227.970187-9-anisa.su887@gmail.com>
- <aEMxlAvukxhWXhw1@debian>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uP227-0006Uc-VL
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:41:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749573665;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/l1nu3eIkA8q1+141NllUUiIrxxn5cUe0PTOoycycI0=;
+ b=Jh6ENB+kjsbV/AibqNAMPjDtkUT7B6z9IZKy+EGQDBsndc2cIg4xPGNtGbvRDQYRdIGbQs
+ rbE//IuaDdRzWsCgVckvgHJzedANjKAd5rYBQvKsv/u2YyZRzbSxqpTsrFBi6S2ReQWc9l
+ G1kD6UHifsZm9hyfVgqfdo1sFkxm6UA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-VfBSVSZFNDyrSBoljajIfA-1; Tue, 10 Jun 2025 12:41:04 -0400
+X-MC-Unique: VfBSVSZFNDyrSBoljajIfA-1
+X-Mimecast-MFC-AGG-ID: VfBSVSZFNDyrSBoljajIfA_1749573663
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a3696a0d3aso2383791f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:41:04 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749573663; x=1750178463;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=/l1nu3eIkA8q1+141NllUUiIrxxn5cUe0PTOoycycI0=;
+ b=l226RwPKnhxTH7dg1DNJx5Z3OKpciKyRMurA4kzx0idd44yToWAHdtmY9MQqUwuRly
+ U/fQjl6DKcXt0Dp3Z1HuCRBfD1S/ZWryw1jZn8rywWCtIq9A0IOIAM5KzoNhdvWlLl0n
+ V0BxBqD+aMKWME5Z3cdfHn87F4VzSKl1JE/y0rm2mTbyy7xXmbT8bWBfSCvz3ZSwFHRB
+ JTFjoSK6CMh5dPm0lwXEOaYVeAAX6L3c1LDE5TQPARxxsYA99ai/NoO+Qg83bT3rkFvT
+ 53HyvcgOmlIB1pQp40qdIAEV9mdKYS/Whh1Vidkt4G0I0DmSwUen/bwVKH+jTwZeDfnr
+ mLYg==
+X-Gm-Message-State: AOJu0YxxyF79XnWkrt74EaunDlcO73gLy3XVlxrbEeN+0nCRVM0uwJ0F
+ 8jJxz1VQhA3/pDzMXvrMIsmkl8Ap/JC2gW3DaUAU65fk0TdSiNO9LKIbYvG90/FbiIFRsH2TYbk
+ iSIwI3CnJXGscq9R9wa7SntsuBtiYHdyUDxPdTOpR3cQ0qhvnuwh+akhS
+X-Gm-Gg: ASbGncssXWPXcrmNNNDhSanfe51t6f1oKWzdkIK/M3H5o4p9V+2QdYhRBeinR3BCsWX
+ WZNu53YmH6dxDvIiLH+4uOrXp77mVlLkYJPwYrjqUT22GLe+DJJgQEoS0nuRNRUZOKAGvFwFMbz
+ ZZIh00I5Ack8FctvAsegGLwBAD02Cl/qmo9ChYxguWx9705ZgD6w+xPH+ZiSF1Wkb65yUQtXBCY
+ L4mQN2y02gqxpnc1jkurGIS/plnY18vFWtWLS9XsMbkrN4X6GDjHwxMI/WHhsInTuBT/38erHaN
+ m8gHKYrLkXZ50Jys
+X-Received: by 2002:a05:6000:1207:b0:3a5:34da:542f with SMTP id
+ ffacd0b85a97d-3a534da5596mr9610885f8f.43.1749573663279; 
+ Tue, 10 Jun 2025 09:41:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFWulD7kabhvRzfbjbgjl9CRbahdfyWKpNtYz9ieTboda8K3ovVQ8x2kaMyzpangzoI2LcIXQ==
+X-Received: by 2002:a05:6000:1207:b0:3a5:34da:542f with SMTP id
+ ffacd0b85a97d-3a534da5596mr9610867f8f.43.1749573662887; 
+ Tue, 10 Jun 2025 09:41:02 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a5323b33c3sm12886120f8f.34.2025.06.10.09.41.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Jun 2025 09:41:02 -0700 (PDT)
+Date: Tue, 10 Jun 2025 12:41:00 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
+Subject: Re: [PATCH] virtio: avoid cost of -ftrivial-auto-var-init in hot path
+Message-ID: <20250610123707-mutt-send-email-mst@kernel.org>
+References: <20250604191843.399309-1-stefanha@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20250604191843.399309-1-stefanha@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,310 +104,92 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 6 Jun 2025 11:21:08 -0700
-Fan Ni <nifan.cxl@gmail.com> wrote:
+On Wed, Jun 04, 2025 at 03:18:43PM -0400, Stefan Hajnoczi wrote:
+> Since commit 7ff9ff039380 ("meson: mitigate against use of uninitialize
+> stack for exploits") the -ftrivial-auto-var-init=zero compiler option is
+> used to zero local variables. While this reduces security risks
+> associated with uninitialized stack data, it introduced a measurable
+> bottleneck in the virtqueue_split_pop() and virtqueue_packed_pop()
+> functions.
+> 
+> These virtqueue functions are in the hot path. They are called for each
+> element (request) that is popped from a VIRTIO device's virtqueue. Using
+> __attribute__((uninitialized)) on large stack variables in these
+> functions improves fio randread bs=4k iodepth=64 performance from 304k
+> to 332k IOPS (+9%).
 
-> On Thu, Jun 05, 2025 at 11:42:22PM +0000, anisa.su887@gmail.com wrote:
-> > From: Anisa Su <anisa.su@samsung.com>
-> > 
-> > FM DCD Management command 0x5604 implemented per CXL r3.2 Spec Section 7.6.7.6.5
-> > 
-> > Signed-off-by: Anisa Su <anisa.su@samsung.com>  
-> 
-> See below...
-A few follow ups.
-> 
-> > ---
-> >  hw/cxl/cxl-mailbox-utils.c  | 152 ++++++++++++++++++++++++++++++++++++
-> >  hw/mem/cxl_type3.c          |   8 +-
-> >  include/hw/cxl/cxl_device.h |   4 +
-> >  3 files changed, 160 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> > index 004e502b22..7ee5be00bc 100644
-> > --- a/hw/cxl/cxl-mailbox-utils.c
-> > +++ b/hw/cxl/cxl-mailbox-utils.c
-> > @@ -123,6 +123,7 @@ enum {
-> >          #define GET_HOST_DC_REGION_CONFIG   0x1
-> >          #define SET_DC_REGION_CONFIG        0x2
-> >          #define GET_DC_REGION_EXTENT_LIST   0x3
-> > +        #define INITIATE_DC_ADD             0x4
-> >  };
-> >  
-> >  /* CCI Message Format CXL r3.1 Figure 7-19 */
-> > @@ -3540,6 +3541,150 @@ static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
-> >      return CXL_MBOX_SUCCESS;
-> >  }
-> >  
-> > +static void cxl_mbox_dc_add_to_pending(CXLType3Dev *ct3d,  
-> 
-> This naming can be improved here, not straightforward to me.
-> Maybe cxl_add_extents_to_pending_list() ?
-> 
-> > +                                       uint32_t ext_count,
-> > +                                       CXLDCExtentRaw extents[])
-> > +{
-> > +    CXLDCExtentGroup *group = NULL;
-> > +    int i;
-> > +
-> > +    for (i = 0; i < ext_count; i++) {
-> > +        group = cxl_insert_extent_to_extent_group(group,
-> > +                                                  extents[i].start_dpa,
-> > +                                                  extents[i].len,
-> > +                                                  extents[i].tag,
-> > +                                                  extents[i].shared_seq);
-> > +    }
-> > +
-> > +    cxl_extent_group_list_insert_tail(&ct3d->dc.extents_pending, group);
-> > +    ct3d->dc.total_extent_count += ext_count;
-> > +}  
-> 
-> Also the code is duplicate with existing code in cxl_type3.c 
-> qmp_cxl_process_dynamic_capacity_prescriptive(). 
-> The function was simulating the behaviour of the mailbox command, so it is
-> behaviour will be smilar to what we have in this patch, 
-> find a way to reuse code, maybe extract common code as a helper function and use
-> it in both qmp interface and here.
-> 
-> > +
-> > +static void cxl_mbox_create_dc_event_records_for_extents(CXLType3Dev *ct3d,  
-> cxl_create_dc_extent_records_for extents()?
-> > +                                                         CXLDCEventType type,
-> > +                                                         CXLDCExtentRaw extents[],
-> > +                                                         uint32_t ext_count)
-> > +{
-> > +    CXLEventDynamicCapacity event_rec = {};
-> > +    int i;
-> > +
-> > +    cxl_assign_event_header(&event_rec.hdr,
-> > +                            &dynamic_capacity_uuid,
-> > +                            (1 << CXL_EVENT_TYPE_INFO),
-> > +                            sizeof(event_rec),
-> > +                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
-> > +    event_rec.type = type;
-> > +    event_rec.validity_flags = 1;
-> > +    event_rec.host_id = 0;
-> > +    event_rec.updated_region_id = 0;
-> > +    event_rec.extents_avail = CXL_NUM_EXTENTS_SUPPORTED -
-> > +                              ct3d->dc.total_extent_count;
-> > +
-> > +    for (i = 0; i < ext_count; i++) {
-> > +        memcpy(&event_rec.dynamic_capacity_extent,
-> > +               &extents[i],
-> > +               sizeof(CXLDCExtentRaw));
-> > +        event_rec.flags = 0;
-> > +        if (i < ext_count - 1) {
-> > +            /* Set "More" flag */
-> > +            event_rec.flags |= BIT(0);
-> > +        }
-> > +
-> > +        if (cxl_event_insert(&ct3d->cxl_dstate,
-> > +                             CXL_EVENT_TYPE_DYNAMIC_CAP,
-> > +                             (CXLEventRecordRaw *)&event_rec)) {
-> > +            cxl_event_irq_assert(ct3d);
-> > +        }
-> > +    }
-> > +}  
-> 
-> Some issue here. A lot of duplicate code compared to
-> qmp_cxl_process_dynamic_capacity_prescriptive.
-> 
-I'm not going to refactor this on my tree.  Given the level of feedback,
-Anisa can you spin a new patch to replace what I'm carrying (which is
-modified version of this with a bit of rebasing).
+I ask however whether it is always not worth it for all users.
+It does reduce chances of leaking stack info, does it not?
 
-I'll push out a tree once I've caught up with reviewing this a bit more.
-
-> > +/* CXL r3.2 Section 7.6.7.6.5 Initiate Dynamic Capacity Add (Opcode 5604h) */
-> > +static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
-> > +                                         uint8_t *payload_in,
-> > +                                         size_t len_in,
-> > +                                         uint8_t *payload_out,
-> > +                                         size_t *len_out,
-> > +                                         CXLCCI *cci)
-> > +{
-> > +    struct {
-> > +        uint16_t host_id;
-> > +        uint8_t selection_policy;
-> > +        uint8_t reg_num;
-> > +        uint64_t length;
-> > +        uint8_t tag[0x10];
-> > +        uint32_t ext_count;
-> > +        CXLDCExtentRaw extents[];
-> > +    } QEMU_PACKED *in = (void *)payload_in;
-> > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> > +    CXLUpdateDCExtentListInPl *list;
-> > +    int i, rc;
-> > +
-> > +    switch (in->selection_policy) {
-> > +    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE:
-> > +        /* Adding extents exceeds device's extent tracking ability. */
-> > +        if (in->ext_count + ct3d->dc.total_extent_count >
-> > +            CXL_NUM_EXTENTS_SUPPORTED) {
-> > +            return CXL_MBOX_RESOURCES_EXHAUSTED;
-> > +        }
-> > +
-> > +        list = calloc(1, (sizeof(*list) +
-> > +                          in->ext_count * sizeof(*list->updated_entries)));  
-> 
-> Use g_malloc() and g_free().
-
-g_malloc0() I think.
-
-> 
-> > +        convert_raw_extents(in->extents, list, in->ext_count);
-> > +        rc = cxl_detect_malformed_extent_list(ct3d, list);
-> > +
-> > +        for (i = 0; i < in->ext_count; i++) {
-> > +            CXLDCExtentRaw ext = in->extents[i];
-> > +             /* Check requested extents do not overlap with pending extents. */
-> > +            if (cxl_extent_groups_overlaps_dpa_range(&ct3d->dc.extents_pending,
-> > +                                                     ext.start_dpa, ext.len)) {
-> > +                return CXL_MBOX_INVALID_EXTENT_LIST;
-> > +            }
-> > +            /* Check requested extents do not overlap with existing extents. */
-> > +            if (cxl_extents_overlaps_dpa_range(&ct3d->dc.extents,
-> > +                                               ext.start_dpa, ext.len)) {
-> > +                return CXL_MBOX_INVALID_EXTENT_LIST;
-> > +            }
-> > +        }
-> > +
-> > +        if (rc) {
-> > +            return rc;
-> > +        }
-> > +
-> > +        cxl_mbox_dc_add_to_pending(ct3d, in->ext_count, in->extents);
-> > +        cxl_mbox_create_dc_event_records_for_extents(ct3d,
-> > +                                                     DC_EVENT_ADD_CAPACITY,
-> > +                                                     in->extents,
-> > +                                                     in->ext_count);
-> > +
-> > +        return CXL_MBOX_SUCCESS;
-> > +    default:
-> > +        qemu_log_mask(LOG_UNIMP,
-> > +                      "CXL extent selection policy not supported.\n");
-> > +        return CXL_MBOX_INVALID_INPUT;
-> > +    }
-> > +  
-> 
-> For all the case to return, instead of return directly set return code and jump
-> here, do two things:
-> 1. g_free(list);
-> 2. return rt;
-
-I'd prefer this which I think has same effect. I like direct returns ;)
-Don't forget the {} to define scope though - I did and you get odd error
-messages :)
+Maybe we can start with a tri-state Kconfig knob to select between
+performance/balanced/paranoid for this and similar variables?
 
 
-
-@@ -3674,19 +3674,19 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
-         CXLDCExtentRaw extents[];
-     } QEMU_PACKED *in = (void *)payload_in;
-     CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
--    CXLUpdateDCExtentListInPl *list;
-     int i, rc;
-
-     switch (in->selection_policy) {
--    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE:
--        /* Adding extents exceeds device's extent tracking ability. */
-+    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE: {
-+         /* Adding extents exceeds device's extent tracking ability. */
-         if (in->ext_count + ct3d->dc.total_extent_count >
-             CXL_NUM_EXTENTS_SUPPORTED) {
-             return CXL_MBOX_RESOURCES_EXHAUSTED;
-         }
-
--        list = calloc(1, (sizeof(*list) +
--                          in->ext_count * sizeof(*list->updated_entries)));
-+        g_autofree CXLUpdateDCExtentListInPl *list =
-+             g_malloc0(sizeof(*list) +
-+                      in->ext_count * sizeof(*list->updated_entries));
-         convert_raw_extents(in->extents, list, in->ext_count);
-         rc = cxl_detect_malformed_extent_list(ct3d, list);
-
-@@ -3715,13 +3715,12 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
-                                                      in->ext_count);
-
-         return CXL_MBOX_SUCCESS;
-+    }
-     default:
-         qemu_log_mask(LOG_UNIMP,
-                       "CXL extent selection policy not supported.\n");
-         return CXL_MBOX_INVALID_INPUT;
-     }
--
--    return CXL_MBOX_SUCCESS;
- }
+> This issue was found using perf-top(1). virtqueue_split_pop() was one of
+> the top CPU consumers and the "annotate" feature showed that the memory
+> zeroing instructions at the beginning of the functions were hot.
 > 
-> Fan
+> Fixes: 7ff9ff039380 ("meson: mitigate against use of uninitialize stack for exploits")
+> Cc: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+> ---
+>  include/qemu/compiler.h | 12 ++++++++++++
+>  hw/virtio/virtio.c      |  8 ++++----
+>  2 files changed, 16 insertions(+), 4 deletions(-)
 > 
-> > +    return CXL_MBOX_SUCCESS;
-> > +}
-> > +
-> >  static const struct cxl_cmd cxl_cmd_set[256][256] = {
-> >      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
-> >          cmd_infostat_bg_op_abort, 0, 0 },
-> > @@ -3667,6 +3812,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-> >           CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> >      [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
-> >          cmd_fm_get_dc_region_extent_list, 12, 0 },
-> > +    [FMAPI_DCD_MGMT][INITIATE_DC_ADD] = { "INIT_DC_ADD",
-> > +        cmd_fm_initiate_dc_add, ~0,
-> > +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-> > +        CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-> > +        CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> > +        CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> > +        CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> >  };
-> >  
-> >  /*
-> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> > index ee554a77be..ca9fe89e4f 100644
-> > --- a/hw/mem/cxl_type3.c
-> > +++ b/hw/mem/cxl_type3.c
-> > @@ -1885,8 +1885,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
-> >   * the list.
-> >   * Return value: return true if has overlaps; otherwise, return false
-> >   */
-> > -static bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
-> > -                                           uint64_t dpa, uint64_t len)
-> > +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
-> > +                                    uint64_t dpa, uint64_t len)
-> >  {
-> >      CXLDCExtent *ent;
-> >      Range range1, range2;
-> > @@ -1931,8 +1931,8 @@ bool cxl_extents_contains_dpa_range(CXLDCExtentList *list,
-> >      return false;
-> >  }
-> >  
-> > -static bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
-> > -                                                 uint64_t dpa, uint64_t len)
-> > +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
-> > +                                          uint64_t dpa, uint64_t len)
-> >  {
-> >      CXLDCExtentGroup *group;
-> >  
-> > diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> > index 76af75d2d0..d30f6503fa 100644
-> > --- a/include/hw/cxl/cxl_device.h
-> > +++ b/include/hw/cxl/cxl_device.h
-> > @@ -724,4 +724,8 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
-> >  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
-> >                               const QemuUUID *uuid, uint32_t flags,
-> >                               uint8_t length, uint64_t timestamp);
-> > +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
-> > +                                    uint64_t dpa, uint64_t len);
-> > +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
-> > +                                          uint64_t dpa, uint64_t len);
-> >  #endif
-> > -- 
-> > 2.47.2
-> >   
+> diff --git a/include/qemu/compiler.h b/include/qemu/compiler.h
+> index 496dac5ac1..fabd540b02 100644
+> --- a/include/qemu/compiler.h
+> +++ b/include/qemu/compiler.h
+> @@ -207,6 +207,18 @@
+>  # define QEMU_USED
+>  #endif
+>  
+> +/*
+> + * Disable -ftrivial-auto-var-init on a local variable. Use this in rare cases
+> + * when the compiler zeroes a large on-stack variable and this causes a
+> + * performance bottleneck. Only use it when performance data indicates this is
+> + * necessary since security risks increase with uninitialized stack variables.
+> + */
+> +#if __has_attribute(uninitialized)
+> +# define QEMU_UNINITIALIZED __attribute__((uninitialized))
+> +#else
+> +# define QEMU_UNINITIALIZED
+> +#endif
+> +
+>  /*
+>   * http://clang.llvm.org/docs/ThreadSafetyAnalysis.html
+>   *
+> diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> index 5534251e01..82a285a31d 100644
+> --- a/hw/virtio/virtio.c
+> +++ b/hw/virtio/virtio.c
+> @@ -1689,8 +1689,8 @@ static void *virtqueue_split_pop(VirtQueue *vq, size_t sz)
+>      VirtIODevice *vdev = vq->vdev;
+>      VirtQueueElement *elem = NULL;
+>      unsigned out_num, in_num, elem_entries;
+> -    hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> -    struct iovec iov[VIRTQUEUE_MAX_SIZE];
+> +    hwaddr QEMU_UNINITIALIZED addr[VIRTQUEUE_MAX_SIZE];
+> +    struct iovec QEMU_UNINITIALIZED iov[VIRTQUEUE_MAX_SIZE];
+>      VRingDesc desc;
+>      int rc;
+>  
+> @@ -1836,8 +1836,8 @@ static void *virtqueue_packed_pop(VirtQueue *vq, size_t sz)
+>      VirtIODevice *vdev = vq->vdev;
+>      VirtQueueElement *elem = NULL;
+>      unsigned out_num, in_num, elem_entries;
+> -    hwaddr addr[VIRTQUEUE_MAX_SIZE];
+> -    struct iovec iov[VIRTQUEUE_MAX_SIZE];
+> +    hwaddr QEMU_UNINITIALIZED addr[VIRTQUEUE_MAX_SIZE];
+> +    struct iovec QEMU_UNINITIALIZED iov[VIRTQUEUE_MAX_SIZE];
+>      VRingPackedDesc desc;
+>      uint16_t id;
+>      int rc;
+> -- 
+> 2.49.0
 
 
