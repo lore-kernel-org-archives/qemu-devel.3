@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C7E9C5B543
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DABA5C5B552
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:06:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyZM-0008Ld-9n; Tue, 10 Jun 2025 08:59:15 -0400
+	id 1uOyb6-0000yw-Cm; Tue, 10 Jun 2025 09:01:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXs-0006s9-6Z
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:40 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyYj-000826-4k
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:58:37 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXq-0002eX-9j
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:39 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-45305c280a3so9663725e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:36 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyYf-0002jb-9u
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:58:32 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-3a365a6804eso3410812f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:58:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749560255; x=1750165055; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749560306; x=1750165106; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8T1V36v8wKP/BAz1gGD+Xad///zXpxrmTwUCr9UV/II=;
- b=XBu8lyybs2/KKFcY5nEYlnij/fKrOspIPrY+P2TsN+/J24SlhE6mIVAARma9F5wIgf
- Gtgnc8+ESsY0Iz7QdKA8pZoVAu7TDgFP/CQRMCH6Ip1xtv7MYYy2sUVpRl9MOrBT7ifD
- Ox+Dz8WgChRP2HDHdLnBidBLrV72b3TmZzWMYRfW1uRM3ht6dSI8H7Cng9OM6NebNCGm
- r5pE7q9Wfp4P+mE2cztmzaYZr7qsJD8BNvn53e+HZNHOrh4/aZFFQ+5UKnks1rGByysh
- EuZQZXCFuzcxizwLCkf3DuGqxBZdm60lK/QuK6R8GBvgT4J0HfAZ6xd4jHx5ha+kr2Ou
- K0yA==
+ bh=39EvlkRXXlcumPLuzzHWwFXfargkkijcg5vOQOsW2Dc=;
+ b=uNYVrdpNbvP6T0MoLAIfRRYbjNKnfJ51qe5sbacAkVIE+cvyzQF5IzXNJWErby9L3l
+ vxH1dzzO9H44O9bujYMmhkN716U0drq0NWeinEVxnWWjF0J+ChrtXM9JPN0tZZfBK3Mv
+ y1zXYkm3hre2UcwlqCthsczEi0VA4xMdQH2wv/nGzkpAWaWxp1tNfWp32n/YUV+x7RDw
+ km71I2kc7bZuAPUYR2ymrQwl2gM73yxwdK/NL6Hig3T3gsztC/BasqmmimQ07WOCt8iG
+ Y6BBMekTsmHoq6dKHbJTzhrr4fyE3dUCL0dspcGPG50ziZxexvEvd6MiwwISAiddrRVQ
+ UWwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749560255; x=1750165055;
+ d=1e100.net; s=20230601; t=1749560306; x=1750165106;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8T1V36v8wKP/BAz1gGD+Xad///zXpxrmTwUCr9UV/II=;
- b=vdkqJFCLXY2od7QnT2j5m9t8PIls+Pc/V8Yw91qVxPnzb4GYvkRBH+oPtwjeSPRsJo
- L5XG3RRQAf5WDYk29vOhOSJwn+6rmeA6oPwOb3Ow3slu/E9DBNumK+nywYF4j0EWJs+2
- yKnFTpaUNb82anWMLVM/+Ieu2E4/svL30ZDdPcR5BqcWXGPg6Oh1ASOCEgM7KD1EorTp
- LwviZbEi/UWDYPL2Pzt6EAqX+miu+GM96+caVmvUMqr9++bUoBN4qQD34EaaU6SKuEX2
- R/zpcPqRi3kPJ9FNsubmJLhCoDF4DMC5Q2Gk/rsg7Zm3xRBikPxmLitEk/llwcFYjBtL
- GoTA==
-X-Gm-Message-State: AOJu0YyNX/h1H0evYBhpo2Ey3AJ+Phke4y6OKkt0qtxn4PPhpUMlu5FF
- aLqTv/vFCRtOMiDHJLgbeYqai0Z3CQMssK1Jqd6c3aNaXjE20u40kI76UQwaaronNTh20SMhK/8
- FF8RAsbI=
-X-Gm-Gg: ASbGncuNMHyoWmuCL8/MLCEA963lprZ5QPko/+aW9WlAnLKJrBjEyoTvAGXvU6fqg/m
- aZYaSxguxKs91jmD04Mh8Tn9W6+8bshq+jl5CetHXd99uHScKqnuJ1rdRaOGH31xD3Nm5AL6xUg
- bnIB4FaL7UaqusQuMswvJ+G4dVbTrgEGPmexxlHFdro0OwgADKByLTCIuFMoaZWIXkPz8mLoEUn
- yKaDc6BrSSAWQb4devITgBvK7iurEzRJLLNcTrO0XalWNucdI5iGl7Ox/h+aYEIdPJWKuuY2TpF
- OQqoZubCddDYijbMEAGgb/7pDg8UccRS9PFyPh3WSP4t29yv5eRa3fQdhMpGRnyyQdK1hNwmdZ+
- 6J4tE8Fn+UmN9xlcWcDux55XhKafN8pt6fW3QobvAzg==
-X-Google-Smtp-Source: AGHT+IEM9R3aOBN7bpwDcyH+VELdNiSjRcqI+UXLkLTYhF7O6qEqL3oheW9+hiGoGXMMelB9klgteA==
-X-Received: by 2002:a05:600c:1d86:b0:443:48:66d2 with SMTP id
- 5b1f17b1804b1-452013ab8e3mr191485635e9.16.1749560254978; 
- Tue, 10 Jun 2025 05:57:34 -0700 (PDT)
+ bh=39EvlkRXXlcumPLuzzHWwFXfargkkijcg5vOQOsW2Dc=;
+ b=i97LZAZ0qUaiXK2dliQE+ryYk8Q5aFn3Gdquy2NF/BFtxwe2CgPgkJEw7V00PvBgu8
+ c7Cv1vTM6eaAoT/GYuCIhDtj0gPu9TjRvt8QUAEhBS/GAXoo9vXcfgNN2QmWEmeKno85
+ kB6yWIb4SMrQQmapPRe7bpgzidj9bA1KPZnWqwl/kou/1R0DkHIptSbZPGhs7l5+pvx3
+ x2bjzsJ9amnsQQdwabZm1ZGEy8Hl5+LOoiuJEbD+2sAkYI89ASoUjEJzz/MegSf/09uw
+ /n3Jhl+p+NWJLNjEXfM+r+XYR/wtIhLY/934f9BtXnRtu4sUj9QHpjlvOO6DY1OcpmSU
+ RUdw==
+X-Gm-Message-State: AOJu0YxFZD9u5FrHsUxX4D/SavGN+btk8UKdzheMQL82n/VGeF8GTTAP
+ ruzFWWQ+LOAyHl1XUumNAshA0i2mCFH/AahkDj6JpgLS0V44VXd8uda83S36VLsp1N6gu1Ls4Wj
+ BYAapDvw=
+X-Gm-Gg: ASbGncvH0/Upc60UsLMKpHFhFtRr1Gg0tjfcd2MGuNfR6R0lEzO/K0Tu7dAj0u8yOCn
+ clVcAcoeypVpKWFTP8GGiHtxO5sSBNh1fzYE2u1FuuS0mhlLg53cFuFpfcuoWJmb8xJJghyiN+E
+ +tSupoByvwKlXokLbp9rTz1j/TaTSCX5FVNKRvqSOLPpxZosurpeavqKUL71F7SAIHXI+uphcf2
+ g2sFQ6Gvze+n7KQe2WSxDVhhu3acsLNCNuRW8cQ1d/s3jWvjjDeknNeDK/xLZZdpIcriQEeFyrz
+ HooXxyGOOMkwBt4yHyoh5CUOh1uyChb/Lea5BRjJYYMvtTuY+xFYSQVuND1xox4lLV+x+1SisKc
+ hA1MtSk2/OSxyixfakFWX5hIyRbRJzio7nfkZ20FuIA==
+X-Google-Smtp-Source: AGHT+IHpUki8lK6upCgEtIu6Ft7/2IvSPuvlA520CYTRMZLFhhPxHCeaF8fFIAO7C8jC82G4IYM3IQ==
+X-Received: by 2002:a05:6000:4027:b0:3a4:d6ed:8df8 with SMTP id
+ ffacd0b85a97d-3a5522bdeeamr2019374f8f.39.1749560305674; 
+ Tue, 10 Jun 2025 05:58:25 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53229e009sm12603364f8f.16.2025.06.10.05.57.34
+ 5b1f17b1804b1-452730c7756sm138986805e9.33.2025.06.10.05.58.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Jun 2025 05:57:34 -0700 (PDT)
+ Tue, 10 Jun 2025 05:58:25 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 13/24] accel/hvf: Fix TYPE_HVF_ACCEL instance size
-Date: Tue, 10 Jun 2025 14:56:22 +0200
-Message-ID: <20250610125633.24411-14-philmd@linaro.org>
+Cc: Soumyajyotii_Ssarkar <soumyajyotisarkar23@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 24/24] hw/net/i82596: Factor configure function out
+Date: Tue, 10 Jun 2025 14:56:33 +0200
+Message-ID: <20250610125633.24411-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250610125633.24411-1-philmd@linaro.org>
 References: <20250610125633.24411-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,39 +100,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fixes: c97d6d2cdf9 ("i386: hvf: add code base from Google repo")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20250606164418.98655-7-philmd@linaro.org>
----
- include/system/hvf_int.h  | 1 +
- accel/hvf/hvf-accel-ops.c | 1 +
- 2 files changed, 2 insertions(+)
+From: Soumyajyotii_Ssarkar <soumyajyotisarkar23@gmail.com>
 
-diff --git a/include/system/hvf_int.h b/include/system/hvf_int.h
-index 8c8b84012d9..d774e58df91 100644
---- a/include/system/hvf_int.h
-+++ b/include/system/hvf_int.h
-@@ -44,6 +44,7 @@ typedef struct hvf_vcpu_caps {
+Abstract the configure function.
+
+Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20250607152711.108914-2-soumyajyotisarkar23@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/net/i82596.c | 36 +++++++++++++++++++++---------------
+ 1 file changed, 21 insertions(+), 15 deletions(-)
+
+diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+index fc33a00d498..c1ff3e6c564 100644
+--- a/hw/net/i82596.c
++++ b/hw/net/i82596.c
+@@ -177,6 +177,26 @@ static void set_individual_address(I82596State *s, uint32_t addr)
+     trace_i82596_new_mac(nc->info_str);
+ }
  
- struct HVFState {
-     AccelState parent;
++static void i82596_configure(I82596State *s, uint32_t addr)
++{
++    uint8_t byte_cnt;
++    byte_cnt = get_byte(addr + 8) & 0x0f;
 +
-     hvf_slot slots[32];
-     int num_slots;
++    byte_cnt = MAX(byte_cnt, 4);
++    byte_cnt = MIN(byte_cnt, sizeof(s->config));
++    /* copy byte_cnt max. */
++    address_space_read(&address_space_memory, addr + 8,
++                       MEMTXATTRS_UNSPECIFIED, s->config, byte_cnt);
++    /* config byte according to page 35ff */
++    s->config[2] &= 0x82; /* mask valid bits */
++    s->config[2] |= 0x40;
++    s->config[7]  &= 0xf7; /* clear zero bit */
++    assert(I596_NOCRC_INS == 0); /* do CRC insertion */
++    s->config[10] = MAX(s->config[10], 5); /* min frame length */
++    s->config[12] &= 0x40; /* only full duplex field valid */
++    s->config[13] |= 0x3f; /* set ones in byte 13 */
++}
++
+ static void set_multicast_list(I82596State *s, uint32_t addr)
+ {
+     uint16_t mc_count, i;
+@@ -234,7 +254,6 @@ static void command_loop(I82596State *s)
+ {
+     uint16_t cmd;
+     uint16_t status;
+-    uint8_t byte_cnt;
  
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index b8b6116bc84..d60446b85b8 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -366,6 +366,7 @@ static void hvf_accel_class_init(ObjectClass *oc, const void *data)
- static const TypeInfo hvf_accel_type = {
-     .name = TYPE_HVF_ACCEL,
-     .parent = TYPE_ACCEL,
-+    .instance_size = sizeof(HVFState),
-     .class_init = hvf_accel_class_init,
- };
+     DBG(printf("STARTING COMMAND LOOP cmd_p=%08x\n", s->cmd_p));
  
+@@ -254,20 +273,7 @@ static void command_loop(I82596State *s)
+             set_individual_address(s, s->cmd_p);
+             break;
+         case CmdConfigure:
+-            byte_cnt = get_byte(s->cmd_p + 8) & 0x0f;
+-            byte_cnt = MAX(byte_cnt, 4);
+-            byte_cnt = MIN(byte_cnt, sizeof(s->config));
+-            /* copy byte_cnt max. */
+-            address_space_read(&address_space_memory, s->cmd_p + 8,
+-                               MEMTXATTRS_UNSPECIFIED, s->config, byte_cnt);
+-            /* config byte according to page 35ff */
+-            s->config[2] &= 0x82; /* mask valid bits */
+-            s->config[2] |= 0x40;
+-            s->config[7]  &= 0xf7; /* clear zero bit */
+-            assert(I596_NOCRC_INS == 0); /* do CRC insertion */
+-            s->config[10] = MAX(s->config[10], 5); /* min frame length */
+-            s->config[12] &= 0x40; /* only full duplex field valid */
+-            s->config[13] |= 0x3f; /* set ones in byte 13 */
++            i82596_configure(s, s->cmd_p);
+             break;
+         case CmdTDR:
+             /* get signal LINK */
 -- 
 2.49.0
 
