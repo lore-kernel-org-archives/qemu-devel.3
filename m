@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79BE1C61DB2
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 21:29:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D84C61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 21:29:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP6Wb-0005ZE-HD; Tue, 10 Jun 2025 17:28:53 -0400
+	id 1uP6Wd-0005Zs-Bp; Tue, 10 Jun 2025 17:28:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uP6WZ-0005X1-W9
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 17:28:52 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1uP6WY-0005Ui-P5
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 17:28:50 -0400
+Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uP6WY-0000h6-Aq
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 17:28:51 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-739b3fe7ce8so4683598b3a.0
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 14:28:49 -0700 (PDT)
+ id 1uP6WX-0000h0-3h
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 17:28:50 -0400
+Received: by mail-pf1-x436.google.com with SMTP id
+ d2e1a72fcca58-74865da80c4so608229b3a.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 14:28:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749590929; x=1750195729; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749590928; x=1750195728; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AmunumSSbRJ+sU3cFReMs3+OMRURp5YZyylAlQXMnU4=;
- b=o82yPzcrblVxU8dJzGYt+3BSWBiyfC7sU1gXxTMpddwkvNGu7MnFJXkJPDaIiDbfpt
- ZKOIf0MNBrfwo4tceiCxQJnaL4DGL95RgVMmx/QeU29k+Mg3kKr7lGiD47b1vfgGkdzU
- 5r5yWsaFdhsrHsrlVTZe/n+dHtCEwwcIskQ8JIgOmDjTx4Qf771oAqp1Mo6GJh0iub+g
- oR52Ijms4uvWshF5jKaw5gS1uNhSaDqrSkqFqL9Lnik0b0/N3laFJupW0kWDqISNzGcX
- khH7MRcPUNRXEyEGMthtyED6OtPtjNEzrlwMR0/L3OVRIhupNni7aibbVJi9Dmp9x015
- Pu/A==
+ bh=ZVY2h3n6p5UCM76x7xGwJIthJDO3448sqBl62JxkyBE=;
+ b=m5bOhuLDaqavMLzVhEliOA/dXEkCEk26nmZ/dYPPJ1ZdMMMtgMWCizk/rG5E6aiPVf
+ QHFr0iiUPzntEeX8FN5i97v9kgBl6TPTqsjlmMnV+y/MwOtw03SSGCQ3CW7yJiIThKHB
+ 81cMu9GImK6y43FVOQr3gWN7ZZHV3B/12IS+xQ6SjiSbHkScaVot+0xSQZDjb7ZGLDqb
+ a2xFIFDL8mljTT38YLbflpWTSOCoatn4y7Luns3CFACJtrq48y51ItSW9IWqSHuO0vzv
+ Y5HeS+XdSQPX6wsuEhSR4o8pfjno5Jv7D2xC3H4bwzzA87BsHV0Ep1agylUAwnDAA3ZI
+ 278A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749590929; x=1750195729;
+ d=1e100.net; s=20230601; t=1749590928; x=1750195728;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AmunumSSbRJ+sU3cFReMs3+OMRURp5YZyylAlQXMnU4=;
- b=tzb4ID+cPFLA38vsqPXgIWtNYJIluiW24Obb/VPTJjrbTRVGH5oOhZ1WtyaDyagh8s
- 9HIm+/Iuv3pwPMcT2mhhES9yEexbYHwyOMvNLZlehs6+/ZylMTAIrPiUyV8iS+lgmls6
- fjcVrFKpUQP7TYDMxFG90hEq6LpnX3veQcbNxN6DH51vx4KZh39WSqQaqTsrUK7BYvTd
- XtTsJCejwiwOgI7yiWFpjRogNdubFJ87c2Q6bdnDIHQ3skI+blkJInh+uToMHG8VPrYI
- aI3n9dC8ESDmsdPJsJiyfGzefWCRRlmLmNT2eob85b1C2QbPSrYTaeikXQXBFwiUxm5d
- VIzA==
-X-Gm-Message-State: AOJu0YxvGGQbxmOUnE8zDVp3LsHI8EQ/2Y2TFoGP5uu8afMJ3voPVo6o
- BGxBx3roX9Ry1MfCCC/8JkGJlg2pZrC2lOvQvhnP8hJZaarPDO6GZ0wwtnE+tD6Y7u5PuzDbfwy
- 1AHUF
-X-Gm-Gg: ASbGncvsc1zW4EzfzIQoKZBLb66LqV17dA4rEbRhEa9jF5le3qSJWZxMq0tWKA+Wynf
- DoFNnvhPFFDDvoxuEMubOWATF/4/xvWxWAQFdmL7I1EAowtkQsJlaP4g9bDQcx48HXaofz3KxIe
- Vry3vOIVzIdq2fsNcBuTj1c1e24kn2D75MtqFRvdiM87aqsXlO7df73iI3SrWThxIKBSuDPXtn0
- Rcr/e9sGDwGdgwF4IXF4AAo8fhd/+A6BMi/CO01D3fFcsHTC6UIKXIzkYJNSaVym4Er0NXzH71T
- COR12gRodmCQyeIAkH3ArCU23gkVImnmU+SLZwNZwOylCBpvT8g3LZWJVYzFMw==
-X-Google-Smtp-Source: AGHT+IG0MCbBo3/eYeGtX2/yHnPmAmOL4svxBBVWfPQUCvsq39e4hx0BWSwmeQ0OG6jpZgEODbCyKA==
-X-Received: by 2002:a05:6a00:1490:b0:73e:2d7a:8fc0 with SMTP id
- d2e1a72fcca58-7486cb219b7mr1312263b3a.1.1749590928721; 
- Tue, 10 Jun 2025 14:28:48 -0700 (PDT)
+ bh=ZVY2h3n6p5UCM76x7xGwJIthJDO3448sqBl62JxkyBE=;
+ b=FGn+uwEKyIkX+1TvTkwxoV08IMoYUhfsGRhJ2JyBUajqMMKGLljpH3xCaEx8McFbag
+ KjgPILPeLqs3UTi4D5r7ABNm+mntZaW7O6bAxffblbWbqRIuyjmH46p9TQpDcvkQ8jGq
+ a1851CpVoxO4ZD0N5xXxIXPrJ98FfTfAIKVNLF+nky0jhhNLPvWVQIgOzvNfoH6elZDo
+ 6Fu6xYvIW+1CLS8/MOAUI65o3foyN57dkYv3VPxZxsZ9NRIxThh6QEa9j8iS6MMeRIRk
+ sdUUmS/EanCqKuMEx8zljQxDqXcYI0TNdr9fDRT/sTv38jZzdIU0uTzWrAd2ujVwYacm
+ ATSw==
+X-Gm-Message-State: AOJu0YwwnzGcmk7otWyZEJo3+2Kig+f4zT593BfPtaKHsEWSrhet3GSW
+ C1qr4aDOhCP9XUHqxkiQVzxPyblrDdFdzvHuQHFISzcIj4lqdsxcyaH7pjy0r+PhjpZo/Jmyp9v
+ y4raw
+X-Gm-Gg: ASbGncsAbtQZvA5r/pI1T9BWALw7Fobe+r+KqABIOFe0tvu8B+dzjzgQkAwXimVR6Do
+ nLUqqLb48JS+Zp/hF7HLOoebR8q4/5HsFnRM333x4OpS/fi1smgo5moSOwC/UnlvlVZfmXhqo5S
+ AUP/OaewP2G20EYKE933+y/cvl2Kc1Q2x/RKUfEnHu31aS4SFNRGQ7aJSBi5CBICHadhE3WhJrf
+ lo8QhoNCmvbs7LzPDmvTR+FAkfKqZEaN6GmSrc4pAP35Y55G+55u8LZjB7GEY9OYs/EAYS+t2Zd
+ 1z037waLwL3NIppMR/VtxZIt2ITFYglMu7hCfSjP+XMBuQfv+WMnefdHpd0LZQ==
+X-Google-Smtp-Source: AGHT+IHCDP1aoZ1YMOECVSdtgjMM0Xm16ODzLXHv0mB2GT6ShoFLgoYmVdq0V+wKaGE1S4GTEgPpYA==
+X-Received: by 2002:a05:6a00:814:b0:740:b5f8:ac15 with SMTP id
+ d2e1a72fcca58-7486cb71816mr1267571b3a.10.1749590927779; 
+ Tue, 10 Jun 2025 14:28:47 -0700 (PDT)
 Received: from pc.. ([38.41.223.211]) by smtp.gmail.com with ESMTPSA id
  d2e1a72fcca58-7482b0c0613sm7864225b3a.122.2025.06.10.14.28.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Jun 2025 14:28:48 -0700 (PDT)
+ Tue, 10 Jun 2025 14:28:47 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: philmd@linaro.org, berrange@redhat.com, peter.maydell@linaro.org,
@@ -70,16 +70,16 @@ Cc: philmd@linaro.org, berrange@redhat.com, peter.maydell@linaro.org,
  richard.henderson@linaro.org, Thomas Huth <thuth@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH 2/2] system/rtc: introduce -rtc time-dilation option
-Date: Tue, 10 Jun 2025 14:28:29 -0700
-Message-ID: <20250610212829.2818792-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH 1/2] qemu/timer: introduce time dilation factor
+Date: Tue, 10 Jun 2025 14:28:28 -0700
+Message-ID: <20250610212829.2818792-2-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250610212829.2818792-1-pierrick.bouvier@linaro.org>
 References: <20250610212829.2818792-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,76 +102,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This option sets a factor on time spent for QEMU clocks since the
-beginning of execution. It can be used to slow or accelerate time for a
-guest, without impacting QEMU speed.
+This factor is applied to time spent since we read clock for the first
+time. It impacts value returned by get_clock() and get_clock_realtime().
 
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- system/rtc.c    | 11 +++++++++++
- system/vl.c     |  3 +++
- qemu-options.hx |  7 ++++++-
- 3 files changed, 20 insertions(+), 1 deletion(-)
+ include/qemu/timer.h     | 22 ++++++++++++++++------
+ util/qemu-timer-common.c |  1 +
+ 2 files changed, 17 insertions(+), 6 deletions(-)
 
-diff --git a/system/rtc.c b/system/rtc.c
-index 56951288c40..36c53f0fbd7 100644
---- a/system/rtc.c
-+++ b/system/rtc.c
-@@ -188,4 +188,15 @@ void configure_rtc(QemuOpts *opts)
-             exit(1);
-         }
-     }
-+    value = qemu_opt_get(opts, "time-dilation");
-+    if (value) {
-+        if (qemu_strtod_finite(value, NULL, &clock_time_dilation)) {
-+            error_report("invalid time-dilation factor '%s'", value);
-+            exit(1);
-+        }
-+        if (clock_time_dilation <= 0.0f) {
-+            error_report("time-dilation factor must be strictly positive");
-+            exit(1);
-+        }
-+    }
+diff --git a/include/qemu/timer.h b/include/qemu/timer.h
+index abd2204f3be..9c3b8e5506d 100644
+--- a/include/qemu/timer.h
++++ b/include/qemu/timer.h
+@@ -801,6 +801,18 @@ static inline int64_t get_max_clock_jump(void)
+     return 60 * NANOSECONDS_PER_SECOND;
  }
-diff --git a/system/vl.c b/system/vl.c
-index 3b7057e6c66..e3e3f2f0209 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -243,6 +243,9 @@ static QemuOptsList qemu_rtc_opts = {
-         },{
-             .name = "driftfix",
-             .type = QEMU_OPT_STRING,
-+        },{
-+            .name = "time-dilation",
-+            .type = QEMU_OPT_STRING,
-         },
-         { /* end of list */ }
-     },
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 4faad5604c0..b8aaf8b3349 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4887,7 +4887,7 @@ SRST
- ERST
  
- DEF("rtc", HAS_ARG, QEMU_OPTION_rtc, \
--    "-rtc [base=utc|localtime|<datetime>][,clock=host|rt|vm][,driftfix=none|slew]\n" \
-+    "-rtc [base=utc|localtime|<datetime>][,clock=host|rt|vm][,driftfix=none|slew][,time-dilation=value]\n" \
-     "                set the RTC base and clock, enable drift fix for clock ticks (x86 only)\n",
-     QEMU_ARCH_ALL)
- 
-@@ -4916,6 +4916,11 @@ SRST
-     problems, specifically with Windows' ACPI HAL. This option will try
-     to figure out how many timer interrupts were not processed by the
-     Windows guest and will re-inject them.
++extern int64_t clock_start;
++extern double clock_time_dilation;
 +
-+    It's possible to slow or accelerate time using ``time-dilation``,
-+    which is a factor (real number) applied to QEMU clock. A value of 0.1 will
-+    slow time by a factor of 10, and a value of 10 will accelerate it with the
-+    same factor.
- ERST
++static inline int64_t dilate_time(int64_t now)
++{
++    g_assert(now >= clock_start);
++    if (!clock_time_dilation) {
++        return now;
++    }
++    return clock_start + (now - clock_start) * clock_time_dilation;
++}
++
+ /*
+  * Low level clock functions
+  */
+@@ -811,11 +823,9 @@ static inline int64_t get_clock_realtime(void)
+     struct timeval tv;
  
- DEF("icount", HAS_ARG, QEMU_OPTION_icount, \
+     gettimeofday(&tv, NULL);
+-    return tv.tv_sec * 1000000000LL + (tv.tv_usec * 1000);
++    return dilate_time(tv.tv_sec * 1000000000LL + (tv.tv_usec * 1000));
+ }
+ 
+-extern int64_t clock_start;
+-
+ /* Warning: don't insert tracepoints into these functions, they are
+    also used by simpletrace backend and tracepoints would cause
+    an infinite recursion! */
+@@ -826,7 +836,7 @@ static inline int64_t get_clock(void)
+ {
+     LARGE_INTEGER ti;
+     QueryPerformanceCounter(&ti);
+-    return muldiv64(ti.QuadPart, NANOSECONDS_PER_SECOND, clock_freq);
++    dilate_time(muldiv64(ti.QuadPart, NANOSECONDS_PER_SECOND, clock_freq));
+ }
+ 
+ #else
+@@ -838,10 +848,10 @@ static inline int64_t get_clock(void)
+     if (use_rt_clock) {
+         struct timespec ts;
+         clock_gettime(CLOCK_MONOTONIC, &ts);
+-        return ts.tv_sec * 1000000000LL + ts.tv_nsec;
++        return dilate_time(ts.tv_sec * 1000000000LL + ts.tv_nsec);
+     } else {
+         /* XXX: using gettimeofday leads to problems if the date
+-           changes, so it should be avoided. */
++           changes, so it should be avoided. Time is already dilated. */
+         return get_clock_realtime();
+     }
+ }
+diff --git a/util/qemu-timer-common.c b/util/qemu-timer-common.c
+index cc1326f7264..d8895aaccad 100644
+--- a/util/qemu-timer-common.c
++++ b/util/qemu-timer-common.c
+@@ -28,6 +28,7 @@
+ /* real time host monotonic timer */
+ 
+ int64_t clock_start;
++double clock_time_dilation;
+ 
+ #ifdef _WIN32
+ 
 -- 
 2.47.2
 
