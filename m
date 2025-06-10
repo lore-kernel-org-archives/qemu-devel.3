@@ -4,146 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7E0EC5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FEC7C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:35:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOuQZ-0003Kg-Jt; Tue, 10 Jun 2025 04:33:51 -0400
+	id 1uOuQV-0003JY-QW; Tue, 10 Jun 2025 04:33:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1uOuQX-0003KF-TY; Tue, 10 Jun 2025 04:33:49 -0400
-Received: from mail-sn1nam02on2061a.outbound.protection.outlook.com
- ([2a01:111:f403:2406::61a]
- helo=NAM02-SN1-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
+ id 1uOuQL-0003I2-IS; Tue, 10 Jun 2025 04:33:37 -0400
+Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1uOuQU-0002gc-Ta; Tue, 10 Jun 2025 04:33:49 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XxS4avm8zyDWBKEI+Gkcl/mKxmIxEwos4YPQ38eebAhLiz8kRmvrdWWpqUzE4jqz1ip3QWOCwb6U0CwcD5sN53PcNpWdfZ0Tmbx8gw9xwN000TDbVEnNXTr7uIWO9Jsp1+w0okhPbth9qXAdfFl/gDAfJ7fVgYx0yD6hFrTMDy+JjLfuJsOt6WyHPERvgm9a+i/L/uxb7vAiDPYRNsXBMO3I/WbW5l8tamOKCTdoLOpCz5f2Lg2YfJ9UdepTNm8gTRc4TboOKAUmxPZAanhqx2wHdAJDpMgqzvSBpiMC8I4lovdn/EJIV0hAmn0DEVSU03bQKPVuH2YVCyxyt+MUhw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=BPkOr3nUhvgNxfBJgjSsszJQAkBD/HkYnTMlblhx87o=;
- b=PjOMlpM8YdwCoZw6Fi6FIsJItcqtF//LWBXKf2mIOtEET+zVLsMP4owvR3u8trknUh6972775hIw3umNpDlFo9jVjoFgX0DzsX7kDPSHN29QKqzwZeh0NgchChVyj9qNH1cVf5htwR5XthIGU+6RyrtfH5khgrK3BgPf6naQZgxB8RD/+ZlD4ZRIAzjD8nXGDgNgh9l0608VWVEf571ngaDs4U/5PszuI8g+zV1cF+WrfYLwXIRCwenCt/Bt8FCk9tJVJMNnbtq6p/B7VO3AnOxOnfrUp1BQupjhZiVjguHF7ft/dJPGcLFmEUCvaaIKm0sY+ruRbS4/5gW35ydAIQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=tls.msk.ru smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=BPkOr3nUhvgNxfBJgjSsszJQAkBD/HkYnTMlblhx87o=;
- b=sjuUhrKPvovD2oWSbPXgfW/PiM2fcrQa/F5qH3fQUAhJjl6KjyVjOCJQzQHH90qshveQTvvxqFXmNyteO2IZBE2frN/SSk1OVdC8I1JwKQ7lX4aphlRKVqJTbxPltwsprgam0x75KCKFaf4Qx/47oa/BeN/8oVMU6EUgfoO3PPQ=
-Received: from BL1PR13CA0238.namprd13.prod.outlook.com (2603:10b6:208:2bf::33)
- by DM6PR12MB4236.namprd12.prod.outlook.com (2603:10b6:5:212::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.35; Tue, 10 Jun
- 2025 08:33:36 +0000
-Received: from MN1PEPF0000ECD6.namprd02.prod.outlook.com
- (2603:10b6:208:2bf:cafe::13) by BL1PR13CA0238.outlook.office365.com
- (2603:10b6:208:2bf::33) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8835.10 via Frontend Transport; Tue,
- 10 Jun 2025 08:33:35 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
-Received: from SATLEXMB04.amd.com (165.204.84.17) by
- MN1PEPF0000ECD6.mail.protection.outlook.com (10.167.242.135) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.20.8835.15 via Frontend Transport; Tue, 10 Jun 2025 08:33:33 +0000
-Received: from [10.136.40.159] (10.180.168.240) by SATLEXMB04.amd.com
- (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Tue, 10 Jun
- 2025 03:33:30 -0500
-Message-ID: <ff1aa145-161c-42f6-8b9d-5057a89d4e12@amd.com>
-Date: Tue, 10 Jun 2025 14:03:23 +0530
+ (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
+ id 1uOuQI-0002fT-Jd; Tue, 10 Jun 2025 04:33:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
+ MIME-Version:References:In-Reply-To:Message-ID:Date:Subject:Cc:To:From:
+ Reply-To:Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=C4Saxiue9qlXzLK8ryVx5pu8pVyq9gm19Wuv24l0ouw=; b=kMntCeWz1mFsU8GZ8SwPaOU5E4
+ 0JGbvJ9FG7y09wM2byRL/eezSwAee4bbvR/JxwKqwVdGlIdHNSID5SAeLUm/EZbRbOIfWShafoDK7
+ NN9B6wf0ZqcmG+oyyapsDBbAaUOGaHwpimGujxi252MLN0y4T3ZjxcYxKd88v+9+bQmPUgA0lm3fX
+ 8i5nUaJHSNj8IRhI/PEpVjNb7nSre3wzvzEMai8FxHFSL7XhuDfiJwCwEuBOTLkqKOhmZNAg/qZBM
+ xN0dt2Vwjp2jee+1R5hNQisE9gxMK8Hr58wpa+emml4PD6f4WkNWw/n6FP8ASmz+NOcmtPYKnsn6X
+ 1fIfXx5w==;
+Received: from [167.98.27.226] (helo=codethink.office.codethink.co.uk)
+ by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
+ id 1uOuQ3-00FyBH-RA; Tue, 10 Jun 2025 09:33:19 +0100
+From: Roan Richmond <roan.richmond@codethink.co.uk>
+To: qemu-riscv@nongnu.org
+Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
+ dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
+ qemu-devel@nongnu.org, alistair23@gmail.com,
+ Roan Richmond <roan.richmond@codethink.co.uk>
+Subject: [PATCH v2 1/1] Add RISCV ZALASR extension
+Date: Tue, 10 Jun 2025 09:32:58 +0100
+Message-ID: <20250610083309.992724-2-roan.richmond@codethink.co.uk>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250610083309.992724-1-roan.richmond@codethink.co.uk>
+References: <20250610083309.992724-1-roan.richmond@codethink.co.uk>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/2] amd_iommu: Fixes
-To: Michael Tokarev <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>
-CC: <mst@redhat.com>, <marcel.apfelbaum@gmail.com>, <pbonzini@redhat.com>,
- <richard.henderson@linaro.org>, <eduardo@habkost.net>,
- <suravee.suthikulpanit@amd.com>, <alejandro.j.jimenez@oracle.com>,
- <joao.m.martins@oracle.com>, qemu-stable <qemu-stable@nongnu.org>
-References: <20250516100535.4980-1-sarunkod@amd.com>
- <f43d5b05-39fe-497b-9166-098e37ff65f1@tls.msk.ru>
-Content-Language: en-US
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <f43d5b05-39fe-497b-9166-098e37ff65f1@tls.msk.ru>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: SATLEXMB04.amd.com (10.181.40.145) To SATLEXMB04.amd.com
- (10.181.40.145)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD6:EE_|DM6PR12MB4236:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4c279182-cdea-4618-d548-08dda7f97ca0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|376014|7416014|36860700013; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?MEFNWXZSQ2RpZEM1QjYycllpc0gzWjJybkp2aE9uVEhmYm5YeUpTT1RmT3VD?=
- =?utf-8?B?eUFGY1pROHgreG9JRitQNWJneEdlZ25LbFVGdTRWUDIxa0JJRkR3QUZXeFE0?=
- =?utf-8?B?VS9HVWYyUWY3WHN5dlRSUWlQdWNLZEthZXFvcEFCZHZxdWxoZmpnMGRVNERU?=
- =?utf-8?B?T3h4YUFHREg3eXMrOHFrRnVWYnVrRks2eUE5aGQrKzA0TzhhZGZWS09DQzZ0?=
- =?utf-8?B?RXo1ZGkxWWZIcUtYb2s4SGEvNmRkTEtZMVJwMm1GV0p1aExQb1liTit2ZnND?=
- =?utf-8?B?b2t2UDNHSzA2cVdxbEljMWIxMFJTNDJHWk9lWkxlKy82NTJwb2lPcHkzNTk2?=
- =?utf-8?B?b3RBa1pDYlhDRXB5R09YZG85VkE1SDJCdnNGcDBBeVpNVnF6R2FsSVhBYVk5?=
- =?utf-8?B?N1BPa0x0OGlObUZNNTJOTW5jd2kxQ0psVVlwOXoxU081NW9kL0dJQWhZTFZR?=
- =?utf-8?B?L3NCMDN5eVRTcDIxM2w2R2Irdlh3Wml6cERTSjBQTDBDOFV2QlNSUnFvK2VR?=
- =?utf-8?B?S3FoK3V5UHdSdS9Td2QzNFlvKzhGUTdVRUQvcjFCUUI2eWd3dFlHTDZjbVR3?=
- =?utf-8?B?NVdUVmo4NTZlMnRRSDBsTHNBckJJaTF1MnVHN1Z2Z3hNYnZNb3VtUGpNODhi?=
- =?utf-8?B?SnhmMkpYanVrUTFZK3hNdWUrWllSUDRsd1ljTER5ZlVHNkN0Q2JYSkp1QXdI?=
- =?utf-8?B?Tml2YUh3VGRWZ2dZTEtCS2dvUDVvRVZqUGhVdkhxQktCUm84NWRKUW5GSnc3?=
- =?utf-8?B?V0Nab1RHZGxNNXpPRWtoMFpmSkJIZkM0Z3lGQnpxZmI3VzFQUkdKY0VzVEw5?=
- =?utf-8?B?MUk3ek1PL25aazEyZ1JsM1VIRzBaNEFRaEFhaEFyMWdrZ0xkMXA1bzhiSFlQ?=
- =?utf-8?B?anJBdkQ5VG1SanlOWStBY3pWWEpIRjZrMG9qZ1U4bWg3UkhSdXVOUmd1T3JE?=
- =?utf-8?B?bk5UNVVjSGpJaldkUG5FTDhzRFJoak93Ny9WMHNxZlpBbHdLeFdkczlGcEll?=
- =?utf-8?B?cnh6Tm94MUJ5bnVxbkxSWFVtZXJkTXhySEpNVFRYQk1GTUQ1eWpBYW02TmY4?=
- =?utf-8?B?aXRKdmRhaFNqZHh0R09lYmhxcVUxRVBZOWZuTWU5dnFIQ0daSktsMXUwOEZp?=
- =?utf-8?B?ZFB3TGlxQ1dVTGJtQ3YxdUJCSWZBUEQ0dExEd25LMm5IeHVKV3RmM1JJVWM5?=
- =?utf-8?B?bXJSamkyT21scmhwb0ViR200bEE5c3ZiUGF6SFYrNERXRDNHbnpSWGtZZkVC?=
- =?utf-8?B?QlVJTng3K25peGZjTG5uNnFJc1BWZm1BNEVQQi9SeC9vdWUwZGpqc2x0d2Nh?=
- =?utf-8?B?REo5NmlhSmtlMkpOMFhEbk80bk0raHZmWTJ5aHlETGRaVWJwN3BZRFJJZGJV?=
- =?utf-8?B?S3E1cjVIaVRMVUZyajhzTGdrYVdtY0l3QURKMnQ0NHRaeHNLTkFnbmJjL3B3?=
- =?utf-8?B?c2F4UzhyN0UrM2JLeE4rdXovbXJYN3VSckcrbGxWYlVRMGpWaXpxWTlCbnhv?=
- =?utf-8?B?UFhvNEdyZUtLaXp5UHFjNmdLQXZ3T21YbUluRFdUYTg4Ri9GamdjRXMxdnRu?=
- =?utf-8?B?K05VQjVzN3dKYm9MM3dWTDhIL1RqSTF1dVduNE5UQmZkckdsS0RiS3g0NmpB?=
- =?utf-8?B?RmtvdU15WEk2VEdTMXVHTjl0MjhJdjVQREpCcjZablBBdnE2NldVWnlJM3A1?=
- =?utf-8?B?MW9HeEE4bTVBQjNkZ2w4SFhQUTI3SU9SbTltUm9xU3hEZzM2R0MzOUlzdkh0?=
- =?utf-8?B?M2ZjeVovYy9PNVFsYVh0QUZPRXR2TmtoZVZxaEp2eHloeXBGcVM4Y1FITXpM?=
- =?utf-8?B?UFRQc3psRytweWo1dGQweWV4TmRROEc4SDZlNmZaWGtRdWl1cmszbGJZSk1v?=
- =?utf-8?B?aXBycXpxUkNHOGJpeGovSTlDTFYxL01ramp2dWRqUUNFa3NuSGxTakgxbmQx?=
- =?utf-8?B?b2gvbUM5TnJQR1NSanNNdy9lMjB5dXZaVXQzZE5VSUxZR2J2blJFeTdVdy8w?=
- =?utf-8?B?cDlxTU5JUkNVc2VxUG51a0JYTXlEaklBTHlrR3R0NjdEZysxaG5WQ1F2cFYv?=
- =?utf-8?Q?CZN5Q+?=
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(376014)(7416014)(36860700013); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2025 08:33:33.5640 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4c279182-cdea-4618-d548-08dda7f97ca0
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[SATLEXMB04.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD6.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4236
-Received-SPF: permerror client-ip=2a01:111:f403:2406::61a;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=NAM02-SN1-obe.outbound.protection.outlook.com
+Received-SPF: pass client-ip=78.40.148.171;
+ envelope-from=roan.richmond@codethink.co.uk; helo=imap5.colo.codethink.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -160,55 +71,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is based on version v0.8.3 of the ZALASR specification [1].
+The specification is listed as in Frozen state [2].
 
+[1]: https://github.com/riscv/riscv-zalasr/tree/v0.8.3
+[2]: https://lf-riscv.atlassian.net/wiki/spaces/HOME/pages/16154882/All+RISC-V+Specifications+Under+Active+Development
 
-On 6/3/2025 2:24 AM, Michael Tokarev wrote:
-> On 16.05.2025 13:05, Sairaj Kodilkar wrote:
->> Fix following two issues in the amd viommu
->> 1. The guest fails to setup the passthrough device when for following 
->> setup
->>     because amd iommu enables the no DMA memory region even when guest is
->>     using DMA remapping mode.
->>
->>      -device amd-iommu,intremap=on,xtsup=on,pt=on \
->>      -device vfio-pci,host=<DEVID> \
->>
->>      and guest forcing DMA remap mode e.g. 'iommu.passthrough=0'
->>
->>      which will cause failures from QEMU:
->>
->>      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command 
->> list buffer address
->>      qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad 
->> FIS receive buffer address
->>      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command 
->> list buffer address
->>      qemu-system-x86_64: AHCI: Failed to start FIS receive engine: bad 
->> FIS receive buffer address
->>      qemu-system-x86_64: AHCI: Failed to start DMA engine: bad command 
->> list buffer address
->>
->>
->> 2. The guest fails to boot with xtsup=on and <= 255 vCPUs, because 
->> amd_iommu
->>     does not enable x2apic mode.
->>
->> base commit 56c6e249b6988c1b6edc2dd34ebb0f1e570a1365 (v10.0.0-rc3)
->>
->> Sairaj Kodilkar (1):
->>    hw/i386/amd_iommu: Fix device setup failure when PT is on.
->>
->> Vasant Hegde (1):
->>    hw/i386/amd_iommu: Fix xtsup when vcpus < 255
-> 
-> Hi!
-> 
-> Is this a qemu-stable material (for 10.0.x)?
+Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
+---
+ target/riscv/cpu.c                           |   1 +
+ target/riscv/insn32.decode                   |  10 ++
+ target/riscv/insn_trans/trans_rvzalasr.c.inc | 110 +++++++++++++++++++
+ target/riscv/translate.c                     |   1 +
+ 4 files changed, 122 insertions(+)
+ create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
 
-Yes it is
-
-Thanks
-Sairaj Kodilkar
-
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 629ac37501..b52bbf0936 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -128,6 +128,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
+     ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+     ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
++    ISA_EXT_DATA_ENTRY(zalasr, PRIV_VERSION_1_12_0, ext_zalasr),
+     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+     ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+     ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+index cd23b1f3a9..c848c0c1c5 100644
+--- a/target/riscv/insn32.decode
++++ b/target/riscv/insn32.decode
+@@ -1066,3 +1066,13 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
+ amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
+ amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
+ amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
++
++# *** Zalasr Standard Extension ***
++lb_aqrl  00110 . . ..... ..... 000 ..... 0101111 @atom_st
++lh_aqrl  00110 . . ..... ..... 001 ..... 0101111 @atom_st
++lw_aqrl  00110 . . ..... ..... 010 ..... 0101111 @atom_st
++ld_aqrl  00110 . . ..... ..... 011 ..... 0101111 @atom_st
++sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
++sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
++sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
++sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
+diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/insn_trans/trans_rvzalasr.c.inc
+new file mode 100644
+index 0000000000..2f2934e731
+--- /dev/null
++++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
+@@ -0,0 +1,110 @@
++/*
++ * RISC-V translation routines for the ZALASR (Load-Aquire and Store-Release)
++ * Extension.
++ *
++ * Copyright (c) 2025 Roan Richmond, roan.richmond@codethink.co.uk
++ *
++ * This program is free software; you can redistribute it and/or modify it
++ * under the terms and conditions of the GNU General Public License,
++ * version 2 or later, as published by the Free Software Foundation.
++ *
++ * This program is distributed in the hope it will be useful, but WITHOUT
++ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
++ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
++ * more details.
++ *
++ * You should have received a copy of the GNU General Public License along with
++ * this program.  If not, see <http://www.gnu.org/licenses/>.
++ */
++
++#define REQUIRE_ZALASR(ctx) do {     \
++    if (!ctx->cfg_ptr->ext_zalasr) { \
++        return false;                \
++    }                                \
++} while (0)
++
++static bool gen_load_acquire(DisasContext *ctx, arg_lb_aqrl *a, MemOp memop)
++{
++    decode_save_opc(ctx, 0);
++
++    TCGv addr = get_address(ctx, a->rs1, 0);
++    TCGv dest = get_gpr(ctx, a->rd, EXT_NONE);
++    TCGBar bar = (a->rl) ? TCG_BAR_STRL : 0;
++
++    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
++
++    tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
++    gen_set_gpr(ctx, a->rd, dest);
++
++    /* Add a memory barrier implied by AQ (mandatory) and RL (optional) */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ | bar);
++
++    return true;
++}
++
++static bool trans_lb_aqrl(DisasContext *ctx, arg_lb_aqrl *a)
++{
++    REQUIRE_ZALASR(ctx);
++    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_SB));
++}
++
++static bool trans_lh_aqrl(DisasContext *ctx, arg_lh_aqrl *a)
++{
++    REQUIRE_ZALASR(ctx);
++    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESW));
++}
++
++static bool trans_lw_aqrl(DisasContext *ctx, arg_lw_aqrl *a)
++{
++    REQUIRE_ZALASR(ctx);
++    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESL));
++}
++
++static bool trans_ld_aqrl(DisasContext *ctx, arg_ld_aqrl *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_ZALASR(ctx);
++    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TEUQ));
++}
++
++static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp memop)
++{
++    decode_save_opc(ctx, 0);
++
++    TCGv addr = get_address(ctx, a->rs1, 0);
++    TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
++    TCGBar bar = (a->aq) ? TCG_BAR_LDAQ : 0;
++
++    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
++
++    /* Add a memory barrier implied by RL (mandatory) and AQ (optional) */
++    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL | bar);
++
++    tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
++    return true;
++}
++
++static bool trans_sb_aqrl(DisasContext *ctx, arg_sb_aqrl *a)
++{
++    REQUIRE_ZALASR(ctx);
++    return gen_store_release(ctx, a, (MO_ALIGN | MO_SB));
++}
++
++static bool trans_sh_aqrl(DisasContext *ctx, arg_sh_aqrl *a)
++{
++    REQUIRE_ZALASR(ctx);
++    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESW));
++}
++
++static bool trans_sw_aqrl(DisasContext *ctx, arg_sw_aqrl *a)
++{
++    REQUIRE_ZALASR(ctx);
++    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESL));
++}
++
++static bool trans_sd_aqrl(DisasContext *ctx, arg_sd_aqrl *a)
++{
++    REQUIRE_64BIT(ctx);
++    REQUIRE_ZALASR(ctx);
++    return gen_store_release(ctx, a, (MO_ALIGN | MO_TEUQ));
++}
+diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+index d7a6de02df..4cd2d68e46 100644
+--- a/target/riscv/translate.c
++++ b/target/riscv/translate.c
+@@ -1183,6 +1183,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
+ #include "insn_trans/trans_rvzicond.c.inc"
+ #include "insn_trans/trans_rvzacas.c.inc"
+ #include "insn_trans/trans_rvzabha.c.inc"
++#include "insn_trans/trans_rvzalasr.c.inc"
+ #include "insn_trans/trans_rvzawrs.c.inc"
+ #include "insn_trans/trans_rvzicbo.c.inc"
+ #include "insn_trans/trans_rvzimop.c.inc"
+-- 
+2.43.0
 
 
