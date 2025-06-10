@@ -4,102 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7747FC71131
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:02:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A28AC677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:04:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27t-0003S0-Ug; Tue, 10 Jun 2025 12:47:05 -0400
+	id 1uP27n-0002ul-9j; Tue, 10 Jun 2025 12:46:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15r-0004ZO-Vg
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:57 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15o-0006Eg-BK
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:55 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXdBd031121;
- Tue, 10 Jun 2025 15:40:39 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=kXu4dBbH9l35rXfzTrg6dH4hjAXVYZWiONb2f9361AA=; b=
- BKSiac5AGrGlAHp0NjkxijOJxCjwdYgTTm/0WRQBkl4EZwcaI8sYrAWqBfZAT0Zr
- lDAgNNwbbcm8FURTQUgedtwiozTw/2nqyOpskPOYukbkqxVrWzRsMAlZS77cHdXg
- QWTcIuFz74L9rVW1QrgLJWf856raQ9QwrM3PhnHrTR01BtqqGOhwBpe2djzJcKrk
- LoRaqY5oFaCrdBiq7A20sIymwA/Yt8m59fDyMIiZsbvzzMOJ8/eYIxMvOgdlsBjs
- Ypm7KlBmooSIADSN3fT20xhT/cPs3l1FLQGlWcalxTFJBMcCaMAb5oi1vCIkFOug
- 5GKTiGOcq9+AHEshkfsn8w==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474dywvgsx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:39 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AF2BAF003893; Tue, 10 Jun 2025 15:40:38 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wbt6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:38 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrg3028825;
- Tue, 10 Jun 2025 15:40:37 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-29; Tue, 10 Jun 2025 15:40:37 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 28/38] vfio/iommufd: device name blocker
-Date: Tue, 10 Jun 2025 08:39:41 -0700
-Message-Id: <1749569991-25171-29-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506100125
-X-Authority-Analysis: v=2.4 cv=fdaty1QF c=1 sm=1 tr=0 ts=684851f7 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=lCvbenQQaY-lctwRflUA:9 cc=ntf
- awl=host:14714
-X-Proofpoint-ORIG-GUID: MY6LzH3Tn8aRMxXYJJBRizO8x1gVUttl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX4vXKtvw6zmt9
- tgmTQPDPcAc7zaIvqNAn09x265mJXG2njaP/m66qDMs54LLKrgtqWZ5/E/bAxrO1OpRu19/nKcU
- WBI3LBlJUHzgK6cxNF6H8Kn5fQmCZS+QeicjvrmmL6vN3KJxw8uUP7EHKfCtHqaAZ+40vcZ9FIX
- xpkgIwQ+daKtTOOZ1WcF6shFab6SMpdPexsWxXNcpmEtlvJug8T0ad1aL2uWWsjfdevzLnn4sYB
- zurTv8uhUNBiIVbpzyw23c8p0XMslk9totm0T6U8uL1ePGrE4a7jWJCcChiMDcVI9w613K1B3ch
- hfbquL1vQj1+UEOFDQ0/IzDxAF330rQIR89MtX8HxAFJaBM9YC087NPUx3njTR2RJg53GLeU1sq
- T2yHZki1aDY0Gbve/drXvRe/z2MhtEvZtL71Mxj/VMze4jwnUpK7e+Cou0hsiXpyrScY+a+y
-X-Proofpoint-GUID: MY6LzH3Tn8aRMxXYJJBRizO8x1gVUttl
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uP0MQ-0005QA-T5
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 10:53:59 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uP0MO-0008Ks-KQ
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 10:53:58 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-747c2cc3419so3929772b3a.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 07:53:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749567233; x=1750172033; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sLbR6oc+On5Mq6zpnUUQIMWRLD1RcyCjq2IEay9viWA=;
+ b=dInfK68cO66lZeOeYITY1AJVUpA52GUZf2wAzoPDq6tjFMSHYpinDlaoJYWLexlwko
+ CknaKUtImocRwFAFJjFYH/pcPjI+kJ3k8KfUwnwpKVjhKQs0m8z7HYKbFstbv2u5L0Xt
+ KE2d76usN3wPJLCGx9JLcTNjWVaSmsIxlyw3zEqUo1WGMWaB9cyvCwuQNPJlg6Gr0SeH
+ b8anWPc6QInDdQXvplC0Oq19t6PtIMqtctblUXl5LG6T0go2LMrK8f/K210LuHkEJbu8
+ N/v84rQh7xn3W75nvKeroZyBDWi83pViD9+gRNBeg13Aoup5X1CHoe6MTmgMdvNZnghi
+ +7kw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749567233; x=1750172033;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=sLbR6oc+On5Mq6zpnUUQIMWRLD1RcyCjq2IEay9viWA=;
+ b=UeYvOPNspP6kDgT9m/uR8HGoi1O5Q6ZrpgdP8As+NjuxTM18PRJN7Px5SyTCFxvnMT
+ yIbRSbtTLkELDAQkEotr1//20nGylr5uPIN0FNnPXl/zIVEk/fa3/nx3tdGLRZt2QseE
+ b5EC5gLMGKmq+/2pUlREPQXSZoUfakH/Nt3g+oLJ1uTMsBskad72TSkzYboiCsO+Wi9m
+ NyOEdvIGm1wvM5peB7mCUqY0yIZTWZmE4r176moha5zO9nHZ59QoPJWaZH0e9r+OukTQ
+ 5/Zu8zxDIaqJMMmTRgAhQC4hZiRv9pT6WL8SDEebL3PeVlwJ7RwoZMkkN91avR0k45F4
+ UkIQ==
+X-Gm-Message-State: AOJu0YxAY7VquZ9HHCDsspkcmarq9icTH/Yr9AOQtn64wco7a41lp8HZ
+ P+eM7PZUHG6+Aygns9nhkcV8uijR4ZjVeeNqJifnVBMvNkL9v0ggroBjAueqkj6Q16o=
+X-Gm-Gg: ASbGncueXJvGRH+ZVylmTPbxtF5Ly+RigFkYyGdZ75XAu7VZrS1OsD6rcpRkZPyU/eQ
+ A0Tjvd0I56SzjORksE961/EdVmp/6mPQMuGmzEr5FYtSvUo4AssJneAvvJgLcqLi3Dlupuq1WOW
+ 1Hd8DRbjt6nmKdZ9mXl59YZD0TbyVYSQ7rMLQ7qC2g5ZbE/dNthSlIENV9kMzNy+GDPi30hJghL
+ joc2ulfKkZ3578EgusPMxqz4FMoK748URT3ldU0YR26Dyv1wwlQtujuVLK9csbR66tTQOHKZSWc
+ 6VX3IeK7y6FP21eAS+4BdgxtG7mYs7BI5l8b2MBP4LkwGN7AddnIdkhI4cMGpWNtngtaOWZUNx8
+ =
+X-Google-Smtp-Source: AGHT+IGfgDE4yJRZdn2k3SW/MkvgFzLx7RChz6WAbj0e6LY1RNp17Zx8bvfTTm1TeTxcVj3FjzHUQw==
+X-Received: by 2002:a05:6a00:9a3:b0:747:b043:41e8 with SMTP id
+ d2e1a72fcca58-74827f12808mr21781849b3a.15.1749567233447; 
+ Tue, 10 Jun 2025 07:53:53 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7482b0f3e59sm7759943b3a.178.2025.06.10.07.53.52
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 07:53:53 -0700 (PDT)
+Message-ID: <6edebc63-4b64-42b1-acdc-c70a9f58cb9f@linaro.org>
+Date: Tue, 10 Jun 2025 07:53:52 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH RESEND v3] meson: fix Windows build
+Content-Language: en-US
+To: Oleg Tolmatcev <oleg.tolmatcev@gmail.com>
+Cc: qemu-devel@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>
+References: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
+ <878ac7c5-6729-4930-a64f-19cf0e10f7f2@linaro.org>
+ <CACcXsZgSdLNUovP_Cz7vAU+E=KzaJ6tLCKFhm1xQpQpKO5h=2Q@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <CACcXsZgSdLNUovP_Cz7vAU+E=KzaJ6tLCKFhm1xQpQpKO5h=2Q@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,65 +104,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If an invariant device name cannot be created, block CPR.
+On 6/8/25 1:23 AM, Oleg Tolmatcev wrote:
+> Am So., 8. Juni 2025 um 02:43 Uhr schrieb Pierrick Bouvier
+> <pierrick.bouvier@linaro.org>:
+>>
+>> On 6/7/25 2:45 AM, oltolm wrote:
+>>> Sorry, I forgot to cc the maintainers.
+>>>
+>>> The build failed when run on Windows. I replaced calls to Unix programs
+>>> like ´cat´, ´sed´ and ´true´ with calls to ´python´. I wrapped calls to
+>>> ´os.path.relpath´ in try-except because it can fail when the two paths
+>>> are on different drives. I made sure to convert the Windows paths to
+>>> Unix paths to prevent warnings in generated files.
+>>>
+>>> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
+>>> ---
+>>>    contrib/plugins/meson.build         |  2 +-
+>>>    plugins/meson.build                 |  2 +-
+>>>    scripts/tracetool/__init__.py       | 15 ++++++++++++---
+>>>    scripts/tracetool/backend/ftrace.py |  4 +---
+>>>    scripts/tracetool/backend/log.py    |  4 +---
+>>>    scripts/tracetool/backend/syslog.py |  4 +---
+>>>    tests/functional/meson.build        |  4 +---
+>>>    tests/include/meson.build           |  2 +-
+>>>    tests/tcg/plugins/meson.build       |  2 +-
+>>>    trace/meson.build                   |  5 +++--
+>>>    10 files changed, 23 insertions(+), 21 deletions(-)
+>>
+>> Are you building using msys2, or another environment on Windows? I'm
+>> curious to know in which configuration the build is failing.
+>>
+>> In case you use msys2, maybe you're simply missing some packages. Our
+>> documentation explains what to install [1].
+>> Building out of msys2 on Windows is not recommended, as this is the only
+>> maintained setup (tested in our CI, and maintained as an msys2 package
+>> by msys2 maintainers) for this system.
+>>
+>> [1] https://www.qemu.org/docs/master/devel/build-environment.html
+> 
+> Yes I do use msys2, but I only use bash for the initial configuration.
+> Afterwards I just call meson and ninja from "cmd" not from bash.
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- include/hw/vfio/vfio-cpr.h |  1 +
- hw/vfio/device.c           | 11 +++++++++++
- 2 files changed, 12 insertions(+)
+Maybe it's because it's complicated to execute a single command from 
+msys2, and return. Using the -shell parameter of msys2_shell, you can 
+pass arguments to bash.
 
-diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-index 25e74ee..170a116 100644
---- a/include/hw/vfio/vfio-cpr.h
-+++ b/include/hw/vfio/vfio-cpr.h
-@@ -29,6 +29,7 @@ typedef struct VFIOContainerCPR {
- 
- typedef struct VFIODeviceCPR {
-     Error *mdev_blocker;
-+    Error *id_blocker;
- } VFIODeviceCPR;
- 
- bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index a3603f5..8c3835b 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -28,6 +28,8 @@
- #include "qapi/error.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
-+#include "migration/cpr.h"
-+#include "migration/blocker.h"
- #include "monitor/monitor.h"
- #include "vfio-helpers.h"
- 
-@@ -308,8 +310,16 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-             } else {
-                 /*
-                  * Assign a name so any function printing it will not break.
-+                 * The fd number changes across processes, so this cannot be
-+                 * used as an invariant name for CPR.
-                  */
-                 vbasedev->name = g_strdup_printf("VFIO_FD%d", vbasedev->fd);
-+                error_setg(&vbasedev->cpr.id_blocker,
-+                           "vfio device with fd=%d needs an id property",
-+                           vbasedev->fd);
-+                return migrate_add_blocker_modes(&vbasedev->cpr.id_blocker,
-+                                                 errp, MIG_MODE_CPR_TRANSFER,
-+                                                 -1) == 0;
-             }
-         }
-     }
-@@ -320,6 +330,7 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
- void vfio_device_free_name(VFIODevice *vbasedev)
- {
-     g_clear_pointer(&vbasedev->name, g_free);
-+    migrate_del_blocker(&vbasedev->cpr.id_blocker);
- }
- 
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
--- 
-1.8.3.1
+cmd.exe /c c:/msys64/msys2_shell.cmd -defterm -here -no-start -mingw64
+   -shell bash -c 'ls / /tmp'
 
+That said, I'm not opposed to the current series, I just wanted to 
+understand what is the context.
+
+Thanks,
+Pierrick
 
