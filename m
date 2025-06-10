@@ -4,81 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B27BC5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E2CAC71131
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:05:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOybE-00013V-N4; Tue, 10 Jun 2025 09:01:09 -0400
+	id 1uOybN-0001al-Aw; Tue, 10 Jun 2025 09:01:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyYJ-0007b8-6C
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:58:07 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyYe-0007yH-U0
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:58:32 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyYG-0002hG-L3
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:58:06 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a54690d369so1971432f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:58:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyYY-0002j4-Of
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:58:25 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a51481a598so3144655f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:58:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749560282; x=1750165082; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749560300; x=1750165100; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=zK8JfL+K6DY+H6D8BIWrVhPNwjGTBASRCCeC9mTbJFE=;
- b=P1axd9lTd0vsAdExoflX61GxsfOaJ2C6Vp1JFEWrwQxYRkyFnvTaRT5p9fXON2helA
- gYcHuz92l+UFNXQmLLQQSDa2PcoBFQjdwro9acI6GlS2oU/Q2K7kjDO/U2MlCG3Z0BRk
- s2CbAdyKzWGZ5/ucj23gfb8gSTFy74U5vYvFVcbIgKz2DphrLf6OVzkqDa7LyPqBVw3F
- ZX43E0v+jcaHs5CyxQskKvAHAru/h+c2o2vvPvtjeB7km3PH8pE3/5hswSHhS8LYcorb
- VLO4aVLdan4GpPN8PvaBJ9WKrRv+EEUhO4QUyanyzxZDjYfht1VC4KNVT1+dNcex8ixh
- sW5g==
+ bh=P1V3w/IS64oeqhhB6d9B4sJVJcOGGWYHRK87tYEg+og=;
+ b=gAShiRFxDYHLbRgcO0vcBHyYb8XyHMjdoVZl6n0fuF+O4E7/CyM5hZyJ9JJeLYnXw2
+ PDeeQoOsj9TO/9FndbRbdWrb5XiXvIimB66BX5RGmSTd3H/SQSs2bpH3VfJnNRzHy1po
+ 6dYhbx/DnhhQhC+WIbNVxOBhO2kSy5v1i3Hz+e4HceDROKsgAexFO9eUaeZv8RF3IS/U
+ p6RZIuIEuLn7QmyOKfDrPjif6xeAsHEO7GjtGkpoHXks8XwNH5k715gzJH2udcHzZR0k
+ FXKFylNJwzl2KrA0XoJF4aStNeP7Vm5S9Fz51Wp02ZJ9uXjkYx1QvvFbZx4RDB2tefkC
+ n/4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749560282; x=1750165082;
+ d=1e100.net; s=20230601; t=1749560300; x=1750165100;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=zK8JfL+K6DY+H6D8BIWrVhPNwjGTBASRCCeC9mTbJFE=;
- b=He250CQr4XgqHPCYpPjxiYlX5scekS7pERMoLKpcWJjwUuhYbS45AccYgyDZi7Gd6m
- duiaL+4G1wPvUFDdujwC+tJWZOxQr0tHcSxI2oKwesP0gWC6EA8A6DJldifzatyzZYM+
- rLORM/vLF91gtI3smRSheFEQq04ISaQB4okdTTUsyj1wKnqfWKiTQxr8f7x0b2jQQDo4
- EC9eMxaqz2aHN3zwjmrvXX2jLBC2ajPP6CzBbo6QUqksS/I97awAr/Blmq9e87xwC66w
- fsGsTztDuz+yJt3onk/2nxsj/d7jlnCVH547ckux6FWdU3aHFjcmAtK/NBNixCT4HN23
- 2BTg==
-X-Gm-Message-State: AOJu0YzK438RxBkSjEfbuxZBvta5y8xzqFPQj4D3qicHIzF+D94mccJB
- foxCvhqbPQqib2Ph8WmcWp9bG+nC+ks0KvbFbtbrxi4Q1Pc9Ff7EaTCcEHn5zuQXHAOWesld84A
- QwU492p0=
-X-Gm-Gg: ASbGncvgYc+R3jy4K/KdPVqum/Rv0PqNeUuxUZJJn3o85KnJTWlCcidEMEDoRg5HHBY
- hM+USI8YmxW6kDw8mciavr3L50A70uOS55E6Zd/ptgk0UG6dKj52HUa1WCqLOP80c9CKRCWJog/
- 2flCXUXWTBEQRrg11JM4OuNsM6DejGSoXNSpe4bNvO/LiTkoEZp1Ek5UEAKbprBP3SENQtvSLKF
- WZJN8JFZW0nTrmWC3mELviFcVxbLxEQ1CSxTIvrFQgBBhpI/J3KB5GB178Gd4RKXfq9hEzGzFh1
- cSAxedn4ItAPXUVwVrSVPSJ0A9P6czzTfvI26/vtCQ51TpTQlB38GDY/fXlzaumbWmzRNb7Qo8M
- KLCZirHuCxlsNP1PhZdUQ8Gcvx/Y/YTE+pRnXDJaMlg==
-X-Google-Smtp-Source: AGHT+IFSf5rP+bGvwTtachKHxuNTrYtyMkIGmShlefIEdlN+4E4aZs9uSph6KVFFa1FVFLq7dsovtQ==
-X-Received: by 2002:a05:6000:1a8d:b0:3a4:f7ae:77ca with SMTP id
- ffacd0b85a97d-3a5319b6a1cmr14665298f8f.3.1749560282240; 
- Tue, 10 Jun 2025 05:58:02 -0700 (PDT)
+ bh=P1V3w/IS64oeqhhB6d9B4sJVJcOGGWYHRK87tYEg+og=;
+ b=wgZpl+Hw2cvba4kcbJbe5NSTslx0apdhjK8EMLt8L497DdMKGTvSBZiFwq+YNzGp7T
+ qwC8zb6LuS4gxQUfb6PUzJSWadM+/6HkFZ+uij4yjEmKeo52taSql1/t7EtGnVyoQ42w
+ eObZcdZqyiu4JH/MgC65WvcoAZEwt1LfikXUHpNB+PijMtVJMPNgofd7axbWbsDCQ37v
+ tlJBby44ja9ArNIM1e742LjyzzKx/E4kvsLi1Kpq7FtZqreEwHLI7OuL1eszKorxMaD6
+ /McwzXVUNT/hrML9ZSXak/WIxndS9jQU7GgfxgVi8NovcjV4pLksa/7fbBNtYnE38gXh
+ 5BoQ==
+X-Gm-Message-State: AOJu0Ywpx5B1vaSifEwwXPfPg84MoY4yJoSe0AZ7Hh8puYGefBKviYWV
+ WN4XMoagAU8M6yplIxHUvJkLHJFaalVR89eJvqaSU+evHrYgH3HT8+GiTz1bTgS5NL8esCVG1xR
+ f8VUOCN0=
+X-Gm-Gg: ASbGncv/Y4DT4QvOz7MEPb9ZXzckZWwJb34TrTbu5JZZ75c9g16lUMXFuz8t714w7GQ
+ 6OIyRDPP9kuhniTum1ZKJTvF/tNv9bgobQBc1wZtyAGFuQwvSVxnEh1Qu0R4qxPEoMZ/saFOeKk
+ rIhFmHxsDW4GgVIxC+Om+p3/IUP2ZNFQhaTXuB1TBgu0C8+QHO3vMZt5j6aR9t114dwnT/ZiErk
+ BVyL+3mijIiTLqI56RPenzOHJfM7sBGPkStpz/cRA9mj+buGXu9qtFtgBDRQFgmwMSy/6VHXnEM
+ inmxCujyRF0cIyUZQYhPaXauwhmjLkGkx7yP+ZhqDZqwEAOFZRD8BRAeQMcvL2arcqIbJELH3Lo
+ 972Is0XaXsNIow3a01YDZGKOhpb7KSSutjhMHiKLZRQ==
+X-Google-Smtp-Source: AGHT+IHLY2qOlpaD7ew7yDnmClP1Hpf5uajbMMKQr25oi/iLFkV82EWxorDwVrkAmQ7SxKtBsP8mVA==
+X-Received: by 2002:a05:6000:2f88:b0:3a4:c8c1:aed8 with SMTP id
+ ffacd0b85a97d-3a5319a6fa1mr14453238f8f.39.1749560300385; 
+ Tue, 10 Jun 2025 05:58:20 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532435f95sm7701475f8f.60.2025.06.10.05.58.01
+ ffacd0b85a97d-3a53229d9e9sm12425447f8f.13.2025.06.10.05.58.19
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Jun 2025 05:58:01 -0700 (PDT)
+ Tue, 10 Jun 2025 05:58:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>,
- David Hildenbrand <david@redhat.com>,
+Cc: Soumyajyotii_Ssarkar <soumyajyotisarkar23@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 19/24] hw/virtio/virtio-pmem: Fix definition of VirtIOPMEMClass
-Date: Tue, 10 Jun 2025 14:56:28 +0200
-Message-ID: <20250610125633.24411-20-philmd@linaro.org>
+Subject: [PULL 23/24] hw/net/i82596: Update datasheet URL
+Date: Tue, 10 Jun 2025 14:56:32 +0200
+Message-ID: <20250610125633.24411-24-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250610125633.24411-1-philmd@linaro.org>
 References: <20250610125633.24411-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,37 +100,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Soumyajyotii_Ssarkar <soumyajyotisarkar23@gmail.com>
 
-VirtIOPMEMClass's parent is VirtioDeviceClass rather than VirtIODevice.
-This isn't catastrophic only because sizeof(VirtIODevice) >
-sizeof(VirtioDeviceClass).
+Change the asset link to one which is working from the PARISC website.
 
-Fixes: 5f503cd9f388 ("virtio-pmem: add virtio device")
-Closes: https://lists.gnu.org/archive/html/qemu-devel/2025-06/msg00586.html
-Reported-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: David Hildenbrand <david@redhat.com>
+Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Message-ID: <20250606092406.229833-3-zhenzhong.duan@intel.com>
+Message-ID: <20250607152711.108914-2-soumyajyotisarkar23@gmail.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/virtio/virtio-pmem.h | 2 +-
+ hw/net/i82596.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/virtio/virtio-pmem.h b/include/hw/virtio/virtio-pmem.h
-index fc4fd1f7fe8..9cce600d0b2 100644
---- a/include/hw/virtio/virtio-pmem.h
-+++ b/include/hw/virtio/virtio-pmem.h
-@@ -36,7 +36,7 @@ struct VirtIOPMEM {
+diff --git a/hw/net/i82596.c b/hw/net/i82596.c
+index 64ed3c83905..fc33a00d498 100644
+--- a/hw/net/i82596.c
++++ b/hw/net/i82596.c
+@@ -5,7 +5,7 @@
+  * This work is licensed under the GNU GPL license version 2 or later.
+  *
+  * This software was written to be compatible with the specification:
+- * https://www.intel.com/assets/pdf/general/82596ca.pdf
++ * https://parisc.docs.kernel.org/en/latest/_downloads/96672be0650d9fc046bbcea40b92482f/82596CA.pdf
+  */
  
- struct VirtIOPMEMClass {
-     /* private */
--    VirtIODevice parent;
-+    VirtioDeviceClass parent_class;
- 
-     /* public */
-     void (*fill_device_info)(const VirtIOPMEM *pmem, VirtioPMEMDeviceInfo *vi);
+ #include "qemu/osdep.h"
 -- 
 2.49.0
 
