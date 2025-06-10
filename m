@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55512C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:44:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A106CC5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:45:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyGE-0003EU-M9; Tue, 10 Jun 2025 08:39:26 -0400
+	id 1uOyFi-00022A-Oq; Tue, 10 Jun 2025 08:38:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOyFc-0001il-8y
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:48 -0400
+ id 1uOyEh-0001E7-Vl
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:37:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOyFU-0000Wo-FK
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:47 -0400
+ id 1uOyEd-0000OX-Cv
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:37:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749559118;
+ s=mimecast20190719; t=1749559066;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=X9O7EQZ8JqxG/dF5TklEeju/NAutOcHOWcAgU5zsnSs=;
- b=D8HLzVmSudXjzIqPlJ1kAVUcpbzBqhiSoN1GKseMF5H5HfkHaEIx/Mo5JqwfG1fVA+avHN
- xo0v0V5ls1QCPLJdqvlCjnErEE+e3l4BRKqCHFiyonjSg7NuLgZzLrAH0GQ5kVkG8ql0Y0
- rS6Mw5WHiBuTt6iLlgAJzbKTJ6w5uaY=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=T8ay3jL27sxTINUQkztWMF7zJ75fZoHD6z9mqVgDF6o=;
+ b=fBnbulgx3T/TZR7TixzsEMxz/IEJHN2R7//RyxuhOOM1+JqwlG7kvUWHjoLDBbDXuqT3dL
+ 6b09HBRj74ZsI4EnD9cQjWQhyCxvGy1J2KMcIMdbwV/mTUgUi4ccj/HQrQCj80+1RmaqaD
+ uGY+BierIQCwrwK/9ozsPWs1UpcWeWI=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-693-Jw33HruPOKOo6fKMwq-I5g-1; Tue,
- 10 Jun 2025 08:38:34 -0400
-X-MC-Unique: Jw33HruPOKOo6fKMwq-I5g-1
-X-Mimecast-MFC-AGG-ID: Jw33HruPOKOo6fKMwq-I5g_1749559113
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-399-B4vnWJhlOx-QANYZsHTaTA-1; Tue,
+ 10 Jun 2025 08:37:43 -0400
+X-MC-Unique: B4vnWJhlOx-QANYZsHTaTA-1
+X-Mimecast-MFC-AGG-ID: B4vnWJhlOx-QANYZsHTaTA_1749559062
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B8B7F1800282; Tue, 10 Jun 2025 12:38:33 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2634B19560BA; Tue, 10 Jun 2025 12:37:42 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.87])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4537E30001B1; Tue, 10 Jun 2025 12:38:31 +0000 (UTC)
+ id F013230001B1; Tue, 10 Jun 2025 12:37:39 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,9 +54,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 30/31] net/socket: skip automatic zero-init of large array
-Date: Tue, 10 Jun 2025 13:37:08 +0100
-Message-ID: <20250610123709.835102-31-berrange@redhat.com>
+Subject: [PATCH 11/31] hw/audio/gus: skip automatic zero-init of large array
+Date: Tue, 10 Jun 2025 13:36:49 +0100
+Message-ID: <20250610123709.835102-12-berrange@redhat.com>
 In-Reply-To: <20250610123709.835102-1-berrange@redhat.com>
 References: <20250610123709.835102-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -72,7 +72,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,31 +89,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'net_socket_send' method has a 68k byte array used for copying
-data between guest and host. Skip the automatic zero-init of this
-array to eliminate the performance overhead in the I/O hot path.
+The 'mv88w8618_audio_callback' method has a 4k byte array used for
+copying data between the audio backend and device. Skip the automatic
+zero-init of this array to eliminate the performance overhead in
+the I/O hot path.
 
-The 'buf1' array will be fully initialized when reading data off
-the network socket.
+The 'buf' array will be fully initialized when reading data from
+device memory.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- net/socket.c | 2 +-
+ hw/audio/marvell_88w8618.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/socket.c b/net/socket.c
-index 8e3702e1f3..784dda686f 100644
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -157,7 +157,7 @@ static void net_socket_send(void *opaque)
-     NetSocketState *s = opaque;
-     int size;
-     int ret;
--    uint8_t buf1[NET_BUFSIZE];
-+    QEMU_UNINITIALIZED uint8_t buf1[NET_BUFSIZE];
-     const uint8_t *buf;
+diff --git a/hw/audio/marvell_88w8618.c b/hw/audio/marvell_88w8618.c
+index 6d3ebbb0c8..c5c79d083a 100644
+--- a/hw/audio/marvell_88w8618.c
++++ b/hw/audio/marvell_88w8618.c
+@@ -66,7 +66,7 @@ static void mv88w8618_audio_callback(void *opaque, int free_out, int free_in)
+ {
+     mv88w8618_audio_state *s = opaque;
+     int16_t *codec_buffer;
+-    int8_t buf[4096];
++    QEMU_UNINITIALIZED int8_t buf[4096];
+     int8_t *mem_buffer;
+     int pos, block_size;
  
-     size = recv(s->fd, buf1, sizeof(buf1), 0);
 -- 
 2.49.0
 
