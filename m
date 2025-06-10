@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7658C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:04:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36FCAC5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:05:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyXP-0006da-9c; Tue, 10 Jun 2025 08:57:11 -0400
+	id 1uOyZ0-00084p-IR; Tue, 10 Jun 2025 08:58:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXM-0006cs-Sk
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:08 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyY0-00075d-0J
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:48 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXJ-0002bM-Lm
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:08 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-451d54214adso44604735e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXy-0002fM-79
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:47 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a503d9ef59so4539480f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749560222; x=1750165022; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749560264; x=1750165064; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6dp7GpujhzFYh18zm/S+UkI0pyq2WLKkULJ1D7AE954=;
- b=Zc3Zrp+Cem/Xmt4c0mjt7Ujir2KRu1yqrSWcBErfOChtnJZ7+cx4cOREpn+iMljetO
- WWtX8c0htIR0GUXy4w2IEyx7VK8XASj0vr9h0k1l4OyGtv7yjWOkesR0sUSaBLicA2o0
- +yoWq0flhm9E+J3swE0Etm4AMe3gjui0obD0eKRm81+DMl7HVIwfUOYgt949zfo9hYRf
- fH7qAziF13JEynSKZj9zyDMeCrZDynnGo3/dDuphl/w81cLy5GfwG0SDmACfIV4CkAfY
- tOuwUBFQleSAPVZWiYFAe/ZFwdTmYqxGIlTBnfSWbWSWxuNVh/6WWzEeSEQmUow0qT0t
- Y5/g==
+ bh=DoWnKErT6L5M/XOHBo7kM8xkl21t85uZpmhKzYCdWBM=;
+ b=LkDQRj9WyLDWzUf0/H1x+b6tGRESsXKqeBzM6mcCYO6bc/aB8AYnT9KhtXL0Za1idO
+ 8HawYPbL7w7at+gnZhMg/EoNd1zyLWyA/CPKrpmU+kFRH3lSbKlH71sERpS5Nq7JX0fd
+ bMvwmhfFCIJS9KiFProkz7ya+hCpFRvQDO0a6DEMOkS9Gj7fBaBSuvUKCHz7AXEpEYzd
+ +mjuTNuvMJ/OMKKWVLmRbwgXtA5XlaX2x8YEjpzjyPHd4t51wd1THnL1CH91MYTwErut
+ LPS5PIgUfE2vDo2wY+PNXWgfAnViTFaKS8/Wecc0QmQNPJg9oVwle5RGxvtaykDg9yoX
+ CH3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749560222; x=1750165022;
+ d=1e100.net; s=20230601; t=1749560264; x=1750165064;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=6dp7GpujhzFYh18zm/S+UkI0pyq2WLKkULJ1D7AE954=;
- b=PAiMtHGgVlm5D7SZoNRfr96JnAbECWqhlAnOIQ9s3/tQ+bDaeHCCqW7qqNb1Ab2iOf
- Jg7CfrUrwBe53smW1vGRpxaJJ/PahIaQsC548df+d07AdvkWFeSjzYY6akbW7HUL0afK
- zfZZfGmiJLW/pEC2pm2kyANi7Dc2q0lMLLYheNR8+Kw8nSG/I+orZMKFFccui2okySLg
- on6z5qjEg9eB6rR/qztIndx8qYC8TSNajxwrwSReaqhblnBxvYYqR1U3AGZWaPpdUOkM
- AfX+mb17p3yMI0YM+zDgKIbZe12dkl9ENbOkW5bjuofq1ne6EMbmT5LFD8dTnAO8ZkIa
- 0EMw==
-X-Gm-Message-State: AOJu0Yxj+SqTQwL7mlu3CqhbKMqMMf9+OXAMcpOsdAs/EmWQ8jCl8kPr
- BUMvTrsRwO/ObUg197s3zhtXQrJjr12g4PxDargV4v5/wnPzM8UzU26lor55XoQ4VcZYPS3tv5I
- W1PCQr3Y=
-X-Gm-Gg: ASbGncszz5NAQt3nFHQyrj9KoNQYePzYtebNG0Ez2CLAKEV8cPzlwsxrve/JAPeQLGr
- aIPj0tAXb7t/KVRAih5+IFdXfOE92urxU3D4kC7mbJE9ei905BCefG6cPZRwoqKyO++ZKvEuY9w
- p6WxTZn09PG4ZHfsNfHxHVXLnH8bXQLqKxhj4Dfq4C3d/3F+WYqADzFauQnemljhU7Obntrpb9m
- ea8lFxBVLBdSYFRFtTOViPyt5oK8O25Rgaz3dun/vWM6J1rumTcMhiOlKmGBmfVe/tU6n7HLjiV
- pzU5ZBvalMh/MH5V3Pk1TlEgilei4KXghNDT2aLF2PYaTOTeiF/o7fVfLlGMutssQoTbLWBMEPh
- Fxr50ecjFNK6zbvjMlhTwp114g18Nphh9WtFdz+YoTA==
-X-Google-Smtp-Source: AGHT+IEfDYWaMws+y6OvpmpAlc5CKzMdJhaQmONxvarRJQntju1FOC0TY3TGUA096q/6ydMIREWEzg==
-X-Received: by 2002:a05:600c:148a:b0:442:d9f2:ded8 with SMTP id
- 5b1f17b1804b1-45320032194mr16320785e9.15.1749560222334; 
- Tue, 10 Jun 2025 05:57:02 -0700 (PDT)
+ bh=DoWnKErT6L5M/XOHBo7kM8xkl21t85uZpmhKzYCdWBM=;
+ b=qtTaLMPHJApbotHE4++SGsxY6orXF+8yN2nbFX9MUl9ilKB1wbtJQ4XmzT+7D7FsET
+ LkSnY9n4b/9Jap2VqMmpJhredRdfeSN1iuL5p0ENDJODNJCMB6LF/ISwjnzqFT63XUcS
+ hac7USZhnQ36furFm4g2Jr2EKMTVqx0M3oLqqJkhU0VawM2CLpE7tjwpTDBscjSWXeXr
+ I5DaZEmR/oJvwVcKuQUuO5kqkNMOlwrz4Nh/ipq7Ogf1awnXo5+OSMPtoVvPxWD5SZJ2
+ f2IHOYwzk63R9TgHfeEOMyOYHAiTbI+r+g113B3VABDvJYV+kzpuI61d4IPdUulCOXNr
+ uIAg==
+X-Gm-Message-State: AOJu0YxkGOYUJ6rFQ2FYdXtlueilmXb0gBfPOHk3jOC9DVt+cotD388g
+ xS98jiqJUtoRh2D5cCcyUS3vag9pfv+lTx7z7OisncWH9IKoqVKW5/+e+o2PfTHVJyzRGUNwNKs
+ GDvL17KY=
+X-Gm-Gg: ASbGncs1CS01XaqHnFbKKXDkiQTqRufEBhgKU9+Ob01hCxYF++Op52waIsslEtbIe0I
+ vWE6WHteNu1d3wqIg/Cwaienu+Ag5N15PwdXwzQ2Ct7Z3WCKzU3+8TVq56zP0Ue8ZTFjexwV2t/
+ +LbJbqco75Q3wQk4so7LAGfBlZbX25NNqDxuFUL5YmN3ZPN2nG+FbzeKlYOYoJLnelII5FAyXnW
+ jl4TBcM/nDRwoyPJOVr8znc/0IOStxGn060nSMTF/46CTnXDJOBRE8+/rU200eljel27ogZe95/
+ l34F+6+0V3LgTD6nSo4LSUnuHzWFsEQ0/w9Klh1YqgIWnE3mOoS3ZlxXHcjYVP/GSqWeTP89dCv
+ liILJ6aI6LZFY5EnYpfzYTGey2YJnpK1CA0ON6DKWCA==
+X-Google-Smtp-Source: AGHT+IE8BeYS6UuWieiSlLOgWOB1or8T9lzwDOsWAsX6e84yX7OH7NfWpGgPXmW0HTr6Xo6G0vXNIw==
+X-Received: by 2002:a05:6000:4313:b0:3a5:25e4:264f with SMTP id
+ ffacd0b85a97d-3a531cb01acmr14320750f8f.31.1749560264048; 
+ Tue, 10 Jun 2025 05:57:44 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-452730d175dsm137297895e9.35.2025.06.10.05.57.01
+ ffacd0b85a97d-3a532436863sm12477526f8f.52.2025.06.10.05.57.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Jun 2025 05:57:01 -0700 (PDT)
+ Tue, 10 Jun 2025 05:57:43 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 06/24] hw/hyperv/balloon: Consolidate
- OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES
-Date: Tue, 10 Jun 2025 14:56:15 +0200
-Message-ID: <20250610125633.24411-7-philmd@linaro.org>
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Glenn Miles <milesg@linux.ibm.com>, Stefan Hajnoczi <stefanha@redhat.com>
+Subject: [PULL 15/24] hw/gpio/pca9552: Avoid using g_newa()
+Date: Tue, 10 Jun 2025 14:56:24 +0200
+Message-ID: <20250610125633.24411-16-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250610125633.24411-1-philmd@linaro.org>
 References: <20250610125633.24411-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,50 +101,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+We have pin_count <= PCA955X_PIN_COUNT_MAX. Having
+PCA955X_PIN_COUNT_MAX = 16, it is safe to explicitly
+allocate the char buffer on the stack, without g_newa().
 
-The QOM type of HvBalloon is declared by OBJECT_DECLARE_SIMPLE_TYPE,
-which means it doesn't need the class!
-
-Therefore, use OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES to implement
-the type, then there's no need for class definition.
-
-Cc: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Acked-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com>
-Message-ID: <20250514084957.2221975-6-zhao1.liu@intel.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+Message-Id: <20250605193540.59874-2-philmd@linaro.org>
 ---
- hw/hyperv/hv-balloon.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ hw/gpio/pca9552.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/hyperv/hv-balloon.c b/hw/hyperv/hv-balloon.c
-index 94b0abbd683..6dbcb2d9a29 100644
---- a/hw/hyperv/hv-balloon.c
-+++ b/hw/hyperv/hv-balloon.c
-@@ -67,10 +67,6 @@
-  * these requests
-  */
+diff --git a/hw/gpio/pca9552.c b/hw/gpio/pca9552.c
+index d65c0a2e90f..1e10238b2e0 100644
+--- a/hw/gpio/pca9552.c
++++ b/hw/gpio/pca9552.c
+@@ -76,7 +76,7 @@ static void pca955x_display_pins_status(PCA955xState *s,
+         return;
+     }
+     if (trace_event_get_state_backends(TRACE_PCA955X_GPIO_STATUS)) {
+-        char *buf = g_newa(char, k->pin_count + 1);
++        char buf[PCA955X_PIN_COUNT_MAX + 1];
  
--struct HvBalloonClass {
--    VMBusDeviceClass parent_class;
--} HvBalloonClass;
--
- typedef enum State {
-     /* not a real state */
-     S_NO_CHANGE = 0,
-@@ -162,8 +158,9 @@ typedef struct HvBalloon {
-     MemoryRegion *mr;
- } HvBalloon;
- 
--OBJECT_DEFINE_TYPE_WITH_INTERFACES(HvBalloon, hv_balloon, HV_BALLOON, VMBUS_DEVICE, \
--                                   { TYPE_MEMORY_DEVICE }, { })
-+OBJECT_DEFINE_SIMPLE_TYPE_WITH_INTERFACES(HvBalloon, hv_balloon, \
-+                                          HV_BALLOON, VMBUS_DEVICE, \
-+                                          { TYPE_MEMORY_DEVICE }, { })
- 
- #define HV_BALLOON_SET_STATE(hvb, news)             \
-     do {                                            \
+         for (i = 0; i < k->pin_count; i++) {
+             if (extract32(pins_status, i, 1)) {
 -- 
 2.49.0
 
