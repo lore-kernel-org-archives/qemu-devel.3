@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8025AC61CE8
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 00:09:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5ED0C61CE8
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 00:28:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOmXd-0003Ja-HA; Mon, 09 Jun 2025 20:08:37 -0400
+	id 1uOmps-0005lW-MU; Mon, 09 Jun 2025 20:27:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uOmXZ-0003JI-4y
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 20:08:33 -0400
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uOmpo-0005kt-Tg
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 20:27:24 -0400
 Received: from mx.treblig.org ([2a00:1098:5b::1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uOmXW-0008D0-NA
- for qemu-devel@nongnu.org; Mon, 09 Jun 2025 20:08:32 -0400
+ (Exim 4.90_1) (envelope-from <dg@treblig.org>) id 1uOmpm-000222-0U
+ for qemu-devel@nongnu.org; Mon, 09 Jun 2025 20:27:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=treblig.org
  ; s=bytemarkmx;
  h=Content-Type:MIME-Version:Message-ID:Subject:From:Date:From
- :Subject; bh=Jf+69yxUohjXYnqAH/uiLPl08LjdjJG/uvMYzuYPlbQ=; b=rA7C9OSqtvwqJL8w
- dQHVHgF830e4/53atx0YAjXGet9GUF/WYrjm1h2y3n6uVmygOXJWJXMmGDL/ABH4Z8YIC7szV8pMo
- 03vEQCOB9g2E5ZOM5TREIZGpB2JZCL+UpCZErBiyYU14fYnl4u7C6nguBaKQz+UzF5n8X4T5THpPN
- sXJsajNmdSHqPZIblRq5AasfyixGe53VdGY1jyksa+yyNDIkLxZ+v4VAgNium0SmTLxSBvcfffSLc
- qDkaWuvZb/T5W0qqv8Qhk5BCMjNXHL3/tteZS0+cmih9Ptpnq4A+1rzqq11YifuNqnAI9QGZkbjRL
- J3xm+ooO3jyZbQnYvA==;
+ :Subject; bh=ULhezJTf6QH25BHP1GRbB5ocijPk3QKYSvi/Ou1FTtc=; b=oRSQmmH8egcWFkoX
+ JNpmNqwpJnWEsxDF+8PZa/Duj+iy5xMRRLwXYFsQhffj+bschax71vkvm8VS7dcUDOWZ5RZtuJ56u
+ mJMvZVAUMJ00hleFqmT6Dmg3uIQniOHZ8jB9yvtu9VrrCXEDmJGHd4rBsl15R4u6uH093wiSVeGWJ
+ a6ZawA/cr3MZ0jDg9dMH9zIxDQaJtYanfyc/WY8Khi9F27OM1jnEIZocrG53rRJgRZKGw7kg4D/mR
+ gXgG9LwYcm/9LsV+P/ZVWNjyZshwxEFkdp2jMhZNfcRIzf/lui7Kb+5OvK8FcWglH+vNBTC6vG5L7
+ /82qCPJofjCKyM6ygA==;
 Received: from dg by mx.treblig.org with local (Exim 4.96)
- (envelope-from <dg@treblig.org>) id 1uOmXP-008W1g-1O;
- Tue, 10 Jun 2025 00:08:23 +0000
-Date: Tue, 10 Jun 2025 00:08:23 +0000
+ (envelope-from <dg@treblig.org>) id 1uOmpj-008W6Q-28;
+ Tue, 10 Jun 2025 00:27:19 +0000
+Date: Tue, 10 Jun 2025 00:27:19 +0000
 From: "Dr. David Alan Gilbert" <dave@treblig.org>
 To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Alexey Perevalov <a.perevalov@samsung.com>,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 08/13] migration/postcopy: Report fault latencies in
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ Juraj Marcin <jmarcin@redhat.com>, Markus Armbruster <armbru@redhat.com>
+Subject: Re: [PATCH] migration/postcopy: Add latency distribution report for
  blocktime
-Message-ID: <aEd3d07hQYXWc4eq@gallifrey>
-References: <20250609191259.9053-1-peterx@redhat.com>
- <20250609191259.9053-9-peterx@redhat.com>
+Message-ID: <aEd7526urkX56eq0@gallifrey>
+References: <20250609223607.34387-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <20250609191259.9053-9-peterx@redhat.com>
+In-Reply-To: <20250609223607.34387-1-peterx@redhat.com>
 X-Chocolate: 70 percent or better cocoa solids preferably
 X-Operating-System: Linux/6.1.0-34-amd64 (x86_64)
-X-Uptime: 00:05:28 up 43 days, 8:19, 1 user, load average: 0.00, 0.00, 0.00
+X-Uptime: 00:20:48 up 43 days, 8:34, 1 user, load average: 0.00, 0.01, 0.00
 User-Agent: Mutt/2.2.12 (2023-09-09)
 Received-SPF: pass client-ip=2a00:1098:5b::1; envelope-from=dg@treblig.org;
  helo=mx.treblig.org
@@ -73,249 +71,262 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 * Peter Xu (peterx@redhat.com) wrote:
-> Blocktime so far only cares about the time one vcpu (or the whole system)
-> got blocked.  It would be also be helpful if it can also report the latency
-> of page requests, which could be very sensitive during postcopy.
+> Add the latency distribution too for blocktime, using order-of-two buckets.
+> It accounts for all the faults, from either vCPU or non-vCPU threads.  With
+> prior rework, it's very easy to achieve by adding an array to account for
+> faults in each buckets.
 > 
-> Blocktime itself is sometimes not very important, especially when one
-> thinks about KVM async PF support, which means vCPUs are literally almost
-> not blocked at all because the guest OS is smart enough to switch to
-> another task when a remote fault is needed.
+> Sample output for HMP (while for QMP it's simply an array):
 > 
-> However, latency is still sensitive and important because even if the guest
-> vCPU is running on threads that do not need a remote fault, the workload
-> that accesses some missing page is still affected.
+> Postcopy Latency Distribution:
+>   [     1 us -     2 us ]:          0
+>   [     2 us -     4 us ]:          0
+>   [     4 us -     8 us ]:          1
+>   [     8 us -    16 us ]:          2
+>   [    16 us -    32 us ]:          2
+>   [    32 us -    64 us ]:          3
+>   [    64 us -   128 us ]:      10169
+>   [   128 us -   256 us ]:      50151
+>   [   256 us -   512 us ]:      12876
+>   [   512 us -     1 ms ]:         97
+>   [     1 ms -     2 ms ]:         42
+>   [     2 ms -     4 ms ]:         44
+>   [     4 ms -     8 ms ]:         93
+>   [     8 ms -    16 ms ]:        138
+
+Nice.
+
+>   [    16 ms -    32 ms ]:          0
+>   [    32 ms -    65 ms ]:          0
+>   [    65 ms -   131 ms ]:          0
+>   [   131 ms -   262 ms ]:          0
+>   [   262 ms -   524 ms ]:          0
+>   [   524 ms -    1 sec ]:          0
+>   [    1 sec -    2 sec ]:          0
+>   [    2 sec -    4 sec ]:          0
+>   [    4 sec -    8 sec ]:          0
+>   [    8 sec -   16 sec ]:          0
 > 
-> Add two entries to the report, showing how long it takes to resolve a
-> remote fault.  Mention in the QAPI doc that this is not the real average
-> fault latency, but only the ones that was requested for a remote fault.
-> 
-> Unwrap get_vcpu_blocktime_list() so we don't need to walk the list twice,
-> meanwhile add the entry checks in qtests for all postcopy tests.
-> 
-> Cc: Markus Armbruster <armbru@redhat.com>
 > Cc: Dr. David Alan Gilbert <dave@treblig.org>
-> Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> Cc: Markus Armbruster <armbru@redhat.com>
 > Signed-off-by: Peter Xu <peterx@redhat.com>
 > ---
->  qapi/migration.json                   | 13 +++++
->  migration/migration-hmp-cmds.c        | 68 ++++++++++++++++++---------
->  migration/postcopy-ram.c              | 48 +++++++++++++------
->  tests/qtest/migration/migration-qmp.c |  3 ++
->  4 files changed, 96 insertions(+), 36 deletions(-)
+> 
+> This patch is based on:
+> 
+> [PATCH v2 00/13] migration/postcopy: Blocktime tracking overhaul
+> Based-on: <20250609191259.9053-1-peterx@redhat.com>
+> 
+> It is the TODO mentioned in the other series, this patch implemented the
+> buckets distribution for fault latency traps.
+> ---
+>  qapi/migration.json                   |  9 ++++++
+>  migration/migration-hmp-cmds.c        | 32 +++++++++++++++++++
+>  migration/postcopy-ram.c              | 45 +++++++++++++++++++++++++++
+>  tests/qtest/migration/migration-qmp.c |  1 +
+>  4 files changed, 87 insertions(+)
 > 
 > diff --git a/qapi/migration.json b/qapi/migration.json
-> index 4963f6ca12..e95b7402cb 100644
+> index cc680dda46..7d9524a8ea 100644
 > --- a/qapi/migration.json
 > +++ b/qapi/migration.json
-> @@ -236,6 +236,17 @@
->  #     This is only present when the postcopy-blocktime migration
->  #     capability is enabled.  (Since 3.0)
+> @@ -242,6 +242,14 @@
+>  #     average page fault latency. This is only present when the
+>  #     postcopy-blocktime migration capability is enabled.  (Since 10.1)
 >  #
-> +# @postcopy-latency: average remote page fault latency (in us).  Note that
-> +#     this doesn't include all faults, but only the ones that require a
-> +#     remote page request.  So it should be always bigger than the real
-> +#     average page fault latency. This is only present when the
-> +#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
+> +# @postcopy-latency-dist: remote page fault latency distributions.  Each
+> +#     element of the array is the number of faults that fall into the
+> +#     bucket period.  For the N-th bucket (N>=0), the latency window is
+> +#     [2^N, 2^(N+1)).  For example, the 8th element stores how many remote
+> +#     faults got resolved within [256us, 512us) window. This is only
+> +#     present when the postcopy-blocktime migration capability is enabled.
+> +#     (Since 10.1)
 > +#
-> +# @postcopy-vcpu-latency: average remote page fault latency per vCPU (in
-> +#     us).  It has the same definition of @postcopy-latency, but instead
-> +#     this is the per-vCPU statistics.  This is only present when the
-> +#     postcopy-blocktime migration capability is enabled.  (Since 10.1)
-
-I wonder if even 'us' is too big; given you have 64bits to play with, and your
-examples show some samples landing in under 10us, perhaps it's best
-to at least define the qapi  fields as ns, even if you keep with the same
-buckets for now?
-
-Dave
-
->  # @socket-address: Only used for tcp, to know what the real port is
->  #     (Since 4.0)
->  #
-> @@ -275,6 +286,8 @@
->             '*blocked-reasons': ['str'],
+>  # @postcopy-vcpu-latency: average remote page fault latency per vCPU (in
+>  #     us).  It has the same definition of @postcopy-latency, but instead
+>  #     this is the per-vCPU statistics.  This is only present when the
+> @@ -293,6 +301,7 @@
 >             '*postcopy-blocktime': 'uint32',
 >             '*postcopy-vcpu-blocktime': ['uint32'],
-> +           '*postcopy-latency': 'uint64',
-> +           '*postcopy-vcpu-latency': ['uint64'],
+>             '*postcopy-latency': 'uint64',
+> +           '*postcopy-latency-dist': ['uint64'],
+>             '*postcopy-vcpu-latency': ['uint64'],
+>             '*postcopy-non-vcpu-latency': 'uint64',
 >             '*socket-address': ['SocketAddress'],
->             '*dirty-limit-throttle-time-per-round': 'uint64',
->             '*dirty-limit-ring-full-time': 'uint64'} }
 > diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-> index 6c36e202a0..600b0f8071 100644
+> index b234eb6478..b83befd26c 100644
 > --- a/migration/migration-hmp-cmds.c
 > +++ b/migration/migration-hmp-cmds.c
-> @@ -52,6 +52,52 @@ static void migration_global_dump(Monitor *mon)
+> @@ -52,6 +52,21 @@ static void migration_global_dump(Monitor *mon)
 >                     ms->clear_bitmap_shift);
 >  }
 >  
-> +static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
+> +static const gchar *format_time_str(uint64_t us)
 > +{
-> +    if (info->has_postcopy_blocktime) {
-> +        monitor_printf(mon, "Postcopy Blocktime (ms): %" PRIu32 "\n",
-> +                       info->postcopy_blocktime);
-> +    }
+> +    const char *units[] = {"us", "ms", "sec"};
+> +    int index = 0;
 > +
-> +    if (info->has_postcopy_vcpu_blocktime) {
-> +        uint32List *item = info->postcopy_vcpu_blocktime;
-> +        const char *sep = "";
-> +        int count = 0;
-> +
-> +        monitor_printf(mon, "Postcopy vCPU Blocktime (ms): \n [");
-> +
-> +        while (item) {
-> +            monitor_printf(mon, "%s%"PRIu32, sep, item->value);
-> +            item = item->next;
-> +            /* Each line 10 vcpu results, newline if there's more */
-> +            sep = ((++count % 10 == 0) && item) ? ",\n  " : ", ";
+> +    while (us > 1000) {
+> +        us /= 1000;
+> +        if (++index >= (sizeof(units) - 1)) {
+> +            break;
 > +        }
-> +        monitor_printf(mon, "]\n");
 > +    }
 > +
-> +    if (info->has_postcopy_latency) {
-> +        monitor_printf(mon, "Postcopy Latency (us): %" PRIu64 "\n",
-> +                       info->postcopy_latency);
-> +    }
-> +
-> +    if (info->has_postcopy_vcpu_latency) {
-> +        uint64List *item = info->postcopy_vcpu_latency;
-> +        int count = 0;
-> +
-> +        monitor_printf(mon, "Postcopy vCPU Latencies (us): \n [");
-> +
-> +        while (item) {
-> +            monitor_printf(mon, "%"PRIu64", ", item->value);
-> +            item = item->next;
-> +            /* Each line 10 vcpu results, newline if there's more */
-> +            if ((++count % 10 == 0) && item) {
-> +                monitor_printf(mon, "\n  ");
-> +            }
-> +        }
-> +        monitor_printf(mon, "\b\b]\n");
-> +    }
+> +    return g_strdup_printf("%"PRIu64" %s", us, units[index]);
 > +}
+
+(It surprises me we don't have a function like that somewhere)
+
 > +
->  void hmp_info_migrate(Monitor *mon, const QDict *qdict)
+>  static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
 >  {
->      bool show_all = qdict_get_try_bool(qdict, "all", false);
-> @@ -202,27 +248,7 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
->                         info->dirty_limit_ring_full_time);
+>      if (info->has_postcopy_blocktime) {
+> @@ -100,6 +115,23 @@ static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
+>          }
+>          monitor_printf(mon, "]\n");
 >      }
->  
-> -    if (info->has_postcopy_blocktime) {
-> -        monitor_printf(mon, "Postcopy Blocktime (ms): %" PRIu32 "\n",
-> -                       info->postcopy_blocktime);
-> -    }
-> -
-> -    if (info->has_postcopy_vcpu_blocktime) {
-> -        uint32List *item = info->postcopy_vcpu_blocktime;
-> -        const char *sep = "";
-> -        int count = 0;
-> -
-> -        monitor_printf(mon, "Postcopy vCPU Blocktime (ms): \n [");
-> -
-> -        while (item) {
-> -            monitor_printf(mon, "%s%"PRIu32, sep, item->value);
-> -            item = item->next;
-> -            /* Each line 10 vcpu results, newline if there's more */
-> -            sep = ((++count % 10 == 0) && item) ? ",\n  " : ", ";
-> -        }
-> -        monitor_printf(mon, "]\n");
-> -    }
-> -
-> +    migration_dump_blocktime(mon, info);
->  out:
->      qapi_free_MigrationInfo(info);
+> +
+> +    if (info->has_postcopy_latency_dist) {
+> +        uint64List *item = info->postcopy_latency_dist;
+> +        int count = 0;
+> +
+> +        monitor_printf(mon, "Postcopy Latency Distribution:\n");
+> +
+> +        while (item) {
+> +            g_autofree const gchar *from = format_time_str(1UL << count);
+> +            g_autofree const gchar *to = format_time_str(1UL << (count + 1));
+> +
+> +            monitor_printf(mon, "  [ %8s - %8s ]: %10"PRIu64"\n",
+> +                           from, to, item->value);
+> +            item = item->next;
+> +            count++;
+> +        }
+> +    }
 >  }
+
+For HMP,
+
+Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+
+>  void hmp_info_migrate(Monitor *mon, const QDict *qdict)
 > diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-> index f5c58a6ca7..98d4c29532 100644
+> index 23332ef3dd..0b40b79f64 100644
 > --- a/migration/postcopy-ram.c
 > +++ b/migration/postcopy-ram.c
-> @@ -166,20 +166,6 @@ static struct PostcopyBlocktimeContext *blocktime_context_new(void)
->      return ctx;
->  }
+> @@ -110,6 +110,15 @@ void postcopy_thread_create(MigrationIncomingState *mis,
+>  #include <sys/eventfd.h>
+>  #include <linux/userfaultfd.h>
 >  
-> -static uint32List *get_vcpu_blocktime_list(PostcopyBlocktimeContext *ctx)
-> -{
-> -    MachineState *ms = MACHINE(qdev_get_machine());
-> -    uint32List *list = NULL;
-> -    int i;
-> -
-> -    for (i = ms->smp.cpus - 1; i >= 0; i--) {
-> -        QAPI_LIST_PREPEND(
-> -            list, (uint32_t)(ctx->vcpu_blocktime_total[i] / 1000));
-> -    }
-> -
-> -    return list;
-> -}
-> -
->  /*
->   * This function just populates MigrationInfo from postcopy's
->   * blocktime context. It will not populate MigrationInfo,
-> @@ -191,15 +177,47 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
->  {
->      MigrationIncomingState *mis = migration_incoming_get_current();
->      PostcopyBlocktimeContext *bc = mis->blocktime_ctx;
-> +    MachineState *ms = MACHINE(qdev_get_machine());
-> +    uint64_t latency_total = 0, faults = 0;
-> +    uint32List *list_blocktime = NULL;
-> +    uint64List *list_latency = NULL;
-> +    int i;
+> +/*
+> + * Here we use 24 buckets, which means the last bucket will cover [2^24 us,
+> + * 2^25 us) ~= [16, 32) seconds.  It should be far enough to record even
+> + * extreme (perf-wise broken) 1G pages moving over, which can sometimes
+> + * take a few seconds due to various reasons.  Anything more than that
+> + * might be unsensible to account anymore.
+> + */
+> +#define  BLOCKTIME_LATENCY_BUCKET_N  (24)
+> +
+>  /* All the time records are in unit of microseconds (us) */
+>  typedef struct PostcopyBlocktimeContext {
+>      /* blocktime per vCPU */
+> @@ -175,6 +184,11 @@ typedef struct PostcopyBlocktimeContext {
+>       * that a fault was requested.
+>       */
+>      GHashTable *vcpu_addr_hash;
+> +    /*
+> +     * Each bucket stores the count of faults that were resolved within the
+> +     * bucket window [2^N us, 2^(N+1) us).
+> +     */
+> +    uint64_t latency_buckets[BLOCKTIME_LATENCY_BUCKET_N];
+>      /* total blocktime when all vCPUs are stopped */
+>      uint64_t total_blocktime;
+>      /* point in time when last page fault was initiated */
+> @@ -283,6 +297,9 @@ static struct PostcopyBlocktimeContext *blocktime_context_new(void)
+>      unsigned int smp_cpus = ms->smp.cpus;
+>      PostcopyBlocktimeContext *ctx = g_new0(PostcopyBlocktimeContext, 1);
+>  
+> +    /* Initialize all counters to be zeros */
+> +    memset(ctx->latency_buckets, 0, sizeof(ctx->latency_buckets));
+> +
+>      ctx->vcpu_blocktime_total = g_new0(uint64_t, smp_cpus);
+>      ctx->vcpu_faults_count = g_new0(uint64_t, smp_cpus);
+>      ctx->vcpu_faults_current = g_new0(uint8_t, smp_cpus);
+> @@ -320,6 +337,7 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
+>      uint64_t latency_total = 0, faults = 0;
+>      uint32List *list_blocktime = NULL;
+>      uint64List *list_latency = NULL;
+> +    uint64List *latency_buckets = NULL;
+>      int i;
 >  
 >      if (!bc) {
->          return;
+> @@ -349,6 +367,10 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
+>          QAPI_LIST_PREPEND(list_latency, latency);
 >      }
 >  
-> +    for (i = ms->smp.cpus - 1; i >= 0; i--) {
-> +        uint64_t latency, total, count;
-> +
-> +        /* This is in milliseconds */
-> +        QAPI_LIST_PREPEND(list_blocktime,
-> +                          (uint32_t)(bc->vcpu_blocktime_total[i] / 1000));
-> +
-> +        /* The rest in microseconds */
-> +        total = bc->vcpu_blocktime_total[i];
-> +        latency_total += total;
-> +        count = bc->vcpu_faults_count[i];
-> +        faults += count;
-> +
-> +        if (count) {
-> +            latency = total / count;
-> +        } else {
-> +            /* No fault detected */
-> +            latency = 0;
-> +        }
-> +
-> +        QAPI_LIST_PREPEND(list_latency, latency);
+> +    for (i = BLOCKTIME_LATENCY_BUCKET_N - 1; i >= 0; i--) {
+> +        QAPI_LIST_PREPEND(latency_buckets, bc->latency_buckets[i]);
 > +    }
 > +
->      info->has_postcopy_blocktime = true;
->      info->postcopy_blocktime = (uint32_t)(bc->total_blocktime / 1000);
->      info->has_postcopy_vcpu_blocktime = true;
-> -    info->postcopy_vcpu_blocktime = get_vcpu_blocktime_list(bc);
-> +    info->postcopy_vcpu_blocktime = list_blocktime;
-> +    info->has_postcopy_latency = true;
-> +    info->postcopy_latency = faults ? (latency_total / faults) : 0;
-> +    info->has_postcopy_vcpu_latency = true;
-> +    info->postcopy_vcpu_latency = list_latency;
+>      latency_total += bc->non_vcpu_blocktime_total;
+>      faults += bc->non_vcpu_faults;
+>  
+> @@ -363,6 +385,8 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
+>      info->postcopy_latency = faults ? (latency_total / faults) : 0;
+>      info->has_postcopy_vcpu_latency = true;
+>      info->postcopy_vcpu_latency = list_latency;
+> +    info->has_postcopy_latency_dist = true;
+> +    info->postcopy_latency_dist = latency_buckets;
 >  }
 >  
 >  static uint64_t get_postcopy_total_blocktime(void)
-> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-> index fb59741b2c..1a5ab2d229 100644
-> --- a/tests/qtest/migration/migration-qmp.c
-> +++ b/tests/qtest/migration/migration-qmp.c
-> @@ -358,6 +358,9 @@ void read_blocktime(QTestState *who)
->  
->      rsp_return = migrate_query_not_failed(who);
->      g_assert(qdict_haskey(rsp_return, "postcopy-blocktime"));
-> +    g_assert(qdict_haskey(rsp_return, "postcopy-vcpu-blocktime"));
-> +    g_assert(qdict_haskey(rsp_return, "postcopy-latency"));
-> +    g_assert(qdict_haskey(rsp_return, "postcopy-vcpu-latency"));
->      qobject_unref(rsp_return);
+> @@ -1095,6 +1119,25 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
+>      blocktime_fault_inject(dc, addr, cpu, current_us);
 >  }
 >  
+> +static void blocktime_latency_account(PostcopyBlocktimeContext *ctx,
+> +                                      uint64_t time_us)
+> +{
+> +    /*
+> +     * Convert time (in us) to bucket index it belongs.  Take extra caution
+> +     * of time_us==0 even if normally rare - when happens put into bucket 0.
+> +     */
+> +    int index = time_us ? (63 - clz64(time_us)) : 0;
+> +
+> +    assert(index >= 0);
+> +
+> +    /* If it's too large, put into top bucket */
+> +    if (index >= BLOCKTIME_LATENCY_BUCKET_N) {
+> +        index = BLOCKTIME_LATENCY_BUCKET_N - 1;
+> +    }
+> +
+> +    ctx->latency_buckets[index]++;
+> +}
+> +
+>  typedef struct {
+>      PostcopyBlocktimeContext *ctx;
+>      uint64_t current_us;
+> @@ -1117,6 +1160,8 @@ static void blocktime_cpu_list_iter_fn(gpointer data, gpointer user_data)
+>      assert(iter->current_us >= entry->fault_time);
+>      time_passed = iter->current_us - entry->fault_time;
+>  
+> +    blocktime_latency_account(ctx, time_passed);
+> +
+>      if (cpu >= 0) {
+>          /*
+>           * If we resolved all pending faults on one vCPU due to this page
+> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
+> index 67a67d4bd6..66dd369ba7 100644
+> --- a/tests/qtest/migration/migration-qmp.c
+> +++ b/tests/qtest/migration/migration-qmp.c
+> @@ -360,6 +360,7 @@ void read_blocktime(QTestState *who)
+>      g_assert(qdict_haskey(rsp_return, "postcopy-blocktime"));
+>      g_assert(qdict_haskey(rsp_return, "postcopy-vcpu-blocktime"));
+>      g_assert(qdict_haskey(rsp_return, "postcopy-latency"));
+> +    g_assert(qdict_haskey(rsp_return, "postcopy-latency-dist"));
+>      g_assert(qdict_haskey(rsp_return, "postcopy-vcpu-latency"));
+>      g_assert(qdict_haskey(rsp_return, "postcopy-non-vcpu-latency"));
+>      qobject_unref(rsp_return);
 > -- 
 > 2.49.0
 > 
