@@ -4,140 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB1BC5B552
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A79C71130
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27l-0002qQ-NK; Tue, 10 Jun 2025 12:46:57 -0400
+	id 1uP2Ab-00017I-7T; Tue, 10 Jun 2025 12:49:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1uP0Ir-00054R-AQ; Tue, 10 Jun 2025 10:50:17 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
- id 1uP0Io-00080Q-UO; Tue, 10 Jun 2025 10:50:17 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-3138d31e40aso1999916a91.1; 
- Tue, 10 Jun 2025 07:50:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749567012; x=1750171812; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
- bh=Cart6UfqDj9LT/UlAicnGPC14gwi5qD74eD6K86z9MM=;
- b=Y8xJ8V0o4RZ0qrrGZ4/XVwJep4g+4cFVrVRSIlXwB73LTY7euGcx+y48Ci0hp2Ba1p
- oP99L9GQh+NskklZn8WqquaPMlbGtJ5aLmHjv8hiNea+eWEZBo6hs2oENz/1SMTe/5YJ
- ekRfpi+P1yfxOLGQmt5myE6/ST/BtRYkoTNhzkgSsHdPhglFeikebDx1u9TGe/Zhn1NQ
- 8Rf2IaSzxeZk4V59j4yyASNQeat104zyKXQN+SgXJOoPtx07V+6kGP5+PC/FLJ3siQ/Y
- rR0GctMHHd/OdQI52Xozf6KiGruY6R1bAIYKVEb4Qx8dKmRl9iWfuwvllJv17AGEggI/
- PbAQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749567012; x=1750171812;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Cart6UfqDj9LT/UlAicnGPC14gwi5qD74eD6K86z9MM=;
- b=hSN9+DwmieXH2FoPcYhW35xyVPntf7JPx76VHhe++8Rq+J7uilmTmnefYqJfk/LzMT
- slthO7PSB5XRtKpNaQ+qokzewXunI2aXyWrO6sXEISXYx5pr29OKQARDfNJQeOldzsCq
- Z/CRTQt0OiYiSgKqpuf4TV9BxGiz8xkLHa+jlPfnnCwZXqBY2YWXRvT+CI5s1JZIp7dd
- 1VhYgX7mwUbCtNnaOmmH3lBmOj1h9Us7wW2fnFtoh2/jMTMIpMIpe19ULgwHDxZuOAC2
- zXOpruAfcVqPgK7xz0se/D92XwOazPQFupeStEMDpULmHvvx25LlhDH2yBuDIzVqf/FI
- x9sA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUa8XQUswivAGygyct5pOKgOztZI9z+PXRb2fCbqTvg3bLpQJiG5BCtJnTiawiaPUdDkBnechaFXw==@nongnu.org,
- AJvYcCVVwTZaZEyg02tVdP5LGDTTI0IEnixOZjAwdsIjGkhGdd6b7p1J69xEr61TX2Z9KK6G460WP45zLBnfVw==@nongnu.org
-X-Gm-Message-State: AOJu0YymZMcdEANWkFQEtJRkyvdH+cl1Ok/YWtOthqUrqlYJGvdtypW4
- M7akHoAOZ9NZitvZGtMReZG6gTOZtpE19PaExkjsGVWHJQYpbJWmgkw7
-X-Gm-Gg: ASbGncsVAH991nnFpVp5reuFTWPL/obAt3qxDsJ7pnYcWaAnI0aZCwGVSTSdgtsTp8g
- Uwjih76zTPxQ2zQ1eqcU4KFwMhlP2E9ZwxwqWl0pcVjKwpbK4m3JUCyyErgYktew+i7215OjrsY
- JWZNA6npfalIrN5U5O4bei+RDH9F4yLaVyuv0NLXwF0QEGUn3wj7h2NDL6lswGUJKtA45Gx0OLP
- YRjR7gBcgaC/ShIb2/rXBNin+fajlsHWnCqzuC77UFwDsKjSWvcEuF5GALZwOuxE9GESBjZzyaF
- jqFpz9ygD41sHEHoDUw+d0WJ58LWUE8tXk9RFezEemtKQ/luPLBuY6VDz1yj1s+dnHGX5QH+aY3
- oYEm2oQRCsE+XgrUUY5Lwlkd0Z29zxnrjsLw=
-X-Google-Smtp-Source: AGHT+IEqga3bND3YF4brMGPiwKCmNou27huTqidwK9PTWxMFvNAta6OXqaMFlEPz9zzQjH/fmjAKXQ==
-X-Received: by 2002:a17:90b:540f:b0:312:e731:5a66 with SMTP id
- 98e67ed59e1d1-313472d087amr23379561a91.3.1749567012521; 
- Tue, 10 Jun 2025 07:50:12 -0700 (PDT)
-Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
- ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-313a688b304sm247140a91.1.2025.06.10.07.50.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 07:50:11 -0700 (PDT)
-Message-ID: <538d51fd-29f9-4d4c-a23c-678434743f77@roeck-us.net>
-Date: Tue, 10 Jun 2025 07:50:10 -0700
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP154-0004Ky-J7
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:07 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP151-0005vZ-Me
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:06 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXatV029093;
+ Tue, 10 Jun 2025 15:39:58 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=gqCnY8/yKRYd46ubbAyvy2o3ATfIgXQVrC1QFKKZH98=; b=
+ FjOMcXOzIi4FHe1pTNwTMSh0nysxh/RL/vEM+5nKxvyjV+9vbhahyVsSkegL0uX6
+ z6bnv9pjqKklKZKYDu7lUEbqN3rT2bJuPqZVOEB8OuptzPIjG88h1BoHECoQ0ve2
+ vYkq/jaWuA8ESg3Ubo/syVsKK/hSmLKXGSHXy9Dv+3wfEbDwPYM9Njsd7kPi9e95
+ KgSqgCbUhu6ZHSBa8sCjM5qSimUxeqAwNfTnizWHr4SJHxfGWnC5u5nortdihDJb
+ 4/VgKQbz5+DNDA+nbkc6+jHTUpi1llcvEg5nd03+SynsJtVwnpe/IAoOYRyeobvC
+ rdrHgs2nxg9QsrcwGCSSzg==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474d1v4jf7-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:39:58 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55AEoK1t003889; Tue, 10 Jun 2025 15:39:57 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bv8wanb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:39:57 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfD028825;
+ Tue, 10 Jun 2025 15:39:57 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 474bv8wak1-4; Tue, 10 Jun 2025 15:39:57 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5 03/38] vfio/container: register container for cpr
+Date: Tue, 10 Jun 2025 08:39:16 -0700
+Message-Id: <1749569991-25171-4-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/npcm7xx_boards: Add support for specifying SPI
- flash model
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-References: <20250610012851.1627715-1-linux@roeck-us.net>
- <CAFEAcA-aznHrcSk9xfmLHkpJTiabjd4oX2KnvC5TXkkLgW6n8A@mail.gmail.com>
- <50464a50-1ddc-410b-bc5b-ec68b895b797@roeck-us.net>
- <CAFEAcA9CWeEmrZ5vTr7M-UZfH3cp5Y9EZUeGPfc2s75Tz2-K9g@mail.gmail.com>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-Autocrypt: addr=linux@roeck-us.net; keydata=
- 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
- np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
-In-Reply-To: <CAFEAcA9CWeEmrZ5vTr7M-UZfH3cp5Y9EZUeGPfc2s75Tz2-K9g@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=groeck7@gmail.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -16
-X-Spam_score: -1.7
-X-Spam_bar: -
-X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.065, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506100125
+X-Proofpoint-GUID: I5zQ8ERIxYnAR8a153Bvk1qE06ADgcmE
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX8yo7Oo29Q7F3
+ qTxTMX5rIhNoyOTjk2P+ezk8pVaOxPwMwq6x7T2KYwzl6DAJUh+DoPZgF0df9NHrVlCB62BMJMM
+ pHZMpu5dGS0AzptvD6hgXGkIrEGGIi74lkogW8j2WiZmXBzc3ee1VNNlJ0B9hG0ZiD3JvDENNWe
+ BaW5Z5gS9zPQsPpwikmZBBzJitdEOiOGMmicXCHlg3skBZhGVVvA8KuEVfTbc9HQsIHSt3d+QtY
+ XRVRekfNNb4cGtgzguDRnSX1yB4+4diBTGJ4XTzXK9/+6l313I7UUynH8L0M2h+66SVx4MCoJdY
+ GIHrI0hzyzefTYvtg8M0ncVS5lgFKDx0pkeaOsVoBOWwSCmTvMpUF8thGCo5T9VCrtITyDhbcL5
+ 55ezPGIaWlYxsnPuokVQt0ArtMIWxeBrCQgZIUsostBqBROpWG23uN1UZ9pdUlRO0vBTuayN
+X-Proofpoint-ORIG-GUID: I5zQ8ERIxYnAR8a153Bvk1qE06ADgcmE
+X-Authority-Analysis: v=2.4 cv=d731yQjE c=1 sm=1 tr=0 ts=684851ce b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
+ a=Wa8AqhRQI3GCQIrSjY4A:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:14714
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -153,60 +120,219 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 06:58, Peter Maydell wrote:
-> On Tue, 10 Jun 2025 at 14:31, Guenter Roeck <linux@roeck-us.net> wrote:
->>
->> On 6/10/25 01:42, Peter Maydell wrote:
->>> I think the question I would have here is "is this the flash
->>> device the hardware actually has?". If QEMU's using the wrong
->>> flash type, we should fix that. If QEMU's modelling the right
->>> flash type and the kernel doesn't implement it, then that's
->>> a kernel bug and the right fix is to get the kernel to
->>> handle that flash type.
->>>
->>
->> That isn't the point.
-> 
-> It is the point from my perspective. This board type is
-> supposed to be modelling real hardware, and therefore in
-> determining how it should behave we start by saying "so
-> what does the real hardware do?". Adding extra behaviour
-> that the real hardware does not have is something that
-> has a tendency to lead into unspecified, untested and hard
-> to maintain complexity.
-> 
+Register a legacy container for cpr-transfer, replacing the generic CPR
+register call with a more specific legacy container register call.  Add a
+blocker if the kernel does not support VFIO_UPDATE_VADDR or VFIO_UNMAP_ALL.
 
-Depends. I would argue that the ability to easily test all
-supported flash types makes the code more robust, not less robust.
+This is mostly boiler plate.  The fields to to saved and restored are added
+in subsequent patches.
 
->> Yes, one is that qemu's emulation is broken, the other is
->> that I wanted to be able to test with other flash types anyway. I understand
->> that this 'violates' the idea of exactly emulating some hardware, but I want
->> to be able to use qemu beyond that.
-> 
-> Why this machine type in particular, though? You say in the commit
-> message that aspeed lets you specify the flash type.
-> 
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+---
+ include/hw/vfio/vfio-container.h |  2 ++
+ include/hw/vfio/vfio-cpr.h       | 15 +++++++++
+ hw/vfio/container.c              |  7 ++---
+ hw/vfio/cpr-legacy.c             | 68 ++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/cpr.c                    |  5 ++-
+ hw/vfio/meson.build              |  1 +
+ 6 files changed, 91 insertions(+), 7 deletions(-)
+ create mode 100644 hw/vfio/cpr-legacy.c
 
-Yes, the aspeed emulations let me provide spi-model= and fmc-model=
-board parameters which I use to work around the problem there. That is why
-I thought a similar solution might be acceptable for Nuvoton boards,
-but apparently I was wrong.
-
->> Either case, I did some debugging: For flashes with sfdp data (mx25l25635e),
->> qemu returns bad sfdp data (at least with quanta-gsj), causing the kernel
->> (as of v6.16-rc1) to bail out. For other flashes (mx66u51235f) it returns
->> no sfdp data, but the upstream kernel now depends on it.
-> 
-> That sounds like a bug we should fix. Would one of the Nuvoton
-> maintainers like to take a look?
-> 
-
-I don't think it is a Nuvoton specific problem. I see the same or similar
-problems with Aspeed boards. Besides, the lack of sfdp data for mx66u51235f
-is most definitely not Nuvoton specific.
-
-Thanks,
-Guenter
+diff --git a/include/hw/vfio/vfio-container.h b/include/hw/vfio/vfio-container.h
+index afc498d..21e5807 100644
+--- a/include/hw/vfio/vfio-container.h
++++ b/include/hw/vfio/vfio-container.h
+@@ -10,6 +10,7 @@
+ #define HW_VFIO_CONTAINER_H
+ 
+ #include "hw/vfio/vfio-container-base.h"
++#include "hw/vfio/vfio-cpr.h"
+ 
+ typedef struct VFIOContainer VFIOContainer;
+ typedef struct VFIODevice VFIODevice;
+@@ -29,6 +30,7 @@ typedef struct VFIOContainer {
+     int fd; /* /dev/vfio/vfio, empowered by the attached groups */
+     unsigned iommu_type;
+     QLIST_HEAD(, VFIOGroup) group_list;
++    VFIOContainerCPR cpr;
+ } VFIOContainer;
+ 
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOContainer, VFIO_IOMMU_LEGACY);
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index 750ea5b..d4e0bd5 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -9,8 +9,23 @@
+ #ifndef HW_VFIO_VFIO_CPR_H
+ #define HW_VFIO_VFIO_CPR_H
+ 
++#include "migration/misc.h"
++
++struct VFIOContainer;
+ struct VFIOContainerBase;
+ 
++typedef struct VFIOContainerCPR {
++    Error *blocker;
++} VFIOContainerCPR;
++
++
++bool vfio_legacy_cpr_register_container(struct VFIOContainer *container,
++                                        Error **errp);
++void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
++
++int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
++                             Error **errp);
++
+ bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
+                                  Error **errp);
+ void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
+diff --git a/hw/vfio/container.c b/hw/vfio/container.c
+index 0f948d0..93cdf80 100644
+--- a/hw/vfio/container.c
++++ b/hw/vfio/container.c
+@@ -33,7 +33,6 @@
+ #include "qapi/error.h"
+ #include "pci.h"
+ #include "hw/vfio/vfio-container.h"
+-#include "hw/vfio/vfio-cpr.h"
+ #include "vfio-helpers.h"
+ #include "vfio-listener.h"
+ 
+@@ -643,7 +642,7 @@ static bool vfio_container_connect(VFIOGroup *group, AddressSpace *as,
+     new_container = true;
+     bcontainer = &container->bcontainer;
+ 
+-    if (!vfio_cpr_register_container(bcontainer, errp)) {
++    if (!vfio_legacy_cpr_register_container(container, errp)) {
+         goto fail;
+     }
+ 
+@@ -679,7 +678,7 @@ fail:
+         vioc->release(bcontainer);
+     }
+     if (new_container) {
+-        vfio_cpr_unregister_container(bcontainer);
++        vfio_legacy_cpr_unregister_container(container);
+         object_unref(container);
+     }
+     if (fd >= 0) {
+@@ -720,7 +719,7 @@ static void vfio_container_disconnect(VFIOGroup *group)
+         VFIOAddressSpace *space = bcontainer->space;
+ 
+         trace_vfio_container_disconnect(container->fd);
+-        vfio_cpr_unregister_container(bcontainer);
++        vfio_legacy_cpr_unregister_container(container);
+         close(container->fd);
+         object_unref(container);
+ 
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+new file mode 100644
+index 0000000..dd7ac84
+--- /dev/null
++++ b/hw/vfio/cpr-legacy.c
+@@ -0,0 +1,68 @@
++/*
++ * Copyright (c) 2021-2025 Oracle and/or its affiliates.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include <sys/ioctl.h>
++#include <linux/vfio.h>
++#include "qemu/osdep.h"
++#include "hw/vfio/vfio-container.h"
++#include "migration/blocker.h"
++#include "migration/cpr.h"
++#include "migration/migration.h"
++#include "migration/vmstate.h"
++#include "qapi/error.h"
++
++static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
++{
++    if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
++        error_setg(errp, "VFIO container does not support VFIO_UPDATE_VADDR");
++        return false;
++
++    } else if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UNMAP_ALL)) {
++        error_setg(errp, "VFIO container does not support VFIO_UNMAP_ALL");
++        return false;
++
++    } else {
++        return true;
++    }
++}
++
++static const VMStateDescription vfio_container_vmstate = {
++    .name = "vfio-container",
++    .version_id = 0,
++    .minimum_version_id = 0,
++    .needed = cpr_incoming_needed,
++    .fields = (VMStateField[]) {
++        VMSTATE_END_OF_LIST()
++    }
++};
++
++bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
++{
++    VFIOContainerBase *bcontainer = &container->bcontainer;
++    Error **cpr_blocker = &container->cpr.blocker;
++
++    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
++                                vfio_cpr_reboot_notifier,
++                                MIG_MODE_CPR_REBOOT);
++
++    if (!vfio_cpr_supported(container, cpr_blocker)) {
++        return migrate_add_blocker_modes(cpr_blocker, errp,
++                                         MIG_MODE_CPR_TRANSFER, -1) == 0;
++    }
++
++    vmstate_register(NULL, -1, &vfio_container_vmstate, container);
++
++    return true;
++}
++
++void vfio_legacy_cpr_unregister_container(VFIOContainer *container)
++{
++    VFIOContainerBase *bcontainer = &container->bcontainer;
++
++    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
++    migrate_del_blocker(&container->cpr.blocker);
++    vmstate_unregister(NULL, &vfio_container_vmstate, container);
++}
+diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
+index 0210e76..0e59612 100644
+--- a/hw/vfio/cpr.c
++++ b/hw/vfio/cpr.c
+@@ -7,13 +7,12 @@
+ 
+ #include "qemu/osdep.h"
+ #include "hw/vfio/vfio-device.h"
+-#include "migration/misc.h"
+ #include "hw/vfio/vfio-cpr.h"
+ #include "qapi/error.h"
+ #include "system/runstate.h"
+ 
+-static int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
+-                                    MigrationEvent *e, Error **errp)
++int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
++                             MigrationEvent *e, Error **errp)
+ {
+     if (e->type == MIG_EVENT_PRECOPY_SETUP &&
+         !runstate_check(RUN_STATE_SUSPENDED) && !vm_get_suspended()) {
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index bccb050..73d29f9 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -21,6 +21,7 @@ system_ss.add(when: 'CONFIG_VFIO_XGMAC', if_true: files('calxeda-xgmac.c'))
+ system_ss.add(when: 'CONFIG_VFIO_AMD_XGBE', if_true: files('amd-xgbe.c'))
+ system_ss.add(when: 'CONFIG_VFIO', if_true: files(
+   'cpr.c',
++  'cpr-legacy.c',
+   'device.c',
+   'migration.c',
+   'migration-multifd.c',
+-- 
+1.8.3.1
 
 
