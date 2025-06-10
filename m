@@ -4,50 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85093C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:58:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60847C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:58:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27j-0002mz-GQ; Tue, 10 Jun 2025 12:46:55 -0400
+	id 1uP2AU-0000hu-Vy; Tue, 10 Jun 2025 12:49:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uOzr8-0006Hh-Bx
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 10:21:38 -0400
+ id 1uP0sT-00028o-5y
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:27:06 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uOzr5-0004gW-6X
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 10:21:38 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bGrYn1HTlz6M4lJ;
- Tue, 10 Jun 2025 22:21:01 +0800 (CST)
+ id 1uP0sL-0004Ya-Ij
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:27:03 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bGszc06Nkz6HJlk;
+ Tue, 10 Jun 2025 23:25:00 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 185CC1404C5;
- Tue, 10 Jun 2025 22:21:24 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ by mail.maildlp.com (Postfix) with ESMTPS id 0F115140373;
+ Tue, 10 Jun 2025 23:26:50 +0800 (CST)
+Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 10 Jun
- 2025 16:21:23 +0200
-Date: Tue, 10 Jun 2025 15:21:21 +0100
-To: Arpit Kumar <arpit1.kumar@samsung.com>
-CC: <qemu-devel@nongnu.org>, <gost.dev@samsung.com>,
- <linux-cxl@vger.kernel.org>, <nifan.cxl@gmail.com>, <dave@stgolabs.net>,
- <vishak.g@samsung.com>, <krish.reddy@samsung.com>,
- <a.manzanares@samsung.com>, <alok.rathore@samsung.com>
-Subject: Re: [PATCH 1/3] hw/cxl: Storing physical ports info during enumeration
-Message-ID: <20250610152121.00004dda@huawei.com>
-In-Reply-To: <20250602135942.2773823-2-arpit1.kumar@samsung.com>
-References: <20250602135942.2773823-1-arpit1.kumar@samsung.com>
- <CGME20250602140018epcas5p2de38473dfcc0369193dd826c6e0e3fac@epcas5p2.samsung.com>
- <20250602135942.2773823-2-arpit1.kumar@samsung.com>
+ 2025 17:26:49 +0200
+Date: Tue, 10 Jun 2025 16:26:48 +0100
+To: Fan Ni <nifan.cxl@gmail.com>
+CC: <anisa.su887@gmail.com>, <qemu-devel@nongnu.org>, <dave@stgolabs.net>,
+ <linux-cxl@vger.kernel.org>, Anisa Su <anisa.su@samsung.com>
+Subject: Re: [QEMU PATCH v3 8/9] cxl-mailbox-utils: 0x5604 - FMAPI Initiate
+ DC Add
+Message-ID: <20250610162648.000071a2@huawei.com>
+In-Reply-To: <aEMxlAvukxhWXhw1@debian>
+References: <20250605234227.970187-1-anisa.su887@gmail.com>
+ <20250605234227.970187-9-anisa.su887@gmail.com>
+ <aEMxlAvukxhWXhw1@debian>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
  frapeml500008.china.huawei.com (7.182.85.71)
 X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
 Received-SPF: pass client-ip=185.176.79.56;
@@ -77,385 +76,305 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon,  2 Jun 2025 19:29:40 +0530
-Arpit Kumar <arpit1.kumar@samsung.com> wrote:
+On Fri, 6 Jun 2025 11:21:08 -0700
+Fan Ni <nifan.cxl@gmail.com> wrote:
 
-> Physical ports info is stored for both mailbox cci &
-> mctp based cci type as per spec CXL r3.2 Table 8-230: Physical Switch
+> On Thu, Jun 05, 2025 at 11:42:22PM +0000, anisa.su887@gmail.com wrote:
+> > From: Anisa Su <anisa.su@samsung.com>
+> > 
+> > FM DCD Management command 0x5604 implemented per CXL r3.2 Spec Section 7.6.7.6.5
+> > 
+> > Signed-off-by: Anisa Su <anisa.su@samsung.com>  
 > 
-> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
-Hi Arpit,
-
-Sorry for slow response. I got behind on reviews in general and missed
-this in the backlog!
-
-Anyhow, main comment is that this is mostly a refactor that only makes
-sense in a single patch with what you have in patch 2.
-
-Don't introduce duplicate infrastructure for so few usecases.  It means
-we can't just look at he diff and see what was added vs what was removed.
-Much cleaner to just have a single refactoring patch.
-> ---
->  hw/cxl/cxl-mailbox-utils.c  | 166 ++++++++++++++++++++++++++++++++++++
->  include/hw/cxl/cxl_device.h |  28 ++++++
->  2 files changed, 194 insertions(+)
+> See below...
+A few follow ups.
 > 
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index a02d130926..680055c6c0 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -124,6 +124,64 @@ enum {
->          #define GET_MHD_INFO 0x0
->  };
->  
-> +/* link state flags */
-Naming makes that clear (which is great) so I'd drop the comment.
+> > ---
+> >  hw/cxl/cxl-mailbox-utils.c  | 152 ++++++++++++++++++++++++++++++++++++
+> >  hw/mem/cxl_type3.c          |   8 +-
+> >  include/hw/cxl/cxl_device.h |   4 +
+> >  3 files changed, 160 insertions(+), 4 deletions(-)
+> > 
+> > diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> > index 004e502b22..7ee5be00bc 100644
+> > --- a/hw/cxl/cxl-mailbox-utils.c
+> > +++ b/hw/cxl/cxl-mailbox-utils.c
+> > @@ -123,6 +123,7 @@ enum {
+> >          #define GET_HOST_DC_REGION_CONFIG   0x1
+> >          #define SET_DC_REGION_CONFIG        0x2
+> >          #define GET_DC_REGION_EXTENT_LIST   0x3
+> > +        #define INITIATE_DC_ADD             0x4
+> >  };
+> >  
+> >  /* CCI Message Format CXL r3.1 Figure 7-19 */
+> > @@ -3540,6 +3541,150 @@ static CXLRetCode cmd_fm_get_dc_region_extent_list(const struct cxl_cmd *cmd,
+> >      return CXL_MBOX_SUCCESS;
+> >  }
+> >  
+> > +static void cxl_mbox_dc_add_to_pending(CXLType3Dev *ct3d,  
+> 
+> This naming can be improved here, not straightforward to me.
+> Maybe cxl_add_extents_to_pending_list() ?
+> 
+> > +                                       uint32_t ext_count,
+> > +                                       CXLDCExtentRaw extents[])
+> > +{
+> > +    CXLDCExtentGroup *group = NULL;
+> > +    int i;
+> > +
+> > +    for (i = 0; i < ext_count; i++) {
+> > +        group = cxl_insert_extent_to_extent_group(group,
+> > +                                                  extents[i].start_dpa,
+> > +                                                  extents[i].len,
+> > +                                                  extents[i].tag,
+> > +                                                  extents[i].shared_seq);
+> > +    }
+> > +
+> > +    cxl_extent_group_list_insert_tail(&ct3d->dc.extents_pending, group);
+> > +    ct3d->dc.total_extent_count += ext_count;
+> > +}  
+> 
+> Also the code is duplicate with existing code in cxl_type3.c 
+> qmp_cxl_process_dynamic_capacity_prescriptive(). 
+> The function was simulating the behaviour of the mailbox command, so it is
+> behaviour will be smilar to what we have in this patch, 
+> find a way to reuse code, maybe extract common code as a helper function and use
+> it in both qmp interface and here.
+> 
+> > +
+> > +static void cxl_mbox_create_dc_event_records_for_extents(CXLType3Dev *ct3d,  
+> cxl_create_dc_extent_records_for extents()?
+> > +                                                         CXLDCEventType type,
+> > +                                                         CXLDCExtentRaw extents[],
+> > +                                                         uint32_t ext_count)
+> > +{
+> > +    CXLEventDynamicCapacity event_rec = {};
+> > +    int i;
+> > +
+> > +    cxl_assign_event_header(&event_rec.hdr,
+> > +                            &dynamic_capacity_uuid,
+> > +                            (1 << CXL_EVENT_TYPE_INFO),
+> > +                            sizeof(event_rec),
+> > +                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
+> > +    event_rec.type = type;
+> > +    event_rec.validity_flags = 1;
+> > +    event_rec.host_id = 0;
+> > +    event_rec.updated_region_id = 0;
+> > +    event_rec.extents_avail = CXL_NUM_EXTENTS_SUPPORTED -
+> > +                              ct3d->dc.total_extent_count;
+> > +
+> > +    for (i = 0; i < ext_count; i++) {
+> > +        memcpy(&event_rec.dynamic_capacity_extent,
+> > +               &extents[i],
+> > +               sizeof(CXLDCExtentRaw));
+> > +        event_rec.flags = 0;
+> > +        if (i < ext_count - 1) {
+> > +            /* Set "More" flag */
+> > +            event_rec.flags |= BIT(0);
+> > +        }
+> > +
+> > +        if (cxl_event_insert(&ct3d->cxl_dstate,
+> > +                             CXL_EVENT_TYPE_DYNAMIC_CAP,
+> > +                             (CXLEventRecordRaw *)&event_rec)) {
+> > +            cxl_event_irq_assert(ct3d);
+> > +        }
+> > +    }
+> > +}  
+> 
+> Some issue here. A lot of duplicate code compared to
+> qmp_cxl_process_dynamic_capacity_prescriptive.
+> 
+I'm not going to refactor this on my tree.  Given the level of feedback,
+Anisa can you spin a new patch to replace what I'm carrying (which is
+modified version of this with a bit of rebasing).
 
-> +#define LINK_STATE_FLAG_LANE_REVERSED    (1 << 0)
+I'll push out a tree once I've caught up with reviewing this a bit more.
 
-BIT(0) from qemu/bitops.h
+> > +/* CXL r3.2 Section 7.6.7.6.5 Initiate Dynamic Capacity Add (Opcode 5604h) */
+> > +static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
+> > +                                         uint8_t *payload_in,
+> > +                                         size_t len_in,
+> > +                                         uint8_t *payload_out,
+> > +                                         size_t *len_out,
+> > +                                         CXLCCI *cci)
+> > +{
+> > +    struct {
+> > +        uint16_t host_id;
+> > +        uint8_t selection_policy;
+> > +        uint8_t reg_num;
+> > +        uint64_t length;
+> > +        uint8_t tag[0x10];
+> > +        uint32_t ext_count;
+> > +        CXLDCExtentRaw extents[];
+> > +    } QEMU_PACKED *in = (void *)payload_in;
+> > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+> > +    CXLUpdateDCExtentListInPl *list;
+> > +    int i, rc;
+> > +
+> > +    switch (in->selection_policy) {
+> > +    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE:
+> > +        /* Adding extents exceeds device's extent tracking ability. */
+> > +        if (in->ext_count + ct3d->dc.total_extent_count >
+> > +            CXL_NUM_EXTENTS_SUPPORTED) {
+> > +            return CXL_MBOX_RESOURCES_EXHAUSTED;
+> > +        }
+> > +
+> > +        list = calloc(1, (sizeof(*list) +
+> > +                          in->ext_count * sizeof(*list->updated_entries)));  
+> 
+> Use g_malloc() and g_free().
 
-> +#define LINK_STATE_FLAG_PERST_ASSERTED   (1 << 1)
-> +#define LINK_STATE_FLAG_PRSNT            (1 << 2)
-> +#define LINK_STATE_FLAG_POWER_OFF        (1 << 3)
-> +
-> +/* physical port control info - CXL r3.2 table 7-19 */
-> +typedef enum {
-> +    PORT_DISABLED = 0,
-> +    BIND_IN_PROGRESS = 1,
-> +    UNBIND_IN_PROGRESS = 2,
-> +    DSP = 3,
-> +    USP = 4,
-> +    FABRIC_PORT = 5,
-> +    INVALID_PORT_ID = 15
-> +} current_port_config_state;
+g_malloc0() I think.
 
-These aren't used as types really but more as defines.
-Hence I'd be tempted to make them defines. Also provide
-defines for the masks.
+> 
+> > +        convert_raw_extents(in->extents, list, in->ext_count);
+> > +        rc = cxl_detect_malformed_extent_list(ct3d, list);
+> > +
+> > +        for (i = 0; i < in->ext_count; i++) {
+> > +            CXLDCExtentRaw ext = in->extents[i];
+> > +             /* Check requested extents do not overlap with pending extents. */
+> > +            if (cxl_extent_groups_overlaps_dpa_range(&ct3d->dc.extents_pending,
+> > +                                                     ext.start_dpa, ext.len)) {
+> > +                return CXL_MBOX_INVALID_EXTENT_LIST;
+> > +            }
+> > +            /* Check requested extents do not overlap with existing extents. */
+> > +            if (cxl_extents_overlaps_dpa_range(&ct3d->dc.extents,
+> > +                                               ext.start_dpa, ext.len)) {
+> > +                return CXL_MBOX_INVALID_EXTENT_LIST;
+> > +            }
+> > +        }
+> > +
+> > +        if (rc) {
+> > +            return rc;
+> > +        }
+> > +
+> > +        cxl_mbox_dc_add_to_pending(ct3d, in->ext_count, in->extents);
+> > +        cxl_mbox_create_dc_event_records_for_extents(ct3d,
+> > +                                                     DC_EVENT_ADD_CAPACITY,
+> > +                                                     in->extents,
+> > +                                                     in->ext_count);
+> > +
+> > +        return CXL_MBOX_SUCCESS;
+> > +    default:
+> > +        qemu_log_mask(LOG_UNIMP,
+> > +                      "CXL extent selection policy not supported.\n");
+> > +        return CXL_MBOX_INVALID_INPUT;
+> > +    }
+> > +  
+> 
+> For all the case to return, instead of return directly set return code and jump
+> here, do two things:
+> 1. g_free(list);
+> 2. return rt;
 
-Namespace the defines so it is obvious which field
-they are in.
-
-> +
-> +typedef enum {
-> +    NOT_CXL_OR_DISCONNECTED = 0x00,
-> +    RCD_MODE = 0x01,
-> +    CXL_68B_FLIT_AND_VH_MODE = 0x02,
-> +    STANDARD_256B_FLIT_MODE = 0x03,
-> +    CXL_LATENCY_OPTIMIZED_256B_FLIT_MODE = 0x04,
-> +    PBR_MODE = 0x05
-> +} connected_device_mode;
-> +
-> +typedef enum {
-> +    NO_DEVICE_DETECTED = 0,
-> +    PCIE_DEVICE = 1,
-> +    CXL_TYPE_1_DEVICE = 2,
-> +    CXL_TYPE_2_DEVICE_OR_HBR_SWITCH = 3,
-> +    CXL_TYPE_3_SLD = 4,
-> +    CXL_TYPE_3_MLD = 5,
-> +    PBR_COMPONENT = 6
-> +} connected_device_type;
-> +
-> +typedef enum {
-> +    CXL_RCD_MODE = 0x00,
-> +    CXL_68B_FLIT_AND_VH_CAPABLE = 0x01,
-> +    CXL_256B_FLIT_CAPABLE = 0x02,
-> +    CXL_LATENCY_OPTIMIZED_256B_FLIT = 0x03,
-> +    CXL_PBR_CAPABLE = 0x04
-> +} supported_cxl_modes;
-> +
-> +typedef enum {
-> +    LTSSM_DETECT = 0x00,
-> +    LTSSM_POLLING = 0x01,
-> +    LTSSM_CONFIGURATION = 0x02,
-> +    LTSSM_RECOVERY = 0x03,
-> +    LTSSM_L0 = 0x04,
-> +    LTSSM_L0S = 0x05,
-> +    LTSSM_L1 = 0x06,
-> +    LTSSM_L2 = 0x07,
-> +    LTSSM_DISABLED = 0x08,
-> +    LTSSM_LOOPBACK = 0x09,
-> +    LTSSM_HOT_RESET = 0x0A
-> +} LTSSM_State;
-> +
->  /* CCI Message Format CXL r3.1 Figure 7-19 */
->  typedef struct CXLCCIMessage {
->      uint8_t category;
-> @@ -3686,6 +3744,112 @@ void cxl_add_cci_commands(CXLCCI *cci, const struct cxl_cmd (*cxl_cmd_set)[256],
->      cxl_rebuild_cel(cci);
->  }
->  
-> +static CXLRetCode cxl_set_port_type(struct phy_port *ports, int pnum,
-> +                                    CXLCCI *cci)
-> +{
-> +    PCIDevice *port_dev;
-> +    uint16_t lnkcap, lnkcap2, lnksta;
-> +    int i = pnum;
-I'd just use pnum for all the indexes.  This local variable doesn't add
-much readability.
-
-> +    if (!cci) {
-
-As below. No need to defend against bugs so only check if there is a
-chance cci might not be set.
-
-> +        return CXL_MBOX_INTERNAL_ERROR;
-> +    }
-> +
-
-Don't interleave declarations and cod.e
-
-> +    PCIBus *bus = &PCI_BRIDGE(cci->d)->sec_bus;
-> +    PCIEPort *usp = PCIE_PORT(cci->d);
-
-blank line after declarations - of include this
-in the declarations as
-    PCIEDevice *port_dev = pcie_find_port_by_pn(bus, i);
-
-However that is reasonable expensive, so maybe do the usp case first?
-
-
-> +    port_dev = pcie_find_port_by_pn(bus, i);
-> +
-> +    if (port_dev) { /* DSP */
-> +        PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
-> +            ->devices[0];
-> +        ports->pport_info[i].port_id = i;
-
-This is not affected by USP or DSP, so drop it out of this if / else.
-
-> +        ports->pport_info[i].current_port_config_state = DSP;
-> +        ports->active_port_bitmask[i / 8] |= (1 << i % 8);
-
-As below - this is currently set but not read, so I'd bring it in as part of
-the patch that uses it.
-
-Independent of port type, so doesn't belong in the if/else.
-
-
-> +        if (ds_dev) {
-> +            if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
-> +                ports->pport_info[i].connected_device_type = CXL_TYPE_3_MLD;
-
-Hmm. We should make this controllable (vs SLD).  I made this up in the existing
-code and probably shouldn't have done :(
-
-> +            } else {
-> +                ports->pport_info[i].connected_device_type = PCIE_DEVICE;
-> +            }
-> +        } else {
-> +            ports->pport_info[i].connected_device_type = NO_DEVICE_DETECTED;
-> +        }
-> +        ports->pport_info[i].supported_ld_count = 3;
-> +    } else if (usp->port == i) { /* USP */
-> +        port_dev = PCI_DEVICE(usp);
-> +        ports->pport_info[i].port_id = i;
-> +        ports->pport_info[i].current_port_config_state = USP;
-> +        ports->pport_info[i].connected_device_type = NO_DEVICE_DETECTED;
-> +        ports->active_port_bitmask[i / 8] |= (1 << i % 8);
-> +    } else {
-> +        return CXL_MBOX_INVALID_INPUT;
-> +    }
-> +
-> +    if (!port_dev->exp.exp_cap) {
-> +        return CXL_MBOX_INTERNAL_ERROR;
-> +    }
-> +
-> +    lnksta = port_dev->config_read(port_dev,
-> +                                   port_dev->exp.exp_cap + PCI_EXP_LNKSTA,
-> +                                   sizeof(lnksta));
-> +    lnkcap = port_dev->config_read(port_dev,
-> +                                   port_dev->exp.exp_cap + PCI_EXP_LNKCAP,
-> +                                   sizeof(lnkcap));
-> +    lnkcap2 = port_dev->config_read(port_dev,
-> +                                    port_dev->exp.exp_cap + PCI_EXP_LNKCAP2,
-> +                                    sizeof(lnkcap2));
-> +
-> +    ports->pport_info[i].max_link_width = (lnkcap & PCI_EXP_LNKCAP_MLW) >> 4;
-> +    ports->pport_info[i].negotiated_link_width = (lnksta & PCI_EXP_LNKSTA_NLW) >> 4;
-> +    ports->pport_info[i].supported_link_speeds_vector = (lnkcap2 & 0xFE) >> 1;
-> +    ports->pport_info[i].max_link_speed = lnkcap & PCI_EXP_LNKCAP_SLS;
-> +    ports->pport_info[i].current_link_speed = lnksta & PCI_EXP_LNKSTA_CLS;
-> +
-> +    ports->pport_info[i].ltssm_state = LTSSM_L2;
-> +    ports->pport_info[i].first_negotiated_lane_num = 0;
-> +    ports->pport_info[i].link_state_flags = 0;
-> +    ports->pport_info[i].supported_cxl_modes = CXL_256B_FLIT_CAPABLE;
-> +    ports->pport_info[i].connected_device_mode = STANDARD_256B_FLIT_MODE;
-> +
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
-> +static CXLRetCode cxl_set_phy_port_info(CXLCCI *cci)
-> +{
-> +    uint8_t phy_port_num;
-> +    if (!cci) {
-
-What is this defending against?  At least for now the cci
-is definitely not null where this function is used.
-
-> +        return CXL_MBOX_INTERNAL_ERROR;
-> +    }
-> +
-> +    PCIEPort *usp = PCIE_PORT(cci->d);
-
-Don't mix declarations and code.  Declarations still typically
-go at the top.
-
-> +    PCIBus *bus = &PCI_BRIDGE(cci->d)->sec_bus;
-> +    struct phy_port *ports = &cci->pports;
-> +    int num_phys_ports = pcie_count_ds_ports(bus) + 1;
-> +    if (num_phys_ports < 0) {
-
-Given add 1 this is always false and the check serve no
-purpose.
-
-> +        return CXL_MBOX_INTERNAL_ERROR;
-> +    }
-> +
-> +    ports->num_ports = num_phys_ports;
-> +    phy_port_num =  usp->port;
-> +
-> +    cxl_set_port_type(ports, phy_port_num, cci); /* usp */
-
-USP for comment given it's an acronym.
- 
-> +
-> +    for (int devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
-
-Maybe use pci_for_each_device_under_bus() ?
-
-> +        PCIDevice *dev = bus->devices[devfn];
-> +
-> +        if (dev) {
-> +            phy_port_num = PCIE_PORT(dev)->port;
-> +            const char *typename = object_get_typename(OBJECT(dev));
-
-Normally in qemu we just use a dynamic cast to identify types rather than
-matching on names.  I'd prefer that approach here.
-
-if (object_dynamic_cast(OBJECT(dev), TYPE_CXL_DSP)
+I'd prefer this which I think has same effect. I like direct returns ;)
+Don't forget the {} to define scope though - I did and you get odd error
+messages :)
 
 
-> +
-> +            if ((strcmp(typename, "cxl-downstream") == 0)) {
-> +                cxl_set_port_type(ports, phy_port_num, cci);
-> +            } else {
-> +                return CXL_MBOX_INTERNAL_ERROR;
-> +            }
-> +        }
-> +    }
-> +    return CXL_MBOX_SUCCESS;
-> +}
-> +
->  void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
->                                    DeviceState *d, size_t payload_max)
->  {
-> @@ -3693,6 +3857,7 @@ void cxl_initialize_mailbox_swcci(CXLCCI *cci, DeviceState *intf,
->      cci->d = d;
->      cci->intf = intf;
->      cxl_init_cci(cci, payload_max);
-> +    cxl_set_phy_port_info(cci); /* store port info */
->  }
->  
->  void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
-> @@ -3797,4 +3962,5 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
->      cci->d = d;
->      cci->intf = intf;
->      cxl_init_cci(cci, payload_max);
-> +    cxl_set_phy_port_info(cci); /* store port info */
 
-I'd not bother with the comment.  The naming of the function is clear enough.
+@@ -3674,19 +3674,19 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
+         CXLDCExtentRaw extents[];
+     } QEMU_PACKED *in = (void *)payload_in;
+     CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
+-    CXLUpdateDCExtentListInPl *list;
+     int i, rc;
 
->  }
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index ca515cab13..9eb128a1e8 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -127,6 +127,31 @@
->                    CXL_NUM_CHMU_INSTANCES * (1 << 16),                   \
->                    (1 << 16))
->  
-> +/* CXL r3.2 Table 7-19: Port Info */
-> +struct cxl_phy_port_info {
+     switch (in->selection_policy) {
+-    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE:
+-        /* Adding extents exceeds device's extent tracking ability. */
++    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE: {
++         /* Adding extents exceeds device's extent tracking ability. */
+         if (in->ext_count + ct3d->dc.total_extent_count >
+             CXL_NUM_EXTENTS_SUPPORTED) {
+             return CXL_MBOX_RESOURCES_EXHAUSTED;
+         }
 
-There is one of these in cxl-mailbox-utils.c already.  Pull it out
-as part of this patch.  That may mean combining patches 1 and 2.
+-        list = calloc(1, (sizeof(*list) +
+-                          in->ext_count * sizeof(*list->updated_entries)));
++        g_autofree CXLUpdateDCExtentListInPl *list =
++             g_malloc0(sizeof(*list) +
++                      in->ext_count * sizeof(*list->updated_entries));
+         convert_raw_extents(in->extents, list, in->ext_count);
+         rc = cxl_detect_malformed_extent_list(ct3d, list);
 
+@@ -3715,13 +3715,12 @@ static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
+                                                      in->ext_count);
 
-> +    uint8_t port_id;
-> +    uint8_t current_port_config_state;
-
-I'd pull the field defines and masks etc alongside the structure
-definition.
-
-
-> +    uint8_t connected_device_mode;
-> +    uint8_t rsv1;
-> +    uint8_t connected_device_type;
-> +    uint8_t supported_cxl_modes;
-> +    uint8_t max_link_width;
-> +    uint8_t negotiated_link_width;
-> +    uint8_t supported_link_speeds_vector;
-> +    uint8_t max_link_speed;
-> +    uint8_t current_link_speed;
-> +    uint8_t ltssm_state;
-> +    uint8_t first_negotiated_lane_num;
-> +    uint16_t link_state_flags;
-> +    uint8_t supported_ld_count;
-> +} QEMU_PACKED;
-> +
-> +struct phy_port {
-> +    uint8_t num_ports;
-> +    uint8_t active_port_bitmask[0x20];
-
-Why that size?  Also not used yet - so maybe bring this in where
-you need it?
-
-> +    struct cxl_phy_port_info pport_info[PCI_DEVFN_MAX];
-
-I think there are lower limits than that on how many ports
-we can have on a given bus + does this actually care about
-the limits from one bus?  Request is per switch, not per
-virtual heirarchy.  So we might be limited by number of unique
-port numbers.
-
-Today we only have one VCH so maybe this is fine for now.
-
-
-> +};
-> +
->  /* CXL r3.1 Table 8-34: Command Return Codes */
->  typedef enum {
->      CXL_MBOX_SUCCESS = 0x0,
-> @@ -223,6 +248,9 @@ typedef struct CXLCCI {
->      /* get log capabilities */
->      const CXLLogCapabilities *supported_log_cap;
->  
-> +    /*physical ports information */
-
-Space after /* 
-
-Run checkpatch.pl over qemu patches. I 'think' it would have
-caught this trivial thing.
-
-> +    struct phy_port pports;
-Storing this in the CCI is a little odd seeing (as opposed to
-in the USP - maybe DSP) as there is only one answer to this query whichever
-CCI we come in on.
-
-For similar things we do have firmware update in there which
-is a mixture of device side stuff and CCI specific handling.
-That might ideally be split up.  Obviously not something for
-this patch, but maybe we can avoid making CCI more bloated? 
-
-To me it seems reasonable to store this in the port and set
-it up whether or not the cci is connected.
-
-> +
->      /* background command handling (times in ms) */
->      struct {
->          uint16_t opcode;
+         return CXL_MBOX_SUCCESS;
++    }
+     default:
+         qemu_log_mask(LOG_UNIMP,
+                       "CXL extent selection policy not supported.\n");
+         return CXL_MBOX_INVALID_INPUT;
+     }
+-
+-    return CXL_MBOX_SUCCESS;
+ }
+> 
+> Fan
+> 
+> > +    return CXL_MBOX_SUCCESS;
+> > +}
+> > +
+> >  static const struct cxl_cmd cxl_cmd_set[256][256] = {
+> >      [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
+> >          cmd_infostat_bg_op_abort, 0, 0 },
+> > @@ -3667,6 +3812,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
+> >           CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+> >      [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
+> >          cmd_fm_get_dc_region_extent_list, 12, 0 },
+> > +    [FMAPI_DCD_MGMT][INITIATE_DC_ADD] = { "INIT_DC_ADD",
+> > +        cmd_fm_initiate_dc_add, ~0,
+> > +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
+> > +        CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
+> > +        CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
+> > +        CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
+> > +        CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
+> >  };
+> >  
+> >  /*
+> > diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> > index ee554a77be..ca9fe89e4f 100644
+> > --- a/hw/mem/cxl_type3.c
+> > +++ b/hw/mem/cxl_type3.c
+> > @@ -1885,8 +1885,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+> >   * the list.
+> >   * Return value: return true if has overlaps; otherwise, return false
+> >   */
+> > -static bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> > -                                           uint64_t dpa, uint64_t len)
+> > +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> > +                                    uint64_t dpa, uint64_t len)
+> >  {
+> >      CXLDCExtent *ent;
+> >      Range range1, range2;
+> > @@ -1931,8 +1931,8 @@ bool cxl_extents_contains_dpa_range(CXLDCExtentList *list,
+> >      return false;
+> >  }
+> >  
+> > -static bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> > -                                                 uint64_t dpa, uint64_t len)
+> > +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> > +                                          uint64_t dpa, uint64_t len)
+> >  {
+> >      CXLDCExtentGroup *group;
+> >  
+> > diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> > index 76af75d2d0..d30f6503fa 100644
+> > --- a/include/hw/cxl/cxl_device.h
+> > +++ b/include/hw/cxl/cxl_device.h
+> > @@ -724,4 +724,8 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+> >  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+> >                               const QemuUUID *uuid, uint32_t flags,
+> >                               uint8_t length, uint64_t timestamp);
+> > +bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+> > +                                    uint64_t dpa, uint64_t len);
+> > +bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> > +                                          uint64_t dpa, uint64_t len);
+> >  #endif
+> > -- 
+> > 2.47.2
+> >   
 
 
