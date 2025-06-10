@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CA4C5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 535FFC5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOu9s-0004mu-SE; Tue, 10 Jun 2025 04:16:36 -0400
+	id 1uOu9u-0004oX-4n; Tue, 10 Jun 2025 04:16:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uOu9o-0004mf-W2
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:16:33 -0400
+ id 1uOu9r-0004nC-VM; Tue, 10 Jun 2025 04:16:35 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uOu9m-0000Sc-2P
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:16:32 -0400
+ (envelope-from <gaosong@loongson.cn>)
+ id 1uOu9m-0000Sl-Ju; Tue, 10 Jun 2025 04:16:34 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8BxlmnW6UdoaX0SAQ--.45731S3;
- Tue, 10 Jun 2025 16:16:22 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8AxGHHZ6Udoa30SAQ--.48285S3;
+ Tue, 10 Jun 2025 16:16:25 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMBxb8fT6UdojgwUAQ--.58593S2;
- Tue, 10 Jun 2025 16:16:19 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMBxb8fT6UdojgwUAQ--.58593S3;
+ Tue, 10 Jun 2025 16:16:24 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com
-Subject: [PULL 0/7] loongarch-to-apply queue
-Date: Tue, 10 Jun 2025 15:53:43 +0800
-Message-Id: <20250610075350.865626-1-gaosong@loongson.cn>
+Cc: stefanha@gmail.com, Bibo Mao <maobibo@loongson.cn>, qemu-stable@nongnu.org
+Subject: [PULL 1/7] hw/loongarch/virt: Fix big endian support with MCFG table
+Date: Tue, 10 Jun 2025 15:53:44 +0800
+Message-Id: <20250610075350.865626-2-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250610075350.865626-1-gaosong@loongson.cn>
+References: <20250610075350.865626-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8fT6UdojgwUAQ--.58593S2
+X-CM-TRANSID: qMiowMBxb8fT6UdojgwUAQ--.58593S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -63,44 +63,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit bc98ffdc7577e55ab8373c579c28fe24d600c40f:
+From: Bibo Mao <maobibo@loongson.cn>
 
-  Merge tag 'pull-10.1-maintainer-may-2025-070625-1' of https://gitlab.com/stsquad/qemu into staging (2025-06-07 15:08:55 -0400)
+With API build_mcfg(), it is not necessary with parameter structure
+AcpiMcfgInfo to convert to little endian since it is directly used
+with host native endian.
 
-are available in the Git repository at:
+Here remove endian conversion before calling function build_mcfg().
+With this patch, bios-tables-test passes to run on big endian host
+machine S390.
 
-  https://github.com/gaosong715/qemu.git tags/pull-loongarch-20250610
+Fixes: 735143f10d3e ("hw/loongarch: Add acpi ged support")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Message-Id: <20250604065502.1114098-2-maobibo@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+---
+ hw/loongarch/virt-acpi-build.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-for you to fetch changes up to ffe89c1762d879fd39ba1be853d154677dbfbc7b:
-
-  hw/loongarch/virt: Remove global variables about memmap tables (2025-06-10 15:01:41 +0800)
-
-----------------------------------------------------------------
-pull-loongarch_20250610
-
-----------------------------------------------------------------
-Bibo Mao (5):
-      hw/loongarch/virt: Fix big endian support with MCFG table
-      hw/intc/loongarch_pch: Convert to little endian with ID register
-      hw/intc/loongarch_extioi: Fix typo issue about register EXTIOI_COREISR_END
-      hw/loongarch/virt: Remove global variables about initrd
-      hw/loongarch/virt: Remove global variables about memmap tables
-
-Qiang Ma (1):
-      hw/loongarch/virt: inform guest of kvm
-
-Song Gao (1):
-      target/loongarch: add check for fcond
-
- hw/intc/loongarch_pch_pic.c                      |  2 +-
- hw/loongarch/boot.c                              | 52 +++++++++++++-----------
- hw/loongarch/virt-acpi-build.c                   |  4 +-
- hw/loongarch/virt.c                              | 27 ++++++++----
- include/hw/intc/loongarch_extioi_common.h        |  2 +-
- include/hw/loongarch/boot.h                      |  5 +--
- include/hw/loongarch/virt.h                      |  2 +
- target/loongarch/tcg/insn_trans/trans_fcmp.c.inc | 25 ++++++++----
- target/loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 ++++++--
- 9 files changed, 87 insertions(+), 48 deletions(-)
+diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+index 073b6de75c..2cd2d9d842 100644
+--- a/hw/loongarch/virt-acpi-build.c
++++ b/hw/loongarch/virt-acpi-build.c
+@@ -575,8 +575,8 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
+     acpi_add_table(table_offsets, tables_blob);
+     {
+         AcpiMcfgInfo mcfg = {
+-           .base = cpu_to_le64(VIRT_PCI_CFG_BASE),
+-           .size = cpu_to_le64(VIRT_PCI_CFG_SIZE),
++           .base = VIRT_PCI_CFG_BASE,
++           .size = VIRT_PCI_CFG_SIZE,
+         };
+         build_mcfg(tables_blob, tables->linker, &mcfg, lvms->oem_id,
+                    lvms->oem_table_id);
+-- 
+2.34.1
 
 
