@@ -4,90 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01BBDC61DB2
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 20:41:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5394EC61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 20:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP5mW-0005Zy-Ag; Tue, 10 Jun 2025 16:41:16 -0400
+	id 1uP5n5-000613-To; Tue, 10 Jun 2025 16:41:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uP5mT-0005Yl-O7
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 16:41:14 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uP5mR-0003Nu-OH
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 16:41:13 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A6E6412AE55;
- Tue, 10 Jun 2025 23:32:24 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 3D4002221FB;
- Tue, 10 Jun 2025 23:32:45 +0300 (MSK)
-Message-ID: <4c8bb61a-d919-411b-afeb-eed15c4b2ab9@tls.msk.ru>
-Date: Tue, 10 Jun 2025 23:32:44 +0300
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uP5my-0005oe-Ey; Tue, 10 Jun 2025 16:41:44 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uP5mw-0003Qx-1u; Tue, 10 Jun 2025 16:41:44 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-606ddbda275so10805944a12.1; 
+ Tue, 10 Jun 2025 13:41:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749588099; x=1750192899; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=QZzAerTSiSj2iP/yiVo1pLCMeUgucyrx0qc66O/SPas=;
+ b=nqhBFcImZY+dnyVa+NMlibD3BqX1SC2+T6FeIDDG1dg+v8Og/9cS1lZv8PVcgd5AXD
+ xM4t7RUdB1behKIqLSomY/OJcfpFj5JTgcSlbmVUgQsEOOEVyC5R3SU+dgxHVmPow3Q1
+ m4u1x1QuqE1P0/luNKwBxj6NXs0hFq6wDZxryIES0eS76VOpdWTg1uY4n+HbOQUpNY9c
+ NFAfWd71pb5OZg4Q1m0PrkSjUD6fvvHD6LB2EAa/juQPWjK64+mK6/k2l72Poo7xERs9
+ pjGp8piuLTeGNXXZbPb5DV6jVMyHj7a/W2rdSlpccMqQ/ezvS0BMa3Mv/FTVTU5rcKQO
+ ApMg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749588099; x=1750192899;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=QZzAerTSiSj2iP/yiVo1pLCMeUgucyrx0qc66O/SPas=;
+ b=P0rOwcb/Rm9/Jw25s5EKuF1P1UqO/vbZdldAu3xatZLC3w+uQeO6b/GqbME/TaLHdm
+ OfxuXbCG3mnQwqCf3xuGn4jBiwtrdgO/TbHZRQRwsH/IDNQp/N1ciIdky2TOcETLnzgB
+ LwYzWk+wKDv/fkoO6u8bcMsSTAvjAa1zrbvEodAfhSz3UZfftQeFQr2HVLLBZErE8mY3
+ 7G90NSDwsaeZtK7NVPCU/y0e1SDpNyP0zn51CHp3GV+lZXv2farvQBegWQ1TvWT6CHBE
+ 2pPdI/eyQT596r9unWpP/MMmipsePKR7AZcniPgg4AwNCWOg/dP/i55P+Gcw6OrQuff3
+ 3HfQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAPcJB445KeHIxPg2F4l2tsDoRRmeNHztwR+vGumU9c25pFOwbPE3h1SOJGHO++QnuYZ1MeeJFRg==@nongnu.org
+X-Gm-Message-State: AOJu0YwprnKQ/2jx6yxyQRa8S7FFy87XPU/l05BEbRgPqd9/oVgbeQa+
+ IHHpPW7hp+sROU3L9b2psvCa1X6ViAFFUUba6nMVwABnwREJAQEYg/jkznH8Pg==
+X-Gm-Gg: ASbGncuSx45CXGMEkX7N5nTbOZhEwzutyUFTiHpYgwgk22Lp/nNVyY61kKr1sY6s07p
+ oxuI2B6FeTw6ickEvr1GMycSAQloy9tCay64e0izsGklB2X3eAbrs+dmunN77QZCgtj4wxjaDDB
+ P4TrSKBPgqU9qUKDGRtgXDMAih9sZ1Qp4tzK9W6N2+Buh87+L3wjdixMY52sgXI9EsMXWqrAClm
+ v0Uf8wdFENXTQevnDGfxMg1gLOOSj3VIjc8vPQdL3KJn9XnvcSS+kILYf1o2nH9UIVR2UPkqjtY
+ g98Tjo/c56cCzjAyOIicD02j8C838BgHzFXWUN/woXanIxkn2Q39ATz0Dxug78Bx87tCEEQZHTj
+ GcJ5JNzAlG8I4QxNyN5nbOKXy0Wd2nU4gVoa5i2tRjpq4VIzZ6GpN98744iG5GrYP3Lq24EmO/y
+ hM3QiIeg==
+X-Google-Smtp-Source: AGHT+IG1RfY9zY7Y7rf6OE4/o0hyRLrAa7ope8DAsG7AqumhrbIa0J5hrIKDgLO2pwqZEWb3p5Ms4g==
+X-Received: by 2002:a05:6402:2745:b0:608:3f9c:c69d with SMTP id
+ 4fb4d7f45d1cf-60846d2e9efmr506657a12.33.1749588098882; 
+ Tue, 10 Jun 2025 13:41:38 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-2cbf-5d00-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:2cbf:5d00:219:99ff:feb2:2458])
+ by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-607783de2bcsm6521847a12.68.2025.06.10.13.41.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Jun 2025 13:41:38 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
+Subject: [PATCH 0/5] DTB build housekeeping
+Date: Tue, 10 Jun 2025 22:41:26 +0200
+Message-ID: <20250610204131.2862-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.49.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pc-bios/s390-ccw: link statically
-To: Sertonix <sertonix@posteo.net>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-References: <DAJ1QOSAP9LS.342SQSM0UZU80@posteo.net>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <DAJ1QOSAP9LS.342SQSM0UZU80@posteo.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=shentey@gmail.com; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,11 +106,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.06.2025 20:58, Sertonix wrote:
-> 
-> Adding -pie to LDFLAGS caused s390-ccw.img to become dynamically linked.
+This series removes the bundled device tree blobs from the repository which are
+redundant to the bundled device tree sources. To make this work, the device tree
+compiler 'dtc' is now required for the boards which rely on these device trees.
+Building these board can be enforced with a 'dtc' build option which should
+help packagers. For simplicity, 'dtc' is searched for in the system only rather
+than also considering the 'dtc' submodule.
 
-Why do you think -pie causes it to become dynamically linked?
+I also tried unsing Meson's source_set::add(when: ...) for building only the
+needed DTBs but eventually found it to be too over-engineered.
 
-/mjt
+Last but not least two inconsistencies regarding QEMU_FILE_TYPE_DTB are fixed
+which seem to be latent bugs (one of which materializes in my e500-fdt branch).
+
+Bernhard Beschow (5):
+  hw: Fix type constant for DTB files
+  pc-bios/dtb/meson: Prefer target name to be outfile, not infile
+  scripts/meson-buildoptions: Sort coroutine_backend choices
+    lexicographically
+  configure: Add dtc option
+  configure: Require dtc for boards with bundled device trees
+
+ MAINTAINERS                          |   2 +-
+ meson.build                          |  12 ++++++++++++
+ hw/arm/boot.c                        |   2 +-
+ hw/ppc/e500.c                        |   2 +-
+ Kconfig.host                         |   3 +++
+ hw/microblaze/Kconfig                |   4 ++--
+ hw/ppc/Kconfig                       |   4 ++--
+ meson_options.txt                    |   3 +++
+ pc-bios/dtb/bamboo.dtb               | Bin 3211 -> 0 bytes
+ pc-bios/dtb/canyonlands.dtb          | Bin 9779 -> 0 bytes
+ pc-bios/dtb/meson.build              |  19 ++++++++-----------
+ pc-bios/dtb/petalogix-ml605.dtb      | Bin 9882 -> 0 bytes
+ pc-bios/dtb/petalogix-s3adsp1800.dtb | Bin 8161 -> 0 bytes
+ scripts/meson-buildoptions.sh        |   5 ++++-
+ 14 files changed, 37 insertions(+), 19 deletions(-)
+ delete mode 100644 pc-bios/dtb/bamboo.dtb
+ delete mode 100644 pc-bios/dtb/canyonlands.dtb
+ delete mode 100644 pc-bios/dtb/petalogix-ml605.dtb
+ delete mode 100644 pc-bios/dtb/petalogix-s3adsp1800.dtb
+
+-- 
+2.49.0
+
 
