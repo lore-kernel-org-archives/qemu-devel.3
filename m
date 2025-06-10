@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F486C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 20:43:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BB1C61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 20:52:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP5n2-0005rQ-5S; Tue, 10 Jun 2025 16:41:48 -0400
+	id 1uP5wY-0005Z3-FW; Tue, 10 Jun 2025 16:51:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uP5my-0005oA-6d; Tue, 10 Jun 2025 16:41:44 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ id 1uP5wX-0005Yn-0e; Tue, 10 Jun 2025 16:51:37 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uP5mw-0003R7-9e; Tue, 10 Jun 2025 16:41:43 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-606b6dbe316so6887301a12.3; 
- Tue, 10 Jun 2025 13:41:41 -0700 (PDT)
+ id 1uP5wU-0005Lr-Hv; Tue, 10 Jun 2025 16:51:36 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-acb5ec407b1so1061429866b.1; 
+ Tue, 10 Jun 2025 13:51:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749588100; x=1750192900; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1749588692; x=1750193492; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
- bh=shjFIoaQyra9yiwcwIYMAJApqIMBlEvH5T9r287lwOw=;
- b=CRaP3zUcFydxHzqqWcRLmunyxCht6/0C+Rv2CY9+sEPpSNUTvVlVUVi2/jfbksmf3R
- 1hoW3s4f1byF5b+xQyVtmfqxnlQe0rDq1HXMWPcvexC5MqDwWR8Tkt6TiDoknXXCyfAy
- omDSjYRAhVku/P1mtH1vJx+OSKczOZLBFLlFLfGyRAHxQDWeJlYt7wVfRvr1Gt3WKjbp
- el3c3iBHdwrUlPHLUN/uqsjwF/+0GRvyiZSUEoUWqH57+7p65tNUlLr0oOaUpAsMwPfH
- WYB85sSh9epHamTqTncszO9WB9r4XgbDXcaBMQ8ePrBwJKZ0WpJtEunJFnqSPdx1Mvi7
- A6MQ==
+ bh=iZRcIsfSaMYZb67JsNtiAQeA+N/8/wuiZqEAWRdsYRo=;
+ b=hQjWLJKPPCC1LND5xTh8+zACBy/CRvp9lBgFh4wR2r4zXZ6sJHG5Ua+xCAwHPH3j4u
+ cORgzuOQYCTWAwinHOdT1nFgkN7+3XTc09Imwzx2t2Zpqd2e1rk6CN84P2bJm0tpc3/I
+ GdnP33Yug2oP1XUUGv2ycJLcztbu7wKkxIsAHO1d2rLVkvl203oo1aiV1lOrwFaoiRuj
+ ibSRQ5AqPvvxr7KsllZNBwCu2jcEhovjIFZMpJd2LxB5cLzSSXy9MZ4Bs+h/QhkLKh9q
+ oKgEaIm7Pa4UTFvb2l1FQpbXzbCfUMNzjg6wDfj1PTDyb0TBVlurrHpo3ptaWIYB2mKc
+ YQMQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749588100; x=1750192900;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1749588692; x=1750193492;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=shjFIoaQyra9yiwcwIYMAJApqIMBlEvH5T9r287lwOw=;
- b=TJUtOalK7m151lPYFl+7IsWf8jNxL4Vcod9Q/RTdhk02nSn4Gc9zrnHxT1RizcQGWk
- xlzbL1eElHh2xyiBMoiid56blXjB9loQf/bUD9JM8JAVIQRtQ5FPBWtWotHBwXPR7NA7
- xCWXdELdoLW2QxfRsPEDJ7Ofgtiss2VQ0YAycOTmipo3cVg9vZeiBKtItEbHwl36CA+H
- AyfhvN0o5jT31KCR4OJVkESvbHwH8GZh3OUCXdjYO8Tr4ZZCUmyNG3HzAXfePETXsZiN
- jBrOoMTFNpn+r52QuBz7rT/Fksr28OwjGsBT2H1v3a8cSN48wsdugBXQVSzR0Xfq49Kl
- QN0g==
+ bh=iZRcIsfSaMYZb67JsNtiAQeA+N/8/wuiZqEAWRdsYRo=;
+ b=WqTnC3QwzKp6EtKpKRN+Bo8HzaJ92XN0ghdXmDYiruHH/RQY8mrtJPWU2XO0eIFKxo
+ tgNJfmPBMwyJbCnrFyA3lwMDYv8SM340KkzDTb+FHJbqtWwbwNiHIdvBPHHxMj7r27UW
+ 2U5GzxWqkkJzFdKUrT57/wgQd0eybTL2dHzzE3FUbko3ZvSe8S95+DYnIRSBeELI7g3v
+ Vw68hhkp2l+iuh3/Kz5qYi4YdDrPh2Uf1z8qm0gLU1lNNpQ8qlzTp68weV4CJBAjoHLf
+ a2b4gmGgYUFzJD2bOq9RnE+EOW5GXHQZYvHTlNIaTsyeTDKi/ufKYSjEwP02Dt62L3c3
+ oaHw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUJbGdIfXKBciMW6f4ze9pQwWYQaC8fGVo2Ul/qFjrtzroQQNax9MKWVFz/1ZFdqAs2+h7Wbr9zZw==@nongnu.org
-X-Gm-Message-State: AOJu0YxooM+JN/gjbrAi1zupQfp6OUJgT9VFS8dgVLmHz+thWz3jStRq
- spBTpUE4tM+llWp151lqlmldrm4ehU430/nUx4bAwWrIl520Kf7Fknu5EJTEDQ==
-X-Gm-Gg: ASbGncvB2Fe1k4qfcuTJf25P5dK0lXFLQSmcj6OreV3UgRpM+zObaPs0biuQ8qP67jS
- xSX5ete6CnpREyOsg1c+13ArPMiyP9xlYYgILaH4EB48/+57swruwd9TueHtUjjBYF7LLRrPUxo
- 9IGjhjFW8B3+pMIJZdMAZmc1rII968ebYV+rRy4dV7GFdMryEk1bRRZcD8Qy1ZnqlI/nMOm8yPk
- 5lmjmThaZHzwF20BV6KyR/Gv/ptVJhxcarbS3GfNKWNaxGxf4P0CuQG7G0DdIXeHqlwQpwfI6H7
- BLlPxVMt3PbwGAwNufv6Xczu/xQtSc0/S4eT/v9p3jJ4mPL2NgNycJ8lCHqie44J8XozWmJ2RBi
- /plvQCOoX+d+XhV6e2Dxk1fUSkk87+PhUhn/ln5nhUQisVBPFOr214m/lQsJW4cVSboBM4calgO
- uk8KwcLw==
-X-Google-Smtp-Source: AGHT+IFDnUFYsi8/vEvVSQu6X/ITolen/ymxIKDo4hkCOc4Di111PCDkuNVzkf1RucXQnbS3Ow0CUQ==
-X-Received: by 2002:a05:6402:5cb:b0:607:5af9:19b6 with SMTP id
- 4fb4d7f45d1cf-60846875435mr528462a12.15.1749588099593; 
- Tue, 10 Jun 2025 13:41:39 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-2cbf-5d00-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:2cbf:5d00:219:99ff:feb2:2458])
- by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-607783de2bcsm6521847a12.68.2025.06.10.13.41.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Jun 2025 13:41:39 -0700 (PDT)
+ AJvYcCVoK+033Jdl3gd6OWE4ZwSKUSX0sUnx6YtoF2QK2liZylSX4cyf9oQ7/W47YkrDTpitVQosSnULO8c=@nongnu.org
+X-Gm-Message-State: AOJu0YyZyluLR/aiDgcSsTe3O19zoVm9Pn+aIYX4sWvnfCUWWqg3rnBn
+ 8V0vFYeFG3cabYPApInd1C8j864aukW79SIL5DefgkCTwamHpbK5gYGVDwYZbQ==
+X-Gm-Gg: ASbGncs2dGFKrzgvfmyqrf4/4tc7osEe5zkHUMhqLEqWl1fvGChTEobls+fcLGwdZfI
+ +Tx6ApRJr20z/ykjZCYvhQ42r4GKA2kP78l5Yz7wd8E8LY75HC87gwXM4cx4b2quACbsRHbYJ2D
+ DhA6d4/LhXtTDUUFZ+hd16DlTDFzIh4EETjvCtyZG/nkT61v6CkyIQUGgC/GyJJQR7esr+gkFvE
+ DtdV8flCVDBCuDi1hLO/nVk8BdSysx44QD579THkBaieoYr4nj5mXdy+wwO+N5XuYW1hWr2d/OB
+ N5vYyybtXVeLW/5e72P3bnkNFLUKdV5XxNs/OQ82fvAlJdp67BVH5lI/XJv2XL9o/eFJ4DKndHc
+ AgzDdkB9hmDQJko8xioLW9wGRizdiIX/XlnSVa1k=
+X-Google-Smtp-Source: AGHT+IHJgXbHoRDLqvYqMT7USDT2ZGwh/PepPjMq57CKxXdrcKmLtcC5RJ8BwCApewqZr+8h9IV32Q==
+X-Received: by 2002:a17:907:7255:b0:ad5:eff:db32 with SMTP id
+ a640c23a62f3a-ade8c9406c5mr23015466b.48.1749588691894; 
+ Tue, 10 Jun 2025 13:51:31 -0700 (PDT)
+Received: from [127.0.0.1] (dynamic-077-183-237-205.77.183.pool.telefonica.de.
+ [77.183.237.205]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ade1dc39c3fsm780113966b.140.2025.06.10.13.51.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 13:51:31 -0700 (PDT)
+Date: Tue, 10 Jun 2025 20:51:29 +0000
 From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Bernhard Beschow <shentey@gmail.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 1/5] hw: Fix type constant for DTB files
-Date: Tue, 10 Jun 2025 22:41:27 +0200
-Message-ID: <20250610204131.2862-2-shentey@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250610204131.2862-1-shentey@gmail.com>
-References: <20250610204131.2862-1-shentey@gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+CC: qemu-devel@nongnu.org, Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-rust@nongnu.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_1/2=5D_rust/qemu-api=3A_Add_i?=
+ =?US-ASCII?Q?nitial_logging_support_based_on_C_API?=
+In-Reply-To: <CABgObfbD-yHee4TXKqQ2gw7N8dtuB1wKqPLD5jLKXtJ8hx2xSw@mail.gmail.com>
+References: <20250330205857.1615-1-shentey@gmail.com>
+ <20250330205857.1615-2-shentey@gmail.com>
+ <340649cf-9348-458d-97e7-aee73c02217c@redhat.com>
+ <540905F9-7DF7-436F-905C-A7F225F5E156@gmail.com>
+ <CABC6E67-C4C7-481F-BB96-BF60957D7A84@gmail.com>
+ <CABgObfbD-yHee4TXKqQ2gw7N8dtuB1wKqPLD5jLKXtJ8hx2xSw@mail.gmail.com>
+Message-ID: <1C6601BE-B21C-4607-ABE1-02B1C1A6D10F@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=shentey@gmail.com; helo=mail-ed1-x52e.google.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,44 +107,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit fcb1ad456c58 ("system/datadir: Add new type constant for DTB files")
-introduced a new type constant for DTB files and converted the boards with
-bundled device trees to use it. Convert the other boards for consistency.
 
-Fixes: fcb1ad456c58 ("system/datadir: Add new type constant for DTB files")
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- hw/arm/boot.c | 2 +-
- hw/ppc/e500.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/boot.c b/hw/arm/boot.c
-index 79afb51b8a..64040504a1 100644
---- a/hw/arm/boot.c
-+++ b/hw/arm/boot.c
-@@ -527,7 +527,7 @@ int arm_load_dtb(hwaddr addr, const struct arm_boot_info *binfo,
- 
-     if (binfo->dtb_filename) {
-         char *filename;
--        filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, binfo->dtb_filename);
-+        filename = qemu_find_file(QEMU_FILE_TYPE_DTB, binfo->dtb_filename);
-         if (!filename) {
-             fprintf(stderr, "Couldn't open dtb file %s\n", binfo->dtb_filename);
-             goto fail;
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index 809078a2c3..69fe71ad39 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -411,7 +411,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
- 
-     if (dtb_file) {
-         char *filename;
--        filename = qemu_find_file(QEMU_FILE_TYPE_BIOS, dtb_file);
-+        filename = qemu_find_file(QEMU_FILE_TYPE_DTB, dtb_file);
-         if (!filename) {
-             goto out;
-         }
--- 
-2.49.0
+Am 12=2E Mai 2025 15:32:08 UTC schrieb Paolo Bonzini <pbonzini@redhat=2Eco=
+m>:
+>Hi, now that GSoC selection is over I'm back=2E Sorry for the delay;
+>Tanish Desai will work mostly on tracing, so logging can remain yours=2E
+>
+>On Tue, Apr 8, 2025 at 10:59=E2=80=AFPM Bernhard Beschow <shentey@gmail=
+=2Ecom> wrote:
+>> >Currently the #defines contain some holes for "private" mask bits=2E T=
+urning these into an
+>> >enum without exposing all publicly, and changing the type of qemu_logl=
+evel for
+>> >consistency, would result in undefined behavior=2E Or do you suggest t=
+o convert just
+>> >the public #defines into an enum to expose them to Rust, and keep the =
+rest of
+>> >the C API including the type of qemu_loglevel as is?
+>
+>Yes, only in Rust=2E
+>
+>> >There are surely several tradeoffs and/or cleanups possible here, but =
+that's way beyond for
+>> >what I wanted to achieve -- which is closing a gap between C and Rust=
+=2E My main goal is just
+>> >to get my feet wet with Rust=2E
+>
+>I understand, however there is no point in defining an API and then chang=
+ing it=2E
+>
+>So we need to answer the questions I wrote a few messages ago, namely:
+>
+>- the mapping the LOG_* constants into Rust (e=2Eg=2E whether to keep the
+>uppercase SNAKE_CASE or switch to something like Log::GuestError)=2E
+>
+>- whether to keep the "qemu" prefix for the API (personal opinion: no)
 
+Sorry for the long delay, the imx8mp desired my attention=2E
+
+Paolo, I tried both of your suggestions and found them to be convincing en=
+ough that I sent a v2: <https://lore=2Ekernel=2Eorg/qemu-devel/202506102021=
+10=2E2243-1-shentey@gmail=2Ecom/T/#t>
+
+Best regards,
+Bernhard
+
+>
+>I agree with not having macros such as log_guest_error! for now, or
+>not wrapping functions like qemu_log_trylock/qemu_log_unlock that
+>would be implemented as RAII (i=2Ee=2E returning a "guard" object) in
+>Rust=2E
+>
+>> >>Also, while this is good for now, later on we probably want to reimpl=
+ement logging at a lower level via the std::fmt::Write trait=2E  But that's=
+ just for efficiency and your macro is indeed good enough to define what th=
+e API would look like=2E
+>> >
+>> >Can we live with an easy solution then for now? As you suggest below, =
+further abstractions like log_guest_error! can be built on top which furthe=
+r insulates client code from implementation details such as the representat=
+ion of the mask bits=2E
+>
+>Yes, of course=2E
+>
+>Paolo
+>
 
