@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88321C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:05:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BFBEC71132
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:05:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyXG-0006ac-2m; Tue, 10 Jun 2025 08:57:02 -0400
+	id 1uOyXb-0006oi-2A; Tue, 10 Jun 2025 08:57:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyX3-0006Y9-6d
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:56:54 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXZ-0006o2-28
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:21 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyX0-0002YL-Qq
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:56:48 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-453066fad06so19507525e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:56:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXX-0002ci-2v
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:20 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb46so45288345e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749560204; x=1750165004; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749560237; x=1750165037; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=0Z+F9XmQmU87AVbjZbrQLCllEUIvwWYDtRqjIX6YXKQ=;
- b=lQw5qI2dNPRPls8X8mah+MqyRWPR/SsITx7hSvX6AMtYYuwVHwXuin7O/kKSqhJJ6h
- cFLxFBtWt8s4qaAFmpKvmxPmthqCjnWu919bHHrxNig9fPcgwqtN0er3IPe/tmqlWN21
- kL1pl2UohEsnaw3xhoYy4NhxtgAkAQ84GDl/d8WMXRXQGMfSnoG/tY94mNymvIYTQZ2R
- qKVi04Oo3bygw2wqdKwkWD1Iuq4aE1ujHxpDnCW2+5P4q+gOy/2des3sf/lwCPv2DmBm
- R7CGBOfTL0OQPURhXuTUVUAZ+QXVuwIWbLX/4C3xvQQ4YkARhGkfLnRJAfZHquR0ybg9
- A/DQ==
+ bh=E9wZcuxBWyI1dFyweR0rRL6SBi5bA4sN/aQECa3VdUc=;
+ b=QX4bsIphaAKsqsp7k9txKCymPghZciGLyUCojTj0FavSgaQNfIu2mUvh7SjWLfFEnO
+ 72ZkSV4caUKktKOPWGhMA6XtSJnSoB0uXeq9xyEiwJLfE5qRXy8JXybUcwQLR0br9KJE
+ mj5tfB+6IhQfhncd2EZCPph8QQZ9t0bAn5gkD3+9Rv2UzXBZZTyY14KqrvTlDGrVJ1ku
+ ebmKw7/vC53ZC2zSaXBVfSvMteA5hs2aDhoVYgk3qm6XdqT+kXuWrTHOcSq0F3VSC8Yv
+ GdZcDkk1yIfSYAGF6fndP1mPJagQlEAFkJJK6qlnksZ8HPsw04MCjTCzESSqk6WWXqbU
+ Dmrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749560204; x=1750165004;
+ d=1e100.net; s=20230601; t=1749560237; x=1750165037;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=0Z+F9XmQmU87AVbjZbrQLCllEUIvwWYDtRqjIX6YXKQ=;
- b=Rr4nvub9ocyEOoY5Ub/Cd4fbTjqiTo7aJy5jZ1VWyx+S4szQh8auM88vBTJewbE/64
- si8+IbCVdDJFR6ciF+eYn/JzXnkVbPlsrtTbsUX9mWhob+7Q/A+5fFBG6t7fLLN0u56e
- Fz4DRABiIkOdcKh6mZVLyAyrr+FABI9e3RUpgRf40vb+RDWtXz/Fe0CCN1AwUttyie0m
- BK5g9Dg4Yj3AR8rdNrKaD+ESODdyoNz3hJPwkN44njT/k14/FJviAbWb7B+sp3PDlbhO
- QHVGntfWa14A1t5y7blOj5y23A43mCVREU5tzioja4l9tS5wx0NPEuqxwK9R6n/hNFON
- yN6Q==
-X-Gm-Message-State: AOJu0YwrVHO/G/XoL0TsQYnObEInKJmXnO/cXX9qA0kd9I4UyYOWngKW
- deOctlp2Vv+t0XpNmvxVDL89ES9Uh5yxLQatjOMBJUSr24+1T5t2ppBRSZ6djNd4ua1Wr9b+jYo
- +PlqmRcI=
-X-Gm-Gg: ASbGncukQ8a7Cl87hxkGuDHNkrDK0W7+ZIxferL5MJjTmCKt1wBvFaPLzZsD461yed9
- p+9PMF9rudD12qZwXjSYw++FrxAhcW+NpMqnGFbWpUywzZkwt5YP58Ri7WKlvIpWUakPLK5vIN3
- tL9LbF6/mjm8keVPH0TFFOzuVN7vZe28bhzfXYG2tYXb/qYuaTowxaDzaGOGMXKH4rl2udFlGe5
- LmdYrszqNVv9pTqHU8RycfHNCSf4MaOgr0E+q3yS7NJ6ZdTp5KrE4HwisNXakNDmSlUAuIZDxZX
- EUKaaRF8dfKlhaltqKQkG3rgIAokSGmhDDbED0KyUXQoSnmZA9lUWPuDupt/PzA1Cfq/UkU+6bH
- UHCqczyrVMlsnfyAx9oltA60OgRsPVnEOV0Z/jbhJbw==
-X-Google-Smtp-Source: AGHT+IHpNGsL5t2pi/phCL8ghVtAcRgc6McDZe0NX6CxXkiiex/9ahceZpFZiT8xxm7WeB1Qa8kh1Q==
-X-Received: by 2002:a05:600c:4f8a:b0:453:b44:eb71 with SMTP id
- 5b1f17b1804b1-4530b44efb3mr73427365e9.19.1749560204409; 
- Tue, 10 Jun 2025 05:56:44 -0700 (PDT)
+ bh=E9wZcuxBWyI1dFyweR0rRL6SBi5bA4sN/aQECa3VdUc=;
+ b=LXTbcZsbZNwBWOQk3t1ZaeSa5PuwCCKCC8qOXs6wKj4B/MncfD8Reui8qc4NnzYdqZ
+ LHq9YVbfGvK5WZxGviQ+Z5iHKDOCYD1Mf9LPS5Us7pftvqCGVrHOuEYDRBvJpDUEqBIE
+ vNfhlGVK5QI9alyokvVrKyH1nUb0Bf9LaZxJQ0xh3YPOl9rIWAHQ+0M5LeTZhs6j32Zw
+ CRwweSJxxWyuLj+JiG0VD/XBybwwdprqa7OyQ9l/mRwlO58knwQ5j5VtxiNA0WjEtT6P
+ xyCPIqJY3s+bGTUlZxqSxPRtT5k86h38HDWbuWss2CxQPmWMM8QZ5lIO2SWBuAnzeRSO
+ hmrg==
+X-Gm-Message-State: AOJu0YyRqjZuL0LbIg87+7W9oo5zq9ikfOOprIG4AKDUyTQ3NgRskswI
+ D6paAuwEiNkoaZ7sLRoqjRFyBKsRsRJGh4/U7cqvi5p9dBCC2/oSXdgEyMi07yGH5BPmipRq7gq
+ jbl0PIfM=
+X-Gm-Gg: ASbGncuoG9B0lHMbFRhWNBp3kY+GSwMtydSkaLY+0laTHpBtYtHaJ0fZ26+fMjSJOEQ
+ 0T15TIKJdLL1i2KZKAPj3VzCnJYBuNzOhFuPHADQP7Hh0i7qaRCLDTuFdESfGaB9as03vUTxguO
+ UttSOpbHo5FdUMyB0Vlu2sbX+4jo8IVs6pzIRtAKtYlnXPb2yuH6Z1cT9Y6nQaAd+TrsvseCYHB
+ vaU0KyKmqB7Fh0R8oNt93QOfbsBhFWJJN75GQ0x+W6+Ev+ICR0PJp8R06+vKqNPbCiTGVKNAVBV
+ CWHt+wK951cFM2b4YvDGoy3HT7qQ+DcvbXR/+qEKoEIHPEVgQ2KR2TkemMkOcZB1YUA4QisgbB7
+ jYul5U3msPA2ipzxiEHNX8pss+Y1hkqTK/5iVg+n7Cw==
+X-Google-Smtp-Source: AGHT+IGjU2rG41kxvcFVJ/KrLuqT6bnlMRBt4W0hSKvmBif4Q/24/OU23MrYORffR352tpE/KXhsmA==
+X-Received: by 2002:a05:600c:c119:b0:453:78f:faa8 with SMTP id
+ 5b1f17b1804b1-453078ffbbamr70192195e9.6.1749560236668; 
+ Tue, 10 Jun 2025 05:57:16 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53244d15asm12581969f8f.66.2025.06.10.05.56.43
+ 5b1f17b1804b1-4526e0563cesm144357165e9.1.2025.06.10.05.57.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Jun 2025 05:56:43 -0700 (PDT)
+ Tue, 10 Jun 2025 05:57:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 02/24] hw/char/sh_serial: Convert to TypeInfo
-Date: Tue, 10 Jun 2025 14:56:11 +0200
-Message-ID: <20250610125633.24411-3-philmd@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/24] hw/ppc/e500: Use SysBusDevice API to access TYPE_CCSR's
+ internal resources
+Date: Tue, 10 Jun 2025 14:56:18 +0200
+Message-ID: <20250610125633.24411-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250610125633.24411-1-philmd@linaro.org>
 References: <20250610125633.24411-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,66 +101,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QOM types are now registered using as TypeInfo via DEFINE_TYPES()
-or type_init(). Update TYPE_SH_SERIAL, removing the empty QOM
-instance_init/finalize handlers.
+From: Bernhard Beschow <shentey@gmail.com>
 
-This was definitely wrong, because OBJECT_DEFINE_TYPE() is only
-for cases where the class needs its own virtual methods or some
-other per-class state in its own class struct.
+Rather than accessing the attributes of TYPE_CCSR directly, use the SysBusDevice
+API which exists exactly for that purpose. Furthermore, registering the memory
+region with the SysBusDevice API makes it show up in QMP's `info qom-tree`
+command.
 
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+[balaton: rebased]
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Acked-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <619a58d1f83d2aad5b4feec930d46c64abff0977.1748012109.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-Id: <20250124175053.74461-3-philmd@linaro.org>
 ---
- hw/char/sh_serial.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+ hw/pci-host/ppce500.c | 8 ++++----
+ hw/ppc/e500.c         | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/hw/char/sh_serial.c b/hw/char/sh_serial.c
-index cdaeac7b709..30447fa018a 100644
---- a/hw/char/sh_serial.c
-+++ b/hw/char/sh_serial.c
-@@ -78,10 +78,6 @@ struct SHSerialState {
-     qemu_irq bri;
- };
+diff --git a/hw/pci-host/ppce500.c b/hw/pci-host/ppce500.c
+index e97a515d5fe..52269b05bb1 100644
+--- a/hw/pci-host/ppce500.c
++++ b/hw/pci-host/ppce500.c
+@@ -16,7 +16,6 @@
  
--typedef struct {} SHSerialStateClass;
--
--OBJECT_DEFINE_TYPE(SHSerialState, sh_serial, SH_SERIAL, SYS_BUS_DEVICE)
--
- static void sh_serial_clear_fifo(SHSerialState *s)
+ #include "qemu/osdep.h"
+ #include "hw/irq.h"
+-#include "hw/ppc/e500-ccsr.h"
+ #include "hw/qdev-properties.h"
+ #include "migration/vmstate.h"
+ #include "hw/pci/pci_device.h"
+@@ -418,11 +417,12 @@ static const VMStateDescription vmstate_ppce500_pci = {
+ static void e500_pcihost_bridge_realize(PCIDevice *d, Error **errp)
  {
-     memset(s->rx_fifo, 0, SH_RX_FIFO_LENGTH);
-@@ -441,14 +437,6 @@ static void sh_serial_unrealize(DeviceState *dev)
-     timer_del(&s->fifo_timeout_timer);
+     PPCE500PCIBridgeState *b = PPC_E500_PCI_BRIDGE(d);
+-    PPCE500CCSRState *ccsr = CCSR(
++    SysBusDevice *ccsr = SYS_BUS_DEVICE(
+         object_resolve_path_component(qdev_get_machine(), "e500-ccsr"));
++    MemoryRegion *ccsr_space = sysbus_mmio_get_region(ccsr, 0);
+ 
+-    memory_region_init_alias(&b->bar0, OBJECT(ccsr), "e500-pci-bar0", &ccsr->ccsr_space,
+-                             0, int128_get64(ccsr->ccsr_space.size));
++    memory_region_init_alias(&b->bar0, OBJECT(ccsr), "e500-pci-bar0",
++                             ccsr_space, 0, int128_get64(ccsr_space->size));
+     pci_register_bar(d, 0, PCI_BASE_ADDRESS_SPACE_MEMORY, &b->bar0);
  }
  
--static void sh_serial_init(Object *obj)
--{
--}
--
--static void sh_serial_finalize(Object *obj)
--{
--}
--
- static const Property sh_serial_properties[] = {
-     DEFINE_PROP_CHR("chardev", SHSerialState, chr),
-     DEFINE_PROP_UINT8("features", SHSerialState, feat, 0),
-@@ -465,3 +453,14 @@ static void sh_serial_class_init(ObjectClass *oc, const void *data)
-     /* Reason: part of SuperH CPU/SoC, needs to be wired up */
-     dc->user_creatable = false;
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index dedd96b0574..6899802bedd 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -931,7 +931,6 @@ void ppce500_init(MachineState *machine)
+     CPUPPCState *firstenv = NULL;
+     MemoryRegion *ccsr_addr_space;
+     SysBusDevice *s;
+-    PPCE500CCSRState *ccsr;
+     I2CBus *i2c;
+ 
+     irqs = g_new0(IrqLines, smp_cpus);
+@@ -993,10 +992,10 @@ void ppce500_init(MachineState *machine)
+     memory_region_add_subregion(address_space_mem, 0, machine->ram);
+ 
+     dev = qdev_new("e500-ccsr");
++    s = SYS_BUS_DEVICE(dev);
+     object_property_add_child(OBJECT(machine), "e500-ccsr", OBJECT(dev));
+-    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
+-    ccsr = CCSR(dev);
+-    ccsr_addr_space = &ccsr->ccsr_space;
++    sysbus_realize_and_unref(s, &error_fatal);
++    ccsr_addr_space = sysbus_mmio_get_region(s, 0);
+     memory_region_add_subregion(address_space_mem, pmc->ccsrbar_base,
+                                 ccsr_addr_space);
+ 
+@@ -1284,6 +1283,7 @@ static void e500_ccsr_initfn(Object *obj)
+     PPCE500CCSRState *ccsr = CCSR(obj);
+     memory_region_init(&ccsr->ccsr_space, obj, "e500-ccsr",
+                        MPC8544_CCSRBAR_SIZE);
++    sysbus_init_mmio(SYS_BUS_DEVICE(ccsr), &ccsr->ccsr_space);
  }
-+
-+static const TypeInfo sh_serial_types[] = {
-+    {
-+        .name           = TYPE_SH_SERIAL,
-+        .parent         = TYPE_SYS_BUS_DEVICE,
-+        .instance_size  = sizeof(SHSerialState),
-+        .class_init     = sh_serial_class_init,
-+    },
-+};
-+
-+DEFINE_TYPES(sh_serial_types)
+ 
+ static const TypeInfo e500_ccsr_info = {
 -- 
 2.49.0
 
