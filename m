@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD03BC5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:10:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B564EC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:12:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2Tx-00016R-QR; Tue, 10 Jun 2025 13:09:53 -0400
+	id 1uP2W8-0002lG-4C; Tue, 10 Jun 2025 13:12:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2Tr-00013a-Se
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:09:50 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2W6-0002kw-UV
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:12:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2Tn-0005tz-W2
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:09:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2W5-0006iR-4U
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:12:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749575382;
+ s=mimecast20190719; t=1749575523;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xnLVKhkfHHMXYvKZR8ML36a5PlYm2zHF6szJ2OaddkQ=;
- b=LVvFYy2AUlxwtaWKaDRUEtN079nNqhtOC/X3qDWdc6s8hM9RKP5DNvWjNb8JcnQbnggGJp
- VTH06ZnS1ZL7UCtis9tEJmarvTjmVsVrxiGEJDXfIkZphrMhRQ/gWWqakJUffVxjrPnN11
- AwJn9xM6Db/1hRhDgT/oxYQaW81xZs8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KIbQNLTC2jDMAATeE+1OCg9Q7Q2qK6KNqtUrC4K08/0=;
+ b=h4I/i9hx01vMdX9SFPcUBI9cgN1s1kiiClAei8CDTV1vWSJOLEOzBMv58vMC33trihdLzP
+ GzRhPx04WuL8fFM/b9fn2CTUgvDJVsnIb+20fQ5SZU9RvuNhb9yH1v9g/o29D1OMDJ/eeM
+ fDJphXf84/L1cHq4QOYwO5FDL/Hbr34=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-260-hrsiEcgqPqGqKJFrSNgLUg-1; Tue, 10 Jun 2025 13:09:41 -0400
-X-MC-Unique: hrsiEcgqPqGqKJFrSNgLUg-1
-X-Mimecast-MFC-AGG-ID: hrsiEcgqPqGqKJFrSNgLUg_1749575380
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-45311704d1fso15488905e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 10:09:41 -0700 (PDT)
+ us-mta-262-HIbD1K0eN26lYa7I5-mRpA-1; Tue, 10 Jun 2025 13:12:02 -0400
+X-MC-Unique: HIbD1K0eN26lYa7I5-mRpA-1
+X-Mimecast-MFC-AGG-ID: HIbD1K0eN26lYa7I5-mRpA_1749575521
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a50049f8eeso2584773f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 10:12:01 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749575380; x=1750180180;
+ d=1e100.net; s=20230601; t=1749575521; x=1750180321;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xnLVKhkfHHMXYvKZR8ML36a5PlYm2zHF6szJ2OaddkQ=;
- b=r6lqQhYtU7TL1gNB+Q313nQfHLBPV4Loc5moReygBGwvplmJVHnvQStR64VpRk39a0
- Dg8bD/4IGI/FOFNtLWN9zrCcqvBQ9u41bZZvN2gjXxuhCSkbrxsB53ig4tNWP7XlYK7E
- HaRHx7wTeftjHr8xHGrRzbjoMRLYIfuQeXw9wLTYeKADq5BLu6GRMrhw8FgNYL9rVjWW
- Dhq1WsEYvAphM+DAajTiKzu8/j+ZKTiPZNEQZoBsu3RQ9c2fUZISTRqhaMNKtJgCMWtq
- R/mA6WgqcCl2OY2C2u8tK0Kbe/cv01T5ESGatNkhV1L/yR/pmxwK2cm9np43zwXlSwds
- yNzw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXy9NHVC6LhDV1g851rVZykoYC/AntNIBGSb8uy9/F/xCpZmTx5pu/LkKqPlBdGvtW/8j4uT7nhln1j@nongnu.org
-X-Gm-Message-State: AOJu0Yxd4n52W7WYNOa4EXGuldZ5oLZIGZ1WzZOtknsm5Kzjs0t4JG2G
- i+egD3aYlvMjCLDBArimoxDv4RSq1My6YeaLUZ7HALQB1MysWA6XDtdfB+tEQWZTPo2Ev7KTA/i
- 90OXw++oVuh4qDVP8iL1rusozAMyzx4HJNm/UEgPslg6NyR3EkugpGrOP
-X-Gm-Gg: ASbGnctUG0aBkmOslA66Kbg/RbCOSIJHr7uuIndJ/b7L7bwNkAMchtXFnIH9a+zbfPR
- 4iTXKg6E2+HwCkjU5GFuUfa656psm/3EV+49GprCMfu4jwKjnCXuCnUYvQEJh0PH/eLAgQd6IFJ
- F6qkvA24s4V+39Wgq/aERzVQjhqq+gj1SN+SwO/Vl9mn+fSZyzqEbaUVPXVtzT3iq1i+Z5kndrb
- SVKHiul9YLe4oD6BU74iH8AokkpyxW114X4XWXmilJCx5E3HUemswnratKftCTtc6FVcCDkKotO
- Zh8FzktgvYkT7x1lXqoCe68ws+DgdwFj5GZZARtIA0MlSv6ewoGuXmb09ejv
-X-Received: by 2002:a05:600c:8b33:b0:43c:ea1a:720a with SMTP id
- 5b1f17b1804b1-4531c271a2dmr46452655e9.1.1749575380136; 
- Tue, 10 Jun 2025 10:09:40 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwQfxR2lypq9aB5VNvjPyjgYbNqtfHCNx2tCMWaaW4TJQVi7lkKofTA+GzOuyxpafAk48tBw==
-X-Received: by 2002:a05:600c:8b33:b0:43c:ea1a:720a with SMTP id
- 5b1f17b1804b1-4531c271a2dmr46452295e9.1.1749575379742; 
- Tue, 10 Jun 2025 10:09:39 -0700 (PDT)
+ bh=KIbQNLTC2jDMAATeE+1OCg9Q7Q2qK6KNqtUrC4K08/0=;
+ b=OTXqTR3o9+GRU3VnHTZEwWMb9r7qmDOxTr94DEn4e+/VQcMrVj5NPH9A0ODnMWCTbD
+ 41U7Rpqs9ZHrNIJ9tilbNFMpQR1f+TVKq0UJnjYIF/paqfBP6PK+AowzzaFst9OpYn3A
+ Afq45y0hfky0jwdEznX5YjpZzcLixZ7v7VV1GbK4GxQ4gvde+J/CKFw4iMz3AU3STIs1
+ J9LDHP23YTzey1o6NSghQSdhIhgOb7SgalgXgId13lxliFvo4S+bfrBJkjHKLIcsdzQl
+ dDuhIGVyhXDYy2F2WI13A2Dn8AzY2wGOxICRqJ130auVrpHTrULJeWsmkGKb2KIgYavz
+ p8nQ==
+X-Gm-Message-State: AOJu0YyiC4m5ghbRtX0BeYesHV6hAPNQYysGB7CKCXAgA7AYITNEeiqQ
+ Y409jiobhMfGxGrN0xcE/uxZYaQIwyHKk+RNzwwb7fedaP9jFZuA7Ec5aebaiF3UEtOswssYB0k
+ voBQqy/VMILlQX3W2+UvGZx3dnJXSVyDED88uOsZR4yuf9OTNxlDmIGh4
+X-Gm-Gg: ASbGncuZIPPnPOI2+608NiwqTrdvLDcOm71Eveq7ywR8lehrhBw9oGxaQl+somIGIB8
+ l1SMxQeWKJ9YeUMXY8t9RsVufOyg1OIbzEXo89JkjLZq2UZ6AkQ1yBjGJxueG8Qd5ksJeKlLf0h
+ RsqLh8iCGdld2qCKrAPU07a56waMWxqAFwALBQHrVDuupeR9yI7DiBKPsCKM5ZvFL2ovPbCaNAK
+ sruWHvryz3iCODf0+9wb5fM6sj80q7rgRl4InbAsJx0DrPeqeaj1jaA0ZR09hJQefh7G54HtMH4
+ QJ2j2WpaLcmayGL7lll378eWOoLndmdqHmv7H5SyDJj0X7/TdwBPK+VTUgRR
+X-Received: by 2002:a05:6000:4387:b0:3a4:d274:1d9b with SMTP id
+ ffacd0b85a97d-3a53188dcb7mr14772232f8f.25.1749575520701; 
+ Tue, 10 Jun 2025 10:12:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGLhXxqQvUHekNxYzgdDtxKu2CaJ0hYTRQw4tZR6UlQ+NajzHAExkPcvlYMMgB9AFnep5dmcA==
+X-Received: by 2002:a05:6000:4387:b0:3a4:d274:1d9b with SMTP id
+ ffacd0b85a97d-3a53188dcb7mr14772204f8f.25.1749575520315; 
+ Tue, 10 Jun 2025 10:12:00 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53229e009sm13164159f8f.16.2025.06.10.10.09.38
+ 5b1f17b1804b1-4526e155ce7sm146312965e9.10.2025.06.10.10.11.58
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 10:09:39 -0700 (PDT)
-Message-ID: <08a63418-771e-4e85-8409-797165edc836@redhat.com>
-Date: Tue, 10 Jun 2025 19:09:38 +0200
+ Tue, 10 Jun 2025 10:11:59 -0700 (PDT)
+Message-ID: <296d0933-3f77-48f4-9096-8bd358aae617@redhat.com>
+Date: Tue, 10 Jun 2025 19:11:58 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH V4 16/43] pci: skip reset during cpr
-To: "Michael S. Tsirkin" <mst@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>, Zhenzhong Duan
- <zhenzhong.duan@intel.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
+To: Steven Sistare <steven.sistare@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
 References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
  <1748546679-154091-17-git-send-email-steven.sistare@oracle.com>
  <d62bd9c6-1660-4d16-8d7d-5445ba6c5031@redhat.com>
@@ -94,6 +93,7 @@ References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
  <468008fc-a86f-4b90-86c3-1109d68f6fc2@oracle.com>
  <76b58b82-a867-4577-8644-88e419a8d85f@redhat.com>
  <20250610122246-mutt-send-email-mst@kernel.org>
+ <6354f3a8-6309-495a-9014-6f5243a7785e@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -139,7 +139,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250610122246-mutt-send-email-mst@kernel.org>
+In-Reply-To: <6354f3a8-6309-495a-9014-6f5243a7785e@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -167,34 +167,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 18:31, Michael S. Tsirkin wrote:
-> On Wed, Jun 04, 2025 at 03:48:40PM +0200, Cédric Le Goater wrote:
->>> I don't see any advantage to making this a class attribute.  I looked for examples
->>> of using such attributes for vfio to configure pci, and found very little.  It
->>> sounds like overkill since vfio already sets and gets PCIDevice members directly
->>> in many places.
+On 6/10/25 19:05, Steven Sistare wrote:
+> On 6/10/2025 12:31 PM, Michael S. Tsirkin wrote:
+>> On Wed, Jun 04, 2025 at 03:48:40PM +0200, Cédric Le Goater wrote:
+>>>> I don't see any advantage to making this a class attribute.  I looked for examples
+>>>> of using such attributes for vfio to configure pci, and found very little.  It
+>>>> sounds like overkill since vfio already sets and gets PCIDevice members directly
+>>>> in many places.
+>>>>
+>>>> I defined skip_reset_on_cpr based on this existing example:
+>>>>
+>>>> vfio_instance_init()
+>>>>       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS
 >>>
->>> I defined skip_reset_on_cpr based on this existing example:
+>>> pci_dev->cap_present can be modified at realize time. skip_reset_on_cpr
+>>> is a constant, for which a class attribute are more appropriate.
+>>> This is minor.
 >>>
->>> vfio_instance_init()
->>>       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS
+>>> Michael,
+>>>
+>>>    Are you ok with the 'skip_reset_on_cpr' bool ?
 >>
->> pci_dev->cap_present can be modified at realize time. skip_reset_on_cpr
->> is a constant, for which a class attribute are more appropriate.
->> This is minor.
->>
->> Michael,
->>
->>    Are you ok with the 'skip_reset_on_cpr' bool ?
+>> Generally yes, but maybe cap_present bit is even cleaner?
+>> vfio already pokes at it, and we have history of encoding
+>> quirks there, see QEMU_PCIE_LNKSTA_DLLLA_BITNR for example.
 > 
-> Generally yes, but maybe cap_present bit is even cleaner?
-> vfio already pokes at it, and we have history of encoding
-> quirks there, see QEMU_PCIE_LNKSTA_DLLLA_BITNR for example.
+> Sure, I can send a new version based on a cap_present bit QEMU_PCI_SKIP_RESET_ON_CPR.
 
-I agree. An extra bit in the cap_present field would be cleaner.
+Please send an update of patch "pci: skip reset during cpr" in the v5 series.
+Hopefully it will apply cleanly.
+
 
 Thanks,
 
 C.
+
+
+
+
+
 
 
