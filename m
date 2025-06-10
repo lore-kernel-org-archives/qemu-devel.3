@@ -4,88 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E21D9C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 19:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7FD5C61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 20:22:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP544-0003Yk-Lp; Tue, 10 Jun 2025 15:55:20 -0400
+	id 1uP5TS-0008W3-Of; Tue, 10 Jun 2025 16:21:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uP53z-0003Xw-KQ
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 15:55:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uP53w-0006gF-B9
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 15:55:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749585310;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=O0AsNVd3r8bR5sfrE+Z/gArVjUFQXbK1PJd9Nm/M3vE=;
- b=Ps00r67e2pHGBnKxQO8wGvzkxnTcnpNzX35K74ZS+nUmatU9u3KWoRgIVom/MM1PKI81yl
- zb8LH7WEIr61r2etprA396bje5yQ9CMMsMZl2pEunv7M7gg3ewm7+GJks3lwYbuX3Hx3dz
- OveesIb7++bCVNwDJtqXmgVf0eHISVQ=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-696-zH5vyYS8Mzuyf7uamcMMmg-1; Tue, 10 Jun 2025 15:55:08 -0400
-X-MC-Unique: zH5vyYS8Mzuyf7uamcMMmg-1
-X-Mimecast-MFC-AGG-ID: zH5vyYS8Mzuyf7uamcMMmg_1749585308
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-31332dc2b59so5278907a91.0
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 12:55:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uP5TK-0008VI-TT; Tue, 10 Jun 2025 16:21:27 -0400
+Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uP5TH-0001J4-KJ; Tue, 10 Jun 2025 16:21:26 -0400
+Received: by mail-ej1-x636.google.com with SMTP id
+ a640c23a62f3a-adb2bb25105so950351966b.0; 
+ Tue, 10 Jun 2025 13:21:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749586881; x=1750191681; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Po4Fh5QWGjtOuuGoRmn0XWgAY6D2JGafa5rf7p1sJ4I=;
+ b=CelFNfAtTNw0mH0DB/nNBPIXiASd89s98bEIf4zsxI5XxzZ4Iui1isOT0juJ+LE1N1
+ 1a6hhERpO5pvmxBo3aAwXjhLSlAujqEBZsm/VLortDp54+zQzGQI0iUGQCnRBn9ZfHOC
+ vbkpDaM8Uq18+O6+eSdy2GnY37ZhC0WdaIMV/e6LDjKsMgsysHdW70YxX4CYvke+/3gk
+ TwTPtKOqPbwj1erCmWINWfhkrRMB+xzO1CX8QHNi1epXjiI42ZUu+IX6k5AKXKXjCW+X
+ MtnB3QGdRkPDbxe35xMU6wIjjUiS8WOQnlL/0h9kZUCeWGkguQvVBadEzv8OkDbhD1Js
+ dqgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749585307; x=1750190107;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1749586881; x=1750191681;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=O0AsNVd3r8bR5sfrE+Z/gArVjUFQXbK1PJd9Nm/M3vE=;
- b=eVMsv0JZ91+yHeo9xZLgYsTLcsC/zrzD1RpcqVzRYEsfjg/27gNK/Cdmnn4QtsUVTb
- ps7pnVs1wwQZhYB23V15kLWVylactgY+kmEfTtunrBwgoFrpHo+3MJgd2wH5BHS4oajR
- GHwnMi+UFJw2Zl080BR/aBlWEFHrxpGSfUudZagEV24tfqkO8xpUKhQ2Rwos96R6+Yo1
- wqi4/WRjRcALOuF7w34Ptz5VZmnNo5YVDy5kkdvbrelBsU6ghmXzKDXY6zmhizd93hYX
- MoioDrarWyuzsA+7MgDssCc+K0nUyqeuNw4VKwN68E6F1LlDs2t6MELyNHfVwH+wrIDX
- iX5g==
-X-Gm-Message-State: AOJu0YwFdhOtcD3a7htJNxoAsppysiUipvNjMOqSa8UI4aBS+6rh0qX+
- C0bCl4SlntU01hUp7HFWyO7XfrfNbbMXZd7U8vWLT7VpGx07zDkkHThKxwxiWxHXWVz0wYmc/aB
- OCYxJZ0LxSkWPYVvT58b1bP71X3pNV2tronDDMuvBXdxiw1xxWsEDcsezU1rLGbVIsitfS2UGid
- JNfdFmXTk9ikeMdALjGz4VwJ0a0Ttzpuw=
-X-Gm-Gg: ASbGnctO0NOUOqTjKgN62lnREsbpAYoWVwiLMWWrvkGamPbxEG2LFenHB6YeTdyI0Fw
- Y7FAt1HmWTRnEDMry/rzqk7DVaII8swFZyaHrYXsJ4hygMTeseiOOwSlGN+vHGNSZouSj7Yq4/g
- yiSmnxnA9uHRbvBAzYoq0EPuSPMeVmG7yi3HY=
-X-Received: by 2002:a17:90b:224f:b0:311:ea13:2e6a with SMTP id
- 98e67ed59e1d1-313af11cbbfmr1242154a91.13.1749585307080; 
- Tue, 10 Jun 2025 12:55:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFmdvgYi5xV9Sv1Wx/iF0lAufl7h4kodi4oetjVi51g0+WjZdv4HUO4L8IYEqnM6uW/itCWX9dbWmymPfQRQZ8=
-X-Received: by 2002:a17:90b:224f:b0:311:ea13:2e6a with SMTP id
- 98e67ed59e1d1-313af11cbbfmr1242114a91.13.1749585306625; Tue, 10 Jun 2025
- 12:55:06 -0700 (PDT)
+ bh=Po4Fh5QWGjtOuuGoRmn0XWgAY6D2JGafa5rf7p1sJ4I=;
+ b=Rwmx1EoSUSO2V/wbqiBtJu8uEjSAu9M1gg0//Q/+JNNnUQmHOW14BLZDXJvC2cV7sa
+ 1+5oIfl2IqDbrURjYh1SJbFT9utlduAL1U/lMuJugC7K32oGN9QvtKIRpJpo6DT2RXV/
+ mYWdVIM52Ra/+J8bEKDugDR1cHraT+Yj8dlcqvStd7zasQ1rxj7wsawLV6CYEQ3ClXqU
+ uOGH1K+9NuTLhQAW2c1Zj8wzGXtkKu9HjIE65rhWk9sky6roNKS8o2Ll0TEG0FgV5tPS
+ jnDEPMAjl/czZY6xVGuFHDk6MmGELrvgw4JlUxyCmzJ4HO//70ugT6LEAEC8rJINZQ65
+ AwJA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX5bpaWtGftdL0mxorinHzO6YDCNxJhpJWi9te7MFkbdnwQyHPRiNKRqSDcjHVcTWP2zo4wX4hMC04=@nongnu.org
+X-Gm-Message-State: AOJu0YyQTRSrsQG8pxDdNf9xyJML+vCvbf1rt4+/g/ugW8MlMxEBGTC7
+ VOQf/jjA5xuNNV5ydKQcGnSNLFYraY865tiwqMJK5HFEkB/gnzsFnOrIMxvfDw==
+X-Gm-Gg: ASbGncvzw89oAy/jBxbvjv17rNb984xnAZgUUZrS6Idccr98TRdoEF3uPMR2zsvIR++
+ z/CMNLJmMX4m6sNxus45iZm/kAOAxbvOXmkBAijL6VMpTTfB3O/2DwJZtrdcWToQY0kOGsJ7+pX
+ WogFJm8AOaSY7j4diU4C9ED8SS285D3NnHE1Lj1FSoepgVTq4AWUUyi4mA0qn7LIkB449aMnUD/
+ OzNmtRuugRdfCBaOYIiiHnPO3TewFqW9R1khZl/l8CAnhsKV+14ixxU30ScT2xcungNZV6mPhAD
+ zFjz4ewftgf0FM8f49FUVHcH1Op9RicYZOD9ST5dUwhGlSUy8jYHDSemqvCVYuCM1BQ/4HilH42
+ T6wxoInljPl2qhEuf2WzyMM/2KgnNAbqJNXkeUWWS4poeDrpz8KhNOkrF3MpBlDK9Fb8ySA2JPC
+ P4zwzybJMlRuFOBpLu
+X-Google-Smtp-Source: AGHT+IGbl+YH3N0uxZZ4aVVhkAB8BSUtBDUCUgE9w0kDF/6Pm7eoqsv189G7ccdAIwdM3fQxHXcBaw==
+X-Received: by 2002:a17:907:60d6:b0:adb:e08:5e71 with SMTP id
+ a640c23a62f3a-ade8c769374mr21547566b.17.1749586880763; 
+ Tue, 10 Jun 2025 13:21:20 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-2cbf-5d00-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:2cbf:5d00:219:99ff:feb2:2458])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ade1dc7c786sm793135166b.172.2025.06.10.13.21.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Jun 2025 13:21:20 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v2 0/2] Initial logging support for Rust
+Date: Tue, 10 Jun 2025 22:21:08 +0200
+Message-ID: <20250610202110.2243-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.49.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <cover.1742401551.git.pkrempa@redhat.com>
- <aEgnsqTpcX0Fp3vx@angien.pipo.sk>
-In-Reply-To: <aEgnsqTpcX0Fp3vx@angien.pipo.sk>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 10 Jun 2025 15:54:54 -0400
-X-Gm-Features: AX0GCFuer1K6fFnuIdHDggDjmf92pAkItP4nlncJx0mbBOAngf_e2Pj2WzJCxpA
-Message-ID: <CAFn=p-aYMQb-StChaph_m-2qXY_1AW4PTx_ZkAOE1bTLchq=Hw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] scripts: render_block_graph: Fix with new python
- and improve argument parsing
-To: Peter Krempa <pkrempa@redhat.com>
-Cc: qemu-devel@nongnu.org, Cleber Rosa <crosa@redhat.com>,
- qemu-block@nongnu.org, Pavel Hrdina <phrdina@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000b5173606373d1213"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::636;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,77 +102,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000b5173606373d1213
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This series introduces a log_mask! macro which is inspired by the C version
+and is just a thin wrapper around qemu_log(). It caters to Rust expectations by
+accepting an enum for logging categories and working like the format! macro. The
+macro then gets used in the pl011 device which either had its logging commented
+out or relied on eprintln!() which can't be silenced by users.
 
-On Tue, Jun 10, 2025 at 8:40=E2=80=AFAM Peter Krempa <pkrempa@redhat.com> w=
-rote:
+Note that this is my first Rust contribution, so please check if the usage of
+`unsafe` is sound.
 
-> On Wed, Mar 19, 2025 at 17:28:06 +0100, Peter Krempa wrote:
-> > New python doesn't like '\l' escapes from the 'dot' language.
-> >
-> > While at it improve usability of the script by employing proper argumen=
-t
-> > parsing.
-> >
-> > v2:
-> >  - use mutually exclusive group instead of hardcoding it (Pavel)
-> >
-> > Peter Krempa (3):
-> >   scripts: render_block_graph: Fix invalid escape sequence warning with
-> >     python 3.12
-> >   scripts: render_block_graph: Implement proper argument parser
-> >   scripts: render_block_graph: Avoid backtrace on error from virsh
->
-> Ping :)
+v2:
+* Drop the qemu_ prefix from the macro name (Paolo)
+* Use an enum for the logging categories in PascalCase as suggested by Paolo
 
+Bernhard Beschow (2):
+  rust/qemu-api: Add initial logging support based on C API
+  rust/hw/char/pl011/src/device: Implement logging
 
-Ah darn, guess that's me.
+ docs/devel/rust.rst              |  1 +
+ rust/wrapper.h                   |  2 +
+ rust/hw/char/pl011/src/device.rs | 12 +++--
+ rust/qemu-api/meson.build        |  1 +
+ rust/qemu-api/src/lib.rs         |  1 +
+ rust/qemu-api/src/log.rs         | 76 ++++++++++++++++++++++++++++++++
+ 6 files changed, 89 insertions(+), 4 deletions(-)
+ create mode 100644 rust/qemu-api/src/log.rs
 
-Tempted to just say "LGTM!" but lemme give it the once over here ... If you
-don't hear back within a day or two just ping my email box directly to nag
-me, please-and-thank-you.
-
---js
-
---000000000000b5173606373d1213
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Jun 10,=
- 2025 at 8:40=E2=80=AFAM Peter Krempa &lt;<a href=3D"mailto:pkrempa@redhat.=
-com">pkrempa@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
-quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
-204);padding-left:1ex">On Wed, Mar 19, 2025 at 17:28:06 +0100, Peter Krempa=
- wrote:<br>
-&gt; New python doesn&#39;t like &#39;\l&#39; escapes from the &#39;dot&#39=
-; language.<br>
-&gt; <br>
-&gt; While at it improve usability of the script by employing proper argume=
-nt<br>
-&gt; parsing.<br>
-&gt; <br>
-&gt; v2:<br>
-&gt;=C2=A0 - use mutually exclusive group instead of hardcoding it (Pavel)<=
-br>
-&gt; <br>
-&gt; Peter Krempa (3):<br>
-&gt;=C2=A0 =C2=A0scripts: render_block_graph: Fix invalid escape sequence w=
-arning with<br>
-&gt;=C2=A0 =C2=A0 =C2=A0python 3.12<br>
-&gt;=C2=A0 =C2=A0scripts: render_block_graph: Implement proper argument par=
-ser<br>
-&gt;=C2=A0 =C2=A0scripts: render_block_graph: Avoid backtrace on error from=
- virsh<br>
-<br>
-Ping :)</blockquote><div><br></div><div>Ah darn, guess that&#39;s me.</div>=
-<div><br></div><div>Tempted to just say &quot;LGTM!&quot; but lemme give it=
- the once over here ... If you don&#39;t hear back within a day or two just=
- ping my email box directly to nag me, please-and-thank-you.</div><div><br>=
-</div><div>--js</div></div></div>
-
---000000000000b5173606373d1213--
+-- 
+2.49.0
 
 
