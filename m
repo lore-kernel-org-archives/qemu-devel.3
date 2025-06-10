@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A99C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0E9FC5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 13:02:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyYE-0007Nn-4g; Tue, 10 Jun 2025 08:58:02 -0400
+	id 1uOyXR-0006dn-1E; Tue, 10 Jun 2025 08:57:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXw-00072T-NB
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:48 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXP-0006dc-KM
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:11 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXu-0002eu-5d
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:44 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-441ab63a415so56528375e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXN-0002bp-0O
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:11 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-43ea40a6e98so68231575e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749560259; x=1750165059; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749560227; x=1750165027; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=f1SDtp+PzmoXDCdOjc+70YYb7XPFBDbAy3avwI/RQMs=;
- b=PaW8DMKvjuHnaErdBdY4YTNo2BbOvjOexHigHLkS8Jd1awdelFPfBLUzp/vjdVyFR+
- MGwLLJ6xr5V2crnG+U9LIg40ltagzuaoRxHxxmRXYptXCxRCbWyp5rh9Rz1VbvRI//fA
- wZ4SU33bcmxuBHIdJorCy9DXYVMXEJ3gTe7ixsaWqvyhDxwfQ2Ps85hH9FOu0BG1500E
- oQ9BiC72DkUlxKtItczjO95SW+gzn02AVXemvYbsqegySZDHiSlqmJfvchYswVY/8gIN
- xdk4Hh8RMOyD7jpaQF7hylGrwLFAQFcfNNFljWRY9UGBIVZ1xFMc5Nt7xiLPPgvxuw53
- xU7w==
+ bh=xJktEGesb57H1K7TS/YxXCRYfzhDd1PRqPB5jPa4EVc=;
+ b=Qns5WSH1Zw1AZauWb0DPt62QIp5BmydrO9Lkz0Zmvnpp1WyBvLRPooRbmPYABv6VCL
+ dzxaoQ3bEJBfP0nqXxaBm/FiDT1IfYbQlrnrSMKVxdfT8l723AoQ4+Yc8YDYSHmGrdPZ
+ TwI/OUyHUPu1O84h1nAEajEJnlb35zD/OAZlASaPTA9zHcUdC7Y6LuL69A8Px6jXdlEt
+ ae49af97tDrIgrtc0Namx9wEKZv8+J77FbNW6oLRFf/jTC23tJdrSj93za2GCTHeEBeK
+ ot/YQLSfdvN6Mu4ynhYU5aRuyWeNEqi4jnz7QpucrwdhUG4x/sH22OiBpqBmwkmyACUc
+ HWrw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749560259; x=1750165059;
+ d=1e100.net; s=20230601; t=1749560227; x=1750165027;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=f1SDtp+PzmoXDCdOjc+70YYb7XPFBDbAy3avwI/RQMs=;
- b=mGAAJxP3eO8Yvyqb8FNNFrmOSJNaFgvk25Tu4YcspS5A0+5FCMP4kiNHQgmWal7OlK
- K1fuUloEiCjtohwdIMcUk/oLCEgFQRTt/a6KQa+h0EYdWnM5TEkt9dIl1YNBU7ATDBWr
- snJ0jhFhVnHTVzF6lihkA5suRz52j2eKBaPW/8nEOWPY+3G1iy9OJZ9QSBc2bhHW0B9w
- J7MRFEehtDpE6OYDEOWxAoACpVLW7DVetm52YIJJ/nUhB6bNXVFd00nKwck5Wbb3I38D
- AlHc6A/vVSFyIsbdndAeqj+gVH/ziKJ6a0rZ5iVfUQBQbH3wngR8CV4NfoVFB/kgfCbl
- 0X0Q==
-X-Gm-Message-State: AOJu0Yzma41FFv4Fj5BRIqFfrilDzcgsd0UUSm6/OQzb90zOCzSeVzdB
- qXUjXWTEftZq3mZ0xB/jGbCTCPX//cGwMcmFhAZ7xJqA5uuuF3akwoq09IEHpz6PII7cDXERbED
- FGenpudc=
-X-Gm-Gg: ASbGnctX1C53OQbwyYcaXryDCVNDEL5ZMkZeHcGwXI2R1QXaT2ItzatHPltYQwCivHN
- lGldWn2QD5HlBmLf6oGmSKoR+u7Swt2PgoDT6L0PWSVWdPwwlXyIIRZqC6fMGO6xUYGojJ0jiwo
- EMe5Iiv/JinewyBBlYY4JRbi3W8ZcBjvjP3xKdN7oICRBwpapOapLuhBuMoegMy0hsaMd1aRhmr
- yYQmFWaJWVRa0KjOhwz3nXCpaFzQv7z/chEuRAtfjtNwAVOzlVR8Co6XKlbhI/RDPerC9jQhyoH
- YTHm8pGalpU3LXGBWCsLWOJk6BJKNwy7u3v0vexDoCZ6usHseD4ZM89MBrhmStUed05MN6txUDH
- nYOffkiu4rTW1neHxAnOw2zD0eyfmKv9UbTzk1iEUe0v3aZw9NQFS
-X-Google-Smtp-Source: AGHT+IEN5klxZr3rdNlkU2fc8MJtjcCFsxh1awHwe89VnWrH+p06NUGRaezwD6tPG7jhc+nGhyeVFQ==
-X-Received: by 2002:a05:6000:220d:b0:3a1:fe77:9e1d with SMTP id
- ffacd0b85a97d-3a552274ab9mr2414992f8f.16.1749560259447; 
- Tue, 10 Jun 2025 05:57:39 -0700 (PDT)
+ bh=xJktEGesb57H1K7TS/YxXCRYfzhDd1PRqPB5jPa4EVc=;
+ b=FyHKfd+3xBVCauCfzdtTx4AyTE9OwU1Ek+/bVRmAsnLS21SGS97RxvlUE0AjKYk2m4
+ EA1j1xXhVIzMzq9pophhQLyY5KdasfCPidmt7DRgg0Cp0ZUbrTSusbQ5tg/geptuFLyV
+ /7Drgo1ooyrK/h52QU9QArgn+TFPWmlkYbgJ7eOx+qJMZUQQ6haOg2GMF6aIzV/8EFcd
+ 9E5MJOSsKjbZlc+GEIaEWraNY1rNTm4nMPmqNjPI7MgsWS+KxcdhNRevEJlUE6r5NeXG
+ 36+5p5X8/0xWBTz31koj6AWGmZqCKfWH7njc0TCZE5D1907NErWkXDczCkSzbziwfELf
+ fF1Q==
+X-Gm-Message-State: AOJu0YxoAM/0LHUZwtrNXU7HTbIo3jGRH0N0rW3ESzccnsSS919nqVCp
+ vkiu1vP4IlwH1m/OpCLgdf6Aq86tWmT6Xx8WNLvh8WnazB3+axRtvM8dMNYcXJEukjiMADa/FzD
+ I5DwLDlQ=
+X-Gm-Gg: ASbGnct2azTEUUwZNBEtlT8H0H65tZpZvseOn9MRvL3mdfkPb1Z1ji6xdRE9KId7xhG
+ 7+DKUD/rbCY2pOMl6wywfa1Csp7u2z9138XnOTEBJ/w7T7/sdTYbMWID5XjhSMgjEWYmQufplrh
+ PlCrprJQoX7z3PSKG2P1vf9rx3N9DUXctJxaEQePEThnrHEzbKzW0anOEkQJrvqnz5OHkTajAf9
+ bxV6bEA8PESkOZ5xdJCL9z9x9j3Zv2IqK1ZMCSLK69JBlPjtoOoKNqw9POTLPZkZbMW8BlHCXxo
+ rh3KzSjQeuSJKk9Wn0V+l+RQBFyWH10WwIpo/MlIZdCRyea6XpoZbcvapn5U6jA+20X91gkFa5M
+ IN9UW8Fi+2QvJ6hTFB0KiXHJg+vgtyrHHewPYz9XXBA==
+X-Google-Smtp-Source: AGHT+IGSBkBsAbt60yhWLd4WbX+087ot2kU8vdzQ+AOh8/CxXgqIfPYlvlbqXNQSTX5Gm59+hF+UBA==
+X-Received: by 2002:a05:600c:8210:b0:44b:eb56:1d45 with SMTP id
+ 5b1f17b1804b1-4531de1a1a6mr28731865e9.15.1749560226831; 
+ Tue, 10 Jun 2025 05:57:06 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532463ed4sm12316003f8f.94.2025.06.10.05.57.38
+ 5b1f17b1804b1-45209ce5045sm140173425e9.16.2025.06.10.05.57.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Jun 2025 05:57:39 -0700 (PDT)
+ Tue, 10 Jun 2025 05:57:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Alireza Sanaee <alireza.sanaee@huawei.com>,
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 14/24] hw/core/cpu: Move CacheType to general cpu.h
-Date: Tue, 10 Jun 2025 14:56:23 +0200
-Message-ID: <20250610125633.24411-15-philmd@linaro.org>
+Subject: [PULL 07/24] hw/ppc/e500: Move clock and TB frequency to machine class
+Date: Tue, 10 Jun 2025 14:56:16 +0200
+Message-ID: <20250610125633.24411-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250610125633.24411-1-philmd@linaro.org>
 References: <20250610125633.24411-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,55 +100,145 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhao Liu <zhao1.liu@intel.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-I386 has already defined cache types in target/i386/cpu.h.
+Different machines have different frequencies so make this
+configurable in machine class instead of using a hard coded constant.
 
-Move CacheType to hw/core/cpu.h, so that ARM and other architectures
-could use it.
-
-Cc: Alireza Sanaee <alireza.sanaee@huawei.com>
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20250605132722.3597593-1-zhao1.liu@intel.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Acked-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <431166f96ff12ff3dbc670d40544974415f11305.1748012109.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h | 6 ++++++
- target/i386/cpu.h     | 6 ------
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ hw/ppc/e500.h      |  4 ++++
+ hw/ppc/e500.c      | 18 +++++++++---------
+ hw/ppc/e500plat.c  |  2 ++
+ hw/ppc/mpc8544ds.c |  2 ++
+ 4 files changed, 17 insertions(+), 9 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 1e87f7d393e..33296a1c080 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -1126,4 +1126,10 @@ extern const VMStateDescription vmstate_cpu_common;
- #define UNASSIGNED_CPU_INDEX -1
- #define UNASSIGNED_CLUSTER_INDEX -1
+diff --git a/hw/ppc/e500.h b/hw/ppc/e500.h
+index 01db102625f..00f490519c2 100644
+--- a/hw/ppc/e500.h
++++ b/hw/ppc/e500.h
+@@ -5,6 +5,8 @@
+ #include "hw/platform-bus.h"
+ #include "qom/object.h"
  
-+enum CacheType {
-+    DATA_CACHE,
-+    INSTRUCTION_CACHE,
-+    UNIFIED_CACHE
-+};
++#define PLATFORM_CLK_FREQ_HZ (400 * 1000 * 1000)
 +
- #endif
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 545851cbde1..5910dcf74d4 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -1773,12 +1773,6 @@ typedef enum TPRAccess {
+ struct PPCE500MachineState {
+     /*< private >*/
+     MachineState parent_obj;
+@@ -37,6 +39,8 @@ struct PPCE500MachineClass {
+     hwaddr pci_mmio_base;
+     hwaddr pci_mmio_bus_base;
+     hwaddr spin_base;
++    uint32_t clock_freq;
++    uint32_t tb_freq;
+ };
  
- /* Cache information data structures: */
+ void ppce500_init(MachineState *machine);
+diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
+index 809078a2c3a..dedd96b0574 100644
+--- a/hw/ppc/e500.c
++++ b/hw/ppc/e500.c
+@@ -79,8 +79,6 @@
+ #define MPC85XX_ESDHC_IRQ          72
+ #define RTC_REGS_OFFSET            0x68
  
--enum CacheType {
--    DATA_CACHE,
--    INSTRUCTION_CACHE,
--    UNIFIED_CACHE
--};
+-#define PLATFORM_CLK_FREQ_HZ       (400 * 1000 * 1000)
 -
- typedef struct CPUCacheInfo {
-     enum CacheType type;
-     uint8_t level;
+ struct boot_info
+ {
+     uint32_t dt_base;
+@@ -120,7 +118,7 @@ static uint32_t *pci_map_create(void *fdt, uint32_t mpic, int first_slot,
+ }
+ 
+ static void dt_serial_create(void *fdt, unsigned long long offset,
+-                             const char *soc, const char *mpic,
++                             const char *soc, uint32_t freq, const char *mpic,
+                              const char *alias, int idx, bool defcon)
+ {
+     char *ser;
+@@ -131,7 +129,7 @@ static void dt_serial_create(void *fdt, unsigned long long offset,
+     qemu_fdt_setprop_string(fdt, ser, "compatible", "ns16550");
+     qemu_fdt_setprop_cells(fdt, ser, "reg", offset, 0x100);
+     qemu_fdt_setprop_cell(fdt, ser, "cell-index", idx);
+-    qemu_fdt_setprop_cell(fdt, ser, "clock-frequency", PLATFORM_CLK_FREQ_HZ);
++    qemu_fdt_setprop_cell(fdt, ser, "clock-frequency", freq);
+     qemu_fdt_setprop_cells(fdt, ser, "interrupts", 42, 2);
+     qemu_fdt_setprop_phandle(fdt, ser, "interrupt-parent", mpic);
+     qemu_fdt_setprop_string(fdt, "/aliases", alias, ser);
+@@ -382,8 +380,7 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+     int fdt_size;
+     void *fdt;
+     uint8_t hypercall[16];
+-    uint32_t clock_freq = PLATFORM_CLK_FREQ_HZ;
+-    uint32_t tb_freq = PLATFORM_CLK_FREQ_HZ;
++    uint32_t clock_freq, tb_freq;
+     int i;
+     char compatible_sb[] = "fsl,mpc8544-immr\0simple-bus";
+     char *soc;
+@@ -484,6 +481,9 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+         if (kvmppc_get_hasidle(env)) {
+             qemu_fdt_setprop(fdt, "/hypervisor", "has-idle", NULL, 0);
+         }
++    } else {
++        clock_freq = pmc->clock_freq;
++        tb_freq = pmc->tb_freq;
+     }
+ 
+     /* Create CPU nodes */
+@@ -564,12 +564,12 @@ static int ppce500_load_device_tree(PPCE500MachineState *pms,
+      */
+     if (serial_hd(1)) {
+         dt_serial_create(fdt, MPC8544_SERIAL1_REGS_OFFSET,
+-                         soc, mpic, "serial1", 1, false);
++                         soc, pmc->clock_freq, mpic, "serial1", 1, false);
+     }
+ 
+     if (serial_hd(0)) {
+         dt_serial_create(fdt, MPC8544_SERIAL0_REGS_OFFSET,
+-                         soc, mpic, "serial0", 0, true);
++                         soc, pmc->clock_freq, mpic, "serial0", 0, true);
+     }
+ 
+     /* i2c */
+@@ -968,7 +968,7 @@ void ppce500_init(MachineState *machine)
+         env->spr_cb[SPR_BOOKE_PIR].default_value = cs->cpu_index = i;
+         env->mpic_iack = pmc->ccsrbar_base + MPC8544_MPIC_REGS_OFFSET + 0xa0;
+ 
+-        ppc_booke_timers_init(cpu, PLATFORM_CLK_FREQ_HZ, PPC_TIMER_E500);
++        ppc_booke_timers_init(cpu, pmc->tb_freq, PPC_TIMER_E500);
+ 
+         /* Register reset handler */
+         if (!i) {
+diff --git a/hw/ppc/e500plat.c b/hw/ppc/e500plat.c
+index 775b9d8da00..4f1d659e723 100644
+--- a/hw/ppc/e500plat.c
++++ b/hw/ppc/e500plat.c
+@@ -93,6 +93,8 @@ static void e500plat_machine_class_init(ObjectClass *oc, const void *data)
+     pmc->pci_mmio_base = 0xC00000000ULL;
+     pmc->pci_mmio_bus_base = 0xE0000000ULL;
+     pmc->spin_base = 0xFEF000000ULL;
++    pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "generic paravirt e500 platform";
+     mc->init = e500plat_init;
+diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
+index 97fb0f35ba9..582698559d2 100644
+--- a/hw/ppc/mpc8544ds.c
++++ b/hw/ppc/mpc8544ds.c
+@@ -55,6 +55,8 @@ static void mpc8544ds_machine_class_init(ObjectClass *oc, const void *data)
+     pmc->pci_mmio_bus_base = 0xC0000000ULL;
+     pmc->pci_pio_base = 0xE1000000ULL;
+     pmc->spin_base = 0xEF000000ULL;
++    pmc->clock_freq = PLATFORM_CLK_FREQ_HZ;
++    pmc->tb_freq = PLATFORM_CLK_FREQ_HZ;
+ 
+     mc->desc = "mpc8544ds";
+     mc->init = mpc8544ds_init;
 -- 
 2.49.0
 
