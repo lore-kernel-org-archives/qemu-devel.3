@@ -4,102 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22244C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:55:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43CD1C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:55:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP28g-0004ku-8I; Tue, 10 Jun 2025 12:47:54 -0400
+	id 1uP27e-0002Rw-S2; Tue, 10 Jun 2025 12:46:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP167-0004cd-3o
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:41:11 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uOyzt-000791-Iq
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 09:26:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP165-0006HB-Gr
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:41:10 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXbL0030408;
- Tue, 10 Jun 2025 15:40:55 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=CbUpGpAA1uYVed/kJWUTIz4OzRzM8cVRAKvIijqS6CQ=; b=
- rjCFSEUHZSU1ARYMQdxIuxnv/diCoHTGAxT2Nrc0FeWqF29BQO2mqnlKP0+9ZU/g
- 9k1rJZ0oN/cHAXrTmMaMbPqoIgaWXppCqVIKAhYQkQv5iP6sLHoxOgSCQU6j0Qfn
- mH9feArDVot51fjMepxVRAMcJKqlwbFCuVn6ISUOcA56uk5SpoCKIX607PEED52D
- 4EYw9W/kvQSdpdYvxuFz7cjH7bNBnBaGXqFqB4YWuaeUWcoAe9AmqLG4eKTFWh9o
- HQDtcRvve/5rJo4Dgvi+Ncgrs93Z5wMUJemem1twFHIBB9m+xR8JV30MJjKNkPjc
- yr+j1HLFPYOvzb9q75B8OA==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c14cgxw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:55 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AF52Cd003304; Tue, 10 Jun 2025 15:40:54 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wc6t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:54 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrgN028825;
- Tue, 10 Jun 2025 15:40:53 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-39; Tue, 10 Jun 2025 15:40:53 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 38/38] vfio: doc changes for cpr
-Date: Tue, 10 Jun 2025 08:39:51 -0700
-Message-Id: <1749569991-25171-39-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506100125
-X-Proofpoint-GUID: j4Cwgm4ZlOBrD1ljsQuPQ_Ho6LdkGnFq
-X-Authority-Analysis: v=2.4 cv=GcEXnRXL c=1 sm=1 tr=0 ts=68485207 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=cQ5gJ0ErMGRkCJeqeJUA:9 cc=ntf
- awl=host:14714
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfXx8wexBLIEGaN
- ZtdaLf7L1snnso5d1voERcO7Ftk0XaXc/aPuq6zMl/HO6iHypMMffI1GinyWBdmFw+Yj9U0FBvR
- i/hboBJ2Bxr4rPdYjyo/GhJsdSJP3mCPUl+GWR8S9ddWgVEDueBwAHye2JfZE/fQv+g3PuuIf+S
- +jyniUdJNG5WqKDN/VygtP6qGzQA5VqHRM8S5AJN6evXfv2MlsmFHLVOxYrs6ZlmWeN7eOS0mdb
- M4DPjkM4iagAy0o0wZUdn8PPW4PekcZO2bloeuIsl66Qj/tMyojautOkNnwPfCfs1IlLw0umkos
- A3SJElS2TNRkk8PEljEkMnFlOWuHwlo225SskRJhmlYit8qxIdheUAo5XHQc70v1Pxut7PtiQjO
- ZDH11LWHJwz3bzccuIFwQsoEV9a1dJ7Gdnf//qJmJ/0EpwCqvinMelUI+YGatKcyrUl4nUuq
-X-Proofpoint-ORIG-GUID: j4Cwgm4ZlOBrD1ljsQuPQ_Ho6LdkGnFq
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uOyzn-0006gD-4M
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 09:26:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749561988;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=TZ8YbzTFpdhd6WiOhudM2Tuhugtqn6d4bA9UVq6kugI=;
+ b=WqsJwhhiPBjFzLan/wTHeXXqUg60KOCa7U1y5mG4SKhuOjL1cWfiOkpjx1meniKT2zBd5w
+ i7nsjJZFuxNtJNSJfgPFSskk0ENp+va8WdDf6IBaBQ7e0hOCnlQepkeRaElHKpR/aExHDg
+ ZWmRbxfdAATxUkMtXuxvGWaRaMsOlis=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-7VqRrdStMkiDlApx8uIKdA-1; Tue, 10 Jun 2025 09:26:24 -0400
+X-MC-Unique: 7VqRrdStMkiDlApx8uIKdA-1
+X-Mimecast-MFC-AGG-ID: 7VqRrdStMkiDlApx8uIKdA_1749561984
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6faeebe9c5bso48192716d6.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 06:26:24 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749561984; x=1750166784;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=TZ8YbzTFpdhd6WiOhudM2Tuhugtqn6d4bA9UVq6kugI=;
+ b=rTRfMm6/RIy7P8n2er2Fk485eucaYQLPV/zWjgHZLEjd6sRmI0iQqQARlej0bJ4qWj
+ 9mwlPVZZiFu96ORbh1O4PJtTIvvfEDLZjiWyGN4h98ugp27gZEOShkz0tPfrkuWSpIqA
+ nflgxfvoM8YNLCbtLdo23fijT55b3SPG+3/h965gOhyZj/oEMA4Zvcchqlh3oWVSzfMw
+ lkoqT7/eQMOEYge15HpIluWEWfy3CsWojiDP2u7qFSfPbRP3Ex4RXww47RE46RyYA2j8
+ Mq0NUxRzaUEV45tXOnlp5Y52oKIeVLbBRrsyxxLZdT875mmj5J+O3nZBFA+k35tKwZAA
+ p3zw==
+X-Gm-Message-State: AOJu0YxiQiYk4iT/0TgMdhpREMmLT9CkXjhaGsXVcq3NQfmYvoK+xFeL
+ dz29l/snmrwzQILgvHUKWL+hTy1UyBZmg6J6QGI3dQTfgITo8/YsaFlC2Rk+n6wFVq7QRFN23Ub
+ So5CWU9VhnTh81MAIibOe3ytQHkXFdU7I6PRbPPSpO3fvzEGK23GyIXcnzY2tkhQFtgiuRDtrKu
+ mfG2oTvuSrVfyNcj1sbh1eXU/p+d0wFfo=
+X-Gm-Gg: ASbGncsqBC9j9FtINAgAuLGDg/ZYZxs0YlElMrILTxEWDzO3pYxQspnlmlF592ay5NT
+ YZbVktg7gKGNyUyLO0vtdRt7BGjC3LXmFWkjJYkjSj6GkxbfpxAbFkmungC/CN0dnoQoF0zw03f
+ y2YBVkqb+foVBEQVwdIDhQk0R9TPWhkUI2sEjP
+X-Received: by 2002:a05:6214:242e:b0:6fa:cb05:b44c with SMTP id
+ 6a1803df08f44-6fb08f4314fmr266826766d6.3.1749561984281; 
+ Tue, 10 Jun 2025 06:26:24 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGG33ocxkZEMglLzN5LY6ffp83zf1HHmc9QPJ1W61gb+CYFBfzhOluCj4vzs9SClPZByqDMfkiWzoQkPajiv1Q=
+X-Received: by 2002:a05:6214:242e:b0:6fa:cb05:b44c with SMTP id
+ 6a1803df08f44-6fb08f4314fmr266826216d6.3.1749561983816; Tue, 10 Jun 2025
+ 06:26:23 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250605101124.367270-1-pbonzini@redhat.com>
+ <20250605101124.367270-2-pbonzini@redhat.com>
+In-Reply-To: <20250605101124.367270-2-pbonzini@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 10 Jun 2025 17:26:12 +0400
+X-Gm-Features: AX0GCFvE64xeikhVCZx9sJM6BU5Q1IMeiXm2InfyBL5Zwgr9Ien68vArHYlPu24
+Message-ID: <CAMxuvayD+KvQTVWv+MyU8gmxLgwDF3p1ahiY+6WLvHJndJTXxg@mail.gmail.com>
+Subject: Re: [PATCH 1/3] rust: make TryFrom macro more resilient
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com, 
+ mkletzan@redhat.com
+Content-Type: multipart/alternative; boundary="0000000000008ee651063737a4da"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,54 +103,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update documentation to say that cpr-transfer supports vfio and iommufd.
+--0000000000008ee651063737a4da
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- docs/devel/migration/CPR.rst | 5 ++---
- qapi/migration.json          | 6 ++++--
- 2 files changed, 6 insertions(+), 5 deletions(-)
+On Thu, Jun 5, 2025 at 2:11=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
 
-diff --git a/docs/devel/migration/CPR.rst b/docs/devel/migration/CPR.rst
-index 7897873..0a0fd4f 100644
---- a/docs/devel/migration/CPR.rst
-+++ b/docs/devel/migration/CPR.rst
-@@ -152,8 +152,7 @@ cpr-transfer mode
- This mode allows the user to transfer a guest to a new QEMU instance
- on the same host with minimal guest pause time, by preserving guest
- RAM in place, albeit with new virtual addresses in new QEMU.  Devices
--and their pinned memory pages will also be preserved in a future QEMU
--release.
-+and their pinned memory pages are also preserved for VFIO and IOMMUFD.
- 
- The user starts new QEMU on the same host as old QEMU, with command-
- line arguments to create the same machine, plus the ``-incoming``
-@@ -322,6 +321,6 @@ Futures
- 
- cpr-transfer mode is based on a capability to transfer open file
- descriptors from old to new QEMU.  In the future, descriptors for
--vfio, iommufd, vhost, and char devices could be transferred,
-+vhost, and char devices could be transferred,
- preserving those devices and their kernel state without interruption,
- even if they do not explicitly support live migration.
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 4963f6c..e8a7d3b 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -620,8 +620,10 @@
- #
- # @cpr-transfer: This mode allows the user to transfer a guest to a
- #     new QEMU instance on the same host with minimal guest pause
--#     time by preserving guest RAM in place.  Devices and their pinned
--#     pages will also be preserved in a future QEMU release.
-+#     time by preserving guest RAM in place.
-+#
-+#     Devices and their pinned pages are also preserved for VFIO and
-+#     IOMMUFD. (since 10.1)
- #
- #     The user starts new QEMU on the same host as old QEMU, with
- #     command-line arguments to create the same machine, plus the
--- 
-1.8.3.1
+> If the enum includes values such as "Ok", "Err", or "Error", the TryInto
+> macro can cause errors.  Be careful and qualify identifiers with the full
+> path, or in the case of TryFrom<>::Error do not use the associated type
+> at all.
+>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+>
+
+Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+
+
+> ---
+>  rust/qemu-api-macros/src/lib.rs | 7 ++++---
+>  1 file changed, 4 insertions(+), 3 deletions(-)
+>
+> diff --git a/rust/qemu-api-macros/src/lib.rs b/rust/qemu-api-macros/src/
+> lib.rs
+> index 103470785e3..c18bb4e036f 100644
+> --- a/rust/qemu-api-macros/src/lib.rs
+> +++ b/rust/qemu-api-macros/src/lib.rs
+> @@ -203,8 +203,8 @@ fn derive_tryinto_body(
+>      Ok(quote! {
+>          #(const #discriminants: #repr =3D #name::#discriminants as #repr=
+;)*;
+>          match value {
+> -            #(#discriminants =3D> Ok(#name::#discriminants),)*
+> -            _ =3D> Err(value),
+> +            #(#discriminants =3D>
+> core::result::Result::Ok(#name::#discriminants),)*
+> +            _ =3D> core::result::Result::Err(value),
+>          }
+>      })
+>  }
+> @@ -236,7 +236,8 @@ pub const fn from_bits(value: #repr) -> Self {
+>          impl core::convert::TryFrom<#repr> for #name {
+>              type Error =3D #repr;
+>
+> -            fn try_from(value: #repr) -> Result<Self, Self::Error> {
+> +            #[allow(ambiguous_associated_items)]
+> +            fn try_from(value: #repr) -> Result<Self, #repr> {
+>                  #body
+>              }
+>          }
+> --
+> 2.49.0
+>
+>
+
+--0000000000008ee651063737a4da
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 5, =
+2025 at 2:11=E2=80=AFPM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat=
+.com">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmai=
+l_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,20=
+4,204);padding-left:1ex">If the enum includes values such as &quot;Ok&quot;=
+, &quot;Err&quot;, or &quot;Error&quot;, the TryInto<br>
+macro can cause errors.=C2=A0 Be careful and qualify identifiers with the f=
+ull<br>
+path, or in the case of TryFrom&lt;&gt;::Error do not use the associated ty=
+pe<br>
+at all.<br>
+<br>
+Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" tar=
+get=3D"_blank">pbonzini@redhat.com</a>&gt;<br></blockquote><div><br></div><=
+div>Reviewed-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lur=
+eau@redhat.com">marcandre.lureau@redhat.com</a>&gt;</div><div>=C2=A0</div><=
+blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-l=
+eft:1px solid rgb(204,204,204);padding-left:1ex">
+---<br>
+=C2=A0rust/qemu-api-macros/src/<a href=3D"http://lib.rs" rel=3D"noreferrer"=
+ target=3D"_blank">lib.rs</a> | 7 ++++---<br>
+=C2=A01 file changed, 4 insertions(+), 3 deletions(-)<br>
+<br>
+diff --git a/rust/qemu-api-macros/src/<a href=3D"http://lib.rs" rel=3D"nore=
+ferrer" target=3D"_blank">lib.rs</a> b/rust/qemu-api-macros/src/<a href=3D"=
+http://lib.rs" rel=3D"noreferrer" target=3D"_blank">lib.rs</a><br>
+index 103470785e3..c18bb4e036f 100644<br>
+--- a/rust/qemu-api-macros/src/<a href=3D"http://lib.rs" rel=3D"noreferrer"=
+ target=3D"_blank">lib.rs</a><br>
++++ b/rust/qemu-api-macros/src/<a href=3D"http://lib.rs" rel=3D"noreferrer"=
+ target=3D"_blank">lib.rs</a><br>
+@@ -203,8 +203,8 @@ fn derive_tryinto_body(<br>
+=C2=A0 =C2=A0 =C2=A0Ok(quote! {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0#(const #discriminants: #repr =3D #name::=
+#discriminants as #repr;)*;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0match value {<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 #(#discriminants =3D&gt; Ok(#nam=
+e::#discriminants),)*<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 _ =3D&gt; Err(value),<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 #(#discriminants =3D&gt; core::r=
+esult::Result::Ok(#name::#discriminants),)*<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 _ =3D&gt; core::result::Result::=
+Err(value),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0})<br>
+=C2=A0}<br>
+@@ -236,7 +236,8 @@ pub const fn from_bits(value: #repr) -&gt; Self {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0impl core::convert::TryFrom&lt;#repr&gt; =
+for #name {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0type Error =3D #repr;<br>
+<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fn try_from(value: #repr) -&gt; =
+Result&lt;Self, Self::Error&gt; {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 #[allow(ambiguous_associated_ite=
+ms)]<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fn try_from(value: #repr) -&gt; =
+Result&lt;Self, #repr&gt; {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0#body<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0}<br>
+-- <br>
+2.49.0<br>
+<br>
+</blockquote></div></div>
+
+--0000000000008ee651063737a4da--
 
 
