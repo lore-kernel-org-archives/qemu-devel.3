@@ -4,101 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFA6C5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:55:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3DA0C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:59:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOssP-0007rn-JO; Tue, 10 Jun 2025 02:54:29 -0400
+	id 1uOsx3-0000Qu-9F; Tue, 10 Jun 2025 02:59:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uOssG-0007rF-GR
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:54:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uOssC-0004Xv-9L
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:54:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749538454;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jTLjeh0ZFAKBjgmIFXj1HF0w+IgIOxtUcHM7LCQkMSI=;
- b=IVgAEOJ+U1MRPmRh6r0iELmxVZR5l5Xwli6qgk2tq0B2bxm9nM5jEYVziL/mt+J7QtJ6os
- RtiaCJknzxsB+VRzVHlv5my3hJKSB/dr7QkCulWVT4UvhDqGRnqV1sMM3qWt07V3/bcG2p
- Moj47BB5F3vOCRfQOeaRisfzrnc8hV4=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-454-jpdX6sdfNJWX2CUBpkc9QA-1; Tue, 10 Jun 2025 02:54:12 -0400
-X-MC-Unique: jpdX6sdfNJWX2CUBpkc9QA-1
-X-Mimecast-MFC-AGG-ID: jpdX6sdfNJWX2CUBpkc9QA_1749538451
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2362e130be8so14822265ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:54:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOswx-0000Qj-Tz
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:59:12 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOsww-0005Vb-9B
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:59:11 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-451d54214adso41368735e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:59:09 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749538747; x=1750143547; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=GKBLLygukal0kKGmI736nH+LlDBEjx3YZi9eSD93C5M=;
+ b=fNE9C8cRKNK4399q3BZ3+iITVGgC7gkNy8ftBS30HefxCnpUuFT7A3g4WMGoR+V917
+ EvbKwVTOBIcAbjF8sM0oz5BP2Fy8Zy89OFOlPM651UmGIMw4EmAEgYHa50AACo83U7Mj
+ /a7hbqEKrg/IdRvTY3gvPlcBiV2rQayVbNLDHf0oeW5sK1SK+VJaZXv+joyTzNqAajBg
+ 1B6UKY+AFBnaCE4usJOGCs++LeBQ6ymaTQrI8o5vGg2XhC88jQ6eUIg9e79Y/s1QIvf3
+ DSRooOg/u84IjqeJQMgqKN3P5O68iRAnSNiraWvdkyoDvGrTqWYptVzrg5GgJA+nRs3Z
+ KBbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749538451; x=1750143251;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=jTLjeh0ZFAKBjgmIFXj1HF0w+IgIOxtUcHM7LCQkMSI=;
- b=sT5NG0McNjUZXArw3baAnpXN0Hy5T/F+9ORqnY2BEDmDhTK/h2DE4aLoRo6T5Hd+qp
- CDMnxZkNxenqEfYutKsaeqtF8Jra0v7/yYd/Pu+cizTEVupZP/bwWlRRqqzEpYyGcRKd
- /ozZTo1e0OeWhyYIUREWBYL4fptbfkAJGEoagMzDbL7YEWNxkj35sLaByVgMd2lKGd6m
- pXrV4KMO8D0Pgn49fR/uA5TQn3D1zKhjy3o2YkN211hTf5y3Mnrm1ZrDofhZOoEj0T+6
- mcJg48ZcZ+t5BttaG4X6eDJdMqd2bpFk3kmhLWcF1V9lxzdXdVJm/j9quWOjwkmz5c0a
- pabg==
-X-Gm-Message-State: AOJu0YzoTm5X8kfFlUDvOwWY+wfVBlPfXP1WGRcejonAOq05d5L11zFa
- ZZQ5lPKvRq4T/8ZrvpNGYJBGy8go294P2YLC/+Ff8zlgNI0d8h6Vem3l5tiZsci1aKP3Z+FufLR
- rCe9wX8xOQjkKtn4EpijjO4VBsVPpB1B68jbg0pyQBCbhuv3tw/dPiEiK
-X-Gm-Gg: ASbGnctCy9NcSQYjAufr7ze2YZHadiBiRSq93dy4in0A5ZCDOiflfEg4NK8PrqENd0E
- 7pwSUh9FA6Jl0jWNwq7P+Ce1drWfZSmBJug0+d2wDPKrA9C6nHY6ogTpGTAT7SY/MnJqwoDrNcA
- gU3T58P9hWs/k+qK3kdA7B+DbZDs8TKaWMvN6KaShwHdKz28wmYfkHd02BaHD1MsoJhg1+sfUxo
- qeWrNQatVS05t0ffxM/MHFe4EceVegAUWhsFJymUO+XVhu//4WwqOm+0HWqPFSOYuIhgq8qpfpB
- J1eSvihmmHjOd0oIJbSieNB754Uv2O4QmTi2SXA=
-X-Received: by 2002:a17:902:f693:b0:235:f45f:ed2b with SMTP id
- d9443c01a7336-23601d0417amr236007805ad.1.1749538451275; 
- Mon, 09 Jun 2025 23:54:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrMdM30XleML0XId1VRSYrxBp3VIUkr1sogK7LqsPSwECxN/fqvg3aj/Nw7zyzSwHU7i65mg==
-X-Received: by 2002:a17:902:f693:b0:235:f45f:ed2b with SMTP id
- d9443c01a7336-23601d0417amr236007615ad.1.1749538450884; 
- Mon, 09 Jun 2025 23:54:10 -0700 (PDT)
-Received: from smtpclient.apple ([171.78.154.233])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-23603406916sm64399075ad.169.2025.06.09.23.54.08
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 09 Jun 2025 23:54:10 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
-Subject: Re: [PATCH] MAINTAINERS: Update the paths to the testing
- documentation files
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20250610053734.10417-1-thuth@redhat.com>
-Date: Tue, 10 Jun 2025 12:23:56 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alexander Bulekov <alxndr@bu.edu>, Fabiano Rosas <farosas@suse.de>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <58CEF573-E771-44F4-A09C-36D792057953@redhat.com>
-References: <20250610053734.10417-1-thuth@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-X-Mailer: Apple Mail (2.3776.700.51.11.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ d=1e100.net; s=20230601; t=1749538747; x=1750143547;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=GKBLLygukal0kKGmI736nH+LlDBEjx3YZi9eSD93C5M=;
+ b=tKS7t7iBUOPu+P86SjSD+oLjAYek1w3FjdONDDfK2MQuJj7Dj2AfepoizGB0y3X0bM
+ iT23RAlF/gpFL0uih5Qr4EwIlFhbN4DgAGKlwD5Q7bGyZY1Qxm3EjFfNzQ9aFNOsTXk7
+ 8ghYZ7NRA92eT8OyeJrsCs+AD5zkP2a96DxKgrbRuGQsJHSMJOhZqdclFUzMzxy7Znsw
+ KkdgVTv/G589n4aQq637BKy3bkl1KH9pNU1PmR5MXwhrWePD6tx2z173a+lpH8/xIp3L
+ BtsGel8TaG7Hnn0BL5cidzt1JdKdg85zk/s+G12Z4QC66AyFHEsuDhULK6yv8X4gALrX
+ Felw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXJ0H0xGrEfFGkYwNjlH/T6f5jocPwGEkmdDnER0IKujbb+yqAEIbCFgbwhyCJeOH8NCeVlGaA0g+2g@nongnu.org
+X-Gm-Message-State: AOJu0YwPu4LGs3T4T+gJR9ta2c4FcCcThof305tmQqMG5gVTLFSKM/HY
+ GNOtw/vmQIH6fgomFiV++xT7z/sI3A+AGebz0hoas6LrVgw5cujyrk05BQNskaoQ1lo=
+X-Gm-Gg: ASbGnctimjQZ3Ai9ya6tkWcxta9PdjY4GxJOPLkVWRQ6dOTIUZIrs8qGWF7ld2rW+kH
+ 18jqIbQVRUt1PLJQiyIr/AD6MoIuTLAfBDtpTGRVVr9jlKD5amChJTYV3ZrrVNiRS3B7/88nH8C
+ +fU7BJRH/k79q83E80yLMXC5+mSOPKIzIC9eDE+zw+GC7djMXvBS2g6CALqjxWDs8Kv/SnUf87H
+ 6WIV7Uh4oUI12wWhPiUMPe/IXe5vhpYPRHWRI+szXrS0eMotNX7HcemJKwgPm8utM//G4CzjkH3
+ U+1yYJmBj35PHtETQT9Y9hbYUVwuKXf48VS0RkpXEiu/vvYKM3/hTpGK0qWhg0sVhRlY5gfmaeM
+ oWDWsB6KEz+gzqCTCDgAtunz+EY2hVw==
+X-Google-Smtp-Source: AGHT+IH+XiBWwLrHYhk5S4ctB8NLgCK/V+9MhrGL6OrGrFL0Z5V5ZHbtF1TGgrGlnoN6OhIUSuoNJw==
+X-Received: by 2002:a05:600c:1c08:b0:43d:42b:e186 with SMTP id
+ 5b1f17b1804b1-4531ddffc27mr10291805e9.8.1749538747607; 
+ Mon, 09 Jun 2025 23:59:07 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-452669ada25sm131868955e9.0.2025.06.09.23.59.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Jun 2025 23:59:07 -0700 (PDT)
+Message-ID: <d6a63d08-c1cf-45a1-b72e-6c7569dc353d@linaro.org>
+Date: Tue, 10 Jun 2025 08:59:05 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/net/i82596:changed assets link + abstracted configure
+ function.
+To: tank0nf <soumyajyotisarkar23@gmail.com>, qemu-devel@nongnu.org
+Cc: richard.henderson@linaro.org, deller@gmx.de, jasowang@redhat.com
+References: <20250607152711.108914-2-soumyajyotisarkar23@gmail.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250607152711.108914-2-soumyajyotisarkar23@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,89 +102,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> On 10 Jun 2025, at 11:07=E2=80=AFAM, Thomas Huth <thuth@redhat.com> =
-wrote:
->=20
-> From: Thomas Huth <thuth@redhat.com>
->=20
-> When the testing docs were moved to a separate subfolder, the entries
-> in the MAINTAINERS file were missed. Update them now.
->=20
-> Fixes: ff41da50308 ("docs/devel: Split testing docs from the build =
-docs and move to separate folder")
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
-
+On 7/6/25 17:27, tank0nf wrote:
+> From: Soumyajyotii_Ssarkar <soumyajyotisarkar23@gmail.com>
+> 
+> 1. Changed the asset link to one which is working from the PARISC website
+> 2. Abstracted the configure function.
+> 
+> Signed-off-by: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>
+> 
 > ---
-> MAINTAINERS | 15 ++++++++-------
-> 1 file changed, 8 insertions(+), 7 deletions(-)
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index aa6763077ea..eb2b338fb11 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -2124,7 +2124,7 @@ M: Michael S. Tsirkin <mst@redhat.com>
-> S: Supported
-> F: tests/functional/acpi-bits/*
-> F: tests/functional/test_acpi_bits.py
-> -F: docs/devel/acpi-bits.rst
-> +F: docs/devel/testing/acpi-bits.rst
->=20
-> ACPI/HEST/GHES
-> R: Dongjiu Geng <gengdongjiu1@gmail.com>
-> @@ -3440,8 +3440,8 @@ F: system/qtest.c
-> F: include/system/qtest.h
-> F: accel/qtest/
-> F: tests/qtest/
-> -F: docs/devel/qgraph.rst
-> -F: docs/devel/qtest.rst
-> +F: docs/devel/testing/qgraph.rst
-> +F: docs/devel/testing/qtest.rst
-> X: tests/qtest/bios-tables-test*
-> X: tests/qtest/migration-*
->=20
-> @@ -3459,7 +3459,7 @@ F: tests/qtest/fuzz-*test.c
-> F: tests/docker/test-fuzz
-> F: scripts/oss-fuzz/
-> F: hw/mem/sparse-mem.c
-> -F: docs/devel/fuzzing.rst
-> +F: docs/devel/testing/fuzzing.rst
->=20
-> Register API
-> M: Alistair Francis <alistair@alistair23.me>
-> @@ -4078,7 +4078,7 @@ M: Stefan Hajnoczi <stefanha@redhat.com>
-> L: qemu-block@nongnu.org
-> S: Supported
-> F: block/blkverify.c
-> -F: docs/devel/blkverify.rst
-> +F: docs/devel/testing/blkverify.rst
->=20
-> bochs
-> M: Stefan Hajnoczi <stefanha@redhat.com>
-> @@ -4156,7 +4156,7 @@ M: Hanna Reitz <hreitz@redhat.com>
-> L: qemu-block@nongnu.org
-> S: Supported
-> F: block/blkdebug.c
-> -F: docs/devel/blkdebug.rst
-> +F: docs/devel/testing/blkdebug.rst
->=20
-> vpc
-> M: Kevin Wolf <kwolf@redhat.com>
-> @@ -4276,7 +4276,8 @@ F: tests/vm/
-> F: tests/lcitool/
-> F: tests/functional/test_*_tuxrun.py
-> F: scripts/archive-source.sh
-> -F: docs/devel/testing.rst
-> +F: docs/devel/testing/ci*
-> +F: docs/devel/testing/main.rst
-> W: https://gitlab.com/qemu-project/qemu/pipelines
-> W: https://travis-ci.org/qemu/qemu
->=20
-> --=20
-> 2.49.0
->=20
+>   hw/net/i82596.c | 38 ++++++++++++++++++++++----------------
+>   1 file changed, 22 insertions(+), 16 deletions(-)
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+and queued, thanks!
 
