@@ -4,62 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB73C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46B3DC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP29G-0006jO-4q; Tue, 10 Jun 2025 12:48:30 -0400
+	id 1uP27k-0002pD-8j; Tue, 10 Jun 2025 12:46:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uP20y-0000kM-VX
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:39:59 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15j-0004YN-Cs
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:47 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uP20X-0005rM-Ao
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:39:33 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bGvXG4n38z6L5FT;
- Wed, 11 Jun 2025 00:34:54 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 556DF140427;
- Wed, 11 Jun 2025 00:39:10 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 10 Jun
- 2025 18:39:09 +0200
-Date: Tue, 10 Jun 2025 17:39:05 +0100
-To: Jonathan Cameron via <qemu-devel@nongnu.org>, <linuxarm@huawei.com>
-CC: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Klaus Jensen
- <k.jensen@samsung.com>, <cminyard@mvista.com>, Fan Ni <fan.ni@samsung.com>,
- Anisa Su <anisa.su@samsung.com>, <linux-cxl@vger.kernel.org>,
- <mst@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>
-Subject: Re: [RFC PATCH qemu 3/5] hw/cxl/i2c_mctp_cxl: Initial device emulation
-Message-ID: <20250610170104.00001392@huawei.com>
-In-Reply-To: <20250609163334.922346-4-Jonathan.Cameron@huawei.com>
-References: <20250609163334.922346-1-Jonathan.Cameron@huawei.com>
- <20250609163334.922346-4-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15g-0006Dz-Qp
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:47 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXdQ9031132;
+ Tue, 10 Jun 2025 15:40:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=9KiemZkmUcZfsD9GF5ejES9E+ejK34OrUNmIWkVJ2Y8=; b=
+ dCqXLlIGW/h070We/7AFjULoYzg4P5xmVj3Vv85TYRAs04EEThD1rD5lqon0mwDl
+ KLFfncFKWfxVzNe5z4ZY+0BW5qJuUzd97pKR7Be0/fe3usSh1cs4L7FEh0EDRyS+
+ dDxlVjTz7SHdNHMFjTB4cM1FaZlbeGHSdmt8DiCOHjOR6tYrIgRjk9Rtco1FPJhw
+ FKPNSO53gUGO6tgKX/0fXqD3dMmk5cTppv4J+aRm6MOoNL4p8Uc3iXtYFoLQgZJ+
+ xM0daMOZ7fnFVZnHA5h/7QEa8kFuNTrMs4IbXT6ASipVJV0I8KW1QDxcVSeebvIZ
+ 6VVjgjPW/cYDWcHerpXPdQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474dywvgsn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:31 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55AEsbes003912; Tue, 10 Jun 2025 15:40:29 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bv8wbjx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:29 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfr028825;
+ Tue, 10 Jun 2025 15:40:29 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 474bv8wak1-24; Tue, 10 Jun 2025 15:40:29 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5 23/38] backends/iommufd: change process ioctl
+Date: Tue, 10 Jun 2025 08:39:36 -0700
+Message-Id: <1749569991-25171-24-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506100125
+X-Authority-Analysis: v=2.4 cv=fdaty1QF c=1 sm=1 tr=0 ts=684851ef b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=SRdfyBftnUHxAk-46XYA:9 cc=ntf
+ awl=host:14714
+X-Proofpoint-ORIG-GUID: IxWUgp8eGtK7XdYRwYcTBp_JRFqdCW9Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX8srnVDr3VyTE
+ +clkeZE7N2VsU3xjjSVNT85aPpHw0oI7MQi+Z1EXLWGyeee6+rQ3sUHDdH55IqtCK0pmEauVvHE
+ DF05FEpTUXO34PI0FKh03jfL0U67A7ou/8WOAP+lwVR/H1UPbJTTPN4yaqS84no7bfTuPbLOJrA
+ +j5mowaaORUvqMzwPoPBI9oLsrfFG9A9gUW+ocrqbbUxuaWAkr91LVmwb1bz+CuGCCo9+PB0uBK
+ XsuLV3lAVnwe3h7IPR5NDf8vpSCwHibCJ8LCh7MdVAPgqALmHW1j7TCTKEHpubFAF31g7tVYLUj
+ 2kHR6vrpwktRyvljGscJfygZJOLz8SkfbT0W3+fgsswavhrTaW2m1YPeTT2Z8RdeVz+1l0VICHj
+ eJM5O49vdZx28+GEWUXJjC2xNKfHPXHYXvtVBol7Dy6BdfXfKHpAHAgcj2EhE2TrZlAKpdpz
+X-Proofpoint-GUID: IxWUgp8eGtK7XdYRwYcTBp_JRFqdCW9Z
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,88 +112,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Jun 2025 17:33:31 +0100
-Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
+Define the change process ioctl
 
-> The CCI and Fabric Manager APIs are used to configure CXL switches and
-> devices. DMTF has defined an MCTP binding specification to carry these
-> messages. The end goal of this work is to hook this up to emulated CXL
-> switches and devices to  allow control of the configuration.
-> 
-> Since this relies on i2c target mode, this can currently only be used with
-> an SoC that includes the Aspeed I2C controller.
-> 
-> Note, only get timestamp added for now.
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ include/system/iommufd.h |  3 +++
+ backends/iommufd.c       | 24 ++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ 3 files changed, 28 insertions(+)
 
-Not very important given this is an RFC, but a chunk of code in here isn't
-used so I'll drop it from future version...
-(I noticed whilst wondering why Anisa didn't update it in they
- FMAPI DCD series).
-
-> ---
->  include/hw/cxl/cxl_device.h               |   8 +
->  include/hw/pci-bridge/cxl_upstream_port.h |   1 +
->  hw/cxl/cxl-mailbox-utils.c                |  49 ++++
->  hw/cxl/i2c_mctp_cxl.c                     | 289 ++++++++++++++++++++++
->  hw/cxl/Kconfig                            |   4 +
->  hw/cxl/meson.build                        |   4 +
->  6 files changed, 355 insertions(+)
-> 
-> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
-> index 6086d4c85b..8d87c7151e 100644
-> --- a/include/hw/cxl/cxl_device.h
-> +++ b/include/hw/cxl/cxl_device.h
-> @@ -360,6 +360,10 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
->                              size_t len_in, uint8_t *pl_in,
->                              size_t *len_out, uint8_t *pl_out,
->                              bool *bg_started);
-> +
-> +void cxl_initialize_t3_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
-> +                               size_t payload_max);
-> +
-
-> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-> index 475547f212..4c9852642e 100644
-> --- a/hw/cxl/cxl-mailbox-utils.c
-> +++ b/hw/cxl/cxl-mailbox-utils.c
-> @@ -3690,6 +3690,29 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
->      cxl_init_cci(cci, payload_max);
->  }
->  
-> +static const struct cxl_cmd cxl_cmd_set_t3_mctp[256][256] = {
-> +    [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0, 0 },
-> +    [INFOSTAT][GET_RESPONSE_MSG_LIMIT] = { "GET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_get_response_msg_limit, 0, 0 },
-> +    [INFOSTAT][SET_RESPONSE_MSG_LIMIT] = { "SET_RESPONSE_MSG_LIMIT",
-> +                                           cmd_set_response_msg_limit, 1, 0 },
-> +    [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
-> +    [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported, 0,
-> +                              0 },
-> +    [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
-> +    [TUNNEL][MANAGEMENT_COMMAND] = { "TUNNEL_MANAGEMENT_COMMAND",
-> +                                     cmd_tunnel_management_cmd, ~0, 0 },
-> +};
-> +
-> +void cxl_initialize_t3_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
-> +                               size_t payload_max)
-> +{
-> +    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_mctp);
-> +    cci->d = d;
-> +    cci->intf = intf;
-> +    cxl_init_cci(cci, payload_max);
-> +}
-> +
-At some point a while back, when adding tunneling we decided to pretend
-we have an MLD (because it's more general) and as such introduced the fm owned
-mctpcci.  That's the one one that is used for the landing point of mctp
-links to a type 3 device.  So this code is unused.
-
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 2d24d93..db5f2c7 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -69,6 +69,9 @@ bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
+                                       uint32_t *entry_num, void *data,
+                                       Error **errp);
+ 
++bool iommufd_change_process_capable(IOMMUFDBackend *be);
++bool iommufd_change_process(IOMMUFDBackend *be, Error **errp);
++
+ #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
+ OBJECT_DECLARE_TYPE(HostIOMMUDeviceIOMMUFD, HostIOMMUDeviceIOMMUFDClass,
+                     HOST_IOMMU_DEVICE_IOMMUFD)
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index 3a2ecc7..87f81a0 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -73,6 +73,30 @@ static void iommufd_backend_class_init(ObjectClass *oc, const void *data)
+     object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
+ }
+ 
++bool iommufd_change_process_capable(IOMMUFDBackend *be)
++{
++    struct iommu_ioas_change_process args = {.size = sizeof(args)};
++
++    /*
++     * Call IOMMU_IOAS_CHANGE_PROCESS to verify it is a recognized ioctl.
++     * This is a no-op if the process has not changed since DMA was mapped.
++     */
++    return !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
++}
++
++bool iommufd_change_process(IOMMUFDBackend *be, Error **errp)
++{
++    struct iommu_ioas_change_process args = {.size = sizeof(args)};
++    bool ret = !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
++
++    if (!ret) {
++        error_setg_errno(errp, errno, "IOMMU_IOAS_CHANGE_PROCESS fd %d failed",
++                         be->fd);
++    }
++    trace_iommufd_change_process(be->fd, ret);
++    return ret;
++}
++
+ bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
+ {
+     int fd;
+diff --git a/backends/trace-events b/backends/trace-events
+index e5f3e70..56132d3 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -7,6 +7,7 @@ dbus_vmstate_loading(const char *id) "id: %s"
+ dbus_vmstate_saving(const char *id) "id: %s"
+ 
+ # iommufd.c
++iommufd_change_process(int fd, bool ret) "fd=%d (%d)"
+ iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d users=%d"
+ iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
+ iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
+-- 
+1.8.3.1
 
 
