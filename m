@@ -4,191 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AB09C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:00:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2869C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2Ga-0007jD-0Q; Tue, 10 Jun 2025 12:56:04 -0400
+	id 1uP27t-0003Pi-UR; Tue, 10 Jun 2025 12:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uP2GV-0007LI-5w
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:55:59 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15M-0004Sn-QZ
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:26 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uP2GT-0001rH-9u
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:55:58 -0400
-Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55ACPgO7030320;
- Tue, 10 Jun 2025 09:55:52 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15J-0006C0-Pp
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:24 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXe7s031147;
+ Tue, 10 Jun 2025 15:40:19 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=1s7fF7vgd624aKKNgkjbEfBT/MCUeqzU0F0FttuAj
- gQ=; b=q2MygnuQY2vEGsz+heQRJHLdx4lU8G3KiF9kTYjYx1ROfIPKlJKrW4jTO
- FsSWYFSeCRAcDEi8mz3Cu7xOgm/hq75UVkI7BubPf/ZDdRUESjLqkNhXLb39q7sN
- KTFA9DGO1U4IrGtlcLlWr7TEnfRd1Efb8yNJnLQvPd3raqkoMyOah1vc7cPd9TDP
- dC+XiOPpe4YhQWqH4OR+tonGEeVWoK8COjyAt0vp8vWlFxz1H396QAPnSuR+dNWS
- 8s7Q4fo7Kn1doBjQVjlkA+AUINyg7MX726kxE3oJ8q5ZZxbvRKLtB9U0GBY0sfBi
- aSUknDAhg/oo2HEGJOURb/9NNwH8w==
-Received: from byapr05cu005.outbound.protection.outlook.com
- (mail-westusazon11020112.outbound.protection.outlook.com [52.101.85.112])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 476mpx0r0h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Jun 2025 09:55:52 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mBmNWeVKcDCKItDDwTKtg+oZ25lqHyq+czGIsjGZgk9GrcFWEXRwfZrEUGBcaJ51K40ClUyAlPhgGWpPVO8pRo2OXzWNxTTVRs68Krnf8ezYDOvYgD0L8+p0+XIACaHFJgDTcS5BBRxI070lb6I2TAILlvp5sQ81lvPDBRMNG0mrbxobyISv3tG6PDBBnv6GBOwbGrwsfgeMaXQx3i+cZqlnFrRQXb1wgSec1wPSnwi651M1aaw+ZZ44NV+JqAfoVvJqZSj+FZJ46cXsfMTrBVg8JJT2CvcXeY9dlZFYYsxSZxnlUSAZ8BJVepiqQ3JZG8FOFxJWZgu8jb7hxPoVPA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=cegyLoxmSvfQD9iLXgTbn8JbcrEAQDy8WtzC5+WEXMU=;
- b=pEmFy+pQZlI9LoT7fo9AyYW6D01Y6VDIUxQlY/cN8m02dGdJs3LpCcI+IgR7loBfqv/91WejkwR8YqxcPiIQ97dSKullu+hHj6JU85Mo5QFDA2y+Cpfyv6CpabOcx0D/p1kci5GsGFNa60/oplsAWDtYBgDAQWaKYZ4MFNegmOvUWiqg25MHJk2qOiL2EA0H/vfSCv6Q3cLXuYEiNN4Qrq8+jK5xamQR8qyGcqlm2FOsuq7RtnWTV2ocB9DplzokFwP2fkgonSxc0x6p7cCSI9g1WwukluDOU/E+FwOHsgMiScXZ0E1IXE8mVehFkIvhXHkXN01srzVyX8XH+s6oAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=cegyLoxmSvfQD9iLXgTbn8JbcrEAQDy8WtzC5+WEXMU=;
- b=I3/iEhZCyh5iT9XviAtA3b/czwr0iveUy8Lc6Gl8BP4R1mS/LfuF6Pq5MQE+7fONwsrpR3Ybeoxp/ohf4zKUoS/dNyXt4gvMwoBCvTkv1YndUvhPvuGIj/qWrh/pyyqwW+RdoXf5lS7EEhYH8EOpZ2PgPjDmaZIECOvyY4Bm9fNLHNrpM/v7VHA6o7PbKHW2Pgy/lTwoXLJ5wEiajEgnPGoLwcYEmmdXEKLH6nEg61YH0r/4SIngwv9jaApMnLYdDs4eDxHOhYLGX1jin2TIOsGw1oT6UszXd8yLFX6yKqGSS3FJd/qToCVxEmkoLGQOStnEfasoUQI7lQCugaAsdA==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by SJ2PR02MB9756.namprd02.prod.outlook.com (2603:10b6:a03:548::22) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.20; Tue, 10 Jun
- 2025 16:55:45 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%2]) with mapi id 15.20.8813.024; Tue, 10 Jun 2025
- 16:55:45 +0000
-Date: Tue, 10 Jun 2025 09:55:41 -0700
-From: John Levon <john.levon@nutanix.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 05/23] vfio-user: introduce vfio-user protocol
- specification
-Message-ID: <aEhjjdtTVZUFCFeS@lent>
-References: <20250607001056.335310-1-john.levon@nutanix.com>
- <20250607001056.335310-6-john.levon@nutanix.com>
- <ef16fe1a-92b1-4523-a214-08d90c844519@redhat.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <ef16fe1a-92b1-4523-a214-08d90c844519@redhat.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: AM0PR10CA0112.EURPRD10.PROD.OUTLOOK.COM
- (2603:10a6:208:e6::29) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
+ corp-2025-04-25; bh=dImXolpWbJtPiSZFmHlkZlCp8b/agnfa37fqDv+cfFc=; b=
+ lKIaT4xtbsLF1yuiUQz45A425FtVVGZ1X2WJhaz2jnN+tkxGSO+XtXwP+nPhPg61
+ gHkRMTdarpetEc5i0amgA2fx3lx//LFb91yyJkox+zUT+0BtTpjz5Bsc2tg01gkM
+ qLMNlEUfhyAuPJcaerhTFg3GZaIvTEevP/Fv8UoRazzieR56aAOlfpPxYES1thBR
+ Di8XkmG+IYvu6q8ISdzWMwj7GJibSE2EhWM5ECpRwSlqvA9whzLFDePreTGaV25G
+ kwTPja2JwhvCCd4Zma9r3Ghh5kKxXWTQ0XbwDfqWqmaOlJHo413C9c0KjP+83O+W
+ MMKIQ+GZi29nKEPecUz5TA==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474dywvgs3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:18 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55AFAkHl003301; Tue, 10 Jun 2025 15:40:17 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bv8wb7p-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:17 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfd028825;
+ Tue, 10 Jun 2025 15:40:16 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 474bv8wak1-17; Tue, 10 Jun 2025 15:40:16 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5 16/38] vfio/pci: vfio_notifier_cleanup
+Date: Tue, 10 Jun 2025 08:39:29 -0700
+Message-Id: <1749569991-25171-17-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|SJ2PR02MB9756:EE_
-X-MS-Office365-Filtering-Correlation-Id: 791d0682-3f18-48be-6da0-08dda83fa47a
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?tBRYmvEcVvqDNrbji78gRBvEyuL+1EvQPEQWRt7zXnNxTzhN/uysW1SKbk?=
- =?iso-8859-1?Q?JcavMLTuCiTZo0OXPsGWuOEVm1laSHNtCZr7O2bkqHsCNdLjMvdfG7Jnu8?=
- =?iso-8859-1?Q?/f6X65tKjZJZ9h03f5sk/j1REeDkv8cktUH9rFn4pJR0Ii+59Oa9kuqUYk?=
- =?iso-8859-1?Q?lF3UaSMx/eA6k4C/WF5jROOnKKVsqVmoTYsJCuUmidzUJPmMYM0QFxQf2K?=
- =?iso-8859-1?Q?NGJTWTsfnemUU7gQQayEupkynmfqRDw2UXZ3pxvzbAnXhKA0WSc9hyKAfL?=
- =?iso-8859-1?Q?HqHLreGTke7alC0g8OwJP1ij9i2PFyRvgF2jIo+Y+OBZIQTyZHnOlL/ImD?=
- =?iso-8859-1?Q?L0b4zB/Zc4OwTelEujWTukokTggRGA9YuMJQQV6w/R9Hn1Rxoo7bk6ryCl?=
- =?iso-8859-1?Q?YWzgkUKGkrAxIbniTMUD4yWJ/w9YjAsqIea4THSDu9ZPz0yH/JbrQP6lps?=
- =?iso-8859-1?Q?NDbO7AiGVE+1gpvAiok0EJn9KpokHH5r2DN0QlZMfosBMmbbaf6hPb+S2D?=
- =?iso-8859-1?Q?d8IMq+8tQGvLGCw0Y8pg86rNuzXtKbXWnprhPX5PWvDZ3gCoh9CXoMsEJj?=
- =?iso-8859-1?Q?zn4Baow/q3ABlUDsI3fF4C0gu+iUZ8JsX8V+0yTD60XB8QHCJY+WPddQ7y?=
- =?iso-8859-1?Q?kq4cQGYlSTdm2jcmOH3Ri9z3SnYiJZkJeTJpfa082jE/boXmT5gZiFtKoS?=
- =?iso-8859-1?Q?0CJR3FaR4Ft4TYuLXXKyylqmUises+fbc/JvI9qu6OkvN3KEsTwFdsLOEk?=
- =?iso-8859-1?Q?p+gOVO4uVM5A0kXKeWPF/p5ySBhWNF+wfmpf9FRZtF9HBJUlDUEW6N+SpY?=
- =?iso-8859-1?Q?7ds3JkHxymTuviDlEQtYyUk9rU+KKbUkNhKdgaUVULmHRaJDFMyVIx9edx?=
- =?iso-8859-1?Q?DB8NEKIUi1S5zGxJ1yKyIgECvLtycYODJrmmwWTAgT5sEtmcjFte3TdYhK?=
- =?iso-8859-1?Q?WuM+DjToVE8Fw2gX75fLbCj7JasztpPCvC1Nl4PtonExUtRXe0o4ErDDr0?=
- =?iso-8859-1?Q?STwbuc51Q1L0NYOtRhubsP5057s+QyJ7TnUF3Sk463+9Pm9RfFTlC26fxR?=
- =?iso-8859-1?Q?62nLY6R3Wq5oo30gWUcKYAaYu4zRbzT16BbQ/G6ywxMd6fYXYNxXJ5sur/?=
- =?iso-8859-1?Q?vLRwahRvW4mT/HTQr2eeysKawg/VE+ZJ4YfLatrLziBqjY08jFYNg0s/AR?=
- =?iso-8859-1?Q?ZwPYfY/A1Mejz1YeLEnch2uGK7YlxJpupe24PwXxou3rOakMuJItDVpXut?=
- =?iso-8859-1?Q?ivIkh0du9pKdC1uyO9eDWhX1AVSXQGxM5X4VEY4Y6eazTApZjBwniiNIlg?=
- =?iso-8859-1?Q?LbRE/0F04xc4X/NpkOUQbmrzAYg+sHiSW8uKlaN3hc5bqrt8mCn3F1baEa?=
- =?iso-8859-1?Q?2DmlxjkBxfLDT6gwD5eT4izPDKqOz6Go+PGYkyn+UIXrrLixUkUIBeU4sy?=
- =?iso-8859-1?Q?sTzu5Zr+lPNO/O+ppR6szwIBKnINJHS04WNW9n/VVu0/w4BjcU8rITY8mz?=
- =?iso-8859-1?Q?o=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?V4rDD5ugkxaFzOgo2Z44d3xvkmd9CKZP0uBwXijLxRRaOC3R3wqY3d1RE7?=
- =?iso-8859-1?Q?TO3OQi+ZS/oMH0aK2DLTI/xN5F9RGPE+Xu/p9EPF5Dn9sD0X7ZlIUUuZnu?=
- =?iso-8859-1?Q?fEAHWYVBu9NiYRNuXWwCOK5wyzsU1cgiZbetVn/EZ/U0N3hMp1RwtjHYs6?=
- =?iso-8859-1?Q?h056mtGH/tFPlsamr7DYGSIVhuJAv9apPpesO0AcTx7ql2bih/lkTs+iDE?=
- =?iso-8859-1?Q?BYX0C8JXetFX8PDOsRpjilLJtsVh/AZ63hUJDFYxkPnywJPA/IxdIHgzJl?=
- =?iso-8859-1?Q?AxrpkSOX4da2gMoxhW/27QyxM636OzNdzLjjmNLttrNDJtN+Ai5L+6JbIg?=
- =?iso-8859-1?Q?To9GtKNp8czJd1ULWyq4rvD24N4fbIcTlon9j/IAVoajZfWs0CZ8F/4Dh5?=
- =?iso-8859-1?Q?B+ebRCCKCtBRcMMzMcjd9Y3DqqAW8ZrQJLb1Lj85SCddgrwkJCO06viVM3?=
- =?iso-8859-1?Q?wJ+xXO69jxzQLhsU216yHmZpgGCQEiaROJm9DkpAHC6AYXZIOvk9IEXni8?=
- =?iso-8859-1?Q?LN0oPOQ9mchdN2UBdy6zpP7W/Odsr87vb+V0Lco2vSoxIsIphbqi6AxMfF?=
- =?iso-8859-1?Q?wcUwK1QC+XDbpxDYGaKWtUloGDMfLfSftvTOoRYhZ204JHtw3JHm+AkuHs?=
- =?iso-8859-1?Q?mGL3H/JQJr0G7OV2Hy7tGLLLsNQMwQbz5ORBU7dFBw5TRUePtsRmCvPU8j?=
- =?iso-8859-1?Q?6/ulVc/Mge+U53YkGcPV1pvM9FFfIVJfOxx1EP00edaa/mKd/X3Ukz1kOL?=
- =?iso-8859-1?Q?eA8Wz8r934hj7s4XkHqCAAHnn687yvldXhNZd1YOHwBADPJ2/2DiTR0jMZ?=
- =?iso-8859-1?Q?rf8Ua+3Ynw+PGm6WdR1k1RJYUAQHZBAVyGQIOe4RdIENA8c4M7xmRc0iq/?=
- =?iso-8859-1?Q?HrTU/1EQGXhZbnHemgVTX6nxxhgc+w9xmJYp/VHUlHtaOzTMaiWwBELBUu?=
- =?iso-8859-1?Q?M2YMDwkITIoXazHap5+GPb/CXhIMmIoY2gNG7AwicwLYf4Y0B7ec3thvsY?=
- =?iso-8859-1?Q?sdMmUsnx0Zdst7QlapYexntRWyMbSnSmO3F7DKruyXQgtPeVNuRhSlyQJ9?=
- =?iso-8859-1?Q?F5gM2decBS2rkDvijAaHFo+WrFOnTNG5s4Un9wghsILBkYjSJbFnxhtWTp?=
- =?iso-8859-1?Q?Y8SeKndDdMdpPHm8zn+kO4w/R6UxzhnebLUGdr1CdnaLLkuP441D2wHErM?=
- =?iso-8859-1?Q?pgGH4QKtz2Mc31SylhBljaRPHiOqTL6vf3hiWTV8P7Sj0waBcOhTacnpQ/?=
- =?iso-8859-1?Q?0fD9wJXwfaZIuFtiZUVwxvHarVi2w8Qmiz7a9hSbXhd5GVNB0ci4ybUYBY?=
- =?iso-8859-1?Q?R2SV28B/QozI3QydlbS7yStx3T4RTdpBUQ9LBp9CxeUy/r53BOyL9yQj4E?=
- =?iso-8859-1?Q?g9iKGQL1OyLtn8cJGZGsmKYwDZIPdZj8tqlyNUMNh0f3MLIedvP9McI7E1?=
- =?iso-8859-1?Q?yEYH8xcILRp9ih/HJf6sCEX3rn3qS52LeVhw0yEtSQf4A+dM5fwQXapyyl?=
- =?iso-8859-1?Q?nlBnUVpeROUd+f5pwAW0JjBfn8uGxgtN0xSrOLx1H2yrph/5ZB2Zmr7bHd?=
- =?iso-8859-1?Q?wR4mpgdr6Mm+f9j78CvmOQVcowQ+UmUoHh6Mi/eY1gGMGMOjJOP2otq7pm?=
- =?iso-8859-1?Q?2/lB2Bi5mu3LJLkjVo+NzLbmAq0CQh7iE1?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 791d0682-3f18-48be-6da0-08dda83fa47a
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2025 16:55:45.3752 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: ny81JUsPBCKLSj94HVn3ZluhY+dqT1Tof+8s8+jluyPm9WdCADBztqaWFv6nf/a4QSfMmzBBSz7NkCszY6CYAQ==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR02MB9756
-X-Proofpoint-GUID: _Vv7-694869fRkEcY19sr14lWYF00uHE
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEzNiBTYWx0ZWRfXygZDMSKLLRwM
- Ae7iS43aHSGaEtIKQjo1E+jGw/PVfY93Z1rf2Ce2dfzw4I/LCIphiuThhQKngUgBqJto8lw1aiA
- aqgD4u2pIvX++L69vWyLv9I4IroH6LTH6Cmb7NScg13bGCYIctBSm9GCrUuWig7rpdVjyKwI5SB
- IIGtEFN8SZwgKW+h+iQ1IKST6qMnLiGFNXtlWKqcKLnAstIoOKkCl57lpY7IAR1pcsdFHLLrX3R
- /ILxXHAYn+INGbdbSxFOFhb9XNdhE1OVlV4Rbfo3UEfVLA5wZCnCwoCCIJGUy4RN18zmGYBvwMi
- OJhdilHc1z/1WcN8Tj6lSuF09UZbhpQd9kEVpuTpPlNrB82Y/j6tJfv2o9wqNpB37uydepfKxfi
- pl1rYgNnfLWRHPAzLJl2LZMQF2Lvfm3/8a4qqLbJ1SoqoBET402IwUCKG7ki4557hYdydtHh
-X-Proofpoint-ORIG-GUID: _Vv7-694869fRkEcY19sr14lWYF00uHE
-X-Authority-Analysis: v=2.4 cv=ENgG00ZC c=1 sm=1 tr=0 ts=68486398 cx=c_pps
- a=1sVWB/l5Kn3omZIicXSEwA==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10
- a=x_M2XpB6T_037TNxxaIA:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_08,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+ definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506100125
+X-Authority-Analysis: v=2.4 cv=fdaty1QF c=1 sm=1 tr=0 ts=684851e3 b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=20KFwNOVAAAA:8
+ a=28Sen26mfX-obivxnQMA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:14714
+X-Proofpoint-ORIG-GUID: AuTk0hEJqYIvpY2dKASU1f0tYkCH9yGc
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX8ZYZTXmi9Ar3
+ h9KtX+nhDE4qTkWeK1se9+CihxCP7QndFZTOeLBqyMIvHZH2+6ATqmTl+nmPYweThXtFz4wE9RK
+ mw4nTv5Xkwb0B9JMlqo3cXZfd69bw0GrLAqGxwpUFlLiIW9hc6yChisSAMYGy2gUaitlNJSQcU5
+ o60ScJnziJMQscX86XoUoM/I4zMP3udawv/FMAIk62CXi0U/A7hPB9m5eWIt0YadgEj/FtIBGCc
+ ferlMh58aHpSNiYjCKyO26nC5kzLWIdhrK6eMcVT6t4HS47pyyXB+WHhC/NrwcqhgCJ+u3POb3u
+ nr9OmXuha4JTGwcYd1oaXAlXhbxByG4UTkBisr5tPW5fOeT2U8ZUZZunytti3cSIJBm22egMGl1
+ ZWnY9UMVYrefeZ3XoK0D2RdbS5QfUNkwItbjU56HQb1/aUiGTQVCvb/MJycuUNeD6nRFYOO5
+X-Proofpoint-GUID: AuTk0hEJqYIvpY2dKASU1f0tYkCH9yGc
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -27
 X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -206,17 +120,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 10, 2025 at 11:38:29AM +0200, Cédric Le Goater wrote:
+Move event_notifier_cleanup calls to a helper vfio_notifier_cleanup.
+This version is trivial, and does not yet use the vdev and nr parameters.
+No functional change.
 
-> > +
-> > +--------------
-> > +Version_ 0.9.1
-> > +--------------
-> 
-> Are you planning to have a subsection per version ?
-> 
-I've removed this, as it's not useful/meaningful at this point in time.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: CÃ©dric Le Goater <clg@redhat.com>
+---
+ hw/vfio/pci.c | 28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
-regards
-john
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index ebc1a4b..508701c 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -68,6 +68,12 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+     return !ret;
+ }
+ 
++static void vfio_notifier_cleanup(VFIOPCIDevice *vdev, EventNotifier *e,
++                                  const char *name, int nr)
++{
++    event_notifier_cleanup(e);
++}
++
+ /*
+  * Disabling BAR mmaping can be slow, but toggling it around INTx can
+  * also be a huge overhead.  We try to get the best of both worlds by
+@@ -180,7 +186,7 @@ fail_vfio:
+     kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, &vdev->intx.interrupt,
+                                           vdev->intx.route.irq);
+ fail_irqfd:
+-    event_notifier_cleanup(&vdev->intx.unmask);
++    vfio_notifier_cleanup(vdev, &vdev->intx.unmask, "intx-unmask", 0);
+ fail:
+     qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
+     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+@@ -212,7 +218,7 @@ static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
+     }
+ 
+     /* We only need to close the eventfd for VFIO to cleanup the kernel side */
+-    event_notifier_cleanup(&vdev->intx.unmask);
++    vfio_notifier_cleanup(vdev, &vdev->intx.unmask, "intx-unmask", 0);
+ 
+     /* QEMU starts listening for interrupt events. */
+     qemu_set_fd_handler(event_notifier_get_fd(&vdev->intx.interrupt),
+@@ -311,7 +317,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+     if (!vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
+                                 VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
+         qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-        event_notifier_cleanup(&vdev->intx.interrupt);
++        vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
+         return false;
+     }
+ 
+@@ -338,7 +344,7 @@ static void vfio_intx_disable(VFIOPCIDevice *vdev)
+ 
+     fd = event_notifier_get_fd(&vdev->intx.interrupt);
+     qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-    event_notifier_cleanup(&vdev->intx.interrupt);
++    vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
+ 
+     vdev->interrupt = VFIO_INT_NONE;
+ 
+@@ -501,7 +507,7 @@ static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
+     return;
+ 
+ fail_kvm:
+-    event_notifier_cleanup(&vector->kvm_interrupt);
++    vfio_notifier_cleanup(vector->vdev, &vector->kvm_interrupt, name, nr);
+ fail_notifier:
+     kvm_irqchip_release_virq(kvm_state, vector->virq);
+     vector->virq = -1;
+@@ -514,7 +520,7 @@ static void vfio_remove_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+                                           vector->virq);
+     kvm_irqchip_release_virq(kvm_state, vector->virq);
+     vector->virq = -1;
+-    event_notifier_cleanup(&vector->kvm_interrupt);
++    vfio_notifier_cleanup(vdev, &vector->kvm_interrupt, "kvm_interrupt", nr);
+ }
+ 
+ static void vfio_update_kvm_msi_virq(VFIOMSIVector *vector, MSIMessage msg,
+@@ -837,7 +843,7 @@ static void vfio_msi_disable_common(VFIOPCIDevice *vdev)
+             }
+             qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
+                                 NULL, NULL, NULL);
+-            event_notifier_cleanup(&vector->interrupt);
++            vfio_notifier_cleanup(vdev, &vector->interrupt, "interrupt", i);
+         }
+     }
+ 
+@@ -2955,7 +2961,7 @@ static void vfio_register_err_notifier(VFIOPCIDevice *vdev)
+                                        VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
+         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+         qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-        event_notifier_cleanup(&vdev->err_notifier);
++        vfio_notifier_cleanup(vdev, &vdev->err_notifier, "err_notifier", 0);
+         vdev->pci_aer = false;
+     }
+ }
+@@ -2974,7 +2980,7 @@ static void vfio_unregister_err_notifier(VFIOPCIDevice *vdev)
+     }
+     qemu_set_fd_handler(event_notifier_get_fd(&vdev->err_notifier),
+                         NULL, NULL, vdev);
+-    event_notifier_cleanup(&vdev->err_notifier);
++    vfio_notifier_cleanup(vdev, &vdev->err_notifier, "err_notifier", 0);
+ }
+ 
+ static void vfio_req_notifier_handler(void *opaque)
+@@ -3022,7 +3028,7 @@ static void vfio_register_req_notifier(VFIOPCIDevice *vdev)
+                                        VFIO_IRQ_SET_ACTION_TRIGGER, fd, &err)) {
+         error_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+         qemu_set_fd_handler(fd, NULL, NULL, vdev);
+-        event_notifier_cleanup(&vdev->req_notifier);
++        vfio_notifier_cleanup(vdev, &vdev->req_notifier, "req_notifier", 0);
+     } else {
+         vdev->req_enabled = true;
+     }
+@@ -3042,7 +3048,7 @@ static void vfio_unregister_req_notifier(VFIOPCIDevice *vdev)
+     }
+     qemu_set_fd_handler(event_notifier_get_fd(&vdev->req_notifier),
+                         NULL, NULL, vdev);
+-    event_notifier_cleanup(&vdev->req_notifier);
++    vfio_notifier_cleanup(vdev, &vdev->req_notifier, "req_notifier", 0);
+ 
+     vdev->req_enabled = false;
+ }
+-- 
+1.8.3.1
+
 
