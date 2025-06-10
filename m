@@ -4,137 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A177C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:30:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FFA6C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:55:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOsUA-0003JO-GF; Tue, 10 Jun 2025 02:29:26 -0400
+	id 1uOssP-0007rn-JO; Tue, 10 Jun 2025 02:54:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsU9-0003JG-JB
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:29:25 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uOssG-0007rF-GR
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:54:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsU7-0001T2-GY
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:29:25 -0400
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uOssC-0004Xv-9L
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:54:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749536960;
+ s=mimecast20190719; t=1749538454;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=gKyBQOT+CFYTtrGuuaOiwg+yRaYcMK5ows+7ceSOa/I=;
- b=MIzbc07mLvTlg5DI1HZhO35eKoyicPl9My4byLJU9KrycryAEEGTWe78+Hlzc1Nyw3RJSw
- nTezsk1JSckMc5uGHdfOYh0FqM3DUiAwpLrptFymbwQe6KcY/8HwW85i3rzQvt4zpje9zF
- +33nr3/V4YfuWJ3ouYRWGUJ7nChjP7g=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references;
+ bh=jTLjeh0ZFAKBjgmIFXj1HF0w+IgIOxtUcHM7LCQkMSI=;
+ b=IVgAEOJ+U1MRPmRh6r0iELmxVZR5l5Xwli6qgk2tq0B2bxm9nM5jEYVziL/mt+J7QtJ6os
+ RtiaCJknzxsB+VRzVHlv5my3hJKSB/dr7QkCulWVT4UvhDqGRnqV1sMM3qWt07V3/bcG2p
+ Moj47BB5F3vOCRfQOeaRisfzrnc8hV4=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-578-0HXciCUwOzufWRUq1aDAmA-1; Tue, 10 Jun 2025 02:29:19 -0400
-X-MC-Unique: 0HXciCUwOzufWRUq1aDAmA-1
-X-Mimecast-MFC-AGG-ID: 0HXciCUwOzufWRUq1aDAmA_1749536958
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4530623eb8fso17365645e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:29:19 -0700 (PDT)
+ us-mta-454-jpdX6sdfNJWX2CUBpkc9QA-1; Tue, 10 Jun 2025 02:54:12 -0400
+X-MC-Unique: jpdX6sdfNJWX2CUBpkc9QA-1
+X-Mimecast-MFC-AGG-ID: jpdX6sdfNJWX2CUBpkc9QA_1749538451
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2362e130be8so14822265ad.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:54:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749536958; x=1750141758;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=gKyBQOT+CFYTtrGuuaOiwg+yRaYcMK5ows+7ceSOa/I=;
- b=luItOMm0+9C0+ZyLvddWVX7NPCNXcmETx6KEjfiOfsEwSq0SnCLRtevpd0+HhQMG/i
- Or4fGYuhqZ36qbDslMaxhzW7xuLvwAXuZEyTTsPNZjpaeM2BTO2PuId5QnM2bM06/RmY
- ui0OMZRGoz+hL/fs3wVzcdBNaKaui+x3woHa34jd8405mZkUWR6yDTYSQEwl50HN1H1N
- 3DrdJ1kRmm6XsSzz+nyPUpZtUPjruotEgr7PY88vqgakE8MULFxR9GfZQoVVixEW+sLO
- L876uLzTELl0ZF7o4z1uUEDv6dr90kK6ucID02ZNBiVUFDjcxSsFP8NJgH50b+cWUz20
- I3Tw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV0n3N1l0WLlgZQiJIYrHxWw+mF3lZmuxBq3bAcR/VflAShxvgvVQ0vJtes1gRmCTHl63j0Dv9Uvm4E@nongnu.org
-X-Gm-Message-State: AOJu0Ywg7U80GA2BQC1DlWvylwzhNg82wh45G1hMr3m+iHV6Qlsa48eS
- ZTorUrnXVkDkfQEKMgu4UuoWxo2pstaBJvJeLsc2tfBJ7nwEiEfHh4AcXJDFo0ce/S4kLW8Lu69
- MdhEoQ1evtUKdvnRgqGXDCUxUP3z2KkgrOyMJejEEBa0Jb+4NvboX5H6U
-X-Gm-Gg: ASbGnctAQoL44V5W/aKzMMZz6kvLEHeO9cEi25c6ZRutqoSGphOrWx6GNkS7Z8C0+Ro
- C/0fo9RlL/cwWIBf919lHXgMYvFX0JFVo6RQpP8wpmFcvcy4aZOCrX1oW3zhzCi+2fryAMcX5rg
- eDkovlFLrTnq6F+Gl6Ay2HDxkHEyJ9rH2SRZrkGsBGgar6ZCo1cYI/fsHcM7qNmeB8wLSvfqQbU
- gPzIVNZRtX+t1ZV1BLryiWGbMiXkp1ysImZTIiuZ/UNFw6gKRvIKdSk3nD2kBzrmI6K+RWQlFWZ
- 1HZocj61wmfUIP7deRPN7Ff971k2F/oQLrts7+wsAZ4n648dDALxKczo+m+8
-X-Received: by 2002:a05:600c:1f94:b0:450:6b55:cf91 with SMTP id
- 5b1f17b1804b1-4531dde6b67mr11882405e9.6.1749536958234; 
- Mon, 09 Jun 2025 23:29:18 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH2d+o6xVU1bg/OKIkvHWOzeq7rCVeFs1xA2pG8cHnwKMvU8kTxLrcP93w5+C9kOs138Qlftg==
-X-Received: by 2002:a05:600c:1f94:b0:450:6b55:cf91 with SMTP id
- 5b1f17b1804b1-4531dde6b67mr11882245e9.6.1749536957843; 
- Mon, 09 Jun 2025 23:29:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ d=1e100.net; s=20230601; t=1749538451; x=1750143251;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=jTLjeh0ZFAKBjgmIFXj1HF0w+IgIOxtUcHM7LCQkMSI=;
+ b=sT5NG0McNjUZXArw3baAnpXN0Hy5T/F+9ORqnY2BEDmDhTK/h2DE4aLoRo6T5Hd+qp
+ CDMnxZkNxenqEfYutKsaeqtF8Jra0v7/yYd/Pu+cizTEVupZP/bwWlRRqqzEpYyGcRKd
+ /ozZTo1e0OeWhyYIUREWBYL4fptbfkAJGEoagMzDbL7YEWNxkj35sLaByVgMd2lKGd6m
+ pXrV4KMO8D0Pgn49fR/uA5TQn3D1zKhjy3o2YkN211hTf5y3Mnrm1ZrDofhZOoEj0T+6
+ mcJg48ZcZ+t5BttaG4X6eDJdMqd2bpFk3kmhLWcF1V9lxzdXdVJm/j9quWOjwkmz5c0a
+ pabg==
+X-Gm-Message-State: AOJu0YzoTm5X8kfFlUDvOwWY+wfVBlPfXP1WGRcejonAOq05d5L11zFa
+ ZZQ5lPKvRq4T/8ZrvpNGYJBGy8go294P2YLC/+Ff8zlgNI0d8h6Vem3l5tiZsci1aKP3Z+FufLR
+ rCe9wX8xOQjkKtn4EpijjO4VBsVPpB1B68jbg0pyQBCbhuv3tw/dPiEiK
+X-Gm-Gg: ASbGnctCy9NcSQYjAufr7ze2YZHadiBiRSq93dy4in0A5ZCDOiflfEg4NK8PrqENd0E
+ 7pwSUh9FA6Jl0jWNwq7P+Ce1drWfZSmBJug0+d2wDPKrA9C6nHY6ogTpGTAT7SY/MnJqwoDrNcA
+ gU3T58P9hWs/k+qK3kdA7B+DbZDs8TKaWMvN6KaShwHdKz28wmYfkHd02BaHD1MsoJhg1+sfUxo
+ qeWrNQatVS05t0ffxM/MHFe4EceVegAUWhsFJymUO+XVhu//4WwqOm+0HWqPFSOYuIhgq8qpfpB
+ J1eSvihmmHjOd0oIJbSieNB754Uv2O4QmTi2SXA=
+X-Received: by 2002:a17:902:f693:b0:235:f45f:ed2b with SMTP id
+ d9443c01a7336-23601d0417amr236007805ad.1.1749538451275; 
+ Mon, 09 Jun 2025 23:54:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrMdM30XleML0XId1VRSYrxBp3VIUkr1sogK7LqsPSwECxN/fqvg3aj/Nw7zyzSwHU7i65mg==
+X-Received: by 2002:a17:902:f693:b0:235:f45f:ed2b with SMTP id
+ d9443c01a7336-23601d0417amr236007615ad.1.1749538450884; 
+ Mon, 09 Jun 2025 23:54:10 -0700 (PDT)
+Received: from smtpclient.apple ([171.78.154.233])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532435b16sm11394678f8f.46.2025.06.09.23.29.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Jun 2025 23:29:17 -0700 (PDT)
-Message-ID: <138cee63-386d-4f80-a0be-de43cbb0303e@redhat.com>
-Date: Tue, 10 Jun 2025 08:29:16 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v13 3/4] hw/vfio/ap: Storing event information for an
- AP configuration change event
-To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
-References: <20250609164418.17585-1-rreyes@linux.ibm.com>
- <20250609164418.17585-4-rreyes@linux.ibm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
- 8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
- yzYe4SFMjFb6Oc0xkQmaK2flmiJNnnxPttYwKBPd98WfXMmjwAv7QfwW+OL3VlTPADgzkcqj
- 53bfZ4VblAQrq6Ctbtu7JuUGAxSIL3XqeQlAwwLTfFGrmpY7MroE7n9Rl+hy/kuIrb/TO8n0
- ZxYXvvhT7OmRKvbYuc5Jze6o7op/bJHlufY+AquYQ4dPxjPPVUT/DLiUYJ3oVBWFYNbzfOrV
- RxEwNuRbycttMiZWxgflsQoHF06q/2l4ttS3zsV4TDZudMq0TbCH/uJFPFsbHUN91qwwaN/+
- gy1j7o6aWMz+Ib3O9dK2M/j/O/Ube95mdCqN4N/uSnDlca3YDEWrV9jO1mUS/ndOkjxa34ia
- 70FjwiSQAsyIwqbRO3CGmiOJqDa9qNvd2TJgAaS2WCw/TlBALjVQ7AyoPEoBPj31K74Wc4GS
- Rm+FSch32ei61yFu6ACdZ12i5Edt+To+hkElzjt6db/UgRUeKfzlMB7PodK7o8NBD8outJGS
- tsL2GRX24QvvBuusJdMiLGpNz3uqyqwzC5w0Fd34E6G94806fwARAQABzSJDw6lkcmljIExl
- IEdvYXRlciA8Y2xnQHJlZGhhdC5jb20+wsGRBBMBCAA7FiEEoPZlSPBIlev+awtgUaNDx8/7
- 7KEFAmTLlVECGwMFCwkIBwICIgIGFQoJCAsCBBYCAwECHgcCF4AACgkQUaNDx8/77KG0eg//
- S0zIzTcxkrwJ/9XgdcvVTnXLVF9V4/tZPfB7sCp8rpDCEseU6O0TkOVFoGWM39sEMiQBSvyY
- lHrP7p7E/JYQNNLh441MfaX8RJ5Ul3btluLapm8oHp/vbHKV2IhLcpNCfAqaQKdfk8yazYhh
- EdxTBlzxPcu+78uE5fF4wusmtutK0JG0sAgq0mHFZX7qKG6LIbdLdaQalZ8CCFMKUhLptW71
- xe+aNrn7hScBoOj2kTDRgf9CE7svmjGToJzUxgeh9mIkxAxTu7XU+8lmL28j2L5uNuDOq9vl
- hM30OT+pfHmyPLtLK8+GXfFDxjea5hZLF+2yolE/ATQFt9AmOmXC+YayrcO2ZvdnKExZS1o8
- VUKpZgRnkwMUUReaF/mTauRQGLuS4lDcI4DrARPyLGNbvYlpmJWnGRWCDguQ/LBPpbG7djoy
- k3NlvoeA757c4DgCzggViqLm0Bae320qEc6z9o0X0ePqSU2f7vcuWN49Uhox5kM5L86DzjEQ
- RHXndoJkeL8LmHx8DM+kx4aZt0zVfCHwmKTkSTQoAQakLpLte7tWXIio9ZKhUGPv/eHxXEoS
- 0rOOAZ6np1U/xNR82QbF9qr9TrTVI3GtVe7Vxmff+qoSAxJiZQCo5kt0YlWwti2fFI4xvkOi
- V7lyhOA3+/3oRKpZYQ86Frlo61HU3r6d9wzOwU0EW7yjdQEQALyDNNMw/08/fsyWEWjfqVhW
- pOOrX2h+z4q0lOHkjxi/FRIRLfXeZjFfNQNLSoL8j1y2rQOs1j1g+NV3K5hrZYYcMs0xhmrZ
- KXAHjjDx7FW3sG3jcGjFW5Xk4olTrZwFsZVUcP8XZlArLmkAX3UyrrXEWPSBJCXxDIW1hzwp
- bV/nVbo/K9XBptT/wPd+RPiOTIIRptjypGY+S23HYBDND3mtfTz/uY0Jytaio9GETj+fFis6
- TxFjjbZNUxKpwftu/4RimZ7qL+uM1rG1lLWc9SPtFxRQ8uLvLOUFB1AqHixBcx7LIXSKZEFU
- CSLB2AE4wXQkJbApye48qnZ09zc929df5gU6hjgqV9Gk1rIfHxvTsYltA1jWalySEScmr0iS
- YBZjw8Nbd7SxeomAxzBv2l1Fk8fPzR7M616dtb3Z3HLjyvwAwxtfGD7VnvINPbzyibbe9c6g
- LxYCr23c2Ry0UfFXh6UKD83d5ybqnXrEJ5n/t1+TLGCYGzF2erVYGkQrReJe8Mld3iGVldB7
- JhuAU1+d88NS3aBpNF6TbGXqlXGF6Yua6n1cOY2Yb4lO/mDKgjXd3aviqlwVlodC8AwI0Sdu
- jWryzL5/AGEU2sIDQCHuv1QgzmKwhE58d475KdVX/3Vt5I9kTXpvEpfW18TjlFkdHGESM/Jx
- IqVsqvhAJkalABEBAAHCwV8EGAECAAkFAlu8o3UCGwwACgkQUaNDx8/77KEhwg//WqVopd5k
- 8hQb9VVdk6RQOCTfo6wHhEqgjbXQGlaxKHoXywEQBi8eULbeMQf5l4+tHJWBxswQ93IHBQjK
- yKyNr4FXseUI5O20XVNYDJZUrhA4yn0e/Af0IX25d94HXQ5sMTWr1qlSK6Zu79lbH3R57w9j
- hQm9emQEp785ui3A5U2Lqp6nWYWXz0eUZ0Tad2zC71Gg9VazU9MXyWn749s0nXbVLcLS0yop
- s302Gf3ZmtgfXTX/W+M25hiVRRKCH88yr6it+OMJBUndQVAA/fE9hYom6t/zqA248j0QAV/p
- LHH3hSirE1mv+7jpQnhMvatrwUpeXrOiEw1nHzWCqOJUZ4SY+HmGFW0YirWV2mYKoaGO2YBU
- wYF7O9TI3GEEgRMBIRT98fHa0NPwtlTktVISl73LpgVscdW8yg9Gc82oe8FzU1uHjU8b10lU
- XOMHpqDDEV9//r4ZhkKZ9C4O+YZcTFu+mvAY3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfA
- HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
- izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250609164418.17585-4-rreyes@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ d9443c01a7336-23603406916sm64399075ad.169.2025.06.09.23.54.08
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 09 Jun 2025 23:54:10 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
+Subject: Re: [PATCH] MAINTAINERS: Update the paths to the testing
+ documentation files
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20250610053734.10417-1-thuth@redhat.com>
+Date: Tue, 10 Jun 2025 12:23:56 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-block@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alexander Bulekov <alxndr@bu.edu>, Fabiano Rosas <farosas@suse.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <58CEF573-E771-44F4-A09C-36D792057953@redhat.com>
+References: <20250610053734.10417-1-thuth@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+X-Mailer: Apple Mail (2.3776.700.51.11.4)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,140 +114,89 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/9/25 18:44, Rorie Reyes wrote:
-> These functions can be invoked by the function that handles interception
-> of the CHSC SEI instruction for requests indicating the accessibility of
-> one or more adjunct processors has changed.
-> 
-> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-> Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+
+
+> On 10 Jun 2025, at 11:07=E2=80=AFAM, Thomas Huth <thuth@redhat.com> =
+wrote:
+>=20
+> From: Thomas Huth <thuth@redhat.com>
+>=20
+> When the testing docs were moved to a separate subfolder, the entries
+> in the MAINTAINERS file were missed. Update them now.
+>=20
+> Fixes: ff41da50308 ("docs/devel: Split testing docs from the build =
+docs and move to separate folder")
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+
 > ---
->   hw/vfio/ap.c                 | 40 ++++++++++++++++++++++++++++++++++++
->   include/hw/s390x/ap-bridge.h | 39 +++++++++++++++++++++++++++++++++++
->   2 files changed, 79 insertions(+)
-> 
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index 681fd4a4f1..874e0d1eaf 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -10,6 +10,7 @@
->    * directory.
->    */
->   
-> +#include <stdbool.h>
->   #include "qemu/osdep.h"
->   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
->   #include <linux/vfio.h>
-> @@ -101,6 +102,38 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
->   
->   }
->   
-> +int ap_chsc_sei_nt0_get_event(void *res)
-> +{
-> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
-> +    APConfigChgEvent *cfg_chg_event;
-> +
-> +    WITH_QEMU_LOCK_GUARD(&cfg_chg_events_lock) {
-> +        if (QTAILQ_EMPTY(&cfg_chg_events)) {
-> +            return EVENT_INFORMATION_NOT_STORED;
-> +        }
-> +
-> +        cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
-> +        QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
-> +    }
-> +
-> +    memset(nt0_res, 0, sizeof(*nt0_res));
-> +    g_free(cfg_chg_event);
-> +    nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
-> +    nt0_res->length = sizeof(ChscSeiNt0Res);
-> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
-> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
-> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
-> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
-> +
-> +    return EVENT_INFORMATION_STORED;
-> +}
-> +
-> +bool ap_chsc_sei_nt0_have_event(void)
-> +{
-> +    QEMU_LOCK_GUARD(&cfg_chg_events_lock);
-> +    return !QTAILQ_EMPTY(&cfg_chg_events);
-> +}
-> +
->   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->                                             unsigned int irq, Error **errp)
->   {
-> @@ -197,6 +230,13 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
->       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
->       VFIODevice *vbasedev = &vapdev->vdev;
->   
-> +    static bool lock_initialized;
-> +
-> +    if (!lock_initialized) {
-> +        qemu_mutex_init(&cfg_chg_events_lock);
-> +        lock_initialized = true;
-> +    }
-> +
-
-cfg_chg_events_lock could be initialized in a __constructor__ routine.
-
-
-Thanks,
-
-C.
-
-
-
->       if (!vfio_device_get_name(vbasedev, errp)) {
->           return;
->       }
-> diff --git a/include/hw/s390x/ap-bridge.h b/include/hw/s390x/ap-bridge.h
-> index 470e439a98..7efc52928d 100644
-> --- a/include/hw/s390x/ap-bridge.h
-> +++ b/include/hw/s390x/ap-bridge.h
-> @@ -16,4 +16,43 @@
->   
->   void s390_init_ap(void);
->   
-> +typedef struct ChscSeiNt0Res {
-> +    uint16_t length;
-> +    uint16_t code;
-> +    uint8_t reserved1;
-> +    uint16_t reserved2;
-> +    uint8_t nt;
-> +#define PENDING_EVENT_INFO_BITMASK 0x80;
-> +    uint8_t flags;
-> +    uint8_t reserved3;
-> +    uint8_t rs;
-> +    uint8_t cc;
-> +} QEMU_PACKED ChscSeiNt0Res;
-> +
-> +#define NT0_RES_RESPONSE_CODE 1
-> +#define NT0_RES_NT_DEFAULT    0
-> +#define NT0_RES_RS_AP_CHANGE  5
-> +#define NT0_RES_CC_AP_CHANGE  3
-> +
-> +#define EVENT_INFORMATION_NOT_STORED 1
-> +#define EVENT_INFORMATION_STORED     0
-> +
-> +/**
-> + * ap_chsc_sei_nt0_get_event - Retrieve the next pending AP config
-> + * change event
-> + * @res: Pointer to a ChscSeiNt0Res struct to be filled with event
-> + * data
-> + *
-> + * This function checks for any pending AP config change events and,
-> + * if present, populates the provided response structure with the
-> + * appropriate SEI NT0 fields.
-> + *
-> + * Return:
-> + *   EVENT_INFORMATION_STORED - An event was available and written to @res
-> + *   EVENT_INFORMATION_NOT_STORED - No event was available
-> + */
-> +int ap_chsc_sei_nt0_get_event(void *res);
-> +
-> +bool ap_chsc_sei_nt0_have_event(void);
-> +
->   #endif
+> MAINTAINERS | 15 ++++++++-------
+> 1 file changed, 8 insertions(+), 7 deletions(-)
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index aa6763077ea..eb2b338fb11 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -2124,7 +2124,7 @@ M: Michael S. Tsirkin <mst@redhat.com>
+> S: Supported
+> F: tests/functional/acpi-bits/*
+> F: tests/functional/test_acpi_bits.py
+> -F: docs/devel/acpi-bits.rst
+> +F: docs/devel/testing/acpi-bits.rst
+>=20
+> ACPI/HEST/GHES
+> R: Dongjiu Geng <gengdongjiu1@gmail.com>
+> @@ -3440,8 +3440,8 @@ F: system/qtest.c
+> F: include/system/qtest.h
+> F: accel/qtest/
+> F: tests/qtest/
+> -F: docs/devel/qgraph.rst
+> -F: docs/devel/qtest.rst
+> +F: docs/devel/testing/qgraph.rst
+> +F: docs/devel/testing/qtest.rst
+> X: tests/qtest/bios-tables-test*
+> X: tests/qtest/migration-*
+>=20
+> @@ -3459,7 +3459,7 @@ F: tests/qtest/fuzz-*test.c
+> F: tests/docker/test-fuzz
+> F: scripts/oss-fuzz/
+> F: hw/mem/sparse-mem.c
+> -F: docs/devel/fuzzing.rst
+> +F: docs/devel/testing/fuzzing.rst
+>=20
+> Register API
+> M: Alistair Francis <alistair@alistair23.me>
+> @@ -4078,7 +4078,7 @@ M: Stefan Hajnoczi <stefanha@redhat.com>
+> L: qemu-block@nongnu.org
+> S: Supported
+> F: block/blkverify.c
+> -F: docs/devel/blkverify.rst
+> +F: docs/devel/testing/blkverify.rst
+>=20
+> bochs
+> M: Stefan Hajnoczi <stefanha@redhat.com>
+> @@ -4156,7 +4156,7 @@ M: Hanna Reitz <hreitz@redhat.com>
+> L: qemu-block@nongnu.org
+> S: Supported
+> F: block/blkdebug.c
+> -F: docs/devel/blkdebug.rst
+> +F: docs/devel/testing/blkdebug.rst
+>=20
+> vpc
+> M: Kevin Wolf <kwolf@redhat.com>
+> @@ -4276,7 +4276,8 @@ F: tests/vm/
+> F: tests/lcitool/
+> F: tests/functional/test_*_tuxrun.py
+> F: scripts/archive-source.sh
+> -F: docs/devel/testing.rst
+> +F: docs/devel/testing/ci*
+> +F: docs/devel/testing/main.rst
+> W: https://gitlab.com/qemu-project/qemu/pipelines
+> W: https://travis-ci.org/qemu/qemu
+>=20
+> --=20
+> 2.49.0
+>=20
 
 
