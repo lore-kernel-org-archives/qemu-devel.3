@@ -4,229 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7278C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:15:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83AF1C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:19:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2Yn-00059q-8s; Tue, 10 Jun 2025 13:14:53 -0400
+	id 1uP2ci-0006LI-Ch; Tue, 10 Jun 2025 13:18:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP2Yk-00059G-N2
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:14:50 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2cf-0006L4-8U
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:18:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP2Yi-0007YU-Ar
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:14:50 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AGMZIC010129;
- Tue, 10 Jun 2025 17:14:44 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- corp-2025-04-25; bh=aGfNtXctI+NTPEunUsWERdj+RNXb6q4CJpRi3J0Y/wA=; b=
- DHmUFCA9RhISUAkao4lsGUCEnaIg2h/ccwcI7lVTNcAcibVbpzDJG4dvdJLsbP4u
- MDL4/CCh28lsCBuIjzB45kCsu/z6nTOqVfo9EKI6TtwPtlJ+W+5+3LySMapV4/Tx
- 2KctDrPYK5MQiLS/AWwxUxeS3nyBd6CR3gi2+3oZqqWYjJX6eMPOKQat2xiQBqPV
- qAIoa5L86VlCqHOehj6UaBrW1arQ0LUvKg5L+xwLvZQQ+YhmA+E/kMln06ybg5VR
- E8Jg1A48yLF2sTNSaimwfBBrHuoXDZMurQCpUPv04bwOfFTlh7xuDE2BwYWr1+9A
- IH4RquCddCFw9j6DzmdrSQ==
-Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c14cptq-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 17:14:44 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AH0tMQ012043; Tue, 10 Jun 2025 17:14:43 GMT
-Received: from nam02-bn1-obe.outbound.protection.outlook.com
- (mail-bn1nam02on2062.outbound.protection.outlook.com [40.107.212.62])
- by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bva0gbv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 17:14:43 +0000
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k6V9y+5/socFK65N9voNcUhvVuHVgCNOS9FlKpf4Y6jSTkJ04HO6zN4sc6OWUNdeaoo8MMWm1j6xp4n7++MGsTJR5fkFPSfsgcPjhvk37BoGahOtzNKFNB3lxotVq9UHIC4MklTuZAU5ZwRr01meRnn7ub8zaVq28pd3mGwCoZg7RY1Eu1xGfIwT73wG8vhcwfe6Crwr/nDdd0I7wTHQJ3hjXJmLiWvQfAFzWyeImpTh4P+tt505RWUgMvHDLHcFV1UPvvS75x4OMrSzVHFP2p8DTvE6uPUbZvlFP4y3FgEmTUD5LgUfpCZZ9gKOSs3Rfw8pwMmWtusi9LG0B++BmA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=aGfNtXctI+NTPEunUsWERdj+RNXb6q4CJpRi3J0Y/wA=;
- b=sCzMs6SZ8ZSt+O7m+GfjOcw6s/JQL103Y4UJTlPAnG7Snw6tc5a2gS1NqAPyTFioLDspTm1gqfmVEqjEu0LAzGYmtJptgbhUbfI6YTt7c5flFLDN/GTd/teArb3Ule56IVVUSh8ksjnPzbG0qZy1rr+G2SKFq9kOMNlQ0VnEnm8Ga2hUAvggGicihbgP0TduFwRV1fJh2ur3MN52XLKhcmQzfkmvQ9XcHqf40tLqkmHTx4QsyC2xrkJGokz1igVvtA8K5bS94C4u5Iysl7cX/ARuvX5UoY535uAgX47mGktEnggQhX2Dk00Gz2ZcIBnixHjLqf+HmoaKzViamPlKsQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
- dkim=pass header.d=oracle.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=aGfNtXctI+NTPEunUsWERdj+RNXb6q4CJpRi3J0Y/wA=;
- b=SVi4tMOPDmGQ/roh9Mx+tQz2kEnqg0haUshmSXLtzHZ6jX8jxVzgXql3IqAQLqiZ6NBBcuKprHFg+fRNoJ15N0mSWMhBcTrw84t6+c16OhaXsYmZ6x+CeDWPrVdIDaF7wTN6XTwVzC42edNEa5QW061G0ugTlUFjzfaV5s2AJWY=
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
- by CH3PR10MB6834.namprd10.prod.outlook.com (2603:10b6:610:14a::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.26; Tue, 10 Jun
- 2025 17:14:40 +0000
-Received: from IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
- ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8835.018; Tue, 10 Jun 2025
- 17:14:40 +0000
-Message-ID: <c629f838-9a2c-44b7-b300-b8a6f42e5588@oracle.com>
-Date: Tue, 10 Jun 2025 13:14:34 -0400
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 16/43] pci: skip reset during cpr
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- "Michael S. Tsirkin" <mst@redhat.com>
-Cc: qemu-devel@nongnu.org, Alex Williamson <alex.williamson@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-17-git-send-email-steven.sistare@oracle.com>
- <d62bd9c6-1660-4d16-8d7d-5445ba6c5031@redhat.com>
- <20250601150607-mutt-send-email-mst@kernel.org>
- <899ee161-2c5d-4aa2-aa64-5135b26bc3ff@oracle.com>
- <0a50d630-57c7-4f05-93c7-73be8f575873@redhat.com>
- <c01c7c19-2422-45c7-9582-09ca37170974@redhat.com>
- <468008fc-a86f-4b90-86c3-1109d68f6fc2@oracle.com>
- <76b58b82-a867-4577-8644-88e419a8d85f@redhat.com>
- <20250610122246-mutt-send-email-mst@kernel.org>
- <6354f3a8-6309-495a-9014-6f5243a7785e@oracle.com>
- <296d0933-3f77-48f4-9096-8bd358aae617@redhat.com>
-Content-Language: en-US
-From: Steven Sistare <steven.sistare@oracle.com>
-In-Reply-To: <296d0933-3f77-48f4-9096-8bd358aae617@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SJ0PR13CA0016.namprd13.prod.outlook.com
- (2603:10b6:a03:2c0::21) To IA1PR10MB7447.namprd10.prod.outlook.com
- (2603:10b6:208:44c::10)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2cY-0000PQ-UU
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:18:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749575920;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uoNO9Twp/KQIRGD9xHtKr/XpL1jOH0UD+Pt2/bQjcSs=;
+ b=Fb0jyLbsnn7HsMl5DrBu9uBHnV7ASpj7qDXM9IM9VHRMxendfnvYgUvR0LaeT7oyru3/m0
+ wDlwsV5v5JAt1w2/hLA7x2AgaEodtFsxK3DNYogOamYg6HMZnQzqxuMhv0XVW7+MxdDLQX
+ sXkolT3FVU7PTuYnVP0ox/Yg2lNpHNg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-610-6VTDXcdENISsQM7sInAlqw-1; Tue, 10 Jun 2025 13:18:39 -0400
+X-MC-Unique: 6VTDXcdENISsQM7sInAlqw-1
+X-Mimecast-MFC-AGG-ID: 6VTDXcdENISsQM7sInAlqw_1749575918
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450eaae2934so51330975e9.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 10:18:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749575918; x=1750180718;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uoNO9Twp/KQIRGD9xHtKr/XpL1jOH0UD+Pt2/bQjcSs=;
+ b=PrceA5x1f6hyLvflWUQIvfaVh3VFCF6pBb07lZIw4XB9kSqkNplhWyogaIWw5h5q+3
+ aWirVU5YLl0Pz+pAWhkKdFTCksoQevfzdZBrSVg2PFzoY/eNjwYXkmrIKKMrwPT1KMpI
+ /cW5HVaUsRTzDi5yePSE3IFwsdk8UrYwEUDuXbk+DN0ygVD5CTh4gJgtaotjJmUNoTLj
+ HyOJXHGl/L1Mh0mBsrPVXowroKbk7LQClhdtHcEI9xZATZ03fOa7NJDdSEj4zjPTrxVX
+ 7oN4BjAgsR1DQz1urFcNUrUehAGytPmQdJdHPbSdejlQT+aoI+yiFb+UZQ8nAiaqiRGv
+ wvXw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULxmTffcEEyK4IMzeWdjSTIHIOoz6tAnZicFLzuLf13XJogEbKlcNhx/niAYMnDQG/EuVjLI3gIVvo@nongnu.org
+X-Gm-Message-State: AOJu0YzXoCoSuNmvicsG58GElZx2Ui3V5kjQwLuS8Evi+fvMR21vd8gx
+ ImkBNtSeMId48MYNJZfI24WftsuGq/D5ASkZis0CL+5ORXu7jno2Q6lKbPPDcHlMhJ2AbapZCph
+ JFUVGami2d6qP43pf0Ilkf9dXfL+jdv/lJqdOPxzfFCauegm3FuvbcTMg
+X-Gm-Gg: ASbGnct4gM2RI4nYsxg++nhtdfckAiDtNBirWW6yWfILQZO42oDBrL1bO1ac9SNL8YU
+ HfKJvNRIqgU6uxFc4hCIpDaO+EX8OTLSXu32bRv+vdP9ruU5WLO1DoOXjCKyrKMf5EvTRdsc4l9
+ FcEEfkCh86GdRszmqDSVT1dYGgcmxNrYsz1Ebu/f1L66Bmwic0VQelsbxF7oPA8U/3g+I9izhw4
+ mnbCqPQPCqZ6tUEXpgN81XVgVWM4Rf7znZLEpfQ965IfjcRm35nAgn3n5iIBpdHbccFQiQWhAmt
+ 0ixRi8NilWZEif9BaUYIPpBT/bSykVEqXwLtpgjuQVQnbo1VzoOYqOkf9R/M
+X-Received: by 2002:a05:600c:3f0e:b0:44a:b7a3:b95f with SMTP id
+ 5b1f17b1804b1-453240a91admr2409895e9.25.1749575918176; 
+ Tue, 10 Jun 2025 10:18:38 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IENbJVMxULjz5Bj3vW4dUUjHwRrJun+hT4a941Y+U9mcKFlrm9r9Fka6GT9KlpunlLnT/kcZg==
+X-Received: by 2002:a05:600c:3f0e:b0:44a:b7a3:b95f with SMTP id
+ 5b1f17b1804b1-453240a91admr2409625e9.25.1749575917761; 
+ Tue, 10 Jun 2025 10:18:37 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-452730b9b3esm146030385e9.25.2025.06.10.10.18.36
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 10:18:37 -0700 (PDT)
+Message-ID: <0330df5e-8a9d-4fdf-bee8-a864eedac24d@redhat.com>
+Date: Tue, 10 Jun 2025 19:18:36 +0200
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|CH3PR10MB6834:EE_
-X-MS-Office365-Filtering-Correlation-Id: bf87d603-ff95-4428-74f5-08dda84248fa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|7416014|1800799024|366016|376014;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?V0xXUEw4MEpDYWs1YTA2MHRVSFZKdDU3UnBHeThZTmVwYkQ3Q2x3cVVYYVNw?=
- =?utf-8?B?R3RLTk9oQWtTejE3RDYycTY5TS9ER1A4dlFNQkVURDUxQW5QWGlrOEFKcHo5?=
- =?utf-8?B?eSsyT0ZuSFQ2LzZJSlNnU1JuMFFUbklVSk5NalRSZlhhUmdISmJ0ZmRZRTNk?=
- =?utf-8?B?clgyWjhSZTM0RXhRSXVZR3NraUFqNWtyTmFXbFY4NmNQUHhGVlBxd1JMcjB4?=
- =?utf-8?B?SmdqaW1ESC9QR2Q3elZWNnJKOURWUTNCOFBZWVJMdWtnajdwNHN1Kzg1VUFy?=
- =?utf-8?B?SDVKalVqcUlIKzFPa2k5dTlUY3BURVZMSVJmVjZXU0NJdk1yT29qaU5qai8x?=
- =?utf-8?B?R09mM1AvVmJPdzVnbS9uNmNPTFhoZHdlTkx0VFlvZXVpUlVJenVOVmdzUTc4?=
- =?utf-8?B?SGtFQUdIOW9OblhoNWZlalEyZEtEVCtWQTZ3cHNTYmRJVUovb1VPZlEzMWZK?=
- =?utf-8?B?cW9YZGhENVlRVWxva0dUaHlNNVhiRFlpbUhEYnp4MkorMGVybCtLdkczaHhv?=
- =?utf-8?B?V2Q4RlllVUZmZTF0UmJGaUx4alk0bXdSMDdEK2pOamlMbTBLUmhxeXR2YnVq?=
- =?utf-8?B?b2dNR3pUb1JYaW5BZFNXTTYvNHlPRzJlMDVPOW8rOHJGN3BMR0MrK05kUFNT?=
- =?utf-8?B?Ri9Ecm1SZkcyTWVPOENWTVlNNEF4YlNhNWNiQ0tpaGRuNXc3c2M0ZEtyT3hJ?=
- =?utf-8?B?Tk1WU2FLTzJuUlFMRzBzaDNoZDZZMTZtOVJFRWJwOHRiYUFNNHVtUjErZ2ZD?=
- =?utf-8?B?VUxUdnNHajJkYTZRaGxBQUZuMTE4MGgwMTNycldoaDVRUWJGTkZuN3JpSi9s?=
- =?utf-8?B?amVnbnZsMHE0S2dJYjgraDNDeUN2L041K2JkS1NOM2NubkpFVEZzdXV0QnE0?=
- =?utf-8?B?djlEUTMrdFRVcDdIUS8wNkZUeGZjc2xGdU5kWlRFR0lIUlZpMEZ5WWZTQlNC?=
- =?utf-8?B?RCtGOVU5VjZXSWw4dUhaWUZKYzJETGxNWkFMaURHZ1h6RFlJS3JMZ2EzZEhT?=
- =?utf-8?B?eEd3VjdKbGZ1d0lvRXZpaHF3aE9yQXhXcnpSNlYzTC9mQW9zNjdKMkZQOEZh?=
- =?utf-8?B?Y0g3T0VLdEtISVZmQjVZZlNPcXNpTG4xNndpRzhsZlNsQzI3cDFPWTk5OXZF?=
- =?utf-8?B?eVpSU01XWm5hblpNdWdzcElXTHRxRDVzazNFcGFVVHZoUkZnSTQwMGVZWHht?=
- =?utf-8?B?clZlZjdZR1grbmZXblA1cENQNEMzWkRRczhFL29WL09yQnNYYmtvc09PdWd4?=
- =?utf-8?B?SFptaEhCQ09kQWVtaGpMZDdjeEF3RWRlSm83SWU5ZUZaOVRxRERSUHhDaTZT?=
- =?utf-8?B?V2wrNFlQUFAzbzg5emYzOHZjYmsyemV0OWJUcW5IWERWN2x3MlJaK1Viei9n?=
- =?utf-8?B?cDB3OHVMRFBrNVl0OWVneXVMRWw5WG9YM2N4V1pnUFh0R253ODVxWlNKek50?=
- =?utf-8?B?WUtwL0FTb2NtS3E1czY3Z3RvSzBjUkFWZlZYcnZ5b0xYZFdpRktVU0NkWkZB?=
- =?utf-8?B?UGpUb09QL2g5ZzViL01TcHA2cGdnZ3R4US9PRnoyM0o0ZFJWN0RYKzVrNlhv?=
- =?utf-8?B?Z2djdWhwT0FZbmU0ZkhMazBqMDgzaEZMdWp2ZU5oMjI5M2ZQdk1VczhVeHBa?=
- =?utf-8?B?RWYwaTgzRGJLUlZnak9ranUyREh4YzhoTDc3WUMxN2l1bm9NZ29TaEl2SU03?=
- =?utf-8?B?bTk0YnZnVTlicUhITkVMSEhXeTNNRkFiMWE3alJzOUJUK1hPOVdzZE1vdFF0?=
- =?utf-8?B?UXlJRlV3UnNjVGltVjErM2hzVzBic2ZPK3QvVEo4cWEzN1FCa2M1cktlaDdv?=
- =?utf-8?B?N2xTVEtSajVZaGk4djNHRVlYWnZKNFdEYXFJWmhCSXdMc0hXYTd4M1pDeXlR?=
- =?utf-8?B?elJsMXBnODFsdWt1OEI1WUFwNVY1UkI3cFR3ek9OdzhyOXc9PQ==?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(1800799024)(366016)(376014); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?enpWM3UzQ01IOEIvNFhWc3pZUmJSOEU5L2F6SjFrc3h3MjRRVkg3ZFhNaCtN?=
- =?utf-8?B?U203MitxdGlqV1YxdlBUVEhUNGxTT2gwSjBQbWFRb2Y0UTdSUzNEMjNKVUUw?=
- =?utf-8?B?M1AvZlhzVW9BS2ZNckt6d00xR2ExWGFaYTlCSnVneHFab3dsdVpUNFk2ZHlv?=
- =?utf-8?B?VWxxeHhYWjNDMzA1SkFNUFkwVm9hekdrY3hmUmVVbzlGM2hZTGpmLzNTQ0JB?=
- =?utf-8?B?a1l4NURNQkhtcmJrMENVemV5V2dCWDFWOVdxVTFGWWxkeVZmb3JqYU1JWHB6?=
- =?utf-8?B?MldhZnJMWjhoZC83Rjd4YUxlQ24xV3RtTk1QdTNiWFBiVmpRak5KdUluS1cv?=
- =?utf-8?B?VmF6ZlJaSFk0NlBvZVA4NUQrR3RDZWlBODE5RmE1M3Y5bjJsdlNzSVRJYUNQ?=
- =?utf-8?B?dG4zTUt6aVJnNzc1UExuOHJIRnhDanZPN0lrdWs5V256Slo5YW5vVXdicHNk?=
- =?utf-8?B?T0s0Q0NheDVXSkxudXB5TitTVllEbTJCSDFQU1RBZ0FXbjNhRWlWeFdYS1Mw?=
- =?utf-8?B?RVhaOXhGZkxGNUNOZEZ5cmJSaEFzUklmU2N2WHJYSTZKZUVjbmludWNKYzZl?=
- =?utf-8?B?eE80bW9nVzhtMTFQUWtWb2dJRU11VTVmeW53R1NzRlVJMStZcXJGOUI1eUVL?=
- =?utf-8?B?bkpENU9WdkhkczhXY3QyU0JkMGd1eTQ3THBBUk5BK0RqbEs1Um9iTzNmSUZn?=
- =?utf-8?B?V2trSmZuVVNnaVpOTU1SeEVwNHhxUFJZN2lremNaVkZCTlEwNVQ0dGJhM3BH?=
- =?utf-8?B?K2FmTDVML2wxeXM0bE5JYWFSeEVmUjlmdnFDemEwUml0M3dJR0R4VHljRU56?=
- =?utf-8?B?bFBwd3JKdXhiRWZkSWJ6djdDMU1ocStYR2xxN0xSanBLU1F4bSsxYURvSUV4?=
- =?utf-8?B?WC9lYTYyQWxiWFhHMnVvbEZLU0RSb1NJRXB1bGd3TjRXQzROTWRualE0TmNW?=
- =?utf-8?B?bXZTMGQyRnFSWjRoUzU1RGNoRW5yT0JCUStXbHVRcEptTUc0TVdqNXJvRWtR?=
- =?utf-8?B?YTVKbDFHaUlxeUJkNTRrck5KR05PMXFhMnhEeERoa3hTcWJDZTNqWnZRR1I0?=
- =?utf-8?B?Y0YzbU9EcVVXdGtiOXFMQWhjNUw2dVpPOEZWa3ZHVy9meDRtTmFvYkQ0aTVM?=
- =?utf-8?B?LzFSS3ZzdUdXSGFQZ1laUlFDVHp1VXFxZFFqenQyRllzVUxHRkhNVVFCTGR4?=
- =?utf-8?B?RlpIVVpPaEFoQnlNUE1BaGQ1dytmM0w3NFhYMm85MUVWbTF6emduNEdkK2ov?=
- =?utf-8?B?a0JUbGNZZUIzVWhLdm93SGNQOFEvZzZzRmxvL3ZIUWpaOGtPRzE1UldRZXhn?=
- =?utf-8?B?bGo2QTV4RUVFQWZvR0ZmeXhXUE9uSUFObjd3N05leEtjZ0YySXBTajRmQjdG?=
- =?utf-8?B?OFczVjF0Zm04bEJvSmtRaEgyNEU5Z0l0T29xY2xEMEVTeXBPRE00MnZMMHQw?=
- =?utf-8?B?UEwxeVZUVHg1aTFzVWRUM0FhTW50YjU0QUZ0VEtjbjNMVmZXanYwTy9uTzgy?=
- =?utf-8?B?MFcydjFFSVRubHRGbzgvVWlZTm03K01md3lJcU9sTkNBM0toQTQzUW1BUExH?=
- =?utf-8?B?TjJiN2pYQ053LzVqZHpZKzlNRVBJZHBzNm5XazdDaEJOT2tWT00xcEJDTVFM?=
- =?utf-8?B?ejRlSzVSbTlrenpvUGk3WXBLSDlYdFZTQWxaVzg4R0xHdEp0S1AvZktPOXpO?=
- =?utf-8?B?bTZpOS9jSEt6RFhJZUxZbDQ2V21mZG1tbkZJaUo4KytCSXhjeEZ3VlJOYzhS?=
- =?utf-8?B?bFlETG5od0JxNU9Da0V3Z2RiSWZ6ckFFeWFrNHVHWHVaTjUvZXVNNy9CUmhH?=
- =?utf-8?B?SjZjeDdYTmptS3B5NFhQWWdTcnBGTFM2TEhPTGYvM2VkVjY5OGwrZzFMdE1q?=
- =?utf-8?B?QVFlVnBrd2xFNER0ZVB3OXhmZyt0dU9yTFVmclBOYkpsUFdmSlhDU2MwU0k1?=
- =?utf-8?B?b1BxbnAwQVZycFNVb2pPanJwZFE0UXJJT3AvZXZsMEFkcnpTaUJzM2lKWGhN?=
- =?utf-8?B?SDZmcGJ0dDV3UHhhSkNWRHhZSU1OM0s4SzRNMHNMUHg5QXFzNWFUK2JLVWpG?=
- =?utf-8?B?dXJzZGZtVGp6a2hLQ3ZXU1B6R0VscnN5TlNDN3Fvb3M2K2FWd0xzbGlSbVZo?=
- =?utf-8?B?Zk1zb3N0ZTk1QzEwY1ZVVWk4c3YyMmVSNVExbFdUWEs5NGQxZU00M0k1dkdr?=
- =?utf-8?B?NkE9PQ==?=
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: x686n5O+FtYYhhx922VBTde+L4ZbRgETK5OYHGv0vuMhQqoDVrLp52ZO7c5Jtj8kqhNrWE4SKN/jDPQoB5a+t6Ky6gaR5SYQwijMr2N6mBAQx0Ka6j49i13iXZKesaogJnVMPSfnHT0cvFTDQbZcOhhIkhzlk57zG7IBXKIjDjoKeIYTOhKLduKgOFnXO7TaeD77EBmW2S8lGJGwEpDIC73yBKJR+tj1RqmibOpjfpQuYJ0KyeErXHQ3Czk4UNP+rh9IxrPOuLuudLayxSWUSwKBE9xPJsNJ3zLxsKxAwgQCKFHAAVjQ4WfR/SIZXteNHmHjgeID0ppXexKVrNiv7+KL0bl6x2Po7Xw+4+HU6n1/PtWxNEwI4BeZrCA3RUvHJNxC7VTOlt+ccp4SFf+elKFA7/FkFDGkgcOFhVxSnXufpwwWD5EG5yIsseNgyonUnViqB15+RFfRgKagetPOMhrfcFl95uoSf9+TeP6yN1gt6YkiuWcct/uOZZAv4Z5OawR1HmJioUomX+T5wEyMsnxcbUCyOWg1LWaIWDbHxtdRXHURUv4cLJ5tm9fDkxgVwSi5qm3KWnFGs+ycU7TxBu2lUahZMivibuIdNPa5HMQ=
-X-OriginatorOrg: oracle.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bf87d603-ff95-4428-74f5-08dda84248fa
-X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2025 17:14:40.3216 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Kir3ll+lVxVXViKIw5pw5eQsiaEdmjOoFytVnc31ABVwvtKa6KUjb4a76CAPCobqcj39ba0wv3xJzKCgAxKDU0KGLFsaDV2+IiXMPa1h4cI=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR10MB6834
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_08,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
- adultscore=0 malwarescore=0
- mlxlogscore=999 bulkscore=0 spamscore=0 phishscore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506100139
-X-Proofpoint-GUID: TqeUElwqkQDia9Qbc_CxmM04AIV5S6SM
-X-Authority-Analysis: v=2.4 cv=GcEXnRXL c=1 sm=1 tr=0 ts=68486804 b=1 cx=c_pps
- a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
- a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
- a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
- a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=AFZqATWQ6Hz4b8-6wZYA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEzOSBTYWx0ZWRfX6yTVLikjkWi6
- xQc7a7ez+rjaxVmaneNdPxB+XudEpr3P3YsBgcFXNKvudDN3mCEbFmm8ICNIBfn5GpIqdxQOFgz
- FGqZJNc12gPRNJ+/QI/aD8HLySJHJa1sXigs/LK1g5fZgMh/qY0+NzXHqyOUXOT/UpsJ7i2OfdN
- hUd0jQQhX7s5t14hewtdcDT4pzPUkq/ofiq8MHgGyAAJjHRGziKwJ2Mpv6ubQgTQq+3/0UIWzMC
- 9bR2gpHVHXxAz91/E2Y/iTHFqsSObFoFW1L4MkWzXVcMhnbmDa0WQrt0TJvW+UQoUJr2r32PH0z
- gG9bfTiwMtIE8d43vFNekMIqF+aXyVI8jih9iAYvV3b33ieJcLXJb4np9rvQi2e0lGFhjyU1Hjo
- XXFxjU03Z2aBk2NcLy9VphqYEPQP+Q9f9Jx+7++2k2ixM4bYvlDJj0dIBuw+inCz16hhGmFw
-X-Proofpoint-ORIG-GUID: TqeUElwqkQDia9Qbc_CxmM04AIV5S6SM
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V5 00/38] Live update: vfio and iommufd
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
+ <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -244,40 +159,226 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/2025 1:11 PM, Cédric Le Goater wrote:
-> On 6/10/25 19:05, Steven Sistare wrote:
->> On 6/10/2025 12:31 PM, Michael S. Tsirkin wrote:
->>> On Wed, Jun 04, 2025 at 03:48:40PM +0200, Cédric Le Goater wrote:
->>>>> I don't see any advantage to making this a class attribute.  I looked for examples
->>>>> of using such attributes for vfio to configure pci, and found very little.  It
->>>>> sounds like overkill since vfio already sets and gets PCIDevice members directly
->>>>> in many places.
->>>>>
->>>>> I defined skip_reset_on_cpr based on this existing example:
->>>>>
->>>>> vfio_instance_init()
->>>>>       pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS
->>>>
->>>> pci_dev->cap_present can be modified at realize time. skip_reset_on_cpr
->>>> is a constant, for which a class attribute are more appropriate.
->>>> This is minor.
->>>>
->>>> Michael,
->>>>
->>>>    Are you ok with the 'skip_reset_on_cpr' bool ?
->>>
->>> Generally yes, but maybe cap_present bit is even cleaner?
->>> vfio already pokes at it, and we have history of encoding
->>> quirks there, see QEMU_PCIE_LNKSTA_DLLLA_BITNR for example.
->>
->> Sure, I can send a new version based on a cap_present bit QEMU_PCI_SKIP_RESET_ON_CPR.
+On 6/10/25 17:39, Steve Sistare wrote:
+> Support vfio and iommufd devices with the cpr-transfer live migration mode.
+> Devices that do not support live migration can still support cpr-transfer,
+> allowing live update to a new version of QEMU on the same host, with no loss
+> of guest connectivity.
 > 
-> Please send an update of patch "pci: skip reset during cpr" in the v5 series.
-> Hopefully it will apply cleanly.
+> No user-visible interfaces are added.
+> 
+> For legacy containers:
+> 
+> Pass vfio device descriptors to new QEMU.  In new QEMU, during vfio_realize,
+> skip the ioctls that configure the device, because it is already configured.
+> 
+> Use VFIO_DMA_UNMAP_FLAG_VADDR to abandon the old VA's for DMA mapped
+> regions, and use VFIO_DMA_MAP_FLAG_VADDR to register the new VA in new
+> QEMU and update the locked memory accounting.  The physical pages remain
+> pinned, because the descriptor of the device that locked them remains open,
+> so DMA to those pages continues without interruption.  Mediated devices are
+> not supported, however, because they require the VA to always be valid, and
+> there is a brief window where no VA is registered.
+> 
+> Save the MSI message area as part of vfio-pci vmstate, and pass the interrupt
+> and notifier eventfd's to new QEMU.  New QEMU loads the MSI data, then the
+> vfio-pci post_load handler finds the eventfds in CPR state, rebuilds vector
+> data structures, and attaches the interrupts to the new KVM instance.  This
+> logic also applies to iommufd containers.
+> 
+> For iommufd containers:
+> 
+> Use IOMMU_IOAS_MAP_FILE to register memory regions for DMA when they are
+> backed by a file (including a memfd), so DMA mappings do not depend on VA,
+> which can differ after live update.  This allows mediated devices to be
+> supported.
+> 
+> Pass the iommufd and vfio device descriptors from old to new QEMU.  In new
+> QEMU, during vfio_realize, skip the ioctls that configure the device, because
+> it is already configured.
+> 
+> In new QEMU, call ioctl(IOMMU_IOAS_CHANGE_PROCESS) to update mm ownership and
+> locked memory accounting.
+> 
+> Patches 3 to 8 are specific to legacy containers.
+> Patches 21 to 36 are specific to iommufd containers.
+> The remainder apply to both.
+> 
+> Changes from previous versions:
+>    * V1 of this series contains minor changes from the "Live update: vfio" and
+>      "Live update: iommufd" series, mainly bug fixes and refactored patches.
+> 
+> Changes in V2:
+>    * refactored various vfio code snippets into new cpr helpers
+>    * refactored vfio struct members into cpr-specific structures
+>    * refactored various small changes into their own patches
+>    * split complex patches.  Notably:
+>      - split "refactor for cpr" into 5 patches
+>      - split "reconstruct device" into 4 patches
+>    * refactored vfio_connect_container using helpers and made its
+>      error recovery more robust.
+>    * moved vfio pci msi/vector/intx cpr functions to cpr.c
+>    * renamed "reused" to cpr_reused and cpr.reused
+>    * squashed vfio_cpr_[un]register_container to their call sites
+>    * simplified iommu_type setting after cpr
+>    * added cpr_open_fd and cpr_is_incoming helpers
+>    * removed changes from vfio_legacy_dma_map, and instead temporarily
+>      override dma_map and dma_unmap ops.
+>    * deleted error_report and returned Error to callers where possible.
+>    * simplified the memory_get_xlat_addr interface
+>    * fixed flags passed to iommufd_backend_alloc_hwpt
+>    * defined MIG_PRI_UNINITIALIZED
+>    * added maintainers
+> 
+> Changes in V3:
+>    * removed cleanup patches that were already pulled
+>    * rebased to latest master
+> 
+> Changes in V4:
+>    * added SPDX-License-Identifier
+>    * patch "vfio/container: preserve descriptors"
+>      - rewrote search loop in vfio_container_connect
+>      - do not return pfd from vfio_cpr_container_match
+>      - add helper for VFIO_GROUP_GET_DEVICE_FD
+>    * deleted patch "export vfio_legacy_dma_map"
+>    * patch "vfio/container: restore DMA vaddr"
+>      - deleted redundant error_report from vfio_legacy_cpr_dma_map
+>      - save old dma_map function
+>    * patch "vfio-pci: skip reset during cpr"
+>      - use cpr_is_incoming instead of cpr_reused
+>    * renamed err -> local_err in all new code
+>    * patch "export MSI functions"
+>      -  renamed with vfio_pci prefix, and defined wrappers for low level
+>         routines instead of exporting them.
+>    * patch "close kvm after cpr"
+>      - fixed build error for !CONFIG_KVM
+>    * added the cpr_resave_fd helper
+>    * dropped patch "pass ramblock to vfio_container_dma_map", relying on
+>      "pass MemoryRegion" from the vfio-user series instead.
+>    * deleted "reused" variables, replaced with cpr_is_incoming()
+>    * renamed cpr_needed_for_reuse -> cpr_incoming_needed
+>    * rewrote patch "pci: skip reset during cpr"
+>    * rebased to latest master
+> 
+>    for iommufd:
+>      * deleted redundant error_report from iommufd_backend_map_file_dma
+>      * added interface doc for dma_map_file
+>      * check return value of cpr_open_fd
+>      * deleted "export iommufd_cdev_get_info_iova_range"
+>      * deleted "reconstruct device"
+>      * deleted "reconstruct hw_caps"
+>      * deleted "define hwpt constructors"
+>      * separated cpr registration for iommufd be and vfio container
+>      * correctly attach to multiple containers per iommufd using ioas_id
+>      * simplified "reconstruct hwpt" by matching against hwpt_id.
+>      * added patch "add vfio_device_free_name"
+> 
+> Changes in V5:
+>    * dropped: vfio/pci: vfio_pci_put_device on failure
+>    * added: "vfio: doc changes for cpr"
+>    * deleted unnecessary include of vfio-cpr.h
+>    * fixed compilation for !CONFIG_VFIO and !CONFIG_IOMMUFD
+>    * misc minor changes
+>    * Added RB's, rebased to master
+> 
+> Steve Sistare (38):
+>    migration: cpr helpers
+>    migration: lower handler priority
+>    vfio/container: register container for cpr
+>    vfio/container: preserve descriptors
+>    vfio/container: discard old DMA vaddr
+>    vfio/container: restore DMA vaddr
+>    vfio/container: mdev cpr blocker
+>    vfio/container: recover from unmap-all-vaddr failure
+>    pci: export msix_is_pending
+>    pci: skip reset during cpr
+>    vfio-pci: skip reset during cpr
+>    vfio/pci: vfio_pci_vector_init
+>    vfio/pci: vfio_notifier_init
+>    vfio/pci: pass vector to virq functions
+>    vfio/pci: vfio_notifier_init cpr parameters
+>    vfio/pci: vfio_notifier_cleanup
+>    vfio/pci: export MSI functions
+>    vfio-pci: preserve MSI
+>    vfio-pci: preserve INTx
+>    migration: close kvm after cpr
+>    migration: cpr_get_fd_param helper
+>    backends/iommufd: iommufd_backend_map_file_dma
+>    backends/iommufd: change process ioctl
+>    physmem: qemu_ram_get_fd_offset
+>    vfio/iommufd: use IOMMU_IOAS_MAP_FILE
+>    vfio/iommufd: invariant device name
+>    vfio/iommufd: add vfio_device_free_name
+>    vfio/iommufd: device name blocker
+>    vfio/iommufd: register container for cpr
+>    migration: vfio cpr state hook
+>    vfio/iommufd: cpr state
+>    vfio/iommufd: preserve descriptors
+>    vfio/iommufd: reconstruct device
+>    vfio/iommufd: reconstruct hwpt
+>    vfio/iommufd: change process
+>    iommufd: preserve DMA mappings
+>    vfio/container: delete old cpr register
+>    vfio: doc changes for cpr
+> 
+>   docs/devel/migration/CPR.rst          |   5 +-
+>   qapi/migration.json                   |   6 +-
+>   hw/vfio/pci.h                         |  10 ++
+>   include/exec/cpu-common.h             |   1 +
+>   include/hw/pci/msix.h                 |   1 +
+>   include/hw/pci/pci_device.h           |   3 +
+>   include/hw/vfio/vfio-container-base.h |  18 +++
+>   include/hw/vfio/vfio-container.h      |   2 +
+>   include/hw/vfio/vfio-cpr.h            |  66 +++++++-
+>   include/hw/vfio/vfio-device.h         |   5 +
+>   include/migration/cpr.h               |  21 +++
+>   include/migration/vmstate.h           |   6 +-
+>   include/system/iommufd.h              |   7 +
+>   include/system/kvm.h                  |   1 +
+>   accel/kvm/kvm-all.c                   |  32 ++++
+>   accel/stubs/kvm-stub.c                |   5 +
+>   backends/iommufd.c                    | 101 +++++++++++-
+>   hw/pci/msix.c                         |   2 +-
+>   hw/pci/pci.c                          |   5 +
+>   hw/vfio/ap.c                          |   2 +-
+>   hw/vfio/ccw.c                         |   2 +-
+>   hw/vfio/container-base.c              |   9 ++
+>   hw/vfio/container.c                   |  97 +++++++++---
+>   hw/vfio/cpr-iommufd.c                 | 220 ++++++++++++++++++++++++++
+>   hw/vfio/cpr-legacy.c                  | 287 ++++++++++++++++++++++++++++++++++
+>   hw/vfio/cpr.c                         | 159 +++++++++++++++++--
+>   hw/vfio/device.c                      |  40 +++--
+>   hw/vfio/helpers.c                     |  10 ++
+>   hw/vfio/iommufd-stubs.c               |  18 +++
+>   hw/vfio/iommufd.c                     |  81 ++++++++--
+>   hw/vfio/listener.c                    |  19 ++-
+>   hw/vfio/pci.c                         | 231 ++++++++++++++++++++-------
+>   hw/vfio/platform.c                    |   2 +-
+>   hw/vfio/vfio-stubs.c                  |  13 ++
+>   migration/cpr-transfer.c              |  18 +++
+>   migration/cpr.c                       |  95 +++++++++--
+>   migration/migration.c                 |   1 +
+>   migration/savevm.c                    |   4 +-
+>   system/physmem.c                      |   5 +
+>   backends/trace-events                 |   2 +
+>   hw/vfio/meson.build                   |   5 +
+>   41 files changed, 1482 insertions(+), 135 deletions(-)
+>   create mode 100644 hw/vfio/cpr-iommufd.c
+>   create mode 100644 hw/vfio/cpr-legacy.c
+>   create mode 100644 hw/vfio/iommufd-stubs.c
+>   create mode 100644 hw/vfio/vfio-stubs.c
+> 
+> base-commit: bc98ffdc7577e55ab8373c579c28fe24d600c40f
 
-Please clarify: do you want me to send a delta that applies on top of the
-old patch, or send a new version of the old patch?
 
-- Steve
+Steve,
+
+For the next vfio PR, I plan to take patches 1-17 when patch 10 is
+updated. The rest is for later in this cycle.
+
+Thanks,
+
+C.
+
 
 
