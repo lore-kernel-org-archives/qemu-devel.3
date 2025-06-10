@@ -4,141 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D36D8C5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:16:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7032FC61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOxty-000243-Gh; Tue, 10 Jun 2025 08:16:26 -0400
+	id 1uOxyn-0004YC-00; Tue, 10 Jun 2025 08:21:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxtg-0001xU-OC
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:16:11 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOxyX-0004WZ-BY
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:21:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxtW-0005iq-0A
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:16:08 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uOxyQ-0006hT-P6
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:21:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749557754;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1749558056;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZwC9UDQ4MhLr8/jFXSDmikgsYg12hjN6NmEFQ+rdPno=;
- b=Jf0buEfO4PtrxNWyKwsrURWx5Lu+C3zN5Bizo/TsbHOA/ILh43SlMV/nIuFFcUWmDmpkH7
- BD/ERkjC0b36hbGt9B2Ugy3jWgZn14aROrNR7aTs8e/98d7Kg0STWs8FudEQAlaL9Xpmo3
- NKZggIdW0L1IoM/lmTf01j319Sr0qLQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-374-G2dzV34xMi2ji8LPwLg6RQ-1; Tue, 10 Jun 2025 08:15:53 -0400
-X-MC-Unique: G2dzV34xMi2ji8LPwLg6RQ-1
-X-Mimecast-MFC-AGG-ID: G2dzV34xMi2ji8LPwLg6RQ_1749557752
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a5058f9ef4so2593848f8f.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:15:52 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749557752; x=1750162552;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZwC9UDQ4MhLr8/jFXSDmikgsYg12hjN6NmEFQ+rdPno=;
- b=ub9xR1BE0w8jJ7cgDk0QnkK/Ow8kgqEPwZWDWjUcxJ/1Nv0IlOm18oF17lZSueV40i
- 01Iqyfh19ehT+TQTnitOcepRTSlfPj8jPWMgo4xYRjwsjd1dZsS/20Gmy+6ppCs8RypE
- 1yYJGV6zUZTbBURyt9/kh/r4+bNFWidJ1sL61CHEX54gAldO8GzsZGjzVSEU12B+9nkP
- KIqoxxzM2kgAUJzvemkJfD8J3heNADX378ulMxotY9uBqMHZrqelkfVDfoEDOyduaPxt
- vvOD0lDZ6RBZmF2XVz2Po/wh8RUVco/CcxqGMgf2ZjXAnuQE68Kaqnx4KzY8Xeo3L3+E
- zM2g==
-X-Gm-Message-State: AOJu0YwsCD/uUYKyS73XFMo8tiXjj+er6x/LS4d8KCLuqN+hICW3SEBp
- W5ojxsb31aDFZQsND/W3J8k7Ll6KuGlDbDyZbcxV7HWNGz7Qx5ZzJKRUJJ6Jl1qZh+DwAZEps82
- MQN8CZZWSAfU3wp0BhfF0XCv6hoYXVKD5DJ9xWM0fOKdjqqrn5SM0JMfQ
-X-Gm-Gg: ASbGnctfQeo6Bbw09yHCas+6rEsSRgFzxTE2u/t6dfO+AdUJA6sEDPxgPjzVa0ZSpFs
- E05JfHs8jstXX1FPMeDRq50T/XUPnO6OqA0WpMykNvJUkLSZSKfKESvqah81ClFpDUoQMj6crKt
- wfC1qFrdofpcschrc9Znpcc8pczhObokq7CMDd4A73QH4p7V5KE+8nVdxWPqe/mQZmJ4LmvWdb3
- qYnnAlE2MKdHAnD1EyFjphSRvJbqaUQ4c9xWFY3Ub1dKbThuR2N4EF81b+Lv2LA8AeMVr02cjNU
- EH8EMqwxjnRMdZIN+jhtA/pE2WpSUekBtKR9aKvJuvpwOtOXSj3Am0u8xL15
-X-Received: by 2002:a05:6000:1a8f:b0:3a4:cfbf:51a0 with SMTP id
- ffacd0b85a97d-3a53189bc76mr15576386f8f.21.1749557751819; 
- Tue, 10 Jun 2025 05:15:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGd/KQY8A02EMGDNtFhF4zDZHoBv+KnXtVh1ZSPu1dnC7ddprJ0C0NTvRSX2df7rfmIBJ+UeQ==
-X-Received: by 2002:a05:6000:1a8f:b0:3a4:cfbf:51a0 with SMTP id
- ffacd0b85a97d-3a53189bc76mr15576354f8f.21.1749557751406; 
- Tue, 10 Jun 2025 05:15:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4526e0563b6sm138621765e9.7.2025.06.10.05.15.50
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 05:15:50 -0700 (PDT)
-Message-ID: <9b0f9720-cc46-4102-aa97-7664b57a05ef@redhat.com>
-Date: Tue, 10 Jun 2025 14:15:49 +0200
+ in-reply-to:in-reply-to:references:references;
+ bh=hkxDJbZjtfgq9m7mpei5ypbjkrV8ex9vU5KtowQT33E=;
+ b=I6quaN5nIbt1LeyAg7s4WK9MXeqWQjUYIZKmzqozSbKyNtq2fre+zwOvDWP8laLRn7IDUl
+ Fe4hMwEiccDu0ErbHzlTWfOmHAYEtGgT1lM1imFecFGmHKmVs9LwXqEcstNysyit8a7HXj
+ fsbG+iJttKrfXLiJzm1Q0YuV4AawB5I=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-66-pOmaZ6LHMnmvK5a_dSK3rQ-1; Tue,
+ 10 Jun 2025 08:20:53 -0400
+X-MC-Unique: pOmaZ6LHMnmvK5a_dSK3rQ-1
+X-Mimecast-MFC-AGG-ID: pOmaZ6LHMnmvK5a_dSK3rQ_1749558052
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 892B519560A2; Tue, 10 Jun 2025 12:20:51 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.87])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 908BE19560A3; Tue, 10 Jun 2025 12:20:48 +0000 (UTC)
+Date: Tue, 10 Jun 2025 13:20:45 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Frediano Ziglio <freddy77@gmail.com>,
+ "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Kim, Dongwon" <dongwon.kim@intel.com>,
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Subject: Re: [PATCH v5 2/7] ui/spice: Add an option for users to provide a
+ preferred codec
+Message-ID: <aEgjHdDScyiuF4ID@redhat.com>
+References: <20250529051352.1409904-1-vivek.kasireddy@intel.com>
+ <20250529051352.1409904-3-vivek.kasireddy@intel.com>
+ <aEFYnTvaDQ6Kd0o4@redhat.com>
+ <IA0PR11MB71852C724D241204B8C09AF0F86EA@IA0PR11MB7185.namprd11.prod.outlook.com>
+ <aEKVmH8ZxDcGKSeq@redhat.com>
+ <CAMxuvaz1wJw-qMDDPwj_BOGPL0zdgBsi647B6+AG+OdOOomhDQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 06/23] vfio-user: add vfio-user class and container
-To: John Levon <john.levon@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>
-References: <20250607001056.335310-1-john.levon@nutanix.com>
- <20250607001056.335310-7-john.levon@nutanix.com>
- <f1a03beb-3667-485e-aca3-5a8f4990f67a@nutanix.com> <aEgdcfh-OBklhGFg@lent>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aEgdcfh-OBklhGFg@lent>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+In-Reply-To: <CAMxuvaz1wJw-qMDDPwj_BOGPL0zdgBsi647B6+AG+OdOOomhDQ@mail.gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -160,27 +96,124 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 13:56, John Levon wrote:
-> On Tue, Jun 10, 2025 at 12:42:35PM +0100, Mark Cave-Ayland wrote:
+On Tue, Jun 10, 2025 at 03:30:24PM +0400, Marc-André Lureau wrote:
+> Hi
 > 
->> Question: how do you see the division between hw/vfio and hw/vfio-user? My
->> initial feeling is that there is substantial sharing between the two, in
->> which case I'd expect the files to be in hw/vfio as e.g.
->> hw/vfio/container-user.c etc. instead of its own directory.
+> On Fri, Jun 6, 2025 at 11:16 AM Daniel P. Berrangé <berrange@redhat.com>
+> wrote:
 > 
-> That was also in the earlier patchsets! Cédric asked for hw/vfio-user - and I
-> think I actually prefer it myself. The amount we export from hw/vfio is actually
-> fairly minimal (now).
+> > On Fri, Jun 06, 2025 at 06:10:31AM +0000, Kasireddy, Vivek wrote:
+> > > Hi Daniel,
+> > >
+> > > > Subject: Re: [PATCH v5 2/7] ui/spice: Add an option for users to
+> > provide a
+> > > > preferred codec
+> > > >
+> > > > On Wed, May 28, 2025 at 10:11:13PM -0700, Vivek Kasireddy wrote:
+> > > > > Giving users an option to choose a particular codec will enable
+> > > > > them to make an appropriate decision based on their hardware and
+> > > > > use-case.
+> > > > >
+> > > > > Cc: Gerd Hoffmann <kraxel@redhat.com>
+> > > > > Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+> > > > > Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> > > > > Cc: Frediano Ziglio <freddy77@gmail.com>
+> > > > > Cc: Dongwon Kim <dongwon.kim@intel.com>
+> > > > > Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+> > > > > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> > > > > ---
+> > > > >  qemu-options.hx |  5 +++++
+> > > > >  ui/spice-core.c | 12 ++++++++++++
+> > > > >  2 files changed, 17 insertions(+)
+> > > > >
+> > > > > diff --git a/qemu-options.hx b/qemu-options.hx
+> > > > > index 7eb8e02b4b..fcddb583c9 100644
+> > > > > --- a/qemu-options.hx
+> > > > > +++ b/qemu-options.hx
+> > > > > @@ -2281,6 +2281,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
+> > > > >      "
+> >  [,streaming-video=[off|all|filter]][,disable-copy-paste=on|off]\n"
+> > > > >      "
+> >  [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
+> > > > >      "       [,playback-compression=[on|off]][,seamless-
+> > > > migration=[on|off]]\n"
+> > > > > +    "       [,video-codecs=<encoder>:<codec>\n"
+> > > > >      "       [,gl=[on|off]][,rendernode=<file>]\n"
+> > > > >      "                enable spice\n"
+> > > > >      "                at least one of {port, tls-port} is
+> > mandatory\n",
+> > > > > @@ -2369,6 +2370,10 @@ SRST
+> > > > >      ``seamless-migration=[on|off]``
+> > > > >          Enable/disable spice seamless migration. Default is off.
+> > > > >
+> > > > > +    ``video-codecs=<encoder>:<codec>``
+> > > > > +        Provide the preferred codec the Spice server should use.
+> > > > > +        Default would be spice:mjpeg.
+> > > >
+> > > > This looks like two distinct settings overloaded into one command
+> > > > line parameter, which is a design anti-pattern.
+> > > >
+> > > > Why can't this be done as separate parameters
+> > > The Spice server API used by Qemu (spice_server_set_video_codecs)
+> > > to set the preferred codec requires the video-codecs string to be in
+> > > encoder:codec format. AFAIK, there is no other option or API to set
+> > > the encoder and codec values separately.
+> >
+> > QEMU can accept the separate parameters and format them into the string
+> > format that the spice API requires so our public API is not impacted
+> > by this spice design choice.
+> >
+> >
+> Apparently you cannot mix and match freely, it has a rather fixed set of
+> actually working values.
+> 
+> See here and related code:
+> https://gitlab.freedesktop.org/spice/spice/-/blob/master/server/reds.cpp?ref_type=heads#L3468
 
-yes. It looks much better. The interfaces between the core VFIO framework
-and the new vfio-user-pci device are clear. This is easier for maintenance
-too.
+That's just showing the built-in defaults - the parsing code is
+not enforcing any constraints. The impl though cleary only allows
+'mjpeg' with 'spice':
 
-Thanks,
+  https://gitlab.freedesktop.org/spice/spice/-/blob/master/server/mjpeg-encoder.c#L1371
 
-C.
+> Tbh, I don't think the encoder matters much, and I don't know why it was
+> decided to associate it with video codec names.
+
+AFAICT the only way in which the encoder matters is to distinguish the
+built-in "mjpeg" impl from the gstreamer "mjpeg" coder.
+
+> Maybe the spice API should provide a simpler form: accept only codec names.
+> 
+> In the meantime, qemu should perhaps add the "working" encoder prefixes
+> (spice: for mjpeg, gstreamer: for others)  itself and not expose any extra
+> option to the user?
+
+Ths question is whether we need to be able to request the gstreamer
+'mjpeg' impl ?
+
+If we do, and we also assume that 'spice' will never gain any more codec
+impls as built-ins, we could do
+
+  builtin, mjpeg, vp8, vp9, h264
+
+where 'builtin' is the standard mjpeg encoder ?
+
+Alternatively we could just go with
+
+  mjpeg, vp8, vp9, h264
+
+and in the unlikely event we need to be able to skip the built-in mjpeg,
+we could add  a boolean 'prefer-gstreamer=on|off'
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
