@@ -4,75 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E0FDC5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:43:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7536AC61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:58:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOuYt-0006Fk-EF; Tue, 10 Jun 2025 04:42:27 -0400
+	id 1uOung-0000f7-Vk; Tue, 10 Jun 2025 04:57:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOuYs-0006FL-5h
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:42:26 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOunc-0000en-Li
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:57:40 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uOuYp-0003ci-QT
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:42:25 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-70e447507a0so41369977b3.0
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 01:42:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOunZ-00055J-PI
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:57:39 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-43ea40a6e98so65175235e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 01:57:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749544942; x=1750149742; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ZIuPnCGNokh2r4qO0IZf3QHexp85bC7lYzuRr1HstuA=;
- b=ss40eniq4u3XWzGuhdoBf3upOrpOa2Ezbt7tYLO6K/E/owcIc1k5U+WSwpQWEZ9XUR
- iDTIHwPYQ7BIffRNmfQaFMRKbQUZgcW8kMRCn8M/jHHDw0fI7PDueJcKk/RwvZ+9zLj6
- xV3WzSnd6Ctf+Gnl2cE1gu6aXBn3z1Jf5nurYQs0CrY/DnBowYsrgHOQOOMnuVgJ+7bW
- 1UCUPNYi3LzMFCP2kfhvK76sC8Qwbdo4oL1JFsacLz+C2IvE6pMV7X9LOO331lDZQbvw
- cpvjOFeMWGMumAxGMuOmrnb1JKM8ZvelDWLuIjjZCnwBCzi8TUM5mJ2kQg9/oAQinZmD
- seMQ==
+ d=linaro.org; s=google; t=1749545855; x=1750150655; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=n2/4rJPLmPoGx43lpSeMUj+Pt2of81iG1MGjwH5xBLk=;
+ b=BVAlgCa696jHxUzXekGo4V+44lYKIK8zvIXc1AZTz67Ox84gjEZfq5Hr0cQXnhiENi
+ 9mK1kNqekQmDlp/4ToV40PhdRSuFAYJhAGw0s7jJfrseSPhG96p0IMDSVEVe6+QTMs26
+ N/4HiBHl96031rYXXEMosd7vFgl6ubaiYdqVuahKYj5G6i1OMsl1Hf0wfdK/UeFzl1+L
+ UTuOk5lQdEtNcKu97d+CXxwALAslHGdpNkt267FXsyZeVdIAEJtdq+6Vi17mnHKDoBLN
+ 30JPGHWY+/s3OQwz5qtEeFIWwHV0fDQqMMn4i9bIlZE9xJ8bq9jUa8j+W1x+/u3Se6Z0
+ JMWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749544942; x=1750149742;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ZIuPnCGNokh2r4qO0IZf3QHexp85bC7lYzuRr1HstuA=;
- b=TRSa+Rtl7PJ50AfCYvZXRaCnwZBEzZVnXlROZ79iYrx1zwhZsPOWOfsD2hYuweHFQs
- uwXr1zOg8Nz3k/Ax+YbRT7Y4po7i4Zp+c8ivgZmMT9PNLDZPdBN7SprKvDQYXPzk4F5f
- q5QEVpbJ3hdfjMyJ6ubV7opPDPdNgSDVaHkg5Bm1D14AXl93KiUw+8RpI8Cf1e14rs2R
- ualHFDACCFEC9uuvn8n64NBm29mTojb2tR1yjr5uEBdT2j9yyjiqDo+FGufLiv2U19oE
- fKvgAUUr6rjuZs9+QlyQL+m2toPL4E4Op1qyATr1W64iHIFRewD7ax+hV3p20DTGZVPn
- deUg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXE8uSRUR/rKDhl3mN2zjymeylletZHN/wX0I6LEGLmN/rgls9bdLLGi5vyO8WYvXAWfU8wPnF/s7mI@nongnu.org
-X-Gm-Message-State: AOJu0Yxv/m78fF9GbPDUW5cTDOl9tCRLu9LLzWV66+m9AyqL6ZBw7G9R
- aSVfNq4h+gFLV1knfipRJFm7Ok1KUPpEF/3BBgrhhRerYsZSElF1GUfTyQTTE0b0uc1ij+SCpal
- 51EQdxHqvF5ZKUcLwMXHT7XxjT6CsFkqu9j0nnXqLcg==
-X-Gm-Gg: ASbGncuRlu5r0ozqAMSdiz3zFjBH2JmT2OA8CBMUxoZeX2WG3HAEAuhRIO/BZK5KzVq
- UsnvP78sW9zDryri2Wfgip81tOnmkX8hT/DPc/ve26js4Bbx94/Av6KabHnrFLtTS1OHJJujC+t
- nuiWjYerN1XXoOYQDyDc69oKl4jEEYV6PkUFxai+aubtWe
-X-Google-Smtp-Source: AGHT+IE/9qk2aSz7vPh2IFx0Y170M93DwiBg3usjvPQBdpHxAXMmy/spygRbSWbSOnTcxcUl0cYcTyKfA34z4QC+Mfo=
-X-Received: by 2002:a05:690c:6a02:b0:70c:a5c2:ceed with SMTP id
- 00721157ae682-710f76ffe14mr221894887b3.25.1749544942061; Tue, 10 Jun 2025
- 01:42:22 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749545855; x=1750150655;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=n2/4rJPLmPoGx43lpSeMUj+Pt2of81iG1MGjwH5xBLk=;
+ b=Q8grSafcqnzyhDoIvcUEDArxKcS9pGfvLj3B5VIOKHx8MJpgD43KxxYvrG1hVNq5Ji
+ xPq4VL43J2bsXZLt5LmWzF07/+KussX0dbrIPLE+6JrCt46XWg7X+PnStE1GjRtFf2iL
+ 2adGjYviwghWgV7o1UGCVjF6UrDuvwXgBbQYhJC/yiC8HKMHaWVbEGJ2UtHxAjeQmanA
+ 2oJtExjW+fu3XPvG7NMtBxgCv5uUpFRBVy6S6k3coLRvlnSbZsQicGTGkDu1MGyRUpJS
+ tQnPBtF3HGcXzaCkUKNhBYOL1c2A4as0M4aJ4aJWwpSyg2b+iYRG6lQTbb68jVNLcPbp
+ 6TBQ==
+X-Gm-Message-State: AOJu0YyZ8EPVy7GhH8/Sd11c87L1qXgdI0Ol4FAn6S1zY42ZcvBiEOCL
+ 2Ho90ISGfVcqLPZNydjx69klYPV5BkjxL6Ctr1Zu7OqmSpuHkpIrFC2opW2fwnhpo00=
+X-Gm-Gg: ASbGnctWpXknP6snb4AsfSbIy/aefmoYnD4P2xBqaUJ2+EOrCvwbdGiD39Zt5j6SK/h
+ 111/nBGbcYPYlA7y1fO1j/yq3x3HS3yc5jhMDhLs8YtEopRwQaUYMwQrb8oM5bLOzb0E2+i8caq
+ fAG+dEP+CAaBRf28P4Ky2IBq5L24uSzDFVs36jHRDA96dGjW59qDJ1nEnbZRwH45QHmCyKOZqzN
+ WosOpp42/ZTBdChavKpgBFiAChgN6Pd6T/6YtWsLWzq6KB3JSNC7k1/F8Wg+6i+LCWwbRbCm0D3
+ r2V5q1ZBkxngLSInzgOAL71wm2CWnH3sefBeQdyzriA2XUOzZfXtd3gbwAh24Xt3DhlZ1DAb+Ak
+ hFkbcXt8gpgj9NdDBo6aFMehhE4wJ/Avi0SftP+JZzjvYpg==
+X-Google-Smtp-Source: AGHT+IE6MyBzhrIWeKZzEbDuvdVYaIsUfZPgCqtNndiDEdo9rXZm0tYshLGdmkxxQTsjdA5RZuBxDA==
+X-Received: by 2002:a05:600c:1f85:b0:43c:fc04:6d35 with SMTP id
+ 5b1f17b1804b1-4531ddec0afmr19220535e9.4.1749545855197; 
+ Tue, 10 Jun 2025 01:57:35 -0700 (PDT)
+Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-452730c747dsm133844075e9.31.2025.06.10.01.57.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 01:57:33 -0700 (PDT)
+Message-ID: <2e925251-067c-42a7-9c86-58bb069519fb@linaro.org>
+Date: Tue, 10 Jun 2025 10:57:31 +0200
 MIME-Version: 1.0
-References: <20250610012851.1627715-1-linux@roeck-us.net>
-In-Reply-To: <20250610012851.1627715-1-linux@roeck-us.net>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Jun 2025 09:42:10 +0100
-X-Gm-Features: AX0GCFsI9n_plIj9Jxbgt6bAPEPMgxofXuZ5eYc1CyFiD0hVGfQM2QzqVQkSWvQ
-Message-ID: <CAFEAcA-aznHrcSk9xfmLHkpJTiabjd4oX2KnvC5TXkkLgW6n8A@mail.gmail.com>
-Subject: Re: [PATCH] hw/arm/npcm7xx_boards: Add support for specifying SPI
- flash model
-To: Guenter Roeck <linux@roeck-us.net>
-Cc: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/core/cpu: Move CacheType to general cpu.h
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: qemu-devel@nongnu.org
+References: <20250605132722.3597593-1-zhao1.liu@intel.com>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20250605132722.3597593-1-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -95,34 +104,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Jun 2025 at 02:28, Guenter Roeck <linux@roeck-us.net> wrote:
->
-> In some situations it is desirable to be able to specify the flash type
-> connected to a board. For example, the target operating system may not
-> support the default flash type, its support may be broken, or the qemu
-> emulation is insufficient and the default flash is not detected.
-> On top of that, the ability to test various flash types improves
-> testability since a single emulated board can be used to test a variety
-> of flash chips with the controller supported by that board.
->
-> The aspeed emulation supports an option to specify the flash type. Use
-> the same mechanism to configure the flash type for Nuvoton 7xx boards.
->
-> Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+On 5/6/25 15:27, Zhao Liu wrote:
+> I386 has already defined cache types in target/i386/cpu.h.
+> 
+> Move CacheType to hw/core/cpu.h, so that ARM and other architectures
+> could use it.
+> 
+> Cc: Alireza Sanaee <alireza.sanaee@huawei.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 > ---
-> I don't know if there is interest in this, but I figured I should at least
-> submit it. Background is that Macronix flash support is broken when running
-> upstream Linux v6.16-rc1, thanks to upstream Linux commit 947c86e481a027e
-> ("mtd: spi-nor: macronix: Drop the redundant flash info fields"). I needed
-> a workaround, and using a different flash model was the easiest solution.
+> This is for Ali's ARM cache topology support:
+> https://lore.kernel.org/qemu-devel/aEFnFI+wglkmLD5G@intel.com/
+> 
+> (Ali, if maintainer doesn't pick this, you can include this into your
+>   series freely.)
+> ---
+>   include/hw/core/cpu.h | 6 ++++++
+>   target/i386/cpu.h     | 6 ------
+>   2 files changed, 6 insertions(+), 6 deletions(-)
 
-I think the question I would have here is "is this the flash
-device the hardware actually has?". If QEMU's using the wrong
-flash type, we should fix that. If QEMU's modelling the right
-flash type and the kernel doesn't implement it, then that's
-a kernel bug and the right fix is to get the kernel to
-handle that flash type.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-thanks
--- PMM
+and queued, thanks!
 
