@@ -4,89 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73621C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 07:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 639B2C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:04:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOtow-0007QG-9o; Tue, 10 Jun 2025 03:54:59 -0400
+	id 1uOtxK-00027q-1p; Tue, 10 Jun 2025 04:03:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOton-0007N7-EU
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 03:54:51 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOtol-0005h1-8l
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 03:54:48 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-43cfe63c592so58697615e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 00:54:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749542084; x=1750146884; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8B6qLJiUllI8GeCv/Gl5huzcjr3YE6kXAQV+l9wR3gA=;
- b=xDkXxTPaaJmGacw3CY+nMIrpaOnLKS8aHG9qvlZ+ntTpYNqhj1WfpmXjX+HQjOSyFh
- nNQ3P47GNHh9VnuFf3whWEv811ym62wvEeM7SA1XLIOk73xlPQJ4SV9NYr9xMNJjf42P
- 9nzngcMeNU8gvEK+gWyiTu39PGqOGo4Yz2orJf9C7NGlr5rDNj+1cYycK4Tehd4LtG+C
- 6aiACuviMiosJm+eDp6FIX5dZUxJNaiG92d5p/OsVKTCW2rb1ow5CXPdz/F1e8nol+Bh
- ODAJn526VfCfkFpXUmHvyXbuY4AWxEnDwEE+Og5Vxe+1DDuyBP/1NWVqb0W4yv1ZwDCk
- H59g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749542084; x=1750146884;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=8B6qLJiUllI8GeCv/Gl5huzcjr3YE6kXAQV+l9wR3gA=;
- b=RDsZReARZXeYzJ3SUz/zduZm24enSJ+JJyiFJJXL/Wj0n53CqGruHd0XpUnJxDIa+O
- ih0eJL4x3T3NWwOE7NxXNdphFR1v9Rl/Ws0ujvBym+7tWCPN8FfbGWEr8f75DycR+pB6
- uuceSXsMYTPb5UTTwffU3t5DQI7DdhWuyZHeP2bNJX1B7r7sCNrE5wo+xYjvSdRqJ1VL
- kIFKeoO6z+oPUMbY1ChzsVsaKutoLkV5hnDHtJkzdUs5iWze1C6WhSBUYOJZdVOaNyXf
- 52ddyY7s8tvAgq4nFOGzaxpHu3TmgBIXvW2Il3tWwQXokkVYQNtBfr7jYbFZjsOwRMOI
- tXOg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW/dwuFCra4Z76UsNjV2wEb9HOZuE0u+PJaueCSLaphFzwG8UEAcuNHrdGFpoWTi47A0GJCLRaiQYVr@nongnu.org
-X-Gm-Message-State: AOJu0YxtHTRHeFxPVdpOBU1MMYoWfgw1sZA2AH09ZxlCe44m2ELC7JIN
- 0miB8X94gyTb7LF0WEsEZ4RVJFZK0xZt1iwgJlFwlk2Olfi16gc7f/6ZARCETvzce3I=
-X-Gm-Gg: ASbGncvMjiM+d1PwQtHfb/IroVBSjsmtqDmxMGCMAboQkMyhdWxdBFKL2so9ziRQfwU
- Os7ARm/YO+EJFanQGddbX2kxOSoFNy4HSS+MJjqG2ddm8CoHtg5zl5tD0REkky6LXL2G0gmSRnF
- ailpiGyWAbq6Hg8AaK5LyfL2CzQTteDOkgxENbuw3io0OlXTUTOQSAUKVt6C/pN2srimSp0OkRg
- Yu3+be4o6Qba5L7dkTi4ftoStUtkcn0A4AiP/LFx2I5vPWi8nzHrTTlei3DUZ40Jmawi7cUXx7c
- 2dqaF0hnpZ1ojfArSFtMLXdTXiCYXzbyI0oppHf/jgln9zYSWYq2Fs/JSykO1Ug0R2cTU6eS3iN
- 7ee6KLsRUTm738TWMToHNuzJnCdQ+qkSSDjQ=
-X-Google-Smtp-Source: AGHT+IHKUQ5x0zagsLu97n8yuaiPeEvLwwCjmgbJ68Yx1a3n1ZP5Nc4Wa1b4blqApSy5DObsF13BdQ==
-X-Received: by 2002:a05:600c:37cd:b0:43c:ee3f:2c3 with SMTP id
- 5b1f17b1804b1-45201364a49mr137358155e9.7.1749542084245; 
- Tue, 10 Jun 2025 00:54:44 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5322aa3c0sm11393162f8f.22.2025.06.10.00.54.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 00:54:43 -0700 (PDT)
-Message-ID: <13e2364e-ef09-4316-96b2-ed16a0c6ffc7@linaro.org>
-Date: Tue, 10 Jun 2025 09:54:43 +0200
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uOtxH-00026J-RO
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:03:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uOtxF-0006nb-9k
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:03:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749542611;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=C6v5eO4KRPLDLssBKHllP2DNjh2KCFp7qAC/RbRL70k=;
+ b=HBPimPYEkxiqopijC+jIw9+i2KSBrOzwU/+qugd+XbYcUnpPifch4OhI9T+3PS7Qv0CWoz
+ 3TKaytb3oAUUMfZSEukIa/YjfC63oCU3CNNqghMtUK2Pb/qzhxVUEYSBlqkyc7n1lVuEHf
+ bIeu5sQ3uOHE35o/S1Ygur6T+aN2xw8=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-Ue46WyiQO-W6R1cymSI5ag-1; Tue,
+ 10 Jun 2025 04:03:27 -0400
+X-MC-Unique: Ue46WyiQO-W6R1cymSI5ag-1
+X-Mimecast-MFC-AGG-ID: Ue46WyiQO-W6R1cymSI5ag_1749542606
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2DBCB1956056; Tue, 10 Jun 2025 08:03:26 +0000 (UTC)
+Received: from sirius.home.kraxel.org (unknown [10.44.32.69])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2AB4C1956087; Tue, 10 Jun 2025 08:03:25 +0000 (UTC)
+Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
+ id 9A83A1801083; Tue, 10 Jun 2025 08:47:06 +0200 (CEST)
+Date: Tue, 10 Jun 2025 08:47:06 +0200
+From: Gerd Hoffmann <kraxel@redhat.com>
+To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, Eric Auger <eauger@redhat.com>, 
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v3 1/2] ramfb: Add property to control if load the romfile
+Message-ID: <dli36wx3pe5we6xg5w7c3vyxifnfctovurucrci75kec3qk2y2@2dweacwekfcl>
+References: <20250609073408.2083831-1-shahuang@redhat.com>
+ <20250609073408.2083831-2-shahuang@redhat.com>
+ <aEakP3rDTyBqDXA5@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 13/77] rocker: do not pollute the namespace
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
-References: <20250530071250.2050910-1-pbonzini@redhat.com>
- <20250530071250.2050910-14-pbonzini@redhat.com>
- <91e38ead-cea4-4100-9f90-f0e75dd748a1@linaro.org>
-Content-Language: en-US
-In-Reply-To: <91e38ead-cea4-4100-9f90-f0e75dd748a1@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <aEakP3rDTyBqDXA5@redhat.com>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,44 +88,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/25 09:53, Philippe Mathieu-Daudé wrote:
-> Hi Paolo,
-> 
-> On 30/5/25 09:11, Paolo Bonzini wrote:
->> Do not leave the __le* macros defined, in fact do not use them at 
->> all.  Fixes a
->> build failure on Alpine with the TDX patches:
->>
->> In file included from ../hw/net/rocker/rocker_of_dpa.c:25:
->> ../hw/net/rocker/rocker_hw.h:14:16: error: conflicting types for 
->> 'uint64_t'; have '__u64' {aka 'long long unsigned int'}
->>     14 | #define __le64 uint64_t
->>        |                ^~~~~~~~
->> In file included from /usr/include/stdint.h:20,
->>                   from ../include/qemu/osdep.h:111,
->>                   from ../hw/net/rocker/rocker_of_dpa.c:17:
->> /usr/include/bits/alltypes.h:136:25: note: previous declaration of 
->> 'uint64_t' with type 'uint64_t' {aka 'long unsigned int'}
->>    136 | typedef unsigned _Int64 uint64_t;
->>        |                         ^~~~~~~~
->>
->> because the Linux headers include a typedef of __leNN.
->>
->> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> 
-> Your tools sometimes miss R-b tags:
-> https://lore.kernel.org/qemu- 
-> devel/4d8013d1-3787-4d8a-8b8d-3eee7d389d6e@linaro.org/
+  Hi,
 
-Bah, my bad, I didn't noticed the PR was posted 4min after the patch;
-I shouldn't have reviewed it.
+> $ qemu-system-aarch64  -machine virt -cpu max -device ati-vga
+> qemu-system-aarch64: -device ati-vga: failed to find romfile "vgabios-ati.bin"
+> $ qemu-system-aarch64  -machine virt -cpu max -device cirrus-vga
+> qemu-system-aarch64: -device cirrus-vga: failed to find romfile "vgabios-cirrus.bin"
+> $ qemu-system-aarch64  -machine virt -cpu max -device VGA
+> qemu-system-aarch64: -device VGA: failed to find romfile "vgabios-stdvga.bin"
+> 
+> Perhaps some of these devices are non-functional for other
+> reasons ?
 
-> 
->> ---
->>   hw/net/rocker/rocker.h        | 14 +++---------
->>   hw/net/rocker/rocker_hw.h     | 20 +++++++-----------
->>   hw/net/rocker/rocker_of_dpa.c | 40 +++++++++++++++++------------------
->>   3 files changed, 31 insertions(+), 43 deletions(-)
-> 
+Anything with pci memory bars is problematic on arm (which is one of the
+reasons why ramfb exists in the first place).
+
+> None the less if the device is built for non-x86 targets, and
+> the ROM files contain x86-only code that is to be executed by
+> SeaBIOS only, then conceptually this fix should apply to all
+> devices use a VGA BIOS ROM, not just ramfb.
+
+Note that non-x86 drivers for some of these devices exist, we have at
+least roms/QemuMacDrivers which includes a driver for (IIRC) stdvga.
+
+The ipxe roms are x86-only too btw.  We could make them multi-arch at
+least for EFI platforms, but given that edk2 ships a virtio-net driver
+and the recently added EFI archs (aarch64, riscv64, loongarch64) are all
+younger than virtio-net there is little reason to do so.
+
+> If we're introducing a property to control this usage, then
+> we should fix all devices at once, so we don't need to add
+> separate properties for other devices in future.
+
+All pci devices already have a romfile property.  So for most devices
+this is a matter of setting this property via machine compat properties.
+
+ramfb is a bit different here because it is not a PCI device, so we
+can't control things with the existing property and need a new one.
+
+take care,
+  Gerd
 
 
