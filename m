@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04E85C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:57:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CBCAC678DA
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:57:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyXF-0006Zh-03; Tue, 10 Jun 2025 08:57:01 -0400
+	id 1uOyXY-0006np-0g; Tue, 10 Jun 2025 08:57:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyX8-0006YQ-R1
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:56:55 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXX-0006nY-6R
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:19 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyX5-0002Z8-43
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:56:53 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-3a4ef2c2ef3so4442388f8f.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:56:50 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uOyXU-0002cM-Rr
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:57:18 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a375e72473so2757534f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 05:57:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749560209; x=1750165009; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749560231; x=1750165031; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xYWOMe7KOZYqH5WTkINgsrklm0G/7PrDwav/PmZ5N5o=;
- b=mGF1KB+X14vYj+bUE2xesW4InYkk1PopxIZ0aD5KJr1JIBAMaoXEwQFvK8sc+bY0CU
- 7kt6MqHaZ7EP26iDS1pkgq2wzR8sNwxPaDRLT27Y3P/EbdNTXIqsBALdOHOlzmvGnpro
- SOlBviJLvZo/dpZW78Fwzn/vuYnRJ+/1wCd33gXgU4oEjCRkYEBlJFZ3d7d8kT6oGIrW
- 0JjHufDaHPbqim4cNoSe8TamqmpESoBTNmnEfRSR89OeBvWcYbrmmPnCo8vD40krZpGP
- NjSVw29aDPhDQeRGwnneksSyKRgd6QoIKagwVt8teWUV/Qqx/0ZWtiFCAdLxoV2P7iG7
- lCyg==
+ bh=pACGd9aRRNLDY6rAI3jpVfxGD06wCRoRsQs9qD7T4XI=;
+ b=B3FCq3OVioCshWL3BsMS3hEzeaEC3pMYbjFhMJKxLUIJS+MmIVxWN2oTyJFCVC06jA
+ 6m7S5szdwVxK+XvUQPtcQ04c5OfAXelRoaRcfOgH/tm5bUjV4jgVB1aJE6bH1d8d90BH
+ mfLdWvUDy5TGHaBop5hPTPg5zLoyjy3C/bgIU3uvLwCF4wAZXIL7uv5PvsyxhlP0+8cn
+ SvTOt9mu3kxSHLm6t8WypoeB4uzCPsGteZ1yFnQ+eZoEtU6FdtHRK0Y2ISM1t7Ff4k+8
+ ZAViZjysk8r8GTEycALU2X5X75b3563nv7vSbnKHliqhlX6WNpC6sLr+dgGMqPNMYG+f
+ oruQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749560209; x=1750165009;
+ d=1e100.net; s=20230601; t=1749560231; x=1750165031;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xYWOMe7KOZYqH5WTkINgsrklm0G/7PrDwav/PmZ5N5o=;
- b=JCxRURJ6stazjHWPIIgKl/ffhzpBgAU5p6xn46Wwb5gZ3Ed/qcssfxwuszHKiMKYkz
- 626cjhOYoBGdzALXaOo+wnOsWsGEijz/MznVm1XtP2yogWNZ22IHfZQDj2Dee/4DjJQn
- G3YEC3HOeVaT2K8J8swT/kElI25ocImYc5ySwlYv/N/cYWVU/MYvriyT/2JWhyoHAdLg
- kVx3pUvUDDj+MHrooOY1cugUYG8rNDcJNyTrXsINkXssByimOlH9ujAfA71Xfl2DNIut
- ChDPOwWbwrjL+WMflbg0TSoxQTy0Tz1zWglunRU2sQ6EKAiQu/94UA4EuDtirwaSC0Uj
- gdNw==
-X-Gm-Message-State: AOJu0YyZIfIsIMH4qsze4NO0aHnlYGkr3LVN7ntCMJQZ0UmvoJzW1NF7
- 58+a+CuFVD0wSlP/lK6nDCAgnnM37qM7AYTF+qlUS8pqPN9ko43vq6PLwIyL21B2puvkbkVl+nb
- jfGLDnT8=
-X-Gm-Gg: ASbGnct0ZVvBhBF2n1WBgX+zeUJYHjjyB410fyTbqXFYlywtfW4dDTLk3CSg/qsany5
- QbhhEm0uMXE+DVfL9l/iHYYKZVeq+4Uv/tXt/uYDaIUCtAU2nfvm2gynTLSeTM950ZeLyllW3fy
- TvTx0S2NUaer03kqqcko2Yf4CJiF7Oiuaa5fYGfMnLABGpq94jYk2heIfv2CkTop1D2eJuG7zlC
- YI6MLTugw8/8/CLEGNu+pBViOwuIFFQXksii65L7y3+kh0UvD7tn6bF8Wns9wKKZxtJlxZkcL2C
- JQE2DuWrbrHpI2iLbSLFCcjOqWvTE27nKkCCog+GDBzrKH7M9t6FLMWO13yTIzBhlrXwVqhnb8t
- vjf4LtdMt3a1R4DIE78st1XsEsFiKSztLnzHbxpGzvA==
-X-Google-Smtp-Source: AGHT+IEgf6of4EgJUYnT1rI2k6XmYt7cRtgY7eqQA/xRiHMLNjEdtFvdPjqWsaQ71VFfWdy0S57r1A==
-X-Received: by 2002:a5d:564d:0:b0:3a5:39e9:7997 with SMTP id
- ffacd0b85a97d-3a539e979e5mr8554336f8f.34.1749560208877; 
- Tue, 10 Jun 2025 05:56:48 -0700 (PDT)
+ bh=pACGd9aRRNLDY6rAI3jpVfxGD06wCRoRsQs9qD7T4XI=;
+ b=VGeE1//f/HG6z1dVBXkHZDKNfj7dFhW/oZ7b7FhagFaFQ3/S8jol4fXvvWf1DjKZ+2
+ 3kw1Rid3S0WJ47dGTaQ4/4hl9kRqk2bTJ0ouRQh+dJtz3P2V5QgwXgdm+m6ACwxkosmb
+ 3hli01N1mHFIwtibJNfAnZzVSO0987vyCT4ZC3MH7bVKY0Vjfb5nZEAQYCwE+6/4JZHn
+ 2yI1E4q0wXaLWoWvoeqraerRzBnNXa4kaYhuEwieXXboOV/+YbTTZUwemGoJO1tr+bg0
+ 9eWovdWuTeiF01qcRcJ3Die9Nzdw1EmdITRoFNHVuxgwUqh+fPErp6pPbZB6xW2RxXW3
+ Xo7A==
+X-Gm-Message-State: AOJu0YyngUQvPVzEZr2eGMFZ0GIbHc0gmWiW53isNrWhVTeDpXlCdgVk
+ ubK+7e78wvNpqVid1klBa/X/tBXXfziIUxnarLyogW6OPY+VHbswHL4pPRy6erv5VuOvTVW8IiF
+ /ITuCDWg=
+X-Gm-Gg: ASbGncvlj1z48YhsT7KzYMyShWdRzF1yW342q9jd2VUIoYRix7J7ioVf+1CNbSEn8PR
+ mRkMNyI6LQ/2gHbVziuQwCIbA2Q+iELfCML4eV2rcs6PBTzlY2hIRSVW1DKBNTD5ECsQ22QMTiF
+ q+XlcGXnLwGGeMdUGkDBWqBh/xd03l9SIYQ9w1+XLVMWdrSAutTqE+y4Z+CyS3R43T2+DUS4qn1
+ 0PiYKEeOd5FWSPCgOJU+ZBVKH+086ye5t2iz3zPAfZ79sS08FdKzm0AhTJ984v+BkQPsrzhH3eW
+ wUbYuuFRJofpB9vAsgf/q9cf+74uJTFTugQzHtSvouke3tvdAJuHpIfEaC9BljsjX0KO5CSGNOm
+ MPlcWL/Zgp8YgTTzo/vsxh+wlm9mj1j2PRMtHe+TbsA==
+X-Google-Smtp-Source: AGHT+IG8N8MmoWXo7meZRdTzxnuNX0XgZdFlC+CiHi5F/ZvEr48gEOhaetKBNyb1O2o7zl5EOGB03A==
+X-Received: by 2002:a05:6000:290c:b0:3a4:d8b6:ca3f with SMTP id
+ ffacd0b85a97d-3a5318a7c04mr11661952f8f.30.1749560231443; 
+ Tue, 10 Jun 2025 05:57:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532435f95sm7698854f8f.60.2025.06.10.05.56.48
+ ffacd0b85a97d-3a5323bee86sm11989585f8f.43.2025.06.10.05.57.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Jun 2025 05:56:48 -0700 (PDT)
+ Tue, 10 Jun 2025 05:57:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: BALATON Zoltan <balaton@eik.bme.hu>,
+Cc: BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PULL 03/24] hw/pci-host/raven: Remove is-legacy-prep property
-Date: Tue, 10 Jun 2025 14:56:12 +0200
-Message-ID: <20250610125633.24411-4-philmd@linaro.org>
+Subject: [PULL 08/24] hw/net/fsl_etsec: Set default MAC address
+Date: Tue, 10 Jun 2025 14:56:17 +0200
+Message-ID: <20250610125633.24411-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250610125633.24411-1-philmd@linaro.org>
 References: <20250610125633.24411-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,74 +102,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: BALATON Zoltan <balaton@eik.bme.hu>
 
-This was a workaround for the prep machine that was removed 5 years
-ago so this is no longer needed.
+Use default MAC address if none is specified by property as done by
+most other network interface models.
 
-Fixes: b2ce76a073 (hw/ppc/prep: Remove the deprecated "prep" machine        and the OpenHackware BIOS)
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <0d41c18a8831bd4c8b0948eda3ef8f60f5a311f3.1746374076.git.balaton@eik.bme.hu>
+Reviewed-by: Bernhard Beschow <shentey@gmail.com>
+Acked-by: Bernhard Beschow <shentey@gmail.com>
+Message-ID: <8bd7ca691bd502b5fd761615d9af805e783fba36.1748012109.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/pci-host/raven.c | 30 +++++++++++-------------------
- 1 file changed, 11 insertions(+), 19 deletions(-)
+ hw/net/fsl_etsec/etsec.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
-index 21f7ca65e06..b78a8f32d32 100644
---- a/hw/pci-host/raven.c
-+++ b/hw/pci-host/raven.c
-@@ -75,7 +75,6 @@ struct PRePPCIState {
-     RavenPCIState pci_dev;
+diff --git a/hw/net/fsl_etsec/etsec.c b/hw/net/fsl_etsec/etsec.c
+index d14cb2a1015..846f6cbc5d9 100644
+--- a/hw/net/fsl_etsec/etsec.c
++++ b/hw/net/fsl_etsec/etsec.c
+@@ -389,6 +389,7 @@ static void etsec_realize(DeviceState *dev, Error **errp)
+ {
+     eTSEC        *etsec = ETSEC_COMMON(dev);
  
-     int contiguous_map;
--    bool is_legacy_prep;
- };
- 
- #define BIOS_SIZE (1 * MiB)
-@@ -243,22 +242,18 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
-     MemoryRegion *address_space_mem = get_system_memory();
-     int i;
- 
--    if (s->is_legacy_prep) {
--        for (i = 0; i < PCI_NUM_PINS; i++) {
--            sysbus_init_irq(dev, &s->pci_irqs[i]);
--        }
--    } else {
--        /* According to PReP specification section 6.1.6 "System Interrupt
--         * Assignments", all PCI interrupts are routed via IRQ 15 */
--        s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
--        object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
--                                &error_fatal);
--        qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
--        sysbus_init_irq(dev, &s->or_irq->out_irq);
-+    /*
-+     * According to PReP specification section 6.1.6 "System Interrupt
-+     * Assignments", all PCI interrupts are routed via IRQ 15
-+     */
-+    s->or_irq = OR_IRQ(object_new(TYPE_OR_IRQ));
-+    object_property_set_int(OBJECT(s->or_irq), "num-lines", PCI_NUM_PINS,
-+                            &error_fatal);
-+    qdev_realize(DEVICE(s->or_irq), NULL, &error_fatal);
-+    sysbus_init_irq(dev, &s->or_irq->out_irq);
- 
--        for (i = 0; i < PCI_NUM_PINS; i++) {
--            s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
--        }
-+    for (i = 0; i < PCI_NUM_PINS; i++) {
-+        s->pci_irqs[i] = qdev_get_gpio_in(DEVICE(s->or_irq), i);
-     }
- 
-     qdev_init_gpio_in(d, raven_change_gpio, 1);
-@@ -426,9 +421,6 @@ static const Property raven_pcihost_properties[] = {
-     DEFINE_PROP_UINT32("elf-machine", PREPPCIState, pci_dev.elf_machine,
-                        EM_NONE),
-     DEFINE_PROP_STRING("bios-name", PREPPCIState, pci_dev.bios_name),
--    /* Temporary workaround until legacy prep machine is removed */
--    DEFINE_PROP_BOOL("is-legacy-prep", PREPPCIState, is_legacy_prep,
--                     false),
- };
- 
- static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
++    qemu_macaddr_default_if_unset(&etsec->conf.macaddr);
+     etsec->nic = qemu_new_nic(&net_etsec_info, &etsec->conf,
+                               object_get_typename(OBJECT(dev)), dev->id,
+                               &dev->mem_reentrancy_guard, etsec);
 -- 
 2.49.0
 
