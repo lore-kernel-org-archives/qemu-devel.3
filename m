@@ -4,96 +4,145 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F2AC677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:27:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF19C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:39:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2kU-0001ov-Bz; Tue, 10 Jun 2025 13:26:58 -0400
+	id 1uP2vm-0004J1-6P; Tue, 10 Jun 2025 13:38:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP2kQ-0001nM-H6
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:26:54 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2ve-0004Hx-4n
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:38:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP2kO-0002rl-F6
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:26:54 -0400
-Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AGN7A0019454;
- Tue, 10 Jun 2025 17:26:46 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:message-id:subject:to; s=corp-2025-04-25; bh=qizwWASt
- wZpnK+4Sqf4tNXNQjISpsZo+DmXa7/8Ezho=; b=cBqO6c0SibMY3X/wM7FS9QD/
- vnuI+wWSzchC0ufvQuqIbRp+DuvLFAywt2mJNBL5dGOslvqD+MFtsRcPRuXWDpPc
- eM0EqIOKFXRNGCNaidnUan6INS9TKrlRrAvRBhlxMVsoZpl5/FMhQmVGI2821I97
- 5a+mJCDlvxQXxp/tzD3WUFafefwTO1vjIhW+SffSsgkJQdDEQZuhZdPBX7eT7Odt
- 9OQN3DPP+3EoHhtm9wXc0s3hFi2JbKe6Zw4oNpklWzp6GiPkg41d3PUYK4CmB3rm
- 3Iibm9jQN1DF25++xAawcsWcjglFMgvW4v+1nH63+4AXeLJmJGd2cDzCDU/9ng==
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c74vsed-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 17:26:46 +0000 (GMT)
-Received: from pps.filterd
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AH8mDY007679; Tue, 10 Jun 2025 17:26:45 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8s51n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 17:26:45 +0000
-Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
- (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AHQiih006021;
- Tue, 10 Jun 2025 17:26:44 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8s517-1; Tue, 10 Jun 2025 17:26:44 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5.1] pci: skip reset during cpr
-Date: Tue, 10 Jun 2025 10:26:43 -0700
-Message-Id: <1749576403-25355-1-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_08,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- phishscore=0
- malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0 bulkscore=0
- adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
- engine=8.12.0-2505160000 definitions=main-2506100140
-X-Authority-Analysis: v=2.4 cv=LIpmQIW9 c=1 sm=1 tr=0 ts=68486ad6 cx=c_pps
- a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=tDKGrQQYyiCnxYLJR1YA:9
-X-Proofpoint-ORIG-GUID: b7wpkCgxHvikyEEaECaRl7oKmWtzn5wZ
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDE0MSBTYWx0ZWRfX9K2bse3lTIZw
- i9vtBE5sKtNdpQGiPoGbw8FSho+a9oJJIYAOyFh/aU4wCBYKFyGLIbF0Bg6do3pWJWCCpa14L9H
- lvuLrs6qVGtDntrTw0krichrINTIFEM1kCUYSnId4+uMRf2O0RKMgbyEbodRnFmYzHKFW+szIxv
- IKb0FnDwSRixwTrnS1kCKa7X8yCSp5yD9+ldhkfE9pO9IQHHNUPKmeptiaviMatjusLuhSAqgP2
- vBrezL/Cwvu0Faf7kFc32ATKDsGlYCdsDNWpIVMdOUC4umerK8p0ofsWyHpKuZ17vtAUPF+mgwE
- AKz2c858HxpYWk2kX87Fo+yZcj3iFmElsZDzpWO3I/G/9zwHeqplBpA+sZ4//yme5XgOv3Y0Fwy
- WiMQWzFO4uLnm11vt573y6oOtNwJXrHkrEw2wcJ2LeYDTDG5wwVUXwMNTlgn6daYhGIJ1hNT
-X-Proofpoint-GUID: b7wpkCgxHvikyEEaECaRl7oKmWtzn5wZ
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2vb-00068e-7b
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:38:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749577105;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=/kFLgJ4GzBy40LoUUXAHQZQOWbDY5MCxJVFi19hrBCA=;
+ b=XOWWJsaT0/+nsltM0yZQFyTO8if+9qY2jFPxpli6RB8EJ0BQC87dIgixF+AMzQn71Q7E67
+ 0Jc4hTDLQ0K90dSvxLt5X+RKFLM6W66pXUB4Ob+Wq2GnR8nP7uhgB9yHBjlC7uiM1IPuex
+ jAJ+znzvVXdHPfqa4CpAqNYno3HGbeU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-674-PfzQviUcPQyUMSZ2ik_tKw-1; Tue, 10 Jun 2025 13:38:23 -0400
+X-MC-Unique: PfzQviUcPQyUMSZ2ik_tKw-1
+X-Mimecast-MFC-AGG-ID: PfzQviUcPQyUMSZ2ik_tKw_1749577103
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4e713e05bso2635214f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 10:38:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749577102; x=1750181902;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=/kFLgJ4GzBy40LoUUXAHQZQOWbDY5MCxJVFi19hrBCA=;
+ b=IJP1BFhwPCiUwRXI7WbZ/ys7nCRl5ReqQXLCrc4IX+8BB6uTkK4LxerfiLGD/oiszq
+ KFbslHMTVM3mRsVluK8CzuUUppPu5t6Hmw5joPwYgRhT4+5/drcyW7ZJMCdrh3/Lub6I
+ GPFej3iGwEE/3wQqNzF1TisqgkG64x3tjQFGy3rSagQlar/OL163V0KOmxvUrg5EtSGx
+ /VyvtgqPu2SmH7ItVMgfOuA0f9+l75pBen8Vc5l/23G3p3cfBcX+GRMz+coEJcY6sFUo
+ rJoJVnkcrT5TlstgE1cpQkCS3+feUKvf7dI3BNNk0CnrqOcPoRGhS4FO+c1vCpMFomXb
+ g8/g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV3Je/6HdtQmvhljBLN4pUHFMYj1hepnBk+Ao2eKinP1NWWiacyEOrJwNp2Bof0UYtjv9k8fRhrBKN8@nongnu.org
+X-Gm-Message-State: AOJu0Yyl01cx5cr42QQGdxtIAF9GD03apNGJn+7nGBNkQjTxcv4s16Qi
+ mNcctyVHqKc9qMHEvoMllg+K1jlfqXbIFAKXxaoxHpsSdoGdzC44xucf8aouI4ahgVSZmUb2Aq7
+ dtqpKXqhVDCuZTgfOF0Snj3OwQI5bWz6G2JSvSxce0yW9M5/TdRaMAjevi0GHKmmw
+X-Gm-Gg: ASbGnctUU9i1nWY4fSzOVdHKY/iVkyDddWvbFGJVRdAJdEauBLJUg7e83Bh3Ofh8IE0
+ HiZSuvzQP+OMYW6UG1W8zkQ/sHP/++CwlONlr75Ragr+LIoPM/lMipNvkbztVUsZHNidoq4mD04
+ EuHWLArjewEzG7+BU++udQLy/ChFKlwQ0eQlVXFHeWlCVMhtyHCnAQCz0F3NUXzZH5WxEUlVsYk
+ K1tZW450ojk4vcmYfK1FgXWTnIxh88yRFnwuvrQoGOUWg9Yf5eTkyHiwNgfDf058Ew36I0zBEf0
+ nxX3hsBmKCqmI63A83UjMSYQdlDfrcUs4kz89yG4kGdvpEHECGG/XVeWck8F
+X-Received: by 2002:a05:6000:4028:b0:3a4:f72a:b19d with SMTP id
+ ffacd0b85a97d-3a5316844a0mr12649272f8f.8.1749577102246; 
+ Tue, 10 Jun 2025 10:38:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH11jdK0IgK3Gl3uxGBfzc7mLOA9Y4vbddjFOuh04gQBFLcSEj8HcRD9HwaKKxJ+fnL+WQTFA==
+X-Received: by 2002:a05:6000:4028:b0:3a4:f72a:b19d with SMTP id
+ ffacd0b85a97d-3a5316844a0mr12649257f8f.8.1749577101912; 
+ Tue, 10 Jun 2025 10:38:21 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-453245c582bsm490325e9.4.2025.06.10.10.38.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 10:38:21 -0700 (PDT)
+Message-ID: <3e467dec-7b16-46d8-b4ae-b3c9533d75d6@redhat.com>
+Date: Tue, 10 Jun 2025 19:38:20 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 01/23] vfio: export PCI helpers needed for vfio-user
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250607001056.335310-1-john.levon@nutanix.com>
+ <20250607001056.335310-2-john.levon@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250607001056.335310-2-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -111,70 +160,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Do not reset a vfio-pci device during CPR.
+On 6/7/25 02:10, John Levon wrote:
+> The vfio-user code will need to re-use various parts of the vfio PCI
+> code. Export them in hw/vfio/pci.h, and rename them to the vfio_pci_*
+> namespace.
+> 
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   hw/vfio/pci.h        | 11 ++++++++++
+>   hw/vfio/pci.c        | 48 ++++++++++++++++++++++----------------------
+>   hw/vfio/trace-events |  6 +++---
+>   3 files changed, 38 insertions(+), 27 deletions(-)
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/pci/pci.c         | 5 +++++
- hw/vfio/pci.c        | 7 +++++++
- include/hw/pci/pci.h | 2 ++
- 3 files changed, 14 insertions(+)
+Applied to vfio-next.
 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 9b4bf48..c70b5ce 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -32,6 +32,7 @@
- #include "hw/pci/pci_host.h"
- #include "hw/qdev-properties.h"
- #include "hw/qdev-properties-system.h"
-+#include "migration/cpr.h"
- #include "migration/qemu-file-types.h"
- #include "migration/vmstate.h"
- #include "net/net.h"
-@@ -537,6 +538,10 @@ static void pci_reset_regions(PCIDevice *dev)
- 
- static void pci_do_device_reset(PCIDevice *dev)
- {
-+    if ((dev->cap_present & QEMU_PCI_SKIP_RESET_ON_CPR) && cpr_is_incoming()) {
-+        return;
-+    }
-+
-     pci_device_deassert_intx(dev);
-     assert(dev->irq_state == 0);
- 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index b1250d8..4cd92c3 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3408,6 +3408,13 @@ static void vfio_instance_init(Object *obj)
-     /* QEMU_PCI_CAP_EXPRESS initialization does not depend on QEMU command
-      * line, therefore, no need to wait to realize like other devices */
-     pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
-+
-+    /*
-+     * A device that is resuming for cpr is already configured, so do not
-+     * reset it during qemu_system_reset prior to cpr load, else interrupts
-+     * may be lost.
-+     */
-+    pci_dev->cap_present |= QEMU_PCI_SKIP_RESET_ON_CPR;
- }
- 
- static void vfio_pci_base_dev_class_init(ObjectClass *klass, const void *data)
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 35d59d7..df3cc7b 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -222,6 +222,8 @@ enum {
-     QEMU_PCIE_EXT_TAG = (1 << QEMU_PCIE_EXT_TAG_BITNR),
- #define QEMU_PCI_CAP_PM_BITNR 14
-     QEMU_PCI_CAP_PM = (1 << QEMU_PCI_CAP_PM_BITNR),
-+#define QEMU_PCI_SKIP_RESET_ON_CPR_BITNR 15
-+    QEMU_PCI_SKIP_RESET_ON_CPR = (1 << QEMU_PCI_SKIP_RESET_ON_CPR_BITNR),
- };
- 
- typedef struct PCIINTxRoute {
--- 
-1.8.3.1
+Thanks,
+
+C.
+
 
 
