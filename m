@@ -4,75 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 639B2C5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:04:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 520F8C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 08:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOtxK-00027q-1p; Tue, 10 Jun 2025 04:03:38 -0400
+	id 1uOu9x-0004q4-MB; Tue, 10 Jun 2025 04:16:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uOtxH-00026J-RO
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:03:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uOtxF-0006nb-9k
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:03:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749542611;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=C6v5eO4KRPLDLssBKHllP2DNjh2KCFp7qAC/RbRL70k=;
- b=HBPimPYEkxiqopijC+jIw9+i2KSBrOzwU/+qugd+XbYcUnpPifch4OhI9T+3PS7Qv0CWoz
- 3TKaytb3oAUUMfZSEukIa/YjfC63oCU3CNNqghMtUK2Pb/qzhxVUEYSBlqkyc7n1lVuEHf
- bIeu5sQ3uOHE35o/S1Ygur6T+aN2xw8=
-Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-Ue46WyiQO-W6R1cymSI5ag-1; Tue,
- 10 Jun 2025 04:03:27 -0400
-X-MC-Unique: Ue46WyiQO-W6R1cymSI5ag-1
-X-Mimecast-MFC-AGG-ID: Ue46WyiQO-W6R1cymSI5ag_1749542606
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2DBCB1956056; Tue, 10 Jun 2025 08:03:26 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.69])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2AB4C1956087; Tue, 10 Jun 2025 08:03:25 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 9A83A1801083; Tue, 10 Jun 2025 08:47:06 +0200 (CEST)
-Date: Tue, 10 Jun 2025 08:47:06 +0200
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Shaoqin Huang <shahuang@redhat.com>, qemu-arm@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Eric Auger <eauger@redhat.com>, 
- Alex Williamson <alex.williamson@redhat.com>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 1/2] ramfb: Add property to control if load the romfile
-Message-ID: <dli36wx3pe5we6xg5w7c3vyxifnfctovurucrci75kec3qk2y2@2dweacwekfcl>
-References: <20250609073408.2083831-1-shahuang@redhat.com>
- <20250609073408.2083831-2-shahuang@redhat.com>
- <aEakP3rDTyBqDXA5@redhat.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uOu9r-0004nE-Vh
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:16:35 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uOu9m-0000TJ-Dp
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 04:16:34 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxJHDb6UdodH0SAQ--.5027S3;
+ Tue, 10 Jun 2025 16:16:27 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMBxb8fT6UdojgwUAQ--.58593S7;
+ Tue, 10 Jun 2025 16:16:26 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org
+Cc: stefanha@gmail.com,
+	Richard Henderson <richard.henderson@linaro.org>
+Subject: [PULL 5/7] target/loongarch: add check for fcond
+Date: Tue, 10 Jun 2025 15:53:48 +0800
+Message-Id: <20250610075350.865626-6-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20250610075350.865626-1-gaosong@loongson.cn>
+References: <20250610075350.865626-1-gaosong@loongson.cn>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <aEakP3rDTyBqDXA5@redhat.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxb8fT6UdojgwUAQ--.58593S7
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,45 +65,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+fcond only has 22 types, add a check for fcond.
 
-> $ qemu-system-aarch64  -machine virt -cpu max -device ati-vga
-> qemu-system-aarch64: -device ati-vga: failed to find romfile "vgabios-ati.bin"
-> $ qemu-system-aarch64  -machine virt -cpu max -device cirrus-vga
-> qemu-system-aarch64: -device cirrus-vga: failed to find romfile "vgabios-cirrus.bin"
-> $ qemu-system-aarch64  -machine virt -cpu max -device VGA
-> qemu-system-aarch64: -device VGA: failed to find romfile "vgabios-stdvga.bin"
-> 
-> Perhaps some of these devices are non-functional for other
-> reasons ?
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2972
 
-Anything with pci memory bars is problematic on arm (which is one of the
-reasons why ramfb exists in the first place).
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20250603024810.350510-1-gaosong@loongson.cn>
+---
+ .../loongarch/tcg/insn_trans/trans_fcmp.c.inc | 25 +++++++++++++------
+ .../loongarch/tcg/insn_trans/trans_vec.c.inc  | 16 +++++++++---
+ 2 files changed, 30 insertions(+), 11 deletions(-)
 
-> None the less if the device is built for non-x86 targets, and
-> the ROM files contain x86-only code that is to be executed by
-> SeaBIOS only, then conceptually this fix should apply to all
-> devices use a VGA BIOS ROM, not just ramfb.
-
-Note that non-x86 drivers for some of these devices exist, we have at
-least roms/QemuMacDrivers which includes a driver for (IIRC) stdvga.
-
-The ipxe roms are x86-only too btw.  We could make them multi-arch at
-least for EFI platforms, but given that edk2 ships a virtio-net driver
-and the recently added EFI archs (aarch64, riscv64, loongarch64) are all
-younger than virtio-net there is little reason to do so.
-
-> If we're introducing a property to control this usage, then
-> we should fix all devices at once, so we don't need to add
-> separate properties for other devices in future.
-
-All pci devices already have a romfile property.  So for most devices
-this is a matter of setting this property via machine compat properties.
-
-ramfb is a bit different here because it is not a PCI device, so we
-can't control things with the existing property and need a new one.
-
-take care,
-  Gerd
+diff --git a/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc b/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
+index 3babf69e4a..6a2c030a6b 100644
+--- a/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_fcmp.c.inc
+@@ -4,10 +4,15 @@
+  */
+ 
+ /* bit0(signaling/quiet) bit1(lt) bit2(eq) bit3(un) bit4(neq) */
+-static uint32_t get_fcmp_flags(int cond)
++static uint32_t get_fcmp_flags(DisasContext *ctx, int cond)
+ {
+     uint32_t flags = 0;
+ 
++    /*check cond , cond =[0-8,10,12] */
++    if ((cond > 8) &&(cond != 10) && (cond != 12)) {
++        return -1;
++    }
++
+     if (cond & 0x1) {
+         flags |= FCMP_LT;
+     }
+@@ -26,9 +31,14 @@ static uint32_t get_fcmp_flags(int cond)
+ static bool trans_fcmp_cond_s(DisasContext *ctx, arg_fcmp_cond_s *a)
+ {
+     TCGv var, src1, src2;
+-    uint32_t flags;
++    uint32_t flags = get_fcmp_flags(ctx, a->fcond >>1);
+     void (*fn)(TCGv, TCGv_env, TCGv, TCGv, TCGv_i32);
+ 
++    if (flags == -1) {
++        generate_exception(ctx, EXCCODE_INE);
++        return true;
++    }
++
+     if (!avail_FP_SP(ctx)) {
+         return false;
+     }
+@@ -39,8 +49,6 @@ static bool trans_fcmp_cond_s(DisasContext *ctx, arg_fcmp_cond_s *a)
+     src1 = get_fpr(ctx, a->fj);
+     src2 = get_fpr(ctx, a->fk);
+     fn = (a->fcond & 1 ? gen_helper_fcmp_s_s : gen_helper_fcmp_c_s);
+-    flags = get_fcmp_flags(a->fcond >> 1);
+-
+     fn(var, tcg_env, src1, src2, tcg_constant_i32(flags));
+ 
+     tcg_gen_st8_tl(var, tcg_env, offsetof(CPULoongArchState, cf[a->cd]));
+@@ -50,9 +58,14 @@ static bool trans_fcmp_cond_s(DisasContext *ctx, arg_fcmp_cond_s *a)
+ static bool trans_fcmp_cond_d(DisasContext *ctx, arg_fcmp_cond_d *a)
+ {
+     TCGv var, src1, src2;
+-    uint32_t flags;
++    uint32_t flags = get_fcmp_flags(ctx, a->fcond >> 1);
+     void (*fn)(TCGv, TCGv_env, TCGv, TCGv, TCGv_i32);
+ 
++    if (flags == -1) {
++        generate_exception(ctx, EXCCODE_INE);
++        return true;
++    }
++
+     if (!avail_FP_DP(ctx)) {
+         return false;
+     }
+@@ -63,8 +76,6 @@ static bool trans_fcmp_cond_d(DisasContext *ctx, arg_fcmp_cond_d *a)
+     src1 = get_fpr(ctx, a->fj);
+     src2 = get_fpr(ctx, a->fk);
+     fn = (a->fcond & 1 ? gen_helper_fcmp_s_d : gen_helper_fcmp_c_d);
+-    flags = get_fcmp_flags(a->fcond >> 1);
+-
+     fn(var, tcg_env, src1, src2, tcg_constant_i32(flags));
+ 
+     tcg_gen_st8_tl(var, tcg_env, offsetof(CPULoongArchState, cf[a->cd]));
+diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+index dff92772ad..d6f0560349 100644
+--- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
++++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+@@ -4655,19 +4655,23 @@ TRANS(xvslti_du, LASX, do_xcmpi, MO_64, TCG_COND_LTU)
+ 
+ static bool do_vfcmp_cond_s(DisasContext *ctx, arg_vvv_fcond *a, uint32_t sz)
+ {
+-    uint32_t flags;
++    uint32_t flags = get_fcmp_flags(ctx, a->fcond >> 1);
+     void (*fn)(TCGv_env, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
+     TCGv_i32 vd = tcg_constant_i32(a->vd);
+     TCGv_i32 vj = tcg_constant_i32(a->vj);
+     TCGv_i32 vk = tcg_constant_i32(a->vk);
+     TCGv_i32 oprsz = tcg_constant_i32(sz);
+ 
++    if(flags == -1){
++        generate_exception(ctx, EXCCODE_INE);
++        return true;
++    }
++
+     if (!check_vec(ctx, sz)) {
+         return true;
+     }
+ 
+     fn = (a->fcond & 1 ? gen_helper_vfcmp_s_s : gen_helper_vfcmp_c_s);
+-    flags = get_fcmp_flags(a->fcond >> 1);
+     fn(tcg_env, oprsz, vd, vj, vk, tcg_constant_i32(flags));
+ 
+     return true;
+@@ -4675,19 +4679,23 @@ static bool do_vfcmp_cond_s(DisasContext *ctx, arg_vvv_fcond *a, uint32_t sz)
+ 
+ static bool do_vfcmp_cond_d(DisasContext *ctx, arg_vvv_fcond *a, uint32_t sz)
+ {
+-    uint32_t flags;
++    uint32_t flags = get_fcmp_flags(ctx, a->fcond >> 1);
+     void (*fn)(TCGv_env, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32, TCGv_i32);
+     TCGv_i32 vd = tcg_constant_i32(a->vd);
+     TCGv_i32 vj = tcg_constant_i32(a->vj);
+     TCGv_i32 vk = tcg_constant_i32(a->vk);
+     TCGv_i32 oprsz = tcg_constant_i32(sz);
+ 
++    if (flags == -1) {
++        generate_exception(ctx, EXCCODE_INE);
++        return true;
++    }
++
+     if (!check_vec(ctx, sz)) {
+         return true;
+     }
+ 
+     fn = (a->fcond & 1 ? gen_helper_vfcmp_s_d : gen_helper_vfcmp_c_d);
+-    flags = get_fcmp_flags(a->fcond >> 1);
+     fn(tcg_env, oprsz, vd, vj, vk, tcg_constant_i32(flags));
+ 
+     return true;
+-- 
+2.34.1
 
 
