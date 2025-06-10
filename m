@@ -4,102 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EBEEC71130
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:54:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11BBFC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:54:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP28g-0004oP-It; Tue, 10 Jun 2025 12:47:55 -0400
+	id 1uP29C-0006NF-Gl; Tue, 10 Jun 2025 12:48:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15r-0004ZN-VO
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:57 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uOz6i-0007xn-NJ
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 09:33:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15o-0006Ee-2z
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:55 -0400
-Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXeHJ027903;
- Tue, 10 Jun 2025 15:40:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=cAnDG67bAlekGC+BaPcckgqyZXgWQH2eruNb9eucybQ=; b=
- J4HANV8XaYgYImt3ajUlx7BrJxlbf6RRDpmqvAIqshfGcmM3qvlBxVLSFNZqrgJn
- CeQl+aXb/1g7TDrxagH7UbLMZ3/eNNWS6RJNc4U39FDN9AvT6CADN+vlndG8ccuc
- z/qbY58X9+asedJTSuRHrariw9FajScu9TiZMEhqQPfkhNkWjtNTtxyr677ByQFG
- tKp0/0YXRfmUSvQp0WQU4NneR8vF4NZ7O3XvyTaHLJE5qCPdFpd8ZKTVRUosGpBf
- vxgWaaX1vHqU14mv+P2KHQ8hULYTmPUiBVLEIWhXQ/ACxxdJATdzjs0+dvRqg+z7
- Mwrw1QS7wokpU3lQgE/ctg==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474cbech6q-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:38 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AF0F37003984; Tue, 10 Jun 2025 15:40:37 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wbrx-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:37 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrg1028825;
- Tue, 10 Jun 2025 15:40:36 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-28; Tue, 10 Jun 2025 15:40:36 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 27/38] vfio/iommufd: add vfio_device_free_name
-Date: Tue, 10 Jun 2025 08:39:40 -0700
-Message-Id: <1749569991-25171-28-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506100125
-X-Proofpoint-GUID: laYNKQBw2C73eOT_gNGMgSEsvbhSOsb1
-X-Authority-Analysis: v=2.4 cv=BffY0qt2 c=1 sm=1 tr=0 ts=684851f6 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=cF8GLI2TDnzqfzOqKfcA:9 cc=ntf
- awl=host:14714
-X-Proofpoint-ORIG-GUID: laYNKQBw2C73eOT_gNGMgSEsvbhSOsb1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfXwLOUsSilBZ49
- 07qQ55iLtPOZCTsN26rfCllaVEw8RzFS7WiAu6V16TpPy2e6UfxGWRb0hurahsynYFuLoCUbg33
- 0ldLa9jZm5PVGerZTzv7MUAh3YoUVtmR9+qmzXS6ZMG++0tod5hwoZpdRqgGW4h6aqe0uR9YJ5L
- J38pieS2u8BH1uwBVyQk8VCMpXdE3SUYjzJfYey0IMLYNESrHJi/amLxvUtsprmp+uQLfSz/e1n
- dEilMRysfM9QDE4IpPk0dNXwitpOinmxjuFonzzCXA09e6vyCY/oAozfXCxt5XeNnR/fC7Xy/aO
- f7cEHWVa4QmDNRvKpEg/xOiYOKrYM4sZdicWPDtwHxXMlWBGG4jy5Q4GzR+Z2ry56eo63VOwdpx
- HuLUJ+rcxcUM1rQyIYWHvgijGRsqUxizjUuB1R0EZAlHZK4DR7vzGtSo2jyzY3IcJMp1S99K
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
+ id 1uOz6d-0007TF-E0
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 09:33:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749562412;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=RSXqtXBWmabqZNaGhAVEch3+5fzLdlsgiXpUhNnshS0=;
+ b=fIr7ChoDsojO+cBu8Wn43Le8VsiXySRGDmSOz4AYnE0q1hZHHDieqkVzEAFLIbTjblljDN
+ pN82IHSDYTIO6ePfhPBSYuO3pMNlMRtgFeIFB/vZCwI8GAr04RialVc7rgLnrl4+TQ+mVA
+ TehFmQEtkp1bbobWR72PybRwKuTVpqQ=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-659-6nKnSMbXOjeISHSuDOSMog-1; Tue, 10 Jun 2025 09:33:31 -0400
+X-MC-Unique: 6nKnSMbXOjeISHSuDOSMog-1
+X-Mimecast-MFC-AGG-ID: 6nKnSMbXOjeISHSuDOSMog_1749562411
+Received: by mail-qv1-f69.google.com with SMTP id
+ 6a1803df08f44-6fb1c6b5ea7so35370196d6.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 06:33:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749562410; x=1750167210;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=RSXqtXBWmabqZNaGhAVEch3+5fzLdlsgiXpUhNnshS0=;
+ b=oqnQWQBw6enpM52X8IkBBBJ2f7U7CL21r+ZQlCg7SqJRUwUGs3pQdbQoo3qP9STAni
+ 63Ek7UjJLRNy1lF9fab6uKDj9rGg3mKQ5kPO26I/h0p1SYbAT3BlEisUYLSPq57ojFgp
+ BhLVW01LVn+WI0MWFQdad5G9j4ja/YDA3Gy4TPYP49y2SvAKrxAAJ2okAU5YewBTV7gk
+ QU6AGwAossee2ECmRJY1R+KF4scFjbMwVPFZdvQgRGPatxUcA+DM7pwcMePFXL6A6d4u
+ wEMnxtIx27Zbpn8cIKGb+d3PTls0B52GQCC3THp3qfeOHnAlpCI5dwOzI/MHiEktUV19
+ LZcQ==
+X-Gm-Message-State: AOJu0YysIsw/HZq/7ZudVfYGLwDLYmBr1aowT1IROw800YWZUTSzxwLV
+ oGV9XSoR6kIR4yIFdKp9QUxjtq4KsFajrw6WSZ3oHQ6mORrV2XIFxzDIVHD/Ou6FoCs2uqzREet
+ u6EXDhsebW8BtniLtNzuvT3L+ET0+A0T6+sYXrcoFeKHAOdxLAdLtTa4PUyrVQ3lZuqwCAk/C6a
+ 68ILozbfqVs/wmZCSDhc0N+gaBYQgpmnA=
+X-Gm-Gg: ASbGncs/GLGA+/FF8aLnA72TSR7GLAEj+wZbo6gr07E3x8784QLVjrdqDyZ5HgrtA50
+ D/4B4QnurHNvlmVwSw+WQCcVVrQj+OZ4N5MKQiuFEfgEChRVCD7e1jdnxJt4GzfHsExElZnoKQT
+ +fi9/+pErUIBN40xoETwIhx+D4vDRjYSSn1JUH
+X-Received: by 2002:ad4:5c4c:0:b0:6fa:c5be:dac3 with SMTP id
+ 6a1803df08f44-6fb08f4f61fmr254505946d6.3.1749562410677; 
+ Tue, 10 Jun 2025 06:33:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGYSLTPJ+7/qxAZBKn8MlMuwFnIje6aEXcdxvTRWyHrbuwuignJ7x5Qn2xqlGIIAejOrttK+Pxa/2QoIOzwIsw=
+X-Received: by 2002:ad4:5c4c:0:b0:6fa:c5be:dac3 with SMTP id
+ 6a1803df08f44-6fb08f4f61fmr254505626d6.3.1749562410186; Tue, 10 Jun 2025
+ 06:33:30 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250605101124.367270-1-pbonzini@redhat.com>
+ <20250605101124.367270-3-pbonzini@redhat.com>
+In-Reply-To: <20250605101124.367270-3-pbonzini@redhat.com>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Date: Tue, 10 Jun 2025 17:33:19 +0400
+X-Gm-Features: AX0GCFsKoXLKD-1URwHVR9ssAlxpgjXHiZxOR8vklkrbfa4q0CZNuTkT_9wDuvI
+Message-ID: <CAMxuvawr=a1RsKXxijZby=1=ru8rNUui7T+Db2P+n5jAeckn3Q@mail.gmail.com>
+Subject: Re: [PATCH 2/3] scripts/qapi: add QAPISchemaIfCond.rsgen()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com, 
+ mkletzan@redhat.com
+Content-Type: multipart/alternative; boundary="000000000000f8ed6f063737bd6c"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mlureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,101 +103,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define vfio_device_free_name to free the name created by
-vfio_device_get_name.  A subsequent patch will do more there.
-No functional change.
+--000000000000f8ed6f063737bd6c
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- include/hw/vfio/vfio-device.h | 1 +
- hw/vfio/ap.c                  | 2 +-
- hw/vfio/ccw.c                 | 2 +-
- hw/vfio/device.c              | 5 +++++
- hw/vfio/pci.c                 | 2 +-
- hw/vfio/platform.c            | 2 +-
- 6 files changed, 10 insertions(+), 4 deletions(-)
+Hi
 
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 6eb6f21..321b442 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -227,6 +227,7 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
- 
- /* Returns 0 on success, or a negative errno. */
- bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
-+void vfio_device_free_name(VFIODevice *vbasedev);
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
- void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
-                       DeviceState *dev, bool ram_discard);
-diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-index 785c0a0..013bd59 100644
---- a/hw/vfio/ap.c
-+++ b/hw/vfio/ap.c
-@@ -180,7 +180,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
- 
- error:
-     error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
--    g_free(vbasedev->name);
-+    vfio_device_free_name(vbasedev);
- }
- 
- static void vfio_ap_unrealize(DeviceState *dev)
-diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-index cea9d6e..903b8b0 100644
---- a/hw/vfio/ccw.c
-+++ b/hw/vfio/ccw.c
-@@ -619,7 +619,7 @@ out_io_notifier_err:
- out_region_err:
-     vfio_device_detach(vbasedev);
- out_attach_dev_err:
--    g_free(vbasedev->name);
-+    vfio_device_free_name(vbasedev);
- out_unrealize:
-     if (cdc->unrealize) {
-         cdc->unrealize(cdev);
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 71fa9f4..a3603f5 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -317,6 +317,11 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
-     return true;
- }
- 
-+void vfio_device_free_name(VFIODevice *vbasedev)
-+{
-+    g_clear_pointer(&vbasedev->name, g_free);
-+}
+On Thu, Jun 5, 2025 at 2:11=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com> =
+wrote:
+
+> From: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+>
+> Generate Rust #[cfg(...)] guards from QAPI 'if' conditions.
+>
+> Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> Link:
+> https://lore.kernel.org/r/20210907121943.3498701-15-marcandre.lureau@redh=
+at.com
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  scripts/qapi/common.py | 16 ++++++++++++++++
+>  scripts/qapi/schema.py |  4 ++++
+>  2 files changed, 20 insertions(+)
+>
+> diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
+> index d7c8aa3365c..a8ea5792c11 100644
+> --- a/scripts/qapi/common.py
+> +++ b/scripts/qapi/common.py
+> @@ -199,6 +199,22 @@ def guardend(name: str) -> str:
+>                   name=3Dc_fname(name).upper())
+>
+>
+> +def rsgen_ifcond(ifcond: Union[str, Dict[str, Any]]) -> str:
+>
+
+def rsgen_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]]) -> str:
+
+to make type checking happy.
+
 +
- void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
- {
-     ERRP_GUARD();
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index b52c488..b4136432 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2966,7 +2966,7 @@ static void vfio_pci_put_device(VFIOPCIDevice *vdev)
- 
-     vfio_device_detach(&vdev->vbasedev);
- 
--    g_free(vdev->vbasedev.name);
-+    vfio_device_free_name(&vdev->vbasedev);
-     g_free(vdev->msix);
- }
- 
-diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
-index 9a21f2e..5c1795a 100644
---- a/hw/vfio/platform.c
-+++ b/hw/vfio/platform.c
-@@ -530,7 +530,7 @@ static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
- {
-     /* @fd takes precedence over @sysfsdev which takes precedence over @host */
-     if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
--        g_free(vbasedev->name);
-+        vfio_device_free_name(vbasedev);
-         vbasedev->name = g_path_get_basename(vbasedev->sysfsdev);
-     } else if (vbasedev->fd < 0) {
-         if (!vbasedev->name || strchr(vbasedev->name, '/')) {
--- 
-1.8.3.1
+> +    def cfg(ifcond: Union[str, Dict[str, Any]]):
+> +        if isinstance(ifcond, str):
+> +            return ifcond
+> +        if isinstance(ifcond, list):
+> +            return ', '.join([cfg(c) for c in ifcond])
+> +        oper, operands =3D next(iter(ifcond.items()))
+> +        operands =3D cfg(operands)
+> +        return f'{oper}({operands})'
+> +
+> +    if not ifcond:
+> +        return ''
+> +    return '#[cfg(%s)]' % cfg(ifcond)
+> +
+> +
+>  def gen_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]],
+>                 cond_fmt: str, not_fmt: str,
+>                 all_operator: str, any_operator: str) -> str:
+> diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py
+> index cbe3b5aa91e..0fb151b5d89 100644
+> --- a/scripts/qapi/schema.py
+> +++ b/scripts/qapi/schema.py
+> @@ -39,6 +39,7 @@
+>      docgen_ifcond,
+>      gen_endif,
+>      gen_if,
+> +    rsgen_ifcond,
+>  )
+>  from .error import QAPIError, QAPISemError, QAPISourceError
+>  from .expr import check_exprs
+> @@ -65,6 +66,9 @@ def gen_endif(self) -> str:
+>      def docgen(self) -> str:
+>          return docgen_ifcond(self.ifcond)
+>
+> +    def rsgen(self) -> str:
+> +        return rsgen_ifcond(self.ifcond)
+> +
+>      def is_present(self) -> bool:
+>          return bool(self.ifcond)
+>
+> --
+> 2.49.0
+>
+>
+
+--000000000000f8ed6f063737bd6c
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr">Hi</div><br><div class=3D"gmail_quote gma=
+il_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Jun 5, 20=
+25 at 2:11=E2=80=AFPM Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.c=
+om">pbonzini@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_=
+quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,=
+204);padding-left:1ex">From: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:m=
+arcandre.lureau@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</=
+a>&gt;<br>
+<br>
+Generate Rust #[cfg(...)] guards from QAPI &#39;if&#39; conditions.<br>
+<br>
+Signed-off-by: Marc-Andr=C3=A9 Lureau &lt;<a href=3D"mailto:marcandre.lurea=
+u@redhat.com" target=3D"_blank">marcandre.lureau@redhat.com</a>&gt;<br>
+Link: <a href=3D"https://lore.kernel.org/r/20210907121943.3498701-15-marcan=
+dre.lureau@redhat.com" rel=3D"noreferrer" target=3D"_blank">https://lore.ke=
+rnel.org/r/20210907121943.3498701-15-marcandre.lureau@redhat.com</a><br>
+Signed-off-by: Paolo Bonzini &lt;<a href=3D"mailto:pbonzini@redhat.com" tar=
+get=3D"_blank">pbonzini@redhat.com</a>&gt;<br>
+---<br>
+=C2=A0scripts/qapi/common.py | 16 ++++++++++++++++<br>
+=C2=A0scripts/qapi/schema.py |=C2=A0 4 ++++<br>
+=C2=A02 files changed, 20 insertions(+)<br>
+<br>
+diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py<br>
+index d7c8aa3365c..a8ea5792c11 100644<br>
+--- a/scripts/qapi/common.py<br>
++++ b/scripts/qapi/common.py<br>
+@@ -199,6 +199,22 @@ def guardend(name: str) -&gt; str:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name=3Dc_fna=
+me(name).upper())<br>
+<br>
+<br>
++def rsgen_ifcond(ifcond: Union[str, Dict[str, Any]]) -&gt; str:<br></block=
+quote><div><br></div><div>def rsgen_ifcond(ifcond: Optional[Union[str, Dict=
+[str, Any]]]) -&gt; str:</div><div><br></div><div>to make type checking=C2=
+=A0happy.</div><div><br></div><blockquote class=3D"gmail_quote" style=3D"ma=
+rgin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:=
+1ex">
++<br>
++=C2=A0 =C2=A0 def cfg(ifcond: Union[str, Dict[str, Any]]):<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if isinstance(ifcond, str):<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return ifcond<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if isinstance(ifcond, list):<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return &#39;, &#39;.join([cfg(c)=
+ for c in ifcond])<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 oper, operands =3D next(iter(ifcond.items()))<=
+br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 operands =3D cfg(operands)<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return f&#39;{oper}({operands})&#39;<br>
++<br>
++=C2=A0 =C2=A0 if not ifcond:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return &#39;&#39;<br>
++=C2=A0 =C2=A0 return &#39;#[cfg(%s)]&#39; % cfg(ifcond)<br>
++<br>
++<br>
+=C2=A0def gen_ifcond(ifcond: Optional[Union[str, Dict[str, Any]]],<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 cond_fmt: str, not_=
+fmt: str,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 all_operator: str, =
+any_operator: str) -&gt; str:<br>
+diff --git a/scripts/qapi/schema.py b/scripts/qapi/schema.py<br>
+index cbe3b5aa91e..0fb151b5d89 100644<br>
+--- a/scripts/qapi/schema.py<br>
++++ b/scripts/qapi/schema.py<br>
+@@ -39,6 +39,7 @@<br>
+=C2=A0 =C2=A0 =C2=A0docgen_ifcond,<br>
+=C2=A0 =C2=A0 =C2=A0gen_endif,<br>
+=C2=A0 =C2=A0 =C2=A0gen_if,<br>
++=C2=A0 =C2=A0 rsgen_ifcond,<br>
+=C2=A0)<br>
+=C2=A0from .error import QAPIError, QAPISemError, QAPISourceError<br>
+=C2=A0from .expr import check_exprs<br>
+@@ -65,6 +66,9 @@ def gen_endif(self) -&gt; str:<br>
+=C2=A0 =C2=A0 =C2=A0def docgen(self) -&gt; str:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return docgen_ifcond(self.ifcond)<br>
+<br>
++=C2=A0 =C2=A0 def rsgen(self) -&gt; str:<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 return rsgen_ifcond(self.ifcond)<br>
++<br>
+=C2=A0 =C2=A0 =C2=A0def is_present(self) -&gt; bool:<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0return bool(self.ifcond)<br>
+<br>
+-- <br>
+2.49.0<br>
+<br>
+</blockquote></div></div>
+
+--000000000000f8ed6f063737bd6c--
 
 
