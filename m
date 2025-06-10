@@ -4,193 +4,150 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF10EC5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 09:56:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B16C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 09:57:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOvhf-0003IH-RT; Tue, 10 Jun 2025 05:55:37 -0400
+	id 1uOvjj-0003zU-9N; Tue, 10 Jun 2025 05:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uOvhV-0003Gi-Uc
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 05:55:27 -0400
-Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOvjA-0003yz-SD
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 05:57:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uOvhP-0003KU-II
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 05:55:25 -0400
-Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55A94KK8003424;
- Tue, 10 Jun 2025 02:55:16 -0700
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
- cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=n4PPN86zL8fq8JQ1iuYw1gHDsnRU//S9gvOHVG4MK
- 9A=; b=It6GQB0wWAR0QomTcQTBUmsXsrxvXl23yufV691ZCJIpUC2x3aWLrB87C
- 1ZA/GcHPN4LoHxAEJ3xvPaj+H8r20Q4c7ySfH0Zl14gPFon4KVaKxZ2oUKV7Ma77
- NGWWsoKBo/s8uxvOhFexs+z4oufNEvlf48AsVlJORceKUm2vMQHKKJvA6Zi2/WKl
- e+Df6ig0HJsPv1Ky1UCKeqQLm0cDWjsoK0kLBJFl/JN+0nOozznvFbKEL4SiIRvy
- VVEels9aGjg5ZgXS202WdtY0JjacZ5VRNd+Ad8YSgorkI6p3CGkA42SYoi5vImZq
- zfxZGKMAnWY3csln4THwfsUr3d+OQ==
-Received: from nam11-dm6-obe.outbound.protection.outlook.com
- (mail-dm6nam11on2092.outbound.protection.outlook.com [40.107.223.92])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 474my0wphh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Jun 2025 02:55:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=JPAvRvLehSA1VHfxeEt/2Vkz2DCNQKndTqIlE452nja4U190UTxWSwpwuRqnvNFRGlzJ+VCfNPz40/O+DSaaTLg0CCKFE54Smr9KhMHK6cSn/9VASvdiIcCrIKe5se0wPH3v4XN86ALn+O2ojsb9MevdG3P1jncMDkaX36iY9EUpyGGZ2OlgZxMGvPEEoukAcOemiN8I1l8Y9ZiZO2+y5sd0V8Ny95fPd1zHWN1AX7QawpwodK6tHgKzZt99XN6ufPd2w/aLwq1XPLu+optulw5UKMOejnQ3ci0ARfV74Tv4kVvarngw8QEYQEmOsBJDUGCam4+r41Jytn/UR9GnDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wkqG3ONNGzsAngt6qEtnvR5C9nDd7pDHp8vhlPWdFzc=;
- b=QMYekTmxBK6J7bVVy4BArXSavbJs3hOW+YQU+JYvtyGxw2FZNkOnHINoveHB1mWeLDm3zGQescbC/GLIfZbxQSMXj7BXC8WjgZ5rKivGDD46Wreo+PJ4D3hDchvfqenE4Hd2PYOx3M5QLA2tjvMpHp/PDVIYfGWRXOpaZyVl+J8txnKqLQcbP+S2aDo/kNv/VcZttdlgZG2Ge7EJwKWU4sBj+SlDEyyhaQmZvhUuWHb+H5Zc5JyRMx+N7Y048LjOm1xyxJK5xjoAR6iTnaHM4KnWUY1GFqb6P1BMkiUurx7K9nkRZ+ZLrXNYEGiSGMQqukwzGCk6IwyatHzPZ2vJig==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
- dkim=pass header.d=nutanix.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
- s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wkqG3ONNGzsAngt6qEtnvR5C9nDd7pDHp8vhlPWdFzc=;
- b=llTgF7S4nPcagy7uwgvG9u4LV2fVl6BiAtHaflX8fzJWW+lVyo2bvtQDJF6/BhcuiXdEHgktVUNTvQmbyVOXx2yQDDPrEm5qD4HQhhCqPVHatmYHITgaU4lKMAkJ6Zx0MTB3kyntPZILRs8m9XJRRj8MdUMoA2lOHztz2yn8xDBZ7JdhzkYLGg4gdiYOMppv8aIvrrV07sWSQhiSb+gr3XNOcN3dMtS8CLuT0ywHs1WXE648ek2ZML1QTzMAwFub3/VhS/y1w3gsFaVdE3WZhSHLAfr5cs4pDQPH0ySksmyv3jeLow9Pwk5O+Dv3nPjlhisNVMVCI+G0tQdH0RtYjA==
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
- by CO6PR02MB7729.namprd02.prod.outlook.com (2603:10b6:303:af::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.29; Tue, 10 Jun
- 2025 09:55:14 +0000
-Received: from CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
- ([fe80::fd77:ea65:a159:ef51%2]) with mapi id 15.20.8813.024; Tue, 10 Jun 2025
- 09:55:13 +0000
-Date: Tue, 10 Jun 2025 02:55:09 -0700
-From: John Levon <john.levon@nutanix.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: qemu-devel@nongnu.org,
- Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOvj8-0003Oz-2O
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 05:57:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749549425;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=UrcKoQWHudhjP3C8s+V8QTJMWzBJAsipi45at4QdI0M=;
+ b=OQJw/lByVb9DDY+9mvvaNxSmJJFLiFEhTWPhHmJ/PUTh7vjUaTJlIeJqD5uM0Xq+VqlM6V
+ lKhap9RlXhY+laRr5a4/odMvtonK5cBftpdnZ+L/ggx90hU365ZPP1eIe+8qdMqPSGDL/R
+ QuqL1zi2heHLWRRBTut16d6mvI4le6g=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-687-G_IP2QExMYKYcB9gUHAX_w-1; Tue, 10 Jun 2025 05:57:03 -0400
+X-MC-Unique: G_IP2QExMYKYcB9gUHAX_w-1
+X-Mimecast-MFC-AGG-ID: G_IP2QExMYKYcB9gUHAX_w_1749549422
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43eed325461so32452955e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 02:57:03 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749549422; x=1750154222;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UrcKoQWHudhjP3C8s+V8QTJMWzBJAsipi45at4QdI0M=;
+ b=nhMumcugQ/9tBq4d5YwQnEbfwemIpOsTPVCMcR3MyPl5EyCs7D4vK2ws1nMA7o08WW
+ MLvU5LomRGVRzCGcs/47i/MDT2E8D07ohjbkQ5xcF49fZoqZFVuV3odE7ZPDnfBEc/VY
+ Vb4sTbUnR5djPMqnP/vVYlA3v3Y/e1na84MqA7ugAUx76xgqdyzWhXUFZ+V+rUMXfaYj
+ faSVYFtLfQtGAI7Fkuh8iEmiqMpXOZjRxIuqYPcMuxQqoIWu/pc/hIJCGKMJDUuHdHeJ
+ badK9bxjBhHzyyCQHfK6fd58GruInNotwZfpYitiFzMe2FSPTxgR3TGUWkUzoA3fda0J
+ I2iQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4TWeub4Z78aLdCHQSqDLF+Sq0eJE4UF3o+K5c2ifSjEB1RY9P87irO9NmyRiK9SMedVS2vn2mdrCV@nongnu.org
+X-Gm-Message-State: AOJu0YxQE//hYpWZTlx5f289ZA/iwX4S3u/B3z2iHWG7Er0bDdXiRmyU
+ WyNnWVWTVPyjYb+QYFNF7IW+nnYIwp6pQGlvSqTCVqsOakXbVY6ftYZnV45NqU3qDTLEE3bURXg
+ 7uaK+gXZSDiA8hHz5WkW0z0tafRQ6EL185aU2LCbT8DvrNfOVfLEpAYii
+X-Gm-Gg: ASbGncur92hebDgJW5MxovdeMfxZACsgbZBpIh/QNlHuEd1njJxu1mZeKrjgs2+D7sk
+ P9eegjX+MeKKOUq4XcIDhsx+TWXa0sW67MGk/G8qIagSrnatP6oJT0LwKDkJUJWrJEKJK0ub8RA
+ fVnCOpqo9GS4+Osp/xa8zD3z4OMsAFWIsE5GtxufADGUDArntfZrPkSQgGU3jZl1QBsDEnz070t
+ i1OlLXvwrD97WZWUSYbgZZX1u9Niqli+ByNyPK1x5hz7EsskUwrX2zvAvMJCGAF0EKH/lcIJKoc
+ 5FF77eIgAMNYVAWBSAggbTDYOrH2Cfevlu+LZ0j6SsIL6OeCenKPWxhfryh8
+X-Received: by 2002:a5d:584c:0:b0:3a4:f024:6717 with SMTP id
+ ffacd0b85a97d-3a531cec750mr13753473f8f.53.1749549422231; 
+ Tue, 10 Jun 2025 02:57:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHgSU0NEZ13anVmwyfg5bR+ZiAUSIWxNyEuPFGRBcczghokI7cOIv7wzC0oeYaMhyF8RZpS/A==
+X-Received: by 2002:a5d:584c:0:b0:3a4:f024:6717 with SMTP id
+ ffacd0b85a97d-3a531cec750mr13753448f8f.53.1749549421711; 
+ Tue, 10 Jun 2025 02:57:01 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a53243661csm11929048f8f.53.2025.06.10.02.57.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 02:57:01 -0700 (PDT)
+Message-ID: <c0fd6bf3-cf0b-4843-a7ea-6ac49480e7ca@redhat.com>
+Date: Tue, 10 Jun 2025 11:57:00 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 06/23] vfio-user: add vfio-user class and container
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Subject: Re: [PATCH v3 05/23] vfio-user: introduce vfio-user protocol
- specification
-Message-ID: <aEgA_U5SZiYWs__7@lent>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
 References: <20250607001056.335310-1-john.levon@nutanix.com>
- <20250607001056.335310-6-john.levon@nutanix.com>
- <ef16fe1a-92b1-4523-a214-08d90c844519@redhat.com>
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
+ <20250607001056.335310-7-john.levon@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250607001056.335310-7-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <ef16fe1a-92b1-4523-a214-08d90c844519@redhat.com>
-X-Url: http://www.movementarian.org/
-X-ClientProxiedBy: AS4P190CA0017.EURP190.PROD.OUTLOOK.COM
- (2603:10a6:20b:5d0::7) To CH2PR02MB6760.namprd02.prod.outlook.com
- (2603:10b6:610:7f::9)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|CO6PR02MB7729:EE_
-X-MS-Office365-Filtering-Correlation-Id: 9d2d7996-28a9-47cc-04ac-08dda804e4d3
-x-proofpoint-crosstenant: true
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
-X-Microsoft-Antispam-Message-Info: =?iso-8859-1?Q?/kIplzgwt92Vk5ESzs9lG2x3+dMpXkZcPS1rhPOADhzNTQa1TO4w1rUsID?=
- =?iso-8859-1?Q?xurVhNt5eN+8ikrGbH7rZEaYzwv3jzOcMQ0GIlHNp4xmF9k7W0wBjTT3sY?=
- =?iso-8859-1?Q?DNehA6LjeRuBKGAEBi1Nn848aaEtUXsZyOz7h8OMFGS+oO+TH0se2fgoMk?=
- =?iso-8859-1?Q?wMnFauAiW2mWCmsGwDDFs/0qGZLbIBVPoP4ICPekA2gsNrNO7O8NFPXUie?=
- =?iso-8859-1?Q?lLA/SmD9IzQwOnbntQbLN50ig/SxxdWLUMFteOKeuscePl9M+34ZCHheGt?=
- =?iso-8859-1?Q?QZqbEEzrhe40plhpf2XNAyGhxEmvU5rpVxpBQATmMKceS3QLlk/92ZmGuR?=
- =?iso-8859-1?Q?m2c0U1mgDd0c0OWTGqRju/b/l7BN3SOCvwfYEGD0vxPTz2tn+eJVtuLvCR?=
- =?iso-8859-1?Q?m8gbju05zGlbOX/G3rl0sZ+grWMo9+uOAziKT1YEt1lmwALnrT0HI2uxYN?=
- =?iso-8859-1?Q?cjE14Si2DIQngE9G8ncxcQ79vivoK+AxyQfgtqZoSK4Pkfh0uuxG53vPPe?=
- =?iso-8859-1?Q?b5y4etRLxXwlL4N25VSgWBwaI6W/Pd6FqCQB+NE5plbLvvKB36qssEunui?=
- =?iso-8859-1?Q?xZ7eY6bPj2UW1hEc3Vottm4Ybi5uThKUss48DA0IjKIptFrZmJY5SvpwSc?=
- =?iso-8859-1?Q?gyxmwOXOZW+bmfnnKjFNycZDyYM9GJQ1oozNu83ZrJWGkUvgRMFz7w9Mal?=
- =?iso-8859-1?Q?sn1cfNcSXEcyAq7SwG0b8XxXxhP7Zz/iaWPjC1QaxqjQHvviELFP+GzN6d?=
- =?iso-8859-1?Q?hEIMsemopfn4ehjdaliPfMzJv+pusVd4x/C4d75W4Ng05kRoudZceDekO6?=
- =?iso-8859-1?Q?hHWhaMl8tOlTKTHkMRq+EdMVoqAJ//Di9fwGQsv5UmgvBHLzDfF30CZHkk?=
- =?iso-8859-1?Q?mTQJ/ehcQhP3xqwPBiM4jMTFE2Wma8NGA/4XYGm+OxSIojO7YTUZNcxW6t?=
- =?iso-8859-1?Q?t+jRjlEH2ACHMspcFywiwbIHeTbD++RAQCjpfCe50B1zBlGAUdNnf5l6gJ?=
- =?iso-8859-1?Q?cEuo6pYYpUqiUG5K+82TJfje5wVt5FXXUzrCBieby7SVuZ2zLK6w3VjYiC?=
- =?iso-8859-1?Q?v11gHFNXptwrsWQItv4tYwV7iEVqSOvGhG0Joa+oIVQx0tN0+xQqGBofab?=
- =?iso-8859-1?Q?WnnSMBxFL49QDhOS05RUuXES2GClZW6KBQv8FmglUDx6kkbsPB8m+h1Yat?=
- =?iso-8859-1?Q?wofhn7HmAztwxCLND9ubA6Spgrk4UTFL3zz9mxqk0q5jU1Ww2pxGlrOm0+?=
- =?iso-8859-1?Q?rDCxqCfTxgMkwC1cpv12jQ6pJzq01/t5HcCNggAh0a0YwMI2dFc0KiNzaT?=
- =?iso-8859-1?Q?9ZTwS/sOSr9zWxbvnDWZgayjc4eGrwJs5mZ3k44VSOP+P5/M7R5w7OPR3i?=
- =?iso-8859-1?Q?7HkbdzSIUrZ1bgiiCpGbw3HqbY+B8VIiKlDPYC7kt1ezgZ0AkBQCU+Sc0h?=
- =?iso-8859-1?Q?3Gz3ixVcPROv0JVBq9OesDS5hBC+4nrfraJnJhK+i9VnY2S2OXrmWAtny/?=
- =?iso-8859-1?Q?A=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?iso-8859-1?Q?LvX9NnNYPqVU7NaAgHkLC99Ok6IexWJAXhCmiwBLwMqjtl/vSJPYdaj6ks?=
- =?iso-8859-1?Q?14XV8CADdtD3GxQGXJUR0hVB3mDMy+FhMe6G1rKDNmyh7sCMv17wA2eSoq?=
- =?iso-8859-1?Q?ONd+CriJi7Bzxt4VexjwxM/ELgtSFy2+B202ZWrRDJ24/EiuF/Vx7vjyAj?=
- =?iso-8859-1?Q?4X9nlwJhW6LCk5EZ3URUgegWZUMA4XyIuPKbWSwPfo4yVXj5McAe6EdQAN?=
- =?iso-8859-1?Q?v96k+76s/iCIH3XjmPzLU6ssl7BOyqkADOdcv26IQaYe/LYLre4QVJX+ax?=
- =?iso-8859-1?Q?FofLOxSkLOPAwy6kHqziEoSOaLL7AkH2sNsgMGKXHXbZ+Zgz2ZgYss9b3Y?=
- =?iso-8859-1?Q?Ggwgc/SymQ2Elnn9gzfFZYLFXaOmR2TTTTD78/HIp61vHivihsK81aiAlt?=
- =?iso-8859-1?Q?O2t2vKiZOAu4H91RJs13Jk1wXMO4+Wi346hQ+QpCv/hmWAIldFGcVz/0l8?=
- =?iso-8859-1?Q?JQhE3QC1FSVUxWue9LWge2WahV63+HQNdZWyN5Ft78QY8QTvCbOfLxtGXc?=
- =?iso-8859-1?Q?L7h6oIYttPm2UxXVnY1fR3b3+8YpO0WALqqhGmqq8m9nk0LC2E4tykcqGi?=
- =?iso-8859-1?Q?yJL6CWNg2DOuODHhCL1wNw8qisALuG076N92Ru4SM+g6j0KW5xXgLHseCA?=
- =?iso-8859-1?Q?4san6LOFNzW66Uvvd9LBM4EdbgTtq+dYH87MPuXPokMd/cZ1A0tmbOtKJY?=
- =?iso-8859-1?Q?894srMEliosFktS8NibwLNTP2kxYY15JTkn/ENDc51ugkgYyZzyGxgQQtK?=
- =?iso-8859-1?Q?mO93cPTk+BCuNkPqR8iuOVHdMJ0zKbPmcd6G8W29UiOXzKTiyMAbViRgAe?=
- =?iso-8859-1?Q?Y/hOb6qaKzXiRnf6ccDa2atz3CxAZk/XNZqktTNwl7meGQjF8Ttm0h0+5G?=
- =?iso-8859-1?Q?x8kyLHhTPM6pCiMgMxXx/iYBm4XVMN+o+dBIKMa9fbBhrhZwF77AqWBmbe?=
- =?iso-8859-1?Q?RjArdXe0zBz41U+brsbiWkGdnleP1d76lHTT6M0tHr05Pm5di/zf81jqkg?=
- =?iso-8859-1?Q?mhe2dyQ7Z/WWnfDaCreSyP30Ue5ReOaKfVLRaiGz5sMXacbjbVMMyY2Bt/?=
- =?iso-8859-1?Q?WEHHYhcbvobWxR+8E6nV2T6UboR9VF1vE5pvFBLzybqBjNKZdbwNlSSpBY?=
- =?iso-8859-1?Q?y3k5TvA9NhWZ78G+IEDgRT/Ry2gebR8DRHiuT2cWrktvh/kWvuPg0mhMQC?=
- =?iso-8859-1?Q?StpVG7EFh8lCniqQIMp7cFs+aldW8pIumeDf1LUeywcQXTD9t3EQiXZ2Qm?=
- =?iso-8859-1?Q?64tGkvbqYWWiGGAyvmDokQdZqzoJ/aHOiBab6SWA127JW6Ckcyp/xBwTNN?=
- =?iso-8859-1?Q?GOShWCp68Tl+XG9/ZK6Eob+tVl+kHbHK2qat7pnrvAddVq6EY+ZKfd4KrM?=
- =?iso-8859-1?Q?wAwO57wxI5lFHzXhgXiy2OY5qFmlaNWZ3mgYd/Z8cR1nMFje3+im+GGhMC?=
- =?iso-8859-1?Q?eFQ/lfT/vpujlY0qBzwmm/h7U99rK39Oq0iUGVWmVc88wGfOV/cnjfDNtH?=
- =?iso-8859-1?Q?aSXWNYXSkuUWkCTZUULQU4fd53fZQqy8RSljeV4fMmMTdPdlcBa53iN7qZ?=
- =?iso-8859-1?Q?LgPnl2+0YrHe6zkH0XO5RIBYAMN7Hu1j+NcL6CF1CB1ugimzf07MgT9Hhc?=
- =?iso-8859-1?Q?Sun2rQk0RDKE3CeWPTjfzxy0TbPb2MMLaP?=
-X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 9d2d7996-28a9-47cc-04ac-08dda804e4d3
-X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2025 09:55:13.1503 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: rK0+zXpUm+7hdeELTHSA+lbHDaw2FScdr7sT2vdK+D3Xh7AjYeaS1WyLobB9Y96XecpRn1F+sdRFx4l5dj8oTA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR02MB7729
-X-Proofpoint-ORIG-GUID: OiPeym7nfEpXCSMqsb1Z0pe6umgwFVvx
-X-Authority-Analysis: v=2.4 cv=Xt/6OUF9 c=1 sm=1 tr=0 ts=68480104 cx=c_pps
- a=SWO9grYKeR/AU/Iit+pPqg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
- a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
- a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=8nJEP1OIZ-IA:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10
- a=N0FpcSZkMYmQBFJp4F0A:9 a=3ZKOabzyN94A:10 a=wPNLvfGTeEIA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA3NiBTYWx0ZWRfX2owbi3YEMF04
- Tzrx8eOrlq7r1Vw2TAubteSONEuV5ZcZJPU6a37fYMqdrDpdsEA0tUwyDHQv6BHbKjKVH0NsZch
- fcee64fJTIFrzS5cwdxALJTppL/qrrpbeiXq5IRFvyH1AV48cZ0MDqFpGdfiUV7HiFZuKUws1mz
- HIF1K/ZDS5xmeQfnW6Y6SI8YWaSz+wGw1a5sLZs9JeMb9beNhzUyjuOlWaTleYyhtCsq73QUEVQ
- QaGbxUEkwBN+NInww0w88XTut2+6azeRXLEEEswOBeoW3vhGgbWrRJtyfpQ/1AGprbba4MAaC5v
- SSRCvx7sbrjyLgG6zgnCrG9/5ETGalizz+5HZCAQLBALEaHOPYmwlfLZedwt6HSrhJIU6D0olWM
- PYHBgppqUVDp5MyFfAyh9mq8Qa6HIgSqH66vI8LOnEOohilAVvdCfTFqrwXrbecJ3slvWQ6a
-X-Proofpoint-GUID: OiPeym7nfEpXCSMqsb1Z0pe6umgwFVvx
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_03,2025-06-09_02,2025-03-28_01
-X-Proofpoint-Spam-Reason: safe
-Received-SPF: pass client-ip=148.163.155.12;
- envelope-from=john.levon@nutanix.com; helo=mx0b-002c1b01.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -206,30 +163,543 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 10, 2025 at 11:38:29AM +0200, Cédric Le Goater wrote:
-
-> >   docs/devel/vfio-user.rst       | 1522 ++++++++++++++++++++++++++++++++
+On 6/7/25 02:10, John Levon wrote:
+> Introduce basic plumbing for vfio-user behind a new
+> --enable-vfio-user-client option.
 > 
-> I think this file should be split in several smaller files. The
-> protocol specification part belongs to "System Emulation Management
-> and Interoperability" section.
+> We introduce VFIOUserContainer in hw/vfio-user/container.c, which is a
+> container type for the "IOMMU" type "vfio-iommu-user", and share some
+> common container code from hw/vfio/container.c.
+> 
+> Add hw/vfio-user/pci.c for instantiating VFIOUserPCIDevice objects,
+> sharing some common code from hw/vfio/pci.c.
+> 
+> Originally-by: John Johnson <john.g.johnson@oracle.com>
+> Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+> Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   MAINTAINERS                           |   2 +
+>   hw/vfio-user/container.h              |  25 +++
+>   include/hw/vfio/vfio-container-base.h |   1 +
+>   hw/vfio-user/container.c              | 212 ++++++++++++++++++++++++++
+>   hw/vfio-user/pci.c                    | 155 +++++++++++++++++++
+>   hw/meson.build                        |   1 +
+>   hw/vfio-user/meson.build              |   9 ++
+>   meson_options.txt                     |   2 +
+>   scripts/meson-buildoptions.sh         |   4 +
+>   9 files changed, 411 insertions(+)
+>   create mode 100644 hw/vfio-user/container.h
+>   create mode 100644 hw/vfio-user/container.c
+>   create mode 100644 hw/vfio-user/pci.c
+>   create mode 100644 hw/vfio-user/meson.build
+> 
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index dbc393989a..328bab8d19 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4252,6 +4252,8 @@ M: John Levon <john.levon@nutanix.com>
+>   M: Thanos Makatos <thanos.makatos@nutanix.com>
+>   S: Supported
+>   F: docs/devel/vfio-user.rst
+> +F: hw/vfio-user/*
+> +F: include/hw/vfio-user/*
+>   F: subprojects/libvfio-user
+>   
+>   EBPF:
+> diff --git a/hw/vfio-user/container.h b/hw/vfio-user/container.h
+> new file mode 100644
+> index 0000000000..3cd3303e68
+> --- /dev/null
+> +++ b/hw/vfio-user/container.h
+> @@ -0,0 +1,25 @@
+> +/*
+> + * vfio-user specific definitions.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2.  See
+> + * the COPYING file in the top-level directory.
 
-I can move it to interop/ sure. Why must it be split up ? It's nearest analogue,
-vhost-user.rst, is one file, and I think that's better for a protocol
-specification.
+Please drop the license boiler plate. This is redundant with SPDX.
 
-> We already have a docs/system/devices/vfio-user.rst which needs some
-> care.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */> +
+> +#ifndef HW_VFIO_USER_CONTAINER_H
+> +#define HW_VFIO_USER_CONTAINER_H
+> +
+> +#include <inttypes.h>
+> +#include <stdbool.h>
+> +
+> +#include "hw/vfio/vfio-container-base.h"
+> +
+> +/* MMU container sub-class for vfio-user. */
+> +typedef struct VFIOUserContainer {
+> +    VFIOContainerBase bcontainer;
+> +} VFIOUserContainer;
+> +
+> +OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserContainer, VFIO_IOMMU_USER);
+> +
+> +#endif /* HW_VFIO_USER_CONTAINER_H */
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index 9d37f86115..28899ca0a6 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -109,6 +109,7 @@ vfio_container_get_page_size_mask(const VFIOContainerBase *bcontainer)
+>   #define TYPE_VFIO_IOMMU_LEGACY TYPE_VFIO_IOMMU "-legacy"
+>   #define TYPE_VFIO_IOMMU_SPAPR TYPE_VFIO_IOMMU "-spapr"
+>   #define TYPE_VFIO_IOMMU_IOMMUFD TYPE_VFIO_IOMMU "-iommufd"
+> +#define TYPE_VFIO_IOMMU_USER TYPE_VFIO_IOMMU "-user"
+>   
+>   OBJECT_DECLARE_TYPE(VFIOContainerBase, VFIOIOMMUClass, VFIO_IOMMU)
+>   
+> diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
+> new file mode 100644
+> index 0000000000..2892845b4f
+> --- /dev/null
+> +++ b/hw/vfio-user/container.c
+> @@ -0,0 +1,212 @@
+> +/*
+> + * Container for vfio-user IOMMU type: rather than communicating with the kernel
+> + * vfio driver, we communicate over a socket to a server using the vfio-user
+> + * protocol.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2.  See
+> + * the COPYING file in the top-level directory.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <sys/ioctl.h>
+> +#include <linux/vfio.h>
+> +#include "qemu/osdep.h"
+> +
+> +#include "hw/vfio-user/container.h"
+> +#include "hw/vfio/vfio-cpr.h"
+> +#include "hw/vfio/vfio-device.h"
+> +#include "hw/vfio/vfio-listener.h"
+> +#include "qapi/error.h"
+> +#include "trace.h"
+> +
+> +static int vfio_user_dma_unmap(const VFIOContainerBase *bcontainer,
+> +                               hwaddr iova, ram_addr_t size,
+> +                               IOMMUTLBEntry *iotlb, bool unmap_all)
+> +{
+> +    return -ENOTSUP;
+> +}
+> +
+> +static int vfio_user_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+> +                             ram_addr_t size, void *vaddr, bool readonly,
+> +                             MemoryRegion *mrp)
+> +{
+> +    return -ENOTSUP;
+> +}
+> +
+> +static int
+> +vfio_user_set_dirty_page_tracking(const VFIOContainerBase *bcontainer,
+> +                                    bool start, Error **errp)
+> +{
+> +    error_setg_errno(errp, ENOTSUP, "Not supported");
+> +    return -ENOTSUP;
+> +}
+> +
+> +static int vfio_user_query_dirty_bitmap(const VFIOContainerBase *bcontainer,
+> +                                         VFIOBitmap *vbmap, hwaddr iova,
+> +                                         hwaddr size, Error **errp)
+> +{
+> +    error_setg_errno(errp, ENOTSUP, "Not supported");
+> +    return -ENOTSUP;
+> +}
+> +
+> +static bool vfio_user_setup(VFIOContainerBase *bcontainer, Error **errp)
+> +{
+> +    error_setg_errno(errp, ENOTSUP, "Not supported");
+> +    return -ENOTSUP;
+> +}
+> +
+> +static VFIOUserContainer *vfio_user_create_container(Error **errp)
+> +{
+> +    VFIOUserContainer *container;
+> +
+> +    container = VFIO_IOMMU_USER(object_new(TYPE_VFIO_IOMMU_USER));
+> +    return container;
+> +}
+> +
+> +/*
+> + * Try to mirror vfio_container_connect() as much as possible.
+> + */
+> +static VFIOUserContainer *
+> +vfio_user_container_connect(AddressSpace *as, Error **errp)
+> +{
+> +    VFIOContainerBase *bcontainer;
+> +    VFIOUserContainer *container;
+> +    VFIOAddressSpace *space;
+> +    VFIOIOMMUClass *vioc;
+> +
+> +    space = vfio_address_space_get(as);
+> +
+> +    container = vfio_user_create_container(errp);
+> +    if (!container) {
+> +        goto put_space_exit;
+> +    }
+> +
+> +    bcontainer = &container->bcontainer;
+> +
+> +    if (!vfio_cpr_register_container(bcontainer, errp)) {
+> +        goto free_container_exit;
+> +    }
+> +
+> +    vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +    assert(vioc->setup);
+> +
+> +    if (!vioc->setup(bcontainer, errp)) {
+> +        goto unregister_container_exit;
+> +    }
+> +
+> +    vfio_address_space_insert(space, bcontainer);
+> +
+> +    if (!vfio_listener_register(bcontainer, errp)) {
+> +        goto listener_release_exit;
+> +    }
+> +
+> +    bcontainer->initialized = true;
+> +
+> +    return container;
+> +
+> +listener_release_exit:
+> +    vfio_listener_unregister(bcontainer);
+> +    if (vioc->release) {
+> +        vioc->release(bcontainer);
+> +    }
+> +
+> +unregister_container_exit:
+> +    vfio_cpr_unregister_container(bcontainer);
+> +
+> +free_container_exit:
+> +    object_unref(container);
+> +
+> +put_space_exit:
+> +    vfio_address_space_put(space);
+> +
+> +    return NULL;
+> +}
+> +
+> +static void vfio_user_container_disconnect(VFIOUserContainer *container)
+> +{
+> +    VFIOContainerBase *bcontainer = &container->bcontainer;
+> +    VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
+> +
+> +    vfio_listener_unregister(bcontainer);
+> +    if (vioc->release) {
+> +        vioc->release(bcontainer);
+> +    }
+> +
+> +    VFIOAddressSpace *space = bcontainer->space;
+> +
+> +    vfio_cpr_unregister_container(bcontainer);
+> +    object_unref(container);
+> +
+> +    vfio_address_space_put(space);
+> +}
+> +
+> +static bool vfio_user_device_get(VFIOUserContainer *container,
+> +                                 VFIODevice *vbasedev, Error **errp)
+> +{
+> +    struct vfio_device_info info = { 0 };
+> +
+> +    vbasedev->fd = -1;
+> +
+> +    vfio_device_prepare(vbasedev, &container->bcontainer, &info);
+> +
+> +    return true;
+> +}
+> +
+> +/*
+> + * vfio_user_device_attach: attach a device to a new container.
+> + */
+> +static bool vfio_user_device_attach(const char *name, VFIODevice *vbasedev,
+> +                                    AddressSpace *as, Error **errp)
+> +{
+> +    VFIOUserContainer *container;
+> +
+> +    container = vfio_user_container_connect(as, errp);
+> +    if (container == NULL) {
+> +        error_prepend(errp, "failed to connect proxy");
+> +        return false;
+> +    }
+> +
+> +    return vfio_user_device_get(container, vbasedev, errp);
+> +}
+> +
+> +static void vfio_user_device_detach(VFIODevice *vbasedev)
+> +{
+> +    VFIOUserContainer *container = container_of(vbasedev->bcontainer,
+> +                                                VFIOUserContainer, bcontainer);
+> +
+> +    vfio_device_unprepare(vbasedev);
+> +
+> +    vfio_user_container_disconnect(container);
+> +}
+> +
+> +static int vfio_user_pci_hot_reset(VFIODevice *vbasedev, bool single)
+> +{
+> +    /* ->needs_reset is always false for vfio-user. */
+> +    return 0;
+> +}
+> +
+> +static void vfio_iommu_user_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
+> +
+> +    vioc->setup = vfio_user_setup;
+> +    vioc->dma_map = vfio_user_dma_map;
+> +    vioc->dma_unmap = vfio_user_dma_unmap;
+> +    vioc->attach_device = vfio_user_device_attach;
+> +    vioc->detach_device = vfio_user_device_detach;
+> +    vioc->set_dirty_page_tracking = vfio_user_set_dirty_page_tracking;
+> +    vioc->query_dirty_bitmap = vfio_user_query_dirty_bitmap;
+> +    vioc->pci_hot_reset = vfio_user_pci_hot_reset;
+> +};
+> +
+> +static const TypeInfo types[] = {
+> +    {
+> +        .name = TYPE_VFIO_IOMMU_USER,
+> +        .parent = TYPE_VFIO_IOMMU,
+> +        .instance_size = sizeof(VFIOUserContainer),
+> +        .class_init = vfio_iommu_user_class_init,
+> +    },
+> +};
+> +
+> +DEFINE_TYPES(types)
+> diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+> new file mode 100644
+> index 0000000000..74b0c61f9b
+> --- /dev/null
+> +++ b/hw/vfio-user/pci.c
+> @@ -0,0 +1,155 @@
+> +/*
+> + * vfio PCI device over a UNIX socket.
+> + *
+> + * Copyright Â© 2018, 2021 Oracle and/or its affiliates.
+> + *
+> + * This work is licensed under the terms of the GNU GPL, version 2 or later.
+> + * See the COPYING file in the top-level directory.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include <sys/ioctl.h>
+> +#include "qemu/osdep.h"
+> +
+> +#include "hw/qdev-properties.h"
+> +#include "hw/vfio/pci.h"
+> +
+> +#define TYPE_VFIO_USER_PCI "vfio-user-pci"
+> +OBJECT_DECLARE_SIMPLE_TYPE(VFIOUserPCIDevice, VFIO_USER_PCI)
+> +
+> +struct VFIOUserPCIDevice {
+> +    VFIOPCIDevice device;
+> +    char *sock_name;
+> +};
+> +
+> +/*
+> + * Emulated devices don't use host hot reset
+> + */
+> +static void vfio_user_compute_needs_reset(VFIODevice *vbasedev)
+> +{
+> +    vbasedev->needs_reset = false;
+> +}
+> +
+> +static Object *vfio_user_pci_get_object(VFIODevice *vbasedev)
+> +{
+> +    VFIOUserPCIDevice *vdev = container_of(vbasedev, VFIOUserPCIDevice,
+> +                                           device.vbasedev);
+> +
+> +    return OBJECT(vdev);
+> +}
+> +
+> +static VFIODeviceOps vfio_user_pci_ops = {
+> +    .vfio_compute_needs_reset = vfio_user_compute_needs_reset,
+> +    .vfio_eoi = vfio_pci_intx_eoi,
+> +    .vfio_get_object = vfio_user_pci_get_object,
+> +    /* No live migration support yet. */
+> +    .vfio_save_config = NULL,
+> +    .vfio_load_config = NULL,
+> +};
+> +
+> +static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+> +{
+> +    ERRP_GUARD();
+> +    VFIOUserPCIDevice *udev = VFIO_USER_PCI(pdev);
+> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(pdev);
+> +    VFIODevice *vbasedev = &vdev->vbasedev;
+> +    AddressSpace *as;
+> +
+> +    /*
+> +     * TODO: make option parser understand SocketAddress
+> +     * and use that instead of having scalar options
+> +     * for each socket type.
+> +     */
+> +    if (!udev->sock_name) {
+> +        error_setg(errp, "No socket specified");
+> +        error_append_hint(errp, "Use -device vfio-user-pci,socket=<name>\n");
+> +        return;
+> +    }
+> +
+> +    vbasedev->name = g_strdup_printf("VFIO user <%s>", udev->sock_name);
+> +
+> +    /*
+> +     * vfio-user devices are effectively mdevs (don't use a host iommu).
+> +     */
+> +    vbasedev->mdev = true;
+> +
+> +    as = pci_device_iommu_address_space(pdev);
+> +    if (!vfio_device_attach_by_iommu_type(TYPE_VFIO_IOMMU_USER,
+> +                                          vbasedev->name, vbasedev,
+> +                                          as, errp)) {
+> +        error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
+> +        return;
+> +    }
+> +}
+> +
+> +static void vfio_user_instance_init(Object *obj)
+> +{
+> +    PCIDevice *pci_dev = PCI_DEVICE(obj);
+> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
+> +    VFIODevice *vbasedev = &vdev->vbasedev;
+> +
+> +    device_add_bootindex_property(obj, &vdev->bootindex,
+> +                                  "bootindex", NULL,
+> +                                  &pci_dev->qdev);
+> +    vdev->host.domain = ~0U;
+> +    vdev->host.bus = ~0U;
+> +    vdev->host.slot = ~0U;
+> +    vdev->host.function = ~0U;
+> +
+> +    vfio_device_init(vbasedev, VFIO_DEVICE_TYPE_PCI, &vfio_user_pci_ops,
+> +                     DEVICE(vdev), false);
+> +
+> +    vdev->nv_gpudirect_clique = 0xFF;
+> +
+> +    /*
+> +     * QEMU_PCI_CAP_EXPRESS initialization does not depend on QEMU command
+> +     * line, therefore, no need to wait to realize like other devices.
+> +     */
+> +    pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
+> +}
+> +
+> +static void vfio_user_instance_finalize(Object *obj)
+> +{
+> +    VFIOPCIDevice *vdev = VFIO_PCI_BASE(obj);
+> +
+> +    vfio_pci_put_device(vdev);
+> +}
+> +
+> +static const Property vfio_user_pci_dev_properties[] = {
+> +    DEFINE_PROP_UINT32("x-pci-vendor-id", VFIOPCIDevice,
+> +                       vendor_id, PCI_ANY_ID),
+> +    DEFINE_PROP_UINT32("x-pci-device-id", VFIOPCIDevice,
+> +                       device_id, PCI_ANY_ID),
+> +    DEFINE_PROP_UINT32("x-pci-sub-vendor-id", VFIOPCIDevice,
+> +                       sub_vendor_id, PCI_ANY_ID),
+> +    DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
+> +                       sub_device_id, PCI_ANY_ID),
+> +    DEFINE_PROP_STRING("socket", VFIOUserPCIDevice, sock_name),
+> +};
+> +
+> +static void vfio_user_pci_dev_class_init(ObjectClass *klass, const void *data)
+> +{
+> +    DeviceClass *dc = DEVICE_CLASS(klass);
+> +    PCIDeviceClass *pdc = PCI_DEVICE_CLASS(klass);
+> +
+> +    device_class_set_props(dc, vfio_user_pci_dev_properties);
+> +    dc->desc = "VFIO over socket PCI device assignment";
+> +    pdc->realize = vfio_user_pci_realize;
+> +}
+> +
+> +static const TypeInfo vfio_user_pci_dev_info = {
+> +    .name = TYPE_VFIO_USER_PCI,
+> +    .parent = TYPE_VFIO_PCI_BASE,
+> +    .instance_size = sizeof(VFIOUserPCIDevice),
+> +    .class_init = vfio_user_pci_dev_class_init,
+> +    .instance_init = vfio_user_instance_init,
+> +    .instance_finalize = vfio_user_instance_finalize,
+> +};
+> +
+> +static void register_vfio_user_dev_type(void)
+> +{
+> +    type_register_static(&vfio_user_pci_dev_info);
+> +}
+> +
+> + type_init(register_vfio_user_dev_type)
+> diff --git a/hw/meson.build b/hw/meson.build
+> index b91f761fe0..791ce21ab4 100644
+> --- a/hw/meson.build
+> +++ b/hw/meson.build
+> @@ -39,6 +39,7 @@ subdir('uefi')
+>   subdir('ufs')
+>   subdir('usb')
+>   subdir('vfio')
+> +subdir('vfio-user')
+>   subdir('virtio')
+>   subdir('vmapple')
+>   subdir('watchdog')
+> diff --git a/hw/vfio-user/meson.build b/hw/vfio-user/meson.build
+> new file mode 100644
+> index 0000000000..f1fee70c85
+> --- /dev/null
+> +++ b/hw/vfio-user/meson.build
+> @@ -0,0 +1,9 @@
+> +vfio_user_ss = ss.source_set()
+> +vfio_user_ss.add(files(
+> +  'container.c',
+> +  'pci.c',
+> +))
+> +
+> +if get_option('vfio_user_client').enabled()
+> +  specific_ss.add_all(vfio_user_ss)
+> +endif
+> diff --git a/meson_options.txt b/meson_options.txt
+> index a442be2995..97d3db44cd 100644
+> --- a/meson_options.txt
+> +++ b/meson_options.txt
+> @@ -109,6 +109,8 @@ option('multiprocess', type: 'feature', value: 'auto',
+>          description: 'Out of process device emulation support')
+>   option('relocatable', type : 'boolean', value : true,
+>          description: 'toggle relocatable install')
+> +option('vfio_user_client', type: 'feature', value: 'disabled',
+> +       description: 'vfio-user client support')
+>   option('vfio_user_server', type: 'feature', value: 'disabled',
+>          description: 'vfio-user server support')
+>   option('dbus_display', type: 'feature', value: 'auto',
+> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+> index f09ef9604f..2c5673769a 100644
+> --- a/scripts/meson-buildoptions.sh
+> +++ b/scripts/meson-buildoptions.sh
+> @@ -201,6 +201,8 @@ meson_options_help() {
+>     printf "%s\n" '  vdi             vdi image format support'
+>     printf "%s\n" '  vduse-blk-export'
+>     printf "%s\n" '                  VDUSE block export support'
+> +  printf "%s\n" '  vfio-user-client'
+> +  printf "%s\n" '                  vfio-user client support'
+>     printf "%s\n" '  vfio-user-server'
+>     printf "%s\n" '                  vfio-user server support'
+>     printf "%s\n" '  vhdx            vhdx image format support'
+> @@ -529,6 +531,8 @@ _meson_option_parse() {
+>       --disable-vdi) printf "%s" -Dvdi=disabled ;;
+>       --enable-vduse-blk-export) printf "%s" -Dvduse_blk_export=enabled ;;
+>       --disable-vduse-blk-export) printf "%s" -Dvduse_blk_export=disabled ;;
+> +    --enable-vfio-user-client) printf "%s" -Dvfio_user_client=enabled ;;
+> +    --disable-vfio-user-client) printf "%s" -Dvfio_user_client=disabled ;;
+>       --enable-vfio-user-server) printf "%s" -Dvfio_user_server=enabled ;;
+>       --disable-vfio-user-server) printf "%s" -Dvfio_user_server=disabled ;;
+>       --enable-vhdx) printf "%s" -Dvhdx=enabled ;;
 
-My series adds this file. This is the user docs, including a device
-example, so independent of the protocol specification.
+can't we simply have a CONFIG option and select the device on platforms
+supporting it ?
 
-Please let me know what care it needs!
 
-> (and functional tests)
+Thanks,
 
-Mark is working on them, there are some difficulties...
+C.
 
-regards
-john
+
 
