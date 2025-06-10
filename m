@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D2C7C5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 10:44:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4D98C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 10:44:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOwS4-0004ZR-HM; Tue, 10 Jun 2025 06:43:32 -0400
+	id 1uOwSq-0004gT-Sz; Tue, 10 Jun 2025 06:44:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uOwS3-0004Z3-5y
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:43:31 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uOwSo-0004d5-Nd
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:44:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uOwRz-0000cF-Qr
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:43:30 -0400
+ (Exim 4.90_1) (envelope-from <david@redhat.com>) id 1uOwSl-0000hw-Jz
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:44:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749552204;
+ s=mimecast20190719; t=1749552254;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=uHFLhgGIYP2g0wU8P4sjggV0oEKCBvBN6Ac+3j+lNps=;
- b=hxI6WQMUje8Oghx0isc0g0acGWk9k9Fi5s0KFHfp5PAW3yHDqcpClWHpe/T8Hy7aitwVRC
- HozRRZyxWtlsmPAVu65GDXndhecdDYTn8pJ2/JglLKPrydkhFKn/Y2InlPmuTKYhmRs2+j
- BGm6PxKWiaLidu6voNWjhBH/AsVttM0=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=MvneSdRkyhpweUxHUhXYCzIz+/iy1Sf8Vtxsu3jZunk=;
+ b=H2GymSBeeVlLKNk9S/Vq0m4vyX61Gm76EArdoP+eqxuGQPAbDELnuCqoU3AMYJvNjBpFPA
+ w/39rJvOU8mDQn0qdQiVBuytMoESssmfN81yZL3zYCX22XLjUS4YZI4siq01/NzauNYqem
+ DZGnserljnckIiST3xhE8fUinuMF9Qw=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-388-kS4kVHN6OI-UJRL-mEvQvw-1; Tue, 10 Jun 2025 06:43:23 -0400
-X-MC-Unique: kS4kVHN6OI-UJRL-mEvQvw-1
-X-Mimecast-MFC-AGG-ID: kS4kVHN6OI-UJRL-mEvQvw_1749552202
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-451d30992bcso41677585e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 03:43:23 -0700 (PDT)
+ us-mta-266-9fx2y3WHNZeTuxQ1Tyt-PA-1; Tue, 10 Jun 2025 06:44:12 -0400
+X-MC-Unique: 9fx2y3WHNZeTuxQ1Tyt-PA-1
+X-Mimecast-MFC-AGG-ID: 9fx2y3WHNZeTuxQ1Tyt-PA_1749552252
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so2729769f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 03:44:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749552202; x=1750157002;
+ d=1e100.net; s=20230601; t=1749552251; x=1750157051;
  h=content-transfer-encoding:in-reply-to:organization:autocrypt
  :content-language:from:references:cc:to:subject:user-agent
  :mime-version:date:message-id:x-gm-message-state:from:to:cc:subject
  :date:message-id:reply-to;
- bh=uHFLhgGIYP2g0wU8P4sjggV0oEKCBvBN6Ac+3j+lNps=;
- b=W1vOrBl7FliYCRF9lDrIDxX/jJVOjz4XPsRWgfcqQaNr462etKYf/6cDD1QANt4m3e
- YnEUwRh01z1wNfhtG+fA9TewsOZlpFFCH5tnnq6gacwxQ7OJCJ37iLx8lSAL/iZLppKr
- amLcHUeteOAm/nE76A4klvKTOGjMAJoFlE4BQhs29MsPGqYk/BeHRp18Zdy0iD12aFA9
- xnTHEgPk686QdtonTZDuII5+SVTfglKUhBF+9vCXxeSHEE9oepPZlHPT7JxkPo6YfGdx
- n2ZlGwO9CfBpu0lrp/kqXK2NJqp1PNbs6aiOy5PJ0NbftgC21hYaC9YmPCk5arnuNF70
- OykQ==
+ bh=MvneSdRkyhpweUxHUhXYCzIz+/iy1Sf8Vtxsu3jZunk=;
+ b=hB5wzD01yWlKqpVspB98ITj8/TtN4CQxy2oElbyzwF1B2TpPlPPgLhqC/Izq+WRuY/
+ A6PbPGXyhbt6OfDrwxdXeE5Fvxv4NH01qwtZZGu0I51rE/Y3xczdsKu1QF3Pdp57EK5U
+ 1vpPA4yzPdk7XplT5LVTAtwT5n6rRgTkFwbNnbkMQV0rLE6UxvmB7yYtHmBsbcMbHjZn
+ xKvBbIKlhvWjHtmK/BC4ilSuUWIRZuYL74P6X8cMf1MCVRlrRftCK/mjZ8XJRSQVAUMs
+ ClFWcfKln3ecmMhVFBdxuak0MRmrLk1t/qLgXJpAw9iob8t13YGQbtB1xN2AVa+D9Ri0
+ aX9w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX61YCgqcYhPX4YnEIcOmmsLZKthdiaEJOOpRDQUShEy0HSErUt7hxgNY+DNO8UhVSRHy170EFBIfwN@nongnu.org
-X-Gm-Message-State: AOJu0YyNQLXucpSZbrw8jOtre1e+GFbLd0Vbw/Bp6EvLJlTn3zXQOqJj
- pZw3yeAuxHRvUjhSYokr3+5nVStefpX3SQfaWLjIEk3lwWJKggqc37cyEvfeEyC9O+rT0JZjBCK
- 4meyCMYMPJFR1IjHuxyQ5At/DTFTFAm1pGy5PaIgC4EoEER+8A7VBKw1f
-X-Gm-Gg: ASbGnctstxdfgBS/pBhVY4vKgUEwf0WdRWi5pKpOH/68DgIoRI4SfhzNsNY4wK9HSka
- h/4+dvPKdO8LOeVYWzEOnzJiDvtGs4hCmAgbKNpLWrzR6z6OiIj8bdCYmqLtDsxvSNBQZUvuoRL
- tRwiQSJ0G/725gGUjoA2FsLZCJNumijvq+lj+Jm5sw0n7l0zD3dehwaLfbr+VuOqBE/2KgvGF9C
- /XzIYWY1TWEBtkF+H4RRU3e+YAkfDmn6UZH8owP0zeykiJyzVX/BmaHMnCiiZF8X9jN6YbuAFd3
- awxnpLXyVekwf2n1jQ3sMMi91PUNo/Ta6wn37j7d4VzgDSeuMsBcKkw=
-X-Received: by 2002:a05:600c:5396:b0:43c:f44c:72a6 with SMTP id
- 5b1f17b1804b1-45201364c47mr172511585e9.2.1749552202321; 
- Tue, 10 Jun 2025 03:43:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEvV5JY3bGfsYp5VuherL+EoZ6KlJh9SmhQUQHRcOXIbXYIQokDS3YByBl5Ng/BVRG6/3+2Tg==
-X-Received: by 2002:a05:600c:5396:b0:43c:f44c:72a6 with SMTP id
- 5b1f17b1804b1-45201364c47mr172511255e9.2.1749552201940; 
- Tue, 10 Jun 2025 03:43:21 -0700 (PDT)
+ AJvYcCUaRRS2Urx5mn7FMZiOAxCn2lbTN6/Uz8dMBe+Acopme7YMfrxrvtuX/JB55eYPwNitlESSLjl28Z0R@nongnu.org
+X-Gm-Message-State: AOJu0Yz5JIk6Yn4Yggp1QJ7KfKwhlAEcyxVT0LXDaR/LyCGtKu9/u2X3
+ O2dWX3UgKuLtBSLgvLTi0a3kuEF8zv0kDNDWX5aHsaVPQU0NLqCsgKkn98GyY9HewtPYO05tFH4
+ NBjvqudx0E9aiwPadZhiDu118Wtm/xKDsNdvwxa/Ym/0i6BQ1rcyhEbyy
+X-Gm-Gg: ASbGncvoNbHrmUg/mPhSpRwRpF6gso+nBvvI6SgAaWG1wPayagLy/i47d/UerilQRDR
+ bgJO9PJ3VXz7+GWdP0evILOkXG6hK3NwRdmiTd1PmPMTqICVvRJN4pC/8ewtRvi4g+cdXn5D6hU
+ WI/ZhIkKqUpVa+qJ90mV83eYKL0N2jl9NuSncwN0fjC/nMhK9+p01ziGsm1EeljgH0fMagNtx2m
+ YzvnWaGk0jaRcQHBfWbAK7XE5Qw3uMPNqd9MSbzb8gguU86yLdP4k+RWsJoQ0mMt5fXT4FHMAVG
+ WjzF9wBubYfzUc3kq9i2AqnTJxdRFCI+S+xWXsAZV4uQKNwXS20k1n4=
+X-Received: by 2002:a5d:5348:0:b0:3a4:e231:8632 with SMTP id
+ ffacd0b85a97d-3a5513ee006mr1961736f8f.12.1749552251625; 
+ Tue, 10 Jun 2025 03:44:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFzGYtecoZRE2cl/oONeUIRI0DXR3HKs7MkT5fwUrXedtv2tvcX1rBuZ08wq7uVjLQSdxv5Vw==
+X-Received: by 2002:a5d:5348:0:b0:3a4:e231:8632 with SMTP id
+ ffacd0b85a97d-3a5513ee006mr1961724f8f.12.1749552251283; 
+ Tue, 10 Jun 2025 03:44:11 -0700 (PDT)
 Received: from ?IPV6:2a09:80c0:192:0:5dac:bf3d:c41:c3e7?
  ([2a09:80c0:192:0:5dac:bf3d:c41:c3e7])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53229e009sm12297166f8f.16.2025.06.10.03.43.21
+ ffacd0b85a97d-3a532436871sm11812554f8f.49.2025.06.10.03.44.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 03:43:21 -0700 (PDT)
-Message-ID: <d4f46b6e-b002-47f9-9f13-09b44d4431df@redhat.com>
-Date: Tue, 10 Jun 2025 12:43:20 +0200
+ Tue, 10 Jun 2025 03:44:10 -0700 (PDT)
+Message-ID: <e81f76a6-b95f-4499-ba95-b60ddc430b3b@redhat.com>
+Date: Tue, 10 Jun 2025 12:44:10 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 1/7] vhost-user: Add VirtIO Shared Memory map request
+Subject: Re: [PATCH v5 2/7] vhost_user.rst: Align VhostUserMsg excerpt members
 To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
 Cc: stefanha@redhat.com, slp@redhat.com, "Michael S. Tsirkin"
  <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
  jasowang@redhat.com, stevensd@chromium.org, hi@alyssa.is,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 References: <20250609144729.884027-1-aesteve@redhat.com>
- <20250609144729.884027-2-aesteve@redhat.com>
+ <20250609144729.884027-3-aesteve@redhat.com>
 From: David Hildenbrand <david@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=david@redhat.com; keydata=
@@ -132,7 +132,7 @@ Autocrypt: addr=david@redhat.com; keydata=
  jPrnvUsUUsjRoRNJjKKA/REq+sAnhkNPPZ/NNMjaZ5b8Tovi8C0tmxiCHaQYqj7G2rgnT0kt
  WNyWQQ==
 Organization: Red Hat
-In-Reply-To: <20250609144729.884027-2-aesteve@redhat.com>
+In-Reply-To: <20250609144729.884027-3-aesteve@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=david@redhat.com;
@@ -161,41 +161,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 09.06.25 16:47, Albert Esteve wrote:
-> Add SHMEM_MAP/UNMAP requests to vhost-user to
-> handle VIRTIO Shared Memory mappings.
+> Add missing members to the VhostUserMsg excerpt in
+> the vhost-user spec documentation.
 > 
-> This request allows backends to dynamically map
-> fds into a VIRTIO Shared Memory Region indentified
-> by its `shmid`. The map is performed by calling
-> `memory_region_init_ram_from_fd` and adding the
-> new region as a subregion of the shmem container
-> MR. Then, the fd memory is advertised to the
-> driver as a base addres + offset, so it can be
+> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+> ---
 
-s/addres/address/
-
-> read/written (depending on the mmap flags
-> requested) while it is valid.
-> 
-> The backend can unmap the memory range
-> in a given VIRTIO Shared Memory Region (again,
-> identified by its `shmid`), to free it.
-> Upon receiving this message, the front-end
-> must delete the MR as a subregion of
-> the shmem container region and free its
-> resources.
-> 
-> Note that commit all these operations need
-> to be delayed to after we respond the request
-> to the backend to avoid deadlocks.
-> 
-> The device model needs to create VirtSharedMemory
-> instances for the VirtIO Shared Memory Regions
-> and add them to the `VirtIODevice` instance.
-
-Just a general comment: you can use more characters per line in the 
-patch desription.
-
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
 -- 
 Cheers,
