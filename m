@@ -4,62 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B018C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:53:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F004C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:54:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2AB-00009E-7a; Tue, 10 Jun 2025 12:49:28 -0400
+	id 1uP28w-0005St-Al; Tue, 10 Jun 2025 12:48:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uP0j1-0000dM-7H
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:17:19 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uP1ce-0003XA-Nu
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:14:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uP0iz-0002x1-2B
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:17:18 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bGsp76D4bz6D8gq;
- Tue, 10 Jun 2025 23:16:47 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id D05271402FE;
- Tue, 10 Jun 2025 23:17:10 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 10 Jun
- 2025 17:17:10 +0200
-Date: Tue, 10 Jun 2025 16:17:09 +0100
-To: Anisa Su <anisa.su887@gmail.com>
-CC: ALOK TIWARI <alok.a.tiwari@oracle.com>, <qemu-devel@nongnu.org>,
- <nifan.cxl@gmail.com>, <dave@stgolabs.net>, <linux-cxl@vger.kernel.org>
-Subject: Re: [QEMU PATCH v3 8/9] cxl-mailbox-utils: 0x5604 - FMAPI Initiate
- DC Add
-Message-ID: <20250610161709.000059f7@huawei.com>
-In-Reply-To: <aEMly5F8kdziHWzO@deb-101020-bm01.eng.stellus.in>
-References: <20250605234227.970187-1-anisa.su887@gmail.com>
- <20250605234227.970187-9-anisa.su887@gmail.com>
- <09aea84f-8c3f-4321-879d-35c8956b3573@oracle.com>
- <aEMly5F8kdziHWzO@deb-101020-bm01.eng.stellus.in>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uP1cc-00025U-Ug
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:14:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749572085;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=xkCM5X49QfFNU96toz1oguUI3Huvz4CHRXCa/Vtdjm0=;
+ b=QSHYbVCchXj03xLskDXQtidT/XOLAu+FbVJXXcSPQCnrWphPrM8N8qVdu3E4QbbwmYSWXb
+ ue5nS3fKCYUAXMVTq9+4aoneKtwa2qkQu/B3P4KdpFHbXotNIbTypVJtYNqiUbygL0vnol
+ 7mncuUXeT3Y3ceWGwFzADBZh2EHs7o4=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-600-DqbqQnncN8yCq5g80KmCMA-1; Tue, 10 Jun 2025 12:14:44 -0400
+X-MC-Unique: DqbqQnncN8yCq5g80KmCMA-1
+X-Mimecast-MFC-AGG-ID: DqbqQnncN8yCq5g80KmCMA_1749572083
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a4f85f31d9so2512304f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:14:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749572083; x=1750176883;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=xkCM5X49QfFNU96toz1oguUI3Huvz4CHRXCa/Vtdjm0=;
+ b=wA9ItzMA3rzHMWhpYjBBGncwt4gU7lBvrIVJND2ZskM3PoUyIThMrVEwiIdihLkXLW
+ ujjOOO2wxG86hS1w0Tq3msfAU3iCSZgSs+2qts3xN0qeQwz9PG1DxhlfZNXBlpbL1V5l
+ Q4tJwiRjA5SuldJGH5KSyOk9ugJ6gtvWYwxxgBM7OWSGCMnsmY5n0NOu7PJBJJszt38D
+ EOWvTnW6/6UXff/+f29PwcSLpIXYi5d4Wx/N4q3RmBtSFh5/V9QRyFK1wE8y12pJDBb0
+ QYd2gntsclOUTe08IGU+3UwoVT23RWvDdv0kSt6YCRABE5JavnnsGBzsw44FeziI2NWp
+ j0tg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX4YI8kHiSrxN4TkKJaUWiBcLZK+GnhN9l+dSuumRL9pY4cAi373sO5GDpysTtVjE+ae+tFizOVhsbX@nongnu.org
+X-Gm-Message-State: AOJu0Yy+HfJN1KNtqeD6oRsMheZ4F3cyplfJ7A/Nzq9vA7DlFklq4T4t
+ z/ZokkGA3ZIapAhaiU3vdH56qQv+b23LIb0I2F+dPZBbS0CP8WGjWRJxGv9Kmoqton4GaW2n3IK
+ k3vtwy+FpZs6wj6bhZ4IaE2hx1HZKDeOle0FwMsp7ltlJpvXapMu2gfoa
+X-Gm-Gg: ASbGncvRuprM+d3z6M2Z4ttsFZCrBd+FDdRAaTeFN1e8Hcl9zfyeViAbHYvvlVHFs6B
+ saFIHN3g1TcEpYHQbDMqyxgWgVCvpvg5dgtM2coe2bAmapT7anld55xjUuToT+N0o2wLUUMYDp2
+ s1TEDNi9VKeQH5QT2vGDbcuqxsMy545F92GzBzVR3RXfr1CDiZ+a30Qo6PsXDUkaEN5zApRaaFs
+ i9Xs5+OeCukuMRu9VmrvdW9GQkLMI6ZVY+7Dkrfrpgov2+vxdHCVd7i74x2U+NJYmDYhKOXHNcd
+ 9zkg2Ft3HS5UV0ZC
+X-Received: by 2002:adf:f58c:0:b0:3a5:39d7:3f17 with SMTP id
+ ffacd0b85a97d-3a539d73f90mr9798611f8f.47.1749572083072; 
+ Tue, 10 Jun 2025 09:14:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGso1vb61dE/j3z8KqF7YodcmlZvAlOQ4RKOCcnYswwN92Gdg6Ww0SjL8pyHelqO0rywvboiQ==
+X-Received: by 2002:adf:f58c:0:b0:3a5:39d7:3f17 with SMTP id
+ ffacd0b85a97d-3a539d73f90mr9798572f8f.47.1749572082557; 
+ Tue, 10 Jun 2025 09:14:42 -0700 (PDT)
+Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a5323ab1a2sm12510052f8f.28.2025.06.10.09.14.41
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Jun 2025 09:14:41 -0700 (PDT)
+Date: Tue, 10 Jun 2025 12:14:39 -0400
+From: "Michael S. Tsirkin" <mst@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ yuanminghao <yuanmh12@chinatelecom.cn>, qemu-devel@nongnu.org,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH 1/1] vhost: do not reset used_memslots when destroying
+ vhost dev
+Message-ID: <20250610121422-mutt-send-email-mst@kernel.org>
+References: <1741024937-37164-1-git-send-email-yuanmh12@chinatelecom.cn>
+ <20250513141341.5f3ffa57@imammedo.users.ipa.redhat.com>
+ <36d6672a-6d06-4af2-bdc6-4349df570662@redhat.com>
+ <20250514111224.7fb1263f@imammedo.users.ipa.redhat.com>
+ <acc02028-89ac-49ad-9c5c-d6973738b113@redhat.com>
+ <20250530071844-mutt-send-email-mst@kernel.org>
+ <b89fc010-cf76-4951-8d06-80dd7c2ebc8c@redhat.com>
+ <20250530073603-mutt-send-email-mst@kernel.org>
+ <89639b23-6061-4c18-96c9-1f2d3bcd773c@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <89639b23-6061-4c18-96c9-1f2d3bcd773c@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mst@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,113 +114,82 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-> > > +/* CXL r3.2 Section 7.6.7.6.5 Initiate Dynamic Capacity Add (Opcode 5604h) */
-> > > +static CXLRetCode cmd_fm_initiate_dc_add(const struct cxl_cmd *cmd,
-> > > +                                         uint8_t *payload_in,
-> > > +                                         size_t len_in,
-> > > +                                         uint8_t *payload_out,
-> > > +                                         size_t *len_out,
-> > > +                                         CXLCCI *cci)
-> > > +{
-> > > +    struct {
-> > > +        uint16_t host_id;
-> > > +        uint8_t selection_policy;
-> > > +        uint8_t reg_num;
-> > > +        uint64_t length;
-> > > +        uint8_t tag[0x10];
-> > > +        uint32_t ext_count;
-> > > +        CXLDCExtentRaw extents[];
-> > > +    } QEMU_PACKED *in = (void *)payload_in;
-> > > +    CXLType3Dev *ct3d = CXL_TYPE3(cci->d);
-> > > +    CXLUpdateDCExtentListInPl *list;
-> > > +    int i, rc;
-> > > +
-> > > +    switch (in->selection_policy) {
-> > > +    case CXL_EXTENT_SELECTION_POLICY_PRESCRIPTIVE:
-> > > +        /* Adding extents exceeds device's extent tracking ability. */
-> > > +        if (in->ext_count + ct3d->dc.total_extent_count >
-> > > +            CXL_NUM_EXTENTS_SUPPORTED) {
-> > > +            return CXL_MBOX_RESOURCES_EXHAUSTED;
-> > > +        }
-> > > +
-> > > +        list = calloc(1, (sizeof(*list) +
-> > > +                          in->ext_count * sizeof(*list->updated_entries)));
-> > > +        convert_raw_extents(in->extents, list, in->ext_count);
-> > > +        rc = cxl_detect_malformed_extent_list(ct3d, list);
-> > > +
-> > > +        for (i = 0; i < in->ext_count; i++) {
-> > > +            CXLDCExtentRaw ext = in->extents[i];
-> > > +             /* Check requested extents do not overlap with pending extents. */
-> > > +            if (cxl_extent_groups_overlaps_dpa_range(&ct3d->dc.extents_pending,
-> > > +                                                     ext.start_dpa, ext.len)) {
-> > > +                return CXL_MBOX_INVALID_EXTENT_LIST;
-> > > +            }
-> > > +            /* Check requested extents do not overlap with existing extents. */
-> > > +            if (cxl_extents_overlaps_dpa_range(&ct3d->dc.extents,
-> > > +                                               ext.start_dpa, ext.len)) {
-> > > +                return CXL_MBOX_INVALID_EXTENT_LIST;
-> > > +            }
-> > > +        }
-> > > +
-> > > +        if (rc) {
-> > > +            return rc;  
+On Tue, Jun 03, 2025 at 11:15:18AM +0200, David Hildenbrand wrote:
+> On 30.05.25 13:36, Michael S. Tsirkin wrote:
+> > On Fri, May 30, 2025 at 01:28:58PM +0200, David Hildenbrand wrote:
+> > > On 30.05.25 13:18, Michael S. Tsirkin wrote:
+> > > > On Wed, May 14, 2025 at 11:26:05AM +0200, David Hildenbrand wrote:
+> > > > > On 14.05.25 11:12, Igor Mammedov wrote:
+> > > > > > On Tue, 13 May 2025 15:12:11 +0200
+> > > > > > David Hildenbrand <david@redhat.com> wrote:
+> > > > > > 
+> > > > > > > On 13.05.25 14:13, Igor Mammedov wrote:
+> > > > > > > > On Mon,  3 Mar 2025 13:02:17 -0500
+> > > > > > > > yuanminghao <yuanmh12@chinatelecom.cn> wrote:
+> > > > > > > > > > > Global used_memslots or used_shared_memslots is updated to 0 unexpectly
+> > > > > > > > > > 
+> > > > > > > > > > it shouldn't be 0 in practice, as it comes from number of RAM regions VM has.
+> > > > > > > > > > It's likely a bug somewhere else.
+> > > > > > > > 
+> > > > > > > > I haven't touched this code for a long time, but I'd say if we consider multiple
+> > > > > > > > devices, we shouldn't do following:
+> > > > > > > > 
+> > > > > > > > static void vhost_commit(MemoryListener *listener)
+> > > > > > > >         ...
+> > > > > > > >         if (dev->vhost_ops->vhost_backend_no_private_memslots &&
+> > > > > > > >             dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+> > > > > > > >             used_shared_memslots = dev->mem->nregions;
+> > > > > > > >         } else {
+> > > > > > > >             used_memslots = dev->mem->nregions;
+> > > > > > > >         }
+> > > > > > > > 
+> > > > > > > > where value dev->mem->nregions gets is well hidden/obscured
+> > > > > > > > and hard to trace where tail ends => fragile.
+> > > > > > > > 
+> > > > > > > > CCing David (accidental victim) who rewrote this part the last time,
+> > > > > > > > perhaps he can suggest a better way to fix the issue.
+> > > > > > > 
+> > > > > > > I think the original idea is that all devices (of on type: private vs.
+> > > > > > > non-private memslots) have the same number of memslots.
+> > > > > > > 
+> > > > > > > This avoids having to loop over all devices to figure out the number of
+> > > > > > > memslots.
+> > > > > > > 
+> > > > > > > ... but in vhost_get_free_memslots() we already loop over all devices.
+> > > > > > > 
+> > > > > > > The check in vhost_dev_init() needs to be taken care of.
+> > > > > > > 
+> > > > > > > So maybe we can get rid of both variables completely?
+> > > > > > 
+> > > > > > looks reasonable to me,  (instead of current state which is
+> > > > > > juggling with  dev->mem->nregions that can become 0 on unplug
+> > > > > > as it was reported).
+> > > > > > 
+> > > > > > David,
+> > > > > > do you have time to fix it?
+> > > > > 
+> > > > > I can try, but I was wondering/hoping whether Yuanminghao could take a look
+> > > > > at that? I can provide guidance if necessary.
+> > > > 
+> > > > 
+> > > > Guys?
+> > > 
+> > > Is the original author not interested in fixing the problem?
 > > 
-> > is list free not require ?
-> >   
-> oh yeah it's definitely required :( that was dumb of me, same for the
-> next patch.
-
-Use a g_autofree marking for this probably given it is just
-a local temp array I think.
-
+> > Given the silence I'd guess no.
 > 
-> Thanks for catching that!
-> -Anisa
-> > > +        }
-> > > +
-> > > +        cxl_mbox_dc_add_to_pending(ct3d, in->ext_count, in->extents);
-> > > +        cxl_mbox_create_dc_event_records_for_extents(ct3d,
-> > > +                                                     DC_EVENT_ADD_CAPACITY,
-> > > +                                                     in->extents,
-> > > +                                                     in->ext_count);
-> > > +
-> > > +        return CXL_MBOX_SUCCESS;
-> > > +    default:
-> > > +        qemu_log_mask(LOG_UNIMP,
-> > > +                      "CXL extent selection policy not supported.\n");
-> > > +        return CXL_MBOX_INVALID_INPUT;
-> > > +    }
-> > > +
-> > > +    return CXL_MBOX_SUCCESS;  
-> > 
-> > CXL_MBOX_SUCCESS, this is unreachable
-> >   
-> > > +}
-> > > +
-> > >   static const struct cxl_cmd cxl_cmd_set[256][256] = {
-> > >       [INFOSTAT][BACKGROUND_OPERATION_ABORT] = { "BACKGROUND_OPERATION_ABORT",
-> > >           cmd_infostat_bg_op_abort, 0, 0 },
-> > > @@ -3667,6 +3812,13 @@ static const struct cxl_cmd cxl_cmd_set_fm_dcd[256][256] = {
-> > >            CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> > >       [FMAPI_DCD_MGMT][GET_DC_REGION_EXTENT_LIST] = { "GET_DC_REGION_EXTENT_LIST",
-> > >           cmd_fm_get_dc_region_extent_list, 12, 0 },
-> > > +    [FMAPI_DCD_MGMT][INITIATE_DC_ADD] = { "INIT_DC_ADD",
-> > > +        cmd_fm_initiate_dc_add, ~0,
-> > > +        (CXL_MBOX_CONFIG_CHANGE_COLD_RESET |
-> > > +        CXL_MBOX_CONFIG_CHANGE_CONV_RESET |
-> > > +        CXL_MBOX_CONFIG_CHANGE_CXL_RESET |
-> > > +        CXL_MBOX_IMMEDIATE_CONFIG_CHANGE |
-> > > +        CXL_MBOX_IMMEDIATE_DATA_CHANGE) },
-> > >   };  
-> > 
-> > 
-> > Thanks,
-> > Alok  
+> SMH, why then even send patches in the first place ...
+
+Drive by contributions are not uncommon.
+
+> Will try finding time to look into this ...
+> 
+> -- 
+> Cheers,
+> 
+> David / dhildenb
 
 
