@@ -4,138 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52369C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 11:58:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7ACAEC61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:03:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOxbm-0002QM-89; Tue, 10 Jun 2025 07:57:38 -0400
+	id 1uOxgt-00067r-VU; Tue, 10 Jun 2025 08:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxbk-0002Pn-BD
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 07:57:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uOxfj-0005ca-SH
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:01:49 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOxbh-0002p6-Um
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 07:57:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uOxfg-0003Rp-Fl
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:01:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749556651;
+ s=mimecast20190719; t=1749556897;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZaNDzA+6dBiSYvQo5XLMNQ6Zb8lrg81zz5LitL0U4UQ=;
- b=MwcyVxnGRx8UgRZpePmG4K+s9OHg1eafKOQ7+IMfvFfBM/FxbYfvJ+2kzN/hHqBwH2mtdh
- H7bVnIOXeTNnFgCUiJytFEU8H2NtBlcHZ2y1P0p7Abtnt7CYgUvI/B7Boinq0KWd6KaAr0
- IoYUNRle2pS/eOSdo3l1d7jLBEHXTYI=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-48-xQhkebJaPXKHwFGY5ia32w-1; Tue, 10 Jun 2025 07:57:30 -0400
-X-MC-Unique: xQhkebJaPXKHwFGY5ia32w-1
-X-Mimecast-MFC-AGG-ID: xQhkebJaPXKHwFGY5ia32w_1749556649
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a50816cc58so1707829f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 04:57:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749556649; x=1750161449;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ZaNDzA+6dBiSYvQo5XLMNQ6Zb8lrg81zz5LitL0U4UQ=;
- b=g895Y5JFAEaYRaM7xMrVKAth3+f9on97DE2IQhF7kdNQsRIFIcLmxEetfy4/5S4a0P
- fFxGt6KNb6+te/5djMgXM216TZqGCTzUEvSQjusjZA63JKrEv2dBZyqeHlo+/zc2Abjx
- FLJ9qm5Qj9zs94S/ImhKwKTAD4KJRXcZ8wtJbaP3mTDlvJQhKTUbpvsx56uDbkIi5jBS
- CvjjL5FTd43ssmTL0envLRYOVdYVcHyyVqvnAyIrA9mEcKte+8qY5/mlRFHpnGuKHp5v
- pYaaFtNvKd3umfxeMFShAxV6s5J5pLAVVbayD3RyqvMlcHxYO9XH8cTaaVCqjLroRfld
- dBVw==
-X-Gm-Message-State: AOJu0Ywujuqaw5aXSIhqcfjthvqLBvwId67Oh9gP08TAgEmnhgafjCon
- +cjGeP5NtXwW6VwpdjG9QMQAUhZtsPj+DaehJeHhYvn+inJ4v81mRcw+1jZX+1YwSO3EMrUqtwo
- Es36boqJZqsaZzf++7I/8mFcFSUIIn7LbDRyLsjXuVlxieLzCvvhCb+N0
-X-Gm-Gg: ASbGncvnuScP/kL4ri1GFfMqLdyz6XkTNK/N8fKOoGkJICfUxDAKCqp1GmhxwSeL6M4
- y5Jt3Wc5AdeHt0tzrWW0tNPBWdaobC9M8y6tpd1mNHbaFGkxtB5/FtPNXrmxPt+EJkZnIk8kaV7
- ots21CgLMxVgW7eR3cR8YIEmo+F6h5tQK/KvrTWxho+EBNgGnX9sUwFLe0ajmUq1GEpyS7l5aTn
- TXhEgJrHZFNlQ8Wciing0lqo2OL7NYK97H0V+fG6a164PQ49wacZrezWjEq48k/gLFK3O0zt+DX
- arBLab08FBG5sZFnuUh7KxM4sLZu/RAGn1tQoiQ2DlRCU4AUNy9mXS5cMKMZ
-X-Received: by 2002:a05:6000:2c13:b0:3a4:e2d8:75e2 with SMTP id
- ffacd0b85a97d-3a5522bfef8mr1824348f8f.50.1749556648666; 
- Tue, 10 Jun 2025 04:57:28 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGynKN/w5S+iyQjrW7LZa8/EWkwXhtXiRv9/DMNNF9YEX5j35hmipBPQ0lLnX1M6iKU3MVUng==
-X-Received: by 2002:a05:6000:2c13:b0:3a4:e2d8:75e2 with SMTP id
- ffacd0b85a97d-3a5522bfef8mr1824321f8f.50.1749556648275; 
- Tue, 10 Jun 2025 04:57:28 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5324520e7sm12129834f8f.84.2025.06.10.04.57.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 04:57:27 -0700 (PDT)
-Message-ID: <c1d90eb0-6077-4b43-b1f3-b04dc6551d23@redhat.com>
-Date: Tue, 10 Jun 2025 13:57:23 +0200
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=OoIeLdcMpFtfEUOvfgtVZDzO71WL39cQEKlY0zojNeI=;
+ b=XzCbypsKpuqm1XhTJS+KBfaGxP1EdQKnBRKInkR38YnjXPFWYJkiwlKI8I8CA9Yn20GnAD
+ 7Tuo6+5efgAD8LKc8gz1jv38VDqeoRmDEST7bh2jaKK514PH0edg6VClpbfRnZy9uDFkHy
+ XwMiFgdVe6ZUGauU5s/gSh9332JGJQk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-TcChW9jTOkOKrilyPuHtzg-1; Tue,
+ 10 Jun 2025 08:01:36 -0400
+X-MC-Unique: TcChW9jTOkOKrilyPuHtzg-1
+X-Mimecast-MFC-AGG-ID: TcChW9jTOkOKrilyPuHtzg_1749556894
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 893721955F43; Tue, 10 Jun 2025 12:01:34 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.89])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C490019560B0; Tue, 10 Jun 2025 12:01:25 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: qemu-devel@nongnu.org,
+	Yoshinori Sato <ysato@users.sourceforge.jp>
+Cc: Magnus Damm <magnus.damm@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH] MAINTAINERS: Drop the defunct mail address from Yoshinori Sato
+Date: Tue, 10 Jun 2025 14:01:23 +0200
+Message-ID: <20250610120123.37689-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/23] vfio: add per-region fd support
-To: John Levon <john.levon@nutanix.com>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250607001056.335310-1-john.levon@nutanix.com>
- <20250607001056.335310-4-john.levon@nutanix.com>
- <dfa38212-2f55-4097-b025-beafe11bb3d2@nutanix.com> <aEgWk5NvYg01GnUO@lent>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aEgWk5NvYg01GnUO@lent>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -160,29 +80,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 13:27, John Levon wrote:
-> On Tue, Jun 10, 2025 at 11:58:18AM +0100, Mark Cave-Ayland wrote:
-> 
->>> +        /* Use the per-region fd if set, or the shared fd. */
->>> +        fd = region->vbasedev->region_fds ?
->>> +             region->vbasedev->region_fds[region->nr] :
->>> +             region->vbasedev->fd,
->>> +
->>
->> This feels a bit odd: if you're asking to map a VFIORegion then shouldn't
->> that contain all the information required for the mapping, including the fd?
->>
->> (goes and looks)
->>
->> It appears that there is already a fd field in VFIORegion so is there a
->> reason why we can't use this instead of adding region_fds to vbasedev?
-> 
-> region->fd was in earlier patchsets, but dropped as requested by Cédric. So we
-> must look it up here.
+From: Thomas Huth <thuth@redhat.com>
 
-yes. It didn't seem necessary to store the same information under
-multiple structs.
+The OSDN / sourceforge.jp site ceased to work (according to
+https://en.wikipedia.org/wiki/OSDN#History at least since midth
+of April 2025) and mails to Yosinori Sato are currently bouncing.
+Since it's unlikely that the site will be back, let's remove the
+defunct mail entries for now and hope that Yoshinori will be back
+with a working e-mail address sometime in the future.
+While we're at it, downgrade some related "Odd Fixes" entries
+to "Orphan" since we don't have a maintainer listed here anymore.
 
-C.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/MAINTAINERS b/MAINTAINERS
+index eb2b338fb11..d6d5f47c9a5 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -367,7 +367,6 @@ F: tests/tcg/s390x/
+ L: qemu-s390x@nongnu.org
+ 
+ SH4 TCG CPUs
+-R: Yoshinori Sato <ysato@users.sourceforge.jp>
+ S: Orphan
+ F: target/sh4/
+ F: hw/sh4/
+@@ -1693,7 +1692,6 @@ F: docs/system/riscv/microblaze-v-generic.rst
+ RX Machines
+ -----------
+ rx-gdbsim
+-R: Yoshinori Sato <ysato@users.sourceforge.jp>
+ S: Orphan
+ F: docs/system/target-rx.rst
+ F: hw/rx/rx-gdbsim.c
+@@ -1702,9 +1700,8 @@ F: tests/functional/test_rx_gdbsim.py
+ SH4 Machines
+ ------------
+ R2D
+-R: Yoshinori Sato <ysato@users.sourceforge.jp>
+ R: Magnus Damm <magnus.damm@gmail.com>
+-S: Odd Fixes
++S: Orphan
+ F: hw/char/sh_serial.c
+ F: hw/sh4/r2d.c
+ F: hw/intc/sh_intc.c
+@@ -2753,9 +2750,8 @@ F: tests/qtest/*xive*
+ F: docs/*/*xive*
+ 
+ Renesas peripherals
+-R: Yoshinori Sato <ysato@users.sourceforge.jp>
+ R: Magnus Damm <magnus.damm@gmail.com>
+-S: Odd Fixes
++S: Orphan
+ F: hw/char/renesas_sci.c
+ F: hw/char/sh_serial.c
+ F: hw/timer/renesas_*.c
+@@ -2765,7 +2761,6 @@ F: include/hw/sh4/sh.h
+ F: include/hw/timer/renesas_*.h
+ 
+ Renesas RX peripherals
+-R: Yoshinori Sato <ysato@users.sourceforge.jp>
+ S: Orphan
+ F: hw/intc/rx_icu.c
+ F: hw/rx/
+-- 
+2.49.0
 
 
