@@ -4,78 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87585C71130
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 317A3C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP28k-00057a-Su; Tue, 10 Jun 2025 12:47:59 -0400
+	id 1uP2Bv-00026F-Rv; Tue, 10 Jun 2025 12:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uP1LO-0001Q2-QC
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:56:58 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uP1PH-0005Tj-JT
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:01:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uP1LJ-0008Bk-8C
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:56:58 -0400
+ (Exim 4.90_1) (envelope-from <alex.williamson@redhat.com>)
+ id 1uP1PE-0000DY-01
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:00:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749571011;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1749571251;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mMhPAuXRHNwaFwWidIKGtMPeUCkcvA0svjUZfXoeofo=;
- b=BPOi0Si5uZlyy+8pVIBXi5gOeIJpHb0rVw3hyQAFvCLDm4dJFrs1RSJqNNmW8AY2BA0sc9
- N57+RAnUylx9za0MnsuJceNVhcwUsUYjQ1TmU6iqBRPlskcbVUjAokGBVe6jGVfVsMOwq2
- WpVe9DV6u2Ja1zT2a+bMXA3kKfqRWx8=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-eiwta7BMMu6GtLFiepudcA-1; Tue,
- 10 Jun 2025 11:56:43 -0400
-X-MC-Unique: eiwta7BMMu6GtLFiepudcA-1
-X-Mimecast-MFC-AGG-ID: eiwta7BMMu6GtLFiepudcA_1749570997
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2CAE319560B2; Tue, 10 Jun 2025 15:56:36 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.87])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E682219560B2; Tue, 10 Jun 2025 15:56:32 +0000 (UTC)
-Date: Tue, 10 Jun 2025 16:56:29 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH 00/31] Skip automatic zero-init of large arrays / structs
- in I/O paths
-Message-ID: <aEhVrceTYtLlqe84@redhat.com>
-References: <20250610123709.835102-1-berrange@redhat.com>
- <50405e77-e665-4772-9715-3901730d00fd@linaro.org>
- <aEgri00LXfeRQRJ2@redhat.com>
- <4d03fe23-86a1-4030-b5fc-8de8be461770@linaro.org>
+ bh=Dp64+H62dto2vYWHN2pdtS9nRn/63AVOPtYCyVP++rg=;
+ b=Apq7XWXO07ylwc6h+0+86EPlemLpufyAspTvZA29x5BZjzSc2pO6eIpD7UgWXrZYQogJ1Q
+ jilkF8D7R1N3FNTLILxbsHI7+gozHmPHKswzwcSoSGL9BuvvCYj4g3cZtagz56AWxkKQtW
+ FbJU88EwlQg4iBH24eEDZBExZXnOeMw=
+Received: from mail-il1-f198.google.com (mail-il1-f198.google.com
+ [209.85.166.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-124-iiNsd2h2P42GfvAxL-orvw-1; Tue, 10 Jun 2025 12:00:50 -0400
+X-MC-Unique: iiNsd2h2P42GfvAxL-orvw-1
+X-Mimecast-MFC-AGG-ID: iiNsd2h2P42GfvAxL-orvw_1749571249
+Received: by mail-il1-f198.google.com with SMTP id
+ e9e14a558f8ab-3dde751641aso3220765ab.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:00:50 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749571249; x=1750176049;
+ h=content-transfer-encoding:mime-version:organization:references
+ :in-reply-to:message-id:subject:cc:to:from:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Dp64+H62dto2vYWHN2pdtS9nRn/63AVOPtYCyVP++rg=;
+ b=BvBVR2UM/3SpRkoTDBtTnRhRRx8KF2CQwOVYTDQP5Dffocb070UYqXONd3mV40hZA5
+ 3vyiQE2InD0TAJscEmvGnrjO17HaqVeoPncvIiikSRZBLQE4/Wd64ltH3oQXNnxbIi5l
+ o0ci8hSJ/ST8j/WP36Va0EklzlPEhhywzH2TndX8mUVCHbBiDpL1AvgatlKx82c8Pm/U
+ AJBggSmILogBRlYY5dtsk3xMPeSgRM9/awyWm6vvryB6r9F2VxNA9UJjXPzdT0v0UZJM
+ c/pxo7r+RL+NRM0pByyTr6HemorpE0nNV2xf19RFPcG/lYM0vDYLzg/abw03ffYHcTDt
+ oEmg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUMFYpAonk4fN9SKI7VWCAPp3N8BQavIosvEuOpK801piVcp+a1gQtpvY+8qqNfzYTiip4zD1tv0XNk@nongnu.org
+X-Gm-Message-State: AOJu0YwbNroyysOqz7AUAdEGdqxZVnu7Pe8tp/JNBpfO2MHj9hOCcmw6
+ +FZuaPBHZGZrI+pfve9AE1y72mXG/pdbjgXShyqo4j5HFW4glhdxPB49Q1ZgWTktVUhnmuNtiiO
+ Vk32QNBbUd2PXcKOw1W7s9DsuTaNz0AQO7AL1+qQLbhXW1oYKiIqx9MZH
+X-Gm-Gg: ASbGncsy2SKNXnGWXarbb1nX13ERjWmA7gwb7gRoDbS+7YXKY/Ww81nMK8fej7XP+Av
+ YodiLn9hHEWUXqdOcfmwOaB+xbT5AdiPKmA8wOSr6zq/Ks0TGT4HgyHn4DMWXyf8NUYETQiDAnQ
+ Cfr2a+1urWHlFY5n6+jAC9nFKCKf4PXW7yVn32eO5GQdWX+dmVvBwDtGqeEG59c2A/3t+xKMgz4
+ gWRCqzXjZ6DdoCnVllmCQL7aDLJVU8iEaw5x+OhXjgpFqL4jfj6U9w91grEi82NszNdj5ljNtXR
+ Lm3E/NHN+h8BYyEn31aGqQ/Zvw==
+X-Received: by 2002:a05:6e02:b48:b0:3dc:7c9e:c3d6 with SMTP id
+ e9e14a558f8ab-3ddcfd32d99mr43155705ab.5.1749571249261; 
+ Tue, 10 Jun 2025 09:00:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEA7RGe+25nJWCQsKDje7z2DCuw4/cUv4FPKY3ATl+CaD9HVcSp5+YZhP17uzT+1APqn+QhgQ==
+X-Received: by 2002:a05:6e02:b48:b0:3dc:7c9e:c3d6 with SMTP id
+ e9e14a558f8ab-3ddcfd32d99mr43155245ab.5.1749571248051; 
+ Tue, 10 Jun 2025 09:00:48 -0700 (PDT)
+Received: from redhat.com ([38.15.36.11]) by smtp.gmail.com with ESMTPSA id
+ 8926c6da1cb9f-500df3f606asm2397415173.24.2025.06.10.09.00.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Jun 2025 09:00:47 -0700 (PDT)
+Date: Tue, 10 Jun 2025 10:00:46 -0600
+From: Alex Williamson <alex.williamson@redhat.com>
+To: Shaoqin Huang <shahuang@redhat.com>
+Cc: =?UTF-8?B?Q8OpZHJpYw==?= Le Goater <clg@redhat.com>, "Daniel P.
+ =?UTF-8?B?QmVycmFuZ8Op?=" <berrange@redhat.com>, qemu-arm@nongnu.org, Eric
+ Auger <eauger@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, Gerd
+ Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] ramfb: Add property to control if load the romfile
+Message-ID: <20250610100046.3577ee29.alex.williamson@redhat.com>
+In-Reply-To: <c2e0ece0-1ee1-4867-b01c-20e847ef6af3@redhat.com>
+References: <20250606070234.2063451-1-shahuang@redhat.com>
+ <aEKeNSc8mAZ8vhGj@redhat.com>
+ <cf34f5b2-d422-453f-85d4-15938ae59e9f@redhat.com>
+ <c373ee81-d094-4b40-93c9-5ece6e24e520@redhat.com>
+ <c2e0ece0-1ee1-4867-b01c-20e847ef6af3@redhat.com>
+Organization: Red Hat
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <4d03fe23-86a1-4030-b5fc-8de8be461770@linaro.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=alex.williamson@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -90,48 +114,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 10, 2025 at 05:00:43PM +0200, Philippe Mathieu-Daudé wrote:
-> On 10/6/25 14:56, Daniel P. Berrangé wrote:
-> > On Tue, Jun 10, 2025 at 02:49:02PM +0200, Philippe Mathieu-Daudé wrote:
-> > > On 10/6/25 14:36, Daniel P. Berrangé wrote:
-> > > > This series is an extension of Stefan's proposal:
-> > > > 
-> > > >     https://lists.nongnu.org/archive/html/qemu-devel/2025-06/msg00736.html
-> > > > 
-> > > > It used '-Wframe-larger-than=4096' to identify all code locations
-> > > > with more than 4k on the stack. Any locations in the I/O paths
-> > > > were chosen to avoid automatic zero-init, to eliminate the performance
-> > > > overhead of the automatic initialization.
-> > > 
-> > > Should we eventually add it to our default CFLAGS?
-> > 
-> > You mean as a way to impose a hard limit on stack frame size ?
-> 
-> Yes, we could use -Wframe-larger-than=50000 for this release, then
-> aim to reduce by 5/10k every release until some reasonable limit...
+On Mon, 9 Jun 2025 13:16:14 +0800
+Shaoqin Huang <shahuang@redhat.com> wrote:
 
-I guess the key thing is to define approximately what our target
-should be ?
+> On 6/6/25 4:07 PM, C=C3=A9dric Le Goater wrote:
+> > On 6/6/25 10:06, C=C3=A9dric Le Goater wrote: =20
+> >> On 6/6/25 09:52, Daniel P. Berrang=C3=A9 wrote: =20
+> >>> On Fri, Jun 06, 2025 at 03:02:34AM -0400, Shaoqin Huang wrote: =20
+> >>>> Now the ramfb will load the vgabios-ramfb.bin unconditionally, but o=
+nly
+> >>>> the x86 need the vgabios-ramfb.bin, this can cause that when use the
+> >>>> release package on arm64 it can't find the vgabios-ramfb.bin.
+> >>>>
+> >>>> Because only seabios will use the vgabios-ramfb.bin, load the rom lo=
+gic
+> >>>> is x86-specific. For other !x86 platforms, the edk2 ships an EFI dri=
+ver
+> >>>> for ramfb, so they don't need to load the romfile.
+> >>>>
+> >>>> So add a new property use_legacy_x86_rom in both ramfb and vfio_pci
+> >>>> device, because the vfio display also use the ramfb_setup() to load
+> >>>> the vgabios-ramfb.bin file.
+> >>>>
+> >>>> After have this property, the machine type can set the compatibility=
+ to
+> >>>> not load the vgabios-ramfb.bin if the arch doesn't need it. =20
+> >>>
+> >>> Can you make this a series, with an additional patch that updates the
+> >>> current in-dev machine types to use this new property, so we're clear
+> >>> about the proposed usage. =20
+> >>
+> >> yes. And please change the vfio-pci property name to use underscores. =
+=20
+> >=20
+> > Sorry, to *not* use underscores : use-legacy-x86-rom =20
+>=20
+> Thanks for pointing out it. Will fix it.
 
-There are some large stack frames in QEMU device I/O paths that are
-not unreasonable to have, because they avoid need to malloc in the
-I/O path. A greater many devices have 4/8k buffers for copying
-data around, and some bigger ones are fairly valid to have too.
+It's also not evident from the property that this is restricted to
+ramfb behavior.  Should the option on the vfio-pci device be prefixed
+with ramfb?  Thanks,
 
-On the flip side there's still way too much use of PATH_MAX that
-is gratuitous and should be removed, but its hard to enforce the
-latter without negatively impacting the former.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Alex
 
 
