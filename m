@@ -4,90 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADA5EC71130
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7AB73C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP29k-0008D4-Ct; Tue, 10 Jun 2025 12:49:02 -0400
+	id 1uP29G-0006jO-4q; Tue, 10 Jun 2025 12:48:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uP0T3-0006UX-F2
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:00:49 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uP0T1-0000p5-J1
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:00:49 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a54836cb7fso1583328f8f.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 08:00:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749567645; x=1750172445; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=etkACMaH6okwnINcTnrxnSS/kK+PzIFfBrEYmbMGJdw=;
- b=Af0ikxGPDPqE9AZayJbdNuVB/W7ygDlAw6GvfkAlpAkd0eHdrOepH9+GtIcDezqv7z
- QEL+q1SryysNREpvc9vsTAy+2BdMnv9KqDh0y8WuTATYL6ptDmhqBztPZro04jO7qO7C
- 83puBaCgm4pHB3LCyg9RVFtBjFPJlJLSOgTsLUzDwBXVydbMZLFT4myOi6U0XebQh8td
- g0RAtoP7ofwLvnjflcTpzbO1QJibdZeozPB8fZU38ZoG9A+5sT9gE0F76REI2UGbcJZv
- J6AVnqrWOVd4547kpw5KPetfKGXOqrpm1pn/nB/9NBl70DPSsJOOaosTlby2vamJ9VEP
- 5lCg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749567645; x=1750172445;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=etkACMaH6okwnINcTnrxnSS/kK+PzIFfBrEYmbMGJdw=;
- b=SyR7FO3Lw1tQM6dID0TPbiHcmMTkD1IMROjuq0ya6A6YtSxq8y2JmxJsolcUdkuKUF
- 7r109F6okIsy5DtZpQf52DBNKmeOE/k9IBsI/lMyjaDYDAtyU5+BI7gx19K9+nlKxK8U
- A1OWOJKpaY32OiqTFrpDlrISxGJT87QR9YtgpJgdgHseGtT5qTSV74r1Xk6MhWlIzi0x
- g4MCdi3KX/LZu19EzcmoRRN6mqN4VZY3hcE4FCpWeef0ykmq+fnKuut6zfCsbj81cSL7
- 4toorpEEwDjKydsMXMdWWxE1MCJkqZK5IXBA1xMYvqzh4H55i2Wlb3V06VWDQ10neJOh
- J6KA==
-X-Gm-Message-State: AOJu0YxTYfKD+AP213v2+DY0OgaYhR/q+auOyOtXvSWutfo4IL2FsW5N
- jT0mwhlBVVJZcS3Q42qZTIxIw2aGgKnWzLWH1ELGtcJFs7NtZdvodwNvWi6jC+/HdWo=
-X-Gm-Gg: ASbGncvw9nydI3VGt7wBX8V+l3pUlYmJoPYCvdwNqDpXgj7fO21f8Oq/VHn0HdjGz+M
- pvSzcB5qpUiqhd+MJifOOWp/dzbtfUyvkGzP56Cx2117qQUa48VSTfck5QeMYNQgR2n0F/N21Yl
- Ju6n7HHuwYjOQH0LYjte2SzNlzpZhmCwaDdx22Iflp2289h2OX7NtJTF2NMfMJ18AWNcIIMHA+7
- 4fzc6J4kxWIQusUfibagn1Rg5dA5/wHR2jnanp4jblWFV638n5/XZbGPuZu5mZaDMVOU6yvYmMb
- 8lPrlT1W2MR28zzf4EIgsodKovHFwEo3hj+e1/dCdm+UHYKG7y4h8mgfLV7Lrm19fqoPNDmqs27
- nFiL+DJ9EvoSSdLPBx1az3xx1NbNoamhRaFT9j6rS
-X-Google-Smtp-Source: AGHT+IEH6pMoIfv5xpLrMPTt3Sgm1EM3PuT8uCmTvSReuZtz6usq25kRVq7GMQU8Jw3q7SSnSm0KmA==
-X-Received: by 2002:a5d:5f8f:0:b0:3a3:7bad:29cb with SMTP id
- ffacd0b85a97d-3a531cba7afmr13643772f8f.52.1749567644965; 
- Tue, 10 Jun 2025 08:00:44 -0700 (PDT)
-Received: from [192.168.69.138] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-452730b9b33sm140470095e9.26.2025.06.10.08.00.43
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 08:00:44 -0700 (PDT)
-Message-ID: <4d03fe23-86a1-4030-b5fc-8de8be461770@linaro.org>
-Date: Tue, 10 Jun 2025 17:00:43 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uP20y-0000kM-VX
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:39:59 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uP20X-0005rM-Ao
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:39:33 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bGvXG4n38z6L5FT;
+ Wed, 11 Jun 2025 00:34:54 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 556DF140427;
+ Wed, 11 Jun 2025 00:39:10 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Tue, 10 Jun
+ 2025 18:39:09 +0200
+Date: Tue, 10 Jun 2025 17:39:05 +0100
+To: Jonathan Cameron via <qemu-devel@nongnu.org>, <linuxarm@huawei.com>
+CC: Jonathan Cameron <Jonathan.Cameron@huawei.com>, Klaus Jensen
+ <k.jensen@samsung.com>, <cminyard@mvista.com>, Fan Ni <fan.ni@samsung.com>,
+ Anisa Su <anisa.su@samsung.com>, <linux-cxl@vger.kernel.org>,
+ <mst@redhat.com>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>
+Subject: Re: [RFC PATCH qemu 3/5] hw/cxl/i2c_mctp_cxl: Initial device emulation
+Message-ID: <20250610170104.00001392@huawei.com>
+In-Reply-To: <20250609163334.922346-4-Jonathan.Cameron@huawei.com>
+References: <20250609163334.922346-1-Jonathan.Cameron@huawei.com>
+ <20250609163334.922346-4-Jonathan.Cameron@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/31] Skip automatic zero-init of large arrays / structs
- in I/O paths
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
-References: <20250610123709.835102-1-berrange@redhat.com>
- <50405e77-e665-4772-9715-3901730d00fd@linaro.org>
- <aEgri00LXfeRQRJ2@redhat.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <aEgri00LXfeRQRJ2@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,37 +72,88 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/6/25 14:56, Daniel P. Berrangé wrote:
-> On Tue, Jun 10, 2025 at 02:49:02PM +0200, Philippe Mathieu-Daudé wrote:
->> On 10/6/25 14:36, Daniel P. Berrangé wrote:
->>> This series is an extension of Stefan's proposal:
->>>
->>>     https://lists.nongnu.org/archive/html/qemu-devel/2025-06/msg00736.html
->>>
->>> It used '-Wframe-larger-than=4096' to identify all code locations
->>> with more than 4k on the stack. Any locations in the I/O paths
->>> were chosen to avoid automatic zero-init, to eliminate the performance
->>> overhead of the automatic initialization.
->>
->> Should we eventually add it to our default CFLAGS?
-> 
-> You mean as a way to impose a hard limit on stack frame size ?
+On Mon, 9 Jun 2025 17:33:31 +0100
+Jonathan Cameron via <qemu-devel@nongnu.org> wrote:
 
-Yes, we could use -Wframe-larger-than=50000 for this release, then
-aim to reduce by 5/10k every release until some reasonable limit...
-
-> FWIW, the VNC server is biggest at 100kb, but we have a large
-> number of other big frames - here's a sorted list of frame
-> sizes vs frequency
+> The CCI and Fabric Manager APIs are used to configure CXL switches and
+> devices. DMTF has defined an MCTP binding specification to carry these
+> messages. The end goal of this work is to hook this up to emulated CXL
+> switches and devices to  allow control of the configuration.
 > 
->        1 103696
->        2 69664
->       46 49184
->        4 42608
->       23 32880
->       23 32864
+> Since this relies on i2c target mode, this can currently only be used with
+> an SoC that includes the Aspeed I2C controller.
+> 
+> Note, only get timestamp added for now.
+> 
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+
+Not very important given this is an RFC, but a chunk of code in here isn't
+used so I'll drop it from future version...
+(I noticed whilst wondering why Anisa didn't update it in they
+ FMAPI DCD series).
+
+> ---
+>  include/hw/cxl/cxl_device.h               |   8 +
+>  include/hw/pci-bridge/cxl_upstream_port.h |   1 +
+>  hw/cxl/cxl-mailbox-utils.c                |  49 ++++
+>  hw/cxl/i2c_mctp_cxl.c                     | 289 ++++++++++++++++++++++
+>  hw/cxl/Kconfig                            |   4 +
+>  hw/cxl/meson.build                        |   4 +
+>  6 files changed, 355 insertions(+)
+> 
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 6086d4c85b..8d87c7151e 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -360,6 +360,10 @@ int cxl_process_cci_message(CXLCCI *cci, uint8_t set, uint8_t cmd,
+>                              size_t len_in, uint8_t *pl_in,
+>                              size_t *len_out, uint8_t *pl_out,
+>                              bool *bg_started);
+> +
+> +void cxl_initialize_t3_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+> +                               size_t payload_max);
+> +
+
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 475547f212..4c9852642e 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -3690,6 +3690,29 @@ void cxl_initialize_mailbox_t3(CXLCCI *cci, DeviceState *d, size_t payload_max)
+>      cxl_init_cci(cci, payload_max);
+>  }
+>  
+> +static const struct cxl_cmd cxl_cmd_set_t3_mctp[256][256] = {
+> +    [INFOSTAT][IS_IDENTIFY] = { "IDENTIFY", cmd_infostat_identify, 0, 0 },
+> +    [INFOSTAT][GET_RESPONSE_MSG_LIMIT] = { "GET_RESPONSE_MSG_LIMIT",
+> +                                           cmd_get_response_msg_limit, 0, 0 },
+> +    [INFOSTAT][SET_RESPONSE_MSG_LIMIT] = { "SET_RESPONSE_MSG_LIMIT",
+> +                                           cmd_set_response_msg_limit, 1, 0 },
+> +    [TIMESTAMP][GET] = { "TIMESTAMP_GET", cmd_timestamp_get, 0, 0 },
+> +    [LOGS][GET_SUPPORTED] = { "LOGS_GET_SUPPORTED", cmd_logs_get_supported, 0,
+> +                              0 },
+> +    [LOGS][GET_LOG] = { "LOGS_GET_LOG", cmd_logs_get_log, 0x18, 0 },
+> +    [TUNNEL][MANAGEMENT_COMMAND] = { "TUNNEL_MANAGEMENT_COMMAND",
+> +                                     cmd_tunnel_management_cmd, ~0, 0 },
+> +};
+> +
+> +void cxl_initialize_t3_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+> +                               size_t payload_max)
+> +{
+> +    cxl_copy_cci_commands(cci, cxl_cmd_set_t3_mctp);
+> +    cci->d = d;
+> +    cci->intf = intf;
+> +    cxl_init_cci(cci, payload_max);
+> +}
+> +
+At some point a while back, when adding tunneling we decided to pretend
+we have an MLD (because it's more general) and as such introduced the fm owned
+mctpcci.  That's the one one that is used for the landing point of mctp
+links to a type 3 device.  So this code is unused.
+
 
 
