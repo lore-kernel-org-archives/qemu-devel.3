@@ -4,113 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C71F6C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:25:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F2AC677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2iw-0000uN-NL; Tue, 10 Jun 2025 13:25:22 -0400
+	id 1uP2kU-0001ov-Bz; Tue, 10 Jun 2025 13:26:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uP2iu-0000u3-SE
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:25:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP2kQ-0001nM-H6
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:26:54 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uP2in-0002VJ-Ur
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:25:20 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AB2Ldk021238;
- Tue, 10 Jun 2025 17:25:12 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=qtKRYMrYcoGV62lrdiVvD2KIlNhwz8
- pIChqIqay/mJ8=; b=a4TumfqcM6eCz0qUQ12ZxpMW/BLBuSiHhdnNDzl7bqRzep
- bwe84QclWtXebZ4yisz7aRiUy8ujyScHcU6Da5oaVMZpLi6THuk2JNkjIuO6BEo/
- zYAkIuhv2xSDjqwKyFwOKr8PZKpu1LWuhtwU/dakQgc1NwK8n9ea1RYH4p9uCbct
- t7Rhnf10ybO/iYSUdLM018mDBn34f8lETFjjfSn12mZSOzCfhl18bEvLjfla0z7e
- xiBEkoiG7e1BoVa40Pk0u2BdYyqJBthrHVKlt0s8iItORtB9KZsZ7L+bwtlGsyEX
- Xs44CDHTIJberEK70YbqBjY70VcANMaR31HQsK4Q==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474x4m4xjs-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Jun 2025 17:25:11 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55AE1dCm027928;
- Tue, 10 Jun 2025 17:25:11 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47518mbfdm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Jun 2025 17:25:11 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55AHPAWY27460248
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 17:25:10 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 871FD58058;
- Tue, 10 Jun 2025 17:25:10 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3B0B058061;
- Tue, 10 Jun 2025 17:25:10 +0000 (GMT)
-Received: from [9.61.254.209] (unknown [9.61.254.209])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Jun 2025 17:25:10 +0000 (GMT)
-Content-Type: multipart/alternative;
- boundary="------------YvdFGZkgW075Kr3wd6izVZx0"
-Message-ID: <06cf8296-a20f-4e53-a8d2-6c4430ce4d4e@linux.ibm.com>
-Date: Tue, 10 Jun 2025 12:25:09 -0500
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] migration: Setup pre-listened cpr.sock to remove
- race-condition.
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, jjherne@linux.ibm.com, steven.sistare@oracle.com,
- farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
-References: <20250610150849.326194-1-jhkim@linux.ibm.com>
- <aEhXMCuztHlUEhqb@x1.local>
-Content-Language: en-US
-From: JAEHOON KIM <jhkim@linux.ibm.com>
-In-Reply-To: <aEhXMCuztHlUEhqb@x1.local>
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Y4X4sgeN c=1 sm=1 tr=0 ts=68486a78 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=6IFa9wvqVegA:10 a=r77TgQKjGQsHNAKrUKIA:9 a=VnNF1IyMAAAA:8
- a=yDl1ueJn3xGpUa3d9hEA:9 a=QEXdDO2ut3YA:10
- a=UCWIu4ZectcTot8mGPwA:9 a=33orzeVKE-T94gIA:21 a=_W_S_7VecoQA:10
- a=lqcHg5cX4UMA:10
-X-Proofpoint-GUID: Bdm5tRnBqoORfy-U1DUdWE94wc30DQrT
-X-Proofpoint-ORIG-GUID: Bdm5tRnBqoORfy-U1DUdWE94wc30DQrT
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDE0MCBTYWx0ZWRfX1f9woLS/Kgs+
- dMaeMcHfPITZMpqn7DNGPiOAsl1/8Bw9ReaFfmEuBtKXP8OvL54QUlJA+P7DWAIYGaQpN1PwCkm
- yC4E7PJO7KZASI79RlOVD42N6cjsMC7MW9YO1Nc6n02Bgg3vir2cn9LfIP/5o+hznHF0Gre63gI
- 98SpOtYTL2s16bMhL45bVwmdGqvpxpjuEYjAfkPDtrziSrTZRWk8IiCqqgfqZdaPmv3ZLYoopeR
- MawFdmMRcxv/bJb64RmuQ9qktshL0gFz6HPmPLm2zS9cqE4MC8QqD6ABoba/aLkoCfWlMzc3KZ6
- N8Dk/WGxwbFCcmP/uNGoqBMh8awjLBugyTV3f6c+zuSOjMBgYRedn1zURSKxLbD5ET+Q+oZv50G
- SOBG8LxI3ovz+FegW2seoUzif61KncDOoibGt4hia4fk8+RLGUVAfH0lm9YOUFjcH2WsQyEy
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP2kO-0002rl-F6
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:26:54 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AGN7A0019454;
+ Tue, 10 Jun 2025 17:26:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:message-id:subject:to; s=corp-2025-04-25; bh=qizwWASt
+ wZpnK+4Sqf4tNXNQjISpsZo+DmXa7/8Ezho=; b=cBqO6c0SibMY3X/wM7FS9QD/
+ vnuI+wWSzchC0ufvQuqIbRp+DuvLFAywt2mJNBL5dGOslvqD+MFtsRcPRuXWDpPc
+ eM0EqIOKFXRNGCNaidnUan6INS9TKrlRrAvRBhlxMVsoZpl5/FMhQmVGI2821I97
+ 5a+mJCDlvxQXxp/tzD3WUFafefwTO1vjIhW+SffSsgkJQdDEQZuhZdPBX7eT7Odt
+ 9OQN3DPP+3EoHhtm9wXc0s3hFi2JbKe6Zw4oNpklWzp6GiPkg41d3PUYK4CmB3rm
+ 3Iibm9jQN1DF25++xAawcsWcjglFMgvW4v+1nH63+4AXeLJmJGd2cDzCDU/9ng==
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.appoci.oracle.com [138.1.114.2])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c74vsed-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 17:26:46 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55AH8mDY007679; Tue, 10 Jun 2025 17:26:45 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bv8s51n-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 17:26:45 +0000
+Received: from phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AHQiih006021;
+ Tue, 10 Jun 2025 17:26:44 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by phxpaimrmta01.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with
+ ESMTP id 474bv8s517-1; Tue, 10 Jun 2025 17:26:44 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5.1] pci: skip reset during cpr
+Date: Tue, 10 Jun 2025 10:26:43 -0700
+Message-Id: <1749576403-25355-1-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-10_08,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxlogscore=999 spamscore=0
- clxscore=1015 lowpriorityscore=0 malwarescore=0 bulkscore=0 adultscore=0
- impostorscore=0 suspectscore=0 phishscore=0 mlxscore=0 priorityscore=1501
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506100140
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ phishscore=0
+ malwarescore=0 suspectscore=0 spamscore=0 mlxscore=0 bulkscore=0
+ adultscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2506100140
+X-Authority-Analysis: v=2.4 cv=LIpmQIW9 c=1 sm=1 tr=0 ts=68486ad6 cx=c_pps
+ a=XiAAW1AwiKB2Y8Wsi+sD2Q==:117 a=XiAAW1AwiKB2Y8Wsi+sD2Q==:17
+ a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=tDKGrQQYyiCnxYLJR1YA:9
+X-Proofpoint-ORIG-GUID: b7wpkCgxHvikyEEaECaRl7oKmWtzn5wZ
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDE0MSBTYWx0ZWRfX9K2bse3lTIZw
+ i9vtBE5sKtNdpQGiPoGbw8FSho+a9oJJIYAOyFh/aU4wCBYKFyGLIbF0Bg6do3pWJWCCpa14L9H
+ lvuLrs6qVGtDntrTw0krichrINTIFEM1kCUYSnId4+uMRf2O0RKMgbyEbodRnFmYzHKFW+szIxv
+ IKb0FnDwSRixwTrnS1kCKa7X8yCSp5yD9+ldhkfE9pO9IQHHNUPKmeptiaviMatjusLuhSAqgP2
+ vBrezL/Cwvu0Faf7kFc32ATKDsGlYCdsDNWpIVMdOUC4umerK8p0ofsWyHpKuZ17vtAUPF+mgwE
+ AKz2c858HxpYWk2kX87Fo+yZcj3iFmElsZDzpWO3I/G/9zwHeqplBpA+sZ4//yme5XgOv3Y0Fwy
+ WiMQWzFO4uLnm11vt573y6oOtNwJXrHkrEw2wcJ2LeYDTDG5wwVUXwMNTlgn6daYhGIJ1hNT
+X-Proofpoint-GUID: b7wpkCgxHvikyEEaECaRl7oKmWtzn5wZ
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,82 +111,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a multi-part message in MIME format.
---------------YvdFGZkgW075Kr3wd6izVZx0
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Do not reset a vfio-pci device during CPR.
 
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+---
+ hw/pci/pci.c         | 5 +++++
+ hw/vfio/pci.c        | 7 +++++++
+ include/hw/pci/pci.h | 2 ++
+ 3 files changed, 14 insertions(+)
 
-On 6/10/2025 11:02 AM, Peter Xu wrote:
-> On Tue, Jun 10, 2025 at 10:08:49AM -0500, Jaehoon Kim wrote:
->> When the source VM attempts to connect to the destination VM's Unix
->> domain socket (cpr.sock) during a cpr-transfer test, race conditions can
->> occur if the socket file isn't ready. This can lead to connection
->> failures when running tests.
->>
->> This patch creates and listens on the socket in advance, and passes the
->> pre-listened FD directly. This avoids timing issues and improves the
->> reliability of CPR tests.
->>
->> Reviewed-by: Jason J. Herne<jjherne@linux.ibm.com>
->> Signed-off-by: Jaehoon Kim<jhkim@linux.ibm.com>
-> One quick comment while we can wait for others to look at the details: when
-> it involves both qemu and tests changes, please consider splitting that
-> into two patches. The test patch can be prefixed with "tests/migration:".
->
-> Thanks,
-
-Thank you for your suggestion. I'll split the patch into two separate 
-patches and submit an updated v3 version
-
-- Jaehoon Kim
-
---------------YvdFGZkgW075Kr3wd6izVZx0
-Content-Type: text/html; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  </head>
-  <body>
-    <p><br>
-    </p>
-    <div class="moz-cite-prefix">On 6/10/2025 11:02 AM, Peter Xu wrote:<br>
-    </div>
-    <blockquote type="cite" cite="mid:aEhXMCuztHlUEhqb@x1.local">
-      <pre wrap="" class="moz-quote-pre">On Tue, Jun 10, 2025 at 10:08:49AM -0500, Jaehoon Kim wrote:
-</pre>
-      <blockquote type="cite">
-        <pre wrap="" class="moz-quote-pre">When the source VM attempts to connect to the destination VM's Unix
-domain socket (cpr.sock) during a cpr-transfer test, race conditions can
-occur if the socket file isn't ready. This can lead to connection
-failures when running tests.
-
-This patch creates and listens on the socket in advance, and passes the
-pre-listened FD directly. This avoids timing issues and improves the
-reliability of CPR tests.
-
-Reviewed-by: Jason J. Herne <a class="moz-txt-link-rfc2396E" href="mailto:jjherne@linux.ibm.com">&lt;jjherne@linux.ibm.com&gt;</a>
-Signed-off-by: Jaehoon Kim <a class="moz-txt-link-rfc2396E" href="mailto:jhkim@linux.ibm.com">&lt;jhkim@linux.ibm.com&gt;</a>
-</pre>
-      </blockquote>
-      <pre wrap="" class="moz-quote-pre">
-One quick comment while we can wait for others to look at the details: when
-it involves both qemu and tests changes, please consider splitting that
-into two patches. The test patch can be prefixed with "tests/migration:".
-
-Thanks,
-</pre>
-    </blockquote>
-    <pre><span style="white-space: pre-wrap">Thank you for your suggestion.
-I'll split the patch into two separate patches and submit an updated v3 version</span></pre>
-    <pre><span style="white-space: pre-wrap">- Jaehoon Kim
-</span></pre>
-  </body>
-</html>
-
---------------YvdFGZkgW075Kr3wd6izVZx0--
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 9b4bf48..c70b5ce 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -32,6 +32,7 @@
+ #include "hw/pci/pci_host.h"
+ #include "hw/qdev-properties.h"
+ #include "hw/qdev-properties-system.h"
++#include "migration/cpr.h"
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "net/net.h"
+@@ -537,6 +538,10 @@ static void pci_reset_regions(PCIDevice *dev)
+ 
+ static void pci_do_device_reset(PCIDevice *dev)
+ {
++    if ((dev->cap_present & QEMU_PCI_SKIP_RESET_ON_CPR) && cpr_is_incoming()) {
++        return;
++    }
++
+     pci_device_deassert_intx(dev);
+     assert(dev->irq_state == 0);
+ 
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index b1250d8..4cd92c3 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3408,6 +3408,13 @@ static void vfio_instance_init(Object *obj)
+     /* QEMU_PCI_CAP_EXPRESS initialization does not depend on QEMU command
+      * line, therefore, no need to wait to realize like other devices */
+     pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS;
++
++    /*
++     * A device that is resuming for cpr is already configured, so do not
++     * reset it during qemu_system_reset prior to cpr load, else interrupts
++     * may be lost.
++     */
++    pci_dev->cap_present |= QEMU_PCI_SKIP_RESET_ON_CPR;
+ }
+ 
+ static void vfio_pci_base_dev_class_init(ObjectClass *klass, const void *data)
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 35d59d7..df3cc7b 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -222,6 +222,8 @@ enum {
+     QEMU_PCIE_EXT_TAG = (1 << QEMU_PCIE_EXT_TAG_BITNR),
+ #define QEMU_PCI_CAP_PM_BITNR 14
+     QEMU_PCI_CAP_PM = (1 << QEMU_PCI_CAP_PM_BITNR),
++#define QEMU_PCI_SKIP_RESET_ON_CPR_BITNR 15
++    QEMU_PCI_SKIP_RESET_ON_CPR = (1 << QEMU_PCI_SKIP_RESET_ON_CPR_BITNR),
+ };
+ 
+ typedef struct PCIINTxRoute {
+-- 
+1.8.3.1
 
 
