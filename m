@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DF19C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:39:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B721C677C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 17:40:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2vm-0004J1-6P; Tue, 10 Jun 2025 13:38:38 -0400
+	id 1uP2xB-0004kN-4K; Tue, 10 Jun 2025 13:40:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2ve-0004Hx-4n
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:38:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2wt-0004iR-GP
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:39:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2vb-00068e-7b
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:38:28 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uP2wr-0006TJ-Qm
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 13:39:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749577105;
+ s=mimecast20190719; t=1749577184;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=/kFLgJ4GzBy40LoUUXAHQZQOWbDY5MCxJVFi19hrBCA=;
- b=XOWWJsaT0/+nsltM0yZQFyTO8if+9qY2jFPxpli6RB8EJ0BQC87dIgixF+AMzQn71Q7E67
- 0Jc4hTDLQ0K90dSvxLt5X+RKFLM6W66pXUB4Ob+Wq2GnR8nP7uhgB9yHBjlC7uiM1IPuex
- jAJ+znzvVXdHPfqa4CpAqNYno3HGbeU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=kEO2MTR/LdhN7FhAaO3KF1kTbCkM0k7nWk0R7DHuKrc=;
+ b=LL7F7RSLovryH7ArmaRQ9j+PUfZAfiFEsbf13rEGpBuR8fqk/Z90hPcFRVU2B72aVO9ooA
+ v6iQH6tnD5u2rlGyJIqW6x9IZowv19r19QjJihIHX8o9idW7QJaFheavj9bOty8zCT8w+O
+ U0oF1PVenstyJlrfzHTGs5SMvlYMVgw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-674-PfzQviUcPQyUMSZ2ik_tKw-1; Tue, 10 Jun 2025 13:38:23 -0400
-X-MC-Unique: PfzQviUcPQyUMSZ2ik_tKw-1
-X-Mimecast-MFC-AGG-ID: PfzQviUcPQyUMSZ2ik_tKw_1749577103
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4e713e05bso2635214f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 10:38:23 -0700 (PDT)
+ us-mta-669-dYKR8Z85MR6wf5XN7l5YQQ-1; Tue, 10 Jun 2025 13:39:43 -0400
+X-MC-Unique: dYKR8Z85MR6wf5XN7l5YQQ-1
+X-Mimecast-MFC-AGG-ID: dYKR8Z85MR6wf5XN7l5YQQ_1749577182
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-453018b4ddeso17330505e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 10:39:42 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749577102; x=1750181902;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/kFLgJ4GzBy40LoUUXAHQZQOWbDY5MCxJVFi19hrBCA=;
- b=IJP1BFhwPCiUwRXI7WbZ/ys7nCRl5ReqQXLCrc4IX+8BB6uTkK4LxerfiLGD/oiszq
- KFbslHMTVM3mRsVluK8CzuUUppPu5t6Hmw5joPwYgRhT4+5/drcyW7ZJMCdrh3/Lub6I
- GPFej3iGwEE/3wQqNzF1TisqgkG64x3tjQFGy3rSagQlar/OL163V0KOmxvUrg5EtSGx
- /VyvtgqPu2SmH7ItVMgfOuA0f9+l75pBen8Vc5l/23G3p3cfBcX+GRMz+coEJcY6sFUo
- rJoJVnkcrT5TlstgE1cpQkCS3+feUKvf7dI3BNNk0CnrqOcPoRGhS4FO+c1vCpMFomXb
- g8/g==
+ d=1e100.net; s=20230601; t=1749577182; x=1750181982;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=kEO2MTR/LdhN7FhAaO3KF1kTbCkM0k7nWk0R7DHuKrc=;
+ b=CXew/MH3MH/vUhl18NxLKJe+VmlFgxH2swijLQGa1KQ/a5kbRKX4XOkxfOVOYvITya
+ 8O8TB0Q542oT7q4oGPxsKwZ2h14gbPVbPQtbKvzDL89h+eEnJ1OApl/NsbnmfLAgjLvM
+ oE1/UTaS5j6jEsEsecaJZq1UqB80OP2h8oOAEg8TDNYQVoelaWA06+hGbtuLAiFLMIXu
+ diEiWA3MQWxCqPWYC+XeLWf4Wp4j9qRpn/aXrnPfIgl6jSjIwQPcawC8jgz8Ie+PiEI+
+ yQE6i5PpShdtfaaZ5wDFcclUS/Ep3nwHfVwESS7wxoh42rS34lIIcJgN+N1xsYGjdVZW
+ o9Ow==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV3Je/6HdtQmvhljBLN4pUHFMYj1hepnBk+Ao2eKinP1NWWiacyEOrJwNp2Bof0UYtjv9k8fRhrBKN8@nongnu.org
-X-Gm-Message-State: AOJu0Yyl01cx5cr42QQGdxtIAF9GD03apNGJn+7nGBNkQjTxcv4s16Qi
- mNcctyVHqKc9qMHEvoMllg+K1jlfqXbIFAKXxaoxHpsSdoGdzC44xucf8aouI4ahgVSZmUb2Aq7
- dtqpKXqhVDCuZTgfOF0Snj3OwQI5bWz6G2JSvSxce0yW9M5/TdRaMAjevi0GHKmmw
-X-Gm-Gg: ASbGnctUU9i1nWY4fSzOVdHKY/iVkyDddWvbFGJVRdAJdEauBLJUg7e83Bh3Ofh8IE0
- HiZSuvzQP+OMYW6UG1W8zkQ/sHP/++CwlONlr75Ragr+LIoPM/lMipNvkbztVUsZHNidoq4mD04
- EuHWLArjewEzG7+BU++udQLy/ChFKlwQ0eQlVXFHeWlCVMhtyHCnAQCz0F3NUXzZH5WxEUlVsYk
- K1tZW450ojk4vcmYfK1FgXWTnIxh88yRFnwuvrQoGOUWg9Yf5eTkyHiwNgfDf058Ew36I0zBEf0
- nxX3hsBmKCqmI63A83UjMSYQdlDfrcUs4kz89yG4kGdvpEHECGG/XVeWck8F
-X-Received: by 2002:a05:6000:4028:b0:3a4:f72a:b19d with SMTP id
- ffacd0b85a97d-3a5316844a0mr12649272f8f.8.1749577102246; 
- Tue, 10 Jun 2025 10:38:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH11jdK0IgK3Gl3uxGBfzc7mLOA9Y4vbddjFOuh04gQBFLcSEj8HcRD9HwaKKxJ+fnL+WQTFA==
-X-Received: by 2002:a05:6000:4028:b0:3a4:f72a:b19d with SMTP id
- ffacd0b85a97d-3a5316844a0mr12649257f8f.8.1749577101912; 
- Tue, 10 Jun 2025 10:38:21 -0700 (PDT)
+ AJvYcCVndWxCcE+1+9vYX426EUjBu8ut5qHzsAdBRmXxJfrSCMOkWr8+eZY3kxiffyp+FdAMhg8ZD+s6josT@nongnu.org
+X-Gm-Message-State: AOJu0YxyZJxbWHXzF27mrPmMMOWEXADG33KAZbh8dD8l7nYGkWfyAD9q
+ qfM+BSwbg1wYzHhznzHUyd72luwZ8Z4eSYOdgzWqJogmhDaIvMoRhHYwmyqDEJxL1I9QYoMOInV
+ HZU4UIBpNJ23gyEGEq47ml/sjM5CROAHNxwzcimKJee6UoczSJKuzfO3b
+X-Gm-Gg: ASbGncumv+m2eH7LmOAD6feud0z0D3gYkf4hvyENQ3vdwvMvVQcy052Ozixcy/V7DYV
+ YtIoK0+VR80ZGyiGL7if1B4ULQot1VQ6wu8RuC5cy5dIDzc3474Z0cCfCapgg97FFMMvXDEivSW
+ fQj0p5GjrHL8OfyEwvX1P/y28gCkb0df1eua99btn0Y7m2lgTAlKJzklkgeT3ilCKZQ2zRVKlbW
+ b86YLH5tyiFSn9G9Jo4oxsi7aY4vhsCUjP7lwddOTJ+pHlHfQxwOPnRWMrTk6vJknviOozJCl6N
+ oEG2yBuK28eOEeHE6/uY7AVC1D7crj6AnlrxJDmg/L5eAANbwYWNmLX9Hw7W
+X-Received: by 2002:a05:600c:8b6e:b0:43b:ca39:6c75 with SMTP id
+ 5b1f17b1804b1-452014507d1mr213434905e9.16.1749577181787; 
+ Tue, 10 Jun 2025 10:39:41 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH/b6OXFqdOnkj8PReLfB5ksIVC6OC6bSFaVfOD+uGb+HjGyyjH8iyIpM4awAcxgSIebFcfoQ==
+X-Received: by 2002:a05:600c:8b6e:b0:43b:ca39:6c75 with SMTP id
+ 5b1f17b1804b1-452014507d1mr213434745e9.16.1749577181432; 
+ Tue, 10 Jun 2025 10:39:41 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453245c582bsm490325e9.4.2025.06.10.10.38.21
+ 5b1f17b1804b1-45203e6e424sm147510095e9.0.2025.06.10.10.39.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 10:38:21 -0700 (PDT)
-Message-ID: <3e467dec-7b16-46d8-b4ae-b3c9533d75d6@redhat.com>
-Date: Tue, 10 Jun 2025 19:38:20 +0200
+ Tue, 10 Jun 2025 10:39:40 -0700 (PDT)
+Message-ID: <effe22b4-c6e4-41c2-b3e2-d03160560f86@redhat.com>
+Date: Tue, 10 Jun 2025 19:39:39 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/23] vfio: export PCI helpers needed for vfio-user
-To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250607001056.335310-1-john.levon@nutanix.com>
- <20250607001056.335310-2-john.levon@nutanix.com>
-Content-Language: en-US, fr
+Subject: Re: [PATCH V5 00/38] Live update: vfio and iommufd
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
+ <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+ <0330df5e-8a9d-4fdf-bee8-a864eedac24d@redhat.com>
+Content-Language: en-US, fr
 Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
@@ -132,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250607001056.335310-2-john.levon@nutanix.com>
+In-Reply-To: <0330df5e-8a9d-4fdf-bee8-a864eedac24d@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -160,19 +160,12 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/7/25 02:10, John Levon wrote:
-> The vfio-user code will need to re-use various parts of the vfio PCI
-> code. Export them in hw/vfio/pci.h, and rename them to the vfio_pci_*
-> namespace.
+> Steve,
 > 
-> Signed-off-by: John Levon <john.levon@nutanix.com>
-> ---
->   hw/vfio/pci.h        | 11 ++++++++++
->   hw/vfio/pci.c        | 48 ++++++++++++++++++++++----------------------
->   hw/vfio/trace-events |  6 +++---
->   3 files changed, 38 insertions(+), 27 deletions(-)
+> For the next vfio PR, I plan to take patches 1-17 when patch 10 is
+> updated. The rest is for later in this cycle
 
-Applied to vfio-next.
+Applied 1-17 to vfio-next. Waiting for an Ack from Michael.
 
 Thanks,
 
