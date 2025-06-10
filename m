@@ -4,90 +4,211 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C43BC61DB2
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 362F6C5B552
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 10:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOw89-0008ID-NV; Tue, 10 Jun 2025 06:22:57 -0400
+	id 1uOw7d-0008Fq-SO; Tue, 10 Jun 2025 06:22:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uOw88-0008Hx-Nc
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:22:56 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uOw86-0006PZ-4v
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:22:56 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-450cb2ddd46so31808925e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 03:22:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749550970; x=1750155770; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
- :reply-to; bh=7lslP2hFur8NQXFSzATNMpM+eyqV7pzgPRYWwkQKhic=;
- b=CAnkuyAM6rbohCNA9A2Xc3WhscHQFiQPF0wRcvF0Fy8dcKWyk/lv/kIP89yElTQSJj
- 257+yk2fzRPy9WiYrJhdqxyX83s3RxGais1OjeX+nLAMDAyKrHGIzm0KyLKs4FYZFTgH
- 3XrA//EvKkoZXoLwPDJHZs7pLIkywRedxvEGRU3QkVpcUDfXGd0TOTl4Mt8MpZE6bbaD
- qkeJCbKdWRRyebczSTErVoZQx2BLxFuE2ihvxcYTd6SJCQtinIhwMkw5A2xhO01eCI9t
- wXZj5fOK6hAXlZuVL/SCsRuB2TH8bYEhQ5lCTGFJvFJ6TGPcaYl8gUBJ/LSmh2EUTprt
- omoQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749550970; x=1750155770;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=7lslP2hFur8NQXFSzATNMpM+eyqV7pzgPRYWwkQKhic=;
- b=ZcT/Uss7dlwbBtszMsdUkdyoVT1qejmiZk0FxLZocJsGJb+rveJms6A9NLby0ljClR
- wiNkiPkzsLu8xQcPqZDLdbxUR9hKcZzW2PUNM+z5zU5Bgndq2gn/f8XmFpOv1fYdu0jp
- wDK9tb9mHh9Sat8UBH7grFjy4TJEO04OUxkfPPYj7OoJtToOrzNqgg3Zf24D5TeVN9/3
- xoNa7pekh7kJNRS0esyFKR1pfVTIz/x4HzP4xyYAfa6G3llB7ghzH/gY0hHnPCxAKTi9
- sr8k/mzm4iKAwvVo8Eq746aZzFjoLr1qV2TmOT+jkzMBUx/TnDoSlC8LH3aRQZtEocgK
- tvMA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX7pa0lugl/bMrXgw7SYiXj9sacE8Dge25vY8JE444bLAMsK8gR9Bnsb6KcUBOuZqAYK3F7KcYo5xM2@nongnu.org
-X-Gm-Message-State: AOJu0Yy/wlORw0EM5AInSAlutBeVqJpo+1vzgYaSJNlr98a+YpgTJcwq
- XUaYc9in6uJw8JGlj69fUD8f7vJus/GYVRNN49jDxOMuEPMlza3Qv91QJbKELw==
-X-Gm-Gg: ASbGncsdVmNdJCqID8hUkiBw/kurnEemdLIH6CRgCaigh8eX7YoTwBeXa4e//wwTFXp
- 1+1H/ouqo3iirL0AAJTh/E74NxNWIbG1piS7YCd+W/29iN4eG1hLlO1eZmqfXBrD9wgYURo59QG
- NW2/DoCJUAqrPrgtMKtEecorjE5eaXVZXmlgR33ntVSwLQySlLNDLgCP88p/G61prKrIcf9uO/U
- Ye7//LyIDOMp8zIuWGiV64Cfo3JdXU+lJgmfaP+eseb/tKjWccBEDinkCJQ8NmCN1+oCFSqZ2v1
- TMn7hYd9mR2Jtus1zRW0VfMnbXgJMRk0I3E1rHTU5St+yUAs+jh1FRIz
-X-Google-Smtp-Source: AGHT+IGKWY2tPpaLCP5QceZnf7fzrMquWPtxjBa4Epy4HZCQ3Us7Jam6A4KviorLp2057ZYtYRp/XQ==
-X-Received: by 2002:a05:600c:3493:b0:450:d386:1afb with SMTP id
- 5b1f17b1804b1-4531de060c7mr18662505e9.9.1749550969619; 
- Tue, 10 Jun 2025 03:22:49 -0700 (PDT)
-Received: from [127.0.0.1] ([185.238.219.2]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45209ce17f9sm139311105e9.11.2025.06.10.03.22.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 03:22:49 -0700 (PDT)
-Date: Tue, 10 Jun 2025 10:22:40 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: Controlling time in QEMU
-In-Reply-To: <b3cef05e-8bb5-4390-8b43-914adca3b3b6@linaro.org>
-References: <b3cef05e-8bb5-4390-8b43-914adca3b3b6@linaro.org>
-Message-ID: <8CDF867E-5AB2-43B6-B271-B350E833316E@gmail.com>
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1uOw7c-0008Fc-IC
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:22:24 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1uOw7W-0006Oh-Iz
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:22:24 -0400
+Received: from pps.filterd (m0127842.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55A5Qc7E003503;
+ Tue, 10 Jun 2025 03:22:08 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=CrX4DrcVekdoFt/T4RolEG9EzrX2Zx0Ggi9mzRfxf
+ SM=; b=sGLhSC2lEXFwpVDOT5MfrtaEI5R0DCyWo+fKKPX2YSRaps3s7rzE0FevT
+ BFt0FVbkJdbwun7LLfQfKkMkWJxpjj675hptBu5DtoAD8u8MACaflELtKb0bG7Ks
+ QFQgJYZIqsq8Bt1AdWLQZecUjhiLNgFupNgKwbwByJeLQbDh5r5Vxdy5e0VS95us
+ aUrLJsYQnUf+WzJH1uqlQmZiAVU+3jWLtmNDzCNF5mPWjapMIUIVi7nxoOdJIj78
+ Of+Uo2nfMod4O5j/CbPmOj5Bf3VE7Gg2Sck4b7r2Oc5dBbE03pRXLcrFxHheSjOo
+ cSiLrjTwAuGuDOTbPjPea4/q5Spgg==
+Received: from nam10-bn7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10on2100.outbound.protection.outlook.com [40.107.92.100])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 474sdgdkw2-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Jun 2025 03:22:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=m2gP3BKRer6V1A2/Vj25WABuNGeHYQ+pwav0S4PbK8rDD8PqDR7anWaHq5Yw1+umSX05kHTZ+88nD0vGcwFlTdBkvXftlJQNmtiNa/9LmVMIDld73VzsVvzc0FwRtcebQjl1ansklSbRFMwcefMtDnpLHyM9hNlEY4o1EIH4gzpga/E7a8HOVjSQpV3F9LUEdpIzSZuCDMdIDBN7UrbFM/ltiL0XGgj83HHBGGvjTJ40/Mbi7gNDXJYa1+WVWHjaDHKkmkmisNPfv2PqQtOPmQRnrx9yO3T4H8Aej7WDgQ8+P0akNYDntp3t9rXI6DU84N6gtsBGp6u6BCDwTL4lbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CrX4DrcVekdoFt/T4RolEG9EzrX2Zx0Ggi9mzRfxfSM=;
+ b=VNk3fmv9a7XxVrjCHc4ptKbd7uCSla4PpV6V+UihS0Qme7U9kjuhVZ12ev+cYSOL9pKi0bcQO14MYDFzEJhF4sCrnKeWZP5/icf9s+u70VbXnqF2zMF9R5OWnA4NyOF66oWe0jMS3O2Max9yXcfE9k3eONyHtAn+uWNSO3mEC64rJeoGUHHEBwfTtyyb44uqktMW70rsj9rLc9B352I/GtEa2MnQQJ2nQYIg2fy9369vbdzwip86RruJATw23xe4qb99GmhZ5XhR4KlEhtIZb9VlkitggiaaFhIr8E+ywkL0VRzp7QavH4oyxCM7SU0ape0Z2L9l4LRrfduC9uQT8Q==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=CrX4DrcVekdoFt/T4RolEG9EzrX2Zx0Ggi9mzRfxfSM=;
+ b=c6i/G90+FBdsNr8O/b+PUJeuSwnX+JBOpnpTv0LwAglSaEfayKqNMVBKvDn5ELcaMfj/QeqiDQVmj4MIihk4tx1/kXMaDMCFGzzRDY9k1WxuyQJ1jqQMetEHZ/QFD16ihAUCE0iR6pgnK/PmSEYz5Vn8fG35GZhYBO40kRcsvXDRUHTIin7laDq8YRm91/fxc9yzb8jj030vf5N1eFy7IFw6pVSRM1T+4mL8VnouGd8Oc8A+9c8CShFWt8IwjnyjIMjeXf/rXKPz8hu8ibc0gFWGxu64sGdDYAVH3E0lqubtsc22VKpm00SK1qZUBHqF1TNugds22bD5tONLF9YZlw==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by MN2PR02MB6781.namprd02.prod.outlook.com (2603:10b6:208:1d0::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.29; Tue, 10 Jun
+ 2025 10:22:06 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::6cf9:b35c:b143:bb88]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::6cf9:b35c:b143:bb88%3]) with mapi id 15.20.8813.032; Tue, 10 Jun 2025
+ 10:22:05 +0000
+Message-ID: <fecc3847-02ed-46cd-9be0-900d39fea5e7@nutanix.com>
+Date: Tue, 10 Jun 2025 11:22:01 +0100
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 05/23] vfio-user: introduce vfio-user protocol
+ specification
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20250607001056.335310-1-john.levon@nutanix.com>
+ <20250607001056.335310-6-john.levon@nutanix.com>
+ <ef16fe1a-92b1-4523-a214-08d90c844519@redhat.com> <aEgA_U5SZiYWs__7@lent>
+ <4cb65486-7443-452f-8c82-da16576c7e47@redhat.com>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+In-Reply-To: <4cb65486-7443-452f-8c82-da16576c7e47@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: AS4P192CA0001.EURP192.PROD.OUTLOOK.COM
+ (2603:10a6:20b:5da::15) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|MN2PR02MB6781:EE_
+X-MS-Office365-Filtering-Correlation-Id: 97178e5c-3c10-46d1-1fc2-08dda808a5fd
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0; ARA:13230040|366016|1800799024|10070799003|376014;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TDVYVHBDQThlTDB3UVF4U0FUejNzaTJ1TUJ3SWlaQW5tOS9Zd1Y1ejVoRXBT?=
+ =?utf-8?B?R1I5d0VjMVZIclhLbjYwNUpkczdFMkRRUHdtREdvUmhjSnNQQ1VMNWduUUpD?=
+ =?utf-8?B?enU0RHQyYUNSL0JXNWpFcVhWajJxU3BMdWRib2N0a1Z5Tkw2Z01jWDgvc0Zp?=
+ =?utf-8?B?UFRYc3lYNkkwdHROMGRIOHZuNkVRSHphZnFUcXdOZVhpVHd4cjMrblFqbSsr?=
+ =?utf-8?B?aGUyWDRPMmt2TGNwZjVFQS9uTHUraWhYeGxrRTl1UERaMjVMTnRTYjFxVmov?=
+ =?utf-8?B?R0gveE1GaVVmS0JBRmF4Uk9Wbk5tTDRYWXFqTERkUWJacmo1b1ZwalpJNEtp?=
+ =?utf-8?B?RmRRaGxBSjVRMWNGSDZPY0drNVJMSG01eHp2VjdSbXJuckptbEtxQm0wSllY?=
+ =?utf-8?B?TmwxVWk1V2RYb1lHd2JNZm93OXdVd0RTWmdHdGY4ZDBvc1pGYTJHWXdTYk91?=
+ =?utf-8?B?U2V2OHpmRTBuWlZNTlZWQ0x2ekxsaXl0TXM2d2w1NDByM0RiWG0vMStaMWNw?=
+ =?utf-8?B?NGlhRGJxVXM2Mi9UMWgrUzVjQ1U3dkplYVprRkx3Z00yajVyTHM0aVBoSVgr?=
+ =?utf-8?B?Z1publY4TEhQNGs2QlFNR1dnbmdFK2JwUU9hc1NQQkk5S3g4OXAxQitrc2Iv?=
+ =?utf-8?B?WkRiNnNuL2Y1OTRzc25MM0doVFpDdEpTOEZKS2NDSDRXdk4zUWdpNW5kVU1L?=
+ =?utf-8?B?ZUdxSjMydXhEamJOSHBrQ2xjVHdyRnlFS3pMYUp2T0RqME1qOTRmckVIUEJy?=
+ =?utf-8?B?T3hPQ3NnbzN5YnhNVitwMjc2cUF3VXNTU2g2QjZxazZzSE1TYUNCa0RvT1NV?=
+ =?utf-8?B?Q05HME1EVE5nc1UxN2MwOHd6aUZpS3QrZXdmcDQyWlFyajI3RDdzVWtFNkpX?=
+ =?utf-8?B?R0hwdkNGK1RMZkl4OUJKSGdzSk5sZk53ZC9sNmtKUG1EblVSQk9tOGVtMXBJ?=
+ =?utf-8?B?MG5jandtL3IzUTVFY2JXUGRDL25La05PdG5KcUhGdHF4Z2Zxa05ab3hyQTBi?=
+ =?utf-8?B?OGhPdW1hczZUa2Vud2ZlWjhsRGNYb2w5c0s2eDhXbjZBcmI1SGJPUGdIVEpr?=
+ =?utf-8?B?cTIxR2x4ZUtwd2VuNlNsUzFlM0FRUUx0YkNvcFZEaUJwTWgzTksxQkUvbEVY?=
+ =?utf-8?B?TVVlenBGSjAwTWtaYzYyVUREUWdWcFJIR25HZ1NYR21nRVJvMTdFcXEwUUNv?=
+ =?utf-8?B?elZIOS9hOUVPZzdXWU04VEtzemcwOVBoRGF2VmJ6WlBtSGl6YUxPUHRVRkRB?=
+ =?utf-8?B?UEllOUI0QzJLb3JGbnJXcGh0Z2JYY1BVSXl0SE1xK2MyeEErUm8rWlFTMVhP?=
+ =?utf-8?B?NkgrNXlEOVM2aThXSUZhQlpTYnF0Y3pkNjhzTjNWR240S0gzRWNQKzRXTmp4?=
+ =?utf-8?B?Z3l1SjhWclNmM2tiUTlncm52OHF6YVhEUXVtYlZYaG01UVB2QTRpUDlJS28z?=
+ =?utf-8?B?OVVmdlBLcm8ybG95VFhsVkZxZWNIOEFBYmRmYTZxM1NTUW52WXdlUTd2YXNm?=
+ =?utf-8?B?QjlUVU5ucUM2WDArbFl5SDQzbTdaNGVsWmtaLys1MWxWSGVEY2pLd3F2eWdB?=
+ =?utf-8?B?OURSRy9OUURlRkZHYXNUV0lvOFVaWVdOZTNJZm0wVGlCemxIYjI2bnFuczZE?=
+ =?utf-8?B?UzJIQ2FHbzlOeTE1K1dCcUZUREdETDZDaHpSSTNFT01FaFl2eXRvTlArZ0tD?=
+ =?utf-8?B?RnF1Z0hKZFdTNDQweEp2MWI3RmMyUzVQQmVpNEVQSHlSMU01SHNHNDJKR25p?=
+ =?utf-8?B?ZlpCVHZJazFjbW9SK0hhdUNhUHQzdGMyUDcrWFJTNjdhYzJmU21nSk1QUTlX?=
+ =?utf-8?B?aDNPVEJVekhDT0NIcFZLK1B1QkpMZXBMSUk1d3gvQ0tSdER3RGdIK2R6MWtp?=
+ =?utf-8?B?WjNVQ3FTczE0L2s4R3FsdHJPQ2pxT25HWlJxT1YzVlZyM0pVRm5wMnFZR0hw?=
+ =?utf-8?Q?UAgKyPoVgVY=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(10070799003)(376014); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZGZqN09GNUs3LzV5cm5rME9haXh2TUhoUGU5akw2M3N5bFFxcEk1NTQwRE9B?=
+ =?utf-8?B?NWNqWE9qdHJtTVh6cEtRVGpFekVYQ1I1eGNVaEVoN0lMQk5vMDZhYllGRitR?=
+ =?utf-8?B?d3ZTQWI4MnVkc2VHRGx2RVFXMWpXY0JtUisweFRIRitEbW1ZSmlXcm5pNC9h?=
+ =?utf-8?B?YU9jdURBejFDaVFjcmdnemdic2JwRXBSSWNlQlovWHBqMFByWFBJSTZTS2JO?=
+ =?utf-8?B?aEc3N0VsMEpOVkVmWGwwTS82Vnp5WkFSd29UTzdmajZiODNYOTU1UXozZUVH?=
+ =?utf-8?B?MkJPTnl6YW02dyttM3hNb2FIN2NOU3F3dy9CaGNOVjRLRDAvMHBmcThZTDVn?=
+ =?utf-8?B?cVFqcFJEamhORVdzQk5TakoyS2Z1Q1pramppZFIvYStZREg0N2ExQVByYVow?=
+ =?utf-8?B?Q2pHUFZhYXh0akxpU0dOMUJEdXVlSWdjRHYwUVptajloZkI1Syt4am4reHFx?=
+ =?utf-8?B?alRsS200QXVUWngwREc2bHEybWRrdjV2Y3BKUE9JL3EwM1FYVnRoUmF5UDdx?=
+ =?utf-8?B?M2NTVXR1cDZUZStDY3c3b1Rzb3VvUldwdEdsVnlyNjBYRDM5UVdEcWMvVm4r?=
+ =?utf-8?B?bGV6VUxNeDJndVNHK2JYYW9pOS95SUpMOFBTWlAyZXpQaXl3SXFMY1V0YVpD?=
+ =?utf-8?B?TkNlM2xPT0w2NlNaakxrc1dYczhOQjVXZ3plbW9USFcyQVc5NmxYdXBud3lT?=
+ =?utf-8?B?WmhUSnZFdFNDdGxvUUhIN3kzeTkrRWt3VDdMNWNJZVVVa2NYazYrNGJuR1pw?=
+ =?utf-8?B?Z3VGT1pzUjA1NkRBcmdyT1BCUG1USVQwZDQ4ZENUWDB5REl5Z2dhZFh4N3Na?=
+ =?utf-8?B?VWl2WGVRS2ZmM244dldGYjhJRVlxaElJdGxHWmFtbVlheEV5ejlmdFJmbmFj?=
+ =?utf-8?B?NDFqN0M3Z1RaTFduWGFqNkpXUys3bEZlODBkbjNzdk9OVTgrYm5FWXpnY0pk?=
+ =?utf-8?B?MGN5VS9Vb1psRHJDa3JWRUJFdGliWTZTUlZHaytNWnBZbkROWFc5Y1FtUjlF?=
+ =?utf-8?B?c0VyTC9qS3BBbDFGdUpOZlZZZkZKZmFXNjNRMzNHazNIeCswU3I0MWVRU1FJ?=
+ =?utf-8?B?cUVpUXlFTVZzOEJvY1F3aTVvamVVeEdWcmgxY0JGZ3NyQ2VkRUdxNkEvODVo?=
+ =?utf-8?B?aVh6bFN0ZHVkd2lHOW82U3pnQ2JpbWZnODY1ajNlcGpTMElOaUFjbHkzOVdP?=
+ =?utf-8?B?NDE3WmtIeENnUkhDdWtkRzYzZ1NWWldJNkRvMW9OSHJyUnZST1RCeWRvclJy?=
+ =?utf-8?B?Y1d0ejlHM0VBb2RQVkR4dmkvQjMxUFMxd1dLVmR1dkJmdVBjNGZORWYxYmF3?=
+ =?utf-8?B?bzZQRVlnNUV1SXdRcmw1a2h2WC95RlNhMVN4K2ZFUG0rRFRoRWZlaUhUcGFq?=
+ =?utf-8?B?dElDM1ZzQlo3RkdwcHgrdXpJT1BtNS9yMldWOGV1Ujk5cThYZWpiU0dmbzRY?=
+ =?utf-8?B?VUQvYnNkcThKNUs1TXlkT2N4d21GWXNhemZsQUVwNEdlOTZxVGd4eWJtcVJq?=
+ =?utf-8?B?NmJYRGtvTnR1TmoxLzhZZWpiSVFvL2s1L0xwQlhPSldnRHRTVDFNRGF2d1BW?=
+ =?utf-8?B?REZIUE90a2tZcit6L0tRNmVEbEdkNVFlMklkV2lQQWlUUkxpa0JsZDFVaTI3?=
+ =?utf-8?B?WitKZ3k0K3Q1bzlObXE1NjJ4WDArSm91Vis5K2M3ZmNVbE9qWDVUUDZmdWxO?=
+ =?utf-8?B?ZTZyb1E1TTdmZVNJY2pXN0tvUXhxRGFkUHFKMktEWTdhUHZ4Z2tFOExyQ1ZJ?=
+ =?utf-8?B?N2gyQVZlSVZOZGtMV3dBRXoyKy9qdXA1UnVvODZQZ2w5SlpsRlpMNGNoMEJt?=
+ =?utf-8?B?ZzVEdkJBeFRuRDhQWnI5bm1UYUZ4ZWxVajRITnNpTnY4NkdkdEtDeWdPR1ZR?=
+ =?utf-8?B?TzIwRXY5aTM1L21sU0t0dXNEcmdOeFA3RWF5M2N0QUp2VVRUbCt2YktLRUNV?=
+ =?utf-8?B?b3VKQ0ZWYjJscUtTenU5R0NHcHQza2NuSmEzUlBlT25XLytDRFNIenp3bTZ0?=
+ =?utf-8?B?aHRDQnF0d3ZOMVNZREdPaTVYZGF1eGRvakdrbHoxRjFVcEQ5cVpxdkprZGkw?=
+ =?utf-8?B?TGtuQ2hxK1Q0Z01tUHI0SHBkelpjTGtTdHJrc0h5MGE3cGd6Q29yOC9Ebk9u?=
+ =?utf-8?B?ZVFJMmV1cTY0SkdrUGZwSHpJMWRUbWhlLzFiTnBXMjV2QVZjOCswc3E2aEEx?=
+ =?utf-8?B?ZUdLZnJ1ZzNuaUFKK3prQ3R2Y1dwbWpobHZPMjh0dEZSS3l4QXNHa1l3bklY?=
+ =?utf-8?B?TmZWWFZYekxTWDRpTzhoK2hkcmJnPT0=?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 97178e5c-3c10-46d1-1fc2-08dda808a5fd
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Jun 2025 10:22:05.6709 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: voaoHT8F6SiGIDZ5cvZsll4ao5+MPUCHInl5tErlJo8bVV/6NH9wV6pnxEbPexxjbkT/8PEEgiy1wMp8jIP8iowhf3BZjNxIxAAr0QYYPa8=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR02MB6781
+X-Proofpoint-GUID: AaAoW8m2UMKrahZ_3uj6d4kIK8PTZ9-Q
+X-Authority-Analysis: v=2.4 cv=L9cdQ/T8 c=1 sm=1 tr=0 ts=68480750 cx=c_pps
+ a=NE+w6TL7qZ80L3NA32co+A==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10
+ a=ziDZjbnpxu3plzmcov8A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: AaAoW8m2UMKrahZ_3uj6d4kIK8PTZ9-Q
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDA4MCBTYWx0ZWRfX2bL07rcBeJs0
+ podDepviOlsIs41kho0X2m4xybnY9WeykZCuM1xNpu5S0J5rZwhezbtoAwsoSry6EaJDCzz1QD0
+ LCo52gLyJlzm/c2aZWLBQLK66NTXWn8bZFbQ+6ee+sKTWVe7RnsnjEAv0/6R1pP94l6+zHjgnyj
+ 75CjPqgPDORQzRrIsKSNiCMjLCKkU3JG9fwojK+6J7mItJSqQt3DKwEHACz6IFjsKYl4AA5D8xh
+ x3OBOJs0y67IHToyUOnJJp4ussmaHAvPjeIVquJwKN/5NI0g/tVHjlgfjQGsWF07lihu5LLKjgG
+ bXB/5Ahs9jVa9LvT6jI2oj3LswZade6ZL04mZPv/eemfNvnpMVNKehk92RhCxWgOaXKJA0V/z90
+ moUol2whzFwv5V1UKaeH5j4IVpwrKu8jzO7vYwwjZWXpHaLzkIjXzsodLrMUW+dyYxmHa/ZW
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-10_04,2025-06-09_02,2025-03-28_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,64 +224,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 10/06/2025 11:12, Cédric Le Goater wrote:
+
+> On 6/10/25 11:55, John Levon wrote:
+>> On Tue, Jun 10, 2025 at 11:38:29AM +0200, Cédric Le Goater wrote:
+>>
+>>>>    docs/devel/vfio-user.rst       | 1522 +++++++++++++++++++++++++++ 
+>>>> +++++
+>>>
+>>> I think this file should be split in several smaller files. The
+>>> protocol specification part belongs to "System Emulation Management
+>>> and Interoperability" section.
+>>
+>> I can move it to interop/ sure. Why must it be split up ? It's nearest 
+>> analogue,
+>> vhost-user.rst, is one file, and I think that's better for a protocol
+>> specification.
+>>
+>>> We already have a docs/system/devices/vfio-user.rst which needs some
+>>> care.
+>>
+>> My series adds this file. This is the user docs, including a device
+>> example, so independent of the protocol specification.
+> 
+> ah yes. The QEMU documentation is a bit messy. Not your fault.
+> 
+>> Please let me know what care it needs!
+> 
+> sure.
+> 
+>>> (and functional tests)
+>>
+>> Mark is working on them, there are some difficulties...
+> 
+> Which kind ? This is important to have and I will be reluctant to merge
+> any support without tests. It is OK to merge a dummy device implementation
+> for the tests since they provide a good example.
+> 
+> C.
+
+I have a bootable test image available for testing basic functionality, 
+however there are a few issues with the functional test framework: in 
+particular the test framework doesn't currently allow logging of 
+multiple VM consoles correctly.
+
+I am continuing to work on this in the background, and hope to be able 
+to provide an integrated functional test soon.
 
 
-Am 6=2E Juni 2025 19:03:32 UTC schrieb Pierrick Bouvier <pierrick=2Ebouvie=
-r@linaro=2Eorg>:
->Hi,
->
->I recently needed to slow down time within a virtual machine, due to a ti=
-meout being hit because my QEMU binary which was not fast enough (gcov debu=
-g build if you're curious about the use case)=2E
->
->Currently, people tend to use -icount shift=3DX with low values for that,=
- as it roughly maps time to how many instructions were ran=2E
->As well, I've been working on ips (Instructions per second) plugin [1], w=
-hich allows to slow down QEMU execution by sleeping, as suggested by Alex=
-=2E It's using a new clock update API [2], that is limited to move time fas=
-ter (jump to future time), but not slower=2E
->
->After looking at how all this implemented, I am wondering why we don't si=
-mply fake real time QEMU is using as a reference, which is based on gettime=
-ofday [3]=2E
->
->Using faketime, which fakes gettimeofday I've been able to manipulate QEM=
-U time:
->- faketime -f '+0 x10' qemu-system-aarch64: boot timestamp is 14s
->- faketime -f '+0 x0=2E1' qemu-system-aarch64: boot timestamp is 0=2E13s
->In both cases, the real boot time (QEMU execution) is around 3s=2E
->
->It works as expected, speeding or slowing execution without impacting QEM=
-U speed itself, which can run without needing to do any artificial sleep or=
- clock manipulation=2E If a program in guest vm sleeps with an absolute tim=
-e, it will be multiplied by the factor, which results in significant slowdo=
-wn=2E But it can't be avoided, by design=2E
->By using a time factor big enough (x200), it can even trigger rcu_preempt=
- stall detection in Linux guest kernel=2E
->
->As it seems a bit too good to be true, time for questions:
->- Has it already been considered?
->- Any obvious downside I might have skipped?
+ATB,
 
-The only downside I can see is that it seems to disturb QEMU's internal ti=
-mekeeping=2E The GTK gui freezes for quite some time when the time facor is=
- very low, e=2Eg=2E 0=2E001=2E
+Mark.
 
-Best regards,
-Bernhard
-
->- Would that be interesting to offer such a feature in QEMU itself
->  (-time-dilation 0=2E10)?
->
->[1] https://gitlab=2Ecom/qemu-project/qemu/-/commit/72db6d54a4a9203736261=
-fc63f32f6cd3486b7e4
->[2] https://gitlab=2Ecom/qemu-project/qemu/-/commit/847a65dd76bf1868c7966=
-a2b2608dcd00cb68dc7
->[3] https://gitlab=2Ecom/qemu-project/qemu/-/blob/master/include/qemu/tim=
-er=2Eh?ref_type=3Dheads#L809
->[4] https://github=2Ecom/wolfcw/libfaketime
->
->Regards,
->Pierrick
->
 
