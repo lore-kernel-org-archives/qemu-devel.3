@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3498C71132
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87585C71130
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:56:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP2Ah-0001JB-NT; Tue, 10 Jun 2025 12:50:00 -0400
+	id 1uP28k-00057a-Su; Tue, 10 Jun 2025 12:47:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15R-0004Un-Qf
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:30 -0400
-Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uP1LO-0001Q2-QC
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:56:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
- id 1uP15O-0006D0-MY
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:29 -0400
-Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXeN1031142;
- Tue, 10 Jun 2025 15:40:24 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :date:from:in-reply-to:message-id:references:subject:to; s=
- corp-2025-04-25; bh=rjcBzt9GtYLUD97vLNEESxroG7+MwYcBu07u518gFkE=; b=
- KGsJT/mVkerkjhC+oteNqgdKR0Ud8BZ7NGkzuPlV/YoL+vWiE+R/YMy9/hnZavAL
- vRDVpDra4LIwbW6dLY8sDGp/qLYD1iyCeL95R87pU1oB8UoIsDHKwaWKyKLeHCny
- LWGs3PcdePyI0tF9ZG3sVZgcoiBrmyRdgU46h0ftZnUsKIluVYLCx6M4Y0sp1vvn
- RKeqxP6HHZps+i5DF8MocD3d2tXjtMTIprgN0PvTwvW4ql+enIZZVk8PbIHroFAg
- U/H5aRm2QxBIPtb4OVmvV9xVtpyzHnc6WygfKGYJJLZhzIGnMosWbYrKJGO0gVJH
- At0x/UlgfpvRa34iumb4dQ==
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474dywvgsb-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:23 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 55AEbn3x004100; Tue, 10 Jun 2025 15:40:22 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 474bv8wbby-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Jun 2025 15:40:22 +0000
-Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfj028825;
- Tue, 10 Jun 2025 15:40:21 GMT
-Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
- by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
- ESMTP id 474bv8wak1-20; Tue, 10 Jun 2025 15:40:21 +0000
-From: Steve Sistare <steven.sistare@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>,
- Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
- Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Steve Sistare <steven.sistare@oracle.com>
-Subject: [PATCH V5 19/38] vfio-pci: preserve INTx
-Date: Tue, 10 Jun 2025 08:39:32 -0700
-Message-Id: <1749569991-25171-20-git-send-email-steven.sistare@oracle.com>
-X-Mailer: git-send-email 1.8.3.1
-In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- malwarescore=0 mlxscore=0
- mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
- definitions=main-2506100125
-X-Authority-Analysis: v=2.4 cv=fdaty1QF c=1 sm=1 tr=0 ts=684851e7 b=1 cx=c_pps
- a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
- a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=aHyXveKDkG1ssMKnveQA:9 cc=ntf
- awl=host:14714
-X-Proofpoint-ORIG-GUID: 2qYp4ko4etI_UBxVuROK0J_YkcNWkzjS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX06CrjEf0PLyp
- D6JWdiGpVCOOwIO+R3RC95Q5WHFlP1nsjuauNC68sWMvTfdmf/M9yyXRLOqndAS20Z99UtcvN87
- +aWAYBsbK1jYe1xvj0IlaTKVlT2VQtlehtgR2tDemxh1oUt42KlVbDGYrvYavuRKm+kqHnJsIeJ
- Nn9y6FDJTp1epZ1L8Ze3Hnl9DHHolq1zBlREOvF/Sv+iTl3bTkbwArtVb8hWk39ZhjMr8Z3N/ZY
- 5BeVvKs9FogE80gE93nDiHLaqmPetYFPLMzfJJC0E71LLMgpQtAOiCCq+5HQfsDLLozcKduKgqt
- 1qdP9oubPii6bm9RunhpBk+FpMAxQToBPxztY2IIBnYSy4n97z1DcOAh0ws7tiQzRveTCRDIVag
- ewIMPBI0yRe0dUKCjuIHlIDkry3n8n36A3Nu1uOkZk+W/1bm9qSYsozYhyWcx0hhqc1Qt/pW
-X-Proofpoint-GUID: 2qYp4ko4etI_UBxVuROK0J_YkcNWkzjS
-Received-SPF: pass client-ip=205.220.165.32;
- envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uP1LJ-0008Bk-8C
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:56:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749571011;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=mMhPAuXRHNwaFwWidIKGtMPeUCkcvA0svjUZfXoeofo=;
+ b=BPOi0Si5uZlyy+8pVIBXi5gOeIJpHb0rVw3hyQAFvCLDm4dJFrs1RSJqNNmW8AY2BA0sc9
+ N57+RAnUylx9za0MnsuJceNVhcwUsUYjQ1TmU6iqBRPlskcbVUjAokGBVe6jGVfVsMOwq2
+ WpVe9DV6u2Ja1zT2a+bMXA3kKfqRWx8=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-608-eiwta7BMMu6GtLFiepudcA-1; Tue,
+ 10 Jun 2025 11:56:43 -0400
+X-MC-Unique: eiwta7BMMu6GtLFiepudcA-1
+X-Mimecast-MFC-AGG-ID: eiwta7BMMu6GtLFiepudcA_1749570997
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2CAE319560B2; Tue, 10 Jun 2025 15:56:36 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.87])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E682219560B2; Tue, 10 Jun 2025 15:56:32 +0000 (UTC)
+Date: Tue, 10 Jun 2025 16:56:29 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
+ Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH 00/31] Skip automatic zero-init of large arrays / structs
+ in I/O paths
+Message-ID: <aEhVrceTYtLlqe84@redhat.com>
+References: <20250610123709.835102-1-berrange@redhat.com>
+ <50405e77-e665-4772-9715-3901730d00fd@linaro.org>
+ <aEgri00LXfeRQRJ2@redhat.com>
+ <4d03fe23-86a1-4030-b5fc-8de8be461770@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <4d03fe23-86a1-4030-b5fc-8de8be461770@linaro.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,172 +90,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Preserve vfio INTx state across cpr-transfer.  Preserve VFIOINTx fields as
-follows:
-  pin : Recover this from the vfio config in kernel space
-  interrupt : Preserve its eventfd descriptor across exec.
-  unmask : Ditto
-  route.irq : This could perhaps be recovered in vfio_pci_post_load by
-    calling pci_device_route_intx_to_irq(pin), whose implementation reads
-    config space for a bridge device such as ich9.  However, there is no
-    guarantee that the bridge vmstate is read before vfio vmstate.  Rather
-    than fiddling with MigrationPriority for vmstate handlers, explicitly
-    save route.irq in vfio vmstate.
-  pending : save in vfio vmstate.
-  mmap_timeout, mmap_timer : Re-initialize
-  bool kvm_accel : Re-initialize
+On Tue, Jun 10, 2025 at 05:00:43PM +0200, Philippe Mathieu-Daudé wrote:
+> On 10/6/25 14:56, Daniel P. Berrangé wrote:
+> > On Tue, Jun 10, 2025 at 02:49:02PM +0200, Philippe Mathieu-Daudé wrote:
+> > > On 10/6/25 14:36, Daniel P. Berrangé wrote:
+> > > > This series is an extension of Stefan's proposal:
+> > > > 
+> > > >     https://lists.nongnu.org/archive/html/qemu-devel/2025-06/msg00736.html
+> > > > 
+> > > > It used '-Wframe-larger-than=4096' to identify all code locations
+> > > > with more than 4k on the stack. Any locations in the I/O paths
+> > > > were chosen to avoid automatic zero-init, to eliminate the performance
+> > > > overhead of the automatic initialization.
+> > > 
+> > > Should we eventually add it to our default CFLAGS?
+> > 
+> > You mean as a way to impose a hard limit on stack frame size ?
+> 
+> Yes, we could use -Wframe-larger-than=50000 for this release, then
+> aim to reduce by 5/10k every release until some reasonable limit...
 
-In vfio_realize, defer calling vfio_intx_enable until the vmstate
-is available, in vfio_pci_post_load.  Modify vfio_intx_enable and
-vfio_intx_kvm_enable to skip vfio initialization, but still perform
-kvm initialization.
+I guess the key thing is to define approximately what our target
+should be ?
 
-Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
----
- hw/vfio/cpr.c | 27 ++++++++++++++++++++++++++-
- hw/vfio/pci.c | 32 ++++++++++++++++++++++++++++----
- 2 files changed, 54 insertions(+), 5 deletions(-)
+There are some large stack frames in QEMU device I/O paths that are
+not unreasonable to have, because they avoid need to malloc in the
+I/O path. A greater many devices have 4/8k buffers for copying
+data around, and some bigger ones are fairly valid to have too.
 
-diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-index e467373..f5555ca 100644
---- a/hw/vfio/cpr.c
-+++ b/hw/vfio/cpr.c
-@@ -139,7 +139,11 @@ static int vfio_cpr_pci_post_load(void *opaque, int version_id)
-         vfio_cpr_claim_vectors(vdev, nr_vectors, false);
- 
-     } else if (vfio_pci_read_config(pdev, PCI_INTERRUPT_PIN, 1)) {
--        g_assert_not_reached();      /* completed in a subsequent patch */
-+        Error *local_err = NULL;
-+        if (!vfio_pci_intx_enable(vdev, &local_err)) {
-+            error_report_err(local_err);
-+            return -1;
-+        }
-     }
- 
-     return 0;
-@@ -152,6 +156,26 @@ static bool pci_msix_present(void *opaque, int version_id)
-     return msix_present(pdev);
- }
- 
-+static const VMStateDescription vfio_intx_vmstate = {
-+    .name = "vfio-cpr-intx",
-+    .version_id = 0,
-+    .minimum_version_id = 0,
-+    .fields = (VMStateField[]) {
-+        VMSTATE_BOOL(pending, VFIOINTx),
-+        VMSTATE_UINT32(route.mode, VFIOINTx),
-+        VMSTATE_INT32(route.irq, VFIOINTx),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+#define VMSTATE_VFIO_INTX(_field, _state) {                         \
-+    .name       = (stringify(_field)),                              \
-+    .size       = sizeof(VFIOINTx),                                 \
-+    .vmsd       = &vfio_intx_vmstate,                               \
-+    .flags      = VMS_STRUCT,                                       \
-+    .offset     = vmstate_offset_value(_state, _field, VFIOINTx),   \
-+}
-+
- const VMStateDescription vfio_cpr_pci_vmstate = {
-     .name = "vfio-cpr-pci",
-     .version_id = 0,
-@@ -162,6 +186,7 @@ const VMStateDescription vfio_cpr_pci_vmstate = {
-     .fields = (VMStateField[]) {
-         VMSTATE_PCI_DEVICE(pdev, VFIOPCIDevice),
-         VMSTATE_MSIX_TEST(pdev, VFIOPCIDevice, pci_msix_present),
-+        VMSTATE_VFIO_INTX(intx, VFIOPCIDevice),
-         VMSTATE_END_OF_LIST()
-     }
- };
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index b3dbb84..b52c488 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -161,12 +161,17 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-         return true;
-     }
- 
-+    if (cpr_is_incoming()) {
-+        goto skip_state;
-+    }
-+
-     /* Get to a known interrupt state */
-     qemu_set_fd_handler(irq_fd, NULL, NULL, vdev);
-     vfio_device_irq_mask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
-     vdev->intx.pending = false;
-     pci_irq_deassert(&vdev->pdev);
- 
-+skip_state:
-     /* Get an eventfd for resample/unmask */
-     if (!vfio_notifier_init(vdev, &vdev->intx.unmask, "intx-unmask", 0, errp)) {
-         goto fail;
-@@ -180,6 +185,10 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-         goto fail_irqfd;
-     }
- 
-+    if (cpr_is_incoming()) {
-+        goto skip_irq;
-+    }
-+
-     if (!vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
-                                        VFIO_IRQ_SET_ACTION_UNMASK,
-                                        event_notifier_get_fd(&vdev->intx.unmask),
-@@ -190,6 +199,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     /* Let'em rip */
-     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
- 
-+skip_irq:
-     vdev->intx.kvm_accel = true;
- 
-     trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
-@@ -305,7 +315,13 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-         return true;
-     }
- 
--    vfio_disable_interrupts(vdev);
-+    /*
-+     * Do not alter interrupt state during vfio_realize and cpr load.
-+     * The incoming state is cleared thereafter.
-+     */
-+    if (!cpr_is_incoming()) {
-+        vfio_disable_interrupts(vdev);
-+    }
- 
-     vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
-     pci_config_set_interrupt_pin(vdev->pdev.config, pin);
-@@ -328,8 +344,10 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-     qemu_set_fd_handler(fd, vfio_intx_interrupt, NULL, vdev);
- 
--    if (!vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX, 0,
--                                VFIO_IRQ_SET_ACTION_TRIGGER, fd, errp)) {
-+    if (!cpr_is_incoming() &&
-+        !vfio_device_irq_set_signaling(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX,
-+                                       0, VFIO_IRQ_SET_ACTION_TRIGGER, fd,
-+                                       errp)) {
-         qemu_set_fd_handler(fd, NULL, NULL, vdev);
-         vfio_notifier_cleanup(vdev, &vdev->intx.interrupt, "intx-interrupt", 0);
-         return false;
-@@ -3234,7 +3252,13 @@ static bool vfio_interrupt_setup(VFIOPCIDevice *vdev, Error **errp)
-                                              vfio_intx_routing_notifier);
-         vdev->irqchip_change_notifier.notify = vfio_irqchip_change;
-         kvm_irqchip_add_change_notifier(&vdev->irqchip_change_notifier);
--        if (!vfio_intx_enable(vdev, errp)) {
-+
-+        /*
-+         * During CPR, do not call vfio_intx_enable at this time.  Instead,
-+         * call it from vfio_pci_post_load after the intx routing data has
-+         * been loaded from vmstate.
-+         */
-+        if (!cpr_is_incoming() && !vfio_intx_enable(vdev, errp)) {
-             timer_free(vdev->intx.mmap_timer);
-             pci_device_set_intx_routing_notifier(&vdev->pdev, NULL);
-             kvm_irqchip_remove_change_notifier(&vdev->irqchip_change_notifier);
+On the flip side there's still way too much use of PATH_MAX that
+is gratuitous and should be removed, but its hard to enforce the
+latter without negatively impacting the former.
+
+
+With regards,
+Daniel
 -- 
-1.8.3.1
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
 
 
