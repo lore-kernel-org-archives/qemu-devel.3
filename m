@@ -4,89 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B09EC5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:15:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A177C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 06:30:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOsGI-00082h-6w; Tue, 10 Jun 2025 02:15:06 -0400
+	id 1uOsUA-0003JO-GF; Tue, 10 Jun 2025 02:29:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsGG-000823-Sq
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:15:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsU9-0003JG-JB
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:29:25 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsGF-0008UU-C6
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:15:04 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOsU7-0001T2-GY
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 02:29:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749536102;
+ s=mimecast20190719; t=1749536960;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=EIB4JW9UUtIcvwYbeZvdGYjF1MD+HJ2Jlj4Nrcnilm0=;
- b=N0zgucpHqSe4ihkbrx9vCLvwBVvKI8z+zk+47Y2rTYV0PkeeUYB+WyELe4Qs9LRe9UMESQ
- nIwflUdvGGiia5+Gen2gwkKZ/HzFoYoexSKJzpb/BPbVqajmlJUuuw2i+rf46W2U1z1uEv
- MdVG2q0o6Q2064Be81N8wSkfiFlFfHw=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=gKyBQOT+CFYTtrGuuaOiwg+yRaYcMK5ows+7ceSOa/I=;
+ b=MIzbc07mLvTlg5DI1HZhO35eKoyicPl9My4byLJU9KrycryAEEGTWe78+Hlzc1Nyw3RJSw
+ nTezsk1JSckMc5uGHdfOYh0FqM3DUiAwpLrptFymbwQe6KcY/8HwW85i3rzQvt4zpje9zF
+ +33nr3/V4YfuWJ3ouYRWGUJ7nChjP7g=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-641-VnqZ6wfqOniQCDXn_SbFLA-1; Tue, 10 Jun 2025 02:14:55 -0400
-X-MC-Unique: VnqZ6wfqOniQCDXn_SbFLA-1
-X-Mimecast-MFC-AGG-ID: VnqZ6wfqOniQCDXn_SbFLA_1749536094
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4eb6fcd88so3266276f8f.1
- for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:14:55 -0700 (PDT)
+ us-mta-578-0HXciCUwOzufWRUq1aDAmA-1; Tue, 10 Jun 2025 02:29:19 -0400
+X-MC-Unique: 0HXciCUwOzufWRUq1aDAmA-1
+X-Mimecast-MFC-AGG-ID: 0HXciCUwOzufWRUq1aDAmA_1749536958
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4530623eb8fso17365645e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Jun 2025 23:29:19 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749536094; x=1750140894;
+ d=1e100.net; s=20230601; t=1749536958; x=1750141758;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=EIB4JW9UUtIcvwYbeZvdGYjF1MD+HJ2Jlj4Nrcnilm0=;
- b=Hsg65HtylJTvtfjk/Z9GwLZxrMqN0vrSzl3g1WofgZbXuIcZBc2k3Q+wCRr7of5jYj
- S3Z3IHouePUSAFzFrTdSTCpVn1N1e7sLCvVSu9sxxj5tW7GRcNvgCe9jwA2ZkwlbLaIn
- O1zoNh4reujFKD6bkj9rH/mmYzRO4YZKdviuT+0RFKk7DwUzWRH2Q+2M1zxS0MdrLUD3
- agg6BD8BQRwJU2k2v7PnmkuSk8xWoX5ZRbTgMG6C74Oe/dIYmVlH60YAMKyZNMYoZ+iD
- 4OOenqHL/VOX7xcZG8J1rIg49E4Y0BOIaNVlXC0LVfV7dpOilxNbxbCxGknYXlmOy+LC
- GusA==
+ bh=gKyBQOT+CFYTtrGuuaOiwg+yRaYcMK5ows+7ceSOa/I=;
+ b=luItOMm0+9C0+ZyLvddWVX7NPCNXcmETx6KEjfiOfsEwSq0SnCLRtevpd0+HhQMG/i
+ Or4fGYuhqZ36qbDslMaxhzW7xuLvwAXuZEyTTsPNZjpaeM2BTO2PuId5QnM2bM06/RmY
+ ui0OMZRGoz+hL/fs3wVzcdBNaKaui+x3woHa34jd8405mZkUWR6yDTYSQEwl50HN1H1N
+ 3DrdJ1kRmm6XsSzz+nyPUpZtUPjruotEgr7PY88vqgakE8MULFxR9GfZQoVVixEW+sLO
+ L876uLzTELl0ZF7o4z1uUEDv6dr90kK6ucID02ZNBiVUFDjcxSsFP8NJgH50b+cWUz20
+ I3Tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwpft3WQ6awKdl/bWE3cEMi/cgcssu66M7K7DfE4RiY5cgJxxfloWD2UxFdtTUWw4XT1bYjH0HNVIy@nongnu.org
-X-Gm-Message-State: AOJu0YzVDoF1+uneoc6nosZ/ODyKRngPaOF9CkRE7nLBgG2rFhVQLH/K
- wEBAD3EmRItAKouVFY5itknPyBhY+6qxjVYy22/Uz1B3Qs6rxhT/c/Q9O82RBTSxIozu/luIgxU
- Us4mAeO7NGw8ddyFKQaJzTfezakDsaTNZLdz0BLUMjhLQLeomBjFLsNV0vFVjAa/6
-X-Gm-Gg: ASbGncuFj/KPSLuA4oMK+TL64Zx+L3QKTtt36RKH49yCs6EvqykQIQA8kPiFeuBPZcB
- w2WzeTIf5riYuEocBhFU8hbTVuOYEVXkCHqDHw0Z+LtfL6Xdgbeou3XrTWwYcTdMjw7f0hVqLNZ
- 2X9GtGYXRYPfdTvWCCXsXXLGuDEe/UZ2Vrq8eu2EiNEwRyJOLQ/xAlsSMeb1X3yKA7ovnOeiPPC
- OP8l2Vt3CPerH6Y/22oVomL91VArIbnnD7m9cu57BcBzqx4+Pi9GgK6B4+kAFFOeMe899NGrogb
- jqntB5oMnVJUgC/I3jcwensxcjn8s2ry27bvULWawSb49u/oGRwjsIYC1W5v
-X-Received: by 2002:a05:6000:290d:b0:3a4:fb7e:5fa6 with SMTP id
- ffacd0b85a97d-3a5319b6aa4mr10539727f8f.1.1749536093998; 
- Mon, 09 Jun 2025 23:14:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF+WId0CLKl6eJwV4AbRmUcFqUiDIbIx9aIsqpP3FNz2Q83VmnPrHPD79vsjiOJiYij3+9yTA==
-X-Received: by 2002:a05:6000:290d:b0:3a4:fb7e:5fa6 with SMTP id
- ffacd0b85a97d-3a5319b6aa4mr10539702f8f.1.1749536093641; 
- Mon, 09 Jun 2025 23:14:53 -0700 (PDT)
+ AJvYcCV0n3N1l0WLlgZQiJIYrHxWw+mF3lZmuxBq3bAcR/VflAShxvgvVQ0vJtes1gRmCTHl63j0Dv9Uvm4E@nongnu.org
+X-Gm-Message-State: AOJu0Ywg7U80GA2BQC1DlWvylwzhNg82wh45G1hMr3m+iHV6Qlsa48eS
+ ZTorUrnXVkDkfQEKMgu4UuoWxo2pstaBJvJeLsc2tfBJ7nwEiEfHh4AcXJDFo0ce/S4kLW8Lu69
+ MdhEoQ1evtUKdvnRgqGXDCUxUP3z2KkgrOyMJejEEBa0Jb+4NvboX5H6U
+X-Gm-Gg: ASbGnctAQoL44V5W/aKzMMZz6kvLEHeO9cEi25c6ZRutqoSGphOrWx6GNkS7Z8C0+Ro
+ C/0fo9RlL/cwWIBf919lHXgMYvFX0JFVo6RQpP8wpmFcvcy4aZOCrX1oW3zhzCi+2fryAMcX5rg
+ eDkovlFLrTnq6F+Gl6Ay2HDxkHEyJ9rH2SRZrkGsBGgar6ZCo1cYI/fsHcM7qNmeB8wLSvfqQbU
+ gPzIVNZRtX+t1ZV1BLryiWGbMiXkp1ysImZTIiuZ/UNFw6gKRvIKdSk3nD2kBzrmI6K+RWQlFWZ
+ 1HZocj61wmfUIP7deRPN7Ff971k2F/oQLrts7+wsAZ4n648dDALxKczo+m+8
+X-Received: by 2002:a05:600c:1f94:b0:450:6b55:cf91 with SMTP id
+ 5b1f17b1804b1-4531dde6b67mr11882405e9.6.1749536958234; 
+ Mon, 09 Jun 2025 23:29:18 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH2d+o6xVU1bg/OKIkvHWOzeq7rCVeFs1xA2pG8cHnwKMvU8kTxLrcP93w5+C9kOs138Qlftg==
+X-Received: by 2002:a05:600c:1f94:b0:450:6b55:cf91 with SMTP id
+ 5b1f17b1804b1-4531dde6b67mr11882245e9.6.1749536957843; 
+ Mon, 09 Jun 2025 23:29:17 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532464575sm11387795f8f.97.2025.06.09.23.14.52
+ ffacd0b85a97d-3a532435b16sm11394678f8f.46.2025.06.09.23.29.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Jun 2025 23:14:53 -0700 (PDT)
-Message-ID: <a766b316-2383-4b71-ab19-83869ffb6234@redhat.com>
-Date: Tue, 10 Jun 2025 08:14:52 +0200
+ Mon, 09 Jun 2025 23:29:17 -0700 (PDT)
+Message-ID: <138cee63-386d-4f80-a0be-de43cbb0303e@redhat.com>
+Date: Tue, 10 Jun 2025 08:29:16 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V4 43/43] vfio/container: delete old cpr register
-To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
- <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-44-git-send-email-steven.sistare@oracle.com>
+Subject: Re: [RFC PATCH v13 3/4] hw/vfio/ap: Storing event information for an
+ AP configuration change event
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
+References: <20250609164418.17585-1-rreyes@linux.ibm.com>
+ <20250609164418.17585-4-rreyes@linux.ibm.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,10 +131,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1748546679-154091-44-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <20250609164418.17585-4-rreyes@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -160,64 +159,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/29/25 21:24, Steve Sistare wrote:
-> vfio_cpr_[un]register_container is no longer used since they were
-> subsumed by container type-specific registration.  Delete them.
+On 6/9/25 18:44, Rorie Reyes wrote:
+> These functions can be invoked by the function that handles interception
+> of the CHSC SEI instruction for requests indicating the accessibility of
+> one or more adjunct processors has changed.
 > 
-> Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+> Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> ---
+>   hw/vfio/ap.c                 | 40 ++++++++++++++++++++++++++++++++++++
+>   include/hw/s390x/ap-bridge.h | 39 +++++++++++++++++++++++++++++++++++
+>   2 files changed, 79 insertions(+)
+> 
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 681fd4a4f1..874e0d1eaf 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -10,6 +10,7 @@
+>    * directory.
+>    */
+>   
+> +#include <stdbool.h>
+>   #include "qemu/osdep.h"
+>   #include CONFIG_DEVICES /* CONFIG_IOMMUFD */
+>   #include <linux/vfio.h>
+> @@ -101,6 +102,38 @@ static void vfio_ap_cfg_chg_notifier_handler(void *opaque)
+>   
+>   }
+>   
+> +int ap_chsc_sei_nt0_get_event(void *res)
+> +{
+> +    ChscSeiNt0Res *nt0_res  = (ChscSeiNt0Res *)res;
+> +    APConfigChgEvent *cfg_chg_event;
+> +
+> +    WITH_QEMU_LOCK_GUARD(&cfg_chg_events_lock) {
+> +        if (QTAILQ_EMPTY(&cfg_chg_events)) {
+> +            return EVENT_INFORMATION_NOT_STORED;
+> +        }
+> +
+> +        cfg_chg_event = QTAILQ_FIRST(&cfg_chg_events);
+> +        QTAILQ_REMOVE(&cfg_chg_events, cfg_chg_event, next);
+> +    }
+> +
+> +    memset(nt0_res, 0, sizeof(*nt0_res));
+> +    g_free(cfg_chg_event);
+> +    nt0_res->flags |= PENDING_EVENT_INFO_BITMASK;
+> +    nt0_res->length = sizeof(ChscSeiNt0Res);
+> +    nt0_res->code = NT0_RES_RESPONSE_CODE;
+> +    nt0_res->nt = NT0_RES_NT_DEFAULT;
+> +    nt0_res->rs = NT0_RES_RS_AP_CHANGE;
+> +    nt0_res->cc = NT0_RES_CC_AP_CHANGE;
+> +
+> +    return EVENT_INFORMATION_STORED;
+> +}
+> +
+> +bool ap_chsc_sei_nt0_have_event(void)
+> +{
+> +    QEMU_LOCK_GUARD(&cfg_chg_events_lock);
+> +    return !QTAILQ_EMPTY(&cfg_chg_events);
+> +}
+> +
+>   static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>                                             unsigned int irq, Error **errp)
+>   {
+> @@ -197,6 +230,13 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+>       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
+>       VFIODevice *vbasedev = &vapdev->vdev;
+>   
+> +    static bool lock_initialized;
+> +
+> +    if (!lock_initialized) {
+> +        qemu_mutex_init(&cfg_chg_events_lock);
+> +        lock_initialized = true;
+> +    }
+> +
 
+cfg_chg_events_lock could be initialized in a __constructor__ routine.
 
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
 
 
-> ---
->   include/hw/vfio/vfio-cpr.h |  4 ----
->   hw/vfio/cpr.c              | 13 -------------
->   2 files changed, 17 deletions(-)
-> 
-> diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
-> index f88e4ba..5b6c960 100644
-> --- a/include/hw/vfio/vfio-cpr.h
-> +++ b/include/hw/vfio/vfio-cpr.h
-> @@ -44,10 +44,6 @@ void vfio_legacy_cpr_unregister_container(struct VFIOContainer *container);
->   int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier, MigrationEvent *e,
->                                Error **errp);
+
+>       if (!vfio_device_get_name(vbasedev, errp)) {
+>           return;
+>       }
+> diff --git a/include/hw/s390x/ap-bridge.h b/include/hw/s390x/ap-bridge.h
+> index 470e439a98..7efc52928d 100644
+> --- a/include/hw/s390x/ap-bridge.h
+> +++ b/include/hw/s390x/ap-bridge.h
+> @@ -16,4 +16,43 @@
 >   
-> -bool vfio_cpr_register_container(struct VFIOContainerBase *bcontainer,
-> -                                 Error **errp);
-> -void vfio_cpr_unregister_container(struct VFIOContainerBase *bcontainer);
-> -
->   bool vfio_iommufd_cpr_register_container(struct VFIOIOMMUFDContainer *container,
->                                            Error **errp);
->   void vfio_iommufd_cpr_unregister_container(
-> diff --git a/hw/vfio/cpr.c b/hw/vfio/cpr.c
-> index f5555ca..c97e467 100644
-> --- a/hw/vfio/cpr.c
-> +++ b/hw/vfio/cpr.c
-> @@ -29,19 +29,6 @@ int vfio_cpr_reboot_notifier(NotifierWithReturn *notifier,
->       return 0;
->   }
+>   void s390_init_ap(void);
 >   
-> -bool vfio_cpr_register_container(VFIOContainerBase *bcontainer, Error **errp)
-> -{
-> -    migration_add_notifier_mode(&bcontainer->cpr_reboot_notifier,
-> -                                vfio_cpr_reboot_notifier,
-> -                                MIG_MODE_CPR_REBOOT);
-> -    return true;
-> -}
-> -
-> -void vfio_cpr_unregister_container(VFIOContainerBase *bcontainer)
-> -{
-> -    migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
-> -}
-> -
->   #define STRDUP_VECTOR_FD_NAME(vdev, name)   \
->       g_strdup_printf("%s_%s", (vdev)->vbasedev.name, (name))
->   
+> +typedef struct ChscSeiNt0Res {
+> +    uint16_t length;
+> +    uint16_t code;
+> +    uint8_t reserved1;
+> +    uint16_t reserved2;
+> +    uint8_t nt;
+> +#define PENDING_EVENT_INFO_BITMASK 0x80;
+> +    uint8_t flags;
+> +    uint8_t reserved3;
+> +    uint8_t rs;
+> +    uint8_t cc;
+> +} QEMU_PACKED ChscSeiNt0Res;
+> +
+> +#define NT0_RES_RESPONSE_CODE 1
+> +#define NT0_RES_NT_DEFAULT    0
+> +#define NT0_RES_RS_AP_CHANGE  5
+> +#define NT0_RES_CC_AP_CHANGE  3
+> +
+> +#define EVENT_INFORMATION_NOT_STORED 1
+> +#define EVENT_INFORMATION_STORED     0
+> +
+> +/**
+> + * ap_chsc_sei_nt0_get_event - Retrieve the next pending AP config
+> + * change event
+> + * @res: Pointer to a ChscSeiNt0Res struct to be filled with event
+> + * data
+> + *
+> + * This function checks for any pending AP config change events and,
+> + * if present, populates the provided response structure with the
+> + * appropriate SEI NT0 fields.
+> + *
+> + * Return:
+> + *   EVENT_INFORMATION_STORED - An event was available and written to @res
+> + *   EVENT_INFORMATION_NOT_STORED - No event was available
+> + */
+> +int ap_chsc_sei_nt0_get_event(void *res);
+> +
+> +bool ap_chsc_sei_nt0_have_event(void);
+> +
+>   #endif
 
 
