@@ -4,91 +4,140 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD0D5C677C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB1BC5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:52:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27k-0002p2-1w; Tue, 10 Jun 2025 12:46:56 -0400
+	id 1uP27l-0002qQ-NK; Tue, 10 Jun 2025 12:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uP1ZB-00033Q-GS
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:11:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uP1Z5-0001eu-QL
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:11:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749571862;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Lw4KCgn5AuZvkE6iDhSORyprWcfTe4OMDLQGuKVdJ68=;
- b=K/JPED1DWreLh6dNLi1Ky/KwB86/2PlF5N0I/zKkUZNOTtwG1XKB7dyZRuRLrMMu5K1qCR
- DRFNjaXSrONTHGbIDzuMovjEkYku4/oljRmjNzSjqnijojmdGNndqDjY2KKYpjdN+IAzBa
- cxXIlfdRmP2xYnN8JBUTpxUac1MTvlM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-335-_TOcaThQOzCPbBoPH1Cn6Q-1; Tue, 10 Jun 2025 12:11:00 -0400
-X-MC-Unique: _TOcaThQOzCPbBoPH1Cn6Q-1
-X-Mimecast-MFC-AGG-ID: _TOcaThQOzCPbBoPH1Cn6Q_1749571859
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a50049f8eeso2558901f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:11:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1uP0Ir-00054R-AQ; Tue, 10 Jun 2025 10:50:17 -0400
+Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <groeck7@gmail.com>)
+ id 1uP0Io-00080Q-UO; Tue, 10 Jun 2025 10:50:17 -0400
+Received: by mail-pj1-x1035.google.com with SMTP id
+ 98e67ed59e1d1-3138d31e40aso1999916a91.1; 
+ Tue, 10 Jun 2025 07:50:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749567012; x=1750171812; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:from:to:cc:subject:date:message-id:reply-to;
+ bh=Cart6UfqDj9LT/UlAicnGPC14gwi5qD74eD6K86z9MM=;
+ b=Y8xJ8V0o4RZ0qrrGZ4/XVwJep4g+4cFVrVRSIlXwB73LTY7euGcx+y48Ci0hp2Ba1p
+ oP99L9GQh+NskklZn8WqquaPMlbGtJ5aLmHjv8hiNea+eWEZBo6hs2oENz/1SMTe/5YJ
+ ekRfpi+P1yfxOLGQmt5myE6/ST/BtRYkoTNhzkgSsHdPhglFeikebDx1u9TGe/Zhn1NQ
+ 8Rf2IaSzxeZk4V59j4yyASNQeat104zyKXQN+SgXJOoPtx07V+6kGP5+PC/FLJ3siQ/Y
+ rR0GctMHHd/OdQI52Xozf6KiGruY6R1bAIYKVEb4Qx8dKmRl9iWfuwvllJv17AGEggI/
+ PbAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749571859; x=1750176659;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Lw4KCgn5AuZvkE6iDhSORyprWcfTe4OMDLQGuKVdJ68=;
- b=ZosxGoMOjKNuKkOjMs5y4B4ml+OvVt92p9ZSRxtgKI2xucZH96QRJBmOuTzr29YOzm
- QlKIJ8bRsDoF7lytzPcIJLlWLEpJ82GRRp2s7gKhHJobk/rjk1iDogIN33F2i6ihf8Qr
- jEGv9Dp735Yexb+GJMBrAahXEr6e+UbdyN+2ZSxYCM2kM9Du8gIC/XYBM9JfVhVEbz1n
- jtaIkCDn8ZLkRry7dOKIVCHI9p/YH/C4v28UN9NvGdARVlp6tRcjD77xSsSqP7alRgx+
- qfTpGBpx3LmF66zIn9B/c5YfeNgHjB2Eqw4lixJm7kwn1K3YEEyjxMsAj/cR1teU7Kg/
- 69+A==
-X-Gm-Message-State: AOJu0YwTmBMNBBiTT20+pk/FLVv+5TPgfZPI+P9BwZh6gVcco+6X4jzn
- Nx5atZ5AWJJY17DPyeH76RK7C1XsT5qNk78FLuNKcK7YOQjMO65cPfHzIj8FFJQrzPrDsfinPaz
- OH2zSW6z9tCsuxfKiZAUfDNG7hmoIExJSFKvSVryAGgLrwdzS2Id+aXmbNVI6SnyVZnAOyWWrIS
- dlm5tgAtMeTW7vb+x+kLJwvypuMAvj7aE=
-X-Gm-Gg: ASbGncticym5frAPbPvFkueO+ZqRWYVZKICDD+dKfqiO62bcNLyqaeVBUGsG2uqEc71
- ZapxBop2icIvS5qBSNzvZgnmH+mjZ+6wn6uvlb4bCRl9uDKs3Q7kQbFNX6ZcZkzH9hblqgi/B/a
- brfQ==
-X-Received: by 2002:adf:f58c:0:b0:3a5:39d7:3f17 with SMTP id
- ffacd0b85a97d-3a539d73f90mr9783997f8f.47.1749571859468; 
- Tue, 10 Jun 2025 09:10:59 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF8rvEMsKyQJ+gIF14zjTJ0VBycm1tLlvb9Fi2AQvxcIw7deQAd1I27kyWkq0ZOiMcEThd5tumYH8vB1D0U1VQ=
-X-Received: by 2002:adf:f58c:0:b0:3a5:39d7:3f17 with SMTP id
- ffacd0b85a97d-3a539d73f90mr9783966f8f.47.1749571859026; Tue, 10 Jun 2025
- 09:10:59 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749567012; x=1750171812;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:sender:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Cart6UfqDj9LT/UlAicnGPC14gwi5qD74eD6K86z9MM=;
+ b=hSN9+DwmieXH2FoPcYhW35xyVPntf7JPx76VHhe++8Rq+J7uilmTmnefYqJfk/LzMT
+ slthO7PSB5XRtKpNaQ+qokzewXunI2aXyWrO6sXEISXYx5pr29OKQARDfNJQeOldzsCq
+ Z/CRTQt0OiYiSgKqpuf4TV9BxGiz8xkLHa+jlPfnnCwZXqBY2YWXRvT+CI5s1JZIp7dd
+ 1VhYgX7mwUbCtNnaOmmH3lBmOj1h9Us7wW2fnFtoh2/jMTMIpMIpe19ULgwHDxZuOAC2
+ zXOpruAfcVqPgK7xz0se/D92XwOazPQFupeStEMDpULmHvvx25LlhDH2yBuDIzVqf/FI
+ x9sA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUa8XQUswivAGygyct5pOKgOztZI9z+PXRb2fCbqTvg3bLpQJiG5BCtJnTiawiaPUdDkBnechaFXw==@nongnu.org,
+ AJvYcCVVwTZaZEyg02tVdP5LGDTTI0IEnixOZjAwdsIjGkhGdd6b7p1J69xEr61TX2Z9KK6G460WP45zLBnfVw==@nongnu.org
+X-Gm-Message-State: AOJu0YymZMcdEANWkFQEtJRkyvdH+cl1Ok/YWtOthqUrqlYJGvdtypW4
+ M7akHoAOZ9NZitvZGtMReZG6gTOZtpE19PaExkjsGVWHJQYpbJWmgkw7
+X-Gm-Gg: ASbGncsVAH991nnFpVp5reuFTWPL/obAt3qxDsJ7pnYcWaAnI0aZCwGVSTSdgtsTp8g
+ Uwjih76zTPxQ2zQ1eqcU4KFwMhlP2E9ZwxwqWl0pcVjKwpbK4m3JUCyyErgYktew+i7215OjrsY
+ JWZNA6npfalIrN5U5O4bei+RDH9F4yLaVyuv0NLXwF0QEGUn3wj7h2NDL6lswGUJKtA45Gx0OLP
+ YRjR7gBcgaC/ShIb2/rXBNin+fajlsHWnCqzuC77UFwDsKjSWvcEuF5GALZwOuxE9GESBjZzyaF
+ jqFpz9ygD41sHEHoDUw+d0WJ58LWUE8tXk9RFezEemtKQ/luPLBuY6VDz1yj1s+dnHGX5QH+aY3
+ oYEm2oQRCsE+XgrUUY5Lwlkd0Z29zxnrjsLw=
+X-Google-Smtp-Source: AGHT+IEqga3bND3YF4brMGPiwKCmNou27huTqidwK9PTWxMFvNAta6OXqaMFlEPz9zzQjH/fmjAKXQ==
+X-Received: by 2002:a17:90b:540f:b0:312:e731:5a66 with SMTP id
+ 98e67ed59e1d1-313472d087amr23379561a91.3.1749567012521; 
+ Tue, 10 Jun 2025 07:50:12 -0700 (PDT)
+Received: from ?IPV6:2600:1700:e321:62f0:da43:aeff:fecc:bfd5?
+ ([2600:1700:e321:62f0:da43:aeff:fecc:bfd5])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-313a688b304sm247140a91.1.2025.06.10.07.50.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 07:50:11 -0700 (PDT)
+Message-ID: <538d51fd-29f9-4d4c-a23c-678434743f77@roeck-us.net>
+Date: Tue, 10 Jun 2025 07:50:10 -0700
 MIME-Version: 1.0
-References: <20250605101124.367270-1-pbonzini@redhat.com>
- <CAMxuvazN2OMc1VANJVMgj0nQ1KCCop46A151uAUe0mdATrQjCg@mail.gmail.com>
-In-Reply-To: <CAMxuvazN2OMc1VANJVMgj0nQ1KCCop46A151uAUe0mdATrQjCg@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Tue, 10 Jun 2025 18:10:47 +0200
-X-Gm-Features: AX0GCFsdiMxgV9drCac9melcjaVIHtck4Y6vTQFlL7mrYgE6AYChETUHOZm5-z8
-Message-ID: <CABgObfYt=Gg=R6cekCTbYhmF+2P-9DoOCSeaaWHHGbMmew2ZyQ@mail.gmail.com>
-Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
-To: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, armbru@redhat.com, 
- mkletzan@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/arm/npcm7xx_boards: Add support for specifying SPI
+ flash model
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Tyrone Ting <kfting@nuvoton.com>, Hao Wu <wuhaotsh@google.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20250610012851.1627715-1-linux@roeck-us.net>
+ <CAFEAcA-aznHrcSk9xfmLHkpJTiabjd4oX2KnvC5TXkkLgW6n8A@mail.gmail.com>
+ <50464a50-1ddc-410b-bc5b-ec68b895b797@roeck-us.net>
+ <CAFEAcA9CWeEmrZ5vTr7M-UZfH3cp5Y9EZUeGPfc2s75Tz2-K9g@mail.gmail.com>
+Content-Language: en-US
+From: Guenter Roeck <linux@roeck-us.net>
+Autocrypt: addr=linux@roeck-us.net; keydata=
+ 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
+ np3900V20aS7eD9K8GTU0TGC1pyz6IVJwIE=
+In-Reply-To: <CAFEAcA9CWeEmrZ5vTr7M-UZfH3cp5Y9EZUeGPfc2s75Tz2-K9g@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
+ envelope-from=groeck7@gmail.com; helo=mail-pj1-x1035.google.com
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.065, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,69 +153,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 10, 2025 at 3:53=E2=80=AFPM Marc-Andr=C3=A9 Lureau
-<marcandre.lureau@redhat.com> wrote:
-> On Thu, Jun 5, 2025 at 2:11=E2=80=AFPM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->> This is just an extremely minimal extraction from the patches at
->> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redha=
-t.com/,
->> limited to generating structs and enums from the QAPI schema.
->> It does not include them in any crate and does not compile them.
->
-> Do you keep an up to date branch for those patches?
+On 6/10/25 06:58, Peter Maydell wrote:
+> On Tue, 10 Jun 2025 at 14:31, Guenter Roeck <linux@roeck-us.net> wrote:
+>>
+>> On 6/10/25 01:42, Peter Maydell wrote:
+>>> I think the question I would have here is "is this the flash
+>>> device the hardware actually has?". If QEMU's using the wrong
+>>> flash type, we should fix that. If QEMU's modelling the right
+>>> flash type and the kernel doesn't implement it, then that's
+>>> a kernel bug and the right fix is to get the kernel to
+>>> handle that flash type.
+>>>
+>>
+>> That isn't the point.
+> 
+> It is the point from my perspective. This board type is
+> supposed to be modelling real hardware, and therefore in
+> determining how it should behave we start by saying "so
+> what does the real hardware do?". Adding extra behaviour
+> that the real hardware does not have is something that
+> has a tendency to lead into unspecified, untested and hard
+> to maintain complexity.
+> 
 
-I can add them to my rust-next branch but they can in theory just be
-applied to upstream/master.
+Depends. I would argue that the ability to easily test all
+supported flash types makes the code more robust, not less robust.
 
-> I fail to understand the advantage of going through Serde to deserialize/=
-serialize from C when you can have C types in Rust - having less generated =
-code?
+>> Yes, one is that qemu's emulation is broken, the other is
+>> that I wanted to be able to test with other flash types anyway. I understand
+>> that this 'violates' the idea of exactly emulating some hardware, but I want
+>> to be able to use qemu beyond that.
+> 
+> Why this machine type in particular, though? You say in the commit
+> message that aspeed lets you specify the flash type.
+> 
 
-It's indeed trading generated Rust code for generic serializers and
-deserializers + #[derive(Serializer, Deserializer)]. It's not the
-primary reason but the size of your code generator patches was a bit
-scary indeed and I don't want to inflict too much review effort on
-QAPI maintainers.
+Yes, the aspeed emulations let me provide spi-model= and fmc-model=
+board parameters which I use to work around the problem there. That is why
+I thought a similar solution might be acceptable for Nuvoton boards,
+but apparently I was wrong.
 
-But also, I'm not sure that the C types are needed at all for
-implementing QAPI commands. The QAPI command generator could have a
-directive like 'rust': 'qga::qmp'" directive (or maybe just
-'language': 'rust', I don't know) that would generate Rust
-marshaling/unmarshaling functions:
+>> Either case, I did some debugging: For flashes with sfdp data (mx25l25635e),
+>> qemu returns bad sfdp data (at least with quanta-gsj), causing the kernel
+>> (as of v6.16-rc1) to bail out. For other flashes (mx66u51235f) it returns
+>> no sfdp data, but the upstream kernel now depends on it.
+> 
+> That sounds like a bug we should fix. Would one of the Nuvoton
+> maintainers like to take a look?
+> 
 
-pub extern "C" fn qmp_guest_get_host_name(
-        args: *mut QDict,
-        ret: *mut *mut QObject,
-        errp: *mut *mut bindings::Error) {
-    let args =3D unsafe { from_qobject::<()>(args) };
-    match ::qga::qmp::guest_get_host_name(args) {
-        Ok(ref v) =3D> unsafe { *ret =3D to_qobject::<GuestHostName>(v); },
-        Err(err) =3D> unsafe { err.propagate(errp); }
-    }
-}
+I don't think it is a Nuvoton specific problem. I see the same or similar
+problems with Aspeed boards. Besides, the lack of sfdp data for mx66u51235f
+is most definitely not Nuvoton specific.
 
-and this (more specifically from_qobject/to_qobject) could also use
-serde, this time to go directly from QObject to Rust and back. A
-QObject serializer/deserializer should be easier to write (and very
-similar to existing code in serde_json for
-https://docs.rs/serde_json/latest/serde_json/enum.Value.html), so you
-could reach the stage of your old posting with qapi-gen changes that
-are little more than these two patches.
-
-> I also do not fully understand how that would work.
-
-To be honest neither do I entirely. But what I understood is that
-Serde is based on a visitor API that is very similar to what we have
-in QEMU. See the above serde_json link where it implements Serializer
-and Deserializer, and the blog post at
-https://ohadravid.github.io/posts/2025-05-serde-reflect/ should be a
-good introduction too.
-
-That said: the *possibility* of using Serde is why I started from the
-native structs. I'm not wed to it and generating/converting the C
-types remains a possibility as well.
-
-Paolo
+Thanks,
+Guenter
 
 
