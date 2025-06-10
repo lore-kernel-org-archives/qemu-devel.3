@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E50A5C5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:43:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58667C5B552
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 12:43:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOyG7-0002fy-BO; Tue, 10 Jun 2025 08:39:19 -0400
+	id 1uOyHO-0004wI-Fr; Tue, 10 Jun 2025 08:40:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOyEr-0001I9-IV
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:09 -0400
+ id 1uOyFW-0001bh-UC
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uOyEo-0000Pr-Gz
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:00 -0400
+ id 1uOyFT-0000Uo-Uh
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 08:38:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749559077;
+ s=mimecast20190719; t=1749559101;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=S+Yf/jmV3e4LBvtju25q+/FPCjoN9gPaEwmhnQLwbYw=;
- b=hMReCPsqT/DiYNWtjukiF6Bf7UbMcJcKGko36jxWgYGGlUnbJQ1xiPLOGMpENQmAZEywAN
- MmG06c6zZUQwNJp266lJPl7aEYmoLgRMbY8I441vKL6EFA/dQr7FXHWZN0wPG55yL9Rr3L
- g2nMEPgPSzfdAEnTJhsXfyCl1VQUzV8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=p+0Eft3NobaxXmgzhgvpihtVhtXWvVKbDm3yOkpCWVY=;
+ b=SMsMuwbxi1BTTccBnfKt5N/O4NYQXqarw/8LSYuOyj6mVZ/Vt27DdjL44QXGX5kEzpOGyi
+ oj/HEYiJU3p8XGdV+HRsH5JmR7ZGnufjbQLbOpS/uoz7M4lprGTXu4zqgcRNB8PKwM7ZTw
+ Hp2mXd+rYKugKBsqJsrYSHwXcuUvLr0=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-rTFqMD2WOJOsHV3kkhI31A-1; Tue,
- 10 Jun 2025 08:37:54 -0400
-X-MC-Unique: rTFqMD2WOJOsHV3kkhI31A-1
-X-Mimecast-MFC-AGG-ID: rTFqMD2WOJOsHV3kkhI31A_1749559073
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-182-gcrg2fn-N9OQwRe-miZAqg-1; Tue,
+ 10 Jun 2025 08:38:18 -0400
+X-MC-Unique: gcrg2fn-N9OQwRe-miZAqg-1
+X-Mimecast-MFC-AGG-ID: gcrg2fn-N9OQwRe-miZAqg_1749559097
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1938E1809C90; Tue, 10 Jun 2025 12:37:53 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1E4EA195606A; Tue, 10 Jun 2025 12:38:17 +0000 (UTC)
 Received: from toolbx.redhat.com (unknown [10.42.28.87])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CA05130001B1; Tue, 10 Jun 2025 12:37:50 +0000 (UTC)
+ id F278930001B1; Tue, 10 Jun 2025 12:38:14 +0000 (UTC)
 From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -54,10 +54,9 @@ Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>, qemu-block@nongnu.org,
  Stefan Hajnoczi <stefanha@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH 15/31] hw/dma/xlnx_csu_dma: skip automatic zero-init of large
- array
-Date: Tue, 10 Jun 2025 13:36:53 +0100
-Message-ID: <20250610123709.835102-16-berrange@redhat.com>
+Subject: [PATCH 24/31] hw/ppc/pnv_occ: skip automatic zero-init of large struct
+Date: Tue, 10 Jun 2025 13:37:02 +0100
+Message-ID: <20250610123709.835102-25-berrange@redhat.com>
 In-Reply-To: <20250610123709.835102-1-berrange@redhat.com>
 References: <20250610123709.835102-1-berrange@redhat.com>
 MIME-Version: 1.0
@@ -73,7 +72,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,30 +88,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The 'xlnx_csu_dma_src_notify' method has a 4k byte array used for
-copying DMA data. Skip the automatic zero-init of this array to
-eliminate the performance overhead in the I/O hot path.
+The 'occ_model_tick' method has a 12k struct used for copying
+data between guest and host. Skip the automatic zero-init of this
+struct to eliminate the performance overhead in the I/O hot path.
 
-The 'buf' array will be fully initialized when data is copied.
+The 'dynamic_data' buffer will be fully initialized when reading
+data from the guest.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 ---
- hw/dma/xlnx_csu_dma.c | 2 +-
+ hw/ppc/pnv_occ.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/dma/xlnx_csu_dma.c b/hw/dma/xlnx_csu_dma.c
-index 3db3904d83..d8c7da1a50 100644
---- a/hw/dma/xlnx_csu_dma.c
-+++ b/hw/dma/xlnx_csu_dma.c
-@@ -287,7 +287,7 @@ static uint32_t xlnx_csu_dma_advance(XlnxCSUDMA *s, uint32_t len)
- static void xlnx_csu_dma_src_notify(void *opaque)
- {
-     XlnxCSUDMA *s = XLNX_CSU_DMA(opaque);
--    unsigned char buf[4 * 1024];
-+    QEMU_UNINITIALIZED unsigned char buf[4 * 1024];
-     size_t rlen = 0;
+diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
+index fa6f31cb8d..24b789c191 100644
+--- a/hw/ppc/pnv_occ.c
++++ b/hw/ppc/pnv_occ.c
+@@ -789,7 +789,7 @@ static bool occ_opal_process_command(PnvOCC *occ,
  
-     ptimer_transaction_begin(s->src_timer);
+ static bool occ_model_tick(PnvOCC *occ)
+ {
+-    struct occ_dynamic_data dynamic_data;
++    QEMU_UNINITIALIZED struct occ_dynamic_data dynamic_data;
+ 
+     if (!occ_read_dynamic_data(occ, &dynamic_data, NULL)) {
+         /* Can't move OCC state field to safe because we can't map it! */
 -- 
 2.49.0
 
