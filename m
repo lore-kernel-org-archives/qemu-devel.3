@@ -4,147 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 808EFC5B552
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 10:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C43BC61DB2
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 10:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uOvyk-0006uW-60; Tue, 10 Jun 2025 06:13:14 -0400
+	id 1uOw89-0008ID-NV; Tue, 10 Jun 2025 06:22:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOvyX-0006tp-Se
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:13:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uOvyT-0005BO-TV
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:13:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749550374;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=s7FOc2SY/YBaFoWfcGiJ4UIZ/gBq2K5p+rIbl8QyGTo=;
- b=R0a324l6+YmY0RQ5IHV/gtNpJ7C8nuk4j7O9hNtZXpE0na62hKNoFJGEAGlQYrcNid9HS+
- BIWN1hZqvIj0TuYp2U/VddP+84WaHCk+6WNSZQkDUwZHMWdyNfWk4riNa3MORyVoC2QQvO
- K8K+yh5yPXhXEkkRCCmY2FiQ4moYe/o=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-553-ObVuM07WOgyqskWMWe_zzg-1; Tue, 10 Jun 2025 06:12:52 -0400
-X-MC-Unique: ObVuM07WOgyqskWMWe_zzg-1
-X-Mimecast-MFC-AGG-ID: ObVuM07WOgyqskWMWe_zzg_1749550371
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a503f28b09so2528876f8f.0
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 03:12:52 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uOw88-0008Hx-Nc
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:22:56 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uOw86-0006PZ-4v
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 06:22:56 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-450cb2ddd46so31808925e9.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 03:22:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749550970; x=1750155770; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:to:from:date:from:to:cc:subject:date:message-id
+ :reply-to; bh=7lslP2hFur8NQXFSzATNMpM+eyqV7pzgPRYWwkQKhic=;
+ b=CAnkuyAM6rbohCNA9A2Xc3WhscHQFiQPF0wRcvF0Fy8dcKWyk/lv/kIP89yElTQSJj
+ 257+yk2fzRPy9WiYrJhdqxyX83s3RxGais1OjeX+nLAMDAyKrHGIzm0KyLKs4FYZFTgH
+ 3XrA//EvKkoZXoLwPDJHZs7pLIkywRedxvEGRU3QkVpcUDfXGd0TOTl4Mt8MpZE6bbaD
+ qkeJCbKdWRRyebczSTErVoZQx2BLxFuE2ihvxcYTd6SJCQtinIhwMkw5A2xhO01eCI9t
+ wXZj5fOK6hAXlZuVL/SCsRuB2TH8bYEhQ5lCTGFJvFJ6TGPcaYl8gUBJ/LSmh2EUTprt
+ omoQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749550371; x=1750155171;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=s7FOc2SY/YBaFoWfcGiJ4UIZ/gBq2K5p+rIbl8QyGTo=;
- b=NVGKk7zefyoZ5k3Lx1S8VwDGMBbT8IjvnmJ0SkCogXvwb2QWZR2SWBWzPOSYNsQtna
- l79DCWhbbBFG+VnDyJUNbNlKolIt9oI4JLZ+3VZcpXmJf3u6uSpt6t6zv2vzEDUcAwRF
- UH5BAnpXwWO4zDYs/J8VLl24G8A5IaT0NcFb8y5g0HTkU0XNYp0mHNRaU4FDayR5Z5zx
- NGTiGOx+4gug7G7e3qq63VmwaY61nrQ68tDBJyq3IUKgYU0EZnYKmUSF2otYpk32lbft
- 0HiLpYNXksLSs+pWUHcIjNwl52DiZuzgZcRRq+daUfFLlHNFp2rEpUkqeo/dw6GkSUgk
- CbjQ==
-X-Gm-Message-State: AOJu0YyApbqKdDo+Ho9uvfoew1bnKrLSrVQFCovXFyU8GovaG4U3Y/2r
- Dg1gwYCp3n7tdcYf35qDv595MXZcDshAJC8H05qXs3zE1O2Rzp2F7S5CSOeAIE0KdUfTs+ti74g
- YRyUnLBK8VhpjX2FSmxVXi7kkidvRnUzdZGnnYApS/hFdldveaQLngSfw
-X-Gm-Gg: ASbGnctG58ghQscI4IpuyR9uhFkiX90HwXemKHdz+B63XqxTbg+Q7dWrEDzS/kHA8ob
- B90TbqtFocYNEHxZgpCdKsCSSytS6B/KL1nzHmBs5CPU/GnrO9PS8RvVBFvi0hqB0NRGpGJll95
- EqNPVCBU0QS+aDqVVzts7uPa6fRyIe4vwtyjIGVGyxrgi+ecCOfZyokS+ZB5NwuznfC0HReI4jn
- CqzzTbre1Lfkb3FecyU6TaS/u2qdsjG/7bhFtBaKIPi5A93QJ1cLoCTToBx7lpW2FG5aSTL225f
- vhV42SohtAzC5zGvWc4fK/CvKguwiPJ0N1d/tyIDjFg8i8kLCMCIr34OC8W7
-X-Received: by 2002:a05:6000:220f:b0:3a3:64b9:773 with SMTP id
- ffacd0b85a97d-3a5513edd39mr2507032f8f.10.1749550371440; 
- Tue, 10 Jun 2025 03:12:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGLgcKL6oLcn6T1H50bQHegkl+PI0ggPEl9WiKUTTvcNMZri4+jlZ2lDZH0k9lSbIWhAw22UQ==
-X-Received: by 2002:a05:6000:220f:b0:3a3:64b9:773 with SMTP id
- ffacd0b85a97d-3a5513edd39mr2507012f8f.10.1749550371106; 
- Tue, 10 Jun 2025 03:12:51 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532436871sm11736334f8f.49.2025.06.10.03.12.50
+ d=1e100.net; s=20230601; t=1749550970; x=1750155770;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=7lslP2hFur8NQXFSzATNMpM+eyqV7pzgPRYWwkQKhic=;
+ b=ZcT/Uss7dlwbBtszMsdUkdyoVT1qejmiZk0FxLZocJsGJb+rveJms6A9NLby0ljClR
+ wiNkiPkzsLu8xQcPqZDLdbxUR9hKcZzW2PUNM+z5zU5Bgndq2gn/f8XmFpOv1fYdu0jp
+ wDK9tb9mHh9Sat8UBH7grFjy4TJEO04OUxkfPPYj7OoJtToOrzNqgg3Zf24D5TeVN9/3
+ xoNa7pekh7kJNRS0esyFKR1pfVTIz/x4HzP4xyYAfa6G3llB7ghzH/gY0hHnPCxAKTi9
+ sr8k/mzm4iKAwvVo8Eq746aZzFjoLr1qV2TmOT+jkzMBUx/TnDoSlC8LH3aRQZtEocgK
+ tvMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX7pa0lugl/bMrXgw7SYiXj9sacE8Dge25vY8JE444bLAMsK8gR9Bnsb6KcUBOuZqAYK3F7KcYo5xM2@nongnu.org
+X-Gm-Message-State: AOJu0Yy/wlORw0EM5AInSAlutBeVqJpo+1vzgYaSJNlr98a+YpgTJcwq
+ XUaYc9in6uJw8JGlj69fUD8f7vJus/GYVRNN49jDxOMuEPMlza3Qv91QJbKELw==
+X-Gm-Gg: ASbGncsdVmNdJCqID8hUkiBw/kurnEemdLIH6CRgCaigh8eX7YoTwBeXa4e//wwTFXp
+ 1+1H/ouqo3iirL0AAJTh/E74NxNWIbG1piS7YCd+W/29iN4eG1hLlO1eZmqfXBrD9wgYURo59QG
+ NW2/DoCJUAqrPrgtMKtEecorjE5eaXVZXmlgR33ntVSwLQySlLNDLgCP88p/G61prKrIcf9uO/U
+ Ye7//LyIDOMp8zIuWGiV64Cfo3JdXU+lJgmfaP+eseb/tKjWccBEDinkCJQ8NmCN1+oCFSqZ2v1
+ TMn7hYd9mR2Jtus1zRW0VfMnbXgJMRk0I3E1rHTU5St+yUAs+jh1FRIz
+X-Google-Smtp-Source: AGHT+IGKWY2tPpaLCP5QceZnf7fzrMquWPtxjBa4Epy4HZCQ3Us7Jam6A4KviorLp2057ZYtYRp/XQ==
+X-Received: by 2002:a05:600c:3493:b0:450:d386:1afb with SMTP id
+ 5b1f17b1804b1-4531de060c7mr18662505e9.9.1749550969619; 
+ Tue, 10 Jun 2025 03:22:49 -0700 (PDT)
+Received: from [127.0.0.1] ([185.238.219.2]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45209ce17f9sm139311105e9.11.2025.06.10.03.22.48
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Jun 2025 03:12:50 -0700 (PDT)
-Message-ID: <4cb65486-7443-452f-8c82-da16576c7e47@redhat.com>
-Date: Tue, 10 Jun 2025 12:12:49 +0200
+ Tue, 10 Jun 2025 03:22:49 -0700 (PDT)
+Date: Tue, 10 Jun 2025 10:22:40 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?ISO-8859-1?Q?Alex_Benn=E9e?= <alex.bennee@linaro.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: Controlling time in QEMU
+In-Reply-To: <b3cef05e-8bb5-4390-8b43-914adca3b3b6@linaro.org>
+References: <b3cef05e-8bb5-4390-8b43-914adca3b3b6@linaro.org>
+Message-ID: <8CDF867E-5AB2-43B6-B271-B350E833316E@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 05/23] vfio-user: introduce vfio-user protocol
- specification
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250607001056.335310-1-john.levon@nutanix.com>
- <20250607001056.335310-6-john.levon@nutanix.com>
- <ef16fe1a-92b1-4523-a214-08d90c844519@redhat.com> <aEgA_U5SZiYWs__7@lent>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aEgA_U5SZiYWs__7@lent>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -160,41 +103,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 11:55, John Levon wrote:
-> On Tue, Jun 10, 2025 at 11:38:29AM +0200, Cédric Le Goater wrote:
-> 
->>>    docs/devel/vfio-user.rst       | 1522 ++++++++++++++++++++++++++++++++
->>
->> I think this file should be split in several smaller files. The
->> protocol specification part belongs to "System Emulation Management
->> and Interoperability" section.
-> 
-> I can move it to interop/ sure. Why must it be split up ? It's nearest analogue,
-> vhost-user.rst, is one file, and I think that's better for a protocol
-> specification.
-> 
->> We already have a docs/system/devices/vfio-user.rst which needs some
->> care.
-> 
-> My series adds this file. This is the user docs, including a device
-> example, so independent of the protocol specification.
-
-ah yes. The QEMU documentation is a bit messy. Not your fault.
-
-> Please let me know what care it needs!
-
-sure.
-
->> (and functional tests)
-> 
-> Mark is working on them, there are some difficulties...
 
 
-Which kind ? This is important to have and I will be reluctant to merge
-any support without tests. It is OK to merge a dummy device implementation
-for the tests since they provide a good example.
+Am 6=2E Juni 2025 19:03:32 UTC schrieb Pierrick Bouvier <pierrick=2Ebouvie=
+r@linaro=2Eorg>:
+>Hi,
+>
+>I recently needed to slow down time within a virtual machine, due to a ti=
+meout being hit because my QEMU binary which was not fast enough (gcov debu=
+g build if you're curious about the use case)=2E
+>
+>Currently, people tend to use -icount shift=3DX with low values for that,=
+ as it roughly maps time to how many instructions were ran=2E
+>As well, I've been working on ips (Instructions per second) plugin [1], w=
+hich allows to slow down QEMU execution by sleeping, as suggested by Alex=
+=2E It's using a new clock update API [2], that is limited to move time fas=
+ter (jump to future time), but not slower=2E
+>
+>After looking at how all this implemented, I am wondering why we don't si=
+mply fake real time QEMU is using as a reference, which is based on gettime=
+ofday [3]=2E
+>
+>Using faketime, which fakes gettimeofday I've been able to manipulate QEM=
+U time:
+>- faketime -f '+0 x10' qemu-system-aarch64: boot timestamp is 14s
+>- faketime -f '+0 x0=2E1' qemu-system-aarch64: boot timestamp is 0=2E13s
+>In both cases, the real boot time (QEMU execution) is around 3s=2E
+>
+>It works as expected, speeding or slowing execution without impacting QEM=
+U speed itself, which can run without needing to do any artificial sleep or=
+ clock manipulation=2E If a program in guest vm sleeps with an absolute tim=
+e, it will be multiplied by the factor, which results in significant slowdo=
+wn=2E But it can't be avoided, by design=2E
+>By using a time factor big enough (x200), it can even trigger rcu_preempt=
+ stall detection in Linux guest kernel=2E
+>
+>As it seems a bit too good to be true, time for questions:
+>- Has it already been considered?
+>- Any obvious downside I might have skipped?
 
-C.
+The only downside I can see is that it seems to disturb QEMU's internal ti=
+mekeeping=2E The GTK gui freezes for quite some time when the time facor is=
+ very low, e=2Eg=2E 0=2E001=2E
 
+Best regards,
+Bernhard
 
+>- Would that be interesting to offer such a feature in QEMU itself
+>  (-time-dilation 0=2E10)?
+>
+>[1] https://gitlab=2Ecom/qemu-project/qemu/-/commit/72db6d54a4a9203736261=
+fc63f32f6cd3486b7e4
+>[2] https://gitlab=2Ecom/qemu-project/qemu/-/commit/847a65dd76bf1868c7966=
+a2b2608dcd00cb68dc7
+>[3] https://gitlab=2Ecom/qemu-project/qemu/-/blob/master/include/qemu/tim=
+er=2Eh?ref_type=3Dheads#L809
+>[4] https://github=2Ecom/wolfcw/libfaketime
+>
+>Regards,
+>Pierrick
+>
 
