@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE69EC5B543
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FE0C5B543
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Jun 2025 16:48:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP27v-0003U8-76; Tue, 10 Jun 2025 12:47:07 -0400
+	id 1uP27p-00031B-Em; Tue, 10 Jun 2025 12:47:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uP1sx-0007kd-Hs
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:31:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15i-0004YF-DC
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:46 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mst@redhat.com>) id 1uP1sv-0004nA-Lw
- for qemu-devel@nongnu.org; Tue, 10 Jun 2025 12:31:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749573094;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=uEnFzQX+3AN5Mg1ENclmMV60pj/YFE2y+k8hgAKqrQk=;
- b=AsQ0PZ/TRGN/2YFbbVw1ORGU9q9duHDSnq3Sz0rqT3LPllrUhp7dn/vZOirg84Lsf9gpfB
- Y5du0rIVLh6zC3Stpk69D59f9237HLsImBY6/KgIXVwcGrX8jg2eokLBBXJ5/BYYBNvJiT
- eUtSlZeu3ia1UsoobWmMcsKms+mo+8M=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-61-wc5BWJ87MmSeTRFBKch6ug-1; Tue, 10 Jun 2025 12:31:32 -0400
-X-MC-Unique: wc5BWJ87MmSeTRFBKch6ug-1
-X-Mimecast-MFC-AGG-ID: wc5BWJ87MmSeTRFBKch6ug_1749573091
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4eb9c80deso2107996f8f.0
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 09:31:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749573091; x=1750177891;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=uEnFzQX+3AN5Mg1ENclmMV60pj/YFE2y+k8hgAKqrQk=;
- b=XNMg+xUOFxsc4u7aBwgBPfuPkoLFvAs0rT7JUpJjTALYIidplRoxQhvk5b6OrpVafM
- GTHP6uNtFzaf17po8RkCe9ur3bRzh4hg0NuosuMAvHlHMNtnPAKv5XkPPcF83gOn3qBZ
- GGYM0n+26whKotHZP1TvJdfZ5BWSua/A5p6BfKFOn4jxmwxmo9TgLDJlC7rCGp1GAL0+
- oWpa0jrV3MUHSjm13427WYZfenQhsD6wvfQskb+d2IGbOmq2ZORezZ9580ZtRj4xtCOI
- iudVPnWW91nFQBnuk4CZE+bBBlDFckhZ9bkmSZ33hRoLeyeMbBSPWTilomX4rgPXcbu+
- SwlA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnFdEgsYGki+QX1JIz+OX3/wDsMn9lz7sX/qMooEP06UR8btejk7XYFkBG/bPW5eZzZ870DM2wXWEm@nongnu.org
-X-Gm-Message-State: AOJu0YyAcxKXXPOFW+6fbUCggeKV7/KAZa0/LUkCT125hvysZe0Q8Lfz
- gtYfN1/Xoiu9LyonYxRDV+cpm2QUmMODC2cq6a/O8DbNh7XK8jbB5OXS5nsA8HkNBcqz2IOTUOa
- fQygms7ugRAsSzyN6oktjdjTe/6Tpv185L/pjoNHrNBqBi54JjdoeT0K6
-X-Gm-Gg: ASbGncuKZ/z/X4euO9Yf/VXaQBwtvNBbQ/6b/ZhvFaXkkGMDdV/GF7F7bhdkXC4R+SK
- kAmxY+a4LrU5iiKFdNsIHCosMEi+cshmDMr3IqEGTD0eNqqYMGBoFEJeqZilF5R4UPPYZtF2hCd
- 1NRAe6fTNmSIDIs+7b0L+ZW0KQ/RVA43Fkse1nPlHCjIXArUaOTgv0eQROCHNMMO1/Vy3J0IE2s
- ZvxAVrBKT5opzWAN3uD/WogHodyTf7B0N+uIdxsVHksVdm9H9HxsJ+QGV77t3L6tfSRycz+9kAq
- 6WhFNG5urNePX+4n
-X-Received: by 2002:a5d:64e7:0:b0:3a4:f902:3872 with SMTP id
- ffacd0b85a97d-3a531cab757mr13367582f8f.19.1749573090918; 
- Tue, 10 Jun 2025 09:31:30 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHysSiRANfZlU1GfoqyZGcgBgVmmaHqdBXp6WJ8+A//vTK6Vw70BMxOPhGTAsgPFrl6dSGr5w==
-X-Received: by 2002:a5d:64e7:0:b0:3a4:f902:3872 with SMTP id
- ffacd0b85a97d-3a531cab757mr13367548f8f.19.1749573090533; 
- Tue, 10 Jun 2025 09:31:30 -0700 (PDT)
-Received: from redhat.com ([2a0d:6fc0:1517:1000:ea83:8e5f:3302:3575])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5323c08fasm12495371f8f.44.2025.06.10.09.31.29
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Jun 2025 09:31:29 -0700 (PDT)
-Date: Tue, 10 Jun 2025 12:31:27 -0400
-From: "Michael S. Tsirkin" <mst@redhat.com>
-To: =?iso-8859-1?Q?C=E9dric?= Le Goater <clg@redhat.com>
-Cc: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org,
- Alex Williamson <alex.williamson@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uP15g-0006Dc-KA
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 11:40:46 -0400
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55AEXeeY027908;
+ Tue, 10 Jun 2025 15:40:28 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :date:from:in-reply-to:message-id:references:subject:to; s=
+ corp-2025-04-25; bh=Xh+z0nbS8xSROVDDIpfHjaehlmXWMmCGbceWpSNFiR0=; b=
+ hDr8Lj6okxtRaLj0sR08c0eoFza1gjjPRbNkhDKTjae4umGQujuN0Kjh8E4ziXTp
+ OcLx6cuvMxw0fZNaosvbR7ow4DnIdcAT+62fBYYKJry+eaRhc9pM2QbBaaW2VmjY
+ hoVz098MzMcR+h0Yc1BCZCs5QVuF3/VoIwqvOH2eS7ZF580mY4s4TcTfvRjBltsN
+ cq4ZmSZj5ObKYtOT2emi8eT+TLgwT5EkjCrFXYBKXAy0Qbyf/KGwUU8lG0/kc+5g
+ b5D4mn1g53qroeM6OwGnkgjp/24t/upfAmlGhKsvo9l7XKssiXBv9ALmVHQe0t0/
+ EUXiUO1LV9bIWSVqgFMbrw==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474cbech67-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:27 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55AF52CC003304; Tue, 10 Jun 2025 15:40:26 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bv8wbfu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Jun 2025 15:40:26 +0000
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55AFdrfp028825;
+ Tue, 10 Jun 2025 15:40:25 GMT
+Received: from ca-dev63.us.oracle.com (ca-dev63.us.oracle.com [10.211.8.221])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with
+ ESMTP id 474bv8wak1-23; Tue, 10 Jun 2025 15:40:25 +0000
+From: Steve Sistare <steven.sistare@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>,
+ Cedric Le Goater <clg@redhat.com>, Yi Liu <yi.l.liu@intel.com>,
+ Eric Auger <eric.auger@redhat.com>,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH V4 16/43] pci: skip reset during cpr
-Message-ID: <20250610122246-mutt-send-email-mst@kernel.org>
-References: <1748546679-154091-1-git-send-email-steven.sistare@oracle.com>
- <1748546679-154091-17-git-send-email-steven.sistare@oracle.com>
- <d62bd9c6-1660-4d16-8d7d-5445ba6c5031@redhat.com>
- <20250601150607-mutt-send-email-mst@kernel.org>
- <899ee161-2c5d-4aa2-aa64-5135b26bc3ff@oracle.com>
- <0a50d630-57c7-4f05-93c7-73be8f575873@redhat.com>
- <c01c7c19-2422-45c7-9582-09ca37170974@redhat.com>
- <468008fc-a86f-4b90-86c3-1109d68f6fc2@oracle.com>
- <76b58b82-a867-4577-8644-88e419a8d85f@redhat.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <76b58b82-a867-4577-8644-88e419a8d85f@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=mst@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Steve Sistare <steven.sistare@oracle.com>
+Subject: [PATCH V5 22/38] backends/iommufd: iommufd_backend_map_file_dma
+Date: Tue, 10 Jun 2025 08:39:35 -0700
+Message-Id: <1749569991-25171-23-git-send-email-steven.sistare@oracle.com>
+X-Mailer: git-send-email 1.8.3.1
+In-Reply-To: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-10_07,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506100125
+X-Proofpoint-GUID: N33sdrt5xRwE1rXIwhpuGRXNwmG-LbCe
+X-Authority-Analysis: v=2.4 cv=BffY0qt2 c=1 sm=1 tr=0 ts=684851eb b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=6IFa9wvqVegA:10 a=yPCof4ZbAAAA:8 a=QyXUC8HyAAAA:8 a=uB58oH_1KMGY2pLkT90A:9
+ cc=ntf awl=host:14714
+X-Proofpoint-ORIG-GUID: N33sdrt5xRwE1rXIwhpuGRXNwmG-LbCe
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEwMDEyNiBTYWx0ZWRfX5RZx99eqlp78
+ /I9yr/8rQL3W0hACpFpGPIwXRbLWO/qxrUfnAah8i7Ge1Vx8hlT20PMuXqCv20GEGxKJVFIW5dI
+ bRoO2HfsRp3vT1LXNsGyw7L44gi95OgCJ+dVOSu7ctbTtfzGR1N934btip1l5zDiGau5pAky+Qs
+ KaOg6hqmakAwoSK1lNlf04QW6vh0RKWg7SAewI2ud4+Tucv07ADbnusgLj9cAWCes6r8BZsq2zi
+ d/5JEVOkZ6UAFZ6FjSTeuebxnWSVtDaYNUppwKHe+73xM7MM8k2yzcovQpZFmQANRI9XCASQW/N
+ R+jgzKwbQFQ/m3Z/eeMFAm6CNey3ukFKFQeDtXUUHsREP+cGofZqE01rSxnxzVvLJ42PM3JEH9F
+ neEdwkAIFoqi/wqrfRY/cXPFRkq+Ddy8YIkqYqMtDX9KvKbH9U+r8dAvADAiNzGpG8hSbgQi
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,40 +115,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 04, 2025 at 03:48:40PM +0200, Cédric Le Goater wrote:
-> > I don't see any advantage to making this a class attribute.  I looked for examples
-> > of using such attributes for vfio to configure pci, and found very little.  It
-> > sounds like overkill since vfio already sets and gets PCIDevice members directly
-> > in many places.
-> > 
-> > I defined skip_reset_on_cpr based on this existing example:
-> > 
-> > vfio_instance_init()
-> >      pci_dev->cap_present |= QEMU_PCI_CAP_EXPRESS
-> 
-> pci_dev->cap_present can be modified at realize time. skip_reset_on_cpr
-> is a constant, for which a class attribute are more appropriate.
-> This is minor.
-> 
-> Michael,
-> 
->   Are you ok with the 'skip_reset_on_cpr' bool ?
+Define iommufd_backend_map_file_dma to implement IOMMU_IOAS_MAP_FILE.
+This will be called as a substitute for iommufd_backend_map_dma, so
+the error conditions for BARs are copied as-is from that function.
 
-Generally yes, but maybe cap_present bit is even cleaner?
-vfio already pokes at it, and we have history of encoding
-quirks there, see QEMU_PCIE_LNKSTA_DLLLA_BITNR for example.
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ include/system/iommufd.h |  3 +++
+ backends/iommufd.c       | 34 ++++++++++++++++++++++++++++++++++
+ backends/trace-events    |  1 +
+ 3 files changed, 38 insertions(+)
 
-
-> > > I wonder if the resettable interface, and more specifically the
-> > > RESET_TYPE_SNAPSHOT_LOAD type, might be useful. Have you explored
-> > > this alternative ?
-> > 
-> > RESET_TYPE_SNAPSHOT_LOAD (or a new type such as RESET_TYPE_CPR) would skip
-> > reset for all devices, but we only skip for vfio_pci.  All other devices
-> > (including virtio) save and restore state using standard migration vmstate,
-> > and must call reset.
-> OK.
-> 
-> C.
+diff --git a/include/system/iommufd.h b/include/system/iommufd.h
+index 283861b..2d24d93 100644
+--- a/include/system/iommufd.h
++++ b/include/system/iommufd.h
+@@ -43,6 +43,9 @@ void iommufd_backend_disconnect(IOMMUFDBackend *be);
+ bool iommufd_backend_alloc_ioas(IOMMUFDBackend *be, uint32_t *ioas_id,
+                                 Error **errp);
+ void iommufd_backend_free_id(IOMMUFDBackend *be, uint32_t id);
++int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
++                                 hwaddr iova, ram_addr_t size, int fd,
++                                 unsigned long start, bool readonly);
+ int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
+                             ram_addr_t size, void *vaddr, bool readonly);
+ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+diff --git a/backends/iommufd.c b/backends/iommufd.c
+index c2c47ab..3a2ecc7 100644
+--- a/backends/iommufd.c
++++ b/backends/iommufd.c
+@@ -172,6 +172,40 @@ int iommufd_backend_map_dma(IOMMUFDBackend *be, uint32_t ioas_id, hwaddr iova,
+     return ret;
+ }
+ 
++int iommufd_backend_map_file_dma(IOMMUFDBackend *be, uint32_t ioas_id,
++                                 hwaddr iova, ram_addr_t size,
++                                 int mfd, unsigned long start, bool readonly)
++{
++    int ret, fd = be->fd;
++    struct iommu_ioas_map_file map = {
++        .size = sizeof(map),
++        .flags = IOMMU_IOAS_MAP_READABLE |
++                 IOMMU_IOAS_MAP_FIXED_IOVA,
++        .ioas_id = ioas_id,
++        .fd = mfd,
++        .start = start,
++        .iova = iova,
++        .length = size,
++    };
++
++    if (!readonly) {
++        map.flags |= IOMMU_IOAS_MAP_WRITEABLE;
++    }
++
++    ret = ioctl(fd, IOMMU_IOAS_MAP_FILE, &map);
++    trace_iommufd_backend_map_file_dma(fd, ioas_id, iova, size, mfd, start,
++                                       readonly, ret);
++    if (ret) {
++        ret = -errno;
++
++        /* TODO: Not support mapping hardware PCI BAR region for now. */
++        if (errno == EFAULT) {
++            warn_report("IOMMU_IOAS_MAP_FILE failed: %m, PCI BAR?");
++        }
++    }
++    return ret;
++}
++
+ int iommufd_backend_unmap_dma(IOMMUFDBackend *be, uint32_t ioas_id,
+                               hwaddr iova, ram_addr_t size)
+ {
+diff --git a/backends/trace-events b/backends/trace-events
+index 7278214..e5f3e70 100644
+--- a/backends/trace-events
++++ b/backends/trace-events
+@@ -11,6 +11,7 @@ iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d user
+ iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
+ iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
+ iommufd_backend_map_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, void *vaddr, bool readonly, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" addr=%p readonly=%d (%d)"
++iommufd_backend_map_file_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int fd, unsigned long start, bool readonly, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" fd=%d start=%ld readonly=%d (%d)"
+ iommufd_backend_unmap_dma_non_exist(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " Unmap nonexistent mapping: iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+ iommufd_backend_unmap_dma(int iommufd, uint32_t ioas, uint64_t iova, uint64_t size, int ret) " iommufd=%d ioas=%d iova=0x%"PRIx64" size=0x%"PRIx64" (%d)"
+ iommufd_backend_alloc_ioas(int iommufd, uint32_t ioas) " iommufd=%d ioas=%d"
+-- 
+1.8.3.1
 
 
