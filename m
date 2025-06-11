@@ -4,64 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A37CAC71134
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 11:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FDB9C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 11:47:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPJpP-0005dv-N2; Wed, 11 Jun 2025 07:41:11 -0400
+	id 1uPJuM-0007rW-3N; Wed, 11 Jun 2025 07:46:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uPJpM-0005cd-PC; Wed, 11 Jun 2025 07:41:08 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uPJuE-0007qT-DY; Wed, 11 Jun 2025 07:46:14 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1uPJot-0001N1-LL; Wed, 11 Jun 2025 07:41:08 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bHNpW1L7fz6L616;
- Wed, 11 Jun 2025 19:33:55 +0800 (CST)
-Received: from frapeml500003.china.huawei.com (unknown [7.182.85.28])
- by mail.maildlp.com (Postfix) with ESMTPS id 5C67A140275;
- Wed, 11 Jun 2025 19:38:13 +0800 (CST)
-Received: from localhost (10.203.177.99) by frapeml500003.china.huawei.com
- (7.182.85.28) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Wed, 11 Jun
- 2025 13:38:12 +0200
-Date: Wed, 11 Jun 2025 12:38:06 +0100
-To: Zhao Liu <zhao1.liu@intel.com>
-CC: <mst@redhat.com>, <anisinha@redhat.com>, <armbru@redhat.com>,
- <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>, 
- <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, <imammedo@redhat.com>,
- <jiangkunkun@huawei.com>, <jonathan.cameron@huawei.com>,
- <linuxarm@huawei.com>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
- <philmd@linaro.org>, <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>,
- <richard.henderson@linaro.org>, <shameerali.kolothum.thodi@huawei.com>,
- <shannon.zhaosl@gmail.com>, <yangyicong@hisilicon.com>, <maobibo@loongson.cn>
-Subject: Re: [PATCH v12 2/6] arm/virt.c: add cache hierarchy to device tree
-Message-ID: <20250611123806.00002a09.alireza.sanaee@huawei.com>
-In-Reply-To: <aEFnFI+wglkmLD5G@intel.com>
-References: <20250604133439.1592-1-alireza.sanaee@huawei.com>
- <20250604133439.1592-3-alireza.sanaee@huawei.com>
- <aEFnFI+wglkmLD5G@intel.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uPJuA-0002j9-RE; Wed, 11 Jun 2025 07:46:09 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7585255C1BA;
+ Wed, 11 Jun 2025 13:45:58 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id f_baXMbxMlG9; Wed, 11 Jun 2025 13:45:56 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 7DA2955C171; Wed, 11 Jun 2025 13:45:56 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 7B9A2745682;
+ Wed, 11 Jun 2025 13:45:56 +0200 (CEST)
+Date: Wed, 11 Jun 2025 13:45:56 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 4/5] configure: Add dtc option
+In-Reply-To: <aElCJnmjrB-X9M-n@redhat.com>
+Message-ID: <6eb6aa79-33f8-57ea-5714-af264557f8c8@eik.bme.hu>
+References: <20250610204131.2862-1-shentey@gmail.com>
+ <20250610204131.2862-5-shentey@gmail.com>
+ <cdfc561e-23a9-607a-d9a8-70e07e73e0fd@eik.bme.hu>
+ <aElCJnmjrB-X9M-n@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml500001.china.huawei.com (7.191.163.213) To
- frapeml500003.china.huawei.com (7.182.85.28)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1454390608-1749642356=:93329"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -75,258 +69,75 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 5 Jun 2025 17:44:52 +0800
-Zhao Liu <zhao1.liu@intel.com> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Hi Ali,
-> 
-> I'm very sorry to bother you with some comments after so many
-> versions.
-> 
-> > diff --git a/hw/cpu/core.c b/hw/cpu/core.c
-> > index 5cb2e9a7f5..7339782663 100644
-> > --- a/hw/cpu/core.c
-> > +++ b/hw/cpu/core.c  
-> 
-> core.c is not the right place. It just contains the "cpu-core"
-> abstraction. So we need to move the following functions to other
-> files.
-> 
-> > @@ -102,4 +102,96 @@ static void cpu_core_register_types(void)
-> >      type_register_static(&cpu_core_type_info);
-> >  }
-> >  
-> > +bool cache_described_at(const MachineState *ms, CpuTopologyLevel
-> > level)  
-> 
-> It's better to add the comment about what this function did. (its name
-> doesn't reflect it wants to check the coresponding CPU topology
-> level.)
-> 
-> I also feel it's not a good name, what about
-> "machine_check_cache_at_topo_level"?
-> 
-> Furthermore, we can move this one to hw/core/machine-smp.c, as it is
-> about with machine's smp_cache.
-> 
-> > +{
-> > +    if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3)
-> > == level ||
-> > +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2)
-> > == level ||
-> > +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I)
-> > == level ||
-> > +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D)
-> > == level) {
-> > +        return true;
-> > +    }
-> > +    return false;
-> > +}
-> > +
-> > +int partial_cache_description(const MachineState *ms,
-> > CPUCorePPTTCaches *caches,
-> > +                              int num_caches)  
-> 
-> Because I'll suggest to move CPUCorePPTTCaches to
-> include/hw/acpi/cpu.h later, and this function accepts
-> CPUCorePPTTCaches as the argument, so I think we could move this
-> function to hw/acpi/cpu.c (if Michael and Igor don't object).
+--3866299591-1454390608-1749642356=:93329
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Hi Zhao
+On Wed, 11 Jun 2025, Daniel P. Berrangé wrote:
+> On Wed, Jun 11, 2025 at 02:37:08AM +0200, BALATON Zoltan wrote:
+>> On Tue, 10 Jun 2025, Bernhard Beschow wrote:
+>>> The next patch will make dtc mandatory for boards with a bundled DTB, causing
+>>> these boards to be omitted when dtc is missing. Allow packagers to force the
+>>> build of those boards by providing an option.
+>>
+>> I don't like this. This might result in some machines missing from some
+>> distros if they don't notice this and forget to update their packages and
+>> these are machines I care about.
+>
+> "Someone might not notice & screw up" is pretty much an argument for
+> not doing anything at all. We publish release notes to alert distros
 
-partial_cache_description function has been used in both hw/arm/virt.c
-and hw/acpi/aml-build.c it feels like it neither for arm nor acpi.
-Where do you think it is better to be placed at? does it go to core
-maybe?
+More like "if it ain't broke don't fix it".
 
-Thanks
-Alirez
-> 
-> > +{
-> > +    int level, c;
-> > +
-> > +    for (level = 1; level < num_caches; level++) {
-> > +        for (c = 0; c < num_caches; c++) {
-> > +            if (caches[c].level != level) {
-> > +                continue;
-> > +            }
-> > +
-> > +            switch (level) {
-> > +            case 1:
-> > +                /*
-> > +                 * L1 cache is assumed to have both L1I and L1D
-> > available.
-> > +                 * Technically both need to be checked.
-> > +                 */
-> > +                if (machine_get_cache_topo_level(ms,
-> > +
-> > CACHE_LEVEL_AND_TYPE_L1I) ==
-> > +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
-> > +                    return level;
-> > +                }
-> > +                break;
-> > +            case 2:
-> > +                if (machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L2) ==
-> > +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
-> > +                    return level;
-> > +                }
-> > +                break;
-> > +            case 3:
-> > +                if (machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L3) ==
-> > +                    CPU_TOPOLOGY_LEVEL_DEFAULT) {
-> > +                    return level;
-> > +                }
-> > +                break;
-> > +            }
-> > +        }
-> > +    }
-> > +
-> > +    return 0;
-> > +}
-> > +
-> > +/*
-> > + * This function assumes l3 and l2 have unified cache and l1 is
-> > split l1d
-> > + * and l1i, and further prepares the lowest cache level for a
-> > topology
-> > + * level.  The info will be fed to build_caches to create caches
-> > at the
-> > + * right level.
-> > + */
-> > +bool find_the_lowest_level_cache_defined_at_level(const
-> > MachineState *ms,
-> > +                                                  int *level_found,
-> > +                                                  CpuTopologyLevel
-> > topo_level) {  
-> 
-> This is a very long name :-).
-> 
-> Maybe we can rename it like:
-> 
-> machine_find_lowest_level_cache_at_topo_level,
-> 
-> (sorry this name doesn't shorten the length but align the naming style
-> in machine-smp.c)
-> 
-> and explain the arguments in the comment.
-> 
-> Furthermore, we can move this one to hw/core/machine-smp.c, too.
-> 
-> > +    CpuTopologyLevel level;
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L1I);
-> > +    if (level == topo_level) {
-> > +        *level_found = 1;
-> > +        return true;
-> > +    }
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L1D);
-> > +    if (level == topo_level) {
-> > +        *level_found = 1;
-> > +        return true;
-> > +    }
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L2);
-> > +    if (level == topo_level) {
-> > +        *level_found = 2;
-> > +        return true;
-> > +    }
-> > +
-> > +    level = machine_get_cache_topo_level(ms,
-> > CACHE_LEVEL_AND_TYPE_L3);
-> > +    if (level == topo_level) {
-> > +        *level_found = 3;
-> > +        return true;
-> > +    }
-> > +
-> > +    return false;
-> > +}
-> > +
-> >  type_init(cpu_core_register_types)  
-> 
-> ...
-> 
-> > diff --git a/include/hw/cpu/core.h b/include/hw/cpu/core.h
-> > index 98ab91647e..0f7bf8bc28 100644
-> > --- a/include/hw/cpu/core.h
-> > +++ b/include/hw/cpu/core.h
-> > @@ -11,6 +11,7 @@
-> >  
-> >  #include "hw/qdev-core.h"
-> >  #include "qom/object.h"
-> > +#include "qapi/qapi-types-machine-common.h"
-> >  
-> >  #define TYPE_CPU_CORE "cpu-core"
-> >  
-> > @@ -25,6 +26,32 @@ struct CPUCore {
-> >      int nr_threads;
-> >  };
-> >  
-> > +typedef enum CPUCacheType {
-> > +    CPU_CORE_DATA,
-> > +    CPU_CORE_INSTRUCTION,
-> > +    CPU_CORE_UNIFIED,
-> > +} CPUCoreCacheType;  
-> 
-> This is a complete duplicate of the x86's CPUCaches
-> (target/i386/cpu.h).
-> 
-> I think we can move x86's CPUCaches to include/hw/core/cpu.h.
-> 
-> > +typedef struct CPUPPTTCaches {
-> > +    CPUCoreCacheType type;
-> > +    uint32_t pptt_id;
-> > +    uint32_t sets;
-> > +    uint32_t size;
-> > +    uint32_t level;
-> > +    uint16_t linesize;
-> > +    uint8_t attributes; /* write policy: 0x0 write back, 0x1 write
-> > through */
-> > +    uint8_t associativity;
-> > +} CPUCorePPTTCaches;  
-> 
-> x86 doesn't use PPTT to describe cache so it's not necessary to reuse
-> CPUCacheInfo (target/i386/cpu.h) for PPTT.
-> 
-> But I understand it's better to place this sturct in
-> include/hw/acpi/cpu.h, since it is part of the ACPI PPTT table.
-> 
-> > +int partial_cache_description(const MachineState *ms,
-> > CPUCorePPTTCaches *caches,
-> > +                              int num_caches);  
-> 
-> Could move to include/hw/acpi/cpu.h, too.
-> 
-> > +bool cache_described_at(const MachineState *ms, CpuTopologyLevel
-> > level); +
-> > +bool find_the_lowest_level_cache_defined_at_level(const
-> > MachineState *ms,
-> > +                                                  int *level_found,
-> > +                                                  CpuTopologyLevel
-> > topo_level);
-> > +  
-> 
-> Because these 2 functions' definitions would be moved to
-> hw/core/machine-smp.c, then we need to move their declarations to
-> include/hw/boards.h.
-> 
-> 
-> Except the above nits, the general part is fine for me.
-> 
-> Thanks,
-> Zhao
-> 
-> 
-> 
+> to these kind of changes which is a reasonable effort on our part.
+> Distros need to play their part by reading them and adapting to the
+> changes. They can also compare the available options with new and
+> old QEMU to identify any new build features they need to handle when
+> updating.
+>
+>>                                  Also what guarantees that we don't get bugs
+>> by compiling the device tree with different dtc versions which might
+>> generate different binaries? The binaries we have now are known to work and
+>> don't take much space so keeping them for convenience might be simpler. If
+>> it worked so far why change it now?
+>
+> Ultimately the DTC project has responsibility to not cause regressions
+> in new releases they issue, as is the case for any 3rd party dep that
+> we rely on.
+>
+> We have CI jobs that can run on different distros. If we have coverage
+> of the boards in functional test suite that provides a way to validate the
+> operation with differing DTC versions as a sanity check.
+>
+> Distributing pre-built binaries in source release tarballs is a long
+> standing issue with QEMU's releases. If we can eliminate the pre-bbuilt
+> DTB and only ship the source that is a good thing IMHO.
+>
+>> If this was using dtc from the submodule when not using system libfdt then
+>> at least it would not result in dropped machines and we had a known working
+>> dtc to compile with. Why isn't that used when we already have it for libfdt?
+>
+> Are there any platforms that we target which still lack dtc ? The
+> submodule was there to plug gaps in distro support long ago, but
+> if every distro has dtc available the submodule is redundant.
 
+OK, can we then make libfdt and dtc mandatory and not build at all instead 
+of disabling boards without it? I only care that my boards will be in 
+distro packages so users don't have to compile and I don't have to provide 
+binaries which would also be ensured if we require dtc, then the dtbs can 
+be dropped.
+
+There's still a potential issue that some of the dts files are old and may 
+not compile with newer dtc and changing them may upset the guest but 
+hopefully we won't get that.
+
+Regards,
+BALATON Zoltan
+--3866299591-1454390608-1749642356=:93329--
 
