@@ -4,58 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F28BC677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 00:38:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1FD1C61DB2
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 02:47:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uP9TE-0002qD-0n; Tue, 10 Jun 2025 20:37:36 -0400
+	id 1uPBTx-0003RQ-SB; Tue, 10 Jun 2025 22:46:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uP9T9-0002ph-Bh; Tue, 10 Jun 2025 20:37:31 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uPBTv-0003RA-Tw
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 22:46:27 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uP9T7-0007sT-Vx; Tue, 10 Jun 2025 20:37:31 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 31B1A55C1B9;
- Wed, 11 Jun 2025 02:37:28 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id q54VDriHUkH2; Wed, 11 Jun 2025 02:37:26 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4016D55C171; Wed, 11 Jun 2025 02:37:26 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 3E1B4745683;
- Wed, 11 Jun 2025 02:37:26 +0200 (CEST)
-Date: Wed, 11 Jun 2025 02:37:26 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Bernhard Beschow <shentey@gmail.com>
-cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, 
- =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, 
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-Subject: Re: [PATCH 3/5] scripts/meson-buildoptions: Sort coroutine_backend
- choices lexicographically
-In-Reply-To: <20250610204131.2862-4-shentey@gmail.com>
-Message-ID: <9c873c0c-67ba-7f47-b7eb-316a62b09f0f@eik.bme.hu>
-References: <20250610204131.2862-1-shentey@gmail.com>
- <20250610204131.2862-4-shentey@gmail.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uPBTu-0007pu-5B
+ for qemu-devel@nongnu.org; Tue, 10 Jun 2025 22:46:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749609986; x=1781145986;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=4nVVIqu3PeOpL+xt4TRfr1LoCSbWuvtT0hbst1bBmDs=;
+ b=be7SOhtulslYEpFKOfqXFqMKlrjALGY42Xgy3pxBAXHbnHInXjXKoeDD
+ Uq6TgWTWQVvDyl3rZg390xDsWUWWpzsQzElxMS1GozYBoM3B8aExWEGFe
+ PH5qG8xFIJXcLLgohbZqqVmbEBIg8cK8pC3DOi3xcb9XwAx+GYRWJPRqy
+ ZlcbDR5NHXoBW9S/jjAyNjzq05u3zHYWGwFeV/0lasgnl1slTrrYcJMZ/
+ SMGpx86pHCSGQL38HECsdrFwfCCPNidsFwLEhFMmiGE6oA3HDkx3pErHv
+ oQEq8/BxoC1WTXBe0qfowTvlVsK1bmxm5Ru70aoZzatkISPwnK8TWSK4F g==;
+X-CSE-ConnectionGUID: BsAxqWlZQnmEO1hVV4ffww==
+X-CSE-MsgGUID: n8IH37XFTfelertjL5PBaw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11460"; a="63091900"
+X-IronPort-AV: E=Sophos;i="6.16,226,1744095600"; d="scan'208";a="63091900"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jun 2025 19:46:20 -0700
+X-CSE-ConnectionGUID: q/GuYDnxQp2UdsKE7ctMyQ==
+X-CSE-MsgGUID: 807uYkPLSmmAp5lgV+caOQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,226,1744095600"; d="scan'208";a="184200049"
+Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Jun 2025 19:46:18 -0700
+From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+To: qemu-devel@nongnu.org
+Cc: john.levon@nutanix.com, chao.p.peng@intel.com,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PATCH] vfio/pci: Fix instance_size of VFIO_PCI_BASE
+Date: Wed, 11 Jun 2025 10:42:28 +0800
+Message-Id: <20250611024228.423666-1-zhenzhong.duan@intel.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.10;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,31 +83,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Jun 2025, Bernhard Beschow wrote:
-> When changing meson_options.txt, this script gets updated automatically by QEMU
-> tooling which sorts the choices lexicographically. Fix this in preparation of
-> the ext patch.
+Currently the final instance_size of VFIO_PCI_BASE is sizeof(PCIDevice).
+It should be sizeof(VFIOPCIDevice), VFIO_PCI uses same structure as
+base class VFIO_PCI_BASE, so no need to set its instance_size explicitly.
 
-Typo: next patch
+This isn't catastrophic only because VFIO_PCI_BASE is an abstract class.
 
-> Fixes: ccc403ed5844 ("meson: Add wasm build in build scripts")
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
-> scripts/meson-buildoptions.sh | 2 +-
-> 1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
-> index f09ef9604f..73e0770f42 100644
-> --- a/scripts/meson-buildoptions.sh
-> +++ b/scripts/meson-buildoptions.sh
-> @@ -80,7 +80,7 @@ meson_options_help() {
->   printf "%s\n" '  --tls-priority=VALUE     Default TLS protocol/cipher priority string'
->   printf "%s\n" '                           [NORMAL]'
->   printf "%s\n" '  --with-coroutine=CHOICE  coroutine backend to use (choices:'
-> -  printf "%s\n" '                           auto/sigaltstack/ucontext/windows/wasm)'
-> +  printf "%s\n" '                           auto/sigaltstack/ucontext/wasm/windows)'
->   printf "%s\n" '  --with-pkgversion=VALUE  use specified string as sub-version of the'
->   printf "%s\n" '                           package'
->   printf "%s\n" '  --with-suffix=VALUE      Suffix for QEMU data/modules/config directories'
->
+Fixes: d4e392d0a99b ("vfio: add vfio-pci-base class")
+Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+---
+ hw/vfio/pci.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 92562898e4..03f52a9b8f 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -3478,7 +3478,7 @@ static void vfio_pci_base_dev_class_init(ObjectClass *klass, const void *data)
+ static const TypeInfo vfio_pci_base_dev_info = {
+     .name = TYPE_VFIO_PCI_BASE,
+     .parent = TYPE_PCI_DEVICE,
+-    .instance_size = 0,
++    .instance_size = sizeof(VFIOPCIDevice),
+     .abstract = true,
+     .class_init = vfio_pci_base_dev_class_init,
+     .interfaces = (const InterfaceInfo[]) {
+@@ -3701,7 +3701,6 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
+ static const TypeInfo vfio_pci_dev_info = {
+     .name = TYPE_VFIO_PCI,
+     .parent = TYPE_VFIO_PCI_BASE,
+-    .instance_size = sizeof(VFIOPCIDevice),
+     .class_init = vfio_pci_dev_class_init,
+     .instance_init = vfio_instance_init,
+     .instance_finalize = vfio_instance_finalize,
+-- 
+2.34.1
+
 
