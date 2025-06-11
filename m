@@ -4,72 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8556C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:51:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 421B2C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:53:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPGEW-0002zP-GR; Wed, 11 Jun 2025 03:50:52 -0400
+	id 1uPGGQ-0004l5-I2; Wed, 11 Jun 2025 03:52:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uPGEQ-0002yg-CK
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:50:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPGGO-0004k2-Nx; Wed, 11 Jun 2025 03:52:49 -0400
+Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uPGEO-0005uJ-Dk
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:50:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749628243;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=3ayC/Yn8lHuEDaclWUygLWgjTbSCMn9SpbsvbpcLpz0=;
- b=AbNOxDtbfDTGwJAzqFX5KqT4eaqprJgRnfQMBFicLpMW67/m0Ny+QRbYyWLigioIBFpTFH
- SuA37b54/KSAEBF1MRmIygXum9Qob374km+jSh9ISliDmOoDQOQLS8g8NUdXM3YCP2MneE
- Mwe8poGZCQdV36G6FdU1X5PDSlIl09k=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-XHwFAPdtMvq-rGOwZEE9kw-1; Wed,
- 11 Jun 2025 03:50:41 -0400
-X-MC-Unique: XHwFAPdtMvq-rGOwZEE9kw-1
-X-Mimecast-MFC-AGG-ID: XHwFAPdtMvq-rGOwZEE9kw_1749628241
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A16C419560B5
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 07:50:40 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.44.32.69])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 334E01800284; Wed, 11 Jun 2025 07:50:40 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id B444518007A6; Wed, 11 Jun 2025 09:50:37 +0200 (CEST)
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 1/2] seabios: update submodule to 1.17.0
-Date: Wed, 11 Jun 2025 09:50:36 +0200
-Message-ID: <20250611075037.659610-2-kraxel@redhat.com>
-In-Reply-To: <20250611075037.659610-1-kraxel@redhat.com>
-References: <20250611075037.659610-1-kraxel@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPGGJ-00061T-8T; Wed, 11 Jun 2025 03:52:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749628363; x=1781164363;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=04SiF/OboX+MLcxzOl8OgSz81IT+tGuMxoZHlGHkKek=;
+ b=YvBgxSBkU7sALOJFn4T/F7fCLaceX39KO7UYsT/erxspfmuJKaqG0Pm3
+ F1rJ7OLj048em1Zs9T0/d2J/h1zi5lAvbcTt1pnl7HI01LiHIe97mK8Yc
+ fMXY5OsWTT92RYErFtUHcoyjciuPqBTPpNuYil7ntJ9xCyUO0V2xoI/z4
+ VDg2Qg+A8VxYq4IUDNHQh7vZ4VIFi+b/kRtNgDVRLntzlIUDBKCUaHLlf
+ A+e4O6bh3kLX6axqPhudU5ymu6rblSV4xpAiBTmLD8oGs0ikWp1xx5IkD
+ V6hPTDnsTsgiok7pPXjQ7X2Gcb51S2gK1PTKjowTrSwmr1+LDkFjWcDsC A==;
+X-CSE-ConnectionGUID: Fkz7lXXkQrqQdDUMeIKpgQ==
+X-CSE-MsgGUID: nV2kxIM+QaKsaYf9hcJK9g==
+X-IronPort-AV: E=McAfee;i="6800,10657,11460"; a="51622168"
+X-IronPort-AV: E=Sophos;i="6.16,227,1744095600"; d="scan'208";a="51622168"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 11 Jun 2025 00:52:35 -0700
+X-CSE-ConnectionGUID: nwfqJUZuRJehoV7W4+6z7g==
+X-CSE-MsgGUID: ZKLkKQ1aTiW5+wo21NhKOQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,227,1744095600"; d="scan'208";a="146985878"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa006.jf.intel.com with ESMTP; 11 Jun 2025 00:52:34 -0700
+Date: Wed, 11 Jun 2025 16:13:49 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com,
+ qemu-rust@nongnu.org, armbru@redhat.com, mkletzan@redhat.com
+Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
+Message-ID: <aEk6vdosWZgyQGXD@intel.com>
+References: <20250605101124.367270-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+In-Reply-To: <20250605101124.367270-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.21; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,80 +82,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-git shortlog rel-1.16.3..rel-1.17.0
------------------------------------
+On Thu, Jun 05, 2025 at 12:11:21PM +0200, Paolo Bonzini wrote:
+> Date: Thu,  5 Jun 2025 12:11:21 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
+> X-Mailer: git-send-email 2.49.0
+> 
+> This is just an extremely minimal extraction from the patches at
+> https://patchew.org/QEMU/20210907121943.3498701-1-marcandre.lureau@redhat.com/,
+> limited to generating structs and enums from the QAPI schema.
+> It does not include them in any crate and does not compile them.
+> 
+> While I'm not going to work on this, I was curious how much work it
+> was to produce *some* kind of Rust QAPI struct, which could be a first
+> step towards using serde as an interface to C visitors, like this:
+> 
+> trait QapiType: FreeForeign {
+>     unsafe fn visit(v: bindings::Visitor, name: *const c_char, obj: *mut <Self as FreeForeign>::Foreign, errp: *mut *mut bindings::Error);
+> }
+> 
+> fn to_c<T: QAPIType>(obj: &T) -> *mut <T as FreeForeign>::Foreign {
+>     let mut ptr = libc::calloc(...);
+>     let mut ser = QapiSerializer::<T>::new(ptr);
+>     obj.serialize(&mut ser).unwrap();
+>     ptr.cast()
+> }
+> 
+> unsafe fn from_c<T: QAPIType>(obj: *const <T as FreeForeign>::Foreign) -> T {
+>     let mut de = QapiDeserializer::new(T::visit, obj as *const c_void);
+>     let value = de::Deserialize::deserialize(&mut de).unwrap();
+>     de.end().unwrap();
+>     value
+> }
+> 
+> /* Generated code below: */
+> 
+> impl QapiType for UefiVariable {
+>     unsafe fn visit(v: bindings::Visitor, name: *const c_char, obj: *mut bindings::UefiVariable, errp: *mut *mut bindings::Error) {
+>         unsafe extern "C" visit_type_DumpGuestMemoryFormat(v: bindings::Visitor, name: *const c_char, obj: *mut bindings::UefiVariable, errp: *mut *mut bindings::Error) {
+>         unsafe { visit_type_DumpGuestMemoryFormat(v, name, obj, errp); }
+>     }
+> }
+> 
+> impl FreeForeign for UefiVariable {
+>     type Foreign = bindings::UefiVariable;
 
-Andrej KrutÃ¡k (1):
-      Add AHCI Power ON + ICC_ACTIVE into port setup code
+My question seems to be different from Marc-André's...
 
-Daniel Khodabakhsh (2):
-      boot: Force display of the boot menu when boot-menu-wait is a negative number
-      usb-hid: Support multiple USB HID devices by storing them in a linked list
+As patch 3 did, qapi will generate Rust types:
 
-Daniel Verkamp (3):
-      vbe: Add VBE 2.0+ OemData field to struct vbe_info
-      vgasrc: round up save/restore size
-      vbe: implement function 09h (get/set palette data)
+- char* is mapped to String, scalars to there corresponding Rust types
+- enums are simply aliased from FFI
+- has_foo/foo members are mapped to Option<T>
+- lists are represented as Vec<T>
+- structures have Rust versions, with To/From FFI conversions
 
-Daniil Tatianin (1):
-      pciinit: don't misalign large BARs
+It seems we still need some raw bindings (generated by bindgen) as the
+`type Foreign`, and then implement Foreign traits for the Rust
+structures generated by this patch.
 
-Gerd Hoffmann (6):
-      limit address space used for pci devices, part two
-      drop obsolete acpi table code
-      drop acpi tables and hex includes
-      add romfile_loadbool()
-      update pci_pad_mem64 handling
-      ahci: add controller reset
+For this example, UefiVariable is generated by qapi (patch 3) and
+bindings::UefiVariable is generated by bindgen. Ah! I feel I'm wrong,
+could you please correct me?
 
-Igor Mammedov (1):
-      fix smbios blob length overflow
+Thanks,
+Zhao
 
-Jiaxun Yang (1):
-      ahci: Fix hangs due to controller reset
-
-Kevin O'Connor (14):
-      vgasrc: Use curmode_g instead of vmode_g when mode is the current video mode
-      vgasrc: Rename vgahw_get_linesize() to vgahw_minimum_linelength()
-      stdvgamodes: No need to store pelmask in vga_modes[]
-      stdvgamodes: Improve naming of dac palette tables
-      stdvga: Rename CGA palette functions
-      stdvga: Add comments to interface functions in stdvga.c
-      stdvga: Rename stdvga_toggle_intensity() to stdvga_set_palette_blinking()
-      stdvga: Rework stdvga palette index paging interface functions
-      stdvga: Rename stdvga_set_text_block_specifier() to stdvga_set_font_location()
-      stdvga: Rename stdvga_set_scan_lines() to stdvga_set_character_height()
-      stdvga: Rename stdvga_get_vde() to stdvga_get_vertical_size()
-      stdvga: Add stdvga_set_vertical_size() helper function
-      stdvgaio: Only read/write one color palette entry at a time
-      docs: Note v1.17.0 release
-
-Mark Cave-Ayland (2):
-      esp-scsi: terminate DMA transfer when ESP data transfer completes
-      esp-scsi: indicate acceptance of MESSAGE IN phase data
-
-Max Tottenham (1):
-      Add LBA 64bit support for reads beyond 2TB.
-
-Steven Price (1):
-      vgabios: Fix generating modes list for static_functionality
-
-nikolar via SeaBIOS (1):
-      kconfig: fix the check-lxdialog.sh to work with gcc 14+
-
-Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
----
- roms/seabios | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/roms/seabios b/roms/seabios
-index a6ed6b701f0a..b52ca86e094d 160000
---- a/roms/seabios
-+++ b/roms/seabios
-@@ -1 +1 @@
--Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
-+Subproject commit b52ca86e094d19b58e2304417787e96b940e39c6
--- 
-2.49.0
-
+>     unsafe fn free_foreign(p: *mut bindings::UefiVariable) {
+>         unsafe extern "C" qapi_free_UefiVariable(p: *mut bindings::UefiVariable);
+>         unsafe { qapi_free_UefiVariable(p); }
+>     }
+> }
+> 
+> impl CloneToForeign for UefiVariable {
+>     fn clone_to_foreign(&self) -> OwnedPointer<Self> {
+>         OwnedPointer::new(qapi::to_c(self))
+>     }
+> }
+> 
+> impl FromForeign for UefiVariable {
+>     unsafe fn cloned_from_foreign(obj: *const bindings::UefiVariable) -> Self {
+>         qapi::from_c(obj)
+>     }
+> }
+> 
+> The FFI types could be generated by qapi-gen, as in Marc-André's
+> proposal, or from bindgen.
+> 
+> I am not sure what approach is better---whether to use serde or to
+> automatically generate the marshaling and unmarshaling code; and whether
+> to use bindgen or generate C-compatible FFI types---but it made sense,
+> from the point of view of extracting "some" code from Marc-André's
+> proof of concept and enticing other people, :) to start from high-level
+> types.
+> 
 
