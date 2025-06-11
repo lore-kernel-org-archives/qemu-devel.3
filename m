@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E0CEC71135
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 23:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A785C71136
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 23:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPUnw-0007a4-7W; Wed, 11 Jun 2025 19:24:24 -0400
+	id 1uPUnt-0007ZC-6w; Wed, 11 Jun 2025 19:24:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uPUnr-0007Yn-CS
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 19:24:20 -0400
+ id 1uPUnq-0007YF-DS
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 19:24:18 -0400
 Received: from mail-pl1-x62c.google.com ([2607:f8b0:4864:20::62c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uPUnp-0001k3-Dw
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 19:24:19 -0400
+ id 1uPUno-0001jq-R2
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 19:24:18 -0400
 Received: by mail-pl1-x62c.google.com with SMTP id
- d9443c01a7336-234d366e5f2so4698425ad.1
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 16:24:17 -0700 (PDT)
+ d9443c01a7336-236192f8770so2597025ad.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 16:24:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749684256; x=1750289056; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1749684255; x=1750289055; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=97wbn1fyVd354+uZeRkmCwxgLDzBnsPU4MLpqSMDiPM=;
- b=luQQv9wGafSshwYKBYHW20gRoHAPg79E4OTjL410IDJak9RjdZuDmV4t8TcJ7iWVWO
- nCxE7vWJIvKFnRX/ov8ZmePl4Fah9HTDo4/UZfMu0IA1jZJIoPY7o+btWQ54NdgVKsu6
- geBTda1Dvo760FtcdYfYwhbagbHZ0e52EOHNmcrkwZZDIjbBOd+V2ytFLZZW4EpFDBM3
- z0kTxatfdPoGQf627htFxTKGd+C7L9hEP5utjKBYIG30ccVmGn/CeOLZSCU3sA005U9x
- l4/NpZ0LrkwZf0UpLHawDg3xqAivw+a3ojv2dwJFE6i8DbOZabwgw4zNsAgq9SO9Q9Ns
- lFCA==
+ bh=Xl2CsCbMIdd7IA6Ry113lx92Qe9OahNuvq02EUlL3YI=;
+ b=GhzfOAgEFSWaMu7xDyMoojUS8xqgqjTVeCSu7IEK+RQv2QSHl8g5E4Rdm4G47oDmlB
+ yM/oo3EcNeBXo497+pz4NgzAsjnYrvw8ApbxUCns+bwVq0QCzlGDDt95itGxPyrshlU9
+ 88rfJK1iGowNP+e1wSG7gStFfeKbHufB26rUxrpHQjm1n4zfma4eWrZaw5vz4xuEzX6a
+ pB1as0sM4U5nopFyj7bbJ7rkOptB/AQjOCnNRG0VxDUQoDvp6vFxKRcZEuSUjfarO/FF
+ 7vQiNyuJj9EYdJzBjHFWXwWJvf3kGehbSZuGj76xsLRHzvNOkblIGIFO4yX5PkFtHxb/
+ afhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749684256; x=1750289056;
+ d=1e100.net; s=20230601; t=1749684255; x=1750289055;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=97wbn1fyVd354+uZeRkmCwxgLDzBnsPU4MLpqSMDiPM=;
- b=OmYg6XGRS9MUSiTmHRhlM36dJeEOnxqWO8rTgmU96GFnFEN4i7F4VO+N1WenLc5D4W
- BXcY5EagZMjGtIgrIWYAxJjx1F3nX9AqhqFrmHo64qSYdPu55yT9L4TfJ85WnmnqSK3D
- h0GKWymNDWKz0B9REvHjXdkD2/L/ntkHumwOd/J2AQNXtt17/0T3RZA1Veu3GepqXyy1
- ws7d+ut/zl9yKSYewHyn3E2PAIRE7ACcbjQVbrkVLZPfiA9Z8WOOXkhHlJC8+vHFbeOt
- AdNGh/Ul1wtP8d8yLC1N1Ds2+PraIaq/0laEj9GA/UONQvX5hYQr5EY0JlAyFDtzTBZa
- lmvQ==
-X-Gm-Message-State: AOJu0YzVKTf74BRQZL/AuZOwpOf+aPFj+hsfI/Cc5F57I5tJOUaOmmta
- YxtFzQYmt4GPCSG1WFceTtfuRr/fCP0uQiZsMhEaoa2ekV0jHH72yRz58ksdJ2Hn
-X-Gm-Gg: ASbGncsgxwqVvQ92F2VQdzgmaap4UJLPAhZBFcuEKu38mX/HxhuN83sr9NZsaiu6quC
- AekpyHniUXbfcvNquGbPkCP08K6f7421/4iS+UPK/6N7HKPOUODM4pt28+uGr/W4Z5U16vvNcKk
- AoxEj1rz6zQae7flLKib0PeFQ2sfWtFmEOSfRplOO61iWanZSBKaVNlI2eFVIOlEhYHNUlqHFIl
- W/aCTmYpfZvYJmYiad3YFOf2UlMIgKFq/GZsiAXfXc3+i691x5Ud+bOgsGK8wLRZMTwH6yHISrU
- Ksq7ihU4H8oOIyl3OD/UfgaAGNCqBLLZ5B5N9oGQ8tLKEIIuJQJRZJRhRd2VIw==
-X-Google-Smtp-Source: AGHT+IEvg3OlEA0PGTV8B4m2dPyJyQEzl/wPnsCh/2SySM9levX460w/RQHeNpjGCageM73wndRQXw==
-X-Received: by 2002:a17:902:f78c:b0:234:c549:da10 with SMTP id
- d9443c01a7336-2364d90de98mr13131515ad.47.1749684255854; 
- Wed, 11 Jun 2025 16:24:15 -0700 (PDT)
+ bh=Xl2CsCbMIdd7IA6Ry113lx92Qe9OahNuvq02EUlL3YI=;
+ b=RslP4soEOUh5WI5YohMrBTGsyb37RVzSp6QNwC0gnz21ZWk7RESLhDbM/a/jwJYzWz
+ QMK3h+QYJoPYGx2fXUquI8wgZfQQ6KqK4vP9ANUs8ktiovM7VE1KmorF/svp/qMG/4LO
+ FYO0SPeDQKV8XLVXFn6m98IjqJPNIuf+HjQ5LkIByl+ROtRQshpTYYk2ox+NvJAW+ymz
+ AfCSK0hFxBjljBO/axymvNP5rj4iRi3qrMpjwqdVo6yy88Gb0HqVhATvE09EUwT1HKvA
+ 61KOkXQpzsX2ftpbdwiQFyDgvD6/k+T9/5IqcLf8+e1CpW9G64LoNoupSAgx63lAvzh/
+ eOaQ==
+X-Gm-Message-State: AOJu0YwElePuBEXG/dTyy/mc1JWE+2T1+5MaX6CrNpWn/HEsCciabsCd
+ AppU2uBpqImX6vcztLRWNM/XXcwtAXnVK8dSolpvPlF/DV9ftYCAHvMegWOck07e
+X-Gm-Gg: ASbGncsWAreeE1PI6r4XCJdBWASxEkbyfLnaS3q9nuGI31wWHokSj0w1aJN0IpA8/5c
+ XVBQRkgmG4q5pWstLhQ+XbC+xam/TMK6NKU8lzBh221M3gwlGTQHGu+zEYOHavcPIqHR7MNuyt6
+ hIKE7BW3ljVfw6Lf6OKoFTw3ow3qcwMYsU1wgGx2YuxCK1TYHBDWLeX3+R28Rdk+s5zAqYcWrVM
+ 8LG17ZOaAh+npCppHSQnSiMirNX5TU8zwRGfM/cWvyaLIKrEPsByEAOs6uFlsL4xqaqvTgNgh8B
+ oY+wRXmSI0w/ED6jOs6EkF2BMpdzkU/aa02tCRMrntosQ3MeA0wepxJoLxdrZA==
+X-Google-Smtp-Source: AGHT+IH9j3TCONUfZz7F4RnlXt7tN7tcf8da7rtl0qJ/4QI2TTO7rEQyEE5xGwAhrg8ytO6PK+lKoA==
+X-Received: by 2002:a17:902:ea11:b0:232:609:86c9 with SMTP id
+ d9443c01a7336-2364cd850bamr16090245ad.9.1749684254941; 
+ Wed, 11 Jun 2025 16:24:14 -0700 (PDT)
 Received: from shemhazi.lan ([50.46.174.34]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2364e6d9c86sm1220295ad.101.2025.06.11.16.24.15
+ d9443c01a7336-2364e6d9c86sm1220295ad.101.2025.06.11.16.24.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Jun 2025 16:24:15 -0700 (PDT)
+ Wed, 11 Jun 2025 16:24:14 -0700 (PDT)
 From: Rowan Hart <rowanbhart@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -74,9 +74,9 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Alexandre Iooss <erdnaxe@crans.org>, Zhao Liu <zhao1.liu@intel.com>,
  Eduardo Habkost <eduardo@habkost.net>, novafacing <rowanbhart@gmail.com>
-Subject: [PATCH v12 5/7] plugins: Add memory hardware address read/write API
-Date: Wed, 11 Jun 2025 16:24:07 -0700
-Message-ID: <20250611232409.2936521-6-rowanbhart@gmail.com>
+Subject: [PATCH v12 4/7] plugins: Add memory virtual address write API
+Date: Wed, 11 Jun 2025 16:24:06 -0700
+Message-ID: <20250611232409.2936521-5-rowanbhart@gmail.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250611232409.2936521-1-rowanbhart@gmail.com>
 References: <20250611232409.2936521-1-rowanbhart@gmail.com>
@@ -108,235 +108,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: novafacing <rowanbhart@gmail.com>
 
-This patch adds functions to the plugins API to allow plugins to read
-and write memory via hardware addresses. The functions use the current
-address space of the current CPU in order to avoid exposing address
-space information to users. A later patch may want to add a function to
-permit a specified address space, for example to facilitate
-architecture-specific plugins that want to operate on them, for example
-reading ARM secure memory.
+This patch adds functions to the plugins API to allow reading and
+writing memory via virtual addresses. These functions only permit doing
+so on the current CPU, because there is no way to ensure consistency if
+plugins are allowed to read or write to other CPUs that aren't currently
+in the context of the plugin.
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
 ---
- include/qemu/qemu-plugin.h | 93 ++++++++++++++++++++++++++++++++++++
- plugins/api.c              | 97 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 190 insertions(+)
+ include/qemu/qemu-plugin.h | 21 +++++++++++++++++++++
+ plugins/api.c              | 18 ++++++++++++++++++
+ 2 files changed, 39 insertions(+)
 
 diff --git a/include/qemu/qemu-plugin.h b/include/qemu/qemu-plugin.h
-index 4167c46c2a..5eecdccc67 100644
+index 9c9ebf6ce0..4167c46c2a 100644
 --- a/include/qemu/qemu-plugin.h
 +++ b/include/qemu/qemu-plugin.h
-@@ -979,6 +979,99 @@ QEMU_PLUGIN_API
- bool qemu_plugin_write_memory_vaddr(uint64_t addr,
-                                    GByteArray *data);
+@@ -958,6 +958,27 @@ QEMU_PLUGIN_API
+ bool qemu_plugin_read_memory_vaddr(uint64_t addr,
+                                    GByteArray *data, size_t len);
  
 +/**
-+ * enum qemu_plugin_hwaddr_operation_result - result of a memory operation
++ * qemu_plugin_write_memory_vaddr() - write to memory using a virtual address
 + *
-+ * @QEMU_PLUGIN_HWADDR_OPERATION_OK: hwaddr operation succeeded
-+ * @QEMU_PLUGIN_HWADDR_OPERATION_ERROR: unexpected error occurred
-+ * @QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR: error in memory device
-+ * @QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED: permission error
-+ * @QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS: address was invalid
-+ * @QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE: invalid address space
-+ */
-+enum qemu_plugin_hwaddr_operation_result {
-+    QEMU_PLUGIN_HWADDR_OPERATION_OK,
-+    QEMU_PLUGIN_HWADDR_OPERATION_ERROR,
-+    QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR,
-+    QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED,
-+    QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS,
-+    QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE,
-+};
-+
-+/**
-+ * qemu_plugin_read_memory_hwaddr() - read from memory using a hardware address
-+ *
-+ * @addr: The physical address to read from
-+ * @data: A byte array to store data into
-+ * @len: The number of bytes to read, starting from @addr
-+ *
-+ * @len bytes of data is read from the current memory space for the current
-+ * vCPU starting at @addr and stored into @data. If @data is not large enough to
-+ * hold @len bytes, it will be expanded to the necessary size, reallocating if
-+ * necessary. @len must be greater than 0.
-+ *
-+ * This function does not ensure writes are flushed prior to reading, so
-+ * callers should take care when calling this function in plugin callbacks to
-+ * avoid attempting to read data which may not yet be written and should use
-+ * the memory callback API instead.
-+ *
-+ * This function is only valid for softmmu targets.
-+ *
-+ * Returns a qemu_plugin_hwaddr_operation_result indicating the result of the
-+ * operation.
-+ */
-+QEMU_PLUGIN_API
-+enum qemu_plugin_hwaddr_operation_result
-+qemu_plugin_read_memory_hwaddr(uint64_t addr, GByteArray *data, size_t len);
-+
-+/**
-+ * qemu_plugin_write_memory_hwaddr() - write to memory using a hardware address
-+ *
-+ * @addr: A physical address to write to
++ * @addr: A virtual address to write to
 + * @data: A byte array containing the data to write
 + *
-+ * The contents of @data will be written to memory starting at the hardware
-+ * address @addr in the current address space for the current vCPU.
++ * The contents of @data will be written to memory starting at the virtual
++ * address @addr.
 + *
 + * This function does not guarantee consistency of writes, nor does it ensure
 + * that pending writes are flushed either before or after the write takes place,
-+ * so callers should take care when calling this function in plugin callbacks to
-+ * avoid depending on the existence of data written using this function which
-+ * may be overwritten afterward. In addition, this function requires that the
-+ * pages containing the address are not locked. Practically, this means that you
-+ * should not write instruction memory in a current translation block inside a
-+ * callback registered with qemu_plugin_register_vcpu_tb_trans_cb.
-+ *
-+ * You can, for example, write instruction memory in a current translation block
-+ * in a callback registered with qemu_plugin_register_vcpu_tb_exec_cb, although
-+ * be aware that the write will not be flushed until after the translation block
-+ * has finished executing.  In general, this function should be used to write
-+ * data memory or to patch code at a known address, not in a current translation
-+ * block.
-+ *
-+ * This function is only valid for softmmu targets.
-+ *
-+ * Returns a qemu_plugin_hwaddr_operation_result indicating the result of the
-+ * operation.
-+ */
-+QEMU_PLUGIN_API
-+enum qemu_plugin_hwaddr_operation_result
-+qemu_plugin_write_memory_hwaddr(uint64_t addr, GByteArray *data);
-+
-+/**
-+ * qemu_plugin_translate_vaddr() - translate virtual address for current vCPU
-+ *
-+ * @vaddr: virtual address to translate
-+ * @hwaddr: pointer to store the physical address
-+ *
-+ * This function is only valid in vCPU context (i.e. in callbacks) and is only
-+ * valid for softmmu targets.
++ * so callers should take care to only call this function in vCPU context (i.e.
++ * in callbacks) and avoid depending on the existence of data written using this
++ * function which may be overwritten afterward.
 + *
 + * Returns true on success and false on failure.
 + */
 +QEMU_PLUGIN_API
-+bool qemu_plugin_translate_vaddr(uint64_t vaddr, uint64_t *hwaddr);
++bool qemu_plugin_write_memory_vaddr(uint64_t addr,
++                                   GByteArray *data);
 +
  /**
   * qemu_plugin_scoreboard_new() - alloc a new scoreboard
   *
 diff --git a/plugins/api.c b/plugins/api.c
-index 1f64a9ea64..eac04cc1f6 100644
+index 3f04399c26..1f64a9ea64 100644
 --- a/plugins/api.c
 +++ b/plugins/api.c
-@@ -39,6 +39,7 @@
- #include "qemu/main-loop.h"
- #include "qemu/plugin.h"
- #include "qemu/log.h"
-+#include "system/memory.h"
- #include "tcg/tcg.h"
- #include "exec/gdbstub.h"
- #include "exec/target_page.h"
-@@ -494,6 +495,102 @@ bool qemu_plugin_write_memory_vaddr(uint64_t addr, GByteArray *data)
+@@ -476,6 +476,24 @@ bool qemu_plugin_read_memory_vaddr(uint64_t addr, GByteArray *data, size_t len)
      return true;
  }
  
-+enum qemu_plugin_hwaddr_operation_result
-+qemu_plugin_read_memory_hwaddr(hwaddr addr, GByteArray *data, size_t len)
++bool qemu_plugin_write_memory_vaddr(uint64_t addr, GByteArray *data)
 +{
-+#ifdef CONFIG_SOFTMMU
-+    if (len == 0) {
-+        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
-+    }
-+
 +    g_assert(current_cpu);
 +
-+
-+    int as_idx = cpu_asidx_from_attrs(current_cpu, MEMTXATTRS_UNSPECIFIED);
-+    AddressSpace *as = cpu_get_address_space(current_cpu, as_idx);
-+
-+    if (as == NULL) {
-+        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE;
-+    }
-+
-+    g_byte_array_set_size(data, len);
-+    MemTxResult res = address_space_rw(as, addr,
-+                                       MEMTXATTRS_UNSPECIFIED, data->data,
-+                                       data->len, false);
-+
-+    switch (res) {
-+    case MEMTX_OK:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_OK;
-+    case MEMTX_ERROR:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR;
-+    case MEMTX_DECODE_ERROR:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS;
-+    case MEMTX_ACCESS_ERROR:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED;
-+    default:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
-+    }
-+#else
-+    return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
-+#endif
-+}
-+
-+enum qemu_plugin_hwaddr_operation_result
-+qemu_plugin_write_memory_hwaddr(hwaddr addr, GByteArray *data)
-+{
-+#ifdef CONFIG_SOFTMMU
 +    if (data->len == 0) {
-+        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
-+    }
-+
-+    g_assert(current_cpu);
-+
-+    int as_idx = cpu_asidx_from_attrs(current_cpu, MEMTXATTRS_UNSPECIFIED);
-+    AddressSpace *as = cpu_get_address_space(current_cpu, as_idx);
-+
-+    if (as == NULL) {
-+        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS_SPACE;
-+    }
-+
-+    MemTxResult res = address_space_rw(as, addr,
-+                                       MEMTXATTRS_UNSPECIFIED, data->data,
-+                                       data->len, true);
-+    switch (res) {
-+    case MEMTX_OK:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_OK;
-+    case MEMTX_ERROR:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_DEVICE_ERROR;
-+    case MEMTX_DECODE_ERROR:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_INVALID_ADDRESS;
-+    case MEMTX_ACCESS_ERROR:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_ACCESS_DENIED;
-+    default:
-+        return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
-+    }
-+#else
-+    return QEMU_PLUGIN_HWADDR_OPERATION_ERROR;
-+#endif
-+}
-+
-+bool qemu_plugin_translate_vaddr(uint64_t vaddr, uint64_t *hwaddr)
-+{
-+#ifdef CONFIG_SOFTMMU
-+    g_assert(current_cpu);
-+
-+    uint64_t res = cpu_get_phys_page_debug(current_cpu, vaddr);
-+
-+    if (res == (uint64_t)-1) {
 +        return false;
 +    }
 +
-+    *hwaddr = res | (vaddr & ~TARGET_PAGE_MASK);
++    int result = cpu_memory_rw_debug(current_cpu, addr, data->data,
++                                     data->len, true);
++
++    if (result < 0) {
++        return false;
++    }
 +
 +    return true;
-+#else
-+    return false;
-+#endif
 +}
 +
  struct qemu_plugin_scoreboard *qemu_plugin_scoreboard_new(size_t element_size)
