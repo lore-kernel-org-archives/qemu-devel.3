@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7666DC71141
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:31:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901ABC71141
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:34:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQBE-0003zb-F0; Wed, 11 Jun 2025 14:28:08 -0400
+	id 1uPQFb-00059j-Rd; Wed, 11 Jun 2025 14:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQA1-0001o6-4T
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:53 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uPQAa-0002Cy-Hg
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQ9s-0001Rj-Sq
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:51 -0400
+ id 1uPQAW-0001hm-5M
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749666404;
+ s=mimecast20190719; t=1749666441;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=UpwIHbzvu7jlclXB/9FN3lLirxVS/6Y80YtOZqhOwSU=;
- b=iTk+qMT6Q1PvdPkAkjlznBcmDGhPt0byiXNbP+PzbJkFQ3iL2jRsya3D6wmCHkfsN0TbZ3
- NOcE7naJpx++Pnl9niRyloP7iTPZDNg5OPpDEt81akcp/S9E5vz+pog+PVD3738n07ovTH
- VZYqzSI0g5gTclGYMNU/zCoERUnwFnU=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=f128TMvyALcEvw2Q1PgUkPtT2l4n4rQQAsIOgSwd6Bw=;
+ b=fqFUhuZZBSIJamGAslmNAYvmzABGkME81L8a5IJ1pOybcqhdrZAbKxxwujTStmosDZkmBQ
+ kLDxYmLUI7wp+GoifCDNan52kUFKzDr0Ud1BR9ZKXMbOEdrg22Z4mJvGHt6cT1ihn3c+ME
+ iO6dnAnevXZO/Ufk+Fe+ymSED6C/kPU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-SdR7kE7NN5KcDoOsCTUOhg-1; Wed,
- 11 Jun 2025 14:26:39 -0400
-X-MC-Unique: SdR7kE7NN5KcDoOsCTUOhg-1
-X-Mimecast-MFC-AGG-ID: SdR7kE7NN5KcDoOsCTUOhg_1749666396
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-98-mSrFx_MUMsimIImP4xTVHA-1; Wed,
+ 11 Jun 2025 14:27:20 -0400
+X-MC-Unique: mSrFx_MUMsimIImP4xTVHA-1
+X-Mimecast-MFC-AGG-ID: mSrFx_MUMsimIImP4xTVHA_1749666436
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1F42E18089B6; Wed, 11 Jun 2025 18:26:36 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D1B0119560B6; Wed, 11 Jun 2025 18:27:15 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.122])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8E0A230002C3; Wed, 11 Jun 2025 18:26:34 +0000 (UTC)
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1B8CB195609D; Wed, 11 Jun 2025 18:27:15 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -75,17 +75,18 @@ Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 12/31] hw/audio/sb16: skip automatic zero-init of large array
-Date: Wed, 11 Jun 2025 14:25:14 -0400
-Message-ID: <20250611182533.200590-13-stefanha@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 26/31] hw/usb/hcd-ohci: skip automatic zero-init of large array
+Date: Wed, 11 Jun 2025 14:25:28 -0400
+Message-ID: <20250611182533.200590-27-stefanha@redhat.com>
 In-Reply-To: <20250611182533.200590-1-stefanha@redhat.com>
 References: <20250611182533.200590-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,35 +113,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'write_audio' method has a 4k byte array used for copying data
-between the audio backend and device. Skip the automatic zero-init
-of this array to eliminate the performance overhead in the I/O hot
-path.
+The 'ohci_service_iso_td' method has a 8k byte array used for copying
+data between guest and host. Skip the automatic zero-init of this
+array to eliminate the performance overhead in the I/O hot path.
 
-The 'tmpbuf' array will be fully initialized when reading data from
-device memory.
+The 'buf' array will be fully initialized when reading data from guest
+memory.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20250610123709.835102-13-berrange@redhat.com
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-id: 20250610123709.835102-27-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/audio/sb16.c | 2 +-
+ hw/usb/hcd-ohci.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/audio/sb16.c b/hw/audio/sb16.c
-index 19fd3b9020..bac64118fe 100644
---- a/hw/audio/sb16.c
-+++ b/hw/audio/sb16.c
-@@ -1181,7 +1181,7 @@ static int write_audio (SB16State *s, int nchan, int dma_pos,
-     IsaDma *isa_dma = nchan == s->dma ? s->isa_dma : s->isa_hdma;
-     IsaDmaClass *k = ISADMA_GET_CLASS(isa_dma);
-     int temp, net;
--    uint8_t tmpbuf[4096];
-+    QEMU_UNINITIALIZED uint8_t tmpbuf[4096];
- 
-     temp = len;
-     net = 0;
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 71b54914d3..72a9f9f474 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -577,7 +577,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
+     USBDevice *dev;
+     USBEndpoint *ep;
+     USBPacket *pkt;
+-    uint8_t buf[8192];
++    QEMU_UNINITIALIZED uint8_t buf[8192];
+     bool int_req;
+     struct ohci_iso_td iso_td;
+     uint32_t addr;
 -- 
 2.49.0
 
