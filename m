@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAFE7C71143
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAB43C71141
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 19:00:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQfr-0007JB-1a; Wed, 11 Jun 2025 14:59:47 -0400
+	id 1uPQft-0007Jr-W6; Wed, 11 Jun 2025 14:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uPQfc-0007II-Lw
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:59:33 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1uPQfh-0007Ig-V9
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:59:41 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uPQfN-0005wl-3K
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:59:31 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-235d6de331fso1822965ad.3
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 11:59:03 -0700 (PDT)
+ id 1uPQfd-0005y1-Ow
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:59:36 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2363497cc4dso1996885ad.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 11:59:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749668342; x=1750273142; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749668371; x=1750273171; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=s2HRxXWhpiKYcCKDs/IOF+TQRq/6M77Volig84nkwt8=;
- b=PELnB7gW8CO0wl+f6Xf39vFDO6cXW4EVqJ1KqK963OgzkW9M3C8vKt1P0O39szVIkv
- RW+i6nHHruvgoljpwV30/45ZRpWg62odKBLl3x59feiwzKRsseDOtmKDWhIixPrvxoSs
- 0da9llN610ttBJAphuPmjFRnBndBG1sgvTfdaVIL2d+Kiy1YgP8o6rkdmjoZGkvoXp/Z
- QzhS4FAwV2iF3HmiT6Ii+zg596QkkOA/UmiUxZvvMeIcVazDGCnsqcDKDnTOBUADCmrj
- 2+u8dnQPvwR7iNGxNOab+4nwPqSVTW+06p8LuUBcdWQnJm+pHK1kyAkYekcgvHkaBTgF
- Zy0g==
+ bh=LXkUHG1ZtTWZJwyqWKLCBAmvTYsIdGWVTYQDG88w7u4=;
+ b=WgI4i4zwNAHQtTLnbvxKmHmjL5WN3uHIPM3LOfaNpMPVYXlG864YshzRRSVEZkPdM2
+ h0pN54gGonTulfSp0QACbvMJFxOO8Nh09WpeTLYllWCnKPqBKi/aGDpV5sVht/6tdElG
+ kQKFtl3tdU7DSF7eE7bdqyMKyMdTunkK6b1kiTI4XG6HVZe21umisaUu65UJnRGoQLPL
+ A0FJNgshtN6dLoBxo4AcNCt9ltAp2FXCndxfN7qL5L5tamzSvhDaIoV5D7pPpAYcXvB3
+ 3UklEyB2HrJl1xWIqyhQcPU9ejWGdIQkCgM+JjbLnnFhR2IK3rewO2m8K3vGgID7HF1h
+ vIOA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749668342; x=1750273142;
+ d=1e100.net; s=20230601; t=1749668371; x=1750273171;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=s2HRxXWhpiKYcCKDs/IOF+TQRq/6M77Volig84nkwt8=;
- b=FniGE/ppmDPe2TRCBIdO6MEZIikVnEnAnDLWujikz8VvxWMkHdD1r1S69giyXnLbUI
- i86gDR0jfylMkDc8oSRVKg5O6qlA8iVFHHXzlwcCIoM/oiN7ECRYuYVpRSCUAlEQh4Db
- HbiAIjjpvIdKe9DdVWi7n7esKTqzdmWTeoKrLCt/mE8R8uFvM8nc6zyXneddvcQWhuXH
- 9hQCm20UE0MLoR5LGAm4Khq5rHIuPklvh35PrTL5rimyidcBozggcQ43wf9ZblGPWwnD
- Gm3n+WFkRVv8S4nDGCxNlnlK+aHYcCwVNn0vhJyhSdgRpXw1NwU0e5YLF0dWmTiTbfvx
- PyMg==
+ bh=LXkUHG1ZtTWZJwyqWKLCBAmvTYsIdGWVTYQDG88w7u4=;
+ b=SowzMWEKiOebdsOvY0mCHZb3ijMpyhvHym2XAMvEQBvrGaAUPIKlh+tpJGN0UZ+gE5
+ YsOrc8ZhmVVh/4C8ARh+PYqH/3GslB9Ma3fXpTtkhlENtRftLrFCsgNOImq/758J0q63
+ Beu8DvVnm3WUcxQdqOT5+PtUcZPAKZ6oHXC7FTrSmx2BawPF1MuikYNM3qAt8RG8WDez
+ T+l4O/vAxTJ0MZoyrcTMjlMP2aYQc+9G8xCyrmIJTaLY32Z9YKB2qoy/eQ1AJ4w7uN07
+ 2CAodUHTd7/YLrM4H7KPuM8rhfLzG/K6B7GQmKchAbX1rNYg9QUp4lBL0CTUu88/TOu9
+ CPfA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzIlocTRs8BhpGBw6QJDXjTUegr58C6woC/vMtRIRbxCAiCvjBwarbneLYAfjXcjarRBCGe3SrMNBt@nongnu.org
-X-Gm-Message-State: AOJu0YzG2ivZz7tMJMsxYvC5JcK9GnZyiYduqCjjZL9PHTq6tVSO391U
- Gcb9hJiZfxyx7bOSt1KTMtEBKsPSCRfdyCcH3TSjfAjrdpSz7ym8YtUqVgLK4E9h2UI=
-X-Gm-Gg: ASbGncsWp/nuMpDKOC/oPv4NjY8LE7iWM8CpIaB/mBfLynBVU50YsgQ76to0jDu/BR7
- TiVwLVU0GXltYkmlbXflvPII8njBYXfmaRsKqG7shH3CO3ZCx9BBmnU63CTVGlf+j3wqwSDRTLQ
- 4y4+IFgUcbU6U+ESFLeovnqSWQWI/zeAzmJzh/IYsBy+SIsTA/TLIwiMAuDnW1+ahypqJXZJdUx
- Ec5Bgq+YKWHcCDqyInF9oCSJilpmHymiNlHaVEwv3q1QJFdDd0RgDs76pSpOj6hJi89kx3OLfmy
- iJw1UZtHAmVzvO/wua/D5mtGlsfxyg4TGxWe2CnblP1Lfb0Ahc4s+So71pBoOd8SYGUshmCFbqs
- 7rTfwlLTxxQ==
-X-Google-Smtp-Source: AGHT+IFXCOPEAfm0L+t3fBj2Lxdj7vW9QRGz6niFFLZbbebHg/OHdM9xUiNbAF5kYMNMPJ/LYCws0A==
-X-Received: by 2002:a17:902:d543:b0:235:e942:cb9c with SMTP id
- d9443c01a7336-2364c8b4d38mr9896385ad.5.1749668342420; 
- Wed, 11 Jun 2025 11:59:02 -0700 (PDT)
+ AJvYcCWiJQbV/7eqyXjOnduIT1RvoRs+v4A+lz+cXJHH6EA8ikflEvc88mJLDCdYCWO7TSq2r0BJ2x07Q4ho@nongnu.org
+X-Gm-Message-State: AOJu0Yw2vMCaQOQUpItSD4OcxfzU0OWzlQolq6m+f0Fi2l594N+od88i
+ WZkgSONI9LdzvpZ9idZA/nYT83z/g3twoTWpkUkccI8+pfXwY6lEP10JotSnJa7D1Eg=
+X-Gm-Gg: ASbGncvi2BUoW3k6p2oLxII9S5QM1wLIjmz1J6LzJ6zGUauWc6xz9jFB1FXV+WN25q/
+ j+0hUhdpS9eX/4xmQdtUbSDit2Pzsef+fgG87F8+8U1VXPhOP1T7uIeSQIDtlTvoLpMbUc6Hvz2
+ c9+EJsh+q7s4JL3gT5gQTjqBSqdDKmshyO5DGmPqZewZ+wkY664LQ0cmtl90t7UddPVyBc5FfAO
+ lWy1tGw8C8hGLsWTggm7QbEWzouxXPwzR5jjBa+HHBqGoLqfcdnTAfpGPqyJm0rMOtVK4iI0LGQ
+ FvHnrhon9lhxlo48zjJZqLG2x9X7mwLMmF7ACzNO5Gr84eYx4fVoe7EOc9hCclMMuhh7QqKaFEM
+ =
+X-Google-Smtp-Source: AGHT+IE8Ozc8xF3bhxztOGg8cPyFnfxwsECZc/JfRWpzg+OKJXvU8gHRU5ST5Mbex+BjB5Ze1cznfA==
+X-Received: by 2002:a17:903:230d:b0:235:eb8d:801b with SMTP id
+ d9443c01a7336-23641b19915mr67470425ad.32.1749668371432; 
+ Wed, 11 Jun 2025 11:59:31 -0700 (PDT)
 Received: from [192.168.1.87] ([38.41.223.211])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-236032fcd58sm92049195ad.122.2025.06.11.11.59.01
+ d9443c01a7336-236032fc9ebsm91270385ad.106.2025.06.11.11.59.30
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 11:59:02 -0700 (PDT)
-Message-ID: <c6882c95-d1c8-436d-b4be-889f399f4867@linaro.org>
-Date: Wed, 11 Jun 2025 11:59:01 -0700
+ Wed, 11 Jun 2025 11:59:31 -0700 (PDT)
+Message-ID: <8eb388d5-15fd-4614-a41b-17caf53cd9be@linaro.org>
+Date: Wed, 11 Jun 2025 11:59:30 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 3/8] plugins: Add enforcement of QEMU_PLUGIN_CB flags
- in register R/W callbacks
+Subject: Re: [PATCH v11 8/8] plugins: Update plugin version and add notes
 Content-Language: en-US
 To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
@@ -82,13 +81,13 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>
 References: <20250609193841.348076-1-rowanbhart@gmail.com>
- <20250609193841.348076-4-rowanbhart@gmail.com>
+ <20250609193841.348076-9-rowanbhart@gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <20250609193841.348076-4-rowanbhart@gmail.com>
+In-Reply-To: <20250609193841.348076-9-rowanbhart@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,25 +111,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/9/25 12:38 PM, Rowan Hart wrote:
-> This patch adds functionality to enforce the requested QEMU_PLUGIN_CB_
-> flags level passed when registering a callback function using the
-> plugins API. Each time a callback is about to be invoked, a thread-local
-> variable will be updated with the level that callback requested. Then,
-> called API functions (in particular, the register read and write API)
-> will call qemu_plugin_get_cb_flags() to check the level is at least the
-> level they require.
+> From: novafacing <rowanbhart@gmail.com>
+> 
+> This patch updates the plugin version to gate new APIs and adds notes
+> describing what has been added.
 > 
 > Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
 > ---
->   accel/tcg/plugin-gen.c     | 30 ++++++++++++++++++++++++++++++
->   include/hw/core/cpu.h      |  1 +
->   include/qemu/plugin.h      | 15 +++++++++++++++
->   include/qemu/qemu-plugin.h | 19 +++++++++++++------
->   plugins/api.c              |  4 ++++
->   plugins/core.c             | 33 +++++++++++++++++++++++++++++++++
->   6 files changed, 96 insertions(+), 6 deletions(-)
+>   include/qemu/qemu-plugin.h | 9 ++++++++-
+>   1 file changed, 8 insertions(+), 1 deletion(-)
 
-Looks good now,
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
