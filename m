@@ -4,85 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B621C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:55:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED96DC677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:56:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPGJ0-0005iW-VD; Wed, 11 Jun 2025 03:55:30 -0400
+	id 1uPGK5-0006JG-9S; Wed, 11 Jun 2025 03:56:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPGIy-0005hk-Rn
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:55:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uPGK2-0006FZ-D8
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:56:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPGIx-0006SD-Dr
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:55:28 -0400
+ id 1uPGJy-0006Xz-Ng
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:56:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749628525;
+ s=mimecast20190719; t=1749628588;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZDlB+8IwLOkwf93Y9Ek8UvFKGDkuIQK6hQr3WuALH5g=;
- b=G5JmVDRL8NZOaoDJjEz3A75kzc94Y9l4hGkORisgwjtSth60BmIxlr/cErbtNOUZ9k9eKM
- pUIyXYze3YOyufDgvJ2BXkYyI/vGMQUZOTSWqRSADtyUf6CP35LhEZZwxBRh6urg60/N6E
- 5Dk/V2ZOT9Q5oZmbf1jncU83TlBqKAc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YsJbuCbe5JRneX3QV2NgxbIF88VzoALe/HxhjozhSI0=;
+ b=PqjVK9aWadxYlJPNDP0c1/m4yEXLkeVQ+PmP0vKiutJfj28qGBfqHs/nZa2X8pQe4+ZcL4
+ fgFz1dH9yyG08JYJFuvVPSzUQFzqM22Sb0/4Ye5zt6JBvxh6MSVP6ANvYrmH4YNYJD1wSX
+ 97qu1NvLT5jjFY4vxTgmW8Xr1oEXfyo=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-693-aLXLXMCjPS20bNkDguYHhg-1; Wed, 11 Jun 2025 03:55:23 -0400
-X-MC-Unique: aLXLXMCjPS20bNkDguYHhg-1
-X-Mimecast-MFC-AGG-ID: aLXLXMCjPS20bNkDguYHhg_1749628523
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a523ce0bb2so3305165f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 00:55:23 -0700 (PDT)
+ us-mta-208-UkY8NNdXO7KS88KAA4XqZQ-1; Wed, 11 Jun 2025 03:56:26 -0400
+X-MC-Unique: UkY8NNdXO7KS88KAA4XqZQ-1
+X-Mimecast-MFC-AGG-ID: UkY8NNdXO7KS88KAA4XqZQ_1749628586
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-441c122fa56so32548605e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 00:56:26 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749628522; x=1750233322;
+ d=1e100.net; s=20230601; t=1749628585; x=1750233385;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ZDlB+8IwLOkwf93Y9Ek8UvFKGDkuIQK6hQr3WuALH5g=;
- b=Rlwvv/Lzfd+36hRHxWRimYOpET7R1YLp/SNUwvYeVMoAiqb39ogx4ixerWMz98YIpp
- 2/ybplpUCzxeBqRcy5HN+YUSi/Yol80GRjY02hxyRQlqtLli4HkkMzpjD3LANuN2hK7Q
- hXSEDpxQaYA4lEWU41mP/mcfa3USp3vWWy54F0ZTBvBkFpDT1PgCDjiTvugNHp+2rZ/4
- AEnby7kQW7rrHBRP6P471sp0o1oUqyLCSFQUpJkiAmo1pS+Lx4rfU4wN0j6kODLh+yhl
- +tcR3IRymOHqKjFkXquOjUTxkhTrSLy8PT2gOC1eX4hAIcpT7vyQlFJS2OqVtVYttdrR
- gQ0A==
+ bh=YsJbuCbe5JRneX3QV2NgxbIF88VzoALe/HxhjozhSI0=;
+ b=qKDV5N/tsfqUm3NpZHcftF7Nxoqouq5IMHMtArUdMmtqEI7RjsAmHek3frvthrwKgE
+ YuPOtRzchXE0dpxvc7fOjib9Rft5rOdzefzV0n/o4xSu3jzUMunlJCZhG0tY1PY+I8aO
+ pk0bi+fe3Mm5kqrc6n77dd8MMbCuansTyWbzF3cB9og5gJh+rIgR9qtxRVQX8emWbRCu
+ pKvjAzYNe3+YTGyhc2qdCGuOBuzlJL+zvxF7ApwtPYxxA2n2avl3XpWCOrKurVkEhtC+
+ ZXxZ0ovf8NwJnyPpbQc54Vjbds+TVUc+mJqQM3Fugq3NWTZtkGtxDskKd73B9jS5XgRt
+ IQyw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXDBDpIlVeRZCgkqN/ow4AtgC9GCCuvM+JM1aSAe9pz/T2iMxNqM/fX8irydqrk24E+UcNa3OOZqi1d@nongnu.org
-X-Gm-Message-State: AOJu0YzVKAkClBJUl75ImvZXLIm45M4DDCxtxpuWCEaNxUx9saU1+YG7
- 0JauINYB2HHeBWkMdhLZYsqnRATSnqWKAK36U9u3uQoaKWuaYVwpRdJWEklSKc3CAPAuKy9k8iU
- VVXjAF2sN3WlesmVYbvcv7dmU9yBr5pvFONguXNPsMAXXJPHMsc7fk+ld
-X-Gm-Gg: ASbGncu/5kKfLzxs2hSvvOduPWiPqel2lvyMWCYTrkIjRfvl8Wv76hQciPpBvjeUFRn
- o15vjfbN1uxwoSaKGh/qFEZqz0jBCIOmoCK6AOlDyx48pe4JnowACtegmPXdCpYjN+jeZkdSsga
- 7wWkLp48X4ciudQsY0aXERHmcbZwdeuEyxe3AcXM1Z76FIC7DBizSsoWJJtc0iSRIS9yhVAkwLX
- seNKXC05bcenkvIiYDV1/2t+zrBnTyGtdIwuqiV0ELJzkXhXyOok1qnBbmIuDcqCgsH6uS0994L
- FWkiwmFsMzLDxQY24Ah7Pykb
-X-Received: by 2002:a05:6000:18a5:b0:3a4:f41d:696e with SMTP id
- ffacd0b85a97d-3a558a2774emr1640975f8f.27.1749628522573; 
- Wed, 11 Jun 2025 00:55:22 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHynn1ZmxEl0ZNtN7lwzF/YB68g1m/IIeKGN9HNrNlal1iZgAxPh0tTHdb6EJG0wWRJSEPxyg==
-X-Received: by 2002:a05:6000:18a5:b0:3a4:f41d:696e with SMTP id
- ffacd0b85a97d-3a558a2774emr1640953f8f.27.1749628522197; 
- Wed, 11 Jun 2025 00:55:22 -0700 (PDT)
+ AJvYcCVWK/oXuiK5QrAHfskHJDp15GrbXkwvfTOLViXoXXJfPhYNAlDp0O9fqMCoFdEIAbIEEyUiRvFVoFsj@nongnu.org
+X-Gm-Message-State: AOJu0YwOgrI17gH8QOjPLFpiu5PAq29DuDZ5I5lMthxfTZvQqsv2AwD2
+ wpQIDIDyrRW2xrOBWjReyLbdUJY+Q27qA9PV9Dn93doUGnwojrJxu6cjge4gwyqKAWAH1F3X/DV
+ B2Avm7fswoLjIBoHEKU+h0SWnVVGPzFAfspVPLpPu27pTxTNqEf8F9TR61h2zw9vj
+X-Gm-Gg: ASbGncs5y7JKbhDZmiSvAA5n699eqJwOfIlgqO6XYy0XMAA+V0OiTuQsTfkxT6C5oMk
+ OPMbT+/83uB/t+Ww2vml9ZWXRJqIBeLmGRdWyi26agjW5F3aIgOtKOpqQBRHrRibfUP+jXlrJVK
+ LTJ9q9FD7+gtQBj59EkXckUWwyONwCzsQM/4o1o97kyejBwVO//b93gzhsmx0YvHxZN5h23mz3f
+ afBtOCRCqGQ8fPJA4+tH6KzKpvnP4yXrTTHHwTQFp45x0eCFPxXIC5L0iDcqp595CAHoo5sA6Yc
+ 07IiB/emIQfJfK/jRLhosyWO
+X-Received: by 2002:a5d:6101:0:b0:3a5:58a5:6a83 with SMTP id
+ ffacd0b85a97d-3a558a56a92mr1252445f8f.13.1749628585177; 
+ Wed, 11 Jun 2025 00:56:25 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHa9EhoFvN5NhHAREDbo8ZUD7GdO/aKx6OUJgy0+qnsn6oOk218rDhRrckUP54C5O1mFfSIvg==
+X-Received: by 2002:a5d:6101:0:b0:3a5:58a5:6a83 with SMTP id
+ ffacd0b85a97d-3a558a56a92mr1252430f8f.13.1749628584835; 
+ Wed, 11 Jun 2025 00:56:24 -0700 (PDT)
 Received: from [192.168.10.81] ([151.49.64.79])
  by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3a53229de01sm14813526f8f.11.2025.06.11.00.55.21
+ ffacd0b85a97d-3a53229e009sm14876566f8f.16.2025.06.11.00.56.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 00:55:21 -0700 (PDT)
-Message-ID: <fc9689e4-f48c-4174-be02-9091338bfa1d@redhat.com>
-Date: Wed, 11 Jun 2025 09:55:20 +0200
+ Wed, 11 Jun 2025 00:56:24 -0700 (PDT)
+Message-ID: <e14ce991-7cd5-4875-bd99-5dc27a22be78@redhat.com>
+Date: Wed, 11 Jun 2025 09:56:23 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/2] rust/hw/char/pl011/src/device: Implement logging
+Subject: Re: [PATCH v2 1/2] rust/qemu-api: Add initial logging support based
+ on C API
 To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
 References: <20250610202110.2243-1-shentey@gmail.com>
- <20250610202110.2243-3-shentey@gmail.com>
+ <20250610202110.2243-2-shentey@gmail.com>
 From: Paolo Bonzini <pbonzini@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=pbonzini@redhat.com; keydata=
@@ -120,10 +121,10 @@ Autocrypt: addr=pbonzini@redhat.com; keydata=
  JBrdmNZSQDz0iKmSrx8xkoXYfA3bgtFN8WJH2xgFL28XnqY4M6dLhJwV3z08tPSRqYFm4NMP
  dRsn0/7oymhneL8RthIvjDDQ5ktUjMe8LtHr70OZE/TT88qvEdhiIVUogHdo4qBrk41+gGQh
  b906Dudw5YhTJFU3nC6bbF2nrLlB4C/XSiH76ZvqzV0Z/cAMBo5NF/w=
-In-Reply-To: <20250610202110.2243-3-shentey@gmail.com>
+In-Reply-To: <20250610202110.2243-2-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -132,7 +133,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -149,26 +150,14 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/10/25 22:21, Bernhard Beschow wrote:
-> Now that there is logging support in Rust for QEMU, use it in the pl011
-> device.
-Adding also this to match the C code:
+> +/// A macro to log messages conditionally based on a provided mask.
+> +///
+> +/// The `log_mask` macro checks whether the given mask matches the current log
+> +/// level and, if so, formats and logs the message. It is the Rust counterpart
+> +/// of the qemu_log_mask() macro in the C implementation.
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 42dfa9509dc..e505abfae86 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -305,6 +305,12 @@ fn read_data_register(&mut self, update: &mut bool) -> u32 {
-      }
-  
-      fn write_data_register(&mut self, value: u32) -> bool {
-+        if !self.control.enable_uart() {
-+            log_mask!(Log::GuestError, "PL011 data written to disabled UART\n");
-+        }
-+        if !self.control.enable_transmit() {
-+            log_mask!(Log::GuestError, "PL011 data written to disabled TX UART\n");
-+        }
-          // interrupts always checked
-          let _ = self.loopback_tx(value.into());
-          self.int_level |= Interrupt::TX;
+Clippy complains that it wants `` around the function name.
+
+Paolo
 
 
