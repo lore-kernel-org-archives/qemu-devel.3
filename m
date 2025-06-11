@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB79AC61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 10:32:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3EEB3C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 10:39:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPIkk-0006b6-Ox; Wed, 11 Jun 2025 06:32:18 -0400
+	id 1uPIqc-0007jX-Jo; Wed, 11 Jun 2025 06:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPIkf-0006a5-Rs
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 06:32:13 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPIqb-0007jA-9V
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 06:38:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPIkW-0000YN-Mh
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 06:32:12 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPIqY-0001BF-PF
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 06:38:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749637914;
+ s=mimecast20190719; t=1749638296;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=KYwl1oGVaWnICbOngbeJqBrYw/IXWit8BAm/nOhBPCk=;
- b=fWMayauyOcEoxubycJ1JSXbmfjAWjIvSWXg5WbMyoEFY86GXZEIip9wbhDqUWzgeIsShwB
- hixSTLn87rcQTW7jtsWMoAHP81zdYDe/h4PUX+jCqPG1/jM6Sag2zL6Tt1dn/tOcicdUv+
- /dDx6VzgiawO2IG3npibCLcT/XKUsro=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=y8aiy6gLrcAVxGa7WKVwLbsuuGNNnp7+0cmsOBx1M9Y=;
+ b=ZrlCBPoLqvBGSzvjJmDRWai+Ef80QC+42IzJ7rjgfd0+TT2dUZBWhVJ1E5WV62FCdG3Tk9
+ UzuWaOAS530+R7eiYV/hwr/tVW+GI2wgFZJDWZ/NLqOX5CiJy5udn/QTLFaZy7hrIdPfMw
+ LiBieScVtmyByiHXTlgNxHJh7X53Y2E=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-102-BISrT12lOCmht0cEsY2pkQ-1; Wed, 11 Jun 2025 06:31:51 -0400
-X-MC-Unique: BISrT12lOCmht0cEsY2pkQ-1
-X-Mimecast-MFC-AGG-ID: BISrT12lOCmht0cEsY2pkQ_1749637910
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450787c8626so37121175e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 03:31:51 -0700 (PDT)
+ us-mta-645-MPvXjztDNM-8BTAFgX5PkA-1; Wed, 11 Jun 2025 06:38:14 -0400
+X-MC-Unique: MPvXjztDNM-8BTAFgX5PkA-1
+X-Mimecast-MFC-AGG-ID: MPvXjztDNM-8BTAFgX5PkA_1749638294
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450cb8f8b1bso15131825e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 03:38:14 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749637909; x=1750242709;
+ d=1e100.net; s=20230601; t=1749638293; x=1750243093;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=KYwl1oGVaWnICbOngbeJqBrYw/IXWit8BAm/nOhBPCk=;
- b=pAbo8HWmfYyzSJ9RiLOwj895hy5cTieksyQvOkQaF59BADjVDZrss7J3fsQpY26no1
- PnvvQYTkEfOiz/c/54AziDXt9lS0zF1LonLrgeS3XQQFOm6p/JUiNvffHqG9sRZ6nqxW
- JYWcSfp0Soum3ndNVJ8Rs9CfR4xRcobHU2C3PXtSYgkLkGGrbjmLNqqHSooyzMe7udA3
- APB0AlLmt/7JR5EvS+i4IFVgC2gzdM5jHJlMufVYSFjr8tDDdOj5/Z4c7tZ3G7Cx+tLh
- DupjJXYlraIpMdxY0WmxG5BNiBVyBmuR+sC9kGQbmi0CBxslJZvIorPIPyETWz+d/ThX
- /E7Q==
+ bh=y8aiy6gLrcAVxGa7WKVwLbsuuGNNnp7+0cmsOBx1M9Y=;
+ b=io01hzm7DnEPgy6b7Gj7AD36iLtA51tHjezJNxHZfwu/SW++XOSjEGiltykn25FgWK
+ jGK152Fc7Cn9RtJRDmxj6vwwplgS4kuaOt8Wk6ezsbzOPVmTYTHpd1U4Iv2bFj79fqq7
+ jGwLBw2Lh7gNJYcD2ZuFlAhzBBc4A3nzmMSjam6aW72TBxSzUJZ2xKh/LN/1m17F5izC
+ 0VEax2UXMTR44dV2ZhiqBw6EOXsHX0JA9768n2mGiwCfBS5m2yfuZSEB8AMspTmT6uy+
+ 2kHdkbl6X6jNYZ0gn0VSNjZyzrc645HzJCWrYQwEQKghXS7zPZzMMoRtuSx0Ke5KOCnt
+ jfqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVTI9oh993iM/PNDB50klYnvDl3j2haAcKgh+YukeViFG288tNJj+nKq4NMPOkIr/30yF7nHeDUHXmj@nongnu.org
-X-Gm-Message-State: AOJu0YxG7wijP1p/v42DW8j8tC2J6MerEtzlHomNpheA/hdcleGStt/j
- 4aqPKn3bQYIV2opw1Yk1/fWA4xOih8sG56m7kzmp3VwRPNNnY5MqcrNxFW+Dphd6l4kyIj8aASP
- agIwkml1LCYuUSNVPdqcw7yskivmj0jU7r1wUljLkMAYApmJh3O0Us2Mo
-X-Gm-Gg: ASbGncuyThsKGV3dzZlXRxgwjebVOB/m1S7aic151ao8+3DDACDYzrwuaGkNrK3UX/B
- GHBfu/PURGByzsJbQRBXLr5+lIlgkfSYe7GNKB+cIMnmYTckVUXpUFiq9DFts57ZtM8P/a7cljS
- aGVrZghAL9+JLwniiVmf7CAX6h9RG5+qGpm1onr9RVOrKOMn3KTeeRXc6Jmoiap4uzT9WSlPqTT
- kTl+zrZucIkrLO6g0TCobObx8CJAThaQPhmSogTm4kvB+sU6OdAt4RziJy1tqr8n0GZh3bY6FLL
- Dm43mGX3BVgeZBMcMfI12sOGkK/WDaHWlcYlxgQYhrGp9DRX2vPfDeU+IepBWls=
-X-Received: by 2002:a05:600c:6612:b0:43e:afca:808f with SMTP id
- 5b1f17b1804b1-453248ea6b3mr26108545e9.31.1749637909684; 
- Wed, 11 Jun 2025 03:31:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFwsSCSIQndKWXCEasjIdday5YV9reC1YXCMJ+e9GeYXfdce70sEDPzUQ4ZYLJ0pK98Z3mf2A==
-X-Received: by 2002:a05:600c:6612:b0:43e:afca:808f with SMTP id
- 5b1f17b1804b1-453248ea6b3mr26108255e9.31.1749637909320; 
- Wed, 11 Jun 2025 03:31:49 -0700 (PDT)
+ AJvYcCUHZOZry/KHi867H+rv/noB/rJEq+Kk5/E9l68UB48a4ED3f1ZkfVw6UPoKmsyBKSqdK4HL8jHzcgRN@nongnu.org
+X-Gm-Message-State: AOJu0YzhLjRdhpfM9gw3vbYk6+1Q5HhLIOm9Ls5FLNS2PqWICzQLWEQf
+ sAMLGO41ENHOLnkzgX0/XvOqBcNLsvNyA5jhIpSkc824Tgvz2WozuFIDmOp/UJJpsT5b9NysaMe
+ +dNxdCKN3H/QNEMs4oevTwTWPYUzEjS6z6SFExhof5Pq/7EYmtg/i+QpP
+X-Gm-Gg: ASbGncvfLgyuCtiI71Fq+iJa6QGUe9oJ9OBXF/Mt4ehlq1OyWRUTCR81lRkuWfhE7fe
+ 1wFwzEvP2MLcphjltjsDvDmaTfKbWviIJckVAPrX6FhnlU6x/sCV/VvqH6Y8L1VtNdPL6ilvogU
+ hlC5d4kI35x7o7ko0F71HJ/8i3rUIXPVQiyLIuOaBVIfKPkaTDptVUbpVh/5Kk6phOy331beLgE
+ vVHwL57M1ey05DEDheqZKsGC7MvWvsXJanM/NQBn3ChM8hFPbANJ8voX2Z/DzfaOwHD8PaJXzt5
+ +q8G4EE3DWs/YkoyrVKqcp+Ry9Dl5Bb/yx8nE4QBvMB/AmGaNuXeMZfZl8FulE8=
+X-Received: by 2002:a05:600c:c178:b0:450:d30e:ff96 with SMTP id
+ 5b1f17b1804b1-453247ee33cmr26281795e9.0.1749638293649; 
+ Wed, 11 Jun 2025 03:38:13 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGFalzxyiIR3nr3Siimpl4io70ltX+0lbzDlOxnMvorBom6DfAT0xZKIIqeLPOzqohOZ4BC4Q==
+X-Received: by 2002:a05:600c:c178:b0:450:d30e:ff96 with SMTP id
+ 5b1f17b1804b1-453247ee33cmr26281485e9.0.1749638293305; 
+ Wed, 11 Jun 2025 03:38:13 -0700 (PDT)
 Received: from [192.168.0.4] (ltea-047-064-115-122.pools.arcor-ip.net.
  [47.64.115.122]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5323b33c3sm15049724f8f.34.2025.06.11.03.31.48
+ 5b1f17b1804b1-453251b6c19sm17110555e9.40.2025.06.11.03.38.12
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 03:31:48 -0700 (PDT)
-Message-ID: <2fcd528a-8372-49e5-94de-374e6f75619d@redhat.com>
-Date: Wed, 11 Jun 2025 12:31:47 +0200
+ Wed, 11 Jun 2025 03:38:12 -0700 (PDT)
+Message-ID: <a444a00d-bb63-4018-84f9-f530c622d3bb@redhat.com>
+Date: Wed, 11 Jun 2025 12:38:11 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] hw: Fix type constant for DTB files
+Subject: Re: [PATCH 2/5] pc-bios/dtb/meson: Prefer target name to be outfile, 
+ not infile
 To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  <philmd@linaro.org>, Peter Maydell <peter.maydell@linaro.org>,
@@ -85,7 +86,7 @@ Cc: qemu-arm@nongnu.org, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250610204131.2862-1-shentey@gmail.com>
- <20250610204131.2862-2-shentey@gmail.com>
+ <20250610204131.2862-3-shentey@gmail.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -130,10 +131,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250610204131.2862-2-shentey@gmail.com>
+In-Reply-To: <20250610204131.2862-3-shentey@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,17 +160,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/06/2025 22.41, Bernhard Beschow wrote:
-> Commit fcb1ad456c58 ("system/datadir: Add new type constant for DTB files")
-> introduced a new type constant for DTB files and converted the boards with
-> bundled device trees to use it. Convert the other boards for consistency.
+> Makes this custom_target() usage consistent with other ones in QEMU.
 > 
-> Fixes: fcb1ad456c58 ("system/datadir: Add new type constant for DTB files")
+> Fixes: 6e0dc9d2a88a ("meson: compile bundled device trees")
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->   hw/arm/boot.c | 2 +-
->   hw/ppc/e500.c | 2 +-
->   2 files changed, 2 insertions(+), 2 deletions(-)
+>   pc-bios/dtb/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/pc-bios/dtb/meson.build b/pc-bios/dtb/meson.build
+> index 7a71835bca..993032949f 100644
+> --- a/pc-bios/dtb/meson.build
+> +++ b/pc-bios/dtb/meson.build
+> @@ -9,7 +9,7 @@ dtc = find_program('dtc', required: false)
+>   if dtc.found()
+>     foreach out : dtbs
+>       f = fs.replace_suffix(out, '.dts')
+> -    custom_target(f,
+> +    custom_target(out,
+>           build_by_default: have_system,
+>           input: files(f),
+>           output: out,
 
+That looks better, indeed.
+
+Tested-by: Thomas Huth <thuth@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
