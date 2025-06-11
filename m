@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E285BC71141
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:30:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99611C71136
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:30:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQBB-0003kg-IY; Wed, 11 Jun 2025 14:28:05 -0400
+	id 1uPQBK-0004Nz-Bm; Wed, 11 Jun 2025 14:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQ9y-0001n9-IV
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:50 -0400
+ id 1uPQAJ-0001xl-Rx
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQ9p-0001Q5-LU
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:50 -0400
+ id 1uPQAA-0001ZH-Pr
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749666400;
+ s=mimecast20190719; t=1749666421;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Go5IXU3Pe7Z7a1UScspRgPi+WTDoYjIknceMmADHQN8=;
- b=Z1b99Y57EpZeQpQknjL1eFGuFsu4uYzOKH5kBL4864ZRepRl85bPfuz56afQ+m9f0JyhBD
- K1yjKnyZEP/UO30339nwiBXWFke3TvdTyK6nRF4u+6xwE7C6axZiamjAhdnr3lNi6RK81w
- lol4cnThFHa4U3PNgeNukusbferrgVE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=98MBMcUSEptGVNIPVLyiue7Ww+HKRSay/z2TDY8nvFw=;
+ b=Xz2NS2lQhM0ooBA1AyawoB9y8KAO4xQNYB1976k5MK01UpfQ7hmu4jYuq86cM5FZitOK/+
+ imUXZyy0cNekwP7zLKcNqAWjXsT1+DuM3kceaFIa6+a1LgR7sjIYWhXIkghFlmEpwJscnm
+ LBDRs1tqqK16Y5QxCCpoqutLM0pL6bk=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-KxM9LR3LM2Ok0FmXGII5KQ-1; Wed,
- 11 Jun 2025 14:26:37 -0400
-X-MC-Unique: KxM9LR3LM2Ok0FmXGII5KQ-1
-X-Mimecast-MFC-AGG-ID: KxM9LR3LM2Ok0FmXGII5KQ_1749666393
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-317-AELjrSb9N5yl-IVITRhf6w-1; Wed,
+ 11 Jun 2025 14:26:56 -0400
+X-MC-Unique: AELjrSb9N5yl-IVITRhf6w-1
+X-Mimecast-MFC-AGG-ID: AELjrSb9N5yl-IVITRhf6w_1749666412
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3FB7A180029D; Wed, 11 Jun 2025 18:26:33 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76D7C18089B5; Wed, 11 Jun 2025 18:26:51 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.122])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 34D2019560A3; Wed, 11 Jun 2025 18:26:32 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B00EF19560AF; Wed, 11 Jun 2025 18:26:49 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -76,15 +76,15 @@ Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 11/31] hw/audio/gus: skip automatic zero-init of large array
-Date: Wed, 11 Jun 2025 14:25:13 -0400
-Message-ID: <20250611182533.200590-12-stefanha@redhat.com>
+Subject: [PULL 17/31] hw/hyperv/syndbg: skip automatic zero-init of large array
+Date: Wed, 11 Jun 2025 14:25:19 -0400
+Message-ID: <20250611182533.200590-18-stefanha@redhat.com>
 In-Reply-To: <20250611182533.200590-1-stefanha@redhat.com>
 References: <20250611182533.200590-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -112,35 +112,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'mv88w8618_audio_callback' method has a 4k byte array used for
-copying data between the audio backend and device. Skip the automatic
-zero-init of this array to eliminate the performance overhead in
-the I/O hot path.
+The 'handle_recv_msg' method has a 4k byte array used for copying
+data between the network socket and guest memory. Skip the automatic
+zero-init of this array to eliminate the performance overhead in the
+I/O hot path.
 
-The 'buf' array will be fully initialized when reading data from
-device memory.
+The 'data_buf' array will be fully initialized when data is read
+off the network socket.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20250610123709.835102-12-berrange@redhat.com
+Message-id: 20250610123709.835102-18-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/audio/marvell_88w8618.c | 2 +-
+ hw/hyperv/syndbg.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/audio/marvell_88w8618.c b/hw/audio/marvell_88w8618.c
-index 6d3ebbb0c8..c5c79d083a 100644
---- a/hw/audio/marvell_88w8618.c
-+++ b/hw/audio/marvell_88w8618.c
-@@ -66,7 +66,7 @@ static void mv88w8618_audio_callback(void *opaque, int free_out, int free_in)
+diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
+index 8b8a14750d..ac7e15f6f1 100644
+--- a/hw/hyperv/syndbg.c
++++ b/hw/hyperv/syndbg.c
+@@ -192,7 +192,7 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
  {
-     mv88w8618_audio_state *s = opaque;
-     int16_t *codec_buffer;
--    int8_t buf[4096];
-+    QEMU_UNINITIALIZED int8_t buf[4096];
-     int8_t *mem_buffer;
-     int pos, block_size;
- 
+     uint16_t ret;
+     g_assert(MSG_BUFSZ >= qemu_target_page_size());
+-    uint8_t data_buf[MSG_BUFSZ];
++    QEMU_UNINITIALIZED uint8_t data_buf[MSG_BUFSZ];
+     hwaddr out_len;
+     void *out_data;
+     ssize_t recv_byte_count;
 -- 
 2.49.0
 
