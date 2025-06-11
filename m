@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C903AC677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 06:14:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDB90C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 06:16:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPEht-0003tO-CY; Wed, 11 Jun 2025 02:13:05 -0400
+	id 1uPElM-0005iF-Ec; Wed, 11 Jun 2025 02:16:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPEho-0003sJ-ML
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:13:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1uPEky-0005a7-Fa
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:16:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPEhm-0007WR-BO
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:13:00 -0400
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1uPEkw-0007s3-KZ
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:16:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749622375;
+ s=mimecast20190719; t=1749622571;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HGbW66QEujBlw5k99bAp7vZLYJ8iYvaCzmHJj1Z+8L0=;
- b=DX+Vrok7K81p6HtwePFjwsQLc1Rh/xDOZ3+Z/hePhVC2fBD4aj/eTiypiO03Ap0E6DzvWV
- wmjkRjuAixnPz6OpiAkpBGTt17xgv5Z1cAMN6y1Yj6eV4fGvS8Ran2FFbajNw04xsr3/tJ
- HNjUTgVA40KoFike9MDfxnTQqZO1F+Y=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rDJEwk/kVYrzRvv1cD8oGHc2ljTA0M3cMi5yRig7Xbs=;
+ b=R+PvnHWNCMPNre1CD6/e0UZ9iiAomS5zjWu3tlgZZ6MqtSKC1LMBI2uGtzTRySJU3Ma0yx
+ XrtN8w6SotD0JYK2a3tF/YAlT593xysHOekhMaGBAN/hWrblJzu5tf/iAsuTvPocZxBM9h
+ YTj49sV7K6AvMB+jpl92sd3cIZPRLQg=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-182-CNTtV6MSN_accB2RTpL1Pg-1; Wed, 11 Jun 2025 02:12:53 -0400
-X-MC-Unique: CNTtV6MSN_accB2RTpL1Pg-1
-X-Mimecast-MFC-AGG-ID: CNTtV6MSN_accB2RTpL1Pg_1749622372
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-450d290d542so33596965e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 23:12:53 -0700 (PDT)
+ us-mta-589-C5Zpj_3mO3aJB8e2ENl9Ig-1; Wed, 11 Jun 2025 02:16:09 -0400
+X-MC-Unique: C5Zpj_3mO3aJB8e2ENl9Ig-1
+X-Mimecast-MFC-AGG-ID: C5Zpj_3mO3aJB8e2ENl9Ig_1749622567
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-32a74099591so33016231fa.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 23:16:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749622372; x=1750227172;
+ d=1e100.net; s=20230601; t=1749622567; x=1750227367;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=HGbW66QEujBlw5k99bAp7vZLYJ8iYvaCzmHJj1Z+8L0=;
- b=EhUVaQq1Sc7AUjCIrFa5ZkORHOXiM0ToRvobdSOquIP73s7qk5W0/FpGJb2bDrzfi7
- aD+K1toh1JGmJfHEyUqVp6lRpLTMgQrbUdJgEzHdKI0PWFtdNoZE9gf7bPsxsLQpIzLm
- 9uKSp5z/FZUf60lA/rOhLp+NAwjnBiaWT46y/YAMmsq7/a2xTR3Av5KOd1/PazZAU4Ta
- 6zsWWfDbPh8E+xyq8UMCDqlgSiYQRl74/i3jiFhC4V1HaTvnBhW7FrfW1DZ9IXdbjL2u
- 7avMjG6VehyAixZrE/jVZFmrdI290kZ2ikm9E0khcDr3ZskmxkPxb0TArZ+yTzTjDNUe
- 5Cag==
-X-Gm-Message-State: AOJu0YyNzu3ZwgmM+bO1u5PBBzw7oEtrgL+rcLHkkJaSr2QUNew1SYXq
- ztdmP44RpFy6dd6gPsdRWwMg/CnDvQPTBr2K9jYhaFIeCYoZWQ14cjIRRNiJMJjYEPsO3WyVcSQ
- wJQnrlcyCFi0D7oMQf0C6FzO8/38yMgETNyh734olMCLwToTd7tCuWU6xNeS00fQpsGwxbmWK8c
- wAfOdyDHlTDoTSNT6j2vCAxFAteoC2dNg=
-X-Gm-Gg: ASbGncuLnw/ZqqbtzEWmyvhEart4Ge5LpCyX4TNhNauWhiNxYFBfB8b544gF+2l4QEi
- KY69m2w8E0JW6ctYp6vVGCC43LWbjqXhSU0paoIBLtFey50cfRHraR/XaZQ8aeBxWdlt1vdwEDM
- pKsA==
-X-Received: by 2002:a05:600c:8b08:b0:453:697:6f08 with SMTP id
- 5b1f17b1804b1-4532490c17amr12683635e9.26.1749622371967; 
- Tue, 10 Jun 2025 23:12:51 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFFIa+0+NoGy9O19H4M/qQbh3SMx7KYcEKUWhoJoK47X0F0qfdcbL+H8ItxuTsFjKDK+n5XHOl2z8/GIn62lvY=
-X-Received: by 2002:a05:600c:8b08:b0:453:697:6f08 with SMTP id
- 5b1f17b1804b1-4532490c17amr12683485e9.26.1749622371578; Tue, 10 Jun 2025
- 23:12:51 -0700 (PDT)
+ bh=rDJEwk/kVYrzRvv1cD8oGHc2ljTA0M3cMi5yRig7Xbs=;
+ b=GLrrcDcNRy1lsTn/Zyik+yZNs9jG4cmm6kyNTb3MfPP/MU9YuBFogiKmYvHa/7BwK/
+ beJNw/Q0J7xlirfY15Kq5oVllQ/5Wal41Y6kR3BaOuDqz+e6lVO6RMrL1SaMMjFcLs41
+ hvpA9VcSng7+qmdoBMiDsGoIClz9QBhQ/9KHLC//SXO4mfSt6L07df1Qw4HMI1tENyif
+ GJz1TlnT//50ijffmVBkhV4hkuTTddopegqEg+oaPHZ1Q8TrlbzbGptARpKz53s3uAIe
+ qr4jzj/I4hDqMyeatQvoAXsNLmB2UbU4Fe6voomCBXVATaffyDkGpSjzOnrYf+YbAc2C
+ LX7g==
+X-Gm-Message-State: AOJu0Yz+tMqlN74EKllQu3hh2TlbjxR1vDqf8DF5B+cFzfnoRZylOHk6
+ Zau6yZ8clioty9jIVpKXn54skPAz1YSDtKedAi4oAV4FDwHeXMOWG6swC9HsJ+At1/bV6xmDPut
+ pT9hsC95SpFQF/86zsCzVXya9BZ8vk03XHNL27VLy5TotYyZanRO94wMv0XcTLpXYvqFA9FzyFk
+ lkQaGxM1W6W9vVxUi5nrCDCZXvQsLUhP0=
+X-Gm-Gg: ASbGncspqwmuBs5VpUgOLEimru8KT9D5bqCpKO1UpYROpfLrhMoZ5edA7OilQ83cyU9
+ Udko9p34j6CG6/lq6ItkwM/M4seuehbct/XrcUivV8TwcQJ9fHm1Jzvxy9LaQiAxqI0NxQHhtSO
+ NIxl8=
+X-Received: by 2002:a2e:a585:0:b0:32a:6ccf:a45c with SMTP id
+ 38308e7fff4ca-32b21d71ca4mr4873161fa.39.1749622566812; 
+ Tue, 10 Jun 2025 23:16:06 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IETCpW14bWGaExhRoPXqPahyhYQAVVScPySReswuw6kMiKsnBE4x61QmW8N54QelqjKgaSTV0cmn92GruaXbTM=
+X-Received: by 2002:a2e:a585:0:b0:32a:6ccf:a45c with SMTP id
+ 38308e7fff4ca-32b21d71ca4mr4873091fa.39.1749622566395; Tue, 10 Jun 2025
+ 23:16:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250606123447.538131-1-pbonzini@redhat.com>
- <20250606123447.538131-17-pbonzini@redhat.com>
- <92c90e43-35a6-48a9-8634-0075aed2988a@intel.com>
-In-Reply-To: <92c90e43-35a6-48a9-8634-0075aed2988a@intel.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 11 Jun 2025 08:12:39 +0200
-X-Gm-Features: AX0GCFvCH1lJoscWEKnXzARXDVl6XJjzMg_0izseKsjN3yVjUmu4qPkfkBTi9Co
-Message-ID: <CABgObfbg5yZ_7xUsotSpbDtU=tKWTu-PONJcgnH98mkSx+PxDQ@mail.gmail.com>
-Subject: Re: [PULL 16/31] i386/kvm: Prefault memory on page state change
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: qemu-devel@nongnu.org, Tom Lendacky <thomas.lendacky@amd.com>, 
- "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
+References: <20250609161855.6603-1-peterx@redhat.com>
+In-Reply-To: <20250609161855.6603-1-peterx@redhat.com>
+From: Mario Casquero <mcasquer@redhat.com>
+Date: Wed, 11 Jun 2025 08:15:55 +0200
+X-Gm-Features: AX0GCFs5TLV24Knt4eptwFDKKb7LyBi5qPA9KV-9nj8BF4IOlJuVE5mj8O87cpU
+Message-ID: <CAMXpfWtGPUDGtn40tkZYNMhntp48BbMRHnZqQkrBKokyMyEXyQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] migration: Some enhancements and cleanups for
+ 10.1
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>, Fabiano Rosas <farosas@suse.de>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=mcasquer@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -105,22 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 11, 2025 at 4:56=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> w=
-rote:
+This series has been successfully tested. The information displayed
+from the HMP info migrate command is more user-friendly, with the
+possibility of displaying the globals with info migrate -a.
+(qemu) info migrate -a
+Status: active
+Sockets: [
+tcp::::8888
+]
+Globals:
+  store-global-state: on
+  only-migratable: off
+  send-configuration: on
+  send-section-footer: on
+  send-switchover-start: on
+  clear-bitmap-shift: 18
+
+Tested-by: Mario Casquero <mcasquer@redhat.com>
+
+
+On Mon, Jun 9, 2025 at 6:20=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
 >
-> Paolo,
+> v2:
+> - Collected R-bs
+> - Avoid using "\b" in HMP dumps [Markus, Dave]
 >
-> This one is not supposed to be pulled until we fix KVM as you said:
-> https://lore.kernel.org/qemu-devel/d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@r=
-edhat.com/
-
-The bug was understood and fix just a few days away, so I included it.
-I'll send the fix to Linus today too.
-
-Paolo
-
-> BTW, I have sent the KVM fix:
-> https://lore.kernel.org/all/20250611001018.2179964-1-xiaoyao.li@intel.com=
-/
+> The series is based on a small patch from Yanfei Xu here:
+>
+> Based-on: <20250514115827.3216082-1-yanfei.xu@bytedance.com>
+> https://lore.kernel.org/r/20250514115827.3216082-1-yanfei.xu@bytedance.co=
+m
+>
+> This is a series that collected many of either enhancements or cleanups I
+> got for QEMU 10.1, which almost came from when working on the last patch.
+>
+> The last patch, which is a oneliner, can further reduce 10% postcopy page
+> fault latency with preempt mode enabled.
+>
+>       Before: 268.00us (+-1.87%)
+>       After:  232.67us (+-2.01%)
+>
+> The patch layout is as following:
+>
+> Patch 1:         A follow up of HMP change for "info migrate", per
+>                  suggestion from Dave
+> Patch 2:         Yet another HMP fix for blocktime displays
+> Patch 3-10:      Cleanups everywhere, especially please take a look at
+>                  patch 10 which changes the core switchover decision logi=
+c
+> Patch 11:        The one-liner optimization
+>
+> Comments welcomed, thanks.
+>
+> Peter Xu (11):
+>   migration/hmp: Reorg "info migrate" once more
+>   migration/hmp: Fix postcopy-blocktime per-vCPU results
+>   migration/docs: Move docs for postcopy blocktime feature
+>   migration/bg-snapshot: Do not check for SKIP in iterator
+>   migration: Drop save_live_complete_postcopy hook
+>   migration: Rename save_live_complete_precopy to save_complete
+>   migration: qemu_savevm_complete*() helpers
+>   migration/ram: One less indent for ram_find_and_save_block()
+>   migration/ram: Add tracepoints for ram_save_complete()
+>   migration: Rewrite the migration complete detect logic
+>   migration/postcopy: Avoid clearing dirty bitmap for postcopy too
+>
+>  docs/devel/migration/postcopy.rst | 36 +++++++-------
+>  include/migration/register.h      | 26 ++++------
+>  hw/ppc/spapr.c                    |  2 +-
+>  hw/s390x/s390-stattrib.c          |  2 +-
+>  hw/vfio/migration.c               |  2 +-
+>  migration/block-dirty-bitmap.c    |  3 +-
+>  migration/migration-hmp-cmds.c    | 81 ++++++++++++++++--------------
+>  migration/migration.c             | 61 ++++++++++++++++-------
+>  migration/ram.c                   | 32 +++++++-----
+>  migration/savevm.c                | 83 +++++++++++++++++--------------
+>  migration/trace-events            |  1 +
+>  11 files changed, 184 insertions(+), 145 deletions(-)
+>
+> --
+> 2.49.0
+>
+>
 
 
