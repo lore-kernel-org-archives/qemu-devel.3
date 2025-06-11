@@ -4,65 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B714C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 05:56:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C903AC677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 06:14:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPEQN-0000No-NC; Wed, 11 Jun 2025 01:55:00 -0400
+	id 1uPEht-0003tO-CY; Wed, 11 Jun 2025 02:13:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sertonix@posteo.net>)
- id 1uPEQK-0000Ne-AC
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 01:54:56 -0400
-Received: from mout02.posteo.de ([185.67.36.66])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uPEho-0003sJ-ML
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:13:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sertonix@posteo.net>)
- id 1uPEQC-0005Cy-Sw
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 01:54:54 -0400
-Received: from submission (posteo.de [185.67.36.169]) 
- by mout02.posteo.de (Postfix) with ESMTPS id F0349240101
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 07:54:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.net;
- s=1984.ea087b; t=1749621285;
- bh=Wm1BMlC1IEsv77XI2FCCsXImrMpT1KGq732S77kZ8Hk=;
- h=Mime-Version:Content-Transfer-Encoding:Content-Type:Date:
- Message-Id:To:Subject:From:From;
- b=BgPiSm6pTgHPOrR7UPCVel6xqtw5VbF5gaJ8gkPTa3LOBMcYYB5iEAAaBRrYpVDxN
- ekh+lN8FTBM9B0KgvgGD46OJl0JklR/bpqJg0BntNQcSe5Cm217TN8cYtHPaKbgRpT
- u4Ld4/1wVoJD0b/xQ+eae265N04o8ibJcLbWZQktAp30w9MmwxyftxqzR7OayYJmDA
- 64OuavWrJ6wXhGKuLRF6E8PzM2UHW2C8F3NjW41qqafvKJILnLU6PPrm83V2mniXWp
- OZ2dlDWmmcmc7SlbjIpONVM3CCURxx5FkV745HVN7SLmeiZdK2zdrRaZH+dyz1PtRr
- nvrp1Tsbbho1URUtovZf0WBDt7QXzoyIzurzdNbrjqG8zUiCifVG2Qm/FvShpZXGXu
- BcvIROE7f6l5kIPnRpgfWk0SonVWkJwb1cy51qhUkmyndTvLimq73qrDmg2NLHn79z
- p7BCUuPsuR5uJdk/hBJJ5f1NYTf33Y/75/C1cP3Tbop4EJxj/j2
-Received: from customer (localhost [127.0.0.1])
- by submission (posteo.de) with ESMTPSA id 4bHFH92sFcz6tyW;
- Wed, 11 Jun 2025 07:54:45 +0200 (CEST)
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uPEhm-0007WR-BO
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:13:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749622375;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=HGbW66QEujBlw5k99bAp7vZLYJ8iYvaCzmHJj1Z+8L0=;
+ b=DX+Vrok7K81p6HtwePFjwsQLc1Rh/xDOZ3+Z/hePhVC2fBD4aj/eTiypiO03Ap0E6DzvWV
+ wmjkRjuAixnPz6OpiAkpBGTt17xgv5Z1cAMN6y1Yj6eV4fGvS8Ran2FFbajNw04xsr3/tJ
+ HNjUTgVA40KoFike9MDfxnTQqZO1F+Y=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-182-CNTtV6MSN_accB2RTpL1Pg-1; Wed, 11 Jun 2025 02:12:53 -0400
+X-MC-Unique: CNTtV6MSN_accB2RTpL1Pg-1
+X-Mimecast-MFC-AGG-ID: CNTtV6MSN_accB2RTpL1Pg_1749622372
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d290d542so33596965e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 23:12:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749622372; x=1750227172;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=HGbW66QEujBlw5k99bAp7vZLYJ8iYvaCzmHJj1Z+8L0=;
+ b=EhUVaQq1Sc7AUjCIrFa5ZkORHOXiM0ToRvobdSOquIP73s7qk5W0/FpGJb2bDrzfi7
+ aD+K1toh1JGmJfHEyUqVp6lRpLTMgQrbUdJgEzHdKI0PWFtdNoZE9gf7bPsxsLQpIzLm
+ 9uKSp5z/FZUf60lA/rOhLp+NAwjnBiaWT46y/YAMmsq7/a2xTR3Av5KOd1/PazZAU4Ta
+ 6zsWWfDbPh8E+xyq8UMCDqlgSiYQRl74/i3jiFhC4V1HaTvnBhW7FrfW1DZ9IXdbjL2u
+ 7avMjG6VehyAixZrE/jVZFmrdI290kZ2ikm9E0khcDr3ZskmxkPxb0TArZ+yTzTjDNUe
+ 5Cag==
+X-Gm-Message-State: AOJu0YyNzu3ZwgmM+bO1u5PBBzw7oEtrgL+rcLHkkJaSr2QUNew1SYXq
+ ztdmP44RpFy6dd6gPsdRWwMg/CnDvQPTBr2K9jYhaFIeCYoZWQ14cjIRRNiJMJjYEPsO3WyVcSQ
+ wJQnrlcyCFi0D7oMQf0C6FzO8/38yMgETNyh734olMCLwToTd7tCuWU6xNeS00fQpsGwxbmWK8c
+ wAfOdyDHlTDoTSNT6j2vCAxFAteoC2dNg=
+X-Gm-Gg: ASbGncuLnw/ZqqbtzEWmyvhEart4Ge5LpCyX4TNhNauWhiNxYFBfB8b544gF+2l4QEi
+ KY69m2w8E0JW6ctYp6vVGCC43LWbjqXhSU0paoIBLtFey50cfRHraR/XaZQ8aeBxWdlt1vdwEDM
+ pKsA==
+X-Received: by 2002:a05:600c:8b08:b0:453:697:6f08 with SMTP id
+ 5b1f17b1804b1-4532490c17amr12683635e9.26.1749622371967; 
+ Tue, 10 Jun 2025 23:12:51 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFFIa+0+NoGy9O19H4M/qQbh3SMx7KYcEKUWhoJoK47X0F0qfdcbL+H8ItxuTsFjKDK+n5XHOl2z8/GIn62lvY=
+X-Received: by 2002:a05:600c:8b08:b0:453:697:6f08 with SMTP id
+ 5b1f17b1804b1-4532490c17amr12683485e9.26.1749622371578; Tue, 10 Jun 2025
+ 23:12:51 -0700 (PDT)
+MIME-Version: 1.0
+References: <20250606123447.538131-1-pbonzini@redhat.com>
+ <20250606123447.538131-17-pbonzini@redhat.com>
+ <92c90e43-35a6-48a9-8634-0075aed2988a@intel.com>
+In-Reply-To: <92c90e43-35a6-48a9-8634-0075aed2988a@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 11 Jun 2025 08:12:39 +0200
+X-Gm-Features: AX0GCFvCH1lJoscWEKnXzARXDVl6XJjzMg_0izseKsjN3yVjUmu4qPkfkBTi9Co
+Message-ID: <CABgObfbg5yZ_7xUsotSpbDtU=tKWTu-PONJcgnH98mkSx+PxDQ@mail.gmail.com>
+Subject: Re: [PULL 16/31] i386/kvm: Prefault memory on page state change
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel@nongnu.org, Tom Lendacky <thomas.lendacky@amd.com>, 
+ "Edgecombe, Rick P" <rick.p.edgecombe@intel.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 11 Jun 2025 05:54:45 +0000
-Message-Id: <DAJGZE8R43JD.1Y1H6T3G593IS@posteo.net>
-To: "Michael Tokarev" <mjt@tls.msk.ru>, <qemu-devel@nongnu.org>, "Thomas
- Huth" <thuth@redhat.com>
-Subject: Re: [PATCH] pc-bios/s390-ccw: link statically
-From: "Sertonix" <sertonix@posteo.net>
-References: <DAJ1QOSAP9LS.342SQSM0UZU80@posteo.net>
- <4c8bb61a-d919-411b-afeb-eed15c4b2ab9@tls.msk.ru>
- <DAJ547978XGV.3LNJ0SI0X7GXD@posteo.net>
- <5c9cbee5-235b-4623-a119-0956b981f43c@tls.msk.ru>
-In-Reply-To: <5c9cbee5-235b-4623-a119-0956b981f43c@tls.msk.ru>
-Received-SPF: pass client-ip=185.67.36.66; envelope-from=sertonix@posteo.net;
- helo=mout02.posteo.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, T_SPF_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -78,85 +105,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Jun 11, 2025 at 6:07 AM CEST, Michael Tokarev wrote:
-> On 10.06.2025 23:36, Sertonix wrote:
->> On Tue Jun 10, 2025 at 10:32 PM CEST, Michael Tokarev wrote:
->>> On 10.06.2025 20:58, Sertonix wrote:
->>>>
->>>> Adding -pie to LDFLAGS caused s390-ccw.img to become dynamically linke=
-d.
->>>
->>> Why do you think -pie causes it to become dynamically linked?
->>>
->>> /mjt
->>=20
->> The documentation (at least for gcc) states that the -pie option produce=
-s
->> a *dynamically* linked position independent executable. (And I verified
->> that the patch changes the resulting binary from dynamically linked to
->> statically linked).
+On Wed, Jun 11, 2025 at 4:56=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> w=
+rote:
 >
-> Ok.
+> Paolo,
 >
-> Why I asked is because -pie by its own does not change "dynaminess" of
-> an executable.
+> This one is not supposed to be pulled until we fix KVM as you said:
+> https://lore.kernel.org/qemu-devel/d0983ba3-383b-4c81-9cfd-b5b0d26a5d17@r=
+edhat.com/
 
-I am uncertain what you mean with "dynaminess" but I mean the ELF file
-type, whether or not an interpreter is set and some additional sections
-(like .dynamic) exist.
+The bug was understood and fix just a few days away, so I included it.
+I'll send the fix to Linus today too.
 
-> -pie has been introduced for s390-ccw in commit d884c86dcd "s390/bios:
-> Make the s390-ccw.img relocatable" (9 Mar 2015).  Before this commit,
-> s390x-ccw.img has been dynamically linked too.  Now with current
-> master (commit bc98ffdc75), removing -Wl,-fpie from LDFLAGS does not
-> change the fact that the image is linked dynamically.
+Paolo
 
-The prebuild binary before d884c86dcd was added in 553ce81c31e4 and shows a=
-s
-statically linked: (ET_EXEC is the ELF file type of static binaries)
-
-~/src/qemu$ scanelf pc-bios/s390-ccw.img
- TYPE   FILE=20
-ET_EXEC pc-bios/s390-ccw.img=20
-
-and when the binary was rebuild after d884c86dcd in 2d5eeef1c0be it shows
-as dynamically linked:
-
-~/src/qemu$ scanelf pc-bios/s390-ccw.img
- TYPE   FILE=20
-ET_DYN pc-bios/s390-ccw.img=20
-
-(Same results with file(1) and readelf -l)
-
-> On the other hand, people sometimes confuse the result of -static-pie
-> as a dynamic executable, especially with older file(1) utility which
-> reported it as dynamically linked.
-
-Latest file(1) release:
-$ file --version
-file-5.46
-magic file from /usr/share/misc/magic
-
-> So my question was badly worded: what I wanted to ask is what makes
-> you think that adding -pie to the link line makes the resulting
-> executable to be linked dynamically.
->
-> With all the above in mind, I think the commit message is misleading
-> a bit.  But it'd be interesting to clarify how this image, being
-> a dynamic executable, worked all these years, and why it has to be
-> changed now.
-
-As mentioned above this is only about the file metadata and doesn't
-affect the binary code part of the binary. So it is probably just
-ignored by qemu and shouldn't change the bhaviour of qemu. This is
-mostly to fix the intend of the commit that added -pie and exclude a
-libc dependant string from a binary that isn't libc dependant.
-
-> I'm definitely not opposing to the change, I just am
-> curious about this aspect and want a correct commit message.
->
-> Thanks,
->
-> /mjt
+> BTW, I have sent the KVM fix:
+> https://lore.kernel.org/all/20250611001018.2179964-1-xiaoyao.li@intel.com=
+/
 
 
