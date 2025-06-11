@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F15E9C71141
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:38:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D0C4C71136
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:39:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQB4-0003MI-KT; Wed, 11 Jun 2025 14:27:58 -0400
+	id 1uPQG1-0006H2-SJ; Wed, 11 Jun 2025 14:33:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQ9u-0001d3-Lt
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uPQAl-0002ib-17
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQ9k-0001KZ-TZ
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:46 -0400
+ id 1uPQAf-0001nV-4w
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749666389;
+ s=mimecast20190719; t=1749666451;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=O+7OFQBZxd+Nmat7sdVrdGixlbTcW+usn+WRWhkWZmc=;
- b=CalUVg1mv7NBUPuv0uj+UoupDkaLTlE3Qg8vrJiO2chr/yqr01JKzlSmgYxlo8Cvvg5wf3
- 7ms2X5ZoCsIaAza2cJ06TXb9SvTppY5/j99BBNkbm3DQvWNmRhXjLSNdt64bSrT+XO0VC1
- RFRw3ltjDVPdR11fUoq0t4Xb42xAPmE=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=TKCERI53LuMk8TuYkm/wkoeKkMg0tToLNccvF0Tm5YY=;
+ b=Nro1EOPw5YmilNT6CfynIpnTZxwc5VRJpAcLWK45rB63JiKuJmTWyXKBb5g7iGEWnUWQFB
+ HHQMvAf7UrKePl2iiqh3pRP5m3bo7BhF9Oz1Uf/e4QLGR3aQJbVVKhuyLZB19+uyzjM+BA
+ xbhS26DYcqoSmbpAT4rrsOyv+G9WaNw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-468-oT-YHPVcO2Os6-8OnAC1NA-1; Wed,
- 11 Jun 2025 14:26:25 -0400
-X-MC-Unique: oT-YHPVcO2Os6-8OnAC1NA-1
-X-Mimecast-MFC-AGG-ID: oT-YHPVcO2Os6-8OnAC1NA_1749666381
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-GFsYugu_M6SpL27G8L--Yw-1; Wed,
+ 11 Jun 2025 14:27:28 -0400
+X-MC-Unique: GFsYugu_M6SpL27G8L--Yw-1
+X-Mimecast-MFC-AGG-ID: GFsYugu_M6SpL27G8L--Yw_1749666444
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 220F6195608E; Wed, 11 Jun 2025 18:26:21 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 49F531809C82; Wed, 11 Jun 2025 18:27:24 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.122])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1FA1519560AF; Wed, 11 Jun 2025 18:26:19 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 65B6618002B6; Wed, 11 Jun 2025 18:27:23 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -75,18 +75,18 @@ Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 08/31] hw/audio/cs4231a: skip automatic zero-init of large
- arrays
-Date: Wed, 11 Jun 2025 14:25:10 -0400
-Message-ID: <20250611182533.200590-9-stefanha@redhat.com>
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Klaus Jensen <k.jensen@samsung.com>
+Subject: [PULL 29/31] hw/ufs/lu: skip automatic zero-init of large array
+Date: Wed, 11 Jun 2025 14:25:31 -0400
+Message-ID: <20250611182533.200590-30-stefanha@redhat.com>
 In-Reply-To: <20250611182533.200590-1-stefanha@redhat.com>
 References: <20250611182533.200590-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,45 +113,37 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'cs_write_audio' method has a pair of byte arrays, one 4k in size
-and one 8k, which are used in converting audio samples. Skip the
-automatic zero-init of these arrays to eliminate the performance
-overhead in the I/O hot path.
+The 'ufs_emulate_scsi_cmd' method has a 4k byte array used for
+copying data from the device. Skip the automatic zero-init of
+this array to eliminate the performance overhead in the I/O hot
+path.
 
-The 'tmpbuf' array will be fully initialized when reading a block of
-data from the guest. The 'linbuf' array will be fully initialized
-when converting the audio samples.
+The 'outbuf' array will be fully initialized when data is copied
+from the guest.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20250610123709.835102-9-berrange@redhat.com
+Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
+Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Message-id: 20250610123709.835102-30-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/audio/cs4231a.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/ufs/lu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/audio/cs4231a.c b/hw/audio/cs4231a.c
-index eb9a45805b..6dfff202ff 100644
---- a/hw/audio/cs4231a.c
-+++ b/hw/audio/cs4231a.c
-@@ -528,7 +528,7 @@ static int cs_write_audio (CSState *s, int nchan, int dma_pos,
-                            int dma_len, int len)
+diff --git a/hw/ufs/lu.c b/hw/ufs/lu.c
+index 57b307ea56..2d8ffd72c5 100644
+--- a/hw/ufs/lu.c
++++ b/hw/ufs/lu.c
+@@ -194,7 +194,7 @@ static int ufs_emulate_wlun_inquiry(UfsRequest *req, uint8_t *outbuf,
+ static UfsReqResult ufs_emulate_scsi_cmd(UfsLu *lu, UfsRequest *req)
  {
-     int temp, net;
--    uint8_t tmpbuf[4096];
-+    QEMU_UNINITIALIZED uint8_t tmpbuf[4096];
-     IsaDmaClass *k = ISADMA_GET_CLASS(s->isa_dma);
- 
-     temp = len;
-@@ -547,7 +547,7 @@ static int cs_write_audio (CSState *s, int nchan, int dma_pos,
-         copied = k->read_memory(s->isa_dma, nchan, tmpbuf, dma_pos, to_copy);
-         if (s->tab) {
-             int i;
--            int16_t linbuf[4096];
-+            QEMU_UNINITIALIZED int16_t linbuf[4096];
- 
-             for (i = 0; i < copied; ++i)
-                 linbuf[i] = s->tab[tmpbuf[i]];
+     uint8_t lun = lu->lun;
+-    uint8_t outbuf[4096];
++    QEMU_UNINITIALIZED uint8_t outbuf[4096];
+     uint8_t sense_buf[UFS_SENSE_SIZE];
+     uint8_t scsi_status;
+     int len = 0;
 -- 
 2.49.0
 
