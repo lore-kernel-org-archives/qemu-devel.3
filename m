@@ -4,106 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43B3CC71135
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 21:00:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61707C71135
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 21:14:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPSYB-0002Wj-Qm; Wed, 11 Jun 2025 16:59:59 -0400
+	id 1uPSkp-0004cO-NI; Wed, 11 Jun 2025 17:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uPSY9-0002QC-LM
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:59:57 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uPSko-0004cC-27; Wed, 11 Jun 2025 17:13:02 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1uPSY6-0002ks-4k
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:59:56 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55BIWb6t022979;
- Wed, 11 Jun 2025 20:59:51 GMT
+ (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
+ id 1uPSkl-0004MC-L6; Wed, 11 Jun 2025 17:13:01 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55BGRlrm021660;
+ Wed, 11 Jun 2025 21:12:56 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=TKaFZ8
- sYr94pxWeI9o4rzqjbRpkw0R/bDHQqdOK3JEg=; b=KEu76//rSo7uEs9fWwBAjw
- PRRLbFprCtvVOZ5vmF3W68nbSWs97fpGqfbOaVmEGbe3Pcww3Lx+1D2WvZHNf6YZ
- GwsnqjX/fbVQ8h/h55k1jSBm2mXJAEfddUv1jBbfcM7UXzL2L5Nh8smBW2kDxlm/
- O/hMUiGJnMWwduhIlZILW76Erx0FuNqZ88O6+xiWhm74qIwGIxdHScF6xnffXb0Q
- 5uzj0S0kdX1Oy62apUChPh6srALmzBpqiYzCuS+ifzQ+tiRNI/Un8Xc9ewec4OJB
- lhjH5kSq0ofaQ9jQPjHNVn//qSke0kF+g4Qp5o8wzuoktogrEE8GVnFHMeAX9kkA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474cxjf28v-1
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=fCf/2hPBcC4phuQ3z7LKAIsZUUkBujUxvu+Dq56Fi
+ 6I=; b=EDvntfoTvxd3mIAJyj3txjhkLG/GDcXogkPvLeiwHD8b2xZYiP/PxM7KP
+ B+YX7UVBneSq7kr1i3n+XJzGnB2/aDx5dHolS7/QVpjE4R3icrW9vbiLkfM4LV+b
+ rcdW+PEUb7GMtiKOA/PBN8kHPu0UJo90TIPbhEuujv/lbSoA8wJH34ekvNJvip2e
+ aJVjUMYFBO09NcvXd9xIz/vPhVMCZPG5MPW759O71gbysnVOxI4gEsjRBIEERwR2
+ G93VT9lel2sawKBJZS61qB+A0FxQk2DbB6PMhyL0CuDTfl/pDIXBCEk9SKyTXznq
+ 8/VV9HsX3bxn6FF5nSgYxWHTgQD8A==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474bup6x9y-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 11 Jun 2025 20:59:50 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55BHQR2u021895;
- Wed, 11 Jun 2025 20:59:49 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4750501mku-1
+ Wed, 11 Jun 2025 21:12:56 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55BHQJbs027957;
+ Wed, 11 Jun 2025 21:12:55 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 47518mhfwt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 11 Jun 2025 20:59:49 +0000
-Received: from smtpav01.wdc07v.mail.ibm.com (smtpav01.wdc07v.mail.ibm.com
- [10.39.53.228])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55BKxn2228246780
+ Wed, 11 Jun 2025 21:12:55 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55BLCrDW24117996
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 11 Jun 2025 20:59:49 GMT
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2408D58059;
- Wed, 11 Jun 2025 20:59:49 +0000 (GMT)
-Received: from smtpav01.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B550A5804B;
- Wed, 11 Jun 2025 20:59:48 +0000 (GMT)
-Received: from [9.61.250.224] (unknown [9.61.250.224])
- by smtpav01.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 11 Jun 2025 20:59:48 +0000 (GMT)
-Message-ID: <e2796793-632d-40c4-80ac-24ce305af7a2@linux.ibm.com>
-Date: Wed, 11 Jun 2025 15:59:47 -0500
+ Wed, 11 Jun 2025 21:12:54 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D055B58045;
+ Wed, 11 Jun 2025 21:12:53 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9836158054;
+ Wed, 11 Jun 2025 21:12:52 +0000 (GMT)
+Received: from MacBookPro.ibm.com (unknown [9.61.250.81])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 11 Jun 2025 21:12:52 +0000 (GMT)
+From: Rorie Reyes <rreyes@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, thuth@redhat.com,
+ akrowiak@linux.ibm.com, rreyes@linux.ibm.com
+Subject: [RFC PATCH v1] hw/vfio/ap: attribute constructor for
+ cfg_chg_events_lock
+Date: Wed, 11 Jun 2025 17:12:52 -0400
+Message-ID: <20250611211252.82107-1-rreyes@linux.ibm.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/2] migration: Support fd-based socket address in
- cpr_transfer_input
-To: Steven Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
-Cc: jjherne@linux.ibm.com, peterx@redhat.com, farosas@suse.de,
- lvivier@redhat.com, pbonzini@redhat.com
-References: <20250610223342.553744-1-jhkim@linux.ibm.com>
- <20250610223342.553744-2-jhkim@linux.ibm.com>
- <d9deb49b-dce4-4cbc-bc7d-53a781e20977@oracle.com>
-Content-Language: en-US
-From: JAEHOON KIM <jhkim@linux.ibm.com>
-In-Reply-To: <d9deb49b-dce4-4cbc-bc7d-53a781e20977@oracle.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: WCPP7Dj4uNai1Efr2iXhNkmDzFFPKLYv
-X-Proofpoint-GUID: WCPP7Dj4uNai1Efr2iXhNkmDzFFPKLYv
-X-Authority-Analysis: v=2.4 cv=fZWty1QF c=1 sm=1 tr=0 ts=6849ee46 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=yPCof4ZbAAAA:8
- a=X2UCRlzkMfj9qmpsFYsA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDE3NiBTYWx0ZWRfX6Zk50WNx7cct
- SGVzaSE04NLgGoE46c3xHshIDuaC7OuYAJz/Fh7GopEUHzO77L5jKMC1KZPnoBfacBHt2J2Mq9N
- shKAuRuTcLpVHTFtjsjpCjL+KcZhpQkd1PIk/MGeRMa3umhQ8pbvex3X2wi0Qniiplyp5SBFdKl
- rAnjC0+9lQfTuTtulqYW/9LJeVJjgdAV3p0C2K5qPbcfdHfSc3kbLOhopMP9yHgwoSoh2SEQZZ8
- N9ZvG+D5zdOjl5rQCRGhuSBN8R58ISTcUzE+ugX+K9jMykda/xD48rbjfxY1y6eUeNI6X7HuNBm
- f6ptDRjjg+iPHyx3ePFnjKzU8k2OxPuyV39qPl/DvZqDxh5goWcvfD6HufBxXU+0go5PRLJ5yCo
- 1j63YE6fNAnU4CHL63euKESXS4USRIhs5D25mY/Q8OMigH4vfFrGpzbLsBQoa7NkdgLU1bHZ
+X-Authority-Analysis: v=2.4 cv=H4Hbw/Yi c=1 sm=1 tr=0 ts=6849f158 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=LeD7RAK3qBdoSFKBwLEA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDE3NiBTYWx0ZWRfXwGxi9E6Tt1UJ
+ 4/qaLri0Mn055nGKpVG2VUINJZldRMRdsEBWAes1MtvfFEC4wxqurArWeG5yhRoAe7bpY++nAkq
+ shL62jGm0tQsx8KyShdG4tRK0d14irYXs7vP7JmIJ8sUNvDBm9brnjDL5WsROaS6Jxy5AYwjz+r
+ dQqXVW33fvha0IAhZEJS1w0LvBbDEARGjwsF3KqQ3ZDPdWuBo/gwO/zLPaXGM/na3GiyNJx0wMN
+ tD98U9vuuPWrOoEHFt4b1UU5jduvcjM5BGi7XZBWgM/AOHT9KjUe0OM50ccyxAtnihrnjT4cV1j
+ +XKL7GoJc+PQL8OhRMeMYoJoq6gYPHPbmyOuFU48OzFI+LCw7H604kvTqxUxW6+EeqhROav9vep
+ Oa24hqU+4AMKahIOhZzh1NBD2PiCjYkfELmk7NMGzvVp3HGyrdRK9sOAmv+wsvQxYWURoNJK
+X-Proofpoint-GUID: CM5WHBKbVGSFmxUo-KQQ0pksPOXxMKHv
+X-Proofpoint-ORIG-GUID: CM5WHBKbVGSFmxUo-KQQ0pksPOXxMKHv
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-11_09,2025-06-10_01,2025-03-28_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 impostorscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505280000
+ suspectscore=0
+ mlxlogscore=790 phishscore=0 lowpriorityscore=0 spamscore=0 bulkscore=0
+ clxscore=1015 adultscore=0 priorityscore=1501 malwarescore=0 mlxscore=0
+ impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
  definitions=main-2506110176
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=rreyes@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
 X-Spam_bar: --
@@ -127,57 +118,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Created an attribute constructor for cfg_chg_events_lock for locking
+mechanism when storing event information for an AP configuration change
+event
 
-On 6/11/2025 7:28 AM, Steven Sistare wrote:
-> On 6/10/2025 6:33 PM, Jaehoon Kim wrote:
->> Extend cpr_transfer_input to handle SOCKET_ADDRESS_TYPE_FD alongside
->> SOCKET_ADDRESS_TYPE_UNIX. This change supports the use of pre-listened
->> socket file descriptors for cpr migration channels.
->>
->> This change is particularly useful in qtest environments, where the
->> socket may be created externally and passed via fd.
->>
->> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
->> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
->> ---
->>   migration/cpr-transfer.c | 7 +++++--
->>   1 file changed, 5 insertions(+), 2 deletions(-)
->>
->> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
->> index e1f140359c..00371d17c3 100644
->> --- a/migration/cpr-transfer.c
->> +++ b/migration/cpr-transfer.c
->> @@ -46,7 +46,8 @@ QEMUFile *cpr_transfer_input(MigrationChannel 
->> *channel, Error **errp)
->>       MigrationAddress *addr = channel->addr;
->>         if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
->> -        addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
->> +        (addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX ||
->> +            addr->u.socket.type == SOCKET_ADDRESS_TYPE_FD)) {
->>             g_autoptr(QIOChannelSocket) sioc = NULL;
->>           SocketAddress *saddr = &addr->u.socket;
->> @@ -60,7 +61,9 @@ QEMUFile *cpr_transfer_input(MigrationChannel 
->> *channel, Error **errp)
->>             sioc = qio_net_listener_wait_client(listener);
->>           ioc = QIO_CHANNEL(sioc);
->> - trace_cpr_transfer_input(addr->u.socket.u.q_unix.path);
->> +        trace_cpr_transfer_input(
->> +            addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX ?
->> +            addr->u.socket.u.q_unix.path : addr->u.socket.u.fd.str);
->>           qio_channel_set_name(ioc, "cpr-in");
->>           return qemu_file_new_input(ioc);
->
->
-> Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
->
-Thank you for your review.
+Fixes: fd03360215 ("Storing event information for an AP configuration change event")
+Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+---
+ hw/vfio/ap.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-I have addressed your comment in patch 1 by using `%d` directly in 
-`g_strdup_printf`, as suggested.
-Patch 2 remains unchanged, with only your Reviewed-by tag added.
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index 874e0d1eaf..1df4438149 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -52,6 +52,11 @@ static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+ 
+ static QemuMutex cfg_chg_events_lock;
+ 
++static void __attribute__((constructor)) vfio_ap_global_init(void)
++{
++    qemu_mutex_init(&cfg_chg_events_lock);
++}
++
+ OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
+ 
+ static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
+@@ -230,13 +235,6 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+     VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
+     VFIODevice *vbasedev = &vapdev->vdev;
+ 
+-    static bool lock_initialized;
+-
+-    if (!lock_initialized) {
+-        qemu_mutex_init(&cfg_chg_events_lock);
+-        lock_initialized = true;
+-    }
+-
+     if (!vfio_device_get_name(vbasedev, errp)) {
+         return;
+     }
+-- 
+2.48.1
 
-I've just sent out v4 of the patch series.
-Please let me know if you have any further comments.
-
--- Jaehoon Kim
 
