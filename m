@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 413B1C61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 12:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60750C61CE7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 12:23:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPKPr-0008HW-UB; Wed, 11 Jun 2025 08:18:52 -0400
+	id 1uPKTO-0001Kf-Ep; Wed, 11 Jun 2025 08:22:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uPKPp-0008GO-0E
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:18:49 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uPKT9-0001Jp-VY
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:22:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uPKPh-0007bB-4H
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:18:47 -0400
+ id 1uPKT4-000861-0j
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:22:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749644316;
+ s=mimecast20190719; t=1749644525;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zZSdbNeeun/D3AOo2VIU282r8Vag0AFvMKttLfsQ7vo=;
- b=fSNf7qiiocgyjNHEphPS7KkbzlpAYQT2HYVL39qT0wqRx09layiyIwSTk8nKv5Hv6yKA8F
- Ilr9OrnSiJJanVwQY8ks5V0z3ZhY/P6CqIWyl3sX3DQMpBcb/T4PHN8FRp1eJVOdTmIAmI
- R35+q+ZUiAsA348c7QtKWfg5ynWqwc4=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=TLtGg7+qhUc7f2ZSuUGo+EY1HTON9oeteeb3NukIgDw=;
+ b=AxYYvNoyBSWFnR388UGdf+Aaze9geJSKSA/0hEDvGCoz4CdodT/LBjQbIqxy6KorwfULsz
+ NgGXK8M4GhqM1WEeCQXFUkeHLgAFT/kdbNUDvLIbWUAnyFD1sbxRG/Rx8i4bU0FhrVTsWk
+ nThGCBiNLO6qKcNKkg5XaGbEDIVc+BU=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-352-R2gLRcKqNCCwwKriLzZr1w-1; Wed, 11 Jun 2025 08:18:35 -0400
-X-MC-Unique: R2gLRcKqNCCwwKriLzZr1w-1
-X-Mimecast-MFC-AGG-ID: R2gLRcKqNCCwwKriLzZr1w_1749644314
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-440667e7f92so45148765e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 05:18:34 -0700 (PDT)
+ us-mta-295-PPiIJpXfPWykjNk32T2FVQ-1; Wed, 11 Jun 2025 08:22:03 -0400
+X-MC-Unique: PPiIJpXfPWykjNk32T2FVQ-1
+X-Mimecast-MFC-AGG-ID: PPiIJpXfPWykjNk32T2FVQ_1749644523
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4e9252ba0so3831491f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 05:22:03 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749644314; x=1750249114;
+ d=1e100.net; s=20230601; t=1749644523; x=1750249323;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zZSdbNeeun/D3AOo2VIU282r8Vag0AFvMKttLfsQ7vo=;
- b=os+qZ0Z1xouvkbJuvPAwidXs7Y0xmFOkkyIM7Ib6nwB1bHPUWZd3jFgEmdswXC8eeV
- sJ1wL5I26p7JdMIQp0aNJXtG5EzxZG1iTST/bW4RCLwQzG1TQYPQsG15vMDbRGk1DRNB
- 0cSeqgNPNiURyFWhgU3pSIOrjqpzTdS8VAi4dyG32S33G6rTDupu+b8C6SLPzmLI9QB/
- PaodrAOGldJ1x+KeK+hD5T3yBcTRrSfbKjHMVpgdl2jASS5d6h7JmFtjHNT/SFzZyZ7n
- 38BwM7iEnNQ5rWuC7ZPp367DXqGeS6lnCDrB0QVgv9kgxMA3nvflPT6RaQ5gEe0ScRV5
- zreQ==
+ bh=TLtGg7+qhUc7f2ZSuUGo+EY1HTON9oeteeb3NukIgDw=;
+ b=HrgM/Kfe9xnZ8/TyLnlmkQXScZC72v28cPPkZrU/5O+/VZTg2OnjdzLmkOB2Sk7bxY
+ WImZGsuLzYmUqzBEI1kPD5AP+zh9IWfEp0GNWhDukI9tBA2uTsOCS2EtfQxEiBXpBNnW
+ uH8yOLfEwenvlf6p24l4jbxIiNkCf52BpL86u6O0X71pZaejIqoN+yU4jLA059Pwq1HI
+ 9/WLfu60is9tUwAa0wrpT0q95A0HvMf+vLlwzwlD/VPhXhMMZn6OHR0ZEGnH7mE0xcm2
+ tUhxgq5PfN/SIrj1W1p03mQYFyvdwu4eZEHe9cLh52xmAP50jq9ZV6fffRUgd6+1SiyZ
+ vJ0w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUhhtpaAVn41PVi+nlzUG5jbWT9x5i8vHhn/z8qRIhjQFijgFWD5rEQM1FNozW620F1SIF8ipH3XgZL@nongnu.org
-X-Gm-Message-State: AOJu0YxLLtNVQPFEXd341zx8bZW1sp5e3eG4KN0xQCrjdIyFsp+GVnYO
- KUQCen/f5nvyXqBXu6MW5BZRfrULtA6W9jcin7TZfOvf6Vo8QeXKKCR1eZEC3h+OsYAVsV4iH7i
- wNoCpwf4znNhsdk+gBXCH6Yq85Nt/sCgs24NZYA9ZYYzdkZ3QnaooWd6P
-X-Gm-Gg: ASbGncsqMT9Qn+pUdKUemZy6tsBfIhw4Tjjw2O0wflpa8P10xLV+D+OS0zZVw6mTJJ8
- 6bHsaP5ZgISNpnQu/Cirx7QMtgme8ohGvnTyLDubb5ZFZJNS3c/NVBJlBIgVVF0PZdkJm9R3ufh
- pNHdToXAEEPKy7vYMoRqZsh9pyMZACjqX5Bhs8mtMirKXCmHKvZhwojH6wQ9CghtBF5x/z2icKD
- py7GPzdBd9v8CUopYwojDKAmuQBq+nCMuF53pLiXZFRoQ98DIwnVD0shO/1zbHyG8qe011PBfGg
- ur4acC5SRyhVpj62K6a6zNOr3dIyxW+42mNOh6zubVpfw5OSuOT1p2sH0MdEHF+dybFG8w==
-X-Received: by 2002:a05:6000:1b8a:b0:3a5:2ddf:c934 with SMTP id
- ffacd0b85a97d-3a55881dbb9mr1737213f8f.30.1749644313752; 
- Wed, 11 Jun 2025 05:18:33 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGMx6TH9CHW/sQ7KK5+Pzjt+BNKladyFWPFpfgr+tKnOYsW5uwjkGc8lJBfMN0eDxRc8OxIOA==
-X-Received: by 2002:a05:6000:1b8a:b0:3a5:2ddf:c934 with SMTP id
- ffacd0b85a97d-3a55881dbb9mr1737177f8f.30.1749644313223; 
- Wed, 11 Jun 2025 05:18:33 -0700 (PDT)
+ AJvYcCWtXK6KlgrpBTwnFGirVozpjlzUAwB/J6VUb5yCT3q2WlvHvz1yiOqFz1hQEmdzvsaSvcUeDhZf5Zb1@nongnu.org
+X-Gm-Message-State: AOJu0YxCHMKkGplBUROlElSiZnFiD316o0WG5i/ljcmSOn6jKT4kDKso
+ UyqCn02GfAp8wTxQNzkZkfcd/39xzGrAdus+HS4b/mJwQAXe4lHkuFIMUj7CMsfU0TezvzmKBR+
+ ZjXpKRU8THZydUOIK580uWkcm1Ro1CoRYrsMt6pHSXozwNrVQxhz7RstS
+X-Gm-Gg: ASbGnctmh5a4mX/c4kTI6pbkhv5f2jKiExnHcQyVikEwrvTVNPYKZPWc3tZpihKcfdw
+ /ig/q0Wa+Z1y5o64VjesCRClyca01GBugk8SchWZtPn0cKBYIe9old8jgUys0G2PdxjhNTLAkfD
+ 7ZM9J/4Ph4W2imtcngAC2mETkrvnFFjPGE2CC14qjJQXWzr7/PV1jvAL+T8C0XXHdypp3aSdCS4
+ z5kUzgzKgm5FdjqEzq487dsq1vzPOFL7Q2UwUfWE8OW7xeBirmlzH4gFtlOog05hn76zgrZ1YQ/
+ 9MSY+e+qKy9JhcQEZ9pt6AO8rx5r5Hr8QN8R/MKx+F+CFkF9jh/90k1ayOcnpyIy319bjQ==
+X-Received: by 2002:a05:6000:40cb:b0:399:6dd9:9f40 with SMTP id
+ ffacd0b85a97d-3a558a9960amr2285976f8f.9.1749644522631; 
+ Wed, 11 Jun 2025 05:22:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFNQTGHMS2KoiNF6cx6uK0zsGBrVAiZXca9FPfty9+Gbsyolf+PRkQeym6yuVxgmhARlSpVWg==
+X-Received: by 2002:a05:6000:40cb:b0:399:6dd9:9f40 with SMTP id
+ ffacd0b85a97d-3a558a9960amr2285939f8f.9.1749644522193; 
+ Wed, 11 Jun 2025 05:22:02 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53229ddebsm15293387f8f.17.2025.06.11.05.18.31
+ ffacd0b85a97d-3a53229de70sm14796386f8f.5.2025.06.11.05.22.00
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 05:18:32 -0700 (PDT)
-Message-ID: <a2f97bcb-4986-421d-937f-1b571b790a8e@redhat.com>
-Date: Wed, 11 Jun 2025 14:18:31 +0200
+ Wed, 11 Jun 2025 05:22:01 -0700 (PDT)
+Message-ID: <58188c95-4940-4619-bcba-58eed064d16f@redhat.com>
+Date: Wed, 11 Jun 2025 14:22:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 05/25] hw/pci-host/gpex-acpi: Split host bridge OSC and
@@ -95,14 +95,14 @@ From: Eric Auger <eric.auger@redhat.com>
 In-Reply-To: <20250530110227.00003341@huawei.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -121,7 +121,7 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan,
+Hi Jonathan
 
 On 5/30/25 12:02 PM, Jonathan Cameron wrote:
 > On Tue, 27 May 2025 09:40:07 +0200
@@ -208,12 +208,6 @@ On 5/30/25 12:02 PM, Jonathan Cameron wrote:
 > you move to the generic code.
 >
 > They end up unused in the DSDT at the end of the series.
-
-Done
-
-Thanks
-
-Eric
 >
 > I ran a quick GPEX + pxb-pcie test and we do get the odd mix that the OSC for
 > the GPEX say no native hotplug but the OSC for the PXB allows it.
@@ -233,6 +227,12 @@ Eric
 > Can you either drop the use of the wrapper for the DSM part here and call
 > it unconditionally (for cxl and PCIe cases) or add an extra call to
 > aml_append(dev, build_host_bridge_dsm()) for the is_cxl path?
+
+Given the following discussion between you and Igor, I understand we can
+keep the code as is for now. cxl alignment would be done later and also
+pxb support might be reworked in near future.
+
+Eric
 >
 >>              }
 >>  
