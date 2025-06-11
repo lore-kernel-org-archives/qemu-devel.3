@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A727EC61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 12:38:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F146C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 12:39:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPKic-0007HL-TR; Wed, 11 Jun 2025 08:38:14 -0400
+	id 1uPKjT-0007fp-2T; Wed, 11 Jun 2025 08:39:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPKia-0007Gk-Qq
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:38:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPKjQ-0007aA-Lt
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:39:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPKiX-0001YH-Vj
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:38:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPKjG-0001dG-JC
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:39:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749645488;
+ s=mimecast20190719; t=1749645530;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Os7oDjbWuIVpcLQnAhOZQshI4Lay7PrVK2LXUSxOYy8=;
- b=NhwNXCcubeJxczD2EWpU15R27fLl/B/SvEgOqj8KqEVK/svaiiNiTCtJ/cwbPBikH1tGxG
- 5EltbvXMh6KKDFe9AZ6VJaxjHaBbBBw4WQVCcT2L+1Z+eCV+gNwtVmzwgfLa18kNd5oHAV
- LmpX/9WM0/amWf8565v72kirypcNU7Y=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=AzX4/aL6j/pTkekjiNlSBQ84LNAuMaTtNREsBrZSV3Y=;
+ b=FLIQrkERg18r+HGRDC/Rfs4gV6AwSrcgR12fcmVUIv6kiFTHroPfVl1Pl39d/bwrF9teG9
+ pAcv2eti+vPA/M80Z4WcNdAUQ3wSgU1IfuwzDu6S8gi5+iM6/+cCG0ihv10Zp9GMOg3JZa
+ OWH/A2UoArV7M3q6bEeDgudbbm7nMtA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-308-q7U3Xo2APzuWIzzKX7zcwg-1; Wed, 11 Jun 2025 08:38:07 -0400
-X-MC-Unique: q7U3Xo2APzuWIzzKX7zcwg-1
-X-Mimecast-MFC-AGG-ID: q7U3Xo2APzuWIzzKX7zcwg_1749645485
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-450787c8626so37979745e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 05:38:06 -0700 (PDT)
+ us-mta-387-s8bzR4eTNteIWl-8QINTig-1; Wed, 11 Jun 2025 08:38:48 -0400
+X-MC-Unique: s8bzR4eTNteIWl-8QINTig-1
+X-Mimecast-MFC-AGG-ID: s8bzR4eTNteIWl-8QINTig_1749645527
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f8192e2cso3671907f8f.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 05:38:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749645484; x=1750250284;
+ d=1e100.net; s=20230601; t=1749645527; x=1750250327;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Os7oDjbWuIVpcLQnAhOZQshI4Lay7PrVK2LXUSxOYy8=;
- b=EwPyCYIKb1/8fkM30roYmARVcOriWqlNrIrx1iw5A/URLX2vpXDCm93qJX6IDsk854
- UqoGdSymuuCfwATVde47/+HWyD/8xgar+91v4XTW7mIzdH+wVTPDmGtvFaJZyWcUDF/G
- ONfU9s/ERd1rhjyN+ONQw4t/R+OxnvVfGl5pyhQXGIy8pDYaByAd6D7KPX4WaksKKtr/
- RlhN/N7PHasgDJdnJ06FfBqmmmz56EnV1fOQKj+jL/qOZL2UOdq9o7E8qzM+niTeDcN9
- 7z2TYDlDM1wqCwC+wxXpJo6hDEbc1lM4xkV1aAwO5N7spiMlKDav+OM0cPnpBFVQQ3/4
- fMJA==
+ bh=AzX4/aL6j/pTkekjiNlSBQ84LNAuMaTtNREsBrZSV3Y=;
+ b=sSZzCzw0sumOrnsnRbU4fijIJwvpxngWgvBFSpIiGBpgz4tnNr1tSroPYSzirpmubl
+ gNaA93Nx3tjNsbatu9xmFtdiCQMR05q6evmsKlb2CEMyz7rGWpSs+MRl6EF5HaSt0fTW
+ WTcYkr3Lx/SzWEoEwwlfxG4zJMLK02iu/nOdOK1yetfyvmQWwmuLfe7lVpIQ9IiWkq+6
+ GJ295/cyG7m6C+WcmhG/+sVokQGtX7fwui5d+BpZjTATkc1eEhtoyOU45DvDi5/yvrk8
+ 89z7k6NK8LjSKWTm5VywI8BzuRQOBKunxdMCBiRLFsl8JgWHH8KavwHWrWZe0figyIWA
+ snFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXJo4HXkI8rpbc6lR3ynxUJJ8CRvbcAYfsCpfrZGCpvH0z+xDENjogkjmc5YUuCKVSfyKgwbaseeBzn@nongnu.org
-X-Gm-Message-State: AOJu0YwRTpgdTIq72WkOaVcrQVEiMjYAepM0on99qq73hqoqbFhw6Y3l
- 2r1BmYSzUQwqzZ58yHRdbgieBRqBLERwNQ/6SSMbqynDlRERde4fZGfFe/L7XI+XBeJUzG/b5v3
- iJ7RDXqbt9ggbFJCPe3IXpem/rZY9KJjQsQXneqfeUdpgyUSZhrco1gWDVQUwS58b
-X-Gm-Gg: ASbGncsMgAXIQLozXql7fZpwHTve4uT4w+aTumZCr0QaDhyYZmbq7iyjSwiLDomI2PO
- P6ZYrpKbX7cz7fiw2zDJUbS3MK91463Agwoh2vywzCsCTfzu1b0VXdHAYFNNAg/n6lnUiusEPq5
- ySxOo8QQ1rphn88HLqLFIG8dKUwhupkaH/QbmM78/bFgXXkEdn5l/HdqHGdPNtMmbnpY7J/txRd
- VFM5qMrhVvxZupmXuahkX5o0+8JQwPNGhDWNE6aEDqPZf+NUcq9Fc1X/57otzcyb4Rk8ecSsGxZ
- IQLe3NTdLTejH/7mA+UgiMmHa+exPwTbcNhcjicGSl1Qck/Gcdq89r6E3lkM
-X-Received: by 2002:a05:6000:2006:b0:3a4:f786:4fa1 with SMTP id
- ffacd0b85a97d-3a5586f5dacmr2279094f8f.2.1749645484661; 
- Wed, 11 Jun 2025 05:38:04 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHFi5cZ5eGnIecf6HS9N+h47pZmH7w5f0KiGDJmwHfs5Mv/wGn3+nfX2Wbc9NDfHaBUp9fqWA==
-X-Received: by 2002:a05:6000:2006:b0:3a4:f786:4fa1 with SMTP id
- ffacd0b85a97d-3a5586f5dacmr2279070f8f.2.1749645484276; 
- Wed, 11 Jun 2025 05:38:04 -0700 (PDT)
+ AJvYcCXfRoqW8KoeWB/xPg2ZWNlCxLr1/+hChjCAk4ftB6n5NPuu8mkheGbCJbvoNn5fpIvF1ZNXwDDYtwdq@nongnu.org
+X-Gm-Message-State: AOJu0YyCNuHXM7eSpySkyYs0oflvznW4tUGDpCcaP4nEOy9CuOPkTZ19
+ v8pPpeyeMVWIXwT2mv834wJVpIEf5276xLqu4BYAu/E9O7M9PIeaG5erhiLYQqqQQOx73eu8Krk
+ ITksfOB92HfWfZmISuk64uibPDxs00s42L4fk8gzJwCIlsUluvGl367ox
+X-Gm-Gg: ASbGncvwX9OUmPpbiSVqzjsexC/zW+Bj6E3Y1Bi97gRW3DC7U3dwjSPBGMmQYKyRQN9
+ /9pPI9mY1qxd/snRnjgGBdT17AcXXel2H0dKxPKVdWHs7ubJmPUhUcw0Pb8RJ0hb9xXvCX+zpm7
+ BPAyu9klMVVkXnPrAy2zZl8CxfRV20ZCplliGX3VU13Po4qyItXMe/EnYMSUD0PrR6R/4oq+L+j
+ Mf47brvauTpvy26Ej8w8UVAb9fGQ9RA4l6FQYbDk84LQTUmL79pwT0EWIx+LSXWJOYgp/9nJuwo
+ gPG+2dqOobnGwZCDGABDMjjpoczRf90nDwcid5231dQeLw64/gGVQp1wKMr1
+X-Received: by 2002:a05:6000:1448:b0:3a4:f52d:8b11 with SMTP id
+ ffacd0b85a97d-3a5586f1905mr2522424f8f.20.1749645527298; 
+ Wed, 11 Jun 2025 05:38:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHxzazbFfNlcF2vrCY6wKVLo8Im/n2x5QZXPhRGBrKPPH94fl232FdNnjcZDDvaXX5Xd4IaTg==
+X-Received: by 2002:a05:6000:1448:b0:3a4:f52d:8b11 with SMTP id
+ ffacd0b85a97d-3a5586f1905mr2522397f8f.20.1749645526871; 
+ Wed, 11 Jun 2025 05:38:46 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532464575sm15294723f8f.97.2025.06.11.05.38.03
+ ffacd0b85a97d-3a5324641c2sm15401948f8f.93.2025.06.11.05.38.46
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 05:38:03 -0700 (PDT)
-Message-ID: <95806737-f106-4a46-8f6f-5e5b7028a6c9@redhat.com>
-Date: Wed, 11 Jun 2025 14:38:02 +0200
+ Wed, 11 Jun 2025 05:38:46 -0700 (PDT)
+Message-ID: <1569b7ab-24da-4cf3-8ce8-fa9e10f9e172@redhat.com>
+Date: Wed, 11 Jun 2025 14:38:45 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH V5 23/38] backends/iommufd: change process ioctl
+Subject: Re: [PATCH V5 27/38] vfio/iommufd: add vfio_device_free_name
 To: Steve Sistare <steven.sistare@oracle.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
@@ -86,7 +86,7 @@ Cc: Alex Williamson <alex.williamson@redhat.com>, Yi Liu
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Peter Xu <peterx@redhat.com>,
  Fabiano Rosas <farosas@suse.de>
 References: <1749569991-25171-1-git-send-email-steven.sistare@oracle.com>
- <1749569991-25171-24-git-send-email-steven.sistare@oracle.com>
+ <1749569991-25171-28-git-send-email-steven.sistare@oracle.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -132,10 +132,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <1749569991-25171-24-git-send-email-steven.sistare@oracle.com>
+In-Reply-To: <1749569991-25171-28-git-send-email-steven.sistare@oracle.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -161,7 +161,9 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 6/10/25 17:39, Steve Sistare wrote:
-> Define the change process ioctl
+> Define vfio_device_free_name to free the name created by
+> vfio_device_get_name.  A subsequent patch will do more there.
+> No functional change.
 > 
 > Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 
@@ -174,71 +176,93 @@ C.
 
 
 > ---
->   include/system/iommufd.h |  3 +++
->   backends/iommufd.c       | 24 ++++++++++++++++++++++++
->   backends/trace-events    |  1 +
->   3 files changed, 28 insertions(+)
+>   include/hw/vfio/vfio-device.h | 1 +
+>   hw/vfio/ap.c                  | 2 +-
+>   hw/vfio/ccw.c                 | 2 +-
+>   hw/vfio/device.c              | 5 +++++
+>   hw/vfio/pci.c                 | 2 +-
+>   hw/vfio/platform.c            | 2 +-
+>   6 files changed, 10 insertions(+), 4 deletions(-)
 > 
-> diff --git a/include/system/iommufd.h b/include/system/iommufd.h
-> index 2d24d93..db5f2c7 100644
-> --- a/include/system/iommufd.h
-> +++ b/include/system/iommufd.h
-> @@ -69,6 +69,9 @@ bool iommufd_backend_invalidate_cache(IOMMUFDBackend *be, uint32_t id,
->                                         uint32_t *entry_num, void *data,
->                                         Error **errp);
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index 6eb6f21..321b442 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -227,6 +227,7 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
 >   
-> +bool iommufd_change_process_capable(IOMMUFDBackend *be);
-> +bool iommufd_change_process(IOMMUFDBackend *be, Error **errp);
-> +
->   #define TYPE_HOST_IOMMU_DEVICE_IOMMUFD TYPE_HOST_IOMMU_DEVICE "-iommufd"
->   OBJECT_DECLARE_TYPE(HostIOMMUDeviceIOMMUFD, HostIOMMUDeviceIOMMUFDClass,
->                       HOST_IOMMU_DEVICE_IOMMUFD)
-> diff --git a/backends/iommufd.c b/backends/iommufd.c
-> index 3a2ecc7..87f81a0 100644
-> --- a/backends/iommufd.c
-> +++ b/backends/iommufd.c
-> @@ -73,6 +73,30 @@ static void iommufd_backend_class_init(ObjectClass *oc, const void *data)
->       object_class_property_add_str(oc, "fd", NULL, iommufd_backend_set_fd);
+>   /* Returns 0 on success, or a negative errno. */
+>   bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp);
+> +void vfio_device_free_name(VFIODevice *vbasedev);
+>   void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp);
+>   void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+>                         DeviceState *dev, bool ram_discard);
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 785c0a0..013bd59 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -180,7 +180,7 @@ static void vfio_ap_realize(DeviceState *dev, Error **errp)
+>   
+>   error:
+>       error_prepend(errp, VFIO_MSG_PREFIX, vbasedev->name);
+> -    g_free(vbasedev->name);
+> +    vfio_device_free_name(vbasedev);
 >   }
 >   
-> +bool iommufd_change_process_capable(IOMMUFDBackend *be)
-> +{
-> +    struct iommu_ioas_change_process args = {.size = sizeof(args)};
-> +
-> +    /*
-> +     * Call IOMMU_IOAS_CHANGE_PROCESS to verify it is a recognized ioctl.
-> +     * This is a no-op if the process has not changed since DMA was mapped.
-> +     */
-> +    return !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
-> +}
-> +
-> +bool iommufd_change_process(IOMMUFDBackend *be, Error **errp)
-> +{
-> +    struct iommu_ioas_change_process args = {.size = sizeof(args)};
-> +    bool ret = !ioctl(be->fd, IOMMU_IOAS_CHANGE_PROCESS, &args);
-> +
-> +    if (!ret) {
-> +        error_setg_errno(errp, errno, "IOMMU_IOAS_CHANGE_PROCESS fd %d failed",
-> +                         be->fd);
-> +    }
-> +    trace_iommufd_change_process(be->fd, ret);
-> +    return ret;
-> +}
-> +
->   bool iommufd_backend_connect(IOMMUFDBackend *be, Error **errp)
->   {
->       int fd;
-> diff --git a/backends/trace-events b/backends/trace-events
-> index e5f3e70..56132d3 100644
-> --- a/backends/trace-events
-> +++ b/backends/trace-events
-> @@ -7,6 +7,7 @@ dbus_vmstate_loading(const char *id) "id: %s"
->   dbus_vmstate_saving(const char *id) "id: %s"
+>   static void vfio_ap_unrealize(DeviceState *dev)
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index cea9d6e..903b8b0 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -619,7 +619,7 @@ out_io_notifier_err:
+>   out_region_err:
+>       vfio_device_detach(vbasedev);
+>   out_attach_dev_err:
+> -    g_free(vbasedev->name);
+> +    vfio_device_free_name(vbasedev);
+>   out_unrealize:
+>       if (cdc->unrealize) {
+>           cdc->unrealize(cdev);
+> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> index 71fa9f4..a3603f5 100644
+> --- a/hw/vfio/device.c
+> +++ b/hw/vfio/device.c
+> @@ -317,6 +317,11 @@ bool vfio_device_get_name(VFIODevice *vbasedev, Error **errp)
+>       return true;
+>   }
 >   
->   # iommufd.c
-> +iommufd_change_process(int fd, bool ret) "fd=%d (%d)"
->   iommufd_backend_connect(int fd, bool owned, uint32_t users) "fd=%d owned=%d users=%d"
->   iommufd_backend_disconnect(int fd, uint32_t users) "fd=%d users=%d"
->   iommu_backend_set_fd(int fd) "pre-opened /dev/iommu fd=%d"
+> +void vfio_device_free_name(VFIODevice *vbasedev)
+> +{
+> +    g_clear_pointer(&vbasedev->name, g_free);
+> +}
+> +
+>   void vfio_device_set_fd(VFIODevice *vbasedev, const char *str, Error **errp)
+>   {
+>       ERRP_GUARD();
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index b52c488..b4136432 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -2966,7 +2966,7 @@ static void vfio_pci_put_device(VFIOPCIDevice *vdev)
+>   
+>       vfio_device_detach(&vdev->vbasedev);
+>   
+> -    g_free(vdev->vbasedev.name);
+> +    vfio_device_free_name(&vdev->vbasedev);
+>       g_free(vdev->msix);
+>   }
+>   
+> diff --git a/hw/vfio/platform.c b/hw/vfio/platform.c
+> index 9a21f2e..5c1795a 100644
+> --- a/hw/vfio/platform.c
+> +++ b/hw/vfio/platform.c
+> @@ -530,7 +530,7 @@ static bool vfio_base_device_init(VFIODevice *vbasedev, Error **errp)
+>   {
+>       /* @fd takes precedence over @sysfsdev which takes precedence over @host */
+>       if (vbasedev->fd < 0 && vbasedev->sysfsdev) {
+> -        g_free(vbasedev->name);
+> +        vfio_device_free_name(vbasedev);
+>           vbasedev->name = g_path_get_basename(vbasedev->sysfsdev);
+>       } else if (vbasedev->fd < 0) {
+>           if (!vbasedev->name || strchr(vbasedev->name, '/')) {
 
 
