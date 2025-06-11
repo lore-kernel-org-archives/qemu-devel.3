@@ -4,60 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 842A4C61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:51:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8556C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:51:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPGEc-0002zn-8r; Wed, 11 Jun 2025 03:50:58 -0400
+	id 1uPGEW-0002zP-GR; Wed, 11 Jun 2025 03:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uPGER-0002z6-OU
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:50:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uPGEQ-0002yg-CK
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:50:46 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uPGEP-0005uL-3e
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:50:47 -0400
+ (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1uPGEO-0005uJ-Dk
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:50:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
  s=mimecast20190719; t=1749628243;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=vMSlGY0wuxt98otkD13PvAy5KihmernySiLqnGc4Q18=;
- b=cm8Zb38asQiXD3QbxKJ2USeyqXYpZGrXIL6OedBoA3C/ongJMwUDn8iN0hPZjz0EAt0dN9
- A7VgddUhaWQCM4W+ayUNbs4iwXXyJUIUEdfBT26lsrYpG/5ufYUYO+TedCsbREj5jeLbY6
- vgIBYrOHQUfPOQ/dyYAyhfGyM4Qse1c=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3ayC/Yn8lHuEDaclWUygLWgjTbSCMn9SpbsvbpcLpz0=;
+ b=AbNOxDtbfDTGwJAzqFX5KqT4eaqprJgRnfQMBFicLpMW67/m0Ny+QRbYyWLigioIBFpTFH
+ SuA37b54/KSAEBF1MRmIygXum9Qob374km+jSh9ISliDmOoDQOQLS8g8NUdXM3YCP2MneE
+ Mwe8poGZCQdV36G6FdU1X5PDSlIl09k=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-PLXch9RNPW-Gi8tNMohFCA-1; Wed,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-540-XHwFAPdtMvq-rGOwZEE9kw-1; Wed,
  11 Jun 2025 03:50:41 -0400
-X-MC-Unique: PLXch9RNPW-Gi8tNMohFCA-1
-X-Mimecast-MFC-AGG-ID: PLXch9RNPW-Gi8tNMohFCA_1749628240
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+X-MC-Unique: XHwFAPdtMvq-rGOwZEE9kw-1
+X-Mimecast-MFC-AGG-ID: XHwFAPdtMvq-rGOwZEE9kw_1749628241
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BBDA2180028F
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A16C419560B5
  for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 07:50:40 +0000 (UTC)
 Received: from sirius.home.kraxel.org (unknown [10.44.32.69])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1D25D18002B5; Wed, 11 Jun 2025 07:50:40 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 334E01800284; Wed, 11 Jun 2025 07:50:40 +0000 (UTC)
 Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id A6D081800786; Wed, 11 Jun 2025 09:50:37 +0200 (CEST)
+ id B444518007A6; Wed, 11 Jun 2025 09:50:37 +0200 (CEST)
 From: Gerd Hoffmann <kraxel@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>
-Subject: [PULL 0/2] Seabios 1.17.0 20250611 patches
-Date: Wed, 11 Jun 2025 09:50:35 +0200
-Message-ID: <20250611075037.659610-1-kraxel@redhat.com>
+Subject: [PULL 1/2] seabios: update submodule to 1.17.0
+Date: Wed, 11 Jun 2025 09:50:36 +0200
+Message-ID: <20250611075037.659610-2-kraxel@redhat.com>
+In-Reply-To: <20250611075037.659610-1-kraxel@redhat.com>
+References: <20250611075037.659610-1-kraxel@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -82,42 +85,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit bc98ffdc7577e55ab8373c579c28fe24d600c40f:
+git shortlog rel-1.16.3..rel-1.17.0
+-----------------------------------
 
-  Merge tag 'pull-10.1-maintainer-may-2025-070625-1' of https://gitlab.com/stsquad/qemu into staging (2025-06-07 15:08:55 -0400)
+Andrej Kruták (1):
+      Add AHCI Power ON + ICC_ACTIVE into port setup code
 
-are available in the Git repository at:
+Daniel Khodabakhsh (2):
+      boot: Force display of the boot menu when boot-menu-wait is a negative number
+      usb-hid: Support multiple USB HID devices by storing them in a linked list
 
-  https://gitlab.com/kraxel/qemu.git tags/seabios-1.17.0-20250611-pull-request
+Daniel Verkamp (3):
+      vbe: Add VBE 2.0+ OemData field to struct vbe_info
+      vgasrc: round up save/restore size
+      vbe: implement function 09h (get/set palette data)
 
-for you to fetch changes up to cba36cf3881e907553ba2de38abd5edf7f952de1:
+Daniil Tatianin (1):
+      pciinit: don't misalign large BARs
 
-  seabios: update binaries to 1.17.0 (2025-06-11 09:45:00 +0200)
+Gerd Hoffmann (6):
+      limit address space used for pci devices, part two
+      drop obsolete acpi table code
+      drop acpi tables and hex includes
+      add romfile_loadbool()
+      update pci_pad_mem64 handling
+      ahci: add controller reset
 
-----------------------------------------------------------------
-seabios: update to 1.17.0 release
+Igor Mammedov (1):
+      fix smbios blob length overflow
 
-----------------------------------------------------------------
+Jiaxun Yang (1):
+      ahci: Fix hangs due to controller reset
 
-Gerd Hoffmann (2):
-  seabios: update submodule to 1.17.0
-  seabios: update binaries to 1.17.0
+Kevin O'Connor (14):
+      vgasrc: Use curmode_g instead of vmode_g when mode is the current video mode
+      vgasrc: Rename vgahw_get_linesize() to vgahw_minimum_linelength()
+      stdvgamodes: No need to store pelmask in vga_modes[]
+      stdvgamodes: Improve naming of dac palette tables
+      stdvga: Rename CGA palette functions
+      stdvga: Add comments to interface functions in stdvga.c
+      stdvga: Rename stdvga_toggle_intensity() to stdvga_set_palette_blinking()
+      stdvga: Rework stdvga palette index paging interface functions
+      stdvga: Rename stdvga_set_text_block_specifier() to stdvga_set_font_location()
+      stdvga: Rename stdvga_set_scan_lines() to stdvga_set_character_height()
+      stdvga: Rename stdvga_get_vde() to stdvga_get_vertical_size()
+      stdvga: Add stdvga_set_vertical_size() helper function
+      stdvgaio: Only read/write one color palette entry at a time
+      docs: Note v1.17.0 release
 
- pc-bios/bios-256k.bin             | Bin 262144 -> 262144 bytes
- pc-bios/bios-microvm.bin          | Bin 131072 -> 131072 bytes
- pc-bios/bios.bin                  | Bin 131072 -> 131072 bytes
- pc-bios/vgabios-ati.bin           | Bin 39424 -> 39424 bytes
- pc-bios/vgabios-bochs-display.bin | Bin 28672 -> 28672 bytes
- pc-bios/vgabios-cirrus.bin        | Bin 38912 -> 39424 bytes
- pc-bios/vgabios-qxl.bin           | Bin 39424 -> 39424 bytes
- pc-bios/vgabios-ramfb.bin         | Bin 28672 -> 28672 bytes
- pc-bios/vgabios-stdvga.bin        | Bin 39424 -> 39424 bytes
- pc-bios/vgabios-virtio.bin        | Bin 39424 -> 39424 bytes
- pc-bios/vgabios-vmware.bin        | Bin 39424 -> 39424 bytes
- pc-bios/vgabios.bin               | Bin 38912 -> 38912 bytes
- roms/seabios                      |   2 +-
- 13 files changed, 1 insertion(+), 1 deletion(-)
+Mark Cave-Ayland (2):
+      esp-scsi: terminate DMA transfer when ESP data transfer completes
+      esp-scsi: indicate acceptance of MESSAGE IN phase data
 
+Max Tottenham (1):
+      Add LBA 64bit support for reads beyond 2TB.
+
+Steven Price (1):
+      vgabios: Fix generating modes list for static_functionality
+
+nikolar via SeaBIOS (1):
+      kconfig: fix the check-lxdialog.sh to work with gcc 14+
+
+Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+---
+ roms/seabios | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/roms/seabios b/roms/seabios
+index a6ed6b701f0a..b52ca86e094d 160000
+--- a/roms/seabios
++++ b/roms/seabios
+@@ -1 +1 @@
+-Subproject commit a6ed6b701f0a57db0569ab98b0661c12a6ec3ff8
++Subproject commit b52ca86e094d19b58e2304417787e96b940e39c6
 -- 
 2.49.0
 
