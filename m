@@ -4,102 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42E68C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 06:22:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A50FAC61CE7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 06:28:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPEql-0007f6-Qk; Wed, 11 Jun 2025 02:22:16 -0400
+	id 1uPEwT-0000jW-9d; Wed, 11 Jun 2025 02:28:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1uPEqB-0007eE-U6
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:21:40 -0400
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>) id 1uPEq9-0008R9-3Y
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:21:38 -0400
-Received: from phl-compute-08.internal (phl-compute-08.phl.internal
- [10.202.2.48])
- by mailfhigh.phl.internal (Postfix) with ESMTP id ED32E11400C1;
- Wed, 11 Jun 2025 02:21:33 -0400 (EDT)
-Received: from phl-mailfrontend-02 ([10.202.2.163])
- by phl-compute-08.internal (MEProxy); Wed, 11 Jun 2025 02:21:33 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm3; t=1749622893; x=1749709293; bh=iRtBKjK22P
- cEM9ocSmXmrVWcTg8faSelkAYCJ9KaGzU=; b=kJWBWNsCxVvyXqqUrpB4I4XKf6
- obY/oHpT3uEJpX7qANeNod32HqvcEQ30ttYiF24lUuXgt7Dih6i4mRcXt0rmagzu
- MyglkrpoB14AEv9kFAluFThlDoVTbf/lxkSLYOMzWaAw/5u9qhdrmxSrNOM6HiGS
- KAUzUYaAB1vhkMOVF2EAeXfvJOoOAO34UJ4QPlsiFqCqUEC/cGU9ZTKQoy4S5yJz
- bJK/zFB0nSP6PZ4rAU0OxaMs1Sl+srl1ChT6gO3/3vWyyiw2KZO4WbI3NJAR6sKD
- SnSsx5vUdpBvywnEmSCqx5jRAUcRJof2j471sJkOg0g1SoG9AZCZq3UKv8Qw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1749622893; x=1749709293; bh=iRtBKjK22PcEM9ocSmXmrVWcTg8faSelkAY
- CJ9KaGzU=; b=ZfnBGAc5A3GWn5zzUrMWFdrwCyBRehBA4FI0qmZ0YloVcefgbRp
- WY933JMYdwIvarMzynKPaCfGFlIR2G9GWH+8G2m278VNE9PZe2rA5pZ9Qh229IUt
- lp89IVHFVwjv6EjQJNpqnZyPeYDDV/RfoukXdGznsRWU0xfzF+W2JQlYtQdeJl8B
- MOeRCn1/omnIozUcuOApf47u3gJQYDSWuPYgbOc0YgkGIe9bCHazCYjy6tmTytJk
- y0i9z4o9dEpgLpDl0QZUF0nW0SCHV/da1ip85QHFhNjZsgLxXBV7lfUSmVhs4LPz
- FcQCVMHGEXib4a+i6UFNhw/RjkLq9oJa+nA==
-X-ME-Sender: <xms:bSBJaBD-WHzCBOVkC0JalfkAcanzIDUioCca8zC-X0w-fpudG3DiwA>
- <xme:bSBJaPio3ETjuloHjySZqPDMoAqSAL55UL0kPYZnZRkK4kYDgjgPBQvifjfl7CzJq
- NPZWNI1lGfR_cJHzA>
-X-ME-Received: <xmr:bSBJaMkZw12y0O_M_5zKgCzYRuKeyErPag0KTbQvOEyqFYnJqgNYMX00FGWr-5oENyI>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddugdduudekudcutefuodetggdotefrod
- ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdp
- uffrtefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivg
- hnthhsucdlqddutddtmdenucfjughrpefhvfevufgjfhffkfggtgesghdtreertddttden
- ucfhrhhomheptehlhihsshgrucftohhsshcuoehhihesrghlhihsshgrrdhisheqnecugg
- ftrfgrthhtvghrnhepieduffeuieelgfetgfdttddtkeekheekgfehkedufeevteegfeei
- ffetvdetueevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrh
- homhephhhisegrlhihshhsrgdrihhspdhnsggprhgtphhtthhopedutddpmhhouggvpehs
- mhhtphhouhhtpdhrtghpthhtohepshhtvghvvghnshgusegthhhrohhmihhumhdrohhrgh
- dprhgtphhtthhopegrlhgvgidrsggvnhhnvggvsehlihhnrghrohdrohhrghdprhgtphht
- thhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtoheprggvsh
- htvghvvgesrhgvughhrghtrdgtohhmpdhrtghpthhtohepuggrvhhiugesrhgvughhrght
- rdgtohhmpdhrtghpthhtohepjhgrshhofigrnhhgsehrvgguhhgrthdrtghomhdprhgtph
- htthhopehmshhtsehrvgguhhgrthdrtghomhdprhgtphhtthhopehsghgrrhiirghrvges
- rhgvughhrghtrdgtohhmpdhrtghpthhtohepshhlphesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:bSBJaLz8a403XQ4FcRbM0d6eZSwxVq2fanTX6dqhVVPU7GDfbI5i-w>
- <xmx:bSBJaGRIn32RQiHCg7rDBKkcR7Ocht5igSkzrokr2lmsCH370BF2Pw>
- <xmx:bSBJaOZG8owOdM9g4Zgp76esAgZnDzCulVr7EdIK4Zh8OogibfzVyg>
- <xmx:bSBJaHRlgPEMhDLpkRIJ2V-QZxFdA3IkBLYcbHP-qCHko89TcdpYHQ>
- <xmx:bSBJaDKpFL7qTU8ut4iKIDETfp8w9bIePcHQ-6Quc_ENf1ylQCh9zZLn>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 11 Jun 2025 02:21:32 -0400 (EDT)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id 1C2CB7119FF; Wed, 11 Jun 2025 08:20:25 +0200 (CEST)
-From: Alyssa Ross <hi@alyssa.is>
-To: Albert Esteve <aesteve@redhat.com>, qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, slp@redhat.com, david@redhat.com, "Michael S.
- Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- jasowang@redhat.com, stevensd@chromium.org, Alex =?utf-8?Q?Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Albert Esteve <aesteve@redhat.com>
-Subject: Re: [PATCH v5 3/7] vhost_user.rst: Add SHMEM_MAP/_UNMAP to spec
-In-Reply-To: <20250609144729.884027-4-aesteve@redhat.com>
-References: <20250609144729.884027-1-aesteve@redhat.com>
- <20250609144729.884027-4-aesteve@redhat.com>
-Date: Wed, 11 Jun 2025 08:20:22 +0200
-Message-ID: <87jz5ilryx.fsf@alyssa.is>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uPEwI-0000eH-7E
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:27:58 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uPEwD-0000bv-SW
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:27:56 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxCeHjIUlo1HYTAQ--.6677S3;
+ Wed, 11 Jun 2025 14:27:48 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxzxvgIUloh44VAQ--.13666S3;
+ Wed, 11 Jun 2025 14:27:47 +0800 (CST)
+Subject: Re: [PATCH 08/10] hw/loongarch: Implement avec set_irq
+To: Song Gao <gaosong@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250609104833.839811-1-gaosong@loongson.cn>
+ <20250609104833.839811-9-gaosong@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <1cf3a214-407b-8d85-cc70-6576e413ec7d@loongson.cn>
+Date: Wed, 11 Jun 2025 14:26:28 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=hi@alyssa.is;
- helo=fhigh-a1-smtp.messagingengine.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250609104833.839811-9-gaosong@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxzxvgIUloh44VAQ--.13666S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxCF48Aw47Kw15GF45JrW8uFX_yoW5Xw18pa
+ ykZFn8XF48JF4fZasxG345u3W5Ar4Igry2vanakrZ2kFn0gw18WrWkJ34ayF4j934UWryj
+ qrn5ua1fWF1UJrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Ar0_tr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Cr0_Gr1UM28EF7xvwVC2z280aVAFwI0_GcCE3s1l84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1Y6r17McIj6I8E87Iv67AK
+ xVW8JVWxJwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Gr0_Gr1UYxBIdaVFxhVjvjDU0xZFpf9x07j5WrAU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.653,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,146 +82,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain
-Content-Transfer-Encoding: quoted-printable
 
-Albert Esteve <aesteve@redhat.com> writes:
 
-> Add SHMEM_MAP/_UNMAP request to the vhost-user
-> spec documentation.
->
-> Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> Signed-off-by: Albert Esteve <aesteve@redhat.com>
+On 2025/6/9 下午6:48, Song Gao wrote:
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
 > ---
->  docs/interop/vhost-user.rst | 55 +++++++++++++++++++++++++++++++++++++
->  1 file changed, 55 insertions(+)
->
-> diff --git a/docs/interop/vhost-user.rst b/docs/interop/vhost-user.rst
-> index 436a94c0ee..b623284819 100644
-> --- a/docs/interop/vhost-user.rst
-> +++ b/docs/interop/vhost-user.rst
-> @@ -350,6 +350,27 @@ Device state transfer parameters
->    In the future, additional phases might be added e.g. to allow
->    iterative migration while the device is running.
->=20=20
-> +MMAP request
-> +^^^^^^^^^^^^
+>   hw/intc/loongarch_avec.c | 37 ++++++++++++++++++++++++++++++++++---
+>   1 file changed, 34 insertions(+), 3 deletions(-)
+> 
+> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
+> index c692fef43c..f609ed9aaa 100644
+> --- a/hw/intc/loongarch_avec.c
+> +++ b/hw/intc/loongarch_avec.c
+> @@ -16,6 +16,12 @@
+>   #include "migration/vmstate.h"
+>   #include "trace.h"
+>   #include "hw/qdev-properties.h"
+> +#include "target/loongarch/cpu.h"
 > +
-> ++-------+---------+-----------+------------+-----+-------+
-> +| shmid | padding | fd_offset | shm_offset | len | flags |
-> ++-------+---------+-----------+------------+-----+-------+
+> +/* msg addr field */
+> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
+> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
+> +FIELD(MSG_ADDR, FIX, 28, 12)
+>   
+>   static uint64_t loongarch_avec_mem_read(void *opaque,
+>                                           hwaddr addr, unsigned size)
+> @@ -23,12 +29,32 @@ static uint64_t loongarch_avec_mem_read(void *opaque,
+>       return 0;
+>   }
+>   
+> +static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int irq_num, int level)
+> +{
+> +   MachineState *machine = MACHINE(qdev_get_machine());
+> +   MachineClass *mc = MACHINE_GET_CLASS(machine);
+> +   const CPUArchIdList *id_list = NULL;
 > +
-> +:shmid: a 8-bit shared memory region identifier
-> +
-> +:fd_offset: a 64-bit offset of this area from the start
-> +            of the supplied file descriptor
-> +
-> +:shm_offset: a 64-bit offset from the start of the
-> +             pointed shared memory region
-> +
-> +:len: a 64-bit size of the memory to map
-> +
-> +:flags: a 64-bit value:
-> +  - 0: Pages are mapped read-only
-> +  - 1: Pages are mapped read-write
-> +
->  C structure
->  -----------
->=20=20
-> @@ -375,6 +396,7 @@ In QEMU the vhost-user message is implemented with th=
-e following struct:
->            VhostUserInflight inflight;
->            VhostUserShared object;
->            VhostUserTransferDeviceState transfer_state;
-> +          VhostUserMMap mmap;
->        };
->    } QEMU_PACKED VhostUserMsg;
->=20=20
-> @@ -1057,6 +1079,7 @@ Protocol features
->    #define VHOST_USER_PROTOCOL_F_XEN_MMAP             17
->    #define VHOST_USER_PROTOCOL_F_SHARED_OBJECT        18
->    #define VHOST_USER_PROTOCOL_F_DEVICE_STATE         19
-> +  #define VHOST_USER_PROTOCOL_F_SHMEM                20
->=20=20
->  Front-end message types
->  -----------------------
-> @@ -1865,6 +1888,38 @@ is sent by the front-end.
->    when the operation is successful, or non-zero otherwise. Note that if =
-the
->    operation fails, no fd is sent to the backend.
->=20=20
-> +``VHOST_USER_BACKEND_SHMEM_MAP``
-> +  :id: 9
-> +  :equivalent ioctl: N/A
-> +  :request payload: fd and ``struct VhostUserMMap``
-> +  :reply payload: N/A
-> +
-> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-> +  successfully negotiated, this message can be submitted by the backends=
- to
-> +  advertise a new mapping to be made in a given VIRTIO Shared Memory Reg=
-ion.
-> +  Upon receiving the message, the front-end will mmap the given fd into =
-the
-> +  VIRTIO Shared Memory Region with the requested ``shmid``. A reply is
-> +  generated indicating whether mapping succeeded.
+> +   assert(mc->possible_cpu_arch_ids(machine));
+> +   id_list = mc->possible_cpu_arch_ids(machine);
+> +   CPUState *cpu = id_list->cpus[cpu_num].cpu;
+> +   CPULoongArchState *env = &LOONGARCH_CPU(cpu)->env;
+The format is strange here. Variable env is declared after normal 
+sentence, there is such issue in many places.
+      id_list = mc->possible_cpu_arch_ids(machine);
 
-Should this be phrased to make it clear replies are only generated in
-some cases, like how e.g. VHOST_USER_BACKEND_IOTLB_MSG phrases it?
+> +   set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
+> +   qemu_set_irq(s->cpu[cpu_num].parent_irq[irq_num], 1);
+Why is parent_irq array here?  I think one parent irq line is enough.
 
-	If ``VHOST_USER_PROTOCOL_F_REPLY_ACK`` is negotiated, and
-	back-end set the ``VHOST_USER_NEED_REPLY`` flag, the front-end
-	must respond with zero when operation is successfully completed,
-	or non-zero otherwise.
-
+> +}
 > +
-> +  Mapping over an already existing map is not allowed and request shall =
-fail.
-
-request*s* shall fail
-
-> +  Therefore, the memory range in the request must correspond with a vali=
-d,
-> +  free region of the VIRTIO Shared Memory Region. Also, note that mappin=
-gs
-> +  consume resources and that the request can fail when there are no reso=
-urces
-> +  available.
+>   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
+>                                        uint64_t val, unsigned size)
+>   {
+> -    return;
+> -}
+> +    int irq_num, cpu_num = 0;
+> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
+> +    uint64_t msg_addr = addr + VIRT_PCH_MSI_ADDR_LOW;
 > +
-> +``VHOST_USER_BACKEND_SHMEM_UNMAP``
-> +  :id: 10
-> +  :equivalent ioctl: N/A
-> +  :request payload: ``struct VhostUserMMap``
-> +  :reply payload: N/A
+> +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
+> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
+>   
+blank line here.
+> +    avec_set_irq(s, cpu_num, irq_num, 1);
+> +}
+>   
+>   static const MemoryRegionOps loongarch_avec_ops = {
+>       .read = loongarch_avec_mem_read,
+> @@ -38,7 +64,12 @@ static const MemoryRegionOps loongarch_avec_ops = {
+>   
+>   static void avec_irq_handler(void *opaque, int irq, int level)
+>   {
+> -    return;
+> +    int cpu_num, irq_num = 0;
+> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
+> +    cpu_num = irq / 256;
+> +    irq_num = irq % 256;
 > +
-> +  When the ``VHOST_USER_PROTOCOL_F_SHMEM`` protocol feature has been
-> +  successfully negotiated, this message can be submitted by the backends=
- so
-> +  that the front-end un-mmap a given range (``shm_offset``, ``len``) in =
-the
+> +    avec_set_irq(s, cpu_num, irq_num, level);
+>   }
+When is the function avec_irq_handler() called?
 
-un-mmaps?
+Regards
+Bibo Mao
+>   
+>   static void loongarch_avec_realize(DeviceState *dev, Error **errp)
+> 
 
-> +  VIRTIO Shared Memory Region with the requested ``shmid``. Note that the
-> +  given range shall correspond to the entirety of a valid mapped region.
-> +  A reply is generated indicating whether unmapping succeeded.
-> +
->  .. _reply_ack:
->=20=20
->  VHOST_USER_PROTOCOL_F_REPLY_ACK
-> --=20
-> 2.49.0
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaEkgJwAKCRBbRZGEIw/w
-oq2nAQCR0up9+aoGTuoPCT1Ph+sTlhu/oAEqhJPiqAl5RgwHtAEAkoPq5INXzCX5
-wIeVAWyxYwBAr6gJ18qlCFAuTD8RzAM=
-=JqWB
------END PGP SIGNATURE-----
---=-=-=--
 
