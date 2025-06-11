@@ -4,70 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FB06C61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 13:05:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 251E6C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 13:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPL2y-0003Ld-NY; Wed, 11 Jun 2025 08:59:16 -0400
+	id 1uPL7z-00086t-IC; Wed, 11 Jun 2025 09:04:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPL2l-0003J8-46
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:59:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uPL7N-00073w-PM; Wed, 11 Jun 2025 09:04:01 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPL2j-0004NB-3O
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:59:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749646739;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9DaQPeOTGsopw4+xA5vbwo50sUhSL9MBD7zUxFIsibM=;
- b=DrpfRkU7SS7uKq1Btx3SA0fzNefBHMUht3xHwVxi4P09pZJTnrJDHGcgvjf8wbQ/7dCsVC
- od1hCXziUHHdOnVwPv4b8WTBZZSMENf4ytf33oR/jIuhM4aEix1rr7Bz1z5H633wP+vSMs
- FmVjwAjDji7nIpHSJAm6/Dhzct/MyHA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-414-D0S-ihJwPj-3vlX3TGuMlw-1; Wed,
- 11 Jun 2025 08:58:57 -0400
-X-MC-Unique: D0S-ihJwPj-3vlX3TGuMlw-1
-X-Mimecast-MFC-AGG-ID: D0S-ihJwPj-3vlX3TGuMlw_1749646737
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DA876180AE02
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 12:58:53 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.45.224.174])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8D2F119560A3; Wed, 11 Jun 2025 12:58:52 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 02/10] hw/s390x/s390-virtio-ccw: Remove the deprecated 4.1
- machine type
-Date: Wed, 11 Jun 2025 14:58:38 +0200
-Message-ID: <20250611125846.125918-3-thuth@redhat.com>
-In-Reply-To: <20250611125846.125918-1-thuth@redhat.com>
-References: <20250611125846.125918-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uPL7C-0004zy-Lr; Wed, 11 Jun 2025 09:03:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
+ Message-Id:Date:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:In-Reply-To:References;
+ bh=gSeAlrhldGJ6CDc/fuawdB7PxaXoK/BgnXGltMyWnxM=; b=M7vhMSJ+cxLKEVYQ+11kZy5a8r
+ sXGAtThm1Uf3rfhCo3FMiLofPnE4K+D9N+5hmvxumGvrc7XFAXNmAUcxU+MDVkOWt+xDzyNngQ2t5
+ wzqKzT901SnEwj/PpyZ+lHIrHx24T+9PnvhdnzgNbhm/xuWRumQxSQaDzEBVe7PHGmKBvnZTjlSlU
+ jOzInN5ZabTuiOTq617Imhd7meq5hxL4RuoiY6BBhUWDoksHDpnHZFINE69tUv8z+IXGpJJtNNtrs
+ uizRnivhuNUIdf7Bmc617dwbf0sakMPdSrnsOjKDEvxmtHqd0Pkbo2ADpgn+JVYVWccAry2OSBaoA
+ iI7QrK2k/XvEm49ITkEIrW8t7hSteq06j0cfoxSc0KwurJEZWiEiaJEOK9WpBlNvRR4XnULWO4Fxj
+ TOR+H4uCc6RIrJXaQpggEeb899pSUAOp/OGkgfwmJbY7ElJBYygDEaUY2lU8jvlMoU7EIWUUNA6AW
+ 1sk4z0eHZn8+O2+nDNUtBc/dFZRVFU/8SovdbxbiGQdKCX+vTmleEhbu6h3vcHWfr1zlYeHcKgbrU
+ JWg3xE/U+aWdIQSvxLKp7xO2GlCWznxCSQsfaNFufGQVFhGHUf1vDAq9YIUd744oCShSoIkXrG8jK
+ ZTZFNDjn40m2f2SWhPlb68W8qonnt0R6JW+fIiLEs=;
+Received: from [2a02:8012:c93d:0:260e:bf57:a4e9:8142]
+ (helo=cheesecake.fritz.box)
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1uPL5c-0002P7-G4; Wed, 11 Jun 2025 14:02:01 +0100
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+To: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org,
+ eduardo@habkost.net
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+	qemu-stable@nongnu.org
+Date: Wed, 11 Jun 2025 14:03:15 +0100
+Message-Id: <20250611130315.383151-1-mark.cave-ayland@ilande.co.uk>
+X-Mailer: git-send-email 2.39.5
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-SA-Exim-Connect-IP: 2a02:8012:c93d:0:260e:bf57:a4e9:8142
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: [PATCH] target/i386: fix TB exit logic in gen_movl_seg() when writing
+ to SS
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,68 +77,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Before commit e54ef98c8a ("target/i386: do not trigger IRQ shadow for LSS"), any
+write to SS in gen_movl_seg() would cause a TB exit. The changes introduced by
+this commit were intended to restrict the DISAS_EOB_INHIBIT_IRQ exit to the case
+where inhibit_irq is true, but missed that a DISAS_EOB_NEXT exit can still be
+required when writing to SS and inhibit_irq is false.
 
-With the upcoming release of QEMU 10.1, the s390-ccw-virtio-4.1 machine
-will be older than 6 years, so according to our machine support policy,
-it can be removed now. The V4_1 CPU feature group gets merged into the
-minimum CPU feature group now.
+Comparing the PE(s) && !VM86(s) section with the logic in x86_update_hflags(), we
+can see that the DISAS_EOB_NEXT exit is still required for the !CODE32 case when
+writing to SS in gen_movl_seg() because any change to the SS flags can affect
+hflags. Similarly we can see that the existing CODE32 case is still correct since
+a change to any of DS, ES and SS can affect hflags. Finally for the
+gen_op_movl_seg_real() case an explicit TB exit is not needed because the segment
+register selector does not affect hflags.
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250519054744.36715-1-thuth@redhat.com>
+Update the logic in gen_movl_seg() so that a write to SS with inhibit_irq set to
+false where PE(s) && !VM86(s) will generate a DISAS_EOB_NEXT exit along with the
+inline comment. This has the effect of allowing Win98SE to boot in QEMU once
+again.
+
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-stable@nongnu.org
+Fixes: e54ef98c8a ("target/i386: do not trigger IRQ shadow for LSS")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2987
 ---
- hw/s390x/s390-virtio-ccw.c  | 14 --------------
- target/s390x/gen-features.c |  4 ----
- 2 files changed, 18 deletions(-)
+ target/i386/tcg/translate.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
-index f69a4d8ed31..ce3c13defb5 100644
---- a/hw/s390x/s390-virtio-ccw.c
-+++ b/hw/s390x/s390-virtio-ccw.c
-@@ -1145,20 +1145,6 @@ static void ccw_machine_4_2_class_options(MachineClass *mc)
- }
- DEFINE_CCW_MACHINE(4, 2);
+(Many thanks to Peter Maydell for help with the hflags analysis and for suggesting
+ the improved comment wording.)
+
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 0fcddc2ec0..0cb87d0201 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2033,8 +2033,11 @@ static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src, bool inhibit
+         tcg_gen_trunc_tl_i32(sel, src);
+         gen_helper_load_seg(tcg_env, tcg_constant_i32(seg_reg), sel);
  
--static void ccw_machine_4_1_instance_options(MachineState *machine)
--{
--    static const S390FeatInit qemu_cpu_feat = { S390_FEAT_LIST_QEMU_V4_1 };
--    ccw_machine_4_2_instance_options(machine);
--    s390_set_qemu_cpu_model(0x2964, 13, 2, qemu_cpu_feat);
--}
--
--static void ccw_machine_4_1_class_options(MachineClass *mc)
--{
--    ccw_machine_4_2_class_options(mc);
--    compat_props_add(mc->compat_props, hw_compat_4_1, hw_compat_4_1_len);
--}
--DEFINE_CCW_MACHINE(4, 1);
--
- static void ccw_machine_register_types(void)
- {
-     type_register_static(&ccw_machine_info);
-diff --git a/target/s390x/gen-features.c b/target/s390x/gen-features.c
-index a814ece82f2..8218e6470ec 100644
---- a/target/s390x/gen-features.c
-+++ b/target/s390x/gen-features.c
-@@ -884,9 +884,6 @@ static uint16_t qemu_MIN[] = {
-      */
-     S390_FEAT_FLOATING_POINT_EXT,
-     S390_FEAT_ZPCI,
--};
--
--static uint16_t qemu_V4_1[] = {
-     S390_FEAT_STFLE_53,
-     S390_FEAT_VECTOR,
- };
-@@ -1049,7 +1046,6 @@ static FeatGroupDefSpec FeatGroupDef[] = {
-  *******************************/
- static FeatGroupDefSpec QemuFeatDef[] = {
-     QEMU_FEAT_INITIALIZER(MIN),
--    QEMU_FEAT_INITIALIZER(V4_1),
-     QEMU_FEAT_INITIALIZER(V6_0),
-     QEMU_FEAT_INITIALIZER(V6_2),
-     QEMU_FEAT_INITIALIZER(V7_0),
+-        /* For move to DS/ES/SS, the addseg or ss32 flags may change.  */
+-        if (CODE32(s) && seg_reg < R_FS) {
++        /*
++         * For moves to SS, the SS32 flag may change. For CODE32 only, changes
++         * to SS, DS and ES may change the ADDSEG flags.
++         */
++        if (seg_reg == R_SS || (CODE32(s) && seg_reg < R_FS)) {
+             s->base.is_jmp = DISAS_EOB_NEXT;
+         }
+     } else {
 -- 
-2.49.0
+2.39.5
 
 
