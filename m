@@ -4,92 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A6CDC677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 04:08:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BBB3C71133
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 04:30:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPCkX-0008C4-Op; Wed, 11 Jun 2025 00:07:42 -0400
+	id 1uPD5r-0001hj-Uk; Wed, 11 Jun 2025 00:29:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uPCkV-0008BP-FC
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 00:07:39 -0400
-Received: from isrv.corpit.ru ([86.62.121.231])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1uPCkT-000799-EQ
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 00:07:39 -0400
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 63C8512AF8F;
- Wed, 11 Jun 2025 07:07:13 +0300 (MSK)
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7E6CF222913;
- Wed, 11 Jun 2025 07:07:34 +0300 (MSK)
-Message-ID: <5c9cbee5-235b-4623-a119-0956b981f43c@tls.msk.ru>
-Date: Wed, 11 Jun 2025 07:07:34 +0300
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uPD5n-0001gr-8s; Wed, 11 Jun 2025 00:29:39 -0400
+Received: from mail-ua1-x931.google.com ([2607:f8b0:4864:20::931])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uPD5l-0001Ce-6f; Wed, 11 Jun 2025 00:29:39 -0400
+Received: by mail-ua1-x931.google.com with SMTP id
+ a1e0cc1a2514c-87ec7acddd3so1000136241.2; 
+ Tue, 10 Jun 2025 21:29:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749616175; x=1750220975; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=q2eUFn/IbyRHJNYqhIoePao7Sh3XI1A2p/i1bR89VZE=;
+ b=gynOFi1k7HrQnO/KmBn7Hw/QiMF9Dw+PlbblqEFUTnIQZ00HO7DAM6tb/Yv9p11l5g
+ 6Rs+MHxQusbyWq6ZAy2smzQW+XKMBCbcix8L0My0PiGqOv1TU5gZJuQgZcBQTP7cvQPe
+ eBWKrbpcutE9MD0E4dPgFqL6sKLnwhptrXCQj0XmvElz/0WxPvv8I6v8gW8QCmxTX0oL
+ +oisutxyIcrZid5cl3wICSOI58M0YDoY47x5ciIPK89bimENHTwGfOsiZuSrXE3mFS2W
+ Xx3xNZIb4iv7FA6zNP0OrrzXVotfbtPhnR4YoFam5jlQGszV+Nihe+cgY15gwWNFocJW
+ ng0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749616175; x=1750220975;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=q2eUFn/IbyRHJNYqhIoePao7Sh3XI1A2p/i1bR89VZE=;
+ b=jgPpSthn++qhwerOh5rmZ9bzMS9Pxv3N0MJA5hCdbIrHLmSDGkZoBWIoMih8o8dJLm
+ 7UarEiTQpbESs80FfcUVQf5GrYY9EsUDLZ3WLXHL8d85xoLHXoL9QZnwq/Dfb4AeCrlh
+ TWX89yg8ZONPouG4LG3S+V/kmg/0llUoNo3LEusUOAxc7WAzFfFueqZ9Q35GEzs7se9p
+ kpnlO6WPyOZ4PF20+j2wc5oMILeHEneep4+JN339lv4YIKolMxhXVpF6qhuASG2MfNfo
+ e+EtQce4e1AK8XPMOqRlqaVqK4rrhGfIyI8kBaaUWuonEiUQU2a1myZ6Y9O2QY1sCPmx
+ SRfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWW68Aj3x67j/gWUO0CE8GPlQjvgQYAmvu7ngNYxj3steG3tzATb18MAirEE8DwzCJSlpGarg8CnQlt@nongnu.org
+X-Gm-Message-State: AOJu0YyHfa4qCd9Su+hrRpWC88EODhj9SOp498cFp7oJqiG09HfeQOoG
+ 7Yf1ljk+Uxcl+RqkhypFNNoZRo4/fAFx7bNovmYBpIqnoG73Ur8pZHQhzeGPeGBgSsDyPdfwi0M
+ hCM9ujOgbAR3dhzuQfJiBuTbRyTj27ME4Cw==
+X-Gm-Gg: ASbGncte2uJbCoDynC4ycqwmU+NM68oQXk4taGfLhiBYb7N4keyhCcRm9nL4D0OqWkO
+ TY8GVB0SH+XJY2UPLQQdcqbQvzKkbInRfYGZ9y5ek29aXxJ1Jhquw6BYVUQQaGj3zrleEY6y3qc
+ P1fz+yYrCUQZg/kpfhp4SKGKu69B891u0QvyjhwRjXptSGmj3/x9IEaFqV2jW3UQ0cpSWHybngK
+ A==
+X-Google-Smtp-Source: AGHT+IGJtKBS8OiqPGKxno5chxV/sS9fZoMQH+gfrHyZOr/UEenWGgULW3p5F8up0qWWBYX8J+X1BU03yeJOHlZfE+c=
+X-Received: by 2002:a05:6102:54a9:b0:4e7:4f6c:b275 with SMTP id
+ ada2fe7eead31-4e7bbb69436mr1213906137.21.1749616175452; Tue, 10 Jun 2025
+ 21:29:35 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] pc-bios/s390-ccw: link statically
-To: Sertonix <sertonix@posteo.net>, qemu-devel@nongnu.org,
- Thomas Huth <thuth@redhat.com>
-References: <DAJ1QOSAP9LS.342SQSM0UZU80@posteo.net>
- <4c8bb61a-d919-411b-afeb-eed15c4b2ab9@tls.msk.ru>
- <DAJ547978XGV.3LNJ0SI0X7GXD@posteo.net>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <DAJ547978XGV.3LNJ0SI0X7GXD@posteo.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=86.62.121.231; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -68
-X-Spam_score: -6.9
-X-Spam_bar: ------
-X-Spam_report: (-6.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_HI=-5,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250610083309.992724-1-roan.richmond@codethink.co.uk>
+ <20250610083309.992724-2-roan.richmond@codethink.co.uk>
+In-Reply-To: <20250610083309.992724-2-roan.richmond@codethink.co.uk>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Wed, 11 Jun 2025 14:29:09 +1000
+X-Gm-Features: AX0GCFsjPuVjUH5TCZgw4dXIfvZfebWvzVPZgnRFKoBsF1DyPzY8X4IDZ-nOJC8
+Message-ID: <CAKmqyKMG_wNPNdAYhsUFJ4K7o4g+LNYwUDUAO_8V14=GezDKPg@mail.gmail.com>
+Subject: Re: [PATCH v2 1/1] Add RISCV ZALASR extension
+To: Roan Richmond <roan.richmond@codethink.co.uk>
+Cc: qemu-riscv@nongnu.org, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::931;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x931.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,53 +98,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10.06.2025 23:36, Sertonix wrote:
-> On Tue Jun 10, 2025 at 10:32 PM CEST, Michael Tokarev wrote:
->> On 10.06.2025 20:58, Sertonix wrote:
->>>
->>> Adding -pie to LDFLAGS caused s390-ccw.img to become dynamically linked.
->>
->> Why do you think -pie causes it to become dynamically linked?
->>
->> /mjt
-> 
-> The documentation (at least for gcc) states that the -pie option produces
-> a *dynamically* linked position independent executable. (And I verified
-> that the patch changes the resulting binary from dynamically linked to
-> statically linked).
+On Tue, Jun 10, 2025 at 6:33=E2=80=AFPM Roan Richmond
+<roan.richmond@codethink.co.uk> wrote:
+>
+> This is based on version v0.8.3 of the ZALASR specification [1].
+> The specification is listed as in Frozen state [2].
+>
+> [1]: https://github.com/riscv/riscv-zalasr/tree/v0.8.3
+> [2]: https://lf-riscv.atlassian.net/wiki/spaces/HOME/pages/16154882/All+R=
+ISC-V+Specifications+Under+Active+Development
+>
+> Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
+> ---
+>  target/riscv/cpu.c                           |   1 +
+>  target/riscv/insn32.decode                   |  10 ++
+>  target/riscv/insn_trans/trans_rvzalasr.c.inc | 110 +++++++++++++++++++
+>  target/riscv/translate.c                     |   1 +
+>  4 files changed, 122 insertions(+)
+>  create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 629ac37501..b52bbf0936 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -128,6 +128,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
+>      ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
+>      ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
+> +    ISA_EXT_DATA_ENTRY(zalasr, PRIV_VERSION_1_12_0, ext_zalasr),
+>      ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
+>      ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
+>      ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index cd23b1f3a9..c848c0c1c5 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -1066,3 +1066,13 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111=
+ @atom_st
+>  amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
+>  amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
+>  amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
+> +
+> +# *** Zalasr Standard Extension ***
+> +lb_aqrl  00110 . . ..... ..... 000 ..... 0101111 @atom_st
+> +lh_aqrl  00110 . . ..... ..... 001 ..... 0101111 @atom_st
+> +lw_aqrl  00110 . . ..... ..... 010 ..... 0101111 @atom_st
+> +ld_aqrl  00110 . . ..... ..... 011 ..... 0101111 @atom_st
+> +sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
+> +sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
+> +sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
+> +sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
+> diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/=
+insn_trans/trans_rvzalasr.c.inc
+> new file mode 100644
+> index 0000000000..2f2934e731
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
+> @@ -0,0 +1,110 @@
+> +/*
+> + * RISC-V translation routines for the ZALASR (Load-Aquire and Store-Rel=
+ease)
+> + * Extension.
+> + *
+> + * Copyright (c) 2025 Roan Richmond, roan.richmond@codethink.co.uk
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#define REQUIRE_ZALASR(ctx) do {     \
+> +    if (!ctx->cfg_ptr->ext_zalasr) { \
+> +        return false;                \
+> +    }                                \
+> +} while (0)
+> +
+> +static bool gen_load_acquire(DisasContext *ctx, arg_lb_aqrl *a, MemOp me=
+mop)
+> +{
+> +    decode_save_opc(ctx, 0);
+> +
+> +    TCGv addr =3D get_address(ctx, a->rs1, 0);
+> +    TCGv dest =3D get_gpr(ctx, a->rd, EXT_NONE);
+> +    TCGBar bar =3D (a->rl) ? TCG_BAR_STRL : 0;
 
-Ok.
+I think we should check that aq isn't set
 
-Why I asked is because -pie by its own does not change "dynaminess" of
-an executable.
+> +
+> +    memop |=3D (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
+> +
+> +    tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
+> +    gen_set_gpr(ctx, a->rd, dest);
+> +
+> +    /* Add a memory barrier implied by AQ (mandatory) and RL (optional) =
+*/
+> +    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ | bar);
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_lb_aqrl(DisasContext *ctx, arg_lb_aqrl *a)
+> +{
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_SB));
+> +}
+> +
+> +static bool trans_lh_aqrl(DisasContext *ctx, arg_lh_aqrl *a)
+> +{
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_lw_aqrl(DisasContext *ctx, arg_lw_aqrl *a)
+> +{
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESL));
+> +}
+> +
+> +static bool trans_ld_aqrl(DisasContext *ctx, arg_ld_aqrl *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TEUQ));
+> +}
+> +
+> +static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp m=
+emop)
+> +{
+> +    decode_save_opc(ctx, 0);
+> +
+> +    TCGv addr =3D get_address(ctx, a->rs1, 0);
+> +    TCGv data =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +    TCGBar bar =3D (a->aq) ? TCG_BAR_LDAQ : 0;
 
--pie has been introduced for s390-ccw in commit d884c86dcd "s390/bios:
-Make the s390-ccw.img relocatable" (9 Mar 2015).  Before this commit,
-s390x-ccw.img has been dynamically linked too.  Now with current
-master (commit bc98ffdc75), removing -Wl,-fpie from LDFLAGS does not
-change the fact that the image is linked dynamically.
+and check here that rq isn't set either
 
-I don't know when s390-ccw.img has become a dynamic executable, maybe
-it always has been - I haven't looked at earlier commits.  With this,
-I've no idea how it works either, as a dynamic executable with an
-interpreter etc.  But it's definitely not -pie added to LDFLAGS which
-made it dynamically linked.
+Alistair
 
-On the other hand, people sometimes confuse the result of -static-pie
-as a dynamic executable, especially with older file(1) utility which
-reported it as dynamically linked.
-
-So my question was badly worded: what I wanted to ask is what makes
-you think that adding -pie to the link line makes the resulting
-executable to be linked dynamically.
-
-With all the above in mind, I think the commit message is misleading
-a bit.  But it'd be interesting to clarify how this image, being
-a dynamic executable, worked all these years, and why it has to be
-changed now.  I'm definitely not opposing to the change, I just am
-curious about this aspect and want a correct commit message.
-
-Thanks,
-
-/mjt
+> +
+> +    memop |=3D (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
+> +
+> +    /* Add a memory barrier implied by RL (mandatory) and AQ (optional) =
+*/
+> +    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL | bar);
+> +
+> +    tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
+> +    return true;
+> +}
+> +
+> +static bool trans_sb_aqrl(DisasContext *ctx, arg_sb_aqrl *a)
+> +{
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_SB));
+> +}
+> +
+> +static bool trans_sh_aqrl(DisasContext *ctx, arg_sh_aqrl *a)
+> +{
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESW));
+> +}
+> +
+> +static bool trans_sw_aqrl(DisasContext *ctx, arg_sw_aqrl *a)
+> +{
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESL));
+> +}
+> +
+> +static bool trans_sd_aqrl(DisasContext *ctx, arg_sd_aqrl *a)
+> +{
+> +    REQUIRE_64BIT(ctx);
+> +    REQUIRE_ZALASR(ctx);
+> +    return gen_store_release(ctx, a, (MO_ALIGN | MO_TEUQ));
+> +}
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index d7a6de02df..4cd2d68e46 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1183,6 +1183,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
+ target_ulong pc)
+>  #include "insn_trans/trans_rvzicond.c.inc"
+>  #include "insn_trans/trans_rvzacas.c.inc"
+>  #include "insn_trans/trans_rvzabha.c.inc"
+> +#include "insn_trans/trans_rvzalasr.c.inc"
+>  #include "insn_trans/trans_rvzawrs.c.inc"
+>  #include "insn_trans/trans_rvzicbo.c.inc"
+>  #include "insn_trans/trans_rvzimop.c.inc"
+> --
+> 2.43.0
+>
 
