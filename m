@@ -4,69 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F3D8C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 06:48:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D584C61CE7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 06:54:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPFFW-00079X-W7; Wed, 11 Jun 2025 02:47:51 -0400
+	id 1uPFLA-0000OY-TZ; Wed, 11 Jun 2025 02:53:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uPFFU-000792-Jq
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:47:48 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uPFFS-0003Mi-J2
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:47:48 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8BxYa+QJkloWXsTAQ--.7780S3;
- Wed, 11 Jun 2025 14:47:44 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMCxbsWNJklouZMVAQ--.4320S3;
- Wed, 11 Jun 2025 14:47:43 +0800 (CST)
-Subject: Re: [PATCH 02/10] loongarch: add virt feature avecintc support
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250609104833.839811-1-gaosong@loongson.cn>
- <20250609104833.839811-3-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <b31a750b-0153-271f-d937-87b8b41c6d8f@loongson.cn>
-Date: Wed, 11 Jun 2025 14:46:24 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uPFL8-0000OC-Ai
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:53:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uPFL6-00043H-BI
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 02:53:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749624813;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4vX7eexTs9BOaxBOSiTy4LK5wMzEspKJIOFsh3hL9fU=;
+ b=f2K21cYx2T+aJLKxVniPTmbgm0ISD54ht2SK2vrU0ZF0rGes0mWFhf48JN9ZNgyi/0wTM0
+ +F1Cc3BoXxZTkt4yj8y+Pu+zCc6ATRSrhSf8Gqoeks4Y/+3+AtLpd1TyQ+K1jWgYZp5DhZ
+ nRimywpKxr8JQ1q9bUnDTxqV3M6BXeA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-690-lT_rK5_LNqK46ZqvmPp-oA-1; Wed, 11 Jun 2025 02:53:32 -0400
+X-MC-Unique: lT_rK5_LNqK46ZqvmPp-oA-1
+X-Mimecast-MFC-AGG-ID: lT_rK5_LNqK46ZqvmPp-oA_1749624811
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4edf5bb4dso3737664f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Jun 2025 23:53:31 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749624811; x=1750229611;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4vX7eexTs9BOaxBOSiTy4LK5wMzEspKJIOFsh3hL9fU=;
+ b=UZwgZGbGIFyGJgVmuBjzoVwfr+MvNJ7+sQahto3nAhXns/ODEHBkE1DCIX7p/M2ayC
+ ain9KhcqfI7te9UDH1Z50+c6oIGeKcsZkgGqJtOueHLtNEyzNBx1lbZDpproVG2a5Csj
+ tBp5sE2sCQ7Jrli+kEVQ+WcESf8kPgVC6E8s2jAOf05cOwoZ3EhVa8V36KvN4tjCo6Xm
+ h5chBzyVpDKb2EFEfT8xwU7dCFMAH05Pg5DhXd9e3/N7AEjfppWW5xPdRbu6JqRtBCJI
+ k+33urBiSF8Q/v+9klazzPLqR0+uZVu+TrqmCFvppNew3dX3bZqohQAoG7dUvMSkw27O
+ w9PA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWin19QxF8+UJexpd1b1/fEc3+Jqwcm00qdYmydC9B1yxnbqDS0OiR+mcp9VUZ0D1QvU61o7tj2U6Cb@nongnu.org
+X-Gm-Message-State: AOJu0YyQ7eBTgXniBuMf6sbDq7WivOCyLwx3hq6bzVhGyn4Yi1SFQCqn
+ 96VWT7RS6XjN/X8R/D+J9CEq4V0bRElher915H2NhkNZDcJhe4g0qXDXkIPYJZR347mkf1XvRIQ
+ FWrFFiY95lQICRjXReoOeGwikffpshO5+WO3U6T6fX/lPHG7zF9G1KY1A
+X-Gm-Gg: ASbGncuy1mZrMbGwouDoaVUCAXEBVzmDevN/eDdRLJs7aiRfhNIxrHN9cHz1yVwLUux
+ +Pjolm8fn/RyhRoufoovjqeKvq4Tn1rUIDlAiuhkWb/+AF+rqWD3Kfhfo/7pfXQngYoE9LItFUu
+ L+68GwfyN5AHvz73P72oj1/TWt7whCirB9jAIRBRkJIWtxqI7d1ZNZDc0Oh/y6b3oDeK0UuNI68
+ t6OBcFqAiUAMLkS3ZZzF4WSuNnl9bVdlqqWWhU83R8ONhI631yAV6gPhL6CjwcS7nv+vYnwn1PY
+ s1oIul26p/z88oD84Pk4rueXkt2J7mt2TB4SArBP4/MlksktiLhz+dXNAsNogTYUlfMDmg==
+X-Received: by 2002:a05:6000:420b:b0:3a5:52b3:103b with SMTP id
+ ffacd0b85a97d-3a5586dce0bmr1166388f8f.4.1749624810740; 
+ Tue, 10 Jun 2025 23:53:30 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE638Wcn1B/qgkYKNpP7s4YsUKWFmyZrbLG5Qr6BGKxm7Od9f3U2S6j+g38zzU/4ya1TiI8+w==
+X-Received: by 2002:a05:6000:420b:b0:3a5:52b3:103b with SMTP id
+ ffacd0b85a97d-3a5586dce0bmr1166353f8f.4.1749624810244; 
+ Tue, 10 Jun 2025 23:53:30 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a53229dc33sm14135669f8f.20.2025.06.10.23.53.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Jun 2025 23:53:29 -0700 (PDT)
+Message-ID: <13792b72-d336-41b8-8ac7-8790e10f833c@redhat.com>
+Date: Wed, 11 Jun 2025 08:53:28 +0200
 MIME-Version: 1.0
-In-Reply-To: <20250609104833.839811-3-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/25] hw/arm/virt: Introduce machine state acpi pcihp
+ flags and props
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMCxbsWNJklouZMVAQ--.4320S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxuryxAr4DAw1UXF15Jw15WrX_yoWrXw1xpF
- WUCFn5Aa48tr1Sg3sIgrn8ur15Ars3KFyagr43urW0kFyDWr1UWr1kZw47tFWkA3ykAF4F
- va1kGFsruF47Z3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JF0_Jw1lYx0Ex4A2jsIE14v2
- 6r4j6F4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1I6r4UMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Gr0_Cr
- 1lIxAIcVC2z280aVCY1x0267AKxVW8JVW8JrUvcSsGvfC2KfnxnUUI43ZEXa7IU8P5r7UU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -35
-X-Spam_score: -3.6
-X-Spam_bar: ---
-X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.653,
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-3-eric.auger@redhat.com>
+ <20250527135813.2d6cde91@imammedo.users.ipa.redhat.com>
+ <d6bd4794-bcee-4701-8e63-4adee91120d9@redhat.com>
+ <20250528123325.750529a4@imammedo.users.ipa.redhat.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250528123325.750529a4@imammedo.users.ipa.redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,119 +119,208 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Gustavo, Alex,
 
+On 5/28/25 12:33 PM, Igor Mammedov wrote:
+> On Tue, 27 May 2025 15:54:15 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
+>
+>> Hi Igor,
+>>
+>> On 5/27/25 1:58 PM, Igor Mammedov wrote:
+>>> On Tue, 27 May 2025 09:40:04 +0200
+>>> Eric Auger <eric.auger@redhat.com> wrote:
+>>>  
+>>>> acpi_pcihp VirtMachineClass state flag will allow
+>>>> to opt in for acpi pci hotplug. This is guarded by a
+>>>> class no_acpi_pcihp flag to manage compats (<= 10.0
+>>>> machine types will not support ACPI PCI hotplug).  
+>>> there is no reason to put an effort in force disabling it
+>>> on old machines, as long as code works when explicitly
+>>> enabled property on CLI.
+>>>
+>>> See comment below on how to deal with it 
+>>>  
+>>>> Machine state acpi_pcihp flag must be set before the creation
+>>>> of the GED device which will use it.
+>>>>
+>>>> Currently the ACPI PCI HP is turned off by default. This will
+>>>> change later on for 10.1 machine type.  
+>>> one thing to note, is that turning it on by default might
+>>> cause change of NIC naming in guest as this brings in
+>>> new "_Sxx" slot naming. /so configs tied to nic  go down the drain/
+>>>
+>>> Naming, we have, also happens to be broken wrt spec
+>>> (it should be unique system wide, there was a gitlab issue for that,
+>>> there is no easy fix that though)
+>>>
+>>> So I'd leave it disabled by default and let users to turn
+>>> it on explicitly when needed.   
+>> what is the status on q35, isn't it enabled by default? If so why
+>> wouldn't we want the same setting on ARM? Is that because of the known
+>> issue you report above?
+> Above issue is not a blocker (for thae lack of a good way to fix it)
+>
+> on q35 we have had a few complains and fixes, after pcihp was promoted
+> to default (so hopefully that won't happen on with ARM). Also given
+> that ARM VM is less popular like hood breaking someone setup is even less.
+>
+> That said I'd be cautions keep native hotplug as default,
+> and only ones who need ACPI one, could turn it on explicitly.
+>
+> But well it's policies, so it's up to you ARM folks to decide what
+> virt board should look like.
+What is your preference? Do you prefer enabling ACPI PCI HP by default
+or the opposite.
+Anybody else?
 
-On 2025/6/9 下午6:48, Song Gao wrote:
-> LoongArchVirtMachinState add  avecintc features, and
-> it use to check whether virt machine support advance interrupt controller
-> and default is on.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/loongarch/virt.c         | 31 +++++++++++++++++++++++++++----
->   include/hw/loongarch/virt.h |  9 +++++++++
->   2 files changed, 36 insertions(+), 4 deletions(-)
-> 
-> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
-> index 90d4643721..35643a4e0b 100644
-> --- a/hw/loongarch/virt.c
-> +++ b/hw/loongarch/virt.c
-> @@ -47,6 +47,23 @@
->   #include "hw/virtio/virtio-iommu.h"
->   #include "qemu/error-report.h"
->   
-> +static void virt_get_avecintc(Object *obj, Visitor *v, const char *name,
-> +                             void *opaque, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +    OnOffAuto avecintc = lvms->avecintc;
-> +
-> +    visit_type_OnOffAuto(v, name, &avecintc, errp);
-> +
-> +}
-> +static void virt_set_avecintc(Object *obj, Visitor *v, const char *name,
-> +                              void *opaque, Error **errp)
-> +{
-> +    LoongArchVirtMachineState *lvms = LOONGARCH_VIRT_MACHINE(obj);
-> +
-> +    visit_type_OnOffAuto(v, name, &lvms->avecintc, errp);
-> +}
-> +
->   static void virt_get_veiointc(Object *obj, Visitor *v, const char *name,
->                                 void *opaque, Error **errp)
->   {
-> @@ -548,8 +565,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
->           break;
->       case FEATURE_REG:
->           ret = BIT(IOCSRF_MSI) | BIT(IOCSRF_EXTIOI) | BIT(IOCSRF_CSRIPI);
-> -        /*TODO: check bit IOCSRF_AVEC with virt_is_avec_enabled */
-> -        ret |= BIT(IOCSRF_AVEC);
-> +        if (virt_is_avecintc_enabled(lvms)) {
-> +            ret |= BIT(IOCSRF_AVEC);
-> +        }
->           if (kvm_enabled()) {
->               ret |= BIT(IOCSRF_VM);
->           }
-> @@ -575,8 +593,9 @@ static MemTxResult virt_iocsr_misc_read(void *opaque, hwaddr addr,
->           if (features & BIT(EXTIOI_ENABLE_INT_ENCODE)) {
->               ret |= BIT_ULL(IOCSRM_EXTIOI_INT_ENCODE);
->           }
-> -        /* enable avec default */
-> -        ret |= BIT_ULL(IOCSRM_AVEC_EN);
-> +        if (virt_is_avecintc_enabled(lvms)) {
-> +            ret |= BIT_ULL(IOCSRM_AVEC_EN);
-> +        }
-Is it really that reading of MISC_FUNC_REG will return 
-BIT_ULL(IOCSRM_AVEC_EN) if there is avec?
+On my end I think I would prefer to have the same default setting than
+on x86 (ie. ACPI PCI hotplug set by default) but I have no strong
+opinion either.
 
-Where is the write operation with register MISC_FUNC_REG?
+Thanks
 
-Regard
-Bibo Mao
->           break;
->       default:
->           g_assert_not_reached();
-> @@ -1212,6 +1231,10 @@ static void virt_class_init(ObjectClass *oc, const void *data)
->           NULL, NULL);
->       object_class_property_set_description(oc, "v-eiointc",
->                               "Enable Virt Extend I/O Interrupt Controller.");
-> +    object_class_property_add(oc, "avecintc", "OnOffAuto",
-> +        virt_get_avecintc, virt_set_avecintc, NULL, NULL);
-> +    object_class_property_set_description(oc, "avecintc",
-> +                            "Enable Advance Interrupt Controller.");
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_RAMFB_DEVICE);
->       machine_class_allow_dynamic_sysbus_dev(mc, TYPE_UEFI_VARS_SYSBUS);
->   #ifdef CONFIG_TPM
-> diff --git a/include/hw/loongarch/virt.h b/include/hw/loongarch/virt.h
-> index 2b7d19953f..3a81f048e8 100644
-> --- a/include/hw/loongarch/virt.h
-> +++ b/include/hw/loongarch/virt.h
-> @@ -50,6 +50,7 @@ struct LoongArchVirtMachineState {
->       Notifier     powerdown_notifier;
->       OnOffAuto    acpi;
->       OnOffAuto    veiointc;
-> +    OnOffAuto    avecintc;
->       char         *oem_id;
->       char         *oem_table_id;
->       DeviceState  *acpi_ged;
-> @@ -70,6 +71,14 @@ OBJECT_DECLARE_SIMPLE_TYPE(LoongArchVirtMachineState, LOONGARCH_VIRT_MACHINE)
->   void virt_acpi_setup(LoongArchVirtMachineState *lvms);
->   void virt_fdt_setup(LoongArchVirtMachineState *lvms);
->   
-> +static inline bool virt_is_avecintc_enabled(LoongArchVirtMachineState *lvms)
-> +{
-> +    if (lvms->avecintc == ON_OFF_AUTO_OFF) {
-> +        return false;
-> +    }
-> +    return true;
-> +}
-> +
->   static inline bool virt_is_veiointc_enabled(LoongArchVirtMachineState *lvms)
->   {
->       if (lvms->veiointc == ON_OFF_AUTO_OFF) {
-> 
+Eric
+>
+>
+>> The no_foo compat stuff was especially introduced to avoid breaking the
+>> guest ABI for old machine types (like the NIC naming alternation you evoke).
+> no_foo is just another way to handle compat stuff,
+> and when it's more than one knob per feature it gets ugly really fast.
+> Hence, I'd prefer pcihp done in x86 way aka:
+>    hw_compat_OLD(ged.use_acpi_hotplug_bridge, false|true)
+> to manage presence of ACPI hotplug on desired machine version.
+> Side benefit it's consistent with how pcihp works on x86
+>
+>>>  
+>>>> We also introduce properties to allow disabling it.
+>>>>
+>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>>> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>>> ---
+>>>>  include/hw/arm/virt.h |  2 ++
+>>>>  hw/arm/virt.c         | 27 +++++++++++++++++++++++++++
+>>>>  2 files changed, 29 insertions(+)
+>>>>
+>>>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+>>>> index 9a1b0f53d2..10ea581f06 100644
+>>>> --- a/include/hw/arm/virt.h
+>>>> +++ b/include/hw/arm/virt.h
+>>>> @@ -129,6 +129,7 @@ struct VirtMachineClass {
+>>>>      bool no_tcg_lpa2;
+>>>>      bool no_ns_el2_virt_timer_irq;
+>>>>      bool no_nested_smmu;
+>>>> +    bool no_acpi_pcihp;
+>>>>  };
+>>>>  
+>>>>  struct VirtMachineState {
+>>>> @@ -150,6 +151,7 @@ struct VirtMachineState {
+>>>>      bool mte;
+>>>>      bool dtb_randomness;
+>>>>      bool second_ns_uart_present;
+>>>> +    bool acpi_pcihp;
+>>>>      OnOffAuto acpi;
+>>>>      VirtGICType gic_version;
+>>>>      VirtIOMMUType iommu;
+>>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+>>>> index 9a6cd085a3..a0deeaf2b3 100644
+>>>> --- a/hw/arm/virt.c
+>>>> +++ b/hw/arm/virt.c
+>>>> @@ -2397,8 +2397,10 @@ static void machvirt_init(MachineState *machine)
+>>>>      create_pcie(vms);
+>>>>  
+>>>>      if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+>>>> +        vms->acpi_pcihp &= !vmc->no_acpi_pcihp;  
+>>> I don't particularly like no_foo naming as it makes code harder to read
+>>> and combined with 'duplicated' field in machine state it make even things worse.
+>>> (if I recall right Philippe was cleaning mess similar flags usage
+>>> have introduced with ITS)
+>>>
+>>> instead of adding machine property (both class and state),
+>>> I'd suggest adding the only property to GPE device (akin to what we have in x86 world)
+>>> And then one can meddle with defaults using hw_compat_xxx  
+>> no_foo still is a largely used pattern in arm virt: no_ged,
+>> kvm_no_adjvtime, no_kvm_steal_time, no_tcg_lpa2, ../.. There are plenty
+>> of them and I am not under the impression this is going to be changed.
+>>
+>> If you refer to 8d23b1df7212 ("hw/arm/virt: Remove
+>> VirtMachineClass::no_its field") I think the no_its was removed because
+>> the machine it applied was removed.
+>>
+>> If I understand correctly you would like the prop to be attached to the
+>> GED device. However the GED device is internally created by the virt
+>> machine code and not passed through a "-device" CLI option. So how would
+>> you pass the option on the cmd line if you don't want it to be set by
+>> default per machine type?
+>>
+>> Thanks
+>>
+>> Eric
+>>>  
+>>>>          vms->acpi_dev = create_acpi_ged(vms);
+>>>>      } else {
+>>>> +        vms->acpi_pcihp = false;
+>>>>          create_gpio_devices(vms, VIRT_GPIO, sysmem);
+>>>>      }
+>>>>  
+>>>> @@ -2593,6 +2595,20 @@ static void virt_set_its(Object *obj, bool value, Error **errp)
+>>>>      vms->its = value;
+>>>>  }
+>>>>  
+>>>> +static bool virt_get_acpi_pcihp(Object *obj, Error **errp)
+>>>> +{
+>>>> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+>>>> +
+>>>> +    return vms->acpi_pcihp;
+>>>> +}
+>>>> +
+>>>> +static void virt_set_acpi_pcihp(Object *obj, bool value, Error **errp)
+>>>> +{
+>>>> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+>>>> +
+>>>> +    vms->acpi_pcihp = value;
+>>>> +}
+>>>> +
+>>>>  static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+>>>>  {
+>>>>      VirtMachineState *vms = VIRT_MACHINE(obj);
+>>>> @@ -3310,6 +3326,10 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+>>>>                                            "in ACPI table header."
+>>>>                                            "The string may be up to 8 bytes in size");
+>>>>  
+>>>> +    object_class_property_add_bool(oc, "acpi-pcihp",
+>>>> +                                   virt_get_acpi_pcihp, virt_set_acpi_pcihp);
+>>>> +    object_class_property_set_description(oc, "acpi-pcihp",
+>>>> +                                          "Force ACPI PCI hotplug");
+>>>>  }
+>>>>  
+>>>>  static void virt_instance_init(Object *obj)
+>>>> @@ -3344,6 +3364,9 @@ static void virt_instance_init(Object *obj)
+>>>>          vms->tcg_its = true;
+>>>>      }
+>>>>  
+>>>> +    /* default disallows ACPI PCI hotplug */
+>>>> +    vms->acpi_pcihp = false;
+>>>> +
+>>>>      /* Default disallows iommu instantiation */
+>>>>      vms->iommu = VIRT_IOMMU_NONE;
+>>>>  
+>>>> @@ -3394,8 +3417,12 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
+>>>>  
+>>>>  static void virt_machine_10_0_options(MachineClass *mc)
+>>>>  {
+>>>> +    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+>>>> +
+>>>>      virt_machine_10_1_options(mc);
+>>>>      compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
+>>>> +    /* 10.0 and earlier do not support ACPI PCI hotplug */
+>>>> +    vmc->no_acpi_pcihp = true;
+>>>>  }
+>>>>  DEFINE_VIRT_MACHINE(10, 0)
+>>>>    
 
 
