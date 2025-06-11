@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 901ABC71141
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:34:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D274C71141
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:34:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQFb-00059j-Rd; Wed, 11 Jun 2025 14:32:40 -0400
+	id 1uPQFq-0005j2-P2; Wed, 11 Jun 2025 14:32:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQAa-0002Cy-Hg
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uPQAo-0002rt-Nk
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQAW-0001hm-5M
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:26 -0400
+ id 1uPQAl-0001rd-2u
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749666441;
+ s=mimecast20190719; t=1749666458;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f128TMvyALcEvw2Q1PgUkPtT2l4n4rQQAsIOgSwd6Bw=;
- b=fqFUhuZZBSIJamGAslmNAYvmzABGkME81L8a5IJ1pOybcqhdrZAbKxxwujTStmosDZkmBQ
- kLDxYmLUI7wp+GoifCDNan52kUFKzDr0Ud1BR9ZKXMbOEdrg22Z4mJvGHt6cT1ihn3c+ME
- iO6dnAnevXZO/Ufk+Fe+ymSED6C/kPU=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=GuZNk0F1bodSwirhOG/JBltWIHXjauSG+o14JA3+usQ=;
+ b=EEFzaF2OYIthOClB3AUjp4CxcX8783PXf69ReNCXbwuEHYYJaKD3+ZacD8qONwAe0HhSO0
+ KXiLx4zhCB42bkUQkkH10tw6C8QnvcnkqvPZO/i/cjVXsPPuvJIdYXDdN+J6K/gz6XHytF
+ hQIkCsg28lxxxc0vubOru1ks7waN8AQ=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-98-mSrFx_MUMsimIImP4xTVHA-1; Wed,
- 11 Jun 2025 14:27:20 -0400
-X-MC-Unique: mSrFx_MUMsimIImP4xTVHA-1
-X-Mimecast-MFC-AGG-ID: mSrFx_MUMsimIImP4xTVHA_1749666436
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-119-IlUTyrPmOYmn9OcCGGCdvw-1; Wed,
+ 11 Jun 2025 14:27:33 -0400
+X-MC-Unique: IlUTyrPmOYmn9OcCGGCdvw-1
+X-Mimecast-MFC-AGG-ID: IlUTyrPmOYmn9OcCGGCdvw_1749666450
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D1B0119560B6; Wed, 11 Jun 2025 18:27:15 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F35F919560B4; Wed, 11 Jun 2025 18:27:29 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.122])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1B8CB195609D; Wed, 11 Jun 2025 18:27:15 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 964ED18003FC; Wed, 11 Jun 2025 18:27:27 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -77,16 +77,16 @@ Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 26/31] hw/usb/hcd-ohci: skip automatic zero-init of large array
-Date: Wed, 11 Jun 2025 14:25:28 -0400
-Message-ID: <20250611182533.200590-27-stefanha@redhat.com>
+Subject: [PULL 31/31] net/stream: skip automatic zero-init of large array
+Date: Wed, 11 Jun 2025 14:25:33 -0400
+Message-ID: <20250611182533.200590-32-stefanha@redhat.com>
 In-Reply-To: <20250611182533.200590-1-stefanha@redhat.com>
 References: <20250611182533.200590-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,36 +113,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'ohci_service_iso_td' method has a 8k byte array used for copying
+The 'net_stream_send' method has a 68k byte array used for copying
 data between guest and host. Skip the automatic zero-init of this
 array to eliminate the performance overhead in the I/O hot path.
 
-The 'buf' array will be fully initialized when reading data from guest
-memory.
+The 'buf1' array will be fully initialized when reading data off
+the network socket.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-id: 20250610123709.835102-27-berrange@redhat.com
+Message-id: 20250610123709.835102-32-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/usb/hcd-ohci.c | 2 +-
+ net/stream.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-index 71b54914d3..72a9f9f474 100644
---- a/hw/usb/hcd-ohci.c
-+++ b/hw/usb/hcd-ohci.c
-@@ -577,7 +577,7 @@ static int ohci_service_iso_td(OHCIState *ohci, struct ohci_ed *ed)
-     USBDevice *dev;
-     USBEndpoint *ep;
-     USBPacket *pkt;
--    uint8_t buf[8192];
-+    QEMU_UNINITIALIZED uint8_t buf[8192];
-     bool int_req;
-     struct ohci_iso_td iso_td;
-     uint32_t addr;
+diff --git a/net/stream.c b/net/stream.c
+index 4de5613844..6152d2a05e 100644
+--- a/net/stream.c
++++ b/net/stream.c
+@@ -148,7 +148,7 @@ static gboolean net_stream_send(QIOChannel *ioc,
+     NetStreamState *s = data;
+     int size;
+     int ret;
+-    char buf1[NET_BUFSIZE];
++    QEMU_UNINITIALIZED char buf1[NET_BUFSIZE];
+     const char *buf;
+ 
+     size = qio_channel_read(s->ioc, buf1, sizeof(buf1), NULL);
 -- 
 2.49.0
 
