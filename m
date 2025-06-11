@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9017C71143
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:38:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0C35C71141
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQE4-0002Nd-VV; Wed, 11 Jun 2025 14:31:05 -0400
+	id 1uPQFT-0004uC-LX; Wed, 11 Jun 2025 14:32:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQAc-0002K8-Cq
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:31 -0400
+ id 1uPQAn-0002oG-4p
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:41 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQAW-0001hJ-OH
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:29 -0400
+ id 1uPQAi-0001ph-Bs
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749666440;
+ s=mimecast20190719; t=1749666455;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=p1SjgeEm1cCSQpMWJ1zjwqMu3sNMaHNBwc1JeIdOkvs=;
- b=V5/N0E7jVdlOUQyX2Ed0+czjcBbYVET0MDbyUBWx2D9qVepj/qsnrxvbj0DRgw8vOcxwaQ
- VMBM0xhJsAqX8/aq3gMKHNn6GDoySvJe11hpqk6CSNvhxfQjzGbURu6oyfnWxf520XKdN0
- /u1efZotGboCdAqAGEEiMZJrm79ZLeE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=FU8wL7XxDJ9uyH0nMB1l6aLZjdzSp7OBD7R4cqOfBZU=;
+ b=Bmh3m3wtB0sMiCGPvlFqHAEYdR15doX0Tzd1wLf6pHDQZK1qMRPs+tyw6N7xyhaF0uGrep
+ T97Cmnr8z4uPvP/zlUkW7p4FTeRTU4aNdJ1HdKSevZLJGNXuEGx/buIe74Wfe8Fb5+YOEC
+ NjSHnw2XoWpNESTeEWIBUpGreir0DOQ=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-280-4wV7N0SwMw-Ternp8fqqqA-1; Wed,
- 11 Jun 2025 14:27:17 -0400
-X-MC-Unique: 4wV7N0SwMw-Ternp8fqqqA-1
-X-Mimecast-MFC-AGG-ID: 4wV7N0SwMw-Ternp8fqqqA_1749666431
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-626-BRevhgz1MY-FqReGZ6l7FQ-1; Wed,
+ 11 Jun 2025 14:27:30 -0400
+X-MC-Unique: BRevhgz1MY-FqReGZ6l7FQ-1
+X-Mimecast-MFC-AGG-ID: BRevhgz1MY-FqReGZ6l7FQ_1749666446
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BE99319560BA; Wed, 11 Jun 2025 18:27:11 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6243E195608B; Wed, 11 Jun 2025 18:27:26 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.122])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C8B6E19560AF; Wed, 11 Jun 2025 18:27:09 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A198518002B5; Wed, 11 Jun 2025 18:27:25 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -77,15 +77,15 @@ Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Klaus Jensen <k.jensen@samsung.com>
-Subject: [PULL 24/31] hw/ppc/pnv_occ: skip automatic zero-init of large struct
-Date: Wed, 11 Jun 2025 14:25:26 -0400
-Message-ID: <20250611182533.200590-25-stefanha@redhat.com>
+Subject: [PULL 30/31] net/socket: skip automatic zero-init of large array
+Date: Wed, 11 Jun 2025 14:25:32 -0400
+Message-ID: <20250611182533.200590-31-stefanha@redhat.com>
 In-Reply-To: <20250611182533.200590-1-stefanha@redhat.com>
 References: <20250611182533.200590-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -113,36 +113,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'occ_model_tick' method has a 12k struct used for copying
+The 'net_socket_send' method has a 68k byte array used for copying
 data between guest and host. Skip the automatic zero-init of this
-struct to eliminate the performance overhead in the I/O hot path.
+array to eliminate the performance overhead in the I/O hot path.
 
-The 'dynamic_data' buffer will be fully initialized when reading
-data from the guest.
+The 'buf1' array will be fully initialized when reading data off
+the network socket.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Klaus Jensen <k.jensen@samsung.com>
 Reviewed-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
-Message-id: 20250610123709.835102-25-berrange@redhat.com
+Message-id: 20250610123709.835102-31-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/ppc/pnv_occ.c | 2 +-
+ net/socket.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/ppc/pnv_occ.c b/hw/ppc/pnv_occ.c
-index fa6f31cb8d..24b789c191 100644
---- a/hw/ppc/pnv_occ.c
-+++ b/hw/ppc/pnv_occ.c
-@@ -789,7 +789,7 @@ static bool occ_opal_process_command(PnvOCC *occ,
+diff --git a/net/socket.c b/net/socket.c
+index 8e3702e1f3..784dda686f 100644
+--- a/net/socket.c
++++ b/net/socket.c
+@@ -157,7 +157,7 @@ static void net_socket_send(void *opaque)
+     NetSocketState *s = opaque;
+     int size;
+     int ret;
+-    uint8_t buf1[NET_BUFSIZE];
++    QEMU_UNINITIALIZED uint8_t buf1[NET_BUFSIZE];
+     const uint8_t *buf;
  
- static bool occ_model_tick(PnvOCC *occ)
- {
--    struct occ_dynamic_data dynamic_data;
-+    QEMU_UNINITIALIZED struct occ_dynamic_data dynamic_data;
- 
-     if (!occ_read_dynamic_data(occ, &dynamic_data, NULL)) {
-         /* Can't move OCC state field to safe because we can't map it! */
+     size = recv(s->fd, buf1, sizeof(buf1), 0);
 -- 
 2.49.0
 
