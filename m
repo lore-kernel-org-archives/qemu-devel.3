@@ -4,89 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57F1DC71136
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 19:55:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA750C71135
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 20:05:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPRWn-0005rH-4o; Wed, 11 Jun 2025 15:54:29 -0400
+	id 1uPRhB-0008MH-AR; Wed, 11 Jun 2025 16:05:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPRWg-0005qs-Em
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 15:54:22 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uPRh8-0008JT-Of
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:05:10 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPRWe-0004Y3-8I
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 15:54:22 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-ad883afdf0cso47070066b.0
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 12:54:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uPRh6-0005RG-28
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:05:10 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-747c2cc3419so277947b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 13:05:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749671658; x=1750276458; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lwacJSlUX5SZ729sUvmr49ypnB+xPnmQTOkglly6cRo=;
- b=WUu57O1fMAffuRMdej7arLokZOZetH3tFHZV2KV4ooZ6CX9mbdTj1BwVn4zkbHJKrO
- bENi0VnYHTl2buqk1mvRF0+Mshg7MMIoH9YNALvymf048mAiDkFDrPOTO8XZjpBO6L26
- 05xDh2eV1ZNBiKTJen8GkZcc+xtCp+Zx8vXMdcXQ5yJgWfYsGuyGYd0bQCNYwgaIOr7O
- EJUv6M3gC9DWb7sfCF/bN21mKJR00W7AZqcDIl5FsnZCj+Gep+uP9mrbeMvMzCHjSkxZ
- HhJ11VnYEIhbrZQicgKnVV72oQ3IaYdAIso7lcHARXKrLGINj7CmcTGpyij02m0tDq/S
- hTDg==
+ d=linaro.org; s=google; t=1749672299; x=1750277099; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=B4RplqXDGw7UVU/g0L3/IqyN16KOAJHEiP0yaVW70ew=;
+ b=zFBRg47ZUDMQd40xlOQdB9Y/tLDPQwKVI7VcSdpt0AGaqBliVpMfb0UTAB5NH6ho3j
+ QHYxcoTwmZZth1Hob+oHYkpSDImgGQ2qns2aB1mjI7pgQyUiC1dltZDTfNnmNsGYOff0
+ mtHmpx7hzGt0L4Jk7hlGj4jfFq/EcyDzL6I0OsHX6OTmIw8KB0WQsnr3BMqmH2fluNqW
+ 7UWTai72HiZa3tUTxaoD0E6ttvbk08Dr2Evk5YeCPLeGaOlNZU/8OLvJOEK8KA9fPo7X
+ gIyxjSbx0Y3OBWDonTDfZruGa8ZjvL4pfPbt/DLz+Xb0xDpLeZtORebScp7isU5LSL7r
+ Kx7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749671658; x=1750276458;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=lwacJSlUX5SZ729sUvmr49ypnB+xPnmQTOkglly6cRo=;
- b=ioj0toawdELz7W5pD7R7QouojUtYBZNvmxbqLJckeELlpNuGUeNnTpGZ3MinieIP8O
- r9DzYlT0uNervnqWUL/xj8HEYY27Jsf/qfXh46HKu/ZdlS9RS/jxxQpC9nz88HtEddyX
- gNJ7Rr1UEBVlpLVA0830M8JeT8ueMokr7FXWMimP63uhEiSZ3+/USJufkXGg8pRIJq9n
- JBnuseFUxa5t1SC0LQBzbCxBbVcB1pILsPwwYrUfHzlH83wxnHVZdWCrRqsPdU7hFoKd
- zjHEi+5RJzkgmZCt4XbEPVe9iubmgDGFcneB1L1JFtg+DtJ2JybYjr7D/QtuN4QBi/yN
- aokw==
+ d=1e100.net; s=20230601; t=1749672299; x=1750277099;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=B4RplqXDGw7UVU/g0L3/IqyN16KOAJHEiP0yaVW70ew=;
+ b=Ty60R/aBpbg6xnlsBrBECkxzaQKKT34WmNojf1owpkbewIWW+su2kSH7jF8NY7w3Hv
+ D6Wp/g9glg0IKSeO5Uyimg70vwrAsY+iXG2mNdaMY0mjFT7KDWuYIq5/dWHHS35cnOd9
+ TqpNyYboiQAqeXMZVe/pknSJs0BW63iVABb5ElOdQUDD3WnLnWuaOwQEHJ7FWtBOAIuS
+ Mmk/r6e999kA/LFOGmrxRI41l1q3/r57SG5Hj/CWViah6V2yVpYfS4FpYUVTKcgTYW3H
+ T/9htqb4bnCPfANz4WN4hpbvbFvv1dcMig/3+2RxaspLi8FTxt7j1kK/x41M92gwdLUW
+ gqBQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWFLgXsWWWOl2xp1/fMgD9AICuf1JvhE5u7sok3w8IKyb50wgDM9U1zUWz6CqKHGdndcqC6uRYQ+GDX@nongnu.org
-X-Gm-Message-State: AOJu0YwUDRk0vdONT0c32mMZfHBxM8lr1gMU7MHVFUu+PuCv8lzY6Uo7
- BabpWCuokwd2xbUaSMVEpb8YH9DsuvbAjuiwD9IWIEuWTFEnwmt1PFTmpZ5emYqF4cUN1/W8HWj
- EjazF00y2yRc1NK2ZnMIggK87f4naw4c=
-X-Gm-Gg: ASbGnctAO0UiSE6edYUlJgQoR349CuUirCE6Q6XZOfgCw7ucEsDEsknm7sPRBJAbE3U
- wh3KiIB7aRplg6VX1syu5S+RiVUuJYyFqDk/72fP5DcL1GVV5h03NzzFQPi7lxHnhOS2eIHW6HQ
- 7OpXPityOXvnAijOeLTGP5rnLdsEc5z+W01G0jbEKhCA==
-X-Google-Smtp-Source: AGHT+IHat96TmOBQgKWPE2CKBdN1r+/nMzF33WtX4IW2O+GodewqR2KPZE8BM1Yb4ntZYA1qLNoJi9HFMVu9MJic8yI=
-X-Received: by 2002:a17:907:3fa9:b0:ad5:1bfd:30d2 with SMTP id
- a640c23a62f3a-adea378c9d5mr96102866b.55.1749671658262; Wed, 11 Jun 2025
- 12:54:18 -0700 (PDT)
+ AJvYcCUE5caiWGvmgABZPgsJrm3cuinLsfg9bje2AKKwcHIfDZO9IFcY1s6ooTV0U/UXONhAoMQ6+as/sXHc@nongnu.org
+X-Gm-Message-State: AOJu0YxNSDP3h9LRK0XHByztXOQ7DSIXlhlkmGMRtndiF+9W44Z97901
+ rYp4bXKEK6u/gdnPMPNts5v4/BFRyFThy3R0O5Mr2yFHW/he1K+vZ76lg3Rux6Un8GU=
+X-Gm-Gg: ASbGncsbvkw6KtEaa/xB6zsUezyGqrTTrODSaamgpb2/blUtRfWsCVTaI8vxR0Bvhuv
+ bxDXOMrq1TK2LxkyB4dd7B4lrw0HbvHm2uUuwJpY5i3ms9geSz+943dlmUlEHtCI0hYsf8YFSKf
+ zvfNEDr4dUz65ptKkGskwaKs7wYr1JoPBXmxKd9K6EMpBv+yhh0QuvQ5stIZ0JM+3zy16+Wb1CI
+ B/V5c9pkmB1YbCeQJgeef9nROoaJtRtYe43ZDhPPVOov5iZPsvG3M00fXxYtX0Z1o1ftCTlLRqI
+ gzh11gLcfS/y/FMcMyeBHBcAWL1RTc1NCQFonX8drnTvUU8vZ9v7wAFQwmR/1bYhnPThhx93tZ8
+ =
+X-Google-Smtp-Source: AGHT+IFcpHUrAyG6p0pcfX5eRdW+z4CcR+EmpOKkvX+yTY01L9ca8UpxikJ1RtR43pMMi0VUleNwcw==
+X-Received: by 2002:a05:6a20:3ca5:b0:21f:53e4:1925 with SMTP id
+ adf61e73a8af0-21f97789298mr1487003637.10.1749672299294; 
+ Wed, 11 Jun 2025 13:04:59 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7482af7afe5sm9951907b3a.60.2025.06.11.13.04.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Jun 2025 13:04:58 -0700 (PDT)
+Message-ID: <2ae6884a-6a8a-4f46-9821-db99858a01c7@linaro.org>
+Date: Wed, 11 Jun 2025 13:04:57 -0700
 MIME-Version: 1.0
-References: <20250611182902.201331-1-stefanha@redhat.com>
- <20250611182902.201331-2-stefanha@redhat.com>
- <alpine.LMD.2.03.2506112113260.22610@eik.bme.hu>
-In-Reply-To: <alpine.LMD.2.03.2506112113260.22610@eik.bme.hu>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Wed, 11 Jun 2025 15:54:06 -0400
-X-Gm-Features: AX0GCFvdwnF7m3cPZq_yPTTSQ7MWGlHjezNqqB-m1ooBhskTbZPje1OX3pymdL8
-Message-ID: <CAJSP0QVWQLK+5Z4DiNVDaz2-YtUUDYRj+roq9rwRS8ZVWYMKBg@mail.gmail.com>
-Subject: Re: [PULL 1/1] meson: fix Windows build
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, qemu-devel@nongnu.org, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, Mads Ynddal <mads@ynddal.dk>, 
- Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- oltolm <oleg.tolmatcev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62f.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FREEMAIL_REPLY=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v11 6/8] plugins: Add patcher plugin and test
+Content-Language: en-US
+To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Alexandre Iooss <erdnaxe@crans.org>
+References: <20250609193841.348076-1-rowanbhart@gmail.com>
+ <20250609193841.348076-7-rowanbhart@gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250609193841.348076-7-rowanbhart@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,294 +110,532 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 11, 2025 at 3:25=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.hu>=
- wrote:
->
-> On Wed, 11 Jun 2025, Stefan Hajnoczi wrote:
-> > From: oltolm <oleg.tolmatcev@gmail.com>
-> >
-> > Sorry, I forgot to cc the maintainers.
->
-> Do we want comments like this end up in git log? This could have been
-> fixed before a pull. Also the other pull request about uninitialised stac=
-k
-> variables had hw/audio/gus twice which was pointed out by a comment befor=
-e
-> the pull that one of those should be different but the pull request still
-> had this error. Did you miss these or aren't these important enough to fi=
-x
-> before getting in git log forever or there is just no easy way to fix up
-> commit messages in pull requests?
+On 6/9/25 12:38 PM, Rowan Hart wrote:
+> From: novafacing <rowanbhart@gmail.com>
+> 
+> This patch adds a plugin that exercises the virtual and hardware memory
+> read-write API functions added in a previous patch. The plugin takes a
+> target and patch byte sequence, and will overwrite any instruction
+> matching the target byte sequence with the patch.
+> 
+> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+> ---
+>   tests/tcg/Makefile.target                 |   1 +
+>   tests/tcg/plugins/meson.build             |   2 +-
+>   tests/tcg/plugins/patch.c                 | 297 ++++++++++++++++++++++
+>   tests/tcg/x86_64/Makefile.softmmu-target  |  32 ++-
+>   tests/tcg/x86_64/system/patch-target.c    |  27 ++
+>   tests/tcg/x86_64/system/validate-patch.py |  39 +++
+>   6 files changed, 392 insertions(+), 6 deletions(-)
+>   create mode 100644 tests/tcg/plugins/patch.c
+>   create mode 100644 tests/tcg/x86_64/system/patch-target.c
+>   create mode 100755 tests/tcg/x86_64/system/validate-patch.py
+> 
+> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+> index 95ff76ea44..4b709a9d18 100644
+> --- a/tests/tcg/Makefile.target
+> +++ b/tests/tcg/Makefile.target
+> @@ -176,6 +176,7 @@ RUN_TESTS+=$(EXTRA_RUNS)
+>   # Some plugins need additional arguments above the default to fully
+>   # exercise things. We can define them on a per-test basis here.
+>   run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
+> +run-plugin-%-with-libpatch.so: PLUGIN_ARGS=$(COMMA)target=ffffffff$(COMMA)patch=00000000
+>   
+>   ifeq ($(filter %-softmmu, $(TARGET)),)
+>   run-%: %
+> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+> index 41f02f2c7f..163042e601 100644
+> --- a/tests/tcg/plugins/meson.build
+> +++ b/tests/tcg/plugins/meson.build
+> @@ -1,6 +1,6 @@
+>   t = []
+>   if get_option('plugins')
+> -  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall']
+> +  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
+>       if host_os == 'windows'
+>         t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
+>                           include_directories: '../../../include/qemu',
+> diff --git a/tests/tcg/plugins/patch.c b/tests/tcg/plugins/patch.c
+> new file mode 100644
+> index 0000000000..6e83418b85
+> --- /dev/null
+> +++ b/tests/tcg/plugins/patch.c
+> @@ -0,0 +1,297 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This plugin patches instructions matching a pattern to a different
+> + * instruction as they execute
+> + *
+> + */
+> +
+> +#include "glib.h"
+> +#include "glibconfig.h"
+> +
+> +#include <qemu-plugin.h>
+> +#include <string.h>
+> +#include <stdio.h>
+> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> +
+> +static bool use_hwaddr;
+> +static bool debug_insns;
+> +static GByteArray *target_data;
+> +static GByteArray *patch_data;
+> +
+> +/**
+> + * Parse a string of hexadecimal digits into a GByteArray. The string must be
+> + * even length
+> + */
+> +static GByteArray *str_to_bytes(const char *str)
+> +{
+> +    GByteArray *bytes = g_byte_array_new();
+> +    char byte[3] = {0};
+> +    size_t len = strlen(str);
+> +    guint8 value = 0;
+> +
+> +    if (len % 2 != 0) {
+> +        g_byte_array_free(bytes, true);
+> +        return NULL;
+> +    }
 
-If another reviewer asks for the author to resend then I'll hold off
-on merging, but I didn't see the comment about hw/audio/gus. Sorry!
+You can check len before allocating "bytes" at start of function.
 
-I did see this "Sorry, I forgot to cc the maintainers" comment.
-Although I'm not consistent, nowadays I generally do not fix these
-issues when merging, provided it's a small issue that can be ignored
-or understood from the context.
+> +
+> +    for (size_t i = 0; i < len; i += 2) {
+> +        byte[0] = str[i];
+> +        byte[1] = str[i + 1];
+> +        value = (guint8)g_ascii_strtoull(byte, NULL, 16);
+> +        g_byte_array_append(bytes, &value, 1);
+> +    }
+> +
+> +    return bytes;
+> +}
+> +
+> +static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
+> +{
+> +    uint64_t addr = (uint64_t)userdata;
+> +    GString *str = g_string_new(NULL);
+> +    g_string_printf(str, "patching: @0x%"
+> +                    PRIx64 "\n",
+> +                    addr);
+> +    qemu_plugin_outs(str->str);
+> +    g_string_free(str, true);
+> +
 
-I don't really mind either way, so if there is a consensus that all
-maintainers should be strict about this, I'm happy to join.
+You can use g_autoptr(type) for various glib types, so it gets freed 
+automatically when leaving the scope.
 
-One related point I do have a strong opinion on is that the
-qemu.git/master maintainer shouldn't be expected to do fixups on a
-pull request they receive. Fixups should be done by subsystem
-maintainers (and the pull request must be resent) or the original
-patch authors. It doesn't scale when the qemu.git/master maintainer
-has to make changes to code that they are unfamiliar with. That's not
-the case here, but I just wanted to mention it because from time to
-time someone requests this.
+g_autoptr(GString)
 
->
-> Regards,
-> BALATON Zoltan
->
-> > The build failed when run on Windows. I replaced calls to Unix programs
-> > like =C2=B4cat=C2=B4, =C2=B4sed=C2=B4 and =C2=B4true=C2=B4 with calls t=
-o =C2=B4python=C2=B4. I wrapped calls to
-> > =C2=B4os.path.relpath=C2=B4 in try-except because it can fail when the =
-two paths
-> > are on different drives. I made sure to convert the Windows paths to
-> > Unix paths to prevent warnings in generated files.
-> >
-> > Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
-> > Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > Acked-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-> > Message-id: 20250607094503.1307-2-oleg.tolmatcev@gmail.com
-> > Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
-> > ---
-> > contrib/plugins/meson.build         |  2 +-
-> > plugins/meson.build                 |  2 +-
-> > scripts/tracetool/__init__.py       | 15 ++++++++++++---
-> > scripts/tracetool/backend/ftrace.py |  4 +---
-> > scripts/tracetool/backend/log.py    |  4 +---
-> > scripts/tracetool/backend/syslog.py |  4 +---
-> > tests/functional/meson.build        |  4 +---
-> > tests/include/meson.build           |  2 +-
-> > tests/tcg/plugins/meson.build       |  2 +-
-> > trace/meson.build                   |  5 +++--
-> > 10 files changed, 23 insertions(+), 21 deletions(-)
-> >
-> > diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-> > index fa8a426c8b..1876bc7843 100644
-> > --- a/contrib/plugins/meson.build
-> > +++ b/contrib/plugins/meson.build
-> > @@ -24,7 +24,7 @@ endif
-> > if t.length() > 0
-> >   alias_target('contrib-plugins', t)
-> > else
-> > -  run_target('contrib-plugins', command: find_program('true'))
-> > +  run_target('contrib-plugins', command: [python, '-c', ''])
-> > endif
-> >
-> > plugin_modules +=3D t
-> > diff --git a/plugins/meson.build b/plugins/meson.build
-> > index b20edfbabc..62c991d87f 100644
-> > --- a/plugins/meson.build
-> > +++ b/plugins/meson.build
-> > @@ -33,7 +33,7 @@ if host_os =3D=3D 'windows'
-> >     input: qemu_plugin_symbols,
-> >     output: 'qemu_plugin_api.def',
-> >     capture: true,
-> > -    command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-> > +    command: [python, '-c', 'import fileinput, re; print("EXPORTS", en=
-d=3D""); [print(re.sub(r"[{};]", "", line), end=3D"") for line in fileinput=
-.input()]', '@INPUT@'])
-> >
-> >   # then use dlltool to assemble a delaylib.
-> >   # The delaylib will have an "imaginary" name (qemu.exe), that is used=
- by the
-> > diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__=
-.py
-> > index bc03238c0f..6dfcbf71e1 100644
-> > --- a/scripts/tracetool/__init__.py
-> > +++ b/scripts/tracetool/__init__.py
-> > @@ -12,12 +12,14 @@
-> > __email__      =3D "stefanha@redhat.com"
-> >
-> >
-> > +import os
-> > import re
-> > import sys
-> > import weakref
-> > +from pathlib import PurePath
-> >
-> > -import tracetool.format
-> > import tracetool.backend
-> > +import tracetool.format
-> >
-> >
-> > def error_write(*lines):
-> > @@ -36,7 +38,7 @@ def error(*lines):
-> >
-> > def out_open(filename):
-> >     global out_filename, out_fobj
-> > -    out_filename =3D filename
-> > +    out_filename =3D posix_relpath(filename)
-> >     out_fobj =3D open(filename, 'wt')
-> >
-> > def out(*lines, **kwargs):
-> > @@ -308,7 +310,7 @@ def build(line_str, lineno, filename):
-> >             fmt =3D [fmt_trans, fmt]
-> >         args =3D Arguments.build(groups["args"])
-> >
-> > -        return Event(name, props, fmt, args, lineno, filename)
-> > +        return Event(name, props, fmt, args, lineno, posix_relpath(fil=
-ename))
-> >
-> >     def __repr__(self):
-> >         """Evaluable string representation for this object."""
-> > @@ -447,3 +449,10 @@ def generate(events, group, format, backends,
-> >     tracetool.backend.dtrace.PROBEPREFIX =3D probe_prefix
-> >
-> >     tracetool.format.generate(events, format, backend, group)
-> > +
-> > +def posix_relpath(path, start=3DNone):
-> > +    try:
-> > +        path =3D os.path.relpath(path, start)
-> > +    except ValueError:
-> > +        pass
-> > +    return PurePath(path).as_posix()
-> > diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/ba=
-ckend/ftrace.py
-> > index baed2ae61c..5fa30ccc08 100644
-> > --- a/scripts/tracetool/backend/ftrace.py
-> > +++ b/scripts/tracetool/backend/ftrace.py
-> > @@ -12,8 +12,6 @@
-> > __email__      =3D "stefanha@redhat.com"
-> >
-> >
-> > -import os.path
-> > -
-> > from tracetool import out
-> >
-> >
-> > @@ -47,7 +45,7 @@ def generate_h(event, group):
-> >         args=3Devent.args,
-> >         event_id=3D"TRACE_" + event.name.upper(),
-> >         event_lineno=3Devent.lineno,
-> > -        event_filename=3Dos.path.relpath(event.filename),
-> > +        event_filename=3Devent.filename,
-> >         fmt=3Devent.fmt.rstrip("\n"),
-> >         argnames=3Dargnames)
-> >
-> > diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backe=
-nd/log.py
-> > index de27b7e62e..17ba1cd90e 100644
-> > --- a/scripts/tracetool/backend/log.py
-> > +++ b/scripts/tracetool/backend/log.py
-> > @@ -12,8 +12,6 @@
-> > __email__      =3D "stefanha@redhat.com"
-> >
-> >
-> > -import os.path
-> > -
-> > from tracetool import out
-> >
-> >
-> > @@ -55,7 +53,7 @@ def generate_h(event, group):
-> >         '    }',
-> >         cond=3Dcond,
-> >         event_lineno=3Devent.lineno,
-> > -        event_filename=3Dos.path.relpath(event.filename),
-> > +        event_filename=3Devent.filename,
-> >         name=3Devent.name,
-> >         fmt=3Devent.fmt.rstrip("\n"),
-> >         argnames=3Dargnames)
-> > diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/ba=
-ckend/syslog.py
-> > index 012970f6cc..5a3a00fe31 100644
-> > --- a/scripts/tracetool/backend/syslog.py
-> > +++ b/scripts/tracetool/backend/syslog.py
-> > @@ -12,8 +12,6 @@
-> > __email__      =3D "stefanha@redhat.com"
-> >
-> >
-> > -import os.path
-> > -
-> > from tracetool import out
-> >
-> >
-> > @@ -43,7 +41,7 @@ def generate_h(event, group):
-> >         '    }',
-> >         cond=3Dcond,
-> >         event_lineno=3Devent.lineno,
-> > -        event_filename=3Dos.path.relpath(event.filename),
-> > +        event_filename=3Devent.filename,
-> >         name=3Devent.name,
-> >         fmt=3Devent.fmt.rstrip("\n"),
-> >         argnames=3Dargnames)
-> > diff --git a/tests/functional/meson.build b/tests/functional/meson.buil=
-d
-> > index 557d59ddf4..4bce961c04 100644
-> > --- a/tests/functional/meson.build
-> > +++ b/tests/functional/meson.build
-> > @@ -412,6 +412,4 @@ foreach speed : ['quick', 'thorough']
-> >   endforeach
-> > endforeach
-> >
-> > -run_target('precache-functional',
-> > -           depends: precache_all,
-> > -           command: ['true'])
-> > +alias_target('precache-functional', precache_all)
-> > diff --git a/tests/include/meson.build b/tests/include/meson.build
-> > index 9abba308fa..8e8d1ec4e6 100644
-> > --- a/tests/include/meson.build
-> > +++ b/tests/include/meson.build
-> > @@ -13,4 +13,4 @@ test_qapi_outputs_extra =3D [
-> > test_qapi_files_extra =3D custom_target('QAPI test (include)',
-> >                                       output: test_qapi_outputs_extra,
-> >                                       input: test_qapi_files,
-> > -                                      command: 'true')
-> > +                                      command: [python, '-c', ''])
-> > diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.bu=
-ild
-> > index 41f02f2c7f..029342282a 100644
-> > --- a/tests/tcg/plugins/meson.build
-> > +++ b/tests/tcg/plugins/meson.build
-> > @@ -17,7 +17,7 @@ endif
-> > if t.length() > 0
-> >   alias_target('test-plugins', t)
-> > else
-> > -  run_target('test-plugins', command: find_program('true'))
-> > +  run_target('test-plugins', command: [python, '-c', ''])
-> > endif
-> >
-> > plugin_modules +=3D t
-> > diff --git a/trace/meson.build b/trace/meson.build
-> > index 3df4549355..9c42a57a05 100644
-> > --- a/trace/meson.build
-> > +++ b/trace/meson.build
-> > @@ -4,7 +4,7 @@ trace_events_files =3D []
-> > foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-> >   if item in qapi_trace_events
-> >     trace_events_file =3D item
-> > -    group_name =3D item.full_path().split('/')[-1].underscorify()
-> > +    group_name =3D fs.name(item).underscorify()
-> >   else
-> >     trace_events_file =3D meson.project_source_root() / item / 'trace-e=
-vents'
-> >     group_name =3D item =3D=3D '.' ? 'root' : item.underscorify()
-> > @@ -57,10 +57,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qap=
-i_trace_events
-> >   endif
-> > endforeach
-> >
-> > +cat =3D [ python, '-c', 'import fileinput; [print(line, end=3D"") for =
-line in fileinput.input()]', '@INPUT@' ]
-> > trace_events_all =3D custom_target('trace-events-all',
-> >                                  output: 'trace-events-all',
-> >                                  input: trace_events_files,
-> > -                                 command: [ 'cat', '@INPUT@' ],
-> > +                                 command: cat,
-> >                                  capture: true,
-> >                                  install: get_option('trace_backends') =
-!=3D [ 'nop' ],
-> >                                  install_dir: qemu_datadir)
-> > --
-> > 2.49.0
-> >
-> >
-> >
+> +    enum qemu_plugin_hwaddr_operation_result result =
+> +        qemu_plugin_write_memory_hwaddr(addr, patch_data);
+> +
+> +
+> +    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
+> +        GString *errmsg = g_string_new(NULL);
+> +        g_string_printf(errmsg, "Failed to write memory: %d\n", result);
+> +        qemu_plugin_outs(errmsg->str);
+> +        g_string_free(errmsg, true);
+> +        return;
+
+g_autoptr(GString)
+
+> +    }
+> +
+> +    GByteArray *read_data = g_byte_array_new();
+> +
+
+g_autoptr(GByteArray)
+
+> +    result = qemu_plugin_read_memory_hwaddr(addr, read_data,
+> +                                            patch_data->len);
+> +
+> +    qemu_plugin_outs("Reading memory...\n");
+> +
+> +    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
+> +        GString *errmsg = g_string_new(NULL);
+> +        g_string_printf(errmsg, "Failed to read memory: %d\n", result);
+> +        qemu_plugin_outs(errmsg->str);
+> +        g_string_free(errmsg, true);
+> +        return;
+> +    }
+
+g_autoptr(GString)
+
+> +
+> +    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
+> +        qemu_plugin_outs("Failed to read back written data\n");
+> +    }
+> +
+> +    qemu_plugin_outs("Success!\n");
+> +
+> +    return;
+> +}
+> +
+> +static void patch_vaddr(unsigned int vcpu_index, void *userdata)
+> +{
+> +    uint64_t addr = (uint64_t)userdata;
+> +    uint64_t hwaddr = 0;
+> +    if (!qemu_plugin_translate_vaddr(addr, &hwaddr)) {
+> +        qemu_plugin_outs("Failed to translate vaddr\n");
+> +        return;
+> +    }
+> +    GString *str = g_string_new(NULL);
+
+g_autoptr(GString)
+
+> +    g_string_printf(str, "patching: @0x%"
+> +                    PRIx64 " hw: @0x%" PRIx64 "\n",
+> +                    addr, hwaddr);
+> +    qemu_plugin_outs(str->str);
+> +    g_string_free(str, true);
+> +
+> +    qemu_plugin_outs("Writing memory (vaddr)...\n");
+> +
+> +    if (!qemu_plugin_write_memory_vaddr(addr, patch_data)) {
+> +        qemu_plugin_outs("Failed to write memory\n");
+> +        return;
+> +    }
+> +
+> +    qemu_plugin_outs("Reading memory (vaddr)...\n");
+> +
+> +
+> +    GByteArray *read_data = g_byte_array_new();
+> +
+
+g_autoptr(GByteArray)
+
+> +    if (!qemu_plugin_read_memory_vaddr(addr, read_data, patch_data->len)) {
+> +        qemu_plugin_outs("Failed to read memory\n");
+> +        return;
+> +    }
+> +
+> +    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
+> +        qemu_plugin_outs("Failed to read back written data\n");
+> +    }
+> +
+> +    qemu_plugin_outs("Success!\n");
+> +
+> +    return;
+> +}
+> +
+> +static void debug_disas(unsigned int vcpu_index, void *userdata)
+> +{
+> +    GString *debug_info = (GString *)userdata;
+> +    qemu_plugin_outs(debug_info->str);
+> +}
+> +
+> +static void debug_print_newline(unsigned int vcpu_index, void *userdata)
+> +{
+> +    qemu_plugin_outs("\n");
+> +}
+> +
+> +/*
+> + * Callback on translation of a translation block.
+> + */
+> +static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> +{
+> +    uint64_t addr = 0;
+> +    GByteArray *insn_data = g_byte_array_new();
+> +    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
+> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> +
+> +        if (use_hwaddr) {
+> +            uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
+> +            if (!qemu_plugin_translate_vaddr(vaddr, &addr)) {
+> +                qemu_plugin_outs("Failed to translate vaddr\n");
+> +                continue;
+> +            }
+> +        } else {
+> +            addr = qemu_plugin_insn_vaddr(insn);
+> +        }
+> +
+> +        g_byte_array_set_size(insn_data, qemu_plugin_insn_size(insn));
+> +        qemu_plugin_insn_data(insn, insn_data->data, insn_data->len);
+> +
+> +        if (insn_data->len >= target_data->len &&
+> +            !memcmp(insn_data->data, target_data->data,
+> +                    MIN(target_data->len, insn_data->len))) {
+> +            if (use_hwaddr) {
+> +                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_hwaddr,
+> +                                                     QEMU_PLUGIN_CB_NO_REGS,
+> +                                                     (void *)addr);
+> +            } else {
+> +                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_vaddr,
+> +                                                     QEMU_PLUGIN_CB_NO_REGS,
+> +                                                     (void *)addr);
+> +            }
+> +        }
+> +    }
+> +    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
+> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> +        uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
+> +        uint64_t hwaddr = (uint64_t)qemu_plugin_insn_haddr(insn);
+> +        uint64_t translated_hwaddr = 0;
+> +        if (!qemu_plugin_translate_vaddr(vaddr, &translated_hwaddr)) {
+> +            qemu_plugin_outs("Failed to translate vaddr\n");
+> +            continue;
+> +        }
+> +        char *disas = qemu_plugin_insn_disas(insn);
+> +        GString *str = g_string_new(NULL);
+> +        g_string_printf(str,
+> +                        "vaddr: 0x%" PRIx64 " hwaddr: 0x%" PRIx64
+> +                        " translated: 0x%" PRIx64 " : %s\n",
+> +                        vaddr, hwaddr, translated_hwaddr, disas);
+> +        g_free(disas);
+> +        if (debug_insns) {
+> +            qemu_plugin_register_vcpu_insn_exec_cb(insn, debug_disas,
+> +                                                   QEMU_PLUGIN_CB_NO_REGS,
+> +                                                   str);
+> +        }
+> +
+> +    }
+> +
+> +    if (debug_insns) {
+> +        qemu_plugin_register_vcpu_tb_exec_cb(tb, debug_print_newline,
+> +                                             QEMU_PLUGIN_CB_NO_REGS,
+> +                                             NULL);
+> +    }
+> +
+
+I think you can remove all the debug_insns and disas related code, as 
+it's mostly equivalent to the existing execlog plugin output.
+
+> +    g_byte_array_free(insn_data, true);
+> +}
+> +
+> +static void usage(void)
+> +{
+> +    fprintf(stderr, "Usage: <lib>,target=<target>,patch=<patch>"
+
+Usage can be changed to help understand the difference between target 
+and patch:
+target=<bytes>,patch=<new_bytes>
+
+> +            "[,use_hwaddr=<use_hwaddr>]"
+
+use_hwaddr=true|false
+
+> +            "[,debug_insns=<debug_insns>]\n");
+> +}
+> +
+> +/*
+> + * Called when the plugin is installed
+> + */
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> +                                           const qemu_info_t *info, int argc,
+> +                                           char **argv)
+> +{
+> +
+> +    use_hwaddr = true;
+> +    debug_insns = false;
+> +    target_data = NULL;
+> +    patch_data = NULL;
+> +
+> +    if (argc > 4) {
+> +        usage();
+> +        return -1;
+> +    }
+> +
+> +    for (size_t i = 0; i < argc; i++) {
+> +        char *opt = argv[i];
+> +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> +        if (g_strcmp0(tokens[0], "use_hwaddr") == 0) {
+> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &use_hwaddr)) {
+> +                fprintf(stderr,
+> +                        "Failed to parse boolean argument use_hwaddr\n");
+> +                return -1;
+> +            }
+> +        } else if (g_strcmp0(tokens[0], "debug_insns") == 0) {
+> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &debug_insns)) {
+> +                fprintf(stderr,
+> +                        "Failed to parse boolean argument debug_insns\n");
+> +                return -1;
+> +            }
+> +        } else if (g_strcmp0(tokens[0], "target") == 0) {
+> +            target_data = str_to_bytes(tokens[1]);
+> +            if (!target_data) {
+> +                fprintf(stderr,
+> +                         "Failed to parse target bytes.\n");
+> +                return -1;
+> +            }
+
+
+> +        } else if (g_strcmp0(tokens[0], "patch") == 0) {
+> +            patch_data = str_to_bytes(tokens[1]);
+> +            if (!patch_data) {
+> +                fprintf(stderr, "Failed to parse patch bytes.\n");
+> +                return -1;
+> +            }
+> +        } else {
+> +            fprintf(stderr, "Unknown argument: %s\n", tokens[0]);
+> +            usage();
+> +            return -1;
+> +        }
+> +    }
+> +
+> +    if (!target_data) {
+> +        fprintf(stderr, "target argument is required\n");
+> +        usage();
+> +        return -1;
+> +    }
+> +
+> +    if (!patch_data) {
+> +        fprintf(stderr, "patch argument is required\n");
+> +        usage();
+> +        return -1;
+> +    }
+> +
+> +    if (target_data->len != patch_data->len) {
+> +        fprintf(stderr, "Target and patch data must be the same length\n");
+> +        return -1;
+> +    }
+> +
+> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
+> +
+> +    return 0;
+> +}
+> diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
+> index ef6bcb4dc7..8d3a067c33 100644
+> --- a/tests/tcg/x86_64/Makefile.softmmu-target
+> +++ b/tests/tcg/x86_64/Makefile.softmmu-target
+> @@ -7,18 +7,27 @@
+>   #
+>   
+>   I386_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/i386/system
+> -X64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
+> +X86_64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
+>   
+>   # These objects provide the basic boot code and helper functions for all tests
+>   CRT_OBJS=boot.o
+>   
+> -CRT_PATH=$(X64_SYSTEM_SRC)
+> -LINK_SCRIPT=$(X64_SYSTEM_SRC)/kernel.ld
+> +X86_64_TEST_C_SRCS=$(wildcard $(X86_64_SYSTEM_SRC)/*.c)
+> +X86_64_TEST_S_SRCS=
+> +
+> +X86_64_C_TESTS = $(patsubst $(X86_64_SYSTEM_SRC)/%.c, %, $(X86_64_TEST_C_SRCS))
+> +X86_64_S_TESTS = $(patsubst $(X86_64_SYSTEM_SRC)/%.S, %, $(X86_64_TEST_S_SRCS))
+> +
+> +X86_64_TESTS = $(X86_64_C_TESTS)
+> +X86_64_TESTS += $(X86_64_S_TESTS)
+> +
+> +CRT_PATH=$(X86_64_SYSTEM_SRC)
+> +LINK_SCRIPT=$(X86_64_SYSTEM_SRC)/kernel.ld
+>   LDFLAGS=-Wl,-T$(LINK_SCRIPT) -Wl,-melf_x86_64
+>   CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
+>   LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+>   
+> -TESTS+=$(MULTIARCH_TESTS)
+> +TESTS+=$(X86_64_TESTS) $(MULTIARCH_TESTS)
+>   EXTRA_RUNS+=$(MULTIARCH_RUNS)
+>   
+>   # building head blobs
+> @@ -27,11 +36,24 @@ EXTRA_RUNS+=$(MULTIARCH_RUNS)
+>   %.o: $(CRT_PATH)/%.S
+>   	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
+>   
+> -# Build and link the tests
+> +# Build and link the multiarch tests
+>   %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+>   	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+>   
+> +# Build and link the arch tests
+> +%: $(X86_64_SYSTEM_SRC)/%.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+> +	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+> +
+>   memory: CFLAGS+=-DCHECK_UNALIGNED=1
+> +patch-target: CFLAGS+=-O0
+>   
+>   # Running
+>   QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
+> +
+> +# Add patch-target to ADDITIONAL_PLUGINS_TESTS
+> +ADDITIONAL_PLUGINS_TESTS += patch-target
+> +
+> +run-plugin-patch-target-with-libpatch.so:		\
+> +	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true$(COMMA)debug_insns=false
+> +run-plugin-patch-target-with-libpatch.so:		\
+> +	CHECK_PLUGIN_OUTPUT_COMMAND=$(X86_64_SYSTEM_SRC)/validate-patch.py $@.out
+> \ No newline at end of file
+> diff --git a/tests/tcg/x86_64/system/patch-target.c b/tests/tcg/x86_64/system/patch-target.c
+> new file mode 100644
+> index 0000000000..8a7c0a0ae8
+> --- /dev/null
+> +++ b/tests/tcg/x86_64/system/patch-target.c
+> @@ -0,0 +1,27 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This test target increments a value 100 times. The patcher converts the
+> + * inc instruction to a nop, so it only increments the value once.
+> + *
+> + */
+> +#include <minilib.h>
+> +
+> +int main(void)
+> +{
+> +    ml_printf("Running test...\n");
+> +#if defined(__x86_64__)
+> +    ml_printf("Testing insn memory read/write...\n");
+> +    unsigned int x = 0;
+> +    for (int i = 0; i < 100; i++) {
+> +        asm volatile (
+> +            "inc %[x]"
+> +            : [x] "+a" (x)
+> +        );
+> +    }
+> +    ml_printf("Value: %d\n", x);
+> +#else
+> +    #error "This test is only valid for x86_64 architecture."
+> +#endif
+> +    return 0;
+> +}
+> diff --git a/tests/tcg/x86_64/system/validate-patch.py b/tests/tcg/x86_64/system/validate-patch.py
+> new file mode 100755
+> index 0000000000..700950eae5
+> --- /dev/null
+> +++ b/tests/tcg/x86_64/system/validate-patch.py
+> @@ -0,0 +1,39 @@
+> +#!/usr/bin/env python3
+> +#
+> +# validate-patch.py: check the patch applies
+> +#
+> +# This program takes two inputs:
+> +#   - the plugin output
+> +#   - the binary output
+> +#
+> +# Copyright (C) 2024
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import sys
+> +from argparse import ArgumentParser
+> +
+> +def main() -> None:
+> +    """
+> +    Process the arguments, injest the program and plugin out and
+> +    verify they match up and report if they do not.
+> +    """
+> +    parser = ArgumentParser(description="Validate patch")
+> +    parser.add_argument('test_output',
+> +                        help="The output from the test itself")
+> +    parser.add_argument('plugin_output',
+> +                        help="The output from plugin")
+> +    args = parser.parse_args()
+> +
+> +    with open(args.test_output, 'r') as f:
+> +        test_data = f.read()
+> +    with open(args.plugin_output, 'r') as f:
+> +        plugin_data = f.read()
+> +    if "Value: 1" in test_data:
+> +        sys.exit(0)
+> +    else:
+> +        sys.exit(1)
+> +
+> +if __name__ == "__main__":
+> +    main()
+> +
+
 
