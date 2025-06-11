@@ -4,55 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B473C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 13:00:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0459C71135
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 13:00:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPL2z-0003MB-DQ; Wed, 11 Jun 2025 08:59:17 -0400
+	id 1uPL34-0003Ny-Cs; Wed, 11 Jun 2025 08:59:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPL2n-0003Jm-S4
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:59:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPL32-0003NW-Gj
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:59:20 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPL2k-0004NR-Si
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:59:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPL2w-0004Pg-Fo
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:59:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749646741;
+ s=mimecast20190719; t=1749646753;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IG4QZWJX/3xJ8U2UhIrcXQnb0TMpwriBUkDLZsInNwo=;
- b=iE5KOqSKlSK2xMduWFoO5lT9dGEqNMdl3cqhKReFnRZZ6OMyR9ViRcFq/yHGeIvOaXi94V
- jtflNKoecI2AN3Qu4S7yDUIKEZ0K3x5b8VwWNWzDCGkeKXr6EjX/0nv2T3dIM8OCiH8X27
- 7MUDF6D6/9W0cU+yHvN1UQS7Ce0tl20=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=i8PyLdoYHi547tWJvqHCG88KlPYKZjEwQO5cMWqBboo=;
+ b=Sw8FjDblEfB651VcIxVTKpIMaOWTUocPMgs7VMtYdURLTS5SRpTaT0T7dEW8ZVfC5P4G8X
+ p7gOoDolnalL/LJ6dgOs7im1xCMTpObmifJMCJsoOHbuqvb4+9b84ge3FAYDhBfFSccCH4
+ wT9TqPiZ78sVvh8LBCLR4g2dcUcQnwU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-YkxDKz3AO8OFNmVcQrRdhQ-1; Wed,
- 11 Jun 2025 08:58:59 -0400
-X-MC-Unique: YkxDKz3AO8OFNmVcQrRdhQ-1
-X-Mimecast-MFC-AGG-ID: YkxDKz3AO8OFNmVcQrRdhQ_1749646738
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-466-jD5UomSYNWqqafRvFfmYew-1; Wed,
+ 11 Jun 2025 08:59:12 -0400
+X-MC-Unique: jD5UomSYNWqqafRvFfmYew-1
+X-Mimecast-MFC-AGG-ID: jD5UomSYNWqqafRvFfmYew_1749646751
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7737319560A6; Wed, 11 Jun 2025 12:58:58 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DCE4D1800290; Wed, 11 Jun 2025 12:59:10 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.224.174])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AB03E19560A3; Wed, 11 Jun 2025 12:58:56 +0000 (UTC)
+ id 810A519560A3; Wed, 11 Jun 2025 12:59:08 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Hajnoczi <stefanha@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>
-Subject: [PULL 04/10] tests/functional: Speed up the avr_mega2560 test
-Date: Wed, 11 Jun 2025 14:58:40 +0200
-Message-ID: <20250611125846.125918-5-thuth@redhat.com>
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/10] MAINTAINERS: Update Akihiko Odaki's affiliation
+Date: Wed, 11 Jun 2025 14:58:45 +0200
+Message-ID: <20250611125846.125918-10-thuth@redhat.com>
 In-Reply-To: <20250611125846.125918-1-thuth@redhat.com>
 References: <20250611125846.125918-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -66,9 +66,9 @@ X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,58 +84,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-We can simply check for the expected pattern on the console,
-no need to wait for two seconds here to search for the pattern
-in the log at the end.
+My contract with Daynix Computing Ltd. will expire by the end of May,
+2025. As I may contribute to QEMU for my research, use my email address
+at the lab.
 
-While we're at it, also remove the obsolete "timeout" variable
-from this test.
+As I'm the only maintainer of igb and no longer financially supported to
+maintain it, change its status to Odd Fixes until someone steps up.
 
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+Message-ID: <20250531-rsg-v1-1-e0bae1e1d90e@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20250603184710.25651-1-thuth@redhat.com>
 ---
- tests/functional/test_avr_mega2560.py | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ MAINTAINERS | 16 ++++++++--------
+ .mailmap    |  3 ++-
+ 2 files changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/tests/functional/test_avr_mega2560.py b/tests/functional/test_avr_mega2560.py
-index 8e47b4200b1..6359b72af39 100755
---- a/tests/functional/test_avr_mega2560.py
-+++ b/tests/functional/test_avr_mega2560.py
-@@ -18,12 +18,10 @@
- # along with this program.  If not, see <http://www.gnu.org/licenses/>.
- #
+diff --git a/MAINTAINERS b/MAINTAINERS
+index eb2b338fb11..8d2fd4d57d9 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2519,7 +2519,7 @@ F: tests/qtest/fuzz-megasas-test.c
  
--import time
-+from qemu_test import QemuSystemTest, Asset, wait_for_console_pattern
+ Network packet abstractions
+ M: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+-R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ S: Maintained
+ F: include/net/eth.h
+ F: net/eth.c
+@@ -2549,13 +2549,13 @@ F: docs/specs/rocker.rst
  
--from qemu_test import QemuSystemTest, Asset
+ e1000x
+ M: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+-R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ S: Maintained
+ F: hw/net/e1000x*
  
- class AVR6Machine(QemuSystemTest):
--    timeout = 5
+ e1000e
+ M: Dmitry Fleytman <dmitry.fleytman@gmail.com>
+-R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ S: Maintained
+ F: hw/net/e1000e*
+ F: tests/qtest/fuzz-e1000e-test.c
+@@ -2563,9 +2563,9 @@ F: tests/qtest/e1000e-test.c
+ F: tests/qtest/libqos/e1000e.*
  
-     ASSET_ROM = Asset(('https://github.com/seharris/qemu-avr-tests'
-                        '/raw/36c3e67b8755dcf/free-rtos/Demo'
-@@ -40,13 +38,12 @@ def test_freertos(self):
-         self.set_machine('arduino-mega-2560-v3')
-         self.vm.add_args('-bios', rom_path)
-         self.vm.add_args('-nographic')
-+        self.vm.set_console()
-         self.vm.launch()
+ igb
+-M: Akihiko Odaki <akihiko.odaki@daynix.com>
++M: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ R: Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>
+-S: Maintained
++S: Odd Fixes
+ F: docs/system/devices/igb.rst
+ F: hw/net/igb*
+ F: tests/functional/test_netdev_ethtool.py
+@@ -2910,7 +2910,7 @@ Core Audio framework backend
+ M: Gerd Hoffmann <kraxel@redhat.com>
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Christian Schoenebeck <qemu_oss@crudebyte.com>
+-R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ S: Odd Fixes
+ F: audio/coreaudio.m
  
--        time.sleep(2)
--        self.vm.shutdown()
-+        wait_for_console_pattern(self,
-+                        'XABCDEFGHIJKLMNOPQRSTUVWXABCDEFGHIJKLMNOPQRSTUVWXA')
+@@ -3211,7 +3211,7 @@ F: tests/functional/test_vnc.py
+ Cocoa graphics
+ M: Peter Maydell <peter.maydell@linaro.org>
+ M: Philippe Mathieu-Daudé <philmd@linaro.org>
+-R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ S: Odd Fixes
+ F: ui/cocoa.m
  
--        self.assertIn('ABCDEFGHIJKLMNOPQRSTUVWXABCDEFGHIJKLMNOPQRSTUVWX',
--                self.vm.get_log())
+@@ -3738,7 +3738,7 @@ F: util/iova-tree.c
  
- if __name__ == '__main__':
-     QemuSystemTest.main()
+ elf2dmp
+ M: Viktor Prutyanov <viktor.prutyanov@phystech.edu>
+-R: Akihiko Odaki <akihiko.odaki@daynix.com>
++R: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+ S: Maintained
+ F: contrib/elf2dmp/
+ 
+diff --git a/.mailmap b/.mailmap
+index 33fe75400fe..e7271852dc6 100644
+--- a/.mailmap
++++ b/.mailmap
+@@ -67,7 +67,8 @@ Andrey Drobyshev <andrey.drobyshev@virtuozzo.com> Andrey Drobyshev via <qemu-blo
+ BALATON Zoltan <balaton@eik.bme.hu> BALATON Zoltan via <qemu-ppc@nongnu.org>
+ 
+ # Next, replace old addresses by a more recent one.
+-Akihiko Odaki <akihiko.odaki@daynix.com> <akihiko.odaki@gmail.com>
++Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> <akihiko.odaki@daynix.com>
++Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp> <akihiko.odaki@gmail.com>
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com> <aleksandar.markovic@mips.com>
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com> <aleksandar.markovic@imgtec.com>
+ Aleksandar Markovic <aleksandar.qemu.devel@gmail.com> <amarkovic@wavecomp.com>
 -- 
 2.49.0
 
