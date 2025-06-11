@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D3A11C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 10:58:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B2BC677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 11:02:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPJ9E-0004sc-7Q; Wed, 11 Jun 2025 06:57:36 -0400
+	id 1uPJDY-0006RV-2t; Wed, 11 Jun 2025 07:02:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uPJ9A-0004sG-Da
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 06:57:32 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
+ id 1uPJDG-0006MT-6F
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 07:01:49 -0400
+Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uPJ98-0003gt-Fv
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 06:57:32 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-606ddbda275so11830714a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 03:57:28 -0700 (PDT)
+ id 1uPJDC-0004DU-Vv
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 07:01:44 -0400
+Received: by mail-ed1-x532.google.com with SMTP id
+ 4fb4d7f45d1cf-607cf70b00aso7262535a12.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 04:01:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749639447; x=1750244247; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749639697; x=1750244497; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TephkakpXOKkZja43JYV7fzw/Bf9/74knzYT3p3IV/I=;
- b=ZBISPhEc/5o4F9YxkMAsm0U0gpiRHAw260YfRRDU9usZvSajgqCFmooomnjKJLBq8j
- Aull0b+MyGt3MReE/xoZE4QN59cRALHW59Zu6g/55v13186qTPxH5qqBq+KEo+AulNLb
- 3PKN0yAMvnemfNFnRakHpE6vtDFwWX5Jgjxkj5G1VHnJb5MJoP0iImULu0ZkpUyG/YS6
- +2M6H+Fw57sDMQ/Uy4YHLl2Ow3CR78PmULCSl233M83c2AisBQljaSfBUaU5zE48VJXZ
- sCYdTb28CNIhheJeQXr0lwaOEowQhDCqchGfr4L1qa8efgGwdwjsAkvdo4iBDWhrsl8L
- lKRg==
+ bh=vt/SCwmnQlT6n+0Kv3RM9z5QLZhhYbVKruVNO0y729U=;
+ b=WtN0GBszs0YvSc3LVDhbQC2XhkL3O6u3TYIlTOAlpN9Kxt1bKEpa6QjeDZx8dKCAji
+ 548IW15UGxHs3YNnRtKnS8dPp8mjHFJoZ79cGS/pcOm2jR+v1thAw2zfrBfObyDczCZ/
+ IUtx3MNM0uLDei/L4SnOD/z1r6yDXbQ1TZ6lfAx2uYGZ0tucGGdQTNZeAOqxIAwZ+1Sc
+ HrZprPdiZ1caqiuVOYywS7DuKzequTnUP9EV4gam5PHGbwtuKtFKK2PMsqjuQYJ6VWC6
+ Y3/m2IJPygkCp2jtC3uodWb0zftlXuWTmLW7UcOErf5s1OG5KSsFlerEqBlOyRlYOref
+ ZNqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749639447; x=1750244247;
+ d=1e100.net; s=20230601; t=1749639697; x=1750244497;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=TephkakpXOKkZja43JYV7fzw/Bf9/74knzYT3p3IV/I=;
- b=HrBKldgBW2OHUt1k1evKqUJZt7zWWxj0ETavmvJyzQw+GM3B0ZExkLUk0oqVIxFq2E
- aQ7aDBhofZDTZnby8yaVoMX+mE6svlT1tXK4DFYiOxyINwu7f5VK9GARouADeTX3QuU2
- 0xD2zVLdZlyrBu0I95egr2UU+Ng59a7l5TeagpYNeAjc8PZ93yWYvs7aGWegA036oMgB
- UkUaChsczsq/WBGZDkjiygublQiPeuYPTcJyBzewNox2EcAiSsIj+Pf6+CZWhjMAEqln
- GSW8E9nQPIVYbDqv4uwYSgXPhmEJAJmiSKeicwANXv/A+ae9PLVj3wUwJyiLxEmfAWPI
- 1r/Q==
-X-Gm-Message-State: AOJu0YzY0ErZq0Ccr4xMtOn90ie6x6SRpN3aK+fnuStDB8QjmE5usCkv
- B8i5lL/tqML+Lxr+xLfmEHwqflOiDPIESBURCHPIGxJdwPKIHxK5TOVLnI7Xa0DOvYvraeUuJpK
- jrVIAhXWliK5efI3yxDh0z1JyvasrQgNUKNYIi2ZOIQ==
-X-Gm-Gg: ASbGncuMrPvqfXVLqC20a3JBNl5f5yPp/AT1uLzhIVrw4C0L0DhLwUAVvCu0Lvci3Oo
- UAjKfZNd8eKFWqSLduSuV0sztkOvL3CJwqXtSYzNOLAbHEzNI9BpCIMJqQacTRSvvpBgUTlbJzJ
- 9H8PDZBvW0jpt/ACWVmSaxvR95eR278cTewcFM54WgCHsk
-X-Google-Smtp-Source: AGHT+IG9MkPJYu6vzWS21PFBiCmWmRZJOQPZ9b6637ExDONViHZ8MF+k95ArrR7IoPfO/bEP2mv8cjKUNwIzbcq4VNY=
-X-Received: by 2002:a05:6402:84d:b0:601:dc49:a99f with SMTP id
- 4fb4d7f45d1cf-60846c4d8bemr2342367a12.18.1749639447259; Wed, 11 Jun 2025
- 03:57:27 -0700 (PDT)
+ bh=vt/SCwmnQlT6n+0Kv3RM9z5QLZhhYbVKruVNO0y729U=;
+ b=HNLZhaqjJHBWt3qLt5myMzC4079/9T501xDGk4BbBDITfpV6q/ua9T2+L6IR8H8gae
+ qKE4ULlq38LbIKwMyC9RgrgSSKCrpDFQJxuAU8kMhPFPvEVhz5khtqmiCqxw2KRz7HZu
+ 7P1gp9DRZYAWQ7tcXXULCTYIGNM7A+VVDrTIzRXWsp8O4h11yvCQNcPaM5yGa9eUD4dS
+ RIHgwqLcSOwPwXr+kYgmUK7nbNppwb+MSfBoVioU9pbSuoUo9bUG9PdITUpTVKG+ax7p
+ NTeZO3XXFj46RScUDDa85viTqAG3+RHoXjUk8WPXqyrBh4Ph7Lq4NLiSSkQ6IzJkgq/F
+ vRaQ==
+X-Gm-Message-State: AOJu0YwBCHOBRN8S+M1+A0Bi5wTiXcriAbXl2pFTIgIcHyedY4kC45Ms
+ y4VMB53b5MogRzp+vL1NcwbK1wgGd0/fXLVzJ4kyfOKVDAyaX5NcTUj2yO3pFw32rEjsm04MXdD
+ +IcvlAL0/8m2RKUxPTZ9X9lnJOf2kxKhvr6ubyUJZGmdtnVATXZYAzcLVWQ==
+X-Gm-Gg: ASbGncvjEE3endpg210a55QSM+XIRuCMGwa3h1q7Tq5POpqXja8NPfaCetqToTeKiJW
+ V+WnwyKjk1Pd5p3+aQayzwh6+wvTVrtixRuvUjEg2ocACye2QAAmq5pYSs4r0MSqZ8kGjhhAq0k
+ y5iqteXBWzWr1sry+k67qCFeWk7KEm/7qLofQB8+aiJjCf
+X-Google-Smtp-Source: AGHT+IForeT7rKQlxG8UT9hg5Z6ri5RJJeknnkisRZKlYmr998RNQIoOCQgPK5Uh1ZZ4RkM907JGRio3dj39UVfBUGs=
+X-Received: by 2002:a05:6402:1941:b0:602:48:ba35 with SMTP id
+ 4fb4d7f45d1cf-6084686a2c2mr2490064a12.13.1749639696981; Wed, 11 Jun 2025
+ 04:01:36 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250610202110.2243-1-shentey@gmail.com>
- <20250610202110.2243-2-shentey@gmail.com>
-In-Reply-To: <20250610202110.2243-2-shentey@gmail.com>
+ <20250610202110.2243-3-shentey@gmail.com>
+In-Reply-To: <20250610202110.2243-3-shentey@gmail.com>
 From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 11 Jun 2025 13:57:00 +0300
-X-Gm-Features: AX0GCFs4WbWvamt5AfO_ND4wzfJ-ZEA6AimiMP8deSGNRZ60-yqof-eZhiwdcqw
-Message-ID: <CAAjaMXbtcyB3J3AvGh8ZW3MSi41uMaE+TkZwipCs5pg6wvYJ=w@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] rust/qemu-api: Add initial logging support based
- on C API
+Date: Wed, 11 Jun 2025 14:01:10 +0300
+X-Gm-Features: AX0GCFueGHVhUMv8hjnKS8D9J0rpms8L-yAMYVK3iwonKZy--GkcLVhiWQMqz3o
+Message-ID: <CAAjaMXbvKvGhWGbxj69vudOzCUbs+AJ+xmZ20jbPirZTHJZyKQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/2] rust/hw/char/pl011/src/device: Implement logging
 To: Bernhard Beschow <shentey@gmail.com>
 Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x52c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::532;
+ envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x532.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,177 +98,77 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Tue, Jun 10, 2025 at 11:21=E2=80=AFPM Bernhard Beschow <shentey@gmail.co=
 m> wrote:
 >
-> A log_mask!() macro is provided which expects similar arguments as the
-> C version. However, the formatting works as one would expect from Rust.
->
-> To maximize code reuse the macro is just a thin wrapper around
-> qemu_log(). Also, just the bare minimum of logging masks is provided
-> which should suffice for the current use case of Rust in QEMU.
+> Now that there is logging support in Rust for QEMU, use it in the pl011
+> device.
 >
 > Signed-off-by: Bernhard Beschow <shentey@gmail.com>
 > ---
->  docs/devel/rust.rst       |  1 +
->  rust/wrapper.h            |  2 ++
->  rust/qemu-api/meson.build |  1 +
->  rust/qemu-api/src/lib.rs  |  1 +
->  rust/qemu-api/src/log.rs  | 76 +++++++++++++++++++++++++++++++++++++++
->  5 files changed, 81 insertions(+)
->  create mode 100644 rust/qemu-api/src/log.rs
+>  rust/hw/char/pl011/src/device.rs | 12 ++++++++----
+>  1 file changed, 8 insertions(+), 4 deletions(-)
 >
-> diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
-> index 47e9677fcb..dc8c44109e 100644
-> --- a/docs/devel/rust.rst
-> +++ b/docs/devel/rust.rst
-> @@ -162,6 +162,7 @@ module           status
->  ``errno``        complete
->  ``error``        stable
->  ``irq``          complete
-> +``log``          proof of concept
->  ``memory``       stable
->  ``module``       complete
->  ``qdev``         stable
-> diff --git a/rust/wrapper.h b/rust/wrapper.h
-> index 6060d3ba1a..15a1b19847 100644
-> --- a/rust/wrapper.h
-> +++ b/rust/wrapper.h
-> @@ -48,6 +48,8 @@ typedef enum memory_order {
->  #endif /* __CLANG_STDATOMIC_H */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/log.h"
-> +#include "qemu/log-for-trace.h"
->  #include "qemu/module.h"
->  #include "qemu-io.h"
->  #include "system/system.h"
-> diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
-> index cac8595a14..33caee3c4f 100644
-> --- a/rust/qemu-api/meson.build
-> +++ b/rust/qemu-api/meson.build
-> @@ -21,6 +21,7 @@ _qemu_api_rs =3D static_library(
->        'src/errno.rs',
->        'src/error.rs',
->        'src/irq.rs',
-> +      'src/log.rs',
->        'src/memory.rs',
->        'src/module.rs',
->        'src/prelude.rs',
-> diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
-> index 93902fc94b..e20be35460 100644
-> --- a/rust/qemu-api/src/lib.rs
-> +++ b/rust/qemu-api/src/lib.rs
-> @@ -21,6 +21,7 @@
->  pub mod errno;
->  pub mod error;
->  pub mod irq;
-> +pub mod log;
->  pub mod memory;
->  pub mod module;
->  pub mod qdev;
-> diff --git a/rust/qemu-api/src/log.rs b/rust/qemu-api/src/log.rs
-> new file mode 100644
-> index 0000000000..9e3c61b8b7
-> --- /dev/null
-> +++ b/rust/qemu-api/src/log.rs
-> @@ -0,0 +1,76 @@
-> +// Copyright 2025 Bernhard Beschow <shentey@gmail.com>
-> +// SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +#[repr(u32)]
-> +/// Represents specific error categories within QEMU's logging system.
-> +///
-> +/// The `Log` enum provides a Rust abstraction for logging errors, corre=
-sponding
-> +/// to a subset of the error categories defined in the C implementation.
-> +pub enum Log {
-> +    /// Log an invalid access caused by the guest.
-> +    /// Corresponds to `LOG_GUEST_ERROR` in the C implementation.
-> +    GuestError =3D crate::bindings::LOG_GUEST_ERROR,
-> +
-> +    /// Log guest access of unimplemented functionality.
-> +    /// Corresponds to `LOG_UNIMP` in the C implementation.
-> +    Unimp =3D crate::bindings::LOG_UNIMP,
-> +}
-> +
-> +/// A macro to log messages conditionally based on a provided mask.
-> +///
-> +/// The `log_mask` macro checks whether the given mask matches the curre=
-nt log
-> +/// level and, if so, formats and logs the message. It is the Rust count=
-erpart
-> +/// of the qemu_log_mask() macro in the C implementation.
-> +///
-> +/// # Parameters
-> +///
-> +/// - `$mask`: A log level mask. This should be a variant of the `Log` e=
-num.
-> +/// - `$fmt`: A format string following the syntax and rules of the `for=
-mat!`
-> +///   macro. It specifies the structure of the log message.
-> +/// - `$args`: Optional arguments to be interpolated into the format str=
-ing.
-> +///
-> +/// # Example
-> +///
-> +/// ```
-> +/// use qemu_api::log::Log;
-> +/// use qemu_api::log_mask;
-> +///
-> +/// let error_address =3D 0xbad;
-> +/// log_mask!(
-> +///     Log::GuestError,
-> +///     "Address 0x{error_address:x} out of range\n"
-> +/// );
-> +/// ```
-> +///
-> +/// It is also possible to use printf-style formatting, as well as havin=
-g a
-> +/// trailing `,`:
-> +///
-> +/// ```
-> +/// use qemu_api::log::Log;
-> +/// use qemu_api::log_mask;
-> +///
-> +/// let error_address =3D 0xbad;
-> +/// log_mask!(
-> +///     Log::GuestError,
-> +///     "Address 0x{:x} out of range\n",
-> +///     error_address,
-> +/// );
-> +/// ```
-> +#[macro_export]
-> +macro_rules! log_mask {
-> +    ($mask:expr, $fmt:tt $($args:tt)*) =3D> {{
-> +        // Type assertion to enforce type `Log` for $mask
-> +        let _: Log =3D $mask;
-> +
-> +        if unsafe {
-> +            (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::ra=
-w::c_int)) !=3D 0
-> +        } {
-> +            let formatted_string =3D format!($fmt $($args)*);
-> +            let c_string =3D std::ffi::CString::new(formatted_string).un=
-wrap();
-> +
-> +            unsafe {
-> +                ::qemu_api::bindings::qemu_log(c_string.as_ptr());
-> +            }
-> +        }
-> +    }};
-> +}
-> --
-> 2.49.0
->
+> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/de=
+vice.rs
+> index be8387f6f2..17a4e9269c 100644
+> --- a/rust/hw/char/pl011/src/device.rs
+> +++ b/rust/hw/char/pl011/src/device.rs
+> @@ -8,6 +8,8 @@
+>      chardev::{CharBackend, Chardev, Event},
+>      impl_vmstate_forward,
+>      irq::{IRQState, InterruptSource},
+> +    log::Log,
+> +    log_mask,
+>      memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuild=
+er},
+>      prelude::*,
+>      qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetTy=
+pe, ResettablePhasesImpl},
+> @@ -275,8 +277,7 @@ pub(self) fn write(
+>              DMACR =3D> {
+>                  self.dmacr =3D value;
+>                  if value & 3 > 0 {
+> -                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemen=
+ted\n");
+> -                    eprintln!("pl011: DMA not implemented");
+> +                    log_mask!(Log::Unimp, "pl011: DMA not implemented\n"=
+);
+>                  }
+>              }
+>          }
+> @@ -538,7 +539,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
+>                  u64::from(device_id[(offset - 0xfe0) >> 2])
+>              }
+>              Err(_) =3D> {
+> -                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offse=
+t 0x%x\n", (int)offset);
+> +                log_mask!(Log::GuestError, "pl011_read: Bad offset {offs=
+et}\n");
 
-Maybe we could take this chance to remove the requirement for trailing
-newline? Not urgent, and also something we could change afterwards
-anyway. We could also introduce log_mask_ln! macro but now I'm just
-bikeshedding.
+Nit:
 
-Besides that, I think it'd be useful to have the macro re-exported in
-rust/qemu-api/src/prelude.rs as well. Please add it for the next
-version.
+log_mask!(Log::GuestError, "pl011_read: Bad offset 0x{offset:x}\n");
 
---=20
+Also, pl011_read is the C device function. You can put
+`PL011State::read: ` instead.
+
+>                  0
+>              }
+>              Ok(field) =3D> {
+> @@ -570,7 +571,10 @@ fn write(&self, offset: hwaddr, value: u64, _size: u=
+32) {
+>                  .borrow_mut()
+>                  .write(field, value as u32, &self.char_backend);
+>          } else {
+> -            eprintln!("write bad offset {offset} value {value}");
+> +            log_mask!(
+> +                Log::GuestError,
+> +                "pl011_write: Bad offset {offset} value {value}\n"
+> +            );
+
+Ditto
+
+
+
+--
 Manos Pitsidianakis
 Emulation and Virtualization Engineer at Linaro Ltd
 
