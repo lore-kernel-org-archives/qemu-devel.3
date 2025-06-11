@@ -4,82 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09B2BC677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 11:02:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 878A1C677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 11:06:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPJDY-0006RV-2t; Wed, 11 Jun 2025 07:02:04 -0400
+	id 1uPJHI-00086c-Uw; Wed, 11 Jun 2025 07:05:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uPJDG-0006MT-6F
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 07:01:49 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <manos.pitsidianakis@linaro.org>)
- id 1uPJDC-0004DU-Vv
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 07:01:44 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-607cf70b00aso7262535a12.2
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 04:01:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749639697; x=1750244497; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vt/SCwmnQlT6n+0Kv3RM9z5QLZhhYbVKruVNO0y729U=;
- b=WtN0GBszs0YvSc3LVDhbQC2XhkL3O6u3TYIlTOAlpN9Kxt1bKEpa6QjeDZx8dKCAji
- 548IW15UGxHs3YNnRtKnS8dPp8mjHFJoZ79cGS/pcOm2jR+v1thAw2zfrBfObyDczCZ/
- IUtx3MNM0uLDei/L4SnOD/z1r6yDXbQ1TZ6lfAx2uYGZ0tucGGdQTNZeAOqxIAwZ+1Sc
- HrZprPdiZ1caqiuVOYywS7DuKzequTnUP9EV4gam5PHGbwtuKtFKK2PMsqjuQYJ6VWC6
- Y3/m2IJPygkCp2jtC3uodWb0zftlXuWTmLW7UcOErf5s1OG5KSsFlerEqBlOyRlYOref
- ZNqA==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uPJHG-00085z-VA
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 07:05:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uPJHF-00055G-4T
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 07:05:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749639952;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=aF7LWn17pkhhg22fNCmAQAxb3U/YTglkfbLytrggQjk=;
+ b=dhhJZpuS5yx0EDU95OS/vsugysx0jHjrUh4PMFF+ApDSRtZsYLDjc8F/TalPlyWC13t3Bh
+ MJSLvFvNl7ew5K56UudDJcDfPodeI59d5GTb2b9BvAOipTWo4r89hEm2hQ7HN1ZQrc0jpE
+ h8qhRPvIgTvY+Ll5Dwqz7sH7WQuVN3I=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-659-qOFr8jewMVGFSpP5Sy6B_A-1; Wed, 11 Jun 2025 07:05:50 -0400
+X-MC-Unique: qOFr8jewMVGFSpP5Sy6B_A-1
+X-Mimecast-MFC-AGG-ID: qOFr8jewMVGFSpP5Sy6B_A_1749639949
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-450d64026baso40082535e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 04:05:50 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749639697; x=1750244497;
+ d=1e100.net; s=20230601; t=1749639948; x=1750244748;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vt/SCwmnQlT6n+0Kv3RM9z5QLZhhYbVKruVNO0y729U=;
- b=HNLZhaqjJHBWt3qLt5myMzC4079/9T501xDGk4BbBDITfpV6q/ua9T2+L6IR8H8gae
- qKE4ULlq38LbIKwMyC9RgrgSSKCrpDFQJxuAU8kMhPFPvEVhz5khtqmiCqxw2KRz7HZu
- 7P1gp9DRZYAWQ7tcXXULCTYIGNM7A+VVDrTIzRXWsp8O4h11yvCQNcPaM5yGa9eUD4dS
- RIHgwqLcSOwPwXr+kYgmUK7nbNppwb+MSfBoVioU9pbSuoUo9bUG9PdITUpTVKG+ax7p
- NTeZO3XXFj46RScUDDa85viTqAG3+RHoXjUk8WPXqyrBh4Ph7Lq4NLiSSkQ6IzJkgq/F
- vRaQ==
-X-Gm-Message-State: AOJu0YwBCHOBRN8S+M1+A0Bi5wTiXcriAbXl2pFTIgIcHyedY4kC45Ms
- y4VMB53b5MogRzp+vL1NcwbK1wgGd0/fXLVzJ4kyfOKVDAyaX5NcTUj2yO3pFw32rEjsm04MXdD
- +IcvlAL0/8m2RKUxPTZ9X9lnJOf2kxKhvr6ubyUJZGmdtnVATXZYAzcLVWQ==
-X-Gm-Gg: ASbGncvjEE3endpg210a55QSM+XIRuCMGwa3h1q7Tq5POpqXja8NPfaCetqToTeKiJW
- V+WnwyKjk1Pd5p3+aQayzwh6+wvTVrtixRuvUjEg2ocACye2QAAmq5pYSs4r0MSqZ8kGjhhAq0k
- y5iqteXBWzWr1sry+k67qCFeWk7KEm/7qLofQB8+aiJjCf
-X-Google-Smtp-Source: AGHT+IForeT7rKQlxG8UT9hg5Z6ri5RJJeknnkisRZKlYmr998RNQIoOCQgPK5Uh1ZZ4RkM907JGRio3dj39UVfBUGs=
-X-Received: by 2002:a05:6402:1941:b0:602:48:ba35 with SMTP id
- 4fb4d7f45d1cf-6084686a2c2mr2490064a12.13.1749639696981; Wed, 11 Jun 2025
- 04:01:36 -0700 (PDT)
+ bh=aF7LWn17pkhhg22fNCmAQAxb3U/YTglkfbLytrggQjk=;
+ b=jaO7U2A1b2K1GJXc6kpSD0w3uougOhc3vSZzlhlEDD5B5XuzL7dwKMRZkMqFfGoQ8O
+ 0W6iDEWDDQk2AtDoqrLUKURC5q4AiOIDAlStCcSA4oPwpb+fw4MdLUaGojPsAB+tGDnc
+ K42xkZYlzKmsEDcD1DYBokgar8hyPd501bJcTGRVHH8+AH65bOjRwqxmR5YV8wyHDfyS
+ u2Wi/GRZ8qX95pY9yAOF44hHncO+URaOgRG7jIf2eBP9yOaWw0/UAYV913DRkwwX0G/4
+ f19fudnZnrROAqQ6O37FXutmJWZbKI7y3lHcpDvbsqnZFVL3tYzFDkxUm0X7EXWn9pBh
+ bJ6g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+6xbrsBZZYYYvWh5JGm5s4WfzcycfU8PJeP0okCSobnVGkCD8DBMrS+rt6cxOZPxeXbEzOuqNV+VV@nongnu.org
+X-Gm-Message-State: AOJu0YywEpR56RWlvPWtTeX/pxhS5AbqT619kuTSeOSFmoDp/nMuuPli
+ 1oc6NanZiZRKEtAo65QvMG9sSBk/PjGV7brfAB1eYe5Eu23WJAj8yetJ+D/tSXp96ErTNs8ZbRO
+ 5XyHdfm7axG5MCats8Z3/PIFIJJZCrQQZHttzi1q1XvLiNZPYGgxeVitOTqaylZVr2gA7/oSp9p
+ GXKMtf87Q2HH67i+L4kl3a0snWcdAk+O9DliBkuKEBCg==
+X-Gm-Gg: ASbGncs4DY5pITgaIkwmrHo4GfyjHDYpvhNoS88YK4Vc3hkvkfKRNfpHecATLm/pheV
+ wf9qrGslL475KEBvccP7mNkppKePz2RLpdnLfxMIzJ3bLNHkfcI4KZ046siiYPGP3iR+Cot3q+I
+ fUeg==
+X-Received: by 2002:a05:6000:2301:b0:3a5:42:b17b with SMTP id
+ ffacd0b85a97d-3a5586cac26mr2035174f8f.29.1749639948388; 
+ Wed, 11 Jun 2025 04:05:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFqo/U5r7IN+KQsjwCtgoOdkY5TI/BNjAE9vGFM4UAA6LPlNIgj0XiGaASxFbBAWGx0yHGQda4X/5DGZQtrwqw=
+X-Received: by 2002:a05:6000:2301:b0:3a5:42:b17b with SMTP id
+ ffacd0b85a97d-3a5586cac26mr2035153f8f.29.1749639948099; Wed, 11 Jun 2025
+ 04:05:48 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250610202110.2243-1-shentey@gmail.com>
- <20250610202110.2243-3-shentey@gmail.com>
-In-Reply-To: <20250610202110.2243-3-shentey@gmail.com>
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Date: Wed, 11 Jun 2025 14:01:10 +0300
-X-Gm-Features: AX0GCFueGHVhUMv8hjnKS8D9J0rpms8L-yAMYVK3iwonKZy--GkcLVhiWQMqz3o
-Message-ID: <CAAjaMXbvKvGhWGbxj69vudOzCUbs+AJ+xmZ20jbPirZTHJZyKQ@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] rust/hw/char/pl011/src/device: Implement logging
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ <20250610202110.2243-2-shentey@gmail.com>
+ <CAAjaMXbtcyB3J3AvGh8ZW3MSi41uMaE+TkZwipCs5pg6wvYJ=w@mail.gmail.com>
+In-Reply-To: <CAAjaMXbtcyB3J3AvGh8ZW3MSi41uMaE+TkZwipCs5pg6wvYJ=w@mail.gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 11 Jun 2025 13:05:35 +0200
+X-Gm-Features: AX0GCFtBBKwf6_WTw-AJEPOpstVJA4JtOOxuTIxppkBOv4rxO49_WvdS7Lv5c60
+Message-ID: <CABgObfYgoYBJmZjin_Wj8JeEviFMM+vFa_QX_8Np+1n9apq4kw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] rust/qemu-api: Add initial logging support based
+ on C API
+To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org,
  qemu-rust@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=manos.pitsidianakis@linaro.org; helo=mail-ed1-x532.google.com
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,80 +108,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Jun 10, 2025 at 11:21=E2=80=AFPM Bernhard Beschow <shentey@gmail.co=
-m> wrote:
->
-> Now that there is logging support in Rust for QEMU, use it in the pl011
-> device.
->
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  rust/hw/char/pl011/src/device.rs | 12 ++++++++----
->  1 file changed, 8 insertions(+), 4 deletions(-)
->
-> diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/de=
-vice.rs
-> index be8387f6f2..17a4e9269c 100644
-> --- a/rust/hw/char/pl011/src/device.rs
-> +++ b/rust/hw/char/pl011/src/device.rs
-> @@ -8,6 +8,8 @@
->      chardev::{CharBackend, Chardev, Event},
->      impl_vmstate_forward,
->      irq::{IRQState, InterruptSource},
-> +    log::Log,
-> +    log_mask,
->      memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuild=
-er},
->      prelude::*,
->      qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetTy=
-pe, ResettablePhasesImpl},
-> @@ -275,8 +277,7 @@ pub(self) fn write(
->              DMACR =3D> {
->                  self.dmacr =3D value;
->                  if value & 3 > 0 {
-> -                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemen=
-ted\n");
-> -                    eprintln!("pl011: DMA not implemented");
-> +                    log_mask!(Log::Unimp, "pl011: DMA not implemented\n"=
-);
->                  }
->              }
->          }
-> @@ -538,7 +539,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
->                  u64::from(device_id[(offset - 0xfe0) >> 2])
->              }
->              Err(_) =3D> {
-> -                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offse=
-t 0x%x\n", (int)offset);
-> +                log_mask!(Log::GuestError, "pl011_read: Bad offset {offs=
-et}\n");
+On Wed, Jun 11, 2025 at 12:57=E2=80=AFPM Manos Pitsidianakis
+<manos.pitsidianakis@linaro.org> wrote:
 
-Nit:
+> Maybe we could take this chance to remove the requirement for trailing
+> newline? Not urgent, and also something we could change afterwards
+> anyway. We could also introduce log_mask_ln! macro but now I'm just
+> bikeshedding.
 
-log_mask!(Log::GuestError, "pl011_read: Bad offset 0x{offset:x}\n");
+Good idea; there is no "formatln!" but I think you could use concat instead=
+.
 
-Also, pl011_read is the C device function. You can put
-`PL011State::read: ` instead.
+If that doesn't work for whatever reason we can indeed add it later. I
+had the idea of a struct that wraps the logging functions
+qemu_log_trylock() and qemu_log_unlock() and implements io::Write; at
+which point, implementing log_mask_ln! (or _nl! following the unstable
+format_args_nl!) with writeln! would be trivial.
 
->                  0
->              }
->              Ok(field) =3D> {
-> @@ -570,7 +571,10 @@ fn write(&self, offset: hwaddr, value: u64, _size: u=
-32) {
->                  .borrow_mut()
->                  .write(field, value as u32, &self.char_backend);
->          } else {
-> -            eprintln!("write bad offset {offset} value {value}");
-> +            log_mask!(
-> +                Log::GuestError,
-> +                "pl011_write: Bad offset {offset} value {value}\n"
-> +            );
+> Besides that, I think it'd be useful to have the macro re-exported in
+> rust/qemu-api/src/prelude.rs as well. Please add it for the next
+> version.
 
-Ditto
+Yes, I agree.
 
+Paolo
 
-
---
-Manos Pitsidianakis
-Emulation and Virtualization Engineer at Linaro Ltd
 
