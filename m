@@ -4,201 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5403DC61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 08:43:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D78CC61CE7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 08:45:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPH3I-00063p-0X; Wed, 11 Jun 2025 04:43:20 -0400
+	id 1uPH5G-0006sn-U0; Wed, 11 Jun 2025 04:45:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uPH3G-00063a-Fz
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 04:43:18 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uPH5F-0006sH-9W
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 04:45:21 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uPH3E-0004YB-DW
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 04:43:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749631396; x=1781167396;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=3O9Z5bdl5oYA6/iZj7/0n7+hIdE/lJufkUlnLNQ8lUk=;
- b=Od+bamfwH/RPQwii7/sjZ1bqw4iKqrsZWGwuEg+jlCS3Q7MAX6YHdjQm
- JrRpCx4/u/FQ7gES/yGloqeZmDBrljeOCGzkG6RMnpOdRqrune2TxRan/
- AH9+EfEc0DdOzCLES+FY/0deqQsne9CEdlo81yj9SwPqERLtLe8exfxvO
- qr2YpzNgokclgTw2gc7LZ8OICHMBA9U9rpaCjSoeLEqoddDrap5Nbp4gw
- BFSiy+xRieokPfF4dAe9kBWV2BklcP391f/cOXgt36ycmRarsOHlPFoIm
- EzU63OPpry/IIu+r3fP81Q2RkcFPVOHo0ohfYZhOxzJjZAzp7e5zWcsX1 Q==;
-X-CSE-ConnectionGUID: mFnRYTWGSIq32OgVkvqEJA==
-X-CSE-MsgGUID: XEgdm2uTTcqKhkZCXHi30A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11460"; a="62379155"
-X-IronPort-AV: E=Sophos;i="6.16,227,1744095600"; d="scan'208";a="62379155"
-Received: from orviesa004.jf.intel.com ([10.64.159.144])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jun 2025 01:43:13 -0700
-X-CSE-ConnectionGUID: Up6093a/R1SxOBwroR0qMw==
-X-CSE-MsgGUID: PuMskLZXQtGwVc1g9uPebw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,227,1744095600"; d="scan'208";a="152120979"
-Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
- by orviesa004.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Jun 2025 01:39:02 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Wed, 11 Jun 2025 01:39:00 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Wed, 11 Jun 2025 01:39:00 -0700
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (40.107.94.66) by
- edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Wed, 11 Jun 2025 01:39:00 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=sSx4zCHOz7MPvypfr85Y6FfAWBBjJNC6SGMuLNuNpKZeU5ITq9esRkSQ6CrEmIQmfQyLi9fpcQdOA7LUIz7UU0trjEswN8tUcWaaM/DhZ1ZFyYANckg72XS+ucwYp8j+Tx8CyXaRalR4gAAMUH3FjgiUKL7QoPMxyV/ACqNWdyE8A6y+YHJOulfPpnuXmPNpC6jlXxEcHHOrjyHbs015PopQS58KMMkIklZ7OsVT1Hj+M6Poo3o+Zs7NlFsI0ZB2pAENA50NSqkzSyn/PyfUvUmMOPPkJ1mcQwtjEb4x0UgNbbQW3PJsDsf4SPYqahLRm3ViAxcwItSTplaUKQh+ow==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3O9Z5bdl5oYA6/iZj7/0n7+hIdE/lJufkUlnLNQ8lUk=;
- b=bnDfiDK28ldZLEC5vITpHyZTYG6QpM6z62bBMFzK66aEm9nbLHstkpJwlR2G24vjUFO67KCaR7BoXigo7HbDGQnjfClqdC98Hn074Yz9toH5P6e3eErC0v+BFsXnQRN9xkRSDU2+OH6g9Qye1A6BEfDQB4fbenTaPIVwVj5u7b6iUpO/tMbBZsfyjoarpmCN4gqDx4Y3CFQwzuKWagUXLWzlLh2OdJnIl0yIX1E2zRAZOBbh+qEk7sFkfACyycwC9in4KZY09FxC7n/5Vl/4xzbhacqoPxHGx8tXtfa9Jk+I/TOM5Ckdn6HdjMlwZpJlfWk3UIth1klJPe7ORKHyYA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by CO1PR11MB4993.namprd11.prod.outlook.com (2603:10b6:303:6c::23)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.31; Wed, 11 Jun
- 2025 08:38:58 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8813.024; Wed, 11 Jun 2025
- 08:38:58 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "john.levon@nutanix.com" <john.levon@nutanix.com>, "Peng, Chao P"
- <chao.p.peng@intel.com>, Alex Williamson <alex.williamson@redhat.com>
-Subject: RE: [PATCH] vfio/pci: Fix instance_size of VFIO_PCI_BASE
-Thread-Topic: [PATCH] vfio/pci: Fix instance_size of VFIO_PCI_BASE
-Thread-Index: AQHb2nsKCKwGGnAhz0mrYLLEqOa4e7P9jVMAgAAUzIA=
-Date: Wed, 11 Jun 2025 08:38:58 +0000
-Message-ID: <IA3PR11MB9136A50C1DB986FB0F3E99519275A@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250611024228.423666-1-zhenzhong.duan@intel.com>
- <58e02d61-7f6e-41bb-a7a5-f1058e52af31@redhat.com>
-In-Reply-To: <58e02d61-7f6e-41bb-a7a5-f1058e52af31@redhat.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CO1PR11MB4993:EE_
-x-ms-office365-filtering-correlation-id: c0e5c33f-ab80-49c3-3a5d-08dda8c368cb
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|1800799024|366016|376014|38070700018;
-x-microsoft-antispam-message-info: =?utf-8?B?d1JCcm9INzdZb21GSm9TTVhnL0k1MERhbDdWbG5jQktWQkQrZ1poMG1pSlZJ?=
- =?utf-8?B?Z1QrdW9Ob3ZPV2IzN05SMlVnbzFDMUVpY0t2bzFBZVpNWDRYNnZqUGFzYWlR?=
- =?utf-8?B?bHZ4ZnZhWWRWYmZpbXllR2VrVjAvVHNaazBWTFdyNWxMZ3ZHRm9jb0Y3NTk2?=
- =?utf-8?B?WWhsOEZSckd4L0NsZkljMGdWd3VZc2RGYzRwQTlXNE9OOUo4NWs2Z2FkSlp2?=
- =?utf-8?B?V3RGWDJ5ZmpwSWFYTE85d1FReVdSdVozS2drd1lVOGtDVmY1SmtwMXM4clpJ?=
- =?utf-8?B?dlR6ZmhKOFRFV2JOVmNmMjcxazNEaU9CZXd6VytlZWxnYXZDMmZwRGFRZkZl?=
- =?utf-8?B?OXBnQlg0S2lwei95Y2U4S2NWWEZnNm52eWZmditNUTZzMzRHZjhsd2o2NWRM?=
- =?utf-8?B?ZlpMNWorVmRTUFJTNy9Ma3pldHdvbVZramV6MUJ0WFRSRFp0U0V4UVdzcm1V?=
- =?utf-8?B?TDdURkpQUzl5RFQ0RzhNcmZIK1VEaEhPZkdQakYzWW9MOC9Gc0dsb3g5dDlD?=
- =?utf-8?B?eUR1cURrN2NDOGIzT0FBUUVlY3Rjamc1NDJIV3FydEhQLy8xUVp5WDBBQTZ2?=
- =?utf-8?B?aVltbVJRdHhGNjJvSnFmSGNMdjN1Smdzc2kvQXRJNm9IZFRscHhIK1g1SHhH?=
- =?utf-8?B?UXVvZ2R3TnowZnRaOTVqNjFUUGt4Mi9ueUJDVWNoUkp3ZE1qRXRHUXdmWDdG?=
- =?utf-8?B?RXhPbW4xcUZ4SjFKc3pYWEhLWStYeHdCK1huWnJsZk11YVlCS1RGVVFFRlZV?=
- =?utf-8?B?dUplcDIzN2hMWnBVUkVYODRpMkV4Uk1aVm1lT2tTNG5PSWRnekdPOGcxL0NG?=
- =?utf-8?B?SkFGVDN0eGFzcFl6TFY2VXlHV0p6WDVMYWh2N3hXVER6enEycmpDSFh1eVY0?=
- =?utf-8?B?TmJ5enJXa0JzaGswM1doVDFvOENneUdKb0JEQUxaOEpaUnhPYTB1dGl4OVNj?=
- =?utf-8?B?VzllM3U5dm5RemNBTXlvTWRmMGpPTmtmTXpJUUdzRFd5WjVGcHlrd1k0ZFZ3?=
- =?utf-8?B?VGp4Y200SWtJRWRnZ0VJYXpIaHlESkFwRXBzSHRxVXdCQUdTOFpEZFNCQVhs?=
- =?utf-8?B?YVk5RlZvc3dFR20zYkg3K284VXA0NU5RQUJ5KzlVeDNDZ0lrN3FoSGVudUhi?=
- =?utf-8?B?ejlWZVdtTG80WWJ3L3FQeDIvNW1yWGxsR2QwRU9nZVc0Y3JkTEZLeE1EcWtn?=
- =?utf-8?B?b1Q2UW1EaFVaalhMNTR4Z2xaT2Era3lQc0hncFBORlpNVVRLRnM1WitnbUlr?=
- =?utf-8?B?TWVUOVcwMkhQSnlDTWE1ZGRHTGRJSm1HUlIwZWNFTW85VUNFLzgrdzE5S2RW?=
- =?utf-8?B?bmp6dWc1TlVMaFYvcllteEI4RDlYeXhTQ2g2QjJPamdXdllJOEtpZnpJOWJT?=
- =?utf-8?B?ZFpyYmhabmpJUDV4V0JJVFZZSUNyMjVCVjlNaGJsUmE4enlQWmE5Q0xQTXZB?=
- =?utf-8?B?RmRUNjV1eHdCRnUralArYXV5U0FnaVcvQ01MY1lSRnB4dTFMWXR2eERvME5y?=
- =?utf-8?B?bWxmM1AwZlJqQXFZWFF0L3UrdDIwZU4wMWpRcmQxYlhYa2p2U2lYWk5vL2lP?=
- =?utf-8?B?THV2dnVycGxPWnNmczdTNzB2V1J6cHhXNUVyYlVJYnYveDdXdFF4bVFURHlh?=
- =?utf-8?B?WmpFcFNJaTJWVlNXSUdmb1ZFdU9qVE05d01rQkF0aHkyRThpZVZ1R3BuUnFv?=
- =?utf-8?B?OWdvZFkwNHpMYmt6OHZOTzlYSHZrNjBQR0kyUVVnVVpSN3N3TENKRWVJTEVq?=
- =?utf-8?B?VERzZ3pocGNvMCtGbmZxTzVEaTJQOWUrTlVYdkZJbitQczFNMHRjL3pScnJD?=
- =?utf-8?B?cXluYzQyL2l2aVlaTnhjQ0dvQ1BPQUlMNFBoVHdZQ29PM0kwY05KN3lPbUNj?=
- =?utf-8?B?V1hQVVhPdkluS0ZwNlN3eER0eXJFalY5UHIyMU5kUTZ6MWV6RkZEc2lXTlNk?=
- =?utf-8?B?MTR0MUpkUWs3QllxSTR3U0R2aE0xRlFCUnBTcHUxWjhOQ3c4UHJHNTNyZk84?=
- =?utf-8?Q?eCDjCEAuAJAiSQoiqqx9ArXRroPq5c=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(376014)(38070700018); DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?cTBKRGxxUTZvZVNQMEVxV0ZNN3Q1T0FDNzRySUJ2cGZGNWIvK2lUMFQ2N0ox?=
- =?utf-8?B?eHh5SGJTM1JtdzZLUTcvK2RkSHRHQ2F4ZnE0aWM5UDdUckNEWFFEVWd4WnRu?=
- =?utf-8?B?RC9DbkRMR0lPZUNpWnZ2UzlSV1d3Y25JaFRkTlhXTDlRT0wzSzRGYjVqbzJ1?=
- =?utf-8?B?emNCL2I5S005bXBpQ2hPam5STUxqeDlRY25SVUNQWHNzaWxtMHVqVjVaRXhF?=
- =?utf-8?B?RXhlc2wxR3Y3aHZsOHVTQVlwV09IRDdQQW9BVUMwckNIVFl3a3JjUlVMVGhP?=
- =?utf-8?B?VEtCeGswNDNDRVpVVnVUR3hPMU9wa2twd0JrSm5tVUx5RjI2RnhDR2VkQ0NM?=
- =?utf-8?B?ZlltVWlTbHJLY1Z2b1pDam1kdTJZajNrNW85WXFXYU9qV09vWFVRMkFMakN0?=
- =?utf-8?B?N0RIVzJtWHdGc0s0L0xRaUdibTF0Mml5R3NqM3J6RUJwQTcxTEZVWXZiR0x1?=
- =?utf-8?B?aEZ5SkdDLzBsUzJVQWpJK1lnVS90WXRoWTRackxoUkVzOFQyQzlXSVNmaUtO?=
- =?utf-8?B?MXNxZ09LOElpUmJScnZwbDNDay9BUkJPZ1NWOVRnQ1ZqMmFuV2pXWVR5YmRO?=
- =?utf-8?B?elN4cFdVLzFFdFVReWFuZmZQRzByYnYwUTJLUWJ0L3FzUjA4SWJXd0xKaVlm?=
- =?utf-8?B?Y3FGV1dmRm13Zy8vWkdhL0ovdVVnNXRqbm14cnM1NW1ZdUtmQnhpZll6Z2tp?=
- =?utf-8?B?NnJsK1V3ampNRmJUVnZTaWxsRDNvdk5kYjRHNDN1OTFuWGE4VVU5Tk9Ed3BQ?=
- =?utf-8?B?dE9wd2EwOE9BSVkwaXlrV0ppSWZVUk9DNC9QVUIrL0svYXBKeGFoQlljVHph?=
- =?utf-8?B?ei8xejBJRk16cURSay8yaHNuay9DdWlrUTN1ZHZlMitpcXg3ZmhUZXlwZ0Ny?=
- =?utf-8?B?TnZCOFZHSTRwMFloLzZiS2NOVEEvMTlEMFRwc28yMGpzZVA5WENsSHZOdTZt?=
- =?utf-8?B?Z2tuSWdFMWhYNXhTbDBCM0lUU1JVbmd2RU5jN1hNMUNCR2RodE4vTDA1UzQv?=
- =?utf-8?B?NXR2aFgwd1JEYnpVVko1OUJ5NDc2WG1vaWZlMFk0Z3k1L29KSlhodDBhbk92?=
- =?utf-8?B?Qy9TdFREaTNid3BkQUhtZlJIVjNaVGVxeXU2TFZXczNvMGtha3NFeHdvRWR6?=
- =?utf-8?B?Y21tanEra1VLWVg5VWZRMWFuOXpva21QcmZvc1VPME1ObEo3YUllVmV2b0R0?=
- =?utf-8?B?TUgxTTFTOFhFUldSWUxCT21LQy9melVwYktRT3FHNkV5UEtWUkxSa1JGTEVT?=
- =?utf-8?B?UklZK1lPZ2kxSGZBWEUyNU5yVWVONm96ME1EdU9FdUd5Ym83cFNCbmtFRDNz?=
- =?utf-8?B?ODkwRjc3WTV5enQ2RktWVFBGL1BlL3k4dVc1K0VNSzlOdTZVRWdrSmhGRXpZ?=
- =?utf-8?B?MElTcUhkQzRaNXRDQVZ6SWRtUmtEV1RsNVBzV1AyaWFjZEZzUUI4VXJPc05R?=
- =?utf-8?B?U3lsM1FPVU90ai9RUWVIOFY3RkxOci9ZUmZwVzl1SnhiWG9PTnU4dUJyOW5s?=
- =?utf-8?B?RWE5RDRFZGpwajlYUXBXZHhIQlV3VTg2N2Q0OU4xNzIvVlh1M0s1SlkyZm9J?=
- =?utf-8?B?eFdmb3RCb3JlTjlUNitqdjdNVU5YTS9WUmVJQ3JUQlZQRlR1RGZnRnZzalgw?=
- =?utf-8?B?YTMrWTRRV2xMOEJ4a3F6a25VQjZNT3N3T1RVOU9uNzdJcytGczdqSVJmaE5p?=
- =?utf-8?B?cUxmd0xkM0k4VitROUR4T1FBZW5kS0hSckw5eDFKemlYK053NXIxc2J1NGwr?=
- =?utf-8?B?RUErOEdMSmxqVTIvZkpFWk94VFRpL3lpYjJrV0NXeEwyZDhHMkE5KzhlaHFm?=
- =?utf-8?B?bkZ2Z1NFWE9zN2ZSd2JXY2pjbSsxcEgzRFFObjRva2N2WnV1K0lJYUlHUHdx?=
- =?utf-8?B?S2I4SjREU2p2OWltaTZ6OENuYldrcjcwWXVwNkpkdXlkcXc1RTRVekxxdnhC?=
- =?utf-8?B?eDRzWVF5a2hKRkVwVkhra283TThYWjlLdUN5dENlNmI1Y1A4d2U1d1ppSkpo?=
- =?utf-8?B?cjJyMG9qWEJiMGRSYU50U0xaN2dUNm93NzFPZDVSTXkwVGFPNWYzVXlqekpi?=
- =?utf-8?B?SDcxSU5zUmtycldzdmlKcUFWYVZieW9iemFCeFBienhxTGdkck11SDcyblRv?=
- =?utf-8?Q?eVkftArv/xIHYGlv8uVw1pwWR?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uPH5C-0004pr-LK
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 04:45:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749631517;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=qHcCQnxFNGGxqdNhHq4fI4mDhbRpqL3ndh+sb3zoq/c=;
+ b=hC3Ac5QPXkMn9WPfWCNrBiemQVxDtTH1BQ4HKICXoJcEEBakXAZ1pW5Dssx58PwlPKmpdK
+ ZxgLKYJkeSRd7Y63w4ORqsvn+Xlc6mxizMxV1686C4KKyhG7UpIvA89FJ6T+FnSllPRPLv
+ wvO3C/7MTOoy2o3Cw1dpMPEAWc/7ubs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-458-oM-oDY_xPj2TgP1iX0vEMQ-1; Wed, 11 Jun 2025 04:45:16 -0400
+X-MC-Unique: oM-oDY_xPj2TgP1iX0vEMQ-1
+X-Mimecast-MFC-AGG-ID: oM-oDY_xPj2TgP1iX0vEMQ_1749631515
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-45320bfc18dso3234725e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 01:45:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749631514; x=1750236314;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qHcCQnxFNGGxqdNhHq4fI4mDhbRpqL3ndh+sb3zoq/c=;
+ b=GKyV53xqF4Fym/46jEHRz6+asFaTAMtAqKJY5ybMN2UsIF/37VKH5+UPEN/34OECxS
+ UlhCZ9eyKZmWgGt7VidKTZGi8127XMHeMY1bG6kgwxWzsJnAuGTUkXCez1EiOpNH64RT
+ jZmc0uhbQy18kj+eJsKds7ah4XQHsrCX4ZGUARX8yIkI05SOw7wweDr3wVXL9CgJOkZ8
+ mv7vi0UKFeqzl0cJ6ERC2dbTmEHrojl6mfhDHxo7xaJEB94QIKJBKwWyAH41t4XO6sFr
+ 3cfhyavTFW23wDbXzbjwkV2nmDBCRnuui9krJx4zq1RvT3ex0JK79Ecn89SAuAIHqQzj
+ sPAw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXIM8HRXQwUnTD39TrkSPCxlNfC7gxv6cKZp8OGplVpq4oFYAxlgct5s7g3uWaLW47eBCKL1kUGGy+y@nongnu.org
+X-Gm-Message-State: AOJu0YzTZJ4HErPR4TM50NMgQf57CzVdzth/WpC1p4OcL2rqczkXpk/q
+ KtOQBRuslNsNcq0uHz+FacLYkE6VkYw8jdTPX307mqRU4lRpa5je2Bv9gGWcldVz2OpxzFFLXQH
+ eDftxHpmhLGGQdTBiwJzK+p1Pb7JmJWw++cImEZ87gY0d16ffYyYAHVGuINEMsxBw
+X-Gm-Gg: ASbGncsO1dlVDYiCXBUP/p6jGYIGRYyT6pyy7FWuONzYTrit3Iru+C3ovCRSp49FeBW
+ gtb0LRfownnLfFyfdl1krul4KwJeScNI3rkmR/gcrOD+tI8Lnt2SDTj5YbeYF14+SgFZ2Z1T/+f
+ IXR46t2rSofPFp4JmJsSwgyo9+QozSUVnfYjxYNOJpACS9Bz1G6GVpE8xGeEXCSMiNpgX1ID7gy
+ 7XVL/ph/VCjwUJGa9VMZtn9cf9bzGV4jrxFwSVHmAeQSvQarRdDvPAPQ4wpY78c7Elfwo9YCS0R
+ pjCoK5BZcuBd06glATIav82sUgIikoLYtT4W2Dn/F9Q=
+X-Received: by 2002:a05:600d:d:b0:451:df07:d8e0 with SMTP id
+ 5b1f17b1804b1-453241e3b27mr21780315e9.11.1749631514501; 
+ Wed, 11 Jun 2025 01:45:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEvHRlqvXKxdW2djR5UamZ2YpBMQd5FGVce56p9dm6vFCHx2xPwY70WXA+y9VzzqFVwZS5czg==
+X-Received: by 2002:a05:600d:d:b0:451:df07:d8e0 with SMTP id
+ 5b1f17b1804b1-453241e3b27mr21779945e9.11.1749631513947; 
+ Wed, 11 Jun 2025 01:45:13 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-45325205048sm14213375e9.21.2025.06.11.01.45.12
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Jun 2025 01:45:12 -0700 (PDT)
+Date: Wed, 11 Jun 2025 10:45:11 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v2 02/25] hw/arm/virt: Introduce machine state acpi
+ pcihp flags and props
+Message-ID: <20250611104511.55152616@imammedo.users.ipa.redhat.com>
+In-Reply-To: <13792b72-d336-41b8-8ac7-8790e10f833c@redhat.com>
+References: <20250527074224.1197793-1-eric.auger@redhat.com>
+ <20250527074224.1197793-3-eric.auger@redhat.com>
+ <20250527135813.2d6cde91@imammedo.users.ipa.redhat.com>
+ <d6bd4794-bcee-4701-8e63-4adee91120d9@redhat.com>
+ <20250528123325.750529a4@imammedo.users.ipa.redhat.com>
+ <13792b72-d336-41b8-8ac7-8790e10f833c@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: c0e5c33f-ab80-49c3-3a5d-08dda8c368cb
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Jun 2025 08:38:58.6164 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: QgFrWK+F/xN92AiDXPPVGGTO3pKWhcc470bE4bqmhIm4rcFjvEe6ukQymU+K7265cSTbLmUsDsp2XPSYKtU6ZMrhIOC7ZPdcDDeFfqZZhMA=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB4993
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.11;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -214,18 +119,216 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEPDqWRyaWMgTGUgR29hdGVy
-IDxjbGdAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIXSB2ZmlvL3BjaTogRml4IGlu
-c3RhbmNlX3NpemUgb2YgVkZJT19QQ0lfQkFTRQ0KPg0KPk9uIDYvMTEvMjUgMDQ6NDIsIFpoZW56
-aG9uZyBEdWFuIHdyb3RlOg0KPj4gQ3VycmVudGx5IHRoZSBmaW5hbCBpbnN0YW5jZV9zaXplIG9m
-IFZGSU9fUENJX0JBU0UgaXMgc2l6ZW9mKFBDSURldmljZSkuDQo+PiBJdCBzaG91bGQgYmUgc2l6
-ZW9mKFZGSU9QQ0lEZXZpY2UpLCBWRklPX1BDSSB1c2VzIHNhbWUgc3RydWN0dXJlIGFzDQo+PiBi
-YXNlIGNsYXNzIFZGSU9fUENJX0JBU0UsIHNvIG5vIG5lZWQgdG8gc2V0IGl0cyBpbnN0YW5jZV9z
-aXplIGV4cGxpY2l0bHkuDQo+Pg0KPj4gVGhpcyBpc24ndCBjYXRhc3Ryb3BoaWMgb25seSBiZWNh
-dXNlIFZGSU9fUENJX0JBU0UgaXMgYW4gYWJzdHJhY3QgY2xhc3MuDQo+Pg0KPj4gRml4ZXM6IGQ0
-ZTM5MmQwYTk5YiAoInZmaW86IGFkZCB2ZmlvLXBjaS1iYXNlIGNsYXNzIikNCj4+IFNpZ25lZC1v
-ZmYtYnk6IFpoZW56aG9uZyBEdWFuIDx6aGVuemhvbmcuZHVhbkBpbnRlbC5jb20+DQo+DQo+DQo+
-SGV5LCB3ZSB3ZXJlIGRpc2N1c3NpbmcgdGhpcyBpc3N1ZSBvbiBJUkMgeWVzdGVyZGF5ICgjcWVt
-dSBvbiBPRlRDKQ0KDQpBaCwgV2hhdCBhIGNvaW5jaWRlbmNlIQ0KDQpCUnMsDQpaaGVuemhvbmcN
-Cg0K
+On Wed, 11 Jun 2025 08:53:28 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
+
+> Hi Gustavo, Alex,
+> 
+> On 5/28/25 12:33 PM, Igor Mammedov wrote:
+> > On Tue, 27 May 2025 15:54:15 +0200
+> > Eric Auger <eric.auger@redhat.com> wrote:
+> >  
+> >> Hi Igor,
+> >>
+> >> On 5/27/25 1:58 PM, Igor Mammedov wrote:  
+> >>> On Tue, 27 May 2025 09:40:04 +0200
+> >>> Eric Auger <eric.auger@redhat.com> wrote:
+> >>>    
+> >>>> acpi_pcihp VirtMachineClass state flag will allow
+> >>>> to opt in for acpi pci hotplug. This is guarded by a
+> >>>> class no_acpi_pcihp flag to manage compats (<= 10.0
+> >>>> machine types will not support ACPI PCI hotplug).    
+> >>> there is no reason to put an effort in force disabling it
+> >>> on old machines, as long as code works when explicitly
+> >>> enabled property on CLI.
+> >>>
+> >>> See comment below on how to deal with it 
+> >>>    
+> >>>> Machine state acpi_pcihp flag must be set before the creation
+> >>>> of the GED device which will use it.
+> >>>>
+> >>>> Currently the ACPI PCI HP is turned off by default. This will
+> >>>> change later on for 10.1 machine type.    
+> >>> one thing to note, is that turning it on by default might
+> >>> cause change of NIC naming in guest as this brings in
+> >>> new "_Sxx" slot naming. /so configs tied to nic  go down the drain/
+> >>>
+> >>> Naming, we have, also happens to be broken wrt spec
+> >>> (it should be unique system wide, there was a gitlab issue for that,
+> >>> there is no easy fix that though)
+> >>>
+> >>> So I'd leave it disabled by default and let users to turn
+> >>> it on explicitly when needed.     
+> >> what is the status on q35, isn't it enabled by default? If so why
+> >> wouldn't we want the same setting on ARM? Is that because of the known
+> >> issue you report above?  
+> > Above issue is not a blocker (for thae lack of a good way to fix it)
+> >
+> > on q35 we have had a few complains and fixes, after pcihp was promoted
+> > to default (so hopefully that won't happen on with ARM). Also given
+> > that ARM VM is less popular like hood breaking someone setup is even less.
+> >
+> > That said I'd be cautions keep native hotplug as default,
+> > and only ones who need ACPI one, could turn it on explicitly.
+> >
+> > But well it's policies, so it's up to you ARM folks to decide what
+> > virt board should look like.  
+> What is your preference? Do you prefer enabling ACPI PCI HP by default
+> or the opposite.
+
+I'd prefer native PCIe hotplug being default,
+that way we have less chance of causing regressions not to mention
+less complexity (as acpi pcihp adds up quite a bit of it).
+
+And ones who want/need acpi-pcihp/acpi-index can enable it explicitly,
+to play with.
+
+> Anybody else?
+> 
+> On my end I think I would prefer to have the same default setting than
+> on x86 (ie. ACPI PCI hotplug set by default) but I have no strong
+> opinion either.
+> 
+> Thanks
+> 
+> Eric
+> >
+> >  
+> >> The no_foo compat stuff was especially introduced to avoid breaking the
+> >> guest ABI for old machine types (like the NIC naming alternation you evoke).  
+> > no_foo is just another way to handle compat stuff,
+> > and when it's more than one knob per feature it gets ugly really fast.
+> > Hence, I'd prefer pcihp done in x86 way aka:
+> >    hw_compat_OLD(ged.use_acpi_hotplug_bridge, false|true)
+> > to manage presence of ACPI hotplug on desired machine version.
+> > Side benefit it's consistent with how pcihp works on x86
+> >  
+> >>>    
+> >>>> We also introduce properties to allow disabling it.
+> >>>>
+> >>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> >>>> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> >>>> ---
+> >>>>  include/hw/arm/virt.h |  2 ++
+> >>>>  hw/arm/virt.c         | 27 +++++++++++++++++++++++++++
+> >>>>  2 files changed, 29 insertions(+)
+> >>>>
+> >>>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> >>>> index 9a1b0f53d2..10ea581f06 100644
+> >>>> --- a/include/hw/arm/virt.h
+> >>>> +++ b/include/hw/arm/virt.h
+> >>>> @@ -129,6 +129,7 @@ struct VirtMachineClass {
+> >>>>      bool no_tcg_lpa2;
+> >>>>      bool no_ns_el2_virt_timer_irq;
+> >>>>      bool no_nested_smmu;
+> >>>> +    bool no_acpi_pcihp;
+> >>>>  };
+> >>>>  
+> >>>>  struct VirtMachineState {
+> >>>> @@ -150,6 +151,7 @@ struct VirtMachineState {
+> >>>>      bool mte;
+> >>>>      bool dtb_randomness;
+> >>>>      bool second_ns_uart_present;
+> >>>> +    bool acpi_pcihp;
+> >>>>      OnOffAuto acpi;
+> >>>>      VirtGICType gic_version;
+> >>>>      VirtIOMMUType iommu;
+> >>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> >>>> index 9a6cd085a3..a0deeaf2b3 100644
+> >>>> --- a/hw/arm/virt.c
+> >>>> +++ b/hw/arm/virt.c
+> >>>> @@ -2397,8 +2397,10 @@ static void machvirt_init(MachineState *machine)
+> >>>>      create_pcie(vms);
+> >>>>  
+> >>>>      if (has_ged && aarch64 && firmware_loaded && virt_is_acpi_enabled(vms)) {
+> >>>> +        vms->acpi_pcihp &= !vmc->no_acpi_pcihp;    
+> >>> I don't particularly like no_foo naming as it makes code harder to read
+> >>> and combined with 'duplicated' field in machine state it make even things worse.
+> >>> (if I recall right Philippe was cleaning mess similar flags usage
+> >>> have introduced with ITS)
+> >>>
+> >>> instead of adding machine property (both class and state),
+> >>> I'd suggest adding the only property to GPE device (akin to what we have in x86 world)
+> >>> And then one can meddle with defaults using hw_compat_xxx    
+> >> no_foo still is a largely used pattern in arm virt: no_ged,
+> >> kvm_no_adjvtime, no_kvm_steal_time, no_tcg_lpa2, ../.. There are plenty
+> >> of them and I am not under the impression this is going to be changed.
+> >>
+> >> If you refer to 8d23b1df7212 ("hw/arm/virt: Remove
+> >> VirtMachineClass::no_its field") I think the no_its was removed because
+> >> the machine it applied was removed.
+> >>
+> >> If I understand correctly you would like the prop to be attached to the
+> >> GED device. However the GED device is internally created by the virt
+> >> machine code and not passed through a "-device" CLI option. So how would
+> >> you pass the option on the cmd line if you don't want it to be set by
+> >> default per machine type?
+> >>
+> >> Thanks
+> >>
+> >> Eric  
+> >>>    
+> >>>>          vms->acpi_dev = create_acpi_ged(vms);
+> >>>>      } else {
+> >>>> +        vms->acpi_pcihp = false;
+> >>>>          create_gpio_devices(vms, VIRT_GPIO, sysmem);
+> >>>>      }
+> >>>>  
+> >>>> @@ -2593,6 +2595,20 @@ static void virt_set_its(Object *obj, bool value, Error **errp)
+> >>>>      vms->its = value;
+> >>>>  }
+> >>>>  
+> >>>> +static bool virt_get_acpi_pcihp(Object *obj, Error **errp)
+> >>>> +{
+> >>>> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+> >>>> +
+> >>>> +    return vms->acpi_pcihp;
+> >>>> +}
+> >>>> +
+> >>>> +static void virt_set_acpi_pcihp(Object *obj, bool value, Error **errp)
+> >>>> +{
+> >>>> +    VirtMachineState *vms = VIRT_MACHINE(obj);
+> >>>> +
+> >>>> +    vms->acpi_pcihp = value;
+> >>>> +}
+> >>>> +
+> >>>>  static bool virt_get_dtb_randomness(Object *obj, Error **errp)
+> >>>>  {
+> >>>>      VirtMachineState *vms = VIRT_MACHINE(obj);
+> >>>> @@ -3310,6 +3326,10 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
+> >>>>                                            "in ACPI table header."
+> >>>>                                            "The string may be up to 8 bytes in size");
+> >>>>  
+> >>>> +    object_class_property_add_bool(oc, "acpi-pcihp",
+> >>>> +                                   virt_get_acpi_pcihp, virt_set_acpi_pcihp);
+> >>>> +    object_class_property_set_description(oc, "acpi-pcihp",
+> >>>> +                                          "Force ACPI PCI hotplug");
+> >>>>  }
+> >>>>  
+> >>>>  static void virt_instance_init(Object *obj)
+> >>>> @@ -3344,6 +3364,9 @@ static void virt_instance_init(Object *obj)
+> >>>>          vms->tcg_its = true;
+> >>>>      }
+> >>>>  
+> >>>> +    /* default disallows ACPI PCI hotplug */
+> >>>> +    vms->acpi_pcihp = false;
+> >>>> +
+> >>>>      /* Default disallows iommu instantiation */
+> >>>>      vms->iommu = VIRT_IOMMU_NONE;
+> >>>>  
+> >>>> @@ -3394,8 +3417,12 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
+> >>>>  
+> >>>>  static void virt_machine_10_0_options(MachineClass *mc)
+> >>>>  {
+> >>>> +    VirtMachineClass *vmc = VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
+> >>>> +
+> >>>>      virt_machine_10_1_options(mc);
+> >>>>      compat_props_add(mc->compat_props, hw_compat_10_0, hw_compat_10_0_len);
+> >>>> +    /* 10.0 and earlier do not support ACPI PCI hotplug */
+> >>>> +    vmc->no_acpi_pcihp = true;
+> >>>>  }
+> >>>>  DEFINE_VIRT_MACHINE(10, 0)
+> >>>>      
+> 
+
 
