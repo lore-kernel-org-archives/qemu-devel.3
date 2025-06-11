@@ -4,107 +4,219 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60750C61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 12:23:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5EBC61CE7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 12:26:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPKTO-0001Kf-Ep; Wed, 11 Jun 2025 08:22:32 -0400
+	id 1uPKWP-0002PT-FT; Wed, 11 Jun 2025 08:25:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uPKT9-0001Jp-VY
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:22:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uPKWA-0002OH-Ak
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:25:24 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uPKT4-000861-0j
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:22:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749644525;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=TLtGg7+qhUc7f2ZSuUGo+EY1HTON9oeteeb3NukIgDw=;
- b=AxYYvNoyBSWFnR388UGdf+Aaze9geJSKSA/0hEDvGCoz4CdodT/LBjQbIqxy6KorwfULsz
- NgGXK8M4GhqM1WEeCQXFUkeHLgAFT/kdbNUDvLIbWUAnyFD1sbxRG/Rx8i4bU0FhrVTsWk
- nThGCBiNLO6qKcNKkg5XaGbEDIVc+BU=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-PPiIJpXfPWykjNk32T2FVQ-1; Wed, 11 Jun 2025 08:22:03 -0400
-X-MC-Unique: PPiIJpXfPWykjNk32T2FVQ-1
-X-Mimecast-MFC-AGG-ID: PPiIJpXfPWykjNk32T2FVQ_1749644523
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-3a4e9252ba0so3831491f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 05:22:03 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749644523; x=1750249323;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TLtGg7+qhUc7f2ZSuUGo+EY1HTON9oeteeb3NukIgDw=;
- b=HrgM/Kfe9xnZ8/TyLnlmkQXScZC72v28cPPkZrU/5O+/VZTg2OnjdzLmkOB2Sk7bxY
- WImZGsuLzYmUqzBEI1kPD5AP+zh9IWfEp0GNWhDukI9tBA2uTsOCS2EtfQxEiBXpBNnW
- uH8yOLfEwenvlf6p24l4jbxIiNkCf52BpL86u6O0X71pZaejIqoN+yU4jLA059Pwq1HI
- 9/WLfu60is9tUwAa0wrpT0q95A0HvMf+vLlwzwlD/VPhXhMMZn6OHR0ZEGnH7mE0xcm2
- tUhxgq5PfN/SIrj1W1p03mQYFyvdwu4eZEHe9cLh52xmAP50jq9ZV6fffRUgd6+1SiyZ
- vJ0w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWtXK6KlgrpBTwnFGirVozpjlzUAwB/J6VUb5yCT3q2WlvHvz1yiOqFz1hQEmdzvsaSvcUeDhZf5Zb1@nongnu.org
-X-Gm-Message-State: AOJu0YxCHMKkGplBUROlElSiZnFiD316o0WG5i/ljcmSOn6jKT4kDKso
- UyqCn02GfAp8wTxQNzkZkfcd/39xzGrAdus+HS4b/mJwQAXe4lHkuFIMUj7CMsfU0TezvzmKBR+
- ZjXpKRU8THZydUOIK580uWkcm1Ro1CoRYrsMt6pHSXozwNrVQxhz7RstS
-X-Gm-Gg: ASbGnctmh5a4mX/c4kTI6pbkhv5f2jKiExnHcQyVikEwrvTVNPYKZPWc3tZpihKcfdw
- /ig/q0Wa+Z1y5o64VjesCRClyca01GBugk8SchWZtPn0cKBYIe9old8jgUys0G2PdxjhNTLAkfD
- 7ZM9J/4Ph4W2imtcngAC2mETkrvnFFjPGE2CC14qjJQXWzr7/PV1jvAL+T8C0XXHdypp3aSdCS4
- z5kUzgzKgm5FdjqEzq487dsq1vzPOFL7Q2UwUfWE8OW7xeBirmlzH4gFtlOog05hn76zgrZ1YQ/
- 9MSY+e+qKy9JhcQEZ9pt6AO8rx5r5Hr8QN8R/MKx+F+CFkF9jh/90k1ayOcnpyIy319bjQ==
-X-Received: by 2002:a05:6000:40cb:b0:399:6dd9:9f40 with SMTP id
- ffacd0b85a97d-3a558a9960amr2285976f8f.9.1749644522631; 
- Wed, 11 Jun 2025 05:22:02 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFNQTGHMS2KoiNF6cx6uK0zsGBrVAiZXca9FPfty9+Gbsyolf+PRkQeym6yuVxgmhARlSpVWg==
-X-Received: by 2002:a05:6000:40cb:b0:399:6dd9:9f40 with SMTP id
- ffacd0b85a97d-3a558a9960amr2285939f8f.9.1749644522193; 
- Wed, 11 Jun 2025 05:22:02 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a53229de70sm14796386f8f.5.2025.06.11.05.22.00
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 05:22:01 -0700 (PDT)
-Message-ID: <58188c95-4940-4619-bcba-58eed064d16f@redhat.com>
-Date: Wed, 11 Jun 2025 14:22:00 +0200
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <steven.sistare@oracle.com>)
+ id 1uPKW7-0008S5-37
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 08:25:21 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55B1Cmib029256;
+ Wed, 11 Jun 2025 12:25:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=d10Qlab0EmBFOQPFFiTSdKKJVfcNzFBlJDv5fOEXSLE=; b=
+ e/2KC+NhOzEeJoWVEdEJH9r4g6dpCLwQHd6jIRNUESe9w6oVZdD1H7BJDrekLT9U
+ fJQ+1hx9IIjYjRyglSNUfwdneaPZMSyhgs7eoPeu7FOLL8wDDhcGAqB1h0VS2SYs
+ SoxXMsi1qswqYEUFZUM2Gn0+Z2gYTACO0nGY58QOH79fP690lEg9SUxoVfcQ24ko
+ 6637pudNFuxiHrr1Au+KqPYYbs47V9REZC35lD+SvSWix1D+5SG/ogKEKsRPUk7q
+ uibTa3izqk9x6QXtYZS8rFghViNurdU9mjBJERjlWW3vsdQxUmoBiIMUV5Nv4tSq
+ ZQYw3waMn0lSokICpvbRmQ==
+Received: from iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta02.appoci.oracle.com [147.154.18.20])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474c14e96t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Jun 2025 12:25:13 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55BBdxeV003964; Wed, 11 Jun 2025 12:25:12 GMT
+Received: from nam10-bn7-obe.outbound.protection.outlook.com
+ (mail-bn7nam10on2083.outbound.protection.outlook.com [40.107.92.83])
+ by iadpaimrmta02.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bva3m3h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Jun 2025 12:25:12 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZqN5QkQR5L6+WEjzAozJtZtATJ+JG+RZh0pj0BUdUC9uZckSCJOvUd7QWs/8Kq9wcKl5hkqtj+7WCnGNgmbBWKaShsFymRdS0dgGkn8nWHHDuU22XK9IG4zptirKpi+vady4zygpS+j8qxlRPalBJYG0rR4LKYgyJGT3Bbn84yxE4hhg2/Crum0g+d3NYf/TrAZIhZ/+TML/j2qrKvlmNz5AbNGvD+Ag2iYWJDb5olqe8MeyCIGd4wg4PIERK5T1747A50gJZqLjA2n/Pd/xNzM8KT8MYsfTWO8WAq8KkHulHmUvmQQf+6JP/zUjsqxNsbpCMSWGu8KpOLeDflOwuw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=d10Qlab0EmBFOQPFFiTSdKKJVfcNzFBlJDv5fOEXSLE=;
+ b=rqbEJl7gJqdwJrzxlv1bobpcH0Njab4ERwxi/YWIzzrT4ho0vy69YjaVq4odI5C/lsB11ZO1GVTzvpQjG419j82UlnP9XZ/hgZDPjgXy8b3sB3ZMJ7h+PU6w1+DvdfuGk9e0ApXdFV0NwtC0wfLGJQ9q3i3Kp94P+Zhr5tkb2hrFoB3Msg9GLT5aObr0kgpzR8YjaXPaNfsiqkHJ2Rus88KFw1Mb8YHy5fq5CzKZ8iu96flAVs3Nw++dQ+r1UoT4dS1W3ID64gZ5Rk2Xo05p0AydB2ESVPlF3/H0plVgmzsR8HTKG3vwvGSOKyK2zam+uMXh+2b67tvYK/EfVmxDpw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=d10Qlab0EmBFOQPFFiTSdKKJVfcNzFBlJDv5fOEXSLE=;
+ b=MpmrWeFsoBkJcEDrVNHda6TM19Do9J9VTSC68AaKaJKV75WJne2cfqFvoSAWWECzyeLxXdMKnOQoLOL0oEgc1UYTmUedxRmX9C8BWt6N3+L4DSPEXIGn4QlcDsWNsEBN9WsubfIzk1U4EfM9zb13HFihszFkZ9DWVR1/yJBPH4U=
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com (2603:10b6:208:44c::10)
+ by DS7PR10MB5950.namprd10.prod.outlook.com (2603:10b6:8:85::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.31; Wed, 11 Jun
+ 2025 12:25:09 +0000
+Received: from IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572]) by IA1PR10MB7447.namprd10.prod.outlook.com
+ ([fe80::f2fe:d6c6:70c4:4572%3]) with mapi id 15.20.8835.018; Wed, 11 Jun 2025
+ 12:25:09 +0000
+Message-ID: <791ee7af-8858-4c0e-bd6b-0260cb0be070@oracle.com>
+Date: Wed, 11 Jun 2025 08:25:03 -0400
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/25] hw/pci-host/gpex-acpi: Split host bridge OSC and
- DSM generation
+Subject: Re: [PATCH v3 1/2] tests/migration: Setup pre-listened cpr.sock to
+ remove race-condition.
+To: Fabiano Rosas <farosas@suse.de>, Jaehoon Kim <jhkim@linux.ibm.com>,
+ qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, peterx@redhat.com, lvivier@redhat.com,
+ pbonzini@redhat.com
+References: <20250610223342.553744-1-jhkim@linux.ibm.com>
+ <87h60mv5ue.fsf@suse.de>
 Content-Language: en-US
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, imammedo@redhat.com, gustavo.romero@linaro.org,
- anisinha@redhat.com, mst@redhat.com, shannon.zhaosl@gmail.com,
- pbonzini@redhat.com, philmd@linaro.org, alex.bennee@linaro.org
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-6-eric.auger@redhat.com>
- <20250530110227.00003341@huawei.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250530110227.00003341@huawei.com>
-Content-Type: text/plain; charset=UTF-8
+From: Steven Sistare <steven.sistare@oracle.com>
+In-Reply-To: <87h60mv5ue.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-ClientProxiedBy: BY3PR05CA0046.namprd05.prod.outlook.com
+ (2603:10b6:a03:39b::21) To IA1PR10MB7447.namprd10.prod.outlook.com
+ (2603:10b6:208:44c::10)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: IA1PR10MB7447:EE_|DS7PR10MB5950:EE_
+X-MS-Office365-Filtering-Correlation-Id: 36ac76f4-ac43-456d-0473-08dda8e3017c
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|1800799024|376014|366016;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?Smg5WktwcWtlQmVsc3JJWVJxaDhqZ1VFQmo3VDJKc3lXbUVrcWVLMlQ0RkNq?=
+ =?utf-8?B?VVdzdThkQjI0M1lIdnBxVEk1NEgxNHZzQ0tNWVFZcE5hdkFqVysxL1JaRk8r?=
+ =?utf-8?B?YW9IUlFsUldtSzZuYzgrYWZaS3pjTmRidXJodGJhM3U4RlB6c3duMzI1SFNJ?=
+ =?utf-8?B?RHdxdktrd1BhTjJHRUdaZ0JUOFI3YkppRk5lalYxcml5YmRYYlNpZlhWYy9S?=
+ =?utf-8?B?ZkFtVDRGK2tmUkRKMUQwN3lUU0l3SjB2MEkyQVRGekJSSWZzcEllV3BmTG5C?=
+ =?utf-8?B?dUEzcU9adEFxU0NleGwyajBSaTRaQkVseGVEcWRsekZXYzgrWi9JY3VVeDFH?=
+ =?utf-8?B?b0JlZjNoL2tWK1FSZHdwS3VGY1pySnlOTHhScTlsT0hzcVZYenRadEk5OFd6?=
+ =?utf-8?B?MlhrVGhJNGRRWERVSzR6d0p1dkN4Yis5eVRKZ0pFa3l0YVNOQUZGenduUWNx?=
+ =?utf-8?B?RWxvOFg1WUpPR0QwOXJEcnp3RHZQTldLRW5sTTVqaC92eWYxSndHckcrTVIy?=
+ =?utf-8?B?QjhRU0RkWDVCZUJZMjlmaUpJNGZVU2JBMk5wZkxZUnkwdUZpUDdwU3Q3UVZz?=
+ =?utf-8?B?SncyYXFMaGl1MER2clZweXlvNjRMQjE4cVlpZnVZQ3ZMZEwyQUNBL1lFOEVz?=
+ =?utf-8?B?MURJbEFOckI2QWx0TjVPNEtXZ1pocDg1UERSRnk4bm1OZGFhTjhhNWxmZ1k1?=
+ =?utf-8?B?bmJDaXFXTlpsWEV2SEJpZWhWTXVwNnVzNjZqT1VQeFdZSmg3T0l1QUVwdk56?=
+ =?utf-8?B?ZG04cjI3T09pOE10b2FOTUI2ekdTUkxLUTVBL0JxNU96enRRcnF1MDRpL0VX?=
+ =?utf-8?B?NTVxSUxXZHAzNm96UGJKbXJnRjNpOXNUUjVCOVR6QWhvRDBsb2VPQzRMam9p?=
+ =?utf-8?B?MDV1TVNBYWh4eEszejU1WnBqNFp0UlBsUFdHZjg5YWNyOWxvaVZQdUFaWUNE?=
+ =?utf-8?B?QnJ5MytobU1wLzdabGRzdWJEZC9UYm83bVQvc0dBZVk1aVMxQ1BWb0VyTmdz?=
+ =?utf-8?B?bktjTGRCd1UyYnViUUtPT09EMElpeWlhamJuazBOZ1paYXZsZU1GL0dxUVZy?=
+ =?utf-8?B?WDhUdzlyYlJiVjhXck1kSDBaR29vM1EydkZKS0dkSlBvMFROK1JhMmljWGRY?=
+ =?utf-8?B?U0xUU2pSYXMwZGFyMjJBOTB4L1hsZkxpeDJ6ekxnb2xZS3FnU2lVQUEwbndC?=
+ =?utf-8?B?RzhhZyt1aEQzWlVDdldIMWdYTVFXVkNvR2NYcTVKbkFXdjdLdGo2cTViTkNp?=
+ =?utf-8?B?cWEycW04U2tHSndweU8xeExPSUlsOEdOT0lhREwrcVR2Yk0rdjNNL2h2aFhr?=
+ =?utf-8?B?NTlBeSs1SCttZ3ZCNDlZNnE2RjlBZFpBaE14aDlUaENPZ1l2N1RvUDlXZnBQ?=
+ =?utf-8?B?Q2xNNTNCL0xtVzh2TkwrMmxnWHpIOFFMdUFscThYeDBCZU5rNFlXRDRUVEV5?=
+ =?utf-8?B?VDRscnM1dFpuWDVwbzJySW1oaytwK0FIbXhER3RvdzEzNC9JTTVEUGcyQmtX?=
+ =?utf-8?B?WmR1NUlyYzJWR3NDN1J2SDVyWGgyTVYxU2s5ZWk3dS84blVFeVpEL2xIaDFx?=
+ =?utf-8?B?SEpDa2Jzb3NWbSs1QjlyVzJaMWx3bVVLYytRRUc2MnRYZXN3azByYzRVNytY?=
+ =?utf-8?B?Z21QNUFiYjdxckRzQUpna2kzTVdEeVNFVGgzRitnYmUvbUZRUTNEZ05Sc2sz?=
+ =?utf-8?B?UGdkblVMWGgybmVxbEVTZUZRMFR0RHZJKzV3d01nQXNXdFJlbGpnQjQzTXRp?=
+ =?utf-8?B?VHBNY2VVTHVhVUl0b1lqWTg4S0RZeDEvVXpGQmdUMlJwVTRDQ2VSbWR5SHZo?=
+ =?utf-8?B?U0JpWWVyTS9hZHlBdUVVUlZZQk1rZ0orL0g3alJMSDh2VFV2YitvdGs1ZmZn?=
+ =?utf-8?B?Mm5XK1NBdW04NmN4UnJROHJpV1VrQmtVRXdEUVNkcnUzK2c9PQ==?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA1PR10MB7447.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(1800799024)(376014)(366016); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?WjhyNm5wQWhnRERQZWlzM2tSWU1CVUdRZ2hBVHJYYU1Dc1JIMTJXUHFzQlly?=
+ =?utf-8?B?QXJBVExOcEd2WmpUd3Q5QytTWG5HT0FpQXNvZkFaMkJ1QkkwMFd5NWFrYmdS?=
+ =?utf-8?B?WTNZOVVaeTNrR3dZYnk1MHpnZ3prTXFqUXdmTmM5THluay9ySFpUQ2xLWlJS?=
+ =?utf-8?B?cWdOUXM3b3RDbklSYUNndkFQbTdoU1psTjJHR2Z0ZXh4cEx6MXJ0S0h3UnUw?=
+ =?utf-8?B?ays2MlNzQW5Ja2wwMzBrUTd4cXpWaC9MS3EvS2VneUZjMHJmaUdlME9iNGVO?=
+ =?utf-8?B?Z2pQUyt1empEYzg5YzdlMitMUURzRzBqOUZ0czQycXk4RTNCeWlsUmYyMEQx?=
+ =?utf-8?B?dlp4RTc3Z2hWQXlBTllUMXdLclpvb0FzWHJVTVV6ditqUnJnZjE3T0F2MDUz?=
+ =?utf-8?B?SFFtUFdKdzhKa1ZidHVmTERPRGMxcXkrWWV1TC9DSDR3d0F2VFlYN05Hd0xG?=
+ =?utf-8?B?MEZwS1ZWa010S1BBeEhPdVpJYjVWWEVNTU4vVE01MzNZaHYycndkdTN6NVVV?=
+ =?utf-8?B?NWprQ3R5ck9tc20vRnVERmE4ck1kUkxwcTkxVHRMK3NpY2drcUs1eENiVUtz?=
+ =?utf-8?B?ZU14UEN4QnU0QmdWcWFiYnJlTHFxczhMUGk1NVB1c0F2bTNYSHJoWWhCaUQz?=
+ =?utf-8?B?RHlXamRHOFU1UFpnQTFhYmd4cFRNUUpFLzhuekdtVllpdkxQdndtV2l1SHlU?=
+ =?utf-8?B?WWIydUVWUzIxaTU1RWFWeHQ4V3RRdlBhdFNTZzY1bDV2RDhJdWNheVN2UTh3?=
+ =?utf-8?B?K0x0Nit0TFltZ1dDNk5Pcmp5NU9WOUp4S0dCN2JrcExYSUR6SWpZcUk0OS9y?=
+ =?utf-8?B?MU0rd0FuSGtFeGxUVVVRQktETkJqQ2RVU01mWkJlWUcra2RsVzVuUlp3Zjht?=
+ =?utf-8?B?dHJrdUREbGtJUE9jSDJVYzl5WEJ2S0QrbXZJWFdNR2pkclBkR0pjMWhzTjRJ?=
+ =?utf-8?B?Ymc1ajE5MXF5V2oxMUplTWE3VWxUZVlDZ0E1QjVHN3FqS0NoMWlTZmlpM3Ev?=
+ =?utf-8?B?WmJhMnVITVplZWt0U0RSL2EvTnVYOGlUNDRWYk1SVWc4Slg5S1FtWWFQci9B?=
+ =?utf-8?B?MUFqSUtFMDFwZ0ZNN2lWdmJtQUJGTm01VWZkblVXSURBWkIvejhXZFpqTk03?=
+ =?utf-8?B?VUY3R3ZBTmN1VlNGMHM3YUttNFhSODF5NEF2UkJXWStLRVFRSFdWL0FjeC80?=
+ =?utf-8?B?NlhmQmlaeDIrMUQ3cVZDWVlOR1ZpOUVQWTM4SUR1dHQ5TW5Yd0Y1b3ZDQXdC?=
+ =?utf-8?B?NG5JZ2c3eFFsNzVYSmZDaTBXeTB0TWJlQVJwOXNsWGd1Sk80dk9Lc01MZFNL?=
+ =?utf-8?B?TmtpQVVtTzIrN2FCY2tpeDh2aVQzdzlFQWFrRnRGbkpEMm12NFhGUld1aWln?=
+ =?utf-8?B?a1BhTEVOUmNIRVY2TXFkYU9uaWZXbkhISTNmTDQrNHF1STIzK0cwdUh0R2px?=
+ =?utf-8?B?d2FUcnVZcVlyTGV5UHEzUjRyV3hZektJVnJ1WWJOWXFzNGwzVGNIRFczUDZi?=
+ =?utf-8?B?NWRQRGlwbW9iQjNZcm80ZUp2b2hjU1FDVmJGUFhYWlA1ai9LYll6YlJqUE5h?=
+ =?utf-8?B?bXFjV0Q2NUtobHM0Vm1jVVROVUhpMzFCZDZLWkVudUhJRzRDdW15elE0SUhN?=
+ =?utf-8?B?M2dCOXlWeU16T2xMbUNjem0wYWNhNklEWWtIVUVoWW1mM1drM09HUklOWTJq?=
+ =?utf-8?B?RjZhY2hCa1BKTGdUQXF1aC8xUnRvc2VjdGl4bHVCbk13RmJTMG9pNVJDSzZS?=
+ =?utf-8?B?T0hVVW45enY3Q0tkdFM5TlFVUzN4NlRsb2VTMHUzdGl5UWtZcU9MZWxNbkJJ?=
+ =?utf-8?B?M2VFWSs5dWRId2RpLzFTc2Y2UGROQVlXNHpvR0UyY1VJUlhIWmpia3d4ZGJu?=
+ =?utf-8?B?WkV1ZUptUGJxKzM0MVFkcmk3MjYrMGMwYXNTOEdaTkxta1ZZdmpmR3lJOFFU?=
+ =?utf-8?B?ZUowa3UveFk5SENsRURlQWVGemdxeXRDREk4NkNubHVEWk1HcDhKZzRxaDRl?=
+ =?utf-8?B?dGlLVHZFNEpJN3BudDBsd245MEIzZEFNdmRBaUJGaklvL0ZXUDFjZm0yb1NN?=
+ =?utf-8?B?WHRjZHNiWVJmQUVUTTVtVGJIZnZzQzdMN3Y3V0Evay9QdEZuYkRYTzNVY05w?=
+ =?utf-8?B?UHNxRis5YVc0M0RyU3hpM2czR3plRVRMdFZNSUR0d25RemFKQ3VySVRDWkRV?=
+ =?utf-8?B?Rnc9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: JhMmeQRaAxKK4ciAWRb1qIA3EPoI5OKuSV+hY2AZIghz1QBSgorSTom+RUl94v6fjX7DttGmXPu31Rdvr0KQybmVgBtrDT7Wo8XtaVywjbARfP2d4dyB11faVzwmlV1mDhvHVniZKOLkQhCl93LxT5lIivaPft7L1X6yKW7z8UTk5iZIOqC4r3JUqxaqNKbsRztI0gU1BoTQYw7XWDxIrhOWt+MI3cXxuVTI2B8CWXxD2fho2qmOpMX1K2R2/k/AY3BvVnnoNAlhgQRgX/LeJ2658Y1nREoa4BDYEBs5jOfxLTjXzuBp7scQeAM78iBavIk3G8VUaI+3tysziQCBvCV8pbu2f2aBBoou8YTP81BDaqoUDWAo4WKVVflx7CMRt8YWO5sMwdy9F/XcnDLIXj9DMfr0Hw84jUaU/+OQmq9bRMAu1iSU+ugnol5CeCFhlwXac4DIoYWoIMsslmlg9xGRd9lUNC0UEewhg8MLquoq9NUAdFXqkhQgQdXFqiixSpd+r9A25X0VuepevIZd+WJkJa77pdIKLTr75RrueIclEtApZh+axZuLe+5+eEGZDzQ0lFtY9aN/DVsuQCEU3T0H1FyTlwpIgNjrntWiWzo=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 36ac76f4-ac43-456d-0473-08dda8e3017c
+X-MS-Exchange-CrossTenant-AuthSource: IA1PR10MB7447.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Jun 2025 12:25:09.4642 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: g6OpFZXkr/uIE6/8SQMpsMnke6neXWE+CvFFxb/oZ2ifv6JMIPs+dMvSwHhn0AWzgNETHGZ9h9fp2eLFutka4zwvijCCYiLd390YlK3pWSA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR10MB5950
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-11_05,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ malwarescore=0 mlxscore=0
+ mlxlogscore=999 phishscore=0 spamscore=0 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506110106
+X-Proofpoint-GUID: VEGO7iLn5LolLWXAj4QvEvzNXEs5D5VZ
+X-Authority-Analysis: v=2.4 cv=GcEXnRXL c=1 sm=1 tr=0 ts=684975aa b=1 cx=c_pps
+ a=e1sVV491RgrpLwSTMOnk8w==:117 a=e1sVV491RgrpLwSTMOnk8w==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=VnNF1IyMAAAA:8 a=JzhzQ6guMLj7xYE5ZMMA:9
+ a=QEXdDO2ut3YA:10 cc=ntf awl=host:14714
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDEwNiBTYWx0ZWRfX+8Nemz6/tfxA
+ Gq8YMmyJlH8oefsBVOCEAjLuSCZGWHyNDMgqfZUinWLKNkjxdAGuf+TazzUC8wgR9oOdXY6Dt1Y
+ J7AhOI4+HMBhfEdLOy9lW+qCvC7g8eXU7GN31J++iOP6n+rqXy2pFpNstfFg6hqeyhndtaBHdK2
+ ZVjZd6+bYs98icPAwZLRagW0Isl/TC3ZOyZq4J3jzr6WBFrBjqQq+uAVOH7gyshdaSnOnpilUpH
+ PmY08IG3O7eBnZMujryf72JqnpExJkGGmASuTMeXE8+DEVAK5ss6RefqxNqn/WaIgtA3iEMfF30
+ 8LJTOWtCX7RP9lbSOnQV3CmVmWDXdKL8fb/51BwiF7E2lWMnhWTQftMb2FXj+jT5YHkPJlI2dcb
+ VJ8v671k/aRTMNSAeFDAdSJXx+hkXwiM6srnnrxVoi2tRXO+1E+M4rGzLc/UfsobiUcDeXFu
+X-Proofpoint-ORIG-GUID: VEGO7iLn5LolLWXAj4QvEvzNXEs5D5VZ
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=steven.sistare@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,134 +229,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Jonathan
-
-On 5/30/25 12:02 PM, Jonathan Cameron wrote:
-> On Tue, 27 May 2025 09:40:07 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
->
->> acpi_dsdt_add_pci_osc() name is confusing as it gives the impression
->> it appends the _OSC method but in fact it also appends the _DSM method
->> for the host bridge. Let's split the function into two separate ones
->> and let them return the method Aml pointer instead. This matches the
->> way it is done on x86 (build_q35_osc_method). In a subsequent patch
->> we will replace the gpex method by the q35 implementation that will
->> become shared between ARM and x86.
+On 6/11/2025 8:08 AM, Fabiano Rosas wrote:
+> Jaehoon Kim <jhkim@linux.ibm.com> writes:
+> 
+> Hi,
+> 
+> These patches should be the other way around, first add the support,
+> then add the test.
+> 
+>> When the source VM attempts to connect to the destination VM's Unix
+>> domain socket (cpr.sock) during a cpr-transfer test, race conditions can
+>> occur if the socket file isn't ready. This can lead to connection
+>> failures when running tests.
 >>
->> acpi_dsdt_add_host_bridge_methods is a new top helper that generates
->> both the _OSC and _DSM methods.
+>> This patch creates and listens on the socket in advance, and passes the
+>> pre-listened FD directly. This avoids timing issues and improves the
+>> reliability of CPR tests.
 >>
->> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Makes complete sense. I've had local equivalent of this on the CXL
-> tree for a while as without it we don't register the _DSM for the
-> CXL path (and we should).  However, can you modify it a little to
-> make that easier for me?  Basically make sure the _DSM is registered
-> for the CXL path as well.
->
-> One other comment inline.
->
->
+>> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
+>> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
 >> ---
->>  hw/pci-host/gpex-acpi.c | 31 +++++++++++++++++++++----------
->>  1 file changed, 21 insertions(+), 10 deletions(-)
+>>   tests/qtest/migration/cpr-tests.c | 14 ++++++++++++--
+>>   1 file changed, 12 insertions(+), 2 deletions(-)
 >>
->> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
->> index f34b7cf25e..1aa2d12026 100644
->> --- a/hw/pci-host/gpex-acpi.c
->> +++ b/hw/pci-host/gpex-acpi.c
->> @@ -50,13 +50,10 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
->>      }
->>  }
->>  
->> -static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
->> +static Aml *build_host_bridge_osc(bool enable_native_pcie_hotplug)
->>  {
->> -    Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
->> +    Aml *method, *UUID, *ifctx, *ifctx1, *elsectx;
->>  
->> -    /* Declare an _OSC (OS Control Handoff) method */
->> -    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
->> -    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
->>      method = aml_method("_OSC", 4, AML_NOTSERIALIZED);
->>      aml_append(method,
->>          aml_create_dword_field(aml_arg(3), aml_int(0), "CDW1"));
->> @@ -103,9 +100,13 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
->>                                 aml_name("CDW1")));
->>      aml_append(elsectx, aml_return(aml_arg(3)));
->>      aml_append(method, elsectx);
->> -    aml_append(dev, method);
->> +    return method;
->> +}
->>  
->> -    method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
->> +static Aml *build_host_bridge_dsm(void)
->> +{
->> +    Aml *method = aml_method("_DSM", 4, AML_NOTSERIALIZED);
->> +    Aml *UUID, *ifctx, *ifctx1, *buf;
->>  
->>      /* PCI Firmware Specification 3.0
->>       * 4.6.1. _DSM for PCI Express Slot Information
->> @@ -124,7 +125,17 @@ static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
->>      byte_list[0] = 0;
->>      buf = aml_buffer(1, byte_list);
->>      aml_append(method, aml_return(buf));
->> -    aml_append(dev, method);
->> +    return method;
->> +}
+>> diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
+>> index 5536e14610..145860c24c 100644
+>> --- a/tests/qtest/migration/cpr-tests.c
+>> +++ b/tests/qtest/migration/cpr-tests.c
+>> @@ -60,13 +60,12 @@ static void test_mode_transfer_common(bool incoming_defer)
+>>       g_autofree char *cpr_path = g_strdup_printf("%s/cpr.sock", tmpfs);
+>>       g_autofree char *mig_path = g_strdup_printf("%s/migsocket", tmpfs);
+>>       g_autofree char *uri = g_strdup_printf("unix:%s", mig_path);
+>> +    g_autofree char *opts_target;
+>>   
+>>       const char *opts = "-machine aux-ram-share=on -nodefaults";
+>>       g_autofree const char *cpr_channel = g_strdup_printf(
+>>           "cpr,addr.transport=socket,addr.type=unix,addr.path=%s",
+>>           cpr_path);
+>> -    g_autofree char *opts_target = g_strdup_printf("-incoming %s %s",
+>> -                                                   cpr_channel, opts);
+>>   
+>>       g_autofree char *connect_channels = g_strdup_printf(
+>>           "[ { 'channel-type': 'main',"
+>> @@ -75,6 +74,17 @@ static void test_mode_transfer_common(bool incoming_defer)
+>>           "              'path': '%s' } } ]",
+>>           mig_path);
+>>   
+>> +    /*
+>> +     * Set up a UNIX domain socket for the CPR channel before
+>> +     * launching the destination VM, to avoid timing issues
+>> +     * during connection setup.
+>> +     */
+>> +    int cpr_sockfd = qtest_socket_server(cpr_path);
+>> +    g_assert(cpr_sockfd >= 0);
 >> +
->> +static void acpi_dsdt_add_host_bridge_methods(Aml *dev,
->> +                                              bool enable_native_pcie_hotplug)
->> +{
->> +    aml_append(dev, aml_name_decl("SUPP", aml_int(0)));
->> +    aml_append(dev, aml_name_decl("CTRL", aml_int(0)));
-> These two declarations seem to be very much part of the _OSC build though not
-> within the the method.  I 'think' you get left with them later with no users.
-> So move them into the osc build here and they will naturally go away when
-> you move to the generic code.
->
-> They end up unused in the DSDT at the end of the series.
->
-> I ran a quick GPEX + pxb-pcie test and we do get the odd mix that the OSC for
-> the GPEX say no native hotplug but the OSC for the PXB allows it.
->
->> +    /* Declare an _OSC (OS Control Handoff) method */
->> +    aml_append(dev, build_host_bridge_osc(enable_native_pcie_hotplug));
->> +    aml_append(dev, build_host_bridge_dsm());
->>  }
->>  
->>  void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->> @@ -193,7 +204,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->>              if (is_cxl) {
->>                  build_cxl_osc_method(dev);
->>              } else {
->> -                acpi_dsdt_add_pci_osc(dev, true);
->> +                acpi_dsdt_add_host_bridge_methods(dev, true);
-> Can you either drop the use of the wrapper for the DSM part here and call
-> it unconditionally (for cxl and PCIe cases) or add an extra call to
-> aml_append(dev, build_host_bridge_dsm()) for the is_cxl path?
+>> +    opts_target = g_strdup_printf("-incoming cpr,addr.transport=socket,"
+>> +                                  "addr.type=fd,addr.str=%s %s",
+>> +                                  g_strdup_printf("%d", cpr_sockfd), opts);
+> 
+> The sockfd string will leak.
 
-Given the following discussion between you and Igor, I understand we can
-keep the code as is for now. cxl alignment would be done later and also
-pxb support might be reworked in near future.
+Just use %d in the top-level printf:
 
-Eric
->
->>              }
->>  
->>              aml_append(scope, dev);
->> @@ -268,7 +279,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->>      }
->>      aml_append(dev, aml_name_decl("_CRS", rbuf));
->>  
->> -    acpi_dsdt_add_pci_osc(dev, true);
->> +    acpi_dsdt_add_host_bridge_methods(dev, true);
->>  
->>      Aml *dev_res0 = aml_device("%s", "RES0");
->>      aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
+     opts_target = g_strdup_printf("-incoming cpr,addr.transport=socket,"
+                                   "addr.type=fd,addr.str=%d %s",
+                                   cpr_sockfd, opts);
+
+- Steve
+
+> 
+>>       MigrateCommon args = {
+>>           .start.opts_source = opts,
+>>           .start.opts_target = opts_target,
 
 
