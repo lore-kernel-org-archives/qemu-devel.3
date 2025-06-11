@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7C11C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:10:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E059C678DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:11:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPN2V-0004TH-BF; Wed, 11 Jun 2025 11:06:55 -0400
+	id 1uPN3A-0005vu-2Y; Wed, 11 Jun 2025 11:07:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2M-0004Qu-BS
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN31-0005cG-0E
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2K-000753-DM
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:46 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2y-0007Bf-FY
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749654403;
+ s=mimecast20190719; t=1749654443;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v+Z6bEAFtbPbilkZ0EIqHvHGBwZUqeGe9jszTIGujG4=;
- b=PsGgD16HkB1BP3H5569ooBUxESyjWLoEmG7sf2fBURtGxGq4oH5yVDFtPYpB0dhvQ1/hHf
- LX/jldqGgg1H7zSMbj38eIIgunHQnkDy90DjxnlRCdUhF1J7mcdNIvDPCN2Nw8UAp5IiAb
- EcSeSTOhRsOR8D5Gr5YK8dokU7CgsCQ=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=A55MlTvVA9xM9Udo2f8ierjn04fv0f7X3KcXB2zJzxA=;
+ b=JRsnqpr0vUhsXnu6mJz2WggN0aruzgyVKRwnlUKjceq6awT9s5+cQIZpJwJa8zNfp4L+NG
+ zzjF2UDf+/7yCriOsWFXRUSH7dnIcKnCD5/12OF0kKMqMqRvVC+UGTrfeUnXvs7Z1ht0m3
+ toYjnVynKc882a1vV82uf1+O/oBBgus=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-527-4460fcEyM46f_1rZVVUDUA-1; Wed,
- 11 Jun 2025 11:06:41 -0400
-X-MC-Unique: 4460fcEyM46f_1rZVVUDUA-1
-X-Mimecast-MFC-AGG-ID: 4460fcEyM46f_1rZVVUDUA_1749654400
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-kiC5NFLnN9KcCvOnFBQv-g-1; Wed,
+ 11 Jun 2025 11:07:17 -0400
+X-MC-Unique: kiC5NFLnN9KcCvOnFBQv-g-1
+X-Mimecast-MFC-AGG-ID: kiC5NFLnN9KcCvOnFBQv-g_1749654436
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 607DA1955F44; Wed, 11 Jun 2025 15:06:40 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBDD1180047F; Wed, 11 Jun 2025 15:07:16 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.225.191])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 05A8718002B6; Wed, 11 Jun 2025 15:06:37 +0000 (UTC)
+ id 261B0180045B; Wed, 11 Jun 2025 15:07:14 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Rorie Reyes <rreyes@linux.ibm.com>,
- Anthony Krowiak <akrowiak@linux.ibm.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 06/27] s390: implementing CHSC SEI for AP config change
-Date: Wed, 11 Jun 2025 17:05:58 +0200
-Message-ID: <20250611150620.701903-7-clg@redhat.com>
+Subject: [PULL 21/27] vfio/pci: vfio_pci_vector_init
+Date: Wed, 11 Jun 2025 17:06:13 +0200
+Message-ID: <20250611150620.701903-22-clg@redhat.com>
 In-Reply-To: <20250611150620.701903-1-clg@redhat.com>
 References: <20250611150620.701903-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -85,114 +84,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Rorie Reyes <rreyes@linux.ibm.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-Handle interception of the CHSC SEI instruction for requests
-indicating the guest's AP configuration has changed.
+Extract a subroutine vfio_pci_vector_init.  No functional change.
 
-If configuring --without-default-devices, hw/s390x/ap-stub.c
-was created to handle such circumstance. Also added the
-following to hw/s390x/meson.build if CONFIG_VFIO_AP is
-false, it will use the stub file.
-
-Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
-Reviewed-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20250609164418.17585-5-rreyes@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/1749569991-25171-13-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- MAINTAINERS           |  1 +
- hw/s390x/ap-stub.c    | 21 +++++++++++++++++++++
- target/s390x/ioinst.c | 11 +++++++++--
- hw/s390x/meson.build  |  1 +
- 4 files changed, 32 insertions(+), 2 deletions(-)
- create mode 100644 hw/s390x/ap-stub.c
+ hw/vfio/pci.c | 24 +++++++++++++++++-------
+ 1 file changed, 17 insertions(+), 7 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index aa6763077ea87af0d527319f1cb13e4468b1f299..1e84bfeaeec7f9e5cecb7dd083aff52bc61fe884 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -112,6 +112,7 @@ F: hw/intc/s390_flic.c
- F: hw/intc/s390_flic_kvm.c
- F: hw/s390x/
- F: hw/vfio/ap.c
-+F: hw/s390x/ap-stub.c
- F: hw/vfio/ccw.c
- F: hw/watchdog/wdt_diag288.c
- F: include/hw/s390x/
-diff --git a/hw/s390x/ap-stub.c b/hw/s390x/ap-stub.c
-new file mode 100644
-index 0000000000000000000000000000000000000000..001fe5f8b015e05e6e06a9c3797d54d6718f7716
---- /dev/null
-+++ b/hw/s390x/ap-stub.c
-@@ -0,0 +1,21 @@
-+/*
-+ * VFIO based AP matrix device assignment
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Rorie Reyes <rreyes@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/s390x/ap-bridge.h"
-+
-+int ap_chsc_sei_nt0_get_event(void *res)
-+{
-+    return EVENT_INFORMATION_NOT_STORED;
-+}
-+
-+bool ap_chsc_sei_nt0_have_event(void)
-+{
-+    return false;
-+}
-diff --git a/target/s390x/ioinst.c b/target/s390x/ioinst.c
-index fe62ba5b06bd8a92101ee8ed010a5fc655c26223..2320dd4c1224e6e4a9396e23f06cc7cf4ffb358d 100644
---- a/target/s390x/ioinst.c
-+++ b/target/s390x/ioinst.c
-@@ -18,6 +18,7 @@
- #include "trace.h"
- #include "hw/s390x/s390-pci-bus.h"
- #include "target/s390x/kvm/pv.h"
-+#include "hw/s390x/ap-bridge.h"
- 
- /* All I/O instructions but chsc use the s format */
- static uint64_t get_address_from_regs(CPUS390XState *env, uint32_t ipb,
-@@ -574,13 +575,19 @@ out:
- 
- static int chsc_sei_nt0_get_event(void *res)
- {
--    /* no events yet */
-+    if (s390_has_feat(S390_FEAT_AP)) {
-+        return ap_chsc_sei_nt0_get_event(res);
-+    }
-+
-     return 1;
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 2da5989581e72538cf61de3f453070b5e4f53cc4..7a33c19ea28c454221ee430784e5d84cf498486b 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -531,6 +531,22 @@ static void set_irq_signalling(VFIODevice *vbasedev, VFIOMSIVector *vector,
+     }
  }
  
- static int chsc_sei_nt0_have_event(void)
- {
--    /* no events yet */
-+    if (s390_has_feat(S390_FEAT_AP)) {
-+        return ap_chsc_sei_nt0_have_event();
-+    }
++static void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr)
++{
++    VFIOMSIVector *vector = &vdev->msi_vectors[nr];
++    PCIDevice *pdev = &vdev->pdev;
 +
-     return 0;
- }
++    vector->vdev = vdev;
++    vector->virq = -1;
++    if (event_notifier_init(&vector->interrupt, 0)) {
++        error_report("vfio: Error: event_notifier_init failed");
++    }
++    vector->use = true;
++    if (vdev->interrupt == VFIO_INT_MSIX) {
++        msix_vector_use(pdev, nr);
++    }
++}
++
+ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+                                    MSIMessage *msg, IOHandler *handler)
+ {
+@@ -544,13 +560,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+     vector = &vdev->msi_vectors[nr];
  
-diff --git a/hw/s390x/meson.build b/hw/s390x/meson.build
-index 3bbebfd817dfaadd55ee8d669be000aee8d5d517..99cbcbd7d633c1379be484d01f296f7c7c7b8a2f 100644
---- a/hw/s390x/meson.build
-+++ b/hw/s390x/meson.build
-@@ -33,6 +33,7 @@ s390x_ss.add(when: 'CONFIG_S390_CCW_VIRTIO', if_true: files(
- ))
- s390x_ss.add(when: 'CONFIG_TERMINAL3270', if_true: files('3270-ccw.c'))
- s390x_ss.add(when: 'CONFIG_VFIO', if_true: files('s390-pci-vfio.c'))
-+s390x_ss.add(when: 'CONFIG_VFIO_AP', if_false: files('ap-stub.c'))
+     if (!vector->use) {
+-        vector->vdev = vdev;
+-        vector->virq = -1;
+-        if (event_notifier_init(&vector->interrupt, 0)) {
+-            error_report("vfio: Error: event_notifier_init failed");
+-        }
+-        vector->use = true;
+-        msix_vector_use(pdev, nr);
++        vfio_pci_vector_init(vdev, nr);
+     }
  
- virtio_ss = ss.source_set()
- virtio_ss.add(files('virtio-ccw.c'))
+     qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
 -- 
 2.49.0
 
