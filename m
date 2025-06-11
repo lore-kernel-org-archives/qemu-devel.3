@@ -4,88 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42B6AC677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:13:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13D96C61CE7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:13:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPFe2-0004Zj-V6; Wed, 11 Jun 2025 03:13:10 -0400
+	id 1uPFeM-0004ah-El; Wed, 11 Jun 2025 03:13:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPFe0-0004Za-4v
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:13:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPFeK-0004aX-E3
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:13:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPFdx-0006ra-PW
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:13:07 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPFeI-0006vD-QL
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:13:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749625982;
+ s=mimecast20190719; t=1749626005;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=H5Gvt42Baqh30tYL+QPdYoGAqIbLqsVh79cmWiB4xqg=;
- b=cDLESA14le83ZRSEtZ9bzxnXgMwv1oKNC6FUUzubYrnECaMg5l0rOLdQRzlmMtCLZgskqb
- oNhmru2VTiz3rGdMqsRCwjXEfgD3KNnC1rXSEzmw52Gu7w6ybJlp3BIBGzvmcv1LgWoawd
- 23lwkhrodg0HAhHZ4SG+jHMNDnbTS8U=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=b9xyqR9XJOsm2ct0SjOYQVSSRCEVwNdEGYUVFb0tYIk=;
+ b=GFMH0Hb7EMuONusp81NxhvSBIz3aBfwmfYBNXlOFCUZj+OGk0lMyzSdUkS3l123T5xrlYi
+ z+vfnDvcPVwwoHfiZOFiIp8sNBHImqE7XDnJ7tOar5nPv2jfdSPuhXgKBL0Nfy1QC5H6YD
+ giG1mwtYJK4/M/DfkPRV9YIM4LUwsr4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-367-KWfLwySYPG6Yq4Wu_MTV2A-1; Wed, 11 Jun 2025 03:12:59 -0400
-X-MC-Unique: KWfLwySYPG6Yq4Wu_MTV2A-1
-X-Mimecast-MFC-AGG-ID: KWfLwySYPG6Yq4Wu_MTV2A_1749625978
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a5281ba3a4so2115931f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 00:12:58 -0700 (PDT)
+ us-mta-444-t8QS11xBNIyaU8zkuROW7A-1; Wed, 11 Jun 2025 03:13:22 -0400
+X-MC-Unique: t8QS11xBNIyaU8zkuROW7A-1
+X-Mimecast-MFC-AGG-ID: t8QS11xBNIyaU8zkuROW7A_1749626001
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4eb9c80deso2316943f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 00:13:22 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749625978; x=1750230778;
+ d=1e100.net; s=20230601; t=1749626001; x=1750230801;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=H5Gvt42Baqh30tYL+QPdYoGAqIbLqsVh79cmWiB4xqg=;
- b=Ue14vGf6bFztC/1cgptE1NmlrOxmhMRujVBZs2FqbwmuzvvQVYZlK7z2Oem391IA4z
- kNA8z6FskAge0IcmlM8NcarL6VFpzR2a19SAgTT2phtqbZUNVZhvj7ZrmvuVX6KqBZb8
- pGzwgKBNp/Msj9EgTI1t8N/U/WxxQGmKjAAxms5MTXxGxP+YsLfY0ABx9X6Ygtc3bJ1E
- YSJVSvoQSzuVqoHoA+01B8FwWDu2JDh0oMiFuawcLXH/tH2v4HotLKAyD6W5SS/rnveZ
- 76FML6bJBowmgXnr+134iNaCZbhUOPZnzi4bJo5+IBZWqsDyV4tSVOzDKfJhsopJNrk8
- tRBw==
-X-Gm-Message-State: AOJu0YyVE3QUEhH4luPmz7TmxpsBbFD4U1X12RNr03KBA9aaxFCmcix4
- H3yGzYXjWqW6Ctngv0GwS0Sa69dAhF7duFOeiDBgCrkmjWF+JSUyslfvYTUqK6+kWYrLHDct5L/
- ssZYkrIp/zQLUQqqviPeWN8Aitwtsu3SU+o2B9Mx26Lo0rypLK3Mo+tFa
-X-Gm-Gg: ASbGncuMtxG58+N9ep5v1kuR0zIAsk8EOPhJ8b4WWy3A62sUfgBkRS9J6n5NOcxv0N+
- 36UkFm39l74vAQ8UEinVWcTD4AAwGMeG6qE+cXoeJgws6iZIxZIJTrXUFDmKm+Wi2Tp1YG2Ax/P
- wuoXbywerjk3cARLUNo8TZSvHrK+L/XTgn6BUzUHvuckWn0xV7NBdBdQ+brvdzJscIpkUjUOSaw
- GZ5dKkqmMRNoJgIWNx7bE8ADYzbm/MgccnIvSNUriXN0wdj+j/8fTjI2SJYBz2sJcxOqvtFFOW6
- 4RWrhlFzd8ms2YWfxCZiAb/BZTf2E3z1DA1hagHNObP2oA81STRaGAQAW26S
-X-Received: by 2002:a05:6000:1a8d:b0:3a5:276b:1ebd with SMTP id
- ffacd0b85a97d-3a558aef287mr1424527f8f.54.1749625977792; 
- Wed, 11 Jun 2025 00:12:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHGxFkQqzV6ccCxlnGcbhuqLgcE1s3k0z3AX6Kz3GpEsyxb5Rj+I0oSdbbuy9VvTy02+emuRQ==
-X-Received: by 2002:a05:6000:1a8d:b0:3a5:276b:1ebd with SMTP id
- ffacd0b85a97d-3a558aef287mr1424503f8f.54.1749625977426; 
- Wed, 11 Jun 2025 00:12:57 -0700 (PDT)
+ bh=b9xyqR9XJOsm2ct0SjOYQVSSRCEVwNdEGYUVFb0tYIk=;
+ b=E5PMq76nnNm/GsvkRB3cx2Jqcpt829U2Sx+NfzPPekKLylSLcVg2obcm5UnUf7R4ak
+ Ewld5/yTIBDkc6YH8uPmkLRuwo99YFhfZ+HxYv5dAHwFYU9WuntqxXSyTPjkYJ+BhF90
+ 935S7foT6ZEbjv9wVbRjbTseGsNmVHaf50vcpOBlvuVSfncIudnFhVXpWloVVeA7GteZ
+ TXQvCMYIQDCis7YLeC2nsCjCauPVJ5XjOY36Z0otSWe4fWzAt5FmNT1yzleD6DAm2GB0
+ dxTkVInbFAfFBxXLKE6iO/ebu5Dekyrlr1xdx8ZdFS/SbMNKeTDrzYlEMdhzn17p6pGw
+ uSXg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXsGP0LJL2z2DEks27c6m9YseXW87QjK+GfDU4JRJ92trfxRggCU67nk5yLHrUxzGV8lQMGtTW9mxGn@nongnu.org
+X-Gm-Message-State: AOJu0YwZuIviq7tEWqaF3Q+B/r8FchlBkV7mDFuwi8QIF5WAI+nS62YS
+ NxAaT5nazygghCMOGFGso08HkFgFGJn80pBRJahe8WV8Xv91ov3iKGe3jtKWFHAJZLEL0g5HZvW
+ 1Mw7seTrN7R/gjFo2lljSBy5uedP9IBzwSAVyfuuhTNX3de+4uHVEu9lE
+X-Gm-Gg: ASbGncu+zMyg6WLafWvcjyc6x2BClvSCMS7q/g1QXGBdYtYulTx2n30N/KdZ4uy/0UJ
+ vOlr/rtHD0d8XmDY4J1J8tuD36RTjfem/j9yK47shPPc2ARDCq+u0p6bF/EYxnDEG7Zs23M/0O2
+ gR6mrBBGJTbpzk+KPncmsnFvwNTh/67kOHS4a3p6yM/7zXespXyOnnj//tpX2X8nxN2ZbLg0DGk
+ PaMZPAe4JRJqyTTj/tU/YVFsJPWhzzJ5W8+Ab6BfXQnNtrIHMkvFIaeXE/XzrLCYdzXtfKptmG3
+ zi0MIaMSjNVewcEzB2UpEfEnQ0F1noc6ztUpCcvv1eBACjxGf8d+8iGlR7/5
+X-Received: by 2002:a05:6000:2082:b0:3a3:7987:945f with SMTP id
+ ffacd0b85a97d-3a558b09dbcmr1360067f8f.57.1749626001400; 
+ Wed, 11 Jun 2025 00:13:21 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHtrPhcwHUY/XpE6C2QTmCwGCyreldo2fKADXuZ6CVbGCLzQOXq/cdGL5ow7yLaHlUjXkclHQ==
+X-Received: by 2002:a05:6000:2082:b0:3a3:7987:945f with SMTP id
+ ffacd0b85a97d-3a558b09dbcmr1360040f8f.57.1749626001030; 
+ Wed, 11 Jun 2025 00:13:21 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
  ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a532436650sm11645087f8f.65.2025.06.11.00.12.56
+ ffacd0b85a97d-3a53229e009sm14764306f8f.16.2025.06.11.00.13.20
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 00:12:56 -0700 (PDT)
-Message-ID: <182479e4-118f-450b-96a6-b331a6f9cb5f@redhat.com>
-Date: Wed, 11 Jun 2025 09:12:55 +0200
+ Wed, 11 Jun 2025 00:13:20 -0700 (PDT)
+Message-ID: <9e4162ee-08b1-4309-9a38-bd155a61f585@redhat.com>
+Date: Wed, 11 Jun 2025 09:13:19 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 03/23] vfio: add per-region fd support
-To: John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+Subject: Re: [PATCH v3 02/23] vfio: enable per-IRQ MSI-X masking
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Thanos Makatos <thanos.makatos@nutanix.com>,
  =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
 References: <20250607001056.335310-1-john.levon@nutanix.com>
- <20250607001056.335310-4-john.levon@nutanix.com>
- <44882230-0e48-4232-9549-9c24c09d3749@redhat.com> <aEgmbDKrjG_-luXP@lent>
+ <20250607001056.335310-3-john.levon@nutanix.com> <aEipFWB1BOmKyXBQ@lent>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -131,10 +135,10 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <aEgmbDKrjG_-luXP@lent>
+In-Reply-To: <aEipFWB1BOmKyXBQ@lent>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,73 +163,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 14:34, John Levon wrote:
-> On Tue, Jun 10, 2025 at 09:42:41AM +0200, Cédric Le Goater wrote:
+On 6/10/25 23:52, John Levon wrote:
+> On Fri, Jun 06, 2025 at 05:10:34PM -0700, John Levon wrote:
 > 
->> On 6/7/25 02:10, John Levon wrote:
->>> For vfio-user, each region has its own fd rather than sharing
->>> vbasedev's. Add the necessary plumbing to support this, and use the
->>> correct fd in vfio_region_mmap().
->>>
->>> @@ -172,10 +174,11 @@ struct VFIODeviceIOOps {
->>>        /**
->>>         * @get_region_info
->>>         *
->>> -     * Fill in @info with information on the region given by @info->index.
->>> +     * Fill in @info (and optionally @fd) with information on the region given
->>> +     * by @info->index.
->>>         */
->>
->> Could you please update the whole documentation of the VFIODeviceIOOps
->> struct and document each parameter ?
+>> If VFIO_IRQ_INFO_MASKABLE is set for VFIO_PCI_MSIX_IRQ_INDEX, record
+>> this in ->can_mask_msix, and use it to individually mask MSI-X
+>> interrupts as needed.
 > 
-> Sorry, not sure what you're asking for. This struct was fully documented in
-> 38bf025d ("vfio: add device IO ops vector")
-> and its subsequent patches.
+> I'm just going to drop this patch. Neither vfio nor libvfio-user (including
+> qemu-as-server) report MASKABLE for MSI-X anyway, so it doesn't seem relevant.
 
-yes. See the formatting of VFIODeviceOps :
+ok. Dropped.
 
-     /**
-      * @vfio_save_config
-      *
-      * Save device config state
-      *
-      * @vdev: #VFIODevice for which to save the config
-      * @f: #QEMUFile where to send the data
-      * @errp: pointer to Error*, to store an error if it happens.
-      *
-      * Returns zero to indicate success and negative for error
-      */
-     int (*vfio_save_config)(VFIODevice *vdev, QEMUFile *f, Error **errp);
-
-
-No big deal. It can come later.
-
-
->>> @@ -360,6 +369,7 @@ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
->>>        vbasedev->io_ops = &vfio_device_io_ops_ioctl;
->>>        vbasedev->dev = dev;
->>>        vbasedev->fd = -1;
->>> +    vbasedev->use_region_fds = false;
->>
->> why not extend vfio_device_init() with a 'region_fd_cache' bool
->> parameter instead ?
-> 
-> I could do, but you previously asked me not to add an "io_ops" parameter to this
-> function and instead directly change it here - why is this parameter different?
-Because I thought we could allocate vbasedev->region_fds[] directly under
-vfio_device_init().
-  >> and avoid the extra VFIODevice attribute.
-> 
-> I don't get this - we still need to record the boolean in the vbasedev.
-
-but we can't because we don't have the vbasedev->num_regions value yet.
-So forget this proposal.
-
-That said, there are a few contortions around the instance_init()
-handler, vfio_device_init() and the realize() handler that I find
-confusing. I will see if it can be improved when the code is stable
-again.
 
 Thanks,
 
