@@ -4,127 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED96DC677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 07:56:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A2CC677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 08:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPGK5-0006JG-9S; Wed, 11 Jun 2025 03:56:37 -0400
+	id 1uPGiO-0002s3-VO; Wed, 11 Jun 2025 04:21:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPGK2-0006FZ-D8
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:56:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uPGiC-0002rX-8f
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 04:21:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPGJy-0006Xz-Ng
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 03:56:33 -0400
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uPGi9-0002HL-Ul
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 04:21:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749628588;
+ s=mimecast20190719; t=1749630085;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=YsJbuCbe5JRneX3QV2NgxbIF88VzoALe/HxhjozhSI0=;
- b=PqjVK9aWadxYlJPNDP0c1/m4yEXLkeVQ+PmP0vKiutJfj28qGBfqHs/nZa2X8pQe4+ZcL4
- fgFz1dH9yyG08JYJFuvVPSzUQFzqM22Sb0/4Ye5zt6JBvxh6MSVP6ANvYrmH4YNYJD1wSX
- 97qu1NvLT5jjFY4vxTgmW8Xr1oEXfyo=
+ in-reply-to:in-reply-to:references:references;
+ bh=GFLbNgPr14QB1K1rm2mgyESuYRoNSzRbZZSZ2DTQGgU=;
+ b=a6Knwf3MhlzXOzLz5WSMlFXGxhFs1zF5XckXnhkpaT4RRmScGgQQLC+cK/Asj/0Y/eKhCt
+ AFYOAG8TJncr7NBFeKR3cBC7MtDcgCZ7a6Pca92WmAcG8+/UrbPkUF/Cba+Jg50JTflrC6
+ PExG+4x104ayV09HXK+rW+EPsFg1E5Y=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-208-UkY8NNdXO7KS88KAA4XqZQ-1; Wed, 11 Jun 2025 03:56:26 -0400
-X-MC-Unique: UkY8NNdXO7KS88KAA4XqZQ-1
-X-Mimecast-MFC-AGG-ID: UkY8NNdXO7KS88KAA4XqZQ_1749628586
+ us-mta-359-jdNbdqZ8O-2qGWQzfzj58A-1; Wed, 11 Jun 2025 04:21:23 -0400
+X-MC-Unique: jdNbdqZ8O-2qGWQzfzj58A-1
+X-Mimecast-MFC-AGG-ID: jdNbdqZ8O-2qGWQzfzj58A_1749630083
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-441c122fa56so32548605e9.2
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 00:56:26 -0700 (PDT)
+ 5b1f17b1804b1-4530623eb8fso25840715e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 01:21:23 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749628585; x=1750233385;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=YsJbuCbe5JRneX3QV2NgxbIF88VzoALe/HxhjozhSI0=;
- b=qKDV5N/tsfqUm3NpZHcftF7Nxoqouq5IMHMtArUdMmtqEI7RjsAmHek3frvthrwKgE
- YuPOtRzchXE0dpxvc7fOjib9Rft5rOdzefzV0n/o4xSu3jzUMunlJCZhG0tY1PY+I8aO
- pk0bi+fe3Mm5kqrc6n77dd8MMbCuansTyWbzF3cB9og5gJh+rIgR9qtxRVQX8emWbRCu
- pKvjAzYNe3+YTGyhc2qdCGuOBuzlJL+zvxF7ApwtPYxxA2n2avl3XpWCOrKurVkEhtC+
- ZXxZ0ovf8NwJnyPpbQc54Vjbds+TVUc+mJqQM3Fugq3NWTZtkGtxDskKd73B9jS5XgRt
- IQyw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVWK/oXuiK5QrAHfskHJDp15GrbXkwvfTOLViXoXXJfPhYNAlDp0O9fqMCoFdEIAbIEEyUiRvFVoFsj@nongnu.org
-X-Gm-Message-State: AOJu0YwOgrI17gH8QOjPLFpiu5PAq29DuDZ5I5lMthxfTZvQqsv2AwD2
- wpQIDIDyrRW2xrOBWjReyLbdUJY+Q27qA9PV9Dn93doUGnwojrJxu6cjge4gwyqKAWAH1F3X/DV
- B2Avm7fswoLjIBoHEKU+h0SWnVVGPzFAfspVPLpPu27pTxTNqEf8F9TR61h2zw9vj
-X-Gm-Gg: ASbGncs5y7JKbhDZmiSvAA5n699eqJwOfIlgqO6XYy0XMAA+V0OiTuQsTfkxT6C5oMk
- OPMbT+/83uB/t+Ww2vml9ZWXRJqIBeLmGRdWyi26agjW5F3aIgOtKOpqQBRHrRibfUP+jXlrJVK
- LTJ9q9FD7+gtQBj59EkXckUWwyONwCzsQM/4o1o97kyejBwVO//b93gzhsmx0YvHxZN5h23mz3f
- afBtOCRCqGQ8fPJA4+tH6KzKpvnP4yXrTTHHwTQFp45x0eCFPxXIC5L0iDcqp595CAHoo5sA6Yc
- 07IiB/emIQfJfK/jRLhosyWO
-X-Received: by 2002:a5d:6101:0:b0:3a5:58a5:6a83 with SMTP id
- ffacd0b85a97d-3a558a56a92mr1252445f8f.13.1749628585177; 
- Wed, 11 Jun 2025 00:56:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHa9EhoFvN5NhHAREDbo8ZUD7GdO/aKx6OUJgy0+qnsn6oOk218rDhRrckUP54C5O1mFfSIvg==
-X-Received: by 2002:a5d:6101:0:b0:3a5:58a5:6a83 with SMTP id
- ffacd0b85a97d-3a558a56a92mr1252430f8f.13.1749628584835; 
- Wed, 11 Jun 2025 00:56:24 -0700 (PDT)
-Received: from [192.168.10.81] ([151.49.64.79])
- by smtp.googlemail.com with ESMTPSA id
- ffacd0b85a97d-3a53229e009sm14876566f8f.16.2025.06.11.00.56.23
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 00:56:24 -0700 (PDT)
-Message-ID: <e14ce991-7cd5-4875-bd99-5dc27a22be78@redhat.com>
-Date: Wed, 11 Jun 2025 09:56:23 +0200
+ d=1e100.net; s=20230601; t=1749630082; x=1750234882;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=GFLbNgPr14QB1K1rm2mgyESuYRoNSzRbZZSZ2DTQGgU=;
+ b=Yl/0Ne5d4UdKjNSFJ+p4x6CkuCW2KRJcjbxF1GCJVaK3d4cJoF9tuVY4ll/y/SbzU8
+ Kzf/dMYekJw0N2A0LCbHQukTuHM8PRgTvDMn6rNk8nLhmKTr+msRtlddLZh88Q6x+kO7
+ em82Rdy7rQzn3kj9jL3FHMRXglngT4jeORSMbPU3dPqwaD5UT93Xo4WXHdW2P+mQdTys
+ 2VjNegagkU7OD7U1ymq5WqkLak8qFMNWIpB0wdMZr8g1HQfMO4et34aC/1w4E8JtDxNJ
+ VCwO1etbdw4U3V26b7lbdYgKVgEIfW83sJtYsWa0pUpOVJ5DbiBnvKvRyUs3469hgY+2
+ wezA==
+X-Gm-Message-State: AOJu0YwQ1fOC0MW/uTauS/vXIUUGziw48P3/Abqzm2pST/Wxx54RhdeM
+ n5/r5+XKNopaIpt4HmuZDUBos/BSnH4DBKYiQT5aYRYsXBmG9Iag9OXa/rfcVWWd/zgmBkvKG4i
+ sr13l4ZPLMd3QPDc3Roddy8Dcxk6/QY2eiWJr9vlTdBZtZi5xqZZzgj8n
+X-Gm-Gg: ASbGncu/qP25/UErtfPXfyKNYft2nUsQH4Ae2kbkhcSbghrDyroM08+susa6tAOLViY
+ 7aIlO37vPQednA02PRO+pUKp+VeFkU56PHqWMdgD9gTo4mc/ReaQeUx3Xd2734M+BfHeAD9lZR1
+ p8AGuvx5DeVxxWMojDN1X9LYHnNIgGQsiHPXTiaGu7KeXew+QOT6Cdc0dT1iESVNFGjeJ5sOHf6
+ tMPlBJ1mgwmmsLhufJBwW/51hN/YXMN1f5TXAo/81NU9FcJHK/yxzMOKKLXAuYIS0RKr71pHvZw
+ y6tqCKpYDXprALvQM7PhlnULXzCHrvjcO5ehnZqccFM=
+X-Received: by 2002:a05:600c:621b:b0:43c:fceb:91a with SMTP id
+ 5b1f17b1804b1-4532487a7cdmr18628245e9.11.1749630082623; 
+ Wed, 11 Jun 2025 01:21:22 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEhIVYkeAK65AlKPTnhEhiY8fYbHRMkcdn3mW1c+u4/sf1tW1Vhr5diMqnNNL//dKyHjMNH3w==
+X-Received: by 2002:a05:600c:621b:b0:43c:fceb:91a with SMTP id
+ 5b1f17b1804b1-4532487a7cdmr18627895e9.11.1749630082154; 
+ Wed, 11 Jun 2025 01:21:22 -0700 (PDT)
+Received: from imammedo.users.ipa.redhat.com ([85.93.96.130])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4532516b934sm13548635e9.15.2025.06.11.01.21.20
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Jun 2025 01:21:20 -0700 (PDT)
+Date: Wed, 11 Jun 2025 10:21:19 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: David Hildenbrand <david@redhat.com>
+Cc: qemu-devel@nongnu.org, yuanminghao <yuanmh12@chinatelecom.cn>, "Michael
+ S. Tsirkin" <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>
+Subject: Re: [PATCH v1] vhost: Fix used memslot tracking when destroying a
+ vhost device
+Message-ID: <20250611102119.02f3ebfa@imammedo.users.ipa.redhat.com>
+In-Reply-To: <20250603111336.1858888-1-david@redhat.com>
+References: <20250603111336.1858888-1-david@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] rust/qemu-api: Add initial logging support based
- on C API
-To: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, qemu-rust@nongnu.org
-References: <20250610202110.2243-1-shentey@gmail.com>
- <20250610202110.2243-2-shentey@gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=pbonzini@redhat.com; keydata=
- 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
-In-Reply-To: <20250610202110.2243-2-shentey@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -149,15 +110,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/10/25 22:21, Bernhard Beschow wrote:
-> +/// A macro to log messages conditionally based on a provided mask.
-> +///
-> +/// The `log_mask` macro checks whether the given mask matches the current log
-> +/// level and, if so, formats and logs the message. It is the Rust counterpart
-> +/// of the qemu_log_mask() macro in the C implementation.
+On Tue,  3 Jun 2025 13:13:36 +0200
+David Hildenbrand <david@redhat.com> wrote:
 
-Clippy complains that it wants `` around the function name.
+> When we unplug a vhost device, we end up calling vhost_dev_cleanup()
+> where we do a memory_listener_unregister().
+> 
+> This memory_listener_unregister() call will end up disconnecting the
+> listener from the address space through listener_del_address_space().
+> 
+> In that process, we effectively communicate the removal of all memory
+> regions from that listener, resulting in region_del() + commit()
+> callbacks getting triggered.
+> 
+> So in case of vhost, we end up calling vhost_commit() with no remaining
+> memory slots (0).
+> 
+> In vhost_commit() we end up overwriting the global variables
+> used_memslots / used_shared_memslots, used for detecting the number
+> of free memslots. With used_memslots / used_shared_memslots set to 0
+> by vhost_commit() during device removal, we'll later assume that the
+> other vhost devices still have plenty of memslots left when calling
+> vhost_get_free_memslots().
+> 
+> Let's fix it by simply removing the global variables and depending
+> only on the actual per-device count.
+> 
+> Easy to reproduce by adding two vhost-user devices to a VM and then
+> hot-unplugging one of them.
+> 
+> While at it, detect unexpected underflows in vhost_get_free_memslots()
+> and issue a warning.
+> 
+> Reported-by: yuanminghao <yuanmh12@chinatelecom.cn>
+> Link: https://lore.kernel.org/qemu-devel/20241121060755.164310-1-yuanmh12@chinatelecom.cn/
+> Fixes: 2ce68e4cf5be ("vhost: add vhost_has_free_slot() interface")
+> Cc: Igor Mammedov <imammedo@redhat.com>
+> Cc: Michael S. Tsirkin <mst@redhat.com>
+> Cc: Stefano Garzarella <sgarzare@redhat.com>
+> Signed-off-by: David Hildenbrand <david@redhat.com>
 
-Paolo
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+
+> ---
+> 
+> I assume the problem existed in some form when used_memslots was
+> introduced. However, I did not check the old behavior of memory listener
+> unregistration etc.
+> 
+> ---
+>  hw/virtio/vhost.c | 37 ++++++++++---------------------------
+>  1 file changed, 10 insertions(+), 27 deletions(-)
+> 
+> diff --git a/hw/virtio/vhost.c b/hw/virtio/vhost.c
+> index fc43853704..c87861b31f 100644
+> --- a/hw/virtio/vhost.c
+> +++ b/hw/virtio/vhost.c
+> @@ -47,12 +47,6 @@ static struct vhost_log *vhost_log[VHOST_BACKEND_TYPE_MAX];
+>  static struct vhost_log *vhost_log_shm[VHOST_BACKEND_TYPE_MAX];
+>  static QLIST_HEAD(, vhost_dev) vhost_log_devs[VHOST_BACKEND_TYPE_MAX];
+>  
+> -/* Memslots used by backends that support private memslots (without an fd). */
+> -static unsigned int used_memslots;
+> -
+> -/* Memslots used by backends that only support shared memslots (with an fd). */
+> -static unsigned int used_shared_memslots;
+> -
+>  static QLIST_HEAD(, vhost_dev) vhost_devices =
+>      QLIST_HEAD_INITIALIZER(vhost_devices);
+>  
+> @@ -74,15 +68,15 @@ unsigned int vhost_get_free_memslots(void)
+>  
+>      QLIST_FOREACH(hdev, &vhost_devices, entry) {
+>          unsigned int r = hdev->vhost_ops->vhost_backend_memslots_limit(hdev);
+> -        unsigned int cur_free;
+> +        unsigned int cur_free = r - hdev->mem->nregions;
+>  
+> -        if (hdev->vhost_ops->vhost_backend_no_private_memslots &&
+> -            hdev->vhost_ops->vhost_backend_no_private_memslots(hdev)) {
+> -            cur_free = r - used_shared_memslots;
+> +        if (unlikely(r < hdev->mem->nregions)) {
+> +            warn_report_once("used (%u) vhost backend memory slots exceed"
+> +                             " the device limit (%u).", hdev->mem->nregions, r);
+> +            free = 0;
+>          } else {
+> -            cur_free = r - used_memslots;
+> +            free = MIN(free, cur_free);
+>          }
+> -        free = MIN(free, cur_free);
+>      }
+>      return free;
+>  }
+> @@ -666,13 +660,6 @@ static void vhost_commit(MemoryListener *listener)
+>      dev->mem = g_realloc(dev->mem, regions_size);
+>      dev->mem->nregions = dev->n_mem_sections;
+>  
+> -    if (dev->vhost_ops->vhost_backend_no_private_memslots &&
+> -        dev->vhost_ops->vhost_backend_no_private_memslots(dev)) {
+> -        used_shared_memslots = dev->mem->nregions;
+> -    } else {
+> -        used_memslots = dev->mem->nregions;
+> -    }
+> -
+>      for (i = 0; i < dev->n_mem_sections; i++) {
+>          struct vhost_memory_region *cur_vmr = dev->mem->regions + i;
+>          struct MemoryRegionSection *mrs = dev->mem_sections + i;
+> @@ -1619,15 +1606,11 @@ int vhost_dev_init(struct vhost_dev *hdev, void *opaque,
+>      QLIST_INSERT_HEAD(&vhost_devices, hdev, entry);
+>  
+>      /*
+> -     * The listener we registered properly updated the corresponding counter.
+> -     * So we can trust that these values are accurate.
+> +     * The listener we registered properly setup the number of required
+> +     * memslots in vhost_commit().
+>       */
+> -    if (hdev->vhost_ops->vhost_backend_no_private_memslots &&
+> -        hdev->vhost_ops->vhost_backend_no_private_memslots(hdev)) {
+> -        used = used_shared_memslots;
+> -    } else {
+> -        used = used_memslots;
+> -    }
+> +    used = hdev->mem->nregions;
+> +
+>      /*
+>       * We assume that all reserved memslots actually require a real memslot
+>       * in our vhost backend. This might not be true, for example, if the
 
 
