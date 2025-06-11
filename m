@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5BBC3C71136
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:29:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 518E1C71141
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:29:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQAe-0002N8-Uu; Wed, 11 Jun 2025 14:27:33 -0400
+	id 1uPQBY-0004h9-Dx; Wed, 11 Jun 2025 14:28:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQ9l-0001WU-GM
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uPQAJ-0001xi-RY
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQ9e-0001IL-W0
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:33 -0400
+ id 1uPQA7-0001YG-E8
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749666374;
+ s=mimecast20190719; t=1749666418;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mt7Eev/XPLmMMdxpFyBJo5Jewpv1gUUY+0ePO6YtQ/c=;
- b=C+2jqb5jcCi16Un6BOubwJl6poL/qN51oQmEfc45UVV3Z3H0XFqQE79au7sgAX7PCWkEtV
- rzzohiUkCuuPdntJ5w8eOG3c35E7ex0HFE2Sb72dGUHlv8RpfFKVLc0iR3QmsA25FHn21E
- ZsZUGnA3X9EvfrYxGO0U8Gs30lCUAl4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EY31iwe6lMrC3heUYVrnbfnuVcc4xslPfJSpEvuNg6o=;
+ b=jEz/gnry+R3Sv0GgBelmlVEaZnKP72gGEsrt1SjTZ/mLJO9uCgGogaD1h4q0N0fUX7S8zQ
+ XqsgH+LEv6+LUSug7TyXS2/oE3YZR52UDHaR9obNC1GnYHcxRaYAJ+KD06wRMmbid702iR
+ hIPQbmCZFsG3zu7/2hx0jLxRDmN37HU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-cE_DP5rNMDGSzqy0Vv7YPQ-1; Wed,
- 11 Jun 2025 14:26:09 -0400
-X-MC-Unique: cE_DP5rNMDGSzqy0Vv7YPQ-1
-X-Mimecast-MFC-AGG-ID: cE_DP5rNMDGSzqy0Vv7YPQ_1749666366
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-130-xO02etT5ORmRJ79kOiamwA-1; Wed,
+ 11 Jun 2025 14:26:54 -0400
+X-MC-Unique: xO02etT5ORmRJ79kOiamwA-1
+X-Mimecast-MFC-AGG-ID: xO02etT5ORmRJ79kOiamwA_1749666408
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4ED6918002A4; Wed, 11 Jun 2025 18:26:05 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A72D11809C80; Wed, 11 Jun 2025 18:26:48 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.122])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 254A31800284; Wed, 11 Jun 2025 18:26:04 +0000 (UTC)
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D1F1519560A3; Wed, 11 Jun 2025 18:26:46 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -76,16 +76,17 @@ Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 04/31] chardev/char-fd: skip automatic zero-init of large array
-Date: Wed, 11 Jun 2025 14:25:06 -0400
-Message-ID: <20250611182533.200590-5-stefanha@redhat.com>
+Subject: [PULL 16/31] hw/display/vmware_vga: skip automatic zero-init of large
+ struct
+Date: Wed, 11 Jun 2025 14:25:18 -0400
+Message-ID: <20250611182533.200590-17-stefanha@redhat.com>
 In-Reply-To: <20250611182533.200590-1-stefanha@redhat.com>
 References: <20250611182533.200590-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -112,35 +113,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'fd_chr_read' method has a 4k byte array used for copying
-data between the socket and device. Skip the automatic zero-init
-of this array to eliminate the performance overhead in the I/O
-hot path.
+The 'vmsvga_fifo_run' method has a struct which is a little over 20k
+in size, used for holding image data for cursor changes. Skip the
+automatic zero-init of this struct to eliminate the performance
+overhead in the I/O hot path.
 
-The 'buf' array will be fully initialized when reading data off
-the network socket.
+The cursor variable will be fully initialized only when processing
+a cursor definition message from the guest.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20250610123709.835102-5-berrange@redhat.com
+Message-id: 20250610123709.835102-17-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- chardev/char-fd.c | 2 +-
+ hw/display/vmware_vga.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/chardev/char-fd.c b/chardev/char-fd.c
-index 23bfe3c0b1..6f03adf872 100644
---- a/chardev/char-fd.c
-+++ b/chardev/char-fd.c
-@@ -50,7 +50,7 @@ static gboolean fd_chr_read(QIOChannel *chan, GIOCondition cond, void *opaque)
-     Chardev *chr = CHARDEV(opaque);
-     FDChardev *s = FD_CHARDEV(opaque);
-     int len;
--    uint8_t buf[CHR_READ_BUF_LEN];
-+    QEMU_UNINITIALIZED uint8_t buf[CHR_READ_BUF_LEN];
-     ssize_t ret;
+diff --git a/hw/display/vmware_vga.c b/hw/display/vmware_vga.c
+index 544bb65320..bc1a8ed466 100644
+--- a/hw/display/vmware_vga.c
++++ b/hw/display/vmware_vga.c
+@@ -618,7 +618,7 @@ static void vmsvga_fifo_run(struct vmsvga_state_s *s)
+     uint32_t cmd, colour;
+     int args, len, maxloop = 1024;
+     int x, y, dx, dy, width, height;
+-    struct vmsvga_cursor_definition_s cursor;
++    QEMU_UNINITIALIZED struct vmsvga_cursor_definition_s cursor;
+     uint32_t cmd_start;
  
-     len = sizeof(buf);
+     len = vmsvga_fifo_length(s);
 -- 
 2.49.0
 
