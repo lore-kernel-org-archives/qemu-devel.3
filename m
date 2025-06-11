@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE849C61CE7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 13:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C3F9C678DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 13:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPLEN-00050G-Cw; Wed, 11 Jun 2025 09:11:03 -0400
+	id 1uPLHB-0006jL-Ka; Wed, 11 Jun 2025 09:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPLEM-0004yY-0x
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 09:11:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uPLH9-0006iv-9y
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 09:13:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPLEK-00065C-6Q
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 09:11:01 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uPLH6-0006FM-Mr
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 09:13:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749647456;
+ s=mimecast20190719; t=1749647628;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kB6yIVfO2HF0upfAAXtnXlTUS3vFMabCNfe03UnjCzo=;
- b=VVnKLDAOKxCl4GlZDlIKYQ6NH18VESvv4Q53OeHnLbZ8gUA9PwLov5rbtWgoldxbg951Sz
- uvBqmQGyuJr73Tye9tc8hXUAqoLVqs/1N91jizf8Ykc671vMd9rhkKLfTFKkH2WDmMQTHH
- LaJF7chUjAfkgT/sT9Z+y9K/gZWo7LQ=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=2su89aEIgTenxnDSOklpXrdmxCCZ2oVVDFqcS7+4ugQ=;
+ b=ADbaPJurujob55EzQ4VIT0UFZhKdQJkdVFug/aWv64yPhNmMnOG6m343WpSPkPD7QUJZX7
+ jJHiwDHuvJeFi/vZct8qSj1M8BKpMFzebmtOgg5XdDzn+KON4ZENKlPp3O/AlyEQgVa16o
+ KpN8y8//V01Oewnmd1+sJmusX+ESIQA=
+Received: from mail-oa1-f69.google.com (mail-oa1-f69.google.com
+ [209.85.160.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-6-SZ-XCoNVM-y9ldPiRLCdmQ-1; Wed, 11 Jun 2025 09:10:55 -0400
-X-MC-Unique: SZ-XCoNVM-y9ldPiRLCdmQ-1
-X-Mimecast-MFC-AGG-ID: SZ-XCoNVM-y9ldPiRLCdmQ_1749647454
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-453080e4741so32119495e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 06:10:55 -0700 (PDT)
+ us-mta-683-r47qxcgZPvWELCH6kbh6PA-1; Wed, 11 Jun 2025 09:13:47 -0400
+X-MC-Unique: r47qxcgZPvWELCH6kbh6PA-1
+X-Mimecast-MFC-AGG-ID: r47qxcgZPvWELCH6kbh6PA_1749647627
+Received: by mail-oa1-f69.google.com with SMTP id
+ 586e51a60fabf-2e9b1f85b2bso5945988fac.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 06:13:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749647454; x=1750252254;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=kB6yIVfO2HF0upfAAXtnXlTUS3vFMabCNfe03UnjCzo=;
- b=U1SDIblwe5belUNFQn4qfck+3zA4P0sOq1xPYbiJKkKxT4nVm5cSCTPazqFZvovJaH
- cXVnRncABRDcuCNc40OjYIlMaSdiRANbwOcH7QWG8V++OvjFWyE+ymauJtXEOPMBcDXR
- Ki6fKlJRpIUghFQNY9E1SzkJEbIMFDLuTwD/h/zxnJcMNfloEwhbwv1wSYQSg0oQX0EK
- DRDbTXrxyLx3YT7o4d9BNh9ZCnhakmLDBuHagvbnrbYVUe1be+b6+0rkx6sGZa0N2VKO
- RY+OXdAcywL8mZKoevy7T/kUZs8fReiA7QwZDnsADrWk5duEfayIsBChG/Wln4Tk2zte
- 6ovQ==
-X-Gm-Message-State: AOJu0YwMIsW/IzMbPcSw00zFJjXXbno/I+6r/gkxxcA7SDYFPpsAgzD2
- vLMW4EeTVX+L1zIRBxMleg6R0o+9pgQ4ijkR6AWdpPFckTKhsOPqPXBOcCzFaX65NQT79v95zzd
- I4NUawZo1KYGbu4+tdkYLrQsrYVczjP6VB9rB3u68QDajS0Es7luJBooA
-X-Gm-Gg: ASbGncsif94d1DbNJxT7VZbM4ZqExM6on+GSeXlxS7dmaK0zObCP0N+xE843mfEEXBU
- Y5HXkLdljcYK7yC9LrK3+LAMQn4KKQkXkHVHkATjqFOcR+9Tr9YVyuP7kC+18uKyM6kG0P7FA0p
- cS/5uydpO5UWe1YY6GoFEYAAAVkJiJvrkl44kfwNxAewEJgAjkAHjdOPShVqPtUvWeCR9UAi7Gq
- Fl46IE9DK/oeZKi9SWZs0/sspE2FqJ9NvFuIlp+FapPEcsBAI1RRx7RbNsuX4M3jyaob3Oo+/XN
- wg+rdCGQF0y97hpKfd+S58zd
-X-Received: by 2002:a05:600c:3511:b0:441:b19c:96fe with SMTP id
- 5b1f17b1804b1-45324882d3amr35222035e9.10.1749647454335; 
- Wed, 11 Jun 2025 06:10:54 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFp2ix5BspRb47dluGnZUln3CEoyn20/BBSt8BN7U+T7boGjFz3KnJFqJgtEhdSNzPisIik1g==
-X-Received: by 2002:a05:600c:3511:b0:441:b19c:96fe with SMTP id
- 5b1f17b1804b1-45324882d3amr35221585e9.10.1749647453978; 
- Wed, 11 Jun 2025 06:10:53 -0700 (PDT)
-Received: from [192.168.122.1] ([151.49.64.79])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a5323b59d0sm15416717f8f.38.2025.06.11.06.10.51
+ d=1e100.net; s=20230601; t=1749647626; x=1750252426;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2su89aEIgTenxnDSOklpXrdmxCCZ2oVVDFqcS7+4ugQ=;
+ b=R6b69wZXs42PZAAXShGiqFrqRPwiN65qy9u119PLENKFUH8StNOTl0t/LuzXDHF95H
+ dl9lER5XkfDOsCsa5+7bvmVJMSIofr18sC+O7bXK0UF8KvCmGlTOTXHg+jbk6P+KRn4V
+ 1cyHlp+7v7wMlOEPlfuVyrcVAZT3rUsB462R8Vm0s8NEk8QzzrKMZA4PCsyHCBM8hW6D
+ 7LbNY1JK0moQS97Zrk/SamoeGbYCngP6phEHu2NZL5wo39zQsa0Hog5JwGD+EcmF8ewS
+ aQ9Zbgo52xrRQoS0Vwfnsq2dfppwINFjgO3jpBpwtwh5jaxFaLgkHs/dJ+oYi0Va/isc
+ QAHQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWYb+XPSOCItmW9NfdfEgRRaio3UFvTaIDVmBKmprWQOQrL9l2Y632gUCuipHPAKni7UwEDbO0Yfq2n@nongnu.org
+X-Gm-Message-State: AOJu0Yx+uMVfyWH9dpornPz/Vh8nE3M2566HSc6Cyl/1eimJQHpT/CCD
+ /sJLvEmQFEAlzYdTTx0S/OkZSUvMnAOWlu/rUvjXA3/Z/+ymlYG0gcxV7kEBsyWIG2Y0VaN/Xk3
+ m69WtXCcYqZJQfEptM77gEAi8SkHFsPeiO/2+Yd2OVj4s8usXR6D1VDE/QtoGFzuO
+X-Gm-Gg: ASbGnctvpn5XUtwaX5EYm8tmmpURt5Lm3Pg8G2G1VLWZ2hk7vbWYc2xLU6u4z87Sx8G
+ evqgac11UaIhgg1SsPbSj5Q1Vapy8yK6t68xA0AEvSKi+32W15in6FyKNtI8gkcRbuQpfZEbyfm
+ HjDmOrXFuBDuqeByo1VEeluC3YyQ6wFscCvrEGbMxNd/mI8Ge3JucTHRKTv1JR2GNgGLqBRLarH
+ 5/bS00hDOH9A680rOxsg9e+ROSDuFzSH5hHluTME+xeo6rE/crJyh21VyYrPTaP/KEa3JQad4lx
+ bknXlV336mrNCw==
+X-Received: by 2002:a05:6870:8183:b0:2d6:6688:a625 with SMTP id
+ 586e51a60fabf-2ea97029788mr1904365fac.37.1749647626462; 
+ Wed, 11 Jun 2025 06:13:46 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGWdLqllmlYxJLpKilZ/fEDwWsVqWk8pzPebX4I6PRGw8nad+Sk/isRpDOZxtVncD0fqQpCtg==
+X-Received: by 2002:a05:6214:2488:b0:6fa:d95d:d0b0 with SMTP id
+ 6a1803df08f44-6fb2c386dc6mr42563266d6.29.1749647615946; 
+ Wed, 11 Jun 2025 06:13:35 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fb09ab848bsm81228186d6.4.2025.06.11.06.13.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Jun 2025 06:10:51 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, richard.henderson@linaro.org,
- eduardo@habkost.net, qemu-stable@nongnu.org
-Subject: Re: [PATCH] target/i386: fix TB exit logic in gen_movl_seg() when
- writing to SS
-Date: Wed, 11 Jun 2025 15:10:31 +0200
-Message-ID: <20250611131030.971554-2-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250611130315.383151-1-mark.cave-ayland@ilande.co.uk>
-References: 
+ Wed, 11 Jun 2025 06:13:35 -0700 (PDT)
+Date: Wed, 11 Jun 2025 09:13:32 -0400
+From: Peter Xu <peterx@redhat.com>
+To: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>
+Cc: Juraj Marcin <jmarcin@redhat.com>, qemu-devel@nongnu.org,
+ kraxel@redhat.com,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH] ui/vnc: Update display update interval when VM state
+ changes to RUNNING
+Message-ID: <aEmA_NE9GWfTx97m@x1.local>
+References: <20250521151616.3951178-1-jmarcin@redhat.com>
+ <aEl31gjAjlt5zj-l@x1.local>
+ <CAMxuvaxTKMEVHOQyjcyWFw=+LbyfbFJgMb4ZfSjkiT-VJsjAWw@mail.gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+In-Reply-To: <CAMxuvaxTKMEVHOQyjcyWFw=+LbyfbFJgMb4ZfSjkiT-VJsjAWw@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -109,14 +112,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Before commit e54ef98c8a ("target/i386: do not trigger IRQ shadow for LSS"), any
-> write to SS in gen_movl_seg() would cause a TB exit. The changes introduced by
-> this commit were intended to restrict the DISAS_EOB_INHIBIT_IRQ exit to the case
-> where inhibit_irq is true, but missed that a DISAS_EOB_NEXT exit can still be
-> required when writing to SS and inhibit_irq is false.
+On Wed, Jun 11, 2025 at 04:41:21PM +0400, Marc-André Lureau wrote:
+> Hi
+> 
+> On Wed, Jun 11, 2025 at 4:34 PM Peter Xu <peterx@redhat.com> wrote:
+> 
+> > On Wed, May 21, 2025 at 05:16:13PM +0200, Juraj Marcin wrote:
+> > > From: Juraj Marcin <jmarcin@redhat.com>
+> > >
+> > > If a virtual machine is paused for an extended period time, for example,
+> > > due to an incoming migration, there are also no changes on the screen.
+> > > VNC in such case increases the display update interval by
+> > > VNC_REFRESH_INTERVAL_INC (50 ms). The update interval can then grow up
+> > > to VNC_REFRESH_INTERVAL_MAX (3000 ms).
+> > >
+> > > When the machine resumes, it can then take up to 3 seconds for the first
+> > > display update. Furthermore, the update interval is then halved with
+> > > each display update with changes on the screen. If there are moving
+> > > elements on the screen, such as a video, this can be perceived as
+> > > freezing and stuttering for few seconds before the movement is smooth
+> > > again.
+> > >
+> > > This patch resolves this issue, by adding a listener to VM state changes
+> > > and changing the update interval when the VM state changes to RUNNING.
+> > > The update_displaychangelistener() function updates the internal timer,
+> > > and the display is refreshed immediately if the timer is expired.
+> > >
+> > > Signed-off-by: Juraj Marcin <jmarcin@redhat.com>
+> >
+> > [add Dan]
+> >
+> > Ping - anyone is willing to pick this one up?
+> >
+> 
+> I haven't started gathering pending UI patches. Feel free to pick it up
 
-Sorry about that.  Queued the fix, thanks.
+I'm queuing it for migration if no one beats me to it. Thanks!
 
-Paolo
+-- 
+Peter Xu
 
 
