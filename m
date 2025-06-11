@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 880DAC71136
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:36:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85C50C71136
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 18:36:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPQBt-0005XP-PE; Wed, 11 Jun 2025 14:28:50 -0400
+	id 1uPQDO-0008RO-Ra; Wed, 11 Jun 2025 14:30:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQA7-0001rZ-38
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uPQAP-00022o-Bk
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uPQA2-0001Wc-TO
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:26:56 -0400
+ id 1uPQAJ-0001bS-O4
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 14:27:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749666414;
+ s=mimecast20190719; t=1749666426;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=mRFy2Ucg58TGuUkHvRrPt1Knp1WbjYx3ysY4ROiLkAw=;
- b=QPdXH1JkNlGFFI0F7Wcpr9pqpsDrkDgutIFiQ+Eavt72u052WXAlBojntNGqLqqslJAjWb
- tfvfJbuLqQ7nC0kfERdrJrNLFmkn3Ue+aSFBiueHjueDC5bax/c/zowuIfsurxpnjrcO/s
- L5wPzoyFt3aX5BEaXAnYbKd6ZFdrKm4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=/2hmw26GO9MntDuKG4kx440hVC19OgahjebBBvbf2WA=;
+ b=D3XfTk6bv+9bjqVF+Px+PXwSz90+iY0oxLRAQ5/ItDHV3A9q/YcU3SsqMORMIeR1smeIux
+ 4iBXkoAzyiy2Kc0VoJG0Uezti7JGiByHZK7/oNQlbhxBZaErt8Qte9F2jkbcz4G6XlpADo
+ /A11wcDTy/ggm+AV37xyRiKUCvwJlgM=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-316-Sv3XTrdpMAeAY9szI_NyDA-1; Wed,
- 11 Jun 2025 14:26:51 -0400
-X-MC-Unique: Sv3XTrdpMAeAY9szI_NyDA-1
-X-Mimecast-MFC-AGG-ID: Sv3XTrdpMAeAY9szI_NyDA_1749666403
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-43-xAiIjpovN3ysLpiLPWXrIA-1; Wed,
+ 11 Jun 2025 14:27:04 -0400
+X-MC-Unique: xAiIjpovN3ysLpiLPWXrIA-1
+X-Mimecast-MFC-AGG-ID: xAiIjpovN3ysLpiLPWXrIA_1749666419
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 79A3F1955F08; Wed, 11 Jun 2025 18:26:43 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 839B419560AE; Wed, 11 Jun 2025 18:26:59 +0000 (UTC)
 Received: from localhost (unknown [10.2.16.122])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BFF811956087; Wed, 11 Jun 2025 18:26:39 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C808619560AF; Wed, 11 Jun 2025 18:26:57 +0000 (UTC)
 From: Stefan Hajnoczi <stefanha@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
@@ -76,17 +76,16 @@ Cc: qemu-ppc@nongnu.org, Daniel Henrique Barboza <danielhb413@gmail.com>,
  Christian Borntraeger <borntraeger@linux.ibm.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 14/31] hw/char/sclpconsole-lm: skip automatic zero-init of
- large array
-Date: Wed, 11 Jun 2025 14:25:16 -0400
-Message-ID: <20250611182533.200590-15-stefanha@redhat.com>
+Subject: [PULL 20/31] hw/net/tulip: skip automatic zero-init of large array
+Date: Wed, 11 Jun 2025 14:25:22 -0400
+Message-ID: <20250611182533.200590-21-stefanha@redhat.com>
 In-Reply-To: <20250611182533.200590-1-stefanha@redhat.com>
 References: <20250611182533.200590-1-stefanha@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -113,35 +112,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-The 'process_mdb' method has a 4k byte array used for copying data
-between the guest and the chardev backend. Skip the automatic zero-init
-of this array to eliminate the performance overhead in the I/O hot
-path.
+The 'tulip_setup_frame' method has a 4k byte array used for copynig
+DMA data from the device. Skip the automatic zero-init of this array
+to eliminate the performance overhead in the I/O hot path.
 
-The 'buffer' array will be selectively initialized when data is converted
-between EBCDIC and ASCII.
+The 'buf' array will be fully initialized when reading data from the
+device.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
-Message-id: 20250610123709.835102-15-berrange@redhat.com
+Message-id: 20250610123709.835102-21-berrange@redhat.com
 Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
 ---
- hw/char/sclpconsole-lm.c | 2 +-
+ hw/net/tulip.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/char/sclpconsole-lm.c b/hw/char/sclpconsole-lm.c
-index e9580aacba..3e40d5e434 100644
---- a/hw/char/sclpconsole-lm.c
-+++ b/hw/char/sclpconsole-lm.c
-@@ -214,7 +214,7 @@ static int process_mdb(SCLPEvent *event, MDBO *mdbo)
+diff --git a/hw/net/tulip.c b/hw/net/tulip.c
+index 63fe513458..319af906c8 100644
+--- a/hw/net/tulip.c
++++ b/hw/net/tulip.c
+@@ -629,7 +629,7 @@ static void tulip_setup_filter_addr(TULIPState *s, uint8_t *buf, int n)
+ static void tulip_setup_frame(TULIPState *s,
+         struct tulip_descriptor *desc)
  {
-     int rc;
-     int len;
--    uint8_t buffer[SIZE_BUFFER];
-+    QEMU_UNINITIALIZED uint8_t buffer[SIZE_BUFFER];
+-    uint8_t buf[4096];
++    QEMU_UNINITIALIZED uint8_t buf[4096];
+     int len = (desc->control >> TDES1_BUF1_SIZE_SHIFT) & TDES1_BUF1_SIZE_MASK;
+     int i;
  
-     len = be16_to_cpu(mdbo->length);
-     len -= sizeof(mdbo->length) + sizeof(mdbo->type)
 -- 
 2.49.0
 
