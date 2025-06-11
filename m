@@ -4,97 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88962C71135
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 20:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3178C71141
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 20:56:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPRxH-0003SP-LE; Wed, 11 Jun 2025 16:21:51 -0400
+	id 1uPSUm-0000QW-0j; Wed, 11 Jun 2025 16:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPRxA-0003Rk-9Z
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:21:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uPSUf-0000PJ-CE
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:56:21 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPRx7-0007a7-KL
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:21:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749673298;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=QE0YZYK5Rgci6SgNbzKZXa40yfAYQL/U3zeDLa60RHw=;
- b=WxzLGorTnWn5bmP9P2mf023buHiC9KvaKydGZXTOT6NPUflYVAa42WJgXRpN0lbX4to3xP
- laSsuuh6GTdwR1lurKQrfXCnbZ91YCKGZjxM4UoZdtj01R7hN68krHZ0z/Mn92NmuMfiCH
- 3N2fivF2HLPNOmQrxZaND6jxwU/k3bU=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-124-Ad5tVN6DOH-Lg3yx7Ow1qQ-1; Wed, 11 Jun 2025 16:21:36 -0400
-X-MC-Unique: Ad5tVN6DOH-Lg3yx7Ow1qQ-1
-X-Mimecast-MFC-AGG-ID: Ad5tVN6DOH-Lg3yx7Ow1qQ_1749673295
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a5281ba3a4so97129f8f.0
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 13:21:36 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749673295; x=1750278095;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=QE0YZYK5Rgci6SgNbzKZXa40yfAYQL/U3zeDLa60RHw=;
- b=KLdN5STYEHRYvoXAMqSd8JapEoQ+0OFljR0OMPUkHODnSI/UZJokZMHqYD+qRHLvuZ
- FLwS3nbKiUWufxzoGHBivnXYgEQObyJOOf6k3RNNcPG5FHsvF2tbGhdXlgjylyHea15x
- em1jGfG6BD83EjGSHzcVpIJgvhaiz4J71zmkDdS5BoRv4F/AMwjdMSABSzamx0c9yUBo
- PAEhiXx/4bbPN0jSuS6MRtNuqqgCnwWlYNvudIT4OYYVw6H1qn1wDP9j63YR8I3L7yMt
- J9cZTZMJ0D7PyKQQN13xlJX/UY2CaBfEgKd+gD5EfOzAlrtX7T4IxvM9pVFtnSzxhd0/
- Hjjw==
-X-Gm-Message-State: AOJu0YwJXJ3dhrJGMWycIa0ieb0uSeGhEUt8iGbz63N3cHCMied4JATB
- 7tdRPsHECucG4qEPECAuqBllGLvXXW4Y6KGY0Erl7iVZqg0Or4tcUSpfjP8gz3yJNwUxdJYa2Cj
- Toak4i95xePE5kLeTrS2xBOuFk5LN08smLzqvId1SXd6NgHPgLAgjEA6bAQcQf+XASPEbFQTwiO
- ZFWlM975+pXX9m9Qmjbx9AanrlmKpLmaA=
-X-Gm-Gg: ASbGncs01kboSp+OZCKtOpq1k8lZUlCtm5axCSvgEiuZgxc8YWgYt0SjnQLzH1cAtux
- waq1DYyy/hh+RehbjMHMNutxvlqF0WbiNiM0mnguHzTn17Vd2o/wHwHuUAWbRTKpUhIB/YYHZaa
- RapA==
-X-Received: by 2002:a05:6000:4305:b0:3a4:f7ae:77cc with SMTP id
- ffacd0b85a97d-3a5603b08ddmr650067f8f.0.1749673295397; 
- Wed, 11 Jun 2025 13:21:35 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGiTeNyZYRIh6EcBnfwPyeuwpF+YYcoG8d+HnGF6qrOyzpGXj8RCqam/IG7mVH/Mt8C5Bl+B0Ge0ojL/BnxoaE=
-X-Received: by 2002:a05:6000:4305:b0:3a4:f7ae:77cc with SMTP id
- ffacd0b85a97d-3a5603b08ddmr650058f8f.0.1749673295036; Wed, 11 Jun 2025
- 13:21:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
+ id 1uPSUd-0002VP-F0
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 16:56:21 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55BChTIh027686;
+ Wed, 11 Jun 2025 20:56:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=mmh3Ss7ddWljTbsI3mPPULu7D2xyWae3UVd0kLNf+
+ 9U=; b=BGL0kZrDnLo7ZfZZGBydFObQdfjTnG8TO4HWUeG1gg4E59ww8IkCqBwUb
+ ieRS/VJ8C3fmm3oxU4mx+DR48yJ1cyfaGVhbs3JRS60HKLlpUb0EEsr/00rAssHB
+ 5Vr+02Wp9CNfdJyvTYiaHV7Ii4EL1hVBWKzZtc71DMXfJBdXgT6uc090tGeOLyhg
+ c3HhxZzYLua6Slk6yM0DuEgt9dlVoYtaOt42GAwjhz8aHt2DCd9Eo8pcBrW0AMph
+ oVmLKjLzLZFyxjtN1jQESYtOtlO8OvJ+O+JMw1uraVbDwjM+2XydO7yss0aACMK/
+ fvSazTLC3Ofi3llaEMq7b3PbvW8Gw==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474cxjf1r3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Jun 2025 20:56:15 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55BI1GB9014948;
+ Wed, 11 Jun 2025 20:56:14 GMT
+Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4750rp9gev-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Jun 2025 20:56:14 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55BKuD2331392494
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Jun 2025 20:56:13 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id EC7FB58052;
+ Wed, 11 Jun 2025 20:56:12 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B108D5805A;
+ Wed, 11 Jun 2025 20:56:12 +0000 (GMT)
+Received: from IBM-GLTZVH3.ibm.com (unknown [9.61.250.224])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 11 Jun 2025 20:56:12 +0000 (GMT)
+From: Jaehoon Kim <jhkim@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: jjherne@linux.ibm.com, steven.sistare@oracle.com, peterx@redhat.com,
+ farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com,
+ Jaehoon Kim <jhkim@linux.ibm.com>
+Subject: [PATCH v4 0/2] migration: Support socket fd for CPR and fix
+Date: Wed, 11 Jun 2025 15:56:08 -0500
+Message-ID: <20250611205610.147008-1-jhkim@linux.ibm.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-References: <20250610212829.2818792-1-pierrick.bouvier@linaro.org>
- <20250610212829.2818792-2-pierrick.bouvier@linaro.org>
- <CABgObfaNGO+hJtGWf=eBvurQqi4u3GmLUFsoa4dWVwk0iiA3PQ@mail.gmail.com>
- <23b737f9-f8b6-437e-a59e-ecd8fec3819c@linaro.org>
-In-Reply-To: <23b737f9-f8b6-437e-a59e-ecd8fec3819c@linaro.org>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Wed, 11 Jun 2025 22:21:22 +0200
-X-Gm-Features: AX0GCFtkKqs-ojs2nE64yQkkzA9loEESTQHzKbvEoeEgQcM4h61fd48Ton74oRs
-Message-ID: <CABgObfZ7J+1uUn_b9s_2KoR5u7nG-XzEV9HEkbytbSN67DApqw@mail.gmail.com>
-Subject: Re: [PATCH 1/2] qemu/timer: introduce time dilation factor
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- "P. Berrange, Daniel" <berrange@redhat.com>, "Maydell,
- Peter" <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Richard Henderson <richard.henderson@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000395e170637518f94"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: dMMssQE08qlEZ3Lr9gv4SuC7GtysD3Tm
+X-Proofpoint-GUID: dMMssQE08qlEZ3Lr9gv4SuC7GtysD3Tm
+X-Authority-Analysis: v=2.4 cv=fZWty1QF c=1 sm=1 tr=0 ts=6849ed6f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=6IFa9wvqVegA:10 a=X9ao9dJPHCAfSuR0ugkA:9 a=ZXulRonScM0A:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjExMDE3NiBTYWx0ZWRfX7WXm2rcxT7Ef
+ j5lwWW2OLFPKweMB2SSqnAjWWnXsXWqha2ZByDAP6G2aJXBiEICb7s1LvMUTaCzaFlOW5yTYvaA
+ ykkm/gvmFx4LgWBeWrfjDJRgA7u+yl7qrDtDa8Nw1oIZ5zIVXJqE1s3B6x2ZOVQ8U0a8S+SDodu
+ 7fgbemh3eExM01ivJq4YvEScG11BSV9Ut7UD7GeTiHL/fg5Esr8hxflBVC42xtxlQHl5MNUshHh
+ BvOL7MxGCNnGbalyw1iK5ZSZAaxL9vbbMmHegTXmee/6KxP+UgunzFKaJCh9eWAEAiKKLuTrB5Y
+ X3OWY6ee3Zt1cmdbQJ7x4NLqXwe/fUgxxRaGOgNxc9q0ADD7B3mFDw9Istq7XKqZStALwG8veB7
+ 1Nl63PAVaDgwsZY7v0q63HgFdgAibZQPBe8knU73rypl5hiZj8OD0z8pAoFcaIz5K4XXWK1W
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-11_09,2025-06-10_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015 impostorscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ adultscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=604
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506110176
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=jhkim@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,74 +118,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000395e170637518f94
-Content-Type: text/plain; charset="UTF-8"
+Hello,
 
-Il mer 11 giu 2025, 20:55 Pierrick Bouvier <pierrick.bouvier@linaro.org> ha
-scritto:
+This is v4 of the patch series.
 
-> > 1) different clocks have different starts, so the clock_start must be
-> > stored per clock type
-> >
->
-> I was not sure if several clocks are used, so I'll simply use static in
-> concerned functions.
->
+Changes since v3:
+- [Patch 1/2]: Applid review feedback from Steve Sistare - now using
+  '%d' in g_strdup_printf
 
-Ok.
+- [Patch 2/2]: No changes; Kept as-is with Reviewed-by from Steve
+  Sistare.
 
-The cycles counter is also problematic, so perhaps make dilation work only
-with TCG?
+Jaehoon Kim (2):
+  tests/migration: Setup pre-listened cpr.sock to remove race-condition.
+  migration: Support fd-based socket address in cpr_transfer_input
 
-> 2) dilation must be applied to timers too.
->
->  From what I saw, timers either use clock function (already dilated), or
-> rely on cpu_get_host_ticks().
-> Do you suggest to dilate time returned by cpu_get_host_ticks(), or
-> something different?
->
+ migration/cpr-transfer.c          |  7 +++++--
+ tests/qtest/migration/cpr-tests.c | 14 ++++++++++++--
+ 2 files changed, 17 insertions(+), 4 deletions(-)
 
-Right. It just seemed that something was missing... and indeed that's
-deadline computation: it must convert the dilated deadline to host
-nanoseconds, i.e. do a division instead of a multiply.
-
-Paolo
-
---000000000000395e170637518f94
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
-ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mer 11 giu 2025, 20:55 Pierri=
-ck Bouvier &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org">pierrick.bouv=
-ier@linaro.org</a>&gt; ha scritto:</div><blockquote class=3D"gmail_quote" s=
-tyle=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pad=
-ding-left:1ex">
-&gt; 1) different clocks have different starts, so the clock_start must be =
-<br>
-&gt; stored per clock type<br>
-&gt;<br>
-<br>
-I was not sure if several clocks are used, so I&#39;ll simply use static in=
- <br>
-concerned functions.<br></blockquote></div></div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">Ok.</div><div dir=3D"auto"><br></div><div dir=3D"auto">=
-The cycles counter is also problematic, so perhaps make dilation work only =
-with TCG?</div><div dir=3D"auto"><br></div><div dir=3D"auto"><div class=3D"=
-gmail_quote gmail_quote_container"><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">&gt; 2) dilation must be applied to timers too.<br>
-<br>
-=C2=A0From what I saw, timers either use clock function (already dilated), =
-or <br>
-rely on cpu_get_host_ticks().<br>
-Do you suggest to dilate time returned by cpu_get_host_ticks(), or <br>
-something different?<br></blockquote></div></div><div dir=3D"auto"><br></di=
-v><div dir=3D"auto">Right. It just seemed that something was missing... and=
- indeed that&#39;s deadline computation: it must convert the dilated deadli=
-ne to host nanoseconds, i.e. do a division instead of a multiply.=C2=A0</di=
-v><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div></div>
-
---000000000000395e170637518f94--
+-- 
+2.49.0
 
 
