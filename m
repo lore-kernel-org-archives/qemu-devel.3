@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F24B8C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:08:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1129FC71131
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:08:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPN3C-00065O-97; Wed, 11 Jun 2025 11:07:38 -0400
+	id 1uPN2p-0005S9-Ro; Wed, 11 Jun 2025 11:07:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2z-0005br-Q7
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2m-0005H9-Hb
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2y-0007BU-29
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2k-00079l-8u
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749654443;
+ s=mimecast20190719; t=1749654429;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7ZCUI4orxnF82b1y3t9R6rH4WLabU1ZdInS/jhGwZkA=;
- b=Siede8fzYkyHqx1O2I8OVp/MvKZjkYntwfRmw4Nndp3rXiaJDQEFZ70nqaVoDQQmX3XcW6
- ppp1Cg1YFUzeqe+QC1tXFPLA13mxVGYNZpTjb4QNC1e/xSWvqG7weye+XKQJtAbjyKsr3V
- 8p0Q0kTTejRlczOJ/gcP3jbLU1oHJkQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=7Mncl3eIe35qDtefYpoRq5zfuIlzvDpPbzDgAjgPdLc=;
+ b=QFcF+PVqmK+ZymRLo1IMrN77IFdvij2ZWzG43YgmQVh8qg4UJIdrHmm4laoH2SI8pn/Tth
+ vGvh2D2jfzbCzMdWLw6WoUqLUDhuwCC2SXFY7eCYfQ4JxEOq5kaJCu4fncMz2SeGqTsIaw
+ 0kZyyGoDHpE/IPZ89bpdn8g3qw7P9tI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-265-zbmHHeWzPhuLxOHFmN8peQ-1; Wed,
- 11 Jun 2025 11:07:21 -0400
-X-MC-Unique: zbmHHeWzPhuLxOHFmN8peQ-1
-X-Mimecast-MFC-AGG-ID: zbmHHeWzPhuLxOHFmN8peQ_1749654439
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-640-BoZ7ku3CNISfbKCe2NM4_g-1; Wed,
+ 11 Jun 2025 11:07:07 -0400
+X-MC-Unique: BoZ7ku3CNISfbKCe2NM4_g-1
+X-Mimecast-MFC-AGG-ID: BoZ7ku3CNISfbKCe2NM4_g_1749654427
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DD8BB18002ED; Wed, 11 Jun 2025 15:07:18 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E7CDD1800282; Wed, 11 Jun 2025 15:07:06 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.225.191])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 46D65180045B; Wed, 11 Jun 2025 15:07:17 +0000 (UTC)
+ id 528CC180045C; Wed, 11 Jun 2025 15:07:05 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
  Steve Sistare <steven.sistare@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 22/27] vfio/pci: vfio_notifier_init
-Date: Wed, 11 Jun 2025 17:06:14 +0200
-Message-ID: <20250611150620.701903-23-clg@redhat.com>
+Subject: [PULL 17/27] vfio/container: recover from unmap-all-vaddr failure
+Date: Wed, 11 Jun 2025 17:06:09 +0200
+Message-ID: <20250611150620.701903-18-clg@redhat.com>
 In-Reply-To: <20250611150620.701903-1-clg@redhat.com>
 References: <20250611150620.701903-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,134 +86,240 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Steve Sistare <steven.sistare@oracle.com>
 
-Move event_notifier_init calls to a helper vfio_notifier_init.
-This version is trivial, but it will be expanded to support CPR
-in subsequent patches.  No functional change.
+If there are multiple containers and unmap-all fails for some container, we
+need to remap vaddr for the other containers for which unmap-all succeeded.
+Recover by walking all address ranges of all containers to restore the vaddr
+for each.  Do so by invoking the vfio listener callback, and passing a new
+"remap" flag that tells it to restore a mapping without re-allocating new
+userland data structures.
 
 Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/1749569991-25171-14-git-send-email-steven.sistare@oracle.com
+Link: https://lore.kernel.org/qemu-devel/1749569991-25171-9-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 40 +++++++++++++++++++++++++---------------
- 1 file changed, 25 insertions(+), 15 deletions(-)
+ include/hw/vfio/vfio-container-base.h |  3 +
+ include/hw/vfio/vfio-cpr.h            | 10 +++
+ hw/vfio/cpr-legacy.c                  | 91 +++++++++++++++++++++++++++
+ hw/vfio/listener.c                    | 19 +++++-
+ 4 files changed, 122 insertions(+), 1 deletion(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index 7a33c19ea28c454221ee430784e5d84cf498486b..dc0d9a7fbb939cdcae58c40e7bd33b0a2c1bd3ec 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -57,6 +57,16 @@ static void vfio_disable_interrupts(VFIOPCIDevice *vdev);
- static void vfio_mmap_set_enabled(VFIOPCIDevice *vdev, bool enabled);
- static void vfio_msi_disable_common(VFIOPCIDevice *vdev);
+diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+index 9d37f86115a873eb164ae90c5ebaf2acd2c6a5d8..f0232654eedf19c4d9c4f0ed55e79074442720c3 100644
+--- a/include/hw/vfio/vfio-container-base.h
++++ b/include/hw/vfio/vfio-container-base.h
+@@ -256,4 +256,7 @@ struct VFIOIOMMUClass {
+ VFIORamDiscardListener *vfio_find_ram_discard_listener(
+     VFIOContainerBase *bcontainer, MemoryRegionSection *section);
  
-+static bool vfio_notifier_init(EventNotifier *e, const char *name, Error **errp)
-+{
-+    int ret = event_notifier_init(e, 0);
++void vfio_container_region_add(VFIOContainerBase *bcontainer,
++                               MemoryRegionSection *section, bool cpr_remap);
 +
-+    if (ret) {
-+        error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
-+    }
-+    return !ret;
-+}
+ #endif /* HW_VFIO_VFIO_CONTAINER_BASE_H */
+diff --git a/include/hw/vfio/vfio-cpr.h b/include/hw/vfio/vfio-cpr.h
+index b83dd4275183595aa31071d99099ad746931c66a..56ede049ad68759e31d855809c5bd8493dc09176 100644
+--- a/include/hw/vfio/vfio-cpr.h
++++ b/include/hw/vfio/vfio-cpr.h
+@@ -10,6 +10,7 @@
+ #define HW_VFIO_VFIO_CPR_H
+ 
+ #include "migration/misc.h"
++#include "system/memory.h"
+ 
+ struct VFIOContainer;
+ struct VFIOContainerBase;
+@@ -17,6 +18,9 @@ struct VFIOGroup;
+ 
+ typedef struct VFIOContainerCPR {
+     Error *blocker;
++    bool vaddr_unmapped;
++    NotifierWithReturn transfer_notifier;
++    MemoryListener remap_listener;
+     int (*saved_dma_map)(const struct VFIOContainerBase *bcontainer,
+                          hwaddr iova, ram_addr_t size,
+                          void *vaddr, bool readonly, MemoryRegion *mr);
+@@ -42,4 +46,10 @@ int vfio_cpr_group_get_device_fd(int d, const char *name);
+ bool vfio_cpr_container_match(struct VFIOContainer *container,
+                               struct VFIOGroup *group, int fd);
+ 
++void vfio_cpr_giommu_remap(struct VFIOContainerBase *bcontainer,
++                           MemoryRegionSection *section);
 +
- /*
-  * Disabling BAR mmaping can be slow, but toggling it around INTx can
-  * also be a huge overhead.  We try to get the best of both worlds by
-@@ -137,8 +147,7 @@ static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     pci_irq_deassert(&vdev->pdev);
- 
-     /* Get an eventfd for resample/unmask */
--    if (event_notifier_init(&vdev->intx.unmask, 0)) {
--        error_setg(errp, "event_notifier_init failed eoi");
-+    if (!vfio_notifier_init(&vdev->intx.unmask, "intx-unmask", errp)) {
-         goto fail;
-     }
- 
-@@ -269,7 +278,6 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     uint8_t pin = vfio_pci_read_config(&vdev->pdev, PCI_INTERRUPT_PIN, 1);
-     Error *err = NULL;
-     int32_t fd;
--    int ret;
- 
- 
-     if (!pin) {
-@@ -292,9 +300,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     }
- #endif
- 
--    ret = event_notifier_init(&vdev->intx.interrupt, 0);
--    if (ret) {
--        error_setg_errno(errp, -ret, "event_notifier_init failed");
-+    if (!vfio_notifier_init(&vdev->intx.interrupt, "intx-interrupt", errp)) {
++bool vfio_cpr_ram_discard_register_listener(
++    struct VFIOContainerBase *bcontainer, MemoryRegionSection *section);
++
+ #endif /* HW_VFIO_VFIO_CPR_H */
+diff --git a/hw/vfio/cpr-legacy.c b/hw/vfio/cpr-legacy.c
+index 2fd8348c7cd37964af87ef04e32ce3dcd2bfde1a..a84c3247b7172a1f084659f2418d0c1e1394becf 100644
+--- a/hw/vfio/cpr-legacy.c
++++ b/hw/vfio/cpr-legacy.c
+@@ -29,6 +29,7 @@ static bool vfio_dma_unmap_vaddr_all(VFIOContainer *container, Error **errp)
+         error_setg_errno(errp, errno, "vfio_dma_unmap_vaddr_all");
          return false;
      }
-     fd = event_notifier_get_fd(&vdev->intx.interrupt);
-@@ -474,11 +480,13 @@ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
++    container->cpr.vaddr_unmapped = true;
+     return true;
+ }
  
- static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector)
- {
-+    const char *name = "kvm_interrupt";
+@@ -59,6 +60,14 @@ static int vfio_legacy_cpr_dma_map(const VFIOContainerBase *bcontainer,
+     return 0;
+ }
+ 
++static void vfio_region_remap(MemoryListener *listener,
++                              MemoryRegionSection *section)
++{
++    VFIOContainer *container = container_of(listener, VFIOContainer,
++                                            cpr.remap_listener);
++    vfio_container_region_add(&container->bcontainer, section, true);
++}
 +
-     if (vector->virq < 0) {
-         return;
-     }
- 
--    if (event_notifier_init(&vector->kvm_interrupt, 0)) {
-+    if (!vfio_notifier_init(&vector->kvm_interrupt, name, NULL)) {
-         goto fail_notifier;
-     }
- 
-@@ -535,11 +543,12 @@ static void vfio_pci_vector_init(VFIOPCIDevice *vdev, int nr)
+ static bool vfio_cpr_supported(VFIOContainer *container, Error **errp)
  {
-     VFIOMSIVector *vector = &vdev->msi_vectors[nr];
-     PCIDevice *pdev = &vdev->pdev;
-+    Error *err = NULL;
- 
-     vector->vdev = vdev;
-     vector->virq = -1;
--    if (event_notifier_init(&vector->interrupt, 0)) {
--        error_report("vfio: Error: event_notifier_init failed");
-+    if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
-+        error_report_err(err);
+     if (!ioctl(container->fd, VFIO_CHECK_EXTENSION, VFIO_UPDATE_VADDR)) {
+@@ -120,6 +129,40 @@ static const VMStateDescription vfio_container_vmstate = {
      }
-     vector->use = true;
-     if (vdev->interrupt == VFIO_INT_MSIX) {
-@@ -755,13 +764,14 @@ retry:
+ };
  
-     for (i = 0; i < vdev->nr_vectors; i++) {
-         VFIOMSIVector *vector = &vdev->msi_vectors[i];
-+        Error *err = NULL;
- 
-         vector->vdev = vdev;
-         vector->virq = -1;
-         vector->use = true;
- 
--        if (event_notifier_init(&vector->interrupt, 0)) {
--            error_report("vfio: Error: event_notifier_init failed");
-+        if (!vfio_notifier_init(&vector->interrupt, "interrupt", &err)) {
-+            error_report_err(err);
-         }
- 
-         qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
-@@ -2928,8 +2938,8 @@ void vfio_pci_register_err_notifier(VFIOPCIDevice *vdev)
-         return;
++static int vfio_cpr_fail_notifier(NotifierWithReturn *notifier,
++                                  MigrationEvent *e, Error **errp)
++{
++    VFIOContainer *container =
++        container_of(notifier, VFIOContainer, cpr.transfer_notifier);
++    VFIOContainerBase *bcontainer = &container->bcontainer;
++
++    if (e->type != MIG_EVENT_PRECOPY_FAILED) {
++        return 0;
++    }
++
++    if (container->cpr.vaddr_unmapped) {
++        /*
++         * Force a call to vfio_region_remap for each mapped section by
++         * temporarily registering a listener, and temporarily diverting
++         * dma_map to vfio_legacy_cpr_dma_map.  The latter restores vaddr.
++         */
++
++        VFIOIOMMUClass *vioc = VFIO_IOMMU_GET_CLASS(bcontainer);
++        vioc->dma_map = vfio_legacy_cpr_dma_map;
++
++        container->cpr.remap_listener = (MemoryListener) {
++            .name = "vfio cpr recover",
++            .region_add = vfio_region_remap
++        };
++        memory_listener_register(&container->cpr.remap_listener,
++                                 bcontainer->space->as);
++        memory_listener_unregister(&container->cpr.remap_listener);
++        container->cpr.vaddr_unmapped = false;
++        vioc->dma_map = container->cpr.saved_dma_map;
++    }
++    return 0;
++}
++
+ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
+ {
+     VFIOContainerBase *bcontainer = &container->bcontainer;
+@@ -142,6 +185,10 @@ bool vfio_legacy_cpr_register_container(VFIOContainer *container, Error **errp)
+         container->cpr.saved_dma_map = vioc->dma_map;
+         vioc->dma_map = vfio_legacy_cpr_dma_map;
      }
++
++    migration_add_notifier_mode(&container->cpr.transfer_notifier,
++                                vfio_cpr_fail_notifier,
++                                MIG_MODE_CPR_TRANSFER);
+     return true;
+ }
  
--    if (event_notifier_init(&vdev->err_notifier, 0)) {
--        error_report("vfio: Unable to init event notifier for error detection");
-+    if (!vfio_notifier_init(&vdev->err_notifier, "err_notifier", &err)) {
-+        error_report_err(err);
-         vdev->pci_aer = false;
-         return;
-     }
-@@ -2995,8 +3005,8 @@ void vfio_pci_register_req_notifier(VFIOPCIDevice *vdev)
-         return;
-     }
+@@ -152,6 +199,50 @@ void vfio_legacy_cpr_unregister_container(VFIOContainer *container)
+     migration_remove_notifier(&bcontainer->cpr_reboot_notifier);
+     migrate_del_blocker(&container->cpr.blocker);
+     vmstate_unregister(NULL, &vfio_container_vmstate, container);
++    migration_remove_notifier(&container->cpr.transfer_notifier);
++}
++
++/*
++ * In old QEMU, VFIO_DMA_UNMAP_FLAG_VADDR may fail on some mapping after
++ * succeeding for others, so the latter have lost their vaddr.  Call this
++ * to restore vaddr for a section with a giommu.
++ *
++ * The giommu already exists.  Find it and replay it, which calls
++ * vfio_legacy_cpr_dma_map further down the stack.
++ */
++void vfio_cpr_giommu_remap(VFIOContainerBase *bcontainer,
++                           MemoryRegionSection *section)
++{
++    VFIOGuestIOMMU *giommu = NULL;
++    hwaddr as_offset = section->offset_within_address_space;
++    hwaddr iommu_offset = as_offset - section->offset_within_region;
++
++    QLIST_FOREACH(giommu, &bcontainer->giommu_list, giommu_next) {
++        if (giommu->iommu_mr == IOMMU_MEMORY_REGION(section->mr) &&
++            giommu->iommu_offset == iommu_offset) {
++            break;
++        }
++    }
++    g_assert(giommu);
++    memory_region_iommu_replay(giommu->iommu_mr, &giommu->n);
++}
++
++/*
++ * In old QEMU, VFIO_DMA_UNMAP_FLAG_VADDR may fail on some mapping after
++ * succeeding for others, so the latter have lost their vaddr.  Call this
++ * to restore vaddr for a section with a RamDiscardManager.
++ *
++ * The ram discard listener already exists.  Call its populate function
++ * directly, which calls vfio_legacy_cpr_dma_map.
++ */
++bool vfio_cpr_ram_discard_register_listener(VFIOContainerBase *bcontainer,
++                                            MemoryRegionSection *section)
++{
++    VFIORamDiscardListener *vrdl =
++        vfio_find_ram_discard_listener(bcontainer, section);
++
++    g_assert(vrdl);
++    return vrdl->listener.notify_populate(&vrdl->listener, section) == 0;
+ }
  
--    if (event_notifier_init(&vdev->req_notifier, 0)) {
--        error_report("vfio: Unable to init event notifier for device request");
-+    if (!vfio_notifier_init(&vdev->req_notifier, "req_notifier", &err)) {
-+        error_report_err(err);
+ int vfio_cpr_group_get_device_fd(int d, const char *name)
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 735b5f21b7b87cff6b5e757f9696d9a7c1c44fbf..f498e23a93747cb1826726f7c4ca28f8128b4ced 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -481,6 +481,13 @@ static void vfio_listener_region_add(MemoryListener *listener,
+ {
+     VFIOContainerBase *bcontainer = container_of(listener, VFIOContainerBase,
+                                                  listener);
++    vfio_container_region_add(bcontainer, section, false);
++}
++
++void vfio_container_region_add(VFIOContainerBase *bcontainer,
++                               MemoryRegionSection *section,
++                               bool cpr_remap)
++{
+     hwaddr iova, end;
+     Int128 llend, llsize;
+     void *vaddr;
+@@ -516,6 +523,11 @@ static void vfio_listener_region_add(MemoryListener *listener,
+         int iommu_idx;
+ 
+         trace_vfio_listener_region_add_iommu(section->mr->name, iova, end);
++
++        if (cpr_remap) {
++            vfio_cpr_giommu_remap(bcontainer, section);
++        }
++
+         /*
+          * FIXME: For VFIO iommu types which have KVM acceleration to
+          * avoid bouncing all map/unmaps through qemu this way, this
+@@ -558,7 +570,12 @@ static void vfio_listener_region_add(MemoryListener *listener,
+      * about changes.
+      */
+     if (memory_region_has_ram_discard_manager(section->mr)) {
+-        vfio_ram_discard_register_listener(bcontainer, section);
++        if (!cpr_remap) {
++            vfio_ram_discard_register_listener(bcontainer, section);
++        } else if (!vfio_cpr_ram_discard_register_listener(bcontainer,
++                                                           section)) {
++            goto fail;
++        }
          return;
      }
  
