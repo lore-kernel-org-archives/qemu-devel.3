@@ -4,64 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7821DC678DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:08:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27F3BC678DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:09:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPN2I-0004Mm-J8; Wed, 11 Jun 2025 11:06:42 -0400
+	id 1uPN2a-0004Vb-3U; Wed, 11 Jun 2025 11:07:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2D-0004MB-8G
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2T-0004Sj-9a
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2B-00072t-Dk
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:36 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2R-00076P-9C
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749654394;
+ s=mimecast20190719; t=1749654409;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=IGUijn8OwNTfwcOPRbjli+qIh22n9IlcqzOHh08EtHM=;
- b=iXHGSx6P+JbhoYYH/PU5adQxOZSrUN1JJeM1lDz7wgwEd004Z7f8uawfJFPqkX8+EzBiGC
- AG5YvoxcL/py+NHUHo0Km+/2JsBq5ehEY2r+yUxPfAbQgTmT7iP6Nf3SD53rRSp7viFZxa
- WjQ5zv4UqKS/qvmQ5QuTk2S5Aku3mN0=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MUGT0dF9kElz2HxdD/WmTDEZEkfwDZyixh8VsmslCw8=;
+ b=VbFE09E6e1N3BB2acuTVA/mIbsEO3mPVzr7hdZSQRlG03/F0sGMGnqiXm81TWmupOMpJx5
+ UqMpU4F0gKLSERdWmqPsySTsOGfqty4E1WBx0MX37JpnFKxKTYtBlNTxItqymYP5jBJhpj
+ blFdjHoRU78fXl5n6l/qo+4si8fTkYI=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-607-Z3gH8SuvMpaECHxrW8CRUw-1; Wed,
- 11 Jun 2025 11:06:31 -0400
-X-MC-Unique: Z3gH8SuvMpaECHxrW8CRUw-1
-X-Mimecast-MFC-AGG-ID: Z3gH8SuvMpaECHxrW8CRUw_1749654390
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-660-FblJkeDENpS7nJjZ5via5A-1; Wed,
+ 11 Jun 2025 11:06:45 -0400
+X-MC-Unique: FblJkeDENpS7nJjZ5via5A-1
+X-Mimecast-MFC-AGG-ID: FblJkeDENpS7nJjZ5via5A_1749654405
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1072C19560B2; Wed, 11 Jun 2025 15:06:30 +0000 (UTC)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0B750195608B; Wed, 11 Jun 2025 15:06:45 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.225.191])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8C7CC180045B; Wed, 11 Jun 2025 15:06:27 +0000 (UTC)
+ id 4A0CC180045C; Wed, 11 Jun 2025 15:06:43 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
  John Levon <john.levon@nutanix.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
- Yi Liu <yi.l.liu@intel.com>
-Subject: [PULL 02/27] vfio/pci: Fix instance_size of VFIO_PCI_BASE
-Date: Wed, 11 Jun 2025 17:05:54 +0200
-Message-ID: <20250611150620.701903-3-clg@redhat.com>
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
+Subject: [PULL 08/27] vfio: add per-region fd support
+Date: Wed, 11 Jun 2025 17:06:00 +0200
+Message-ID: <20250611150620.701903-9-clg@redhat.com>
 In-Reply-To: <20250611150620.701903-1-clg@redhat.com>
 References: <20250611150620.701903-1-clg@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -86,46 +84,180 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: John Levon <john.levon@nutanix.com>
 
-Currently the final instance_size of VFIO_PCI_BASE is sizeof(PCIDevice).
-It should be sizeof(VFIOPCIDevice), VFIO_PCI uses same structure as
-base class VFIO_PCI_BASE, so no need to set its instance_size explicitly.
+For vfio-user, each region has its own fd rather than sharing
+vbasedev's. Add the necessary plumbing to support this, and use the
+correct fd in vfio_region_mmap().
 
-This isn't catastrophic only because VFIO_PCI_BASE is an abstract class.
-
-Fixes: d4e392d0a99b ("vfio: add vfio-pci-base class")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: John Levon <john.levon@nutanix.com>
+Signed-off-by: John Levon <john.levon@nutanix.com>
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Link: https://lore.kernel.org/qemu-devel/20250611024228.423666-1-zhenzhong.duan@intel.com
+Link: https://lore.kernel.org/qemu-devel/20250607001056.335310-4-john.levon@nutanix.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/pci.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ include/hw/vfio/vfio-device.h |  7 +++++--
+ hw/vfio/device.c              | 29 +++++++++++++++++++++++++----
+ hw/vfio/region.c              |  9 +++++++--
+ 3 files changed, 37 insertions(+), 8 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index b1250d85bf0124a22e3ba3859a47d2b176ade648..6748f4e876942f89138f9d8fedfb99dab95b865e 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -3425,7 +3425,7 @@ static void vfio_pci_base_dev_class_init(ObjectClass *klass, const void *data)
- static const TypeInfo vfio_pci_base_dev_info = {
-     .name = TYPE_VFIO_PCI_BASE,
-     .parent = TYPE_PCI_DEVICE,
--    .instance_size = 0,
-+    .instance_size = sizeof(VFIOPCIDevice),
-     .abstract = true,
-     .class_init = vfio_pci_base_dev_class_init,
-     .interfaces = (const InterfaceInfo[]) {
-@@ -3647,7 +3647,6 @@ static void vfio_pci_dev_class_init(ObjectClass *klass, const void *data)
- static const TypeInfo vfio_pci_dev_info = {
-     .name = TYPE_VFIO_PCI,
-     .parent = TYPE_VFIO_PCI_BASE,
--    .instance_size = sizeof(VFIOPCIDevice),
-     .class_init = vfio_pci_dev_class_init,
-     .instance_init = vfio_instance_init,
-     .instance_finalize = vfio_instance_finalize,
+diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+index 8bcb3c19f62b5a47c835e10149c04a9bd7536520..bf54fc69205a713263a666b480b2399e2a91f552 100644
+--- a/include/hw/vfio/vfio-device.h
++++ b/include/hw/vfio/vfio-device.h
+@@ -66,6 +66,7 @@ typedef struct VFIODevice {
+     OnOffAuto enable_migration;
+     OnOffAuto migration_multifd_transfer;
+     bool migration_events;
++    bool use_region_fds;
+     VFIODeviceOps *ops;
+     VFIODeviceIOOps *io_ops;
+     unsigned int num_irqs;
+@@ -84,6 +85,7 @@ typedef struct VFIODevice {
+     VFIOIOASHwpt *hwpt;
+     QLIST_ENTRY(VFIODevice) hwpt_next;
+     struct vfio_region_info **reginfo;
++    int *region_fds;
+ } VFIODevice;
+ 
+ struct VFIODeviceOps {
+@@ -170,10 +172,11 @@ struct VFIODeviceIOOps {
+     /**
+      * @get_region_info
+      *
+-     * Fill in @info with information on the region given by @info->index.
++     * Fill in @info (and optionally @fd) with information on the region given
++     * by @info->index.
+      */
+     int (*get_region_info)(VFIODevice *vdev,
+-                           struct vfio_region_info *info);
++                           struct vfio_region_info *info, int *fd);
+ 
+     /**
+      * @get_irq_info
+diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+index 9fba2c7272f207f2fe870fc97b46c342bd57dc0a..a4bdde8e8bd49c82923d0d29a44f18fd71a44204 100644
+--- a/hw/vfio/device.c
++++ b/hw/vfio/device.c
+@@ -200,6 +200,7 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+                                 struct vfio_region_info **info)
+ {
+     size_t argsz = sizeof(struct vfio_region_info);
++    int fd = -1;
+     int ret;
+ 
+     /* check cache */
+@@ -214,7 +215,7 @@ int vfio_device_get_region_info(VFIODevice *vbasedev, int index,
+ retry:
+     (*info)->argsz = argsz;
+ 
+-    ret = vbasedev->io_ops->get_region_info(vbasedev, *info);
++    ret = vbasedev->io_ops->get_region_info(vbasedev, *info, &fd);
+     if (ret != 0) {
+         g_free(*info);
+         *info = NULL;
+@@ -225,11 +226,19 @@ retry:
+         argsz = (*info)->argsz;
+         *info = g_realloc(*info, argsz);
+ 
++        if (fd != -1) {
++            close(fd);
++            fd = -1;
++        }
++
+         goto retry;
+     }
+ 
+     /* fill cache */
+     vbasedev->reginfo[index] = *info;
++    if (vbasedev->region_fds != NULL) {
++        vbasedev->region_fds[index] = fd;
++    }
+ 
+     return 0;
+ }
+@@ -334,6 +343,7 @@ void vfio_device_init(VFIODevice *vbasedev, int type, VFIODeviceOps *ops,
+     vbasedev->io_ops = &vfio_device_io_ops_ioctl;
+     vbasedev->dev = dev;
+     vbasedev->fd = -1;
++    vbasedev->use_region_fds = false;
+ 
+     vbasedev->ram_block_discard_allowed = ram_discard;
+ }
+@@ -444,6 +454,9 @@ void vfio_device_prepare(VFIODevice *vbasedev, VFIOContainerBase *bcontainer,
+ 
+     vbasedev->reginfo = g_new0(struct vfio_region_info *,
+                                vbasedev->num_regions);
++    if (vbasedev->use_region_fds) {
++        vbasedev->region_fds = g_new0(int, vbasedev->num_regions);
++    }
+ }
+ 
+ void vfio_device_unprepare(VFIODevice *vbasedev)
+@@ -452,9 +465,14 @@ void vfio_device_unprepare(VFIODevice *vbasedev)
+ 
+     for (i = 0; i < vbasedev->num_regions; i++) {
+         g_free(vbasedev->reginfo[i]);
++        if (vbasedev->region_fds != NULL && vbasedev->region_fds[i] != -1) {
++            close(vbasedev->region_fds[i]);
++        }
++
+     }
+-    g_free(vbasedev->reginfo);
+-    vbasedev->reginfo = NULL;
++
++    g_clear_pointer(&vbasedev->reginfo, g_free);
++    g_clear_pointer(&vbasedev->region_fds, g_free);
+ 
+     QLIST_REMOVE(vbasedev, container_next);
+     QLIST_REMOVE(vbasedev, global_next);
+@@ -476,10 +494,13 @@ static int vfio_device_io_device_feature(VFIODevice *vbasedev,
+ }
+ 
+ static int vfio_device_io_get_region_info(VFIODevice *vbasedev,
+-                                          struct vfio_region_info *info)
++                                          struct vfio_region_info *info,
++                                          int *fd)
+ {
+     int ret;
+ 
++    *fd = -1;
++
+     ret = ioctl(vbasedev->fd, VFIO_DEVICE_GET_REGION_INFO, info);
+ 
+     return ret < 0 ? -errno : ret;
+diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+index 34752c3f65c4b43fc961754657b18f5269c01ef1..cb172f2136dab7d5e649e588bda16b0e4821079d 100644
+--- a/hw/vfio/region.c
++++ b/hw/vfio/region.c
+@@ -241,6 +241,7 @@ int vfio_region_mmap(VFIORegion *region)
+ {
+     int i, ret, prot = 0;
+     char *name;
++    int fd;
+ 
+     if (!region->mem) {
+         return 0;
+@@ -271,14 +272,18 @@ int vfio_region_mmap(VFIORegion *region)
+             goto no_mmap;
+         }
+ 
++        /* Use the per-region fd if set, or the shared fd. */
++        fd = region->vbasedev->region_fds ?
++             region->vbasedev->region_fds[region->nr] :
++             region->vbasedev->fd,
++
+         map_align = (void *)ROUND_UP((uintptr_t)map_base, (uintptr_t)align);
+         munmap(map_base, map_align - map_base);
+         munmap(map_align + region->mmaps[i].size,
+                align - (map_align - map_base));
+ 
+         region->mmaps[i].mmap = mmap(map_align, region->mmaps[i].size, prot,
+-                                     MAP_SHARED | MAP_FIXED,
+-                                     region->vbasedev->fd,
++                                     MAP_SHARED | MAP_FIXED, fd,
+                                      region->fd_offset +
+                                      region->mmaps[i].offset);
+         if (region->mmaps[i].mmap == MAP_FAILED) {
 -- 
 2.49.0
 
