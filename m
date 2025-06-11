@@ -4,56 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B32B0C677C4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:10:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A94F4C678DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 15:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPN2I-0004Og-Rj; Wed, 11 Jun 2025 11:06:44 -0400
+	id 1uPN3C-00065P-7J; Wed, 11 Jun 2025 11:07:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2D-0004MN-Pa
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:37 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN31-0005cP-5r
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2C-00072y-5v
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:06:37 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uPN2y-0007Bl-Tt
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 11:07:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749654394;
+ s=mimecast20190719; t=1749654444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3V1erp9IYlAc+EgRMbW4Q/hidSJSfzmi+tNxBKakHeY=;
- b=YLjNrOu0+VTeeDgviKdF0G/oBfvP09g+JeemVgHT12427/i2pL5Uwr+IaqJgtjRxyfzgno
- WfNsFrIz4dluiVFMBTF+MEnsZwYOvjJdMPb4SStMbhe8leyhpagChdGD+EHD3QKi59op+p
- T5S8QRcchguB6se17N9Q5bmtXAb+FLY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gOQzLLiN8iauOujs8Nfw0zuPWkL6ghzAGZLmzgYRxsA=;
+ b=DlSpxnczfir1Sl+PMDUOJOno3BStgN5ufWoqqpitCDHcIJsRjoVruqrHAkoRHBGxF27+eb
+ 3L5ZD8ejKqvknImePBuDywhxjrAuLlIWFlktIwI/oFUQsHeK+xStrQEz3hMIfFJgIcEpL7
+ 8r/XnvBT5HHRG22gnfRFjvtl/DbNnuM=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-628-7A0dyRxjMjOgsxotjQ8GGQ-1; Wed,
- 11 Jun 2025 11:06:28 -0400
-X-MC-Unique: 7A0dyRxjMjOgsxotjQ8GGQ-1
-X-Mimecast-MFC-AGG-ID: 7A0dyRxjMjOgsxotjQ8GGQ_1749654387
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-38-h_JtNDq_PxaZAZX1-jREKg-1; Wed,
+ 11 Jun 2025 11:07:21 -0400
+X-MC-Unique: h_JtNDq_PxaZAZX1-jREKg-1
+X-Mimecast-MFC-AGG-ID: h_JtNDq_PxaZAZX1-jREKg_1749654441
 Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0F7811956095; Wed, 11 Jun 2025 15:06:27 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0BED819560B4; Wed, 11 Jun 2025 15:07:21 +0000 (UTC)
 Received: from corto.redhat.com (unknown [10.45.225.191])
  by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 21E8F18002B6; Wed, 11 Jun 2025 15:06:24 +0000 (UTC)
+ id 678EA180045B; Wed, 11 Jun 2025 15:07:19 +0000 (UTC)
 From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alex Williamson <alex.williamson@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- John Levon <john.levon@nutanix.com>,
+ Steve Sistare <steven.sistare@oracle.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PULL 01/27] vfio/container: Fix vfio_listener_commit()
-Date: Wed, 11 Jun 2025 17:05:53 +0200
-Message-ID: <20250611150620.701903-2-clg@redhat.com>
+Subject: [PULL 23/27] vfio/pci: pass vector to virq functions
+Date: Wed, 11 Jun 2025 17:06:15 +0200
+Message-ID: <20250611150620.701903-24-clg@redhat.com>
 In-Reply-To: <20250611150620.701903-1-clg@redhat.com>
 References: <20250611150620.701903-1-clg@redhat.com>
 MIME-Version: 1.0
@@ -85,33 +84,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Zhenzhong Duan <zhenzhong.duan@intel.com>
+From: Steve Sistare <steven.sistare@oracle.com>
 
-It's wrong to call into listener_begin callback in vfio_listener_commit().
-Currently this impacts vfio-user.
+Pass the vector number to vfio_connect_kvm_msi_virq and
+vfio_remove_kvm_msi_virq, so it can be passed to their subroutines in
+a subsequent patch.  No functional change.
 
-Fixes: d9b7d8b6993b ("vfio/container: pass listener_begin/commit callbacks")
-Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: John Levon <john.levon@nutanix.com>
-Link: https://lore.kernel.org/qemu-devel/20250609115433.401775-1-zhenzhong.duan@intel.com
+Signed-off-by: Steve Sistare <steven.sistare@oracle.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/1749569991-25171-15-git-send-email-steven.sistare@oracle.com
 Signed-off-by: Cédric Le Goater <clg@redhat.com>
 ---
- hw/vfio/listener.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/vfio/pci.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 203ed0314ec46225651a51d91df9c2e7c76168ed..735b5f21b7b87cff6b5e757f9696d9a7c1c44fbf 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -437,7 +437,7 @@ static void vfio_listener_commit(MemoryListener *listener)
-                                                  listener);
-     void (*listener_commit)(VFIOContainerBase *bcontainer);
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index dc0d9a7fbb939cdcae58c40e7bd33b0a2c1bd3ec..1d22c41efb6c6150ca1dff6ace752faad4a0fcfd 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -478,7 +478,7 @@ static void vfio_add_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
+                                              vector_n, &vdev->pdev);
+ }
  
--    listener_commit = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_begin;
-+    listener_commit = VFIO_IOMMU_GET_CLASS(bcontainer)->listener_commit;
+-static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector)
++static void vfio_connect_kvm_msi_virq(VFIOMSIVector *vector, int nr)
+ {
+     const char *name = "kvm_interrupt";
  
-     if (listener_commit) {
-         listener_commit(bcontainer);
+@@ -504,7 +504,8 @@ fail_notifier:
+     vector->virq = -1;
+ }
+ 
+-static void vfio_remove_kvm_msi_virq(VFIOMSIVector *vector)
++static void vfio_remove_kvm_msi_virq(VFIOPCIDevice *vdev, VFIOMSIVector *vector,
++                                     int nr)
+ {
+     kvm_irqchip_remove_irqfd_notifier_gsi(kvm_state, &vector->kvm_interrupt,
+                                           vector->virq);
+@@ -581,7 +582,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+      */
+     if (vector->virq >= 0) {
+         if (!msg) {
+-            vfio_remove_kvm_msi_virq(vector);
++            vfio_remove_kvm_msi_virq(vdev, vector, nr);
+         } else {
+             vfio_update_kvm_msi_virq(vector, *msg, pdev);
+         }
+@@ -593,7 +594,7 @@ static int vfio_msix_vector_do_use(PCIDevice *pdev, unsigned int nr,
+                 vfio_route_change = kvm_irqchip_begin_route_changes(kvm_state);
+                 vfio_add_kvm_msi_virq(vdev, vector, nr, true);
+                 kvm_irqchip_commit_route_changes(&vfio_route_change);
+-                vfio_connect_kvm_msi_virq(vector);
++                vfio_connect_kvm_msi_virq(vector, nr);
+             }
+         }
+     }
+@@ -687,7 +688,7 @@ static void vfio_commit_kvm_msi_virq_batch(VFIOPCIDevice *vdev)
+     kvm_irqchip_commit_route_changes(&vfio_route_change);
+ 
+     for (i = 0; i < vdev->nr_vectors; i++) {
+-        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i]);
++        vfio_connect_kvm_msi_virq(&vdev->msi_vectors[i], i);
+     }
+ }
+ 
+@@ -827,7 +828,7 @@ static void vfio_msi_disable_common(VFIOPCIDevice *vdev)
+         VFIOMSIVector *vector = &vdev->msi_vectors[i];
+         if (vdev->msi_vectors[i].use) {
+             if (vector->virq >= 0) {
+-                vfio_remove_kvm_msi_virq(vector);
++                vfio_remove_kvm_msi_virq(vdev, vector, i);
+             }
+             qemu_set_fd_handler(event_notifier_get_fd(&vector->interrupt),
+                                 NULL, NULL, NULL);
 -- 
 2.49.0
 
