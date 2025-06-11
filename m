@@ -4,80 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6D78C678DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 14:02:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50FEEC677C4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Jun 2025 14:10:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPM0n-00045q-Fr; Wed, 11 Jun 2025 10:01:05 -0400
+	id 1uPM9f-0006wv-4i; Wed, 11 Jun 2025 10:10:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uPM0c-00044y-FA
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 10:01:02 -0400
+ id 1uPM9b-0006tE-R8
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 10:10:11 -0400
 Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uPM0Z-0003Tc-Hc
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 10:00:53 -0400
+ id 1uPM9X-0004Yf-H5
+ for qemu-devel@nongnu.org; Wed, 11 Jun 2025 10:10:11 -0400
 Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-604f5691bceso81149a12.0
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 07:00:50 -0700 (PDT)
+ 4fb4d7f45d1cf-6077d0b9bbeso9358378a12.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 07:10:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749650448; x=1750255248; darn=nongnu.org;
+ d=linaro.org; s=google; t=1749651004; x=1750255804; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Rw3OsuBf+UZBV+3Oe2W1P4mJiyWaTcPUqBk0IoX6HzY=;
- b=effsrdokhk2P82GXYylDM/XJfjtsRLSxD/IgU53bxOo6SolyNK8DSWU3k7kDB2sUG5
- EnI/JvGTjXeJmZWms90BoxWFh5fpPvFIfs0D9BdEbBLpcOuKaWsiEwhH9YUVQqMgUjPa
- jhqjTZZu9Bo4AXJIaAqNBqqX6sFLzuEGXjjUPlqS+6Zqb1SrqY3Lz/iGXqsWlugvWF4t
- DWapYXX6Oh1SJop7egPsH/iuTFu0BXiRtIn6BcYI0hPaGR3ggrNAmyIebeewO5rNhTrm
- aiCAXF+6LU01wJwDHdceyKgv8h7PloAgKpsx39VbE21bfSE2ujJ1XRgmYjy0gawDbMG0
- Ik3A==
+ bh=y+5mNqitLQXjrhNVrkaJjeARd4IJxtnjUPTzhKB9klg=;
+ b=TzKfBGP/if6jSEZks24d+PCp4cEVZ8CQZ4k4Y4bqVPfyWZgt/zlhNugC2U8Jl1/ug1
+ jkeW6njmZ1uUg0mIonBoa68SN6j7CJGGpP4uTjY2ndmFteFYb6bOu+yvm+jzRPKShrOx
+ MOl+qLFRiovfhxbtXMV8378l3yz/D56QCws9By7ITB/7NpL8EMAuDo3kGpDO1ACGwDC1
+ oc9oECPuyOgvxu2eOTzDAAZlOxf6RrUe2yAZkw797wh4v2KLXwuRdCkoZ4gK7ofVBmGq
+ 9VeS3aX9B0mG4B2Xp1VCNXvr3SK5YM+vfjCnAQkOWK0Gb49Vz8c4uRkigeMvTsVPisrH
+ zygg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749650448; x=1750255248;
+ d=1e100.net; s=20230601; t=1749651004; x=1750255804;
  h=content-transfer-encoding:mime-version:message-id:date:user-agent
  :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Rw3OsuBf+UZBV+3Oe2W1P4mJiyWaTcPUqBk0IoX6HzY=;
- b=PEy8daci9WuTrn5FNQ1Pnh/Y0ZH462shB8aniy7mh5l/RVd6ZwxVA5kA65GglUvwM5
- qAcmiP1HijJlM+AqBUUcXlbCiTOs2mGpFZuSaLLTSwQrE4PciWEbyNUr0nh+RkLv3clr
- MlVun1495IeYCAQ+wd6U1UOv/GnWOrW9iFxJ9h9OoErh3ku98oE7Y2AGWM6tJrT78XIH
- y8UzRXBzCK/AB1FbW6kyEmFcmP+XznEl8vBZhcGOwiIy7nOPLGopFCPRU8CUuhMjJpFX
- SN7qOMiTF21Ne6msASUtfYQmnY8nexQlajg0tq1sb0RLPO6uTh+IC/5iK072gEPETWcU
- ndSg==
-X-Gm-Message-State: AOJu0YxRuIOSeMX9GRty0d2O6sg+Ed8+ivE27dWGqtcUCPrDFOKBAIse
- x9a902gbEUWUtBBJwm6cKScBmIOkgET/hESBLuniCj3uvwy8UgwfIxuAIsDU6bchSk4=
-X-Gm-Gg: ASbGncuBtRdaEOpxOtAbeWBIfFlwYAAyaoHOtCACarcWx5ssJdThl2Sk/Lov9txrlhK
- zAzAcI2Nnm6uBzZkLjL1dMyw6U0JW2IEg4mBqDOxQyaTuSaM8iREQvpGRv3eA48nkqR0qCqzKBk
- C7OWgrlSGVmekBdl27Ff4sINsrinULn9NeuFoVCcyzdHh5gf0EZ1hN0TruKnxNq1QLE1qFYcQcc
- zXNFuKrIQMIU32xEK6NYgTrWqZ99aniObciysbJCYY2TDadFd9zsK2X2YeqIq8zOXcIvYdNQPDO
- hGkdfg4fjyA3fj/PO6baUSrtuQZS5R3RsypK4aW2gZ4ANCvSJtomcHuJ5Hh85Zo=
-X-Google-Smtp-Source: AGHT+IFpUpjm/+0bvH3QkyjY8fcrOmpIhv8k+b2L0kiXFWPNWQ1xgDn0c8dY4A6kFXNaYNSHxzxPDQ==
-X-Received: by 2002:a17:907:3f86:b0:ad1:81c5:5ec9 with SMTP id
- a640c23a62f3a-ade893e50damr389063466b.4.1749650447758; 
- Wed, 11 Jun 2025 07:00:47 -0700 (PDT)
+ bh=y+5mNqitLQXjrhNVrkaJjeARd4IJxtnjUPTzhKB9klg=;
+ b=onXNKow8xqWuwTl6VnUEneMIU9OhVDQUOPQ8kHxgaKztJ6awUENNCD4pxPNAUa1cMj
+ +6F7oiCGEHewZ5VGiM0YDEnInZEoEVNLErDZjbNWDXHX3dR5Fmcm/cNqVieGYVPyVkW8
+ RiSYLtVq2tyUlfLm3uIpJlAnPPfVY90cJnEdPFF7lJ3Q4UXXqMHTAfC9q3i0qx3h+Jyv
+ Hl1NKaPE8nJ0P+S5Y+IR9MpckCN/XfiGfZ9yVgO8LSBrvQGthe0AKtlFemNbM1gv/YNy
+ Ceu2wxCQCqQrKcdThAfpZe0a9fuGkOnFIzez/Osq20923CxJqUQn3fETJ25AS+Djy2Jy
+ TIIQ==
+X-Gm-Message-State: AOJu0Yx+l3qH10VCT3v4dtmqUhv2x/wJhgzu2koa+spgTe7nZcvCA7W3
+ 9JhauFeeBJYGeE7NvFN/lTXMqpNxXGf/j5X2UnXSaH1mEUQtm94zibeJJ23Jc2P9HOY=
+X-Gm-Gg: ASbGncv4ojfAYod2QG2FMvLj2yEoCv4joC0rciayEWXr/Aol4KC+s8QntkjhjItu3/y
+ fxaN6IQGp9wxPKWkixU1qFMBuE9OPBd25NLNaOjGrno9UhEqVcinf5MM7PkzKes74AS9JZ0nyUS
+ IU9tP7mbz7y9ttSCwol86xuFCeThSZSFFUWAuI2pEXpZHoB87UcvHazTs7tmsUb6xYbCbfpCvBh
+ OVFVAwfkxWwR+IUIOvpJdMMrakMQZnHjorDz7yfYedWw3YUQx84zKvKTAJjodLZsF6DxboggMu6
+ 6HarayHk1afHVAWqM+qmwivDl8WBtdXP+npxDv2DHCkKjAK3t1yMEjfl88+C/7V0dg8VyGLtaA=
+ =
+X-Google-Smtp-Source: AGHT+IFecrFH5JXlWxzmFLWbx5K6s+CqyG/yuCMUHGbCQQu81Ekz2J0kjWwgqrClB4aBGPllQASeDg==
+X-Received: by 2002:a17:907:1c0c:b0:ad8:9257:573d with SMTP id
+ a640c23a62f3a-ade8c7a5bd1mr292055466b.24.1749651004119; 
+ Wed, 11 Jun 2025 07:10:04 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ade1dc3a609sm902238066b.145.2025.06.11.07.00.45
+ a640c23a62f3a-ade44af8215sm708983766b.15.2025.06.11.07.10.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Jun 2025 07:00:46 -0700 (PDT)
+ Wed, 11 Jun 2025 07:10:00 -0700 (PDT)
 Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 08E875F7CB;
- Wed, 11 Jun 2025 15:00:44 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 67DDA5F7CB;
+ Wed, 11 Jun 2025 15:09:59 +0100 (BST)
 From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org,  Richard Henderson
  <richard.henderson@linaro.org>,  Pierrick Bouvier
  <pierrick.bouvier@linaro.org>
-Subject: Re: [RFC PATCH 00/19] accel: Preparatory cleanups for split-accel
-In-Reply-To: <20250606164418.98655-1-philmd@linaro.org> ("Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 6 Jun 2025 18:43:59
+Subject: Re: [RFC PATCH 13/19] accel: Introduce
+ AccelOpsClass::cpu_thread_routine handler
+In-Reply-To: <20250606164418.98655-14-philmd@linaro.org> ("Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9=22's?= message of "Fri, 6 Jun 2025 18:44:12
  +0200")
 References: <20250606164418.98655-1-philmd@linaro.org>
+ <20250606164418.98655-14-philmd@linaro.org>
 User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Wed, 11 Jun 2025 15:00:43 +0100
-Message-ID: <87ecvqjs38.fsf@draig.linaro.org>
+Date: Wed, 11 Jun 2025 15:09:59 +0100
+Message-ID: <875xh2jrns.fsf@draig.linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -107,29 +110,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 
-> Few changes needed before being able to add the
-> split acceleration. Mostly adapting few prototypes
-> so callees have all necessary information.
+> In order to have a generic function creating threads,
+> introduce the thread_precreate() and cpu_thread_routine()
+> handlers.
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> ---
+>  include/system/accel-ops.h |  2 ++
+>  accel/accel-common.c       | 16 +++++++++++++++-
+>  2 files changed, 17 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/system/accel-ops.h b/include/system/accel-ops.h
+> index 44b37592d02..a6535a07343 100644
+> --- a/include/system/accel-ops.h
+> +++ b/include/system/accel-ops.h
+> @@ -37,6 +37,8 @@ struct AccelOpsClass {
+>      bool (*cpus_are_resettable)(void);
+>      void (*cpu_reset_hold)(CPUState *cpu);
+>=20=20
+> +    void *(*cpu_thread_routine)(void *);
+> +    void (*thread_precreate)(CPUState *cpu);
+>      void (*create_vcpu_thread)(CPUState *cpu); /* MANDATORY NON-NULL
+> */
 
-make check-tcg failed:
+After this you start switching *create_vcpu_thread to
+*cpu_thread_routine despite this being a mandatory non-null. You should
+fix the comment and maybe the assert?
 
-  =E2=9E=9C  make check-tcg
-  /home/alex/lsrc/qemu.git/builds/arm.all/pyvenv/bin/meson introspect --tar=
-gets --tests --benchmarks | /home/alex/lsrc/qemu.git/builds/arm.all/pyvenv/=
-bin/python3 -B scripts/mtest2make.py > Makefile.mtest
-    BUILD   aarch64-softmmu guest-tests
-  tests/tcg/aarch64-softmmu: -march=3Darmv8.3-a detected
-  tests/tcg/aarch64-softmmu: -march=3Darmv8.5-a+memtag detected
-    RUN     aarch64-softmmu guest-tests
-    TEST    feat-xs on aarch64
-  qemu-system-aarch64: ../../system/cpus.c:685: cpus_register_accel: Assert=
-ion `ops->create_vcpu_thread !=3D NULL' failed.
-  Aborted
-  make[1]: *** [Makefile:195: run-feat-xs] Error 134
-  make: *** [/home/alex/lsrc/qemu.git/tests/Makefile.include:56: run-tcg-te=
-sts-aarch64-softmmu] Error 2
-
-<snip>
+modified   system/cpus.c
+@@ -682,7 +682,7 @@ void cpu_remove_sync(CPUState *cpu)
+ void cpus_register_accel(const AccelOpsClass *ops)
+ {
+     assert(ops !=3D NULL);
+-    assert(ops->create_vcpu_thread !=3D NULL); /* mandatory */
++    assert(ops->create_vcpu_thread || ops->cpu_thread_routine); /* mandato=
+ry */
+     cpus_accel =3D ops;
+ }
 
 --=20
 Alex Benn=C3=A9e
