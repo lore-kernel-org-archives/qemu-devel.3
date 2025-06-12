@@ -4,113 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57C02C61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 14:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DCCFC71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 14:34:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPivz-0006Je-0A; Thu, 12 Jun 2025 10:29:39 -0400
+	id 1uPize-0008Gy-WC; Thu, 12 Jun 2025 10:33:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uPivg-0006AN-KO; Thu, 12 Jun 2025 10:29:21 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rreyes@linux.ibm.com>)
- id 1uPiva-0007Zz-RX; Thu, 12 Jun 2025 10:29:20 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55CDx8W6012194;
- Thu, 12 Jun 2025 14:29:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=RBgt9X
- Nr7GAwdmi2tIA5G1Te9LZO+sTjrhoiqLlvtXc=; b=qP1GCLD8VMTRgkOtUpcmS/
- OdEPncUpr4HYK/w7QDfJvr8K1/uTJUG01c0NNLwXNXlwsikrxmAPB0owQuBAadSR
- XnwV1TM0dPVhTW+PUbIeVBSpEj48ognHtV6qqdyxC8EKhcZXYdnJ4Ehc3le9j5PY
- TiHN1rrc7qnIW0YGnVv6zmKEWvykTQrIP5dqviR7SGvz2cAtevhV+qiY1kBuwdUF
- tvJIKgrQjeIrAWjAzfeg8r7bBuX3rcdb6fRkNVaRClB6sGJhmD5FEDDZQZYZdylU
- JKgj4xKzJwzL+gqBN6CZgA838J7R+uTG9OXPsEeF8lnjUTpL5qvCzqDkKUZTYCEw
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474hgutehm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Jun 2025 14:29:12 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55CEHrFv021895;
- Thu, 12 Jun 2025 14:29:12 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4750505ag8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 12 Jun 2025 14:29:12 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55CETARm30409458
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Thu, 12 Jun 2025 14:29:11 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 9780958052;
- Thu, 12 Jun 2025 14:29:10 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A440558056;
- Thu, 12 Jun 2025 14:29:09 +0000 (GMT)
-Received: from [9.61.251.201] (unknown [9.61.251.201])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Thu, 12 Jun 2025 14:29:09 +0000 (GMT)
-Message-ID: <61622329-5af4-4f50-9438-a30d529dc00b@linux.ibm.com>
-Date: Thu, 12 Jun 2025 10:29:09 -0400
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uPizZ-0008Gg-Jt
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 10:33:21 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1uPizX-00089f-LC
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 10:33:21 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-607434e1821so1659827a12.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 07:33:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749738797; x=1750343597; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5AX3E31XECFc+G9A1RVdfizbbvy7OzcfeDBJl8Rt31Y=;
+ b=AKiu+8jYEdJW9DOTbxEz1iSc5hx5SnF/JGfx/2N/dqUq5FWDMJq4u7kjA4zLzm/4Ts
+ 5SGTMJCK6YPxT8rukXUJ5jGfo9Io76gugI2wfQeKoeIGSmKdgiRm4fFd7ViXHIg4LDdj
+ pxV/1aMF8/1fXMUDcMtmuQLbrJbWl/D8ugVvFcRntLksJU4+pPQE8hQm8ZjPGZMAHsv8
+ n4DKbtgadVh8ZhVZUsJsVLls7g9nX5Qw/5osL+uSgyvZTugvj9iZRC2n1ImhKFxTCI/m
+ sbdvPgFzgrUdD43MlhCEsfrGTqWWbbprBxa+nJ/Nki39Yhkicv9yA7RetG67TcyyeyH8
+ oChw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749738797; x=1750343597;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5AX3E31XECFc+G9A1RVdfizbbvy7OzcfeDBJl8Rt31Y=;
+ b=inT5+6milfHD/YqOzDGUI9EVlgAfgyYzQzKps81i8sQlbmBk7+CeZBptZGXzQBxq7F
+ P4Q1pf2p3RuzRYhUWRjAHA2KGMFuXiYVTUK/5l7A16xOG10qH3dBMAMD7ZMrSIZ7liKC
+ pbYfahXrhqh2wmmxMiCsyNP83VvnKQzOapyF/pQQTb6LpMD1uSEIJwe9RMe8e5I2RG0J
+ c694Ymjuahtrm9iHAwAyJEsWlttFEHwP41hWcye1XNnrRxGYC7uR8/GPOfmHs+Hs45S8
+ 1e7QIhS0QRGqhgyGzWFxqfJPyaZ3spEUI5onOP5j6eLI9WJ2mI+FqqZ7ID+WPRR+7ATB
+ N9Xw==
+X-Gm-Message-State: AOJu0YzFwPTWaIv/xbh4opPwpNmAGs24HMctf0BHQR+dBDNx8+kuQE3y
+ Qoe3WAoiXWWitO2dPveLAKCXHy/XC9oQGZ/+JpW3VAE8J6dk/E/4ffKF8iASSf16dz+R1N2tRxs
+ vJfiY4XXMxijHJtHyR32eyuuXn20OZh8=
+X-Gm-Gg: ASbGncu9Px1VUFMoiZIruztj6iyYJRfREToSrY/ojDk0Y9elpw69ZAqXl6pnxNWJGoL
+ dM/E/Imlv/RVtEOMWfDvykzkHOefRaB23ITXZjRR8v5RPkRfthoO8eaYRGzxE5AUvDQpUvr2eKW
+ 3son6C/dHGl9ceK078Yq67jGFY3WXHa+qdBBvRnHdeBg==
+X-Google-Smtp-Source: AGHT+IH3yI9V70FWTV6VxP59SvxxqFI4L/U7dzYJC4sTjRmYPTdangYV2yTCnRxrKm3X48GgIYNwPed/cOSB8AIuxqc=
+X-Received: by 2002:a17:906:fe02:b0:ad2:28be:9a16 with SMTP id
+ a640c23a62f3a-adea273ad40mr333360866b.51.1749738796644; Thu, 12 Jun 2025
+ 07:33:16 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH v1] hw/vfio/ap: attribute constructor for
- cfg_chg_events_lock
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org, 
- qemu-s390x@nongnu.org
-Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
- jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
- alex.williamson@redhat.com, thuth@redhat.com, akrowiak@linux.ibm.com
-References: <20250611211252.82107-1-rreyes@linux.ibm.com>
- <7db34f93-e373-4a27-a0e9-e76d6fe5e032@redhat.com>
-Content-Language: en-US
-From: Rorie Reyes <rreyes@linux.ibm.com>
-In-Reply-To: <7db34f93-e373-4a27-a0e9-e76d6fe5e032@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=Pfr/hjhd c=1 sm=1 tr=0 ts=684ae438 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=qZpv2hzm9qyOo8pYOh0A:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: KMdF1W1UsJaskWLISbzR8f6CiuV03jzU
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEyMDExMCBTYWx0ZWRfX8vfl41s22R26
- 9Wlze/L6WYNkk/B+RD7egT+TUTOSIJShFq5dTnhw4QqpN/nUn0wQONT2IwIzerNLBfMSlxr3QWk
- OP0fLKp/+5u+Jk5ZLeJzGdj10mEwG8e4vjqZR8mRQp1533TCxOybS5zPRLhk+cXn4bjz2lQmemO
- YbC4kDdH5+61bLqEFDB4Ve7x61qhyjONypkOhuNhzkjKZxsQFoWrck7VvYUVtQ8eCjhzXaE8TwH
- 93YMjNLvqDVJGh+4Jo6Jq4gjwkSyZMX+SXxqYLQcXjw9ieQgn6lYNNj6Mr1SE8K/JWZMZLbh8WE
- ypgCK3sQW885/wUOCaLygFhw/iH2knUNWM9bvW+g/UERBKSd63jqQRhTUwyWkUp39m2Z/ba/KS9
- bnKApg4i3E+5aU45ZvtljNmj1AOlBr7dZjc9KiZZFhlLSCaPLjrLGjTDIOYQj+G9bXywP34O
-X-Proofpoint-ORIG-GUID: KMdF1W1UsJaskWLISbzR8f6CiuV03jzU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-12_09,2025-06-12_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0
- priorityscore=1501 impostorscore=0 suspectscore=0 adultscore=0
- clxscore=1015 phishscore=0 bulkscore=0 malwarescore=0 mlxlogscore=999
- mlxscore=0 lowpriorityscore=0 classifier=spam authscore=0 authtc=n/a
- authcc= route=outbound adjust=0 reason=mlx scancount=1
- engine=8.19.0-2505280000 definitions=main-2506120110
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=rreyes@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250611075037.659610-1-kraxel@redhat.com>
+ <3bc239aa-a2ab-400c-84b5-d7de3e5193ea@redhat.com>
+ <CAJSP0QU++wDCXvYe2sUyHCZHrHVVY2ehdeAswjDE_5V2J-qE9w@mail.gmail.com>
+ <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
+ <CAJSP0QWyjzLLGnvrzMDtRubHuzAPWNtejb_wLz33PVWJ+QJLmw@mail.gmail.com>
+ <4ftyylwfpk2d6xioduftadbbwq3cydjmzeaqivksseem4a2h5d@xg7u6y6qaaak>
+In-Reply-To: <4ftyylwfpk2d6xioduftadbbwq3cydjmzeaqivksseem4a2h5d@xg7u6y6qaaak>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Thu, 12 Jun 2025 10:33:03 -0400
+X-Gm-Features: AX0GCFuNCm3ax_Gy0RxZ1WxbeO9uYIUiK7JM_dNhwYjOxiwyN8EZtDN0BqpugaA
+Message-ID: <CAJSP0QU-msg=bTwODkB5VPoiwMcDC_ozN=7MuG5tFDNiNDNOKg@mail.gmail.com>
+Subject: Re: [PULL 0/2] Seabios 1.17.0 20250611 patches
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,57 +100,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jun 12, 2025 at 10:16=E2=80=AFAM Gerd Hoffmann <kraxel@redhat.com> =
+wrote:
+>
+>   Hi,
+>
+> > I didn't fix it. GitLab's mirror operation is still failing. Your
+> > suggestion of force pushing should fix it, but I want to understand
+> > why a commit was lost first.
+> >
+> > The issue is that QEMU's mirror and upstream have diverged. The
+> > following commit is only in QEMU's mirror repo:
+> >
+> > commit 44693a974cd90917f81a7d0310df4b592edd7e09
+> > Author: Christopher Lentocha <christopherericlentocha@gmail.com>
+> > Date:   Tue Jan 21 11:59:14 2025 -0500
+> >
+> >     Fix AHCI Disk Detection when using EDK2 CSM
+> >
+> > It is not possible to fast-forward to upstream's master due to this dif=
+ference.
+> >
+> > Gerd: Do you know what happened to this commit upstream?
+>
+> Hmm, no idea.  Didn't notice it got lost until now.  Also can't remember
+> having seen a non-ff update on the seabios master branch when pulling.
+>
+> Either me or Kevin must have deleted it by accident, or something went
+> wrong with the coreboot git server (where seabios git repo is hosted).
+>
+> Guess we must do a forced update once to get them back in sync.
 
-On 6/12/25 2:18 AM, Cédric Le Goater wrote:
-> On 6/11/25 23:12, Rorie Reyes wrote:
->> Created an attribute constructor for cfg_chg_events_lock for locking
->> mechanism when storing event information for an AP configuration change
->> event
->>
->> Fixes: fd03360215 ("Storing event information for an AP configuration 
->> change event")
->> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
->> ---
->>   hw/vfio/ap.c | 12 +++++-------
->>   1 file changed, 5 insertions(+), 7 deletions(-)
->>
->> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
->> index 874e0d1eaf..1df4438149 100644
->> --- a/hw/vfio/ap.c
->> +++ b/hw/vfio/ap.c
->> @@ -52,6 +52,11 @@ static QTAILQ_HEAD(, APConfigChgEvent) 
->> cfg_chg_events =
->>     static QemuMutex cfg_chg_events_lock;
->>   +static void __attribute__((constructor)) vfio_ap_global_init(void)
->> +{
->> +    qemu_mutex_init(&cfg_chg_events_lock);
->> +}
->> +
->>   OBJECT_DECLARE_SIMPLE_TYPE(VFIOAPDevice, VFIO_AP_DEVICE)
->>     static void vfio_ap_compute_needs_reset(VFIODevice *vdev)
->> @@ -230,13 +235,6 @@ static void vfio_ap_realize(DeviceState *dev, 
->> Error **errp)
->>       VFIOAPDevice *vapdev = VFIO_AP_DEVICE(dev);
->>       VFIODevice *vbasedev = &vapdev->vdev;
->>   -    static bool lock_initialized;
->> -
->> -    if (!lock_initialized) {
->> -        qemu_mutex_init(&cfg_chg_events_lock);
->> -        lock_initialized = true;
->> -    }
->> -
->>       if (!vfio_device_get_name(vbasedev, errp)) {
->>           return;
->>       }
->
->
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->
-> Applied to vfio-next.
->
-> Thanks,
->
-> C.
->
-Thank you!
+Do you still want me to go ahead with the SeaBIOS update you posted?
+
+I'm asking because if QEMU drops the commit I mentioned above, then I
+guess EDK2 CSM AHCI detection will break. That would be a regression.
+
+Stefan
 
