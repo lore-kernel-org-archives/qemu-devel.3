@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 240B9C61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:02:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AE6C61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPhYJ-0005So-1g; Thu, 12 Jun 2025 09:01:07 -0400
+	id 1uPhgG-0002Fr-SD; Thu, 12 Jun 2025 09:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPhXc-0005Nu-Om
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:00:27 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1uPhgE-0002FW-Mx
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:09:18 -0400
+Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPhXV-0003CE-9R
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:00:24 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-607c2b96b29so2011508a12.1
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 06:00:12 -0700 (PDT)
+ id 1uPhgB-0004DL-Gm
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:09:18 -0400
+Received: by mail-ej1-x62a.google.com with SMTP id
+ a640c23a62f3a-ad8a8da2376so163533866b.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 06:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749733211; x=1750338011; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1749733753; x=1750338553; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jtHPaKU2swfiVtNZCe1hgNgb9zwNe7AXH3+ob8/iKlQ=;
- b=SIAUYw8mULpWezaCx9HqrJkWHpVZLXHUjsdcsI//sPSb5PZcfn4hN+gtiPDEsfLTmn
- t02tGRe+17vBsgywI8fcdFA94/6m3p4MiPSkxj1IIITxot/2KqsI27l6xksgFhAuUvUJ
- CRiXzzHBHFe3beFTOkLkcXo2gs2R9s8TWPRiEq9e5bx6DnkXtViNNS0KeUegdG7yQyXA
- kqUbXOQ1l5tdfswnYNM5+GzHC0zxFaUE/k3FVUClGpJe3/02x8RTLbzs7EVRrtM4925q
- D/oKhPT2JQsyJPqIGpwd+ivdTtzbp6vCdKi5bwJGrWZJJoE7JmWtnMBTFsJeYYdLqcvu
- H19A==
+ bh=oF9HV3J9cGHJC5/rdUJ1C0ToRyFmid67B4txS1enQ0I=;
+ b=C9rWQ9BkOE3tXBSTAhmf/la2/ZVqbJdTfkBSxlj/EN28zEUDGh1swlpSnVptuQQTq3
+ rtVq+6ohYuKops7i6cB+gR4MoA9+0BeiqGSsCDp8Yz6bSmPA95oeRdp3lC/yW2BAWOs7
+ HFMDBwIEx+HefwlCWvTc6EfHGa7Vw7tcsEb8uDzqAuFEvdIocvtbQ1b3/FOaZh3jnm9e
+ Ift2Z5+nZ+SXbP7uMi6SmD6/AFZgRIF4DucMV2jh0XpEXRcE+ZGb0wyxYId7JRTPj9dN
+ w5/dVl8BQUy9JkzwyLpJJcStNJ7Ec07o/fKsKhvdOlTXg/wYADzn7Vh0gMBdLB0Z4Rh9
+ tWKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749733211; x=1750338011;
+ d=1e100.net; s=20230601; t=1749733753; x=1750338553;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jtHPaKU2swfiVtNZCe1hgNgb9zwNe7AXH3+ob8/iKlQ=;
- b=qyhPorcUxlZJNfAcz57zpZFtZ0FZmp9MN9mgBZxe8YWIeRKerj91CS+mvMXYKRsC2e
- 2cSy3zqEYAkS0/U0l0/QfkD1JmVUMyViyLo9vcPVH/J5RSg4LH3zaZXEghl3xGfz0ai3
- 87UMIDj+0LXvmC3IZ4XzJH4Vrw8RsogOLXAu+HaooVPZLw86hlQZyvK7VxW+FKR7Bxw3
- iYuGwRQxBaWms/biX7iqo8x6fHRtKHMZbDz2qU0t0pGE+ZsShqwzpsA353YQbyvRx7uF
- WJ5HAtwNX1kABUhJMTiGd8m8II+Y4uGwZFx6JuZy3CxCiZMtOzvtAeoQPtOgyjJAXUKu
- b7Nw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU0a5jax7mW+Wrr6FxjnUJGgPKbv3gRqohFXvGhFP3wgWlc44AKNyA1L3Nyh9l/rtgh8oezUUazF579@nongnu.org
-X-Gm-Message-State: AOJu0YzQTtlEidFDZ16YJXC9/oZ9xDiURNS1QsAIKfV8XTWYawoHEVwL
- voBL48kc/bn/2WeEnvCJnOvqW+Um5RDtSh4HhJBHenIRsG250IcsR3G/2MUAvCq+ypZGCiX9iCW
- B7+1m/M4wXAl2qs6o5Zos1zpVM9z7KPc=
-X-Gm-Gg: ASbGnct/ZQz0epkbqcevW+S2ICISgWCW4KO8jgsGEk0QexMw4TDXkPGdk7yh3BRrd9d
- EXxBfjY1w6guQC2eFWQZT5TLEj+ED/DGLqey3BLVhpO2w5WK70i1UHEUbM7QlwqQiVXXJ4uTkal
- +yzzFgXWCRhbPjYATvJ3maE90uTV0vU6k7FdQUuhCTaw==
-X-Google-Smtp-Source: AGHT+IGM3wg0a83urfBEgAIRBD2I3C5xzwu5gPR7yco04mldQfKcbXUB8nEluy9YGmyfPeZxV1IpGi/sJGUlLOIJxFg=
-X-Received: by 2002:a17:907:9414:b0:ad5:5b2e:655b with SMTP id
- a640c23a62f3a-ade8955ee30mr778567166b.25.1749733210844; Thu, 12 Jun 2025
- 06:00:10 -0700 (PDT)
+ bh=oF9HV3J9cGHJC5/rdUJ1C0ToRyFmid67B4txS1enQ0I=;
+ b=VXbf7W6ydCIqGard1nY1GgIGNm667zfEgbttFCID70YKcRtKPw8X7wYu/hnzjnPKXw
+ s746uALmuZ/38JSmoV35zZSQ8Gqj7VraHNWJ5ZrHkaygY67R0z39HQCYBWS70nMkuW7v
+ guuxwZgMMSenEPsi4dPPjEU08wHUkWG1Kyc1/ulYoMp+F0sP9AH9OEEB1G+2rEPxLD53
+ 3pZgy46sTGDfoOHTM7f7ydQfhKpBjcZn0vci1sVuadRVG43VHzGNIPgHYt3/oWT7I4X0
+ uLXrpsP5a2mo3+uUdIE4WRDR9Qvv6YJogwWIpVZMx9R2jTEapNkamGJ3KRbSIxHvf0je
+ fqWg==
+X-Gm-Message-State: AOJu0YynXmlHeGnlOBu/EJzW3MbF+do9A+H6EPg+dy/4iqy8k/Uarmg+
+ 7LLlLgxk919WFpgDvilVGWx8N7P9bmuP6q9Iy+3qcSvSYF8SF0v5qllrKDl1gQZHirk+my3CVz4
+ wULkFaEiB55L4fSXA1cETQ/qTl9Y/25w=
+X-Gm-Gg: ASbGncsS9F2Yx+0SgVMhXaOLufSZi0GSBHtJl/LhWQJUfJ1S5owymQZ4bFkY2MMON9u
+ HVrd/9widEWG3tWq1hIB6fl4lCPQBD2Zp/BqT4HP5JA6n6nfIWdVWfMgfAvO1H04HBRNJM71Lqt
+ XuW6bpSLTAkCbddcA7+PeU/lfu64mh/97W9ZS1LYz+WQ==
+X-Google-Smtp-Source: AGHT+IFHY6d8YxAXJYgsP/7BmYyi9VNlX0/i0llV3grQn+HMHnJ7D5UrvBkNkOiuZvw5TVYCGamp5xeiGBYdyaaIsCw=
+X-Received: by 2002:a17:907:3fa5:b0:ad8:a935:b8eb with SMTP id
+ a640c23a62f3a-adea8d31416mr323523566b.3.1749733751647; Thu, 12 Jun 2025
+ 06:09:11 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250611075037.659610-1-kraxel@redhat.com>
- <aEnEiqfa57eH53Gf@redhat.com>
- <CAJSP0QX7pcNTz_uSdMBzDhTRbUkrmmSPziBs82-GscRHM-xiug@mail.gmail.com>
- <aEqo-1g4gL0QXKWe@redhat.com>
-In-Reply-To: <aEqo-1g4gL0QXKWe@redhat.com>
+ <3bc239aa-a2ab-400c-84b5-d7de3e5193ea@redhat.com>
+ <CAJSP0QU++wDCXvYe2sUyHCZHrHVVY2ehdeAswjDE_5V2J-qE9w@mail.gmail.com>
+ <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
+In-Reply-To: <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
 From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 12 Jun 2025 08:59:58 -0400
-X-Gm-Features: AX0GCFvj2GIsZs-Cl5u3SzC4L625K_j51igU4E2_a6JZS_AU7bWUdOO4buiotQ8
-Message-ID: <CAJSP0QXFX9QBCu3h_Od1YeqTnB7gOUKRQ8ipnyKGxtY29kGA_A@mail.gmail.com>
+Date: Thu, 12 Jun 2025 09:08:59 -0400
+X-Gm-Features: AX0GCFsjo2OK5aIeqBglRtNlr8mhFTcyM4gVNDQqKwkNsMXSM6JwwYiZnbn4Yq0
+Message-ID: <CAJSP0QWyjzLLGnvrzMDtRubHuzAPWNtejb_wLz33PVWJ+QJLmw@mail.gmail.com>
 Subject: Re: [PULL 0/2] Seabios 1.17.0 20250611 patches
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org
+To: Gerd Hoffmann <kraxel@redhat.com>
+Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
+ Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x535.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
+ envelope-from=stefanha@gmail.com; helo=mail-ej1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,41 +98,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 6:16=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@r=
-edhat.com> wrote:
+On Thu, Jun 12, 2025 at 12:36=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
+te:
 >
-> On Wed, Jun 11, 2025 at 03:21:38PM -0400, Stefan Hajnoczi wrote:
-> > On Wed, Jun 11, 2025 at 2:03=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
-ge@redhat.com> wrote:
-> > >
-> > > FYI, this seabios 1.17.0 release appears to have broken the
-> > > ability to use virtio-pci with libguestfs+QEMU:
-> > >
-> > >   https://bugzilla.redhat.com/show_bug.cgi?id=3D2372329
-> > >
-> > > so I'd suggest we hold off on this pull request until
-> > > the regression is diagnosed.
+> On 11/06/2025 21.09, Stefan Hajnoczi wrote:
+> > On Wed, Jun 11, 2025 at 2:36=E2=80=AFPM Thomas Huth <thuth@redhat.com> =
+wrote:
+> >>
+> >> On 11/06/2025 09.50, Gerd Hoffmann wrote:
+> >>> The following changes since commit bc98ffdc7577e55ab8373c579c28fe24d6=
+00c40f:
+> >>>
+> >>>     Merge tag 'pull-10.1-maintainer-may-2025-070625-1' of https://git=
+lab.com/stsquad/qemu into staging (2025-06-07 15:08:55 -0400)
+> >>>
+> >>> are available in the Git repository at:
+> >>>
+> >>>     https://gitlab.com/kraxel/qemu.git tags/seabios-1.17.0-20250611-p=
+ull-request
+> >>>
+> >>> for you to fetch changes up to cba36cf3881e907553ba2de38abd5edf7f952d=
+e1:
+> >>>
+> >>>     seabios: update binaries to 1.17.0 (2025-06-11 09:45:00 +0200)
+> >>>
+> >>> ----------------------------------------------------------------
+> >>> seabios: update to 1.17.0 release
+> >>>
+> >>> ----------------------------------------------------------------
+> >>>
+> >>> Gerd Hoffmann (2):
+> >>>     seabios: update submodule to 1.17.0
+> >>>     seabios: update binaries to 1.17.0
+> >>
+> >>    Hi Gerd, hi Stefan,
+> >>
+> >> I'm now getting this when doing a git pull:
+> >>
+> >> Fetching submodule roms/seabios
+> >> fatal: remote error: upload-pack: not our ref
+> >> b52ca86e094d19b58e2304417787e96b940e39c6
+> >> Errors during submodule fetch:
+> >>          roms/seabios
 > >
-> > Thanks, Daniel. I have pushed a revert to staging.
+> > GitLab CI didn't detect this, probably because the tests don't build
+> > SeaBIOS from source and use the binaries instead. Given infinite CI
+> > resources we should rebuild all ROMs from source to catch problems
+> > like this one.
+> >
+> > I wanted to mention this in case anyone wants to tighten up the CI to
+> > catch these issues for SeaBIOS and other ROMs.
+> >
+> >> Looking at
+> >> https://gitlab.com/qemu-project/seabios/-/commits/master?ref_type=3DHE=
+ADS
+> >> there is a problem with the mirroring:
+> >>
+> >> "This project is mirrored from https://review.coreboot.org/seabios. Pu=
+ll
+> >> mirroring failed 4 months ago.
+> >> Repository mirroring has been paused due to too many failed attempts. =
+It can
+> >> be resumed by a project maintainer or owner.
+> >> Last successful update 4 months ago. This branch has diverged from ups=
+tream. "
+> >>
+> >> Could you please fix this?
+> >
+> > `git clone https://review.coreboot.org/seabios` works on my machine,
+> > but I manually clicked the "update" button and GitLab failed again.
+> >
+> > In the GitLab UI there is a button to add a new mirror repo. I thought
+> > maybe we can delete the old repo and add a new one, but the push/pull
+> > direction dropdown list is disabled. Maybe that's because only 1 repo
+> > can be a mirror source for pull, I'm worried that deleting the
+> > existing failed repo will leave us with no way to add a new repo that
+> > supports pull.
+> >
+> > Does anyone know how to go about fixing this failed mirror?
 >
-> This has been diagnosed now.
+> Maybe do a manual push --force to our mirror to sync them again? ... but =
+it
+> would be good to know how this could have happened at all - maybe seabios
+> force-pushed their master branch at one point in time? Or did we commit
+> something to the mirror that was not in the upstream repository?
 >
-> Old SeaBIOS would unconditionally add ACPI tables, even when QEMU
-> machine type had acpi=3Doff. libguestfs forgot to ask for ACPI in
-> its libvirt XML, so was getting acpi=3Doff as far as QEMU was
-> concerned, but SeaBIOS was none the less creating ACPI tables.
->
-> It was a miracle this worked because the ACPI tables were
-> designed for i440fx, but somehow Linux still booted with
-> them under q35.
->
-> So, the SeaBIOS update has a functional change, but that
-> was intentional & desirable, and the root bug was the lack
-> of request for ACPI in libguestfs.
->
-> So no need to revert anything
+> Anyway, I just noticed that it seems to be working now again - how did yo=
+u
+> fix it?
 
-Thanks for the update!
+I didn't fix it. GitLab's mirror operation is still failing. Your
+suggestion of force pushing should fix it, but I want to understand
+why a commit was lost first.
+
+The issue is that QEMU's mirror and upstream have diverged. The
+following commit is only in QEMU's mirror repo:
+
+commit 44693a974cd90917f81a7d0310df4b592edd7e09
+Author: Christopher Lentocha <christopherericlentocha@gmail.com>
+Date:   Tue Jan 21 11:59:14 2025 -0500
+
+    Fix AHCI Disk Detection when using EDK2 CSM
+
+It is not possible to fast-forward to upstream's master due to this differe=
+nce.
+
+Gerd: Do you know what happened to this commit upstream? According to
+the mailing list archives you merged it, but I don't see it on the
+master branch:
+https://patchew.org/Seabios/clqcnplppk34e7eyiquorweq5dvmbsgm2qrk7ozhzybvxvi=
+boa@4i2yfqplktar/
 
 Stefan
 
