@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 283B8C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 04:36:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F414C71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 04:45:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPZfp-0003sc-UE; Thu, 12 Jun 2025 00:36:21 -0400
+	id 1uPZo6-0005KL-PX; Thu, 12 Jun 2025 00:44:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPZfo-0003nh-3g
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 00:36:20 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPZo2-0005Jx-8E
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 00:44:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPZfm-0003Wu-2e
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 00:36:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uPZnz-0004Hq-Cf
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 00:44:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749702975;
+ s=mimecast20190719; t=1749703485;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=2ZNfETzhcu1K83ZxhFHRw4jS5b7unnj4iNKgwqdNYIY=;
- b=RGxZYv2V20USXGaQfjum4kiKxrCBd9lG1GRR7k7d+hTVEbnfdsEQkd90AXwJtiayIvoYIR
- qAstNeYLaomdBxn5UEkWL4fl2hlUL94yhLBZamwia4ovZH1gaxTUwVBY7ENDb1lg8ZcCB5
- xNAF8h38vzsEI2TwVKY4i31NnasmJaE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=JB8EwHEZ/OePmM5Ks6FWdJDJnUItz8sQjhyvjktlr8o=;
+ b=ZL3Za7/S7FBP9rBtjhUJhDSuhJdQPTe0m/NScLjcZO8TO7CW9jz+omDahMbQ6lKlTn+uXW
+ T/ZRSizdXdDbJ24zM85SZQNIiUsCFiSjN71bxOR2Z14ZH/3WkQ3rNR2MKZMvFrcjR9oLMv
+ IRTiEziEVFdi6kdZtH7fKlzbJcX1IeY=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-137-cLUbbYWmPO2WlUHhpLuXww-1; Thu, 12 Jun 2025 00:36:13 -0400
-X-MC-Unique: cLUbbYWmPO2WlUHhpLuXww-1
-X-Mimecast-MFC-AGG-ID: cLUbbYWmPO2WlUHhpLuXww_1749702972
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-3a4e713e05bso223004f8f.3
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 21:36:13 -0700 (PDT)
+ us-mta-147-45Td24FhMGqk8-cDOLL9vw-1; Thu, 12 Jun 2025 00:44:44 -0400
+X-MC-Unique: 45Td24FhMGqk8-cDOLL9vw-1
+X-Mimecast-MFC-AGG-ID: 45Td24FhMGqk8-cDOLL9vw_1749703483
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-43eea5a5d80so2007185e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 21:44:44 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749702972; x=1750307772;
+ d=1e100.net; s=20230601; t=1749703483; x=1750308283;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=2ZNfETzhcu1K83ZxhFHRw4jS5b7unnj4iNKgwqdNYIY=;
- b=nnefZlMrCJ1h/VZAeJPN36bBatPDKKMNuF7hmAV2o5HYg2auihkQggetPpSIO8QOo2
- 9b3ieXZrFkF67QEfKqLkJkoIbkY+gvq/PLBbbmjHb7fBGu/Vw3xgWcX3T9Vr0E9zE+dZ
- mzfr7PXAENm0FuY31A2bHdviurdDl3VBHZ/R8l3oaX+hH2YLgEQ4uGgKetOR0kMDKTGG
- Tm4JD4i1Rl0ArlHwWUx5UFgXICRf8DcnuBfSBiDKFBWa6WkRaDpo8d6ApluFXhmI1ch/
- KUM9cBgh0kdfCQA7amH5rV35ikswXZdjuIm+f3EiWviGoEsJ+FfzbZ29TDCduu7OBBg5
- Nl3A==
+ bh=JB8EwHEZ/OePmM5Ks6FWdJDJnUItz8sQjhyvjktlr8o=;
+ b=sjyX078ZYXiy5fQicDIzotyA8AqXlc/kb8f9aC4jWbxjbJ/r/sHEInYjKbvt2PXEzm
+ nrdiUiCw6ds4LDlrd23zlTqKJiHOSOKnNsbZjl3LBRclQxVdcLRJDniOM9HSb5JLm3OA
+ /ASWxjg7sOpdz0NqjrTh1qM7Dp5uqd1P7ffs87siu2HWTEp2mF2VvSHbK+PGI6hAf16T
+ hFKR7KEKRt8VrMUEhjk8sAAYSGezU5Vvuj7H99+mChsgGBqyZOoMHzPUHDx4GtPnDSeS
+ d3iPxRSTyvnnemMYnpxWZiaCTQJCDl+N/wXrIU/nhjXVdlV12xjAnxQlXqbCM2sbX+yu
+ dkig==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVaNLaWCKuF9clg4coGbFBCgOHP7mICkDfBG0ao6MDgoz6DmNwGJoeqJ16B7PNK+SPtmgflbWV6rvbU@nongnu.org
-X-Gm-Message-State: AOJu0Ywh5Kmy2HlTnh/GdurS7N0BdqubIYTt/m4z26TvFWllbSYC45Ef
- IbcDzdaKl6Zv4ejP2wI2MBA8UtIYvMC3sYtKPiO77oV30RJr3+bk1Zz4B2XZAaQgXAb1vkOErDf
- aatwA4UsjU86Rf2W/cxSKvH0XMvKgXZMlnWcUl6sphpJITtv5wy8h0luq
-X-Gm-Gg: ASbGnctjxJVGHwBDoBAY+IpmusS0OGfbjsh4IIPPmD6dHbQ7baxpGMaMPhFZN9F1H+N
- eppNXGA9odfsxjUz7Y/RI9YJfmp4Xbpa5xQdm7JH/1YLEPdS/WJW0l9crOFr0BJBk4YhajbbA59
- sros1zHKsfIH43x6wdU0Ow1ZDV3vQupViAjz+LNcOFjrvRPZHoahAXk1Dxk93ypXf8dlmVHfhNS
- JEz337Rlz3G7ESqi6aAPi5L6/3hufM0Zs3XyIUZEY2rWGJiQ2niEGuW3qrVbExxLWBT6/KAydAq
- ks2546wEmoKW74dv5u2qZNNwtYD/HM+6QEnZgLLhtjICgI/p4nZuvDyJknr97Fo=
-X-Received: by 2002:a5d:584b:0:b0:3a5:266f:e6fb with SMTP id
- ffacd0b85a97d-3a561374b1emr1025011f8f.44.1749702972159; 
- Wed, 11 Jun 2025 21:36:12 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtjuW/4HpwubZ02aMqDKxbT6cImJ7QeN8d5WCDEwRc8xlGG5VnjrvAWF2XNCC1JuujdYwWsw==
-X-Received: by 2002:a5d:584b:0:b0:3a5:266f:e6fb with SMTP id
- ffacd0b85a97d-3a561374b1emr1025000f8f.44.1749702971789; 
- Wed, 11 Jun 2025 21:36:11 -0700 (PDT)
+ AJvYcCXRKxYPe6uH6Gql30BEQ4WZ4pHX9J3NIh4YZO89+udmm1ktqDJAv3BN5mF35O8aLgA0zggau7Knrxtj@nongnu.org
+X-Gm-Message-State: AOJu0YxqaW3R0Lby0GXrDMvWTgaXPlNa88bpP4Z2crMigZtPtR5HmuJd
+ AkT4Zj0/YSLISvjDm/7mguadtF0WotFN6uQiqFnxo9HyNoVrZI4m5JipOPUaomKLfH8dh+XsPSv
+ fL+d5RThp6PCvGIl8DXx9/+r9vUAtJK8HOTIy4pLk95GrxgHqY+vIOoMuMtjDKgAk
+X-Gm-Gg: ASbGncu3AHcxenIln0gGml3zHdLU0+lxmSLUhFzOJs1EuTXsixN+qQll4/pjAmtWbgd
+ ynxviI1k4Jgh/MU2YAlttNQvoapW7mUB1DLr6uahBS8be1KWbPf9AbcRIUz8JrGRIjopjCajhBh
+ 7OsevdBrsnjVfAOo9i+HhkojGQ1mxkpW522dVyJfEolym0Htq8O0Rtvsvsd5vDQ6lsrfdiYznts
+ 5i2863Hs4ms7mfEzksfnfSZiX9ElNyZSOek4qa6LLgGTUOOZ31XrxRdV4WswIaRDT3R1E1LSIky
+ LXAWtRz5vTYVugFuPEnesM4atSCno/6sxz5O4MXdpNk0/PwuowPbaRI7F4KknE4=
+X-Received: by 2002:a05:600c:a011:b0:43d:b3:fb1 with SMTP id
+ 5b1f17b1804b1-4532b9362f6mr17868505e9.27.1749703483245; 
+ Wed, 11 Jun 2025 21:44:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGUi2NlWMJ0jWIrKoomr5Jg+iA6/tLyOa0pj46IHuGzs8p4nYuaDH6iazwhng+QmHZ1Kj52dw==
+X-Received: by 2002:a05:600c:a011:b0:43d:b3:fb1 with SMTP id
+ 5b1f17b1804b1-4532b9362f6mr17868435e9.27.1749703482922; 
+ Wed, 11 Jun 2025 21:44:42 -0700 (PDT)
 Received: from [192.168.0.4] (ltea-047-064-115-122.pools.arcor-ip.net.
  [47.64.115.122]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e2354fbsm7671705e9.15.2025.06.11.21.36.10
+ 5b1f17b1804b1-4532e2449f1sm7872215e9.23.2025.06.11.21.44.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Jun 2025 21:36:10 -0700 (PDT)
-Message-ID: <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
-Date: Thu, 12 Jun 2025 06:36:08 +0200
+ Wed, 11 Jun 2025 21:44:42 -0700 (PDT)
+Message-ID: <f986cf46-038e-4e83-8ad8-af0aef23e280@redhat.com>
+Date: Thu, 12 Jun 2025 06:44:41 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Seabios 1.17.0 20250611 patches
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org,
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20250611075037.659610-1-kraxel@redhat.com>
- <3bc239aa-a2ab-400c-84b5-d7de3e5193ea@redhat.com>
- <CAJSP0QU++wDCXvYe2sUyHCZHrHVVY2ehdeAswjDE_5V2J-qE9w@mail.gmail.com>
+Subject: Re: [RFC PATCH v1] hw/vfio/ap: attribute constructor for
+ cfg_chg_events_lock
+To: Rorie Reyes <rreyes@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: pbonzini@redhat.com, cohuck@redhat.com, pasic@linux.ibm.com,
+ jjherne@linux.ibm.com, borntraeger@linux.ibm.com,
+ alex.williamson@redhat.com, clg@redhat.com, akrowiak@linux.ibm.com
+References: <20250611211252.82107-1-rreyes@linux.ibm.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -128,9 +128,9 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <CAJSP0QU++wDCXvYe2sUyHCZHrHVVY2ehdeAswjDE_5V2J-qE9w@mail.gmail.com>
+In-Reply-To: <20250611211252.82107-1-rreyes@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
@@ -156,81 +156,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/06/2025 21.09, Stefan Hajnoczi wrote:
-> On Wed, Jun 11, 2025 at 2:36 PM Thomas Huth <thuth@redhat.com> wrote:
->>
->> On 11/06/2025 09.50, Gerd Hoffmann wrote:
->>> The following changes since commit bc98ffdc7577e55ab8373c579c28fe24d600c40f:
->>>
->>>     Merge tag 'pull-10.1-maintainer-may-2025-070625-1' of https://gitlab.com/stsquad/qemu into staging (2025-06-07 15:08:55 -0400)
->>>
->>> are available in the Git repository at:
->>>
->>>     https://gitlab.com/kraxel/qemu.git tags/seabios-1.17.0-20250611-pull-request
->>>
->>> for you to fetch changes up to cba36cf3881e907553ba2de38abd5edf7f952de1:
->>>
->>>     seabios: update binaries to 1.17.0 (2025-06-11 09:45:00 +0200)
->>>
->>> ----------------------------------------------------------------
->>> seabios: update to 1.17.0 release
->>>
->>> ----------------------------------------------------------------
->>>
->>> Gerd Hoffmann (2):
->>>     seabios: update submodule to 1.17.0
->>>     seabios: update binaries to 1.17.0
->>
->>    Hi Gerd, hi Stefan,
->>
->> I'm now getting this when doing a git pull:
->>
->> Fetching submodule roms/seabios
->> fatal: remote error: upload-pack: not our ref
->> b52ca86e094d19b58e2304417787e96b940e39c6
->> Errors during submodule fetch:
->>          roms/seabios
+On 11/06/2025 23.12, Rorie Reyes wrote:
+> Created an attribute constructor for cfg_chg_events_lock for locking
+> mechanism when storing event information for an AP configuration change
+> event
 > 
-> GitLab CI didn't detect this, probably because the tests don't build
-> SeaBIOS from source and use the binaries instead. Given infinite CI
-> resources we should rebuild all ROMs from source to catch problems
-> like this one.
+> Fixes: fd03360215 ("Storing event information for an AP configuration change event")
+> Signed-off-by: Rorie Reyes <rreyes@linux.ibm.com>
+> ---
+>   hw/vfio/ap.c | 12 +++++-------
+>   1 file changed, 5 insertions(+), 7 deletions(-)
 > 
-> I wanted to mention this in case anyone wants to tighten up the CI to
-> catch these issues for SeaBIOS and other ROMs.
-> 
->> Looking at
->> https://gitlab.com/qemu-project/seabios/-/commits/master?ref_type=HEADS
->> there is a problem with the mirroring:
->>
->> "This project is mirrored from https://review.coreboot.org/seabios. Pull
->> mirroring failed 4 months ago.
->> Repository mirroring has been paused due to too many failed attempts. It can
->> be resumed by a project maintainer or owner.
->> Last successful update 4 months ago. This branch has diverged from upstream. "
->>
->> Could you please fix this?
-> 
-> `git clone https://review.coreboot.org/seabios` works on my machine,
-> but I manually clicked the "update" button and GitLab failed again.
-> 
-> In the GitLab UI there is a button to add a new mirror repo. I thought
-> maybe we can delete the old repo and add a new one, but the push/pull
-> direction dropdown list is disabled. Maybe that's because only 1 repo
-> can be a mirror source for pull, I'm worried that deleting the
-> existing failed repo will leave us with no way to add a new repo that
-> supports pull.
-> 
-> Does anyone know how to go about fixing this failed mirror?
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index 874e0d1eaf..1df4438149 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -52,6 +52,11 @@ static QTAILQ_HEAD(, APConfigChgEvent) cfg_chg_events =
+>   
+>   static QemuMutex cfg_chg_events_lock;
+>   
+> +static void __attribute__((constructor)) vfio_ap_global_init(void)
+> +{
+> +    qemu_mutex_init(&cfg_chg_events_lock);
+> +}
 
-Maybe do a manual push --force to our mirror to sync them again? ... but it 
-would be good to know how this could have happened at all - maybe seabios 
-force-pushed their master branch at one point in time? Or did we commit 
-something to the mirror that was not in the upstream repository?
+I wonder why we don't have a macro for this yet (there are many other spots 
+in the code that initialize a mutex like this).
 
-Anyway, I just noticed that it seems to be working now again - how did you 
-fix it?
-
-  Thomas
+Anyway, for your patch:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
