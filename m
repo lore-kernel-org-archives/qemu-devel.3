@@ -4,92 +4,172 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FA03C61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 10:26:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517DAC71141
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 10:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPf7S-0006OZ-Jk; Thu, 12 Jun 2025 06:25:14 -0400
+	id 1uPfK9-000057-Co; Thu, 12 Jun 2025 06:38:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPf7L-0006Ly-F5
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:25:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1uPfK4-0008WH-Gb
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:16 -0400
+Received: from mail-mw2nam04on20623.outbound.protection.outlook.com
+ ([2a01:111:f403:240a::623]
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uPf7G-00076v-Nz
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:25:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749723898;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=qEgrlhjN92FBcMwIxakpxjD1PBIpMBBDOC8SPelF25U=;
- b=BAfXz4lFoeRGxOouKriK2D09BSn7u7Ya+SW/bmcqncMu5S1WJXHm84sZyc47PNrTN/mIrq
- eQwYp27mZ6vT3G3gBDgt/R37Dj1slCvKR9oqthgXBRzC7gN4ZyaykuwEte4nvw/Lgiws4t
- dp+j2tgxA4mBujn+4VZPigoBQqGHTqE=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-486-FFIrP4mpNQCrsubRT2yWYQ-1; Thu, 12 Jun 2025 06:24:57 -0400
-X-MC-Unique: FFIrP4mpNQCrsubRT2yWYQ-1
-X-Mimecast-MFC-AGG-ID: FFIrP4mpNQCrsubRT2yWYQ_1749723896
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-450db029f2aso2967375e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 03:24:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749723896; x=1750328696;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=qEgrlhjN92FBcMwIxakpxjD1PBIpMBBDOC8SPelF25U=;
- b=nLRc3yyW+leLXj67L80+kJ+4gdVZq3hjREziPzyxbWDj5+DwJBp/ZR1F9kQPH42xjw
- TljIXhM2pgkb4p08xgbhyghpe4L7RpFsqagIatvXl/FTUCJ7UVoY37fIm4l+Y+T5PnDI
- 6eNzbrK3VW6tDh/4In+zUxO250HnItmp4e1WXOcNJfBNaG9tWn2AUK6vF+edQOZyvJ9Y
- kC0lHU7wuVhYdLUe9vwH8GcnUY0UPbgZKBbpZ8AVQvakFW2tU1sUfQh8cO8Wo7RREi25
- Htd99ZzcPXIsiu5EERf2UN/ONffrYyeMIAxweJDoWub2502LTMrqEkks7bZVNnVbwfUH
- U17A==
-X-Gm-Message-State: AOJu0Yyt5ApnSe0flWVwkplgfpvyla0UuNnb3ng5znuvEZ36ZV9Kfs+2
- UwEwp/09dFzvthBKNEAzjUQqbrscoElcK23XHyCtJUkc7HHAFHr5syCUHXGc5BH1Ipo0FRupQqb
- CwpeS1DpBfGkC4IMKBDtP29Ut86pBi+UFO6PhGEzY74e3ThaP7J5mhemKTbEbeNC+wGgrKOhKxY
- 6Uc6DzEU63eUqQGZJ9WdUZ8/WxUgMhvYM=
-X-Gm-Gg: ASbGncv0rwbkBV9Np5Y1uFSXEu8TPH72HfR/c8CpEBOjQkU4skxx2ToWoMhtsY506Is
- vpkIGC8XmYyvMiIk7RCMCMrl+X479uZPHcOw7K0VHA8tXdXHCoHDLu7USQX73CJrur3+k3Gwtgy
- 2ls70=
-X-Received: by 2002:a05:600c:c16f:b0:453:c39:d0a7 with SMTP id
- 5b1f17b1804b1-4532b89f884mr31035215e9.5.1749723896103; 
- Thu, 12 Jun 2025 03:24:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGngaTDMGf8NuTuFr3mU5qBj8FJincuePOUNWSV3WOhdX2dxUZjThAtebGnQDal9szZudMqKe1j8OsaB4kN76Y=
-X-Received: by 2002:a05:600c:c16f:b0:453:c39:d0a7 with SMTP id
- 5b1f17b1804b1-4532b89f884mr31035045e9.5.1749723895722; Thu, 12 Jun 2025
- 03:24:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
+ id 1uPfJf-00080B-UW
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RbIaQZgznKlLlH/mvSmpBG/Q2V68rIw8Aa+Tvz9gwxuxxxeUok6hbvP9Hup/TYqZKEGkI0rhRD1nOrsMwqhJdOIezObRUtqBYIRKDQGLUMBxOPWnZUx+yvGAkCJybLjn7STYeUKSfEIJz9gyuom7ZgNVRZVgmEaPqGMauJOsEKeKLi7l0sdv1ZQ1O0e41qF2wGBOeiA5o+D2Sc3zQNpntM7Mv36irh/ac0DWwmZCTNGwpxSBx+58BzQfXGbln25pB8X8s/0kNj+ELSGVORSJc7fl9o0aMQcnYGYQ1bii93A2W7MI4kqtvC2j6NC+LWFqZYrz8OwC7qZi1atf5PA5Hw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Cg1yrxtBNtLLauTL2SuyUA04gvNCLG6liuTQfOYXwqs=;
+ b=y1BRAGYfUayzBHXx/7JSaTZbEVn7OpIZzx4qv0AoNaNqiJc6L3kedoFXdb7gv3+AskA1DwArPV/O7eq2YqaR0wQYiXhLu/ok6i28A4Es0EeGP1+JHc6PfriO3XWd2lHzWGRWmqmzvPljWPYXfq5voIn9xd1BvrRQWPqh1BFal/7cpNcrj9GAjQZb+JteXqZ1Tz9L2rfGNf6q3fv7SN7E0tm2P8z7BmkgxRese9/24p2SDmjYvMmT90Z+Bt1npbvOlhoFsnfEGLPPMG2dMrR8o5r0+voB6ay8xWb4nKlnilMHOwmL5aZqJU7D9BKlc/mrOR7QI35v9H04bu3HcInXVg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Cg1yrxtBNtLLauTL2SuyUA04gvNCLG6liuTQfOYXwqs=;
+ b=dhdqztdAqXjy3wO7gcU99ocYC2OKlQb3oe2soZrvVtm7li9Q+5Yvc0nDBTekJ+KV8wW/u7qmSic9yn6GKwjY6N9I9H/+VcdZ0iK+Bzox7IadSvFsxS4Cjcr3KPQPeDctL/+2WBP5VxURFB4hMR3wG7rc8r9KPhCDv/yLIZLDY1A=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
+ SA1PR12MB5614.namprd12.prod.outlook.com (2603:10b6:806:228::7) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8792.39; Thu, 12 Jun 2025 10:37:28 +0000
+Received: from DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
+ ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.8835.018; Thu, 12 Jun 2025
+ 10:37:28 +0000
+Message-ID: <34197439-8045-4fee-8fcf-4fad005379a6@amd.com>
+Date: Thu, 12 Jun 2025 16:07:19 +0530
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 06/20] amd_iommu: Return an error when unable to read
+ PTE from guest memory
+To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, alex.williamson@redhat.com,
+ suravee.suthikulpanit@amd.com, santosh.shukla@amd.com, sarunkod@amd.com,
+ Wei.Huang2@amd.com, clement.mathieu--drif@eviden.com,
+ ethan.milon@eviden.com, joao.m.martins@oracle.com, boris.ostrovsky@oracle.com
+References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
+ <20250502021605.1795985-7-alejandro.j.jimenez@oracle.com>
+Content-Language: en-US
+From: Vasant Hegde <vasant.hegde@amd.com>
+In-Reply-To: <20250502021605.1795985-7-alejandro.j.jimenez@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: PN3PR01CA0126.INDPRD01.PROD.OUTLOOK.COM
+ (2603:1096:c01:96::16) To DS7PR12MB6048.namprd12.prod.outlook.com
+ (2603:10b6:8:9f::5)
 MIME-Version: 1.0
-References: <20250605101124.367270-1-pbonzini@redhat.com>
- <aEk6vdosWZgyQGXD@intel.com>
- <CABgObfaK8h3GE4GWbPrn22JshYcCFdXsxWHWuAPVC4pRb7GZ0A@mail.gmail.com>
-In-Reply-To: <CABgObfaK8h3GE4GWbPrn22JshYcCFdXsxWHWuAPVC4pRb7GZ0A@mail.gmail.com>
-From: Paolo Bonzini <pbonzini@redhat.com>
-Date: Thu, 12 Jun 2025 12:24:44 +0200
-X-Gm-Features: AX0GCFuEzO8zgdw5MudUQOuwPC6sDysENa6QHxcQX9ophrZ25Hao1Iimp8yNNdE
-Message-ID: <CABgObfa+w3pcYhFnO6ETxSfoNiNU=+_8WcW6dE8dkUrbt6darw@mail.gmail.com>
-Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
-To: Zhao Liu <zhao1.liu@intel.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com, qemu-rust@nongnu.org, 
- armbru@redhat.com, mkletzan@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|SA1PR12MB5614:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7aff5dd5-df72-4baa-bcb5-08dda99d20c1
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|7416014|376014|1800799024|7053199007; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NlJPdy9vR1JqS29EbzhWM3pFczYrQlVncVB3ZE56NDR2dEpxOEc0ZnpsSjRl?=
+ =?utf-8?B?enJ5Y21jK04rTS9Cdk43VGJDaEkyS2tzWElRWXF1U0o0dUR5WkxDaWl2WXpS?=
+ =?utf-8?B?RE0xTXJyYzZoZkJXelNsWlpsNXovcHlaVm5rVkdsTC9wVWtCbllOVEhJOTkx?=
+ =?utf-8?B?bllkYldKRWxGZldJbndGNTBPc3dBMzI0enFNVjAvS3RpR3pTb2trYTkvcWVx?=
+ =?utf-8?B?ZVhicENmOVBoNFEyOVU4UkFCRFMvU3RZT2xkN1VOUG9jdHl5TUZabWhOTmUv?=
+ =?utf-8?B?TW42NTUyVUlpMHFUTUVLVXF2aUNUOURXWk1mL3ZLeTNzQW1XbU45SlFCMTdU?=
+ =?utf-8?B?TmdXdGx2VlNmWGI4TWVPUXpHUkRpTkU3TDVJOGQ4UnE0cnE5L013aWJaRENn?=
+ =?utf-8?B?UjFlOUNMWVJFSFkwQjdKTzBKOUpXdXpBRDBUTE15TFNNWXR3cWI0SkVsbFlw?=
+ =?utf-8?B?SU1HRjc3TjFDYzVqMTJTMTQvV0RMVzJ1UXM1UDVNUG05UUZMNHpEa0N6OGI5?=
+ =?utf-8?B?empuUXZ1bmkybWZGTGJqV0UyV245Y2FRZzdnejBTSkdYMlExeEFMY2tCcStx?=
+ =?utf-8?B?ZEVQV3JLcjNJSjY0dVJCcFZudVdzNVVNbWtXTzc5bG94aWh2UkJVZ3NqN2ow?=
+ =?utf-8?B?a1JNQVBpNllvM3JyOEd0Q0QrbUdxWHFGOW0yNTE5NjY1cEZOMUErWHRja3hh?=
+ =?utf-8?B?ZmNBMGZUeXF2MjZkWEtFQllZRmhwQkJFSmRDWDUrQWlUVGZ0SEJZZGM1NWdE?=
+ =?utf-8?B?OUJmYk1nSHhWWjRUeU9nY2ppSWVGa3FpZXJzdlUwWVgyNEVGOUp1OS91MXhP?=
+ =?utf-8?B?d0t1K25Eajg3ZnNxV2txZWxDb1lRT2thUDZNUG1ReU51R2ZEclVBME1jVnRz?=
+ =?utf-8?B?Q0QxZFN4bmFLbTRHbGxrbGxWMHJBd0tRZU04S2pOMmpoZHc5OERMTTcrOEhn?=
+ =?utf-8?B?VVZxeUJUNkx2YWpHbW16MGl2L3NlWjNEdmtkamt4R0xwTVZXeWZJSVVFOVJF?=
+ =?utf-8?B?UWxFZC9nNjQwTVlvenhhR3ZOSjl2ajFWQkpSUXMzV3VLRzRkV0VpdFBIOCth?=
+ =?utf-8?B?UnlQdkFyWFVWREVydzNhN0MrVTBHM1MyTzR4RVhPemN5TElFMUFVTGdQSkFM?=
+ =?utf-8?B?VmpTMDlNTlZDM0RBd1BCSExxenQwKzhSQTZ3K00zV0lIenNvWnVtWjV0VGpD?=
+ =?utf-8?B?cDZ6Y3h0cDRsU0ZrYURmYXFzU2lGNWZEdFliUGZRUjFrSm9Wc1hibTIwS1VG?=
+ =?utf-8?B?aEs2VWlFNXBRbTI4MlM3VEh5RytFcW93N3h3WE5UMTRLTFVKd1dWZTgzblpW?=
+ =?utf-8?B?elNLYjlNc0hwMjdmaDhSNytpNFBiNk9hQWdOSC8yaWxvOUJWRTA0SmFpNmxt?=
+ =?utf-8?B?OXBodWxmdCtHNW55S2tCdjlGdGluNDlyZHN2bWlOc1QyY3FHWUJPVGg4a2lG?=
+ =?utf-8?B?ZkxpRFdmWEMwc2RHUVRweFFWV0czb2l3RDJISUR3UXFwbHNhQVM1d1JsdXFC?=
+ =?utf-8?B?YVdFdkhjVHRTVk5uMzhMcTVYbjRBQWRjWCs1NldHY0l0cUcxNm9zcG1wK2hv?=
+ =?utf-8?B?Mzc3RVl4SUtYR3lUMUQ2eHozbTgzb2pTVThmcVJaa3cyamR1MExKaUdsbVJS?=
+ =?utf-8?B?V3pja3hKb3EzZGhXK3lBODM2SDZhM1JJTUQyV0xJSFdneHA1UWI3WlB1UzRZ?=
+ =?utf-8?B?RHJSdmpwYTdSZW82c29sMlBiYm9vR0YxZGlTYlFHS2lXVCt5Zkw0Rm9jTXpR?=
+ =?utf-8?B?YWVRM3k2S3RVaTNEYmZNTGV2L2pwYUhPVEVlSDNBRzBhMm5CZk5wSTRjNlJ6?=
+ =?utf-8?B?dHJtVEVJZWFOTGNSdTJ3dWN6ZzZMdHoya1JyaWorbGxrUWpqOVFaRzZpYTla?=
+ =?utf-8?B?K28vWUtIM1FyVEFVWG0rdzBET21aME9icmpMenZXUCtGNVNPZHBwaXVrVEV2?=
+ =?utf-8?Q?wUgzoMogqR4=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR12MB6048.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RG1Cd1Z1Wm9yZ1UrellTQmJkTWJHYm1weis2anBudVdGcjBkMGhDUmcveDc1?=
+ =?utf-8?B?YWl3cFJtemRFVHhKMGdRWnRVdUV6Q0RSbTZTLzd4RlZXb1ZwVlVTaW4vR1Z3?=
+ =?utf-8?B?cGsyeE1wVVFpT201SFo5U3NGN1FuRmljSERmYmhyM0FwU1RxbUNHTi96S1Jp?=
+ =?utf-8?B?M3A4T1RUM3ZIZHVuWjJqM0hiTDhuZUdmcWp3dXNjbDVQVFFXcGErbzdsbzNp?=
+ =?utf-8?B?NmZhZGF6ZEhWMnRRV0tMV2NaV2tMNXVBQ1FRSUlHeTlCbjFLUGVHQStuWmp6?=
+ =?utf-8?B?QmtkQ0d2cXdpSlFrU0s4TE0zc3ptWVQzZFEwVGhGU2N4QVhlOXBrVGVsVjhj?=
+ =?utf-8?B?ODJnU2NqYXM4ejhBc2dHbkFsMnFqeE4vbmdSNDFNR1FFNzVvTjdIcEJlSG9N?=
+ =?utf-8?B?MzU3K2RDTFZGc3lIV3dtbEZsWmtSNktFdFo2U1N6R3NHQml3NlhRa2hDbGZW?=
+ =?utf-8?B?YklCQTkyQXJ3aDZzN1Q2QmVvdS9rd2hzNUtpbUIrSVlCMDJtcnZ6WG0zZVJx?=
+ =?utf-8?B?R2EyV2NlQUdsaFA4WFRLVzNpRk8ydHBnem11S0xZS05BSU1CUHREMm9hNmg4?=
+ =?utf-8?B?Q2tyOWFIM2ZnV0NZRklpNzBOYUx4bExaMnZockRnZiswZlp4MXR6MzQ1aEVJ?=
+ =?utf-8?B?TzBEQjk4NUJ5eDdQM1E1VHJBRm02YlhoRFZkRlVBWEdBbmxYWmszS3RuZGF6?=
+ =?utf-8?B?dUlvZ3ZJZlVCNGQ5QmtHOEl4VUdGODRVWnhmUFk4cTZ5a3VRR3k1ZmNoQ08y?=
+ =?utf-8?B?ajRNUkVFQ1htVGYzVWM3RlVabVA3OXZhYkpSeHI3dm1jNUdxVlgzSkxYalMr?=
+ =?utf-8?B?ejVma29WUFh3ZjVHL0ROL2lEZXVIcUY1eWh5bklHTnU3UnN6aVBTU05zTUNX?=
+ =?utf-8?B?VkQxUmFwTjk4WWhCUnA4WW5qaWNwTm9kUmhxcGV1R3NFQXhvODdNZ1JoQkh0?=
+ =?utf-8?B?RXoyMGpwa1lrOE1DdEErMmgxUEdoZ2lCczJLUlkrZTduZk1ES1RIdFVsZmNL?=
+ =?utf-8?B?cXNPbzc4dnMxaWFwVmlNK3ZIT2ZySUJLRzJHd2VqakZWVERJZ283SGhMOUdq?=
+ =?utf-8?B?OVVJZmFkNmt1U204UFFic3ZkQTBjV1JEdGF1QTJBTWY0TDE5MFpWM2JLTWRO?=
+ =?utf-8?B?MUZtbGovNHlKbFkxbys1Uk9BaFhLdGZ3SDFtYWtWRFQwNS9RbTFtTXozd2V4?=
+ =?utf-8?B?eUlmZGVGQnk0NG01U1hTWlBsY2NQbUloRElYNVdVV1NpYldmOHRvL1FqOTJB?=
+ =?utf-8?B?R0ovazBLR3B3YzNjQXRPZHpLd0N6ZFNLWThVTmpaamR6NE1tQjlhVThyOVU4?=
+ =?utf-8?B?VWJoaVA5eThCWVRPU0pTOW5QWDN6Z3BjK3I3Y29iYU1Fd1VtS05JUXhhU2x3?=
+ =?utf-8?B?M2Q0eFE4R1NRTXlRd1NoWkYzMUhMbEtEd1d3SUl6dkZSUkpEd1IzeGJ4T3Bk?=
+ =?utf-8?B?N2xQREhtYU9CamxTVHZFL1FCRW9WSU9UVnNpUUZ6MmhtaXk1WXFWNi83UjhL?=
+ =?utf-8?B?TmtKZ1hPWkxHbTNkYnVGZFd1RU8yNU5KQnZQT2g3WmFnb1JEdkllamw5N0xl?=
+ =?utf-8?B?c0tJVTlxS2hHb08xVGlLN3VQcVlRejJMVTBrMTZ1Ti9JZlUyQ2VjK1pQbFRP?=
+ =?utf-8?B?L0doN2lObGk1NmZGdUJRN0w1ZlAyUkRzQTJmV1VHdTRIWTc2WUJPVWowdEJ3?=
+ =?utf-8?B?dmYrVzFiSlpsNVAxa2hNYVZ0ejBzb3hsOWlGRnh4ekl5R1lxNklMQU9aS2Nm?=
+ =?utf-8?B?QU9aVFhvNy9JZzEyb0g1YVl3MFhyVzMxUnpGa3kvSEgvTlUrOFIwMmhDS1dL?=
+ =?utf-8?B?WVJwa040TmFSSjZ3V0ZYSkppL3lWRFd0ZnN1VWwxNks0SG92c3VOWWRob3Rr?=
+ =?utf-8?B?S0Y4NDd6YVp1M2MyR3FaL09aU1g5SithYnB5RG9NbzF2WjQySTJQV0FEc3Ju?=
+ =?utf-8?B?SlNJWVh6aGpCMGtUQVdCTGJNQzJRZEQ3bzJNcHFUbCtsMDlhK1BndmsveGVa?=
+ =?utf-8?B?RHJPdGgzdDE2eitjTGY0VzcwN3krSmFieEo3eXk1aWJMb2EySnBINU5LZWRP?=
+ =?utf-8?B?YzROQ0hRU01JeWV0TWVPYlB4elJmc3A3bXY5d3BlZXh5MWlCL3JUeXh6OEdj?=
+ =?utf-8?Q?72S7aSwcmQahxLJVre10ha+Ll?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7aff5dd5-df72-4baa-bcb5-08dda99d20c1
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2025 10:37:28.5044 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 9HdOAEqplU+HTNOgGfSDfd4+9p/4DWkjS+XAxj/DiCU4ayFfiQ5KypKDbMyAurgNqveq4PCmaIl+sSt0II2NDw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5614
+Received-SPF: permerror client-ip=2a01:111:f403:240a::623;
+ envelope-from=Vasant.Hegde@amd.com;
+ helo=NAM04-MW2-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,86 +185,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 11, 2025 at 10:57=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
-> Yes. If using serde the implementation of the traits is very small,
-> and basically the same for all types. If not using serde, it would
-> need some (or most) of the infrastructure in Marc-Andr=C3=A9's original
-> series.
+Alejandro,
 
-Looking more at it, the Rust->QObject and QObject->Rust parts *can* be
-done with serde (following the model of serde_json's Value
-(de)serializer) but the Rust<->C part has a problem.
 
-To recap, Rust->C is the serialization and corresponds to output
-visitors. C->Rust is the deserialization and corresponds to input
-visitors.
+On 5/2/2025 7:45 AM, Alejandro Jimenez wrote:
+> Make amdvi_get_pte_entry() return an error value (-1) in cases where the
+> memory read fails, versus the current return of 0 to indicate failure.
+> The reason is that 0 is also a valid PTE value, and it is useful to know
 
-For serialization, serde has a push model where the generated code
-looks like this:
 
-      let mut state =3D
-          Serializer::serialize_struct(serializer, "S", 2);
-      SerializeStruct::serialize_field(&mut state, "a", &self.a)?;
-      SerializeStruct::serialize_field(&mut state, "b", &self.b)?;
-      SerializeStruct::end(state)
+If PTE is valid then at least PR bit will be set. So it will not be zero right?
 
-whereas QAPI has a pull model where visit_type_* drives the process
-and requests the fields one by one.
+-Vasant
 
-For deserialization, serde has a pull model where the generated code
-asks for the field names one by one:
 
-    fn visit_map<__A>(self, mut __map: __A)
-        while let Some(key) =3D
-            MapAccess::next_key::<__Field>(&mut __map)? {
-                match __key { ... }
-        }
-    }
-
-whereas QAPI has a push model where visit_type_* again drives the
-process and sends fields one by one.
-
-For commands this is not a problem because the real underlying
-transformation is QObject->QObject and the intermediate steps (to and
-from QObject) can use serde.
-
-However, QOM property getters/setters (especially, but not
-exclusively, for properties with compound types) remain a problem
-since these use callbacks with a Visitor* argument. I see three
-possibilities:
-
-1) everything is done through an intermediate QObject step (e.g. for a
-setter: Visitor->QObject with an input visitor, and QObject->Rust with
-serde deserialization).
-    + easy, Rust only sees serde
-    + QMP commands use a single conversion step
-    - inefficient
-
-2) everything is done through an intermediate C step (e.g. for a
-setter: Visitor->C with a visit_type_* function, and C->Rust with
-generated code that does not need to use serde). There is still a
-double conversion step, but it's more efficient than option 1
-    + one framework (visitor)
-    - double conversion for the QMP commands
-    - lots of generated code
-
-3) generating a Rust visit_type_* implementation as well, either in
-qapi-gen (3a) or through a procedural macro (3b). This should not be
-hard to write but it would remove a lot of the advantages from using
-serde.
-    + efficient
-    + preserves single conversion for QMP commands
-    - two frameworks
-
-I am leaning towards option 1, i.e. keep using serde but only cover
-conversions to and from QObject. The reason is that one future usecase
-for Rust in QEMU is the UEFI variable store; that one also has some
-Rust<->JSON conversions and could be served by either QObject or
-serde_json. Either way, it'd be nice for the UEFI variable store to
-remain within the Rust serde ecosystem and allow sharing code between
-QEMU and Coconut SVSM. But I'm not so sure...
-
-Paolo
+> when a PTE points to memory that is zero i.e. the guest unmapped the
+> page.
+> 
+> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+> ---
+>  hw/i386/amd_iommu.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+> index 5322a614f5d6..698967cc1a88 100644
+> --- a/hw/i386/amd_iommu.c
+> +++ b/hw/i386/amd_iommu.c
+> @@ -496,7 +496,7 @@ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
+>                          &pte, sizeof(pte), MEMTXATTRS_UNSPECIFIED)) {
+>          trace_amdvi_get_pte_hwerror(pte_addr);
+>          amdvi_log_pagetab_error(s, devid, pte_addr, 0);
+> -        pte = 0;
+> +        pte = (uint64_t)-1;
+>          return pte;
+>      }
+>  
+> @@ -1024,7 +1024,7 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
+>              /* add offset and load pte */
+>              pte_addr += ((addr >> (3 + 9 * level)) & 0x1FF) << 3;
+>              pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
+> -            if (!pte) {
+> +            if (!pte || (pte == (uint64_t)-1)) {
+>                  return;
+>              }
+>              oldlevel = level;
 
 
