@@ -4,101 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D5BC61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 21:28:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26676C71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 21:28:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPpSJ-0005Td-1y; Thu, 12 Jun 2025 17:27:27 -0400
+	id 1uPpSF-0005Sl-1n; Thu, 12 Jun 2025 17:27:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uPpSH-0005Sr-CV; Thu, 12 Jun 2025 17:27:25 -0400
-Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uPpSF-0005FB-Nv; Thu, 12 Jun 2025 17:27:25 -0400
-Received: by mail-ej1-x630.google.com with SMTP id
- a640c23a62f3a-ad8826c05f2so270253766b.3; 
- Thu, 12 Jun 2025 14:27:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749763641; x=1750368441; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=UGZv2VAG09mDiRoHHEgf2+bwUAgRb+R+CKa75tyGlTk=;
- b=ladChdKVgCUQmMK8OwrZ0xSw6eNEVduFh2a4d4xIJIHVmi4MjHKJU1bZMo2OFzuSEw
- v5agt1tS4EBTNVgnSZLshLYYv1xbpsm1JOwaI5p6FiXwMJ4/V9MHuVWn/Ehk7kdbOW8a
- h2rG22Ji/zfmOkZltbS9sW9i6qthoZCa9kleaIgzgBe8OkIEJa84GkLDhyngLHVA05Hh
- yiDxlG4uc0QsIBqvPNuSn6XgBFgQR8VDlX+eXCHnoQ176rl8Tf3uE2AiLrs+HE7rr1VT
- RsjOUxxPG81xpLCyy9NWdT1AD2VnX8MXPjMKnlGW5TQJX3vTK9ocPkRtPjUusSh2mWCh
- sjxA==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uPpSC-0005S8-SA
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:27:20 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uPpSB-0005Ec-06
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:27:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749763636;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bwFyUWKoKycXGh83cs4dY7T7SNkT7xXTjH6qeDtoHVg=;
+ b=MULmrHJ5RbZvyq5vrsSpGm11y10Gfh6H+bRGu6+SSBwEJ0s1/vc+RtJuWjUTTBethhHPHw
+ f3M1kAxxC1cGB5oETB72CQvZCQfhimq8qqAKq4qUIvT3jZULc9F4g1tRuDPf5LiO8sC/cW
+ Dp4HSVW5ApqgkzPEX3Ev/T9A0ocwNu0=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-444-fuub8LqLOse6SX645ekH9Q-1; Thu, 12 Jun 2025 17:27:15 -0400
+X-MC-Unique: fuub8LqLOse6SX645ekH9Q-1
+X-Mimecast-MFC-AGG-ID: fuub8LqLOse6SX645ekH9Q_1749763634
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-7c5f876bfe0so277251285a.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 14:27:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749763641; x=1750368441;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=UGZv2VAG09mDiRoHHEgf2+bwUAgRb+R+CKa75tyGlTk=;
- b=RMA6UXtCPItBvyhumb0rToHu3K32JmOnQaVN/6gNxg08BERIZJVaYOjynpuZKgYtKt
- OaKbNJ6DXUzb1AMXU1I/Xt3N4M81DIdIWDjIMETTucpdOQOnk3fdBaHunEtKAQKuFo6e
- 2OzXd0vL9XpCnx5R+o0f9wyrH5VMuhBW+pFk216gkFojHCUOmSgEcvR+hLGssIOjJDR4
- s6Mi4dk3Zv8yNN2yZ6IG6+ryfp3SV2gQ0fV6ZxbShSboS5X+zakfLvnXyGQxrnoDaJ+2
- rxVTwPjKe0BrrvwoiVBUarc37Re0NLpdVoTEPQMS/OE48iYDhUwcHHUbDbstlaVrO8ye
- PUqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2Edy1RuW5qmNHm12nLqUZ4BpCqCAd+Rp03gT1ixcobsgXoBMrN+iSxne4b8vaZtp2ZLSD6syVz6o=@nongnu.org,
- AJvYcCXMGenmL4Xa9pckjwaTiACwvzkKWxqd9+oB6aJpvV14VbQHtPVglFFNgHah/CyQzqTm/+JsKekO6Q==@nongnu.org
-X-Gm-Message-State: AOJu0YzEgAsJ5bf9Kc6hsTASgKGLxfS6R8cZGzBYnU3oRn9w0sdmhURW
- /msfehu8pkpgQp5VB9n3YlpjPXYmHroMpph4teBjTfU+x/XmK/2efokb
-X-Gm-Gg: ASbGncvYS1txDVArFd/+AmkERgjhuNZH0KId03X50EH0NTayAVnvdZ4ao/92aYuFZtX
- cSbmJV7lWjtVaatN7hK4jqiQyJCiMmYXIF9mAe1lOWUdJCJFedtwKLPNVtOaOHNs0n7RI4p2ope
- 62jBUciMGioWhGHa3RIJyVknsiP4C3z554s7koxeufwQ1k3gd4VLLdGflXXgpLO7Jn8FpG78QhA
- KJymif9SlA2I5O/cJXXociz5lbwz6fvLreCb7pIXx/ks7pUtpCFA4OFmY7QYsewsY3lzHKoVOks
- ys/qcyUfaZS2yLVF5yx/iY4Lc1xf4PxFRLgOkq5KF2kOUAkUTQY19NAVGltcmKeLknmXhzUX24q
- eeBoZ69S0HnuqSYG9MAGvTH9waZfkZcwmeF7BtSyjCcREs9dU7r56C72jEVfSmNuvyANBmA==
-X-Google-Smtp-Source: AGHT+IEEl8HJ9Jo/cyEnCAnv3iTy5DoW4nXLFYgamacqqBaaKOjznmliZuy1exI8HSXL5kPakclDcQ==
-X-Received: by 2002:a17:907:3f9e:b0:ace:cc7f:8abe with SMTP id
- a640c23a62f3a-adec5cb1aa7mr68440666b.31.1749763641233; 
- Thu, 12 Jun 2025 14:27:21 -0700 (PDT)
-Received: from ?IPv6:::1?
- (dynamic-2a02-3100-2ff0-9b00-bd73-623e-7632-a2ac.310.pool.telefonica.de.
- [2a02:3100:2ff0:9b00:bd73:623e:7632:a2ac])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-adec81bfd69sm23672266b.51.2025.06.12.14.27.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Jun 2025 14:27:20 -0700 (PDT)
-Date: Thu, 12 Jun 2025 21:27:18 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
- =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
-CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org,
- =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH 4/5] configure: Add dtc option
-In-Reply-To: <d2860e38-241e-4778-ad9c-7042c73edfd9@redhat.com>
-References: <20250610204131.2862-1-shentey@gmail.com>
- <20250610204131.2862-5-shentey@gmail.com>
- <cdfc561e-23a9-607a-d9a8-70e07e73e0fd@eik.bme.hu>
- <aElCJnmjrB-X9M-n@redhat.com>
- <6eb6aa79-33f8-57ea-5714-af264557f8c8@eik.bme.hu>
- <c29386d1-1a4b-4f3b-a669-4206c366ad9e@redhat.com>
- <d2860e38-241e-4778-ad9c-7042c73edfd9@redhat.com>
-Message-ID: <B55C341F-5BDE-45B5-B3F5-2F730EF4586D@gmail.com>
+ d=1e100.net; s=20230601; t=1749763634; x=1750368434;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bwFyUWKoKycXGh83cs4dY7T7SNkT7xXTjH6qeDtoHVg=;
+ b=M/75UYcIpAy1QKmz52V5IliEFFKxdtG74735mfft/jJ0CjPaAeIiQdPldVStjPv/BX
+ rXc5LRfty5lRC477MSZrTqqXSKxV+t9LeGaJLWcsAlX4ZzxxnjcoLMMlnbKHZZeKBUrU
+ +EaZgAu2agOkOH20K4JrMH3DCTM38k2lNFHEQrd/+ghUIx4c4Iq+aufk0pa50SlSeSY/
+ nqAY89vbY1cHVYibvKpLRIbfMSo1StsAALyCzRlWG5w8IDI8FEbSTuGFSeYCyaoZGInA
+ xAXoAnGKkG8jCqFI/I+uOQy0nZA0Rbon5pEhVruB484TnKmjb8Qx+FR/rmKIlTY3Gral
+ Zzkw==
+X-Gm-Message-State: AOJu0YyGxK4muwzgdKxVtNwBp2rPXsvrN6VZRsqmCJ9AskKS150q8gen
+ QhnCf+B09FSiEOudiVt1bvP04OVNZSCeCQRAWu8S9+JwU2kymk8yMWSiXlDr7WckoaWHw+qKlq1
+ ItGsupRhP4DEKIhQJb4aDnrstI7hfjtEvdWx98PiSXKVglkPYp2ZPmuzk
+X-Gm-Gg: ASbGncupUSBoPQn4MwHAZOifnyA64b0JPTraqHZUE2VSaDfnWobugfzoOvp7Ffm5p/R
+ m4MZgWBRPggLP3TOc1QYXk8lUAU1dLSXfZiH+gO+YqrR1s+vbRBUbrRbgzsq94SVfBtRHsakFF+
+ mrvjsKAK3NNLrpFOFJnfhmoGJgfcE1rywdj2fzmJ7MPpiRnUodoKdbSInmEEsKl+etQafbiihuY
+ 5snQDBkI7FH+Focl+taB7OwHcuovXKMLlWYMsoDxcB7PCh8nEyt1/7JBNY4ks7tzOmcCoyKa3cd
+ m9Cph2mJnahf0Q==
+X-Received: by 2002:a05:620a:171e:b0:7ce:d352:668f with SMTP id
+ af79cd13be357-7d3bc4d9581mr150132785a.47.1749763634425; 
+ Thu, 12 Jun 2025 14:27:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGfNKSq1Bc1Z9nIRiBbZhtfa2+A/40w5eCoBXcDkx4gwy6vA0AZ3wnqctcypZWoZqepZVbQhQ==
+X-Received: by 2002:a05:620a:171e:b0:7ce:d352:668f with SMTP id
+ af79cd13be357-7d3bc4d9581mr150128785a.47.1749763634061; 
+ Thu, 12 Jun 2025 14:27:14 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-7d3b8ef9e87sm85010285a.100.2025.06.12.14.27.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Jun 2025 14:27:13 -0700 (PDT)
+Date: Thu, 12 Jun 2025 17:27:11 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
+Subject: Re: [PATCH 10/21] migration: Use QAPI_CLONE_MEMBERS in
+ query_migrate_parameters
+Message-ID: <aEtGL1J4LpLJ8Gj9@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-11-farosas@suse.de>
+ <aEMJacJqDHLrdkgn@x1.local> <87a56kx3xc.fsf@suse.de>
+ <87ecvovfrt.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::630;
- envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87ecvovfrt.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,128 +108,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Jun 12, 2025 at 05:58:14PM -0300, Fabiano Rosas wrote:
+> Fabiano Rosas <farosas@suse.de> writes:
+> 
+> > Peter Xu <peterx@redhat.com> writes:
+> >
+> >> On Mon, Jun 02, 2025 at 10:37:59PM -0300, Fabiano Rosas wrote:
+> >>> QAPI_CLONE_MEMBERS is a better option than copying parameters one by
+> >>> one because it operates on the entire struct and follows pointers. It
+> >>> also avoids the need to alter this function every time a new parameter
+> >>> is added.
+> >>> 
+> >>> Note, since this is a deep clone, now we must free the TLS strings
+> >>> before assignment.
+> >>> 
+> >>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> >>> ---
+> >>>  migration/options.c | 31 ++++---------------------------
+> >>>  1 file changed, 4 insertions(+), 27 deletions(-)
+> >>> 
+> >>> diff --git a/migration/options.c b/migration/options.c
+> >>> index dd62e726cb..0a2a3050ec 100644
+> >>> --- a/migration/options.c
+> >>> +++ b/migration/options.c
+> >>> @@ -918,7 +918,9 @@ static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
+> >>>  {
+> >>>      StrOrNull *dst = *dstp;
+> >>>  
+> >>> -    assert(!dst);
+> >>> +    if (dst) {
+> >>> +        qapi_free_StrOrNull(dst);
+> >>> +    }
+> >>>  
+> >>>      dst = *dstp = g_new0(StrOrNull, 1);
+> >>>      dst->type = QTYPE_QSTRING;
+> >>> @@ -975,42 +977,17 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+> >>>      MigrationParameters *params;
+> >>>      MigrationState *s = migrate_get_current();
+> >>>  
+> >>> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
+> >>>      params = g_malloc0(sizeof(*params));
+> >>>  
+> >>> -    params->throttle_trigger_threshold = s->parameters.throttle_trigger_threshold;
+> >>> -    params->cpu_throttle_initial = s->parameters.cpu_throttle_initial;
+> >>> -    params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
+> >>> -    params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
+> >>> +    QAPI_CLONE_MEMBERS(MigrationParameters, params, &s->parameters);
+> >>>  
+> >>>      tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
+> >>>      tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
+> >>>      tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
 
+[1]
 
-Am 12=2E Juni 2025 05:46:03 UTC schrieb Paolo Bonzini <pbonzini@redhat=2Ec=
-om>:
->On 6/12/25 07:12, Paolo Bonzini wrote:
->> I'll send a patch to the upstream dtc project and you can add it to QEM=
-U via diff_files (see commit 64644bc4eab2f for an example)=2E
->This is the patch, backported to QEMU's version of the dtc subproject:
->
->diff --git a/libfdt/meson=2Ebuild b/libfdt/meson=2Ebuild
->index 0307ffb=2E=2E6581965 100644
->--- a/libfdt/meson=2Ebuild
->+++ b/libfdt/meson=2Ebuild
->@@ -30,6 +30,7 @@ libfdt_dep =3D declare_dependency(
->   include_directories: libfdt_inc,
->   link_with: libfdt,
-> )
->+meson=2Eoverride_dependency('libfdt', libfdt_dep)
->  install_headers(
->   files(
->diff --git a/meson=2Ebuild b/meson=2Ebuild
->index b23ea1b=2E=2E7def0a6 100644
->--- a/meson=2Ebuild
->+++ b/meson=2Ebuild
->@@ -54,6 +54,7 @@ version_gen_h =3D vcs_tag(
->  subdir('libfdt')
-> +dtc_tools =3D []
-> if get_option('tools')
->   flex =3D find_program('flex', required: true)
->   bison =3D find_program('bison', required: true)
->@@ -77,7 +78,7 @@ if get_option('tools')
->   )
->    if cc=2Echeck_header('fnmatch=2Eh')
->-    executable(
->+    dtc_tools +=3D executable(
->       'convert-dtsv0',
->       [
->         lgen=2Eprocess('convert-dtsv0-lexer=2El'),
->@@ -88,7 +89,7 @@ if get_option('tools')
->     )
->   endif
-> -  executable(
->+  dtc_tools +=3D executable(
->     'dtc',
->     [
->       lgen=2Eprocess('dtc-lexer=2El'),
->@@ -108,7 +109,7 @@ if get_option('tools')
->   )
->    foreach e: ['fdtdump', 'fdtget', 'fdtput', 'fdtoverlay']
->-    executable(e, files(e + '=2Ec'), dependencies: util_dep, install: tr=
-ue)
->+    dtc_tools +=3D executable(e, files(e + '=2Ec'), dependencies: util_d=
-ep, install: true)
->   endforeach
->    install_data(
->@@ -118,6 +119,10 @@ if get_option('tools')
->   )
-> endif
-> +foreach e: dtc_tools
->+  meson=2Eoverride_find_program(e=2Ename(), e)
->+endforeach
->+
-> if not meson=2Eis_cross_build()
->   if py=2Efound() and swig=2Efound()
->     subdir('pylibfdt')
->
->
->and this is how you can then find dtc in QEMU's meson=2Ebuild:
->
->diff --git a/meson=2Ebuild b/meson=2Ebuild
->index 61595015802=2E=2E831678b4580 100644
->--- a/meson=2Ebuild
->+++ b/meson=2Ebuild
->@@ -2121,13 +2121,15 @@ if numa=2Efound() and not cc=2Elinks('''
-> endif
->  fdt =3D not_found
->+dtc =3D not_found
-> fdt_opt =3D get_option('fdt')
-> if fdt_opt =3D=3D 'enabled' and get_option('wrap_mode') =3D=3D 'nodownlo=
-ad'
->   fdt_opt =3D 'system'
-> endif
-> if fdt_opt in ['enabled', 'system'] or (fdt_opt =3D=3D 'auto' and have_s=
-ystem)
->   fdt =3D cc=2Efind_library('fdt', required: fdt_opt =3D=3D 'system')
->-  if fdt=2Efound() and cc=2Elinks('''
->+  dtc =3D find_program('dtc', required: fdt_opt =3D=3D 'system')
->+  if dtc=2Efound() and fdt=2Efound() and cc=2Elinks('''
->      #include <libfdt=2Eh>
->      #include <libfdt_env=2Eh>
->      int main(void) { fdt_find_max_phandle(NULL, NULL); return 0; }''',
->@@ -2136,8 +2138,12 @@ if fdt_opt in ['enabled', 'system'] or (fdt_opt =
-=3D=3D 'auto' and have_system)
->   elif fdt_opt !=3D 'system'
->     fdt_opt =3D get_option('wrap_mode') =3D=3D 'nodownload' ? 'disabled'=
- : 'internal'
->     fdt =3D not_found
->+    dtc =3D not_found
->   else
->-    error('system libfdt is too old (1=2E5=2E1 or newer required)')
->+    if dtc=2Efound()
->+      error('system libfdt is too old (1=2E5=2E1 or newer required)')
->+    else
->+      error('device tree compiler not found')
->   endif
-> endif
-> if fdt_opt =3D=3D 'internal'
->@@ -2145,7 +2148,8 @@ if fdt_opt =3D=3D 'internal'
->   libfdt_proj =3D subproject('dtc', required: true,
->                            default_options: ['tools=3Dfalse',  'yaml=3Dd=
-isabled',
->                                              'python=3Ddisabled', 'defau=
-lt_library=3Dstatic'])
->-  fdt =3D libfdt_proj=2Eget_variable('libfdt_dep')
->+  fdt =3D dependency('libfdt', required: true)
->+  dtc =3D find_program('dtc', required: true)
-> endif
->  rdma =3D not_found
->
+> >>>  
+> >>> -    params->max_bandwidth = s->parameters.max_bandwidth;
+> >>> -    params->avail_switchover_bandwidth = s->parameters.avail_switchover_bandwidth;
+> >>> -    params->downtime_limit = s->parameters.downtime_limit;
+> >>> -    params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
+> >>> -    params->multifd_channels = s->parameters.multifd_channels;
+> >>> -    params->multifd_compression = s->parameters.multifd_compression;
+> >>> -    params->multifd_zlib_level = s->parameters.multifd_zlib_level;
+> >>> -    params->multifd_qatzip_level = s->parameters.multifd_qatzip_level;
+> >>> -    params->multifd_zstd_level = s->parameters.multifd_zstd_level;
+> >>> -    params->xbzrle_cache_size = s->parameters.xbzrle_cache_size;
+> >>> -    params->max_postcopy_bandwidth = s->parameters.max_postcopy_bandwidth;
+> >>> -    params->max_cpu_throttle = s->parameters.max_cpu_throttle;
+> >>> -    params->announce_initial = s->parameters.announce_initial;
+> >>> -    params->announce_max = s->parameters.announce_max;
+> >>> -    params->announce_rounds = s->parameters.announce_rounds;
+> >>> -    params->announce_step = s->parameters.announce_step;
+> >>>      params->block_bitmap_mapping =
+> >>>          QAPI_CLONE(BitmapMigrationNodeAliasList,
+> >>>                     s->parameters.block_bitmap_mapping);
+> >>
+> >> Wouldn't the QAPI_CLONE_MEMBERS() have deep cloned this too?
+> >>
+> >
+> > Hmm, I think it should. But it definitely broke something without this
+> > line. I'll double check.
+> >
+> 
+> Thanks for the question, this was indeed wrong. QAPI_CLONE_MEMBERS
+> depend on the has_* fields on src, otherwise it's just a glorified
+> assignment (*dst = src). The reason I got this wrong is that I was using
+> the TLS strings to test and they have a different handling in QAPI:
+> 
+> visit_type_MigrationParameters_members():
+> 
+>     bool has_tls_creds = !!obj->tls_creds;
 
-Thanks Paolo, I'll send a v2=2E
+[2]
 
-Best regards,
-Bernhard
+> 
+> So the code was working for them, but not for block_bitmap_mapping, for
+> which the QAPI has:
+> 
+> if (visit_optional(v, "block-bitmap-mapping", &obj->has_block_bitmap_mapping)) {
+>                                                     ^
+>     if (!visit_type_BitmapMigrationNodeAliasList(v, "block-bitmap-mapping",
+>         &obj->block_bitmap_mapping, errp)) {
+>         return false;
+>     }
+> }
+> 
+> IOW, the QAPI_CLONE routines depend on the has_ fields (in retrospect:
+> obviously).
+> 
+> That assert you didn't like will have to go then and s->parameters will
+> have to have all has_* fields permanently set. Not a huge deal, but it
+> undermines my argument of keeping it free from QAPI details.
+
+Oops, indeed.  Now you have that function to set all has_*, hopefully this
+is trivial now to still do so.
+
+Since you mentioned tls_* won't have has_*, but they will get properly
+cloned IIUC as you mentioned above [2].  Does it mean we can also drop the
+three lines at [1] too?
+
+In general, I am curious why we can't already use QAPI_CLONE() like:
+
+  params = QAPI_CLONE(&s->parameters);
+
+And if my wish came true once more on having it a pointer (meanwhile if it
+even happened before this patch):
+
+  params = QAPI_CLONE(s->parameters);
+
+I thought with that, any of "g_malloc0(), copying of tls_*, copying of
+block_bitmap things" are all not needed?
+
+-- 
+Peter Xu
+
 
