@@ -4,67 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D132AC71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:45:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1733EC61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:45:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPiEW-0005Mn-GZ; Thu, 12 Jun 2025 09:44:44 -0400
+	id 1uPiES-0005LM-GA; Thu, 12 Jun 2025 09:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uPiER-0005LQ-Ty
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:44:40 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uPiDh-0005Fr-0H; Thu, 12 Jun 2025 09:43:55 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
- id 1uPiEP-0000og-Ng
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:44:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749735877; x=1781271877;
- h=from:to:cc:subject:date:message-id:mime-version:
- content-transfer-encoding;
- bh=n3YvyYwqdlI8cLdKSwV1RnMfVu09BAcB8TUPZVUs/J8=;
- b=KUlHLBI7Qa6EXE1/Y3EO5/h6vBi04TEz8+rvzf72IHUVYs7IQm/Lb9gL
- 6JLs7jafei8DflCqtXUaHgteyP6bWv/J1Id2x9UWpJRFGGhA13B4nofU8
- aXSWQUstByH2fpMUPro/r17WPuCoPJqXFkBmdG65cizrx9u3AHg7zQRR8
- phSRWSgDhxtnfz39y0zGSItBGYu/zL1vwgl15QvUev9u3PybDLbFGvDl3
- wiJE5H00JVagCWAoDVa8sZaWQagdpWDFN0YJOE7ips2lbo0Q8ZaCcWgx9
- S91xsUwfce0I0Uz9DRsdxid+xpuOS+sj36AQWsrZ8FgPl2+TXw3hn5Dji w==;
-X-CSE-ConnectionGUID: XG5vk66nSqyRbK01bLFdNA==
-X-CSE-MsgGUID: sajucKG+TeKwVu2QgXhxsg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11462"; a="52062787"
-X-IronPort-AV: E=Sophos;i="6.16,231,1744095600"; d="scan'208";a="52062787"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jun 2025 06:44:32 -0700
-X-CSE-ConnectionGUID: fmZgCLHhSomVx5CayMvWfg==
-X-CSE-MsgGUID: KA+wyFJSQ0q16BOFnn+eTQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,231,1744095600"; d="scan'208";a="147410247"
-Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
- by fmviesa007.fm.intel.com with ESMTP; 12 Jun 2025 06:44:31 -0700
-From: Xiaoyao Li <xiaoyao.li@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Marcelo Tosatti <mtosatti@redhat.com>, xiaoyao.li@intel.com,
- qemu-devel@nongnu.org
-Subject: [PATCH] i386/tdx: Error and exit when named cpu model is requested
-Date: Thu, 12 Jun 2025 09:38:01 -0400
-Message-ID: <20250612133801.2238342-1-xiaoyao.li@intel.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uPiDd-0000mS-Cz; Thu, 12 Jun 2025 09:43:52 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bJ3dG2QBPz6M51h;
+ Thu, 12 Jun 2025 21:43:14 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 2F2341402EB;
+ Thu, 12 Jun 2025 21:43:40 +0800 (CST)
+Received: from SecurePC-101-06.china.huawei.com (10.122.19.247) by
+ frapeml500008.china.huawei.com (7.182.85.71) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.1.2507.39; Thu, 12 Jun 2025 15:43:39 +0200
+To: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <mst@redhat.com>, Zhijian Li
+ <lizhijian@fujitsu.com>, Itaru Kitayama <itaru.kitayama@linux.dev>
+CC: <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>, 
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Alireza Sanaee
+ <alireza.sanaee@huawei.com>, =?UTF-8?q?Alex=20Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Subject: [PATCH v15 0/4] arm/virt: CXL support via pxb_cxl
+Date: Thu, 12 Jun 2025 14:43:34 +0100
+Message-ID: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
- helo=mgamail.intel.com
+Content-Type: text/plain
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
 X-Spam_score_int: -33
 X-Spam_score: -3.4
 X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,50 +69,125 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, it gets below error when requesting any named cpu model with
-"-cpu" to boot a TDX VM:
+v15:
+  - Split the address map calculations and mmio setup into separate
+    functions in patch 2, allowing v14 patch 3 to be dropped as not
+    x86 and arm make the same calls.  Note I felt this was a sufficient
+    change to trigger dropping tags. (Zhijian Li)
+  - A few other minor tweaks.
+  - TLB issue mentioned in v14 now fixed upstream so dropped reference
+    in this cover letter.
 
-  qemu-system-x86_64: KVM_TDX_INIT_VM failed: Invalid argument
+Thanks to Itaru Kitayama and Zhijian Li for testing + reviews.
 
-It misleads people to think it's the bug of KVM or QEMU. It is just that
-current QEMU doesn't support named cpu model for TDX.
+Updated cover letter
 
-To support named cpu models for TDX guest, there are opens to be
-finalized and needs a mount of additional work.
+Back in 2022, this series stalled on the absence of a solution to device
+tree support for PCI Expander Bridges (PXB) and we ended up only having
+x86 support upstream. I've been carrying the arm64 support out of tree
+since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+a few weeks ago) and a fair number of fiddly rebases.
+gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
+series.
 
-For now, explicitly check the case when named cpu model is requested.
-Error report a hint and exit.
+A recent discussion with Peter Maydell indicated that there are various
+other ACPI only features now, so in general he might be more relaxed
+about DT support being necessary. The upcoming vSMMUv3 support would
+run into this problem as well.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
----
- target/i386/kvm/tdx.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+I presented the background to the PXB issue at Linaro connect 2022. In
+short the issue is that PXBs steal MMIO space from the main PCI root
+bridge. The challenge is knowing how much to steal.
 
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 820ca3614e27..2b52de9d71bc 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -739,8 +739,14 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
- 
- static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
- {
-+    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
-     X86CPU *x86cpu = X86_CPU(cpu);
- 
-+    if (xcc->model) {
-+        error_report("Named cpu model is not supported for TDX yet!");
-+        exit(1);
-+    }
-+
-     object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
- 
-     /* invtsc is fixed1 for TD guest */
+On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+configuration of the PCI topology and QEMU can update the ACPI tables
+after EDK2 has done this when it can simply read the space used by the
+root ports. On device tree, there is no entity to figure out that
+enumeration so we don't know how to size the stolen region.
 
-base-commit: d9ce74873a6a5a7c504379857461e4ae64fcf0cd
+Three approaches were discussed:
+1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+   3rd enumeration implementation that ends up out of sync with EDK2 and
+   the kernel (there are frequent issues because of how those existing
+   implementations differ.
+2) Figure out how to enumerate in kernel. I never put a huge amount of work
+   into this, but it seemed likely to involve a nasty dance with similar
+   very specific code to that EDK2 is carrying and would very challenging
+   to upstream (given the lack of clarity on real use cases for PXBs and
+   DT).
+3) Hack it based on the control we have which is bus numbers.
+   No one liked this but it worked :)
+
+The other little wrinkle would be the need to define full bindings for CXL
+on DT + implement a fairly complex kernel stack as equivalent in ACPI
+involves a static table, CEDT, new runtime queries via _DSM and a description
+of various components. Doable, but so far there is no interest on physical
+platforms. Worth noting that for now, the QEMU CXL emulation is all about
+testing and developing the OS stack, not about virtualization (performance
+is terrible except in some very contrived situations!)
+
+There is only a very simple test in here, because my intent is not to
+duplicate what we have on x86, but just to do a smoke test that everything
+is hooked up.  In general we need much more comprehensive end to end CXL
+tests but that requires a reaonsably stable guest software stack. A few
+people have expressed interest in working on that, but we aren't there yet.
+
+Note that this series has a very different use case to that in the proposed
+SBSA-ref support:
+https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+
+SBSA-ref is a good choice if you want a relatively simple mostly fixed
+configuration.  That works well with the limited host system
+discoverability etc as EDK2 can be build against a known configuration.
+
+My interest with this support in arm/virt is support host software stack
+development (we have a wide range of contributors, most of whom are working
+on emulation + the kernel support). I care about the weird corners. As such
+I need to be able to bring up variable numbers of host bridges, multiple CXL
+Fixed Memory Windows with varying characteristics (interleave etc), complex
+NUMA topologies with wierd performance characteristics etc. We can do that
+on x86 upstream today, or my gitlab tree. Note that we need arm support
+for some arch specific features in the near future (cache flushing).
+Doing kernel development with this need for flexibility on SBSA-ref is not
+currently practical. SBSA-ref CXL support is an excellent thing, just
+not much use to me for this work.
+
+Also, we are kicking off some work on DCD virtualization, particularly to
+support inter-host shared memory being presented up into a VM. That
+will need upstream support on arm64 as it is built on top of the existing
+CXL emulation to avoid the need for a separate guest software stack.
+
+Note this is TCG only - it is possible to support limited use with KVM but
+that needs additional patches not yet ready for upstream.  The challenge
+is interleave - and the solution is don't interleave if you want to run
+with KVM.
+
+Jonathan Cameron (4):
+  hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+  hw/cxl: Make the CXL fixed memory windows devices.
+  hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+    pxb-cxl
+  qtest/cxl: Add aarch64 virt test for CXL
+
+ include/hw/arm/virt.h     |   4 +
+ include/hw/cxl/cxl.h      |   5 +-
+ include/hw/cxl/cxl_host.h |   5 +-
+ hw/acpi/cxl.c             |  76 +++++++++--------
+ hw/arm/virt-acpi-build.c  |  34 ++++++++
+ hw/arm/virt.c             |  29 +++++++
+ hw/cxl/cxl-host-stubs.c   |   7 +-
+ hw/cxl/cxl-host.c         | 170 +++++++++++++++++++++++++++++++-------
+ hw/i386/pc.c              |  50 +++++------
+ tests/qtest/cxl-test.c    |  59 ++++++++++---
+ tests/qtest/meson.build   |   1 +
+ 11 files changed, 330 insertions(+), 110 deletions(-)
+
 -- 
-2.43.0
+2.48.1
 
 
