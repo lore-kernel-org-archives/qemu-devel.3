@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9144FC71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 21:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B088C71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 21:02:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPp3K-00050o-6p; Thu, 12 Jun 2025 17:01:41 -0400
+	id 1uPp3Z-0005zH-9J; Thu, 12 Jun 2025 17:01:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp2q-0004oq-C5
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:01:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp3R-0005PF-1Z
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:01:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp2o-0001DM-3h
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:01:08 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp3N-0001HI-QV
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:01:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749762065;
+ s=mimecast20190719; t=1749762100;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=biVTVO6tTUZgXsk76i+pCkrq8Kzb2MvWdVTKKPUZZgI=;
- b=Yt2x7H0eo4b+vYafRmIO5AEocc0wv0fHIZquQbZ4TyvimBkug5XasLtu5lu/6s3IfRNrBK
- F/5N7SQ0e04PTkIbDI1Q9Zu0K/mmmp7LyNlPNqa5gDtYUMfWrektAnBKkNn6sJnAP/fGg/
- Rgk60w8e0qG6mi9ObAjHcrlAmvm66/Q=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=aQL5AVZzjW1dNur0+zU036GgiAEpA8O2BMI4YkdQQVE=;
+ b=VPCSEUqfihwouilZNsBctHIobJUAfirL1mr5tOgdJFyH1sK9ue9hnpLynkQUIwSbNDc2ke
+ VmWFL3Dy1DN1+L8Hs/WsYsGvOpvV/ZAVKuV32dX3QxT4az2+A92IV7MluHKK81gzxddap5
+ RvornaIefz9uNokX0FFWeX7sG4liMos=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-vnvS8YJfPauQ8Md4VPLwig-1; Thu,
- 12 Jun 2025 17:01:03 -0400
-X-MC-Unique: vnvS8YJfPauQ8Md4VPLwig-1
-X-Mimecast-MFC-AGG-ID: vnvS8YJfPauQ8Md4VPLwig_1749762058
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-QGzFUNx3NDGxQRHX_xpujg-1; Thu,
+ 12 Jun 2025 17:01:33 -0400
+X-MC-Unique: QGzFUNx3NDGxQRHX_xpujg-1
+X-Mimecast-MFC-AGG-ID: QGzFUNx3NDGxQRHX_xpujg_1749762089
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E1CF195608F; Thu, 12 Jun 2025 21:00:58 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2014D19560A2; Thu, 12 Jun 2025 21:01:29 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.54])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8FB201955F57; Thu, 12 Jun 2025 21:00:26 +0000 (UTC)
+ id B1FE11955F4A; Thu, 12 Jun 2025 21:00:58 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
@@ -126,15 +126,15 @@ Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  Huacai Chen <chenhuacai@kernel.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 10/12] python: remove version restriction for mypy
-Date: Thu, 12 Jun 2025 16:54:48 -0400
-Message-ID: <20250612205451.1177751-11-jsnow@redhat.com>
+Subject: [PATCH v2 11/12] scripts/codeconverter: remove unused code
+Date: Thu, 12 Jun 2025 16:54:49 -0400
+Message-ID: <20250612205451.1177751-12-jsnow@redhat.com>
 In-Reply-To: <20250612205451.1177751-1-jsnow@redhat.com>
 References: <20250612205451.1177751-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -159,29 +159,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Removing this configuration line allows mypy to type check files from
-the context of whatever version of Python it happens to be running
-under, which is actually what we want here, so long as we do actually
-support running these scripts under multiple versions of Python, which
-we currently do.
+Remove (select) bits of unused code, as it is not typed correctly and
+appears to not be in use. The quickest solution is to remove it
+entirely.
+
+'Match' is not defined, and neither is 'TypeInfoReference'. What these
+bits of code were meant to do is unclear.
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/setup.cfg | 1 -
- 1 file changed, 1 deletion(-)
+ scripts/codeconverter/codeconverter/patching.py      | 3 ---
+ scripts/codeconverter/codeconverter/qom_type_info.py | 4 ----
+ 2 files changed, 7 deletions(-)
 
-diff --git a/python/setup.cfg b/python/setup.cfg
-index 02cc076eaea..9b6dbc520aa 100644
---- a/python/setup.cfg
-+++ b/python/setup.cfg
-@@ -78,7 +78,6 @@ exclude = __pycache__,
+diff --git a/scripts/codeconverter/codeconverter/patching.py b/scripts/codeconverter/codeconverter/patching.py
+index 7c3135a3e27..0165085caed 100644
+--- a/scripts/codeconverter/codeconverter/patching.py
++++ b/scripts/codeconverter/codeconverter/patching.py
+@@ -418,9 +418,6 @@ def show_diff(self) -> None:
+             f.flush()
+             subprocess.call(['diff', '-u', self.filename, f.name])
  
- [mypy]
- strict = True
--python_version = 3.9
- namespace_packages = True
- warn_unused_ignores = False
+-    def ref(self):
+-        return TypeInfoReference
+-
+ class FileList(RegexpScanner):
+     def __init__(self):
+         super().__init__()
+diff --git a/scripts/codeconverter/codeconverter/qom_type_info.py b/scripts/codeconverter/codeconverter/qom_type_info.py
+index d4dd6267b76..4ecdd728890 100644
+--- a/scripts/codeconverter/codeconverter/qom_type_info.py
++++ b/scripts/codeconverter/codeconverter/qom_type_info.py
+@@ -29,10 +29,6 @@
  
+ ParsedArray = List[str]
+ ParsedInitializerValue = Union[str, ParsedArray]
+-class InitializerValue(NamedTuple):
+-    raw: str
+-    parsed: Optional[ParsedInitializerValue]
+-    match: Optional[Match]
+ 
+ class ArrayItem(FileMatch):
+     regexp = RE_ARRAY_ITEM
 -- 
 2.48.1
 
