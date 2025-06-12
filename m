@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4FC96C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 07:30:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C03CBC71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 07:38:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPcO5-0003sw-6C; Thu, 12 Jun 2025 03:30:13 -0400
+	id 1uPcV2-0006AJ-GJ; Thu, 12 Jun 2025 03:37:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uPcO0-0003r7-54; Thu, 12 Jun 2025 03:30:08 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1uPcV0-00069t-Sn; Thu, 12 Jun 2025 03:37:22 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uPcNx-000505-W9; Thu, 12 Jun 2025 03:30:07 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-451d54214adso4589325e9.3; 
- Thu, 12 Jun 2025 00:30:04 -0700 (PDT)
+ id 1uPcUz-0006Bg-E3; Thu, 12 Jun 2025 03:37:22 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-450cf214200so5208435e9.1; 
+ Thu, 12 Jun 2025 00:37:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749713402; x=1750318202; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1749713839; x=1750318639; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
  :message-id:reply-to;
  bh=SZ6sPcipkdgCHZUrlXXsBzdJ/gVBOKP0mf97qysVYPc=;
- b=FYpff/5ckEgccfCzTMtJp6gcoOKbrq8GFhaTixHqpDKzzGd2GVDY9hLLj2PjHpsHfO
- pNjFBiPYJCbm/c7M7sE1FEwAD4pnSXKPcM0swyvloyOSl9BaoNDmO2zoNhwOZ2JClvyZ
- SdUmoD6ZrAWokAjRnTwjNulqDljWPGG/L9LkyYtHaUQa14Q1DxH6V3K7qQRLKLIVaqmG
- agpyG2m0/ewUAzaSsGVEbxhD7UwgD/rlfiGabbhmWpvloO91FrYy6qfGr2slo4Vlh2Pv
- bwsT7NIjQaUo6cc8YAKHXhnSOQRnH6JADA0OCmIr/mzX1MCk2UB3diI2BXg/0sYtAuvw
- 0NKA==
+ b=muvwtyR0RLtqw9LFIxihZs2Q65Zkr7E+/KDe2x6ETMwcAl4nXtjkTIMWKF0xwdHMwc
+ 7lKYO4AeKeBsjaiMsp/gTdzsCw+WFX7wy4Bsb1Wjifvf/jErT0Yqj8nOOIp1P7bpqPFN
+ +i6VBTeyS/i3ycvQznX/a+VSE/pP11uw/puX4FHQlhSPm4IyLPNY/EHapZvnx7Z8Vsyt
+ m4aWfmbNZUHS+Qo8Tz2kbZRwuBNeivEnOHakCo1l0PAa0ToBTuFu7L25R/o8CQfGcV3l
+ s7jglFsHtIRqj21wK/XGjL+FBqGLHHN8YlnToiMey3cq894MPDv21CbI2XdBpGeOmqWu
+ 3avw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749713402; x=1750318202;
+ d=1e100.net; s=20230601; t=1749713839; x=1750318639;
  h=content-transfer-encoding:mime-version:message-id:references
  :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
  bh=SZ6sPcipkdgCHZUrlXXsBzdJ/gVBOKP0mf97qysVYPc=;
- b=TEjT8vTWy6/krPgIrQyEtVKH4Hy5r4dBjq5qISkgP+Gls3+T7tqFG4/pqcsPr7Y6o2
- Z3oHUn39iSwfm0dtQ+x4WdBI1KaCDEsSIBr1MLhI0gCbjP6grkYu526t+GNiHi46qO/N
- +gp+fNJ6L89YNFBNkzrVZPM33kplOw6S3RYbyF9duWYRaDfOuGUE9MWEVPN80A9OeItE
- M81IGCA/Pj5R2FX18jOirtNKfrX8jr25pa4Ba/BWKvarpmopKQDX+XhYfQbgnZMGaCNH
- Gn1EZ5p4PoiyPMnR0oYX+W5ekvNg2OSoiGGf5RgyJKCfWGv5MdWxeS22fuyoRUcBOUPZ
- +PJw==
+ b=CoB/RLzqd48IdyprnFs/+zHlWEy6UOE+Q4LcvGxKY5rho68HGJIb7rCuklS6LL6tHq
+ WDzts1BbHXSzUx4t9ek2TedlGa5INd1/OOlr7qfGBRZ3ASShC4dIOULK0uufyzdA/kL2
+ EBSaPyatuvuyj3IeWX5OMzajMQ77e8GJYpwdVcKz+3a57eUvD+Juq3ccFoz3ZWpyDA2+
+ TikDiW0hhSQvGY/aWjxHIrANI3WL0vZy0KwMi0r8kLIm8FzgAk9z9NSMnpl2D8fo6wc8
+ ci47eCaUDd0sQ5Hs43RH6b16/cZjSwcmaCuUMu6IUXy3XcHWZq+1FPLDMu7TtxjdAb90
+ XE/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU4hd8OGbOlQmOBc/gT3Wgnxnzv7bEi+9Yr9CJaYttL5yLW/qr+lVFKPS7KbeLkN06qapGq/7LMgUY=@nongnu.org
-X-Gm-Message-State: AOJu0YxvfD92e3RdWggPUUS1Hmzw+4wBfIs56Vzv5NlSmiVj4Zn31We8
- r+U+tpMoa0JtNAQX7rmDkNRKbDPnMTkI8Zi/7wzGJuoAVpHPi8vVZXDA
-X-Gm-Gg: ASbGncvzA6JyTZabMjbA4+lCjI2ox4GHrLr+oj/p8HjXQO6ZMoFLCOIwmeShIlwDOoO
- Qte42o4mOCi63pY6c+VLeBAAV0WZqHULz0QrM0siZq2cr+GDDCsneHdz6H5Q84P1aLLBZ8IxsWu
- 4hSdXu5AoHQCLwToXJDGolvr60RnhQoly1gTFyi5c0cd59wzE134sQdasiOxOxw2YJ9UqlmwjVf
- 2eN0wNZdh8fwCJKbxzMqVCHs4+vQ3Y1faISUp+BY3mdFQM488jbW2PiHr6Hbjh3T4vOGcY1jVql
- C3H9VW0R/bux6n3wXdRD4m21CUWf55yPgIKj7t+rRWi5X0DqshWA1KylYfvYTzvHi6k=
-X-Google-Smtp-Source: AGHT+IH7Y0ttH5M3AHT2bU36eXJweMGldXIecU3i/W05D7llHYNUWysbP2+tFItsc0H+TNU/xW/67Q==
-X-Received: by 2002:a5d:64e6:0:b0:3a4:fc52:f5d4 with SMTP id
- ffacd0b85a97d-3a5586e983bmr4896646f8f.47.1749713401877; 
- Thu, 12 Jun 2025 00:30:01 -0700 (PDT)
+ AJvYcCVj88JZ1UuELYqmS4eoqJ/DSJDmmV73wTOZ5PK5as8t3S0ZEMJfofzQ7oO30rcvQTjEZwvJBJoiuFo=@nongnu.org
+X-Gm-Message-State: AOJu0Yy7fOIhGpvrkyG4w+1y9VwM+RikhQutN/ln4MI8VpXviNmF6Dk8
+ hwrERzD2a9hrNfFxuNr/klOdPipyrKK3iTTSlzbB/ybofgB2uXIyLVfu
+X-Gm-Gg: ASbGncs1L2PCikb9zDCA0th5++OlbFma5nuYYB7z4NIBACHVK9AHctdhBMryMaepsKe
+ spXBc1CiAz9EpsZC0l09rzMbkHKKI4WK3/D477TXwUnqIHrXc+GMjeBuBD0D2p4KHw7bK23tF2v
+ MoUbEsD9dDhNd5k7h80P1OqzbmpSldEHCjhqnD3oD+vGBr+nwsBpWEIhELgtcBF835jB4KBpmPv
+ lZEaYGinWEV0TOyGo0F5ne9RFpNC1z1FSn9MDKFz60FdQvUT3S2UrZlDXT1e/YtqvEbxM+GAmOt
+ 9Wmxt43cr2HehOziqGVZVGmFoyFNhKO21av6ALlNg2/8yEbV0r2Kp290
+X-Google-Smtp-Source: AGHT+IFl5jqHyNZJmbERnvs3fvJqKJtQk+dO7ngtBkNDQyaqzWni7HZf6pBPTYXKLcQOPC4JKrpXNg==
+X-Received: by 2002:a05:600c:8b0b:b0:450:cd25:e68f with SMTP id
+ 5b1f17b1804b1-4532b966c95mr23746935e9.27.1749713839247; 
+ Thu, 12 Jun 2025 00:37:19 -0700 (PDT)
 Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e151c3csm11760555e9.30.2025.06.12.00.30.01
+ 5b1f17b1804b1-4531febf905sm60164575e9.0.2025.06.12.00.37.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Jun 2025 00:30:01 -0700 (PDT)
-Date: Thu, 12 Jun 2025 07:29:49 +0000
+ Thu, 12 Jun 2025 00:37:18 -0700 (PDT)
+Date: Thu, 12 Jun 2025 07:37:18 +0000
 From: Bernhard Beschow <shentey@gmail.com>
 To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>
@@ -75,13 +75,13 @@ References: <20250610202110.2243-1-shentey@gmail.com>
  <CAAjaMXbtcyB3J3AvGh8ZW3MSi41uMaE+TkZwipCs5pg6wvYJ=w@mail.gmail.com>
  <CABgObfYgoYBJmZjin_Wj8JeEviFMM+vFa_QX_8Np+1n9apq4kw@mail.gmail.com>
  <CAAjaMXZ5S7GUPmhwxsyuVmF4tvUh3vgjnK8OLKv-A+h7JCPqBA@mail.gmail.com>
-Message-ID: <07B116B0-6D08-446A-9BD1-C8020D8EE86F@gmail.com>
+Message-ID: <9C43F9B8-6A5A-40EA-88B4-C5B8B17B9F5A@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
