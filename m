@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10647C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 03:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4134C71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 04:33:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPYoa-0004e3-1G; Wed, 11 Jun 2025 23:41:20 -0400
+	id 1uPZbl-0002VO-0r; Thu, 12 Jun 2025 00:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uPYoX-0004du-V7
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 23:41:18 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uPZbf-0002Ud-Ik; Thu, 12 Jun 2025 00:32:03 -0400
+Received: from mail-vs1-xe2e.google.com ([2607:f8b0:4864:20::e2e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <rowanbhart@gmail.com>)
- id 1uPYoV-0005lQ-F5
- for qemu-devel@nongnu.org; Wed, 11 Jun 2025 23:41:17 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-3138d31e40aso591515a91.1
- for <qemu-devel@nongnu.org>; Wed, 11 Jun 2025 20:41:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uPZbe-00034I-0H; Thu, 12 Jun 2025 00:32:03 -0400
+Received: by mail-vs1-xe2e.google.com with SMTP id
+ ada2fe7eead31-4e79dde8511so125468137.0; 
+ Wed, 11 Jun 2025 21:32:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749699674; x=1750304474; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=3efuB8AJ94FUlz6qmeCmOtrV497Br48MgXbRBS9OQBY=;
- b=TKJXwmOcrvAcH2JvjwpBdzNzJrisPCMAqbOqE8+UTRYDxNjLH7UUyrNuPjfUdpDlAI
- gR+U3CVD99bgjzmdg2EKyqkQQhMKYZJi/cHau+dfBoTkrI6txiKYtDbuSgfHhJMfMfjr
- gzc7bvnqqMCzdgW1+b7QXhH/3oshKQZJqaK/VoZUpVHVFL5W6f0K/fEIRG4Nj5k7Q9rt
- O3yEbQfAQX8AF1dU3e3Z8yxjm533lnbAU2YO1JgOK/AHueHTwFu9f3yvX/0EpyQZGlz7
- hAa7+WZPar+1uu4OWRRpQYd7TyYrouQbEmz1BS5N/OK7nSjhJtKIQMX40ItyVOclBwK7
- Zpvg==
+ d=gmail.com; s=20230601; t=1749702720; x=1750307520; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1LShEKZm1q4RYeV1EjluM0mlneg+4f1R+f7XoajXd2k=;
+ b=nCG10SC/IWRlPcOZnxXt8lwwGaERIlFyr/5MOIl34hAzoxHVEOCThAV1HVSbNBl/6x
+ ZIz/Eej8CZ29QMXxM1Td4rVEHw5LZpEIXroz9LHPBw5xZ5meZOEmphw9xZXQUK8VbsdN
+ ZTZDug65LA9FMma355OdQhZMuwFVDLUslUVFYq92R2/STUTL/a7kAReMZ+Ml7wspdSoK
+ I0ZtR8J9yKTFuteRh6Edsrq/yUs735tJKnFleNPPdsZWUjBDpLtTAMIB4nEVbomkRnVj
+ drpMPtkdz2GdGmKhl5FXjPwurpsciPH0WCU26A7SpjJ3BJ/zFb+7eQeQoj9C+67u1N92
+ 91Mw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749699674; x=1750304474;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3efuB8AJ94FUlz6qmeCmOtrV497Br48MgXbRBS9OQBY=;
- b=iurYx/8RhuqpX/l8brIEMWnBHfG0gFUoq6cFArzdxKlNR0pc31aCgPLbNHEX/CpxmR
- MyHRu8fqTalZXKim5Ad0PXrpYI7XMQNgDgzR7AFBLn/J2RAt3Je4pJhEkkRZAYEfgu0B
- 7AP94/vJBOIPcYZbXFS/+jy3X5y3lFNpS5Pv+/ok5WF/qwp0Tib3v7fxH98A0nRVWfd6
- aVLN6i8zZBW3IO23UKROtQse8q95Jzqua58R1N84q0f+7/iGwICW8UCj8LKUGHHQpFn4
- oL71hhrDmT9N6xu9vDed6Ua44f04PiR93vLBzXwNbxMO3CE01xk+nC5F7p2sQUNxKYfm
- 05MA==
-X-Gm-Message-State: AOJu0YxpScVcsGfZVD1wzQuMiyJ3QSXU3bo8W6zEDJNIMlRLEfExn2mL
- gLA4m5SuJssy4UWS8f9DN21udmc5zTtZF9COZhXlgdoYIsYfr7IxFzNE82rcPQ3Pr1kt9iysc5o
- MzqsC5NfVMVNLoISEuVskQ7XciQKnn737HVZ3
-X-Gm-Gg: ASbGnctHrlftnJ1RMjZfvNIgykL3D4+oIWEkqAkZEntxOq/YTZm45atgOUb+AVQaxbF
- ZbtBVogfEnUL8aFZ+uG5DdM9XEbUVtzxvyRBELWLTIFIfaCXMxkHl842uqlR4m/OW5k7ndC+VXr
- zbS34JIp/MfGCaMoADWO/9u9oWqQsXyhdadJxONbloQQ==
-X-Google-Smtp-Source: AGHT+IGZDSumRcNbUfor5G5mBoB6fVGJH/AdIkGXhX0dZScY2CwGDEOKSIAUwxN6t+XZK2JJN6qpXt5qGpr7BcmrOCs=
-X-Received: by 2002:a17:90b:48d1:b0:311:c939:c84a with SMTP id
- 98e67ed59e1d1-313c0695074mr2207496a91.15.1749699673592; Wed, 11 Jun 2025
- 20:41:13 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749702720; x=1750307520;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=1LShEKZm1q4RYeV1EjluM0mlneg+4f1R+f7XoajXd2k=;
+ b=GU7dqx1qS7ySLtfW0F0QiGwvXRgMaAbwemgR7ziLJXZ4vvBB8P8KGzO/bBbQe+SeZl
+ BP+vXFtm0uHmi8NLA4fg0XDenv5WDd2RYeCBUk1ZJeN6cu1ReE5ozPJ7/M6+qPb2m3bA
+ B+1b67XbMs+M65Grg73z02AT9YY3keyJPG+WQUPffVqVHDAsmVvMnjxIMJXoCWr7D/l8
+ UnFimLptMVe3x+rW3rhbFqJ7i0aU7/R+Kgb3YDVPxPp+vb4qw//iiGZdRu3K9iz9cL5v
+ BqXsujwA51XUicJ36Fz6dpn3ZDg/wVJTDM02jS7nWkf4qYEKEvWLDrI/iF8k+XK4NNOU
+ EM3A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVvRKzXjkiLfkpJeGvcdfIRwZQmv1n4lZq9DVTAihKxxy40jdMvgZrpf8z5QLzuX9/+rzNAT8ev90Hq0g==@nongnu.org,
+ AJvYcCW68pD43B/MgAq3AiEr3y6HcqhVT7Qryf8R6gexd/RUcHFAVhdkj2880VghhtnoRDqFtkunLW24enbO@nongnu.org
+X-Gm-Message-State: AOJu0YyBW7d4xJAUYrf8YUAO7vldBPr68P3qSVpZc/nxzARNaQQuEnQS
+ mUTY3jVPFWnWSpb4S0dM+zJzcRI4oCZJBvo7/2He1B8jXxCAyz0fk/3uhDMqCJiKaYuAEhFrdAI
+ IFRyLggT79xFBOLIfmH1SdAd/9AwFCQ0=
+X-Gm-Gg: ASbGnctQyh6ubA/ihNN8vSFhT3xU5GYaDjSz5j7kOv+mhCJFBzhMO+0NzjOszZLJfSi
+ wUTX5ze7m4bID35oS9clzo+u1RKEO+/se5k/h7w5UPeOfm806A0ZRSXCyuQtA/f20E+ILD6233h
+ UXu0dXgTTIpnFzXGpuUXanZGxuzfASOOzN1HifT8KSduG4mgYXc3/Kbyo7BFIUUEgDjXYJhyPZ2
+ 48XUQZgVV6s
+X-Google-Smtp-Source: AGHT+IFi4BsRsdADc/JTQJpAGT6GS9cpQ873qPuI4WsWATh0ue6K88do3pzBwHWItb3dl08V84o8QDSanrEtnmwnsbk=
+X-Received: by 2002:a05:6102:6f0e:b0:4e4:f503:666b with SMTP id
+ ada2fe7eead31-4e7ce8578aemr850278137.3.1749702719840; Wed, 11 Jun 2025
+ 21:31:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250611232409.2936521-1-rowanbhart@gmail.com>
-In-Reply-To: <20250611232409.2936521-1-rowanbhart@gmail.com>
-From: Rowan Hart <rowanbhart@gmail.com>
-Date: Wed, 11 Jun 2025 20:41:05 -0700
-X-Gm-Features: AX0GCFshDhiTvL02gC_MYFKr1S-Vsz-jBT7BFIusqUcB_7pGelzcEbvj_7bvvCs
-Message-ID: <CAE5MsNb7Js3--+JqYK89M+goX9c+FsLuo0qk6JKE6B-gBuWU1g@mail.gmail.com>
-Subject: Re: [PATCH v12 0/7] Add additional plugin API functions to read and
- write memory and registers
-To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Yanan Wang <wangyanan55@huawei.com>, Mahmoud Mandour <ma.mandourr@gmail.com>, 
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>
-Content-Type: multipart/alternative; boundary="0000000000008217a1063757b35c"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=rowanbhart@gmail.com; helo=mail-pj1-x102a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+References: <20250604025450.85327-1-joel@jms.id.au>
+In-Reply-To: <20250604025450.85327-1-joel@jms.id.au>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 12 Jun 2025 14:31:33 +1000
+X-Gm-Features: AX0GCFv001e_oBkiXOcUA7CySpe-JZmrWRfqD3YiK5FOcWcex8XLqUrcXpnEKMk
+Message-ID: <CAKmqyKOR6DW7EaUwb=2V5vsoJTC94DkE9dzOhGPpN+H07cAxuQ@mail.gmail.com>
+Subject: Re: [PATCH v2 00/12] hw/riscv/virt: device tree reg cleanups
+To: Joel Stanley <joel@jms.id.au>
+Cc: Alistair Francis <alistair.francis@wdc.com>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org,
+ qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2e;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,16 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000008217a1063757b35c
-Content-Type: text/plain; charset="UTF-8"
+On Wed, Jun 4, 2025 at 12:58=E2=80=AFPM Joel Stanley <joel@jms.id.au> wrote=
+:
+>
+> v2:
+>  - Rebased on master now that Daniel's changes are merged
+>  - Fixed doubled up patch 1
+>  - r-b tags from Alistair and Daniel added
+>
+> This is a set of cleanups for the riscv virt machine device tree
+> generation.
+>
+> Using dumpdtb the old and new device trees are identical for -M virt and
+> -M virt,aia=3Daplic-imsic.
+>
+> Joel Stanley (12):
+>   hw/riscv/virt: Fix clint base address type
+>   hw/riscv/virt: Use setprop_sized_cells for clint
+>   hw/riscv/virt: Use setprop_sized_cells for memory
+>   hw/riscv/virt: Use setprop_sized_cells for aplic
+>   hw/riscv/virt: Use setprop_sized_cells for aclint
+>   hw/riscv/virt: Use setprop_sized_cells for plic
+>   hw/riscv/virt: Use setprop_sized_cells for virtio
+>   hw/riscv/virt: Use setprop_sized_cells for reset
+>   hw/riscv/virt: Use setprop_sized_cells for uart
+>   hw/riscv/virt: Use setprop_sized_cells for rtc
+>   hw/riscv/virt: Use setprop_sized_cells for iommu
+>   hw/riscv/virt: Use setprop_sized_cells for pcie
 
-I forgot to mention it in the cover letter but v12 also addresses
-Pierrick's comments to clean up the patch plug-in. Thanks for the feedback!
+Thanks!
 
---0000000000008217a1063757b35c
-Content-Type: text/html; charset="UTF-8"
+Applied to riscv-to-apply.next
 
-<div dir="auto">I forgot to mention it in the cover letter but v12 also addresses Pierrick&#39;s comments to clean up the patch plug-in. Thanks for the feedback!</div>
+Alistair
 
---0000000000008217a1063757b35c--
+>
+>  hw/riscv/virt.c | 66 ++++++++++++++++++++++++-------------------------
+>  1 file changed, 32 insertions(+), 34 deletions(-)
+>
+> --
+> 2.47.2
+>
+>
 
