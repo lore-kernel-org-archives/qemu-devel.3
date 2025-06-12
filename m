@@ -4,90 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1143C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 09:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A667C71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 09:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPdmW-0000mr-SP; Thu, 12 Jun 2025 04:59:32 -0400
+	id 1uPdnP-00013c-Ud; Thu, 12 Jun 2025 05:00:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uPdmP-0000mb-HI
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 04:59:27 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uPdmN-0008IV-RW
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 04:59:25 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-70e447507a0so4659177b3.0
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 01:59:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749718762; x=1750323562; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dOH4TOPKfXVTtEum4vcNxqUxilqMWr/Vjh2CfFpD4p4=;
- b=l67PgzAdCXDZqVdJxuY9cTElzEcoUn7NnKn+CQRSH790XT2+keijmkZ/i29NBrpqf2
- CPuhAvLy/bUq6Qomu4R9XIr890bZjcMyVq6CFh0GL7tZJ+s1Aa7PfrlHQ3/POWAdx6dq
- W+NfpSZeBp//tzDYaZCe9RY5tJqe7VzoxfoC9sqLdQWEMG/dVWvuxSvw1D6G8gFW/0s0
- CeDmWC3SgosRE7QTigoxGddfU9ozJZta/WU+AoBEiQE33PP7b/g4wFZVKfen4c/mo80T
- HcbIOuX4vNDMgvcBp274F9gIC1aQrEPfPFWfDN6KYyt0V3MitM5GXNQ6qrDzdWRbKGC8
- 4hzg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749718762; x=1750323562;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=dOH4TOPKfXVTtEum4vcNxqUxilqMWr/Vjh2CfFpD4p4=;
- b=dD+PX+AX9oi7X6KbVqQAAj3HvJAADLDKcYdloUWFoqHoqFJNegyXB1xVyNeMajF1Ph
- wHZbP1viRi2KCv/nablb7jMX0msB59yVyg6L0GGwSgFtT8evaoGZ4WCpbOxXwPPOL6hA
- d0JIP8FojSK/giuJjZMGhuOHRGIqSX1vKRbWJ+H7anX6WgYXUF7pMGyhrgSkNp9I2wZ9
- cganGw/Rp8ISk5HN+7SuMqGZPkCxv8sXIlZ450D5fzF7WsUQQoOFzXL4GRkGwYYH/Wnl
- 4FUgEWeKS2zayu9yywippESSv3Lv6hc/lgVxjwhqQ7IFAivlGQ4EYa39ZRcA/3OZoR4r
- TwbA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXlt09litQlXdrjlCZWZm4xy2EWus1vnInJ4HWcfa2d7Zh1W2gB4lJPbQ0Gh5xdPDZHtElfNI9g0gbl@nongnu.org
-X-Gm-Message-State: AOJu0Yy1P2cCNANCqSEL5HHXsZ2PSShl4lbJJgYW8jUyeWvO8KCf2dK+
- iiWlSHgPnFz1CLLKDqPQ+Y30tAZZkgPobjYoKSDyLAy5hIdlLWbF1x6HnafEvBAVjmVO4071l+w
- cRGge6MwmrQU2b7aDPBuyntwkM2cQgI0pOQWHGgy/Yw==
-X-Gm-Gg: ASbGncsnCQKNpu82EAv6dMozTKHBmG68nN2hMVfLucPdMa1tWH4l8anpdxs72qIy2Ie
- Zi9q6XWJ0ADX3ORfKda5QVKg/IHyb/Wxz5I4H6+2FlZfL+c+lszjkYPREgAhXBcvw0ifnBhb6eB
- QFRDL50jtIxZLD/NjkTQV+KiYdZZm87DiAzGD22Djshk22
-X-Google-Smtp-Source: AGHT+IHE/y8PR2bSWQkpeBdjykvQj6Er7X2jjQT1pUgLSP427cYx3+3qdjUxwK8mMRn/DhX8Rek4iQDr3NF9TU54b+M=
-X-Received: by 2002:a05:690c:680d:b0:70e:1bd8:a9c8 with SMTP id
- 00721157ae682-7114ed6aa60mr39561017b3.23.1749718761960; Thu, 12 Jun 2025
- 01:59:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPdnN-00011Y-Mu; Thu, 12 Jun 2025 05:00:25 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPdnK-00005L-3p; Thu, 12 Jun 2025 05:00:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749718822; x=1781254822;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=uunrVqsDwUhwOpEvjWu0C+dxLc3o7sRI7x+svKoU9QM=;
+ b=J+QFeoaERH4HoSAikZouppLvmTOEHl1Cq8YxA/fd94FND5eXH9M31eUk
+ RYs7D+9qUzaaATBCiq7lYIdC2vVfv9b+NJk+z1QLK9uUeaku29QeVVfZQ
+ F5IA5hyAElWBg8T8Nh5pY4L44MFw0ppP5RK1sfgUPhzc9kLX8e67OhMCx
+ FN9QosTQuPO1jBS7GMsQsCXuzKE+TxRseKjt8h6AXAW4SQQZwN1VBxt6R
+ 0czGyXN5KMUXvEwef+8atQuIo3ajCK8o0sZMdonqa0rluZGcVkbOWkEgb
+ U12ZO/IJPcv9yKous66Vlqf0uce4536a5eEKnv/BFRuaRpZUybCml17y0 w==;
+X-CSE-ConnectionGUID: YiGsrBobSM+LqDBJXFIB5g==
+X-CSE-MsgGUID: wIpsrb5CR4axzcNW3/M2cw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11461"; a="50996953"
+X-IronPort-AV: E=Sophos;i="6.16,230,1744095600"; d="scan'208";a="50996953"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jun 2025 02:00:15 -0700
+X-CSE-ConnectionGUID: ddP/SHrNQz2kh+pnVshG8g==
+X-CSE-MsgGUID: TbezF1vPQvSJBrvMHBLRgQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,230,1744095600"; d="scan'208";a="148007715"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa007.jf.intel.com with ESMTP; 12 Jun 2025 02:00:14 -0700
+Date: Thu, 12 Jun 2025 17:21:30 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 4/5] rust: qom: make ParentInit lifetime-invariant
+Message-ID: <aEqcGiGmZiMoIhY5@intel.com>
+References: <20250609154423.706056-1-pbonzini@redhat.com>
+ <20250609154423.706056-5-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20250611182902.201331-1-stefanha@redhat.com>
- <20250611182902.201331-2-stefanha@redhat.com>
- <alpine.LMD.2.03.2506112113260.22610@eik.bme.hu>
- <CAJSP0QVWQLK+5Z4DiNVDaz2-YtUUDYRj+roq9rwRS8ZVWYMKBg@mail.gmail.com>
-In-Reply-To: <CAJSP0QVWQLK+5Z4DiNVDaz2-YtUUDYRj+roq9rwRS8ZVWYMKBg@mail.gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Jun 2025 09:59:10 +0100
-X-Gm-Features: AX0GCFtGhA8rOG7O6c-9vu0CHs1olgpXspjqdRJI8rhzNiQbhNsNvbl_TP75Oas
-Message-ID: <CAFEAcA-GjJ0o37nwNX0+oLJPRUACEbW2KVi1N63fC0Etc1q0kw@mail.gmail.com>
-Subject: Re: [PULL 1/1] meson: fix Windows build
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Stefan Hajnoczi <stefanha@redhat.com>,
- qemu-devel@nongnu.org, 
- Mahmoud Mandour <ma.mandourr@gmail.com>, Mads Ynddal <mads@ynddal.dk>, 
- Alexandre Iooss <erdnaxe@crans.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- oltolm <oleg.tolmatcev@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250609154423.706056-5-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.19; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,70 +81,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Jun 2025 at 20:55, Stefan Hajnoczi <stefanha@gmail.com> wrote:
->
-> On Wed, Jun 11, 2025 at 3:25=E2=80=AFPM BALATON Zoltan <balaton@eik.bme.h=
-u> wrote:
-> >
-> > On Wed, 11 Jun 2025, Stefan Hajnoczi wrote:
-> > > From: oltolm <oleg.tolmatcev@gmail.com>
-> > >
-> > > Sorry, I forgot to cc the maintainers.
-> >
-> > Do we want comments like this end up in git log? This could have been
-> > fixed before a pull. Also the other pull request about uninitialised st=
-ack
-> > variables had hw/audio/gus twice which was pointed out by a comment bef=
-ore
-> > the pull that one of those should be different but the pull request sti=
-ll
-> > had this error. Did you miss these or aren't these important enough to =
-fix
-> > before getting in git log forever or there is just no easy way to fix u=
-p
-> > commit messages in pull requests?
->
-> If another reviewer asks for the author to resend then I'll hold off
-> on merging, but I didn't see the comment about hw/audio/gus. Sorry!
->
-> I did see this "Sorry, I forgot to cc the maintainers" comment.
-> Although I'm not consistent, nowadays I generally do not fix these
-> issues when merging, provided it's a small issue that can be ignored
-> or understood from the context.
->
-> I don't really mind either way, so if there is a consensus that all
-> maintainers should be strict about this, I'm happy to join.
+On Mon, Jun 09, 2025 at 05:44:22PM +0200, Paolo Bonzini wrote:
+> Date: Mon,  9 Jun 2025 17:44:22 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 4/5] rust: qom: make ParentInit lifetime-invariant
+> X-Mailer: git-send-email 2.49.0
+> 
+> This is the trick that allows the parent-field initializer to be used
+> only for the object that it's meant to be initialized.  This way,
+> the owner of a MemoryRegion must be the object that embeds it.
+> 
+> More information is in the comments; it's best explained with a simplified
+> example.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/qemu-api/src/qom.rs | 88 ++++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 84 insertions(+), 4 deletions(-)
+> 
+> diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+> index 21c271cd2f9..1481ef20f0c 100644
+> --- a/rust/qemu-api/src/qom.rs
+> +++ b/rust/qemu-api/src/qom.rs
+> @@ -95,6 +95,7 @@
+>  use std::{
+>      ffi::{c_void, CStr},
+>      fmt,
+> +    marker::PhantomData,
+>      mem::{ManuallyDrop, MaybeUninit},
+>      ops::{Deref, DerefMut},
+>      ptr::NonNull,
+> @@ -208,12 +209,91 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
+>  
+>  /// This struct knows that the superclasses of the object have already been
+>  /// initialized.
+> -pub struct ParentInit<'a, T>(&'a mut MaybeUninit<T>);
+> +///
+> +/// The declaration of `ParentInit` is.. *"a kind of magic"*.  It uses a
+> +/// technique that is found in several crates, the main ones probably being
+> +/// `ghost-cell` (in fact it was introduced by the [`GhostCell` paper](https://plv.mpi-sws.org/rustbelt/ghostcell/))
+> +/// and `generativity`.
 
-Personally when I'm accumulating patches as a maintainer I do
-fix up this kind of commit message. It's generally from a first
-time contributor, so the commit needs closer attention anyway,
-and I favour just fixing "this isn't quite the way we usually
-do things" problems at my end, rather than asking the submitter to
-resend. I also fix nits from longer term contributors where it's
-faster to do that than to ask for a respin.
+From the paper, I understand this technique should be "branded type". :-)
 
-In this specific case I'd probably re-cast the commit message
-entirely, because the first-person past-tense phrasing is not
-our standard commit log style. I would also want to add something
-clarifying exactly what we're fixing (clearly "the Windows build"
-generally was not broken, or we'd have seen it in CI, so this
-is fixing a more niche build environment setup, and it's worth
-having the commit message be clear about what that setup is).
+> +/// The `PhantomData` makes the `ParentInit` type *invariant* with respect to
+> +/// the lifetime argument `'init`.  This, together with the `for<'...>` in
+> +/// `[ParentInit::with]`, block any attempt of the compiler to be creative when
+> +/// operating on types of type `ParentInit` and to extend their lifetimes.  In
+> +/// particular, it ensures that the `ParentInit` cannot be made to outlive the
+> +/// `rust_instance_init()` function that creates it, and therefore that the
+> +/// `&'init T` reference is valid.
+> +///
+> +/// This implementation of the same concept, without the QOM baggage, can help
+> +/// understanding the effect:
+> +///
+> +/// ```
+> +/// use std::marker::PhantomData;
+> +///
+> +/// #[derive(PartialEq, Eq)]
+> +/// pub struct Jail<'closure, T: Copy>(&'closure T, PhantomData<fn(&'closure ()) -> &'closure ()>);
+> +///
+> +/// impl<'closure, T: Copy> Jail<'closure, T> {
+> +///     fn get(&self) -> T {
+> +///         *self.0
+> +///     }
+> +///
+> +///     #[inline]
+> +///     fn with<U>(v: T, f: impl for<'id> FnOnce(Jail<'id, T>) -> U) -> U {
+> +///         let parent_init = Jail(&v, PhantomData);
+> +///         f(parent_init)
+> +///     }
+> +/// }
+> +/// ```
+> +///
+> +/// It's impossible to escape the `Jail`; `token1` cannot be moved out of the
+> +/// closure:
+> +///
+> +/// ```ignore
+> +/// let x = 42;
+> +/// let escape = Jail::with(&x, |token1| {
+> +///     println!("{}", token1.get());
+> +///     token1
 
-> One related point I do have a strong opinion on is that the
-> qemu.git/master maintainer shouldn't be expected to do fixups on a
-> pull request they receive. Fixups should be done by subsystem
-> maintainers (and the pull request must be resent) or the original
-> patch authors. It doesn't scale when the qemu.git/master maintainer
-> has to make changes to code that they are unfamiliar with. That's not
-> the case here, but I just wanted to mention it because from time to
-> time someone requests this.
+This line will fail to compile (the below comment "// fails to compile" seems
+to indicate that println! will fail):
 
-Fixing up a pullreq is also basically not possible -- the
-pullreq is signed and you can't change the commits in it.
-I don't recommend throwing random fixes (as opposed to
-genuine simple merge conflict fixes) into the merge commit.
+error: lifetime may not live long enough
+  --> src/main.rs:22:9
+   |
+20 |     let escape = Jail::with(x, |token1| {
+   |                                 ------- return type of closure is Jail<'2, i32>
+   |                                 |
+   |                                 has type `Jail<'1, i32>`
+21 |         println!("{}", token1.get());
+22 |         token1
+   |         ^^^^^^ returning this value requires that `'1` must outlive `'2`
 
-thanks
--- PMM
+
+Referring to GhostToken::new() [*], it said:
+
+        // Return the result of running `f`.  Note that the `GhostToken` itself
+        // cannot be returned, because `R` cannot mention the lifetime `'id`, so
+        // the `GhostToken` only exists within its scope.
+
+So this example is good, I think just need to optimize the location of the error hint.
+
+[*]: https://gitlab.mpi-sws.org/FP/ghostcell/-/blob/master/ghostcell/src/lib.rs#L128
+
+> +/// });
+> +/// // fails to compile:
+> +/// println!("{}", escape.get());
+> +/// ```
+> +///
+> +/// Likewise, in the QOM case the `ParentInit` cannot be moved out of
+> +/// `instance_init()`. Without this trick it would be possible to stash a
+> +/// `ParentInit` and use it later to access uninitialized memory.
+> +///
+> +/// Here is another example, showing how separately-created "identities" stay
+> +/// isolated:
+> +///
+> +/// ```ignore
+> +/// impl<'closure, T: Copy> Clone for Jail<'closure, T> {
+> +///     fn clone(&self) -> Jail<'closure, T> {
+> +///         Jail(self.0, PhantomData)
+> +///     }
+> +/// }
+> +///
+> +/// fn main() {
+> +///     Jail::with(42, |token1| {
+> +///         // this works and returns true: the clone has the same "identity"
+> +///         println!("{}", token1 == token1.clone());
+> +///         Jail::with(42, |token2| {
+> +///             // here the outer token remains accessible...
+> +///             println!("{}", token1.get());
+> +///             // ... but the two are separate: this fails to compile:
+> +///             println!("{}", token1 == token2);
+> +///         });
+> +///     });
+> +/// }
+> +/// ```
+> +pub struct ParentInit<'init, T>(
+> +    &'init mut MaybeUninit<T>,
+> +    PhantomData<fn(&'init ()) -> &'init ()>,
+> +);
+>  
+> -impl<'a, T> ParentInit<'a, T> {
+> +impl<'init, T> ParentInit<'init, T> {
+>      #[inline]
+> -    pub fn with(obj: &'a mut MaybeUninit<T>, f: impl FnOnce(ParentInit<'a, T>)) {
+> -        let parent_init = ParentInit(obj);
+> +    pub fn with(obj: &'init mut MaybeUninit<T>, f: impl for<'id> FnOnce(ParentInit<'id, T>)) {
+> +        let parent_init = ParentInit(obj, PhantomData);
+
+I think it's also valuable to add the similar comment as GhostToken did,
+mentioning this `f` can't reture ParentInit itself.
+
+>          f(parent_init)
+>      }
+>  }
+> -- 
+> 2.49.0
+> 
+
+Nice comment and nice reference (learned a lot).
+
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+
+
 
