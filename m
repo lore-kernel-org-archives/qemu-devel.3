@@ -4,172 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 517DAC71141
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E060C61CE8
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 10:38:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPfK9-000057-Co; Thu, 12 Jun 2025 06:38:21 -0400
+	id 1uPfKI-00007m-CX; Thu, 12 Jun 2025 06:38:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
- id 1uPfK4-0008WH-Gb
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:16 -0400
-Received: from mail-mw2nam04on20623.outbound.protection.outlook.com
- ([2a01:111:f403:240a::623]
- helo=NAM04-MW2-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1uPfKD-00005z-CJ
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Vasant.Hegde@amd.com>)
- id 1uPfJf-00080B-UW
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RbIaQZgznKlLlH/mvSmpBG/Q2V68rIw8Aa+Tvz9gwxuxxxeUok6hbvP9Hup/TYqZKEGkI0rhRD1nOrsMwqhJdOIezObRUtqBYIRKDQGLUMBxOPWnZUx+yvGAkCJybLjn7STYeUKSfEIJz9gyuom7ZgNVRZVgmEaPqGMauJOsEKeKLi7l0sdv1ZQ1O0e41qF2wGBOeiA5o+D2Sc3zQNpntM7Mv36irh/ac0DWwmZCTNGwpxSBx+58BzQfXGbln25pB8X8s/0kNj+ELSGVORSJc7fl9o0aMQcnYGYQ1bii93A2W7MI4kqtvC2j6NC+LWFqZYrz8OwC7qZi1atf5PA5Hw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Cg1yrxtBNtLLauTL2SuyUA04gvNCLG6liuTQfOYXwqs=;
- b=y1BRAGYfUayzBHXx/7JSaTZbEVn7OpIZzx4qv0AoNaNqiJc6L3kedoFXdb7gv3+AskA1DwArPV/O7eq2YqaR0wQYiXhLu/ok6i28A4Es0EeGP1+JHc6PfriO3XWd2lHzWGRWmqmzvPljWPYXfq5voIn9xd1BvrRQWPqh1BFal/7cpNcrj9GAjQZb+JteXqZ1Tz9L2rfGNf6q3fv7SN7E0tm2P8z7BmkgxRese9/24p2SDmjYvMmT90Z+Bt1npbvOlhoFsnfEGLPPMG2dMrR8o5r0+voB6ay8xWb4nKlnilMHOwmL5aZqJU7D9BKlc/mrOR7QI35v9H04bu3HcInXVg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Cg1yrxtBNtLLauTL2SuyUA04gvNCLG6liuTQfOYXwqs=;
- b=dhdqztdAqXjy3wO7gcU99ocYC2OKlQb3oe2soZrvVtm7li9Q+5Yvc0nDBTekJ+KV8wW/u7qmSic9yn6GKwjY6N9I9H/+VcdZ0iK+Bzox7IadSvFsxS4Cjcr3KPQPeDctL/+2WBP5VxURFB4hMR3wG7rc8r9KPhCDv/yLIZLDY1A=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from DS7PR12MB6048.namprd12.prod.outlook.com (2603:10b6:8:9f::5) by
- SA1PR12MB5614.namprd12.prod.outlook.com (2603:10b6:806:228::7) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8792.39; Thu, 12 Jun 2025 10:37:28 +0000
-Received: from DS7PR12MB6048.namprd12.prod.outlook.com
- ([fe80::6318:26e5:357a:74a5]) by DS7PR12MB6048.namprd12.prod.outlook.com
- ([fe80::6318:26e5:357a:74a5%5]) with mapi id 15.20.8835.018; Thu, 12 Jun 2025
- 10:37:28 +0000
-Message-ID: <34197439-8045-4fee-8fcf-4fad005379a6@amd.com>
-Date: Thu, 12 Jun 2025 16:07:19 +0530
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 06/20] amd_iommu: Return an error when unable to read
- PTE from guest memory
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- peterx@redhat.com, david@redhat.com, philmd@linaro.org, mst@redhat.com,
- marcel.apfelbaum@gmail.com, alex.williamson@redhat.com,
- suravee.suthikulpanit@amd.com, santosh.shukla@amd.com, sarunkod@amd.com,
- Wei.Huang2@amd.com, clement.mathieu--drif@eviden.com,
- ethan.milon@eviden.com, joao.m.martins@oracle.com, boris.ostrovsky@oracle.com
-References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
- <20250502021605.1795985-7-alejandro.j.jimenez@oracle.com>
-Content-Language: en-US
-From: Vasant Hegde <vasant.hegde@amd.com>
-In-Reply-To: <20250502021605.1795985-7-alejandro.j.jimenez@oracle.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: PN3PR01CA0126.INDPRD01.PROD.OUTLOOK.COM
- (2603:1096:c01:96::16) To DS7PR12MB6048.namprd12.prod.outlook.com
- (2603:10b6:8:9f::5)
+ (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
+ id 1uPfJs-0007wj-ES
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749724562;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=g5JtIEjkmv9Lug4mLY5HB53y41fVbGtvJ9WO+Y3G5Tw=;
+ b=eDIB9alzHrhKkbMMP5reOymDm3T7vhZAcKU4IvKI8ZXuFN1dXvCd8K4cdwSQobEfXvmOKa
+ xjx6Wqns4bc5AGE6ps4Ih1KmlIW5+is8gk8HlW3ADnYxQDweHbj5n5SmugIwytM4ju3N4L
+ DJv9oEd1JRVcQuongLNxpdOrfB5kYZ4=
+Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
+ [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-504-yr-Y13L5PCKne5hHClkf5g-1; Thu, 12 Jun 2025 06:36:00 -0400
+X-MC-Unique: yr-Y13L5PCKne5hHClkf5g-1
+X-Mimecast-MFC-AGG-ID: yr-Y13L5PCKne5hHClkf5g_1749724559
+Received: by mail-lj1-f198.google.com with SMTP id
+ 38308e7fff4ca-32add2506abso4199661fa.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 03:36:00 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749724559; x=1750329359;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=g5JtIEjkmv9Lug4mLY5HB53y41fVbGtvJ9WO+Y3G5Tw=;
+ b=Xf2h3nnAk1X/XnHtFvQ9RZbQMWCrg0TY9fxv1C6j4GB6o9gUPr4Fb8e+oemjZFSdtA
+ dlwLws/4TwCuR/rDsirhYffobN6A9OXlo7L5iDBtyrEO/asuQyA4/osQG5OsPPnnQcb2
+ 8j+TkdSe5nwKxrWLwt4t90P+nPyCscX0F2B3Dejb2XB42Rkm/U16IwbbbuFMvgmTnpDC
+ 7z6DQSMKRzH+glPcmCzWLv7KdQj5+SQqLcrGCcbvCinBqwReVUdKdW0NUY8UGuFKYBal
+ QfWjD/+rtEopZxer+qvVmUjWyPc+Lt1OZHLPRt5+XnMu4pV1+5473UKP7oMuDtxtCiV7
+ q1Sg==
+X-Gm-Message-State: AOJu0YxpRqUfmPNT3dcjJZ/SBBxi44VBbuj50ineny9HIKQ3OMr3OUku
+ LrmJxdaCRQLCG7B3Zkwx6ds+WtzFrJPozhJ3wE1O9sjPL4kSayX092zXb/PEb+m/8dWSFmRxKa7
+ AMGyJdL01MYxs4NktDgsNNmw3oJBt/0+S9U7eqNN63SWewBwuCAJkaatjDAil7uNztcHF0zGNNa
+ 2ypR9/nqfdqAlyWfvO3/uuHqgBUl5DarI=
+X-Gm-Gg: ASbGncuioRSlqfN8zzAUvjDT5Bs9grhmXqHoI4xelzm7SMRNtYsUq0Obv/b7CIIWfkl
+ u0Hsq1Y7hUEbFzummFSBEoEfqv+QKMUy9NQ13i31wWq6+NHVPpG0vuZd2eRWXWmZnbc1h1A1Uo3
+ VbKkA=
+X-Received: by 2002:a2e:a7c1:0:b0:32a:7666:80d4 with SMTP id
+ 38308e7fff4ca-32b306f724dmr8419141fa.23.1749724558689; 
+ Thu, 12 Jun 2025 03:35:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQ1Brd50CC9vOc23ah8SRFfvqaFsC0RP0nGwGrmBNbdU+OfM9AbKxuPGzXz4ybur6bfLBeC67NA+8RYpdRByI=
+X-Received: by 2002:a2e:a7c1:0:b0:32a:7666:80d4 with SMTP id
+ 38308e7fff4ca-32b306f724dmr8419061fa.23.1749724558212; Thu, 12 Jun 2025
+ 03:35:58 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS7PR12MB6048:EE_|SA1PR12MB5614:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7aff5dd5-df72-4baa-bcb5-08dda99d20c1
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|7416014|376014|1800799024|7053199007; 
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NlJPdy9vR1JqS29EbzhWM3pFczYrQlVncVB3ZE56NDR2dEpxOEc0ZnpsSjRl?=
- =?utf-8?B?enJ5Y21jK04rTS9Cdk43VGJDaEkyS2tzWElRWXF1U0o0dUR5WkxDaWl2WXpS?=
- =?utf-8?B?RE0xTXJyYzZoZkJXelNsWlpsNXovcHlaVm5rVkdsTC9wVWtCbllOVEhJOTkx?=
- =?utf-8?B?bllkYldKRWxGZldJbndGNTBPc3dBMzI0enFNVjAvS3RpR3pTb2trYTkvcWVx?=
- =?utf-8?B?ZVhicENmOVBoNFEyOVU4UkFCRFMvU3RZT2xkN1VOUG9jdHl5TUZabWhOTmUv?=
- =?utf-8?B?TW42NTUyVUlpMHFUTUVLVXF2aUNUOURXWk1mL3ZLeTNzQW1XbU45SlFCMTdU?=
- =?utf-8?B?TmdXdGx2VlNmWGI4TWVPUXpHUkRpTkU3TDVJOGQ4UnE0cnE5L013aWJaRENn?=
- =?utf-8?B?UjFlOUNMWVJFSFkwQjdKTzBKOUpXdXpBRDBUTE15TFNNWXR3cWI0SkVsbFlw?=
- =?utf-8?B?SU1HRjc3TjFDYzVqMTJTMTQvV0RMVzJ1UXM1UDVNUG05UUZMNHpEa0N6OGI5?=
- =?utf-8?B?empuUXZ1bmkybWZGTGJqV0UyV245Y2FRZzdnejBTSkdYMlExeEFMY2tCcStx?=
- =?utf-8?B?ZEVQV3JLcjNJSjY0dVJCcFZudVdzNVVNbWtXTzc5bG94aWh2UkJVZ3NqN2ow?=
- =?utf-8?B?a1JNQVBpNllvM3JyOEd0Q0QrbUdxWHFGOW0yNTE5NjY1cEZOMUErWHRja3hh?=
- =?utf-8?B?ZmNBMGZUeXF2MjZkWEtFQllZRmhwQkJFSmRDWDUrQWlUVGZ0SEJZZGM1NWdE?=
- =?utf-8?B?OUJmYk1nSHhWWjRUeU9nY2ppSWVGa3FpZXJzdlUwWVgyNEVGOUp1OS91MXhP?=
- =?utf-8?B?d0t1K25Eajg3ZnNxV2txZWxDb1lRT2thUDZNUG1ReU51R2ZEclVBME1jVnRz?=
- =?utf-8?B?Q0QxZFN4bmFLbTRHbGxrbGxWMHJBd0tRZU04S2pOMmpoZHc5OERMTTcrOEhn?=
- =?utf-8?B?VVZxeUJUNkx2YWpHbW16MGl2L3NlWjNEdmtkamt4R0xwTVZXeWZJSVVFOVJF?=
- =?utf-8?B?UWxFZC9nNjQwTVlvenhhR3ZOSjl2ajFWQkpSUXMzV3VLRzRkV0VpdFBIOCth?=
- =?utf-8?B?UnlQdkFyWFVWREVydzNhN0MrVTBHM1MyTzR4RVhPemN5TElFMUFVTGdQSkFM?=
- =?utf-8?B?VmpTMDlNTlZDM0RBd1BCSExxenQwKzhSQTZ3K00zV0lIenNvWnVtWjV0VGpD?=
- =?utf-8?B?cDZ6Y3h0cDRsU0ZrYURmYXFzU2lGNWZEdFliUGZRUjFrSm9Wc1hibTIwS1VG?=
- =?utf-8?B?aEs2VWlFNXBRbTI4MlM3VEh5RytFcW93N3h3WE5UMTRLTFVKd1dWZTgzblpW?=
- =?utf-8?B?elNLYjlNc0hwMjdmaDhSNytpNFBiNk9hQWdOSC8yaWxvOUJWRTA0SmFpNmxt?=
- =?utf-8?B?OXBodWxmdCtHNW55S2tCdjlGdGluNDlyZHN2bWlOc1QyY3FHWUJPVGg4a2lG?=
- =?utf-8?B?ZkxpRFdmWEMwc2RHUVRweFFWV0czb2l3RDJISUR3UXFwbHNhQVM1d1JsdXFC?=
- =?utf-8?B?YVdFdkhjVHRTVk5uMzhMcTVYbjRBQWRjWCs1NldHY0l0cUcxNm9zcG1wK2hv?=
- =?utf-8?B?Mzc3RVl4SUtYR3lUMUQ2eHozbTgzb2pTVThmcVJaa3cyamR1MExKaUdsbVJS?=
- =?utf-8?B?V3pja3hKb3EzZGhXK3lBODM2SDZhM1JJTUQyV0xJSFdneHA1UWI3WlB1UzRZ?=
- =?utf-8?B?RHJSdmpwYTdSZW82c29sMlBiYm9vR0YxZGlTYlFHS2lXVCt5Zkw0Rm9jTXpR?=
- =?utf-8?B?YWVRM3k2S3RVaTNEYmZNTGV2L2pwYUhPVEVlSDNBRzBhMm5CZk5wSTRjNlJ6?=
- =?utf-8?B?dHJtVEVJZWFOTGNSdTJ3dWN6ZzZMdHoya1JyaWorbGxrUWpqOVFaRzZpYTla?=
- =?utf-8?B?K28vWUtIM1FyVEFVWG0rdzBET21aME9icmpMenZXUCtGNVNPZHBwaXVrVEV2?=
- =?utf-8?Q?wUgzoMogqR4=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS7PR12MB6048.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(7416014)(376014)(1800799024)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?RG1Cd1Z1Wm9yZ1UrellTQmJkTWJHYm1weis2anBudVdGcjBkMGhDUmcveDc1?=
- =?utf-8?B?YWl3cFJtemRFVHhKMGdRWnRVdUV6Q0RSbTZTLzd4RlZXb1ZwVlVTaW4vR1Z3?=
- =?utf-8?B?cGsyeE1wVVFpT201SFo5U3NGN1FuRmljSERmYmhyM0FwU1RxbUNHTi96S1Jp?=
- =?utf-8?B?M3A4T1RUM3ZIZHVuWjJqM0hiTDhuZUdmcWp3dXNjbDVQVFFXcGErbzdsbzNp?=
- =?utf-8?B?NmZhZGF6ZEhWMnRRV0tMV2NaV2tMNXVBQ1FRSUlHeTlCbjFLUGVHQStuWmp6?=
- =?utf-8?B?QmtkQ0d2cXdpSlFrU0s4TE0zc3ptWVQzZFEwVGhGU2N4QVhlOXBrVGVsVjhj?=
- =?utf-8?B?ODJnU2NqYXM4ejhBc2dHbkFsMnFqeE4vbmdSNDFNR1FFNzVvTjdIcEJlSG9N?=
- =?utf-8?B?MzU3K2RDTFZGc3lIV3dtbEZsWmtSNktFdFo2U1N6R3NHQml3NlhRa2hDbGZW?=
- =?utf-8?B?YklCQTkyQXJ3aDZzN1Q2QmVvdS9rd2hzNUtpbUIrSVlCMDJtcnZ6WG0zZVJx?=
- =?utf-8?B?R2EyV2NlQUdsaFA4WFRLVzNpRk8ydHBnem11S0xZS05BSU1CUHREMm9hNmg4?=
- =?utf-8?B?Q2tyOWFIM2ZnV0NZRklpNzBOYUx4bExaMnZockRnZiswZlp4MXR6MzQ1aEVJ?=
- =?utf-8?B?TzBEQjk4NUJ5eDdQM1E1VHJBRm02YlhoRFZkRlVBWEdBbmxYWmszS3RuZGF6?=
- =?utf-8?B?dUlvZ3ZJZlVCNGQ5QmtHOEl4VUdGODRVWnhmUFk4cTZ5a3VRR3k1ZmNoQ08y?=
- =?utf-8?B?ajRNUkVFQ1htVGYzVWM3RlVabVA3OXZhYkpSeHI3dm1jNUdxVlgzSkxYalMr?=
- =?utf-8?B?ejVma29WUFh3ZjVHL0ROL2lEZXVIcUY1eWh5bklHTnU3UnN6aVBTU05zTUNX?=
- =?utf-8?B?VkQxUmFwTjk4WWhCUnA4WW5qaWNwTm9kUmhxcGV1R3NFQXhvODdNZ1JoQkh0?=
- =?utf-8?B?RXoyMGpwa1lrOE1DdEErMmgxUEdoZ2lCczJLUlkrZTduZk1ES1RIdFVsZmNL?=
- =?utf-8?B?cXNPbzc4dnMxaWFwVmlNK3ZIT2ZySUJLRzJHd2VqakZWVERJZ283SGhMOUdq?=
- =?utf-8?B?OVVJZmFkNmt1U204UFFic3ZkQTBjV1JEdGF1QTJBTWY0TDE5MFpWM2JLTWRO?=
- =?utf-8?B?MUZtbGovNHlKbFkxbys1Uk9BaFhLdGZ3SDFtYWtWRFQwNS9RbTFtTXozd2V4?=
- =?utf-8?B?eUlmZGVGQnk0NG01U1hTWlBsY2NQbUloRElYNVdVV1NpYldmOHRvL1FqOTJB?=
- =?utf-8?B?R0ovazBLR3B3YzNjQXRPZHpLd0N6ZFNLWThVTmpaamR6NE1tQjlhVThyOVU4?=
- =?utf-8?B?VWJoaVA5eThCWVRPU0pTOW5QWDN6Z3BjK3I3Y29iYU1Fd1VtS05JUXhhU2x3?=
- =?utf-8?B?M2Q0eFE4R1NRTXlRd1NoWkYzMUhMbEtEd1d3SUl6dkZSUkpEd1IzeGJ4T3Bk?=
- =?utf-8?B?N2xQREhtYU9CamxTVHZFL1FCRW9WSU9UVnNpUUZ6MmhtaXk1WXFWNi83UjhL?=
- =?utf-8?B?TmtKZ1hPWkxHbTNkYnVGZFd1RU8yNU5KQnZQT2g3WmFnb1JEdkllamw5N0xl?=
- =?utf-8?B?c0tJVTlxS2hHb08xVGlLN3VQcVlRejJMVTBrMTZ1Ti9JZlUyQ2VjK1pQbFRP?=
- =?utf-8?B?L0doN2lObGk1NmZGdUJRN0w1ZlAyUkRzQTJmV1VHdTRIWTc2WUJPVWowdEJ3?=
- =?utf-8?B?dmYrVzFiSlpsNVAxa2hNYVZ0ejBzb3hsOWlGRnh4ekl5R1lxNklMQU9aS2Nm?=
- =?utf-8?B?QU9aVFhvNy9JZzEyb0g1YVl3MFhyVzMxUnpGa3kvSEgvTlUrOFIwMmhDS1dL?=
- =?utf-8?B?WVJwa040TmFSSjZ3V0ZYSkppL3lWRFd0ZnN1VWwxNks0SG92c3VOWWRob3Rr?=
- =?utf-8?B?S0Y4NDd6YVp1M2MyR3FaL09aU1g5SithYnB5RG9NbzF2WjQySTJQV0FEc3Ju?=
- =?utf-8?B?SlNJWVh6aGpCMGtUQVdCTGJNQzJRZEQ3bzJNcHFUbCtsMDlhK1BndmsveGVa?=
- =?utf-8?B?RHJPdGgzdDE2eitjTGY0VzcwN3krSmFieEo3eXk1aWJMb2EySnBINU5LZWRP?=
- =?utf-8?B?YzROQ0hRU01JeWV0TWVPYlB4elJmc3A3bXY5d3BlZXh5MWlCL3JUeXh6OEdj?=
- =?utf-8?Q?72S7aSwcmQahxLJVre10ha+Ll?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7aff5dd5-df72-4baa-bcb5-08dda99d20c1
-X-MS-Exchange-CrossTenant-AuthSource: DS7PR12MB6048.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2025 10:37:28.5044 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: 9HdOAEqplU+HTNOgGfSDfd4+9p/4DWkjS+XAxj/DiCU4ayFfiQ5KypKDbMyAurgNqveq4PCmaIl+sSt0II2NDw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB5614
-Received-SPF: permerror client-ip=2a01:111:f403:240a::623;
- envelope-from=Vasant.Hegde@amd.com;
- helo=NAM04-MW2-obe.outbound.protection.outlook.com
+References: <20250609161855.6603-1-peterx@redhat.com>
+ <CAMXpfWtGPUDGtn40tkZYNMhntp48BbMRHnZqQkrBKokyMyEXyQ@mail.gmail.com>
+ <aEl_RESZhLS56pv2@x1.local>
+In-Reply-To: <aEl_RESZhLS56pv2@x1.local>
+From: Mario Casquero <mcasquer@redhat.com>
+Date: Thu, 12 Jun 2025 12:35:46 +0200
+X-Gm-Features: AX0GCFthwxpBImjokCk3P9O4tj245sU1UTGzfd3Fcfa1_a0K9OMXrqkOlQH1Tr0
+Message-ID: <CAMXpfWuAkKoVJFvD_YFLzTpUZ_a-25jK_y1y-EA_Sk+LUC0B6A@mail.gmail.com>
+Subject: Re: [PATCH v2 00/11] migration: Some enhancements and cleanups for
+ 10.1
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>, Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcasquer@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -185,49 +106,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alejandro,
+Hello Peter,
 
+Thanks for pointing this out! I retested it with the series you
+mentioned and everything works fine.
 
-On 5/2/2025 7:45 AM, Alejandro Jimenez wrote:
-> Make amdvi_get_pte_entry() return an error value (-1) in cases where the
-> memory read fails, versus the current return of 0 to indicate failure.
-> The reason is that 0 is also a valid PTE value, and it is useful to know
+Booted up 2 VMs as usual, one in source and one in destination with
+-incoming defer. Set the postcopy-blocktime and postcopy-ram
+capabilities and query them to verify that they are enabled.
 
+(qemu) migrate_set_capability postcopy-ram on
+(qemu) migrate_set_capability postcopy-blocktime on
+(qemu) info migrate_capabilities
 
-If PTE is valid then at least PR bit will be set. So it will not be zero right?
+...
+postcopy-ram: on
+...
+postcopy-blocktime: on
+...
 
--Vasant
+Do migration with postcopy, this time check the full info migrate in source=
+.
+(qemu) info migrate  -a
+Status: postcopy-active
+Time (ms): total=3D6522, setup=3D33, down=3D16
+RAM info:
+  Throughput (Mbps): 949.60
+  Sizes: pagesize=3D4 KiB, total=3D16 GiB
+  Transfers: transferred=3D703 MiB, remain=3D5.4 GiB
+    Channels: precopy=3D111 MiB, multifd=3D0 B, postcopy=3D592 MiB
+    Page Types: normal=3D178447, zero=3D508031
+  Page Rates (pps): transfer=3D167581
+  Others: dirty_syncs=3D2, postcopy_req=3D1652
+Globals:
+  store-global-state: on
+  only-migratable: off
+  send-configuration: on
+  send-section-footer: on
+  send-switchover-start: on
+  clear-bitmap-shift: 18
 
+Once migration is completed compare the differences in destination
+about the postcopy blocktime.
 
-> when a PTE points to memory that is zero i.e. the guest unmapped the
-> page.
-> 
-> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
-> ---
->  hw/i386/amd_iommu.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
-> index 5322a614f5d6..698967cc1a88 100644
-> --- a/hw/i386/amd_iommu.c
-> +++ b/hw/i386/amd_iommu.c
-> @@ -496,7 +496,7 @@ static inline uint64_t amdvi_get_pte_entry(AMDVIState *s, uint64_t pte_addr,
->                          &pte, sizeof(pte), MEMTXATTRS_UNSPECIFIED)) {
->          trace_amdvi_get_pte_hwerror(pte_addr);
->          amdvi_log_pagetab_error(s, devid, pte_addr, 0);
-> -        pte = 0;
-> +        pte = (uint64_t)-1;
->          return pte;
->      }
->  
-> @@ -1024,7 +1024,7 @@ static void amdvi_page_walk(AMDVIAddressSpace *as, uint64_t *dte,
->              /* add offset and load pte */
->              pte_addr += ((addr >> (3 + 9 * level)) & 0x1FF) << 3;
->              pte = amdvi_get_pte_entry(as->iommu_state, pte_addr, as->devfn);
-> -            if (!pte) {
-> +            if (!pte || (pte == (uint64_t)-1)) {
->                  return;
->              }
->              oldlevel = level;
+(qemu) info migrate -a
+Status: completed
+Globals:
+...
+Postcopy Blocktime (ms): 712
+Postcopy vCPU Blocktime (ms):
+ [1633, 1635, 1710, 2097, 2595, 1993, 1958, 1214]
+
+With all the series applied and same VM:
+
+(qemu) info migrate -a
+Status: completed
+Globals:
+...
+Postcopy Blocktime (ms): 134
+Postcopy vCPU Blocktime (ms):
+ [1310, 1064, 1112, 1400, 1334, 756, 1216, 1420]
+Postcopy Latency (us): 16075
+Postcopy non-vCPU Latencies (us): 14743
+Postcopy vCPU Latencies (us):
+ [24730, 25350, 27125, 25930, 23825, 29110, 22960, 26304]
+
+Indeed the Postcopy Blocktime has been reduced a lot :)
+
+Thanks,
+Mario
+
+On Wed, Jun 11, 2025 at 3:06=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
+>
+> On Wed, Jun 11, 2025 at 08:15:55AM +0200, Mario Casquero wrote:
+> > This series has been successfully tested. The information displayed
+> > from the HMP info migrate command is more user-friendly, with the
+> > possibility of displaying the globals with info migrate -a.
+> > (qemu) info migrate -a
+> > Status: active
+> > Sockets: [
+> > tcp::::8888
+> > ]
+> > Globals:
+> >   store-global-state: on
+> >   only-migratable: off
+> >   send-configuration: on
+> >   send-section-footer: on
+> >   send-switchover-start: on
+> >   clear-bitmap-shift: 18
+> >
+> > Tested-by: Mario Casquero <mcasquer@redhat.com>
+>
+> Hey, Mario,
+>
+> Thanks for doing this!
+>
+> This is a specific HMP dump test on recv side, just to mention the major
+> change will be on the src side, so feel free to try that too.  That's wha=
+t
+> patch 1 does.
+>
+> Patch 2 changed recv side report for blocktime, but in your case you didn=
+'t
+> enable it, to cover tests on patch 2, you can enable postcopy-blocktime
+> feature and kickoff a postcopy migration.
+>
+> And just to mention, the real meat in this series is actually the last
+> patch. :) If you want to test that, you'd likely want to apply another of
+> my series:
+>
+> https://lore.kernel.org/r/20250609191259.9053-1-peterx@redhat.com
+>
+> Then invoke postcopy test with some loads, then check the blocktime repor=
+ts
+> again.  The other series added latency tracking to blocktime.  With that
+> extra series applied, you should be able to observe average page fault
+> latency reduction after the last patch, aka, the meat.
+>
+> Note that this is not a request to have you test everything!  Just to
+> mention the bits from test perspective, so just take it as FYI.  I
+> appreciate your help already to test on the recv side!
+>
+> Thanks,
+>
+> --
+> Peter Xu
+>
 
 
