@@ -4,72 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6983C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D132AC71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:45:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPiBX-0004bz-DO; Thu, 12 Jun 2025 09:41:39 -0400
+	id 1uPiEW-0005Mn-GZ; Thu, 12 Jun 2025 09:44:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uPiBQ-0004bf-LB
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:41:32 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uPiER-0005LQ-Ty
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:44:40 -0400
+Received: from mgamail.intel.com ([192.198.163.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uPiBM-0000X0-Vu
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:41:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749735687;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=/6nhs55HeCEfop4HhUcD3CdGhQXBSPU2ZhHHxwdY5Rs=;
- b=WYtjKsGFlk5LG723yCzLtHp0HWaZC5vz8Llk3N473jGMx7lnUztJ0ghYRPz5tCgu/eMlmn
- cuDnF9HXyJcgWwk4U649U/YfqFZh56rio3FltcRkUlxS5ACGuktwhy65AmPCRbBRQmQOLW
- hK4Je6788p5IYvq1y9AmuC5KzM43LLk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-QMw2CSZANOOWU_7jTfk1TQ-1; Thu,
- 12 Jun 2025 09:41:23 -0400
-X-MC-Unique: QMw2CSZANOOWU_7jTfk1TQ-1
-X-Mimecast-MFC-AGG-ID: QMw2CSZANOOWU_7jTfk1TQ_1749735682
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AD694180AE16; Thu, 12 Jun 2025 13:41:22 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.113])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DC9E195E340; Thu, 12 Jun 2025 13:41:19 +0000 (UTC)
-Date: Thu, 12 Jun 2025 14:41:15 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Jaehoon Kim <jhkim@linux.ibm.com>
-Cc: qemu-devel@nongnu.org, jjherne@linux.ibm.com, steven.sistare@oracle.com,
- peterx@redhat.com, farosas@suse.de, lvivier@redhat.com, pbonzini@redhat.com
-Subject: Re: [PATCH v4 2/2] migration: Support fd-based socket address in
- cpr_transfer_input
-Message-ID: <aErY-yZy9qbVpdcU@redhat.com>
-References: <20250611205610.147008-1-jhkim@linux.ibm.com>
- <20250611205610.147008-3-jhkim@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1uPiEP-0000og-Ng
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:44:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749735877; x=1781271877;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=n3YvyYwqdlI8cLdKSwV1RnMfVu09BAcB8TUPZVUs/J8=;
+ b=KUlHLBI7Qa6EXE1/Y3EO5/h6vBi04TEz8+rvzf72IHUVYs7IQm/Lb9gL
+ 6JLs7jafei8DflCqtXUaHgteyP6bWv/J1Id2x9UWpJRFGGhA13B4nofU8
+ aXSWQUstByH2fpMUPro/r17WPuCoPJqXFkBmdG65cizrx9u3AHg7zQRR8
+ phSRWSgDhxtnfz39y0zGSItBGYu/zL1vwgl15QvUev9u3PybDLbFGvDl3
+ wiJE5H00JVagCWAoDVa8sZaWQagdpWDFN0YJOE7ips2lbo0Q8ZaCcWgx9
+ S91xsUwfce0I0Uz9DRsdxid+xpuOS+sj36AQWsrZ8FgPl2+TXw3hn5Dji w==;
+X-CSE-ConnectionGUID: XG5vk66nSqyRbK01bLFdNA==
+X-CSE-MsgGUID: sajucKG+TeKwVu2QgXhxsg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11462"; a="52062787"
+X-IronPort-AV: E=Sophos;i="6.16,231,1744095600"; d="scan'208";a="52062787"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jun 2025 06:44:32 -0700
+X-CSE-ConnectionGUID: fmZgCLHhSomVx5CayMvWfg==
+X-CSE-MsgGUID: KA+wyFJSQ0q16BOFnn+eTQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,231,1744095600"; d="scan'208";a="147410247"
+Received: from lxy-clx-4s.sh.intel.com ([10.239.48.52])
+ by fmviesa007.fm.intel.com with ESMTP; 12 Jun 2025 06:44:31 -0700
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Marcelo Tosatti <mtosatti@redhat.com>, xiaoyao.li@intel.com,
+ qemu-devel@nongnu.org
+Subject: [PATCH] i386/tdx: Error and exit when named cpu model is requested
+Date: Thu, 12 Jun 2025 09:38:01 -0400
+Message-ID: <20250612133801.2238342-1-xiaoyao.li@intel.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20250611205610.147008-3-jhkim@linux.ibm.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=192.198.163.15; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ HK_RANDOM_ENVFROM=0.001, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -84,64 +77,50 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 11, 2025 at 03:56:10PM -0500, Jaehoon Kim wrote:
-> Extend cpr_transfer_input to handle SOCKET_ADDRESS_TYPE_FD alongside
-> SOCKET_ADDRESS_TYPE_UNIX. This change supports the use of pre-listened
-> socket file descriptors for cpr migration channels.
-> 
-> This change is particularly useful in qtest environments, where the
-> socket may be created externally and passed via fd.
-> 
-> Reviewed-by: Jason J. Herne <jjherne@linux.ibm.com>
-> Reviewed-by: Steve Sistare <steven.sistare@oracle.com>
-> Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-> ---
->  migration/cpr-transfer.c | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
+Currently, it gets below error when requesting any named cpu model with
+"-cpu" to boot a TDX VM:
 
-This patch *MUST* be first in the series, otherwise 'git bisect'
-will hit test failures on the former patch.
+  qemu-system-x86_64: KVM_TDX_INIT_VM failed: Invalid argument
 
-> 
-> diff --git a/migration/cpr-transfer.c b/migration/cpr-transfer.c
-> index e1f140359c..00371d17c3 100644
-> --- a/migration/cpr-transfer.c
-> +++ b/migration/cpr-transfer.c
-> @@ -46,7 +46,8 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
->      MigrationAddress *addr = channel->addr;
->  
->      if (addr->transport == MIGRATION_ADDRESS_TYPE_SOCKET &&
-> -        addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX) {
-> +        (addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX ||
-> +            addr->u.socket.type == SOCKET_ADDRESS_TYPE_FD)) {
->  
->          g_autoptr(QIOChannelSocket) sioc = NULL;
->          SocketAddress *saddr = &addr->u.socket;
-> @@ -60,7 +61,9 @@ QEMUFile *cpr_transfer_input(MigrationChannel *channel, Error **errp)
->  
->          sioc = qio_net_listener_wait_client(listener);
->          ioc = QIO_CHANNEL(sioc);
-> -        trace_cpr_transfer_input(addr->u.socket.u.q_unix.path);
-> +        trace_cpr_transfer_input(
-> +            addr->u.socket.type == SOCKET_ADDRESS_TYPE_UNIX ?
-> +            addr->u.socket.u.q_unix.path : addr->u.socket.u.fd.str);
->          qio_channel_set_name(ioc, "cpr-in");
->          return qemu_file_new_input(ioc);
->  
-> -- 
-> 2.49.0
-> 
-> 
+It misleads people to think it's the bug of KVM or QEMU. It is just that
+current QEMU doesn't support named cpu model for TDX.
 
-With regards,
-Daniel
+To support named cpu models for TDX guest, there are opens to be
+finalized and needs a mount of additional work.
+
+For now, explicitly check the case when named cpu model is requested.
+Error report a hint and exit.
+
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+---
+ target/i386/kvm/tdx.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 820ca3614e27..2b52de9d71bc 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -739,8 +739,14 @@ static int tdx_kvm_type(X86ConfidentialGuest *cg)
+ 
+ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
+ {
++    X86CPUClass *xcc = X86_CPU_GET_CLASS(cpu);
+     X86CPU *x86cpu = X86_CPU(cpu);
+ 
++    if (xcc->model) {
++        error_report("Named cpu model is not supported for TDX yet!");
++        exit(1);
++    }
++
+     object_property_set_bool(OBJECT(cpu), "pmu", false, &error_abort);
+ 
+     /* invtsc is fixed1 for TD guest */
+
+base-commit: d9ce74873a6a5a7c504379857461e4ae64fcf0cd
 -- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+2.43.0
 
 
