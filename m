@@ -4,81 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5918C61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 12:30:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40C99C61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 12:40:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPh4h-0003H4-S4; Thu, 12 Jun 2025 08:30:33 -0400
+	id 1uPhDs-0006x3-FT; Thu, 12 Jun 2025 08:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uPh4K-0003A0-FF
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:30:10 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uPh4G-00079W-7E
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:30:06 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-addfe17ec0bso396320666b.1
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 05:30:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749731401; x=1750336201; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=LAthCIUL4GjwIULRaLaRtPoxL1oy917bqw20hsx5dQg=;
- b=Kspc4rEDolHiNqjJIwWZMf88/RstueBLdQgje7bb0AR/G2RieK8/rGANMhja/xJc8U
- 6wqpoNN1NXnjlUzLW0Lzva6THOKDrYy5rtqgATfLFkJFVoOVM7WTaAFmlD0EN3u+T1k1
- cUyWHp9D9epWKa//y7pYRCxPltZ5TwFHD3kjRe6/XNI/7A7hIfVdRFA0rnHw+jwPNbP4
- lZGUfk9mNe5Yy7BGgus1zOwtxnrii7Zf7hntDZGhXwai/F5jBKZ4+1wkljcPl4LFdOJ3
- kgtAaAKdPxvAdOssIG9R681m0rw2b5S5ZRqLhxv6MK5QWJ5rk1YkfedcynpALoWut1yP
- VZ5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749731402; x=1750336202;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=LAthCIUL4GjwIULRaLaRtPoxL1oy917bqw20hsx5dQg=;
- b=ry/iVzNiX5IWKL+vmcdv14kyBrsoVAmm2whG9BbETorqpZXQ+PZgv7OoYJNJro82hV
- bkrlENG8IseivTs/EkrAZI5sIN2jA/6sJCupt0dwPhpQmS+sSeraLLgfnZY6Lld5bMfT
- TcTLGpoKy1TWRXtr0Oqx1yl28YD5WYAhz+itu1+sRrioimP7TmuhO2pKIRTNcYsmEDlY
- 8PVq4g8lTGI92Y8Zey848JWpFhOCusGHLgU40AtIdJc/6ONtNwMXYvq9bsUoZBUj+RF/
- Fp9Tq/vv8E7o8yuM86f4+vW/8thzPnfFqWNCkSjqJzf2b1SKCoDHdJA5dVEIksccGbAK
- cRDA==
-X-Gm-Message-State: AOJu0YwbRbAM9zfk21zV2cRvlsbYbE3GgnrgPx0M9oD+E0j94387TK35
- 6bFPTcXyipnIgLXaHPJbFmQ/ZhgYOZNJ4J9crSpciK3ft6XNua9UTa5CYKuy31hhUY/nxbetI8M
- rnSoaonZDvd7GJp4pdX01/uelwfPC02noHMmqKpt7BQ==
-X-Gm-Gg: ASbGncudVFhtHfALB4K1mHBdPPOihlPDUOOF8vh32RVgW+sO8dtP/8ZSskZ/vFhgL4t
- QeM6JIafjkuNw1Q2SMHbNvM8QRXhlreDfpsLUyHQv2QDu4WzUyxw/URXmqxGWZ9XX2urnGOsHNc
- v86bTW15hsS2LfH/b0joT2n374h0FHHUnPP0sykwk9aIM=
-X-Google-Smtp-Source: AGHT+IHR8lwEEXgxlEGc9I0gPi7lREDMQ+VTK8Q3ilPhuTWvan/0ElV4PH4zU2nlyIlQRo9GbQdhBM40WYPyX+H0VrQ=
-X-Received: by 2002:a17:907:7245:b0:ad8:942b:1d53 with SMTP id
- a640c23a62f3a-adea5b3c4b5mr302506666b.27.1749731401278; Thu, 12 Jun 2025
- 05:30:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uPhDd-0006tc-Hn; Thu, 12 Jun 2025 08:39:50 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uPhDW-0008T8-E1; Thu, 12 Jun 2025 08:39:42 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id ECA4255C16F;
+ Thu, 12 Jun 2025 14:39:30 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id 8CG0zaX2-EOY; Thu, 12 Jun 2025 14:39:28 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DDBED55C16E; Thu, 12 Jun 2025 14:39:28 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DB3B3745682;
+ Thu, 12 Jun 2025 14:39:28 +0200 (CEST)
+Date: Thu, 12 Jun 2025 14:39:28 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Paolo Bonzini <pbonzini@redhat.com>
+cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
+ qemu-arm@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org, 
+ =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 4/5] configure: Add dtc option
+In-Reply-To: <c29386d1-1a4b-4f3b-a669-4206c366ad9e@redhat.com>
+Message-ID: <7a9f2ae7-93fb-8acd-34ca-0d5d71b80af5@eik.bme.hu>
+References: <20250610204131.2862-1-shentey@gmail.com>
+ <20250610204131.2862-5-shentey@gmail.com>
+ <cdfc561e-23a9-607a-d9a8-70e07e73e0fd@eik.bme.hu>
+ <aElCJnmjrB-X9M-n@redhat.com>
+ <6eb6aa79-33f8-57ea-5714-af264557f8c8@eik.bme.hu>
+ <c29386d1-1a4b-4f3b-a669-4206c366ad9e@redhat.com>
 MIME-Version: 1.0
-References: <20250609182044.21703-1-tanishdesai37@gmail.com>
- <CAJSP0QXRPcTBHsCPnFfUAKGRa7aqJ+nsiR4buawAeXXh_3p8Ng@mail.gmail.com>
-In-Reply-To: <CAJSP0QXRPcTBHsCPnFfUAKGRa7aqJ+nsiR4buawAeXXh_3p8Ng@mail.gmail.com>
-From: Tanish Desai <tanishdesai37@gmail.com>
-Date: Thu, 12 Jun 2025 17:59:50 +0530
-X-Gm-Features: AX0GCFvspKPJG58D9BZBQx5SRlVE-sZMcL9OqvCa1-gzo5Yh2w5tEX86e5uJ9Cc
-Message-ID: <CAH_Y1jdGT0iAkKneH_7NimesqchcNpnMJs-zkL4bjGrQZkv0Ug@mail.gmail.com>
-Subject: Re: [PATCH] utils/log: add qemu_log_timestamp() to encapsulate
- timestamp logging
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mads@ynddal.dk, 
- balaton@eik.bme.hu, philmd@linaro.org, peter.maydell@linaro.org
-Content-Type: multipart/alternative; boundary="000000000000a0297d06375f1681"
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=tanishdesai37@gmail.com; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: multipart/mixed;
+ boundary="3866299591-479763625-1749731968=:67385"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,161 +74,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000a0297d06375f1681
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Thank you everyone for the review I have shared
-[PATCH v2] utils/log: add qemu_log_timestamp()
-in a separate mail thread with the suggested changes.
+--3866299591-479763625-1749731968=:67385
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-On Tue, 10 Jun 2025 at 12:37=E2=80=AFAM, Stefan Hajnoczi <stefanha@gmail.co=
-m> wrote:
+On Thu, 12 Jun 2025, Paolo Bonzini wrote:
+> On 6/11/25 13:45, BALATON Zoltan wrote:
+>> On Wed, 11 Jun 2025, Daniel P. Berrangé wrote:
+>>> On Wed, Jun 11, 2025 at 02:37:08AM +0200, BALATON Zoltan wrote:
+>>>> On Tue, 10 Jun 2025, Bernhard Beschow wrote:
+>>>>> The next patch will make dtc mandatory for boards with a bundled DTB, 
+>>>>> causing
+>>>>> these boards to be omitted when dtc is missing. Allow packagers to force 
+>>>>> the
+>>>>> build of those boards by providing an option.
+>>>> 
+>>>> I don't like this. This might result in some machines missing from some
+>>>> distros if they don't notice this and forget to update their packages and
+>>>> these are machines I care about.
+>>> 
+>>> "Someone might not notice & screw up" is pretty much an argument for
+>>> not doing anything at all. We publish release notes to alert distros
+>> 
+>> More like "if it ain't broke don't fix it".
+>> 
+>>> to these kind of changes which is a reasonable effort on our part.
+>>> Distros need to play their part by reading them and adapting to the
+>>> changes. They can also compare the available options with new and
+>>> old QEMU to identify any new build features they need to handle when
+>>> updating.
+>>> 
+>>>>                                  Also what guarantees that we don't get 
+>>>> bugs
+>>>> by compiling the device tree with different dtc versions which might
+>>>> generate different binaries? The binaries we have now are known to work 
+>>>> and
+>>>> don't take much space so keeping them for convenience might be simpler. 
+>>>> If
+>>>> it worked so far why change it now?
+>>> 
+>>> Ultimately the DTC project has responsibility to not cause regressions
+>>> in new releases they issue, as is the case for any 3rd party dep that
+>>> we rely on.
+>>> 
+>>> We have CI jobs that can run on different distros. If we have coverage
+>>> of the boards in functional test suite that provides a way to validate the
+>>> operation with differing DTC versions as a sanity check.
+>>> 
+>>> Distributing pre-built binaries in source release tarballs is a long
+>>> standing issue with QEMU's releases. If we can eliminate the pre-bbuilt
+>>> DTB and only ship the source that is a good thing IMHO.
+>>> 
+>>>> If this was using dtc from the submodule when not using system libfdt 
+>>>> then
+>>>> at least it would not result in dropped machines and we had a known 
+>>>> working
+>>>> dtc to compile with. Why isn't that used when we already have it for 
+>>>> libfdt?
+>>> 
+>>> Are there any platforms that we target which still lack dtc ? The
+>>> submodule was there to plug gaps in distro support long ago, but
+>>> if every distro has dtc available the submodule is redundant.
+>> 
+>> OK, can we then make libfdt and dtc mandatory and not build at all instead 
+>> of disabling boards without it?
+>
+> Disabling libfdt was done because of the x86 microvm board, which was adding 
+> a libfdt dependency to all of qemu-system-x86_64.
+>
+> However, several targets still have a hard dependency on libfdt, plus libfdt 
+> is supported as a subproject and will be built together with the emulators. 
+> So the impact of the change was minimal, and limited only to people using 
+> --disable-libfdt or --disable-download on the configure command line.  This 
+> is not true of Bernard's proposal to use dtc.
+>
+> For now, one possibility is just to make dtc mandatory whenever one of this 
+> boards is used; the best would be to be able to use the dtc that comes from 
+> the libfdt subproject.  This however requires patching dtc's meson.build so 
+> that it calls meson.override_find_program (and it could also use 
+> meson.override_dependency while you're at it).
+>
+> I'll send a patch to the upstream dtc project and you can add it to QEMU via 
+> diff_files (see commit 64644bc4eab2f for an example).
 
-> On Mon, Jun 9, 2025 at 2:21=E2=80=AFPM Tanish Desai <tanishdesai37@gmail.=
-com>
-> wrote:
-> >
-> > Moved the logic for timestamped logging (~6 lines) from
-> a_nocheck__trace_foo(header) into a new qemu_log_timestamp() function in
-> util/log.c. This avoids code duplication across binaries and enables reus=
-e
-> as a standalone utility.
-> > Encapsulation helps reduce build size significantly, particularly when
-> many trace points are present. On Ubuntu 22 with
-> > ./configure --target-list=3Daarch64-softmmu --enable-kvm
-> --enable-trace-backends=3Dlog,
-> > this change reduced the build directory size from ~1435.27 MB to ~1412
-> MB (~23 MB saved).
-> > Notable reductions include:
-> >     trace/: ~2.6 MB
-> >     libqemuutil.a.p: ~3 MB
-> > A detailed report of size changes (in bytes) for relevant folders and
-> subfolders will follow in a trailing mail.
->
-> Nice, the output of size(1) on qemu-system-x86_64 is reduced by 3%
-> (839 KB) when built with gcc 15.1.1 on x86_64:
->
->    text    data     bss     dec     hex filename
-> 14712231        13652904         149496 28514631        1b31947 before
-> 13852879        13652904         149496 27655279        1a5fc6f after
->
-> That is in the same ballpark as the change in build directory size you
-> measured.
->
-> > diff --git a/util/log.c b/util/log.c
-> > index b87d399e4c..996530fe7e 100644
-> > --- a/util/log.c
-> > +++ b/util/log.c
-> > @@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)
-> >      }
-> >  }
-> >
-> > +
-> > +void qemu_log_timestamp(const char *fmt, ...)
-> > +{
-> > +    FILE *f =3D qemu_log_trylock();
-> > +    if (f) {
-> > +        va_list ap;
-> > +        if(message_with_timestamp){
-> > +            struct timeval _now;
-> > +            gettimeofday(&_now, NULL);
-> > +            fprintf(f,"%d@%zu.%06zu:",qemu_get_thread_id(),(size_t)_no=
-w.tv_sec,
-> (size_t)_now.tv_usec);
-> > +        }
-> > +        va_start(ap, fmt);
-> > +        vfprintf(f, fmt, ap);
-> > +        va_end(ap);
-> > +    }
-> > +    qemu_log_unlock(f);
->
-> Although calling qemu_log_unlock(NULL) is safe, existing callers
-> invoke this function inside the if (f) { ... } body. Please follow
-> that approach for consistency.
->
-> Looks good aside from that.
->
+This seems getting too complicated just to get rid of some small binaries 
+so I'd just leave it as it is now but if Bernhard wants to make this 
+change I'm OK with it as long as my boards won't get disabled in configs 
+where now they are built I.e. if no system dtc is found now the dtbs are 
+installed; if this used dtc from submodule instead that would be OK but 
+dropping the board is not. I'm also OK with replacing the submodule with 
+always requiring system libfdt and dtc but that may be more work for 
+distros to update their package dependencies.
 
---000000000000a0297d06375f1681
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"auto">Thank you everyone for the review I have shared=C2=A0<div=
->[PATCH v2] utils/log: add qemu_log_timestamp()</div>in a separate mail thr=
-ead with the suggested changes.</div><div dir=3D"auto"><span style=3D"font-=
-family:-apple-system,sans-serif"><br></span></div><div dir=3D"auto"><span s=
-tyle=3D"font-family:-apple-system,sans-serif">On Tue, 10 Jun 2025 at 12:37=
-=E2=80=AFAM, Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com">stef=
-anha@gmail.com</a>&gt; wrote:</span><br></div><div><div class=3D"gmail_quot=
-e gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:=
-0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Mon, Jun 9, 2025=
- at 2:21=E2=80=AFPM Tanish Desai &lt;<a href=3D"mailto:tanishdesai37@gmail.=
-com" target=3D"_blank">tanishdesai37@gmail.com</a>&gt; wrote:<br>
-&gt;<br>
-&gt; Moved the logic for timestamped logging (~6 lines) from a_nocheck__tra=
-ce_foo(header) into a new qemu_log_timestamp() function in util/log.c. This=
- avoids code duplication across binaries and enables reuse as a standalone =
-utility.<br>
-&gt; Encapsulation helps reduce build size significantly, particularly when=
- many trace points are present. On Ubuntu 22 with<br>
-&gt; ./configure --target-list=3Daarch64-softmmu --enable-kvm --enable-trac=
-e-backends=3Dlog,<br>
-&gt; this change reduced the build directory size from ~1435.27 MB to ~1412=
- MB (~23 MB saved).<br>
-&gt; Notable reductions include:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0trace/: ~2.6 MB<br>
-&gt;=C2=A0 =C2=A0 =C2=A0libqemuutil.a.p: ~3 MB<br>
-&gt; A detailed report of size changes (in bytes) for relevant folders and =
-subfolders will follow in a trailing mail.<br>
-<br>
-Nice, the output of size(1) on qemu-system-x86_64 is reduced by 3%<br>
-(839 KB) when built with gcc 15.1.1 on x86_64:<br>
-<br>
-=C2=A0 =C2=A0text=C2=A0 =C2=A0 data=C2=A0 =C2=A0 =C2=A0bss=C2=A0 =C2=A0 =C2=
-=A0dec=C2=A0 =C2=A0 =C2=A0hex filename<br>
-14712231=C2=A0 =C2=A0 =C2=A0 =C2=A0 13652904=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0149496 28514631=C2=A0 =C2=A0 =C2=A0 =C2=A0 1b31947 before<br>
-13852879=C2=A0 =C2=A0 =C2=A0 =C2=A0 13652904=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0149496 27655279=C2=A0 =C2=A0 =C2=A0 =C2=A0 1a5fc6f after<br>
-<br>
-That is in the same ballpark as the change in build directory size you meas=
-ured.<br>
-<br>
-&gt; diff --git a/util/log.c b/util/log.c<br>
-&gt; index b87d399e4c..996530fe7e 100644<br>
-&gt; --- a/util/log.c<br>
-&gt; +++ b/util/log.c<br>
-&gt; @@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
-&gt;=C2=A0 }<br>
-&gt;<br>
-&gt; +<br>
-&gt; +void qemu_log_timestamp(const char *fmt, ...)<br>
-&gt; +{<br>
-&gt; +=C2=A0 =C2=A0 FILE *f =3D qemu_log_trylock();<br>
-&gt; +=C2=A0 =C2=A0 if (f) {<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 va_list ap;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if(message_with_timestamp){<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct timeval _now;<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gettimeofday(&amp;_now, NUL=
-L);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fprintf(f,&quot;%d@%zu.%06z=
-u:&quot;,qemu_get_thread_id(),(size_t)_now.tv_sec, (size_t)_now.tv_usec);<b=
-r>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 va_start(ap, fmt);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 vfprintf(f, fmt, ap);<br>
-&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 va_end(ap);<br>
-&gt; +=C2=A0 =C2=A0 }<br>
-&gt; +=C2=A0 =C2=A0 qemu_log_unlock(f);<br>
-<br>
-Although calling qemu_log_unlock(NULL) is safe, existing callers<br>
-invoke this function inside the if (f) { ... } body. Please follow<br>
-that approach for consistency.<br>
-<br>
-Looks good aside from that.<br>
-</blockquote></div></div>
-
---000000000000a0297d06375f1681--
+Regards,
+BALATON Zoltan
+--3866299591-479763625-1749731968=:67385--
 
