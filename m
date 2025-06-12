@@ -4,56 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10391C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 07:56:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44356C71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 08:12:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPcmr-0001BC-PG; Thu, 12 Jun 2025 03:55:49 -0400
+	id 1uPd2Q-0004eG-Rf; Thu, 12 Jun 2025 04:11:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1uPcmo-0001Av-UA; Thu, 12 Jun 2025 03:55:46 -0400
-Received: from imap5.colo.codethink.co.uk ([78.40.148.171])
+ (Exim 4.90_1) (envelope-from <floss@arusekk.pl>) id 1uPd2O-0004e2-1P
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 04:11:52 -0400
+Received: from out-181.mta1.migadu.com ([2001:41d0:203:375::b5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roan.richmond@codethink.co.uk>)
- id 1uPcmm-0008QO-Hj; Thu, 12 Jun 2025 03:55:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=codethink.co.uk; s=imap5-20230908; h=Sender:Content-Transfer-Encoding:
- MIME-Version:Message-ID:Date:Subject:Cc:To:From:Reply-To:Content-Type:
- Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
- Resent-To:Resent-Cc:Resent-Message-ID:In-Reply-To:References:List-Id:
- List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=zex+xFKcGkKpcW7uPNq1h+/d1Mvig3m8rvW3+/zMxaA=; b=qg4Ksz3rUQb3MccQeqk+O7ZtC9
- xbz2TwLFjOTVNkAinrY0VprFz2ml/MF/7VYsZyheQ4ip9BuNwU6tpdit6nuLXYNcv6A2tCqJHLOf3
- WGi6YMfZegvru1yShTb0/F0Zm/QcnC46eWed6nG3MHQdfKCFI0CaEOadNFDsCsqaJkDWCH+hEuAZv
- siMhWUVUpJtLqqdpk4P/DRXacPRUrvLyvXKNBwRydCSw+P/+oOw47SODQ0J/pWvhJUoh7ldOAon4J
- GAESlzDqdB0p5/CdnBDnx2uU3TI1Z3EuVLgaEW76rGxIMEz7+5RX6tpPkTxHxCE9ZWcZSs7RioCbV
- aEog07YQ==;
-Received: from [167.98.27.226] (helo=codethink.office.codethink.co.uk)
- by imap5.colo.codethink.co.uk with esmtpsa  (Exim 4.94.2 #2 (Debian))
- id 1uPcme-000RbX-CV; Thu, 12 Jun 2025 08:55:37 +0100
-From: Roan Richmond <roan.richmond@codethink.co.uk>
-To: qemu-riscv@nongnu.org
-Cc: palmer@dabbelt.com, alistair.francis@wdc.com, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- qemu-devel@nongnu.org, alistair23@gmail.com,
- Roan Richmond <roan.richmond@codethink.co.uk>
-Subject: [PATCH v3] Add RISCV ZALASR extension
-Date: Thu, 12 Jun 2025 08:54:44 +0100
-Message-ID: <20250612075527.330174-1-roan.richmond@codethink.co.uk>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <floss@arusekk.pl>) id 1uPd2L-0002K8-P4
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 04:11:51 -0400
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arusekk.pl; s=key1;
+ t=1749715888;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ActwR5oOxeyDC2GETCetICsQMFBTfms80j4LG8/GEmI=;
+ b=L5jhgkCboE+o4pxLgR6oMOUaswfVxqUsFrtF8pAlGyqsvh8cZn6lMSvr1qfP1Mu8Eld7Tk
+ sW/LKC9zan8KKp6vkTdflTi14Jv9/OUxvRbNDSXiuIPffg9lXVOOpbTb70oF0H6JhJms79
+ GGmRQXVJtor7/Tqg0QbNA2rrOfB/PsIS5xKjjnLVPGjjNxpewt9K0sWvG3m+0Q6Lbq5fTJ
+ WvHnACOBanFyFyjzX4sCDULxue5U2BpeyitYDG3wTAPo7Y7TYToWJvj0mZlldtWjZ+tIJ+
+ HWnB7NMY7e7Z+wNHNb4ULYp4JqlzT8HlWzc3P8jLkDpN0Nc6E58p1zyJv6hQlg==
+From: Arusekk <floss@arusekk.pl>
+To: Daniel =?UTF-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
+Subject: Re: [PATCH v2] linux-user: fix resource leaks in gen-vdso
+Date: Thu, 12 Jun 2025 10:12:29 +0200
+Message-ID: <10691455.nUPlyArG6x@swift>
+In-Reply-To: <20250513150346.1328217-1-berrange@redhat.com>
+References: <20250513150346.1328217-1-berrange@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=78.40.148.171;
- envelope-from=roan.richmond@codethink.co.uk; helo=imap5.colo.codethink.co.uk
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="utf-8"
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:203:375::b5;
+ envelope-from=floss@arusekk.pl; helo=out-181.mta1.migadu.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,195 +67,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is based on version v0.8.3 of the ZALASR specification [1].
-The specification is listed as in Frozen state [2].
+Tested-by: Arusekk <floss@arusekk.pl>
 
-[1]: https://github.com/riscv/riscv-zalasr/tree/v0.8.3
-[2]: https://lf-riscv.atlassian.net/wiki/spaces/HOME/pages/16154882/All+RISC-V+Specifications+Under+Active+Development
+Thanks for the patch. I am just a drive-by contributor, not someone
+experienced in qemu development, so take my feedback with a grain of salt.
 
-Signed-off-by: Roan Richmond <roan.richmond@codethink.co.uk>
----
-V3:
-  - rebased patch onto master branch
-  - added check for aq on Load Acquire, as pointed out by Alistair Palmer
-  - added check for rl on Store Release, as mentioned by Alistair Palmer
+> There are a number of resource leaks in gen-vdso. In theory they are
+> harmless because this is a short lived process, but when building QEMU
+> with --extra-cflags="-fsanitize=address" problems ensure. The gen-vdso
+> program is run as part of the build, and that aborts due to the
+> sanitizer identifying memory leaks, leaving QEMU unbuildable.
 
- target/riscv/cpu.c                           |   1 +
- target/riscv/insn32.decode                   |  10 ++
- target/riscv/insn_trans/trans_rvzalasr.c.inc | 120 +++++++++++++++++++
- target/riscv/translate.c                     |   1 +
- 4 files changed, 132 insertions(+)
- create mode 100644 target/riscv/insn_trans/trans_rvzalasr.c.inc
+I have not encountered it personally before.
+However, I can confirm that qemu fails to build using
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 629ac37501..b52bbf0936 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -128,6 +128,7 @@ const RISCVIsaExtData isa_edata_arr[] = {
-     ISA_EXT_DATA_ENTRY(zabha, PRIV_VERSION_1_13_0, ext_zabha),
-     ISA_EXT_DATA_ENTRY(zacas, PRIV_VERSION_1_12_0, ext_zacas),
-     ISA_EXT_DATA_ENTRY(zama16b, PRIV_VERSION_1_13_0, ext_zama16b),
-+    ISA_EXT_DATA_ENTRY(zalasr, PRIV_VERSION_1_12_0, ext_zalasr),
-     ISA_EXT_DATA_ENTRY(zalrsc, PRIV_VERSION_1_12_0, ext_zalrsc),
-     ISA_EXT_DATA_ENTRY(zawrs, PRIV_VERSION_1_12_0, ext_zawrs),
-     ISA_EXT_DATA_ENTRY(zfa, PRIV_VERSION_1_12_0, ext_zfa),
-diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-index cd23b1f3a9..c848c0c1c5 100644
---- a/target/riscv/insn32.decode
-+++ b/target/riscv/insn32.decode
-@@ -1066,3 +1066,13 @@ amominu_h  11000 . . ..... ..... 001 ..... 0101111 @atom_st
- amomaxu_h  11100 . . ..... ..... 001 ..... 0101111 @atom_st
- amocas_b    00101 . . ..... ..... 000 ..... 0101111 @atom_st
- amocas_h    00101 . . ..... ..... 001 ..... 0101111 @atom_st
-+
-+# *** Zalasr Standard Extension ***
-+lb_aqrl  00110 . . ..... ..... 000 ..... 0101111 @atom_st
-+lh_aqrl  00110 . . ..... ..... 001 ..... 0101111 @atom_st
-+lw_aqrl  00110 . . ..... ..... 010 ..... 0101111 @atom_st
-+ld_aqrl  00110 . . ..... ..... 011 ..... 0101111 @atom_st
-+sb_aqrl  00111 . . ..... ..... 000 ..... 0101111 @atom_st
-+sh_aqrl  00111 . . ..... ..... 001 ..... 0101111 @atom_st
-+sw_aqrl  00111 . . ..... ..... 010 ..... 0101111 @atom_st
-+sd_aqrl  00111 . . ..... ..... 011 ..... 0101111 @atom_st
-diff --git a/target/riscv/insn_trans/trans_rvzalasr.c.inc b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-new file mode 100644
-index 0000000000..8761508de3
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_rvzalasr.c.inc
-@@ -0,0 +1,120 @@
-+/*
-+ * RISC-V translation routines for the ZALASR (Load-Aquire and Store-Release)
-+ * Extension.
-+ *
-+ * Copyright (c) 2025 Roan Richmond, roan.richmond@codethink.co.uk
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ *
-+ * You should have received a copy of the GNU General Public License along with
-+ * this program.  If not, see <http://www.gnu.org/licenses/>.
-+ */
-+
-+#define REQUIRE_ZALASR(ctx) do {     \
-+    if (!ctx->cfg_ptr->ext_zalasr) { \
-+        return false;                \
-+    }                                \
-+} while (0)
-+
-+static bool gen_load_acquire(DisasContext *ctx, arg_lb_aqrl *a, MemOp memop)
-+{
-+    decode_save_opc(ctx, 0);
-+
-+    TCGv addr = get_address(ctx, a->rs1, 0);
-+    TCGv dest = get_gpr(ctx, a->rd, EXT_NONE);
-+    TCGBar bar = (a->rl) ? TCG_BAR_STRL : 0;
-+
-+    /* Check that AQ is set, as this is mandatory */
-+    if (!a->aq) {
-+        return false;    
-+    }
-+
-+    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-+
-+    tcg_gen_qemu_ld_tl(dest, addr, ctx->mem_idx, memop);
-+    gen_set_gpr(ctx, a->rd, dest);
-+
-+    /* Add a memory barrier implied by AQ (mandatory) and RL (optional) */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_LDAQ | bar);
-+
-+    return true;
-+}
-+
-+static bool trans_lb_aqrl(DisasContext *ctx, arg_lb_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_SB));
-+}
-+
-+static bool trans_lh_aqrl(DisasContext *ctx, arg_lh_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESW));
-+}
-+
-+static bool trans_lw_aqrl(DisasContext *ctx, arg_lw_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TESL));
-+}
-+
-+static bool trans_ld_aqrl(DisasContext *ctx, arg_ld_aqrl *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_ZALASR(ctx);
-+    return gen_load_acquire(ctx, a, (MO_ALIGN | MO_TEUQ));
-+}
-+
-+static bool gen_store_release(DisasContext *ctx, arg_sb_aqrl *a, MemOp memop)
-+{
-+    decode_save_opc(ctx, 0);
-+
-+    TCGv addr = get_address(ctx, a->rs1, 0);
-+    TCGv data = get_gpr(ctx, a->rs2, EXT_NONE);
-+    TCGBar bar = (a->aq) ? TCG_BAR_LDAQ : 0;
-+
-+    /* Check that RL is set, as this is mandatory */
-+    if (!a->rl) {
-+        return false;    
-+    }
-+
-+    memop |= (ctx->cfg_ptr->ext_zama16b) ? MO_ATOM_WITHIN16 : 0;
-+
-+    /* Add a memory barrier implied by RL (mandatory) and AQ (optional) */
-+    tcg_gen_mb(TCG_MO_ALL | TCG_BAR_STRL | bar);
-+
-+    tcg_gen_qemu_st_tl(data, addr, ctx->mem_idx, memop);
-+    return true;
-+}
-+
-+static bool trans_sb_aqrl(DisasContext *ctx, arg_sb_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_SB));
-+}
-+
-+static bool trans_sh_aqrl(DisasContext *ctx, arg_sh_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESW));
-+}
-+
-+static bool trans_sw_aqrl(DisasContext *ctx, arg_sw_aqrl *a)
-+{
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TESL));
-+}
-+
-+static bool trans_sd_aqrl(DisasContext *ctx, arg_sd_aqrl *a)
-+{
-+    REQUIRE_64BIT(ctx);
-+    REQUIRE_ZALASR(ctx);
-+    return gen_store_release(ctx, a, (MO_ALIGN | MO_TEUQ));
-+}
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index d7a6de02df..4cd2d68e46 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1183,6 +1183,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- #include "insn_trans/trans_rvzicond.c.inc"
- #include "insn_trans/trans_rvzacas.c.inc"
- #include "insn_trans/trans_rvzabha.c.inc"
-+#include "insn_trans/trans_rvzalasr.c.inc"
- #include "insn_trans/trans_rvzawrs.c.inc"
- #include "insn_trans/trans_rvzicbo.c.inc"
- #include "insn_trans/trans_rvzimop.c.inc"
--- 
-2.43.0
+./configure --target-list=x86_64-linux-user --extra-cflags=-fsanitize=address && make
+
+on current master, and that the patch fixes it.
+
+I use gcc (Gentoo Hardened 15.1.0 p1) 15.1.0 libasan.so.8.
+Curiously, the leak does not happen e.g. for arm-linux-user target.
+
+> This complaint is about the 'buf' variable, however, the FILE objects
+> are also leaked in some error scenarios, so this fix refactors the
+> cleanup paths to fix all leaks. For completeness it also reports an
+> error if fclose() fails on 'inf'.
+
+How about other error cases?
+
+> diff --git a/linux-user/gen-vdso.c b/linux-user/gen-vdso.c
+> index 721f38d5a3..fce9d5cbc3 100644
+> --- a/linux-user/gen-vdso.c
+> +++ b/linux-user/gen-vdso.c
+> @@ -129,7 +130,6 @@ int main(int argc, char **argv)
+>          fprintf(stderr, "%s: incomplete read\n", inf_name);
+>          return EXIT_FAILURE;
+
+Like this one. Are other places like here possible candidates to also goto cleanup?
+
+- Arusekk <https://arusekk.pl>
+
 
 
