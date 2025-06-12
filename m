@@ -4,83 +4,173 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C55CC71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 12:29:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B20AC61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 12:29:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPh2h-0002V0-NU; Thu, 12 Jun 2025 08:28:27 -0400
+	id 1uPh3c-0002a3-1o; Thu, 12 Jun 2025 08:29:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uPh2f-0002Uj-I7
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:28:25 -0400
-Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
- id 1uPh2d-0006y2-Gl
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:28:25 -0400
-Received: by mail-pl1-x634.google.com with SMTP id
- d9443c01a7336-22c33677183so7444855ad.2
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 05:28:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749731300; x=1750336100; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=m02+F5MiVnJQFIfIv3hYeXpw9ghwtDidGli202nMygI=;
- b=MwowxhLxO/Kx3WIbkoJ571SDErxxOWTVXJvCq+bdVjt+PtrohIs8WPRT5P1S6lDZAB
- pXTBbqxR3+7iCadMvTeDrc8N9+N5YGCnhjI/3D7BUjgf+eL3eNskwJwyvu9P0YJ39HZ8
- WR7GxABnSPO1/+904Xw3uLE8GW11Hs4so+1UuJ9uQUjjsiDg1qKO9ZM7CQylPsWhmV/v
- mSIH9mqGJ9O1q6TGV4QfTK5GDCUg5saq3CFQtO4/YTPWAD3cHnjThoXomPPB7I6ys8OU
- mdMxWNgd+5OjYL4+c4Qa83pNojpfNYy8Q2xX0PbfkvzqtQgCMiIEVJ2gUc3/HhMgT9ez
- t3dg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749731300; x=1750336100;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=m02+F5MiVnJQFIfIv3hYeXpw9ghwtDidGli202nMygI=;
- b=ruuPxYxO6965T7WLMaE7fiM64Rn0Lf+g2tO17yN8yLiMFRL7EtdrF6XuXZoeFTs8MH
- rLF2wlqU/BZQb6VOp3ObyRPYVYjJQLES+bZADBGuqecHhRGl8v0RHuMvcVqwQHyH+x/h
- M9pnvw5C/xKnQSXYVShxtzF6d9ycHlWGU25gHk3ev107WLaFq+wjg5y0VrcIU6PJ3rBH
- WkNTdccP+uAval68/WjZ80BEFrB24N3eRbkbmZd5kY+YlGZNhf3/yqnBcxMYhf8wFO7k
- bsTdLO5hgAATKkpRBWxn1/k9sxztFoKOPNBmSW3n8RC7WhKVUuvU8fcZ3TEFw6yN9Tfy
- fAeA==
-X-Gm-Message-State: AOJu0Yz7Zj6ywpT/nG1eok3/HkXcJXAZRXB8l09S18Ddy5ORone6DHmI
- C/aansQvT9PesU61o4ouHZSzLXnORUwIZJWG0zsWANpASRPczcbP0UDKeIB8qOcCQq/etQ==
-X-Gm-Gg: ASbGncvs2SJpcCRGD94zjKATngUxFsWfxzSaBbfEJRn/v3Q7LJGcjFz6n54fHr6pdkK
- +WPJZWVj+SuuxiqxXMQFAPuRLYVP+twoKBI9+A+L0xzDyb6ZeJRf4zHmeD+OCHj0q/pQeUp+mm3
- 5rYG7l5g/0fZHpc3W9QZdB5eMWlN3sefMfXpwxPG4NJqvxaEYrVMeqKEymAyqfz3Qix84rdUehd
- 47ASScySbBPWmJ9hlqxjfWcce/3Jfi7eR0tX3i8DTo4ZZl0b5QItJ3Q6pY9Eo+rQE2E6Yza835V
- jU9Q7LGxtbGokR/JtAr6mQQ/bqx7N91ko95Q33xTF9rATsUA5dZCNWoWXrwauWmtyJ4ANYlu
-X-Google-Smtp-Source: AGHT+IFk5owXjZpBxYYhCouQRcFVlNV9j+9kJi0wZWc/KTYTBTor4+FIyXG+0meYl4d0ERZ8HX4x0Q==
-X-Received: by 2002:a17:903:1a8c:b0:22f:c19c:810c with SMTP id
- d9443c01a7336-2364cabb390mr42546225ad.51.1749731300091; 
- Thu, 12 Jun 2025 05:28:20 -0700 (PDT)
-Received: from ubuntu.. ([49.207.62.244]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2364e7031efsm12510625ad.188.2025.06.12.05.28.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Jun 2025 05:28:19 -0700 (PDT)
-From: Tanish Desai <tanishdesai37@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, stefanha@gmail.com, mads@ynddal.dk,
- balaton@eik.bme.hu, philmd@linaro.org, peter.maydell@linaro.org,
- Tanish Desai <tanishdesai37@gmail.com>
-Subject: [PATCH v2] utils/log: add qemu_log_timestamp()
-Date: Thu, 12 Jun 2025 12:27:19 +0000
-Message-Id: <20250612122718.18863-1-tanishdesai37@gmail.com>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
+ id 1uPh3E-0002ZM-6r
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:29:00 -0400
+Received: from mail-norwayeastazon11023123.outbound.protection.outlook.com
+ ([40.107.159.123] helo=OSPPR02CU001.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
+ id 1uPh3C-00070P-0o
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:28:59 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=OKLfgcJOBQmQTT8OtM5MxZ17GOcIYbHpVJV8/9lsEj5vZywWoNcalOmmgVaK99lDAIUev5JNsoSM+krJpLeeZrnwESSHV7PijkjPsovJS0Sr2o0ToS6G1A62Fd95WB+0FCgI3zkBGDROYNuy8MgdRAeL1HDN8uSi9Hli+tD568iaKkw2qSbcdQCTSZjTOgKQz4rAadueB3bWQHZ0eMBGG5di8+EhFHni52edXsqI6VstvHjcYLuwQNOTiLBZWR2KkRY8Si9uZaEvqlgJ6yU8LOpF0QEbCqpZeYFxAndXyy7U6FgJAOX1EC3yyPRPFONFIynd4aUyB3icQDCGqMVDyQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VG0Xyf3te65eLoGFpnbJuYIgyscgjvu02bCg/Y/BxQ8=;
+ b=L+49K97b66yWE06PzhJF1oAQGGFQt28EGz1x8VZ5GjLWdYjr3quQDCDV9WOIe+t0pLONA8tay9aNNniVQ7fIDzYWa5dH+o2g/IVYwiI/qT8rDBL/nuQgu7wjAVxbgEMojxLqS4SCiz13R60ZboncUtzTO4hMfnpM8UDkuxID/hSyfQ1Ous41WXYJ2IFui1uvbD/ifYQ3Eh+CRsSV+KwjwPlh2wjTOM+4pREaXjALrVbC047q8n+hFYvNr1R/IUSmIjZ0V/8gX6yMZDxwU5UoHBEiD6tUN6U3vsETfAYnMcy2oDAyriB1ORkdKHRPiF0SsZlkZt50RAo82kt9606ghw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
+ header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VG0Xyf3te65eLoGFpnbJuYIgyscgjvu02bCg/Y/BxQ8=;
+ b=zTl0FZwZCMhHAP96FnFqF0fMYkP2a5xIADS4b8uN+ZYOpetWpsLQoJ54IvgQ8JQmMmJMCjn2TnEB9Z6BzEg2u/wujd3SSJE7GkMiCHELX2wVFCElGdRYNjvDJLh3J9/cn0TsITBTkOMwVEupWpxKjl4jd9sb8Du9eXDLPxN6mwyTZS73v5I5RrIBJ+R14V1y9eshgqWohymAVXEf6e5kC8vs03LXP3KPpHKjfVVxuyfBpn/dq4Cq7gfHFOvJx3Dr7TuDa3/HWioARyOgeQU3RcXBiObDAiI+ekSkH0iu56lIOe/evUvnnr/wQICMAy9VLu4mzICAzjhHi8yMbqicXA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=virtuozzo.com;
+Received: from AM8PR08MB5732.eurprd08.prod.outlook.com (2603:10a6:20b:1d4::16)
+ by DU5PR08MB10703.eurprd08.prod.outlook.com (2603:10a6:10:520::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.19; Thu, 12 Jun
+ 2025 12:23:47 +0000
+Received: from AM8PR08MB5732.eurprd08.prod.outlook.com
+ ([fe80::e543:a83c:a260:602b]) by AM8PR08MB5732.eurprd08.prod.outlook.com
+ ([fe80::e543:a83c:a260:602b%3]) with mapi id 15.20.8835.018; Thu, 12 Jun 2025
+ 12:23:47 +0000
+Message-ID: <2b2838cd-9285-490d-8ad0-c61bfba92a96@virtuozzo.com>
+Date: Thu, 12 Jun 2025 14:23:45 +0200
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/i386: KVM: add hack for Windows vCPU hotplug with
+ SGX
+To: Paolo Bonzini <pbonzini@redhat.com>,
+ Sean Christopherson <seanjc@google.com>
+Cc: zhao1.liu@intel.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, andrey.drobyshev@virtuozzo.com,
+ "Denis V. Lunev" <den@virtuozzo.com>
+References: <20250609132347.3254285-2-andrey.zhadchenko@virtuozzo.com>
+ <7ce603ad-33c7-4dcd-9c63-1f724db9978e@redhat.com>
+ <4f19c78f-a843-49c9-8d19-f1dc1e2c4468@virtuozzo.com>
+ <aEcOSd-KBjOW61Rt@google.com>
+ <203f24da-fce0-4646-abed-c6ca657828d1@virtuozzo.com>
+ <aEcnMFzh-X7Aofbl@google.com>
+Content-Language: en-US
+From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
+In-Reply-To: <aEcnMFzh-X7Aofbl@google.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: FR4P281CA0229.DEUP281.PROD.OUTLOOK.COM
+ (2603:10a6:d10:e9::7) To AM8PR08MB5732.eurprd08.prod.outlook.com
+ (2603:10a6:20b:1d4::16)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
- envelope-from=tanishdesai37@gmail.com; helo=mail-pl1-x634.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: AM8PR08MB5732:EE_|DU5PR08MB10703:EE_
+X-MS-Office365-Filtering-Correlation-Id: 2d4d4233-c5c7-4994-97fa-08dda9abfa6e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?c3Arb21zcksrSk1nSXVSbHpEc29rNm9LVXovQWkvcERraWJOV1VMSzU5c3Fr?=
+ =?utf-8?B?NUFUbkNTRUZCcU8wS29zZXFsYUFJY3lQc1EwYitXdnRCV1o3b1RCVUwxdFZG?=
+ =?utf-8?B?Zm03aGg0VXNzR01yNDI5Ty9mWlVkMDR6U285c0Q5NjJJRFlWYzhzNVBFT2t4?=
+ =?utf-8?B?RkduWWFZcmtLVW1wOWVGT3dMVkN1S3R1Y0g2bXNjcDhrWlhqYmFCVk9rSnJG?=
+ =?utf-8?B?ekZsMWZLeWxYUnFVbkt4QmZXd1JyNGVEVXhMZ3VSeW1sKzdYQko5WHprY3ZI?=
+ =?utf-8?B?aGZwZGlPcE90WDJHWm1nYmpJcUFEOWl1R1g0REhtcFpRZjNaWnFnZ01ralhr?=
+ =?utf-8?B?OGZiZGFXaTUzRjFwT3JtNy9NeWZ1Z0c4ZHNIUGlsS0xONXJDMWk2a2RJcXZ2?=
+ =?utf-8?B?ZTU1MEY3d0tpR2IrNzRXT0VmR084WFUvSk41QVdtRzZ1aitwenJPT2prS001?=
+ =?utf-8?B?VnJZc3ByZ21ObTRWSm9OV211c2p4ZWhFQldhUC96SWFmMml2ZmRnNFgzYUNC?=
+ =?utf-8?B?VS90UERkRmF0VFhadnphUXVrSXRxVXpHME14Nkw0UExGdHBGTlQzSXJpYWtZ?=
+ =?utf-8?B?T3BkYWUrTXNrcFRaT2xvVDN1RFVyYXpTM3BTVG9sTGE4WWZ4L3pjRVJCRTBL?=
+ =?utf-8?B?YmxCU1JnQ3RkYlUvM3dUSUpwcFd3cmpSd0VrWUxMRWIzWmNsWlQvSmNlYVVw?=
+ =?utf-8?B?QkhUS3BCT0J3NzZWRGJTRWdtRGdPQzBmNzJ0QlRKSGMvNUR1WmI2aEx2WVJH?=
+ =?utf-8?B?b2RsSEFseE1icTFwRVdOSTdDalFzU2I4eWJOMUFseE9CTHJlM041aUFpVitV?=
+ =?utf-8?B?MGlua01PcncwVmswM1RDT3pTZDMzYUVKNHcvNUJmdTl0QnMyTXRaTzlrdnhq?=
+ =?utf-8?B?R2Z4UWFCUTdVOUczZUN6Rng5dFFHSm83a3oxbGdvK0RNSUxvUnNxUzY5T0tM?=
+ =?utf-8?B?cjlwZC9hUi83ZzZvMzIrbUpJekhCTG5iVnhSMTlUSm9LNVh1RlZzRWJDZytw?=
+ =?utf-8?B?WXBzSHRKUHB4WHpuRjJoc3VObnV5ZWN2K28rc09zSzdVbE1zODg1ZmpaK3Zo?=
+ =?utf-8?B?bzg0YituR2ZRbmJvZng1TkhUNThab05KcU5BaGxOZ2Y0WExkeFZ5dmtYQlE0?=
+ =?utf-8?B?V0l0bTZnMTZuQVVIQTl3cnBOR0xqcDRSbFlRbjVKaUNjSy9sS2RidlhMbmFi?=
+ =?utf-8?B?VXlNN2czN0JzYWlkK1Jub0NXWlJxeWFVcDlJTEF1WDVCcTlEcEtDNlhQM3lL?=
+ =?utf-8?B?cmtPRXZCMFBKWFQxVEhXOW50QSs2QWFxbFJ4dUJodTlJdWlSQ0wrc0NteTJt?=
+ =?utf-8?B?RGF4NEJoNEFWYzgrTWdSYkFqOTNzdjkyWXZ0SEVRNGt0QmFQYWNJcEhOWVhm?=
+ =?utf-8?B?aVpOalVLM21lQ3BBN1NYdEJ2dGFkaW9hcEY2L2xlUFpqTVJDUFNDY2p1bWZv?=
+ =?utf-8?B?Qm4rWncyRm82MS9pZW56RjJDdjkrQzhhdEhob2FPR09sU3NscVBwbVFqMXFK?=
+ =?utf-8?B?TVBrUW50UEE3TzVjL29Xa0N5NE9od09qOTZiSm5QVnFMTU0xMnMxMGRHTXFK?=
+ =?utf-8?B?dFBoMG12eEo1UUl6RGhvMDhmSWhQekgyYWRabFNMUno3UXdETFZRUmthczFv?=
+ =?utf-8?B?cW1EZTEwMGczWTliZ2x6TEtLd1p0T1V6dnM1ZytDZzBoekZCWXFVUUQvdVJW?=
+ =?utf-8?B?WEZrTlpKWTBudllZdFlXUnFhYVRqbXNNVWEzYmQyR2tybGx2TWY1QTRWMDJm?=
+ =?utf-8?B?TUxTRmVTQWtpY1dXSGl5Y04zaXM2S2d4YVhTLytIcU9DbHpHc0hFMm9VNzJZ?=
+ =?utf-8?B?b1RZZ1lBZDVGakFOMitDS0orYnIyYXgvbXo3NjJYcEtkQWNDUHlPVm85cS9z?=
+ =?utf-8?B?anAxaVlERVVWYlFaYXJKallwNEhodUVjV0JxWDk1MkRrdnc9PQ==?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:AM8PR08MB5732.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TmJuY0hFcmVxdHZkbjIveGdEaUZrT2k3RjJCQUpqUk10elFFOUU0MU5FK1lk?=
+ =?utf-8?B?c0dnOVFjRVlEanpJNUREaDdxeWxzcWVydWpoZC9BU052YWs5WEFYTCtBZld1?=
+ =?utf-8?B?N3ErVVdSU1podW5VRXVoZHNGM2JyUHdnNzlSVWdPSk4xVURwVUhkeWZqVjc1?=
+ =?utf-8?B?bGZObkh4ZTZYNzh4R1BjT01XWHZEcVNpS0ptekpnUC9xV2N4NHBwTlArbHFI?=
+ =?utf-8?B?eElybEFkQlZyU1M5YlBGcWhaWjlIeXZKOWpibEg1SXpkQ2FWWEpXUTRhdEhY?=
+ =?utf-8?B?a2ZGOUg0QVhxVnZVb1ZLTkNPdDY0WngrSFk2a3VtNmRHd0tQNWZWQWlSUVFw?=
+ =?utf-8?B?UUJiQzhCQ1ZSeTRzTTZRbEJGSTBhQ1orTEFBa1dveVVTU01lUXo2R3JNMFVo?=
+ =?utf-8?B?Zm9HT3VDMjRDRXYyS3NhV3dwb3AxT1FJOHRRMzlCSUlkYVZ2YzVSQTFCL2JQ?=
+ =?utf-8?B?RGJoMklaZVZBK05Pam8wVSs1enB0TzVSMUhPUi9LZzlWZktDaS84bnRjd0hL?=
+ =?utf-8?B?NXBNdHdDekZDa0hCTUZpSWtMRWY0dkZ1K29FZDZBVnYvTlRmZ1NNU2JWbFpE?=
+ =?utf-8?B?NWJ6SENuVkNhWktDRnhmYlVYVHBqbzlEUVljalhaNFdkZWlpNHFrQ24vWHRw?=
+ =?utf-8?B?d0NXeTZMWGhGNDFrbndsSlA4NHAvcnFUQzN6VlMwTFFyczhQclpYSzErb0Jl?=
+ =?utf-8?B?NVlLRTEwd1V6ZERRRlNZNEhJd3lWQXhxWCt3Y1JmTTIxU0Q4Nmd2NmEzeFND?=
+ =?utf-8?B?dkRLL2tiZFN0WDV3bGlTZ3d5MWpITUhZVGlYNUMxUFlNNE45QXZPYlQ3eFRR?=
+ =?utf-8?B?MXlTbkhUTzlGN1gxMVZVL01NY2srWXk2T3RvWWdMeFlEREd5UkI5L2V0eitV?=
+ =?utf-8?B?OEM1NFVyRHphR0ppWnhEQzdkRkhpWGp0R21rdHBSZXNUa1JVd2lhbVRXTE0x?=
+ =?utf-8?B?enA5L1JHcC9jSUxDdkgxa1VNZWtKdWNQY0gyalpLOHN3bWdmN1dFTS90UnlC?=
+ =?utf-8?B?Q2lUSE9PQ1JXaUc5ditPQkRkbHVZTFlqczl3R1piUjFLR2lpRUtYalBUTngv?=
+ =?utf-8?B?dFFkV25NbUw0UDhMVGExdk42aCtaU2VBTlFUOHF1ZEpTV3kxUEl2elBRTnph?=
+ =?utf-8?B?WWxsQ3lTREo5bS9MYkxIS3ZodTNxR08xZW5jQkVKaGltb3dyYkMxSmR2aHd4?=
+ =?utf-8?B?UzdiSGU2aHdobnQrRks4Yk1nUVVKNTBiQXVYcnJJVHpVNjFPT1Y5V1RmRHhB?=
+ =?utf-8?B?eDFNdU51WVVBUzZiL2g5TzRHOUlnNVFoS0RQdm90YS94WHA0RWhSRWQ5U1pm?=
+ =?utf-8?B?UzQrVllkM0pNM3ZUd0NlS2FVRXpla2F3RmlKczRzS3pRbWNYMVBJUTIzbG5t?=
+ =?utf-8?B?ZjRyS2VVWEZRWG1YSEFXaktlSzVmVUF6ZXZFTEdCMmZEN2loTEJKNTdoWGEx?=
+ =?utf-8?B?TzV1akhuVXU2Y3laOTA1elJsdFZUKzRzYytiRm81aXJ0MUoveldEdE0wWEJD?=
+ =?utf-8?B?dkhCQ3NEVTh1cGcyNmhCOHBIYnhvRmJxYldjOHpIY2x2WS9ZWnBaWWJzM0k4?=
+ =?utf-8?B?aUoxcXIybXdjK1BqNGVGSUJ2VndtUGg3RmpOUGV1dkpwNEF2YS9kdTJUYVZ1?=
+ =?utf-8?B?MU1YV1ZtZW5UZHQ5dFlyaVNoNmtlZnpyYVVjVFZlRm5XT09SQk5paHlpNVlH?=
+ =?utf-8?B?T0hxT21yUTk2ZHhkVUgyK2ErUFFEeU9veUd5TStNbVYxM2JMcm9qaGRMUjJh?=
+ =?utf-8?B?OHArekxaOE42YzE5VGVsbzYzS3o5cGlyV0NqZ0tlQmZiMnJiN3FoOWVnWUxI?=
+ =?utf-8?B?UGt6NEx5d3BlWHRxOFJzSThkRjdIaUR3eXRzOFNLVjY2aUtkVHl2Z3oxZ05M?=
+ =?utf-8?B?YU9xdTFNSEp5UllZaTRMTXdaZ280U3FUdWduTmc0eDcwWGNzekhpcHRValFE?=
+ =?utf-8?B?WmVnalNLZS8xRUlpSHQ2cCt5cGxFUjczb1FJYXpDZG5OQ0lPVVBIa3RmVnRp?=
+ =?utf-8?B?bG81UkQ2NGpodmVGeUQvMHB3bUlRNE1QVGZIQ2x3RFU3a2svQUVEVWVITU1L?=
+ =?utf-8?B?bkFDOFdaTGRUMktRcGZtZDdMR0NyYVdHbzVaaXQ0NDA2OE91M0U3cEo1VitX?=
+ =?utf-8?B?OEF2RzBEam9zanBEWG41cFM1YjlPWHgzZnp5aVJTTjhJMmd4Z0RGdnhYWHYz?=
+ =?utf-8?B?M2c9PQ==?=
+X-OriginatorOrg: virtuozzo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 2d4d4233-c5c7-4994-97fa-08dda9abfa6e
+X-MS-Exchange-CrossTenant-AuthSource: AM8PR08MB5732.eurprd08.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2025 12:23:46.9444 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: tr0BDuvAF/+uHB3cupHxLWXzpHt1hAI0v6hFoD7E7y27fjPhym2x/W1HlOro4LtE84u8Do/E/yJqIJGwVtrkx2MoH0Ir2dcrmlx42rvoc5k=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU5PR08MB10703
+Received-SPF: pass client-ip=40.107.159.123;
+ envelope-from=andrey.zhadchenko@virtuozzo.com;
+ helo=OSPPR02CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -97,87 +187,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moved the logic for timestamped logging (~6 lines) from a_nocheck__trace_foo(header) into a new qemu_log_timestamp() function in util/log.c.
-This avoids code duplication across binaries and enables reuse as a standalone utility.
-Encapsulation helps reduce build size significantly, particularly when many trace points are present. On Ubuntu 22 with
-./configure --target-list=aarch64-softmmu --enable-kvm --enable-trace-backends=log,
-this change reduced the build directory size significantly(~3%).
+Apparently, looks like it is a firmware bug.
+Both seaBIOS/OVMF set IA32_FEATURE_CONTROL only during init from 
+qemu-provided etc/msr_feature_control.
+So probably the fix should be done in the firmware then.
 
-Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
----
- include/qemu/log-for-trace.h     |  3 +++
- scripts/tracetool/backend/log.py | 13 +------------
- util/log.c                       | 18 ++++++++++++++++++
- 3 files changed, 22 insertions(+), 12 deletions(-)
+On 6/9/25 20:25, Sean Christopherson wrote:
 
-diff --git a/include/qemu/log-for-trace.h b/include/qemu/log-for-trace.h
-index d47c9cd446..680f30a8a9 100644
---- a/include/qemu/log-for-trace.h
-+++ b/include/qemu/log-for-trace.h
-@@ -32,4 +32,7 @@ static inline bool qemu_loglevel_mask(int mask)
- /* main logging function */
- void G_GNUC_PRINTF(1, 2) qemu_log(const char *fmt, ...);
- 
-+/* main logging function with timestamp */
-+void G_GNUC_PRINTF(1, 2) qemu_log_timestamp(const char *fmt, ...);
-+
- #endif
-diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-index de27b7e62e..3358afb43a 100644
---- a/scripts/tracetool/backend/log.py
-+++ b/scripts/tracetool/backend/log.py
-@@ -38,20 +38,9 @@ def generate_h(event, group):
-         cond = "trace_event_get_state(%s)" % ("TRACE_" + event.name.upper())
- 
-     out('    if (%(cond)s && qemu_loglevel_mask(LOG_TRACE)) {',
--        '        if (message_with_timestamp) {',
--        '            struct timeval _now;',
--        '            gettimeofday(&_now, NULL);',
-         '#line %(event_lineno)d "%(event_filename)s"',
--        '            qemu_log("%%d@%%zu.%%06zu:%(name)s " %(fmt)s "\\n",',
--        '                     qemu_get_thread_id(),',
--        '                     (size_t)_now.tv_sec, (size_t)_now.tv_usec',
--        '                     %(argnames)s);',
-+        '            qemu_log_timestamp("%(name)s " %(fmt)s "\\n"%(argnames)s);',
-         '#line %(out_next_lineno)d "%(out_filename)s"',
--        '        } else {',
--        '#line %(event_lineno)d "%(event_filename)s"',
--        '            qemu_log("%(name)s " %(fmt)s "\\n"%(argnames)s);',
--        '#line %(out_next_lineno)d "%(out_filename)s"',
--        '        }',
-         '    }',
-         cond=cond,
-         event_lineno=event.lineno,
-diff --git a/util/log.c b/util/log.c
-index b87d399e4c..6cd2a974c4 100644
---- a/util/log.c
-+++ b/util/log.c
-@@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)
-     }
- }
- 
-+
-+void qemu_log_timestamp(const char *fmt, ...)
-+{
-+    FILE *f = qemu_log_trylock();
-+    if (f) {
-+        va_list ap;
-+        if(message_with_timestamp){
-+            struct timeval _now;
-+            gettimeofday(&_now, NULL);
-+            fprintf(f,"%d@%zu.%06zu:",qemu_get_thread_id(),(size_t)_now.tv_sec, (size_t)_now.tv_usec);
-+        }
-+        va_start(ap, fmt);
-+        vfprintf(f, fmt, ap);
-+        va_end(ap);
-+        qemu_log_unlock(f);
-+    }
-+}
-+
- void qemu_log(const char *fmt, ...)
- {
-     FILE *f = qemu_log_trylock();
--- 
-2.34.1
+> On Mon, Jun 09, 2025, Andrey Zhadchenko wrote:
+>> On 6/9/25 18:39, Sean Christopherson wrote:
+>>> On Mon, Jun 09, 2025, Denis V. Lunev wrote:
+>>>>> Does anything in edk2 run during the hotplug process (on real hardware
+>>>>> it does, because the whole hotplug is managed via SMM)? If so maybe that
+>>>>> could be a better place to write the value.
+>>>
+>>> Yeah, I would expect firmware to write and lock IA32_FEATURE_CONTROL.
+>>>
+>>>>> So many questions, but I'd really prefer to avoid this hack if the only
+>>>>> reason for it is SGX...
+>>>
+>>> Does your setup actually support SGX?  I.e. expose EPC sections to the guest?
+>>> If not, can't you simply disable SGX in CPUID?
+>>
+>> We do not have any TYPE_MEMORY_BACKEND_EPC objects in our default config,
+>> but have the following:
+>> sgx=on,sgx1=on,sgx-debug=on,sgx-mode64=on,sgx-provisionkey=on,sgx-tokenkey=on
+>> We found this during testing, and it can be disabled on our testing setup
+>> without any worries indeed.
+>> I have no data whether someone actually sets it properly in the wild, which
+>> may still be possible.
+> 
+> The reason I ask is because on bare metal, I'm pretty sure SGX is incompatible
+> with true CPU hotplug.  It can work for the virtualization case, but I wouldn't
+> be all that surprised if the answer here is "don't do that".
+> 
+>>>> Linux by itself handles this well and assigns MSRs properly (we observe
+>>>> corresponding set_msr on the hotplugged CPU).
+>>
+>> I think Linux, at least old 4.4, does not write msr on hotplug.
+> 
+> Yeah, it's a newer thing.  5.6+ should initialize IA32_FEATURE_CONTROL if it's
+> left unlocked (commit 1db2a6e1e29f ("x86/intel: Initialize IA32_FEAT_CTL MSR at boot").
+> 
+>> Anyway it hotplugs fine and tolerates different value unlike Windows
+> 
+> Heh, probably only because the VM isn't actively using KVM at the time of hotplug.
+> In pre-5.6 kernels, i.e. without the aforementioned handling, KVM (in the guest)
+> would refuse to load (though the hotplug would still work).  But if the guest is
+> actively running (nested) VMs at the time of hotplug, the hotplugged vCPUs would
+> hit a #GP when attempting to do VMXON, and would likely crash the kernel.
+> 
+>>> Linux is much more tolerant of oddities, and quite a bit of effort went into
+>>> making sure that IA32_FEATURE_CONTROL was initialized if firmware left it unlocked.
+>>
+>> Thanks everyone for the ideas. I focused on Windows too much and did not
+>> investigate into firmware, so perhaps this is rather a firmware problem?
+>> I think by default we are using seaBIOS, not ovmf/edk2. I will update after
+>> some testing with different configurations.
+> 
+> Generally speaking, firmware is expected to set and lock IA32_FEATURE_CONTROL.
+> But of course firmware doesn't always behave as expected, hence the hardening that
+> was added by commit 1db2a6e1e29f to avoid blowing up when running on weird/buggy
+> firmware.
+> 
 
 
