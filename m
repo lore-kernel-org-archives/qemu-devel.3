@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35AD2C71144
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D241C71136
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 21:00:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPp2S-0003xG-Jc; Thu, 12 Jun 2025 17:00:44 -0400
+	id 1uPp1P-0001l8-J3; Thu, 12 Jun 2025 16:59:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp2Q-0003qo-UR
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:00:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp1N-0001jJ-Ed
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 16:59:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp2J-00017d-4y
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:00:42 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp1J-0000mC-SN
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 16:59:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749762033;
+ s=mimecast20190719; t=1749761973;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PBxHPU8F9xytU1WJw8ndoGxgIxFGcDQhUL4l1zUYAMc=;
- b=Z5E0PvP+7enLnzNMibiaPHJfjomceTRJrK9htYC3DwPYHvJMEOvAztSz+wtCN5kfFgbHjw
- wtWr0qzl2B83TLpFBWZLUl0r223mxNFAvWj1JafXwbSC+9wfvcJhF+4CnBrBNxEMg4o09p
- f7OWcXI+Kt3ZRJ8dEJ0mTClxwP86yc8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=jCIejFSQfcGoCjcsgn+YLuJOKRTgKy2BSecLZSTojbc=;
+ b=cGmjYkd+Njhawz1s8vXrhnVju8VWBSJGTjznGV4xKn0YCBH0+6zC15zV9lTb3FiIBm4WaX
+ 1jOdW9+5lHrr9Zk/+nHefAqtFa2QBxWrZmZne/4t6ZdpCrnlg/1Cq+8+zPLVvvJCB94WMe
+ zTDbMA+yYPhL56CuvevvIqXsoBQtkWU=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-637-nAgNX1eRO0idUHF4Tns3sw-1; Thu,
- 12 Jun 2025 17:00:31 -0400
-X-MC-Unique: nAgNX1eRO0idUHF4Tns3sw-1
-X-Mimecast-MFC-AGG-ID: nAgNX1eRO0idUHF4Tns3sw_1749762027
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-76--dlK-Bb-Pq2wXo9ih3MOiQ-1; Thu,
+ 12 Jun 2025 16:59:31 -0400
+X-MC-Unique: -dlK-Bb-Pq2wXo9ih3MOiQ-1
+X-Mimecast-MFC-AGG-ID: -dlK-Bb-Pq2wXo9ih3MOiQ_1749761966
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2628518001D6; Thu, 12 Jun 2025 21:00:26 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 12AD919560B2; Thu, 12 Jun 2025 20:59:26 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.54])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E49291956050; Thu, 12 Jun 2025 20:59:55 +0000 (UTC)
+ id B9E4B1956050; Thu, 12 Jun 2025 20:58:57 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
@@ -126,23 +126,22 @@ Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  Huacai Chen <chenhuacai@kernel.org>,
  Mahmoud Mandour <ma.mandourr@gmail.com>,
  Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 09/12] python: update mkvenv to type-check under different
- python versions
-Date: Thu, 12 Jun 2025 16:54:47 -0400
-Message-ID: <20250612205451.1177751-10-jsnow@redhat.com>
+Subject: [PATCH v2 07/12] fixup
+Date: Thu, 12 Jun 2025 16:54:45 -0400
+Message-ID: <20250612205451.1177751-8-jsnow@redhat.com>
 In-Reply-To: <20250612205451.1177751-1-jsnow@redhat.com>
 References: <20250612205451.1177751-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -160,73 +159,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, we instruct mypy to pretend it is type checking under a
-specific version of python. For our case, where our scripts may in fact
-actually be executing under a number of different environments in the
-build system, we want mypy to remove this restriction.
+These are manual fixes that ought be merged into the prior patch, but
+are here separated for clarity to separate the automated portions of
+this patch from the non-automated portions.
 
-This patch adjusts some of the import logic in mkvenv.py to make it type
-check under a wider range of python versions. It's largely arbitrary, to
-work around some mypy fussiness.
+These fixes are only the necessary portions to allow python static
+checks (and checkpatch.pl) to pass again, and don't perform any
+"optional" cleanups. (i.e. this patch strictly prevents regressions.)
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/scripts/mkvenv.py | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ python/qemu/utils/qom_fuse.py |  1 +
+ scripts/qapi/common.py        | 28 ++++++++++++++--------------
+ 2 files changed, 15 insertions(+), 14 deletions(-)
 
-diff --git a/python/scripts/mkvenv.py b/python/scripts/mkvenv.py
-index 8026ca24861..b5d1edd3afa 100644
---- a/python/scripts/mkvenv.py
-+++ b/python/scripts/mkvenv.py
-@@ -99,16 +99,18 @@
-         HAVE_DISTLIB = False
+diff --git a/python/qemu/utils/qom_fuse.py b/python/qemu/utils/qom_fuse.py
+index c1f596e3273..e2ed70f9ded 100644
+--- a/python/qemu/utils/qom_fuse.py
++++ b/python/qemu/utils/qom_fuse.py
+@@ -41,6 +41,7 @@
  
- # Try to load tomllib, with a fallback to tomli.
--# HAVE_TOMLLIB is checked below, just-in-time, so that mkvenv does not fail
-+# TOML is checked below, just-in-time, so that mkvenv does not fail
- # outside the venv or before a potential call to ensurepip in checkpip().
--HAVE_TOMLLIB = True
-+TOML = None
- try:
-     import tomllib
-+    TOML = tomllib
- except ImportError:
-     try:
--        import tomli as tomllib
-+        import tomli
-+        TOML = tomli
-     except ImportError:
--        HAVE_TOMLLIB = False
-+        pass
+ import fuse
+ from fuse import FUSE, FuseOSError, Operations
++
+ from qemu.qmp import ExecuteError
  
- # Do not add any mandatory dependencies from outside the stdlib:
- # This script *must* be usable standalone!
-@@ -194,6 +196,7 @@ def compute_venv_libpath(context: SimpleNamespace) -> str:
-         # Python 3.12+, not strictly necessary because it's documented
-         # to be the same as 3.10 code below:
-         if sys.version_info >= (3, 12):
-+            assert isinstance(context.lib_path, str)
-             return context.lib_path
- 
-         # Python 3.10+
-@@ -710,7 +713,7 @@ def _do_ensure(
- 
- 
- def _parse_groups(file: str) -> dict[str, dict[str, Any]]:
--    if not HAVE_TOMLLIB:
-+    if not TOML:
-         if sys.version_info < (3, 11):
-             raise Ouch("found no usable tomli, please install it")
- 
-@@ -722,7 +725,7 @@ def _parse_groups(file: str) -> dict[str, dict[str, Any]]:
-     # Debian bullseye-backports) and v2.0.x
-     with open(file, encoding="ascii") as depfile:
-         contents = depfile.read()
--        return tomllib.loads(contents)  # type: ignore
-+        return TOML.loads(contents)  # type: ignore
- 
- 
- def ensure_group(
+ from .qom_common import QOMCommand
+diff --git a/scripts/qapi/common.py b/scripts/qapi/common.py
+index d1fa5003c29..ecdac1dff85 100644
+--- a/scripts/qapi/common.py
++++ b/scripts/qapi/common.py
+@@ -91,29 +91,29 @@ def c_name(name: str, protect: bool = True) -> str:
+     """
+     # ANSI X3J11/88-090, 3.1.1
+     c89_words = {'auto', 'break', 'case', 'char', 'const', 'continue',
+-                     'default', 'do', 'double', 'else', 'enum', 'extern',
+-                     'float', 'for', 'goto', 'if', 'int', 'long', 'register',
+-                     'return', 'short', 'signed', 'sizeof', 'static',
+-                     'struct', 'switch', 'typedef', 'union', 'unsigned',
+-                     'void', 'volatile', 'while'}
++                 'default', 'do', 'double', 'else', 'enum', 'extern',
++                 'float', 'for', 'goto', 'if', 'int', 'long', 'register',
++                 'return', 'short', 'signed', 'sizeof', 'static',
++                 'struct', 'switch', 'typedef', 'union', 'unsigned',
++                 'void', 'volatile', 'while'}
+     # ISO/IEC 9899:1999, 6.4.1
+     c99_words = {'inline', 'restrict', '_Bool', '_Complex', '_Imaginary'}
+     # ISO/IEC 9899:2011, 6.4.1
+     c11_words = {'_Alignas', '_Alignof', '_Atomic', '_Generic',
+-                     '_Noreturn', '_Static_assert', '_Thread_local'}
++                 '_Noreturn', '_Static_assert', '_Thread_local'}
+     # GCC http://gcc.gnu.org/onlinedocs/gcc-4.7.1/gcc/C-Extensions.html
+     # excluding _.*
+     gcc_words = {'asm', 'typeof'}
+     # C++ ISO/IEC 14882:2003 2.11
+     cpp_words = {'bool', 'catch', 'class', 'const_cast', 'delete',
+-                     'dynamic_cast', 'explicit', 'false', 'friend', 'mutable',
+-                     'namespace', 'new', 'operator', 'private', 'protected',
+-                     'public', 'reinterpret_cast', 'static_cast', 'template',
+-                     'this', 'throw', 'true', 'try', 'typeid', 'typename',
+-                     'using', 'virtual', 'wchar_t',
+-                     # alternative representations
+-                     'and', 'and_eq', 'bitand', 'bitor', 'compl', 'not',
+-                     'not_eq', 'or', 'or_eq', 'xor', 'xor_eq'}
++                 'dynamic_cast', 'explicit', 'false', 'friend', 'mutable',
++                 'namespace', 'new', 'operator', 'private', 'protected',
++                 'public', 'reinterpret_cast', 'static_cast', 'template',
++                 'this', 'throw', 'true', 'try', 'typeid', 'typename',
++                 'using', 'virtual', 'wchar_t',
++                 # alternative representations
++                 'and', 'and_eq', 'bitand', 'bitor', 'compl', 'not',
++                 'not_eq', 'or', 'or_eq', 'xor', 'xor_eq'}
+     # namespace pollution:
+     polluted_words = {'unix', 'errno', 'mips', 'sparc', 'i386', 'linux'}
+     name = re.sub(r'[^A-Za-z0-9_]', '_', name)
 -- 
 2.48.1
 
