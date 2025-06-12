@@ -4,91 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C03CBC71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 07:38:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CCDCC71143
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 07:40:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPcV2-0006AJ-GJ; Thu, 12 Jun 2025 03:37:24 -0400
+	id 1uPcXY-00071H-RE; Thu, 12 Jun 2025 03:40:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uPcV0-00069t-Sn; Thu, 12 Jun 2025 03:37:22 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uPcUz-0006Bg-E3; Thu, 12 Jun 2025 03:37:22 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-450cf214200so5208435e9.1; 
- Thu, 12 Jun 2025 00:37:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749713839; x=1750318639; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SZ6sPcipkdgCHZUrlXXsBzdJ/gVBOKP0mf97qysVYPc=;
- b=muvwtyR0RLtqw9LFIxihZs2Q65Zkr7E+/KDe2x6ETMwcAl4nXtjkTIMWKF0xwdHMwc
- 7lKYO4AeKeBsjaiMsp/gTdzsCw+WFX7wy4Bsb1Wjifvf/jErT0Yqj8nOOIp1P7bpqPFN
- +i6VBTeyS/i3ycvQznX/a+VSE/pP11uw/puX4FHQlhSPm4IyLPNY/EHapZvnx7Z8Vsyt
- m4aWfmbNZUHS+Qo8Tz2kbZRwuBNeivEnOHakCo1l0PAa0ToBTuFu7L25R/o8CQfGcV3l
- s7jglFsHtIRqj21wK/XGjL+FBqGLHHN8YlnToiMey3cq894MPDv21CbI2XdBpGeOmqWu
- 3avw==
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uPcXX-00070w-Bi
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 03:39:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uPcXV-0006P9-TM
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 03:39:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749713996;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Jyfclqkv9g5I5cSR+ECGEHSp27JRi/Dx2MjH1UDDGhQ=;
+ b=WWS5zd0ob1PCukDWXlFD6L6MqH0JcS3YF8XNXAIe/7uiZ6DjfffFgltXrs9S7eiM2dBW8J
+ gXcnKNBjFw1jlhit4VgPkLM1V6ZM88K6cT3NPMRAQ11wiie3L3pIOOuyNnocUDNALcwhza
+ bCS3JK9hU3o4EFa9MO4eDE8gWqa/4GA=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-114-sPNW3AEsP1OT_s1uicZMWw-1; Thu, 12 Jun 2025 03:39:54 -0400
+X-MC-Unique: sPNW3AEsP1OT_s1uicZMWw-1
+X-Mimecast-MFC-AGG-ID: sPNW3AEsP1OT_s1uicZMWw_1749713993
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4f6ff23ccso356277f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 00:39:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749713839; x=1750318639;
- h=content-transfer-encoding:mime-version:message-id:references
- :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SZ6sPcipkdgCHZUrlXXsBzdJ/gVBOKP0mf97qysVYPc=;
- b=CoB/RLzqd48IdyprnFs/+zHlWEy6UOE+Q4LcvGxKY5rho68HGJIb7rCuklS6LL6tHq
- WDzts1BbHXSzUx4t9ek2TedlGa5INd1/OOlr7qfGBRZ3ASShC4dIOULK0uufyzdA/kL2
- EBSaPyatuvuyj3IeWX5OMzajMQ77e8GJYpwdVcKz+3a57eUvD+Juq3ccFoz3ZWpyDA2+
- TikDiW0hhSQvGY/aWjxHIrANI3WL0vZy0KwMi0r8kLIm8FzgAk9z9NSMnpl2D8fo6wc8
- ci47eCaUDd0sQ5Hs43RH6b16/cZjSwcmaCuUMu6IUXy3XcHWZq+1FPLDMu7TtxjdAb90
- XE/g==
+ d=1e100.net; s=20230601; t=1749713993; x=1750318793;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Jyfclqkv9g5I5cSR+ECGEHSp27JRi/Dx2MjH1UDDGhQ=;
+ b=MXLl826eLQeTSj9dpAXuHd2bO2Pf2eUPoZqH3kPqqLZQAzcDVEeopHWnDaeD9Y5Enq
+ Fj/Arq9I8Yd1/jmoY4lKfEmt/zfae8phvMrO2B9UvQgic/s9EyH+QbIIAk71BKxYzQZB
+ bjzGo2P+kHdQrqbgIHHzqgI4+lya1TxMDmO0G2LFThkbWdXWQ5rGv9RccZC9ws8V0Src
+ BDsrgF90mrY/K3UdRtdRghVNbX8xyicx+4HfMQPOcuqsreIyMWsL+/Rcby8KG0oFl8nr
+ q10TpgnZ9Ad8T4W3uK43xgqX5LARc0vxznJ95N92JbMl7okxMEeYOxd+8vfWnqVlNVzm
+ lqRg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVj88JZ1UuELYqmS4eoqJ/DSJDmmV73wTOZ5PK5as8t3S0ZEMJfofzQ7oO30rcvQTjEZwvJBJoiuFo=@nongnu.org
-X-Gm-Message-State: AOJu0Yy7fOIhGpvrkyG4w+1y9VwM+RikhQutN/ln4MI8VpXviNmF6Dk8
- hwrERzD2a9hrNfFxuNr/klOdPipyrKK3iTTSlzbB/ybofgB2uXIyLVfu
-X-Gm-Gg: ASbGncs1L2PCikb9zDCA0th5++OlbFma5nuYYB7z4NIBACHVK9AHctdhBMryMaepsKe
- spXBc1CiAz9EpsZC0l09rzMbkHKKI4WK3/D477TXwUnqIHrXc+GMjeBuBD0D2p4KHw7bK23tF2v
- MoUbEsD9dDhNd5k7h80P1OqzbmpSldEHCjhqnD3oD+vGBr+nwsBpWEIhELgtcBF835jB4KBpmPv
- lZEaYGinWEV0TOyGo0F5ne9RFpNC1z1FSn9MDKFz60FdQvUT3S2UrZlDXT1e/YtqvEbxM+GAmOt
- 9Wmxt43cr2HehOziqGVZVGmFoyFNhKO21av6ALlNg2/8yEbV0r2Kp290
-X-Google-Smtp-Source: AGHT+IFl5jqHyNZJmbERnvs3fvJqKJtQk+dO7ngtBkNDQyaqzWni7HZf6pBPTYXKLcQOPC4JKrpXNg==
-X-Received: by 2002:a05:600c:8b0b:b0:450:cd25:e68f with SMTP id
- 5b1f17b1804b1-4532b966c95mr23746935e9.27.1749713839247; 
- Thu, 12 Jun 2025 00:37:19 -0700 (PDT)
-Received: from [127.0.0.1] ([62.214.191.67]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4531febf905sm60164575e9.0.2025.06.12.00.37.18
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Jun 2025 00:37:18 -0700 (PDT)
-Date: Thu, 12 Jun 2025 07:37:18 +0000
-From: Bernhard Beschow <shentey@gmail.com>
-To: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-CC: qemu-devel@nongnu.org, qemu-rust@nongnu.org
-Subject: =?US-ASCII?Q?Re=3A_=5BPATCH_v2_1/2=5D_rust/qemu-api=3A_Add_?=
- =?US-ASCII?Q?initial_logging_support_based_on_C_API?=
-In-Reply-To: <CAAjaMXZ5S7GUPmhwxsyuVmF4tvUh3vgjnK8OLKv-A+h7JCPqBA@mail.gmail.com>
+ AJvYcCVL6zTQ8334hE2yWRkRrl3P4e8/ptXTut/Ixhi54GYxaN6ydRtFPOleqhdL8n6K9jodukAVb0Qw4Crc@nongnu.org
+X-Gm-Message-State: AOJu0YzYTyYGvfhkoYrahOQNdo7elLnynLnqbWSZz/UdE4Htq2PZKtui
+ XXNEwAaIx2ng5pGX/GwUrVIQMNkH/xlr90FWpJpcupDGg8qBbAnNGv6MkkWAfEIWHdKE/p31Y4w
+ Rnm5uUuxqA3U99+Zurd/vVsDp7ZrIwXwcg0Kg5dKqBi313kZMpTGTx0/cCTUZ+Nqb6GNlLDzzz8
+ +F7OYKwIVnFvBNRxDExdV3XnVh0uDQrfw=
+X-Gm-Gg: ASbGncv2mVeDylcwpkTr1zWUqjpeFfp1yQtWqBhO3+6QawAvgfbn1rzZNE/qKFDEU8C
+ uTJmIUzv7+Iync1Tdto7/fUmmjq3CBRLojHEOIUm5DN7SjmSNc08qibsggpqyIOg8ICsnJUbCO1
+ gNEA==
+X-Received: by 2002:a5d:64e9:0:b0:3a4:f7af:db9c with SMTP id
+ ffacd0b85a97d-3a558a43b5emr4944224f8f.59.1749713992767; 
+ Thu, 12 Jun 2025 00:39:52 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF2IVnGMJCnwsL7wsPIX3aIGjP6OxrKIOmkgg6ZR2+08XS10UasBnXgVNDDmescJyDhnaK13nwxXAPAQ2LqLJ4=
+X-Received: by 2002:a5d:64e9:0:b0:3a4:f7af:db9c with SMTP id
+ ffacd0b85a97d-3a558a43b5emr4944208f8f.59.1749713992446; Thu, 12 Jun 2025
+ 00:39:52 -0700 (PDT)
+MIME-Version: 1.0
 References: <20250610202110.2243-1-shentey@gmail.com>
  <20250610202110.2243-2-shentey@gmail.com>
  <CAAjaMXbtcyB3J3AvGh8ZW3MSi41uMaE+TkZwipCs5pg6wvYJ=w@mail.gmail.com>
  <CABgObfYgoYBJmZjin_Wj8JeEviFMM+vFa_QX_8Np+1n9apq4kw@mail.gmail.com>
  <CAAjaMXZ5S7GUPmhwxsyuVmF4tvUh3vgjnK8OLKv-A+h7JCPqBA@mail.gmail.com>
-Message-ID: <9C43F9B8-6A5A-40EA-88B4-C5B8B17B9F5A@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain;
- charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=shentey@gmail.com; helo=mail-wm1-x335.google.com
+ <9C43F9B8-6A5A-40EA-88B4-C5B8B17B9F5A@gmail.com>
+In-Reply-To: <9C43F9B8-6A5A-40EA-88B4-C5B8B17B9F5A@gmail.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Thu, 12 Jun 2025 09:39:41 +0200
+X-Gm-Features: AX0GCFu8W0jpAtL1sa6todOY1hM005Tk7scgUnuFa-eYsDT31POjL87RPcqTo3I
+Message-ID: <CABgObfbJbAg=tJ5CzUntexKFnfQzBKteh2jK4pebQfWY86B-Yw@mail.gmail.com>
+Subject: Re: [PATCH v2 1/2] rust/qemu-api: Add initial logging support based
+ on C API
+To: Bernhard Beschow <shentey@gmail.com>
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ qemu-devel <qemu-devel@nongnu.org>, qemu-rust@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000fa914b06375b08fc"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,29 +110,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--000000000000fa914b06375b08fc
+Content-Type: text/plain; charset="UTF-8"
 
+Il gio 12 giu 2025, 09:37 Bernhard Beschow <shentey@gmail.com> ha scritto:
 
-Am 11=2E Juni 2025 12:17:57 UTC schrieb Manos Pitsidianakis <manos=2Epitsi=
-dianakis@linaro=2Eorg>:
->On Wed, Jun 11, 2025 at 2:05=E2=80=AFPM Paolo Bonzini <pbonzini@redhat=2E=
-com> wrote:
->>
->> On Wed, Jun 11, 2025 at 12:57=E2=80=AFPM Manos Pitsidianakis
->> <manos=2Epitsidianakis@linaro=2Eorg> wrote:
->>
->> > Maybe we could take this chance to remove the requirement for trailin=
-g
->> > newline? Not urgent, and also something we could change afterwards
->> > anyway=2E We could also introduce log_mask_ln! macro but now I'm just
->> > bikeshedding=2E
->>
->> Good idea; there is no "formatln!" but I think you could use concat ins=
-tead=2E
->
->I think `let formatted_string =3D format!("{}\n", format_args!($fmt
->$($args)*));` might be sufficient, but I haven't checked it myself
+> So the idea is to have a log_mask_ln! macro instead, since there isn't
+> really a point for a macro that doesn't add `\n` at the end. Correct?
 >
 
-So the idea is to have a log_mask_ln! macro instead, since there isn't rea=
-lly a point for a macro that doesn't add `\n` at the end=2E Correct?
+Yes, or both.
+
+Paolo
+
+>
+
+--000000000000fa914b06375b08fc
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il gio 12 giu 2025, 09:37 Bernha=
+rd Beschow &lt;<a href=3D"mailto:shentey@gmail.com">shentey@gmail.com</a>&g=
+t; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0=
+px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">S=
+o the idea is to have a log_mask_ln! macro instead, since there isn&#39;t r=
+eally a point for a macro that doesn&#39;t add `\n` at the end. Correct?<br=
+></blockquote></div></div><div dir=3D"auto"><br></div><div dir=3D"auto">Yes=
+, or both.</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div><d=
+iv dir=3D"auto"><div class=3D"gmail_quote gmail_quote_container"><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">
+</blockquote></div></div></div>
+
+--000000000000fa914b06375b08fc--
+
 
