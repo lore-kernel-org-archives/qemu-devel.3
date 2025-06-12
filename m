@@ -4,57 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E5FC61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 22:07:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEE04C61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 22:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPq4U-0003EM-S9; Thu, 12 Jun 2025 18:06:55 -0400
+	id 1uPq8v-00046g-B8; Thu, 12 Jun 2025 18:11:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uPq4T-0003Dw-0R
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 18:06:53 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPq8s-00045g-RM
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 18:11:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1uPq4Q-0002Lk-Fb
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 18:06:52 -0400
-Received: from zero.eik.bme.hu (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 81C2E55BC03;
- Fri, 13 Jun 2025 00:06:48 +0200 (CEST)
-X-Virus-Scanned: amavisd-new at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
- with ESMTP id fVfga0KTVRLr; Fri, 13 Jun 2025 00:06:46 +0200 (CEST)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 3237C55BC02; Fri, 13 Jun 2025 00:06:46 +0200 (CEST)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 2D0CC745683;
- Fri, 13 Jun 2025 00:06:46 +0200 (CEST)
-Date: Fri, 13 Jun 2025 00:06:46 +0200 (CEST)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Oleg Tolmatcev <oleg.tolmatcev@gmail.com>
-cc: Stefan Hajnoczi <stefanha@gmail.com>, qemu-devel@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH RESEND v3] meson: fix Windows build
-In-Reply-To: <CACcXsZhwqiLcyuE6uQYTDqQqJucC1FQfXOCNSPwSQKvuEjBCcg@mail.gmail.com>
-Message-ID: <860d4ea3-fd5f-b837-4bf6-b55e7032e0ac@eik.bme.hu>
-References: <20250607094503.1307-2-oleg.tolmatcev@gmail.com>
- <CAJSP0QXOiaYWo-s8V7tRRBdyzJTCruY5ufvu9zyNPm9ZQR1SrQ@mail.gmail.com>
- <CACcXsZhwqiLcyuE6uQYTDqQqJucC1FQfXOCNSPwSQKvuEjBCcg@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPq8q-0002xJ-KS
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 18:11:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749766283;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=0tqVsARbWVo/2p6umHDuXm9z2o5FLAyXzweF6F/8I7M=;
+ b=Dm+v88RJHZ8QzmCdWfNWXIHc6msiplV05Ywzm54OMZoyhDPAeUloDrDSJQOiDRpRwAGsGa
+ vu8D1lfGuF9VGvo9Jzb1boIWnSMOgLd3wibvcdu82A6uprdrGrnZhAKXyshfPhlDWhJwrA
+ iM9UrKVQQ0Kqn+PnAZiWcdUZ10xzAV0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-SJalfshKNmKi-8ootXVysA-1; Thu,
+ 12 Jun 2025 18:11:19 -0400
+X-MC-Unique: SJalfshKNmKi-8ootXVysA-1
+X-Mimecast-MFC-AGG-ID: SJalfshKNmKi-8ootXVysA_1749766277
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B1A0B1800295; Thu, 12 Jun 2025 22:11:16 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.54])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4590419560B3; Thu, 12 Jun 2025 22:11:06 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: John Snow <jsnow@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Zhenwei Pi <pizhenwei@bytedance.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Jiri Pirko <jiri@resnulli.us>,
+ Ani Sinha <anisinha@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Mads Ynddal <mads@ynddal.dk>, Zhao Liu <zhao1.liu@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Kashyap Chamarthy <kchamart@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Hanna Reitz <hreitz@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-block@nongnu.org, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Eric Blake <eblake@redhat.com>, "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Lukas Straub <lukasstraub2@web.de>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fan Ni <fan.ni@samsung.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,
+ Jonathan Cameron <jonathan.cameron@huawei.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Roth <michael.roth@amd.com>, Kevin Wolf <kwolf@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Konstantin Kostiuk <kkostiuk@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: [PATCH v2 1/3] docs: fix errors formatting in
+ tests/qapi-schema/doc-good
+Date: Thu, 12 Jun 2025 18:10:49 -0400
+Message-ID: <20250612221051.1224565-2-jsnow@redhat.com>
+In-Reply-To: <20250612221051.1224565-1-jsnow@redhat.com>
+References: <20250612221051.1224565-1-jsnow@redhat.com>
 MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-314526806-1749766006=:46155"
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,220 +110,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
+If we remove the legacy parser, the doc-good.json formatting begins to
+fail because the body text is appended directly after the field list
+entry, which is invalid rST syntax.
 
---3866299591-314526806-1749766006=:46155
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
+Without this change, we see this error:
 
-On Thu, 12 Jun 2025, Oleg Tolmatcev wrote:
-> Am Do., 12. Juni 2025 um 21:35 Uhr schrieb Stefan Hajnoczi <stefanha@gmail.com>:
->>
->> On Sat, Jun 7, 2025 at 5:47 AM oltolm <oleg.tolmatcev@gmail.com> wrote:
->>>
->>> Sorry, I forgot to cc the maintainers.
->>>
->>> The build failed when run on Windows. I replaced calls to Unix programs
->>> like ´cat´, ´sed´ and ´true´ with calls to ´python´. I wrapped calls to
->>> ´os.path.relpath´ in try-except because it can fail when the two paths
->>> are on different drives. I made sure to convert the Windows paths to
->>> Unix paths to prevent warnings in generated files.
->>>
->>> Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
->>> ---
->>>  contrib/plugins/meson.build         |  2 +-
->>>  plugins/meson.build                 |  2 +-
->>>  scripts/tracetool/__init__.py       | 15 ++++++++++++---
->>>  scripts/tracetool/backend/ftrace.py |  4 +---
->>>  scripts/tracetool/backend/log.py    |  4 +---
->>>  scripts/tracetool/backend/syslog.py |  4 +---
->>>  tests/functional/meson.build        |  4 +---
->>>  tests/include/meson.build           |  2 +-
->>>  tests/tcg/plugins/meson.build       |  2 +-
->>>  trace/meson.build                   |  5 +++--
->>>  10 files changed, 23 insertions(+), 21 deletions(-)
->>>
->>> diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
->>> index fa8a426c8..1876bc784 100644
->>> --- a/contrib/plugins/meson.build
->>> +++ b/contrib/plugins/meson.build
->>> @@ -24,7 +24,7 @@ endif
->>>  if t.length() > 0
->>>    alias_target('contrib-plugins', t)
->>>  else
->>> -  run_target('contrib-plugins', command: find_program('true'))
->>> +  run_target('contrib-plugins', command: [python, '-c', ''])
->>>  endif
->>>
->>>  plugin_modules += t
->>> diff --git a/plugins/meson.build b/plugins/meson.build
->>> index 5383c7b88..cb7472df8 100644
->>> --- a/plugins/meson.build
->>> +++ b/plugins/meson.build
->>> @@ -33,7 +33,7 @@ if host_os == 'windows'
->>>      input: qemu_plugin_symbols,
->>>      output: 'qemu_plugin_api.def',
->>>      capture: true,
->>> -    command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
->>> +    command: [python, '-c', 'import fileinput, re; print("EXPORTS", end=""); [print(re.sub(r"[{};]", "", line), end="") for line in fileinput.input()]', '@INPUT@'])
->>>
->>>    # then use dlltool to assemble a delaylib.
->>>    # The delaylib will have an "imaginary" name (qemu.exe), that is used by the
->>> diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
->>> index bc03238c0..6dfcbf71e 100644
->>> --- a/scripts/tracetool/__init__.py
->>> +++ b/scripts/tracetool/__init__.py
->>> @@ -12,12 +12,14 @@
->>>  __email__      = "stefanha@redhat.com"
->>>
->>>
->>> +import os
->>>  import re
->>>  import sys
->>>  import weakref
->>> +from pathlib import PurePath
->>>
->>> -import tracetool.format
->>>  import tracetool.backend
->>> +import tracetool.format
->>>
->>>
->>>  def error_write(*lines):
->>> @@ -36,7 +38,7 @@ def error(*lines):
->>>
->>>  def out_open(filename):
->>>      global out_filename, out_fobj
->>> -    out_filename = filename
->>> +    out_filename = posix_relpath(filename)
->>>      out_fobj = open(filename, 'wt')
->>>
->>>  def out(*lines, **kwargs):
->>> @@ -308,7 +310,7 @@ def build(line_str, lineno, filename):
->>>              fmt = [fmt_trans, fmt]
->>>          args = Arguments.build(groups["args"])
->>>
->>> -        return Event(name, props, fmt, args, lineno, filename)
->>> +        return Event(name, props, fmt, args, lineno, posix_relpath(filename))
->>>
->>>      def __repr__(self):
->>>          """Evaluable string representation for this object."""
->>> @@ -447,3 +449,10 @@ def generate(events, group, format, backends,
->>>      tracetool.backend.dtrace.PROBEPREFIX = probe_prefix
->>>
->>>      tracetool.format.generate(events, format, backend, group)
->>> +
->>> +def posix_relpath(path, start=None):
->>> +    try:
->>> +        path = os.path.relpath(path, start)
->>> +    except ValueError:
->>> +        pass
->>> +    return PurePath(path).as_posix()
->>> diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
->>> index baed2ae61..5fa30ccc0 100644
->>> --- a/scripts/tracetool/backend/ftrace.py
->>> +++ b/scripts/tracetool/backend/ftrace.py
->>> @@ -12,8 +12,6 @@
->>>  __email__      = "stefanha@redhat.com"
->>>
->>>
->>> -import os.path
->>> -
->>>  from tracetool import out
->>>
->>>
->>> @@ -47,7 +45,7 @@ def generate_h(event, group):
->>>          args=event.args,
->>>          event_id="TRACE_" + event.name.upper(),
->>>          event_lineno=event.lineno,
->>> -        event_filename=os.path.relpath(event.filename),
->>> +        event_filename=event.filename,
->>>          fmt=event.fmt.rstrip("\n"),
->>>          argnames=argnames)
->>>
->>> diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
->>> index de27b7e62..17ba1cd90 100644
->>> --- a/scripts/tracetool/backend/log.py
->>> +++ b/scripts/tracetool/backend/log.py
->>> @@ -12,8 +12,6 @@
->>>  __email__      = "stefanha@redhat.com"
->>>
->>>
->>> -import os.path
->>> -
->>>  from tracetool import out
->>>
->>>
->>> @@ -55,7 +53,7 @@ def generate_h(event, group):
->>>          '    }',
->>>          cond=cond,
->>>          event_lineno=event.lineno,
->>> -        event_filename=os.path.relpath(event.filename),
->>> +        event_filename=event.filename,
->>>          name=event.name,
->>>          fmt=event.fmt.rstrip("\n"),
->>>          argnames=argnames)
->>> diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
->>> index 012970f6c..5a3a00fe3 100644
->>> --- a/scripts/tracetool/backend/syslog.py
->>> +++ b/scripts/tracetool/backend/syslog.py
->>> @@ -12,8 +12,6 @@
->>>  __email__      = "stefanha@redhat.com"
->>>
->>>
->>> -import os.path
->>> -
->>>  from tracetool import out
->>>
->>>
->>> @@ -43,7 +41,7 @@ def generate_h(event, group):
->>>          '    }',
->>>          cond=cond,
->>>          event_lineno=event.lineno,
->>> -        event_filename=os.path.relpath(event.filename),
->>> +        event_filename=event.filename,
->>>          name=event.name,
->>>          fmt=event.fmt.rstrip("\n"),
->>>          argnames=argnames)
->>> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
->>> index 52b4706cf..ee222888f 100644
->>> --- a/tests/functional/meson.build
->>> +++ b/tests/functional/meson.build
->>> @@ -411,6 +411,4 @@ foreach speed : ['quick', 'thorough']
->>>    endforeach
->>>  endforeach
->>>
->>> -run_target('precache-functional',
->>> -           depends: precache_all,
->>> -           command: ['true'])
->>> +alias_target('precache-functional', precache_all)
->>
->> Hi Oleg,
->> There is a CI hexagon build failure. Maybe precache_all is []:
->> ../tests/functional/meson.build:417:0: ERROR: alias_target takes at
->> least 2 arguments, but got 1.
->>
->> https://gitlab.com/qemu-project/qemu/-/jobs/10336566320#L4267
->>
->> Please take a look. Thanks!
->
-> Hi Stefan,
->
-> this should be replaced with
->
-> run_target('precache-functional',
->           depends: precache_all,
->           command: [python, '-c', ''])
->
-> Should I send a v4 of my patch?
+/home/jsnow/src/qemu/docs/../tests/qapi-schema/doc-good.json:169:
+WARNING: Field list ends without a blank line; unexpected
+unindent. [docutils]
 
-I think it would help if you can send a v4 also fixing up the commit 
-message as was discussed so Stefan does not have to do it. Generally more 
-than trivial fixup needs a new version of the patch sent by the author, 
-only fixing simple typos might not need a resend. Ideally maintainers 
-should not need to do any fixup just take the latest patch version.
+And this intermediate rST source:
 
-Regards,
-BALATON Zoltan
---3866299591-314526806-1749766006=:46155--
+tests/qapi-schema/doc-good.json:0167 |    :error:
+tests/qapi-schema/doc-good.json:0168 |    some
+
+With this patch applied, we instead generate this source:
+
+tests/qapi-schema/doc-good.json:0167 |    :error:
+tests/qapi-schema/doc-good.json:0168 |        - some
+
+which compiles successfully.
+
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ tests/qapi-schema/doc-good.json | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-good.json
+index 14b808f9090..6dcde8fd7e8 100644
+--- a/tests/qapi-schema/doc-good.json
++++ b/tests/qapi-schema/doc-good.json
+@@ -165,7 +165,8 @@
+ #
+ # Returns: @Object
+ #
+-# Errors: some
++# Errors:
++#     - some
+ #
+ # TODO: frobnicate
+ #
+-- 
+2.48.1
+
 
