@@ -4,84 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AE6C61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F2B2C71136
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 13:14:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPhgG-0002Fr-SD; Thu, 12 Jun 2025 09:09:21 -0400
+	id 1uPhkj-0003RZ-I8; Thu, 12 Jun 2025 09:13:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPhgE-0002FW-Mx
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:09:18 -0400
-Received: from mail-ej1-x62a.google.com ([2a00:1450:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPhgB-0004DL-Gm
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 09:09:18 -0400
-Received: by mail-ej1-x62a.google.com with SMTP id
- a640c23a62f3a-ad8a8da2376so163533866b.3
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 06:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749733753; x=1750338553; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=oF9HV3J9cGHJC5/rdUJ1C0ToRyFmid67B4txS1enQ0I=;
- b=C9rWQ9BkOE3tXBSTAhmf/la2/ZVqbJdTfkBSxlj/EN28zEUDGh1swlpSnVptuQQTq3
- rtVq+6ohYuKops7i6cB+gR4MoA9+0BeiqGSsCDp8Yz6bSmPA95oeRdp3lC/yW2BAWOs7
- HFMDBwIEx+HefwlCWvTc6EfHGa7Vw7tcsEb8uDzqAuFEvdIocvtbQ1b3/FOaZh3jnm9e
- Ift2Z5+nZ+SXbP7uMi6SmD6/AFZgRIF4DucMV2jh0XpEXRcE+ZGb0wyxYId7JRTPj9dN
- w5/dVl8BQUy9JkzwyLpJJcStNJ7Ec07o/fKsKhvdOlTXg/wYADzn7Vh0gMBdLB0Z4Rh9
- tWKA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749733753; x=1750338553;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=oF9HV3J9cGHJC5/rdUJ1C0ToRyFmid67B4txS1enQ0I=;
- b=VXbf7W6ydCIqGard1nY1GgIGNm667zfEgbttFCID70YKcRtKPw8X7wYu/hnzjnPKXw
- s746uALmuZ/38JSmoV35zZSQ8Gqj7VraHNWJ5ZrHkaygY67R0z39HQCYBWS70nMkuW7v
- guuxwZgMMSenEPsi4dPPjEU08wHUkWG1Kyc1/ulYoMp+F0sP9AH9OEEB1G+2rEPxLD53
- 3pZgy46sTGDfoOHTM7f7ydQfhKpBjcZn0vci1sVuadRVG43VHzGNIPgHYt3/oWT7I4X0
- uLXrpsP5a2mo3+uUdIE4WRDR9Qvv6YJogwWIpVZMx9R2jTEapNkamGJ3KRbSIxHvf0je
- fqWg==
-X-Gm-Message-State: AOJu0YynXmlHeGnlOBu/EJzW3MbF+do9A+H6EPg+dy/4iqy8k/Uarmg+
- 7LLlLgxk919WFpgDvilVGWx8N7P9bmuP6q9Iy+3qcSvSYF8SF0v5qllrKDl1gQZHirk+my3CVz4
- wULkFaEiB55L4fSXA1cETQ/qTl9Y/25w=
-X-Gm-Gg: ASbGncsS9F2Yx+0SgVMhXaOLufSZi0GSBHtJl/LhWQJUfJ1S5owymQZ4bFkY2MMON9u
- HVrd/9widEWG3tWq1hIB6fl4lCPQBD2Zp/BqT4HP5JA6n6nfIWdVWfMgfAvO1H04HBRNJM71Lqt
- XuW6bpSLTAkCbddcA7+PeU/lfu64mh/97W9ZS1LYz+WQ==
-X-Google-Smtp-Source: AGHT+IFHY6d8YxAXJYgsP/7BmYyi9VNlX0/i0llV3grQn+HMHnJ7D5UrvBkNkOiuZvw5TVYCGamp5xeiGBYdyaaIsCw=
-X-Received: by 2002:a17:907:3fa5:b0:ad8:a935:b8eb with SMTP id
- a640c23a62f3a-adea8d31416mr323523566b.3.1749733751647; Thu, 12 Jun 2025
- 06:09:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uPhkc-0003RF-78; Thu, 12 Jun 2025 09:13:51 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uPhkY-0004zN-Bw; Thu, 12 Jun 2025 09:13:49 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bJ2wr4D6hz6K8Rw;
+ Thu, 12 Jun 2025 21:11:40 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 11C5F1400DC;
+ Thu, 12 Jun 2025 21:13:36 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 12 Jun
+ 2025 15:13:35 +0200
+Date: Thu, 12 Jun 2025 14:13:33 +0100
+To: Itaru Kitayama <itaru.kitayama@linux.dev>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <mst@redhat.com>, <linuxarm@huawei.com>,
+ <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>, Yuquan Wang
+ <wangyuquan1236@phytium.com.cn>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
+ <philmd@linaro.org>, Alireza Sanaee <alireza.sanaee@huawei.com>
+Subject: Re: [PATCH v14 0/5] arm/virt: CXL support via pxb_cxl
+Message-ID: <20250612141333.00004bcc@huawei.com>
+In-Reply-To: <aDfs+gIkK5ekKBXx@vm4>
+References: <20250528110726.226389-1-Jonathan.Cameron@huawei.com>
+ <aDfs+gIkK5ekKBXx@vm4>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250611075037.659610-1-kraxel@redhat.com>
- <3bc239aa-a2ab-400c-84b5-d7de3e5193ea@redhat.com>
- <CAJSP0QU++wDCXvYe2sUyHCZHrHVVY2ehdeAswjDE_5V2J-qE9w@mail.gmail.com>
- <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
-In-Reply-To: <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 12 Jun 2025 09:08:59 -0400
-X-Gm-Features: AX0GCFsjo2OK5aIeqBglRtNlr8mhFTcyM4gVNDQqKwkNsMXSM6JwwYiZnbn4Yq0
-Message-ID: <CAJSP0QWyjzLLGnvrzMDtRubHuzAPWNtejb_wLz33PVWJ+QJLmw@mail.gmail.com>
-Subject: Re: [PULL 0/2] Seabios 1.17.0 20250611 patches
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62a;
- envelope-from=stefanha@gmail.com; helo=mail-ej1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -95,119 +70,148 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 12:36=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
-te:
->
-> On 11/06/2025 21.09, Stefan Hajnoczi wrote:
-> > On Wed, Jun 11, 2025 at 2:36=E2=80=AFPM Thomas Huth <thuth@redhat.com> =
-wrote:
-> >>
-> >> On 11/06/2025 09.50, Gerd Hoffmann wrote:
-> >>> The following changes since commit bc98ffdc7577e55ab8373c579c28fe24d6=
-00c40f:
-> >>>
-> >>>     Merge tag 'pull-10.1-maintainer-may-2025-070625-1' of https://git=
-lab.com/stsquad/qemu into staging (2025-06-07 15:08:55 -0400)
-> >>>
-> >>> are available in the Git repository at:
-> >>>
-> >>>     https://gitlab.com/kraxel/qemu.git tags/seabios-1.17.0-20250611-p=
-ull-request
-> >>>
-> >>> for you to fetch changes up to cba36cf3881e907553ba2de38abd5edf7f952d=
-e1:
-> >>>
-> >>>     seabios: update binaries to 1.17.0 (2025-06-11 09:45:00 +0200)
-> >>>
-> >>> ----------------------------------------------------------------
-> >>> seabios: update to 1.17.0 release
-> >>>
-> >>> ----------------------------------------------------------------
-> >>>
-> >>> Gerd Hoffmann (2):
-> >>>     seabios: update submodule to 1.17.0
-> >>>     seabios: update binaries to 1.17.0
-> >>
-> >>    Hi Gerd, hi Stefan,
-> >>
-> >> I'm now getting this when doing a git pull:
-> >>
-> >> Fetching submodule roms/seabios
-> >> fatal: remote error: upload-pack: not our ref
-> >> b52ca86e094d19b58e2304417787e96b940e39c6
-> >> Errors during submodule fetch:
-> >>          roms/seabios
-> >
-> > GitLab CI didn't detect this, probably because the tests don't build
-> > SeaBIOS from source and use the binaries instead. Given infinite CI
-> > resources we should rebuild all ROMs from source to catch problems
-> > like this one.
-> >
-> > I wanted to mention this in case anyone wants to tighten up the CI to
-> > catch these issues for SeaBIOS and other ROMs.
-> >
-> >> Looking at
-> >> https://gitlab.com/qemu-project/seabios/-/commits/master?ref_type=3DHE=
-ADS
-> >> there is a problem with the mirroring:
-> >>
-> >> "This project is mirrored from https://review.coreboot.org/seabios. Pu=
-ll
-> >> mirroring failed 4 months ago.
-> >> Repository mirroring has been paused due to too many failed attempts. =
-It can
-> >> be resumed by a project maintainer or owner.
-> >> Last successful update 4 months ago. This branch has diverged from ups=
-tream. "
-> >>
-> >> Could you please fix this?
-> >
-> > `git clone https://review.coreboot.org/seabios` works on my machine,
-> > but I manually clicked the "update" button and GitLab failed again.
-> >
-> > In the GitLab UI there is a button to add a new mirror repo. I thought
-> > maybe we can delete the old repo and add a new one, but the push/pull
-> > direction dropdown list is disabled. Maybe that's because only 1 repo
-> > can be a mirror source for pull, I'm worried that deleting the
-> > existing failed repo will leave us with no way to add a new repo that
-> > supports pull.
-> >
-> > Does anyone know how to go about fixing this failed mirror?
->
-> Maybe do a manual push --force to our mirror to sync them again? ... but =
-it
-> would be good to know how this could have happened at all - maybe seabios
-> force-pushed their master branch at one point in time? Or did we commit
-> something to the mirror that was not in the upstream repository?
->
-> Anyway, I just noticed that it seems to be working now again - how did yo=
-u
-> fix it?
+On Thu, 29 May 2025 14:13:30 +0900
+Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
 
-I didn't fix it. GitLab's mirror operation is still failing. Your
-suggestion of force pushing should fix it, but I want to understand
-why a commit was lost first.
+> On Wed, May 28, 2025 at 12:07:21PM +0100, Jonathan Cameron wrote:
+> > v14: Simplifications suggeseted by Itaru (and some extra simplifications
+> >      that became apparent) and gather tags.
+> >      See individual patches for more information.
+> > 
+> > Updated cover letter
+> > 
+> > Richard Henderson has posted a pull request with a fix for the TCG TLB
+> > issue which will hopefully merge shortly (Thanks Richard!).
+> > 
+> > Back in 2022, this series stalled on the absence of a solution to device
+> > tree support for PCI Expander Bridges (PXB) and we ended up only having
+> > x86 support upstream. I've been carrying the arm64 support out of tree
+> > since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+> > a few weeks ago) and a fair number of fiddly rebases.
+> > gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
+> > series.
+> > 
+> > A recent discussion with Peter Maydell indicated that there are various
+> > other ACPI only features now, so in general he might be more relaxed
+> > about DT support being necessary. The upcoming vSMMUv3 support would
+> > run into this problem as well.
+> > 
+> > I presented the background to the PXB issue at Linaro connect 2022. In
+> > short the issue is that PXBs steal MMIO space from the main PCI root
+> > bridge. The challenge is knowing how much to steal.
+> > 
+> > On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+> > configuration of the PCI topology and QEMU can update the ACPI tables
+> > after EDK2 has done this when it can simply read the space used by the
+> > root ports. On device tree, there is no entity to figure out that
+> > enumeration so we don't know how to size the stolen region.
+> > 
+> > Three approaches were discussed:
+> > 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+> >    3rd enumeration implementation that ends up out of sync with EDK2 and
+> >    the kernel (there are frequent issues because of how those existing
+> >    implementations differ.
+> > 2) Figure out how to enumerate in kernel. I never put a huge amount of work
+> >    into this, but it seemed likely to involve a nasty dance with similar
+> >    very specific code to that EDK2 is carrying and would very challenging
+> >    to upstream (given the lack of clarity on real use cases for PXBs and
+> >    DT).
+> > 3) Hack it based on the control we have which is bus numbers.
+> >    No one liked this but it worked :)
+> > 
+> > The other little wrinkle would be the need to define full bindings for CXL
+> > on DT + implement a fairly complex kernel stack as equivalent in ACPI
+> > involves a static table, CEDT, new runtime queries via _DSM and a description
+> > of various components. Doable, but so far there is no interest on physical
+> > platforms. Worth noting that for now, the QEMU CXL emulation is all about
+> > testing and developing the OS stack, not about virtualization (performance
+> > is terrible except in some very contrived situations!)
+> > 
+> > There is only a very simple test in here, because my intent is not to
+> > duplicate what we have on x86, but just to do a smoke test that everything
+> > is hooked up.  In general we need much more comprehensive end to end CXL
+> > tests but that requires a reaonsably stable guest software stack. A few
+> > people have expressed interest in working on that, but we aren't there yet.
+> > 
+> > Note that this series has a very different use case to that in the proposed
+> > SBSA-ref support:
+> > https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+> > 
+> > SBSA-ref is a good choice if you want a relatively simple mostly fixed
+> > configuration.  That works well with the limited host system
+> > discoverability etc as EDK2 can be build against a known configuration.
+> > 
+> > My interest with this support in arm/virt is support host software stack
+> > development (we have a wide range of contributors, most of whom are working
+> > on emulation + the kernel support). I care about the weird corners. As such
+> > I need to be able to bring up variable numbers of host bridges, multiple CXL
+> > Fixed Memory Windows with varying characteristics (interleave etc), complex
+> > NUMA topologies with wierd performance characteristics etc. We can do that
+> > on x86 upstream today, or my gitlab tree. Note that we need arm support
+> > for some arch specific features in the near future (cache flushing).
+> > Doing kernel development with this need for flexibility on SBSA-ref is not
+> > currently practical. SBSA-ref CXL support is an excellent thing, just
+> > not much use to me for this work.
+> > 
+> > Also, we are kicking off some work on DCD virtualization, particularly to
+> > support inter-host shared memory being presented up into a VM. That
+> > will need upstream support on arm64 as it is built on top of the existing
+> > CXL emulation to avoid the need for a separate guest software stack.
+> > 
+> > Note this is TCG only - it is possible to support limited use with KVM but
+> > that needs additional patches not yet ready for upstream.  The challenge
+> > is interleave - and the solution is don't interleave if you want to run
+> > with KVM.  
+> 
+> Series applied cleanly on top of today's QEMU. And I confirm that
+> qtest-aarch64/cxl-test passes the test as it should and ndctl cxl test
+> suite ran fine 11 out of 12 (1 SKIP) on this series again this time tracing
+> subsystem enabled as Alison suggested. Used the Intel folk cxl/next
+> kernel.
+> 
+> Tested-by: Itaru Kitayama <itaru.kitayama@fujitsu.com>
+Thanks Itaru.
 
-The issue is that QEMU's mirror and upstream have diverged. The
-following commit is only in QEMU's mirror repo:
+I'm not going to pick this tag up purely because of the changes in patch
+2 and related dropping of patch 3.  Whilst not huge that is in fairly
+critical bit of the code, so feels inappropriate to carryn tags forwards.
 
-commit 44693a974cd90917f81a7d0310df4b592edd7e09
-Author: Christopher Lentocha <christopherericlentocha@gmail.com>
-Date:   Tue Jan 21 11:59:14 2025 -0500
+Jonathan
 
-    Fix AHCI Disk Detection when using EDK2 CSM
+> 
+> Thanks,
+> Itaru.
+> 
+> > 
+> > Jonathan Cameron (5):
+> >   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+> >   hw/cxl: Make the CXL fixed memory windows devices.
+> >   hw/cxl-host: Allow split of establishing memory address and mmio
+> >     setup.
+> >   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+> >     pxb-cxl
+> >   qtest/cxl: Add aarch64 virt test for CXL
+> > 
+> >  include/hw/arm/virt.h     |   4 +
+> >  include/hw/cxl/cxl.h      |   4 +
+> >  include/hw/cxl/cxl_host.h |   6 +-
+> >  hw/acpi/cxl.c             |  76 +++++++--------
+> >  hw/arm/virt-acpi-build.c  |  34 +++++++
+> >  hw/arm/virt.c             |  29 ++++++
+> >  hw/cxl/cxl-host-stubs.c   |   8 +-
+> >  hw/cxl/cxl-host.c         | 190 ++++++++++++++++++++++++++++++++------
+> >  hw/i386/pc.c              |  51 +++++-----
+> >  tests/qtest/cxl-test.c    |  59 +++++++++---
+> >  tests/qtest/meson.build   |   1 +
+> >  11 files changed, 353 insertions(+), 109 deletions(-)
+> > 
+> > -- 
+> > 2.48.1
+> >   
 
-It is not possible to fast-forward to upstream's master due to this differe=
-nce.
-
-Gerd: Do you know what happened to this commit upstream? According to
-the mailing list archives you merged it, but I don't see it on the
-master branch:
-https://patchew.org/Seabios/clqcnplppk34e7eyiquorweq5dvmbsgm2qrk7ozhzybvxvi=
-boa@4i2yfqplktar/
-
-Stefan
 
