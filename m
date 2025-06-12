@@ -4,92 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3245CC71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 15:01:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30934C61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 15:01:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPjPr-0001e4-82; Thu, 12 Jun 2025 11:00:31 -0400
+	id 1uPjQs-00025h-Is; Thu, 12 Jun 2025 11:01:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPjPi-0001cs-7j
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 11:00:23 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uPjPg-0003b8-K2
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 11:00:21 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-6077dea37easo2070864a12.3
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 08:00:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749740418; x=1750345218; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CP5Uuh3yt7akKnN+XqV7fg3bgP1hU5xiOm/Fjl0Pz50=;
- b=kX2njudNfwzRF96129T1U4j42Io9bZFEUdhOGeS12xm0QR7PG+QHZL2cx7EmaZUmFc
- cwNoV5gQRl9hN+6LERvN25XZK+Vzc77XO8eObopeGLWhWTByvhl3VK1NGJz4Fdym2KtD
- emJKdnH+N+dPTaW12PHm64fxwkmsYYV1oXgN5SBcqs0SY/tDTY5chpUYzSzD+/nYIpNZ
- NtqV6tw+AX5DJHxqXrLWyKVVbf39vMMGTCkl9n9zj/HMjfUNYBrtCZbGQUHcXfCojPmH
- CnFGImJeHzH/38G+qLh4RbgpCh4Z+wWPCMSehrrQ9CGpTWUw/NBKuFM+XrfqA8PDHJKW
- Hg7Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749740418; x=1750345218;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CP5Uuh3yt7akKnN+XqV7fg3bgP1hU5xiOm/Fjl0Pz50=;
- b=C3TQwxmwHLBjcrp+FfbEpzH5IRzSlU5jlwSnoFWH5uFM3051TvYAaCFZM+kIakXxz1
- oAgxnB5835lTGEjzZ9AOV8sm3NgPjq7vpKAyVic0nMwDsKGoKz61cdj6BOQ0i92vzbZ8
- VOQECuw1IhBXiZeHmzUqhU3YXC2ERYl/KO5SmUh3PSAxrbzArWFZNZFtSb8I3Wx5r2Ph
- PpiyqYDInZPNvH1tzv65monPceg9tyVJRqc+934jVvV4pzBiJ5+j0nKHV162IVcGf54n
- x9YuDUAaTpRtszSjr01V1RaHCK4kkosytHG3O7+WncH8ivgF2iL88G4jsoFnVry+B4Mr
- oZfw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV4XnmJIr1Y1cKZzPjXr2zsLEKGbgrGZ3PvaKV32rmBhl2ACoEj2mM8FZlksjn+aggkLOyx5E3b3rB0@nongnu.org
-X-Gm-Message-State: AOJu0YwMyGWR3mqKdnMZgF6Bda0Xp7blrfa6Z3UVCsS566/pyWx+oEuX
- dmFbSnPUelMNy3G+2DjFDOGfxh5rHYhNlIvIz9DQyORDw4IyyLD/c5XPhPzSKWVSUGHYIbOUIgY
- aeYGevp9urZ1RbidEsBeviCfD4GPVCqw=
-X-Gm-Gg: ASbGncuaK8HhygH+3uhD/S3Vq15lVYniMXuE+6h3ZHoMdi4ErF/zq9w8P44xGJYcQ7j
- fmthbiLAYEy+/DGRpRPf7S6QIkDZMPNnBislYxMimsnfKHS+UATPckOBsGte1tpRoSWJl1rvwJM
- ScNXoi9Tin+HX16dUw+idskSmzxMZZTwpNH5o/85A8nQ==
-X-Google-Smtp-Source: AGHT+IGBSQ6I7OkLxkAYVpt94gau9oZCmInqMOKVBI46pBpwA8O/1r/uMAJS4gvFlcNfHgBzTlbQMjeUfnAQS0Dx5Y0=
-X-Received: by 2002:a05:6402:51cb:b0:602:3e3:dada with SMTP id
- 4fb4d7f45d1cf-608af7330fcmr66446a12.25.1749740418310; Thu, 12 Jun 2025
- 08:00:18 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uPjQr-00023V-As
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 11:01:33 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uPjQo-0003hG-50
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 11:01:33 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bJ5K94CZtz6K9CR;
+ Thu, 12 Jun 2025 22:59:25 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 4684C1402CB;
+ Thu, 12 Jun 2025 23:01:21 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 12 Jun
+ 2025 17:01:20 +0200
+Date: Thu, 12 Jun 2025 16:01:19 +0100
+To: wangyuquan <wangyuquan1236@phytium.com.cn>
+CC: <fan.ni@samsung.com>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
+ <chenbaozi@phytium.com.cn>, <qemu-devel@nongnu.org>,
+ <linux-cxl@vger.kernel.org>
+Subject: Re: [RFC PATCH v2 2/2] pci-host/cxl: Support creation of a new CXL
+ Host Bridge
+Message-ID: <20250612160119.000060e2@huawei.com>
+In-Reply-To: <20250530103320.534173-3-wangyuquan1236@phytium.com.cn>
+References: <20250530103320.534173-1-wangyuquan1236@phytium.com.cn>
+ <20250530103320.534173-3-wangyuquan1236@phytium.com.cn>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-References: <20250611075037.659610-1-kraxel@redhat.com>
- <3bc239aa-a2ab-400c-84b5-d7de3e5193ea@redhat.com>
- <CAJSP0QU++wDCXvYe2sUyHCZHrHVVY2ehdeAswjDE_5V2J-qE9w@mail.gmail.com>
- <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
- <CAJSP0QWyjzLLGnvrzMDtRubHuzAPWNtejb_wLz33PVWJ+QJLmw@mail.gmail.com>
- <4ftyylwfpk2d6xioduftadbbwq3cydjmzeaqivksseem4a2h5d@xg7u6y6qaaak>
- <CAJSP0QU-msg=bTwODkB5VPoiwMcDC_ozN=7MuG5tFDNiNDNOKg@mail.gmail.com>
- <aErm6omt7VSljvwJ@redhat.com>
- <suqgvgrk6kgcl3zgfn7u4nuuqat6e6h5dft5n7tji77ivfkloj@4zs2y2l6rpol>
-In-Reply-To: <suqgvgrk6kgcl3zgfn7u4nuuqat6e6h5dft5n7tji77ivfkloj@4zs2y2l6rpol>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Thu, 12 Jun 2025 11:00:04 -0400
-X-Gm-Features: AX0GCFvzbfvM6Y2SgsI4VPZQhFwjtzg6yNm1gZIyOiUzjo21_GxS7YMqPSf8jPs
-Message-ID: <CAJSP0QWUCqY06WP+YT7qJxYr2CQYDn08ifJP=Em38LMN5YRA_g@mail.gmail.com>
-Subject: Re: [PULL 0/2] Seabios 1.17.0 20250611 patches
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-devel@nongnu.org, Thomas Huth <thuth@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x52e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -103,30 +71,235 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 10:53=E2=80=AFAM Gerd Hoffmann <kraxel@redhat.com> =
-wrote:
->
->   Hi,
->
-> > > I'm asking because if QEMU drops the commit I mentioned above, then I
-> > > guess EDK2 CSM AHCI detection will break. That would be a regression.
->
-> It was broken before too, so we are "only" missing a fix,
-> for a rather esoteric use case.
->
-> And it could very well be that this fix is not needed any more
-> given that seabios got a ahci controller reset so possibly things
-> are working now even without a ahci port reset.
->
-> > AFAICT it wouldn't be a regression from QEMU's POV.
->
-> Also not when looking at seabios release tags.
+On Fri, 30 May 2025 18:33:20 +0800
+wangyuquan <wangyuquan1236@phytium.com.cn> wrote:
 
-Okay, thanks Gerd and Daniel. The SeaBIOS update has been merged and
-will not be reverted.
+> From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+> 
+> This work defines a new cxl host bridge type (TYPE_CXL_HOST). This
+I'd stick to simpler text.
+Define a new CXL host bridge type (TYPE_CXL_HOST). This is an
+independent CXL host bridge which combined GPEX features (ECAM, MMIO
+windows and irq) and CXL Host Bridge Component Registers (CHBCR)
 
-Stefan
+> could be considered as a prototype of an independent cxl host bridge
+> which combines gpex features (ecam, mmio windows & irq) and CHBCR
+> at meanwhile.
+> 
+> The root bus path of CXL_HOST is "0001:00", that would not affect the
+> original pcie host topology. In the previous, the pxb-cxl-host with
+
+PCIe or PCIE
+
+> any cxl root ports and cxl endpoint devices would occupy the BDF
+
+CXL
+
+> number of the original pcie domain. This new type provide a solution
+> to resolve the problem.
+
+This isn't describing a problem as such.  I think the problem is with
+the generated ACPI tables etc being wrong.  Perhaps some more details? 
+
+> 
+> CXLFixedWindow struct adds a new member 'target_chb' to record the
+> target list of CXLHostBridge and adjusts the logic of
+> 'cxl_cfmws_find_device' and 'cxl_fmws_link_targets' to allow different
+> types of cxl host bridge.
+> 
+> Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+
+
+A few comments inline.  I don't mind this support being added as
+long as we get the user in (so SBSA patch as well).
+
+> diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+> index e010163174..183bc19a4b 100644
+> --- a/hw/cxl/cxl-host.c
+> +++ b/hw/cxl/cxl-host.c
+
+> -static void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> -                                           CXLFixedMemoryWindowOptions *object,
+> -                                           Error **errp)
+> +void cxl_fixed_memory_window_config(CXLState *cxl_state,
+> +                                    CXLFixedMemoryWindowOptions *object,
+> +                                    Error **errp)
+>  {
+>      ERRP_GUARD();
+>      g_autofree CXLFixedWindow *fw = g_malloc0(sizeof(*fw));
+> @@ -83,14 +85,16 @@ void cxl_fmws_link_targets(CXLState *cxl_state, Error **errp)
+>                  bool ambig;
+>  
+>                  o = object_resolve_path_type(fw->targets[i],
+> -                                             TYPE_PXB_CXL_DEV,
+> -                                             &ambig);
+> -                if (!o) {
+> +                    TYPE_DEVICE, &ambig);
+
+Keep alignment as it was.  If nothing else it makes it more obvious what
+exactly is changing in this diff.
+
+
+> +
+> +                if (object_dynamic_cast(o, TYPE_PXB_CXL_DEV) ||
+> +                    object_dynamic_cast(o, TYPE_CXL_HOST)) {
+> +                    fw->target_hbs[i] = o;
+> +                } else {
+>                      error_setg(errp, "Could not resolve CXLFM target %s",
+> -                               fw->targets[i]);
+> +                        fw->targets[i]);
+
+Check for unnecessary white space changes like this one as they make it
+harder to read the patch.
+
+>                      return;
+>                  }
+> -                fw->target_hbs[i] = PXB_CXL_DEV(o);
+>              }
+>          }
+>      }
+
+> diff --git a/hw/pci-host/cxl.c b/hw/pci-host/cxl.c
+> new file mode 100644
+> index 0000000000..8323456864
+> --- /dev/null
+> +++ b/hw/pci-host/cxl.c
+> @@ -0,0 +1,145 @@
+
+Needs SPDX header I think.
+
+> +#include "qemu/osdep.h"
+> +#include "hw/pci/pci_bus.h"
+> +#include "hw/pci-host/cxl_host_bridge.h"
+
+> +
+> +static void cxl_host_realize(DeviceState *dev, Error **errp)
+> +{
+> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
+> +    CXLHostBridge *host = CXL_HOST(dev);
+> +    CXLComponentState *cxl_cstate = &host->cxl_cstate;
+> +    struct MemoryRegion *mr = &cxl_cstate->crb.component_registers;
+> +    PCIBus *cxlbus;
+
+Ordering seems a little random. I'd move this cxlbus to after pex.
+
+> +    PCIHostState *pci = PCI_HOST_BRIDGE(dev);
+> +    PCIExpressHost *pex = PCIE_HOST_BRIDGE(dev);
+> +    int i;
+> +
+> +    /* CHBCR MMIO init */
+> +    cxl_host_reset(host);
+> +    cxl_component_register_block_init(OBJECT(dev), cxl_cstate, TYPE_CXL_HOST);
+> +    sysbus_init_mmio(sbd, mr);
+> +
+> +    /* MMFG window init */
+
+MMCFG however, I'd just drop this comment as the code is fairly obvious.  Also dro
+the CHBCR one above for the same reason.
+
+> +    pcie_host_mmcfg_init(pex, PCIE_MMCFG_SIZE_MAX);
+> +    sysbus_init_mmio(sbd, &pex->mmio);
+> +
+> +    /* mmio window init */
+
+And this comment.  None of them are adding significant value.
+
+> +    memory_region_init(&host->io_mmio, OBJECT(host), "cxl_host_mmio",
+> +                        UINT64_MAX);
+> +
+> +    memory_region_init_io(&host->io_mmio_window, OBJECT(host),
+> +                              &unassigned_io_ops, OBJECT(host),
+> +                              "cxl_host_mmio_window", UINT64_MAX);
+> +
+> +    memory_region_add_subregion(&host->io_mmio_window, 0, &host->io_mmio);
+> +    sysbus_init_mmio(sbd, &host->io_mmio_window);
+> +
+> +    /* ioport window init, 64K is the legacy size in x86 */
+> +    memory_region_init(&host->io_ioport, OBJECT(host), "cxl_host_ioport",
+> +                        64 * 1024);
+> +
+> +    memory_region_init_io(&host->io_ioport_window, OBJECT(host),
+> +                              &unassigned_io_ops, OBJECT(host),
+> +                              "cxl_host_ioport_window", 64 * 1024);
+> +
+> +    memory_region_add_subregion(&host->io_ioport_window, 0, &host->io_ioport);
+> +    sysbus_init_mmio(sbd, &host->io_ioport_window);
+> +
+> +    /* PCIe host bridge use 4 legacy IRQ lines */
+> +    for (i = 0; i < CXL_HOST_NUM_IRQS; i++) {
+> +        sysbus_init_irq(sbd, &host->irq[i]);
+> +        host->irq_num[i] = -1;
+> +    }
+> +
+> +    pci->bus = pci_register_root_bus(dev, "cxlhost.0", cxl_host_set_irq,
+> +                                 pci_swizzle_map_irq_fn, host, &host->io_mmio,
+> +                                 &host->io_ioport, 0, 4, TYPE_CXL_BUS);
+> +    cxlbus = pci->bus;
+> +    cxlbus->flags |= PCI_BUS_CXL;
+> +
+> +    pci_bus_set_route_irq_fn(pci->bus, cxl_host_route_intx_pin_to_irq);
+> +}
+
+
+> diff --git a/hw/pci-host/meson.build b/hw/pci-host/meson.build
+> index 937a0f72ac..a00995068b 100644
+> --- a/hw/pci-host/meson.build
+> +++ b/hw/pci-host/meson.build
+> @@ -4,6 +4,7 @@ pci_ss.add(when: 'CONFIG_PCI_BONITO', if_true: files('bonito.c'))
+>  pci_ss.add(when: 'CONFIG_GT64120', if_true: files('gt64120.c'))
+>  pci_ss.add(when: 'CONFIG_PCI_EXPRESS_DESIGNWARE', if_true: files('designware.c'))
+>  pci_ss.add(when: 'CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', if_true: files('gpex.c'))
+> +pci_ss.add(when: 'CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', if_true: files('cxl.c'))
+
+I think this needs it's own config variable.
+
+>  pci_ss.add(when: ['CONFIG_PCI_EXPRESS_GENERIC_BRIDGE', 'CONFIG_ACPI'], if_true: files('gpex-acpi.c'))
+>  pci_ss.add(when: 'CONFIG_PCI_EXPRESS_Q35', if_true: files('q35.c'))
+>  pci_ss.add(when: 'CONFIG_PCI_EXPRESS_XILINX', if_true: files('xilinx-pcie.c'))
+
+> diff --git a/include/hw/pci-host/cxl_host_bridge.h b/include/hw/pci-host/cxl_host_bridge.h
+> new file mode 100644
+> index 0000000000..f6830dab83
+> --- /dev/null
+> +++ b/include/hw/pci-host/cxl_host_bridge.h
+> @@ -0,0 +1,25 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "hw/cxl/cxl.h"
+> +#include "hw/irq.h"
+> +#include "hw/pci/pcie_host.h"
+> +
+> +#define CXL_HOST_NUM_IRQS 4
+
+Does that come directly from the PCIe bus spec, if so is there
+a PCIe definition somewhere we can use for this?
+
+None of the CXL spec defined stuff uses legacy interrupts
+but I guess we have to support them for any PCIe device plugged
+in to the bus.
+
+> +
+> +typedef struct CXLHostBridge {
+> +    PCIExpressHost parent_obj;
+> +
+> +    CXLComponentState cxl_cstate;
+> +
+> +    MemoryRegion io_ioport;
+> +    MemoryRegion io_mmio;
+> +    MemoryRegion io_ioport_window;
+> +    MemoryRegion io_mmio_window;
+> +    qemu_irq irq[CXL_HOST_NUM_IRQS];
+> +    int irq_num[CXL_HOST_NUM_IRQS];
+> +} CXLHostBridge;
+> +
+> +int cxl_host_set_irq_num(CXLHostBridge *host, int index, int gsi);
+> +void cxl_host_hook_up_registers(CXLState *cxl_state, CXLHostBridge *host);
+
 
