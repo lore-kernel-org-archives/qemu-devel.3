@@ -4,38 +4,38 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F234CC71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 15:20:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37856C61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 15:20:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPjgz-0003UM-Hy; Thu, 12 Jun 2025 11:18:13 -0400
+	id 1uPjgp-0002yt-1c; Thu, 12 Jun 2025 11:18:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uPjgl-0002q4-4s; Thu, 12 Jun 2025 11:17:59 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ id 1uPjgh-0002n6-V0; Thu, 12 Jun 2025 11:17:56 -0400
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mchehab+huawei@kernel.org>)
- id 1uPjgf-0006dT-4m; Thu, 12 Jun 2025 11:17:58 -0400
+ id 1uPjge-0006d7-2q; Thu, 12 Jun 2025 11:17:55 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 1FB2B4A080;
- Thu, 12 Jun 2025 15:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4755C4CEF7;
+ by tor.source.kernel.org (Postfix) with ESMTP id E652662A05;
+ Thu, 12 Jun 2025 15:17:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89AFCC4CEEB;
  Thu, 12 Jun 2025 15:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
  s=k20201202; t=1749741468;
- bh=1N6hea/7ukAd+5GaVGFyPu+VhER4xnCVrmTaiBTUYb0=;
+ bh=IADrYFANwdNZ1rY1HT52KolBlScr6ckE6a5syaX5oVY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=q1SxZruptAuOs12qvd0H6OJYiEgDdo1o9oOAmryeNL7p3uIJqa0mmYenyB3220wBq
- /HguqattQkj3gDxcd5lMFZ2mpZ6RcHP2tdK2vxbdqDinzO3csUKXz8qmVSRhj/rjhS
- PSv5CJVD/zN5vL3Tbjpw2Y8/lbjUnxocLgE0JDCNwR19z1D58hmc6lghZng5Kox2yU
- abEN+wEH5KYessJpqAI08GU7/Ff2RCMWIvY91DaH4U/1FFOriSbBB5x028O0TOR+zG
- F9rEgcO6gt9PSspNnYk0QfjvyA+pUESYYeGNiYEbbpeB2rxtxw4uTFnAiILVmFnYCa
- urGfR7oRvAl7w==
+ b=FwRtQafizvhHBnRTdXWuDuyqnQ2vrkcSLc894V2TYhXqOxNIHRNilE1HCfiiP0JbP
+ kUbFcmO3sN2DLEZdPJSj4C4qWGOdLNj7BkHkYwIEIkLZa5FZ7ZE8+nDyUtuAiD0aiD
+ wnp2z1Bw3GPQhWF16A35Tz0N0SyLCE38z7ijUFkAaEiaCxYah9gQXgEIwl36PXlQV8
+ 92P9JeEWzQpvuYfvYBSULQx9L65zWGobJC5VPr+nUG84fNIahQPilL0uhCVq8B4XGR
+ 3r5rGL+7VCodzj4vFEfL2P2nUEqNq5RiUDa+OSg+v/bf+8MrQoEyW1SHMnR7lh9S5+
+ diqiHdZJGq2mg==
 Received: from mchehab by mail.kernel.org with local (Exim 4.98.2)
  (envelope-from <mchehab+huawei@kernel.org>)
- id 1uPjgZ-00000005Eva-08Z2; Thu, 12 Jun 2025 17:17:47 +0200
+ id 1uPjgY-00000005EvK-3Kwo; Thu, 12 Jun 2025 17:17:46 +0200
 From: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
 To: Igor Mammedov <imammedo@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
 Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
@@ -48,17 +48,17 @@ Cc: Jonathan Cameron <Jonathan.Cameron@huawei.com>,
  "Shannon Zhao" <shannon.zhaosl@gmail.com>,
  "Yanan Wang" <wangyanan55@huawei.com>, "Zhao Liu" <zhao1.liu@intel.com>,
  kvm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v10 (RESEND) 07/20] acpi/ghes: add a firmware file with HEST
- address
-Date: Thu, 12 Jun 2025 17:17:31 +0200
-Message-ID: <31b533ac65fa4746ff3f21e74acf2ab1a78d8b7d.1749741085.git.mchehab+huawei@kernel.org>
+Subject: [PATCH v10 (RESEND) 03/20] tests/acpi: virt: update HEST file with
+ its current data
+Date: Thu, 12 Jun 2025 17:17:27 +0200
+Message-ID: <e3527be1610b2ef6b20ca2efa025de91a1f1e0a6.1749741085.git.mchehab+huawei@kernel.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <cover.1749741085.git.mchehab+huawei@kernel.org>
 References: <cover.1749741085.git.mchehab+huawei@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=mchehab+huawei@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=mchehab+huawei@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -80,97 +80,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Store HEST table address at GPA, placing its the start of the table at
-hest_addr_le variable.
+Now that HEST table is checked for aarch64, add the current
+firmware file.
 
 Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
+Acked-by: Igor Mammedov <imammedo@redhat.com>
 Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/acpi/ghes.c         | 22 ++++++++++++++++++++--
- include/hw/acpi/ghes.h |  6 +++++-
- 2 files changed, 25 insertions(+), 3 deletions(-)
+ tests/data/acpi/aarch64/virt/HEST           | Bin 0 -> 132 bytes
+ tests/qtest/bios-tables-test-allowed-diff.h |   1 -
+ 2 files changed, 1 deletion(-)
 
-diff --git a/hw/acpi/ghes.c b/hw/acpi/ghes.c
-index 9243b5ad4acb..cbc96c1909f0 100644
---- a/hw/acpi/ghes.c
-+++ b/hw/acpi/ghes.c
-@@ -30,6 +30,7 @@
- 
- #define ACPI_HW_ERROR_FW_CFG_FILE           "etc/hardware_errors"
- #define ACPI_HW_ERROR_ADDR_FW_CFG_FILE      "etc/hardware_errors_addr"
-+#define ACPI_HEST_ADDR_FW_CFG_FILE          "etc/acpi_table_hest_addr"
- 
- /* The max size in bytes for one error block */
- #define ACPI_GHES_MAX_RAW_DATA_LENGTH   (1 * KiB)
-@@ -341,6 +342,9 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
- {
-     AcpiTable table = { .sig = "HEST", .rev = 1,
-                         .oem_id = oem_id, .oem_table_id = oem_table_id };
-+    uint32_t hest_offset;
-+
-+    hest_offset = table_data->len;
- 
-     build_ghes_error_table(ags, hardware_errors, linker);
- 
-@@ -352,6 +356,17 @@ void acpi_build_hest(AcpiGhesState *ags, GArray *table_data,
-                   ACPI_GHES_NOTIFY_SEA, ACPI_HEST_SRC_ID_SEA);
- 
-     acpi_table_end(linker, &table);
-+
-+    if (ags->use_hest_addr) {
-+        /*
-+         * Tell firmware to write into GPA the address of HEST via fw_cfg,
-+         * once initialized.
-+         */
-+        bios_linker_loader_write_pointer(linker,
-+                                         ACPI_HEST_ADDR_FW_CFG_FILE, 0,
-+                                         sizeof(uint64_t),
-+                                         ACPI_BUILD_TABLE_FILE, hest_offset);
-+    }
- }
- 
- void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-@@ -361,7 +376,10 @@ void acpi_ghes_add_fw_cfg(AcpiGhesState *ags, FWCfgState *s,
-     fw_cfg_add_file(s, ACPI_HW_ERROR_FW_CFG_FILE, hardware_error->data,
-                     hardware_error->len);
- 
--    if (!ags->use_hest_addr) {
-+    if (ags->use_hest_addr) {
-+        fw_cfg_add_file_callback(s, ACPI_HEST_ADDR_FW_CFG_FILE, NULL, NULL,
-+            NULL, &(ags->hest_addr_le), sizeof(ags->hest_addr_le), false);
-+    } else {
-         /* Create a read-write fw_cfg file for Address */
-         fw_cfg_add_file_callback(s, ACPI_HW_ERROR_ADDR_FW_CFG_FILE, NULL, NULL,
-             NULL, &(ags->hw_error_le), sizeof(ags->hw_error_le), false);
-@@ -484,7 +502,7 @@ AcpiGhesState *acpi_ghes_get_state(void)
-     }
-     ags = &acpi_ged_state->ghes_state;
- 
--    if (!ags->hw_error_le) {
-+    if (!ags->hw_error_le && !ags->hest_addr_le) {
-         return NULL;
-     }
-     return ags;
-diff --git a/include/hw/acpi/ghes.h b/include/hw/acpi/ghes.h
-index 411f592662af..ea9baab764e2 100644
---- a/include/hw/acpi/ghes.h
-+++ b/include/hw/acpi/ghes.h
-@@ -70,9 +70,13 @@ enum {
-  * When use_hest_addr is false, the GPA of the etc/hardware_errors firmware
-  * is stored at hw_error_le. This is the default on QEMU 9.x.
-  *
-- * An GPA value equal to zero means that GHES is not present.
-+ * When use_hest_addr is true, the GPA of the HEST table is stored at
-+ * hest_addr_le. This is the default for QEMU 10.x and above.
-+ *
-+ * Whe both GPA values are equal to zero means that GHES is not present.
-  */
- typedef struct AcpiGhesState {
-+    uint64_t hest_addr_le;
-     uint64_t hw_error_le;
-     bool use_hest_addr;         /* Currently, always false */
- } AcpiGhesState;
+diff --git a/tests/data/acpi/aarch64/virt/HEST b/tests/data/acpi/aarch64/virt/HEST
+index e69de29bb2d1d6434b8b29ae775ad8c2e48c5391..4c5d8c5b5da5b3241f93cd0839e94272bf6b1486 100644
+GIT binary patch
+literal 132
+zcmeZp4Gw8xU|?W;<mB({5v<@85#X$#prF9Wz`y`vgJ=-uVqjqS|DS;o#%Ew*U|?_n
+dk++-~7#J8hWI!Yi09DHYRr~Kh1c1x}0RY>66afGL
+
+literal 0
+HcmV?d00001
+
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index 39901c58d647..dfb8523c8bf4 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1,2 +1 @@
+ /* List of comma-separated changed AML files to ignore */
+-"tests/data/acpi/aarch64/virt/HEST",
 -- 
 2.49.0
 
