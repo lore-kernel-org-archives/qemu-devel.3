@@ -4,173 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B20AC61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 12:29:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5918C61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 12:30:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPh3c-0002a3-1o; Thu, 12 Jun 2025 08:29:25 -0400
+	id 1uPh4h-0003H4-S4; Thu, 12 Jun 2025 08:30:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uPh3E-0002ZM-6r
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:29:00 -0400
-Received: from mail-norwayeastazon11023123.outbound.protection.outlook.com
- ([40.107.159.123] helo=OSPPR02CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <andrey.zhadchenko@virtuozzo.com>)
- id 1uPh3C-00070P-0o
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:28:59 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=OKLfgcJOBQmQTT8OtM5MxZ17GOcIYbHpVJV8/9lsEj5vZywWoNcalOmmgVaK99lDAIUev5JNsoSM+krJpLeeZrnwESSHV7PijkjPsovJS0Sr2o0ToS6G1A62Fd95WB+0FCgI3zkBGDROYNuy8MgdRAeL1HDN8uSi9Hli+tD568iaKkw2qSbcdQCTSZjTOgKQz4rAadueB3bWQHZ0eMBGG5di8+EhFHni52edXsqI6VstvHjcYLuwQNOTiLBZWR2KkRY8Si9uZaEvqlgJ6yU8LOpF0QEbCqpZeYFxAndXyy7U6FgJAOX1EC3yyPRPFONFIynd4aUyB3icQDCGqMVDyQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VG0Xyf3te65eLoGFpnbJuYIgyscgjvu02bCg/Y/BxQ8=;
- b=L+49K97b66yWE06PzhJF1oAQGGFQt28EGz1x8VZ5GjLWdYjr3quQDCDV9WOIe+t0pLONA8tay9aNNniVQ7fIDzYWa5dH+o2g/IVYwiI/qT8rDBL/nuQgu7wjAVxbgEMojxLqS4SCiz13R60ZboncUtzTO4hMfnpM8UDkuxID/hSyfQ1Ous41WXYJ2IFui1uvbD/ifYQ3Eh+CRsSV+KwjwPlh2wjTOM+4pREaXjALrVbC047q8n+hFYvNr1R/IUSmIjZ0V/8gX6yMZDxwU5UoHBEiD6tUN6U3vsETfAYnMcy2oDAyriB1ORkdKHRPiF0SsZlkZt50RAo82kt9606ghw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=virtuozzo.com; dmarc=pass action=none
- header.from=virtuozzo.com; dkim=pass header.d=virtuozzo.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=virtuozzo.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=VG0Xyf3te65eLoGFpnbJuYIgyscgjvu02bCg/Y/BxQ8=;
- b=zTl0FZwZCMhHAP96FnFqF0fMYkP2a5xIADS4b8uN+ZYOpetWpsLQoJ54IvgQ8JQmMmJMCjn2TnEB9Z6BzEg2u/wujd3SSJE7GkMiCHELX2wVFCElGdRYNjvDJLh3J9/cn0TsITBTkOMwVEupWpxKjl4jd9sb8Du9eXDLPxN6mwyTZS73v5I5RrIBJ+R14V1y9eshgqWohymAVXEf6e5kC8vs03LXP3KPpHKjfVVxuyfBpn/dq4Cq7gfHFOvJx3Dr7TuDa3/HWioARyOgeQU3RcXBiObDAiI+ekSkH0iu56lIOe/evUvnnr/wQICMAy9VLu4mzICAzjhHi8yMbqicXA==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=virtuozzo.com;
-Received: from AM8PR08MB5732.eurprd08.prod.outlook.com (2603:10a6:20b:1d4::16)
- by DU5PR08MB10703.eurprd08.prod.outlook.com (2603:10a6:10:520::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.19; Thu, 12 Jun
- 2025 12:23:47 +0000
-Received: from AM8PR08MB5732.eurprd08.prod.outlook.com
- ([fe80::e543:a83c:a260:602b]) by AM8PR08MB5732.eurprd08.prod.outlook.com
- ([fe80::e543:a83c:a260:602b%3]) with mapi id 15.20.8835.018; Thu, 12 Jun 2025
- 12:23:47 +0000
-Message-ID: <2b2838cd-9285-490d-8ad0-c61bfba92a96@virtuozzo.com>
-Date: Thu, 12 Jun 2025 14:23:45 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/i386: KVM: add hack for Windows vCPU hotplug with
- SGX
-To: Paolo Bonzini <pbonzini@redhat.com>,
- Sean Christopherson <seanjc@google.com>
-Cc: zhao1.liu@intel.com, mtosatti@redhat.com, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, andrey.drobyshev@virtuozzo.com,
- "Denis V. Lunev" <den@virtuozzo.com>
-References: <20250609132347.3254285-2-andrey.zhadchenko@virtuozzo.com>
- <7ce603ad-33c7-4dcd-9c63-1f724db9978e@redhat.com>
- <4f19c78f-a843-49c9-8d19-f1dc1e2c4468@virtuozzo.com>
- <aEcOSd-KBjOW61Rt@google.com>
- <203f24da-fce0-4646-abed-c6ca657828d1@virtuozzo.com>
- <aEcnMFzh-X7Aofbl@google.com>
-Content-Language: en-US
-From: Andrey Zhadchenko <andrey.zhadchenko@virtuozzo.com>
-In-Reply-To: <aEcnMFzh-X7Aofbl@google.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0229.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e9::7) To AM8PR08MB5732.eurprd08.prod.outlook.com
- (2603:10a6:20b:1d4::16)
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uPh4K-0003A0-FF
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:30:10 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uPh4G-00079W-7E
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 08:30:06 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-addfe17ec0bso396320666b.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 05:30:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749731401; x=1750336201; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=LAthCIUL4GjwIULRaLaRtPoxL1oy917bqw20hsx5dQg=;
+ b=Kspc4rEDolHiNqjJIwWZMf88/RstueBLdQgje7bb0AR/G2RieK8/rGANMhja/xJc8U
+ 6wqpoNN1NXnjlUzLW0Lzva6THOKDrYy5rtqgATfLFkJFVoOVM7WTaAFmlD0EN3u+T1k1
+ cUyWHp9D9epWKa//y7pYRCxPltZ5TwFHD3kjRe6/XNI/7A7hIfVdRFA0rnHw+jwPNbP4
+ lZGUfk9mNe5Yy7BGgus1zOwtxnrii7Zf7hntDZGhXwai/F5jBKZ4+1wkljcPl4LFdOJ3
+ kgtAaAKdPxvAdOssIG9R681m0rw2b5S5ZRqLhxv6MK5QWJ5rk1YkfedcynpALoWut1yP
+ VZ5g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749731402; x=1750336202;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LAthCIUL4GjwIULRaLaRtPoxL1oy917bqw20hsx5dQg=;
+ b=ry/iVzNiX5IWKL+vmcdv14kyBrsoVAmm2whG9BbETorqpZXQ+PZgv7OoYJNJro82hV
+ bkrlENG8IseivTs/EkrAZI5sIN2jA/6sJCupt0dwPhpQmS+sSeraLLgfnZY6Lld5bMfT
+ TcTLGpoKy1TWRXtr0Oqx1yl28YD5WYAhz+itu1+sRrioimP7TmuhO2pKIRTNcYsmEDlY
+ 8PVq4g8lTGI92Y8Zey848JWpFhOCusGHLgU40AtIdJc/6ONtNwMXYvq9bsUoZBUj+RF/
+ Fp9Tq/vv8E7o8yuM86f4+vW/8thzPnfFqWNCkSjqJzf2b1SKCoDHdJA5dVEIksccGbAK
+ cRDA==
+X-Gm-Message-State: AOJu0YwbRbAM9zfk21zV2cRvlsbYbE3GgnrgPx0M9oD+E0j94387TK35
+ 6bFPTcXyipnIgLXaHPJbFmQ/ZhgYOZNJ4J9crSpciK3ft6XNua9UTa5CYKuy31hhUY/nxbetI8M
+ rnSoaonZDvd7GJp4pdX01/uelwfPC02noHMmqKpt7BQ==
+X-Gm-Gg: ASbGncudVFhtHfALB4K1mHBdPPOihlPDUOOF8vh32RVgW+sO8dtP/8ZSskZ/vFhgL4t
+ QeM6JIafjkuNw1Q2SMHbNvM8QRXhlreDfpsLUyHQv2QDu4WzUyxw/URXmqxGWZ9XX2urnGOsHNc
+ v86bTW15hsS2LfH/b0joT2n374h0FHHUnPP0sykwk9aIM=
+X-Google-Smtp-Source: AGHT+IHR8lwEEXgxlEGc9I0gPi7lREDMQ+VTK8Q3ilPhuTWvan/0ElV4PH4zU2nlyIlQRo9GbQdhBM40WYPyX+H0VrQ=
+X-Received: by 2002:a17:907:7245:b0:ad8:942b:1d53 with SMTP id
+ a640c23a62f3a-adea5b3c4b5mr302506666b.27.1749731401278; Thu, 12 Jun 2025
+ 05:30:01 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: AM8PR08MB5732:EE_|DU5PR08MB10703:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2d4d4233-c5c7-4994-97fa-08dda9abfa6e
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?c3Arb21zcksrSk1nSXVSbHpEc29rNm9LVXovQWkvcERraWJOV1VMSzU5c3Fr?=
- =?utf-8?B?NUFUbkNTRUZCcU8wS29zZXFsYUFJY3lQc1EwYitXdnRCV1o3b1RCVUwxdFZG?=
- =?utf-8?B?Zm03aGg0VXNzR01yNDI5Ty9mWlVkMDR6U285c0Q5NjJJRFlWYzhzNVBFT2t4?=
- =?utf-8?B?RkduWWFZcmtLVW1wOWVGT3dMVkN1S3R1Y0g2bXNjcDhrWlhqYmFCVk9rSnJG?=
- =?utf-8?B?ekZsMWZLeWxYUnFVbkt4QmZXd1JyNGVEVXhMZ3VSeW1sKzdYQko5WHprY3ZI?=
- =?utf-8?B?aGZwZGlPcE90WDJHWm1nYmpJcUFEOWl1R1g0REhtcFpRZjNaWnFnZ01ralhr?=
- =?utf-8?B?OGZiZGFXaTUzRjFwT3JtNy9NeWZ1Z0c4ZHNIUGlsS0xONXJDMWk2a2RJcXZ2?=
- =?utf-8?B?ZTU1MEY3d0tpR2IrNzRXT0VmR084WFUvSk41QVdtRzZ1aitwenJPT2prS001?=
- =?utf-8?B?VnJZc3ByZ21ObTRWSm9OV211c2p4ZWhFQldhUC96SWFmMml2ZmRnNFgzYUNC?=
- =?utf-8?B?VS90UERkRmF0VFhadnphUXVrSXRxVXpHME14Nkw0UExGdHBGTlQzSXJpYWtZ?=
- =?utf-8?B?T3BkYWUrTXNrcFRaT2xvVDN1RFVyYXpTM3BTVG9sTGE4WWZ4L3pjRVJCRTBL?=
- =?utf-8?B?YmxCU1JnQ3RkYlUvM3dUSUpwcFd3cmpSd0VrWUxMRWIzWmNsWlQvSmNlYVVw?=
- =?utf-8?B?QkhUS3BCT0J3NzZWRGJTRWdtRGdPQzBmNzJ0QlRKSGMvNUR1WmI2aEx2WVJH?=
- =?utf-8?B?b2RsSEFseE1icTFwRVdOSTdDalFzU2I4eWJOMUFseE9CTHJlM041aUFpVitV?=
- =?utf-8?B?MGlua01PcncwVmswM1RDT3pTZDMzYUVKNHcvNUJmdTl0QnMyTXRaTzlrdnhq?=
- =?utf-8?B?R2Z4UWFCUTdVOUczZUN6Rng5dFFHSm83a3oxbGdvK0RNSUxvUnNxUzY5T0tM?=
- =?utf-8?B?cjlwZC9hUi83ZzZvMzIrbUpJekhCTG5iVnhSMTlUSm9LNVh1RlZzRWJDZytw?=
- =?utf-8?B?WXBzSHRKUHB4WHpuRjJoc3VObnV5ZWN2K28rc09zSzdVbE1zODg1ZmpaK3Zo?=
- =?utf-8?B?bzg0YituR2ZRbmJvZng1TkhUNThab05KcU5BaGxOZ2Y0WExkeFZ5dmtYQlE0?=
- =?utf-8?B?V0l0bTZnMTZuQVVIQTl3cnBOR0xqcDRSbFlRbjVKaUNjSy9sS2RidlhMbmFi?=
- =?utf-8?B?VXlNN2czN0JzYWlkK1Jub0NXWlJxeWFVcDlJTEF1WDVCcTlEcEtDNlhQM3lL?=
- =?utf-8?B?cmtPRXZCMFBKWFQxVEhXOW50QSs2QWFxbFJ4dUJodTlJdWlSQ0wrc0NteTJt?=
- =?utf-8?B?RGF4NEJoNEFWYzgrTWdSYkFqOTNzdjkyWXZ0SEVRNGt0QmFQYWNJcEhOWVhm?=
- =?utf-8?B?aVpOalVLM21lQ3BBN1NYdEJ2dGFkaW9hcEY2L2xlUFpqTVJDUFNDY2p1bWZv?=
- =?utf-8?B?Qm4rWncyRm82MS9pZW56RjJDdjkrQzhhdEhob2FPR09sU3NscVBwbVFqMXFK?=
- =?utf-8?B?TVBrUW50UEE3TzVjL29Xa0N5NE9od09qOTZiSm5QVnFMTU0xMnMxMGRHTXFK?=
- =?utf-8?B?dFBoMG12eEo1UUl6RGhvMDhmSWhQekgyYWRabFNMUno3UXdETFZRUmthczFv?=
- =?utf-8?B?cW1EZTEwMGczWTliZ2x6TEtLd1p0T1V6dnM1ZytDZzBoekZCWXFVUUQvdVJW?=
- =?utf-8?B?WEZrTlpKWTBudllZdFlXUnFhYVRqbXNNVWEzYmQyR2tybGx2TWY1QTRWMDJm?=
- =?utf-8?B?TUxTRmVTQWtpY1dXSGl5Y04zaXM2S2d4YVhTLytIcU9DbHpHc0hFMm9VNzJZ?=
- =?utf-8?B?b1RZZ1lBZDVGakFOMitDS0orYnIyYXgvbXo3NjJYcEtkQWNDUHlPVm85cS9z?=
- =?utf-8?B?anAxaVlERVVWYlFaYXJKallwNEhodUVjV0JxWDk1MkRrdnc9PQ==?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:AM8PR08MB5732.eurprd08.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?TmJuY0hFcmVxdHZkbjIveGdEaUZrT2k3RjJCQUpqUk10elFFOUU0MU5FK1lk?=
- =?utf-8?B?c0dnOVFjRVlEanpJNUREaDdxeWxzcWVydWpoZC9BU052YWs5WEFYTCtBZld1?=
- =?utf-8?B?N3ErVVdSU1podW5VRXVoZHNGM2JyUHdnNzlSVWdPSk4xVURwVUhkeWZqVjc1?=
- =?utf-8?B?bGZObkh4ZTZYNzh4R1BjT01XWHZEcVNpS0ptekpnUC9xV2N4NHBwTlArbHFI?=
- =?utf-8?B?eElybEFkQlZyU1M5YlBGcWhaWjlIeXZKOWpibEg1SXpkQ2FWWEpXUTRhdEhY?=
- =?utf-8?B?a2ZGOUg0QVhxVnZVb1ZLTkNPdDY0WngrSFk2a3VtNmRHd0tQNWZWQWlSUVFw?=
- =?utf-8?B?UUJiQzhCQ1ZSeTRzTTZRbEJGSTBhQ1orTEFBa1dveVVTU01lUXo2R3JNMFVo?=
- =?utf-8?B?Zm9HT3VDMjRDRXYyS3NhV3dwb3AxT1FJOHRRMzlCSUlkYVZ2YzVSQTFCL2JQ?=
- =?utf-8?B?RGJoMklaZVZBK05Pam8wVSs1enB0TzVSMUhPUi9LZzlWZktDaS84bnRjd0hL?=
- =?utf-8?B?NXBNdHdDekZDa0hCTUZpSWtMRWY0dkZ1K29FZDZBVnYvTlRmZ1NNU2JWbFpE?=
- =?utf-8?B?NWJ6SENuVkNhWktDRnhmYlVYVHBqbzlEUVljalhaNFdkZWlpNHFrQ24vWHRw?=
- =?utf-8?B?d0NXeTZMWGhGNDFrbndsSlA4NHAvcnFUQzN6VlMwTFFyczhQclpYSzErb0Jl?=
- =?utf-8?B?NVlLRTEwd1V6ZERRRlNZNEhJd3lWQXhxWCt3Y1JmTTIxU0Q4Nmd2NmEzeFND?=
- =?utf-8?B?dkRLL2tiZFN0WDV3bGlTZ3d5MWpITUhZVGlYNUMxUFlNNE45QXZPYlQ3eFRR?=
- =?utf-8?B?MXlTbkhUTzlGN1gxMVZVL01NY2srWXk2T3RvWWdMeFlEREd5UkI5L2V0eitV?=
- =?utf-8?B?OEM1NFVyRHphR0ppWnhEQzdkRkhpWGp0R21rdHBSZXNUa1JVd2lhbVRXTE0x?=
- =?utf-8?B?enA5L1JHcC9jSUxDdkgxa1VNZWtKdWNQY0gyalpLOHN3bWdmN1dFTS90UnlC?=
- =?utf-8?B?Q2lUSE9PQ1JXaUc5ditPQkRkbHVZTFlqczl3R1piUjFLR2lpRUtYalBUTngv?=
- =?utf-8?B?dFFkV25NbUw0UDhMVGExdk42aCtaU2VBTlFUOHF1ZEpTV3kxUEl2elBRTnph?=
- =?utf-8?B?WWxsQ3lTREo5bS9MYkxIS3ZodTNxR08xZW5jQkVKaGltb3dyYkMxSmR2aHd4?=
- =?utf-8?B?UzdiSGU2aHdobnQrRks4Yk1nUVVKNTBiQXVYcnJJVHpVNjFPT1Y5V1RmRHhB?=
- =?utf-8?B?eDFNdU51WVVBUzZiL2g5TzRHOUlnNVFoS0RQdm90YS94WHA0RWhSRWQ5U1pm?=
- =?utf-8?B?UzQrVllkM0pNM3ZUd0NlS2FVRXpla2F3RmlKczRzS3pRbWNYMVBJUTIzbG5t?=
- =?utf-8?B?ZjRyS2VVWEZRWG1YSEFXaktlSzVmVUF6ZXZFTEdCMmZEN2loTEJKNTdoWGEx?=
- =?utf-8?B?TzV1akhuVXU2Y3laOTA1elJsdFZUKzRzYytiRm81aXJ0MUoveldEdE0wWEJD?=
- =?utf-8?B?dkhCQ3NEVTh1cGcyNmhCOHBIYnhvRmJxYldjOHpIY2x2WS9ZWnBaWWJzM0k4?=
- =?utf-8?B?aUoxcXIybXdjK1BqNGVGSUJ2VndtUGg3RmpOUGV1dkpwNEF2YS9kdTJUYVZ1?=
- =?utf-8?B?MU1YV1ZtZW5UZHQ5dFlyaVNoNmtlZnpyYVVjVFZlRm5XT09SQk5paHlpNVlH?=
- =?utf-8?B?T0hxT21yUTk2ZHhkVUgyK2ErUFFEeU9veUd5TStNbVYxM2JMcm9qaGRMUjJh?=
- =?utf-8?B?OHArekxaOE42YzE5VGVsbzYzS3o5cGlyV0NqZ0tlQmZiMnJiN3FoOWVnWUxI?=
- =?utf-8?B?UGt6NEx5d3BlWHRxOFJzSThkRjdIaUR3eXRzOFNLVjY2aUtkVHl2Z3oxZ05M?=
- =?utf-8?B?YU9xdTFNSEp5UllZaTRMTXdaZ280U3FUdWduTmc0eDcwWGNzekhpcHRValFE?=
- =?utf-8?B?WmVnalNLZS8xRUlpSHQ2cCt5cGxFUjczb1FJYXpDZG5OQ0lPVVBIa3RmVnRp?=
- =?utf-8?B?bG81UkQ2NGpodmVGeUQvMHB3bUlRNE1QVGZIQ2x3RFU3a2svQUVEVWVITU1L?=
- =?utf-8?B?bkFDOFdaTGRUMktRcGZtZDdMR0NyYVdHbzVaaXQ0NDA2OE91M0U3cEo1VitX?=
- =?utf-8?B?OEF2RzBEam9zanBEWG41cFM1YjlPWHgzZnp5aVJTTjhJMmd4Z0RGdnhYWHYz?=
- =?utf-8?B?M2c9PQ==?=
-X-OriginatorOrg: virtuozzo.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2d4d4233-c5c7-4994-97fa-08dda9abfa6e
-X-MS-Exchange-CrossTenant-AuthSource: AM8PR08MB5732.eurprd08.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2025 12:23:46.9444 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 0bc7f26d-0264-416e-a6fc-8352af79c58f
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: tr0BDuvAF/+uHB3cupHxLWXzpHt1hAI0v6hFoD7E7y27fjPhym2x/W1HlOro4LtE84u8Do/E/yJqIJGwVtrkx2MoH0Ir2dcrmlx42rvoc5k=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU5PR08MB10703
-Received-SPF: pass client-ip=40.107.159.123;
- envelope-from=andrey.zhadchenko@virtuozzo.com;
- helo=OSPPR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250609182044.21703-1-tanishdesai37@gmail.com>
+ <CAJSP0QXRPcTBHsCPnFfUAKGRa7aqJ+nsiR4buawAeXXh_3p8Ng@mail.gmail.com>
+In-Reply-To: <CAJSP0QXRPcTBHsCPnFfUAKGRa7aqJ+nsiR4buawAeXXh_3p8Ng@mail.gmail.com>
+From: Tanish Desai <tanishdesai37@gmail.com>
+Date: Thu, 12 Jun 2025 17:59:50 +0530
+X-Gm-Features: AX0GCFvspKPJG58D9BZBQx5SRlVE-sZMcL9OqvCa1-gzo5Yh2w5tEX86e5uJ9Cc
+Message-ID: <CAH_Y1jdGT0iAkKneH_7NimesqchcNpnMJs-zkL4bjGrQZkv0Ug@mail.gmail.com>
+Subject: Re: [PATCH] utils/log: add qemu_log_timestamp() to encapsulate
+ timestamp logging
+To: Stefan Hajnoczi <stefanha@gmail.com>
+Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, mads@ynddal.dk, 
+ balaton@eik.bme.hu, philmd@linaro.org, peter.maydell@linaro.org
+Content-Type: multipart/alternative; boundary="000000000000a0297d06375f1681"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=tanishdesai37@gmail.com; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -187,68 +95,161 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Apparently, looks like it is a firmware bug.
-Both seaBIOS/OVMF set IA32_FEATURE_CONTROL only during init from 
-qemu-provided etc/msr_feature_control.
-So probably the fix should be done in the firmware then.
+--000000000000a0297d06375f1681
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On 6/9/25 20:25, Sean Christopherson wrote:
+Thank you everyone for the review I have shared
+[PATCH v2] utils/log: add qemu_log_timestamp()
+in a separate mail thread with the suggested changes.
 
-> On Mon, Jun 09, 2025, Andrey Zhadchenko wrote:
->> On 6/9/25 18:39, Sean Christopherson wrote:
->>> On Mon, Jun 09, 2025, Denis V. Lunev wrote:
->>>>> Does anything in edk2 run during the hotplug process (on real hardware
->>>>> it does, because the whole hotplug is managed via SMM)? If so maybe that
->>>>> could be a better place to write the value.
->>>
->>> Yeah, I would expect firmware to write and lock IA32_FEATURE_CONTROL.
->>>
->>>>> So many questions, but I'd really prefer to avoid this hack if the only
->>>>> reason for it is SGX...
->>>
->>> Does your setup actually support SGX?  I.e. expose EPC sections to the guest?
->>> If not, can't you simply disable SGX in CPUID?
->>
->> We do not have any TYPE_MEMORY_BACKEND_EPC objects in our default config,
->> but have the following:
->> sgx=on,sgx1=on,sgx-debug=on,sgx-mode64=on,sgx-provisionkey=on,sgx-tokenkey=on
->> We found this during testing, and it can be disabled on our testing setup
->> without any worries indeed.
->> I have no data whether someone actually sets it properly in the wild, which
->> may still be possible.
-> 
-> The reason I ask is because on bare metal, I'm pretty sure SGX is incompatible
-> with true CPU hotplug.  It can work for the virtualization case, but I wouldn't
-> be all that surprised if the answer here is "don't do that".
-> 
->>>> Linux by itself handles this well and assigns MSRs properly (we observe
->>>> corresponding set_msr on the hotplugged CPU).
->>
->> I think Linux, at least old 4.4, does not write msr on hotplug.
-> 
-> Yeah, it's a newer thing.  5.6+ should initialize IA32_FEATURE_CONTROL if it's
-> left unlocked (commit 1db2a6e1e29f ("x86/intel: Initialize IA32_FEAT_CTL MSR at boot").
-> 
->> Anyway it hotplugs fine and tolerates different value unlike Windows
-> 
-> Heh, probably only because the VM isn't actively using KVM at the time of hotplug.
-> In pre-5.6 kernels, i.e. without the aforementioned handling, KVM (in the guest)
-> would refuse to load (though the hotplug would still work).  But if the guest is
-> actively running (nested) VMs at the time of hotplug, the hotplugged vCPUs would
-> hit a #GP when attempting to do VMXON, and would likely crash the kernel.
-> 
->>> Linux is much more tolerant of oddities, and quite a bit of effort went into
->>> making sure that IA32_FEATURE_CONTROL was initialized if firmware left it unlocked.
->>
->> Thanks everyone for the ideas. I focused on Windows too much and did not
->> investigate into firmware, so perhaps this is rather a firmware problem?
->> I think by default we are using seaBIOS, not ovmf/edk2. I will update after
->> some testing with different configurations.
-> 
-> Generally speaking, firmware is expected to set and lock IA32_FEATURE_CONTROL.
-> But of course firmware doesn't always behave as expected, hence the hardening that
-> was added by commit 1db2a6e1e29f to avoid blowing up when running on weird/buggy
-> firmware.
-> 
+On Tue, 10 Jun 2025 at 12:37=E2=80=AFAM, Stefan Hajnoczi <stefanha@gmail.co=
+m> wrote:
 
+> On Mon, Jun 9, 2025 at 2:21=E2=80=AFPM Tanish Desai <tanishdesai37@gmail.=
+com>
+> wrote:
+> >
+> > Moved the logic for timestamped logging (~6 lines) from
+> a_nocheck__trace_foo(header) into a new qemu_log_timestamp() function in
+> util/log.c. This avoids code duplication across binaries and enables reus=
+e
+> as a standalone utility.
+> > Encapsulation helps reduce build size significantly, particularly when
+> many trace points are present. On Ubuntu 22 with
+> > ./configure --target-list=3Daarch64-softmmu --enable-kvm
+> --enable-trace-backends=3Dlog,
+> > this change reduced the build directory size from ~1435.27 MB to ~1412
+> MB (~23 MB saved).
+> > Notable reductions include:
+> >     trace/: ~2.6 MB
+> >     libqemuutil.a.p: ~3 MB
+> > A detailed report of size changes (in bytes) for relevant folders and
+> subfolders will follow in a trailing mail.
+>
+> Nice, the output of size(1) on qemu-system-x86_64 is reduced by 3%
+> (839 KB) when built with gcc 15.1.1 on x86_64:
+>
+>    text    data     bss     dec     hex filename
+> 14712231        13652904         149496 28514631        1b31947 before
+> 13852879        13652904         149496 27655279        1a5fc6f after
+>
+> That is in the same ballpark as the change in build directory size you
+> measured.
+>
+> > diff --git a/util/log.c b/util/log.c
+> > index b87d399e4c..996530fe7e 100644
+> > --- a/util/log.c
+> > +++ b/util/log.c
+> > @@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)
+> >      }
+> >  }
+> >
+> > +
+> > +void qemu_log_timestamp(const char *fmt, ...)
+> > +{
+> > +    FILE *f =3D qemu_log_trylock();
+> > +    if (f) {
+> > +        va_list ap;
+> > +        if(message_with_timestamp){
+> > +            struct timeval _now;
+> > +            gettimeofday(&_now, NULL);
+> > +            fprintf(f,"%d@%zu.%06zu:",qemu_get_thread_id(),(size_t)_no=
+w.tv_sec,
+> (size_t)_now.tv_usec);
+> > +        }
+> > +        va_start(ap, fmt);
+> > +        vfprintf(f, fmt, ap);
+> > +        va_end(ap);
+> > +    }
+> > +    qemu_log_unlock(f);
+>
+> Although calling qemu_log_unlock(NULL) is safe, existing callers
+> invoke this function inside the if (f) { ... } body. Please follow
+> that approach for consistency.
+>
+> Looks good aside from that.
+>
+
+--000000000000a0297d06375f1681
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"auto">Thank you everyone for the review I have shared=C2=A0<div=
+>[PATCH v2] utils/log: add qemu_log_timestamp()</div>in a separate mail thr=
+ead with the suggested changes.</div><div dir=3D"auto"><span style=3D"font-=
+family:-apple-system,sans-serif"><br></span></div><div dir=3D"auto"><span s=
+tyle=3D"font-family:-apple-system,sans-serif">On Tue, 10 Jun 2025 at 12:37=
+=E2=80=AFAM, Stefan Hajnoczi &lt;<a href=3D"mailto:stefanha@gmail.com">stef=
+anha@gmail.com</a>&gt; wrote:</span><br></div><div><div class=3D"gmail_quot=
+e gmail_quote_container"><blockquote class=3D"gmail_quote" style=3D"margin:=
+0 0 0 .8ex;border-left:1px #ccc solid;padding-left:1ex">On Mon, Jun 9, 2025=
+ at 2:21=E2=80=AFPM Tanish Desai &lt;<a href=3D"mailto:tanishdesai37@gmail.=
+com" target=3D"_blank">tanishdesai37@gmail.com</a>&gt; wrote:<br>
+&gt;<br>
+&gt; Moved the logic for timestamped logging (~6 lines) from a_nocheck__tra=
+ce_foo(header) into a new qemu_log_timestamp() function in util/log.c. This=
+ avoids code duplication across binaries and enables reuse as a standalone =
+utility.<br>
+&gt; Encapsulation helps reduce build size significantly, particularly when=
+ many trace points are present. On Ubuntu 22 with<br>
+&gt; ./configure --target-list=3Daarch64-softmmu --enable-kvm --enable-trac=
+e-backends=3Dlog,<br>
+&gt; this change reduced the build directory size from ~1435.27 MB to ~1412=
+ MB (~23 MB saved).<br>
+&gt; Notable reductions include:<br>
+&gt;=C2=A0 =C2=A0 =C2=A0trace/: ~2.6 MB<br>
+&gt;=C2=A0 =C2=A0 =C2=A0libqemuutil.a.p: ~3 MB<br>
+&gt; A detailed report of size changes (in bytes) for relevant folders and =
+subfolders will follow in a trailing mail.<br>
+<br>
+Nice, the output of size(1) on qemu-system-x86_64 is reduced by 3%<br>
+(839 KB) when built with gcc 15.1.1 on x86_64:<br>
+<br>
+=C2=A0 =C2=A0text=C2=A0 =C2=A0 data=C2=A0 =C2=A0 =C2=A0bss=C2=A0 =C2=A0 =C2=
+=A0dec=C2=A0 =C2=A0 =C2=A0hex filename<br>
+14712231=C2=A0 =C2=A0 =C2=A0 =C2=A0 13652904=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0149496 28514631=C2=A0 =C2=A0 =C2=A0 =C2=A0 1b31947 before<br>
+13852879=C2=A0 =C2=A0 =C2=A0 =C2=A0 13652904=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0149496 27655279=C2=A0 =C2=A0 =C2=A0 =C2=A0 1a5fc6f after<br>
+<br>
+That is in the same ballpark as the change in build directory size you meas=
+ured.<br>
+<br>
+&gt; diff --git a/util/log.c b/util/log.c<br>
+&gt; index b87d399e4c..996530fe7e 100644<br>
+&gt; --- a/util/log.c<br>
+&gt; +++ b/util/log.c<br>
+&gt; @@ -143,6 +143,24 @@ void qemu_log_unlock(FILE *logfile)<br>
+&gt;=C2=A0 =C2=A0 =C2=A0 }<br>
+&gt;=C2=A0 }<br>
+&gt;<br>
+&gt; +<br>
+&gt; +void qemu_log_timestamp(const char *fmt, ...)<br>
+&gt; +{<br>
+&gt; +=C2=A0 =C2=A0 FILE *f =3D qemu_log_trylock();<br>
+&gt; +=C2=A0 =C2=A0 if (f) {<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 va_list ap;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 if(message_with_timestamp){<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 struct timeval _now;<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gettimeofday(&amp;_now, NUL=
+L);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 fprintf(f,&quot;%d@%zu.%06z=
+u:&quot;,qemu_get_thread_id(),(size_t)_now.tv_sec, (size_t)_now.tv_usec);<b=
+r>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 va_start(ap, fmt);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 vfprintf(f, fmt, ap);<br>
+&gt; +=C2=A0 =C2=A0 =C2=A0 =C2=A0 va_end(ap);<br>
+&gt; +=C2=A0 =C2=A0 }<br>
+&gt; +=C2=A0 =C2=A0 qemu_log_unlock(f);<br>
+<br>
+Although calling qemu_log_unlock(NULL) is safe, existing callers<br>
+invoke this function inside the if (f) { ... } body. Please follow<br>
+that approach for consistency.<br>
+<br>
+Looks good aside from that.<br>
+</blockquote></div></div>
+
+--000000000000a0297d06375f1681--
 
