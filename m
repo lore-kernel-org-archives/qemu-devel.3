@@ -4,93 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E060C61CE8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 10:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27490C61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 11:29:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPfKI-00007m-CX; Thu, 12 Jun 2025 06:38:30 -0400
+	id 1uPg6h-0004tq-JH; Thu, 12 Jun 2025 07:28:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1uPfKD-00005z-CJ
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uPg6a-0004sM-Lq
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 07:28:25 -0400
+Received: from mail-co1nam11on2057.outbound.protection.outlook.com
+ ([40.107.220.57] helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mcasquer@redhat.com>)
- id 1uPfJs-0007wj-ES
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 06:38:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749724562;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=g5JtIEjkmv9Lug4mLY5HB53y41fVbGtvJ9WO+Y3G5Tw=;
- b=eDIB9alzHrhKkbMMP5reOymDm3T7vhZAcKU4IvKI8ZXuFN1dXvCd8K4cdwSQobEfXvmOKa
- xjx6Wqns4bc5AGE6ps4Ih1KmlIW5+is8gk8HlW3ADnYxQDweHbj5n5SmugIwytM4ju3N4L
- DJv9oEd1JRVcQuongLNxpdOrfB5kYZ4=
-Received: from mail-lj1-f198.google.com (mail-lj1-f198.google.com
- [209.85.208.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-504-yr-Y13L5PCKne5hHClkf5g-1; Thu, 12 Jun 2025 06:36:00 -0400
-X-MC-Unique: yr-Y13L5PCKne5hHClkf5g-1
-X-Mimecast-MFC-AGG-ID: yr-Y13L5PCKne5hHClkf5g_1749724559
-Received: by mail-lj1-f198.google.com with SMTP id
- 38308e7fff4ca-32add2506abso4199661fa.0
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 03:36:00 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749724559; x=1750329359;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=g5JtIEjkmv9Lug4mLY5HB53y41fVbGtvJ9WO+Y3G5Tw=;
- b=Xf2h3nnAk1X/XnHtFvQ9RZbQMWCrg0TY9fxv1C6j4GB6o9gUPr4Fb8e+oemjZFSdtA
- dlwLws/4TwCuR/rDsirhYffobN6A9OXlo7L5iDBtyrEO/asuQyA4/osQG5OsPPnnQcb2
- 8j+TkdSe5nwKxrWLwt4t90P+nPyCscX0F2B3Dejb2XB42Rkm/U16IwbbbuFMvgmTnpDC
- 7z6DQSMKRzH+glPcmCzWLv7KdQj5+SQqLcrGCcbvCinBqwReVUdKdW0NUY8UGuFKYBal
- QfWjD/+rtEopZxer+qvVmUjWyPc+Lt1OZHLPRt5+XnMu4pV1+5473UKP7oMuDtxtCiV7
- q1Sg==
-X-Gm-Message-State: AOJu0YxpRqUfmPNT3dcjJZ/SBBxi44VBbuj50ineny9HIKQ3OMr3OUku
- LrmJxdaCRQLCG7B3Zkwx6ds+WtzFrJPozhJ3wE1O9sjPL4kSayX092zXb/PEb+m/8dWSFmRxKa7
- AMGyJdL01MYxs4NktDgsNNmw3oJBt/0+S9U7eqNN63SWewBwuCAJkaatjDAil7uNztcHF0zGNNa
- 2ypR9/nqfdqAlyWfvO3/uuHqgBUl5DarI=
-X-Gm-Gg: ASbGncuioRSlqfN8zzAUvjDT5Bs9grhmXqHoI4xelzm7SMRNtYsUq0Obv/b7CIIWfkl
- u0Hsq1Y7hUEbFzummFSBEoEfqv+QKMUy9NQ13i31wWq6+NHVPpG0vuZd2eRWXWmZnbc1h1A1Uo3
- VbKkA=
-X-Received: by 2002:a2e:a7c1:0:b0:32a:7666:80d4 with SMTP id
- 38308e7fff4ca-32b306f724dmr8419141fa.23.1749724558689; 
- Thu, 12 Jun 2025 03:35:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQ1Brd50CC9vOc23ah8SRFfvqaFsC0RP0nGwGrmBNbdU+OfM9AbKxuPGzXz4ybur6bfLBeC67NA+8RYpdRByI=
-X-Received: by 2002:a2e:a7c1:0:b0:32a:7666:80d4 with SMTP id
- 38308e7fff4ca-32b306f724dmr8419061fa.23.1749724558212; Thu, 12 Jun 2025
- 03:35:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
+ id 1uPg6U-0007US-Hh
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 07:28:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=DJDXROLILVrOLOs4s7VbrKgpj76PHrOZrTwFJs3tmYAjkxq0y+BYNejtsnsGasmbWH62ytpbT7+78HR11Vig2uggfmGKc/6v+PLHwXrXmLen+DbF0rAqNAyFwffWWXQnE1Bwj/l6urt/n+901nQ7JzjDIgRSPXqSmB0GciacHxC3c3+IEOcwcdyd1S/PBtmL6kQbzVaRRnzApD6pkMts3ocEsFPcGEWo5G3nEn7/+NSUTltu108yigxjJ3PrdiAuvgEbxRdBINIypepq4KUGvbbnAyAq97OaMU9jKFVh48lmeAJz/MmRSdIrO30Hw0fMgxVzIpIk5lQFBq0Y6wB0TQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=L0X5jNqnfEUCEvWmMZ18GewnfCZlx8qD8EMZj5j/l38=;
+ b=xQCsoW4AcrsIxb3vtOU9FWEByorEmbEgraoev7q84cFQ8hYuHBz/RDlfwZZNWJo3l8nVfKCZNy2UeB8Xb2B8gy0ByxhLpWfbDuGzuYRMI9PZnMi1NVnHhxp7Lb/qes8TnSGtD1AnZfO4dXFAibtWE27UA+akOuxVpJDm8pzU6HOomZ9IbgIGFx7XEVnZOyfEnaNZpP4OsQZFfhsDdwSXIXKCSIrZ+kDJFNaIFMKquQ0v18FFk9Xxf6X65aHZzz+TKPXk83sIDnnwOyiD9okC3L1SVRuwm0/8Gs0jInDHT7blZQwOqP4jC5J2iZiLy/110Ac4Kvecr9JXEtLCEDHpYA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=eviden.com smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=L0X5jNqnfEUCEvWmMZ18GewnfCZlx8qD8EMZj5j/l38=;
+ b=1mlv+fsw37pdf9DcDxUfvH4U7W4smkPpIq9wumLZuCDfVOTKP/Crpp1O6MT+WNohKxJ0uWn6220mrIq6IdVutfwhyV5itbDMBWcW0uUX66amkdO+GSbeNuypJpbhUDDjVcYwdqmmgI2VmANIrv60MlGqN+OW9w40Kks2I428v2U=
+Received: from MN2PR05CA0064.namprd05.prod.outlook.com (2603:10b6:208:236::33)
+ by PH8PR12MB7325.namprd12.prod.outlook.com (2603:10b6:510:217::19)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8792.36; Thu, 12 Jun
+ 2025 11:23:09 +0000
+Received: from MN1PEPF0000ECD8.namprd02.prod.outlook.com
+ (2603:10b6:208:236:cafe::ac) by MN2PR05CA0064.outlook.office365.com
+ (2603:10b6:208:236::33) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8835.19 via Frontend Transport; Thu,
+ 12 Jun 2025 11:23:09 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=SATLEXMB04.amd.com; pr=C
+Received: from SATLEXMB04.amd.com (165.204.84.17) by
+ MN1PEPF0000ECD8.mail.protection.outlook.com (10.167.242.137) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.20.8835.15 via Frontend Transport; Thu, 12 Jun 2025 11:23:09 +0000
+Received: from [10.85.38.70] (10.180.168.240) by SATLEXMB04.amd.com
+ (10.181.40.145) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 12 Jun
+ 2025 06:23:04 -0500
+Message-ID: <9fc055e7-aa69-4c14-a8ba-5d555da42033@amd.com>
+Date: Thu, 12 Jun 2025 16:53:01 +0530
 MIME-Version: 1.0
-References: <20250609161855.6603-1-peterx@redhat.com>
- <CAMXpfWtGPUDGtn40tkZYNMhntp48BbMRHnZqQkrBKokyMyEXyQ@mail.gmail.com>
- <aEl_RESZhLS56pv2@x1.local>
-In-Reply-To: <aEl_RESZhLS56pv2@x1.local>
-From: Mario Casquero <mcasquer@redhat.com>
-Date: Thu, 12 Jun 2025 12:35:46 +0200
-X-Gm-Features: AX0GCFthwxpBImjokCk3P9O4tj245sU1UTGzfd3Fcfa1_a0K9OMXrqkOlQH1Tr0
-Message-ID: <CAMXpfWuAkKoVJFvD_YFLzTpUZ_a-25jK_y1y-EA_Sk+LUC0B6A@mail.gmail.com>
-Subject: Re: [PATCH v2 00/11] migration: Some enhancements and cleanups for
- 10.1
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
- "Dr . David Alan Gilbert" <dave@treblig.org>, Fabiano Rosas <farosas@suse.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mcasquer@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 18/20] amd_iommu: Toggle address translation mode on
+ devtab entry invalidation
+To: Ethan MILON <ethan.milon@eviden.com>, Alejandro Jimenez
+ <alejandro.j.jimenez@oracle.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "eduardo@habkost.net" <eduardo@habkost.net>, "peterx@redhat.com"
+ <peterx@redhat.com>, "david@redhat.com" <david@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "vasant.hegde@amd.com" <vasant.hegde@amd.com>,
+ "suravee.suthikulpanit@amd.com" <suravee.suthikulpanit@amd.com>,
+ "santosh.shukla@amd.com" <santosh.shukla@amd.com>, "Wei.Huang2@amd.com"
+ <Wei.Huang2@amd.com>, CLEMENT MATHIEU--DRIF
+ <clement.mathieu--drif@eviden.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "boris.ostrovsky@oracle.com"
+ <boris.ostrovsky@oracle.com>
+References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
+ <20250502021605.1795985-19-alejandro.j.jimenez@oracle.com>
+ <5fedf606-dd01-4a0a-af67-077e9ef9d0fd@eviden.com>
+Content-Language: en-US
+From: Sairaj Kodilkar <sarunkod@amd.com>
+In-Reply-To: <5fedf606-dd01-4a0a-af67-077e9ef9d0fd@eviden.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.180.168.240]
+X-ClientProxiedBy: SATLEXMB03.amd.com (10.181.40.144) To SATLEXMB04.amd.com
+ (10.181.40.145)
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MN1PEPF0000ECD8:EE_|PH8PR12MB7325:EE_
+X-MS-Office365-Filtering-Correlation-Id: f85246e2-c44c-4e12-192c-08dda9a382c8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|36860700013|1800799024|82310400026|7416014|376014; 
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?RHJQRWpDNWxZMnkwS2F2SElleXRvditEdThRend2VTR2Y1R6bVpJSHl3QmFG?=
+ =?utf-8?B?UjBOZGNML2ZBcjdORUJweGZMdlZVSEsyMEpCL3pWOFVjdS82SW1QT2lLZGo4?=
+ =?utf-8?B?R3N5alJqSGRoTVFhVHhzOW43Q05mbnpZK2RhN0h4OG45ZDNocGtBZzlsZEUv?=
+ =?utf-8?B?RDRwRmtlM0NqbG9DSmZyaUFpSFZtdkFIYjUxUDBwQitvOFBJeGhDM2Jpa2dn?=
+ =?utf-8?B?eVpZbjZucTRPRjRoZm94bEkzYW9IV2xLcHVObzliYVZQcTg5T2xmeWorNUMz?=
+ =?utf-8?B?T0R2VzJTQTlVc3NyRmRmZjhtSVpGS1NTakxKcFc4c3d0NURva3RTWFN2Q29t?=
+ =?utf-8?B?SlpiZU1EbFBhUWZydEhKSEpSdVNONGZLb2VLczBRS2FwWDBYYmxGeXEwa3BG?=
+ =?utf-8?B?cWdxdXlCcWU4UGJLc2Q5MjlMQTVnS0Raay9LVXJKeWhpVWdQck1DY050U0Jq?=
+ =?utf-8?B?TElVRGlIVksrN1BHV2llbzB4d0s0U28rTlgzdTk5QjVEZWk2NHZRV2tRVFNS?=
+ =?utf-8?B?Rk1JQk05TENFUkY1MkFxbVhaTTl5SVBZSUZNZXRQVlFzbUNnMVZCbms4QVZ1?=
+ =?utf-8?B?UkV6eUc1RkFuSjJZWEhKdk0rOUs4Yys1cUQwNUNrZ3B1QndjNzFPdmtMRzhU?=
+ =?utf-8?B?YnNCQ2tZenB0OGMrRTNTMWJpSFFUZ005VERlbktZQVN4ZlMzUUZYV2dGMEM5?=
+ =?utf-8?B?RkdQMWRyVGRPNTY5QnhITFdmWDRaeGh6eVZiN2F1a1dxY09wRVkrTkI2Qlpu?=
+ =?utf-8?B?ZVN0YjlmWFQyUXlxSmRGZmR6VFJGSFVpcTFjNkh0YlIxa1NybUIyRUhwUkMy?=
+ =?utf-8?B?azBVM0hpampkZk85RnE1ZGdIYXFyZTZMNFZjVVBHMFl1WUlxQVRMR1N0eEdN?=
+ =?utf-8?B?YW4yWFdMZlNMM09FeXhWV3h5OGx2VTNxRFpFMFBuOWJoTjBrL2huWHRDUFBC?=
+ =?utf-8?B?UFR2eUZyd3dCbEJZdWFWb29kRmdyRUIxY2FmSy8rNzViMGRqR3M5V2RVWmZp?=
+ =?utf-8?B?NXg2WnFwL0JJQnNvMmxPZ2dmSmR6L0RIbllnK2NZZDhsNG5EMnoyM2pNMHcv?=
+ =?utf-8?B?eXBzdU1nbExvc2NWQ0NUOTQ3bjU1NVBJWVVPUEtObnN3VXhCWjNrT1Y1bHkw?=
+ =?utf-8?B?UXMxRzNYRXZNVVFsUldnNVFudFNCWWlCOGtjN1ZtbTJ1cUVHMUJmRHNQc2p5?=
+ =?utf-8?B?UVBYNFBzV09CNFoxUkc2cUV5a2k4a0FHOHBXK0RRa1RBTWpqSHJYalVHNnp4?=
+ =?utf-8?B?WXJTcVZOTk1ETmVxVGlaQlV6NGZrUXFuRGJtM3ZuMURhOW9rL0pSaGRrdHNB?=
+ =?utf-8?B?MThueDNqTjJhWDI0eTFqdEk3TXhINzhyRWJ6MWZRYmlocTF3WEtGeDQxTE1G?=
+ =?utf-8?B?cVppT1VadS9PTHhwS2ovR1VvaFZmZ0hyVkpsVUo4aTNCaU1wQWlxVUlHL1pK?=
+ =?utf-8?B?Q3QvUjBpTDBGYzI4VVo3OWpQdWJIWU9rTlFMSTdOT2R2TnRTcGNGc1JMV0sw?=
+ =?utf-8?B?c2VnajAxc3pIN3pSVXg1ME5SUVk3WlJucXBoV2RZdGR3ajRqQ0xLMzJ0ZURr?=
+ =?utf-8?B?YTN3VXVHd09yV2hsa1N4Ni9FVUs1blM5WlZ0RmpFWTdlZUVkN08vV2VzOUVH?=
+ =?utf-8?B?Vkg2ditmQkZuRExpNnhSeTVhUnZ5Zk5nUDN6ZkMwbkhRSFhNZllvQXB4VWcr?=
+ =?utf-8?B?cTVKamt4clU1NUlFMm1wZ2VaVVFBYnJ1bTg4Z0Y0TVUybkhITXdyV0VIeWlG?=
+ =?utf-8?B?TjVaNU4rZEpmM3Mra2s0TzZiK2Vla0Q0UmJndUw1UXIvdGE3bTFRVzJxZjFy?=
+ =?utf-8?B?Qll5alkrbnpqN1ZiYnlZRGJsdDJMNkZIVXh0elJjU1dGOVRzdWc3NGtNMDJt?=
+ =?utf-8?B?a0duSUx3SjdxTzFJT3dyMGpsdlJmeVplKzNxaCsrKy9ORXVZWFEwV0tsSW10?=
+ =?utf-8?B?ZVZtVHQ1R2FkajJFMU5mZDJCVDAxTjlMSFRsb05jZXdiaGhsVlFuYnZkc1dm?=
+ =?utf-8?B?Y0E5L1g2SkFrWXk4ZlNRL2FobDRvTU1oVHdibGUvaXcremhhMk1MWC8xc1Bx?=
+ =?utf-8?Q?aVUfna?=
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:CAL; SFV:NSPM; H:SATLEXMB04.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(36860700013)(1800799024)(82310400026)(7416014)(376014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Jun 2025 11:23:09.4953 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: f85246e2-c44c-4e12-192c-08dda9a382c8
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[SATLEXMB04.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: MN1PEPF0000ECD8.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH8PR12MB7325
+Received-SPF: permerror client-ip=40.107.220.57;
+ envelope-from=Sairaj.ArunKodilkar@amd.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,131 +177,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter,
 
-Thanks for pointing this out! I retested it with the series you
-mentioned and everything works fine.
 
-Booted up 2 VMs as usual, one in source and one in destination with
--incoming defer. Set the postcopy-blocktime and postcopy-ram
-capabilities and query them to verify that they are enabled.
+On 6/12/2025 1:57 PM, Ethan MILON wrote:
+> Hi,
+> 
+> On 5/2/25 4:16 AM, Alejandro Jimenez wrote:
+>> Caution: External email. Do not open attachments or click links, unless this email comes from a known sender and you know the content is safe.
+>>
+>>
+>> A guest must issue an INVALIDATE_DEVTAB_ENTRY command after changing a
+>> Device Table entry (DTE) e.g. after attaching a device and setting up its
+>> DTE. When intercepting this event, determine if the DTE has been configured
+>> for paging or not, and toggle the appropriate memory regions to allow DMA
+>> address translation for the address space if needed. Requires dma-remap=on.
+>>
+>> Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+>> ---
+>>   hw/i386/amd_iommu.c | 78 +++++++++++++++++++++++++++++++++++++++++++--
+>>   1 file changed, 76 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+>> index a2df73062bf7..75a92067f35f 100644
+>> --- a/hw/i386/amd_iommu.c
+>> +++ b/hw/i386/amd_iommu.c
+>> @@ -991,18 +991,92 @@ static void amdvi_switch_address_space_all(AMDVIState *s)
+>>       }
+>>   }
+>>
+>> +/*
+>> + * A guest driver must issue the INVALIDATE_DEVTAB_ENTRY command to the IOMMU
+>> + * after changing a Device Table entry. We can use this fact to detect when a
+>> + * Device Table entry is created for a device attached to a paging domain and
+>> + * enable the corresponding IOMMU memory region to allow for DMA translation if
+>> + * appropriate.
+>> + */
+>> +static void amdvi_update_addr_translation_mode(AMDVIState *s, uint16_t devid)
+>> +{
+>> +    uint8_t bus_num, devfn, dte_mode;
+>> +    AMDVIAddressSpace *as;
+>> +    uint64_t dte[4] = { 0 };
+>> +    IOMMUNotifier *n;
+>> +    int ret;
+>> +
+>> +    /*
+>> +     * Convert the devid encoded in the command to a bus and devfn in
+>> +     * order to retrieve the corresponding address space.
+>> +     */
+>> +    bus_num = PCI_BUS_NUM(devid);
+>> +    devfn = devid & 0xff;
+>> +
+>> +    /*
+>> +     * The main buffer of size (AMDVIAddressSpace *) * (PCI_BUS_MAX) has already
+>> +     * been allocated within AMDVIState, but must be careful to not access
+>> +     * unallocated devfn.
+>> +     */
+>> +    if (!s->address_spaces[bus_num] || !s->address_spaces[bus_num][devfn]) {
+>> +        return;
+>> +    }
+>> +    as = s->address_spaces[bus_num][devfn];
+>> +
+>> +    ret = amdvi_as_to_dte(as, dte);
+>> +
+>> +    if (!ret) {
+>> +        dte_mode = (dte[0] >> AMDVI_DEV_MODE_RSHIFT) & AMDVI_DEV_MODE_MASK;
+>> +    }
+>> +
+>> +    if ((ret < 0) || (!ret && !dte_mode)) {
+>> +        /*
+>> +         * The DTE could not be retrieved, it is not valid, or it is not setup
+>> +         * for paging. In either case, ensure that if paging was previously in
+>> +         * use then invalidate all existing mappings and then switch to use the
+>> +         * no_dma memory region.
+>> +         */
+> 
+> If the DTE is malformed or could not be retrieved, wouldn't it be safer
+> to default to the DMA region rather than falling back to direct access?
+> Or am I missing something?
+> 
 
-(qemu) migrate_set_capability postcopy-ram on
-(qemu) migrate_set_capability postcopy-blocktime on
-(qemu) info migrate_capabilities
+Hi Ethan
 
-...
-postcopy-ram: on
-...
-postcopy-blocktime: on
-...
+I also agree with you.
+I think right way should be keep the IOMMU DMA region if error codes are
+AMDVI_FR_DTE_RTR_ERR and AMDVI_FR_DTE_TV. Otherwise when error code is
+AMDVI_FR_DTE_V, switch to direct access.
 
-Do migration with postcopy, this time check the full info migrate in source=
-.
-(qemu) info migrate  -a
-Status: postcopy-active
-Time (ms): total=3D6522, setup=3D33, down=3D16
-RAM info:
-  Throughput (Mbps): 949.60
-  Sizes: pagesize=3D4 KiB, total=3D16 GiB
-  Transfers: transferred=3D703 MiB, remain=3D5.4 GiB
-    Channels: precopy=3D111 MiB, multifd=3D0 B, postcopy=3D592 MiB
-    Page Types: normal=3D178447, zero=3D508031
-  Page Rates (pps): transfer=3D167581
-  Others: dirty_syncs=3D2, postcopy_req=3D1652
-Globals:
-  store-global-state: on
-  only-migratable: off
-  send-configuration: on
-  send-section-footer: on
-  send-switchover-start: on
-  clear-bitmap-shift: 18
+@vasant what do you think ?
 
-Once migration is completed compare the differences in destination
-about the postcopy blocktime.
-
-(qemu) info migrate -a
-Status: completed
-Globals:
-...
-Postcopy Blocktime (ms): 712
-Postcopy vCPU Blocktime (ms):
- [1633, 1635, 1710, 2097, 2595, 1993, 1958, 1214]
-
-With all the series applied and same VM:
-
-(qemu) info migrate -a
-Status: completed
-Globals:
-...
-Postcopy Blocktime (ms): 134
-Postcopy vCPU Blocktime (ms):
- [1310, 1064, 1112, 1400, 1334, 756, 1216, 1420]
-Postcopy Latency (us): 16075
-Postcopy non-vCPU Latencies (us): 14743
-Postcopy vCPU Latencies (us):
- [24730, 25350, 27125, 25930, 23825, 29110, 22960, 26304]
-
-Indeed the Postcopy Blocktime has been reduced a lot :)
-
-Thanks,
-Mario
-
-On Wed, Jun 11, 2025 at 3:06=E2=80=AFPM Peter Xu <peterx@redhat.com> wrote:
->
-> On Wed, Jun 11, 2025 at 08:15:55AM +0200, Mario Casquero wrote:
-> > This series has been successfully tested. The information displayed
-> > from the HMP info migrate command is more user-friendly, with the
-> > possibility of displaying the globals with info migrate -a.
-> > (qemu) info migrate -a
-> > Status: active
-> > Sockets: [
-> > tcp::::8888
-> > ]
-> > Globals:
-> >   store-global-state: on
-> >   only-migratable: off
-> >   send-configuration: on
-> >   send-section-footer: on
-> >   send-switchover-start: on
-> >   clear-bitmap-shift: 18
-> >
-> > Tested-by: Mario Casquero <mcasquer@redhat.com>
->
-> Hey, Mario,
->
-> Thanks for doing this!
->
-> This is a specific HMP dump test on recv side, just to mention the major
-> change will be on the src side, so feel free to try that too.  That's wha=
-t
-> patch 1 does.
->
-> Patch 2 changed recv side report for blocktime, but in your case you didn=
-'t
-> enable it, to cover tests on patch 2, you can enable postcopy-blocktime
-> feature and kickoff a postcopy migration.
->
-> And just to mention, the real meat in this series is actually the last
-> patch. :) If you want to test that, you'd likely want to apply another of
-> my series:
->
-> https://lore.kernel.org/r/20250609191259.9053-1-peterx@redhat.com
->
-> Then invoke postcopy test with some loads, then check the blocktime repor=
-ts
-> again.  The other series added latency tracking to blocktime.  With that
-> extra series applied, you should be able to observe average page fault
-> latency reduction after the last patch, aka, the meat.
->
-> Note that this is not a request to have you test everything!  Just to
-> mention the bits from test perspective, so just take it as FYI.  I
-> appreciate your help already to test on the recv side!
->
-> Thanks,
->
-> --
-> Peter Xu
->
-
+Thanks
+Sairaj
 
