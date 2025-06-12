@@ -4,87 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83570C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 15:05:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4940DC61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 15:05:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPjTz-0004of-EW; Thu, 12 Jun 2025 11:04:48 -0400
+	id 1uPjUL-00057c-Dp; Thu, 12 Jun 2025 11:05:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uPjTk-0004k2-Hv
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 11:04:35 -0400
-Received: from mail-yb1-xb2b.google.com ([2607:f8b0:4864:20::b2b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uPjTd-0004Tp-GL
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 11:04:29 -0400
-Received: by mail-yb1-xb2b.google.com with SMTP id
- 3f1490d57ef6-e81cf6103a6so1026369276.3
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 08:04:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749740662; x=1750345462; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mwRohgyatrsnok8RQFXYdLlHld9AUTUpziIQUj48/Fk=;
- b=MjcH4m1QS4ptoUEirF/4NrtrJc+FBafEouqOXm6S4RBqq1h87ieosj7HFM0rqba5Jw
- a2R4mMMpaF0RgTRUNWzV3zqhTQPL3pyj1bDZNSYstDNUhLPgFzgLiAbd8SHpOfRdiL+f
- Ubtzz8PkWRiYnYqOc0ZvqE/xNjJCJmru7TgESW4NHN+vG3GrfBs3z0bUx3AqzFjSEDj2
- uEc7Lw+mATaX9OrHKlbxEV1zQqHVeVU/Un2y8We4YibmWRo9Kh6IDBEsHkSnV90NLgYy
- jlBclFctfEq8ggDXoMlU2h+BaTNcRSjFhnfOaRNqmsYJnA1lZZE73XVQsRwRkIBwOYxa
- i3Ig==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749740662; x=1750345462;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mwRohgyatrsnok8RQFXYdLlHld9AUTUpziIQUj48/Fk=;
- b=SBmJiqKQSOsrHgNfIaWjMyhwExF66qXH4spSE0Dh0+GREfzg1fInjFQGIvyDknKc5v
- a2TCj5htYNK8aZYfcZZzP5nX+UfHALZELQAlXnKWwcvIeBjNdGU23i9b17AEQFIVuUqx
- VODk3sbjBNTXyS3FHWeX4F/TUKtRx6wmRz1OyrnfMbxH5ts5WyuZyOQRkG0Rge7jBXDw
- X58WetURf7H4LJ+IAgQ4RLu9uEJ+dKgF7yuf5XJpxMaXjtbJcz2RB2JmHILBqJGtYYNn
- MKOJezmBWWe2FerKuaFz/6VK8eOMrRlNl+g161aGmrUhvZoNCJem61Z68L7JfSwSDExv
- Lvqg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdYrXMB+2gQ9KnEXWn5nM6ksBOdFULCT9bIaScySEdglu1EpQVYKk6sn+PaRa+perqWpKgSKx7+t1b@nongnu.org
-X-Gm-Message-State: AOJu0YzYw6BQLNPPEQ9yyNrMWJ6dGGAGn91hgwzJsOypKSdcu0yj1x/A
- sO7KXW/ixBXZV1ebCxwxkrhVRrDIznQioooSoHzcIVqRG3oCqoHgQDDgia+01kN2svwWDg11MS5
- fThAfQz6XRvrBgSWsUdNVROBnEumemAknxSp1lwWyDQ==
-X-Gm-Gg: ASbGncsuLs6MV+fHESzOTqTF7j8Ml9gR848IIEX2vlGNs4wFghcvqNBJ9E282bGcuDL
- 9n/dgJGQ1h/6B9yvvJRaeUNk0CxYhY22cQC5UlYQdeVsfm1UKIzXVc+GULRqkTIgVb8wDDyQ3gJ
- 2K7KVbDDc0FliIhbnEof+dF7IDUVJ1G2l5DCJh7nZCJKz/
-X-Google-Smtp-Source: AGHT+IGkwf3AJrycbkaLsXCktxf09YCtxZ4zQIpiVu3XRTDHJMzFJzu0b0P9/VzPi89aVoUmCtZ/VVXUpqdEnylPPMc=
-X-Received: by 2002:a05:690c:498d:b0:710:f46d:cee0 with SMTP id
- 00721157ae682-7114edcb04fmr56567777b3.33.1749740662363; Thu, 12 Jun 2025
- 08:04:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPjTz-0004rk-Hi; Thu, 12 Jun 2025 11:04:48 -0400
+Received: from mgamail.intel.com ([192.198.163.8])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPjTw-0004WZ-36; Thu, 12 Jun 2025 11:04:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749740684; x=1781276684;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=Uzd80MfbH0B2i2Iq6hvmbAhJ29lb/JWcWBgozs+nhaE=;
+ b=SQhcszhhPjktvPaHlKtIEAj9VkewdY7w6wDlEZqyUoKM08XqnLzDI7/z
+ Mk2rcECXEWZaRK5Fv7yL4WDwSygVTMinF/tvABcYThrxeLhaF77bFKhjw
+ ZlzAlhdgEoDZI8YxcJuU6afQ+wuTI6sWby8i15pd/gAM6kp77xtyjKrbC
+ ZetbO+kYh+7qY/JfrwQzma7Tj3X5f0TYDpp35cVVvGib8Vq/fB6bpW4y5
+ qJF/OkDjhAr0sgczAQL7vF2Dlfm0IebUrhRdFwEld9ylL94o8oOgVpBnG
+ uku/XhhdhY1OXTJ9bBtniV0y6/jutc5vxoHve85Sftjv4PZ/SB96EjXy8 Q==;
+X-CSE-ConnectionGUID: qCLrURHlQ2aowcfCzL0IDg==
+X-CSE-MsgGUID: xvTKvNqOQg+3yM0rC4IMtQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11462"; a="69494701"
+X-IronPort-AV: E=Sophos;i="6.16,231,1744095600"; d="scan'208";a="69494701"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by fmvoesa102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jun 2025 08:04:39 -0700
+X-CSE-ConnectionGUID: yEt4wnjnT/i/x9UGSYVhEQ==
+X-CSE-MsgGUID: MFrBY5odQ/6J7hiO8cO/NQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,231,1744095600"; d="scan'208";a="147537149"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa009.jf.intel.com with ESMTP; 12 Jun 2025 08:04:38 -0700
+Date: Thu, 12 Jun 2025 23:25:54 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org
+Subject: Re: [PATCH 5/5] rust: qom: change instance_init to take a ParentInit<>
+Message-ID: <aErxghTgZnH7Ae8s@intel.com>
+References: <20250609154423.706056-1-pbonzini@redhat.com>
+ <20250609154423.706056-6-pbonzini@redhat.com>
 MIME-Version: 1.0
-References: <20250515153907.151174-1-cohuck@redhat.com>
- <20250515153907.151174-3-cohuck@redhat.com>
-In-Reply-To: <20250515153907.151174-3-cohuck@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Jun 2025 16:04:09 +0100
-X-Gm-Features: AX0GCFtWVVUEsGciOpuhQYdpTNAk5ugyqKk3hjsV_bBetoONUXe_HXNhehSuotE
-Message-ID: <CAFEAcA8y_wwZPoqkyPrNscRNTEwiOQm5Or9C=aiSNMGcZmq8CQ@mail.gmail.com>
-Subject: Re: [PATCH v7 02/14] arm/cpu: Store aa64isar0/aa64zfr0 into the
- idregs arrays
-To: Cornelia Huck <cohuck@redhat.com>
-Cc: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org, 
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, richard.henderson@linaro.org, 
- alex.bennee@linaro.org, maz@kernel.org, oliver.upton@linux.dev, 
- sebott@redhat.com, shameerali.kolothum.thodi@huawei.com, armbru@redhat.com, 
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com, 
- agraf@csgraf.de, shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org, 
- pbonzini@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b2b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250609154423.706056-6-pbonzini@redhat.com>
+Received-SPF: pass client-ip=192.198.163.8; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -101,23 +81,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 15 May 2025 at 16:39, Cornelia Huck <cohuck@redhat.com> wrote:
->
-> From: Eric Auger <eric.auger@redhat.com>
->
-> Also add kvm accessors for storing host features into idregs.
->
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Sebastian Ott <sebott@redhat.com>
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+On Mon, Jun 09, 2025 at 05:44:23PM +0200, Paolo Bonzini wrote:
+> Date: Mon,  9 Jun 2025 17:44:23 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: [PATCH 5/5] rust: qom: change instance_init to take a ParentInit<>
+> X-Mailer: git-send-email 2.49.0
+> 
+> This removes undefined behavior associated to writing to uninitialized
+> fields, and makes it possible to remove "unsafe" from the instance_init
+> implementation.
+> 
+> However, the init function itself is still unsafe, because it must promise
+> (as a sort as MaybeUninit::assume_init) that all fields have been
+> initialized.
+> 
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  rust/hw/char/pl011/src/device.rs | 34 ++++++++++-----------
+>  rust/hw/timer/hpet/src/device.rs | 16 ++++------
+>  rust/qemu-api/src/memory.rs      | 12 ++++----
+>  rust/qemu-api/src/qdev.rs        | 51 ++++++++++++++++++++------------
+>  rust/qemu-api/src/qom.rs         |  9 ++++--
+>  5 files changed, 65 insertions(+), 57 deletions(-)
 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
->      if (!cpu->has_neon && !cpu->has_vfp) {
-> -        uint64_t t;
-> +        unit64_t t;
-
-This doesn't compile :-)
-
--- PMM
 
