@@ -4,146 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE1EEC71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 21:03:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32D5BC61CE8
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 21:28:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPp4F-0007Q4-DB; Thu, 12 Jun 2025 17:02:35 -0400
+	id 1uPpSJ-0005Td-1y; Thu, 12 Jun 2025 17:27:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp3u-00070H-4z
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:02:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uPp3r-0001OQ-Me
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 17:02:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749762130;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JJA305OgYfWdFpeBb895vZC1w+JpOwGtBxhuAxXTPBY=;
- b=iIM77MN3LTvQBQck3WD/ewUNLbr83nkn+zG3eyG0Qgl5ZfDvc36XHXAb5iQu7lT1F6BAzQ
- KE0gJ9rhkz0QwuI8ZLPhphCj4BALco6WLD3ipUscc/SCNWAozfHCUrxXRH69haM47qHCG5
- WqjLhLS3FpQkdnR8PQd3dKahbZS5ZSY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-510-906kJsTJPgW6XmaniTmVEQ-1; Thu,
- 12 Jun 2025 17:02:04 -0400
-X-MC-Unique: 906kJsTJPgW6XmaniTmVEQ-1
-X-Mimecast-MFC-AGG-ID: 906kJsTJPgW6XmaniTmVEQ_1749762119
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DED151956096; Thu, 12 Jun 2025 21:01:58 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.54])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A929F1956050; Thu, 12 Jun 2025 21:01:29 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Helge Deller <deller@gmx.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Fabiano Rosas <farosas@suse.de>, Alexander Bulekov <alxndr@bu.edu>,
- Darren Kenny <darren.kenny@oracle.com>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Ed Maste <emaste@freebsd.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Warner Losh <imp@bsdimp.com>, Kevin Wolf <kwolf@redhat.com>,
- Tyrone Ting <kfting@nuvoton.com>, Eric Blake <eblake@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, Troy Lee <leetroy@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Roth <michael.roth@amd.com>, Laurent Vivier <laurent@vivier.eu>,
- Ani Sinha <anisinha@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- John Snow <jsnow@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Steven Lee <steven_lee@aspeedtech.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-s390x@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paul Durrant <paul@xen.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Eric Auger <eric.auger@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- qemu-arm@nongnu.org, Hao Wu <wuhaotsh@google.com>,
- Mads Ynddal <mads@ynddal.dk>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Rolnik <mrolnik@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Alessandro Di Federico <ale@rev.ng>,
- Thomas Huth <thuth@redhat.com>, Antony Pavlov <antonynpavlov@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Hanna Reitz <hreitz@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Hyman Huang <yong.huang@smartx.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Magnus Damm <magnus.damm@gmail.com>, qemu-rust@nongnu.org,
- Bandan Das <bsd@redhat.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- kvm@vger.kernel.org, Fam Zheng <fam@euphon.net>,
- Jia Liu <proljc@gmail.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
- Alexandre Iooss <erdnaxe@crans.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Peter Xu <peterx@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20Barrat?= <fbarrat@linux.ibm.com>,
- qemu-ppc@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
- Beniamino Galvani <b.galvani@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Woodhouse <dwmw2@infradead.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Ahmed Karaman <ahmedkhaledkaraman@gmail.com>,
- Huacai Chen <chenhuacai@kernel.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Subject: [PATCH v2 12/12] scripts/codeconverter: remove * imports
-Date: Thu, 12 Jun 2025 16:54:50 -0400
-Message-ID: <20250612205451.1177751-13-jsnow@redhat.com>
-In-Reply-To: <20250612205451.1177751-1-jsnow@redhat.com>
-References: <20250612205451.1177751-1-jsnow@redhat.com>
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uPpSH-0005Sr-CV; Thu, 12 Jun 2025 17:27:25 -0400
+Received: from mail-ej1-x630.google.com ([2a00:1450:4864:20::630])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uPpSF-0005FB-Nv; Thu, 12 Jun 2025 17:27:25 -0400
+Received: by mail-ej1-x630.google.com with SMTP id
+ a640c23a62f3a-ad8826c05f2so270253766b.3; 
+ Thu, 12 Jun 2025 14:27:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1749763641; x=1750368441; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=UGZv2VAG09mDiRoHHEgf2+bwUAgRb+R+CKa75tyGlTk=;
+ b=ladChdKVgCUQmMK8OwrZ0xSw6eNEVduFh2a4d4xIJIHVmi4MjHKJU1bZMo2OFzuSEw
+ v5agt1tS4EBTNVgnSZLshLYYv1xbpsm1JOwaI5p6FiXwMJ4/V9MHuVWn/Ehk7kdbOW8a
+ h2rG22Ji/zfmOkZltbS9sW9i6qthoZCa9kleaIgzgBe8OkIEJa84GkLDhyngLHVA05Hh
+ yiDxlG4uc0QsIBqvPNuSn6XgBFgQR8VDlX+eXCHnoQ176rl8Tf3uE2AiLrs+HE7rr1VT
+ RsjOUxxPG81xpLCyy9NWdT1AD2VnX8MXPjMKnlGW5TQJX3vTK9ocPkRtPjUusSh2mWCh
+ sjxA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749763641; x=1750368441;
+ h=content-transfer-encoding:mime-version:message-id:references
+ :in-reply-to:subject:cc:to:from:date:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=UGZv2VAG09mDiRoHHEgf2+bwUAgRb+R+CKa75tyGlTk=;
+ b=RMA6UXtCPItBvyhumb0rToHu3K32JmOnQaVN/6gNxg08BERIZJVaYOjynpuZKgYtKt
+ OaKbNJ6DXUzb1AMXU1I/Xt3N4M81DIdIWDjIMETTucpdOQOnk3fdBaHunEtKAQKuFo6e
+ 2OzXd0vL9XpCnx5R+o0f9wyrH5VMuhBW+pFk216gkFojHCUOmSgEcvR+hLGssIOjJDR4
+ s6Mi4dk3Zv8yNN2yZ6IG6+ryfp3SV2gQ0fV6ZxbShSboS5X+zakfLvnXyGQxrnoDaJ+2
+ rxVTwPjKe0BrrvwoiVBUarc37Re0NLpdVoTEPQMS/OE48iYDhUwcHHUbDbstlaVrO8ye
+ PUqA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV2Edy1RuW5qmNHm12nLqUZ4BpCqCAd+Rp03gT1ixcobsgXoBMrN+iSxne4b8vaZtp2ZLSD6syVz6o=@nongnu.org,
+ AJvYcCXMGenmL4Xa9pckjwaTiACwvzkKWxqd9+oB6aJpvV14VbQHtPVglFFNgHah/CyQzqTm/+JsKekO6Q==@nongnu.org
+X-Gm-Message-State: AOJu0YzEgAsJ5bf9Kc6hsTASgKGLxfS6R8cZGzBYnU3oRn9w0sdmhURW
+ /msfehu8pkpgQp5VB9n3YlpjPXYmHroMpph4teBjTfU+x/XmK/2efokb
+X-Gm-Gg: ASbGncvYS1txDVArFd/+AmkERgjhuNZH0KId03X50EH0NTayAVnvdZ4ao/92aYuFZtX
+ cSbmJV7lWjtVaatN7hK4jqiQyJCiMmYXIF9mAe1lOWUdJCJFedtwKLPNVtOaOHNs0n7RI4p2ope
+ 62jBUciMGioWhGHa3RIJyVknsiP4C3z554s7koxeufwQ1k3gd4VLLdGflXXgpLO7Jn8FpG78QhA
+ KJymif9SlA2I5O/cJXXociz5lbwz6fvLreCb7pIXx/ks7pUtpCFA4OFmY7QYsewsY3lzHKoVOks
+ ys/qcyUfaZS2yLVF5yx/iY4Lc1xf4PxFRLgOkq5KF2kOUAkUTQY19NAVGltcmKeLknmXhzUX24q
+ eeBoZ69S0HnuqSYG9MAGvTH9waZfkZcwmeF7BtSyjCcREs9dU7r56C72jEVfSmNuvyANBmA==
+X-Google-Smtp-Source: AGHT+IEEl8HJ9Jo/cyEnCAnv3iTy5DoW4nXLFYgamacqqBaaKOjznmliZuy1exI8HSXL5kPakclDcQ==
+X-Received: by 2002:a17:907:3f9e:b0:ace:cc7f:8abe with SMTP id
+ a640c23a62f3a-adec5cb1aa7mr68440666b.31.1749763641233; 
+ Thu, 12 Jun 2025 14:27:21 -0700 (PDT)
+Received: from ?IPv6:::1?
+ (dynamic-2a02-3100-2ff0-9b00-bd73-623e-7632-a2ac.310.pool.telefonica.de.
+ [2a02:3100:2ff0:9b00:bd73:623e:7632:a2ac])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-adec81bfd69sm23672266b.51.2025.06.12.14.27.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Jun 2025 14:27:20 -0700 (PDT)
+Date: Thu, 12 Jun 2025 21:27:18 +0000
+From: Bernhard Beschow <shentey@gmail.com>
+To: Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
+ =?ISO-8859-1?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>
+CC: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ =?ISO-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, qemu-ppc@nongnu.org,
+ =?ISO-8859-1?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
+Subject: Re: [PATCH 4/5] configure: Add dtc option
+In-Reply-To: <d2860e38-241e-4778-ad9c-7042c73edfd9@redhat.com>
+References: <20250610204131.2862-1-shentey@gmail.com>
+ <20250610204131.2862-5-shentey@gmail.com>
+ <cdfc561e-23a9-607a-d9a8-70e07e73e0fd@eik.bme.hu>
+ <aElCJnmjrB-X9M-n@redhat.com>
+ <6eb6aa79-33f8-57ea-5714-af264557f8c8@eik.bme.hu>
+ <c29386d1-1a4b-4f3b-a669-4206c366ad9e@redhat.com>
+ <d2860e38-241e-4778-ad9c-7042c73edfd9@redhat.com>
+Message-ID: <B55C341F-5BDE-45B5-B3F5-2F730EF4586D@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::630;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x630.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,464 +114,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Python static analysis tools generally don't like dealing with asterisk
-imports as it's tough to deduce what's actually getting used and from
-where. Replace these imports with explicit imports.
 
-This also helps eliminate deprecated imports from the typing module.
 
-These files have more style issues that are not addressed by this patch,
-so the command-line I am using to ensure I am not creating new
-identifier problems is a flake8 command set to squelch most style
-issues:
+Am 12=2E Juni 2025 05:46:03 UTC schrieb Paolo Bonzini <pbonzini@redhat=2Ec=
+om>:
+>On 6/12/25 07:12, Paolo Bonzini wrote:
+>> I'll send a patch to the upstream dtc project and you can add it to QEM=
+U via diff_files (see commit 64644bc4eab2f for an example)=2E
+>This is the patch, backported to QEMU's version of the dtc subproject:
+>
+>diff --git a/libfdt/meson=2Ebuild b/libfdt/meson=2Ebuild
+>index 0307ffb=2E=2E6581965 100644
+>--- a/libfdt/meson=2Ebuild
+>+++ b/libfdt/meson=2Ebuild
+>@@ -30,6 +30,7 @@ libfdt_dep =3D declare_dependency(
+>   include_directories: libfdt_inc,
+>   link_with: libfdt,
+> )
+>+meson=2Eoverride_dependency('libfdt', libfdt_dep)
+>  install_headers(
+>   files(
+>diff --git a/meson=2Ebuild b/meson=2Ebuild
+>index b23ea1b=2E=2E7def0a6 100644
+>--- a/meson=2Ebuild
+>+++ b/meson=2Ebuild
+>@@ -54,6 +54,7 @@ version_gen_h =3D vcs_tag(
+>  subdir('libfdt')
+> +dtc_tools =3D []
+> if get_option('tools')
+>   flex =3D find_program('flex', required: true)
+>   bison =3D find_program('bison', required: true)
+>@@ -77,7 +78,7 @@ if get_option('tools')
+>   )
+>    if cc=2Echeck_header('fnmatch=2Eh')
+>-    executable(
+>+    dtc_tools +=3D executable(
+>       'convert-dtsv0',
+>       [
+>         lgen=2Eprocess('convert-dtsv0-lexer=2El'),
+>@@ -88,7 +89,7 @@ if get_option('tools')
+>     )
+>   endif
+> -  executable(
+>+  dtc_tools +=3D executable(
+>     'dtc',
+>     [
+>       lgen=2Eprocess('dtc-lexer=2El'),
+>@@ -108,7 +109,7 @@ if get_option('tools')
+>   )
+>    foreach e: ['fdtdump', 'fdtget', 'fdtput', 'fdtoverlay']
+>-    executable(e, files(e + '=2Ec'), dependencies: util_dep, install: tr=
+ue)
+>+    dtc_tools +=3D executable(e, files(e + '=2Ec'), dependencies: util_d=
+ep, install: true)
+>   endforeach
+>    install_data(
+>@@ -118,6 +119,10 @@ if get_option('tools')
+>   )
+> endif
+> +foreach e: dtc_tools
+>+  meson=2Eoverride_find_program(e=2Ename(), e)
+>+endforeach
+>+
+> if not meson=2Eis_cross_build()
+>   if py=2Efound() and swig=2Efound()
+>     subdir('pylibfdt')
+>
+>
+>and this is how you can then find dtc in QEMU's meson=2Ebuild:
+>
+>diff --git a/meson=2Ebuild b/meson=2Ebuild
+>index 61595015802=2E=2E831678b4580 100644
+>--- a/meson=2Ebuild
+>+++ b/meson=2Ebuild
+>@@ -2121,13 +2121,15 @@ if numa=2Efound() and not cc=2Elinks('''
+> endif
+>  fdt =3D not_found
+>+dtc =3D not_found
+> fdt_opt =3D get_option('fdt')
+> if fdt_opt =3D=3D 'enabled' and get_option('wrap_mode') =3D=3D 'nodownlo=
+ad'
+>   fdt_opt =3D 'system'
+> endif
+> if fdt_opt in ['enabled', 'system'] or (fdt_opt =3D=3D 'auto' and have_s=
+ystem)
+>   fdt =3D cc=2Efind_library('fdt', required: fdt_opt =3D=3D 'system')
+>-  if fdt=2Efound() and cc=2Elinks('''
+>+  dtc =3D find_program('dtc', required: fdt_opt =3D=3D 'system')
+>+  if dtc=2Efound() and fdt=2Efound() and cc=2Elinks('''
+>      #include <libfdt=2Eh>
+>      #include <libfdt_env=2Eh>
+>      int main(void) { fdt_find_max_phandle(NULL, NULL); return 0; }''',
+>@@ -2136,8 +2138,12 @@ if fdt_opt in ['enabled', 'system'] or (fdt_opt =
+=3D=3D 'auto' and have_system)
+>   elif fdt_opt !=3D 'system'
+>     fdt_opt =3D get_option('wrap_mode') =3D=3D 'nodownload' ? 'disabled'=
+ : 'internal'
+>     fdt =3D not_found
+>+    dtc =3D not_found
+>   else
+>-    error('system libfdt is too old (1=2E5=2E1 or newer required)')
+>+    if dtc=2Efound()
+>+      error('system libfdt is too old (1=2E5=2E1 or newer required)')
+>+    else
+>+      error('device tree compiler not found')
+>   endif
+> endif
+> if fdt_opt =3D=3D 'internal'
+>@@ -2145,7 +2148,8 @@ if fdt_opt =3D=3D 'internal'
+>   libfdt_proj =3D subproject('dtc', required: true,
+>                            default_options: ['tools=3Dfalse',  'yaml=3Dd=
+isabled',
+>                                              'python=3Ddisabled', 'defau=
+lt_library=3Dstatic'])
+>-  fdt =3D libfdt_proj=2Eget_variable('libfdt_dep')
+>+  fdt =3D dependency('libfdt', required: true)
+>+  dtc =3D find_program('dtc', required: true)
+> endif
+>  rdma =3D not_found
+>
 
-flake8 --ignore=E111,E114,E117,E127,E128,E129,E201,E221,E222,\
-                E225,E226,E252,E231,E261,E265,E301,E302,E303,\
-                E305,E306,E501,E502,E703,E712,E731,E741,F841,\
-                W292,W391,W503,W504 \
-                *.py
+Thanks Paolo, I'll send a v2=2E
 
-I am also using pylint's errors-only mode:
-
-pylint -E *.py
-
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- .../codeconverter/codeconverter/patching.py   |  4 +-
- .../codeconverter/codeconverter/qom_macros.py | 83 +++++++++++++------
- .../codeconverter/qom_type_info.py            | 76 ++++++++++++++---
- .../codeconverter/test_patching.py            |  9 +-
- .../codeconverter/test_regexps.py             | 32 ++++++-
- scripts/codeconverter/codeconverter/utils.py  |  7 +-
- 6 files changed, 161 insertions(+), 50 deletions(-)
-
-diff --git a/scripts/codeconverter/codeconverter/patching.py b/scripts/codeconverter/codeconverter/patching.py
-index 0165085caed..f336377972e 100644
---- a/scripts/codeconverter/codeconverter/patching.py
-+++ b/scripts/codeconverter/codeconverter/patching.py
-@@ -25,6 +25,8 @@
-     Union,
- )
- 
-+from .utils import LineAndColumn, line_col
-+
- 
- logger = logging.getLogger(__name__)
- DBG = logger.debug
-@@ -32,8 +34,6 @@
- WARN = logger.warning
- ERROR = logger.error
- 
--from .utils import *
--
- 
- T = TypeVar('T')
- 
-diff --git a/scripts/codeconverter/codeconverter/qom_macros.py b/scripts/codeconverter/codeconverter/qom_macros.py
-index 04512bfffdd..f28d91ae90c 100644
---- a/scripts/codeconverter/codeconverter/qom_macros.py
-+++ b/scripts/codeconverter/codeconverter/qom_macros.py
-@@ -5,14 +5,47 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2.  See
- # the COPYING file in the top-level directory.
-+from collections.abc import Iterable, Iterator
- from itertools import chain
- import logging
- import re
--from typing import *
-+from typing import (
-+    Literal,
-+    NamedTuple,
-+    Optional,
-+    cast,
-+)
- 
--from .patching import *
--from .regexps import *
--from .utils import *
-+from .patching import (
-+    FileInfo,
-+    FileList,
-+    FileMatch,
-+    Patch,
-+    RequiredIdentifier,
-+)
-+from .regexps import (
-+    CPP_SPACE,
-+    NAMED,
-+    OPTIONAL_PARS,
-+    OR,
-+    RE_COMMENT,
-+    RE_COMMENTS,
-+    RE_EXPRESSION,
-+    RE_FILE_BEGIN,
-+    RE_FUN_CALL,
-+    RE_IDENTIFIER,
-+    RE_INCLUDE,
-+    RE_MACRO_CONCAT,
-+    RE_NUMBER,
-+    RE_SIMPLEDEFINE,
-+    RE_STRING,
-+    RE_STRUCT_TYPE,
-+    RE_TYPE,
-+    SP,
-+    M,
-+    S,
-+)
-+from .utils import merge, opt_compare
- 
- 
- logger = logging.getLogger(__name__)
-@@ -69,7 +102,7 @@ def __str__(self) -> str:
-         s = ', '.join('%s=%s' % (f,v) for f,v in values if v is not None)
-         return f'{s}'
- 
--    def check_consistency(self) -> List[str]:
-+    def check_consistency(self) -> list[str]:
-         """Check if identifiers are consistent with each other,
-         return list of problems (or empty list if everything seems consistent)
-         """
-@@ -236,7 +269,7 @@ def find_typedef(f: FileInfo, name: Optional[str]) -> Optional[TypedefMatch]:
-         NAMED('qom_typename', RE_IDENTIFIER), r'\s*\)\n',
-         n='?', name='check_args'))
- 
--EXPECTED_CHECKER_SUFFIXES: List[Tuple[CheckerMacroName, str]] = [
-+EXPECTED_CHECKER_SUFFIXES: list[tuple[CheckerMacroName, str]] = [
-     ('OBJECT_GET_CLASS', '_GET_CLASS'),
-     ('OBJECT_CLASS_CHECK', '_CLASS'),
- ]
-@@ -268,7 +301,7 @@ def sanity_check(self) -> None:
-         if self.typedefname and self.find_typedef() is None:
-             self.warn("typedef used by %s not found", self.name)
- 
--    def find_matching_macros(self) -> List['TypeCheckMacro']:
-+    def find_matching_macros(self) -> list['TypeCheckMacro']:
-         """Find other check macros that generate the same macro names
- 
-         The returned list will always be sorted.
-@@ -281,7 +314,7 @@ def find_matching_macros(self) -> List['TypeCheckMacro']:
-                    and (my_ids.uppercase == m.type_identifiers.uppercase
-                         or my_ids.typename == m.type_identifiers.typename)]
- 
--    def merge_ids(self, matches: List['TypeCheckMacro']) -> Optional[TypeIdentifiers]:
-+    def merge_ids(self, matches: list['TypeCheckMacro']) -> Optional[TypeIdentifiers]:
-         """Try to merge info about type identifiers from all matches in a list"""
-         if not matches:
-             return None
-@@ -581,10 +614,12 @@ def gen_patches(self) -> Iterable[Patch]:
-             return
- 
-         # group checkers by uppercase name:
--        decl_types: List[Type[TypeDeclaration]] = [DeclareInstanceChecker, DeclareInstanceType,
--                                                   DeclareClassCheckers, DeclareClassType,
--                                                   DeclareObjCheckers]
--        checker_dict: Dict[str, List[TypeDeclaration]] = {}
-+        decl_types: list[type[TypeDeclaration]] = [
-+            DeclareInstanceChecker, DeclareInstanceType,
-+            DeclareClassCheckers, DeclareClassType,
-+            DeclareObjCheckers
-+        ]
-+        checker_dict: dict[str, list[TypeDeclaration]] = {}
-         for t in decl_types:
-             for m in self.file.matches_of_type(t):
-                 checker_dict.setdefault(m.group('uppercase'), []).append(m)
-@@ -603,9 +638,9 @@ def gen_patches(self) -> Iterable[Patch]:
-             field_dict = {f: v.pop() if v else None for f,v in fvalues.items()}
-             yield from self.gen_patches_for_type(uppercase, checkers, field_dict)
- 
--    def find_conflicts(self, uppercase: str, checkers: List[TypeDeclaration]) -> bool:
-+    def find_conflicts(self, uppercase: str, checkers: list[TypeDeclaration]) -> bool:
-         """Look for conflicting declarations that would make it unsafe to add new ones"""
--        conflicting: List[FileMatch] = []
-+        conflicting: list[FileMatch] = []
-         # conflicts in the same file:
-         conflicting.extend(chain(self.file.find_matches(DefineDirective, uppercase),
-                                  self.file.find_matches(DeclareInterfaceChecker, uppercase, 'uppercase'),
-@@ -634,8 +669,8 @@ def find_conflicts(self, uppercase: str, checkers: List[TypeDeclaration]) -> boo
-         return False
- 
-     def gen_patches_for_type(self, uppercase: str,
--                             checkers: List[TypeDeclaration],
--                             fields: Dict[str, Optional[str]]) -> Iterable[Patch]:
-+                             checkers: list[TypeDeclaration],
-+                             fields: dict[str, Optional[str]]) -> Iterable[Patch]:
-         """Should be reimplemented by subclasses"""
-         return
-         yield
-@@ -644,8 +679,8 @@ class DeclareVoidTypes(TypeDeclarationFixup):
-     """Add DECLARE_*_TYPE(..., void) when there's no declared type"""
-     regexp = RE_FILE_BEGIN
-     def gen_patches_for_type(self, uppercase: str,
--                             checkers: List[TypeDeclaration],
--                             fields: Dict[str, Optional[str]]) -> Iterable[Patch]:
-+                             checkers: list[TypeDeclaration],
-+                             fields: dict[str, Optional[str]]) -> Iterable[Patch]:
-         if self.find_conflicts(uppercase, checkers):
-             return
- 
-@@ -672,8 +707,8 @@ def gen_patches_for_type(self, uppercase: str,
- class AddDeclareTypeName(TypeDeclarationFixup):
-     """Add DECLARE_TYPE_NAME declarations if necessary"""
-     def gen_patches_for_type(self, uppercase: str,
--                             checkers: List[TypeDeclaration],
--                             fields: Dict[str, Optional[str]]) -> Iterable[Patch]:
-+                             checkers: list[TypeDeclaration],
-+                             fields: dict[str, Optional[str]]) -> Iterable[Patch]:
-         typename = fields.get('typename')
-         if typename is None:
-             self.warn("typename unavailable")
-@@ -754,7 +789,7 @@ def find_typename_uppercase(files: FileList, typename: str) -> Optional[str]:
- 
- def find_type_checkers(files:FileList, name:str, group:str='uppercase') -> Iterable[TypeCheckerDeclaration]:
-     """Find usage of DECLARE*CHECKER macro"""
--    c: Type[TypeCheckerDeclaration]
-+    c: type[TypeCheckerDeclaration]
-     for c in (DeclareInstanceChecker, DeclareClassCheckers, DeclareObjCheckers, ObjectDeclareType, ObjectDeclareSimpleType):
-         yield from files.find_matches(c, name=name, group=group)
- 
-@@ -775,8 +810,8 @@ class InitialIncludes(FileMatch):
-                  n='*', name='includes'))
- 
- class SymbolUserList(NamedTuple):
--    definitions: List[FileMatch]
--    users: List[FileMatch]
-+    definitions: list[FileMatch]
-+    users: list[FileMatch]
- 
- class MoveSymbols(FileMatch):
-     """Handle missing symbols
-@@ -790,7 +825,7 @@ def gen_patches(self) -> Iterator[Patch]:
-             self.debug("skipping object.h")
-             return
- 
--        index: Dict[RequiredIdentifier, SymbolUserList] = {}
-+        index: dict[RequiredIdentifier, SymbolUserList] = {}
-         definition_classes = [SimpleTypedefMatch, FullStructTypedefMatch, ConstantDefine, Include]
-         user_classes = [TypeCheckMacro, DeclareObjCheckers, DeclareInstanceChecker, DeclareClassCheckers, InterfaceCheckMacro]
- 
-diff --git a/scripts/codeconverter/codeconverter/qom_type_info.py b/scripts/codeconverter/codeconverter/qom_type_info.py
-index 4ecdd728890..76fcf498f58 100644
---- a/scripts/codeconverter/codeconverter/qom_type_info.py
-+++ b/scripts/codeconverter/codeconverter/qom_type_info.py
-@@ -5,14 +5,49 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2.  See
- # the COPYING file in the top-level directory.
-+from collections.abc import Iterable
-+import logging
- import re
-+from typing import Optional, Union
- 
--from .patching import *
--from .qom_macros import *
--from .regexps import *
--from .utils import *
-+from .patching import (
-+    FileInfo,
-+    FileList,
-+    FileMatch,
-+    Patch,
-+    RegexpScanner,
-+)
-+from .qom_macros import (
-+    DeclareClassCheckers,
-+    DeclareInstanceChecker,
-+    DeclareObjCheckers,
-+    ExpressionDefine,
-+    OldStyleObjectDeclareSimpleType,
-+    SimpleTypedefMatch,
-+    TypeDeclaration,
-+    TypeDeclarationFixup,
-+    find_type_checkers,
-+    find_typename_uppercase,
-+)
-+from .regexps import (
-+    CPP_SPACE,
-+    NAMED,
-+    OR,
-+    RE_ARRAY,
-+    RE_ARRAY_ITEM,
-+    RE_COMMENTS,
-+    RE_EXPRESSION,
-+    RE_IDENTIFIER,
-+    RE_SIZEOF,
-+    SP,
-+    M,
-+    S,
-+)
- 
- 
-+logger = logging.getLogger(__name__)
-+DBG = logger.debug
-+
- TI_FIELDS = [ 'name', 'parent', 'abstract', 'interfaces',
-     'instance_size', 'instance_init', 'instance_post_init', 'instance_finalize',
-     'class_size', 'class_init', 'class_base_init', 'class_data']
-@@ -27,7 +62,7 @@
- RE_TYPEINFO_START = S(r'^[ \t]*', M(r'(static|const)\s+', name='modifiers'), r'TypeInfo\s+',
-                       NAMED('name', RE_IDENTIFIER), r'\s*=\s*{[ \t]*\n')
- 
--ParsedArray = List[str]
-+ParsedArray = list[str]
- ParsedInitializerValue = Union[str, ParsedArray]
- 
- class ArrayItem(FileMatch):
-@@ -57,7 +92,7 @@ def parsed(self) -> ParsedInitializerValue:
-             return array.parsed()
-         return parsed
- 
--TypeInfoInitializers = Dict[str, FieldInitializer]
-+TypeInfoInitializers = dict[str, FieldInitializer]
- 
- class TypeDefinition(FileMatch):
-     """
-@@ -341,7 +376,9 @@ def gen_patches(self) -> Iterable[Patch]:
- 
-         ok = True
- 
--        #checkers: List[TypeCheckerDeclaration] = list(find_type_checkers(self.allfiles, uppercase))
-+        #checkers: list[TypeCheckerDeclaration] = list(
-+        #    find_type_checkers(self.allfiles, uppercase)
-+        #)
-         #for c in checkers:
-         #    c.info("instance type checker declaration (%s) is here", c.group('uppercase'))
-         #if not checkers:
-@@ -446,7 +483,11 @@ class ObjectDefineType(TypeDefinition):
-                r'\s*\);?\n?')
- 
- def find_type_definitions(files: FileList, uppercase: str) -> Iterable[TypeDefinition]:
--    types: List[Type[TypeDefinition]] = [TypeInfoVar, ObjectDefineType, ObjectDefineTypeExtended]
-+    types: list[type[TypeDefinition]] = [
-+        TypeInfoVar,
-+        ObjectDefineType,
-+        ObjectDefineTypeExtended
-+    ]
-     for t in types:
-         for m in files.matches_of_type(t):
-             m.debug("uppercase: %s", m.uppercase)
-@@ -456,9 +497,12 @@ def find_type_definitions(files: FileList, uppercase: str) -> Iterable[TypeDefin
- 
- class AddDeclareVoidClassType(TypeDeclarationFixup):
-     """Will add DECLARE_CLASS_TYPE(..., void) if possible"""
--    def gen_patches_for_type(self, uppercase: str,
--                             checkers: List[TypeDeclaration],
--                             fields: Dict[str, Optional[str]]) -> Iterable[Patch]:
-+    def gen_patches_for_type(
-+        self,
-+        uppercase: str,
-+        checkers: list[TypeDeclaration],
-+        fields: dict[str, Optional[str]],
-+    ) -> Iterable[Patch]:
-         defs = list(find_type_definitions(self.allfiles, uppercase))
-         if len(defs) > 1:
-             self.warn("multiple definitions for %s", uppercase)
-@@ -552,7 +596,10 @@ def gen_patches(self) -> Iterable[Patch]:
-             if not self.file.force:
-                 return
- 
--        decl_types: List[Type[TypeDeclaration]] = [DeclareClassCheckers, DeclareObjCheckers]
-+        decl_types: list[type[TypeDeclaration]] = [
-+            DeclareClassCheckers,
-+            DeclareObjCheckers
-+        ]
-         class_decls = [m for t in decl_types
-                        for m in self.allfiles.find_matches(t, uppercase, 'uppercase')]
- 
-@@ -632,7 +679,10 @@ def gen_patches(self) -> Iterable[Patch]:
-             if not self.file.force:
-                 return
- 
--        decl_types: List[Type[TypeDeclaration]] = [DeclareClassCheckers, DeclareObjCheckers]
-+        decl_types: list[type[TypeDeclaration]] = [
-+            DeclareClassCheckers,
-+            DeclareObjCheckers
-+        ]
-         class_decls = [m for t in decl_types
-                        for m in self.allfiles.find_matches(t, uppercase, 'uppercase')]
-         if class_decls:
-diff --git a/scripts/codeconverter/codeconverter/test_patching.py b/scripts/codeconverter/codeconverter/test_patching.py
-index b125eee2b72..4e5165a8014 100644
---- a/scripts/codeconverter/codeconverter/test_patching.py
-+++ b/scripts/codeconverter/codeconverter/test_patching.py
-@@ -7,13 +7,8 @@
- # the COPYING file in the top-level directory.
- from tempfile import NamedTemporaryFile
- 
--from .patching import (
--    FileInfo,
--    FileList,
--    FileMatch,
--    Patch,
--)
--from .regexps import *
-+from .patching import FileInfo, FileList, FileMatch
-+from .regexps import NAMED, RE_IDENTIFIER, S
- 
- 
- class BasicPattern(FileMatch):
-diff --git a/scripts/codeconverter/codeconverter/test_regexps.py b/scripts/codeconverter/codeconverter/test_regexps.py
-index 86d0499c50e..deba604361b 100644
---- a/scripts/codeconverter/codeconverter/test_regexps.py
-+++ b/scripts/codeconverter/codeconverter/test_regexps.py
-@@ -5,9 +5,35 @@
- #
- # This work is licensed under the terms of the GNU GPL, version 2.  See
- # the COPYING file in the top-level directory.
--from .qom_macros import *
--from .qom_type_info import *
--from .regexps import *
-+
-+import re
-+
-+from .qom_macros import (
-+    RE_CHECK_MACRO,
-+    RE_MACRO_DEFINE,
-+    RE_STRUCT_TYPEDEF,
-+    InitialIncludes,
-+)
-+from .qom_type_info import (
-+    RE_TI_FIELD_INIT,
-+    RE_TI_FIELDS,
-+    RE_TYPEINFO_START,
-+    TypeInfoVar,
-+)
-+from .regexps import (
-+    CPP_SPACE,
-+    RE_ARRAY,
-+    RE_ARRAY_CAST,
-+    RE_ARRAY_ITEM,
-+    RE_COMMENT,
-+    RE_COMMENTS,
-+    RE_EXPRESSION,
-+    RE_FUN_CALL,
-+    RE_IDENTIFIER,
-+    RE_MACRO_CONCAT,
-+    RE_SIMPLE_VALUE,
-+    SP,
-+)
- 
- 
- def test_res() -> None:
-diff --git a/scripts/codeconverter/codeconverter/utils.py b/scripts/codeconverter/codeconverter/utils.py
-index ced81a76486..b39cfb8b7d1 100644
---- a/scripts/codeconverter/codeconverter/utils.py
-+++ b/scripts/codeconverter/codeconverter/utils.py
-@@ -6,7 +6,12 @@
- # This work is licensed under the terms of the GNU GPL, version 2.  See
- # the COPYING file in the top-level directory.
- import logging
--from typing import *
-+from typing import (
-+    NamedTuple,
-+    NewType,
-+    Optional,
-+    TypeVar,
-+)
- 
- 
- logger = logging.getLogger(__name__)
--- 
-2.48.1
-
+Best regards,
+Bernhard
 
