@@ -4,62 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E6AC71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 15:48:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CBAC71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 15:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ6dJ-0006V6-3R; Fri, 13 Jun 2025 11:47:57 -0400
+	id 1uQ6mu-0000L8-Sw; Fri, 13 Jun 2025 11:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uQ6dC-0006PX-ND; Fri, 13 Jun 2025 11:47:51 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uQ6d8-00077M-Pw; Fri, 13 Jun 2025 11:47:50 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bJkHx6Hrnz6L4rw;
- Fri, 13 Jun 2025 23:45:33 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 7C157140159;
- Fri, 13 Jun 2025 23:47:32 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 13 Jun
- 2025 17:47:31 +0200
-Date: Fri, 13 Jun 2025 16:47:30 +0100
-To: Itaru Kitayama <itaru.kitayama@linux.dev>
-CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
- <peter.maydell@linaro.org>, <mst@redhat.com>, Zhijian Li
- <lizhijian@fujitsu.com>, <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
- <qemu-arm@nongnu.org>, Yuquan Wang <wangyuquan1236@phytium.com.cn>, Philippe
- =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Alireza Sanaee
- <alireza.sanaee@huawei.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH v15 0/4] arm/virt: CXL support via pxb_cxl
-Message-ID: <20250613164730.00004d58@huawei.com>
-In-Reply-To: <aEuyFHlk7t7wiLvU@vm4>
-References: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
- <aEuyFHlk7t7wiLvU@vm4>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uQ6mt-0000Kq-CN
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:57:51 -0400
+Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uQ6mr-0008GE-BI
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:57:51 -0400
+Received: by mail-ej1-x62e.google.com with SMTP id
+ a640c23a62f3a-ad8a8da2376so384295266b.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 08:57:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749830267; x=1750435067; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=4MebXgKOFnN//odpzFbw1/yPlr8CUgURJ2O38A5IhnU=;
+ b=Tta8U5WBoiuQ3gpCtOjbP838BKsB0xOcsFeTqJslGe+2nADgx6m/enDBl/zb0L1DpB
+ e2DYdUy0AkT6r7FgQ6cRMIGMWYaiyA61xfuH8RCMZ35UlOl/qsE9uiZOXvPdtSp+Jtye
+ oAQGXhJiAfVxX65JufYCsUe2die5cPxlktglW3zWB+1PsovJfy9rfuaazwYUVZA0vLTI
+ 5zWv6MMlQlo2rGTvkFO/3b3901ivu57r8P9YJDeHiQ8P140EFgiX+E+7B1irRZU4yMWg
+ CeAvzApoP7i1fOHRl6kB34+ugRt0wfovD8SL/hV9sebBJLkOqxCSJ+owugXZ6U0ahn5z
+ 1ktQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749830267; x=1750435067;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=4MebXgKOFnN//odpzFbw1/yPlr8CUgURJ2O38A5IhnU=;
+ b=ctlau9xuHBvNbWPpKZPJaDZrQ60ZkF8RJUayYqtn8Kl96aTa+xuV1rGx8YtcT1gIYG
+ 8WiliaoxWS1XIWjx5Hd/vzZCAgNHJd4OLJcEcITe3X2kV5TbYwjzCDIhNbj8UUhRm8Fp
+ B15f4iY8XpZRyOU0tKh71Mw++3Bo+JfyrSKUK8cdu1H7e9HsbF7sv7rzKza7lbWj6qLC
+ e+RWFar9EClUkDGDSNDhbZVW0HCRs7HENCJxvoPqrd+h3oEu+TR6n7aoWeYUUgdqk/QX
+ 82Krn/BRIR7lrW7UoUY5IEE3O6ZyQ259Uyk4e50LsA7aGdVLYdssOMM+AvWPLSwvxHe5
+ HSMQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUNWUz2lGvdMjKm3N0gsmfC/zu8o0QQhF8jtUe7L8OLYrIXI2QICxHoc12WPsYDhDLDabQQZzwbsJUY@nongnu.org
+X-Gm-Message-State: AOJu0YzSnFHs2iADe4Gc6DE8dJGCDL3TfYptzY3Vkir5R2GKnUVt0ZAA
+ dtrxqCsKsDQdRrmb9bF/U1JlEt6IrGdF1y+5q8xkQQG8e+Qk+0bX+Zz0jmBp+mqrtTA=
+X-Gm-Gg: ASbGncsrkGShOJLWk7DT8R7lLYcgc0Ky6gYm900faD2Vd0nVf9uKTPcQ03LBwghyGtc
+ Q4QVAgX5Ddnko6naILm2XeKuv8AZDzpu8gd7QxQVIjzhL08dTwZeL5DBdVZeY0iSSeQYxDFPpt7
+ U5/xOdhZ3bcec9GLFFRAnl/kMc/ae4roGFtYyQq5MnArVagJts5tnAz8YdOlC2RQeSvy/is03U8
+ ZWpeBiZja/bKWEzbk4kqsMXyCGAreqXho5UucdhxuRt7rSwnoIpsfWqZn1kAP6ouOLjGb5XgIsM
+ 0Ao6LTanwEdYihMArKYoBRMK5zUINIyr0xxavM6LU5IKJdXhqQyNmHNSabwTuQs=
+X-Google-Smtp-Source: AGHT+IEUyUsrmEIT2qGB0s4NrWmnvwVE1S31NPzMbdBBFi1d/gsY/It/kR/vY/qZg8EGHmRPCp1eNg==
+X-Received: by 2002:a17:906:f591:b0:ad8:9ab7:a270 with SMTP id
+ a640c23a62f3a-adec5c3d478mr376872466b.38.1749830267143; 
+ Fri, 13 Jun 2025 08:57:47 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-adec81c2122sm149418766b.57.2025.06.13.08.57.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Jun 2025 08:57:46 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id C35B05F827;
+ Fri, 13 Jun 2025 16:57:44 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Rowan Hart <rowanbhart@gmail.com>,  qemu-devel@nongnu.org,  Paolo
+ Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Mahmoud
+ Mandour <ma.mandourr@gmail.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao
+ Liu <zhao1.liu@intel.com>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v12 0/7] Add additional plugin API functions to read and
+ write memory and registers
+In-Reply-To: <3743dd0d-0cfa-434a-ae19-54af637b1528@linaro.org> (Pierrick
+ Bouvier's message of "Fri, 13 Jun 2025 08:19:59 -0700")
+References: <20250611232409.2936521-1-rowanbhart@gmail.com>
+ <3743dd0d-0cfa-434a-ae19-54af637b1528@linaro.org>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Fri, 13 Jun 2025 16:57:44 +0100
+Message-ID: <875xgzhbwn.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,280 +109,132 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Jun 2025 14:07:32 +0900
-Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-> On Thu, Jun 12, 2025 at 02:43:34PM +0100, Jonathan Cameron wrote:
-> > v15:
-> >   - Split the address map calculations and mmio setup into separate
-> >     functions in patch 2, allowing v14 patch 3 to be dropped as not
-> >     x86 and arm make the same calls.  Note I felt this was a sufficient
-> >     change to trigger dropping tags. (Zhijian Li)
-> >   - A few other minor tweaks.
-> >   - TLB issue mentioned in v14 now fixed upstream so dropped reference
-> >     in this cover letter.
-> > 
-> > Thanks to Itaru Kitayama and Zhijian Li for testing + reviews.
-> > 
-> > Updated cover letter
-> > 
-> > Back in 2022, this series stalled on the absence of a solution to device
-> > tree support for PCI Expander Bridges (PXB) and we ended up only having
-> > x86 support upstream. I've been carrying the arm64 support out of tree
-> > since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
-> > a few weeks ago) and a fair number of fiddly rebases.
-> > gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
-> > series.
-> > 
-> > A recent discussion with Peter Maydell indicated that there are various
-> > other ACPI only features now, so in general he might be more relaxed
-> > about DT support being necessary. The upcoming vSMMUv3 support would
-> > run into this problem as well.
-> > 
-> > I presented the background to the PXB issue at Linaro connect 2022. In
-> > short the issue is that PXBs steal MMIO space from the main PCI root
-> > bridge. The challenge is knowing how much to steal.
-> > 
-> > On ACPI platforms, we can rely on EDK2 to perform an enumeration and
-> > configuration of the PCI topology and QEMU can update the ACPI tables
-> > after EDK2 has done this when it can simply read the space used by the
-> > root ports. On device tree, there is no entity to figure out that
-> > enumeration so we don't know how to size the stolen region.
-> > 
-> > Three approaches were discussed:
-> > 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
-> >    3rd enumeration implementation that ends up out of sync with EDK2 and
-> >    the kernel (there are frequent issues because of how those existing
-> >    implementations differ.
-> > 2) Figure out how to enumerate in kernel. I never put a huge amount of work
-> >    into this, but it seemed likely to involve a nasty dance with similar
-> >    very specific code to that EDK2 is carrying and would very challenging
-> >    to upstream (given the lack of clarity on real use cases for PXBs and
-> >    DT).
-> > 3) Hack it based on the control we have which is bus numbers.
-> >    No one liked this but it worked :)
-> > 
-> > The other little wrinkle would be the need to define full bindings for CXL
-> > on DT + implement a fairly complex kernel stack as equivalent in ACPI
-> > involves a static table, CEDT, new runtime queries via _DSM and a description
-> > of various components. Doable, but so far there is no interest on physical
-> > platforms. Worth noting that for now, the QEMU CXL emulation is all about
-> > testing and developing the OS stack, not about virtualization (performance
-> > is terrible except in some very contrived situations!)
-> > 
-> > There is only a very simple test in here, because my intent is not to
-> > duplicate what we have on x86, but just to do a smoke test that everything
-> > is hooked up.  In general we need much more comprehensive end to end CXL
-> > tests but that requires a reaonsably stable guest software stack. A few
-> > people have expressed interest in working on that, but we aren't there yet.
-> > 
-> > Note that this series has a very different use case to that in the proposed
-> > SBSA-ref support:
-> > https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
-> > 
-> > SBSA-ref is a good choice if you want a relatively simple mostly fixed
-> > configuration.  That works well with the limited host system
-> > discoverability etc as EDK2 can be build against a known configuration.
-> > 
-> > My interest with this support in arm/virt is support host software stack
-> > development (we have a wide range of contributors, most of whom are working
-> > on emulation + the kernel support). I care about the weird corners. As such
-> > I need to be able to bring up variable numbers of host bridges, multiple CXL
-> > Fixed Memory Windows with varying characteristics (interleave etc), complex
-> > NUMA topologies with wierd performance characteristics etc. We can do that
-> > on x86 upstream today, or my gitlab tree. Note that we need arm support
-> > for some arch specific features in the near future (cache flushing).
-> > Doing kernel development with this need for flexibility on SBSA-ref is not
-> > currently practical. SBSA-ref CXL support is an excellent thing, just
-> > not much use to me for this work.
-> > 
-> > Also, we are kicking off some work on DCD virtualization, particularly to
-> > support inter-host shared memory being presented up into a VM. That
-> > will need upstream support on arm64 as it is built on top of the existing
-> > CXL emulation to avoid the need for a separate guest software stack.
-> > 
-> > Note this is TCG only - it is possible to support limited use with KVM but
-> > that needs additional patches not yet ready for upstream.  The challenge
-> > is interleave - and the solution is don't interleave if you want to run
-> > with KVM.  
-> 
-> One of the ndctl:cxl tests fails (other tests ran ok):
+> On 6/11/25 4:24 PM, Rowan Hart wrote:
+>> This patch series adds several new API functions focused on enabling use
+>> cases around reading and writing guest memory from QEMU plugins. To supp=
+ort
+>> these new APIs, some utility functionality around retrieving information=
+ about
+>> address spaces is added as well.
+>> The new qemu_plugin_write_register utilizes gdb_write_register,
+>> which is now
+>> declared in gdbstub.h for this purpose instead of being static.
+>> qemu_plugin_write_memory_vaddr utilizes cpu_memory_rw_debug much the
+>> same as
+>> the existing read_memory_vaddr function does.
+>> The read and write_hwaddr functions are the most different. These
+>> functions
+>> use address_space_rw, which works well in most cases. There is an import=
+ant
+>> caveat that for writes, the page being written will be set dirty by the
+>> write operation. This dirty setting requires locking the page range,
+>> which can contend with an already held lock in page_collection_lock
+>> when called in a tb translate callback with a write to the instruction
+>> memory in the tb. The doc comments warn against doing this, and it's unl=
+ikely
+>> anyone would want to do this.
+>> I've also added two test plugins: one that implements a simple
+>> hypercall
+>> interface that guest code can use to communicate with the plugin in a
+>> structured way with a test to ensure that this hypercall works and writi=
+ng
+>> virtual memory works. And one that implements a simple patch utility to =
+patch
+>> memory at runtime. The test for the second plugin ensures the patch appl=
+ies
+>> successfully to instruction memory, and can use both hw and vaddr method=
+s.
+>> For v3, I've had a few comments from the last submission that I've
+>> addressed,
+>> and some that I haven't for one reason or another:
+>> - Enforce QEMU_PLUGIN_CB_ flags in register read/write operations:
+>> done!
+>> - Fix my commit messages and add long messages describing commits: done!
+>> - Un-expose AS internals: done! Functions operate on current vCPU, curre=
+nt AS.
+>> - Clean up use of current_cpu: done!
+>> - Make functions take a vcpu_idx: not done. May revisit but it allows fo=
+otguns.
+>>    Even for translation, seems best to not do this now. We can easily ad=
+d _vcpu
+>>    versions of these functions in the future if we change our minds!
+>> For v5, I've just updated the enforcement of the QEMU_PLUGIN_CB_
+>> flags to just
+>> use immediate stores, which simplifies the implementation quite a lot and
+>> should be more efficient too. Thanks Pierrick for the suggestion!
+>> v6 is a formatting pass, I left some whitespace that needed removal,
+>> some
+>> license text was wrong, and so forth.
+>> v8 reverts a mistake I made extending the size of arrays of
+>> TCGHelperInfo
+>> structs, as I misunderstood their sizes. It preserves adding an explicit
+>> zero as the last entry for clarity, however.
+>> v9 fixes qemu_plugin_read_register to return -1 on parameter or flag
+>> state
+>> error instead of 0.
+>> In v10, I relaxed the restriction on when the register r/w functions
+>> can be
+>> called, allowing all them to be used from any callback where the CPU is =
+not
+>> currently executing, with additional notes in the documentation for exce=
+ptions
+>> (atexit and flush, which do not operate on a specific CPU and in which
+>> current_cpu is not set).
+>> v11 makes the cb flags functions inline and fixes a typo where cpu
+>> was asserted
+>> but current_cpu was actually accessed.
+>> v12 removes the hypercalls plugin because the functions it tested
+>> are also
+>> tested by the patcher plugin, making it redundant. We'll circle back on a
+>> hypercalls API in the future as a part of the plugin API, not as a plugin
+>> itself.
+>> Rowan Hart (1):
+>>    plugins: Add enforcement of QEMU_PLUGIN_CB flags in register R/W
+>>      callbacks
+>> novafacing (6):
+>>    gdbstub: Expose gdb_write_register function to consumers of gdbstub
+>>    plugins: Add register write API
+>>    plugins: Add memory virtual address write API
+>>    plugins: Add memory hardware address read/write API
+>>    plugins: Add patcher plugin and test
+>>    plugins: Update plugin version and add notes
+>>   accel/tcg/plugin-gen.c                    |  30 +++
+>>   gdbstub/gdbstub.c                         |   2 +-
+>>   include/exec/gdbstub.h                    |  14 ++
+>>   include/hw/core/cpu.h                     |   1 +
+>>   include/qemu/plugin.h                     |  15 ++
+>>   include/qemu/qemu-plugin.h                | 176 ++++++++++++++--
+>>   plugins/api.c                             | 135 +++++++++++-
+>>   plugins/core.c                            |  33 +++
+>>   tests/tcg/Makefile.target                 |   1 +
+>>   tests/tcg/plugins/meson.build             |   2 +-
+>>   tests/tcg/plugins/patch.c                 | 241 ++++++++++++++++++++++
+>>   tests/tcg/x86_64/Makefile.softmmu-target  |  32 ++-
+>>   tests/tcg/x86_64/system/patch-target.c    |  27 +++
+>>   tests/tcg/x86_64/system/validate-patch.py |  39 ++++
+>>   14 files changed, 725 insertions(+), 23 deletions(-)
+>>   create mode 100644 tests/tcg/plugins/patch.c
+>>   create mode 100644 tests/tcg/x86_64/system/patch-target.c
+>>   create mode 100755 tests/tcg/x86_64/system/validate-patch.py
+>>=20
+>
+> @Alex,
+> series looks good to me now.
+>
+> Would you like to add comments, or is it good for you also?
 
-Whilst interesting and needing debugging I'd just like to point out that those
-tests are not running on the qemu CXL emulation at all, but on cxl test which
-is mocking stuff in the kernel.   I know you know that but it might not
-be obvious to anyone seeing a bug report on this thread!
+I'll do a pass through next week but I think we are in good shape.
 
-Jonathan
-
-
-> 
-> # meson test cxl-region-sysfs.sh
-> ninja: Entering directory `/root/ndctl/build'
-> [1/55] Generating version.h with a custom command
-> [  706.564783][ T2080] calling  cxl_port_init+0x0/0xfe0 [cxl_port] @ 2080
-> [  706.566861][ T2080] initcall cxl_port_init+0x0/0xfe0 [cxl_port] returned 0 after 1735 usecs
-> [  706.586457][ T2080] calling  cxl_acpi_init+0x0/0xfe0 [cxl_acpi] @ 2080
-> [  706.625690][ T2080] probe of port1 returned 0 after 25381 usecs
-> [  706.626634][ T2080]  pci0000:bf: host supports CXL
-> [  706.653573][ T2080] probe of port2 returned 0 after 25631 usecs
-> [  706.655164][ T2080]  pci0000:35: host supports CXL
-> [  706.662409][ T2080] probe of ACPI0017:00 returned 0 after 74464 usecs
-> [  706.663150][ T2080] initcall cxl_acpi_init+0x0/0xfe0 [cxl_acpi] returned 0 after 76306 usecs
-> [  706.690482][ T2080] calling  cxl_pmem_init+0x0/0xfd0 [cxl_pmem] @ 2080
-> [  706.695324][ T2080] probe of ndbus0 returned 0 after 1496 usecs
-> [  706.699217][ T2080] probe of nvdimm-bridge0 returned 0 after 6705 usecs
-> [  706.702372][ T2080] initcall cxl_pmem_init+0x0/0xfd0 [cxl_pmem] returned 0 after 11576 usecs
-> [  706.717668][ T2080] calling  cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] @ 2080
-> [  706.758561][ T2080] probe of port3 returned 0 after 34188 usecs
-> [  706.767080][ T2080] cxl_nvdimm pmem11: GPF: could not set dirty shutdown state
-> [  706.779392][ T2080] probe of nmem0 returned 0 after 1083 usecs
-> [  706.782181][ T2080] probe of pmem11 returned 0 after 15516 usecs
-> [  706.826941][ T2080] probe of endpoint4 returned 0 after 42630 usecs
-> [  706.827987][ T2080] probe of mem11 returned 0 after 108475 usecs
-> [  706.878052][ T2080] probe of port5 returned 0 after 41354 usecs
-> [  706.938260][ T2080] probe of endpoint6 returned 0 after 46831 usecs
-> [  706.939223][ T2080] probe of mem12 returned 0 after 105104 usecs
-> [  706.994611][ T2080] probe of endpoint7 returned 0 after 49337 usecs
-> [  706.995790][ T2080] probe of mem13 returned 0 after 53632 usecs
-> [  707.004334][ T2080] cxl_nvdimm pmem14: GPF: could not set dirty shutdown state
-> [  707.017782][ T2080] probe of nmem1 returned 0 after 1115 usecs
-> [  707.019324][ T2080] probe of pmem14 returned 0 after 14920 usecs
-> [  707.072148][ T2080] probe of endpoint8 returned 0 after 50887 usecs
-> [  707.073367][ T2080] probe of mem14 returned 0 after 71279 usecs
-> [  707.079062][ T2080] initcall cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] returned 0 after 361073 usecs
-> [  707.111533][ T2080] calling  cxl_test_init+0x0/0xc88 [cxl_test] @ 2080
-> [  708.001403][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-> [  708.002032][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-> [  708.010988][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-> [  708.011963][ T2080] platform cxl_host_bridge.3: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-> [  708.034604][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-> [  708.056775][ T2080] probe of port10 returned 0 after 20555 usecs
-> [  708.057814][ T2080] platform cxl_host_bridge.0: host supports CXL
-> [  708.062226][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-> [  708.081857][ T2080] probe of port11 returned 0 after 18696 usecs
-> [  708.085821][ T2080] platform cxl_host_bridge.1: host supports CXL
-> [  708.086496][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-> [  708.538268][ T2080] probe of port12 returned 0 after 450064 usecs
-> [  708.563248][ T2080] platform cxl_host_bridge.2: host supports CXL
-> [  708.563875][ T2080] platform cxl_host_bridge.3: host supports CXL (restricted)
-> [  708.803640][ T2080] probe of ndbus1 returned 0 after 87373 usecs
-> [  708.817241][ T2080] probe of nvdimm-bridge1 returned 0 after 182992 usecs
-> [  708.839172][ T2080] probe of cxl_acpi.0 returned 0 after 843615 usecs
-> [  709.026867][  T503] cxl_mock_mem cxl_mem.0: CXL MCE unsupported
-> [  709.240435][  T502] cxl_mock_mem cxl_mem.1: CXL MCE unsupported
-> [  709.263055][  T499] cxl_mock_mem cxl_mem.2: CXL MCE unsupported
-> [  709.317257][  T503] probe of port13 returned 0 after 57147 usecs
-> [  709.442524][  T498] cxl_mock_mem cxl_mem.3: CXL MCE unsupported
-> [  709.495789][  T499] probe of port15 returned 0 after 57022 usecs
-> [  709.538513][ T1514] cxl_mock_mem cxl_mem.5: CXL MCE unsupported
-> [  709.553021][  T503] probe of nmem3 returned 0 after 12329 usecs
-> [  709.555876][  T503] probe of pmem0 returned 0 after 54954 usecs
-> [  709.567823][  T499] probe of nmem2 returned 0 after 27577 usecs
-> [  709.569359][  T499] probe of pmem2 returned 0 after 64505 usecs
-> [  709.603845][  T497] cxl_mock_mem cxl_mem.4: CXL MCE unsupported
-> [  709.626487][   T12] cxl_mock_mem cxl_mem.6: CXL MCE unsupported
-> [  709.639194][  T502] probe of port14 returned 0 after 255539 usecs
-> [  709.662671][  T503] probe of region2 returned 6 after 421 usecs
-> [  709.664855][  T503] cxl_mock_mem cxl_mem.0: Extended linear cache calculation failed rc:-2
-> [  709.694975][  T503] probe of endpoint16 returned 0 after 100427 usecs
-> [  709.698678][  T503] probe of mem0 returned 0 after 516964 usecs
-> [  709.752821][   T49] cxl_mock_mem cxl_mem.7: CXL MCE unsupported
-> [  709.782050][  T499] probe of endpoint17 returned 0 after 102692 usecs
-> [  709.814422][  T499] probe of mem2 returned 0 after 539843 usecs
-> [  709.859496][  T497] probe of nmem4 returned 0 after 74368 usecs
-> [  709.860064][  T497] probe of pmem5 returned 0 after 120134 usecs
-> [  709.862431][  T499] probe of cxl_mem.2 returned 0 after 686512 usecs
-> [  709.863290][  T503] probe of cxl_mem.0 returned 0 after 892734 usecs
-> [  709.870924][   T30] cxl_mock_mem cxl_mem.9: CXL MCE unsupported
-> [  709.876631][ T2080] initcall cxl_test_init+0x0/0xc88 [cxl_test] returned 0 after 2764528 usecs
-> [  709.886776][  T498] probe of port18 returned 0 after 168122 usecs
-> [  709.900934][  T500] cxl_mock_mem cxl_mem.8: CXL MCE unsupported
-> [  709.946498][ T1514] probe of nmem5 returned 0 after 9462 usecs
-> [  709.947381][ T1514] probe of pmem4 returned 0 after 14445 usecs
-> [  709.970022][   T12] probe of nmem6 returned 0 after 32603 usecs
-> [  709.978337][  T498] probe of nmem7 returned 0 after 35875 usecs
-> [  709.986071][  T498] probe of pmem3 returned 0 after 46583 usecs
-> [  710.010717][   T12] probe of pmem6 returned 0 after 75369 usecs
-> [  710.014337][  T501] cxl_mock_mem cxl_rcd.10: CXL MCE unsupported
-> [  710.040337][  T502] probe of nmem8 returned 0 after 29862 usecs
-> [  710.059653][  T502] probe of pmem1 returned 0 after 88935 usecs
-> [  710.079573][   T12] probe of endpoint23 returned 0 after 49198 usecs
-> [  710.097280][   T30] probe of port21 returned 0 after 120461 usecs
-> [  710.097393][   T49] probe of nmem9 returned 0 after 26437 usecs
-> [  710.101820][   T49] probe of pmem7 returned 0 after 36944 usecs
-> [  710.106202][   T12] probe of mem6 returned 0 after 452293 usecs
-> [  710.130816][   T12] probe of cxl_mem.6 returned 0 after 669975 usecs
-> [  710.133959][  T500] probe of nmem10 returned 0 after 12351 usecs
-> [  710.170179][  T500] probe of pmem9 returned 0 after 50316 usecs
-> [  710.183178][  T498] probe of endpoint22 returned 0 after 160579 usecs
-> [  710.208790][  T498] probe of mem3 returned 0 after 760551 usecs
-> [  710.212463][  T501] probe of endpoint24 returned 0 after 149792 usecs
-> [  710.236975][  T497] probe of dax2.0 returned 0 after 118646 usecs
-> [  710.240952][  T497] probe of dax_region2 returned 0 after 166940 usecs
-> [  710.242545][  T498] probe of cxl_mem.3 returned 0 after 917362 usecs
-> [  710.256278][   T30] probe of nmem11 returned 0 after 45572 usecs
-> [  710.257079][   T30] probe of pmem8 returned 0 after 105691 usecs
-> [  710.259332][  T501] probe of mem10 returned 0 after 218194 usecs
-> [  710.265545][  T497] probe of region2 returned 0 after 225563 usecs
-> [  710.269232][ T1514] probe of endpoint20 returned 0 after 320269 usecs
-> [  710.282299][  T497] probe of endpoint19 returned 0 after 421116 usecs
-> [  710.283234][  T497] probe of mem5 returned 0 after 642268 usecs
-> [  710.304734][ T1514] probe of mem4 returned 0 after 762768 usecs
-> [  710.322940][   T49] probe of endpoint26 returned 0 after 117975 usecs
-> [  710.324643][   T49] probe of mem7 returned 0 after 558032 usecs
-> [  710.336434][  T501] probe of cxl_rcd.10 returned 0 after 414904 usecs
-> [  710.339624][  T497] probe of cxl_mem.4 returned 0 after 957535 usecs
-> [  710.400496][ T1514] probe of cxl_mem.5 returned 0 after 996364 usecs
-> [  710.450320][   T49] probe of cxl_mem.7 returned 0 after 842769 usecs
-> [  710.648851][  T500] probe of endpoint25 returned 0 after 477479 usecs
-> [  710.659334][  T500] probe of mem9 returned 0 after 690185 usecs
-> [  710.706030][  T500] probe of cxl_mem.8 returned 0 after 917194 usecs
-> [  711.162896][   T30] probe of endpoint28 returned 0 after 493899 usecs
-> [  711.227336][   T30] probe of mem8 returned 0 after 1278462 usecs
-> [  711.325568][  T502] probe of endpoint27 returned 0 after 929403 usecs
-> [  711.356687][  T502] probe of mem1 returned 0 after 2101415 usecs
-> [  711.531055][   T30] probe of cxl_mem.9 returned 0 after 1707787 usecs
-> [  711.554073][  T502] probe of cxl_mem.1 returned 0 after 2425696 usecs
-> [  724.421245][ T2077] probe of region5 returned 6 after 262 usecs
-> 1/1 ndctl:cxl / cxl-region-sysfs.sh        FAIL            18.22s   exit status 1
-> >>> TEST_PATH=/root/ndctl/build/test ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 LD_LIBRARY_PATH=/root/ndctl/build/daxctl/lib:/root/ndctl/build/cxl/lib:/root/ndctl/build/ndctl/lib DAXCTL=/root/ndctl/build/daxctl/daxctl DATA_PATH=/root/ndctl/test NDCTL=/root/ndctl/build/ndctl/ndctl MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=123 /bin/bash /root/ndctl/test/cxl-region-sysfs.sh  
-> 
-> The kernel (the cxl_test kernel module) is built off of cxl/next which
-> has Jonathan's fix to the cxl_test seen on arm64.
-> Could the experts take a look at this issue?
-> 
+>
 > Thanks,
-> Itaru.
-> 
-> > 
-> > Jonathan Cameron (4):
-> >   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
-> >   hw/cxl: Make the CXL fixed memory windows devices.
-> >   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
-> >     pxb-cxl
-> >   qtest/cxl: Add aarch64 virt test for CXL
-> > 
-> >  include/hw/arm/virt.h     |   4 +
-> >  include/hw/cxl/cxl.h      |   5 +-
-> >  include/hw/cxl/cxl_host.h |   5 +-
-> >  hw/acpi/cxl.c             |  76 +++++++++--------
-> >  hw/arm/virt-acpi-build.c  |  34 ++++++++
-> >  hw/arm/virt.c             |  29 +++++++
-> >  hw/cxl/cxl-host-stubs.c   |   7 +-
-> >  hw/cxl/cxl-host.c         | 170 +++++++++++++++++++++++++++++++-------
-> >  hw/i386/pc.c              |  50 +++++------
-> >  tests/qtest/cxl-test.c    |  59 ++++++++++---
-> >  tests/qtest/meson.build   |   1 +
-> >  11 files changed, 330 insertions(+), 110 deletions(-)
-> > 
-> > -- 
-> > 2.48.1
-> >   
+> Pierrick
 
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
