@@ -4,72 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DBC5DC61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 10:28:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E75EC71135
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 10:33:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ1dd-0002ZG-EH; Fri, 13 Jun 2025 06:27:58 -0400
+	id 1uQ1ia-0004M9-Jm; Fri, 13 Jun 2025 06:33:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uQ1dK-0002Ui-2L
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:27:38 -0400
-Received: from mail-yw1-x1133.google.com ([2607:f8b0:4864:20::1133])
+ id 1uQ1iZ-0004Jf-9o
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:33:03 -0400
+Received: from mail-yw1-x1134.google.com ([2607:f8b0:4864:20::1134])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uQ1dI-0008SZ-5S
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:27:37 -0400
-Received: by mail-yw1-x1133.google.com with SMTP id
- 00721157ae682-710e344bbf9so17251817b3.2
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 03:27:35 -0700 (PDT)
+ id 1uQ1iX-0001DI-Oi
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:33:02 -0400
+Received: by mail-yw1-x1134.google.com with SMTP id
+ 00721157ae682-70e3e0415a7so19141177b3.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 03:33:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749810455; x=1750415255; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=JlMs0p6VdV7oxxg2epAT1Bo92I28U+gNdsoTeg5K1Kg=;
- b=ZBqJL+9nBNlgI/rlKBya7f8ZS7N2z1iALIOga1GC5daPJQphfGcys5iIGpXqrkqrXH
- IjtrwAg5Z1PclakWDOoiQRTbJfQbPAq9EwyfDUgFnxJBgSfRhKQWl5Y6rHK31Hq23KDd
- k1yMU6atchsUoLQPSFtn6HkwXmOak1yaz/PfDaMX29H9CB08LpCoupL49sk1rAf+XpvG
- G3gMz4EZKAv/FJ2Fv+poSdCW8KLyXYbDsV3IU0XKqy915jxXQ+tNsqLpI29rYL7ocBsN
- PK8qPsMw4HDgKULxhEDrm761XwIjqaz5VD5M9kHGf4BMOG+Bi4bOHYzZNwgqfOyOU15d
- dgUw==
+ d=linaro.org; s=google; t=1749810780; x=1750415580; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=If4kGmFmMukX9qb+e/hifH9l/FBRtkjVpd8CeCvuk1M=;
+ b=lNC/VamScBUzs5dtZM1bzuTsVatW+M1KuMHTdzpsmElFui/j01129pN02y06LIdEPQ
+ 361NSHCr07Erl8iNqjvuIpGH1lbeo2U2Bz2ZJkCVlcVXL5wBBFMd9Q/2Ajgf8P3L9Px0
+ SfIvpkzDt5NcsS8IyhGWUnjX0Luox39fN73UoBboDK26VGknIx8ApIYoxkNEGC3edj4i
+ dz0ZbCgeRbboZRpwO2qv8tMD90NPj61v2rTW2dblQ00gPU5+cqOkLeAY1go9wsxqTJmr
+ DXvlvTKli1Ts3bqLfNZ308tki3STpCAnRhwb9qkKnkD32chbw92EoiwYHg0tUZ3RL0e+
+ NTgw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749810455; x=1750415255;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JlMs0p6VdV7oxxg2epAT1Bo92I28U+gNdsoTeg5K1Kg=;
- b=NCL9tpXNtNwrmsOgTMp18aOdeXPQP1tf0LPzAU1YzLynZdfrFMFx3QR06luAxZw6Rj
- nelhEzuMLvOrmf0R4dXMQieE/TAgIS5UIbVrNbrDLMcJZ5d2G8qHX+6J8Av7evlgi7a5
- Reh1OG2DtOG2hECFz04dHPVIum8rLh7QFA/vVKkicjjGvxEZH17qasxUK/qFjhfbsSJ0
- AgAsxPz7yCnRxfan3ZQPx4ipdllpCMccVZRfvFNZb/q9NIdVtey2VGULQOnmuRjEAMr3
- 4pszEDvjvmjqy63Aw9ik82g0ldRScuFVUzlxpJGQGY5JwEjCSvbburFb2C8zBcitEYYC
- 2t7A==
-X-Gm-Message-State: AOJu0YwTvv+FODjT2jow5B4RskwSYQNXqyIVJJ17+/+PLBZfmrASQWAU
- GhqyvJkynw4Seyzs2cNt4kkNn7j5bowlu0dtsslUmpMN1U/BXVMq3kMWhmR8ZiLxPpiyp5eZMyD
- M7wVpFwUNubxsPYVXI67gCp7q/NbOave0YOZZyrOF+w==
-X-Gm-Gg: ASbGnctAocjhqOi95PV8jdnKGoo0FSv61GWVwFfwXBHx1xZbHZXMjk3m4dOqGYkg4Cw
- rPmunV3k4mg69FKGRxELRPYhSkCXAtUcx++CHfHJY2hn00+4UqHR/pUP+aeYrhvyM9v9gc5x7eb
- NmVwp74akT5QYmLpMocsnQSAfHiEGZ7IVwNSp9QNB+Qvw5RHtduQdXsCQ=
-X-Google-Smtp-Source: AGHT+IERQXUXqFRJd53kRpxIN/keuu6R3uczYuqHyJ9BN6LqiMx0qa72q8Y7k9xu0+nO97b//YrO6cLKekDqTDUVzDQ=
-X-Received: by 2002:a05:690c:4885:b0:709:197d:5d3c with SMTP id
- 00721157ae682-71163650082mr41866887b3.11.1749810454848; Fri, 13 Jun 2025
- 03:27:34 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749810780; x=1750415580;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=If4kGmFmMukX9qb+e/hifH9l/FBRtkjVpd8CeCvuk1M=;
+ b=qcKO8osYoht3EK5XTM8nogaRj98he3lyTWz/jdNuOCXphntNBgFAnf0bs6xnVxTK6o
+ aRX0KMPaPiW6lbXc2n6c+SCY2aC2vsoGCHOKglzGLap9Zez3cpCsJ6qfsNJqBgv7OBid
+ proFFCRZ25VbZBWnZT+8JAg7lqT1ZOJv/DAxhmfxxDK0W04FAMgXgbMNq4awXDYXJibw
+ hKBjLwN39Dm2u8ltD1EGVQWODTTWFEulitj3gyWjw09jS0pYt9XU5neiTbF7hMRMwniA
+ U+QIuJyQyIqNEIEzfLPtu7QUoH0eJk1XY61Ql9+pesB/gA7Ze6c/WN1fyMfpIi0DZSkZ
+ HJ/Q==
+X-Gm-Message-State: AOJu0YzsrQc2kbP0QCN5jHFqRjqwIUi+j8qiQgHGKOUEiHnqEhTAuock
+ CZPYrjIKRrDLS6hAVXUJdIi4Uop/XlTbW8GNfeaTg6My4GOlf9xrJa1MqR62NYdeuObryPH8Vnw
+ y9CB2WEO4QzMubxXXWMFtCukP2tnXCnfrf8C+1lrugw==
+X-Gm-Gg: ASbGncv96f8Q/g6Eo2E5/Aw+YtY3UJaPTEpgcwAmepThoRXY8P2LLNW1e3xGaRUUcaR
+ OX6BKLzloEgpHoFP/40R74doV+fQFTtOEIQCinT5qX5mIbFXywAsRWzfJMAyNwZnFDSoyUA8vMF
+ r6zb3Trn5o7twjPheAppF90pv2GHoKsYDnKmScz7f2Yvz1
+X-Google-Smtp-Source: AGHT+IGADNIPmaMohnRjL1LchwzbVPQDFGWGQp+uNAbvBMw/5zJxjAVe+BDhbTuYOQIjvXkUq7IjWSQpk4TVEebz9Ms=
+X-Received: by 2002:a05:690c:4889:b0:710:e81e:1364 with SMTP id
+ 00721157ae682-71172580180mr2107187b3.6.1749810779990; Fri, 13 Jun 2025
+ 03:32:59 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250609135124.45078-1-conte.souleymane@gmail.com>
-In-Reply-To: <20250609135124.45078-1-conte.souleymane@gmail.com>
+References: <20250526085523.809003-1-chigot@adacore.com>
+ <20250526085523.809003-3-chigot@adacore.com>
+In-Reply-To: <20250526085523.809003-3-chigot@adacore.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Jun 2025 11:27:22 +0100
-X-Gm-Features: AX0GCFsoSXYnOj5hcfyQXlnNaRnAS1PFqwKcUpXPpuXLIQgMdOLs94Tndq82Eto
-Message-ID: <CAFEAcA_Z2AgjaeeQ3sGHvUgvcQcDRGz0rwmq6pHJVQcnBGaNHQ@mail.gmail.com>
-Subject: Re: [PATCH v2] docs/interop: convert text file to reStructuredText
- format (v2)
-To: conte.souleymane@gmail.com
-Cc: qemu-devel@nongnu.org, eblake@redhat.com, jsnow@redhat.com
+Date: Fri, 13 Jun 2025 11:32:48 +0100
+X-Gm-Features: AX0GCFtmefTMxKElQsTWkxr_1RmuiosBfIx55mWgdZALc_62mNdeFhXeJ-DJXAM
+Message-ID: <CAFEAcA_XFRNJgN4dYe4euqh-u5-16ncfgtu2bOLR0tYamFUCqg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/4] hw/intc/arm_gic: introduce a first-cpu-index
+ property
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, edgar.iglesias@gmail.com, 
+ alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1133.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1134.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,24 +96,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Jun 2025 at 14:52, <conte.souleymane@gmail.com> wrote:
+On Mon, 26 May 2025 at 09:55, Cl=C3=A9ment Chigot <chigot@adacore.com> wrot=
+e:
 >
-> From: Souleymane Conte <conte.souleymane@gmail.com>
+> From: Frederic Konrad <konrad.frederic@yahoo.fr>
 >
-> buglink: https://gitlab.com/qemu-project/qemu/-/issues/527
-> Signed-off-by: Souleymane Conte <conte.souleymane@gmail.com>
+> This introduces a first-cpu-index property to the arm-gic, as some SOCs
+> could have two separate GIC (ie: the zynqmp).
+>
+> Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
 > ---
-> This is v2 of the patch previously sent here:
-> https://lists.nongnu.org/archive/html/qemu-devel/2025-06/msg01318.html
 
-Thanks, this looks good. I've applied it to target-arm.next.
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-I fixed a few tiny nits on the way:
- * moved the doc down to below qcow2 in the ToC (so it
-   doesn't split up the two Parallels related docs)
- * added new file to MAINTAINERS
- * made 'Consistency Checking' a section at the same level
-   as 'Header' and 'Tables'
-
+thanks
 -- PMM
 
