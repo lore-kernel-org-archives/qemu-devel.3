@@ -4,83 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1985EC61CE8
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 00:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E02C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 01:54:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPrv3-0006FL-R5; Thu, 12 Jun 2025 20:05:20 -0400
+	id 1uPtcf-0006Cv-D8; Thu, 12 Jun 2025 21:54:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3BmtLaAcKClM59769y319916z.x97Bz7F-yzGz689818F.9C1@flex--komlodi.bounces.google.com>)
- id 1uPruD-0005pE-MR
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:26 -0400
-Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3BmtLaAcKClM59769y319916z.x97Bz7F-yzGz689818F.9C1@flex--komlodi.bounces.google.com>)
- id 1uPruC-0000Yb-4e
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:25 -0400
-Received: by mail-pl1-x64a.google.com with SMTP id
- d9443c01a7336-23507382e64so13721565ad.2
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 17:04:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1749773062; x=1750377862; darn=nongnu.org;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:from:to:cc:subject:date:message-id:reply-to;
- bh=NO1C/XYn0cNc0jJwYcW3jpPIHQxOkwpZejg8rpn/AhI=;
- b=QeUuvCsdXl92znA3t7UbNu+WKqdMnW3G7IFNz9wAPzSnWTLh2d+eJxSu8s5niz0gsO
- K/X/UbhohwmjpFOBryPHzff4Td2+gWhWX5TtonmzBMB2Q9G1EDEnyKlrqZSEYd2TWu/j
- iMRn0eoQ0FAHCzZoKejcXqeNeutFqNC76RefV0T46bMlPqW9eGFLaFJqGP4CC2/g5tT/
- FxZD1ZrnZL26N1Mv8HDndDdKufM6EYwtL6616Pli1JR2tKv2/Fywl+/v3YrUuAbgwO6A
- ajpwSKS3qBOfiLd7VvnSQBFL71Rb8klnWxY2FCZgUMxlGShX2Vmcn5LuGk7MUSC9Wt9R
- pfZA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749773062; x=1750377862;
- h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
- :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=NO1C/XYn0cNc0jJwYcW3jpPIHQxOkwpZejg8rpn/AhI=;
- b=Odva11nslluDDRkfGHpTlHZDDO119G71ClQuxfz/Pg0c2JlH68LGYFUXg/zdcBAtlb
- z0E0823bYCys816DBj6jY7j7lzOqEtcN73TnwmDILHh03oYgOpyMtrMnPZinmtFg1ISV
- yxD7X95O8I3AlTAt5MFCOgTW0q810bFSyJHUfklndM6TnSccDXyQRy2vTuklBa7M54t+
- cJWDx9/5jVMIrKvsFO7TfW+5GXlxv8xU6ViCtI8td6HP4wPr6wiksh5z1ytZ6LHnG8ov
- OGLFrp2SkLKGMl4fO/tC+4KlaYbvAYgXqaZxZQBsZvl4kffRJNcH7KCLnDw518NT4GBI
- wcTg==
-X-Gm-Message-State: AOJu0Yz6bxRJh8bBW8lki7yBgu8Kmo8AIcE/+Emh5jVCxmBYPjseErZk
- 46VT9NF6XOitmX+39aH0WqjPTCp8El/mUfIP0n8Ccj3KTwZiaro4c8DI4u8YzYGQrQTE5XYD2iQ
- gVzJbY8MSU9oTeEfBGTYwLXcJJEPV1swXVZwO7lp1lsYUlFF65WVIFeBnyMO/cjzX0mQ/WIKV54
- mcxcj4a2QJoYOBpWhVo4hV6sjMvZ7XcRmo09P7YE16
-X-Google-Smtp-Source: AGHT+IF9eJQlQuSnGUux3PbemsptH8BHWBlQK73JP4lTFI29QphP1Bx+UKQyMnvHcdm+jIpaXg+9fua7Py1l
-X-Received: from pgac10.prod.google.com ([2002:a05:6a02:294a:b0:b2c:3a2e:ac7])
- (user=komlodi job=prod-delivery.src-stubby-dispatcher) by
- 2002:a17:903:4b2b:b0:235:f45f:ed41
- with SMTP id d9443c01a7336-2365d89f25fmr13389855ad.19.1749773062018; Thu, 12
- Jun 2025 17:04:22 -0700 (PDT)
-Date: Fri, 13 Jun 2025 00:03:59 +0000
-In-Reply-To: <20250613000411.1516521-1-komlodi@google.com>
-Mime-Version: 1.0
-References: <20250613000411.1516521-1-komlodi@google.com>
-X-Mailer: git-send-email 2.50.0.rc1.591.g9c95f17f64-goog
-Message-ID: <20250613000411.1516521-8-komlodi@google.com>
-Subject: [PATCH 07/19] hw/i3c/aspeed_i3c: Add register RO field masks
-From: Joe Komlodi <komlodi@google.com>
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1uPtcd-0006Cc-Ig
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 21:54:23 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1uPtcb-0007C5-KE
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 21:54:23 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8AxGHHJhEto12oVAQ--.53910S3;
+ Fri, 13 Jun 2025 09:54:17 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMBxb8evhEtoiJIYAQ--.6626S3;
+ Fri, 13 Jun 2025 09:54:16 +0800 (CST)
+From: Xianglai Li <lixianglai@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: venture@google.com, komlodi@google.com, clg@kaod.org, 
- peter.maydell@linaro.org, steven_lee@aspeedtech.com, leetroy@gmail.com, 
- jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au, joel@jms.id.au, 
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
- envelope-from=3BmtLaAcKClM59769y319916z.x97Bz7F-yzGz689818F.9C1@flex--komlodi.bounces.google.com;
- helo=mail-pl1-x64a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+Cc: Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>
+Subject: [PATCH V1 1/2] hw/rtc: Fixed loongson rtc emulation errors
+Date: Fri, 13 Jun 2025 09:31:15 +0800
+Message-Id: <b83fa4c3319e372b2a7b3b7b994821441ff9ca7c.1749777563.git.lixianglai@loongson.cn>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <cover.1749777563.git.lixianglai@loongson.cn>
+References: <cover.1749777563.git.lixianglai@loongson.cn>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMBxb8evhEtoiJIYAQ--.6626S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,50 +65,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Adds read-only register masks for the Aspeed I3C controller registers.
+The expire time is sent to the timer only
+when the expire Time is greater than 0 or
+greater than now. Otherwise, the timer
+will trigger interruption continuously.
 
-Signed-off-by: Joe Komlodi <komlodi@google.com>
+Timer interrupts are sent using pulse functions.
 
-Reviewed-by: Patrick Venture <venture@google.com>
+Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 ---
- hw/i3c/aspeed_i3c.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Cc: Bibo Mao <maobibo@loongson.cn>
+Cc: Song Gao <gaosong@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+Cc: Xianglai Li <lixianglai@loongson.cn>
 
-diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c
-index 7a16dfec53..1ad25e5a00 100644
---- a/hw/i3c/aspeed_i3c.c
-+++ b/hw/i3c/aspeed_i3c.c
-@@ -74,6 +74,21 @@ REG32(I3C6_REG1, 0x64)
-     FIELD(I3C6_REG1, SA_EN,         15, 1)
-     FIELD(I3C6_REG1, INST_ID,       16, 4)
+ hw/loongarch/virt-fdt-build.c | 11 +++++++++--
+ hw/rtc/ls7a_rtc.c             | 26 +++++++++++++++++---------
+ 2 files changed, 26 insertions(+), 11 deletions(-)
+
+diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+index 728ce46699..c613131a07 100644
+--- a/hw/loongarch/virt-fdt-build.c
++++ b/hw/loongarch/virt-fdt-build.c
+@@ -17,6 +17,11 @@
+ #include "system/reset.h"
+ #include "target/loongarch/cpu.h"
  
-+static const uint32_t ast2600_i3c_controller_ro[ASPEED_I3C_NR_REGS] = {
-+    [R_I3C1_REG0]                   = 0xfc000000,
-+    [R_I3C1_REG1]                   = 0xfff00000,
-+    [R_I3C2_REG0]                   = 0xfc000000,
-+    [R_I3C2_REG1]                   = 0xfff00000,
-+    [R_I3C3_REG0]                   = 0xfc000000,
-+    [R_I3C3_REG1]                   = 0xfff00000,
-+    [R_I3C4_REG0]                   = 0xfc000000,
-+    [R_I3C4_REG1]                   = 0xfff00000,
-+    [R_I3C5_REG0]                   = 0xfc000000,
-+    [R_I3C5_REG1]                   = 0xfff00000,
-+    [R_I3C6_REG0]                   = 0xfc000000,
-+    [R_I3C6_REG1]                   = 0xfff00000,
-+};
++#define FDT_IRQ_FLAGS_EDGE_LO_HI 1
++#define FDT_IRQ_FLAGS_EDGE_HI_LO 2
++#define FDT_IRQ_FLAGS_LEVEL_HI 4
++#define FDT_IRQ_FLAGS_LEVEL_LO 8
 +
- static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int size)
+ static void create_fdt(LoongArchVirtMachineState *lvms)
  {
-     AspeedI3CState *s = ASPEED_I3C(opaque);
-@@ -97,6 +112,7 @@ static void aspeed_i3c_write(void *opaque,
+     MachineState *ms = MACHINE(lvms);
+@@ -416,7 +421,8 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+     if (chosen) {
+         qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+     }
+-    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
++    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq,
++                           FDT_IRQ_FLAGS_LEVEL_HI);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+                           *pch_pic_phandle);
+     g_free(nodename);
+@@ -436,7 +442,8 @@ static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
+                             "loongson,ls7a-rtc");
+     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
+     qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+-                           VIRT_RTC_IRQ - VIRT_GSI_BASE , 0x4);
++                           VIRT_RTC_IRQ - VIRT_GSI_BASE ,
++                           FDT_IRQ_FLAGS_EDGE_LO_HI);
+     qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+                           *pch_pic_phandle);
+     g_free(nodename);
+diff --git a/hw/rtc/ls7a_rtc.c b/hw/rtc/ls7a_rtc.c
+index 10097b2db7..7eca75a42a 100644
+--- a/hw/rtc/ls7a_rtc.c
++++ b/hw/rtc/ls7a_rtc.c
+@@ -145,20 +145,24 @@ static void toymatch_write(LS7ARtcState *s, uint64_t val, int num)
+         now = qemu_clock_get_ms(rtc_clock);
+         toymatch_val_to_time(s, val, &tm);
+         expire_time = now + (qemu_timedate_diff(&tm) - s->offset_toy) * 1000;
+-        timer_mod(s->toy_timer[num], expire_time);
++        if (expire_time > now) {
++            timer_mod(s->toy_timer[num], expire_time);
++        }
+     }
+ }
  
-     addr >>= 2;
+ static void rtcmatch_write(LS7ARtcState *s, uint64_t val, int num)
+ {
+-    uint64_t expire_ns;
++    int64_t expire_ns;
  
-+    data &= ~ast2600_i3c_controller_ro[addr];
-     /* I3C controller register */
-     switch (addr) {
-     case R_I3C1_REG1:
+     /* it do not support write when toy disabled */
+     if (rtc_enabled(s)) {
+         s->rtcmatch[num] = val;
+         /* calculate expire time */
+         expire_ns = ticks_to_ns(val) - ticks_to_ns(s->offset_rtc);
+-        timer_mod_ns(s->rtc_timer[num], expire_ns);
++        if (expire_ns > 0) {
++            timer_mod_ns(s->rtc_timer[num], expire_ns);
++        }
+     }
+ }
+ 
+@@ -185,7 +189,7 @@ static void ls7a_rtc_stop(LS7ARtcState *s)
+ static void ls7a_toy_start(LS7ARtcState *s)
+ {
+     int i;
+-    uint64_t expire_time, now;
++    int64_t expire_time, now;
+     struct tm tm = {};
+ 
+     now = qemu_clock_get_ms(rtc_clock);
+@@ -194,19 +198,23 @@ static void ls7a_toy_start(LS7ARtcState *s)
+     for (i = 0; i < TIMER_NUMS; i++) {
+         toymatch_val_to_time(s, s->toymatch[i], &tm);
+         expire_time = now + (qemu_timedate_diff(&tm) - s->offset_toy) * 1000;
+-        timer_mod(s->toy_timer[i], expire_time);
++        if (expire_time > now) {
++            timer_mod(s->toy_timer[i], expire_time);
++        }
+     }
+ }
+ 
+ static void ls7a_rtc_start(LS7ARtcState *s)
+ {
+     int i;
+-    uint64_t expire_time;
++    int64_t expire_time;
+ 
+     /* recalculate expire time and enable timer */
+     for (i = 0; i < TIMER_NUMS; i++) {
+         expire_time = ticks_to_ns(s->rtcmatch[i]) - ticks_to_ns(s->offset_rtc);
+-        timer_mod_ns(s->rtc_timer[i], expire_time);
++        if (expire_time > 0) {
++            timer_mod_ns(s->rtc_timer[i], expire_time);
++        }
+     }
+ }
+ 
+@@ -370,7 +378,7 @@ static void toy_timer_cb(void *opaque)
+     LS7ARtcState *s = opaque;
+ 
+     if (toy_enabled(s)) {
+-        qemu_irq_raise(s->irq);
++        qemu_irq_pulse(s->irq);
+     }
+ }
+ 
+@@ -379,7 +387,7 @@ static void rtc_timer_cb(void *opaque)
+     LS7ARtcState *s = opaque;
+ 
+     if (rtc_enabled(s)) {
+-        qemu_irq_raise(s->irq);
++        qemu_irq_pulse(s->irq);
+     }
+ }
+ 
 -- 
-2.50.0.rc1.591.g9c95f17f64-goog
+2.39.1
 
 
