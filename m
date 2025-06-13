@@ -4,114 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE24C61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 11:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ABBBC61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 11:57:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ2jb-0001cy-1S; Fri, 13 Jun 2025 07:38:11 -0400
+	id 1uQ31u-0005Io-8p; Fri, 13 Jun 2025 07:57:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uQ2jY-0001ca-4A; Fri, 13 Jun 2025 07:38:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
- id 1uQ2jU-0003fS-Qt; Fri, 13 Jun 2025 07:38:07 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55D7TKqh019993;
- Fri, 13 Jun 2025 11:38:00 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=KM3O3+
- 9vbldgRNBnYUR7mOlchK3YvpLrieCMg3pYtEU=; b=X6FpH3JnVreuqAiA51Q+BT
- 8sj7/tvfJ3ywiMiGeR4YCgZczC60cdIxncTuNZvqpnwHzbRvTigNkqJ26gDOvOBW
- b3vzKZaGF6pdkMCWehSiLTDFLEBUMmG/A9ZMuIozu9Xnxi2gZ2/0ZeZ/cEI5qbkT
- w1LDBjH8WV1I3RoaMhUQcbmr7msbLG4DvWuAbdFXQA4YJctPQQSS3GWH9XSw+kSj
- Z8xEqIMAANrP/EldNGAj3PvQSk3FRLcdCrc+8vXclAfRgrrSfmFZZc/70brQHLLV
- 0kfIxCuzODsQx3x5biNxoSis5lfEssggR7i/vkm3LHLs7TDFYoHrtd79YHErPNQA
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474cxjrx0b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Jun 2025 11:38:00 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55D9UBbo015192;
- Fri, 13 Jun 2025 11:37:59 GMT
-Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 474yrtt12w-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Jun 2025 11:37:59 +0000
-Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
- [10.39.53.230])
- by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55DBbvtt3605186
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Jun 2025 11:37:58 GMT
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id B408458054;
- Fri, 13 Jun 2025 11:37:57 +0000 (GMT)
-Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0D77B5805A;
- Fri, 13 Jun 2025 11:37:57 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Jun 2025 11:37:56 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ31q-0005Hg-U2
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 07:57:02 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ31m-0006mT-N5
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 07:57:02 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-70e5599b795so19341877b3.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 04:56:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749815816; x=1750420616; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6vzaVIA9d+9s2Fziqj284tT6vvw/UIzD8MC8G8RTWz4=;
+ b=Yq/IObmIahVO5N0QfCZGyjmvLXelc/bl+mALdwYAIYIQCa4/TYB0OitxMtdGXhX693
+ /EMGLdS1GPyH7iKykHwsybxl46j6zxxqDoToQkj3QubE89trk3zEPxC4cysVIOWR1I/2
+ D4AGOh28xzOL5aNwoqUzbfMkFptPj4jpfNPtOi98S20f0z8qO1+yULEKqiGp7ZmK1+BC
+ q4ClELrTUYAhhYKFnESzrJqqpOMXFGdXMzBWZpTCnDFS0qNpE4b+NIJ6+rh6Uh6p0SV7
+ KGCdaLogpAeRyoMz/HAx4D9fNeR28IIu7K28d8V3752gGtk8UtXp6ePLEn2HCDBnokXv
+ LTlw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749815816; x=1750420616;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=6vzaVIA9d+9s2Fziqj284tT6vvw/UIzD8MC8G8RTWz4=;
+ b=JOGaQsqNt4qscsCnTQOilHN7AHTqakYjSae2L7eQbzI1PA1+IbvWZvl3EhZKQdtuae
+ BauqaHn3Q2pUoRaqANUbvcbWMI+rKDN33Yb3LTOnRYFp3fSBMz3rCi2/HBOPGY/4RsV/
+ qNY5nHO3biZvKSqGe2PtbOtIUI745hPAYeIxQCTZkPQNTfgCdEvVV7Eenu0/MQrXPQxp
+ iK8eMKp1+USgJa8GR2ggypLN9INxhIUSfm15YBuCrUd52aeoGnvRXnqwC4EK+6NpuK3E
+ aCRMUUVU9nrHF0jGG/Yl1wf8QX0NuzRwPkCKrCyU9nxmjvu5YhTxk+j03f1KZLhmLioA
+ Bf5A==
+X-Gm-Message-State: AOJu0Yy8kN2Ri3Ptz/k4RWVGnX/UaGXm2t4d29HSWZM/V6doE/ANPZCy
+ ebudJvIyF52eJLvHQXk3RA5kDCdkIGXPophTtxUtZPm3i7h9yvatu2WobiBzMVfcpu/5YuSd7St
+ uAFzCChxkT1cpL/wV188BMfsI3XSNQvfBje0agCik6g==
+X-Gm-Gg: ASbGncvPqPaVt8CClzIeN8AHuHITQdAA6cZKwW4krSupRL0xCSJ49qr1kY6Fc4P3KLp
+ 6a50iqrQz8Y9pWY+r7fjBDPZ+Z0PxSfIkRe7Ek4Mm2WF5fFjyJ+x+eqHR8yR62iEDyWPQZc2d3+
+ ZIErW8fZmbloOjvHvAmUVvw1NBgMFBWDshDCy9lpwFOTyE
+X-Google-Smtp-Source: AGHT+IEOxX2AqqREHOhnSU56nUClVP+8hsHDw07qoVBqXeysujv/jeYDPVMDblMr+rGeAwbSVh7rStYF8g4D9OIt9iQ=
+X-Received: by 2002:a05:690c:9684:b0:70f:8835:b767 with SMTP id
+ 00721157ae682-711636073femr36791167b3.5.1749815815922; Fri, 13 Jun 2025
+ 04:56:55 -0700 (PDT)
 MIME-Version: 1.0
-Date: Fri, 13 Jun 2025 13:37:56 +0200
-From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Daniel Berrange
- <berrange@redhat.com>, qemu-devel mailing list <qemu-devel@nongnu.org>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Hendrik Brueckner
- <brueckner@linux.ibm.com>, Sebastian Mitterle <smitterl@redhat.com>, Boqiao
- Fu <bfu@redhat.com>
-Subject: Re: [PATCH v5 2/3] hw/s390x: add Control-Program Identification to QOM
-In-Reply-To: <7e228759-2fea-48e9-a604-4dadb9882f13@redhat.com>
-References: <20250603135655.595602-1-shalini@linux.ibm.com>
- <20250603135655.595602-3-shalini@linux.ibm.com>
- <7e228759-2fea-48e9-a604-4dadb9882f13@redhat.com>
-Message-ID: <356561a646fc891240f42c95d64e8c32@linux.ibm.com>
-X-Sender: shalini@linux.ibm.com
-Organization: IBM Deutschland Research & Development GmbH
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: bBozqg5UCtJ2H-MUCTFABJQvSRuyRfVm
-X-Proofpoint-GUID: bBozqg5UCtJ2H-MUCTFABJQvSRuyRfVm
-X-Authority-Analysis: v=2.4 cv=fZWty1QF c=1 sm=1 tr=0 ts=684c0d98 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=Bz7YMBVqm1x7Jq11-RIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEzMDA4MiBTYWx0ZWRfX3QdMv1sOqmL7
- rEB7lN1oiA7GEVGd8us5F0qc2JvxVyPDkYp48UviMVuQkCZB+AsKmt3wVmnJnMdqtGGvbK3dUGf
- smFMhwRUklvx4LFCQ4vajG5kU3tdu97JjQ2FArsUT8fwAUVo6UPljym3UEsg2NlJ1ZZXCFEQjg4
- 29KELkvTcWg/cCla90shlC8EAnC1qCjAoNkhS4aaJ59HswMSvNMd2aGN9dHK1ajYxuguwuWHzZV
- 2HXtuJhNci5ZCYczh6Tnr+dbgCwGrLlUVyCjfmdTozfJVqWjqCLQQEQqcyajn+e9plOxvrnW4at
- hk+sRuwdgoo4PbTOfONQc+QYa48WXO3vbLN6Mv6F35onutkmkNbmE6jBsqrFpp19QIVcaypPEWY
- C17fHpfSbE7eKZaGjgKcOw3AUOcj9AqilKLvnbNuKbtp+r/sC6oJnLuY4iiJMWxIoh5NIdmd
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-13_01,2025-06-12_02,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1011 impostorscore=0
- priorityscore=1501 spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
- adultscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506130082
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250526085523.809003-1-chigot@adacore.com>
+ <20250526085523.809003-4-chigot@adacore.com>
+In-Reply-To: <20250526085523.809003-4-chigot@adacore.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Jun 2025 12:56:44 +0100
+X-Gm-Features: AX0GCFubLDIpLL61bX_PZfKCL9rvgqpfC95cCKckZ_c2I88PqVyQH_kvIBGcSVs
+Message-ID: <CAFEAcA_OLNWNMVe8wxCkg4JUkEvNP3ga_YpSnhYXHkD-criYEg@mail.gmail.com>
+Subject: Re: [PATCH v2 3/4] hw/arm/xlnx-zynqmp: wire a second GIC for the
+ Cortex-R5
+To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, edgar.iglesias@gmail.com, 
+ alistair@alistair23.me, Frederic Konrad <konrad.frederic@yahoo.fr>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,122 +96,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025-06-13 11:59, Thomas Huth wrote:
-> On 03/06/2025 15.56, Shalini Chellathurai Saroja wrote:
->> Add Control-Program Identification (CPI) data to the QEMU Object
->> Model (QOM), along with the timestamp in which the data was received
->> as shown below.
-> ...
->> diff --git a/qapi/machine.json b/qapi/machine.json
->> index 5373e1368c..1f2db68032 100644
->> --- a/qapi/machine.json
->> +++ b/qapi/machine.json
->> @@ -2279,3 +2279,61 @@
->>   # Since: 1.2
->>   ##
->>   { 'command': 'query-cpu-definitions', 'returns': 
->> ['CpuDefinitionInfo'] }
->> +
->> +##
->> +# @S390ControlProgramId:
->> +#
->> +# Control-program identifiers provide data about the guest operating 
->> system.
->> +# The control-program identifiers are: system type, system name, 
->> system level
->> +# and sysplex name.
->> +#
->> +# In Linux, all the control-program identifiers are user 
->> configurable. The
->> +# system type, system name, and sysplex name use EBCDIC characters 
->> from
->> +# this set: capital A-Z, 0-9, $, @, #, and blank.  In Linux, the 
->> system type,
->> +# system name and sysplex name are arbitrary free-form texts.
->> +#
->> +# In Linux, the 8-byte hexadecimal system-level has the format
->> +# 0x<a><b><cc><dd><eeee><ff><gg><hh>, where:
->> +# <a>: is one hexadecimal byte, its most significant bit indicates 
->> hypervisor
->> +# use
-> 
->  Hi Shalini!
-> 
-> While testing the patches, the above description caused some headache
-> for me, but I think it's simply typo here: This is not a hexadecimal
-> byte, it's just a nibble / 4-bit digit for this <a>, right? Could you
-> please fix the description in the next version of the patch series,
-> please?
+On Mon, 26 May 2025 at 09:55, Cl=C3=A9ment Chigot <chigot@adacore.com> wrot=
+e:
+>
+> From: Frederic Konrad <konrad.frederic@yahoo.fr>
+>
+> This wires a second GIC for the Cortex-R5, all the IRQs are split when th=
+ere
+> is an RPU instanciated.
+>
+> Signed-off-by: Cl=C3=A9ment Chigot <chigot@adacore.com>
 
+Some review of this from the Xilinx folks would be helpful.
 
-Hello Thomas,
-Yes, that is correct. <a> is a 4-bit digit and not a byte. I will 
-correct this
-in the next version. Thank you very much.
+> ---
+>  hw/arm/xlnx-zynqmp.c         | 88 +++++++++++++++++++++++++++++++++---
+>  include/hw/arm/xlnx-zynqmp.h |  6 +++
+>  2 files changed, 87 insertions(+), 7 deletions(-)
+>
+> diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
+> index ec96a46eec..be33669f87 100644
+> --- a/hw/arm/xlnx-zynqmp.c
+> +++ b/hw/arm/xlnx-zynqmp.c
+> @@ -26,8 +26,6 @@
+>  #include "target/arm/cpu-qom.h"
+>  #include "target/arm/gtimer.h"
+>
+> -#define GIC_NUM_SPI_INTR 160
+> -
+>  #define ARM_PHYS_TIMER_PPI  30
+>  #define ARM_VIRT_TIMER_PPI  27
+>  #define ARM_HYP_TIMER_PPI   26
+> @@ -206,7 +204,7 @@ static const XlnxZynqMPGICRegion xlnx_zynqmp_gic_regi=
+ons[] =3D {
+>
+>  static inline int arm_gic_ppi_index(int cpu_nr, int ppi_index)
+>  {
+> -    return GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_index;
+> +    return XLXN_ZYNQMP_GIC_NUM_SPI_INTR + cpu_nr * GIC_INTERNAL + ppi_in=
+dex;
 
-> 
->  Thanks,
->   Thomas
-> 
-> 
->> +# <b>: is one digit that represents Linux distributions as follows
->> +# 0: generic Linux
->> +# 1: Red Hat Enterprise Linux
->> +# 2: SUSE Linux Enterprise Server
->> +# 3: Canonical Ubuntu
->> +# 4: Fedora
->> +# 5: openSUSE Leap
->> +# 6: Debian GNU/Linux
->> +# 7: Red Hat Enterprise Linux CoreOS
->> +# <cc>: are two digits for a distribution-specific encoding of the 
->> major version
->> +# of the distribution
->> +# <dd>: are two digits for a distribution-specific encoding of the 
->> minor version
->> +# of the distribution
->> +# <eeee>: are four digits for the patch level of the distribution
->> +# <ff>: are two digits for the major version of the kernel
->> +# <gg>: are two digits for the minor version of the kernel
->> +# <hh>: are two digits for the stable version of the kernel
->> +# (e.g. 74872343805430528, when converted to hex is 
->> 0x010a000000060b00). On
->> +# machines prior to z16, some of the values are not available to 
->> display.
->> +#
->> +# Sysplex refers to a cluster of logical partitions that communicates 
->> and
->> +# co-operates with each other.
->> +#
->> +# @system-type: operating system (e.g. "LINUX   ")
->> +#
->> +# @system-name: user configurable name of the VM (e.g. "TESTVM  ")
->> +#
->> +# @system-level: distribution and kernel version in Linux
->> +#
->> +# @sysplex-name: sysplex which the VM belongs to, if any (e.g. "PLEX 
->> ")
->> +#
->> +# @timestamp: latest update of CPI data in nanoseconds since the UNIX 
->> EPOCH
->> +#
->> +# Since: 10.1
->> +##
->> +{ 'struct': 'S390ControlProgramId', 'data': {
->> +     'system-type': 'str',
->> +     'system-name': 'str',
->> +     'system-level': 'uint64',
->> +     'sysplex-name': 'str',
->> +     'timestamp': 'uint64' } }
+Typo in your new constant name: should be XLNX_.
 
--- 
-Mit freundlichen Grüßen / Kind regards
-Shalini Chellathurai Saroja
-Software Developer
-Linux on IBM Z & KVM Development
-IBM Deutschland Research & Development GmbH
-Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
-Vorsitzender des Aufsichtsrats: Wolfgang Wendt
-Geschäftsführung: David Faller
-Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
-Stuttgart, HRB 243294
+>  }
+>
+>  static void xlnx_zynqmp_create_rpu(MachineState *ms, XlnxZynqMPState *s,
+> @@ -377,6 +375,8 @@ static void xlnx_zynqmp_init(Object *obj)
+>      XlnxZynqMPState *s =3D XLNX_ZYNQMP(obj);
+>      int i;
+>      int num_apus =3D MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
+> +    int num_rpus =3D MIN((int)(ms->smp.cpus - XLNX_ZYNQMP_NUM_APU_CPUS),
+> +                       XLNX_ZYNQMP_NUM_RPU_CPUS);
+
+This is kind of a complicated expression that we use twice, and
+I think it would be worth abstracting out into a function.
+
+>      object_initialize_child(obj, "apu-cluster", &s->apu_cluster,
+>                              TYPE_CPU_CLUSTER);
+> @@ -390,6 +390,12 @@ static void xlnx_zynqmp_init(Object *obj)
+>
+>      object_initialize_child(obj, "gic", &s->gic, gic_class_name());
+>
+> +    if (num_rpus > 0) {
+> +        /* Do not create the rpu_gic in case we don't have rpus..  */
+
+stray ".." at end. Also I would say "if", rather than "in case".
+
+> +        object_initialize_child(obj, "rpu_gic", &s->rpu_gic,
+> +                                gic_class_name());
+> +    }
+> +
+>      for (i =3D 0; i < XLNX_ZYNQMP_NUM_GEMS; i++) {
+>          object_initialize_child(obj, "gem[*]", &s->gem[i], TYPE_CADENCE_=
+GEM);
+>          object_initialize_child(obj, "gem-irq-orgate[*]",
+> @@ -439,6 +445,13 @@ static void xlnx_zynqmp_init(Object *obj)
+>      object_initialize_child(obj, "qspi-irq-orgate",
+>                              &s->qspi_irq_orgate, TYPE_OR_IRQ);
+>
+> +    for (i =3D 0; i < ARRAY_SIZE(s->splitter); i++) {
+> +        g_autofree char *name =3D g_strdup_printf("irq-splitter%d", i);
+> +        object_initialize_child(obj, name, &s->splitter[i], TYPE_SPLIT_I=
+RQ);
+> +    }
+
+We don't need the splitters unless num_rpus > 0, so I think
+it would be neater not to create/realize/use them.
+
+> +
+> +
+> +
+>      for (i =3D 0; i < XLNX_ZYNQMP_NUM_USB; i++) {
+>          object_initialize_child(obj, "usb[*]", &s->usb[i], TYPE_USB_DWC3=
+);
+>      }
+> @@ -452,10 +465,13 @@ static void xlnx_zynqmp_realize(DeviceState *dev, E=
+rror **errp)
+>      uint8_t i;
+>      uint64_t ram_size;
+>      int num_apus =3D MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
+> +    int num_rpus =3D MIN((int)(ms->smp.cpus - XLNX_ZYNQMP_NUM_APU_CPUS),
+> +                       XLNX_ZYNQMP_NUM_RPU_CPUS);
+>      const char *boot_cpu =3D s->boot_cpu ? s->boot_cpu : "apu-cpu[0]";
+>      ram_addr_t ddr_low_size, ddr_high_size;
+> -    qemu_irq gic_spi[GIC_NUM_SPI_INTR];
+> +    qemu_irq gic_spi[XLXN_ZYNQMP_GIC_NUM_SPI_INTR];
+>      Error *err =3D NULL;
+> +    DeviceState *splitter;
+
+I think you can put this variable declaration inside the
+loop where it is used, so it has a much smaller scope.
+
+>      ram_size =3D memory_region_size(s->ddr_ram);
+>
+> @@ -502,13 +518,21 @@ static void xlnx_zynqmp_realize(DeviceState *dev, E=
+rror **errp)
+>          g_free(ocm_name);
+>      }
+>
+> -    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq", GIC_NUM_SPI_INTR + =
+32);
+> +    qdev_prop_set_uint32(DEVICE(&s->gic), "num-irq", XLXN_ZYNQMP_GIC_NUM=
+_SPI_INTR + 32);
+>      qdev_prop_set_uint32(DEVICE(&s->gic), "revision", 2);
+>      qdev_prop_set_uint32(DEVICE(&s->gic), "num-cpu", num_apus);
+>      qdev_prop_set_bit(DEVICE(&s->gic), "has-security-extensions", s->sec=
+ure);
+>      qdev_prop_set_bit(DEVICE(&s->gic),
+>                        "has-virtualization-extensions", s->virt);
+>
+> +    if (num_rpus > 0) {
+> +        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "num-irq",
+> +                             XLXN_ZYNQMP_GIC_NUM_SPI_INTR + 32);
+> +        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "revision", 1);
+> +        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "num-cpu", num_rpus);
+> +        qdev_prop_set_uint32(DEVICE(&s->rpu_gic), "first-cpu-index", 4);
+> +    }
+> +
+>      qdev_realize(DEVICE(&s->apu_cluster), NULL, &error_fatal);
+>
+>      /* Realize APUs before realizing the GIC. KVM requires this.  */
+
+> diff --git a/include/hw/arm/xlnx-zynqmp.h b/include/hw/arm/xlnx-zynqmp.h
+> index c137ac59e8..a69953650d 100644
+> --- a/include/hw/arm/xlnx-zynqmp.h
+> +++ b/include/hw/arm/xlnx-zynqmp.h
+> @@ -42,6 +42,7 @@
+>  #include "hw/misc/xlnx-zynqmp-crf.h"
+>  #include "hw/timer/cadence_ttc.h"
+>  #include "hw/usb/hcd-dwc3.h"
+> +#include "hw/core/split-irq.h"
+>
+>  #define TYPE_XLNX_ZYNQMP "xlnx-zynqmp"
+>  OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPState, XLNX_ZYNQMP)
+> @@ -87,12 +88,14 @@ OBJECT_DECLARE_SIMPLE_TYPE(XlnxZynqMPState, XLNX_ZYNQ=
+MP)
+>                                    XLNX_ZYNQMP_MAX_HIGH_RAM_SIZE)
+>
+>  #define XLNX_ZYNQMP_NUM_TTC 4
+> +#define XLXN_ZYNQMP_GIC_NUM_SPI_INTR 160
+>
+>  /*
+>   * Unimplemented mmio regions needed to boot some images.
+>   */
+>  #define XLNX_ZYNQMP_NUM_UNIMP_AREAS 1
+>
+> +
+
+Stray extra whitespace change.
+
+>  struct XlnxZynqMPState {
+>      /*< private >*/
+>      DeviceState parent_obj;
+> @@ -105,6 +108,9 @@ struct XlnxZynqMPState {
+>      GICState gic;
+>      MemoryRegion gic_mr[XLNX_ZYNQMP_GIC_REGIONS][XLNX_ZYNQMP_GIC_ALIASES=
+];
+>
+> +    GICState rpu_gic;
+> +    SplitIRQ splitter[XLXN_ZYNQMP_GIC_NUM_SPI_INTR];
+> +
+>      MemoryRegion ocm_ram[XLNX_ZYNQMP_NUM_OCM_BANKS];
+>
+>      MemoryRegion *ddr_ram;
+
+thanks
+-- PMM
 
