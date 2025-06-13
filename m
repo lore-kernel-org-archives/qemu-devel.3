@@ -4,75 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C1E7C61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 09:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9182C61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 09:07:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ0Ll-0002kh-9C; Fri, 13 Jun 2025 05:05:25 -0400
+	id 1uQ0N9-00032G-Ka; Fri, 13 Jun 2025 05:06:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uQ0Lj-0002k8-Ms
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 05:05:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1uQ0Lh-0002PZ-Fu
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 05:05:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749805519;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9HZ/pxyFuLzrddWOkc+HkqrDC3VLR6rdYJt+PZIWdD8=;
- b=PPUWu56ZCKtImBbOYYw95Vp4Z60K1Gizli4EyukyBIvLaJVfy8OLPNqG8JUpuio+AYn/+7
- +LIQDIsm4LozCXtHINmUbtKRsIGOGFVrv1fM3FcoWi3D4GZ6lq5CCP73N4sJ494HDD+CUU
- AsRuLFqxF64jjUmO+itvTsH6VvXhIS4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-441-j10OhrEdN_SYoBzvlftmJw-1; Fri,
- 13 Jun 2025 05:05:15 -0400
-X-MC-Unique: j10OhrEdN_SYoBzvlftmJw-1
-X-Mimecast-MFC-AGG-ID: j10OhrEdN_SYoBzvlftmJw_1749805515
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CB0D818089B5; Fri, 13 Jun 2025 09:05:14 +0000 (UTC)
-Received: from redhat.com (unknown [10.42.28.54])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6825B1956050; Fri, 13 Jun 2025 09:05:12 +0000 (UTC)
-Date: Fri, 13 Jun 2025 10:05:08 +0100
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Li Zhijian <lizhijian@fujitsu.com>
-Cc: qemu-devel@nongnu.org, imammedo@redhat.com, mst@redhat.com,
- anisinha@redhat.com
-Subject: Re: [PATCH v2] hw/acpi: Fix GPtrArray memory leak in crs_range_merge
-Message-ID: <aEvpxGwmxXrUBVRn@redhat.com>
-References: <20250613085110.111204-1-lizhijian@fujitsu.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ0Mz-00030M-Lv
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 05:06:43 -0400
+Received: from mail-yb1-xb2e.google.com ([2607:f8b0:4864:20::b2e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ0Mu-0002dJ-64
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 05:06:39 -0400
+Received: by mail-yb1-xb2e.google.com with SMTP id
+ 3f1490d57ef6-e694601f624so1516370276.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 02:06:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749805595; x=1750410395; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=74HaimTdbSL1bD+t0uPPJJc0xDzsWxH7INW1uQ7Wgsg=;
+ b=F0F2g5A610Op4rDg1z187JzKrh+jUpb7MFtXfTXaOc3znfDRWbCUXpRnBtn6pFKGXG
+ GkT41jEtyAIP+kW24kyCKxJbryO3qorallxLkRkTxQEk8LDW+wVLPqefxfQWdSj3cGdH
+ ZtuTg74RsR6x+HtFVRWCDR8I1tHIhcMbrh+UJp0+z3dUcXFRGencU+5NIL9X1EWwVdEq
+ swPN5st+f7LbFzWfFBPYPqB33K9nMJV7adQS++dZn2QuRfrGps/bJJcuBkjl7uvRcTJ/
+ /k4hbpHyQe1GcADjDl85Q1Q7KExlYan41oLBB0TYl4uiIZ+d1XDo5Q4a+w99ExBAE9A0
+ omDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749805595; x=1750410395;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=74HaimTdbSL1bD+t0uPPJJc0xDzsWxH7INW1uQ7Wgsg=;
+ b=fXKON2vqvRQIlYLFBg84ltBRdTadZpW1rZ/q2mWmrqOxaLrCoC/RYB5sN6AlTu+4xt
+ RIHOmKl92s/HiO1oT3TcSfEK/GEzzM2MCY2pEd3FRF5wpZtvkMoymbQIKDPT8hzl7Kv4
+ wEJ2cvDtOftxh0weVC/zHW0uhTfPWKHk2fmn0FodiRkpqWVdl7sXJcGSQPHDHjEEetLI
+ TEaSSulA6vABMt/w6cOMeGm3eKVvcRTj4ZEihPx7R48UYOuuFrZYtUaOdmRhWHwyM830
+ hFOp0QfTcUrJ5i0ETRmg6W141GMRSOA/eooFQvEfIqjg3N0CETmp68Jpc/chCqc3kiop
+ bn/Q==
+X-Gm-Message-State: AOJu0YxKBtdQsdNBdEep81ITUVkCqXwH6OZw/UuN8R4qeWpodwfaJY6a
+ wHoA7N3X8kx3TrcNkD0gcdqJL9Tai8DibQ+alEC9Y3JrL0Pj/YHbddtEWmHBKn8h+UyVfwT96QI
+ wKob0yDZC4nFgc01hzRGOXaGQislL0umdFImfGckahg==
+X-Gm-Gg: ASbGnctcmmFMkrF7xSAxMqkiDcyZ8LWX9VBoyD7J9wD0mfqpoT8JrHSuuFdK90B9EGt
+ n1jHFXOaSxgqCYIUQquNcrh3kASiyeYzjcCGw4lEpcmUZLszYs5BNLhf7ejdhllISJSxayFIXzM
+ RooZWAv+uWB7TJm8072lwvQPtkVSUk5/sH9LnqZbB4sidn
+X-Google-Smtp-Source: AGHT+IEQeOVp/cROfGsvPraYIEIXrJg1jDCevuBkj2fp/SbY0dwcENZZ5X7PfR8cywNdYGB8HxIUyWQKdhZDEVviHVE=
+X-Received: by 2002:a05:690c:9987:b0:710:ea78:8ff with SMTP id
+ 00721157ae682-7116372a3c4mr35744737b3.23.1749805594972; Fri, 13 Jun 2025
+ 02:06:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20250613085110.111204-1-lizhijian@fujitsu.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+References: <20250606095728.3672832-1-ethan84@andestech.com>
+In-Reply-To: <20250606095728.3672832-1-ethan84@andestech.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Jun 2025 10:06:23 +0100
+X-Gm-Features: AX0GCFvvruDwIttjmKmLlPI6bD-XAps0bWdNIgWNGtn5ht7pmBnF1jnDTsgfn88
+Message-ID: <CAFEAcA-LhiOL2OJEJzsSTTQ1=QWXOAB=h+yv25szH9SJ3CpmFw@mail.gmail.com>
+Subject: Re: [PATCH] qemu-options.hx: Fix reversed description of icount sleep
+ behavior
+To: Ethan Chen <ethan84@andestech.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ richard.henderson@linaro.org, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b2e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb2e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,34 +90,52 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Jun 13, 2025 at 04:51:10PM +0800, Li Zhijian wrote:
-> This leak was detected by the valgrind.
-> 
-> The crs_range_merge() function unconditionally allocated a GPtrArray
-> 'even when range->len was zero, causing an early return without freeing
-> the allocated array. This resulted in a memory leak when an empty range
-> was processed.
-> 
-> Instead of moving the allocation after the check (as previously attempted),
-> use g_autoptr for automatic cleanup. This ensures the array is freed even
-> on early returns, and also removes the need for the explicit free at the
-> end of the function.
-> 
-> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+On Fri, 6 Jun 2025 at 10:58, Ethan Chen via <qemu-devel@nongnu.org> wrote:
+>
+> The documentation for the -icount option incorrectly describes the behavior
+> of the sleep suboption. Based on the actual implementation and system
+> behavior, the effects of sleep=on and sleep=off were inadvertently reversed.
+> This commit updates the description to reflect their intended functionality.
+>
+> Signed-off-by: Ethan Chen <ethan84@andestech.com>
 > ---
+>  qemu-options.hx | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+>
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 7eb8e02b4b..1f862b19a6 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -4936,13 +4936,13 @@ SRST
+>      with actual performance.
+>
+>      When the virtual cpu is sleeping, the virtual time will advance at
+> -    default speed unless ``sleep=on`` is specified. With
+> -    ``sleep=on``, the virtual time will jump to the next timer
+> +    default speed unless ``sleep=off`` is specified. With
+> +    ``sleep=off``, the virtual time will jump to the next timer
+>      deadline instantly whenever the virtual cpu goes to sleep mode and
+>      will not advance if no timer is enabled. This behavior gives
+>      deterministic execution times from the guest point of view.
+> -    The default if icount is enabled is ``sleep=off``.
+> -    ``sleep=on`` cannot be used together with either ``shift=auto``
+> +    The default if icount is enabled is ``sleep=on``.
+> +    ``sleep=off`` cannot be used together with either ``shift=auto``
+>      or ``align=on``.
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Whoops. It looks like I introduced this error in commit fa647905e6baae
+where I converted the previous unhelpful "sleep=on|off" to say
+specifically whether it meant sleep=on or sleep=off: I got it
+the wrong way around.
 
+Confirmed against the icount-common.c code that our default is
+indeed sleep=on and that the incompatibility with shift=auto
+and align=on is the sleep=off setting.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
-|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
-|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+Applied to target-arm.next, thanks.
 
+-- PMM
 
