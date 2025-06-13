@@ -4,72 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5CBBC71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 15:01:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4864C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 15:20:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ5uC-0001Qx-Gu; Fri, 13 Jun 2025 11:01:20 -0400
+	id 1uQ6BX-0004pP-62; Fri, 13 Jun 2025 11:19:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uQ5uA-0001QW-Gg
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:01:18 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uQ6BU-0004n6-JK
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:19:12 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uQ5u8-0000Li-1S
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:01:18 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-7115e32802bso10701977b3.1
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 08:01:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1uQ6BS-00039P-2m
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:19:12 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-234b440afa7so22712985ad.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 08:19:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749826874; x=1750431674; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SCp9bRUq6HErDfdRql2xhMRzUsM0i/NuDhdVGDHpGag=;
- b=rkBInI2+VjUuTCwu8iwhDkLkkliLesuVZwap24jWqeZsztYlGBmf2i1ohDnkwy4hj6
- 1DebjPwOWPWtXUzmlailrwWs+6ePg5vSstDoVVvvk8boe03YKAPBc5MBVm7z1pIbTWlb
- IYC1SMQNhvAPev7jFNITgnpAJ836qxdZFGpNJs966EU5R8xYCy2FdMFMri1Jvze8ZRQF
- e5+6nDfKNYxV7d4HStNwNDxwA3FUEgA5FIUffOx9KVm1W3GiSShVrgU7NVsGvVrfCyiW
- 9g1pFmQgKrMjLYy5Ove7Tn/sXjdhOQiRBebAOBXKFTAeCLxO7thZXXAVLu/th4vmypnW
- EDOQ==
+ d=linaro.org; s=google; t=1749827948; x=1750432748; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=TASCar+QIcRCEKos7HPghKU5Bc6Pdq03w300XZ5NTN8=;
+ b=OvodSbhVHFIqxXeRBSGSV44myujnQ97nWQpIw244osOnqfPfMdLTPxbdaGib/uW4DD
+ u7Q2fDbsSI7x/DX42uaDwRxtnbdnByqmYWEU+v4LugKXBKuCQboCJ6R85PV80BBGLA4R
+ 4tCJuTDAzZg3y8fvb5OSv4VaKvHlEfrQWxqx09dwJcqVPajAWqM0y6lsqjCAnintEErl
+ FWjujTLWqaQA2RkW4rpTVG4LQiJbrYVIuGb4xUYwIEawWXu7iEqBNg+E2/osHlOOiHME
+ cWGBcpv8vdeicD0A6jY5AyaWQeRDuqtJXEwtC/uFD5rSk7zwy8H4J+wxhjAU17lHAvCG
+ h1bQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749826874; x=1750431674;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=SCp9bRUq6HErDfdRql2xhMRzUsM0i/NuDhdVGDHpGag=;
- b=Rg2OOmaHNfA08m2V20pyv04PsF1Jb8HcQKILyAVzeovdC2qed3BmLZPqK20ax1Dt7x
- b6DsX1B105NwgacA97vBIxo04Rmm3Rm5nRVoozJORRjG6RmnwetePgUeuBgCiGGO/xHR
- 6DI+02V2YHQ3uAAAN+vOfZ0l4yNyS6pQ9TmcHVBiTVbhmt34GJXeKShiK9n/r97GOcuF
- vNwtLvZTzykT+7r+phZhoRIT7MDUB5QpwIVhtETjIViFQydbMJUX5g2PqGpOdn2xKScR
- 7iLM07tNB+jWc6dCli4Rv+yWaEwcYqZTluQD+rGwq1bGqKPUJ9eRTafpIqJaoGmAAyKq
- etfA==
-X-Gm-Message-State: AOJu0YxLoB3J+aAI++yVJ1wqCLWxzLJjwPB/DQXA1uUWnN+LiieKe05a
- yFvvInXfmr+yw9nS2AuNmSumu/dTJBgpXFel4lvgNZL182Cl+TAKv9pDAc0iYcXAdTLNXsqiN28
- 2UHtuVSUqWCHbnWlhWA5tM8KAvn3Q2fX9e3mwMcMXVw==
-X-Gm-Gg: ASbGncvGYhPuaqtXkurcLknHZRZQulfVotsUqYS/F8fLW2n9TQc2tc/EZqFcKXdhcsV
- 3MDkjU5GyajOo9Q6fibe8rmMZ+mW4AfaMpV4TmQoE5DnKOYrl9I7eKRIiLrSz9yU5I3YHnDsxuR
- 70wrwEjqpKKqbOYQzZQ4nba96qraF8Uaw44BgQSFnHkPlU
-X-Google-Smtp-Source: AGHT+IHThK8rQwEUGWRJ+Je69vN5AatLR8Og/jPM1sfrJy5ED+557OwTLTzi7N5bkhfMwKinQBBYi9RrCyET1Tsx6Wo=
-X-Received: by 2002:a05:690c:6184:b0:70e:142d:9c56 with SMTP id
- 00721157ae682-711637d033cmr54327897b3.26.1749826872843; Fri, 13 Jun 2025
- 08:01:12 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1749827948; x=1750432748;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=TASCar+QIcRCEKos7HPghKU5Bc6Pdq03w300XZ5NTN8=;
+ b=KlY4LWgAFfUQ23LV/aBWGrDBU6qTbCayTQG2eGwrG33S7HvOtZlmrHWFUItP24M9g6
+ k468I4V++od9MQUKRydO/xSEx4UA9EOlh3rn6IPmN2fF0/Z91choBl7o0s/P635jWXd7
+ n2A6SXWhqPrPBYWrqCcyZymH6DzlUTdZGfou3sivz2+n2H+KsauY0LKEDoIxyEh7z4Sp
+ rKs+dYVFi4hs7LJ2lhPjY+xdN2xIFaOF/wo4XygNUoA8yh6MC6EK59D4eum3LBxLuQK+
+ e9HSiFmy7wo2Jn2AAHGIyDyHXninjEXzpdwrmlAodwM54Ct/jF60DHMFgQ0GWlyHtYHw
+ tcyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV4jbhhuSUJrdkPA5k0oK/9N+PglCnApyBJpywCKS5vuugk9fBwWpcKL1SYSrD/JSHmceQ83VpN/iSI@nongnu.org
+X-Gm-Message-State: AOJu0YzLhG2KNrX8cvJcTDQVPJGI/rrgVIZuqvCuZRyqnWq0BrzoWJZJ
+ m6gRrtxXgIKIQmp1SljfbEljznJkebWLoQSG0SXPkr/CCrNIEBjGH60BgN2gAJY9luY=
+X-Gm-Gg: ASbGncs1OrWaMUp2m4H5AADS/3cMa5jtMaQYpO+/46pi2HNP8jb8MseT32TD7MHIAhS
+ h7YDAOnqLAPOWg7by0IbZ87Walup4GHqo9f7Lxd/X2qy05EqcWMAonDi3g1YM+PkqrWfS6Sfycn
+ 4mrJ8JOMXCDssKhb2hNP/eiPQ6PcPIgvuLN4nruGnQ0OfsENUlo4bYTIWZ3wDo/4SPo7Nc7/FGL
+ gKNPtQpgXIFf5UWAZUu68ksrgOfuNQMS+ky5VMGFMZkW4h/becpmkrd/dhO5BCfORfpngicUIee
+ wiDojJwSk6HZpRbfcM751RYCwnyoZ8QATeVGMCHAdqDjoplK3neTCkYIaVmwOZ1/SqYmls2mTNM
+ =
+X-Google-Smtp-Source: AGHT+IEc/l5eEFawTZUjLQjMgriAWMpzwp55BAai+R30AMr/Os4Q7ilcN9Epp/jOeYBFw3eLkR+pYg==
+X-Received: by 2002:a17:903:234a:b0:234:e8db:432d with SMTP id
+ d9443c01a7336-2365dd3f60amr46086795ad.39.1749827947923; 
+ Fri, 13 Jun 2025 08:19:07 -0700 (PDT)
+Received: from [192.168.1.87] ([38.41.223.211])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-313c19b771esm3503912a91.9.2025.06.13.08.19.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Jun 2025 08:19:07 -0700 (PDT)
+Message-ID: <45e636bc-a2e0-42da-9f71-24b2ccdc9072@linaro.org>
+Date: Fri, 13 Jun 2025 08:19:06 -0700
 MIME-Version: 1.0
-References: <20250510042043.2056265-1-jcksn@duck.com>
- <8C3C084A-FAB6-42E4-BCC7-6BEC6B1D4C15.1@smtp-inbound1.duck.com>
-In-Reply-To: <8C3C084A-FAB6-42E4-BCC7-6BEC6B1D4C15.1@smtp-inbound1.duck.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Jun 2025 16:01:01 +0100
-X-Gm-Features: AX0GCFuc26u65B31uBDvFetjioY_qTPIOta6X2WYN_LW--xHz9cN8cxKLsv34so
-Message-ID: <CAFEAcA96fap_EJiFtX6a_PFmWeP1OPZGABueAyE_=JQwFi-spA@mail.gmail.com>
-Subject: Re: [PATCH 1/6] MAX78000: Add MAX78000FTHR Machine
-To: jcksn@duck.com
-Cc: qemu-devel@nongnu.org, alistair@alistair.me
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 6/7] plugins: Add patcher plugin and test
+To: Rowan Hart <rowanbhart@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Yanan Wang <wangyanan55@huawei.com>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Alexandre Iooss <erdnaxe@crans.org>, Zhao Liu <zhao1.liu@intel.com>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20250611232409.2936521-1-rowanbhart@gmail.com>
+ <20250611232409.2936521-7-rowanbhart@gmail.com>
+Content-Language: en-US
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+In-Reply-To: <20250611232409.2936521-7-rowanbhart@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -92,270 +111,442 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 10 May 2025 at 07:57, <jcksn@duck.com> wrote:
->
-> This patch adds support for the MAX78000FTHR machine.
->
-> The MAX78000FTHR contains a MAX78000 and a RISC-V core. This patch
-> implements only the MAX78000, which is Cortex-M4 based.
-> Details can be found at:
-> https://www.analog.com/media/en/technical-documentation/user-guides/max78000-user-guide.pdf
->
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-
-Hi; thanks for this patchset, and sorry it's taken me so
-long to get to reviewing it. Mostly it looks in good
-shape, but I have some review comments, which I'll give
-below (and on some of the other patches).
-
-A minor note on email patchseries formatting: something odd
-seems to have happened with your cover letter. Patches in a
-series are supposed to be followups to the cover letter, but
-in this case each patch email has a header
- In-reply-to: 20250510042043.2056265-1-jcksn@duck.com
-but that doesn't match the message-id of the cover letter mail
-(which was
- 16B81215-B460-4A49-910E-E5FB479837C8.1@smtp-inbound1.duck.com
-).
-
-It looks like something has rewritten the message-ID header
-between when git generated it and it got to the mailing list.
-I don't know if that's something you can fix at your end.
-(Otherwise I guess you could work around it by sending the cover
-letter first, finding out what message-ID it got given, and then
-generating the patch emails with the --in-reply-to=<identifier>
-option of git send-email so they come out as replies to the
-cover letter. But that seems a bit of a faff :-/ )
-
-> diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+On 6/11/25 4:24 PM, Rowan Hart wrote:
+> From: novafacing <rowanbhart@gmail.com>
+> 
+> This patch adds a plugin that exercises the virtual and hardware memory
+> read-write API functions added in a previous patch. The plugin takes a
+> target and patch byte sequence, and will overwrite any instruction
+> matching the target byte sequence with the patch.
+> 
+> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
+> ---
+>   tests/tcg/Makefile.target                 |   1 +
+>   tests/tcg/plugins/meson.build             |   2 +-
+>   tests/tcg/plugins/patch.c                 | 241 ++++++++++++++++++++++
+>   tests/tcg/x86_64/Makefile.softmmu-target  |  32 ++-
+>   tests/tcg/x86_64/system/patch-target.c    |  27 +++
+>   tests/tcg/x86_64/system/validate-patch.py |  39 ++++
+>   6 files changed, 336 insertions(+), 6 deletions(-)
+>   create mode 100644 tests/tcg/plugins/patch.c
+>   create mode 100644 tests/tcg/x86_64/system/patch-target.c
+>   create mode 100755 tests/tcg/x86_64/system/validate-patch.py
+> 
+> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
+> index 95ff76ea44..4b709a9d18 100644
+> --- a/tests/tcg/Makefile.target
+> +++ b/tests/tcg/Makefile.target
+> @@ -176,6 +176,7 @@ RUN_TESTS+=$(EXTRA_RUNS)
+>   # Some plugins need additional arguments above the default to fully
+>   # exercise things. We can define them on a per-test basis here.
+>   run-plugin-%-with-libmem.so: PLUGIN_ARGS=$(COMMA)inline=true
+> +run-plugin-%-with-libpatch.so: PLUGIN_ARGS=$(COMMA)target=ffffffff$(COMMA)patch=00000000
+>   
+>   ifeq ($(filter %-softmmu, $(TARGET)),)
+>   run-%: %
+> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
+> index 41f02f2c7f..163042e601 100644
+> --- a/tests/tcg/plugins/meson.build
+> +++ b/tests/tcg/plugins/meson.build
+> @@ -1,6 +1,6 @@
+>   t = []
+>   if get_option('plugins')
+> -  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall']
+> +  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall', 'patch']
+>       if host_os == 'windows'
+>         t += shared_module(i, files(i + '.c') + '../../../contrib/plugins/win32_linker.c',
+>                           include_directories: '../../../include/qemu',
+> diff --git a/tests/tcg/plugins/patch.c b/tests/tcg/plugins/patch.c
 > new file mode 100644
-> index 0000000000..64578438bd
+> index 0000000000..450fc51c88
 > --- /dev/null
-> +++ b/hw/arm/max78000_soc.c
-> @@ -0,0 +1,184 @@
+> +++ b/tests/tcg/plugins/patch.c
+> @@ -0,0 +1,241 @@
 > +/*
-> + * MAX78000 SOC
-> + *
-> + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
-> + *
 > + * SPDX-License-Identifier: GPL-2.0-or-later
 > + *
-> + * Implementation based on stm32f205
-
-This comment is a good place to add the URL of the user guide.
-
+> + * This plugin patches instructions matching a pattern to a different
+> + * instruction as they execute
+> + *
 > + */
 > +
-> +#include "qemu/osdep.h"
-> +#include "qapi/error.h"
-> +#include "system/address-spaces.h"
-> +#include "system/system.h"
-> +#include "hw/arm/max78000_soc.h"
-> +#include "hw/qdev-clock.h"
-> +#include "hw/misc/unimp.h"
+> +#include "glib.h"
+> +#include "glibconfig.h"
 > +
-> +static void max78000_soc_initfn(Object *obj)
+> +#include <qemu-plugin.h>
+> +#include <string.h>
+> +#include <stdio.h>
+> +
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_version = QEMU_PLUGIN_VERSION;
+> +
+> +static bool use_hwaddr;
+> +static GByteArray *target_data;
+> +static GByteArray *patch_data;
+> +
+> +/**
+> + * Parse a string of hexadecimal digits into a GByteArray. The string must be
+> + * even length
+> + */
+> +static GByteArray *str_to_bytes(const char *str)
 > +{
-> +    MAX78000State *s = MAX78000_SOC(obj);
+> +    size_t len = strlen(str);
 > +
-> +    object_initialize_child(obj, "armv7m", &s->armv7m, TYPE_ARMV7M);
+> +    if (len == 0 || len % 2 != 0) {
+> +        return NULL;
+> +    }
 > +
-> +    s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
-> +    s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
+> +    GByteArray *bytes = g_byte_array_new();
+> +    char byte[3] = {0};
+> +    guint8 value = 0;
+> +
+> +    for (size_t i = 0; i < len; i += 2) {
+> +        byte[0] = str[i];
+> +        byte[1] = str[i + 1];
+> +        value = (guint8)g_ascii_strtoull(byte, NULL, 16);
+> +        g_byte_array_append(bytes, &value, 1);
+> +    }
+> +
+> +    return bytes;
 > +}
 > +
-> +static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+> +static void patch_hwaddr(unsigned int vcpu_index, void *userdata)
 > +{
-> +    MAX78000State *s = MAX78000_SOC(dev_soc);
-> +    MemoryRegion *system_memory = get_system_memory();
-> +    DeviceState *armv7m;
-> +    Error *err = NULL;
+> +    uint64_t addr = (uint64_t)userdata;
+> +    g_autoptr(GString) str = g_string_new(NULL);
+> +    g_string_printf(str, "patching: @0x%"
+> +                    PRIx64 "\n",
+> +                    addr);
+> +    qemu_plugin_outs(str->str);
 > +
-> +    /*
-> +     * We use s->refclk internally and only define it with qdev_init_clock_in()
-> +     * so it is correctly parented and not leaked on an init/deinit; it is not
-> +     * intended as an externally exposed clock.
-> +     */
-> +    if (clock_has_source(s->refclk)) {
-> +        error_setg(errp, "refclk clock must not be wired up by the board code");
+> +    enum qemu_plugin_hwaddr_operation_result result =
+> +        qemu_plugin_write_memory_hwaddr(addr, patch_data);
+> +
+> +
+> +    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
+> +        g_autoptr(GString) errmsg = g_string_new(NULL);
+> +        g_string_printf(errmsg, "Failed to write memory: %d\n", result);
+> +        qemu_plugin_outs(errmsg->str);
 > +        return;
 > +    }
 > +
-> +    if (!clock_has_source(s->sysclk)) {
-> +        error_setg(errp, "sysclk clock must be wired up by the board code");
+> +    GByteArray *read_data = g_byte_array_new();
+> +
+> +    result = qemu_plugin_read_memory_hwaddr(addr, read_data,
+> +                                            patch_data->len);
+> +
+> +    qemu_plugin_outs("Reading memory...\n");
+> +
+> +    if (result != QEMU_PLUGIN_HWADDR_OPERATION_OK) {
+> +        g_autoptr(GString) errmsg = g_string_new(NULL);
+> +        g_string_printf(errmsg, "Failed to read memory: %d\n", result);
+> +        qemu_plugin_outs(errmsg->str);
 > +        return;
 > +    }
 > +
-> +    /*
-> +     * TODO: ideally we should model the SoC RCC and its ability to
-> +     * change the sysclk frequency and define different sysclk sources.
-> +     */
-
-The MAX78000 doesn't have an RCC...
-
-> +
-> +    /* The refclk always runs at frequency HCLK / 8 */
-
-Is this actually true for the MAX78000? I couldn't figure out
-from the datasheet what it does for the systick refclk.
-
-> +    clock_set_mul_div(s->refclk, 8, 1);
-> +    clock_set_source(s->refclk, s->sysclk);
-> +
-> +    memory_region_init_rom(&s->flash, OBJECT(dev_soc), "MAX78000.flash",
-> +                           FLASH_SIZE, &err);
-> +    if (err != NULL) {
-> +        error_propagate(errp, err);
-> +        return;
+> +    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
+> +        qemu_plugin_outs("Failed to read back written data\n");
 > +    }
 > +
-> +    memory_region_add_subregion(system_memory, FLASH_BASE_ADDRESS, &s->flash);
+> +    qemu_plugin_outs("Success!\n");
 > +
-> +    memory_region_init_ram(&s->sram, NULL, "MAX78000.sram", SRAM_SIZE,
-> +                           &err);
-> +    if (err != NULL) {
-> +        error_propagate(errp, err);
-> +        return;
-> +    }
-> +    memory_region_add_subregion(system_memory, SRAM_BASE_ADDRESS, &s->sram);
-> +
-> +    armv7m = DEVICE(&s->armv7m);
-> +    qdev_prop_set_uint32(armv7m, "num-irq", 134);
-
-The datasheet seems a little confused here, because
-it says there are 134 interrupts including the 15 system
-exceptions, but the interrupt vector table it lists then
-only goes from 0 to 119 despite including the system exceptions.
-So if we believe table 5-1 then there are 104 external
-interrupts (numbered from 16 to 119 in that table).
-
-If we believe the "total number of entries including the
-15 system exceptions in 134" text above the table, then
-there are 120 external exceptions, numbered 16 to 135,
-of which 120 to 135 don't appear in the table and would
-presumably be unused.
-
-The num-irq property is the number of external interrupts
-(not including the CPU-internal ones). So 134 seems definitely
-the wrong value, and the correct number is probably either
-104 or 120.
-
-If you have the real hardware and the enthusiasm then you
-can check by writing to the NVIC_ISERn register bank until
-you find the point where you can't write 1 bits and read
-them back any more (i.e. until you find the RAZ/WI bits
-corresponding to "interrupt number not implemented").
-Otherwise, it's not a big deal if we don't actually
-get this value correct, but it would in that case be worth
-a comment noting that the datasheet is unclear and we've
-made our best guess at the value.
-
-> +    qdev_prop_set_uint8(armv7m, "num-prio-bits", 3);
-> +    qdev_prop_set_string(armv7m, "cpu-type", ARM_CPU_TYPE_NAME("cortex-m4"));
-> +    qdev_prop_set_bit(armv7m, "enable-bitband", true);
-> +    qdev_connect_clock_in(armv7m, "cpuclk", s->sysclk);
-> +    qdev_connect_clock_in(armv7m, "refclk", s->refclk);
-> +    object_property_set_link(OBJECT(&s->armv7m), "memory",
-> +                             OBJECT(system_memory), &error_abort);
-> +    if (!sysbus_realize(SYS_BUS_DEVICE(&s->armv7m), errp)) {
-> +        return;
-> +    }
-> +
-> +    create_unimplemented_device("globalControl",    0x40000000, 0x400);
-> +    create_unimplemented_device("systemInterface",  0x40000400, 0x400);
-> +    create_unimplemented_device("functionControl",  0x40000800, 0x3400);
-
-Table 3-3 says the end address is 0x4000_0bff, so the size should be 0x400,
-not 0x3400.
-
-> +    create_unimplemented_device("watchdogTimer0",   0x40003000, 0x400);
-> +    create_unimplemented_device("dynamicVoltScale", 0x40003c00, 0x800);
-
-Size doesn't match listed end address in table 3-3 ?
-
-> +    create_unimplemented_device("SIMO",             0x40004400, 0x400);
-> +    create_unimplemented_device("trimSystemInit",   0x40005400, 0x400);
-> +    create_unimplemented_device("generalCtrlFunc",  0x40005800, 0xc00);
-
-Ditto
-
-> +    create_unimplemented_device("wakeupTimer",      0x40006400, 0x400);
-> +    create_unimplemented_device("powerSequencer",   0x40006800, 0x400);
-> +    create_unimplemented_device("miscControl",      0x40006c00, 0x800);
-
-Ditto. I stopped checking the sizes here but you should probably
-look at the rest.
-
-> +
-> +    create_unimplemented_device("aes",              0x40007400, 0x400);
-> +    create_unimplemented_device("aesKey",           0x40007800, 0x800);
-> +
-> +    create_unimplemented_device("gpio0",            0x40008000, 0x1000);
-> +    create_unimplemented_device("gpio1",            0x40009000, 0x1000);
-> +
-> +    create_unimplemented_device("parallelCamInter", 0x4000e000, 0x1000);
-> +    create_unimplemented_device("CRC",              0x4000f000, 0x1000);
-> +
-> +    create_unimplemented_device("timer0",           0x40010000, 0x1000);
-> +    create_unimplemented_device("timer1",           0x40011000, 0x1000);
-> +    create_unimplemented_device("timer2",           0x40012000, 0x1000);
-> +    create_unimplemented_device("timer3",           0x40013000, 0x1000);
-> +
-> +    create_unimplemented_device("i2c0",             0x4001d000, 0x1000);
-> +    create_unimplemented_device("i2c1",             0x4001e000, 0x1000);
-> +    create_unimplemented_device("i2c2",             0x4001f000, 0x1000);
-> +
-> +    create_unimplemented_device("standardDMA",      0x40028000, 0x1000);
-> +    create_unimplemented_device("flashController0", 0x40029000, 0x400);
-> +
-> +    create_unimplemented_device("icc0",             0x4002a000, 0x800);
-> +    create_unimplemented_device("icc1",             0x4002a800, 0x800);
-> +
-> +    create_unimplemented_device("adc",              0x40034000, 0x1000);
-> +    create_unimplemented_device("pulseTrainEngine", 0x4003c000, 0xa0);
-> +    create_unimplemented_device("oneWireMaster",    0x4003d000, 0x1000);
-> +    create_unimplemented_device("semaphore",        0x4003e000, 0x1000);
-> +
-> +    create_unimplemented_device("uart0",            0x40042000, 0x1000);
-> +    create_unimplemented_device("uart1",            0x40043000, 0x1000);
-> +    create_unimplemented_device("uart2",            0x40044000, 0x1000);
-> +
-> +    create_unimplemented_device("spi1",             0x40046000, 0x2000);
-> +    create_unimplemented_device("trng",             0x4004d000, 0x1000);
-> +    create_unimplemented_device("i2s",              0x40060000, 0x1000);
-> +    create_unimplemented_device("lowPowerControl",  0x40080000, 0x400);
-> +    create_unimplemented_device("gpio2",            0x40080400, 0x200);
-> +    create_unimplemented_device("lowPowWatchdogTi", 0x40080800, 0x400);
-
-You don't need to just cut off the name string like this, there's
-no fixed length to it. "Ti" is rather non-obvious (and the point
-of these strings is to show them to the user if the guest tries
-to access the missing device). Either write Timer or else just say
-"lowPowerWatchdog". Similarly with some of the other names.
-
-> +
-> +    create_unimplemented_device("lowPowerTimer5",   0x40081000, 0x400);
-> +    create_unimplemented_device("lowPowerUART0",    0x40081400, 0x400);
-> +    create_unimplemented_device("lowPowerCompar",   0x40088000, 0x400);
-> +
-> +    create_unimplemented_device("spi0",             0x400be000, 0x400);
-> +
-> +    /*
-> +     * The MAX78000 user guide's base address map lists the CNN TX FIFO as
-> +     * beginning at 0x400c0400 and ending at 0x400c0400. Given that CNN_FIFO
-> +     * is listed as having data accessible up to offset 0x1000, the user
-> +     * guide is likely incorrect.
-> +     */
-> +    create_unimplemented_device("cnnTxFIFO",        0x400c0400, 0x2000);
-> +
-> +    create_unimplemented_device("cnnGlobalControl", 0x50000000, 0x10000);
-> +    create_unimplemented_device("cnnx16quad0",      0x50100000, 0x40000);
-> +    create_unimplemented_device("cnnx16quad1",      0x50500000, 0x40000);
-> +    create_unimplemented_device("cnnx16quad2",      0x50900000, 0x40000);
-> +    create_unimplemented_device("cnnx16quad3",      0x50d00000, 0x40000);
-> +
+> +    return;
 > +}
+> +
+> +static void patch_vaddr(unsigned int vcpu_index, void *userdata)
+> +{
+> +    uint64_t addr = (uint64_t)userdata;
+> +    uint64_t hwaddr = 0;
+> +    if (!qemu_plugin_translate_vaddr(addr, &hwaddr)) {
+> +        qemu_plugin_outs("Failed to translate vaddr\n");
+> +        return;
+> +    }
+> +    g_autoptr(GString) str = g_string_new(NULL);
+> +    g_string_printf(str, "patching: @0x%"
+> +                    PRIx64 " hw: @0x%" PRIx64 "\n",
+> +                    addr, hwaddr);
+> +    qemu_plugin_outs(str->str);
+> +
+> +    qemu_plugin_outs("Writing memory (vaddr)...\n");
+> +
+> +    if (!qemu_plugin_write_memory_vaddr(addr, patch_data)) {
+> +        qemu_plugin_outs("Failed to write memory\n");
+> +        return;
+> +    }
+> +
+> +    qemu_plugin_outs("Reading memory (vaddr)...\n");
+> +
+> +    g_autoptr(GByteArray) read_data = g_byte_array_new();
+> +
+> +    if (!qemu_plugin_read_memory_vaddr(addr, read_data, patch_data->len)) {
+> +        qemu_plugin_outs("Failed to read memory\n");
+> +        return;
+> +    }
+> +
+> +    if (memcmp(patch_data->data, read_data->data, patch_data->len) != 0) {
+> +        qemu_plugin_outs("Failed to read back written data\n");
+> +    }
+> +
+> +    qemu_plugin_outs("Success!\n");
+> +
+> +    return;
+> +}
+> +
+> +/*
+> + * Callback on translation of a translation block.
+> + */
+> +static void vcpu_tb_trans_cb(qemu_plugin_id_t id, struct qemu_plugin_tb *tb)
+> +{
+> +    uint64_t addr = 0;
+> +    g_autoptr(GByteArray) insn_data = g_byte_array_new();
+> +    for (size_t i = 0; i < qemu_plugin_tb_n_insns(tb); i++) {
+> +        struct qemu_plugin_insn *insn = qemu_plugin_tb_get_insn(tb, i);
+> +
+> +        if (use_hwaddr) {
+> +            uint64_t vaddr = qemu_plugin_insn_vaddr(insn);
+> +            if (!qemu_plugin_translate_vaddr(vaddr, &addr)) {
+> +                qemu_plugin_outs("Failed to translate vaddr\n");
+> +                continue;
+> +            }
+> +        } else {
+> +            addr = qemu_plugin_insn_vaddr(insn);
+> +        }
+> +
+> +        g_byte_array_set_size(insn_data, qemu_plugin_insn_size(insn));
+> +        qemu_plugin_insn_data(insn, insn_data->data, insn_data->len);
+> +
+> +        if (insn_data->len >= target_data->len &&
+> +            !memcmp(insn_data->data, target_data->data,
+> +                    MIN(target_data->len, insn_data->len))) {
+> +            if (use_hwaddr) {
+> +                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_hwaddr,
+> +                                                     QEMU_PLUGIN_CB_NO_REGS,
+> +                                                     (void *)addr);
+> +            } else {
+> +                qemu_plugin_register_vcpu_tb_exec_cb(tb, patch_vaddr,
+> +                                                     QEMU_PLUGIN_CB_NO_REGS,
+> +                                                     (void *)addr);
+> +            }
+> +        }
+> +    }
+> +}
+> +
+> +static void usage(void)
+> +{
+> +    fprintf(stderr, "Usage: <lib>,target=<bytes>,patch=<new_bytes>"
+> +            "[,use_hwaddr=true|false]");
+> +}
+> +
+> +/*
+> + * Called when the plugin is installed
+> + */
+> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
+> +                                           const qemu_info_t *info, int argc,
+> +                                           char **argv)
+> +{
+> +
+> +    use_hwaddr = true;
+> +    target_data = NULL;
+> +    patch_data = NULL;
+> +
+> +    if (argc > 4) {
+> +        usage();
+> +        return -1;
+> +    }
+> +
+> +    for (size_t i = 0; i < argc; i++) {
+> +        char *opt = argv[i];
+> +        g_auto(GStrv) tokens = g_strsplit(opt, "=", 2);
+> +        if (g_strcmp0(tokens[0], "use_hwaddr") == 0) {
+> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &use_hwaddr)) {
+> +                fprintf(stderr,
+> +                        "Failed to parse boolean argument use_hwaddr\n");
+> +                return -1;
+> +            }
+> +        } else if (g_strcmp0(tokens[0], "target") == 0) {
+> +            target_data = str_to_bytes(tokens[1]);
+> +            if (!target_data) {
+> +                fprintf(stderr,
+> +                         "Failed to parse target bytes.\n");
+> +                return -1;
+> +            }
+> +        } else if (g_strcmp0(tokens[0], "patch") == 0) {
+> +            patch_data = str_to_bytes(tokens[1]);
+> +            if (!patch_data) {
+> +                fprintf(stderr, "Failed to parse patch bytes.\n");
+> +                return -1;
+> +            }
+> +        } else {
+> +            fprintf(stderr, "Unknown argument: %s\n", tokens[0]);
+> +            usage();
+> +            return -1;
+> +        }
+> +    }
+> +
+> +    if (!target_data) {
+> +        fprintf(stderr, "target argument is required\n");
+> +        usage();
+> +        return -1;
+> +    }
+> +
+> +    if (!patch_data) {
+> +        fprintf(stderr, "patch argument is required\n");
+> +        usage();
+> +        return -1;
+> +    }
+> +
+> +    if (target_data->len != patch_data->len) {
+> +        fprintf(stderr, "Target and patch data must be the same length\n");
+> +        return -1;
+> +    }
+> +
+> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
+> +
+> +    return 0;
+> +}
+> diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/Makefile.softmmu-target
+> index ef6bcb4dc7..154910ab72 100644
+> --- a/tests/tcg/x86_64/Makefile.softmmu-target
+> +++ b/tests/tcg/x86_64/Makefile.softmmu-target
+> @@ -7,18 +7,27 @@
+>   #
+>   
+>   I386_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/i386/system
+> -X64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
+> +X86_64_SYSTEM_SRC=$(SRC_PATH)/tests/tcg/x86_64/system
+>   
+>   # These objects provide the basic boot code and helper functions for all tests
+>   CRT_OBJS=boot.o
+>   
+> -CRT_PATH=$(X64_SYSTEM_SRC)
+> -LINK_SCRIPT=$(X64_SYSTEM_SRC)/kernel.ld
+> +X86_64_TEST_C_SRCS=$(wildcard $(X86_64_SYSTEM_SRC)/*.c)
+> +X86_64_TEST_S_SRCS=
+> +
+> +X86_64_C_TESTS = $(patsubst $(X86_64_SYSTEM_SRC)/%.c, %, $(X86_64_TEST_C_SRCS))
+> +X86_64_S_TESTS = $(patsubst $(X86_64_SYSTEM_SRC)/%.S, %, $(X86_64_TEST_S_SRCS))
+> +
+> +X86_64_TESTS = $(X86_64_C_TESTS)
+> +X86_64_TESTS += $(X86_64_S_TESTS)
+> +
+> +CRT_PATH=$(X86_64_SYSTEM_SRC)
+> +LINK_SCRIPT=$(X86_64_SYSTEM_SRC)/kernel.ld
+>   LDFLAGS=-Wl,-T$(LINK_SCRIPT) -Wl,-melf_x86_64
+>   CFLAGS+=-nostdlib -ggdb -O0 $(MINILIB_INC)
+>   LDFLAGS+=-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
+>   
+> -TESTS+=$(MULTIARCH_TESTS)
+> +TESTS+=$(X86_64_TESTS) $(MULTIARCH_TESTS)
+>   EXTRA_RUNS+=$(MULTIARCH_RUNS)
+>   
+>   # building head blobs
+> @@ -27,11 +36,24 @@ EXTRA_RUNS+=$(MULTIARCH_RUNS)
+>   %.o: $(CRT_PATH)/%.S
+>   	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
+>   
+> -# Build and link the tests
+> +# Build and link the multiarch tests
+>   %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+>   	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+>   
+> +# Build and link the arch tests
+> +%: $(X86_64_SYSTEM_SRC)/%.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
+> +	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
+> +
+>   memory: CFLAGS+=-DCHECK_UNALIGNED=1
+> +patch-target: CFLAGS+=-O0
+>   
+>   # Running
+>   QEMU_OPTS+=-device isa-debugcon,chardev=output -device isa-debug-exit,iobase=0xf4,iosize=0x4 -kernel
+> +
+> +# Add patch-target to ADDITIONAL_PLUGINS_TESTS
+> +ADDITIONAL_PLUGINS_TESTS += patch-target
+> +
+> +run-plugin-patch-target-with-libpatch.so:		\
+> +	PLUGIN_ARGS=$(COMMA)target=ffc0$(COMMA)patch=9090$(COMMA)use_hwaddr=true
+> +run-plugin-patch-target-with-libpatch.so:		\
+> +	CHECK_PLUGIN_OUTPUT_COMMAND=$(X86_64_SYSTEM_SRC)/validate-patch.py $@.out
+> \ No newline at end of file
+> diff --git a/tests/tcg/x86_64/system/patch-target.c b/tests/tcg/x86_64/system/patch-target.c
+> new file mode 100644
+> index 0000000000..8a7c0a0ae8
+> --- /dev/null
+> +++ b/tests/tcg/x86_64/system/patch-target.c
+> @@ -0,0 +1,27 @@
+> +/*
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * This test target increments a value 100 times. The patcher converts the
+> + * inc instruction to a nop, so it only increments the value once.
+> + *
+> + */
+> +#include <minilib.h>
+> +
+> +int main(void)
+> +{
+> +    ml_printf("Running test...\n");
+> +#if defined(__x86_64__)
+> +    ml_printf("Testing insn memory read/write...\n");
+> +    unsigned int x = 0;
+> +    for (int i = 0; i < 100; i++) {
+> +        asm volatile (
+> +            "inc %[x]"
+> +            : [x] "+a" (x)
+> +        );
+> +    }
+> +    ml_printf("Value: %d\n", x);
+> +#else
+> +    #error "This test is only valid for x86_64 architecture."
+> +#endif
+> +    return 0;
+> +}
+> diff --git a/tests/tcg/x86_64/system/validate-patch.py b/tests/tcg/x86_64/system/validate-patch.py
+> new file mode 100755
+> index 0000000000..700950eae5
+> --- /dev/null
+> +++ b/tests/tcg/x86_64/system/validate-patch.py
+> @@ -0,0 +1,39 @@
+> +#!/usr/bin/env python3
+> +#
+> +# validate-patch.py: check the patch applies
+> +#
+> +# This program takes two inputs:
+> +#   - the plugin output
+> +#   - the binary output
+> +#
+> +# Copyright (C) 2024
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +import sys
+> +from argparse import ArgumentParser
+> +
+> +def main() -> None:
+> +    """
+> +    Process the arguments, injest the program and plugin out and
+> +    verify they match up and report if they do not.
+> +    """
+> +    parser = ArgumentParser(description="Validate patch")
+> +    parser.add_argument('test_output',
+> +                        help="The output from the test itself")
+> +    parser.add_argument('plugin_output',
+> +                        help="The output from plugin")
+> +    args = parser.parse_args()
+> +
+> +    with open(args.test_output, 'r') as f:
+> +        test_data = f.read()
+> +    with open(args.plugin_output, 'r') as f:
+> +        plugin_data = f.read()
+> +    if "Value: 1" in test_data:
+> +        sys.exit(0)
+> +    else:
+> +        sys.exit(1)
+> +
+> +if __name__ == "__main__":
+> +    main()
+> +
 
-thanks
--- PMM
+Thanks for the update Rowan.
+Looks good to me,
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
 
