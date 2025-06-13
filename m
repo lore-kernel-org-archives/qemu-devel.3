@@ -4,97 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF81C71135
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 10:40:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5001C61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 10:42:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ1pU-0005Xb-QB; Fri, 13 Jun 2025 06:40:13 -0400
+	id 1uQ1rH-0006sH-1h; Fri, 13 Jun 2025 06:42:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uQ1pE-0005P9-3P
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:39:57 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uQ1r3-0006c9-0k
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:41:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uQ1pC-0001zo-Fj
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:39:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1uQ1qz-0002Kh-Gw
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:41:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749811191;
+ s=mimecast20190719; t=1749811295;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=xr3f0HwZTflgXRn97Dcbf3ujZ1UE03N2YRaWLFBmakY=;
- b=VnHZYtW5bpc+sLUwLez5LZd/din9U6hb9aFvFGgUALIUz1OtSsdp9rdC9eWvVyF3d3fG38
- cm8WA9806wjokcbuxzwPy5bgkBDMTxaadZfR33XS4+tp1HlgHlaTW8JPsZdXVDGL7/gEFX
- MAzN/8E1OT1fRbwqjRXh2poRZ6NP0Ow=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=figJZmNZUAIV8ivTAUr2WUKY/O33ofJJymTbtraOGVc=;
+ b=UXtFZTh3l+3u9W9BbmQTyJgcfu/CTEIxgAhfWsXqN2aYvgdPfyr3P2muYJpzHGzEsinCsX
+ qUhEIbvAVlmdFjFSKTdg9jyTn+ASr1QKXcju+vdl/e1tit0G3190aBlP5L2nDgGsouHHPw
+ 5rxxbEi3TT4M01eOiyL6PiAid3XV/WE=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-136-WGvwNkcoMr6wmvh3lqquWA-1; Fri, 13 Jun 2025 06:39:50 -0400
-X-MC-Unique: WGvwNkcoMr6wmvh3lqquWA-1
-X-Mimecast-MFC-AGG-ID: WGvwNkcoMr6wmvh3lqquWA_1749811189
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4532514dee8so19042885e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 03:39:50 -0700 (PDT)
+ us-mta-319-cMUFhpsIN5imI4UbKz28Ew-1; Fri, 13 Jun 2025 06:41:34 -0400
+X-MC-Unique: cMUFhpsIN5imI4UbKz28Ew-1
+X-Mimecast-MFC-AGG-ID: cMUFhpsIN5imI4UbKz28Ew_1749811293
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-3a4f8192e2cso1037411f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 03:41:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749811189; x=1750415989;
+ d=1e100.net; s=20230601; t=1749811293; x=1750416093;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xr3f0HwZTflgXRn97Dcbf3ujZ1UE03N2YRaWLFBmakY=;
- b=r+553ELv4Oet8FVt/iNYm5PmL9gwLaHoQ4dpOD7kX3KaaBL1sM/TnoIL7B7O7P0dpk
- /7oUK54PP5mjcTP4xRq28f/wJkjTC9eJT6D3SC4uDJVJy3S7VwcfFxgKnOA1I/ez3CJE
- ITdK47iW4P/DQxPnfDfUv13K0Jqqjg9KcNKV9Sx4QNd1UV1Wez4GFhbzVzV9iliDpncf
- D0mHaJvCB9iz9lab542aWj2AJWqYhwGu4PjgbjYg1gQohJgawSskeSqu725Lh7jcsa2/
- /ynGxNyaGMxdzEBbXXzTfECFH2BW8CgnICUpXG6xbckq+J+rispGxp0w20zoa4ZzxGf+
- z6Fw==
+ bh=figJZmNZUAIV8ivTAUr2WUKY/O33ofJJymTbtraOGVc=;
+ b=COlyc9719WUlAeaRLb8j3pBJtz3D+1AMDT2ICPfL5loUw++3Cciq36avuWrHginfqQ
+ B8STbL0j3wOwWduBJo11iav2cFWYHvmqi7bh1aFjBkQ+eMJ6QBM+cV9nUn/Siex/1QkT
+ ic2J/g5kFjGgFQ0H1PQs7rbOdSoH4YxQDrs+OHTc7UPuu9Icgh+NaN+Ac1cBjFz4z9ad
+ Sc8BwqucjZH6Ka1bseBSOVaG4diuseplVjsPR1Exh9VjX+mUtHQbB62dP8MPF2QRiAwv
+ 6D+iLoCY0XcxOFySpocNdR+pkTYJbtcFdVeDX3mCWVtr7C2n0QmL5DCmEWgWDMAaMd8y
+ Nr0A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXkqMsEkI0qMD3sm4/NEWIcgoCUOhyNvpyn/mBFrnLWASy+lCQxklHZ0fHaKpBJHo4+IzriihQX7Lpz@nongnu.org
-X-Gm-Message-State: AOJu0YwrlubPNzOWGvKtTcJVqjwNXOirw3Vogc+/pjNAwyggUzhlRe8w
- BibT840DpL2o8ngWU+kxTLhQgvuA0GDlrAwss7/a21HgBVoXyEk6uPm6UoYWZjAWmh01tqGhja3
- QUVV3WI8AnDEMQZJrFK0K+lp1a1SzGbwccvvfq8oNnLYnM+olnp+HTzvE
-X-Gm-Gg: ASbGncuJdQuY/R0sxigUD+RhPjRS3XwIAGwolFWSGrxjO2e3s7u+ASzYMHpaBqQhRZW
- 76ypi6kYozxRXB2TNw9I98UIfNCwGubpSnhUjuTnPlxG+f3CZsE9zqorbknPWUoluyg1UbV7Mrb
- 0Oo3Ns+OpxpFMUmKE6rbfgpiDfYV2UzeQs3cNYQ72nuYzcgbpKJOFZk3ll5TpCB7CgtAAgQzRJ9
- QcNqMvAcVjhtvGIdz7Y8CAiyZ9e9C6JKWXR4N878L0ZxQq66JKLEoqF1xBZxFmsBhQKRxt0AvHQ
- qqJ4RetM8EnZBflau9AaQtb+EmX4QCN8gFQwVZYthJteL7EWCz0fD/ZnUjhfhA==
-X-Received: by 2002:a05:600c:314b:b0:43d:745a:5a50 with SMTP id
- 5b1f17b1804b1-45334ad4e4fmr22699345e9.19.1749811189015; 
- Fri, 13 Jun 2025 03:39:49 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IErZK5YXtBq5ybw1mhtf49xkKAZhSJ1B1ZIgicpDaP1Cal4uw2B4lU1Hc9zCHpsaDRsZ4KxIA==
-X-Received: by 2002:a05:600c:314b:b0:43d:745a:5a50 with SMTP id
- 5b1f17b1804b1-45334ad4e4fmr22699165e9.19.1749811188521; 
- Fri, 13 Jun 2025 03:39:48 -0700 (PDT)
+ AJvYcCXoOhX/g9TaKZ2TulWkqhVRRuI1p3lefsMJJmfRsyhzECnjX/KXx5C5quJDz7twdaAZaaK8YFoIlsaE@nongnu.org
+X-Gm-Message-State: AOJu0Yx6KRtPtxZ5wfYjuO3ldI47ras7YRxravO+NKX8J2goG/zE+KGz
+ d6seWTiSaoAtHwf2AY476Si9xBS+pxsAr29Ekl6Z9qw9AYB3z1DrvafJ/FxsrmOesi/kqVsi+nI
+ MTxw4U4ZFuF5aKOPMiTdV9CUNLH9IsX7MT6Mi0fzjTD7RrFiYEuM++aLI
+X-Gm-Gg: ASbGnctr1oufGuFjRuF2emwoieiqp8I2ILxYMYM9dFwiYUQ98j+FMJ4IGfJ/BB1ZVAM
+ w3vv8rMNX6SY+PZzJssDw1K8cax8ogvWNZFLkddA39vb+SLbgg6bKUFg+3ZtFBZNMUXKTX45UC0
+ dlDFrHN7drS4lJIgNnV2t6KlpkFGXIvyyZFQXC6yq+2EmpimdH/i+rna0CMe7R2SSotCPUDRCEq
+ pQZs2zVLkqbs3UtQ2KQtz7FZUoRx0uhXnn2yyrobyQZBIrh51VTIO4gBGMaOyuc9Pzx8juzr6bg
+ mpXAIpq5cDT+qyrgf+WjneRqLRX7gDjPrJSk0oloHAe/4ozEIbB9vBxXfdSmbw==
+X-Received: by 2002:a05:6000:2312:b0:3a5:2599:4183 with SMTP id
+ ffacd0b85a97d-3a568717a0bmr2102230f8f.25.1749811292675; 
+ Fri, 13 Jun 2025 03:41:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHJlJNgrePZmATp2R205Kf4PA9FIhO0maj7nVLAo7B4qoXmvRW3bpUlsacbB7nyFhXz0AEztw==
+X-Received: by 2002:a05:6000:2312:b0:3a5:2599:4183 with SMTP id
+ ffacd0b85a97d-3a568717a0bmr2102200f8f.25.1749811292158; 
+ Fri, 13 Jun 2025 03:41:32 -0700 (PDT)
 Received: from [192.168.0.4] (ltea-047-064-114-027.pools.arcor-ip.net.
  [47.64.114.27]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b61071sm1967464f8f.90.2025.06.13.03.39.44
+ 5b1f17b1804b1-4532e13c19esm48431355e9.25.2025.06.13.03.41.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Jun 2025 03:39:47 -0700 (PDT)
-Message-ID: <c2b6f157-692a-4dcf-b589-ec8c38a86ec4@redhat.com>
-Date: Fri, 13 Jun 2025 12:39:43 +0200
+ Fri, 13 Jun 2025 03:41:31 -0700 (PDT)
+Message-ID: <932ebe19-e581-499b-9294-022f3fb4d76a@redhat.com>
+Date: Fri, 13 Jun 2025 12:41:26 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/12] python: update shebangs to standard, using
- /usr/bin/env
+Subject: Re: [PATCH v2 05/12] python: fix illegal escape sequences
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Helge Deller <deller@gmx.de>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Fabiano Rosas
- <farosas@suse.de>, Alexander Bulekov <alxndr@bu.edu>,
- Darren Kenny <darren.kenny@oracle.com>,
+ Helge Deller <deller@gmx.de>, Fabiano Rosas <farosas@suse.de>,
+ Alexander Bulekov <alxndr@bu.edu>, Darren Kenny <darren.kenny@oracle.com>,
  Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
  Ed Maste <emaste@freebsd.org>, Gerd Hoffmann <kraxel@redhat.com>,
  Warner Losh <imp@bsdimp.com>, Kevin Wolf <kwolf@redhat.com>,
- Eric Blake <eblake@redhat.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Troy Lee <leetroy@gmail.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Tyrone Ting <kfting@nuvoton.com>, Eric Blake <eblake@redhat.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, Troy Lee <leetroy@gmail.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
  Michael Roth <michael.roth@amd.com>, Laurent Vivier <laurent@vivier.eu>,
  Ani Sinha <anisinha@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Steven Lee <steven_lee@aspeedtech.com>,
+ Eric Farman <farman@linux.ibm.com>, Steven Lee <steven_lee@aspeedtech.com>,
  Brian Cain <brian.cain@oss.qualcomm.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
  Jamin Lin <jamin_lin@aspeedtech.com>, qemu-s390x@nongnu.org,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
@@ -103,9 +100,8 @@ Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  Maksim Davydov <davydov-max@yandex-team.ru>,
  Niek Linnenbank <nieklinnenbank@gmail.com>,
  =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Paul Durrant <paul@xen.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Jagannathan Raman <jag.raman@oracle.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Paul Durrant <paul@xen.org>, Jagannathan Raman <jag.raman@oracle.com>,
  Igor Mitsyanko <i.mitsyanko@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
  Markus Armbruster <armbru@redhat.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -113,18 +109,16 @@ Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
  Eric Auger <eric.auger@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  qemu-arm@nongnu.org, Hao Wu <wuhaotsh@google.com>,
- Mads Ynddal <mads@ynddal.dk>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Mads Ynddal <mads@ynddal.dk>, qemu-riscv@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
  Nicholas Piggin <npiggin@gmail.com>, Michael Rolnik <mrolnik@gmail.com>,
  Zhao Liu <zhao1.liu@intel.com>, Alessandro Di Federico <ale@rev.ng>,
  Antony Pavlov <antonynpavlov@gmail.com>,
  Jiaxun Yang <jiaxun.yang@flygoat.com>, Hanna Reitz <hreitz@redhat.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
  Qiuhao Li <Qiuhao.Li@outlook.com>, Hyman Huang <yong.huang@smartx.com>,
  =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Magnus Damm <magnus.damm@gmail.com>, Bandan Das <bsd@redhat.com>,
+ Magnus Damm <magnus.damm@gmail.com>, qemu-rust@nongnu.org,
+ Bandan Das <bsd@redhat.com>,
  Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
  Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
@@ -133,12 +127,13 @@ Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  Alistair Francis <alistair@alistair23.me>,
  Subbaraya Sundeep <sundeep.lkml@gmail.com>, Kyle Evans <kevans@freebsd.org>,
  Song Gao <gaosong@loongson.cn>, Alexandre Iooss <erdnaxe@crans.org>,
+ Aurelien Jarno <aurelien@aurel32.net>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Peter Xu <peterx@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
  Elena Ufimtseva <elena.ufimtseva@oracle.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- Radoslaw Biernacki <rad@semihalf.com>,
+ qemu-ppc@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
  Beniamino Galvani <b.galvani@gmail.com>, David Hildenbrand
  <david@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
  David Woodhouse <dwmw2@infradead.org>, Eduardo Habkost
@@ -146,7 +141,7 @@ Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  Huacai Chen <chenhuacai@kernel.org>, Mahmoud Mandour
  <ma.mandourr@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <20250612205451.1177751-1-jsnow@redhat.com>
- <20250612205451.1177751-5-jsnow@redhat.com>
+ <20250612205451.1177751-6-jsnow@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -191,10 +186,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20250612205451.1177751-5-jsnow@redhat.com>
+In-Reply-To: <20250612205451.1177751-6-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -203,7 +198,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -220,19 +215,30 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 12/06/2025 22.54, John Snow wrote:
-> This is the standard shebang we should always be using, as it plays
-> nicely with virtual environments and our desire to always be using a
-> specific python interpreter in our environments.
+> \{ is an illegal escape sequence, to get a literal backslash we need to
+> use \\.
 > 
-> (It also makes sure I can find all of the python scripts in our tree
-> easily.)
+> This is being fixed because of an issue spotted when attempting to use
+> the pyupgrade script.
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->   roms/edk2-build.py           | 2 +-
->   scripts/cpu-x86-uarch-abi.py | 2 +-
->   scripts/userfaultfd-wrlat.py | 2 +-
->   3 files changed, 3 insertions(+), 3 deletions(-)
+>   scripts/feature_to_c.py | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
+> index 807af0e685c..5f8fa8ad5c6 100644
+> --- a/scripts/feature_to_c.py
+> +++ b/scripts/feature_to_c.py
+> @@ -25,7 +25,7 @@ def writeliteral(indent, bytes):
+>           elif c >= 32 and c < 127:
+>               sys.stdout.write(c.to_bytes(1, 'big').decode())
+>           else:
+> -            sys.stdout.write(f'\{c:03o}')
+> +            sys.stdout.write(f'\\{c:03o}')
+>   
+>       if quoted:
+>           sys.stdout.write('"')
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
