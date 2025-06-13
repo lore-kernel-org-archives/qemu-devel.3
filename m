@@ -4,99 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31CBAC71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 15:58:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEADDC71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 16:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ6mu-0000L8-Sw; Fri, 13 Jun 2025 11:57:52 -0400
+	id 1uQ6p1-0001rp-Pn; Fri, 13 Jun 2025 12:00:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uQ6mt-0000Kq-CN
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:57:51 -0400
-Received: from mail-ej1-x62e.google.com ([2a00:1450:4864:20::62e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uQ6mr-0008GE-BI
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:57:51 -0400
-Received: by mail-ej1-x62e.google.com with SMTP id
- a640c23a62f3a-ad8a8da2376so384295266b.3
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 08:57:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749830267; x=1750435067; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=4MebXgKOFnN//odpzFbw1/yPlr8CUgURJ2O38A5IhnU=;
- b=Tta8U5WBoiuQ3gpCtOjbP838BKsB0xOcsFeTqJslGe+2nADgx6m/enDBl/zb0L1DpB
- e2DYdUy0AkT6r7FgQ6cRMIGMWYaiyA61xfuH8RCMZ35UlOl/qsE9uiZOXvPdtSp+Jtye
- oAQGXhJiAfVxX65JufYCsUe2die5cPxlktglW3zWB+1PsovJfy9rfuaazwYUVZA0vLTI
- 5zWv6MMlQlo2rGTvkFO/3b3901ivu57r8P9YJDeHiQ8P140EFgiX+E+7B1irRZU4yMWg
- CeAvzApoP7i1fOHRl6kB34+ugRt0wfovD8SL/hV9sebBJLkOqxCSJ+owugXZ6U0ahn5z
- 1ktQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749830267; x=1750435067;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=4MebXgKOFnN//odpzFbw1/yPlr8CUgURJ2O38A5IhnU=;
- b=ctlau9xuHBvNbWPpKZPJaDZrQ60ZkF8RJUayYqtn8Kl96aTa+xuV1rGx8YtcT1gIYG
- 8WiliaoxWS1XIWjx5Hd/vzZCAgNHJd4OLJcEcITe3X2kV5TbYwjzCDIhNbj8UUhRm8Fp
- B15f4iY8XpZRyOU0tKh71Mw++3Bo+JfyrSKUK8cdu1H7e9HsbF7sv7rzKza7lbWj6qLC
- e+RWFar9EClUkDGDSNDhbZVW0HCRs7HENCJxvoPqrd+h3oEu+TR6n7aoWeYUUgdqk/QX
- 82Krn/BRIR7lrW7UoUY5IEE3O6ZyQ259Uyk4e50LsA7aGdVLYdssOMM+AvWPLSwvxHe5
- HSMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUNWUz2lGvdMjKm3N0gsmfC/zu8o0QQhF8jtUe7L8OLYrIXI2QICxHoc12WPsYDhDLDabQQZzwbsJUY@nongnu.org
-X-Gm-Message-State: AOJu0YzSnFHs2iADe4Gc6DE8dJGCDL3TfYptzY3Vkir5R2GKnUVt0ZAA
- dtrxqCsKsDQdRrmb9bF/U1JlEt6IrGdF1y+5q8xkQQG8e+Qk+0bX+Zz0jmBp+mqrtTA=
-X-Gm-Gg: ASbGncsrkGShOJLWk7DT8R7lLYcgc0Ky6gYm900faD2Vd0nVf9uKTPcQ03LBwghyGtc
- Q4QVAgX5Ddnko6naILm2XeKuv8AZDzpu8gd7QxQVIjzhL08dTwZeL5DBdVZeY0iSSeQYxDFPpt7
- U5/xOdhZ3bcec9GLFFRAnl/kMc/ae4roGFtYyQq5MnArVagJts5tnAz8YdOlC2RQeSvy/is03U8
- ZWpeBiZja/bKWEzbk4kqsMXyCGAreqXho5UucdhxuRt7rSwnoIpsfWqZn1kAP6ouOLjGb5XgIsM
- 0Ao6LTanwEdYihMArKYoBRMK5zUINIyr0xxavM6LU5IKJdXhqQyNmHNSabwTuQs=
-X-Google-Smtp-Source: AGHT+IEUyUsrmEIT2qGB0s4NrWmnvwVE1S31NPzMbdBBFi1d/gsY/It/kR/vY/qZg8EGHmRPCp1eNg==
-X-Received: by 2002:a17:906:f591:b0:ad8:9ab7:a270 with SMTP id
- a640c23a62f3a-adec5c3d478mr376872466b.38.1749830267143; 
- Fri, 13 Jun 2025 08:57:47 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-adec81c2122sm149418766b.57.2025.06.13.08.57.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Jun 2025 08:57:46 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id C35B05F827;
- Fri, 13 Jun 2025 16:57:44 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Rowan Hart <rowanbhart@gmail.com>,  qemu-devel@nongnu.org,  Paolo
- Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao
- Liu <zhao1.liu@intel.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v12 0/7] Add additional plugin API functions to read and
- write memory and registers
-In-Reply-To: <3743dd0d-0cfa-434a-ae19-54af637b1528@linaro.org> (Pierrick
- Bouvier's message of "Fri, 13 Jun 2025 08:19:59 -0700")
-References: <20250611232409.2936521-1-rowanbhart@gmail.com>
- <3743dd0d-0cfa-434a-ae19-54af637b1528@linaro.org>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Fri, 13 Jun 2025 16:57:44 +0100
-Message-ID: <875xgzhbwn.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <j.neuschaefer@gmx.net>)
+ id 1uQ6on-0001nZ-HW
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:59:49 -0400
+Received: from mout.gmx.net ([212.227.15.15])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <j.neuschaefer@gmx.net>)
+ id 1uQ6om-0008Oq-2b
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:59:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
+ s=s31663417; t=1749830386; x=1750435186; i=j.neuschaefer@gmx.net;
+ bh=xsSRgWgcg+SxnvKNG2VkY2gFYCH4Xc4FvVyni4w7Ask=;
+ h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
+ Content-Transfer-Encoding:Message-Id:To:Cc:cc:
+ content-transfer-encoding:content-type:date:from:message-id:
+ mime-version:reply-to:subject:to;
+ b=TQxqjva3F2FgoQ6v5d93IRv+aWgYJMPAMK4dWei9P2eIIfixLpNgN7dhZnue6Qky
+ qFHJ+YGgcDiL5W9QHXf1X7oqB2J1esBYbJ/Bw5lLXDesM1iFmDO3ggaz2JFyMIt0s
+ ydQENDB7cS3NYxoT4bYZNnNpXdKsRCcaZe3+pepQzymZi1uZV3fZWG6rtp0bDpw8V
+ n55gLoxHdC4aPfygETcPxwfbykQOvJd2CxMJH1Eq5gtH1VQbOIYNa73ooe/qaWbVM
+ cFZRN5O6GSm9iFN4i+7Kd9aunJoZvuF10XTgc6O0oLIDVRRVV6uLY5Em9oVNDBRsQ
+ NHqU4YOqqcD91H5GPw==
+X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
+Received: from probook ([89.1.210.197]) by mail.gmx.net (mrgmx004
+ [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8hZD-1uUnmF0MmP-007Hbl; Fri, 13
+ Jun 2025 17:59:46 +0200
+From: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+Date: Fri, 13 Jun 2025 17:59:32 +0200
+Subject: [PATCH] linux-user/arm: Fix return value of SYS_cacheflush
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62e;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x62e.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Message-Id: <20250613-cache-v1-1-ee9f4a9ba81b@gmx.net>
+X-B4-Tracking: v=1; b=H4sIAONKTGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDI1MDM0Nj3eTE5IxUXXMj40Rzc0Mzi2SLVCWg2oKi1LTMCrA50bG1tQBLmQ4
+ mVwAAAA==
+X-Change-ID: 20250613-cache-723a77168c8e
+To: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
+Cc: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
+X-Mailer: b4 0.14.2
+X-Developer-Signature: v=1; a=ed25519-sha256; t=1749830385; l=982;
+ i=j.neuschaefer@gmx.net; s=20240329; h=from:subject:message-id;
+ bh=iBmFThkbLN1Y6xJC1Mw0h3DuXXRcCSecP9DKmG8UycQ=;
+ b=5cUiJu1/wKPmmTwYK7L0wowRAZbsG42QYjhd84+d/vEstljLRjl5k2WWpf9OjKw4BzNnYWure
+ 1pGdmRDEGxUAgFbnBXGcZrEZHtQs56lQK8Qc9YgXFvWCl/+I66Z/A/V
+X-Developer-Key: i=j.neuschaefer@gmx.net; a=ed25519;
+ pk=NIe0bK42wNaX/C4bi6ezm7NJK0IQE+8MKBm7igFMIS4=
+X-Provags-ID: V03:K1:wrup2wGn0aHadN1LQCJk6S59+tfahLiY54Dwom+ESLpvrA1pD/j
+ ZfTc3wJhbvlGbqRKqMgkhlyZG4NtdrJe0HV90e1bqpQ3fh9IWT/V2Bw/Md9+U1pO7lAUTjp
+ tMKxG/EpSdhGzj+MdivHLef7mPweFfdknkFtLeCv839Ast4p01PxkDdj8nIWWnXBeCFVWoH
+ pepSfVkMsGLNzayHkVBVg==
+UI-OutboundReport: notjunk:1;M01:P0:TwKUZyFKMzg=;PceM4vB09uYkIPP2XI7SGt4uKLV
+ mlbEadrnpnckRvcwwiZCIV8zcbRJ7GegskZhjp59nR4sO1sJI3gNN46X5PW0hb1rC9vOSa63H
+ V/Modbhh5S3fijD81LUAleHiyjSylUKDPpH6Kk34gloGJKBX/QRD8ptLDf3k3Q+s4AgYfiU4T
+ JEMAdhL5RivzYrzJP0zIEmoqee8DQ5CM9F0ECwubXlgfv7E38L/IPDh76fvNrjdb2S730Y9Ih
+ UOj7YhxPA/smS1dXIB67abEuufv87hsZyDdPLSRZFOY8RsT2BScmZjRrrZWkSw+LdfKc3eVFC
+ dw+mXUfSX91PNd92Y5iEkAZtaqsYhrjoK+WV0AEtBcyKbGOB0BypQSEwkfP+SMs2iJ4n6ualb
+ REHh42nFDQfH3vP9X2qTKZ1J0TI3KhpFmeHMbfsMoZzz4Fp4O2/bmP1k5OBu83ECPHp8hgpIx
+ XOapTcBrgDEFQ1sF1lra53Z32N8uTnwVd3WbkFHKsrLCgN/sT9LRqRkU6fiOYYS1tMtUGB6Ze
+ 9XkZpujk1kiQLRv5B1oGBie9mr/wMx1lOB/rJadLX1OudK66OdakhxndXIXVoo0jWsC4UHDKI
+ zadHacCWwz10BJHlgnCq6WURygp36acnJFCzV79qxqF6vIEqjhD56SLeK2/YsY7JwwBBqf0lc
+ 7gMnkj4Z4YhAexDqlZemVAdRgOujlKLbqrjR3eSr4ukghTk/0u6rQ4qhDHqu7qY3uQOljPY1v
+ ao6TggcEnx8JDP6G7RzheWWdjA0J8ATebqegYag92I+ApPVWJ5d5nTGoLQNcivSYvJ8tv72Of
+ XryLiPS6s6cRUR8pibAsiMzh9s49i5cQZMEggIBzAojFtkiBo3l5VqSu73K54AeZBFw6iOcDv
+ GZbMD83bHMpxXHVQLZBr0EwIlB3q4HCRZNlsVySMg+tsuKS+OAtTVdGojXO16rbi71O0cMkyL
+ nrcRiqJdqZ9tBK/0vTAzwmTSqVZWCMNRi4H/B759gGtEVTthgIAqGMO1Nams8LY98YEQJLCqB
+ wJkQwfB1yGoalep4Sv8c1jvv9QM19/XRzTnz5XTJP4kBiw2NiCl/e+x3wIvBComhPwrAXqxGi
+ 29IwOa5kVZjUfHAMTX+jxmyX5VeHaLTq52lMExqbkViNVxAulgoKgcuuLHieUEx4Uojr0GvqR
+ 0INcfU0bVVBMzFUNd309EgVnZQmnv6sTdwwc5VywqwnOPsY3WOpmNSYu4BBN1WgDRfZLgkGs0
+ rqYMiyvoZo73DI2uX/n4+5fBsUsHrZXcLiyflFe87VRMyWkESrCXa8kxX7Y4V6ZhVifH+8Xtd
+ za3aMkIC+jduSahXZLzck1VROICa9H+Fi8fLbV2L8br252Vd7DtazFKj3INM09WsqoAvA6by7
+ qbrMSh9so7wnTftOsO+uPoqLpC1SuUqro1G7igEHdXnz4b84s8gSy6sZBTp9o6/19kHHugwTk
+ fkvjmXRmWdH1EwgUeOcONVUjq4QCOGgFjP15Cif13UYUjv9I91AAr12CFL9hQbsTmnxs4TRcR
+ 2aTonOueNTog2VN7XnsCED7wBMiOyA/4RBbfrYoaSbL8ytvVDdIABq40cvZBZ+D42LUFgB2w7
+ OzfImNAcW2kumGvGBFzimsjx5RwOW1Z6wkMYIYgwj/PioAUeSWjg29dLOxnPADMJbSNWN4UQz
+ nkp1tBx5IuWehGz4LoPfnGqmGcVeBT5PQ/D7TcnoMua3ay0I2uPW2thZfniTEzZTpF221vyEr
+ 1YC7nyo0JN8F+dvPdoOrFxVfG0ro77e2nYZcSp0gUmPwp72z4q1aXtGVOVBFjWNuWaSJLoHyc
+ EdiJeBH6F95XyGIMM8T6kQoG6EYuuRRqi5sQjkyt08pjEOSp+Phg9xPv6HVBjOnkGhNt4nKgC
+ 0BqCGTq++TFxfSEPK4tUXCg4q77dmuCJ0+XfQuKvHuP5W1jZVxU1/0oi4n8KORKxY32cU0fTF
+ j+otRxWgGS4x7vixIOypjhnSXgTm0e8dUuZKiFxzifPxaCMvmGm0rJ6lo9b72Z9tQhmT1rfu4
+ bXLA8zzJd/uYLGvnIX+Br3H3V2AyaD9ARifOqJp0m2GlvJBLmGtm/M6mApccafApASE+u465P
+ yFK8SKTjaj4b/8Ip3eYONKF/8Yi1T4TbvPWCv1b2bJpkSJ6ewUxdhItTFOzAotUBpZKwN199D
+ pkRdfnIiG9SupNtarVmm3c2N/NWm+S0OewXI4dUzb7YSnN8cjuIS7atZgtmoobNyzUXoN6dX6
+ hHOOHRgm8zZzXwL3+yPivxJ4tmDXYmf0L7uleOFSFpF6DdP2yB5PZO0VvlIJ8VuuBbwJUzFCW
+ ZXF8tvaebhRunCBbhWBA74OTO9CeAihyc4Eht9s4mmYkA+HzrWdk5INkX56/AbJbqQLd144Fx
+ 5BoU6Qdwy09T234zw/7h92fKnR12zV3nqx7285nRuhw/1rht+DxB0wUBgh4Ryxwlbk1jPMlp+
+ RCYVP5htOjkpnXKbBUz5HyKU+lPKRKjlR31tMoc0vF+TZmiMOkaCVqzwG4YWRc/P7CKV+nzhv
+ 7lm/PRvFoamMR7t498fBNQC5nxBtbCOB+4ZxqDk7ALHgIg4Tq1ayXBZfGeDFLMvGg8ItLSEOd
+ FGLCShYtiw4RhWw0JS2yu+aOnYpuDyHPiGBK9XsczcSRwnopSCRE3USXqI8NexTWFhKN7xhqL
+ 77HmBUJIv7+pcWXIT9o83vGi7GlBMv/v8tryce8mD+g7ac0U1pHSTjYLMH8XaLIlya/HRPwh6
+ GjE2oquVIfQsTZIshDArs9GNylKvSXinKq9mDkWfUOD91hzcFex8QJ/pvxNoOpHDf91xadMgP
+ 0UcP9/E8pHo7QJAs+hJAoEpysvWBt6aQFjenfw2jNhqlWC6abFu06/dW3Qj9rxzdv1l+j7Ns2
+ ezIxxOCCjBGRtIqU67pmdSYoP/jLZBzL2TmBC1TjiNRqp35tC902FHH1b2uQ6NZ6P0ZEMg+Uv
+ 2Qiuoi8XY8MbwnYeogTvwZ/sA6yrDBn4IQ7oSGBYbOJHcjO7o6lSOtBy33Zn3FnyyESa0r5UF
+ FeOAR+bC6w+4rxtuHxnUBxnroicspiKksjULKZOmP8Hg/93G+Fr1qjvRVro1eb57XMbMIIzgS
+ sXCCR33CcCXX7puZi0tcbIjITaYIMhLpJteOaGMDRnZ2bhxw4faFyc4GM/i1KsO4ALAvVcBOK
+ a28KrMAqqCnYljk4paG+aTEM3xMZ7mmGz+c47GhiE53mooYOWVtZhQU6kAE6EidSAiXFKvlaz
+ ZcgLPhs+cd93gs78YD1/qy5HngJ/eTJd9Y3P6A==
+Received-SPF: pass client-ip=212.227.15.15; envelope-from=j.neuschaefer@gmx.net;
+ helo=mout.gmx.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,129 +134,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
+Although the emulated cacheflush syscall does nothing, it still needs to
+return zero to indicate success.
 
-> On 6/11/25 4:24 PM, Rowan Hart wrote:
->> This patch series adds several new API functions focused on enabling use
->> cases around reading and writing guest memory from QEMU plugins. To supp=
-ort
->> these new APIs, some utility functionality around retrieving information=
- about
->> address spaces is added as well.
->> The new qemu_plugin_write_register utilizes gdb_write_register,
->> which is now
->> declared in gdbstub.h for this purpose instead of being static.
->> qemu_plugin_write_memory_vaddr utilizes cpu_memory_rw_debug much the
->> same as
->> the existing read_memory_vaddr function does.
->> The read and write_hwaddr functions are the most different. These
->> functions
->> use address_space_rw, which works well in most cases. There is an import=
-ant
->> caveat that for writes, the page being written will be set dirty by the
->> write operation. This dirty setting requires locking the page range,
->> which can contend with an already held lock in page_collection_lock
->> when called in a tb translate callback with a write to the instruction
->> memory in the tb. The doc comments warn against doing this, and it's unl=
-ikely
->> anyone would want to do this.
->> I've also added two test plugins: one that implements a simple
->> hypercall
->> interface that guest code can use to communicate with the plugin in a
->> structured way with a test to ensure that this hypercall works and writi=
-ng
->> virtual memory works. And one that implements a simple patch utility to =
-patch
->> memory at runtime. The test for the second plugin ensures the patch appl=
-ies
->> successfully to instruction memory, and can use both hw and vaddr method=
-s.
->> For v3, I've had a few comments from the last submission that I've
->> addressed,
->> and some that I haven't for one reason or another:
->> - Enforce QEMU_PLUGIN_CB_ flags in register read/write operations:
->> done!
->> - Fix my commit messages and add long messages describing commits: done!
->> - Un-expose AS internals: done! Functions operate on current vCPU, curre=
-nt AS.
->> - Clean up use of current_cpu: done!
->> - Make functions take a vcpu_idx: not done. May revisit but it allows fo=
-otguns.
->>    Even for translation, seems best to not do this now. We can easily ad=
-d _vcpu
->>    versions of these functions in the future if we change our minds!
->> For v5, I've just updated the enforcement of the QEMU_PLUGIN_CB_
->> flags to just
->> use immediate stores, which simplifies the implementation quite a lot and
->> should be more efficient too. Thanks Pierrick for the suggestion!
->> v6 is a formatting pass, I left some whitespace that needed removal,
->> some
->> license text was wrong, and so forth.
->> v8 reverts a mistake I made extending the size of arrays of
->> TCGHelperInfo
->> structs, as I misunderstood their sizes. It preserves adding an explicit
->> zero as the last entry for clarity, however.
->> v9 fixes qemu_plugin_read_register to return -1 on parameter or flag
->> state
->> error instead of 0.
->> In v10, I relaxed the restriction on when the register r/w functions
->> can be
->> called, allowing all them to be used from any callback where the CPU is =
-not
->> currently executing, with additional notes in the documentation for exce=
-ptions
->> (atexit and flush, which do not operate on a specific CPU and in which
->> current_cpu is not set).
->> v11 makes the cb flags functions inline and fixes a typo where cpu
->> was asserted
->> but current_cpu was actually accessed.
->> v12 removes the hypercalls plugin because the functions it tested
->> are also
->> tested by the patcher plugin, making it redundant. We'll circle back on a
->> hypercalls API in the future as a part of the plugin API, not as a plugin
->> itself.
->> Rowan Hart (1):
->>    plugins: Add enforcement of QEMU_PLUGIN_CB flags in register R/W
->>      callbacks
->> novafacing (6):
->>    gdbstub: Expose gdb_write_register function to consumers of gdbstub
->>    plugins: Add register write API
->>    plugins: Add memory virtual address write API
->>    plugins: Add memory hardware address read/write API
->>    plugins: Add patcher plugin and test
->>    plugins: Update plugin version and add notes
->>   accel/tcg/plugin-gen.c                    |  30 +++
->>   gdbstub/gdbstub.c                         |   2 +-
->>   include/exec/gdbstub.h                    |  14 ++
->>   include/hw/core/cpu.h                     |   1 +
->>   include/qemu/plugin.h                     |  15 ++
->>   include/qemu/qemu-plugin.h                | 176 ++++++++++++++--
->>   plugins/api.c                             | 135 +++++++++++-
->>   plugins/core.c                            |  33 +++
->>   tests/tcg/Makefile.target                 |   1 +
->>   tests/tcg/plugins/meson.build             |   2 +-
->>   tests/tcg/plugins/patch.c                 | 241 ++++++++++++++++++++++
->>   tests/tcg/x86_64/Makefile.softmmu-target  |  32 ++-
->>   tests/tcg/x86_64/system/patch-target.c    |  27 +++
->>   tests/tcg/x86_64/system/validate-patch.py |  39 ++++
->>   14 files changed, 725 insertions(+), 23 deletions(-)
->>   create mode 100644 tests/tcg/plugins/patch.c
->>   create mode 100644 tests/tcg/x86_64/system/patch-target.c
->>   create mode 100755 tests/tcg/x86_64/system/validate-patch.py
->>=20
->
-> @Alex,
-> series looks good to me now.
->
-> Would you like to add comments, or is it good for you also?
+Signed-off-by: J. Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+=2D--
+ linux-user/arm/cpu_loop.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-I'll do a pass through next week but I think we are in good shape.
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index e8417d040691a04a3edc0f5508f047571beac8fa..33f63951a958a5a48ced2d1e18=
+7264d691e5c940 100644
+=2D-- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -363,6 +363,7 @@ void cpu_loop(CPUARMState *env)
+                     switch (n) {
+                     case ARM_NR_cacheflush:
+                         /* nop */
++                        env->regs[0] =3D 0;
+                         break;
+                     case ARM_NR_set_tls:
+                         cpu_set_tls(env, env->regs[0]);
 
->
-> Thanks,
-> Pierrick
+=2D--
+base-commit: d9ce74873a6a5a7c504379857461e4ae64fcf0cd
+change-id: 20250613-cache-723a77168c8e
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Best regards,
+=2D-=20
+J. Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+
 
