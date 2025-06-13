@@ -4,164 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E17D7C61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 11:14:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCE24C61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 11:38:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ2MD-0005AV-7D; Fri, 13 Jun 2025 07:14:01 -0400
+	id 1uQ2jb-0001cy-1S; Fri, 13 Jun 2025 07:38:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tan@siewert.io>)
- id 1uQ2MB-0005AF-Hn; Fri, 13 Jun 2025 07:13:59 -0400
-Received: from
- mail-germanywestcentralazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c20c::1] helo=FR6P281CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1uQ2jY-0001ca-4A; Fri, 13 Jun 2025 07:38:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tan@siewert.io>)
- id 1uQ2MA-0007nN-17; Fri, 13 Jun 2025 07:13:59 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=qeztKOKy1fjudfiOUnTFtJjSkEuY2fLEeNUMa+vzlBt2nOtyf4b3Q6Tzl9wkpsMaDWGm+ipE5ORRHzQMSyuOCXtFBx8l+EbKynysjUZqIpZiVMz6ko7SgWSCbz7cxQR/KvnAXgGSg30OT6D9o0Zo5MaOqhtKPRrqUpSIdCI5RdH3H115YFzw6Dw0PVYYnYVy+I0V1lcQlwn8woHOmEFtRQcz39ydVJmFkGtwzguDeudKdaawgaTC1IpUdhXMhoZv/15JW2Cilnv9D6xnBM29YP0q1t8XXI/13BpORU/Tq8vqZrVoqDZwWLdNCB2Lr7feIZsH1Mkzpl2FfqQ3+a8aqQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=VN6+Ao1S2pHA2Dq4PdyZtJlWT7HPXQj63AQ2kYm+szY=;
- b=bwjBBj3UcG1BkQ7pj7xqLAePqgkL9iDVD/d+FDxnxY1qKi5KK5IjJuPzOiwIuTy/MB5Nr9tg9YG1pWw41yHmnRnOEiuXswUPhCsICyzDyFcJtn2fwBqnJW35z5FPHJpWhE+lYsJ0J0mKWU9MOX/ILVlvFTEFJIqoHHi6WlQxht6s9rkQwinK37u+LfJhQA2ertvJIEbmk6aw5pJVB0Ht83hw2DXsxsi7JQ5CpJIu1zCG50MCXRnUeuaXVQv67fD9YAT8Q0XJ0w1l7v/hz2PfWehj5eWRAd7uyMV32CtQKMRtGYNxYaRCtB6PAbEUp1kSlS+au2hc53DYJ1TmJcPTNQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siewert.io; dmarc=pass action=none header.from=siewert.io;
- dkim=pass header.d=siewert.io; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siewert.io;
-Received: from FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d18:2::182)
- by FRYP281MB2940.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d10:71::14) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.26; Fri, 13 Jun
- 2025 11:13:51 +0000
-Received: from FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6ec7:ece3:1787:5e48]) by FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6ec7:ece3:1787:5e48%6]) with mapi id 15.20.8835.019; Fri, 13 Jun 2025
- 11:13:50 +0000
-Message-ID: <e9622a66-e9d6-46ba-aaed-57de592f5959@siewert.io>
-Date: Fri, 13 Jun 2025 13:13:49 +0200
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] hw/misc/aspeed_scu: Handle AST2600 protection key
- registers correctly
-Content-Language: en-GB
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-References: <20250612144052.22478-1-tan@siewert.io>
- <SI2PR06MB5041DE20EB548C3137045975FC77A@SI2PR06MB5041.apcprd06.prod.outlook.com>
- <SI2PR06MB504192DDAD5ED2325B9AC0EFFC77A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-From: Tan Siewert <tan@siewert.io>
-In-Reply-To: <SI2PR06MB504192DDAD5ED2325B9AC0EFFC77A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: FR4P281CA0298.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d10:e7::7) To FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d18:2::182)
+ (Exim 4.90_1) (envelope-from <shalini@linux.ibm.com>)
+ id 1uQ2jU-0003fS-Qt; Fri, 13 Jun 2025 07:38:07 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55D7TKqh019993;
+ Fri, 13 Jun 2025 11:38:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=KM3O3+
+ 9vbldgRNBnYUR7mOlchK3YvpLrieCMg3pYtEU=; b=X6FpH3JnVreuqAiA51Q+BT
+ 8sj7/tvfJ3ywiMiGeR4YCgZczC60cdIxncTuNZvqpnwHzbRvTigNkqJ26gDOvOBW
+ b3vzKZaGF6pdkMCWehSiLTDFLEBUMmG/A9ZMuIozu9Xnxi2gZ2/0ZeZ/cEI5qbkT
+ w1LDBjH8WV1I3RoaMhUQcbmr7msbLG4DvWuAbdFXQA4YJctPQQSS3GWH9XSw+kSj
+ Z8xEqIMAANrP/EldNGAj3PvQSk3FRLcdCrc+8vXclAfRgrrSfmFZZc/70brQHLLV
+ 0kfIxCuzODsQx3x5biNxoSis5lfEssggR7i/vkm3LHLs7TDFYoHrtd79YHErPNQA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 474cxjrx0b-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Jun 2025 11:38:00 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55D9UBbo015192;
+ Fri, 13 Jun 2025 11:37:59 GMT
+Received: from smtprelay02.dal12v.mail.ibm.com ([172.16.1.4])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 474yrtt12w-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Jun 2025 11:37:59 +0000
+Received: from smtpav03.wdc07v.mail.ibm.com (smtpav03.wdc07v.mail.ibm.com
+ [10.39.53.230])
+ by smtprelay02.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55DBbvtt3605186
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Jun 2025 11:37:58 GMT
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id B408458054;
+ Fri, 13 Jun 2025 11:37:57 +0000 (GMT)
+Received: from smtpav03.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0D77B5805A;
+ Fri, 13 Jun 2025 11:37:57 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav03.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 13 Jun 2025 11:37:56 +0000 (GMT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: FR3PPFB3D0CF1D2:EE_|FRYP281MB2940:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4716f3d0-fadc-421d-0c48-08ddaa6b5fdc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?QTM3R25RTUFLY3Q1M25VNkp5dStLUkZ4cDVuOVRqSVg5ekRnNmtHL041YUJs?=
- =?utf-8?B?eTRIaU11elNkTzUyeXpsTmhlZDBld0t1TkJaeEJsWURoR09IMndib3Nicncx?=
- =?utf-8?B?TkdDaE82RG5XU0hpMTB5SGc3TnI3azdHSHZMNEpweCs0aHJydFc1Ry9jd2Rv?=
- =?utf-8?B?eUlSWXVEK3hSTzJpdC8zbFN4ZlQydWNrR0s1c3B0K2c2bXUxYld1VVRNbmNT?=
- =?utf-8?B?Y3RDdzNwdjVMTktaZ3E2a0tSeEMrazA2ZU5VdnpkaytyTW5yRnVhZENPTkZz?=
- =?utf-8?B?T3dGWElwNDdxV0ZqZk96WjVDd1JsUE1lcW1mMnRqZUdSTXBSK01MUCtTU0lL?=
- =?utf-8?B?ejF5WVRwYXBURkgrUkN2dHhnNnYxMkVXclBKVy9YYk9aSkdEbnJjU1NHb2Mw?=
- =?utf-8?B?VTZCZmt5eXFlQ05mblRWV3YwZTVaU3VLU0svUU92R3dibGU1NEllRmxPbEQ3?=
- =?utf-8?B?aWZOVHZNMXd2N3ZUM0JUTEs4QWg4ajdETi9TRmtIK0xrdDJCVDFBdGtBeGJU?=
- =?utf-8?B?dmNPT2RWTDdpWHFKeklMRCt5TGpkZGxjRE9yQVZYMHUxNDBULzFXZlNJRmRB?=
- =?utf-8?B?RkJtVVBRYU5SZitUNmtxRnFieHRiRXpKanpyOWVjMURrQ3QyOWgzZnFlanBL?=
- =?utf-8?B?d3NkalNyK0RqSmZFVGxObG9LOEFDL3J5QjNqbGJUY0N2eUpOVTN2WWNrQk12?=
- =?utf-8?B?ZytiL3Y0WGpzSGlvTDRyVncrTGY3M3Rwdi9kVmVHYVd5WFpudnJQUjNDYUlN?=
- =?utf-8?B?S3A0aTZsQ0NPWXJla24rcE8wOXllVjBGdUdVVkRFazMrTmh2L1U0dllhUURT?=
- =?utf-8?B?elRzZVJyaUg2MmJFeTdwTE5EeTQ5ZHZUOExSYXB0MHZwTVZrVFFiR0ZscE50?=
- =?utf-8?B?LzRyQjErOVhvOEhEeDh5Sm4xdnR5N01DQVBLSVQ4ZDVaWlBzeHk3WEswS29B?=
- =?utf-8?B?TWxMQXVVWnlwelBMMmxTd1prMU1TeU5oSzlLVjZqNWFzbU1BdWhDdEMvWDhR?=
- =?utf-8?B?b3QzQ2dON1Z5MTRjdzZHUDJMSHhWc1ZjTFhaZ29PUlAzekFsWXZUSWtJeHM4?=
- =?utf-8?B?MkJxYU5yQ3F4UmpHNWtncTRSeStWVFhIQk93OFJ2bEREd3pWeGZnaVF3aGlI?=
- =?utf-8?B?R3dQaDZKbWhaVHp4MUlCU1U1ZDA0VW45MHk2SnVmeS82Z2JFS3oxd2lnL0F6?=
- =?utf-8?B?UWZ6alZIbXplMUFsL0Z4RXdua2paMGNVMUhIMXp5SzV0c1FZTEhhKzdnUStZ?=
- =?utf-8?B?UitEZXR0TmVEY25aV0Z2V2cyN1Ixd0VMRHg5TVVRczM5cGQ1d3lhWXJvZnZK?=
- =?utf-8?B?Z2lHc0lmNkphN3hTeElxb0d6NVkxQnpWK1dYMjdtbFQzdGNiOGxvSE9NZVor?=
- =?utf-8?B?bmdtVENaSEhyL2FvWCtnOWw3VkZUR2Mwd1IxTjRoelJiTTVZNi9HWCtrY09y?=
- =?utf-8?B?N0c3YkNxaEh2QjlkRFQ5Q0U3Vk9iOFU2TjJ4UHd1aG5hYm1DOWMyK1RiNFdJ?=
- =?utf-8?B?SmxFWVZDVlBNWFBxaXlDc0VVT1FMa0puMXBBL3ZYTDc3a0MxajNtM0tzTGYw?=
- =?utf-8?B?VDIzQmRXZldyQnFDSDFGOWs3eTNqRXFkWTVFd1FHN1hnRXBqWldYdE1tVFBQ?=
- =?utf-8?B?bitSSXJadUdKdHBITDhDSlFRM3lMSlRUanlDVDNHSGEwTG5lSEF5T29sZ3Ev?=
- =?utf-8?B?TWQzSFNoSUJXM09DOVFEOVAveDNraDdnanNQbkJtMEhLeVEwcWdja0QyRm5O?=
- =?utf-8?B?TXlrejU4WG56SE1lMm5INjBoeEkvYTBtYjBHaURjQk1leEJLUHd4U2ptV2No?=
- =?utf-8?B?Q0VHUTRFcmdLL1lwRzdGV3dDWmJIbnExcllMcVJMOVVZTjgxL25sUlBqSGs1?=
- =?utf-8?B?UnpySzA0OGlKRnBFZFdnREU5Y2MxLzdMK0EvbTZaaG9hT2pyQndJOGFYRWdn?=
- =?utf-8?Q?cI16Rb9o2fo=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?a0xnOC9FUWxFVDdCalowZ1pEcVR2Ynl3MHBjVnozUDJUK05KR1RXMzE3dmZx?=
- =?utf-8?B?QlgyT0R3NTBqd2xNMGVwN3lHMDF3WEZoQTBFWWhxMk9VZUtoYUFab2ZwYnR3?=
- =?utf-8?B?ODVzZlc4L1JTMHE0TUtzVWVtSDNodHJhTDlvQTBybDZpMTlEeXBqOS9hMHcv?=
- =?utf-8?B?dHAycWNmS25JTnBxWnNJWHZtQ3dmYmZ4dmpJeVBQeTFnNkV6QTJOVUFmVEVH?=
- =?utf-8?B?VHVYZUVzRkNhQzlQWmxiblBJN3plNVFkcHNBb0N6VGtzN3pLdWEvOTJIQ3E1?=
- =?utf-8?B?am8vZnppNjJmaU9ZTTdyRkswVUIxRHE0RHJoRld5MlJZU1FGZGhzOG1QU2NG?=
- =?utf-8?B?MDhPQTlkeWp1aFNuT2FpUnMxek1hcVBBZ1JJR2gvaUs2and1Z2lCU25jWm82?=
- =?utf-8?B?eFl4SE5yQnVXd2x0TWdKN2hPQWJSTE1wVXFFYUxhRXBJMWFjVy9Zd3dUaWk3?=
- =?utf-8?B?aXdFb0FSQzhjQlRvWmp2akE4VkRJWVNzdmNOeTBnUGdxMFgxY2poZ2lDTExG?=
- =?utf-8?B?cHRaOXd1dWw1eTJBVEZKMU5zRi95bE8xeDI0Yi82MTAzVUcvd0p5VFl1REx4?=
- =?utf-8?B?dEpGMXQwNXNlZEtPTFlBdUIwaGFKdDJhVy9CVkRSTVZWRXdQTXZUQVpUOGxX?=
- =?utf-8?B?cGZoSG9SMkNOUVEzdjhmNGxUWnRTQzhNL0VzeXd1MklnaVN6WlVwYlYvYnRZ?=
- =?utf-8?B?WEVzYTBvU3dGeGNjVWZBUytqbjFFQnBadlZUY0g3Wmh5VHM3Y1IyQzlwNTdH?=
- =?utf-8?B?eWpWdm9GTlJLT2MwMkJZN3ovdGdEUEVMSzlaK1ZuazB0RFNPcVl2TlFJcFUv?=
- =?utf-8?B?SnZWaWdIL1ZUVUd2czRweTZoZmFSd1FCYU02TGJhSWhtNWdmUjBiUkVFa3pz?=
- =?utf-8?B?ditvalNYbWgyby9RQjVYT3YvRlhiV3pMQUFuUDRHZzZhcjZEdkIzZitteUZ2?=
- =?utf-8?B?SGdsM3owQmF0VjduSSsyVXVVYUNJbjZTc0Jub3FhM0R2NzFDYkFOUWJ0NUFq?=
- =?utf-8?B?RUpWVjhyd2U4WEJzc1owSkU0alZqWVRzYi9pR0JjYXZrRkg1WGxPb0s3RmxD?=
- =?utf-8?B?RDladHVPaFVlM3JYZ1pjOEdrb0JFM0ZzakFLbUN4VUFNeG1FZGRvZnk4M0gy?=
- =?utf-8?B?M2JkNXFUL0RvOVFqcVhZSHZaUGQ2SDJmS1lpQ25ia2dSRGVIeXpGdlZPVjNO?=
- =?utf-8?B?MkFkV3hXMVVLRGJvZVBoMU42RXQ4ZHpyRmZVaGJBUW9LZVlTa2cwUExjNlg2?=
- =?utf-8?B?YUJNam8vLy9DWFZYNWhvTFBZeDRxdC81aXlqbXZDL2k0QU5xanFvK2dqWnVT?=
- =?utf-8?B?R29uRnJpRDJRQmpqUElYOTJ1RDdKMlhQVGVJbGpqZjUzMkRoOEQ3YUdWZDln?=
- =?utf-8?B?SkpHSXgxNjJqUVNWa2kweE9xeEQwWEJVYVhOaG8xMHhHdVI3UzIyckFSb0dz?=
- =?utf-8?B?RDl5aStOYTZjM282ZG5HemZBRG5lUGRuakZBNVZuc1BKSFIva3V0aVFmbGVF?=
- =?utf-8?B?YWJZdDZCZEZ5TXdUMUZVdENCVTRJMEZPbDdlRWI1RzE0MmRIck9RRFhXempZ?=
- =?utf-8?B?TWd3SnRUZG9ZZ21lbkk4dW9ncDJPb2dzLy9vNUtQbVBwci93UittN05BelRm?=
- =?utf-8?B?eEMxSkcxMFdkeVFHc2I1YWVTZXFCMGdvWEZuTWNFQ3dPLzJSRG1FQXdYMWpx?=
- =?utf-8?B?QjhUblV1N1ZrQjlWL2tHcERmRnV1UFN0QzVSbjVEbTdYNmg4VVFnd0tRNFJT?=
- =?utf-8?B?NnFVbjh5L1NCVU10NjVrcVN3OEZ3TVI0TjM4c0pzNTZjaGdSOEpBU2pIdVRR?=
- =?utf-8?B?c0I3ODdBY3diWDZHS3M0dklTcmcyK1FIMkdpSlBrSDdaY2tFaWVkOTdLcVdY?=
- =?utf-8?B?MG1MT3JEMDNtODdFNWJRdytQSWFHZlZQWnZRMkV2SFJIUUNqZjBjc2pmZHds?=
- =?utf-8?B?aXpYZWllbENac0JTc2dwc3pBOGpNUVFqcG9MYUZYT204WDVwNmR6YXhKajJR?=
- =?utf-8?B?a0ZHaVRqZS9MRnNESjJBQS9aL1N5NFJBbGQyTWxtZzRVSmtJaStNS0EyK0ln?=
- =?utf-8?B?b2dsRXhjYUhIWDZEOEV0a0dsUzNFb1dIWjNLcVJXSmIrdHNrSGFWN0VaeTR3?=
- =?utf-8?Q?lzb0=3D?=
-X-OriginatorOrg: siewert.io
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4716f3d0-fadc-421d-0c48-08ddaa6b5fdc
-X-MS-Exchange-CrossTenant-AuthSource: FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2025 11:13:50.7613 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e8b4abbe-444b-4835-b8fd-87ac97451a7e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Gklom8p8QJHSNI85EJFR9bEyiNGhXZXN40P7YmsB8F5maVbEKsVdxjyMaDluuVdc
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: FRYP281MB2940
-Received-SPF: pass client-ip=2a01:111:f403:c20c::1;
- envelope-from=tan@siewert.io;
- helo=FR6P281CU001.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Fri, 13 Jun 2025 13:37:56 +0200
+From: Shalini Chellathurai Saroja <shalini@linux.ibm.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-s390x mailing list <qemu-s390x@nongnu.org>, Daniel Berrange
+ <berrange@redhat.com>, qemu-devel mailing list <qemu-devel@nongnu.org>,
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>, Hendrik Brueckner
+ <brueckner@linux.ibm.com>, Sebastian Mitterle <smitterl@redhat.com>, Boqiao
+ Fu <bfu@redhat.com>
+Subject: Re: [PATCH v5 2/3] hw/s390x: add Control-Program Identification to QOM
+In-Reply-To: <7e228759-2fea-48e9-a604-4dadb9882f13@redhat.com>
+References: <20250603135655.595602-1-shalini@linux.ibm.com>
+ <20250603135655.595602-3-shalini@linux.ibm.com>
+ <7e228759-2fea-48e9-a604-4dadb9882f13@redhat.com>
+Message-ID: <356561a646fc891240f42c95d64e8c32@linux.ibm.com>
+X-Sender: shalini@linux.ibm.com
+Organization: IBM Deutschland Research & Development GmbH
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: bBozqg5UCtJ2H-MUCTFABJQvSRuyRfVm
+X-Proofpoint-GUID: bBozqg5UCtJ2H-MUCTFABJQvSRuyRfVm
+X-Authority-Analysis: v=2.4 cv=fZWty1QF c=1 sm=1 tr=0 ts=684c0d98 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=Bz7YMBVqm1x7Jq11-RIA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEzMDA4MiBTYWx0ZWRfX3QdMv1sOqmL7
+ rEB7lN1oiA7GEVGd8us5F0qc2JvxVyPDkYp48UviMVuQkCZB+AsKmt3wVmnJnMdqtGGvbK3dUGf
+ smFMhwRUklvx4LFCQ4vajG5kU3tdu97JjQ2FArsUT8fwAUVo6UPljym3UEsg2NlJ1ZZXCFEQjg4
+ 29KELkvTcWg/cCla90shlC8EAnC1qCjAoNkhS4aaJ59HswMSvNMd2aGN9dHK1ajYxuguwuWHzZV
+ 2HXtuJhNci5ZCYczh6Tnr+dbgCwGrLlUVyCjfmdTozfJVqWjqCLQQEQqcyajn+e9plOxvrnW4at
+ hk+sRuwdgoo4PbTOfONQc+QYa48WXO3vbLN6Mv6F35onutkmkNbmE6jBsqrFpp19QIVcaypPEWY
+ C17fHpfSbE7eKZaGjgKcOw3AUOcj9AqilKLvnbNuKbtp+r/sC6oJnLuY4iiJMWxIoh5NIdmd
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-13_01,2025-06-12_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1011 impostorscore=0
+ priorityscore=1501 spamscore=0 bulkscore=0 phishscore=0 suspectscore=0
+ adultscore=0 mlxscore=0 malwarescore=0 lowpriorityscore=0 mlxlogscore=999
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506130082
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=shalini@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,39 +127,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Many Thanks for your review, Jamin!
+On 2025-06-13 11:59, Thomas Huth wrote:
+> On 03/06/2025 15.56, Shalini Chellathurai Saroja wrote:
+>> Add Control-Program Identification (CPI) data to the QEMU Object
+>> Model (QOM), along with the timestamp in which the data was received
+>> as shown below.
+> ...
+>> diff --git a/qapi/machine.json b/qapi/machine.json
+>> index 5373e1368c..1f2db68032 100644
+>> --- a/qapi/machine.json
+>> +++ b/qapi/machine.json
+>> @@ -2279,3 +2279,61 @@
+>>   # Since: 1.2
+>>   ##
+>>   { 'command': 'query-cpu-definitions', 'returns': 
+>> ['CpuDefinitionInfo'] }
+>> +
+>> +##
+>> +# @S390ControlProgramId:
+>> +#
+>> +# Control-program identifiers provide data about the guest operating 
+>> system.
+>> +# The control-program identifiers are: system type, system name, 
+>> system level
+>> +# and sysplex name.
+>> +#
+>> +# In Linux, all the control-program identifiers are user 
+>> configurable. The
+>> +# system type, system name, and sysplex name use EBCDIC characters 
+>> from
+>> +# this set: capital A-Z, 0-9, $, @, #, and blank.  In Linux, the 
+>> system type,
+>> +# system name and sysplex name are arbitrary free-form texts.
+>> +#
+>> +# In Linux, the 8-byte hexadecimal system-level has the format
+>> +# 0x<a><b><cc><dd><eeee><ff><gg><hh>, where:
+>> +# <a>: is one hexadecimal byte, its most significant bit indicates 
+>> hypervisor
+>> +# use
+> 
+>  Hi Shalini!
+> 
+> While testing the patches, the above description caused some headache
+> for me, but I think it's simply typo here: This is not a hexadecimal
+> byte, it's just a nibble / 4-bit digit for this <a>, right? Could you
+> please fix the description in the next version of the patch series,
+> please?
 
-On 13.06.25 05:01, Jamin Lin wrote:
->> According to the datasheet description: it seems your changes do not match
->> the actual hardware behavior.
->> Protection Key
->> This register is designed to protect SCU registers from unpredictable updates,
->> especially when ARM CPU is out of control.
->> The password of the protection key is 0x1688A8A8.
->> Unlock SCU registers: Write 0x1688A8A8 to this register Lock SCU registers:
->> Write others value to this register Only firmware can lock the SCU registers,
->> other softwares (ex. system
->> BIOS/driver) can not do this to prevent disturbing the operation of firmware.
->> When this register is unlocked, the read back value of this register is
->> 0x00000001.
->> When this register is locked, the read back value of this register is 0x00000000.
->> Writing to SCU000 can be seen on both SCU000 and SCU010.
->> Writing to SCU010 is only on SCU010 itself. SCU000 does not change.
->>
 
-Interesting. I tried something similar but apparently did not enough 
-research on my AST2600-A3 card (or messed smth else up during research).
+Hello Thomas,
+Yes, that is correct. <a> is a 4-bit digit and not a byte. I will 
+correct this
+in the next version. Thank you very much.
 
-You're right, (un-)locking SCU000 will (un-)lock SCU010 too, but not 
-vice versa.
+> 
+>  Thanks,
+>   Thomas
+> 
+> 
+>> +# <b>: is one digit that represents Linux distributions as follows
+>> +# 0: generic Linux
+>> +# 1: Red Hat Enterprise Linux
+>> +# 2: SUSE Linux Enterprise Server
+>> +# 3: Canonical Ubuntu
+>> +# 4: Fedora
+>> +# 5: openSUSE Leap
+>> +# 6: Debian GNU/Linux
+>> +# 7: Red Hat Enterprise Linux CoreOS
+>> +# <cc>: are two digits for a distribution-specific encoding of the 
+>> major version
+>> +# of the distribution
+>> +# <dd>: are two digits for a distribution-specific encoding of the 
+>> minor version
+>> +# of the distribution
+>> +# <eeee>: are four digits for the patch level of the distribution
+>> +# <ff>: are two digits for the major version of the kernel
+>> +# <gg>: are two digits for the minor version of the kernel
+>> +# <hh>: are two digits for the stable version of the kernel
+>> +# (e.g. 74872343805430528, when converted to hex is 
+>> 0x010a000000060b00). On
+>> +# machines prior to z16, some of the values are not available to 
+>> display.
+>> +#
+>> +# Sysplex refers to a cluster of logical partitions that communicates 
+>> and
+>> +# co-operates with each other.
+>> +#
+>> +# @system-type: operating system (e.g. "LINUX   ")
+>> +#
+>> +# @system-name: user configurable name of the VM (e.g. "TESTVM  ")
+>> +#
+>> +# @system-level: distribution and kernel version in Linux
+>> +#
+>> +# @sysplex-name: sysplex which the VM belongs to, if any (e.g. "PLEX 
+>> ")
+>> +#
+>> +# @timestamp: latest update of CPI data in nanoseconds since the UNIX 
+>> EPOCH
+>> +#
+>> +# Since: 10.1
+>> +##
+>> +{ 'struct': 'S390ControlProgramId', 'data': {
+>> +     'system-type': 'str',
+>> +     'system-name': 'str',
+>> +     'system-level': 'uint64',
+>> +     'sysplex-name': 'str',
+>> +     'timestamp': 'uint64' } }
 
->> Could you please verify the QEMU behavior?
-
-Right now, locking either SCU000 or SCU010 will be reflected on both 
-registers, and unlocking must be always done separately.
-
-I guess it's time for a v3 then.
-
-Cheers,
-Tan
+-- 
+Mit freundlichen Grüßen / Kind regards
+Shalini Chellathurai Saroja
+Software Developer
+Linux on IBM Z & KVM Development
+IBM Deutschland Research & Development GmbH
+Dept 1419, Schoenaicher Str. 220, 71032 Boeblingen
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Geschäftsführung: David Faller
+Sitz der Gesellschaft: Böblingen / Registergericht: Amtsgericht 
+Stuttgart, HRB 243294
 
