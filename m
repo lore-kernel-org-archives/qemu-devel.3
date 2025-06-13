@@ -4,78 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80BCAC71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 10:06:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED3E3C61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 10:17:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ1Hk-0005qO-RT; Fri, 13 Jun 2025 06:05:20 -0400
+	id 1uQ1T3-00082r-EP; Fri, 13 Jun 2025 06:17:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uQ1Hi-0005ow-Vv
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:05:19 -0400
-Received: from mail-yb1-xb31.google.com ([2607:f8b0:4864:20::b31])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uQ1Hg-00041a-9p
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:05:18 -0400
-Received: by mail-yb1-xb31.google.com with SMTP id
- 3f1490d57ef6-e82278e3889so47277276.2
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 03:05:15 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1749809115; x=1750413915; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=ASLjwtRAxStQtF93rw6d34LHCm0nYZsuFqAZ+YyWvew=;
- b=QiuRuYy/AdFvKtvBBZJIBC7QI/eCi316N8JVPFLQZAJGWeFs1llouI6SCY428une74
- MfiX2UlOeYSBOL4WV5b6rEpj5mKU1jR5Cy0Kv6IdlisNCVnohHjQ/Sv5fa9AUAPEK+wc
- XHj3+kgNycuLzVFTqFJ6+SFYgyK6/lf5fZ4hRyI/L623Dts4rfllwJuEKqz+HDaeS7a+
- 0C+BLuMu1GZkVKzX+0/eq92JkNpEOefx0JjGwR9zZf0m6R0WVkn+ysqpxumH6+inl7cj
- kkaeTzQsxfaziuQ84Fjr74XEHFNcJAxz8qiFdzEMTmY4OF/TaknhjB72ptYy0ekL+a2/
- SRDA==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uQ1T0-00082e-8z
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:16:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uQ1Sx-0006ms-P9
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 06:16:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749809812;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=erIZkqETjTGrmHx+fuOarayRy42APKSrEU1DfliGPLE=;
+ b=H0CZ+lkuidbLvYKF9Wsf4n1l/0ON0EifcN5N8Zq9wzwZ8+DOLfu3aOcw/XkbcP7Y4JUUcE
+ 4rx9S0+jfhIG07PWq6S5h6GaewlVXDW44K6Au4p9O3WkKHhEAanzGaqUaNHfnFmFrC6XZJ
+ i4eB9LBj2J+coww8BE2msRS62LOJm44=
+Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
+ [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-156-K5hpP2YlNFuQrCuO0HxKfA-1; Fri, 13 Jun 2025 06:16:51 -0400
+X-MC-Unique: K5hpP2YlNFuQrCuO0HxKfA-1
+X-Mimecast-MFC-AGG-ID: K5hpP2YlNFuQrCuO0HxKfA_1749809810
+Received: by mail-pg1-f197.google.com with SMTP id
+ 41be03b00d2f7-b2fb347b3e4so1276803a12.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 03:16:51 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749809115; x=1750413915;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ASLjwtRAxStQtF93rw6d34LHCm0nYZsuFqAZ+YyWvew=;
- b=W/OXSp2hEhHWjeuHe5H5qfbOpVwSmnugkN3yWgq6NIICHzAHOyhDzA4heEGLTyUfFD
- CZKAyHO317QXng/yEQoBSShdDjzwebbJy/DOkYBIiX244bQdOZ2ECQ8oXrLOpTH17L1O
- fJiwNRTFy1wz9+nUZP+Idd17QT9L7THaGpBkxNspfS4l/jLBC2Z5acmW7T59rRB6htKB
- 1ffjT247qIrdb1SBgri44djsqbDhYHaYUBfEL+gdgcQiwXOyHLqBrrjLjS1hGEwMTFLo
- VaJLdi3QFRW1PkyugRcdwDdvNhGZI3JGuLASH6RxfudAljSDUvVxMa3WW0iBGrrXFL10
- Btvg==
-X-Gm-Message-State: AOJu0Yx5ptOTwhHHLj+e1GWJrfD9/GB7IC9LJiGJN9/2Qoowi1/wAi2H
- WrjJT76W2PG3a9JyUOx6FJtCHkZWC6KSXpn11oH0MLDEciVZDgl+RlaboXdHNvj0TD7rtwRbZGY
- k8J+0wWL5KYu8O4bHRtZvF0DzKExE3JSZNaUjIRudLQ==
-X-Gm-Gg: ASbGncvh7w7B2ofi5k0CQs/yynjM/oTkjkpWOsOyeDj4Tu0nSXujXoKr1FPtTnvljrG
- W5adtdVRfsbbfqHbD7mN8RhU36OnZ4K4iU7US2W4Hvlp1aCu21IR4y8FjVVAHgPNvx2u2c/qY6E
- Y0EH+TXwRFMDFXAEJNK47skv3ftLTbPTe5nS03/bPpAjVO9E5OwsAK80c=
-X-Google-Smtp-Source: AGHT+IGDcGhHID6J71QVYJ0V9DPtc83AdWLXRf/upT8ihNxjZY38KW5jmz38woYhgdh6dPKQPXcPCW6ke10VvnU3Ry4=
-X-Received: by 2002:a05:690c:688f:b0:70e:719e:754 with SMTP id
- 00721157ae682-7116373c02fmr36974647b3.12.1749809114927; Fri, 13 Jun 2025
- 03:05:14 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250531-clr-v3-1-377f9bf1746d@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250531-clr-v3-1-377f9bf1746d@rsg.ci.i.u-tokyo.ac.jp>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Jun 2025 11:05:03 +0100
-X-Gm-Features: AX0GCFstQPogjqmGJNYjMdQCAK7CTApNPVQ5FToff6E_PxhfhErvGKtQYSTTm4M
-Message-ID: <CAFEAcA9nrW7N0=FUqXJ9x_+kxC4Qt4QtPf2n4QY8Wh6S84QXBA@mail.gmail.com>
-Subject: Re: [PATCH v3] target/arm: Define raw write for PMU CLR registers
-To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, devel@daynix.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b31;
- envelope-from=peter.maydell@linaro.org; helo=mail-yb1-xb31.google.com
+ d=1e100.net; s=20230601; t=1749809810; x=1750414610;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=erIZkqETjTGrmHx+fuOarayRy42APKSrEU1DfliGPLE=;
+ b=F06F3u+pAgzXw4TyuwFB4M4G5APyTtucWRNUwWXT3Wph3c3cMIF921zslDLVs0XAlU
+ 1hGgfoOPLVpt8yFnm7CUA5qy08jyac0orNc0mA+CTdqVH/nXOcRXXG0aqNSQ09hhtUvF
+ UzS/VLG0YvWL51xvEpnb/3/G9FC7+0gdMjxokRMoAn0ZbstWrYYzMHhtyXUs5PmJcO0n
+ rUT6FglAMPZQSLyPPZUuxoSmh7Kzb7f2vinSNeGCCkbUrKddfLMONdFzi0N6FGjdQ3Pn
+ U3R4r8I50zoOeeypKZ3Po9zOLTNk0OqTmp9vWu0k5zP45t79KBlHbsLRxaC3vR/Nw2r5
+ mqLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVoAl0i58pO9m0qHUN486KwcDiEpiliC8VbOi75YnG9zalbJpTMoywPvqVoCPO/I7Smr/0FWqxRRZgh@nongnu.org
+X-Gm-Message-State: AOJu0YxmRKFofSqbE042e9gv17hWkpAexmONM4Nqa7v5dx2tk8xHExZF
+ gBxegEKk0OKMWGptZs4UseUuRWWXzWZ7zHxSssmyb9Y4AuJCZeKTR0T2QZs63/7GobbvKSBT6bz
+ lkmFwbJNw4PDmxH/GFzJ937180+8VWM2OEn3ymR/N44J4Rjlr7pY5KUld
+X-Gm-Gg: ASbGncvc6OYkniY6xMimepHIsMeW7WY0iW0pF/y3R6DXOfWtMEoVl8Lpg7DMSmzGHRY
+ CeWCd9NKC5PekhIlbjfXisbNK3bVtFDIb30MTS96XjOHch4zZFPXHja9x82cFuuP9ZAAcYzk6B/
+ 76xFlL8XnhkmPkNCNS4wt9RO4nQ+Di1MfieQVUnLlxJlvS9vPlmbrC/hPfRdgF+4JpsuQFMaIYe
+ fRntwKWZr791VBp3Eg+qTjj2nBSM0bS1Ia34/E4NCv5jbef3cuy9XwvxkfrbBwYEcBRwbmpoyo5
+ R1hrq2F3ddBzk/BBp9HjUERx1M3AdLPx5ilhfkPD
+X-Received: by 2002:a05:6a21:9013:b0:201:8a13:f392 with SMTP id
+ adf61e73a8af0-21fad01056cmr3572465637.20.1749809810236; 
+ Fri, 13 Jun 2025 03:16:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFnjV/wUCRIG4RHR8oq8uzqy/XG1af9+QjQ4mShJKr4qEppZ5aY4bdJomqhKNHjs9uiLJwGSw==
+X-Received: by 2002:a05:6a21:9013:b0:201:8a13:f392 with SMTP id
+ adf61e73a8af0-21fad01056cmr3572439637.20.1749809809841; 
+ Fri, 13 Jun 2025 03:16:49 -0700 (PDT)
+Received: from smtpclient.apple ([223.235.162.140])
+ by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-74890005f47sm1276055b3a.51.2025.06.13.03.16.47
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 13 Jun 2025 03:16:49 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
+Subject: Re: [PATCH v2] hw/acpi: Fix GPtrArray memory leak in crs_range_merge
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <aEvpxGwmxXrUBVRn@redhat.com>
+Date: Fri, 13 Jun 2025 15:46:35 +0530
+Cc: Li Zhijian <lizhijian@fujitsu.com>, qemu-devel <qemu-devel@nongnu.org>,
+ Igor Mammedov <imammedo@redhat.com>, Michael Tsirkin <mst@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <1C90068F-D8B6-4CBC-B1F7-2FB381776C3D@redhat.com>
+References: <20250613085110.111204-1-lizhijian@fujitsu.com>
+ <aEvpxGwmxXrUBVRn@redhat.com>
+To: Daniel Berrange <berrange@redhat.com>
+X-Mailer: Apple Mail (2.3776.700.51.11.4)
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,55 +113,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 31 May 2025 at 13:11, Akihiko Odaki
-<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
->
-> Raw writes to PMCNTENCLR and PMCNTENCLR_EL0 incorrectly used their
-> default write function, which clears written bits instead of writes the
-> raw value.
->
-> PMINTENCLR and PMINTENCLR_EL1 are similar registers, but they instead
-> had ARM_CP_NO_RAW. Commit 7a0e58fa6487 ("target-arm: Split NO_MIGRATE
-> into ALIAS and NO_RAW") sugguests ARM_CP_ALIAS should be used instead of
-> ARM_CP_NO_RAW in such a case:
->
-> > We currently mark ARM coprocessor/system register definitions with
-> > the flag ARM_CP_NO_MIGRATE for two different reasons:
-> > 1) register is an alias on to state that's also visible via
-> >    some other register, and that other register is the one
-> >    responsible for migrating the state
-> > 2) register is not actually state at all (for instance the TLB
-> >    or cache maintenance operation "registers") and it makes no
-> >    sense to attempt to migrate it or otherwise access the raw state
-> >
-> > This works fine for identifying which registers should be ignored
-> > when performing migration, but we also use the same functions for
-> > synchronizing system register state between QEMU and the kernel
-> > when using KVM. In this case we don't want to try to sync state
-> > into registers in category 2, but we do want to sync into registers
-> > in category 1, because the kernel might have picked a different
-> > one of the aliases as its choice for which one to expose for
-> > migration.
->
-> These registers fall in category 1 (ARM_CP_ALIAS), not category 2
-> (ARM_CP_NO_RAW).
->
-> ARM_CP_NO_RAW also has another undesired side effect that hides
-> registers from GDB.
->
-> Properly set raw write functions and drop the ARM_CP_NO_RAW flag from
-> PMINTENCLR and PMINTENCLR_EL1; this fixes GDB/KVM state synchronization
-> of PMCNTENCLR and PMCNTENCLR_EL0, and exposes all these four registers
-> to GDB.
->
-> It is not necessary to add ARM_CP_ALIAS to these registers because the
-> flag is already set.
->
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
 
+> On 13 Jun 2025, at 2:35=E2=80=AFPM, Daniel P. Berrang=C3=A9 =
+<berrange@redhat.com> wrote:
+>=20
+> On Fri, Jun 13, 2025 at 04:51:10PM +0800, Li Zhijian wrote:
+>> This leak was detected by the valgrind.
+>>=20
+>> The crs_range_merge() function unconditionally allocated a GPtrArray
+>> 'even when range->len was zero, causing an early return without =
+freeing
+>> the allocated array. This resulted in a memory leak when an empty =
+range
+>> was processed.
+>>=20
+>> Instead of moving the allocation after the check (as previously =
+attempted),
+>> use g_autoptr for automatic cleanup. This ensures the array is freed =
+even
+>> on early returns, and also removes the need for the explicit free at =
+the
+>> end of the function.
+>>=20
+>> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+>> ---
+>=20
+> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 
-Applied to target-arm.next, thanks.
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
 
--- PMM
+>=20
+>=20
+> With regards,
+> Daniel
+> --=20
+> |: https://berrange.com      -o-    =
+https://www.flickr.com/photos/dberrange :|
+> |: https://libvirt.org         -o-            =
+https://fstop138.berrange.com :|
+> |: https://entangle-photo.org    -o-    =
+https://www.instagram.com/dberrange :|
+
+
 
