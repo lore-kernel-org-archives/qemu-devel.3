@@ -4,62 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48053C61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 05:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B62C71135
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 05:23:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPwe1-0002Gr-6v; Fri, 13 Jun 2025 01:08:01 -0400
+	id 1uPwrp-0006OP-LX; Fri, 13 Jun 2025 01:22:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uPwdx-0002Ge-Or
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:07:58 -0400
-Received: from out-171.mta1.migadu.com ([95.215.58.171])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
- id 1uPwdv-0000Is-0j
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:07:57 -0400
-Date: Fri, 13 Jun 2025 14:07:32 +0900
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1749791263;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GkvK5CwdgTfzVehhlYR/22C54raijMQHPJxq6LFqbdk=;
- b=owWRlRIkBTst+zGWjbylA7nMnpcr5DxGdKnE/gq+3A2S0wPMxh7SZEB40s2AOFKDCKD3Fk
- 4gEtN4oOPkXfSrNGA/tHbpKutatyo7qk4IcAKU3S70H2/ruK/NJ6M4D4yzUBZWHt38Iztp
- XMpzVwtdqiaKEcK7SiBhdCJmNksm9kQ=
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Itaru Kitayama <itaru.kitayama@linux.dev>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
- Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
- Zhijian Li <lizhijian@fujitsu.com>, linuxarm@huawei.com,
- linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Alireza Sanaee <alireza.sanaee@huawei.com>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v15 0/4] arm/virt: CXL support via pxb_cxl
-Message-ID: <aEuyFHlk7t7wiLvU@vm4>
-References: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uPwrd-0006Nq-7e
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:22:08 -0400
+Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
+ id 1uPwra-0002B2-N8
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:22:04 -0400
+Received: by mail-pg1-x529.google.com with SMTP id
+ 41be03b00d2f7-b2fb8226e1cso2780585a12.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 22:22:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1749792120; x=1750396920;
+ darn=nongnu.org; 
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=OIJdJB/To0+EFq3p/Bf04hNgiEcBJvYkfqKaLcJcG/g=;
+ b=GVEEmxaPyrIlJvhMDpXeGBHDB3k4DniVDEpArIH8vvaFpAJZ4jdtKcaVJwxmbNEmGJ
+ EM/XBjB5GuNjnetPkKxkthvwr48qm8YNJeH/UZesHF2pWsAr7RYNH/ZqKF02dT4ar0Ov
+ rLKoVz/feh0XNWxFU8qp/YrfAVeBho4s4bA3SM49wfSGyPVljnvD3gPE9kDx0XUbprGM
+ OAXKQcfozDWG00D9WlaS08Jf7ayVzNBWlwlmBhkmxZ9DPjDFTSg4Hy1UW4q/YWAqEJbu
+ RdzxbnXgm+54Lcn5D/F/YEwHSK6mllV/rD1KhGAG9+4m7M1oTEONmBniC8PDMXBrDN4f
+ OcqA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749792120; x=1750396920;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=OIJdJB/To0+EFq3p/Bf04hNgiEcBJvYkfqKaLcJcG/g=;
+ b=qLCFvjjbeSRLsNnSuykBc9tKrTsrv6fG7WvnDKapPJjXcfNbD4rg56UVV1nLysU+s7
+ Rr9QUUy5rNrilJgyerNic2+P2zFURNdGUM2pBhZV3X1WDQIRNite+EcuiiH3rA1VifzK
+ mco6TquhFVIjTAGIyPCJhA3nnDkE6HCFEYpP6pMYnFEe6RNSYiihRFKoS53FK3oEnTkb
+ zZXo8cPKLeU76715CrARVlLfLbY6F8BXB4zcdOJZoBgBVerYk31nm1Y6jbm1WgIk78EV
+ so8/yhiyFKGLPgYNpFj8njhnl+P+fKVj61TGq7IMFh9qBCKLYQU3nDHJ/f8Q1pp6Qsno
+ wNnQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcn71R4Mqz9PjRwC3ndu10zQ7UKOLG5FRzzvBpbiELdCNkabLLIXwKZzcJc38RYZiYBd4UxFDHFMuP@nongnu.org
+X-Gm-Message-State: AOJu0Yw0SANOR6XSXzvwblcXF/Cp5E9gpt4z5oZwPGMkZGt3t7dTq1Zl
+ +bKCOsZioMfDaWHWv2D5h+45o8bxiYcTcE0vKwip9Lo8aufNlZFzKQ8+5jf8vNrTzHo=
+X-Gm-Gg: ASbGnct1sk/J4OIdy8QWs3h+8CtjVrnqaHBBvfzT8BH4pkeTntuKfDeNqwk3svcdtpb
+ HJyz9sFrOPCgSBPQof6NrqcL69THfCew1JaUYsttfQca23WwKacGCfHvwU7hlTTnYShqlFXPpgO
+ OGN2M4eppG7IBz5HV8+ZN8BySuw+z9n2RJElGMgRleL3UuJG3Y0vLOYT6lVTFyyEYdDK17rMx4v
+ kG1uH+T8c2ThsHBiYgoq0wDG5sqOODYHZS4Gq6rPSMhjwpkhRiwkCNXPa1yODHkW5Mdy+nELRRu
+ E7cBCx0RoE5kvLusMl5iXvofjw8OZmp+c+iNZDQkqvlmOCGeq7d36KSkOvK3vLd5zfWN8KxE
+X-Google-Smtp-Source: AGHT+IFOhijwB82xKKqulYtyBwSKw69AkZhtAaCt8mJ0I2yFQCiqdSEMPOmINWezzK1jonChaMrwJA==
+X-Received: by 2002:a17:90b:3c8e:b0:312:dbcd:b93d with SMTP id
+ 98e67ed59e1d1-313dc2ba637mr1936290a91.14.1749792120479; 
+ Thu, 12 Jun 2025 22:22:00 -0700 (PDT)
+Received: from [10.100.116.185] ([157.82.128.1])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-313c1c5fd7esm2447761a91.37.2025.06.12.22.21.58
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Jun 2025 22:22:00 -0700 (PDT)
+Message-ID: <392b4ec1-b347-4b0a-8863-8480e52b20aa@daynix.com>
+Date: Fri, 13 Jun 2025 14:21:56 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.171;
- envelope-from=itaru.kitayama@linux.dev; helo=out-171.mta1.migadu.com
-X-Spam_score_int: -27
-X-Spam_score: -2.8
-X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: Build platform guarantees, docs, tests, and snakes in the garden
+To: John Snow <jsnow@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
+ =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Markus Armbruster <armbru@redhat.com>
+References: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
+Content-Language: en-US
+From: Akihiko Odaki <akihiko.odaki@daynix.com>
+In-Reply-To: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
+ envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x529.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,262 +104,136 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 02:43:34PM +0100, Jonathan Cameron wrote:
-> v15:
->   - Split the address map calculations and mmio setup into separate
->     functions in patch 2, allowing v14 patch 3 to be dropped as not
->     x86 and arm make the same calls.  Note I felt this was a sufficient
->     change to trigger dropping tags. (Zhijian Li)
->   - A few other minor tweaks.
->   - TLB issue mentioned in v14 now fixed upstream so dropped reference
->     in this cover letter.
+On 2025/06/06 4:35, John Snow wrote:
+> Hi, I've long been a little confused about the specifics of our build 
+> platform guarantee and how it applies to documentation and testing.
 > 
-> Thanks to Itaru Kitayama and Zhijian Li for testing + reviews.
+> My *current* understanding is that our build platform guarantee applies 
+> to both unit tests and building documentation, but that this requirement 
+> may not be as absolute as I imagine it.
 > 
-> Updated cover letter
-> 
-> Back in 2022, this series stalled on the absence of a solution to device
-> tree support for PCI Expander Bridges (PXB) and we ended up only having
-> x86 support upstream. I've been carrying the arm64 support out of tree
-> since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
-> a few weeks ago) and a fair number of fiddly rebases.
-> gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
-> series.
-> 
-> A recent discussion with Peter Maydell indicated that there are various
-> other ACPI only features now, so in general he might be more relaxed
-> about DT support being necessary. The upcoming vSMMUv3 support would
-> run into this problem as well.
-> 
-> I presented the background to the PXB issue at Linaro connect 2022. In
-> short the issue is that PXBs steal MMIO space from the main PCI root
-> bridge. The challenge is knowing how much to steal.
-> 
-> On ACPI platforms, we can rely on EDK2 to perform an enumeration and
-> configuration of the PCI topology and QEMU can update the ACPI tables
-> after EDK2 has done this when it can simply read the space used by the
-> root ports. On device tree, there is no entity to figure out that
-> enumeration so we don't know how to size the stolen region.
-> 
-> Three approaches were discussed:
-> 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
->    3rd enumeration implementation that ends up out of sync with EDK2 and
->    the kernel (there are frequent issues because of how those existing
->    implementations differ.
-> 2) Figure out how to enumerate in kernel. I never put a huge amount of work
->    into this, but it seemed likely to involve a nasty dance with similar
->    very specific code to that EDK2 is carrying and would very challenging
->    to upstream (given the lack of clarity on real use cases for PXBs and
->    DT).
-> 3) Hack it based on the control we have which is bus numbers.
->    No one liked this but it worked :)
-> 
-> The other little wrinkle would be the need to define full bindings for CXL
-> on DT + implement a fairly complex kernel stack as equivalent in ACPI
-> involves a static table, CEDT, new runtime queries via _DSM and a description
-> of various components. Doable, but so far there is no interest on physical
-> platforms. Worth noting that for now, the QEMU CXL emulation is all about
-> testing and developing the OS stack, not about virtualization (performance
-> is terrible except in some very contrived situations!)
-> 
-> There is only a very simple test in here, because my intent is not to
-> duplicate what we have on x86, but just to do a smoke test that everything
-> is hooked up.  In general we need much more comprehensive end to end CXL
-> tests but that requires a reaonsably stable guest software stack. A few
-> people have expressed interest in working on that, but we aren't there yet.
-> 
-> Note that this series has a very different use case to that in the proposed
-> SBSA-ref support:
-> https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
-> 
-> SBSA-ref is a good choice if you want a relatively simple mostly fixed
-> configuration.  That works well with the limited host system
-> discoverability etc as EDK2 can be build against a known configuration.
-> 
-> My interest with this support in arm/virt is support host software stack
-> development (we have a wide range of contributors, most of whom are working
-> on emulation + the kernel support). I care about the weird corners. As such
-> I need to be able to bring up variable numbers of host bridges, multiple CXL
-> Fixed Memory Windows with varying characteristics (interleave etc), complex
-> NUMA topologies with wierd performance characteristics etc. We can do that
-> on x86 upstream today, or my gitlab tree. Note that we need arm support
-> for some arch specific features in the near future (cache flushing).
-> Doing kernel development with this need for flexibility on SBSA-ref is not
-> currently practical. SBSA-ref CXL support is an excellent thing, just
-> not much use to me for this work.
-> 
-> Also, we are kicking off some work on DCD virtualization, particularly to
-> support inter-host shared memory being presented up into a VM. That
-> will need upstream support on arm64 as it is built on top of the existing
-> CXL emulation to avoid the need for a separate guest software stack.
-> 
-> Note this is TCG only - it is possible to support limited use with KVM but
-> that needs additional patches not yet ready for upstream.  The challenge
-> is interleave - and the solution is don't interleave if you want to run
-> with KVM.
+> The way I have endeavored to manage the Python tooling in our tree so 
+> far is to preserve, without fail, our ability to perform fully offline 
+> builds on all supported platforms (provided that the right distro repo 
+> packages are available). The Python virtual environment created at 
+> configure time bends over backwards to use system packages *whenever 
+> possible*, and the list of exceptions - notably Meson itself - uses 
+> vendored packages only in very specific cases where it is possible to 
+> vendor such packages. Fetching packages from PyPI is generally offered 
+> only as a convenience for developer workstations to, in general, save 
+> developers from having to know anything about Python. (I think I've done 
+> a good job there, to be honest!)
 
-One of the ndctl:cxl tests fails (other tests ran ok):
-
-# meson test cxl-region-sysfs.sh
-ninja: Entering directory `/root/ndctl/build'
-[1/55] Generating version.h with a custom command
-[  706.564783][ T2080] calling  cxl_port_init+0x0/0xfe0 [cxl_port] @ 2080
-[  706.566861][ T2080] initcall cxl_port_init+0x0/0xfe0 [cxl_port] returned 0 after 1735 usecs
-[  706.586457][ T2080] calling  cxl_acpi_init+0x0/0xfe0 [cxl_acpi] @ 2080
-[  706.625690][ T2080] probe of port1 returned 0 after 25381 usecs
-[  706.626634][ T2080]  pci0000:bf: host supports CXL
-[  706.653573][ T2080] probe of port2 returned 0 after 25631 usecs
-[  706.655164][ T2080]  pci0000:35: host supports CXL
-[  706.662409][ T2080] probe of ACPI0017:00 returned 0 after 74464 usecs
-[  706.663150][ T2080] initcall cxl_acpi_init+0x0/0xfe0 [cxl_acpi] returned 0 after 76306 usecs
-[  706.690482][ T2080] calling  cxl_pmem_init+0x0/0xfd0 [cxl_pmem] @ 2080
-[  706.695324][ T2080] probe of ndbus0 returned 0 after 1496 usecs
-[  706.699217][ T2080] probe of nvdimm-bridge0 returned 0 after 6705 usecs
-[  706.702372][ T2080] initcall cxl_pmem_init+0x0/0xfd0 [cxl_pmem] returned 0 after 11576 usecs
-[  706.717668][ T2080] calling  cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] @ 2080
-[  706.758561][ T2080] probe of port3 returned 0 after 34188 usecs
-[  706.767080][ T2080] cxl_nvdimm pmem11: GPF: could not set dirty shutdown state
-[  706.779392][ T2080] probe of nmem0 returned 0 after 1083 usecs
-[  706.782181][ T2080] probe of pmem11 returned 0 after 15516 usecs
-[  706.826941][ T2080] probe of endpoint4 returned 0 after 42630 usecs
-[  706.827987][ T2080] probe of mem11 returned 0 after 108475 usecs
-[  706.878052][ T2080] probe of port5 returned 0 after 41354 usecs
-[  706.938260][ T2080] probe of endpoint6 returned 0 after 46831 usecs
-[  706.939223][ T2080] probe of mem12 returned 0 after 105104 usecs
-[  706.994611][ T2080] probe of endpoint7 returned 0 after 49337 usecs
-[  706.995790][ T2080] probe of mem13 returned 0 after 53632 usecs
-[  707.004334][ T2080] cxl_nvdimm pmem14: GPF: could not set dirty shutdown state
-[  707.017782][ T2080] probe of nmem1 returned 0 after 1115 usecs
-[  707.019324][ T2080] probe of pmem14 returned 0 after 14920 usecs
-[  707.072148][ T2080] probe of endpoint8 returned 0 after 50887 usecs
-[  707.073367][ T2080] probe of mem14 returned 0 after 71279 usecs
-[  707.079062][ T2080] initcall cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] returned 0 after 361073 usecs
-[  707.111533][ T2080] calling  cxl_test_init+0x0/0xc88 [cxl_test] @ 2080
-[  708.001403][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-[  708.002032][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-[  708.010988][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-[  708.011963][ T2080] platform cxl_host_bridge.3: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-[  708.034604][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-[  708.056775][ T2080] probe of port10 returned 0 after 20555 usecs
-[  708.057814][ T2080] platform cxl_host_bridge.0: host supports CXL
-[  708.062226][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-[  708.081857][ T2080] probe of port11 returned 0 after 18696 usecs
-[  708.085821][ T2080] platform cxl_host_bridge.1: host supports CXL
-[  708.086496][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
-[  708.538268][ T2080] probe of port12 returned 0 after 450064 usecs
-[  708.563248][ T2080] platform cxl_host_bridge.2: host supports CXL
-[  708.563875][ T2080] platform cxl_host_bridge.3: host supports CXL (restricted)
-[  708.803640][ T2080] probe of ndbus1 returned 0 after 87373 usecs
-[  708.817241][ T2080] probe of nvdimm-bridge1 returned 0 after 182992 usecs
-[  708.839172][ T2080] probe of cxl_acpi.0 returned 0 after 843615 usecs
-[  709.026867][  T503] cxl_mock_mem cxl_mem.0: CXL MCE unsupported
-[  709.240435][  T502] cxl_mock_mem cxl_mem.1: CXL MCE unsupported
-[  709.263055][  T499] cxl_mock_mem cxl_mem.2: CXL MCE unsupported
-[  709.317257][  T503] probe of port13 returned 0 after 57147 usecs
-[  709.442524][  T498] cxl_mock_mem cxl_mem.3: CXL MCE unsupported
-[  709.495789][  T499] probe of port15 returned 0 after 57022 usecs
-[  709.538513][ T1514] cxl_mock_mem cxl_mem.5: CXL MCE unsupported
-[  709.553021][  T503] probe of nmem3 returned 0 after 12329 usecs
-[  709.555876][  T503] probe of pmem0 returned 0 after 54954 usecs
-[  709.567823][  T499] probe of nmem2 returned 0 after 27577 usecs
-[  709.569359][  T499] probe of pmem2 returned 0 after 64505 usecs
-[  709.603845][  T497] cxl_mock_mem cxl_mem.4: CXL MCE unsupported
-[  709.626487][   T12] cxl_mock_mem cxl_mem.6: CXL MCE unsupported
-[  709.639194][  T502] probe of port14 returned 0 after 255539 usecs
-[  709.662671][  T503] probe of region2 returned 6 after 421 usecs
-[  709.664855][  T503] cxl_mock_mem cxl_mem.0: Extended linear cache calculation failed rc:-2
-[  709.694975][  T503] probe of endpoint16 returned 0 after 100427 usecs
-[  709.698678][  T503] probe of mem0 returned 0 after 516964 usecs
-[  709.752821][   T49] cxl_mock_mem cxl_mem.7: CXL MCE unsupported
-[  709.782050][  T499] probe of endpoint17 returned 0 after 102692 usecs
-[  709.814422][  T499] probe of mem2 returned 0 after 539843 usecs
-[  709.859496][  T497] probe of nmem4 returned 0 after 74368 usecs
-[  709.860064][  T497] probe of pmem5 returned 0 after 120134 usecs
-[  709.862431][  T499] probe of cxl_mem.2 returned 0 after 686512 usecs
-[  709.863290][  T503] probe of cxl_mem.0 returned 0 after 892734 usecs
-[  709.870924][   T30] cxl_mock_mem cxl_mem.9: CXL MCE unsupported
-[  709.876631][ T2080] initcall cxl_test_init+0x0/0xc88 [cxl_test] returned 0 after 2764528 usecs
-[  709.886776][  T498] probe of port18 returned 0 after 168122 usecs
-[  709.900934][  T500] cxl_mock_mem cxl_mem.8: CXL MCE unsupported
-[  709.946498][ T1514] probe of nmem5 returned 0 after 9462 usecs
-[  709.947381][ T1514] probe of pmem4 returned 0 after 14445 usecs
-[  709.970022][   T12] probe of nmem6 returned 0 after 32603 usecs
-[  709.978337][  T498] probe of nmem7 returned 0 after 35875 usecs
-[  709.986071][  T498] probe of pmem3 returned 0 after 46583 usecs
-[  710.010717][   T12] probe of pmem6 returned 0 after 75369 usecs
-[  710.014337][  T501] cxl_mock_mem cxl_rcd.10: CXL MCE unsupported
-[  710.040337][  T502] probe of nmem8 returned 0 after 29862 usecs
-[  710.059653][  T502] probe of pmem1 returned 0 after 88935 usecs
-[  710.079573][   T12] probe of endpoint23 returned 0 after 49198 usecs
-[  710.097280][   T30] probe of port21 returned 0 after 120461 usecs
-[  710.097393][   T49] probe of nmem9 returned 0 after 26437 usecs
-[  710.101820][   T49] probe of pmem7 returned 0 after 36944 usecs
-[  710.106202][   T12] probe of mem6 returned 0 after 452293 usecs
-[  710.130816][   T12] probe of cxl_mem.6 returned 0 after 669975 usecs
-[  710.133959][  T500] probe of nmem10 returned 0 after 12351 usecs
-[  710.170179][  T500] probe of pmem9 returned 0 after 50316 usecs
-[  710.183178][  T498] probe of endpoint22 returned 0 after 160579 usecs
-[  710.208790][  T498] probe of mem3 returned 0 after 760551 usecs
-[  710.212463][  T501] probe of endpoint24 returned 0 after 149792 usecs
-[  710.236975][  T497] probe of dax2.0 returned 0 after 118646 usecs
-[  710.240952][  T497] probe of dax_region2 returned 0 after 166940 usecs
-[  710.242545][  T498] probe of cxl_mem.3 returned 0 after 917362 usecs
-[  710.256278][   T30] probe of nmem11 returned 0 after 45572 usecs
-[  710.257079][   T30] probe of pmem8 returned 0 after 105691 usecs
-[  710.259332][  T501] probe of mem10 returned 0 after 218194 usecs
-[  710.265545][  T497] probe of region2 returned 0 after 225563 usecs
-[  710.269232][ T1514] probe of endpoint20 returned 0 after 320269 usecs
-[  710.282299][  T497] probe of endpoint19 returned 0 after 421116 usecs
-[  710.283234][  T497] probe of mem5 returned 0 after 642268 usecs
-[  710.304734][ T1514] probe of mem4 returned 0 after 762768 usecs
-[  710.322940][   T49] probe of endpoint26 returned 0 after 117975 usecs
-[  710.324643][   T49] probe of mem7 returned 0 after 558032 usecs
-[  710.336434][  T501] probe of cxl_rcd.10 returned 0 after 414904 usecs
-[  710.339624][  T497] probe of cxl_mem.4 returned 0 after 957535 usecs
-[  710.400496][ T1514] probe of cxl_mem.5 returned 0 after 996364 usecs
-[  710.450320][   T49] probe of cxl_mem.7 returned 0 after 842769 usecs
-[  710.648851][  T500] probe of endpoint25 returned 0 after 477479 usecs
-[  710.659334][  T500] probe of mem9 returned 0 after 690185 usecs
-[  710.706030][  T500] probe of cxl_mem.8 returned 0 after 917194 usecs
-[  711.162896][   T30] probe of endpoint28 returned 0 after 493899 usecs
-[  711.227336][   T30] probe of mem8 returned 0 after 1278462 usecs
-[  711.325568][  T502] probe of endpoint27 returned 0 after 929403 usecs
-[  711.356687][  T502] probe of mem1 returned 0 after 2101415 usecs
-[  711.531055][   T30] probe of cxl_mem.9 returned 0 after 1707787 usecs
-[  711.554073][  T502] probe of cxl_mem.1 returned 0 after 2425696 usecs
-[  724.421245][ T2077] probe of region5 returned 6 after 262 usecs
-1/1 ndctl:cxl / cxl-region-sysfs.sh        FAIL            18.22s   exit status 1
->>> TEST_PATH=/root/ndctl/build/test ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 LD_LIBRARY_PATH=/root/ndctl/build/daxctl/lib:/root/ndctl/build/cxl/lib:/root/ndctl/build/ndctl/lib DAXCTL=/root/ndctl/build/daxctl/daxctl DATA_PATH=/root/ndctl/test NDCTL=/root/ndctl/build/ndctl/ndctl MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=123 /bin/bash /root/ndctl/test/cxl-region-sysfs.sh
-
-The kernel (the cxl_test kernel module) is built off of cxl/next which
-has Jonathan's fix to the cxl_test seen on arm64.
-Could the experts take a look at this issue?
-
-Thanks,
-Itaru.
+It is a nice work indeed. I spent substantial time to work on QEMU but 
+the Sphinx problem mentioned later was the only problem I encountered.
 
 > 
-> Jonathan Cameron (4):
->   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
->   hw/cxl: Make the CXL fixed memory windows devices.
->   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
->     pxb-cxl
->   qtest/cxl: Add aarch64 virt test for CXL
+> (Notably: Meson is pure python and has no dependencies, so it is 
+> possible to vendor it for offline builds. Tools like Sphinx, however, 
+> have many dependencies and are not so easily vendored. Thus, we have 
+> created a tenuous arrangement where we are allowed to use versions of 
+> Meson that otherwise would break our build platform guarantee.)
 > 
->  include/hw/arm/virt.h     |   4 +
->  include/hw/cxl/cxl.h      |   5 +-
->  include/hw/cxl/cxl_host.h |   5 +-
->  hw/acpi/cxl.c             |  76 +++++++++--------
->  hw/arm/virt-acpi-build.c  |  34 ++++++++
->  hw/arm/virt.c             |  29 +++++++
->  hw/cxl/cxl-host-stubs.c   |   7 +-
->  hw/cxl/cxl-host.c         | 170 +++++++++++++++++++++++++++++++-------
->  hw/i386/pc.c              |  50 +++++------
->  tests/qtest/cxl-test.c    |  59 ++++++++++---
->  tests/qtest/meson.build   |   1 +
->  11 files changed, 330 insertions(+), 110 deletions(-)
+> Lately, we've had some issues with the wide range of Sphinx versions we 
+> support presenting various cross-platform difficulties. In particular, 
+> Akihiko Odaki has sent patches to bump our Sphinx version to at least 
+> 6.2.1, because platforms with Python 3.13.1 can no longer run Sphinx 3.x 
+> at all, so having that be our "default install version" causes issues on 
+> newer platforms.
 > 
-> -- 
-> 2.48.1
+> However, if we take as iron-clad our commitment to the build platform 
+> promise -- *and* guarantee offline/tarball builds as well -- then Debian 
+> 12 (as an example) only offers Sphinx 5.3.0 and not newer unless we 
+> allow internet access to fetch Sphinx 6.2.1. This is not a problem for 
+> developer workstations at all, but I am unclear on what problems this 
+> may cause for tarball releases and downstream offline/isolated/ 
+> reproducible builds, if any.
 > 
+> In this case, we can (probably) "fix" the issue by continuing to allow 
+> older Sphinx while preferring a newer Sphinx version when it is missing, 
+> but then we lose the ability to make code cleanups and drop a lot of 
+> back-compat crud. If memory serves, there were other issues recently 
+> where older versions of Sphinx behaved differently from newer versions, 
+> causing intermittent failures that were hard to track down.
+> 
+> What I'd like to know is: what precisely are our options in this 
+> scenario? Do we consider it acceptable for some platforms to be unable 
+> to build docs offline? How highly do we value the ability to locally 
+> build docs for any given release?
+> 
+> Before I throw my weight behind any given option, I just want to know 
+> what we consider our non-negotiable obligations to be.
+> 
+> Thanks,
+> --js
+> 
+
+Thank you for detailed explanation. I see a few possible options in this 
+situation.
+
+Pretending as a lawyer interpreting docs/about/build-platforms.rst as a 
+law, I think it is allowed to require the Internet access. It says:
+
+ > For the purposes of identifying supported software versions available
+ > on Linux, the project will look at CentOS, Debian, Fedora, openSUSE,
+ > RHEL, SLES and Ubuntu LTS. Other distros will be assumed to ship
+ > similar software versions.
+ >
+ > For FreeBSD and OpenBSD, decisions will be made based on the contents
+ > of the respective ports repository, while NetBSD will use the pkgsrc
+ > repository.
+ >
+ > For macOS, `Homebrew`_ will be used, although `MacPorts`_ is expected
+ > to carry similar versions.
+ >
+ > Some build dependencies may follow less conservative rules:
+
+ > Python build dependencies
+ >   Some of QEMU's build dependencies are written in Python.  Usually
+ >   these are only packaged by distributions for the default Python
+ >   runtime.
+ >   If QEMU bumps its minimum Python version and a non-default runtime
+ >   is required, it may be necessary to fetch python modules from the
+ >   Python Package Index (PyPI) via ``pip``, in order to build QEMU.
+
+So it is allowed to require a non-default runtime that is available on 
+PyPI but not on Debian.
+
+But it is also allowed to bundle a python module or to keep its version 
+requirement low to help users just as we do for Meson, of course.
+
+Another possible option is to provide a mechanism to download the 
+required Python packages; users need the Internet to to prepare the 
+build platform (e.g., Debian) and QEMU source code anyway, so it makes 
+sense to require downloading the Python packages at the same time for 
+the future offline usage.
+
+"pip download" is probably for such a use case, and we can make sure 
+that nobody get hurt by the Sphinx change or other Python dependency 
+changes by wiring up it into python/scripts/mkvenv.py.
+
+In summary, there are the following viable options:
+(1) Don't bump the Sphinx version.
+(2) Require the Internet access when running ./configure --enable-docs.
+(3) Bundle Sphinx.
+(4) Let users "pip download".
+
+Skipping into the conclusion, I'm for (2). The other options have their 
+own disadvantages:
+
+(1) may cause intermittent failures with old Sphinx versions, which is 
+too bad.
+(3) is just difficult, according on your description.
+(4) is nice, but requires more time and I don't think it's worthwhile to 
+take the risk of old Sphinx versions until it is implemented.
+
+In contrast, it seems (2) has the minimum risk and acceptable level of 
+annoyance. The documentation is for humans, and any human using QEMU 
+should have one computer with the Internet access at least. Perhaps some 
+users will be forced to change the build flag to stop building the 
+documentation on an offline computer and to prepare a build environment 
+on an online computer, but it's acceptable I guess.
+
+Regards,
+Akihiko Odaki
 
