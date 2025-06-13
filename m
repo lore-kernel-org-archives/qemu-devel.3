@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB742C71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 20:40:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3D76C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 20:40:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQB8y-0002By-3Z; Fri, 13 Jun 2025 16:36:56 -0400
+	id 1uQB9I-0002GF-JK; Fri, 13 Jun 2025 16:37:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQB8w-0002BU-LE
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:36:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQB9F-0002Ex-IU
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:37:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQB8v-00050L-9R
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:36:54 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQB9E-00054L-0i
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:37:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749847012;
+ s=mimecast20190719; t=1749847031;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=HvAW79klHfY8YcQpj4tTEG4nFxXcNdp3u4MynL6q3c8=;
- b=J75h0b9UoYcMTz4hPdCuZjsAhNGB65bMussmuJWRm+LqGn3ZvxuU43XofILchFixRDvE4Z
- z1xjVbpqNsFXUoEoaRg265fNHhk628lCVGRwxzM32jFfylGOGUb048xHzJ+AXUPtotnAJp
- Svlu0dAWL7UAqmQltp1PEk1Z7bQNCiA=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=gW3szA3kiSpzIH48DAHEYfWp52FKnfrWsl4liMttKl0=;
+ b=UG1Tji0yQc6CVlF9m7jXOxbEDkxvazcuhuNIDoY4w4X9WhUUv1lqDwZBKcVzbAXufCMADj
+ dSuEiIBn0bgYQehzbay9QXnaryp0w4YbEeglbeziA7rgD/SHQ9pv4mXa3n/kqyyFT2ldC9
+ xrpo9P9J3ZPnTVeAbWE8CM0eOs3w83I=
+Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-427-HjTtNKplOuGu3RGN4a1O1w-1; Fri,
- 13 Jun 2025 16:36:48 -0400
-X-MC-Unique: HjTtNKplOuGu3RGN4a1O1w-1
-X-Mimecast-MFC-AGG-ID: HjTtNKplOuGu3RGN4a1O1w_1749847006
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-632-M1UFn_PFO-advdcdR4untw-1; Fri,
+ 13 Jun 2025 16:37:07 -0400
+X-MC-Unique: M1UFn_PFO-advdcdR4untw-1
+X-Mimecast-MFC-AGG-ID: M1UFn_PFO-advdcdR4untw_1749847026
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 136EF195608C; Fri, 13 Jun 2025 20:36:46 +0000 (UTC)
+ by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0935E19560B7; Fri, 13 Jun 2025 20:37:06 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.203])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1475530044D5; Fri, 13 Jun 2025 20:36:37 +0000 (UTC)
+ id 678DA30044D1; Fri, 13 Jun 2025 20:36:59 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -63,15 +63,15 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 02/18] qapi: add cross-references to authz.json
-Date: Fri, 13 Jun 2025 16:36:04 -0400
-Message-ID: <20250613203620.1283814-3-jsnow@redhat.com>
+Subject: [PATCH 05/18] qapi: add cross-references to dump.json
+Date: Fri, 13 Jun 2025 16:36:07 -0400
+Message-ID: <20250613203620.1283814-6-jsnow@redhat.com>
 In-Reply-To: <20250613203620.1283814-1-jsnow@redhat.com>
 References: <20250613203620.1283814-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -98,22 +98,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/authz.json | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ qapi/dump.json | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/qapi/authz.json b/qapi/authz.json
-index 7fc6e3032ea..cbd9399c461 100644
---- a/qapi/authz.json
-+++ b/qapi/authz.json
-@@ -75,7 +75,7 @@
- # Properties for authz-listfile objects.
+diff --git a/qapi/dump.json b/qapi/dump.json
+index 3a9b67efb1b..c311ccb4d2d 100644
+--- a/qapi/dump.json
++++ b/qapi/dump.json
+@@ -110,7 +110,7 @@
  #
- # @filename: File name to load the configuration from.  The file must
--#     contain valid JSON for AuthZListProperties.
-+#     contain valid JSON for `AuthZListProperties`.
+ # Describe the status of a long-running background guest memory dump.
  #
- # @refresh: If true, inotify is used to monitor the file,
- #     automatically reloading changes.  If an error occurs during
+-# @none: no dump-guest-memory has started yet.
++# @none: no `dump-guest-memory` has started yet.
+ #
+ # @active: there is one dump running in background.
+ #
+@@ -128,7 +128,7 @@
+ #
+ # The result format for 'query-dump'.
+ #
+-# @status: enum of @DumpStatus, which shows current dump status
++# @status: enum of `DumpStatus`, which shows current dump status
+ #
+ # @completed: bytes written in latest dump (uncompressed)
+ #
+@@ -184,7 +184,7 @@
+ ##
+ # @DumpGuestMemoryCapability:
+ #
+-# @formats: the available formats for dump-guest-memory
++# @formats: the available formats for `dump-guest-memory`
+ #
+ # Since: 2.0
+ ##
+@@ -195,9 +195,9 @@
+ ##
+ # @query-dump-guest-memory-capability:
+ #
+-# Return the available formats for dump-guest-memory
++# Return the available formats for `dump-guest-memory`
+ #
+-# Returns: An object listing available formats for dump-guest-memory
++# Returns: An object listing available formats for `dump-guest-memory`
+ #
+ # Since: 2.0
+ #
 -- 
 2.48.1
 
