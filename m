@@ -4,144 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63715C7114A
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 18:20:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3197C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 19:38:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ8zr-0005hD-M5; Fri, 13 Jun 2025 14:19:23 -0400
+	id 1uQADH-0005Bb-N1; Fri, 13 Jun 2025 15:37:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tan@siewert.io>)
- id 1uQ8zo-0005gZ-0W; Fri, 13 Jun 2025 14:19:20 -0400
-Received: from mail-germanynorthazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c20b::1] helo=BEUP281CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQADB-00059W-1t
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 15:37:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tan@siewert.io>)
- id 1uQ8zm-0001kU-DA; Fri, 13 Jun 2025 14:19:19 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DCt7qQnerWaWNfR/jfINqjt/LZeeH0EnQCdhAbsb+HBTwLWXv7HTxYaQM9MASRaPAgDy7AXqe7w60c5DeeqSThTWxjK/J+gtzvukOhmZYhSJB/exqdBIHln0UaxnNdG8KU81SenKuYaWLR+IyOY7+HJkyqkzMl0438hiHREM2fllRCXkgTudMzIZkC4Mx1t1NcmJqkPl/B534HrsIkraQVrQmwzypzVxJWc4eMjZQKqMQNCwkcGjQRsxrwXDI0xnW9k7OszsvSHjLPsjYEfp5icRyss3qaou3At578FOhyUxl4r0xhfKqYdzoh4JmFOSnd2sVt1+laTQK3hWIG9tfA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=f3f+mn4A94PYh8AF5TKA1j3K8Ev1N3QYOmavMZACKCM=;
- b=KriRS3A+TPtswCAWaktrdLiX5yb4pMcs3dV50nux/Zl4jIludsHavpxm1s1YmmIFA43lmUxWHkiZS8ciMR1ZKK9/A/x24ca+QGs3yyR3wD3tsp9xSHo3mMPbNulHyEfdbtSbAIYcvS0GZ5fq/EoKiNNTzECbKLYwuBfCRevtmZOpsydRoin//xnDu3HjPwYNUAMj1IFFjqeeZMq0Ta+wHTF6+bIPtATGkNnQTR12TxEETVbSMJh6Hn+49UkpSvlbhBXb5BIde9WKcro6fuXnEsosyl2eXddyyor6yWdWg5zBa06Jwawx7lb518kQp4QdG36tDMCK1W9/wEfXRn9j8w==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=siewert.io; dmarc=pass action=none header.from=siewert.io;
- dkim=pass header.d=siewert.io; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=siewert.io;
-Received: from FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM (2603:10a6:d18:2::182)
- by BEZP281MB2865.DEUP281.PROD.OUTLOOK.COM (2603:10a6:b10:70::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.26; Fri, 13 Jun
- 2025 18:19:10 +0000
-Received: from FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6ec7:ece3:1787:5e48]) by FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
- ([fe80::6ec7:ece3:1787:5e48%6]) with mapi id 15.20.8835.019; Fri, 13 Jun 2025
- 18:19:09 +0000
-From: Tan Siewert <tan@siewert.io>
-To: qemu-devel@nongnu.org
-Cc: Tan Siewert <tan@siewert.io>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, qemu-arm@nongnu.org
-Subject: [PATCH v3] hw/misc/aspeed_scu: Handle AST2600 protection key
- registers correctly
-Date: Fri, 13 Jun 2025 20:19:06 +0200
-Message-ID: <20250613181906.50078-1-tan@siewert.io>
-X-Mailer: git-send-email 2.49.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-ClientProxiedBy: BE1P281CA0385.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:b10:80::21) To FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
- (2603:10a6:d18:2::182)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQAD6-0005Ml-Tf
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 15:37:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749843426;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=v6KgViuFjR1WJCP8hMyuFp9zVb8OEl6/pzjbqiT4YPc=;
+ b=QiTpN1Zvs6876UUsf606lt5lZSsk0NLuDXiFMzEiRJJ6CFmqX0Gl1v5buLCmSF74FeuPc5
+ qmgispWU6odiu+oE2uuAs1Iclzd3EqEBlwORYGHOR1EVl22MHYm9+qnHdVWuR0PHdBYmbb
+ 4nEWPCd3bJUxAH9AFugz7B6ISnCXcXM=
+Received: from mail-pj1-f72.google.com (mail-pj1-f72.google.com
+ [209.85.216.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-639-1GTkZ5M_PA-tLMhq9NoJTQ-1; Fri, 13 Jun 2025 15:37:05 -0400
+X-MC-Unique: 1GTkZ5M_PA-tLMhq9NoJTQ-1
+X-Mimecast-MFC-AGG-ID: 1GTkZ5M_PA-tLMhq9NoJTQ_1749843424
+Received: by mail-pj1-f72.google.com with SMTP id
+ 98e67ed59e1d1-313d6cc50ddso2036845a91.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 12:37:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749843424; x=1750448224;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=v6KgViuFjR1WJCP8hMyuFp9zVb8OEl6/pzjbqiT4YPc=;
+ b=TMAUaGzpgMr16fzjTD6Z17EQWU+meNxroImbIxoKzHiPBLMeHgs1aVKxdF+7X1/gio
+ K6+6UBufttjVU4vU7BOclD7i/5aq99vZi1hmr6Qes0fGt0rzdHdSzuKlCtwXZ/AtMzq9
+ z4TijedayNCww4G5VPrLNhicGOxeC5pp/J2QgLs4TPjdGbZahF/ecvJUGYGrUIoB2aq9
+ ob3I1YJhokcpVCeg174tbFGMC+7IUvm7g5oYEV3lZB3G0lB0E6pMolwdS4iqvvWxf97D
+ TcuuawI/xzvqK0XHs8hN0xe0YVWwD7X2RecUrSd3Fj6ePeUDVrL+fvRQ2eJzLr3W3ZvS
+ u4Eg==
+X-Gm-Message-State: AOJu0YzWrRHJmduwXCdmB/3/I7+w8EniZITPXtG9p//DmAueljyoR/FY
+ H73qnOL3AhM9VvYIu7MWVIZjLicg3h2SAM/V7PCkTAtVU3EA8VSTTf0VYuLEq8DggEu+QK6FLA2
+ XsMm7B6ZmSx1StZvchTZdyuN0NylOke5DZpMc6THFJR/dDc+OCIgVFE13hFphAECYoYqsQjXE/g
+ jIoOK9KH0M77JOj8Zr9psVjRJvj8xwstQ=
+X-Gm-Gg: ASbGncuDU8r1jf3OrDO9ldIrthtYBCGLetkqm5YjgVLFfkOnBo8L4zstJY8yWWH0rqc
+ dDvMAeVHQkegzFPH4SV6eVQCVomKhTegj1/JG+0apXwF9+5rhy+Ta+ig41SY3QHLgAxTKQx7HbM
+ YeXtUkqrRjeoFZgE2M8ER5KZMXrR0ILjbrc9U=
+X-Received: by 2002:a17:90b:38d1:b0:313:d79e:1f48 with SMTP id
+ 98e67ed59e1d1-313f1cd5fd7mr1412220a91.16.1749843424235; 
+ Fri, 13 Jun 2025 12:37:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFhf1HqKLp320naz0KUatZcE9BnzmY7beSDDUcZNuUCQOKgLCaWfg8YHgA6yJFkz4svRxh8Tde5oKAfHRznHds=
+X-Received: by 2002:a17:90b:38d1:b0:313:d79e:1f48 with SMTP id
+ 98e67ed59e1d1-313f1cd5fd7mr1412109a91.16.1749843423695; Fri, 13 Jun 2025
+ 12:37:03 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: FR3PPFB3D0CF1D2:EE_|BEZP281MB2865:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6f4a0e3a-db51-48a7-e32b-08ddaaa6ca50
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|366016|1800799024|52116014|38350700014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?E6Sf94dHTn/CiRtv/WFNyvZ/eeUj64WLqxVIIY7jbagCUi+wT05ozcbI5Oiv?=
- =?us-ascii?Q?dh2tangVhKe4fVrOjfzcNPt7fuxCEYmuoNJHUXJvbT57zVIiaqOy5pYPt+f+?=
- =?us-ascii?Q?ubl5O9LZYTnDcFOcDCo9fTg2njC/rszqM7JDnKPMBT2kZJEk/FZenwpI9CFm?=
- =?us-ascii?Q?VCcZe8BVrbg00TgXLjaMazcb95UpZf9Qk6D2CXIJKX1r7TXCMaRxGBN0UPZ5?=
- =?us-ascii?Q?9H6tG5PeB36wdCfkyU4Uq7yleXhUhfT9FcExdKSfNqQdGXyw7lDqsTcKjUV6?=
- =?us-ascii?Q?MAFNOZAjLjLtb1ztZSiTrKZnpb+6CUnNlYtsJyVFSoO5xghlhSoQol6sXe75?=
- =?us-ascii?Q?Ntveob+oN/zzWZUNupHZFy3iExQWAkS06WQ6SP4ksDArGyo8u4mDY+dFY2LG?=
- =?us-ascii?Q?wVdd1AemAhhvKNok0Z9ofpDkpqpw9KVQxfzAaQ/JH5nGzadwO4iPRrobCvP0?=
- =?us-ascii?Q?JtJHpv5fzSA1oJyKPAVCaZbaP6yG8GuU76Wks6SBDh9Fmx6ZrmYQVnFrOo29?=
- =?us-ascii?Q?4QrJSs4f33trB01tewHCzxZtImEqjXhZPy83hmoHY8ef/Q5D91QDDsy/WH1E?=
- =?us-ascii?Q?/dAb2EOG4H2HpXCpKqcF4Pi0fqtXIcz/Lms4/9OP1oiD3vX46UMtQY2w+gpS?=
- =?us-ascii?Q?t1vpYW6opKpnfgrfmbO1cw4QPCW56bKZd7EtB8mekPRRv9GsF/FIdsV9snwG?=
- =?us-ascii?Q?Ui6f1Yr277TQP4KroE1YIaQ1ezxIgouDSJlRbwx5gAc8zcwYAYy3TOASveMB?=
- =?us-ascii?Q?BvwYI6XGN3wnd+ZgS9Oo1xauNCdnsT78DDj9aY1cJV0tjM5YsJwEXWq5taeL?=
- =?us-ascii?Q?4MXw1VT8lNdrBY2VENl4PdYaStTVtcsi68xBAeYkBDAFySfX2rVpnNYY2tdg?=
- =?us-ascii?Q?My8vq/8BKfxus24TBj/F4EMqU9ukuIDKGkgj2Ug53W74OCU3tyke+v9uJM3h?=
- =?us-ascii?Q?r3taUgRHTkR6zd8UeXtaXxeLUXa2SjvDp2kVEcB3ddFkgNWbGP4V58smKEGd?=
- =?us-ascii?Q?EScdDYxxKAWgVSng6VhGjfuW1heVaCmXn0MlkILm0INlF0dDtwyGWpYVpjB8?=
- =?us-ascii?Q?yuKHDVj20k22n73IgyVKzH8wKW0swbGbTkM1RW7ju1qA6bHNwjjcjFhafhE+?=
- =?us-ascii?Q?sBsHAeifCaLR95YFmaylqZkn4WDKa3GJycfsMjnA699n8Xi8u4qhLjGjUGyg?=
- =?us-ascii?Q?NCs4HUzTlexrp7IA+1rdVdNkGYmTP8DxSURyWr6oZETl9g0/8kA8/fapC7qp?=
- =?us-ascii?Q?wkoks4fsBOFXEdluk8sqsXqdi8MEcC6eG/j5561y/t+AJst98kwR4CDjvsDF?=
- =?us-ascii?Q?FgErm1dJBqiJKX89BlqTjyJCVwp8lzgxzkxd9+fGum0yxSnnpLv0bv3zbEGW?=
- =?us-ascii?Q?dOjW9bQyTB8pK4Q1LAXTezi7O+ecpV8hcWQzq8UQqaq78yqcPPM4x3uGWsG9?=
- =?us-ascii?Q?kc04K5Tp7mCnoIBMqS8v+b/TXZxMCKKyvFNZWf21++MJ3ALpU5vbdA=3D=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(366016)(1800799024)(52116014)(38350700014); DIR:OUT;
- SFP:1102; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?8Nt5JOwxu2V0simiTc84L7EDI9ZrZJWwQJStJDgELulXOjXQ59CXXvPz5aJX?=
- =?us-ascii?Q?E12NIk5DVP/TcZdPCNF3YqlAtglCnlxPmNxDV0DOFEDY4COo+jGK6NG1OaIB?=
- =?us-ascii?Q?OoaiRBsnxrTTT0xwcipLTyNhXnHteEcR8NH7Dec0LXFFJFsdgAH5Zjs4cIEa?=
- =?us-ascii?Q?Ci9abjDChhiLIqkyYzn/rzbf8rs2sepuHq7qKUmPSEsWEe57MnXZwD8CHohg?=
- =?us-ascii?Q?POnrBcksClA8qbDM7wJ3TvqpCx2AzSWvvRi4lKheazibRr3u7N8uUJ7804NA?=
- =?us-ascii?Q?9yQIPuzFSk9zYlEpPUP7kmyr3H61RL0gmnmOcQTnRPmWDtA36b6+Kd9VIX7c?=
- =?us-ascii?Q?vTt3pqeRj3IJ63joYU3cayy4JZrKzGTynG/5FlbKQaJDk28oY5wzKHAvzSel?=
- =?us-ascii?Q?LA44LrKWjG5gxH9lue9jmU4jxRftSkJeUD38jwkMGNUyos/xq5fijCrXo1W9?=
- =?us-ascii?Q?ic6ZCI6/1Oi2oJdkgxbRYHsZ0gB0oZxJoG2nvZCGWFPEvNj3CFrNn2GmXAPx?=
- =?us-ascii?Q?Lmr+/wupQRZ9k8qndeBwUN5sfgrfCAJfAgYkGxpm9lcEVmPbv5tCHe13HQir?=
- =?us-ascii?Q?MgL/ZiKBS/V7+TvJQktATUQZyX6Ky8MDsfuoMALTvkx3aA6M86UuDBVPGaY6?=
- =?us-ascii?Q?FhSEP6fEbgxmfcnCSwh6vVN8gjndWOMKRJGXQmM9mUEVXc7gq2FPubatXwNC?=
- =?us-ascii?Q?8UJn4l8B2ZRMtUBaKOFgbOJAKGTzVPrPXjj34nBiwn5Sya8QDh2Gtqptaxcx?=
- =?us-ascii?Q?aL4cdgDWH47QCDZt86MzzXmZEoYtLP96f3jsxowlCa/s77gbEXX6pc5V7rGM?=
- =?us-ascii?Q?s5ITJrSOCpfzH3mWC/Cw+anxRGAkwp0y8y7TffolEAk2mzzqwEsHMZoR91uM?=
- =?us-ascii?Q?io9y/XBNV+TcB1oFXQBX0SIA2vQkR9Y45IgPGGGTHJj52AJjgJ7NUQRomDeG?=
- =?us-ascii?Q?7AgT896oE2KaMtTPRR0iL+jGFCH7PEJFyqJMqLhLu37UeRc/VKCd6IWgnsnr?=
- =?us-ascii?Q?BWAu8EALwr/aocKq7cBLIcSjMErSCVVAV5GvpZqJr1UQVaTnfoJxTKHCNkRO?=
- =?us-ascii?Q?rxOqIsEHFRgBXypufzOq9VpJUf5sFUtyePOP7SkRQHwGiI67mjWIgY8Ok/oM?=
- =?us-ascii?Q?0jqYQEBdehn1HeBS6AOnCzGkwAxvbEc5CToQ/lUSgXgksUHjAHiLmMjcdFI8?=
- =?us-ascii?Q?enI8D42zyNUqzC2s8F2xGL2OgI/NJuHi2+xD8WTx8SvSwO/NVPSMvJ1+V1gx?=
- =?us-ascii?Q?jWngoc6DISBYyOJEuy//1nWrgKSNm+7b7U4ZwG58ZB/uZfIp+SFMpT8O/00I?=
- =?us-ascii?Q?551xUq7+pFD0ZV2LZhzEK/ZkQ+bIvBzTt4veD3SJHiSdIabF5W0c1Peutdkp?=
- =?us-ascii?Q?Wi2JftDMXKK3xVNSKReE9UvauygNT/USR9Ex6w0vSGFyhkkIBZIWwLxktMa1?=
- =?us-ascii?Q?1BxA5hIkURupTfQWfu+leZRNZml1y/9YJLydpSNoz1dDaIxgEDLsuCFy5nn3?=
- =?us-ascii?Q?Ja+U9pbORqFC2Bkati7nYLn/2EMPpmg4scx7vM2z0S3l/3DqAmuQouyYTgVF?=
- =?us-ascii?Q?ik4QnUlOrYVeg2uYYR+jfyTag0ZEhGgPOy+Q8LWH?=
-X-OriginatorOrg: siewert.io
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6f4a0e3a-db51-48a7-e32b-08ddaaa6ca50
-X-MS-Exchange-CrossTenant-AuthSource: FR3PPFB3D0CF1D2.DEUP281.PROD.OUTLOOK.COM
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2025 18:19:09.6112 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: e8b4abbe-444b-4835-b8fd-87ac97451a7e
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Gh2hv6xBs/vp6z46jnp54b6XpmhF2ujKhaBJ2aONBpfea7NLCFOWhhjzbc1IQced
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BEZP281MB2865
-Received-SPF: pass client-ip=2a01:111:f403:c20b::1;
- envelope-from=tan@siewert.io;
- helo=BEUP281CU002.outbound.protection.outlook.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250612205451.1177751-1-jsnow@redhat.com>
+ <20250612205451.1177751-2-jsnow@redhat.com>
+ <7e66e758-da47-47eb-9114-22f07e1ffdc9@redhat.com>
+In-Reply-To: <7e66e758-da47-47eb-9114-22f07e1ffdc9@redhat.com>
+From: John Snow <jsnow@redhat.com>
+Date: Fri, 13 Jun 2025 15:36:51 -0400
+X-Gm-Features: AX0GCFuiAeQBZnODkOUFiBBQ0SwoPYSj3-6O0mDgbYSey7x4h5zk9dtghUBJoLg
+Message-ID: <CAFn=p-aZz51W14-v4jd2J6wXqzO6ZKvo8L5ckhA=RGsWE9D1UA@mail.gmail.com>
+Subject: Re: [PATCH v2 01/12] python: convert packages to PEP517/pyproject.toml
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
+ Yi Liu <yi.l.liu@intel.com>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Andrew Jeffery <andrew@codeconstruct.com.au>, 
+ Fabiano Rosas <farosas@suse.de>, Alexander Bulekov <alxndr@bu.edu>,
+ Darren Kenny <darren.kenny@oracle.com>, 
+ Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
+ Ed Maste <emaste@freebsd.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, 
+ Tyrone Ting <kfting@nuvoton.com>, Eric Blake <eblake@redhat.com>,
+ Troy Lee <leetroy@gmail.com>, 
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Michael Roth <michael.roth@amd.com>, 
+ Laurent Vivier <laurent@vivier.eu>, Ani Sinha <anisinha@redhat.com>,
+ Weiwei Li <liwei1518@gmail.com>, 
+ Eric Farman <farman@linux.ibm.com>, Steven Lee <steven_lee@aspeedtech.com>, 
+ Brian Cain <brian.cain@oss.qualcomm.com>, Li-Wen Hsu <lwhsu@freebsd.org>, 
+ Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, qemu-block@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>, 
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu=2D=2DDrif?= <clement.mathieu--drif@eviden.com>, 
+ Maksim Davydov <davydov-max@yandex-team.ru>,
+ Niek Linnenbank <nieklinnenbank@gmail.com>, 
+ =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>, 
+ Christian Borntraeger <borntraeger@linux.ibm.com>, Paul Durrant <paul@xen.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Jagannathan Raman <jag.raman@oracle.com>, 
+ Igor Mitsyanko <i.mitsyanko@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>, 
+ Markus Armbruster <armbru@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Eric Auger <eric.auger@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ qemu-arm@nongnu.org, 
+ Hao Wu <wuhaotsh@google.com>, Mads Ynddal <mads@ynddal.dk>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-riscv@nongnu.org, 
+ Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Alessandro Di Federico <ale@rev.ng>, Antony Pavlov <antonynpavlov@gmail.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Hanna Reitz <hreitz@redhat.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
+ Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Daniel Henrique Barboza <danielhb413@gmail.com>, 
+ Qiuhao Li <Qiuhao.Li@outlook.com>, Hyman Huang <yong.huang@smartx.com>, 
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ qemu-rust@nongnu.org, Bandan Das <bsd@redhat.com>, 
+ Strahinja Jankovic <strahinja.p.jankovic@gmail.com>, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ kvm@vger.kernel.org, Fam Zheng <fam@euphon.net>, Jia Liu <proljc@gmail.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Alistair Francis <alistair@alistair23.me>, Kyle Evans <kevans@freebsd.org>, 
+ Alexandre Iooss <erdnaxe@crans.org>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Peter Xu <peterx@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ =?UTF-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>, 
+ qemu-ppc@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>, 
+ Beniamino Galvani <b.galvani@gmail.com>, David Hildenbrand <david@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>,
+ David Woodhouse <dwmw2@infradead.org>, 
+ Eduardo Habkost <eduardo@habkost.net>,
+ Ahmed Karaman <ahmedkhaledkaraman@gmail.com>, 
+ Huacai Chen <chenhuacai@kernel.org>, Harsh Prateek Bora <harshpb@linux.ibm.com>
+Content-Type: multipart/alternative; boundary="000000000000aeb5fa0637792b4e"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -157,72 +166,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AST2600 SCU has two protection key registers (0x00 and 0x10) that
-both need to be unlocked. (Un-)locking 0x00 modifies both protection key
-registers, while modifying 0x10 only modifies itself.
+--000000000000aeb5fa0637792b4e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This commit updates the SCU write logic to reject writes unless both
-protection key registers are unlocked, matching the behaviour of
-real hardware.
+On Fri, Jun 13, 2025 at 4:36=E2=80=AFAM Thomas Huth <thuth@redhat.com> wrot=
+e:
 
-Signed-off-by: Tan Siewert <tan@siewert.io>
----
-V3:
-  - Change logic to unlock both registers on 0x00 write, while writing
-    to 0x10 only modifies itself. [Jamin]
+> On 12/06/2025 22.54, John Snow wrote:
+> > Newer versions of setuptools increasingly expect that packages are
+> > defined using the pyproject.toml/PEP517 packaging layout format. With
+> > 3.9 as our minimum, I believe it's finally appropriate to make the shif=
+t
+> > away from the legacy packaging format.
+> >
+> > Update documentation and dependencies that change as a result of the
+> > different build/packaging/installation pathways.
+> >
+> > This change has the effect of fixing "make check-dev", which has been
+> > broken on newer versions of Fedora for a while, now.
+> >
+> > Signed-off-by: John Snow <jsnow@redhat.com>
+> > ---
+> >   python/README.rst        | 33 ++++++++++++++++-----------------
+> >   python/Makefile          | 18 +++++++++---------
+> >   python/pyproject.toml    | 10 ++++++++++
+> >   python/setup.py          | 40 ---------------------------------------=
+-
+> >   python/tests/minreqs.txt |  2 +-
+> >   5 files changed, 36 insertions(+), 67 deletions(-)
+> >   create mode 100644 python/pyproject.toml
+> >   delete mode 100755 python/setup.py
+>
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 
- hw/misc/aspeed_scu.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-index 4930e00fed..993cb800a8 100644
---- a/hw/misc/aspeed_scu.c
-+++ b/hw/misc/aspeed_scu.c
-@@ -91,6 +91,7 @@
- #define BMC_DEV_ID           TO_REG(0x1A4)
- 
- #define AST2600_PROT_KEY          TO_REG(0x00)
-+#define AST2600_PROT_KEY2         TO_REG(0x10)
- #define AST2600_SILICON_REV       TO_REG(0x04)
- #define AST2600_SILICON_REV2      TO_REG(0x14)
- #define AST2600_SYS_RST_CTRL      TO_REG(0x40)
-@@ -722,6 +723,7 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
-     int reg = TO_REG(offset);
-     /* Truncate here so bitwise operations below behave as expected */
-     uint32_t data = data64;
-+    bool unlocked = s->regs[AST2600_PROT_KEY] && s->regs[AST2600_PROT_KEY2];
- 
-     if (reg >= ASPEED_AST2600_SCU_NR_REGS) {
-         qemu_log_mask(LOG_GUEST_ERROR,
-@@ -730,15 +732,25 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
-         return;
-     }
- 
--    if (reg > PROT_KEY && !s->regs[PROT_KEY]) {
-+    if ((reg != AST2600_PROT_KEY || reg != AST2600_PROT_KEY2) && !unlocked) {
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: SCU is locked!\n", __func__);
-+        return;
-     }
- 
-     trace_aspeed_scu_write(offset, size, data);
- 
-     switch (reg) {
-     case AST2600_PROT_KEY:
--        s->regs[reg] = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
-+        /*
-+         * Writing a value to SCU000 will modify both protection
-+         * registers to each protection register individually.
-+         */
-+        u32 value = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
-+        s->regs[AST2600_PROT_KEY] = value;
-+        s->regs[AST2600_PROT_KEY2] = value;
-+        return;
-+    case AST2600_PROT_KEY2:
-+        s->regs[AST2600_PROT_KEY2] = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
-         return;
-     case AST2600_HW_STRAP1:
-     case AST2600_HW_STRAP2:
--- 
-2.49.0
+Thanks. If there are no objections, I might stage at least the first few
+reviewed patches here so I can get this stitched up sooner than later. The
+more disruptive parts I might wait a touch longer on.
+
+--000000000000aeb5fa0637792b4e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, Jun 13,=
+ 2025 at 4:36=E2=80=AFAM Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com=
+">thuth@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">On 12/06/2025 22.54, John Snow wrote:<br>
+&gt; Newer versions of setuptools increasingly expect that packages are<br>
+&gt; defined using the pyproject.toml/PEP517 packaging layout format. With<=
+br>
+&gt; 3.9 as our minimum, I believe it&#39;s finally appropriate to make the=
+ shift<br>
+&gt; away from the legacy packaging format.<br>
+&gt; <br>
+&gt; Update documentation and dependencies that change as a result of the<b=
+r>
+&gt; different build/packaging/installation pathways.<br>
+&gt; <br>
+&gt; This change has the effect of fixing &quot;make check-dev&quot;, which=
+ has been<br>
+&gt; broken on newer versions of Fedora for a while, now.<br>
+&gt; <br>
+&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
+t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
+&gt; ---<br>
+&gt;=C2=A0 =C2=A0python/README.rst=C2=A0 =C2=A0 =C2=A0 =C2=A0 | 33 ++++++++=
+++++++++-----------------<br>
+&gt;=C2=A0 =C2=A0python/Makefile=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 18 +++=
+++++++---------<br>
+&gt;=C2=A0 =C2=A0python/pyproject.toml=C2=A0 =C2=A0 | 10 ++++++++++<br>
+&gt;=C2=A0 =C2=A0python/setup.py=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 40 ---=
+-------------------------------------<br>
+&gt;=C2=A0 =C2=A0python/tests/minreqs.txt |=C2=A0 2 +-<br>
+&gt;=C2=A0 =C2=A05 files changed, 36 insertions(+), 67 deletions(-)<br>
+&gt;=C2=A0 =C2=A0create mode 100644 python/pyproject.toml<br>
+&gt;=C2=A0 =C2=A0delete mode 100755 python/setup.py<br>
+<br>
+Reviewed-by: Thomas Huth &lt;<a href=3D"mailto:thuth@redhat.com" target=3D"=
+_blank">thuth@redhat.com</a>&gt;</blockquote><div><br></div><div>Thanks. If=
+ there are no objections, I might stage at least the first few reviewed pat=
+ches here so I can get this stitched up sooner than later. The more disrupt=
+ive parts I might wait a touch longer on. <br></div></div></div>
+
+--000000000000aeb5fa0637792b4e--
 
 
