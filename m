@@ -4,70 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A05C61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 12:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9E7C61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 12:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ3PW-0004d7-PW; Fri, 13 Jun 2025 08:21:31 -0400
+	id 1uQ3Ys-0007iD-GU; Fri, 13 Jun 2025 08:31:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uQ3On-0004Dw-JM
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:20:58 -0400
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=dkim.livemail.co.uk)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uQ3Ok-00032E-LQ
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:20:45 -0400
-Received: from smtp.livemail.co.uk (unknown [10.44.132.82])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id 02B481801CF;
- Fri, 13 Jun 2025 13:20:39 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1749817239;
- bh=HaOLf/3L/pX9L1fL8qHujkwpHVoMzsJTcNFJXUSeug4=;
- h=Subject:From:To:Cc:Date:In-Reply-To:References:From;
- b=QvikJupy3BSFEjmfuURoz0Lj/SAabIEym06YtR76qDwOyJ6qdEX9LG3fl4hcTcsDE
- NRrVtKqFHZ8Jl1TNV530Jk9a18b54M2kLGq4j4tOoMdviu5AWbU7JGY3dZswhM7T6A
- ZALn1B1rgF8iR9duwL88qAuw7YN9avVchODQOcwU=
-Received: from [172.22.54.5] (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 80F15C02A8;
- Fri, 13 Jun 2025 13:20:34 +0100 (BST)
-Message-ID: <07f6c5d67b439acc49b96b0aefdafe602488585d.camel@randomman.co.uk>
-Subject: Re: [PATCH v7 15/16] i386/sev: Add implementation of CGS
- set_guest_policy()
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Berrange <berrange@redhat.com>, Stefano Garzarella
- <sgarzare@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, Michael
- Tsirkin <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>, Sergio Lopez
- <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>, Alistair Francis
- <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>, David Hildenbrand
- <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Tom Lendacky
- <thomas.lendacky@amd.com>, Michael Roth <michael.roth@amd.com>, Joerg
- Roedel <joro@8bytes.org>
-Date: Fri, 13 Jun 2025 13:20:34 +0100
-In-Reply-To: <18D52538-820A-44BE-82CB-FF960882A414@redhat.com>
-References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
- <ec4fb8e4.AUUAAGN5T_UAAAAAAAAAA9cBm3AAAYKJZwAAAAAAAC5ATwBnwULW@mailjet.com>
- <18D52538-820A-44BE-82CB-FF960882A414@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: base64
-User-Agent: Evolution 3.44.4-0ubuntu2 
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uQ3YO-0007hN-Uz
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:30:44 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uQ3YL-0004g0-1H
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:30:39 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id ED42E1F7EC;
+ Fri, 13 Jun 2025 12:30:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1749817828; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
+ b=ZlS96WZ8Qj/wuasbX+fjgHxSdFLiqTPuF/GD/nAbgv+zIN9BUAKu2kNpQMrN+wcGvmUX3m
+ oGfrrWTf4S1QoC5SIZUUu+rlBXL6vysREOhxOlagZxhTYyiwhIHJcIa+tXgB2W1GjM/WmS
+ s8dmalt7V/J6csAI8zAOINsZwtJQHw4=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1749817828;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
+ b=v7qn1c0u6hMn+916P+KfREvMrIY3S+OWpYH4OlsC0MyQ6mvo/6vB9bphpec22p309PeByF
+ wV1o8Taej6OKpZBg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1749817826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
+ b=0kugf2jrs35b3sjlnhDYEqccCl0qevIlZm6ZPPkrDAKIOVv8uTBvFMbrESqS3fcjWQWXO6
+ 03gGpGzez95FlfMP3/U4R+iO2JEWdOJBU+wx64jLR75oyKZ7h3JAQyxb2Q4/CSIqs3Olqa
+ kSciYwvpXrjPYz+whVHUKqcMqSa1z3w=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1749817826;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
+ b=pY13SM7MMtK56UBbjr7/LsLoshBxVu/T4O2+HXuC8ygxt2BGmueYoGRxrglxc5QnipmM8R
+ F87QoDjX2f8m5YAg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6D05813782;
+ Fri, 13 Jun 2025 12:30:26 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id ofSNC+IZTGg4cQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 13 Jun 2025 12:30:26 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
+ =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 10/21] migration: Use QAPI_CLONE_MEMBERS in
+ query_migrate_parameters
+In-Reply-To: <aEtGL1J4LpLJ8Gj9@x1.local>
+References: <20250603013810.4772-1-farosas@suse.de>
+ <20250603013810.4772-11-farosas@suse.de> <aEMJacJqDHLrdkgn@x1.local>
+ <87a56kx3xc.fsf@suse.de> <87ecvovfrt.fsf@suse.de>
+ <aEtGL1J4LpLJ8Gj9@x1.local>
+Date: Fri, 13 Jun 2025 09:30:23 -0300
+Message-ID: <87bjqrvn6o.fsf@suse.de>
 MIME-Version: 1.0
-Received-SPF: pass client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
+ TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ RCVD_TLS_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
+ FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,108 +119,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-T24gRnJpLCAyMDI1LTA2LTEzIGF0IDE3OjQxICswNTMwLCBBbmkgU2luaGEgd3JvdGU6Cj4gCj4g
-Cj4gPiBPbiAyNyBGZWIgMjAyNSwgYXQgNzo1OeKAr1BNLCBSb3kgSG9wa2lucyA8cm95LmhvcGtp
-bnNAcmFuZG9tbWFuLmNvLnVrPiB3cm90ZToKPiA+IAo+ID4gVGhlIG5ldyBjZ3Nfc2V0X2d1ZXN0
-X3BvbGljeSgpIGZ1bmN0aW9uIGlzIHByb3ZpZGVkIHRvIHJlY2VpdmUgdGhlIGd1ZXN0Cj4gPiBw
-b2xpY3kgZmxhZ3MsIFNOUCBJRCBibG9jayBhbmQgU05QIElEIGF1dGhlbnRpY2F0aW9uIGZyb20g
-Z3Vlc3QKPiA+IGNvbmZpZ3VyYXRpb24gc3VjaCBhcyBhbiBJR1ZNIGZpbGUgYW5kIGFwcGx5IGl0
-IHRvIHRoZSBwbGF0Zm9ybSBwcmlvciB0bwo+ID4gbGF1bmNoaW5nIHRoZSBndWVzdC4KPiA+IAo+
-ID4gVGhlIHBvbGljeSBpcyB1c2VkIHRvIHBvcHVsYXRlIHZhbHVlcyBmb3IgdGhlIGV4aXN0aW5n
-ICdwb2xpY3knLAo+ID4gJ2lkX2Jsb2NrJyBhbmQgJ2lkX2F1dGgnIHBhcmFtZXRlcnMuIFdoZW4g
-cHJvdmlkZWQsIHRoZSBndWVzdCBwb2xpY3kgaXMKPiA+IGFwcGxpZWQgYW5kIHRoZSBJRCBibG9j
-ayBjb25maWd1cmF0aW9uIGlzIHVzZWQgdG8gdmVyaWZ5IHRoZSBsYXVuY2gKPiA+IG1lYXN1cmVt
-ZW50IGFuZCBzaWduYXR1cmVzLiBUaGUgZ3Vlc3QgaXMgb25seSBzdWNjZXNzZnVsbHkgc3RhcnRl
-ZCBpZgo+ID4gdGhlIGV4cGVjdGVkIGxhdW5jaCBtZWFzdXJlbWVudHMgbWF0Y2ggdGhlIGFjdHVh
-bCBtZWFzdXJlbWVudHMgYW5kIHRoZQo+ID4gc2lnbmF0dXJlcyBhcmUgdmFsaWQuCj4gPiAKPiA+
-IFNpZ25lZC1vZmYtYnk6IFJveSBIb3BraW5zIDxyb3kuaG9wa2luc0ByYW5kb21tYW4uY28udWs+
-Cj4gPiBBY2tlZC1ieTogTWljaGFlbCBTLiBUc2lya2luIDxtc3RAcmVkaGF0LmNvbT4KPiA+IEFj
-a2VkLWJ5OiBTdGVmYW5vIEdhcnphcmVsbGEgPHNnYXJ6YXJlQHJlZGhhdC5jb20+Cj4gPiAtLS0K
-PiA+IHRhcmdldC9pMzg2L3Nldi5jIHwgODMgKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrKysKPiA+IHRhcmdldC9pMzg2L3Nldi5oIHwgMTIgKysrKysrKwo+ID4g
-MiBmaWxlcyBjaGFuZ2VkLCA5NSBpbnNlcnRpb25zKCspCj4gPiAKPiA+IGRpZmYgLS1naXQgYS90
-YXJnZXQvaTM4Ni9zZXYuYyBiL3RhcmdldC9pMzg2L3Nldi5jCj4gPiBpbmRleCAzMWIyOTY5NWJm
-Li5mYTliNGJjYWQ2IDEwMDY0NAo+ID4gLS0tIGEvdGFyZ2V0L2kzODYvc2V2LmMKPiA+ICsrKyBi
-L3RhcmdldC9pMzg2L3Nldi5jCj4gPiBAQCAtMjUyNiw2ICsyNTI2LDg4IEBAIHN0YXRpYyBpbnQg
-Y2dzX2dldF9tZW1fbWFwX2VudHJ5KGludCBpbmRleCwKPiA+IMKgwqDCoCByZXR1cm4gMDsKPiA+
-IH0KPiA+IAo+ID4gK3N0YXRpYyBpbnQgY2dzX3NldF9ndWVzdF9wb2xpY3koQ29uZmlkZW50aWFs
-R3Vlc3RQb2xpY3lUeXBlIHBvbGljeV90eXBlLAo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQ2NF90IHBvbGljeSwg
-dm9pZCAqcG9saWN5X2RhdGExLAo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHVpbnQzMl90IHBvbGljeV9kYXRhMV9zaXpl
-LCB2b2lkICpwb2xpY3lfZGF0YTIsCj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgdWludDMyX3QgcG9saWN5X2RhdGEyX3Np
-emUsIEVycm9yICoqZXJycCkKPiA+ICt7Cj4gPiArwqDCoMKgIGlmIChwb2xpY3lfdHlwZSAhPSBH
-VUVTVF9QT0xJQ1lfU0VWKSB7Cj4gPiArwqDCoMKgwqDCoMKgwqAgZXJyb3Jfc2V0ZyhlcnJwLCAi
-JXM6IEludmFsaWQgZ3Vlc3QgcG9saWN5IHR5cGUgcHJvdmlkZWQgZm9yIFNFVjogJWQiLAo+ID4g
-K8KgwqDCoMKgwqDCoMKgIF9fZnVuY19fLCBwb2xpY3lfdHlwZSk7Cj4gPiArwqDCoMKgwqDCoMKg
-wqAgcmV0dXJuIC0xOwo+ID4gK8KgwqDCoCB9Cj4gPiArwqDCoMKgIC8qCj4gPiArwqDCoMKgwqAg
-KiBTRVYtU05QIGhhbmRsZXMgcG9saWN5IGRpZmZlcmVudGx5LiBUaGUgcG9saWN5IGZsYWdzIGFy
-ZSBkZWZpbmVkIGluCj4gPiArwqDCoMKgwqAgKiBrdm1fc3RhcnRfY29uZi5wb2xpY3kgYW5kIGFu
-IElEIGJsb2NrIGFuZCBJRCBhdXRoIGNhbiBiZSBwcm92aWRlZC4KPiA+ICvCoMKgwqDCoCAqLwo+
-ID4gK8KgwqDCoCBpZiAoc2V2X3NucF9lbmFibGVkKCkpIHsKPiA+ICvCoMKgwqDCoMKgwqDCoCBT
-ZXZTbnBHdWVzdFN0YXRlICpzZXZfc25wX2d1ZXN0ID0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIFNFVl9TTlBfR1VFU1QoTUFDSElORShxZGV2X2dldF9tYWNoaW5lKCkpLT5jZ3MpOwo+ID4g
-K8KgwqDCoMKgwqDCoMKgIHN0cnVjdCBrdm1fc2V2X3NucF9sYXVuY2hfZmluaXNoICpmaW5pc2gg
-PQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgJnNldl9zbnBfZ3Vlc3QtPmt2bV9maW5pc2hf
-Y29uZjsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoCAvKgo+ID4gK8KgwqDCoMKgwqDCoMKgwqAg
-KiBUaGUgcG9saWN5IGNvbnNpc3RzIG9mIGZsYWdzIGluICdwb2xpY3knIGFuZCBvcHRpb25hbGx5
-IGFuIElEIGJsb2NrCj4gPiArwqDCoMKgwqDCoMKgwqDCoCAqIGFuZCBJRCBhdXRoIGluIHBvbGlj
-eV9kYXRhMSBhbmQgcG9saWN5X2RhdGEyIHJlc3BlY3RpdmVseS4gVGhlIElECj4gPiArwqDCoMKg
-wqDCoMKgwqDCoCAqIGJsb2NrIGFuZCBhdXRoIGFyZSBvcHRpb25hbCBzbyBjbGVhciBhbnkgcHJl
-dmlvdXMgSUQgYmxvY2sgYW5kIGF1dGgKPiA+ICvCoMKgwqDCoMKgwqDCoMKgICogYW5kIHNldCB0
-aGVtIGlmIHByb3ZpZGVkLCBidXQgYWx3YXlzIHNldCB0aGUgcG9saWN5IGZsYWdzLgo+ID4gK8Kg
-wqDCoMKgwqDCoMKgwqAgKi8KPiA+ICvCoMKgwqDCoMKgwqDCoCBnX2ZyZWUoc2V2X3NucF9ndWVz
-dC0+aWRfYmxvY2spOwo+ID4gK8KgwqDCoMKgwqDCoMKgIGdfZnJlZSgoZ3VjaGFyICopZmluaXNo
-LT5pZF9ibG9ja191YWRkcik7Cj4gPiArwqDCoMKgwqDCoMKgwqAgZ19mcmVlKHNldl9zbnBfZ3Vl
-c3QtPmlkX2F1dGgpOwo+ID4gK8KgwqDCoMKgwqDCoMKgIGdfZnJlZSgoZ3VjaGFyICopZmluaXNo
-LT5pZF9hdXRoX3VhZGRyKTsKPiA+ICvCoMKgwqDCoMKgwqDCoCBzZXZfc25wX2d1ZXN0LT5pZF9i
-bG9jayA9IE5VTEw7Cj4gPiArwqDCoMKgwqDCoMKgwqAgZmluaXNoLT5pZF9ibG9ja191YWRkciA9
-IDA7Cj4gPiArwqDCoMKgwqDCoMKgwqAgc2V2X3NucF9ndWVzdC0+aWRfYXV0aCA9IE5VTEw7Cj4g
-PiArwqDCoMKgwqDCoMKgwqAgZmluaXNoLT5pZF9hdXRoX3VhZGRyID0gMDsKPiA+ICsKPiA+ICvC
-oMKgwqDCoMKgwqDCoCBpZiAocG9saWN5X2RhdGExX3NpemUgPiAwKSB7Cj4gPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoCBzdHJ1Y3Qgc2V2X3NucF9pZF9hdXRoZW50aWNhdGlvbiAqaWRfYXV0aCA9
-Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIChzdHJ1Y3Qgc2V2X3NucF9pZF9h
-dXRoZW50aWNhdGlvbiAqKXBvbGljeV9kYXRhMjsKPiA+ICsKPiA+ICvCoMKgwqDCoMKgwqDCoMKg
-wqDCoMKgIGlmIChwb2xpY3lfZGF0YTFfc2l6ZSAhPSBLVk1fU0VWX1NOUF9JRF9CTE9DS19TSVpF
-KSB7Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGVycm9yX3NldGcoZXJycCwg
-IiVzOiBJbnZhbGlkIFNFVi1TTlAgSUQgYmxvY2s6IGluY29ycmVjdCBzaXplIiwKPiA+ICvCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIF9fZnVuY19f
-KTsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgcmV0dXJuIC0xOwo+ID4gK8Kg
-wqDCoMKgwqDCoMKgwqDCoMKgwqAgfQo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgaWYgKHBv
-bGljeV9kYXRhMl9zaXplICE9IEtWTV9TRVZfU05QX0lEX0FVVEhfU0laRSkgewo+ID4gK8KgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBlcnJvcl9zZXRnKGVycnAsCj4gPiArwqDCoMKgwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCAiJXM6IEludmFsaWQg
-U0VWLVNOUCBJRCBhdXRoIGJsb2NrOiBpbmNvcnJlY3Qgc2l6ZSIsCj4gPiArwqDCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBfX2Z1bmNfXyk7Cj4gPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIHJldHVybiAtMTsKPiA+ICvCoMKgwqDCoMKg
-wqDCoMKgwqDCoMKgIH0KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGFzc2VydChwb2xpY3lf
-ZGF0YTEgIT0gTlVMTCk7Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoCBhc3NlcnQocG9saWN5
-X2RhdGEyICE9IE5VTEwpOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKgwqDCoMKgwqAgZmluaXNo
-LT5pZF9ibG9ja191YWRkciA9Cj4gPiArwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIChf
-X3U2NClnX21lbWR1cDIocG9saWN5X2RhdGExLCBLVk1fU0VWX1NOUF9JRF9CTE9DS19TSVpFKTsK
-PiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZpbmlzaC0+aWRfYXV0aF91YWRkciA9Cj4gPiAr
-wqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIChfX3U2NClnX21lbWR1cDIocG9saWN5X2Rh
-dGEyLCBLVk1fU0VWX1NOUF9JRF9BVVRIX1NJWkUpOwo+ID4gKwo+ID4gK8KgwqDCoMKgwqDCoMKg
-wqDCoMKgwqAgLyoKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBDaGVjayBpZiBhbiBh
-dXRob3Iga2V5IGhhcyBiZWVuIHByb3ZpZGVkIGFuZCB1c2UgdGhhdCB0byBmbGFnCj4gPiArwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgICogd2hldGhlciB0aGUgYXV0aG9yIGtleSBpcyBlbmFibGVk
-LiBUaGUgZmlyc3Qgb2YgdGhlIGF1dGhvciBrZXkKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKg
-wqAgKiBtdXN0IGJlIG5vbi16ZXJvIHRvIGluZGljYXRlIHRoZSBrZXkgdHlwZSwgd2hpY2ggd2ls
-bCBjdXJyZW50bHkKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKiBhbHdheXMgYmUgMi4K
-PiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgwqAgKi8KPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDC
-oMKgIHNldl9zbnBfZ3Vlc3QtPmt2bV9maW5pc2hfY29uZi5hdXRoX2tleV9lbiA9Cj4gPiArwqDC
-oMKgwqDCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGlkX2F1dGgtPmF1dGhvcl9rZXlbMF0gPyAxIDog
-MDsKPiA+ICvCoMKgwqDCoMKgwqDCoMKgwqDCoMKgIGZpbmlzaC0+aWRfYmxvY2tfZW4gPSAxOwo+
-ID4gK8KgwqDCoMKgwqDCoMKgIH0KPiA+ICvCoMKgwqDCoMKgwqDCoCBzZXZfc25wX2d1ZXN0LT5r
-dm1fc3RhcnRfY29uZi5wb2xpY3kgPSBwb2xpY3k7Cj4gPiArwqDCoMKgIH0gZWxzZSB7Cj4gCj4g
-SSBkbyBub3Qgc2VlIGhvdyB0aGlzIOKAnGVsc2XigJ0gcGFydCAoc2V2IGFuZCBzZXYtZXMpIHdp
-bGwgZXZlciBiZSBleGVjdXRlZCBzaW5jZSBxaWd2bV9oYW5kbGVfcG9saWN5KCkgaW4gcGF0Y2gg
-IzE0IG9ubHkgY2FsbHMgc2V0X2d1ZXN0X3BvbGljeSgpIGlmIGl0cyBTRVYtCj4gU05QLgo+IApZ
-b3UncmUgY29ycmVjdC4gVGhlcmUgaXMgY3VycmVudGx5IG5vIHdheSBmb3IgdGhpcyBjb2RlIHRv
-IGJlIGJlIGNhbGxlZC4gQnV0IGFzIGl0IGlzCmFuIGludGVyZmFjZSBmdW5jdGlvbiBvbiBjb25m
-aWRlbnRpYWwtZ3Vlc3Qtc3VwcG9ydCwgaXQgY291bGQgYmUgY2FsbGVkIGVycm9uZW91c2x5Cmlu
-IHRoZSBmdXR1cmUgc28gSSBkb24ndCBzZWUgYW55IGhhcm0gaW4gbGVhdmluZyB0aGUgZXJyb3Ig
-Y2hlY2sgdGhlcmUuCgpUaGFua3MsClJveQo=
+Peter Xu <peterx@redhat.com> writes:
 
+> On Thu, Jun 12, 2025 at 05:58:14PM -0300, Fabiano Rosas wrote:
+>> Fabiano Rosas <farosas@suse.de> writes:
+>> 
+>> > Peter Xu <peterx@redhat.com> writes:
+>> >
+>> >> On Mon, Jun 02, 2025 at 10:37:59PM -0300, Fabiano Rosas wrote:
+>> >>> QAPI_CLONE_MEMBERS is a better option than copying parameters one by
+>> >>> one because it operates on the entire struct and follows pointers. It
+>> >>> also avoids the need to alter this function every time a new parameter
+>> >>> is added.
+>> >>> 
+>> >>> Note, since this is a deep clone, now we must free the TLS strings
+>> >>> before assignment.
+>> >>> 
+>> >>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> >>> ---
+>> >>>  migration/options.c | 31 ++++---------------------------
+>> >>>  1 file changed, 4 insertions(+), 27 deletions(-)
+>> >>> 
+>> >>> diff --git a/migration/options.c b/migration/options.c
+>> >>> index dd62e726cb..0a2a3050ec 100644
+>> >>> --- a/migration/options.c
+>> >>> +++ b/migration/options.c
+>> >>> @@ -918,7 +918,9 @@ static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
+>> >>>  {
+>> >>>      StrOrNull *dst = *dstp;
+>> >>>  
+>> >>> -    assert(!dst);
+>> >>> +    if (dst) {
+>> >>> +        qapi_free_StrOrNull(dst);
+>> >>> +    }
+>> >>>  
+>> >>>      dst = *dstp = g_new0(StrOrNull, 1);
+>> >>>      dst->type = QTYPE_QSTRING;
+>> >>> @@ -975,42 +977,17 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
+>> >>>      MigrationParameters *params;
+>> >>>      MigrationState *s = migrate_get_current();
+>> >>>  
+>> >>> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
+>> >>>      params = g_malloc0(sizeof(*params));
+>> >>>  
+>> >>> -    params->throttle_trigger_threshold = s->parameters.throttle_trigger_threshold;
+>> >>> -    params->cpu_throttle_initial = s->parameters.cpu_throttle_initial;
+>> >>> -    params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
+>> >>> -    params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
+>> >>> +    QAPI_CLONE_MEMBERS(MigrationParameters, params, &s->parameters);
+>> >>>  
+>> >>>      tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
+>> >>>      tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
+>> >>>      tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
+>
+> [1]
+>
+>> >>>  
+>> >>> -    params->max_bandwidth = s->parameters.max_bandwidth;
+>> >>> -    params->avail_switchover_bandwidth = s->parameters.avail_switchover_bandwidth;
+>> >>> -    params->downtime_limit = s->parameters.downtime_limit;
+>> >>> -    params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
+>> >>> -    params->multifd_channels = s->parameters.multifd_channels;
+>> >>> -    params->multifd_compression = s->parameters.multifd_compression;
+>> >>> -    params->multifd_zlib_level = s->parameters.multifd_zlib_level;
+>> >>> -    params->multifd_qatzip_level = s->parameters.multifd_qatzip_level;
+>> >>> -    params->multifd_zstd_level = s->parameters.multifd_zstd_level;
+>> >>> -    params->xbzrle_cache_size = s->parameters.xbzrle_cache_size;
+>> >>> -    params->max_postcopy_bandwidth = s->parameters.max_postcopy_bandwidth;
+>> >>> -    params->max_cpu_throttle = s->parameters.max_cpu_throttle;
+>> >>> -    params->announce_initial = s->parameters.announce_initial;
+>> >>> -    params->announce_max = s->parameters.announce_max;
+>> >>> -    params->announce_rounds = s->parameters.announce_rounds;
+>> >>> -    params->announce_step = s->parameters.announce_step;
+>> >>>      params->block_bitmap_mapping =
+>> >>>          QAPI_CLONE(BitmapMigrationNodeAliasList,
+>> >>>                     s->parameters.block_bitmap_mapping);
+>> >>
+>> >> Wouldn't the QAPI_CLONE_MEMBERS() have deep cloned this too?
+>> >>
+>> >
+>> > Hmm, I think it should. But it definitely broke something without this
+>> > line. I'll double check.
+>> >
+>> 
+>> Thanks for the question, this was indeed wrong. QAPI_CLONE_MEMBERS
+>> depend on the has_* fields on src, otherwise it's just a glorified
+>> assignment (*dst = src). The reason I got this wrong is that I was using
+>> the TLS strings to test and they have a different handling in QAPI:
+>> 
+>> visit_type_MigrationParameters_members():
+>> 
+>>     bool has_tls_creds = !!obj->tls_creds;
+>
+> [2]
+>
+>> 
+>> So the code was working for them, but not for block_bitmap_mapping, for
+>> which the QAPI has:
+>> 
+>> if (visit_optional(v, "block-bitmap-mapping", &obj->has_block_bitmap_mapping)) {
+>>                                                     ^
+>>     if (!visit_type_BitmapMigrationNodeAliasList(v, "block-bitmap-mapping",
+>>         &obj->block_bitmap_mapping, errp)) {
+>>         return false;
+>>     }
+>> }
+>> 
+>> IOW, the QAPI_CLONE routines depend on the has_ fields (in retrospect:
+>> obviously).
+>> 
+>> That assert you didn't like will have to go then and s->parameters will
+>> have to have all has_* fields permanently set. Not a huge deal, but it
+>> undermines my argument of keeping it free from QAPI details.
+>
+> Oops, indeed.  Now you have that function to set all has_*, hopefully this
+> is trivial now to still do so.
+>
+
+Yes.
+
+> Since you mentioned tls_* won't have has_*, but they will get properly
+> cloned IIUC as you mentioned above [2].  Does it mean we can also drop the
+> three lines at [1] too?
+>
+
+I'm thinking yes as well, still woking on it.
+
+> In general, I am curious why we can't already use QAPI_CLONE() like:
+>
+>   params = QAPI_CLONE(&s->parameters);
+>
+> And if my wish came true once more on having it a pointer (meanwhile if it
+> even happened before this patch):
+>
+>   params = QAPI_CLONE(s->parameters);
+>
+> I thought with that, any of "g_malloc0(), copying of tls_*, copying of
+> block_bitmap things" are all not needed?
+
+Same here.
 
