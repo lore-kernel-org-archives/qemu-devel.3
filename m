@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20964C7114A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1570DC71148
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 20:40:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQBBg-0006BO-Id; Fri, 13 Jun 2025 16:39:44 -0400
+	id 1uQB9v-0003EA-9S; Fri, 13 Jun 2025 16:37:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQBAa-0004Om-Oz
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:38:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQB9s-0003A4-Ch
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:37:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQBAZ-0005Gj-8p
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:38:36 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQB9q-0005Bi-PV
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 16:37:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749847114;
+ s=mimecast20190719; t=1749847070;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=M9Pic9u0SAGuTiZR9R8w60irKdbuoJr7Oywb6RlenAA=;
- b=YTKrlrVJNY0UPep0z6ehEemR7O2U0eSbucKf5JNHtwF6Iiu+LgGshsilYX0nsrJnQvQ5af
- xBOfRyiuykcX6WK0qInt+BjKMUWkQTmdnb69K9vma3fLWJ48MAGbG8QvnQ86E93EMPQ+Ar
- ZS/so0n9m+WSRpRYtWFTBMjnHbGkBKI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ bh=4l346ViXf6E95arH0fnIRc0YazRIdUbNm6EuFtCh/5Y=;
+ b=ZvEbrAxGcAFD+LHzCmsOTcdtWmGb+IAsGDZYAlqqhFd2sK2DpZhWjhzgc6grkXeViCg2bI
+ +CW4XUdS1yCQjoB8n/am/BCYQ1Pki0xLSQ/ACdsGatN6m1FVcx7gdX/dPwVFCsklQcBUKg
+ P/OVBjFERu78oRQV6MYscCPHZiUyDqA=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-550-RQ2DiqTTP0aP4EAxrzR92Q-1; Fri,
- 13 Jun 2025 16:38:31 -0400
-X-MC-Unique: RQ2DiqTTP0aP4EAxrzR92Q-1
-X-Mimecast-MFC-AGG-ID: RQ2DiqTTP0aP4EAxrzR92Q_1749847109
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-169-eB2J8sP0NcyNjb0o0Ny9vg-1; Fri,
+ 13 Jun 2025 16:37:46 -0400
+X-MC-Unique: eB2J8sP0NcyNjb0o0Ny9vg-1
+X-Mimecast-MFC-AGG-ID: eB2J8sP0NcyNjb0o0Ny9vg_1749847065
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D3A0E180028C; Fri, 13 Jun 2025 20:38:28 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 343271809C87; Fri, 13 Jun 2025 20:37:45 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.65.203])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DB02930044CC; Fri, 13 Jun 2025 20:38:23 +0000 (UTC)
+ id DA6EC30044D0; Fri, 13 Jun 2025 20:37:36 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
@@ -63,15 +63,15 @@ Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  qemu-block@nongnu.org, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH 17/18] qapi: add cross-references to yank.json
-Date: Fri, 13 Jun 2025 16:36:19 -0400
-Message-ID: <20250613203620.1283814-18-jsnow@redhat.com>
+Subject: [PATCH 10/18] qapi: add cross-references to pci.json
+Date: Fri, 13 Jun 2025 16:36:12 -0400
+Message-ID: <20250613203620.1283814-11-jsnow@redhat.com>
 In-Reply-To: <20250613203620.1283814-1-jsnow@redhat.com>
 References: <20250613203620.1283814-1-jsnow@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -98,84 +98,22 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- qapi/yank.json | 20 ++++++++++----------
- 1 file changed, 10 insertions(+), 10 deletions(-)
+ qapi/pci.json | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/qapi/yank.json b/qapi/yank.json
-index 9bd8ecce27f..931d4b22d4b 100644
---- a/qapi/yank.json
-+++ b/qapi/yank.json
-@@ -9,7 +9,7 @@
+diff --git a/qapi/pci.json b/qapi/pci.json
+index 29549d94551..4aad5f98e2a 100644
+--- a/qapi/pci.json
++++ b/qapi/pci.json
+@@ -83,7 +83,7 @@
+ #
+ # @bus: information about the bus the device resides on
+ #
+-# @devices: a list of @PciDeviceInfo for each device on this bridge
++# @devices: a list of `PciDeviceInfo` for each device on this bridge
+ #
+ # Since: 0.14
  ##
- # @YankInstanceType:
- #
--# An enumeration of yank instance types.  See @YankInstance for more
-+# An enumeration of `yank` instance types.  See `YankInstance` for more
- # information.
- #
- # Since: 6.0
-@@ -20,7 +20,7 @@
- ##
- # @YankInstanceBlockNode:
- #
--# Specifies which block graph node to yank.  See @YankInstance for
-+# Specifies which block graph node to `yank`.  See `YankInstance` for
- # more information.
- #
- # @node-name: the name of the block graph node
-@@ -33,7 +33,7 @@
- ##
- # @YankInstanceChardev:
- #
--# Specifies which character device to yank.  See @YankInstance for
-+# Specifies which character device to `yank`.  See `YankInstance` for
- # more information.
- #
- # @id: the chardev's ID
-@@ -46,20 +46,20 @@
- ##
- # @YankInstance:
- #
--# A yank instance can be yanked with the @yank qmp command to recover
-+# A `yank` instance can be yanked with the `yank` qmp command to recover
- # from a hanging QEMU.
- #
--# @type: yank instance type
-+# @type: `yank` instance type
- #
--# Currently implemented yank instances:
-+# Currently implemented `yank` instances:
- #
- # - nbd block device: Yanking it will shut down the connection to the
- #   nbd server without attempting to reconnect.
- # - socket chardev: Yanking it will shut down the connected socket.
- # - migration: Yanking it will shut down all migration connections.
--#   Unlike @migrate_cancel, it will not notify the migration process,
-+#   Unlike `migrate_cancel`, it will not notify the migration process,
- #   so migration will go into @failed state, instead of @cancelled
--#   state.  @yank should be used to recover from hangs.
-+#   state.  `yank` should be used to recover from hangs.
- #
- # Since: 6.0
- ##
-@@ -74,7 +74,7 @@
- # @yank:
- #
- # Try to recover from hanging QEMU by yanking the specified instances.
--# See @YankInstance for more information.
-+# See `YankInstance` for more information.
- #
- # @instances: the instances to be yanked
- #
-@@ -100,7 +100,7 @@
- ##
- # @query-yank:
- #
--# Query yank instances.  See @YankInstance for more information.
-+# Query `yank` instances.  See `YankInstance` for more information.
- #
- #
- # .. qmp-example::
 -- 
 2.48.1
 
