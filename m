@@ -4,90 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B62C71135
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 05:23:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08890C71135
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 05:37:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPwrp-0006OP-LX; Fri, 13 Jun 2025 01:22:17 -0400
+	id 1uPx5b-00023c-Ka; Fri, 13 Jun 2025 01:36:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uPwrd-0006Nq-7e
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:22:08 -0400
-Received: from mail-pg1-x529.google.com ([2607:f8b0:4864:20::529])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <akihiko.odaki@daynix.com>)
- id 1uPwra-0002B2-N8
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:22:04 -0400
-Received: by mail-pg1-x529.google.com with SMTP id
- 41be03b00d2f7-b2fb8226e1cso2780585a12.0
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 22:22:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=daynix-com.20230601.gappssmtp.com; s=20230601; t=1749792120; x=1750396920;
- darn=nongnu.org; 
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=OIJdJB/To0+EFq3p/Bf04hNgiEcBJvYkfqKaLcJcG/g=;
- b=GVEEmxaPyrIlJvhMDpXeGBHDB3k4DniVDEpArIH8vvaFpAJZ4jdtKcaVJwxmbNEmGJ
- EM/XBjB5GuNjnetPkKxkthvwr48qm8YNJeH/UZesHF2pWsAr7RYNH/ZqKF02dT4ar0Ov
- rLKoVz/feh0XNWxFU8qp/YrfAVeBho4s4bA3SM49wfSGyPVljnvD3gPE9kDx0XUbprGM
- OAXKQcfozDWG00D9WlaS08Jf7ayVzNBWlwlmBhkmxZ9DPjDFTSg4Hy1UW4q/YWAqEJbu
- RdzxbnXgm+54Lcn5D/F/YEwHSK6mllV/rD1KhGAG9+4m7M1oTEONmBniC8PDMXBrDN4f
- OcqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749792120; x=1750396920;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OIJdJB/To0+EFq3p/Bf04hNgiEcBJvYkfqKaLcJcG/g=;
- b=qLCFvjjbeSRLsNnSuykBc9tKrTsrv6fG7WvnDKapPJjXcfNbD4rg56UVV1nLysU+s7
- Rr9QUUy5rNrilJgyerNic2+P2zFURNdGUM2pBhZV3X1WDQIRNite+EcuiiH3rA1VifzK
- mco6TquhFVIjTAGIyPCJhA3nnDkE6HCFEYpP6pMYnFEe6RNSYiihRFKoS53FK3oEnTkb
- zZXo8cPKLeU76715CrARVlLfLbY6F8BXB4zcdOJZoBgBVerYk31nm1Y6jbm1WgIk78EV
- so8/yhiyFKGLPgYNpFj8njhnl+P+fKVj61TGq7IMFh9qBCKLYQU3nDHJ/f8Q1pp6Qsno
- wNnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUcn71R4Mqz9PjRwC3ndu10zQ7UKOLG5FRzzvBpbiELdCNkabLLIXwKZzcJc38RYZiYBd4UxFDHFMuP@nongnu.org
-X-Gm-Message-State: AOJu0Yw0SANOR6XSXzvwblcXF/Cp5E9gpt4z5oZwPGMkZGt3t7dTq1Zl
- +bKCOsZioMfDaWHWv2D5h+45o8bxiYcTcE0vKwip9Lo8aufNlZFzKQ8+5jf8vNrTzHo=
-X-Gm-Gg: ASbGnct1sk/J4OIdy8QWs3h+8CtjVrnqaHBBvfzT8BH4pkeTntuKfDeNqwk3svcdtpb
- HJyz9sFrOPCgSBPQof6NrqcL69THfCew1JaUYsttfQca23WwKacGCfHvwU7hlTTnYShqlFXPpgO
- OGN2M4eppG7IBz5HV8+ZN8BySuw+z9n2RJElGMgRleL3UuJG3Y0vLOYT6lVTFyyEYdDK17rMx4v
- kG1uH+T8c2ThsHBiYgoq0wDG5sqOODYHZS4Gq6rPSMhjwpkhRiwkCNXPa1yODHkW5Mdy+nELRRu
- E7cBCx0RoE5kvLusMl5iXvofjw8OZmp+c+iNZDQkqvlmOCGeq7d36KSkOvK3vLd5zfWN8KxE
-X-Google-Smtp-Source: AGHT+IFOhijwB82xKKqulYtyBwSKw69AkZhtAaCt8mJ0I2yFQCiqdSEMPOmINWezzK1jonChaMrwJA==
-X-Received: by 2002:a17:90b:3c8e:b0:312:dbcd:b93d with SMTP id
- 98e67ed59e1d1-313dc2ba637mr1936290a91.14.1749792120479; 
- Thu, 12 Jun 2025 22:22:00 -0700 (PDT)
-Received: from [10.100.116.185] ([157.82.128.1])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-313c1c5fd7esm2447761a91.37.2025.06.12.22.21.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Jun 2025 22:22:00 -0700 (PDT)
-Message-ID: <392b4ec1-b347-4b0a-8863-8480e52b20aa@daynix.com>
-Date: Fri, 13 Jun 2025 14:21:56 +0900
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPx5X-00021v-NU; Fri, 13 Jun 2025 01:36:28 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1uPx5T-0004D9-VU; Fri, 13 Jun 2025 01:36:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1749792985; x=1781328985;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=F58yUyairb8+CMgREp6Coq/wzpd2FVi+30joS8mftl8=;
+ b=XK1xwbiAEWd6nZlA4nsrD0iEJQ9kIuqseuVQRlZGiMGTGaiopMNcyG5e
+ RSvY1enkCLfYpN5mIXDHaiYguwA3oCuuJvZvcerQ7v2bBFWqq0Whmx9Wt
+ CURVFBJhV/T2IgaVf6tU0pibd0eqHws+XEdn+EcIvfnJRPXRKnDwfZ4Yy
+ jwqsbDrhmIFeXs3MvGjFvbluwwHF7CJB5avApjmQbNTK/k78QIF/BpVKN
+ LMLKiznoO2H+NssWvFw7G4QS6lUBU7CK9gcMHgpdTID6JWE2Hc9MtbgrW
+ W0Pbu7snQPOg5SWUFYpdeFs5L2KGqGXbrx9YfOf68dj5Th4zJLy0prjOh w==;
+X-CSE-ConnectionGUID: h8qKNIvBQjGFCjDB7FE1dA==
+X-CSE-MsgGUID: 3tf8Cp0CQFu/AIor0Qz5kw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11462"; a="52133994"
+X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; d="scan'208";a="52133994"
+Received: from orviesa010.jf.intel.com ([10.64.159.150])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Jun 2025 22:36:21 -0700
+X-CSE-ConnectionGUID: 2GSdNUF/SquKEbRE23F0og==
+X-CSE-MsgGUID: lXSyYJiMSwyjsIgYxkytjw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; d="scan'208";a="147639452"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa010.jf.intel.com with ESMTP; 12 Jun 2025 22:36:19 -0700
+Date: Fri, 13 Jun 2025 13:57:36 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com,
+ qemu-rust@nongnu.org, armbru@redhat.com, mkletzan@redhat.com
+Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
+Message-ID: <aEu90HVJsySBHJKz@intel.com>
+References: <20250605101124.367270-1-pbonzini@redhat.com>
+ <aEk6vdosWZgyQGXD@intel.com>
+ <CABgObfaK8h3GE4GWbPrn22JshYcCFdXsxWHWuAPVC4pRb7GZ0A@mail.gmail.com>
+ <CABgObfa+w3pcYhFnO6ETxSfoNiNU=+_8WcW6dE8dkUrbt6darw@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Build platform guarantees, docs, tests, and snakes in the garden
-To: John Snow <jsnow@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Markus Armbruster <armbru@redhat.com>
-References: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
-Content-Language: en-US
-From: Akihiko Odaki <akihiko.odaki@daynix.com>
-In-Reply-To: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::529;
- envelope-from=akihiko.odaki@daynix.com; helo=mail-pg1-x529.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CABgObfa+w3pcYhFnO6ETxSfoNiNU=+_8WcW6dE8dkUrbt6darw@mail.gmail.com>
+Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -104,136 +85,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/06/06 4:35, John Snow wrote:
-> Hi, I've long been a little confused about the specifics of our build 
-> platform guarantee and how it applies to documentation and testing.
+On Thu, Jun 12, 2025 at 12:24:44PM +0200, Paolo Bonzini wrote:
+> Date: Thu, 12 Jun 2025 12:24:44 +0200
+> From: Paolo Bonzini <pbonzini@redhat.com>
+> Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
 > 
-> My *current* understanding is that our build platform guarantee applies 
-> to both unit tests and building documentation, but that this requirement 
-> may not be as absolute as I imagine it.
+> On Wed, Jun 11, 2025 at 10:57 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
+> > Yes. If using serde the implementation of the traits is very small,
+> > and basically the same for all types. If not using serde, it would
+> > need some (or most) of the infrastructure in Marc-André's original
+> > series.
 > 
-> The way I have endeavored to manage the Python tooling in our tree so 
-> far is to preserve, without fail, our ability to perform fully offline 
-> builds on all supported platforms (provided that the right distro repo 
-> packages are available). The Python virtual environment created at 
-> configure time bends over backwards to use system packages *whenever 
-> possible*, and the list of exceptions - notably Meson itself - uses 
-> vendored packages only in very specific cases where it is possible to 
-> vendor such packages. Fetching packages from PyPI is generally offered 
-> only as a convenience for developer workstations to, in general, save 
-> developers from having to know anything about Python. (I think I've done 
-> a good job there, to be honest!)
-
-It is a nice work indeed. I spent substantial time to work on QEMU but 
-the Sphinx problem mentioned later was the only problem I encountered.
-
+> Looking more at it, the Rust->QObject and QObject->Rust parts *can* be
+> done with serde (following the model of serde_json's Value
+> (de)serializer) but the Rust<->C part has a problem.
 > 
-> (Notably: Meson is pure python and has no dependencies, so it is 
-> possible to vendor it for offline builds. Tools like Sphinx, however, 
-> have many dependencies and are not so easily vendored. Thus, we have 
-> created a tenuous arrangement where we are allowed to use versions of 
-> Meson that otherwise would break our build platform guarantee.)
+> To recap, Rust->C is the serialization and corresponds to output
+> visitors. C->Rust is the deserialization and corresponds to input
+> visitors.
 > 
-> Lately, we've had some issues with the wide range of Sphinx versions we 
-> support presenting various cross-platform difficulties. In particular, 
-> Akihiko Odaki has sent patches to bump our Sphinx version to at least 
-> 6.2.1, because platforms with Python 3.13.1 can no longer run Sphinx 3.x 
-> at all, so having that be our "default install version" causes issues on 
-> newer platforms.
+> For serialization, serde has a push model where the generated code
+> looks like this:
 > 
-> However, if we take as iron-clad our commitment to the build platform 
-> promise -- *and* guarantee offline/tarball builds as well -- then Debian 
-> 12 (as an example) only offers Sphinx 5.3.0 and not newer unless we 
-> allow internet access to fetch Sphinx 6.2.1. This is not a problem for 
-> developer workstations at all, but I am unclear on what problems this 
-> may cause for tarball releases and downstream offline/isolated/ 
-> reproducible builds, if any.
+>       let mut state =
+>           Serializer::serialize_struct(serializer, "S", 2);
+>       SerializeStruct::serialize_field(&mut state, "a", &self.a)?;
+>       SerializeStruct::serialize_field(&mut state, "b", &self.b)?;
+>       SerializeStruct::end(state)
 > 
-> In this case, we can (probably) "fix" the issue by continuing to allow 
-> older Sphinx while preferring a newer Sphinx version when it is missing, 
-> but then we lose the ability to make code cleanups and drop a lot of 
-> back-compat crud. If memory serves, there were other issues recently 
-> where older versions of Sphinx behaved differently from newer versions, 
-> causing intermittent failures that were hard to track down.
+> whereas QAPI has a pull model where visit_type_* drives the process
+> and requests the fields one by one.
 > 
-> What I'd like to know is: what precisely are our options in this 
-> scenario? Do we consider it acceptable for some platforms to be unable 
-> to build docs offline? How highly do we value the ability to locally 
-> build docs for any given release?
+> For deserialization, serde has a pull model where the generated code
+> asks for the field names one by one:
 > 
-> Before I throw my weight behind any given option, I just want to know 
-> what we consider our non-negotiable obligations to be.
+>     fn visit_map<__A>(self, mut __map: __A)
+>         while let Some(key) =
+>             MapAccess::next_key::<__Field>(&mut __map)? {
+>                 match __key { ... }
+>         }
+>     }
 > 
-> Thanks,
-> --js
+> whereas QAPI has a push model where visit_type_* again drives the
+> process and sends fields one by one.
 > 
+> For commands this is not a problem because the real underlying
+> transformation is QObject->QObject and the intermediate steps (to and
+> from QObject) can use serde.
+> 
+> However, QOM property getters/setters (especially, but not
+> exclusively, for properties with compound types) remain a problem
+> since these use callbacks with a Visitor* argument. I see three
+> possibilities:
+> 
+> 1) everything is done through an intermediate QObject step (e.g. for a
+> setter: Visitor->QObject with an input visitor, and QObject->Rust with
+> serde deserialization).
+>     + easy, Rust only sees serde
+>     + QMP commands use a single conversion step
+>     - inefficient
 
-Thank you for detailed explanation. I see a few possible options in this 
-situation.
+This sounds like a natural approach.
 
-Pretending as a lawyer interpreting docs/about/build-platforms.rst as a 
-law, I think it is allowed to require the Internet access. It says:
+> 2) everything is done through an intermediate C step (e.g. for a
+> setter: Visitor->C with a visit_type_* function, and C->Rust with
+> generated code that does not need to use serde).
 
- > For the purposes of identifying supported software versions available
- > on Linux, the project will look at CentOS, Debian, Fedora, openSUSE,
- > RHEL, SLES and Ubuntu LTS. Other distros will be assumed to ship
- > similar software versions.
- >
- > For FreeBSD and OpenBSD, decisions will be made based on the contents
- > of the respective ports repository, while NetBSD will use the pkgsrc
- > repository.
- >
- > For macOS, `Homebrew`_ will be used, although `MacPorts`_ is expected
- > to carry similar versions.
- >
- > Some build dependencies may follow less conservative rules:
+I understand this step indicates to use bindgen to generate visit_type_*
+bindings...
 
- > Python build dependencies
- >   Some of QEMU's build dependencies are written in Python.  Usually
- >   these are only packaged by distributions for the default Python
- >   runtime.
- >   If QEMU bumps its minimum Python version and a non-default runtime
- >   is required, it may be necessary to fetch python modules from the
- >   Python Package Index (PyPI) via ``pip``, in order to build QEMU.
+> There is still a
+> double conversion step, but it's more efficient than option 1
+>     + one framework (visitor)
+>     - double conversion for the QMP commands
+>     - lots of generated code
 
-So it is allowed to require a non-default runtime that is available on 
-PyPI but not on Debian.
+...if so, then yes, there would be too much generated and "unsafe"
+codes, and further abstraction may be needed to ensure safety, similar
+to the lots of work currently done in the qemu-api.
 
-But it is also allowed to bundle a python module or to keep its version 
-requirement low to help users just as we do for Meson, of course.
+> 3) generating a Rust visit_type_* implementation as well, either in
+> qapi-gen (3a) or through a procedural macro (3b).> This should not be
+> hard to write but it would remove a lot of the advantages from using
+> serde.
+>     + efficient
+>     + preserves single conversion for QMP commands
+>     - two frameworks
 
-Another possible option is to provide a mechanism to download the 
-required Python packages; users need the Internet to to prepare the 
-build platform (e.g., Debian) and QEMU source code anyway, so it makes 
-sense to require downloading the Python packages at the same time for 
-the future offline usage.
+The difference between the two frameworks is that one is for C and the
+other is for Rust, which increases the maintenance burden.
 
-"pip download" is probably for such a use case, and we can make sure 
-that nobody get hurt by the Sphinx change or other Python dependency 
-changes by wiring up it into python/scripts/mkvenv.py.
+> I am leaning towards option 1, i.e. keep using serde but only cover
+> conversions to and from QObject.
 
-In summary, there are the following viable options:
-(1) Don't bump the Sphinx version.
-(2) Require the Internet access when running ./configure --enable-docs.
-(3) Bundle Sphinx.
-(4) Let users "pip download".
+Based on my understanding of the three options above, I also think that
+option 1 is the more appropriate approach.
 
-Skipping into the conclusion, I'm for (2). The other options have their 
-own disadvantages:
+> The reason is that one future usecase
+> for Rust in QEMU is the UEFI variable store; that one also has some
+> Rust<->JSON conversions and could be served by either QObject or
+> serde_json. Either way, it'd be nice for the UEFI variable store to
+> remain within the Rust serde ecosystem and allow sharing code between
+> QEMU and Coconut SVSM. But I'm not so sure...
 
-(1) may cause intermittent failures with old Sphinx versions, which is 
-too bad.
-(3) is just difficult, according on your description.
-(4) is nice, but requires more time and I don't think it's worthwhile to 
-take the risk of old Sphinx versions until it is implemented.
+Thanks,
+Zhao
 
-In contrast, it seems (2) has the minimum risk and acceptable level of 
-annoyance. The documentation is for humans, and any human using QEMU 
-should have one computer with the Internet access at least. Perhaps some 
-users will be forced to change the build flag to stop building the 
-documentation on an offline computer and to prepare a build environment 
-on an online computer, but it's acceptable I guess.
-
-Regards,
-Akihiko Odaki
 
