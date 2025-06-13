@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E76C71136
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 14:11:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8DA6C71136
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 14:11:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ54t-00048N-Iy; Fri, 13 Jun 2025 10:08:19 -0400
+	id 1uQ54v-00048h-4f; Fri, 13 Jun 2025 10:08:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ54p-000478-Gb
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:08:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ54q-00047Q-Nn
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:08:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ54n-0001T9-ID
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:08:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ54o-0001TR-HX
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:08:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749823691;
+ s=mimecast20190719; t=1749823692;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ZtGNbngagZowlFdpcI8HvA2dIlze53B9ZOZz7ZeuxTs=;
- b=clwnNqJC9TfgPQOQIeOgyHMKM22f0uJy5i7pzK3fd1fhNagZ0ta0LYi0JrgzbeQ88oSXpI
- m9BfUh88fB56evFtIXwwPTuO6ekqm1DFcnEb9rPsSTi40FUiE6KF6Qmty+6FMEBOApF8TJ
- Gw+VWXGq+v7A3m4zLwPIjaS6rnhdv4c=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=cDCSHE7UZto1NWz1vjWrhDSXJj9UdV9w/vzQlY4ASS0=;
+ b=c423tSmlhXOS4yi/a+XtAG5Wswb8kjYZt4TPP/ykQ6pNTfMfNZdPEBVZMMYxF97r5KHNl/
+ Xga2Vt0yUuu+qE9Ga58LZ4/N0i2T+VdGpdpm9ailL+kt+KaC9nVrWVay/2It05Oc0RAU6D
+ 7c8gMKimB0tivjWNOCPJQbimGuXZdhc=
+Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
+ [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-367-YGTFkPfaNe-7HfssoxOZ8w-1; Fri, 13 Jun 2025 10:08:09 -0400
-X-MC-Unique: YGTFkPfaNe-7HfssoxOZ8w-1
-X-Mimecast-MFC-AGG-ID: YGTFkPfaNe-7HfssoxOZ8w_1749823688
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-6fac45de153so31329176d6.2
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 07:08:09 -0700 (PDT)
+ us-mta-65-M6q9PC8ANnybymwiTbCGog-1; Fri, 13 Jun 2025 10:08:10 -0400
+X-MC-Unique: M6q9PC8ANnybymwiTbCGog-1
+X-Mimecast-MFC-AGG-ID: M6q9PC8ANnybymwiTbCGog_1749823690
+Received: by mail-qt1-f200.google.com with SMTP id
+ d75a77b69052e-4a38007c7bdso47311221cf.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 07:08:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749823688; x=1750428488;
+ d=1e100.net; s=20230601; t=1749823690; x=1750428490;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZtGNbngagZowlFdpcI8HvA2dIlze53B9ZOZz7ZeuxTs=;
- b=QUdPIo6iCM/S9H9bTuEucdEOe70+tPJFKKha/EH5gQ2k2x1FzbIz8OChwwgScCkt+8
- FAmjRKXe9mAOPzjSahBXL6aQvfIptpicgJj5lyoLn92Zfn33EF8eIcgnxyMm5hWp9wR8
- 1w/ZOqYe/7aE064GGSsxDHnGNb066YYM9nl5LRJPZFlwxigtQ0GX2OX06JC6hOJyutia
- XBC43RhtzTw11hXG0ePBIVhilmNN9J9vdAbQgJhhVpgqXEY1eC5aV27qAldsX2/tYPpB
- koo9QudI6MJiQjr0WvWCKeC2nao5aPaW8XQ56rv0Dc7RpqncD1/mSeKuUrc5EB0JulbR
- VmaA==
-X-Gm-Message-State: AOJu0YwKl6LAK8tshDjsoIApbgGZYcWn+9HIeoi5e2JvO/CB46dSA18J
- RSETHPLT9qDxRD0lrlQyDdLUE1xLeRXgS3DrDSQMnuM3FaA0HZyUT2E3XGL1wM8O8y30LLVVY8T
- m6GEQxYf5L+Jp+9Ef2Z81QDT1D938nOjJAMlkC6wvz1XbYtqziZ5zfqWWuugmDoovG9FcRCQpL/
- Oa2yEwcNtifY1JazQ52eFSzN8WPqNOoQSU7vTxdQ==
-X-Gm-Gg: ASbGnctos8RELkAnTsLJsK3UZekL/cji0ntVsH0xdpeV3wtoUhFDGGHVy1u9uxqbvOt
- dTLAWXAj+PcUa3hoNl5hL94FLRCg/N2cplFe+0rfPYSiV2fjK1hq9do3yEq2SEQ5B4GqAKcck8X
- ouehTobMebUibP4cVhdrv69BKENya26VsH+nm4Bb4p33JyPSjMFeTU6UJlW1/U3Fi0M18EQ75mI
- Y4l1CsHogjOX9fUYErO+PnbIALkfXxY/iWa7Q6q0dBg9mAavRd/uYxogZxuUhcVmO17iaA6OqrX
- AEYcCP15HnE=
-X-Received: by 2002:a05:622a:4816:b0:499:5503:7b2c with SMTP id
- d75a77b69052e-4a72ff18e39mr59444011cf.43.1749823687920; 
- Fri, 13 Jun 2025 07:08:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHRyPdqjx1gEFBLVGZZXGwrD6+ZD+qblAgtVDjpWiXky+DIFkA0chRsMdL4GBxqbc1F9q0Yrw==
-X-Received: by 2002:a05:622a:4816:b0:499:5503:7b2c with SMTP id
- d75a77b69052e-4a72ff18e39mr59443281cf.43.1749823687241; 
- Fri, 13 Jun 2025 07:08:07 -0700 (PDT)
+ bh=cDCSHE7UZto1NWz1vjWrhDSXJj9UdV9w/vzQlY4ASS0=;
+ b=cNFtX2UnBICA+fSmgAnjcdSHz91HHzKRyBgxKIvVYdnOvvaDBcgn5ySkLTb3Rr01/t
+ Yl2Dhtmy5VTCBwSsox8KWReBBiy4EBnVDvdHFMMI8IKxajsV0wgobhtss/AZSPEsq6Kw
+ cvPwyAKvnA2KAn4DDagwS4rCx8fkOernoYXwCFS/64f2LZwLKvNB5IoU/eYqiWrdkHnW
+ 4DMzr7zwqTSp0UggS6RPKKseyXtNnI6SzD7QPjDYWGyJqJGaZhppC9+f4G15ZRB+5Ec6
+ 2j8PkhZ83v+JmIYyQAuTWdd3e2QIDL1+MqfHJIDL34S13QmM4xB5tbPxbMWgcJ6TIFWw
+ RZIA==
+X-Gm-Message-State: AOJu0YzYc90XPbPDoD/vmRLg8L7cE1uLjAVZFiDpPOPfN2ikTZ8eZWcJ
+ VGfRaTZCRcaz3/iVdQMdtyKC85XK2l+sJDoGBS8PCjURcDkzGS+mhdMMAm7gGZksfHoBTBW+CAt
+ RfPgtDNDLPfiXu7HMe3jQk6b6cKA//2HJcJ16O1Rzc6aELlk8t071ATrSUf9ZEgQ5HeK8zj01Xd
+ DUqGWAHgn0Se/yoQIoxlyFNWHa0Fv1vUeiXmQC/g==
+X-Gm-Gg: ASbGncsuxbVKFJ9x8Gb6WV9DjbNrtIUF0tAXnEoG9ewwvI82ifLBX9gD8mYlOzmyLBM
+ qn/Kb7IxVDmtno8whrrYXcyxG2SB2fLOMDybIFdB70hJPB2+KkoNBtfyTGKesz1cDoy+c04sc76
+ rDiXu2sOQ9MFsp6qMhbiz5XJdgo5wKOiUl6Y9IWmoVbYNYNuH62g61HcxFS4MuomBJZtvsaw3RC
+ u0Jusp9gKlsYibhiRvUrd4277uxuBbpvlEeRK36weB1dFrbQvR1YqQloGPZcP/QEBaAqE9PNpYk
+ p/9BfJHXZ8w=
+X-Received: by 2002:a05:622a:1b15:b0:4a7:2f49:7627 with SMTP id
+ d75a77b69052e-4a72febfd10mr59473061cf.11.1749823689649; 
+ Fri, 13 Jun 2025 07:08:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGZRoM6yXHJtrSQqBO1L4FnmXXbP3si63rDmjvV0PuUBFknDWrIcohxTfozmq6qTfOODl4OmQ==
+X-Received: by 2002:a05:622a:1b15:b0:4a7:2f49:7627 with SMTP id
+ d75a77b69052e-4a72febfd10mr59472521cf.11.1749823689211; 
+ Fri, 13 Jun 2025 07:08:09 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a72a52a1ddsm17384111cf.81.2025.06.13.07.08.06
+ d75a77b69052e-4a72a52a1ddsm17384111cf.81.2025.06.13.07.08.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Jun 2025 07:08:06 -0700 (PDT)
+ Fri, 13 Jun 2025 07:08:08 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, Juraj Marcin <jmarcin@redhat.com>,
  Mario Casquero <mcasquer@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Alexey Perevalov <a.perevalov@samsung.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 02/11] migration/hmp: Fix postcopy-blocktime per-vCPU
- results
-Date: Fri, 13 Jun 2025 10:07:52 -0400
-Message-ID: <20250613140801.474264-3-peterx@redhat.com>
+ "Dr . David Alan Gilbert" <dave@treblig.org>
+Subject: [PATCH v3 04/11] migration/bg-snapshot: Do not check for SKIP in
+ iterator
+Date: Fri, 13 Jun 2025 10:07:54 -0400
+Message-ID: <20250613140801.474264-5-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250613140801.474264-1-peterx@redhat.com>
 References: <20250613140801.474264-1-peterx@redhat.com>
@@ -110,69 +108,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Unfortunately, it was never correctly shown..
+It's not possible to happen in bg-snapshot case.
 
-This is only found when I started to look into making the blocktime feature
-more useful (so as to avoid using bpftrace, even though I'm not sure which
-one will be harder to use..).
-
-So the old dump would look like this:
-
-  Postcopy vCPU Blocktime: 0-1,4,10,21,33,46,48,59
-
-Even though there're actually 40 vcpus, and the string will merge same
-elements and also sort them.
-
-To fix it, simply loop over the uint32List manually.  Now it looks like:
-
-  Postcopy vCPU Blocktime (ms):
-   [15, 0, 0, 43, 29, 34, 36, 29, 37, 41,
-    33, 37, 45, 52, 50, 38, 40, 37, 40, 49,
-    40, 35, 35, 35, 81, 19, 18, 19, 18, 30,
-    22, 3, 0, 0, 0, 0, 0, 0, 0, 0]
-
-Cc: Dr. David Alan Gilbert <dave@treblig.org>
-Cc: Alexey Perevalov <a.perevalov@samsung.com>
-Cc: Markus Armbruster <armbru@redhat.com>
-Tested-by: Mario Casquero <mcasquer@redhat.com>
+Reviewed-by: Juraj Marcin <jmarcin@redhat.com>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/migration-hmp-cmds.c | 22 +++++++++++++---------
- 1 file changed, 13 insertions(+), 9 deletions(-)
+ migration/migration.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index 367ff6037f..867e017b32 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -208,15 +208,19 @@ void hmp_info_migrate(Monitor *mon, const QDict *qdict)
-     }
+diff --git a/migration/migration.c b/migration/migration.c
+index 4098870bce..e33e39ac74 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -3887,9 +3887,8 @@ static void *bg_migration_thread(void *opaque)
  
-     if (info->has_postcopy_vcpu_blocktime) {
--        Visitor *v;
--        char *str;
--        v = string_output_visitor_new(false, &str);
--        visit_type_uint32List(v, NULL, &info->postcopy_vcpu_blocktime,
--                              &error_abort);
--        visit_complete(v, &str);
--        monitor_printf(mon, "Postcopy vCPU Blocktime: %s\n", str);
--        g_free(str);
--        visit_free(v);
-+        uint32List *item = info->postcopy_vcpu_blocktime;
-+        const char *sep = "";
-+        int count = 0;
+     while (migration_is_active()) {
+         MigIterateState iter_state = bg_migration_iteration_run(s);
+-        if (iter_state == MIG_ITERATE_SKIP) {
+-            continue;
+-        } else if (iter_state == MIG_ITERATE_BREAK) {
 +
-+        monitor_printf(mon, "Postcopy vCPU Blocktime (ms):\n [");
-+
-+        while (item) {
-+            monitor_printf(mon, "%s%"PRIu32, sep, item->value);
-+            item = item->next;
-+            /* Each line 10 vcpu results, newline if there's more */
-+            sep = ((++count % 10 == 0) && item) ? ",\n  " : ", ";
-+        }
-+        monitor_printf(mon, "]\n");
-     }
++        if (iter_state == MIG_ITERATE_BREAK) {
+             break;
+         }
  
- out:
 -- 
 2.49.0
 
