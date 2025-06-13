@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C258DC71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 14:59:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AEEDC71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 14:59:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ5rR-0008BU-Fr; Fri, 13 Jun 2025 10:58:30 -0400
+	id 1uQ5rV-0008CO-6W; Fri, 13 Jun 2025 10:58:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uQ5rE-0008Aw-2D
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:58:17 -0400
+ id 1uQ5rO-0008Ba-Mg
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:58:28 -0400
 Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
  helo=dkim.livemail.co.uk)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uQ5rC-0008IQ-86
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:58:15 -0400
+ id 1uQ5rL-0008Im-Et
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:58:25 -0400
 Received: from smtp.livemail.co.uk (unknown [10.44.132.82])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id 1529C40238;
- Fri, 13 Jun 2025 15:58:12 +0100 (BST)
+ by dkim.livemail.co.uk (Postfix) with ESMTPS id F0082A03C3;
+ Fri, 13 Jun 2025 15:58:21 +0100 (BST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1749826692;
- bh=m/KpfL2N4w7qhT2MGX2IKCF5EKCVZd7L9Ka+XVTB8oc=;
+ s=livemail2; t=1749826702;
+ bh=BmgYGfqxadfNjre5CbBsoPtvW6352tZwhB9WZhQQwgc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=lrDtATW4neP6RNhZEwHY51ke9HbpSMDq3Vh6TZ4qmaxp2Jzj5lvvSHx13hzRSu2EF
- fgmRhWxUA4WfJC1i1ii2hb4qZf4Gdzk0napthBzCqCmaN8c7JxO9+MwkbbvPUh7BtG
- /dvRrnN+qV2ErqQ4hn/qewGVf1WFAu8PzxpNyLjg=
+ b=lGxnxoiGLa0XLnVMlZHgwcxpC3TzRXMdlux4ZCDAifUSYFNx+o9qDf+aACDnWLZAE
+ SXq5Zu6GmEwBX6z5Xi7HqI4YEy+RSrZ9bOl/p/sTJdjg8gEf/I4bIOto31YS6vW2cD
+ aLENzvtVR5ER+Im1qNtsk19joPc0exk3JISrCTQA=
 Received: from localhost.localdomain (unknown [145.40.191.116])
  (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 8EF41C02CE;
- Fri, 13 Jun 2025 15:58:07 +0100 (BST)
+ by smtp.livemail.co.uk (Postfix) with ESMTPSA id 657B8C03ED;
+ Fri, 13 Jun 2025 15:58:17 +0100 (BST)
 From: Roy Hopkins <roy.hopkins@randomman.co.uk>
 To: qemu-devel@nongnu.org
 Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
@@ -51,14 +51,15 @@ Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
  Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
  Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
  Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v8 11/16] docs/interop/firmware.json: Add igvm to
- FirmwareDevice
-Date: Fri, 13 Jun 2025 15:11:51 +0100
-Message-ID: <0527eab371d62ca011fb645d20f317d0ba662e21.1749820158.git.roy.hopkins@randomman.co.uk>
+Subject: [PATCH v8 12/16] backends/confidential-guest-support: Add
+ set_guest_policy() function
+Date: Fri, 13 Jun 2025 15:11:52 +0100
+Message-ID: <65089ffb0e3e935e8f046098db3cd2c2f7b0d950.1749820158.git.roy.hopkins@randomman.co.uk>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
 References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=213.171.216.60;
  envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
@@ -85,76 +86,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Create an enum entry within FirmwareDevice for 'igvm' to describe that
-an IGVM file can be used to map firmware into memory as an alternative
-to pre-existing firmware devices.
+For confidential guests a policy can be provided that defines the
+security level, debug status, expected launch measurement and other
+parameters that define the configuration of the confidential platform.
+
+This commit adds a new function named set_guest_policy() that can be
+implemented by each confidential platform, such as AMD SEV to set the
+policy. This will allow configuration of the policy from a
+multi-platform resource such as an IGVM file without the IGVM processor
+requiring specific implementation details for each platform.
 
 Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Acked-by: Gerd Hoffman <kraxel@redhat.com>
-Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
 ---
- docs/interop/firmware.json | 30 ++++++++++++++++++++++++++++--
- 1 file changed, 28 insertions(+), 2 deletions(-)
+ backends/confidential-guest-support.c       | 12 ++++++++++++
+ include/system/confidential-guest-support.h | 21 +++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/docs/interop/firmware.json b/docs/interop/firmware.json
-index 745d21d822..0711b6f323 100644
---- a/docs/interop/firmware.json
-+++ b/docs/interop/firmware.json
-@@ -57,10 +57,17 @@
- #
- # @memory: The firmware is to be mapped into memory.
- #
-+# @igvm: The firmware is defined by a file conforming to the IGVM
-+#        specification and mapped into memory according to directives
-+#        defined in the file. This is similar to @memory but may
-+#        include additional processing defined by the IGVM file
-+#        including initial CPU state or population of metadata into
-+#        the guest address space. Since: 10.1
-+#
- # Since: 3.0
- ##
- { 'enum' : 'FirmwareDevice',
--  'data' : [ 'flash', 'kernel', 'memory' ] }
-+  'data' : [ 'flash', 'kernel', 'memory', 'igvm' ] }
+diff --git a/backends/confidential-guest-support.c b/backends/confidential-guest-support.c
+index c5bef1fbfa..156dd15e66 100644
+--- a/backends/confidential-guest-support.c
++++ b/backends/confidential-guest-support.c
+@@ -38,6 +38,17 @@ static int set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
+     return -1;
+ }
  
- ##
- # @FirmwareArchitecture:
-@@ -377,6 +384,24 @@
- { 'struct' : 'FirmwareMappingMemory',
-   'data'   : { 'filename' : 'str' } }
- 
-+##
-+# @FirmwareMappingIgvm:
-+#
-+# Describes loading and mapping properties for the firmware executable,
-+# when @FirmwareDevice is @igvm.
-+#
-+# @filename: Identifies the IGVM file containing the firmware executable
-+#            along with other information used to configure the initial
-+#            state of the guest. The IGVM file may be shared by multiple
-+#            virtual machine definitions. This corresponds to creating
-+#            an object on the command line with "-object igvm-cfg,
-+#            file=@filename".
-+#
-+# Since: 10.1
-+##
-+{ 'struct' : 'FirmwareMappingIgvm',
-+  'data'   : { 'filename' : 'str' } }
++static int set_guest_policy(ConfidentialGuestPolicyType policy_type,
++                            uint64_t policy,
++                            void *policy_data1, uint32_t policy_data1_size,
++                            void *policy_data2, uint32_t policy_data2_size,
++                            Error **errp)
++{
++    error_setg(errp,
++               "Setting confidential guest policy is not supported for this platform");
++    return -1;
++}
 +
- ##
- # @FirmwareMapping:
- #
-@@ -393,7 +418,8 @@
-   'discriminator' : 'device',
-   'data'          : { 'flash'  : 'FirmwareMappingFlash',
-                       'kernel' : 'FirmwareMappingKernel',
--                      'memory' : 'FirmwareMappingMemory' } }
-+                      'memory' : 'FirmwareMappingMemory',
-+                      'igvm'   : 'FirmwareMappingIgvm' } }
+ static int get_mem_map_entry(int index, ConfidentialGuestMemoryMapEntry *entry,
+                              Error **errp)
+ {
+@@ -53,6 +64,7 @@ static void confidential_guest_support_class_init(ObjectClass *oc,
+     ConfidentialGuestSupportClass *cgsc = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
+     cgsc->check_support = check_support;
+     cgsc->set_guest_state = set_guest_state;
++    cgsc->set_guest_policy = set_guest_policy;
+     cgsc->get_mem_map_entry = get_mem_map_entry;
+ }
  
- ##
- # @Firmware:
+diff --git a/include/system/confidential-guest-support.h b/include/system/confidential-guest-support.h
+index 79ecd21f42..0cc8b26e64 100644
+--- a/include/system/confidential-guest-support.h
++++ b/include/system/confidential-guest-support.h
+@@ -57,6 +57,10 @@ typedef enum ConfidentialGuestPageType {
+     CGS_PAGE_TYPE_REQUIRED_MEMORY,
+ } ConfidentialGuestPageType;
+ 
++typedef enum ConfidentialGuestPolicyType {
++    GUEST_POLICY_SEV,
++} ConfidentialGuestPolicyType;
++
+ struct ConfidentialGuestSupport {
+     Object parent;
+ 
+@@ -123,6 +127,23 @@ typedef struct ConfidentialGuestSupportClass {
+                            ConfidentialGuestPageType memory_type,
+                            uint16_t cpu_index, Error **errp);
+ 
++    /*
++     * Set the guest policy. The policy can be used to configure the
++     * confidential platform, such as if debug is enabled or not and can contain
++     * information about expected launch measurements, signed verification of
++     * guest configuration and other platform data.
++     *
++     * The format of the policy data is specific to each platform. For example,
++     * SEV-SNP uses a policy bitfield in the 'policy' argument and provides an
++     * ID block and ID authentication in the 'policy_data' parameters. The type
++     * of policy data is identified by the 'policy_type' argument.
++     */
++    int (*set_guest_policy)(ConfidentialGuestPolicyType policy_type,
++                            uint64_t policy,
++                            void *policy_data1, uint32_t policy_data1_size,
++                            void *policy_data2, uint32_t policy_data2_size,
++                            Error **errp);
++
+     /*
+      * Iterate the system memory map, getting the entry with the given index
+      * that can be populated into guest memory.
 -- 
 2.43.0
 
