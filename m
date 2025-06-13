@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CDA8C7114C
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 00:04:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C53A1C61CE8
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 00:05:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPruB-0005nl-LH; Thu, 12 Jun 2025 20:04:23 -0400
+	id 1uPruD-0005pB-Dr; Thu, 12 Jun 2025 20:04:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <3AGtLaAcKCk0z3103sxv33v0t.r315t19-stAt0232v29.36v@flex--komlodi.bounces.google.com>)
- id 1uPru9-0005md-Ja
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:21 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+ <3AmtLaAcKCk815325uzx55x2v.t537v3B-uvCv2454x4B.58x@flex--komlodi.bounces.google.com>)
+ id 1uPruA-0005n1-D3
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:22 -0400
+Received: from mail-pl1-x64a.google.com ([2607:f8b0:4864:20::64a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <3AGtLaAcKCk0z3103sxv33v0t.r315t19-stAt0232v29.36v@flex--komlodi.bounces.google.com>)
- id 1uPru6-0000Wu-ND
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:21 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-747d394f45fso1343906b3a.2
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 17:04:17 -0700 (PDT)
+ <3AmtLaAcKCk815325uzx55x2v.t537v3B-uvCv2454x4B.58x@flex--komlodi.bounces.google.com>)
+ id 1uPru7-0000XN-Qa
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:22 -0400
+Received: by mail-pl1-x64a.google.com with SMTP id
+ d9443c01a7336-2358de17665so13421045ad.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 17:04:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1749773057; x=1750377857; darn=nongnu.org;
+ d=google.com; s=20230601; t=1749773058; x=1750377858; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=rlKLlPaZ/qjCDaZme7JPe4na4UPbi/S79jkvjPexJpU=;
- b=jFKhybts4p+lkAyt/hRlc52F/fo6eUdw+Yfpk324NH3XHAPNHOQLR3RXCswtj56eDN
- /GMGNJk4eHS0gr/U2+/IQ/DvA5K4ka84x0Y+dUQQ2IgaMOGOd4PsNlBaBIdTr/whBBNq
- QKcW/hyzo59/uzOPRELca/owYw2KL99ddM0HDmfvgUUIyr9TUj6IcGs1pXtazORX+b4V
- zxnpLn7WInNn4j4bk7seF6SYBDCJumLSB1jg33KgbVsrMVeuBLRIQ+lwp1Y80+vUvdlQ
- d2gKBsVrEzYYOCnEfpBglWzxakyYcqmBRRCag7Sd1c49fubfHz+fzONnifqZ7Sa0/pFu
- yJhg==
+ bh=yV4kGwbpp1m9FhU4yzA1jnn6GM9g9YaJoL8u1HuZLk4=;
+ b=2RbQc45IgQTor61EZMPrnidJHE4LfByPrS5Xns6GGNU1ioRcWoq8d65tmPvGVASAIH
+ BER6G3D/BQ+bgtdrUUiK1HqpRQt6McJ20nvKARJagA4iibIyBUps3+5J2sYlbNm01Ru8
+ tb38mOLls7Nz/r3yzm4A5quJVg//wxv3Yf3UxWGl1+CgEQOUxzWZU+ktWs99LI2d030v
+ lS5M2bFp+UmcC3fXCH9Zj0tIc8KdYybOVC9OEdvydvHCqEREg8WGynSdvA6doO0AAyDH
+ Lc79vLkOBiUthQ6AD0etS0+XlpY/DA7ASBKMGubqxZbCFVpWP+k2xHT3NwvuKvv0qx8g
+ cPAQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749773057; x=1750377857;
+ d=1e100.net; s=20230601; t=1749773058; x=1750377858;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rlKLlPaZ/qjCDaZme7JPe4na4UPbi/S79jkvjPexJpU=;
- b=YoUJvVOEG3dF2jN7BHXaJOo96X0omNmruNBcSi1VCzWpT3aOSLvZdJOw3rKT+MH7MV
- gqZuH/tsr3AuocybR6cg8WMj4WK+SVrQONkc0z+NjFiXWN6VWgGIUA0Khsiphw13zIlO
- kK1135jojLwTnOTWlY6rjvU8eOHIMNFtztW698BNq0napip4ieeFWsWkVto8u9kukyww
- KXXoddopWSD/HgHWmCyWYNnYh/Bty6cLkUytV4O7MXVan8EeyBXcn7VRNVaQ9ikKdbtn
- arjoOpgVuJ/OEfTGNnKDUUavFfP1nKwPyAlU/U4wyfmw9M+qK3E9tALomBJY8Fcl9DKU
- WJ+g==
-X-Gm-Message-State: AOJu0Ywdl3ZfqIZjCwWmDmW140kYlASgBcvKxHl08n4/RRJ/Q209nENy
- c0kBgmdQzS97u1cIzK319k3l/IqWr8F+5LCek0ksSo82A503sAFdH3MRlhZ9hsDYkJ9vE5uYl+b
- DkkQVsrUA4kFqIbyparWS2IQc83OL8WSFTFREBNB8QEXOeOq8/CqGKKtth8WbWNWNXRbDQT/7ON
- 3S01Urz8QbxSPhUjVClIBPuov5n96pXRIuX7yr24r+
-X-Google-Smtp-Source: AGHT+IG6akEqGlNM8qsP7MZTZas9c60HPxg5e6upy7QQEHMJbGLhCImjYT8+m30GdpsgxYtDz8rNbPPE8oHp
-X-Received: from pgbfy9.prod.google.com ([2002:a05:6a02:2a89:b0:b2c:374b:9e48])
+ bh=yV4kGwbpp1m9FhU4yzA1jnn6GM9g9YaJoL8u1HuZLk4=;
+ b=LcPvrnM0jesOpQtQkV2NgBL911oNdox756kGc0yuS27Mh3TvxZ0EUehPsheefMyRvj
+ 0AwosAlhamoGqViwA8SgycMPKBxzF/lfc/3+kyLIpfdlWCEHI+5nIVYf8dc768nmQ3Ct
+ z34BQGjTPPVWnLKe0oYeojUXA9vYh7ncH2mAYDzWYW56qXrZYcsCn0zcvK0Baxlswiic
+ tme1ODeXItSjGwpXEgPzGrNwbn3ywzbs4jar1xREDnwMdgflP7r5JifhMnrCV52an8AP
+ KIe14AP6krVppQotXMhxvs19XvLzs95IlsmJXCgt0H0NnzJq7KsjCzY3Iv4kA3fJ0ixs
+ yiqA==
+X-Gm-Message-State: AOJu0YyyVDvQTugwMqYkIB4GfLbM5dwJqNIkVmszW/2kpvA4qVSzeY4Q
+ f/3/F77jnS9z/aM67lS+iGYOuwCFVtnybOu2edquzOj2aS7BQLcGwGtTmY3T3ijMM0keMDp31YY
+ 7xRd3eQC7jpblySiKoxQmGIPlE2VGmm/Wiy+5dXrSGL2/XngMYxFnMlWpjmTrhGV0bXX8AX45cE
+ ZXwHIN7WmRc7niQKAkuNI5YqkLxEwZmB+liXjgMQWo
+X-Google-Smtp-Source: AGHT+IEItkmlqA0nh1bG1USlq32Zt0fVXVjxOFcC3qqim18euF/XBFRjLkEEWdkTrdMxTUkzZ/cMfsMRYUg0
+X-Received: from pgg12.prod.google.com ([2002:a05:6a02:4d8c:b0:b1f:dd75:de2a])
  (user=komlodi job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:700d:b0:1f5:769a:a4be
- with SMTP id adf61e73a8af0-21fad0bb9b6mr1359209637.36.1749773056758; Thu, 12
- Jun 2025 17:04:16 -0700 (PDT)
-Date: Fri, 13 Jun 2025 00:03:55 +0000
+ 2002:a17:903:3205:b0:234:b131:15a
+ with SMTP id d9443c01a7336-2365d8880f8mr14744295ad.4.1749773058144; Thu, 12
+ Jun 2025 17:04:18 -0700 (PDT)
+Date: Fri, 13 Jun 2025 00:03:56 +0000
 In-Reply-To: <20250613000411.1516521-1-komlodi@google.com>
 Mime-Version: 1.0
 References: <20250613000411.1516521-1-komlodi@google.com>
 X-Mailer: git-send-email 2.50.0.rc1.591.g9c95f17f64-goog
-Message-ID: <20250613000411.1516521-4-komlodi@google.com>
-Subject: [PATCH 03/19] hw/i3c: Split DesignWare I3C out of Aspeed I3C
+Message-ID: <20250613000411.1516521-5-komlodi@google.com>
+Subject: [PATCH 04/19] hw/i3c/dw-i3c: Add more register fields
 From: Joe Komlodi <komlodi@google.com>
 To: qemu-devel@nongnu.org
 Cc: venture@google.com, komlodi@google.com, clg@kaod.org, 
@@ -71,16 +71,17 @@ Cc: venture@google.com, komlodi@google.com, clg@kaod.org,
  jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au, joel@jms.id.au, 
  qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=3AGtLaAcKCk0z3103sxv33v0t.r315t19-stAt0232v29.36v@flex--komlodi.bounces.google.com;
- helo=mail-pf1-x44a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::64a;
+ envelope-from=3AmtLaAcKCk815325uzx55x2v.t537v3B-uvCv2454x4B.58x@flex--komlodi.bounces.google.com;
+ helo=mail-pl1-x64a.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
 X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ UPPERCASE_75_100=0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,600 +97,290 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Aspeed I3C IP block is technically an Aspeed IP block that manages
-6 DW I3C controllers.
-
-To help reflect this better and to make it easier for other SoCs to use
-the DW I3C model, we'll split out the DW portion from the Aspeed
-portion.
+Adds the rest of the Designware register fields.
 
 Signed-off-by: Joe Komlodi <komlodi@google.com>
----
- hw/arm/Kconfig              |   1 +
- hw/i3c/Kconfig              |   3 +
- hw/i3c/aspeed_i3c.c         | 183 +-------------------------------
- hw/i3c/dw-i3c.c             | 204 ++++++++++++++++++++++++++++++++++++
- hw/i3c/meson.build          |   1 +
- hw/i3c/trace-events         |   6 +-
- include/hw/i3c/aspeed_i3c.h |  19 +---
- include/hw/i3c/dw-i3c.h     |  35 +++++++
- 8 files changed, 254 insertions(+), 198 deletions(-)
- create mode 100644 hw/i3c/dw-i3c.c
- create mode 100644 include/hw/i3c/dw-i3c.h
 
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index 427d0f0271..53d62cd08d 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -531,6 +531,7 @@ config ASPEED_SOC
-     select FTGMAC100
-     select I2C
-     select I3C
-+    select DW_I3C
-     select DPS310
-     select PCA9552
-     select SERIAL_MM
-diff --git a/hw/i3c/Kconfig b/hw/i3c/Kconfig
-index e07fe445c6..ecec77d6fc 100644
---- a/hw/i3c/Kconfig
-+++ b/hw/i3c/Kconfig
-@@ -1,2 +1,5 @@
- config I3C
-     bool
-+
-+config DW_I3C
-+    bool
-diff --git a/hw/i3c/aspeed_i3c.c b/hw/i3c/aspeed_i3c.c
-index e56822f928..cb0332828c 100644
---- a/hw/i3c/aspeed_i3c.c
-+++ b/hw/i3c/aspeed_i3c.c
-@@ -2,6 +2,7 @@
-  * ASPEED I3C Controller
-  *
-  * Copyright (C) 2021 ASPEED Technology Inc.
-+ * Copyright (C) 2025 Google, LLC.
-  *
-  * This code is licensed under the GPL version 2 or later.  See
-  * the COPYING file in the top-level directory.
-@@ -43,162 +44,6 @@ REG32(I3C6_REG1, 0x64)
-     FIELD(I3C6_REG1, I2C_MODE,  0,  1)
-     FIELD(I3C6_REG1, SA_EN,     15, 1)
- 
--/* I3C Device Registers */
--REG32(DEVICE_CTRL,                  0x00)
--REG32(DEVICE_ADDR,                  0x04)
--REG32(HW_CAPABILITY,                0x08)
--REG32(COMMAND_QUEUE_PORT,           0x0c)
--REG32(RESPONSE_QUEUE_PORT,          0x10)
--REG32(RX_TX_DATA_PORT,              0x14)
--REG32(IBI_QUEUE_STATUS,             0x18)
--REG32(IBI_QUEUE_DATA,               0x18)
--REG32(QUEUE_THLD_CTRL,              0x1c)
--REG32(DATA_BUFFER_THLD_CTRL,        0x20)
--REG32(IBI_QUEUE_CTRL,               0x24)
--REG32(IBI_MR_REQ_REJECT,            0x2c)
--REG32(IBI_SIR_REQ_REJECT,           0x30)
--REG32(RESET_CTRL,                   0x34)
--REG32(SLV_EVENT_CTRL,               0x38)
--REG32(INTR_STATUS,                  0x3c)
--REG32(INTR_STATUS_EN,               0x40)
--REG32(INTR_SIGNAL_EN,               0x44)
--REG32(INTR_FORCE,                   0x48)
--REG32(QUEUE_STATUS_LEVEL,           0x4c)
--REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)
--REG32(PRESENT_STATE,                0x54)
--REG32(CCC_DEVICE_STATUS,            0x58)
--REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)
--    FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)
--    FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)
--REG32(DEV_CHAR_TABLE_POINTER,       0x60)
--REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)
--REG32(SLV_MIPI_PID_VALUE,           0x70)
--REG32(SLV_PID_VALUE,                0x74)
--REG32(SLV_CHAR_CTRL,                0x78)
--REG32(SLV_MAX_LEN,                  0x7c)
--REG32(MAX_READ_TURNAROUND,          0x80)
--REG32(MAX_DATA_SPEED,               0x84)
--REG32(SLV_DEBUG_STATUS,             0x88)
--REG32(SLV_INTR_REQ,                 0x8c)
--REG32(DEVICE_CTRL_EXTENDED,         0xb0)
--REG32(SCL_I3C_OD_TIMING,            0xb4)
--REG32(SCL_I3C_PP_TIMING,            0xb8)
--REG32(SCL_I2C_FM_TIMING,            0xbc)
--REG32(SCL_I2C_FMP_TIMING,           0xc0)
--REG32(SCL_EXT_LCNT_TIMING,          0xc8)
--REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)
--REG32(BUS_FREE_TIMING,              0xd4)
--REG32(BUS_IDLE_TIMING,              0xd8)
--REG32(I3C_VER_ID,                   0xe0)
--REG32(I3C_VER_TYPE,                 0xe4)
--REG32(EXTENDED_CAPABILITY,          0xe8)
--REG32(SLAVE_CONFIG,                 0xec)
--
--static const uint32_t ast2600_i3c_device_resets[ASPEED_I3C_DEVICE_NR_REGS] = {
--    [R_HW_CAPABILITY]               = 0x000e00bf,
--    [R_QUEUE_THLD_CTRL]             = 0x01000101,
--    [R_I3C_VER_ID]                  = 0x3130302a,
--    [R_I3C_VER_TYPE]                = 0x6c633033,
--    [R_DEVICE_ADDR_TABLE_POINTER]   = 0x00080280,
--    [R_DEV_CHAR_TABLE_POINTER]      = 0x00020200,
--    [A_VENDOR_SPECIFIC_REG_POINTER] = 0x000000b0,
--    [R_SLV_MAX_LEN]                 = 0x00ff00ff,
--};
--
--static uint64_t aspeed_i3c_device_read(void *opaque, hwaddr offset,
--                                       unsigned size)
--{
--    AspeedI3CDevice *s = ASPEED_I3C_DEVICE(opaque);
--    uint32_t addr = offset >> 2;
--    uint64_t value;
--
--    switch (addr) {
--    case R_COMMAND_QUEUE_PORT:
--        value = 0;
--        break;
--    default:
--        value = s->regs[addr];
--        break;
--    }
--
--    trace_aspeed_i3c_device_read(s->id, offset, value);
--
--    return value;
--}
--
--static void aspeed_i3c_device_write(void *opaque, hwaddr offset,
--                                    uint64_t value, unsigned size)
--{
--    AspeedI3CDevice *s = ASPEED_I3C_DEVICE(opaque);
--    uint32_t addr = offset >> 2;
--
--    trace_aspeed_i3c_device_write(s->id, offset, value);
--
--    switch (addr) {
--    case R_HW_CAPABILITY:
--    case R_RESPONSE_QUEUE_PORT:
--    case R_IBI_QUEUE_DATA:
--    case R_QUEUE_STATUS_LEVEL:
--    case R_PRESENT_STATE:
--    case R_CCC_DEVICE_STATUS:
--    case R_DEVICE_ADDR_TABLE_POINTER:
--    case R_VENDOR_SPECIFIC_REG_POINTER:
--    case R_SLV_CHAR_CTRL:
--    case R_SLV_MAX_LEN:
--    case R_MAX_READ_TURNAROUND:
--    case R_I3C_VER_ID:
--    case R_I3C_VER_TYPE:
--    case R_EXTENDED_CAPABILITY:
--        qemu_log_mask(LOG_GUEST_ERROR,
--                      "%s: write to readonly register[0x%02" HWADDR_PRIx
--                      "] = 0x%08" PRIx64 "\n",
--                      __func__, offset, value);
--        break;
--    case R_RX_TX_DATA_PORT:
--        break;
--    case R_RESET_CTRL:
--        break;
--    default:
--        s->regs[addr] = value;
--        break;
--    }
--}
--
--static const VMStateDescription aspeed_i3c_device_vmstate = {
--    .name = TYPE_ASPEED_I3C,
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (const VMStateField[]){
--        VMSTATE_UINT32_ARRAY(regs, AspeedI3CDevice, ASPEED_I3C_DEVICE_NR_REGS),
--        VMSTATE_END_OF_LIST(),
--    }
--};
--
--static const MemoryRegionOps aspeed_i3c_device_ops = {
--    .read = aspeed_i3c_device_read,
--    .write = aspeed_i3c_device_write,
--    .endianness = DEVICE_LITTLE_ENDIAN,
--};
--
--static void aspeed_i3c_device_reset(DeviceState *dev)
--{
--    AspeedI3CDevice *s = ASPEED_I3C_DEVICE(dev);
--
--    memcpy(s->regs, ast2600_i3c_device_resets, sizeof(s->regs));
--}
--
--static void aspeed_i3c_device_realize(DeviceState *dev, Error **errp)
--{
--    AspeedI3CDevice *s = ASPEED_I3C_DEVICE(dev);
--    g_autofree char *name = g_strdup_printf(TYPE_ASPEED_I3C_DEVICE ".%d",
--                                            s->id);
--
--    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
--
--    memory_region_init_io(&s->mr, OBJECT(s), &aspeed_i3c_device_ops,
--                          s, name, ASPEED_I3C_DEVICE_NR_REGS << 2);
--}
--
- static uint64_t aspeed_i3c_read(void *opaque, hwaddr addr, unsigned int size)
- {
-     AspeedI3CState *s = ASPEED_I3C(opaque);
-@@ -275,7 +120,7 @@ static void aspeed_i3c_instance_init(Object *obj)
- 
-     for (i = 0; i < ASPEED_I3C_NR_DEVICES; ++i) {
-         object_initialize_child(obj, "device[*]", &s->devices[i],
--                TYPE_ASPEED_I3C_DEVICE);
-+                TYPE_DW_I3C);
-     }
- }
- 
-@@ -323,27 +168,6 @@ static void aspeed_i3c_realize(DeviceState *dev, Error **errp)
- 
- }
- 
--static const Property aspeed_i3c_device_properties[] = {
--    DEFINE_PROP_UINT8("device-id", AspeedI3CDevice, id, 0),
--};
--
--static void aspeed_i3c_device_class_init(ObjectClass *klass, const void *data)
--{
--    DeviceClass *dc = DEVICE_CLASS(klass);
--
--    dc->desc = "Aspeed I3C Device";
--    dc->realize = aspeed_i3c_device_realize;
--    device_class_set_legacy_reset(dc, aspeed_i3c_device_reset);
--    device_class_set_props(dc, aspeed_i3c_device_properties);
--}
--
--static const TypeInfo aspeed_i3c_device_info = {
--    .name = TYPE_ASPEED_I3C_DEVICE,
--    .parent = TYPE_SYS_BUS_DEVICE,
--    .instance_size = sizeof(AspeedI3CDevice),
--    .class_init = aspeed_i3c_device_class_init,
--};
--
- static const VMStateDescription vmstate_aspeed_i3c = {
-     .name = TYPE_ASPEED_I3C,
-     .version_id = 1,
-@@ -351,7 +175,7 @@ static const VMStateDescription vmstate_aspeed_i3c = {
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32_ARRAY(regs, AspeedI3CState, ASPEED_I3C_NR_REGS),
-         VMSTATE_STRUCT_ARRAY(devices, AspeedI3CState, ASPEED_I3C_NR_DEVICES, 1,
--                             aspeed_i3c_device_vmstate, AspeedI3CDevice),
-+                             vmstate_dw_i3c, DWI3C),
-         VMSTATE_END_OF_LIST(),
-     }
- };
-@@ -376,7 +200,6 @@ static const TypeInfo aspeed_i3c_info = {
- 
- static void aspeed_i3c_register_types(void)
- {
--    type_register_static(&aspeed_i3c_device_info);
-     type_register_static(&aspeed_i3c_info);
- }
- 
+Reviewed-by: Patrick Venture <venture@google.com>
+---
+ hw/i3c/dw-i3c.c | 216 ++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 216 insertions(+)
+
 diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-new file mode 100644
-index 0000000000..4b1a3f3f07
---- /dev/null
+index 4b1a3f3f07..b252903ea4 100644
+--- a/hw/i3c/dw-i3c.c
 +++ b/hw/i3c/dw-i3c.c
-@@ -0,0 +1,204 @@
-+/*
-+ * DesignWare I3C Controller
-+ *
-+ * Copyright (C) 2021 ASPEED Technology Inc.
-+ * Copyright (C) 2025 Google, LLC
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/error-report.h"
-+#include "hw/i3c/i3c.h"
-+#include "hw/i3c/dw-i3c.h"
-+#include "hw/registerfields.h"
-+#include "hw/qdev-properties.h"
-+#include "qapi/error.h"
-+#include "migration/vmstate.h"
-+#include "trace.h"
-+
-+REG32(DEVICE_CTRL,                  0x00)
-+REG32(DEVICE_ADDR,                  0x04)
-+REG32(HW_CAPABILITY,                0x08)
-+REG32(COMMAND_QUEUE_PORT,           0x0c)
-+REG32(RESPONSE_QUEUE_PORT,          0x10)
-+REG32(RX_TX_DATA_PORT,              0x14)
-+REG32(IBI_QUEUE_STATUS,             0x18)
-+REG32(IBI_QUEUE_DATA,               0x18)
-+REG32(QUEUE_THLD_CTRL,              0x1c)
-+REG32(DATA_BUFFER_THLD_CTRL,        0x20)
-+REG32(IBI_QUEUE_CTRL,               0x24)
-+REG32(IBI_MR_REQ_REJECT,            0x2c)
-+REG32(IBI_SIR_REQ_REJECT,           0x30)
-+REG32(RESET_CTRL,                   0x34)
-+REG32(SLV_EVENT_CTRL,               0x38)
-+REG32(INTR_STATUS,                  0x3c)
-+REG32(INTR_STATUS_EN,               0x40)
-+REG32(INTR_SIGNAL_EN,               0x44)
-+REG32(INTR_FORCE,                   0x48)
-+REG32(QUEUE_STATUS_LEVEL,           0x4c)
-+REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)
-+REG32(PRESENT_STATE,                0x54)
-+REG32(CCC_DEVICE_STATUS,            0x58)
-+REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)
-+    FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)
-+    FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)
-+REG32(DEV_CHAR_TABLE_POINTER,       0x60)
-+REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)
-+REG32(SLV_MIPI_PID_VALUE,           0x70)
-+REG32(SLV_PID_VALUE,                0x74)
-+REG32(SLV_CHAR_CTRL,                0x78)
-+REG32(SLV_MAX_LEN,                  0x7c)
-+REG32(MAX_READ_TURNAROUND,          0x80)
-+REG32(MAX_DATA_SPEED,               0x84)
-+REG32(SLV_DEBUG_STATUS,             0x88)
-+REG32(SLV_INTR_REQ,                 0x8c)
-+REG32(DEVICE_CTRL_EXTENDED,         0xb0)
-+REG32(SCL_I3C_OD_TIMING,            0xb4)
-+REG32(SCL_I3C_PP_TIMING,            0xb8)
-+REG32(SCL_I2C_FM_TIMING,            0xbc)
-+REG32(SCL_I2C_FMP_TIMING,           0xc0)
-+REG32(SCL_EXT_LCNT_TIMING,          0xc8)
-+REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)
-+REG32(BUS_FREE_TIMING,              0xd4)
-+REG32(BUS_IDLE_TIMING,              0xd8)
-+REG32(I3C_VER_ID,                   0xe0)
-+REG32(I3C_VER_TYPE,                 0xe4)
-+REG32(EXTENDED_CAPABILITY,          0xe8)
-+REG32(SLAVE_CONFIG,                 0xec)
-+
-+static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
-+    [R_HW_CAPABILITY]               = 0x000e00bf,
-+    [R_QUEUE_THLD_CTRL]             = 0x01000101,
-+    [R_I3C_VER_ID]                  = 0x3130302a,
-+    [R_I3C_VER_TYPE]                = 0x6c633033,
-+    [R_DEVICE_ADDR_TABLE_POINTER]   = 0x00080280,
-+    [R_DEV_CHAR_TABLE_POINTER]      = 0x00020200,
-+    [A_VENDOR_SPECIFIC_REG_POINTER] = 0x000000b0,
-+    [R_SLV_MAX_LEN]                 = 0x00ff00ff,
-+};
-+
-+static uint64_t dw_i3c_read(void *opaque, hwaddr offset, unsigned size)
-+{
-+    DWI3C *s = DW_I3C(opaque);
-+    uint32_t addr = offset >> 2;
-+    uint64_t value;
-+
-+    switch (addr) {
-+    case R_COMMAND_QUEUE_PORT:
-+        value = 0;
-+        break;
-+    default:
-+        value = s->regs[addr];
-+        break;
-+    }
-+
-+    trace_dw_i3c_read(s->id, offset, value);
-+
-+    return value;
-+}
-+
-+static void dw_i3c_write(void *opaque, hwaddr offset, uint64_t value,
-+                         unsigned size)
-+{
-+    DWI3C *s = DW_I3C(opaque);
-+    uint32_t addr = offset >> 2;
-+
-+    trace_dw_i3c_write(s->id, offset, value);
-+
-+    switch (addr) {
-+    case R_HW_CAPABILITY:
-+    case R_RESPONSE_QUEUE_PORT:
-+    case R_IBI_QUEUE_DATA:
-+    case R_QUEUE_STATUS_LEVEL:
-+    case R_PRESENT_STATE:
-+    case R_CCC_DEVICE_STATUS:
-+    case R_DEVICE_ADDR_TABLE_POINTER:
-+    case R_VENDOR_SPECIFIC_REG_POINTER:
-+    case R_SLV_CHAR_CTRL:
-+    case R_SLV_MAX_LEN:
-+    case R_MAX_READ_TURNAROUND:
-+    case R_I3C_VER_ID:
-+    case R_I3C_VER_TYPE:
-+    case R_EXTENDED_CAPABILITY:
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: write to readonly register[0x%02" HWADDR_PRIx
-+                      "] = 0x%08" PRIx64 "\n",
-+                      __func__, offset, value);
-+        break;
-+    case R_RX_TX_DATA_PORT:
-+        break;
-+    case R_RESET_CTRL:
-+        break;
-+    default:
-+        s->regs[addr] = value;
-+        break;
-+    }
-+}
-+
-+const VMStateDescription vmstate_dw_i3c = {
-+    .name = TYPE_DW_I3C,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (VMStateField[]){
-+        VMSTATE_UINT32_ARRAY(regs, DWI3C, DW_I3C_NR_REGS),
-+        VMSTATE_END_OF_LIST(),
-+    }
-+};
-+
-+static const MemoryRegionOps dw_i3c_ops = {
-+    .read = dw_i3c_read,
-+    .write = dw_i3c_write,
-+    .endianness = DEVICE_LITTLE_ENDIAN,
-+};
-+
-+static void dw_i3c_reset_enter(Object *obj, ResetType type)
-+{
-+    DWI3C *s = DW_I3C(obj);
-+
-+    memcpy(s->regs, dw_i3c_resets, sizeof(s->regs));
-+}
-+
-+static void dw_i3c_realize(DeviceState *dev, Error **errp)
-+{
-+    DWI3C *s = DW_I3C(dev);
-+    g_autofree char *name = g_strdup_printf(TYPE_DW_I3C ".%d", s->id);
-+
-+    sysbus_init_irq(SYS_BUS_DEVICE(dev), &s->irq);
-+
-+    memory_region_init_io(&s->mr, OBJECT(s), &dw_i3c_ops, s, name,
-+                          DW_I3C_NR_REGS << 2);
-+    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &s->mr);
-+}
-+
-+static const Property dw_i3c_properties[] = {
-+    DEFINE_PROP_UINT8("device-id", DWI3C, id, 0),
-+};
-+
-+static void dw_i3c_class_init(ObjectClass *klass, const void *data)
-+{
-+    DeviceClass *dc = DEVICE_CLASS(klass);
-+    ResettableClass *rc = RESETTABLE_CLASS(klass);
-+
-+    rc->phases.enter = dw_i3c_reset_enter;
-+
-+    dc->desc = "DesignWare I3C Controller";
-+    dc->realize = dw_i3c_realize;
-+    dc->vmsd = &vmstate_dw_i3c;
-+    device_class_set_props(dc, dw_i3c_properties);
-+}
-+
-+static const TypeInfo dw_i3c_info = {
-+    .name = TYPE_DW_I3C,
-+    .parent = TYPE_SYS_BUS_DEVICE,
-+    .instance_size = sizeof(DWI3C),
-+    .class_init = dw_i3c_class_init,
-+};
-+
-+static void dw_i3c_register_types(void)
-+{
-+    type_register_static(&dw_i3c_info);
-+}
-+
-+type_init(dw_i3c_register_types);
-diff --git a/hw/i3c/meson.build b/hw/i3c/meson.build
-index fb127613fe..83d75e7d5c 100644
---- a/hw/i3c/meson.build
-+++ b/hw/i3c/meson.build
-@@ -1,4 +1,5 @@
- i3c_ss = ss.source_set()
- i3c_ss.add(when: 'CONFIG_I3C', if_true: files('core.c'))
- i3c_ss.add(when: 'CONFIG_ASPEED_SOC', if_true: files('aspeed_i3c.c'))
-+i3c_ss.add(when: 'CONFIG_DW_I3C', if_true: files('dw-i3c.c'))
- system_ss.add_all(when: 'CONFIG_I3C', if_true: i3c_ss)
-diff --git a/hw/i3c/trace-events b/hw/i3c/trace-events
-index cdf7cb07f6..2d944387db 100644
---- a/hw/i3c/trace-events
-+++ b/hw/i3c/trace-events
-@@ -3,8 +3,10 @@
- # aspeed_i3c.c
- aspeed_i3c_read(uint64_t offset, uint64_t data) "I3C read: offset 0x%" PRIx64 " data 0x%" PRIx64
- aspeed_i3c_write(uint64_t offset, uint64_t data) "I3C write: offset 0x%" PRIx64 " data 0x%" PRIx64
--aspeed_i3c_device_read(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64
--aspeed_i3c_device_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64
-+
-+# dw-i3c,c
-+dw_i3c_read(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] read: offset 0x%" PRIx64 " data 0x%" PRIx64
-+dw_i3c_write(uint32_t deviceid, uint64_t offset, uint64_t data) "I3C Dev[%u] write: offset 0x%" PRIx64 " data 0x%" PRIx64
+@@ -19,54 +19,270 @@
+ #include "trace.h"
  
- # core.c
- i3c_target_event(uint8_t address, uint8_t event) "I3C target 0x%" PRIx8 " event 0x%" PRIx8
-diff --git a/include/hw/i3c/aspeed_i3c.h b/include/hw/i3c/aspeed_i3c.h
-index 39679dfa1a..793ee111cb 100644
---- a/include/hw/i3c/aspeed_i3c.h
-+++ b/include/hw/i3c/aspeed_i3c.h
-@@ -10,29 +10,15 @@
- #ifndef ASPEED_I3C_H
- #define ASPEED_I3C_H
+ REG32(DEVICE_CTRL,                  0x00)
++    FIELD(DEVICE_CTRL, I3C_BROADCAST_ADDR_INC,    0, 1)
++    FIELD(DEVICE_CTRL, I2C_SLAVE_PRESENT,         7, 1)
++    FIELD(DEVICE_CTRL, HOT_JOIN_ACK_NACK_CTRL,    8, 1)
++    FIELD(DEVICE_CTRL, IDLE_CNT_MULTIPLIER,       24, 2)
++    FIELD(DEVICE_CTRL, SLV_ADAPT_TO_I2C_I3C_MODE, 27, 1)
++    FIELD(DEVICE_CTRL, DMA_HANDSHAKE_EN,          28, 1)
++    FIELD(DEVICE_CTRL, I3C_ABORT,                 29, 1)
++    FIELD(DEVICE_CTRL, I3C_RESUME,                30, 1)
++    FIELD(DEVICE_CTRL, I3C_EN,                    31, 1)
+ REG32(DEVICE_ADDR,                  0x04)
++    FIELD(DEVICE_ADDR, STATIC_ADDR,         0, 7)
++    FIELD(DEVICE_ADDR, STATIC_ADDR_VALID,   15, 1)
++    FIELD(DEVICE_ADDR, DYNAMIC_ADDR,        16, 7)
++    FIELD(DEVICE_ADDR, DYNAMIC_ADDR_VALID,  15, 1)
+ REG32(HW_CAPABILITY,                0x08)
++    FIELD(HW_CAPABILITY, DEVICE_ROLE_CONFIG,  0, 2)
++    FIELD(HW_CAPABILITY, HDR_DDR, 3, 1)
++    FIELD(HW_CAPABILITY, HDR_TS,  4, 1)
+ REG32(COMMAND_QUEUE_PORT,           0x0c)
++    FIELD(COMMAND_QUEUE_PORT, CMD_ATTR, 0, 3)
++    /* Transfer command structure */
++    FIELD(COMMAND_QUEUE_PORT, TID, 3, 4)
++    FIELD(COMMAND_QUEUE_PORT, CMD, 7, 8)
++    FIELD(COMMAND_QUEUE_PORT, CP, 15, 1)
++    FIELD(COMMAND_QUEUE_PORT, DEV_INDEX, 16, 5)
++    FIELD(COMMAND_QUEUE_PORT, SPEED, 21, 3)
++    FIELD(COMMAND_QUEUE_PORT, ROC, 26, 1)
++    FIELD(COMMAND_QUEUE_PORT, SDAP, 27, 1)
++    FIELD(COMMAND_QUEUE_PORT, RNW, 28, 1)
++    FIELD(COMMAND_QUEUE_PORT, TOC, 30, 1)
++    FIELD(COMMAND_QUEUE_PORT, PEC, 31, 1)
++    /* Transfer argument data structure */
++    FIELD(COMMAND_QUEUE_PORT, DB, 8, 8)
++    FIELD(COMMAND_QUEUE_PORT, DL, 16, 16)
++    /* Short data argument data structure */
++    FIELD(COMMAND_QUEUE_PORT, BYTE_STRB, 3, 3)
++    FIELD(COMMAND_QUEUE_PORT, BYTE0, 8, 8)
++    FIELD(COMMAND_QUEUE_PORT, BYTE1, 16, 8)
++    FIELD(COMMAND_QUEUE_PORT, BYTE2, 24, 8)
++    /* Address assignment command structure */
++    /*
++     * bits 3..21 and 26..31 are the same as the transfer command structure, or
++     * marked as reserved.
++     */
++    FIELD(COMMAND_QUEUE_PORT, DEV_COUNT, 21, 3)
+ REG32(RESPONSE_QUEUE_PORT,          0x10)
++    FIELD(RESPONSE_QUEUE_PORT, DL, 0, 16)
++    FIELD(RESPONSE_QUEUE_PORT, CCCT, 16, 8)
++    FIELD(RESPONSE_QUEUE_PORT, TID, 24, 4)
++    FIELD(RESPONSE_QUEUE_PORT, ERR_STATUS, 28, 4)
+ REG32(RX_TX_DATA_PORT,              0x14)
+ REG32(IBI_QUEUE_STATUS,             0x18)
++    FIELD(IBI_QUEUE_STATUS, IBI_DATA_LEN,   0, 8)
++    FIELD(IBI_QUEUE_STATUS, IBI_ID,         8, 8)
++    FIELD(IBI_QUEUE_STATUS, LAST_STATUS,    24, 1)
++    FIELD(IBI_QUEUE_STATUS, ERROR,          30, 1)
++    FIELD(IBI_QUEUE_STATUS, IBI_STATUS,     31, 1)
+ REG32(IBI_QUEUE_DATA,               0x18)
+ REG32(QUEUE_THLD_CTRL,              0x1c)
++    FIELD(QUEUE_THLD_CTRL, CMD_BUF_EMPTY_THLD,  0, 8);
++    FIELD(QUEUE_THLD_CTRL, RESP_BUF_THLD, 8, 8);
++    FIELD(QUEUE_THLD_CTRL, IBI_DATA_THLD, 16, 8);
++    FIELD(QUEUE_THLD_CTRL, IBI_STATUS_THLD,     24, 8);
+ REG32(DATA_BUFFER_THLD_CTRL,        0x20)
++    FIELD(DATA_BUFFER_THLD_CTRL, TX_BUF_THLD,   0, 3)
++    FIELD(DATA_BUFFER_THLD_CTRL, RX_BUF_THLD,   10, 3)
++    FIELD(DATA_BUFFER_THLD_CTRL, TX_START_THLD, 16, 3)
++    FIELD(DATA_BUFFER_THLD_CTRL, RX_START_THLD, 24, 3)
+ REG32(IBI_QUEUE_CTRL,               0x24)
++    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_HOT_JOIN,   0, 1)
++    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_MASTER_REQ, 1, 1)
++    FIELD(IBI_QUEUE_CTRL, NOTIFY_REJECTED_SLAVE_IRQ,  3, 1)
+ REG32(IBI_MR_REQ_REJECT,            0x2c)
+ REG32(IBI_SIR_REQ_REJECT,           0x30)
+ REG32(RESET_CTRL,                   0x34)
++    FIELD(RESET_CTRL, CORE_RESET,       0, 1)
++    FIELD(RESET_CTRL, CMD_QUEUE_RESET,  1, 1)
++    FIELD(RESET_CTRL, RESP_QUEUE_RESET, 2, 1)
++    FIELD(RESET_CTRL, TX_BUF_RESET,     3, 1)
++    FIELD(RESET_CTRL, RX_BUF_RESET,     4, 1)
++    FIELD(RESET_CTRL, IBI_QUEUE_RESET,  5, 1)
+ REG32(SLV_EVENT_CTRL,               0x38)
++    FIELD(SLV_EVENT_CTRL, SLV_INTERRUPT,      0, 1)
++    FIELD(SLV_EVENT_CTRL, MASTER_INTERRUPT,   1, 1)
++    FIELD(SLV_EVENT_CTRL, HOT_JOIN_INTERRUPT, 3, 1)
++    FIELD(SLV_EVENT_CTRL, ACTIVITY_STATE,     4, 2)
++    FIELD(SLV_EVENT_CTRL, MRL_UPDATED,        6, 1)
++    FIELD(SLV_EVENT_CTRL, MWL_UPDATED,        7, 1)
+ REG32(INTR_STATUS,                  0x3c)
++    FIELD(INTR_STATUS, TX_THLD,           0, 1)
++    FIELD(INTR_STATUS, RX_THLD,           1, 1)
++    FIELD(INTR_STATUS, IBI_THLD,          2, 1)
++    FIELD(INTR_STATUS, CMD_QUEUE_RDY,     3, 1)
++    FIELD(INTR_STATUS, RESP_RDY,          4, 1)
++    FIELD(INTR_STATUS, TRANSFER_ABORT,    5, 1)
++    FIELD(INTR_STATUS, CCC_UPDATED,       6, 1)
++    FIELD(INTR_STATUS, DYN_ADDR_ASSGN,    8, 1)
++    FIELD(INTR_STATUS, TRANSFER_ERR,      9, 1)
++    FIELD(INTR_STATUS, DEFSLV,            10, 1)
++    FIELD(INTR_STATUS, READ_REQ_RECV,     11, 1)
++    FIELD(INTR_STATUS, IBI_UPDATED,       12, 1)
++    FIELD(INTR_STATUS, BUSOWNER_UPDATED,  13, 1)
+ REG32(INTR_STATUS_EN,               0x40)
++    FIELD(INTR_STATUS_EN, TX_THLD,          0, 1)
++    FIELD(INTR_STATUS_EN, RX_THLD,          1, 1)
++    FIELD(INTR_STATUS_EN, IBI_THLD,         2, 1)
++    FIELD(INTR_STATUS_EN, CMD_QUEUE_RDY,    3, 1)
++    FIELD(INTR_STATUS_EN, RESP_RDY,         4, 1)
++    FIELD(INTR_STATUS_EN, TRANSFER_ABORT,   5, 1)
++    FIELD(INTR_STATUS_EN, CCC_UPDATED,      6, 1)
++    FIELD(INTR_STATUS_EN, DYN_ADDR_ASSGN,   8, 1)
++    FIELD(INTR_STATUS_EN, TRANSFER_ERR,     9, 1)
++    FIELD(INTR_STATUS_EN, DEFSLV,           10, 1)
++    FIELD(INTR_STATUS_EN, READ_REQ_RECV,    11, 1)
++    FIELD(INTR_STATUS_EN, IBI_UPDATED,      12, 1)
++    FIELD(INTR_STATUS_EN, BUSOWNER_UPDATED, 13, 1)
+ REG32(INTR_SIGNAL_EN,               0x44)
++    FIELD(INTR_SIGNAL_EN, TX_THLD,          0, 1)
++    FIELD(INTR_SIGNAL_EN, RX_THLD,          1, 1)
++    FIELD(INTR_SIGNAL_EN, IBI_THLD,         2, 1)
++    FIELD(INTR_SIGNAL_EN, CMD_QUEUE_RDY,    3, 1)
++    FIELD(INTR_SIGNAL_EN, RESP_RDY,         4, 1)
++    FIELD(INTR_SIGNAL_EN, TRANSFER_ABORT,   5, 1)
++    FIELD(INTR_SIGNAL_EN, CCC_UPDATED,      6, 1)
++    FIELD(INTR_SIGNAL_EN, DYN_ADDR_ASSGN,   8, 1)
++    FIELD(INTR_SIGNAL_EN, TRANSFER_ERR,     9, 1)
++    FIELD(INTR_SIGNAL_EN, DEFSLV,           10, 1)
++    FIELD(INTR_SIGNAL_EN, READ_REQ_RECV,    11, 1)
++    FIELD(INTR_SIGNAL_EN, IBI_UPDATED,      12, 1)
++    FIELD(INTR_SIGNAL_EN, BUSOWNER_UPDATED, 13, 1)
+ REG32(INTR_FORCE,                   0x48)
++    FIELD(INTR_FORCE, TX_THLD,          0, 1)
++    FIELD(INTR_FORCE, RX_THLD,          1, 1)
++    FIELD(INTR_FORCE, IBI_THLD,         2, 1)
++    FIELD(INTR_FORCE, CMD_QUEUE_RDY,    3, 1)
++    FIELD(INTR_FORCE, RESP_RDY,         4, 1)
++    FIELD(INTR_FORCE, TRANSFER_ABORT,   5, 1)
++    FIELD(INTR_FORCE, CCC_UPDATED,      6, 1)
++    FIELD(INTR_FORCE, DYN_ADDR_ASSGN,   8, 1)
++    FIELD(INTR_FORCE, TRANSFER_ERR,     9, 1)
++    FIELD(INTR_FORCE, DEFSLV,           10, 1)
++    FIELD(INTR_FORCE, READ_REQ_RECV,    11, 1)
++    FIELD(INTR_FORCE, IBI_UPDATED,      12, 1)
++    FIELD(INTR_FORCE, BUSOWNER_UPDATED, 13, 1)
+ REG32(QUEUE_STATUS_LEVEL,           0x4c)
++    FIELD(QUEUE_STATUS_LEVEL, CMD_QUEUE_EMPTY_LOC,  0, 8)
++    FIELD(QUEUE_STATUS_LEVEL, RESP_BUF_BLR,         8, 8)
++    FIELD(QUEUE_STATUS_LEVEL, IBI_BUF_BLR,          16, 8)
++    FIELD(QUEUE_STATUS_LEVEL, IBI_STATUS_CNT,       24, 5)
+ REG32(DATA_BUFFER_STATUS_LEVEL,     0x50)
++    FIELD(DATA_BUFFER_STATUS_LEVEL, TX_BUF_EMPTY_LOC, 0, 8)
++    FIELD(DATA_BUFFER_STATUS_LEVEL, RX_BUF_BLR,       16, 8)
+ REG32(PRESENT_STATE,                0x54)
++    FIELD(PRESENT_STATE, SCL_LINE_SIGNAL_LEVEL, 0, 1)
++    FIELD(PRESENT_STATE, SDA_LINE_SIGNAL_LEVEL, 1, 1)
++    FIELD(PRESENT_STATE, CURRENT_MASTER,        2, 1)
++    FIELD(PRESENT_STATE, CM_TFR_STATUS,         8, 6)
++    FIELD(PRESENT_STATE, CM_TFR_ST_STATUS,      16, 6)
++    FIELD(PRESENT_STATE, CMD_TID,               24, 4)
+ REG32(CCC_DEVICE_STATUS,            0x58)
++    FIELD(CCC_DEVICE_STATUS, PENDING_INTR,      0, 4)
++    FIELD(CCC_DEVICE_STATUS, PROTOCOL_ERR,      4, 2)
++    FIELD(CCC_DEVICE_STATUS, ACTIVITY_MODE,     6, 2)
++    FIELD(CCC_DEVICE_STATUS, UNDER_ERR,         8, 1)
++    FIELD(CCC_DEVICE_STATUS, SLV_BUSY,          9, 1)
++    FIELD(CCC_DEVICE_STATUS, OVERFLOW_ERR,      10, 1)
++    FIELD(CCC_DEVICE_STATUS, DATA_NOT_READY,    11, 1)
++    FIELD(CCC_DEVICE_STATUS, BUFFER_NOT_AVAIL,  12, 1)
+ REG32(DEVICE_ADDR_TABLE_POINTER,    0x5c)
+     FIELD(DEVICE_ADDR_TABLE_POINTER, DEPTH, 16, 16)
+     FIELD(DEVICE_ADDR_TABLE_POINTER, ADDR,  0,  16)
+ REG32(DEV_CHAR_TABLE_POINTER,       0x60)
++    FIELD(DEV_CHAR_TABLE_POINTER, P_DEV_CHAR_TABLE_START_ADDR,  0, 12)
++    FIELD(DEV_CHAR_TABLE_POINTER, DEV_CHAR_TABLE_DEPTH,         12, 7)
++    FIELD(DEV_CHAR_TABLE_POINTER, PRESENT_DEV_CHAR_TABLE_INDEX, 19, 3)
+ REG32(VENDOR_SPECIFIC_REG_POINTER,  0x6c)
++    FIELD(VENDOR_SPECIFIC_REG_POINTER, P_VENDOR_REG_START_ADDR, 0, 16)
+ REG32(SLV_MIPI_PID_VALUE,           0x70)
+ REG32(SLV_PID_VALUE,                0x74)
++    FIELD(SLV_PID_VALUE, SLV_PID_DCR, 0, 12)
++    FIELD(SLV_PID_VALUE, SLV_INST_ID, 12, 4)
++    FIELD(SLV_PID_VALUE, SLV_PART_ID, 16, 16)
+ REG32(SLV_CHAR_CTRL,                0x78)
++    FIELD(SLV_CHAR_CTRL, BCR,     0, 8)
++    FIELD(SLV_CHAR_CTRL, DCR,     8, 8)
++    FIELD(SLV_CHAR_CTRL, HDR_CAP, 16, 8)
+ REG32(SLV_MAX_LEN,                  0x7c)
++    FIELD(SLV_MAX_LEN, MWL, 0, 16)
++    FIELD(SLV_MAX_LEN, MRL, 16, 16)
+ REG32(MAX_READ_TURNAROUND,          0x80)
+ REG32(MAX_DATA_SPEED,               0x84)
+ REG32(SLV_DEBUG_STATUS,             0x88)
+ REG32(SLV_INTR_REQ,                 0x8c)
++    FIELD(SLV_INTR_REQ, SIR,          0, 1)
++    FIELD(SLV_INTR_REQ, SIR_CTRL,     1, 2)
++    FIELD(SLV_INTR_REQ, MIR,          3, 1)
++    FIELD(SLV_INTR_REQ, TS,           4, 1)
++    FIELD(SLV_INTR_REQ, IBI_STS,      8, 2)
++    FIELD(SLV_INTR_REQ, MDB,          8, 8)
++    FIELD(SLV_INTR_REQ, SIR_DATA_LEN, 16, 8)
++REG32(SLV_TSX_SYMBL_TIMING,         0x90)
++    FIELD(SLV_TSX_SYMBL_TIMING, SLV_TSX_SYMBL_CNT, 0, 6)
++REG32(SLV_SIR_DATA,                 0x94)
++    FIELD(SLV_SIR_DATA, SIR_DATA_BYTE0, 0, 8)
++    FIELD(SLV_SIR_DATA, SIR_DATA_BYTE1, 8, 8)
++    FIELD(SLV_SIR_DATA, SIR_DATA_BYTE2, 16, 8)
++    FIELD(SLV_SIR_DATA, SIR_DATA_BYTE3, 24, 8)
++REG32(SLV_IBI_RESP,                 0x98)
++    FIELD(SLV_IBI_RESP, IBI_STS,           0, 2)
++    FIELD(SLV_IBI_RESP, SIR_RESP_DATA_LEN, 8, 16)
+ REG32(DEVICE_CTRL_EXTENDED,         0xb0)
++    FIELD(DEVICE_CTRL_EXTENDED, MODE, 0, 2)
++    FIELD(DEVICE_CTRL_EXTENDED, REQMST_ACK_CTRL, 3, 1)
+ REG32(SCL_I3C_OD_TIMING,            0xb4)
++    FIELD(SCL_I3C_OD_TIMING, I3C_OD_LCNT, 0, 8)
++    FIELD(SCL_I3C_OD_TIMING, I3C_OD_HCNT, 16, 8)
+ REG32(SCL_I3C_PP_TIMING,            0xb8)
++    FIELD(SCL_I3C_PP_TIMING, I3C_PP_LCNT, 0, 8)
++    FIELD(SCL_I3C_PP_TIMING, I3C_PP_HCNT, 16, 8)
+ REG32(SCL_I2C_FM_TIMING,            0xbc)
+ REG32(SCL_I2C_FMP_TIMING,           0xc0)
++    FIELD(SCL_I2C_FMP_TIMING, I2C_FMP_LCNT, 0, 16)
++    FIELD(SCL_I2C_FMP_TIMING, I2C_FMP_HCNT, 16, 8)
+ REG32(SCL_EXT_LCNT_TIMING,          0xc8)
+ REG32(SCL_EXT_TERMN_LCNT_TIMING,    0xcc)
+ REG32(BUS_FREE_TIMING,              0xd4)
+ REG32(BUS_IDLE_TIMING,              0xd8)
++    FIELD(BUS_IDLE_TIMING, BUS_IDLE_TIME, 0, 20)
+ REG32(I3C_VER_ID,                   0xe0)
+ REG32(I3C_VER_TYPE,                 0xe4)
+ REG32(EXTENDED_CAPABILITY,          0xe8)
++    FIELD(EXTENDED_CAPABILITY, APP_IF_MODE,       0, 2)
++    FIELD(EXTENDED_CAPABILITY, APP_IF_DATA_WIDTH, 2, 2)
++    FIELD(EXTENDED_CAPABILITY, OPERATION_MODE,    4, 2)
++    FIELD(EXTENDED_CAPABILITY, CLK_PERIOD,        8, 6)
+ REG32(SLAVE_CONFIG,                 0xec)
++    FIELD(SLAVE_CONFIG, DMA_EN,     0, 1)
++    FIELD(SLAVE_CONFIG, HJ_CAP,     0, 1)
++    FIELD(SLAVE_CONFIG, CLK_PERIOD, 2, 14)
++/* Device characteristic table fields */
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC1, 0x200)
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, 0x200)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, DYNAMIC_ADDR, 0, 8)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, DCR, 8, 8)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, BCR, 16, 8)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC_SECONDARY, STATIC_ADDR, 24, 8)
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC2, 0x204)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC2, MSB_PID, 0, 16)
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC3, 0x208)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC3, DCR, 0, 8)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC3, BCR, 8, 8)
++REG32(DEVICE_CHARACTERISTIC_TABLE_LOC4, 0x20c)
++    FIELD(DEVICE_CHARACTERISTIC_TABLE_LOC4, DEV_DYNAMIC_ADDR, 0, 8)
++/* Dev addr table fields */
++REG32(DEVICE_ADDR_TABLE_LOC1, 0x280)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_STATIC_ADDR, 0, 7)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_PEC_EN, 11, 1)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_WITH_DATA, 12, 1)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, SIR_REJECT, 13, 1)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, MR_REJECT, 14, 1)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_DYNAMIC_ADDR, 16, 8)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, IBI_ADDR_MASK, 24, 2)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, DEV_NACK_RETRY_CNT, 29, 2)
++    FIELD(DEVICE_ADDR_TABLE_LOC1, LEGACY_I2C_DEVICE, 31, 1)
  
-+#include "hw/i3c/dw-i3c.h"
- #include "hw/sysbus.h"
- 
- #define TYPE_ASPEED_I3C "aspeed.i3c"
--#define TYPE_ASPEED_I3C_DEVICE "aspeed.i3c.device"
- OBJECT_DECLARE_TYPE(AspeedI3CState, AspeedI3CClass, ASPEED_I3C)
- 
- #define ASPEED_I3C_NR_REGS (0x70 >> 2)
--#define ASPEED_I3C_DEVICE_NR_REGS (0x300 >> 2)
- #define ASPEED_I3C_NR_DEVICES 6
- 
--OBJECT_DECLARE_SIMPLE_TYPE(AspeedI3CDevice, ASPEED_I3C_DEVICE)
--typedef struct AspeedI3CDevice {
--    /* <private> */
--    SysBusDevice parent;
--
--    /* <public> */
--    MemoryRegion mr;
--    qemu_irq irq;
--
--    uint8_t id;
--    uint32_t regs[ASPEED_I3C_DEVICE_NR_REGS];
--} AspeedI3CDevice;
--
- typedef struct AspeedI3CState {
-     /* <private> */
-     SysBusDevice parent;
-@@ -43,6 +29,7 @@ typedef struct AspeedI3CState {
-     qemu_irq irq;
- 
-     uint32_t regs[ASPEED_I3C_NR_REGS];
--    AspeedI3CDevice devices[ASPEED_I3C_NR_DEVICES];
-+    DWI3C devices[ASPEED_I3C_NR_DEVICES];
-+    uint8_t id;
- } AspeedI3CState;
- #endif /* ASPEED_I3C_H */
-diff --git a/include/hw/i3c/dw-i3c.h b/include/hw/i3c/dw-i3c.h
-new file mode 100644
-index 0000000000..214f5ffed2
---- /dev/null
-+++ b/include/hw/i3c/dw-i3c.h
-@@ -0,0 +1,35 @@
-+/*
-+ * DesignWare I3C Controller
-+ *
-+ * Copyright (C) 2021 ASPEED Technology Inc.
-+ * Copyright (C) 2025 Google, LLC.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef DW_I3C_H
-+#define DW_I3C_H
-+
-+#include "hw/sysbus.h"
-+
-+#define TYPE_DW_I3C "dw.i3c"
-+OBJECT_DECLARE_SIMPLE_TYPE(DWI3C, DW_I3C)
-+
-+#define DW_I3C_NR_REGS (0x300 >> 2)
-+
-+typedef struct DWI3C {
-+    /* <private> */
-+    SysBusDevice parent;
-+
-+    /* <public> */
-+    MemoryRegion mr;
-+    qemu_irq irq;
-+
-+    uint8_t id;
-+    uint32_t regs[DW_I3C_NR_REGS];
-+} DWI3C;
-+
-+/* Extern for other controllers that use DesignWare I3C. */
-+extern const VMStateDescription vmstate_dw_i3c;
-+
-+#endif /* DW_I3C_H */
+ static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
+     [R_HW_CAPABILITY]               = 0x000e00bf,
 -- 
 2.50.0.rc1.591.g9c95f17f64-goog
 
