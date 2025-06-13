@@ -4,106 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD9E7C61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 12:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B020FC61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 12:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ3Ys-0007iD-GU; Fri, 13 Jun 2025 08:31:10 -0400
+	id 1uQ3aC-0007xa-QL; Fri, 13 Jun 2025 08:32:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uQ3YO-0007hN-Uz
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:30:44 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ3a4-0007tN-Rr
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:32:30 -0400
+Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1uQ3YL-0004g0-1H
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:30:39 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id ED42E1F7EC;
- Fri, 13 Jun 2025 12:30:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749817828; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
- b=ZlS96WZ8Qj/wuasbX+fjgHxSdFLiqTPuF/GD/nAbgv+zIN9BUAKu2kNpQMrN+wcGvmUX3m
- oGfrrWTf4S1QoC5SIZUUu+rlBXL6vysREOhxOlagZxhTYyiwhIHJcIa+tXgB2W1GjM/WmS
- s8dmalt7V/J6csAI8zAOINsZwtJQHw4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749817828;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
- b=v7qn1c0u6hMn+916P+KfREvMrIY3S+OWpYH4OlsC0MyQ6mvo/6vB9bphpec22p309PeByF
- wV1o8Taej6OKpZBg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1749817826; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
- b=0kugf2jrs35b3sjlnhDYEqccCl0qevIlZm6ZPPkrDAKIOVv8uTBvFMbrESqS3fcjWQWXO6
- 03gGpGzez95FlfMP3/U4R+iO2JEWdOJBU+wx64jLR75oyKZ7h3JAQyxb2Q4/CSIqs3Olqa
- kSciYwvpXrjPYz+whVHUKqcMqSa1z3w=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1749817826;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=/GWGn13O4aW2pbclGDr6yM4pF74Pb7Bzp7OijrpupQU=;
- b=pY13SM7MMtK56UBbjr7/LsLoshBxVu/T4O2+HXuC8ygxt2BGmueYoGRxrglxc5QnipmM8R
- F87QoDjX2f8m5YAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 6D05813782;
- Fri, 13 Jun 2025 12:30:26 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id ofSNC+IZTGg4cQAAD6G6ig
- (envelope-from <farosas@suse.de>); Fri, 13 Jun 2025 12:30:26 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- =?utf-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 10/21] migration: Use QAPI_CLONE_MEMBERS in
- query_migrate_parameters
-In-Reply-To: <aEtGL1J4LpLJ8Gj9@x1.local>
-References: <20250603013810.4772-1-farosas@suse.de>
- <20250603013810.4772-11-farosas@suse.de> <aEMJacJqDHLrdkgn@x1.local>
- <87a56kx3xc.fsf@suse.de> <87ecvovfrt.fsf@suse.de>
- <aEtGL1J4LpLJ8Gj9@x1.local>
-Date: Fri, 13 Jun 2025 09:30:23 -0300
-Message-ID: <87bjqrvn6o.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ3Zx-0004ws-UI
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 08:32:24 -0400
+Received: by mail-yw1-x112e.google.com with SMTP id
+ 00721157ae682-70e6bddc30aso18232807b3.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 05:32:15 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749817934; x=1750422734; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=07JVhg802iRo9r8/K0Jmv569qCvievwFPfErLy0AXps=;
+ b=IxgZYgRvJ+/arqG61DXQKdHYJ7zmz2EVLfCpLyzeZxw4i22OgZJJ1jJIBxmFKTeEF1
+ AaAXjzP27HVnMNJfCU0zLqrCokf/LFpANxs5NQtJXLgaCDN5LOx5WqQSmJAUvdlSawcn
+ Jx8Gbp+vF4dpXAqzgjJq66or3f7i4kgq4fofq5ITZEfp8N9eM7ToDMHoSeT3pY3eqWfw
+ eigo9COxi+Mw5yVZ0KEli+Erne9eSJZtr7PowJRGToSaov/tHfhku8pXKDdKwU8Qgp6J
+ VdWW0niXB5s/yOIQpHpiUsHDC18maloMiDFBzPcPd04Wo19f1I0tXBTx2qJqosrV3A8v
+ 1zrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749817934; x=1750422734;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=07JVhg802iRo9r8/K0Jmv569qCvievwFPfErLy0AXps=;
+ b=F92qAIR3k7N3KDrBrmz0OxY4Q8TcTvuSZfknOGAVaGpObP+TlWZxbDhpJqKWJvT7vU
+ hR4WJeOrPVV3sXR/vWrTWuetGdR8rC5r7dVs1hr63RtvU273b7u2ba6xPiWvjUVHnXVS
+ 6f4ZAgBB+qgo7eW/nikX5duEhTz6t/L+gYiukFelygHnLuU6GQQxvv5ASEZMayaeCIPP
+ Js9qPmQfQ75/I4pOzl+JlcRP1ktTkqA7mh1xwDFDUY7TXyZyyuBC31Gl8jCGBdszTpty
+ dbGxEr5GvIdloO/W9peYU02DJQhfE1SfjIc+7ymvMRryYYfJb9ZRwI0pTRzmSDfQ22A7
+ 8zZw==
+X-Gm-Message-State: AOJu0Yzan4aQ5yYBbn8+KHv2laKgmA0HLmJeaQoi6Fd5vVtX5e9kWiw6
+ Wj5tl7PYf9NbeiIFQm4Dex1gATaxtJRZxejrY7SR2i61LqL+BfQSeVSJpEANTs+rPmlnulN3x/W
+ D4+td3gB5hZ/zol9QTQCaTOe6tS760ZQY6KgEq6oTGA==
+X-Gm-Gg: ASbGncumF1OfqFRdlvPfnseuHYwLBsHh91cCDf3ZGe34Ab4fWrWVvoTQcFZoVp5iTM9
+ Fxe172VaEFnwr6l1VG7Yhq1ZsEzeBbO/X8O4JOT+RN5993zStBExUklpYVr6C6LqbMglyUgN49w
+ OAga0GJfuYS+k7zlA59ExwQFKsXGpK27biaID939JebbT3
+X-Google-Smtp-Source: AGHT+IFAh/pRObNEqsEHzHc9PX7qF1sWhz9Pj9Np6nag1q6YhuyL+Lq3qJpFmsYoU3w5VHRtSeualJtj+JZoQa8/Ww8=
+X-Received: by 2002:a05:690c:f96:b0:70e:142d:9c52 with SMTP id
+ 00721157ae682-7116372329emr42840937b3.22.1749817934334; Fri, 13 Jun 2025
+ 05:32:14 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; MISSING_XM_UA(0.00)[];
- TO_DN_SOME(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
- RCVD_TLS_ALL(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_COUNT_TWO(0.00)[2];
- FUZZY_BLOCKED(0.00)[rspamd.com]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
+ <20250612134338.1871023-5-Jonathan.Cameron@huawei.com>
+In-Reply-To: <20250612134338.1871023-5-Jonathan.Cameron@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Jun 2025 13:32:03 +0100
+X-Gm-Features: AX0GCFtY0-n-3gf_nsaxJ4DbwNp3JIuQBsYWobX7KaEQ6RzpFw0oR2DA4cIwVXQ
+Message-ID: <CAFEAcA8xVQUnReg-3jYENLmOMG_PeJ-ACLQa0dRoLBzxQ+9Svg@mail.gmail.com>
+Subject: Re: [PATCH v15 4/4] qtest/cxl: Add aarch64 virt test for CXL
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>, mst@redhat.com, 
+ Zhijian Li <lizhijian@fujitsu.com>, Itaru Kitayama <itaru.kitayama@linux.dev>,
+ linuxarm@huawei.com, linux-cxl@vger.kernel.org, qemu-arm@nongnu.org, 
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,143 +98,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Peter Xu <peterx@redhat.com> writes:
+On Thu, 12 Jun 2025 at 14:45, Jonathan Cameron
+<Jonathan.Cameron@huawei.com> wrote:
+>
+> Add a single complex case for aarch64 virt machine.
+> Given existing much more comprehensive tests for x86 cover the
+> common functionality, a single test should be enough to verify
+> that the aarch64 part continue to work.
+>
+> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+>
+> ---
+> v15: Dropped tags due to changes in patches 2 and 3.
+> ---
+>  tests/qtest/cxl-test.c  | 59 ++++++++++++++++++++++++++++++++---------
+>  tests/qtest/meson.build |  1 +
+>  2 files changed, 47 insertions(+), 13 deletions(-)
+>
+> diff --git a/tests/qtest/cxl-test.c b/tests/qtest/cxl-test.c
+> index a600331843..c7189d6222 100644
+> --- a/tests/qtest/cxl-test.c
+> +++ b/tests/qtest/cxl-test.c
+> @@ -19,6 +19,12 @@
+>      "-device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=53 " \
+>      "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=4G "
+>
+> +#define QEMU_VIRT_2PXB_CMD \
+> +    "-machine virt,cxl=on -cpu max " \
+> +    "-device pxb-cxl,id=cxl.0,bus=pcie.0,bus_nr=52 " \
+> +    "-device pxb-cxl,id=cxl.1,bus=pcie.0,bus_nr=53 " \
+> +    "-M cxl-fmw.0.targets.0=cxl.0,cxl-fmw.0.targets.1=cxl.1,cxl-fmw.0.size=4G "
+> +
+>  #define QEMU_RP \
+>      "-device cxl-rp,id=rp0,bus=cxl.0,chassis=0,slot=0 "
+>
+> @@ -197,25 +203,52 @@ static void cxl_2pxb_4rp_4t3d(void)
+>      qtest_end();
+>      rmdir(tmpfs);
+>  }
+> +
+> +static void cxl_virt_2pxb_4rp_4t3d(void)
+> +{
+> +    g_autoptr(GString) cmdline = g_string_new(NULL);
+> +    char template[] = "/tmp/cxl-test-XXXXXX";
+> +    const char *tmpfs;
+> +
+> +    tmpfs = mkdtemp(template);
 
-> On Thu, Jun 12, 2025 at 05:58:14PM -0300, Fabiano Rosas wrote:
->> Fabiano Rosas <farosas@suse.de> writes:
->> 
->> > Peter Xu <peterx@redhat.com> writes:
->> >
->> >> On Mon, Jun 02, 2025 at 10:37:59PM -0300, Fabiano Rosas wrote:
->> >>> QAPI_CLONE_MEMBERS is a better option than copying parameters one by
->> >>> one because it operates on the entire struct and follows pointers. It
->> >>> also avoids the need to alter this function every time a new parameter
->> >>> is added.
->> >>> 
->> >>> Note, since this is a deep clone, now we must free the TLS strings
->> >>> before assignment.
->> >>> 
->> >>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> >>> ---
->> >>>  migration/options.c | 31 ++++---------------------------
->> >>>  1 file changed, 4 insertions(+), 27 deletions(-)
->> >>> 
->> >>> diff --git a/migration/options.c b/migration/options.c
->> >>> index dd62e726cb..0a2a3050ec 100644
->> >>> --- a/migration/options.c
->> >>> +++ b/migration/options.c
->> >>> @@ -918,7 +918,9 @@ static void tls_option_set_str(StrOrNull **dstp, StrOrNull *src)
->> >>>  {
->> >>>      StrOrNull *dst = *dstp;
->> >>>  
->> >>> -    assert(!dst);
->> >>> +    if (dst) {
->> >>> +        qapi_free_StrOrNull(dst);
->> >>> +    }
->> >>>  
->> >>>      dst = *dstp = g_new0(StrOrNull, 1);
->> >>>      dst->type = QTYPE_QSTRING;
->> >>> @@ -975,42 +977,17 @@ MigrationParameters *qmp_query_migrate_parameters(Error **errp)
->> >>>      MigrationParameters *params;
->> >>>      MigrationState *s = migrate_get_current();
->> >>>  
->> >>> -    /* TODO use QAPI_CLONE() instead of duplicating it inline */
->> >>>      params = g_malloc0(sizeof(*params));
->> >>>  
->> >>> -    params->throttle_trigger_threshold = s->parameters.throttle_trigger_threshold;
->> >>> -    params->cpu_throttle_initial = s->parameters.cpu_throttle_initial;
->> >>> -    params->cpu_throttle_increment = s->parameters.cpu_throttle_increment;
->> >>> -    params->cpu_throttle_tailslow = s->parameters.cpu_throttle_tailslow;
->> >>> +    QAPI_CLONE_MEMBERS(MigrationParameters, params, &s->parameters);
->> >>>  
->> >>>      tls_option_set_str(&params->tls_creds, s->parameters.tls_creds);
->> >>>      tls_option_set_str(&params->tls_hostname, s->parameters.tls_hostname);
->> >>>      tls_option_set_str(&params->tls_authz, s->parameters.tls_authz);
->
-> [1]
->
->> >>>  
->> >>> -    params->max_bandwidth = s->parameters.max_bandwidth;
->> >>> -    params->avail_switchover_bandwidth = s->parameters.avail_switchover_bandwidth;
->> >>> -    params->downtime_limit = s->parameters.downtime_limit;
->> >>> -    params->x_checkpoint_delay = s->parameters.x_checkpoint_delay;
->> >>> -    params->multifd_channels = s->parameters.multifd_channels;
->> >>> -    params->multifd_compression = s->parameters.multifd_compression;
->> >>> -    params->multifd_zlib_level = s->parameters.multifd_zlib_level;
->> >>> -    params->multifd_qatzip_level = s->parameters.multifd_qatzip_level;
->> >>> -    params->multifd_zstd_level = s->parameters.multifd_zstd_level;
->> >>> -    params->xbzrle_cache_size = s->parameters.xbzrle_cache_size;
->> >>> -    params->max_postcopy_bandwidth = s->parameters.max_postcopy_bandwidth;
->> >>> -    params->max_cpu_throttle = s->parameters.max_cpu_throttle;
->> >>> -    params->announce_initial = s->parameters.announce_initial;
->> >>> -    params->announce_max = s->parameters.announce_max;
->> >>> -    params->announce_rounds = s->parameters.announce_rounds;
->> >>> -    params->announce_step = s->parameters.announce_step;
->> >>>      params->block_bitmap_mapping =
->> >>>          QAPI_CLONE(BitmapMigrationNodeAliasList,
->> >>>                     s->parameters.block_bitmap_mapping);
->> >>
->> >> Wouldn't the QAPI_CLONE_MEMBERS() have deep cloned this too?
->> >>
->> >
->> > Hmm, I think it should. But it definitely broke something without this
->> > line. I'll double check.
->> >
->> 
->> Thanks for the question, this was indeed wrong. QAPI_CLONE_MEMBERS
->> depend on the has_* fields on src, otherwise it's just a glorified
->> assignment (*dst = src). The reason I got this wrong is that I was using
->> the TLS strings to test and they have a different handling in QAPI:
->> 
->> visit_type_MigrationParameters_members():
->> 
->>     bool has_tls_creds = !!obj->tls_creds;
->
-> [2]
->
->> 
->> So the code was working for them, but not for block_bitmap_mapping, for
->> which the QAPI has:
->> 
->> if (visit_optional(v, "block-bitmap-mapping", &obj->has_block_bitmap_mapping)) {
->>                                                     ^
->>     if (!visit_type_BitmapMigrationNodeAliasList(v, "block-bitmap-mapping",
->>         &obj->block_bitmap_mapping, errp)) {
->>         return false;
->>     }
->> }
->> 
->> IOW, the QAPI_CLONE routines depend on the has_ fields (in retrospect:
->> obviously).
->> 
->> That assert you didn't like will have to go then and s->parameters will
->> have to have all has_* fields permanently set. Not a huge deal, but it
->> undermines my argument of keeping it free from QAPI details.
->
-> Oops, indeed.  Now you have that function to set all has_*, hopefully this
-> is trivial now to still do so.
->
+We prefer g_mkdtemp() or g_dir_make_temp() over raw mkdtemp(),
+I think. Other tests in this file use g_dir_make_tmp().
 
-Yes.
+Also you aren't checking whether it failed.
 
-> Since you mentioned tls_* won't have has_*, but they will get properly
-> cloned IIUC as you mentioned above [2].  Does it mean we can also drop the
-> three lines at [1] too?
->
+> +
+> +    g_string_printf(cmdline, QEMU_VIRT_2PXB_CMD QEMU_4RP QEMU_4T3D,
+> +                    tmpfs, tmpfs, tmpfs, tmpfs, tmpfs, tmpfs,
+> +                    tmpfs, tmpfs);
+> +
+> +    qtest_start(cmdline->str);
 
-I'm thinking yes as well, still woking on it.
+We never change the GString and only use its C representation,
+so I think it's simpler to use
+  g_autofree char *cmdline = NULL;
+  ...
+  cmdline = g_strdup_printf(...);
 
-> In general, I am curious why we can't already use QAPI_CLONE() like:
->
->   params = QAPI_CLONE(&s->parameters);
->
-> And if my wish came true once more on having it a pointer (meanwhile if it
-> even happened before this patch):
->
->   params = QAPI_CLONE(s->parameters);
->
-> I thought with that, any of "g_malloc0(), copying of tls_*, copying of
-> block_bitmap things" are all not needed?
+But I see all the other tests in this file are written this
+way, so I'm ok with staying consistent to that here.
 
-Same here.
+-- PMM
 
