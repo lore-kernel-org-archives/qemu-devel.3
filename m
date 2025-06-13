@@ -4,115 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9195DC61DB2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 05:06:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48053C61DB2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 05:08:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPwbz-0001Pa-Uj; Fri, 13 Jun 2025 01:05:56 -0400
+	id 1uPwe1-0002Gr-6v; Fri, 13 Jun 2025 01:08:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uPwbW-0001NW-E6
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:05:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uPwdx-0002Ge-Or
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:07:58 -0400
+Received: from out-171.mta1.migadu.com ([95.215.58.171])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uPwbR-00005j-Nh
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:05:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749791119;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ (Exim 4.90_1) (envelope-from <itaru.kitayama@linux.dev>)
+ id 1uPwdv-0000Is-0j
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 01:07:57 -0400
+Date: Fri, 13 Jun 2025 14:07:32 +0900
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1749791263;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=mMxIr67GsAt1Z4qW9pogz4vadnhRgUPhQ68fi5VaJBs=;
- b=fnWuEtfm8X0AQN+ez668iOZo5EmNKVMLgrfcbcVRAo3edcJBgh6KvFsKuxI38qlBVVfycx
- PYPh+xzD3IMiSikg1bjI5V1lyubn/jPV0k72OtNbvx25zyg1sAMtMxhx7QLB/ujah6lXGE
- 0p8Jt80af3d/PGgRO6f6qntnZnE5ldw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-15-aDJOSIjyOjyhS6Q1SWE3pA-1; Fri, 13 Jun 2025 01:05:17 -0400
-X-MC-Unique: aDJOSIjyOjyhS6Q1SWE3pA-1
-X-Mimecast-MFC-AGG-ID: aDJOSIjyOjyhS6Q1SWE3pA_1749791117
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4f6ff23ccso1283304f8f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 22:05:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749791116; x=1750395916;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=mMxIr67GsAt1Z4qW9pogz4vadnhRgUPhQ68fi5VaJBs=;
- b=gvys4f5NnT9NhbysltzIFROQaFTUzIaq/zpkssTDGE4hbSug0wTwwAICxG6YTiMoQj
- cqbL/Td2taQUGqOuIqxX6g9QqUtyRZGucJ3LSruyiEOAwzBpt/Ja3A6IGI+3VennDXZ1
- 0/oiM51My3QUqzXxXJaAhrjAdskrzGBr0m2fXr0LNoXdFxW1DaUMJB2k3COHDDtLJzr9
- S6+HGbXZ7GLAweoFgFL+2W0JJwA2Y/XeoqS7we4A98iwOfz4KuK2GjIv3qcAVY5BpU0c
- GdcZeGudBazrs3GH+L1C0lhpVOjEnhnhy1VQsgoi7WIo6h3QtRWb7Us80tEKCMurnPpY
- Lx6g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVsWKjQNrh0NVcDMF+l4ZmfjLJq/oF84MxuCpqn6oWzfmdY3M1yPw4V6TORs/yiPGodIv5EsKCc5Gow@nongnu.org
-X-Gm-Message-State: AOJu0Yw0A50NB6uSXtsLj92kEGIf+MSr6TxnQy41x8igNd/yc9cIBFgK
- r88PKztXz52j+tEtd6el4Al83SuuZ9t2X0uzEyBmNsVL7Dg+C0q9iop9y9nOaz6M43Qqbsp50Fy
- n3r7ocOdrBFkxkhAIoxnbe5S8h6ypH3RQqemHwEzQG5JUGnQ9kmD6gtVG
-X-Gm-Gg: ASbGncvUd6CfCVeryJhDY3N3Fnn2GpV3xoGcLQ5u1rJWBBotmh8BjT80bhoMCAMEhrH
- 3agqeho3+wvUaa2XiH/Sw5GxKBr4iyDgGcnT1XRdVNIORUUUTHjxE2M1ICrlTN9Gqab8wpEWBe+
- FVAdbcfa39YV+q4eY7OZBbfGWn8vjrsnrIBRmmPf9sqpQ8+PJXm1WFIf4zjCIR7tzz1MukP3EMn
- P1KFckqPe3j86xO6ceYriI0yFqibOriZQ/r7nf6xfU5q2tKFPGTvf28lYopo5Gbshm+4MGx6+2W
- 2dKGVWdm15DBmRrnlcmthMatOrLZsKZYsw59rpOfBFbljXhH03KYDwJe8JqqFl1rUzlSow==
-X-Received: by 2002:a05:6000:310e:b0:3a5:52d4:5b39 with SMTP id
- ffacd0b85a97d-3a5686831camr1278051f8f.8.1749791116436; 
- Thu, 12 Jun 2025 22:05:16 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHYzQli9l+CeCil/JQSfu5phOSxFlx43BZ5XJcfNYDR1q5Drwy4uXFnaoUY5VbQqTkU2XFsqg==
-X-Received: by 2002:a05:6000:310e:b0:3a5:52d4:5b39 with SMTP id
- ffacd0b85a97d-3a5686831camr1278022f8f.8.1749791115841; 
- Thu, 12 Jun 2025 22:05:15 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b087b4sm1194957f8f.51.2025.06.12.22.05.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Jun 2025 22:05:14 -0700 (PDT)
-Message-ID: <46cb9903-7a00-4e43-9b0e-03707e4952d3@redhat.com>
-Date: Fri, 13 Jun 2025 07:05:13 +0200
+ bh=GkvK5CwdgTfzVehhlYR/22C54raijMQHPJxq6LFqbdk=;
+ b=owWRlRIkBTst+zGWjbylA7nMnpcr5DxGdKnE/gq+3A2S0wPMxh7SZEB40s2AOFKDCKD3Fk
+ 4gEtN4oOPkXfSrNGA/tHbpKutatyo7qk4IcAKU3S70H2/ruK/NJ6M4D4yzUBZWHt38Iztp
+ XMpzVwtdqiaKEcK7SiBhdCJmNksm9kQ=
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Itaru Kitayama <itaru.kitayama@linux.dev>
+To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, Fan Ni <fan.ni@samsung.com>,
+ Peter Maydell <peter.maydell@linaro.org>, mst@redhat.com,
+ Zhijian Li <lizhijian@fujitsu.com>, linuxarm@huawei.com,
+ linux-cxl@vger.kernel.org, qemu-arm@nongnu.org,
+ Yuquan Wang <wangyuquan1236@phytium.com.cn>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Alireza Sanaee <alireza.sanaee@huawei.com>,
+ Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
+Subject: Re: [PATCH v15 0/4] arm/virt: CXL support via pxb_cxl
+Message-ID: <aEuyFHlk7t7wiLvU@vm4>
+References: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/25] hw/arm/virt: Introduce machine state acpi pcihp
- flags and props
-Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, anisinha@redhat.com, mst@redhat.com,
- shannon.zhaosl@gmail.com, pbonzini@redhat.com, Jonathan.Cameron@huawei.com,
- philmd@linaro.org, alex.bennee@linaro.org
-References: <20250527074224.1197793-1-eric.auger@redhat.com>
- <20250527074224.1197793-3-eric.auger@redhat.com>
- <20250527135813.2d6cde91@imammedo.users.ipa.redhat.com>
- <d6bd4794-bcee-4701-8e63-4adee91120d9@redhat.com>
- <20250528123325.750529a4@imammedo.users.ipa.redhat.com>
- <13792b72-d336-41b8-8ac7-8790e10f833c@redhat.com>
- <20250611104511.55152616@imammedo.users.ipa.redhat.com>
- <05680827-85d9-4ebd-91a7-93e262da52f5@redhat.com>
- <20250612145537.7dff93a8@imammedo.users.ipa.redhat.com>
- <61599d8b-d83d-44ff-8c4d-86bf90ebbb4c@linaro.org>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <61599d8b-d83d-44ff-8c4d-86bf90ebbb4c@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=95.215.58.171;
+ envelope-from=itaru.kitayama@linux.dev; helo=out-171.mta1.migadu.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,301 +72,265 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gustavo,
+On Thu, Jun 12, 2025 at 02:43:34PM +0100, Jonathan Cameron wrote:
+> v15:
+>   - Split the address map calculations and mmio setup into separate
+>     functions in patch 2, allowing v14 patch 3 to be dropped as not
+>     x86 and arm make the same calls.  Note I felt this was a sufficient
+>     change to trigger dropping tags. (Zhijian Li)
+>   - A few other minor tweaks.
+>   - TLB issue mentioned in v14 now fixed upstream so dropped reference
+>     in this cover letter.
+> 
+> Thanks to Itaru Kitayama and Zhijian Li for testing + reviews.
+> 
+> Updated cover letter
+> 
+> Back in 2022, this series stalled on the absence of a solution to device
+> tree support for PCI Expander Bridges (PXB) and we ended up only having
+> x86 support upstream. I've been carrying the arm64 support out of tree
+> since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+> a few weeks ago) and a fair number of fiddly rebases.
+> gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
+> series.
+> 
+> A recent discussion with Peter Maydell indicated that there are various
+> other ACPI only features now, so in general he might be more relaxed
+> about DT support being necessary. The upcoming vSMMUv3 support would
+> run into this problem as well.
+> 
+> I presented the background to the PXB issue at Linaro connect 2022. In
+> short the issue is that PXBs steal MMIO space from the main PCI root
+> bridge. The challenge is knowing how much to steal.
+> 
+> On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+> configuration of the PCI topology and QEMU can update the ACPI tables
+> after EDK2 has done this when it can simply read the space used by the
+> root ports. On device tree, there is no entity to figure out that
+> enumeration so we don't know how to size the stolen region.
+> 
+> Three approaches were discussed:
+> 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+>    3rd enumeration implementation that ends up out of sync with EDK2 and
+>    the kernel (there are frequent issues because of how those existing
+>    implementations differ.
+> 2) Figure out how to enumerate in kernel. I never put a huge amount of work
+>    into this, but it seemed likely to involve a nasty dance with similar
+>    very specific code to that EDK2 is carrying and would very challenging
+>    to upstream (given the lack of clarity on real use cases for PXBs and
+>    DT).
+> 3) Hack it based on the control we have which is bus numbers.
+>    No one liked this but it worked :)
+> 
+> The other little wrinkle would be the need to define full bindings for CXL
+> on DT + implement a fairly complex kernel stack as equivalent in ACPI
+> involves a static table, CEDT, new runtime queries via _DSM and a description
+> of various components. Doable, but so far there is no interest on physical
+> platforms. Worth noting that for now, the QEMU CXL emulation is all about
+> testing and developing the OS stack, not about virtualization (performance
+> is terrible except in some very contrived situations!)
+> 
+> There is only a very simple test in here, because my intent is not to
+> duplicate what we have on x86, but just to do a smoke test that everything
+> is hooked up.  In general we need much more comprehensive end to end CXL
+> tests but that requires a reaonsably stable guest software stack. A few
+> people have expressed interest in working on that, but we aren't there yet.
+> 
+> Note that this series has a very different use case to that in the proposed
+> SBSA-ref support:
+> https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+> 
+> SBSA-ref is a good choice if you want a relatively simple mostly fixed
+> configuration.  That works well with the limited host system
+> discoverability etc as EDK2 can be build against a known configuration.
+> 
+> My interest with this support in arm/virt is support host software stack
+> development (we have a wide range of contributors, most of whom are working
+> on emulation + the kernel support). I care about the weird corners. As such
+> I need to be able to bring up variable numbers of host bridges, multiple CXL
+> Fixed Memory Windows with varying characteristics (interleave etc), complex
+> NUMA topologies with wierd performance characteristics etc. We can do that
+> on x86 upstream today, or my gitlab tree. Note that we need arm support
+> for some arch specific features in the near future (cache flushing).
+> Doing kernel development with this need for flexibility on SBSA-ref is not
+> currently practical. SBSA-ref CXL support is an excellent thing, just
+> not much use to me for this work.
+> 
+> Also, we are kicking off some work on DCD virtualization, particularly to
+> support inter-host shared memory being presented up into a VM. That
+> will need upstream support on arm64 as it is built on top of the existing
+> CXL emulation to avoid the need for a separate guest software stack.
+> 
+> Note this is TCG only - it is possible to support limited use with KVM but
+> that needs additional patches not yet ready for upstream.  The challenge
+> is interleave - and the solution is don't interleave if you want to run
+> with KVM.
 
-On 6/13/25 5:01 AM, Gustavo Romero wrote:
-> Hi Eric,
->
-> On 6/12/25 09:55, Igor Mammedov wrote:
->> On Wed, 11 Jun 2025 10:50:04 +0200
->> Eric Auger <eric.auger@redhat.com> wrote:
->>
->>> Hi Igor,
->>> On 6/11/25 10:45 AM, Igor Mammedov wrote:
->>>> On Wed, 11 Jun 2025 08:53:28 +0200
->>>> Eric Auger <eric.auger@redhat.com> wrote:
->>>>  
->>>>> Hi Gustavo, Alex,
->>>>>
->>>>> On 5/28/25 12:33 PM, Igor Mammedov wrote:
->>>>>> On Tue, 27 May 2025 15:54:15 +0200
->>>>>> Eric Auger <eric.auger@redhat.com> wrote:
->>>>>>    
->>>>>>> Hi Igor,
->>>>>>>
->>>>>>> On 5/27/25 1:58 PM, Igor Mammedov wrote:
->>>>>>>> On Tue, 27 May 2025 09:40:04 +0200
->>>>>>>> Eric Auger <eric.auger@redhat.com> wrote:
->>>>>>>>      
->>>>>>>>> acpi_pcihp VirtMachineClass state flag will allow
->>>>>>>>> to opt in for acpi pci hotplug. This is guarded by a
->>>>>>>>> class no_acpi_pcihp flag to manage compats (<= 10.0
->>>>>>>>> machine types will not support ACPI PCI hotplug).
->>>>>>>> there is no reason to put an effort in force disabling it
->>>>>>>> on old machines, as long as code works when explicitly
->>>>>>>> enabled property on CLI.
->>>>>>>>
->>>>>>>> See comment below on how to deal with it
->>>>>>>>      
->>>>>>>>> Machine state acpi_pcihp flag must be set before the creation
->>>>>>>>> of the GED device which will use it.
->>>>>>>>>
->>>>>>>>> Currently the ACPI PCI HP is turned off by default. This will
->>>>>>>>> change later on for 10.1 machine type.
->>>>>>>> one thing to note, is that turning it on by default might
->>>>>>>> cause change of NIC naming in guest as this brings in
->>>>>>>> new "_Sxx" slot naming. /so configs tied to nic  go down the
->>>>>>>> drain/
->>>>>>>>
->>>>>>>> Naming, we have, also happens to be broken wrt spec
->>>>>>>> (it should be unique system wide, there was a gitlab issue for
->>>>>>>> that,
->>>>>>>> there is no easy fix that though)
->>>>>>>>
->>>>>>>> So I'd leave it disabled by default and let users to turn
->>>>>>>> it on explicitly when needed.
->>>>>>> what is the status on q35, isn't it enabled by default? If so why
->>>>>>> wouldn't we want the same setting on ARM? Is that because of the
->>>>>>> known
->>>>>>> issue you report above?
->>>>>> Above issue is not a blocker (for thae lack of a good way to fix it)
->>>>>>
->>>>>> on q35 we have had a few complains and fixes, after pcihp was
->>>>>> promoted
->>>>>> to default (so hopefully that won't happen on with ARM). Also given
->>>>>> that ARM VM is less popular like hood breaking someone setup is
->>>>>> even less.
->>>>>>
->>>>>> That said I'd be cautions keep native hotplug as default,
->>>>>> and only ones who need ACPI one, could turn it on explicitly.
->>>>>>
->>>>>> But well it's policies, so it's up to you ARM folks to decide what
->>>>>> virt board should look like.
->>>>> What is your preference? Do you prefer enabling ACPI PCI HP by
->>>>> default
->>>>> or the opposite.
->>>> I'd prefer native PCIe hotplug being default,
->>>> that way we have less chance of causing regressions not to mention
->>>> less complexity (as acpi pcihp adds up quite a bit of it).
->>>>
->>>> And ones who want/need acpi-pcihp/acpi-index can enable it explicitly,
->>>> to play with.
->>>
->>> OK I will follow your suggestion. You have definitively more expertise
->>> than me here ! ;-)
->>
->> So far what I suggest looks like better option compared to multiple
->> machine knobs
->> fiddling. But I can easily change my mind once I see respin, if
->> experiment
->> with compat props is not coming well together.
->
-> For now, I think it's okay to let ACPI PCI hotplug stabilize (while
-> not being the
-> default) for at least one release cycle. So I'm fine with keeping
-> acpi-pcihp=off as
-> the default.
->
-> As I mentioned elsewhere, I don't consider native PCIe hotplug to be
-> legacy.
->
-> We can make acpi-pcihp=on the default in a future release once it's
-> been more
-> widely exercised.
->
-> I'll update the bios-tables-test.c test accordingly, then you can
-> either put them
-> in the v3 (if you happen to send v3 next week) or add them to a v4.
+One of the ndctl:cxl tests fails (other tests ran ok):
 
-OK thank you for the confirmation. So following Igor's suggestion I
-indeed kept the current default value (legacy PCIe hotplug) and I don't
-use a machine option anymore. Instead I use the x86 trick, ie.
+# meson test cxl-region-sysfs.sh
+ninja: Entering directory `/root/ndctl/build'
+[1/55] Generating version.h with a custom command
+[  706.564783][ T2080] calling  cxl_port_init+0x0/0xfe0 [cxl_port] @ 2080
+[  706.566861][ T2080] initcall cxl_port_init+0x0/0xfe0 [cxl_port] returned 0 after 1735 usecs
+[  706.586457][ T2080] calling  cxl_acpi_init+0x0/0xfe0 [cxl_acpi] @ 2080
+[  706.625690][ T2080] probe of port1 returned 0 after 25381 usecs
+[  706.626634][ T2080]  pci0000:bf: host supports CXL
+[  706.653573][ T2080] probe of port2 returned 0 after 25631 usecs
+[  706.655164][ T2080]  pci0000:35: host supports CXL
+[  706.662409][ T2080] probe of ACPI0017:00 returned 0 after 74464 usecs
+[  706.663150][ T2080] initcall cxl_acpi_init+0x0/0xfe0 [cxl_acpi] returned 0 after 76306 usecs
+[  706.690482][ T2080] calling  cxl_pmem_init+0x0/0xfd0 [cxl_pmem] @ 2080
+[  706.695324][ T2080] probe of ndbus0 returned 0 after 1496 usecs
+[  706.699217][ T2080] probe of nvdimm-bridge0 returned 0 after 6705 usecs
+[  706.702372][ T2080] initcall cxl_pmem_init+0x0/0xfd0 [cxl_pmem] returned 0 after 11576 usecs
+[  706.717668][ T2080] calling  cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] @ 2080
+[  706.758561][ T2080] probe of port3 returned 0 after 34188 usecs
+[  706.767080][ T2080] cxl_nvdimm pmem11: GPF: could not set dirty shutdown state
+[  706.779392][ T2080] probe of nmem0 returned 0 after 1083 usecs
+[  706.782181][ T2080] probe of pmem11 returned 0 after 15516 usecs
+[  706.826941][ T2080] probe of endpoint4 returned 0 after 42630 usecs
+[  706.827987][ T2080] probe of mem11 returned 0 after 108475 usecs
+[  706.878052][ T2080] probe of port5 returned 0 after 41354 usecs
+[  706.938260][ T2080] probe of endpoint6 returned 0 after 46831 usecs
+[  706.939223][ T2080] probe of mem12 returned 0 after 105104 usecs
+[  706.994611][ T2080] probe of endpoint7 returned 0 after 49337 usecs
+[  706.995790][ T2080] probe of mem13 returned 0 after 53632 usecs
+[  707.004334][ T2080] cxl_nvdimm pmem14: GPF: could not set dirty shutdown state
+[  707.017782][ T2080] probe of nmem1 returned 0 after 1115 usecs
+[  707.019324][ T2080] probe of pmem14 returned 0 after 14920 usecs
+[  707.072148][ T2080] probe of endpoint8 returned 0 after 50887 usecs
+[  707.073367][ T2080] probe of mem14 returned 0 after 71279 usecs
+[  707.079062][ T2080] initcall cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] returned 0 after 361073 usecs
+[  707.111533][ T2080] calling  cxl_test_init+0x0/0xc88 [cxl_test] @ 2080
+[  708.001403][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+[  708.002032][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+[  708.010988][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+[  708.011963][ T2080] platform cxl_host_bridge.3: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+[  708.034604][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+[  708.056775][ T2080] probe of port10 returned 0 after 20555 usecs
+[  708.057814][ T2080] platform cxl_host_bridge.0: host supports CXL
+[  708.062226][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+[  708.081857][ T2080] probe of port11 returned 0 after 18696 usecs
+[  708.085821][ T2080] platform cxl_host_bridge.1: host supports CXL
+[  708.086496][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+[  708.538268][ T2080] probe of port12 returned 0 after 450064 usecs
+[  708.563248][ T2080] platform cxl_host_bridge.2: host supports CXL
+[  708.563875][ T2080] platform cxl_host_bridge.3: host supports CXL (restricted)
+[  708.803640][ T2080] probe of ndbus1 returned 0 after 87373 usecs
+[  708.817241][ T2080] probe of nvdimm-bridge1 returned 0 after 182992 usecs
+[  708.839172][ T2080] probe of cxl_acpi.0 returned 0 after 843615 usecs
+[  709.026867][  T503] cxl_mock_mem cxl_mem.0: CXL MCE unsupported
+[  709.240435][  T502] cxl_mock_mem cxl_mem.1: CXL MCE unsupported
+[  709.263055][  T499] cxl_mock_mem cxl_mem.2: CXL MCE unsupported
+[  709.317257][  T503] probe of port13 returned 0 after 57147 usecs
+[  709.442524][  T498] cxl_mock_mem cxl_mem.3: CXL MCE unsupported
+[  709.495789][  T499] probe of port15 returned 0 after 57022 usecs
+[  709.538513][ T1514] cxl_mock_mem cxl_mem.5: CXL MCE unsupported
+[  709.553021][  T503] probe of nmem3 returned 0 after 12329 usecs
+[  709.555876][  T503] probe of pmem0 returned 0 after 54954 usecs
+[  709.567823][  T499] probe of nmem2 returned 0 after 27577 usecs
+[  709.569359][  T499] probe of pmem2 returned 0 after 64505 usecs
+[  709.603845][  T497] cxl_mock_mem cxl_mem.4: CXL MCE unsupported
+[  709.626487][   T12] cxl_mock_mem cxl_mem.6: CXL MCE unsupported
+[  709.639194][  T502] probe of port14 returned 0 after 255539 usecs
+[  709.662671][  T503] probe of region2 returned 6 after 421 usecs
+[  709.664855][  T503] cxl_mock_mem cxl_mem.0: Extended linear cache calculation failed rc:-2
+[  709.694975][  T503] probe of endpoint16 returned 0 after 100427 usecs
+[  709.698678][  T503] probe of mem0 returned 0 after 516964 usecs
+[  709.752821][   T49] cxl_mock_mem cxl_mem.7: CXL MCE unsupported
+[  709.782050][  T499] probe of endpoint17 returned 0 after 102692 usecs
+[  709.814422][  T499] probe of mem2 returned 0 after 539843 usecs
+[  709.859496][  T497] probe of nmem4 returned 0 after 74368 usecs
+[  709.860064][  T497] probe of pmem5 returned 0 after 120134 usecs
+[  709.862431][  T499] probe of cxl_mem.2 returned 0 after 686512 usecs
+[  709.863290][  T503] probe of cxl_mem.0 returned 0 after 892734 usecs
+[  709.870924][   T30] cxl_mock_mem cxl_mem.9: CXL MCE unsupported
+[  709.876631][ T2080] initcall cxl_test_init+0x0/0xc88 [cxl_test] returned 0 after 2764528 usecs
+[  709.886776][  T498] probe of port18 returned 0 after 168122 usecs
+[  709.900934][  T500] cxl_mock_mem cxl_mem.8: CXL MCE unsupported
+[  709.946498][ T1514] probe of nmem5 returned 0 after 9462 usecs
+[  709.947381][ T1514] probe of pmem4 returned 0 after 14445 usecs
+[  709.970022][   T12] probe of nmem6 returned 0 after 32603 usecs
+[  709.978337][  T498] probe of nmem7 returned 0 after 35875 usecs
+[  709.986071][  T498] probe of pmem3 returned 0 after 46583 usecs
+[  710.010717][   T12] probe of pmem6 returned 0 after 75369 usecs
+[  710.014337][  T501] cxl_mock_mem cxl_rcd.10: CXL MCE unsupported
+[  710.040337][  T502] probe of nmem8 returned 0 after 29862 usecs
+[  710.059653][  T502] probe of pmem1 returned 0 after 88935 usecs
+[  710.079573][   T12] probe of endpoint23 returned 0 after 49198 usecs
+[  710.097280][   T30] probe of port21 returned 0 after 120461 usecs
+[  710.097393][   T49] probe of nmem9 returned 0 after 26437 usecs
+[  710.101820][   T49] probe of pmem7 returned 0 after 36944 usecs
+[  710.106202][   T12] probe of mem6 returned 0 after 452293 usecs
+[  710.130816][   T12] probe of cxl_mem.6 returned 0 after 669975 usecs
+[  710.133959][  T500] probe of nmem10 returned 0 after 12351 usecs
+[  710.170179][  T500] probe of pmem9 returned 0 after 50316 usecs
+[  710.183178][  T498] probe of endpoint22 returned 0 after 160579 usecs
+[  710.208790][  T498] probe of mem3 returned 0 after 760551 usecs
+[  710.212463][  T501] probe of endpoint24 returned 0 after 149792 usecs
+[  710.236975][  T497] probe of dax2.0 returned 0 after 118646 usecs
+[  710.240952][  T497] probe of dax_region2 returned 0 after 166940 usecs
+[  710.242545][  T498] probe of cxl_mem.3 returned 0 after 917362 usecs
+[  710.256278][   T30] probe of nmem11 returned 0 after 45572 usecs
+[  710.257079][   T30] probe of pmem8 returned 0 after 105691 usecs
+[  710.259332][  T501] probe of mem10 returned 0 after 218194 usecs
+[  710.265545][  T497] probe of region2 returned 0 after 225563 usecs
+[  710.269232][ T1514] probe of endpoint20 returned 0 after 320269 usecs
+[  710.282299][  T497] probe of endpoint19 returned 0 after 421116 usecs
+[  710.283234][  T497] probe of mem5 returned 0 after 642268 usecs
+[  710.304734][ T1514] probe of mem4 returned 0 after 762768 usecs
+[  710.322940][   T49] probe of endpoint26 returned 0 after 117975 usecs
+[  710.324643][   T49] probe of mem7 returned 0 after 558032 usecs
+[  710.336434][  T501] probe of cxl_rcd.10 returned 0 after 414904 usecs
+[  710.339624][  T497] probe of cxl_mem.4 returned 0 after 957535 usecs
+[  710.400496][ T1514] probe of cxl_mem.5 returned 0 after 996364 usecs
+[  710.450320][   T49] probe of cxl_mem.7 returned 0 after 842769 usecs
+[  710.648851][  T500] probe of endpoint25 returned 0 after 477479 usecs
+[  710.659334][  T500] probe of mem9 returned 0 after 690185 usecs
+[  710.706030][  T500] probe of cxl_mem.8 returned 0 after 917194 usecs
+[  711.162896][   T30] probe of endpoint28 returned 0 after 493899 usecs
+[  711.227336][   T30] probe of mem8 returned 0 after 1278462 usecs
+[  711.325568][  T502] probe of endpoint27 returned 0 after 929403 usecs
+[  711.356687][  T502] probe of mem1 returned 0 after 2101415 usecs
+[  711.531055][   T30] probe of cxl_mem.9 returned 0 after 1707787 usecs
+[  711.554073][  T502] probe of cxl_mem.1 returned 0 after 2425696 usecs
+[  724.421245][ T2077] probe of region5 returned 6 after 262 usecs
+1/1 ndctl:cxl / cxl-region-sysfs.sh        FAIL            18.22s   exit status 1
+>>> TEST_PATH=/root/ndctl/build/test ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 LD_LIBRARY_PATH=/root/ndctl/build/daxctl/lib:/root/ndctl/build/cxl/lib:/root/ndctl/build/ndctl/lib DAXCTL=/root/ndctl/build/daxctl/daxctl DATA_PATH=/root/ndctl/test NDCTL=/root/ndctl/build/ndctl/ndctl MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=123 /bin/bash /root/ndctl/test/cxl-region-sysfs.sh
 
--global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
+The kernel (the cxl_test kernel module) is built off of cxl/next which
+has Jonathan's fix to the cxl_test seen on arm64.
+Could the experts take a look at this issue?
 
-I can easily update your tests with that option, don't bother
-respinning. I should be able to send the v3 by beginning of next week.
+Thanks,
+Itaru.
 
-Thanks!
-
-Eric
-
->
->
-> Cheers,
-> Gustavo
->
->>> Thanks!
->>>
->>> Eric
->>>>  
->>>>> Anybody else?
->>>>>
->>>>> On my end I think I would prefer to have the same default setting
->>>>> than
->>>>> on x86 (ie. ACPI PCI hotplug set by default) but I have no strong
->>>>> opinion either.
->>>>>
->>>>> Thanks
->>>>>
->>>>> Eric
->>>>>>    
->>>>>>> The no_foo compat stuff was especially introduced to avoid
->>>>>>> breaking the
->>>>>>> guest ABI for old machine types (like the NIC naming alternation
->>>>>>> you evoke).
->>>>>> no_foo is just another way to handle compat stuff,
->>>>>> and when it's more than one knob per feature it gets ugly really
->>>>>> fast.
->>>>>> Hence, I'd prefer pcihp done in x86 way aka:
->>>>>>     hw_compat_OLD(ged.use_acpi_hotplug_bridge, false|true)
->>>>>> to manage presence of ACPI hotplug on desired machine version.
->>>>>> Side benefit it's consistent with how pcihp works on x86
->>>>>>    
->>>>>>>>      
->>>>>>>>> We also introduce properties to allow disabling it.
->>>>>>>>>
->>>>>>>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
->>>>>>>>> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
->>>>>>>>> ---
->>>>>>>>>   include/hw/arm/virt.h |  2 ++
->>>>>>>>>   hw/arm/virt.c         | 27 +++++++++++++++++++++++++++
->>>>>>>>>   2 files changed, 29 insertions(+)
->>>>>>>>>
->>>>>>>>> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
->>>>>>>>> index 9a1b0f53d2..10ea581f06 100644
->>>>>>>>> --- a/include/hw/arm/virt.h
->>>>>>>>> +++ b/include/hw/arm/virt.h
->>>>>>>>> @@ -129,6 +129,7 @@ struct VirtMachineClass {
->>>>>>>>>       bool no_tcg_lpa2;
->>>>>>>>>       bool no_ns_el2_virt_timer_irq;
->>>>>>>>>       bool no_nested_smmu;
->>>>>>>>> +    bool no_acpi_pcihp;
->>>>>>>>>   };
->>>>>>>>>     struct VirtMachineState {
->>>>>>>>> @@ -150,6 +151,7 @@ struct VirtMachineState {
->>>>>>>>>       bool mte;
->>>>>>>>>       bool dtb_randomness;
->>>>>>>>>       bool second_ns_uart_present;
->>>>>>>>> +    bool acpi_pcihp;
->>>>>>>>>       OnOffAuto acpi;
->>>>>>>>>       VirtGICType gic_version;
->>>>>>>>>       VirtIOMMUType iommu;
->>>>>>>>> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->>>>>>>>> index 9a6cd085a3..a0deeaf2b3 100644
->>>>>>>>> --- a/hw/arm/virt.c
->>>>>>>>> +++ b/hw/arm/virt.c
->>>>>>>>> @@ -2397,8 +2397,10 @@ static void machvirt_init(MachineState
->>>>>>>>> *machine)
->>>>>>>>>       create_pcie(vms);
->>>>>>>>>         if (has_ged && aarch64 && firmware_loaded &&
->>>>>>>>> virt_is_acpi_enabled(vms)) {
->>>>>>>>> +        vms->acpi_pcihp &= !vmc->no_acpi_pcihp;
->>>>>>>> I don't particularly like no_foo naming as it makes code harder
->>>>>>>> to read
->>>>>>>> and combined with 'duplicated' field in machine state it make
->>>>>>>> even things worse.
->>>>>>>> (if I recall right Philippe was cleaning mess similar flags usage
->>>>>>>> have introduced with ITS)
->>>>>>>>
->>>>>>>> instead of adding machine property (both class and state),
->>>>>>>> I'd suggest adding the only property to GPE device (akin to
->>>>>>>> what we have in x86 world)
->>>>>>>> And then one can meddle with defaults using hw_compat_xxx
->>>>>>> no_foo still is a largely used pattern in arm virt: no_ged,
->>>>>>> kvm_no_adjvtime, no_kvm_steal_time, no_tcg_lpa2, ../.. There are
->>>>>>> plenty
->>>>>>> of them and I am not under the impression this is going to be
->>>>>>> changed.
->>>>>>>
->>>>>>> If you refer to 8d23b1df7212 ("hw/arm/virt: Remove
->>>>>>> VirtMachineClass::no_its field") I think the no_its was removed
->>>>>>> because
->>>>>>> the machine it applied was removed.
->>>>>>>
->>>>>>> If I understand correctly you would like the prop to be attached
->>>>>>> to the
->>>>>>> GED device. However the GED device is internally created by the
->>>>>>> virt
->>>>>>> machine code and not passed through a "-device" CLI option. So
->>>>>>> how would
->>>>>>> you pass the option on the cmd line if you don't want it to be
->>>>>>> set by
->>>>>>> default per machine type?
->>>>>>>
->>>>>>> Thanks
->>>>>>>
->>>>>>> Eric
->>>>>>>>      
->>>>>>>>>           vms->acpi_dev = create_acpi_ged(vms);
->>>>>>>>>       } else {
->>>>>>>>> +        vms->acpi_pcihp = false;
->>>>>>>>>           create_gpio_devices(vms, VIRT_GPIO, sysmem);
->>>>>>>>>       }
->>>>>>>>>   @@ -2593,6 +2595,20 @@ static void virt_set_its(Object *obj,
->>>>>>>>> bool value, Error **errp)
->>>>>>>>>       vms->its = value;
->>>>>>>>>   }
->>>>>>>>>   +static bool virt_get_acpi_pcihp(Object *obj, Error **errp)
->>>>>>>>> +{
->>>>>>>>> +    VirtMachineState *vms = VIRT_MACHINE(obj);
->>>>>>>>> +
->>>>>>>>> +    return vms->acpi_pcihp;
->>>>>>>>> +}
->>>>>>>>> +
->>>>>>>>> +static void virt_set_acpi_pcihp(Object *obj, bool value,
->>>>>>>>> Error **errp)
->>>>>>>>> +{
->>>>>>>>> +    VirtMachineState *vms = VIRT_MACHINE(obj);
->>>>>>>>> +
->>>>>>>>> +    vms->acpi_pcihp = value;
->>>>>>>>> +}
->>>>>>>>> +
->>>>>>>>>   static bool virt_get_dtb_randomness(Object *obj, Error **errp)
->>>>>>>>>   {
->>>>>>>>>       VirtMachineState *vms = VIRT_MACHINE(obj);
->>>>>>>>> @@ -3310,6 +3326,10 @@ static void
->>>>>>>>> virt_machine_class_init(ObjectClass *oc, const void *data)
->>>>>>>>>                                             "in ACPI table
->>>>>>>>> header."
->>>>>>>>>                                             "The string may be
->>>>>>>>> up to 8 bytes in size");
->>>>>>>>>   +    object_class_property_add_bool(oc, "acpi-pcihp",
->>>>>>>>> +                                   virt_get_acpi_pcihp,
->>>>>>>>> virt_set_acpi_pcihp);
->>>>>>>>> +    object_class_property_set_description(oc, "acpi-pcihp",
->>>>>>>>> +                                          "Force ACPI PCI
->>>>>>>>> hotplug");
->>>>>>>>>   }
->>>>>>>>>     static void virt_instance_init(Object *obj)
->>>>>>>>> @@ -3344,6 +3364,9 @@ static void virt_instance_init(Object *obj)
->>>>>>>>>           vms->tcg_its = true;
->>>>>>>>>       }
->>>>>>>>>   +    /* default disallows ACPI PCI hotplug */
->>>>>>>>> +    vms->acpi_pcihp = false;
->>>>>>>>> +
->>>>>>>>>       /* Default disallows iommu instantiation */
->>>>>>>>>       vms->iommu = VIRT_IOMMU_NONE;
->>>>>>>>>   @@ -3394,8 +3417,12 @@ DEFINE_VIRT_MACHINE_AS_LATEST(10, 1)
->>>>>>>>>     static void virt_machine_10_0_options(MachineClass *mc)
->>>>>>>>>   {
->>>>>>>>> +    VirtMachineClass *vmc =
->>>>>>>>> VIRT_MACHINE_CLASS(OBJECT_CLASS(mc));
->>>>>>>>> +
->>>>>>>>>       virt_machine_10_1_options(mc);
->>>>>>>>>       compat_props_add(mc->compat_props, hw_compat_10_0,
->>>>>>>>> hw_compat_10_0_len);
->>>>>>>>> +    /* 10.0 and earlier do not support ACPI PCI hotplug */
->>>>>>>>> +    vmc->no_acpi_pcihp = true;
->>>>>>>>>   }
->>>>>>>>>   DEFINE_VIRT_MACHINE(10, 0)
->>>>>>>>>         
->>>
->>
->
-
+> 
+> Jonathan Cameron (4):
+>   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+>   hw/cxl: Make the CXL fixed memory windows devices.
+>   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+>     pxb-cxl
+>   qtest/cxl: Add aarch64 virt test for CXL
+> 
+>  include/hw/arm/virt.h     |   4 +
+>  include/hw/cxl/cxl.h      |   5 +-
+>  include/hw/cxl/cxl_host.h |   5 +-
+>  hw/acpi/cxl.c             |  76 +++++++++--------
+>  hw/arm/virt-acpi-build.c  |  34 ++++++++
+>  hw/arm/virt.c             |  29 +++++++
+>  hw/cxl/cxl-host-stubs.c   |   7 +-
+>  hw/cxl/cxl-host.c         | 170 +++++++++++++++++++++++++++++++-------
+>  hw/i386/pc.c              |  50 +++++------
+>  tests/qtest/cxl-test.c    |  59 ++++++++++---
+>  tests/qtest/meson.build   |   1 +
+>  11 files changed, 330 insertions(+), 110 deletions(-)
+> 
+> -- 
+> 2.48.1
+> 
 
