@@ -4,88 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F069C71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 14:13:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 274CEC71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 14:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ59J-0003zw-LD; Fri, 13 Jun 2025 10:12:53 -0400
+	id 1uQ59I-0003z5-Aj; Fri, 13 Jun 2025 10:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ59H-0003yw-VY
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:12:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ59E-0003vm-Nn
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:12:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ59E-0002MP-FW
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:12:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uQ595-0002Jl-N5
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 10:12:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749823965;
+ s=mimecast20190719; t=1749823954;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=3i05mM5Kf5Mf9n3r0qpk8pmYqkJYk9eZcgiq02HTyoE=;
- b=UQM+3PIhE1V19ReYVrR1AQjz/SubhL8nX/2a3LIhp64JfgsnTcopDl2IaCVN4fcLiKUNI+
- tlUHzNnADn9L1ASVrWMUQNzbW4177h7TtQZh/M7zR2ZrxjEQi187KKfCMUrBWy2x8L6BCH
- i77SzEITmzit7rWzckC28V5v7nqQvBk=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aVKgBQMfxhddBxPyaKNixg5DSYmgqFw6jW8hSbO1LhE=;
+ b=KbjTiELoB6FyyYFf9dnAcktVHnT041mpD/1dBB0LG2HEijAzOr75pg2JDTZI1fBvjrnWto
+ 41bkf3CzK71J5cYwFBvliIh/BURHJ6xYXVBIeBXw7NvKgygHVEc9Avj7ftrwF5T8/cHx/Y
+ vhmD4kT+vg8cBG3mRkqcnY9fFn+LNjI=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-149-Nv_kLPq5NxW7m72BremU9A-1; Fri, 13 Jun 2025 10:12:41 -0400
-X-MC-Unique: Nv_kLPq5NxW7m72BremU9A-1
-X-Mimecast-MFC-AGG-ID: Nv_kLPq5NxW7m72BremU9A_1749823960
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-4a5882b7339so25650011cf.2
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 07:12:41 -0700 (PDT)
+ us-mta-592-dp2ERQOSP5eVjdoFi6QIhw-1; Fri, 13 Jun 2025 10:12:32 -0400
+X-MC-Unique: dp2ERQOSP5eVjdoFi6QIhw-1
+X-Mimecast-MFC-AGG-ID: dp2ERQOSP5eVjdoFi6QIhw_1749823952
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-4a6e9182fbaso57370361cf.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 07:12:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749823960; x=1750428760;
+ d=1e100.net; s=20230601; t=1749823951; x=1750428751;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=3i05mM5Kf5Mf9n3r0qpk8pmYqkJYk9eZcgiq02HTyoE=;
- b=THvQW0brj/Lu19hcThNr6O5I1sGOR6vYyvgRmKqOuz3joQLziWs0Z3pDlTF38W58Vq
- KhfniMR3ZFSQXXsiaiDNAv4e6hj/kylSV9Oobqxqy4TcTL8rdOUt3gkcquzp01jR3pyy
- Fad5401Q3tyVrQCfQK+FflqjBlp0dgnCz9nM2++QAQ0i5hmHAvkCYTO0GtIttKhc9tYN
- QRQI0gcCoFuG5AdWFgYSZ9V/ypMCZ8vW16a12PmjmtO3lJMzlaO2TRRipd3bOt9DtQnq
- nN8sG7vL1hWovmt2lEdrwM41z/xc9KLrwRJVHBsyqp+alL/zNgpDJmvVs2EpeNZOrsWL
- MrOw==
-X-Gm-Message-State: AOJu0YzsMbjsq6Py9APBctSqILyf3bw2BaQe4inrdG6/dG2BI+2QXAZy
- OFwEXVPY4gqvDL+z8sjvoPXftSYmBSrC0e7ctOHD9/I+PC+LzOgPTj84BMJnkfPpnIW0/dQSrIV
- xC4A/chl0i7FFzKU2EqcdvfqW1LV1hMomYJmBrQ8OunK/zQWybq0IfH7wojD++ET8cBx7XE9jpB
- z+Ww8WMXsHJGJyT9S566PkmH2UgULaobZ1mPcmMQ==
-X-Gm-Gg: ASbGncu4/G1g8o05BLrCmDkjLdMDuhw6JMysdqYH0IcICJIZMZGgoZomQhj2qVAV8CT
- dOI61SqsVHui17C0RdcRQJEzMgw/fdfg39TA0ZY7xhcfAwITMFBdNqBTZ/F26bQscBIS8vVLjlB
- MFHzdxrdLlahwAhJdg9b7GtnOHv+vfhfhnfTbdRr+86U4Q9BtSiTa1mQ/2V9T/KB/xB5NllpZoH
- itYXzT7LENduT9X2e9LFSlwdJbcCj3to4j/BGP+SXN9rQ1WMCAlzEQTw5V+QYdTYYVuMo/+6vcB
- 6MMizeViwy4=
-X-Received: by 2002:ac8:5cd0:0:b0:4a7:14c4:2385 with SMTP id
- d75a77b69052e-4a72ff1c496mr44385601cf.42.1749823958825; 
- Fri, 13 Jun 2025 07:12:38 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEM4VKkG3eFF/XRZsyNegzjZLfmIEDQQdj8yUhuoeLUmZXRuneVPxLmZPtzuh7uOa5S5di6/g==
-X-Received: by 2002:ac8:5cd0:0:b0:4a7:14c4:2385 with SMTP id
- d75a77b69052e-4a72ff1c496mr44384921cf.42.1749823958041; 
- Fri, 13 Jun 2025 07:12:38 -0700 (PDT)
+ bh=aVKgBQMfxhddBxPyaKNixg5DSYmgqFw6jW8hSbO1LhE=;
+ b=QR6wO8IoMhRwaBjxnPCKGIqLFdhfOKZ9EzB2kyf5TbUnQis9c7AA8tp3ykqfEzA5EV
+ sb9aULfQQpiHNF3WtC/uCfz7ye3fsXpqNxLt/It2XRAkna0WE2RK7vaJeXerlXq9bTLv
+ cINhKmC8cbUwJMbp3TSc/YIXagOuTX0B3kGeZ6ys1Y8AKyaKZ2ggGXBUMAkadrCcffAy
+ +v9vHl62oWuw5zXtDNSyPuRKGgg7sJeWcv8FoQJWJUqE47be6JlsclGX6piLIaUVfn1x
+ BK/bqEynt9Ttefgzw5exIiZpiy5RVABOwOt6X3R/yJUmjxh/yt5Ci3u3BvYhQEA9ogG1
+ D/6A==
+X-Gm-Message-State: AOJu0YwoYyBEKo0keQvhea846m+5x28iUhkHylFXGK5R8CpUUNtlTOT7
+ cIoIdYSDQLkBbiCVFfkoc9fsboNkAuKcpIbpKWXeDUxpSiReanO9LEoiW2BR+MiV/Uz40AV9Zsl
+ F11zAUcSOtk8LbMiu08ZgnAEp0YTOaJax1hW06nCBlZHCRIHLRe/ETacQ7ik7ozIJyDP+zH1th8
+ 99VojzNeVf/nXrIeS1cvj56BjJzJ0QOsNI5KLi7A==
+X-Gm-Gg: ASbGncujRhfPE1dolI/GRyz63MshLVC+Amt20lDseoi5PWR/bRYSMx16MKCv1OwaV0n
+ Kn3RJqn8/v+KEIjmIYH/uva0s+l+/cDH0BjXO64nXjbbgenPtH8662rZqj1PW7Zbacy5fBG+w39
+ WZYZguPuSXkFxH9TOJ7zOzM+5EMZGtbkWe//F1YWhfO+ZD4blD+pSBU3hbQpTPAfvVkFF4w3ZyK
+ yTpGJKb9CwVpWR5O7vLCtjwPSxRCEr5nsoiLGvasUN239CjiKn5OE9mj8otqKfXSupK8hSJuqRs
+ /MMqtXluK50=
+X-Received: by 2002:ac8:5a84:0:b0:49a:4fc0:56ff with SMTP id
+ d75a77b69052e-4a73910fe61mr14844021cf.12.1749823951297; 
+ Fri, 13 Jun 2025 07:12:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEQnsKlqpqOyfpH7oDmt/WafmFK07fx6niGHh2XSU7PI6ivB8SSWmqVMV1huPyddAucUMBteQ==
+X-Received: by 2002:ac8:5a84:0:b0:49a:4fc0:56ff with SMTP id
+ d75a77b69052e-4a73910fe61mr14843181cf.12.1749823950584; 
+ Fri, 13 Jun 2025 07:12:30 -0700 (PDT)
 Received: from x1.com ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-4a72a526cc6sm17141641cf.79.2025.06.13.07.12.36
+ d75a77b69052e-4a72a526cc6sm17141641cf.79.2025.06.13.07.12.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Jun 2025 07:12:37 -0700 (PDT)
+ Fri, 13 Jun 2025 07:12:29 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mario Casquero <mcasquer@redhat.com>,
  Alexey Perevalov <a.perevalov@samsung.com>,
  "Dr . David Alan Gilbert" <dave@treblig.org>, peterx@redhat.com,
- Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH v3 14/14] migration/postcopy: Add latency distribution report
- for blocktime
-Date: Fri, 13 Jun 2025 10:12:17 -0400
-Message-ID: <20250613141217.474825-15-peterx@redhat.com>
+ Juraj Marcin <jmarcin@redhat.com>, Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH v3 09/14] migration/postcopy: Initialize blocktime context
+ only until listen
+Date: Fri, 13 Jun 2025 10:12:12 -0400
+Message-ID: <20250613141217.474825-10-peterx@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250613141217.474825-1-peterx@redhat.com>
 References: <20250613141217.474825-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -110,255 +109,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the latency distribution too for blocktime, using order-of-two buckets.
-It accounts for all the faults, from either vCPU or non-vCPU threads.  With
-prior rework, it's very easy to achieve by adding an array to account for
-faults in each buckets.
+Before this patch, the blocktime context can be created very early, because
+postcopy_ram_supported_by_host() <- migrate_caps_check() can happen during
+migration object init.
 
-Sample output for HMP (while for QMP it's simply an array):
+The trick here is the blocktime context needs system vCPU information,
+which seems to be possible to change after that point.  I didn't verify it,
+but it doesn't sound right.
 
-Postcopy Latency Distribution:
-  [     1 us -     2 us ]:          0
-  [     2 us -     4 us ]:          0
-  [     4 us -     8 us ]:          1
-  [     8 us -    16 us ]:          2
-  [    16 us -    32 us ]:          2
-  [    32 us -    64 us ]:          3
-  [    64 us -   128 us ]:      10169
-  [   128 us -   256 us ]:      50151
-  [   256 us -   512 us ]:      12876
-  [   512 us -     1 ms ]:         97
-  [     1 ms -     2 ms ]:         42
-  [     2 ms -     4 ms ]:         44
-  [     4 ms -     8 ms ]:         93
-  [     8 ms -    16 ms ]:        138
-  [    16 ms -    32 ms ]:          0
-  [    32 ms -    65 ms ]:          0
-  [    65 ms -   131 ms ]:          0
-  [   131 ms -   262 ms ]:          0
-  [   262 ms -   524 ms ]:          0
-  [   524 ms -    1 sec ]:          0
-  [    1 sec -    2 sec ]:          0
-  [    2 sec -    4 sec ]:          0
-  [    4 sec -    8 sec ]:          0
-  [    8 sec -   16 sec ]:          0
+Now move it out and initialize the context only when postcopy listen
+starts.  That is already during a migration so it should be guaranteed the
+vCPU topology can never change on both sides.
 
-Cc: Markus Armbruster <armbru@redhat.com>
-Acked-by: Dr. David Alan Gilbert <dave@treblig.org>
+While at it, assert that the ctx isn't created instead this time; the old
+"if" trick isn't needed when we're sure it will only happen once now.
+
 Reviewed-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- qapi/migration.json                   | 12 ++++++-
- migration/migration-hmp-cmds.c        | 32 +++++++++++++++++++
- migration/postcopy-ram.c              | 46 +++++++++++++++++++++++++++
- tests/qtest/migration/migration-qmp.c |  1 +
- 4 files changed, 90 insertions(+), 1 deletion(-)
+ migration/postcopy-ram.c | 15 ++++++++++-----
+ 1 file changed, 10 insertions(+), 5 deletions(-)
 
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 0f5b2d914c..d3016c0b94 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -242,6 +242,14 @@
- #     average page fault latency. This is only present when the
- #     postcopy-blocktime migration capability is enabled.  (Since 10.1)
- #
-+# @postcopy-latency-dist: remote page fault latency distributions.  Each
-+#     element of the array is the number of faults that fall into the
-+#     bucket period.  For the N-th bucket (N>=0), the latency window is
-+#     [2^Nus, 2^(N+1)us).  For example, the 8th element stores how many
-+#     remote faults got resolved within [256us, 512us) window. This is only
-+#     present when the postcopy-blocktime migration capability is enabled.
-+#     (Since 10.1)
-+#
- # @postcopy-vcpu-latency: average remote page fault latency per vCPU (in
- #     ns).  It has the same definition of @postcopy-latency, but instead
- #     this is the per-vCPU statistics.  This is only present when the
-@@ -280,7 +288,7 @@
- # Features:
- #
- # @unstable: Members @postcopy-latency, @postcopy-vcpu-latency,
--#     @postcopy-non-vcpu-latency are experimental.
-+#     @postcopy-latency-dist, @postcopy-non-vcpu-latency are experimental.
- #
- # Since: 0.14
- ##
-@@ -299,6 +307,8 @@
-            '*postcopy-vcpu-blocktime': ['uint32'],
-            '*postcopy-latency': {
-                'type': 'uint64', 'features': [ 'unstable' ] },
-+           '*postcopy-latency-dist': {
-+               'type': ['uint64'], 'features': [ 'unstable' ] },
-            '*postcopy-vcpu-latency': {
-                'type': ['uint64'], 'features': [ 'unstable' ] },
-            '*postcopy-non-vcpu-latency': {
-diff --git a/migration/migration-hmp-cmds.c b/migration/migration-hmp-cmds.c
-index e1f9530520..cef5608210 100644
---- a/migration/migration-hmp-cmds.c
-+++ b/migration/migration-hmp-cmds.c
-@@ -52,6 +52,21 @@ static void migration_global_dump(Monitor *mon)
-                    ms->clear_bitmap_shift);
- }
- 
-+static const gchar *format_time_str(uint64_t us)
-+{
-+    const char *units[] = {"us", "ms", "sec"};
-+    int index = 0;
-+
-+    while (us > 1000) {
-+        us /= 1000;
-+        if (++index >= (sizeof(units) - 1)) {
-+            break;
-+        }
-+    }
-+
-+    return g_strdup_printf("%"PRIu64" %s", us, units[index]);
-+}
-+
- static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
- {
-     if (info->has_postcopy_blocktime) {
-@@ -100,6 +115,23 @@ static void migration_dump_blocktime(Monitor *mon, MigrationInfo *info)
-         }
-         monitor_printf(mon, "]\n");
-     }
-+
-+    if (info->has_postcopy_latency_dist) {
-+        uint64List *item = info->postcopy_latency_dist;
-+        int count = 0;
-+
-+        monitor_printf(mon, "Postcopy Latency Distribution:\n");
-+
-+        while (item) {
-+            g_autofree const gchar *from = format_time_str(1UL << count);
-+            g_autofree const gchar *to = format_time_str(1UL << (count + 1));
-+
-+            monitor_printf(mon, "  [ %8s - %8s ]: %10"PRIu64"\n",
-+                           from, to, item->value);
-+            item = item->next;
-+            count++;
-+        }
-+    }
- }
- 
- void hmp_info_migrate(Monitor *mon, const QDict *qdict)
 diff --git a/migration/postcopy-ram.c b/migration/postcopy-ram.c
-index f4cb23b3e0..45af9a361e 100644
+index fe940f89b9..dd3615663f 100644
 --- a/migration/postcopy-ram.c
 +++ b/migration/postcopy-ram.c
-@@ -110,6 +110,15 @@ void postcopy_thread_create(MigrationIncomingState *mis,
- #include <sys/eventfd.h>
- #include <linux/userfaultfd.h>
- 
-+/*
-+ * Here we use 24 buckets, which means the last bucket will cover [2^24 us,
-+ * 2^25 us) ~= [16, 32) seconds.  It should be far enough to record even
-+ * extreme (perf-wise broken) 1G pages moving over, which can sometimes
-+ * take a few seconds due to various reasons.  Anything more than that
-+ * might be unsensible to account anymore.
-+ */
-+#define  BLOCKTIME_LATENCY_BUCKET_N  (24)
-+
- /* All the time records are in unit of nanoseconds */
- typedef struct PostcopyBlocktimeContext {
-     /* blocktime per vCPU */
-@@ -175,6 +184,11 @@ typedef struct PostcopyBlocktimeContext {
-      * that a fault was requested.
-      */
-     GHashTable *vcpu_addr_hash;
-+    /*
-+     * Each bucket stores the count of faults that were resolved within the
-+     * bucket window [2^N us, 2^(N+1) us).
-+     */
-+    uint64_t latency_buckets[BLOCKTIME_LATENCY_BUCKET_N];
-     /* total blocktime when all vCPUs are stopped */
-     uint64_t total_blocktime;
-     /* point in time when last page fault was initiated */
-@@ -283,6 +297,9 @@ static struct PostcopyBlocktimeContext *blocktime_context_new(void)
-     unsigned int smp_cpus = ms->smp.cpus;
-     PostcopyBlocktimeContext *ctx = g_new0(PostcopyBlocktimeContext, 1);
- 
-+    /* Initialize all counters to be zeros */
-+    memset(ctx->latency_buckets, 0, sizeof(ctx->latency_buckets));
-+
-     ctx->vcpu_blocktime_total = g_new0(uint64_t, smp_cpus);
-     ctx->vcpu_faults_count = g_new0(uint64_t, smp_cpus);
-     ctx->vcpu_faults_current = g_new0(uint8_t, smp_cpus);
-@@ -320,6 +337,7 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
-     uint64_t latency_total = 0, faults = 0;
-     uint32List *list_blocktime = NULL;
-     uint64List *list_latency = NULL;
-+    uint64List *latency_buckets = NULL;
-     int i;
- 
-     if (!bc) {
-@@ -349,6 +367,10 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
-         QAPI_LIST_PREPEND(list_latency, latency);
+@@ -325,13 +325,13 @@ static bool ufd_check_and_apply(int ufd, MigrationIncomingState *mis,
      }
  
-+    for (i = BLOCKTIME_LATENCY_BUCKET_N - 1; i >= 0; i--) {
-+        QAPI_LIST_PREPEND(latency_buckets, bc->latency_buckets[i]);
-+    }
-+
-     latency_total += bc->non_vcpu_blocktime_total;
-     faults += bc->non_vcpu_faults;
- 
-@@ -364,6 +386,8 @@ void fill_destination_postcopy_migration_info(MigrationInfo *info)
-     info->postcopy_latency = faults ? (latency_total / faults) : 0;
-     info->has_postcopy_vcpu_latency = true;
-     info->postcopy_vcpu_latency = list_latency;
-+    info->has_postcopy_latency_dist = true;
-+    info->postcopy_latency_dist = latency_buckets;
- }
- 
- static uint64_t get_postcopy_total_blocktime(void)
-@@ -1096,6 +1120,25 @@ void mark_postcopy_blocktime_begin(uintptr_t addr, uint32_t ptid,
-     blocktime_fault_inject(dc, addr, cpu, current);
- }
- 
-+static void blocktime_latency_account(PostcopyBlocktimeContext *ctx,
-+                                      uint64_t time_us)
-+{
+ #ifdef UFFD_FEATURE_THREAD_ID
 +    /*
-+     * Convert time (in us) to bucket index it belongs.  Take extra caution
-+     * of time_us==0 even if normally rare - when happens put into bucket 0.
++     * Postcopy blocktime conditionally needs THREAD_ID feature (introduced
++     * to Linux in 2017). Always try to enable it when QEMU is compiled
++     * with such environment.
 +     */
-+    int index = time_us ? (63 - clz64(time_us)) : 0;
-+
-+    assert(index >= 0);
-+
-+    /* If it's too large, put into top bucket */
-+    if (index >= BLOCKTIME_LATENCY_BUCKET_N) {
-+        index = BLOCKTIME_LATENCY_BUCKET_N - 1;
+     if (UFFD_FEATURE_THREAD_ID & supported_features) {
+         asked_features |= UFFD_FEATURE_THREAD_ID;
+-        if (migrate_postcopy_blocktime()) {
+-            if (!mis->blocktime_ctx) {
+-                mis->blocktime_ctx = blocktime_context_new();
+-            }
+-        }
+     }
+ #endif
+ 
+@@ -1239,6 +1239,11 @@ int postcopy_ram_incoming_setup(MigrationIncomingState *mis)
+         return -1;
+     }
+ 
++    if (migrate_postcopy_blocktime()) {
++        assert(mis->blocktime_ctx == NULL);
++        mis->blocktime_ctx = blocktime_context_new();
 +    }
 +
-+    ctx->latency_buckets[index]++;
-+}
-+
- typedef struct {
-     PostcopyBlocktimeContext *ctx;
-     uint64_t current;
-@@ -1118,6 +1161,9 @@ static void blocktime_cpu_list_iter_fn(gpointer data, gpointer user_data)
-     assert(iter->current >= entry->fault_time);
-     time_passed = iter->current - entry->fault_time;
- 
-+    /* Latency buckets are in microseconds */
-+    blocktime_latency_account(ctx, time_passed / SCALE_US);
-+
-     if (cpu >= 0) {
-         /*
-          * If we resolved all pending faults on one vCPU due to this page
-diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-index 67a67d4bd6..66dd369ba7 100644
---- a/tests/qtest/migration/migration-qmp.c
-+++ b/tests/qtest/migration/migration-qmp.c
-@@ -360,6 +360,7 @@ void read_blocktime(QTestState *who)
-     g_assert(qdict_haskey(rsp_return, "postcopy-blocktime"));
-     g_assert(qdict_haskey(rsp_return, "postcopy-vcpu-blocktime"));
-     g_assert(qdict_haskey(rsp_return, "postcopy-latency"));
-+    g_assert(qdict_haskey(rsp_return, "postcopy-latency-dist"));
-     g_assert(qdict_haskey(rsp_return, "postcopy-vcpu-latency"));
-     g_assert(qdict_haskey(rsp_return, "postcopy-non-vcpu-latency"));
-     qobject_unref(rsp_return);
+     /* Now an eventfd we use to tell the fault-thread to quit */
+     mis->userfault_event_fd = eventfd(0, EFD_CLOEXEC);
+     if (mis->userfault_event_fd == -1) {
 -- 
 2.49.0
 
