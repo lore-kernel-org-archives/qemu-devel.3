@@ -4,155 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7821FC61CE8
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 02:55:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 353A0C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 02:56:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPuZg-0002tG-Er; Thu, 12 Jun 2025 22:55:24 -0400
+	id 1uPuaM-0003H6-RY; Thu, 12 Jun 2025 22:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uPuZU-0002do-F2; Thu, 12 Jun 2025 22:55:12 -0400
-Received: from mail-japanwestazlp170120003.outbound.protection.outlook.com
- ([2a01:111:f403:c406::3] helo=OS8PR02CU002.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
- id 1uPuZR-0007W3-5K; Thu, 12 Jun 2025 22:55:12 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=N4Qp6GpE5bMHyYtmJulHb6NfdCc+OHU5ltdh4edG5Bq4T8/NiZwC1kfYf5LQhjXYDK2e2CbD8gWml8iCobN445ucc61g9N0FRMIBGodk9Br3jfc9auKHr5pjGmGXHfpHLr4RQ3Zn4shYcpg18k7FA7ru3p97gWveSnUrBN+sntzDs0bLYC6YksNsHu7AFlgD9coZmFudV85JqSw87IZrzqy24479MOqTknTnh9PBwrNbQceTAJ/VdtPNyY46WQdywEFdySmT/5WV774rVk40chboFaPzReBg2DzH20LE6GY12C7PdFC+/+zK+C0F9k//m2Xd3MChA3XioorV7xTbgQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=DgbMODNQ2BDFhwcJYlbaO/WcmddV9gQYEliQaaxFw+Y=;
- b=c96BHH27X21XbBsF1m89eBJWbaBTDV9Cfkh+9zNLTKBJ/tEUQwVtB6AqMKl20mE5aTmEu2duOpFK0AbpCfKg9eLGgz1InRP/v6KDOwOv4sNjK5RIdlKOAdM+H0DAcMpd0ioSNoOqURbm5FFkl1g31GAdOag5F4BDPcUwScaq3Jby0nUslwQBUM2uLP3FkC/sCmSRzZGV/7MpjdBG9f3cHlU15B/hbBQc8Ib71GTyVFQ4IIdnsr/mvJKEdSMgB6+MXDI/LMM91HdAb75jRWQyOGNeqQONi9qg8suqJO5Es28XuIOMYxaZindmWBJwLsRTO5qUeutAksZnfhBo89Z/nw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
- header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=DgbMODNQ2BDFhwcJYlbaO/WcmddV9gQYEliQaaxFw+Y=;
- b=FJYw6RldY3sB5UU/gotsKHJKv0YnOVCvaV8VxFU6YNJvSYAAXJn7JbrjremUGnQ3ptOBJX51pmKhrZ1gBLsZjFfWN5VD8yVDUeYpbmimzhtvziYaV3qp2MPfcRj3Gm30umXQ/h/+2KMNAO/pcYx+3CJ5tlAu9rPxNU4lcTiXOhZE6JYocPyn2F2hLnD+jZnWhSx7e+Vgcgi+EKaL35ThJGJu1owusuPzBmLH3Z5Y5UpGjOZnr7PspGH55ZzLFzcVBLZ6lcvcdPvGYhcafUeMMpgjwbeRrgRWOmhXo6T1vcJ+WYg4CwxJ1ievRIukTYQMiC9kMetg8ZxmEqy74ecOog==
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com (2603:1096:4:1a4::6) by
- KL1PR06MB6961.apcprd06.prod.outlook.com (2603:1096:820:120::8) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8835.22; Fri, 13 Jun 2025 02:54:57 +0000
-Received: from SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56]) by SI2PR06MB5041.apcprd06.prod.outlook.com
- ([fe80::705a:352a:7564:8e56%4]) with mapi id 15.20.8813.024; Fri, 13 Jun 2025
- 02:54:57 +0000
-From: Jamin Lin <jamin_lin@aspeedtech.com>
-To: Tan Siewert <tan@siewert.io>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@kaod.org>, Peter Maydell
- <peter.maydell@linaro.org>, Steven Lee <steven_lee@aspeedtech.com>, Troy Lee
- <leetroy@gmail.com>, Andrew Jeffery <andrew@codeconstruct.com.au>, Joel
- Stanley <joel@jms.id.au>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-Subject: RE: [PATCH v2] hw/misc/aspeed_scu: Handle AST2600 protection key
- registers correctly
-Thread-Topic: [PATCH v2] hw/misc/aspeed_scu: Handle AST2600 protection key
- registers correctly
-Thread-Index: AQHb26gO6SN3HcnSYUqhj+VKKkWvBrQAZASg
-Date: Fri, 13 Jun 2025 02:54:57 +0000
-Message-ID: <SI2PR06MB5041DE20EB548C3137045975FC77A@SI2PR06MB5041.apcprd06.prod.outlook.com>
-References: <20250612144052.22478-1-tan@siewert.io>
-In-Reply-To: <20250612144052.22478-1-tan@siewert.io>
-Accept-Language: zh-TW, en-US
-Content-Language: zh-TW
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=aspeedtech.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: SI2PR06MB5041:EE_|KL1PR06MB6961:EE_
-x-ms-office365-filtering-correlation-id: a33e25cd-0908-4656-1abb-08ddaa25ae5f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0; ARA:13230040|366016|1800799024|376014|38070700018;
-x-microsoft-antispam-message-info: =?iso-8859-1?Q?C0492gCYkxKgggJE/Qcc5XAdeugTsfbeBSlmXwkdzQfsPfI36LDN0LG/RY?=
- =?iso-8859-1?Q?zaVUWJKm6AEwgZFG4IYNz/RyEplbEn8D9Xo2Y7zGDiD49ffWVR0eQLTIiZ?=
- =?iso-8859-1?Q?OMxCRSlLr3Zr7cWRk2cJde5AI31mETeoIf9Sz945ZiyNcf5mfu+OQxZKo3?=
- =?iso-8859-1?Q?gyLH2wj+1PhAmQjH48s+b/XLS40xaVwVFAOj89QnrX/fC60bTfGe6BllRO?=
- =?iso-8859-1?Q?Cs9tdrbdsF4MwBOXVEpvTXvqgHL2bkPdYBbALgnFFLr+rOO5MX4q1tKgKy?=
- =?iso-8859-1?Q?h6n9MDYG8n2DRuDQceoia5oi5UB9aKQvgonBSxXB13wm+CK3oa1CLTIv5K?=
- =?iso-8859-1?Q?hFsy7fv6g+XPiyyZPXixCMvLs0ZOAsNUg8KZo670X5Rlmd7IHTsd4rFgFT?=
- =?iso-8859-1?Q?pdGuEHe1M6o/0uRAgcAGwWii33Thz/uhaZHqVFvJdBt8sWjukE8L/AjTO1?=
- =?iso-8859-1?Q?2N2CYSnAoqOaaiHbYlI/PrbMRWmQDmYeLxSQe/QfAwDvB9wfQnl6eYA6+J?=
- =?iso-8859-1?Q?LMeK3nU5WIyCMNqpN8YHQLar3f2Pscm815UOsZovnlB0j4+DLZo1FP7Pn2?=
- =?iso-8859-1?Q?ItJI/JrIUXSLOskqKtrULB8dXcsPyC6Hoh0rfWQ+c6Y8R/Nr2P2VCVjWTy?=
- =?iso-8859-1?Q?7gXf0tnv5VbW+KeDDe0ErCGVOhAXr25hbbvYWTwsLgAiExN0Se1UICbIuY?=
- =?iso-8859-1?Q?f2x7M3qaJqC5viKUGou+uE2tuFJeeyBxW4xtb8CkXcYyo1qe+ENvmD607n?=
- =?iso-8859-1?Q?dD2sW0fRvTQZiwz+lTaX3o3JLDghFljJFI90Uhrj9aYiuAWlhjyDckdxkW?=
- =?iso-8859-1?Q?JVxIxk5s+sfIbUhuq+/btZBhmwSycSY6VfA4P7MHd+gj5M/kK2zeyonVXH?=
- =?iso-8859-1?Q?TVidQ5xxgfyXsOW8nMvjq1EIfjabB8QT24ygjw7/8pSqKVwSTuH2tWNBCZ?=
- =?iso-8859-1?Q?encfrz6DyOglbm2x04yf9myNNHwUSLyvU0vHNTKS+kFEIZ7SSSaawTAVAY?=
- =?iso-8859-1?Q?QIZo9gp+fFidP1y/1bWbp50Xq5e4rsv0COmiZm3vMQSYgA3SlMXt/HvyV6?=
- =?iso-8859-1?Q?ovpYzjR3weWyWvGe+6vF3eqDzsOHXhdHVzrRQqQoGJvkAwtGvggBG7DxLB?=
- =?iso-8859-1?Q?ChXlA6DfTlDYyXtH7tRaI5oPdT8+4ya0UXG2QBxzw8RPEo8T4nhXStnryA?=
- =?iso-8859-1?Q?FAqzHhHbHBBPDBOUuZe/3v9Hedq0r3pkTqsIHltMe9yQOBdmxK3ZhA/Jvn?=
- =?iso-8859-1?Q?J8xVLP6HJjwuKkdoFooGko8vrnOg1DEgNAcNuMZML67SWTE23L4JFGHozQ?=
- =?iso-8859-1?Q?6nYyKgHXW+UoJYP9Ecl1m59cTs/4yoz28f+TUnHrS8a+i58XVOB1kR8I2q?=
- =?iso-8859-1?Q?3D63PD5uTIeg/eDEIqO5v3E+EWkWk7AAgrd50ZRJJpbOErtWT2ecOfxBWN?=
- =?iso-8859-1?Q?0v2ThdV3p2v+YYMK0ptxygZwOX5DiYuWxIA8Hu7BOwTyQ145RoL2mL2yKC?=
- =?iso-8859-1?Q?6iEsN8mOJmoBQoeU0YbLijQNVPpCdr185soBkesr65YDHU+fusSY2blULQ?=
- =?iso-8859-1?Q?BKd/Lok=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:zh-tw; SCL:1;
- SRV:; IPV:NLI; SFV:NSPM; H:SI2PR06MB5041.apcprd06.prod.outlook.com; PTR:;
- CAT:NONE; SFS:(13230040)(366016)(1800799024)(376014)(38070700018); DIR:OUT;
- SFP:1102; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?jLsGzF4YCnRXhs5a6rhm3AneN5N53PrqokvYh9SyzG54gm7inmkfknDsm9?=
- =?iso-8859-1?Q?ubOkRcXv44XvPw7yZVj6QG6z5GbXasDKCCYuhHqShfTh4oef56Fvb64205?=
- =?iso-8859-1?Q?95zxbujNeeAwuQ6NB8Saw5gFNNa8D65HA/FNgkKy2muxDY7qsBZQDgveqH?=
- =?iso-8859-1?Q?WdRJ+AtriwpTCdEXhp3lqkxFThfGq/fg4WZN/A2s5PN6ALqB0UNmyiwzwI?=
- =?iso-8859-1?Q?RwEVwjyLjLJwQEWqfHWAkE/b8bf3UMY1NWK4jXs6rAxGmzkHoNYCoMTCKF?=
- =?iso-8859-1?Q?d8NfwBpKuvpSOWM0xvLl/y7wNZctwvmn7kiiDtBxDhGnAyZknJqIgzsy9K?=
- =?iso-8859-1?Q?Sm6s8fedf9t3BsjwsFw+ZCxAuYIHLIgpljdNR8wwrp6cVSfFSZXu6cDQas?=
- =?iso-8859-1?Q?ws/IDIllvrBCkhlsdCwcKpynB9BtR8ol+xItZNk+XzTDEWgPiCcCIWm+Hq?=
- =?iso-8859-1?Q?xKzmipHOJVBer53Fd6BumNr0D4U8dwLrEtLQDVH6+cdWdQGmlnW8BZD+QZ?=
- =?iso-8859-1?Q?H+uSdTzJgtxaLVRZ7T0cqN08aYlciN4PvnmacFZeHKk4oNNLuQE9wBcWrh?=
- =?iso-8859-1?Q?3Y4HsNKAnbzF65RUlPYtX9YuEa2+JSL6sPizbBc40Dq9qDvpzApHt+pJBQ?=
- =?iso-8859-1?Q?YEtQYnJsbIdeUpcNjwr0yyBmdPmaDdhisM6wA4GOxB/gIPU6rekix8XEyb?=
- =?iso-8859-1?Q?p/UBWNUynfxS0Kuxm6sPMAKSlLx0wWjQqrEHXJXAnZQdyCV69ZQelTaZ23?=
- =?iso-8859-1?Q?d19J0z4JieSMnLAIUgLcgvXsNDfOh8gB6c+ZeCi3sW3Y/1ndOi1rpSFsv1?=
- =?iso-8859-1?Q?EpbujBsAn7ZJyY/JRmvH0D9TbX06x9BvMjNrJPWCw97BVv24ignMWU6oOc?=
- =?iso-8859-1?Q?9q3kTLV5tHPodzMYL0K7LgSDJ+AwO1Y2/IDPiYzJEVzvT/64DTJvDlrbrc?=
- =?iso-8859-1?Q?bv3/Y3+hITKSNEpLWuelchAMZpDMymv6BB2VFafPf9sjfDPPsSHjzqCEGU?=
- =?iso-8859-1?Q?V3WgX4Qp3aN9IjLFN4EJCzZAo16DOjIydTRCOyXXGOQZY161vaLXlTkxpy?=
- =?iso-8859-1?Q?MWetCOa1lzrfZPniCUCaLu5J69m3Kao/GQC9mY/j6HeYj1phNsv7D1+RY2?=
- =?iso-8859-1?Q?4QfZzde8t5XMY8cRYf2RFK+OD0xA50LO2aq/o55X7cHkvQPSQ2d3OQ5qDH?=
- =?iso-8859-1?Q?ypIEOknFddHi/0q3e7n5zopnXZkse9VmewbrHJnxGQq4MRPLTWDgzRQLZW?=
- =?iso-8859-1?Q?uP2FprztnUW+zbed+O411r99sTdYAXwSkLbI/MNvsyj3wL4FnVCp4p5h64?=
- =?iso-8859-1?Q?iEAQtp81yNHGeprC0OllrWv9ABteQaFTjaYLH+90s7BovFFqstFqeuLito?=
- =?iso-8859-1?Q?BUqqjM56bwoHgIVhqwFNLoZAnm+lfqf2mwKnvVO/sxc06TJLH3E0C7ggvU?=
- =?iso-8859-1?Q?cQbv7JsDTiReMmHwCxQAblS5dH5RazVv7sbv4NfmbI0/qu//VQAejzLj1d?=
- =?iso-8859-1?Q?YZM8P02XSmIlphmsfRD6orbi062XpiQlDq7itNwHgFXtw79EcOAiEfzlSG?=
- =?iso-8859-1?Q?8JR/wUQSBCZwe2pRNl6nsJcqeZVvA4sSz15yFQYdCfzZBCkvZcnsEhzfVY?=
- =?iso-8859-1?Q?IIKNe+m96JMjqa6b9XB5QeBlWUy9P2JnWM?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uPuaK-0003FT-CC
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 22:56:04 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uPuaH-0007jf-Pw
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 22:56:03 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bxlmk+k0toBHYVAQ--.51332S3;
+ Fri, 13 Jun 2025 10:55:58 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxDcU6k0toqaMYAQ--.5533S3;
+ Fri, 13 Jun 2025 10:55:57 +0800 (CST)
+Subject: Re: [PATCH V1 1/2] hw/rtc: Fixed loongson rtc emulation errors
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <cover.1749777563.git.lixianglai@loongson.cn>
+ <b83fa4c3319e372b2a7b3b7b994821441ff9ca7c.1749777563.git.lixianglai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <beb3b653-d73f-022e-476e-3938af322fc0@loongson.cn>
+Date: Fri, 13 Jun 2025 10:54:38 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-X-OriginatorOrg: aspeedtech.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: SI2PR06MB5041.apcprd06.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a33e25cd-0908-4656-1abb-08ddaa25ae5f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Jun 2025 02:54:57.2156 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: VPy7ZVZpK2dp/0D8/0/g4RBHRBE850Q4oxnxMJ5lUBqxgbHUtlt2F2f4A3cN85N454CY7MGk5W/0ELFDrkGcfXAILYtYDfkQ20qL57uHWIE=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: KL1PR06MB6961
-Received-SPF: pass client-ip=2a01:111:f403:c406::3;
- envelope-from=jamin_lin@aspeedtech.com;
- helo=OS8PR02CU002.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <b83fa4c3319e372b2a7b3b7b994821441ff9ca7c.1749777563.git.lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxDcU6k0toqaMYAQ--.5533S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxZr17Kw4DAryUZw15WFW7GFX_yoW7Jry3pF
+ W7Crn5Ja43JFZrWrWxZ3sIv3WrCws5JrySgr17Ca1Fv34kXw1rJF18X3y2yFWUC3Z5Ja1r
+ ZFsYqr95W3W2grXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jrv_JF1lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxUwmhFDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
+X-Spam_bar: ----
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.554,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,148 +82,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Tan,
 
-> Subject: [PATCH v2] hw/misc/aspeed_scu: Handle AST2600 protection key
-> registers correctly
->=20
-> The AST2600 SCU has two protection key registers (0x00 and 0x10) that bot=
-h
-> need to be unlocked. Each must be unlocked individually, but locking one =
-will
-> lock both.
->=20
-> This commit updates the SCU write logic to reject writes unless both prot=
-ection
-> key registers are unlocked, matching the behaviour of real hardware.
->=20
-> Signed-off-by: Tan Siewert <tan@siewert.io>
+
+On 2025/6/13 上午9:31, Xianglai Li wrote:
+> The expire time is sent to the timer only
+> when the expire Time is greater than 0 or
+> greater than now. Otherwise, the timer
+> will trigger interruption continuously.
+Again, one line of the comments should no more than 75 bytes :)
+
+I think it should be split into two patches, one is fixup with irq pulse 
+type setting, the other is fixup with expired time out calculation in 
+rtc emulation driver.
+
+Regards
+Bibo Mao
+> 
+> Timer interrupts are sent using pulse functions.
+
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 > ---
-> V2:
->   - Fix protection key register check to be an OR instead of AND
->   - Add missing return if SCU is locked (like for AST2500)
->=20
->  hw/misc/aspeed_scu.c | 18 ++++++++++++++++--
->  1 file changed, 16 insertions(+), 2 deletions(-)
->=20
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c index
-> 4930e00fed..4dcfe8f7b4 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -91,6 +91,7 @@
->  #define BMC_DEV_ID           TO_REG(0x1A4)
->=20
->  #define AST2600_PROT_KEY          TO_REG(0x00)
-> +#define AST2600_PROT_KEY2         TO_REG(0x10)
->  #define AST2600_SILICON_REV       TO_REG(0x04)
->  #define AST2600_SILICON_REV2      TO_REG(0x14)
->  #define AST2600_SYS_RST_CTRL      TO_REG(0x40)
-> @@ -722,6 +723,7 @@ static void aspeed_ast2600_scu_write(void *opaque,
-> hwaddr offset,
->      int reg =3D TO_REG(offset);
->      /* Truncate here so bitwise operations below behave as expected */
->      uint32_t data =3D data64;
-> +    bool unlocked =3D s->regs[AST2600_PROT_KEY] &&
-> + s->regs[AST2600_PROT_KEY2];
->=20
->      if (reg >=3D ASPEED_AST2600_SCU_NR_REGS) {
->          qemu_log_mask(LOG_GUEST_ERROR,
-> @@ -730,15 +732,27 @@ static void aspeed_ast2600_scu_write(void *opaque,
-> hwaddr offset,
->          return;
->      }
->=20
-> -    if (reg > PROT_KEY && !s->regs[PROT_KEY]) {
-> +    if ((reg !=3D AST2600_PROT_KEY || reg !=3D AST2600_PROT_KEY2) &&
-> + !unlocked) {
->          qemu_log_mask(LOG_GUEST_ERROR, "%s: SCU is locked!\n",
-> __func__);
-> +        return;
->      }
->=20
->      trace_aspeed_scu_write(offset, size, data);
->=20
->      switch (reg) {
->      case AST2600_PROT_KEY:
-> -        s->regs[reg] =3D (data =3D=3D ASPEED_SCU_PROT_KEY) ? 1 : 0;
-> +    case AST2600_PROT_KEY2:
-> +        /*
-> +         * Writing a value other than the protection key will lock
-> +         * both protection registers, but unlocking must be done
-> +         * to each protection register individually.
-> +         */
-> +        if (data !=3D ASPEED_SCU_PROT_KEY) {
-> +            s->regs[AST2600_PROT_KEY] =3D 0;
-> +            s->regs[AST2600_PROT_KEY2] =3D 0;
-> +        } else {
-> +            s->regs[reg] =3D (data =3D=3D ASPEED_SCU_PROT_KEY) ? 1 : 0;
-               It can set 1 directly.
-               s->regs[reg] =3D 1;
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Cc: Xianglai Li <lixianglai@loongson.cn>
+> 
+>   hw/loongarch/virt-fdt-build.c | 11 +++++++++--
+>   hw/rtc/ls7a_rtc.c             | 26 +++++++++++++++++---------
+>   2 files changed, 26 insertions(+), 11 deletions(-)
+> 
+> diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
+> index 728ce46699..c613131a07 100644
+> --- a/hw/loongarch/virt-fdt-build.c
+> +++ b/hw/loongarch/virt-fdt-build.c
+> @@ -17,6 +17,11 @@
+>   #include "system/reset.h"
+>   #include "target/loongarch/cpu.h"
+>   
+> +#define FDT_IRQ_FLAGS_EDGE_LO_HI 1
+> +#define FDT_IRQ_FLAGS_EDGE_HI_LO 2
+> +#define FDT_IRQ_FLAGS_LEVEL_HI 4
+> +#define FDT_IRQ_FLAGS_LEVEL_LO 8
+> +
+>   static void create_fdt(LoongArchVirtMachineState *lvms)
+>   {
+>       MachineState *ms = MACHINE(lvms);
+> @@ -416,7 +421,8 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+>       if (chosen) {
+>           qemu_fdt_setprop_string(ms->fdt, "/chosen", "stdout-path", nodename);
+>       }
+> -    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq, 0x4);
+> +    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts", irq,
+> +                           FDT_IRQ_FLAGS_LEVEL_HI);
+>       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+>                             *pch_pic_phandle);
+>       g_free(nodename);
+> @@ -436,7 +442,8 @@ static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
+>                               "loongson,ls7a-rtc");
+>       qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
+>       qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+> -                           VIRT_RTC_IRQ - VIRT_GSI_BASE , 0x4);
+> +                           VIRT_RTC_IRQ - VIRT_GSI_BASE ,
+> +                           FDT_IRQ_FLAGS_EDGE_LO_HI);
+>       qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+>                             *pch_pic_phandle);
+>       g_free(nodename);
+> diff --git a/hw/rtc/ls7a_rtc.c b/hw/rtc/ls7a_rtc.c
+> index 10097b2db7..7eca75a42a 100644
+> --- a/hw/rtc/ls7a_rtc.c
+> +++ b/hw/rtc/ls7a_rtc.c
+> @@ -145,20 +145,24 @@ static void toymatch_write(LS7ARtcState *s, uint64_t val, int num)
+>           now = qemu_clock_get_ms(rtc_clock);
+>           toymatch_val_to_time(s, val, &tm);
+>           expire_time = now + (qemu_timedate_diff(&tm) - s->offset_toy) * 1000;
+> -        timer_mod(s->toy_timer[num], expire_time);
+> +        if (expire_time > now) {
+> +            timer_mod(s->toy_timer[num], expire_time);
 > +        }
->          return;
-According to the datasheet description: it seems your changes do not match =
-the actual hardware behavior.
-Protection Key
-This register is designed to protect SCU registers from unpredictable updat=
-es,
-especially when ARM CPU is out of control.
-The password of the protection key is 0x1688A8A8.
-Unlock SCU registers: Write 0x1688A8A8 to this register
-Lock SCU registers: Write others value to this register
-Only firmware can lock the SCU registers, other softwares (ex. system
-BIOS/driver) can not do this to prevent disturbing the operation of firmwar=
-e.
-When this register is unlocked, the read back value of this register is 0x0=
-0000001.
-When this register is locked, the read back value of this register is 0x000=
-00000.
-Writing to SCU000 can be seen on both SCU000 and SCU010.
-Writing to SCU010 is only on SCU010 itself. SCU000 does not change.
-
-I The following results were tested on the AST2600 EVB.
-Could you please verify the QEMU behavior?
-
-Writing to SCU000 can be seen on both SCU000 and SCU010.
-Writing to SCU010 is only on SCU010 itself. SCU000 does not change.
-
-1. locked status
-ast# md 1e6e2000
-1e6e2000: 00000000                               ....
-ast# md 1e6e2010
-1e6e2010: 00000000
-
-unlocked protection key
-mw 1e6e2000 1688A8A8
-
-both key and key1 unlock
-ast# md 1e6e2000
-1e6e2000: 00000001                               ....
-ast# md 1e6e2010
-1e6e2010: 0000000
-
-lock protection key
-ast# mw 1e6e2000 abcd
-
-both key and key1 unlock
-ast# md 1e6e2000
-1e6e2000: 00000000                               ....
-ast# md 1e6e2010
-1e6e2010: 00000000
-
-unlocked protection key1
-ast# mw 1e6e2010 1688A8A8
-ast# md 1e6e2000
-
-Only protection key 1 unlock
-1e6e2000: 00000000                               ....
-ast# md 1e6e2010
-1e6e2010: 00000001
-
-Thanks-Jamin
-
->      case AST2600_HW_STRAP1:
->      case AST2600_HW_STRAP2:
-> --
-> 2.49.0
+>       }
+>   }
+>   
+>   static void rtcmatch_write(LS7ARtcState *s, uint64_t val, int num)
+>   {
+> -    uint64_t expire_ns;
+> +    int64_t expire_ns;
+>   
+>       /* it do not support write when toy disabled */
+>       if (rtc_enabled(s)) {
+>           s->rtcmatch[num] = val;
+>           /* calculate expire time */
+>           expire_ns = ticks_to_ns(val) - ticks_to_ns(s->offset_rtc);
+> -        timer_mod_ns(s->rtc_timer[num], expire_ns);
+> +        if (expire_ns > 0) {
+> +            timer_mod_ns(s->rtc_timer[num], expire_ns);
+> +        }
+>       }
+>   }
+>   
+> @@ -185,7 +189,7 @@ static void ls7a_rtc_stop(LS7ARtcState *s)
+>   static void ls7a_toy_start(LS7ARtcState *s)
+>   {
+>       int i;
+> -    uint64_t expire_time, now;
+> +    int64_t expire_time, now;
+>       struct tm tm = {};
+>   
+>       now = qemu_clock_get_ms(rtc_clock);
+> @@ -194,19 +198,23 @@ static void ls7a_toy_start(LS7ARtcState *s)
+>       for (i = 0; i < TIMER_NUMS; i++) {
+>           toymatch_val_to_time(s, s->toymatch[i], &tm);
+>           expire_time = now + (qemu_timedate_diff(&tm) - s->offset_toy) * 1000;
+> -        timer_mod(s->toy_timer[i], expire_time);
+> +        if (expire_time > now) {
+> +            timer_mod(s->toy_timer[i], expire_time);
+> +        }
+>       }
+>   }
+>   
+>   static void ls7a_rtc_start(LS7ARtcState *s)
+>   {
+>       int i;
+> -    uint64_t expire_time;
+> +    int64_t expire_time;
+>   
+>       /* recalculate expire time and enable timer */
+>       for (i = 0; i < TIMER_NUMS; i++) {
+>           expire_time = ticks_to_ns(s->rtcmatch[i]) - ticks_to_ns(s->offset_rtc);
+> -        timer_mod_ns(s->rtc_timer[i], expire_time);
+> +        if (expire_time > 0) {
+> +            timer_mod_ns(s->rtc_timer[i], expire_time);
+> +        }
+>       }
+>   }
+>   
+> @@ -370,7 +378,7 @@ static void toy_timer_cb(void *opaque)
+>       LS7ARtcState *s = opaque;
+>   
+>       if (toy_enabled(s)) {
+> -        qemu_irq_raise(s->irq);
+> +        qemu_irq_pulse(s->irq);
+>       }
+>   }
+>   
+> @@ -379,7 +387,7 @@ static void rtc_timer_cb(void *opaque)
+>       LS7ARtcState *s = opaque;
+>   
+>       if (rtc_enabled(s)) {
+> -        qemu_irq_raise(s->irq);
+> +        qemu_irq_pulse(s->irq);
+>       }
+>   }
+>   
+> 
 
 
