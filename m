@@ -4,72 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08890C71135
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 05:37:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EE24C71135
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 07:51:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPx5b-00023c-Ka; Fri, 13 Jun 2025 01:36:31 -0400
+	id 1uPzBU-0002uv-S7; Fri, 13 Jun 2025 03:50:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uPx5X-00021v-NU; Fri, 13 Jun 2025 01:36:28 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uPzBT-0002ul-PO
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 03:50:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uPx5T-0004D9-VU; Fri, 13 Jun 2025 01:36:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749792985; x=1781328985;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=F58yUyairb8+CMgREp6Coq/wzpd2FVi+30joS8mftl8=;
- b=XK1xwbiAEWd6nZlA4nsrD0iEJQ9kIuqseuVQRlZGiMGTGaiopMNcyG5e
- RSvY1enkCLfYpN5mIXDHaiYguwA3oCuuJvZvcerQ7v2bBFWqq0Whmx9Wt
- CURVFBJhV/T2IgaVf6tU0pibd0eqHws+XEdn+EcIvfnJRPXRKnDwfZ4Yy
- jwqsbDrhmIFeXs3MvGjFvbluwwHF7CJB5avApjmQbNTK/k78QIF/BpVKN
- LMLKiznoO2H+NssWvFw7G4QS6lUBU7CK9gcMHgpdTID6JWE2Hc9MtbgrW
- W0Pbu7snQPOg5SWUFYpdeFs5L2KGqGXbrx9YfOf68dj5Th4zJLy0prjOh w==;
-X-CSE-ConnectionGUID: h8qKNIvBQjGFCjDB7FE1dA==
-X-CSE-MsgGUID: 3tf8Cp0CQFu/AIor0Qz5kw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11462"; a="52133994"
-X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; d="scan'208";a="52133994"
-Received: from orviesa010.jf.intel.com ([10.64.159.150])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jun 2025 22:36:21 -0700
-X-CSE-ConnectionGUID: 2GSdNUF/SquKEbRE23F0og==
-X-CSE-MsgGUID: lXSyYJiMSwyjsIgYxkytjw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; d="scan'208";a="147639452"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa010.jf.intel.com with ESMTP; 12 Jun 2025 22:36:19 -0700
-Date: Fri, 13 Jun 2025 13:57:36 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, marcandre.lureau@redhat.com,
- qemu-rust@nongnu.org, armbru@redhat.com, mkletzan@redhat.com
-Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
-Message-ID: <aEu90HVJsySBHJKz@intel.com>
-References: <20250605101124.367270-1-pbonzini@redhat.com>
- <aEk6vdosWZgyQGXD@intel.com>
- <CABgObfaK8h3GE4GWbPrn22JshYcCFdXsxWHWuAPVC4pRb7GZ0A@mail.gmail.com>
- <CABgObfa+w3pcYhFnO6ETxSfoNiNU=+_8WcW6dE8dkUrbt6darw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CABgObfa+w3pcYhFnO6ETxSfoNiNU=+_8WcW6dE8dkUrbt6darw@mail.gmail.com>
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uPzBR-0007Lv-8U
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 03:50:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1749801037;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Bm9s1hPUFF9HM1XXwrCWwqAmDgJ8oNMZ3hcEKSa2NSg=;
+ b=PHoc12kpYYvaC/aX00IFkToOmYBv1N5EcGFKJ1gKwIQt4VnWTrU3N8xfsLutzi+CjQTZ+t
+ BDmYY16dx8ax1ztMFG0MU+/hSAS7LTh0P4B5sPJ35mmxhgKZYXENR5WxD/GCTcuJaNWi9c
+ tCHEqpSxZz+5op3UsTphfMyyL7In4uM=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-501-tlojIE3NOa6_tfo41QieUg-1; Fri, 13 Jun 2025 03:50:35 -0400
+X-MC-Unique: tlojIE3NOa6_tfo41QieUg-1
+X-Mimecast-MFC-AGG-ID: tlojIE3NOa6_tfo41QieUg_1749801035
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-2362e130be8so19203325ad.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 00:50:35 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749801034; x=1750405834;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Bm9s1hPUFF9HM1XXwrCWwqAmDgJ8oNMZ3hcEKSa2NSg=;
+ b=qmOA8KmGhJQGRUiA0Jpyxulo33J7DXz7fTuyQRQNEKziWCOJLU9wY0zek82c4wIyFy
+ 2HFxtJvLa89Dma6CHvA6iS670FEbhUlM3wfGeOt3Z7rO7WH8qvr02ztzVFhXmbu/A2pg
+ KP5FewnMQmyeC4dkWxP+sWCNyCA/M9t6Woj8jFD5OUGg7iEcs6S3hceH71CxrWXa7lAX
+ iJSYIttffvy/FlYKBBgdNRFuy9MXkhgzlPDfLeAbTDBNBR0T1Y+njtobgrgm5Oy4iXDw
+ iHv19aHpDOHuJy9elkHyadyhloXwq7Y/K1SUtj4AUV1IEE8f7kUyGaJs1q2b0pETI63+
+ lPYw==
+X-Gm-Message-State: AOJu0YwB6Z6DjwAnXL8sJz+4lgQIFgHi5JSnCCQ3lkQRbNMhpBKR/rqp
+ btNTdv9PE0xIywZzZCvjmTgrqzRY3T3aTe4rDZlFYFrkeR7/iptVd6mBgMhhGAHg8cJlhiuNbgC
+ 41yxVAY8igRe+YFI8eWciY5DzZ3nPhKg/Pz4gSRq57ZaGPmWLw89B53VZ
+X-Gm-Gg: ASbGncs8v03oJxZMbX7osuY0WOfShhtXY7EdK7xWIyR69n33+Flv7Swcwmypn8HaNh5
+ 9fWMcTkWog7uGN9N/WCk3ltb4bZQGzMV3TMW48f5GO8Pc2bJ7L/Cz9kv3s9ZdjvNDlUtu6+658H
+ roGvwX73tKN6FvBpkAU8IPeGoAOY2sjqCxKiHhL/xTnvehiSCIfRwenYpbx03aLtdBpAjpzFj7H
+ jhn0tr77LCauZ5gjOC35vXH2XppdgA184DnNDIP6zDCQ6IPz/dMeCdeW5wtG8q2eflvBqQEpvBC
+ Y/nlrPyw1g9XV/y5qfr3H/4djWVilJqb654eHKDH
+X-Received: by 2002:a17:903:2a8c:b0:234:d1f2:da31 with SMTP id
+ d9443c01a7336-2365d8884bcmr33277395ad.2.1749801034596; 
+ Fri, 13 Jun 2025 00:50:34 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFKo4ZWCYKZcX44o/w7Whf6Z0E5n/FBwyM+WS6Xks7Fiuvt5HziaOHYoDa0EAiLC3zNJI5WQA==
+X-Received: by 2002:a17:903:2a8c:b0:234:d1f2:da31 with SMTP id
+ d9443c01a7336-2365d8884bcmr33277095ad.2.1749801034164; 
+ Fri, 13 Jun 2025 00:50:34 -0700 (PDT)
+Received: from smtpclient.apple ([223.235.162.140])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2365dea8ccbsm8622265ad.167.2025.06.13.00.50.32
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Fri, 13 Jun 2025 00:50:33 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
+Subject: Re: [PATCH] hw/acpi: Fix GPtrArray memory leak in crs_range_merge
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <20250613044002.106396-1-lizhijian@fujitsu.com>
+Date: Fri, 13 Jun 2025 13:20:19 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Igor Mammedov <imammedo@redhat.com>,
+ Michael Tsirkin <mst@redhat.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <3F535BBF-CA62-4F90-BD55-9C37ECF1CDDF@redhat.com>
+References: <20250613044002.106396-1-lizhijian@fujitsu.com>
+To: Li Zhijian <lizhijian@fujitsu.com>
+X-Mailer: Apple Mail (2.3776.700.51.11.4)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -85,110 +110,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 12:24:44PM +0200, Paolo Bonzini wrote:
-> Date: Thu, 12 Jun 2025 12:24:44 +0200
-> From: Paolo Bonzini <pbonzini@redhat.com>
-> Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
-> 
-> On Wed, Jun 11, 2025 at 10:57 AM Paolo Bonzini <pbonzini@redhat.com> wrote:
-> > Yes. If using serde the implementation of the traits is very small,
-> > and basically the same for all types. If not using serde, it would
-> > need some (or most) of the infrastructure in Marc-André's original
-> > series.
-> 
-> Looking more at it, the Rust->QObject and QObject->Rust parts *can* be
-> done with serde (following the model of serde_json's Value
-> (de)serializer) but the Rust<->C part has a problem.
-> 
-> To recap, Rust->C is the serialization and corresponds to output
-> visitors. C->Rust is the deserialization and corresponds to input
-> visitors.
-> 
-> For serialization, serde has a push model where the generated code
-> looks like this:
-> 
->       let mut state =
->           Serializer::serialize_struct(serializer, "S", 2);
->       SerializeStruct::serialize_field(&mut state, "a", &self.a)?;
->       SerializeStruct::serialize_field(&mut state, "b", &self.b)?;
->       SerializeStruct::end(state)
-> 
-> whereas QAPI has a pull model where visit_type_* drives the process
-> and requests the fields one by one.
-> 
-> For deserialization, serde has a pull model where the generated code
-> asks for the field names one by one:
-> 
->     fn visit_map<__A>(self, mut __map: __A)
->         while let Some(key) =
->             MapAccess::next_key::<__Field>(&mut __map)? {
->                 match __key { ... }
->         }
+
+
+> On 13 Jun 2025, at 10:10=E2=80=AFAM, Li Zhijian =
+<lizhijian@fujitsu.com> wrote:
+>=20
+> This leak was detected by the valgrind.
+>=20
+> The crs_range_merge() function unconditionally allocated a GPtrArray
+> 'even when range->len was zero, causing an early return without =
+freeing
+> the allocated array. This resulted in a memory leak when an empty =
+range
+> was processed.
+>=20
+> Fix this by moving the GPtrArray allocation after the empty range =
+check,
+> ensuring memory is only allocated when actually needed.
+
+Thanks for the fix.
+
+>=20
+> Signed-off-by: Li Zhijian <lizhijian@fujitsu.com>
+
+Reviewed-by: Ani Sinha <anisinha@redhat.com>
+
+> ---
+> hw/acpi/aml-build.c | 3 ++-
+> 1 file changed, 2 insertions(+), 1 deletion(-)
+>=20
+> diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
+> index f8f93a9f66c8..cf1999880119 100644
+> --- a/hw/acpi/aml-build.c
+> +++ b/hw/acpi/aml-build.c
+> @@ -160,7 +160,7 @@ void crs_replace_with_free_ranges(GPtrArray =
+*ranges,
+>  */
+> static void crs_range_merge(GPtrArray *range)
+> {
+> -    GPtrArray *tmp =3D =
+g_ptr_array_new_with_free_func(crs_range_free);
+> +    GPtrArray *tmp;
+>     CrsRangeEntry *entry;
+>     uint64_t range_base, range_limit;
+>     int i;
+> @@ -169,6 +169,7 @@ static void crs_range_merge(GPtrArray *range)
+>         return;
 >     }
-> 
-> whereas QAPI has a push model where visit_type_* again drives the
-> process and sends fields one by one.
-> 
-> For commands this is not a problem because the real underlying
-> transformation is QObject->QObject and the intermediate steps (to and
-> from QObject) can use serde.
-> 
-> However, QOM property getters/setters (especially, but not
-> exclusively, for properties with compound types) remain a problem
-> since these use callbacks with a Visitor* argument. I see three
-> possibilities:
-> 
-> 1) everything is done through an intermediate QObject step (e.g. for a
-> setter: Visitor->QObject with an input visitor, and QObject->Rust with
-> serde deserialization).
->     + easy, Rust only sees serde
->     + QMP commands use a single conversion step
->     - inefficient
-
-This sounds like a natural approach.
-
-> 2) everything is done through an intermediate C step (e.g. for a
-> setter: Visitor->C with a visit_type_* function, and C->Rust with
-> generated code that does not need to use serde).
-
-I understand this step indicates to use bindgen to generate visit_type_*
-bindings...
-
-> There is still a
-> double conversion step, but it's more efficient than option 1
->     + one framework (visitor)
->     - double conversion for the QMP commands
->     - lots of generated code
-
-...if so, then yes, there would be too much generated and "unsafe"
-codes, and further abstraction may be needed to ensure safety, similar
-to the lots of work currently done in the qemu-api.
-
-> 3) generating a Rust visit_type_* implementation as well, either in
-> qapi-gen (3a) or through a procedural macro (3b).> This should not be
-> hard to write but it would remove a lot of the advantages from using
-> serde.
->     + efficient
->     + preserves single conversion for QMP commands
->     - two frameworks
-
-The difference between the two frameworks is that one is for C and the
-other is for Rust, which increases the maintenance burden.
-
-> I am leaning towards option 1, i.e. keep using serde but only cover
-> conversions to and from QObject.
-
-Based on my understanding of the three options above, I also think that
-option 1 is the more appropriate approach.
-
-> The reason is that one future usecase
-> for Rust in QEMU is the UEFI variable store; that one also has some
-> Rust<->JSON conversions and could be served by either QObject or
-> serde_json. Either way, it'd be nice for the UEFI variable store to
-> remain within the Rust serde ecosystem and allow sharing code between
-> QEMU and Coconut SVSM. But I'm not so sure...
-
-Thanks,
-Zhao
+>=20
+> +    tmp =3D g_ptr_array_new_with_free_func(crs_range_free);
+>     g_ptr_array_sort(range, crs_range_compare);
+>=20
+>     entry =3D g_ptr_array_index(range, 0);
+> --=20
+> 2.47.0
+>=20
 
 
