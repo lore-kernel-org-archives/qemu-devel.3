@@ -4,77 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A057C71148
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D32EC71150
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 02:51:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPuV8-0000v0-D8; Thu, 12 Jun 2025 22:50:42 -0400
+	id 1uPuUq-0000tM-MX; Thu, 12 Jun 2025 22:50:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uPuV6-0000uQ-5J; Thu, 12 Jun 2025 22:50:40 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1uPuV3-00079F-TH; Thu, 12 Jun 2025 22:50:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1749783038; x=1781319038;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:in-reply-to;
- bh=5ME7Rr8GvHZ6NDCucaH5UuynuC83NzCm9tbVAL5cvlc=;
- b=f3qzy3m8YV3gReciIqLdOSVKMDwM5q+9QLApSXhtuUTV4DzRjO1NfxFe
- Ktlt0kTcQZ/LZu7EHWz9RaA+DIEViDRPJPc2Rd+XZYVeW/CVMY4MdyPo6
- /xY9Xavs3WoRT3CpNvFaNloGvgTJEMlsWFCyeFXlBgAYz+JrVSb5N3Uqz
- 3zcD+UXnGjLwiLHlBCJX2NQzDh+AT5S+23ijyRoHu06h/BLIwSrz2XBpe
- MLm2PKEj/pMleSuVvwrpiyYWB7IjulZjSrYJurIPYU4Gk387B4HapoFSb
- Q3veENW1cjpMhrrTaW3vIx3hrf1Y+IjN9rYCTaqhleKduuervFqu8M9BV Q==;
-X-CSE-ConnectionGUID: Yvdg6JxsSm+rgJ4zI6VaFg==
-X-CSE-MsgGUID: UxqcDA3TR4aqqyQSxQuk2w==
-X-IronPort-AV: E=McAfee;i="6800,10657,11462"; a="55660093"
-X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; d="scan'208";a="55660093"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 12 Jun 2025 19:50:34 -0700
-X-CSE-ConnectionGUID: ppVKj6rnRjiRlVBMbUpxew==
-X-CSE-MsgGUID: YqCXiCPBRUepAG6sEQhETg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,232,1744095600"; d="scan'208";a="148063587"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa008.fm.intel.com with ESMTP; 12 Jun 2025 19:50:28 -0700
-Date: Fri, 13 Jun 2025 11:11:46 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Alireza Sanaee <alireza.sanaee@huawei.com>
-Cc: qemu-devel@nongnu.org, mst@redhat.com, anisinha@redhat.com,
- armbru@redhat.com, berrange@redhat.com, dapeng1.mi@linux.intel.com,
- eric.auger@redhat.com, farman@linux.ibm.com,
- gustavo.romero@linaro.org, imammedo@redhat.com,
- jiangkunkun@huawei.com, jonathan.cameron@huawei.com,
- linuxarm@huawei.com, maobibo@loongson.cn, mtosatti@redhat.com,
- peter.maydell@linaro.org, philmd@linaro.org, qemu-arm@nongnu.org,
- richard.henderson@linaro.org, shameerali.kolothum.thodi@huawei.com,
- shannon.zhaosl@gmail.com, yangyicong@hisilicon.com
-Subject: Re: [PATCH v13 2/7] hw/core/machine: topology functions capabilities
- added
-Message-ID: <aEuW8qIlDwJi44t6@intel.com>
-References: <20250611155618.351-1-alireza.sanaee@huawei.com>
- <20250611155618.351-3-alireza.sanaee@huawei.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uPuUn-0000sy-Pc
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 22:50:21 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uPuUl-00078a-3n
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 22:50:21 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8AxaeHkkUto9nQVAQ--.8146S3;
+ Fri, 13 Jun 2025 10:50:12 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxzMThkUtodaIYAQ--.10041S3;
+ Fri, 13 Jun 2025 10:50:11 +0800 (CST)
+Subject: Re: [PATCH V1 2/2] hw/loongarch: add rtc acpi table
+To: Xianglai Li <lixianglai@loongson.cn>, qemu-devel@nongnu.org
+Cc: Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <cover.1749777563.git.lixianglai@loongson.cn>
+ <49c55c9e6c49a89ec4438725ebf178e458572229.1749777563.git.lixianglai@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <07082db1-27d9-af0b-cf76-69edfe8b8d2f@loongson.cn>
+Date: Fri, 13 Jun 2025 10:48:52 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20250611155618.351-3-alireza.sanaee@huawei.com>
-Received-SPF: pass client-ip=198.175.65.15; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
+In-Reply-To: <49c55c9e6c49a89ec4438725ebf178e458572229.1749777563.git.lixianglai@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowMAxzMThkUtodaIYAQ--.10041S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tr4fZrWkJw1kJF15Jw15WrX_yoW8tFy3pr
+ W7Aa4ayr1DJFy7X343JayYgFnxJr1kGa4jvFWIyrZYkF1vgw10qr1jkwnrtas0yas7JF4U
+ uryYgrn7Wa1UAFXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU25EfUUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -44
+X-Spam_score: -4.5
 X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-4.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.554,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,23 +82,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Jun 11, 2025 at 04:56:13PM +0100, Alireza Sanaee wrote:
-> Date: Wed, 11 Jun 2025 16:56:13 +0100
-> From: Alireza Sanaee <alireza.sanaee@huawei.com>
-> Subject: [PATCH v13 2/7] hw/core/machine: topology functions capabilities
->  added
-> X-Mailer: git-send-email 2.34.1
-> 
-> Add two functions one of which finds the lowest level cache defined in
-> the cache description input, and the other checks if caches are defined
-> at a particular level.
-> 
-> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
-> ---
->  hw/core/machine-smp.c | 52 +++++++++++++++++++++++++++++++++++++++++++
->  include/hw/boards.h   |  7 ++++++
->  2 files changed, 59 insertions(+)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Xianglai,
+
+On 2025/6/13 上午9:31, Xianglai Li wrote:
+> Add the acpi table to the loongson rtc hardware
+> so that the virtual machine kernel can use the
+> loongson RTC-related drivers.
+One line of the comments is no more than 75 bytes, it seems that it is 
+far less than 75 bytes.
+
+> 
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
+> ---
+> Cc: Bibo Mao <maobibo@loongson.cn>
+> Cc: Song Gao <gaosong@loongson.cn>
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+> Cc: Xianglai Li <lixianglai@loongson.cn>
+> 
+>   hw/loongarch/virt-acpi-build.c | 24 ++++++++++++++++++++++++
+>   1 file changed, 24 insertions(+)
+> 
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+> index 2cd2d9d842..2cfc5421c5 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -473,6 +473,29 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
+>   }
+>   #endif
+>   
+> +static void acpi_dsdt_add_rtc(Aml *scope)
+> +{
+> +    uint32_t rtc_irq = VIRT_RTC_IRQ;
+> +    Aml *dev = aml_device("RTC");
+> +
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("LOON0001")));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +
+> +    Aml *crs = aml_resource_template();
+> +    aml_append(crs,
+> +        aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
+> +                         AML_NON_CACHEABLE, AML_READ_WRITE,
+> +                         0, VIRT_RTC_REG_BASE,
+> +                         VIRT_RTC_REG_BASE + VIRT_RTC_LEN - 1,
+> +                         0, VIRT_RTC_LEN));
+> +    aml_append(crs,
+> +               aml_interrupt(AML_CONSUMER, AML_EDGE, AML_ACTIVE_HIGH,
+> +                             AML_EXCLUSIVE, &rtc_irq, 1));
+> +
+> +    aml_append(dev, aml_name_decl("_CRS", crs));
+> +    aml_append(scope, dev);
+> +}
+> +
+>   /* build DSDT */
+>   static void
+>   build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+> @@ -488,6 +511,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>       for (i = 0; i < VIRT_UART_COUNT; i++) {
+>           build_uart_device_aml(dsdt, i);
+>       }
+> +    acpi_dsdt_add_rtc(dsdt);
+>       build_pci_device_aml(dsdt, lvms);
+>       build_la_ged_aml(dsdt, machine);
+>       build_flash_aml(dsdt, lvms);
+> 
+Otherwise looks good to me except comments alignment.
+
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
 
