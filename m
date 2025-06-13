@@ -4,89 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26D73C71136
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Jun 2025 22:16:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07B03C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 00:04:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uPqDU-0006xZ-71; Thu, 12 Jun 2025 18:16:12 -0400
+	id 1uPruK-0005qy-9x; Thu, 12 Jun 2025 20:04:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uPqDT-0006xC-5b
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 18:16:11 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from
+ <3B2tLaAcKClQ6A87Az42AA270.yA8C08G-z0H079A929G.AD2@flex--komlodi.bounces.google.com>)
+ id 1uPruF-0005q2-PO
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:27 -0400
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <oleg.tolmatcev@gmail.com>)
- id 1uPqDP-0003eQ-Vm
- for qemu-devel@nongnu.org; Thu, 12 Jun 2025 18:16:10 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3a4fea34e07so922427f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 15:16:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from
+ <3B2tLaAcKClQ6A87Az42AA270.yA8C08G-z0H079A929G.AD2@flex--komlodi.bounces.google.com>)
+ id 1uPruD-0000ZA-PG
+ for qemu-devel@nongnu.org; Thu, 12 Jun 2025 20:04:27 -0400
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-b00e4358a34so921001a12.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Jun 2025 17:04:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749766565; x=1750371365; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=gVUqMWdXGopLtTJgsDYEUFW5shw7i3ZthEogkgqiY0Y=;
- b=JsviI3sYNUbD8viKJlrhZ/Wb+hQvItK9NfYaoevqLvPSZUtGxfai1FD4QLoHvr0IFe
- M+E0BM30WT3GaRsnklkf1sR7ANpiNa0IuYI5hd/XLaTgLQ58EhhpHmGdxZKY0VnmDhBj
- v2DI0lxIdKrCcZYPDwqbFabuaxgWXcvMmljQ25PWZt2fQMSXYadw1hS/7vsE4mIEkNCd
- P8+NrEs/k8j+6OUiZ5oZYXtf6mTHVkOd3PSryX/71K3W7nDYG4j7JApAv7Jr/dwzCn1m
- K/PE0y6KyGkwDnjDiCa4diLDmvXdshOPJ461mHHiVFgzSSe9fXGdg1k7lX3xbskAkMPs
- Xnkw==
+ d=google.com; s=20230601; t=1749773064; x=1750377864; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:from:to:cc:subject:date:message-id:reply-to;
+ bh=p8GFuynGr1nk+VpIO+5MvKgGfqQz5tqawVbKnQiXbx4=;
+ b=z8id1q9TSumCNdFNNRtbKIKvvlWNKDeYR/6zI/KE/q7qOM5KAcgQjhy05pYffiigR4
+ F7B5PGh5S9Ryan9FSfidb5DdSXwP11nEH0KFlfFBCUq721Iig7AGrhBu1E7d0ASpjUI7
+ uyZSoXs9kergOaeOgkDZDukaLy1ssnKDF17pn5hnLD0ZHT7X4SNDDH2G+3vtIA79qjB7
+ WAVOFMJ2BMEo/qDk48s1oiEMXs6BdZFu/IGwN9akKo2ac6LQ9F5jgkHwjR8hmkgeKEeE
+ yHM62cZCk4xAFdVvcSTa8DGllvPD8cr4GgZ45O0wRvJ7oZ+B21PWUfRLOcnl2jkPBxdd
+ FNnA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749766565; x=1750371365;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gVUqMWdXGopLtTJgsDYEUFW5shw7i3ZthEogkgqiY0Y=;
- b=V6bGbYsD5aTjlQ/xjXNjif69dZS+LQ3hfpCq8OoBXHj9DobLv7jQd6r4k3YyJSsth2
- ZTWmCpsHsLYpr63qaI8tz/OA4c6bTcAYpN1814lfZ/a9vDiYtNffV1kPV22UenAyKFEF
- bzgHnYLQRGTyhcRw+dwGCY9orNBJvAcFN85qtX4eIJKXUfCXj5EIzWdc0/Lek6ML92Cw
- Nu2Z89WX7nvVeLiZ2xJEssTgzeo2V+TTO51p6cAyGa/wmoZ2wxVhlpnD2xemh9uzkmQT
- ge28CQBtKSlSXuxkm/fcTDGQD9+BSjIxZL0ecn9jf8m06sks+qe/yp0GLBm9fz0gz2hs
- 2uXQ==
-X-Gm-Message-State: AOJu0Yxh9gIyOkB7CXtUPGKzkuTR8dnt2g8+ORqt2Cvl+/ZjB6UDVuBu
- SrQ7bg4RHxWI8belfUQwEh5N4UVx8lCLXuyH/YU7oPUXpeeuRWh0Ls47kBCC1iZC
-X-Gm-Gg: ASbGncuF8Twm5EzW1BE5RJ6ZRH25GiNH6F4XUYtG32uWZb925jerTP75eEaFu2U3f+Y
- KlzlWXPYjYk7gSCnuGaYOJmbiLegcS9V4b4IcI7lYAlVR3tKozVeNO6HjJMz6g41MAYNIRtG/IW
- dEnBvfRnAsFeqTxwCgUwqrYSVHfQ974qrcUnpFdEmZYAhETUVSnU118l5gCHlyR52FrOb1Gm/bj
- ds1+UH19l5LXW5LWPR/Ta9lRTWxusKCq9m4a2/YDN8KFDkdSIZERf16YZ4JsikWOju7THOOmjFy
- QWSkjQPsqW3r+pu5rFZfIud/BOq/e3huyCZmrQuummRoJG2fEGWCutAF5AKlfmY6TuGwn3hirUy
- ZnFnZYnb/7O7iwEvWpbEfl8Ihe8rL1zQOnuY+IQwAiGUoRSkXLe53Akx/1Q3cV8umT1WcLSuRkQ
- U=
-X-Google-Smtp-Source: AGHT+IFfjf8ujDBh7TpBi5CJp/avGNGsVgMElhEdrClDGLQFOLDrd4bcqI2otdH5IkSwSV86EvAuxQ==
-X-Received: by 2002:a5d:5f44:0:b0:3a5:26fd:d46f with SMTP id
- ffacd0b85a97d-3a5687571b2mr524602f8f.32.1749766564821; 
- Thu, 12 Jun 2025 15:16:04 -0700 (PDT)
-Received: from localhost.localdomain
- (p200300ed8f252b003d090f81614e5ac5.dip0.t-ipconnect.de.
- [2003:ed:8f25:2b00:3d09:f81:614e:5ac5])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b08c7csm510431f8f.50.2025.06.12.15.16.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Jun 2025 15:16:04 -0700 (PDT)
-From: oltolm <oleg.tolmatcev@gmail.com>
+ d=1e100.net; s=20230601; t=1749773064; x=1750377864;
+ h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
+ :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=p8GFuynGr1nk+VpIO+5MvKgGfqQz5tqawVbKnQiXbx4=;
+ b=AZK1iNe5H7bM2d3bqLUzHYNra9DBsBgYeB22hqP2ZfgqtMkR9F+lS3pzVViPsR7oWu
+ 2uW9Pe3beT1kor8lcTvttYGQdGQzC4dC9PGshmrtEEXeXe0lLNR0yg5U4L/brDnLiDMW
+ BNPWXmPUJkbRf721FkGDT0xqS3q3StBKOq/+AUmMcTyXahd99UiyVQjFPq1D7w7uoErb
+ Cw4UfNEH3aas7nWOo6055FYP/9nH4YuTqRdOkxFMqIaMfWBbqymdDxmrl/Y9fusOHLXg
+ n5zUf7RkRcAeE8bLBvobnMDFJcoACdj+bcJWxGB5jlUOE9VZKXtCjEflZKPgpbcC71OP
+ tuJg==
+X-Gm-Message-State: AOJu0YxIs1Gz661brh+KqyjHQuRAOT/L/O6luAk9pJiQjVbLe9JASNwB
+ cU/4f8RXLG1eJ/sjzGl/a0DB5WgAJN6OKgd2w6mtfr1o8yqBsHxh5SXlpZCZ7ExEx5e4i6tFhUI
+ l1AEM0EFrGTr+aBd8wZdM8wEY7TexyznPrDQeOXsx4OG1L6RlR2ZWrceR7LdvGMOS3ZMqW/k9wa
+ Ly7jVkfSSg4yY783wr509VkPTRhtMbo2f8cjxXo00M
+X-Google-Smtp-Source: AGHT+IHkf788GgVLS7iXbgwTAE5UzkS0H2haTTYF+o0yJk64nWaDSM0TC0ZIyzG8EqOobxTF5pJgiqEOevc4
+X-Received: from pgbcw6.prod.google.com ([2002:a05:6a02:4286:b0:af9:8f44:d7ec])
+ (user=komlodi job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a20:431d:b0:21f:5aa1:3124
+ with SMTP id adf61e73a8af0-21fac92fc14mr1289955637.13.1749773063550; Thu, 12
+ Jun 2025 17:04:23 -0700 (PDT)
+Date: Fri, 13 Jun 2025 00:04:00 +0000
+In-Reply-To: <20250613000411.1516521-1-komlodi@google.com>
+Mime-Version: 1.0
+References: <20250613000411.1516521-1-komlodi@google.com>
+X-Mailer: git-send-email 2.50.0.rc1.591.g9c95f17f64-goog
+Message-ID: <20250613000411.1516521-9-komlodi@google.com>
+Subject: [PATCH 08/19] hw/i3c/dw-i3c: Add register RO field masks
+From: Joe Komlodi <komlodi@google.com>
 To: qemu-devel@nongnu.org
-Cc: Stefan Hajnoczi <stefanha@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- oltolm <oleg.tolmatcev@gmail.com>
-Subject: [PATCH v4] meson: fix Windows build
-Date: Fri, 13 Jun 2025 00:15:22 +0200
-Message-ID: <20250612221521.1109-2-oleg.tolmatcev@gmail.com>
-X-Mailer: git-send-email 2.49.0.windows.1
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=oleg.tolmatcev@gmail.com; helo=mail-wr1-x434.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Cc: venture@google.com, komlodi@google.com, clg@kaod.org, 
+ peter.maydell@linaro.org, steven_lee@aspeedtech.com, leetroy@gmail.com, 
+ jamin_lin@aspeedtech.com, andrew@codeconstruct.com.au, joel@jms.id.au, 
+ qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=3B2tLaAcKClQ6A87Az42AA270.yA8C08G-z0H079A929G.AD2@flex--komlodi.bounces.google.com;
+ helo=mail-pg1-x549.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,227 +96,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The build fails on Windows. Replace calls to Unix programs like ´cat´,
-´sed´ and ´true´ with calls to ´python´ and wrap calls to
-´os.path.relpath´ in try-except because it can fail when the two paths
-are on different drives. Make sure to convert the Windows paths to Unix
-paths to prevent warnings in generated files.
+Adds read-only register masks for the DwC I3C controller.
 
-Signed-off-by: oltolm <oleg.tolmatcev@gmail.com>
+Signed-off-by: Joe Komlodi <komlodi@google.com>
+
+Reviewed-by: Patrick Venture <venture@google.com>
 ---
- contrib/plugins/meson.build         |  2 +-
- plugins/meson.build                 |  2 +-
- scripts/tracetool/__init__.py       | 15 ++++++++++++---
- scripts/tracetool/backend/ftrace.py |  4 +---
- scripts/tracetool/backend/log.py    |  4 +---
- scripts/tracetool/backend/syslog.py |  4 +---
- tests/functional/meson.build        |  2 +-
- tests/include/meson.build           |  2 +-
- tests/tcg/plugins/meson.build       |  2 +-
- trace/meson.build                   |  5 +++--
- 10 files changed, 23 insertions(+), 19 deletions(-)
+ hw/i3c/dw-i3c.c | 40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/contrib/plugins/meson.build b/contrib/plugins/meson.build
-index fa8a426c8..1876bc784 100644
---- a/contrib/plugins/meson.build
-+++ b/contrib/plugins/meson.build
-@@ -24,7 +24,7 @@ endif
- if t.length() > 0
-   alias_target('contrib-plugins', t)
- else
--  run_target('contrib-plugins', command: find_program('true'))
-+  run_target('contrib-plugins', command: [python, '-c', ''])
- endif
+diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
+index 845fbd5efd..4f40f999f4 100644
+--- a/hw/i3c/dw-i3c.c
++++ b/hw/i3c/dw-i3c.c
+@@ -313,6 +313,45 @@ static const uint32_t dw_i3c_resets[DW_I3C_NR_REGS] = {
+     [R_SLAVE_CONFIG]                = 0x00000023,
+ };
  
- plugin_modules += t
-diff --git a/plugins/meson.build b/plugins/meson.build
-index b20edfbab..62c991d87 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -33,7 +33,7 @@ if host_os == 'windows'
-     input: qemu_plugin_symbols,
-     output: 'qemu_plugin_api.def',
-     capture: true,
--    command: ['sed', '-e', '0,/^/s//EXPORTS/; s/[{};]//g', '@INPUT@'])
-+    command: [python, '-c', 'import fileinput, re; print("EXPORTS", end=""); [print(re.sub(r"[{};]", "", line), end="") for line in fileinput.input()]', '@INPUT@'])
- 
-   # then use dlltool to assemble a delaylib.
-   # The delaylib will have an "imaginary" name (qemu.exe), that is used by the
-diff --git a/scripts/tracetool/__init__.py b/scripts/tracetool/__init__.py
-index bc03238c0..6dfcbf71e 100644
---- a/scripts/tracetool/__init__.py
-+++ b/scripts/tracetool/__init__.py
-@@ -12,12 +12,14 @@
- __email__      = "stefanha@redhat.com"
- 
- 
-+import os
- import re
- import sys
- import weakref
-+from pathlib import PurePath
- 
--import tracetool.format
- import tracetool.backend
-+import tracetool.format
- 
- 
- def error_write(*lines):
-@@ -36,7 +38,7 @@ def error(*lines):
- 
- def out_open(filename):
-     global out_filename, out_fobj
--    out_filename = filename
-+    out_filename = posix_relpath(filename)
-     out_fobj = open(filename, 'wt')
- 
- def out(*lines, **kwargs):
-@@ -308,7 +310,7 @@ def build(line_str, lineno, filename):
-             fmt = [fmt_trans, fmt]
-         args = Arguments.build(groups["args"])
- 
--        return Event(name, props, fmt, args, lineno, filename)
-+        return Event(name, props, fmt, args, lineno, posix_relpath(filename))
- 
-     def __repr__(self):
-         """Evaluable string representation for this object."""
-@@ -447,3 +449,10 @@ def generate(events, group, format, backends,
-     tracetool.backend.dtrace.PROBEPREFIX = probe_prefix
- 
-     tracetool.format.generate(events, format, backend, group)
++static const uint32_t dw_i3c_ro[DW_I3C_NR_REGS] = {
++    [R_DEVICE_CTRL]                 = 0x04fffe00,
++    [R_DEVICE_ADDR]                 = 0x7f807f80,
++    [R_HW_CAPABILITY]               = 0xffffffff,
++    [R_IBI_QUEUE_STATUS]            = 0xffffffff,
++    [R_DATA_BUFFER_THLD_CTRL]       = 0xf8f8f8f8,
++    [R_IBI_QUEUE_CTRL]              = 0xfffffff0,
++    [R_RESET_CTRL]                  = 0xffffffc0,
++    [R_SLV_EVENT_CTRL]              = 0xffffff3f,
++    [R_INTR_STATUS]                 = 0xffff809f,
++    [R_INTR_STATUS_EN]              = 0xffff8080,
++    [R_INTR_SIGNAL_EN]              = 0xffff8080,
++    [R_INTR_FORCE]                  = 0xffff8000,
++    [R_QUEUE_STATUS_LEVEL]          = 0xffffffff,
++    [R_DATA_BUFFER_STATUS_LEVEL]    = 0xffffffff,
++    [R_PRESENT_STATE]               = 0xffffffff,
++    [R_CCC_DEVICE_STATUS]           = 0xffffffff,
++    [R_I3C_VER_ID]                  = 0xffffffff,
++    [R_I3C_VER_TYPE]                = 0xffffffff,
++    [R_DEVICE_ADDR_TABLE_POINTER]   = 0xffffffff,
++    [R_DEV_CHAR_TABLE_POINTER]      = 0xffcbffff,
++    [R_SLV_PID_VALUE]               = 0xffff0fff,
++    [R_SLV_CHAR_CTRL]               = 0xffffffff,
++    [A_VENDOR_SPECIFIC_REG_POINTER] = 0xffffffff,
++    [R_SLV_MAX_LEN]                 = 0xffffffff,
++    [R_MAX_READ_TURNAROUND]         = 0xffffffff,
++    [R_MAX_DATA_SPEED]              = 0xffffffff,
++    [R_SLV_INTR_REQ]                = 0xfffffff0,
++    [R_SLV_TSX_SYMBL_TIMING]        = 0xffffffc0,
++    [R_DEVICE_CTRL_EXTENDED]        = 0xfffffff8,
++    [R_SCL_I3C_OD_TIMING]           = 0xff00ff00,
++    [R_SCL_I3C_PP_TIMING]           = 0xff00ff00,
++    [R_SCL_I2C_FMP_TIMING]          = 0xff000000,
++    [R_SCL_EXT_TERMN_LCNT_TIMING]   = 0x0000fff0,
++    [R_BUS_IDLE_TIMING]             = 0xfff00000,
++    [R_EXTENDED_CAPABILITY]         = 0xffffffff,
++    [R_SLAVE_CONFIG]                = 0xffffffff,
++};
 +
-+def posix_relpath(path, start=None):
-+    try:
-+        path = os.path.relpath(path, start)
-+    except ValueError:
-+        pass
-+    return PurePath(path).as_posix()
-diff --git a/scripts/tracetool/backend/ftrace.py b/scripts/tracetool/backend/ftrace.py
-index baed2ae61..5fa30ccc0 100644
---- a/scripts/tracetool/backend/ftrace.py
-+++ b/scripts/tracetool/backend/ftrace.py
-@@ -12,8 +12,6 @@
- __email__      = "stefanha@redhat.com"
+ static uint64_t dw_i3c_read(void *opaque, hwaddr offset, unsigned size)
+ {
+     DWI3C *s = DW_I3C(opaque);
+@@ -341,6 +380,7 @@ static void dw_i3c_write(void *opaque, hwaddr offset, uint64_t value,
  
+     trace_dw_i3c_write(s->id, offset, value);
  
--import os.path
--
- from tracetool import out
- 
- 
-@@ -47,7 +45,7 @@ def generate_h(event, group):
-         args=event.args,
-         event_id="TRACE_" + event.name.upper(),
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=event.filename,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
- 
-diff --git a/scripts/tracetool/backend/log.py b/scripts/tracetool/backend/log.py
-index de27b7e62..17ba1cd90 100644
---- a/scripts/tracetool/backend/log.py
-+++ b/scripts/tracetool/backend/log.py
-@@ -12,8 +12,6 @@
- __email__      = "stefanha@redhat.com"
- 
- 
--import os.path
--
- from tracetool import out
- 
- 
-@@ -55,7 +53,7 @@ def generate_h(event, group):
-         '    }',
-         cond=cond,
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=event.filename,
-         name=event.name,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
-diff --git a/scripts/tracetool/backend/syslog.py b/scripts/tracetool/backend/syslog.py
-index 012970f6c..5a3a00fe3 100644
---- a/scripts/tracetool/backend/syslog.py
-+++ b/scripts/tracetool/backend/syslog.py
-@@ -12,8 +12,6 @@
- __email__      = "stefanha@redhat.com"
- 
- 
--import os.path
--
- from tracetool import out
- 
- 
-@@ -43,7 +41,7 @@ def generate_h(event, group):
-         '    }',
-         cond=cond,
-         event_lineno=event.lineno,
--        event_filename=os.path.relpath(event.filename),
-+        event_filename=event.filename,
-         name=event.name,
-         fmt=event.fmt.rstrip("\n"),
-         argnames=argnames)
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 557d59ddf..de03a41de 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -414,4 +414,4 @@ endforeach
- 
- run_target('precache-functional',
-            depends: precache_all,
--           command: ['true'])
-+           command: [python, '-c', ''])
-diff --git a/tests/include/meson.build b/tests/include/meson.build
-index 9abba308f..8e8d1ec4e 100644
---- a/tests/include/meson.build
-+++ b/tests/include/meson.build
-@@ -13,4 +13,4 @@ test_qapi_outputs_extra = [
- test_qapi_files_extra = custom_target('QAPI test (include)',
-                                       output: test_qapi_outputs_extra,
-                                       input: test_qapi_files,
--                                      command: 'true')
-+                                      command: [python, '-c', ''])
-diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-index 41f02f2c7..029342282 100644
---- a/tests/tcg/plugins/meson.build
-+++ b/tests/tcg/plugins/meson.build
-@@ -17,7 +17,7 @@ endif
- if t.length() > 0
-   alias_target('test-plugins', t)
- else
--  run_target('test-plugins', command: find_program('true'))
-+  run_target('test-plugins', command: [python, '-c', ''])
- endif
- 
- plugin_modules += t
-diff --git a/trace/meson.build b/trace/meson.build
-index 3df454935..9c42a57a0 100644
---- a/trace/meson.build
-+++ b/trace/meson.build
-@@ -4,7 +4,7 @@ trace_events_files = []
- foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-   if item in qapi_trace_events
-     trace_events_file = item
--    group_name = item.full_path().split('/')[-1].underscorify()
-+    group_name = fs.name(item).underscorify()
-   else
-     trace_events_file = meson.project_source_root() / item / 'trace-events'
-     group_name = item == '.' ? 'root' : item.underscorify()
-@@ -57,10 +57,11 @@ foreach item : [ '.' ] + trace_events_subdirs + qapi_trace_events
-   endif
- endforeach
- 
-+cat = [ python, '-c', 'import fileinput; [print(line, end="") for line in fileinput.input()]', '@INPUT@' ]
- trace_events_all = custom_target('trace-events-all',
-                                  output: 'trace-events-all',
-                                  input: trace_events_files,
--                                 command: [ 'cat', '@INPUT@' ],
-+                                 command: cat,
-                                  capture: true,
-                                  install: get_option('trace_backends') != [ 'nop' ],
-                                  install_dir: qemu_datadir)
++    value &= ~dw_i3c_ro[addr];
+     switch (addr) {
+     case R_HW_CAPABILITY:
+     case R_RESPONSE_QUEUE_PORT:
 -- 
-2.49.0.windows.1
+2.50.0.rc1.591.g9c95f17f64-goog
 
 
