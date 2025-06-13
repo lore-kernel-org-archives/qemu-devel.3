@@ -4,72 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB2C3C71151
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 15:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E6AC71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 15:48:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ6Om-00030n-U5; Fri, 13 Jun 2025 11:32:56 -0400
+	id 1uQ6dJ-0006V6-3R; Fri, 13 Jun 2025 11:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uQ6Om-00030W-6j
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:32:56 -0400
-Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
- helo=dkim.livemail.co.uk)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uQ6dC-0006PX-ND; Fri, 13 Jun 2025 11:47:51 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
- id 1uQ6Oi-0005WZ-SO
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:32:55 -0400
-Received: from smtp.livemail.co.uk (unknown [10.44.132.84])
- by dkim.livemail.co.uk (Postfix) with ESMTPS id A7A86401DA;
- Fri, 13 Jun 2025 16:32:50 +0100 (BST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
- s=livemail2; t=1749828770;
- bh=HsR51g/RYvSxr0PjCbXbzIbeC0wc9IOog+RU+6oMGhY=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=TRwjekyiidGuq8/k5AXU3Vdcj3ybQmAYKrwmoDStRNDRjeQkqa3iLPqnymSIdhQbl
- /DxUJ4D/cStckJIP64r7LdospqzchjTvnt4fWYywu0vP2LLOyLJHWmm24Lfv+mw3Gx
- Xuj29l5fjdj8niqjOhAfQsCNnHfclLooITfNCw5g=
-Received: from localhost.localdomain (unknown [145.40.191.116])
- (Authenticated sender: roy.hopkins@randomman.co.uk)
- by smtp.livemail.co.uk (Postfix) with ESMTPSA id 1256DA0232;
- Fri, 13 Jun 2025 16:32:46 +0100 (BST)
-From: Roy Hopkins <roy.hopkins@randomman.co.uk>
-To: qemu-devel@nongnu.org
-Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Daniel P . Berrange" <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
- Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
- Joerg Roedel <joro@8bytes.org>
-Subject: [PATCH v8 16/16] sev: Provide sev_features flags from IGVM VMSA to
- KVM_SEV_INIT2
-Date: Fri, 13 Jun 2025 16:32:26 +0100
-Message-ID: <dc9525b51a7e5872f96dac0468d2f7816b8c9c01.1749820158.git.roy.hopkins@randomman.co.uk>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
-References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uQ6d8-00077M-Pw; Fri, 13 Jun 2025 11:47:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bJkHx6Hrnz6L4rw;
+ Fri, 13 Jun 2025 23:45:33 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 7C157140159;
+ Fri, 13 Jun 2025 23:47:32 +0800 (CST)
+Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 13 Jun
+ 2025 17:47:31 +0200
+Date: Fri, 13 Jun 2025 16:47:30 +0100
+To: Itaru Kitayama <itaru.kitayama@linux.dev>
+CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, Peter Maydell
+ <peter.maydell@linaro.org>, <mst@redhat.com>, Zhijian Li
+ <lizhijian@fujitsu.com>, <linuxarm@huawei.com>, <linux-cxl@vger.kernel.org>,
+ <qemu-arm@nongnu.org>, Yuquan Wang <wangyuquan1236@phytium.com.cn>, Philippe
+ =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>, Alireza Sanaee
+ <alireza.sanaee@huawei.com>, Alex =?ISO-8859-1?Q?Benn=E9e?=
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH v15 0/4] arm/virt: CXL support via pxb_cxl
+Message-ID: <20250613164730.00004d58@huawei.com>
+In-Reply-To: <aEuyFHlk7t7wiLvU@vm4>
+References: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
+ <aEuyFHlk7t7wiLvU@vm4>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=213.171.216.60;
- envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.122.19.247]
+X-ClientProxiedBy: lhrpeml500006.china.huawei.com (7.191.161.198) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,374 +72,280 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-IGVM files can contain an initial VMSA that should be applied to each
-vcpu as part of the initial guest state. The sev_features flags are
-provided as part of the VMSA structure. However, KVM only allows
-sev_features to be set during initialization and not as the guest is
-being prepared for launch.
+On Fri, 13 Jun 2025 14:07:32 +0900
+Itaru Kitayama <itaru.kitayama@linux.dev> wrote:
 
-This patch queries KVM for the supported set of sev_features flags and
-processes the VP context entries in the IGVM file during kvm_init to
-determine any sev_features flags set in the IGVM file. These are then
-provided in the call to KVM_SEV_INIT2 to ensure the guest state
-matches that specified in the IGVM file.
+> On Thu, Jun 12, 2025 at 02:43:34PM +0100, Jonathan Cameron wrote:
+> > v15:
+> >   - Split the address map calculations and mmio setup into separate
+> >     functions in patch 2, allowing v14 patch 3 to be dropped as not
+> >     x86 and arm make the same calls.  Note I felt this was a sufficient
+> >     change to trigger dropping tags. (Zhijian Li)
+> >   - A few other minor tweaks.
+> >   - TLB issue mentioned in v14 now fixed upstream so dropped reference
+> >     in this cover letter.
+> > 
+> > Thanks to Itaru Kitayama and Zhijian Li for testing + reviews.
+> > 
+> > Updated cover letter
+> > 
+> > Back in 2022, this series stalled on the absence of a solution to device
+> > tree support for PCI Expander Bridges (PXB) and we ended up only having
+> > x86 support upstream. I've been carrying the arm64 support out of tree
+> > since then, with occasional nasty surprises (e.g. UNIMP + DT issue seen
+> > a few weeks ago) and a fair number of fiddly rebases.
+> > gitlab.com/jic23/qemu cxl-<latest date>.  Will update shortly with this
+> > series.
+> > 
+> > A recent discussion with Peter Maydell indicated that there are various
+> > other ACPI only features now, so in general he might be more relaxed
+> > about DT support being necessary. The upcoming vSMMUv3 support would
+> > run into this problem as well.
+> > 
+> > I presented the background to the PXB issue at Linaro connect 2022. In
+> > short the issue is that PXBs steal MMIO space from the main PCI root
+> > bridge. The challenge is knowing how much to steal.
+> > 
+> > On ACPI platforms, we can rely on EDK2 to perform an enumeration and
+> > configuration of the PCI topology and QEMU can update the ACPI tables
+> > after EDK2 has done this when it can simply read the space used by the
+> > root ports. On device tree, there is no entity to figure out that
+> > enumeration so we don't know how to size the stolen region.
+> > 
+> > Three approaches were discussed:
+> > 1) Enumerating in QEMU. Horribly complex and the last thing we want is a
+> >    3rd enumeration implementation that ends up out of sync with EDK2 and
+> >    the kernel (there are frequent issues because of how those existing
+> >    implementations differ.
+> > 2) Figure out how to enumerate in kernel. I never put a huge amount of work
+> >    into this, but it seemed likely to involve a nasty dance with similar
+> >    very specific code to that EDK2 is carrying and would very challenging
+> >    to upstream (given the lack of clarity on real use cases for PXBs and
+> >    DT).
+> > 3) Hack it based on the control we have which is bus numbers.
+> >    No one liked this but it worked :)
+> > 
+> > The other little wrinkle would be the need to define full bindings for CXL
+> > on DT + implement a fairly complex kernel stack as equivalent in ACPI
+> > involves a static table, CEDT, new runtime queries via _DSM and a description
+> > of various components. Doable, but so far there is no interest on physical
+> > platforms. Worth noting that for now, the QEMU CXL emulation is all about
+> > testing and developing the OS stack, not about virtualization (performance
+> > is terrible except in some very contrived situations!)
+> > 
+> > There is only a very simple test in here, because my intent is not to
+> > duplicate what we have on x86, but just to do a smoke test that everything
+> > is hooked up.  In general we need much more comprehensive end to end CXL
+> > tests but that requires a reaonsably stable guest software stack. A few
+> > people have expressed interest in working on that, but we aren't there yet.
+> > 
+> > Note that this series has a very different use case to that in the proposed
+> > SBSA-ref support:
+> > https://lore.kernel.org/qemu-devel/20250117034343.26356-1-wangyuquan1236@phytium.com.cn/
+> > 
+> > SBSA-ref is a good choice if you want a relatively simple mostly fixed
+> > configuration.  That works well with the limited host system
+> > discoverability etc as EDK2 can be build against a known configuration.
+> > 
+> > My interest with this support in arm/virt is support host software stack
+> > development (we have a wide range of contributors, most of whom are working
+> > on emulation + the kernel support). I care about the weird corners. As such
+> > I need to be able to bring up variable numbers of host bridges, multiple CXL
+> > Fixed Memory Windows with varying characteristics (interleave etc), complex
+> > NUMA topologies with wierd performance characteristics etc. We can do that
+> > on x86 upstream today, or my gitlab tree. Note that we need arm support
+> > for some arch specific features in the near future (cache flushing).
+> > Doing kernel development with this need for flexibility on SBSA-ref is not
+> > currently practical. SBSA-ref CXL support is an excellent thing, just
+> > not much use to me for this work.
+> > 
+> > Also, we are kicking off some work on DCD virtualization, particularly to
+> > support inter-host shared memory being presented up into a VM. That
+> > will need upstream support on arm64 as it is built on top of the existing
+> > CXL emulation to avoid the need for a separate guest software stack.
+> > 
+> > Note this is TCG only - it is possible to support limited use with KVM but
+> > that needs additional patches not yet ready for upstream.  The challenge
+> > is interleave - and the solution is don't interleave if you want to run
+> > with KVM.  
+> 
+> One of the ndctl:cxl tests fails (other tests ran ok):
 
-The igvm process() function is modified to allow a partial processing
-of the file during initialization, with on the IGVM_VHT_VP_CONTEXT
-fields being processed. This means the function is called twice,
-firstly to extract the sev_features then secondly to actually
-configure the guest.
+Whilst interesting and needing debugging I'd just like to point out that those
+tests are not running on the qemu CXL emulation at all, but on cxl test which
+is mocking stuff in the kernel.   I know you know that but it might not
+be obvious to anyone seeing a bug report on this thread!
 
-Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-Acked-by: Gerd Hoffman <kraxel@redhat.com>
-Tested-by: Stefano Garzarella <sgarzare@redhat.com>
----
- backends/igvm.c           |  17 +++-
- backends/igvm.h           |   2 +-
- hw/i386/pc_piix.c         |   2 +-
- hw/i386/pc_q35.c          |   2 +-
- include/system/igvm-cfg.h |   5 +-
- target/i386/sev.c         | 161 +++++++++++++++++++++++++++++++++-----
- 6 files changed, 163 insertions(+), 26 deletions(-)
+Jonathan
 
-diff --git a/backends/igvm.c b/backends/igvm.c
-index 034f504716..9853ba941e 100644
---- a/backends/igvm.c
-+++ b/backends/igvm.c
-@@ -869,7 +869,7 @@ static IgvmHandle qigvm_file_init(char *filename, Error **errp)
- }
- 
- int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
--                       Error **errp)
-+                       bool onlyVpContext, Error **errp)
- {
-     int32_t header_count;
-     QIgvmParameterData *parameter;
-@@ -913,11 +913,22 @@ int qigvm_process_file(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
-          ctx.current_header_index++) {
-         IgvmVariableHeaderType type = igvm_get_header_type(
-             ctx.file, IGVM_HEADER_SECTION_DIRECTIVE, ctx.current_header_index);
--        if (qigvm_handler(&ctx, type, errp) < 0) {
--            goto cleanup_parameters;
-+        if (!onlyVpContext || (type == IGVM_VHT_VP_CONTEXT)) {
-+            if (qigvm_handler(&ctx, type, errp) < 0) {
-+                goto cleanup_parameters;
-+            }
-         }
-     }
- 
-+    /*
-+     * If only processing the VP context then we don't need to process
-+     * any more of the file.
-+     */
-+    if (onlyVpContext) {
-+        retval = 0;
-+        goto cleanup_parameters;
-+    }
-+
-     header_count =
-         igvm_header_count(ctx.file, IGVM_HEADER_SECTION_INITIALIZATION);
-     if (header_count < 0) {
-diff --git a/backends/igvm.h b/backends/igvm.h
-index db02ea9165..a4abab043a 100644
---- a/backends/igvm.h
-+++ b/backends/igvm.h
-@@ -17,6 +17,6 @@
- #include "qapi/error.h"
- 
- int qigvm_process_file(IgvmCfg *igvm, ConfidentialGuestSupport *cgs,
--                      Error **errp);
-+                      bool onlyVpContext, Error **errp);
- 
- #endif
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 3184ea1b37..a3285fbc64 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -371,7 +371,7 @@ static void pc_init1(MachineState *machine, const char *pci_type)
-     /* Apply guest state from IGVM if supplied */
-     if (x86ms->igvm) {
-         if (IGVM_CFG_GET_CLASS(x86ms->igvm)
--                ->process(x86ms->igvm, machine->cgs, &error_fatal) < 0) {
-+                ->process(x86ms->igvm, machine->cgs, false, &error_fatal) < 0) {
-             g_assert_not_reached();
-         }
-     }
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index 6990e1c669..cf871cfdad 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -330,7 +330,7 @@ static void pc_q35_init(MachineState *machine)
-     /* Apply guest state from IGVM if supplied */
-     if (x86ms->igvm) {
-         if (IGVM_CFG_GET_CLASS(x86ms->igvm)
--                ->process(x86ms->igvm, machine->cgs, &error_fatal) < 0) {
-+                ->process(x86ms->igvm, machine->cgs, false, &error_fatal) < 0) {
-             g_assert_not_reached();
-         }
-     }
-diff --git a/include/system/igvm-cfg.h b/include/system/igvm-cfg.h
-index 321b3196f0..944f23a814 100644
---- a/include/system/igvm-cfg.h
-+++ b/include/system/igvm-cfg.h
-@@ -31,11 +31,14 @@ typedef struct IgvmCfgClass {
-     /*
-      * If an IGVM filename has been specified then process the IGVM file.
-      * Performs a no-op if no filename has been specified.
-+     * If onlyVpContext is true then only the IGVM_VHT_VP_CONTEXT entries
-+     * in the IGVM file will be processed, allowing information about the
-+     * CPU state to be determined before processing the entire file.
-      *
-      * Returns 0 for ok and -1 on error.
-      */
-     int (*process)(IgvmCfg *cfg, ConfidentialGuestSupport *cgs,
--                   Error **errp);
-+                   bool onlyVpContext, Error **errp);
- 
- } IgvmCfgClass;
- 
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index 2798fe1c38..df55a25a67 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -118,6 +118,8 @@ struct SevCommonState {
-     uint32_t cbitpos;
-     uint32_t reduced_phys_bits;
-     bool kernel_hashes;
-+    uint64_t sev_features;
-+    uint64_t supported_sev_features;
- 
-     /* runtime state */
-     uint8_t api_major;
-@@ -485,7 +487,40 @@ static void sev_apply_cpu_context(CPUState *cpu)
-     }
- }
- 
--static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
-+static int check_sev_features(SevCommonState *sev_common, uint64_t sev_features,
-+                              Error **errp)
-+{
-+    /*
-+     * Ensure SEV_FEATURES is configured for correct SEV hardware and that
-+     * the requested features are supported. If SEV-SNP is enabled then
-+     * that feature must be enabled, otherwise it must be cleared.
-+     */
-+    if (sev_snp_enabled() && !(sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+        error_setg(
-+            errp,
-+            "%s: SEV_SNP is enabled but is not enabled in VMSA sev_features",
-+            __func__);
-+        return -1;
-+    } else if (!sev_snp_enabled() &&
-+               (sev_features & SVM_SEV_FEAT_SNP_ACTIVE)) {
-+        error_setg(
-+            errp,
-+            "%s: SEV_SNP is not enabled but is enabled in VMSA sev_features",
-+            __func__);
-+        return -1;
-+    }
-+    if (sev_features & ~sev_common->supported_sev_features) {
-+        error_setg(errp,
-+                   "%s: VMSA contains unsupported sev_features: %lX, "
-+                   "supported features: %lX",
-+                   __func__, sev_features, sev_common->supported_sev_features);
-+        return -1;
-+    }
-+    return 0;
-+}
-+
-+static int check_vmsa_supported(SevCommonState *sev_common, hwaddr gpa,
-+                                const struct sev_es_save_area *vmsa,
-                                 Error **errp)
- {
-     struct sev_es_save_area vmsa_check;
-@@ -551,24 +586,10 @@ static int check_vmsa_supported(hwaddr gpa, const struct sev_es_save_area *vmsa,
-     vmsa_check.x87_fcw = 0;
-     vmsa_check.mxcsr = 0;
- 
--    if (sev_snp_enabled()) {
--        if (vmsa_check.sev_features != SVM_SEV_FEAT_SNP_ACTIVE) {
--            error_setg(errp,
--                       "%s: sev_features in the VMSA contains an unsupported "
--                       "value. For SEV-SNP, sev_features must be set to %x.",
--                       __func__, SVM_SEV_FEAT_SNP_ACTIVE);
--            return -1;
--        }
--        vmsa_check.sev_features = 0;
--    } else {
--        if (vmsa_check.sev_features != 0) {
--            error_setg(errp,
--                       "%s: sev_features in the VMSA contains an unsupported "
--                       "value. For SEV-ES and SEV, sev_features must be "
--                       "set to 0.", __func__);
--            return -1;
--        }
-+    if (check_sev_features(sev_common, vmsa_check.sev_features, errp) < 0) {
-+        return -1;
-     }
-+    vmsa_check.sev_features = 0;
- 
-     if (!buffer_is_zero(&vmsa_check, sizeof(vmsa_check))) {
-         error_setg(errp,
-@@ -1722,6 +1743,39 @@ static int sev_snp_kvm_type(X86ConfidentialGuest *cg)
-     return KVM_X86_SNP_VM;
- }
- 
-+static int sev_init_supported_features(ConfidentialGuestSupport *cgs,
-+                                       SevCommonState *sev_common, Error **errp)
-+{
-+    X86ConfidentialGuestClass *x86_klass =
-+                               X86_CONFIDENTIAL_GUEST_GET_CLASS(cgs);
-+    /*
-+     * Older kernels do not support query or setting of sev_features. In this
-+     * case the set of supported features must be zero to match the settings
-+     * in the kernel.
-+     */
-+    if (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common)) ==
-+        KVM_X86_DEFAULT_VM) {
-+        sev_common->supported_sev_features = 0;
-+        return 0;
-+    }
-+
-+    /* Query KVM for the supported set of sev_features */
-+    struct kvm_device_attr attr = {
-+        .group = KVM_X86_GRP_SEV,
-+        .attr = KVM_X86_SEV_VMSA_FEATURES,
-+        .addr = (unsigned long)&sev_common->supported_sev_features,
-+    };
-+    if (kvm_ioctl(kvm_state, KVM_GET_DEVICE_ATTR, &attr) < 0) {
-+        error_setg(errp, "%s: failed to query supported sev_features",
-+                   __func__);
-+        return -1;
-+    }
-+    if (sev_snp_enabled()) {
-+        sev_common->supported_sev_features |= SVM_SEV_FEAT_SNP_ACTIVE;
-+    }
-+    return 0;
-+}
-+
- static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
- {
-     char *devname;
-@@ -1802,6 +1856,10 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-         }
-     }
- 
-+    if (sev_init_supported_features(cgs, sev_common, errp) < 0) {
-+        return -1;
-+    }
-+
-     trace_kvm_sev_init();
-     switch (x86_klass->kvm_type(X86_CONFIDENTIAL_GUEST(sev_common))) {
-     case KVM_X86_DEFAULT_VM:
-@@ -1813,6 +1871,40 @@ static int sev_common_kvm_init(ConfidentialGuestSupport *cgs, Error **errp)
-     case KVM_X86_SEV_ES_VM:
-     case KVM_X86_SNP_VM: {
-         struct kvm_sev_init args = { 0 };
-+        MachineState *machine = MACHINE(qdev_get_machine());
-+        X86MachineState *x86machine = X86_MACHINE(qdev_get_machine());
-+
-+        /*
-+         * If configuration is provided via an IGVM file then the IGVM file
-+         * might contain configuration of the initial vcpu context. For SEV
-+         * the vcpu context includes the sev_features which should be applied
-+         * to the vcpu.
-+         *
-+         * KVM does not synchronize sev_features from CPU state. Instead it
-+         * requires sev_features to be provided as part of this initialization
-+         * call which is subsequently automatically applied to the VMSA of
-+         * each vcpu.
-+         *
-+         * The IGVM file is normally processed after initialization. Therefore
-+         * we need to pre-process it here to extract sev_features in order to
-+         * provide it to KVM_SEV_INIT2. Each cgs_* function that is called by
-+         * the IGVM processor detects this pre-process by observing the state
-+         * as SEV_STATE_UNINIT.
-+         */
-+        if (x86machine->igvm) {
-+            if (IGVM_CFG_GET_CLASS(x86machine->igvm)
-+                    ->process(x86machine->igvm, machine->cgs, true, errp) ==
-+                -1) {
-+                return -1;
-+            }
-+            /*
-+             * KVM maintains a bitmask of allowed sev_features. This does not
-+             * include SVM_SEV_FEAT_SNP_ACTIVE which is set accordingly by KVM
-+             * itself. Therefore we need to clear this flag.
-+             */
-+            args.vmsa_features = sev_common->sev_features &
-+                                 ~SVM_SEV_FEAT_SNP_ACTIVE;
-+        }
- 
-         ret = sev_ioctl(sev_common->sev_fd, KVM_SEV_INIT2, &args, &fw_error);
-         break;
-@@ -2417,6 +2509,24 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
- 
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        if ((cpu_index == 0) && (memory_type == CGS_PAGE_TYPE_VMSA)) {
-+            const struct sev_es_save_area *sa =
-+                (const struct sev_es_save_area *)ptr;
-+            if (len < sizeof(*sa)) {
-+                error_setg(errp, "%s: invalid VMSA length encountered",
-+                           __func__);
-+                return -1;
-+            }
-+            if (check_sev_features(sev_common, sa->sev_features, errp) < 0) {
-+                return -1;
-+            }
-+            sev_common->sev_features = sa->sev_features;
-+        }
-+        return 0;
-+    }
-+
-     if (!sev_enabled()) {
-         error_setg(errp, "%s: attempt to configure guest memory, but SEV "
-                      "is not enabled", __func__);
-@@ -2436,7 +2546,8 @@ static int cgs_set_guest_state(hwaddr gpa, uint8_t *ptr, uint64_t len,
-                        __func__);
-             return -1;
-         }
--        if (check_vmsa_supported(gpa, (const struct sev_es_save_area *)ptr,
-+        if (check_vmsa_supported(sev_common, gpa,
-+                                 (const struct sev_es_save_area *)ptr,
-                                  errp) < 0) {
-             return -1;
-         }
-@@ -2493,6 +2604,12 @@ static int cgs_get_mem_map_entry(int index,
-     struct e820_entry *table;
-     int num_entries;
- 
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        return 1;
-+    }
-+
-     num_entries = e820_get_table(&table);
-     if ((index < 0) || (index >= num_entries)) {
-         return 1;
-@@ -2524,6 +2641,12 @@ static int cgs_set_guest_policy(ConfidentialGuestPolicyType policy_type,
-                                 uint32_t policy_data1_size, void *policy_data2,
-                                 uint32_t policy_data2_size, Error **errp)
- {
-+    SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-+    if (sev_common->state == SEV_STATE_UNINIT) {
-+        /* Pre-processing of IGVM file called from sev_common_kvm_init() */
-+        return 0;
-+    }
-+
-     if (policy_type != GUEST_POLICY_SEV) {
-         error_setg(errp, "%s: Invalid guest policy type provided for SEV: %d",
-         __func__, policy_type);
--- 
-2.43.0
+
+> 
+> # meson test cxl-region-sysfs.sh
+> ninja: Entering directory `/root/ndctl/build'
+> [1/55] Generating version.h with a custom command
+> [  706.564783][ T2080] calling  cxl_port_init+0x0/0xfe0 [cxl_port] @ 2080
+> [  706.566861][ T2080] initcall cxl_port_init+0x0/0xfe0 [cxl_port] returned 0 after 1735 usecs
+> [  706.586457][ T2080] calling  cxl_acpi_init+0x0/0xfe0 [cxl_acpi] @ 2080
+> [  706.625690][ T2080] probe of port1 returned 0 after 25381 usecs
+> [  706.626634][ T2080]  pci0000:bf: host supports CXL
+> [  706.653573][ T2080] probe of port2 returned 0 after 25631 usecs
+> [  706.655164][ T2080]  pci0000:35: host supports CXL
+> [  706.662409][ T2080] probe of ACPI0017:00 returned 0 after 74464 usecs
+> [  706.663150][ T2080] initcall cxl_acpi_init+0x0/0xfe0 [cxl_acpi] returned 0 after 76306 usecs
+> [  706.690482][ T2080] calling  cxl_pmem_init+0x0/0xfd0 [cxl_pmem] @ 2080
+> [  706.695324][ T2080] probe of ndbus0 returned 0 after 1496 usecs
+> [  706.699217][ T2080] probe of nvdimm-bridge0 returned 0 after 6705 usecs
+> [  706.702372][ T2080] initcall cxl_pmem_init+0x0/0xfd0 [cxl_pmem] returned 0 after 11576 usecs
+> [  706.717668][ T2080] calling  cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] @ 2080
+> [  706.758561][ T2080] probe of port3 returned 0 after 34188 usecs
+> [  706.767080][ T2080] cxl_nvdimm pmem11: GPF: could not set dirty shutdown state
+> [  706.779392][ T2080] probe of nmem0 returned 0 after 1083 usecs
+> [  706.782181][ T2080] probe of pmem11 returned 0 after 15516 usecs
+> [  706.826941][ T2080] probe of endpoint4 returned 0 after 42630 usecs
+> [  706.827987][ T2080] probe of mem11 returned 0 after 108475 usecs
+> [  706.878052][ T2080] probe of port5 returned 0 after 41354 usecs
+> [  706.938260][ T2080] probe of endpoint6 returned 0 after 46831 usecs
+> [  706.939223][ T2080] probe of mem12 returned 0 after 105104 usecs
+> [  706.994611][ T2080] probe of endpoint7 returned 0 after 49337 usecs
+> [  706.995790][ T2080] probe of mem13 returned 0 after 53632 usecs
+> [  707.004334][ T2080] cxl_nvdimm pmem14: GPF: could not set dirty shutdown state
+> [  707.017782][ T2080] probe of nmem1 returned 0 after 1115 usecs
+> [  707.019324][ T2080] probe of pmem14 returned 0 after 14920 usecs
+> [  707.072148][ T2080] probe of endpoint8 returned 0 after 50887 usecs
+> [  707.073367][ T2080] probe of mem14 returned 0 after 71279 usecs
+> [  707.079062][ T2080] initcall cxl_mem_driver_init+0x0/0xfe0 [cxl_mem] returned 0 after 361073 usecs
+> [  707.111533][ T2080] calling  cxl_test_init+0x0/0xc88 [cxl_test] @ 2080
+> [  708.001403][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+> [  708.002032][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+> [  708.010988][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+> [  708.011963][ T2080] platform cxl_host_bridge.3: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+> [  708.034604][ T2080] platform cxl_host_bridge.0: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+> [  708.056775][ T2080] probe of port10 returned 0 after 20555 usecs
+> [  708.057814][ T2080] platform cxl_host_bridge.0: host supports CXL
+> [  708.062226][ T2080] platform cxl_host_bridge.1: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+> [  708.081857][ T2080] probe of port11 returned 0 after 18696 usecs
+> [  708.085821][ T2080] platform cxl_host_bridge.1: host supports CXL
+> [  708.086496][ T2080] platform cxl_host_bridge.2: Unsupported platform config, mixed Virtual Host and Restricted CXL Host hierarchy.
+> [  708.538268][ T2080] probe of port12 returned 0 after 450064 usecs
+> [  708.563248][ T2080] platform cxl_host_bridge.2: host supports CXL
+> [  708.563875][ T2080] platform cxl_host_bridge.3: host supports CXL (restricted)
+> [  708.803640][ T2080] probe of ndbus1 returned 0 after 87373 usecs
+> [  708.817241][ T2080] probe of nvdimm-bridge1 returned 0 after 182992 usecs
+> [  708.839172][ T2080] probe of cxl_acpi.0 returned 0 after 843615 usecs
+> [  709.026867][  T503] cxl_mock_mem cxl_mem.0: CXL MCE unsupported
+> [  709.240435][  T502] cxl_mock_mem cxl_mem.1: CXL MCE unsupported
+> [  709.263055][  T499] cxl_mock_mem cxl_mem.2: CXL MCE unsupported
+> [  709.317257][  T503] probe of port13 returned 0 after 57147 usecs
+> [  709.442524][  T498] cxl_mock_mem cxl_mem.3: CXL MCE unsupported
+> [  709.495789][  T499] probe of port15 returned 0 after 57022 usecs
+> [  709.538513][ T1514] cxl_mock_mem cxl_mem.5: CXL MCE unsupported
+> [  709.553021][  T503] probe of nmem3 returned 0 after 12329 usecs
+> [  709.555876][  T503] probe of pmem0 returned 0 after 54954 usecs
+> [  709.567823][  T499] probe of nmem2 returned 0 after 27577 usecs
+> [  709.569359][  T499] probe of pmem2 returned 0 after 64505 usecs
+> [  709.603845][  T497] cxl_mock_mem cxl_mem.4: CXL MCE unsupported
+> [  709.626487][   T12] cxl_mock_mem cxl_mem.6: CXL MCE unsupported
+> [  709.639194][  T502] probe of port14 returned 0 after 255539 usecs
+> [  709.662671][  T503] probe of region2 returned 6 after 421 usecs
+> [  709.664855][  T503] cxl_mock_mem cxl_mem.0: Extended linear cache calculation failed rc:-2
+> [  709.694975][  T503] probe of endpoint16 returned 0 after 100427 usecs
+> [  709.698678][  T503] probe of mem0 returned 0 after 516964 usecs
+> [  709.752821][   T49] cxl_mock_mem cxl_mem.7: CXL MCE unsupported
+> [  709.782050][  T499] probe of endpoint17 returned 0 after 102692 usecs
+> [  709.814422][  T499] probe of mem2 returned 0 after 539843 usecs
+> [  709.859496][  T497] probe of nmem4 returned 0 after 74368 usecs
+> [  709.860064][  T497] probe of pmem5 returned 0 after 120134 usecs
+> [  709.862431][  T499] probe of cxl_mem.2 returned 0 after 686512 usecs
+> [  709.863290][  T503] probe of cxl_mem.0 returned 0 after 892734 usecs
+> [  709.870924][   T30] cxl_mock_mem cxl_mem.9: CXL MCE unsupported
+> [  709.876631][ T2080] initcall cxl_test_init+0x0/0xc88 [cxl_test] returned 0 after 2764528 usecs
+> [  709.886776][  T498] probe of port18 returned 0 after 168122 usecs
+> [  709.900934][  T500] cxl_mock_mem cxl_mem.8: CXL MCE unsupported
+> [  709.946498][ T1514] probe of nmem5 returned 0 after 9462 usecs
+> [  709.947381][ T1514] probe of pmem4 returned 0 after 14445 usecs
+> [  709.970022][   T12] probe of nmem6 returned 0 after 32603 usecs
+> [  709.978337][  T498] probe of nmem7 returned 0 after 35875 usecs
+> [  709.986071][  T498] probe of pmem3 returned 0 after 46583 usecs
+> [  710.010717][   T12] probe of pmem6 returned 0 after 75369 usecs
+> [  710.014337][  T501] cxl_mock_mem cxl_rcd.10: CXL MCE unsupported
+> [  710.040337][  T502] probe of nmem8 returned 0 after 29862 usecs
+> [  710.059653][  T502] probe of pmem1 returned 0 after 88935 usecs
+> [  710.079573][   T12] probe of endpoint23 returned 0 after 49198 usecs
+> [  710.097280][   T30] probe of port21 returned 0 after 120461 usecs
+> [  710.097393][   T49] probe of nmem9 returned 0 after 26437 usecs
+> [  710.101820][   T49] probe of pmem7 returned 0 after 36944 usecs
+> [  710.106202][   T12] probe of mem6 returned 0 after 452293 usecs
+> [  710.130816][   T12] probe of cxl_mem.6 returned 0 after 669975 usecs
+> [  710.133959][  T500] probe of nmem10 returned 0 after 12351 usecs
+> [  710.170179][  T500] probe of pmem9 returned 0 after 50316 usecs
+> [  710.183178][  T498] probe of endpoint22 returned 0 after 160579 usecs
+> [  710.208790][  T498] probe of mem3 returned 0 after 760551 usecs
+> [  710.212463][  T501] probe of endpoint24 returned 0 after 149792 usecs
+> [  710.236975][  T497] probe of dax2.0 returned 0 after 118646 usecs
+> [  710.240952][  T497] probe of dax_region2 returned 0 after 166940 usecs
+> [  710.242545][  T498] probe of cxl_mem.3 returned 0 after 917362 usecs
+> [  710.256278][   T30] probe of nmem11 returned 0 after 45572 usecs
+> [  710.257079][   T30] probe of pmem8 returned 0 after 105691 usecs
+> [  710.259332][  T501] probe of mem10 returned 0 after 218194 usecs
+> [  710.265545][  T497] probe of region2 returned 0 after 225563 usecs
+> [  710.269232][ T1514] probe of endpoint20 returned 0 after 320269 usecs
+> [  710.282299][  T497] probe of endpoint19 returned 0 after 421116 usecs
+> [  710.283234][  T497] probe of mem5 returned 0 after 642268 usecs
+> [  710.304734][ T1514] probe of mem4 returned 0 after 762768 usecs
+> [  710.322940][   T49] probe of endpoint26 returned 0 after 117975 usecs
+> [  710.324643][   T49] probe of mem7 returned 0 after 558032 usecs
+> [  710.336434][  T501] probe of cxl_rcd.10 returned 0 after 414904 usecs
+> [  710.339624][  T497] probe of cxl_mem.4 returned 0 after 957535 usecs
+> [  710.400496][ T1514] probe of cxl_mem.5 returned 0 after 996364 usecs
+> [  710.450320][   T49] probe of cxl_mem.7 returned 0 after 842769 usecs
+> [  710.648851][  T500] probe of endpoint25 returned 0 after 477479 usecs
+> [  710.659334][  T500] probe of mem9 returned 0 after 690185 usecs
+> [  710.706030][  T500] probe of cxl_mem.8 returned 0 after 917194 usecs
+> [  711.162896][   T30] probe of endpoint28 returned 0 after 493899 usecs
+> [  711.227336][   T30] probe of mem8 returned 0 after 1278462 usecs
+> [  711.325568][  T502] probe of endpoint27 returned 0 after 929403 usecs
+> [  711.356687][  T502] probe of mem1 returned 0 after 2101415 usecs
+> [  711.531055][   T30] probe of cxl_mem.9 returned 0 after 1707787 usecs
+> [  711.554073][  T502] probe of cxl_mem.1 returned 0 after 2425696 usecs
+> [  724.421245][ T2077] probe of region5 returned 6 after 262 usecs
+> 1/1 ndctl:cxl / cxl-region-sysfs.sh        FAIL            18.22s   exit status 1
+> >>> TEST_PATH=/root/ndctl/build/test ASAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1 LD_LIBRARY_PATH=/root/ndctl/build/daxctl/lib:/root/ndctl/build/cxl/lib:/root/ndctl/build/ndctl/lib DAXCTL=/root/ndctl/build/daxctl/daxctl DATA_PATH=/root/ndctl/test NDCTL=/root/ndctl/build/ndctl/ndctl MESON_TEST_ITERATION=1 UBSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MSAN_OPTIONS=halt_on_error=1:abort_on_error=1:print_summary=1:print_stacktrace=1 MALLOC_PERTURB_=123 /bin/bash /root/ndctl/test/cxl-region-sysfs.sh  
+> 
+> The kernel (the cxl_test kernel module) is built off of cxl/next which
+> has Jonathan's fix to the cxl_test seen on arm64.
+> Could the experts take a look at this issue?
+> 
+> Thanks,
+> Itaru.
+> 
+> > 
+> > Jonathan Cameron (4):
+> >   hw/cxl-host: Add an index field to CXLFixedMemoryWindow
+> >   hw/cxl: Make the CXL fixed memory windows devices.
+> >   hw/arm/virt: Basic CXL enablement on pci_expander_bridge instances
+> >     pxb-cxl
+> >   qtest/cxl: Add aarch64 virt test for CXL
+> > 
+> >  include/hw/arm/virt.h     |   4 +
+> >  include/hw/cxl/cxl.h      |   5 +-
+> >  include/hw/cxl/cxl_host.h |   5 +-
+> >  hw/acpi/cxl.c             |  76 +++++++++--------
+> >  hw/arm/virt-acpi-build.c  |  34 ++++++++
+> >  hw/arm/virt.c             |  29 +++++++
+> >  hw/cxl/cxl-host-stubs.c   |   7 +-
+> >  hw/cxl/cxl-host.c         | 170 +++++++++++++++++++++++++++++++-------
+> >  hw/i386/pc.c              |  50 +++++------
+> >  tests/qtest/cxl-test.c    |  59 ++++++++++---
+> >  tests/qtest/meson.build   |   1 +
+> >  11 files changed, 330 insertions(+), 110 deletions(-)
+> > 
+> > -- 
+> > 2.48.1
+> >   
 
 
