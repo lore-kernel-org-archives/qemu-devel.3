@@ -4,58 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA701C71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 16:48:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2186C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 16:51:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ7ZZ-0004vR-La; Fri, 13 Jun 2025 12:48:09 -0400
+	id 1uQ7cj-0005wW-Qr; Fri, 13 Jun 2025 12:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7ZX-0004us-HT
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:48:07 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7ci-0005wO-W0
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:51:25 -0400
 Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7ZV-00075h-TR
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:48:07 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7ch-0007dk-4c
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:51:24 -0400
 Authentication-Results: sean.taipei; dmarc=fail (p=quarantine dis=none)
  header.from=sean.taipei
-ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 7B94054F1
-ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1749833252;
+ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 169686FE
+ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1749833450;
  cv=none;
- b=w5M3XYPX+ua8Wjw0YMfCx7Pn1/dJvAMMHlaGymDI5LY7eIq2q0XyJVeHE8DwrNv2+L6oaVjv63+8n0ROOXg23b+YNUMHTg9lBofYunh8NGrf+gkwLQ0+LT2luADGM/Iy1d2sBw3nBCWkbNMY1QVFWxBRtYmUzwX5MTZ8JmpmpXpQI6lnL+saniSnd22lQ8JbFPbcGu7lb7nIiYyqYAKv3eh6F9FfZd9FMqhQbKhYb5ti/sKPxUs2wVJ9p20EQ2c0wMf9MpZWXK1ck9E+nDOkpK7bGuFD/Xhx9TApD7u7iBPMflhN01ANhA5/i+rhXl4isEw24zuKT3Suk1eNzfgDMw==
+ b=hocpg3WmNjcCFifYGGFbdmxLUU5LMxcDZZfigAdmPc85CVZM0fQkioREGyoG/wzezvWTVG2UFca/KnRMc1Tc7IQt/0yrk0a9thEGE7hGCpxFQW06vtWdVNmhc/8QqXFQ2osFnya5aa9U+vdy3DQFdoYzBoFDp3+s7XQvD03NTcbyYH9Ixbtc0c3w5cEjhszRGJPB7D6NC1mOk5+uKhLc6xtrgDuIbLx1n+2gJe2JPn6ExPmVCR1jd4WTczg0j1Xn/zIE9z2q0AEUoEOMQyvfenNjrlm9Xi2LVmXgeS+VNoc8w/XwZso/KA7O8+wQYMkRLjchUlOPuN6KyUJuX531Cw==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2;
- t=1749833252; c=relaxed/simple;
- bh=B3lNwftSpS+tqV7UQ/I5Rae8w9BYde1GoHx5gGkQaMk=;
+ t=1749833450; c=relaxed/simple;
+ bh=KN+QfjXO87LWOdYnoHgbV8syv98RuniMJDgDwfJ84J0=;
  h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:References:
  MIME-Version;
- b=fI9RdfpzbqV426NPfFdRTn3vfMZsLwYWrt/XmNHnGcRxccgp+84nwH3URKEZ0ILnZ4Le0sfxZ/f9Vjlf39676Ny15iyy7pRXTYMI610I4HI8qSRYi474kqoZFlD+er7+gDXdaHgKsZsTdpNo/InyqOfEcjlvanwksWrb/T3XhW+pbDRV+wczUcn60L1bhvt2L/wRJrpHdDFgNKfirFAVrc51EsIYyqTgUwRVQbpVi9gXlLom0hRIb40TJpaDoID+e6d372Dx/PnWF9/hP+gQ5nUrv6/PxnPOn5HHpjjhUZh8us6Zoi6D4AmKLjAj1MlX4jGe6X95UaqSIRZ4xYjkBw==
+ b=WCWXjqrTw+Itgup0t1AjlbgjM9RvD0uBTNWAh49VyvEEEusKNT1Air9owCkxsqp3r2wauU+4m+UMgPO9BC/jUTgFm5b4UsjoLpxfO0TnpKSCDj5q6N7kTNFvhMl9uPcEj85xVLvMGlZW9c4rAm8kg+R1lWWRjoTUBLZT77sr8tHIgAo1xdr+zkQA3VydwkScICYFwbpmIBAtyTEyC0Gl6HeQ1evLoYvbUBCiEmH6x5Tgk9EhYpJNr0EYcY2ujcISRoy8skU2+v7ROE9GDMf87fvMo0Va7AX0dB4n9/Yqj49PcJ+cyLQsxIpJIy60IayjS/I0McDSZ2AnLPM6X/7FVw==
 ARC-Authentication-Results: i=1; sean.taipei;
  dmarc=fail (p=quarantine dis=none)
  header.from=sean.taipei
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
- s=2021Q3; t=1749833252;
- bh=B3lNwftSpS+tqV7UQ/I5Rae8w9BYde1GoHx5gGkQaMk=;
+ s=2021Q3; t=1749833446;
+ bh=KN+QfjXO87LWOdYnoHgbV8syv98RuniMJDgDwfJ84J0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Kq0y+GX0P0uIXb+PA+BX9JhJnQKDHWw9q/iCcdZRkP3VFemMUXtyWW9a+6wY+tIUK
- UL8f/KQYzif1l++Dh4kJ8xw90QlTkkMN6QgiZLydbbCDRoGjr97ImVwFPymZiiEYyo
- 6gtEjKBwgC0lulG7pVAJ7ilz038pF6wn0Dw0nLXXT5rxOMa4EdKElu3+z8s+4pKTGl
- +mZwDQBSz6ztX1Pbh7+2Ejzl4QufV76o8KrCvy4Pj9BYEZ1iyOnojazB6dEtF7PcdX
- p6Tm8HRpkG/222gQL2+LlFacQ4iZyVoL31IcmCqw7Am7JeCmQ/o4bq/aoj0DMz+//C
- 87/U8L20ZkJaw==
+ b=3agaPJdaIuyzJrFm+r1/8SwL8F2Z22uuk9GonM/XWap0NOkQebWUgoMA5J4qlBUmW
+ OS2ojGq1aJjJac9SD6kuie4yJNkVPMRxxo21sQINjZRGM2FsriqyOwkWt2k0zdwSAM
+ L5h3Fwu1jZ+jwJ9J5r7WG/5g2DZjFo8Oy9f0ZN1kUHioCQYLzyEFUgFoBZSNVQpeJg
+ RpZBlkbHSuSgtGxkS+my0HOaeBE/I+7R3tF0Ssw+eu8aEQxetBbk+U5XSSg4kqEk7E
+ LueOOo/dAW1VQA4DErfjeerLhdzT5zPh7y6aS2y6IA1HHuaom6S1LDmbEyG2yn0Kpv
+ LhGz+e+r9yjuA==
 Received: from localhost.localdomain (unknown [23.170.80.102])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by sean.taipei (Postfix) with ESMTPSA id 7B94054F1;
- Sat, 14 Jun 2025 00:47:30 +0800 (CST)
+ by sean.taipei (Postfix) with ESMTPSA id 169686FE;
+ Sat, 14 Jun 2025 00:50:43 +0800 (CST)
 From: Sean Wei <me@sean.taipei>
 To: qemu-devel@nongnu.org
-Cc: Sean Wei <me@sean.taipei>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 07/12] util/rcu.c: replace FSF postal address with licenses URL
-Date: Fri, 13 Jun 2025 12:46:50 -0400
-Message-ID: <20250613.qemu.patch.07@sean.taipei>
+Cc: Sean Wei <me@sean.taipei>, Dmitry Fleytman <dmitry.fleytman@gmail.com>,
+ Jason Wang <jasowang@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Fam Zheng <fam@euphon.net>
+Subject: [PATCH 08/12] hw: replace FSF postal address with licenses URL
+Date: Fri, 13 Jun 2025 12:50:20 -0400
+Message-ID: <20250613.qemu.patch.08@sean.taipei>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250613.qemu.patch@sean.taipei>
 References: <20250613.qemu.patch@sean.taipei>
@@ -87,32 +88,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The LGPLv2.1 boiler-plate in util/rcu.c still contained
-the obsolete "51 Franklin Street" postal address.
+The GPLv2 boiler-plate in vmxnet3.h and vmw_pvscsi.h still
+contained the obsolete "51 Franklin Street" postal address.
 
 Replace it with the canonical GNU licenses URL recommended by the FSF:
 https://www.gnu.org/licenses/
 
 Signed-off-by: Sean Wei <me@sean.taipei>
 ---
- util/rcu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ hw/net/vmxnet3.h     | 4 ++--
+ hw/scsi/vmw_pvscsi.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/util/rcu.c b/util/rcu.c
-index fa32c942e4..b703c86f15 100644
---- a/util/rcu.c
-+++ b/util/rcu.c
-@@ -20,8 +20,8 @@
-  * Lesser General Public License for more details.
+diff --git a/hw/net/vmxnet3.h b/hw/net/vmxnet3.h
+index f9283f9e7b..dbc69d5fb6 100644
+--- a/hw/net/vmxnet3.h
++++ b/hw/net/vmxnet3.h
+@@ -63,8 +63,8 @@
+  * details.
   *
-  * You should have received a copy of the GNU Lesser General Public
-- * License along with this library; if not, write to the Free Software
-- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-+ * License along with this library; if not, see
+  * You should have received a copy of the GNU General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
++ * along with this program; if not, see
 + * <https://www.gnu.org/licenses/>.
   *
-  * IBM's contributions to this file may be relicensed under LGPLv2 or later.
-  */
+  * The full GNU General Public License is included in this distribution in
+  * the file called "COPYING".
+diff --git a/hw/scsi/vmw_pvscsi.h b/hw/scsi/vmw_pvscsi.h
+index 17fcf66273..a3ae517e19 100644
+--- a/hw/scsi/vmw_pvscsi.h
++++ b/hw/scsi/vmw_pvscsi.h
+@@ -14,8 +14,8 @@
+  * details.
+  *
+  * You should have received a copy of the GNU General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
++ * along with this program; if not, see
++ * <https://www.gnu.org/licenses/>.
+  *
+  * Maintained by: Arvind Kumar <arvindkumar@vmware.com>
+  *
 -- 
 2.49.0
 
