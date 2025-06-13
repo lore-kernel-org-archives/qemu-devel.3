@@ -4,87 +4,225 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86947C71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 21:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B06C71136
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 21:52:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQBd7-0007yY-NM; Fri, 13 Jun 2025 17:08:05 -0400
+	id 1uQCJA-0006F4-4s; Fri, 13 Jun 2025 17:51:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQBd4-0007yG-JG
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 17:08:02 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uQCJ2-0006Ej-TZ
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 17:51:24 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uQBd1-0000Md-SW
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 17:08:02 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1749848875;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=r92FoZ6ZCENuevCJqmk7ir4uhkS+Z6unUDCa7or88/s=;
- b=OOkI6FEMU6F25AevOLxcqiLb6Bx2WjAz/cYCCvi47evPyjETsbcwuS9p8/VjexZMfpOULM
- gzL014k4O+9FNW+xzegN+PzD2rcsKmhNmI/ZPjnsWQF68sHCw/O1qqMQlU77aq3CTUMzGH
- JTyM3ToHIUX9Y38BO+8WBIpfMgnAefQ=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-224-j94UlNO-MxKqsC5gnLB0Iw-1; Fri, 13 Jun 2025 17:07:53 -0400
-X-MC-Unique: j94UlNO-MxKqsC5gnLB0Iw-1
-X-Mimecast-MFC-AGG-ID: j94UlNO-MxKqsC5gnLB0Iw_1749848873
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-31332dc2b59so2138187a91.0
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 14:07:53 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749848872; x=1750453672;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=r92FoZ6ZCENuevCJqmk7ir4uhkS+Z6unUDCa7or88/s=;
- b=NHvQ4okA726KD+OPi/NV4F+VYuuIkiYRxENju7ffuMqk31Xt1BZHV5IpIgmC52u4ak
- kbPVuBgWIZmZ6a4M2+23j6NKOOksxvdk4MwNe60vnMBkrWi4gVY5bjiruqXnufSo6LLh
- nZrvpFN+XlPEstwkURnP5syvQS5LvEuXO+akKn2siegz7okhnMeI858SmNpXnOD2adrj
- hDJkQcvl873SsQCjPI8C5yq0jzsqKilI3VgcFqY8DdXij/8iwjly2zGuFQG7mA/dIbEm
- WaLIH83S7T7trvM2n94fu8/gvLCam+djS4fWutczyGF8u33NQU+EneYUJHP43HuuU7nS
- Vo3Q==
-X-Gm-Message-State: AOJu0YwWnJOsWjnlRrbqBAriDtMKatKD2TScAQkEQMEhn5enc4ZM4ajK
- rdTOsnNU2cjEMo2pRAllbhnBgZRjRGvIUt0U3ajl0XFuFS2tKWOF3I2n3oE8a+F5s1FV6a7zwnH
- jeyNTFhmMkmeJHVrGo4bTmCZfI67iLuCK59wPH9HX9J1uPKgwAi4vqO84h3oMkd0xVwEpcjvUTx
- pAdysKY67N0jox3iGBrc9ugCba61NnfV4dQgcOVTPB5SKa
-X-Gm-Gg: ASbGnct2FdLWqxrifM4vJf/BiHy7bz69KGmG4BYQwWzucK/SRvlBm+WoiX92Wm9Ncus
- sV13HSmPhk15gDsTtyxoVWoipWqUBi5FE3+IMLM5mWwo90OJ8v3sgxARQh4HUSuTKpAvT6nLZSV
- Y4/qlMQe/uwuEeEexJ2m/rzMVgNnm0P1ybX+o=
-X-Received: by 2002:a17:90b:134f:b0:311:e8cc:425d with SMTP id
- 98e67ed59e1d1-313f1c00e26mr1634242a91.10.1749848872283; 
- Fri, 13 Jun 2025 14:07:52 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFKLCimMk8Qo10ih+/c2QWIquiXrVgoL7101y1enx+1RwhXMcr0fgHmbdVSJmPcmsZr1XlBHthIyXWoGZZlNPw=
-X-Received: by 2002:a17:90b:134f:b0:311:e8cc:425d with SMTP id
- 98e67ed59e1d1-313f1c00e26mr1634207a91.10.1749848871846; Fri, 13 Jun 2025
- 14:07:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uQCIz-0005No-4j
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 17:51:23 -0400
+Received: from pps.filterd (m0246629.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55DCtd9A023692;
+ Fri, 13 Jun 2025 21:51:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=hJno+/LbiF4t/Zldpl7NGVqz0rljFxzjXb7cxcLyU8g=; b=
+ hn8ukwMD5lMyfMUEpilxJOnMeU4sWMcWcw7IHtHwLodlHYiL0JrEK+kv8iDlP9xC
+ lYMwzCXsSIyVpvsDcUhv7yJN4HF+uf4KzxPnZKs734LA1/lOuoroSWxjhwNeYGEG
+ 2kZls6MXnMk2NTvE/hpgusqVxb3x320S9E6w9lDihEqsSXDfaw1AWTAduOIiOV7u
+ Bu3LNG1lIZzj4pdbWAcV0P22ic4D7H42BFDyzxQbvVc2c/A9k9Tffenbvgz0d2nY
+ oAABeW0jmjIDYJegQsQ6cbebYKWWrkChLoC+IbVSrmdFB2UaS4WZHPOkjRR46xIy
+ h4ZyaW+uh+EOyZFNh2u3kQ==
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 474dadc88r-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Jun 2025 21:51:05 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55DKovVv040803; Fri, 13 Jun 2025 21:51:04 GMT
+Received: from nam04-bn8-obe.outbound.protection.outlook.com
+ (mail-bn8nam04on2075.outbound.protection.outlook.com [40.107.100.75])
+ by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 474bvecbac-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Jun 2025 21:51:04 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=pGNM4SB6d+M6GlCiCNMigWfqBzq2wnUYPufBfjeLy3vYHrpguIabtTczHLG229FXoeWxNq/aKpkaG/kMUpEd66MNSwKadi+RU/IIZZUfh3/yWp8AHPSBV/g//Q2F9Yd/9sUJmZtXp5khD81vwGpSA7eVNYAcFWswjmeFuDlb3pGFYrl+syBJ6qKc8HDl0x56/RpakQ0ZLaQVzRj9hFUFAI8y9nUoXm/1HM4WBJ4XLPgPKsQ+vH/yH2U3uMIzKarzwLujC2H8U1sPxReNOk8bqJwP/WPVcieQriTEFVNl6RV6yh1t1gKhD5BbEiMqN6QhFHlIgJQk2wyyiErXT6rDhw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=hJno+/LbiF4t/Zldpl7NGVqz0rljFxzjXb7cxcLyU8g=;
+ b=lGuu9qnLWtsOQAMR5tDuDUT5IiveNXVDU3/yv+0p/RcwGypcBhFo7ZDMujauXZenR7a+4CVcRaciT+Hqf/9SypxlENSGTbRiqT5SaNKjBTpcs40dQZ2/yHI4+htixftzXucxFuF7aZd+mgXGNxZl6y6oW66d5y0kOEmy3t5sQuTaSYuPpiqXjYhq0FU6CyTRhNEiHeHpCMiizDxij1/0smnIJpovO+pIUsFownQCYfQYqNLpb5hflT7wshsBWQNlO8MMpz7bwG3J55T7SP2qB/x6PKgEaFtS++X3wHB+tHw++eqKnTn38ydBVwhATzzdlvDZDLpWBhi1qWL6AYKsBg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hJno+/LbiF4t/Zldpl7NGVqz0rljFxzjXb7cxcLyU8g=;
+ b=kVFDurH8PiA0/b44GUrdjZH1NsUFWSK66PVELYkf8bt5GfJyZE9y3aXl3bloWyodSVFBXof/xewXs7+U3+VON2oxlVigmOS4vzi45ailukesUQRifr000yUt/NhQnhKOfPzVGcAO6KtNoS81yGEjesCA0qcwhxVBTVOF3CEBh5s=
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com (2603:10b6:5:3a7::5) by
+ DS4PPF80E5E852F.namprd10.prod.outlook.com (2603:10b6:f:fc00::d2e)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8813.26; Fri, 13 Jun
+ 2025 21:51:01 +0000
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da]) by DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da%7]) with mapi id 15.20.8835.023; Fri, 13 Jun 2025
+ 21:51:01 +0000
+Message-ID: <9a9ed7c1-b6a8-42ca-8e33-f30d507173fa@oracle.com>
+Date: Fri, 13 Jun 2025 17:50:58 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 11/20] amd_iommu: Use iova_tree records to determine
+ large page size on UNMAP
+To: Sairaj Kodilkar <sarunkod@amd.com>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org, mst@redhat.com,
+ marcel.apfelbaum@gmail.com, alex.williamson@redhat.com,
+ vasant.hegde@amd.com, suravee.suthikulpanit@amd.com,
+ santosh.shukla@amd.com, Wei.Huang2@amd.com,
+ clement.mathieu--drif@eviden.com, ethan.milon@eviden.com,
+ joao.m.martins@oracle.com, boris.ostrovsky@oracle.com
+References: <20250502021605.1795985-1-alejandro.j.jimenez@oracle.com>
+ <20250502021605.1795985-12-alejandro.j.jimenez@oracle.com>
+ <ed8ac2ac-02eb-4f91-9a78-59401e64fdb8@amd.com>
+Content-Language: en-US
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+In-Reply-To: <ed8ac2ac-02eb-4f91-9a78-59401e64fdb8@amd.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: DS7PR03CA0229.namprd03.prod.outlook.com
+ (2603:10b6:5:3ba::24) To DS7PR10MB5280.namprd10.prod.outlook.com
+ (2603:10b6:5:3a7::5)
 MIME-Version: 1.0
-References: <20250523180809.41211-1-jsnow@redhat.com>
- <20250523180809.41211-2-jsnow@redhat.com>
-In-Reply-To: <20250523180809.41211-2-jsnow@redhat.com>
-From: John Snow <jsnow@redhat.com>
-Date: Fri, 13 Jun 2025 17:07:40 -0400
-X-Gm-Features: AX0GCFvrbBD4cA5l9FuXdgpbNobn-90sduOtXApcr8-652Y-CCz0n1c0Mdzt28Y
-Message-ID: <CAFn=p-ZjWxODCxvPu8xAjanq5XX+PueZdYK3tGqZgA8+9Dupcw@mail.gmail.com>
-Subject: Re: [PATCH 1/1] docs/qapi-domain: Improve QAPI indices
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Content-Type: multipart/alternative; boundary="0000000000006aea2806377a7044"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5280:EE_|DS4PPF80E5E852F:EE_
+X-MS-Office365-Filtering-Correlation-Id: b3b52da4-6588-4467-94f2-08ddaac4635e
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|7416014|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?U2xKSHpqaUZHMUNxN2MyYVdyVS8xdWZUd0tlS2hlZUkrSDZic3pTaFBaaXFk?=
+ =?utf-8?B?eU5ISDZPa3kxdWJpd3pqZHpMS29FVW9hRlRZTEtHd2lDOVlrSnlCTWRGdSs5?=
+ =?utf-8?B?dG91Mm5vZjFNVlNjenBSNWFhWUc5RXVKV3BmY1pEZVpWNXFjM0FSWFJQZEhK?=
+ =?utf-8?B?blM2aG16NGdTQmxRTGZXMEk0TnFxZDdLSDNjV1kvZEUxOUVpUmRITllwU1BR?=
+ =?utf-8?B?OUFqNlVERW9BUm13WEVVWHJWRzIvcTBZRWN5UlN6MVBOaXpkV0RUdm52SUVl?=
+ =?utf-8?B?bnZDOHd1WE9Uc0N0UDRZdG1UeUJuODdiS3ZzbmdBOHl3dEV6WTJLVkpXNi80?=
+ =?utf-8?B?dEpEcFBZVldWQmNCNllyTlRhd2Y1NldiSyt1cWFjUWpTV1hGS2dLN0RnQlpk?=
+ =?utf-8?B?LzhrbTh2YjhTdERocGtZSDE1bGd3N1daVm5VMVpOcC9LTkZVb0IzbXl6Qi9n?=
+ =?utf-8?B?VUxCSTFBOHJQbXI4bTB6UjJYdjQ2Q0FDWHJ5K0FxT2VWdDh5TEpGZDRscy9D?=
+ =?utf-8?B?NU9YL1JiUTZld0pGL0w3UVZ5ZzhhSnRzZjRMQ3IxMjF4dkxBOXV2dVd6NHZK?=
+ =?utf-8?B?ZnNQaFZsUkNHMUQzOVo1d09zalkvWi80dnNjVzVjZEFOUzI5cXJmVVk1OGlX?=
+ =?utf-8?B?MXBsRGJOZmluZE9RcUkweGNwcEQ1dlpwTTNmQUtvRnNZejlXNDlRNm9nSi9E?=
+ =?utf-8?B?U3hpRWt6Vy94NmpXdGwzcWVXNDZ4VERIQ0lobFhRSmJVNkdQbFp0SHBWNEhV?=
+ =?utf-8?B?S3ByeWF2a1dKS1FMeDVJbmQ0Qno3L0FEdzRMOHF0RnhGdEUxaXI1TDhZRldE?=
+ =?utf-8?B?NndLZGF2d2ZqbTdjY3lYZnlqRVVYZ0R5blQ1WmdCTVpGdHpUOU1Bb1JTWW13?=
+ =?utf-8?B?Skpaa0VZakFMTVgreDV1UXdPSDZ1NzVlTm83c1ZWbVhrUHUxcVBQNHFWUGdT?=
+ =?utf-8?B?Sll5bFVnc0JHS2YwTW9LZjlXSDczOUhPUmpYa1ZGWjlVZERSdm5xQWR3K2ZM?=
+ =?utf-8?B?bjYzSCtPNUpNbjNuZmZoc3dTRWlSTlBNci9RaVdrUjVpbkVheUpnUzZXQnBG?=
+ =?utf-8?B?NkJ2MXE3VXJkWWRLakhjYjM1QjhBTkRDSHdJQXZVM0pSc2JuQW9mZUp0L3Vt?=
+ =?utf-8?B?OXBaZi9uVjBRaTdmUFBHL0tDWXZYeHN4U3RORzZZTWU3TmFLa3ZtYTMyR0pn?=
+ =?utf-8?B?SS9yTzNyelpyazFPVVhhcXNWWG5YTWU3N2Y2a1BObzVBYlNvOWZoVmdRTnV1?=
+ =?utf-8?B?bEg4NmlSRGlpQ1E3TXJFNG9CSFdvVERSbDJ6c011QlBHMVhreDI4d3psNUl6?=
+ =?utf-8?B?WkVTazY4UmF5czNweXBXMTZkZFAxMHJreHJ0OTJjTC9nSkhMNFNVTTBDbG1N?=
+ =?utf-8?B?KzVRcXRwOUU2RnI0NnVGZHNlYmNKbUZFb0RwUVBZcEJOVzB5Mk9xZG16R0x6?=
+ =?utf-8?B?cWR3Z2RzMUYyS1d0bXNqbE1SMVExYlpYcERESVNrNHlMR0VkVEZNdUxlTGdo?=
+ =?utf-8?B?TEJINGVkTGRkZmRNcC9YdXdIcTBtWXltZ2NVUU0wa0Z1djN0cGt0Q1hSZi9D?=
+ =?utf-8?B?djNJZ3F5MENMbU5mVVE5V05LZytWQlJSUWtYa1RXLzB6WEN0bWFTTERIb3or?=
+ =?utf-8?B?YmF5d09WVFhBWFFmWUxjc1oyL0tvTjZBZEFza0l6OGNQbUNnU0c3WE5odXpK?=
+ =?utf-8?B?dHA1akFsemhneFBXdWZsK2xCcTBObzI2UnZ6cmpvMThvU3A2bHZIdWowOVhG?=
+ =?utf-8?B?MWtPUUJra0lJNVE5MDAyUXdzZ3NRMzNkLzBVcmRnNjBBWlVzcWN3eHo2K3lU?=
+ =?utf-8?B?WTh3WUdLd3RaenFMbExZaXJ5aE1CSmdPMkx2TUJDK0lpU0dKSFYzMWpaazRF?=
+ =?utf-8?B?TUJTS0dRUDFZblpzRkdZakY1OUl1eUJIdlFhMUxLK2ROSFJGUjE0djJwNW03?=
+ =?utf-8?Q?uLE3MDfkSXU=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR10MB5280.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q2EybjdHSCsrVUVHSUtDZGVHV090VFZuWlV3VEx5SUh2SGFBSGdNaytTQ2dj?=
+ =?utf-8?B?MUpnQUxHV1RweXJ5Wjljc1VtOWZwMVdJQXVYUm9GWWFKRktOZXRUNFp3UFNP?=
+ =?utf-8?B?YkpMZk4vU21iY1JXdGUvSGZuUzJaV0M1RFQrdnNtOGlPOW83dmduR3ZaU1dP?=
+ =?utf-8?B?TTd5ZUpiZFM0OVN5QkllNmd6bkJMeitPZTExaGdXTFBFZ1d0MjJ6NXlNYjBa?=
+ =?utf-8?B?OEtkUHVUM0FJUTY2Ky9EVzhYSFVCWFdDUzUrcE9nalE0N1R1MEVRUm4yeGFC?=
+ =?utf-8?B?WWdMeXFVVFltZ2k2UFM4OEdSN1ZaOXU3Rm1VcW9lVVVEOVEzdnYzdVNJdk5u?=
+ =?utf-8?B?ZElxZDBBWXdMc2ZRY21SZGpyOWM5bHJsNDgxblZpTFh1VW5wQUM1UW54RzE2?=
+ =?utf-8?B?SVkxZmNqb2s3L0NDaTQxaFlQendPZ1NKMUlPMWNsaVNRSlFvSU10K2Z3M0R0?=
+ =?utf-8?B?aTY5VDhOeXJVMGZYcnliWmd1RThhOGx4Qk96K1VWMWs2Y2dlbkxIaUVNcHZr?=
+ =?utf-8?B?c1QwaEliMEI2ZUNXcFBuSDU5OXdXa3NWeVZwQWJGcll0cmZ5MzdNSTZzOUtw?=
+ =?utf-8?B?QlM5MVVKTkEzRWVRUWZqL0U5TlpuUUF0TjBwbGhNakM3MkYrZmlHVGtqVmpm?=
+ =?utf-8?B?L2E5bjRmSnRwWTRIaGhndC94UXFhL2c1YkVSVlJOb1A3c1I3KzVIeDIwVkY4?=
+ =?utf-8?B?UFdIUTk3UjVYUmdmb2lnalhIaWtGblFkS25GeElqa1p0bmFHOTRYTEo3Y2JB?=
+ =?utf-8?B?eStvR2JXZnc0eWlWNHIzUnByeHl1ODJVWUZ0NFJQdnl3NHVXQnBvSTVJT0Iw?=
+ =?utf-8?B?SmQxVnVWb3JBdHNlZ0Fhb1E3NHZ4Q1pHQkZyRk81RXFMNE5pcWcxSEhVVUZX?=
+ =?utf-8?B?NDM1ZFN5RFljN2d0OXp5MTNrU1JRKzZUUXJESnV0bnJMMGVhMVRHN01XQzB6?=
+ =?utf-8?B?L2pUcHZtMGpic25oNVJRQkRzTWFuY3Z1YkFxMFh3Zmt6dmZUQWdZQW56bysv?=
+ =?utf-8?B?RHdqOGN6ZVMzTW45VUIxL09XKzV3eHRFTklGdSs0M3BDazZOL1psZnhrNllw?=
+ =?utf-8?B?bGs5N0VuWEdzT1RmSGxuL24rSHk3RGlXQVVtcTBxOS8zMDNZaGNNcUt4Q1h6?=
+ =?utf-8?B?elJ1WmRRNFNmc29XbEQxMVc0d2hMR1M2MFA5NVBJVVAyMm5rVm9UL3o2akxn?=
+ =?utf-8?B?TFJHY2phV1MwS3JZZXNpZWVhRDZKSmJ1dkU5T2ZoQS84ZmNQM2hWU2NUSkJW?=
+ =?utf-8?B?ZjhCczFYNENjMzVuYjZpZDczUDVERllsVVpwUmJZYUdBZEdOeS9SaUFTdUQ1?=
+ =?utf-8?B?cTNOdE5VMTg3Y3liRFVjOTlvSU5jWFdGWjYxbE1oL1NJcVdPOVJNbTlUeGwz?=
+ =?utf-8?B?SjFmR0RRZ2JGd1hhVVBRdkpRWmp0a0RSYnZvL05UaFpqeHJvVWtVejRFN0Js?=
+ =?utf-8?B?NExwQURaeG82WTJQSGFnaUpxQU1mTjZJdkpNdjdVMHBTSmwxb2ZmdVpjb3o5?=
+ =?utf-8?B?OTdlRlNvUjNGVS9taHhRL0R6ZVY4MUs1ZFdIVExITk4wUHBOQ092eGQ5eDhY?=
+ =?utf-8?B?N0orUUVvYnNpcUdxdVRmRFZtV2w3cWJiSXR4Uk9lalREcVBqclp5dnhRdFNl?=
+ =?utf-8?B?VlRKVVJEQStZSk9SQlV2c2cvRVFUWjVOYVAvQUo3VFcxcE9DRXVKcC9NdGZL?=
+ =?utf-8?B?WDZCVmVsQWxwd0VTWnpOdHJpaFdHY1AwY3Vqb3VYNEYybzB2all2TFdaWUM3?=
+ =?utf-8?B?UkVaaHlKbjVaQ1drTHRtMmdFWHZ2R2VpVlEwZFhUZVAwQ3U1K1NaVG5vbnkx?=
+ =?utf-8?B?Y3Y4eFFrcXh0TXI3ay9Rc1VvRjhOYktkWnFtUDB1RmFpZzJCaFdPbmx6RjJp?=
+ =?utf-8?B?TTkxbWExRmcwRlNWYWFSK2xGdkpIaU92Y2huWFZ2MTdFSHBqN3lCc1lpdnhl?=
+ =?utf-8?B?NXZNU1Z3Wm90SFBNTnFBejFDQ3NqdVRyNWNlb2VTTGFoYUg1QVFPQlY4dUhz?=
+ =?utf-8?B?ODJKMFdBTmI0QTlGcDZLQS84T0dKQ2lEUTNRSVp1TXBYTTYxS0wzOWZUaVBT?=
+ =?utf-8?B?RkJvZFdYeUhib2VjZUN5SVhJZlVjenlnSEpCQWptMGkzaXU3N3hTRWQ2V0lK?=
+ =?utf-8?B?c2hPVGkydUZDVGlGcHNPUngyTUYzeXB5eGQzSjcwckZqUm5BM0NJRWM3VjM4?=
+ =?utf-8?B?V3c9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: Xo/4D8HppAZ8y3N8/Pu/m1xa+lDwfSgrVSYMcoPvbqi5Z932IN4hnKM2aMpTb3oPxY5kNjiKDLqH/0dXm+wUY6NVy82c1aAXA+PFldCkDEbv4Z/akWd/EWsyj+g5ZKFsOyBvOlc1l+u+FzxyJ5nt2W1aShs9KLzxC7eNeJEwveOoedpWriET4EXZWX0mFSZZgcwU+lG2H4zOKA6m3Zvo02wHl973RIZhL/3YzyFiHbTe7D+iQ4CS6G1nS4s6/TcbK71cutEdEtdYWEPEWDmaVqPupMPvElD2MIoowgtlLPDf+UPOIF8j9r343ODoxAGadUI3Dr8JYtL69wFzAyOm/D30lFfUcVwUXOXt3ZwwrRHWCK90ECK6/nLBVYOUAOpOqHEsPxss0yB3SakNuE1JMtB/RkyqBLBVen5HiQL8OcPEq07KIoLT2xQdRNpVak1v1836fZfk0NZuJ2q5mbJbgEneGRIDtqy25faCkM3JbUvJ1NVskq8QuRRWSn5SjgJwj6jp+1lujI8VwmOa9Ge3gK5lxck20ItKTPvMohirtvGblBSYcJIT33RMEHrJyGNMvRsqzqlEoIMPfqxF+hxeFzgvjCI5dxS8KQ25YLXcOwE=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3b52da4-6588-4467-94f2-08ddaac4635e
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5280.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Jun 2025 21:51:01.7741 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0lKnD9de44iwXzpwYyzxddIKpm+v5a2Ux60VZ5B/CbmQ6JJ1Po8IPaMbJjfBMGkwuLuo17aw20VniJUnPo8BjjECVY83j/lr+5t4rZ5E2jU=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS4PPF80E5E852F
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-13_03,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
+ adultscore=0 malwarescore=0
+ mlxlogscore=999 bulkscore=0 spamscore=0 phishscore=0 suspectscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2505160000
+ definitions=main-2506130156
+X-Proofpoint-ORIG-GUID: W3I7ZI7IlQ9nZcSUaX0zT9ImsnsP2Hsq
+X-Authority-Analysis: v=2.4 cv=EJwG00ZC c=1 sm=1 tr=0 ts=684c9d49 b=1 cx=c_pps
+ a=WeWmnZmh0fydH62SvGsd2A==:117 a=WeWmnZmh0fydH62SvGsd2A==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=pSBqwU8xm1H7UWPwP54A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjEzMDE1NiBTYWx0ZWRfX/uqPw+DsNc3/
+ hY354GP/G1TCmkAI3suPPyBK0DYoHM6yO+5+UDTgqw4knE3pMYDStMf3Q1esLgDp1RS8AF+2b9G
+ ff++l7mnZpNTO9/iCZ5uHhu0uonz6Wq18DAY6hDm5ulVvT8Yh/2V5lD7dyZcK7+bMHgdCc3/duJ
+ e5QsB/5y/N2ck3KlcZMlltB6Z+xtIb+P5Yx4GhO2SjcwDXLa8INN3jVoXAkmifI/O6vyQ70K24e
+ BUCvJRNt61n8rrAH+LSv9RYAYNBP7+rZ9kpcl/ESBn7enhd7F5EZBpNI6u/TA61pEegaNPyM/Fl
+ 2UhMUSueDCt7hYGBQP9aojBlpz2g9fH/I0wzKjtw6xdU1bgoSMuCx49vqJsvyFhwaKK+pi5arHB
+ QEi6WBzbf9Xc36dAkZxEMxy2LFoETUJMBL//mMkHXStHcrxiDSJe5PYmUDY+y/WOpXMv5wVs
+X-Proofpoint-GUID: W3I7ZI7IlQ9nZcSUaX0zT9ImsnsP2Hsq
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,158 +238,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000006aea2806377a7044
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, May 23, 2025 at 2:08=E2=80=AFPM John Snow <jsnow@redhat.com> wrote:
-
-> This patch changes the "by type" categorization in favor of using
-> sub-categories of a literal "By type" category instead. A new "By
-> module" categorization is also added that follows a similar pattern.
->
-> Alphabetical sorting has been improved and will sort in a case
-> insensitive manner for all categories, now.
->
-> Lastly, the "main" QAPI Index (qapi-index.html) is altered to index
-> *everything* from all namespaces, adding disambiguation where necessary
-> to do so.
->
-> Signed-off-by: John Snow <jsnow@redhat.com>
->
-
-...
-
-So, what would we like to keep here and what would we like to scrap? I'm
-basically fine either way, I just need to plan for what I'm going to clean
-up and submit and what I'm going to scrap. Not against adding a "TODO" for
-a later addition or a GSoC/Outreachy project etc either.
-
-I recall that we want the alphabetization fix no matter what, so I will do
-that. What about everything else?
 
 
-Before this patch, what we have currently, is:
-https://www.qemu.org/docs/master/qapi-qmp-index.html
+On 6/11/25 4:29 AM, Sairaj Kodilkar wrote:
+> 
+> 
+> On 5/2/2025 7:45 AM, Alejandro Jimenez wrote:
 
-> Alternates | Commands | Enums | Events | Modules | Objects | A | ... | Z
+>>   next:
+>> -        iova = iova_next;
+>> +        iova = (iova & ~(pagesize - 1)) + pagesize;
+> 
+> Hi Alejandro,
+> While experimenting with iommu.forcedac=1, I found that above line 
+> causes unsigned integer overflow for 64 bit IOVAs. This results in an 
+> infinite loop.
+> 
+> Please add a overflow check here.
+> 
 
-Entries in Alternates/Commands/Enums/Events/Modules/Objects are just the
-name.
-Entries under A..Z have a (type) suffix that clarifies what type of entry
-it is.
-There is no "global" qapi index, and any definitions that don't get
-included in a "namespace" will actually just be dropped.
+Good catch. Reproduced it and tested the fix; will include it in next 
+revision.
 
-After this patch, the top level categories we have are:
+Thank you,
+Alejandro
 
->  By module | By type | A | ... | Z
-
-with "By module" having collapsible sections for each module, with entries
-that use the (type) suffix.
-and "By type" split into collapsible subsections for
-Alternate/Command/Enum/Event/Module/Object, entries have no suffix.
-The alphabetical entries cover absolutely everything and use the "(type)"
-suffix.
-
-The other major change creates a "global QAPI" index, which I only really
-created for the sake of completionism, just in case you really wanted to
-know every last thing about QMP that we offer all in one place.
-
-- By module, with subcategories being named "module, namespace" instead of
-just "module". Individual entries are suffixed with "(type)".
-- By type, subcategories have no suffix, but individual entries have a
-"(namespace)" suffix.
-- Alphabetical entries use a "(type, namespace)" suffix.
-
-One thing I'll volunteer that I don't actually like is that there's no way
-to hyperlink specifically to the list of commands/events in particular,
-though I do kind of like that the subsections are collapsible and I like
-that two-tier organization.
-
-I am not currently aware of any mechanisms to help make the indices
-fancier, and probably cannot afford to spend time investigating it further.
-
-Is consensus to just apply the alphabetization fix by itself and leave it
-at that for now?
-
---js
-
---0000000000006aea2806377a7044
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Fri, May 23,=
- 2025 at 2:08=E2=80=AFPM John Snow &lt;<a href=3D"mailto:jsnow@redhat.com">=
-jsnow@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" =
-style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);pa=
-dding-left:1ex">This patch changes the &quot;by type&quot; categorization i=
-n favor of using<br>
-sub-categories of a literal &quot;By type&quot; category instead. A new &qu=
-ot;By<br>
-module&quot; categorization is also added that follows a similar pattern.<b=
-r>
-<br>
-Alphabetical sorting has been improved and will sort in a case<br>
-insensitive manner for all categories, now.<br>
-<br>
-Lastly, the &quot;main&quot; QAPI Index (qapi-index.html) is altered to ind=
-ex<br>
-*everything* from all namespaces, adding disambiguation where necessary<br>
-to do so.<br>
-<br>
-Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" target=3D"=
-_blank">jsnow@redhat.com</a>&gt;<br></blockquote><div><br></div><div>...</d=
-iv><div><br></div><div>So, what would we like to keep here and what would w=
-e like to scrap? I&#39;m basically fine either way, I just need to plan for=
- what I&#39;m going to clean up and submit and what I&#39;m going to scrap.=
- Not against adding a &quot;TODO&quot; for a later addition or a GSoC/Outre=
-achy project etc either.<br></div><div><br></div><div>I recall that we want=
- the alphabetization fix no matter what, so I will do that. What about ever=
-ything else?</div><div><br></div><div><br></div><div>Before this patch, wha=
-t we have currently, is: <a href=3D"https://www.qemu.org/docs/master/qapi-q=
-mp-index.html">https://www.qemu.org/docs/master/qapi-qmp-index.html</a></di=
-v><div><br></div><div>&gt; Alternates | Commands | Enums | Events | Modules=
- | Objects | A | ... | Z <br></div><div><br></div><div>Entries in Alternate=
-s/Commands/Enums/Events/Modules/Objects are just the name.</div><div>Entrie=
-s under A..Z have a (type) suffix that clarifies what type of entry it is.<=
-/div><div>There is no &quot;global&quot; qapi index, and any definitions th=
-at don&#39;t get included in a &quot;namespace&quot; will actually just be =
-dropped.</div><div><br></div><div>After this patch, the top level categorie=
-s we have are:</div><div><br></div><div>&gt;=C2=A0 By module | By type | A =
-| ... | Z <br></div><div><br></div><div>with &quot;By module&quot; having c=
-ollapsible sections for each module, with entries that use the (type) suffi=
-x.</div><div>and &quot;By type&quot; split into collapsible subsections for=
- Alternate/Command/Enum/Event/Module/Object, entries have no suffix.</div><=
-div>The alphabetical entries cover absolutely everything and use the &quot;=
-(type)&quot; suffix.</div></div><div class=3D"gmail_quote gmail_quote_conta=
-iner"><br></div><div class=3D"gmail_quote gmail_quote_container">The other =
-major change creates a &quot;global QAPI&quot; index, which I only really c=
-reated for the sake of completionism, just in case you really wanted to kno=
-w every last thing about QMP that we offer all in one place.</div><div clas=
-s=3D"gmail_quote gmail_quote_container"><br></div><div class=3D"gmail_quote=
- gmail_quote_container">- By module, with subcategories being named &quot;m=
-odule, namespace&quot; instead of just &quot;module&quot;. Individual entri=
-es are suffixed with &quot;(type)&quot;.</div><div class=3D"gmail_quote gma=
-il_quote_container">- By type, subcategories have no suffix, but individual=
- entries have a &quot;(namespace)&quot; suffix.</div><div class=3D"gmail_qu=
-ote gmail_quote_container">- Alphabetical entries use a &quot;(type, namesp=
-ace)&quot; suffix.</div><div class=3D"gmail_quote gmail_quote_container"><b=
-r></div><div class=3D"gmail_quote gmail_quote_container">One thing I&#39;ll=
- volunteer that I don&#39;t actually like is that there&#39;s no way to hyp=
-erlink specifically to the list of commands/events in particular, though I =
-do kind of like that the subsections are collapsible and I like that two-ti=
-er organization.</div><div class=3D"gmail_quote gmail_quote_container"><br>=
-</div><div class=3D"gmail_quote gmail_quote_container">I am not currently a=
-ware of any mechanisms to help make the indices fancier, and probably canno=
-t afford to spend time investigating it further.</div><div class=3D"gmail_q=
-uote gmail_quote_container"><br></div><div class=3D"gmail_quote gmail_quote=
-_container">Is consensus to just apply the alphabetization fix by itself an=
-d leave it at that for now?</div><div class=3D"gmail_quote gmail_quote_cont=
-ainer"><br></div><div class=3D"gmail_quote gmail_quote_container">--js</div=
-></div>
-
---0000000000006aea2806377a7044--
+> Thanks
+> Sairaj Kodilkar
+> 
 
 
