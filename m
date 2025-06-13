@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D107BC71136
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 16:34:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86FE5C71136
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 16:40:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ7Ls-00076M-6L; Fri, 13 Jun 2025 12:34:01 -0400
+	id 1uQ7RU-0000X6-BD; Fri, 13 Jun 2025 12:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7Lb-0006te-Ef
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:33:46 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7RS-0000WM-Sd
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:39:46 -0400
 Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7LY-0005Iu-Nq
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:33:43 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQ7RR-000680-51
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:39:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
- s=2021Q3; t=1749832417;
- bh=4fGj5rVwW6MUVvCdGIWAv/+R6GQKpiJ3T++WbBrx4lU=;
+ s=2021Q3; t=1749832752;
+ bh=w9Yu4hxd5YkZTczKQMfEZj+pbo8vVb2woEIq4gGi6j0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=SOQiaZ0zF2hISybKVSFALXRC6EDG/E9iiSlBq5WQ68pLoK7VGFz0MLy588Ke+Hrd4
- 9m3qYUGwwafhX5tX2uN9KwJ9wynKaTGlP5eJkcgx+Nc0oshXuIi8FAzB7W+iY4kzd/
- fu6zp2S6ybp3aOaw4hQQjblCZCLpMTVcmJfezXIQFtFy5492BkkxTVWtafK8YBfy5R
- SB57iGYwKz7vOhcDD78Gn5zWoWfH+khlMINYly4jt3yOCRrV7+abua2qSQ3j396AcE
- XhO014+GhsOTPjdeyA75vMBqUkDHaBdw6l5HtRWMN+9dHQIGarXQPTpY+4l1Ygd5Ha
- Gs/CDoMTmJhOg==
-Received: from localhost.localdomain (unknown [23.170.80.102])
+ b=1Wof1JWRGWjAKc/k0msM7mx/gYCYnHzg4PId9jLI7kEaRmRBGdkD29mH5yeVaZZAX
+ CaNyGBcJIE9ftbPg12dlFZjHoCQKXCMZRVMpzuvLtDr7Zqlce7EiOtSWD686ldT7iZ
+ twe8JIY/sWhYoWAW2XzSW2CIqJAUQ0redAkIXikzyEoavjaj4PmT4PquxIALQYQsim
+ kp3LhYlUW/WfuvTY5xf54uxuaRwCytI5buJtZCnhJvh8pMOlYiVG7t42FbyF2hXpKA
+ 7aqlUHVdYIOsjNV4n/znLsmvPcslnlNglD4sUjUlESdWsMHmApXSTgWTxvw8DzVlys
+ OQezUDnJr+WuQ==
+Received: from localhost.localdomain (unknown [72.14.99.165])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by sean.taipei (Postfix) with ESMTPSA id B71E654C8;
- Sat, 14 Jun 2025 00:33:35 +0800 (CST)
+ by sean.taipei (Postfix) with ESMTPSA id 0DD0354F1;
+ Sat, 14 Jun 2025 00:39:08 +0800 (CST)
 From: Sean Wei <me@sean.taipei>
 To: qemu-devel@nongnu.org
 Cc: Sean Wei <me@sean.taipei>, "Michael S. Tsirkin" <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 01/12] COPYING: replace FSF postal address with licenses URL
-Date: Fri, 13 Jun 2025 12:33:10 -0400
-Message-ID: <20250613.qemu.patch.01@sean.taipei>
+ Cornelia Huck <cohuck@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ kvm@vger.kernel.org (open list:Overall KVM CPUs)
+Subject: [PATCH 02/12] linux-headers: replace FSF postal address with licenses
+ URL
+Date: Fri, 13 Jun 2025 12:38:48 -0400
+Message-ID: <20250613.qemu.patch.02@sean.taipei>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250613.qemu.patch@sean.taipei>
 References: <20250613.qemu.patch@sean.taipei>
@@ -70,89 +72,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The license text in COPYING (GPLv2), COPYING.LIB (LGPLv2.1),
-and the linux-headers/LICENSES/preferred/GPL-2.0 file are
-referenced to the obsolete FSF postal address.
+The GPLv2 boiler-plate in asm-arm/kvm.h and asm-powerpc/kvm.h still
+contained the obsolete "51 Franklin Street" postal address.
 
 Replace it with the canonical GNU licenses URL recommended by the FSF:
 https://www.gnu.org/licenses/
 
 Signed-off-by: Sean Wei <me@sean.taipei>
 ---
- COPYING                                  | 5 ++---
- COPYING.LIB                              | 5 ++---
- linux-headers/LICENSES/preferred/GPL-2.0 | 5 ++---
- 3 files changed, 6 insertions(+), 9 deletions(-)
+ linux-headers/asm-arm/kvm.h     | 4 ++--
+ linux-headers/asm-powerpc/kvm.h | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/COPYING b/COPYING
-index 00ccfbb628..8095135d50 100644
---- a/COPYING
-+++ b/COPYING
-@@ -2,7 +2,7 @@
- 		       Version 2, June 1991
+diff --git a/linux-headers/asm-arm/kvm.h b/linux-headers/asm-arm/kvm.h
+index 0db5644e27..a8bb1aa42a 100644
+--- a/linux-headers/asm-arm/kvm.h
++++ b/linux-headers/asm-arm/kvm.h
+@@ -13,8 +13,8 @@
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++ * along with this program; if not, see
++ * <https://www.gnu.org/licenses/>.
+  */
  
-  Copyright (C) 1989, 1991 Free Software Foundation, Inc.,
-- 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
-+ <https://fsf.org/>
-  Everyone is permitted to copy and distribute verbatim copies
-  of this license document, but changing it is not allowed.
- 
-@@ -304,8 +304,7 @@ the "copyright" line and a pointer to where the full notice is found.
-     GNU General Public License for more details.
- 
-     You should have received a copy of the GNU General Public License along
--    with this program; if not, write to the Free Software Foundation, Inc.,
--    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-+    with this program; if not, see <https://www.gnu.org/licenses/>.
- 
- Also add information on how to contact you by electronic and paper mail.
- 
-diff --git a/COPYING.LIB b/COPYING.LIB
-index 4362b49151..99f47575b5 100644
---- a/COPYING.LIB
-+++ b/COPYING.LIB
-@@ -2,7 +2,7 @@
-                        Version 2.1, February 1999
- 
-  Copyright (C) 1991, 1999 Free Software Foundation, Inc.
-- 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-+ <https://fsf.org/>
-  Everyone is permitted to copy and distribute verbatim copies
-  of this license document, but changing it is not allowed.
- 
-@@ -484,8 +484,7 @@ convey the exclusion of warranty; and each file should have at least the
-     Lesser General Public License for more details.
- 
-     You should have received a copy of the GNU Lesser General Public
--    License along with this library; if not, write to the Free Software
--    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-+    License along with this library; if not, see <https://www.gnu.org/licenses/>.
- 
- Also add information on how to contact you by electronic and paper mail.
- 
-diff --git a/linux-headers/LICENSES/preferred/GPL-2.0 b/linux-headers/LICENSES/preferred/GPL-2.0
-index ff0812fd89..10248a619e 100644
---- a/linux-headers/LICENSES/preferred/GPL-2.0
-+++ b/linux-headers/LICENSES/preferred/GPL-2.0
-@@ -21,7 +21,7 @@ License-Text:
- 		       Version 2, June 1991
- 
-  Copyright (C) 1989, 1991 Free Software Foundation, Inc.
--                       51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-+ <https://fsf.org/>
-  Everyone is permitted to copy and distribute verbatim copies
-  of this license document, but changing it is not allowed.
- 
-@@ -323,8 +323,7 @@ the "copyright" line and a pointer to where the full notice is found.
-     GNU General Public License for more details.
- 
-     You should have received a copy of the GNU General Public License
--    along with this program; if not, write to the Free Software
--    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-+    along with this program; if not, see <https://www.gnu.org/licenses/>.
- 
- 
- Also add information on how to contact you by electronic and paper mail.
+ #ifndef __ARM_KVM_H__
+diff --git a/linux-headers/asm-powerpc/kvm.h b/linux-headers/asm-powerpc/kvm.h
+index eaeda00178..83faa7fae3 100644
+--- a/linux-headers/asm-powerpc/kvm.h
++++ b/linux-headers/asm-powerpc/kvm.h
+@@ -10,8 +10,8 @@
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+- * along with this program; if not, write to the Free Software
+- * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
++ * along with this program; if not, see
++ * <https://www.gnu.org/licenses/>.
+  *
+  * Copyright IBM Corp. 2007
+  *
 -- 
 2.49.0
 
