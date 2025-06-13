@@ -4,63 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359B3C71136
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 13:11:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13FCFC71135
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 13:37:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ4BJ-0003gl-FI; Fri, 13 Jun 2025 09:10:53 -0400
+	id 1uQ4aQ-0007dI-Aj; Fri, 13 Jun 2025 09:36:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uQ4B6-0003fQ-Tp; Fri, 13 Jun 2025 09:10:42 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uQ4aO-0007d6-1g
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 09:36:48 -0400
+Received: from smtp-out-60.livemail.co.uk ([213.171.216.60]
+ helo=dkim.livemail.co.uk)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uQ4B4-0001kj-3K; Fri, 13 Jun 2025 09:10:40 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bJfp55RkBz6K9kL;
- Fri, 13 Jun 2025 21:07:57 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 1257414038F;
- Fri, 13 Jun 2025 21:09:56 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 13 Jun
- 2025 15:09:55 +0200
-Date: Fri, 13 Jun 2025 14:09:54 +0100
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <qemu-devel@nongnu.org>, Fan Ni <fan.ni@samsung.com>, <mst@redhat.com>,
- Zhijian Li <lizhijian@fujitsu.com>, Itaru Kitayama
- <itaru.kitayama@linux.dev>, <linuxarm@huawei.com>,
- <linux-cxl@vger.kernel.org>, <qemu-arm@nongnu.org>, Yuquan Wang
- <wangyuquan1236@phytium.com.cn>, Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?=
- <philmd@linaro.org>, Alireza Sanaee <alireza.sanaee@huawei.com>, Alex
- =?ISO-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH v15 2/4] hw/cxl: Make the CXL fixed memory windows devices.
-Message-ID: <20250613140954.000013f5@huawei.com>
-In-Reply-To: <CAFEAcA8eC9TpGyrMARRUWs4q1o7LACD03zLAwPnTRU+m98LrWQ@mail.gmail.com>
-References: <20250612134338.1871023-1-Jonathan.Cameron@huawei.com>
- <20250612134338.1871023-3-Jonathan.Cameron@huawei.com>
- <CAFEAcA8eC9TpGyrMARRUWs4q1o7LACD03zLAwPnTRU+m98LrWQ@mail.gmail.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <roy.hopkins@randomman.co.uk>)
+ id 1uQ4aL-0005d7-N3
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 09:36:47 -0400
+Received: from smtp.livemail.co.uk (unknown [10.44.132.82])
+ by dkim.livemail.co.uk (Postfix) with ESMTPS id 2711A20051;
+ Fri, 13 Jun 2025 14:36:43 +0100 (BST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=randomman.co.uk;
+ s=livemail2; t=1749821803;
+ bh=JGKqCEW8CNklInDdkOaXnVq37puYFFpaFQne6SLWSN4=;
+ h=From:To:Cc:Subject:Date:From;
+ b=SJEAQSjhuXEBn+CgpvrKvO6bvJ1UvMOTVYZdPH47/5SuZ2xfKWSmu9TV6ZanRT3Ma
+ VLVIPt5BTl1c7b7uraddLHqf6eYjGNmkdTVLFiWjvHcqTB6tqjjHu3V/J4gE6C7rj+
+ MkM6lMJQHQSXvU0aMrJedz/dN5lEM/FIqUJUXz84=
+Received: from localhost.localdomain (unknown [145.40.191.116])
+ (Authenticated sender: roy.hopkins@randomman.co.uk)
+ by smtp.livemail.co.uk (Postfix) with ESMTPSA id A13E7C02FA;
+ Fri, 13 Jun 2025 14:36:38 +0100 (BST)
+From: Roy Hopkins <roy.hopkins@randomman.co.uk>
+To: qemu-devel@nongnu.org
+Cc: Roy Hopkins <roy.hopkins@randomman.co.uk>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Cornelia Huck <cohuck@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Ani Sinha <anisinha@redhat.com>,
+ Gerd Hoffman <kraxel@redhat.com>, Pankaj Gupta <pankaj.gupta@amd.com>,
+ Joerg Roedel <joro@8bytes.org>
+Subject: [PATCH v8 00/16] Introduce support for IGVM files
+Date: Fri, 13 Jun 2025 14:36:11 +0100
+Message-ID: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500002.china.huawei.com (7.191.160.78) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=213.171.216.60;
+ envelope-from=roy.hopkins@randomman.co.uk; helo=dkim.livemail.co.uk
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,73 +80,116 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Jun 2025 13:33:51 +0100
-Peter Maydell <peter.maydell@linaro.org> wrote:
+Here is v8 of the set of patches to add support for IGVM files to QEMU. This is
+based on commit d9ce74873a6a5a7c504379857461e4ae64fcf0cd of qemu.
 
-> On Thu, 12 Jun 2025 at 14:44, Jonathan Cameron
-> <Jonathan.Cameron@huawei.com> wrote:
-> >
-> > Previously these somewhat device like structures were tracked using a list
-> > in the CXLState in each machine. This is proving restrictive in a few
-> > cases where we need to iterate through these without being aware of the
-> > machine type. Just make them sysbus devices.  
-> 
-> 
-> > +static void cxl_fmw_realize(DeviceState *dev, Error **errp)
-> > +{
-> > +    CXLFixedWindow *fw = CXL_FMW(dev);
-> > +
-> > +    memory_region_init_io(&fw->mr, OBJECT(dev), &cfmws_ops, fw,
-> > +                          "cxl-fixed-memory-region", fw->size);
-> > +    sysbus_init_mmio(SYS_BUS_DEVICE(dev), &fw->mr);
-> > +}
-> > +
-> > +static void cxl_fmw_class_init(ObjectClass *klass, const void *data)
-> > +{
-> > +    DeviceClass *dc = DEVICE_CLASS(klass);
-> > +
-> > +    dc->desc = "CXL Fixed Memory Window";
-> > +    dc->realize = cxl_fmw_realize;
-> > +    /* Reason - created by machines as tightly coupled to machine memory map */
-> > +    dc->user_creatable = false;
-> > +}  
-> 
-> Do these things have any state that needs migrating or resetting?
-> If they do, they need a reset function and a vmstate. If not,
-> it's helpful to have a comment explaining that the device
-> has no state to be reset or migrated, so future readers of
-> the code know this wasn't just accidentally forgotten.
+The previous version of this patch series [1] has only received a few comments
+which are now addressed in this new version. Additionally, the series has
+benefited from additional reviews and testing from the community. Therefore I
+am hoping that this will be the final version and rebase of this patch series.
 
-Hi Peter,
+Suggestions have been received for adding support for setting CPU initial state
+for non-confidential guests (Gerd) and for reorganization of the confidential-
+guest support modules (dhildenb). These suggestions have not been
+implemented in this version of the patch series, but I will look to implement
+them in a future patch series.
 
-For these specific devices (the fixed memory windows) there isn't
-any state as they are representing fixed configuration of the system.
-The state is all in the host bridges and beyond. I'll add
-a comment as you suggest.
+The only functional change in this version is to fix an issue in patch 16/16
+where the pre-parsing of the IGVM file caused an error after rebasing.
+Additionally, commit metadata, version numbers and documentation changes have
+been made, as suggested in review comments.
 
-Currently CXL emulation is completely broken wrt to migration and
-there are some known issues for reset as well. Both are on the list
-of things to fix. Migration is less important as the only current use
-for this stuff is running software stack test cases and for that
-migration isn't currently of interest - that will change for some
-of the virtualization related work that is just getting started.
-The reset thing needs more work for devices as we've tripped over
-a few corner cases triggered by people rebooting the guest and device
-state not being fully cleared.  On top of that we have a complex
-nest of device reset types to cover at some point as some registers
-are sticky over some types of reset.
+As always, thanks to those that have been following along, reviewing and testing
+this series. This v8 patch series is also available on github: [2]
 
-Jonathan
+For testing IGVM support in QEMU you need to generate an IGVM file that is
+configured for the platform you want to launch. You can use the `buildigvm`
+test tool [3] to allow generation of IGVM files for all currently supported
+platforms. Patch 11/17 contains information on how to generate an IGVM file
+using this tool.
 
+Changes in v8:
 
+* Fix an issue found after rebasing where the pre-parsing of the IGVM file
+  caused an error.
+* Update version numbers for IGVM support to 10.1
+* Minor changes to documentation.
+* Add metadata to relevant commits.
 
-> 
-> thanks
-> -- PMM
+Patch summary:
+
+1-11: Add support and documentation for processing IGVM files for SEV, SEV-ES,
+SEV-SNP and native platforms. 
+
+12-15: Processing of policy and SEV-SNP ID_BLOCK from IGVM file. 
+
+16: Add pre-processing of IGVM file to support synchronization of 'SEV_FEATURES'
+from IGVM VMSA to KVM.
+
+[1] Link to v7:
+https://lists.gnu.org/archive/html/qemu-devel/2025-02/msg05714.html
+
+[2] v8 patches also available here:
+https://github.com/roy-hopkins/qemu/tree/igvm_master_v8
+
+[3] `buildigvm` tool v0.2.0
+https://github.com/roy-hopkins/buildigvm/releases/tag/v0.2.0
+
+Roy Hopkins (16):
+  meson: Add optional dependency on IGVM library
+  backends/confidential-guest-support: Add functions to support IGVM
+  backends/igvm: Add IGVM loader and configuration
+  hw/i386: Add igvm-cfg object and processing for IGVM files
+  i386/pc_sysfw: Ensure sysfw flash configuration does not conflict with
+    IGVM
+  sev: Update launch_update_data functions to use Error handling
+  target/i386: Allow setting of R_LDTR and R_TR with
+    cpu_x86_load_seg_cache()
+  i386/sev: Refactor setting of reset vector and initial CPU state
+  i386/sev: Implement ConfidentialGuestSupport functions for SEV
+  docs/system: Add documentation on support for IGVM
+  docs/interop/firmware.json: Add igvm to FirmwareDevice
+  backends/confidential-guest-support: Add set_guest_policy() function
+  backends/igvm: Process initialization sections in IGVM file
+  backends/igvm: Handle policy for SEV guests
+  i386/sev: Add implementation of CGS set_guest_policy()
+  sev: Provide sev_features flags from IGVM VMSA to KVM_SEV_INIT2
+
+ backends/confidential-guest-support.c       |  43 +
+ backends/igvm-cfg.c                         |  51 +
+ backends/igvm.c                             | 977 ++++++++++++++++++++
+ backends/igvm.h                             |  22 +
+ backends/meson.build                        |   5 +
+ docs/interop/firmware.json                  |  30 +-
+ docs/system/i386/amd-memory-encryption.rst  |   2 +
+ docs/system/igvm.rst                        | 173 ++++
+ docs/system/index.rst                       |   1 +
+ hw/i386/pc.c                                |  12 +
+ hw/i386/pc_piix.c                           |  10 +
+ hw/i386/pc_q35.c                            |  10 +
+ hw/i386/pc_sysfw.c                          |  31 +-
+ include/hw/i386/x86.h                       |   3 +
+ include/system/confidential-guest-support.h |  88 ++
+ include/system/igvm-cfg.h                   |  49 +
+ meson.build                                 |   8 +
+ meson_options.txt                           |   2 +
+ qapi/qom.json                               |  17 +
+ qemu-options.hx                             |  28 +
+ scripts/meson-buildoptions.sh               |   3 +
+ target/i386/cpu.h                           |   9 +-
+ target/i386/sev.c                           | 851 +++++++++++++++--
+ target/i386/sev.h                           | 124 +++
+ 24 files changed, 2465 insertions(+), 84 deletions(-)
+ create mode 100644 backends/igvm-cfg.c
+ create mode 100644 backends/igvm.c
+ create mode 100644 backends/igvm.h
+ create mode 100644 docs/system/igvm.rst
+ create mode 100644 include/system/igvm-cfg.h
+
+-- 
+2.43.0
 
 
