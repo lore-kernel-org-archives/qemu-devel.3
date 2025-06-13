@@ -4,121 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEADDC71148
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 16:02:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17978C71148
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 16:04:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQ6p1-0001rp-Pn; Fri, 13 Jun 2025 12:00:03 -0400
+	id 1uQ6su-0005m5-7P; Fri, 13 Jun 2025 12:04:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@gmx.net>)
- id 1uQ6on-0001nZ-HW
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:59:49 -0400
-Received: from mout.gmx.net ([212.227.15.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <j.neuschaefer@gmx.net>)
- id 1uQ6om-0008Oq-2b
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 11:59:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.net;
- s=s31663417; t=1749830386; x=1750435186; i=j.neuschaefer@gmx.net;
- bh=xsSRgWgcg+SxnvKNG2VkY2gFYCH4Xc4FvVyni4w7Ask=;
- h=X-UI-Sender-Class:From:Date:Subject:MIME-Version:Content-Type:
- Content-Transfer-Encoding:Message-Id:To:Cc:cc:
- content-transfer-encoding:content-type:date:from:message-id:
- mime-version:reply-to:subject:to;
- b=TQxqjva3F2FgoQ6v5d93IRv+aWgYJMPAMK4dWei9P2eIIfixLpNgN7dhZnue6Qky
- qFHJ+YGgcDiL5W9QHXf1X7oqB2J1esBYbJ/Bw5lLXDesM1iFmDO3ggaz2JFyMIt0s
- ydQENDB7cS3NYxoT4bYZNnNpXdKsRCcaZe3+pepQzymZi1uZV3fZWG6rtp0bDpw8V
- n55gLoxHdC4aPfygETcPxwfbykQOvJd2CxMJH1Eq5gtH1VQbOIYNa73ooe/qaWbVM
- cFZRN5O6GSm9iFN4i+7Kd9aunJoZvuF10XTgc6O0oLIDVRRVV6uLY5Em9oVNDBRsQ
- NHqU4YOqqcD91H5GPw==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from probook ([89.1.210.197]) by mail.gmx.net (mrgmx004
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1M8hZD-1uUnmF0MmP-007Hbl; Fri, 13
- Jun 2025 17:59:46 +0200
-From: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-Date: Fri, 13 Jun 2025 17:59:32 +0200
-Subject: [PATCH] linux-user/arm: Fix return value of SYS_cacheflush
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ6so-0005iu-8n
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:03:59 -0400
+Received: from mail-yw1-x112c.google.com ([2607:f8b0:4864:20::112c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1uQ6sm-0000Yr-3b
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 12:03:57 -0400
+Received: by mail-yw1-x112c.google.com with SMTP id
+ 00721157ae682-70e302191a3so19171437b3.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 09:03:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1749830634; x=1750435434; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=dtrjAAF2JsKWfSl1rUQw6akguXOFuEAjIn4T5vBWltw=;
+ b=O10bt+TsMEdqFrSRoz7iYf9O9rnJGKoLymCQz0U1sMxwvH4pUZORB484PU9fJ8f8PU
+ 2cNiYBeBGlk0A4bcZjYJzeFon7Lb1BgPycogQ3TaO3vCMnbMS9bZuP2N1S5GKJlQL74I
+ sNPIqfC2V/CpsX/iY2PYVfxCeNljNBzdZ/AFwZO3wA3AyfH2carDz3kyAdY5aaC4dcaT
+ Yu8V51b3dRaEjPbJndy6HBEbCCix92+vh8cFnLxJ+SoyX+/TQjINPtNhmqIjUzlBa4b8
+ 7qNh43gpgz4BeG3OPl7Hl8kxeVocM3H2T7RhC4JuFlOLLOwcoWNgyH2jjt8+kNv4s3MD
+ jlkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1749830634; x=1750435434;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=dtrjAAF2JsKWfSl1rUQw6akguXOFuEAjIn4T5vBWltw=;
+ b=P9f9HGlkHMnN9vSvJb172k1c7fTsnfTRz9ZlMTJtjHeFArWtBQzC+giGXsQxKv7S5g
+ fLCDJ1OQxz+1SyvmOtJ8t0rD3/9PHILQ2XwEEG7QUtKRATWDlKFqaWNMttcBmhvtmSRl
+ fiitMAsvexrcadvOp16rlHN9QPptUsYw3RxdV9hTPuazuMR4EyjlSfERRcxXcI5VN8A8
+ M104bHG7ujEfRNymn3Wl8fRoB1AuhA55G4rDE83nsSw5tMtCviOplHEPgnJrmvui4pKY
+ pJTt7eJwS6+FyjujcwUfQztKaQD4zuDKh+9j83VBJiW10gwPBpuK89PjclikV1GpcY3e
+ Tvng==
+X-Gm-Message-State: AOJu0Yx1t15ZkkDhSpIT50oM3248Ld2hyBvsr9YmFvDc6kskXvVNXKda
+ WjcUUh7Fvgp4EYaySwsyyc6HMxDj2R5DUpx3OFaEPPDDEpHuu7124z9MleDMFePGiSRPEj1BTs/
+ SgJO0X1JWIu84YP7iH5NPUL4avjmygKnqcUGphuj0Iw==
+X-Gm-Gg: ASbGnctIo8fNileyOtdG4CZRjFmA5RyODiFWuxLkHR0/YJuZe3s7Bu0c1EH68XFfot6
+ 648zddqZScEXO0F8HzYoTYXEfa3VZ9QnGdMf/JnPDWHkD6FXGJ9prciC+8DpNsI6pnSc6VOe7LO
+ wuQrA4n5rxm/rJYcv3qd/mvMJUapRNbhhrHydnTg8hVLbf
+X-Google-Smtp-Source: AGHT+IEbvQ2t0rlhNGcYtZxRvjX+41IJyO/oGENArEjD2nxlz/CWCprp9uBNYzRcvBHCj++PhIbc0XFgF0LZ5hlI8sI=
+X-Received: by 2002:a05:690c:19:b0:70e:73ce:80de with SMTP id
+ 00721157ae682-7116380b361mr53822767b3.25.1749830634369; Fri, 13 Jun 2025
+ 09:03:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <20250613-cache-v1-1-ee9f4a9ba81b@gmx.net>
-X-B4-Tracking: v=1; b=H4sIAONKTGgC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDI1MDM0Nj3eTE5IxUXXMj40Rzc0Mzi2SLVCWg2oKi1LTMCrA50bG1tQBLmQ4
- mVwAAAA==
-X-Change-ID: 20250613-cache-723a77168c8e
-To: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>
-Cc: =?utf-8?q?J=2E_Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>
-X-Mailer: b4 0.14.2
-X-Developer-Signature: v=1; a=ed25519-sha256; t=1749830385; l=982;
- i=j.neuschaefer@gmx.net; s=20240329; h=from:subject:message-id;
- bh=iBmFThkbLN1Y6xJC1Mw0h3DuXXRcCSecP9DKmG8UycQ=;
- b=5cUiJu1/wKPmmTwYK7L0wowRAZbsG42QYjhd84+d/vEstljLRjl5k2WWpf9OjKw4BzNnYWure
- 1pGdmRDEGxUAgFbnBXGcZrEZHtQs56lQK8Qc9YgXFvWCl/+I66Z/A/V
-X-Developer-Key: i=j.neuschaefer@gmx.net; a=ed25519;
- pk=NIe0bK42wNaX/C4bi6ezm7NJK0IQE+8MKBm7igFMIS4=
-X-Provags-ID: V03:K1:wrup2wGn0aHadN1LQCJk6S59+tfahLiY54Dwom+ESLpvrA1pD/j
- ZfTc3wJhbvlGbqRKqMgkhlyZG4NtdrJe0HV90e1bqpQ3fh9IWT/V2Bw/Md9+U1pO7lAUTjp
- tMKxG/EpSdhGzj+MdivHLef7mPweFfdknkFtLeCv839Ast4p01PxkDdj8nIWWnXBeCFVWoH
- pepSfVkMsGLNzayHkVBVg==
-UI-OutboundReport: notjunk:1;M01:P0:TwKUZyFKMzg=;PceM4vB09uYkIPP2XI7SGt4uKLV
- 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
- ZcgLPhs+cd93gs78YD1/qy5HngJ/eTJd9Y3P6A==
-Received-SPF: pass client-ip=212.227.15.15; envelope-from=j.neuschaefer@gmx.net;
- helo=mout.gmx.net
-X-Spam_score_int: -27
-X-Spam_score: -2.8
+References: <20250510042043.2056265-1-jcksn@duck.com>
+ <B389ED9F-EC29-47F0-90DD-93E89826912D.1@smtp-inbound1.duck.com>
+In-Reply-To: <B389ED9F-EC29-47F0-90DD-93E89826912D.1@smtp-inbound1.duck.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Jun 2025 17:03:41 +0100
+X-Gm-Features: AX0GCFsWPTjByzwpmUYTYbYvppDbBwEi2-6gy_NF0bdGSyy09DakhB9y9UyMnRc
+Message-ID: <CAFEAcA9sYQ0r_e4y0vaH0FmfNm5ezDPixT60uRSx5C2cW2KB=g@mail.gmail.com>
+Subject: Re: [PATCH 3/6] MAX78000 UART implementation
+To: jcksn@duck.com
+Cc: qemu-devel@nongnu.org, alistair@alistair.me
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,34 +92,255 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although the emulated cacheflush syscall does nothing, it still needs to
-return zero to indicate success.
+On Sat, 10 May 2025 at 07:57, <jcksn@duck.com> wrote:
+>
+> This patch implements UART support for the MAX78000 SOC
+>
+> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
+> ---
+>  hw/arm/Kconfig                  |   1 +
+>  hw/arm/max78000_soc.c           |  27 +++-
+>  hw/char/Kconfig                 |   3 +
+>  hw/char/max78000_uart.c         | 263 ++++++++++++++++++++++++++++++++
+>  hw/char/meson.build             |   1 +
+>  include/hw/arm/max78000_soc.h   |   3 +
+>  include/hw/char/max78000_uart.h |  77 ++++++++++
+>  7 files changed, 370 insertions(+), 5 deletions(-)
+>  create mode 100644 hw/char/max78000_uart.c
+>  create mode 100644 include/hw/char/max78000_uart.h
 
-Signed-off-by: J. Neusch=C3=A4fer <j.neuschaefer@gmx.net>
-=2D--
- linux-user/arm/cpu_loop.c | 1 +
- 1 file changed, 1 insertion(+)
+Some of the comments I had on patch 2 apply also to this
+and the other devices:
+ * separate patches for "new device" and "wire up new
+   device into the SoC"
+ * missing migration state support
+ * use DEVICE_LITTLE_ENDIAN
+ * set .impl.min_access_size and .impl_max_access_size
+   appropriately for the device
+ * make sure you've implemented a reset method (this device
+   has one but some of the later ones don't)
+ * fix case indent and excess braces if necessary
+ * make sure you're not using the _realize_and_unref functions
 
-diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
-index e8417d040691a04a3edc0f5508f047571beac8fa..33f63951a958a5a48ced2d1e18=
-7264d691e5c940 100644
-=2D-- a/linux-user/arm/cpu_loop.c
-+++ b/linux-user/arm/cpu_loop.c
-@@ -363,6 +363,7 @@ void cpu_loop(CPUARMState *env)
-                     switch (n) {
-                     case ARM_NR_cacheflush:
-                         /* nop */
-+                        env->regs[0] =3D 0;
-                         break;
-                     case ARM_NR_set_tls:
-                         cpu_set_tls(env, env->regs[0]);
 
-=2D--
-base-commit: d9ce74873a6a5a7c504379857461e4ae64fcf0cd
-change-id: 20250613-cache-723a77168c8e
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index 3f23af3244..59450dc3cb 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -368,6 +368,7 @@ config MAX78000_SOC
+>      bool
+>      select ARM_V7M
+>      select MAX78000_ICC
+> +    select MAX78000_UART
+>
+>  config RASPI
+>      bool
+> diff --git a/hw/arm/max78000_soc.c b/hw/arm/max78000_soc.c
+> index 4d598bddd4..6334d8b49b 100644
+> --- a/hw/arm/max78000_soc.c
+> +++ b/hw/arm/max78000_soc.c
+> @@ -16,7 +16,11 @@
+>  #include "hw/qdev-clock.h"
+>  #include "hw/misc/unimp.h"
+>
+> -static const uint32_t max78000_icc_addr[] = {0x4002a000, 0x4002a800};
+> +static const uint32_t max78000_icc_addr[] =  {0x4002a000, 0x4002a800};
+> +static const uint32_t max78000_uart_addr[] = {0x40042000, 0x40043000,
+> +                                              0x40044000};
+> +
+> +static const int max78000_uart_irq[] = {30, 31, 50};
 
-Best regards,
-=2D-=20
-J. Neusch=C3=A4fer <j.neuschaefer@gmx.net>
+The GPIO inputs to the ARM7M object are only the external
+interrupt lines, so GPIO 0 is the first external interrupt,
+which is 16 in the datasheet's Table 3-3. So you need to
+subtract 16 from all the numbers in the table to get
+the right GPIO index. The UARTs here are at 14, 15, 34.
 
+>
+>  static void max78000_soc_initfn(Object *obj)
+>  {
+> @@ -29,6 +33,10 @@ static void max78000_soc_initfn(Object *obj)
+>          object_initialize_child(obj, "icc[*]", &s->icc[i], TYPE_MAX78000_ICC);
+>      }
+>
+> +    for (i = 0; i < MAX78000_NUM_UART; i++) {
+> +        object_initialize_child(obj, "uart[*]", &s->uart[i], TYPE_MAX78000_UART);
+
+I didn't notice this for the icc patch, but rather than using the
+same string for each UART, you can give them unique names with
+           g_autofree char *name = g_strdup_printf("uart%d", i);
+           object_initialize_child(obj, name, ...)
+
+See eg hw/arm/stm32l4x5_soc.c for examples.
+
+> +    }
+> +
+>      s->sysclk = qdev_init_clock_in(DEVICE(s), "sysclk", NULL, NULL, 0);
+>      s->refclk = qdev_init_clock_in(DEVICE(s), "refclk", NULL, NULL, 0);
+>  }
+> @@ -38,6 +46,7 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>      MAX78000State *s = MAX78000_SOC(dev_soc);
+>      MemoryRegion *system_memory = get_system_memory();
+>      DeviceState *dev, *armv7m;
+> +    SysBusDevice *busdev;
+>      Error *err = NULL;
+>      int i;
+>
+> @@ -101,6 +110,18 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>          sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, max78000_icc_addr[i]);
+>      }
+>
+> +    for (i = 0; i < MAX78000_NUM_UART; i++) {
+> +        dev = DEVICE(&(s->uart[i]));
+> +        qdev_prop_set_chr(dev, "chardev", serial_hd(i));
+> +        if (!sysbus_realize(SYS_BUS_DEVICE(&s->uart[i]), errp)) {
+> +            return;
+> +        }
+> +        busdev = SYS_BUS_DEVICE(dev);
+> +        sysbus_mmio_map(busdev, 0, max78000_uart_addr[i]);
+> +        sysbus_connect_irq(busdev, 0, qdev_get_gpio_in(armv7m,
+> +                                                       max78000_uart_irq[i]));
+> +    }
+> +
+>
+>      create_unimplemented_device("globalControl",    0x40000000, 0x400);
+>      create_unimplemented_device("systemInterface",  0x40000400, 0x400);
+> @@ -140,10 +161,6 @@ static void max78000_soc_realize(DeviceState *dev_soc, Error **errp)
+>      create_unimplemented_device("oneWireMaster",    0x4003d000, 0x1000);
+>      create_unimplemented_device("semaphore",        0x4003e000, 0x1000);
+>
+> -    create_unimplemented_device("uart0",            0x40042000, 0x1000);
+> -    create_unimplemented_device("uart1",            0x40043000, 0x1000);
+> -    create_unimplemented_device("uart2",            0x40044000, 0x1000);
+> -
+>      create_unimplemented_device("spi1",             0x40046000, 0x2000);
+>      create_unimplemented_device("trng",             0x4004d000, 0x1000);
+>      create_unimplemented_device("i2s",              0x40060000, 0x1000);
+> diff --git a/hw/char/Kconfig b/hw/char/Kconfig
+> index 9d517f3e28..020c0a84bb 100644
+> --- a/hw/char/Kconfig
+> +++ b/hw/char/Kconfig
+> @@ -48,6 +48,9 @@ config VIRTIO_SERIAL
+>      default y
+>      depends on VIRTIO
+>
+> +config MAX78000_UART
+> +    bool
+> +
+>  config STM32F2XX_USART
+>      bool
+>
+> diff --git a/hw/char/max78000_uart.c b/hw/char/max78000_uart.c
+> new file mode 100644
+> index 0000000000..edd39c5a8b
+> --- /dev/null
+> +++ b/hw/char/max78000_uart.c
+> @@ -0,0 +1,263 @@
+> +/*
+> + * MAX78000 UART
+> + *
+> + * Copyright (c) 2025 Jackson Donaldson <jcksn@duck.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/char/max78000_uart.h"
+> +#include "hw/irq.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/qdev-properties-system.h"
+> +#include "qemu/log.h"
+> +#include "qemu/module.h"
+> +#include "trace.h"
+> +
+> +static int max78000_uart_can_receive(void *opaque)
+> +{
+> +    Max78000UartState *s = opaque;
+> +    if (!(s->ctrl & UART_BCLKEN)) {
+> +        return 0;
+> +    }
+> +    return fifo8_num_free(&s->rx_fifo);
+> +}
+> +
+> +static void max78000_update_irq(Max78000UartState *s)
+> +{
+> +    int interrupt_level = 0;
+> +    uint32_t rx_threshold = s->ctrl & 0xf;
+> +
+> +    /*
+> +     * Because tx is synchronous and we should have no frame errors, the only
+> +     * possible interrupt is receive fifo threshold
+> +     */
+> +    if ((s->int_en & UART_RX_THD) && fifo8_num_used(&s->rx_fifo) >= rx_threshold) {
+> +        interrupt_level = 1;
+> +        s->int_fl = s->int_fl & UART_RX_THD;
+> +    } else{
+> +        s->int_fl = s->int_fl & ~UART_RX_THD;
+> +    }
+
+This looks a little odd. The usual pattern for interrupt
+status bits is:
+ * when we notice the condition (in this case, when we receive
+   a char and it puts us above the rx threshold), set the
+   bit in the int_fl register
+ * option A: devices where the flag bit tracks the underlying
+   condition:
+     - when we notice that the condition is no longer true (in this
+       case, when the guest reads a char from the rx fifo and it
+       puts us below the rx threshold again), clear the int_fl bit,
+ * option B: devices where the flag bit latches and the guest must
+   explicitly clear it:
+     - no action when the condition is no longer true
+
+   The MAX78000 UART is an "option B" device -- see section 12.5.
+ * in the update_irq() function, set the interrupt if
+   the int_fl bit and the int_en bit are set, otherwise clear it.
+   If the bit definitions in the two registers line up, this is
+   as simple as
+    bool interrupt_level = s->int_fl & s->int_en;
+   If they don't line up then it needs a bit more manual work.
+
+The code you have at the moment doesn't implement the "int_fl
+bits latch and must be explicitly cleared by software" behaviour.
+
+> +    qemu_set_irq(s->irq, interrupt_level);
+> +}
+> +
+> +static void max78000_uart_receive(void *opaque, const uint8_t *buf, int size)
+> +{
+> +    Max78000UartState *s = opaque;
+> +
+> +    if (size <= fifo8_num_free(&s->rx_fifo)) {
+> +        fifo8_push_all(&s->rx_fifo, buf, size);
+> +    } else{
+> +        fifo8_push_all(&s->rx_fifo, buf, fifo8_num_free(&s->rx_fifo));
+> +        printf("rx_fifo overrun!\n");
+
+This should be a "can't happen" condition -- your receive
+method will never be passed more bytes of data than you
+said you could handle in can_receive.
+
+Don't printf() in device code. Your options are:
+ * if it's something that the device spec says is
+   forbidden but a badly behaved guest can trigger,
+   use qemu_log(LOG_GUEST_ERROR, ...)
+ * if it's something that the device should implement but
+   we don't, use qemu_log(LOG_UNIMP, ...)
+ * if it's something that can't happen unless there's a bug
+   in QEMU, use some kind of assert()
+ * if it's nice-to-have information for debugging or for
+   a user to see what the device is doing, use a tracepoint
+   (trace_* functions, see docs/devel/tracing.rst)
+
+
+From your register write function:
+
+> +    case UART_INT_FL:
+> +        s->int_fl = value;
+> +        return;
+
+This register's bits are W1C, i.e. write-1-to-clear.
+
+thanks
+-- PMM
 
