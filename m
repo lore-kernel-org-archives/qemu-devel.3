@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30BEDC71141
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Jun 2025 11:04:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5570C71135
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Jun 2025 13:00:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQOfi-0002hD-Gx; Sat, 14 Jun 2025 07:03:38 -0400
+	id 1uQQU8-0007cN-I4; Sat, 14 Jun 2025 08:59:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hasueng@gmail.com>) id 1uQOfg-0002h1-Sy
- for qemu-devel@nongnu.org; Sat, 14 Jun 2025 07:03:36 -0400
-Received: from mail-pg1-x533.google.com ([2607:f8b0:4864:20::533])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hasueng@gmail.com>) id 1uQOff-00088K-4K
- for qemu-devel@nongnu.org; Sat, 14 Jun 2025 07:03:36 -0400
-Received: by mail-pg1-x533.google.com with SMTP id
- 41be03b00d2f7-b2eeada3df1so312372a12.1
- for <qemu-devel@nongnu.org>; Sat, 14 Jun 2025 04:03:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749899012; x=1750503812; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Ew6FhwV7k+RCBqhhgmkMcyj1wtfFtnRN4ZJrEDhTzag=;
- b=g+2AAw72tlLJ18v/7gPkKNfTRk+n+4Nodo55Om7+FJ2KDJyWvVgpFHR14TCl3EoF09
- HwQpylhQAR5VbiYdrhpn4qnPBAZHvt1AFtSKTNAppH9+xnRdYk4FzlMdJI98mbvdQVRL
- 7mKDVG7WofSuB/RL2ZgWFOKNilPRxA9glhXk/EbA0e8idbqj1IbUcWyll3dtTMgHAKO2
- Z7WDFAvwqCm60YMKN5gYrtueHYdVFgEfhfAumbQvTbFcXBRGpeVU2H2MH4bBTX3JLERD
- c81VMks+k43ikjvd+3tkyqbpzrwPMVZz/GOOp/vKezWUZf6cNzjny+zPzWRVm1NbcbK3
- tOlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749899012; x=1750503812;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Ew6FhwV7k+RCBqhhgmkMcyj1wtfFtnRN4ZJrEDhTzag=;
- b=kJjM1YLReBwkfKnvumS7eZ12TKAosEzUxwuEugcRz0VIYhb5n8QbGzniMwW1T1sGNp
- R44cAhSFu4oyAZtq0yAE4TF3O7aWBabdP+eKUA1FgwQ0JAhxXDG2/nx3kftkY+cH4b/9
- CsqR/ttV416cdxcyDhKdWeyU5IvGI2IRfCLNr/E1fe7FGW700zdzksSV57buPvwZ7xI2
- mnxa2AYX1AaEzKPzm2e7hOT3JDm9LZ0lu5T/3bc5Ms7+NaDftGa1b7Tx96ZCs8TW1DB4
- fXhtNWtSnIjNgqJEUGcsaHrzTOMA5PkRpWdKOc93cph1RLbw+GKJZpSc1xZn/A3AHYBr
- 7qMg==
-X-Gm-Message-State: AOJu0Yx5SiYdsKL7TuO1nSDL6sfHRHo+K347/3SxDLm3neGUrrbvzpEZ
- rg2L2g13vJ0snhU139tTxuSYDe5Gwr4cTEJI7tTvZybwr8DaReDlNqqAlHwrjyubzFY=
-X-Gm-Gg: ASbGnctGnCRtrpI5Z292ymWL4FccZ/Zk2Yw1ubJEl8f49l1sBep177ktyTghIMS2AoF
- gS1EKGurrg0U2G2ccfAoMa7w3wH33fhgZsv40J5Jw/sgnAIG/WBFT0ClOMTZsSaYRzo3izeNZOQ
- lpSXAE+33PtdobHI0FaTgcpfphmnxYYr9VtKXTcY8jKz1Qqtk3YfyC28hbeZi8sC8+YBDYWHp0W
- pztM74sfvvrme837n+EKChcLu/A1WMoEvVWETQfC67No2aJPjoxWkO6JzOStCyKT0uI/jaSkohw
- RnMw1J5SNF32B4zc6Ko8klTKZQPWcvFZFBlbSAWVr57S3iIbIad3R4WG
-X-Google-Smtp-Source: AGHT+IHW8f352DJTHNwY13hBpzBUHbrFmCcRxESA5/JbyMur9UUn+2uzCqWAKTElaL/C4R3nlO4ZzQ==
-X-Received: by 2002:a05:6a20:a109:b0:214:70c9:37d3 with SMTP id
- adf61e73a8af0-21fbd66f922mr1599214637.9.1749899012515; 
- Sat, 14 Jun 2025 04:03:32 -0700 (PDT)
-Received: from bong-com.. ([210.97.55.153]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-748900064d1sm3242602b3a.61.2025.06.14.04.03.30
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 14 Jun 2025 04:03:32 -0700 (PDT)
-From: Haseung Bong <hasueng@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org, thuth@redhat.com,
- imp@bsdimp.com, kevans@freebsd.org, Haseung Bong <hasueng@gmail.com>
-Subject: [PATCH] Subject: [PATCH] tests/vm: update openbsd image to 7.7
-Date: Sat, 14 Jun 2025 20:03:23 +0900
-Message-ID: <20250614110323.68832-1-hasueng@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>)
+ id 1uQQTy-0007by-6s; Sat, 14 Jun 2025 08:59:38 -0400
+Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>)
+ id 1uQQTv-0006Py-O9; Sat, 14 Jun 2025 08:59:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
+ s=2021Q3; t=1749905971;
+ bh=d4cYSZfaPzfHe8s9eJDdGllyY2pTNhhcb47WbT7nNZk=;
+ h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+ b=9/+o/iwmwXs2JSd7ZDEcquxr+EKXijIJChlknQIC75Ca5JMNPjrrAfoRMF7NwKivj
+ rIce6mJTbWO7VUPZIAlnAfj91cKrX23zdYUdhWNHGHtXwvBwYFaOGvGCv5xWj34o0t
+ S8LHmHCPuMlKFW7WzVxtDLSCyZ63CAmAH9SKK5FcOUzCapLiFBN+19Hb7pYX51ydv0
+ JjLuxGYYzi+x4iVdb8KpOBfz5c8s6JgGLwr7LeIvWtYbtGr8ORLdl/nt/FfFI0DiVy
+ JhKB4VVkVtoUE/i2cKHFOJ1qWIb8TKf5WoN2RC3eOr+XQ9+K3yC8N+BekFO8lNAM14
+ xbkVLgN4AaPWg==
+Received: from mail-yw1-f180.google.com (mail-yw1-f180.google.com
+ [209.85.128.180])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by sean.taipei (Postfix) with ESMTPSA id D13CB6355;
+ Sat, 14 Jun 2025 20:59:31 +0800 (CST)
+Received: by mail-yw1-f180.google.com with SMTP id
+ 00721157ae682-711756ae8c9so5850167b3.3; 
+ Sat, 14 Jun 2025 05:59:31 -0700 (PDT)
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3EKBMrEgw7hMo7ZkQpb9TX8Fx7tkAcUsb6EWSBLEogy1L/5FUwY0HH1CiF+71AI/lSESAh1nhNg==@nongnu.org
+X-Gm-Message-State: AOJu0YyezuMSEqTXRZxVmXYGl52VYdV18WLmH6iJNAtnKx/+vgdn8OH0
+ L6IVvgEsXGAi/suzLK3zcEK/OUVQL8DU03tSDDKyvPYLoa2azhrFo6mZV56CZWAtY6ou1pCzO6X
+ mtL4ODgAknTyfNwSN+yXnG15j0UCUM2I=
+X-Google-Smtp-Source: AGHT+IEUjp++agcqzyNwU65nGazOJ+NSWYrepEqc5f979rgGw6Lo/+qZ3mCEXwYgJZo6gYtbmJVbJu2vFh2bXiqkZBw=
+X-Received: by 2002:a05:690c:630a:b0:70d:f420:7ab4 with SMTP id
+ 00721157ae682-7117545758bmr40382367b3.29.1749905966846; Sat, 14 Jun 2025
+ 05:59:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::533;
- envelope-from=hasueng@gmail.com; helo=mail-pg1-x533.google.com
+References: <20250613.qemu.patch@sean.taipei>
+ <20250613.qemu.patch.05@sean.taipei>
+ <3aa8de03-911e-4906-a0c5-5b8ea269ad28@kaod.org>
+In-Reply-To: <3aa8de03-911e-4906-a0c5-5b8ea269ad28@kaod.org>
+From: Sean Wei <me@sean.taipei>
+Date: Sat, 14 Jun 2025 08:58:50 -0400
+X-Gmail-Original-Message-ID: <CAGvOXg_VK0+DA_OHy0oWGC4QuL6icFd7yabLKeRzQMc8OpU-rA@mail.gmail.com>
+X-Gm-Features: AX0GCFvnZBRVh2FkSeAuh9DH9hIL6J0bW_SXB6nBB0mjrV595eA0Cg3I5V_OBho
+Message-ID: <CAGvOXg_VK0+DA_OHy0oWGC4QuL6icFd7yabLKeRzQMc8OpU-rA@mail.gmail.com>
+Subject: Re: [PATCH 05/12] include/hw: replace FSF postal address with
+ licenses URL
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: qemu-devel@nongnu.org, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>, 
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, 
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>, 
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>, 
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=128.199.207.102; envelope-from=me@sean.taipei;
+ helo=sean.taipei
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,29 +93,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update tests/vm/openbsd to release 7.7
+Hi C=C3=A9dric,
 
-Signed-off-by: Haseung Bong <hasueng@gmail.com>
----
- tests/vm/openbsd | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Thank you for the quick review and for suggesting the SPDX approach.
 
-diff --git a/tests/vm/openbsd b/tests/vm/openbsd
-index 5e4f76f398..2ea86a01ba 100755
---- a/tests/vm/openbsd
-+++ b/tests/vm/openbsd
-@@ -22,8 +22,8 @@ class OpenBSDVM(basevm.BaseVM):
-     name = "openbsd"
-     arch = "x86_64"
- 
--    link = "https://cdn.openbsd.org/pub/OpenBSD/7.6/amd64/install76.iso"
--    csum = "60cba8cb391b50bba8fa10fc768bd0529636f5345d82133c93e22c798d8e5269"
-+    link = "https://cdn.openbsd.org/pub/OpenBSD/7.7/amd64/install77.iso"
-+    csum = "da0106e39463f015524dca806f407c37a9bdd17e6dfffe533b06a2dd2edd8a27"
-     size = "20G"
-     pkgs = [
-         # tools
--- 
-2.43.0
+On Sat, Jun 14, 2025 at 1:36=E2=80=AFAM C=C3=A9dric Le Goater <clg@kaod.org=
+> wrote:
+>
+> Instead,  I would remove the license boiler plate and add :
+>
+>    SPDX-License-Identifier: GPL-2.0-or-later
+>
 
+Before we respin the patch, could you please confirm the scope below?
+
+
+1. For the two headers currently under review
+   (aspeed_i2c.h and aspeed_timer.h)
+
+   I will drop the multi-line GPL boiler-plate and replace it
+   with SPDX line, while keeping the copyright statements.
+
+
+2. For the other ASPEED-maintained files
+
+       hw/*/*aspeed*
+       include/hw/*/*aspeed*
+       tests/*/*aspeed*
+
+   Would you prefer to convert them as well? If so, I'd prefer to
+   send a dedicated patch series after this one.
+
+
+3. Replacement rule:
+
+   * multi-line GPL boiler-plate
+     -> replace with SPDX
+
+   * existing short two-line notice
+       This code is licensed under the GPL version 2 or later.
+       See the COPYING file in the top-level directory.
+     -> leave unchanged
+
+   Is that correct?
+
+
+4. If we do the wider sweep,
+   should MIT-licensed ASPEED files also be updated by replacing
+   their boiler-plate with SPDX identifier in the same patch series?
+
+
+Please let me know what works best for you and I will send v2 accordingly.
+
+Thanks again for the guidance,
+Sean Wei
 
