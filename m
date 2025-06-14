@@ -4,72 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08307C71136
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Jun 2025 02:10:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A2A5C71141
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Jun 2025 05:30:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQGLU-0003bQ-2f; Fri, 13 Jun 2025 22:10:12 -0400
+	id 1uQJSZ-0006uo-B6; Sat, 14 Jun 2025 01:29:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGLR-0003YO-Us
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:10:10 -0400
-Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
+ (Exim 4.90_1) (envelope-from <SRS0=RIc8=Y5=kaod.org=clg@ozlabs.org>)
+ id 1uQJSP-0006ty-Dj; Sat, 14 Jun 2025 01:29:33 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGLQ-0006or-1d
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:10:09 -0400
-Authentication-Results: sean.taipei; dmarc=fail (p=quarantine dis=none)
- header.from=sean.taipei
-ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 343775F9F
-ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1749866975;
- cv=none;
- b=SpjVyNmVzgk1/nkZxJhHGAScIKPN515uHFwITUlzuF9+CqGHKFnBdifDJzYQSQqrdNmJfbK3kb995yReQw1vgea7sU6hBAJYLXtCbLWtHtlFw1WDQzzswG9uoGmFbUQBNiBkVlEwvdyU/+E13ch4WbPnlKRuYL6UNE7ECod2KsMuuHKodqHZKNqFR1n3ZG9RPsic2PXy/ZoCow4w6m401HWjNpOwNNPN80ji3Slt2wdMd+E+nA+edIpAIg4X27v0TJlwPnCJMX7kcptjvyLJAcO+8Xxvi4yfKJJAPclOE6OUuhLUAauZb3s3lEJfm29+ZFaxnI3hk1Ubdq+aKEEzRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2;
- t=1749866975; c=relaxed/simple;
- bh=m0K56CSPcT09qRkK6ylaq0Uw2Aj41rsQzExHIcDXrOQ=;
- h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:References:
- MIME-Version;
- b=WlZnjCxAOvNF2WQYA9hzPvV/n1B1ZznD1WYYCPvZvnQPQDeiGYyqw0bGtlGFsYmT0k3gcPrmGNkXkIYpskoZ8i1vsVm1we5y2Ky/VcDh96gxxJMTWENRXSe8am0r28DC0rB960uiZSterkw9qN+Wg/j/OS1VvbY3+2le50CtM5Q2XpUBSaaPStetlIe67DJFYGw9dKTRci4Jnokq+/nsZpWaoxklwEPyQ6uEMKDR+LCm24R78knXgRTWl2JKu61AJVNXolcX4nklELPd0GmpRyaJV4TcEARXdc1LLnemPBtrVQ92ps1LEpZ7btG0+2UXnyYpd7dy++/AUcvp4hVkxQ==
-ARC-Authentication-Results: i=1; sean.taipei;
- dmarc=fail (p=quarantine dis=none)
- header.from=sean.taipei
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
- s=2021Q3; t=1749866974;
- bh=m0K56CSPcT09qRkK6ylaq0Uw2Aj41rsQzExHIcDXrOQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=rMwYb4BqW3r1x7nV6kXHGMuwLxgsk/OLMdYBr0VNfZmDkYElqpx0ASSLtU3H4h0qt
- M9fKVDD3VXQlxZV6hRq2Hgc3WlIvLZczm/+Zzs6AmMjoZQ9y1DANWRLNMyhaQeWX+j
- W3twbWdavinbfCac6Wm6LaMBAt8KzIhHwjvir+r69Fw+hI4C4Gl1klf/5V3A+XhKvj
- EwL1E/IBfznpOIIfzmNSJh5uziGbNz26JHGrttceKtlzXoxThOiz/rY7V/eBPdzUjM
- sT3Q2ymI+McBzbuCXEp/r/f+iYpFX2FC4u/238wQ4X7o3ECQ/1BqryWsZVae+/1DoD
- pCWeku2iZbE0A==
-Received: from Mac.home.lla.com (unknown [207.191.242.16])
+ (Exim 4.90_1) (envelope-from <SRS0=RIc8=Y5=kaod.org=clg@ozlabs.org>)
+ id 1uQJSM-0003xQ-PS; Sat, 14 Jun 2025 01:29:32 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bK4ZS1l81z4x07;
+ Sat, 14 Jun 2025 15:29:20 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by sean.taipei (Postfix) with ESMTPSA id 343775F9F;
- Sat, 14 Jun 2025 10:09:31 +0800 (CST)
-From: Sean Wei <me@sean.taipei>
-To: qemu-devel@nongnu.org
-Cc: Sean Wei <me@sean.taipei>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>
-Subject: [PATCH 2/2] hw/9pfs: move G_GNUC_PRINTF to header
-Date: Fri, 13 Jun 2025 22:09:20 -0400
-Message-ID: <20250613.qemu.9p.02@sean.taipei>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250613.qemu.9p@sean.taipei>
-References: <20250613.qemu.9p@sean.taipei>
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bK4ZK2WJ1z4wj2;
+ Sat, 14 Jun 2025 15:29:13 +1000 (AEST)
+Message-ID: <3aa8de03-911e-4906-a0c5-5b8ea269ad28@kaod.org>
+Date: Sat, 14 Jun 2025 07:29:09 +0200
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Powered-By: Sean <postmaster@sean.taipei>
-X-Scanned-By: MIMEDefang 3.3 on 104.21.5.93
-Received-SPF: pass client-ip=128.199.207.102; envelope-from=me@sean.taipei;
- helo=sean.taipei
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/12] include/hw: replace FSF postal address with
+ licenses URL
+To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+References: <20250613.qemu.patch@sean.taipei>
+ <20250613.qemu.patch.05@sean.taipei>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250613.qemu.patch.05@sean.taipei>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=RIc8=Y5=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.097, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -87,47 +114,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v9fs_path_sprintf() is annotated with G_GNUC_PRINTF(2, 3) in
-hw/9pfs/9p.c, but the prototype in hw/9pfs/9p.h is missing the
-attribute, so callers that include only the header do not get format
-checking.
+Hello Sean,
 
-Move the annotation to the header and delete the duplicate in the
-source file. No behavior change.
+On 6/13/25 18:44, Sean Wei wrote:
+> Some of the GPLv2 boiler-plate still contained the
+> obsolete "51 Franklin Street" postal address.
+> 
+> Replace it with the canonical GNU licenses URL recommended by the FSF:
+> https://www.gnu.org/licenses/
+> 
+> Signed-off-by: Sean Wei <me@sean.taipei>
 
-Signed-off-by: Sean Wei <me@sean.taipei>
----
- hw/9pfs/9p.c | 3 +--
- hw/9pfs/9p.h | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+Instead,  I would remove the license boiler plate and add :
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index 8b001b9112..acfa7db4e1 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -201,8 +201,7 @@ void v9fs_path_free(V9fsPath *path)
- }
- 
- 
--void G_GNUC_PRINTF(2, 3)
--v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
-+void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...)
- {
-     va_list ap;
- 
-diff --git a/hw/9pfs/9p.h b/hw/9pfs/9p.h
-index 259ad32ed1..f4f4086cf7 100644
---- a/hw/9pfs/9p.h
-+++ b/hw/9pfs/9p.h
-@@ -456,7 +456,7 @@ static inline uint8_t v9fs_request_cancelled(V9fsPDU *pdu)
- void coroutine_fn v9fs_reclaim_fd(V9fsPDU *pdu);
- void v9fs_path_init(V9fsPath *path);
- void v9fs_path_free(V9fsPath *path);
--void v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...);
-+void G_GNUC_PRINTF(2, 3) v9fs_path_sprintf(V9fsPath *path, const char *fmt, ...);
- void v9fs_path_copy(V9fsPath *dst, const V9fsPath *src);
- size_t v9fs_readdir_response_size(V9fsString *name);
- int v9fs_name_to_path(V9fsState *s, V9fsPath *dirpath,
--- 
-2.49.0
+   SPDX-License-Identifier: GPL-2.0-or-later
+
+Thanks,
+
+C.
+
+> ---
+>   include/hw/i2c/aspeed_i2c.h     | 3 +--
+>   include/hw/pci/pci_bridge.h     | 4 ++--
+>   include/hw/timer/aspeed_timer.h | 3 +--
+>   3 files changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+> index 2c4c81bd20..2daacc10ce 100644
+> --- a/include/hw/i2c/aspeed_i2c.h
+> +++ b/include/hw/i2c/aspeed_i2c.h
+> @@ -14,8 +14,7 @@
+>    *  GNU General Public License for more details.
+>    *
+>    *  You should have received a copy of the GNU General Public License along
+> - *  with this program; if not, write to the Free Software Foundation, Inc.,
+> - *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+> + *  with this program; if not, see <https://www.gnu.org/licenses/>.
+>    */
+>   
+>   #ifndef ASPEED_I2C_H
+> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+> index b0f5204d80..8cdacbc4e1 100644
+> --- a/include/hw/pci/pci_bridge.h
+> +++ b/include/hw/pci/pci_bridge.h
+> @@ -14,8 +14,8 @@
+>    * GNU General Public License for more details.
+>    *
+>    * You should have received a copy of the GNU General Public License
+> - * along with this program; if not, write to the Free Software
+> - * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+> + * along with this program; if not, see
+> + * <https://www.gnu.org/licenses/>.
+>    *
+>    * split out pci bus specific stuff from pci.[hc] to pci_bridge.[hc]
+>    * Copyright (c) 2009 Isaku Yamahata <yamahata at valinux co jp>
+> diff --git a/include/hw/timer/aspeed_timer.h b/include/hw/timer/aspeed_timer.h
+> index 767cae4b05..a850625a05 100644
+> --- a/include/hw/timer/aspeed_timer.h
+> +++ b/include/hw/timer/aspeed_timer.h
+> @@ -16,8 +16,7 @@
+>    *  GNU General Public License for more details.
+>    *
+>    *  You should have received a copy of the GNU General Public License along
+> - *  with this program; if not, write to the Free Software Foundation, Inc.,
+> - *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+> + *  with this program; if not, see <https://www.gnu.org/licenses/>.
+>    */
+>   #ifndef ASPEED_TIMER_H
+>   #define ASPEED_TIMER_H
+
 
