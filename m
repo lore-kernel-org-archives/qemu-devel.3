@@ -4,113 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C4CFC71136
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Jun 2025 22:28:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F616C71135
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Jun 2025 02:09:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQCrk-0004B6-3r; Fri, 13 Jun 2025 18:27:16 -0400
+	id 1uQGK1-0002jR-52; Fri, 13 Jun 2025 22:08:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1uQCrg-0004AT-7z
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 18:27:12 -0400
-Received: from mail-oa1-x29.google.com ([2001:4860:4864:20::29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <trini@konsulko.com>)
- id 1uQCre-0000sk-Hj
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 18:27:11 -0400
-Received: by mail-oa1-x29.google.com with SMTP id
- 586e51a60fabf-2db9e29d3bcso973008fac.1
- for <qemu-devel@nongnu.org>; Fri, 13 Jun 2025 15:27:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=konsulko.com; s=google; t=1749853627; x=1750458427; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:date:message-id:subject
- :references:in-reply-to:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=53LCWwtjBsJih5SgMyaJboAcq2zuL0xQA5d2JRjx47M=;
- b=SPq/vz1jw2O29FjZXX8za2RrbgXDR/lr7Nc9ofDiI4vO8AdDuGEvb3UVrJvmo65MTE
- mgy+LDTYupXayYM1gs1dYZlqD9puwN8un434lasl5FhjbVLp8ucuzmeFWHikC4ES+m5D
- s0flCfJWSe+rZ3yYncMcfyTdcp1vbqPoAH6YM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749853627; x=1750458427;
- h=content-transfer-encoding:mime-version:date:message-id:subject
- :references:in-reply-to:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=53LCWwtjBsJih5SgMyaJboAcq2zuL0xQA5d2JRjx47M=;
- b=Z5Pg/KUXZs3B0OKxlWDeRMZJ4WEom68679gt2kuay8dvlXmI5WnQ5tBguS3z+8Wbmj
- zysiGp4vz8094BqRPawAvazGsuIg3V7WsaZTpo1wNkI/zvXSwgMq1/ZLAAw0ru/aO22C
- Zi5qEHUlkzKGHptOOGCp7013q6czuoIFQ+rbuRt/nxyTCHHbBDYhpg79+L6YxOw2fMxe
- Nj48qsHykCqpwAeJmJRjO4Y5Evcfdd2nFYD4X4Tmnmu0HgmDvSZwHd2GLcB9QpujSjcV
- IvvU9aMOoCi9EJNc4Q23dVQwCS4AcgL1q0soTjeXnIKZfuxPjCh5AfdWkZ36i79Nc+HE
- A0eQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWcQgtpgoULZuIHPtPg+kum4QlKZrPQIpuhYjjVbP9xE0nksFf5OIETVwy0OhbZPayFu/UpZr8pVook@nongnu.org
-X-Gm-Message-State: AOJu0YyLwyd6FprdHmHEJTcw8dt3Lifr23KuO5zVKIguj9CnczhZeChi
- tVzcyVESUONZFN0hJHDbLIH+MY8yWiTMsWi0DaMT+zFlvs9wUzrBU6g7q3w5GfHoOXNezhrOwsw
- DWYn2aTs=
-X-Gm-Gg: ASbGnctC//kxUuShDNi6AFWB23an40F5UjXahLPz80wepI+cX+KIwb/LmxCUX16YoeW
- YoWLTl96T5H/7xpM69D2V/xF0smUBrbcD/H6adqgjvKuifJQeB17c10N4M1gyb9kC7lnpv7pMk6
- Tiuq7B3TvIPev7Eq7FghyEUcsQxeOIn99JetLWPjgacdNCBsFSCzgp+HHAyyY8tjj5YvqX9Iu9d
- 0ekYaf9NB21VJ2OT5N3daEqVugTgtkBgwioUXgWrbRoTYw0Hrh8eDcFA61Klx+H3QQczwOegrCv
- u65juuMp294tWzaYHKJF60gH6sFcX5mnqMPtK/2fuEU/toPqccAGbNMpCdpeUQEMDZc4rWtAuA4
- NkuVisHDRL4EWu1vN0wRrqzp7IrqcdP3R
-X-Google-Smtp-Source: AGHT+IGQyeJdGTk+cQHSXuElQOzxDQBhOErOvVmfeHFfTnl10vp1osa6jYCZ8GdFy3zMo4IBMG6fQQ==
-X-Received: by 2002:a05:6870:1cc:b0:2e9:512:ee1a with SMTP id
- 586e51a60fabf-2eaf0835465mr889020fac.4.1749853627250; 
- Fri, 13 Jun 2025 15:27:07 -0700 (PDT)
-Received: from [127.0.1.1] (fixed-189-203-100-42.totalplay.net.
- [189.203.100.42]) by smtp.gmail.com with ESMTPSA id
- 586e51a60fabf-2eab8e6bec6sm885548fac.35.2025.06.13.15.27.04
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Jun 2025 15:27:06 -0700 (PDT)
-From: Tom Rini <trini@konsulko.com>
-To: U-Boot Mailing List <u-boot@lists.denx.de>, Simon Glass <sjg@chromium.org>
-Cc: =?utf-8?q?Fran=C3=A7ois_Ozog?= <francois.ozog@linaro.org>, 
- Ilias Apalodimas <ilias.apalodimas@linaro.org>, 
- Bill Mills <bill.mills@linaro.org>, Raymond Mao <raymond.mao@linaro.org>, 
- Heinrich Schuchardt <xypron.glpk@gmx.de>, 
- Andrew Phelps <andrew.phelps@canonical.com>, 
- Alexander Graf <agraf@csgraf.de>, Boyan Karatotev <boyan.karatotev@arm.com>, 
- Evgeny Bachinin <EABachinin@salutedevices.com>, 
- Fabio Estevam <festevam@gmail.com>, Harrison Mutai <harrison.mutai@arm.com>, 
- Jonas Karlman <jonas@kwiboo.se>, Liviu Dudau <liviu.dudau@foss.arm.com>, 
- Liya Huang <1425075683@qq.com>, 
- =?utf-8?q?Marek_Beh=C3=BAn?= <kabel@kernel.org>, 
- =?utf-8?q?Marek_Moj=C3=ADk?= <marek.mojik@nic.cz>, 
- Marek Vasut <marex@denx.de>, Matthias Brugger <mbrugger@suse.com>, 
- Max Filippov <jcmvbkbc@gmail.com>, 
- Nathan Barrett-Morrison <nathan.morrison@timesys.com>, 
- Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 
- Patrick Delaunay <patrick.delaunay@foss.st.com>, 
- Patrick Rudolph <patrick.rudolph@9elements.com>, 
- Peter Maydell <peter.maydell@linaro.org>, Rasmus Villemoes <ravi@prevas.dk>, 
- Rayagonda Kokatanur <rayagonda.kokatanur@broadcom.com>, 
- Sean Anderson <seanga2@gmail.com>, Stefan Roese <sr@denx.de>, 
- Stefano Babic <sbabic@nabladev.com>, Sughosh Ganu <sughosh.ganu@linaro.org>, 
- Svyatoslav Ryhel <clamor95@gmail.com>, 
- Tuomas Tynkkynen <tuomas.tynkkynen@iki.fi>, 
- =?utf-8?q?Vincent_Stehl=C3=A9?= <vincent.stehle@arm.com>, 
- Xu Zhang <423756212@qq.com>, qemu-devel@nongnu.org
-In-Reply-To: <20250528123236.1138632-1-sjg@chromium.org>
-References: <20250528123236.1138632-1-sjg@chromium.org>
-Subject: Re: (subset) [PATCH v5 00/25] passage: Define a standard for
- firmware data flow
-Message-Id: <174985362441.860502.7163329201162812483.b4-ty@konsulko.com>
-Date: Fri, 13 Jun 2025 16:27:04 -0600
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGJx-0002ir-Tl
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:08:38 -0400
+Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGJv-0006ZB-QR
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:08:37 -0400
+Authentication-Results: sean.taipei; dmarc=fail (p=quarantine dis=none)
+ header.from=sean.taipei
+ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 0A7BB2806
+ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1749866912;
+ cv=none;
+ b=WiTM4f2EcSh4g5LXma2jScVCOoK4y7YavMvYCyyqpHbJekhWCrlvtZh1IG6uZlB7l4tWcfOAr0P6CzIbFoOoD/F0N9V1woxSUqWRx1s8a/J2DB8snPJKWTLmxniNyG4Fy32a0rt/k4nWloawEOfjMQk6Kn3qt0hBqIgR8xYQjPyVX8j2Qtr6Vt6jX25g2Y+yuFac+fm47QewyYelBPlj0jteO7vwfmzf+coFeSh83gak+hnhQ944kFaIPlqlf/E14LbIKKG8D9y2/6jMNDDIEeHwYvCuxJGZg7fuaKJlDCN005leyJuHg0ZF+eUqQKu69QBSAfcOGn894dxNPTsU7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2;
+ t=1749866912; c=relaxed/simple;
+ bh=YJPB+UpF0TrK4otw7PnFdY2TZPEROUIzJoUx4Rnh/Ls=;
+ h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:MIME-Version;
+ b=j8Ay4qC7+L9ZIhkTNFKMW0QYFTTcjJvpTIdbVuqd9RxJazblK7iW3w3qcZvdDPQYxL7qZVlD/mw/8yqFRcnRvf0aorZy35DfWT9Owz7uIrglZzi77RCrhwTi/KeS6jYikASfj+f8TeIxWnE6Q0pj0JZ1aENy8K3i0Eg7eGm4fcI8muLNlFjE8qgG8HyZTTaj2M3/AAmQSqwooUOOJAbABg51mRT6iN7ZLAM3CMKOK9TG8/zDMufZnwBR+YRNkrJBfcsd9U22PIC4TKCHQPOuOMmJr92VPhY90LmsvPvEvbcL0cJaBNSK3WQLgO5j6ge6iguiagXxxQB1THT0DqiRng==
+ARC-Authentication-Results: i=1; sean.taipei;
+ dmarc=fail (p=quarantine dis=none)
+ header.from=sean.taipei
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
+ s=2021Q3; t=1749866911;
+ bh=YJPB+UpF0TrK4otw7PnFdY2TZPEROUIzJoUx4Rnh/Ls=;
+ h=From:To:Cc:Subject:Date:From;
+ b=9xremK/SDi0PGVTj7N/T+MU6E+n6PB1jP8UyarkBduErtTU+m6nxSQPSUbuWnHyJA
+ tpvUS+/UkSeWf8F7rZXqQRd4BGdWMLjdZAR7EurwDeN7ALYKouKOUbVY5vd4sfe5gd
+ Dq9qzKJ+4+w8tXSpcgTz/KRSwF/rucH+vaqN+anCPSPRI7fVi+EoFHPUZpUj88Wemi
+ A7vDCcpw/M9I8LySToVYUFZw6mLCLDhgrH0OZpFJbZNMgudnWq8Ohv0TSvBemt6mR/
+ +S9zSAPzcjJx/0AA/QZO0wiez0RkTuy3JLSZNBMIcMw2kp8OS88unL0TTGvHwv9u3d
+ 894fz3UNPQkDg==
+Received: from Mac.home.lla.com (unknown [207.191.242.16])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by sean.taipei (Postfix) with ESMTPSA id 0A7BB2806;
+ Sat, 14 Jun 2025 10:08:28 +0800 (CST)
+From: Sean Wei <me@sean.taipei>
+To: qemu-devel@nongnu.org
+Cc: Sean Wei <me@sean.taipei>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Greg Kurz <groug@kaod.org>
+Subject: [PATCH 0/2] virtio-9p: move G_GNUC_PRINTF to header
+Date: Fri, 13 Jun 2025 22:07:40 -0400
+Message-ID: <20250613.qemu.9p@sean.taipei>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=2001:4860:4864:20::29;
- envelope-from=trini@konsulko.com; helo=mail-oa1-x29.google.com
+Content-Transfer-Encoding: 8bit
+X-Powered-By: Sean <postmaster@sean.taipei>
+X-Scanned-By: MIMEDefang 3.3 on 104.21.5.93
+Received-SPF: pass client-ip=128.199.207.102; envelope-from=me@sean.taipei;
+ helo=sean.taipei
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,25 +84,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 28 May 2025 06:32:02 -0600, Simon Glass wrote:
+v9fs_string_sprintf() and v9fs_path_sprintf() already have
+G_GNUC_PRINTF annotations in their own *.c files, but the
+prototypes in the corresponding headers lack them.  When another
+translation unit includes only the header, -Wformat can no longer
+validate the argument list.
 
-> This series adds a standard way of passing information between different
-> firmware phases. This already exists in U-Boot at a very basic level, in
-> the form of a bloblist containing an spl_handoff structure, but the intent
-> here is to define something useful across projects.
-> 
-> The need for this is growing as firmware fragments into multiple binaries
-> each with its own purpose. Without any run-time connection, we must rely
-> on build-time settings which are brittle and painful to keep in sync.
-> 
-> [...]
+This series relocates the annotations to fsdev/9p-marshal.h and
+hw/9pfs/9p.h, then drops the now-redundant annotations in
+the *.c files.  There is no functional change.
 
-Applied to u-boot/next, thanks!
+I've checked all call sites for these two helper function, all
+of them already passes the correct number of arguments.
 
-[06/25] spl: Rename jump_to_image_no_args()
-        commit: f73450918d66565c5efacf2bb57227ba94bdaa40
+A minimal PoC (sent as the next mail in the thread) demo how
+G_GNUC_PRINTF behaves differently when the attribute is present
+only in code.c or code.h file.
+
+--
+
+Sean Wei (3):
+  fsdev/9p-marshal: move G_GNUC_PRINTF to header
+  hw/9pfs: move G_GNUC_PRINTF to header
+
+ fsdev/9p-marshal.c |  3 +--
+ fsdev/9p-marshal.h |  2 +-
+ hw/9pfs/9p.c       |  3 +--
+ hw/9pfs/9p.h       |  2 +-
+ 4 files changed, 4 insertions(+), 6 deletions(-)
+
 -- 
-Tom
-
-
+2.49.0
 
