@@ -4,58 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42FB7C71136
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Jun 2025 02:09:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51C57C71136
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Jun 2025 02:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQGKu-0002qv-Of; Fri, 13 Jun 2025 22:09:36 -0400
+	id 1uQGLa-0003le-0L; Fri, 13 Jun 2025 22:10:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGKt-0002pf-6t
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:09:35 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGLU-0003gp-Ne
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:10:13 -0400
 Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGKr-0006aj-Me
- for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:09:34 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uQGLS-0006pB-3Q
+ for qemu-devel@nongnu.org; Fri, 13 Jun 2025 22:10:12 -0400
 Authentication-Results: sean.taipei; dmarc=fail (p=quarantine dis=none)
  header.from=sean.taipei
-ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 8A0C52806
-ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1749866940;
+ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 4BD3F5FC7
+ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1749867007;
  cv=none;
- b=FoepIYZXbB90bZburMfKQZC0YhulBgDbM6A67wdwTJ2dhjyagK7IVLFalw0mFy5w8h6SJKX0JP/IT25aooc3DiGXBnNgfVj5zN1a0i5s6J2HFoPmC6gA5yPJI3f91kssRT5GhmiSq7qfsWAOFADMbh32NMgxi/cBYOjSJmHxEAP0BQFr8Wc5wFFVpNZQueiyqU6UNgznIuEEbh34rYCqQJBRHTf0Xq1Pm+hjiZ/5o3AlQA1rW9/JJ0Gx0bIkH2Bou77Ge7tGNv1eNJUFkp29AEluBFDj+7+5K+1duRRlJuw+m+1kX3LpOmrOU+itcSUkMHJseATp5RjbPWDmUMXhmw==
+ b=bhvZ8mpx4k1SzEDKRPPUBS1UWvvZ9v3YUD5lk7/WWJbKyKoaCFk4KuQ36xe10mKzAUZtjJWhc3GNIfqB4r6f+xPrbrjJV+Qvf+7fFzjO1IwBE80rKa4tMdkXXIgAZthoAM43xLovvpwInoB3oMew+9i+cjL5Zkl1u/3VUg4pW2YZ2C2Li+iAXrlQn5vb2VvAt197dKKSzSWNbp1iFyNEjfOlIUe0JYH91KifUViNh6uQZ0pldHnYa9XOAm9tlwx2KMfmzqK2LHT3qJQbGUG7lvrR26p6dER+8dEg1nFJkm4IFT5N+9qXEh3RxkXSDdM1WH1RYo0r2K4XMI2P/0ahAQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2;
- t=1749866940; c=relaxed/simple;
- bh=OFgiAYNFhF4Pa/5z/yEOAjYoeD4iuxqzyU+5fqONaLQ=;
+ t=1749867007; c=relaxed/simple;
+ bh=VZLRDdSa1IIQmngleoD4NcU4WOkdN9IiCFAoz1wV0Eg=;
  h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:References:
  MIME-Version;
- b=bDMJviHBmWGxj2vZ8EPePzDqu63SCeIeMI1wSyWOp6ss3wV0Lz3svQIKRiIPUHUqTOdUaieUbG0SuBBvivaFsrPVNnKor69TrhnL/qq+1XlO97Qxb79oAurGDXgIQMhnMZx8vJVSLxgt4S4XFG7a68tE6QSm7T8UajSYNsTZhAmbMrjfwgq/DNZGoWwrS3oXp0KdIqsTC3vZ6WaU5MQq3q13bijeVKnxcAD2v1w51IWXSxbQ4eSE5cjPJMvZ3B+xLq+W4AXC8wk8jUb/hFkuFex7B0M0MUxswGX/YNh1yppiRef76bgrzRVE41e5eUrdrl1JNsx5/UK0yOBx3rxvhw==
+ b=W9HX+4biOs6RBzsbnYPM1MImsLhq69z+NXq0OPauQ4BCS4ij7QlV4HEiBaarB9usldtXXuERQIQzxxzgpX4Dm0ptkDNjPsv4VrCTYIyl6IjNYSezl1hXm+p+S0NSE3K3Remb40I+o5Kl6nvk6UOKz113hb9DR1yhLEBu0AY8r0q6Nzrk+qB5zorniTjOBSLJJFbua1ROfKcX9dkw6zLFC3G/5YYG+1U04CsF7+88bbRcvk8aVEJSu331v7n/eowpmaJPbsd20vP0q4GDkltOEBmXg2tPN6c/YzPrp60h3+Yo1oRaIAN0/XKp9qTUvuGRm04RSQ20JmKY4/+7WVeQ/Q==
 ARC-Authentication-Results: i=1; sean.taipei;
  dmarc=fail (p=quarantine dis=none)
  header.from=sean.taipei
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
- s=2021Q3; t=1749866939;
- bh=OFgiAYNFhF4Pa/5z/yEOAjYoeD4iuxqzyU+5fqONaLQ=;
+ s=2021Q3; t=1749867006;
+ bh=VZLRDdSa1IIQmngleoD4NcU4WOkdN9IiCFAoz1wV0Eg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=0Md08k+b47vGppahMK/Voly0TpeBN3dDi36fPqz+G9HNBhxNkZjNA7drcNsV8I7TC
- AzWz4WVgQLF5MDfDMKFDb1uNcZPeLKXsRg1w+47cVNU2o8HfoI6p09YWU5ck4FQG/z
- 44lXjD6CU20uOG4gRTBi86DAeb7rQ5igZmanJQK4tGMcNiGJcUZU9eaBiBK3GKvWD4
- yd4RRzjh4gGt69bTY0YOxxZ0uvzje+gsQiireeULSM9GefZUFvJyHklKikGuKaoit5
- 8xgwoFKT1dNgQShoZ5uYXmFsp4nCTmwJJoCCrsLLCHSs0T2sdIPmiXvDTawj3dtehm
- kP7BqJzh7dqAA==
+ b=SEaryxXbzaEJw3DiL2zxTn0voLj2aLdVkNNvaFnRDTScyKJUk9Og3M7grAYS/keU7
+ fd413v/jSYeexuKczZwrKz9dOKs35ZtIX0VrS8AaXi+5lF+nm8Qz/oSitOdJaQ1mLK
+ ijzbRsh1CevXMnC/wQC2cNYQnrClkOUzOLT9KtgsxqtppxfVEYBDxe4oSivvWgBbaG
+ DEW2wFSkPC1A2f4qRK0DQaXZ4U+vgCurXa87KGDyXdyvAJ/Fzuylf76kw+SvePkHYq
+ KhMXanVLKJoegMhiIRphVPWQFsQnjI6kUmQVGNv9Qs1cZILb4Y0yglfsDAtXwP1yUi
+ qBN5GCPAQKLRw==
 Received: from Mac.home.lla.com (unknown [207.191.242.16])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by sean.taipei (Postfix) with ESMTPSA id 8A0C52806;
- Sat, 14 Jun 2025 10:08:57 +0800 (CST)
+ by sean.taipei (Postfix) with ESMTPSA id 4BD3F5FC7;
+ Sat, 14 Jun 2025 10:10:04 +0800 (CST)
 From: Sean Wei <me@sean.taipei>
 To: qemu-devel@nongnu.org
-Cc: Sean Wei <me@sean.taipei>, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Greg Kurz <groug@kaod.org>
-Subject: [PATCH 1/2] fsdev/9p-marshal: move G_GNUC_PRINTF to header
-Date: Fri, 13 Jun 2025 22:08:40 -0400
-Message-ID: <20250613.qemu.9p.01@sean.taipei>
+Cc: Sean Wei <me@sean.taipei>
+Subject: [PoC] show header-vs-source G_GNUC_PRINTF behavior
+Date: Fri, 13 Jun 2025 22:09:50 -0400
+Message-ID: <20250613.qemu.9p.poc@sean.taipei>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250613.qemu.9p@sean.taipei>
 References: <20250613.qemu.9p@sean.taipei>
@@ -87,47 +86,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-v9fs_string_sprintf() is annotated with G_GNUC_PRINTF(2, 3) in
-9p-marshal.c, but the prototype in fsdev/9p-marshal.h is missing the
-attribute, so callers that include only the header do not get format
-checking.
+This patch is NOT meant for merge.
+Just a simple proof-of-concept so reviewers can quickly reproduce
+the difference between placing a G_GNUC_PRINTF attribute in *.c versus
+*.h file.
 
-Move the annotation to the header and delete the duplicate in the
-source file. No behavior change.
+What it tests
+-------------
+
+* Two identical printf-style helpers (my_printf) are provided:
+  - v1: attribute lives in foo-v1.c
+  - v2: attribute lives in foo-v2.h
+* Two callers (bar-v1.c, bar-v2.c) intentionally pass too few
+  arguments: `my_printf("%d %d %d\n", 1)`.
+* A trivial Makefile builds each variant and shows whether GCC emits
+  the missing-argument warning.
+
+Expected result
+---------------
+
+$ make -C poc run
+// Compiling version 1 (Place G_GNUC_PRINTF in 'foo-v1.c')
+No warning will appear, sliently cause security flaw
+
+// Compiling version 2 (Place G_GNUC_PRINTF in 'foo-v2.h')
+bar-v2.c:4:17: warning: more '%' conversions than data arguments [-Wformat-insufficient-args]
+
+
 
 Signed-off-by: Sean Wei <me@sean.taipei>
 ---
- fsdev/9p-marshal.c | 3 +--
- fsdev/9p-marshal.h | 2 +-
- 2 files changed, 2 insertions(+), 3 deletions(-)
+ poc/foo-v1.h  |  3 +++
+ poc/foo-v1.c  | 10 ++++++++++
+ poc/bar-v1.c  |  6 ++++++
+ poc/foo-v2.h  |  3 +++
+ poc/foo-v2.c  | 10 ++++++++++
+ poc/bar-v2.c  |  6 ++++++
+ poc/Makefile  | 39 +++++++++++++++++++++++++++++++++++++++
+ 7 files changed, 77 insertions(+)
+ create mode 100644 poc/foo-v1.h
+ create mode 100644 poc/foo-v1.c
+ create mode 100644 poc/bar-v1.c
+ create mode 100644 poc/foo-v2.h
+ create mode 100644 poc/foo-v2.c
+ create mode 100644 poc/bar-v2.c
+ create mode 100644 poc/Makefile
 
-diff --git a/fsdev/9p-marshal.c b/fsdev/9p-marshal.c
-index f9b0336cd5..3455580703 100644
---- a/fsdev/9p-marshal.c
-+++ b/fsdev/9p-marshal.c
-@@ -27,8 +27,7 @@ void v9fs_string_free(V9fsString *str)
-     str->size = 0;
- }
- 
--void G_GNUC_PRINTF(2, 3)
--v9fs_string_sprintf(V9fsString *str, const char *fmt, ...)
-+void v9fs_string_sprintf(V9fsString *str, const char *fmt, ...)
- {
-     va_list ap;
- 
-diff --git a/fsdev/9p-marshal.h b/fsdev/9p-marshal.h
-index f1abbe151c..e8c0ef0e11 100644
---- a/fsdev/9p-marshal.h
-+++ b/fsdev/9p-marshal.h
-@@ -76,7 +76,7 @@ static inline void v9fs_string_init(V9fsString *str)
-     str->size = 0;
- }
- void v9fs_string_free(V9fsString *str);
--void v9fs_string_sprintf(V9fsString *str, const char *fmt, ...);
-+void G_GNUC_PRINTF(2, 3) v9fs_string_sprintf(V9fsString *str, const char *fmt, ...);
- void v9fs_string_copy(V9fsString *lhs, V9fsString *rhs);
- 
- #endif
+diff --git a/poc/foo-v1.h b/poc/foo-v1.h
+new file mode 100644
+index 0000000000..37b5403ba6
+--- /dev/null
++++ b/poc/foo-v1.h
+@@ -0,0 +1,3 @@
++#define G_GNUC_PRINTF(n, m) __attribute__((format(printf, n, m)))
++
++void my_printf(const char *fmt, ...);
+diff --git a/poc/foo-v1.c b/poc/foo-v1.c
+new file mode 100644
+index 0000000000..ce89f95e3e
+--- /dev/null
++++ b/poc/foo-v1.c
+@@ -0,0 +1,10 @@
++#include <stdio.h>
++#include <stdarg.h>
++#include "foo-v2.h"
++
++void G_GNUC_PRINTF(1, 2) my_printf(const char *fmt, ...) {
++	va_list ap;
++	va_start(ap, fmt);
++	vprintf(fmt, ap);
++	va_end(ap);
++}
+diff --git a/poc/bar-v1.c b/poc/bar-v1.c
+new file mode 100644
+index 0000000000..6e707e13b4
+--- /dev/null
++++ b/poc/bar-v1.c
+@@ -0,0 +1,6 @@
++#include "foo-v1.h"
++
++int main() {
++	my_printf("%d %d %d\n", 1);  // missing arguments
++	return 0;
++}
+diff --git a/poc/foo-v2.h b/poc/foo-v2.h
+new file mode 100644
+index 0000000000..8bb56d3181
+--- /dev/null
++++ b/poc/foo-v2.h
+@@ -0,0 +1,3 @@
++#define G_GNUC_PRINTF(n, m) __attribute__((format(printf, n, m)))
++
++void G_GNUC_PRINTF(1, 2) my_printf(const char *fmt, ...);
+diff --git a/poc/foo-v2.c b/poc/foo-v2.c
+new file mode 100644
+index 0000000000..3f18632ee6
+--- /dev/null
++++ b/poc/foo-v2.c
+@@ -0,0 +1,10 @@
++#include <stdio.h>
++#include <stdarg.h>
++#include "foo-v1.h"
++
++void my_printf(const char *fmt, ...) {
++	va_list ap;
++	va_start(ap, fmt);
++	vprintf(fmt, ap);
++	va_end(ap);
++}
+diff --git a/poc/bar-v2.c b/poc/bar-v2.c
+new file mode 100644
+index 0000000000..e06fd87056
+--- /dev/null
++++ b/poc/bar-v2.c
+@@ -0,0 +1,6 @@
++#include "foo-v2.h"
++
++int main() {
++	my_printf("%d %d %d\n", 1);  // missing arguments
++	return 0;
++}
+diff --git a/poc/Makefile b/poc/Makefile
+new file mode 100644
+index 0000000000..5725c9ff63
+--- /dev/null
++++ b/poc/Makefile
+@@ -0,0 +1,39 @@
++CC ?= gcc
++CFLAGS ?= -Wall
++
++TARGET = prog-v1 prog-v2
++SRCS   = foo-v1.c foo-v2.c bar-v1.c bar-v2.c
++OBJS   = $(SRCS:.c=.o)
++
++.PHONY: run
++
++run: clean prog-v1 prog-v2
++
++
++prog-v1:
++	@echo
++	@echo
++	@echo "### Compiling version 1 ###"
++	@echo "Place G_GNUC_PRINTF in 'foo.c' only"
++	@echo "No warning will appear, sliently cause security flaw"
++	@echo
++	$(CC) $(CFLAGS) -c foo-v1.c -o foo-v1.o
++	$(CC) $(CFLAGS) -c bar-v1.c -o bar-v1.o
++	@echo
++	$(CC) foo-v1.o bar-v1.o -o $@
++
++prog-v2:
++	@echo
++	@echo
++	@echo "### Compiling version 2###"
++	@echo "Place G_GNUC_PRINTF in 'foo.h' instead"
++	@echo "Show warning for missing arguments"
++	@echo
++	$(CC) $(CFLAGS) -c foo-v2.c -o foo-v2.o
++	$(CC) $(CFLAGS) -c bar-v2.c -o bar-v2.o
++	@echo
++	$(CC) foo-v2.o bar-v2.o -o $@
++
++clean:
++	@echo "### Clean all artifacts ###"
++	rm -f $(TARGET) $(OBJS)
 -- 
 2.49.0
 
