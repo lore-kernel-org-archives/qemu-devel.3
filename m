@@ -4,73 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4053CC7114A
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Jun 2025 00:33:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2D1C71151
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Jun 2025 11:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQbJ3-0007p5-3J; Sat, 14 Jun 2025 20:33:05 -0400
+	id 1uQlQM-0003eM-Dm; Sun, 15 Jun 2025 07:21:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hasueng@gmail.com>) id 1uQbJ0-0007oi-Ut
- for qemu-devel@nongnu.org; Sat, 14 Jun 2025 20:33:03 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uQlQK-0003dn-CJ; Sun, 15 Jun 2025 07:21:16 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hasueng@gmail.com>) id 1uQbIy-0008Ez-CV
- for qemu-devel@nongnu.org; Sat, 14 Jun 2025 20:33:02 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-b2700de85d0so146389a12.2
- for <qemu-devel@nongnu.org>; Sat, 14 Jun 2025 17:32:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
+ id 1uQlQH-0007xo-EN; Sun, 15 Jun 2025 07:21:14 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a575a988f9so655900f8f.0; 
+ Sun, 15 Jun 2025 04:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749947579; x=1750552379; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1749986470; x=1750591270; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Ew6FhwV7k+RCBqhhgmkMcyj1wtfFtnRN4ZJrEDhTzag=;
- b=mv3n6n8pS/4PoelusI9nFRIH5+/cHwUPNBUcVOPb4Elpsuz3gw8m7bInF6Fptcicwl
- 3tb1Fhzjzg5yAja7E5zcU6j5IDmLNgRvZ8lxTCutHTR9WK9V9neXHloOInqUY+xCn+98
- e0h2Pe6dq/ZI8+WdeRNLYhC8y9+xbD6HyNR4O4ifxMsH5Bbyyme40yjdVS/nLhbKYlNo
- V6EniwodcY4gOSpGYtMN99kLPxq59z2yT2PK40HxVVjjKIp5qD792NgGYkB2b5fZvCgk
- aiGqO0Gb8xQCN8W0sFeDFVRqNbssiXp+kKbRYZFHHFeedg+HBmlJ9wzvsd7ew0e3cv/W
- 5wsw==
+ bh=Hutb4ji51xb3Yw07pXHv6w3iBGw3zwwmaYb3nUMWfCo=;
+ b=eCrv7q/DrFEIfkavy5LGdpJj04pLWT9cisOVuIDeKg8cnQfwW2W+3EXj08QiwQrma4
+ M8vEisyLCyji0f2vDK7tiF3HtNTBv8U440/7jZUajsDIMHhROkgaAlTYxB/D+kp7Ryk2
+ gs+wUov6NysH2a/9Tcaar3KMNN+xsNLgplBBEsfUE8ks2OpplmfSOIOQoJcYiG1WTb03
+ Et2F1jsngI/fPUed2/IaPmbXgmeJPfjJKCBtW+3v8Iq+N4trD6px4UE+X4jQIGNCr38r
+ nz7YKmNry8lgVWAAsY4oDV3hPmhxn7/by/aKMabYN3B+zzbQJH2X+6hgF5ZpMYmaEZhz
+ mLNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749947579; x=1750552379;
+ d=1e100.net; s=20230601; t=1749986470; x=1750591270;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Ew6FhwV7k+RCBqhhgmkMcyj1wtfFtnRN4ZJrEDhTzag=;
- b=YGI7lJBTiShCJmTgk0WSIy1DwM/zjIapXHMmcPdYnK777tO7v12tSnrixx3vB3lSHY
- lFtXgW8bnw30l5xXZCe0or8pbnXWBYiHKgDC6/0dNMAw1JzxjIXFAkFHk1+gqzU52Z/+
- 1zSHZek2Y5SSSQkLnQEi2GvZ7/xlZC/T65HGcFnGL+QhTrCBXc/HebRqF4+J6D9hj+se
- v+CPNfPNrb+zJF7U5QrlznRe388MPh9KXlXchEeT7jpyGUtmk7QitXeWSaCBdU0r4V08
- xXDKx1l+JejaM+Fl4rCMkQzdcu1AuxLigDTLi0VhiMR/8SLVu/3ZOMAgZqGbuRKMtDWd
- qI/A==
-X-Gm-Message-State: AOJu0Yxh0MmKD6H/Q2FV8FsVy1vDR1XmiUPtrQLIe72RwQarIn9SVC+3
- 54ptv1Xn4MXwITzesuOgsonPmegd7YSvC6CBPp1YwS5Q5qffVuWemfix9vFvDvThwvQ=
-X-Gm-Gg: ASbGnctK164QhyzyakiYoxFCzXhyx7YFXZ4eLEPGRhqWwBCyMVPguMBVdxhUVyD0gCs
- 6zNeoE9Uv+8Bq+rIIm68ZGsAHzPcompCihaX/0AyI14MHHW+6vuSJ8dScGov4oUU48i9W0LaGc/
- RUSFv0CnWhKKgmWVP3TwQJocCiU4WZKL6o30iJPB/VUTvFZ1PsFKABzciCbWpZZW7BufsKP9y5Z
- K7aExn/VylWiFkIt9TkYzcPsXcCWHZpKDcu4LXSsyAEb+bxrkUQupDo5Vl+b05kwik++J9pn/6z
- PHI02A+W85e4kMmpIUHrzt0rsbm9JWki91z0m1PC62HEkR4xAto6nRz5
-X-Google-Smtp-Source: AGHT+IHqIvEKWgNs0W0GMLkINeTdcrAGw3sx4WZyLUpAdCd79Jk2QkPScJ/oYakI99LiOAGk1yJ7Yw==
-X-Received: by 2002:a05:6a00:ac3:b0:736:89bd:ffb9 with SMTP id
- d2e1a72fcca58-7489cd5b5b2mr1992680b3a.0.1749947578565; 
- Sat, 14 Jun 2025 17:32:58 -0700 (PDT)
-Received: from bong-com.. ([210.97.55.153]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7488ffed0c2sm3942803b3a.22.2025.06.14.17.32.56
+ bh=Hutb4ji51xb3Yw07pXHv6w3iBGw3zwwmaYb3nUMWfCo=;
+ b=KDlv0Oa0Rwo4xnYmJDfsvgYbVvetek3AVOr30AyO3BCJeP6U8yMCbxr9GNyDKI2Msg
+ rnSWwEG/2IcqADaWpnIeVCmCRrt/2kU3Sskt6GC8olm1A85R7sD+YB24ch+IetYohqYe
+ QfP1uA1dXy1tQJkJPoUrWYPUPyhVZlWhGJ4JtYHY/qL2/hJgT0zxDtxdKfirGGfwtBhh
+ pIY0UQBJ3YhTfSnC7WnX6fhA85YR+QH+PqPzfJm+ksnOhP2dB0x0Z6Mqm+ZXB/CN9Jof
+ EFYOCDxOcA7MEGD1PjZCbO6xpkuhGEw2xNOZIPmMwSmIHz3niAMfRHoSzwNu/UsBHQjc
+ Qyrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX69bIn4A6GfCcHepNLJziJXfe68LToeODlHc69KIAIWAEWB5nZqnmQ6BokvgprKH4u4SejWrLf9n0=@nongnu.org
+X-Gm-Message-State: AOJu0YxjOG23oG1RV39grx6KvvfrEy9eg2wJucJDfkPnHipSelYvVoof
+ PKulqc4fR+MhGcaxZ6jdpH1ic8G/T79YW4dl3zKpE6yhGvjcgVSi/fFKc0ewAg==
+X-Gm-Gg: ASbGncsiJmsLgVGDtnx+lM0mkQxwAiHMQR78RLCpADjc4KAA8bR9DyFLpMMZKaaHh9j
+ H+E5Pxry8sf7DxVyywVV1+pYSKhDSXXrKDFDLOtY+lfljVAUFIyR+a8Zr6Yev9l5N2TqgnYgt7m
+ 3cJOjtOmqH+eF6jVbCRXlKvdHutp4nbZaUzHxgCba/GZCnSjCrbojVfwgbzBC6b5ayKvkx8Jctd
+ 7/EIXOWAjQ7jssQleCJ3fU9XXmzqi5PjeyPGohdql8h9HAxuwT/5UhyfpIkwALLE058Ad4WMwQ5
+ RwbTtZ1H2H5q3WDyPZ45j7xsqAwzv7QePwG4ZwTV6DM5Aa5tp2TNw22aysqgDdLxCOiRVWheViX
+ 4qxt8ppZgdcWHky3dZ9HvE47fXOSJv1kPpdJaySaO07Eb4N/SU7OrSmCqQ28p132XCQL4prKLr6
+ +lP8n2IQ==
+X-Google-Smtp-Source: AGHT+IEFB2YPqR+A59N5lh65OHm5NgptfSZMbIdCGXVgX9QK6jvYZ7FCLSyStDFJUfIGyyg3vQPhRA==
+X-Received: by 2002:a5d:64cb:0:b0:3a4:d274:1d9b with SMTP id
+ ffacd0b85a97d-3a5723ad5eamr5086294f8f.25.1749986469963; 
+ Sun, 15 Jun 2025 04:21:09 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-231b-9b00-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:231b:9b00:219:99ff:feb2:2458])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a568b5c372sm7327099f8f.89.2025.06.15.04.21.09
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 14 Jun 2025 17:32:58 -0700 (PDT)
-From: Haseung Bong <hasueng@gmail.com>
+ Sun, 15 Jun 2025 04:21:09 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: alex.bennee@linaro.org, philmd@linaro.org, thuth@redhat.com,
- imp@bsdimp.com, kevans@freebsd.org, Haseung Bong <hasueng@gmail.com>
-Subject: [PATCH v3] tests/vm: update openbsd image to 7.7
-Date: Sun, 15 Jun 2025 09:32:49 +0900
-Message-ID: <20250615003249.310160-1-hasueng@gmail.com>
-X-Mailer: git-send-email 2.43.0
+Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH v3 0/4] Initial logging support for Rust
+Date: Sun, 15 Jun 2025 13:20:33 +0200
+Message-ID: <20250615112037.11992-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.49.0
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=hasueng@gmail.com; helo=mail-pg1-x52e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -93,29 +102,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Update tests/vm/openbsd to release 7.7
+This series introduces a log_mask_ln! macro which is inspired by the C version
+and is just a thin wrapper around qemu_log(). It caters to Rust expectations by
+accepting an enum for logging categories and working like the format! macro. The
+macro then gets used in the pl011 device which either had its logging commented
+out or relied on eprintln!() which can't be silenced by users.
 
-Signed-off-by: Haseung Bong <hasueng@gmail.com>
----
- tests/vm/openbsd | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Testing done:
+* Run `make clippy`
+* Purposefully trigger warnings with varying number of arguments
 
-diff --git a/tests/vm/openbsd b/tests/vm/openbsd
-index 5e4f76f398..2ea86a01ba 100755
---- a/tests/vm/openbsd
-+++ b/tests/vm/openbsd
-@@ -22,8 +22,8 @@ class OpenBSDVM(basevm.BaseVM):
-     name = "openbsd"
-     arch = "x86_64"
- 
--    link = "https://cdn.openbsd.org/pub/OpenBSD/7.6/amd64/install76.iso"
--    csum = "60cba8cb391b50bba8fa10fc768bd0529636f5345d82133c93e22c798d8e5269"
-+    link = "https://cdn.openbsd.org/pub/OpenBSD/7.7/amd64/install77.iso"
-+    csum = "da0106e39463f015524dca806f407c37a9bdd17e6dfffe533b06a2dd2edd8a27"
-     size = "20G"
-     pkgs = [
-         # tools
+v3:
+* Add macro to prelude (Manos)
+* Have log_mask_ln! rather than log_mask! macro (Manos, Paolo)
+* rustdoc improvements (Paolo)
+* Fix logged function names (Manos)
+* Add missing logging to pl011 to match C version (Paolo)
+* Add patch to make clippy happier (which still complains about "PrimeCell" in
+  rustdoc comment)
+
+v2:
+* Drop the qemu_ prefix from the macro name (Paolo)
+* Use an enum for the logging categories in PascalCase as suggested by Paolo
+
+Bernhard Beschow (4):
+  rust/qemu-api: Add initial logging support based on C API
+  rust/hw/char/pl011/src/device: Implement logging
+  rust/hw/char/pl011/src/device: Add missing logging to match C version
+  rust/qemu-api: Fix clippy lint `missing_const_for_fn`
+
+ docs/devel/rust.rst              |  1 +
+ rust/wrapper.h                   |  2 +
+ rust/hw/char/pl011/src/device.rs | 18 ++++++--
+ rust/qemu-api/meson.build        |  1 +
+ rust/qemu-api/src/cell.rs        |  2 +-
+ rust/qemu-api/src/lib.rs         |  1 +
+ rust/qemu-api/src/log.rs         | 78 ++++++++++++++++++++++++++++++++
+ rust/qemu-api/src/prelude.rs     |  2 +
+ rust/qemu-api/src/qom.rs         |  2 +-
+ 9 files changed, 101 insertions(+), 6 deletions(-)
+ create mode 100644 rust/qemu-api/src/log.rs
+
 -- 
-2.43.0
+2.49.0
 
 
