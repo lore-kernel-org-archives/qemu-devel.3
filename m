@@ -4,85 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03A90C61CE8
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Jun 2025 11:22:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA72AC61CE8
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Jun 2025 14:58:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQlQZ-0003nr-Pi; Sun, 15 Jun 2025 07:21:32 -0400
+	id 1uQoo9-0004aU-Lt; Sun, 15 Jun 2025 10:58:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uQlQM-0003eL-15; Sun, 15 Jun 2025 07:21:18 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <algonell@gmail.com>)
+ id 1uQoQs-0007LH-FA
+ for qemu-devel@nongnu.org; Sun, 15 Jun 2025 10:34:02 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uQlQK-0007y8-Gr; Sun, 15 Jun 2025 07:21:17 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a507e88b0aso3492212f8f.1; 
- Sun, 15 Jun 2025 04:21:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <algonell@gmail.com>)
+ id 1uQoQq-0005VG-Sm
+ for qemu-devel@nongnu.org; Sun, 15 Jun 2025 10:34:01 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-453066fad06so26829275e9.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Jun 2025 07:33:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749986473; x=1750591273; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1PAd+Ag09Z1RtE6nSLbu8MU1jQdIfYloyvGbcP1uNwY=;
- b=FnJqbTuJqQao/hZC6gPbNUF1RMpUSlGE2adBMmu4r3cj6O/spFGW4yOCR9sH7ldhif
- 2wCd/UocmHH76g54pjnwehq+0gRXEzQ2ldG3ykc6bIYiiWlywHz8q0fE0C6ndr1Svwlo
- koI/AF/6q6Kt2X5k/EJxaWIRzYzVuyNevog6eRWnaDnUOLrYSTP8AayVn+an3GxZ/d+q
- GHTWx4nrixQTOV1HbAfGBvgDac/X/3tOdRxXO79eMTk6yg99qV2SibWv7OBv1QpaGA1h
- QB/aZtBCVPaCaBG0QSC9+7Wa8vLuF0twmCisaVeLXYypQ9qplFG8HfoOveP9e86GAZpt
- ATjA==
+ d=gmail.com; s=20230601; t=1749998038; x=1750602838; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=rs6Qvqw8PYN5dg7MGjWVuDjKN/0wmQ/9o3ZBnfwK26w=;
+ b=FkaP/slj9O4Hqy67ZHM2PQ64+ws4CRG4bY4vzrEA9/Jr33rvJYL9OlzC7Lfi8Rhlom
+ ZFd4d72gQzdlrzVtP+VG6RKhOqpmLGpMcyMHSQEt7qrDclJgw1E2sNNKraF2qnl2hNWE
+ ATIAQe0TqJJm5dPrNgetqtMptellagKR4gYA1hnqBdVj9c9r7kEdwtPB7DA9f0N/reVo
+ ipaxbTkThT1+Herxzywiu61QoCMqw2c32w0+4BgaQFcFUrUxUAg9mRmI2EmbN+LqBB1V
+ 0iMG5XPVrL0PgovTpueSS+0lMnnpj9mXSkWWFO1uoIufyw4Xni5DKfGIgvxCAwaJ5NeJ
+ zOVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749986473; x=1750591273;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1PAd+Ag09Z1RtE6nSLbu8MU1jQdIfYloyvGbcP1uNwY=;
- b=YwY0TxHnOwNEuBqXMIYxQR1uhuojMqoIMCTjKugtFRzL2QbQD8x0er1gGu0ySC2oS3
- 7+9CXcwbWZ1w6/kNs40NgvKDp0eQm/+P5RYtRNxI000Jb51oM0pvpbCkwKnSxZLjehfE
- AmFY+PwhAh223XmbjKQ/KZb7CQW3Qk26ZBz27K5h242rmtR0rwyexOadWTwgpYqGf92r
- RRfmyg1uH2/4ZBMs6+e0MdiuQD2QQtTVDEcvAYLhiivwSNOOveLKnbpu4N8P7SE/uiR/
- sQXq8Hj4HEJz9iEh+gC/NtEwMVwdaSNgKbp183Be9irZVm5ZH2yLJ0OqD7Wk5VglzVWJ
- mfFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXTEwthdNLerWKpQ6BHED2/rXdTroMqMeSK3ocTzZy8syZW3ybMUhf9rn2aEZboPgiitzNX+fWhR2I=@nongnu.org
-X-Gm-Message-State: AOJu0Yw4szZ6S2a+odThntvmI+qMHjcfLu+B2L09Uhtn5bF2wu/EqucM
- nQF45StCrkXS00Q3wIs+iqym7ClJwGPJfwk4oyBKk2qY8q+v/0fyVUT/X4AxeA==
-X-Gm-Gg: ASbGncvGGEOngRcwvASSWUEhQDMz04NXCxAwKr7ICkqZmMhLTUfGUgFZmLVE1wrn9b/
- k4sYbbjfc/cqKS1zjMTaCTpkXfuEVCswdBmpqCtIyM1spBMV6sQlAaO4PL9no51812O3BTHmh2q
- mo1rWI8xgCdztp7bEZcPfg4Q5anRiXYupTfnfS+jJP0xHfuHzRsCOir/02F2RuzXjnxnnqBcx+v
- vAx5kqfyOtBiwiyKb6nMOhDtT8V7keqYaejtUjDsqyM1+GvFO66Z2C0ilCW+IxwgyFLOePMeaEN
- x7DECuz9a7vRBxP/az1pbhogmoQraEDhAod0Y+MvLvuI8clWFLGM0g02kEjQ0pCVff/jY5amK1L
- 0tTyW8mw0iNDQgaMkKaiv6Y5BjHhHe9ZoyKo5Al3E2RFPmT8MM9MawPZQe/PaG88JBJyAAxQvp0
- cx1ymosQ==
-X-Google-Smtp-Source: AGHT+IGqFpEiTIg7K7tEux/BOI4K4o2CpLwSw+ng+8y1WcXpcuD9s52EVtO5umVxRJCb8D31lJmMnw==
-X-Received: by 2002:a05:6000:2884:b0:3a5:2ef8:3512 with SMTP id
- ffacd0b85a97d-3a572373cdamr5418243f8f.14.1749986472881; 
- Sun, 15 Jun 2025 04:21:12 -0700 (PDT)
-Received: from Provence.localdomain
- (dynamic-2a02-3100-231b-9b00-0219-99ff-feb2-2458.310.pool.telefonica.de.
- [2a02:3100:231b:9b00:219:99ff:feb2:2458])
+ d=1e100.net; s=20230601; t=1749998038; x=1750602838;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rs6Qvqw8PYN5dg7MGjWVuDjKN/0wmQ/9o3ZBnfwK26w=;
+ b=ZklKbNXTWYTWT5B4DbyT62wl6vF7RT9w2duSusF5njTjb0p5jwVkqyQi8ZUn6tMEf+
+ aBzL4uQ2MJXnmnUeYq/LbFXZugUh+wdo+ECLWngvPoZuzbucVWkZImeF4mE4uoelwkVD
+ CzuuUuFdAMYkilYVt85IGltvffdB5n5Jg8sq9eMcAYSvCECtvH8eygCrfBxksmnybWjJ
+ CfA5D6pKLQgiyNMNXoxVdnaA/IJ4+b99pA+ikhDrB7jt64uIJS5g4AzK7BpceiRRYJad
+ GCRQOjESSeN8t1LDXSHD/78wKOqg3gre+Q/qfY17BuYJGn1NfP/aDaXYcR0GFgDDpOEx
+ JXCA==
+X-Gm-Message-State: AOJu0YzO/6KYaDh1O0hxA+K7dvOCt3U6v9yj+NRLe3taLlUHRvYRlvxV
+ 9aaAJThsu+R4DFhDEEwWi65yV9cqkB7RjR0ZHXm3lwSLZmHuvzitnFrBEtEduqMl
+X-Gm-Gg: ASbGncu0EACQsZYZWilTwiqRH8V//rakFcose86nLRxbD1vFovBDU11n1kyb9gMBMqj
+ QeqBoA+r3bUqZuRFtakqxK7Tb3NWoyldIy13AeJlzXesP5RIaE7eRLxw/cL3G+hnEHd3gTo3k3U
+ 0SRF8NP1QeoHO99NusgqYTjIzwNkEGejD+kUQvfQDSfPIQCWKC261YQ3O/knP8B5kby9FIKI9gW
+ vVBA8FuN8ko/XNe85n4kMS/mX1m8NEdhUzSGSpEJvz9p23TsQR/mC6IOWkKM4O1u1Z3EMue1azo
+ REKfKDyW7JEh98HkP4TGflmFIlz9QakMLWpJP6Cns0Df4fsnYSCWidCKgyBXSQnbVTHy
+X-Google-Smtp-Source: AGHT+IGoV0Zc0CGLrIqipgI0QRhDkCHsOAxcLcbpAU2dmliVIXcfsSFIQELElT2a0Yj8L4ZxLYWM6Q==
+X-Received: by 2002:a05:600c:5020:b0:43c:f1b8:16ad with SMTP id
+ 5b1f17b1804b1-4533cac5d29mr59257575e9.30.1749998037865; 
+ Sun, 15 Jun 2025 07:33:57 -0700 (PDT)
+Received: from ip-172-26-2-149.. ([2a05:d018:458:cf00:674c:b768:6d8:37d1])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b5c372sm7327099f8f.89.2025.06.15.04.21.12
+ ffacd0b85a97d-3a568a7e980sm7737749f8f.41.2025.06.15.07.33.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Jun 2025 04:21:12 -0700 (PDT)
-From: Bernhard Beschow <shentey@gmail.com>
+ Sun, 15 Jun 2025 07:33:57 -0700 (PDT)
+From: Andrew Kreimer <algonell@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
- Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v3 3/4] rust/hw/char/pl011/src/device: Add missing logging to
- match C version
-Date: Sun, 15 Jun 2025 13:20:36 +0200
-Message-ID: <20250615112037.11992-4-shentey@gmail.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250615112037.11992-1-shentey@gmail.com>
-References: <20250615112037.11992-1-shentey@gmail.com>
+Cc: Andrew Kreimer <algonell@gmail.com>
+Subject: [PATCH] docs: remove repeated word
+Date: Sun, 15 Jun 2025 17:33:03 +0300
+Message-ID: <20250615143353.5542-1-algonell@gmail.com>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=algonell@gmail.com; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -91,6 +81,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Sun, 15 Jun 2025 10:58:03 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -105,30 +96,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Co-developed-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
----
- rust/hw/char/pl011/src/device.rs | 6 ++++++
- 1 file changed, 6 insertions(+)
+The word 'find' appears twice, remove the extra one.
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index fa591c3ef6..48b4bca6b8 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -304,6 +304,12 @@ fn read_data_register(&mut self, update: &mut bool) -> u32 {
-     }
+Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+---
+ docs/system/introduction.rst | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+index 338d3745c3..4cd46b5b8f 100644
+--- a/docs/system/introduction.rst
++++ b/docs/system/introduction.rst
+@@ -81,7 +81,7 @@ may not be optimal for modern systems.
  
-     fn write_data_register(&mut self, value: u32) -> bool {
-+        if !self.control.enable_uart() {
-+            log_mask_ln!(Log::GuestError, "PL011 data written to disabled UART");
-+        }
-+        if !self.control.enable_transmit() {
-+            log_mask_ln!(Log::GuestError, "PL011 data written to disabled TX UART");
-+        }
-         // interrupts always checked
-         let _ = self.loopback_tx(value.into());
-         self.int_level |= Interrupt::TX;
+ For a non-x86 system where we emulate a broad range of machine types,
+ the command lines are generally more explicit in defining the machine
+-and boot behaviour. You will find often find example command lines in
++and boot behaviour. You will often find example command lines in
+ the :ref:`system-targets-ref` section of the manual.
+ 
+ While the project doesn't want to discourage users from using the
 -- 
-2.49.0
+2.48.1
 
 
