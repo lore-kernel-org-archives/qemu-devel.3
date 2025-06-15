@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D2D1C71151
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A83FC61CE8
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Jun 2025 11:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uQlQM-0003eM-Dm; Sun, 15 Jun 2025 07:21:18 -0400
+	id 1uQlQT-0003gE-RR; Sun, 15 Jun 2025 07:21:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uQlQK-0003dn-CJ; Sun, 15 Jun 2025 07:21:16 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1uQlQL-0003eG-Ly; Sun, 15 Jun 2025 07:21:17 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <shentey@gmail.com>)
- id 1uQlQH-0007xo-EN; Sun, 15 Jun 2025 07:21:14 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-3a575a988f9so655900f8f.0; 
- Sun, 15 Jun 2025 04:21:12 -0700 (PDT)
+ id 1uQlQI-0007y2-U3; Sun, 15 Jun 2025 07:21:17 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-450d668c2a1so31189935e9.0; 
+ Sun, 15 Jun 2025 04:21:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1749986470; x=1750591270; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Hutb4ji51xb3Yw07pXHv6w3iBGw3zwwmaYb3nUMWfCo=;
- b=eCrv7q/DrFEIfkavy5LGdpJj04pLWT9cisOVuIDeKg8cnQfwW2W+3EXj08QiwQrma4
- M8vEisyLCyji0f2vDK7tiF3HtNTBv8U440/7jZUajsDIMHhROkgaAlTYxB/D+kp7Ryk2
- gs+wUov6NysH2a/9Tcaar3KMNN+xsNLgplBBEsfUE8ks2OpplmfSOIOQoJcYiG1WTb03
- Et2F1jsngI/fPUed2/IaPmbXgmeJPfjJKCBtW+3v8Iq+N4trD6px4UE+X4jQIGNCr38r
- nz7YKmNry8lgVWAAsY4oDV3hPmhxn7/by/aKMabYN3B+zzbQJH2X+6hgF5ZpMYmaEZhz
- mLNA==
+ d=gmail.com; s=20230601; t=1749986472; x=1750591272; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=P8ZAY6eIGVrJzx52bkDggMM638/7q1R15DHDcagaO4c=;
+ b=bBouAGmjp+EKpkQUAvuw3YMu+LsmZqesjGKBezJ0Lvop1ieZC64pf6vKc/wfBAUJVL
+ ZIqjt2ETfUQkpxRfIDOnvUMv2FlPwIIK4n00e4nFriguEDoKAPE6YUvDo79ev1/Pwu5W
+ IIRT56NG2+e0kScMF30D2dtOQlfg3PkGWieVsIWhP6Uzz4ATnBayQ6i/hSWzTUTCPJbB
+ 3c55CLVnZoCuq9pcu3pi6Oz08ayBKupWn1NFCAkKDxKsP3DvDc+4m+K87Ln0iFx6ylXz
+ D8N9E8Hxb3AvgA9WRvusGk3dfXwr30xilBmvX/DzPfW4Lb4FrDC//dxE+mjl3g/n0nNS
+ POdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1749986470; x=1750591270;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Hutb4ji51xb3Yw07pXHv6w3iBGw3zwwmaYb3nUMWfCo=;
- b=KDlv0Oa0Rwo4xnYmJDfsvgYbVvetek3AVOr30AyO3BCJeP6U8yMCbxr9GNyDKI2Msg
- rnSWwEG/2IcqADaWpnIeVCmCRrt/2kU3Sskt6GC8olm1A85R7sD+YB24ch+IetYohqYe
- QfP1uA1dXy1tQJkJPoUrWYPUPyhVZlWhGJ4JtYHY/qL2/hJgT0zxDtxdKfirGGfwtBhh
- pIY0UQBJ3YhTfSnC7WnX6fhA85YR+QH+PqPzfJm+ksnOhP2dB0x0Z6Mqm+ZXB/CN9Jof
- EFYOCDxOcA7MEGD1PjZCbO6xpkuhGEw2xNOZIPmMwSmIHz3niAMfRHoSzwNu/UsBHQjc
- Qyrw==
+ d=1e100.net; s=20230601; t=1749986472; x=1750591272;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=P8ZAY6eIGVrJzx52bkDggMM638/7q1R15DHDcagaO4c=;
+ b=aOcsxOctRhehxFg4ue3LVEQGkkySpAfTsRDbMVzlBylRaheeVC4EB9rHB4weyPpFGo
+ FSDVAaHX6iMct473h+vjdYfBc0AY1rl8xWsegLYUu1P2jDkudbWz5hfl65llXLc55o+1
+ f+YoBy95z4enUSgRqA5ZN6mlbpqTuUzWkZzE98ojfVGegEj+92WZdMeQtt1APOsZ0YCn
+ QheWwFriXGTpZkPA8hFdgDpyZZsTPdaAX1dxjGMT/1CARlVQuESrRyqWzPbWTzBYIWvC
+ R3F3/CV4Lhapu/sbTsWGpSuWh47v7uPVOwLnoGjvemFyAvagjXbe12EzYMyX6ODixbQ8
+ Uqqg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX69bIn4A6GfCcHepNLJziJXfe68LToeODlHc69KIAIWAEWB5nZqnmQ6BokvgprKH4u4SejWrLf9n0=@nongnu.org
-X-Gm-Message-State: AOJu0YxjOG23oG1RV39grx6KvvfrEy9eg2wJucJDfkPnHipSelYvVoof
- PKulqc4fR+MhGcaxZ6jdpH1ic8G/T79YW4dl3zKpE6yhGvjcgVSi/fFKc0ewAg==
-X-Gm-Gg: ASbGncsiJmsLgVGDtnx+lM0mkQxwAiHMQR78RLCpADjc4KAA8bR9DyFLpMMZKaaHh9j
- H+E5Pxry8sf7DxVyywVV1+pYSKhDSXXrKDFDLOtY+lfljVAUFIyR+a8Zr6Yev9l5N2TqgnYgt7m
- 3cJOjtOmqH+eF6jVbCRXlKvdHutp4nbZaUzHxgCba/GZCnSjCrbojVfwgbzBC6b5ayKvkx8Jctd
- 7/EIXOWAjQ7jssQleCJ3fU9XXmzqi5PjeyPGohdql8h9HAxuwT/5UhyfpIkwALLE058Ad4WMwQ5
- RwbTtZ1H2H5q3WDyPZ45j7xsqAwzv7QePwG4ZwTV6DM5Aa5tp2TNw22aysqgDdLxCOiRVWheViX
- 4qxt8ppZgdcWHky3dZ9HvE47fXOSJv1kPpdJaySaO07Eb4N/SU7OrSmCqQ28p132XCQL4prKLr6
- +lP8n2IQ==
-X-Google-Smtp-Source: AGHT+IEFB2YPqR+A59N5lh65OHm5NgptfSZMbIdCGXVgX9QK6jvYZ7FCLSyStDFJUfIGyyg3vQPhRA==
-X-Received: by 2002:a5d:64cb:0:b0:3a4:d274:1d9b with SMTP id
- ffacd0b85a97d-3a5723ad5eamr5086294f8f.25.1749986469963; 
- Sun, 15 Jun 2025 04:21:09 -0700 (PDT)
+ AJvYcCVuvN23sM6s9NTYnb5MZLbfDPBPjM7nBJfrFaqatPC4kGVSx8mbd6weU7z59iq7BMvnsMwzCh+qzvo=@nongnu.org
+X-Gm-Message-State: AOJu0Yx0JYzB7vlcVSXkcQZPn2pZUJLZS6Z4JT5oSo3LqwON4cDWZ0Bu
+ 6LAJoUWyI8nfoTaKPQxJRv9mXXINkTYIprBNLVLK5omLF3cVPZSvde9HGQQdoQ==
+X-Gm-Gg: ASbGncsJzdihlHDTBhJVxmVWWvYg1VKwsuaboJxTylnvfV7xFW2oMXXajR93fU1HPWM
+ qVaS8M38/BvtzaosBpvxDEsqZ9EKSNcfI2pSsAsCDGlQ+8T8miSN3fhHvDsYvPS+i/66VT89/W4
+ NcSt73OSZM00B4uKhDAQgHxZRTnek9t1pfOdUYoO3eFR04aKBKHzks7X/bdsV9HHpfXI8X1sxhR
+ GNENbZReVJf8fIS7f1feaPGHoJQscf2Yg68xXl2MkIHH6adRIoO+kihzYtTT5gcle4A9ANNS548
+ 0MI5/UTF4/0XUg+doMIKnfbfZmGy7w1632WfwUFR72wF2hsoNMTAFPac/sWwYhvwHSI/KquTjWQ
+ rkQ9mdQ5APuzsar2gxBpytmxPuS1tcErQ3FW3UrpH6ptCi8YCvZV2rvKceKxRgmhmg6D0Z8S3OY
+ YxmbWCjuRYi6KThdFY
+X-Google-Smtp-Source: AGHT+IFScch2F8u1V6k+XUxgjGw6Hq6dhWt9obagz53Lc3uwHX9XfJhcJloREcz49cMl0bqImtWC8w==
+X-Received: by 2002:adf:9d92:0:b0:3a5:7895:7f6b with SMTP id
+ ffacd0b85a97d-3a578958019mr2801870f8f.7.1749986472088; 
+ Sun, 15 Jun 2025 04:21:12 -0700 (PDT)
 Received: from Provence.localdomain
  (dynamic-2a02-3100-231b-9b00-0219-99ff-feb2-2458.310.pool.telefonica.de.
  [2a02:3100:231b:9b00:219:99ff:feb2:2458])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b5c372sm7327099f8f.89.2025.06.15.04.21.09
+ ffacd0b85a97d-3a568b5c372sm7327099f8f.89.2025.06.15.04.21.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Jun 2025 04:21:09 -0700 (PDT)
+ Sun, 15 Jun 2025 04:21:11 -0700 (PDT)
 From: Bernhard Beschow <shentey@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, qemu-rust@nongnu.org,
  Bernhard Beschow <shentey@gmail.com>
-Subject: [PATCH v3 0/4] Initial logging support for Rust
-Date: Sun, 15 Jun 2025 13:20:33 +0200
-Message-ID: <20250615112037.11992-1-shentey@gmail.com>
+Subject: [PATCH v3 2/4] rust/hw/char/pl011/src/device: Implement logging
+Date: Sun, 15 Jun 2025 13:20:35 +0200
+Message-ID: <20250615112037.11992-3-shentey@gmail.com>
 X-Mailer: git-send-email 2.49.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20250615112037.11992-1-shentey@gmail.com>
+References: <20250615112037.11992-1-shentey@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=shentey@gmail.com; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=shentey@gmail.com; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,47 +104,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces a log_mask_ln! macro which is inspired by the C version
-and is just a thin wrapper around qemu_log(). It caters to Rust expectations by
-accepting an enum for logging categories and working like the format! macro. The
-macro then gets used in the pl011 device which either had its logging commented
-out or relied on eprintln!() which can't be silenced by users.
+Now that there is logging support in Rust for QEMU, use it in the pl011
+device.
 
-Testing done:
-* Run `make clippy`
-* Purposefully trigger warnings with varying number of arguments
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ rust/hw/char/pl011/src/device.rs | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-v3:
-* Add macro to prelude (Manos)
-* Have log_mask_ln! rather than log_mask! macro (Manos, Paolo)
-* rustdoc improvements (Paolo)
-* Fix logged function names (Manos)
-* Add missing logging to pl011 to match C version (Paolo)
-* Add patch to make clippy happier (which still complains about "PrimeCell" in
-  rustdoc comment)
-
-v2:
-* Drop the qemu_ prefix from the macro name (Paolo)
-* Use an enum for the logging categories in PascalCase as suggested by Paolo
-
-Bernhard Beschow (4):
-  rust/qemu-api: Add initial logging support based on C API
-  rust/hw/char/pl011/src/device: Implement logging
-  rust/hw/char/pl011/src/device: Add missing logging to match C version
-  rust/qemu-api: Fix clippy lint `missing_const_for_fn`
-
- docs/devel/rust.rst              |  1 +
- rust/wrapper.h                   |  2 +
- rust/hw/char/pl011/src/device.rs | 18 ++++++--
- rust/qemu-api/meson.build        |  1 +
- rust/qemu-api/src/cell.rs        |  2 +-
- rust/qemu-api/src/lib.rs         |  1 +
- rust/qemu-api/src/log.rs         | 78 ++++++++++++++++++++++++++++++++
- rust/qemu-api/src/prelude.rs     |  2 +
- rust/qemu-api/src/qom.rs         |  2 +-
- 9 files changed, 101 insertions(+), 6 deletions(-)
- create mode 100644 rust/qemu-api/src/log.rs
-
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index be8387f6f2..fa591c3ef6 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -8,6 +8,8 @@
+     chardev::{CharBackend, Chardev, Event},
+     impl_vmstate_forward,
+     irq::{IRQState, InterruptSource},
++    log::Log,
++    log_mask_ln,
+     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
+     prelude::*,
+     qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
+@@ -275,8 +277,7 @@ pub(self) fn write(
+             DMACR => {
+                 self.dmacr = value;
+                 if value & 3 > 0 {
+-                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
+-                    eprintln!("pl011: DMA not implemented");
++                    log_mask_ln!(Log::Unimp, "pl011: DMA not implemented");
+                 }
+             }
+         }
+@@ -538,7 +539,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
+                 u64::from(device_id[(offset - 0xfe0) >> 2])
+             }
+             Err(_) => {
+-                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
++                log_mask_ln!(Log::GuestError, "PL011State::read: Bad offset {offset}");
+                 0
+             }
+             Ok(field) => {
+@@ -570,7 +571,10 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
+                 .borrow_mut()
+                 .write(field, value as u32, &self.char_backend);
+         } else {
+-            eprintln!("write bad offset {offset} value {value}");
++            log_mask_ln!(
++                Log::GuestError,
++                "PL011State::write: Bad offset {offset} value {value}"
++            );
+         }
+         if update_irq {
+             self.update();
 -- 
 2.49.0
 
