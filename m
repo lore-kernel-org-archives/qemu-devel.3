@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EA69C71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 14:08:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C550EC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 14:08:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRAUe-0001II-9p; Mon, 16 Jun 2025 10:07:24 -0400
+	id 1uRAUc-0001ID-Td; Mon, 16 Jun 2025 10:07:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uRAU8-00016k-Up
+ id 1uRAU8-00016j-Ue
  for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:58 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uRAU1-00041E-1x
+ id 1uRAU1-00041S-2I
  for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:51 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-45300c82c1cso14610065e9.3
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 07:06:43 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-45305c280a3so18286455e9.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 07:06:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750082801; x=1750687601; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750082803; x=1750687603; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=h8VneX6jvIb39sL+b3h3e8ynlMbxT5M4RcGTGS18RQw=;
- b=sBPVineeVA9oLzGzW+lz1LWpcb12d9tKRyI6he3Qm5eDcmgevzYE5auT4TtxxmLG2i
- RaSS091CCexL8jNxh/n7wl4jP1VXeZRW2zM9wuiOaYy4pwW+dY5PASR/89pFoc4dZMyP
- AP+WxCB28YPxqUjlE3vkaju+x6aGL7QvVYG8EtyVPZm5VmJoZfJLGSYfXecIlk6DXJ1S
- 2ee0C13q3hlZpHlVc2JfFeFSqBqlsuftAWxxDUb7cyFdQ8pao+WErYtlTt4cT21NORJE
- CMc+aOWlt226g9Iz/Ty3tIPCrlHLPVXH6Tt/aF2FudemzbwY/BIkC7IfBGxCozq+xHWv
- nZDA==
+ :reply-to; bh=x7phbzrAcVyuXp2vszvsdZCmriphcffSkgR9/9ccTkE=;
+ b=mgqijibzGr5OnC1XmAcUsnKnK7hG5RiAXWEvEZZI1kiRJe0LnkUuf671p1DuWSNeDv
+ QG2bEeBl7pDC/qBzvrAEf5qiG8mzDPshhI+y208mwRJ4bojxGUyDtRtDndD9dPFLl3AO
+ 93G4PjzbZGBLHXIQmK2Czkvn31xbJmrKfIe2CL/qU38Jcx/O+ProFLuTJzx8CwCnvp1v
+ /uYuETu1YG+z44Cx/GJSY/DuWHsccjBHohWYIxfsJKQWBFAkKsDe1CXL+wCTTDJl2FI7
+ jLYpn502gFoMJcWFSBt7qCWeEzsh/H16D1sJKrUKveol5hDhma1jNlIj2lrN7OnJvZxY
+ Je1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750082801; x=1750687601;
+ d=1e100.net; s=20230601; t=1750082803; x=1750687603;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=h8VneX6jvIb39sL+b3h3e8ynlMbxT5M4RcGTGS18RQw=;
- b=Khl/2qj98N00u241hjirQ2o4qtAz/8DkWRnT0R7uL36OkXf97JyXZU3d3uyqlw2MDY
- wda/Z1OoibLnltvkEmLapRzEwDyXvfblDuuAiKBLXYgNRfKBVbhxK0//aC56f+oayz0P
- 4fiHtMAXKNJlzneAUJVN8qycs39r/D3YPJi7V1ewcxulUl/tzU+j6LT/TWZNyibhb9oq
- hV1omK2NwXwhiu+9KCyItD+a3JLlM0Z2EhcDdhlPEPn9Nmm5kLj4hESfcDAVm8QZOGHL
- doLfQ8GqMmIJtB5/VXFbhGpZYnuREO/l8d6f9Ld+DoDdhfiYzrPSElHFEjLJDFfP/VxB
- cNDQ==
-X-Gm-Message-State: AOJu0Yx6sWdKlkJU2+9yta233+3JB4COCrwsKraaIuX9BhJa2HE/3LSF
- 5++s2f3OM0sjjugOVInsF+VGVoglNowKlGQM547Dh5SHGKK6zogLAtKnrggoogKt24pFsufeVfa
- F3RUy
-X-Gm-Gg: ASbGncsA3AwgcW31Q/yCtCTRdRFEm8no275awr6YPh2hk9JqpjLsI2ZSftf0wCkR7+m
- PqURcoxSOcNQ+jesJBg068WiMILiZT8NNp9SBKcKguEpHct97LAV3IILubElaIayWKjE6c2Pofc
- ZhFAFsYirFnx1c5R+WyMPfuPV1QoFIVmUeM/ypY+rsVtpo9im2WqI5XkCIDbScsnKCbwVdXCgPn
- +79STIbHOAxIFSASMw9NBIHbgIoUKhSe6IreaY4OiVitFXWrKCgTGvJByyulyNXyn4r+ZUsvOP0
- 4r2ALS7nTuVN82GQ7+nmMFCk880BFCpRuqG+Orq6dx1M5XdK04tDGHBRKEmmSXCBhz4Y
-X-Google-Smtp-Source: AGHT+IGEUbNS6fUD2J+4+c6mukXCxf+pqV4qLJ3+rIwndQaAvFO+UBg2GetW05FzLWsmZ77I5yv0CQ==
-X-Received: by 2002:a05:600c:4ed1:b0:442:d9fb:d9f1 with SMTP id
- 5b1f17b1804b1-4533cacf7c0mr95856955e9.4.1750082801226; 
- Mon, 16 Jun 2025 07:06:41 -0700 (PDT)
+ bh=x7phbzrAcVyuXp2vszvsdZCmriphcffSkgR9/9ccTkE=;
+ b=I92vGtRIuuTzMp7rdIaOyvyd4BdisjR4xQ7apdb6w4jWQs1rzSWJycRn6a+nOxc6t0
+ I5b1raIAjgVxPQlfdbGEFP67VjuMfeONyAk+yDpaLjJmqiwWlb3PMZdGCz8oFLJp3k23
+ qsXDXzWBIf69KHgI+KzpWVMb7juiYXW2+YjUqg2ldkoj54r5pjA/bP9/TGqvc5rfMVoG
+ toRcU27etdHAyhg+kYgL6X2+SbDt9/Gfvq7UExd9nH7+LFWkaVnT8o077stXi9zMwNrm
+ vuLaxNs+LIN+OO6VuEDJBNCxVfgfAV3p1t2Jkdz/JV+2z5L8BRrkWsPHQubiZRbLOSez
+ +AJQ==
+X-Gm-Message-State: AOJu0Yx7wU3CUJmzYZbILZdQw1OQ2GSPSKj6Qi/34zGovA8O/f4Zkh8r
+ Gy3jXeGOsQ09P/BAMgEJzuM+cr6g1C/eeArA6kzvB5KZQXWq6vDTvsalgw7xIl5cVMcpXqaRVXW
+ 3H4px
+X-Gm-Gg: ASbGncsTcSXkdOY5KTsR6SmIcfclJViqPtur4+cOxCzhyOq98eFKZM2WkTwH5gArOaS
+ kO66poPy/uK11Tr87ogTgWWPiGYQwtRV+HMH8uacE8KhqELnYbC7SHoI/1Hmv5htZb91pk/ogV6
+ e0xybt+nbOhp98WJZcZjwwmZaOHy6rtuKhTZdMQ0g730EOo2Z+jJHn0JTO73kvzylh9F0gSvYkx
+ uS5wB/hli1/9yebLBcSmbh16vv+0JRmKtR3QfkngxMQw1aySy5tGslgRiFWDF7GpyWLCMfY12R9
+ KbLPAzPFfw4bGEquY32afOjOg021v2oeRlMrI0HCrJFfrdCIurslnwbT9u931SRJiqLS
+X-Google-Smtp-Source: AGHT+IEa5xjXpsFFzA3KKMBBUcCPoXdpiN4Jt5ZFICWxO6c4FcvwgHsoHMCPByWmTdgLddatwZUY+w==
+X-Received: by 2002:a5d:5c0f:0:b0:3a4:d64a:3df6 with SMTP id
+ ffacd0b85a97d-3a57238b99amr6410218f8f.3.1750082802777; 
+ Mon, 16 Jun 2025 07:06:42 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e13c192sm146561975e9.26.2025.06.16.07.06.40
+ 5b1f17b1804b1-4532e13c192sm146561975e9.26.2025.06.16.07.06.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Jun 2025 07:06:40 -0700 (PDT)
+ Mon, 16 Jun 2025 07:06:42 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 8/9] hw/arm/mps2: Configure the AN500 CPU with 16 MPU regions
-Date: Mon, 16 Jun 2025 15:06:29 +0100
-Message-ID: <20250616140630.2273870-9-peter.maydell@linaro.org>
+Subject: [PULL 9/9] linux-user/arm: Fix return value of SYS_cacheflush
+Date: Mon, 16 Jun 2025 15:06:30 +0100
+Message-ID: <20250616140630.2273870-10-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250616140630.2273870-1-peter.maydell@linaro.org>
 References: <20250616140630.2273870-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,41 +99,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The AN500 application note documents that it configures the Cortex-M7
-CPU to have 16 MPU regions. We weren't doing this in our emulation,
-so the CPU had only the default 8 MPU regions. Set the mpu-ns-regions
-property to 16 for this board.
+From: J. Neuschäfer <j.neuschaefer@gmx.net>
 
-This bug doesn't affect any of the other board types we model in
-this source file, because they all use either the Cortex-M3 or
-Cortex-M4. Those CPUs do not have an RTL configurable number of
-MPU regions, and always provide 8 regions if the MPU is built in.
+Although the emulated cacheflush syscall does nothing, it still needs to
+return zero to indicate success.
 
 Cc: qemu-stable@nongnu.org
-Reported-by: Corentin GENDRE <cocotroupe20@gmail.com>
+Signed-off-by: J. Neuschäfer <j.neuschaefer@gmx.net>
+Message-id: 20250613-cache-v1-1-ee9f4a9ba81b@gmx.net
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Message-id: 20250605141801.1083266-1-peter.maydell@linaro.org
 ---
- hw/arm/mps2.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ linux-user/arm/cpu_loop.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/arm/mps2.c b/hw/arm/mps2.c
-index 58efb41e6db..bd378e360b0 100644
---- a/hw/arm/mps2.c
-+++ b/hw/arm/mps2.c
-@@ -224,7 +224,11 @@ static void mps2_common_init(MachineState *machine)
-     switch (mmc->fpga_type) {
-     case FPGA_AN385:
-     case FPGA_AN386:
-+        qdev_prop_set_uint32(armv7m, "num-irq", 32);
-+        break;
-     case FPGA_AN500:
-+        /* The AN500 configures its Cortex-M7 with 16 MPU regions */
-+        qdev_prop_set_uint32(armv7m, "mpu-ns-regions", 16);
-         qdev_prop_set_uint32(armv7m, "num-irq", 32);
-         break;
-     case FPGA_AN511:
+diff --git a/linux-user/arm/cpu_loop.c b/linux-user/arm/cpu_loop.c
+index e8417d04069..33f63951a95 100644
+--- a/linux-user/arm/cpu_loop.c
++++ b/linux-user/arm/cpu_loop.c
+@@ -363,6 +363,7 @@ void cpu_loop(CPUARMState *env)
+                     switch (n) {
+                     case ARM_NR_cacheflush:
+                         /* nop */
++                        env->regs[0] = 0;
+                         break;
+                     case ARM_NR_set_tls:
+                         cpu_set_tls(env, env->regs[0]);
 -- 
 2.43.0
 
