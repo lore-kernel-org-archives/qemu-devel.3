@@ -4,38 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFC3C71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 13:39:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB6AEC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 13:40:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRA2z-0005C0-K0; Mon, 16 Jun 2025 09:38:49 -0400
+	id 1uRA4S-0006HF-RI; Mon, 16 Jun 2025 09:40:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
- id 1uRA2x-0005AS-S9; Mon, 16 Jun 2025 09:38:47 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ id 1uRA4O-0006EM-E7; Mon, 16 Jun 2025 09:40:16 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
- id 1uRA2t-0008EI-R3; Mon, 16 Jun 2025 09:38:47 -0400
+ id 1uRA4L-00009L-WB; Mon, 16 Jun 2025 09:40:16 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bLWL61BlGz4wyV;
- Mon, 16 Jun 2025 23:38:38 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bLWMl4M3Jz4x3d;
+ Mon, 16 Jun 2025 23:40:03 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bLWKz3QLSz4wbv;
- Mon, 16 Jun 2025 23:38:31 +1000 (AEST)
-Message-ID: <b5245811-8a3c-47d2-8e83-e686d55e8d23@kaod.org>
-Date: Mon, 16 Jun 2025 15:38:27 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bLWMg5WV7z4x07;
+ Mon, 16 Jun 2025 23:39:59 +1000 (AEST)
+Message-ID: <475ff262-2fba-4291-b0c1-1c96d0da4052@kaod.org>
+Date: Mon, 16 Jun 2025 15:39:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 05/12] include/hw: replace FSF postal address with
  licenses URL
-To: Sean Wei <me@sean.taipei>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
  Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
  Jamin Lin <jamin_lin@aspeedtech.com>,
  Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
@@ -44,10 +43,6 @@ Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
 References: <20250613.qemu.patch@sean.taipei>
  <20250613.qemu.patch.05@sean.taipei>
- <3aa8de03-911e-4906-a0c5-5b8ea269ad28@kaod.org> <aE_D5zVzf3qHRP-2@redhat.com>
- <accf0fab-782d-4e0a-9f13-f6a940fc86a1@kaod.org> <aE_ML3jtVgweJMid@redhat.com>
- <63d1cb84-7e65-4c60-a718-92a2807e53ea@kaod.org>
- <4b381b19-0cd2-4036-b9bc-6954869eca28@sean.taipei>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -92,17 +87,16 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <4b381b19-0cd2-4036-b9bc-6954869eca28@sean.taipei>
+In-Reply-To: <20250613.qemu.patch.05@sean.taipei>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
  envelope-from=SRS0=g70R=Y7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -40
 X-Spam_score: -4.1
 X-Spam_bar: ----
 X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
  HEADER_FROM_DIFFERENT_DOMAINS=0.056, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -119,63 +113,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/16/25 14:49, Sean Wei wrote:
-> Hi Cédric & Daniel,
+On 6/13/25 18:44, Sean Wei wrote:
+> Some of the GPLv2 boiler-plate still contained the
+> obsolete "51 Franklin Street" postal address.
 > 
-> On 2025/6/16 3:55 AM, Cédric Le Goater wrote:
->> On 6/16/25 09:47, Daniel P. Berrangé wrote:
->>> On Mon, Jun 16, 2025 at 09:29:35AM +0200, Cédric Le Goater wrote:
->>>> On 6/16/25 09:13, Daniel P. Berrangé wrote:
->>>>> On Sat, Jun 14, 2025 at 07:29:09AM +0200, Cédric Le Goater wrote:
->>>>>> Hello Sean,
->>>>>>
->>>>>> On 6/13/25 18:44, Sean Wei wrote:
->>>>>>> Some of the GPLv2 boiler-plate still contained the
->>>>>>> obsolete "51 Franklin Street" postal address.
->>>>>>>
->>>>>>> Replace it with the canonical GNU licenses URL recommended by the FSF:
->>>>>>> https://www.gnu.org/licenses/
->>>>>>>
->>>>>>> Signed-off-by: Sean Wei <me@sean.taipei>
->>>>>>
->>>>>> Instead,  I would remove the license boiler plate and add :
->>>>>>
->>>>>>     SPDX-License-Identifier: GPL-2.0-or-later
->>>>>
->>>>> This is *NOT* something we are doing for existing code sources,
->>>>> unless the person removing it is the exclusive copyright
->>>>> holder on the file.
->>>> Ah. So I misunderstood.
->>>>
->>>> How is license boiler plate different from the SPDX identifier tag ?
->>>
->>> It achieves the same aims, but notice GPL clause 1
->>>
->>>    "keep intact all the notices that refer to this License and
->>>     to the absence of any warranty;"
->>>
->>> and yes, some projects have none the less done a wholesale replacement of
->>> boilerplate. I don't know how they rationalized ignoring this license
->>> requirement. It is simpler to just preserve boilerplate as-is that to
->>> debate the legal nuances of this.
->> OK. Then, let's forget about this replacement.
->>
->> Thanks,
->>
->> C.
->>
+> Replace it with the canonical GNU licenses URL recommended by the FSF:
+> https://www.gnu.org/licenses/
 > 
-> Thank you both for the clarification! To avoid any controversy, I will keep the patch in its original form, only replacing the deprecated FSF address with the canonical GNU licenses URL.
+> Signed-off-by: Sean Wei <me@sean.taipei>
+> ---
+>   include/hw/i2c/aspeed_i2c.h     | 3 +--
+>   include/hw/pci/pci_bridge.h     | 4 ++--
+>   include/hw/timer/aspeed_timer.h | 3 +--
+>   3 files changed, 4 insertions(+), 6 deletions(-)
+> 
+> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+> index 2c4c81bd20..2daacc10ce 100644
+> --- a/include/hw/i2c/aspeed_i2c.h
+> +++ b/include/hw/i2c/aspeed_i2c.h
+> @@ -14,8 +14,7 @@
+>    *  GNU General Public License for more details.
+>    *
+>    *  You should have received a copy of the GNU General Public License along
+> - *  with this program; if not, write to the Free Software Foundation, Inc.,
+> - *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+> + *  with this program; if not, see <https://www.gnu.org/licenses/>.
+>    */
+>   
+>   #ifndef ASPEED_I2C_H
+> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
+> index b0f5204d80..8cdacbc4e1 100644
+> --- a/include/hw/pci/pci_bridge.h
+> +++ b/include/hw/pci/pci_bridge.h
+> @@ -14,8 +14,8 @@
+>    * GNU General Public License for more details.
+>    *
+>    * You should have received a copy of the GNU General Public License
+> - * along with this program; if not, write to the Free Software
+> - * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+> + * along with this program; if not, see
+> + * <https://www.gnu.org/licenses/>.
+>    *
+>    * split out pci bus specific stuff from pci.[hc] to pci_bridge.[hc]
+>    * Copyright (c) 2009 Isaku Yamahata <yamahata at valinux co jp>
+> diff --git a/include/hw/timer/aspeed_timer.h b/include/hw/timer/aspeed_timer.h
+> index 767cae4b05..a850625a05 100644
+> --- a/include/hw/timer/aspeed_timer.h
+> +++ b/include/hw/timer/aspeed_timer.h
+> @@ -16,8 +16,7 @@
+>    *  GNU General Public License for more details.
+>    *
+>    *  You should have received a copy of the GNU General Public License along
+> - *  with this program; if not, write to the Free Software Foundation, Inc.,
+> - *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+> + *  with this program; if not, see <https://www.gnu.org/licenses/>.
+>    */
+>   #ifndef ASPEED_TIMER_H
+>   #define ASPEED_TIMER_H
 
-yep.
 
-> Cédric, could you please take another look and let me know if everything looks good? If so, I'd be grateful if you could add a Reviewed-by tag. Thanks!
-
-sure.
-
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
+
 
 
