@@ -4,79 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F208BC71135
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:57:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 920C8C71135
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR6aa-0004JE-VI; Mon, 16 Jun 2025 05:57:21 -0400
+	id 1uR6UE-0000u5-DU; Mon, 16 Jun 2025 05:50:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uR6aL-00042A-ID
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:57:02 -0400
-Received: from mail-yw1-x112b.google.com ([2607:f8b0:4864:20::112b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uR6aJ-000367-Im
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:57:01 -0400
-Received: by mail-yw1-x112b.google.com with SMTP id
- 00721157ae682-710fe491842so30967847b3.0
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 02:56:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750067818; x=1750672618; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=I235erRaayFx7BYOEeId81HFtNTQgLr8vcqgU7Z0iuI=;
- b=nrqGx2UR5elY41J58VmEhxi8ryEdIboEPr8QR5KCqtnKAMOIsQsmdaoMgcw0DOwABg
- 4xnz6kS41mQUWr/YspRDvTX+qxQYgSrN+n4MA2lhwfNnPk56mHs0Cvul/PK9qOez9WSW
- LMFDvvB1DmJ9JBscosNbOLO1Q7pd45GpaHYdUC32HrRcD423RPftIQ5t4/EUaCJQ/JTg
- wFalW9lcDaO6c62TqbjDICXMPyypr7tv60NEuQny4yj2k0qWA+CdpsuqQKzH30/c40ZJ
- CIiogkxYCCf/wrgqpJd4TwQV5X1WbV/hIl1K6UgHqwg4Q9aD/ATqV9Hy8SSUEHCD9u/8
- CogA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750067818; x=1750672618;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=I235erRaayFx7BYOEeId81HFtNTQgLr8vcqgU7Z0iuI=;
- b=W3pRRgLyLUP+2fz8HydwQ3qAHVNUSlABCZga6Xp5hupa8ZYnbv4LkcMWJ6P02fxk6Y
- Q3Qt2F5kDawBcl27kpdVl25o0b/8nbQk3FrzhYrC6gVr013iEQkj4aqLCacmMJpi0I8v
- z0WWgT+lBHsStEkVf/v6oLBB23mcPiy9dmv885mT1tFZvQobhXfOe/2IQ08itef0JpTK
- c5nsbz0koyCno2CBB75jAvRLJItFSh8YSgtH/es5JQGPgwIIms3xLVs/WyYbNz9vtsrJ
- IMdeMgU/HykbaKVfagmG9SlJA081mA1EJjAlbBV9+4qdDMZzwikFNRs2t0cJuVPLolyF
- Oxxw==
-X-Gm-Message-State: AOJu0YziXro3fC03Uq7XE9VCLAV0B9lRoPhDkuAAphks33ZW4lfUBcFr
- JaTmLiMopVMRqAzc/OzItSwMyNjZnDSejT1AV8sBMaqHyJug9yehIfqKBcCKcPF0puSP2iFKRhI
- tywMEkMHRTLiz+Ek0D4heIbtagI/BLcTWDKCKSDqoig==
-X-Gm-Gg: ASbGnctRdz4AHR79GQm25vkhw6bwPQg2SXPKzcpxuDvS/CrPnfDBhvjcCi8wWQh7FSK
- fqVjUJC7eYqfC2eL5Y5PahT9c0x6QZH8uROtCqLRr6gHAopDF/RWK85JyZFgLx5td17z7tgJLqg
- x48fcXjeXvkxvau49PCR3kacTPPw7wknHzH8zboEaoPiHkOlRHVPAOY9M=
-X-Google-Smtp-Source: AGHT+IH1b9ORrUmBrwwoo5kXePYtutdazqPQBKkvme32P2sU5A1G2NCcH1B1VeTIGuom34r0DAxADMnrkedbS1cTcSw=
-X-Received: by 2002:a05:690c:4901:b0:703:b5ae:a3da with SMTP id
- 00721157ae682-71175457d73mr126992267b3.32.1750067818209; Mon, 16 Jun 2025
- 02:56:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uR6Ty-0000ce-Qk
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:50:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uR6Tw-0002GL-EP
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:50:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750067423;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=z0d4EBsGh9yLAxM81xOQFT7hz74YJDRbi5GdcA29b90=;
+ b=OgKGuAWdor/jaUC+KqmFFF0982PJLgkG6SPu3Y88oP4+D6Ou9XAPo0TQJSWEVzqxwOvGpi
+ OoFtTYfyzKEFgYs7kcmlI6vbc5R881fuHOrfbIOKHLjcuAQcSGm6Se/YcTYD/zvldtCxAy
+ iNGhivkZyjWxjbXXiQGp8vJyGGK/dPw=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-112-r4ZJO8ZgPziig40KvweatA-1; Mon,
+ 16 Jun 2025 05:50:20 -0400
+X-MC-Unique: r4ZJO8ZgPziig40KvweatA-1
+X-Mimecast-MFC-AGG-ID: r4ZJO8ZgPziig40KvweatA_1750067418
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BED7F195608E; Mon, 16 Jun 2025 09:50:18 +0000 (UTC)
+Received: from laptop.redhat.com (unknown [10.45.224.77])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 37BB819560A3; Mon, 16 Jun 2025 09:50:13 +0000 (UTC)
+From: Eric Auger <eric.auger@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
+ gustavo.romero@linaro.org, anisinha@redhat.com, mst@redhat.com,
+ shannon.zhaosl@gmail.com
+Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
+ alex.bennee@linaro.org
+Subject: [PATCH v3 12/29] hw/acpi/pcihp: Add an AmlRegionSpace arg to
+ build_acpi_pci_hotplug
+Date: Mon, 16 Jun 2025 11:46:41 +0200
+Message-ID: <20250616094903.885753-13-eric.auger@redhat.com>
+In-Reply-To: <20250616094903.885753-1-eric.auger@redhat.com>
+References: <20250616094903.885753-1-eric.auger@redhat.com>
 MIME-Version: 1.0
-References: <20250510042043.2056265-1-jcksn@duck.com>
- <D705B9CD-82EC-42AF-A370-21038E35BDC1.1@smtp-inbound1.duck.com>
-In-Reply-To: <D705B9CD-82EC-42AF-A370-21038E35BDC1.1@smtp-inbound1.duck.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Jun 2025 10:56:46 +0100
-X-Gm-Features: AX0GCFsOdMl3U_gcU8YKi8GM00c_z8VA6n5RHXIAOTqhohQTStioIgHzaiSiH3U
-Message-ID: <CAFEAcA83NzkG7NgwAyW9X12YLm5m439_b4y=M0dS6eR14-y2Gw@mail.gmail.com>
-Subject: Re: [PATCH 5/6] MAX78000 TRNG Implementation
-To: jcksn@duck.com
-Cc: qemu-devel@nongnu.org, alistair@alistair.me
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112b.google.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,68 +88,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 10 May 2025 at 07:57, <jcksn@duck.com> wrote:
->
-> This patch implements the True Random Number Generator for the MAX78000 SOC
->
-> Signed-off-by: Jackson Donaldson <jcksn@duck.com>
-> ---
->  hw/arm/Kconfig                  |   1 +
->  hw/arm/max78000_soc.c           |   9 ++-
->  hw/misc/Kconfig                 |   3 +
->  hw/misc/max78000_gcr.c          |   3 +
->  hw/misc/max78000_trng.c         | 115 ++++++++++++++++++++++++++++++++
->  hw/misc/meson.build             |   1 +
->  include/hw/arm/max78000_soc.h   |   2 +
->  include/hw/misc/max78000_trng.h |  35 ++++++++++
->  8 files changed, 168 insertions(+), 1 deletion(-)
->  create mode 100644 hw/misc/max78000_trng.c
->  create mode 100644 include/hw/misc/max78000_trng.h
-> +static uint64_t max78000_trng_read(void *opaque, hwaddr addr,
-> +                                    unsigned int size)
-> +{
-> +    uint8_t buf[4];
-> +    Error *errp = NULL;
-> +
-> +    Max78000TrngState *s = opaque;
-> +    switch (addr) {
-> +        case CTRL:{
-> +            return s->ctrl;
-> +        }
-> +        case STATUS:{
-> +            return 1;
-> +        }
-> +        case DATA:{
-> +            qcrypto_random_bytes(buf, 4, &errp);
-> +            return *(uint32_t *)buf;
-> +        }
+On ARM we will put the operation regions in AML_SYSTEM_MEMORY.
+So let's allow this configuration.
 
-No other code in hw/ calls qcrypto_random_bytes(). This kind
-of "almost no other use of this function like this" is usually
-a hint that it's not a good idea in new code. You want
-qemu_guest_getrandom_nofail().
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+---
+ include/hw/acpi/pcihp.h | 3 ++-
+ hw/acpi/pcihp.c         | 8 ++++----
+ hw/i386/acpi-build.c    | 4 ++--
+ 3 files changed, 8 insertions(+), 7 deletions(-)
 
-Also, instead of using a uint8_t buf[], use a
-uint32_t and pass the address of that to the function:
+diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
+index 8a46a414cc..253ac6e483 100644
+--- a/include/hw/acpi/pcihp.h
++++ b/include/hw/acpi/pcihp.h
+@@ -28,6 +28,7 @@
+ #define HW_ACPI_PCIHP_H
+ 
+ #include "hw/acpi/acpi.h"
++#include "hw/acpi/aml-build.h"
+ #include "hw/hotplug.h"
+ 
+ #define ACPI_PCIHP_IO_BASE_PROP "acpi-pcihp-io-base"
+@@ -73,7 +74,7 @@ void acpi_pcihp_device_unplug_request_cb(HotplugHandler *hotplug_dev,
+                                          AcpiPciHpState *s, DeviceState *dev,
+                                          Error **errp);
+ 
+-void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr);
++void build_acpi_pci_hotplug(Aml *table, AmlRegionSpace rs, uint64_t pcihp_addr);
+ void build_append_pci_dsm_func0_common(Aml *ctx, Aml *retvar);
+ void build_append_pcihp_resources(Aml *table,
+                                   uint64_t io_addr, uint64_t io_len);
+diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
+index 47fa434a62..e3cc57b954 100644
+--- a/hw/acpi/pcihp.c
++++ b/hw/acpi/pcihp.c
+@@ -629,7 +629,7 @@ static Aml *aml_pci_pdsm(void)
+     return method;
+ }
+ 
+-void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
++void build_acpi_pci_hotplug(Aml *table, AmlRegionSpace rs, uint64_t pcihp_addr)
+ {
+     Aml *scope;
+     Aml *field;
+@@ -638,21 +638,21 @@ void build_acpi_pci_hotplug(Aml *table, uint64_t pcihp_addr)
+     scope =  aml_scope("_SB.PCI0");
+ 
+     aml_append(scope,
+-        aml_operation_region("PCST", AML_SYSTEM_IO, aml_int(pcihp_addr), 0x08));
++        aml_operation_region("PCST", rs, aml_int(pcihp_addr), 0x08));
+     field = aml_field("PCST", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
+     aml_append(field, aml_named_field("PCIU", 32));
+     aml_append(field, aml_named_field("PCID", 32));
+     aml_append(scope, field);
+ 
+     aml_append(scope,
+-        aml_operation_region("SEJ", AML_SYSTEM_IO,
++        aml_operation_region("SEJ", rs,
+                              aml_int(pcihp_addr + ACPI_PCIHP_SEJ_BASE), 0x04));
+     field = aml_field("SEJ", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
+     aml_append(field, aml_named_field("B0EJ", 32));
+     aml_append(scope, field);
+ 
+     aml_append(scope,
+-        aml_operation_region("BNMR", AML_SYSTEM_IO,
++        aml_operation_region("BNMR", rs,
+                              aml_int(pcihp_addr + ACPI_PCIHP_BNMR_BASE), 0x08));
+     field = aml_field("BNMR", AML_DWORD_ACC, AML_NOLOCK, AML_WRITE_AS_ZEROS);
+     aml_append(field, aml_named_field("BNUM", 32));
+diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+index 52cef834ed..6ca2b34ef8 100644
+--- a/hw/i386/acpi-build.c
++++ b/hw/i386/acpi-build.c
+@@ -1172,7 +1172,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dsdt, sb_scope);
+ 
+         if (pm->pcihp_bridge_en || pm->pcihp_root_en) {
+-            build_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
++            build_acpi_pci_hotplug(dsdt, AML_SYSTEM_IO, pm->pcihp_io_base);
+         }
+         build_piix4_pci0_int(dsdt);
+     } else if (q35) {
+@@ -1216,7 +1216,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+         aml_append(dsdt, sb_scope);
+ 
+         if (pm->pcihp_bridge_en) {
+-            build_acpi_pci_hotplug(dsdt, pm->pcihp_io_base);
++            build_acpi_pci_hotplug(dsdt, AML_SYSTEM_IO, pm->pcihp_io_base);
+         }
+         build_q35_pci0_int(dsdt);
+     }
+-- 
+2.49.0
 
-     uint32_t data;
-     qemu_guest_getrandom_nofail(&data, sizeof(data));
-     return data;
-
-That avoids the need for a cast.
-
-
-Your interrupt generation code in this device doesn't look
-right: the interrupt is supposed to be generated when each
-new random number is ready, so in our "generation takes
-zero time" model a read from DATA should provoke a new
-interrupt immediately (assuming the interrupt is enabled):
-you need to simulate the ready status bit going low and
-then high again.
-
-See also my comments on an earlier patch about the usual
-logic being to have an update function which does
-"set interrupt to (condition && enabled)".
-
--- PMM
 
