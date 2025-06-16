@@ -4,59 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB4F9C71159
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 21:16:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF24CC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 21:19:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRHBi-0001n2-8x; Mon, 16 Jun 2025 17:16:18 -0400
+	id 1uRHDd-0002Tr-44; Mon, 16 Jun 2025 17:18:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uRHBf-0001lQ-TZ
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 17:16:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uRHDW-0002Sk-Dn
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 17:18:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uRHBc-00051E-U5
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 17:16:15 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uRHDT-0005Kz-KM
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 17:18:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750108570;
+ s=mimecast20190719; t=1750108686;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=tcd4dbglLSCOiuJ/nJX96YmhKJtOYx7qlmVMX+T1vX8=;
- b=Pb4fZ7rCkc2nAdSwF+72dXJOaG/tm6NVwjtPfDVDpc0wSvWRq2aC495Ynpo4uR/QKIgSE/
- fkyxW9Oz7dstRORSLJ5/XOJ9TUQvfmK/VBkLyXF2iu2CAJb9tfc6P1mXezKXC61L3fjNRI
- twMdbgRsgngLHWIeHQXJD1sMZJ04ZYY=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-590-C5CTIwZgNNmGsA_S_hDqzQ-1; Mon,
- 16 Jun 2025 17:16:08 -0400
-X-MC-Unique: C5CTIwZgNNmGsA_S_hDqzQ-1
-X-Mimecast-MFC-AGG-ID: C5CTIwZgNNmGsA_S_hDqzQ_1750108568
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EBE1119560BB
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 21:16:07 +0000 (UTC)
-Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.80.82])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 85E3B180035E; Mon, 16 Jun 2025 21:16:05 +0000 (UTC)
-From: John Snow <jsnow@redhat.com>
-To: qemu-devel@nongnu.org,
-	armbru@redhat.com,
-	eblake@redhat.com
-Cc: John Snow <jsnow@redhat.com>
-Subject: [PATCH] docs/contrib: add insert_crossrefs script
-Date: Mon, 16 Jun 2025 17:16:04 -0400
-Message-ID: <20250616211604.1399219-1-jsnow@redhat.com>
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=0krcWH+oX1VPWcxsC+mPFwkaqla2v62qu06n2N8lzIA=;
+ b=EeMaxtEJ7P2YFB4a5nfCsSu7nV0hTPFuKas94bL1HUwVsxIJv2bb2eINMuC4mO1JH9GKso
+ hded8bNjEZMdI4I4omcyztLHcoDhnvtp/23W0HYAaoL+1zL/7t9Ij8EFq/giQGilWYn8vc
+ Ypet/KFhQ1uD7H7tj0tFx6qXI1TEICM=
+Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
+ [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-182-ikDIXzl2MrOwlvJlH5ArGQ-1; Mon, 16 Jun 2025 17:18:05 -0400
+X-MC-Unique: ikDIXzl2MrOwlvJlH5ArGQ-1
+X-Mimecast-MFC-AGG-ID: ikDIXzl2MrOwlvJlH5ArGQ_1750108685
+Received: by mail-qv1-f72.google.com with SMTP id
+ 6a1803df08f44-6fabd295d12so80838426d6.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 14:18:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750108684; x=1750713484;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0krcWH+oX1VPWcxsC+mPFwkaqla2v62qu06n2N8lzIA=;
+ b=uOCmpq8qja6CYXHxWBzPktLXKuqVoKmQlqfw3hYu/7AoHXAiM7WL6C+prXdBTQan+t
+ JFdFOswPyYELEusoaK4DgOcsXpYVEUzkllDT+DgokoqGD88LsznyDu5bQq+20Wd9nnVT
+ NyZlKc4c+wsT9V3Q75eRue3GEfWwSpt7AXo1zt8ec5efG/uCZ3B9FcryX3SOqKRVgd7A
+ 2UuIwPqBJapMjKFzEPCIkrBPTt3CSCH77/uT1/wn7D11tfdHs9nMA67H6EwDYqjQ1CsZ
+ BdzwL4om2gszFxJPSjxdCXZzu1L4c0UDaE+tlxpoeGLdS70DJRBWc3vtDGjmgnEV5xT9
+ NGAg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9a37PyxugVGRG32PNM/xmTuRLw+9Rw5CxVgUm1UcllCPbTKM4x8H+LrUdai2b84HiMjif/XyRm4D7@nongnu.org
+X-Gm-Message-State: AOJu0YwmG5S3gNH6b3Y9dwvd95pcLBIEpJ9xk+W/mL3T6nC/jsSnPnSV
+ XRtmqtsxj5F2XyCDzRqYcJsZA8gnEN1vVWAT3ypTSyJF+kz/LsdO3iZFjRFTYJqzASCY/PSTfIB
+ ylsRbBfbwObGS34aFFvOVRCSwvmGjhR3J3bSZ8AY0yJLiRceAVyonzkda
+X-Gm-Gg: ASbGncurITV5kOoeMkROJBwSrB77buAzk6A/DvJlw1BUw9jQFUfRlKRUzfZjaHCnn5y
+ cuBanP1IUSKK8Zo8lFUvqDC4wgTv3fLB43QvMND6YgMVdbjwWqJzuf2qSFS8tx8+5Y772kyf1ee
+ Ry51aHqtl7CVIoQHIJGEEXUaWQ/utlF/mxVb13UOggH/s/TMg0Wj2kzGXCKA3GLXuBl1ZDAWoRs
+ ciBhG6n7m5/yOxRYT+otSf0/3n3uqhjdkRfU+hn+9YgOSx+OrfawXREec0XMavrRP5bga9fQ2yh
+ JsYBvcmkwhLNuw==
+X-Received: by 2002:a05:6214:4a06:b0:6fb:f10:60e with SMTP id
+ 6a1803df08f44-6fb4779a23dmr188133786d6.40.1750108684643; 
+ Mon, 16 Jun 2025 14:18:04 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE+7jv0HQYzV3711aI6P/V275dMFO3cJtzMATkmktGjjbfK9w1gUlxgSRFnlJv062lyLQAEOA==
+X-Received: by 2002:a05:6214:4a06:b0:6fb:f10:60e with SMTP id
+ 6a1803df08f44-6fb4779a23dmr188133346d6.40.1750108684324; 
+ Mon, 16 Jun 2025 14:18:04 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-6fb35b20f08sm56156146d6.22.2025.06.16.14.18.03
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Jun 2025 14:18:03 -0700 (PDT)
+Date: Mon, 16 Jun 2025 17:18:00 -0400
+From: Peter Xu <peterx@redhat.com>
+To: "Chaney, Ben" <bchaney@akamai.com>
+Cc: David Hildenbrand <david@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "yury-kotov@yandex-team.ru" <yury-kotov@yandex-team.ru>,
+ "dgilbert@redhat.com" <dgilbert@redhat.com>,
+ "beata.michalska@linaro.org" <beata.michalska@linaro.org>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "alex.bennee@linaro.org" <alex.bennee@linaro.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "junyan.he@intel.com" <junyan.he@intel.com>,
+ "imammedo@redhat.com" <imammedo@redhat.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "pbonzini@redhat.com" <pbonzini@redhat.com>,
+ "philmd@linaro.org" <philmd@linaro.org>,
+ "xiaoguangrong.eric@gmail.com" <xiaoguangrong.eric@gmail.com>,
+ "Tottenham, Max" <mtottenh@akamai.com>, "Hunt, Joshua" <johunt@akamai.com>,
+ "Glasgall, Anna" <aglasgal@akamai.com>,
+ "qemu-stable@nongnu.org" <qemu-stable@nongnu.org>
+Subject: Re: [Patch v2] Don't sync volatile memory
+Message-ID: <aFCKCILrNyfwmWL1@x1.local>
+References: <1CC43F59-336F-4A12-84AD-DB89E0A17A95@akamai.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1CC43F59-336F-4A12-84AD-DB89E0A17A95@akamai.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -81,108 +121,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This isn't really meant for inclusion as it's a bit of a hackjob, but I
-figured it would be best to share it in some form or another to serve as
-a basis for a kind of meta-review of the crossreferenceification series.
+On Mon, Jun 16, 2025 at 08:56:50PM +0000, Chaney, Ben wrote:
+> Not all pmem regions are backed by non-volatile memory. Syncing volatile
+> memory provides no benefit, but can cause performance issues is some
+> cases. Only sync memory that is marked as non-volatile.
+> 
+> Signed-off-by: Ben Chaney <bchaney@akamai.com>
+> Fixes: bd108a44bc29 (migration: ram: Switch to ram block writeback)
 
-This script is designed to convert 'name', "name", name, and @name
-instances in qapi/*.json files to `name` for the purposes of
-cross-referencing commands, events, and data types in the generated HTML
-documentation. It is specifically tuned for our QAPI files and is not
-suitable for running on generic rST source files. It can likely be made
-to operate on QEMU guest agent or other qapi JSON files with some edits
-to which files its opening.
+I've queued it with an update on the subject and commit message, as
+following:
 
-Navigate to your qemu/qapi/ directory and run this script with "python
-insert_crossrefs.py" and it'll handle the rest. Definitely don't run it
-in a non-git-controlled folder, it edits your source files.
+    migration: Don't sync volatile memory after migration completes
+    
+    Syncing volatile memory provides no benefit, instead it can cause
+    performance issues in some cases.  Only sync memory that is marked as
+    non-volatile after migration completes on destination.
 
-(Yes, in polishing this script, I found a few instances of
-cross-references I missed in my v1 series. I figure I'll let us discuss
-the conversion a bit before I send out a v2 patchbomb.)
+Thanks,
 
-Signed-off-by: John Snow <jsnow@redhat.com>
----
- contrib/autoxref/insert_crossrefs.py | 69 ++++++++++++++++++++++++++++
- 1 file changed, 69 insertions(+)
- create mode 100644 contrib/autoxref/insert_crossrefs.py
+> ---
+> migration/ram.c | 4 +++-
+> 1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/migration/ram.c b/migration/ram.c
+> index d26dbd37c4..e857b579d6 100644
+> --- a/migration/ram.c
+> +++ b/migration/ram.c
+> @@ -3672,7 +3672,9 @@ static int ram_load_cleanup(void *opaque)
+>      RAMBlock *rb;
+> 
+>      RAMBLOCK_FOREACH_NOT_IGNORED(rb) {
+> -        qemu_ram_block_writeback(rb);
+> +        if (memory_region_is_nonvolatile(rb->mr)) {
+> +            qemu_ram_block_writeback(rb);
+> +        }
+>      }
+> 
+>      xbzrle_load_cleanup();
+> --
+> 2.40.1
+> 
 
-diff --git a/contrib/autoxref/insert_crossrefs.py b/contrib/autoxref/insert_crossrefs.py
-new file mode 100644
-index 00000000000..399dd7524c2
---- /dev/null
-+++ b/contrib/autoxref/insert_crossrefs.py
-@@ -0,0 +1,69 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+import os
-+import re
-+import sys
-+
-+if not os.path.exists("qapi-schema.json"):
-+    raise Exception(
-+        "This script was meant to be run from the qemu.git/qapi directory."
-+    )
-+sys.path.append("../scripts/")
-+
-+from qapi.schema import QAPISchema, QAPISchemaDefinition
-+
-+# Adjust this global to exclude certain tokens from being xreffed.
-+SKIP_TOKENS = ('String', 'stop', 'transaction', 'eject', 'migrate', 'quit')
-+
-+print("Compiling schema to build list of reference-able entities ...", end='')
-+tokens = []
-+schema = QAPISchema("qapi-schema.json")
-+for ent in schema._entity_list:
-+    if isinstance(ent, QAPISchemaDefinition) and not ent.is_implicit():
-+        if ent.name not in SKIP_TOKENS:
-+            tokens.append(ent.name)
-+print("OK")
-+
-+patt_names = r'(' + '|'.join(tokens) + r')'
-+
-+# catch 'token' and "token" specifically
-+patt = re.compile(r'([\'"]|``)' + patt_names + r'\1')
-+# catch naked instances of token, excluding those where prefixed or
-+# suffixed by a quote, dash, or word character. Exclude "@" references
-+# specifically to handle them elsewhere. Exclude <name> matches, as
-+# these are explicit cross-reference targets.
-+patt2 = r"(?<![-@`'\"\w<])" + patt_names + r"(?![-`'\"\w>])"
-+# catch @references. prohibit when followed by ":" to exclude members
-+# whose names happen to match xreffable entities.
-+patt3 = r"@" + patt_names + r"(?![-\w:])"
-+
-+
-+
-+
-+for file in os.scandir():
-+    outlines = []
-+    if not file.name.endswith(".json"):
-+        continue
-+    print(f"Scanning {file.name} ...")
-+    with open(file.name) as searchfile:
-+        block_start = False
-+        for line in searchfile:
-+            # Don't mess with the start of doc blocks.
-+            # We don't want to convert "# @name:" to a reference!
-+            if block_start and line.startswith('# @'):
-+                outlines.append(line)
-+                continue
-+            block_start = bool(line.startswith('##'))
-+
-+            # Don't mess with anything outside of comment blocks,
-+            # and don't mess with example blocks. We use five spaces
-+            # as a heuristic for detecting example blocks. It's not perfect,
-+            # but it seemingly does the job well.
-+            if line.startswith('# ') and not line.startswith('#     '):
-+                line = re.sub(patt, r'`\2`', line)
-+                line = re.sub(patt2, r'`\1`', line)
-+                line = re.sub(patt3, r'`\1`', line)
-+            outlines.append(line)
-+    with open(file.name, "w") as outfile:
-+        for line in outlines:
-+            outfile.write(line)
 -- 
-2.48.1
+Peter Xu
 
 
