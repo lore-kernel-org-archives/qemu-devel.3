@@ -4,62 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 988DCC71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 10:22:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26567C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 10:30:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR6xZ-0004yI-LB; Mon, 16 Jun 2025 06:21:01 -0400
+	id 1uR75W-0007II-Dv; Mon, 16 Jun 2025 06:29:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uR6xO-0004vA-Rf; Mon, 16 Jun 2025 06:20:50 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uR6xL-00062i-Or; Mon, 16 Jun 2025 06:20:50 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bLQwj6yLWz6M53g;
- Mon, 16 Jun 2025 18:19:49 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id E89AF1402F7;
- Mon, 16 Jun 2025 18:20:21 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 16 Jun
- 2025 12:20:21 +0200
-Date: Mon, 16 Jun 2025 11:20:19 +0100
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <imammedo@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v4 1/7] hw/arm/smmu-common: Check SMMU has PCIe Root
- Complex association
-Message-ID: <20250616112019.00003bce@huawei.com>
-In-Reply-To: <20250613144449.60156-2-shameerali.kolothum.thodi@huawei.com>
-References: <20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com>
- <20250613144449.60156-2-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <idryomov@gmail.com>)
+ id 1uR75L-0007GF-Sz; Mon, 16 Jun 2025 06:29:06 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <idryomov@gmail.com>)
+ id 1uR75I-0006sz-6e; Mon, 16 Jun 2025 06:29:02 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2363e973db1so41957305ad.0; 
+ Mon, 16 Jun 2025 03:28:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750069737; x=1750674537; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+EWd6AuSh0sCTK8mlejekZBA9CosXuo/DQP9YgSYPjI=;
+ b=dJbqRMuCCrTZ8c49tRtAEmIvugQNq0TT7HHsmQx1amA/AAuTMsrQ8TqpeOtqYMOKAR
+ NZmYygAYOZXQwsJ7fTJRoVr90r2AYMss7FRU7PdSdMMET7oVjK2aOGRI7CaXbgZk7emR
+ +YdaePNr8k5bWO4+jTjS+SB2V/Q16scfhJIBzQy7YVM+f0gvmJLXwyBuMMQ4pEll5QiH
+ Vskl4gpwqty8PgA5WMSF/4zJ43i9NLOOaP+YUCvY73+Z712+9YoWkQ9yGbkZGAoAMbMh
+ IhKTVLAaeX++KKKJjovRZDBEPRrPQbmA2FoWy7yWQneYhVNFVglYtQdCBv3paikZruvE
+ /SAA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750069737; x=1750674537;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=+EWd6AuSh0sCTK8mlejekZBA9CosXuo/DQP9YgSYPjI=;
+ b=LxOhvLJd0+RhN8Ux5JgW0QxFWM7beSY8dJFwOqf/FcOU+WPyZ7WW4BAA+bHW2mHa6I
+ HiAYtdTcFfXGLTonjuoq22V5A6K9v/+kUqIEa9yLbXxr8GHEQ+7exwrLgtasch5P8bae
+ KYgbeMPTbOSDzVosuZ1mXRuq09vmwRqE/6tpFzFfh+00eN0CBsboMINq4LTLqSo+FUW5
+ 4G5Eyj7NfgcP8i7kZfKmxQVLv6yt/mx9JdgI24zdWqVBr4jke4757ll6edmC7p9vkcwh
+ Mq3gOaAvZBgigkR70cU4f+Fms5hmQUqfukqytP6xXaXm3Z2Lp77a6oFoLODYXDdG+Sxs
+ Jn5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU+sAekzpNchAWiWcpNI29L+qzHSuagA1aMBjJkSIqJDdXI8rZiQ1Mj4lSa6RNUUlNyA2eST80M4bL7@nongnu.org,
+ AJvYcCW2JmZBcBO4XJiL7mOzkA5Gsomvoo0hJcSCCkvLl/BEosiC8fwI9T5hfTduyq4lHqPz1ocKz568FjY5hg==@nongnu.org
+X-Gm-Message-State: AOJu0Yx7s/8wvyUdG9pWGfJe5hGyxIn1jvfzMuM7ih5Hyc6hKG/IoFG7
+ 12WsE5jBE45+uj3rIygyuvHRz35uV9zdrUzrBs1K0n5+2zwq88GCbDpqXCNfMQDaWcCq1cBPLhA
+ jOLCwLptnL8KQka7hNN0YAsMgC/h2KOzTJd3/
+X-Gm-Gg: ASbGncvAFEUmPQ6rFplsamtql1LWfD8pC2CIYtEkNyX4i7JdvHa1qgpJvmAv6JuXdFt
+ 6B499mvHnSjlbz4eY+Q6RtZT0eiNlrReRyQfETA/CisWjBu1GtK1lSBxi/DNtUS/jvvbVxUXWrx
+ LA5uraZj7Tsd4IlnhIZIRCrfkosZ8pE/vr3Vpx1ipRSjNjRJRP7bS5sw==
+X-Google-Smtp-Source: AGHT+IEprtCSXw3BEBV7KHv4oCikH30DnhUXQwqgZ6qtpNWlXi7+UVx4ofIfrh2E6AKZkAODi7OqROJd+8ywVRH9Pz0=
+X-Received: by 2002:a17:903:2288:b0:234:9dce:74e3 with SMTP id
+ d9443c01a7336-2366781613emr137475255ad.2.1750069737148; Mon, 16 Jun 2025
+ 03:28:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100011.china.huawei.com (7.191.174.247) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+References: <20250515112908.383693-1-f.ebner@proxmox.com>
+ <20250515112908.383693-2-f.ebner@proxmox.com>
+ <CAOi1vP94WJ7r1vPXvcpGZTs2xf6TZ=p=EmVGQvwipftufaYAMw@mail.gmail.com>
+ <aE_pbAS_gS12Fp8f@redhat.com>
+In-Reply-To: <aE_pbAS_gS12Fp8f@redhat.com>
+From: Ilya Dryomov <idryomov@gmail.com>
+Date: Mon, 16 Jun 2025 12:28:44 +0200
+X-Gm-Features: AX0GCFusGr96N_ea00DCRluAE8UEWBf8S0krizrQW8ZKNolNW8gkNyjHvcVC2zk
+Message-ID: <CAOi1vP-oc0XHR28E7JrvZOohL7KZEq7LunYKHfb540W=a8t=wQ@mail.gmail.com>
+Subject: Re: [PATCH 1/2] block/rbd: support selected key-value-pairs via QAPI
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-block@nongnu.org,
+ qemu-devel@nongnu.org, 
+ armbru@redhat.com, eblake@redhat.com, hreitz@redhat.com, kwolf@redhat.com, 
+ pl@dlhnet.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=idryomov@gmail.com; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -73,52 +97,87 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Jun 2025 15:44:43 +0100
-Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
+On Mon, Jun 16, 2025 at 11:52=E2=80=AFAM Daniel P. Berrang=C3=A9 <berrange@=
+redhat.com> wrote:
+>
+> On Mon, Jun 16, 2025 at 11:25:54AM +0200, Ilya Dryomov wrote:
+> > On Thu, May 15, 2025 at 1:29=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.co=
+m> wrote:
+> > >
+> > > Currently, most Ceph configuration options are not exposed via QAPI.
+> > > While it is possible to specify a dedicated Ceph configuration file,
+> > > specialized options are often only required for a selection of images
+> > > on the RBD storage, not all of them. To avoid the need to generate a
+> > > dedicated Ceph configuration file for each image (or for each require=
+d
+> > > combination of options), support a selection of key-value pairs via
+> > > QAPI.
+> > >
+> > > Initially, this is just 'rbd_cache_policy'. For example, this is
+> > > useful with small images used as a pflash for EFI variables. Setting
+> > > the 'rbd_cache_policy' to 'writeback' yields a substantial improvemen=
+t
+> > > there [0].
+> > >
+> > > The function qemu_rbd_extract_key_value_pairs() was copied/adapted
+> > > from the existing qemu_rbd_extract_encryption_create_options().
+> > >
+> > > [0]: https://bugzilla.proxmox.com/show_bug.cgi?id=3D3329#c9
+> > >
+> > > Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+>
+> snip
+>
+> > >  ##
+> > >  # @BlockdevOptionsRbd:
+> > >  #
+> > > @@ -4327,6 +4360,9 @@
+> > >  #     authentication.  This maps to Ceph configuration option "key".
+> > >  #     (Since 3.0)
+> > >  #
+> > > +# @key-value-pairs: Key-value pairs for additional Ceph configuraton=
+.
+> > > +#     (Since 10.1)
+> > > +#
+> > >  # @server: Monitor host address and port.  This maps to the "mon_hos=
+t"
+> > >  #     Ceph option.
+> > >  #
+> > > @@ -4342,6 +4378,7 @@
+> > >              '*user': 'str',
+> > >              '*auth-client-required': ['RbdAuthMode'],
+> > >              '*key-secret': 'str',
+> > > +            '*key-value-pairs' : 'RbdKeyValuePairs',
+> >
+> > To side-step all of the above, have you considered implementing
+> > a straightforward passthrough to Ceph instead?  Something like
+> >
+> >   '*key-value-pairs': ['RbdKeyValuePair']
+> >
+> > where RbdKeyValuePair is just a pair arbitrary strings (and
+> > key-value-pairs is thus an optional list of those).  rados_conf_set()
+> > would be called just the same but the user would be able to override
+> > any Ceph option they wish, not just a few that we thought of here.
+>
+> Passing through arbitrary key/value pairs as strings is essentially
+> abdicating our design responsibility in QAPI. enums would no longer
+> be introspectable. Integers / booleans would require abnormal formatting
+> by clients. API stability / deprecation promises can no longer be made.
+> and more besides.
+>
+> Given that limitation, if we did go the string pairs route, I would
+> expect it to be marked as "unstable" in the QAPI schema, so apps have
+> a suitable warning NOT to rely on this.
 
-> Although this change does not affect functionality at present, it is
+This sounds sensible to me.  We can continue exposing the most common
+Ceph options through a proper QAPI schema but add key-value-pairs as an
+alternative low-level route for those who want to avoid dealing with
+physical configuration files.
 
-Patch title says PCIe.  This check is vs PCI host bridge.
+Thanks,
 
-No idea which one you wanted, but if it is PCIe needs to be
-TYPC_PCIE_HOST_BRIDGE from pcie_host.h not the pci_host.h one
-I think.
-
-> required when we add support for user-creatable SMMUv3 devices in
-> future patches.
-> 
-> Tested-by: Nathan Chen <nathanc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-> ---
->  hw/arm/smmu-common.c | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/arm/smmu-common.c b/hw/arm/smmu-common.c
-> index f39b99e526..7890aa12c1 100644
-> --- a/hw/arm/smmu-common.c
-> +++ b/hw/arm/smmu-common.c
-> @@ -20,6 +20,7 @@
->  #include "trace.h"
->  #include "exec/target_page.h"
->  #include "hw/core/cpu.h"
-> +#include "hw/pci/pci_bridge.h"
->  #include "hw/qdev-properties.h"
->  #include "qapi/error.h"
->  #include "qemu/jhash.h"
-> @@ -937,7 +938,8 @@ static void smmu_base_realize(DeviceState *dev, Error **errp)
->                                       g_free, g_free);
->      s->smmu_pcibus_by_busptr = g_hash_table_new(NULL, NULL);
->  
-> -    if (s->primary_bus) {
-> +    if (s->primary_bus && object_dynamic_cast(OBJECT(s->primary_bus)->parent,
-> +                                              TYPE_PCI_HOST_BRIDGE)) {
->          pci_setup_iommu(s->primary_bus, &smmu_ops, s);
->      } else {
->          error_setg(errp, "SMMU is not attached to any PCI bus!");
-
+                Ilya
 
