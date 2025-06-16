@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 719CDC71135
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:55:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81336C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:55:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR6V2-0003eR-5o; Mon, 16 Jun 2025 05:51:32 -0400
+	id 1uR6Uu-0003HC-C3; Mon, 16 Jun 2025 05:51:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uR6Ux-0003LT-6P
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:51:28 -0400
+ id 1uR6Us-0003GI-5l
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:51:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uR6Uv-0002MZ-HL
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:51:26 -0400
+ id 1uR6Uq-0002MJ-Fd
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:51:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750067484;
+ s=mimecast20190719; t=1750067479;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jvMZHA/dTkfEnWx09eaKnTkC86MZFnhWkUQI52i2V1k=;
- b=N5gpuW66dqgKAac5rW0lcZxEiFcOX3mkSnfmSlSHtMJ3lxjx90bI/m+UO5/30aft3OUCM5
- D65J4l6i0GDe6MMv+Wb7lFXNO+hf0eprYQordJvZE7icRAv679XwMytnn3NXIC4MYJkrX2
- CatVgUA7FXb7fUUtqVu4mh68NhZPcwU=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=ENcWQhSiq/mDYXzO0B3NWUXB9XTPdOHL4+pzW85tp58=;
+ b=hDyTpShL77PmbFB3MECSXr+Qz4mDEeEepiooxD9i52N41CKcJnLtiVIw/IcC+Yru15+OPh
+ qNnja/KUWy/aOchdv+q2XA8uKk+ntJnQVAQYEP/GWy0LS0MXzeHMIIl2t2abXk2z6EMlPJ
+ BflsJ4peUPBJbzBmnj+jc5o1p37ICJg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-g0b_qnXgObuzpOUQ8mNo3Q-1; Mon,
- 16 Jun 2025 05:51:21 -0400
-X-MC-Unique: g0b_qnXgObuzpOUQ8mNo3Q-1
-X-Mimecast-MFC-AGG-ID: g0b_qnXgObuzpOUQ8mNo3Q_1750067479
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-672-76xb6vKTNZ2Gkf0i8pHCCA-1; Mon,
+ 16 Jun 2025 05:51:16 -0400
+X-MC-Unique: 76xb6vKTNZ2Gkf0i8pHCCA-1
+X-Mimecast-MFC-AGG-ID: 76xb6vKTNZ2Gkf0i8pHCCA_1750067474
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B57201955DCA; Mon, 16 Jun 2025 09:51:19 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D0D4418002ED; Mon, 16 Jun 2025 09:51:14 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.45.224.77])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5DE3719560A3; Mon, 16 Jun 2025 09:51:15 +0000 (UTC)
+ id 7912A19560A3; Mon, 16 Jun 2025 09:51:10 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -54,10 +54,10 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  shannon.zhaosl@gmail.com
 Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH v3 24/29] hw/arm/virt: Use a SysBusDevice variable in
- create_acpi_ged()
-Date: Mon, 16 Jun 2025 11:46:53 +0200
-Message-ID: <20250616094903.885753-25-eric.auger@redhat.com>
+Subject: [PATCH v3 23/29] hw/core/sysbus: Introduce sysbus_mmio_map_name()
+ helper
+Date: Mon, 16 Jun 2025 11:46:52 +0200
+Message-ID: <20250616094903.885753-24-eric.auger@redhat.com>
 In-Reply-To: <20250616094903.885753-1-eric.auger@redhat.com>
 References: <20250616094903.885753-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -88,43 +88,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use an intermediate SysBusDevice variable in create_acpi_ged().
-This allows to get rid of multiple SYS_BUS_DEVICE() casts.
+Some sysbus devices have conditionnal mmio regions. This
+happens for instance with the hw/acpi/ged device. In that case
+it becomes difficult to predict which index a specific MMIO
+region corresponds to when one needs to mmio map the region.
+Introduce a new helper that takes the name of the region instead
+of its index. If the region is not found this returns -1.
+Otherwise it maps the corresponding index and returns this latter.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
 ---
- hw/arm/virt.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/hw/sysbus.h |  1 +
+ hw/core/sysbus.c    | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index 2f34877716..41be8f6dbb 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -683,6 +683,7 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
- {
-     DeviceState *dev;
-     MachineState *ms = MACHINE(vms);
-+    SysBusDevice *sbdev;
-     int irq = vms->irqmap[VIRT_ACPI_GED];
-     uint32_t event = ACPI_GED_PWR_DOWN_EVT;
+diff --git a/include/hw/sysbus.h b/include/hw/sysbus.h
+index 7dc88aaa27..18fde8a7b4 100644
+--- a/include/hw/sysbus.h
++++ b/include/hw/sysbus.h
+@@ -82,6 +82,7 @@ void sysbus_connect_irq(SysBusDevice *dev, int n, qemu_irq irq);
+ bool sysbus_is_irq_connected(SysBusDevice *dev, int n);
+ qemu_irq sysbus_get_connected_irq(SysBusDevice *dev, int n);
+ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr);
++int sysbus_mmio_map_name(SysBusDevice *dev, const char*name, hwaddr addr);
+ void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
+                              int priority);
  
-@@ -697,11 +698,12 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
-     dev = qdev_new(TYPE_ACPI_GED);
-     qdev_prop_set_uint32(dev, "ged-event", event);
-     object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
--    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sbdev = SYS_BUS_DEVICE(dev);
-+    sysbus_realize_and_unref(sbdev, &error_fatal);
- 
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, vms->memmap[VIRT_ACPI_GED].base);
--    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
--    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(vms->gic, irq));
-+    sysbus_mmio_map(sbdev, 0, vms->memmap[VIRT_ACPI_GED].base);
-+    sysbus_mmio_map(sbdev, 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
-+    sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
- 
-     return dev;
+diff --git a/hw/core/sysbus.c b/hw/core/sysbus.c
+index e71367adfb..ec69e877a2 100644
+--- a/hw/core/sysbus.c
++++ b/hw/core/sysbus.c
+@@ -151,6 +151,17 @@ void sysbus_mmio_map(SysBusDevice *dev, int n, hwaddr addr)
+     sysbus_mmio_map_common(dev, n, addr, false, 0);
  }
+ 
++int sysbus_mmio_map_name(SysBusDevice *dev, const char *name, hwaddr addr)
++{
++    for (int i = 0; i < dev->num_mmio; i++) {
++        if (!strcmp(dev->mmio[i].memory->name, name)) {
++            sysbus_mmio_map(dev, i, addr);
++            return i;
++        }
++    }
++    return -1;
++}
++
+ void sysbus_mmio_map_overlap(SysBusDevice *dev, int n, hwaddr addr,
+                              int priority)
+ {
 -- 
 2.49.0
 
