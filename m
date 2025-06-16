@@ -4,80 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CE02C71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 05:09:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86517C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 05:10:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR25w-0007zo-Ov; Mon, 16 Jun 2025 01:09:20 -0400
+	id 1uR26o-0000KB-Uy; Mon, 16 Jun 2025 01:10:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR25t-0007yr-Pb
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:09:17 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR26h-0000FC-NL
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:10:07 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR25r-0003PH-Ul
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:09:17 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb46so29183415e9.0
- for <qemu-devel@nongnu.org>; Sun, 15 Jun 2025 22:09:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR26g-0003eS-2c
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:10:07 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-43edecbfb94so45162705e9.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Jun 2025 22:10:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750050554; x=1750655354; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Y377tA3TJ8POVFAfNSK5I0mnXGUtCQSLClGcjp1KFA0=;
- b=BfDJ44iJqiwVPy5ns9JTZ/aQI+tv4J195GzEU90fI0X10oEIyJ3PUqyzZiWhoXtPC7
- LYuwKiY3avEk27+sGuZ4WyEP5/3xZJQmqa6Y31xu8fbhcfyK6sntIRAD3XvxhalkF5HK
- BcR6FS5zbLqhGUKDYN7JerNX0yrBvq8gUR4YR6lzGDJ1Z6Tp2I9AYdNL2gD5U/jOOek0
- rsygShndXCONHXJWFUcklolSbYCas7cot0/qTj2R+pCxZ4bT234gh67qUEREWOWKerdv
- jZRugvhDnoMmPWE5HQep+Dflz3TjmWrF6h8uZuuDBDaxYqbNwvKfdPscTpMNAxOZue5Y
- Ka/Q==
+ d=linaro.org; s=google; t=1750050604; x=1750655404; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=N3Pb09QRezOqh74pvUD+Nx4AuD9S8qvfhDsxnfBPdZA=;
+ b=hHYf1kNHYmxXrEPxDeJj6dx6oc3O5vzT9jeGLzBcYb3nWrYN26CjfunXjkpPBiojDs
+ If65qiUkSkQq7o31LTm4I/TQhCxZRP0zImNRu5BuMrlHLb82YM/0oDcnCmw+UF5MfEYX
+ BZMLM/hHoBVWC0wfu1zciL1OVQ+oleva6vCz9O3uEHa3ZFDUG1TF6W9lgsOT7102g7GH
+ G+dMmv9s6VzlzR/Ip1zaYrbJ5BezXyU9mEwybIFNdtxwlMWilWUHwsLpO8K4mjU+1whC
+ n6A0I6zyd/1KSVCcLMLAlxqE4scgkUOjHHT97UJNBY9KDNilpibUKkV/wmUznsxZLtrN
+ jYgQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750050554; x=1750655354;
- h=content-transfer-encoding:in-reply-to:from:cc:content-language
- :references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1750050604; x=1750655404;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Y377tA3TJ8POVFAfNSK5I0mnXGUtCQSLClGcjp1KFA0=;
- b=rRzG7wRt07CRz5UPzlhv1pOjzJaSL/Z0S/K8Yl/4YGwAUEnCSkt6BWb6Lyq+dROKfi
- 8kPKJwI31++QR/ct24LJVysdVsidciP/Mi5e0i9AG4KXFCRBbD/ew4Pc7onY0at0YqFo
- XgEunV2psD7UomgfXtscR76m9hG2Q63QPxFEiV/hroOzAN0D3dET59RG/55um27R/kPG
- b7dq3jOBz1f2mwpcumLRHIN7rXLWECH1f828dOLNgj+cdLC9qTx5/a6T+7Qk+HvOlgio
- aMClCtl0eM036TDCqU9vCncz+8hZWTuOL/qJTyND+a97LHHhI7eKmE347yKpp+98JyDy
- qsmw==
-X-Gm-Message-State: AOJu0YzZ19jT9F7IIybyX4UomPE/eeQO3vVuzSCIUNiGppucYDuExdyq
- TNLcaE2mdelWbujhE5q+Wo1RMH4/d56f2n9fymY7f0F+Dd5riGfFMbBn1UKX4LcRk1m1pEcPH4y
- tcxQmhXE=
-X-Gm-Gg: ASbGncsDfx8yIx/7jl8NpiaSLcFpNMxrQzNZ6NAnHevZCLrgbj/RdlLHFF8ZjSm34Pw
- vO0qomCnMGgPRsarldFFINQdzvZRzoFW8XKbwLoCfULIlqPhN5l48zAopo2uxGphw3+6O+q3GN1
- zoKDzcfcaOfFGn45Xe/II+lJefjVeJaBUzDnB2Eg2AMk4ttRZZ3Nc/ozNJxbp0xCNWXaoJe8cBw
- cNtlVo5km1rJd7pNRtuQEkO/Q0ihg3mdg/JhRdHdOgQVI/5UpsDCTcceqSrU4GogZEPpj4NXjHt
- SIPrPEgJDjMGdFbNGrIYYEbI+qiOj8OiuowViNA4Q1l9tqr7mZ8Pg0sFxBShzxWhSdQVCn19dhh
- +JNlIObuYv5HwQLwIFRi8ZKzeqZVecA==
-X-Google-Smtp-Source: AGHT+IEo0NCT/0ErN0Fw7tEwjIya+X4aNfXq4/mT0IXG+jiZAU3HrBmP1fdC6UoLNiB2nqSt/588bA==
-X-Received: by 2002:a05:6000:4b03:b0:3a4:eac6:e320 with SMTP id
- ffacd0b85a97d-3a5723993bfmr6276243f8f.3.1750050554125; 
- Sun, 15 Jun 2025 22:09:14 -0700 (PDT)
+ bh=N3Pb09QRezOqh74pvUD+Nx4AuD9S8qvfhDsxnfBPdZA=;
+ b=NGQrF/IZw4aJBSt5W0Op9mEm5CyNgyVCQVYGAOqwdp61wIcU5YLNGwv6weVdEZSSTa
+ EHyEMUN0NEW389V3P6VIZT+A0ta8BLyKDipUjq88DFr55jrz9UuovJQtoWGHfzST6GSH
+ 9go5Lqr5DECkr0a1a2dXmRQ/rAYWHRRdmMjLlGtGhmMTE6WUqk2SjjKymqcs1zVyp2T/
+ aUYnCMjxhS3sOiUEEUy5elW3V+JdD2iFKd/0GyDmMN0Q5GSSNyQ59841rRqfz9x9Z9gy
+ O+PPvaACf/AWOCnuYhpYzGgpDYS9qr/lEWspd9JcxqXBFrDHjAQ3lWZk4h58iljG12rE
+ 5RyQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWKRbw/9A5+C2PIpo8tKlJHgVRPEIzVs/hTaCtOwXWWWWRiKJLwJEUlV6Uh7wcouKJazQjlI67KPKeh@nongnu.org
+X-Gm-Message-State: AOJu0YztkunR6JWGZdpOj9t0P3B3GZCd21CyEkpoCIu27Fr8xz8E5OlH
+ U6Q6i4UYXt4x2tic1zX/TPsBNwjmCQUy5Wi0kv/cSOwPt/wozo6gk5dOULogKWwepRidc40OP+7
+ 4+Tmvdig=
+X-Gm-Gg: ASbGnctE+uNb2Rj92UZX91E2iCU3UXOQEiAhm7SOTSOJnktJEIx726Qbm7T3hXYm7X6
+ dgZpieFnzoIF46Cyd/saSUTCrPBpRmPOk52mkN7Q+ZKOJdx55SgdzjfvH6ab7pZYLjB9V9uavdi
+ WcXFP2zETss69NdH02m7qZVcwlgXb77FTBYxV0yj8aYvaYmnR+sx6wmJRlOMEI8Gb2S2SWDt7ii
+ MsjtLejLNi+o5p3GR6Z8nId33m2fOmofDC12sfx0L/8F5YpIXU8E8CymzQiHE815rm/igumgtyg
+ eMzc7k5ixhMRxgw8PjHwx5iC2ngNQBZEnlWOPzbGsMiINcPLksksFaCgXV/WLVQVhhgof5kmM+3
+ zb575kdo6pjOm41+5zDOP52FmHOpR/w==
+X-Google-Smtp-Source: AGHT+IEzdxrm0R8Ij7DYRJ9982k8devAZJPjqjGDWKX/XQllYVLaRqIk0mHk3fbD48RU+nKdkqc3tw==
+X-Received: by 2002:a05:600c:674a:b0:453:dda:a52e with SMTP id
+ 5b1f17b1804b1-4533cad28b6mr64764705e9.33.1750050604536; 
+ Sun, 15 Jun 2025 22:10:04 -0700 (PDT)
 Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b70d77sm9993803f8f.94.2025.06.15.22.09.13
+ 5b1f17b1804b1-4532e256b95sm134317515e9.30.2025.06.15.22.10.03
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Jun 2025 22:09:13 -0700 (PDT)
-Message-ID: <7d1ddf7e-b16c-4820-958c-0d03bf8479d1@linaro.org>
-Date: Mon, 16 Jun 2025 07:09:12 +0200
+ Sun, 15 Jun 2025 22:10:04 -0700 (PDT)
+Message-ID: <476eed49-bb19-41e5-842d-7a69e971067b@linaro.org>
+Date: Mon, 16 Jun 2025 07:10:03 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU emulating ARM Neoverse N1 unexpectectly emulates `retaa`
-To: root@wjsota.com, qemu-discuss@nongnu.org
-References: <1235E663-AD2F-499E-8CF9-16E54A1C01DD@wjsota.com>
+Subject: Re: [PATCH 1/2] fsdev/9p-marshal: move G_GNUC_PRINTF to header
+To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
+Cc: Christian Schoenebeck <qemu_oss@crudebyte.com>, Greg Kurz <groug@kaod.org>
+References: <20250613.qemu.9p@sean.taipei> <20250613.qemu.9p.01@sean.taipei>
 Content-Language: en-US
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <1235E663-AD2F-499E-8CF9-16E54A1C01DD@wjsota.com>
+In-Reply-To: <20250613.qemu.9p.01@sean.taipei>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,63 +102,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Solomon,
+On 14/6/25 04:08, Sean Wei wrote:
+> v9fs_string_sprintf() is annotated with G_GNUC_PRINTF(2, 3) in
+> 9p-marshal.c, but the prototype in fsdev/9p-marshal.h is missing the
+> attribute, so callers that include only the header do not get format
+> checking.
+> 
+> Move the annotation to the header and delete the duplicate in the
+> source file. No behavior change.
+> 
+> Signed-off-by: Sean Wei <me@sean.taipei>
+> ---
+>   fsdev/9p-marshal.c | 3 +--
+>   fsdev/9p-marshal.h | 2 +-
+>   2 files changed, 2 insertions(+), 3 deletions(-)
 
-Cc'ing the qemu-arm@ list.
-
-On 14/6/25 06:51, root@wjsota.com wrote:
-> Hi!
-> 
-> Is `qemu-aarch64 -cpu neoverse-n1` supposed to emulate the `retaa` instruction?
-> 
-> I have a binary called `main_pac` compiled from https://learn.arm.com/learning-paths/servers-and-cloud-computing/pac/example/ .
-> 
-> The compiling command is `aarch64-linux-gnu-gcc -march=armv8.5-a -fPIC -pedantic -Wall -Wextra -ggdb3 -O0 -mbranch-protection=standard -fno-stack-protector -fPIE -static main.c -o main_pac`. The binary includes the `paciasp` and `retaa` instructions associated with ARM PAC.
-> 
-> ```
-> (gdb) disas main
-> Dump of assembler code for function main:
->     0x0000000000400858 <+0>:	paciasp
->     0x000000000040085c <+4>:	stp	x29, x30, [sp, #-32]!
->     […]
->     0x0000000000400898 <+64>:	ldp	x29, x30, [sp], #32
->     0x000000000040089c <+68>:	retaa
-> End of assembler dump.
-> (gdb) quit
-> ```
-> 
-> When emulated using `qemu-aarch64 -cpu neoverse-n1` , the program completes without issues.
-> ```
-> user@dell-op7020:~/learning/arm_learning_path_pac$ qemu-aarch64 -cpu neoverse-n1 main_pac test
-> Hello World!
-> user@dell-op7020:~/learning/arm_learning_path_pac$
-> ```
-> 
-> This is the case for two versions I tested:
-> - v9.2.1 (Debian 1:9.2.1+ds-1ubuntu5)
-> - v10.0.50 (v10.0.0-1610-gd9ce74873a)
-> 
-> 
-> The expected behavior is for an Illegal Instruction exception to occur. Citing the Arm A-profile A64 Instruction Set Architect Version 2025-03, the `retaa` instruction should return an Undefined Instruction error when the PAC feature is not implemented.
-> ```
-> if !IsFeatureImplemented(FEAT_PAuth) then EndOfDecode(Decode_UNDEF);
-> ```
-> 
-> The same binary was run on AWS’s t4g.nano running Neoverse N1. It got the illegal instruction exception, as expected
-> ```
-> Core was generated by `./main_pac test'.
-> Program terminated with signal SIGILL, Illegal instruction.
-> #0  0x00000000004007d4 in func1 (s=0xffffe2446636 "test") at main.c:9
-> 9 }
-> (gdb) x/i $pc
-> => 0x4007d4 <func1+36>: retaa
-> (gdb) quit
-> ```
-> 
-> Is the emulation of Neoverse N1 behavior correct?
-> 
-> Thank you
-> Cheers,
-> Solomon
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
