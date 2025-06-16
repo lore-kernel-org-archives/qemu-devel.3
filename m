@@ -4,100 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB6AEC71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 13:40:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F1CFCC71155
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 13:47:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRA4S-0006HF-RI; Mon, 16 Jun 2025 09:40:21 -0400
+	id 1uRAAw-0007nI-7d; Mon, 16 Jun 2025 09:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
- id 1uRA4O-0006EM-E7; Mon, 16 Jun 2025 09:40:16 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1uRAAl-0007mq-Ak
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 09:46:51 -0400
+Received: from mail-m16.yeah.net ([1.95.21.16])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
- id 1uRA4L-00009L-WB; Mon, 16 Jun 2025 09:40:16 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bLWMl4M3Jz4x3d;
- Mon, 16 Jun 2025 23:40:03 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bLWMg5WV7z4x07;
- Mon, 16 Jun 2025 23:39:59 +1000 (AEST)
-Message-ID: <475ff262-2fba-4291-b0c1-1c96d0da4052@kaod.org>
-Date: Mon, 16 Jun 2025 15:39:57 +0200
+ (Exim 4.90_1) (envelope-from <chao.liu@yeah.net>) id 1uRAAc-0000mC-WF
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 09:46:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yeah.net;
+ s=s110527; h=Message-ID:Date:MIME-Version:Subject:To:From:
+ Content-Type; bh=r6qMdGH9R3vGJgRi0ixioQwlBdPEwIcR3i2XKKFkfEk=;
+ b=YfPvidzT9DPZZmT7T5GoPnaws4MhXaBNLs/e6vZxgv4ljaXhmG3FSBrVcPVfJ2
+ a8Nhl53aCU3aRyyJ5DxknWC9ZIAWd8FdH33tBZ7Kco/N/9dbcglDDIhnv/V7hOkV
+ 2ZTbrSnM+cjcEF0cMgs54Vo+yBS9JPxC0YqBH0U/AG46k=
+Received: from [192.168.8.103] (unknown [])
+ by gzsmtp3 (Coremail) with SMTP id M88vCgD3XzwFIFBoxy3DAA--.40708S2;
+ Mon, 16 Jun 2025 21:45:42 +0800 (CST)
+Message-ID: <7b5c0278-e2e9-4632-845b-73bf53c79525@yeah.net>
+Date: Mon, 16 Jun 2025 21:45:42 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/12] include/hw: replace FSF postal address with
- licenses URL
-To: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
-References: <20250613.qemu.patch@sean.taipei>
- <20250613.qemu.patch.05@sean.taipei>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250613.qemu.patch.05@sean.taipei>
+Subject: Re: [PATCH v7 0/1] Optimizing the print format of the QEMU monitor
+ 'info mtree'
+To: Markus Armbruster <armbru@redhat.com>, Chao Liu <lc00631@tecorigin.com>
+Cc: pbonzini@redhat.com, peterx@redhat.com, david@redhat.com,
+ philmd@linaro.org, balaton@eik.bme.hu, qemu-devel@nongnu.org
+References: <cover.1749800810.git.chao.liu@yeah.net>
+ <87frg0w7rb.fsf@pond.sub.org>
+From: Chao Liu <chao.liu@yeah.net>
+In-Reply-To: <87frg0w7rb.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=g70R=Y7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.056, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: M88vCgD3XzwFIFBoxy3DAA--.40708S2
+X-Coremail-Antispam: 1Uf129KBjvJXoW7Cr4kJw4fKw1kZrWDCFW8Crg_yoW8GrW7pF
+ yUAa1Dtan7XFy5XF1kt3WSqFy2vFW3Gr98KF4DKF929Fn8CFyIqr4xKrWF9F9rurs7Aw12
+ vFW5t343A3Z3XFJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07jjq2NUUUUU=
+X-Originating-IP: [223.64.204.89]
+X-CM-SenderInfo: pfkd0hxolxq5hhdkh0dhw/1tbiNQY3X2hQIAbvvgAA3U
+Received-SPF: pass client-ip=1.95.21.16; envelope-from=chao.liu@yeah.net;
+ helo=mail-m16.yeah.net
+X-Spam_score_int: -16
+X-Spam_score: -1.7
+X-Spam_bar: -
+X-Spam_report: (-1.7 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,70 +73,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/13/25 18:44, Sean Wei wrote:
-> Some of the GPLv2 boiler-plate still contained the
-> obsolete "51 Franklin Street" postal address.
+On 2025/6/16 13:55, Markus Armbruster wrote:
+> Chao Liu <lc00631@tecorigin.com> writes:
 > 
-> Replace it with the canonical GNU licenses URL recommended by the FSF:
-> https://www.gnu.org/licenses/
+>> From: Chao Liu <chao.liu@yeah.net>
+>>
+>> Hi, all:
+>>
+>> After several rounds of discussion, I think that adding a -t option to the
+>> `info mtree` command, which enables the display of tree-like node characters
+>> (e.g., +--, |--), is a better approach.
+>>
+>> As BALATON Zoltan pointed out, retaining space-based indentation for displaying
+>> memory region (mr) nodes helps ensure that the output remains easily parseable
+>> by other programs. This also provides better compatibility with existing tools
+>> and scripts.
 > 
-> Signed-off-by: Sean Wei <me@sean.taipei>
-> ---
->   include/hw/i2c/aspeed_i2c.h     | 3 +--
->   include/hw/pci/pci_bridge.h     | 4 ++--
->   include/hw/timer/aspeed_timer.h | 3 +--
->   3 files changed, 4 insertions(+), 6 deletions(-)
+> If people really feed the output of HMP info mtree to parsers, we should
+> probably provide the information via QMP.
 > 
-> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-> index 2c4c81bd20..2daacc10ce 100644
-> --- a/include/hw/i2c/aspeed_i2c.h
-> +++ b/include/hw/i2c/aspeed_i2c.h
-> @@ -14,8 +14,7 @@
->    *  GNU General Public License for more details.
->    *
->    *  You should have received a copy of the GNU General Public License along
-> - *  with this program; if not, write to the Free Software Foundation, Inc.,
-> - *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-> + *  with this program; if not, see <https://www.gnu.org/licenses/>.
->    */
->   
->   #ifndef ASPEED_I2C_H
-> diff --git a/include/hw/pci/pci_bridge.h b/include/hw/pci/pci_bridge.h
-> index b0f5204d80..8cdacbc4e1 100644
-> --- a/include/hw/pci/pci_bridge.h
-> +++ b/include/hw/pci/pci_bridge.h
-> @@ -14,8 +14,8 @@
->    * GNU General Public License for more details.
->    *
->    * You should have received a copy of the GNU General Public License
-> - * along with this program; if not, write to the Free Software
-> - * Foundation, 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-> + * along with this program; if not, see
-> + * <https://www.gnu.org/licenses/>.
->    *
->    * split out pci bus specific stuff from pci.[hc] to pci_bridge.[hc]
->    * Copyright (c) 2009 Isaku Yamahata <yamahata at valinux co jp>
-> diff --git a/include/hw/timer/aspeed_timer.h b/include/hw/timer/aspeed_timer.h
-> index 767cae4b05..a850625a05 100644
-> --- a/include/hw/timer/aspeed_timer.h
-> +++ b/include/hw/timer/aspeed_timer.h
-> @@ -16,8 +16,7 @@
->    *  GNU General Public License for more details.
->    *
->    *  You should have received a copy of the GNU General Public License along
-> - *  with this program; if not, write to the Free Software Foundation, Inc.,
-> - *  51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-> + *  with this program; if not, see <https://www.gnu.org/licenses/>.
->    */
->   #ifndef ASPEED_TIMER_H
->   #define ASPEED_TIMER_H
 
+Thank you for your helpful advice. I think the next step is to try 
+implementing "info mtree" via QMP first, and then have it called by HMP.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+I’ve added it to my to-do list, and I’ll try to implement it using QMP 
+in the next phase.
 
-Thanks,
-
-C.
-
+>> Users can choose between:
+>>
+>> - Without '-t': The default format using spaces for indentation, suitable for
+>>    scripting and parsing;
+>> - With '-t': The tree-style format using visual characters, ideal for
+>>    human-readable output.
+>>
+>> This way, both usability and compatibility are preserved.
+> 
+> Maintaining compatibility is a choice in HMP, not a requirement.  I'm
+> not judging, mind.
 
 
