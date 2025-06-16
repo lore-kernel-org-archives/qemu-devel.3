@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65489C71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 20:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C911C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 20:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRGAS-0001l1-1a; Mon, 16 Jun 2025 16:10:56 -0400
+	id 1uRGCG-0002WD-4j; Mon, 16 Jun 2025 16:12:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRGAP-0001k4-7f
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 16:10:53 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uRGCB-0002VC-JS
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 16:12:44 -0400
+Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRGAN-0006IE-06
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 16:10:52 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-45347d6cba3so4362015e9.0
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 13:10:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <tanishdesai37@gmail.com>)
+ id 1uRGC5-00073s-8y
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 16:12:43 -0400
+Received: by mail-pg1-x532.google.com with SMTP id
+ 41be03b00d2f7-7fd35b301bdso5905440a12.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 13:12:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750104648; x=1750709448; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=e1HQznq99qoCK8P8PgCsYfpPefLsvFqz98NOZI1uUSU=;
- b=tyC3dZyxRvrr7Da1k297sXE1T3xhamu1b7g0UrUO+eWVI1rmLx5ZUy+lGc6jtbEKhu
- pv5IjpPRqyZ9vKxM2gfOmU/lwibX40DD6UsIPbNe+DAj+OMvmu2lklGf0cvEEU+xLHOH
- 3m/LmGF1LDjiwcKDOQuJWnxqZ2IjdeWxZQcnMMd1MxY2OhKuJcyFfp5XISbRN72e1hz5
- uDQBAyW+JgDgpKBjlqYp+j6kiTMwiaRaz/i3wgehMb/ATjnkerNn27UXAogAYDI5IkNf
- dC3UH2lHDa+NSpVMCts0ovBn8dpMwZEwWm1tyWGTqa3WUm0XdSR/CAkbDbjxOI0pc/s+
- s15w==
+ d=gmail.com; s=20230601; t=1750104753; x=1750709553; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Uq8r4SY6dBJOUCHBztuIABwLi9QFf5rV0uIKi8BAX2Y=;
+ b=UQZ6AIo7i0PPJb04zBK8i1qBvxvmt0khhnODL8NZY+Z4hsYyh8wSUxMo+bcdmGrGi8
+ 3n3yqnw4S6+CueEqT6egZUzxrZOjL0Pz0n/rmZu9eNqT6BTyl+X2gvAR4DAoGPn3qh1x
+ 4UmSu92+MAx6mDfo1a5Z56izQ3omWyST5bkOiLqfIRzb6H4CPX6BescPQ1z/IMrsvCN0
+ F/XhpBVrhrP2pJ/mrnWJR4R3xLb0HmlGLsaW15DjIqq2lFxurfWTmM5qLsBmOAIzMd/D
+ nKyPFhCq0RmNG91wL9aOhNFklcj4ETKBbFx5+KNLAyB10EBeC3p3R7TipJow6X2v8yhg
+ 8xpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750104648; x=1750709448;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=e1HQznq99qoCK8P8PgCsYfpPefLsvFqz98NOZI1uUSU=;
- b=ZsOtGSzJqxMW0/yOsllF0g43kI7dNt8zTscktBCei80AAUT7VcETjidP6fgV1DxOym
- 5bBvN2QHSDGFsMSMjKAm+BIyUQgv6MDWLt3LJEzntmGP/ADJbYkXRTJDTEl9NQsCYisd
- I6CPUtQXidUzEq4Moev99PIiTL269z21SCRPkuhla5i8Fb9vqlDiURwWJAEhK3J6sHM0
- fO9SI0D6/tO+ePPXUS7rZSVLJIuJ/OkO2TVogXsiQjeE2nz0ztlhYwmOQyjEfynUUOFf
- VQAUUeNgfDqfaTNpszlCvQj5pBGXKMlQFUyaTEaTnhTunBWpKSmAL6p/qSJLDvjUblWR
- FW6w==
-X-Gm-Message-State: AOJu0Yz964MW+CaWDkJP3O2Mj0qmaHAFTzKADBHUydwKTYOUlRa0b9gw
- xrusitxtuCD4NsdrzYsSVlfkx7mCPqMDo84sCRrOvPDzefDyvzg1VgCS7ld47TJOfdKZw9c0a4U
- iHe0xkxU=
-X-Gm-Gg: ASbGnctSeQg6q2hyK+VlFSigpMTeftCv/0kUxMesh4jrZvqkB1XhvOEogu0EzsQCr98
- ihaUV0o4PZvBe8DRSdd4ZwWAbGhZEwOFsxohj7O1P+rAEmY92wSTiIlLqvxOrWJWI4vqMeVVwpZ
- v0IS+Vwdu4NdFd5fzgPR2n5ZZOTQloIK3FUQvbDbnjCTqkcHnIdZN2nexkxfXjNe0FC2E0g7gCE
- Z0u8SX3I7EwhPtXiO22mLl9TuqsUOZgZ1Bp0U7XlUVYHvBG7o9Lnj1Sl+9a11Ka6j+CWhnE/Mtr
- C/c488utmzZT5GyHOBOdkz6HkDsznsAFKIWLCgopUxQYjwcVuHzXcP96FZpjtWA=
-X-Google-Smtp-Source: AGHT+IHGttkRrfephVCBQu0wUh/9hw3NjkRpFA2g7XLjUPlYK2Q5LCLzFXgzlRRFiOykgcrvx0kk+w==
-X-Received: by 2002:a05:600c:1c0b:b0:453:1058:f8aa with SMTP id
- 5b1f17b1804b1-453418d1130mr91380755e9.15.1750104648334; 
- Mon, 16 Jun 2025 13:10:48 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532dea1c27sm152889575e9.15.2025.06.16.13.10.47
+ d=1e100.net; s=20230601; t=1750104753; x=1750709553;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Uq8r4SY6dBJOUCHBztuIABwLi9QFf5rV0uIKi8BAX2Y=;
+ b=GX7kN8+yYzStywk7LrbPtBHJuEt9Gbq25c39ZKI8LpnVU8caqE/Ozgy5z+D+Jdjufe
+ bjcRtsatBgSxW8dI3nntEZsi9Cdxz71+YU4+Tx4ly5G8SFAb6Q9jtWL+lYmfEZ1wHWqd
+ YRftBbLweI/bHmwZGAx0XtFa2ZVXrBwYxQi49q/DakILl78kah5mCbgK03T61cT/Kqa3
+ m1v+FxOuQ2xR0TOy5UoUGvBrs7afKIGp5WhGS5k/TffWyVvzCOgINoDzF2+DTBvt/0PV
+ YKQhM7AT8OMAJvVSyWkvCKmk81XI948AuLexGk5YswKdycNuXr3nFt9fCBdPPOdH9yCo
+ MUqw==
+X-Gm-Message-State: AOJu0YzJvw2s3KQsjUfmGeAlJVKWJN3NV+cVkvKpbf5p9j1+BUALmWUJ
+ yPEjoW4CI3l4u3wk9IiddNB2u3SvPwGwf1vjwjYUx6m30fEM64N7m24+DqYnGmByiMECYA==
+X-Gm-Gg: ASbGnctgNZvweO/OzcwJLNywhc77L2h0BmlWRBGUK8h1PqdsFEBFowJ9rHLlsgjXI+s
+ OJjcmmKpsdbhW3stuorY2ugxE4YmQXdv347/xIbpvR/RIVMuSUGyuPCg8cy2EoyCkWXARvre+eF
+ 46aSQXqE775++YK7Les8UlsPfLCfJG9Vi9Cqzo1jaTymXhlbLZkqsL5Az2FPA8yAyaT8UwBBURB
+ KB3mVRKxw948vNQ9TOreE0Jw19BboMAsyWwAleLdDIGCHBr7mQcgebilnAoD9FW0mqFH2oc//EK
+ 5eth2pwxpUVqO0mnf6u05zeFhiOZVckT+7ndVS6d980wVeFhWUmVrwiXB69IX/OE8hMQQ2gXFl6
+ FQg==
+X-Google-Smtp-Source: AGHT+IH2HblgeAwP+Nsiok75hKrwGZM2CSefExtvTqQzZyrNRCojSbSeJY68oUefXPV+QGBkII6HRA==
+X-Received: by 2002:a05:6a20:e687:b0:1f5:9330:29fe with SMTP id
+ adf61e73a8af0-21fbd4c7e08mr13286691637.17.1750104752982; 
+ Mon, 16 Jun 2025 13:12:32 -0700 (PDT)
+Received: from ubuntu.. ([49.207.59.180]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b2fe1642dfdsm7369494a12.18.2025.06.16.13.12.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Jun 2025 13:10:47 -0700 (PDT)
-Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 2E3705F7D7;
- Mon, 16 Jun 2025 21:10:47 +0100 (BST)
-From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+ Mon, 16 Jun 2025 13:12:32 -0700 (PDT)
+From: Tanish Desai <tanishdesai37@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- qemu-arm@nongnu.org (open list:ARM cores)
-Subject: [RFC PATCH] target/arm: clamp value to account for RES0 fields
-Date: Mon, 16 Jun 2025 21:10:42 +0100
-Message-ID: <20250616201042.2196127-1-alex.bennee@linaro.org>
-X-Mailer: git-send-email 2.47.2
+Cc: =?UTF-8?q?Llu=C3=ADs=20Vilanova?= <vilanova@ac.upc.edu>,
+ Paolo Bonzini <pbonzini@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Tanish Desai <tanishdesai37@gmail.com>
+Subject: [PATCH 2/3] tracetool: introduce generate_unconditional
+Date: Mon, 16 Jun 2025 20:12:21 +0000
+Message-Id: <20250616201222.6416-3-tanishdesai37@gmail.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20250616201222.6416-1-tanishdesai37@gmail.com>
+References: <20250616201222.6416-1-tanishdesai37@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
+ envelope-from=tanishdesai37@gmail.com; helo=mail-pg1-x532.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,40 +102,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the user writes a large value to the register but with the bottom
-bits unset we could end up with something illegal. By clamping ahead
-of the check we at least assure we won't assert(bpr > 0) later in the
-GIC interface code.
+This patch separates the generation logic of trace_foo() for the UST and DTrace backends from other backends.
+The motivation is to remove the unnecessary if (true) in the _no_check function, as UST and DTrace do not require a trace_event_get_state check without introducing a seperate function it is very difficult to generate code which keeps them out of unified if condition.
+With this separation, we can safely move the trace_event_get_state check into trace_foo for the other backends only, keeping UST/DTrace generation paths clean.
+A new generate_h_unconditional function has been introduced for UST and DTrace. It behaves similarly to generate_h, but is defined only in UST and DTrace backends. This ensures that generate_h is used by the other backends, while UST/DTrace selectively use generate_h_unconditional.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
 ---
- hw/intc/arm_gicv3_cpuif.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ scripts/tracetool/backend/__init__.py |  3 +++
+ scripts/tracetool/backend/dtrace.py   |  3 ++-
+ scripts/tracetool/backend/ust.py      |  2 +-
+ scripts/tracetool/format/h.py         | 10 +++++++---
+ 4 files changed, 13 insertions(+), 5 deletions(-)
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 4b4cf09157..165f7e9c2f 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1797,6 +1797,9 @@ static void icc_bpr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     trace_gicv3_icc_bpr_write(ri->crm == 8 ? 0 : 1,
-                               gicv3_redist_affid(cs), value);
+diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/backend/__init__.py
+index 7bfcc86cc5..c4456a5efd 100644
+--- a/scripts/tracetool/backend/__init__.py
++++ b/scripts/tracetool/backend/__init__.py
+@@ -118,6 +118,9 @@ def generate_begin(self, events, group):
+     def generate(self, event, group):
+         self._run_function("generate_%s", event, group)
  
-+    /* clamp the value to 2:0, the rest os RES0 */
-+    value = deposit64(0, 0, 3, value);
++    def generate_unconditional(self, event, group):
++        self._run_function("generate_%s_unconditional", event, group)
++    
+     def generate_backend_dstate(self, event, group):
+         self._run_function("generate_%s_backend_dstate", event, group)
+ 
+diff --git a/scripts/tracetool/backend/dtrace.py b/scripts/tracetool/backend/dtrace.py
+index e17edc9b9d..171b7e09ed 100644
+--- a/scripts/tracetool/backend/dtrace.py
++++ b/scripts/tracetool/backend/dtrace.py
+@@ -61,7 +61,8 @@ def generate_h_begin(events, group):
+             '#endif',
+             uppername=e.name.upper())
+ 
+-def generate_h(event, group):
 +
-     if (grp == GICV3_G1 && gicv3_use_ns_bank(env)) {
-         grp = GICV3_G1NS;
-     }
-@@ -1820,7 +1823,7 @@ static void icc_bpr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         value = minval;
-     }
++def generate_h_unconditional(event, group):
+     out('    QEMU_%(uppername)s(%(argnames)s);',
+         uppername=event.name.upper(),
+         argnames=", ".join(event.args.names()))
+diff --git a/scripts/tracetool/backend/ust.py b/scripts/tracetool/backend/ust.py
+index c857516f21..1564b490ec 100644
+--- a/scripts/tracetool/backend/ust.py
++++ b/scripts/tracetool/backend/ust.py
+@@ -30,7 +30,7 @@ def generate_h_begin(events, group):
+         '')
  
--    cs->icc_bpr[grp] = value & 7;
-+    cs->icc_bpr[grp] = value;
-     gicv3_cpuif_update(cs);
- }
+ 
+-def generate_h(event, group):
++def generate_h_unconditional(event, group):
+     argnames = ", ".join(event.args.names())
+     if len(event.args) > 0:
+         argnames = ", " + argnames
+diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
+index ea126b07ea..89d54b9aff 100644
+--- a/scripts/tracetool/format/h.py
++++ b/scripts/tracetool/format/h.py
+@@ -76,13 +76,17 @@ def generate(events, backend, group):
+         out('',
+             'static inline void %(api)s(%(args)s)',
+             '{',
+-            '    if (%(cond)s) {',
++            api=e.api(),
++            args=e.args)
++        
++        if "disable" not in e.properties:
++            backend.generate_unconditional(e, group)
++
++        out('    if (%(cond)s) {',
+             '        %(api_nocheck)s(%(names)s);',
+             '    }',
+             '}',
+-            api=e.api(),
+             api_nocheck=e.api(e.QEMU_TRACE_NOCHECK),
+-            args=e.args,
+             names=", ".join(e.args.names()),
+             cond=cond)
  
 -- 
-2.47.2
+2.34.1
 
 
