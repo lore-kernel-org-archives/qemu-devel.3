@@ -4,92 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BEF69C71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 06:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1563FC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 06:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR3CI-0005O0-Eb; Mon, 16 Jun 2025 02:19:58 -0400
+	id 1uR3O5-0000m9-SL; Mon, 16 Jun 2025 02:32:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uR3CB-0005LJ-97
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 02:19:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
+ id 1uR3NJ-0000gI-ES; Mon, 16 Jun 2025 02:31:22 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1uR3C9-0003Ii-8b
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 02:19:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750054784;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=2nnQoc+bXq1oHteOBFbA1Xjlf8RxAtYfQOG0McQImtQ=;
- b=VcsRaO1cL6/JNTexcfgPeEe6mUk3/kR6tBupzvq2XWgEOaSsGB3UOdVA9P/CWlce+Mxt6b
- c607URHHP9LCL+Uy5XADWL683+DlQLE1bsZRsQLKKzpfQlRWWIULkXnln0DPp03FgcHvnL
- XSKzC8liXYluXZ21Gbh5ZO7vK0oL8mE=
-Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
- [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-NoMSwS1PNme11FE_EtC_Og-1; Mon, 16 Jun 2025 02:19:43 -0400
-X-MC-Unique: NoMSwS1PNme11FE_EtC_Og-1
-X-Mimecast-MFC-AGG-ID: NoMSwS1PNme11FE_EtC_Og_1750054782
-Received: by mail-pj1-f70.google.com with SMTP id
- 98e67ed59e1d1-311f4f2e761so4020852a91.2
- for <qemu-devel@nongnu.org>; Sun, 15 Jun 2025 23:19:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750054782; x=1750659582;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=2nnQoc+bXq1oHteOBFbA1Xjlf8RxAtYfQOG0McQImtQ=;
- b=RoTJPqGLP055f5aMXh9IBgG1TBuj5ktwIu7TcsYbpJQk8Yp+M+pHdpiMbvA8UNy0i4
- I5UTlsETCrQYn9jPrgAd/gwQFjqa4t9W+ATTuqZ1mAxMy/3R1f77fLaVkeqpLmt10rh9
- OkWBhLGq6H2gLnsY55KvyrALCjedjx8VWC9saPO1kRpfZ4aov5CA2Yp57e4vTroQnbi2
- GsIlsuU8b+C4YXDmAjFL7b0xXRCW3SjHPJ7SkOrNfSjYUvu/QnVU1QvyGYb7C//JXpsQ
- f69UFqYcZCvfAONGPSMoGhUqX4H4vUeBpCj7T4y0LszG6wV5aWSEok+ALgijHl1l4Voo
- YtaQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVRILsym2ZZXHsnhJzJzncNbuNPbHYWX7RX57MhmW3XSjY/dsBRB09WrM2knbKYCVOTTzoTrUKw7VeW@nongnu.org
-X-Gm-Message-State: AOJu0Yxe4LtOG1TTzw3uA7A001/ofPjRlYzM2lzm49mcHXEg3AKLR1Cf
- sM0ZhMRyIm0sei5d0mEvFiQuDUvtDbmmYKxmgijDFTs0xKidpxjqsjTjuCAg1IBA+f4hKqsZWXn
- XdfvBEk2VTxHodwiR0AlbroczVSDoFpdr47xWqEvxpD5W9apjFM+h67ey59r25UaW+fcq0cqTm3
- mOK3r5xLHjrKtSnEgaa4CV4RXOBxKWV1o=
-X-Gm-Gg: ASbGncu78f3GZqDHDvIBmGR/XM/Mz0fBOM87y/p5/T+opC9G+Fk9RTXfYCfqbanWkr3
- X/uthHs0wRI07cWF37WpMsS08LyzMezAkkUfhMl4RN6shiwBzfi0WRiPnKiGy24gyQdgpWKCAUx
- r1Tg==
-X-Received: by 2002:a17:90b:1d81:b0:313:352f:6620 with SMTP id
- 98e67ed59e1d1-313f1be63ebmr11625623a91.4.1750054782026; 
- Sun, 15 Jun 2025 23:19:42 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHDeKz0nlV/DT7Z8Ca+zwI9I4hmTHziDzjbUV38ZQlPP0vYBBQ9HEO9WUZOVly6h9IOzyQFZwYWr1EocZsBD/s=
-X-Received: by 2002:a17:90b:1d81:b0:313:352f:6620 with SMTP id
- 98e67ed59e1d1-313f1be63ebmr11625600a91.4.1750054781641; Sun, 15 Jun 2025
- 23:19:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
+ id 1uR3NG-0004kD-V8; Mon, 16 Jun 2025 02:31:20 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bLKry319Xz4wbn;
+ Mon, 16 Jun 2025 16:31:14 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bLKrt2f1bz4wb0;
+ Mon, 16 Jun 2025 16:31:10 +1000 (AEST)
+Message-ID: <4dec0b7e-d7a1-4a0f-aca1-4d5c0ef23e98@kaod.org>
+Date: Mon, 16 Jun 2025 08:31:07 +0200
 MIME-Version: 1.0
-References: <20250614224422.1595301-1-kshk@linux.ibm.com>
-In-Reply-To: <20250614224422.1595301-1-kshk@linux.ibm.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 16 Jun 2025 08:19:04 +0200
-X-Gm-Features: AX0GCFu8JHjpVkd0MFHMXsbbhes1RZ64ZVWpvGrqdHAaPNLZYsA7uT_dsAImB4Q
-Message-ID: <CAJaqyWcPHdEsQMLHUyZ6MYMtppwiPBgmJP9JzQrppL8k5rPnCA@mail.gmail.com>
-Subject: Re: [PATCH] vdpa: Allow VDPA to work on big-endian machine
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>
-Cc: jasowang@redhat.com, akihiko.odaki@daynix.com, qemu-devel@nongnu.org, 
- mjrosato@linux.ibm.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/12] include/hw: replace FSF postal address with
+ licenses URL
+To: Sean Wei <me@sean.taipei>
+Cc: qemu-devel@nongnu.org, "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20250613.qemu.patch@sean.taipei>
+ <20250613.qemu.patch.05@sean.taipei>
+ <3aa8de03-911e-4906-a0c5-5b8ea269ad28@kaod.org>
+ <CAGvOXg_VK0+DA_OHy0oWGC4QuL6icFd7yabLKeRzQMc8OpU-rA@mail.gmail.com>
+ <66a0c462-deb3-46c9-bcd1-1395137dc108@kaod.org>
+ <3f4e8f04-c785-4374-913f-2dc200d1ea1e@sean.taipei>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <3f4e8f04-c785-4374-913f-2dc200d1ea1e@sean.taipei>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=g70R=Y7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.097, RCVD_IN_DNSWL_MED=-2.3,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,50 +119,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Jun 15, 2025 at 12:46=E2=80=AFAM Konstantin Shkolnyy <kshk@linux.ib=
-m.com> wrote:
->
-> After commit 0caed25cd171 vhost_vdpa_net_load_vlan() started seeing
-> VIRTIO_NET_F_CTRL_VLAN flag and making 4096 calls to the kernel with
-> VIRTIO_NET_CTRL_VLAN_ADD command. However, it forgot to convert the
-> 16-bit VLAN IDs to LE format. On BE machine, the kernel calls failed
-> when they saw "VLAN IDs" greater than 4095, and QEMU then said:
-> "unable to start vhost net: 5: falling back on userspace virtio", and
-> VDPA became disabled.
->
-> Convert the VLAN ID to LE before putting it into virtio queue.
->
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Hello Sean
 
-Good catch! You should add the Fixes: tag though :). With that,
+On 6/14/25 22:22, Sean Wei wrote:
+> Hi Cédric,
+> 
+> Thanks for pointing me to the earlier thread, moving to
+> the `SPDX-License-Identifier` tags is the better long-term fix.
+> 
+> 
+>  > I think you can convert all QEMU files while at it.
+> 
+> To keep traffic on qemu-devel@ manageable, I'd like to work
+> subtree by subtree, following the sections in MAINTAINERS.
+> 
+> 
+>  > Are there any MIT-licensed files?
+> 
+> Just a handful in the ASPEED code base using MIT:
+> 
+>      hw/ssi/aspeed_smc.c
+>      include/hw/ssi/aspeed_smc.h
+>      tests/qtest/aspeed_gpio-test.c
+>      tests/qtest/aspeed_smc-test.c
+>      tests/qtest/aspeed-smc-utils.c
+>      tests/qtest/aspeed-smc-utils.h
 
-Acked-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+Oh and I am the one that did that 9y ago. I think I was inspired by
+the PPC series source files I was working on at the time.
 
-> ---
->  net/vhost-vdpa.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-> index 58d738945d..99c9eb42b9 100644
-> --- a/net/vhost-vdpa.c
-> +++ b/net/vhost-vdpa.c
-> @@ -1173,9 +1173,10 @@ static int vhost_vdpa_net_load_single_vlan(VhostVD=
-PAState *s,
->                                             struct iovec *in_cursor,
->                                             uint16_t vid)
->  {
-> +    __le16 vid_le =3D cpu_to_le16(vid);
->      const struct iovec data =3D {
-> -        .iov_base =3D &vid,
-> -        .iov_len =3D sizeof(vid),
-> +        .iov_base =3D &vid_le,
-> +        .iov_len =3D sizeof(vid_le),
->      };
->      ssize_t r =3D vhost_vdpa_net_load_cmd(s, out_cursor, in_cursor,
->                                          VIRTIO_NET_CTRL_VLAN,
-> --
-> 2.34.1
->
->
+> 
+> ## Proposed steps
+> 
+> 1. Start with the ASPEED BMC subtree.
+> 
+> 2. Split commits by path and header style.
+>     path: hw/, include/hw/, tests/
+>     license: GPL-2.0-or-later, GPL-2.0-only, MIT
+>     style: boiler plate, see COPYING
+> > 3. Drop the boiler-plate, replace with the correct
+>     SPDX-License-Identifier, without changing code.
+> 
+> Does this approach sound reasonable for you?
+
+LGTM. I will merge these changes through the aspeed tree.
+
+Thanks,
+
+C.
 
 
