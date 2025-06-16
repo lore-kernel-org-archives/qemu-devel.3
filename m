@@ -4,94 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A00BC71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 08:24:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D3F2C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 08:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR57y-0002js-90; Mon, 16 Jun 2025 04:23:38 -0400
+	id 1uR5O6-0006t2-Vp; Mon, 16 Jun 2025 04:40:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR55y-0002Do-Eu
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:21:34 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR55w-0000sg-4H
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:21:34 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3a53359dea5so2823198f8f.0
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 01:21:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750062090; x=1750666890; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2v7A+U0GguZRsc2/YYGWktbw6iMfk/gfZedDJ/vBDrY=;
- b=mgh9aJ3ZP7J6S/QE5Waw6EGHJrGWl4nFUDGo++JSI3h9TsAhI8WYy1zYaJIOpFkOlB
- 6hQNC4GAsB8qPL+8wfW/qmc0nBywzTrewPo6s7vQtGDfSesCezAhEYJKWb/C8bw8EWkh
- aDuUkRe2Q5Jy9/fvoEzog3oTwkVn33EEp+CWfut4oF7txbOkpdobKUBqfzk6+hv1Zth2
- wteviWcu418LwARdFUL4PogmOLtu2lQfsnhmqGYA19jrc7leZkeYtucQxyKbvYjnS5g/
- 8O1zOQXQ9O83BLLGKGSyH2YbHVOAC7urzq/YsyVkblCI2Ul38eRO0sqxDGL/NKYxLKea
- wu+Q==
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uR5Ng-0006ix-HV
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:39:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
+ id 1uR5Nd-00038e-8O
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:39:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750063185;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Ta6ST1mJJu/rG13Ij9HUkZ0h+9zLbdzBlamI4NQsbM8=;
+ b=AtKU27tMCvCfhVtP2d2wq8pMPovhFb90x5jx0BWEX4zcrc7g7OClSsD04P0VOSxC20at6G
+ aS8KQWcW63X+kffPu+VzB5H3BpN8jHJuDbSqQAHbRfvMeJVOzxPUEpbBTc5DELDUmdtAba
+ fmwSdZ5/u2qwSk75DhQrhyv2sVhdLyU=
+Received: from mail-pj1-f70.google.com (mail-pj1-f70.google.com
+ [209.85.216.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-421-D71rg5VQPQy1v7PBTSVdHg-1; Mon, 16 Jun 2025 04:39:43 -0400
+X-MC-Unique: D71rg5VQPQy1v7PBTSVdHg-1
+X-Mimecast-MFC-AGG-ID: D71rg5VQPQy1v7PBTSVdHg_1750063183
+Received: by mail-pj1-f70.google.com with SMTP id
+ 98e67ed59e1d1-3141f9ce4e2so186112a91.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 01:39:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750062090; x=1750666890;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=2v7A+U0GguZRsc2/YYGWktbw6iMfk/gfZedDJ/vBDrY=;
- b=tPhErivYUVCP2BhE0Vdy87cVBypclpwCMZ7ADT9l/IKcrsCwEXVDz2vsidxBCkI2E7
- /41p1zkHL3OUW3WUZRwOjDq6Gw6B471qozvYIpmvLZPdms/vKNCj0i2Z0N8k4cRcbsUS
- zt4KLq2Juxfab18EYc9CLdnSixEat2AcgDaGYBGZu2wQTDOHB60lsmuz33nUWg2zZiQ/
- XFXvVrn7o8fY+BDJROngHQ2F+qPlDT2k6+rfbHZLioCAu0dsGuJWJ7XlUj49YoQEXJOV
- QMXCTUvKoNmDmaOJvJuoe6gupsjZGrtJzKK3IJuizjcMQfRzh/CqKmwJYtZawO6iGGzs
- LNlw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWhCN1wjqrxASx0aVm8MVf6BWufumrGCr/24oDAVWJKZlHzUO3hB6wuzagFDEcJT3QDNbjhqkCg/2gd@nongnu.org
-X-Gm-Message-State: AOJu0Yyx8YtLXNE8qnV1HkZHhR40W3nfCKx4ROpSwfTLdMuLFKg0cbzo
- F0axpHksmpCWztULNND8go+0zh0gFFd83QRcs8YxyHWlOacqHK09ZzhSXadUE3MK4JY=
-X-Gm-Gg: ASbGncufi+OjQBOhjfbyioaY4lzKnEmC9CyHBHxZEvT4J9FVjjr8JcDciMcLBFSUnDS
- P4L+jS5z2/EpH0ZPkR0I/fTL/UWrf+pBuMSk4VMvXdxpBTWpn/wPnUlrpgtk4oqVfROwlhXJ+k7
- zmVVVNihtkVCf1szLcyP9OUMDAS25GIQg5qZ0dVKrUCYuIw+PUhymUrcYrffwKMFP7HzWIQ6/XZ
- 3JSpVrzKI6uEHvNOpgUeusrWVw7KiQWOsA7lY3Gyk9+b/L/kcif028MvVypO13Yd1e1uSfnmXsu
- MJrYcaqHjolzrjSYAuB2AfK2/rLB6thIBGYnwFooTl8r9c2jlANjfW+NSEZybSpC0hRbMEgwot7
- Y52zmk6DgOJKNd943/Ai9fgdJtaTVv32d2l2jWwyx
-X-Google-Smtp-Source: AGHT+IHl4rm2jvgL/HchZ3eiUsOPUesmnxaCqYdvnunRZZqShm3+fzRknHWNsMd1O/TSGZaGpQNp2A==
-X-Received: by 2002:a05:6000:288a:b0:3a5:3a3b:6a3a with SMTP id
- ffacd0b85a97d-3a572e5856amr6806289f8f.54.1750062089688; 
- Mon, 16 Jun 2025 01:21:29 -0700 (PDT)
-Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e232e4asm135488375e9.11.2025.06.16.01.21.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Jun 2025 01:21:29 -0700 (PDT)
-Message-ID: <9ec68c71-c53d-495f-b7ab-6061ea727dd0@linaro.org>
-Date: Mon, 16 Jun 2025 10:21:28 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 02/19] system/cpus: Only kick running vCPUs
-To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Igor Mammedov <imammedo@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
-References: <20250606164418.98655-1-philmd@linaro.org>
- <20250606164418.98655-3-philmd@linaro.org>
- <c9a8d923-0faf-46a4-962b-5a0f4289008f@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <c9a8d923-0faf-46a4-962b-5a0f4289008f@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+ d=1e100.net; s=20230601; t=1750063183; x=1750667983;
+ h=to:references:message-id:content-transfer-encoding:cc:date
+ :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=Ta6ST1mJJu/rG13Ij9HUkZ0h+9zLbdzBlamI4NQsbM8=;
+ b=H/s1axWwP241Ji+kOO12UWWRrYMCG8UWsvpxksTY9Y7PZqW0pK/+oqavW1AcTbUfCn
+ i44FTJfHdTfKN/HDKfh6y1HaPz9KLwx0UUz55GaG+t3JD4TCwLtBbIOmuGg/eRzKApv9
+ gdAJoczC8YxSZp2JHjJtz1mDSCcUfIC+bR8v+zvbYNxELswR/eAAmqBNZzxSuuQ7+OiR
+ QvB6Zb3I59Fc704e9egCaEIO2lZIcA0TvBQydqJ1eD0v9vBqBN+mO1dovgVdDGKPTp/W
+ qDLdNkhTGcza5HOk8m7crALB+K2spQnyFo4zKqzlddCLStjzoqq/L1Xg+27RT7NsyTkv
+ vsRg==
+X-Gm-Message-State: AOJu0Yx8RSsuBZfD6PVDWGHX2T0GNjVPXQT+FiCA2WJnCud5lhu6Z3DP
+ /SFidArxFsevDTjehB0x2MGKGh6+L9UMYAS6T9oJLaV5U26hUYmY3b8VT24lltDU+YikGpflU7y
+ VRnpFHhfMb+pTbNk8boB4+GPNuTjyMGF9F4CPZFcdGGT8VVokOv3tA5NJ
+X-Gm-Gg: ASbGnctmY6rYSfN5dXRlhM5zyv1O4GMmN/RL00lKPN+EPEN+ky7MkYEOXMX8ykEgpUV
+ Rl78w3zaaLFE7Zp1h+K/EAETqnV/Sy1mhVtXNm0ZnYeJK0PMLF/a73EjcYYpz/NbRRQa1fSz1q2
+ CUu1NFwv/7UYxdyPWiDiyhudIe6GBmNs8LrNDSqj2k9/E8YZagiZl1xtVRDTwZqBKnZr8YVsuTN
+ 9WC68xnm+oA7EUcd6e5uUTOZQdN+hdtsasv2O7jvLWZMsido9zZ3rkqnr1T/tYENSXTthIdE2QV
+ +glTmdpUY/37y0GhcnehbTQOhDBbPh8sZ5cG
+X-Received: by 2002:a17:90b:4cd1:b0:311:f2f6:44ff with SMTP id
+ 98e67ed59e1d1-313f1db806fmr16932399a91.17.1750063182638; 
+ Mon, 16 Jun 2025 01:39:42 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHr+231mxwAY9wtRvJfHeFIYeXM0nYoJoNc4UG2PQlGCH38ohdbTG83ct6v6D7kMDhivKtZ0w==
+X-Received: by 2002:a17:90b:4cd1:b0:311:f2f6:44ff with SMTP id
+ 98e67ed59e1d1-313f1db806fmr16932345a91.17.1750063182071; 
+ Mon, 16 Jun 2025 01:39:42 -0700 (PDT)
+Received: from smtpclient.apple ([171.48.6.172])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2365d8a5619sm55977325ad.73.2025.06.16.01.39.36
+ (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+ Mon, 16 Jun 2025 01:39:41 -0700 (PDT)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
+Subject: Re: [PATCH v7 08/16] i386/sev: Refactor setting of reset vector and
+ initial CPU state
+From: Ani Sinha <anisinha@redhat.com>
+In-Reply-To: <CBF546AD-51DD-467C-B338-642AF5D915A6@redhat.com>
+Date: Mon, 16 Jun 2025 14:09:24 +0530
+Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Berrange <berrange@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Michael Tsirkin <mst@redhat.com>,
+ Cornelia Huck <cohuck@redhat.com>, Sergio Lopez <slp@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Tom Lendacky <thomas.lendacky@amd.com>,
+ Michael Roth <michael.roth@amd.com>, Joerg Roedel <jroedel@suse.com>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <068F493F-E98F-4175-89EA-DF90F1C4BE9D@redhat.com>
+References: <cover.1740663410.git.roy.hopkins@randomman.co.uk>
+ <b43aa3fa.AUoAAGOlyUYAAAAAAAAAA9cBm3AAAYKJZwAAAAAAAC5ATwBnwHdy@mailjet.com>
+ <CBF546AD-51DD-467C-B338-642AF5D915A6@redhat.com>
+To: Roy Hopkins <roy.hopkins@randomman.co.uk>
+X-Mailer: Apple Mail (2.3776.700.51.11.4)
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,158 +121,433 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 7/6/25 15:23, Richard Henderson wrote:
-> On 6/6/25 17:44, Philippe Mathieu-Daudé wrote:
->> As an optimization, avoid kicking stopped vCPUs.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+
+> On 12 Jun 2025, at 5:33=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
+wrote:
+>=20
+>=20
+>=20
+>> On 27 Feb 2025, at 7:59=E2=80=AFPM, Roy Hopkins =
+<roy.hopkins@randomman.co.uk> wrote:
+>>=20
+>> When an SEV guest is started, the reset vector and state are
+>> extracted from metadata that is contained in the firmware volume.
+>>=20
+>> In preparation for using IGVM to setup the initial CPU state,
+>> the code has been refactored to populate vmcb_save_area for each
+>> CPU which is then applied during guest startup and CPU reset.
+>>=20
+>> Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
+>> Acked-by: Michael S. Tsirkin <mst@redhat.com>
+>> Acked-by: Stefano Garzarella <sgarzare@redhat.com>
+>=20
+> I am not sure if I am responding to the latest version of this patch =
+series, but ...
+>=20
 >> ---
->>   system/cpus.c | 5 +++++
->>   1 file changed, 5 insertions(+)
->>
->> diff --git a/system/cpus.c b/system/cpus.c
->> index d16b0dff989..4835e5ced48 100644
->> --- a/system/cpus.c
->> +++ b/system/cpus.c
->> @@ -494,6 +494,11 @@ void cpus_kick_thread(CPUState *cpu)
->>   void qemu_cpu_kick(CPUState *cpu)
->>   {
->>       qemu_cond_broadcast(cpu->halt_cond);
+>> target/i386/sev.c | 323 =
++++++++++++++++++++++++++++++++++++++++++-----
+>> target/i386/sev.h | 110 ++++++++++++++++
+>> 2 files changed, 400 insertions(+), 33 deletions(-)
+>>=20
+>> diff --git a/target/i386/sev.c b/target/i386/sev.c
+>> index 7d91985f41..1d1e36e3de 100644
+>> --- a/target/i386/sev.c
+>> +++ b/target/i386/sev.c
+>> @@ -49,6 +49,12 @@ OBJECT_DECLARE_TYPE(SevSnpGuestState, =
+SevCommonStateClass, SEV_SNP_GUEST)
+>> /* hard code sha256 digest size */
+>> #define HASH_SIZE 32
+>>=20
+>> +/* Convert between SEV-ES VMSA and SegmentCache flags/attributes */
+>> +#define FLAGS_VMSA_TO_SEGCACHE(flags) \
+>> +    ((((flags) & 0xff00) << 12) | (((flags) & 0xff) << 8))
+>> +#define FLAGS_SEGCACHE_TO_VMSA(flags) \
+>> +    ((((flags) & 0xff00) >> 8) | (((flags) & 0xf00000) >> 12))
 >> +
->> +    if (!cpu_can_run(cpu)) {
->> +        return;
->> +    }
+>> typedef struct QEMU_PACKED SevHashTableEntry {
+>>    QemuUUID guid;
+>>    uint16_t len;
+>> @@ -88,6 +94,14 @@ typedef struct QEMU_PACKED SevHashTableDescriptor =
+{
+>>    uint32_t size;
+>> } SevHashTableDescriptor;
+>>=20
+>> +typedef struct SevLaunchVmsa {
+>> +    QTAILQ_ENTRY(SevLaunchVmsa) next;
 >> +
-> 
-> This would appear to be a race condition.  The evaluation of cpu_can_run 
-> should be done within the context of 'cpu', not here, and not *after* 
-> we've already woken 'cpu' via the broadcast.
+>> +    uint16_t cpu_index;
+>> +    uint64_t gpa;
+>> +    struct sev_es_save_area vmsa;
+>> +} SevLaunchVmsa;
+>> +
+>> struct SevCommonState {
+>>    X86ConfidentialGuest parent_obj;
+>>=20
+>> @@ -106,9 +120,7 @@ struct SevCommonState {
+>>    int sev_fd;
+>>    SevState state;
+>>=20
+>> -    uint32_t reset_cs;
+>> -    uint32_t reset_ip;
+>> -    bool reset_data_valid;
+>> +    QTAILQ_HEAD(, SevLaunchVmsa) launch_vmsa;
+>> };
+>>=20
+>> struct SevCommonStateClass {
+>> @@ -371,6 +383,172 @@ static struct RAMBlockNotifier sev_ram_notifier =
+=3D {
+>>    .ram_block_removed =3D sev_ram_block_removed,
+>> };
+>>=20
+>> +static void sev_apply_cpu_context(CPUState *cpu)
+>> +{
+>> +    SevCommonState *sev_common =3D =
+SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+>> +    X86CPU *x86;
+>> +    CPUX86State *env;
+>> +    struct SevLaunchVmsa *launch_vmsa;
+>> +
+>> +    /* See if an initial VMSA has been provided for this CPU */
+>> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
+>> +    {
+>> +        if (cpu->cpu_index =3D=3D launch_vmsa->cpu_index) {
+>> +            x86 =3D X86_CPU(cpu);
+>> +            env =3D &x86->env;
+>> +
+>> +            /*
+>> +             * Ideally we would provide the VMSA directly to kvm =
+which would
+>> +             * ensure that the resulting initial VMSA measurement =
+which is
+>> +             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is =
+calculated from
+>> +             * exactly what we provide here. Currently this is not =
+possible so
+>> +             * we need to copy the parts of the VMSA structure that =
+we currently
+>> +             * support into the CPU state.
+>> +             */
+>> +            cpu_load_efer(env, launch_vmsa->vmsa.efer);
+>> +            cpu_x86_update_cr4(env, launch_vmsa->vmsa.cr4);
+>> +            cpu_x86_update_cr0(env, launch_vmsa->vmsa.cr0);
+>> +            cpu_x86_update_cr3(env, launch_vmsa->vmsa.cr3);
+>> +            env->xcr0 =3D launch_vmsa->vmsa.xcr0;
+>> +            env->pat =3D launch_vmsa->vmsa.g_pat;
+>> +
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_CS, launch_vmsa->vmsa.cs.selector,
+>> +                launch_vmsa->vmsa.cs.base, =
+launch_vmsa->vmsa.cs.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.cs.attrib));
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_DS, launch_vmsa->vmsa.ds.selector,
+>> +                launch_vmsa->vmsa.ds.base, =
+launch_vmsa->vmsa.ds.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ds.attrib));
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_ES, launch_vmsa->vmsa.es.selector,
+>> +                launch_vmsa->vmsa.es.base, =
+launch_vmsa->vmsa.es.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.es.attrib));
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_FS, launch_vmsa->vmsa.fs.selector,
+>> +                launch_vmsa->vmsa.fs.base, =
+launch_vmsa->vmsa.fs.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.fs.attrib));
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_GS, launch_vmsa->vmsa.gs.selector,
+>> +                launch_vmsa->vmsa.gs.base, =
+launch_vmsa->vmsa.gs.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gs.attrib));
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_SS, launch_vmsa->vmsa.ss.selector,
+>> +                launch_vmsa->vmsa.ss.base, =
+launch_vmsa->vmsa.ss.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ss.attrib));
+>> +
+>> +            env->gdt.base =3D launch_vmsa->vmsa.gdtr.base;
+>> +            env->gdt.limit =3D launch_vmsa->vmsa.gdtr.limit;
+>> +            env->gdt.flags =3D
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gdtr.attrib);
+>> +            env->idt.base =3D launch_vmsa->vmsa.idtr.base;
+>> +            env->idt.limit =3D launch_vmsa->vmsa.idtr.limit;
+>> +            env->idt.flags =3D
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.idtr.attrib);
+>> +
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_LDTR, launch_vmsa->vmsa.ldtr.selector,
+>> +                launch_vmsa->vmsa.ldtr.base, =
+launch_vmsa->vmsa.ldtr.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ldtr.attrib));
+>> +            cpu_x86_load_seg_cache(
+>> +                env, R_TR, launch_vmsa->vmsa.tr.selector,
+>> +                launch_vmsa->vmsa.ldtr.base, =
+launch_vmsa->vmsa.tr.limit,
+>> +                =
+FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.tr.attrib));
+>> +
+>> +            env->dr[6] =3D launch_vmsa->vmsa.dr6;
+>> +            env->dr[7] =3D launch_vmsa->vmsa.dr7;
+>> +
+>> +            env->regs[R_EAX] =3D launch_vmsa->vmsa.rax;
+>> +            env->regs[R_ECX] =3D launch_vmsa->vmsa.rcx;
+>> +            env->regs[R_EDX] =3D launch_vmsa->vmsa.rdx;
+>> +            env->regs[R_EBX] =3D launch_vmsa->vmsa.rbx;
+>> +            env->regs[R_ESP] =3D launch_vmsa->vmsa.rsp;
+>> +            env->regs[R_EBP] =3D launch_vmsa->vmsa.rbp;
+>> +            env->regs[R_ESI] =3D launch_vmsa->vmsa.rsi;
+>> +            env->regs[R_EDI] =3D launch_vmsa->vmsa.rdi;
+>> +#ifdef TARGET_X86_64
+>> +            env->regs[R_R8] =3D launch_vmsa->vmsa.r8;
+>> +            env->regs[R_R9] =3D launch_vmsa->vmsa.r9;
+>> +            env->regs[R_R10] =3D launch_vmsa->vmsa.r10;
+>> +            env->regs[R_R11] =3D launch_vmsa->vmsa.r11;
+>> +            env->regs[R_R12] =3D launch_vmsa->vmsa.r12;
+>> +            env->regs[R_R13] =3D launch_vmsa->vmsa.r13;
+>> +            env->regs[R_R14] =3D launch_vmsa->vmsa.r14;
+>> +            env->regs[R_R15] =3D launch_vmsa->vmsa.r15;
+>> +#endif
+>> +            env->eip =3D launch_vmsa->vmsa.rip;
+>> +            env->eflags =3D launch_vmsa->vmsa.rflags;
+>> +
+>> +            cpu_set_fpuc(env, launch_vmsa->vmsa.x87_fcw);
+>> +            env->mxcsr =3D launch_vmsa->vmsa.mxcsr;
+>> +
+>> +            break;
+>> +        }
+>> +    }
+>> +}
+>> +
+>> +static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
+>> +                               uint32_t ctx_len, hwaddr gpa, Error =
+**errp)
+>> +{
+>> +    SevCommonState *sev_common =3D =
+SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
+>> +    SevLaunchVmsa *launch_vmsa;
+>> +    CPUState *cpu;
+>> +    bool exists =3D false;
+>> +
+>> +    /*
+>> +     * Setting the CPU context is only supported for SEV-ES and =
+SEV-SNP. The
+>> +     * context buffer will contain a sev_es_save_area from the Linux =
+kernel
+>> +     * which is defined by "Table B-4. VMSA Layout, State Save Area =
+for SEV-ES"
+>> +     * in the AMD64 APM, Volume 2.
+>> +     */
+>> +
+>> +    if (!sev_es_enabled()) {
+>> +        error_setg(errp, "SEV: unable to set CPU context: Not =
+supported");
+>> +        return -1;
+>> +    }
+>> +
+>> +    if (ctx_len < sizeof(struct sev_es_save_area)) {
+>> +        error_setg(errp, "SEV: unable to set CPU context: "
+>> +                     "Invalid context provided");
+>> +        return -1;
+>> +    }
+>> +
+>> +    cpu =3D qemu_get_cpu(cpu_index);
+>> +    if (!cpu) {
+>> +        error_setg(errp, "SEV: unable to set CPU context for out of =
+bounds "
+>> +                     "CPU index %d", cpu_index);
+>> +        return -1;
+>> +    }
+>> +
+>> +    /*
+>> +     * If the context of this VP has already been set then replace =
+it with the
+>> +     * new context.
+>> +     */
+>> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
+>> +    {
+>> +        if (cpu_index =3D=3D launch_vmsa->cpu_index) {
+>> +            launch_vmsa->gpa =3D gpa;
+>> +            memcpy(&launch_vmsa->vmsa, ctx, =
+sizeof(launch_vmsa->vmsa));
+>> +            exists =3D true;
+>> +            break;
+>> +        }
+>> +    }
+>> +
+>> +    if (!exists) {
+>> +        /* New VP context */
+>> +        launch_vmsa =3D g_new0(SevLaunchVmsa, 1);
+>> +        memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
+>> +        launch_vmsa->cpu_index =3D cpu_index;
+>> +        launch_vmsa->gpa =3D gpa;
+>> +        QTAILQ_INSERT_TAIL(&sev_common->launch_vmsa, launch_vmsa, =
+next);
+>> +    }
+>> +
+>> +    /* Synchronise the VMSA with the current CPU state */
+>> +    sev_apply_cpu_context(cpu);
+>=20
+> Ok so here you are not only saving the vmsa but also applying it.
+>=20
+>> +
+>> +    return 0;
+>> +}
+>> +
+>> bool
+>> sev_enabled(void)
+>> {
+>> @@ -1005,6 +1183,16 @@ static int
+>> sev_launch_update_vmsa(SevGuestState *sev_guest)
+>> {
+>>    int ret, fw_error;
+>> +    CPUState *cpu;
+>> +
+>> +    /*
+>> +     * The initial CPU state is measured as part of =
+KVM_SEV_LAUNCH_UPDATE_VMSA.
+>> +     * Synchronise the CPU state to any provided launch VMSA =
+structures.
+>> +     */
+>> +    CPU_FOREACH(cpu) {
+>> +        sev_apply_cpu_context(cpu);
+>> +    }
+>> +
+>>=20
+>>    ret =3D sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, =
+KVM_SEV_LAUNCH_UPDATE_VMSA,
+>>                    NULL, &fw_error);
+>> @@ -1787,40 +1975,110 @@ sev_es_find_reset_vector(void *flash_ptr, =
+uint64_t flash_size,
+>>    return sev_es_parse_reset_block(info, addr);
+>> }
+>>=20
+>> -void sev_es_set_reset_vector(CPUState *cpu)
+>> +
+>> +static void seg_to_vmsa(const SegmentCache *cpu_seg, struct vmcb_seg =
+*vmsa_seg)
+>> {
+>> -    X86CPU *x86;
+>> -    CPUX86State *env;
+>> -    ConfidentialGuestSupport *cgs =3D =
+MACHINE(qdev_get_machine())->cgs;
+>> -    SevCommonState *sev_common =3D SEV_COMMON(
+>> -        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
+>> +    vmsa_seg->selector =3D cpu_seg->selector;
+>> +    vmsa_seg->base =3D cpu_seg->base;
+>> +    vmsa_seg->limit =3D cpu_seg->limit;
+>> +    vmsa_seg->attrib =3D FLAGS_SEGCACHE_TO_VMSA(cpu_seg->flags);
+>> +}
+>>=20
+>> -    /* Only update if we have valid reset information */
+>> -    if (!sev_common || !sev_common->reset_data_valid) {
+>> -        return;
+>> -    }
+>> +static void initialize_vmsa(const CPUState *cpu, struct =
+sev_es_save_area *vmsa)
+>> +{
+>> +    const X86CPU *x86 =3D X86_CPU(cpu);
+>> +    const CPUX86State *env =3D &x86->env;
+>>=20
+>> -    /* Do not update the BSP reset state */
+>> -    if (cpu->cpu_index =3D=3D 0) {
+>> -        return;
+>> +    /*
+>> +     * Initialize the SEV-ES save area from the current state of
+>> +     * the CPU. The entire state does not need to be copied, only =
+the state
+>> +     * that is copied back to the CPUState in sev_apply_cpu_context.
+>> +     */
+>> +    memset(vmsa, 0, sizeof(struct sev_es_save_area));
+>> +    vmsa->efer =3D env->efer;
+>> +    vmsa->cr0 =3D env->cr[0];
+>> +    vmsa->cr3 =3D env->cr[3];
+>> +    vmsa->cr4 =3D env->cr[4];
+>> +    vmsa->xcr0 =3D env->xcr0;
+>> +    vmsa->g_pat =3D env->pat;
+>> +
+>> +    seg_to_vmsa(&env->segs[R_CS], &vmsa->cs);
+>> +    seg_to_vmsa(&env->segs[R_DS], &vmsa->ds);
+>> +    seg_to_vmsa(&env->segs[R_ES], &vmsa->es);
+>> +    seg_to_vmsa(&env->segs[R_FS], &vmsa->fs);
+>> +    seg_to_vmsa(&env->segs[R_GS], &vmsa->gs);
+>> +    seg_to_vmsa(&env->segs[R_SS], &vmsa->ss);
+>> +
+>> +    seg_to_vmsa(&env->gdt, &vmsa->gdtr);
+>> +    seg_to_vmsa(&env->idt, &vmsa->idtr);
+>> +    seg_to_vmsa(&env->ldt, &vmsa->ldtr);
+>> +    seg_to_vmsa(&env->tr, &vmsa->tr);
+>> +
+>> +    vmsa->dr6 =3D env->dr[6];
+>> +    vmsa->dr7 =3D env->dr[7];
+>> +
+>> +    vmsa->rax =3D env->regs[R_EAX];
+>> +    vmsa->rcx =3D env->regs[R_ECX];
+>> +    vmsa->rdx =3D env->regs[R_EDX];
+>> +    vmsa->rbx =3D env->regs[R_EBX];
+>> +    vmsa->rsp =3D env->regs[R_ESP];
+>> +    vmsa->rbp =3D env->regs[R_EBP];
+>> +    vmsa->rsi =3D env->regs[R_ESI];
+>> +    vmsa->rdi =3D env->regs[R_EDI];
+>> +
+>> +#ifdef TARGET_X86_64
+>> +    vmsa->r8 =3D env->regs[R_R8];
+>> +    vmsa->r9 =3D env->regs[R_R9];
+>> +    vmsa->r10 =3D env->regs[R_R10];
+>> +    vmsa->r11 =3D env->regs[R_R11];
+>> +    vmsa->r12 =3D env->regs[R_R12];
+>> +    vmsa->r13 =3D env->regs[R_R13];
+>> +    vmsa->r14 =3D env->regs[R_R14];
+>> +    vmsa->r15 =3D env->regs[R_R15];
+>> +#endif
+>> +
+>> +    vmsa->rip =3D env->eip;
+>> +    vmsa->rflags =3D env->eflags;
+>> +}
+>> +
+>> +static void sev_es_set_ap_context(uint32_t reset_addr)
+>> +{
+>> +    CPUState *cpu;
+>> +    struct sev_es_save_area vmsa;
+>> +    SegmentCache cs;
+>> +
+>> +    cs.selector =3D 0xf000;
+>> +    cs.base =3D reset_addr & 0xffff0000;
+>> +    cs.limit =3D 0xffff;
+>> +    cs.flags =3D DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK | =
+DESC_R_MASK |
+>> +               DESC_A_MASK;
+>> +
+>> +    CPU_FOREACH(cpu) {
+>> +        if (cpu->cpu_index =3D=3D 0) {
+>> +            /* Do not update the BSP reset state */
+>> +            continue;
+>> +        }
+>> +        initialize_vmsa(cpu, &vmsa);
+>> +        seg_to_vmsa(&cs, &vmsa.cs);
+>> +        vmsa.rip =3D reset_addr & 0x0000ffff;
+>> +        sev_set_cpu_context(cpu->cpu_index, &vmsa,
+>> +                            sizeof(struct sev_es_save_area),
+>> +                            0, &error_fatal);
+>> +        sev_apply_cpu_context(cpu);
+>=20
+> Is the above call ^^^^^^ sev_apply_cpu_context() needed? Since in =
+sev_set_cpu_context() you already call it?
 
-OK.
+It seems I would have the same question for v8.
 
-Still I don't understand something, when putting this assertion:
+>=20
+>>    }
 
--- >8 --
-diff --git a/system/cpus.c b/system/cpus.c
-index d16b0dff989..0631015f754 100644
---- a/system/cpus.c
-+++ b/system/cpus.c
-@@ -493,7 +493,10 @@ void cpus_kick_thread(CPUState *cpu)
 
-  void qemu_cpu_kick(CPUState *cpu)
-  {
-+    assert(cpu_can_run(cpu));
-+
-      qemu_cond_broadcast(cpu->halt_cond);
-      if (cpus_accel->kick_vcpu_thread) {
-          cpus_accel->kick_vcpu_thread(cpu);
-      } else { /* default */
----
-
-I get:
-
-(lldb) bt
-* thread #1, queue = 'com.apple.main-thread', stop reason = hit program 
-assert
-     frame #0: 0x000000018a669388 libsystem_kernel.dylib`__pthread_kill + 8
-     frame #1: 0x000000018a6a288c libsystem_pthread.dylib`pthread_kill + 296
-     frame #2: 0x000000018a5abc60 libsystem_c.dylib`abort + 124
-     frame #3: 0x000000018a5aaeec libsystem_c.dylib`__assert_rtn + 284
-   * frame #4: 0x000000010057ddc4 qemu_cpu_kick(cpu=0x0000000130218000) 
-at cpus.c:496:5
-     frame #5: 0x00000001000106ec 
-queue_work_on_cpu(cpu=0x0000000130218000, wi=0x000060000038c000) at 
-cpu-common.c:140:5
-     frame #6: 0x0000000100010780 
-async_run_on_cpu(cpu=0x0000000130218000, func=(tcg_commit_cpu at 
-physmem.c:2758), data=(host_int = 60885632, host_ulong = 
-105553177152128, host_ptr = 0x0000600003a10a80, target_ptr = 
-105553177152128)) at cpu-common.c:177:5
-     frame #7: 0x000000010059ad34 
-tcg_commit(listener=0x0000600003a10a98) at physmem.c:2789:9
-     frame #8: 0x0000000100591240 
-listener_add_address_space(listener=0x0000600003a10a98, 
-as=0x0000600003611980) at memory.c:3082:9
-     frame #9: 0x0000000100590f48 
-memory_listener_register(listener=0x0000600003a10a98, 
-as=0x0000600003611980) at memory.c:3170:5
-     frame #10: 0x000000010059abe4 
-cpu_address_space_init(cpu=0x0000000130218000, asidx=0, 
-prefix="cpu-memory", mr=0x000000012b1faba0) at physmem.c:813:9
-     frame #11: 0x0000000100750c40 
-arm_cpu_realizefn(dev=0x0000000130218000, errp=0x000000016fdfe2c0) at 
-cpu.c:2572:5
-     frame #12: 0x0000000100b7ed9c 
-device_set_realized(obj=0x0000000130218000, value=true, 
-errp=0x000000016fdfe388) at qdev.c:494:13
-     frame #13: 0x0000000100b8a880 
-property_set_bool(obj=0x0000000130218000, v=0x0000600003f12d00, 
-name="realized", opaque=0x000060000010c1d0, errp=0x000000016fdfe388) at 
-object.c:2375:5
-     frame #14: 0x0000000100b87acc 
-object_property_set(obj=0x0000000130218000, name="realized", 
-v=0x0000600003f12d00, errp=0x000000016fdfe388) at object.c:1450:5
-     frame #15: 0x0000000100b8f14c 
-object_property_set_qobject(obj=0x0000000130218000, name="realized", 
-value=0x0000600000386920, errp=0x0000000101e39e28) at qom-qobject.c:28:10
-     frame #16: 0x0000000100b882f8 
-object_property_set_bool(obj=0x0000000130218000, name="realized", 
-value=true, errp=0x0000000101e39e28) at object.c:1520:15
-     frame #17: 0x0000000100b7d240 qdev_realize(dev=0x0000000130218000, 
-bus=0x0000000000000000, errp=0x0000000101e39e28) at qdev.c:276:12
-     frame #18: 0x000000010083a81c 
-machvirt_init(machine=0x000000012b1fa710) at virt.c:2329:9
-     frame #19: 0x0000000100136a40 
-machine_run_board_init(machine=0x000000012b1fa710, 
-mem_path=0x0000000000000000, errp=0x000000016fdfe6a8) at machine.c:1669:5
-     frame #20: 0x0000000100571384 qemu_init_board at vl.c:2714:5
-     frame #21: 0x0000000100571154 
-qmp_x_exit_preconfig(errp=0x0000000101e39e28) at vl.c:2808:5
-     frame #22: 0x0000000100573a14 qemu_init(argc=17, 
-argv=0x000000016fdff138) at vl.c:3844:9
-     frame #23: 0x0000000100d036e0 main(argc=17, 
-argv=0x000000016fdff138) at main.c:71:5
-     frame #24: 0x000000018a302b98 dyld`start + 6076
-(lldb)
-
-I expect a vCPU to be in a "stable" state and usable *after* it is
-realized, as we are calling various hooks in many places. Here we are
-processing the pending work queue while the vCPU isn't fully realized,
-so some hooks might not have been called yet...
-
-Git history of tcg_commit() points to commit 0d58c660689 ("softmmu: Use
-async_run_on_cpu in tcg_commit").
-This isn't the first time I ends there, see also:
-https://lore.kernel.org/qemu-devel/20230907161415.6102-1-philmd@linaro.org/. 
-Using the same reasoning of this patch, adding:
-
--- >8 --
-diff --git a/system/physmem.c b/system/physmem.c
-index a8a9ca309ea..479a7a88037 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -2773,6 +2774,14 @@ static void tcg_commit(MemoryListener *listener)
-      cpuas = container_of(listener, CPUAddressSpace, tcg_as_listener);
-      cpu = cpuas->cpu;
-
-+    if (!qdev_is_realized(DEVICE(cpu))) {
-+        /*
-+         * The listener is also called during realize, before
-+         * all of the tcg machinery for run-on is initialized.
-+         */
-+        return;
-+    }
-+
-      /*
-       * Defer changes to as->memory_dispatch until the cpu is quiescent.
-       * Otherwise we race between (1) other cpu threads and (2) ongoing
----
-
-makes my issues disappear; tcg_commit_cpu() calls are run on realized
-vCPUs, and the order of pre-realize vcpu hooks doesn't alter anything.
-
-I don't remember why I wrote this "The listener is also called during
-realize, before all of the tcg machinery for run-on is initialized"
-comment, it could be better to call memory_region_transaction_commit()
-after CpuRealize, maybe in CpuReset.
 
