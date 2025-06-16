@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1572AC71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 14:08:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4017C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 14:08:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRAUQ-00018y-FF; Mon, 16 Jun 2025 10:07:11 -0400
+	id 1uRAUZ-0001Ey-DB; Mon, 16 Jun 2025 10:07:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uRATw-00015H-ST
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:41 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ id 1uRAU1-000163-9N
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:50 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uRATs-0003zI-NE
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:40 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-3a50fc819f2so3868148f8f.2
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 07:06:36 -0700 (PDT)
+ id 1uRATy-00040w-4d
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:44 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-450cf214200so39262575e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 07:06:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750082795; x=1750687595; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750082800; x=1750687600; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=jixPME6Y9feGFUr2gudtz74NxDsb7swpzH58eMF9CFw=;
- b=c4BvAI3aP+DZb0/5fFLkm6i3Ja/8D4yj9bDWC0/mbJCrUVLD6uEjaoSj41kMf+hdTz
- zePK2otMHDGfeNum9uAz/WZVKmWD6kMTkTGJk01frq7wJxBkZnguR3bCAnosjdtichtA
- 3C9NXaqybj4fNn+1GGRPttTCJSglbJW81hdhh1mWQpWqsxuulm6tEzVFUkyqjtZfgHmL
- /FR6BXvnQ2tuOWLIb18Pk5VvSYerZOQCfuidAYcAWljDNi+i2zVCi8JYwmUM53a7BLax
- U+/iAIiIpR7lhCOS0/Oo+r0NKuGKOT9XoU3K41tbzSCleePoulBCu8qIp5WTDTQX4itn
- z7ZA==
+ :reply-to; bh=Sj4CFhPbE7Fh5CPRnVAD3jRmQ3BeYvsxrXes/KZEpoQ=;
+ b=LAiN1SP+pVGkN2EnZjn+Htif4VseWjDrywjeuBOI458D4mOaXuy7B/2Ux2EcJPuX4l
+ h2kP87t0mSJILmP4GmSvAkj99kxWpHV4rlJrAYp2Hi5vTX9Wyj0EW/ulkdrN1iCYjxhT
+ So9YVdVHekn9eJzMZUR/A6yn3tTspKQRnTTqPOoBqTekYDYf8O9xTs3Y/VoQXyKia3Ur
+ VlKwMC1pRlv1H+drxkXvUA6Fo9L6sy/RFNh8zqWnozE5Tk9HSsQxlcUQocbM5/97Z/T4
+ V92ZXpMcO7jbuBZuoHS1iRga7ZMg7nC5EdsCpPMi4+uHfEsGBmlDA7YsnW6AMXwxNDLa
+ QW9Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750082795; x=1750687595;
+ d=1e100.net; s=20230601; t=1750082800; x=1750687600;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=jixPME6Y9feGFUr2gudtz74NxDsb7swpzH58eMF9CFw=;
- b=n0oMu7mFRzjHH2jDBTZp6mzS4hahhTMzkmIf7in82J9LBL2c+UlKPTNm/Vb/R+7qc9
- Hok0MdKv6kvlqKGB5fT5FJlNO3ef3Dz3+mCqnrZhL/HsO9dXpmRVX7mgv5s/TD7k5XQy
- Y/jrgUryEioMhTSadjwBx9enmXcYo7UYD3aPwM7Pjtvjvp+/j1jv5+7bfLEkV8LNgDc+
- Lp0r1W6me7pZ2wZHfotpqs+wf9KSj0/DmHY10H4TeUK3YjboNAh2uUUkvBXW4iMfmFwI
- 85VCVf75a8BY8aCZhfj+HTSnGrzSzKVVVmnkjQU4nhr70R5gyYopTDpmys93nSufK4gX
- kFtA==
-X-Gm-Message-State: AOJu0Yw59s4mhBCX9cKzprE7NwQP320M+erWAjB7i5gOkktvsDXSqwhq
- SnggYgVwhAS+qhF3iaA8CYnxO79hgbFdVSu7zaycCWRRKzfnACX5JtG0T8pNXSSWV2ndMBcdfDO
- 1lybH
-X-Gm-Gg: ASbGncsNq8UGFoJ2Ry6jNMBlquVX+B1NRnDrvNio3R9d8VppD5qzptGOTcuBd3KELUu
- LzCL+JubtOllwT1UM83C0fGBqqcCWGaN31fnYFHab1BaZtJqRsRpB7lSNEzA3/czuT/AEtivILs
- rgjD+uGe3RqJyXCAjfSgeGlwBVumEP8LlyJaCgVDiTg16W8FfB+muw1X4JucOqBhxae19R1BGya
- ZOKIQ+SGi2ADr3Nq3yQOGTfTu6qYdET8fFMQEnp38P3HMBEHot7iIazhcVMNSD3R5W2IqxwR/Lm
- EZz8WsWo/XQLKhahghAxD6lhFMOoTdd1zKHYgkCMWjj8SKr277wpQ8cDAHAgDOLXJk48
-X-Google-Smtp-Source: AGHT+IFhLI+YgZ1RBnSwN49Bl/7SRvER3Q1cJSWUy1baxCQ2fSYShSn6YHYQ3RLAO7kSFQNaEak1Yg==
-X-Received: by 2002:a05:6000:653:b0:3a5:783f:5289 with SMTP id
- ffacd0b85a97d-3a5783f5758mr6080641f8f.49.1750082794556; 
- Mon, 16 Jun 2025 07:06:34 -0700 (PDT)
+ bh=Sj4CFhPbE7Fh5CPRnVAD3jRmQ3BeYvsxrXes/KZEpoQ=;
+ b=CgRR8MToHldddH0NxOdUm/pCthy7AvSG5do+6Tb5mUGg14zdw+ZaCkJRnsKaOZBaaC
+ VppYT9OoJDWNnhKcdwAQD5/x/rlegmLJFKuX9IE3yue7lM4aryvEbaVk7lSJH+Ld4uF5
+ hrQ+K+HgtYuwftnC3hi7ULpVVwA1h1WYE0yUCoXvi6j8RqJCPW8bjK7p2fQVvMbGuWXY
+ wmwmv+aL8SIoJQ1nA03atvZZmH2JFfK9zKaete4WATG03Qt7qy9QV23d3p/SrKpluz/a
+ V4dJMCfLr67aqKGFb5gvIKxbmrrNMblTcJdVB9HxHh3zVxKWJXG0REKmOlNftPWs0cww
+ 0vHA==
+X-Gm-Message-State: AOJu0YxLPEb7WFomnGYE/pCtOXJq+NwWos3QWsfcFwN8VzADM+uKBHtE
+ hJ60x1AeFPf4qOFM+R+EFEk8KG98J208qYckJPu+9eA2ERPfmIuTO4XPkylF1BxJFKuNOzKBhC0
+ qpnw8
+X-Gm-Gg: ASbGncvdHTG3oDyfmvKK3vsLAaBi2/TDd/J91NObcQW4zr7tIYPQTwqLxshZuGCxd6r
+ aEAz7f7S3EySOIQhZ/w0kajj9eQO+WuAoTEMioYlgqznvyUajMyl95cP9excDHL/lgyeU553PjB
+ HRmWkK1XLe/GbuxIT8NBzrXe8eSpjD2lBm23O0BQt31hMQvLH1HwzP6tUCrZ7yAs7IL0P7VthU/
+ 0caICvIKWNS3CKv/83HFO99aggp0T+kMdSvdnS6V1KQ+qtBIN2CbH6M/PWSYhhJvxBAylTa0chD
+ 4NRucgK6rhBZobg6n5fc+AS5fTKaWelixQlLM+1e77NHT7H2ipDFBE2000TvtdpGZY+i
+X-Google-Smtp-Source: AGHT+IGFmhAVDSya/9P+SzwgzU2UrVfjD2n4LmwpgdeuGDLLgxykPCn9JQhHI3b6OdWVsESYDrNDnQ==
+X-Received: by 2002:a05:600c:3513:b0:453:a88:d509 with SMTP id
+ 5b1f17b1804b1-4533ca7443cmr115999655e9.10.1750082800095; 
+ Mon, 16 Jun 2025 07:06:40 -0700 (PDT)
 Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e13c192sm146561975e9.26.2025.06.16.07.06.33
+ 5b1f17b1804b1-4532e13c192sm146561975e9.26.2025.06.16.07.06.39
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Jun 2025 07:06:33 -0700 (PDT)
+ Mon, 16 Jun 2025 07:06:39 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/9] tests/functional: Add a test for the realview-eb-mpcore
- machine
-Date: Mon, 16 Jun 2025 15:06:23 +0100
-Message-ID: <20250616140630.2273870-3-peter.maydell@linaro.org>
+Subject: [PULL 7/9] hw/intc/arm_gic: introduce a first-cpu-index property
+Date: Mon, 16 Jun 2025 15:06:28 +0100
+Message-ID: <20250616140630.2273870-8-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250616140630.2273870-1-peter.maydell@linaro.org>
 References: <20250616140630.2273870-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,99 +99,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+From: Frederic Konrad <konrad.frederic@yahoo.fr>
 
-Check that we can boot a Linux kernel here and that we can at
-least send one ping network packet.
+This introduces a first-cpu-index property to the arm-gic, as some SOCs
+could have two separate GIC (ie: the zynqmp).
 
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Message-id: 20250603101526.21217-1-thuth@redhat.com
+Signed-off-by: Clément Chigot <chigot@adacore.com>
+Message-id: 20250526085523.809003-3-chigot@adacore.com
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+[PMM: slightly expanded comment documenting GIC property]
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- MAINTAINERS                           |  1 +
- tests/functional/meson.build          |  1 +
- tests/functional/test_arm_realview.py | 47 +++++++++++++++++++++++++++
- 3 files changed, 49 insertions(+)
- create mode 100755 tests/functional/test_arm_realview.py
+ include/hw/intc/arm_gic.h        | 3 +++
+ include/hw/intc/arm_gic_common.h | 2 ++
+ hw/intc/arm_gic.c                | 2 +-
+ hw/intc/arm_gic_common.c         | 1 +
+ 4 files changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 28b3dd2684b..84cfef835eb 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -955,6 +955,7 @@ F: hw/cpu/realview_mpcore.c
- F: hw/intc/realview_gic.c
- F: include/hw/intc/realview_gic.h
- F: docs/system/arm/realview.rst
-+F: tests/functional/test_arm_realview.py
+diff --git a/include/hw/intc/arm_gic.h b/include/hw/intc/arm_gic.h
+index 48f6a51a70a..be923f7ed88 100644
+--- a/include/hw/intc/arm_gic.h
++++ b/include/hw/intc/arm_gic.h
+@@ -27,6 +27,9 @@
+  *    implement the security extensions
+  *  + QOM property "has-virtualization-extensions": set true if the GIC should
+  *    implement the virtualization extensions
++ *  + QOM property "first-cpu-index": index of the first cpu attached to the
++ *    GIC (default 0). The CPUs connected to the GIC are assumed to be
++ *    first-cpu-index, first-cpu-index + 1, ... first-cpu-index + num-cpu - 1.
+  *  + unnamed GPIO inputs: (where P is number of SPIs, i.e. num-irq - 32)
+  *    [0..P-1]  SPIs
+  *    [P..P+31] PPIs for CPU 0
+diff --git a/include/hw/intc/arm_gic_common.h b/include/hw/intc/arm_gic_common.h
+index 97fea4102d3..93a3cc2bf81 100644
+--- a/include/hw/intc/arm_gic_common.h
++++ b/include/hw/intc/arm_gic_common.h
+@@ -129,6 +129,8 @@ struct GICState {
+     uint32_t num_lrs;
  
- SABRELITE / i.MX6
- M: Peter Maydell <peter.maydell@linaro.org>
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index 7faa2b6e3c0..e7e051ef3c8 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -135,6 +135,7 @@ tests_arm_system_thorough = [
-   'arm_orangepi',
-   'arm_quanta_gsj',
-   'arm_raspi2',
-+  'arm_realview',
-   'arm_replay',
-   'arm_smdkc210',
-   'arm_stellaris',
-diff --git a/tests/functional/test_arm_realview.py b/tests/functional/test_arm_realview.py
-new file mode 100755
-index 00000000000..82cc964333e
---- /dev/null
-+++ b/tests/functional/test_arm_realview.py
-@@ -0,0 +1,47 @@
-+#!/usr/bin/env python3
-+#
-+# Functional test that boots a Linux kernel on a realview arm machine
-+# and checks the console
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+from qemu_test import LinuxKernelTest, exec_command_and_wait_for_pattern
-+from qemu_test import Asset
-+
-+
-+class RealviewMachine(LinuxKernelTest):
-+
-+    ASSET_REALVIEW_MPCORE = Asset(
-+        ('https://archive.openwrt.org/chaos_calmer/15.05.1/realview/generic/'
-+         'openwrt-15.05.1-realview-vmlinux-initramfs.elf'),
-+        'd3a01037f33e7512d46d50975588d5c3a0e0cbf25f37afab44775c2a2be523e6')
-+
-+    def test_realview_ep_mpcore(self):
-+        self.require_netdev('user')
-+        self.set_machine('realview-eb-mpcore')
-+        kernel_path = self.ASSET_REALVIEW_MPCORE.fetch()
-+        self.vm.set_console()
-+        kernel_param = 'console=ttyAMA0 mem=128M quiet'
-+        self.vm.add_args('-kernel', kernel_path,
-+                         '-append', kernel_param)
-+        self.vm.launch()
-+        self.wait_for_console_pattern('Please press Enter to activate')
-+        prompt = ':/#'
-+        exec_command_and_wait_for_pattern(self, '', prompt)
-+        exec_command_and_wait_for_pattern(self, 'dmesg', kernel_param)
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                ('while ! dmesg | grep "br-lan: port 1(eth0) entered" ;'
-+                 ' do sleep 1 ; done'),
-+                'entered forwarding state')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self,
-+                'while ! ifconfig | grep "10.0.2.15" ; do sleep 1 ; done',
-+                'addr:10.0.2.15')
-+        self.wait_for_console_pattern(prompt)
-+        exec_command_and_wait_for_pattern(self, 'ping -c 1 10.0.2.2',
-+                                          '1 packets received, 0% packet loss')
-+
-+
-+if __name__ == '__main__':
-+    LinuxKernelTest.main()
+     uint32_t num_cpu;
++    /* cpu_index of the first CPU, attached to this GIC.  */
++    uint32_t first_cpu_index;
+ 
+     MemoryRegion iomem; /* Distributor */
+     /* This is just so we can have an opaque pointer which identifies
+diff --git a/hw/intc/arm_gic.c b/hw/intc/arm_gic.c
+index d18bef40fcc..899f1333633 100644
+--- a/hw/intc/arm_gic.c
++++ b/hw/intc/arm_gic.c
+@@ -59,7 +59,7 @@ static const uint8_t gic_id_gicv2[] = {
+ static inline int gic_get_current_cpu(GICState *s)
+ {
+     if (!qtest_enabled() && s->num_cpu > 1) {
+-        return current_cpu->cpu_index;
++        return current_cpu->cpu_index - s->first_cpu_index;
+     }
+     return 0;
+ }
+diff --git a/hw/intc/arm_gic_common.c b/hw/intc/arm_gic_common.c
+index 0f0c48d89ab..ed5be056452 100644
+--- a/hw/intc/arm_gic_common.c
++++ b/hw/intc/arm_gic_common.c
+@@ -350,6 +350,7 @@ static void arm_gic_common_linux_init(ARMLinuxBootIf *obj,
+ 
+ static const Property arm_gic_common_properties[] = {
+     DEFINE_PROP_UINT32("num-cpu", GICState, num_cpu, 1),
++    DEFINE_PROP_UINT32("first-cpu-index", GICState, first_cpu_index, 0),
+     DEFINE_PROP_UINT32("num-irq", GICState, num_irq, 32),
+     /* Revision can be 1 or 2 for GIC architecture specification
+      * versions 1 or 2, or 0 to indicate the legacy 11MPCore GIC.
 -- 
 2.43.0
 
