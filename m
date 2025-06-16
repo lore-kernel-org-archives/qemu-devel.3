@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 302C9C71135
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C318EC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:59:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR6UL-0001SF-AS; Mon, 16 Jun 2025 05:50:49 -0400
+	id 1uR6Un-000357-LZ; Mon, 16 Jun 2025 05:51:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uR6UH-0001GR-Mz
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:50:46 -0400
+ id 1uR6Um-00033D-F6
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:51:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uR6UC-0002I9-0c
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:50:45 -0400
+ id 1uR6Uk-0002Lp-JD
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:51:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750067439;
+ s=mimecast20190719; t=1750067473;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=zubIoFh9ZPeBOwkz2oBfKxpS2MJRsQpjm6T4ikFUl2U=;
- b=GOoh5djsu1u5C6i2fj7Ryt3YYatQ+3n7PspGTLZzRjVsRFUqQuLyge4cQCTES5dJolDAlY
- VsImMiPAdvOFZafR05yrIV5QCkkDH1OjcShOSoUIHmAXVCY8J373I3QCKk6QVr0ny+S7m7
- prvFdOg339cwwMy5yIb3Eko9FUOrMOM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8Y1qdYHZEKH6Xmzl8eoJOe9QKUbxbGtABxaz9IVujHw=;
+ b=QYa2Tqs2MkAUgVVjLQ5idNmRVzvkxzBatSd0/R3Ls4ZWkm9iRe0aMZIp6mS8NJuxQEmnzi
+ 3s+UhcZPxG3OLA+J8JMVDwDctkKbIyHllAwHhrsSh57kaM6FqSlqSFoyiBNReaQ28EvpoF
+ KCzkZxBZqlQk8oplmHMfzMx4KHthQLY=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-52-QNnQzIezOgyXdrdWeBY4pw-1; Mon,
- 16 Jun 2025 05:50:35 -0400
-X-MC-Unique: QNnQzIezOgyXdrdWeBY4pw-1
-X-Mimecast-MFC-AGG-ID: QNnQzIezOgyXdrdWeBY4pw_1750067434
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-616-5uLTMmmPNgWlHJCfabrEGA-1; Mon,
+ 16 Jun 2025 05:51:11 -0400
+X-MC-Unique: 5uLTMmmPNgWlHJCfabrEGA-1
+X-Mimecast-MFC-AGG-ID: 5uLTMmmPNgWlHJCfabrEGA_1750067470
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DCE751956096; Mon, 16 Jun 2025 09:50:33 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EDB601800282; Mon, 16 Jun 2025 09:51:09 +0000 (UTC)
 Received: from laptop.redhat.com (unknown [10.45.224.77])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8691419560A3; Mon, 16 Jun 2025 09:50:29 +0000 (UTC)
+ id 94F4A19560AD; Mon, 16 Jun 2025 09:51:05 +0000 (UTC)
 From: Eric Auger <eric.auger@redhat.com>
 To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org, peter.maydell@linaro.org, imammedo@redhat.com,
@@ -54,10 +54,9 @@ To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
  shannon.zhaosl@gmail.com
 Cc: pbonzini@redhat.com, Jonathan.Cameron@huawei.com, philmd@linaro.org,
  alex.bennee@linaro.org
-Subject: [PATCH v3 15/29] hw/i386/acpi-build: Use AcpiPciHpState::root in
- acpi_set_pci_info
-Date: Mon, 16 Jun 2025 11:46:44 +0200
-Message-ID: <20250616094903.885753-16-eric.auger@redhat.com>
+Subject: [PATCH v3 22/29] hw/acpi/ged: Support migration of AcpiPciHpState
+Date: Mon, 16 Jun 2025 11:46:51 +0200
+Message-ID: <20250616094903.885753-23-eric.auger@redhat.com>
 In-Reply-To: <20250616094903.885753-1-eric.auger@redhat.com>
 References: <20250616094903.885753-1-eric.auger@redhat.com>
 MIME-Version: 1.0
@@ -72,7 +71,7 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,66 +87,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-pcihp acpi_set_pci_info() generic code currently uses
-acpi_get_i386_pci_host() to retrieve the pci host bridge.
-
-To make it work also on ARM we get rid of that call and
-directly use AcpiPciHpState::root.
+Add a subsection to migrate the AcpiPciHpState state.
 
 Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 ---
+ hw/acpi/generic_event_device.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
 
-v2 -> v3:
-- Use AcpiPciHpState::root
-
-v1 -> v2
-- described the fact we changed the implementation of
-  acpi_get_pci_host() in the commit msg.
----
- hw/acpi/pcihp.c | 11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
-
-diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-index 236e175b69..e79a24b821 100644
---- a/hw/acpi/pcihp.c
-+++ b/hw/acpi/pcihp.c
-@@ -99,10 +99,10 @@ static void *acpi_set_bsel(PCIBus *bus, void *opaque)
-     return info;
- }
- 
--static void acpi_set_pci_info(bool has_bridge_hotplug)
-+static void acpi_set_pci_info(AcpiPciHpState *s)
- {
-     static bool bsel_is_set;
--    Object *host = acpi_get_i386_pci_host();
-+    bool has_bridge_hotplug = s->use_acpi_hotplug_bridge;
-     PCIBus *bus;
-     BSELInfo info = { .bsel_alloc = ACPI_PCIHP_BSEL_DEFAULT,
-                       .has_bridge_hotplug = has_bridge_hotplug };
-@@ -112,11 +112,8 @@ static void acpi_set_pci_info(bool has_bridge_hotplug)
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index 2ae9ad082a..48b286ccb2 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -417,6 +417,25 @@ static const VMStateDescription vmstate_ghes_state = {
      }
-     bsel_is_set = true;
+ };
  
--    if (!host) {
--        return;
--    }
- 
--    bus = PCI_HOST_BRIDGE(host)->bus;
-+    bus = s->root;
-     if (bus) {
-         /* Scan all PCI buses. Set property to enable acpi based hotplug. */
-         pci_for_each_bus_depth_first(bus, acpi_set_bsel, NULL, &info);
-@@ -266,7 +263,7 @@ static void acpi_pcihp_update(AcpiPciHpState *s)
- 
- void acpi_pcihp_reset(AcpiPciHpState *s)
- {
--    acpi_set_pci_info(s->use_acpi_hotplug_bridge);
-+    acpi_set_pci_info(s);
-     acpi_pcihp_update(s);
- }
- 
++static bool pcihp_needed(void *opaque)
++{
++    AcpiGedState *s = opaque;
++    return s->pcihp_state.use_acpi_hotplug_bridge;
++}
++
++static const VMStateDescription vmstate_pcihp_state = {
++    .name = "acpi-ged/pcihp",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = pcihp_needed,
++    .fields = (const VMStateField[]) {
++        VMSTATE_PCI_HOTPLUG(pcihp_state,
++                            AcpiGedState,
++                            NULL, NULL),
++        VMSTATE_END_OF_LIST()
++    }
++};
++
+ static const VMStateDescription vmstate_acpi_ged = {
+     .name = "acpi-ged",
+     .version_id = 1,
+@@ -429,6 +448,7 @@ static const VMStateDescription vmstate_acpi_ged = {
+         &vmstate_memhp_state,
+         &vmstate_cpuhp_state,
+         &vmstate_ghes_state,
++        &vmstate_pcihp_state,
+         NULL
+     }
+ };
 -- 
 2.49.0
 
