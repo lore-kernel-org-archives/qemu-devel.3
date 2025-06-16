@@ -4,204 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32A3C71135
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 08:17:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A00BC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 08:24:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR51l-0000s7-Lr; Mon, 16 Jun 2025 04:17:14 -0400
+	id 1uR57y-0002js-90; Mon, 16 Jun 2025 04:23:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uR500-0000TD-3q
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:15:24 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uR4zw-0008TF-KG
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:15:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750061721; x=1781597721;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=thUJ7bs8+M7dDnnwbn9to6mjDgDYAMSu6appndMR7Bc=;
- b=ijySLPmoRkCDarYbocUS6v5cL3djgP8E1+cG5e4YGx4dJe2VBPRVgW+y
- WfLmqN5k5eHIpVsmp8KoXmM4YvC87EkmcqQ2KVwuHeHRDMQbnj0ku7Y4k
- CIftezaJSoQyiF5N1LM9rqd4oz2fraGN+/iPHWuR8rt8pGfRFnvn9IqY3
- aYuSQ/q2I55kmJDuYy/f0g+Q7hye0nQau0Io/OULM13I0jhZzXdE6qHDr
- HIMkhh3aCub04FjhuuiYBJr8Crot9nJ17x4ZfELQ7OaMTNlstEdvId1cz
- /xRRP+yx1etejW2c86tQyaFGNPPstfnhFsWgMjgWw4HHMe0H/SDY88eQE Q==;
-X-CSE-ConnectionGUID: iOiN5Y8FROqFITazOxplVg==
-X-CSE-MsgGUID: NoXszDttTlSFVw4wr5KywA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="62805302"
-X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; d="scan'208";a="62805302"
-Received: from orviesa002.jf.intel.com ([10.64.159.142])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jun 2025 01:15:17 -0700
-X-CSE-ConnectionGUID: EdzYj5n8TIi+9HjNVcSUkw==
-X-CSE-MsgGUID: Qh4Vd6t9Rx+Q04n9+izwFg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; d="scan'208";a="179303516"
-Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
- by orviesa002.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jun 2025 01:15:17 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Mon, 16 Jun 2025 01:15:16 -0700
-Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25 via Frontend Transport; Mon, 16 Jun 2025 01:15:16 -0700
-Received: from NAM11-DM6-obe.outbound.protection.outlook.com (40.107.223.52)
- by edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.25; Mon, 16 Jun 2025 01:15:15 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=P4jUiPaWgf4V0SwTbYgkyNk4bNs56RZqE0laP876QXZyZ3M0WEMCSB4F+iFvkWi4f7PHKBuuKyI1aYP7wXu4m85U4pTygO5Q45hnlZWWsH/4Y9oMIG0y/eeEWc/TG5URkqz1k/XVAw2PtMeQcjUR2M3Oymoq62qUQzkfUQ+jxeEFSeWBJWzD0ugOjy/SbdtYgNUieke0twH1HT4OYZqCLBIw1UujMb75Epx1T0XZ56tjDMhbph7zeAtEeF+x7IsBO6KYnYHI6ehngOeGtjr0mAWI8rIXW1ZFfWAnKxrblBOZ/y8pQX2PeU0sGiP5iLh3cjjBusG2JWxhwFlMtbNTaA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=thUJ7bs8+M7dDnnwbn9to6mjDgDYAMSu6appndMR7Bc=;
- b=B8QYVswFOqHLSaYMHRsV955AFHXRoHE17w11JS53C/C+40WBVO3deMg+KXNdaLtdjB8L6mV1DgGeRfalfyiEhkpfq6aFmDv8hEc1TvkRvtRWxLned9GCY1DdrhKzzxRpYh4VZawdLGvVFNRMyJOMNim/TxTw/Qyo2NyX33l6BJomI73SL0IzUTXeFhktWML+7pR5ryCbLj6sLY2au8tv+C6EleoKyhMgUaJp0hZPTXFEMllyAA0xgVM3uzT2BLSA1piEr/rWebI8TV1gWB2RKDPzbnil7mf0JwZ0jbT5Ix+QQrOAANsWUlDs+3cHsESL7hYVLbQQPiyYG7kLDuSR7A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by DS0PR11MB7530.namprd11.prod.outlook.com (2603:10b6:8:146::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.28; Mon, 16 Jun
- 2025 08:15:12 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8835.023; Mon, 16 Jun 2025
- 08:15:12 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Nicolin Chen <nicolinc@nvidia.com>
-CC: "Liu, Yi L" <yi.l.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
- <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: RE: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
- host
-Thread-Topic: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
- host
-Thread-Index: AQHbykJMfKt9Mfha3Ee+klVeu6JiiLPdsMoAgAIQvoCAAPjWAIADz6UAgACqsQCAAnMkMIAdyAkAgAAnT2A=
-Date: Mon, 16 Jun 2025 08:15:11 +0000
-Message-ID: <IA3PR11MB91369A0E98CC76ABDBA365809270A@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-16-zhenzhong.duan@intel.com>
- <aC5YjHrv5EMDixzZ@Asurada-Nvidia>
- <0f8087f4-0c97-440d-84d2-f3f017f81041@intel.com>
- <aDDk1NYwJXaAdUQI@Asurada-Nvidia>
- <29f5f434-1fe3-4b5e-91d1-f153e1e98602@intel.com>
- <aDSmcvZ08jNOSr05@Asurada-Nvidia>
- <SJ0PR11MB6744340B889FF65D3BD5B8459267A@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <aE+wCIG8KHb3u1lV@nvidia.com>
-In-Reply-To: <aE+wCIG8KHb3u1lV@nvidia.com>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DS0PR11MB7530:EE_
-x-ms-office365-filtering-correlation-id: d1bbdeff-af4c-45d0-3a3f-08ddacadea7f
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|7416014|376014|38070700018; 
-x-microsoft-antispam-message-info: =?us-ascii?Q?p5ExDM8V1b6dRXxdqG9Y4FwwHthWNGp59djnNNj5Io2IBb67aHtjFHjgs0vM?=
- =?us-ascii?Q?EEC1+hd/FBgX88F8w2Mcq6fe9WohxIAagNL03bLqELqIw/Ag3ugHzT+GmV2b?=
- =?us-ascii?Q?XSanX5NIeoecPUVEKlj/EBdgvrMuTaEQg9KJC/FyaETbkcCajCiYzIQOT7YO?=
- =?us-ascii?Q?MeuAVHbfF7fACF/Jw/w6umCzF4i402DqXJnLPzlZF4YIHl5Nn/1LZYYFo5Pv?=
- =?us-ascii?Q?IbfOhNypquvbH5OyoWm9GUBS2KOWljXHww3EL2xJj47fe9KZgolS2ET2bvdc?=
- =?us-ascii?Q?XLcUE56zfsBV4Imnx99NNkAXL+agA7FBtD+D0kTfVNda1zcTCIqck0cDQmEN?=
- =?us-ascii?Q?APQyLuI+/5W/32e6dsVos3dg3j+UYCLfyryU5zX4xivGRjlfco8fX59jAcay?=
- =?us-ascii?Q?0pc99LLzk+WLS2l89pAWUO40xoimlS+foV5XFKby2ecixoz5lMLHNq+Kx3O8?=
- =?us-ascii?Q?M38LWrnOQfKWcZkx88Q3dec97yZ2ra3zRC6SEce4yZS4GP9zdAIaD6UnCY28?=
- =?us-ascii?Q?H4klTPZSt7weTQCTNoHl2uJDXCvTztfswlt3Yag8f+ak0Eff3cROWt9+aJ2t?=
- =?us-ascii?Q?xw4sAMVq9tUnROqxmZbWx6rC18cRCNgKSmXlX1/hJ+C6npX7/0qZSsdGnfnj?=
- =?us-ascii?Q?DiqjXHHZHqRJ1YuspAHbuWPc5HbTmvecmSaoLsDhCs6ERj6ctRj+4hytLTen?=
- =?us-ascii?Q?vfuEr0eV0LukbLpbCfo72hRPVBnK7nWWyvKjpZK2EBizWIY/rZjMRg3JNUBR?=
- =?us-ascii?Q?VfDAXP+bQcUS0HY1RqvMCLgpUCLdA/n1p4Zqr/bH5Lg3fki+UHgRIsL2vTDK?=
- =?us-ascii?Q?tGsHUIi7emc9WZPopauqwgimr9nAfByEpcivYQs41kHazcua+DKmvPhbhocV?=
- =?us-ascii?Q?qCLkBQOVmuWGxgRgwNyl0CpbBHg2IjFD6csk5XEPWjiDZJQTG4n2el4PgGdL?=
- =?us-ascii?Q?OljH5cgtoUAxZbH0uGRD6Abm8jd+isCmSbgnsuzViHI8QA8ulLaUcNoHaYQj?=
- =?us-ascii?Q?QtkVpSRMGBMvPlaNfulTletiiyc5VQ7MnZhpzFhXdj7O7DsC08XzVmclyl+W?=
- =?us-ascii?Q?MLqwJ5ndGRT0iyUNyNZQO4uWW5e7PIHo2qdsbZHaXl87bWwh7N0rFRWDOhma?=
- =?us-ascii?Q?n5wnw2wKK2XRqU4ALz/IgUGhunQSl+QAm4UzQ6k3hRHpKP8bspMeuilhRP6p?=
- =?us-ascii?Q?82xYLTYqLDR9Yz7M/LYGAt62UOk6iKLOOQ6WW2/ZnHwrq2PhROqgjt14LWww?=
- =?us-ascii?Q?QV79E0phvRDYMULkKcioyUfgF4KoTY1FA4XTkw3WkP146tgXKgceoTTLVLz0?=
- =?us-ascii?Q?QVmN4eMpdrtv6w9WR6au0wZ6bB6FrDp8BgnxM2dm2yRLr3CwlE70e/fhZppT?=
- =?us-ascii?Q?DlyNA/b+Woism7J6tETfPuoskLboj83kVAiy0Bpd9h0UqRXM3LLOLtxTDQgn?=
- =?us-ascii?Q?wDU9uMqRJYpvRPyK/eSG1xPVwQnVao200k7/t7jy1u3Ti2RURhMfQQ=3D=3D?=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700018); DIR:OUT;
- SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?AoM57GU+rQRYIEJLua1anURfTlZmkLi7261te8c4d8YHsDY9DobHLMZiI8xy?=
- =?us-ascii?Q?hZropUhnSVyB2PSYA7zEqJLWeMuqU0cC2gljCtyicoTN5Txqu4bxRMj9m32h?=
- =?us-ascii?Q?baa1F1y5SD9OTYhyeAaUAiL4CBrSYPSJ/lAwEx+/B94TOVbG4BOMEWuJGAEI?=
- =?us-ascii?Q?7Mf3W2vxDTUzZ/WiisIFoDXSJtVESmkq0X9SDf4v/0gPrv+MEMlIIIlMuvG/?=
- =?us-ascii?Q?rurLy0m8/RSDqj9ItA5KEdqJDYqlz2bVn/diAbcrv0MB9O3F8JCqw3mFzXGh?=
- =?us-ascii?Q?Hlrgs/h9iZFVIkyXdHNiIfb0uWZ/n4XU5xJcDnM5achxi47hj9oJtn7gUDvi?=
- =?us-ascii?Q?hjPbgIKobkZmmBrwSN8Ipu8+MDmUirbjyoNTRDRBhlvon/3pTt31n/fuBkhJ?=
- =?us-ascii?Q?9bUl+oPfulooFiYo/Xzk3aHcAsB8LfV7WvH/pBxQyB7+K/Ufdodo51URIqxZ?=
- =?us-ascii?Q?C0C5x5ib3AwTF0EQ6DnuC1cbsOiVIT9QrDI38on9f4HE4H9sOfmmm67JHcpI?=
- =?us-ascii?Q?CzFg2nHB18AZUvo8KwlYoF8S1d3qngoBvhAW/w+uIHuSyVOrGmfn111ZpqqJ?=
- =?us-ascii?Q?r2rLNgC0QWQ2/tCwIK4fduKg3sN2zj+vLWo2KC3/b1QPc79jV8xs+XQvFbI3?=
- =?us-ascii?Q?PMkNUz+LaLAK4j59LwKlbAxI9LowDqoOSJNptINPC4kJt4ueZo9V5ZizRLVM?=
- =?us-ascii?Q?CIRMycl0SKVqNj0AiUGltrseU8BTEkqeYLW3zLh9OEtxZMt9tdKA1xkUfuwD?=
- =?us-ascii?Q?d9cqgsNpBcL/UZaOV36HO/5kuj2ZYjrbEClnaE5YXG63loCtea1OSqJK1qN/?=
- =?us-ascii?Q?l75Qou6YdT73yKagqYJjH0BBvy854N8IsdLGbgYs8WT2XygmUkGOX+33Bzrg?=
- =?us-ascii?Q?EaXptPYtKDCgoBXcxHaFfQ9+uK45ka7pEVMo5WBC1rzKUoWNl+pPZKtLCzcp?=
- =?us-ascii?Q?G8Q0q9zxO9AsC1Lx3v3gdZIyf2anfoi/2e0/ov1IETGqq9QpimzeZ4keh50N?=
- =?us-ascii?Q?7QueVEbZuxMtguke05TUNMYK4l5IF/ZURs9YObArgrViFeEc884iVx2RjkEM?=
- =?us-ascii?Q?3rO4kI5cqEfqmNUU2SSHHXHwDlhMZpPtpZ2Q27oiiK6B5H7ItaXKVaVQcNno?=
- =?us-ascii?Q?0k519sJFiRyFe3finlFvF95bb9yw5elSQqZdtsmqRWJQ9+RKp09UiTwNpCjX?=
- =?us-ascii?Q?l9rrPuQNsoaw5SXQG1aNu4WaM0H5d9hFUHeRyo+8QWbEN+qrWoZwy/invAAr?=
- =?us-ascii?Q?X18H+4x/rSCasKKa7KuZI9iyrmgw23A2QWG2dE/IKz1tuVufsIU5BU5uAQjA?=
- =?us-ascii?Q?cM5k0+ThnLRuUgAmuee2uTdWHP+Et1wpREb6wsx2BT7lLEhKWic+LSWidTrV?=
- =?us-ascii?Q?BpQ0KYKMTL6CvWk6i1zbcmTUczqwGDAGWSFvK36I1/8o+NbFIT29HWpmn5Mz?=
- =?us-ascii?Q?LTnS63T73zqfvex1yG8e8gyG41QcV/60XQAemNmzFSE1na9w9h022rZ3Fpm+?=
- =?us-ascii?Q?j7PSd1RAsdZEn3oD73PUm+h4/nltnpRJGFRjeBdULDKiPoAtAsmdXl4efn7y?=
- =?us-ascii?Q?6mVta0v8h90Pa7mDKzUsdHITRJiHU4SkDZHkU4mc?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR55y-0002Do-Eu
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:21:34 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR55w-0000sg-4H
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:21:34 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-3a53359dea5so2823198f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 01:21:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1750062090; x=1750666890; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2v7A+U0GguZRsc2/YYGWktbw6iMfk/gfZedDJ/vBDrY=;
+ b=mgh9aJ3ZP7J6S/QE5Waw6EGHJrGWl4nFUDGo++JSI3h9TsAhI8WYy1zYaJIOpFkOlB
+ 6hQNC4GAsB8qPL+8wfW/qmc0nBywzTrewPo6s7vQtGDfSesCezAhEYJKWb/C8bw8EWkh
+ aDuUkRe2Q5Jy9/fvoEzog3oTwkVn33EEp+CWfut4oF7txbOkpdobKUBqfzk6+hv1Zth2
+ wteviWcu418LwARdFUL4PogmOLtu2lQfsnhmqGYA19jrc7leZkeYtucQxyKbvYjnS5g/
+ 8O1zOQXQ9O83BLLGKGSyH2YbHVOAC7urzq/YsyVkblCI2Ul38eRO0sqxDGL/NKYxLKea
+ wu+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750062090; x=1750666890;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=2v7A+U0GguZRsc2/YYGWktbw6iMfk/gfZedDJ/vBDrY=;
+ b=tPhErivYUVCP2BhE0Vdy87cVBypclpwCMZ7ADT9l/IKcrsCwEXVDz2vsidxBCkI2E7
+ /41p1zkHL3OUW3WUZRwOjDq6Gw6B471qozvYIpmvLZPdms/vKNCj0i2Z0N8k4cRcbsUS
+ zt4KLq2Juxfab18EYc9CLdnSixEat2AcgDaGYBGZu2wQTDOHB60lsmuz33nUWg2zZiQ/
+ XFXvVrn7o8fY+BDJROngHQ2F+qPlDT2k6+rfbHZLioCAu0dsGuJWJ7XlUj49YoQEXJOV
+ QMXCTUvKoNmDmaOJvJuoe6gupsjZGrtJzKK3IJuizjcMQfRzh/CqKmwJYtZawO6iGGzs
+ LNlw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWhCN1wjqrxASx0aVm8MVf6BWufumrGCr/24oDAVWJKZlHzUO3hB6wuzagFDEcJT3QDNbjhqkCg/2gd@nongnu.org
+X-Gm-Message-State: AOJu0Yyx8YtLXNE8qnV1HkZHhR40W3nfCKx4ROpSwfTLdMuLFKg0cbzo
+ F0axpHksmpCWztULNND8go+0zh0gFFd83QRcs8YxyHWlOacqHK09ZzhSXadUE3MK4JY=
+X-Gm-Gg: ASbGncufi+OjQBOhjfbyioaY4lzKnEmC9CyHBHxZEvT4J9FVjjr8JcDciMcLBFSUnDS
+ P4L+jS5z2/EpH0ZPkR0I/fTL/UWrf+pBuMSk4VMvXdxpBTWpn/wPnUlrpgtk4oqVfROwlhXJ+k7
+ zmVVVNihtkVCf1szLcyP9OUMDAS25GIQg5qZ0dVKrUCYuIw+PUhymUrcYrffwKMFP7HzWIQ6/XZ
+ 3JSpVrzKI6uEHvNOpgUeusrWVw7KiQWOsA7lY3Gyk9+b/L/kcif028MvVypO13Yd1e1uSfnmXsu
+ MJrYcaqHjolzrjSYAuB2AfK2/rLB6thIBGYnwFooTl8r9c2jlANjfW+NSEZybSpC0hRbMEgwot7
+ Y52zmk6DgOJKNd943/Ai9fgdJtaTVv32d2l2jWwyx
+X-Google-Smtp-Source: AGHT+IHl4rm2jvgL/HchZ3eiUsOPUesmnxaCqYdvnunRZZqShm3+fzRknHWNsMd1O/TSGZaGpQNp2A==
+X-Received: by 2002:a05:6000:288a:b0:3a5:3a3b:6a3a with SMTP id
+ ffacd0b85a97d-3a572e5856amr6806289f8f.54.1750062089688; 
+ Mon, 16 Jun 2025 01:21:29 -0700 (PDT)
+Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4532e232e4asm135488375e9.11.2025.06.16.01.21.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Jun 2025 01:21:29 -0700 (PDT)
+Message-ID: <9ec68c71-c53d-495f-b7ab-6061ea727dd0@linaro.org>
+Date: Mon, 16 Jun 2025 10:21:28 +0200
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: d1bbdeff-af4c-45d0-3a3f-08ddacadea7f
-X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jun 2025 08:15:11.9542 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Ir+l7sYiXtspobzDUQQqrXRfGcK7u9vt+qLCx/6ClH4TTr+QDshH2L93g1lp9f2OETfXsSuGefDUbW1L92p2zDd0kt8a5FUiUjtd48lYcAg=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB7530
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.11;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -43
-X-Spam_score: -4.4
-X-Spam_bar: ----
-X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 02/19] system/cpus: Only kick running vCPUs
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Igor Mammedov <imammedo@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>, David Hildenbrand <david@redhat.com>
+References: <20250606164418.98655-1-philmd@linaro.org>
+ <20250606164418.98655-3-philmd@linaro.org>
+ <c9a8d923-0faf-46a4-962b-5a0f4289008f@linaro.org>
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <c9a8d923-0faf-46a4-962b-5a0f4289008f@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -218,64 +107,158 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
->-----Original Message-----
->From: Nicolin Chen <nicolinc@nvidia.com>
->Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table=
- to
->host
->
->Sorry for a late reply.
->
->On Wed, May 28, 2025 at 07:12:25AM +0000, Duan, Zhenzhong wrote:
->> >Third, the vSMMU model, for invalidation efficiency and HW Queue
->> >support, isolates all emulated devices out of the nesting-enabled
->> >vSMMU instance, suggested by Jason. So, only passthrough devices
->> >would use the nesting-enabled vSMMU instance, meaning there is no
->> >need of IOMMU_NOTIFIER_IOTLB_EVENTS:
+On 7/6/25 15:23, Richard Henderson wrote:
+> On 6/6/25 17:44, Philippe Mathieu-Daudé wrote:
+>> As an optimization, avoid kicking stopped vCPUs.
 >>
->> I see, then you need to check if there is emulated device under nesting-=
-enabled
->vSMMU and fail if there is.
->
->Shameer is working on a multi-vSMMU model in the QEMU. This gives
->each VM different instances to attach devices. And we do not plan
->to support emulated devices on an nesting enabled vSMMU instance,
->which is a bit different than the VT-d model.
-
-I see.
-
->
->> >On the other hand, the VT-d model is a bit different. It's a giant
->> >vIOMMU for all devices (either passthrough or emualted). For all
->> >emulated devices, it needs IOMMU_NOTIFIER_IOTLB_EVENTS, i.e. the
->> >iommu address space returned via get_address_space().
->> >
->> >That being said, IOMMU_NOTIFIER_IOTLB_EVENTS should not be needed
->> >for passthrough devices, right?
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   system/cpus.c | 5 +++++
+>>   1 file changed, 5 insertions(+)
 >>
->> No, even if x-flts=3Don is configured in QEMU cmdline, that only mean vi=
-rtual vtd
->> supports stage-1 translation, guest still can choose to run in legacy
->mode(stage2),
->> e.g., with kernel cmdline intel_iommu=3Don,sm_off
->>
->> So before guest run, we don't know which kind of page table either stage=
-1 or
->stage2
->> for this VFIO device by guest. So we have to use iommu AS to catch stage=
-2's
->MAP event
->> if guest choose stage2.
->
->IIUIC, the guest kernel cmdline can switch the mode between the
->stage1 (nesting) and stage2 (legacy/emulated VT-d), right?
+>> diff --git a/system/cpus.c b/system/cpus.c
+>> index d16b0dff989..4835e5ced48 100644
+>> --- a/system/cpus.c
+>> +++ b/system/cpus.c
+>> @@ -494,6 +494,11 @@ void cpus_kick_thread(CPUState *cpu)
+>>   void qemu_cpu_kick(CPUState *cpu)
+>>   {
+>>       qemu_cond_broadcast(cpu->halt_cond);
+>> +
+>> +    if (!cpu_can_run(cpu)) {
+>> +        return;
+>> +    }
+>> +
+> 
+> This would appear to be a race condition.  The evaluation of cpu_can_run 
+> should be done within the context of 'cpu', not here, and not *after* 
+> we've already woken 'cpu' via the broadcast.
 
-Right. E.g., kexec from "intel_iommu=3Don,sm_on" to "intel_iommu=3Don,sm_of=
-f",
-Then first kernel will run in scalable mode and use stage1(nesting) and sec=
-ond kernel will run in legacy mode and use stage2.
+OK.
 
-Zhenzhong
+Still I don't understand something, when putting this assertion:
+
+-- >8 --
+diff --git a/system/cpus.c b/system/cpus.c
+index d16b0dff989..0631015f754 100644
+--- a/system/cpus.c
++++ b/system/cpus.c
+@@ -493,7 +493,10 @@ void cpus_kick_thread(CPUState *cpu)
+
+  void qemu_cpu_kick(CPUState *cpu)
+  {
++    assert(cpu_can_run(cpu));
++
+      qemu_cond_broadcast(cpu->halt_cond);
+      if (cpus_accel->kick_vcpu_thread) {
+          cpus_accel->kick_vcpu_thread(cpu);
+      } else { /* default */
+---
+
+I get:
+
+(lldb) bt
+* thread #1, queue = 'com.apple.main-thread', stop reason = hit program 
+assert
+     frame #0: 0x000000018a669388 libsystem_kernel.dylib`__pthread_kill + 8
+     frame #1: 0x000000018a6a288c libsystem_pthread.dylib`pthread_kill + 296
+     frame #2: 0x000000018a5abc60 libsystem_c.dylib`abort + 124
+     frame #3: 0x000000018a5aaeec libsystem_c.dylib`__assert_rtn + 284
+   * frame #4: 0x000000010057ddc4 qemu_cpu_kick(cpu=0x0000000130218000) 
+at cpus.c:496:5
+     frame #5: 0x00000001000106ec 
+queue_work_on_cpu(cpu=0x0000000130218000, wi=0x000060000038c000) at 
+cpu-common.c:140:5
+     frame #6: 0x0000000100010780 
+async_run_on_cpu(cpu=0x0000000130218000, func=(tcg_commit_cpu at 
+physmem.c:2758), data=(host_int = 60885632, host_ulong = 
+105553177152128, host_ptr = 0x0000600003a10a80, target_ptr = 
+105553177152128)) at cpu-common.c:177:5
+     frame #7: 0x000000010059ad34 
+tcg_commit(listener=0x0000600003a10a98) at physmem.c:2789:9
+     frame #8: 0x0000000100591240 
+listener_add_address_space(listener=0x0000600003a10a98, 
+as=0x0000600003611980) at memory.c:3082:9
+     frame #9: 0x0000000100590f48 
+memory_listener_register(listener=0x0000600003a10a98, 
+as=0x0000600003611980) at memory.c:3170:5
+     frame #10: 0x000000010059abe4 
+cpu_address_space_init(cpu=0x0000000130218000, asidx=0, 
+prefix="cpu-memory", mr=0x000000012b1faba0) at physmem.c:813:9
+     frame #11: 0x0000000100750c40 
+arm_cpu_realizefn(dev=0x0000000130218000, errp=0x000000016fdfe2c0) at 
+cpu.c:2572:5
+     frame #12: 0x0000000100b7ed9c 
+device_set_realized(obj=0x0000000130218000, value=true, 
+errp=0x000000016fdfe388) at qdev.c:494:13
+     frame #13: 0x0000000100b8a880 
+property_set_bool(obj=0x0000000130218000, v=0x0000600003f12d00, 
+name="realized", opaque=0x000060000010c1d0, errp=0x000000016fdfe388) at 
+object.c:2375:5
+     frame #14: 0x0000000100b87acc 
+object_property_set(obj=0x0000000130218000, name="realized", 
+v=0x0000600003f12d00, errp=0x000000016fdfe388) at object.c:1450:5
+     frame #15: 0x0000000100b8f14c 
+object_property_set_qobject(obj=0x0000000130218000, name="realized", 
+value=0x0000600000386920, errp=0x0000000101e39e28) at qom-qobject.c:28:10
+     frame #16: 0x0000000100b882f8 
+object_property_set_bool(obj=0x0000000130218000, name="realized", 
+value=true, errp=0x0000000101e39e28) at object.c:1520:15
+     frame #17: 0x0000000100b7d240 qdev_realize(dev=0x0000000130218000, 
+bus=0x0000000000000000, errp=0x0000000101e39e28) at qdev.c:276:12
+     frame #18: 0x000000010083a81c 
+machvirt_init(machine=0x000000012b1fa710) at virt.c:2329:9
+     frame #19: 0x0000000100136a40 
+machine_run_board_init(machine=0x000000012b1fa710, 
+mem_path=0x0000000000000000, errp=0x000000016fdfe6a8) at machine.c:1669:5
+     frame #20: 0x0000000100571384 qemu_init_board at vl.c:2714:5
+     frame #21: 0x0000000100571154 
+qmp_x_exit_preconfig(errp=0x0000000101e39e28) at vl.c:2808:5
+     frame #22: 0x0000000100573a14 qemu_init(argc=17, 
+argv=0x000000016fdff138) at vl.c:3844:9
+     frame #23: 0x0000000100d036e0 main(argc=17, 
+argv=0x000000016fdff138) at main.c:71:5
+     frame #24: 0x000000018a302b98 dyld`start + 6076
+(lldb)
+
+I expect a vCPU to be in a "stable" state and usable *after* it is
+realized, as we are calling various hooks in many places. Here we are
+processing the pending work queue while the vCPU isn't fully realized,
+so some hooks might not have been called yet...
+
+Git history of tcg_commit() points to commit 0d58c660689 ("softmmu: Use
+async_run_on_cpu in tcg_commit").
+This isn't the first time I ends there, see also:
+https://lore.kernel.org/qemu-devel/20230907161415.6102-1-philmd@linaro.org/. 
+Using the same reasoning of this patch, adding:
+
+-- >8 --
+diff --git a/system/physmem.c b/system/physmem.c
+index a8a9ca309ea..479a7a88037 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2773,6 +2774,14 @@ static void tcg_commit(MemoryListener *listener)
+      cpuas = container_of(listener, CPUAddressSpace, tcg_as_listener);
+      cpu = cpuas->cpu;
+
++    if (!qdev_is_realized(DEVICE(cpu))) {
++        /*
++         * The listener is also called during realize, before
++         * all of the tcg machinery for run-on is initialized.
++         */
++        return;
++    }
++
+      /*
+       * Defer changes to as->memory_dispatch until the cpu is quiescent.
+       * Otherwise we race between (1) other cpu threads and (2) ongoing
+---
+
+makes my issues disappear; tcg_commit_cpu() calls are run on realized
+vCPUs, and the order of pre-realize vcpu hooks doesn't alter anything.
+
+I don't remember why I wrote this "The listener is also called during
+realize, before all of the tcg machinery for run-on is initialized"
+comment, it could be better to call memory_region_transaction_commit()
+after CpuRealize, maybe in CpuReset.
 
