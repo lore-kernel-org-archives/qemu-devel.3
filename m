@@ -4,91 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56A1DC71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 13:34:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F873C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 13:37:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR9xw-0002Q5-Jy; Mon, 16 Jun 2025 09:33:36 -0400
+	id 1uRA1Z-0003pn-1m; Mon, 16 Jun 2025 09:37:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR9xu-0002PS-R8
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 09:33:34 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR9xs-0007Tf-N9
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 09:33:34 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-3a531fcaa05so2771853f8f.3
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 06:33:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750080810; x=1750685610; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OLBiGdFQBYSuCjE9HOzR5RujC6zuqYW1dMFD/IFCbwM=;
- b=w9kJgZGI1t8UXATYgiEpfYnCNfO9V4mi90Ao/G29J5OZbYQpzCoWGD8nNu9la38ETq
- ySJZyXhamBFCMJTv51hkqeBllt0r2dZRYd4hO4iOg+o2q3uGc1xlesqwcQfj89ciFpZN
- GqAA6CVUANxoqIk46m6rcMaacRFPcmIvVXTIS+WiIZxiAzHTx2444zHY61ZyzM3uTj8T
- Z0XU+dUUlFzJL/MVwivBu3ZWGV4IBedoq58Uhk/o1F4B61NU9CAJwvx4APHPqKoIrXfU
- G02lfR5XZ/li8ibK+SkhzVy51qVbTTR2lFjwiV5/tvXROgv3WSYSceYlfQZWa4OAPPeI
- vtrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750080810; x=1750685610;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=OLBiGdFQBYSuCjE9HOzR5RujC6zuqYW1dMFD/IFCbwM=;
- b=JjHa4SFlXvo+zYr7K0xtcktxZDZyyLihXB+wiJEEAObETiK7G42YcW+Z+v/nvXI++P
- LIEvePA+f+Zey/7vPA+TtFoXsAULICyrqZcRz2Io2rR+NUY6StCckU3Jw8z/9GK2CZYo
- vt1ZOykxch+MI7P039U934OQUJy9wKmThNfguXD85obi2tXrt+MYIAUXHVS6aPB8pPHC
- iEMHwSYi5KgGbCfZXtHXyrWI4Y+DFPzXXq+tA6zpzM2uFY6HH1HSaMXdUCY3jMfUdcBd
- 2Z/bRMF3SJ4OpsrNTMlwbnHN3jY6CrcWwiDQ5n6QYlFn4AXKij17h0csYL1bPstiSJIm
- mAWQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7tnVHQQ2OdkpMpfuP3/rRRn9FsrqLcaB44dnDSkCeMs8RPYUG70azMHbPX6yZ6Pp9aDrChhEqDqqU@nongnu.org
-X-Gm-Message-State: AOJu0YwLYMRiUcnWfPo5CvYmEzVwQbHxuKDW4DE9crIAdlFOIqfgw3Ka
- MhlNLdo19UvBFmDERTiYb2FK4+bRasfD4jNVWQveT519Oog+LgQJCpMu+X43DiNs8Uo=
-X-Gm-Gg: ASbGncuS8L4iqi8FcF6q918l02RerRnnd1p6AFVpuITxkZnCDhe7bEtOAj640gmt+RM
- YO1ygUPyDhPSFu9KK+UgYMSi9olpP7F8LO7Y/bjGGxWzTIU1gK0XZa7kew9OI7hPIvwMxRUSr/d
- JEatsbNT9oIbYBzzzTVml8K0oKiaijFj+rO0n7TCOkdYYZcuVF5ftLs2sFEyIX2DpOtIs6Q1mEQ
- QOuRyZdSqi4CQ6NhMnY6GsiN4M/QkcnRx5W6lxzBWzWpNAdK579g8ROyRZxepNkClvjFZNQkFda
- lG74swT1Kh8+L21vIrxzGHSu5kg3pmnI/t907LVpq7hFtx8/D28ipU4ag2LyAEqSyXzkNMxSMMO
- GhWZOSnWlcLVSfxVVxBxxt1WdIuOAMw==
-X-Google-Smtp-Source: AGHT+IE580eB4gDixRbSCBfpsvK3enjr+M1j09ArqGPbt+1MBAuB68pk2dqysHu0uKliTlQ68Onp2g==
-X-Received: by 2002:a05:6000:25f9:b0:3a4:f024:6717 with SMTP id
- ffacd0b85a97d-3a572e9a4a5mr7316014f8f.53.1750080810284; 
- Mon, 16 Jun 2025 06:33:30 -0700 (PDT)
-Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b08e21sm11236902f8f.52.2025.06.16.06.33.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Jun 2025 06:33:29 -0700 (PDT)
-Message-ID: <70853fdc-ef08-40ad-85a9-5cb02146cf23@linaro.org>
-Date: Mon, 16 Jun 2025 15:33:28 +0200
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1uRA1W-0003o5-EX
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 09:37:18 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <kshk@linux.ibm.com>)
+ id 1uRA1R-00085l-CA
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 09:37:18 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55G4Tb2B015293;
+ Mon, 16 Jun 2025 13:37:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=pp1; bh=aKTZpJ9cRHBDV1VEOR1X3Fw9DCwD
+ zYKT1B1um9+1GhY=; b=bD86/HnTH07kAm61Cqizh4waN9/883xtFjVxL0beIFIm
+ 8fF3IdXbIpAYuDKoHV2ldMzTTzQCT8lNmgQFRqO07S+DpjpIE52fORR+F6pYZgRh
+ dDlM0S9az+OrCSTtBRY5m2Hyi3EcBwkoFYhT8nx9EcQzs5XgLr6ymfK2QWzFVEOg
+ Z/y1ePQd/sj04pEEGDW4PX+KOwzo4txFOrmVgNJYPn+L68tfNEMqzOtrL61WTByf
+ KsyfADSAEtxA+sOMbJXvdfEGiMvFwizWvFjQyU4a7lF3a6FuUtwtkDBmHk1NjwIf
+ n5sV+kqr+Lx7e5eJu+O1U86EYHVneBtlStZST96ybg==
+Received: from pps.reinject (localhost [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4790s4a3jd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Jun 2025 13:37:07 +0000 (GMT)
+Received: from m0353729.ppops.net (m0353729.ppops.net [127.0.0.1])
+ by pps.reinject (8.18.0.8/8.18.0.8) with ESMTP id 55GDKgwK002474;
+ Mon, 16 Jun 2025 13:37:07 GMT
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4790s4a3ja-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Jun 2025 13:37:07 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55GCTZXv000875;
+ Mon, 16 Jun 2025 13:37:06 GMT
+Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 479mdnxae8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Jun 2025 13:37:06 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55GDb4Vm42664396
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Jun 2025 13:37:04 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6C1B358059;
+ Mon, 16 Jun 2025 13:37:04 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3169558057;
+ Mon, 16 Jun 2025 13:37:04 +0000 (GMT)
+Received: from WIN-DU0DFC9G5VV.ibm.com (unknown [9.61.241.22])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 16 Jun 2025 13:37:04 +0000 (GMT)
+From: Konstantin Shkolnyy <kshk@linux.ibm.com>
+To: jasowang@redhat.com, akihiko.odaki@daynix.com, yin31149@gmail.com
+Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com,
+ Konstantin Shkolnyy <kshk@linux.ibm.com>,
+ =?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>
+Subject: [PATCH v2] vdpa: Allow VDPA to work on big-endian machine
+Date: Mon, 16 Jun 2025 08:36:47 -0500
+Message-Id: <20250616133647.1662767-1-kshk@linux.ibm.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 1/8] hw/intc/gicv3_its: Do not check its_class_name()
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- eric.auger@redhat.com, mst@redhat.com
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
- ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
- anisinha@redhat.com, Richard Henderson <richard.henderson@linaro.org>
-References: <20250616131824.425315-1-gustavo.romero@linaro.org>
- <20250616131824.425315-2-gustavo.romero@linaro.org>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250616131824.425315-2-gustavo.romero@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDA4MyBTYWx0ZWRfXwULRtAEBNYSY
+ bmVnD+QBpmoDf3yrhNmPuHxmlhV4ws2WdMTX/2VHynuZ6EPaimlxOu70SpF+6gsz3OwIjlfgmhM
+ vOr5jEjzsjVbJI2XHlUW0SCA8rHdHaj8L/uELoVyNHCbrnPcgE3umLLh2VoAJVPNDPYoo+LHOu8
+ fokhdasu6V57TRh/XeIOagvLvnWciKyVDbwFoAPDtoDW/jDjDBf6SdMqvsEAVc1SNJLqDpxAByN
+ chPXbc16BhRPzTuwUnz26lhedxkBZDTUbkQMhpzEpVTZ+beuUy03pP1Pi93oeyvWh1fD1t7Rhl6
+ iPVsH/SrGK6MQbYIRnzjSJ1z9pcJFdqVvUwpgKyG3j7g79VY40ri6vsEQZwJwEa/YXjARRHB0ct
+ Uj8z8BNlGqE+j057iZO39yStjaBVFBH3TFGi7k5kiZTwqc0Ym2CqroIFrzScQn7KhejU7ZHv
+X-Proofpoint-ORIG-GUID: --L4gECb9rv9doc0M7U1izUtzrh5mXoO
+X-Authority-Analysis: v=2.4 cv=Qc9mvtbv c=1 sm=1 tr=0 ts=68501e03 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
+ a=wOKiVAmTcRLR3a3dhvcA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: UNF2gYg8mUtuOwZm95si9xwmNSre677-
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_05,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501
+ malwarescore=0 spamscore=0 impostorscore=0 phishscore=0 mlxscore=0
+ lowpriorityscore=0 clxscore=1015 adultscore=0 bulkscore=0 mlxlogscore=909
+ suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506160083
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=kshk@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_MSPIKE_H4=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -105,86 +128,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gustavo, why reset authorship?
+After commit 0caed25cd171 vhost_vdpa_net_load_vlan() started seeing
+VIRTIO_NET_F_CTRL_VLAN flag and making 4096 calls to the kernel with
+VIRTIO_NET_CTRL_VLAN_ADD command. However, it forgot to convert the
+16-bit VLAN IDs to LE format. On BE machine, the kernel calls failed
+when they saw "VLAN IDs" greater than 4095, and QEMU then said:
+"unable to start vhost net: 5: falling back on userspace virtio", and
+VDPA became disabled.
 
-On 16/6/25 15:18, Gustavo Romero wrote:
-> Since commit cc5e719e2c8 ("kvm: require KVM_CAP_SIGNAL_MSI"), the single
-> implementation of its_class_name() no longer returns NULL (it now always
-> returns a valid char pointer). Hence, update the prototype docstring and
-> remove the tautological checks that use the its_class_name() returned
-> value.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> ---
->   hw/arm/virt-acpi-build.c               | 32 +++++++++++---------------
->   include/hw/intc/arm_gicv3_its_common.h |  2 +-
->   2 files changed, 15 insertions(+), 19 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 7e8e0f0298..9eee284c80 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -737,20 +737,18 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->                                             memmap[VIRT_HIGH_GIC_REDIST2].size);
->           }
->   
-> -        if (its_class_name()) {
-> -            /*
-> -             * ACPI spec, Revision 6.0 Errata A
-> -             * (original 6.0 definition has invalid Length)
-> -             * 5.2.12.18 GIC ITS Structure
-> -             */
-> -            build_append_int_noprefix(table_data, 0xF, 1);  /* Type */
-> -            build_append_int_noprefix(table_data, 20, 1);   /* Length */
-> -            build_append_int_noprefix(table_data, 0, 2);    /* Reserved */
-> -            build_append_int_noprefix(table_data, 0, 4);    /* GIC ITS ID */
-> -            /* Physical Base Address */
-> -            build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
-> -            build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
-> -        }
-> +        /*
-> +         * ACPI spec, Revision 6.0 Errata A
-> +         * (original 6.0 definition has invalid Length)
-> +         * 5.2.12.18 GIC ITS Structure
-> +         */
-> +        build_append_int_noprefix(table_data, 0xF, 1);  /* Type */
-> +        build_append_int_noprefix(table_data, 20, 1);   /* Length */
-> +        build_append_int_noprefix(table_data, 0, 2);    /* Reserved */
-> +        build_append_int_noprefix(table_data, 0, 4);    /* GIC ITS ID */
-> +        /* Physical Base Address */
-> +        build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
-> +        build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
->       } else {
->           const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
->   
-> @@ -969,10 +967,8 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
->                             vms->oem_table_id);
->       }
->   
-> -    if (its_class_name()) {
-> -        acpi_add_table(table_offsets, tables_blob);
-> -        build_iort(tables_blob, tables->linker, vms);
-> -    }
-> +    acpi_add_table(table_offsets, tables_blob);
-> +    build_iort(tables_blob, tables->linker, vms);
->   
->   #ifdef CONFIG_TPM
->       if (tpm_get_version(tpm_find()) == TPM_VERSION_2_0) {
-> diff --git a/include/hw/intc/arm_gicv3_its_common.h b/include/hw/intc/arm_gicv3_its_common.h
-> index 7dc712b38d..3c7b543b01 100644
-> --- a/include/hw/intc/arm_gicv3_its_common.h
-> +++ b/include/hw/intc/arm_gicv3_its_common.h
-> @@ -128,7 +128,7 @@ struct GICv3ITSCommonClass {
->    * Return the ITS class name to use depending on whether KVM acceleration
->    * and KVM CAP_SIGNAL_MSI are supported
->    *
-> - * Returns: class name to use or NULL
-> + * Returns: class name to use
->    */
->   const char *its_class_name(void);
->   
+Convert the VLAN ID to LE before putting it into virtio queue.
+
+Fixes: 8f7e9967484d ("vdpa: Restore vlan filtering state")
+Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
+---
+Changes in v2:
+ - Replace __le16 with uint16_t.
+ - Add "Fixes:" tag.
+
+ net/vhost-vdpa.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 58d738945d..bd5c37305d 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -1173,9 +1173,10 @@ static int vhost_vdpa_net_load_single_vlan(VhostVDPAState *s,
+                                            struct iovec *in_cursor,
+                                            uint16_t vid)
+ {
++    uint16_t vid_le = cpu_to_le16(vid);
+     const struct iovec data = {
+-        .iov_base = &vid,
+-        .iov_len = sizeof(vid),
++        .iov_base = &vid_le,
++        .iov_len = sizeof(vid_le),
+     };
+     ssize_t r = vhost_vdpa_net_load_cmd(s, out_cursor, in_cursor,
+                                         VIRTIO_NET_CTRL_VLAN,
+-- 
+2.34.1
 
 
