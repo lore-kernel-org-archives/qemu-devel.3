@@ -4,116 +4,221 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A9CC71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 21:48:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90B63C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 22:55:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRHg0-0002Pu-72; Mon, 16 Jun 2025 17:47:36 -0400
+	id 1uRIiy-0005Xc-My; Mon, 16 Jun 2025 18:54:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uRHfx-0002PT-SE
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 17:47:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uRIis-0005Vd-JC
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 18:54:39 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uRHfs-0001Gc-Gb
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 17:47:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750110447;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WW+UJwk0B/mo5iDb8LUza0lMroJ8OS+uo5j9e+65NYk=;
- b=LZMUL1i9LKxeW3oF3/yi6gtH663MpYrG1qabzLJp266FJYcrGpUleC+jAsVMUzrzhlyo0h
- YmqdLrmdAZtXzUSjoKMvbpSUzB1uvM4CMFz7chutz8tGhTcO9gnKj/3ETGRT3gslgAiDIE
- 3kK0G0X5BKUNGTdHE1iWoOQkxsM3Bu8=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-271-OgvslpnpNsueaCdLZb4GPw-1; Mon, 16 Jun 2025 17:47:24 -0400
-X-MC-Unique: OgvslpnpNsueaCdLZb4GPw-1
-X-Mimecast-MFC-AGG-ID: OgvslpnpNsueaCdLZb4GPw_1750110444
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-31327b2f8e4so4961042a91.1
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 14:47:24 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750110443; x=1750715243;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=WW+UJwk0B/mo5iDb8LUza0lMroJ8OS+uo5j9e+65NYk=;
- b=XeUeDbQoRw3Im7QpspvaNe8WH7j5yWkTyTwHmeZu1ws6aJZC3hLnkHWWQ6P1W89Be7
- 4n+TCZc/VXYCeQvd9oOY5//TNJmEkyubdPn7EqM8BbvlHnmWQs+FEGGAM7cPtnX32q/6
- 1HxQta3YBIStf2TV04jUQFw8DBrNTD5Egt3C1wbPFveI2LjM6C+CTC2+gbwdU0iibt9G
- Clgv4CziiG/lGr1c9QPBtxAELZpOX1QohfoglQlpCVJ62R4ltSYoKAU8TjxcsEbnN1BF
- pR6FbhLXnBuV9z0O6n8FiZQRJS1S7bZhjjeuVOSNwFUWKxqmcusCh/Nl/OW+Ku2rOShR
- q6HQ==
-X-Gm-Message-State: AOJu0YzEyBGFWASQ5pM3a+Tg7/jGUZ7899lIIQxiEbA9k7qHCu3iK4NL
- GCEnphE9L8Dylc9MElRk/JqLvVuqDcZ3x9wilP7sRrrI5TWDe3J8WP9Aww7pT+Q8DLqSy7bHe97
- SojH55M8TgK7iiJQTyWqRQqo4K8g1gduTPYmBxWvlcqbrOpLc4mAlziu6mndE2ZueFb27maHVpt
- GvtxM0Ho5BziJacmzit4LE1bMkHwiwoko=
-X-Gm-Gg: ASbGncu6h10wpU9U456g5JWX4bDc3igllXfeUBLwHQFB00GIHgWQt24ptHW7M17fdFj
- 7x4BepsdaVEiUqmPCus1sqgtp4XxlCwlQ9Vn4JkboOFwqrHDfCL4n5JgPnzphT8vwXUpFbztXqj
- 728fgjie11gTSXK/oOFw1MA2vL1uxnBeBoCl4=
-X-Received: by 2002:a17:90b:540f:b0:311:b0ec:135f with SMTP id
- 98e67ed59e1d1-313f1e22bf7mr16481060a91.30.1750110443437; 
- Mon, 16 Jun 2025 14:47:23 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGOEOoHUtnKVIx3xnNMBpe31easwiu6BWDtI1fz7a65T7SdHYDoKpsHMYGjEWqVcGndnQb3S2dC7JJxd3vZDOI=
-X-Received: by 2002:a17:90b:540f:b0:311:b0ec:135f with SMTP id
- 98e67ed59e1d1-313f1e22bf7mr16481005a91.30.1750110442997; Mon, 16 Jun 2025
- 14:47:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uRIil-0000jq-Sv
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 18:54:37 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55GMMPCe027735;
+ Mon, 16 Jun 2025 22:54:23 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=
+ content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=
+ corp-2025-04-25; bh=VS360A01q287oJURxDk5TNZ7Y79LvawDq6WjNtaHmk4=; b=
+ hz0wNBvvghi8bihEeikRgn9hgVXKK/24CENZPZyEHaQgPcMUbqUnRpxIL/CG427i
+ cVgOFxvLW3ucPMb1xfigGxjw8LivSHpsxAFXOFg6V1/AYC/xg1sSdaa7+bE2WRMA
+ h53rP2V+iBTiowv68J4H8l1OQjnATI3+VgykEVog8IfXXWujtP83Abr0Ki1DSpR/
+ yzln6U7SZVye10h7AhwfnQwbhYKJar+lDCXcbE6hOIk8mmlX8Qj7LsCKHqJu9yhP
+ 6yVTDm2gsZJq0b/JIl0K7K1xPeXwDptRShpvFimjVxEFXdKWu98pMXFd9OPMbAau
+ M6YKvuR0zRBPPW7o1Lm0WA==
+Received: from phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com
+ (phxpaimrmta02.appoci.oracle.com [147.154.114.232])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4791mxm5x9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Jun 2025 22:54:22 +0000 (GMT)
+Received: from pps.filterd
+ (phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55GL8uKH035184; Mon, 16 Jun 2025 22:54:21 GMT
+Received: from sn4pr2101cu001.outbound.protection.outlook.com
+ (mail-southcentralusazon11012028.outbound.protection.outlook.com
+ [40.93.195.28])
+ by phxpaimrmta02.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
+ 478yh89evx-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Jun 2025 22:54:21 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=E2v7qNr7OYEoym34SBQZCTSgm6vhtvQ6rzF5M/nNocCmhxIkxR70nd2mWMO1omE2pywPU5eEg1wpNd2VKlar2bt4UlCOrot3q15zWQR5zAljJNA9XO+eNjpcY97Y75XbeVdHwDySHEDu5xySGc3d3rJmBoMfZoyp7iGREaFgsynL0uAULFCZMopLm6/LQOfN1v2gQCkQWqa9dtlU+FKMwFIDEAOetnMwkoNM+KPHSXcOUXS3r2sJPHl8jBaYyQI/e9iSoil6hVmwVAZ/9Q/z4QkMYMkHK3FYLH/FjSRTMksp41MIixYdBR19Gt3ny40VLRk1NdbA4iI1q7bBhwpOlA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=VS360A01q287oJURxDk5TNZ7Y79LvawDq6WjNtaHmk4=;
+ b=l6KiyTdzAu0PWD3g3UpQFqTxVPT/m9qZWj5EMR8HMUnxr/MzX+t2Afh38nIe6oquK8zwXGOIlcLj13whrgpqpI2rFemVcAj16743IY1+Ag+ffWqT1ovYjJxiVFIICuIZ29Dqpvpza7T1tMiS7DRAuT13CIopNTGBaxaBJFLMyMRkHXklqHLxkm9THmWN6lyNhGPS1uWbQO86BO7Qe2usByVTN9kl+ZApSSlU16b4FUzd3N4dWyPKtJwYWT3rRQ+V0MVJcLs/vSrNveH58pMLLaCjeZTpCpgREPpYeEYJY/XsrjY6rcyA+tcb//G4rCcyIftKKrmCX88e1tyRWkQ5VA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VS360A01q287oJURxDk5TNZ7Y79LvawDq6WjNtaHmk4=;
+ b=NhUm58G5JDHilvexoZIXW/n1gJDQKHh703EX9XrjISnxo8qHJ32363S7pYHfGZFvlN7xH2YL/jUdhH8YAniKjsX1Phq1fTuAMAecloy3Aa5qbFoHXv/ZaImUl20G+moKFAI+VnfMHCmr0MNW60V5DY79B9DJ1f1Hp6t8eebmdyY=
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com (2603:10b6:5:3a7::5) by
+ IA0PR10MB7303.namprd10.prod.outlook.com (2603:10b6:208:40d::5) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.29; Mon, 16 Jun 2025 22:54:13 +0000
+Received: from DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da]) by DS7PR10MB5280.namprd10.prod.outlook.com
+ ([fe80::da22:796e:d798:14da%7]) with mapi id 15.20.8835.027; Mon, 16 Jun 2025
+ 22:54:12 +0000
+Message-ID: <f5a8e3b0-a7e5-487a-82c4-d54d565a657e@oracle.com>
+Date: Mon, 16 Jun 2025 18:54:09 -0400
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/7] amd_iommu: Fixes to align with AMDVi specification
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ethan MILON <ethan.milon@eviden.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+References: <20250529193023.3590780-1-alejandro.j.jimenez@oracle.com>
+ <af1423ff-24ad-4a4c-8a42-eec5fe77a66c@eviden.com>
+ <ca5c935f-adc7-4d9d-930b-b8a4e71003ab@oracle.com>
+ <eba82f72-fd87-4f47-b5a9-86dbccb6b90a@linaro.org>
+Content-Language: en-US
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+In-Reply-To: <eba82f72-fd87-4f47-b5a9-86dbccb6b90a@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SJ0PR03CA0331.namprd03.prod.outlook.com
+ (2603:10b6:a03:39c::6) To DS7PR10MB5280.namprd10.prod.outlook.com
+ (2603:10b6:5:3a7::5)
 MIME-Version: 1.0
-References: <20250612221051.1224565-1-jsnow@redhat.com>
- <20250612221051.1224565-2-jsnow@redhat.com>
- <87ecvjj4uy.fsf@pond.sub.org>
-In-Reply-To: <87ecvjj4uy.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Mon, 16 Jun 2025 17:47:10 -0400
-X-Gm-Features: AX0GCFtio_A5iE59jjIp5WF4ouZwAwv9WvEoyCNB10MSxPsTfOJiFBuqZb6DA8U
-Message-ID: <CAFn=p-Zns1tq_GZ+DR_53ThXidwDywb14o-uVNcccAiNXb+Mvw@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] docs: fix errors formatting in
- tests/qapi-schema/doc-good
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhenwei Pi <pizhenwei@bytedance.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Jiri Pirko <jiri@resnulli.us>, 
- Ani Sinha <anisinha@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, 
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Kashyap Chamarthy <kchamart@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Hanna Reitz <hreitz@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org, 
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Eric Blake <eblake@redhat.com>, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- Lukas Straub <lukasstraub2@web.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fan Ni <fan.ni@samsung.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Kevin Wolf <kwolf@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: multipart/alternative; boundary="00000000000045f4e00637b75778"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS7PR10MB5280:EE_|IA0PR10MB7303:EE_
+X-MS-Office365-Filtering-Correlation-Id: a252baeb-b999-48a4-28db-08ddad28b628
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?TG1sdGtLbEplYXZzTkRNMnVNZHZrc1dRaHhVaUhLOU9xVCtkNStScGRTVElt?=
+ =?utf-8?B?QnRZOHNDekFEckY2eDNhVWRtYmVvTGhGa3FkNW5aT0h1VVJzL2M3bXZKWHlB?=
+ =?utf-8?B?a0FZWkxUU0l3WXhycHl3UjUxS2JacUhhNU9KbXF2WVhLWjBtNkNaeXJGczl6?=
+ =?utf-8?B?VGJ5NjlEekVIaXJWcFRQNUE4dDUrZnEweEo2UzNTT0FVajlKd0FvVmpwd2hL?=
+ =?utf-8?B?Y1VrVDFlNDNtNnRSRjc2MkhsSmtlc0RISHNXUjZxcFJ1bkR1OTNwNFhXOXN6?=
+ =?utf-8?B?VGVWd3JudHBZVXBVMFJVeWcvMmhpakZkU01sMUtRVEdLejNra25LUk12Q0tB?=
+ =?utf-8?B?YnlaUGY0RHlkbStOaCt0aEJWTnlWSzRYcjN0K3huRXUrWUNLaDVEVjdrcFJ1?=
+ =?utf-8?B?bWFaNVloZ3lMSUEwOHhURm11bDFNK0VDOFYyTGNCR3B1TTMzVE9iUSt1aklz?=
+ =?utf-8?B?dGZNMXRpUVV5b2pmNXhyOWtnQVpxeEd3NDgzWnBkbUdIcWFuR3h5ZnBVNUZ5?=
+ =?utf-8?B?eEFreTdIN3hJK3l5ckVRbmlEWlhRWnB4RER5cFN3Y3NQdE1SWjFhdEtpYWtQ?=
+ =?utf-8?B?L2lqTzhkTXh6SGsrbmx3U2E3cWV3YndDKzdFT2liL3BFZE1aV2xIUHc2QXZu?=
+ =?utf-8?B?TDlIUnAxaUlBaXkwUVRLeUllWno5V3VPd3JOS3lnOHRaSE5RaHVkRExGRHhp?=
+ =?utf-8?B?R3UvNkdMTGtJMXdCL1hKK3VadTl0ZGRQdDhJa0ZpY0tJbk5zN3Q2Q2FRUURC?=
+ =?utf-8?B?b2JLYURKT3lxQlJyUnF1N1NTOU1rMlVtd3k4OUFVQnkzb0xUUERDSjBua3hW?=
+ =?utf-8?B?eFNJNjI0U1dxN0JmbE1ETE43ZW03WUZzYVgreGM0bWYxOTY5dUtVUzRDcWhm?=
+ =?utf-8?B?M1NWeDZIVmJVazgwc1lNaTBWMDd4aG5EZTZGTkNGU0J3T292djB4K3pvZXpn?=
+ =?utf-8?B?TFZzc2pOUW03cTRianQ5SG5rSGNYa0c5N0NRSytJRzN4dmRGemlzL21NQ2xl?=
+ =?utf-8?B?ejlKY1Y0UXRUekxocGMxb1k0Y2o0Q3dmbnVvdkdyQ0tPYk9GL3dlL0tMdmxG?=
+ =?utf-8?B?NW5sdG1iQ3Z0Uzd1N2JMUXVsaWhFKzJkV0FDNlJKSHB4VDhiYjc1c3o0T2JR?=
+ =?utf-8?B?dEhXbHA1NXh0V3VHTGNxMnhhaGtXZ0oraHhmdVFwbU03dkVIaVFsZkxmK3gz?=
+ =?utf-8?B?Y0JvbVZ4cEJ5NmQySzA4YnNjVUo3ZFRaSkI4UllScFJVaWMwRVl6Qk1mdkFD?=
+ =?utf-8?B?WUZoV1h5SlovUm9XZng1Y2tyL05JRUN0VUhUeEhCUW5nSGZ3UUhRdGU1aGtk?=
+ =?utf-8?B?T0FXNDRvZnZBWWI0TExYK3JDc1NtOFdhTUVGQlZSK1VOQ2NwaXRWMXNxZXNw?=
+ =?utf-8?B?VGp3SHhEd0lXaXBJdHFUeXZtKy9zYnJXVStqRlNNZktWSUw4c0dRSmZDM1E4?=
+ =?utf-8?B?TlZZNHVqSlA4K3c5YnllNmh1bHREdGRPeCszMGRxK2FMWHRiU3M5OXMwd1dp?=
+ =?utf-8?B?OGZkMTY3ajVTLzkxMHJ2VEpldTNuQ00yNnZLZmNnMHBMRFdqNi9OWFM0QUV5?=
+ =?utf-8?B?SS9WOTNXU2JGYTgvZCtuWVREeGsxSS9zWDl3TytET0lKWUlJb1B1VUdsMXZh?=
+ =?utf-8?B?bGkzSDgyVmlWQm9aeDFlai8wZWYrdGtUWFBQUEVPYWYwMGY4MHhUL1I4L1JI?=
+ =?utf-8?B?K0Z0N1phMFhyUUMyYXZsaEpKblI4R1Vla3M3blhZRk5JM0M2bWdnWVhJbDhk?=
+ =?utf-8?B?eDNYRzBhcG1Ebm5scHRrSXozWmxmeSt3RUxYbGlNMUJtZ295VSsyR05uM0dm?=
+ =?utf-8?B?SlA1eEdPVWlCS0trRGljU1RsQndnV29LWGlrc0pQcnkvNFlmbytQNU1ZdFRi?=
+ =?utf-8?B?WmtGaVNadm5xWW9Bd3RjYW0yNHRkSmxvQXNDK2ErdUhwaTlEcmFmTFFkWndq?=
+ =?utf-8?Q?mM/+TI4O1nQ=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS7PR10MB5280.namprd10.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ZTRpREtCbUlnQmhpaGkzaHlYNHZIOUszSTU5N2plUnV5NWZxTVg2UGRjdEt0?=
+ =?utf-8?B?elJQYkU0MDB6VlAzeEgzYXVHQnp3RGZIR1NjdythcWUrNC9lWitkSks4YVdu?=
+ =?utf-8?B?Y1hRV2lxMmFhMnB5eFhUcDBQdUN1L2U0ZGNENzlQVSt0MDVmTU9TTUlBQ25U?=
+ =?utf-8?B?WVJEOFZ1YVdlSlVxcGdDbUlhRXZ6TlVlSHhJRlpqaGlMeXlMR2NjL3BTNDlP?=
+ =?utf-8?B?Y1p0T0dlZnNmaVNQakI4b0NDUEswaytFcWpEMmZXSDJDRHgvSTdXS1NRZ2Nq?=
+ =?utf-8?B?VktNUng4YXN3eG1qdXhxcUxISFpCY3JraWsvd1RvcXVBc0F5SGRrNFdMQW5T?=
+ =?utf-8?B?UDBDWTBYaEZicXlLcWo3MWNIWi9PMWc2ZHpRNUVXMVRxb0hUdW1WUG9rT1c5?=
+ =?utf-8?B?WGFmQkRxcS9nKzV3UXhJOG8yMzFvN0k2bk1HRFNIOU1Jak5KTFlIR0N6bGxM?=
+ =?utf-8?B?N2hiVE1YZElNYURLekVKSTdaaVdzTXpDSWZkbk9WVDIydFlYTHMxdGRHRTNi?=
+ =?utf-8?B?V29pVTFQcVRETEVqelp2ZURJeDlVM1Y0OHl1V2JCR3d6WHpVejljclVlWkRM?=
+ =?utf-8?B?NnhnK3lXTlpzS25lZUIxQXhHSVJ4OHo4Q1d0cEhUcjlHT1I1cFlYeklLNGJY?=
+ =?utf-8?B?MWxZYjJ3RFBNR05DeS8xZXVFSndpeHlMU2o4TXNtVmlUeDlzSXZPSUZyWVJZ?=
+ =?utf-8?B?MmV5dVNHK3BDUzQvYjBHVUhDdFdtZThwWG9TMzZ0Ym5OV0U1M0VBLzVlTFoy?=
+ =?utf-8?B?VitqdkZ0K3F5blBydEVINkI4NFdqcjVuY3owd3ZyVEJqM0NsNVFjekh4WVk5?=
+ =?utf-8?B?cGdiZnozdjdJVDJ1VzBUZ0hvK1JYbVk4T2JndVJtSmx5ZFhUZjVMY1AvYzdY?=
+ =?utf-8?B?RTRUTDUyWTRTc1RTd2V3OTJlRld5UE5vSDVQVGozTjB5TlhOMDZWUDU3bE5M?=
+ =?utf-8?B?WGI5dDRBWnZOZmdYaCt2RlJRQmwvSmFieWlCR1BzSGIzT28xeVNJM3VsM2hi?=
+ =?utf-8?B?R01RdHIwN2p2c1FUK3lRa1BTamZTREVEdG9OVGJWaHFtemNabVVYQnZsWlpD?=
+ =?utf-8?B?bzdHckhablhRRzFmemtUZWt4aS9iQVVPWGEySy9hWHBnQ3FJck1CbDJ0MzJ1?=
+ =?utf-8?B?aXhLZitaOWNOUGlDOWpIa0g1YWhlS2xPV1dFUEUxTnUra1p3SUlIRjVPODUr?=
+ =?utf-8?B?cGhqK0NqZnNIaWZKVURjaE1TSUt1VWlLTU8wcjhGQ1lFc0RQUEN0QnIzT0FE?=
+ =?utf-8?B?WHNTeGRvK2M2NGhrTkloeXJFYU9xTk5nYk9Md2s5NWZ1dS93a0Q0NzlvWVpG?=
+ =?utf-8?B?WS96Mkd2WGkzYjdwTE5HWmtrbjQ2Y3R5K0xSQzFxWkdHN2ZTVnlSaVdQNmlB?=
+ =?utf-8?B?VzFsZ3JvQ0Q3V0lpME5QanlsYmNFMnZwSjRBMmtzYW1rNU5vWFU5RWFacmtq?=
+ =?utf-8?B?TzhHUlV2bUM2QXBrRnpwRDg0QStIUkxKeWkyZ2M2ak1NSERnM2RHTmt1cndo?=
+ =?utf-8?B?T2kyRVlGMHZkQ2xyeW1ObWdpcDdmQk9NSGc4b0EyTkhsOGRrWnJrdmdxODNw?=
+ =?utf-8?B?M0JaN1l6NldKbFBVUWFVOUxzNFo3UXkzNXJMQm9aN2RheDZDamFobi82K2Vu?=
+ =?utf-8?B?Yk11MHBBUGp6dnFUZzJpR1lqeWJCQTZuN3p5YXNvWWRMdU94aTQ5SFhrd0dM?=
+ =?utf-8?B?RW9TdUhYamt6NWNWeG5CZ0VQeW5IRVJFUFhPT1RYSXY4NUNleWR1YjViempO?=
+ =?utf-8?B?SFJMS1ZiYjN6VlFwWUVMTjFLYUlYdVBsSUZjS2FLZ3hiVG0zVjdRRVJoMkFq?=
+ =?utf-8?B?c3ZDYnJyT2d0MitoQmFSbVlyQWtQbHM2RStBWkFTbGtQbk5tOGlMSHFhd2Y0?=
+ =?utf-8?B?Y2hsZlJLaFNlNEliQkZVQ3NNaS9pUncxaTlVbDg4RmNrRzdBT3hiY1BlUnBZ?=
+ =?utf-8?B?Ymo5eFZ5VWVNdjNlcndNdUpCRjd3eE51SDZ5OVNWT2dTQWhuTlQ5eE9ETHhV?=
+ =?utf-8?B?WHNDQWdkeEhvZ3k4M3V0ekFhWSsvN2l1alNodFBLZEhUaHZtWnd0N0xxWHI3?=
+ =?utf-8?B?UjBMTzdxTEhaQ1J1Nm90bmJEZzdUZE9SejlGWlVIVG9FSmxLWEtXcUpob2F0?=
+ =?utf-8?B?VUNmM0gyNWQwM21NZ0tDQURsdUR4YlZDc1YxOGhmQ3phRzF0cVV1Q1FIaGp5?=
+ =?utf-8?B?eEE9PQ==?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: rNL2dzVcCYRYAdfP6XRzqu1PQgLnb86yn3A2UlrE2kv2n2nfc2N5kgIjsea1KXzwtpwgzqDKHHu5KypzRvLwyayS0EaJY9uPkPt9olAqmO3nQ3657cG3tt1SsY4OnrEtbPVcIvmuc9OSa5r25rCGFj7kH6bVpKG7sF83RusbB70P7s79rNxvx7sK/y3XOaZYLJQG27MbYFzWJf7em0X5vV19+NSLIkHR5XbYfH/HP9T5O/O47FnHx49u2gXYVBub80L6IL0msbY+gEtj1HEa9KSTqB9xned2QIyvAVIrKPBmpoLlXw+95g6Dr+3XE0ZBMr7s64WQtc4NFNM5ErTb8IlUKN1YgOMJ5+wAc94jGx6BxcC0DG2qCVsp+S68ZkPBnvPb1RUNmLAb5bgPJjWAWjMh8sifIgtJgva+DHAaHWkj3SAwT//xGe2LZ59KjaCGwRnEdcLWuefK/jAbfWAyoefl5TyDRxEPlaX9woAOa5d32wRz3tpMoYBVMF1hYg5dHypgJBYQMwKbjoB+bUmDNz5XWl9XkjR54/JyMx6aITcnz53oJVrieQU0C2TAzewDuQoobEdaN7CSquprmZHUAsV7L9+7TFDg+mSW05F5oFc=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a252baeb-b999-48a4-28db-08ddad28b628
+X-MS-Exchange-CrossTenant-AuthSource: DS7PR10MB5280.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 22:54:12.9038 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: NSWpvsWAIQV+MixjJJYDhqNtXb6StXhKmu2xGoBADmM6Pk+sAYttsQN6+OMKPs2KvOs71JWRtkOI0ZrUdLYfSh4fA3cmpHdw5Cghs9WgJcA=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA0PR10MB7303
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-16_11,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ spamscore=0
+ malwarescore=0 adultscore=0 phishscore=0 suspectscore=0 mlxscore=0
+ bulkscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2506160164
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE2MDE2NCBTYWx0ZWRfX9IXPKynYx6IW
+ uQsqaf0uoBI/9RunY99D4TBWu59+zLsROjdb1F/A6hE3ROUMlaopTrdCwzpQuP/jA8Q0grbEryi
+ e4WhO8Zh1UHU9Q7gA+Xp+DaVn6ZeCX3Jj7q2gf/osYBi32JjY1T4xrijnoTMo6FxC5vb/w8n94A
+ 4V4lQqV8i9EJD5xOIekiQcVal0evKxXk7f9vBwLy5V3U6xMfR1FcJArM6KOkhlB+OrZEqXf2gdy
+ 5AYxf0E2cZ+7dg8w0jSnCkeilNaSOcwiVnHdE7Tlkzri2M0ybWJ4I13LPTGJfwJ8AOuFgDGpGnD
+ z+yY5AGexs6w+T4pLOIByCktFRuP+kkoE6dc9cAImUVG0cuU21HpzhvpbkXucXoGpfDnHk3mAsT
+ jKgPe1jKWMsVv8c0VGzTDMW/pLBNQ/Zjqe6lJBYvKExh6fVcfRIzrjs6SHIpd+UeEoGjRnD5
+X-Authority-Analysis: v=2.4 cv=HvR2G1TS c=1 sm=1 tr=0 ts=6850a09e cx=c_pps
+ a=OOZaFjgC48PWsiFpTAqLcw==:117 a=OOZaFjgC48PWsiFpTAqLcw==:17
+ a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19 a=xqWC_Br6kY4A:10 a=IkcTkHD0fZMA:10
+ a=6IFa9wvqVegA:10 a=GoEa3M9JfhUA:10 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8
+ a=CCydYvSpi1wDkXdEFy4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: 3grKjq6-_C-tghICZzuMTRZ90qzAiKFy
+X-Proofpoint-ORIG-GUID: 3grKjq6-_C-tghICZzuMTRZ90qzAiKFy
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,602 +234,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000045f4e00637b75778
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Hi Phil,
 
-On Mon, Jun 16, 2025 at 7:36=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On 6/16/25 2:59 AM, Philippe Mathieu-Daudé wrote:
+> Hi Alejandro,
+> 
+> On 12/6/25 22:59, Alejandro Jimenez wrote:
+>> Hi Ethan,
+>>
+>> On 6/12/25 4:36 AM, Ethan MILON wrote:
+>>> Hi,
+>>>
+>>> Is this series the right place to include the following minor fix?
+>>>
+>>
+>> I would defer this change for two reasons:
+>>
+>> 1) This series has been reviewed and tested already. I was hoping it 
+>> would be included on the Jun 1st pull but I sent v3 too late for that. 
+>> I think it is ready so I would like to leave it as is unless there are 
+>> any objections ...
+>>
+>>
+>>> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+>>> index 0775c..18d30e1 100644
+>>> --- a/hw/i386/amd_iommu.c
+>>> +++ b/hw/i386/amd_iommu.c
+>>> @@ -140,7 +140,7 @@ static void amdvi_writeq(AMDVIState *s, hwaddr addr,
+>>> uint64_t val)
+>>>   {
+>>>       uint64_t romask = ldq_le_p(&s->romask[addr]);
+>>>       uint64_t w1cmask = ldq_le_p(&s->w1cmask[addr]);
+>>> -    uint32_t oldval = ldq_le_p(&s->mmior[addr]);
+>>> +    uint64_t oldval = ldq_le_p(&s->mmior[addr]);
+>>>       stq_le_p(&s->mmior[addr],
+>>>               ((oldval & romask) | (val & ~romask)) & ~(val & w1cmask));
+>>>   }
+>>>
+>>> This corrects the type of oldval to match the return type of ldq_le_p().
+>>>
+>>
+>> 2) This fix is needed, but it is likely better as part of additional 
+>> changes that are needed to cleanup/fix the XTSup support. i.e. there 
+>> are unhandled writes to the 0x170, 0x178, and 0x180 MMIO offsets, and 
+>> those depend on MMIO 0x18[IntCapXTEn]=1. I think the truncation of 
+>> oldval that you found is causing XTEn and IntCapXTEn bits on the 
+>> control registers to be ignored, but ultimately things are not broken 
+>> enough (yet).
+> 
+> I agree with Ethan it is better to avoid hidden truncation, because it
+> just makes debugging experience harder.
+> 
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > If we remove the legacy parser, the doc-good.json formatting begins to
->
-> "parser"?  You mean docs/sphinx/qapidoc_legacy.py, don't you?
->
+I agree that Ethan found a bug that must be fixed. I am answering his 
+initial question of whether this series is the right place to fix it by 
+pointing out that this bug uncovers that there is more to do than just 
+fixing this specific error, and it could be included in a series to 
+address those larger problems that I mentioned above.
 
-Mmm... yes, I'm conflating the purpose of the series (removing the legacy
-freeform doc parser) with what necessitated this change (switching to the
-new doc *generator*)
+On the other hand, it is probably better just to fix this specific bug 
+now since it is simple enough, which is why I asked Ethan to send a 
+commit and I will add it (he should get credit)
 
-Wiggly-brained, wiggly-mouthed.
+> If this is the expected behavior, better add a comment, or use
+> extract64() which makes the truncation explicit.
+> 
 
+It is not the expected behavior, the truncation is a bug. It doesn't yet 
+cause any issues because amdvi_writeq() is currently only called to 
+handle MMIO writes for a few offsets/register, mostly to 
+AMDVI_MMIO_CONTROL, and the romask for the offset is 0. This means that 
+the bug doesn't really change the value that is ultimately written to 
+the emulated MMIO register, but it could cause problems in the future.
 
->
-> > fail because the body text is appended directly after the field list
-> > entry, which is invalid rST syntax.
->
-> We've been running the test suite with the legacy doc generator.
-> Unwise; we should've switched to the new one right away.
->
-
-Oops O:-)
-
-
->
-> > Without this change, we see this error:
-> >
-> > /home/jsnow/src/qemu/docs/../tests/qapi-schema/doc-good.json:169:
-> > WARNING: Field list ends without a blank line; unexpected
-> > unindent. [docutils]
->
-> The reporting is less than helpful.
->
-> > And this intermediate rST source:
-> >
-> > tests/qapi-schema/doc-good.json:0167 |    :error:
-> > tests/qapi-schema/doc-good.json:0168 |    some
-> >
-> > With this patch applied, we instead generate this source:
-> >
-> > tests/qapi-schema/doc-good.json:0167 |    :error:
-> > tests/qapi-schema/doc-good.json:0168 |        - some
-> >
-> > which compiles successfully.
->
-> Hmm.
->
-> As far as I can tell, the problem is lack of indentation[*].
->
-> By convention, the contents of an Errors: section is a list.
-> docs/devel/qapi-code-gen.rst:
->
->     "Errors" sections should be formatted as an rST list, each entry
->     detailing a relevant error condition.  For example::
->
->      # Errors:
->      #     - If @device does not exist, DeviceNotFound
->      #     - Any other error returns a GenericError.
->
-> This test case is the only instance of something else.
->
-> It's just a convention, though.
->
-> Your change to the positive test case makes some sense all the same; it
-> should cover how we want the thing to be used.
->
-> What I don't like is how the new doc generator fails when we fail to
-> adhere to the convention.
->
-
-I agree... it should probably generate ":error: some" instead, without the
-newline. Bad, but valid.
+Thank you,
+Alejandro
 
 
->
-> Here's docs/devel/qapi-code-gen.rst on tagged sections:
->
->     A tagged section begins with a paragraph that starts with one of the
->     following words: "Since:", "Returns:", "Errors:", "TODO:".  It ends
-> with
->     the start of a new section.
->
->     The second and subsequent lines of tagged sections must be indented
->     like this::
->
->      # TODO: Ut enim ad minim veniam, quis nostrud exercitation ullamco
->      #     laboris nisi ut aliquip ex ea commodo consequat.
->      #
->      #     Duis aute irure dolor in reprehenderit in voluptate velit esse
->      #     cillum dolore eu fugiat nulla pariatur.
->
-> This tells us that
->
->     # Errors: some
->
-> and
->
->     # Errors:
->     #     some
->
-> and
->
->     # Errors: some
->     #     more
->
-> should all work, just like for any other tag.  However, only the second
-> one works in my testing.  With qapidoc_legacy.py, all three work.
->
-> We can make Errors: unlike the other tags.  But it needs to be done
-> properly, i.e. in scripts/qapi/parser.py (for decent error reporting),
-> and documented in docs/devel/qapi-code-gen.rst.
->
-> Keeping the QAPI domain accept what the generator generates might be
-> easier.
->
-> Thoughts?
->
-
-I try not to have any as often as I can.
-
-In seriousness, I need a good few minutes with the generator to understand
-why this behaves strangely. Might need to switch to a different parser
-routine in parser.py, or I might need to adjust the qapidoc generator. Not
-entirely sure what's precisely wrong... If I can find something that's both
-easy and clean I'll do that instead.
-
-Probably a newline needs to be preserved in the source somewhere, and then
-a newline needs to be *not* added to the generator. Something like that.
-
-We can discuss turning our de-facto standard into an actual syntactical
-requirement later; I think there might be some benefit to allowing multiple
-errors sections that each become their own ":error:" info field list entry,
-but I am not confident on that and am not ready to dive into it just yet. I
-think it's definitely easier on the sphinx side but it might not be easier
-on the QAPI side. We'll see...
-
-
->
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
-> > ---
-> >  tests/qapi-schema/doc-good.json | 3 ++-
-> >  1 file changed, 2 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/tests/qapi-schema/doc-good.json
-> b/tests/qapi-schema/doc-good.json
-> > index 14b808f9090..6dcde8fd7e8 100644
-> > --- a/tests/qapi-schema/doc-good.json
-> > +++ b/tests/qapi-schema/doc-good.json
-> > @@ -165,7 +165,8 @@
-> >  #
-> >  # Returns: @Object
-> >  #
-> > -# Errors: some
-> > +# Errors:
-> > +#     - some
-> >  #
-> >  # TODO: frobnicate
-> >  #
->
-> Fails "make check".  Fixup appended.
->
-
-Strange. How'd I find this issue and fix it if I wasn't running the tests?
-Uhm, sorry. Sloppy of me.
-
-
->
->
->
-> [*] Evidence:
->
->     # Errors:
->     #     - some
->
-> which expands into
->
->     :error:
->         - some
->
-> and
->
->     # Errors:
->     #     some
->
-> which expands into
->
->     :error:
->         some
->
-> both work.
->
-> docs/devel/qapi-domain.rst:
->
->     ``:error:``
->     -----------
->
->     Document the error condition(s) of a QAPI command.
->
->     :availability: This field list is only available in the body of the
->                    Command directive.
-> --> :syntax: ``:error: Lorem ipsum dolor sit amet ...``
->     :type: `sphinx.util.docfields.Field
->            <
-> https://pydoc.dev/sphinx/latest/sphinx.util.docfields.Field.html?private=
-=3D1
-> >`_
->
->     The format of the :errors: field list description is free-form rST. T=
-he
->     alternative spelling ":errors:" is also permitted, but strictly
->     analogous.
->
->     Example::
->
->        .. qapi:command:: block-job-set-speed
->           :since: 1.1
->
->           Set maximum speed for a background block operation.
->
->           This command can only be issued when there is an active block
-> job.
->
->           Throttling can be disabled by setting the speed to 0.
->
->           :arg string device: The job identifier.  This used to be a devi=
-ce
->               name (hence the name of the parameter), but since QEMU 2.7 =
-it
->               can have other values.
->           :arg int speed: the maximum speed, in bytes per second, or 0 fo=
-r
->               unlimited.  Defaults to 0.
-> -->       :error:
-> -->           - If no background operation is active on this device,
-> -->             DeviceNotActive
->
-> This makes me expect
->
->     :error: some
->
-> also works.  However, the obvious
->
->     # Errors: some
->
-> produces
->
->     :error:
->     some
->
-> which doesn't work.
->
->
-> diff --git a/tests/qapi-schema/doc-good.out
-> b/tests/qapi-schema/doc-good.out
-> index dc8352eed4..3711cf5480 100644
-> --- a/tests/qapi-schema/doc-good.out
-> +++ b/tests/qapi-schema/doc-good.out
-> @@ -176,7 +176,7 @@ another feature
->      section=3DReturns
->  @Object
->      section=3DErrors
-> -some
-> +    - some
->      section=3DTodo
->  frobnicate
->      section=3DPlain
-> diff --git a/tests/qapi-schema/doc-good.txt
-> b/tests/qapi-schema/doc-good.txt
-> index 17a1d56ef1..e54cc95f4a 100644
-> --- a/tests/qapi-schema/doc-good.txt
-> +++ b/tests/qapi-schema/doc-good.txt
-> @@ -207,7 +207,7 @@ Returns
->  Errors
->  ~~~~~~
->
-> -some
-> +* some
->
->  Notes:
->
->
->
-
---00000000000045f4e00637b75778
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 16,=
- 2025 at 7:36=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; If we remove the legacy parser, the doc-good.json formatting begins to=
-<br>
-<br>
-&quot;parser&quot;?=C2=A0 You mean docs/sphinx/qapidoc_legacy.py, don&#39;t=
- you?<br></blockquote><div><br></div><div>Mmm... yes, I&#39;m conflating th=
-e purpose of the series (removing the legacy freeform doc parser) with what=
- necessitated this change (switching to the new doc *generator*)<br></div><=
-div><br></div><div>Wiggly-brained, wiggly-mouthed.</div><div>=C2=A0</div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-&gt; fail because the body text is appended directly after the field list<b=
-r>
-&gt; entry, which is invalid rST syntax.<br>
-<br>
-We&#39;ve been running the test suite with the legacy doc generator.<br>
-Unwise; we should&#39;ve switched to the new one right away.<br></blockquot=
-e><div><br></div><div>Oops O:-)</div><div>=C2=A0</div><blockquote class=3D"=
-gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(20=
-4,204,204);padding-left:1ex">
-<br>
-&gt; Without this change, we see this error:<br>
-&gt;<br>
-&gt; /home/jsnow/src/qemu/docs/../tests/qapi-schema/doc-good.json:169:<br>
-&gt; WARNING: Field list ends without a blank line; unexpected<br>
-&gt; unindent. [docutils]<br>
-<br>
-The reporting is less than helpful.<br>
-<br>
-&gt; And this intermediate rST source:<br>
-&gt;<br>
-&gt; tests/qapi-schema/doc-good.json:0167 |=C2=A0 =C2=A0 :error:<br>
-&gt; tests/qapi-schema/doc-good.json:0168 |=C2=A0 =C2=A0 some<br>
-&gt;<br>
-&gt; With this patch applied, we instead generate this source:<br>
-&gt;<br>
-&gt; tests/qapi-schema/doc-good.json:0167 |=C2=A0 =C2=A0 :error:<br>
-&gt; tests/qapi-schema/doc-good.json:0168 |=C2=A0 =C2=A0 =C2=A0 =C2=A0 - so=
-me<br>
-&gt;<br>
-&gt; which compiles successfully.<br>
-<br>
-Hmm.<br>
-<br>
-As far as I can tell, the problem is lack of indentation[*].<br>
-<br>
-By convention, the contents of an Errors: section is a list.<br>
-docs/devel/qapi-code-gen.rst:<br>
-<br>
-=C2=A0 =C2=A0 &quot;Errors&quot; sections should be formatted as an rST lis=
-t, each entry<br>
-=C2=A0 =C2=A0 detailing a relevant error condition.=C2=A0 For example::<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0# Errors:<br>
-=C2=A0 =C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0- If @device does not exist, Devic=
-eNotFound<br>
-=C2=A0 =C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0- Any other error returns a Generi=
-cError.<br>
-<br>
-This test case is the only instance of something else.<br>
-<br>
-It&#39;s just a convention, though.<br>
-<br>
-Your change to the positive test case makes some sense all the same; it<br>
-should cover how we want the thing to be used.<br>
-<br>
-What I don&#39;t like is how the new doc generator fails when we fail to<br=
->
-adhere to the convention.<br></blockquote><div><br></div><div>I agree... it=
- should probably generate &quot;:error: some&quot; instead, without the new=
-line. Bad, but valid.</div><div>=C2=A0</div><blockquote class=3D"gmail_quot=
-e" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204)=
-;padding-left:1ex">
-<br>
-Here&#39;s docs/devel/qapi-code-gen.rst on tagged sections:<br>
-<br>
-=C2=A0 =C2=A0 A tagged section begins with a paragraph that starts with one=
- of the<br>
-=C2=A0 =C2=A0 following words: &quot;Since:&quot;, &quot;Returns:&quot;, &q=
-uot;Errors:&quot;, &quot;TODO:&quot;.=C2=A0 It ends with<br>
-=C2=A0 =C2=A0 the start of a new section.<br>
-<br>
-=C2=A0 =C2=A0 The second and subsequent lines of tagged sections must be in=
-dented<br>
-=C2=A0 =C2=A0 like this::<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0# TODO: Ut enim ad minim veniam, quis nostrud exercitat=
-ion ullamco<br>
-=C2=A0 =C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0laboris nisi ut aliquip ex ea comm=
-odo consequat.<br>
-=C2=A0 =C2=A0 =C2=A0#<br>
-=C2=A0 =C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0Duis aute irure dolor in reprehend=
-erit in voluptate velit esse<br>
-=C2=A0 =C2=A0 =C2=A0#=C2=A0 =C2=A0 =C2=A0cillum dolore eu fugiat nulla pari=
-atur.<br>
-<br>
-This tells us that<br>
-<br>
-=C2=A0 =C2=A0 # Errors: some<br>
-<br>
-and<br>
-<br>
-=C2=A0 =C2=A0 # Errors:<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0some<br>
-<br>
-and<br>
-<br>
-=C2=A0 =C2=A0 # Errors: some<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0more<br>
-<br>
-should all work, just like for any other tag.=C2=A0 However, only the secon=
-d<br>
-one works in my testing.=C2=A0 With qapidoc_legacy.py, all three work.<br>
-<br>
-We can make Errors: unlike the other tags.=C2=A0 But it needs to be done<br=
->
-properly, i.e. in scripts/qapi/parser.py (for decent error reporting),<br>
-and documented in docs/devel/qapi-code-gen.rst.<br>
-<br>
-Keeping the QAPI domain accept what the generator generates might be<br>
-easier.<br>
-<br>
-Thoughts?<br></blockquote><div><br></div><div>I try not to have any as ofte=
-n as I can.</div><div><br></div><div>In seriousness, I need a good few minu=
-tes with the generator to understand why this behaves strangely. Might need=
- to switch to a different parser routine in parser.py, or I might need to a=
-djust the qapidoc generator. Not entirely sure what&#39;s precisely wrong..=
-. If I can find something that&#39;s both easy and clean I&#39;ll do that i=
-nstead.</div><div><br></div><div>Probably a newline needs to be preserved i=
-n the source somewhere, and then a newline needs to be *not* added to the g=
-enerator. Something like that.</div><div><br></div><div>We can discuss turn=
-ing our de-facto standard into an actual syntactical requirement later; I t=
-hink there might be some benefit to allowing multiple errors sections that =
-each become their own &quot;:error:&quot; info field list entry, but I am n=
-ot confident on that and am not ready to dive into it just yet. I think it&=
-#39;s definitely easier on the sphinx side but it might not be easier on th=
-e QAPI side. We&#39;ll see...</div><div>=C2=A0</div><blockquote class=3D"gm=
-ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
-204,204);padding-left:1ex">
-<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-&gt; ---<br>
-&gt;=C2=A0 tests/qapi-schema/doc-good.json | 3 ++-<br>
-&gt;=C2=A0 1 file changed, 2 insertions(+), 1 deletion(-)<br>
-&gt;<br>
-&gt; diff --git a/tests/qapi-schema/doc-good.json b/tests/qapi-schema/doc-g=
-ood.json<br>
-&gt; index 14b808f9090..6dcde8fd7e8 100644<br>
-&gt; --- a/tests/qapi-schema/doc-good.json<br>
-&gt; +++ b/tests/qapi-schema/doc-good.json<br>
-&gt; @@ -165,7 +165,8 @@<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # Returns: @Object<br>
-&gt;=C2=A0 #<br>
-&gt; -# Errors: some<br>
-&gt; +# Errors:<br>
-&gt; +#=C2=A0 =C2=A0 =C2=A0- some<br>
-&gt;=C2=A0 #<br>
-&gt;=C2=A0 # TODO: frobnicate<br>
-&gt;=C2=A0 #<br>
-<br>
-Fails &quot;make check&quot;.=C2=A0 Fixup appended.<br></blockquote><div><b=
-r></div><div>Strange. How&#39;d I find this issue and fix it if I wasn&#39;=
-t running the tests? Uhm, sorry. Sloppy of me.</div><div>=C2=A0</div><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">
-<br>
-<br>
-<br>
-[*] Evidence:<br>
-<br>
-=C2=A0 =C2=A0 # Errors:<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0- some<br>
-<br>
-which expands into<br>
-<br>
-=C2=A0 =C2=A0 :error:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 - some<br>
-<br>
-and<br>
-<br>
-=C2=A0 =C2=A0 # Errors:<br>
-=C2=A0 =C2=A0 #=C2=A0 =C2=A0 =C2=A0some<br>
-<br>
-which expands into<br>
-<br>
-=C2=A0 =C2=A0 :error:<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 some<br>
-<br>
-both work.<br>
-<br>
-docs/devel/qapi-domain.rst:<br>
-<br>
-=C2=A0 =C2=A0 ``:error:``<br>
-=C2=A0 =C2=A0 -----------<br>
-<br>
-=C2=A0 =C2=A0 Document the error condition(s) of a QAPI command.<br>
-<br>
-=C2=A0 =C2=A0 :availability: This field list is only available in the body =
-of the<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0Comman=
-d directive.<br>
---&gt; :syntax: ``:error: Lorem ipsum dolor sit amet ...``<br>
-=C2=A0 =C2=A0 :type: `sphinx.util.docfields.Field<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&lt;<a href=3D"https://pydoc.dev/s=
-phinx/latest/sphinx.util.docfields.Field.html?private=3D1" rel=3D"noreferre=
-r" target=3D"_blank">https://pydoc.dev/sphinx/latest/sphinx.util.docfields.=
-Field.html?private=3D1</a>&gt;`_<br>
-<br>
-=C2=A0 =C2=A0 The format of the :errors: field list description is free-for=
-m rST. The<br>
-=C2=A0 =C2=A0 alternative spelling &quot;:errors:&quot; is also permitted, =
-but strictly<br>
-=C2=A0 =C2=A0 analogous.<br>
-<br>
-=C2=A0 =C2=A0 Example::<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0.. qapi:command:: block-job-set-speed<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 :since: 1.1<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Set maximum speed for a background block=
- operation.<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 This command can only be issued when the=
-re is an active block job.<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Throttling can be disabled by setting th=
-e speed to 0.<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 :arg string device: The job identifier.=
-=C2=A0 This used to be a device<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 name (hence the name of th=
-e parameter), but since QEMU 2.7 it<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 can have other values.<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 :arg int speed: the maximum speed, in by=
-tes per second, or 0 for<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 unlimited.=C2=A0 Defaults =
-to 0.<br>
---&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0:error:<br>
---&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0- If no background operation=
- is active on this device,<br>
---&gt;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0DeviceNotActive<br>
-<br>
-This makes me expect<br>
-<br>
-=C2=A0 =C2=A0 :error: some<br>
-<br>
-also works.=C2=A0 However, the obvious<br>
-<br>
-=C2=A0 =C2=A0 # Errors: some<br>
-<br>
-produces<br>
-<br>
-=C2=A0 =C2=A0 :error:<br>
-=C2=A0 =C2=A0 some<br>
-<br>
-which doesn&#39;t work.<br>
-<br>
-<br>
-diff --git a/tests/qapi-schema/doc-good.out b/tests/qapi-schema/doc-good.ou=
-t<br>
-index dc8352eed4..3711cf5480 100644<br>
---- a/tests/qapi-schema/doc-good.out<br>
-+++ b/tests/qapi-schema/doc-good.out<br>
-@@ -176,7 +176,7 @@ another feature<br>
-=C2=A0 =C2=A0 =C2=A0section=3DReturns<br>
-=C2=A0@Object<br>
-=C2=A0 =C2=A0 =C2=A0section=3DErrors<br>
--some<br>
-+=C2=A0 =C2=A0 - some<br>
-=C2=A0 =C2=A0 =C2=A0section=3DTodo<br>
-=C2=A0frobnicate<br>
-=C2=A0 =C2=A0 =C2=A0section=3DPlain<br>
-diff --git a/tests/qapi-schema/doc-good.txt b/tests/qapi-schema/doc-good.tx=
-t<br>
-index 17a1d56ef1..e54cc95f4a 100644<br>
---- a/tests/qapi-schema/doc-good.txt<br>
-+++ b/tests/qapi-schema/doc-good.txt<br>
-@@ -207,7 +207,7 @@ Returns<br>
-=C2=A0Errors<br>
-=C2=A0~~~~~~<br>
-<br>
--some<br>
-+* some<br>
-<br>
-=C2=A0Notes:<br>
-<br>
-<br>
-</blockquote></div></div>
-
---00000000000045f4e00637b75778--
+> Regards,
+> 
+> Phil.
+> 
+>> In other words, I think there is a lot more work to do in here, and it 
+>> is something I am looking into.
+>>
+>> I suspect Vasant might have spotted this problem already, so he might 
+>> even have some fixes queued up...
+>>
+>> That being said, if you want to send a patch with your S-b I'll add it 
+>> to this series.
+>>
+>> Alejandro
+>>
+>>> Thanks,
+>>> Ethan
+>>>
+>>> On 5/29/25 9:30 PM, Alejandro Jimenez wrote:
+>>>> Caution: External email. Do not open attachments or click links, 
+>>>> unless this email comes from a known sender and you know the content 
+>>>> is safe.
+>>>>
+>>>>
+>>>> The main reason for sending this new revision so soon is that v2 
+>>>> included a
+>>>> duplicated [PATCH 5/7]. I fixed a typo in the commit subject and missed
+>>>> removing the old patch. Apologies for the mistake.
+>>>>
+>>>> Additional changes in v3:
+>>>> - Fixed typo on [PATCH 1/7] subject line (s/Miscellanous/ 
+>>>> Miscellaneous/).
+>>>> - Added 'Fixes:' tag to [PATCH 5/7].
+>>>> - Added Vasant's R-b to patches 4,5,7.
+>>>>
+>>>> Thank you,
+>>>> Alejandro
+>>>>
+>>>> v2:
+>>>> https://lore.kernel.org/qemu-devel/20250528221725.3554040-1- 
+>>>> alejandro.j.jimenez@oracle.com/
+>>>>
+>>>> v1:
+>>>> https://lore.kernel.org/all/20250311152446.45086-1- 
+>>>> alejandro.j.jimenez@oracle.com/
+>>>>
+>>>>
+>>>> Alejandro Jimenez (7):
+>>>>    amd_iommu: Fix Miscellaneous Information Register 0 offsets
+>>>>    amd_iommu: Fix Device ID decoding for INVALIDATE_IOTLB_PAGES command
+>>>>    amd_iommu: Update bitmasks representing DTE reserved fields
+>>>>    amd_iommu: Fix masks for various IOMMU MMIO Registers
+>>>>    amd_iommu: Fix mask to retrieve Interrupt Table Root Pointer from 
+>>>> DTE
+>>>>    amd_iommu: Fix the calculation for Device Table size
+>>>>    amd_iommu: Remove duplicated definitions
+>>>>
+>>>>   hw/i386/amd_iommu.c | 15 ++++++------
+>>>>   hw/i386/amd_iommu.h | 59 +++++++++++++++++++++ 
+>>>> +-----------------------
+>>>>   2 files changed, 37 insertions(+), 37 deletions(-)
+>>>>
+>>>>
+>>>> base-commit: 80db93b2b88f9b3ed8927ae7ac74ca30e643a83e
+>>>> -- 
+>>>> 2.43.5
+>>>>
+>>>>
+>>
+>>
+> 
 
 
