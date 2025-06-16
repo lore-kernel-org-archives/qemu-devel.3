@@ -4,86 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450A8C71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 14:09:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42F49C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 14:45:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRAUa-0001G2-Pk; Mon, 16 Jun 2025 10:07:20 -0400
+	id 1uRB4R-0007ZG-GW; Mon, 16 Jun 2025 10:44:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uRATx-00015I-5w
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:41 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1uRATt-0003zQ-Gb
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:06:40 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-450cb2ddd46so25427295e9.2
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 07:06:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750082796; x=1750687596; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=eEpF1bq+uDdit1cKP/leNUs+euxU/so4YJjiIr0qDj4=;
- b=NPUCeFx4cu/XBxquoEVqhnA+yB/3EIOjxPyjge1/28Mb0eZ7pM0kx+LkvOVzsbDie5
- zNNn5yuQFcSkSH/M8LOFx/v6f8TM3rQAjdffBiJgsST5UdMEuwDdXqQywZJi9twccVuy
- yE3w6BVAr6wJDw1GhAdSCG+lEB3iyqIra4yGZne9LVJVMwaWDMcBf6IMH6fzUjbZkRT2
- 5/5BbGQ3L7EOx9I9a7ky8Cw0Dzx/TlFpbtqah5a28fvEb02hzAgryLQx/okKaYcn4Qvd
- e4oRlVo1BkS6TIvQujcJxzLbngz0MNoXavpK7gwvLR4Tjk83LBeNLvdxsItNdi6vvtOV
- S1yg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750082796; x=1750687596;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=eEpF1bq+uDdit1cKP/leNUs+euxU/so4YJjiIr0qDj4=;
- b=jZEOXTMeSClQ0sH82swju+YV7r7iA8L9aqzhx0Uj6cmOncmE4pPM1AVnDtRGPlVjQE
- /u/8Lb39bS7KtFtN+Gh+zDLt/aV572+3TU3E58QRmjDUINeBT3tQJnpD6mo9ZpUYYiE3
- wZ9crJSTBnuoK3xMV0hacB+Dc+LYCzqEz68FkKFC8dU+hQaYMAp+x72B4iQlnwzAKp/l
- ParvNkbtpQQoZC5+l3gx4JMYFV+LswXJ6yGJqqHwC56JTWXCiSn9wZINT8Dht4/SIV5N
- cVdQoZRxTLD4uOzSBUMyzgV5i3PqGuVNt/jlCityrfxmp7veD3WDO2CDw+wg6mYFQRMj
- 3LSw==
-X-Gm-Message-State: AOJu0Yy1MEAbd7jK/Rri3o0mqlCQsF5WjPmQJhprGKgP2N0yoHSxb31F
- YOyTadFmt3PihMsYQCM5DqaIxRwLs7gWiUnvTLXi7up4dAZutnTVsJ3oJilRuysnElYncmP90lp
- pjjR9
-X-Gm-Gg: ASbGnctxcIdd+wfO9fi97SEjKBZ1RZMr7YgT3Ya0G4F//z0SQfe6KXvvo2xpzv++6dW
- 7zsOSQUPMnXrLhrcZK4Gv4UdNjV5wdCgaY1RPRpbfe6fv0iRGqGft1xasiVLZj8cdBviFcFd05B
- scR+BLhuNpFpueuu1RZaUx4Zao5oRWYYgjQ0Ol1A7upj61oDaVCMkKOZnGEuzK5wnIXQYMh7/hO
- Dww0qHZBK6g2uMYyB1aj0IqnF1u5ORugIv6KUdhPYfaRz+3//lBm842ej60n92saaykwe9t7joc
- io3/mxQgPuCqokBEnTcXuczg6RDAGimnVBiWzS2YLjXFrmwh+YW8kcG28KCvW+g3jao6
-X-Google-Smtp-Source: AGHT+IFBV9QrT7/m9A1qn2l+wg6q9aE01Bro8S6YJvl4+Ce8N7zE3G9uR25qy4/y2qqBsLzZWvukoQ==
-X-Received: by 2002:a05:600c:34c4:b0:43d:94:2d1e with SMTP id
- 5b1f17b1804b1-4533ca55a90mr96773125e9.13.1750082795560; 
- Mon, 16 Jun 2025 07:06:35 -0700 (PDT)
-Received: from orth.archaic.org.uk (orth.archaic.org.uk. [2001:8b0:1d0::2])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e13c192sm146561975e9.26.2025.06.16.07.06.34
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Jun 2025 07:06:34 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 3/9] qemu-options.hx: Fix reversed description of icount sleep
- behavior
-Date: Mon, 16 Jun 2025 15:06:24 +0100
-Message-ID: <20250616140630.2273870-4-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20250616140630.2273870-1-peter.maydell@linaro.org>
-References: <20250616140630.2273870-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRB4M-0007Yu-NT
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:44:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRB4H-0000sb-Et
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 10:44:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750085050;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=whkjWvSS+kxqV6pLBQMuMJyqdPMCbpQRti1s2FjOsxI=;
+ b=NrgT583JI8oihWrYMelkFC31xffJCA51HyewXMUQwvB+Eth6VPGS+d953ruAD/lqlK2gqp
+ cPIMHuo2xEVZvZW7BB9FnRygBeYwiUqxUviPxxCkE6DcRZwonCZ8ndMYxRNqv6EccAe1H+
+ RQhuCNcnrYz4IzOfRRmLq9tb7tvUUa4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-54-owG9ICKvNd-bs7UszHI3Ig-1; Mon,
+ 16 Jun 2025 10:44:09 -0400
+X-MC-Unique: owG9ICKvNd-bs7UszHI3Ig-1
+X-Mimecast-MFC-AGG-ID: owG9ICKvNd-bs7UszHI3Ig_1750085048
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2A81C19560A3; Mon, 16 Jun 2025 14:44:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.11])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 32A54180035E; Mon, 16 Jun 2025 14:44:07 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 710C921E6A27; Mon, 16 Jun 2025 16:44:04 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Chao Liu <chao.liu@yeah.net>
+Cc: Chao Liu <lc00631@tecorigin.com>,  pbonzini@redhat.com,
+ peterx@redhat.com,  david@redhat.com,  philmd@linaro.org,
+ balaton@eik.bme.hu,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v7 0/1] Optimizing the print format of the QEMU monitor
+ 'info mtree'
+In-Reply-To: <7b5c0278-e2e9-4632-845b-73bf53c79525@yeah.net> (Chao Liu's
+ message of "Mon, 16 Jun 2025 21:45:42 +0800")
+References: <cover.1749800810.git.chao.liu@yeah.net>
+ <87frg0w7rb.fsf@pond.sub.org>
+ <7b5c0278-e2e9-4632-845b-73bf53c79525@yeah.net>
+Date: Mon, 16 Jun 2025 16:44:04 +0200
+Message-ID: <87h60fd9vv.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,46 +91,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ethan Chen <ethan84@andestech.com>
+Chao Liu <chao.liu@yeah.net> writes:
 
-The documentation for the -icount option incorrectly describes the behavior
-of the sleep suboption. Based on the actual implementation and system
-behavior, the effects of sleep=on and sleep=off were inadvertently reversed.
-This commit updates the description to reflect their intended functionality.
+> On 2025/6/16 13:55, Markus Armbruster wrote:
+>> Chao Liu <lc00631@tecorigin.com> writes:
+>>=20
+>>> From: Chao Liu <chao.liu@yeah.net>
+>>>
+>>> Hi, all:
+>>>
+>>> After several rounds of discussion, I think that adding a -t option to =
+the
+>>> `info mtree` command, which enables the display of tree-like node chara=
+cters
+>>> (e.g., +--, |--), is a better approach.
+>>>
+>>> As BALATON Zoltan pointed out, retaining space-based indentation for di=
+splaying
+>>> memory region (mr) nodes helps ensure that the output remains easily pa=
+rseable
+>>> by other programs. This also provides better compatibility with existin=
+g tools
+>>> and scripts.
+>>=20
+>> If people really feed the output of HMP info mtree to parsers, we should
+>> probably provide the information via QMP.
+>
+> Thank you for your helpful advice. I think the next step is to try implem=
+enting "info mtree" via QMP first, and then have it called by HMP.
+>
+> I=E2=80=99ve added it to my to-do list, and I=E2=80=99ll try to implement=
+ it using QMP in the next phase.
 
-Cc: qemu-stable@nongnu.org
-Fixes: fa647905e6ba ("qemu-options.hx: Fix minor issues in icount documentation")
-Signed-off-by: Ethan Chen <ethan84@andestech.com>
-Message-id: 20250606095728.3672832-1-ethan84@andestech.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- qemu-options.hx | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+First question before you actually do that: use cases for feeding the
+information to programs?  You might have answers already; I'm not on top
+of prior conversations.
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 7eb8e02b4b9..1f862b19a67 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -4936,13 +4936,13 @@ SRST
-     with actual performance.
- 
-     When the virtual cpu is sleeping, the virtual time will advance at
--    default speed unless ``sleep=on`` is specified. With
--    ``sleep=on``, the virtual time will jump to the next timer
-+    default speed unless ``sleep=off`` is specified. With
-+    ``sleep=off``, the virtual time will jump to the next timer
-     deadline instantly whenever the virtual cpu goes to sleep mode and
-     will not advance if no timer is enabled. This behavior gives
-     deterministic execution times from the guest point of view.
--    The default if icount is enabled is ``sleep=off``.
--    ``sleep=on`` cannot be used together with either ``shift=auto``
-+    The default if icount is enabled is ``sleep=on``.
-+    ``sleep=off`` cannot be used together with either ``shift=auto``
-     or ``align=on``.
- 
-     ``align=on`` will activate the delay algorithm which will try to
--- 
-2.43.0
+[...]
 
 
