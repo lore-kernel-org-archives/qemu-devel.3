@@ -4,63 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 804BCC71135
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 10:33:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED52C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 10:39:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR79I-0000AN-EV; Mon, 16 Jun 2025 06:33:08 -0400
+	id 1uR7Et-0002DM-UG; Mon, 16 Jun 2025 06:38:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uR79F-00008L-Ji; Mon, 16 Jun 2025 06:33:05 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uR7El-0002CV-Ex; Mon, 16 Jun 2025 06:38:49 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uR79C-0007Rf-6H; Mon, 16 Jun 2025 06:33:05 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bLR6X3FXCz6L5XG;
- Mon, 16 Jun 2025 18:28:20 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id E09B114050C;
- Mon, 16 Jun 2025 18:32:53 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 16 Jun
- 2025 12:32:53 +0200
-Date: Mon, 16 Jun 2025 11:32:50 +0100
-To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
- <linuxarm@huawei.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <jgg@nvidia.com>, <nicolinc@nvidia.com>,
- <ddutile@redhat.com>, <berrange@redhat.com>, <imammedo@redhat.com>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <smostafa@google.com>,
- <wangzhou1@hisilicon.com>, <jiangkunkun@huawei.com>,
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>
-Subject: Re: [PATCH v4 2/7] hw/arm/virt-acpi-build: Re-arrange SMMUv3 IORT
- build
-Message-ID: <20250616113236.00007fa4@huawei.com>
-In-Reply-To: <20250613144449.60156-3-shameerali.kolothum.thodi@huawei.com>
-References: <20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com>
- <20250613144449.60156-3-shameerali.kolothum.thodi@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1uR7Eh-0007zQ-Mx; Mon, 16 Jun 2025 06:38:47 -0400
+Received: from zero.eik.bme.hu (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 22BB655C0CD;
+ Mon, 16 Jun 2025 12:38:38 +0200 (CEST)
+X-Virus-Scanned: amavisd-new at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by zero.eik.bme.hu (zero.eik.bme.hu [127.0.0.1]) (amavisd-new, port 10028)
+ with ESMTP id yhA2ui6kauT6; Mon, 16 Jun 2025 12:38:36 +0200 (CEST)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 0DA3355C0CF; Mon, 16 Jun 2025 12:38:36 +0200 (CEST)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0B766745682;
+ Mon, 16 Jun 2025 12:38:36 +0200 (CEST)
+Date: Mon, 16 Jun 2025 12:38:36 +0200 (CEST)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Nicholas Piggin <npiggin@gmail.com>, qemu-devel@nongnu.org, 
+ qemu-ppc@nongnu.org
+Subject: Re: [PULL 70/72] ppc/amigaone: Add kernel and initrd support
+In-Reply-To: <42af58ad-4e19-4d44-85d8-b78634af8cef@linaro.org>
+Message-ID: <698f2718-8c95-445e-2ad1-d29f2c88a2d1@eik.bme.hu>
+References: <20250311125815.903177-1-npiggin@gmail.com>
+ <20250311125815.903177-71-npiggin@gmail.com>
+ <42af58ad-4e19-4d44-85d8-b78634af8cef@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml500003.china.huawei.com (7.191.162.67) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1427990379-1750070316=:42759"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,93 +64,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Jun 2025 15:44:44 +0100
-Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Introduces a new struct AcpiIortSMMUv3Dev to hold all the information
-> required for SMMUv3 IORT node and use that for populating the node.
-> 
-> The current machine wide SMMUv3 is named as legacy SMMUv3 as we will
-> soon add support for user-creatable SMMUv3 devices. These changes will
-> be useful to have common code paths when we add that support.
-> 
-> Tested-by: Nathan Chen <nathanc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
-Some trivial stuff inline. Otherwise only comment in passing is that
-some of the loop nests are deep enough that it might be worth
-considering factoring some of those out as helper functions.
+--3866299591-1427990379-1750070316=:42759
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> ---
->  hw/arm/virt-acpi-build.c | 111 +++++++++++++++++++++++++++------------
->  hw/arm/virt.c            |   1 +
->  include/hw/arm/virt.h    |   1 +
->  3 files changed, 79 insertions(+), 34 deletions(-)
-> 
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 7e8e0f0298..d39506179a 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -266,6 +266,36 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
->      return idmap_a->input_base - idmap_b->input_base;
->  }
->  
-> +struct AcpiIortSMMUv3Dev {
-> +    int irq;
-> +    hwaddr base;
-> +    GArray *idmaps;
-> +    /* Offset of the SMMUv3 IORT Node relative to the start of the IORT. */
-> +    size_t offset;
-> +};
-> +typedef struct AcpiIortSMMUv3Dev AcpiIortSMMUv3Dev;
+On Mon, 16 Jun 2025, Philippe Mathieu-Daudé wrote:
+> On 11/3/25 13:58, Nicholas Piggin wrote:
+>> From: BALATON Zoltan <balaton@eik.bme.hu>
+>> 
+>> Add support for -kernel, -initrd and -append command line options.
+>> 
+>> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+>> Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
+>> Message-ID: 
+>> <489b1be5d95d5153e924c95b0691b8b53f9ffb9e.1740673173.git.balaton@eik.bme.hu>
+>> Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+>> ---
+>>   hw/ppc/amigaone.c | 113 +++++++++++++++++++++++++++++++++++++++++++++-
+>>   1 file changed, 112 insertions(+), 1 deletion(-)
+>> 
+>> diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
+>> index 1c6f2a944d..359f5fa125 100644
+>> --- a/hw/ppc/amigaone.c
+>> +++ b/hw/ppc/amigaone.c
+>
+>
+>> @@ -301,6 +362,56 @@ static void amigaone_init(MachineState *machine)
+>>       }
+>>       pci_ide_create_devs(PCI_DEVICE(object_resolve_path_component(via, 
+>> "ide")));
+>>       pci_vga_init(pci_bus);
+>> +
+>> +    if (!machine->kernel_filename) {
+>> +        return;
+>> +    }
+>> +
+>> +    /* handle -kernel, -initrd, -append options and emulate U-Boot */
+>> +    bi = g_new0(struct boot_info, 1);
+>> +    cpu->env.load_info = bi;
+>> +
+>> +    loadaddr = MIN(machine->ram_size, 256 * MiB);
+>> +    bi->bd_info = loadaddr - 8 * MiB;
+>> +    create_bd_info(bi->bd_info, machine->ram_size);
+>> +    bi->stack = bi->bd_info - 64 * KiB - 8;
+>> +
+>> +    if (machine->kernel_cmdline && machine->kernel_cmdline[0]) {
+>> +        size_t len = strlen(machine->kernel_cmdline);
+>> +
+>> +        loadaddr = bi->bd_info + 1 * MiB;
+>> +        cpu_physical_memory_write(loadaddr, machine->kernel_cmdline, len + 
+>> 1);
+>
+> This patch introduces a call to a legacy API (documented since at least
+> 2017 in commit b7ecba0f6f6: "docs/devel/loads-stores.rst: Document our
+> various load and store APIs").
 
-Hmm. This file is a bit inconsistent on style but there are instances of the more
-compact
+It does not say deprecated but only if you're in a device you probably 
+need something else as this implicitly operates on system address space 
+and does not report errors. But we're in a machine here and there's 
+nothing to be done for a failure which is not expected at this point.
 
-typedef struct AcpiIortSMMUv3Dev {
-    int irq;
-    hwaddr base;
-    GArray *idmaps;
-    /* Offset of the SMMUv3 IORT Node relative to the start of the IORT. */
-    size_t offset;
-} AcpiIortSMMUv3Dev;
+> Can we load via &address_space_memory instead?
 
-> +
-> +static void
-> +populate_smmuv3_legacy_dev(GArray *sdev_blob)
-What Nicolin said here.
+I guess we could but that would just make this line much longer and less 
+readable. There are plenty of places using this still so unless it's about 
+to be removed I'd leave it as it is. Get back to this when it's the last 
+instance.
 
-
-> +{
-> +    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
-> +    AcpiIortSMMUv3Dev sdev;
-> +
-> +    sdev.idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
-> +    object_child_foreach_recursive(object_get_root(),
-> +                                   iort_host_bridges, sdev.idmaps);
-
-Not sure why this wrap. I'd move iort_host_bridges up a line probably.
-
-> +
-> +    /*
-> +     * There will be only one legacy SMMUv3 as it is a machine wide one.
-> +     * And since it covers all the PCIe RCs in the machine, may have
-> +     * multiple SMMUv3 idmaps. Sort it by input_base.
-> +     */
-> +    g_array_sort(sdev.idmaps, iort_idmap_compare);
-
-I'd add a blank line here to make it more clear the comment only (I think)
-applies to the one line of code and not this whole block.
-
-> +    sdev.base = vms->memmap[VIRT_SMMU].base;
-> +    sdev.irq = vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
-> +    g_array_append_val(sdev_blob, sdev);
-> +}
-
-
+Regards,
+BALATON Zoltan
+--3866299591-1427990379-1750070316=:42759--
 
