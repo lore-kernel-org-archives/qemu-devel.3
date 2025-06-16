@@ -4,89 +4,168 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 427CCC71159
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 17:35:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DEAC71159
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 18:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRDiy-0000Tg-R0; Mon, 16 Jun 2025 13:34:24 -0400
+	id 1uRELX-0000Gi-2B; Mon, 16 Jun 2025 14:14:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uRDiu-0000T8-PV
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 13:34:22 -0400
-Received: from mail-ed1-x536.google.com ([2a00:1450:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uRDio-0004Tp-Ab
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 13:34:20 -0400
-Received: by mail-ed1-x536.google.com with SMTP id
- 4fb4d7f45d1cf-60780d74c8cso8762129a12.2
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 10:34:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750095252; x=1750700052; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tVfJTpKiQ6gxhpDt+NpQbe8CiIZp1Tqpsbpuecn0z1c=;
- b=frOu9a1Is1ZCL8zYvcUyLLa6ffmHKYvcm9TYtYvvEJbqk795jVwGKjPG6DvxWXnpcy
- q0gZmpm2cEtmBYBxQl0kia+QF4TrxE1abluusC28YdZksHOpwoCrZc6wE+oKjI0qvt/y
- +Ivo27357cXmC+VIk0SA2RMfNFQ+k55CkUuHl4OfzGrgUUC8h9sZImApMpPMTuBKchN/
- MCM38TE+GOnurngPwqC4WQ3z0eqv8uA7H+w57WQlGiXnfxGtbfziopyXz6egFH1gU5tJ
- bysEsOQtU0vWq3m0X5b9e/0HPfqnsNiPSjkLivnJYGrvNeO/htql5tMPsNTJO01Grwb+
- lzmg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750095252; x=1750700052;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=tVfJTpKiQ6gxhpDt+NpQbe8CiIZp1Tqpsbpuecn0z1c=;
- b=kl/FZeMIKaFVWHefo1yFb3tuI49nalu4JPONrFOzpzwSUrQsJh6qhlfgS9mjwDrx12
- 8pNlxxNZJjap2jI0cC5vL+DtIAdPp1ZBq9I1U7Q6XrVWCbxkdStevsNTe+PjGmV/rdPZ
- ePJT6Vu5/KUQj1KeT5bBMvncVfS0C6Vf9eC82toeaIrNO6pCuxJSx/R1IycuD3t/5nb1
- MBA3dNg75v+3RcDIdbKvxecC+oy2I5MVi9PDopn3btc9Z/1zBB8sDmL3FNZoeRNLchJX
- cQAu8Z6bFoYssZnIoO5XpNtGEaC3vqK0wrDM6A5xBpeAmp4XNV81vLw0VB6QxVe5gKKf
- ffnQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUKaJfftKLsz8LyXUXq8J+wXIm37l83OQ87qa/9Muvdg/rBQGsQrYXsuwVV7E/QaKFpF39WEc44kC7t@nongnu.org
-X-Gm-Message-State: AOJu0YwgX6N54RM8CDE38gB+PSBJXf2LciJueYTbAAFWCrgzPmyn1K+S
- JxxoYAUAAMZrSC5ujTFa0l8d3fh9gLqq94IKmi2hOFu4KLHyysgbKKE7WYED+8cn1Qyftenbr1n
- wjDEdzeRFNJ/IJjL2zqtxv1GIG60n0Go=
-X-Gm-Gg: ASbGncuscqKQyHw3qhIVaC4gICkvjse26iSAnjYg3cnzRsw6aGo3NsJOQ3jxnKREjMX
- qlFknm3vUTlOGCPdthzYW+PLRGw7vlkZHst5Oe8GLw0JkAnKPAlP/JP3Nhf8HCH6Aqn2j5e6WqG
- lDbVHmjvMZaaG+Ze4kJI8EV4heZh7CuLco3BhGoLXQBRoWzmqYxJgv
-X-Google-Smtp-Source: AGHT+IGCkEONrpt85ER0lPSDNUqw8noHRa4xUQ9u758QsXsoq54PQziX79ZbOZt6GPkpDdWa4G2axW4+yP+hZBsgk9Y=
-X-Received: by 2002:a17:907:3d93:b0:ad8:a935:b8e8 with SMTP id
- a640c23a62f3a-adfad2b7637mr1020361166b.5.1750095251645; Mon, 16 Jun 2025
- 10:34:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1uRELV-0000GX-QF
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 14:14:13 -0400
+Received: from mail-dm6nam12on2059.outbound.protection.outlook.com
+ ([40.107.243.59] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
+ id 1uRELT-0007dP-0f
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 14:14:13 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=RxAuspGLbXHy1bL4jBM+loVCfIf28/SP5k/WMLLPq1VQL4t9+y3VieeHIJh3k3DWxLjuG1OJ7Jy0QnCu6SI8hWqgx3IFVydZ/IVzlMHrwqdoSN0x1dpKVU+IkM5nUIBo3CD5tkLHzXuC/R9/xvSFomGnN8s2Nnm+poccFCrpyaHfxLpSCb3Co8eZvuCuIONrtaSYI5TGUeNsHL4ia5QWbkUG2B/ghMEniNBLn8jWv+1PHuhkqiNYPaIJUWcoqzjVT7mdP7HjpNxL+2LyceNQVmLxhets9ESPkOQ0FbZmPDus3UNmGw3S68cJvP3SyKT4kW9EhMeskxXLExv2CMswuw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Bnwv1ycXm4yzQ8Y55eFqHWlPvhYXxPwAuBaC/7Ts/zE=;
+ b=rSUJnLZvr921ILKNG0PnhCeEv+FOvNsldbymMnG2sEpG5/iOVSiTy36+1Cyj6OL7p3v6HwYvKycW3A6GAel3c3NNpQ1SM1HdY2suEG3Pt4kjG0/fGD6DJrdpjwBTs00e2F+JQF8+ls+pbuA9YVN2uMPeXNscqcFyRqoePHJLouQ6uEEMOiKtoX6v/usRcdD9S8fpLq18mnOkMekr8vwyXlbir9F6zOYmh6cSBW/nIIPa7E6z0saA62u/FFov5eWExnj7q12qJCDdl0h6+6lIkiPuidQHPwgcAC57qIxNx7sbaBRxMW4T+L2p46lFjS1wJaHSsHkidhji4aI5vnmITg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Bnwv1ycXm4yzQ8Y55eFqHWlPvhYXxPwAuBaC/7Ts/zE=;
+ b=yskhbF53/veDBbKnwNVVjHARGeOC0U8pR3WgFKiSUORVuDU91XVatA0XodGPzOQMPwE7syFE6j2cRZs3X7te1FiMbWxTcinQgcUweVcux7HNIMisbJ/tGmV98uPhTowBECbjHJLlRqLqH4iezD+426tmKyb81vIdqi+xs9YYDiM=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by DM6PR12MB4122.namprd12.prod.outlook.com (2603:10b6:5:214::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Mon, 16 Jun
+ 2025 18:09:04 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::b0ef:2936:fec1:3a87%7]) with mapi id 15.20.8835.026; Mon, 16 Jun 2025
+ 18:09:04 +0000
+Message-ID: <e7cdab23-de40-457d-aa69-f0e210206c16@amd.com>
+Date: Mon, 16 Jun 2025 13:09:01 -0500
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 4/6] target/i386: Add couple of feature bits in
+ CPUID_Fn80000021_EAX
+To: "Dr. David Alan Gilbert" <dave@treblig.org>
+Cc: pbonzini@redhat.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, davydov-max@yandex-team.ru
+References: <cover.1746734284.git.babu.moger@amd.com>
+ <a5f6283a59579b09ac345b3f21ecb3b3b2d92451.1746734284.git.babu.moger@amd.com>
+ <aELfPr7snDmIirNk@gallifrey>
+Content-Language: en-US
+From: "Moger, Babu" <babu.moger@amd.com>
+In-Reply-To: <aELfPr7snDmIirNk@gallifrey>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: PH7P220CA0125.NAMP220.PROD.OUTLOOK.COM
+ (2603:10b6:510:327::18) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 MIME-Version: 1.0
-References: <20250611075037.659610-1-kraxel@redhat.com>
- <3bc239aa-a2ab-400c-84b5-d7de3e5193ea@redhat.com>
- <CAJSP0QU++wDCXvYe2sUyHCZHrHVVY2ehdeAswjDE_5V2J-qE9w@mail.gmail.com>
- <4dd4bee5-7098-4f24-a81b-3935c58a6d9c@redhat.com>
- <CAJSP0QWyjzLLGnvrzMDtRubHuzAPWNtejb_wLz33PVWJ+QJLmw@mail.gmail.com>
- <be26f6ad-f266-4451-a7ce-3d78afe34f27@redhat.com>
-In-Reply-To: <be26f6ad-f266-4451-a7ce-3d78afe34f27@redhat.com>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Mon, 16 Jun 2025 13:33:58 -0400
-X-Gm-Features: AX0GCFsGPlUAfczO0lNuBWNXr4bQsXsUdbMbZeLmgVWQc83Eu0uyhwC7TemiDnE
-Message-ID: <CAJSP0QVPqt_9-pp6Ox8jO8ozDUvOzpErWu1cxPv1pptaAwFW=Q@mail.gmail.com>
-Subject: Re: [PULL 0/2] Seabios 1.17.0 20250611 patches
-To: Thomas Huth <thuth@redhat.com>
-Cc: Gerd Hoffmann <kraxel@redhat.com>, qemu-devel@nongnu.org, 
- Stefan Hajnoczi <stefanha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::536;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|DM6PR12MB4122:EE_
+X-MS-Office365-Filtering-Correlation-Id: bbb76350-bc24-4471-8d48-08ddad00e0bc
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?NDlCa1k2dTRJeHd3a3JRSUtha3g2MGc0bmx6cVl2N0xtbFVrZXM3Unp6TXVo?=
+ =?utf-8?B?b2FxRWhuQWlJZnBrSi9xVC9SNDJLZHFJbVNyQUoveDBxVnQzTzJ2SzFob05q?=
+ =?utf-8?B?cHJ1b0F6MEZ2MGUvS0JGdXpKTmw4QWZ0cDNkakx1bThXRVBrR3orL0tONkxU?=
+ =?utf-8?B?ekg0dzc3cW1FOWZzcW5rY1RTNVNWbFNCQTVTWm5lSzh5VFFETG9LcWcvanVR?=
+ =?utf-8?B?OXZaQU82SFVvRlZzaTJnTzBVbnZ1dk53aEpHQ2h0cmc4ZjVibFpRWU5xeUNU?=
+ =?utf-8?B?ZFQwbndwZGlHQWgyczYwNXpvN0RzWnZLVTVRWXgveGhtSTBsNG9mVk5xaEpt?=
+ =?utf-8?B?TFJZY2o1Qm43TzNQNVBrQmJGa3QxaUlRZDVxdEwzeG1HdWRyWnRnUHpUcGlu?=
+ =?utf-8?B?eDB5dml5RDZlZ0pEMUdWcUxXS2hUSzBaMnBTM2FqRnRMOHE5RVhFZGhNaDh6?=
+ =?utf-8?B?MHdNeFZEcmtjN01jakN2bWNaLzFqa2FVaEZQa2N1ZURSbVErQkhzKzJDM2s2?=
+ =?utf-8?B?RFRxRXR4ejc2NTdaRFUrU3F2dUxaOUNTRytpc1QwbnQ2bjdKMjJmT2lia2p2?=
+ =?utf-8?B?WlpGWlBuQnNCMDNZdC8rSU5hY1ZJLzJ1TFVGUkI1K1dnYlRKN3A3ODN0aTBB?=
+ =?utf-8?B?a0Z0eHhGdEhsbHovMUF6eU5ITHZKU1VxQTVDcnFXOWlTbkowckYzYzZ5ZjdU?=
+ =?utf-8?B?a256a3FpN3VDa0xwVEFsRFI4cXphelFFZGRFaEpacUhGWjZBS3BWd1VUNUR2?=
+ =?utf-8?B?L0ZDYWZGOFRyeitLdzR3MlFoSmFWbzhnVzE4M2VKc2JCclZORmdFaXk4ejls?=
+ =?utf-8?B?OWtaNzV5Vm94L0hhZWRqVHUxREpUbS9YdVVwNzB4WFY0RG10VXFHSncxWDZx?=
+ =?utf-8?B?ckFxdnBLdkVPd2ZkNElEVUpJOW1OS1VEUG9BMFZxdW1xMjhCbTEvbHdoNUJL?=
+ =?utf-8?B?eXFmTW5yVTUvUXhTNXFjRUhIVUF0VzZwM1QvRC85ZFZGM1NncGNxUFdNY1dG?=
+ =?utf-8?B?QU5uVTVJcG9xODBXSE9xL1RKRjE1eEFkcU5ZZmh2VFJ3NDdCdHRVYjRYQkZ5?=
+ =?utf-8?B?WC9CT05venQyakhIMndBeHpBaThETTZVVXBIcHNQODdPK3lhR0lOOGUwQWhO?=
+ =?utf-8?B?N3RHQ0VoSzlsZkE3Wml1N1RZZjNQWTZ0dVpDVGJJWmVrRXJGWlRNcEZaMDBz?=
+ =?utf-8?B?SUhLTjZPZUl1SkhPV1pGbERmd3J3Y3B0M1ZjbG5aRlNTbXZ2azNRWjVkcTVi?=
+ =?utf-8?B?VmtPaGdUNEc1MTFmN0U4bkZyR1Fmd3pBNnE1SEZIUnZhK0EvMTFpdkkwYlk5?=
+ =?utf-8?B?NnBMNjJSMW5MYWsrWUx1NW05TUlPWS93QkkrWUxNQmxDTUVmUDZqMFNrSDhs?=
+ =?utf-8?B?R0xPT0RHclBNckRjWXFsUk1CdERoeDBJSng1WDRldkxqQy9TSGY4SkY3amVN?=
+ =?utf-8?B?RXU5czd3d0pKNVRpT0xtdUZ6R1d1cEFMZStIR2k3SUlSTHVtVGdrVTl3aURr?=
+ =?utf-8?B?UEs3WU1zZUNidi93QWFHUjc2Vnl1a1NwZStVRG0yRk51RGtuL1A2Wkd1SnlK?=
+ =?utf-8?B?UVF6WHViczF1ZDE0N2pjNWlYYjlBaUk2R1hLOFR5L2VObGZMcXU4NHBYM1l6?=
+ =?utf-8?B?Z3NGcW5IaVZnQkU4ZGRhZ2dSVFpEcElTR2ZCZkk3cUJZanZGT0NWVGpkSG8v?=
+ =?utf-8?B?SXhHUzJaZDFpT1NOWG9MUkF3K1Zmby9pN09mT1MzZmt6WXZDYXFJejljb2pY?=
+ =?utf-8?B?RXB6OU1LSUVZOTNDTlc2RXZQUnVrREthREtNbktkbnJ5WEhwNmNoWElSTFJ6?=
+ =?utf-8?B?QzdBb290ZFdES3RnQlZXSU51cVFJbW5xOVZUbEpYeGxSVlVaMWdNczkrcVJT?=
+ =?utf-8?B?VTFpRFNhRGh4cTdHKzN1cWNtZnc5NmQ4bFQvd0NGNi9OcmF4YU5acmh4bmx0?=
+ =?utf-8?Q?Wc0xpfSnNsw=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bE1GWGxpcjBWZ3ZvbzZidTV6QWdoNHlBRGZnOEFOVWprdXd3dDNWaTQ3ZFUw?=
+ =?utf-8?B?TTBSWWl3SEh6ZDJRSTRCWnh1SnpPZzFoeVhMbmNhdmpidU82d1pyN0Jib0Vn?=
+ =?utf-8?B?QUp4aXhvUzBLTHFPS2FOWDI5Q1hrUDdIRXM3VWFmUkllYzh2QUtkU2w1TXZS?=
+ =?utf-8?B?djd6VWhmb2VweU1XTXZ4QnQyWFBKbVY1NG1mNzRkdEU2alJvbFpSSmZOUVNB?=
+ =?utf-8?B?ejNsbFNLS3dpN2dGL0tRRUd2M3A0K1I4SE5KRVBTdXFZY0FNdlhPSEVGTkI4?=
+ =?utf-8?B?WnZoQitobmwvOGdTYVlVc05NTThCQVNnOHZ6WUx5V01RWDlneExKak10Y1da?=
+ =?utf-8?B?YndXSUQ4YUZwTFhma0FkTnNqSzdkNlNmTEJPd2I4bVFIdy81OE9MdnFwM1JF?=
+ =?utf-8?B?aVB5MDh1Y0dVK0V5VEIxbEthU0F5Zng3MjNFVG5SWUx3MlNHQ2V2S0ZZeEhn?=
+ =?utf-8?B?WVE2aVZEa2gzSWVnWnQ0T0tETTNSRU5Cb3BWdDUxMXFpMmxqNTcrUG1aY20y?=
+ =?utf-8?B?eHRLMUJXd044OTA3Qkx6dmpsUGxRQTdWVDhpa1VyYlNVL0xBeEtMLzU4Rk92?=
+ =?utf-8?B?V1d1a0tvNzFIblNSVEFkdVJHV0dIenpsbFNxY0tMZStrRHZMUE5iL1VoQmdu?=
+ =?utf-8?B?R2JJUXNWSFF2bjhCajFSTkJQWWhkNzFyUUIrTEFtaGszcU5IMkpzYTJob09L?=
+ =?utf-8?B?N0NaQ1I0aUtqMnJRY015RCsrUzMzT1Z3T1hscEVMNWE1bnVDTzhsZ2hhWWtr?=
+ =?utf-8?B?R0ZockJVKzJoc2RMbXBFNmVoYmVxbDNYeGtLSDNTYkZGOGdmZHhYSTlOdmZL?=
+ =?utf-8?B?MG5HOTFCOUpmRjFBZG50Ni9ic0hxZXdIa1BsNDlrN3d5cFlFcW9xN3dRU3o0?=
+ =?utf-8?B?OXFLMU5SOWJKOTZqRnRZZDlYU1BTMzNhODdZS2NJUlJWcEc5UGV5U1NSNnBw?=
+ =?utf-8?B?dGxlWDV4dC9qZUVjQ3NKSld6aFhBaEJsL2RrMFpDemZoSmQyaWEvOVBUa1Ix?=
+ =?utf-8?B?V0IyZTg0TE1zMHd3Ukk0UmRvdEl1TUJPS3IyZjltNU5tSkdtOTNOYWtGMXQ5?=
+ =?utf-8?B?Wk1MdlQwU05BTGR2VU5JZy8rWTdUMEorekVKMFlyS1RHLy9ldGtFTTFUOTho?=
+ =?utf-8?B?WDdyd0EwRW5Qb0dnVmVkN2ZwOG81d0NaMkxmMXZoYkx6VEZyLytUVjU3RUhN?=
+ =?utf-8?B?YXBlMEoxK3dBMlRhNWRsa0tNWllOZ09ZeWxGcDIydmR6dGRYZkhCS0tURS9P?=
+ =?utf-8?B?dXB3YzZURGlZdWVRWCtoYktQbDNxZkxZMVE1VWxtaHVWUDVxYlVDelk4NUgr?=
+ =?utf-8?B?d3J1aDRsZkx3aG9Rd0dzbkJJbFd3QkdLRTcrMmNoM3NGNzJCTmlWenM3TFNx?=
+ =?utf-8?B?S3RtS0x4WEFJRFR0ajM4Z3I3RW5Rak80STJrUHZ5RHFzTEdqMitqVDE4cHNv?=
+ =?utf-8?B?b1pnOFN0OFdaQ08xREhoTnA4dndLcm9CRjgyUlhnUm9uMG9oOS9sUEQ4d29E?=
+ =?utf-8?B?R0VNTFBBYS94OVFhOFdDbnFLazVLWm9YNmhPQXFEK3QxWFNxZmdWRDdwVmI4?=
+ =?utf-8?B?TS90SzBsV0xuYk1pcWJqL2NaRTJJWG5tTnV1NFk5ZFRFUk84ZDdKcWdYa3Yv?=
+ =?utf-8?B?ZjR6bTlSZXN1dS9aQndhaXd2L1c0RDY1UHFFZTdQVlQrTmo0SENmSWQ0dVZV?=
+ =?utf-8?B?bVRIdnV6REo5U2dINXE1TzNLQ2NhTEhCTXhwd0pFbGc0bXJyTzBmRmRYVWtL?=
+ =?utf-8?B?M0hobVRwR1RkRHZ0QVFIdW9FVVkrVVhHME81SnVOQldvNXp6OHNEZ1ZKN0Vn?=
+ =?utf-8?B?dmhneXcvaTVTVDZuaHdPNUs0czNISzVxczIxZWlPK0Y4NHMvQ3hUMWNrdy9H?=
+ =?utf-8?B?MHFZNkVUWGdZOFJoZXNEditKQ3NGenhHVGhFRzJTRjE1YjFBZy8vNUNNdHBh?=
+ =?utf-8?B?ckR6NkZUTjlJSVhtcGtjNnNvMEFIRVZ1TWFjS1ZLeHpzS25wUkZmczN5eW5t?=
+ =?utf-8?B?dFpGOUxMZHpIUHRrME9aR29udGhqVkoyVmFQUFovenluZkJPbFhHWWJyY3ZE?=
+ =?utf-8?B?aHhVRjkxMmJ2bFhGcS9qcHUycW02emhmT0pOZXJSYWpmQVRSKzM2MWdGSEJQ?=
+ =?utf-8?Q?SkOc=3D?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bbb76350-bc24-4471-8d48-08ddad00e0bc
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 18:09:04.1282 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: T0TL0KeDvNrK1S7cNhlBgfbm0uHo44TnPL4ODEMF0EpMsNVEf73RAOzQe9dT34ej
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4122
+Received-SPF: permerror client-ip=40.107.243.59;
+ envelope-from=Babu.Moger@amd.com;
+ helo=NAM12-DM6-obe.outbound.protection.outlook.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,118 +178,35 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 11:05=E2=80=AFAM Thomas Huth <thuth@redhat.com> wro=
-te:
->
-> On 12/06/2025 15.08, Stefan Hajnoczi wrote:
-> > On Thu, Jun 12, 2025 at 12:36=E2=80=AFAM Thomas Huth <thuth@redhat.com>=
- wrote:
-> >>
-> >> On 11/06/2025 21.09, Stefan Hajnoczi wrote:
-> >>> On Wed, Jun 11, 2025 at 2:36=E2=80=AFPM Thomas Huth <thuth@redhat.com=
-> wrote:
-> >>>>
-> >>>> On 11/06/2025 09.50, Gerd Hoffmann wrote:
-> >>>>> The following changes since commit bc98ffdc7577e55ab8373c579c28fe24=
-d600c40f:
-> >>>>>
-> >>>>>      Merge tag 'pull-10.1-maintainer-may-2025-070625-1' of https://=
-gitlab.com/stsquad/qemu into staging (2025-06-07 15:08:55 -0400)
-> >>>>>
-> >>>>> are available in the Git repository at:
-> >>>>>
-> >>>>>      https://gitlab.com/kraxel/qemu.git tags/seabios-1.17.0-2025061=
-1-pull-request
-> >>>>>
-> >>>>> for you to fetch changes up to cba36cf3881e907553ba2de38abd5edf7f95=
-2de1:
-> >>>>>
-> >>>>>      seabios: update binaries to 1.17.0 (2025-06-11 09:45:00 +0200)
-> >>>>>
-> >>>>> ----------------------------------------------------------------
-> >>>>> seabios: update to 1.17.0 release
-> >>>>>
-> >>>>> ----------------------------------------------------------------
-> >>>>>
-> >>>>> Gerd Hoffmann (2):
-> >>>>>      seabios: update submodule to 1.17.0
-> >>>>>      seabios: update binaries to 1.17.0
-> >>>>
-> >>>>     Hi Gerd, hi Stefan,
-> >>>>
-> >>>> I'm now getting this when doing a git pull:
-> >>>>
-> >>>> Fetching submodule roms/seabios
-> >>>> fatal: remote error: upload-pack: not our ref
-> >>>> b52ca86e094d19b58e2304417787e96b940e39c6
-> >>>> Errors during submodule fetch:
-> >>>>           roms/seabios
-> >>>
-> >>> GitLab CI didn't detect this, probably because the tests don't build
-> >>> SeaBIOS from source and use the binaries instead. Given infinite CI
-> >>> resources we should rebuild all ROMs from source to catch problems
-> >>> like this one.
-> >>>
-> >>> I wanted to mention this in case anyone wants to tighten up the CI to
-> >>> catch these issues for SeaBIOS and other ROMs.
-> >>>
-> >>>> Looking at
-> >>>> https://gitlab.com/qemu-project/seabios/-/commits/master?ref_type=3D=
-HEADS
-> >>>> there is a problem with the mirroring:
-> >>>>
-> >>>> "This project is mirrored from https://review.coreboot.org/seabios. =
-Pull
-> >>>> mirroring failed 4 months ago.
-> >>>> Repository mirroring has been paused due to too many failed attempts=
-. It can
-> >>>> be resumed by a project maintainer or owner.
-> >>>> Last successful update 4 months ago. This branch has diverged from u=
-pstream. "
-> >>>>
-> >>>> Could you please fix this?
-> >>>
-> >>> `git clone https://review.coreboot.org/seabios` works on my machine,
-> >>> but I manually clicked the "update" button and GitLab failed again.
-> >>>
-> >>> In the GitLab UI there is a button to add a new mirror repo. I though=
-t
-> >>> maybe we can delete the old repo and add a new one, but the push/pull
-> >>> direction dropdown list is disabled. Maybe that's because only 1 repo
-> >>> can be a mirror source for pull, I'm worried that deleting the
-> >>> existing failed repo will leave us with no way to add a new repo that
-> >>> supports pull.
-> >>>
-> >>> Does anyone know how to go about fixing this failed mirror?
-> >>
-> >> Maybe do a manual push --force to our mirror to sync them again? ... b=
-ut it
-> >> would be good to know how this could have happened at all - maybe seab=
-ios
-> >> force-pushed their master branch at one point in time? Or did we commi=
-t
-> >> something to the mirror that was not in the upstream repository?
-> >>
-> >> Anyway, I just noticed that it seems to be working now again - how did=
- you
-> >> fix it?
-> >
-> > I didn't fix it. GitLab's mirror operation is still failing.
->
-> Oh, ok! Maybe the error message only pops up if I pull changes into my lo=
-cal
-> master branch, and during my last fetch there were only changes coming in
-> for the "origin/staging", and those didn't trigger the error message.
-> Anyway, I'll keep my eyes open!
+Hi Dave,
 
-Hi Thomas,
-I force pushed upstream SeaBIOS to QEMU's mirror repo and now the
-GitLab mirroring feature is operational again.
+On 6/6/25 07:29, Dr. David Alan Gilbert wrote:
+> * Babu Moger (babu.moger@amd.com) wrote:
+>> Add CPUID bit indicates that a WRMSR to MSR_FS_BASE, MSR_GS_BASE, or
+>> MSR_KERNEL_GS_BASE is non-serializing amd PREFETCHI that the indicates
+>> support for IC prefetch.
+>>
+>> CPUID_Fn80000021_EAX
+>> Bit    Feature description
+>> 20     Indicates support for IC prefetch.
+>> 1      FsGsKernelGsBaseNonSerializing.
+> 
+> I'm curious about this:
+>   a) Is this new CPUs are non-serialising on that write?
+>   b) If so, what happens if you run existing kernels/firmware on them?
+>   c) Bonus migration question; what happens if you live migrate from a host
+>      that claims to be serialising to one that has the extra non-serialising
+>      flag but is disabled in the emulated CPU model.
 
-Thanks for your help getting to the bottom of this!
-
-Stefan
+Good question. After looking at the AMD64 Architecture Programmer’s Manual
+again, these writes have always been non-serializing. Behavior has not
+changed. We're just reporting it through CPUID now. This information
+likely isn’t being used anywhere. Let me know if you have any questions.
+-- 
+Thanks
+Babu Moger
 
