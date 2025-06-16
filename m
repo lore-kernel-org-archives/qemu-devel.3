@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253D1C71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:24:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC9FC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 09:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR64B-0001W8-Sl; Mon, 16 Jun 2025 05:23:47 -0400
+	id 1uR65M-0002lE-J0; Mon, 16 Jun 2025 05:25:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uR63N-0000P1-Am
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:23:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uR63N-0000Ou-8N
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:22:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uR63J-0005Je-LO
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:22:57 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uR63J-0005Ii-Vk
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 05:22:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750065772;
+ s=mimecast20190719; t=1750065771;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/57mASegoW8S7VeTMnJN+Cb99ND64Q2D44UkawBVIvY=;
- b=DhR1HIXaFPxcXHW9YdYgVi/dpfyRzYbeGyw8ryUhJNdAvJsndhEiqNPyBmBUEf8Hc4fP+F
- 0hNysyCXLlb+hnHcnkZJS5v+n0pMXTXU2wB9z/1hlyqyAad/X984jCz4xUUYDcN99qxMsC
- s8dcRutqGNOMSJwgtbkOLxTAQ270Lbs=
+ bh=BiIK4Ng2NUigzAsQEhP3LzUekXkRimZT+fiVxrWmEJk=;
+ b=QUSuN0oMX9jfkZp0GiZ5WJjvgcuLoSFRfUO3suqEBRbww3lYrUnixraygJjoUXuGfDIWrS
+ nGnUDJoa0kaM+5b8n/RGxdX20/esQDDdc8s93SnnTD2AAds6tJfYdOeKqBI1CON0eG6ENG
+ W3Dje2rjzfIFYDt6DGVgOmRvRf07zL8=
 Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-434-nyvLT8HWNpupm0VGxNkk_Q-1; Mon,
- 16 Jun 2025 05:22:49 -0400
-X-MC-Unique: nyvLT8HWNpupm0VGxNkk_Q-1
-X-Mimecast-MFC-AGG-ID: nyvLT8HWNpupm0VGxNkk_Q_1750065767
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-177--UT4I0qINQ63Wy8q6F-XHg-1; Mon,
+ 16 Jun 2025 05:22:48 -0400
+X-MC-Unique: -UT4I0qINQ63Wy8q6F-XHg-1
+X-Mimecast-MFC-AGG-ID: -UT4I0qINQ63Wy8q6F-XHg_1750065766
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2B05818011CD; Mon, 16 Jun 2025 09:22:47 +0000 (UTC)
+ id 8A4511808984; Mon, 16 Jun 2025 09:22:46 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.11])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7686C195608D; Mon, 16 Jun 2025 09:22:46 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 995D030044D8; Mon, 16 Jun 2025 09:22:45 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D3BA921E6935; Mon, 16 Jun 2025 11:22:41 +0200 (CEST)
+ id CA80321E6924; Mon, 16 Jun 2025 11:22:41 +0200 (CEST)
 From: Markus Armbruster <armbru@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
@@ -59,17 +59,17 @@ Cc: =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Alexander Graf <agraf@csgraf.de>, Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v5 3/3] docs: define policy forbidding use of AI code
- generators
-Date: Mon, 16 Jun 2025 11:22:41 +0200
-Message-ID: <20250616092241.212898-4-armbru@redhat.com>
+Subject: [PATCH v5 1/3] docs: introduce dedicated page about code provenance /
+ sign-off
+Date: Mon, 16 Jun 2025 11:22:39 +0200
+Message-ID: <20250616092241.212898-2-armbru@redhat.com>
 In-Reply-To: <20250616092241.212898-1-armbru@redhat.com>
 References: <20250616092241.212898-1-armbru@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
@@ -78,7 +78,8 @@ X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ T_FILL_THIS_FORM_SHORT=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -96,106 +97,310 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Daniel P. Berrangé <berrange@redhat.com>
 
-There has been an explosion of interest in so called AI code
-generators. Thus far though, this is has not been matched by a broadly
-accepted legal interpretation of the licensing implications for code
-generator outputs. While the vendors may claim there is no problem and
-a free choice of license is possible, they have an inherent conflict
-of interest in promoting this interpretation. More broadly there is,
-as yet, no broad consensus on the licensing implications of code
-generators trained on inputs under a wide variety of licenses
+Currently we have a short paragraph saying that patches must include
+a Signed-off-by line, and merely link to the kernel documentation.
+The linked kernel docs have a lot of content beyond the part about
+sign-off an thus are misleading/distracting to QEMU contributors.
 
-The DCO requires contributors to assert they have the right to
-contribute under the designated project license. Given the lack of
-consensus on the licensing of AI code generator output, it is not
-considered credible to assert compliance with the DCO clause (b) or (c)
-where a patch includes such generated code.
-
-This patch thus defines a policy that the QEMU project will currently
-not accept contributions where use of AI code generators is either
-known, or suspected.
-
-These are early days of AI-assisted software development. The legal
-questions will be resolved eventually. The tools will mature, and we
-can expect some to become safely usable in free software projects.
-The policy we set now must be for today, and be open to revision. It's
-best to start strict and safe, then relax.
-
-Meanwhile requests for exceptions can also be considered on a case by
-case basis.
+This introduces a dedicated 'code-provenance' page in QEMU talking
+about why we require sign-off, explaining the other tags we commonly
+use, and what to do in some edge cases.
 
 Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Signed-off-by: Markus Armbruster <armbru@redhat.com>
 ---
- docs/devel/code-provenance.rst | 55 +++++++++++++++++++++++++++++++++-
- 1 file changed, 54 insertions(+), 1 deletion(-)
+ docs/devel/code-provenance.rst    | 230 ++++++++++++++++++++++++++++++
+ docs/devel/index-process.rst      |   1 +
+ docs/devel/submitting-a-patch.rst |  23 +--
+ 3 files changed, 233 insertions(+), 21 deletions(-)
+ create mode 100644 docs/devel/code-provenance.rst
 
 diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
-index c25afed98d..b5aae2e253 100644
---- a/docs/devel/code-provenance.rst
+new file mode 100644
+index 0000000000..95b2dd34e2
+--- /dev/null
 +++ b/docs/devel/code-provenance.rst
-@@ -282,4 +282,57 @@ boilerplate code template which is then filled in to produce the final patch.
- The output of such a tool would still be considered the "preferred format",
- since it is intended to be a foundation for further human authored changes.
- Such tools are acceptable to use, provided there is clearly defined copyright
--and licensing for their output.
-+and licensing for their output. Note in particular the caveats applying to AI
-+content generators below.
+@@ -0,0 +1,230 @@
++.. _code-provenance:
 +
-+Use of AI content generators
++Code provenance
++===============
++
++Certifying patch submissions
 +~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 +
-+TL;DR:
++The QEMU community **mandates** all contributors to certify provenance of
++patch submissions they make to the project. To put it another way,
++contributors must indicate that they are legally permitted to contribute to
++the project.
 +
-+  **Current QEMU project policy is to DECLINE any contributions which are
-+  believed to include or derive from AI generated content. This includes
-+  ChatGPT, Claude, Copilot, Llama and similar tools.**
++Certification is achieved with a low overhead by adding a single line to the
++bottom of every git commit::
 +
-+The increasing prevalence of AI-assisted software development results in a
-+number of difficult legal questions and risks for software projects, including
-+QEMU.  Of particular concern is content generated by `Large Language Models
-+<https://en.wikipedia.org/wiki/Large_language_model>`__ (LLMs).
++   Signed-off-by: YOUR NAME <YOUR@EMAIL>
 +
-+The QEMU community requires that contributors certify their patch submissions
-+are made in accordance with the rules of the `Developer's Certificate of
-+Origin (DCO) <dco>`.
++The addition of this line asserts that the author of the patch is contributing
++in accordance with the clauses specified in the
++`Developer's Certificate of Origin <https://developercertificate.org>`__:
 +
-+To satisfy the DCO, the patch contributor has to fully understand the
-+copyright and license status of content they are contributing to QEMU. With AI
-+content generators, the copyright and license status of the output is
-+ill-defined with no generally accepted, settled legal foundation.
++.. _dco:
 +
-+Where the training material is known, it is common for it to include large
-+volumes of material under restrictive licensing/copyright terms. Even where
-+the training material is all known to be under open source licenses, it is
-+likely to be under a variety of terms, not all of which will be compatible
-+with QEMU's licensing requirements.
++  Developer's Certificate of Origin 1.1
 +
-+How contributors could comply with DCO terms (b) or (c) for the output of AI
-+content generators commonly available today is unclear.  The QEMU project is
-+not willing or able to accept the legal risks of non-compliance.
++  By making a contribution to this project, I certify that:
 +
-+The QEMU project thus requires that contributors refrain from using AI content
-+generators on patches intended to be submitted to the project, and will
-+decline any contribution if use of AI is either known or suspected.
++  (a) The contribution was created in whole or in part by me and I
++      have the right to submit it under the open source license
++      indicated in the file; or
 +
-+This policy does not apply to other uses of AI, such as researching APIs or
-+algorithms, static analysis, or debugging, provided their output is not to be
-+included in contributions.
++  (b) The contribution is based upon previous work that, to the best
++      of my knowledge, is covered under an appropriate open source
++      license and I have the right under that license to submit that
++      work with modifications, whether created in whole or in part
++      by me, under the same open source license (unless I am
++      permitted to submit under a different license), as indicated
++      in the file; or
 +
-+Examples of tools impacted by this policy includes GitHub's CoPilot, OpenAI's
-+ChatGPT, Anthropic's Claude, and Meta's Code Llama, and code/content
-+generation agents which are built on top of such tools.
++  (c) The contribution was provided directly to me by some other
++      person who certified (a), (b) or (c) and I have not modified
++      it.
 +
-+This policy may evolve as AI tools mature and the legal situation is
-+clarifed. In the meanwhile, requests for exceptions to this policy will be
-+evaluated by the QEMU project on a case by case basis. To be granted an
-+exception, a contributor will need to demonstrate clarity of the license and
-+copyright status for the tool's output in relation to its training model and
-+code, to the satisfaction of the project maintainers.
++  (d) I understand and agree that this project and the contribution
++      are public and that a record of the contribution (including all
++      personal information I submit with it, including my sign-off) is
++      maintained indefinitely and may be redistributed consistent with
++      this project or the open source license(s) involved.
++
++The name used with "Signed-off-by" does not need to be your legal name, nor
++birth name, nor appear on any government ID. It is the identity you choose to
++be known by in the community, but should not be anonymous, nor misrepresent
++whom you are.
++
++It is generally expected that the name and email addresses used in one of the
++``Signed-off-by`` lines, matches that of the git commit ``Author`` field.
++It's okay if you subscribe or contribute to the list via more than one
++address, but using multiple addresses in one commit just confuses
++things.
++
++If the person sending the mail is not one of the patch authors, they are
++nonetheless expected to add their own ``Signed-off-by`` to comply with the
++DCO clause (c).
++
++Multiple authorship
++~~~~~~~~~~~~~~~~~~~
++
++It is not uncommon for a patch to have contributions from multiple authors. In
++this scenario, git commits will usually be expected to have a ``Signed-off-by``
++line for each contributor involved in creation of the patch. Some edge cases:
++
++  * The non-primary author's contributions were so trivial that they can be
++    considered not subject to copyright. In this case the secondary authors
++    need not include a ``Signed-off-by``.
++
++    This case most commonly applies where QEMU reviewers give short snippets
++    of code as suggested fixes to a patch. The reviewers don't need to have
++    their own ``Signed-off-by`` added unless their code suggestion was
++    unusually large, but it is common to add ``Suggested-by`` as a credit
++    for non-trivial code.
++
++  * Both contributors work for the same employer and the employer requires
++    copyright assignment.
++
++    It can be said that in this case a ``Signed-off-by`` is indicating that
++    the person has permission to contribute from their employer who is the
++    copyright holder. It is nonetheless still preferable to include a
++    ``Signed-off-by`` for each contributor, as in some countries employees are
++    not able to assign copyright to their employer, and it also covers any
++    time invested outside working hours.
++
++When multiple ``Signed-off-by`` tags are present, they should be strictly kept
++in order of authorship, from oldest to newest.
++
++Other commit tags
++~~~~~~~~~~~~~~~~~
++
++While the ``Signed-off-by`` tag is mandatory, there are a number of other tags
++that are commonly used during QEMU development:
++
++ * **``Reviewed-by``**: when a QEMU community member reviews a patch on the
++   mailing list, if they consider the patch acceptable, they should send an
++   email reply containing a ``Reviewed-by`` tag. Subsystem maintainers who
++   review a patch should add this even if they are also adding their
++   ``Signed-off-by`` to the same commit.
++
++ * **``Acked-by``**: when a QEMU subsystem maintainer approves a patch that
++   touches their subsystem, but intends to allow a different maintainer to
++   queue it and send a pull request, they would send a mail containing a
++   ``Acked-by`` tag. Where a patch touches multiple subsystems, ``Acked-by``
++   only implies review of the maintainers' own areas of responsibility. If a
++   maintainer wants to indicate they have done a full review they should use
++   a ``Reviewed-by`` tag.
++
++ * **``Tested-by``**: when a QEMU community member has functionally tested the
++   behaviour of the patch in some manner, they should send an email reply
++   containing a ``Tested-by`` tag.
++
++ * **``Reported-by``**: when a QEMU community member reports a problem via the
++   mailing list, or some other informal channel that is not the issue tracker,
++   it is good practice to credit them by including a ``Reported-by`` tag on
++   any patch fixing the issue. When the problem is reported via the GitLab
++   issue tracker, however, it is sufficient to just include a link to the
++   issue.
++
++ * **``Suggested-by``**: when a reviewer or other 3rd party makes non-trivial
++   suggestions for how to change a patch, it is good practice to credit them
++   by including a ``Suggested-by`` tag.
++
++Subsystem maintainer requirements
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++When a subsystem maintainer accepts a patch from a contributor, in addition to
++the normal code review points, they are expected to validate the presence of
++suitable ``Signed-off-by`` tags.
++
++At the time they queue the patch in their subsystem tree, the maintainer
++**must** also then add their own ``Signed-off-by`` to indicate that they have
++done the aforementioned validation. This is in addition to any of their own
++``Reviewed-by`` tags the subsystem maintainer may wish to include.
++
++When the maintainer modifies the patch after pulling into their tree, they
++should record their contribution.  This is typically done via a note in the
++commit message, just prior to the maintainer's ``Signed-off-by``::
++
++    Signed-off-by: Cory Contributor <cory.contributor@example.com>
++    [Comment rephrased for clarity]
++    Signed-off-by: Mary Maintainer <mary.maintainer@mycorp.test>
++
++
++Tools for adding ``Signed-off-by``
++~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++There are a variety of ways tools can support adding ``Signed-off-by`` tags
++for patches, avoiding the need for contributors to manually type in this
++repetitive text each time.
++
++git commands
++^^^^^^^^^^^^
++
++When creating, or amending, a commit the ``-s`` flag to ``git commit`` will
++append a suitable line matching the configured git author details.
++
++If preparing patches using the ``git format-patch`` tool, the ``-s`` flag can
++be used to append a suitable line in the emails it creates, without modifying
++the local commits. Alternatively to modify all the local commits on a branch::
++
++  git rebase master -x 'git commit --amend --no-edit -s'
++
++emacs
++^^^^^
++
++In the file ``$HOME/.emacs.d/abbrev_defs`` add:
++
++.. code:: elisp
++
++  (define-abbrev-table 'global-abbrev-table
++    '(
++      ("8rev" "Reviewed-by: YOUR NAME <your@email.addr>" nil 1)
++      ("8ack" "Acked-by: YOUR NAME <your@email.addr>" nil 1)
++      ("8test" "Tested-by: YOUR NAME <your@email.addr>" nil 1)
++      ("8sob" "Signed-off-by: YOUR NAME <your@email.addr>" nil 1)
++     ))
++
++with this change, if you type (for example) ``8rev`` followed by ``<space>``
++or ``<enter>`` it will expand to the whole phrase.
++
++vim
++^^^
++
++In the file ``$HOME/.vimrc`` add::
++
++  iabbrev 8rev Reviewed-by: YOUR NAME <your@email.addr>
++  iabbrev 8ack Acked-by: YOUR NAME <your@email.addr>
++  iabbrev 8test Tested-by: YOUR NAME <your@email.addr>
++  iabbrev 8sob Signed-off-by: YOUR NAME <your@email.addr>
++
++with this change, if you type (for example) ``8rev`` followed by ``<space>``
++or ``<enter>`` it will expand to the whole phrase.
++
++Re-starting abandoned work
++~~~~~~~~~~~~~~~~~~~~~~~~~~
++
++For a variety of reasons there are some patches that get submitted to QEMU but
++never merged. An unrelated contributor may decide (months or years later) to
++continue working from the abandoned patch and re-submit it with extra changes.
++
++The general principles when picking up abandoned work are:
++
++ * Continue to credit the original author for their work, by maintaining their
++   original ``Signed-off-by``
++ * Indicate where the original patch was obtained from (mailing list, bug
++   tracker, author's git repo, etc) when sending it for review
++ * Acknowledge the extra work of the new contributor by including their
++   ``Signed-off-by`` in the patch in addition to the orignal author's
++ * Indicate who is responsible for what parts of the patch. This is typically
++   done via a note in the commit message, just prior to the new contributor's
++   ``Signed-off-by``::
++
++    Signed-off-by: Some Person <some.person@example.com>
++    [Rebased and added support for 'foo']
++    Signed-off-by: New Person <new.person@mycorp.test>
++
++In complicated cases, or if otherwise unsure, ask for advice on the project
++mailing list.
++
++It is also recommended to attempt to contact the original author to let them
++know you are interested in taking over their work, in case they still intended
++to return to the work, or had any suggestions about the best way to continue.
+diff --git a/docs/devel/index-process.rst b/docs/devel/index-process.rst
+index cb7c6640fd..5807752d70 100644
+--- a/docs/devel/index-process.rst
++++ b/docs/devel/index-process.rst
+@@ -13,6 +13,7 @@ Notes about how to interact with the community and how and where to submit patch
+    maintainers
+    style
+    submitting-a-patch
++   code-provenance
+    trivial-patches
+    stable-process
+    submitting-a-pull-request
+diff --git a/docs/devel/submitting-a-patch.rst b/docs/devel/submitting-a-patch.rst
+index 65c64078cb..f7917b899f 100644
+--- a/docs/devel/submitting-a-patch.rst
++++ b/docs/devel/submitting-a-patch.rst
+@@ -344,28 +344,9 @@ Patch emails must include a ``Signed-off-by:`` line
+ 
+ Your patches **must** include a Signed-off-by: line. This is a hard
+ requirement because it's how you say "I'm legally okay to contribute
+-this and happy for it to go into QEMU". The process is modelled after
+-the `Linux kernel
+-<http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/SubmittingPatches?id=f6f94e2ab1b33f0082ac22d71f66385a60d8157f#n297>`__
+-policy.
++this and happy for it to go into QEMU". For full guidance, read the
++:ref:`code-provenance` documentation.
+ 
+-If you wrote the patch, make sure your "From:" and "Signed-off-by:"
+-lines use the same spelling. It's okay if you subscribe or contribute to
+-the list via more than one address, but using multiple addresses in one
+-commit just confuses things. If someone else wrote the patch, git will
+-include a "From:" line in the body of the email (different from your
+-envelope From:) that will give credit to the correct author; but again,
+-that author's Signed-off-by: line is mandatory, with the same spelling.
+-
+-The name used with "Signed-off-by" does not need to be your legal name,
+-nor birth name, nor appear on any government ID. It is the identity you
+-choose to be known by in the community, but should not be anonymous,
+-nor misrepresent whom you are.
+-
+-There are various tooling options for automatically adding these tags
+-include using ``git commit -s`` or ``git format-patch -s``. For more
+-information see `SubmittingPatches 1.12
+-<http://git.kernel.org/cgit/linux/kernel/git/torvalds/linux.git/tree/Documentation/SubmittingPatches?id=f6f94e2ab1b33f0082ac22d71f66385a60d8157f#n297>`__.
+ 
+ .. _include_a_meaningful_cover_letter:
+ 
 -- 
 2.49.0
 
