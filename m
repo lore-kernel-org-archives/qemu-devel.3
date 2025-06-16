@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C4AC71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 05:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE29EC71135
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 05:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR2eP-000187-V1; Mon, 16 Jun 2025 01:44:57 -0400
+	id 1uR2es-0001H2-Jx; Mon, 16 Jun 2025 01:45:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR2eO-00017l-Rr
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:44:56 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uR2eM-0007dm-MM
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:44:56 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3a365a6804eso2818029f8f.3
- for <qemu-devel@nongnu.org>; Sun, 15 Jun 2025 22:44:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750052692; x=1750657492; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xc2cLD2ntBOLWn9J2QDVOrWC0n7u+YczZeWOQbn7lZg=;
- b=IR0Dk24xpQp9nyMw8WVWaiCH3ilFul40ZcS7NoLK/vqfCsr/Qg1RV1K5mrnTFE6scg
- hhNBtp7xTYrMaFNIcXud4cGgPC4g3s43lLdvhlO3LJDAzJTIxMIWDVB9+nJqX/20Hn3s
- pc0OqKFRS9Ehc7zLQ0NEr1u+3kWWdKY2xXfAzOMsTbPlFxBflJodJkH+oxNwiXxIHMhj
- drMLlt2ZUHYWHy6Y6qK4zyzcmuVh3+2PBxX5WwG14+ihM4Pb5wtl6RyvIK48QoBx5NFu
- 58iM7CErbOld6n8t6bH/jGXrvMd9F7kQcQBOu8wspWUskujjCaxSgwoyuwArH3M0lWcU
- jbvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750052692; x=1750657492;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xc2cLD2ntBOLWn9J2QDVOrWC0n7u+YczZeWOQbn7lZg=;
- b=fOZIDHohzzXnC8uLdWZXwdN7m7FK7W4ilOhWtf9QfSWAKzIC6xvB65af3IBlDerMMN
- M27lTA07mRHMgwSVYnaeVfjoMZgg0mtUPk09dG8O7oyTkxdinbibHdQFMZLm00Ki/vWb
- G826EKdIF2OTR3Xy0hbCp8ufI2lBrOPDE8Ou055ryrRmSJK8Yux82SvSDbCX4FOxXYN9
- SL+T7QMx+r7Hcu9oKdVf+N+m+magTwTKgK07jVdH6aqItONNB0taQ5cXLPPtI4q7VI67
- WdRnSRNE9N+aWRIOaiUWJ3z3GFinGv9ZtN59e0DLIak9/MwHIwlNUOrf4oIPzm9o5WSY
- 6Tdg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUoB/VdF2NXcbeCgmUKKehnq08CMfzuQiBbhrAMVbYwvOsFWKgok1eYHu45KlAhULQ3ZLhFJy7/7Jrz@nongnu.org
-X-Gm-Message-State: AOJu0YyhCr5P69qidCtrv1AJHpgdz/E1Gmj2S34P0DxdBPnNLBAkSdIe
- Cp+oekN8D6sNcijZXUaAOdQZ7T7FrvXrFOjnrD9AciqGTeZZn8Z+gYG1da6cwWBhyVk=
-X-Gm-Gg: ASbGncuXWDT9jRj3clt6iy9Km6Xjmp8rAakw8Ra/tU+oVJFLedvkSAvI/EAgGzTAe8H
- zumm67+J4LjgtRY3PRu3K/wIEUg+rh2/5AspbYkTurESa8CTyHrmRu2AXPJvc++xNGHtzk7za6L
- qBH4qf/lQLx4ueoQt26nLZaWI/PlI+PBxk/sGfv6+Otl6XGKiilJ8pQyDGRJ9Pgf5cC5m+ri5bM
- UPu3nCtX8oeFbGfDcyEbcdRHec7VDXdA/mFXD9RGUR2zdWiFjpr2I5ZVYwCE9qHdazO373ti5Ct
- ISF6Ei0cRAN9FRqMWSqXK2kz5W9X7CV0nJ1yRZHzCjrYNKkgTXPNaCxAcNlWnWk672PYh5GwyQT
- Ocu2gWxKKTUoArcS2S+gw2sUy0FYI8Q==
-X-Google-Smtp-Source: AGHT+IFYTpQH3yHz13TnpWn5YVUswxWXBHCLhK0owLYk0MQtj4zBSSIM5+oTeIjNo8PH2QPxzYFCQA==
-X-Received: by 2002:a05:6000:708:b0:3a5:5278:e635 with SMTP id
- ffacd0b85a97d-3a572367577mr5888410f8f.3.1750052692022; 
- Sun, 15 Jun 2025 22:44:52 -0700 (PDT)
-Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e256630sm136115695e9.29.2025.06.15.22.44.51
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Jun 2025 22:44:51 -0700 (PDT)
-Message-ID: <23605427-8930-41a8-bd92-6a3a76a950cf@linaro.org>
-Date: Mon, 16 Jun 2025 07:44:50 +0200
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uR2ei-0001Ca-Sp
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:45:18 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uR2eg-0007qU-9q
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 01:45:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750052712;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Qwff3nWQXvSMruSgJmawrDVwQHKyN42/EoGomjHhuyc=;
+ b=SGKifuXSN+rtStpKrbIIZa+TmBoaIWgf42mLYM2RXiba4+6bsf6alm54Vnmj+rx8czYql8
+ SPCDsazR84Mp816qv1g+gXTYlFMgnZeiU3y0osaVwAg4wd3zyQ2Cn68dYCipknvJRCoWXu
+ kbagJvras8+2DsPIuos3F15pU0BJ+ds=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-39-Ehg6MLWBPem2DlQ5H3Ov2g-1; Mon,
+ 16 Jun 2025 01:45:10 -0400
+X-MC-Unique: Ehg6MLWBPem2DlQ5H3Ov2g-1
+X-Mimecast-MFC-AGG-ID: Ehg6MLWBPem2DlQ5H3Ov2g_1750052709
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BBBB719560A7; Mon, 16 Jun 2025 05:45:08 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.11])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 402381956094; Mon, 16 Jun 2025 05:45:08 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id AED6F21E6A27; Mon, 16 Jun 2025 07:45:05 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: Andrew Kreimer <algonell@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Subject: Re: [PATCH] docs: remove repeated word
+In-Reply-To: <20250615143353.5542-1-algonell@gmail.com> (Andrew Kreimer's
+ message of "Sun, 15 Jun 2025 17:33:03 +0300")
+References: <20250615143353.5542-1-algonell@gmail.com>
+Date: Mon, 16 Jun 2025 07:45:05 +0200
+Message-ID: <87jz5cw87y.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/3] hw/arm: make cpu targeted by arm_load_kernel the
- primary CPU.
-To: =?UTF-8?Q?Cl=C3=A9ment_Chigot?= <chigot@adacore.com>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, peter.maydell@linaro.org, edgar.iglesias@gmail.com,
- alistair@alistair23.me
-References: <20250613134208.1509436-1-chigot@adacore.com>
- <20250613134208.1509436-2-chigot@adacore.com>
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250613134208.1509436-2-chigot@adacore.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,25 +84,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/6/25 15:42, Clément Chigot wrote:
-> Currently, arm booting processus assumes that the first_cpu is the CPU
-> that will boot: `arm_load_kernel` is powering off all but the `first_cpu`;
-> `do_cpu_reset` is setting the loader address only for this `first_cpu`.
-> 
-> For most of the boards, this isn't an issue as the kernel is loaded and
-> booted on the first CPU anyway. However, for zynqmp, the option
-> "boot-cpu" allows to choose any CPUs.
-> 
-> Create a new arm_boot_info entry `primary_cpu` recording which CPU will
-> be boot first. This one is set when `arm_boot_kernel` is called.
-> 
-> Signed-off-by: Clément Chigot <chigot@adacore.com>
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/arm/boot.c         | 15 +++++++--------
->   include/hw/arm/boot.h |  3 +++
->   2 files changed, 10 insertions(+), 8 deletions(-)
+Cc: qemu-trivial
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Andrew Kreimer <algonell@gmail.com> writes:
+
+> The word 'find' appears twice, remove the extra one.
+>
+> Signed-off-by: Andrew Kreimer <algonell@gmail.com>
+> ---
+>  docs/system/introduction.rst | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+> index 338d3745c3..4cd46b5b8f 100644
+> --- a/docs/system/introduction.rst
+> +++ b/docs/system/introduction.rst
+> @@ -81,7 +81,7 @@ may not be optimal for modern systems.
+>  
+>  For a non-x86 system where we emulate a broad range of machine types,
+>  the command lines are generally more explicit in defining the machine
+> -and boot behaviour. You will find often find example command lines in
+> +and boot behaviour. You will often find example command lines in
+>  the :ref:`system-targets-ref` section of the manual.
+>  
+>  While the project doesn't want to discourage users from using the
+
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
 
 
