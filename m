@@ -4,55 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B85F0C71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 07:02:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77FC3C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 07:15:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR3qx-0000FX-9C; Mon, 16 Jun 2025 03:01:59 -0400
+	id 1uR43B-0003C1-Vb; Mon, 16 Jun 2025 03:14:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1uR3q6-0008Ix-Jr; Mon, 16 Jun 2025 03:01:07 -0400
-Received: from mxct.zte.com.cn ([183.62.165.209])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uR428-00036b-Eg
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 03:13:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1uR3q3-0007t1-85; Mon, 16 Jun 2025 03:01:05 -0400
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1uR426-0000oY-0V
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 03:13:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750058008;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=NpVt4VPeWJoe4jvmjR7Zfi9vrG4WCqdL8uSvZVASWPQ=;
+ b=fv8QzOl/xZ48jROR17o+CVI/Y0rXIwp3z+VAyPnObyvigTG/G8TH2CP3KCvEEazd0Y3DLZ
+ C/hgmzaHcebMb40d0oTqUdPrja2up3B5zJXZ101SRVXT1Cik7et/DcXpDBknLxmq7tf+Q7
+ edUDQhjqntJpv8tgiCJ6FzEeNTdT9Ag=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-28-ZWxk0m5pO3qwhZh2nhl48w-1; Mon,
+ 16 Jun 2025 03:13:21 -0400
+X-MC-Unique: ZWxk0m5pO3qwhZh2nhl48w-1
+X-Mimecast-MFC-AGG-ID: ZWxk0m5pO3qwhZh2nhl48w_1750057998
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mxct.zte.com.cn (FangMail) with ESMTPS id 4bLLW31Lzkz4xVcQ;
- Mon, 16 Jun 2025 15:00:47 +0800 (CST)
-Received: from xaxapp05.zte.com.cn ([10.99.98.109])
- by mse-fl2.zte.com.cn with SMTP id 55G70Wqk068171;
- Mon, 16 Jun 2025 15:00:32 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp04[null]) by mapi (Zmail) with MAPI id mid32;
- Mon, 16 Jun 2025 15:00:34 +0800 (CST)
-Date: Mon, 16 Jun 2025 15:00:34 +0800 (CST)
-X-Zmail-TransId: 2afb684fc11271d-ec39d
-X-Mailer: Zmail v1.0
-Message-ID: <20250616150034827wuHs_ffe3Qm8cqFXT7HeW@zte.com.cn>
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: =?UTF-8?B?W1BBVENIIHYzIFJFU0VORF0gbWlncmF0aW9uOiBGaXggbWlncmF0aW9uIGZhaWx1cmUgd2hlbiBhaWEgaXMgY29uZmlndXJlZCBhcyBhcGxpYy1pbXNpYw==?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 55G70Wqk068171
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 684FC11F.000/4bLLW31Lzkz4xVcQ
-Received-SPF: pass client-ip=183.62.165.209;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxct.zte.com.cn
-X-Spam_score_int: -41
-X-Spam_score: -4.2
-X-Spam_bar: ----
-X-Spam_report: (-4.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7AAC719560A3; Mon, 16 Jun 2025 07:13:17 +0000 (UTC)
+Received: from redhat.com (unknown [10.42.28.53])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 14B9818003FC; Mon, 16 Jun 2025 07:13:11 +0000 (UTC)
+Date: Mon, 16 Jun 2025 08:13:08 +0100
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>
+Cc: Sean Wei <me@sean.taipei>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>,
+ Joel Stanley <joel@jms.id.au>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>
+Subject: Re: [PATCH 05/12] include/hw: replace FSF postal address with
+ licenses URL
+Message-ID: <aE_D5zVzf3qHRP-2@redhat.com>
+References: <20250613.qemu.patch@sean.taipei>
+ <20250613.qemu.patch.05@sean.taipei>
+ <3aa8de03-911e-4906-a0c5-5b8ea269ad28@kaod.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <3aa8de03-911e-4906-a0c5-5b8ea269ad28@kaod.org>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,81 +94,36 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Address an error in migration when aia is configured as 'aplic-imsic' in
-riscv kvm vm by adding riscv_aplic_state_needed() and
-riscv_imsic_state_needed() to determine whether the corresponding sates are
-needed.
+On Sat, Jun 14, 2025 at 07:29:09AM +0200, Cédric Le Goater wrote:
+> Hello Sean,
+> 
+> On 6/13/25 18:44, Sean Wei wrote:
+> > Some of the GPLv2 boiler-plate still contained the
+> > obsolete "51 Franklin Street" postal address.
+> > 
+> > Replace it with the canonical GNU licenses URL recommended by the FSF:
+> > https://www.gnu.org/licenses/
+> > 
+> > Signed-off-by: Sean Wei <me@sean.taipei>
+> 
+> Instead,  I would remove the license boiler plate and add :
+> 
+>   SPDX-License-Identifier: GPL-2.0-or-later
 
-Previously, the fields in the vmsds of 'riscv_aplic' and 'riscv_imsic' can
-only be initialized under certain special conditions in commit 95a97b3fd2.
-However, the corresponding ses of these vmsds are inserted into the
-savevm_state.handlers unconditionally. This led to migration failure
-characterized by uninitialized fields when save vm state:
-qemu-system-riscv64: ../migration/vmstate.c:433: vmstate_save_state_v:
-Assertion 'first_elem || !n_elems || !size' failed.
+This is *NOT* something we are doing for existing code sources,
+unless the person removing it is the exclusive copyright
+holder on the file.
 
-Fixes: 95a97b3fd2 ("target/riscv: update APLIC and IMSIC to support KVM AIA")
 
-Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
----
- Changes in v3:
- - Increase version_id and minimum_version_id
-
- hw/intc/riscv_aplic.c | 12 ++++++++++--
- hw/intc/riscv_imsic.c | 10 ++++++++--
- 2 files changed, 18 insertions(+), 4 deletions(-)
-
-diff --git a/hw/intc/riscv_aplic.c b/hw/intc/riscv_aplic.c
-index 8bcd9f4697..4fa5f7597b 100644
---- a/hw/intc/riscv_aplic.c
-+++ b/hw/intc/riscv_aplic.c
-@@ -962,10 +962,18 @@ static const Property riscv_aplic_properties[] = {
-     DEFINE_PROP_BOOL("mmode", RISCVAPLICState, mmode, 0),
- };
-
-+static bool riscv_aplic_state_needed(void *opaque)
-+{
-+    RISCVAPLICState *aplic = opaque;
-+
-+    return riscv_use_emulated_aplic(aplic->msimode);
-+}
-+
- static const VMStateDescription vmstate_riscv_aplic = {
-     .name = "riscv_aplic",
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-+    .needed = riscv_aplic_state_needed,
-     .fields = (const VMStateField[]) {
-             VMSTATE_UINT32(domaincfg, RISCVAPLICState),
-             VMSTATE_UINT32(mmsicfgaddr, RISCVAPLICState),
-diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index 2169988167..6174e1a05d 100644
---- a/hw/intc/riscv_imsic.c
-+++ b/hw/intc/riscv_imsic.c
-@@ -398,10 +398,16 @@ static const Property riscv_imsic_properties[] = {
-     DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
- };
-
-+static bool riscv_imsic_state_needed(void *opaque)
-+{
-+    return !kvm_irqchip_in_kernel();
-+}
-+
- static const VMStateDescription vmstate_riscv_imsic = {
-     .name = "riscv_imsic",
--    .version_id = 1,
--    .minimum_version_id = 1,
-+    .version_id = 2,
-+    .minimum_version_id = 2,
-+    .needed = riscv_imsic_state_needed,
-     .fields = (const VMStateField[]) {
-             VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
-                                   num_pages, 0,
+With regards,
+Daniel
 -- 
-2.27.0
+|: https://berrange.com      -o-    https://www.flickr.com/photos/dberrange :|
+|: https://libvirt.org         -o-            https://fstop138.berrange.com :|
+|: https://entangle-photo.org    -o-    https://www.instagram.com/dberrange :|
+
 
