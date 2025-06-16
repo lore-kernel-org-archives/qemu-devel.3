@@ -4,33 +4,33 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6163C71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 11:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7742BC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 11:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR7v2-0006GQ-V7; Mon, 16 Jun 2025 07:22:28 -0400
+	id 1uR7xD-0007Hf-A1; Mon, 16 Jun 2025 07:24:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uR7v1-0006Fw-7y; Mon, 16 Jun 2025 07:22:27 -0400
+ id 1uR7x9-0007Gs-F6; Mon, 16 Jun 2025 07:24:39 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shameerali.kolothum.thodi@huawei.com>)
- id 1uR7uz-0005IS-Ec; Mon, 16 Jun 2025 07:22:26 -0400
+ id 1uR7x5-0005O8-Vw; Mon, 16 Jun 2025 07:24:38 -0400
 Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bLSGQ4mj4z6L5PD;
- Mon, 16 Jun 2025 19:20:14 +0800 (CST)
-Received: from frapeml100005.china.huawei.com (unknown [7.182.85.132])
- by mail.maildlp.com (Postfix) with ESMTPS id B836E140119;
- Mon, 16 Jun 2025 19:22:21 +0800 (CST)
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bLSLl3SK0z6M4YZ;
+ Mon, 16 Jun 2025 19:23:59 +0800 (CST)
+Received: from frapeml500006.china.huawei.com (unknown [7.182.85.219])
+ by mail.maildlp.com (Postfix) with ESMTPS id 8C327140119;
+ Mon, 16 Jun 2025 19:24:31 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (7.182.85.71) by
- frapeml100005.china.huawei.com (7.182.85.132) with Microsoft SMTP Server
+ frapeml500006.china.huawei.com (7.182.85.219) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Mon, 16 Jun 2025 13:22:21 +0200
+ 15.1.2507.39; Mon, 16 Jun 2025 13:24:31 +0200
 Received: from frapeml500008.china.huawei.com ([7.182.85.71]) by
  frapeml500008.china.huawei.com ([7.182.85.71]) with mapi id 15.01.2507.039;
- Mon, 16 Jun 2025 13:22:21 +0200
+ Mon, 16 Jun 2025 13:24:31 +0200
 To: Jonathan Cameron <jonathan.cameron@huawei.com>, Linuxarm
  <linuxarm@huawei.com>
 CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
@@ -43,17 +43,15 @@ CC: "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org"
  <mochs@nvidia.com>, "smostafa@google.com" <smostafa@google.com>, "Wangzhou
  (B)" <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>,
  "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
-Subject: RE: [PATCH v4 3/7] hw/arm/virt-acpi-build: Update IORT for multiple
- smmuv3 devices
-Thread-Topic: [PATCH v4 3/7] hw/arm/virt-acpi-build: Update IORT for multiple
- smmuv3 devices
-Thread-Index: AQHb3HIk563rOMpuqEagBYqLye3hgbQFf90AgAAo1gA=
-Date: Mon, 16 Jun 2025 11:22:21 +0000
-Message-ID: <a7591aab15e646c08e03636061175bb1@huawei.com>
+Subject: RE: [PATCH v4 7/7] qemu-options.hx: Document the arm-smmuv3 device
+Thread-Topic: [PATCH v4 7/7] qemu-options.hx: Document the arm-smmuv3 device
+Thread-Index: AQHb3HJQOaCTlODNok60fpRTGyj5n7QFhL+AgAAkWOA=
+Date: Mon, 16 Jun 2025 11:24:31 +0000
+Message-ID: <4ef54e9145e7488298fb9ef3c9f48835@huawei.com>
 References: <20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com>
- <20250613144449.60156-4-shameerali.kolothum.thodi@huawei.com>
- <20250616115502.000030d5@huawei.com>
-In-Reply-To: <20250616115502.000030d5@huawei.com>
+ <20250613144449.60156-8-shameerali.kolothum.thodi@huawei.com>
+ <20250616121245.00005b4b@huawei.com>
+In-Reply-To: <20250616121245.00005b4b@huawei.com>
 Accept-Language: en-GB, en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -95,7 +93,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 > -----Original Message-----
 > From: Jonathan Cameron <jonathan.cameron@huawei.com>
-> Sent: Monday, June 16, 2025 11:55 AM
+> Sent: Monday, June 16, 2025 12:13 PM
 > To: Shameerali Kolothum Thodi
 > <shameerali.kolothum.thodi@huawei.com>; Linuxarm
 > <linuxarm@huawei.com>
@@ -106,69 +104,43 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 > smostafa@google.com; Wangzhou (B) <wangzhou1@hisilicon.com>;
 > jiangkunkun <jiangkunkun@huawei.com>; Jonathan Cameron
 > <jonathan.cameron@huawei.com>; zhangfei.gao@linaro.org
-> Subject: Re: [PATCH v4 3/7] hw/arm/virt-acpi-build: Update IORT for
-> multiple smmuv3 devices
+> Subject: Re: [PATCH v4 7/7] qemu-options.hx: Document the arm-smmuv3
+> device
 >=20
-> On Fri, 13 Jun 2025 15:44:45 +0100
+> On Fri, 13 Jun 2025 15:44:49 +0100
 > Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> wrote:
 >=20
-> > With the soon to be introduced user-creatable SMMUv3 devices for
-> > virt, it is possible to have multiple SMMUv3 devices associated
-> > with different PCIe root complexes.
+> > Now that arm,virt can have user-creatable smmuv3 devices, document it.
 > >
-> > Update IORT nodes accordingly.
-> >
-> > An example IORT Id mappings for a Qemu virt machine with two
-> > PCIe Root Complexes each assocaited with a SMMUv3 will
-> > be something like below,
-> >
-> >   -device arm-smmuv3,primary-bus=3Dpcie.0,id=3Dsmmuv3.0
-> >   -device arm-smmuv3,primary-bus=3Dpcie.1,id=3Dsmmuv3.1
-> >   ...
-> >
-> >   +--------------------+           +--------------------+
-> >   |   Root Complex 0   |           |   Root Complex 1   |
-> >   |                    |           |                    |
-> >   |  Requestor IDs     |           |  Requestor IDs     |
-> >   |  0x0000 - 0x00FF   |           |  0x0100 - 0x01FF   |
-> >   +---------+----------+           +---------+----------+
-> >             |                               |
-> >             |                               |
-> >             |       Stream ID Mapping       |
-> >             v                               v
-> >   +--------------------+          +--------------------+
-> >   |    SMMUv3 Node 0   |          |    SMMUv3 Node 1   |
-> >   |                    |          |                    |
-> >   | Stream IDs 0x0000- |          | Stream IDs 0x0100- |
-> >   | 0x00FF mapped from |          | 0x01FF mapped from |
-> >   | RC0 Requestor IDs  |          | RC1 Requestor IDs  |
-> >   +--------------------+          +--------------------+
-> >             |                                |
-> >             |                                |
-> >             +----------------+---------------+
-> >                              |
-> >                              |Device ID Mapping
-> >                              v
-> >               +----------------------------+
-> >               |       ITS Node 0           |
-> >               |                            |
-> >               | Device IDs:                |
-> >               | 0x0000 - 0x00FF (from RC0) |
-> >               | 0x0100 - 0x01FF (from RC1) |
-> >               | 0x0200 - 0xFFFF (No SMMU)  |
-> >               +----------------------------+
-> >
-> > Tested-by: Nathan Chen <nathanc@nvidia.com>
 > > Signed-off-by: Shameer Kolothum
 > <shameerali.kolothum.thodi@huawei.com>
-> Seems fine to me.
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > ---
+> >  qemu-options.hx | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/qemu-options.hx b/qemu-options.hx
+> > index 7eb8e02b4b..3edbde45bb 100644
+> > --- a/qemu-options.hx
+> > +++ b/qemu-options.hx
+> > @@ -1226,6 +1226,12 @@ SRST
+> >      ``aw-bits=3Dval`` (val between 32 and 64, default depends on machi=
+ne)
+> >          This decides the address width of the IOVA address space.
+> >
+> > +``-device arm-smmuv3,primary-bus=3Did``
+> > +    This is only supported by ``-machine virt`` (ARM).
+> > +
+> > +    ``primary-bus=3Did``
+> > +        The PCIe Root Complex to be associated with.
 >=20
-> Other than needs a bios table test :)
+> Hmm.  Root complex or host bridge?
+> I think an RC is allowed to have multiple heirarchy and hence multiple
+> host bridges. Figure 1.2 in the PCI spec. So my gut feeling is this
+> should be host bridge.
 
-Sure, Will add one.
+Ok. I will change the documentation and other comments where it matters
+in this series to host bridge.
 
 Thanks,
 Shameer
-
 
