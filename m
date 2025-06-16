@@ -4,163 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 253B9C71135
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 06:05:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14086C71135
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 06:20:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR2xf-0007yO-U6; Mon, 16 Jun 2025 02:04:53 -0400
+	id 1uR3Bb-00055C-S4; Mon, 16 Jun 2025 02:19:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uR2xV-0007wj-N5
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 02:04:42 -0400
-Received: from mail-bn8nam12on2062d.outbound.protection.outlook.com
- ([2a01:111:f403:2418::62d]
- helo=NAM12-BN8-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
+ id 1uR3BD-0004x4-8Y; Mon, 16 Jun 2025 02:18:52 -0400
+Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uR2xR-0001Kq-BR
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 02:04:40 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=odeC5jqVbLP3kS0wl6Jl0zvs82chxaoMKdbbyU0mR2JTNGJV3tlsDQKmbKcCHlZIYrKzGRBTpBqQIFvVVcG0Xbhwlry7qGTFaqWYmPqvVtIY+/vXHI+HHEANzihwxI0Q3XGGr525BR4A5rX7h/cRaVQlSLsHUntZYwram18VN2ITrs0LxyX+6VqIj/otwJkmOoMQ2A82841Lmt2X2wEN0pP/UjXcNCEtA56rOblVpPM1PtZWJ3WH9ZpGuVdFl83/psmkA06VcfJN73sVZ9p91ibv/GnSclNfK3wt4SwGggZHpuHGFJXxLUG55f1Sxz7z66h5VvTmB6c1gq//mN41cg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Z+4lRxSCTM/pRdrR79TXJkJu5ZCtnvhbGK0bXiaDjSg=;
- b=Mb7J+HFop9Ch9dOwR7QChdjXuRN/pgVEi4lz1GZivzcAcyn+zTTHcW1wl0zEWp+9yCXeosd1dK8ITQ00Ch6xXRBnSMasSgXNlSEknuqTN8aa+3bWzGvit/IQ7AhIxFV/Ojrlz87u2Qmpy8Q3rAoHa6VkoGtO+NsWwtQNnT+NTnV8DMBomk59bjZ0xhnK+5usmVifPrQ/u/kI8xcekbGdtAuNxWektmTU4iDd9p/lHLTJXQWtIyZfgG5D/g1aOjNoFXzVhIv7lY8jrFtZBw6cTBENXkkxxk6ZUVIC5RSwc/t4QQp6e++Xk4SaN9+5DLTWJLl1AI0+xXVCwaqQRtVPiA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=huawei.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Z+4lRxSCTM/pRdrR79TXJkJu5ZCtnvhbGK0bXiaDjSg=;
- b=qkfb56Fsdbhf2dKTcl9ybq+s9xRGF8hko0RxD/C2hN/OoLW3fKH8PNQwg+ZR8mbTCKv//Go9y7K/VGhL7AfEDMPuGLixuvQlienh8+Lzkt5CmceWIP/1c/Bl1fy2yRCHE0tReSAWETptWfhxtn0RjZOHsNAQpx2xDkpUDHqOza5gP9DB34jemAFGErrP6rxx/CXUQReKdAtKDgxkAB2ZBwFZIPaJafU3WlsU61u8KuO0TOpwuxeg9CmIRcxAvgOMkEj4xSO5jR0ADeTSzrjk/xClQqhKOytuBiYQiF0Pgsw3/ynysQbhYdeoNdUpO5yLTpefDu3FOwRW1wWsNY2JKg==
-Received: from BL1PR13CA0117.namprd13.prod.outlook.com (2603:10b6:208:2b9::32)
- by SJ2PR12MB8184.namprd12.prod.outlook.com (2603:10b6:a03:4f2::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.27; Mon, 16 Jun
- 2025 06:04:31 +0000
-Received: from BL02EPF0001A0FF.namprd03.prod.outlook.com
- (2603:10b6:208:2b9:cafe::60) by BL1PR13CA0117.outlook.office365.com
- (2603:10b6:208:2b9::32) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8835.23 via Frontend Transport; Mon,
- 16 Jun 2025 06:04:30 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BL02EPF0001A0FF.mail.protection.outlook.com (10.167.242.106) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8835.15 via Frontend Transport; Mon, 16 Jun 2025 06:04:29 +0000
-Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Sun, 15 Jun
- 2025 23:04:16 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Sun, 15 Jun 2025 23:04:15 -0700
-Received: from nvidia.com (10.127.8.12) by mail.nvidia.com (10.126.190.182)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Sun, 15 Jun 2025 23:04:11 -0700
-Date: Sun, 15 Jun 2025 23:04:10 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
-CC: Yi Liu <yi.l.liu@intel.com>, "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, 
- Peter Xu <peterx@redhat.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
- <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>, "Tian, 
- Kevin" <kevin.tian@intel.com>, "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun
- <yi.y.sun@linux.intel.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
- host
-Message-ID: <aE+z2gGLcxNUuODW@nvidia.com>
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-16-zhenzhong.duan@intel.com>
- <aC5YjHrv5EMDixzZ@Asurada-Nvidia>
- <0f8087f4-0c97-440d-84d2-f3f017f81041@intel.com>
- <aDDk1NYwJXaAdUQI@Asurada-Nvidia>
- <29f5f434-1fe3-4b5e-91d1-f153e1e98602@intel.com>
- <aDSmcvZ08jNOSr05@Asurada-Nvidia>
- <SJ0PR11MB6744340B889FF65D3BD5B8459267A@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <f6baaea1-a60c-41dc-a9a8-d2389ed14679@intel.com>
- <7b684d1b8454496f9a302c66298daf37@huawei.com>
+ (Exim 4.90_1) (envelope-from <SRS0=g70R=Y7=kaod.org=clg@ozlabs.org>)
+ id 1uR3B8-0003Af-Th; Mon, 16 Jun 2025 02:18:50 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bLKZN10ljz4wcm;
+ Mon, 16 Jun 2025 16:18:36 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bLKZJ28hwz4wb0;
+ Mon, 16 Jun 2025 16:18:31 +1000 (AEST)
+Message-ID: <157ec442-1d6e-42b2-aa0d-56a2d6f11414@kaod.org>
+Date: Mon, 16 Jun 2025 08:18:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <7b684d1b8454496f9a302c66298daf37@huawei.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF0001A0FF:EE_|SJ2PR12MB8184:EE_
-X-MS-Office365-Filtering-Correlation-Id: 11014934-04dc-4213-8487-08ddac9ba7ff
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|1800799024|82310400026|7416014|376014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Kp4BFz0KF8shlBQ0+gHznv+7IBX7n3tg/9Ga1mqXyvGmaUJMATrJoR/AiGz2?=
- =?us-ascii?Q?N63DsCXkIT36CvIvEd8+FtVMBPqWYAxO3g8VbHd+kAVjGaR8PY9U3Bez32Bh?=
- =?us-ascii?Q?5u+tfpjBU6BxOB0/1NstB1UTJvohKvj+3OHlye0OTydB2VK58T5rm25fFfxy?=
- =?us-ascii?Q?i2Rrv7EzB6/+N/kuviAdFOcSWguXJQjcOQw44DHYaoukKbRB7Pf2B1Sg5Fts?=
- =?us-ascii?Q?/kMoarpCc/u4tMMXZX2tu5COCGAF8CVTLrAgfgXqWtDNdZertZhWXkF0Xnup?=
- =?us-ascii?Q?d4I3WkfyLj/qJX/kIMk9dbDzWT5YOk687ofRnUzT4D1e5fFQ74uAv2XHpPc5?=
- =?us-ascii?Q?GBqO5skueDuZUCYbOsCWFCjVilLYFXxmbBB6wWR1Dq6lY7IiqV1L3772zXdV?=
- =?us-ascii?Q?dz9OKRkSlh7CbxSwgVw5yBTQTCVM91DBE9YJh3EfnYfz7dXeEsZYPPXFVCoR?=
- =?us-ascii?Q?TyI/M198AHRIPg25hINF/ng4PXo8WwYnp/04/pbFi93ELd1kFKGVYuErFttQ?=
- =?us-ascii?Q?PfuzF7Ay3d7k/oGt0Gwd6JUEOW5AKp2uAUQUA2auyZ45we1PXy92pCreJZTP?=
- =?us-ascii?Q?/AiYP7aCQbpfYGmfp1hMepfUTJHEgkKTCCsDoLfBZlFKx99435tdvZ02wido?=
- =?us-ascii?Q?rFbgh1xoNIzALl/xjYWUeE5Cgr8+/nHwnWxChGip7AnFEZes1JMFtZ6YHX4y?=
- =?us-ascii?Q?ttp1lV3jxNJTIW4gEWCHTWPgG63u+Xp/ZozxR+WLpX1nvUCIK4Dd5Aqjv3uA?=
- =?us-ascii?Q?1lwOpBxeYcImCHDnSxya1k2NIc+VcQoWFXQnpgo6UO/xTRwcPWe21l+mTECp?=
- =?us-ascii?Q?IEJoF9s7EE1YaSX+0WElFENtPmTjA/XLISF5GNaaD8yfZBJFDhQ18jqr7D7N?=
- =?us-ascii?Q?J+djOb0RnJYBLDBllXiyPWIFArzueGczD33SFdcNhK1aG2NkCqQjh4v05871?=
- =?us-ascii?Q?iSxZnoJwjqWflHdeeb9z0nb4dUpyoHuF23OEo3BMoFJbVJl7/SMGp8+4hec9?=
- =?us-ascii?Q?3SDX6XITER+48Ev8keY1Bx4ameQyuBEk17sgJtCABL4GkT21zpZegSJjMQfI?=
- =?us-ascii?Q?r+DAkFXIfIoM64kYUyyh9RuPxPkYimJ0Qm8Be0qQzcGzySLIJi7T4XNQsvIC?=
- =?us-ascii?Q?XGCdOlcRR/chW6QNpHVkI6BnoUfpv6Kb7s8IMyg8NVu7LAe4tULikpKrsvdP?=
- =?us-ascii?Q?0n5mzX02+mx5Q3uk1xgvPihqe+72vzxBAr9wd9r6Yxvs1D3lKRUuylrotz9s?=
- =?us-ascii?Q?8BHvTRTUAfCnLZiPQzCCYsa5kWeQNIkot1I6TprZiDvAIEgm3fIV5cFlobjX?=
- =?us-ascii?Q?ZpcaCbvLgvs68PmgXZCQV/6DVAjYxmXvUef1oTT+PrhufA1arrPqgLiEeh0q?=
- =?us-ascii?Q?TPeJqAvqWG5OqQzO2fK09leuf2rHXvxuna0w2toYBNdDdrLYTQdbMR51oRd4?=
- =?us-ascii?Q?D+vSz8jZA0ydGqTU/N2opeS9UNtQnlH8pCiNRQlMsHnKLIPWHM3yVmqi6eeP?=
- =?us-ascii?Q?FE96luDNpeMNkvAqblJN1r/VM0D8FgIIXtK2?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(1800799024)(82310400026)(7416014)(376014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 06:04:29.3479 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 11014934-04dc-4213-8487-08ddac9ba7ff
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL02EPF0001A0FF.namprd03.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ2PR12MB8184
-Received-SPF: permerror client-ip=2a01:111:f403:2418::62d;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM12-BN8-obe.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] hw/misc/aspeed_scu: Handle AST2600 protection key
+ registers correctly
+To: Tan Siewert <tan@siewert.io>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org
+References: <20250613181906.50078-1-tan@siewert.io>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250613181906.50078-1-tan@siewert.io>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
+ envelope-from=SRS0=g70R=Y7=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.097, RCVD_IN_DNSWL_MED=-2.3,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -177,37 +110,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 02:06:15PM +0000, Shameerali Kolothum Thodi wrote:
-> > >> The "switch" in vSMMU model is only needed by KVM for MSI doorbell
-> > >> translation. By thinking it carefully, maybe it shouldn't switch AS
-> > >> because VFIO might be confused if it somehow does get_address_space
-> > >> again in the future..
-> > 
-> > @Nicolin, not quite get the detailed logic for the MSI stuff on SMMU. But I
-> > agree with the last sentence. get_address_space should return a consistent
-> > AS.
+On 6/13/25 20:19, Tan Siewert wrote:
+> The AST2600 SCU has two protection key registers (0x00 and 0x10) that
+> both need to be unlocked. (Un-)locking 0x00 modifies both protection key
+> registers, while modifying 0x10 only modifies itself.
 > 
-> I think it is because, in ARM world the MSI doorbell address is translated by
-> an IOMMU. Hence, if the Guest device is behind IOMMU, it needs to return
-> the IOMMU AS in,
+> This commit updates the SCU write logic to reject writes unless both
+> protection key registers are unlocked, matching the behaviour of
+> real hardware.
 > 
-> kvm_irqchip_add_msi_route()
->  kvm_arch_fixup_msi_route()
->    pci_device_iommu_address_space()  --> .get_address_space()  -->At this point we now return IOMMU AS.
+> Signed-off-by: Tan Siewert <tan@siewert.io>
+> ---
+> V3:
+>    - Change logic to unlock both registers on 0x00 write, while writing
+>      to 0x10 only modifies itself. [Jamin]
 > 
-> If not the device will be configured with a  wrong MSI doorbell address.
+>   hw/misc/aspeed_scu.c | 16 ++++++++++++++--
+>   1 file changed, 14 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+> index 4930e00fed..993cb800a8 100644
+> --- a/hw/misc/aspeed_scu.c
+> +++ b/hw/misc/aspeed_scu.c
+> @@ -91,6 +91,7 @@
+>   #define BMC_DEV_ID           TO_REG(0x1A4)
+>   
+>   #define AST2600_PROT_KEY          TO_REG(0x00)
+> +#define AST2600_PROT_KEY2         TO_REG(0x10)
+>   #define AST2600_SILICON_REV       TO_REG(0x04)
+>   #define AST2600_SILICON_REV2      TO_REG(0x14)
+>   #define AST2600_SYS_RST_CTRL      TO_REG(0x40)
+> @@ -722,6 +723,7 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
+>       int reg = TO_REG(offset);
+>       /* Truncate here so bitwise operations below behave as expected */
+>       uint32_t data = data64;
+> +    bool unlocked = s->regs[AST2600_PROT_KEY] && s->regs[AST2600_PROT_KEY2];
+>   
+>       if (reg >= ASPEED_AST2600_SCU_NR_REGS) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -730,15 +732,25 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
+>           return;
+>       }
+>   
+> -    if (reg > PROT_KEY && !s->regs[PROT_KEY]) {
+> +    if ((reg != AST2600_PROT_KEY || reg != AST2600_PROT_KEY2) && !unlocked) {
+>           qemu_log_mask(LOG_GUEST_ERROR, "%s: SCU is locked!\n", __func__);
+> +        return;
+>       }
+>   
+>       trace_aspeed_scu_write(offset, size, data);
+>   
+>       switch (reg) {
+>       case AST2600_PROT_KEY:
+> -        s->regs[reg] = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
+> +        /*
+> +         * Writing a value to SCU000 will modify both protection
+> +         * registers to each protection register individually.
+> +         */
+> +        u32 value = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
 
-Yes. The KVM code on ARM needs to translate the MSI location from
-gIOVA to gPA, because MSI on ARM is behind IOMMU.
+u32 -> uint32_t and it is best to declare variables at the top
+of the function.
 
-> Nicolin, you seems to suggest we could avoid this switching and always return
-> System AS. Does that mean we handle this KVM/MSI case separately?
-> Could you please detail out the idea?
+Thanks,
 
-We could add one of following ops:
-    get_msi_address_space
-    get_msi_address/translate_msi_iova
+C.
 
-Thanks
-Nicolin
+
+
+> +        s->regs[AST2600_PROT_KEY] = value;
+> +        s->regs[AST2600_PROT_KEY2] = value;
+> +        return;
+> +    case AST2600_PROT_KEY2:
+> +        s->regs[AST2600_PROT_KEY2] = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
+>           return;
+>       case AST2600_HW_STRAP1:
+>       case AST2600_HW_STRAP2:
+
 
