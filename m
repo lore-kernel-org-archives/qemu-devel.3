@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D543C71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 12:16:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8AEFC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 12:17:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR8l1-00079Q-Jm; Mon, 16 Jun 2025 08:16:11 -0400
+	id 1uR8kT-0006vA-1r; Mon, 16 Jun 2025 08:15:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uR8kg-0006xJ-TA; Mon, 16 Jun 2025 08:15:51 -0400
+ id 1uR8kF-0006qI-Sv; Mon, 16 Jun 2025 08:15:24 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uR8kY-0004Yd-AI; Mon, 16 Jun 2025 08:15:49 -0400
+ id 1uR8kC-0004Vl-PR; Mon, 16 Jun 2025 08:15:23 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 55GCDKG0047581
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 55GCCw8j047515
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Mon, 16 Jun 2025 21:13:20 +0900 (JST)
+ Mon, 16 Jun 2025 21:12:58 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=hyI6ifgDk3Q7Kv3xDnCmgrJzLzLKSQRU+5vx/8ccJHo=; 
+DKIM-Signature: a=rsa-sha256; bh=4JSHX6X6s+w1UYxLKUROnDTVSl6teX25I2C+LjCWQpE=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1750076002; v=1;
- b=sUHoe9SQkfJw6ynMY3sqqNwW1/D5eKVGMvw70KzOHvhFaEAUBvdIFPQ8RiQ9kG/C
- K6zj8j45TkI3CIkKUkKcsn9Kpw+FFcPQ0Tv7u6h6FImfNp2xrCTcPc8IavUjqvcq
- oZKLMZ80ACxveklcdUjoRoVM44HPjlaIBmk0d8eLfk3aU7VNeaffIfO2xSa07Kv6
- 8BgNNQYR0osuF+xJthsL6B+vyEfdWLOJfgi61eLAmS3/qhh2g5cfMYoJnx85YR1/
- +Zb6NB4YfV5Wo8xscZQXH8zXfJbdC13YSPu3ax1PJGlV6JY/xlEAuMGPeeaEJui1
- 0xOgaGo9AKLjN8MbUasCjQ==
-Message-ID: <3c997a88-d0df-45f5-be1e-02f8d3018605@rsg.ci.i.u-tokyo.ac.jp>
-Date: Mon, 16 Jun 2025 21:13:19 +0900
+ s=rs20250326; t=1750075980; v=1;
+ b=VPH1kh91xsU4KYEmFTpfwP/D+AZzIwCs40gBdNlxOoWfXZv1L0PUrW5tSwSdfLsS
+ fN2bLWTG/atuD6c/gWQ+ujbBiUnJ0oCsG0hV6aqYDCEUZoi4+DwdrRTCOIubbeB6
+ g5qExqA5Y+6maQTTffkKeGa6UOTusx7tEPnUHqU1qJ8dmEdQDnXbVAMJcIZuJm5Y
+ Z9lZg9EvURWFzmpyNI8QJ17K17bfxNWx0tjhM2gGB+5Sv6Pa2qyCVo12FjdPePcm
+ iFQPDsr8hlHZUjEnTXeLC15qmVJhENJYrNFHQQ/c8T1VqJuphu5zUex8WCJfHBQH
+ VXUeVy6t93xuvn/pUEHB4Q==
+Message-ID: <3c349b4d-1cb5-41f3-a64d-e8455b4c88b5@rsg.ci.i.u-tokyo.ac.jp>
+Date: Mon, 16 Jun 2025 21:12:58 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 05/12] python: fix illegal escape sequences
+Subject: Re: [PATCH v2 04/12] python: update shebangs to standard, using
+ /usr/bin/env
 To: John Snow <jsnow@redhat.com>, qemu-devel@nongnu.org
 Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -119,10 +120,10 @@ Cc: Joel Stanley <joel@jms.id.au>, Yi Liu <yi.l.liu@intel.com>,
  Huacai Chen <chenhuacai@kernel.org>, Mahmoud Mandour
  <ma.mandourr@gmail.com>, Harsh Prateek Bora <harshpb@linux.ibm.com>
 References: <20250612205451.1177751-1-jsnow@redhat.com>
- <20250612205451.1177751-6-jsnow@redhat.com>
+ <20250612205451.1177751-5-jsnow@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250612205451.1177751-6-jsnow@redhat.com>
+In-Reply-To: <20250612205451.1177751-5-jsnow@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -150,11 +151,12 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 2025/06/13 5:54, John Snow wrote:
-> \{ is an illegal escape sequence, to get a literal backslash we need to
-> use \\.
+> This is the standard shebang we should always be using, as it plays
+> nicely with virtual environments and our desire to always be using a
+> specific python interpreter in our environments.
 > 
-> This is being fixed because of an issue spotted when attempting to use
-> the pyupgrade script.
+> (It also makes sure I can find all of the python scripts in our tree
+> easily.)
 > 
 > Signed-off-by: John Snow <jsnow@redhat.com>
 
