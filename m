@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91E96C71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 15:50:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2963BC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 15:51:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRC6B-0000Ck-Nr; Mon, 16 Jun 2025 11:50:15 -0400
+	id 1uRC7H-0001BB-Ny; Mon, 16 Jun 2025 11:51:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uRC60-0008WH-UH
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 11:50:05 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uRC7F-0001Ax-Ua
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 11:51:22 -0400
 Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uRC5z-0003GP-3B
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 11:50:04 -0400
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uRC77-0003js-L0
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 11:51:21 -0400
 Authentication-Results: sean.taipei; dmarc=fail (p=quarantine dis=none)
  header.from=sean.taipei
-ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 39ECB737B
-ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1750088998;
+ARC-Filter: OpenARC Filter v0.1.0 sean.taipei 48B4B737B
+ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1750089039;
  cv=none;
- b=WwCuB2mamigF/+5eE+2Vdy3VFgO5gcbwQIRi+4W7NI6V9FizcPY8H8PaIb66e2uO46n+kPZolCyn3Zf8f9YU28pK4QUFNCV796zw3qc13tkZDIiYzvtbNDTWPdoX19v1Wg7HThoESabMsEzlo1mgB/vPFjKs+FMTXoUhT3JQ61gUR8kLBwOAe8k6t9B0fbIlJtGB8lQnmzi1wzJLCUPNTmKCTWaBU1hMfKccGm1RUbp2bA3/05E9vrYikbxjAw2WSoOnxyXLdYGz0Kw+mtUdran04Y1qyvD/6LtoD49JNCSVR33Nf5mI94ilRa7iVa1fX9gqxQla3P4pbH9bUyS3tA==
+ b=v80Gs3U/4YCsy/h5DMXcd+UQ3RuBFEe66HJejp3CdJ9d1p15beWNJez+yMxwaizH0OAzkaXnntby3NzWjPU4QnfJZCndlUSv3WcXMCVZe3DEyI8BsmA1mz0JiBoghsNi9O0qOvhoYpRo5f+2bhkSgDpya0E1MGT5Rr5lJXRvxWyP5yQOE1oGa0Th9Jp7+cdT7gNiT05jClyGf6A8zsczZK9vUKEbJh/pteeLDTljCKlZxp84b9AgQIbStkVss98aAWECcmgPBlFd83LizTNiIKyoyq0LEM411IC8BMKL1CtVOIIxMM+1h80mpE9fFXTqzgWsxmXtPsZUF4AfrkExgQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2;
- t=1750088998; c=relaxed/simple;
- bh=AdX+pbXmv9eeLx2TICcIfvUDdEy0BT7Wklw7bbJ4PIQ=;
+ t=1750089039; c=relaxed/simple;
+ bh=wOUJ/zaiQlCj3siK0vTD1Gt0EpD0c1WOUtaCYr30hIo=;
  h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:References:
  MIME-Version;
- b=rNhLyvVnL+jdFrSP0vq/p8hjGtXx3L0Idhw2zpC4bceeO7nG8Iw3hLWYfRBGhxmAoiMe9azNc4iqqvTxPrBF7ekJLSFydUKip/WNv+bVfKgTuoBQHZpjgKFMubkUz/kTzSdjH8FNpkC6PY8wWE2esUR5lMCEDpSR7nWjjDgtNRf070Nr2oj0gTfSzWxQFUl4qNywZSa9v+5PGGu4lDz5oCz/FZuQZLk/RG/7nlSn/9yIpXZaKpGG3uPOIQWYzQizWzkf0Mo51+VZmb8XLbybiUP3UZJbVwCEcrsz/qfGHph7I3cVoM1au5rHHptKilmQ/K/dlKklrvh+AXvP71C5sQ==
+ b=pOuL/etpx68cFYWh2XGMKQrDqGJT4CNfL634c3Lol6SeVjdqeyIYFVzHZWXGEVWdLXwEMQdrE7W6eX/TneOGsb/t+4D3aKUG822um0lWFWIV1sAsSHCzwg0oH1EE2g+SQwSo4E3B2rBeFw9zBWuTxBD29Ld9Oui2vOH8r2alCYIdKhLDTZfEdB9dJCL7Hdgxi23iV4/uLPNEbwkFqh7ZefFYC9qoXUUjOFvRmCBrrYuAQnry5VQ+pRlDO+rGVIvj8Eqbjn+1utmZWvKi3NzcWCP7s7VUwXArMUgnsqWzimfC7zPZVPH5KI8woupH35dLwirlYZwJHqxRwgwZK0bUAQ==
 ARC-Authentication-Results: i=1; sean.taipei;
  dmarc=fail (p=quarantine dis=none)
  header.from=sean.taipei
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
- s=2021Q3; t=1750088998;
- bh=AdX+pbXmv9eeLx2TICcIfvUDdEy0BT7Wklw7bbJ4PIQ=;
+ s=2021Q3; t=1750089039;
+ bh=wOUJ/zaiQlCj3siK0vTD1Gt0EpD0c1WOUtaCYr30hIo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=paahbG/7yGb+EMgz2W7PhdPrSa8/tTuX9iScWdWLVTp8nheia9AwvwA5E+fxA8/wU
- d8ta0OO75DtayuDXxiwQI9awSzW87iakfz0CZfiJ6nZ+65PZN2C+YeYU3R+24DW4Z8
- MFH5ntW7b4L0bjh71FEQbZ08Z21i+QPa/0wSnhgwrlaFpBlXxWkdSpYRT/O759By3O
- j+C5IX8b8CCa53cBzkBxEx6iCijjerAehe7xQ38SwP9q4qxnwcSzS1qTR5zy0og7bq
- Ve1rXa6Rm2Q9mvjAi2pPG5jnGc+YWP5MvEvNSDFZmcbXZJf7uo0UdReexT37feF+8U
- itdmXhPI3uXjQ==
+ b=f28paViscSp+3dC0awPhX08mOIH05nFfznCrfT0DjcP00fIffSWU2isg88yfcLhPT
+ ZTN0woOdvAL/1x7hWH608TiFAfbludthb6yiAZSOmwTamr3E0Af5coffT90PL+s8vi
+ nHXivSbqOQpaSp6LbGe8atqf0yb/8QCDJ+uTFuKlWFxCpMgPNRmuNSMgiTLio9nRD9
+ AHMlFY30n24pnnSOSqsX9+7LQFWtVkyMWcYyBr23iquAvFdFKbX6EdXT3TbENwuRLm
+ TCxSzyJjd2/6Mm0EmAZfH6W1X+zdzqJeZqUui0z648jabfQnkQbEijSCmrKkYNbN/b
+ 3nhTawItZwjyg==
 Received: from localhost.localdomain (unknown [23.170.80.102])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by sean.taipei (Postfix) with ESMTPSA id 39ECB737B;
- Mon, 16 Jun 2025 23:49:55 +0800 (CST)
+ by sean.taipei (Postfix) with ESMTPSA id 48B4B737B;
+ Mon, 16 Jun 2025 23:50:36 +0800 (CST)
 From: Sean Wei <me@sean.taipei>
 To: qemu-devel@nongnu.org
 Cc: Sean Wei <me@sean.taipei>,
 	Dmitry Fleytman <dmitry.fleytman@gmail.com>
-Subject: [PATCH 3/6] MAINTAINERS: fix vendor capitalization (Vmware -> VMware)
-Date: Mon, 16 Jun 2025 11:49:30 -0400
-Message-ID: <20250616.qemu.relocated.03@sean.taipei>
+Subject: [PATCH 4/6] MAINTAINERS: fix VMware filename typo (vwm -> vmw)
+Date: Mon, 16 Jun 2025 11:50:10 -0400
+Message-ID: <20250616.qemu.relocated.04@sean.taipei>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250616.qemu.relocated@sean.taipei>
 References: <20250616.qemu.relocated@sean.taipei>
@@ -87,8 +87,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"VMware" is the vendor's official spelling.
-Adjust the spelling in MAINTAINERS for consistency.
+The entry for the VMware PVSCSI spec uses "vwm" instead of "vmw",
+which does not match any file in the tree.
+
+Correct the path so scripts/get_maintainer.pl can match the file.
 
 Signed-off-by: Sean Wei <me@sean.taipei>
 ---
@@ -96,18 +98,18 @@ Signed-off-by: Sean Wei <me@sean.taipei>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/MAINTAINERS b/MAINTAINERS
-index 0477e124d1..7428217361 100644
+index 7428217361..ad82fa4d9a 100644
 --- a/MAINTAINERS
 +++ b/MAINTAINERS
-@@ -2528,7 +2528,7 @@ F: net/eth.c
- F: hw/net/net_rx_pkt*
- F: hw/net/net_tx_pkt*
+@@ -2539,7 +2539,7 @@ F: pc-bios/efi-vmxnet3.rom
+ F: pc-bios/vgabios-vmware.bin
+ F: roms/config.vga-vmware
+ F: tests/qtest/vmxnet3-test.c
+-F: docs/specs/vwm_pvscsi-spec.rst
++F: docs/specs/vmw_pvscsi-spec.rst
  
--Vmware
-+VMware
- M: Dmitry Fleytman <dmitry.fleytman@gmail.com>
- S: Maintained
- F: docs/specs/vmw_pvscsi-spec.rst
+ Rocker
+ M: Jiri Pirko <jiri@resnulli.us>
 -- 
 2.49.0
 
