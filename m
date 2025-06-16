@@ -4,77 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62F04C71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 15:53:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27105C71155
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 16:07:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRC8f-0002Xn-MZ; Mon, 16 Jun 2025 11:52:49 -0400
+	id 1uRCLe-00007C-Mj; Mon, 16 Jun 2025 12:06:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>)
- id 1uRC8V-0002OC-QN; Mon, 16 Jun 2025 11:52:39 -0400
-Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uRCLd-00006D-1c
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 12:06:13 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>)
- id 1uRC8S-00044M-9K; Mon, 16 Jun 2025 11:52:39 -0400
-Authentication-Results: sean.taipei; dmarc=fail (p=quarantine dis=none)
- header.from=sean.taipei
-ARC-Filter: OpenARC Filter v0.1.0 sean.taipei B20C17389
-ARC-Seal: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2; t=1750089120;
- cv=none;
- b=AsG7YFQQWVqR6a2Uc5LrKDmiiLeOS+Xo3D5TvWdAsFTJ/Z/O9qkRIQ8e37DlVJaZynsHqekehc0ZXD/QJDjXBwk+VilWM7SeBN4VOg8V409nYkOpZviSj4K1crXxYkVDoBbhVXip4Xdk7kVNW2Pupdz4rs2Hphy8A7VhOG+7ZL/RZXjBeOY29jCpUNfkvV8tBbiXVzm3NKvbPLpawQUAaVcdTm3JxurmBgngmH+FGYXyVrBddOwfDNryf/sKJ9zlbiG+h+IUIUNljrZqmKxpF8Ta7J2wP/Mr1lXp+TzvJMqrj3j3ny5RjcMU1vTS6XoHsN/+UD6VXhr6oIonEWUkfg==
-ARC-Message-Signature: i=1; a=rsa-sha256; d=sean.taipei; s=arc-2024Q2;
- t=1750089120; c=relaxed/simple;
- bh=xwjkPl8NeSHmZR6/B86A6bnYGCIQGsZXeJmjL1O1fWw=;
- h=DKIM-Signature:From:To:Cc:Subject:Date:Message-ID:References:
- MIME-Version;
- b=rl1eDOiOJov0p8fEBfVun2ynnI1G/K2sDxJgQlMYUx7x85IRT6ln7gdD4WykS+ifVx1hWjUnMT/48dXvP3zIzGuObSl8FwKL2y2Upts0M5ab3TpYxMC1YRiUzPiqscCco+tSKyfbxWZkXNbZgHsJ3HXJDChOfcO0JwURqETITw0IGg04gA8zDyI+KTLETbIWFucn8W1lANziGmHQCJAd4J/GQ2jqzCBEUI0+SQu0ah9EKaN9dN8fRrwOU/HdQUQnl0wZeplbqCzEr09BDOsM6XNHfPEZJcXZfkfKH/cty69Vu5UI0xi9RuG21vwWKc8h3kYOUxKtkpKFIlIqk8cB0w==
-ARC-Authentication-Results: i=1; sean.taipei;
- dmarc=fail (p=quarantine dis=none)
- header.from=sean.taipei
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
- s=2021Q3; t=1750089119;
- bh=xwjkPl8NeSHmZR6/B86A6bnYGCIQGsZXeJmjL1O1fWw=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=UB32phdYayN4xdsvinvny+ll6lGzs/Mre+6v5ZjTIPNBFx5P8oBtDZMYjsDU8Q2B9
- gK+jjkZ5XJvEPUkgFOJ6knfqyrydw0MStoigOaXYFwCcX68RzoO31bYDaIw9hKpUGl
- W5uXhZ3As0ExsBNarmNPJVd+aVNomd6a8efe8EDYW5tLZmMHGv/Lbam9wq93xhKLtt
- ptPJCXgvDkw7zVHvTHdW6OFwoW0kikJU9fMHN5gmmX7lbo4h/CJuFMU4tNEZ2vyfAB
- AZQwOTh1KcS9ZCyMZ/nLh5yvEJrnxXLEtdrX3q/MjaqV8wrfXXgBsA04nJ/QvH3SuQ
- t1x2Xjqc5mLVg==
-Received: from localhost.localdomain (unknown [23.170.80.102])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by sean.taipei (Postfix) with ESMTPSA id B20C17389;
- Mon, 16 Jun 2025 23:51:55 +0800 (CST)
-From: Sean Wei <me@sean.taipei>
-To: qemu-devel@nongnu.org
-Cc: Sean Wei <me@sean.taipei>, Keith Busch <kbusch@kernel.org>,
- Klaus Jensen <its@irrelevant.dk>, Jesper Devantier <foss@defmacro.it>,
- Peter Maydell <peter.maydell@linaro.org>, Song Gao <gaosong@loongson.cn>,
- qemu-block@nongnu.org (open list:nvme),
- qemu-arm@nongnu.org (open list:ARM TCG CPUs)
-Subject: [PATCH 6/6] treewide: fix paths for relocated files in comments
-Date: Mon, 16 Jun 2025 11:51:30 -0400
-Message-ID: <20250616.qemu.relocated.06@sean.taipei>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250616.qemu.relocated@sean.taipei>
-References: <20250616.qemu.relocated@sean.taipei>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uRCLV-0006qw-J6
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 12:06:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750089960;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=mW42fp2Z1LLzB87Xi9JR4VufdFd+FNoquYmLpFIfMyw=;
+ b=KNfguS6TQHPZZSv2U2IjnZXPi8Iov1xGZ87Py+HpPsuxkspIlxTXJBBQo0WmUIMZdrudNa
+ ac2ZGUIPAS+CJDsrwizn6EPxsbdoLQm2Xahn9Fl0ZZjSOfoc49+Q3FwVCAlsmNigeyuh/b
+ 5LexwVioAR2VfNvuDXQLSAuDqV4aa3M=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-364-bha_tGL6MqeH_SiYqBUHgg-1; Mon, 16 Jun 2025 12:05:57 -0400
+X-MC-Unique: bha_tGL6MqeH_SiYqBUHgg-1
+X-Mimecast-MFC-AGG-ID: bha_tGL6MqeH_SiYqBUHgg_1750089956
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a52bfda108so2249547f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 09:05:57 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750089956; x=1750694756;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mW42fp2Z1LLzB87Xi9JR4VufdFd+FNoquYmLpFIfMyw=;
+ b=jKqdcWtMdsaTsUoNlhj/0M0sHNZs75sv1M3obwOGdXAPb3m3q2tHpnOxNdUbnShx+U
+ G0L/9R/RMhO218w6DeQLCGK91GKAaEQCmlNDrlEtktqGCrUuZUIPCq5JCj518DMt77ZP
+ 8MW7E5qS+iN0euMkTeSvE21n6/0tsoJDWbGLAOpTRfNYxb9hf7/ingEmnS/wuzZIRQfi
+ agFnqwbVhQLehf8jZ66yv0oyOWEzF1/jkgW82Hm3vX0UR6ay64UnXwcf5un/Y0pNifv5
+ f6941HV3l8P20z5gy5Ou1OHBfPSeOgtUfgVK/5zYHt2V4vaPxq72Zf5MFe4XtkSR2GUB
+ bg5Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUCThiUmmBL9Zfb3z6L44VaJQSb7jfPuuMbxb7bLRsy4SqSIxcVzqQxiVziZ8UYHOcXaDkAhA+yI4LD@nongnu.org
+X-Gm-Message-State: AOJu0YxuTxSoqYOtv2UJQ5DB89A0fWPHK11KaVT6CoeJhMTa769TGs/S
+ uErMVecHo3oGOMU0v3QskhkKcyN6zHLuIo+h8QiWqRXrJfsBq9TnsTWzlzxxeKj79HlG9pFfSCk
+ Qb4KWu7HbtrX1rvpzNIWU1ZR0qI878ttZ6geb+gffCWZ4jE7gRwEsAEXG
+X-Gm-Gg: ASbGncuMSyOoPo+fOnJXSbtSkYQG7u0oJl6bJs8EQxkwh/v7sFi2EUSMoOHkJSfv3EQ
+ v4NzG90NoBk2wf46mmhFOY+oKaMxEX6UVKwHOdBQZZCaT63QklVaIHjIi80PyK69RgS+q/XraK6
+ 83MHRKtCQcA/28YqdJCxZicl445ns2LbFbI4DD27dobMwjerVSetsVN3CKeH/xFlphUNYvf+ncW
+ N6LkOLVpW/56PyEtoyLtvFFe95CUebbAal4x5zo81DQSu+7bEoVfF3oqwAIyZ0euUWnuqvvjKQQ
+ 3lnhdKD+6otGeVoYBwLw6NjC0dnNHstUP9dB1DEewY2NNYzo3+mJPimuw9Cv
+X-Received: by 2002:a05:6000:4602:b0:3a5:2182:bd11 with SMTP id
+ ffacd0b85a97d-3a572373c13mr8974754f8f.20.1750089956125; 
+ Mon, 16 Jun 2025 09:05:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF6k4o2Kmg1a3eiamx9fMCgXuSLexa8cAczetsLQJ1yM3TmCzmZMErZFUd6zdityRhGwir64Q==
+X-Received: by 2002:a05:6000:4602:b0:3a5:2182:bd11 with SMTP id
+ ffacd0b85a97d-3a572373c13mr8974718f8f.20.1750089955697; 
+ Mon, 16 Jun 2025 09:05:55 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a568a60f5asm11338370f8f.25.2025.06.16.09.05.55
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Jun 2025 09:05:55 -0700 (PDT)
+Message-ID: <d9230a6d-85d8-4944-a4ec-d87903c4fac6@redhat.com>
+Date: Mon, 16 Jun 2025 18:05:54 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: add vfio_device_get_region_fd()
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>
+References: <20250616101337.3190027-1-john.levon@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250616101337.3190027-1-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Powered-By: Sean <postmaster@sean.taipei>
-X-Scanned-By: MIMEDefang 3.3 on 104.21.5.93
-Received-SPF: pass client-ip=128.199.207.102; envelope-from=me@sean.taipei;
- helo=sean.taipei
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,100 +154,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-After the docs directory restructuring, several comments
-refer to paths that no longer exist.
+On 6/16/25 12:13, John Levon wrote:
+> This keeps the existence of ->region_fds private to hw/vfio/device.c.
+> 
+> Signed-off-by: John Levon <john.levon@nutanix.com>
 
-Replace these references to the current file locations
-so readers can find the correct files.
 
-Related commits
----------------
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-  189c099f75f (Jul 2021)
-    docs: collect the disparate device emulation docs into one section
-    Rename  docs/system/{ => devices}/nvme.rst
+Applied to vfio-next.
 
-  5f4c96b779f (Feb 2023)
-    docs/system/loongarch: update loongson3.rst and rename it to virt.rst
-    Rename  docs/system/loongarch/{loongson3.rst => virt.rst}
+Thanks,
 
-  fe0007f3c1d (Sep 2023)
-    exec: Rename cpu.c -> cpu-target.c
-    Rename  cpus-common.c => cpu-common.c
-
-  42fa9665e59 (Apr 2025)
-    exec: Restrict 'cpu_ldst.h' to accel/tcg/
-    Rename  include/{exec/cpu_ldst.h => accel/tcg/cpu-ldst.h}
-
-Signed-off-by: Sean Wei <me@sean.taipei>
----
- docs/spin/tcg-exclusive.promela | 4 ++--
- hw/nvme/ctrl.c                  | 2 +-
- target/arm/cpu.c                | 2 +-
- target/loongarch/README         | 2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
-
-diff --git a/docs/spin/tcg-exclusive.promela b/docs/spin/tcg-exclusive.promela
-index c91cfca9f7..1d03af850b 100644
---- a/docs/spin/tcg-exclusive.promela
-+++ b/docs/spin/tcg-exclusive.promela
-@@ -1,6 +1,6 @@
- /*
-  * This model describes the implementation of exclusive sections in
-- * cpus-common.c (start_exclusive, end_exclusive, cpu_exec_start,
-+ * cpu-common.c (start_exclusive, end_exclusive, cpu_exec_start,
-  * cpu_exec_end).
-  *
-  * Author: Paolo Bonzini <pbonzini@redhat.com>
-@@ -65,7 +65,7 @@
-                              }
- #define COND_BROADCAST(c)    c++
- 
--// this is the logic from cpus-common.c
-+// this is the logic from cpu-common.c
- 
- mutex_t mutex;
- cond_t exclusive_cond;
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index fd935507bc..5810bfbe7a 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -22,7 +22,7 @@
-  *
-  * Usage
-  * -----
-- * See docs/system/nvme.rst for extensive documentation.
-+ * See docs/system/devices/nvme.rst for extensive documentation.
-  *
-  * Add options:
-  *      -drive file=<file>,if=none,id=<drive_id>
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index e025e241ed..90cf924938 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -2672,7 +2672,7 @@ static const char *arm_gdb_get_core_xml_file(CPUState *cs)
-  * linux syscall TIF_TAGGED_ADDR setting, not TBI in general.
-  *
-  * There should be a better place to put this, but we need this in
-- * include/exec/cpu_ldst.h, and not some place linux-user specific.
-+ * include/accel/tcg/cpu-ldst.h, and not some place linux-user specific.
-  *
-  * Note that arm-*-user will never set tagged_addr_enable.
-  */
-diff --git a/target/loongarch/README b/target/loongarch/README
-index 0b9dc0d40a..1ffd3422d2 100644
---- a/target/loongarch/README
-+++ b/target/loongarch/README
-@@ -11,7 +11,7 @@
- 
- - System emulation
- 
--  You can reference docs/system/loongarch/loongson3.rst to get the information about system emulation of LoongArch.
-+  You can reference docs/system/loongarch/virt.rst to get the information about system emulation of LoongArch.
- 
- - Linux-user emulation
- 
--- 
-2.49.0
+C.
 
 
