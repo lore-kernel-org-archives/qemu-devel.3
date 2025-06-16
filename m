@@ -4,50 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9481FC71155
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 12:39:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB3DFC71155
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 12:49:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR96u-0004AW-IT; Mon, 16 Jun 2025 08:38:48 -0400
+	id 1uR9G9-0006Di-O2; Mon, 16 Jun 2025 08:48:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uR96s-00049v-LA; Mon, 16 Jun 2025 08:38:46 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uR9G6-0006Cz-O2; Mon, 16 Jun 2025 08:48:18 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1uR96p-0007nZ-KP; Mon, 16 Jun 2025 08:38:46 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id CA10445E28;
- Mon, 16 Jun 2025 14:38:40 +0200 (CEST)
-Message-ID: <4a7ca415-0d16-4b21-ad93-31c35f1a4511@proxmox.com>
-Date: Mon, 16 Jun 2025 14:38:39 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uR9G3-0000hn-PY; Mon, 16 Jun 2025 08:48:18 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bLVC14X0Pz6M567;
+ Mon, 16 Jun 2025 20:47:25 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id C40E41402FF;
+ Mon, 16 Jun 2025 20:47:57 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Mon, 16 Jun
+ 2025 14:47:56 +0200
+Date: Mon, 16 Jun 2025 13:47:54 +0100
+To: Alireza Sanaee <alireza.sanaee@huawei.com>
+CC: <qemu-devel@nongnu.org>, <mst@redhat.com>, <anisinha@redhat.com>,
+ <armbru@redhat.com>, <berrange@redhat.com>, <dapeng1.mi@linux.intel.com>,
+ <eric.auger@redhat.com>, <farman@linux.ibm.com>, <gustavo.romero@linaro.org>, 
+ <imammedo@redhat.com>, <jiangkunkun@huawei.com>, <linuxarm@huawei.com>,
+ <maobibo@loongson.cn>, <mtosatti@redhat.com>, <peter.maydell@linaro.org>,
+ <philmd@linaro.org>, <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
+ <shameerali.kolothum.thodi@huawei.com>, <shannon.zhaosl@gmail.com>,
+ <yangyicong@hisilicon.com>, <zhao1.liu@intel.com>
+Subject: Re: [PATCH v13 2/7] hw/core/machine: topology functions
+ capabilities added
+Message-ID: <20250616134754.00004530@huawei.com>
+In-Reply-To: <20250611155618.351-3-alireza.sanaee@huawei.com>
+References: <20250611155618.351-1-alireza.sanaee@huawei.com>
+ <20250611155618.351-3-alireza.sanaee@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] block/rbd: support selected key-value-pairs via QAPI
-To: Ilya Dryomov <idryomov@gmail.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com,
- eblake@redhat.com, hreitz@redhat.com, kwolf@redhat.com, pl@dlhnet.de
-References: <20250515112908.383693-1-f.ebner@proxmox.com>
- <20250515112908.383693-2-f.ebner@proxmox.com>
- <CAOi1vP94WJ7r1vPXvcpGZTs2xf6TZ=p=EmVGQvwipftufaYAMw@mail.gmail.com>
- <aE_pbAS_gS12Fp8f@redhat.com>
- <CAOi1vP-oc0XHR28E7JrvZOohL7KZEq7LunYKHfb540W=a8t=wQ@mail.gmail.com>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <CAOi1vP-oc0XHR28E7JrvZOohL7KZEq7LunYKHfb540W=a8t=wQ@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -60,69 +74,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 16.06.25 um 12:28 schrieb Ilya Dryomov:
-> On Mon, Jun 16, 2025 at 11:52 AM Daniel P. Berrangé <berrange@redhat.com> wrote:
->> On Mon, Jun 16, 2025 at 11:25:54AM +0200, Ilya Dryomov wrote:
->>> On Thu, May 15, 2025 at 1:29 PM Fiona Ebner <f.ebner@proxmox.com> wrote:
->>>>  ##
->>>>  # @BlockdevOptionsRbd:
->>>>  #
->>>> @@ -4327,6 +4360,9 @@
->>>>  #     authentication.  This maps to Ceph configuration option "key".
->>>>  #     (Since 3.0)
->>>>  #
->>>> +# @key-value-pairs: Key-value pairs for additional Ceph configuraton.
->>>> +#     (Since 10.1)
->>>> +#
->>>>  # @server: Monitor host address and port.  This maps to the "mon_host"
->>>>  #     Ceph option.
->>>>  #
->>>> @@ -4342,6 +4378,7 @@
->>>>              '*user': 'str',
->>>>              '*auth-client-required': ['RbdAuthMode'],
->>>>              '*key-secret': 'str',
->>>> +            '*key-value-pairs' : 'RbdKeyValuePairs',
->>>
->>> To side-step all of the above, have you considered implementing
->>> a straightforward passthrough to Ceph instead?  Something like
->>>
->>>   '*key-value-pairs': ['RbdKeyValuePair']
->>>
->>> where RbdKeyValuePair is just a pair arbitrary strings (and
->>> key-value-pairs is thus an optional list of those).  rados_conf_set()
->>> would be called just the same but the user would be able to override
->>> any Ceph option they wish, not just a few that we thought of here.
->>
->> Passing through arbitrary key/value pairs as strings is essentially
->> abdicating our design responsibility in QAPI. enums would no longer
->> be introspectable. Integers / booleans would require abnormal formatting
->> by clients. API stability / deprecation promises can no longer be made.
->> and more besides.
+On Wed, 11 Jun 2025 16:56:13 +0100
+Alireza Sanaee <alireza.sanaee@huawei.com> wrote:
 
-Yes, and I also was under the impression that there is no desire to
-re-introduce arbitrary key-value pairs with QMP/blockdev options.
-
->> Given that limitation, if we did go the string pairs route, I would
->> expect it to be marked as "unstable" in the QAPI schema, so apps have
->> a suitable warning NOT to rely on this.
+> Add two functions one of which finds the lowest level cache defined in
+> the cache description input, and the other checks if caches are defined
+> at a particular level.
 > 
-> This sounds sensible to me.  We can continue exposing the most common
-> Ceph options through a proper QAPI schema but add key-value-pairs as an
-> alternative low-level route for those who want to avoid dealing with
-> physical configuration files.
+> Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+> ---
+>  hw/core/machine-smp.c | 52 +++++++++++++++++++++++++++++++++++++++++++
+>  include/hw/boards.h   |  7 ++++++
+>  2 files changed, 59 insertions(+)
+> 
+> diff --git a/hw/core/machine-smp.c b/hw/core/machine-smp.c
+> index 0be0ac044c..a4d79e0aa4 100644
+> --- a/hw/core/machine-smp.c
+> +++ b/hw/core/machine-smp.c
 
-As written in the commit message, the cache option should not apply to
-all volumes, so using configuration files is rather impractical there.
+> +
+> +bool machine_check_cache_at_topo_level(const MachineState *ms,
 
-I'd prefer defining the cache option(s) explicitly, and have people add
-additional key-value pairs they require explicitly going forward. But if
-you really don't want me to, I can still go with the unstable, arbitrary
-strings approach instead.
+Maybe avoid machine_check naming. It has too many other meanings!
 
-Best Regards,
-Fiona
+machine_is_cache_at_topo_level() perhaps?
+
+> +                                       CpuTopologyLevel level)
+> +{
+> +    if (machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L3) == level ||
+> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L2) == level ||
+> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1I) == level ||
+> +        machine_get_cache_topo_level(ms, CACHE_LEVEL_AND_TYPE_L1D) == level) {
+> +        return true;
+> +    }
+> +    return false;
+> +}
+
 
 
