@@ -4,168 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80DEAC71159
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 18:15:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20DFAC71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 19:00:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRELX-0000Gi-2B; Mon, 16 Jun 2025 14:14:15 -0400
+	id 1uRF3h-0000pz-TL; Mon, 16 Jun 2025 14:59:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1uRELV-0000GX-QF
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 14:14:13 -0400
-Received: from mail-dm6nam12on2059.outbound.protection.outlook.com
- ([40.107.243.59] helo=NAM12-DM6-obe.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uRF3d-0000pZ-Lk
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 14:59:51 -0400
+Received: from nyc.source.kernel.org ([2604:1380:45d1:ec00::3])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Babu.Moger@amd.com>)
- id 1uRELT-0007dP-0f
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 14:14:13 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=RxAuspGLbXHy1bL4jBM+loVCfIf28/SP5k/WMLLPq1VQL4t9+y3VieeHIJh3k3DWxLjuG1OJ7Jy0QnCu6SI8hWqgx3IFVydZ/IVzlMHrwqdoSN0x1dpKVU+IkM5nUIBo3CD5tkLHzXuC/R9/xvSFomGnN8s2Nnm+poccFCrpyaHfxLpSCb3Co8eZvuCuIONrtaSYI5TGUeNsHL4ia5QWbkUG2B/ghMEniNBLn8jWv+1PHuhkqiNYPaIJUWcoqzjVT7mdP7HjpNxL+2LyceNQVmLxhets9ESPkOQ0FbZmPDus3UNmGw3S68cJvP3SyKT4kW9EhMeskxXLExv2CMswuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Bnwv1ycXm4yzQ8Y55eFqHWlPvhYXxPwAuBaC/7Ts/zE=;
- b=rSUJnLZvr921ILKNG0PnhCeEv+FOvNsldbymMnG2sEpG5/iOVSiTy36+1Cyj6OL7p3v6HwYvKycW3A6GAel3c3NNpQ1SM1HdY2suEG3Pt4kjG0/fGD6DJrdpjwBTs00e2F+JQF8+ls+pbuA9YVN2uMPeXNscqcFyRqoePHJLouQ6uEEMOiKtoX6v/usRcdD9S8fpLq18mnOkMekr8vwyXlbir9F6zOYmh6cSBW/nIIPa7E6z0saA62u/FFov5eWExnj7q12qJCDdl0h6+6lIkiPuidQHPwgcAC57qIxNx7sbaBRxMW4T+L2p46lFjS1wJaHSsHkidhji4aI5vnmITg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=Bnwv1ycXm4yzQ8Y55eFqHWlPvhYXxPwAuBaC/7Ts/zE=;
- b=yskhbF53/veDBbKnwNVVjHARGeOC0U8pR3WgFKiSUORVuDU91XVatA0XodGPzOQMPwE7syFE6j2cRZs3X7te1FiMbWxTcinQgcUweVcux7HNIMisbJ/tGmV98uPhTowBECbjHJLlRqLqH4iezD+426tmKyb81vIdqi+xs9YYDiM=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by DM6PR12MB4122.namprd12.prod.outlook.com (2603:10b6:5:214::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Mon, 16 Jun
- 2025 18:09:04 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b0ef:2936:fec1:3a87]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::b0ef:2936:fec1:3a87%7]) with mapi id 15.20.8835.026; Mon, 16 Jun 2025
- 18:09:04 +0000
-Message-ID: <e7cdab23-de40-457d-aa69-f0e210206c16@amd.com>
-Date: Mon, 16 Jun 2025 13:09:01 -0500
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v7 4/6] target/i386: Add couple of feature bits in
- CPUID_Fn80000021_EAX
-To: "Dr. David Alan Gilbert" <dave@treblig.org>
-Cc: pbonzini@redhat.com, zhao1.liu@intel.com, qemu-devel@nongnu.org,
- kvm@vger.kernel.org, davydov-max@yandex-team.ru
-References: <cover.1746734284.git.babu.moger@amd.com>
- <a5f6283a59579b09ac345b3f21ecb3b3b2d92451.1746734284.git.babu.moger@amd.com>
- <aELfPr7snDmIirNk@gallifrey>
-Content-Language: en-US
-From: "Moger, Babu" <babu.moger@amd.com>
-In-Reply-To: <aELfPr7snDmIirNk@gallifrey>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: PH7P220CA0125.NAMP220.PROD.OUTLOOK.COM
- (2603:10b6:510:327::18) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+ (Exim 4.90_1) (envelope-from <wei.liu@kernel.org>)
+ id 1uRF3b-0000nA-Rx
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 14:59:49 -0400
+Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
+ by nyc.source.kernel.org (Postfix) with ESMTP id D9391A51E22;
+ Mon, 16 Jun 2025 18:59:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 606AAC4CEEA;
+ Mon, 16 Jun 2025 18:59:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+ s=k20201202; t=1750100384;
+ bh=M38YybNg95iwMHGdSjlLs0pglry1aQaEHlBsaf3QXPY=;
+ h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+ b=DdsK/7UGhPIH4nLVst6qwnmLQHGgPJ1b2sn6z3HolCwa8OupGrICtQdMP3VFa7gQK
+ OVOQITg5z+/6gJUOym2757EcdauLcnoHjCqnc8EGntqWLcZFQwUDkK2uXwut9ot4sb
+ zFtM+IngNiS9WgByNZtis1Hc2nxmUrFdwPzmBIxacYcuB3Pg0Co/D+HV89IN2Yk0ws
+ fPXVGVKTTu4OCB/912etwfhtIprfgv8jWdqpARvp4b/CHtS6MJHurflMiQdVWhavoW
+ zP+mZIyaFY/Ee6QBQjT9BrMD/0kBemVuvP8iuA6CdMD2fXs74evDfQrCBh0nIJxWTC
+ BNmyFhKUNjX1w==
+Date: Mon, 16 Jun 2025 18:59:43 +0000
+From: Wei Liu <wei.liu@kernel.org>
+To: Sean Wei <me@sean.taipei>
+Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
+ Roman Bolshakov <rbolshakov@ddn.com>,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH 12/12] target/i386/emulate: replace FSF postal address
+ with licenses URL
+Message-ID: <aFBpn7aeZfGJMZ-8@liuwe-devbox-ubuntu-v2.lamzopl0uupeniq2etz1fddiyg.xx.internal.cloudapp.net>
+References: <20250613.qemu.patch@sean.taipei>
+ <20250613.qemu.patch.12@sean.taipei>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|DM6PR12MB4122:EE_
-X-MS-Office365-Filtering-Correlation-Id: bbb76350-bc24-4471-8d48-08ddad00e0bc
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;ARA:13230040|366016|376014|1800799024;
-X-Microsoft-Antispam-Message-Info: =?utf-8?B?NDlCa1k2dTRJeHd3a3JRSUtha3g2MGc0bmx6cVl2N0xtbFVrZXM3Unp6TXVo?=
- =?utf-8?B?b2FxRWhuQWlJZnBrSi9xVC9SNDJLZHFJbVNyQUoveDBxVnQzTzJ2SzFob05q?=
- =?utf-8?B?cHJ1b0F6MEZ2MGUvS0JGdXpKTmw4QWZ0cDNkakx1bThXRVBrR3orL0tONkxU?=
- =?utf-8?B?ekg0dzc3cW1FOWZzcW5rY1RTNVNWbFNCQTVTWm5lSzh5VFFETG9LcWcvanVR?=
- =?utf-8?B?OXZaQU82SFVvRlZzaTJnTzBVbnZ1dk53aEpHQ2h0cmc4ZjVibFpRWU5xeUNU?=
- =?utf-8?B?ZFQwbndwZGlHQWgyczYwNXpvN0RzWnZLVTVRWXgveGhtSTBsNG9mVk5xaEpt?=
- =?utf-8?B?TFJZY2o1Qm43TzNQNVBrQmJGa3QxaUlRZDVxdEwzeG1HdWRyWnRnUHpUcGlu?=
- =?utf-8?B?eDB5dml5RDZlZ0pEMUdWcUxXS2hUSzBaMnBTM2FqRnRMOHE5RVhFZGhNaDh6?=
- =?utf-8?B?MHdNeFZEcmtjN01jakN2bWNaLzFqa2FVaEZQa2N1ZURSbVErQkhzKzJDM2s2?=
- =?utf-8?B?RFRxRXR4ejc2NTdaRFUrU3F2dUxaOUNTRytpc1QwbnQ2bjdKMjJmT2lia2p2?=
- =?utf-8?B?WlpGWlBuQnNCMDNZdC8rSU5hY1ZJLzJ1TFVGUkI1K1dnYlRKN3A3ODN0aTBB?=
- =?utf-8?B?a0Z0eHhGdEhsbHovMUF6eU5ITHZKU1VxQTVDcnFXOWlTbkowckYzYzZ5ZjdU?=
- =?utf-8?B?a256a3FpN3VDa0xwVEFsRFI4cXphelFFZGRFaEpacUhGWjZBS3BWd1VUNUR2?=
- =?utf-8?B?L0ZDYWZGOFRyeitLdzR3MlFoSmFWbzhnVzE4M2VKc2JCclZORmdFaXk4ejls?=
- =?utf-8?B?OWtaNzV5Vm94L0hhZWRqVHUxREpUbS9YdVVwNzB4WFY0RG10VXFHSncxWDZx?=
- =?utf-8?B?ckFxdnBLdkVPd2ZkNElEVUpJOW1OS1VEUG9BMFZxdW1xMjhCbTEvbHdoNUJL?=
- =?utf-8?B?eXFmTW5yVTUvUXhTNXFjRUhIVUF0VzZwM1QvRC85ZFZGM1NncGNxUFdNY1dG?=
- =?utf-8?B?QU5uVTVJcG9xODBXSE9xL1RKRjE1eEFkcU5ZZmh2VFJ3NDdCdHRVYjRYQkZ5?=
- =?utf-8?B?WC9CT05venQyakhIMndBeHpBaThETTZVVXBIcHNQODdPK3lhR0lOOGUwQWhO?=
- =?utf-8?B?N3RHQ0VoSzlsZkE3Wml1N1RZZjNQWTZ0dVpDVGJJWmVrRXJGWlRNcEZaMDBz?=
- =?utf-8?B?SUhLTjZPZUl1SkhPV1pGbERmd3J3Y3B0M1ZjbG5aRlNTbXZ2azNRWjVkcTVi?=
- =?utf-8?B?VmtPaGdUNEc1MTFmN0U4bkZyR1Fmd3pBNnE1SEZIUnZhK0EvMTFpdkkwYlk5?=
- =?utf-8?B?NnBMNjJSMW5MYWsrWUx1NW05TUlPWS93QkkrWUxNQmxDTUVmUDZqMFNrSDhs?=
- =?utf-8?B?R0xPT0RHclBNckRjWXFsUk1CdERoeDBJSng1WDRldkxqQy9TSGY4SkY3amVN?=
- =?utf-8?B?RXU5czd3d0pKNVRpT0xtdUZ6R1d1cEFMZStIR2k3SUlSTHVtVGdrVTl3aURr?=
- =?utf-8?B?UEs3WU1zZUNidi93QWFHUjc2Vnl1a1NwZStVRG0yRk51RGtuL1A2Wkd1SnlK?=
- =?utf-8?B?UVF6WHViczF1ZDE0N2pjNWlYYjlBaUk2R1hLOFR5L2VObGZMcXU4NHBYM1l6?=
- =?utf-8?B?Z3NGcW5IaVZnQkU4ZGRhZ2dSVFpEcElTR2ZCZkk3cUJZanZGT0NWVGpkSG8v?=
- =?utf-8?B?SXhHUzJaZDFpT1NOWG9MUkF3K1Zmby9pN09mT1MzZmt6WXZDYXFJejljb2pY?=
- =?utf-8?B?RXB6OU1LSUVZOTNDTlc2RXZQUnVrREthREtNbktkbnJ5WEhwNmNoWElSTFJ6?=
- =?utf-8?B?QzdBb290ZFdES3RnQlZXSU51cVFJbW5xOVZUbEpYeGxSVlVaMWdNczkrcVJT?=
- =?utf-8?B?VTFpRFNhRGh4cTdHKzN1cWNtZnc5NmQ4bFQvd0NGNi9OcmF4YU5acmh4bmx0?=
- =?utf-8?Q?Wc0xpfSnNsw=3D?=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:MW3PR12MB4553.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024); DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?bE1GWGxpcjBWZ3ZvbzZidTV6QWdoNHlBRGZnOEFOVWprdXd3dDNWaTQ3ZFUw?=
- =?utf-8?B?TTBSWWl3SEh6ZDJRSTRCWnh1SnpPZzFoeVhMbmNhdmpidU82d1pyN0Jib0Vn?=
- =?utf-8?B?QUp4aXhvUzBLTHFPS2FOWDI5Q1hrUDdIRXM3VWFmUkllYzh2QUtkU2w1TXZS?=
- =?utf-8?B?djd6VWhmb2VweU1XTXZ4QnQyWFBKbVY1NG1mNzRkdEU2alJvbFpSSmZOUVNB?=
- =?utf-8?B?ejNsbFNLS3dpN2dGL0tRRUd2M3A0K1I4SE5KRVBTdXFZY0FNdlhPSEVGTkI4?=
- =?utf-8?B?WnZoQitobmwvOGdTYVlVc05NTThCQVNnOHZ6WUx5V01RWDlneExKak10Y1da?=
- =?utf-8?B?YndXSUQ4YUZwTFhma0FkTnNqSzdkNlNmTEJPd2I4bVFIdy81OE9MdnFwM1JF?=
- =?utf-8?B?aVB5MDh1Y0dVK0V5VEIxbEthU0F5Zng3MjNFVG5SWUx3MlNHQ2V2S0ZZeEhn?=
- =?utf-8?B?WVE2aVZEa2gzSWVnWnQ0T0tETTNSRU5Cb3BWdDUxMXFpMmxqNTcrUG1aY20y?=
- =?utf-8?B?eHRLMUJXd044OTA3Qkx6dmpsUGxRQTdWVDhpa1VyYlNVL0xBeEtMLzU4Rk92?=
- =?utf-8?B?V1d1a0tvNzFIblNSVEFkdVJHV0dIenpsbFNxY0tMZStrRHZMUE5iL1VoQmdu?=
- =?utf-8?B?R2JJUXNWSFF2bjhCajFSTkJQWWhkNzFyUUIrTEFtaGszcU5IMkpzYTJob09L?=
- =?utf-8?B?N0NaQ1I0aUtqMnJRY015RCsrUzMzT1Z3T1hscEVMNWE1bnVDTzhsZ2hhWWtr?=
- =?utf-8?B?R0ZockJVKzJoc2RMbXBFNmVoYmVxbDNYeGtLSDNTYkZGOGdmZHhYSTlOdmZL?=
- =?utf-8?B?MG5HOTFCOUpmRjFBZG50Ni9ic0hxZXdIa1BsNDlrN3d5cFlFcW9xN3dRU3o0?=
- =?utf-8?B?OXFLMU5SOWJKOTZqRnRZZDlYU1BTMzNhODdZS2NJUlJWcEc5UGV5U1NSNnBw?=
- =?utf-8?B?dGxlWDV4dC9qZUVjQ3NKSld6aFhBaEJsL2RrMFpDemZoSmQyaWEvOVBUa1Ix?=
- =?utf-8?B?V0IyZTg0TE1zMHd3Ukk0UmRvdEl1TUJPS3IyZjltNU5tSkdtOTNOYWtGMXQ5?=
- =?utf-8?B?Wk1MdlQwU05BTGR2VU5JZy8rWTdUMEorekVKMFlyS1RHLy9ldGtFTTFUOTho?=
- =?utf-8?B?WDdyd0EwRW5Qb0dnVmVkN2ZwOG81d0NaMkxmMXZoYkx6VEZyLytUVjU3RUhN?=
- =?utf-8?B?YXBlMEoxK3dBMlRhNWRsa0tNWllOZ09ZeWxGcDIydmR6dGRYZkhCS0tURS9P?=
- =?utf-8?B?dXB3YzZURGlZdWVRWCtoYktQbDNxZkxZMVE1VWxtaHVWUDVxYlVDelk4NUgr?=
- =?utf-8?B?d3J1aDRsZkx3aG9Rd0dzbkJJbFd3QkdLRTcrMmNoM3NGNzJCTmlWenM3TFNx?=
- =?utf-8?B?S3RtS0x4WEFJRFR0ajM4Z3I3RW5Rak80STJrUHZ5RHFzTEdqMitqVDE4cHNv?=
- =?utf-8?B?b1pnOFN0OFdaQ08xREhoTnA4dndLcm9CRjgyUlhnUm9uMG9oOS9sUEQ4d29E?=
- =?utf-8?B?R0VNTFBBYS94OVFhOFdDbnFLazVLWm9YNmhPQXFEK3QxWFNxZmdWRDdwVmI4?=
- =?utf-8?B?TS90SzBsV0xuYk1pcWJqL2NaRTJJWG5tTnV1NFk5ZFRFUk84ZDdKcWdYa3Yv?=
- =?utf-8?B?ZjR6bTlSZXN1dS9aQndhaXd2L1c0RDY1UHFFZTdQVlQrTmo0SENmSWQ0dVZV?=
- =?utf-8?B?bVRIdnV6REo5U2dINXE1TzNLQ2NhTEhCTXhwd0pFbGc0bXJyTzBmRmRYVWtL?=
- =?utf-8?B?M0hobVRwR1RkRHZ0QVFIdW9FVVkrVVhHME81SnVOQldvNXp6OHNEZ1ZKN0Vn?=
- =?utf-8?B?dmhneXcvaTVTVDZuaHdPNUs0czNISzVxczIxZWlPK0Y4NHMvQ3hUMWNrdy9H?=
- =?utf-8?B?MHFZNkVUWGdZOFJoZXNEditKQ3NGenhHVGhFRzJTRjE1YjFBZy8vNUNNdHBh?=
- =?utf-8?B?ckR6NkZUTjlJSVhtcGtjNnNvMEFIRVZ1TWFjS1ZLeHpzS25wUkZmczN5eW5t?=
- =?utf-8?B?dFpGOUxMZHpIUHRrME9aR29udGhqVkoyVmFQUFovenluZkJPbFhHWWJyY3ZE?=
- =?utf-8?B?aHhVRjkxMmJ2bFhGcS9qcHUycW02emhmT0pOZXJSYWpmQVRSKzM2MWdGSEJQ?=
- =?utf-8?Q?SkOc=3D?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: bbb76350-bc24-4471-8d48-08ddad00e0bc
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Jun 2025 18:09:04.1282 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: T0TL0KeDvNrK1S7cNhlBgfbm0uHo44TnPL4ODEMF0EpMsNVEf73RAOzQe9dT34ej
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4122
-Received-SPF: permerror client-ip=40.107.243.59;
- envelope-from=Babu.Moger@amd.com;
- helo=NAM12-DM6-obe.outbound.protection.outlook.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20250613.qemu.patch.12@sean.taipei>
+Received-SPF: pass client-ip=2604:1380:45d1:ec00::3;
+ envelope-from=wei.liu@kernel.org; helo=nyc.source.kernel.org
 X-Spam_score_int: -39
 X-Spam_score: -4.0
 X-Spam_bar: ----
 X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,35 +70,74 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: babu.moger@amd.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Dave,
-
-On 6/6/25 07:29, Dr. David Alan Gilbert wrote:
-> * Babu Moger (babu.moger@amd.com) wrote:
->> Add CPUID bit indicates that a WRMSR to MSR_FS_BASE, MSR_GS_BASE, or
->> MSR_KERNEL_GS_BASE is non-serializing amd PREFETCHI that the indicates
->> support for IC prefetch.
->>
->> CPUID_Fn80000021_EAX
->> Bit    Feature description
->> 20     Indicates support for IC prefetch.
->> 1      FsGsKernelGsBaseNonSerializing.
+On Fri, Jun 13, 2025 at 12:54:20PM -0400, Sean Wei wrote:
+> Some of the LGPLv2.1 boiler-plate still contained the
+> obsolete "51 Franklin Street" postal address.
 > 
-> I'm curious about this:
->   a) Is this new CPUs are non-serialising on that write?
->   b) If so, what happens if you run existing kernels/firmware on them?
->   c) Bonus migration question; what happens if you live migrate from a host
->      that claims to be serialising to one that has the extra non-serialising
->      flag but is disabled in the emulated CPU model.
+> Replace it with the canonical GNU licenses URL recommended by the FSF:
+> https://www.gnu.org/licenses/
+> 
+> Signed-off-by: Sean Wei <me@sean.taipei>
 
-Good question. After looking at the AMD64 Architecture Programmer’s Manual
-again, these writes have always been non-serializing. Behavior has not
-changed. We're just reporting it through CPUID now. This information
-likely isn’t being used anywhere. Let me know if you have any questions.
--- 
-Thanks
-Babu Moger
+It looks to me this is just following the footsteps of commit 8167ee883.
+
+Reviewed-by: Wei Liu <wei.liu@kernel.org>
+
+> ---
+>  target/i386/emulate/x86_emu.c   | 4 ++--
+>  target/i386/emulate/x86_flags.c | 4 ++--
+>  target/i386/emulate/x86_flags.h | 4 ++--
+>  3 files changed, 6 insertions(+), 6 deletions(-)
+> 
+> diff --git a/target/i386/emulate/x86_emu.c b/target/i386/emulate/x86_emu.c
+> index 4890e0a4e5..db7a7f7437 100644
+> --- a/target/i386/emulate/x86_emu.c
+> +++ b/target/i386/emulate/x86_emu.c
+> @@ -31,8 +31,8 @@
+>  //  Lesser General Public License for more details.
+>  //
+>  //  You should have received a copy of the GNU Lesser General Public
+> -//  License along with this library; if not, write to the Free Software
+> -//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA B 02110-1301 USA
+> +//  License along with this library; if not, see
+> +//  <https://www.gnu.org/licenses/>.
+>  /////////////////////////////////////////////////////////////////////////
+>  
+>  #include "qemu/osdep.h"
+> diff --git a/target/i386/emulate/x86_flags.c b/target/i386/emulate/x86_flags.c
+> index cc138c7749..6592193b5e 100644
+> --- a/target/i386/emulate/x86_flags.c
+> +++ b/target/i386/emulate/x86_flags.c
+> @@ -14,8 +14,8 @@
+>  //  Lesser General Public License for more details.
+>  //
+>  //  You should have received a copy of the GNU Lesser General Public
+> -//  License along with this library; if not, write to the Free Software
+> -//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA B 02110-1301 USA
+> +//  License along with this library; if not, see
+> +//  <https://www.gnu.org/licenses/>.
+>  /////////////////////////////////////////////////////////////////////////
+>  /*
+>   * flags functions
+> diff --git a/target/i386/emulate/x86_flags.h b/target/i386/emulate/x86_flags.h
+> index 28b008e577..a395c837a0 100644
+> --- a/target/i386/emulate/x86_flags.h
+> +++ b/target/i386/emulate/x86_flags.h
+> @@ -14,8 +14,8 @@
+>  //  Lesser General Public License for more details.
+>  //
+>  //  You should have received a copy of the GNU Lesser General Public
+> -//  License along with this library; if not, write to the Free Software
+> -//  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA B 02110-1301 USA
+> +//  License along with this library; if not, see
+> +//  <https://www.gnu.org/licenses/>.
+>  /////////////////////////////////////////////////////////////////////////
+>  /*
+>   * x86 eflags functions
+> -- 
+> 2.49.0
+> 
 
