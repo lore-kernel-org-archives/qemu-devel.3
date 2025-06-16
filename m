@@ -4,109 +4,208 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 395B8C71136
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 08:43:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A60A9C71136
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Jun 2025 08:55:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uR5QI-0007wN-Fi; Mon, 16 Jun 2025 04:42:35 -0400
+	id 1uR5cc-0002ra-1p; Mon, 16 Jun 2025 04:55:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uR5PW-0007Yw-1X
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:41:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uR5cZ-0002qh-15
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:55:15 -0400
+Received: from mgamail.intel.com ([198.175.65.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1uR5PT-0003Vd-ER
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:41:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750063299;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9Y3Yr3KLZkfU0A1vu+dNNSEzYfyOoilmJQi4mgbPnHs=;
- b=GxpeWgL3ZNNl6SUoSYivYFztgN+x8Dl5yMJmItijMYADDUsxJV8cazxjp/0soxmrnTo7tM
- Gc9xpiXGDZy3coNUlebQVy1xKai/fcVQJfmTg+sguhClMdQhrVHvI6KoOC2VZBa7QKZ6dR
- jcSP3W6GAnH3EH747HnSYj1Wd/l9Jak=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-651-drTfnNh1NvGPzSXVlOPweA-1; Mon, 16 Jun 2025 04:41:37 -0400
-X-MC-Unique: drTfnNh1NvGPzSXVlOPweA-1
-X-Mimecast-MFC-AGG-ID: drTfnNh1NvGPzSXVlOPweA_1750063297
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-311ef4fb5fdso3711725a91.1
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 01:41:37 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750063296; x=1750668096;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=9Y3Yr3KLZkfU0A1vu+dNNSEzYfyOoilmJQi4mgbPnHs=;
- b=sLtqfHs13jq39vLXsF0JDOQnEt7qaMRjYbdTfwyknZyw6DyO2jaZY2fAlUsvqk5hDd
- eEwHtS90oAcFLT039oigejcEfKLtzOH1RTxl/ARN+6LzGUoZEWylkpvcX/x+anKfiLun
- lra3PehvG6iIQn+ZXfgIACG+caXDSETVqIcK9KC4LKsJsTFGlDlWMDxj1wXazk8O3wK4
- s41t/dfc+gmeGi5aTQsCIaCRB8GzwsxMloJSxCo2ZG+NEWe37Gb4oL7oLMHNiTK2GSAh
- i/cdDW8kfgGsSxbTJP6Dhg2wNU0hk1nafb33O9OLWQ51+E7IVRMXGE3RCLCFH2I1KI5t
- HVNQ==
-X-Gm-Message-State: AOJu0YyqZMy+N+S+4RRJ0y63NPYAUOeVzxjHEm1uWZoyUDubz/IRW3Wh
- Rnj1tG37KCJiEb5iKdxZzcTO0d2p5RAgMsNgHU1+xA4K0GhvTP7/kPTiYFH5JgNWPPeO8aU0MY4
- I2oFd0T3E3XvyiPW5hh03MBQq8uF9zYgzqstZkA6BAdSoRAHp/gk9howP
-X-Gm-Gg: ASbGncsXdXuNzfDUxfVMyYYASGnTjBwL2fsEbcSdUavWmtB8VFmn8arfEeGjO0zMNq3
- mwEHI/p3Jgor/wZxP/fcU6HBbAkFaM+IE1PS0TiLII08jxQEQTr9Ey6QwQwLCkx0a7523Jc0gya
- WCK08BCOuS60NlhDH74k8V3Zo0D6BluqN1Giw3U3BqRvyN2Uz/B240roa2/Lu/3aRFw3qixzRYL
- 35VObzx2EgnX2VLLrAvgb6ITjngxTQo331ZIbboFna37Hot+MmiP6TP+atBpTWDCl05kNp5GP5w
- xSRmdLhbA9y82PxlrBmdVz2YKpQ5ghqGDHN1
-X-Received: by 2002:a17:90b:1805:b0:313:d79d:87eb with SMTP id
- 98e67ed59e1d1-313f1d0f2b3mr14685972a91.35.1750063296431; 
- Mon, 16 Jun 2025 01:41:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IH9Dmrr+pj6A3TSsOEjanqeMLvX7qcSB3FvYRxLdBb9LfgxMqRxor3D0w9A6gTEZxpkB9bmPg==
-X-Received: by 2002:a17:90b:1805:b0:313:d79d:87eb with SMTP id
- 98e67ed59e1d1-313f1d0f2b3mr14685921a91.35.1750063295833; 
- Mon, 16 Jun 2025 01:41:35 -0700 (PDT)
-Received: from smtpclient.apple ([171.48.6.172])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-313c1bcbb6dsm8079350a91.6.2025.06.16.01.41.30
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Mon, 16 Jun 2025 01:41:35 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3776.700.51.11.4\))
-Subject: Re: [PATCH v8 08/16] i386/sev: Refactor setting of reset vector and
- initial CPU state
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <6a923e1cb5cdcc9d8bd3115c60b90f87b49aafa4.1749820158.git.roy.hopkins@randomman.co.uk>
-Date: Mon, 16 Jun 2025 14:11:17 +0530
-Cc: qemu-devel <qemu-devel@nongnu.org>, Paolo Bonzini <pbonzini@redhat.com>,
- Daniel Berrange <berrange@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Michael Tsirkin <mst@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Sergio Lopez <slp@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Alistair Francis <alistair@alistair23.me>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Tom Lendacky <thomas.lendacky@amd.com>,
- Michael Roth <michael.roth@amd.com>, Gerd Hoffmann <kraxel@redhat.com>,
- Pankaj Gupta <pankaj.gupta@amd.com>, Joerg Roedel <joro@8bytes.org>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1uR5cW-0005Q7-Al
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 04:55:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750064112; x=1781600112;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=7MheW+LWB30fO2UpcTphwh2dysPxg8TQclrf2sXA8I8=;
+ b=R/bPICSFtJ9CNfZlbkLl11pY4SLpEsvdF3vdsPNYkBYU+TjslPM0YcGQ
+ vrBLj9oh2zAxaL4T4RkDHmZGvGGIpJh/qnB7HD+a4+Jw5wJ5OvxYdonrG
+ DDQCKWc3YLKArpZs+OMMCnjoGcAtbDyVtDLARWhBf3DKoiJd+FKBL+sur
+ S6iYF4PF8EmsGUFa9o59wdLp3fO3RomVJFkMPUgxy+90YV3EGx8lfKkh5
+ RXKAokno74bUDAMwzHv/rcMrd/v5RRIJqUKJXCjKOCroi4w8bZzksYSU8
+ z2+g6SRXCqTAqHeoqWXwFXP9BdDwBMKcXsWTgD0wLfALL3tKzpNFtUPs8 w==;
+X-CSE-ConnectionGUID: miNfKTMcS6+Ox9baN9GG8A==
+X-CSE-MsgGUID: 8zeJlq4+RPSWwUJ6kaJKLA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="63231766"
+X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; d="scan'208";a="63231766"
+Received: from orviesa003.jf.intel.com ([10.64.159.143])
+ by orvoesa105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jun 2025 01:55:02 -0700
+X-CSE-ConnectionGUID: 3WaINpwuQtOAuAy7JAB6fg==
+X-CSE-MsgGUID: jx7vrbgsRZK8SK9mzRN2/Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,240,1744095600"; d="scan'208";a="153176319"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by orviesa003.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jun 2025 01:54:59 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Mon, 16 Jun 2025 01:54:58 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Mon, 16 Jun 2025 01:54:58 -0700
+Received: from NAM11-DM6-obe.outbound.protection.outlook.com (40.107.223.50)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Mon, 16 Jun 2025 01:54:55 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=lPVXu89m8kXhH0zVxqvdbfmyy5pXtokO1dBY5wNouum/DucyCdEfPvDCWle90V/Ntu4zvBfVPD/SOU315CE9xtp60T2MrHF4GXseWY7Jfmdo2jRo3HKO67k3khIXQNBUGiBQj2irG4hEqXeDvtqUXRV8ZU4+ERC+nI2aVcLMbqe1L5pNFj7jv3qxALv57XiYGswlWowcO3lLd90e0P635JH4zdXD3dX8pw89HRD5QxCTMH4R/ChntK07TSzPES/Bo4l5Zl0fezfsoUAymg8s8JBw3aQ3M0LRtZsahkAq2h427EjFMY/7p4ouVWVV+HxRWupyn41K3otTc4TIVQZ8vw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=jE1LNo6PrrIL7OT01OM99QSan/ZdTpBGrPy1NX5V/Ts=;
+ b=AMCxLFUz6oOqSaVNDfwGjDL8sGbF9K1SFWjfQrXmHfKW7WoLqKpmx+JMfGXOMENV3XQJG9OnDfUW5zhYJnzXHMdNviTwFGoVNHfEHgDYbyeo+gWkSDqbr29Yx8Tsw5KVCrK+3+bmv6lAJW6d9qvEk4B/HijIfBlDIC1SCgOfFn3z6N4DBM4Roa8NWCJCMqd/YhTQAnWmO6WCN2eM/iQ78iC/fHYQFX2GN0ARG6pi0iT2f6ocnTD5s/SF11rjejKyyrQMH8yWdhBjfGeMOWMXObICWhXGdeKyLPPvNN+0T6CHL01Gz/wz6DYZ+uBEJmp+sXNMYCZoyq+5G7j/hGmKyA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by DS0PR11MB6374.namprd11.prod.outlook.com (2603:10b6:8:ca::8) with
+ Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.28; Mon, 16 Jun 2025 08:54:26 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::604b:77a4:b1be:3f13%4]) with mapi id 15.20.8835.023; Mon, 16 Jun 2025
+ 08:54:26 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Nicolin Chen <nicolinc@nvidia.com>, "Liu, Yi L" <yi.l.liu@intel.com>
+CC: Peter Xu <peterx@redhat.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
+ <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
+ "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
+ <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
+ "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
+ "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: RE: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
+ host
+Thread-Topic: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
+ host
+Thread-Index: AQHbykJMfKt9Mfha3Ee+klVeu6JiiLPdsMoAgAIQvoCAAPjWAIADz6UAgACqsQCAAnMkMIAX9a0AgAWgn1CAAD69AIAAIZ9Q
+Date: Mon, 16 Jun 2025 08:54:26 +0000
+Message-ID: <IA3PR11MB91362B306AA38B1180E3FC5A9270A@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
+ <20250521111452.3316354-16-zhenzhong.duan@intel.com>
+ <aC5YjHrv5EMDixzZ@Asurada-Nvidia>
+ <0f8087f4-0c97-440d-84d2-f3f017f81041@intel.com>
+ <aDDk1NYwJXaAdUQI@Asurada-Nvidia>
+ <29f5f434-1fe3-4b5e-91d1-f153e1e98602@intel.com>
+ <aDSmcvZ08jNOSr05@Asurada-Nvidia>
+ <SJ0PR11MB6744340B889FF65D3BD5B8459267A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <f6baaea1-a60c-41dc-a9a8-d2389ed14679@intel.com>
+ <IA3PR11MB91365922FBD407DD25E382C39270A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <aE+68E03aAXEynBd@nvidia.com>
+In-Reply-To: <aE+68E03aAXEynBd@nvidia.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-Mentions: yi.l.liu@intel.com
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|DS0PR11MB6374:EE_
+x-ms-office365-filtering-correlation-id: 9a34e653-655d-4c83-fcbb-08ddacb36616
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|7416014|376014|38070700018; 
+x-microsoft-antispam-message-info: =?us-ascii?Q?03Ay8gSjYpcyAjg04mQM+UQYlUbmUT3KKGaUoEfoYR8pYZdWg9/4TmYP70aA?=
+ =?us-ascii?Q?TmAt6QqJUtnI6g2BYua/dNMH91eYX5KivXSdtSgyapAB6com9W9jUSYeNwRw?=
+ =?us-ascii?Q?wYK2Dt0+apAmU7aZzsyXZXjggZY5+/28ICISwRocGL4LK6HLlLHSHwMjlHxo?=
+ =?us-ascii?Q?kmEI0FzacsYiSYbjINGf/vS38deiQnAo9KB6N0wN0vBpgQiBzVAi3naqlY6V?=
+ =?us-ascii?Q?WuB97+Tw+WEU4Cfoc+7+mdaoX8GNkFxlWqieSra0HtlpA4UZmyxFmV3TcSJP?=
+ =?us-ascii?Q?I+9asW6F9b0k+zUvnVrBOuaUve9GXe7EsOr7X+iTZHGFPL+K1DaBSWLhDjSv?=
+ =?us-ascii?Q?fP2ixjs8wG+oWRNAE6Zt+2Dkg2ca+YX+7ADvQdN3f1DOFsfRT7tzLg3WQxix?=
+ =?us-ascii?Q?l2dEd5EQOqFD2eXnaWBLsAFTpBFHCm3RaTJkYUgLXMldWz1XX1JB2D0V8NKO?=
+ =?us-ascii?Q?4Hz4XA0YUFRVD7d2j2CF1cyxhhb9Y06NTZHaPW1hY7ozL7OWIisQ/kjfiLzJ?=
+ =?us-ascii?Q?wmeGdx+BFqzSJPMAEF9QMs61LSSKEg9yn+3TZzBpG94JpZQbGk1B0OFsPfvP?=
+ =?us-ascii?Q?WRVloIlxnT5QAYBoCvB52F46qFAls6hSw/ksx0BzuYdrF/GWjMRbmFRwKDcU?=
+ =?us-ascii?Q?ekI/X8cnp8iFZjTGtsd/41Bo6O4Ve6TFe53YXn9SFcnj7RtW+7gy/viBp3YL?=
+ =?us-ascii?Q?yDrepY010Mx3ILkpEAzIV/nsyndNhjh3oMLxJCnCg3EnhpGOX6R+3FjvQpB7?=
+ =?us-ascii?Q?rz4E+hc0Fh6toaFKan+OsPkU5HAfHcqnswjaYVrK9zvLgfnQJJ9O+X0rRqGR?=
+ =?us-ascii?Q?z8OPq/prmfJe/GnoNutYZY4CYc+SRS5nvkheN7LfjRfQSecAfraPpm+6dvsl?=
+ =?us-ascii?Q?OmH8mDEzLOoOZYCdIsq2+Y56qD8XhjHNtE6QkKoLv4zjAD9OxlAv8HRMs4ZA?=
+ =?us-ascii?Q?mZa8rHQhBqxmwShemaElpdsOeaFX+2fh2CXkM3K2OCxaCGIngcWiIfMloM3A?=
+ =?us-ascii?Q?ZfXFU37IIqUnJ/ptN+GnLCRoMaRD8e3G/p8D0yriohIN8ursMi1jaXASzGZE?=
+ =?us-ascii?Q?UxkbFL5A+haC3QZZ/msMHoJOwr7xnrVH37QW7QSzxn15Ata/NTZ/dVwCV/i/?=
+ =?us-ascii?Q?5eFj72hkClu57QWhoaBHis67ftoVdJvPo9IfC2tyfqXGlL8cLP+JdqjzJNxg?=
+ =?us-ascii?Q?tVyuJ+xDGUaoCvK8P3/qT9E6t3ztNFOgKtJg/8VYRmAh61N2aFB132iUYctg?=
+ =?us-ascii?Q?r4w4GwBtU5JmuGESvNE73wRfHOV20a3V8uOTS3ObxRQqrEFQx4EgT8aW8YSB?=
+ =?us-ascii?Q?tpyyxTJNqVKP93rcc7zwJKv6ss+QEDX6uJZPyTy85Uh+bZFoWCAqAAmV39hU?=
+ =?us-ascii?Q?TUs3yQbQSPkWb9111xCyWZ8cuomDan2FkuYUq+2Zq010YF0wCGaHduFjiXom?=
+ =?us-ascii?Q?lqNvBsvFghTQybIIgZvd/8KqSAvUCI9TCWrpaXyuTRriOIw7gD3Cqg=3D=3D?=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(7416014)(376014)(38070700018); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?Q+3pmxzPwzxo/9ICavL3K8wKpK8cAkchL3q8EJf03DyPLVFCjdMMx2Xlo3x9?=
+ =?us-ascii?Q?7cC4SkjQoud1PkefmnWc/KQE4eQ4At05gMxk5VnWjq4CylzAkGALTo+KkwBl?=
+ =?us-ascii?Q?99VVL/jes4V4phG5hAjnC5Bt50u5CHxq9g+kAyC6K1loDWpMXj/IPuEPzTlk?=
+ =?us-ascii?Q?67TtXjngVQdh7NTajVDNJzMo24Jm5cfuidi3GEhvDcW3hXT5Jx7xu4mtEaVZ?=
+ =?us-ascii?Q?vZTWqmDqaZQQ0Rcy+BwGT20qH4bR0VPJruXka4VV6sUm5yKouiZ7jjYmaQJY?=
+ =?us-ascii?Q?4ytKnJnQti6mYofZo+KVpKWD3y+aAzmbcpjGB1GYB6ZT1t1g4dkfbaIqpRsH?=
+ =?us-ascii?Q?s0wGMOyg1mSDLIJQeeVU+QzSH/o8rUQCdEu7FWu061XqiQF3UYuD90hF0wpK?=
+ =?us-ascii?Q?E5pq25fNcnhZETX4aXdHROlrmnduacjaQL22vrJ8z6o73kO689eZLF8aLetl?=
+ =?us-ascii?Q?HA2DTUjEKBoay02DyoFTwWpEgHw39t+VcNhhIZ93A0a6hrPO4FfgSVB7ji0s?=
+ =?us-ascii?Q?59ooz0Yq1kUd7e75sg3OJ6AdDxYdIORlC9gDKEZtFy4jJGM9WSGzREDE2F9u?=
+ =?us-ascii?Q?j6SY540Vx14Zs/zqsneBEruTODQjBBKoNkRbv40xZeizJX6+W2p8VlUIJhhE?=
+ =?us-ascii?Q?yVSBfHL3ZgHPv1uClQIBLyN0ZaVz/0U8Sonl4FukpCpqedwR5/t1RauzguKF?=
+ =?us-ascii?Q?ESAbpnnPI0/aRYvBAb/fxitAPofGSSZMX/wOjQbE4WwGsTpBpGjkCmGzaaqR?=
+ =?us-ascii?Q?yD5HNryJOXmX3TvS5wRNXr6sWvwlmNe2F1Fkb9jLd6gEEAUjKu4Y24bc7M+i?=
+ =?us-ascii?Q?G91LScrE25mt8f47zdkJIk6ZgPuOZluOLHfvf6ta2ZB1H3PP9wFQP4DRORa8?=
+ =?us-ascii?Q?GLBZjyfA80F2RHX50DU0TzIX3o3Np9Ug9s2xj23MoLKxcV/bWKnq+F77MUMG?=
+ =?us-ascii?Q?itWuv8QdihxFzY/8vXFcTS3+0+iePm0QQwE0ILdTX2+0RYzVzJ4hb0tf8fmh?=
+ =?us-ascii?Q?lnQOwxVdv5ie7SNtcwB+BjIuJr/26U73O+i3BldGpYiYCJgCtPEsOb9SNIow?=
+ =?us-ascii?Q?oOdgmFh941segQBsdY/JYRZbYzMF3EzRFf9ygFFCSIEM4QC6hiii7ZdBazp1?=
+ =?us-ascii?Q?1S2NeWGXUJ/V27r9u53ROvJK7KX3Oytags8oIxoOCsjtxcluEq5NCafQvAUl?=
+ =?us-ascii?Q?OVt2fEzxm3w5QeWydKGUsn8ak94atlSiGRFpidRfivc9AxtyVE7MIXpL9Tl8?=
+ =?us-ascii?Q?PkAkvGD/iYOUJCecxQ22EP+gW52IgaeXf1TZalu7TIzO2+vSnH6Gg/Y+pQT3?=
+ =?us-ascii?Q?JCz+uqWmH2FdLtPTEK0OpGmiZ3uLzypQ0Toc6IZD8vqJ4lC2C3hqCXRd4+hE?=
+ =?us-ascii?Q?+KPRnvfnteUW0QGJZMD5hypONyu+d+QV78xrY27BeeDuRyaedykPSI/N/Bmp?=
+ =?us-ascii?Q?GeFL8io3/dJpZdmLIroCjEhanWDgPpkk7Z3FInTlyJ8KFppB8Rlov8NGaFz/?=
+ =?us-ascii?Q?bljerayNdAG+aINuFPezDut4eZI+tEpC6eh7ZqdfshCaK8jivBuDcw1ieRKQ?=
+ =?us-ascii?Q?aKYj2WlAa9/UVzqpvIiRnkSEuS1PUAS3F8IHatlC?=
+Content-Type: text/plain; charset="us-ascii"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <5930FAAD-2CA3-42E0-BC9D-FB072017167C@redhat.com>
-References: <cover.1749820158.git.roy.hopkins@randomman.co.uk>
- <6a923e1cb5cdcc9d8bd3115c60b90f87b49aafa4.1749820158.git.roy.hopkins@randomman.co.uk>
-To: Roy Hopkins <roy.hopkins@randomman.co.uk>
-X-Mailer: Apple Mail (2.3776.700.51.11.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+MIME-Version: 1.0
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9a34e653-655d-4c83-fcbb-08ddacb36616
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Jun 2025 08:54:26.7993 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 0hhD2JN6p1Yl5bXVxvE/Sf9Lx2iL3veA42GfTHVDuju4aORgnXr57fK0nItINYazOe2G5lFco7Hn1xq78nI5GcYDgrZPt75ceZaE88MSAyE=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS0PR11MB6374
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.13;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -43
+X-Spam_score: -4.4
+X-Spam_bar: ----
+X-Spam_report: (-4.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,413 +223,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 13 Jun 2025, at 7:41=E2=80=AFPM, Roy Hopkins =
-<roy.hopkins@randomman.co.uk> wrote:
->=20
-> When an SEV guest is started, the reset vector and state are
-> extracted from metadata that is contained in the firmware volume.
->=20
-> In preparation for using IGVM to setup the initial CPU state,
-> the code has been refactored to populate vmcb_save_area for each
-> CPU which is then applied during guest startup and CPU reset.
->=20
-> Signed-off-by: Roy Hopkins <roy.hopkins@randomman.co.uk>
-> Acked-by: Michael S. Tsirkin <mst@redhat.com>
-> Acked-by: Stefano Garzarella <sgarzare@redhat.com>
-> Acked-by: Gerd Hoffman <kraxel@redhat.com>
-> Reviewed-by: Pankaj Gupta <pankaj.gupta@amd.com>
-> ---
-> target/i386/sev.c | 323 +++++++++++++++++++++++++++++++++++++++++-----
-> target/i386/sev.h | 110 ++++++++++++++++
-> 2 files changed, 400 insertions(+), 33 deletions(-)
->=20
-> diff --git a/target/i386/sev.c b/target/i386/sev.c
-> index a84f5f5d28..2e4cf9f6c1 100644
-> --- a/target/i386/sev.c
-> +++ b/target/i386/sev.c
-> @@ -50,6 +50,12 @@ OBJECT_DECLARE_TYPE(SevSnpGuestState, =
-SevCommonStateClass, SEV_SNP_GUEST)
-> /* hard code sha256 digest size */
-> #define HASH_SIZE 32
->=20
-> +/* Convert between SEV-ES VMSA and SegmentCache flags/attributes */
-> +#define FLAGS_VMSA_TO_SEGCACHE(flags) \
-> +    ((((flags) & 0xff00) << 12) | (((flags) & 0xff) << 8))
-> +#define FLAGS_SEGCACHE_TO_VMSA(flags) \
-> +    ((((flags) & 0xff00) >> 8) | (((flags) & 0xf00000) >> 12))
-> +
-> typedef struct QEMU_PACKED SevHashTableEntry {
->     QemuUUID guid;
->     uint16_t len;
-> @@ -89,6 +95,14 @@ typedef struct QEMU_PACKED SevHashTableDescriptor {
->     uint32_t size;
-> } SevHashTableDescriptor;
->=20
-> +typedef struct SevLaunchVmsa {
-> +    QTAILQ_ENTRY(SevLaunchVmsa) next;
-> +
-> +    uint16_t cpu_index;
-> +    uint64_t gpa;
-> +    struct sev_es_save_area vmsa;
-> +} SevLaunchVmsa;
-> +
-> struct SevCommonState {
->     X86ConfidentialGuest parent_obj;
->=20
-> @@ -107,9 +121,7 @@ struct SevCommonState {
->     int sev_fd;
->     SevState state;
->=20
-> -    uint32_t reset_cs;
-> -    uint32_t reset_ip;
-> -    bool reset_data_valid;
-> +    QTAILQ_HEAD(, SevLaunchVmsa) launch_vmsa;
-> };
->=20
-> struct SevCommonStateClass {
-> @@ -364,6 +376,172 @@ static struct RAMBlockNotifier sev_ram_notifier =
-=3D {
->     .ram_block_removed =3D sev_ram_block_removed,
-> };
->=20
-> +static void sev_apply_cpu_context(CPUState *cpu)
-> +{
-> +    SevCommonState *sev_common =3D =
-SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +    X86CPU *x86;
-> +    CPUX86State *env;
-> +    struct SevLaunchVmsa *launch_vmsa;
-> +
-> +    /* See if an initial VMSA has been provided for this CPU */
-> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-> +    {
-> +        if (cpu->cpu_index =3D=3D launch_vmsa->cpu_index) {
-> +            x86 =3D X86_CPU(cpu);
-> +            env =3D &x86->env;
-> +
-> +            /*
-> +             * Ideally we would provide the VMSA directly to kvm =
-which would
-> +             * ensure that the resulting initial VMSA measurement =
-which is
-> +             * calculated during KVM_SEV_LAUNCH_UPDATE_VMSA is =
-calculated from
-> +             * exactly what we provide here. Currently this is not =
-possible so
-> +             * we need to copy the parts of the VMSA structure that =
-we currently
-> +             * support into the CPU state.
-> +             */
-> +            cpu_load_efer(env, launch_vmsa->vmsa.efer);
-> +            cpu_x86_update_cr4(env, launch_vmsa->vmsa.cr4);
-> +            cpu_x86_update_cr0(env, launch_vmsa->vmsa.cr0);
-> +            cpu_x86_update_cr3(env, launch_vmsa->vmsa.cr3);
-> +            env->xcr0 =3D launch_vmsa->vmsa.xcr0;
-> +            env->pat =3D launch_vmsa->vmsa.g_pat;
-> +
-> +            cpu_x86_load_seg_cache(
-> +                env, R_CS, launch_vmsa->vmsa.cs.selector,
-> +                launch_vmsa->vmsa.cs.base, =
-launch_vmsa->vmsa.cs.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.cs.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_DS, launch_vmsa->vmsa.ds.selector,
-> +                launch_vmsa->vmsa.ds.base, =
-launch_vmsa->vmsa.ds.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ds.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_ES, launch_vmsa->vmsa.es.selector,
-> +                launch_vmsa->vmsa.es.base, =
-launch_vmsa->vmsa.es.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.es.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_FS, launch_vmsa->vmsa.fs.selector,
-> +                launch_vmsa->vmsa.fs.base, =
-launch_vmsa->vmsa.fs.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.fs.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_GS, launch_vmsa->vmsa.gs.selector,
-> +                launch_vmsa->vmsa.gs.base, =
-launch_vmsa->vmsa.gs.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gs.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_SS, launch_vmsa->vmsa.ss.selector,
-> +                launch_vmsa->vmsa.ss.base, =
-launch_vmsa->vmsa.ss.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ss.attrib));
-> +
-> +            env->gdt.base =3D launch_vmsa->vmsa.gdtr.base;
-> +            env->gdt.limit =3D launch_vmsa->vmsa.gdtr.limit;
-> +            env->gdt.flags =3D
-> +                =
-FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.gdtr.attrib);
-> +            env->idt.base =3D launch_vmsa->vmsa.idtr.base;
-> +            env->idt.limit =3D launch_vmsa->vmsa.idtr.limit;
-> +            env->idt.flags =3D
-> +                =
-FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.idtr.attrib);
-> +
-> +            cpu_x86_load_seg_cache(
-> +                env, R_LDTR, launch_vmsa->vmsa.ldtr.selector,
-> +                launch_vmsa->vmsa.ldtr.base, =
-launch_vmsa->vmsa.ldtr.limit,
-> +                =
-FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.ldtr.attrib));
-> +            cpu_x86_load_seg_cache(
-> +                env, R_TR, launch_vmsa->vmsa.tr.selector,
-> +                launch_vmsa->vmsa.ldtr.base, =
-launch_vmsa->vmsa.tr.limit,
-> +                FLAGS_VMSA_TO_SEGCACHE(launch_vmsa->vmsa.tr.attrib));
-> +
-> +            env->dr[6] =3D launch_vmsa->vmsa.dr6;
-> +            env->dr[7] =3D launch_vmsa->vmsa.dr7;
-> +
-> +            env->regs[R_EAX] =3D launch_vmsa->vmsa.rax;
-> +            env->regs[R_ECX] =3D launch_vmsa->vmsa.rcx;
-> +            env->regs[R_EDX] =3D launch_vmsa->vmsa.rdx;
-> +            env->regs[R_EBX] =3D launch_vmsa->vmsa.rbx;
-> +            env->regs[R_ESP] =3D launch_vmsa->vmsa.rsp;
-> +            env->regs[R_EBP] =3D launch_vmsa->vmsa.rbp;
-> +            env->regs[R_ESI] =3D launch_vmsa->vmsa.rsi;
-> +            env->regs[R_EDI] =3D launch_vmsa->vmsa.rdi;
-> +#ifdef TARGET_X86_64
-> +            env->regs[R_R8] =3D launch_vmsa->vmsa.r8;
-> +            env->regs[R_R9] =3D launch_vmsa->vmsa.r9;
-> +            env->regs[R_R10] =3D launch_vmsa->vmsa.r10;
-> +            env->regs[R_R11] =3D launch_vmsa->vmsa.r11;
-> +            env->regs[R_R12] =3D launch_vmsa->vmsa.r12;
-> +            env->regs[R_R13] =3D launch_vmsa->vmsa.r13;
-> +            env->regs[R_R14] =3D launch_vmsa->vmsa.r14;
-> +            env->regs[R_R15] =3D launch_vmsa->vmsa.r15;
-> +#endif
-> +            env->eip =3D launch_vmsa->vmsa.rip;
-> +            env->eflags =3D launch_vmsa->vmsa.rflags;
-> +
-> +            cpu_set_fpuc(env, launch_vmsa->vmsa.x87_fcw);
-> +            env->mxcsr =3D launch_vmsa->vmsa.mxcsr;
-> +
-> +            break;
-> +        }
-> +    }
-> +}
-> +
-> +static int sev_set_cpu_context(uint16_t cpu_index, const void *ctx,
-> +                               uint32_t ctx_len, hwaddr gpa, Error =
-**errp)
-> +{
-> +    SevCommonState *sev_common =3D =
-SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-> +    SevLaunchVmsa *launch_vmsa;
-> +    CPUState *cpu;
-> +    bool exists =3D false;
-> +
-> +    /*
-> +     * Setting the CPU context is only supported for SEV-ES and =
-SEV-SNP. The
-> +     * context buffer will contain a sev_es_save_area from the Linux =
-kernel
-> +     * which is defined by "Table B-4. VMSA Layout, State Save Area =
-for SEV-ES"
-> +     * in the AMD64 APM, Volume 2.
-> +     */
-> +
-> +    if (!sev_es_enabled()) {
-> +        error_setg(errp, "SEV: unable to set CPU context: Not =
-supported");
-> +        return -1;
-> +    }
-> +
-> +    if (ctx_len < sizeof(struct sev_es_save_area)) {
-> +        error_setg(errp, "SEV: unable to set CPU context: "
-> +                     "Invalid context provided");
-> +        return -1;
-> +    }
-> +
-> +    cpu =3D qemu_get_cpu(cpu_index);
-> +    if (!cpu) {
-> +        error_setg(errp, "SEV: unable to set CPU context for out of =
-bounds "
-> +                     "CPU index %d", cpu_index);
-> +        return -1;
-> +    }
-> +
-> +    /*
-> +     * If the context of this VP has already been set then replace it =
-with the
-> +     * new context.
-> +     */
-> +    QTAILQ_FOREACH(launch_vmsa, &sev_common->launch_vmsa, next)
-> +    {
-> +        if (cpu_index =3D=3D launch_vmsa->cpu_index) {
-> +            launch_vmsa->gpa =3D gpa;
-> +            memcpy(&launch_vmsa->vmsa, ctx, =
-sizeof(launch_vmsa->vmsa));
-> +            exists =3D true;
-> +            break;
-> +        }
-> +    }
-> +
-> +    if (!exists) {
-> +        /* New VP context */
-> +        launch_vmsa =3D g_new0(SevLaunchVmsa, 1);
-> +        memcpy(&launch_vmsa->vmsa, ctx, sizeof(launch_vmsa->vmsa));
-> +        launch_vmsa->cpu_index =3D cpu_index;
-> +        launch_vmsa->gpa =3D gpa;
-> +        QTAILQ_INSERT_TAIL(&sev_common->launch_vmsa, launch_vmsa, =
-next);
-> +    }
-> +
-> +    /* Synchronise the VMSA with the current CPU state */
-> +    sev_apply_cpu_context(cpu);
+>-----Original Message-----
+>From: Nicolin Chen <nicolinc@nvidia.com>
+>Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table=
+ to
+>host
+>
+>On Mon, Jun 16, 2025 at 03:24:06AM +0000, Duan, Zhenzhong wrote:
+>> Hi @Liu, Yi L @Nicolin Chen, for emulated/passthru devices
+>> behind the same pcie-pci bridge, I think of an idea, adding
+>> a new PCI callback:
+>>
+>> AddressSpace * (*get_address_space_extend)(PCIBus *bus,
+>> void *opaque, int devfn, bool accel_dev);
+>>
+>> which pass in real bus/devfn and a new param accel_dev which
+>> is true for vfio device.
+>
+>Just =3Dy for all vfio (passthrough) devices?
+>
+>ARM tentatively does this for get_address_space using Shameer's
+>trick to detect if the device is a passthrough VFIO one:
+>
+>    PCIDevice *pdev =3D pci_find_device(bus, pci_bus_num(bus), devfn);
+>    bool has_iommufd =3D !!object_property_find(OBJECT(pdev), "iommufd");
+>
+>    if (smmu->nested && ... && has_iommufd) {
+>        return &sdev->as_sysmem;
+>    }
+>
+>So, I guess "accel_dev" could be just:
+>    !!object_property_find(OBJECT(pdev), "iommufd")
+>?
 
-Calling this ...
+You are right, we don't need param accel_dev. Below should work:
 
-> +
-> +    return 0;
-> +}
-> +
-> bool
-> sev_enabled(void)
-> {
-> @@ -998,6 +1176,16 @@ static int
-> sev_launch_update_vmsa(SevGuestState *sev_guest)
-> {
->     int ret, fw_error;
-> +    CPUState *cpu;
-> +
-> +    /*
-> +     * The initial CPU state is measured as part of =
-KVM_SEV_LAUNCH_UPDATE_VMSA.
-> +     * Synchronise the CPU state to any provided launch VMSA =
-structures.
-> +     */
-> +    CPU_FOREACH(cpu) {
-> +        sev_apply_cpu_context(cpu);
-> +    }
-> +
->=20
->     ret =3D sev_ioctl(SEV_COMMON(sev_guest)->sev_fd, =
-KVM_SEV_LAUNCH_UPDATE_VMSA,
->                     NULL, &fw_error);
-> @@ -1780,40 +1968,110 @@ sev_es_find_reset_vector(void *flash_ptr, =
-uint64_t flash_size,
->     return sev_es_parse_reset_block(info, addr);
-> }
->=20
-> -void sev_es_set_reset_vector(CPUState *cpu)
-> +
-> +static void seg_to_vmsa(const SegmentCache *cpu_seg, struct vmcb_seg =
-*vmsa_seg)
-> {
-> -    X86CPU *x86;
-> -    CPUX86State *env;
-> -    ConfidentialGuestSupport *cgs =3D =
-MACHINE(qdev_get_machine())->cgs;
-> -    SevCommonState *sev_common =3D SEV_COMMON(
-> -        object_dynamic_cast(OBJECT(cgs), TYPE_SEV_COMMON));
-> +    vmsa_seg->selector =3D cpu_seg->selector;
-> +    vmsa_seg->base =3D cpu_seg->base;
-> +    vmsa_seg->limit =3D cpu_seg->limit;
-> +    vmsa_seg->attrib =3D FLAGS_SEGCACHE_TO_VMSA(cpu_seg->flags);
-> +}
->=20
-> -    /* Only update if we have valid reset information */
-> -    if (!sev_common || !sev_common->reset_data_valid) {
-> -        return;
-> -    }
-> +static void initialize_vmsa(const CPUState *cpu, struct =
-sev_es_save_area *vmsa)
-> +{
-> +    const X86CPU *x86 =3D X86_CPU(cpu);
-> +    const CPUX86State *env =3D &x86->env;
->=20
-> -    /* Do not update the BSP reset state */
-> -    if (cpu->cpu_index =3D=3D 0) {
-> -        return;
-> +    /*
-> +     * Initialize the SEV-ES save area from the current state of
-> +     * the CPU. The entire state does not need to be copied, only the =
-state
-> +     * that is copied back to the CPUState in sev_apply_cpu_context.
-> +     */
-> +    memset(vmsa, 0, sizeof(struct sev_es_save_area));
-> +    vmsa->efer =3D env->efer;
-> +    vmsa->cr0 =3D env->cr[0];
-> +    vmsa->cr3 =3D env->cr[3];
-> +    vmsa->cr4 =3D env->cr[4];
-> +    vmsa->xcr0 =3D env->xcr0;
-> +    vmsa->g_pat =3D env->pat;
-> +
-> +    seg_to_vmsa(&env->segs[R_CS], &vmsa->cs);
-> +    seg_to_vmsa(&env->segs[R_DS], &vmsa->ds);
-> +    seg_to_vmsa(&env->segs[R_ES], &vmsa->es);
-> +    seg_to_vmsa(&env->segs[R_FS], &vmsa->fs);
-> +    seg_to_vmsa(&env->segs[R_GS], &vmsa->gs);
-> +    seg_to_vmsa(&env->segs[R_SS], &vmsa->ss);
-> +
-> +    seg_to_vmsa(&env->gdt, &vmsa->gdtr);
-> +    seg_to_vmsa(&env->idt, &vmsa->idtr);
-> +    seg_to_vmsa(&env->ldt, &vmsa->ldtr);
-> +    seg_to_vmsa(&env->tr, &vmsa->tr);
-> +
-> +    vmsa->dr6 =3D env->dr[6];
-> +    vmsa->dr7 =3D env->dr[7];
-> +
-> +    vmsa->rax =3D env->regs[R_EAX];
-> +    vmsa->rcx =3D env->regs[R_ECX];
-> +    vmsa->rdx =3D env->regs[R_EDX];
-> +    vmsa->rbx =3D env->regs[R_EBX];
-> +    vmsa->rsp =3D env->regs[R_ESP];
-> +    vmsa->rbp =3D env->regs[R_EBP];
-> +    vmsa->rsi =3D env->regs[R_ESI];
-> +    vmsa->rdi =3D env->regs[R_EDI];
-> +
-> +#ifdef TARGET_X86_64
-> +    vmsa->r8 =3D env->regs[R_R8];
-> +    vmsa->r9 =3D env->regs[R_R9];
-> +    vmsa->r10 =3D env->regs[R_R10];
-> +    vmsa->r11 =3D env->regs[R_R11];
-> +    vmsa->r12 =3D env->regs[R_R12];
-> +    vmsa->r13 =3D env->regs[R_R13];
-> +    vmsa->r14 =3D env->regs[R_R14];
-> +    vmsa->r15 =3D env->regs[R_R15];
-> +#endif
-> +
-> +    vmsa->rip =3D env->eip;
-> +    vmsa->rflags =3D env->eflags;
-> +}
-> +
-> +static void sev_es_set_ap_context(uint32_t reset_addr)
-> +{
-> +    CPUState *cpu;
-> +    struct sev_es_save_area vmsa;
-> +    SegmentCache cs;
-> +
-> +    cs.selector =3D 0xf000;
-> +    cs.base =3D reset_addr & 0xffff0000;
-> +    cs.limit =3D 0xffff;
-> +    cs.flags =3D DESC_P_MASK | DESC_S_MASK | DESC_CS_MASK | =
-DESC_R_MASK |
-> +               DESC_A_MASK;
-> +
-> +    CPU_FOREACH(cpu) {
-> +        if (cpu->cpu_index =3D=3D 0) {
-> +            /* Do not update the BSP reset state */
-> +            continue;
-> +        }
-> +        initialize_vmsa(cpu, &vmsa);
-> +        seg_to_vmsa(&cs, &vmsa.cs);
-> +        vmsa.rip =3D reset_addr & 0x0000ffff;
-> +        sev_set_cpu_context(cpu->cpu_index, &vmsa,
-> +                            sizeof(struct sev_es_save_area),
-> +                            0, &error_fatal);
-> +        sev_apply_cpu_context(cpu);
+object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)
 
-Would mean we do not need to call sev_apply_cpu_context() here?=20
+>
+>> Vtd implements this callback and return separate AS for vfio
+>> device if it's under an pcie-pci bridge and flts=3Don;
+>> otherwise it fallback to call .get_address_space(). This way
+>> emulated devices and passthru devices behind the same pcie-pci
+>> bridge can have different AS.
+>
+>Again, if "vfio-device" tag with "iommufd" property is enough to
+>identify devices to separate their address spaces, perhaps the
+>existing get_address_space is enough.
 
->     }
-> +}
->=20
-> -
+We need get_address_space_extend() to pass real BDF.
+get_address_space pass group's BDF which made pci_find_device return wrong =
+device.
 
+>
+>> If above idea is acceptable, then only obstacle is ERRATA_772415,
+>> maybe we can let VFIO check this errata and bypass RO mapping from
+>> beginning?
+>
+>Yes. There can be some communication between vIOMMU and the VFIO
+>core.
+>
+>> Or we just block this VFIO device running with flts=3Don if
+>> ERRATA_772415 and suggesting running with flts=3Doff?
+>
+>That sounds like a simpler solution, so long as nobody complains
+>about this limitation :)
+
+I plan to apply this simpler solution except there is objection, because
+I don't want to bring complexity to VFIO just for an Errata. I remember
+ERRATA_772415 exists only on old SPR, @Liu, Yi L can correct me if I'm wron=
+g.
+
+We can also introduce a new vtd option ignore_errata to force ignore the er=
+rata
+with a warning message in case user care more on performance over security.
+
+With these two solutions, vtd can reuse VFIO container's IOAS and HWPT just
+like ARM, so we are common on this part.
+
+Comments welcome! If no objection, I will apply these solutions in v2.
+
+Thanks
+Zhenzhong
 
