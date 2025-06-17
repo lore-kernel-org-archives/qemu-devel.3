@@ -4,77 +4,127 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE4AAC71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:04:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9F5C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:05:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYeO-0000ir-MZ; Tue, 17 Jun 2025 11:55:04 -0400
+	id 1uRYfb-0003KW-K9; Tue, 17 Jun 2025 11:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uRYQZ-0005KV-0Z
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:40:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uRYQO-0005Yi-1H
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:40:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750174823;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cZMNbAfMQjfPANHhO+btiyS6Mi7Z2tfSqrkWrXhYg8o=;
- b=fKERH4D8C1dFJ/84Prx/g7fgVMr48zVu8t140+CIilURWVJQSD4vpfx7qchsQBZKLNEiXA
- LKNS9m0tNSTz2j7XSYpwEEaZvHL+sWufsZe9jlPBkzoh7Q3VQpoDbIAKZzTrB+Nia+esCb
- 8NDJFK8Yaqn7DAxiU9qAq0gRIs6qX+0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-hPOKNHmKOwmTUySeSkdFcg-1; Tue,
- 17 Jun 2025 11:40:20 -0400
-X-MC-Unique: hPOKNHmKOwmTUySeSkdFcg-1
-X-Mimecast-MFC-AGG-ID: hPOKNHmKOwmTUySeSkdFcg_1750174816
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4D6141800295; Tue, 17 Jun 2025 15:40:16 +0000 (UTC)
-Received: from gondolin.str.redhat.com (pixel-6a.str.redhat.com
- [10.33.192.205])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BCD2B180035C; Tue, 17 Jun 2025 15:40:10 +0000 (UTC)
-From: Cornelia Huck <cohuck@redhat.com>
-To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
- richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
- oliver.upton@linux.dev, sebott@redhat.com,
- shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
- berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
- agraf@csgraf.de
-Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
- pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
-Subject: [PATCH v8 05/14] arm/cpu: Store aa64mmfr0-3 into the idregs array
-Date: Tue, 17 Jun 2025 17:39:22 +0200
-Message-ID: <20250617153931.1330449-6-cohuck@redhat.com>
-In-Reply-To: <20250617153931.1330449-1-cohuck@redhat.com>
-References: <20250617153931.1330449-1-cohuck@redhat.com>
+ (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
+ id 1uRYM1-0006F5-LM
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:36:10 -0400
+Received: from mail-ed1-f66.google.com ([209.85.208.66])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
+ id 1uRUyK-0006xW-3h
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 07:59:26 -0400
+Received: by mail-ed1-f66.google.com with SMTP id
+ 4fb4d7f45d1cf-6088d856c6eso9937275a12.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 04:59:23 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750161562; x=1750766362;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:cc:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=EU0DCQb/zd9WyUxYMFIGRJc9j60ngOl4viJXnSpEIdM=;
+ b=BUlgxlCbCn3+UGy5xTGnkHosVlnqfOwwR2CXXcanJX/qHdB9eOROi1iPnAWBLM48IC
+ GYA4buqlCFOJGPrklvg1iOqOnH+CEP1q3rVaqB6PjC23t9Qv0852xQ3RpwOfKUFhzair
+ WT2mhJmyoITUD1mI8CfZOjsPB3yigYDKDyGV9l7+PuTO9XbLwt/UMB9iVnoygSJv6ZWU
+ 2kvyAcn1CqRfN5CguThWuE0sxb8NaBsYNVfn8iO8PRfpPNgE5WWFWUDHgEKOkC728JRS
+ 4uEH7WSlWSg7/L6Y7rTM+dvbr9CI234sVghIkfwVG492nhXRgJmqe+kwuKaluiyiCekm
+ VAGA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXbiolaPzXSvwDEOQqfcuRKQbnGx4rbLYoo2eSbeaOvIN0O0IOrzibR0V1zWom4pt3pmsnA812mh8qB@nongnu.org
+X-Gm-Message-State: AOJu0Yw8B9gkkGLg9DHOmnnjq0GaiiPAfWIoHYZOcsAX8EGVsv2PfkiV
+ E7J9IPjlfnNyZmW1ROwOJk+wqxhMIricohFxBT9JeYCBnFn5Yza0DrD3
+X-Gm-Gg: ASbGncs3iKKwfzwg0Ljr9gyHwZ8PiyYMXr0Q7KM/A8OHPwuzgCGYyb5nCY3bZgwINqN
+ Fy5dS1D3rW8ThKsdk1ip/TlJ6sEUHSxEz5n0LW9tHwvZpH0+O60/jOd+Myaxx4AAdhFnLM1UHGv
+ soyP9VfF1QSVGXScIA74bt3zpq889cxK0PnUvElAf7dJwQJ6HTAFmdbZotjt5RPEDJG2mARfMAN
+ BFIb9lt26fkv5BuGNh8Tc94qTCzbi2DErYd4bxu9NRGRcjUmD2Nym+xbx7Dun7UwGQws9b/yxYu
+ 01l3p8EMD+9FMZ+31rNLrLSc1jTfnCeVP9AEXQWx7bpUirfm7Y5s9rMVTjqr3c3Zdz6irI1Cq8y
+ IaSrSVfHFY49+wwqvwUyK
+X-Google-Smtp-Source: AGHT+IGD80YnBZ6Xyz3YA/r0wute/DqTa0eS6djh4+3Iyh/GyqY8a3Rw+jHNzsYYseRlduFjErwydQ==
+X-Received: by 2002:a17:906:6a1b:b0:ad5:7234:e4a9 with SMTP id
+ a640c23a62f3a-adfad54b256mr1282817066b.28.1750161561350; 
+ Tue, 17 Jun 2025 04:59:21 -0700 (PDT)
+Received: from [192.168.88.252] (78-80-97-102.customers.tmcz.cz.
+ [78.80.97.102]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-adfbfc777c9sm550579866b.118.2025.06.17.04.59.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Jun 2025 04:59:21 -0700 (PDT)
+Message-ID: <945f230c-052b-43b5-b1c3-b8c450c21327@ovn.org>
+Date: Tue, 17 Jun 2025 13:59:20 +0200
 MIME-Version: 1.0
-Content-type: text/plain
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=cohuck@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Cc: i.maximets@ovn.org, Jason Wang <jasowang@redhat.com>,
+ Anton Protopopov <aspsk@isovalent.com>
+Subject: Re: [PATCH v3 2/2] net/af-xdp: Fix up cleanup path upon failure in
+ queue creation
+To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
+References: <20250604112916.1195368-1-daniel@iogearbox.net>
+ <20250604112916.1195368-2-daniel@iogearbox.net>
+Content-Language: en-US
+From: Ilya Maximets <i.maximets@ovn.org>
+Autocrypt: addr=i.maximets@ovn.org; keydata=
+ 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
+In-Reply-To: <20250604112916.1195368-2-daniel@iogearbox.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.85.208.66;
+ envelope-from=i.maximets.ovn@gmail.com; helo=mail-ed1-f66.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,619 +140,100 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Eric Auger <eric.auger@redhat.com>
+On 6/4/25 1:29 PM, Daniel Borkmann wrote:
+> While testing, it turned out that upon error in the queue creation loop,
+> we never trigger the af_xdp_cleanup() handler. This is because we pass
+> errp instead of a local err pointer into the various AF_XDP setup functions
+> instead of a scheme like:
+> 
+>     bool fn(..., Error **errp)
+>     {
+>         Error *err = NULL;
+> 
+>         foo(arg, &err);
+>         if (err) {
+>             handle the error...
+>             error_propagate(errp, err);
+>             return false;
+>         }
+>         ...
+>     }
+> 
+> With a conversion into the above format, the af_xdp_cleanup() handler is
+> called as expected.
 
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Sebastian Ott <sebott@redhat.com>
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Signed-off-by: Cornelia Huck <cohuck@redhat.com>
----
- target/arm/cpu-features.h | 74 +++++++++++++++++++--------------------
- target/arm/cpu.h          |  4 ---
- target/arm/cpu64.c        |  8 ++---
- target/arm/helper.c       |  8 ++---
- target/arm/hvf/hvf.c      | 21 ++++++-----
- target/arm/kvm.c          | 12 +++----
- target/arm/ptw.c          |  6 ++--
- target/arm/tcg/cpu64.c    | 64 ++++++++++++++++-----------------
- 8 files changed, 95 insertions(+), 102 deletions(-)
+How exactly this prevents calling the cleanup function?  I don't see the
+errp being checked anywhere in the qemu_del_net_client() path.
 
-diff --git a/target/arm/cpu-features.h b/target/arm/cpu-features.h
-index 3adea85b79b7..89c9278639bf 100644
---- a/target/arm/cpu-features.h
-+++ b/target/arm/cpu-features.h
-@@ -711,192 +711,192 @@ static inline bool isar_feature_aa64_nmi(const ARMISARegisters *id)
- 
- static inline bool isar_feature_aa64_tgran4_lpa2(const ARMISARegisters *id)
- {
--    return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4) >= 1;
-+    return FIELD_SEX64_IDREG(id, ID_AA64MMFR0, TGRAN4) >= 1;
- }
- 
- static inline bool isar_feature_aa64_tgran4_2_lpa2(const ARMISARegisters *id)
- {
--    unsigned t = FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4_2);
-+    unsigned t = FIELD_EX64_IDREG(id, ID_AA64MMFR0, TGRAN4_2);
-     return t >= 3 || (t == 0 && isar_feature_aa64_tgran4_lpa2(id));
- }
- 
- static inline bool isar_feature_aa64_tgran16_lpa2(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN16) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR0, TGRAN16) >= 2;
- }
- 
- static inline bool isar_feature_aa64_tgran16_2_lpa2(const ARMISARegisters *id)
- {
--    unsigned t = FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN16_2);
-+    unsigned t = FIELD_EX64_IDREG(id, ID_AA64MMFR0, TGRAN16_2);
-     return t >= 3 || (t == 0 && isar_feature_aa64_tgran16_lpa2(id));
- }
- 
- static inline bool isar_feature_aa64_tgran4(const ARMISARegisters *id)
- {
--    return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4) >= 0;
-+    return FIELD_SEX64_IDREG(id, ID_AA64MMFR0, TGRAN4) >= 0;
- }
- 
- static inline bool isar_feature_aa64_tgran16(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN16) >= 1;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR0, TGRAN16) >= 1;
- }
- 
- static inline bool isar_feature_aa64_tgran64(const ARMISARegisters *id)
- {
--    return FIELD_SEX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN64) >= 0;
-+    return FIELD_SEX64_IDREG(id, ID_AA64MMFR0, TGRAN64) >= 0;
- }
- 
- static inline bool isar_feature_aa64_tgran4_2(const ARMISARegisters *id)
- {
--    unsigned t = FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN4_2);
-+    unsigned t = FIELD_EX64_IDREG(id, ID_AA64MMFR0, TGRAN4_2);
-     return t >= 2 || (t == 0 && isar_feature_aa64_tgran4(id));
- }
- 
- static inline bool isar_feature_aa64_tgran16_2(const ARMISARegisters *id)
- {
--    unsigned t = FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN16_2);
-+    unsigned t = FIELD_EX64_IDREG(id, ID_AA64MMFR0, TGRAN16_2);
-     return t >= 2 || (t == 0 && isar_feature_aa64_tgran16(id));
- }
- 
- static inline bool isar_feature_aa64_tgran64_2(const ARMISARegisters *id)
- {
--    unsigned t = FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, TGRAN64_2);
-+    unsigned t = FIELD_EX64_IDREG(id, ID_AA64MMFR0, TGRAN64_2);
-     return t >= 2 || (t == 0 && isar_feature_aa64_tgran64(id));
- }
- 
- static inline bool isar_feature_aa64_fgt(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, FGT) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR0, FGT) != 0;
- }
- 
- static inline bool isar_feature_aa64_ecv_traps(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, ECV) > 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR0, ECV) > 0;
- }
- 
- static inline bool isar_feature_aa64_ecv(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr0, ID_AA64MMFR0, ECV) > 1;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR0, ECV) > 1;
- }
- 
- static inline bool isar_feature_aa64_vh(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, VH) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, VH) != 0;
- }
- 
- static inline bool isar_feature_aa64_lor(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, LO) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, LO) != 0;
- }
- 
- static inline bool isar_feature_aa64_pan(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, PAN) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, PAN) != 0;
- }
- 
- static inline bool isar_feature_aa64_ats1e1(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, PAN) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, PAN) >= 2;
- }
- 
- static inline bool isar_feature_aa64_pan3(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, PAN) >= 3;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, PAN) >= 3;
- }
- 
- static inline bool isar_feature_aa64_hcx(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, HCX) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, HCX) != 0;
- }
- 
- static inline bool isar_feature_aa64_afp(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, AFP) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, AFP) != 0;
- }
- 
- static inline bool isar_feature_aa64_tidcp1(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, TIDCP1) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, TIDCP1) != 0;
- }
- 
- static inline bool isar_feature_aa64_cmow(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, CMOW) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, CMOW) != 0;
- }
- 
- static inline bool isar_feature_aa64_hafs(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, HAFDBS) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, HAFDBS) != 0;
- }
- 
- static inline bool isar_feature_aa64_hdbs(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, HAFDBS) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, HAFDBS) >= 2;
- }
- 
- static inline bool isar_feature_aa64_tts2uxn(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr1, ID_AA64MMFR1, XNX) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR1, XNX) != 0;
- }
- 
- static inline bool isar_feature_aa64_uao(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, UAO) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, UAO) != 0;
- }
- 
- static inline bool isar_feature_aa64_st(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, ST) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, ST) != 0;
- }
- 
- static inline bool isar_feature_aa64_lse2(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, AT) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, AT) != 0;
- }
- 
- static inline bool isar_feature_aa64_fwb(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, FWB) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, FWB) != 0;
- }
- 
- static inline bool isar_feature_aa64_ids(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, IDS) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, IDS) != 0;
- }
- 
- static inline bool isar_feature_aa64_half_evt(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, EVT) >= 1;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, EVT) >= 1;
- }
- 
- static inline bool isar_feature_aa64_evt(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, EVT) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, EVT) >= 2;
- }
- 
- static inline bool isar_feature_aa64_ccidx(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, CCIDX) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, CCIDX) != 0;
- }
- 
- static inline bool isar_feature_aa64_lva(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, VARANGE) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, VARANGE) != 0;
- }
- 
- static inline bool isar_feature_aa64_e0pd(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, E0PD) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, E0PD) != 0;
- }
- 
- static inline bool isar_feature_aa64_nv(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, NV) != 0;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, NV) != 0;
- }
- 
- static inline bool isar_feature_aa64_nv2(const ARMISARegisters *id)
- {
--    return FIELD_EX64(id->id_aa64mmfr2, ID_AA64MMFR2, NV) >= 2;
-+    return FIELD_EX64_IDREG(id, ID_AA64MMFR2, NV) >= 2;
- }
- 
- static inline bool isar_feature_aa64_pmuv3p1(const ARMISARegisters *id)
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 05157a49d75c..df9b7cc8c84c 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -1074,10 +1074,6 @@ struct ArchCPU {
-         uint32_t dbgdidr;
-         uint32_t dbgdevid;
-         uint32_t dbgdevid1;
--        uint64_t id_aa64mmfr0;
--        uint64_t id_aa64mmfr1;
--        uint64_t id_aa64mmfr2;
--        uint64_t id_aa64mmfr3;
-         uint64_t id_aa64dfr0;
-         uint64_t id_aa64dfr1;
-         uint64_t id_aa64smfr0;
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 502aac91730d..500f3646bfad 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -623,12 +623,12 @@ void arm_cpu_lpa2_finalize(ARMCPU *cpu, Error **errp)
-         return;
-     }
- 
--    t = cpu->isar.id_aa64mmfr0;
-+    t = GET_IDREG(&cpu->isar, ID_AA64MMFR0);
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN16, 2);   /* 16k pages w/ LPA2 */
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN4, 1);    /*  4k pages w/ LPA2 */
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN16_2, 3); /* 16k stage2 w/ LPA2 */
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN4_2, 3);  /*  4k stage2 w/ LPA2 */
--    cpu->isar.id_aa64mmfr0 = t;
-+    SET_IDREG(&cpu->isar, ID_AA64MMFR0, t);
- }
- 
- static void aarch64_a57_initfn(Object *obj)
-@@ -673,7 +673,7 @@ static void aarch64_a57_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
--    cpu->isar.id_aa64mmfr0 = 0x00001124;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
-     cpu->isar.dbgdidr = 0x3516d000;
-     cpu->isar.dbgdevid = 0x01110f13;
-     cpu->isar.dbgdevid1 = 0x2;
-@@ -735,7 +735,7 @@ static void aarch64_a53_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
--    cpu->isar.id_aa64mmfr0 = 0x00001122; /* 40 bit physical addr */
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x00001122); /* 40 bit physical addr */
-     cpu->isar.dbgdidr = 0x3516d000;
-     cpu->isar.dbgdevid = 0x00110f13;
-     cpu->isar.dbgdevid1 = 0x1;
-diff --git a/target/arm/helper.c b/target/arm/helper.c
-index 2b7c963e026c..48fcd755dcdb 100644
---- a/target/arm/helper.c
-+++ b/target/arm/helper.c
-@@ -8043,22 +8043,22 @@ void register_cp_regs_for_features(ARMCPU *cpu)
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 0,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = cpu->isar.id_aa64mmfr0 },
-+              .resetvalue = GET_IDREG(isar, ID_AA64MMFR0)},
-             { .name = "ID_AA64MMFR1_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 1,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = cpu->isar.id_aa64mmfr1 },
-+              .resetvalue = GET_IDREG(isar, ID_AA64MMFR1) },
-             { .name = "ID_AA64MMFR2_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 2,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = cpu->isar.id_aa64mmfr2 },
-+              .resetvalue = GET_IDREG(isar, ID_AA64MMFR2) },
-             { .name = "ID_AA64MMFR3_EL1", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 3,
-               .access = PL1_R, .type = ARM_CP_CONST,
-               .accessfn = access_aa64_tid3,
--              .resetvalue = cpu->isar.id_aa64mmfr3 },
-+              .resetvalue = GET_IDREG(isar, ID_AA64MMFR3) },
-             { .name = "ID_AA64MMFR4_EL1_RESERVED", .state = ARM_CP_STATE_AA64,
-               .opc0 = 3, .opc1 = 0, .crn = 0, .crm = 7, .opc2 = 4,
-               .access = PL1_R, .type = ARM_CP_CONST,
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index e1bfca5947c1..37a6303ec2a4 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -846,14 +846,17 @@ static uint64_t hvf_get_reg(CPUState *cpu, int rt)
-     return val;
- }
- 
--static void clamp_id_aa64mmfr0_parange_to_ipa_size(uint64_t *id_aa64mmfr0)
-+static void clamp_id_aa64mmfr0_parange_to_ipa_size(ARMISARegisters *isar)
- {
-     uint32_t ipa_size = chosen_ipa_bit_size ?
-             chosen_ipa_bit_size : hvf_arm_get_max_ipa_bit_size();
-+    uint64_t id_aa64mmfr0;
- 
-     /* Clamp down the PARange to the IPA size the kernel supports. */
-     uint8_t index = round_down_to_parange_index(ipa_size);
--    *id_aa64mmfr0 = (*id_aa64mmfr0 & ~R_ID_AA64MMFR0_PARANGE_MASK) | index;
-+    id_aa64mmfr0 = GET_IDREG(isar, ID_AA64MMFR0);
-+    id_aa64mmfr0 = (id_aa64mmfr0 & ~R_ID_AA64MMFR0_PARANGE_MASK) | index;
-+    SET_IDREG(isar, ID_AA64MMFR0, id_aa64mmfr0);
- }
- 
- static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-@@ -870,9 +873,9 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         { HV_SYS_REG_ID_AA64ISAR0_EL1, &host_isar.idregs[ID_AA64ISAR0_EL1_IDX] },
-         { HV_SYS_REG_ID_AA64ISAR1_EL1, &host_isar.idregs[ID_AA64ISAR1_EL1_IDX] },
-         /* Add ID_AA64ISAR2_EL1 here when HVF supports it */
--        { HV_SYS_REG_ID_AA64MMFR0_EL1, &host_isar.id_aa64mmfr0 },
--        { HV_SYS_REG_ID_AA64MMFR1_EL1, &host_isar.id_aa64mmfr1 },
--        { HV_SYS_REG_ID_AA64MMFR2_EL1, &host_isar.id_aa64mmfr2 },
-+        { HV_SYS_REG_ID_AA64MMFR0_EL1, &host_isar.idregs[ID_AA64MMFR0_EL1_IDX] },
-+        { HV_SYS_REG_ID_AA64MMFR1_EL1, &host_isar.idregs[ID_AA64MMFR1_EL1_IDX] },
-+        { HV_SYS_REG_ID_AA64MMFR2_EL1, &host_isar.idregs[ID_AA64MMFR2_EL1_IDX] },
-         /* Add ID_AA64MMFR3_EL1 here when HVF supports it */
-     };
-     hv_vcpu_t fd;
-@@ -899,7 +902,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-     r |= hv_vcpu_get_sys_reg(fd, HV_SYS_REG_MIDR_EL1, &ahcf->midr);
-     r |= hv_vcpu_destroy(fd);
- 
--    clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar.id_aa64mmfr0);
-+    clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar);
- 
-     /*
-      * Disable SME, which is not properly handled by QEMU hvf yet.
-@@ -1067,12 +1070,12 @@ int hvf_arch_init_vcpu(CPUState *cpu)
- 
-     /* We're limited to underlying hardware caps, override internal versions */
-     ret = hv_vcpu_get_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64MMFR0_EL1,
--                              &arm_cpu->isar.id_aa64mmfr0);
-+                              &arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
-     assert_hvf_ok(ret);
- 
--    clamp_id_aa64mmfr0_parange_to_ipa_size(&arm_cpu->isar.id_aa64mmfr0);
-+    clamp_id_aa64mmfr0_parange_to_ipa_size(&arm_cpu->isar);
-     ret = hv_vcpu_set_sys_reg(cpu->accel->fd, HV_SYS_REG_ID_AA64MMFR0_EL1,
--                              arm_cpu->isar.id_aa64mmfr0);
-+                              arm_cpu->isar.idregs[ID_AA64MMFR0_EL1_IDX]);
-     assert_hvf_ok(ret);
- 
-     return 0;
-diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 1e19dba4cb07..1dde96fbbda7 100644
---- a/target/arm/kvm.c
-+++ b/target/arm/kvm.c
-@@ -323,14 +323,10 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR0_EL1_IDX);
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR1_EL1_IDX);
-         err |= get_host_cpu_reg(fd, ahcf, ID_AA64ISAR2_EL1_IDX);
--        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64mmfr0,
--                              ARM64_SYS_REG(3, 0, 0, 7, 0));
--        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64mmfr1,
--                              ARM64_SYS_REG(3, 0, 0, 7, 1));
--        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64mmfr2,
--                              ARM64_SYS_REG(3, 0, 0, 7, 2));
--        err |= read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64mmfr3,
--                              ARM64_SYS_REG(3, 0, 0, 7, 3));
-+        err |= get_host_cpu_reg(fd, ahcf, ID_AA64MMFR0_EL1_IDX);
-+        err |= get_host_cpu_reg(fd, ahcf, ID_AA64MMFR1_EL1_IDX);
-+        err |= get_host_cpu_reg(fd, ahcf, ID_AA64MMFR2_EL1_IDX);
-+        err |= get_host_cpu_reg(fd, ahcf, ID_AA64MMFR3_EL1_IDX);
- 
-         /*
-          * Note that if AArch32 support is not present in the host,
-diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-index 44170d831cca..561bf2678e5a 100644
---- a/target/arm/ptw.c
-+++ b/target/arm/ptw.c
-@@ -122,7 +122,7 @@ unsigned int arm_pamax(ARMCPU *cpu)
- {
-     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64)) {
-         unsigned int parange =
--            FIELD_EX64(cpu->isar.id_aa64mmfr0, ID_AA64MMFR0, PARANGE);
-+            FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE);
- 
-         /*
-          * id_aa64mmfr0 is a read-only register so values outside of the
-@@ -332,7 +332,7 @@ static bool granule_protection_check(CPUARMState *env, uint64_t paddress,
-      * physical address size is invalid.
-      */
-     pps = FIELD_EX64(gpccr, GPCCR, PPS);
--    if (pps > FIELD_EX64(cpu->isar.id_aa64mmfr0, ID_AA64MMFR0, PARANGE)) {
-+    if (pps > FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE)) {
-         goto fault_walk;
-     }
-     pps = pamax_map[pps];
-@@ -1703,7 +1703,7 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
-          * ID_AA64MMFR0 is a read-only register so values outside of the
-          * supported mappings can be considered an implementation error.
-          */
--        ps = FIELD_EX64(cpu->isar.id_aa64mmfr0, ID_AA64MMFR0, PARANGE);
-+        ps = FIELD_EX64_IDREG(&cpu->isar, ID_AA64MMFR0, PARANGE);
-         ps = MIN(ps, param.ps);
-         assert(ps < ARRAY_SIZE(pamax_map));
-         outputsize = pamax_map[ps];
-diff --git a/target/arm/tcg/cpu64.c b/target/arm/tcg/cpu64.c
-index 7a730c7974f0..9efb7f0ce800 100644
---- a/target/arm/tcg/cpu64.c
-+++ b/target/arm/tcg/cpu64.c
-@@ -69,8 +69,8 @@ static void aarch64_a35_initfn(Object *obj)
-     cpu->isar.id_aa64dfr1 = 0;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
-     SET_IDREG(isar, ID_AA64ISAR1, 0);
--    cpu->isar.id_aa64mmfr0 = 0x00101122;
--    cpu->isar.id_aa64mmfr1 = 0;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x00101122);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0);
-     cpu->clidr = 0x0a200023;
-     cpu->dcz_blocksize = 4;
- 
-@@ -222,9 +222,9 @@ static void aarch64_a55_initfn(Object *obj)
-     cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
-     SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
--    cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
--    cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
--    cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101122ull);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0x0000000010212122ull);
-+    SET_IDREG(isar, ID_AA64MMFR2, 0x0000000000001011ull);
-     SET_IDREG(isar, ID_AA64PFR0, 0x0000000010112222ull);
-     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
-     cpu->id_afr0       = 0x00000000;
-@@ -312,7 +312,7 @@ static void aarch64_a72_initfn(Object *obj)
-     SET_IDREG(isar, ID_AA64PFR0, 0x00002222);
-     cpu->isar.id_aa64dfr0 = 0x10305106;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x00011120);
--    cpu->isar.id_aa64mmfr0 = 0x00001124;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x00001124);
-     cpu->isar.dbgdidr = 0x3516d000;
-     cpu->isar.dbgdevid = 0x01110f13;
-     cpu->isar.dbgdevid1 = 0x2;
-@@ -355,9 +355,9 @@ static void aarch64_a76_initfn(Object *obj)
-     cpu->isar.id_aa64dfr0  = 0x0000000010305408ull;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
-     SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
--    cpu->isar.id_aa64mmfr0 = 0x0000000000101122ull;
--    cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
--    cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101122ull);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0x0000000010212122ull);
-+    SET_IDREG(isar, ID_AA64MMFR2, 0x0000000000001011ull);
-     SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
-     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000010ull);
-     cpu->id_afr0       = 0x00000000;
-@@ -430,9 +430,9 @@ static void aarch64_a64fx_initfn(Object *obj)
-     cpu->isar.id_aa64dfr1 = 0x0000000000000000;
-     cpu->id_aa64afr0 = 0x0000000000000000;
-     cpu->id_aa64afr1 = 0x0000000000000000;
--    cpu->isar.id_aa64mmfr0 = 0x0000000000001122;
--    cpu->isar.id_aa64mmfr1 = 0x0000000011212100;
--    cpu->isar.id_aa64mmfr2 = 0x0000000000001011;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000001122);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0x0000000011212100);
-+    SET_IDREG(isar, ID_AA64MMFR2, 0x0000000000001011);
-     SET_IDREG(isar, ID_AA64ISAR0, 0x0000000010211120);
-     SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000010001);
-     SET_IDREG(isar, ID_AA64ZFR0, 0x0000000000000000);
-@@ -603,9 +603,9 @@ static void aarch64_neoverse_n1_initfn(Object *obj)
-     cpu->isar.id_aa64dfr0  = 0x0000000110305408ull;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x0000100010211120ull);
-     SET_IDREG(isar, ID_AA64ISAR1, 0x0000000000100001ull);
--    cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
--    cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
--    cpu->isar.id_aa64mmfr2 = 0x0000000000001011ull;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101125ull);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0x0000000010212122ull);
-+    SET_IDREG(isar, ID_AA64MMFR2, 0x0000000000001011ull);
-     SET_IDREG(isar, ID_AA64PFR0, 0x1100000010111112ull); /* GIC filled in later */
-     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
-     cpu->id_afr0       = 0x00000000;
-@@ -682,9 +682,9 @@ static void aarch64_neoverse_v1_initfn(Object *obj)
-     cpu->isar.id_aa64dfr1 = 0x00000000;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x1011111110212120ull); /* with FEAT_RNG */
-     SET_IDREG(isar, ID_AA64ISAR1, 0x0011000001211032ull);
--    cpu->isar.id_aa64mmfr0 = 0x0000000000101125ull;
--    cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
--    cpu->isar.id_aa64mmfr2 = 0x0220011102101011ull;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x0000000000101125ull);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0x0000000010212122ull),
-+    SET_IDREG(isar, ID_AA64MMFR2, 0x0220011102101011ull),
-     SET_IDREG(isar, ID_AA64PFR0, 0x1101110120111112ull); /* GIC filled in later */
-     SET_IDREG(isar, ID_AA64PFR1, 0x0000000000000020ull);
-     cpu->id_afr0       = 0x00000000;
-@@ -931,9 +931,9 @@ static void aarch64_a710_initfn(Object *obj)
-     cpu->id_aa64afr1       = 0;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x0221111110212120ull); /* with Crypto */
-     SET_IDREG(isar, ID_AA64ISAR1, 0x0010111101211052ull);
--    cpu->isar.id_aa64mmfr0 = 0x0000022200101122ull;
--    cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
--    cpu->isar.id_aa64mmfr2 = 0x1221011110101011ull;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x0000022200101122ull);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0x0000000010212122ull);
-+    SET_IDREG(isar, ID_AA64MMFR2, 0x1221011110101011ull);
-     cpu->clidr             = 0x0000001482000023ull;
-     cpu->gm_blocksize      = 4;
-     cpu->ctr               = 0x000000049444c004ull;
-@@ -1033,9 +1033,9 @@ static void aarch64_neoverse_n2_initfn(Object *obj)
-     cpu->id_aa64afr1       = 0;
-     SET_IDREG(isar, ID_AA64ISAR0, 0x1221111110212120ull); /* with Crypto and FEAT_RNG */
-     SET_IDREG(isar, ID_AA64ISAR1, 0x0011111101211052ull);
--    cpu->isar.id_aa64mmfr0 = 0x0000022200101125ull;
--    cpu->isar.id_aa64mmfr1 = 0x0000000010212122ull;
--    cpu->isar.id_aa64mmfr2 = 0x1221011112101011ull;
-+    SET_IDREG(isar, ID_AA64MMFR0, 0x0000022200101125ull);
-+    SET_IDREG(isar, ID_AA64MMFR1, 0x0000000010212122ull);
-+    SET_IDREG(isar, ID_AA64MMFR2, 0x1221011112101011ull);
-     cpu->clidr             = 0x0000001482000023ull;
-     cpu->gm_blocksize      = 4;
-     cpu->ctr               = 0x00000004b444c004ull;
-@@ -1206,7 +1206,7 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64PFR1, NMI, 1);       /* FEAT_NMI */
-     SET_IDREG(isar, ID_AA64PFR1, t);
- 
--    t = cpu->isar.id_aa64mmfr0;
-+    t = GET_IDREG(isar, ID_AA64MMFR0);
-     t = FIELD_DP64(t, ID_AA64MMFR0, PARANGE, 6); /* FEAT_LPA: 52 bits */
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN16, 1);   /* 16k pages supported */
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN16_2, 2); /* 16k stage2 supported */
-@@ -1214,9 +1214,9 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64MMFR0, TGRAN4_2, 2);  /*  4k stage2 supported */
-     t = FIELD_DP64(t, ID_AA64MMFR0, FGT, 1);       /* FEAT_FGT */
-     t = FIELD_DP64(t, ID_AA64MMFR0, ECV, 2);       /* FEAT_ECV */
--    cpu->isar.id_aa64mmfr0 = t;
-+    SET_IDREG(isar, ID_AA64MMFR0, t);
- 
--    t = cpu->isar.id_aa64mmfr1;
-+    t = GET_IDREG(isar, ID_AA64MMFR1);
-     t = FIELD_DP64(t, ID_AA64MMFR1, HAFDBS, 2);   /* FEAT_HAFDBS */
-     t = FIELD_DP64(t, ID_AA64MMFR1, VMIDBITS, 2); /* FEAT_VMID16 */
-     t = FIELD_DP64(t, ID_AA64MMFR1, VH, 1);       /* FEAT_VHE */
-@@ -1229,9 +1229,9 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64MMFR1, AFP, 1);      /* FEAT_AFP */
-     t = FIELD_DP64(t, ID_AA64MMFR1, TIDCP1, 1);   /* FEAT_TIDCP1 */
-     t = FIELD_DP64(t, ID_AA64MMFR1, CMOW, 1);     /* FEAT_CMOW */
--    cpu->isar.id_aa64mmfr1 = t;
-+    SET_IDREG(isar, ID_AA64MMFR1, t);
- 
--    t = cpu->isar.id_aa64mmfr2;
-+    t = GET_IDREG(isar, ID_AA64MMFR2);
-     t = FIELD_DP64(t, ID_AA64MMFR2, CNP, 1);      /* FEAT_TTCNP */
-     t = FIELD_DP64(t, ID_AA64MMFR2, UAO, 1);      /* FEAT_UAO */
-     t = FIELD_DP64(t, ID_AA64MMFR2, IESB, 1);     /* FEAT_IESB */
-@@ -1245,11 +1245,9 @@ void aarch64_max_tcg_initfn(Object *obj)
-     t = FIELD_DP64(t, ID_AA64MMFR2, BBM, 2);      /* FEAT_BBM at level 2 */
-     t = FIELD_DP64(t, ID_AA64MMFR2, EVT, 2);      /* FEAT_EVT */
-     t = FIELD_DP64(t, ID_AA64MMFR2, E0PD, 1);     /* FEAT_E0PD */
--    cpu->isar.id_aa64mmfr2 = t;
-+    SET_IDREG(isar, ID_AA64MMFR2, t);
- 
--    t = cpu->isar.id_aa64mmfr3;
--    t = FIELD_DP64(t, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
--    cpu->isar.id_aa64mmfr3 = t;
-+    FIELD_DP64_IDREG(isar, ID_AA64MMFR3, SPEC_FPACC, 1); /* FEAT_FPACC_SPEC */
- 
-     t = GET_IDREG(isar, ID_AA64ZFR0);
-     t = FIELD_DP64(t, ID_AA64ZFR0, SVEVER, 1);
--- 
-2.49.0
+Could you provide a more detailed call sequence description where the cleanup
+is not called?
+
+I agree thought that the local err variable is actually unused.  We should
+be able to just remove it and remove the error_propagate() call as well.
+
+> Also, making sure the XDP program will be removed does
+> require to set s->n_queues to i + 1 since the test is nc->queue_index ==
+> s->n_queues - 1, where nc->queue_index was set to i earlier.
+
+The idea behind 'i' instead of 'i + 1' was that if either af_xdp_umem_create()
+or af_xdp_socket_create() fails, we do not have xdp_flags initialized on the
+last queue.  And without it we can't remove the program, so we remove it while
+destroying the last actually configured queue.  And this is OK, because the
+failed queue was not added to the program, and if the af_xdp_socket_create()
+fails for the very first queue, then we don't have a program loaded at all.
+
+With the new changes in this patch set, we have an extra function that can fail,
+which is a new af_xdp_update_xsk_map(), and only if this one fails, we need to
+remove the program while cleaning up the current failed queue, since it was
+already created and xdp_flags are available.
+
+If we get this patch as-is and the af_xdp_socket_create() fails, we will not
+remove the program, AFAICT.
+
+Or am I missing something?
+
+Best regards, Ilya Maximets.
+
+> With both
+> fixed the cleanup triggers as expected. Note the error_propagate() handles
+> a NULL err internally.
+> 
+> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+> Cc: Ilya Maximets <i.maximets@ovn.org>
+> Cc: Jason Wang <jasowang@redhat.com>
+> Cc: Anton Protopopov <aspsk@isovalent.com>
+> ---
+>  net/af-xdp.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+> 
+> diff --git a/net/af-xdp.c b/net/af-xdp.c
+> index b83d9bc47f..5d9857fdd8 100644
+> --- a/net/af-xdp.c
+> +++ b/net/af-xdp.c
+> @@ -559,12 +559,11 @@ int net_init_af_xdp(const Netdev *netdev,
+>              s->map_start_index = opts->map_start_index;
+>          }
+>  
+> -        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp) ||
+> -            af_xdp_socket_create(s, opts, errp) ||
+> -            af_xdp_update_xsk_map(s, errp)) {
+> +        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, &err) ||
+> +            af_xdp_socket_create(s, opts, &err) ||
+> +            af_xdp_update_xsk_map(s, &err)) {
+>              /* Make sure the XDP program will be removed. */
+> -            s->n_queues = i;
+> -            error_propagate(errp, err);
+> +            s->n_queues = i + 1;
+>              goto err;
+>          }
+>      }
+> @@ -586,6 +585,7 @@ int net_init_af_xdp(const Netdev *netdev,
+>  err:
+>      if (nc0) {
+>          qemu_del_net_client(nc0);
+> +        error_propagate(errp, err);
+>      }
+>  
+>      return -1;
 
 
