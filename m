@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1860C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:36:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B93F0C71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRZHE-0001Lo-Gj; Tue, 17 Jun 2025 12:35:12 -0400
+	id 1uRZHa-0001tP-Ae; Tue, 17 Jun 2025 12:35:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZGC-0000m3-78
+ id 1uRZGC-0000mF-QN
  for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:10 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZG1-0000dB-5k
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:00 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-450ce671a08so37702105e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:33:56 -0700 (PDT)
+ id 1uRZG3-0000e4-2K
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:01 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-3a536ecbf6fso4061571f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:33:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750178035; x=1750782835; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750178037; x=1750782837; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=t40bt1183UrSentyz3550cC0V6NSp0ZoskbuhIRXheY=;
- b=iYZzXrooLEVABswjRyJcpawNukewtvdMUDWzFL8TEBSdYHqNbmU7R5p4fD0u6JxUAt
- F5ycupFpXVopyi6nvRZDnY7LpjmqK5lqg5P+gEraJhS4W9HcwsKlO/+VT/RNSIRWdROr
- iRirD3v+uRkFPsDO6IX5zNYzmgNWvv33pGpHBFRHT0JqEJ3/AQrv4jZokhPx93dujNu7
- mmT+3SJgONekc6ZH47zjoCS6FNjJ0guXBBWAsPjWXbMpUmi+M3gTN3KS5C6IlWQdMI44
- W7Mkuiz72bkpeWDjHxYxxxrjVwfhOT/JuMshPiPZzee62NJvUu/fWb9yHedh95t41Pfx
- apzQ==
+ bh=08AiNc4t9QnXpXVjsIzl22ewoa/Tdv5ZaJHW+qjaXxo=;
+ b=dZ2Xvev7DErfPQpq1ef2zHiuMhYP3G4/18/9sV5vMq5nfEP29ytS2gtR4xmZGijIfK
+ WZJZDFWGxEVwjDGsEMVEWegCa4h2MzWnCgzHCjU5WAckF/PpcqArWG4RtKuv+Iu83SWN
+ xaOQs6ePl4xcmua/c2iWPi5gUOClCJjaqENd+KCROXuX/MWJzy56OjMnNsODNp09xyFo
+ 6Kf2jlry3SgqM1Fh3s+Cg77KSbBAnjnxX0Xhm9euQ13uhMWJJfSwv/irULrSZc+vwMAB
+ Hl/eD6p//HK8JP9Ky/PEvKScHeP6n4LSydOh+n4nh22N8kE0CinRDPiWxEDbyLYN0wyW
+ XNzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750178035; x=1750782835;
+ d=1e100.net; s=20230601; t=1750178037; x=1750782837;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=t40bt1183UrSentyz3550cC0V6NSp0ZoskbuhIRXheY=;
- b=hMegHgrL6sYqxm06KLY3gY1SHO+n/ffTlChTLHBwCdke3pnEHrTYou8z4HM5CmC5Q2
- 2SIwRXpW2JhjIPuHBSaFd7JYZIxRr3gW2qG+bIYD2Hdr8pBArojEnuTc6PCNChlN7YS6
- 2qQLfCkBYScheBx2i84BF1V/29T5/N3wk+G4Yvn7mi6hT3FVD0Jy7Gt+VDCta7bDK+tQ
- uajabfzXGkbPAF72O/kdYhP/SwA32SluQb7jGJbduCB8boEhmGl5fd6BcXhcg97RNJW5
- eZ57RUMzmAV5P4cnl4S70wfbVXtMVHV2qBAeDYu3YxuKxtUzTasBZbzoYIEgWK8dgajG
- g+cg==
-X-Gm-Message-State: AOJu0Yy6+ucJWtc7KnNREhH9LNHamKIH1xnDAgeyUt4WDTbYPUkm3Mv8
- FtiJAUOwJtI1A25VxefWdqZ8aYBiryE6TVoYmU2XEa7Yk5YNnV53ul/VUDbDH77C9Bg=
-X-Gm-Gg: ASbGncsjTI2tReuGKVBCO2LFtbxGtnCtyWmb4HRToX0POt5TN+08qaBRMMOa7zyHEr+
- Cchs4xmqMa1Vh8zsfR7A8RU6ujgbjQsXyQKVsZAqysO5cp4iaf/a9Ct0nV7Hv/kfIn91Cm0JEHi
- AXAkZ2s+SkFis/x7DdLFDQBENCLZhemBfkR368X2sC/i++GZuOi1p3CKwWV/9j7QsHEZ6Un/NBq
- 68X0ni22MwbelwcJBsAXD8rk7OXYMmIHIK/JYzJWpKPm1KHvEG7rCerD/Hcv1spUqlfeCgHboaa
- lDBMNEp/kKowwAEYUmnb3M8dy2cC8x3f3APfH4crTXUedQNl8Q6ZO/WtyB2zCr0=
-X-Google-Smtp-Source: AGHT+IG4cv90M94Tfw7iEiYjMpdDPcWxYkGMa/ll8ppjhP2edxc6v82sBNSLJWREvyzO/nD4jEsnAg==
-X-Received: by 2002:a05:6000:2913:b0:3a4:d4e5:498a with SMTP id
- ffacd0b85a97d-3a5723af2e8mr12220518f8f.42.1750178035305; 
- Tue, 17 Jun 2025 09:33:55 -0700 (PDT)
+ bh=08AiNc4t9QnXpXVjsIzl22ewoa/Tdv5ZaJHW+qjaXxo=;
+ b=inmYPsuuj8bjqnRHeODPeKHD9WOGI1V9ReQY/CdiXRTLQGCobuIIIs1jRcMdMazn1V
+ aLNkN+qB7WJqXl6cjK2QqhCDQiHOKWIiSFqZTpdYn77SGjwS/qHZTESvzF1zNpDw2cl3
+ SLC4CnVMSbUjcpwdvDjoVV3ZVdCQVrtxTVdzvmte2UFsHyPll8jM04oQKEfrwlL7mfwQ
+ WvVbo5gewaZbNFOj21I9DjafEIcTQYu0ho7aBBEcZvN1avYmHZ2ARoawELyfH0uDCJv3
+ +9gT0ZjPIoP6TVaVpTlQiDWxRsZ3dyYJ/Sx73nulqD0on1J5woy27PRrt1iwRlxSWHwi
+ eQVg==
+X-Gm-Message-State: AOJu0YwZykp3b4jpdFjt+YEYRlWIFiqBR1W52ecTiRc7xbKDrI8dvF/e
+ 10646YOFCZn5HIHGA/YyDA1Cmt2NIkRn6QoDFA9VoPpHN96zCuVUS2SCPZMIGjBYeXY=
+X-Gm-Gg: ASbGncvoULdG8lxBXdWN9oYv9VQPqhF+0iuVGZF8hPpO112R8F4mHujyselhm5fChCR
+ YB8J5ChK3xs7n4HJ0f9qDR6g3Yl1wZQ4L2OaUJDQxCOdNAubn42tjUoNlD1XPako34TcGv6wtZz
+ 2/IN2YBjWPnQMHX0EFPf1yEs5qbt62g4dNzcb9su4rjLmMXCh/c8lt0QyPiT6DEh/luNv9JZTtF
+ Kwd1bnDEpx0KMJvCvohId27VKRikqXKPNysoCDdbn1UxtVx2D+Bvma0GHCDcGH1DkZZkw6A88On
+ gzIxCI6IGEpsTBgAArcTqzignXgycZVO1LVBaSigzPV/XXGUs61DtIAqHRWhe3Y=
+X-Google-Smtp-Source: AGHT+IEN9d1okWsq/8zsxuLsJHKVkJr9o41irpI2tw2DJJ8y8sNzt8REZAmA1XvhJWVvCccTBndiHg==
+X-Received: by 2002:a05:6000:708:b0:3a5:5278:e635 with SMTP id
+ ffacd0b85a97d-3a572367577mr10901001f8f.3.1750178037072; 
+ Tue, 17 Jun 2025 09:33:57 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b48564sm14222655f8f.82.2025.06.17.09.33.52
+ ffacd0b85a97d-3a568a68b0esm14233217f8f.29.2025.06.17.09.33.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Jun 2025 09:33:53 -0700 (PDT)
+ Tue, 17 Jun 2025 09:33:55 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 434E85F8A6;
+ by draig.lan (Postfix) with ESMTP id A920F5F914;
  Tue, 17 Jun 2025 17:33:52 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,17 +74,17 @@ Cc: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 04/11] kvm: expose a trap-harder option to the command line
-Date: Tue, 17 Jun 2025 17:33:44 +0100
-Message-ID: <20250617163351.2640572-5-alex.bennee@linaro.org>
+Subject: [RFC PATCH 08/11] kvm/arm: plumb in a basic trap harder handler
+Date: Tue, 17 Jun 2025 17:33:48 +0100
+Message-ID: <20250617163351.2640572-9-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250617163351.2640572-1-alex.bennee@linaro.org>
 References: <20250617163351.2640572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,68 +107,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It would be nice to only have the variable for this is a KVM_ARM_STATE
-but currently everything is just held together in the common KVMState.
-Only KVM ARM can set the flag though.
+Currently we do nothing but report we don't handle anything and let
+KVM come to a halt.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/system/kvm_int.h |  4 ++++
- target/arm/kvm.c         | 19 +++++++++++++++++++
- 2 files changed, 23 insertions(+)
+ target/arm/syndrome.h |  4 ++++
+ target/arm/kvm-stub.c |  5 +++++
+ target/arm/kvm.c      | 44 +++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 53 insertions(+)
 
-diff --git a/include/system/kvm_int.h b/include/system/kvm_int.h
-index 756a3c0a25..a1e306b7b7 100644
---- a/include/system/kvm_int.h
-+++ b/include/system/kvm_int.h
-@@ -122,6 +122,10 @@ struct KVMState
-     OnOffAuto kernel_irqchip_split;
-     bool sync_mmu;
-     bool guest_state_protected;
+diff --git a/target/arm/syndrome.h b/target/arm/syndrome.h
+index 3244e0740d..29b95bdd36 100644
+--- a/target/arm/syndrome.h
++++ b/target/arm/syndrome.h
+@@ -88,6 +88,10 @@ typedef enum {
+ #define ARM_EL_ISV_SHIFT 24
+ #define ARM_EL_IL (1 << ARM_EL_IL_SHIFT)
+ #define ARM_EL_ISV (1 << ARM_EL_ISV_SHIFT)
++#define ARM_EL_ISS_SHIFT 0
++#define ARM_EL_ISS_LENGTH 25
++#define ARM_EL_ISS2_SHIFT 32
++#define ARM_EL_ISS2_LENGTH 24
+ 
+ /* In the Data Abort syndrome */
+ #define ARM_EL_VNCR (1 << 13)
+diff --git a/target/arm/kvm-stub.c b/target/arm/kvm-stub.c
+index 34e57fab01..765efb1848 100644
+--- a/target/arm/kvm-stub.c
++++ b/target/arm/kvm-stub.c
+@@ -60,6 +60,11 @@ void kvm_arm_add_vcpu_properties(ARMCPU *cpu)
+     g_assert_not_reached();
+ }
+ 
++int kvm_arm_get_type(MachineState *ms)
++{
++    g_assert_not_reached();
++}
 +
-+    /* currently Arm only, but we have no KVMArmState */
-+    bool trap_harder;
-+
-     uint64_t manual_dirty_log_protect;
-     /*
-      * Older POSIX says that ioctl numbers are signed int, but in
+ int kvm_arm_get_max_vm_ipa_size(MachineState *ms, bool *fixed_ipa)
+ {
+     g_assert_not_reached();
 diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 74fda8b809..8b1719bfc1 100644
+index c5374d12cf..f2255cfdc8 100644
 --- a/target/arm/kvm.c
 +++ b/target/arm/kvm.c
-@@ -1615,6 +1615,18 @@ static void kvm_arch_set_eager_split_size(Object *obj, Visitor *v,
-     s->kvm_eager_split_size = value;
+@@ -1414,6 +1414,43 @@ static bool kvm_arm_handle_debug(ARMCPU *cpu,
+     return false;
  }
  
-+static bool kvm_arch_get_trap_harder(Object *obj, Error **errp)
++/**
++ * kvm_arm_handle_hard_trap:
++ * @cpu: ARMCPU
++ * @esr: full exception state register
++ * @elr: exception link return address
++ * @far: fault address (if used)
++ *
++ * Returns: 0 if the exception has been handled, < 0 otherwise
++ */
++static int kvm_arm_handle_hard_trap(ARMCPU *cpu,
++                                    uint64_t esr,
++                                    uint64_t elr,
++                                    uint64_t far)
 +{
-+    KVMState *s = KVM_STATE(obj);
-+    return s->trap_harder;
++    CPUState *cs = CPU(cpu);
++    int esr_ec = extract64(esr, ARM_EL_EC_SHIFT, ARM_EL_EC_LENGTH);
++    int esr_iss = extract64(esr, ARM_EL_ISS_SHIFT, ARM_EL_ISS_LENGTH);
++    int esr_iss2 = extract64(esr, ARM_EL_ISS2_SHIFT, ARM_EL_ISS2_LENGTH);
++    int esr_il = extract64(esr, ARM_EL_IL_SHIFT, 1);
++
++    /*
++     * Ensure register state is synchronised
++     *
++     * This sets vcpu->vcpu_dirty which should ensure the registers
++     * are synced back to KVM before we restart.
++     */
++    kvm_cpu_synchronize_state(cs);
++
++    switch (esr_ec) {
++    default:
++        qemu_log_mask(LOG_UNIMP, "%s: unhandled EC: %x/%x/%x/%d\n",
++                __func__, esr_ec, esr_iss, esr_iss2, esr_il);
++        return -1;
++    }
 +}
 +
-+static void kvm_arch_set_trap_harder(Object *obj, bool value, Error **errp)
-+{
-+    KVMState *s = KVM_STATE(obj);
-+    s->trap_harder = value;
-+}
 +
- void kvm_arch_accel_class_init(ObjectClass *oc)
+ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
  {
-     object_class_property_add(oc, "eager-split-size", "size",
-@@ -1623,6 +1635,13 @@ void kvm_arch_accel_class_init(ObjectClass *oc)
- 
-     object_class_property_set_description(oc, "eager-split-size",
-         "Eager Page Split chunk size for hugepages. (default: 0, disabled)");
-+
-+    object_class_property_add_bool(oc, "trap-harder",
-+                                   kvm_arch_get_trap_harder,
-+                                   kvm_arch_set_trap_harder);
-+
-+    object_class_property_set_description(oc, "trap-harder",
-+        "Trap harder mode traps almost everything to QEMU (default: off)");
- }
- 
- int kvm_arch_insert_hw_breakpoint(vaddr addr, vaddr len, int type)
+     ARMCPU *cpu = ARM_CPU(cs);
+@@ -1430,9 +1467,16 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+         ret = kvm_arm_handle_dabt_nisv(cpu, run->arm_nisv.esr_iss,
+                                        run->arm_nisv.fault_ipa);
+         break;
++    case KVM_EXIT_ARM_TRAP_HARDER:
++        ret = kvm_arm_handle_hard_trap(cpu,
++                                       run->arm_trap_harder.esr,
++                                       run->arm_trap_harder.elr,
++                                       run->arm_trap_harder.far);
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: un-handled exit reason %d\n",
+                       __func__, run->exit_reason);
++        ret = -1;
+         break;
+     }
+     return ret;
 -- 
 2.47.2
 
