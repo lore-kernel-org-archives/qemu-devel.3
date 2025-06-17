@@ -4,115 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0E8CC71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 19:55:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49973C71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 20:35:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRcO6-0000Er-Ao; Tue, 17 Jun 2025 15:54:30 -0400
+	id 1uRd1E-0000nl-PK; Tue, 17 Jun 2025 16:34:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uRcO4-0000Du-A2
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 15:54:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1uRcO1-0000sj-2x
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 15:54:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750190063;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4+yv49Gp8LjvUnTJ3f3eZHXRHCpvWv0B1jgNMuP9viU=;
- b=c7tb+2zMCYfL67Q8GUTcigOzvnbg03GrEGCG3JLjOpNESn5/aNGqryR0X1w0gjNKfLzHnT
- 9KsC+Sx0qJpRsnTqR/qmp0PNFhUUw5f0TMZAKruOArfduiidjfuSECRPebReXaJ6YRqccX
- dOm8Hl/6WhECWWSpJAEBXygljv/RSuE=
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com
- [209.85.216.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-602-Q4E4Sm2dOgWnyfvagBCutQ-1; Tue, 17 Jun 2025 15:54:20 -0400
-X-MC-Unique: Q4E4Sm2dOgWnyfvagBCutQ-1
-X-Mimecast-MFC-AGG-ID: Q4E4Sm2dOgWnyfvagBCutQ_1750190060
-Received: by mail-pj1-f69.google.com with SMTP id
- 98e67ed59e1d1-31220ecc586so5924559a91.2
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 12:54:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uRd19-0000jV-EN
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 16:34:53 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <shentey@gmail.com>) id 1uRd16-0005rd-D7
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 16:34:51 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-ad89ee255easo1132748366b.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 13:34:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750192484; x=1750797284; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=ggtHM3GAaW5X/Kz0xY6kUpW+9KOtvI/XJSER1Yg1Ek8=;
+ b=kzbmumzjB1aSnc5JwNAGjdoQXlKmMBALIc5cFFeipIkWqKpH6okme8jUYwrUH74gik
+ hS/H94cyJRPvedFvA2WYhn8Gmu+aqYkht/W8tTHItIQYZ118yt/xoOHSQ+VDcZFWODW6
+ IWy2syOtjBTrAI076t3GVY9ewI4bGl8UdbSNX4Q982GNl7Tdds/+NJPYItQnHc4jDMx+
+ YlK87cz/UQGW2UUR88LPTNRjOuKIMARNRovt3ZhGsu1KfJDlot9Gl+0oowjvL0P2Rle/
+ /WRfo4KCYU5oUkm1aTlpVc8E9E5O3fmaBTMs8rEkEnreOEgJg+QNPbnJ+R3Xj/c6p8Pr
+ 66cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750190060; x=1750794860;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1750192484; x=1750797284;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4+yv49Gp8LjvUnTJ3f3eZHXRHCpvWv0B1jgNMuP9viU=;
- b=eXYxwz2ThI2itqaYK71awocd1AZaYNbnTHbF05UJ4ekndigElu+37NfYHuoVepGaKC
- Yd6e/j0RB1BDlmubovvCs3qPUxDqL7WOFV0tYyPzDkye2TX551YR9oC0GjGSYcPXRkP5
- IoVB17stvrhwjt1vUJeHcDAzttqS2TJIDxC2xwhKeSqMicPry8+QSHn7vSeaJFQeLI7Q
- +vAiZ33BFCyrWHThMArISC/wuTWRhNnaO5kVgID6xhusp17FTJnwb+E6Um5f8uJFDyo6
- 3zFMPqxzm8Eh6L3NZ11AvT2c335YkozTBqTlhEyqFemiCLMnF5/QqhjowS/niuhiAuIv
- wsww==
-X-Gm-Message-State: AOJu0Yz0ayBZLaACpXJ8SPfHn3axICmRFxteOoMIww7bwanEdKmf/5VX
- cZmYq4Ky+0KWqHnEIjjSFC2jRf6XjKCNI5A/uz6Je/KOBU1fKqHj0QiP2pHDIWGFUZCGxvtGfyK
- PXE/V2YiDCo+i7xMnzekiFtf8ethOpGdOTxpFN8hEl7PbLrFlGVX2P3aKAoLe6TDqXHTg/W1Fx4
- AhDh2dhJdDOj/yrAhkBwspr6D59LBbSh4=
-X-Gm-Gg: ASbGncvoTD9jyk/XWJeLHOT3aj2bk5YmGJEjCLm40NAZxOpiMtYaNpxUjkroTA6msXR
- o6+aSqmaY5gRwNYe0IDNWSjVZ1UX3B91Kb7voxEojB+T/Pu9BGAkmgMKEJrqbXdkYyDscNW4EOH
- vO8U7xWh5rxcdVgcGa45v9dCtEcXUE0Z58U8w=
-X-Received: by 2002:a17:90a:e7c3:b0:313:27cc:69cd with SMTP id
- 98e67ed59e1d1-313f1c015e8mr25533389a91.12.1750190059372; 
- Tue, 17 Jun 2025 12:54:19 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFtHB+4tKZr1cqhD+HBI2aWcjNyUdEKA4b4RFn4fKc8y9IBYyiBeMaZqwAe2uNzPYpRV5zIJdXVsSTev1TOko4=
-X-Received: by 2002:a17:90a:e7c3:b0:313:27cc:69cd with SMTP id
- 98e67ed59e1d1-313f1c015e8mr25533333a91.12.1750190058851; Tue, 17 Jun 2025
- 12:54:18 -0700 (PDT)
+ bh=ggtHM3GAaW5X/Kz0xY6kUpW+9KOtvI/XJSER1Yg1Ek8=;
+ b=jGKmLJJ0fDe+BooDXYjn0jkYibsfXXQ2XHYUDEm7VHObNMX71EbJ0k7M8HyliX622S
+ s+ck6GyYGd6Hd/F+zbTRXQHliAqoKTNWrcrXsEVpNmcAKjKEzjAc8h6dSbqn8jt8yZ5r
+ LP2M+ndM/N5kfsWkh1htnEbRlTkrx9+f4LOyQzeu/YAwoyyrZq2+cNGagntppofiNOAp
+ 2OvcFStGHCrI837LbBqJq94bscJ7vGemLqVOyLAvAPxuA434oZ+xd+B7Snh2Sm4VwPB1
+ Beox9HFSbEVNl4aOYQ7CAy8u5U/ni3QHYlLePo543ekso4xL8rGslVZFuA9EqHb7yNVM
+ uOYQ==
+X-Gm-Message-State: AOJu0YwNXlcxbybHM7O+qS2lMylZMHVoTvpl+6MGK4rpIuasSm4rNrHz
+ IVyDxB1T7CtrzKvpYovRSYHmXwjK9N5G1zjVqi+NWRrU5REsWWVAFfgjM8LI9eV1
+X-Gm-Gg: ASbGncux/uno9bJ11edfYWmFHac5Y8b8Hoajud/4j3KyvbukGiMM1Xu9rlYTr+jvlKJ
+ 9xnUE96o/468dYqOUkGunqhrVTgqPnf1XnhBKlva8TlBPx7PbZnyreBqf0GSXUGtOLo3BCDEjV0
+ F9U0uB+wpfehee3aAgaLrn3mGHrbj/dYUndX62KjjwVNtt+B9PXjElwK2A8oqeBnwxK3e7LbB7W
+ Z+HJoo4pYJlSvGNNAbB305CTIL6g59AmjJGoJDwSMJAjUE0yOlxcCaXnMFjheW8ZRMr19W69kdi
+ RMk1+xhn5RNGqzZ9n7IZIfHLxgqG31ZWmMOyIa9iL/oOMDENr06M0DzT+u8Zv+u6UwUPRCieEfo
+ mUc9HOYr8ROxM9qmcXtvR3rnRQjcQSA1zkbd9Jtf4PVgNBMUHMNmgTv22OrwTbmZMekQLJYDtC+
+ WdvQ1M
+X-Google-Smtp-Source: AGHT+IGpa1vkwT1qDmyAWrxnedBSnN1FjGbMGeNaTtQBNpf3JYcZqQXZo8RjRFfBx5E4FIV9tn0CJQ==
+X-Received: by 2002:a17:907:868f:b0:adb:2ef9:db38 with SMTP id
+ a640c23a62f3a-adfad5c7b4amr1482137466b.36.1750192484018; 
+ Tue, 17 Jun 2025 13:34:44 -0700 (PDT)
+Received: from Provence.localdomain
+ (dynamic-2a02-3100-23f9-0f00-0219-99ff-feb2-2458.310.pool.telefonica.de.
+ [2a02:3100:23f9:f00:219:99ff:feb2:2458])
+ by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-adec897ac3dsm919353466b.155.2025.06.17.13.34.43
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Jun 2025 13:34:43 -0700 (PDT)
+From: Bernhard Beschow <shentey@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Bernhard Beschow <shentey@gmail.com>
+Subject: [PATCH] meson: Add most 3rd-party includes as system includes
+Date: Tue, 17 Jun 2025 22:34:35 +0200
+Message-ID: <20250617203435.41490-1-shentey@gmail.com>
+X-Mailer: git-send-email 2.50.0
 MIME-Version: 1.0
-References: <20250612221051.1224565-1-jsnow@redhat.com>
- <20250612221051.1224565-3-jsnow@redhat.com>
- <87ldprho83.fsf@pond.sub.org>
-In-Reply-To: <87ldprho83.fsf@pond.sub.org>
-From: John Snow <jsnow@redhat.com>
-Date: Tue, 17 Jun 2025 15:54:07 -0400
-X-Gm-Features: AX0GCFvatfhhPej0Ee6ZFdaFYDr0pZgi1N0tPoO2JW_PCMB0XVKmkN6s3N-i4CY
-Message-ID: <CAFn=p-bwa7ETp9znOQ_zMD5icJz2e7=Lj+uLWNctADwLrtqnhA@mail.gmail.com>
-Subject: Re: [PATCH v2 2/3] docs: remove legacy QAPI manual generator
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, Zhenwei Pi <pizhenwei@bytedance.com>, 
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Jiri Pirko <jiri@resnulli.us>, 
- Ani Sinha <anisinha@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Mads Ynddal <mads@ynddal.dk>, 
- Zhao Liu <zhao1.liu@intel.com>, Eduardo Habkost <eduardo@habkost.net>, 
- Kashyap Chamarthy <kchamart@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- Hanna Reitz <hreitz@redhat.com>, Cleber Rosa <crosa@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>, qemu-block@nongnu.org, 
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Eric Blake <eblake@redhat.com>, "Gonglei (Arei)" <arei.gonglei@huawei.com>, 
- Lukas Straub <lukasstraub2@web.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, 
- "Michael S. Tsirkin" <mst@redhat.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- Fan Ni <fan.ni@samsung.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Peter Xu <peterx@redhat.com>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>, Yanan Wang <wangyanan55@huawei.com>, 
- Stefano Garzarella <sgarzare@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>, 
- Fabiano Rosas <farosas@suse.de>, Jonathan Cameron <jonathan.cameron@huawei.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, 
- Michael Roth <michael.roth@amd.com>, Kevin Wolf <kwolf@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Konstantin Kostiuk <kkostiuk@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
-Content-Type: multipart/alternative; boundary="000000000000bf76120637c9e070"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=shentey@gmail.com; helo=mail-ej1-x632.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,847 +102,628 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bf76120637c9e070
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+When compiling QEMU against fuse3-3.17.1 with --enable-werror the build fails
+with:
 
-On Mon, Jun 16, 2025 at 8:20=E2=80=AFAM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+  In file included from ../src/block/export/fuse.c:33:
+  /usr/include/fuse3/fuse.h:959:5: error: redundant redeclaration of ‘fuse_main_real_versioned’ [-Werror=redundant-decls]
+    959 | int fuse_main_real_versioned(int argc, char *argv[],
+        |     ^~~~~~~~~~~~~~~~~~~~~~~~
+  /usr/include/fuse3/fuse.h:885:5: note: previous declaration of ‘fuse_main_real_versioned’ with type ‘int(int,  char **, const struct fuse_operations *, size_t,  struct libfuse_version *, void *)’ {aka ‘int(int,  char **, const struct fuse_operations *, long unsigned int,  struct libfuse_version *, void *)’}
+    885 | int fuse_main_real_versioned(int argc, char *argv[],
+        |     ^~~~~~~~~~~~~~~~~~~~~~~~
+  cc1: all warnings being treated as errors
 
-> John Snow <jsnow@redhat.com> writes:
->
-> > Thanks for your service!
-> >
-> > Remove the old qapidoc and the option to enable the transmogrifier,
-> > leaving the "transmogrifier" as the ONLY qapi doc generator. This in
-> > effect also converts the QAPI test to use the new documentation
-> > generator, too.
-> >
-> > Signed-off-by: John Snow <jsnow@redhat.com>
->
-> Fails "make check", because tests/qapi-schema/doc-good.txt needs an
-> update.
->
-> Unfortunately, the diff of the update is less than useful.  To make
-> sense of what changes, I split doc-good.txt into parts before and after,
-> and diffed those.
->
->
->   diff -rupw o/01 n/01
->   --- o/01      2025-06-16 13:53:05.036940854 +0200
->   +++ n/01      2025-06-16 13:49:07.167435996 +0200
->   @@ -1,11 +1,13 @@
->    Section
->    *******
->
->   +Just text, no heading.
->   +
->
-> Looks like a bug fix.  Needs a mention in the commit message then.
->
+That is, a fuse header triggers a warning within itself. Since QEMU adds the
+fuse3 include path via `-I`, the compiler thinks that the header is part of the
+QEMU project, and thus raises a warning. The compiler can be told to ignore
+warnings within 3rd party headers by adding these paths via `-isystem`. Fix the
+above build failure by marking fuse as system dependency. While at it mark
+every 3rd-party dependency as system dependency to prevent similar issues in the
+future but skip glib since that results in glib include paths to be omitted from
+bindgen in case of a Rust build.
 
-I think before, these sections just got ... discarded? but with no special
-formatting, they just get copied through. You could call it a bugfix, you
-could call it an unintentional side effect.
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+---
+ meson.build | 160 ++++++++++++++++++++++++++--------------------------
+ 1 file changed, 80 insertions(+), 80 deletions(-)
 
-For my money, I think it's fine to allow free-form docs to have any
-arbitrary content. If it produces bad results, don't do it, then. Fewer
-constraints =3D less code.
-
-
->
->    Subsection
->    =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   -*with emphasis* "var" {in braces}
->   +*with emphasis* @var {in braces}
->
-> Rendering of @references changes.  Okay.
->
-
-Unintentional. Freeform sections are handled outside of "visit_sections",
-because they are not attached to an entity, and so the @references
-rendering is missed. Bug, I'll fix it.
-
-
->
->    * List item one
->
->   @@ -35,4 +37,3 @@ Example:
->
->    -> in <- out Examples: - *verbatim* - {braces}
->
->   -
->   diff -rupw o/02 n/02
->   --- o/02      2025-06-16 13:53:17.133712123 +0200
->   +++ n/02      2025-06-16 13:49:21.024174424 +0200
->   @@ -1,32 +1,15 @@
->   -"Enum" (Enum)
->   --------------
->   +Enum Enum
->   +    *Availability*: "IFCOND"
->
->   +   Values:
->   +      * **one** -- The _one_ {and only}, description on the same line
->
->   -Values
->   -~~~~~~
->   +      * **two** -- Not documented
->
->   -"one" (**If: **"IFONE")
->
-> Member conditional is lost.  Known issue; see commit dbf51d15fdb.
->
->   -   The _one_ {and only}, description on the same line
->   +   Features:
->   +      * **enum-feat** -- Also _one_ {and only}
->
->   -"two"
->   -   Not documented
->   -
->   -
->   -Features
->   -~~~~~~~~
->   -
->   -"enum-feat"
->   -   Also _one_ {and only}
->   -
->   -"enum-member-feat"
->   -   a member feature
->   +      * **enum-member-feat** -- a member feature
->
->    "two" is undocumented
->
->   -
->   -If
->   -~~
->   -
->   -"IFCOND"
->   -
->   -
->   diff -rupw o/03 n/03
->   --- o/03      2025-06-16 13:53:27.556514971 +0200
->   +++ n/03      2025-06-16 13:50:44.582595942 +0200
->   @@ -1,17 +1,7 @@
->   -"Base" (Object)
->   ----------------
->   -
->   -
->   -Members
->   -~~~~~~~
->   -
->   -"base1": "Enum"
->   -   description starts on a new line, minimally indented
->   -
->   -
->   -If
->   -~~
->   -
->   -"IFALL1 and IFALL2"
->   +Object Base
->   +    *Availability*: "IFALL1 and IFALL2"
->
->   +   Members:
->   +      * **base1** ("Enum") -- description starts on a new line,
->   +        minimally indented
->
->   diff -rupw o/04 n/04
->   --- o/04      2025-06-16 13:53:39.356291772 +0200
->   +++ n/04      2025-06-16 13:50:54.486408751 +0200
->   @@ -1,5 +1,4 @@
->   -"Variant1" (Object)
->   --------------------
->   +Object Variant1
->
->    A paragraph
->
->   @@ -7,21 +6,11 @@ Another paragraph
->
->    "var1" is undocumented
->
->   +   Members:
->   +      * **var1** ("string") -- Not documented
->
->   -Members
->   -~~~~~~~
->   -
->   -"var1": "string" (**If: **"IFSTR")
->
-> Likewise.
->
->   -   Not documented
->   -
->   -
->   -Features
->   -~~~~~~~~
->   -
->   -"variant1-feat"
->   -   a feature
->   -
->   -"member-feat"
->   -   a member feature
->   +   Features:
->   +      * **variant1-feat** -- a feature
->
->   +      * **member-feat** -- a member feature
->
->   diff -rupw o/05 n/05
->   --- o/05      2025-06-16 13:53:43.429214731 +0200
->   +++ n/05      2025-06-16 13:51:05.247205330 +0200
->   @@ -1,4 +1,2 @@
->   -"Variant2" (Object)
->   --------------------
->   -
->   +Object Variant2
->
->   diff -rupw o/06 n/06
->   --- o/06      2025-06-16 13:53:48.461119551 +0200
->   +++ n/06      2025-06-16 13:51:10.990096739 +0200
->   @@ -1,19 +1,12 @@
->   -"Object" (Object)
->   ------------------
->   +Object Object
->
->   +   Members:
->   +      * The members of "Base".
->
->   -Members
->   -~~~~~~~
->   +      * When "base1" is "one": The members of "Variant1".
->
->   -The members of "Base"
->   -The members of "Variant1" when "base1" is ""one""
->   -The members of "Variant2" when "base1" is ""two"" (**If: **"IFONE or
->   -IFTWO")
->
-> Likewise.
->
->   -
->   -Features
->   -~~~~~~~~
->   -
->   -"union-feat1"
->   -   a feature
->   +      * When "base1" is "two": The members of "Variant2".
->
->   +   Features:
->   +      * **union-feat1** -- a feature
->
->   diff -rupw o/07 n/07
->   --- o/07      2025-06-16 13:53:55.988977158 +0200
->   +++ n/07      2025-06-16 13:51:16.869985559 +0200
->   @@ -1,28 +1,13 @@
->   -"Alternate" (Alternate)
->   ------------------------
->   +Alternate Alternate
->   +    *Availability*: "not (IFONE or IFTWO)"
->
->   +   Alternatives:
->   +      * **i** ("int") -- description starts on the same line remainder
->   +        indented the same "b" is undocumented
->
->   -Members
->   -~~~~~~~
->   +      * **b** ("boolean") -- Not documented
->
->   -"i": "int"
->   -   description starts on the same line remainder indented the same "b"
->   -   is undocumented
->   -
->   -"b": "boolean"
->   -   Not documented
->   -
->   -
->   -Features
->   -~~~~~~~~
->   -
->   -"alt-feat"
->   -   a feature
->   -
->   -
->   -If
->   -~~
->   -
->   -"not (IFONE or IFTWO)"
->   +   Features:
->   +      * **alt-feat** -- a feature
->
->
->   diff -rupw o/08 n/08
->   --- o/08      2025-06-16 13:54:11.692680115 +0200
->   +++ n/08      2025-06-16 13:51:35.957624638 +0200
->   @@ -1,47 +1,29 @@
->    Another subsection
->    =3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
->
->   +Command cmd (Since: 2.10)
->
->   -"cmd" (Command)
->   ----------------
->   +   Arguments:
->   +      * **arg1** ("int") -- description starts on a new line, indented
->
->   +      * **arg2** ("string", *optional*) -- description starts on the
->   +        same line remainder indented differently
->
->   -Arguments
->   -~~~~~~~~~
->   +      * **arg3** ("boolean") -- Not documented
->
->   -"arg1": "int"
->   -   description starts on a new line, indented
->   +   Features:
->   +      * **cmd-feat1** -- a feature
->
->   -"arg2": "string" (optional)
->   -   description starts on the same line remainder indented differently
->   -
->   -"arg3": "boolean"
->   -   Not documented
->   -
->   -
->   -Features
->   -~~~~~~~~
->   -
->   -"cmd-feat1"
->   -   a feature
->   -
->   -"cmd-feat2"
->   -   another feature
->   +      * **cmd-feat2** -- another feature
->
->    Note:
->
->      "arg3" is undocumented
->
->   +   Return:
->   +      "Object" -- "Object"
->
->   -Returns
->   -~~~~~~~
->   -
->   -"Object"
->   -
->   -
->   -Errors
->   -~~~~~~
->   -
->   +   Errors:
->    * some
->
->    Notes:
->   @@ -68,10 +50,3 @@ Examples:
->    Note::
->       Ceci n'est pas une note
->
->   -
->   -Since
->   -~~~~~
->   -
->   -2.10
->   -
->   -
->   diff -rupw o/09 n/09
->   --- o/09      2025-06-16 14:11:32.819939859 +0200
->   +++ n/09      2025-06-16 13:51:43.469482599 +0200
->   @@ -1,22 +1,14 @@
->   -"cmd-boxed" (Command)
->   ----------------------
->   +Command cmd-boxed
->
->    If you're bored enough to read this, go see a video of boxed cats
->
->   +   Arguments:
->   +      * The members of "Object".
->
->   -Arguments
->   -~~~~~~~~~
->   +   Features:
->   +      * **cmd-feat1** -- a feature
->
->   -The members of "Object"
->   -
->   -Features
->   -~~~~~~~~
->   -
->   -"cmd-feat1"
->   -   a feature
->   -
->   -"cmd-feat2"
->   -   another feature
->   +      * **cmd-feat2** -- another feature
->
->    Example::
->
->   @@ -24,4 +16,3 @@ Example::
->
->       <- ... has no title ...
->
->   -
->   diff -rupw o/10 n/10
->   --- o/10      2025-06-16 14:11:35.771883514 +0200
->   +++ n/10      2025-06-16 13:51:46.653422395 +0200
->   @@ -1,14 +1,7 @@
->   -"EVT_BOXED" (Event)
->   --------------------
->   +Event EVT_BOXED
->
->   +   Members:
->   +      * The members of "Object".
->
->   -Arguments
->   -~~~~~~~~~
->   -
->   -The members of "Object"
->   -
->   -Features
->   -~~~~~~~~
->   -
->   -"feat3"
->   -   a feature
->   +   Features:
->   +      * **feat3** -- a feature
->
-> The only unexpected change is the first hunk.
-
-
-Some of these look a little silly, let me see what I can do ... The IFCOND
-stuff is a known issue, and I believe is best tackled in conjunction with
-your project to add conditional documentation entities.
-
-Everything else, I'll review and see what can be improved upon if anything.
-
---000000000000bf76120637c9e070
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Jun 16,=
- 2025 at 8:20=E2=80=AFAM Markus Armbruster &lt;<a href=3D"mailto:armbru@red=
-hat.com">armbru@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex">John Snow &lt;<a href=3D"mailto:jsnow@redhat.com"=
- target=3D"_blank">jsnow@redhat.com</a>&gt; writes:<br>
-<br>
-&gt; Thanks for your service!<br>
-&gt;<br>
-&gt; Remove the old qapidoc and the option to enable the transmogrifier,<br=
->
-&gt; leaving the &quot;transmogrifier&quot; as the ONLY qapi doc generator.=
- This in<br>
-&gt; effect also converts the QAPI test to use the new documentation<br>
-&gt; generator, too.<br>
-&gt;<br>
-&gt; Signed-off-by: John Snow &lt;<a href=3D"mailto:jsnow@redhat.com" targe=
-t=3D"_blank">jsnow@redhat.com</a>&gt;<br>
-<br>
-Fails &quot;make check&quot;, because tests/qapi-schema/doc-good.txt needs =
-an<br>
-update.<br>
-<br>
-Unfortunately, the diff of the update is less than useful.=C2=A0 To make<br=
->
-sense of what changes, I split doc-good.txt into parts before and after,<br=
->
-and diffed those.<br>
-<br>
-<br>
-=C2=A0 diff -rupw o/01 n/01<br>
-=C2=A0 --- o/01=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:53:05.036940854 +0200<br>
-=C2=A0 +++ n/01=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:49:07.167435996 +0200<br>
-=C2=A0 @@ -1,11 +1,13 @@<br>
-=C2=A0 =C2=A0Section<br>
-=C2=A0 =C2=A0*******<br>
-<br>
-=C2=A0 +Just text, no heading.<br>
-=C2=A0 +<br>
-<br>
-Looks like a bug fix.=C2=A0 Needs a mention in the commit message then.<br>=
-</blockquote><div><br></div><div>I think before, these sections just got ..=
-. discarded? but with no special formatting, they just get copied through. =
-You could call it a bugfix, you could call it an unintentional side effect.=
-</div><div><br></div><div>For my money, I think it&#39;s fine to allow free=
--form docs to have any arbitrary content. If it produces bad results, don&#=
-39;t do it, then. Fewer constraints =3D less code.</div><div>=C2=A0</div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-=C2=A0 =C2=A0Subsection<br>
-=C2=A0 =C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
-<br>
-=C2=A0 -*with emphasis* &quot;var&quot; {in braces}<br>
-=C2=A0 +*with emphasis* @var {in braces}<br>
-<br>
-Rendering of @references changes.=C2=A0 Okay.<br></blockquote><div><br></di=
-v><div>Unintentional. Freeform sections are handled outside of &quot;visit_=
-sections&quot;, because they are not attached to an entity, and so the @ref=
-erences rendering is missed. Bug, I&#39;ll fix it.</div><div>=C2=A0</div><b=
-lockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-le=
-ft:1px solid rgb(204,204,204);padding-left:1ex">
-<br>
-=C2=A0 =C2=A0* List item one<br>
-<br>
-=C2=A0 @@ -35,4 +37,3 @@ Example:<br>
-<br>
-=C2=A0 =C2=A0-&gt; in &lt;- out Examples: - *verbatim* - {braces}<br>
-<br>
-=C2=A0 -<br>
-=C2=A0 diff -rupw o/02 n/02<br>
-=C2=A0 --- o/02=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:53:17.133712123 +0200<br>
-=C2=A0 +++ n/02=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:49:21.024174424 +0200<br>
-=C2=A0 @@ -1,32 +1,15 @@<br>
-=C2=A0 -&quot;Enum&quot; (Enum)<br>
-=C2=A0 --------------<br>
-=C2=A0 +Enum Enum<br>
-=C2=A0 +=C2=A0 =C2=A0 *Availability*: &quot;IFCOND&quot;<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Values:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **one** -- The _one_ {and only}, description=
- on the same line<br>
-<br>
-=C2=A0 -Values<br>
-=C2=A0 -~~~~~~<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **two** -- Not documented<br>
-<br>
-=C2=A0 -&quot;one&quot; (**If: **&quot;IFONE&quot;)<br>
-<br>
-Member conditional is lost.=C2=A0 Known issue; see commit dbf51d15fdb.<br>
-<br>
-=C2=A0 -=C2=A0 =C2=A0The _one_ {and only}, description on the same line<br>
-=C2=A0 +=C2=A0 =C2=A0Features:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **enum-feat** -- Also _one_ {and only}<br>
-<br>
-=C2=A0 -&quot;two&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0Not documented<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -Features<br>
-=C2=A0 -~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;enum-feat&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0Also _one_ {and only}<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;enum-member-feat&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a member feature<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **enum-member-feat** -- a member feature<br>
-<br>
-=C2=A0 =C2=A0&quot;two&quot; is undocumented<br>
-<br>
-=C2=A0 -<br>
-=C2=A0 -If<br>
-=C2=A0 -~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;IFCOND&quot;<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 diff -rupw o/03 n/03<br>
-=C2=A0 --- o/03=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:53:27.556514971 +0200<br>
-=C2=A0 +++ n/03=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:50:44.582595942 +0200<br>
-=C2=A0 @@ -1,17 +1,7 @@<br>
-=C2=A0 -&quot;Base&quot; (Object)<br>
-=C2=A0 ----------------<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -Members<br>
-=C2=A0 -~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;base1&quot;: &quot;Enum&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0description starts on a new line, minimally indented<b=
-r>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -If<br>
-=C2=A0 -~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;IFALL1 and IFALL2&quot;<br>
-=C2=A0 +Object Base<br>
-=C2=A0 +=C2=A0 =C2=A0 *Availability*: &quot;IFALL1 and IFALL2&quot;<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Members:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **base1** (&quot;Enum&quot;) -- description =
-starts on a new line,<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 minimally indented<br>
-<br>
-=C2=A0 diff -rupw o/04 n/04<br>
-=C2=A0 --- o/04=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:53:39.356291772 +0200<br>
-=C2=A0 +++ n/04=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:50:54.486408751 +0200<br>
-=C2=A0 @@ -1,5 +1,4 @@<br>
-=C2=A0 -&quot;Variant1&quot; (Object)<br>
-=C2=A0 --------------------<br>
-=C2=A0 +Object Variant1<br>
-<br>
-=C2=A0 =C2=A0A paragraph<br>
-<br>
-=C2=A0 @@ -7,21 +6,11 @@ Another paragraph<br>
-<br>
-=C2=A0 =C2=A0&quot;var1&quot; is undocumented<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Members:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **var1** (&quot;string&quot;) -- Not documen=
-ted<br>
-<br>
-=C2=A0 -Members<br>
-=C2=A0 -~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;var1&quot;: &quot;string&quot; (**If: **&quot;IFSTR&quot;)<br=
->
-<br>
-Likewise.<br>
-<br>
-=C2=A0 -=C2=A0 =C2=A0Not documented<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -Features<br>
-=C2=A0 -~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;variant1-feat&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a feature<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;member-feat&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a member feature<br>
-=C2=A0 +=C2=A0 =C2=A0Features:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **variant1-feat** -- a feature<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **member-feat** -- a member feature<br>
-<br>
-=C2=A0 diff -rupw o/05 n/05<br>
-=C2=A0 --- o/05=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:53:43.429214731 +0200<br>
-=C2=A0 +++ n/05=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:51:05.247205330 +0200<br>
-=C2=A0 @@ -1,4 +1,2 @@<br>
-=C2=A0 -&quot;Variant2&quot; (Object)<br>
-=C2=A0 --------------------<br>
-=C2=A0 -<br>
-=C2=A0 +Object Variant2<br>
-<br>
-=C2=A0 diff -rupw o/06 n/06<br>
-=C2=A0 --- o/06=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:53:48.461119551 +0200<br>
-=C2=A0 +++ n/06=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:51:10.990096739 +0200<br>
-=C2=A0 @@ -1,19 +1,12 @@<br>
-=C2=A0 -&quot;Object&quot; (Object)<br>
-=C2=A0 ------------------<br>
-=C2=A0 +Object Object<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Members:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * The members of &quot;Base&quot;.<br>
-<br>
-=C2=A0 -Members<br>
-=C2=A0 -~~~~~~~<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * When &quot;base1&quot; is &quot;one&quot;: T=
-he members of &quot;Variant1&quot;.<br>
-<br>
-=C2=A0 -The members of &quot;Base&quot;<br>
-=C2=A0 -The members of &quot;Variant1&quot; when &quot;base1&quot; is &quot=
-;&quot;one&quot;&quot;<br>
-=C2=A0 -The members of &quot;Variant2&quot; when &quot;base1&quot; is &quot=
-;&quot;two&quot;&quot; (**If: **&quot;IFONE or<br>
-=C2=A0 -IFTWO&quot;)<br>
-<br>
-Likewise.<br>
-<br>
-=C2=A0 -<br>
-=C2=A0 -Features<br>
-=C2=A0 -~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;union-feat1&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a feature<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * When &quot;base1&quot; is &quot;two&quot;: T=
-he members of &quot;Variant2&quot;.<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Features:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **union-feat1** -- a feature<br>
-<br>
-=C2=A0 diff -rupw o/07 n/07<br>
-=C2=A0 --- o/07=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:53:55.988977158 +0200<br>
-=C2=A0 +++ n/07=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:51:16.869985559 +0200<br>
-=C2=A0 @@ -1,28 +1,13 @@<br>
-=C2=A0 -&quot;Alternate&quot; (Alternate)<br>
-=C2=A0 ------------------------<br>
-=C2=A0 +Alternate Alternate<br>
-=C2=A0 +=C2=A0 =C2=A0 *Availability*: &quot;not (IFONE or IFTWO)&quot;<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Alternatives:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **i** (&quot;int&quot;) -- description start=
-s on the same line remainder<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 indented the same &quot;b&quot; is undo=
-cumented<br>
-<br>
-=C2=A0 -Members<br>
-=C2=A0 -~~~~~~~<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **b** (&quot;boolean&quot;) -- Not documente=
-d<br>
-<br>
-=C2=A0 -&quot;i&quot;: &quot;int&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0description starts on the same line remainder indented=
- the same &quot;b&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0is undocumented<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;b&quot;: &quot;boolean&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0Not documented<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -Features<br>
-=C2=A0 -~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;alt-feat&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a feature<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -If<br>
-=C2=A0 -~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;not (IFONE or IFTWO)&quot;<br>
-=C2=A0 +=C2=A0 =C2=A0Features:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **alt-feat** -- a feature<br>
-<br>
-<br>
-=C2=A0 diff -rupw o/08 n/08<br>
-=C2=A0 --- o/08=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:54:11.692680115 +0200<br>
-=C2=A0 +++ n/08=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:51:35.957624638 +0200<br>
-=C2=A0 @@ -1,47 +1,29 @@<br>
-=C2=A0 =C2=A0Another subsection<br>
-=C2=A0 =C2=A0=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D<br>
-<br>
-=C2=A0 +Command cmd (Since: 2.10)<br>
-<br>
-=C2=A0 -&quot;cmd&quot; (Command)<br>
-=C2=A0 ----------------<br>
-=C2=A0 +=C2=A0 =C2=A0Arguments:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **arg1** (&quot;int&quot;) -- description st=
-arts on a new line, indented<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **arg2** (&quot;string&quot;, *optional*) --=
- description starts on the<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 =C2=A0 same line remainder indented differentl=
-y<br>
-<br>
-=C2=A0 -Arguments<br>
-=C2=A0 -~~~~~~~~~<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **arg3** (&quot;boolean&quot;) -- Not docume=
-nted<br>
-<br>
-=C2=A0 -&quot;arg1&quot;: &quot;int&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0description starts on a new line, indented<br>
-=C2=A0 +=C2=A0 =C2=A0Features:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **cmd-feat1** -- a feature<br>
-<br>
-=C2=A0 -&quot;arg2&quot;: &quot;string&quot; (optional)<br>
-=C2=A0 -=C2=A0 =C2=A0description starts on the same line remainder indented=
- differently<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;arg3&quot;: &quot;boolean&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0Not documented<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -Features<br>
-=C2=A0 -~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;cmd-feat1&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a feature<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;cmd-feat2&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0another feature<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **cmd-feat2** -- another feature<br>
-<br>
-=C2=A0 =C2=A0Note:<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0&quot;arg3&quot; is undocumented<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Return:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 &quot;Object&quot; -- &quot;Object&quot;<br>
-<br>
-=C2=A0 -Returns<br>
-=C2=A0 -~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;Object&quot;<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 -Errors<br>
-=C2=A0 -~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 +=C2=A0 =C2=A0Errors:<br>
-=C2=A0 =C2=A0* some<br>
-<br>
-=C2=A0 =C2=A0Notes:<br>
-=C2=A0 @@ -68,10 +50,3 @@ Examples:<br>
-=C2=A0 =C2=A0Note::<br>
-=C2=A0 =C2=A0 =C2=A0 Ceci n&#39;est pas une note<br>
-<br>
-=C2=A0 -<br>
-=C2=A0 -Since<br>
-=C2=A0 -~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -2.10<br>
-=C2=A0 -<br>
-=C2=A0 -<br>
-=C2=A0 diff -rupw o/09 n/09<br>
-=C2=A0 --- o/09=C2=A0 =C2=A0 =C2=A0 2025-06-16 14:11:32.819939859 +0200<br>
-=C2=A0 +++ n/09=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:51:43.469482599 +0200<br>
-=C2=A0 @@ -1,22 +1,14 @@<br>
-=C2=A0 -&quot;cmd-boxed&quot; (Command)<br>
-=C2=A0 ----------------------<br>
-=C2=A0 +Command cmd-boxed<br>
-<br>
-=C2=A0 =C2=A0If you&#39;re bored enough to read this, go see a video of box=
-ed cats<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Arguments:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * The members of &quot;Object&quot;.<br>
-<br>
-=C2=A0 -Arguments<br>
-=C2=A0 -~~~~~~~~~<br>
-=C2=A0 +=C2=A0 =C2=A0Features:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **cmd-feat1** -- a feature<br>
-<br>
-=C2=A0 -The members of &quot;Object&quot;<br>
-=C2=A0 -<br>
-=C2=A0 -Features<br>
-=C2=A0 -~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;cmd-feat1&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a feature<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;cmd-feat2&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0another feature<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **cmd-feat2** -- another feature<br>
-<br>
-=C2=A0 =C2=A0Example::<br>
-<br>
-=C2=A0 @@ -24,4 +16,3 @@ Example::<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0 &lt;- ... has no title ...<br>
-<br>
-=C2=A0 -<br>
-=C2=A0 diff -rupw o/10 n/10<br>
-=C2=A0 --- o/10=C2=A0 =C2=A0 =C2=A0 2025-06-16 14:11:35.771883514 +0200<br>
-=C2=A0 +++ n/10=C2=A0 =C2=A0 =C2=A0 2025-06-16 13:51:46.653422395 +0200<br>
-=C2=A0 @@ -1,14 +1,7 @@<br>
-=C2=A0 -&quot;EVT_BOXED&quot; (Event)<br>
-=C2=A0 --------------------<br>
-=C2=A0 +Event EVT_BOXED<br>
-<br>
-=C2=A0 +=C2=A0 =C2=A0Members:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * The members of &quot;Object&quot;.<br>
-<br>
-=C2=A0 -Arguments<br>
-=C2=A0 -~~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -The members of &quot;Object&quot;<br>
-=C2=A0 -<br>
-=C2=A0 -Features<br>
-=C2=A0 -~~~~~~~~<br>
-=C2=A0 -<br>
-=C2=A0 -&quot;feat3&quot;<br>
-=C2=A0 -=C2=A0 =C2=A0a feature<br>
-=C2=A0 +=C2=A0 =C2=A0Features:<br>
-=C2=A0 +=C2=A0 =C2=A0 =C2=A0 * **feat3** -- a feature<br>
-<br>
-The only unexpected change is the first hunk.</blockquote><div><br></div><d=
-iv>Some of these look a little silly, let me see what I can do ... The IFCO=
-ND stuff is a known issue, and I believe is best tackled in conjunction wit=
-h your project to add conditional documentation entities.</div><div><br></d=
-iv><div>Everything else, I&#39;ll review and see what can be improved upon =
-if anything. <br></div></div></div>
-
---000000000000bf76120637c9e070--
+diff --git a/meson.build b/meson.build
+index 34729c2a3d..694cf95f6f 100644
+--- a/meson.build
++++ b/meson.build
+@@ -826,7 +826,7 @@ endif
+ #####################################
+ 
+ libm = cc.find_library('m', required: false)
+-threads = dependency('threads')
++threads = dependency('threads', include_type: 'system')
+ util = cc.find_library('util', required: false)
+ winmm = []
+ socket = []
+@@ -859,11 +859,11 @@ if host_os == 'windows'
+                                       include_directories: include_directories('.'))
+   host_dsosuf = '.dll'
+ elif host_os == 'darwin'
+-  coref = dependency('appleframeworks', modules: 'CoreFoundation')
+-  iokit = dependency('appleframeworks', modules: 'IOKit', required: false)
++  coref = dependency('appleframeworks', modules: 'CoreFoundation', include_type: 'system')
++  iokit = dependency('appleframeworks', modules: 'IOKit', required: false, include_type: 'system')
+   host_dsosuf = '.dylib'
+   pvg = dependency('appleframeworks', modules: ['ParavirtualizedGraphics', 'Metal'],
+-                   required: get_option('pvg'))
++                   required: get_option('pvg'), include_type: 'system')
+ elif host_os == 'sunos'
+   socket = [cc.find_library('socket'),
+             cc.find_library('nsl'),
+@@ -899,7 +899,7 @@ endif
+ hvf = not_found
+ if get_option('hvf').allowed()
+   hvf = dependency('appleframeworks', modules: 'Hypervisor',
+-                   required: get_option('hvf'))
++                   required: get_option('hvf'), include_type: 'system')
+   if hvf.found()
+     accelerators += 'CONFIG_HVF'
+   endif
+@@ -960,30 +960,30 @@ endif
+ xen = not_found
+ if get_option('xen').enabled() or (get_option('xen').auto() and have_system)
+   xencontrol = dependency('xencontrol', required: false,
+-                          method: 'pkg-config')
++                          method: 'pkg-config', include_type: 'system')
+   if xencontrol.found()
+     xen_pc = declare_dependency(version: xencontrol.version(),
+       dependencies: [
+         xencontrol,
+         # disabler: true makes xen_pc.found() return false if any is not found
+         dependency('xenstore', required: false,
+-                   method: 'pkg-config',
++                   method: 'pkg-config', include_type: 'system',
+                    disabler: true),
+         dependency('xenforeignmemory', required: false,
+-                   method: 'pkg-config',
++                   method: 'pkg-config', include_type: 'system',
+                    disabler: true),
+         dependency('xengnttab', required: false,
+-                   method: 'pkg-config',
++                   method: 'pkg-config', include_type: 'system',
+                    disabler: true),
+         dependency('xenevtchn', required: false,
+-                   method: 'pkg-config',
++                   method: 'pkg-config', include_type: 'system',
+                    disabler: true),
+         dependency('xendevicemodel', required: false,
+-                   method: 'pkg-config',
++                   method: 'pkg-config', include_type: 'system',
+                    disabler: true),
+         # optional, no "disabler: true"
+         dependency('xentoolcore', required: false,
+-                   method: 'pkg-config')])
++                   method: 'pkg-config', include_type: 'system')])
+     if xen_pc.found()
+       xen = xen_pc
+     endif
+@@ -1050,10 +1050,10 @@ glib_pc = dependency('glib-2.0', version: glib_req_ver, required: true,
+ glib_cflags = []
+ if enable_modules
+   gmodule = dependency('gmodule-export-2.0', version: glib_req_ver, required: true,
+-                       method: 'pkg-config')
++                       method: 'pkg-config', include_type: 'system')
+ elif get_option('plugins')
+   gmodule = dependency('gmodule-no-export-2.0', version: glib_req_ver, required: true,
+-                       method: 'pkg-config')
++                       method: 'pkg-config', include_type: 'system')
+ else
+   gmodule = not_found
+ endif
+@@ -1109,7 +1109,7 @@ gdbus_codegen = not_found
+ gdbus_codegen_error = '@0@ requires gdbus-codegen, please install libgio'
+ if not get_option('gio').auto() or have_system
+   gio = dependency('gio-2.0', required: get_option('gio'),
+-                   method: 'pkg-config')
++                   method: 'pkg-config', include_type: 'system')
+   if gio.found() and not cc.links('''
+     #include <gio/gio.h>
+     int main(void)
+@@ -1126,7 +1126,7 @@ if not get_option('gio').auto() or have_system
+     gdbus_codegen = find_program('gdbus-codegen',
+                                  required: get_option('gio'))
+     gio_unix = dependency('gio-unix-2.0', required: get_option('gio'),
+-                          method: 'pkg-config')
++                          method: 'pkg-config', include_type: 'system')
+     gio = declare_dependency(dependencies: [gio, gio_unix],
+                              version: gio.version())
+   endif
+@@ -1141,15 +1141,15 @@ xml_pp = find_program('scripts/xml-preprocess.py')
+ lttng = not_found
+ if 'ust' in get_option('trace_backends')
+   lttng = dependency('lttng-ust', required: true, version: '>= 2.1',
+-                     method: 'pkg-config')
++                     method: 'pkg-config', include_type: 'system')
+ endif
+ pixman = not_found
+ if not get_option('pixman').auto() or have_system or have_tools
+   pixman = dependency('pixman-1', required: get_option('pixman'), version:'>=0.21.8',
+-                      method: 'pkg-config')
++                      method: 'pkg-config', include_type: 'system')
+ endif
+ 
+-zlib = dependency('zlib', required: true)
++zlib = dependency('zlib', required: true, include_type: 'system')
+ 
+ libaio = not_found
+ if not get_option('linux_aio').auto() or have_block
+@@ -1167,7 +1167,7 @@ linux_io_uring = not_found
+ if not get_option('linux_io_uring').auto() or have_block
+   linux_io_uring = dependency('liburing', version: '>=0.3',
+                               required: get_option('linux_io_uring'),
+-                              method: 'pkg-config')
++                              method: 'pkg-config', include_type: 'system')
+   if not cc.links(linux_io_uring_test)
+     linux_io_uring = not_found
+   endif
+@@ -1177,7 +1177,7 @@ libnfs = not_found
+ if not get_option('libnfs').auto() or have_block
+   libnfs = dependency('libnfs', version: ['>=1.9.3', '<6.0.0'],
+                       required: get_option('libnfs'),
+-                      method: 'pkg-config')
++                      method: 'pkg-config', include_type: 'system')
+ endif
+ 
+ libattr_test = '''
+@@ -1214,9 +1214,9 @@ endif
+ 
+ cocoa = dependency('appleframeworks',
+                    modules: ['Cocoa', 'CoreVideo', 'QuartzCore'],
+-                   required: get_option('cocoa'))
++                   required: get_option('cocoa'), include_type: 'system')
+ 
+-vmnet = dependency('appleframeworks', modules: 'vmnet', required: get_option('vmnet'))
++vmnet = dependency('appleframeworks', modules: 'vmnet', required: get_option('vmnet'), include_type: 'system')
+ if vmnet.found() and not cc.has_header_symbol('vmnet/vmnet.h',
+                                               'VMNET_BRIDGED_MODE',
+                                               dependencies: vmnet)
+@@ -1233,7 +1233,7 @@ seccomp_has_sysrawrc = false
+ if not get_option('seccomp').auto() or have_system or have_tools
+   seccomp = dependency('libseccomp', version: '>=2.3.0',
+                        required: get_option('seccomp'),
+-                       method: 'pkg-config')
++                       method: 'pkg-config', include_type: 'system')
+   if seccomp.found()
+     seccomp_has_sysrawrc = cc.has_header_symbol('seccomp.h',
+                                                 'SCMP_FLTATR_API_SYSRAWRC',
+@@ -1265,13 +1265,13 @@ if get_option('xkbcommon').auto() and not have_system and not have_tools
+   xkbcommon = not_found
+ else
+   xkbcommon = dependency('xkbcommon', required: get_option('xkbcommon'),
+-                         method: 'pkg-config')
++                         method: 'pkg-config', include_type: 'system')
+ endif
+ 
+ slirp = not_found
+ if not get_option('slirp').auto() or have_system
+   slirp = dependency('slirp', required: get_option('slirp'),
+-                     method: 'pkg-config')
++                     method: 'pkg-config', include_type: 'system')
+   # slirp < 4.7 is incompatible with CFI support in QEMU.  This is because
+   # it passes function pointers within libslirp as callbacks for timers.
+   # When using a system-wide shared libslirp, the type information for the
+@@ -1313,35 +1313,35 @@ endif
+ pulse = not_found
+ if not get_option('pa').auto() or (host_os == 'linux' and have_system)
+   pulse = dependency('libpulse', required: get_option('pa'),
+-                     method: 'pkg-config')
++                     method: 'pkg-config', include_type: 'system')
+ endif
+ alsa = not_found
+ if not get_option('alsa').auto() or (host_os == 'linux' and have_system)
+   alsa = dependency('alsa', required: get_option('alsa'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+ endif
+ jack = not_found
+ if not get_option('jack').auto() or have_system
+   jack = dependency('jack', required: get_option('jack'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+ endif
+ pipewire = not_found
+ if not get_option('pipewire').auto() or (host_os == 'linux' and have_system)
+   pipewire = dependency('libpipewire-0.3', version: '>=0.3.60',
+                     required: get_option('pipewire'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+ endif
+ sndio = not_found
+ if not get_option('sndio').auto() or have_system
+   sndio = dependency('sndio', required: get_option('sndio'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+ endif
+ 
+ spice_protocol = not_found
+ if not get_option('spice_protocol').auto() or have_system
+   spice_protocol = dependency('spice-protocol', version: '>=0.14.0',
+                               required: get_option('spice_protocol'),
+-                              method: 'pkg-config')
++                              method: 'pkg-config', include_type: 'system')
+ endif
+ spice = not_found
+ if get_option('spice') \
+@@ -1351,7 +1351,7 @@ if get_option('spice') \
+              .allowed()
+   spice = dependency('spice-server', version: '>=0.14.0',
+                      required: get_option('spice'),
+-                     method: 'pkg-config')
++                     method: 'pkg-config', include_type: 'system')
+ endif
+ spice_headers = spice.partial_dependency(compile_args: true, includes: true)
+ 
+@@ -1361,28 +1361,28 @@ libiscsi = not_found
+ if not get_option('libiscsi').auto() or have_block
+   libiscsi = dependency('libiscsi', version: '>=1.9.0',
+                          required: get_option('libiscsi'),
+-                         method: 'pkg-config')
++                         method: 'pkg-config', include_type: 'system')
+ endif
+ zstd = not_found
+ if not get_option('zstd').auto() or have_block
+   zstd = dependency('libzstd', version: '>=1.4.0',
+                     required: get_option('zstd'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+ endif
+ qpl = not_found
+ if not get_option('qpl').auto() or have_system
+   qpl = dependency('qpl', version: '>=1.5.0',
+                     required: get_option('qpl'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+ endif
+ uadk = not_found
+ if not get_option('uadk').auto() or have_system
+   libwd = dependency('libwd', version: '>=2.6',
+                       required: get_option('uadk'),
+-                      method: 'pkg-config')
++                      method: 'pkg-config', include_type: 'system')
+   libwd_comp = dependency('libwd_comp', version: '>=2.6',
+                            required: get_option('uadk'),
+-                           method: 'pkg-config')
++                           method: 'pkg-config', include_type: 'system')
+   if libwd.found() and libwd_comp.found()
+      uadk = declare_dependency(dependencies: [libwd, libwd_comp])
+   endif
+@@ -1392,7 +1392,7 @@ qatzip = not_found
+ if not get_option('qatzip').auto() or have_system
+   qatzip = dependency('qatzip', version: '>=1.1.2',
+                       required: get_option('qatzip'),
+-                      method: 'pkg-config')
++                      method: 'pkg-config', include_type: 'system')
+ endif
+ 
+ virgl = not_found
+@@ -1400,31 +1400,31 @@ virgl = not_found
+ have_vhost_user_gpu = have_tools and host_os == 'linux' and pixman.found()
+ if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
+   virgl = dependency('virglrenderer',
+-                     method: 'pkg-config',
++                     method: 'pkg-config', include_type: 'system',
+                      required: get_option('virglrenderer'))
+ endif
+ rutabaga = not_found
+ if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
+   rutabaga = dependency('rutabaga_gfx_ffi',
+-                         method: 'pkg-config',
++                         method: 'pkg-config', include_type: 'system',
+                          required: get_option('rutabaga_gfx'))
+ endif
+ blkio = not_found
+ if not get_option('blkio').auto() or have_block
+   blkio = dependency('blkio',
+-                     method: 'pkg-config',
++                     method: 'pkg-config', include_type: 'system',
+                      required: get_option('blkio'))
+ endif
+ curl = not_found
+ if not get_option('curl').auto() or have_block
+   curl = dependency('libcurl', version: '>=7.29.0',
+-                    method: 'pkg-config',
++                    method: 'pkg-config', include_type: 'system',
+                     required: get_option('curl'))
+ endif
+ libudev = not_found
+ if host_os == 'linux' and (have_system or have_tools)
+   libudev = dependency('libudev',
+-                       method: 'pkg-config',
++                       method: 'pkg-config', include_type: 'system',
+                        required: get_option('libudev'))
+ endif
+ 
+@@ -1504,7 +1504,7 @@ if have_system and get_option('curses').allowed()
+   curses_dep_list = host_os == 'windows' ? ['ncurses', 'ncursesw'] : ['ncursesw']
+   curses = dependency(curses_dep_list,
+                       required: false,
+-                      method: 'pkg-config')
++                      method: 'pkg-config', include_type: 'system')
+   msg = get_option('curses').enabled() ? 'curses library not found' : ''
+   curses_compile_args = ['-DNCURSES_WIDECHAR=1']
+   if curses.found()
+@@ -1593,7 +1593,7 @@ endif
+ 
+ sdl = not_found
+ if not get_option('sdl').auto() or have_system
+-  sdl = dependency('sdl2', required: get_option('sdl'))
++  sdl = dependency('sdl2', required: get_option('sdl'), include_type: 'system')
+   sdl_image = not_found
+ endif
+ if sdl.found()
+@@ -1608,7 +1608,7 @@ if sdl.found()
+                              version: sdl.version())
+   endif
+   sdl_image = dependency('SDL2_image', required: get_option('sdl_image'),
+-                         method: 'pkg-config')
++                         method: 'pkg-config', include_type: 'system')
+ else
+   if get_option('sdl_image').enabled()
+     error('sdl-image required, but SDL was @0@'.format(
+@@ -1649,7 +1649,7 @@ glusterfs_iocb_has_stat = false
+ if not get_option('glusterfs').auto() or have_block
+   glusterfs = dependency('glusterfs-api', version: '>=3',
+                          required: get_option('glusterfs'),
+-                         method: 'pkg-config')
++                         method: 'pkg-config', include_type: 'system')
+   if glusterfs.found()
+     glusterfs_ftruncate_has_stat = cc.links('''
+       #include <glusterfs/api/glfs.h>
+@@ -1707,7 +1707,7 @@ endif
+ libssh = not_found
+ if not get_option('libssh').auto() or have_block
+   libssh = dependency('libssh', version: '>=0.8.7',
+-                    method: 'pkg-config',
++                    method: 'pkg-config', include_type: 'system',
+                     required: get_option('libssh'))
+ endif
+ 
+@@ -1775,12 +1775,12 @@ endif
+ coreaudio = not_found
+ if not get_option('coreaudio').auto() or (host_os == 'darwin' and have_system)
+   coreaudio = dependency('appleframeworks', modules: 'CoreAudio',
+-                         required: get_option('coreaudio'))
++                         required: get_option('coreaudio'), include_type: 'system')
+ endif
+ 
+ opengl = not_found
+ if not get_option('opengl').auto() or have_system or have_vhost_user_gpu
+-  epoxy = dependency('epoxy', method: 'pkg-config',
++  epoxy = dependency('epoxy', method: 'pkg-config', include_type: 'system',
+                       required: get_option('opengl'))
+   if cc.has_header('epoxy/egl.h', dependencies: epoxy)
+     opengl = epoxy
+@@ -1790,14 +1790,14 @@ if not get_option('opengl').auto() or have_system or have_vhost_user_gpu
+ endif
+ gbm = not_found
+ if (have_system or have_tools) and (virgl.found() or opengl.found())
+-  gbm = dependency('gbm', method: 'pkg-config', required: false)
++  gbm = dependency('gbm', method: 'pkg-config', include_type: 'system', required: false)
+ endif
+ have_vhost_user_gpu = have_vhost_user_gpu and virgl.found() and opengl.found() and gbm.found()
+ 
+ libcbor = not_found
+ if not get_option('libcbor').auto() or have_system
+   libcbor = dependency('libcbor', version: '>=0.7.0',
+-                       required: get_option('libcbor'))
++                       required: get_option('libcbor'), include_type: 'system')
+ endif
+ 
+ gnutls = not_found
+@@ -1817,14 +1817,14 @@ if get_option('gnutls').enabled() or (get_option('gnutls').auto() and have_syste
+   # still use a different crypto backend to satisfy
+   # the platform support requirements
+   gnutls_crypto = dependency('gnutls', version: '>=3.6.14',
+-                             method: 'pkg-config',
++                             method: 'pkg-config', include_type: 'system',
+                              required: false)
+   if gnutls_crypto.found()
+     gnutls = gnutls_crypto
+   else
+     # Our min version if all we need is TLS
+     gnutls = dependency('gnutls', version: '>=3.5.18',
+-                        method: 'pkg-config',
++                        method: 'pkg-config', include_type: 'system',
+                         required: get_option('gnutls'))
+   endif
+ endif
+@@ -1853,7 +1853,7 @@ endif
+ if not gnutls_crypto.found()
+   if (not get_option('gcrypt').auto() or have_system) and not get_option('nettle').enabled()
+     gcrypt = dependency('libgcrypt', version: '>=1.8',
+-                        required: get_option('gcrypt'))
++                        required: get_option('gcrypt'), include_type: 'system')
+     # Debian has removed -lgpg-error from libgcrypt-config
+     # as it "spreads unnecessary dependencies" which in
+     # turn breaks static builds...
+@@ -1888,7 +1888,7 @@ if not gnutls_crypto.found()
+   endif
+   if (not get_option('nettle').auto() or have_system) and not gcrypt.found()
+     nettle = dependency('nettle', version: '>=3.4',
+-                        method: 'pkg-config',
++                        method: 'pkg-config', include_type: 'system',
+                         required: get_option('nettle'))
+     if nettle.found() and not cc.has_header('nettle/xts.h', dependencies: nettle)
+       xts = 'private'
+@@ -1936,7 +1936,7 @@ endif
+ capstone = not_found
+ if not get_option('capstone').auto() or have_system or have_user
+   capstone = dependency('capstone', version: '>=3.0.5',
+-                        method: 'pkg-config',
++                        method: 'pkg-config', include_type: 'system',
+                         required: get_option('capstone'))
+ 
+   # Some versions of capstone have broken pkg-config file
+@@ -1952,10 +1952,10 @@ if not get_option('capstone').auto() or have_system or have_user
+   endif
+ endif
+ 
+-gmp = dependency('gmp', required: false, method: 'pkg-config')
++gmp = dependency('gmp', required: false, method: 'pkg-config', include_type: 'system')
+ if nettle.found() and gmp.found()
+   hogweed = dependency('hogweed', version: '>=3.4',
+-                       method: 'pkg-config',
++                       method: 'pkg-config', include_type: 'system',
+                        required: get_option('nettle'))
+ endif
+ 
+@@ -1971,18 +1971,18 @@ if get_option('gtk') \
+                       error_message: 'cannot enable GTK if pixman is not available') \
+              .allowed()
+   gtk = dependency('gtk+-3.0', version: '>=3.22.0',
+-                   method: 'pkg-config',
++                   method: 'pkg-config', include_type: 'system',
+                    required: get_option('gtk'))
+   if gtk.found()
+     gtkx11 = dependency('gtk+-x11-3.0', version: '>=3.22.0',
+-                        method: 'pkg-config',
++                        method: 'pkg-config', include_type: 'system',
+                         required: false)
+     gtk = declare_dependency(dependencies: [gtk, gtkx11],
+                              version: gtk.version())
+ 
+     if not get_option('vte').auto() or have_system
+       vte = dependency('vte-2.91',
+-                       method: 'pkg-config',
++                       method: 'pkg-config', include_type: 'system',
+                        required: get_option('vte'))
+     endif
+   elif have_gtk_clipboard
+@@ -1992,12 +1992,12 @@ endif
+ 
+ x11 = not_found
+ if gtkx11.found()
+-  x11 = dependency('x11', method: 'pkg-config', required: gtkx11.found())
++  x11 = dependency('x11', method: 'pkg-config', include_type: 'system', required: gtkx11.found())
+ endif
+ png = not_found
+ if get_option('png').allowed() and have_system
+    png = dependency('libpng', version: '>=1.6.34', required: get_option('png'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+ endif
+ vnc = not_found
+ jpeg = not_found
+@@ -2009,7 +2009,7 @@ if get_option('vnc') \
+              .allowed()
+   vnc = declare_dependency() # dummy dependency
+   jpeg = dependency('libjpeg', required: get_option('vnc_jpeg'),
+-                    method: 'pkg-config')
++                    method: 'pkg-config', include_type: 'system')
+   sasl = cc.find_library('sasl2', has_headers: ['sasl/sasl.h'],
+                          required: get_option('vnc_sasl'))
+   if sasl.found()
+@@ -2135,49 +2135,49 @@ endif
+ cacard = not_found
+ if not get_option('smartcard').auto() or have_system
+   cacard = dependency('libcacard', required: get_option('smartcard'),
+-                      version: '>=2.5.1', method: 'pkg-config')
++                      version: '>=2.5.1', method: 'pkg-config', include_type: 'system')
+ endif
+ u2f = not_found
+ if not get_option('u2f').auto() or have_system
+   u2f = dependency('u2f-emu', required: get_option('u2f'),
+-                   method: 'pkg-config')
++                   method: 'pkg-config', include_type: 'system')
+ endif
+ canokey = not_found
+ if not get_option('canokey').auto() or have_system
+   canokey = dependency('canokey-qemu', required: get_option('canokey'),
+-                   method: 'pkg-config')
++                   method: 'pkg-config', include_type: 'system')
+ endif
+ usbredir = not_found
+ if not get_option('usb_redir').auto() or have_system
+   usbredir = dependency('libusbredirparser-0.5', required: get_option('usb_redir'),
+-                        version: '>=0.6', method: 'pkg-config')
++                        version: '>=0.6', method: 'pkg-config', include_type: 'system')
+ endif
+ libusb = not_found
+ if not get_option('libusb').auto() or have_system
+   libusb = dependency('libusb-1.0', required: get_option('libusb'),
+-                      version: '>=1.0.13', method: 'pkg-config')
++                      version: '>=1.0.13', method: 'pkg-config', include_type: 'system')
+ endif
+ 
+ libpmem = not_found
+ if not get_option('libpmem').auto() or have_system
+   libpmem = dependency('libpmem', required: get_option('libpmem'),
+-                       method: 'pkg-config')
++                       method: 'pkg-config', include_type: 'system')
+ endif
+ libdaxctl = not_found
+ if not get_option('libdaxctl').auto() or have_system
+   libdaxctl = dependency('libdaxctl', required: get_option('libdaxctl'),
+-                         version: '>=57', method: 'pkg-config')
++                         version: '>=57', method: 'pkg-config', include_type: 'system')
+ endif
+ tasn1 = not_found
+ if gnutls.found()
+   tasn1 = dependency('libtasn1',
+                      required: false,
+-                     method: 'pkg-config')
++                     method: 'pkg-config', include_type: 'system')
+ endif
+ keyutils = not_found
+ if not get_option('libkeyutils').auto() or have_block
+   keyutils = dependency('libkeyutils', required: get_option('libkeyutils'),
+-                        method: 'pkg-config')
++                        method: 'pkg-config', include_type: 'system')
+ endif
+ 
+ has_gettid = cc.has_function('gettid')
+@@ -2185,7 +2185,7 @@ has_gettid = cc.has_function('gettid')
+ # libselinux
+ selinux = dependency('libselinux',
+                      required: get_option('selinux'),
+-                     method: 'pkg-config')
++                     method: 'pkg-config', include_type: 'system')
+ 
+ # Malloc tests
+ 
+@@ -2237,7 +2237,7 @@ if get_option('fuse').disabled() and get_option('fuse_lseek').enabled()
+ endif
+ 
+ fuse = dependency('fuse3', required: get_option('fuse'),
+-                  version: '>=3.1', method: 'pkg-config')
++                  version: '>=3.1', method: 'pkg-config', include_type: 'system')
+ 
+ fuse_lseek = not_found
+ if get_option('fuse_lseek').allowed()
+@@ -2275,7 +2275,7 @@ endif
+ 
+ # libbpf
+ bpf_version = '1.1.0'
+-libbpf = dependency('libbpf', version: '>=' + bpf_version, required: get_option('bpf'), method: 'pkg-config')
++libbpf = dependency('libbpf', version: '>=' + bpf_version, required: get_option('bpf'), method: 'pkg-config', include_type: 'system')
+ if libbpf.found() and not cc.links('''
+    #include <bpf/libbpf.h>
+    #include <linux/bpf.h>
+@@ -2299,7 +2299,7 @@ libxdp = not_found
+ if not get_option('af_xdp').auto() or have_system
+     if libbpf.found()
+         libxdp = dependency('libxdp', required: get_option('af_xdp'),
+-                            version: '>=1.4.0', method: 'pkg-config')
++                            version: '>=1.4.0', method: 'pkg-config', include_type: 'system')
+     else
+         if get_option('af_xdp').enabled()
+             error('libxdp requested, but libbpf is not available')
+@@ -2312,7 +2312,7 @@ libdw = not_found
+ if not get_option('libdw').auto() or \
+         (not get_option('prefer_static') and (have_system or have_user))
+     libdw = dependency('libdw',
+-                       method: 'pkg-config',
++                       method: 'pkg-config', include_type: 'system',
+                        required: get_option('libdw'))
+ endif
+ 
+-- 
+2.50.0
 
 
