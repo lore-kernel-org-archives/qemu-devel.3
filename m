@@ -4,90 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 81900C71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:59:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 571BAC71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:59:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYdQ-0006XT-Fi; Tue, 17 Jun 2025 11:54:05 -0400
+	id 1uRYf7-0002u8-Co; Tue, 17 Jun 2025 11:55:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uRYLN-00015x-V9
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:35:27 -0400
-Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uRVZl-0002ZP-Lx
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 08:38:11 -0400
-Received: by mail-pg1-x535.google.com with SMTP id
- 41be03b00d2f7-b0db0b6a677so5188948a12.2
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 05:38:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750163883; x=1750768683; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9uKzW3H/dOr6s+S6VOJ2FYNtxIwtCXlSB+0Kwmd0Wjw=;
- b=nV1VHGF+NbmY+eth/eiEzQceA6f4DoDR0coEVAQYMDoGRrwrpQayVccvAVDtXPzMQ3
- css+WKemqmgFn85j7YCDlxzSUxpqoHfNTdZH5GSNfoApUm0z/nlgJHx1Gtdnav8lCBG3
- 5sakoCepWpLProrK5Ui5AUgUHg3Mdlr8gWCujaNLPf3gAbDGqbK4/ezFoD9HWjfMcDyf
- O5dOjERWNnF+8AkJ+d/kb3ShPdl7NxAJn9LtsxIq/1adPpV1pc/eGgmJnZtpMMHRwb7R
- 6lONPLHCG5Gu/t6w63vsLaBz+DqWDVZseINQciieeOMEuvmrno3oLtGQS9lRH0GDK4Dt
- vLsA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750163883; x=1750768683;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=9uKzW3H/dOr6s+S6VOJ2FYNtxIwtCXlSB+0Kwmd0Wjw=;
- b=QeEq5dCS6xEv7VnPKZCHT2lQvI9F/XbfKKsp+lnzLWoBvMKf/dG20hqy6kdJQWi0Gy
- TilQNztdZqAyzydqRFHSk2y8fjTeAXzdS9DIyvwyalAvmcSG2PvK7NN/pBMUknWxWPAQ
- 4DsEAkoYsi+E8OUEMogP2JVXWWj2FgC7OwzP85+a6Kv68hlE9Eq3bJmiq9y9i2Eqds+O
- /NiI4OuTxKUxMLK20P3QQQ/ffwFQe7l6lNanY12hNcJu1qFz5v5FHEkuCSjFfEzFzIKn
- zjxIev8AxqtdEoTwqse6fQhT1Hh9+tsEkN3H6lsFq7I5b0CnUQ7Kv5XsdbIJm/WqOARu
- o8DQ==
-X-Gm-Message-State: AOJu0YwU2cGmtmUo1Dm0tm6dQ5huotTIC2xohNBcrZSICSbQBTBTe4ss
- +wBQS/mQKMygp3b+X71EiWKVJVOn/u4fo6HCBWlHt6Z/6Ir7gCgX94wARcv2WTw9Q8g=
-X-Gm-Gg: ASbGncvXT6ePS9yBMZykzOQwBvQ9jO7E38gIHX2oJgwH6qVIPWH/3XjRM718fWT4xXc
- 6Y5vLER1DiYNF8FeNc19FH6UzPROKA/XTcH8UzobXG2lXu7s7AG8tBtat5InS5ufp/R+1Vqs3b3
- kQueJL29xHgN7QQJjuRkSCCb4A19w7gH7ny5p9XTohPwDa8krxr8lLlz8mGtd+jJw2tQZuqWqCG
- Tah+v+BgNgHE4NCJ8qcFsGVc5hQ0zsrtzmHm1SL5OxSHglKBOmsS+drXkbFCvcMVElH4t1NZNBb
- c0F6p2vKYkqau62RSMcWhTfZ2lIkE2aneBO/AcVsdtweO2x7eLtc50sudzYT+soWI4k9WXC1asR
- LHnUTg9Yx
-X-Google-Smtp-Source: AGHT+IGC6RdtkCaWoXRvoNEfspcD7NZpIqPCHsc0FaiMQf5DkPfr9+V3eIMMeGn+yh1WyjRj9mKPxw==
-X-Received: by 2002:a05:6a21:328c:b0:21f:7430:148a with SMTP id
- adf61e73a8af0-21fbd57d24amr20201895637.28.1750163883360; 
- Tue, 17 Jun 2025 05:38:03 -0700 (PDT)
-Received: from [192.168.0.102] ([186.215.60.20])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-b2fe1680408sm8773000a12.39.2025.06.17.05.38.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 05:38:02 -0700 (PDT)
-Message-ID: <bbffdac9-a957-41d9-b1f8-3824e794831c@linaro.org>
-Date: Tue, 17 Jun 2025 09:37:47 -0300
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uRYQt-0006Tv-0G
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:41:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <cohuck@redhat.com>) id 1uRYQq-0005iK-Vk
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:41:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750174863;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=YvlwFYdrmYZ5pBPrt5fnuh8VXecITqSPvDABKFjWw0w=;
+ b=LUYKfy79OpUiVeVOiPjN5HrCLfuzC4Rp9nC4yJxbnfomOqNHmr9hbIsjtu43nkpxkviv9K
+ IrwTEbA/IFTT2vnrfX0d5Us+T/CoHeMcgUVHa85NSM5DkIgxTx42K/kUvKOIj+ksQPDPZ0
+ y0gByix+6X2rMpqlGfPL33lEuoZjG14=
+Received: from mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-463-ukgekzDbOOW4TRqhwIM9dQ-1; Tue,
+ 17 Jun 2025 11:41:02 -0400
+X-MC-Unique: ukgekzDbOOW4TRqhwIM9dQ-1
+X-Mimecast-MFC-AGG-ID: ukgekzDbOOW4TRqhwIM9dQ_1750174860
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D32711956068; Tue, 17 Jun 2025 15:40:59 +0000 (UTC)
+Received: from gondolin.str.redhat.com (pixel-6a.str.redhat.com
+ [10.33.192.205])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DCDCD180045B; Tue, 17 Jun 2025 15:40:53 +0000 (UTC)
+From: Cornelia Huck <cohuck@redhat.com>
+To: eric.auger.pro@gmail.com, eric.auger@redhat.com, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org, kvmarm@lists.linux.dev, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, alex.bennee@linaro.org, maz@kernel.org,
+ oliver.upton@linux.dev, sebott@redhat.com,
+ shameerali.kolothum.thodi@huawei.com, armbru@redhat.com,
+ berrange@redhat.com, abologna@redhat.com, jdenemar@redhat.com,
+ agraf@csgraf.de
+Cc: shahuang@redhat.com, mark.rutland@arm.com, philmd@linaro.org,
+ pbonzini@redhat.com, Cornelia Huck <cohuck@redhat.com>
+Subject: [PATCH v8 12/14] arm/cpu: Add sysreg generation scripts
+Date: Tue, 17 Jun 2025 17:39:29 +0200
+Message-ID: <20250617153931.1330449-13-cohuck@redhat.com>
+In-Reply-To: <20250617153931.1330449-1-cohuck@redhat.com>
+References: <20250617153931.1330449-1-cohuck@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5] tests/functional: Add PCI hotplug test for aarch64
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, thuth@redhat.com,
- eric.auger@redhat.com, berrange@redhat.com
-References: <20250528203137.1654964-1-gustavo.romero@linaro.org>
- <87msa6vgsu.fsf@draig.linaro.org>
-Content-Language: en-US
-From: Gustavo Romero <gustavo.romero@linaro.org>
-In-Reply-To: <87msa6vgsu.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-type: text/plain
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pg1-x535.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=cohuck@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,20 +90,124 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
+From: Eric Auger <eric.auger@redhat.com>
 
-On 6/17/25 06:49, Alex Bennée wrote:
-> Gustavo Romero <gustavo.romero@linaro.org> writes:
-> 
->> Add a functional test, aarch64_hotplug_pci, to exercise PCI hotplug and
->> hot-unplug on arm64.
-> 
-> Queued to testing/next, thanks.
+Introduce scripts that automate the generation of system register
+definitions from a given linux source tree arch/arm64/tools/sysreg.
 
-Thanks a lot!
+Invocation of
+./update-aarch64-sysreg-code.sh $PATH_TO_LINUX_SOURCE_TREE
+in scripts directory generates target/arm/cpu-sysregs.h.inc
+containing defines for all system registers.
 
+[CH: update to handle current kernel sysregs structure, and to emit
+     the re-worked register structures; cpu properties will be added
+     later]
+Reviewed-by: Sebastian Ott <sebott@redhat.com>
+Signed-off-by: Eric Auger <eric.auger@redhat.com>
+Signed-off-by: Cornelia Huck <cohuck@redhat.com>
+---
+ MAINTAINERS                            |  1 +
+ scripts/arm-gen-cpu-sysregs-header.awk | 37 ++++++++++++++++++++++++++
+ scripts/update-aarch64-sysreg-code.sh  | 32 ++++++++++++++++++++++
+ 3 files changed, 70 insertions(+)
+ create mode 100755 scripts/arm-gen-cpu-sysregs-header.awk
+ create mode 100755 scripts/update-aarch64-sysreg-code.sh
 
-Cheers,
-Gustavo
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 28b3dd2684b4..01334cb93ca1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -443,6 +443,7 @@ M: Peter Maydell <peter.maydell@linaro.org>
+ L: qemu-arm@nongnu.org
+ S: Maintained
+ F: target/arm/kvm.c
++F: scripts/*-sysreg*
+ 
+ MIPS KVM CPUs
+ M: Huacai Chen <chenhuacai@kernel.org>
+diff --git a/scripts/arm-gen-cpu-sysregs-header.awk b/scripts/arm-gen-cpu-sysregs-header.awk
+new file mode 100755
+index 000000000000..f92bbbafa727
+--- /dev/null
++++ b/scripts/arm-gen-cpu-sysregs-header.awk
+@@ -0,0 +1,37 @@
++#!/bin/awk -f
++# SPDX-License-Identifier: GPL-2.0-or-later
++# arm-gen-cpu-sysregs-header.awk: arm64 sysreg header include generator
++#
++# Usage: awk -f arm-gen-cpu-sysregs-header.awk $LINUX_PATH/arch/arm64/tools/sysreg
++
++BEGIN {
++    print "/* SPDX-License-Identifier: GPL-2.0-or-later */"
++    print "/* GENERATED FILE, DO NOT EDIT */"
++    print "/* use arm-gen-cpu-sysregs-header.awk to regenerate */"
++} END {
++    print ""
++}
++
++# skip blank lines and comment lines
++/^$/ { next }
++/^[\t ]*#/ { next }
++
++/^Sysreg\t/ || /^Sysreg /{
++
++	reg = $2
++	op0 = $3
++	op1 = $4
++	crn = $5
++	crm = $6
++	op2 = $7
++
++	if (op0 == 3 && (op1==0 || op1==1 || op1==3) && crn==0 && (crm>=0 && crm<=7) && (op2>=0 && op2<=7)) {
++	    print "DEF("reg", "op0", "op1", "crn", "crm", "op2")"
++	}
++	next
++}
++
++{
++	/* skip all other lines */
++	next
++}
+diff --git a/scripts/update-aarch64-sysreg-code.sh b/scripts/update-aarch64-sysreg-code.sh
+new file mode 100755
+index 000000000000..7bba0bcd6f66
+--- /dev/null
++++ b/scripts/update-aarch64-sysreg-code.sh
+@@ -0,0 +1,32 @@
++#!/bin/sh -e
++#
++# SPDX-License-Identifier: GPL-2.0-or-later
++# Update target/arm/cpu-sysregs.h
++# from a linux source tree (arch/arm64/tools/sysreg)
++#
++# Copyright Red Hat, Inc. 2024
++#
++# Authors:
++#          Eric Auger <eric.auger@redhat.com>
++#
++
++scripts="$(dirname "$0")"
++linux="$1"
++output="$2"
++
++if [ -z "$linux" ] || ! [ -d "$linux" ]; then
++    cat << EOF
++usage: update-aarch64-sysreg-code.sh LINUX_PATH [OUTPUT_PATH]
++
++LINUX_PATH      Linux kernel directory to obtain the register definitions from
++OUTPUT_PATH     output directory, usually the qemu source tree (default: $PWD)
++EOF
++    exit 1
++fi
++
++if [ -z "$output" ]; then
++    output="$PWD"
++fi
++
++awk -f $scripts/arm-gen-cpu-sysregs-header.awk \
++    $linux/arch/arm64/tools/sysreg > $output/target/arm/cpu-sysregs.h.inc
+-- 
+2.49.0
 
 
