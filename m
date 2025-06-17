@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A634FC71155
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 04:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58021C71155
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 04:39:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRO5i-0002rP-J6; Tue, 17 Jun 2025 00:38:34 -0400
+	id 1uRO5j-0002ri-DU; Tue, 17 Jun 2025 00:38:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uRO5f-0002pk-D8
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:31 -0400
+ id 1uRO5h-0002rC-KE
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:33 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uRO5d-0007ja-OY
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:31 -0400
+ id 1uRO5f-0007ja-P7
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750135110; x=1781671110;
+ t=1750135112; x=1781671112;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=N/hxLA1NKl77VClmHWfKHM7UOdeBh5dCwhVlxw8bnz8=;
- b=TP7l1LVvu4P60yV4il8zRaPRJhHSGoKue/qQSQ7u6P34+XM/q6CFnIEx
- Aav+IWtN/XTFUAXAMdpQB9u0ojenbi7/fBrUM0rkIGGwf2d9SI9DyJCgW
- 0HUHchNzg2fMPPiu6OwkQHfy9P8Tr9cG68+Hwa2xtdZPZgR6r/aEaQRLk
- vQhnVjnrlw/LUicroCPKT5jiWomq6TGzWSsLaW8m+Lzpa/Yoz6L7DtI2/
- Mczw5MkGtVnLdIYTGEufXZmeOY7fCz1ahUTyfqp3MGaUkvjmXBzOSRLo/
- VIgvZrbvy0cPg0+BbeVBdfypVrSkVoyZsNr016LKF4j0DM8INhkrWjSH1 g==;
-X-CSE-ConnectionGUID: ZzrJEi4KSpCoXeGhvYdMdw==
-X-CSE-MsgGUID: 8//Wg5JSSv6iec2je+oruw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="52432300"
-X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="52432300"
+ bh=H+bzC9R1rwWKRfo5+CXouNBCZFJm6s2WQLQ7fPjkRDk=;
+ b=dW+ljxqmR1YRtukkRYI9z3xbagbFjLlrdEoffgAQlS6NOPo1jdFX5cbo
+ Mk7nPQaZDCt2jeD0zhteavPVZTC3OTM9ANr9FWe6dLZtYWNwlC0+18EL+
+ BXt0P27AjCBGJmNnokLezpGW4NEntZrvKovorE4c6JmAyaPiejf00ru3Y
+ QTng7SJYNCIy8bW08l2ED789vbUNI3WPZ9q4UbV60F28zs9zsHjkA2pcF
+ I6T8ODB7bPtdWy5txWKzWIA03FIIhfvx6U3qf+KH9MBhHrl672YIAVUCI
+ cSqp5lGJqEhnEt5ITKRE38CqmM+TKDshHXLHHKYxBqx087oS4bwXBbnL0 A==;
+X-CSE-ConnectionGUID: ALhmFZ3DR7agnYiaz9CmMQ==
+X-CSE-MsgGUID: c4G4DglpR9Sy7KrM/PlckA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="52432320"
+X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="52432320"
 Received: from orviesa008.jf.intel.com ([10.64.159.148])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jun 2025 21:38:24 -0700
-X-CSE-ConnectionGUID: YiGgnWO2SkW8bkYovLf+eQ==
-X-CSE-MsgGUID: fn5azfjfSl6lWpBzyABr7A==
+ 16 Jun 2025 21:38:26 -0700
+X-CSE-ConnectionGUID: jTTXjVaaTaWmqY4hm2xH1A==
+X-CSE-MsgGUID: DoHdGCsMRZS+s+k+6od36Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="149551044"
+X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="149551057"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jun 2025 21:38:23 -0700
+ 16 Jun 2025 21:38:24 -0700
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
@@ -53,12 +53,11 @@ Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
  =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH v6 3/7] ui/spice: Add an option for users to provide a
- preferred video codec
-Date: Mon, 16 Jun 2025 21:32:27 -0700
-Message-ID: <20250617043546.1022779-4-vivek.kasireddy@intel.com>
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Subject: [PATCH v6 6/7] ui/spice: Create a new texture with linear layout when
+ gl=on is specified
+Date: Mon, 16 Jun 2025 21:32:30 -0700
+Message-ID: <20250617043546.1022779-7-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250617043546.1022779-1-vivek.kasireddy@intel.com>
 References: <20250617043546.1022779-1-vivek.kasireddy@intel.com>
@@ -90,95 +89,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Giving users an option to choose a particular codec will enable
-them to make an appropriate decision based on their hardware and
-use-case. Note that, the Spice server would use this codec with
-Gstreamer encoder and only when gl=on is specified.
+Since most encoders/decoders (invoked by Spice) may not work properly
+with tiled memory associated with a texture, we need to create another
+texture that has linear memory layout and use that instead.
 
-If no codec is provided, then the codec gstreamer:h264 would be used
-as default. And, for the case where gl=off, the default codec to be
-used is determined by the Spice server.
+Note that, there does not seem to be a direct way to indicate to the
+GL implementation that a texture's backing memory needs to be linear.
+Instead, we have to do it in a roundabout way where we need to first
+create a tiled texture and import that as a memory object to create
+a new texture that has a linear memory layout.
 
 Cc: Gerd Hoffmann <kraxel@redhat.com>
 Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Frediano Ziglio <freddy77@gmail.com>
 Cc: Dongwon Kim <dongwon.kim@intel.com>
-Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Cc: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Co-developed-by: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- qemu-options.hx |  8 ++++++++
- ui/spice-core.c | 15 +++++++++++++++
- 2 files changed, 23 insertions(+)
+ include/ui/surface.h |  1 +
+ ui/console-gl.c      |  6 ++++
+ ui/spice-display.c   | 82 ++++++++++++++++++++++++++++++++++++++++++++
+ 3 files changed, 89 insertions(+)
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 7eb8e02b4b..124c87311c 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2281,6 +2281,7 @@ DEF("spice", HAS_ARG, QEMU_OPTION_spice,
-     "       [,streaming-video=[off|all|filter]][,disable-copy-paste=on|off]\n"
-     "       [,disable-agent-file-xfer=on|off][,agent-mouse=[on|off]]\n"
-     "       [,playback-compression=[on|off]][,seamless-migration=[on|off]]\n"
-+    "       [,video-codec=<codec>\n"
-     "       [,gl=[on|off]][,rendernode=<file>]\n"
-     "                enable spice\n"
-     "                at least one of {port, tls-port} is mandatory\n",
-@@ -2369,6 +2370,13 @@ SRST
-     ``seamless-migration=[on|off]``
-         Enable/disable spice seamless migration. Default is off.
+diff --git a/include/ui/surface.h b/include/ui/surface.h
+index f16f7be8be..006b1986bb 100644
+--- a/include/ui/surface.h
++++ b/include/ui/surface.h
+@@ -22,6 +22,7 @@ typedef struct DisplaySurface {
+     GLenum glformat;
+     GLenum gltype;
+     GLuint texture;
++    GLuint mem_obj;
+ #endif
+     qemu_pixman_shareable share_handle;
+     uint32_t share_handle_offset;
+diff --git a/ui/console-gl.c b/ui/console-gl.c
+index afb36dba64..403fc36fbd 100644
+--- a/ui/console-gl.c
++++ b/ui/console-gl.c
+@@ -184,6 +184,12 @@ void surface_gl_destroy_texture(QemuGLShader *gls,
+     }
+     glDeleteTextures(1, &surface->texture);
+     surface->texture = 0;
++#ifdef GL_EXT_memory_object_fd
++    if (surface->mem_obj) {
++        glDeleteMemoryObjectsEXT(1, &surface->mem_obj);
++        surface->mem_obj = 0;
++    }
++#endif
+ }
  
-+    ``video-codec=<codec>``
-+        Provide the preferred codec the Spice server should use with the
-+        Gstreamer encoder. This option is only relevant when gl=on is
-+        specified. If no codec is provided, then the codec gstreamer:h264
-+        would be used as default. And, for the case where gl=off, the
-+        default codec to be used is determined by the Spice server.
-+
-     ``gl=[on|off]``
-         Enable/disable OpenGL context. Default is off.
+ void surface_gl_setup_viewport(QemuGLShader *gls,
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index e409b6bdb2..854a97c198 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -893,6 +893,81 @@ static void spice_gl_update(DisplayChangeListener *dcl,
+     ssd->gl_updates++;
+ }
  
-diff --git a/ui/spice-core.c b/ui/spice-core.c
-index 5acbdd3955..5e585ed958 100644
---- a/ui/spice-core.c
-+++ b/ui/spice-core.c
-@@ -488,6 +488,9 @@ static QemuOptsList qemu_spice_opts = {
-         },{
-             .name = "streaming-video",
-             .type = QEMU_OPT_STRING,
-+        },{
-+            .name = "video-codec",
-+            .type = QEMU_OPT_STRING,
-         },{
-             .name = "agent-mouse",
-             .type = QEMU_OPT_BOOL,
-@@ -662,6 +665,8 @@ static void qemu_spice_init(void)
-     char *x509_key_file = NULL,
-         *x509_cert_file = NULL,
-         *x509_cacert_file = NULL;
-+    const char *video_codec = NULL;
-+    g_autofree char *enc_codec = NULL;
-     int port, tls_port, addr_flags;
-     spice_image_compression_t compression;
-     spice_wan_compression_t wan_compr;
-@@ -838,6 +843,16 @@ static void qemu_spice_init(void)
-         if ((port != 0) || (tls_port != 0)) {
- #if SPICE_SERVER_VERSION >= 0x000f03 /* release 0.15.3 */
-             spice_remote_client = 1;
++static bool spice_gl_replace_fd_texture(SimpleSpiceDisplay *ssd,
++                                        int *fds, uint64_t *modifier,
++                                        int *num_planes)
++{
++    uint32_t offsets[DMABUF_MAX_PLANES], strides[DMABUF_MAX_PLANES];
++    GLuint texture;
++    GLuint mem_obj;
++    int fourcc;
++    bool ret;
 +
-+            video_codec = qemu_opt_get(opts, "video-codec");
-+            if (video_codec) {
-+                enc_codec = g_strconcat("gstreamer:", video_codec, NULL);
-+            }
-+            if (spice_server_set_video_codecs(spice_server,
-+                                              enc_codec ?: "gstreamer:h264")) {
-+                error_report("invalid video codec");
-+                exit(1);
-+            }
- #else
-             error_report("SPICE GL support is local-only for now and "
-                          "incompatible with -spice port/tls-port");
++    if (!spice_remote_client) {
++        return true;
++    }
++
++    if (*modifier == DRM_FORMAT_MOD_LINEAR) {
++        return true;
++    }
++
++    if (*num_planes > 1) {
++        error_report("spice: cannot replace texture with multiple planes");
++        return false;
++    }
++
++    /*
++     * We really want to ensure that the memory layout of the texture
++     * is linear; otherwise, the encoder's output may show corruption.
++     */
++    if (!surface_gl_create_texture_from_fd(ssd->ds, fds[0], &texture,
++                                           &mem_obj)) {
++        error_report("spice: cannot create new texture from fd");
++        return false;
++    }
++
++    /*
++     * A successful return after glImportMemoryFdEXT() means that
++     * the ownership of fd has been passed to GL. In other words,
++     * the fd we got above should not be used anymore.
++     */
++    ret = egl_dmabuf_export_texture(texture,
++                                    fds,
++                                    (EGLint *)offsets,
++                                    (EGLint *)strides,
++                                    &fourcc,
++                                    num_planes,
++                                    modifier);
++    if (!ret) {
++        glDeleteTextures(1, &texture);
++#ifdef GL_EXT_memory_object_fd
++        glDeleteMemoryObjectsEXT(1, &mem_obj);
++#endif
++
++        /*
++         * Since we couldn't export our newly create texture (or create,
++         * an fd associated with it) we need to backtrack and try to
++         * recreate the fd associated with the original texture.
++         */
++        ret = egl_dmabuf_export_texture(ssd->ds->texture,
++                                        fds,
++                                        (EGLint *)offsets,
++                                        (EGLint *)strides,
++                                        &fourcc,
++                                        num_planes,
++                                        modifier);
++        if (!ret) {
++            surface_gl_destroy_texture(ssd->gls, ssd->ds);
++            warn_report("spice: no texture available to display");
++        }
++    } else {
++        surface_gl_destroy_texture(ssd->gls, ssd->ds);
++        ssd->ds->texture = texture;
++        ssd->ds->mem_obj = mem_obj;
++    }
++    return ret;
++}
++
+ static void spice_server_gl_scanout(QXLInstance *qxl,
+                                     const int *fd,
+                                     uint32_t width, uint32_t height,
+@@ -917,6 +992,7 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
+                             struct DisplaySurface *new_surface)
+ {
+     SimpleSpiceDisplay *ssd = container_of(dcl, SimpleSpiceDisplay, dcl);
++    bool ret;
+ 
+     if (ssd->ds) {
+         surface_gl_destroy_texture(ssd->gls, ssd->ds);
+@@ -939,6 +1015,12 @@ static void spice_gl_switch(DisplayChangeListener *dcl,
+             return;
+         }
+ 
++        ret = spice_gl_replace_fd_texture(ssd, fd, &modifier, &num_planes);
++        if (!ret) {
++            surface_gl_destroy_texture(ssd->gls, ssd->ds);
++            return;
++        }
++
+         trace_qemu_spice_gl_surface(ssd->qxl.id,
+                                     surface_width(ssd->ds),
+                                     surface_height(ssd->ds),
 -- 
 2.49.0
 
