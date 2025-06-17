@@ -4,165 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F1AFC71159
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 03:23:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF1B8C71155
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 03:26:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRMv2-0002gb-KP; Mon, 16 Jun 2025 23:23:28 -0400
+	id 1uRMxj-0003Z9-NX; Mon, 16 Jun 2025 23:26:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uRMv0-0002gL-JY
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:23:26 -0400
-Received: from mail-co1nam11on2061d.outbound.protection.outlook.com
- ([2a01:111:f403:2416::61d]
- helo=NAM11-CO1-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uRMuy-0006nw-2G
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:23:26 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Av7JO9yXN1DpdDWozqxeAJv1NLYVwoJ72WcWABL6qNaOnQV13fHIfWGT3BV9hXJ9jwCdcLhWzdp6VEUeo7hyK9vvFWemqT1G4pDGL9E/YJgcm40D6N3KfTlUkCSvAh9uVLk15Uo5L/09ZcV+j1RjVlU7Q8wnJ/Bw+sKb132Wx/Sszbt3LdQWXNBkBa9yyesn53UHNudLC8dIuXEnPK0RbrQNlvNNL1ye7anEHdeE4y7MXXkEmKsDHTzTfkh5FUVYpael83m35vYKgxNH+5ZFZ4Admgj3g5vG8ainU/nrHPq4VK/U5mybsof2d4r7jad6Of8bS69L+tSVjz3IzZo+fA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ztSwtwwL8jkkZtgH0zZ6v6OFTPH4Tc/Q78656KJFIj4=;
- b=bHgKCQo2zNd+/Gp+xKnvaRIY9w2AW0kBkFQQ6DVcdFmjLHRzRWZ/NmyMXECbYfABUXE6lzdCxL3RTJfvwlfADzSEaHDeLNw4U76MbCasBLpvaVbwVB2AaMv8cCjHYKxHgvanJWihm1B2dg5nmxL3WByXT/QvPmIiS0ZXdSGqp3ACsxh7rsHu4oao4EiDt3BSJuxKltXWoPMgjW5wqT7SOwy82lNHWWEuOXr4zcp5ddUWOPhJMppSK9va3yNSzyPnBLMiiGCYCHUcKCGVIC+God9WbeqRHPwIITvXBI6fI1QKYJtxJ1b1PXshZvJ27u6ahcEpmq/kGQ57P+hGYP/WxQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ztSwtwwL8jkkZtgH0zZ6v6OFTPH4Tc/Q78656KJFIj4=;
- b=r4TSDDx4x+RXftzXxcC8FnF0TviqK1FdOTPIHiyiJp/WQmrBDjGrir4qmjNv8tskebOWCkzwvph+msP7ilSFxn/M/x9TNtpqGsXRV0tVmQMIKmnJ8h6jCrAubE5h+3GVHt2+XzBbX65aditpIRnMxuneFZ27kXyUdVGUbi10jA7f0tEi+p5pc4KPKxVma9BTq8SSugfBSceoFw2rPqdJRU+yQSls1yf6bQQfegoR+4QmRFx8wvDVEp4tbHl9PfiySZgmfBZ20mc+UdkjewCdbm8WSP7JD3hsNfnlcUNqq/zDxNbvzUAVmA57C7UBd5hkpV7DqpNSUf3JzgYsOtujhw==
-Received: from SJ0PR05CA0176.namprd05.prod.outlook.com (2603:10b6:a03:339::31)
- by BL4PR12MB9478.namprd12.prod.outlook.com (2603:10b6:208:58e::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Tue, 17 Jun
- 2025 03:23:17 +0000
-Received: from MWH0EPF000971E5.namprd02.prod.outlook.com
- (2603:10b6:a03:339:cafe::f2) by SJ0PR05CA0176.outlook.office365.com
- (2603:10b6:a03:339::31) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8835.19 via Frontend Transport; Tue,
- 17 Jun 2025 03:23:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- MWH0EPF000971E5.mail.protection.outlook.com (10.167.243.73) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8835.15 via Frontend Transport; Tue, 17 Jun 2025 03:23:16 +0000
-Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 16 Jun
- 2025 20:23:09 -0700
-Received: from drhqmail201.nvidia.com (10.126.190.180) by
- drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Mon, 16 Jun 2025 20:23:08 -0700
-Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.126.190.180)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Mon, 16 Jun 2025 20:22:51 -0700
-Date: Mon, 16 Jun 2025 20:22:44 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Yi Liu <yi.l.liu@intel.com>
-CC: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, Peter Xu
- <peterx@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
- <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
- "jgg@nvidia.com" <jgg@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
- host
-Message-ID: <aFDfhI0zScBhy01j@nvidia.com>
-References: <20250521111452.3316354-16-zhenzhong.duan@intel.com>
- <aC5YjHrv5EMDixzZ@Asurada-Nvidia>
- <0f8087f4-0c97-440d-84d2-f3f017f81041@intel.com>
- <aDDk1NYwJXaAdUQI@Asurada-Nvidia>
- <29f5f434-1fe3-4b5e-91d1-f153e1e98602@intel.com>
- <aDSmcvZ08jNOSr05@Asurada-Nvidia>
- <SJ0PR11MB6744340B889FF65D3BD5B8459267A@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <f6baaea1-a60c-41dc-a9a8-d2389ed14679@intel.com>
- <aE+yvI2clKEZyoyz@nvidia.com>
- <6f0cb11d-ab12-4ae1-98d0-eb44bb0a7f4f@intel.com>
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uRMxi-0003Yb-2j
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:26:14 -0400
+Received: from mail-vs1-xe35.google.com ([2607:f8b0:4864:20::e35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uRMxe-0007DK-Jf
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:26:12 -0400
+Received: by mail-vs1-xe35.google.com with SMTP id
+ ada2fe7eead31-4e7feaae0e1so2027193137.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 20:26:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750130769; x=1750735569; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=njjUON9IEyk/evSSOYlb0/Yopru4ctcIJbzJHnLed+8=;
+ b=NykD2S7Ad32UU/+cWeBiL/ra36IKIYIzCZRMSvZgJVWRQKfz5+Fo8BlYEWZ4jGt2q/
+ Zei8tvgbI0xyiD1NwwI994S21fAmfoDIBMz6oR9PSOJR0uPjNMBF5DbFe1nwAodyhib7
+ 9K7IgwtWUQCmnVBV/b+sDltMcod24SYfoQNi/UeYOwnFbluDY1+OGl6QWVwW2zkjlFGH
+ HiE4ZqLuLxyzOenqhP7gxpxyK+yb9ZfAsxFEoC08HiYo3x4ybB9n4gqIsHNnzAIH4XPw
+ RoAhKVO/twlP8rRHo7hz+RMYzGOiFXvSpzllH/A050wzChqnneE/0Fh4Ej6L0zyXUFV2
+ 13qA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750130769; x=1750735569;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=njjUON9IEyk/evSSOYlb0/Yopru4ctcIJbzJHnLed+8=;
+ b=b5khak0Wi31ml2r2TSZ4fnA6doYuAikh7xScHqgs5rUAxltEt5TtCt2GIoqDGGdkJd
+ xWTpxCSvmKvthN0PL92qULSiVLNBKMA4tyn2KSNbxly0+nGIYZjhgg08FiWIsNvmFl40
+ 1DaqyLP0LGv+2Bwo11rgSzFtwdY9fipZFTm2NwpYF0k6Xef4FoTutZkmhRTL79aK1s7E
+ clCgklFJmo+Zu58bP/H8oYjfwbtE5AnjWIbOoI+VcG+zA9wNG6HdF6XNNYGXjlsAt2CA
+ vMRD+zq4qqmJsO6/q38xwTibb8MNVcMam4zG27uAaxYPrUl0eMdF3Xdfxdy6ytr13t0H
+ ZNqA==
+X-Gm-Message-State: AOJu0Yy5MEBOqeV9IK+odu8fijw4s7xi1QkBYkySHoCyR7CXihT0Y8Sq
+ Tsf4QI5VRo21xR6D7tUysCklVd7xUsC/tF2fD3LjzVRBcdzuj7Q7Cu/XqTv8LbapJetgc5FL5pi
+ 5RKMqrVJXc3ikcaNGUkmdOwjEBCxn/Mw=
+X-Gm-Gg: ASbGncs347LkULTiIzj0w9hEaHw+R7LbxQE7gLM7F1h6x2AmhvHDvek13wZReS2/NTs
+ nCe+RxsV8hm48cRr5vzJIu8Rn5R3VJUCUjAni4LoBRVrGFpSHWAncHqVdWtx48SnUmD+SIZhUy7
+ o2wXz88Wu3EgO0972M46luDOduymaEDmOd5NPb4GAstkqzPXoZtkDCQv2U0wdGxwVnug+a2b/hP
+ Q==
+X-Google-Smtp-Source: AGHT+IG8BitCiwJtXl4/AiEQsleuRvisGGk+mgQTQjQYFJ3h31TmxCBk/mNt+LmDrskoVYnrmCDoqM/QI6fE26YjGzY=
+X-Received: by 2002:a05:6102:2c8d:b0:4e7:b8ca:e3bc with SMTP id
+ ada2fe7eead31-4e7f622313bmr8348968137.17.1750130769025; Mon, 16 Jun 2025
+ 20:26:09 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <6f0cb11d-ab12-4ae1-98d0-eb44bb0a7f4f@intel.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000971E5:EE_|BL4PR12MB9478:EE_
-X-MS-Office365-Filtering-Correlation-Id: 96c7dfdf-36e4-4bf4-d8c5-08ddad4e4cff
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|36860700013|1800799024|82310400026|7416014; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Av06UDdZc3BczPmn/HU/fWKZZnxEbMPrxDg1KwWXvQYLTpTa+7RbZCRLDg2m?=
- =?us-ascii?Q?TsfleNDeezF92kn4pXby5F9iLWQJ6MykvC5x0wcGDL2a6bCGw+mC+JhzDSiN?=
- =?us-ascii?Q?qVRiMwGilBTQHc5V+Qs15VhQK50pq9FG+uVf0We9kQzmo28qU7qYzL9qoRK2?=
- =?us-ascii?Q?u8d5Lesf1aMrZoHLzZ8wptVbltC0MciSwyU3Htx6+nXSpWoqGC7KLAZCkbvr?=
- =?us-ascii?Q?YvZt79UiAHj1XlHwOP2tFwbUTToyBtpeGhaxKZyxEDCWMnUOet8Ec3MxKF4X?=
- =?us-ascii?Q?ywrq03VENShkgsziB/q7t7uNsxWMbcD3sjfqqKtAP8KesCvtBBQhJnrmX1uv?=
- =?us-ascii?Q?o1z+MbzscgUzpap3KJjdJ+QjepSwBSEWKxX4geWpIvwP2Vajpe9btXV4Vvx/?=
- =?us-ascii?Q?TrIaNrnUyTipCbpPh1W0wEKdlzo71kAn+wIptGzWKvTUsnbHVMIvJeeNv/W5?=
- =?us-ascii?Q?K+pXRU52g3hG+7FzCgcHABwJER7WsboSm/5ADDsWdzU4W9xvffGyTfYFQ31G?=
- =?us-ascii?Q?dZtuFzkOgabG6V2xHfvoOPjrcx9nkg4FF9zv0H/dWwUWCQc1XKcS5HPIWFGH?=
- =?us-ascii?Q?ySbvuP9ipGT+0ynS8jgZqAi7HhRuBh0fO4+4t/IH50rsTUeNWNTpPsBO46K/?=
- =?us-ascii?Q?FWmZ7OU/z5I3K5BUjb22I/ULgwtIAsPYeA9bIPbPUccBj0TbP9d9IhMIOU2V?=
- =?us-ascii?Q?X1K1XMFzWRgTLq+02byXZiMuPj1RpGr1Sd9GHYaDYiT5njPYLMJKG1USiERH?=
- =?us-ascii?Q?7PJuScqRHLSjWsGRbsToYnmQTKwyXsA4Jz7Jix5PMWhX2l/d3g8/RGbtsPVC?=
- =?us-ascii?Q?UC55Vg2tfr8p7I4iZAk4ARKaQmzCQH+cKw2wVVXVcYos6JAr93CJYbXoqZkC?=
- =?us-ascii?Q?G90Nghix96I+EAQUkuBYx71UutE9aJIPKkmv5e3YEt7LwF/xplkwhK13C2xl?=
- =?us-ascii?Q?6ehAyfMX4Wck1wUhfeJ/dNBs54xb/6+p1T0Whbv3JJVsv3MtLn3g1UKRAAM1?=
- =?us-ascii?Q?JUbgcm9NJj0DBF3k8ApjlAIqmclBM4Nngznd3I8zLrZJJvF9bAAOEz49juE+?=
- =?us-ascii?Q?7r8C55pzsePkAwUR6w0of5Pehhttdz/rzUD75KqvjP/JOM54QvgLdlr97JUF?=
- =?us-ascii?Q?6hxtZGY7/sE4kG8XpTqY3zsMlgh4WEt8vNhOxByONW9I/Umkv4KCj/8gRe5S?=
- =?us-ascii?Q?iHHpW0tOqK7WCEPBskERRrNFugxikHDSvM+Q6wxQ92TYlsmT25E6HyUAiIAu?=
- =?us-ascii?Q?FHo2mpkJmBfYCj+91paYqVg5k9iPgubV4KCI/1YWx/qE/blJFx5h5fBCfusB?=
- =?us-ascii?Q?QelICxUhJATyfux/cFLYDodsRfl7R5Z1Ds9/yvGWMfsv1FyuaHwktmbHQ8Ld?=
- =?us-ascii?Q?li+n28qMP4uB+lfuQfagUvPbL44x40ErqkJXA6ozfWLAW6XPdwxRufgMdfme?=
- =?us-ascii?Q?66bMM9XDpcl9k473Vdf4Y0EK7ZQntxe0uCgm/mXTv9O6VZpLlo08wiCGfSI6?=
- =?us-ascii?Q?J4q+h+ACtljPgU+UoHCuH+qURoAOoiREBoJb?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(376014)(36860700013)(1800799024)(82310400026)(7416014); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 03:23:16.6980 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 96c7dfdf-36e4-4bf4-d8c5-08ddad4e4cff
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000971E5.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR12MB9478
-Received-SPF: permerror client-ip=2a01:111:f403:2416::61d;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM11-CO1-obe.outbound.protection.outlook.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <174971620915.19456.15836954551382475540-0@git.sr.ht>
+ <174971620915.19456.15836954551382475540-1@git.sr.ht>
+In-Reply-To: <174971620915.19456.15836954551382475540-1@git.sr.ht>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 17 Jun 2025 13:25:42 +1000
+X-Gm-Features: AX0GCFtiyejQRe8wYjRW1E28gueFJDEGxUVDk0yxSbQorbjHNGZNzdteXakr--k
+Message-ID: <CAKmqyKM6bAv7_UrGZWip9Qq8UjpEyHvo7MS3WaQPNc8febJVKQ@mail.gmail.com>
+Subject: Re: [PATCH qemu v8 1/1] target/riscv: Add Zilsd and Zclsd extension
+ support
+To: "~liuxu" <liuxu@nucleisys.com>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e35;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe35.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,79 +97,355 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 16, 2025 at 03:38:26PM +0800, Yi Liu wrote:
-> On 2025/6/16 13:59, Nicolin Chen wrote:
-> > On Thu, Jun 12, 2025 at 08:53:40PM +0800, Yi Liu wrote:
-> > > > > That being said, IOMMU_NOTIFIER_IOTLB_EVENTS should not be needed
-> > > > > for passthrough devices, right?
-> > > > 
-> > > > No, even if x-flts=on is configured in QEMU cmdline, that only mean virtual vtd
-> > > > supports stage-1 translation, guest still can choose to run in legacy mode(stage2),
-> > > > e.g., with kernel cmdline intel_iommu=on,sm_off
-> > > > 
-> > > > So before guest run, we don't know which kind of page table either stage1 or stage2
-> > > > for this VFIO device by guest. So we have to use iommu AS to catch stage2's MAP event
-> > > > if guest choose stage2.
-> > > 
-> > > @Zheznzhong, if guest decides to use legacy mode then vIOMMU should switch
-> > > the MRs of the device's AS, hence the IOAS created by VFIO container would
-> > > be switched to using the IOMMU_NOTIFIER_IOTLB_EVENTS since the MR is
-> > > switched to IOMMU MR. So it should be able to support shadowing the guest
-> > > IO page table. Hence, this should not be a problem.
-> > > 
-> > > @Nicolin, I think your major point is making the VFIO container IOAS as a
-> > > GPA IOAS (always return system AS in get_address_space op) and reusing it
-> > > when setting nested translation. Is it? I think it should work if:
-> > > 1) we can let the vfio memory listener filter out the RO pages per vIOMMU's
-> > >     request.
-> > 
-> > Yes.
-> > 
-> > > But I don't want the get_address_space op always return system
-> > >     AS as the reason mentioned by Zhenzhong above.
-> > 
-> > So, you mean the VT-d model would need a runtime notification to
-> > switch the address space of the VFIO ioas?
-> 
-> It's not a notification. It's done by switching AS. Detail can be found
-> in vtd_switch_address_space().
+On Thu, Jun 12, 2025 at 6:16=E2=80=AFPM ~liuxu <liuxu@git.sr.ht> wrote:
+>
+> From: lxx <1733205434@qq.com>
+>
+> This patch adds support for the Zilsd and Zclsd extension,
+> which is documented at https://github.com/riscv/riscv-zilsd/releases/tag/=
+v1.0
+>
+> Signed-off-by: LIU Xu <liuxu@nucleisys.com>
+> Co-developed-by: SUN Dongya <sundongya@nucleisys.com>
+> Co-developed-by: ZHAO Fujin <zhaofujin@nucleisys.com>
+> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-OK. I got confused about the "switch", thinking that was about
-the get_address_space() call.
+This breaks with linux-user (which is using the "max" CPU)
 
-> > TBH, I am still unclear how many cases the VT-d model would need
-> > support here :-/
-> >
-> > > 2) we can disallow emulated/passthru devices behind the same pcie-pci
-> > >     bridge[1]. For emulated devices, AS should switch to iommu MR, while for
-> > >     passthru devices, it needs the AS stick with the system MR hence be able
-> > >     to keep the VFIO container IOAS as a GPA IOAS. To support this, let AS
-> > >     switch to iommu MR and have a separate GPA IOAS is needed. This separate
-> > >     GPA IOAS can be shared by all the passthru devices.
-> > 
-> > Yea, ARM is doing in a similar way.
-> > 
-> > > So basically, we are ok with your idea. But we should decide if it is
-> > > necessary to support the topology in 2). I think this is a general
-> > > question. TBH. I don't have much information to judge if it is valuable.
-> > > Perhaps, let's hear from more people.
-> > 
-> > I would be okay if VT-d decides to move on with its own listener,
-> > if it turns out to be the relatively better case. But for ARM, I'd
-> > like to see we can reuse the VFIO container IOAS.
-> 
-> I didn't see a problem so far on this part. Have you seen any?
+./build/qemu-riscv64 ./images/qemuriscv64/target-rootfs/usr/bin/sha512sum .=
+..
 
-Probably no functional problem with that internal listener. ARM
-could work using one like that as well. The only problem is code
-duplication. It's not ideal for everybody to have an internal S2
-listener while wasting the VFIO one.
+qemu-riscv64: Zclsd cannot be supported together with C and F extension
 
-But given that VT-d has more complicated use cases like runtime
-guest-level configuration that switches between nesting and non-
-nesting modes, perhaps having an internal listener is a better
-idea?
+Zclsd Should be disabled for the "max" CPU as C and F are already enabled
 
-Thanks
-Nicolin
+Alistair
+
+> ---
+>  target/riscv/cpu.c                        |   4 +
+>  target/riscv/cpu_cfg_fields.h.inc         |   2 +
+>  target/riscv/insn16.decode                |   8 ++
+>  target/riscv/insn32.decode                |  12 ++-
+>  target/riscv/insn_trans/trans_zilsd.c.inc | 112 ++++++++++++++++++++++
+>  target/riscv/tcg/tcg-cpu.c                |  30 ++++++
+>  target/riscv/translate.c                  |   1 +
+>  7 files changed, 167 insertions(+), 2 deletions(-)
+>  create mode 100644 target/riscv/insn_trans/trans_zilsd.c.inc
+>
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 758f254c15..778816901a 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -121,6 +121,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
+>      ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause=
+),
+>      ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
+> +    ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_12_0, ext_zilsd),
+>      ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
+>      ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
+>      ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
+> @@ -144,6 +145,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
+>      ISA_EXT_DATA_ENTRY(zcmop, PRIV_VERSION_1_13_0, ext_zcmop),
+>      ISA_EXT_DATA_ENTRY(zcmp, PRIV_VERSION_1_12_0, ext_zcmp),
+>      ISA_EXT_DATA_ENTRY(zcmt, PRIV_VERSION_1_12_0, ext_zcmt),
+> +    ISA_EXT_DATA_ENTRY(zclsd, PRIV_VERSION_1_12_0, ext_zclsd),
+>      ISA_EXT_DATA_ENTRY(zba, PRIV_VERSION_1_12_0, ext_zba),
+>      ISA_EXT_DATA_ENTRY(zbb, PRIV_VERSION_1_12_0, ext_zbb),
+>      ISA_EXT_DATA_ENTRY(zbc, PRIV_VERSION_1_12_0, ext_zbc),
+> @@ -1289,6 +1291,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
+ =3D {
+>
+>      MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
+>      MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
+> +    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
+>
+>      MULTI_EXT_CFG_BOOL("zba", ext_zba, true),
+>      MULTI_EXT_CFG_BOOL("zbb", ext_zbb, true),
+> @@ -1328,6 +1331,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
+ =3D {
+>      MULTI_EXT_CFG_BOOL("zcmp", ext_zcmp, false),
+>      MULTI_EXT_CFG_BOOL("zcmt", ext_zcmt, false),
+>      MULTI_EXT_CFG_BOOL("zicond", ext_zicond, false),
+> +    MULTI_EXT_CFG_BOOL("zclsd", ext_zclsd, false),
+>
+>      /* Vector cryptography extensions */
+>      MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
+lds.h.inc
+> index 33c4f9bac8..9833d592bd 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -19,6 +19,7 @@ BOOL_FIELD(ext_zce)
+>  BOOL_FIELD(ext_zcf)
+>  BOOL_FIELD(ext_zcmp)
+>  BOOL_FIELD(ext_zcmt)
+> +BOOL_FIELD(ext_zclsd)
+>  BOOL_FIELD(ext_zk)
+>  BOOL_FIELD(ext_zkn)
+>  BOOL_FIELD(ext_zknd)
+> @@ -41,6 +42,7 @@ BOOL_FIELD(ext_zicond)
+>  BOOL_FIELD(ext_zihintntl)
+>  BOOL_FIELD(ext_zihintpause)
+>  BOOL_FIELD(ext_zihpm)
+> +BOOL_FIELD(ext_zilsd)
+>  BOOL_FIELD(ext_zimop)
+>  BOOL_FIELD(ext_zcmop)
+>  BOOL_FIELD(ext_ztso)
+> diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
+> index bf893d1c2e..c34020e4dc 100644
+> --- a/target/riscv/insn16.decode
+> +++ b/target/riscv/insn16.decode
+> @@ -130,10 +130,14 @@ sw                110  ... ... .. ... 00 @cs_w
+>  {
+>    ld              011  ... ... .. ... 00 @cl_d
+>    c_flw           011  ... ... .. ... 00 @cl_w
+> +  # *** Zclsd Extension ***
+> +  zclsd_ld        011  ... ... .. ... 00 @cl_d
+>  }
+>  {
+>    sd              111  ... ... .. ... 00 @cs_d
+>    c_fsw           111  ... ... .. ... 00 @cs_w
+> +  # *** Zclsd Extension ***
+> +  zclsd_sd        111  ... ... .. ... 00 @cs_d
+>  }
+>
+>  # *** RV32/64C Standard Extension (Quadrant 1) ***
+> @@ -212,10 +216,14 @@ sw                110 .  .....  ..... 10 @c_swsp
+>    c64_illegal     011 -  00000  ----- 10 # c.ldsp, RES rd=3D0
+>    ld              011 .  .....  ..... 10 @c_ldsp
+>    c_flw           011 .  .....  ..... 10 @c_lwsp
+> +  # *** Zclsd Extension ***
+> +  zclsd_ldsp      011 .  .....  ..... 10 @c_ldsp
+>  }
+>  {
+>    sd              111 .  .....  ..... 10 @c_sdsp
+>    c_fsw           111 .  .....  ..... 10 @c_swsp
+> +  # *** Zclsd Extension ***
+> +  zclsd_sd        111 .  .....  ..... 10 @c_sdsp
+>  }
+>
+>  # *** RV64 and RV32 Zcb Extension ***
+> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
+> index cd23b1f3a9..b341832e41 100644
+> --- a/target/riscv/insn32.decode
+> +++ b/target/riscv/insn32.decode
+> @@ -182,8 +182,16 @@ csrrci   ............     ..... 111 ..... 1110011 @c=
+sr
+>
+>  # *** RV64I Base Instruction Set (in addition to RV32I) ***
+>  lwu      ............   ..... 110 ..... 0000011 @i
+> -ld       ............   ..... 011 ..... 0000011 @i
+> -sd       ....... .....  ..... 011 ..... 0100011 @s
+> +{
+> +  ld       ............   ..... 011 ..... 0000011 @i
+> +  # *** Zilsd instructions ***
+> +  zilsd_ld ............   ..... 011 ..... 0000011 @i
+> +}
+> +{
+> +  sd       ....... .....  ..... 011 ..... 0100011 @s
+> +  # *** Zilsd instructions ***
+> +  zilsd_sd ....... .....  ..... 011 ..... 0100011 @s
+> +}
+>  addiw    ............   ..... 000 ..... 0011011 @i
+>  slliw    0000000 .....  ..... 001 ..... 0011011 @sh5
+>  srliw    0000000 .....  ..... 101 ..... 0011011 @sh5
+> diff --git a/target/riscv/insn_trans/trans_zilsd.c.inc b/target/riscv/ins=
+n_trans/trans_zilsd.c.inc
+> new file mode 100644
+> index 0000000000..7bdc303298
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_zilsd.c.inc
+> @@ -0,0 +1,112 @@
+> +/*
+> + * RISC-V translation routines for the Zilsd & Zclsd Extension.
+> + *
+> + * Copyright (c) 2025 Nucleisys, Inc.
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
+> +
+> +#define REQUIRE_ZILSD(ctx) do {    \
+> +    if (!ctx->cfg_ptr->ext_zilsd)  \
+> +        return false;              \
+> +} while (0)
+> +
+> +#define REQUIRE_ZCLSD(ctx) do {    \
+> +    if (!ctx->cfg_ptr->ext_zclsd)  \
+> +        return false;              \
+> +} while (0)
+> +
+> +static bool gen_load_i64(DisasContext *ctx, arg_ld *a)
+> +{
+> +    if ((a->rd) % 2) {
+> +        return false;
+> +    }
+> +
+> +    TCGv dest_low =3D dest_gpr(ctx, a->rd);
+> +    TCGv dest_high =3D dest_gpr(ctx, a->rd + 1);
+> +    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
+> +    TCGv_i64 tmp =3D tcg_temp_new_i64();
+> +
+> +    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
+> +
+> +    if (a->rd =3D=3D 0) {
+> +        return true;
+> +    }
+> +
+> +    tcg_gen_extr_i64_tl(dest_low, dest_high, tmp);
+> +
+> +    gen_set_gpr(ctx, a->rd, dest_low);
+> +    gen_set_gpr(ctx, a->rd + 1, dest_high);
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_zilsd_ld(DisasContext *ctx, arg_zilsd_ld *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZILSD(ctx);
+> +    return gen_load_i64(ctx, a);
+> +}
+> +
+> +static bool trans_zclsd_ld(DisasContext *ctx, arg_zclsd_ld *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZCLSD(ctx);
+> +    return gen_load_i64(ctx, a);
+> +}
+> +
+> +static bool trans_zclsd_ldsp(DisasContext *ctx, arg_zclsd_ldsp *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZCLSD(ctx);
+> +
+> +    if (a->rd =3D=3D 0) {
+> +        return false;
+> +    }
+> +    return gen_load_i64(ctx, a);
+> +}
+> +
+> +static bool gen_store_i64(DisasContext *ctx, arg_sd *a)
+> +{
+> +    if ((a->rs2) % 2) {
+> +        return false;
+> +    }
+> +
+> +    TCGv data_low =3D get_gpr(ctx, a->rs2, EXT_NONE);
+> +    TCGv data_high =3D get_gpr(ctx, a->rs2 + 1, EXT_NONE);
+> +    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
+> +    TCGv_i64 tmp =3D tcg_temp_new_i64();
+> +
+> +    if (a->rs2 =3D=3D 0) {
+> +        tmp =3D tcg_constant_i64(0);
+> +    } else {
+> +        tcg_gen_concat_tl_i64(tmp, data_low, data_high);
+> +    }
+> +    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
+> +
+> +    return true;
+> +}
+> +
+> +static bool trans_zilsd_sd(DisasContext *ctx, arg_zilsd_sd *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZILSD(ctx);
+> +    return gen_store_i64(ctx, a);
+> +}
+> +
+> +static bool trans_zclsd_sd(DisasContext *ctx, arg_zclsd_sd *a)
+> +{
+> +    REQUIRE_32BIT(ctx);
+> +    REQUIRE_ZCLSD(ctx);
+> +    return gen_store_i64(ctx, a);
+> +}
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 163e7ce364..0944426b38 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -818,6 +818,19 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu=
+, Error **errp)
+>          cpu->pmu_avail_ctrs =3D 0;
+>      }
+>
+> +    if (cpu->cfg.ext_zclsd) {
+> +        if (riscv_has_ext(env, RVC) && riscv_has_ext(env, RVF)) {
+> +            error_setg(errp,
+> +                    "Zclsd cannot be supported together with C and F ext=
+ension");
+> +            return;
+> +        }
+> +        if (cpu->cfg.ext_zcf) {
+> +            error_setg(errp,
+> +                    "Zclsd cannot be supported together with Zcf extensi=
+on");
+> +            return;
+> +        }
+> +    }
+> +
+>      if (cpu->cfg.ext_zicfilp && !cpu->cfg.ext_zicsr) {
+>          error_setg(errp, "zicfilp extension requires zicsr extension");
+>          return;
+> @@ -1075,6 +1088,20 @@ static void cpu_enable_zc_implied_rules(RISCVCPU *=
+cpu)
+>      }
+>  }
+>
+> +static void cpu_enable_zilsd_implied_rules(RISCVCPU *cpu)
+> +{
+> +    CPURISCVState *env =3D &cpu->env;
+> +
+> +    if (cpu->cfg.ext_zilsd && riscv_has_ext(env, RVC)) {
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zclsd), true);
+> +    }
+> +
+> +    if (cpu->cfg.ext_zclsd) {
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
+> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zilsd), true);
+> +    }
+> +}
+> +
+>  static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
+>  {
+>      RISCVCPUImpliedExtsRule *rule;
+> @@ -1083,6 +1110,9 @@ static void riscv_cpu_enable_implied_rules(RISCVCPU=
+ *cpu)
+>      /* Enable the implied extensions for Zc. */
+>      cpu_enable_zc_implied_rules(cpu);
+>
+> +    /* Enable the implied extensions for Zilsd. */
+> +    cpu_enable_zilsd_implied_rules(cpu);
+> +
+>      /* Enable the implied MISAs. */
+>      for (i =3D 0; (rule =3D riscv_misa_ext_implied_rules[i]); i++) {
+>          if (riscv_has_ext(&cpu->env, rule->ext)) {
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index 9ddef2d6e2..62f714034f 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1200,6 +1200,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
+ target_ulong pc)
+>  /* Include the auto-generated decoder for 16 bit insn */
+>  #include "decode-insn16.c.inc"
+>  #include "insn_trans/trans_rvzce.c.inc"
+> +#include "insn_trans/trans_zilsd.c.inc"
+>  #include "insn_trans/trans_rvzcmop.c.inc"
+>  #include "insn_trans/trans_rvzicfiss.c.inc"
+>
+> --
+> 2.45.3
 
