@@ -4,96 +4,213 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAB4CC71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 10:36:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4084C71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 10:53:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRTfE-0007Hb-0b; Tue, 17 Jun 2025 06:35:36 -0400
+	id 1uRTvf-0001vU-8U; Tue, 17 Jun 2025 06:52:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRTfB-0007HR-AN
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:35:33 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRTf8-00062t-JW
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:35:33 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-43edecbfb94so61749705e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 03:35:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750156527; x=1750761327; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GPvPGzFs0a3PkB4JAWcIGIJWqK5K2TevyIQjprK6q1k=;
- b=e4d3PwKhTql+pHXzOrLcU6DsPTAK8Hvdras+h/DC8zbzH9oBzDUTFuXOmlV/vmiUmj
- hahd/imrX0XwoJ+8G+fAsixvNGdsnEqR7LMhNqNkxMrk7o9XhJhLF705oV3LStOXVapc
- 0EzezyJIwetq3/OK/uthOy64mSMKJTDg4qj7sZdDqeQis388bOjqgVG8SedV/DIgKyQ6
- E5093+Wic7CpyuA6qDu+iFsBj75i5PKm4tmTJn2ds7sQdGiLxcg4WlZxTE7HGIxZWvNJ
- nOmNISHq04TM1azIonARPt2Zf3F2HLFVxgTyDaXeH9QaA75A6StbUUJF4VLqwv3cgICS
- 2MmQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750156527; x=1750761327;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GPvPGzFs0a3PkB4JAWcIGIJWqK5K2TevyIQjprK6q1k=;
- b=iECy2PlP+bSy6ZrIJ+UK5Tg+nmkCGrkKRGTe9N+wpkoVNMZQnjOCP3yHIOKSD1LAYv
- oyJJKNrLuj9My0fnX4FMGo2QdFtct6L0hxzXSeEAuvlhaMR1A/PIaJJAy70njwdo/qaJ
- YcuvfLLQrqgixlbrKg0lmfmyZLPIU8kLxXnKfMpmDmYC63LgIMHmKzc10Q1GK9UaJlXK
- IOAXmMKtY8JHF0Hgtg3Qh+B0+nnca8xvXDxUfBX3lDYkNMlQ3sFoLa0rmOIPJhkuDhxf
- Ea49aZaiaaLplfEiddUm3Zr4hDYcv0YoaLEapBZh7zL5YtYcE3PfvMXGgCA731TCMICw
- w9iw==
-X-Gm-Message-State: AOJu0YxyO5nv/QwCIbjOFbif2NAw3KCWO61d8I/vbBWbpUXMkKotWejp
- 6RD8/2YxbHICGpVT84vue6Xrw82yUmF7amgp8EMtn0of5cHrOXeptNCDClzSN3xyDoc=
-X-Gm-Gg: ASbGnctunvc0Z+m+Kc/Ff141oFt0F/E49Wcx3hQfi1MNEJcVZweMCelB/39BbmFmtaw
- epxi4EIatX2BHlXmTxbjG10WvhSynCFIf+SY1Z4NLpPz60ZUUALPCUk0bOa2yATXh9YMygunELD
- SR/wFlWmcj0Izzxu8ySFhSqNXnavh//duFfB+/3pfFQRpwR88kxLYGsqeS/Apia9Ru7H0tGgAAb
- NdFCZLIw7VnhlJTyzlyd60hA8Dfkcg3/gkiNXCjl+cQBYYxDInosbkMe0uU1xuPwTMzI+Crjl/b
- H377AgtTnObukJxr7lvUTniI7Da04s8LOPNo71JOU9HNiKLj8AH9z7gcWw5AOQo=
-X-Google-Smtp-Source: AGHT+IGCdgPWXS1A4l5Y8ZFCMXmwkvCP/rG9QQ7Wpi8QPSpwgxZH2q/vIp9SWwF7c1b0tUPMSMxUNA==
-X-Received: by 2002:a05:600c:1e1d:b0:442:ccfa:1461 with SMTP id
- 5b1f17b1804b1-4533ca6ace2mr130706555e9.13.1750156527018; 
- Tue, 17 Jun 2025 03:35:27 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532de8c2d2sm177401215e9.1.2025.06.17.03.35.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Jun 2025 03:35:26 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id B706D5F834;
- Tue, 17 Jun 2025 11:35:25 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao
- Liu <zhao1.liu@intel.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v12 6/7] plugins: Add patcher plugin and test
-In-Reply-To: <20250611232409.2936521-7-rowanbhart@gmail.com> (Rowan Hart's
- message of "Wed, 11 Jun 2025 16:24:08 -0700")
-References: <20250611232409.2936521-1-rowanbhart@gmail.com>
- <20250611232409.2936521-7-rowanbhart@gmail.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Tue, 17 Jun 2025 11:35:25 +0100
-Message-ID: <87bjqmveoi.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1uRTvc-0001u3-Dk
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:52:32 -0400
+Received: from mgamail.intel.com ([192.198.163.10])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
+ id 1uRTvV-0007Xx-IH
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:52:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750157546; x=1781693546;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=0MDxrB0n2pVK5646KiIJYtFMxVXrk6fQVFjPTVK5Cgg=;
+ b=KECMofowwveKfwBZ2L6POlnY9KSxZ0H7gVpZt4/OQyQ1CJRb3sIRefub
+ ekneRawS+lhNDNEXZs5725xxjo4ZXChoruZ9vMMGHIx3HOpqXqcmlsEsb
+ tA220W45boeGizHmRb1wdYuESXX/2HCvMQfNsl+yE/J82PXmeBlPZiuWi
+ R6OOu5KDmx5IG3XPS2QteheuX89Px/M5pn47OzcuFYl7zQa6ZD7ZGOmQm
+ PHJdZPr8ilWvtSTM0yx/ktjJeBV/CziaIa+ZeZnXmfnyygskFFFGOTn9Z
+ dVpMg2U+P9wPpb7KgSnE9OkK1LpIdIISNjTXqb7jQZ65IWprGrG8V27oo A==;
+X-CSE-ConnectionGUID: kB+bfxWwS/6LlEFbENtpww==
+X-CSE-MsgGUID: 2z/ooXa0SN6i/uC4yip78A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="63683667"
+X-IronPort-AV: E=Sophos;i="6.16,243,1744095600"; d="scan'208";a="63683667"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by fmvoesa104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jun 2025 03:52:22 -0700
+X-CSE-ConnectionGUID: hepZCxXtSwef10hxDrwelA==
+X-CSE-MsgGUID: BR2kObFBQWmVkTDWZGx5pA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,243,1744095600"; d="scan'208";a="148656922"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jun 2025 03:52:21 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Tue, 17 Jun 2025 03:52:21 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Tue, 17 Jun 2025 03:52:21 -0700
+Received: from NAM12-MW2-obe.outbound.protection.outlook.com (40.107.244.51)
+ by edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Tue, 17 Jun 2025 03:52:19 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=YvpDPThG7cgGmgwIyQupLJKnyt9LconXsWSDRf3n1M5KMJQxAEzJgvdQpe8nhkg5YMV9m58D6BhzEve2BGYflCnRnFcfzVOnbrpD4emWiRKoU2FYhinYnaUNiya+XmbU/StYCW1DVAw5xRHy8rAPsPubZZwGh96Twrdnv0uevBKngj6g/uCZeLlahU+0ANYafGUHv6/5BqA7USJjTbNXgC809Sjf5BE+dBiXZuCPpLseolWYTylD7pYk868zcKMVnfWqGalJchK184QI7h4uEnMEJuBS2Qf9ffnxHPWyTMJ6ZHxB4Fv2fir5KDhBEsplNfFNCg0Hqf5mprr9O26aCQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=+CPd/m6WaGkbZY2Ukk0IuVvoaZFmmX3LqH+QQLyTGGU=;
+ b=FRDBXPmYjlGTBgvziiaWpQSx/vd5EvX9fArhvM7RLf3mWWoilz7r/wCypwLeK/5++zyIkQ7K8VsSvxWUsofJ4JVDDx88TwPyrg31i5r/Z4zynM/KjfgtIdiVBK7Emd/+BJcDYjMEx1Fp6FKCw3gxyxuvL1wQFYr6COWnqIK22tSD0g9rA8WP57FUZ3dvTgLBJoffYA0xZ+4T7DoMC6cTDS8Sfg0gOpgXemd5f4RDmN4175w5ZHmhM7peqq80lqPasN1A3x3tT/tXy7FjZ5+jNNA5IPUWDtG9tjFNtft9tEA4ZcUSV60d2ekqE5wuqlpRAe/sVWFx3OyUB+XMuD2OpQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com (2603:10b6:8:141::20)
+ by PH0PR11MB5013.namprd11.prod.outlook.com (2603:10b6:510:30::21) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Tue, 17 Jun
+ 2025 10:52:17 +0000
+Received: from DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a]) by DS0PR11MB7529.namprd11.prod.outlook.com
+ ([fe80::d244:15cd:1060:941a%7]) with mapi id 15.20.8835.027; Tue, 17 Jun 2025
+ 10:52:17 +0000
+Message-ID: <7006a5fd-f8c3-4d4c-9b3f-78b3e4ed1051@intel.com>
+Date: Tue, 17 Jun 2025 18:58:25 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 05/15] intel_iommu: Introduce two helpers
+ vtd_as_from/to_iommu_pasid_locked
+To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
+ "clg@redhat.com" <clg@redhat.com>, "eric.auger@redhat.com"
+ <eric.auger@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
+ "jasowang@redhat.com" <jasowang@redhat.com>, "peterx@redhat.com"
+ <peterx@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "nicolinc@nvidia.com"
+ <nicolinc@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, Eduardo Habkost
+ <eduardo@habkost.net>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20250606100416.346132-1-zhenzhong.duan@intel.com>
+ <20250606100416.346132-6-zhenzhong.duan@intel.com>
+ <6bbc4632-1234-4f6f-a621-d5f8a1a27bcd@intel.com>
+ <IA3PR11MB9136DF86BA8E60C52336F7819275A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Yi Liu <yi.l.liu@intel.com>
+In-Reply-To: <IA3PR11MB9136DF86BA8E60C52336F7819275A@IA3PR11MB9136.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR01CA0003.apcprd01.prod.exchangelabs.com
+ (2603:1096:4:191::16) To DS0PR11MB7529.namprd11.prod.outlook.com
+ (2603:10b6:8:141::20)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS0PR11MB7529:EE_|PH0PR11MB5013:EE_
+X-MS-Office365-Filtering-Correlation-Id: b1713516-467c-46f7-5863-08ddad8d06a4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?cmRGU01vaFRVaml2Unh3b1pFQW5HOU5wSlBqOUp6RmM1NCthS0NMa1ZvbG01?=
+ =?utf-8?B?MHB5Y1dOYTJGZVdaSzAzb3NacE11SHhNNzVJQ1Nsa3l4L2t5c1ZuemFXY2NH?=
+ =?utf-8?B?ZTNPamM0MFllcHJwVGtCekxoVDI3Q2FPNkdNOUk5WDFLaHN1S3ZhRE5uVUZL?=
+ =?utf-8?B?NHZHZGV5S1dUQ2hPRVNFcDl1K09YN1E2c3dJN2VWRlNKVWJmVXBMNHlveSt5?=
+ =?utf-8?B?TUFSc1BYaUdZeEx5OWVqN05YQnlsQ2RnQTdCZUxnK3czZXRUalpOc0hMUFFm?=
+ =?utf-8?B?SW5pYTJJUDdRa0l4RlFHODg5ajFvUUtIbUFHSjVhTjJsUXFUc3FWOHh4M2Vy?=
+ =?utf-8?B?STFBbEpSUEVUeFVzdUtNOWJnekpvQWhSSU9saHRNYzRJVmxIUVBEeG5sL1cx?=
+ =?utf-8?B?bWJEVC9LVXpqMlRHdDd0QlRYY0N1S3U0eXNlWmRmVGRlN0R0NVZuWHBoTE8v?=
+ =?utf-8?B?TkxJcDE3Vk1yVVFqL1BTb1pxWVlUbTFyNk1LY3JObXRvRGZobWFTbGFyRVor?=
+ =?utf-8?B?VDYzV1BwcmtYMlRTeURTUGxVbUFSNVRNTDkzV0swZGF1Mk1rOXY5cnFFT3ZQ?=
+ =?utf-8?B?b2NLVEtHK3g1amxkZnlRT1lxalZFOUpURElsTlgySCtMeExIZExPNDFWOFgy?=
+ =?utf-8?B?bzdZZlBlMGNyVHVETllnSTZjRzhKSjl0aUEyT0cyNjBIS1d3LytXZmozQXoz?=
+ =?utf-8?B?dGNta2NCUTVxSEVWMVJQZklNTlVXeDJ3Rk8zM2QrVU5mZVFiTFdHN3N5ZXJp?=
+ =?utf-8?B?WjF2blc1RTRiWmVabGJZejZFRTV6aGtlTEVJWGNEUXpMQ1daSnBDNkY5a0I5?=
+ =?utf-8?B?N3Vwb3NZNzV6ZUcyVFV5S2lRVzlDK0c1OVEzZnRJelFpUDdiY3NWSS93Uk1Q?=
+ =?utf-8?B?M3h0Z2hJUHJMUDRLNElSRlpDTmxGbEdqRTR1T1BMZDN0SDMzWGxJUHZRYzZX?=
+ =?utf-8?B?K09KdXZDOHZKOXJPN1lxMk44ZzRLSWQ0bjQwNDVvai80MExhcmVsYjVCOGti?=
+ =?utf-8?B?ZkR0ZysxUm9vc2RBejJKVEZCMFlOVVBoUVkvM1dPbDNhL1pmRGhBVmZiNXd2?=
+ =?utf-8?B?RjJ3V3BhOWxqRnpORENheXlxMldkbmJsbnlzcnNGblpvQXYvMk9qWFZWRGRo?=
+ =?utf-8?B?eDlzaXp5cDVmTDd3UlNDTlRxUkVJOVBIOHJZalA5Y0c3WFB0SUFXLzhZTmNq?=
+ =?utf-8?B?bjNWTmRiNithTkdPYWZWcUtjODYrNzdLczNERjF2WTNmemZUVHFXRGpPdzV3?=
+ =?utf-8?B?QjlQVkpxMUVaWkxRbm90VmpYemRxU201NUZGVDhFTUZIS29qL0VKQ0VPUUMz?=
+ =?utf-8?B?MS9Rbmt0MnQ3NGpLZTFCVDNTNG5ZbHl2NUJoRVgvMXhLbkFEUGJOdHluUVE2?=
+ =?utf-8?B?Tkt1eExCTytMWVhrRUlKWVlZRWVOSnRZSzVzVXpodURudnczMnBMbS9ES3kw?=
+ =?utf-8?B?akV3c2c2bTlNKy9Wb0pQcWJxNEJlQXlTZnRyUUgrUGdHYkk4dElKRlp2Q2li?=
+ =?utf-8?B?cHVUMWRuUklHRnZndHJ3L1o3VlFTenc1NnpCOU5Od0huaWNrYjN2elJBUnA2?=
+ =?utf-8?B?S0JWM0YvZzZMbVJqSTVtTERBWThGbTJNR0pYNCs0M0k1S1ZrbVgwRzV2U3hp?=
+ =?utf-8?B?THdaY0d1TjhjK0hZL3p4Z3ZMek9wZmtsQStSVFM0bjdHbWNXVFhKakgwaS9O?=
+ =?utf-8?B?QkpkcElSUHBhdGxyOGtoWHZXdmU4amFDSldGdVRnb0JIYXBtYmFBK0wycmVt?=
+ =?utf-8?B?bFJFWW0zQk50U3kwckg3Mk4xd0kwYlFRQUVPbVlmdnVKc0Y3dzM3czNGMnc1?=
+ =?utf-8?B?NXJ5SzhUUkdlVVA2OGVJTVZ5eFFKSFM4RkMza3FGT1BBQk5LMGY5amRSZVB3?=
+ =?utf-8?B?WkZGRWdHZk5wTXY4YW5VQURDWGdONFVVVGV1NmwxeUg4TDA0dnlRbmdmSEZ3?=
+ =?utf-8?Q?/Aw6sc65s4E=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS0PR11MB7529.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?cU5EOWpVb0ZDUFQzTWlSaW5TUG52andDWnBpeUExZ2ZMbWJDWHZKN3gwVThO?=
+ =?utf-8?B?TTFwUUw3dmlRQXkza2wrSjhTSDNvVU96azZWZWhnSnlTb0FsSkxvRHZvWUFD?=
+ =?utf-8?B?YTNLMzhlb1dOK05VSWtpb0ZQdU1JMVM4OFNxaldZbUp4dG1vZE5oS0ppcTE2?=
+ =?utf-8?B?S09kMThlOXhGRnZlSExsWGZkT2FtUjZ2dDYrWUZReUV0M1FHRkpZaWVzTHpm?=
+ =?utf-8?B?TnV6QlMzcXJhdHloTWowRDNYM3A1WUhuaUxVZnZ0bGRHTXdvclN1TnBMRCt4?=
+ =?utf-8?B?U2plU2FPNDFkckp1dnJ5ZjBIT1FQRnp2d21DZFlZaXNXTHRTVk9SbW9NN01m?=
+ =?utf-8?B?d1hmWFBhU013WW5LVDVKYkNvZEJicXlQSTRvRWtxajZNTkNMVVQ5Y25CcFAz?=
+ =?utf-8?B?WnFqcFNrU25teXF5L2V2MEdmUFJlcEpUUXpsWi9ST2d3blFjZHJtWDl0V0xQ?=
+ =?utf-8?B?T0owNy9XZEc0eHg4R0swZUs4dWk5ZHlNRXpuZVFVbkpXTU9jNlhjOG5kdHRE?=
+ =?utf-8?B?OTRwTVRMdkQ0QlZES3F6cHpHejNHNzlMNnEvVStjVktlYkNaZktxenhhb2sy?=
+ =?utf-8?B?dGhZaHBBNytoNlllaHFIZTZnODhzRDdLWTM4RWZ5REdKQ2lGK0c1enltYzdC?=
+ =?utf-8?B?RE9rc0k5QjM4S3R1OVVXUDc0RU45UUVyOGhZTGxsN0ZwajU4TlBrUFI1VFFC?=
+ =?utf-8?B?OWlGN3dqZnNEeVBUajRseVpTczA0dXMxeDNUMXhEVjMxd3JzVjFrWXU3dVhD?=
+ =?utf-8?B?OTFwYThpa2VNdXVScWsyaTFyM0hYa1E2QlNjWlI3RmlKTFZwaGdGQ253SzZZ?=
+ =?utf-8?B?OUZlQXNiajBQMElVTG04WWlweEdSWTltV0hvUWo4TzZvUEtsK0lZMG1OMlVh?=
+ =?utf-8?B?SlNjMmZDcWZ0RWRndGFveEc3Z2JuOVhZaERiTnNSTnZCSUVRYWwwQk5DbFMr?=
+ =?utf-8?B?enhxb3BxY21IYURCMWNiUExOV0F4QUxSd28zd0ozeGZDM1F4cVJmbC9yb2xO?=
+ =?utf-8?B?UG9xLzRMbGM5bHk0cXZOYjQzQjh3bURncnNvSlF6YmxCRTBQK1VOSmp1WUVB?=
+ =?utf-8?B?SlJzQy8yNTBIU05DMzNTaGczNlpTUGRCM1pmTm1YdkZSci9IdVZBbzI1Vmtt?=
+ =?utf-8?B?a282YVRya2puWWFWbHlqbTY4Y0FuNDlyWXAvQXFiczhhK0Vrd2hHQlg4S0F1?=
+ =?utf-8?B?RWg4MHlleXRFWDFWb3MyOENlSzRERFkxdWVNRGIvOUQxem03N3lqRTZYblNP?=
+ =?utf-8?B?SUp3MkxZaVhVTDFPbjFYQ2NpM0RBWnEzNjRwelpPWS9XQlI1Tk9COFNQNWFT?=
+ =?utf-8?B?aDdUTlVUMFJFRyt5enlYY3B0RnB5aUovSlpHdlgxNmlHbjNETmxKUHJkMVdz?=
+ =?utf-8?B?VTBpWWFRN1ZNZnFNY08vclRhZ3V1UWxDQ3MrMnZTTHJSV04xWmRsZWtpR0VE?=
+ =?utf-8?B?Wm40MUFBN2dBWFNnbjJMYzJ1KzZvZXUxbGM0VnpvT2FjMXh2eEs3SUJ4MTJ2?=
+ =?utf-8?B?YVIvZSs3R0dNMXc0L1FrczNScW43QzU1Nm4rc1QrUjFCd1Y3elFZZlRGa0Fs?=
+ =?utf-8?B?MDg2ZVpHWDd4WjhOeVhxSStNaUdPdjVRb1ljUGlaOHhPS25EdUJiVFdZQjEv?=
+ =?utf-8?B?TDZDRkZHRW1zTXA1dnJ6OTlJU1VqTWVpTGlKK2s2aFROVnNpQndTTldPbmxQ?=
+ =?utf-8?B?SUdKbFV2S0xhOWxGSW42UmVib3gvK3Mza0Noak1FV00zTEZtTVFIN0N3TFg0?=
+ =?utf-8?B?OFNGeXRzSXltNTRtVlJGOG9oTnplZG81cmJKYXlRMUhIRGxrQU4xcWYrQ2Qr?=
+ =?utf-8?B?QXVIT1FMcE5vSUd0TkJMUE5ITmtDVmhhWGdaRlAvdkhDSlFEcXVyRkxJRUM3?=
+ =?utf-8?B?RUZpM3FRYzFGejhRdGJuWk1xTTZINlpIcGc2Uk5wTHRwMzZTbUVNVjJYQVBr?=
+ =?utf-8?B?RGU3ZWUrbkpnbTZuaVA4ak9UUHV6THBYdzU4RWhWN21yeUx1NkltNGFnbXpi?=
+ =?utf-8?B?eDY2TXR2a1RRVXc2ZmxNU1RGVHdtbXhmVkVxVU9Ld3pGTGV3VWdORThaajQz?=
+ =?utf-8?B?Tk5POExRVVcrbGViM1NuZE0ydHJNVHFXcFpCL2I0MDd4SmJMNVJOOU1EaG5n?=
+ =?utf-8?Q?R6rOUc1ua0+oLacWeYqbiyrat?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: b1713516-467c-46f7-5863-08ddad8d06a4
+X-MS-Exchange-CrossTenant-AuthSource: DS0PR11MB7529.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 10:52:17.1206 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ZMucG0TvDZON96MLvGB9VrtiWZW0PqWES9+j7Xq5PME2D8OjN4PX4xm5HgJ++1XawGACG8q5PIaRxSF+27mJ2A==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5013
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.10; envelope-from=yi.l.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -62
+X-Spam_score: -6.3
+X-Spam_bar: ------
+X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,311 +226,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rowan Hart <rowanbhart@gmail.com> writes:
+On 2025/6/11 18:46, Duan, Zhenzhong wrote:
+> 
+> 
+>> -----Original Message-----
+>> From: Liu, Yi L <yi.l.liu@intel.com>
+>> Subject: Re: [PATCH v1 05/15] intel_iommu: Introduce two helpers
+>> vtd_as_from/to_iommu_pasid_locked
+>>
+>> On 2025/6/6 18:04, Zhenzhong Duan wrote:
+>>> We already have vtd_find_add_as() to find an AS from BDF+pasid, but this
+>>> pasid is passed from PCI subsystem. PCI device supports two request types,
+>>> Requests-without-PASID and Requests-with-PASID. Requests-without-PASID
+>>> doesn't include a PASID TLP prefix, IOMMU fetches rid_pasid from context
+>>> entry and use it as IOMMU's pasid to index pasid table.
+>>
+>> When reading the first line, it makes me thinking why need the helpers
+>> since there is already a helper to find. The key is the later part. We need
+>> to translate the PCI_NO_PASID to ridpasid.
+> 
+> OK, presume you want me to delete first line.
+> Let me know if you mean not.
+> 
 
-> From: novafacing <rowanbhart@gmail.com>
->
-> This patch adds a plugin that exercises the virtual and hardware memory
-> read-write API functions added in a previous patch. The plugin takes a
-> target and patch byte sequence, and will overwrite any instruction
-> matching the target byte sequence with the patch.
->
-> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
-> ---
->  tests/tcg/Makefile.target                 |   1 +
->  tests/tcg/plugins/meson.build             |   2 +-
->  tests/tcg/plugins/patch.c                 | 241 ++++++++++++++++++++++
->  tests/tcg/x86_64/Makefile.softmmu-target  |  32 ++-
->  tests/tcg/x86_64/system/patch-target.c    |  27 +++
->  tests/tcg/x86_64/system/validate-patch.py |  39 ++++
->  6 files changed, 336 insertions(+), 6 deletions(-)
->  create mode 100644 tests/tcg/plugins/patch.c
->  create mode 100644 tests/tcg/x86_64/system/patch-target.c
->  create mode 100755 tests/tcg/x86_64/system/validate-patch.py
->
-> diff --git a/tests/tcg/Makefile.target b/tests/tcg/Makefile.target
-> index 95ff76ea44..4b709a9d18 100644
-> --- a/tests/tcg/Makefile.target
-> +++ b/tests/tcg/Makefile.target
-> @@ -176,6 +176,7 @@ RUN_TESTS+=3D$(EXTRA_RUNS)
->  # Some plugins need additional arguments above the default to fully
->  # exercise things. We can define them on a per-test basis here.
->  run-plugin-%-with-libmem.so: PLUGIN_ARGS=3D$(COMMA)inline=3Dtrue
-> +run-plugin-%-with-libpatch.so: PLUGIN_ARGS=3D$(COMMA)target=3Dffffffff$(=
-COMMA)patch=3D00000000
->
+yes. :)
 
-I think we need to manually add this to the x86_64 specific tests because...
-
->  ifeq ($(filter %-softmmu, $(TARGET)),)
->  run-%: %
-> diff --git a/tests/tcg/plugins/meson.build b/tests/tcg/plugins/meson.build
-> index 41f02f2c7f..163042e601 100644
-> --- a/tests/tcg/plugins/meson.build
-> +++ b/tests/tcg/plugins/meson.build
-> @@ -1,6 +1,6 @@
->  t =3D []
->  if get_option('plugins')
-> -  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall=
-']
-> +  foreach i : ['bb', 'empty', 'inline', 'insn', 'mem', 'reset', 'syscall=
-', 'patch']
->      if host_os =3D=3D 'windows'
->        t +=3D shared_module(i, files(i + '.c') + '../../../contrib/plugin=
-s/win32_linker.c',
->                          include_directories: '../../../include/qemu',
-
-... the problem with adding test patches into tests/tcg is we balloon the
-number of test cases. Whats worse we are running on linux-user tests
-where we don't exercise anything.
-
-So I think we should filter out the test from the general testing by
-fixing up:
-
-PLUGINS=3D$(patsubst %.c, lib%.so, $(notdir $(wildcard $(PLUGIN_SRC)/*.c)))
-
-<snip>
-> +
-> +static void usage(void)
-> +{
-> +    fprintf(stderr, "Usage: <lib>,target=3D<bytes>,patch=3D<new_bytes>"
-> +            "[,use_hwaddr=3Dtrue|false]");
-> +}
-> +
-> +/*
-> + * Called when the plugin is installed
-> + */
-> +QEMU_PLUGIN_EXPORT int qemu_plugin_install(qemu_plugin_id_t id,
-> +                                           const qemu_info_t *info, int =
-argc,
-> +                                           char **argv)
-> +{
-> +
-> +    use_hwaddr =3D true;
-> +    target_data =3D NULL;
-> +    patch_data =3D NULL;
-> +
-> +    if (argc > 4) {
-> +        usage();
-> +        return -1;
-> +    }
-> +
-> +    for (size_t i =3D 0; i < argc; i++) {
-> +        char *opt =3D argv[i];
-> +        g_auto(GStrv) tokens =3D g_strsplit(opt, "=3D", 2);
-> +        if (g_strcmp0(tokens[0], "use_hwaddr") =3D=3D 0) {
-> +            if (!qemu_plugin_bool_parse(tokens[0], tokens[1], &use_hwadd=
-r)) {
-> +                fprintf(stderr,
-> +                        "Failed to parse boolean argument use_hwaddr\n");
-> +                return -1;
-> +            }
-> +        } else if (g_strcmp0(tokens[0], "target") =3D=3D 0) {
-> +            target_data =3D str_to_bytes(tokens[1]);
-> +            if (!target_data) {
-> +                fprintf(stderr,
-> +                         "Failed to parse target bytes.\n");
-> +                return -1;
-> +            }
-> +        } else if (g_strcmp0(tokens[0], "patch") =3D=3D 0) {
-> +            patch_data =3D str_to_bytes(tokens[1]);
-> +            if (!patch_data) {
-> +                fprintf(stderr, "Failed to parse patch bytes.\n");
-> +                return -1;
-> +            }
-> +        } else {
-> +            fprintf(stderr, "Unknown argument: %s\n", tokens[0]);
-> +            usage();
-> +            return -1;
-> +        }
-> +    }
-> +
-> +    if (!target_data) {
-> +        fprintf(stderr, "target argument is required\n");
-> +        usage();
-> +        return -1;
-> +    }
-> +
-> +    if (!patch_data) {
-> +        fprintf(stderr, "patch argument is required\n");
-> +        usage();
-> +        return -1;
-> +    }
-> +
-> +    if (target_data->len !=3D patch_data->len) {
-> +        fprintf(stderr, "Target and patch data must be the same length\n=
-");
-> +        return -1;
-> +    }
-> +
-> +    qemu_plugin_register_vcpu_tb_trans_cb(id, vcpu_tb_trans_cb);
-> +
-> +    return 0;
-> +}
-> diff --git a/tests/tcg/x86_64/Makefile.softmmu-target b/tests/tcg/x86_64/=
-Makefile.softmmu-target
-> index ef6bcb4dc7..154910ab72 100644
-> --- a/tests/tcg/x86_64/Makefile.softmmu-target
-> +++ b/tests/tcg/x86_64/Makefile.softmmu-target
-> @@ -7,18 +7,27 @@
->  #
->=20=20
->  I386_SYSTEM_SRC=3D$(SRC_PATH)/tests/tcg/i386/system
-> -X64_SYSTEM_SRC=3D$(SRC_PATH)/tests/tcg/x86_64/system
-> +X86_64_SYSTEM_SRC=3D$(SRC_PATH)/tests/tcg/x86_64/system
-
-Can we have symbol renaming in a separate patch as it makes diffs messy
-to follow otherwise.
-
->=20=20
->  # These objects provide the basic boot code and helper functions for all=
- tests
->  CRT_OBJS=3Dboot.o
->=20=20
-> -CRT_PATH=3D$(X64_SYSTEM_SRC)
-> -LINK_SCRIPT=3D$(X64_SYSTEM_SRC)/kernel.ld
-> +X86_64_TEST_C_SRCS=3D$(wildcard $(X86_64_SYSTEM_SRC)/*.c)
-> +X86_64_TEST_S_SRCS=3D
-> +
-> +X86_64_C_TESTS =3D $(patsubst $(X86_64_SYSTEM_SRC)/%.c, %, $(X86_64_TEST=
-_C_SRCS))
-> +X86_64_S_TESTS =3D $(patsubst $(X86_64_SYSTEM_SRC)/%.S, %, $(X86_64_TEST=
-_S_SRCS))
-> +
-> +X86_64_TESTS =3D $(X86_64_C_TESTS)
-> +X86_64_TESTS +=3D $(X86_64_S_TESTS)
-> +
-> +CRT_PATH=3D$(X86_64_SYSTEM_SRC)
-> +LINK_SCRIPT=3D$(X86_64_SYSTEM_SRC)/kernel.ld
->  LDFLAGS=3D-Wl,-T$(LINK_SCRIPT) -Wl,-melf_x86_64
->  CFLAGS+=3D-nostdlib -ggdb -O0 $(MINILIB_INC)
->  LDFLAGS+=3D-static -nostdlib $(CRT_OBJS) $(MINILIB_OBJS) -lgcc
->=20=20
-> -TESTS+=3D$(MULTIARCH_TESTS)
-> +TESTS+=3D$(X86_64_TESTS) $(MULTIARCH_TESTS)
->  EXTRA_RUNS+=3D$(MULTIARCH_RUNS)
->=20=20
->  # building head blobs
-> @@ -27,11 +36,24 @@ EXTRA_RUNS+=3D$(MULTIARCH_RUNS)
->  %.o: $(CRT_PATH)/%.S
->  	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) -Wa,--noexecstack -c $< -o $@
->=20=20
-> -# Build and link the tests
-> +# Build and link the multiarch tests
->  %: %.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
->  	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
->=20=20
-> +# Build and link the arch tests
-> +%: $(X86_64_SYSTEM_SRC)/%.c $(LINK_SCRIPT) $(CRT_OBJS) $(MINILIB_OBJS)
-> +	$(CC) $(CFLAGS) $(EXTRA_CFLAGS) $< -o $@ $(LDFLAGS)
-> +
-
-Is this needed? The aarch64 vtimer system test didn't need a new build stan=
-za.
-
->  memory: CFLAGS+=3D-DCHECK_UNALIGNED=3D1
-> +patch-target: CFLAGS+=3D-O0
->=20=20
->  # Running
->  QEMU_OPTS+=3D-device isa-debugcon,chardev=3Doutput -device isa-debug-exi=
-t,iobase=3D0xf4,iosize=3D0x4 -kernel
-> +
-> +# Add patch-target to ADDITIONAL_PLUGINS_TESTS
-> +ADDITIONAL_PLUGINS_TESTS +=3D patch-target
-> +
-> +run-plugin-patch-target-with-libpatch.so:		\
-> +	PLUGIN_ARGS=3D$(COMMA)target=3Dffc0$(COMMA)patch=3D9090$(COMMA)use_hwad=
-dr=3Dtrue
-> +run-plugin-patch-target-with-libpatch.so:		\
-> +	CHECK_PLUGIN_OUTPUT_COMMAND=3D$(X86_64_SYSTEM_SRC)/validate-patch.py $@=
-.out
-> \ No newline at end of file
-> diff --git a/tests/tcg/x86_64/system/patch-target.c b/tests/tcg/x86_64/sy=
-stem/patch-target.c
-> new file mode 100644
-> index 0000000000..8a7c0a0ae8
-> --- /dev/null
-> +++ b/tests/tcg/x86_64/system/patch-target.c
-> @@ -0,0 +1,27 @@
-> +/*
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + *
-> + * This test target increments a value 100 times. The patcher converts t=
-he
-> + * inc instruction to a nop, so it only increments the value once.
-> + *
-> + */
-> +#include <minilib.h>
-> +
-> +int main(void)
-> +{
-> +    ml_printf("Running test...\n");
-> +#if defined(__x86_64__)
-> +    ml_printf("Testing insn memory read/write...\n");
-> +    unsigned int x =3D 0;
-> +    for (int i =3D 0; i < 100; i++) {
-> +        asm volatile (
-> +            "inc %[x]"
-> +            : [x] "+a" (x)
-> +        );
-> +    }
-> +    ml_printf("Value: %d\n", x);
-> +#else
-> +    #error "This test is only valid for x86_64 architecture."
-> +#endif
-
-This is a bit redundant given the test is in tests/tcg/x86_64/system.
-
-> +    return 0;
-> +}
-> diff --git a/tests/tcg/x86_64/system/validate-patch.py b/tests/tcg/x86_64=
-/system/validate-patch.py
-> new file mode 100755
-> index 0000000000..700950eae5
-> --- /dev/null
-> +++ b/tests/tcg/x86_64/system/validate-patch.py
-> @@ -0,0 +1,39 @@
-> +#!/usr/bin/env python3
-> +#
-> +# validate-patch.py: check the patch applies
-> +#
-> +# This program takes two inputs:
-> +#   - the plugin output
-> +#   - the binary output
-> +#
-> +# Copyright (C) 2024
-> +#
-> +# SPDX-License-Identifier: GPL-2.0-or-later
-> +
-> +import sys
-> +from argparse import ArgumentParser
-> +
-> +def main() -> None:
-> +    """
-> +    Process the arguments, injest the program and plugin out and
-> +    verify they match up and report if they do not.
-> +    """
-> +    parser =3D ArgumentParser(description=3D"Validate patch")
-> +    parser.add_argument('test_output',
-> +                        help=3D"The output from the test itself")
-> +    parser.add_argument('plugin_output',
-> +                        help=3D"The output from plugin")
-> +    args =3D parser.parse_args()
-> +
-> +    with open(args.test_output, 'r') as f:
-> +        test_data =3D f.read()
-> +    with open(args.plugin_output, 'r') as f:
-> +        plugin_data =3D f.read()
-> +    if "Value: 1" in test_data:
-> +        sys.exit(0)
-> +    else:
-> +        sys.exit(1)
-> +
-> +if __name__ =3D=3D "__main__":
-> +    main()
-> +
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Regards,
+Yi Liu
 
