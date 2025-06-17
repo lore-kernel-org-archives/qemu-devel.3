@@ -4,66 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2554DC71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:37:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9387C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:37:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRZJC-0003n7-Fn; Tue, 17 Jun 2025 12:37:14 -0400
+	id 1uRZJF-000436-Ro; Tue, 17 Jun 2025 12:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZGD-0000mN-PP
+ id 1uRZGE-0000mP-2o
  for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:10 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZG5-0000ek-Dd
+ id 1uRZG5-0000fC-Dn
  for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:09 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-450dd065828so48835875e9.2
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-450ce3a2dd5so56423695e9.3
  for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:33:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750178038; x=1750782838; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750178039; x=1750782839; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aoMza4IYUrQ4pKhizFEWSlqdn80g7ODuwHDUZB6a5Mc=;
- b=vN0DXITT142R1G1HVYRZagx6SjIaDNtzCoLXWkYwCXFZ7CF3w1mIOYMFawT0JN5zLo
- ui1sOMnHfFb4nz86Ma17pN1K/8Vnv4/4/3q3p/eWe0NYBfXZd9t53E5S1R2EVSZyxIC0
- 1Pjme7CMArdwLIl3omtOoTl+iFQG+2BjCO7kpmJnhV7KTVPjY+ae+HHwnW3daAU0ACN/
- 64J1KJfgnxv4M7XRa/iD2SQrTvo0B47oXDAbY0mPPl8jnH6s0PD6ovN++RL+KjNbofMy
- SnjohHJdLFm1nILdU7QUIho0ij0Chi3mP7e72UuCdnFvBHURjMXk9bH8YAlCKTkPnAwR
- KdzQ==
+ bh=n0sO4FG8MJlTgihEHf66llt9xMF7CLK1g/3AupI01Bo=;
+ b=s0vs5UOOotw2kRN4LmSwxK4N+WEi3Jp4sxZ2s7OVvdofGc+o9IISIENtUymGifxr6w
+ U3BYvuBdUNGwLB+owhz94rjrUF2oX5g7dE/Qntjsq74is/LTb/65wVovOxiF8AoC7xw3
+ k+jLizw0u9l2AIuQe9qeb65eoD/qci7bZJNX9ndA2NTabMRGDzKF0MikuPnTMXaJZEfV
+ E2qizVp4DLO8PMop44u9Z46/U38WyTdmebxy9TXohHjuAO3uYXMWnQC0Q140spGPPvQF
+ scnnqBBd+LVqCA9kPqwsqPVeS74ka5Jj0Hn4c4RkE1qQ8jGSsHD7aCrFaN3SnKjMvB5a
+ GpdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750178038; x=1750782838;
+ d=1e100.net; s=20230601; t=1750178039; x=1750782839;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aoMza4IYUrQ4pKhizFEWSlqdn80g7ODuwHDUZB6a5Mc=;
- b=e/glX/QxJiOxgy1jO7IEnMMycUDMshvYqp1RKNhD4GFwDV94Giwn68TlVTPB/sNXBy
- Bgwq/nOYsPEq+QAA2lhymKWWiMSpZJMuQcZND10472kVR0HRHn3UYvoYFRFEX6FYgRoU
- eXUBE0Vwf5CemQNMlxUrnkmSHkss8dhGvfWu5gC/QGrPVdHgdXdWu439j2c2bHc4ghgd
- 9siSeJ0P/anNagxdhwI82rmRLAfUS5sFyyWYKKgsa2akVWVXe5pdD6XwxdxF/gFv28kg
- kXa1S6pqZYNWhFjnbvG/IXaeQP+Z/Poc7YEB93Mk29FU1+UriDe7Og+FSVRV+H8D2/hf
- smGg==
-X-Gm-Message-State: AOJu0YxGJ3cbj9iLr8S9I7KOM9BYJbYRhX8fxCm5CBCCGsOx0og2ieyJ
- DI3wNLsM9p/qgmIXx2G0Q9Of6jw+iVqo1Q8ye5Ky/CClniYW+nVTtOjJeJd6PgZZzgU=
-X-Gm-Gg: ASbGncuCBipdKuX2glhbt4KTWtpNLeKqc92Y9TdTM2z0EilUHauocbzSeBzlgGtSb6w
- 1gJZwj/KDG/4V2LpRZ+3VQzwWKyVoetLXzt1ZQSlJw/Hb0TnN4ABOQlre88trxQWwBe0z/T7Vzl
- HJPba3GcoZ49Pm5F8b+1/ELcrHgGdxqj2r5IooLSinojuhfN+xGgfoDMSIs2d4YYgLR3E+7JXVB
- 0jOKTms+Z4lzJ3I6xToec9KEjxxGLIrQGwbPojUdF/AlTUo1PP+2MgEQ7ahI0UBB1hEnVvFk7Ym
- nf2PyDewlw2UdBOgCWF7Nsn/l5a3TSXFIes9HyQgfLdwFmHTv4M04nVHytdvWUA=
-X-Google-Smtp-Source: AGHT+IE6pt33ke9xpxkXCz0wErJ6OWj9AV5oeVpKv/9/pglk58bJEG+5/55asfXJBldZuJtVgP7Iyw==
-X-Received: by 2002:a05:600c:6095:b0:43c:fffc:7886 with SMTP id
- 5b1f17b1804b1-4535627dbe5mr19855865e9.8.1750178038202; 
+ bh=n0sO4FG8MJlTgihEHf66llt9xMF7CLK1g/3AupI01Bo=;
+ b=XptscxX2VT8UDZbNEpXzbSiwwjtkHK30trjo7LJpm1Z8zC9+5OgU7TdUD/sj1PWnFt
+ bkDQxpXV7ul/t6Y+NSku9s/6xzVTQyqz6fcyAgWn/NJFFQUupkhT4Eq3Hs3sv5ufN6D4
+ W5NHALFFW945dNDk4+tfm49uJRFMR4ufnIt8GPld9L95vH1QU+0nHCsnoRfuDTf89uBR
+ krXqHba8+ewJkvwldbeoFpxFexZ1W2Lpz0V60mCmCt5+y/SG1zul3KKJe/QLOe6K6afN
+ 096ZWFLCU5RIi0V99/ZcGrYBVexG26ryaozW7aNLbDHbFV/535+8LHTaVslgsism4KC/
+ psRg==
+X-Gm-Message-State: AOJu0Yz2egPN5mTcA1Bv79rSHkz1qoz7Mw6yTjdixH74XKfC4YWeeUXi
+ qFmwKusqTL9/jzvT+AGlVf9v0Gy5zJFMmicQgH7hlrpUmyB4/6xT22vKQoYCJRISnrEbaaW8Q+0
+ lJue5QYk=
+X-Gm-Gg: ASbGncuD+CS4aNDBzIOwfi7THTU7AJUdbbf+Dpmxf3gk5IexiCXqXtJKaTP3DJ3SNLh
+ oYq1zDEFT9NGrmhWIqUDF8DlgBsdb10lagKLCyjNMwhSHbhTVmRaCzRTqadG25Wfiq+0ZZPfBDz
+ vF/7VmLdP6OyW9C1ZvjF/UJyr/zW+YbNcGGSr6JMpqZWKcgJgJhDEiMMQ8kKl5FYHncaY3e2L4V
+ AAze0fJNgaIN6ZJQHT5l0PCaA/gV8T4JwyT463bFZFi6gHgPcYoIITXeFo/cGVFkqusZqbIiUlQ
+ MdtqKxsPvXRKoDhgam2QN1JlzQIi6ad/iF6761SePUKEhtg3eBOloYD2DbfGYBBmX2wZ04vzyg=
+ =
+X-Google-Smtp-Source: AGHT+IHtPPp86JB1WL2NUMpWWPzLqOSjoM5yKoDid7gycB2n4vWQmDxDEGw2087UlKh+t1YO5wHSuA==
+X-Received: by 2002:a05:600c:3b92:b0:43d:2230:300f with SMTP id
+ 5b1f17b1804b1-4533c9c6e8fmr147105255e9.0.1750178038731; 
  Tue, 17 Jun 2025 09:33:58 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e232e4asm178682015e9.11.2025.06.17.09.33.54
+ ffacd0b85a97d-3a568a73845sm14651906f8f.35.2025.06.17.09.33.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 17 Jun 2025 09:33:55 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id DC5DE5F924;
+ by draig.lan (Postfix) with ESMTP id C30215F91D;
  Tue, 17 Jun 2025 17:33:52 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
@@ -74,17 +76,17 @@ Cc: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 10/11] kvm/arm: implement a basic hypercall handler
-Date: Tue, 17 Jun 2025 17:33:50 +0100
-Message-ID: <20250617163351.2640572-11-alex.bennee@linaro.org>
+Subject: [RFC PATCH 09/11] kvm/arm: implement sysreg trap handler
+Date: Tue, 17 Jun 2025 17:33:49 +0100
+Message-ID: <20250617163351.2640572-10-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250617163351.2640572-1-alex.bennee@linaro.org>
 References: <20250617163351.2640572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,85 +109,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For now just deal with the basic version probe we see during startup.
+Fortunately all the information about which sysreg is being accessed
+should be in the ISS field of the ESR. Once we process that we can
+figure out what we need to do.
+
+[AJB: the read/write stuff should probably go into a shared helper].
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- target/arm/kvm.c        | 44 +++++++++++++++++++++++++++++++++++++++++
- target/arm/trace-events |  1 +
- 2 files changed, 45 insertions(+)
+ target/arm/kvm.c        | 95 +++++++++++++++++++++++++++++++++++++++++
+ target/arm/trace-events |  2 +
+ 2 files changed, 97 insertions(+)
 
 diff --git a/target/arm/kvm.c b/target/arm/kvm.c
-index 0a852af126..1280e2c1e8 100644
+index f2255cfdc8..0a852af126 100644
 --- a/target/arm/kvm.c
 +++ b/target/arm/kvm.c
-@@ -1507,6 +1507,43 @@ static int kvm_arm_handle_sysreg_trap(ARMCPU *cpu,
-     return -1;
+@@ -24,6 +24,7 @@
+ #include "system/runstate.h"
+ #include "system/kvm.h"
+ #include "system/kvm_int.h"
++#include "cpregs.h"
+ #include "kvm_arm.h"
+ #include "cpu.h"
+ #include "trace.h"
+@@ -1414,6 +1415,98 @@ static bool kvm_arm_handle_debug(ARMCPU *cpu,
+     return false;
  }
  
 +/*
-+ * The guest is making a hypercall or firmware call. We can handle a
-+ * limited number of them (e.g. PSCI) but we can't emulate a true
-+ * firmware. This is an abbreviated version of
-+ * kvm_smccc_call_handler() in the kernel and the TCG only arm_handle_psci_call().
-+ *
-+ * In the SplitAccel case we would be transitioning to execute EL2+
-+ * under TCG.
++ * To handle system register traps we should be able to extract the
++ * encoding from the ISS encoding and go from there.
 + */
-+static int kvm_arm_handle_hypercall(ARMCPU *cpu,
-+                                    int esr_ec)
++static int kvm_arm_handle_sysreg_trap(ARMCPU *cpu,
++                                      uint64_t esr_iss,
++                                      uint64_t elr)
 +{
-+    CPUARMState *env = &cpu->env;
-+    int32_t ret = 0;
++    int op0 = extract32(esr_iss, 20, 2);
++    int op2 = extract32(esr_iss, 17, 3);
++    int op1 = extract32(esr_iss, 14, 3);
++    int crn = extract32(esr_iss, 10, 4);
++    int rt = extract32(esr_iss, 5, 5);
++    int crm = extract32(esr_iss, 1, 4);
++    bool is_read = extract32(esr_iss, 0, 1);
 +
-+    trace_kvm_hypercall(esr_ec, env->xregs[0]);
++    uint32_t key = ENCODE_AA64_CP_REG(CP_REG_ARM64_SYSREG_CP, crn, crm, op0, op1, op2);
++    const ARMCPRegInfo *ri = get_arm_cp_reginfo(cpu->cp_regs, key);
 +
-+    switch (env->xregs[0]) {
-+    case QEMU_PSCI_0_2_FN_PSCI_VERSION:
-+        ret = QEMU_PSCI_VERSION_1_1;
-+        break;
-+    case QEMU_PSCI_0_2_FN_MIGRATE_INFO_TYPE:
-+        ret = QEMU_PSCI_0_2_RET_TOS_MIGRATION_NOT_REQUIRED; /* No trusted OS */
-+        break;
-+    case QEMU_PSCI_1_0_FN_PSCI_FEATURES:
-+        ret = QEMU_PSCI_RET_NOT_SUPPORTED;
-+        break;
-+    default:
-+        qemu_log_mask(LOG_UNIMP, "%s: unhandled hypercall %"PRIx64"\n",
-+                      __func__, env->xregs[0]);
-+        return -1;
++    if (ri) {
++        CPUARMState *env = &cpu->env;
++        uint64_t val = 0;
++        bool take_bql = ri->type & ARM_CP_IO;
++
++        if (ri->accessfn) {
++            if (ri->accessfn(env, ri, true) != CP_ACCESS_OK) {
++                g_assert_not_reached();
++            }
++        }
++
++        if (take_bql) {
++            bql_lock();
++        }
++
++        if (is_read) {
++            if (ri->type & ARM_CP_CONST) {
++                val = ri->resetvalue;
++            } else if (ri->readfn) {
++                val = ri->readfn(env, ri);
++            } else {
++                val = CPREG_FIELD64(env, ri);
++            }
++            trace_kvm_sysreg_read(ri->name, val);
++
++            if (rt < 31) {
++                env->xregs[rt] = val;
++            } else {
++                /* this would be deeply weird */
++                g_assert_not_reached();
++            }
++        } else {
++            /* x31 == zero reg */
++            if (rt < 31) {
++                val = env->xregs[rt];
++            }
++
++            if (ri->writefn) {
++                ri->writefn(env, ri, val);
++            } else {
++                CPREG_FIELD64(env, ri) = val;
++            }
++            trace_kvm_sysreg_write(ri->name, val);
++        }
++
++        if (take_bql) {
++            bql_unlock();
++        }
++
++        /*
++         * Set PC to return.
++         *
++         * Note we elr_el2 doesn't seem to be what we need so lets
++         * rely on env->pc being correct.
++         *
++         * TODO We currently skip to the next instruction
++         * unconditionally but that is at odds with the kernels code
++         * which only does that conditionally (see kvm_handle_sys_reg
++         * -> perform_access):
++         *
++         *    if (likely(r->access(vcpu, params, r)))
++         *        kvm_incr_pc(vcpu);
++         *
++         */
++        env->pc = env->pc + 4;
++        return 0;
 +    }
 +
-+    env->xregs[0] = ret;
-+    return 0;
++    fprintf(stderr, "%s: @ %" PRIx64 " failed to find sysreg crn:%d crm:%d op0:%d op1:%d op2:%d\n",
++            __func__, elr, crn, crm, op0, op1, op2);
++    return -1;
 +}
 +
  /**
   * kvm_arm_handle_hard_trap:
   * @cpu: ARMCPU
-@@ -1538,6 +1575,13 @@ static int kvm_arm_handle_hard_trap(ARMCPU *cpu,
+@@ -1443,6 +1536,8 @@ static int kvm_arm_handle_hard_trap(ARMCPU *cpu,
+     kvm_cpu_synchronize_state(cs);
+ 
      switch (esr_ec) {
-     case EC_SYSTEMREGISTERTRAP:
-         return kvm_arm_handle_sysreg_trap(cpu, esr_iss, elr);
-+    case EC_AA32_SVC:
-+    case EC_AA32_HVC:
-+    case EC_AA32_SMC:
-+    case EC_AA64_SVC:
-+    case EC_AA64_HVC:
-+    case EC_AA64_SMC:
-+        return kvm_arm_handle_hypercall(cpu, esr_ec);
++    case EC_SYSTEMREGISTERTRAP:
++        return kvm_arm_handle_sysreg_trap(cpu, esr_iss, elr);
      default:
          qemu_log_mask(LOG_UNIMP, "%s: unhandled EC: %x/%x/%x/%d\n",
                  __func__, esr_ec, esr_iss, esr_iss2, esr_il);
 diff --git a/target/arm/trace-events b/target/arm/trace-events
-index 69bb4d370d..10cdba92a3 100644
+index 4438dce7be..69bb4d370d 100644
 --- a/target/arm/trace-events
 +++ b/target/arm/trace-events
-@@ -15,3 +15,4 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+@@ -13,3 +13,5 @@ arm_gt_update_irq(int timer, int irqstate) "gt_update_irq: timer %d irqstate %d"
+ 
+ # kvm.c
  kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is translated into 0x%"PRIx64
- kvm_sysreg_read(const char *name, uint64_t val) "%s => 0x%" PRIx64
- kvm_sysreg_write(const char *name, uint64_t val) "%s <=  0x%" PRIx64
-+kvm_hypercall(int ec, uint64_t arg0) "%d: %"PRIx64
++kvm_sysreg_read(const char *name, uint64_t val) "%s => 0x%" PRIx64
++kvm_sysreg_write(const char *name, uint64_t val) "%s <=  0x%" PRIx64
 -- 
 2.47.2
 
