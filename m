@@ -4,109 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EB3C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:03:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E492C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:04:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYe0-0007hV-TD; Tue, 17 Jun 2025 11:54:41 -0400
+	id 1uRYbV-0003rA-Ef; Tue, 17 Jun 2025 11:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1uRYLD-00061i-B6
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:35:24 -0400
-Received: from www62.your-server.de ([213.133.104.62])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRYKo-0003yF-3K
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:34:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <daniel@iogearbox.net>)
- id 1uRVfB-00033E-Me
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 08:43:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=iogearbox.net; s=default2302; h=Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:Subject:MIME-Version:Date:Message-ID:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=cz7b/j9ULywcsa2Hf/dKrUVLoBF9ZgwPHOaWBTXxljc=; b=n+qieK6YZcO/Pced4Mf+WtW6MH
- 8/mq2ICSnuej4v8Hljie85u50wCyC1YSSt3luK+SFnMRiERnWK3gOQLC1MG+KqxdrOm+V8Ao+Q/P8
- fS6i3ZQxXCUNpJOSfv1I9kdcklD4eH+3hyQRPCssFc0ubGgzXDJ0Ea1w4msgtAN9FcVFPjJCxOC6/
- 7vmzvJzIlijmiiIG4AEH4hNDJz4NfJkc64L1llZywGRpBPtEI/ZtXldJeMVdIlKdXja13QgO3qr4T
- MIC9GZvjODhA1YI41PyTU+/uqQOgzniPsM9h6D9LT6EO7j30PHxojiJf/LHGbnoPQreAivvGSzWs0
- 4wFEAamQ==;
-Received: from sslproxy06.your-server.de ([78.46.172.3])
- by www62.your-server.de with esmtpsa  (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96.2) (envelope-from <daniel@iogearbox.net>)
- id 1uRVey-0003sa-3D; Tue, 17 Jun 2025 14:43:29 +0200
-Received: from localhost ([127.0.0.1])
- by sslproxy06.your-server.de with esmtpsa (TLS1.3) tls TLS_AES_256_GCM_SHA384
- (Exim 4.96) (envelope-from <daniel@iogearbox.net>)
- id 1uRVey-0006i8-2D; Tue, 17 Jun 2025 14:43:28 +0200
-Message-ID: <2e420055-3a1c-46fe-afac-4a15577f44fd@iogearbox.net>
-Date: Tue, 17 Jun 2025 14:43:28 +0200
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRWKt-0008Sh-L3
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 09:26:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750166803;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=CN5hHjMIPHO/GMteEkHH8lxx5y/cl+D15tG5+ZrsW+k=;
+ b=Zq3ASuKmQU4HSu2L9X052Ys3T/iZfQrsqJHylbGExUB+0ddnlLB4/5Sziq3uFv8FAEgYHV
+ HYJr06+SyPVPbYVSqaSKsSujeVrNiFoXpdGqmmtq00Hd2pU3gBxaoVmkp3fGeUBP+bevoQ
+ EMX/ZEsXoLnZfIUPwTmW0Wr+R+5m5Aw=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-146-p0PEONmJMhWbHWj6cGV-kA-1; Tue, 17 Jun 2025 09:26:41 -0400
+X-MC-Unique: p0PEONmJMhWbHWj6cGV-kA-1
+X-Mimecast-MFC-AGG-ID: p0PEONmJMhWbHWj6cGV-kA_1750166800
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a503f28b09so445967f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 06:26:41 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750166799; x=1750771599;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CN5hHjMIPHO/GMteEkHH8lxx5y/cl+D15tG5+ZrsW+k=;
+ b=ICjJ7sJ69NMEbWBtgfEe1Rq929+rv8IOFyZLn3RktNAHD42oxVBnQoJ2QWpU/zHKN8
+ Dkt+x73s7S+FZzS1iJIRsxe58uKaJq3dBfX2qyqj+ngcmHdAR4qEWPOZdrRf2ja3Pazl
+ 0s+2R23D6e9Ao9HVhPBqS8GyP771qKkQfAtRDdIUNxokKKz8xrul0JdDJIKjOHebR93Z
+ nmu/NRvMTxFNClO2QEHzTR6O6s4cTLt5JdJ9C7m500UtHY5rEVMO73ku6q+4BAebr02a
+ AS8MhWoLHq8PhP6sTF5aXOV6fX/IOVPT9WjeGv279H51ggOo+CJSRZPqtOlp0iTJ5BE2
+ KfRw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXdHHZOKp8dbqLSl1kIO7NpsV0sL6OWus+aWxr/ttdVT175cgTIEGZ9awGx4ac5Ltso5cxV7oiiLhta@nongnu.org
+X-Gm-Message-State: AOJu0YwO6bv6SrrxZoRyKAKrOieAWG32fSc2hPbpwj9AM0A/xdci6P0D
+ K1bBvuUdQFNozs6YY2nnJkY2s0X2CnqItjC15KrFse8ItnblG7H/w4Locq493zW8BQZZ7EUcriw
+ oYZRj2AN3D2Qtm5fGsgdrVbM3Ed30vC3Q0YKlQ9rNSOnviOQp02ZFr87TD5knMwiF
+X-Gm-Gg: ASbGncsdKUHjNAd5LE9watNd+Nb3ty4VTXzjKZLfJZH61YufwFBCxWP9RwhOAAevh1R
+ ZS/dMKNmyJgdATqBrx6gC6l90OI/dYcoFWUFFzYZhQvWI4oH3ZzmXsPvHw0veQPJ5U0YKCElJBP
+ FX2wO2A4Wjfy5Lf6QwUOCcpzoWu3OZXLvYzGnEmo0Cd1+5+Nq/21Aod6boRNhGSYcfV7mO3KkvW
+ NcPC93XLcvShS7WdPlVIX+eLQSttFnMihIIQo+J1TtQctQXP2Hz3LieW12bUnS4vxX7VKBH5S39
+ 14t6rWsOS2cJ3W8eRi1Ib0jJWP3vfKY0VWiG5ipprv1r8sLv90GbwmnMqonGIlVFCmBSew==
+X-Received: by 2002:a5d:64cc:0:b0:3a4:d685:3de7 with SMTP id
+ ffacd0b85a97d-3a56d7cd56bmr12345016f8f.8.1750166799283; 
+ Tue, 17 Jun 2025 06:26:39 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGa31fOt3M0d6C7ClYd1TOlgYkmTcpt25oTo6RJDjebAolkbG7VQ2/u00E5i8kWG07dzqN0dQ==
+X-Received: by 2002:a5d:64cc:0:b0:3a4:d685:3de7 with SMTP id
+ ffacd0b85a97d-3a56d7cd56bmr12344992f8f.8.1750166798808; 
+ Tue, 17 Jun 2025 06:26:38 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a568b62ba7sm14314490f8f.91.2025.06.17.06.26.37
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Jun 2025 06:26:38 -0700 (PDT)
+Message-ID: <cd38280c-6f5e-4c58-b40c-3391d121e557@redhat.com>
+Date: Tue, 17 Jun 2025 15:26:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/2] net/af-xdp: Support pinned map path for AF_XDP
- sockets
-To: Ilya Maximets <i.maximets@ovn.org>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Anton Protopopov <aspsk@isovalent.com>
-References: <20250604112916.1195368-1-daniel@iogearbox.net>
- <36baa0a5-43ac-44c1-bf30-34f34ddfceba@ovn.org>
+Subject: Re: [PATCH-for-10.1 v4 0/8] hw/arm: GIC 'its=off' ACPI table fixes
 Content-Language: en-US
-Autocrypt: addr=daniel@iogearbox.net; keydata=
- xsFNBGNAkI0BEADiPFmKwpD3+vG5nsOznvJgrxUPJhFE46hARXWYbCxLxpbf2nehmtgnYpAN
- 2HY+OJmdspBntWzGX8lnXF6eFUYLOoQpugoJHbehn9c0Dcictj8tc28MGMzxh4aK02H99KA8
- VaRBIDhmR7NJxLWAg9PgneTFzl2lRnycv8vSzj35L+W6XT7wDKoV4KtMr3Szu3g68OBbp1TV
- HbJH8qe2rl2QKOkysTFRXgpu/haWGs1BPpzKH/ua59+lVQt3ZupePpmzBEkevJK3iwR95TYF
- 06Ltpw9ArW/g3KF0kFUQkGXYXe/icyzHrH1Yxqar/hsJhYImqoGRSKs1VLA5WkRI6KebfpJ+
- RK7Jxrt02AxZkivjAdIifFvarPPu0ydxxDAmgCq5mYJ5I/+BY0DdCAaZezKQvKw+RUEvXmbL
- 94IfAwTFA1RAAuZw3Rz5SNVz7p4FzD54G4pWr3mUv7l6dV7W5DnnuohG1x6qCp+/3O619R26
- 1a7Zh2HlrcNZfUmUUcpaRPP7sPkBBLhJfqjUzc2oHRNpK/1mQ/+mD9CjVFNz9OAGD0xFzNUo
- yOFu/N8EQfYD9lwntxM0dl+QPjYsH81H6zw6ofq+jVKcEMI/JAgFMU0EnxrtQKH7WXxhO4hx
- 3DFM7Ui90hbExlFrXELyl/ahlll8gfrXY2cevtQsoJDvQLbv7QARAQABzSZEYW5pZWwgQm9y
- a21hbm4gPGRhbmllbEBpb2dlYXJib3gubmV0PsLBkQQTAQoAOxYhBCrUdtCTcZyapV2h+93z
- cY/jfzlXBQJjQJCNAhsDBQkHhM4ACAsJCAcNDAsKBRUKCQgLAh4BAheAAAoJEN3zcY/jfzlX
- dkUQAIFayRgjML1jnwKs7kvfbRxf11VI57EAG8a0IvxDlNKDcz74mH66HMyhMhPqCPBqphB5
- ZUjN4N5I7iMYB/oWUeohbuudH4+v6ebzzmgx/EO+jWksP3gBPmBeeaPv7xOvN/pPDSe/0Ywp
- dHpl3Np2dS6uVOMnyIsvmUGyclqWpJgPoVaXrVGgyuer5RpE/a3HJWlCBvFUnk19pwDMMZ8t
- 0fk9O47HmGh9Ts3O8pGibfdREcPYeGGqRKRbaXvcRO1g5n5x8cmTm0sQYr2xhB01RJqWrgcj
- ve1TxcBG/eVMmBJefgCCkSs1suriihfjjLmJDCp9XI/FpXGiVoDS54TTQiKQinqtzP0jv+TH
- 1Ku+6x7EjLoLH24ISGyHRmtXJrR/1Ou22t0qhCbtcT1gKmDbTj5TcqbnNMGWhRRTxgOCYvG0
- 0P2U6+wNj3HFZ7DePRNQ08bM38t8MUpQw4Z2SkM+jdqrPC4f/5S8JzodCu4x80YHfcYSt+Jj
- ipu1Ve5/ftGlrSECvy80ZTKinwxj6lC3tei1bkI8RgWZClRnr06pirlvimJ4R0IghnvifGQb
- M1HwVbht8oyUEkOtUR0i0DMjk3M2NoZ0A3tTWAlAH8Y3y2H8yzRrKOsIuiyKye9pWZQbCDu4
- ZDKELR2+8LUh+ja1RVLMvtFxfh07w9Ha46LmRhpCzsFNBGNAkI0BEADJh65bNBGNPLM7cFVS
- nYG8tqT+hIxtR4Z8HQEGseAbqNDjCpKA8wsxQIp0dpaLyvrx4TAb/vWIlLCxNu8Wv4W1JOST
- wI+PIUCbO/UFxRy3hTNlb3zzmeKpd0detH49bP/Ag6F7iHTwQQRwEOECKKaOH52tiJeNvvyJ
- pPKSKRhmUuFKMhyRVK57ryUDgowlG/SPgxK9/Jto1SHS1VfQYKhzMn4pWFu0ILEQ5x8a0RoX
- k9p9XkwmXRYcENhC1P3nW4q1xHHlCkiqvrjmWSbSVFYRHHkbeUbh6GYuCuhqLe6SEJtqJW2l
- EVhf5AOp7eguba23h82M8PC4cYFl5moLAaNcPHsdBaQZznZ6NndTtmUENPiQc2EHjHrrZI5l
- kRx9hvDcV3Xnk7ie0eAZDmDEbMLvI13AvjqoabONZxra5YcPqxV2Biv0OYp+OiqavBwmk48Z
- P63kTxLddd7qSWbAArBoOd0wxZGZ6mV8Ci/ob8tV4rLSR/UOUi+9QnkxnJor14OfYkJKxot5
- hWdJ3MYXjmcHjImBWplOyRiB81JbVf567MQlanforHd1r0ITzMHYONmRghrQvzlaMQrs0V0H
- 5/sIufaiDh7rLeZSimeVyoFvwvQPx5sXhjViaHa+zHZExP9jhS/WWfFE881fNK9qqV8pi+li
- 2uov8g5yD6hh+EPH6wARAQABwsF8BBgBCgAmFiEEKtR20JNxnJqlXaH73fNxj+N/OVcFAmNA
- kI0CGwwFCQeEzgAACgkQ3fNxj+N/OVfFMhAA2zXBUzMLWgTm6iHKAPfz3xEmjtwCF2Qv/TT3
- KqNUfU3/0VN2HjMABNZR+q3apm+jq76y0iWroTun8Lxo7g89/VDPLSCT0Nb7+VSuVR/nXfk8
- R+OoXQgXFRimYMqtP+LmyYM5V0VsuSsJTSnLbJTyCJVu8lvk3T9B0BywVmSFddumv3/pLZGn
- 17EoKEWg4lraXjPXnV/zaaLdV5c3Olmnj8vh+14HnU5Cnw/dLS8/e8DHozkhcEftOf+puCIl
- Awo8txxtLq3H7KtA0c9kbSDpS+z/oT2S+WtRfucI+WN9XhvKmHkDV6+zNSH1FrZbP9FbLtoE
- T8qBdyk//d0GrGnOrPA3Yyka8epd/bXA0js9EuNknyNsHwaFrW4jpGAaIl62iYgb0jCtmoK/
- rCsv2dqS6Hi8w0s23IGjz51cdhdHzkFwuc8/WxI1ewacNNtfGnorXMh6N0g7E/r21pPeMDFs
- rUD9YI1Je/WifL/HbIubHCCdK8/N7rblgUrZJMG3W+7vAvZsOh/6VTZeP4wCe7Gs/cJhE2gI
- DmGcR+7rQvbFQC4zQxEjo8fNaTwjpzLM9NIp4vG9SDIqAm20MXzLBAeVkofixCsosUWUODxP
- owLbpg7pFRJGL9YyEHpS7MGPb3jSLzucMAFXgoI8rVqoq6si2sxr2l0VsNH5o3NgoAgJNIg=
-In-Reply-To: <36baa0a5-43ac-44c1-bf30-34f34ddfceba@ovn.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Virus-Scanned: Clear (ClamAV 1.0.7/27671/Tue Jun 17 10:47:08 2025)
-Received-SPF: pass client-ip=213.133.104.62; envelope-from=daniel@iogearbox.net;
- helo=www62.your-server.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, mst@redhat.com,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
+ ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
+ anisinha@redhat.com
+References: <20250616131824.425315-1-gustavo.romero@linaro.org>
+ <5b0f2250-e521-4172-870c-0384c5ef2382@redhat.com>
+ <36ac7f90-d946-439f-ab20-123f542291b6@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <36ac7f90-d946-439f-ab20-123f542291b6@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,67 +117,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Daniel Borkmann <daniel@iogearbox.net>
-From:  Daniel Borkmann via <qemu-devel@nongnu.org>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/25 1:59 PM, Ilya Maximets wrote:
-> On 6/4/25 1:29 PM, Daniel Borkmann wrote:
->> Extend 'inhibit=on' setting with the option to specify a pinned XSK map
->> path along with a starting index (default 0) to push the created XSK
->> sockets into. Example usage:
->>
->>    # ./build/qemu-system-x86_64 [...] \
->>     -netdev af-xdp,ifname=enp2s0f0np0,id=net0,mode=native,queues=2,start-queue=14,inhibit=on,map-path=/sys/fs/bpf/xsks_map,map-start-index=14 \
->>     -device virtio-net-pci,netdev=net0 [...]
->>
->> This is useful for the case where an existing XDP program with XSK map
->> is present on the AF_XDP supported phys device and the XSK map is not
->> yet populated. For example, the former could have been pre-loaded onto
->> the netdevice by a control plane, which later launches qemu to populate
->> it with XSK sockets.
->>
->> Normally, the main idea behind 'inhibit=on' is that the qemu instance
->> doesn't need to have a lot of privileges to use the pre-loaded program
->> and the pre-created sockets, but this mentioned use-case here is different
->> where qemu still needs privileges to create the sockets.
->>
->> The 'map-start-index' parameter is optional and defaults to 0. It allows
->> flexible placement of the XSK sockets, and is up to the user to specify
->> when the XDP program with XSK map was already preloaded. In the simplest
->> case the queue-to-map-slot mapping is just 1:1 based on ctx->rx_queue_index
->> but the user might as well have a different scheme (or smaller map size,
->> e.g. ctx->rx_queue_index % max_size) to push the inbound traffic to one
->> of the XSK sockets.
->>
->> Note that the bpf_xdp_query_id() is now only tested for 'inhibit=off'
->> since only in the latter case the libxdp takes care of installing the
->> XDP program which was installed based on the s->xdp_flags pointing to
->> either driver or skb mode. For 'inhibit=on' we don't make any assumptions
->> and neither go down the path of probing all possible options in which
->> way the user installed the XDP program.
->>
->> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
->> Cc: Ilya Maximets <i.maximets@ovn.org>
->> Cc: Jason Wang <jasowang@redhat.com>
->> Cc: Anton Protopopov <aspsk@isovalent.com>
->> ---
->>   net/af-xdp.c    | 80 +++++++++++++++++++++++++++++++++++++++++++++----
->>   qapi/net.json   | 29 +++++++++++-------
->>   qemu-options.hx | 23 ++++++++++++--
->>   3 files changed, 114 insertions(+), 18 deletions(-)
-> 
-> Hi, Daniel.  Thanks for v3!
-> 
-> checkpatch complains about 2 issues in the patch - a missing braces and
-> onle too long line that can be wrapped.
+Hi Gustavo,
 
-Thanks for review, I wasn't aware of this, will fix these two in v4!
+On 6/17/25 3:01 PM, Gustavo Romero wrote:
+> Hi Eric,
+>
+> Thanks a lot for doing a first pass on this series!
+>
+> On 6/17/25 06:35, Eric Auger wrote:
+>> Hi Gustavo,
+>>
+>> On 6/16/25 3:18 PM, Gustavo Romero wrote:
+>>> Since v2:
+>>> - Fixed no_tcg_its inverted logic (rth)
+>>>
+>>> Since v3:
+>>> - Fixed remappings in the IORT table when ITS is no present
+>>> - Rebased on master and resoled conflics, like no more "no_its"
+>>>    flag in VirtMachineClass
+>>> - Dropped patch 1/9 because we actually want the instance flags,
+>>>    not only the class flags, and the instance flags are the ones
+>>>    to be used often when deciding about the presence/absence of a
+>>>    machine feature, instead of the negated class flags ("no_*")
+>>> - Adapted the other patches that depended on 1/9
+>>> - Dropped patch 4/9 in favor of using the instance flag for
+>>>    checking if ITS is on or off
+>>> - Simplified VM options for the new "its=off" test
+>>>
+>>> v1: https://lists.gnu.org/archive/html/qemu-devel/2025-03/msg07080.html
+>>> v2:
+>>> https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00495.html
+>>> (Patches 6/14 -> 14/14 in the series)
+>>> v3: https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00567.html
+>>>
+>>> Fix ACPI tables for '-M its=off' CLI option and resolve the issue:
+>>>
+>>> https://gitlab.com/qemu-project/qemu/-/issues/2886
+>>
+>> One first comment is that this series will collide with Shameer's SMMU
+>> multi instance series which has been lunder review for quite some time
+>> (adding him in TO):
+>>
+>> I think it may be more future proof if you could rebase on it - I know
+>> it is a pain ;-( -. Or if sbdy objects for Shameer's series please raise
+>> your voice now.
+>>
+>> [PATCH v4 0/7] hw/arm/virt: Add support for user creatable SMMUv3
+>> device
+>> <https://lore.kernel.org/all/20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com/#r>
+>>
+>> https://lore.kernel.org/all/20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com/
+>>
+>
+> ayayay, life is never that easy! :)
+>
+> Thanks for point that out. Sure, I can rebase it on Shameer's series,
+> but also
+> I'd like to have this ITS fix for 10.1, so I think it's a matter of
+> understanding
+> if Shameer's series will make the 10.1 release (thanks for asking the
+> reviewers if they
+> have any current objection so we have an idea if it's close to get
+> accepted
+> or not)?
+Peter was the most annoyed by the usage of -device arm-smmuv3 option
+line. We'd better ask him.
 
-> There also seems to be some issue on a cleanup path that you attempt to
-> fix in the second patch, so I reply about it there.
-> 
-> Best regards, Ilya Maximets.
+On my end I don't see how we can achieve this more elegantly.
+>
+> Meanwhile, I'm pretty keen on if I'm correctly generating the IORT
+> table pruned from ITS
+> (patch 7/8 in this series), like, are the remappings for the RC and
+> SMMU nodes correct? That
+> would make me more comfortable to start working on a rebase.
+sure looking at it...
+
+Eric
+>
+>
+>> Also I understood Shameer intended to write some new bios-tables-test.
+>
+> I see.
+>
+>
+> Cheers,
+> Gustavo
+>
 
 
