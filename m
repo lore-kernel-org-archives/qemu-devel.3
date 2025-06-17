@@ -4,70 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7C3BC71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 02:03:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55551C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 02:38:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRLfN-0000CU-VA; Mon, 16 Jun 2025 22:03:15 -0400
+	id 1uRMD4-0006v5-K1; Mon, 16 Jun 2025 22:38:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uRLfL-0000CE-Hd
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 22:03:11 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uRLfJ-0005E7-K2
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 22:03:11 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxNHDVzFBoWxMYAQ--.55226S3;
- Tue, 17 Jun 2025 10:03:01 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMAxzxvLzFBofcgdAQ--.37904S3;
- Tue, 17 Jun 2025 10:02:54 +0800 (CST)
-Subject: Re: [PATCH 08/10] hw/loongarch: Implement avec set_irq
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250609104833.839811-1-gaosong@loongson.cn>
- <20250609104833.839811-9-gaosong@loongson.cn>
- <1cf3a214-407b-8d85-cc70-6576e413ec7d@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <7bc57b80-d97c-78ef-5d42-c9877c183e81@loongson.cn>
-Date: Tue, 17 Jun 2025 10:05:46 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uRMD2-0006uk-QM; Mon, 16 Jun 2025 22:38:00 -0400
+Received: from mail-vs1-xe2f.google.com ([2607:f8b0:4864:20::e2f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1uRMD1-0001HG-4W; Mon, 16 Jun 2025 22:38:00 -0400
+Received: by mail-vs1-xe2f.google.com with SMTP id
+ ada2fe7eead31-4e7f7d0f7baso1982287137.0; 
+ Mon, 16 Jun 2025 19:37:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1750127877; x=1750732677; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=O6URteAf+pRhF1OQuwj3gK8Bsv5VVcghBrlBh6BG360=;
+ b=ZcTV4B/x+BnOxqsaeWe7pANxq5+sdT+gz9Zhza5pmh7y+FXm1EopcUACpDBDy530gi
+ UHodrNw6SD2T/XDt3BY+X9w9ffb+QvhnuMEK1y8Kom/4V3VyrgmxcRFJp+VFg5urDLsX
+ 8lmuYobmF3Nqnc/NbfJnQ6bAJSXYdRoCnvIiS7btMRfse+rZEC1+HKK3q/Xc1BRfi+I1
+ c4C+nA/9/dDNbTNd1Yjbo4U0w1iMO41GrYLa3YizcKR7D/C1duk9QQ2bnzo6YbWJH6JL
+ vk+qGyIgGBC1aJ2r5NxLEbYJdIGWwGamw6Kgdjmgg7gOxpl+2zR1+WcvTqz5D1c7+rl1
+ p5Fw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750127877; x=1750732677;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=O6URteAf+pRhF1OQuwj3gK8Bsv5VVcghBrlBh6BG360=;
+ b=uu9o9h3CnCpsu0Q3TfeVWsFmty949pZ3dS97z0JyCr+6WU+I2GamPjObzNhOYFrIZ2
+ DQ0RAODMQ2fxO40xpGBxxCoupx0PCcUaws8Sjz7dKTjdCJBBTf/LamY1f63iIaPFRhDH
+ 4VwvHNN2GVos28C8w2hSOivlNEIS34QXtwRlo/dqHaRz96Apyn7Zm/XDYYnaJZTBO958
+ QbOBPwJ5IysbwFbJ+aV/Yb8/m0tZInPRkl1u/2gs685W6mXpy6gKpJXy8xCpa+KwKCFz
+ Xl+5hh9FOLG6zry8a77euiCaPStZeDS8Ad1xarkhn75xm4+JIYhxbUyMKOsuBxpXOSOn
+ qywA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0AIcjouY0ed8gcmIN4LReibTQuVkXxjLwIhIXcUi8T3FiUmOd2RcaXnXrqhVba0wPy2smE3q3xFsFLQ==@nongnu.org,
+ AJvYcCXRGEt+Cf6jqJExdXiJ+3ovH2EiGHHxXMPt/ZFhoUay0xPpg8ktDo3mL9Z9449txuAAVmGzBzsBalD7@nongnu.org
+X-Gm-Message-State: AOJu0Yx1SnNRR+ga+OIV9JDGZaDaGuurKpOoevFOdqzUcPAwxIYK3yQ5
+ DGJUUqx+UZBaW4g7RENn930N54pOG79C7Zw7wnob9cGq82MxMHktTQyrN9t3XbGX21vxs2FtTiP
+ 36dGXz/bzLHwZceCWMJtq9VK3Hufe2/E=
+X-Gm-Gg: ASbGncvCZeHC6UWECzTlisn0M8DBT72Tta/UqI3nr6Uu+iqiC8AsV9GWxQYBCVYfUev
+ C3wX47ePXYfjD59vx/r1XFkaCM2bQkSVYP7NUqZNe9OHmUYqsjqZnhRXAjWNLGTNUcAtaiWBF2w
+ eT5J6X7v3PqtXwrbT9ljUBKUd9JTBD35HN2eagnUXyZpa65HNwIib4mE3eAVwe+8iVE65yDugVW
+ A==
+X-Google-Smtp-Source: AGHT+IESNDl3l5C1jpCQ1GzmEABrFaXWKjL3Omy5wBJi5BTtd5EBB1JdIU1gfTAhKNsg+XbNDPl8Keu6LFgG7NTCpDA=
+X-Received: by 2002:a05:6102:5a8f:b0:4e4:5a1f:1414 with SMTP id
+ ada2fe7eead31-4e977ce0a76mr476644137.12.1750127877179; Mon, 16 Jun 2025
+ 19:37:57 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1cf3a214-407b-8d85-cc70-6576e413ec7d@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMAxzxvLzFBofcgdAQ--.37904S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxCF45Cw4xXFy3tFW7XrWDAwc_yoW5Kr47pF
- ykAFZ8XFyUJFs3Xr9rGw15uFy5Jr4xW3W7tF1SgFyIkF4qkr10grW8XrnIgF1UC3y8Xr1U
- Xr18Xa1fuF17JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUAVWUtwAv7VC2z280aVAF
- wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
- CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
- 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
- IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
- 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j83kZU
- UUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.129,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20250425121750.311-1-wangran@bosc.ac.cn>
+In-Reply-To: <20250425121750.311-1-wangran@bosc.ac.cn>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Tue, 17 Jun 2025 12:37:31 +1000
+X-Gm-Features: AX0GCFvCHbC0xUhJxkzhnQRSPm26fw_7o17WTifseu708xYoNQAbN43WsruQzmg
+Message-ID: <CAKmqyKP9yaT_raamZEevP04QkjMyA3BkagbyDVFKPzm0_tgVEw@mail.gmail.com>
+Subject: Re: [PATCH v4 0/2] riscv: Add Kunminghu CPU and platform
+To: Ran Wang <wangran@bosc.ac.cn>
+Cc: 3543977024@qq.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e2f;
+ envelope-from=alistair23@gmail.com; helo=mail-vs1-xe2f.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,96 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/6/11 下午2:26, Bibo Mao 写道:
+On Fri, Apr 25, 2025 at 10:18=E2=80=AFPM Ran Wang <wangran@bosc.ac.cn> wrot=
+e:
 >
+> This serial adds Xiangshan Kunminghu CPU and its FPGA prototype
+> platform, which include UART, CLINT, IMSIC, and APLIC
+> devices.
 >
-> On 2025/6/9 下午6:48, Song Gao wrote:
->> Signed-off-by: Song Gao <gaosong@loongson.cn>
->> ---
->>   hw/intc/loongarch_avec.c | 37 ++++++++++++++++++++++++++++++++++---
->>   1 file changed, 34 insertions(+), 3 deletions(-)
->>
->> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
->> index c692fef43c..f609ed9aaa 100644
->> --- a/hw/intc/loongarch_avec.c
->> +++ b/hw/intc/loongarch_avec.c
->> @@ -16,6 +16,12 @@
->>   #include "migration/vmstate.h"
->>   #include "trace.h"
->>   #include "hw/qdev-properties.h"
->> +#include "target/loongarch/cpu.h"
->> +
->> +/* msg addr field */
->> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
->> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
->> +FIELD(MSG_ADDR, FIX, 28, 12)
->>     static uint64_t loongarch_avec_mem_read(void *opaque,
->>                                           hwaddr addr, unsigned size)
->> @@ -23,12 +29,32 @@ static uint64_t loongarch_avec_mem_read(void 
->> *opaque,
->>       return 0;
->>   }
->>   +static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int 
->> irq_num, int level)
->> +{
->> +   MachineState *machine = MACHINE(qdev_get_machine());
->> +   MachineClass *mc = MACHINE_GET_CLASS(machine);
->> +   const CPUArchIdList *id_list = NULL;
->> +
->> +   assert(mc->possible_cpu_arch_ids(machine));
->> +   id_list = mc->possible_cpu_arch_ids(machine);
->> +   CPUState *cpu = id_list->cpus[cpu_num].cpu;
->> +   CPULoongArchState *env = &LOONGARCH_CPU(cpu)->env;
-> The format is strange here. Variable env is declared after normal 
-> sentence, there is such issue in many places.
->      id_list = mc->possible_cpu_arch_ids(machine);
+> More details can be found at
+> https://github.com/OpenXiangShan/XiangShan
 >
->> +   set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
->> +   qemu_set_irq(s->cpu[cpu_num].parent_irq[irq_num], 1);
-> Why is parent_irq array here?  I think one parent irq line is enough.
+> Patches based on alistair/riscv-to-apply.next
 >
-ok , i'll correct on v3.
->> +}
->> +
->>   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
->>                                        uint64_t val, unsigned size)
->>   {
->> -    return;
->> -}
->> +    int irq_num, cpu_num = 0;
->> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
->> +    uint64_t msg_addr = addr + VIRT_PCH_MSI_ADDR_LOW;
->> +
->> +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
->> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-> blank line here.
-Got it.
->> +    avec_set_irq(s, cpu_num, irq_num, 1);
->> +}
->>     static const MemoryRegionOps loongarch_avec_ops = {
->>       .read = loongarch_avec_mem_read,
->> @@ -38,7 +64,12 @@ static const MemoryRegionOps loongarch_avec_ops = {
->>     static void avec_irq_handler(void *opaque, int irq, int level)
->>   {
->> -    return;
->> +    int cpu_num, irq_num = 0;
->> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
->> +    cpu_num = irq / 256;
->> +    irq_num = irq % 256;
->> +
->> +    avec_set_irq(s, cpu_num, irq_num, level);
->>   }
-> When is the function avec_irq_handler() called?
->
-when some deviec gpio_out connect to avec gpio_in, since we define the 
-avec qdev_init_gpio_in at
-avec realize  and the avec_Irq_handler is the callback function.
+> Huang Borong (2):
+>   target/riscv: Add BOSC's Xiangshan Kunminghu CPU
+>   hw/riscv: Initial support for BOSC's Xiangshan Kunminghu FPGA
+>     prototype
 
-Thanks.
-Song Gao
-> Regards
-> Bibo Mao
->>     static void loongarch_avec_realize(DeviceState *dev, Error **errp)
->>
+Thanks!
 
+Applied to riscv-to-apply.next
+
+Alistair
+
+>
+>  MAINTAINERS                                 |   7 +
+>  configs/devices/riscv64-softmmu/default.mak |   1 +
+>  docs/system/riscv/xiangshan-kunminghu.rst   |  39 ++++
+>  docs/system/target-riscv.rst                |   1 +
+>  hw/riscv/Kconfig                            |   9 +
+>  hw/riscv/meson.build                        |   1 +
+>  hw/riscv/xiangshan_kmh.c                    | 220 ++++++++++++++++++++
+>  include/hw/riscv/xiangshan_kmh.h            |  78 +++++++
+>  target/riscv/cpu-qom.h                      |   1 +
+>  target/riscv/cpu.c                          |  64 ++++++
+>  10 files changed, 421 insertions(+)
+>  create mode 100644 docs/system/riscv/xiangshan-kunminghu.rst
+>  create mode 100644 hw/riscv/xiangshan_kmh.c
+>  create mode 100644 include/hw/riscv/xiangshan_kmh.h
+>
+> --
+> 2.34.1
+>
 
