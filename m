@@ -4,165 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F1CBC71159
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 03:16:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62857C71155
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 03:20:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRMn2-0008MN-Jm; Mon, 16 Jun 2025 23:15:12 -0400
+	id 1uRMrd-0000tV-DJ; Mon, 16 Jun 2025 23:19:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uRMn1-0008Kw-46
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:15:11 -0400
-Received: from mail-dm6nam11on2060f.outbound.protection.outlook.com
- ([2a01:111:f403:2415::60f]
- helo=NAM11-DM6-obe.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1uRMmx-0005m0-PB
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:15:10 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=aZhkSUMXo225U33irJQsFp6hVE/nSTz3KdD1BYGDHhGpnfDjZrUuizXJ3sd6qJNqBcjrlCr/cCJMN8WfE2Gl/rP175E3a/Bom+qwef3anuCJRMbUxs8F10d4vh4XEjSJVtUcen3lAlYXGH39ydJNqk8uKpSXcDp7mQtj57Up8eR6HYttlfiELwe0KG4gEjLujyBaSi+TajIb0FVoMzLCWBcskIs7/NMFT4kUW8pdlvaVLfmt2OiKuCz5KjcFQOEs7wuGzyBCJFpAwdwOclTh0T52NhiCJ7NxuV70cwGlMFrWPAA9GQMS3jDukB7j6uoFz+IXPcn2ZJfkEYrTnZuHig==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=8ApzUBQjTbI+Y9UyQRc3i1GsJ75GmD6u1wxhDRpcG3Q=;
- b=O6QWf0tviT3VzQdWDvOqohPCgFFwI/uaTsrZ2OsOZcdn90OrRr716PhmRlT68K1bfhKJ60E+5kdtOGRaBOkZ64s6pnJfj7O+AlYGoV/LAOXE8xExNVVvcAmXgYauTWp8UhtNheHmDPD6JezaW6LD18/ZHr+N5mHFRcVYoXzY9ZfJASk9zhs3aE9/OmOzZOrPlLsRFUkzskcmWRjpfr9N+nTbiGWipzNbUSqTBcfKk0O0UaNnIXiQvqxcIbPcySRmJxQwPd+LyVQgku/Q5VTqbhWk77hl6WYr77jT/S+QQZOHiUG77KXirf3DHmvozmgiwaiieKSx/bYHZKcx09vj8A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=8ApzUBQjTbI+Y9UyQRc3i1GsJ75GmD6u1wxhDRpcG3Q=;
- b=OpTMbYFkpGBSPNvFF7DMl+KnIh0rj7V1xuo/46dAHdEWm3YPTHkiuI/XkQV2yxJ2+85HrNukgEo7v5lUD17kedjizgYKchqJMRQf9BPfTlFnaDhpkDC8M5jlMMSI3gJulIPZAuOi7x8bM2kuscL9EYZ4ffaJFURrI9evM/nS0zpLPfZTxdRBLxPXeBzWywQW5ANUlmse2qIyfuvI1Vq2b8T42iOEambWQGRpvWXcbGzPBsNhSJK0oz8P/IDLl+HLsjkdZQ+V/Oq6Kp0MByOGmqW1oRAwQllBjdgJRXPuZaXnUJGmu98vj4dTdwv4CvqX/zK2eE8/Ju+Ys6/CEloNVQ==
-Received: from BN9PR03CA0948.namprd03.prod.outlook.com (2603:10b6:408:108::23)
- by DM6PR12MB4218.namprd12.prod.outlook.com (2603:10b6:5:21b::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.28; Tue, 17 Jun
- 2025 03:15:01 +0000
-Received: from BN1PEPF00006003.namprd05.prod.outlook.com
- (2603:10b6:408:108:cafe::c5) by BN9PR03CA0948.outlook.office365.com
- (2603:10b6:408:108::23) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.8792.23 via Frontend Transport; Tue,
- 17 Jun 2025 03:15:01 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BN1PEPF00006003.mail.protection.outlook.com (10.167.243.235) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.8835.15 via Frontend Transport; Tue, 17 Jun 2025 03:15:01 +0000
-Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 16 Jun
- 2025 20:14:51 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.14; Mon, 16 Jun 2025 20:14:50 -0700
-Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.126.190.182)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
- Transport; Mon, 16 Jun 2025 20:14:34 -0700
-Date: Mon, 16 Jun 2025 20:14:27 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-CC: "Liu, Yi L" <yi.l.liu@intel.com>, Peter Xu <peterx@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "alex.williamson@redhat.com"
- <alex.williamson@redhat.com>, "clg@redhat.com" <clg@redhat.com>,
- "eric.auger@redhat.com" <eric.auger@redhat.com>, "mst@redhat.com"
- <mst@redhat.com>, "jasowang@redhat.com" <jasowang@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com" <jgg@nvidia.com>, 
- "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
- <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
- <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
- host
-Message-ID: <aFDdkxPODYnyG0Vo@nvidia.com>
-References: <20250521111452.3316354-1-zhenzhong.duan@intel.com>
- <20250521111452.3316354-16-zhenzhong.duan@intel.com>
- <aC5YjHrv5EMDixzZ@Asurada-Nvidia>
- <0f8087f4-0c97-440d-84d2-f3f017f81041@intel.com>
- <aDDk1NYwJXaAdUQI@Asurada-Nvidia>
- <29f5f434-1fe3-4b5e-91d1-f153e1e98602@intel.com>
- <aDSmcvZ08jNOSr05@Asurada-Nvidia>
- <SJ0PR11MB6744340B889FF65D3BD5B8459267A@SJ0PR11MB6744.namprd11.prod.outlook.com>
- <aE+wCIG8KHb3u1lV@nvidia.com>
- <IA3PR11MB91369A0E98CC76ABDBA365809270A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uRMra-0000tI-Tk
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:19:54 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uRMrX-00066h-7Y
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:19:54 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxlmnM3lBolx0YAQ--.55604S3;
+ Tue, 17 Jun 2025 11:19:40 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMBxLsfE3lBoatkdAQ--.29444S3;
+ Tue, 17 Jun 2025 11:19:35 +0800 (CST)
+Subject: Re: [PATCH v3 00/13] hw/loongarch/virt: Add kernel irqchip support
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen
+ <chenhuacai@kernel.org>, qemu-devel@nongnu.org,
+ Xianglai Li <lixianglai@loongson.cn>
+References: <20250606063033.2557365-1-maobibo@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <3a3608d2-30b0-dbcb-27d0-c19bb141f933@loongson.cn>
+Date: Tue, 17 Jun 2025 11:22:27 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <IA3PR11MB91369A0E98CC76ABDBA365809270A@IA3PR11MB9136.namprd11.prod.outlook.com>
-X-NV-OnPremToCloud: AnonymousSubmission
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BN1PEPF00006003:EE_|DM6PR12MB4218:EE_
-X-MS-Office365-Filtering-Correlation-Id: 629cdba8-2a4d-4a7e-b317-08ddad4d25c0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|36860700013|376014|7416014|82310400026|1800799024; 
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?W6+BXMnc7R9Xx74JtG++cR+1jJPt9stNo7kj2XeC2Z3kYhikAIljMr6KJPhw?=
- =?us-ascii?Q?M69KPPntEDn/qIc51bRABHYr8CuSf6EOVWme9bXL0qn0axXzHuaCAWmFhaxe?=
- =?us-ascii?Q?Hacb1w3+yA0mKjyQazpOsrqAvh9kVvVHb+kO8Z2y46CQlHxUhMG6ECCLJkkF?=
- =?us-ascii?Q?4bv2SO7eAyb8D4iWMWCSHiS8RObu5upG3Hpw9Tdr9TC/B7rUhv1rDNVbjXC1?=
- =?us-ascii?Q?uIjSi6HbZKRUusEieBWIz6ALCb8N4NB/CvJ3wm7rvdeOJzpTw0XpRaIL9GDw?=
- =?us-ascii?Q?bwLvskQ4IQ2SXHw5rSFD1fQr1OqkxVsmyKyVVFN6uAHiibrySIIgMPF82MJx?=
- =?us-ascii?Q?bmW2TRPQIDkpmjiG3iCAfOwyrunvoVgiIURFP5ozV9oathAddCPh6f3V0PF9?=
- =?us-ascii?Q?9zCYIUigw4rDzO71WZJBNpoRTF5498KSoEmbvSGEVn/LjOOBPvIFcQ0RWTyi?=
- =?us-ascii?Q?Yqg/0xuTwFp57L/pdDq50DNj4ujedM1g8BswYwbWg3RRRphB7W8ztJACHMck?=
- =?us-ascii?Q?7XYaGsuDE+UWIdn3OWSwcORV6f6pZZN1W+wiL3b4Zv+sIGSuK1y2g1oUYdLh?=
- =?us-ascii?Q?wI88Y4bh2hmwsDlRr14MOG2TnuOBtXcYVIK2AX5yJz9YrRpyO+bhZDPgwqKA?=
- =?us-ascii?Q?iwIlVTY2aMF1cWuIzADtq7i+2FhMvwNzQGMHERI5yeCF+XF7WB/TKFsve+LA?=
- =?us-ascii?Q?8pIYEnNrlcbquudyyFTcg8ZYGB3U2BY7gG/w6EXcxKrkNiFZydHa5RIQbbey?=
- =?us-ascii?Q?1OQSI8bsLJra8DzQZrsqUhSdv8niwQXrctZYNGoytb1wJ3Iwb/uXygb04to4?=
- =?us-ascii?Q?uzWwkC9H+WCdNCvCHEESS8XikF4ljKGdRa//Dgmw2QqGEHL2OQqOCwr85atY?=
- =?us-ascii?Q?iFSemz7Sad8P5tm4Nm20YkdltjkIqUNB1mrLkvAXyIIo03eI6Bfv8FINzTRt?=
- =?us-ascii?Q?evJyCeaIqC6vkgDJakX3aSIKtt9Utl/NqWUapVtQsrUEOZiDTtRIGsAyHSGy?=
- =?us-ascii?Q?qHvIsV0YYFWaTpnE2ijJL5VAH6ERq7SZZOZWip8kpPdkaFuk4qw7Y3K0GHv1?=
- =?us-ascii?Q?2aRmj2ir3CDQq08Y1RnRVZRKjlo2tcgwX4CrKucT7lWX9bLKqGszsUIu9mmx?=
- =?us-ascii?Q?rSE3JHst680OnE+ihIs+7ZwJtnOsA594MeCTDfZnHJEZTS1AT6SdTePxuO0M?=
- =?us-ascii?Q?cbGPWqjJs4Y6SEZgr5zURgictCeqscclb80z+1gKTyviS7jgaRIy/ZysQAQ6?=
- =?us-ascii?Q?fCBSpJkfvNiW0WtAR1MpWxJXbeOkfPScGjyrLvQk6P/2SPmDtWH+DVR0ssIN?=
- =?us-ascii?Q?ONoZt/j9aYH5DzjQmukqQtNFqmAoNvmhHHWujsrPqVud8ZoGAKAIV4qYsnbr?=
- =?us-ascii?Q?7GkS+Xoa9rHLoQjwKJrqLyFQtDwPvNU4+gF7v3d5MuNqJ2Vs2WtuaF7GWmMC?=
- =?us-ascii?Q?o0agB93qPiv77lU/LPN/w/ykXZ2/e0MP/E34qTFFt/vdFjCBVAHKknZqwb8m?=
- =?us-ascii?Q?tvtZNEbcmtTmJ1UL1na0aNnn+zdbancIm4Pn?=
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(36860700013)(376014)(7416014)(82310400026)(1800799024); DIR:OUT;
- SFP:1101; 
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 03:15:01.2070 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 629cdba8-2a4d-4a7e-b317-08ddad4d25c0
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BN1PEPF00006003.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM6PR12MB4218
-Received-SPF: permerror client-ip=2a01:111:f403:2415::60f;
- envelope-from=nicolinc@nvidia.com;
- helo=NAM11-DM6-obe.outbound.protection.outlook.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250606063033.2557365-1-maobibo@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMBxLsfE3lBoatkdAQ--.29444S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxAF1DCFWkuw48KF17Ar4DWrX_yoWrJw4kpr
+ WUuw1Y9r48Gry7Jrnay345uF98WFn7Wr4a93WakFyfCrW3tF1vvF18t3sxXFyUKw18G34q
+ qF4rWw1jg3WDAFcCm3ZEXasCq-sJn29KB7ZKAUJUUUU5529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvFb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280aVAF
+ wI0_Gr0_Cr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVW8JV
+ WxJwCI42IY6I8E87Iv6xkF7I0E14v26r4j6r4UJbIYCTnIWIevJa73UjIFyTuYvjxUcrWF
+ UUUUU
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: 4
+X-Spam_score: 0.4
+X-Spam_bar: /
+X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-0.129, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,28 +84,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 16, 2025 at 08:15:11AM +0000, Duan, Zhenzhong wrote:
-> >IIUIC, the guest kernel cmdline can switch the mode between the
-> >stage1 (nesting) and stage2 (legacy/emulated VT-d), right?
-> 
-> Right. E.g., kexec from "intel_iommu=on,sm_on" to "intel_iommu=on,sm_off",
-> Then first kernel will run in scalable mode and use stage1(nesting) and
-> second kernel will run in legacy mode and use stage2.
+ÔÚ 2025/6/6 ÏÂÎç2:30, Bibo Mao Ð´µÀ:
+> If kernel irqchip is set such as kvm_irqchip_in_kernel() return true, there
+> is special operations with irqchips in such fields:
+>    1. During irqchip object realization, kvm_create_device() is used here
+>       to create irqchip in KVM kernel.
+>    2. Add pre_save and post_load function, where register states can be
+>       get and set from KVM kernel.
+>    3. With reset function, register and software state is initialized
+>       in qemu user space and set to KVM kernel with ioctl command.
+>    4. Interrupt injection to kernel, IRQ line interrupt is injected with
+>       API kvm_set_irq() and MSI interrupt is injected with API
+>       kvm_irqchip_send_msi().
+>
+> ---
+> v2 ... v3:
+>    1. Implement reset function with kernel irqchip device, initialize the
+>       registers and set to KVM kernel.
+>    2. Use register offset address rather base address in function
+>       kvm_pch_pic_save_load().
+>    3. Rename kvm_xxx_save_load() with kvm_xxx_access().
+>    4. Rename kvm_xxx_pre_save() with kvm_xxx_get(), kvm_xxx_post_load()
+>       with kvm_xxx_put().
+>    5. Macro KVM_IRQCHIP_NUM_PINS defined in UAPI header file is used
+>       kvm_loongarch_init_irq_routing(), which means the maxinium irq line
+>       number.
+>
+> v1 ... v2:
+>    1. Remove property irqchip-in-kernel with irqchip device driver, use
+>       global API kvm_irqchip_in_kernel() directly.
+>    2. Do not create memory map region if kernel irqchip is set.
+>    3. Modify copy and paste typo issue in kvm_arch_irqchip_create().
+>    4. Do not emulate MISC_FUNC_REG IOCSR register if kernel irqchip is
+>       set since it access EXTIOI memory region, this register need be
+>       emulated in kernel.
+>
+> Bibo Mao (13):
+>    hw/intc/loongarch_extioi: Add kernel irqchip realize function
+>    hw/intc/loongarch_extioi: Add kernel irqchip save and restore function
+>    hw/intc/loongarch_ipi: Add kernel irqchip realize function
+>    hw/intc/loongson_ipi: Add load and save interface with ipi_common
+>      class
+>    hw/intc/loongarch_ipi: Add kernel irqchip save and restore function
+>    hw/intc/loongarch_pch_msi: Inject MSI interrupt to kernel
+>    hw/intc/loongarch_pch: Add kernel irqchip realize function
+>    hw/intc/loongarch_pch: Add kernel irqchip save and restore function
+>    hw/intc/loongarch_pch: Inject irq line interrupt to kernel
+>    hw/loongarch/virt: Add reset support for kernel irqchip
+>    target/loongarch: Report error with split kernel_irqchip option
+>    hw/loongarch/virt: Disable emulation with IOCSR misc register
+>    hw/loongarch/virt: Add kernel irqchip support
+hi,
 
-In scalable mode, guest kernel has a stage1 (nested) domain and
-host kernel has a stage2 (nesting parent) domain. In this case,
-the VFIO container IOAS could be the system AS corresponding to
-the kernel-managed stage2 domain.
+This series looks good to me. I will apply to loongarch.nexts
+Reviewed-by: Song Gao <gaosong@loongson.cn>
 
-In legacy mode, guest kernel has a stage2 (normal) domain while
-host kernel has a stage2 (shadow) domain? In this case, the VFIO
-container IOAS should be the iommu AS corresponding to the kernel
-guest-level stage2 domain (or should it be shadow)?
+Thanks.
+Son Gao
+>   hw/intc/loongarch_extioi.c             |  49 ++++++---
+>   hw/intc/loongarch_extioi_kvm.c         | 140 +++++++++++++++++++++++++
+>   hw/intc/loongarch_ipi.c                |  29 +++++
+>   hw/intc/loongarch_ipi_kvm.c            |  85 +++++++++++++++
+>   hw/intc/loongarch_pch_msi.c            |  10 ++
+>   hw/intc/loongarch_pch_pic.c            |  45 +++++++-
+>   hw/intc/loongarch_pic_kvm.c            |  89 ++++++++++++++++
+>   hw/intc/loongson_ipi_common.c          |  33 ++++++
+>   hw/intc/meson.build                    |   6 ++
+>   hw/loongarch/virt.c                    |  65 +++++++-----
+>   include/hw/intc/loongarch_extioi.h     |   5 +
+>   include/hw/intc/loongarch_ipi.h        |   5 +
+>   include/hw/intc/loongarch_pch_pic.h    |   5 +
+>   include/hw/intc/loongarch_pic_common.h |   1 +
+>   include/hw/intc/loongson_ipi_common.h  |   2 +
+>   target/loongarch/cpu.h                 |   1 +
+>   target/loongarch/kvm/kvm.c             |  23 +++-
+>   17 files changed, 552 insertions(+), 41 deletions(-)
+>   create mode 100644 hw/intc/loongarch_extioi_kvm.c
+>   create mode 100644 hw/intc/loongarch_ipi_kvm.c
+>   create mode 100644 hw/intc/loongarch_pic_kvm.c
+>
+>
+> base-commit: 09be8a511a2e278b45729d7b065d30c68dd699d0
 
-The ARM model that Shameer is proposing only allows a nested SMMU
-when such a legacy mode is off. This simplifies a lot of things.
-But the difficulty of the VT-d model is that it has to rely on a
-guest bootcmd during runtime..
-
-Nicolin
 
