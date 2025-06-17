@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A037C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:49:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29275C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:52:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYYY-0000t9-TY; Tue, 17 Jun 2025 11:49:03 -0400
+	id 1uRYb9-0003Xc-HB; Tue, 17 Jun 2025 11:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRYJO-0001BQ-S4
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:33:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uRYKj-0004Bk-Ku
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:34:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRWvw-0005ag-VP
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 10:05:08 -0400
+ id 1uRWS6-0001bE-3z
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 09:34:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750169103;
+ s=mimecast20190719; t=1750167251;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=t7fvMTs02Yc4ySb+1f1Y2yV8qjqLU6pID/iGbEfUA1g=;
- b=EQ70wD9N34zsO02vcWBcgQ+dKQb5QJTGRYalsdFBc9Z8Nw/yiwB80TA7dYjcay5Cj6QTay
- BhkFd3RV07mVAa9e7o5J45Cy/Ycq0WWZxowBIvgz8C1QjL6xB4QhCyL2lbsZCFZRu022UW
- 6hbP/2sQlWr26m2LqQNPOCluCEAfG60=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ha0XZi3PC2IVQ1lBR0EUp81EerH9P6ZxpdcTmNxLBlw=;
+ b=aOHTL12h+wQN6KBcCM6UWdi3LNxx0eOXSdgpqLtfe5u+5HLDAaMhvrLr5WySisDHTDvHAB
+ CAXzQuML8J8gCG6ExR1femx4vFTJ69tox6Q+dGMJcsmG7ChaBEHVTUuJy7l1gifyETQLX8
+ N+1LPqJ8kVHeowmU6SDRLFSniyklEok=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-14-FR2bBv6gMFeRS1pkPm8Sxg-1; Tue, 17 Jun 2025 10:05:01 -0400
-X-MC-Unique: FR2bBv6gMFeRS1pkPm8Sxg-1
-X-Mimecast-MFC-AGG-ID: FR2bBv6gMFeRS1pkPm8Sxg_1750169100
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-45311704d1fso32795905e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 07:05:00 -0700 (PDT)
+ us-mta-227-1iE24AnvO12xqmOs6LT_-g-1; Tue, 17 Jun 2025 09:34:08 -0400
+X-MC-Unique: 1iE24AnvO12xqmOs6LT_-g-1
+X-Mimecast-MFC-AGG-ID: 1iE24AnvO12xqmOs6LT_-g_1750167247
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-3a4eb6fcd88so3416616f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 06:34:08 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750169100; x=1750773900;
+ d=1e100.net; s=20230601; t=1750167247; x=1750772047;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=t7fvMTs02Yc4ySb+1f1Y2yV8qjqLU6pID/iGbEfUA1g=;
- b=TZcCxUMgXmGbhV9UXQIFUqmtsLSu/lUbIU/weKYPPA8JtaL6xm8I+ysYT1dlmMyTx4
- 38rcXAom2RwA/1ToAPBMpdFdLuplbR4d8Cbopk/uuXu6IvfHUm01RMIUvUPCP/xI9Vlr
- E1oQJSOn4w1jQJFQYrIiSF8Wbp+bmINqy8U1+hJBwKqzeu2zKXtXGa6KZwdYmeuWfnmm
- n4Neq2CmzfEM6ZJhalAXd0ozEt0MqLuUlHK3kYoP1r6QYwZxj78nPSx1yBiOFW0XvwSk
- JwL47P8T4f9t6uE//kzNlyed1lWXYX7W/UByNqwtXq9w7qnxsC4d1uj0rQlSHJfi8TjD
- U2YQ==
+ bh=ha0XZi3PC2IVQ1lBR0EUp81EerH9P6ZxpdcTmNxLBlw=;
+ b=t2LQcOQXXagJkxNpCnEFAZieVykRxoIL66Tm53qkpx7h2NUz3AM97KoZrsAd4Q3Nlw
+ NAMCkPu6I7rtHiSkZ7Jux9DbUp4Fn4sh+FmUvsgaY5eYGTWOAHVH3zlav9kQv6bcVDqe
+ 8d5LOYRIAdc+4mn8tkSUEDboD6/9MksDHLVoLTTIAHAs4pqCpAItcd6eh2U7yQahuPWw
+ LXKuXi4ZBUOBocEGrknKB/+F8E7QBIvlzAKugcS6A0J0KC8erjilnFkG9NwHi8csOhzb
+ f/iP3jMuzeEctjDIrwyVw5mMT+aAUZ/V0uEniAKCSYTEtUZtlCsYJNPcdmrT5J4v1g1+
+ /ypA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWZjaN1NW7zkNsk7d5/I7it+rLJWwjP4E5bNosngW/aE88cuu276qY71mUEzFZhrh3EVyMo06Z9XO3z@nongnu.org
-X-Gm-Message-State: AOJu0YyRQo9sfhpQ1mAJxIajJkAvZVWHnGY7ABk5xq6xEw/TOZ1zRIzg
- otnBqhnkZ8UUz9aRWUv2AYhFxoF2CRQ38c9Yr4w+iov5b/NHNAG8ztHCrgWabiaVMfubLs7jrkQ
- qSgl7fnaFZmWvhfZ1mm0b1ss7d555i6DiiTIixOSfFHl6yQSg3MGKCN/w
-X-Gm-Gg: ASbGncuYqLOKvpVSLVf4FKLjnD7EggphkAyyJS+fgQpPVSz/UV7zzwEZUaXvceDf2GY
- Kc9YPc+/Xg69Ixwkni4lBBbjgqL2G8ddPp1zKExIYNi/a9YvlW57uKZ4H7hx8l7bKCY16YDq6XT
- T4qvC2NcGaXfbtm4/v1D/jIA3wXH8GT2vQV55LL4y3DKEFLT9vyV8uIwtddr6B/6/xpS/443wyE
- CEL+hBRzxGWDq9dKFmWL80SV/mS5UFKR58vpnPxg76VJW4mLlyEDnjmjiKoCp5IfpOkpF/SR8iK
- MF6jFrcuzCYVTpoq4H+1kPXK7w6yFdSS5VtvNS0iX+WDYZj+Jj7e41gKPEYjKaMFUeHlpQ==
-X-Received: by 2002:a05:600c:620b:b0:450:d4a6:79ad with SMTP id
- 5b1f17b1804b1-4533cb4bea8mr119324665e9.23.1750169098267; 
- Tue, 17 Jun 2025 07:04:58 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHNHa9xPGBrlGViVTjKwHUHrrRRInb5RI5F8jy6FmGyJoW11BYseKIOgEQAtyZGxeGZyJIHQA==
-X-Received: by 2002:a05:600c:620b:b0:450:d4a6:79ad with SMTP id
- 5b1f17b1804b1-4533cb4bea8mr119323835e9.23.1750169097480; 
- Tue, 17 Jun 2025 07:04:57 -0700 (PDT)
+ AJvYcCXr/M+AX/KByMxQe8vcMNwWyz9pMIGpVA3+2N2FeCcA9HkUbaSX/tiROGR2GXQ2uwe+gKzlPGhC9diB@nongnu.org
+X-Gm-Message-State: AOJu0YwMakaTHcE5zYjyb/TJpzjgSAjNCCirMHDlaiegEh9UsZiX5Brk
+ gpsjbw4zVfA8q9RhV8h95MF5mpR5+xrdEUHcfS6IgThzGj5bCPBd0hEXzAU76OUvF00OsUryjlS
+ 5wzBqMVydmb1RaH+T3GopOS73tSRCsgovhaMCUm/88qbuh/cULQ4Jq3PA
+X-Gm-Gg: ASbGncsTiiEdLJrhL8SJDVqyMIBo5601JiO6V7JFFATjaVxQfGmiWE+ISNy7DrIZDjV
+ gSGRTx9/5mTjKQHlC+i8kq1gikfES+0u9MLYZsAqDyzp9cKFn6ZXqeAiVRMzIsI7q7u5eXvVaFG
+ VFH1HoQe8hCg5NCnsmrNP58jVIORmockkwJH4aCAJejc6W2dzfA/+5owHqWXaoU2zzgT73d3OWc
+ LrQk1T8i3km5WXUCl09KwF9YqXdE7WoCUaBsIqnYH7jTP4iMUHQViDAjPT0Fh+eUIn/wg+8JsV1
+ 9Fv9b4g+PYXDHa4CkDBxp2X3gylN8EprGDkyWXfUkbllPm7qMEGTBoiylFhQ8B9LKzxs6w==
+X-Received: by 2002:a05:6000:1447:b0:3a5:2fad:17af with SMTP id
+ ffacd0b85a97d-3a572e58cbemr8799272f8f.57.1750167247311; 
+ Tue, 17 Jun 2025 06:34:07 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEWuKpIzFA5EOrW7frVPEBawZ2k+SvHAPCXmr54cZJx+V/3fuGOT+6ARfwZpQgnkTzTkiXMbw==
+X-Received: by 2002:a05:6000:1447:b0:3a5:2fad:17af with SMTP id
+ ffacd0b85a97d-3a572e58cbemr8799244f8f.57.1750167246910; 
+ Tue, 17 Jun 2025 06:34:06 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e232219sm175153485e9.9.2025.06.17.07.04.55
+ ffacd0b85a97d-3a568a68b0esm13828969f8f.29.2025.06.17.06.34.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 07:04:56 -0700 (PDT)
-Message-ID: <2ccdf511-825b-41fc-9a59-1cb4c662a002@redhat.com>
-Date: Tue, 17 Jun 2025 16:04:54 +0200
+ Tue, 17 Jun 2025 06:34:06 -0700 (PDT)
+Message-ID: <fe166574-9e53-4e27-9c12-c91f3fc774c7@redhat.com>
+Date: Tue, 17 Jun 2025 15:34:00 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/8] hw/arm/virt-acpi-build: Fix ACPI IORT and MADT
- tables when its=off
+Subject: Re: [PATCH v4 5/8] qtest/bios-tables-test: Add test for when ITS is
+ off on aarch64
 Content-Language: en-US
 To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
  philmd@linaro.org, mst@redhat.com
@@ -89,12 +89,12 @@ Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
  ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
  anisinha@redhat.com
 References: <20250616131824.425315-1-gustavo.romero@linaro.org>
- <20250616131824.425315-8-gustavo.romero@linaro.org>
+ <20250616131824.425315-6-gustavo.romero@linaro.org>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250616131824.425315-8-gustavo.romero@linaro.org>
+In-Reply-To: <20250616131824.425315-6-gustavo.romero@linaro.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -103,7 +103,7 @@ X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,248 +123,88 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Hi Gustavo,
 
 On 6/16/25 3:18 PM, Gustavo Romero wrote:
-> Currently, the ITS Group nodes in the IORT table and the GIC ITS Struct
-> in the MADT table are always generated, even if GIC ITS is not available
-> on the machine.
+> From: Philippe Mathieu-Daudé <philmd@linaro.org>
 >
-> This commit fixes it by not generating the ITS Group nodes, not mapping
-> any other node to them, and not advertising the GIC ITS in the MADT
-> table, when GIC ITS is not available on the machine.
+> Arm64 GIC ITS (Interrupt Translation Service) is an optional piece of
+> hardware introduced in GICv3 and, being optional, it can be disabled
+> in QEMU aarch64 VMs that support it using machine option "its=off",
+> like, for instance: "-M virt,its=off".
 >
-> Since the fix changes the MADT and IORT tables, add the blobs for the
-> "its=off" test to the allow list and update them in the next commit.
+> In ACPI, the ITS is advertised, if present, in the MADT (aka APIC)
+> table and the remappings from the Root Complex (RC) and from the SMMU
+I would rephrase "and the remappings" by "while the RID mappings from ..."
+> nodes to the ITS Group nodes are described in the IORT table.
 >
-> Reported-by: Udo Steinberg <udo@hypervisor.org>
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2886
+> This new test verifies that when the "its=off" option is passed to the
+> machine the ITS-related data is correctly pruned from the ACPI tables.
+>
+> The new blobs for this test will be added in a following commit.
+>
 > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/arm/virt-acpi-build.c                    | 152 ++++++++++++--------
->  tests/qtest/bios-tables-test-allowed-diff.h |   2 +
->  2 files changed, 93 insertions(+), 61 deletions(-)
+>  tests/qtest/bios-tables-test-allowed-diff.h |  2 ++
+>  tests/qtest/bios-tables-test.c              | 21 +++++++++++++++++++++
+>  2 files changed, 23 insertions(+)
 >
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 6990bce3bb..2240421980 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -295,32 +295,42 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          /* Sort the smmu idmap by input_base */
->          g_array_sort(smmu_idmaps, iort_idmap_compare);
->  
-> -        /*
-> -         * Split the whole RIDs by mapping from RC to SMMU,
-> -         * build the ID mapping from RC to ITS directly.
-> -         */
-> -        for (i = 0; i < smmu_idmaps->len; i++) {
-> -            idmap = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
-> +        nb_nodes = 2; /* RC and SMMUv3 */
-> +        rc_mapping_count = smmu_idmaps->len;
-> +
-> +        if (vms->its) {
-> +            /*
-> +             * Split the whole RIDs by mapping from RC to SMMU,
-> +             * build the ID mapping from RC to ITS directly.
-> +             */
-> +            for (i = 0; i < smmu_idmaps->len; i++) {
-> +                idmap = &g_array_index(smmu_idmaps, AcpiIortIdMapping, i);
-> +
-> +                if (next_range.input_base < idmap->input_base) {
-> +                    next_range.id_count = idmap->input_base - next_range.input_base;
-> +                    g_array_append_val(its_idmaps, next_range);
-> +                }
-> +
-> +                next_range.input_base = idmap->input_base + idmap->id_count;
-> +            }
-I think I would create a helper that populates the its_idmap from the
-smmu_idmaps. To me to would make the code more readable. Also we could
-add a doc comment bout the helper explaining what it does.
->  
-> -            if (next_range.input_base < idmap->input_base) {
-> -                next_range.id_count = idmap->input_base - next_range.input_base;
-> +            /* Append the last RC -> ITS ID mapping */
-> +            if (next_range.input_base < 0x10000) {
-> +                next_range.id_count = 0x10000 - next_range.input_base;
->                  g_array_append_val(its_idmaps, next_range);
->              }
->  
-> -            next_range.input_base = idmap->input_base + idmap->id_count;
-> +            nb_nodes++; /* ITS */
-> +            rc_mapping_count += its_idmaps->len;
->          }
-> -
-> -        /* Append the last RC -> ITS ID mapping */
-> -        if (next_range.input_base < 0x10000) {
-> -            next_range.id_count = 0x10000 - next_range.input_base;
-> -            g_array_append_val(its_idmaps, next_range);
-> -        }
-> -
-> -        nb_nodes = 3; /* RC, ITS, SMMUv3 */
-> -        rc_mapping_count = smmu_idmaps->len + its_idmaps->len;
->      } else {
-> -        nb_nodes = 2; /* RC, ITS */
-> -        rc_mapping_count = 1;
-> +        if (vms->its) {
-> +            nb_nodes = 2; /* RC and ITS */
-> +            rc_mapping_count = 1; /* Direct map to ITS */
-> +        } else {
-> +            nb_nodes = 1; /* RC only */
-> +            rc_mapping_count = 0; /* No output mapping */
-> +        }
->      }
->      /* Number of IORT Nodes */
->      build_append_int_noprefix(table_data, nb_nodes, 4);
-> @@ -329,31 +339,43 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->      build_append_int_noprefix(table_data, IORT_NODE_OFFSET, 4);
->      build_append_int_noprefix(table_data, 0, 4); /* Reserved */
->  
-> -    /* Table 12 ITS Group Format */
-> -    build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
-> -    node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-> -    build_append_int_noprefix(table_data, node_size, 2); /* Length */
-> -    build_append_int_noprefix(table_data, 1, 1); /* Revision */
-> -    build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-> -    build_append_int_noprefix(table_data, 0, 4); /* Number of ID mappings */
-> -    build_append_int_noprefix(table_data, 0, 4); /* Reference to ID Array */
-> -    build_append_int_noprefix(table_data, 1, 4); /* Number of ITSs */
-> -    /* GIC ITS Identifier Array */
-> -    build_append_int_noprefix(table_data, 0 /* MADT translation_id */, 4);
-> +    if (vms->its) {
-> +        /* Table 12 ITS Group Format */
-> +        build_append_int_noprefix(table_data, 0 /* ITS Group */, 1); /* Type */
-> +        node_size =  20 /* fixed header size */ + 4 /* 1 GIC ITS Identifier */;
-> +        build_append_int_noprefix(table_data, node_size, 2); /* Length */
-> +        build_append_int_noprefix(table_data, 1, 1); /* Revision */
-> +        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-> +        build_append_int_noprefix(table_data, 0, 4); /* Number of ID mappings */
-> +        build_append_int_noprefix(table_data, 0, 4); /* Reference to ID Array */
-> +        build_append_int_noprefix(table_data, 1, 4); /* Number of ITSs */
-> +        /* GIC ITS Identifier Array */
-> +        build_append_int_noprefix(table_data, 0 /* MADT translation_id */, 4);
-> +    }
->  
->      if (vms->iommu == VIRT_IOMMU_SMMUV3) {
->          int irq =  vms->irqmap[VIRT_SMMU] + ARM_SPI_BASE;
-> -
-> +        int num_id_mappings, offset_to_id_array;
-> +
-> +        if (vms->its) {
-> +            num_id_mappings = 1; /* ITS Group node */
-> +            offset_to_id_array = SMMU_V3_ENTRY_SIZE; /* Just after the header */
-> +        } else {
-> +            num_id_mappings = 0; /* No ID mappings */
-> +            offset_to_id_array = 0; /* No ID mappings array */
-> +        }
->          smmu_offset = table_data->len - table.table_offset;
->          /* Table 9 SMMUv3 Format */
->          build_append_int_noprefix(table_data, 4 /* SMMUv3 */, 1); /* Type */
-> -        node_size =  SMMU_V3_ENTRY_SIZE + ID_MAPPING_ENTRY_SIZE;
-> +        node_size =  SMMU_V3_ENTRY_SIZE +
-> +                     (ID_MAPPING_ENTRY_SIZE * num_id_mappings);
->          build_append_int_noprefix(table_data, node_size, 2); /* Length */
->          build_append_int_noprefix(table_data, 4, 1); /* Revision */
->          build_append_int_noprefix(table_data, id++, 4); /* Identifier */
-> -        build_append_int_noprefix(table_data, 1, 4); /* Number of ID mappings */
-> +        /* Number of ID mappings */
-> +        build_append_int_noprefix(table_data, num_id_mappings, 4);
->          /* Reference to ID Array */
-> -        build_append_int_noprefix(table_data, SMMU_V3_ENTRY_SIZE, 4);
-> +        build_append_int_noprefix(table_data, offset_to_id_array, 4);
->          /* Base address */
->          build_append_int_noprefix(table_data, vms->memmap[VIRT_SMMU].base, 8);
->          /* Flags */
-> @@ -370,8 +392,10 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->          /* DeviceID mapping index (ignored since interrupts are GSIV based) */
->          build_append_int_noprefix(table_data, 0, 4);
->  
-> -        /* output IORT node is the ITS group node (the first node) */
-> -        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-> +        if (vms->its) {
-I would use num_id_mappings
-> +            /* Output IORT node is the ITS Group node (the first node). */
-> +            build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-> +        }
->      }
->  
->      /* Table 17 Root Complex Node */
-> @@ -415,20 +439,24 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->                                    range->id_count, smmu_offset);
->          }
->  
-> -        /* Map DeviceIDs (input) from SMMUv3 to ITS Group nodes: SMMU -> ITS. */
-see my previous comment
-> -        for (i = 0; i < its_idmaps->len; i++) {
-> -            range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
-> -            /* Output IORT node is the ITS Group node (the first node). */
-> -            build_iort_id_mapping(table_data, range->input_base,
-> -                                  range->id_count, IORT_NODE_OFFSET);
-> +        if (vms->its) {
-> +            /* Map DeviceIDs (input) from SMMUv3 to ITS Group nodes: SMMU -> ITS. */
-> +            for (i = 0; i < its_idmaps->len; i++) {
-> +                range = &g_array_index(its_idmaps, AcpiIortIdMapping, i);
-> +                /* Output IORT node is the ITS Group node (the first node). */
-> +                build_iort_id_mapping(table_data, range->input_base,
-> +                                      range->id_count, IORT_NODE_OFFSET);
-> +            }
->          }
->      } else {
-> -        /*
-> -         * Map bypassed RIDs (input) (don't go through the SMMU) to ITS Group
-> -         * nodes: RC -> ITS.
-> -         * Output IORT node is the ITS Group node (the first node).
-> -         */
-> -        build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-> +        if (vms->its) {
-> +            /*
-> +             * Map bypassed RIDs (input) (don't go through the SMMU) to ITS Group
-> +             * nodes: RC -> ITS.
-> +             * Output IORT node is the ITS Group node (the first node).
-> +             */
-> +            build_iort_id_mapping(table_data, 0, 0x10000, IORT_NODE_OFFSET);
-> +        }
->      }
->  
->      acpi_table_end(linker, &table);
-> @@ -741,18 +769,20 @@ build_madt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
->                                            memmap[VIRT_HIGH_GIC_REDIST2].size);
->          }
->  
-> -        /*
-> -         * ACPI spec, Revision 6.0 Errata A
-> -         * (original 6.0 definition has invalid Length)
-> -         * 5.2.12.18 GIC ITS Structure
-> -         */
-> -        build_append_int_noprefix(table_data, 0xF, 1);  /* Type */
-> -        build_append_int_noprefix(table_data, 20, 1);   /* Length */
-> -        build_append_int_noprefix(table_data, 0, 2);    /* Reserved */
-> -        build_append_int_noprefix(table_data, 0, 4);    /* GIC ITS ID */
-> -        /* Physical Base Address */
-> -        build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
-> -        build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
-> +        if (vms->its) {
-> +            /*
-> +             * ACPI spec, Revision 6.0 Errata A
-> +             * (original 6.0 definition has invalid Length)
-> +             * 5.2.12.18 GIC ITS Structure
-> +             */
-> +            build_append_int_noprefix(table_data, 0xF, 1);  /* Type */
-> +            build_append_int_noprefix(table_data, 20, 1);   /* Length */
-> +            build_append_int_noprefix(table_data, 0, 2);    /* Reserved */
-> +            build_append_int_noprefix(table_data, 0, 4);    /* GIC ITS ID */
-> +            /* Physical Base Address */
-> +            build_append_int_noprefix(table_data, memmap[VIRT_GIC_ITS].base, 8);
-> +            build_append_int_noprefix(table_data, 0, 4);    /* Reserved */
-> +        }
->      } else {
->          const uint16_t spi_base = vms->irqmap[VIRT_GIC_V2M] + ARM_SPI_BASE;
->  
 > diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
 > index dfb8523c8b..a88198d5c2 100644
 > --- a/tests/qtest/bios-tables-test-allowed-diff.h
 > +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+I still fail to understand whether empty tables + update if the
+
+bios-tables-test-allowed-diff.h need to be done prior to adding the new test.
+
+ * How to add or update the tests or commit changes that affect ACPI tables:
+ * Contributor:
+ * 1. add empty files for new tables, if any, under tests/data/acpi
+ * 2. list any changed files in tests/qtest/bios-tables-test-allowed-diff.h
+ * 3. commit the above *before* making changes that affect the tables
+
 > @@ -1 +1,3 @@
 >  /* List of comma-separated changed AML files to ignore */
 > +"tests/data/acpi/aarch64/virt/APIC.its_off",
 > +"tests/data/acpi/aarch64/virt/IORT.its_off",
+> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
+> index 0b2bdf9d0d..4201ec1131 100644
+> --- a/tests/qtest/bios-tables-test.c
+> +++ b/tests/qtest/bios-tables-test.c
+> @@ -2146,6 +2146,25 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
+>      free_test_data(&data);
+>  }
+>  
+> +static void test_acpi_aarch64_virt_tcg_its_off(void)
+> +{
+> +    test_data data = {
+> +        .machine = "virt",
+> +        .arch = "aarch64",
+> +        .variant =".its_off",
+you have a checkpatch error here.
+> +        .tcg_only = true,
+> +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+> +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
+> +        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+> +        .ram_start = 0x40000000ULL,
+> +        .scan_len = 128ULL * 1024 * 1024,
+> +    };
+> +
+> +    test_acpi_one("-cpu cortex-a57 "
+> +                  "-M gic-version=3,iommu=smmuv3,its=off", &data);
+> +    free_test_data(&data);
+> +}
+> +
+>  static void test_acpi_q35_viot(void)
+>  {
+>      test_data data = {
+> @@ -2577,6 +2596,8 @@ int main(int argc, char *argv[])
+>                             test_acpi_aarch64_virt_tcg_acpi_hmat);
+>              qtest_add_func("acpi/virt/topology",
+>                             test_acpi_aarch64_virt_tcg_topology);
+> +            qtest_add_func("acpi/virt/its_off",
+> +                           test_acpi_aarch64_virt_tcg_its_off);
+>              qtest_add_func("acpi/virt/numamem",
+>                             test_acpi_aarch64_virt_tcg_numamem);
+>              qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
 Thanks
 
 Eric
