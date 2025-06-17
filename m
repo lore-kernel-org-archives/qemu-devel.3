@@ -4,111 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8A73C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:37:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DF38C7115B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:38:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYJL-0003G4-2m; Tue, 17 Jun 2025 11:33:21 -0400
+	id 1uRYJG-00031g-28; Tue, 17 Jun 2025 11:33:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uRYIC-0001Fx-Lk; Tue, 17 Jun 2025 11:32:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRYID-0001Fx-VH
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:32:10 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uRXkn-0006GZ-3x; Tue, 17 Jun 2025 10:57:42 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55H87JP5014347;
- Tue, 17 Jun 2025 14:57:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=MQWX+6
- 9YNKZeuPiRUz9pug47O/6QaZc6bZ2mffAdzB8=; b=OrPk/eyKCRgZehOPNfaoZN
- 1SC5MlZI/bVL3Kl00iTC+rHftjFaQrDu917vBxze5A/w598ie6RJZ5xqYjo8dWUy
- 0USCEe66bYW04lqFU/eCVjr9/3W7mWLx6vb2yyhf133r8Qfe0Y+5ChlbtqgdiwJl
- 5O9W6dx0a2jMnW8Y2I4OzNm8qkd2yUPovVCZOOa1nMUUe3ueZ8xvSxVmWrKH9YAP
- tMo5mdmo7tjOPczbmwVGCUnHqr7UT0CwLNhm1+MDRjeNuUQg0Z80LphrUYmKoWQl
- SP6EPbbnxY0srBuIQqqAJBnxRwDZpS6HJp2rkP1QPWAnXTkDVIpDZC94/JBDXYLw
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4790s4h6pc-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Jun 2025 14:57:27 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55HC9D52000724;
- Tue, 17 Jun 2025 14:57:26 GMT
-Received: from smtprelay06.wdc07v.mail.ibm.com ([172.16.1.73])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 479mdp437x-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Jun 2025 14:57:26 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay06.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55HEvPIi32309648
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Jun 2025 14:57:25 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0853058056;
- Tue, 17 Jun 2025 14:57:25 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 29A0958052;
- Tue, 17 Jun 2025 14:57:24 +0000 (GMT)
-Received: from [9.12.79.241] (unknown [9.12.79.241])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Tue, 17 Jun 2025 14:57:24 +0000 (GMT)
-Message-ID: <41e788ad-77e2-46d2-a384-2c8f524391c2@linux.ibm.com>
-Date: Tue, 17 Jun 2025 10:57:23 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRXgN-0004VA-UT
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 10:53:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750171981;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=/vvdbIrIYuE0AqpfkcU+eN1rb+0uJtRv0SRE3RdgRVE=;
+ b=TNoMJAKRfe1BxMDJvlL/8W2jGJQwiQv4JCFkthJU0ZK5zc8JZyhk+ArOM6eVOXUvTVwqSL
+ wqsMq0N+YyDowCSQLh9eyw//kczZkYyQdrdU4fFIWkchtzVaoVSB7uV89eIv6KYtecGaJG
+ P7+GtdPmCxJtBFfZTK42fq8Djdsd/wk=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-441-x0u6e5-PN8CI4lMCQbRKVw-1; Tue, 17 Jun 2025 10:52:59 -0400
+X-MC-Unique: x0u6e5-PN8CI4lMCQbRKVw-1
+X-Mimecast-MFC-AGG-ID: x0u6e5-PN8CI4lMCQbRKVw_1750171978
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-450d290d542so35388645e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 07:52:59 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750171978; x=1750776778;
+ h=content-transfer-encoding:in-reply-to:from:references:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/vvdbIrIYuE0AqpfkcU+eN1rb+0uJtRv0SRE3RdgRVE=;
+ b=YuABcFNSu0FMjMySyj97WRKBp4Uq+2RZJHdQ5IujlyYzKDWKS06Ofw0DQUe256QBEA
+ fXL6XvnmYsAK8jZiAlQX18njvAnFc4fH/E9xkjxWE7HhO7Dv2tArgTVSdhyxuyG/jpdJ
+ AM2v9c0zU+VhJ4qx8w/CWJuSMxAI6+BS8lwI8LArZO4TEu662hzePv1E89KxtZqreNMU
+ VMBvHYsm3u2dFLAxTswpqmbGGL3eWrZkOQgY4nID+WX0rzPdIeL3uGw0qRbn2ylwxqu1
+ M7bpJ4wAtDxsrKXRwoeYJmr3koOM+Gzx9QPC+gQCMxKIq3dz0YPub9SFGLCI5pUPL6kb
+ AxYA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWTvuJJOo+bODGKlzUxKiZD8wdjqkjmGSO73wJ1TYVcJA3T3ivVc2qoblQjUyQ/9BXULLexxKwWRE08@nongnu.org
+X-Gm-Message-State: AOJu0Yxgvxos6aUVVLuD7hQpHyP6c/xctEHxphQMdzJuQeF7wJ+3YRMl
+ eT1wRgoJBMgrp5mc42ZAI93EJfDt9ItpjSOHCYEF31GfkzRdBVyedAg3NZmT4Pw44UEyhjgawwF
+ Zc5CPOUNrEw8c+XEd6ExoxgR/5tVffvb2+j89tCs+XmCJgZLMil86fWV/
+X-Gm-Gg: ASbGncspwuj2FZ18HTa/kbQY7SqMciJVqcpeNd+cY+URYAL5NFXcl67SW64kXHuRJww
+ L2Ou3ra//Gn8pWSCHHEy9SYmTaCtWi+S0lkUEpkzDuBy+OOFxcwyq1tP2I5QgWFJML0Btm/h3do
+ UnW0DR94TrZMVHFglIW3wY1VKzWpitopaRkj2kkNF8x/HJV51j1myiFZHLBtW+wPkb0XZN0nlto
+ razrF7yAVUnT4etPBNCXWgRUIisHKgomdwJrfjZkBI6E8mZmwaDQM1E0fY9wTGJqUvrBiurpHiQ
+ 4UK80ca4303RwIBiohT8VrHmAJB9ecjMYFVy4Ih2RuhT+bdsjO32f48+mYl2s5G5F746bw==
+X-Received: by 2002:a5d:5849:0:b0:3a4:dfc2:2a3e with SMTP id
+ ffacd0b85a97d-3a5723aeb2cmr11568588f8f.39.1750171978386; 
+ Tue, 17 Jun 2025 07:52:58 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF9HTWdom8PFQPfWWFaLklEvLBfbARk0LOFa905xM7xhItbTYPloiIJQ7yrjufhWUNXVbry4w==
+X-Received: by 2002:a5d:5849:0:b0:3a4:dfc2:2a3e with SMTP id
+ ffacd0b85a97d-3a5723aeb2cmr11568559f8f.39.1750171977970; 
+ Tue, 17 Jun 2025 07:52:57 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4532e224956sm180681045e9.4.2025.06.17.07.52.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Jun 2025 07:52:57 -0700 (PDT)
+Message-ID: <6debc836-c55d-406f-a74d-8ea5070b7fba@redhat.com>
+Date: Tue, 17 Jun 2025 16:52:55 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
- certificate store
-To: Markus Armbruster <armbru@redhat.com>
-Cc: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@redhat.com, pbonzini@redhat.com, walling@linux.ibm.com,
- jjherne@linux.ibm.com, jrossi@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-3-zycai@linux.ibm.com> <87sejyskgj.fsf@pond.sub.org>
+Subject: Re: [PATCH v5 5/5] hw/arm/virt: Allow virt extensions with KVM
 Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <87sejyskgj.fsf@pond.sub.org>
+To: Alyssa Ross <hi@alyssa.is>, eric.auger.pro@gmail.com,
+ qemu-devel@nongnu.org, qemu-arm@nongnu.org, miguel.luis@oracle.com,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, maz@kernel.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com
+References: <20250527062534.1186004-1-eric.auger@redhat.com>
+ <20250527062534.1186004-6-eric.auger@redhat.com> <875xgutpuh.fsf@alyssa.is>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <875xgutpuh.fsf@alyssa.is>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDExNSBTYWx0ZWRfX88ZmDWIu+juY
- BvThgSNPvRl+Qs4RIGKcC3xzz8cIzDTyZ0urGSHytDbSc8epVTTMtKdBBCrFmnnOPaGlTvwuicb
- 8EZ5dzIl4C42Vw8JlHUoj84V9W8AkbQCyjQOn3SfpWau5wr7El9GLL94R03AAXlLEQaQwgOp/HO
- gcq3n3n4OBiNA1xVpyus8zzeH29Y9HKyeY2Wl4Ijn7Y9FKAPBsPxCTjqaumkYcF1rUuxFwEJbsn
- 2UIzpIC9WoIYxS0zXJdtBgpNB9CSgWyIyIs5DHkvWetuZvpaiqbzK3C2uarmtMByms12KxWsQXF
- Mb6xLAsQFsd9Hknc5zDwnjY1GJIoaWYaChwJTyjxmJ4TKdSR5+EPVdkqVxjxDevbiAqWZ4YJLJS
- kzY0w7EtgYf9y9qB4FVtvuwlRSdlMtJelgJBWaa0EuSyowQTF800ImoxwiFTXY5N2ztqcnTw
-X-Proofpoint-ORIG-GUID: AMD-p3PLIFkSJn3TzDrYcLkw08i1dgtI
-X-Authority-Analysis: v=2.4 cv=Qc9mvtbv c=1 sm=1 tr=0 ts=68518258 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=iHqiD_Bf0ui-M6XZcwgA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: AMD-p3PLIFkSJn3TzDrYcLkw08i1dgtI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-17_06,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- priorityscore=1501
- malwarescore=0 spamscore=0 impostorscore=0 phishscore=0 mlxscore=0
- lowpriorityscore=0 clxscore=1015 adultscore=0 bulkscore=0 mlxlogscore=730
- suspectscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506170115
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,123 +114,48 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 6/17/25 6:58 AM, Markus Armbruster wrote:
-> Zhuoying Cai <zycai@linux.ibm.com> writes:
-> 
->> Add helper functions for x509 certificate which will be used in the next
->> patch for the certificate store.
+Hi Alyssa,
+On 6/17/25 4:17 PM, Alyssa Ross wrote:
+> Eric Auger <eric.auger@redhat.com> writes:
+>
+>> From: Haibo Xu <haibo.xu@linaro.org>
 >>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> 
-> [...]
-> 
->> diff --git a/qapi/crypto.json b/qapi/crypto.json
->> index c9d967d782..af487dcecd 100644
->> --- a/qapi/crypto.json
->> +++ b/qapi/crypto.json
->> @@ -612,3 +612,83 @@
->>    'base': { 'alg': 'QCryptoAkCipherAlgo' },
->>    'discriminator': 'alg',
->>    'data': { 'rsa': 'QCryptoAkCipherOptionsRSA' }}
->> +
->> +##
->> +# @QCryptoKeyidFlags:
->> +#
->> +# The supported flags for the key ID
->> +#
->> +# @sha1: SHA-1
->> +#
->> +# @sha256: SHA-256
->> +#
->> +# @sha512: SHA-512
->> +#
->> +# @best-known: BEST-KNOWN
->> +#
->> +# Since: 10.1
->> +##
->> +{ 'enum': 'QCryptoKeyidFlags',
->> +  'data': ['sha1', 'sha256', 'sha512', 'best-known']}
->> +
->> +##
->> +# @QCryptoCertFmt:
-> 
-> For better or worse, we tend not to abbreviate things in QAPI schema
-> names: QCryptoCertFormat.
-> 
->> +#
->> +# The supported certificate encoding formats
->> +#
->> +# @der: DER
->> +#
->> +# @pem: PEM
->> +#
->> +# Since: 10.1
->> +##
->> +{ 'enum': 'QCryptoCertFmt',
->> +  'data': ['der', 'pem']}
->> +
->> +##
->> +# @QCryptoSigAlgo:
->> +#
->> +# Algorithms for digital signature
->> +#
->> +# @unknown: UNKNOWN
->> +#
->> +# @rsa-sha1: RSA-SHA1 or RSA-SHA
->> +#
->> +# @dsa-sha1: DSA-SHA1 or DSA-SHA
->> +#
->> +# @rsa-md5: RSA-MD5
->> +#
->> +# @rsa-md2: RSA-MD2
->> +#
->> +# @rsa-rmd160: RSA-RMD160
->> +#
->> +# @rsa-sha256: RSA-SHA256
->> +#
->> +# @rsa-sha384: RSA-SHA384
->> +#
->> +# @rsa-sha512: RSA-SHA512
->> +#
->> +# @rsa-sha224: RSA-SHA224
->> +#
->> +# @dsa-sha224: DSA-SHA224
->> +#
->> +# @dsa-sha256: DSA-SHA256
->> +#
->> +# @ecdsa-sha1: ECDSA-SHA1
->> +#
->> +# @ecdsa-sha224: ECDSA-SHA224
->> +#
->> +# @ecdsa-sha256: ECDSA-SHA256
->> +#
->> +# @ecdsa-sha384: ECDSA-SHA384
->> +#
->> +# @ecdsa-sha512: ECDSA-SHA512
->> +#
->> +# Since: 10.1
->> +##
->> +{ 'enum': 'QCryptoSigAlgo',
->> +  'data': ['unknown', 'rsa-sha1', 'dsa-sha1',
->> +           'rsa-md5', 'rsa-md2', 'rsa-rmd160',
->> +           'rsa-sha256', 'rsa-sha384', 'rsa-sha512', 'rsa-sha224',
->> +           'dsa-sha224', 'dsa-sha256',
->> +           'ecdsa-sha1', 'ecdsa-sha224', 'ecdsa-sha256', 'ecdsa-sha384', 'ecdsa-sha512']}
-> 
-> Ignorant question: why are these QAPI enums?
-> 
-> If they need to be QAPI enums, then I'll have some requests on the doc
-> comments.
-> 
+>> Up to now virt support on guest has been only supported with TCG.
+>> Now it becomes feasible to use it with KVM acceleration.
+>>
+>> Also check only in-kernel GICv3 is used along with KVM EL2.
+>>
+>> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
+>> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
+>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Hi!  From what I can tell, this will produce an error on hosts that
+> don't support nested virtualization when QEMU is invoked with -accel
+> kvm:tcg -machine virtualization=on, but I don't think that's the ideal
+Thanks for reporting this issue. This is not an expected behavior. I
+will respin hopefully this week so I will have give it a try.
 
-Hi, thanks for the feedback.
+What kind of error msg do you get?
 
-The helper functions in x509-utils.c either take QAPI enum values as
-parameters or return them. These enums are used later within QEMU.
+Thanks
+
+Eric
+> behaviour.  It would make more sense for it to fall back to the first
+> permitted accel option that does support running the machine as
+> configured, so if hardware nested virtualization is not supported, it
+> should fall back to TCG.
+>
+> I maintain an OS development environment that includes scripts for
+> running images in QEMU, where running KVM on those images is a
+> requirement.  Currently, those scripts simply force TCG on aarch64.
+> With this change, to take advantage of KVM NV support, I'd have to try
+> to identify in the script whether NV would be supported.  QEMU would be
+> in a much better position to determine this and fall back to TCG if it's
+> unsupported, like how the -accel option with multiple values usually
+> works.
 
 
