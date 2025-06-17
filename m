@@ -4,75 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F177C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 10:59:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B417FC71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:32:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRU1y-0004q0-EU; Tue, 17 Jun 2025 06:59:06 -0400
+	id 1uRYIG-0001Xb-5L; Tue, 17 Jun 2025 11:32:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRU1w-0004js-4T
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:59:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uRYI7-0000vN-KB
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:32:04 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRU1t-0008IJ-Nb
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:59:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750157939;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Ll8Pu8fWO5pLJlieWzTx8djWwly8ZdyIrU4GDzrcl0o=;
- b=dM+uMdoT5FKkn0S7Let33dAOd/AbACSKB6s9pbjAa0RIpz42b+atQZsx2FqmahMni5PMfw
- GbX/WrxzVRxxUl/9zpFXFvuVcX64zd/rdSTrqRhvzNab8WKqqiIP7frDi/Lc8AEwLpx3Rz
- bYoNKMXXP0JcsXVBfgwRo1cOTeUemjI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-491-VZVNihXnPtSW9rjAAq89rA-1; Tue,
- 17 Jun 2025 06:58:57 -0400
-X-MC-Unique: VZVNihXnPtSW9rjAAq89rA-1
-X-Mimecast-MFC-AGG-ID: VZVNihXnPtSW9rjAAq89rA_1750157936
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C374A1800290; Tue, 17 Jun 2025 10:58:55 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.11])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id EFF4A1956094; Tue, 17 Jun 2025 10:58:54 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 63E3421E6A27; Tue, 17 Jun 2025 12:58:52 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: Zhuoying Cai <zycai@linux.ibm.com>
-Cc: thuth@redhat.com,  berrange@redhat.com,  richard.henderson@linaro.org,
- david@redhat.com,  pbonzini@redhat.com,  walling@linux.ibm.com,
- jjherne@linux.ibm.com,  jrossi@linux.ibm.com,  pasic@linux.ibm.com,
- borntraeger@linux.ibm.com,  farman@linux.ibm.com,  iii@linux.ibm.com,
- eblake@redhat.com,  qemu-s390x@nongnu.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
- certificate store
-In-Reply-To: <20250604215657.528142-3-zycai@linux.ibm.com> (Zhuoying Cai's
- message of "Wed, 4 Jun 2025 17:56:30 -0400")
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-3-zycai@linux.ibm.com>
-Date: Tue, 17 Jun 2025 12:58:52 +0200
-Message-ID: <87sejyskgj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uRXsQ-00076j-RV
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:05:33 -0400
+Received: from pps.filterd (m0246617.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55HEXDZG012810;
+ Tue, 17 Jun 2025 15:05:14 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=66pgN
+ YGDKbghLS1TEv4zQ3PHBw3c2sjasWk8q2OjnXQ=; b=QXmAiipKaphBYq1Khf5+V
+ uWBIJio00GSH8ZS2R5n/gK8fBEOeoWtrp5mkP5gkZMMB0TyiF7eC0/Jn8kWSpbXR
+ sZ48lI9AOR2c8AQbXb0PBhiBgn6Ne7oGvc05YHwyHyfuDOxlPZFAaypwedQKkQO+
+ 5Y08uTGHWAcCn5lXM/lC8eBo4P+LDch7/DDGFe4d7kBdLrK2Y33fvEdWiGux9nlg
+ Hc2mTLhPn2Y27xslian3cRFiit5jRxPO0cPYfcSGB0C66iERpfGYPiDKrYkbAUc5
+ nYTvBx0ZSG4ectg7xaJNRBheDlPoKDCVmyhy7XOgFXl8ssIl9Mwt4XBd2Bmzg78k
+ g==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 47b23xs0wb-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Jun 2025 15:05:13 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55HEedae000822; Tue, 17 Jun 2025 15:04:32 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 478yh9bxtj-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Jun 2025 15:04:32 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55HF4Svh014869;
+ Tue, 17 Jun 2025 15:04:31 GMT
+Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
+ (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.254.235])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 478yh9bxny-6; Tue, 17 Jun 2025 15:04:31 +0000
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+To: qemu-devel@nongnu.org
+Cc: ethan.milon@eviden.com, mst@redhat.com, pbonzini@redhat.com,
+ mjt@tls.msk.ru, marcel.apfelbaum@gmail.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ vasant.hegde@amd.com, suravee.suthikulpanit@amd.com,
+ santosh.shukla@amd.com, sarunkod@amd.com, brijesh.singh@amd.com,
+ joao.m.martins@oracle.com, boris.ostrovsky@oracle.com,
+ alejandro.j.jimenez@oracle.com, philmd@linaro.org
+Subject: [PATCH v4 5/8] amd_iommu: Fix mask to retrieve Interrupt Table Root
+ Pointer from DTE
+Date: Tue, 17 Jun 2025 15:04:24 +0000
+Message-ID: <20250617150427.20585-6-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250617150427.20585-1-alejandro.j.jimenez@oracle.com>
+References: <20250617150427.20585-1-alejandro.j.jimenez@oracle.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-17_06,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ malwarescore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 spamscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2506170117
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDExOCBTYWx0ZWRfX9lvUNp3uq9Ui
+ Uhk5B9Y35QV47FIWRKbEmQ/YgE0oA9aeoph5CAJcTglxoBNuznHY4lLRsCHDPz8Bs8sdkOuTOBB
+ zBAil2mE1dUNYHI8kWm1267U06W/uWLuht8tyQxW9cVx2nhdPWu+7nfhV8NdHtM4GdIS0m7ls1/
+ 0lk5xdJ8IBaXT21MURo5O95rotpTbgMLvvhX7VnxC/Za8113dOuIhEGKipuLjfERpwUey/f74RF
+ VKiBOy3pVJw4M7LnqUn7IasmwDwzSBeK755W0AkPMVAbL4tdgMB0gMYBCyyi/tSSbN94M9SYs52
+ nj2zzhKZToQceku/5m9B959bBFzlmj8nuswtRuTb+6TUd/UJqu307xZpni5RTIHfI4hB1fViy35
+ fOtC8c13CyTuaJOu8Imf+OkPkXvWXxzSbAoiP03uvWvLD4MTn2sHsGEZS7YhBrIiJSFhD76+
+X-Authority-Analysis: v=2.4 cv=DM2P4zNb c=1 sm=1 tr=0 ts=68518429 b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+ a=6IFa9wvqVegA:10 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
+ a=VXbWx-IoamzKqho_xYMA:9
+ a=Fg1AiH1G6rFz08G2ETeA:22 cc=ntf awl=host:13206
+X-Proofpoint-GUID: Cg3HqFDKm4r5zuNbANtCHWJxyFafQj_s
+X-Proofpoint-ORIG-GUID: Cg3HqFDKm4r5zuNbANtCHWJxyFafQj_s
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0a-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,111 +121,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhuoying Cai <zycai@linux.ibm.com> writes:
+Fix an off-by-one error in the definition of AMDVI_IR_PHYS_ADDR_MASK. The
+current definition masks off the most significant bit of the Interrupt Table
+Root ptr i.e. it only generates a mask with bits [50:6] set. See the AMD I/O
+Virtualization Technology (IOMMU) Specification for the Interrupt Table
+Root Pointer[51:6] field in the Device Table Entry format.
 
-> Add helper functions for x509 certificate which will be used in the next
-> patch for the certificate store.
->
-> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
+Cc: qemu-stable@nongnu.org
+Fixes: b44159fe0078 ("x86_iommu/amd: Add interrupt remap support when VAPIC is not enabled")
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+---
+ hw/i386/amd_iommu.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-[...]
-
-> diff --git a/qapi/crypto.json b/qapi/crypto.json
-> index c9d967d782..af487dcecd 100644
-> --- a/qapi/crypto.json
-> +++ b/qapi/crypto.json
-> @@ -612,3 +612,83 @@
->    'base': { 'alg': 'QCryptoAkCipherAlgo' },
->    'discriminator': 'alg',
->    'data': { 'rsa': 'QCryptoAkCipherOptionsRSA' }}
-> +
-> +##
-> +# @QCryptoKeyidFlags:
-> +#
-> +# The supported flags for the key ID
-> +#
-> +# @sha1: SHA-1
-> +#
-> +# @sha256: SHA-256
-> +#
-> +# @sha512: SHA-512
-> +#
-> +# @best-known: BEST-KNOWN
-> +#
-> +# Since: 10.1
-> +##
-> +{ 'enum': 'QCryptoKeyidFlags',
-> +  'data': ['sha1', 'sha256', 'sha512', 'best-known']}
-> +
-> +##
-> +# @QCryptoCertFmt:
-
-For better or worse, we tend not to abbreviate things in QAPI schema
-names: QCryptoCertFormat.
-
-> +#
-> +# The supported certificate encoding formats
-> +#
-> +# @der: DER
-> +#
-> +# @pem: PEM
-> +#
-> +# Since: 10.1
-> +##
-> +{ 'enum': 'QCryptoCertFmt',
-> +  'data': ['der', 'pem']}
-> +
-> +##
-> +# @QCryptoSigAlgo:
-> +#
-> +# Algorithms for digital signature
-> +#
-> +# @unknown: UNKNOWN
-> +#
-> +# @rsa-sha1: RSA-SHA1 or RSA-SHA
-> +#
-> +# @dsa-sha1: DSA-SHA1 or DSA-SHA
-> +#
-> +# @rsa-md5: RSA-MD5
-> +#
-> +# @rsa-md2: RSA-MD2
-> +#
-> +# @rsa-rmd160: RSA-RMD160
-> +#
-> +# @rsa-sha256: RSA-SHA256
-> +#
-> +# @rsa-sha384: RSA-SHA384
-> +#
-> +# @rsa-sha512: RSA-SHA512
-> +#
-> +# @rsa-sha224: RSA-SHA224
-> +#
-> +# @dsa-sha224: DSA-SHA224
-> +#
-> +# @dsa-sha256: DSA-SHA256
-> +#
-> +# @ecdsa-sha1: ECDSA-SHA1
-> +#
-> +# @ecdsa-sha224: ECDSA-SHA224
-> +#
-> +# @ecdsa-sha256: ECDSA-SHA256
-> +#
-> +# @ecdsa-sha384: ECDSA-SHA384
-> +#
-> +# @ecdsa-sha512: ECDSA-SHA512
-> +#
-> +# Since: 10.1
-> +##
-> +{ 'enum': 'QCryptoSigAlgo',
-> +  'data': ['unknown', 'rsa-sha1', 'dsa-sha1',
-> +           'rsa-md5', 'rsa-md2', 'rsa-rmd160',
-> +           'rsa-sha256', 'rsa-sha384', 'rsa-sha512', 'rsa-sha224',
-> +           'dsa-sha224', 'dsa-sha256',
-> +           'ecdsa-sha1', 'ecdsa-sha224', 'ecdsa-sha256', 'ecdsa-sha384', 'ecdsa-sha512']}
-
-Ignorant question: why are these QAPI enums?
-
-If they need to be QAPI enums, then I'll have some requests on the doc
-comments.
+diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
+index 988a485f808cc..96fc5b621e609 100644
+--- a/hw/i386/amd_iommu.h
++++ b/hw/i386/amd_iommu.h
+@@ -231,7 +231,7 @@
+ #define AMDVI_IR_INTCTL_PASS            1
+ #define AMDVI_IR_INTCTL_REMAP           2
+ 
+-#define AMDVI_IR_PHYS_ADDR_MASK         (((1ULL << 45) - 1) << 6)
++#define AMDVI_IR_PHYS_ADDR_MASK         GENMASK64(51, 6)
+ 
+ /* MSI data 10:0 bits (section 2.2.5.1 Fig 14) */
+ #define AMDVI_IRTE_OFFSET               0x7ff
+-- 
+2.43.5
 
 
