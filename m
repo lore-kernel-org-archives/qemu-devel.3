@@ -4,56 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6219C71155
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 04:20:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C76FC71155
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 04:39:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRNo3-0006gY-Uo; Tue, 17 Jun 2025 00:20:19 -0400
+	id 1uRO5g-0002qC-4n; Tue, 17 Jun 2025 00:38:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangyuquan1236@phytium.com.cn>)
- id 1uRNo2-0006gN-33
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:20:18 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <wangyuquan1236@phytium.com.cn>) id 1uRNny-0005Gl-1D
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:20:17 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-7 (Coremail) with SMTP id AQAAfwDn7n757FBoQr04Aw--.543S2;
- Tue, 17 Jun 2025 12:20:09 +0800 (CST)
-Received: from phytium.com.cn (unknown [218.76.62.144])
- by mail (Coremail) with SMTP id AQAAfwC3Tyny7FBoIwhWAA--.24S3;
- Tue, 17 Jun 2025 12:20:03 +0800 (CST)
-From: wangyuquan <wangyuquan1236@phytium.com.cn>
-To: rad@semihalf.com, peter.maydell@linaro.org, leif.lindholm@oss.qualcomm.com,
- jonathan.cameron@huawei.com
-Cc: qemu-devel@nongnu.org, linux-cxl@vger.kernel.org,
- Yuquan Wang <wangyuquan1236@phytium.com.cn>
-Subject: [RFC PATCH v6] hw/arm/sbsa-ref: Support CXL Host Bridge & CFMW
-Date: Tue, 17 Jun 2025 12:19:46 +0800
-Message-Id: <20250617041946.82587-1-wangyuquan1236@phytium.com.cn>
-X-Mailer: git-send-email 2.34.1
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1uRO5e-0002pW-Qb
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:30 -0400
+Received: from mgamail.intel.com ([198.175.65.18])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
+ id 1uRO5b-0007je-EI
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750135108; x=1781671108;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=IglXtui1Vatd43jD84nQ+rb4ziwGuJrvIl5/7WfV7Ng=;
+ b=n52J+Q9FwaKD7n/lQD50S6uFlWczb8vG7c5tVa4I0zcQrb8hBe0U8R9E
+ W9/s2O0O4r0388f7TiaDZD7u033DOgZi8dyXgcRtZXmjkoDJwdBTbL9JY
+ g3VObYf143qpG9i6Jj/0OuwvfFi4Elf/YaU+WraYenrzr5kprG2442BsB
+ KtouJqR2PIVr4/N5/e8VndnSaEnI7ngvC/7UKwR33SVnTNmmJw92RnvEE
+ D/baVOAwLWoWBuIh7Hskelxf87oKCzCMJ+r907VTr5qtTVl/uwFsIZM2t
+ a4Cuc7edyBxVZrQ8MVBLtU4RX81mWxj8Bx3JB3PMLpnznm+k00GgTvmma Q==;
+X-CSE-ConnectionGUID: G5+f97wZRfKxTvk3TKIABw==
+X-CSE-MsgGUID: cZgrbfGiSIGGJcaP8esFbQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="52432292"
+X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="52432292"
+Received: from orviesa008.jf.intel.com ([10.64.159.148])
+ by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jun 2025 21:38:24 -0700
+X-CSE-ConnectionGUID: fEi7vHC9QH60ohAHmC5TQQ==
+X-CSE-MsgGUID: YYAS85NHQSmP8yDIC+/SZQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="149551038"
+Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
+ by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Jun 2025 21:38:22 -0700
+From: Vivek Kasireddy <vivek.kasireddy@intel.com>
+To: qemu-devel@nongnu.org
+Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
+ Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Subject: [PATCH v6 2/7] ui/spice: Enable gl=on option for non-local or remote
+ clients
+Date: Mon, 16 Jun 2025 21:32:26 -0700
+Message-ID: <20250617043546.1022779-3-vivek.kasireddy@intel.com>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250617043546.1022779-1-vivek.kasireddy@intel.com>
+References: <20250617043546.1022779-1-vivek.kasireddy@intel.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAfwC3Tyny7FBoIwhWAA--.24S3
-X-CM-SenderInfo: 5zdqw5pxtxt0arstlqxsk13x1xpou0fpof0/1tbiAQADAWhPIu4E8QAgs9
-Authentication-Results: hzbj-icmmx-7; spf=neutral smtp.mail=wangyuquan
- 1236@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvAXoWfGFWrZrW8Xr18KFy3Ar15CFg_yoW8Gr1xKo
- WIqFs5CF48Kw4SqF10kFZrtrW7XFZ8KFn3JF45CF4Yka1UA3yDJa4fKws7JwsxJr4rtF13
- XFZrtr9xW34DJF97n29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXasCq-sGcSsGvf
- J3UbIjqfuFe4nvWSU8nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2KfnxnUUI43ZEXa7xR_UU
- UUUUUUU==
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=wangyuquan1236@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -25
-X-Spam_score: -2.6
-X-Spam_bar: --
-X-Spam_report: (-2.6 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.18;
+ envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -62
+X-Spam_score: -6.3
+X-Spam_bar: ------
+X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -69,362 +89,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+Newer versions of Spice server should be able to accept dmabuf
+fds from Qemu for clients that are connected via the network.
+In other words, when this option is enabled, Qemu would share
+a dmabuf fd with Spice which would encode and send the data
+associated with the fd to a client that could be located on
+a different machine.
 
-This creates a specific CXL host bridge (0001:00) with two cxl
-root ports on sbsa-ref. And the memory layout provides separate
-space windows for the cxl host bridge in the sbsa-ref memmap:
-
-- 64K  CXL Host Bridge Component Registers (CHBCR)
-- 64K  CXL_PIO
-- 128M CXL_MMIO
-- 256M CXL_ECAM
-- 4G   CXL_MMIO_HIGH
-
-To provide CFMWs on sbsa-ref, this extends 1TB space from the
-hole above RAM Memory [SBSA_MEM] for CXL Fixed Memory Window:
-
-- 1T   CXL_FIXED_WINDOW
-
-Signed-off-by: Yuquan Wang <wangyuquan1236@phytium.com.cn>
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Cc: Frediano Ziglio <freddy77@gmail.com>
+Cc: Dongwon Kim <dongwon.kim@intel.com>
+Cc: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
+ include/ui/spice-display.h | 1 +
+ ui/spice-core.c            | 4 ++++
+ ui/spice-display.c         | 1 +
+ 3 files changed, 6 insertions(+)
 
-v5 -> v6:
-- Change the CXL root ports to 4
-
-Background
-==========
-Currently the base CXL support for arm platforms is only on Jonathan's patches[2].
-SBSA-REF can be more like a real machine, thus my initial purpose is to support the
-simplest CXL VH topology on sbsa-ref to verify the basic CXL function usage,
-therefore, some real machine could refer the CXL running result on sbsa-ref.  
-
-This series leverages Jonathan's patches to design [SBSA_CXL_CHBCR] and
-[SBSA_CXL_FIXED_WINDOW] spaces for sbsa-ref layout. 
-
-Regard to the burden of edk2 firmware, I try to build a static CEDT table and add
-acpi0016, acpi0017 and other CXL relevant contents into acpi tables[3][4]. Hence it
-doesn't need to communicate CXL contents via DT to edk2. 
-
-The New CXL HOST
-================
-This patch will use the new CXL host bridge to establish the CXL topology[5].
-
-CXL FIXED WINDOW design
-=======================
-0xA0000000000 is chosen as the base address of this space because of 3 reasons:
-1) It is more suitable to choose a static address instead of that
-implementation in virt, since a dynamic address space layout of
-sbsa-ref is not appropriate for its original purpose as a reference
-platform.
-
-2) The Hotplug Memory address range should in the range of maximum
-addressable range of sbsa-ref platform(0x10000000000-0x80ffffffffff).
-It is satisfied the requirements of memory hotplug in linux kernel.
-
-3) The start pfn of CFMW should exceed the reserved_pfn_range for
-onlined numa node.
-
-Usage of CXL on sbsa-ref
-========================
-With the 'create_cxl()' and 'create_cxl_fixed_window()', users don't need to input
-'-device pxb-cxl' , '-device cxl-rp' and '-M cxl-fmw' parameters.
-
-Thus, to run sbsa-ref with a CXL device could use:
-qemu-system-aarch64 \
--object memory-backend-file,id=mem2,mem-path=/tmp/mem2,size=256M,share=true \
--device cxl-type3,bus=cxl.0,volatile-memdev=mem2,id=cxl-mem1 \
-
-Incompatibility problem
-=======================
-Although the new CXL host bridge has been separated from the original pcie host, the
-incompatibility problem of "-device qemu-xhci" is not resolved. Because the new device
-to plug by qemu command would be enumerated at the largest domain(0001), for example,
-if we add "-device qemu-xhci" to boot sbsa-ref with CXL, the lspci would show:
-
-    root@ubuntu-jammy-arm64:~# lspci
-     0000:00:00.0 Host bridge: Red Hat, Inc. QEMU PCIe Host bridge
-     0000:00:01.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
-     0000:00:02.0 Display controller: Device 1234:1111 (rev 02)
-     0001:00:00.0 PCI bridge: Intel Corporation Device 7075
-     0001:00:01.0 PCI bridge: Intel Corporation Device 7075
-     0001:00:02.0 PCI bridge: Intel Corporation Device 7075
-     0001:00:03.0 PCI bridge: Intel Corporation Device 7075
-     0001:00:04.0 USB controller: Red Hat, Inc. QEMU XHCI Host Controller (rev 01)
-     0001:01:00.0 Memory controller [0502]: Intel Corporation Device 0d93 (rev 01)
-     0001:02:00.0 Memory controller [0502]: Intel Corporation Device 0d93 (rev 01)
-     0001:03:00.0 Memory controller [0502]: Intel Corporation Device 0d93 (rev 01)
-     0001:04:00.0 Memory controller [0502]: Intel Corporation Device 0d93 (rev 01)
-
-Hence we should add "bus=pcie.0" when we want to plug some devices on the original
-pcie bus, for example:
--device qemu-xhci,bus=pcie.0 \
-or
--device nvme,serial=deadbeef,bus=pcie.0,drive=hdd \
--drive file=../disk/hdd.qcow2,format=qcow2,id=hdd,if=none \
-
-Dynamic CXL topology problem
-============================
-Actually the ideal expectation is sbsa-ref could also have a dynamic CXL topology by user
-parameters. According to my knowledge, it should pass a dtb to firmware to match the required
-address space. I'm currently trying to solve this problem. I am looking for suggestions on if
-there are better ways to do it.
-
-This series patches are here to hopefully some comments to guide me!
-
-Link:
-[1]: https://lists.nongnu.org/archive/html/qemu-arm/2024-12/msg00350.html
-[2]: https://lore.kernel.org/linux-cxl/20220616141950.23374-1-Jonathan.Cameron@huawei.com/
-[3]: https://edk2.groups.io/g/devel/message/120851
-[4]: https://edk2.groups.io/g/devel/topic/rfc_patch_edk2_platforms_v4/110023229
-[5]: https://lore.kernel.org/linux-cxl/20250617040649.81303-1-wangyuquan1236@phytium.com.cn/T/#t
-
- docs/system/arm/sbsa.rst |   4 ++
- hw/arm/Kconfig           |   1 +
- hw/arm/sbsa-ref.c        | 137 ++++++++++++++++++++++++++++++++++++++-
- 3 files changed, 141 insertions(+), 1 deletion(-)
-
-diff --git a/docs/system/arm/sbsa.rst b/docs/system/arm/sbsa.rst
-index 2bf3fc8d59..21b88e88e7 100644
---- a/docs/system/arm/sbsa.rst
-+++ b/docs/system/arm/sbsa.rst
-@@ -28,6 +28,7 @@ The ``sbsa-ref`` board supports:
-   - E1000E ethernet card on PCIe bus
-   - Bochs display adapter on PCIe bus
-   - A generic SBSA watchdog device
-+  - CXL host bridge and CXL fixed memory window
- 
- 
- Board to firmware interface
-@@ -92,3 +93,6 @@ Platform version changes:
- 
- 0.4
-   CPU topology information is present in devicetree.
-+
-+0.5
-+  CXL host bridge and CXL fixed memory window are supported.
-diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
-index f543d944c3..b7247f83bc 100644
---- a/hw/arm/Kconfig
-+++ b/hw/arm/Kconfig
-@@ -192,6 +192,7 @@ config SBSA_REF
-     select GPIO_KEY
-     select PCI_EXPRESS
-     select PCI_EXPRESS_GENERIC_BRIDGE
-+    select CXL_HOST_BRIDGE
-     select PFLASH_CFI01
-     select PL011 # UART
-     select PL031 # RTC
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index deae5cf986..7082d83da0 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -36,11 +36,15 @@
- #include "hw/arm/smmuv3.h"
- #include "hw/block/flash.h"
- #include "hw/boards.h"
-+#include "hw/cxl/cxl.h"
-+#include "hw/cxl/cxl_host.h"
- #include "hw/ide/ide-bus.h"
- #include "hw/ide/ahci-sysbus.h"
- #include "hw/intc/arm_gicv3_common.h"
- #include "hw/intc/arm_gicv3_its_common.h"
- #include "hw/loader.h"
-+#include "hw/pci/pcie_port.h"
-+#include "hw/pci-host/cxl_host_bridge.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/qdev-properties.h"
- #include "hw/usb.h"
-@@ -94,6 +98,13 @@ enum {
-     SBSA_SECURE_MEM,
-     SBSA_AHCI,
-     SBSA_XHCI,
-+    SBSA_CXL,
-+    SBSA_CXL_CHBCR,
-+    SBSA_CXL_MMIO,
-+    SBSA_CXL_MMIO_HIGH,
-+    SBSA_CXL_PIO,
-+    SBSA_CXL_ECAM,
-+    SBSA_CXL_FIXED_WINDOW,
+diff --git a/include/ui/spice-display.h b/include/ui/spice-display.h
+index e1a9b36185..6c55f38c8b 100644
+--- a/include/ui/spice-display.h
++++ b/include/ui/spice-display.h
+@@ -151,6 +151,7 @@ struct SimpleSpiceCursor {
  };
  
- struct SBSAMachineState {
-@@ -105,6 +116,7 @@ struct SBSAMachineState {
-     int psci_conduit;
-     DeviceState *gic;
-     PFlashCFI01 *flash[2];
-+    CXLState cxl_devices_state;
- };
+ extern bool spice_opengl;
++extern bool spice_remote_client;
  
- #define TYPE_SBSA_MACHINE   MACHINE_TYPE_NAME("sbsa-ref")
-@@ -132,6 +144,14 @@ static const MemMapEntry sbsa_ref_memmap[] = {
-     /* Space here reserved for more SMMUs */
-     [SBSA_AHCI] =               { 0x60100000, 0x00010000 },
-     [SBSA_XHCI] =               { 0x60110000, 0x00010000 },
-+    /* 64K CXL Host Bridge Registers space */
-+    [SBSA_CXL_CHBCR] =          { 0x60200000, 0x00010000 },
-+    /* 64K CXL PIO space */
-+    [SBSA_CXL_PIO] =            { 0x60300000, 0x00010000 },
-+    /* 128M CXL 32-bit MMIO space */
-+    [SBSA_CXL_MMIO] =           { 0x60400000, 0x08000000 },
-+    /* 256M CXL ECAM space */
-+    [SBSA_CXL_ECAM] =           { 0x68500000, 0x10000000 },
-     /* Space here reserved for other devices */
-     [SBSA_PCIE_PIO] =           { 0x7fff0000, 0x00010000 },
-     /* 32-bit address PCIE MMIO space */
-@@ -141,6 +161,10 @@ static const MemMapEntry sbsa_ref_memmap[] = {
-     /* ~1TB PCIE MMIO space (4GB to 1024GB boundary) */
-     [SBSA_PCIE_MMIO_HIGH] =     { 0x100000000ULL, 0xFF00000000ULL },
-     [SBSA_MEM] =                { 0x10000000000ULL, RAMLIMIT_BYTES },
-+    /* 4G CXL 64-bit MMIO space */
-+    [SBSA_CXL_MMIO_HIGH] =      { 0x90000000000ULL, 0x100000000ULL },
-+    /* 1TB CXL FIXED WINDOW space */
-+    [SBSA_CXL_FIXED_WINDOW] =   { 0xA0000000000ULL, 0x10000000000ULL },
- };
+ int qemu_spice_rect_is_empty(const QXLRect* r);
+ void qemu_spice_rect_union(QXLRect *dest, const QXLRect *r);
+diff --git a/ui/spice-core.c b/ui/spice-core.c
+index 0326c63bec..5acbdd3955 100644
+--- a/ui/spice-core.c
++++ b/ui/spice-core.c
+@@ -836,9 +836,13 @@ static void qemu_spice_init(void)
+ #ifdef HAVE_SPICE_GL
+     if (qemu_opt_get_bool(opts, "gl", 0)) {
+         if ((port != 0) || (tls_port != 0)) {
++#if SPICE_SERVER_VERSION >= 0x000f03 /* release 0.15.3 */
++            spice_remote_client = 1;
++#else
+             error_report("SPICE GL support is local-only for now and "
+                          "incompatible with -spice port/tls-port");
+             exit(1);
++#endif
+         }
+         egl_init(qemu_opt_get(opts, "rendernode"), DISPLAY_GL_MODE_ON, &error_fatal);
+         spice_opengl = 1;
+diff --git a/ui/spice-display.c b/ui/spice-display.c
+index 9c39d2c5c8..0fb72f6d6f 100644
+--- a/ui/spice-display.c
++++ b/ui/spice-display.c
+@@ -31,6 +31,7 @@
+ #include "standard-headers/drm/drm_fourcc.h"
  
- static const int sbsa_ref_irqmap[] = {
-@@ -154,6 +178,7 @@ static const int sbsa_ref_irqmap[] = {
-     [SBSA_XHCI] = 11,
-     [SBSA_SMMU] = 12, /* ... to 15 */
-     [SBSA_GWDT_WS0] = 16,
-+    [SBSA_CXL] = 17, /* ... to 20 */
- };
+ bool spice_opengl;
++bool spice_remote_client;
  
- static uint64_t sbsa_ref_cpu_mp_affinity(SBSAMachineState *sms, int idx)
-@@ -216,7 +241,7 @@ static void create_fdt(SBSAMachineState *sms)
-      *                        fw compatibility.
-      */
-     qemu_fdt_setprop_cell(fdt, "/", "machine-version-major", 0);
--    qemu_fdt_setprop_cell(fdt, "/", "machine-version-minor", 4);
-+    qemu_fdt_setprop_cell(fdt, "/", "machine-version-minor", 5);
- 
-     if (ms->numa_state->have_numa_distance) {
-         int size = nb_numa_nodes * nb_numa_nodes * 3 * sizeof(uint32_t);
-@@ -631,6 +656,114 @@ static void create_smmu(const SBSAMachineState *sms, PCIBus *bus)
-     }
- }
- 
-+static void create_cxl_fixed_window(SBSAMachineState *sms,
-+                               MemoryRegion *mem, CXLHostBridge *host)
-+{
-+    PCIBus *cxlbus = PCI_HOST_BRIDGE(host)->bus;
-+    char *cxl_host = object_get_canonical_path(OBJECT(cxlbus));
-+    hwaddr base = sbsa_ref_memmap[SBSA_CXL_FIXED_WINDOW].base;
-+    GList *it;
-+    strList host_target = { NULL, cxl_host };
-+    CXLFixedMemoryWindowOptions sbsa_ref_cfmwoptions = {
-+        .size = 1 * TiB,
-+        .has_interleave_granularity = false,
-+        .targets = &host_target,
-+    };
-+    CXLFixedWindow *fw;
-+
-+    cxl_fixed_memory_window_config(&sms->cxl_devices_state,
-+                                   &sbsa_ref_cfmwoptions, &error_fatal);
-+
-+    it = sms->cxl_devices_state.fixed_windows;
-+    fw = it->data;
-+    fw->base = base;
-+    fw->target_hbs[0] = OBJECT(host);
-+
-+    memory_region_init_io(&fw->mr, OBJECT(sms), &cfmws_ops, fw,
-+                          "cxl-fixed-memory-region", fw->size);
-+
-+    memory_region_add_subregion(mem, fw->base, &fw->mr);
-+}
-+
-+static void create_cxl(SBSAMachineState *sms)
-+{
-+    hwaddr base_ecam = sbsa_ref_memmap[SBSA_CXL_ECAM].base;
-+    hwaddr size_ecam = sbsa_ref_memmap[SBSA_CXL_ECAM].size;
-+    hwaddr base_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].base;
-+    hwaddr size_mmio = sbsa_ref_memmap[SBSA_CXL_MMIO].size;
-+    hwaddr base_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].base;
-+    hwaddr size_mmio_high = sbsa_ref_memmap[SBSA_CXL_MMIO_HIGH].size;
-+    hwaddr base_pio = sbsa_ref_memmap[SBSA_CXL_PIO].base;
-+    hwaddr base_chbcr = sbsa_ref_memmap[SBSA_CXL_CHBCR].base;
-+    hwaddr size_chbcr = sbsa_ref_memmap[SBSA_CXL_CHBCR].size;
-+    int irq = sbsa_ref_irqmap[SBSA_CXL];
-+    MemoryRegion *mmio_alias, *mmio_alias_high, *mmio_reg;
-+    MemoryRegion *ecam_alias, *ecam_reg;
-+    MemoryRegion *sysmem = get_system_memory();
-+    MemoryRegion *chbcr = &sms->cxl_devices_state.host_mr;
-+    DeviceState *dev;
-+    CXLHostBridge *host;
-+    PCIHostState *cxl;
-+    PCIDevice *cxlrp;
-+    PCIEPort *p;
-+    PCIESlot *s;
-+    int i;
-+
-+    dev = qdev_new(TYPE_CXL_HOST);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+    sms->cxl_devices_state.is_enabled = true;
-+
-+    /* Map CXL ECAM space */
-+    ecam_alias = g_new0(MemoryRegion, 1);
-+    ecam_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 1);
-+    memory_region_init_alias(ecam_alias, OBJECT(dev), "cxl-ecam",
-+                             ecam_reg, 0, size_ecam);
-+    memory_region_add_subregion(get_system_memory(), base_ecam, ecam_alias);
-+
-+    /* Map CXL MMIO space */
-+    mmio_alias = g_new0(MemoryRegion, 1);
-+    mmio_reg = sysbus_mmio_get_region(SYS_BUS_DEVICE(dev), 2);
-+    memory_region_init_alias(mmio_alias, OBJECT(dev), "cxl-mmio",
-+                             mmio_reg, base_mmio, size_mmio);
-+    memory_region_add_subregion(get_system_memory(), base_mmio, mmio_alias);
-+
-+    /* Map CXL MMIO_HIGH space */
-+    mmio_alias_high = g_new0(MemoryRegion, 1);
-+    memory_region_init_alias(mmio_alias_high, OBJECT(dev), "cxl-mmio-high",
-+                             mmio_reg, base_mmio_high, size_mmio_high);
-+    memory_region_add_subregion(get_system_memory(),
-+                                base_mmio_high, mmio_alias_high);
-+
-+    /* Map CXL IO port space */
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 3, base_pio);
-+
-+    for (i = 0; i < PCI_NUM_PINS; i++) {
-+        sysbus_connect_irq(SYS_BUS_DEVICE(dev), i,
-+                           qdev_get_gpio_in(sms->gic, irq + i));
-+        cxl_host_set_irq_num(CXL_HOST(dev), i, irq + i);
-+    }
-+
-+    /* Map CXL CHBCR space */
-+    memory_region_init(chbcr, OBJECT(sms), "cxl_host_reg", size_chbcr);
-+    memory_region_add_subregion(sysmem, base_chbcr, chbcr);
-+
-+    cxl = PCI_HOST_BRIDGE(dev);
-+
-+    for (i = 0; i < 4; i++) {
-+        cxlrp = pci_new(-1, "cxl-rp");
-+        p = PCIE_PORT(cxlrp);
-+        s = PCIE_SLOT(cxlrp);
-+        p->port = i;
-+        s->slot = i;
-+        pci_realize_and_unref(cxlrp, cxl->bus, &error_fatal);
-+    }
-+
-+    host = CXL_HOST(dev);
-+    cxl_host_hook_up_registers(&sms->cxl_devices_state, host);
-+
-+    create_cxl_fixed_window(sms, sysmem, host);
-+}
-+
- static void create_pcie(SBSAMachineState *sms)
+ int qemu_spice_rect_is_empty(const QXLRect* r)
  {
-     hwaddr base_ecam = sbsa_ref_memmap[SBSA_PCIE_ECAM].base;
-@@ -823,6 +956,8 @@ static void sbsa_ref_init(MachineState *machine)
- 
-     create_pcie(sms);
- 
-+    create_cxl(sms);
-+
-     create_secure_ec(secure_sysmem);
- 
-     sms->bootinfo.ram_size = machine->ram_size;
 -- 
-2.34.1
+2.49.0
 
 
