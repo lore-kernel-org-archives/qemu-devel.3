@@ -4,98 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2A5BC71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 17:39:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A589C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 17:50:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRaGW-0001uc-F0; Tue, 17 Jun 2025 13:38:32 -0400
+	id 1uRaRs-00074y-Uz; Tue, 17 Jun 2025 13:50:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uRaGL-0001th-Q8
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 13:38:26 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uRaGI-0000Ed-5n
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 13:38:21 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-748764d8540so5264621b3a.0
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 10:38:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750181891; x=1750786691; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=VuemgY0fVVu6jMDUyH8KzEZYvFzJ+JUeJ+UMwyzDkSQ=;
- b=IdLoApBS5rO1sPWvZ/71TMTyz9bZ7lEzBOZYQ2DZebOE+6IdfrKpPcUAjux1HsgeC5
- c/JCQH7V+wkYfaYKPbXlpwI3U4f8UmUZkt8gI627WC0ce9YZvaC33Jkx0xq5jIV5SMik
- yvQ/2fcw6cM9fgxlTnoGThgzc86JYkqpxoa9IiGdOVNeIg6403iHS9mbZRFv40rUIE/2
- FRW78cADujBgZC8eGtI8Pr5ZlSgHT6DNjNiBj9xdzWU2y3CQix34RstvW8xi7F0b5w5G
- xd3cBPfCwyyBYBiw/4QLeg/vtH7EbcoqOENi1e8cy9on1uujwVMRE7JBE7Jzi7Cxhrdw
- aC+g==
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRaRj-00072E-Hf
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 13:50:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRaRg-0001J4-K0
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 13:50:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750182602;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=3uUDTnH367m2YZr2J+PzST12ccxaUXG2Z3hId4PxOVU=;
+ b=WnUEdokEstuZFQ0l3iQFZXJ+H4yCt+F6sLTPBAgNganR18ArnzwNmd7HfpEuFEa7+6TKgJ
+ G/IlkdkjQi+8ACviiMeT0pygqYs4iNbaCzcF7xQ8JtgTfw4LVKEiKxzQRhaVSThEpo6Ont
+ YISBRucJ9CcOJlSbxrTxyRNkzNxvZl0=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-13-39jeuOLCO7iRbsTpbsucBQ-1; Tue, 17 Jun 2025 13:50:00 -0400
+X-MC-Unique: 39jeuOLCO7iRbsTpbsucBQ-1
+X-Mimecast-MFC-AGG-ID: 39jeuOLCO7iRbsTpbsucBQ_1750182600
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-43eea5a5d80so36160155e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 10:50:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750181891; x=1750786691;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VuemgY0fVVu6jMDUyH8KzEZYvFzJ+JUeJ+UMwyzDkSQ=;
- b=qIwPVND+eN+hg/eprppvw7QSyLU4YzKP13kpssx6IAmpKQCzS41+T7d01dpP8vSjwp
- jrjn9saPfnEF7KxFK1HKoN7f/yAgWh5MjHNJ5aPGD8waN2uOp+eeQPc7nqTSNd1HFTgL
- MqzTAG6b8NkznRHRYorqOt8lkRfMHBkZPxUDm/rH1FlFibuf/6bWk1Z/2VKhtqJ1rrjv
- SKi1kfDe93DVfgX7laZ8HavXKCg3fFeZIQDO0Fp7C5iL8L4/B0CGBt5zahUj18vAPT9f
- kbOCVbk/lrGRydTNvJ9LABkbDGtP7Eba9brNlzuRN9e89R00szirRBSbregWC56GmpI/
- 1uYA==
-X-Gm-Message-State: AOJu0YzDKpy6rDGDg+QVc42inys73CCa9dQ8iCBukVumInclyW+uzCtz
- DE1m1eotNfrGlG/JpVCY107S8olJEBHE9BlcQbvgIEtjUKbiP0M1YrbMpQ2JfA9JTQ4=
-X-Gm-Gg: ASbGncvHcRfDf72J9k9ygyNIIe3eelBPr4DYyD89OuDRoG7R9MIuqgXTOv4gtANh063
- sLxMXTtprUInggwAIIOncGldZhCIfzrGa1P+1PJYhVyPEKG2AaO40nwU1mkxlB/L2eAv2hf9kTX
- iY8q3qD9+5CUFxkdhMJjOfaUZwcZ35OMLgCaDavdGugowOwyhU5oU069ctme9N6psIyQ47Iap02
- 2X0W+W9jKhAUm4cIAqyaxEOlsPHtM2RlCJdRGdTJSbi17b/OwC0HpaD6bYblwg8gOBxki/gp/ML
- IIMWiWHZGZ2rZBHkzMGf092P4MSlXvRcYrUsFEYPy/RYld+LhvpSGyl6AaV3T7WPxP4Ny2C7MY8
- =
-X-Google-Smtp-Source: AGHT+IF1eW5CIj9+xDj0t1GOMZPD7kBee7eEKy2IkrcAJk7KcgQDgg04iYtM7JZatMjRp5+n9+lPKQ==
-X-Received: by 2002:a05:6a00:4fce:b0:746:31d1:f7d0 with SMTP id
- d2e1a72fcca58-7489cf7263bmr17207070b3a.9.1750181891274; 
- Tue, 17 Jun 2025 10:38:11 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
+ d=1e100.net; s=20230601; t=1750182600; x=1750787400;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=3uUDTnH367m2YZr2J+PzST12ccxaUXG2Z3hId4PxOVU=;
+ b=hj7W3FD1KG3bqHoUbyYn2AoW1wvgmzDHfd7SErkAMNREoS7Q90idVXzejju59A4Gh9
+ 5pvT7+3bTNkZhLVxj6OFO122gwJkAfPGGNGSelvZuOt9COwi8N2k1Z4vnEw3I8ln2Pcc
+ XR7cwvebg9PO6Cj0Bl7OjqYQQH62ZQZfPJPcfbJWPq+ayvy34LFIwIpbLxnNXhZchcm9
+ wQ+LLzG7XnUOD4jzmhj54AlsZspCt3PgV+xlqkXxTv5Md+IR2lo1kZbDzMAMXIkjmxDM
+ 0SBSS+REcDRunNlWYvYg9xWiZria/PR+r8vpQ4twx36XwOGrPLJjiImlrSlVu6KOQmRk
+ kj3A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW1GwkF+qe367bXYwzKkT1c/qRctmn31Um/hb3Jln0VlieyYICod7juQgSP6Xce9zROrw+BLWn3bgfa@nongnu.org
+X-Gm-Message-State: AOJu0Yw9ZWAMGNCKS6UCoaObrmx+q5IJ5I+1zgh6ammSWPyoX99GrYM6
+ ZMOVkqfKZ2m59QOLVmYLsEo0etYUNKso+ZrBY0suEPO4hi6SayiHjgzpTkRsSSagxdjejWlqrEJ
+ nkkVYhIVlZf2ZPZN1IjYlb9TGpSI0z04TETYOKw/nEtzSe05V26+oBuPk
+X-Gm-Gg: ASbGncujOlDwIYMvd3mnH8j745UzZn1fABxios7t3qECXA3OY5WArTBR+SPcijWqLBy
+ Vs9fIsEh+DG1W93BRxZqyBLu+2IN5RNtmJFa9bX7lorUlu5nuBy8MHNJ2ewxvKInMd2heZrZMSL
+ /KRDWRGaPQ6IIRsnxwgn5tOtQLC8BL+LrINVreBS5ClWc/lkPzCxbEi3epbg5/+THk0fNhhdjFc
+ 1q+42O1ePfpUQ/ssamL9WLdO1rwW0+4gfwIBh54i8qFiRM4bTrfgTZgnGHhz3mvVgF7Y+PNSxyt
+ dOUEmDsyFAuQSaLlwyimWHgClazJgLyRHqsPpBN8eT7D3FFlVadvvibWc8Xf/SYleJUDOA==
+X-Received: by 2002:a05:600c:3e8c:b0:440:6a37:be0d with SMTP id
+ 5b1f17b1804b1-4533ca9cc5cmr162166225e9.15.1750182599660; 
+ Tue, 17 Jun 2025 10:49:59 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG23FNIEVNafiKTRHqvF8XH/WJ7Y/i33oYfAqq3o7JIAkZsyyb+YLvceRu740m03eA14rU6gg==
+X-Received: by 2002:a05:600c:3e8c:b0:440:6a37:be0d with SMTP id
+ 5b1f17b1804b1-4533ca9cc5cmr162165885e9.15.1750182599279; 
+ Tue, 17 Jun 2025 10:49:59 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7488ffeca93sm9143794b3a.20.2025.06.17.10.38.10
+ 5b1f17b1804b1-4532e14f283sm183367245e9.27.2025.06.17.10.49.57
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 10:38:10 -0700 (PDT)
-Message-ID: <3fe049b2-a962-4dc2-9373-570c35fb8355@linaro.org>
-Date: Tue, 17 Jun 2025 10:38:09 -0700
+ Tue, 17 Jun 2025 10:49:58 -0700 (PDT)
+Message-ID: <a8b1cf9e-260f-4659-8eac-77993ebab842@redhat.com>
+Date: Tue, 17 Jun 2025 19:49:57 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v12 5/7] plugins: Add memory hardware address read/write
- API
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Alexandre Iooss <erdnaxe@crans.org>, Zhao Liu <zhao1.liu@intel.com>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20250611232409.2936521-1-rowanbhart@gmail.com>
- <20250611232409.2936521-6-rowanbhart@gmail.com>
- <87h60evf6t.fsf@draig.linaro.org>
+Subject: Re: [PATCH v1 03/15] intel_iommu: Check for compatibility with
+ IOMMUFD backed device when x-flts=on
 Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <87h60evf6t.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+References: <20250606100416.346132-1-zhenzhong.duan@intel.com>
+ <20250606100416.346132-4-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250606100416.346132-4-zhenzhong.duan@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,67 +121,90 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/17/25 3:24 AM, Alex Bennée wrote:
-> Rowan Hart <rowanbhart@gmail.com> writes:
-> 
->> From: novafacing <rowanbhart@gmail.com>
->>
->> This patch adds functions to the plugins API to allow plugins to read
->> and write memory via hardware addresses. The functions use the current
->> address space of the current CPU in order to avoid exposing address
->> space information to users. A later patch may want to add a function to
->> permit a specified address space, for example to facilitate
->> architecture-specific plugins that want to operate on them, for example
->> reading ARM secure memory.
->>
->> Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Rowan Hart <rowanbhart@gmail.com>
-> <snip>
->> +/**
->> + * qemu_plugin_write_memory_hwaddr() - write to memory using a hardware address
->> + *
->> + * @addr: A physical address to write to
->> + * @data: A byte array containing the data to write
->> + *
->> + * The contents of @data will be written to memory starting at the hardware
->> + * address @addr in the current address space for the current vCPU.
->> + *
->> + * This function does not guarantee consistency of writes, nor does it ensure
->> + * that pending writes are flushed either before or after the write takes place,
->> + * so callers should take care when calling this function in plugin callbacks to
->> + * avoid depending on the existence of data written using this function which
->> + * may be overwritten afterward. In addition, this function requires that the
->> + * pages containing the address are not locked. Practically, this means that you
->> + * should not write instruction memory in a current translation block inside a
->> + * callback registered with qemu_plugin_register_vcpu_tb_trans_cb.
->> + *
->> + * You can, for example, write instruction memory in a current translation block
->> + * in a callback registered with qemu_plugin_register_vcpu_tb_exec_cb, although
->> + * be aware that the write will not be flushed until after the translation block
->> + * has finished executing.  In general, this function should be used to write
->> + * data memory or to patch code at a known address, not in a current translation
->> + * block.
-> 
-> My main concern about the long list of caveats for writing memory is the
-> user will almost certainly cause weird things to happen which will then
-> be hard to debug. I can see the patcher example however it would be
-> useful to know what other practical uses this interface provides.
+Hi Zhenzhong,
+
+On 6/6/25 12:04 PM, Zhenzhong Duan wrote:
+> When vIOMMU is configured x-flts=on in scalable mode, stage-1 page table
+> is passed to host to construct nested page table. We need to check
+> compatibility of some critical IOMMU capabilities between vIOMMU and
+> host IOMMU to ensure guest stage-1 page table could be used by host.
 >
+> For instance, vIOMMU supports stage-1 1GB huge page mapping, but host
+> does not, then this IOMMUFD backed device should be failed.
+>
+> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  hw/i386/intel_iommu_internal.h |  1 +
+>  hw/i386/intel_iommu.c          | 28 ++++++++++++++++++++++++++++
+>  2 files changed, 29 insertions(+)
+>
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index e8b211e8b0..2cda744786 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -191,6 +191,7 @@
+>  #define VTD_ECAP_PT                 (1ULL << 6)
+>  #define VTD_ECAP_SC                 (1ULL << 7)
+>  #define VTD_ECAP_MHMV               (15ULL << 20)
+> +#define VTD_ECAP_NEST               (1ULL << 26)
+>  #define VTD_ECAP_SRS                (1ULL << 31)
+>  #define VTD_ECAP_PASID              (1ULL << 40)
+>  #define VTD_ECAP_SMTS               (1ULL << 43)
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index a2f3250724..c42ef83ddc 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -39,6 +39,7 @@
+>  #include "kvm/kvm_i386.h"
+>  #include "migration/vmstate.h"
+>  #include "trace.h"
+> +#include "system/iommufd.h"
+>  
+>  /* context entry operations */
+>  #define VTD_CE_GET_RID2PASID(ce) \
+> @@ -4361,6 +4362,33 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+>          return true;
+>      }
+>  
+> +#ifdef CONFIG_IOMMUFD
+is it requested?
 
-I understand the concern that allowing modification of execution state 
-through plugins opens the path for possible bugs. However, it 
-significantly augment what is possible to do with them, especially for 
-security researchers, as Rowan listed in his answer.
-For once, we have someone motivated to contribute upstream instead of 
-reinventing another downstream fork, so it should be encouraged.
+Cheers
 
-As well, in case "weird things" happen and people file a bug report, 
-they will be free to share their plugin, so we can reproduce and solve 
-the problem. It should concern only users trying to modify state of 
-execution though, so definitely not the majority of plugins users.
+Eric
+> +    struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+> +    struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
+> +
+> +    /* Remaining checks are all stage-1 translation specific */
+> +    if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+> +        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
+> +        return false;
+> +    }
+> +
+> +    if (caps->type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
+> +        error_setg(errp, "Incompatible host platform IOMMU type %d",
+> +                   caps->type);
+> +        return false;
+> +    }
+> +
+> +    if (!(vtd->ecap_reg & VTD_ECAP_NEST)) {
+> +        error_setg(errp, "Host IOMMU doesn't support nested translation");
+> +        return false;
+> +    }
+> +
+> +    if (s->fs1gp && !(vtd->cap_reg & VTD_CAP_FS1GP)) {
+> +        error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
+> +        return false;
+> +    }
+> +#endif
+> +
+>      error_setg(errp, "host device is uncompatible with stage-1 translation");
+>      return false;
+>  }
 
-Pierrick
 
