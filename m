@@ -4,76 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E57EC7115A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E543C71157
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 10:23:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRTSY-0000Um-E6; Tue, 17 Jun 2025 06:22:30 -0400
+	id 1uRTSa-0000Vo-Tg; Tue, 17 Jun 2025 06:22:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1uRTSU-0000U1-Rs
+ id 1uRTSU-0000Ty-RX
  for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:22:26 -0400
-Received: from mailout4.samsung.com ([203.254.224.34])
+Received: from mailout1.samsung.com ([203.254.224.24])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <arpit1.kumar@samsung.com>)
- id 1uRTSD-0004Jl-Gr
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:22:17 -0400
-Received: from epcas5p3.samsung.com (unknown [182.195.41.41])
- by mailout4.samsung.com (KnoxPortal) with ESMTP id
- 20250617102141epoutp04305cec719b6b4487299c20e597fbb5c7~JzVZzsUyo1057610576epoutp047
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 10:21:41 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout4.samsung.com
- 20250617102141epoutp04305cec719b6b4487299c20e597fbb5c7~JzVZzsUyo1057610576epoutp047
+ id 1uRTSD-0004Jp-H0
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 06:22:16 -0400
+Received: from epcas5p2.samsung.com (unknown [182.195.41.40])
+ by mailout1.samsung.com (KnoxPortal) with ESMTP id
+ 20250617102144epoutp01e14b6bd65e45890ea5a2149d8a21c759~JzVci8Jfu2706227062epoutp01P
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 10:21:44 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com
+ 20250617102144epoutp01e14b6bd65e45890ea5a2149d8a21c759~JzVci8Jfu2706227062epoutp01P
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
- s=mail20170921; t=1750155701;
- bh=RHnfMDcnjkCpNXmxxzs/C20X71OBG3mUzj26FeqODOk=;
+ s=mail20170921; t=1750155704;
+ bh=3KgvRgTU4cn4BM4l0esPAnPMKhdKDAdRbUBviGxOSKQ=;
  h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
- b=izlujs3LCKUBIg49nVzC6FCeUhl+kIF4XNlDjpa26bxGBYGuei461kAtoTZCbrRcA
- P4YS/jNcatxuKjZbTsUVotoFy7GNj5N5FwYk+TRR8vbVgPZ/8/3c5ckDxYrXUVRCY8
- p6/TqPOYtRQ12RiqHgNoCrwOXQpMx80Lda+HpwcA=
-Received: from epsnrtp02.localdomain (unknown [182.195.42.154]) by
- epcas5p3.samsung.com (KnoxPortal) with ESMTPS id
- 20250617102141epcas5p3630447b43bcedd87c29009961428e537~JzVZeEtoT1868018680epcas5p3G;
- Tue, 17 Jun 2025 10:21:41 +0000 (GMT)
-Received: from epcas5p2.samsung.com (unknown [182.195.38.178]) by
- epsnrtp02.localdomain (Postfix) with ESMTP id 4bM2wM2x7cz2SSKY; Tue, 17 Jun
- 2025 10:21:39 +0000 (GMT)
+ b=tQZyY0oKjVGWmKb5P6D7kdehWwGzjoLpKB78XpszGuc6fGDvDG2R6vr1hMlY4E+kz
+ aLV8rFWZ3N8KkzmPbvlf/bGC0r74bZojZWM2cyxbbtduw/OSLaEfFjQEdyvH0ynXUg
+ kHuwb2+Azkmg27MfGHHls0P8RdJLGUB+eFqD5D3g=
+Received: from epsnrtp01.localdomain (unknown [182.195.42.153]) by
+ epcas5p2.samsung.com (KnoxPortal) with ESMTPS id
+ 20250617102144epcas5p2c6ae5fd671c6b8434674381ffffddb13~JzVcR4YPO0587405874epcas5p2S;
+ Tue, 17 Jun 2025 10:21:44 +0000 (GMT)
+Received: from epcas5p2.samsung.com (unknown [182.195.38.182]) by
+ epsnrtp01.localdomain (Postfix) with ESMTP id 4bM2wQ48s1z6B9m4; Tue, 17 Jun
+ 2025 10:21:42 +0000 (GMT)
 Received: from epsmtip1.samsung.com (unknown [182.195.34.30]) by
- epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
- 20250617100204epcas5p2a5516d83ce61909c730901772fe90ae8~JzERge6Dn0477404774epcas5p2m;
- Tue, 17 Jun 2025 10:02:04 +0000 (GMT)
+ epcas5p4.samsung.com (KnoxPortal) with ESMTPA id
+ 20250617101142epcas5p480d44eef68b94fb4590949e5fbf31e69~JzMsIoPeq1786417864epcas5p4z;
+ Tue, 17 Jun 2025 10:11:42 +0000 (GMT)
 Received: from test-PowerEdge-R740xd (unknown [107.99.41.79]) by
  epsmtip1.samsung.com (KnoxPortal) with ESMTPA id
- 20250617100202epsmtip120c42834f6a8f3ac4e6cc9f3427f716e~JzEQPyDP91516415164epsmtip1a;
- Tue, 17 Jun 2025 10:02:02 +0000 (GMT)
-Date: Tue, 17 Jun 2025 15:31:56 +0530
+ 20250617101141epsmtip118bbb4d9ca9bc2fac510f4653dd7b2f4~JzMq15knE2132521325epsmtip1P;
+ Tue, 17 Jun 2025 10:11:41 +0000 (GMT)
+Date: Tue, 17 Jun 2025 15:41:36 +0530
 From: Arpit Kumar <arpit1.kumar@samsung.com>
 To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Cc: qemu-devel@nongnu.org, gost.dev@samsung.com, linux-cxl@vger.kernel.org,
  nifan.cxl@gmail.com, dave@stgolabs.net, vishak.g@samsung.com,
  krish.reddy@samsung.com, a.manzanares@samsung.com, alok.rathore@samsung.com
-Subject: Re: [PATCH 2/3] hw/cxl: Simplified Identify Switch Device & Get
- Physical Port State
-Message-ID: <20250617100156.nllspip2jcykteid@test-PowerEdge-R740xd>
+Subject: Re: [PATCH 3/3] hw/cxl: Add Physical Port Control (Opcode 5102h)
+Message-ID: <20250617101136.z4ityaayhuglrvqu@test-PowerEdge-R740xd>
 MIME-Version: 1.0
-In-Reply-To: <20250610152906.00002c4b@huawei.com>
-X-CMS-MailID: 20250617100204epcas5p2a5516d83ce61909c730901772fe90ae8
+In-Reply-To: <20250610154501.0000213b@huawei.com>
+X-CMS-MailID: 20250617101142epcas5p480d44eef68b94fb4590949e5fbf31e69
 X-Msg-Generator: CA
 Content-Type: multipart/mixed;
- boundary="----K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a58ee_"
+ boundary="----K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a5bcc_"
 X-Sendblock-Type: REQ_APPROVE
 CMS-TYPE: 105P
 cpgsPolicy: CPGSC10-542,Y
 X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250602140026epcas5p131c1af3cdd05056e7dccf0f91efe490b
+X-CMS-RootMailID: 20250602140045epcas5p2445a99b249ba9588af027d59b0c8bd35
 References: <20250602135942.2773823-1-arpit1.kumar@samsung.com>
- <CGME20250602140026epcas5p131c1af3cdd05056e7dccf0f91efe490b@epcas5p1.samsung.com>
- <20250602135942.2773823-3-arpit1.kumar@samsung.com>
- <20250610152906.00002c4b@huawei.com>
-Received-SPF: pass client-ip=203.254.224.34;
- envelope-from=arpit1.kumar@samsung.com; helo=mailout4.samsung.com
+ <CGME20250602140045epcas5p2445a99b249ba9588af027d59b0c8bd35@epcas5p2.samsung.com>
+ <20250602135942.2773823-4-arpit1.kumar@samsung.com>
+ <20250610154501.0000213b@huawei.com>
+Received-SPF: pass client-ip=203.254.224.24;
+ envelope-from=arpit1.kumar@samsung.com; helo=mailout1.samsung.com
 X-Spam_score_int: -62
 X-Spam_score: -6.3
 X-Spam_bar: ------
@@ -97,143 +96,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-------K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a58ee_
+------K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a5bcc_
 Content-Type: text/plain; charset="utf-8"; format="flowed"
 Content-Disposition: inline
 
-On 10/06/25 03:29PM, Jonathan Cameron wrote:
->On Mon,  2 Jun 2025 19:29:41 +0530
+On 10/06/25 03:45PM, Jonathan Cameron wrote:
+>On Mon,  2 Jun 2025 19:29:42 +0530
 >Arpit Kumar <arpit1.kumar@samsung.com> wrote:
 >
->> Modified Identify Switch Device (Opcode 5100h)
->> & Get Physical Port State(Opcode 5101h)
->> using physical ports info stored during enumeration
+>
+>Very interesting to see support for this. It will enable a load
+>of additional test cases.
+>
+>> added assert-deassert PERST implementation, reset PPB
+>> for physical port.
+>Added
+okay
+>
+>Please also include some details of testing done and what happens.
+>Given I know we have some issues with reset that we haven't resolved
+>I'm curious if you see them here.
+>
+sure, I have tested this command using libcxl-mi. will share the details in the
+next iteration (V2) of the patch series.
 >>
 >> Signed-off-by: Arpit Kumar <arpit1.kumar@samsung.com>
->A few additional comments in here.
 >
->J
->> ---
->>  hw/cxl/cxl-mailbox-utils.c | 133 +++++++------------------------------
->>  1 file changed, 24 insertions(+), 109 deletions(-)
->>
->> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
->> index 680055c6c0..b2fa79a721 100644
->> --- a/hw/cxl/cxl-mailbox-utils.c
->> +++ b/hw/cxl/cxl-mailbox-utils.c
->> @@ -558,17 +558,7 @@ static CXLRetCode cmd_set_response_msg_limit(const struct cxl_cmd *cmd,
+>> +/* Assert - Deassert PERST */
+>> +#define ASSERT_WAIT_TIME_MS 100
+>> +
+>>  /* link state flags */
+>>  #define LINK_STATE_FLAG_LANE_REVERSED    (1 << 0)
+>>  #define LINK_STATE_FLAG_PERST_ASSERTED   (1 << 1)
+>> @@ -662,6 +666,114 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
 >>      return CXL_MBOX_SUCCESS;
 >>  }
 >>
->> -static void cxl_set_dsp_active_bm(PCIBus *b, PCIDevice *d,
->> -                                  void *private)
->> -{
->> -    uint8_t *bm = private;
->> -    if (object_dynamic_cast(OBJECT(d), TYPE_CXL_DSP)) {
->> -        uint8_t port = PCIE_PORT(d)->port;
->> -        bm[port / 8] |= 1 << (port % 8);
->> -    }
->> -}
->> -
->> -/* CXL r3.1 Section 7.6.7.1.1: Identify Switch Device (Opcode 5100h) */
->> +/* CXL r3.2 Section 7.6.7.1.1: Identify Switch Device (Opcode 5100h) */
+>> +static struct PCIDevice *cxl_find_port_dev(uint8_t ppb_id, PCIBus *bus)
+>> +{
+>> +    PCIDevice *d;
+>> +    int devfn;
+>> +
+>> +    for (devfn = 0; devfn < ARRAY_SIZE(bus->devices); devfn++) {
 >
->I'd prefer the spec reference updates in a separate patch. They are noise here
->and kind of suggest there are real changes rather than just refactoring.
+>As in patch one, maybe use the for_each_pci_...  Though with the callback
+>needed it may end up slightly more complex that this.
+>
+right, will use the same.
+>
+>> +        d = bus->devices[devfn];
+>> +        if (d) {
+>> +            if (object_dynamic_cast(OBJECT(d), TYPE_CXL_DSP)) {
+>> +                uint8_t port = PCIE_PORT(d)->port;
+>I'd not bother with the local variable for this one.
 >
 okay
+>                 if (PCIE_PORT(d)->port == ppb_id) {
+>                     return d;
+>                 }
 >
->> @@ -611,16 +599,14 @@ static CXLRetCode cmd_identify_switch_device(const struct cxl_cmd *cmd,
->>          out->ingress_port_id = 0;
->>      }
->>
->> -    pci_for_each_device_under_bus(bus, cxl_set_dsp_active_bm,
->> -                                  out->active_port_bitmask);
->> -    out->active_port_bitmask[usp->port / 8] |= (1 << usp->port % 8);
+>> +                if (port == ppb_id) {
+>> +                    return d;
+>> +                }
+>> +            }
+>> +        }
+>> +    }
+>> +    return NULL;
+>> +}
+>> +
+>> +static CXLRetCode deassert_PERST(Object *obj, ResetType type, uint8_t pn, CXLCCI *cci)
+>> +{
+>> +    ResettableClass *rc = RESETTABLE_GET_CLASS(obj);
+>> +    ResettableState *s = rc->get_state(obj);
+>> +
+>> +    if (cci->pports.perst[pn].issued_assert_PERST) {
+>> +        if (cci->pports.perst[pn].asrt_time == -1 && !s->hold_phase_pending) {
 >
->Ah. With this in front of me the reason for the sizeing is much clearer
->than in previous patch on it's own. Combining the two will make it all more obvious.
+>I'd flip the logic as then can return early in error case and reduce
+>indent of the rest.
 >
-right, will do the same in next iteration(V2) of the patch series.
->> -
->> +    memcpy(out->active_port_bitmask, cci->pports.active_port_bitmask,
->> +           sizeof(cci->pports.active_port_bitmask));
->>      *len_out = sizeof(*out);
->>
->>      return CXL_MBOX_SUCCESS;
->>  }
->>
->> -/* CXL r3.1 Section 7.6.7.1.2: Get Physical Port State (Opcode 5101h) */
->> +/* CXL r3.2 Section 7.6.7.1.2: Get Physical Port State (Opcode 5101h) */
->>  static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
->>                                                uint8_t *payload_in,
->>                                                size_t len_in,
->> @@ -628,44 +614,21 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
->>                                                size_t *len_out,
->>                                                CXLCCI *cci)
->>  {
+okay, will update in V2.
 >
->>
->>      in = (struct cxl_fmapi_get_phys_port_state_req_pl *)payload_in;
->>      out = (struct cxl_fmapi_get_phys_port_state_resp_pl *)payload_out;
->> @@ -673,72 +636,24 @@ static CXLRetCode cmd_get_physical_port_state(const struct cxl_cmd *cmd,
->>      if (len_in < sizeof(*in)) {
->>          return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
->>      }
->> -    /* Check if what was requested can fit */
+>> +            qemu_mutex_lock(&cci->pports.perst[pn].lock);
+>
+>            QEMU_LOCK_GUARD(&cci->pports.prst[pn].lock);
+>
+>> +            resettable_release_reset(obj, type);
+>> +            cci->pports.perst[pn].issued_assert_PERST = false;
+>> +            cci->pports.pport_info[pn].link_state_flags &=
+>> +                ~LINK_STATE_FLAG_PERST_ASSERTED;
+>> +            cci->pports.perst[pn].asrt_time = ASSERT_WAIT_TIME_MS;
+>> +            qemu_mutex_unlock(&cci->pports.perst[pn].lock);
+>and drop explicit unlock.
+got it
+>> +        } else {
+>> +            return CXL_MBOX_INTERNAL_ERROR;
+>> +        }
+>> +    } else {
+>> +        return CXL_MBOX_INTERNAL_ERROR;
+>> +    }
+>> +    return CXL_MBOX_SUCCESS;
+>> +}
+>> +
+>> +static CXLRetCode assert_PERST(Object *obj, ResetType type, uint8_t pn, CXLCCI *cci)
+>> +{
+>> +    ResettableClass *rc = RESETTABLE_GET_CLASS(ocpgs@samsung.combj);
+>> +    ResettableState *s = rc->get_state(obj);
+>> +
+>> +    if (cci->pports.perst[pn].issued_assert_PERST || s->exit_phase_in_progress) {
+>> +        return CXL_MBOX_INTERNAL_ERROR;
+>> +    }
 >> +
 >
->The check is still here... So why remove the comment?
-thanks for pointing this out, will add the comment back.
->
->>      if (sizeof(*out) + sizeof(*out->ports) * in->num_ports > cci->payload_max) {
->>          return CXL_MBOX_INVALID_INPUT;
->>      }
->>
->> -    /* For success there should be a match for each requested */
->> -    out->num_ports = in->num_ports;
->> +    if (in->num_ports > cci->pports.num_ports) {
->> +        return CXL_MBOX_INVALID_INPUT;
->> +    }
->>
->> +    out->num_ports = in->num_ports;
->>      for (i = 0; i < in->num_ports; i++) {
->> -        struct cxl_fmapi_port_state_info_block *port;
->> -        /* First try to match on downstream port */
->> -        PCIDevice *port_dev;
->> -        uint16_t lnkcap, lnkcap2, lnksta;
->> -
->> -        port = &out->ports[i];
->> -
->> -        port_dev = pcie_find_port_by_pn(bus, in->ports[i]);
->> -        if (port_dev) { /* DSP */
->> -            PCIDevice *ds_dev = pci_bridge_get_sec_bus(PCI_BRIDGE(port_dev))
->> -                ->devices[0];
->> -            port->config_state = 3;
->> -            if (ds_dev) {
->> -                if (object_dynamic_cast(OBJECT(ds_dev), TYPE_CXL_TYPE3)) {
->> -                    port->connected_device_type = 5; /* Assume MLD for now */
->> -                } else {
->> -                    port->connected_device_type = 1;
->> -                }
->> -            } else {
->> -                port->connected_device_type = 0;
->> +        int pn = in->ports[i];
->> +        for (int j = 0; j < PCI_DEVFN_MAX; j++) {
->> +            if (pn == cci->pports.pport_info[j].port_id) {
->
->Given port id is 0-255 and your port_info has 256 elements, why not index
->by port_id when storing them in the first place? That should reduce
->complexity of this look up.  I don't think we ever actually look up
->by devfn?
+>WITH_QEMU_LOCK_GUARD() perhaps
 okay
 >
->> +                memcpy(&out->ports[i], &(cci->pports.pport_info[pn]),
->> +                       sizeof(struct cxl_phy_port_info));
+>> +    qemu_mutex_lock(&cci->pports.perst[pn].lock);
+>> +    cci->pports.perst[pn].issued_assert_PERST = true;
+>> +    cci->pports.pport_info[pn].link_state_flags |=
+>> +        LINK_STATE_FLAG_PERST_ASSERTED;
+>> +    resettable_assert_reset(obj, type);
+>> +    qemu_mutex_unlock(&cci->pports.perst[pn].lock);
+>> +
+>> +    /* holding reset phase for 100ms */
+>> +    while (cci->pports.perst[pn].asrt_time--) {
+>> +        usleep(1000);
+>Is this happening synchronously?  I'd kind of expect it to be a background thing
+>where we'd just check it had finished.
+okay, will update it in V2 of patch series.
+>> +    }
+>> +    return CXL_MBOX_SUCCESS;
+>> +}
+>> +
+>> +/*CXL r3.2 Section 7.6.7.1.3: Get Physical Port Control (Opcode 5102h)*/
+>> +static CXLRetCode cmd_physical_port_control(const struct cxl_cmd *cmd,
+>> +                                            uint8_t *payload_in,
+>> +                                            size_t len_in,
+>> +                                            uint8_t *payload_out,
+>> +                                            size_t *len_out,
+>> +                                            CXLCCI *cci)
+>> +{
+>> +    PCIBus *bus = &PCI_BRIDGE(cci->d)->sec_bus;
+>> +    PCIDevice *dev;
+>> +    struct cxl_fmapi_get_physical_port_control_req_pl {
+>> +        uint8_t PPB_ID;
+>> +        uint8_t Ports_Op;
+>> +    } QEMU_PACKED *in;
+>> +
+>> +    in = (struct cxl_fmapi_get_physical_port_control_req_pl *)payload_in;
+>
+>Often we cheat on these where the type is locally defined and do
+>
+>    struct cxl_fmapi_get_physical_port_control_req_pl {
+>        uint8_t ppb_id;
+>        uint8_t ports_op;
+>    } QEMU_PACKED *in = (void *)payload_in;
+>
+>Given it's all together the type isn't confusing or ambiguous even
+>though we use a void * instead of the more specific cast.
+>
+>Note also that it is better to stick to local style and use lower_case
+>style for structure element naming etc.
+>
+got it
+>> +
+>> +    if (len_in < sizeof(*in)) {
+>> +        return CXL_MBOX_INVALID_PAYLOAD_LENGTH;
+>> +    }
+>> +
+>> +    uint8_t pn = in->PPB_ID;
+>> +    dev = cxl_find_port_dev(pn, bus);
+>> +    if (!dev) {
+>> +        return CXL_MBOX_INTERNAL_ERROR;
+>> +    }
+>> +
+>> +    switch (in->Ports_Op) {
+>> +    case 0:
+>> +        assert_PERST(OBJECT(&dev->qdev), RESET_TYPE_COLD, pn, cci);
+>
+>Even for these probably
+>
+>assert_perst()
+>
+okay
+>> +        break;
+>return CXL_MBOX_SUCESS;
+>> +    case 1:
+>> +        deassert_PERST(OBJECT(&dev->qdev), RESET_TYPE_COLD, pn, cci);
+>> +        break;
+>> +    case 2:
+>> +        device_cold_reset(&dev->qdev);
+>> +        break;
+>> +    default:
+>> +        return CXL_MBOX_INVALID_INPUT;
+>> +    }
+>> +    return CXL_MBOX_SUCCESS;
+>> +}
+>> +
+>
+>> @@ -3878,4 +3995,15 @@ void cxl_initialize_usp_mctpcci(CXLCCI *cci, DeviceState *d, DeviceState *intf,
+>>      cci->intf = intf;
+>>      cxl_init_cci(cci, payload_max);
+>>      cxl_set_phy_port_info(cci); /* store port info */
+>> +    /* physical port control */
+>> +    for (int i = 0; i < PCI_DEVFN_MAX; i++) {
+>> +        qemu_mutex_init(&cci->pports.perst[i].lock);
+>
+>perst is definitely port wise - not linked to CCI so that stuff should be
+>in the port structures themselves.
+>
+>> +        cci->pports.perst[i].issued_assert_PERST = false;
+>> +        /* Assert PERST involves physical port to be in
+>wrap at 80 chars.
+okay
+>> +         * hold reset phase for minimum 100ms. No other calls
+>> +         * are entertained until Deassert PERST command.
+>> +         * https://patchwork.ozlabs.org/project/linux-pci/patch/20190523194409.17718-1-niklas.cassel@linaro.org/#2178369
+>
+>Blocking other commands is fine but we should lock up emulation of other stuff
+>in the system and I think you currently do.
+>
+got it. I think you meant 'we should *not lock up..'
+>> +         */
+>> +        cci->pports.perst[i].asrt_time = ASSERT_WAIT_TIME_MS;
+>> +    }
+>>  }
+>> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+>> index 9eb128a1e8..f877d60b39 100644
+>> --- a/include/hw/cxl/cxl_device.h
+>> +++ b/include/hw/cxl/cxl_device.h
+>> @@ -146,10 +146,18 @@ struct cxl_phy_port_info {
+>>      uint8_t supported_ld_count;
+>>  } QEMU_PACKED;
+>>
+>> +/* assert-deassert PERST */
+>> +struct pperst {
+>> +    bool issued_assert_PERST;
+>> +    int asrt_time;
+>> +    QemuMutex lock;
+>> +};
+>> +
+>>  struct phy_port {
+>>      uint8_t num_ports;
+>>      uint8_t active_port_bitmask[0x20];
+>>      struct cxl_phy_port_info pport_info[PCI_DEVFN_MAX];
+>> +    struct pperst perst[PCI_DEVFN_MAX];
+>>  };
+>>
+>>  /* CXL r3.1 Table 8-34: Command Return Codes */
+>
 
-------K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a58ee_
+------K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a5bcc_
 Content-Type: text/plain; charset="utf-8"
 
 
-------K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a58ee_--
+------K5ZVV-zrPS8y8iJelFUsagW7KEVVNg7wn3oh2ZJRPRpX678s=_a5bcc_--
 
