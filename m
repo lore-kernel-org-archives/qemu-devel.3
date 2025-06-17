@@ -4,50 +4,165 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC88BC71159
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 03:22:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F1AFC71159
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 03:23:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRMtG-0001jd-85; Mon, 16 Jun 2025 23:21:38 -0400
+	id 1uRMv2-0002gb-KP; Mon, 16 Jun 2025 23:23:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangran@bosc.ac.cn>)
- id 1uRMtD-0001jM-DQ; Mon, 16 Jun 2025 23:21:35 -0400
-Received: from [115.124.28.98] (helo=out28-98.mail.aliyun.com)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1uRMv0-0002gL-JY
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:23:26 -0400
+Received: from mail-co1nam11on2061d.outbound.protection.outlook.com
+ ([2a01:111:f403:2416::61d]
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wangran@bosc.ac.cn>)
- id 1uRMt2-0005v4-JB; Mon, 16 Jun 2025 23:21:35 -0400
-Received: from 172.38.29.63(mailfrom:wangran@bosc.ac.cn
- fp:SMTPD_---.dNpCArM_1750130229 cluster:ay29) by smtp.aliyun-inc.com;
- Tue, 17 Jun 2025 11:17:10 +0800
-Message-ID: <eb421c72-42fc-448e-9317-7e4d48f56b77@bosc.ac.cn>
-Date: Tue, 17 Jun 2025 11:17:09 +0800
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1uRMuy-0006nw-2G
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 23:23:26 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=Av7JO9yXN1DpdDWozqxeAJv1NLYVwoJ72WcWABL6qNaOnQV13fHIfWGT3BV9hXJ9jwCdcLhWzdp6VEUeo7hyK9vvFWemqT1G4pDGL9E/YJgcm40D6N3KfTlUkCSvAh9uVLk15Uo5L/09ZcV+j1RjVlU7Q8wnJ/Bw+sKb132Wx/Sszbt3LdQWXNBkBa9yyesn53UHNudLC8dIuXEnPK0RbrQNlvNNL1ye7anEHdeE4y7MXXkEmKsDHTzTfkh5FUVYpael83m35vYKgxNH+5ZFZ4Admgj3g5vG8ainU/nrHPq4VK/U5mybsof2d4r7jad6Of8bS69L+tSVjz3IzZo+fA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=ztSwtwwL8jkkZtgH0zZ6v6OFTPH4Tc/Q78656KJFIj4=;
+ b=bHgKCQo2zNd+/Gp+xKnvaRIY9w2AW0kBkFQQ6DVcdFmjLHRzRWZ/NmyMXECbYfABUXE6lzdCxL3RTJfvwlfADzSEaHDeLNw4U76MbCasBLpvaVbwVB2AaMv8cCjHYKxHgvanJWihm1B2dg5nmxL3WByXT/QvPmIiS0ZXdSGqp3ACsxh7rsHu4oao4EiDt3BSJuxKltXWoPMgjW5wqT7SOwy82lNHWWEuOXr4zcp5ddUWOPhJMppSK9va3yNSzyPnBLMiiGCYCHUcKCGVIC+God9WbeqRHPwIITvXBI6fI1QKYJtxJ1b1PXshZvJ27u6ahcEpmq/kGQ57P+hGYP/WxQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.233) smtp.rcpttodomain=intel.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=ztSwtwwL8jkkZtgH0zZ6v6OFTPH4Tc/Q78656KJFIj4=;
+ b=r4TSDDx4x+RXftzXxcC8FnF0TviqK1FdOTPIHiyiJp/WQmrBDjGrir4qmjNv8tskebOWCkzwvph+msP7ilSFxn/M/x9TNtpqGsXRV0tVmQMIKmnJ8h6jCrAubE5h+3GVHt2+XzBbX65aditpIRnMxuneFZ27kXyUdVGUbi10jA7f0tEi+p5pc4KPKxVma9BTq8SSugfBSceoFw2rPqdJRU+yQSls1yf6bQQfegoR+4QmRFx8wvDVEp4tbHl9PfiySZgmfBZ20mc+UdkjewCdbm8WSP7JD3hsNfnlcUNqq/zDxNbvzUAVmA57C7UBd5hkpV7DqpNSUf3JzgYsOtujhw==
+Received: from SJ0PR05CA0176.namprd05.prod.outlook.com (2603:10b6:a03:339::31)
+ by BL4PR12MB9478.namprd12.prod.outlook.com (2603:10b6:208:58e::9)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.29; Tue, 17 Jun
+ 2025 03:23:17 +0000
+Received: from MWH0EPF000971E5.namprd02.prod.outlook.com
+ (2603:10b6:a03:339:cafe::f2) by SJ0PR05CA0176.outlook.office365.com
+ (2603:10b6:a03:339::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.8835.19 via Frontend Transport; Tue,
+ 17 Jun 2025 03:23:16 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.233) by
+ MWH0EPF000971E5.mail.protection.outlook.com (10.167.243.73) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.8835.15 via Frontend Transport; Tue, 17 Jun 2025 03:23:16 +0000
+Received: from drhqmail201.nvidia.com (10.126.190.180) by mail.nvidia.com
+ (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.4; Mon, 16 Jun
+ 2025 20:23:09 -0700
+Received: from drhqmail201.nvidia.com (10.126.190.180) by
+ drhqmail201.nvidia.com (10.126.190.180) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.14; Mon, 16 Jun 2025 20:23:08 -0700
+Received: from nvidia.com (10.127.8.10) by mail.nvidia.com (10.126.190.180)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.14 via Frontend
+ Transport; Mon, 16 Jun 2025 20:22:51 -0700
+Date: Mon, 16 Jun 2025 20:22:44 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Yi Liu <yi.l.liu@intel.com>
+CC: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>, Peter Xu
+ <peterx@redhat.com>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "alex.williamson@redhat.com" <alex.williamson@redhat.com>, "clg@redhat.com"
+ <clg@redhat.com>, "eric.auger@redhat.com" <eric.auger@redhat.com>,
+ "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
+ <jasowang@redhat.com>, "ddutile@redhat.com" <ddutile@redhat.com>,
+ "jgg@nvidia.com" <jgg@nvidia.com>, "shameerali.kolothum.thodi@huawei.com"
+ <shameerali.kolothum.thodi@huawei.com>, "joao.m.martins@oracle.com"
+ <joao.m.martins@oracle.com>, "clement.mathieu--drif@eviden.com"
+ <clement.mathieu--drif@eviden.com>, "Tian, Kevin" <kevin.tian@intel.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>, Yi Sun <yi.y.sun@linux.intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH rfcv3 15/21] intel_iommu: Bind/unbind guest page table to
+ host
+Message-ID: <aFDfhI0zScBhy01j@nvidia.com>
+References: <20250521111452.3316354-16-zhenzhong.duan@intel.com>
+ <aC5YjHrv5EMDixzZ@Asurada-Nvidia>
+ <0f8087f4-0c97-440d-84d2-f3f017f81041@intel.com>
+ <aDDk1NYwJXaAdUQI@Asurada-Nvidia>
+ <29f5f434-1fe3-4b5e-91d1-f153e1e98602@intel.com>
+ <aDSmcvZ08jNOSr05@Asurada-Nvidia>
+ <SJ0PR11MB6744340B889FF65D3BD5B8459267A@SJ0PR11MB6744.namprd11.prod.outlook.com>
+ <f6baaea1-a60c-41dc-a9a8-d2389ed14679@intel.com>
+ <aE+yvI2clKEZyoyz@nvidia.com>
+ <6f0cb11d-ab12-4ae1-98d0-eb44bb0a7f4f@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 2/2] hw/riscv: Initial support for BOSC's Xiangshan
- Kunminghu FPGA prototype
-To: Alistair Francis <alistair23@gmail.com>
-Cc: 3543977024@qq.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-References: <20250425122238.383-1-wangran@bosc.ac.cn>
- <CAKmqyKPvx4zfXgdKqQrXix_57aoF87vJg2BWc6it700B7jt6yw@mail.gmail.com>
-From: Ran Wang <wangran@bosc.ac.cn>
-In-Reply-To: <CAKmqyKPvx4zfXgdKqQrXix_57aoF87vJg2BWc6it700B7jt6yw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 115.124.28.98 (deferred)
-Received-SPF: pass client-ip=115.124.28.98; envelope-from=wangran@bosc.ac.cn;
- helo=out28-98.mail.aliyun.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <6f0cb11d-ab12-4ae1-98d0-eb44bb0a7f4f@intel.com>
+X-NV-OnPremToCloud: AnonymousSubmission
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MWH0EPF000971E5:EE_|BL4PR12MB9478:EE_
+X-MS-Office365-Filtering-Correlation-Id: 96c7dfdf-36e4-4bf4-d8c5-08ddad4e4cff
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|36860700013|1800799024|82310400026|7416014; 
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?Av06UDdZc3BczPmn/HU/fWKZZnxEbMPrxDg1KwWXvQYLTpTa+7RbZCRLDg2m?=
+ =?us-ascii?Q?TsfleNDeezF92kn4pXby5F9iLWQJ6MykvC5x0wcGDL2a6bCGw+mC+JhzDSiN?=
+ =?us-ascii?Q?qVRiMwGilBTQHc5V+Qs15VhQK50pq9FG+uVf0We9kQzmo28qU7qYzL9qoRK2?=
+ =?us-ascii?Q?u8d5Lesf1aMrZoHLzZ8wptVbltC0MciSwyU3Htx6+nXSpWoqGC7KLAZCkbvr?=
+ =?us-ascii?Q?YvZt79UiAHj1XlHwOP2tFwbUTToyBtpeGhaxKZyxEDCWMnUOet8Ec3MxKF4X?=
+ =?us-ascii?Q?ywrq03VENShkgsziB/q7t7uNsxWMbcD3sjfqqKtAP8KesCvtBBQhJnrmX1uv?=
+ =?us-ascii?Q?o1z+MbzscgUzpap3KJjdJ+QjepSwBSEWKxX4geWpIvwP2Vajpe9btXV4Vvx/?=
+ =?us-ascii?Q?TrIaNrnUyTipCbpPh1W0wEKdlzo71kAn+wIptGzWKvTUsnbHVMIvJeeNv/W5?=
+ =?us-ascii?Q?K+pXRU52g3hG+7FzCgcHABwJER7WsboSm/5ADDsWdzU4W9xvffGyTfYFQ31G?=
+ =?us-ascii?Q?dZtuFzkOgabG6V2xHfvoOPjrcx9nkg4FF9zv0H/dWwUWCQc1XKcS5HPIWFGH?=
+ =?us-ascii?Q?ySbvuP9ipGT+0ynS8jgZqAi7HhRuBh0fO4+4t/IH50rsTUeNWNTpPsBO46K/?=
+ =?us-ascii?Q?FWmZ7OU/z5I3K5BUjb22I/ULgwtIAsPYeA9bIPbPUccBj0TbP9d9IhMIOU2V?=
+ =?us-ascii?Q?X1K1XMFzWRgTLq+02byXZiMuPj1RpGr1Sd9GHYaDYiT5njPYLMJKG1USiERH?=
+ =?us-ascii?Q?7PJuScqRHLSjWsGRbsToYnmQTKwyXsA4Jz7Jix5PMWhX2l/d3g8/RGbtsPVC?=
+ =?us-ascii?Q?UC55Vg2tfr8p7I4iZAk4ARKaQmzCQH+cKw2wVVXVcYos6JAr93CJYbXoqZkC?=
+ =?us-ascii?Q?G90Nghix96I+EAQUkuBYx71UutE9aJIPKkmv5e3YEt7LwF/xplkwhK13C2xl?=
+ =?us-ascii?Q?6ehAyfMX4Wck1wUhfeJ/dNBs54xb/6+p1T0Whbv3JJVsv3MtLn3g1UKRAAM1?=
+ =?us-ascii?Q?JUbgcm9NJj0DBF3k8ApjlAIqmclBM4Nngznd3I8zLrZJJvF9bAAOEz49juE+?=
+ =?us-ascii?Q?7r8C55pzsePkAwUR6w0of5Pehhttdz/rzUD75KqvjP/JOM54QvgLdlr97JUF?=
+ =?us-ascii?Q?6hxtZGY7/sE4kG8XpTqY3zsMlgh4WEt8vNhOxByONW9I/Umkv4KCj/8gRe5S?=
+ =?us-ascii?Q?iHHpW0tOqK7WCEPBskERRrNFugxikHDSvM+Q6wxQ92TYlsmT25E6HyUAiIAu?=
+ =?us-ascii?Q?FHo2mpkJmBfYCj+91paYqVg5k9iPgubV4KCI/1YWx/qE/blJFx5h5fBCfusB?=
+ =?us-ascii?Q?QelICxUhJATyfux/cFLYDodsRfl7R5Z1Ds9/yvGWMfsv1FyuaHwktmbHQ8Ld?=
+ =?us-ascii?Q?li+n28qMP4uB+lfuQfagUvPbL44x40ErqkJXA6ozfWLAW6XPdwxRufgMdfme?=
+ =?us-ascii?Q?66bMM9XDpcl9k473Vdf4Y0EK7ZQntxe0uCgm/mXTv9O6VZpLlo08wiCGfSI6?=
+ =?us-ascii?Q?J4q+h+ACtljPgU+UoHCuH+qURoAOoiREBoJb?=
+X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
+ SFS:(13230040)(376014)(36860700013)(1800799024)(82310400026)(7416014); DIR:OUT;
+ SFP:1101; 
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 17 Jun 2025 03:23:16.6980 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 96c7dfdf-36e4-4bf4-d8c5-08ddad4e4cff
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000971E5.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BL4PR12MB9478
+Received-SPF: permerror client-ip=2a01:111:f403:2416::61d;
+ envelope-from=nicolinc@nvidia.com;
+ helo=NAM11-CO1-obe.outbound.protection.outlook.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,506 +178,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alistair,
-
-On 2025/6/17 10:59, Alistair Francis wrote:
-> On Fri, Apr 25, 2025 at 10:22 PM Ran Wang <wangran@bosc.ac.cn> wrote:
->>
->> From: Huang Borong <3543977024@qq.com>
->>
->> This implementation provides emulation for the Xiangshan Kunminghu
->> FPGA prototype platform, including support for UART, CLINT, IMSIC,
->> and APLIC devices. More details can be found at
->> https://github.com/OpenXiangShan/XiangShan
->>
->> Signed-off-by: qinshaoqing <qinshaoqing@bosc.ac.cn>
->> Signed-off-by: Yang Wang <wangyang@bosc.ac.cn>
->> Signed-off-by: Yu Hu <huyu@bosc.ac.cn>
->> Signed-off-by: Ran Wang <wangran@bosc.ac.cn>
->> Signed-off-by: Borong Huang <3543977024@qq.com>
->> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
->> ---
->>   MAINTAINERS                                 |   7 +
->>   configs/devices/riscv64-softmmu/default.mak |   1 +
->>   docs/system/riscv/xiangshan-kunminghu.rst   |  39 ++++
->>   docs/system/target-riscv.rst                |   1 +
->>   hw/riscv/Kconfig                            |   9 +
->>   hw/riscv/meson.build                        |   1 +
->>   hw/riscv/xiangshan_kmh.c                    | 220 ++++++++++++++++++++
->>   include/hw/riscv/xiangshan_kmh.h            |  78 +++++++
->>   8 files changed, 356 insertions(+)
->>   create mode 100644 docs/system/riscv/xiangshan-kunminghu.rst
->>   create mode 100644 hw/riscv/xiangshan_kmh.c
->>   create mode 100644 include/hw/riscv/xiangshan_kmh.h
->>
->> diff --git a/MAINTAINERS b/MAINTAINERS
->> index 8978adf999..a9258bd610 100644
->> --- a/MAINTAINERS
->> +++ b/MAINTAINERS
->> @@ -1667,6 +1667,13 @@ S: Maintained
->>   F: hw/riscv/microblaze-v-generic.c
->>   F: docs/system/riscv/microblaze-v-generic.rst
->>
->> +Xiangshan Kunminghu
->> +M: Ran Wang <wangran@bosc.ac.cn>
->> +S: Maintained
->> +F: docs/system/riscv/xiangshan-kunminghu.rst
->> +F: hw/riscv/xiangshan_kmh.c
->> +F: include/hw/riscv/xiangshan_kmh.h
->> +
->>   RX Machines
->>   -----------
->>   rx-gdbsim
->> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/devices/riscv64-softmmu/default.mak
->> index 39ed3a0061..e485bbd1a3 100644
->> --- a/configs/devices/riscv64-softmmu/default.mak
->> +++ b/configs/devices/riscv64-softmmu/default.mak
->> @@ -11,3 +11,4 @@
->>   # CONFIG_RISCV_VIRT=n
->>   # CONFIG_MICROCHIP_PFSOC=n
->>   # CONFIG_SHAKTI_C=n
->> +# CONFIG_XIANGSHAN_KUNMINGHU=n
->> diff --git a/docs/system/riscv/xiangshan-kunminghu.rst b/docs/system/riscv/xiangshan-kunminghu.rst
->> new file mode 100644
->> index 0000000000..46e7ceeda0
->> --- /dev/null
->> +++ b/docs/system/riscv/xiangshan-kunminghu.rst
->> @@ -0,0 +1,39 @@
->> +BOSC Xiangshan Kunminghu FPGA prototype platform (``xiangshan-kunminghu``)
->> +==========================================================================
->> +The ``xiangshan-kunminghu`` machine is compatible with our FPGA prototype
->> +platform.
->> +
->> +XiangShan is an open-source high-performance RISC-V processor project.
->> +The third generation processor is called Kunminghu. Kunminghu is a 64-bit
->> +RV64GCBSUHV processor core. More information can be found in our Github
->> +repository:
->> +https://github.com/OpenXiangShan/XiangShan
->> +
->> +Supported devices
->> +-----------------
->> +The ``xiangshan-kunminghu`` machine supports the following devices:
->> +
->> +* Up to 16 xiangshan-kunminghu cores
->> +* Core Local Interruptor (CLINT)
->> +* Incoming MSI Controller (IMSIC)
->> +* Advanced Platform-Level Interrupt Controller (APLIC)
->> +* 1 UART
->> +
->> +Boot options
->> +------------
->> +The ``xiangshan-kunminghu`` machine can start using the standard ``-bios``
->> +functionality for loading the boot image. You need to compile and link
->> +the firmware, kernel, and Device Tree (FDT) into a single binary file,
->> +such as ``fw_payload.bin``.
->> +
->> +Running
->> +-------
->> +Below is an example command line for running the ``xiangshan-kunminghu``
->> +machine:
->> +
->> +.. code-block:: bash
->> +
->> +   $ qemu-system-riscv64 -machine xiangshan-kunminghu \
->> +      -smp 16 -m 16G \
->> +      -bios path/to/opensbi/platform/generic/firmware/fw_payload.bin \
->> +      -nographic
->> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
->> index 95457af130..89b2cb732c 100644
->> --- a/docs/system/target-riscv.rst
->> +++ b/docs/system/target-riscv.rst
->> @@ -71,6 +71,7 @@ undocumented; you can get a complete list by running
->>      riscv/shakti-c
->>      riscv/sifive_u
->>      riscv/virt
->> +   riscv/xiangshan-kunminghu
->>
->>   RISC-V CPU firmware
->>   -------------------
->> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
->> index e6a0ac1fa1..fc9c35bd98 100644
->> --- a/hw/riscv/Kconfig
->> +++ b/hw/riscv/Kconfig
->> @@ -119,3 +119,12 @@ config SPIKE
->>       select HTIF
->>       select RISCV_ACLINT
->>       select SIFIVE_PLIC
->> +
->> +config XIANGSHAN_KUNMINGHU
->> +    bool
->> +    default y
->> +    depends on RISCV64
->> +    select RISCV_ACLINT
->> +    select RISCV_APLIC
->> +    select RISCV_IMSIC
->> +    select SERIAL_MM
->> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
->> index c22f3a7216..2a8d5b136c 100644
->> --- a/hw/riscv/meson.build
->> +++ b/hw/riscv/meson.build
->> @@ -13,5 +13,6 @@ riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-acpi-build.c'))
->>   riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
->>          'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv-iommu-hpm.c'))
->>   riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-generic.c'))
->> +riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangshan_kmh.c'))
->>
->>   hw_arch += {'riscv': riscv_ss}
->> diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
->> new file mode 100644
->> index 0000000000..f7ae879d13
->> --- /dev/null
->> +++ b/hw/riscv/xiangshan_kmh.c
->> @@ -0,0 +1,220 @@
->> +/*
->> + * QEMU RISC-V Board Compatible with the Xiangshan Kunminghu
->> + * FPGA prototype platform
->> + *
->> + * Copyright (c) 2025 Beijing Institute of Open Source Chip (BOSC)
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + *
->> + * Provides a board compatible with the Xiangshan Kunminghu
->> + * FPGA prototype platform:
->> + *
->> + * 0) UART (16550A)
->> + * 1) CLINT (Core-Local Interruptor)
->> + * 2) IMSIC (Incoming MSI Controller)
->> + * 3) APLIC (Advanced Platform-Level Interrupt Controller)
->> + *
->> + * More information can be found in our Github repository:
->> + * https://github.com/OpenXiangShan/XiangShan
->> + *
->> + * This program is free software; you can redistribute it and/or modify it
->> + * under the terms and conditions of the GNU General Public License,
->> + * version 2 or later, as published by the Free Software Foundation.
->> + *
->> + * This program is distributed in the hope it will be useful, but WITHOUT
->> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
->> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
->> + * more details.
->> + *
->> + * You should have received a copy of the GNU General Public License along with
->> + * this program.  If not, see <http://www.gnu.org/licenses/>.
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "qapi/error.h"
->> +#include "exec/address-spaces.h"
+On Mon, Jun 16, 2025 at 03:38:26PM +0800, Yi Liu wrote:
+> On 2025/6/16 13:59, Nicolin Chen wrote:
+> > On Thu, Jun 12, 2025 at 08:53:40PM +0800, Yi Liu wrote:
+> > > > > That being said, IOMMU_NOTIFIER_IOTLB_EVENTS should not be needed
+> > > > > for passthrough devices, right?
+> > > > 
+> > > > No, even if x-flts=on is configured in QEMU cmdline, that only mean virtual vtd
+> > > > supports stage-1 translation, guest still can choose to run in legacy mode(stage2),
+> > > > e.g., with kernel cmdline intel_iommu=on,sm_off
+> > > > 
+> > > > So before guest run, we don't know which kind of page table either stage1 or stage2
+> > > > for this VFIO device by guest. So we have to use iommu AS to catch stage2's MAP event
+> > > > if guest choose stage2.
+> > > 
+> > > @Zheznzhong, if guest decides to use legacy mode then vIOMMU should switch
+> > > the MRs of the device's AS, hence the IOAS created by VFIO container would
+> > > be switched to using the IOMMU_NOTIFIER_IOTLB_EVENTS since the MR is
+> > > switched to IOMMU MR. So it should be able to support shadowing the guest
+> > > IO page table. Hence, this should not be a problem.
+> > > 
+> > > @Nicolin, I think your major point is making the VFIO container IOAS as a
+> > > GPA IOAS (always return system AS in get_address_space op) and reusing it
+> > > when setting nested translation. Is it? I think it should work if:
+> > > 1) we can let the vfio memory listener filter out the RO pages per vIOMMU's
+> > >     request.
+> > 
+> > Yes.
+> > 
+> > > But I don't want the get_address_space op always return system
+> > >     AS as the reason mentioned by Zhenzhong above.
+> > 
+> > So, you mean the VT-d model would need a runtime notification to
+> > switch the address space of the VFIO ioas?
 > 
-> This should be
+> It's not a notification. It's done by switching AS. Detail can be found
+> in vtd_switch_address_space().
+
+OK. I got confused about the "switch", thinking that was about
+the get_address_space() call.
+
+> > TBH, I am still unclear how many cases the VT-d model would need
+> > support here :-/
+> >
+> > > 2) we can disallow emulated/passthru devices behind the same pcie-pci
+> > >     bridge[1]. For emulated devices, AS should switch to iommu MR, while for
+> > >     passthru devices, it needs the AS stick with the system MR hence be able
+> > >     to keep the VFIO container IOAS as a GPA IOAS. To support this, let AS
+> > >     switch to iommu MR and have a separate GPA IOAS is needed. This separate
+> > >     GPA IOAS can be shared by all the passthru devices.
+> > 
+> > Yea, ARM is doing in a similar way.
+> > 
+> > > So basically, we are ok with your idea. But we should decide if it is
+> > > necessary to support the topology in 2). I think this is a general
+> > > question. TBH. I don't have much information to judge if it is valuable.
+> > > Perhaps, let's hear from more people.
+> > 
+> > I would be okay if VT-d decides to move on with its own listener,
+> > if it turns out to be the relatively better case. But for ARM, I'd
+> > like to see we can reuse the VFIO container IOAS.
 > 
-> #include "system/address-spaces.h"
-> 
-> But even with that change I see a few errors with this patch
-> 
-> FAILED: libqemu-riscv64-softmmu.a.p/hw_riscv_xiangshan_kmh.c.o
-> ...
-> ../hw/riscv/xiangshan_kmh.c:154:19: error: initialization of ‘void
-> (*)(ObjectClass *, const void *)’ from incompatible pointer type ‘void
-> (*)(ObjectClass *,
-> void *)’ [-Wincompatible-pointer-types]
->   154 |     .class_init = xiangshan_kmh_soc_class_init,
->       |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ../hw/riscv/xiangshan_kmh.c:154:19: note: (near initialization for
-> ‘xiangshan_kmh_soc_info.class_init’)
-> ../hw/riscv/xiangshan_kmh.c:134:13: note:
-> ‘xiangshan_kmh_soc_class_init’ declared here
->   134 | static void xiangshan_kmh_soc_class_init(ObjectClass *klass, void *data)
->       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ../hw/riscv/xiangshan_kmh.c:213:19: error: initialization of ‘void
-> (*)(ObjectClass *, const void *)’ from incompatible pointer type ‘void
-> (*)(ObjectClass *,
-> void *)’ [-Wincompatible-pointer-types]
->   213 |     .class_init = xiangshan_kmh_machine_class_init,
->       |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> ../hw/riscv/xiangshan_kmh.c:213:19: note: (near initialization for
-> ‘xiangshan_kmh_machine_info.class_init’)
-> ../hw/riscv/xiangshan_kmh.c:192:13: note:
-> ‘xiangshan_kmh_machine_class_init’ declared here
->   192 | static void xiangshan_kmh_machine_class_init(ObjectClass
-> *klass, void *data)
->       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> I didn't see a problem so far on this part. Have you seen any?
 
-Got it, let me check this and may send out v5 patch later.
+Probably no functional problem with that internal listener. ARM
+could work using one like that as well. The only problem is code
+duplication. It's not ideal for everybody to have an internal S2
+listener while wasting the VFIO one.
 
-Thanks for the test.
+But given that VT-d has more complicated use cases like runtime
+guest-level configuration that switches between nesting and non-
+nesting modes, perhaps having an internal listener is a better
+idea?
 
-Regards,
-Ran
-
-> Alistair
-> 
->> +#include "hw/boards.h"
->> +#include "hw/char/serial-mm.h"
->> +#include "hw/intc/riscv_aclint.h"
->> +#include "hw/intc/riscv_aplic.h"
->> +#include "hw/intc/riscv_imsic.h"
->> +#include "hw/qdev-properties.h"
->> +#include "hw/riscv/boot.h"
->> +#include "hw/riscv/xiangshan_kmh.h"
->> +#include "hw/riscv/riscv_hart.h"
->> +#include "system/system.h"
->> +
->> +static const MemMapEntry xiangshan_kmh_memmap[] = {
->> +    [XIANGSHAN_KMH_ROM] =          {     0x1000,        0xF000 },
->> +    [XIANGSHAN_KMH_UART0] =        { 0x310B0000,       0x10000 },
->> +    [XIANGSHAN_KMH_CLINT] =        { 0x38000000,       0x10000 },
->> +    [XIANGSHAN_KMH_APLIC_M] =      { 0x31100000,        0x4000 },
->> +    [XIANGSHAN_KMH_APLIC_S] =      { 0x31120000,        0x4000 },
->> +    [XIANGSHAN_KMH_IMSIC_M] =      { 0x3A800000,       0x10000 },
->> +    [XIANGSHAN_KMH_IMSIC_S] =      { 0x3B000000,       0x80000 },
->> +    [XIANGSHAN_KMH_DRAM] =         { 0x80000000,           0x0 },
->> +};
->> +
->> +static DeviceState *xiangshan_kmh_create_aia(uint32_t num_harts)
->> +{
->> +    int i;
->> +    const MemMapEntry *memmap = xiangshan_kmh_memmap;
->> +    hwaddr addr = 0;
->> +    DeviceState *aplic_m = NULL;
->> +
->> +    /* M-level IMSICs */
->> +    addr = memmap[XIANGSHAN_KMH_IMSIC_M].base;
->> +    for (i = 0; i < num_harts; i++) {
->> +        riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0), i, true,
->> +                           1, XIANGSHAN_KMH_IMSIC_NUM_IDS);
->> +    }
->> +
->> +    /* S-level IMSICs */
->> +    addr = memmap[XIANGSHAN_KMH_IMSIC_S].base;
->> +    for (i = 0; i < num_harts; i++) {
->> +        riscv_imsic_create(addr +
->> +                           i * IMSIC_HART_SIZE(XIANGSHAN_KMH_IMSIC_GUEST_BITS),
->> +                           i, false, 1 + XIANGSHAN_KMH_IMSIC_GUEST_BITS,
->> +                           XIANGSHAN_KMH_IMSIC_NUM_IDS);
->> +    }
->> +
->> +    /* M-level APLIC */
->> +    aplic_m = riscv_aplic_create(memmap[XIANGSHAN_KMH_APLIC_M].base,
->> +                                 memmap[XIANGSHAN_KMH_APLIC_M].size,
->> +                                 0, 0, XIANGSHAN_KMH_APLIC_NUM_SOURCES,
->> +                                 1, true, true, NULL);
->> +
->> +    /* S-level APLIC */
->> +    riscv_aplic_create(memmap[XIANGSHAN_KMH_APLIC_S].base,
->> +                       memmap[XIANGSHAN_KMH_APLIC_S].size,
->> +                       0, 0, XIANGSHAN_KMH_APLIC_NUM_SOURCES,
->> +                       1, true, false, aplic_m);
->> +
->> +    return aplic_m;
->> +}
->> +
->> +static void xiangshan_kmh_soc_realize(DeviceState *dev, Error **errp)
->> +{
->> +    MachineState *ms = MACHINE(qdev_get_machine());
->> +    XiangshanKmhSoCState *s = XIANGSHAN_KMH_SOC(dev);
->> +    const MemMapEntry *memmap = xiangshan_kmh_memmap;
->> +    MemoryRegion *system_memory = get_system_memory();
->> +    uint32_t num_harts = ms->smp.cpus;
->> +
->> +    qdev_prop_set_uint32(DEVICE(&s->cpus), "num-harts", num_harts);
->> +    qdev_prop_set_uint32(DEVICE(&s->cpus), "hartid-base", 0);
->> +    qdev_prop_set_string(DEVICE(&s->cpus), "cpu-type",
->> +                         TYPE_RISCV_CPU_XIANGSHAN_KMH);
->> +    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
->> +
->> +    /* AIA */
->> +    s->irqchip = xiangshan_kmh_create_aia(num_harts);
->> +
->> +    /* UART */
->> +    serial_mm_init(system_memory, memmap[XIANGSHAN_KMH_UART0].base, 2,
->> +                   qdev_get_gpio_in(s->irqchip, XIANGSHAN_KMH_UART0_IRQ),
->> +                   115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
->> +
->> +    /* CLINT */
->> +    riscv_aclint_swi_create(memmap[XIANGSHAN_KMH_CLINT].base,
->> +                            0, num_harts, false);
->> +    riscv_aclint_mtimer_create(memmap[XIANGSHAN_KMH_CLINT].base +
->> +                               RISCV_ACLINT_SWI_SIZE,
->> +                               RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
->> +                               0, num_harts, RISCV_ACLINT_DEFAULT_MTIMECMP,
->> +                               RISCV_ACLINT_DEFAULT_MTIME,
->> +                               XIANGSHAN_KMH_CLINT_TIMEBASE_FREQ, true);
->> +
->> +    /* ROM */
->> +    memory_region_init_rom(&s->rom, OBJECT(dev), "xiangshan.kunminghu.rom",
->> +                           memmap[XIANGSHAN_KMH_ROM].size, &error_fatal);
->> +    memory_region_add_subregion(system_memory,
->> +                                memmap[XIANGSHAN_KMH_ROM].base, &s->rom);
->> +}
->> +
->> +static void xiangshan_kmh_soc_class_init(ObjectClass *klass, void *data)
->> +{
->> +    DeviceClass *dc = DEVICE_CLASS(klass);
->> +
->> +    dc->realize = xiangshan_kmh_soc_realize;
->> +    dc->user_creatable = false;
->> +}
->> +
->> +static void xiangshan_kmh_soc_instance_init(Object *obj)
->> +{
->> +    XiangshanKmhSoCState *s = XIANGSHAN_KMH_SOC(obj);
->> +
->> +    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
->> +}
->> +
->> +static const TypeInfo xiangshan_kmh_soc_info = {
->> +    .name = TYPE_XIANGSHAN_KMH_SOC,
->> +    .parent = TYPE_DEVICE,
->> +    .instance_size = sizeof(XiangshanKmhSoCState),
->> +    .instance_init = xiangshan_kmh_soc_instance_init,
->> +    .class_init = xiangshan_kmh_soc_class_init,
->> +};
->> +
->> +static void xiangshan_kmh_soc_register_types(void)
->> +{
->> +    type_register_static(&xiangshan_kmh_soc_info);
->> +}
->> +type_init(xiangshan_kmh_soc_register_types)
->> +
->> +static void xiangshan_kmh_machine_init(MachineState *machine)
->> +{
->> +    XiangshanKmhState *s = XIANGSHAN_KMH_MACHINE(machine);
->> +    const MemMapEntry *memmap = xiangshan_kmh_memmap;
->> +    MemoryRegion *system_memory = get_system_memory();
->> +    hwaddr start_addr = memmap[XIANGSHAN_KMH_DRAM].base;
->> +
->> +    /* Initialize SoC */
->> +    object_initialize_child(OBJECT(machine), "soc", &s->soc,
->> +                            TYPE_XIANGSHAN_KMH_SOC);
->> +    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
->> +
->> +    /* Register RAM */
->> +    memory_region_add_subregion(system_memory,
->> +                                memmap[XIANGSHAN_KMH_DRAM].base,
->> +                                machine->ram);
->> +
->> +    /* ROM reset vector */
->> +    riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
->> +                              start_addr,
->> +                              memmap[XIANGSHAN_KMH_ROM].base,
->> +                              memmap[XIANGSHAN_KMH_ROM].size, 0, 0);
->> +    if (machine->firmware) {
->> +        riscv_load_firmware(machine->firmware, &start_addr, NULL);
->> +    }
->> +
->> +    /* Note: dtb has been integrated into firmware(OpenSBI) when compiling */
->> +}
->> +
->> +static void xiangshan_kmh_machine_class_init(ObjectClass *klass, void *data)
->> +{
->> +    MachineClass *mc = MACHINE_CLASS(klass);
->> +    static const char *const valid_cpu_types[] = {
->> +        TYPE_RISCV_CPU_XIANGSHAN_KMH,
->> +        NULL
->> +    };
->> +
->> +    mc->desc = "RISC-V Board compatible with the Xiangshan " \
->> +               "Kunminghu FPGA prototype platform";
->> +    mc->init = xiangshan_kmh_machine_init;
->> +    mc->max_cpus = XIANGSHAN_KMH_MAX_CPUS;
->> +    mc->default_cpu_type = TYPE_RISCV_CPU_XIANGSHAN_KMH;
->> +    mc->valid_cpu_types = valid_cpu_types;
->> +    mc->default_ram_id = "xiangshan.kunminghu.ram";
->> +}
->> +
->> +static const TypeInfo xiangshan_kmh_machine_info = {
->> +    .name = TYPE_XIANGSHAN_KMH_MACHINE,
->> +    .parent = TYPE_MACHINE,
->> +    .instance_size = sizeof(XiangshanKmhState),
->> +    .class_init = xiangshan_kmh_machine_class_init,
->> +};
->> +
->> +static void xiangshan_kmh_machine_register_types(void)
->> +{
->> +    type_register_static(&xiangshan_kmh_machine_info);
->> +}
->> +type_init(xiangshan_kmh_machine_register_types)
->> diff --git a/include/hw/riscv/xiangshan_kmh.h b/include/hw/riscv/xiangshan_kmh.h
->> new file mode 100644
->> index 0000000000..952473fbb6
->> --- /dev/null
->> +++ b/include/hw/riscv/xiangshan_kmh.h
->> @@ -0,0 +1,78 @@
->> +/*
->> + * QEMU RISC-V Board Compatible with the Xiangshan Kunminghu
->> + * FPGA prototype platform
->> + *
->> + * Copyright (c) 2025 Beijing Institute of Open Source Chip (BOSC)
->> + *
->> + * This program is free software; you can redistribute it and/or modify it
->> + * under the terms and conditions of the GNU General Public License,
->> + * version 2 or later, as published by the Free Software Foundation.
->> + *
->> + * This program is distributed in the hope it will be useful, but WITHOUT
->> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
->> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
->> + * more details.
->> + *
->> + * You should have received a copy of the GNU General Public License along with
->> + * this program.  If not, see <http://www.gnu.org/licenses/>.
->> + */
->> +
->> +#ifndef HW_XIANGSHAN_KMH_H
->> +#define HW_XIANGSHAN_KMH_H
->> +
->> +#include "hw/boards.h"
->> +#include "hw/riscv/riscv_hart.h"
->> +
->> +#define XIANGSHAN_KMH_MAX_CPUS 16
->> +
->> +typedef struct XiangshanKmhSoCState {
->> +    /*< private >*/
->> +    DeviceState parent_obj;
->> +
->> +    /*< public >*/
->> +    RISCVHartArrayState cpus;
->> +    DeviceState *irqchip;
->> +    MemoryRegion rom;
->> +} XiangshanKmhSoCState;
->> +
->> +#define TYPE_XIANGSHAN_KMH_SOC "xiangshan.kunminghu.soc"
->> +DECLARE_INSTANCE_CHECKER(XiangshanKmhSoCState, XIANGSHAN_KMH_SOC,
->> +                         TYPE_XIANGSHAN_KMH_SOC)
->> +
->> +typedef struct XiangshanKmhState {
->> +    /*< private >*/
->> +    MachineState parent_obj;
->> +
->> +    /*< public >*/
->> +    XiangshanKmhSoCState soc;
->> +} XiangshanKmhState;
->> +
->> +#define TYPE_XIANGSHAN_KMH_MACHINE MACHINE_TYPE_NAME("xiangshan-kunminghu")
->> +DECLARE_INSTANCE_CHECKER(XiangshanKmhState, XIANGSHAN_KMH_MACHINE,
->> +                         TYPE_XIANGSHAN_KMH_MACHINE)
->> +
->> +enum {
->> +    XIANGSHAN_KMH_ROM,
->> +    XIANGSHAN_KMH_UART0,
->> +    XIANGSHAN_KMH_CLINT,
->> +    XIANGSHAN_KMH_APLIC_M,
->> +    XIANGSHAN_KMH_APLIC_S,
->> +    XIANGSHAN_KMH_IMSIC_M,
->> +    XIANGSHAN_KMH_IMSIC_S,
->> +    XIANGSHAN_KMH_DRAM,
->> +};
->> +
->> +enum {
->> +    XIANGSHAN_KMH_UART0_IRQ = 10,
->> +};
->> +
->> +/* Indicating Timebase-freq (1MHZ) */
->> +#define XIANGSHAN_KMH_CLINT_TIMEBASE_FREQ 1000000
->> +
->> +#define XIANGSHAN_KMH_IMSIC_NUM_IDS 255
->> +#define XIANGSHAN_KMH_IMSIC_NUM_GUESTS 7
->> +#define XIANGSHAN_KMH_IMSIC_GUEST_BITS 3
->> +
->> +#define XIANGSHAN_KMH_APLIC_NUM_SOURCES 96
->> +
->> +#endif
->> --
->> 2.34.1
->>
-
+Thanks
+Nicolin
 
