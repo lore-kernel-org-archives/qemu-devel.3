@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15862C71136
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA3E6C71157
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:37:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRZJ1-0002u7-IQ; Tue, 17 Jun 2025 12:37:07 -0400
+	id 1uRZIh-0002g2-54; Tue, 17 Jun 2025 12:36:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZGC-0000mH-R8
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:10 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ id 1uRZGF-0000n8-9S
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:15 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZG3-0000eM-Gm
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:02 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-450d668c2a1so47398815e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:33:58 -0700 (PDT)
+ id 1uRZGC-0000fT-SL
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:34:11 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3a4ef2c2ef3so4913276f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:34:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750178037; x=1750782837; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750178039; x=1750782839; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e1HQznq99qoCK8P8PgCsYfpPefLsvFqz98NOZI1uUSU=;
- b=ox/IQgKB3OQg4OVOn6+163FpfmnWREMGSc0Ls0RiPermpmp154i4M7fAfaA8FCBwsR
- aQAJ7KB9ByXuSHcrX5XPg1pA1IGr9qHeXyBPUHG65xHlBDV3ntdJaPJB62qxaaOjohP6
- 1O3YyLwsi5C5ZtYlgoZwKp5+2CvM4k9R6+uoqYkYCybVr8HBmvONvgYswEWmqbh5pCu8
- tsdQd3RsWHWoCC5h3kckV5cLJ83hkoxrsB9KEE3P2KOwBrWklLt92gKUrWP8x3pCraIy
- 3sdqOMhEFvlNrrpCol4nRey2LG6Ul7BOyfhnvAgD/7opzwsheSKC3qserT9OLRzEEzPN
- +aYQ==
+ bh=GncEdQO/d7gOZ9LM+QxKenzRx6813cX2TxyJIAl7x3Y=;
+ b=lwjeugSjNXojm8tIkAOD2mZRfEj7Ogkbcu/jJWH4hqFjJCL0caFeJctuezT8MUj6dF
+ 0c1MLdYt4no58+X1dsA4o9r7kuhzkWTZeCUSW5PJUoLjnI4z/U6IjYvI3GNoU/c+ZVMP
+ FoD6N9BJDnvxnWst8ah/cmJpp2Mt2HLYFeoqAiDuAzIc4uMwnX+pN4RyGxlZND3gSJwO
+ iIhVT4Hdh1gJ/2arD1VnjWx1xC43AdCZ72oqrYTocGM4puug5JqKG3vztUiPCMCuXEWp
+ Oo9geWdyTHWfR0zq2Gc4qubeedDW6m9aqsijp5ecTHKTCntAt7FVn5V9hcvaQI31FSSh
+ oh0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750178038; x=1750782838;
+ d=1e100.net; s=20230601; t=1750178039; x=1750782839;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=e1HQznq99qoCK8P8PgCsYfpPefLsvFqz98NOZI1uUSU=;
- b=BLWRdLADgpK8P5syaIfHC6nzhF8pFjN12NXdKn45X4ZBC0eBHQIvuUuvfvaAzP9yVJ
- 6xWkdv9LJcAOYuGsWg9WmEzYi+5o5nY9PEHpUxQWiYI06ubMEZaREFQdRIKQtIo29jOb
- xMWwBy1Ix4EaVwI9Y5VF6h2hyxUg2FnpFIi4mBaRDELUXxnhJjBLfcXk80SkMPYGpumK
- 15SWC7EuQNMe7QN9F7JUDdwO6KccMmfhny1A9VKChDXflE3KQr3g92b4A4Twg6hJpunl
- lIgmf7s6noHWeRPnMh+C/DOH/VtAJbS/mR4osjqI+WZQiURsSToUM1tTARhkMUpkIy1d
- XfXg==
-X-Gm-Message-State: AOJu0YxVxhlkOeZwMYf44aTwbZ5w6G5zSgfO3o/HmPGqa4XB4TKBubEU
- MxaP3YfTiffM+p9As0J2kaXdkXFmhQpAZSH9Js+0KAn1QUzfPyTE3bhgkhvGlAp07wQ=
-X-Gm-Gg: ASbGncvxqO6aN/QZb78tl/uEXP15fml2r90RA8mVMLlqdkbCnZ8vz8X4tttRb4t7z9B
- 0tO5xHhpi8EcKglheRJBKL/BEjLWBuJvo99fuo+g+P9+iT501JDbVrgE044CCZADNDo81ixWIhq
- JyuefXWf6FYcBMGPC1OqDqMQi23XyOQE9QJFz2YseYdDBCPmERpbPtxSODZzCVnFTlIWYwkTT49
- 5bnziz7WLaiyrSgQa9RgGn5bJa9QhzIZFFwsHvEPJOFtwS9UMJlp6IdaCnZXZxRpb6tDY9C1vqG
- UxxMynGAZ4EcA/ueM8xhBjGPlMTVc2NAgmGKh/LBo7Ag55W4rUaKY07GYoCzse8=
-X-Google-Smtp-Source: AGHT+IEuOlzuLgIb55MubMss/sq0ETxsqBxX/tP7MvZTc4WF4bNrfAkV6TatGGs3YrMBZLde9xPYaQ==
-X-Received: by 2002:a05:6000:64b:b0:3a5:8977:e0fd with SMTP id
- ffacd0b85a97d-3a58977e508mr2505193f8f.0.1750178037635; 
- Tue, 17 Jun 2025 09:33:57 -0700 (PDT)
+ bh=GncEdQO/d7gOZ9LM+QxKenzRx6813cX2TxyJIAl7x3Y=;
+ b=eEgGYSONAd8VlS2REvyzqqGbt4xczU1GgGZM/NotvKwfhM1atbF/DQT152w1G0EEIe
+ fPJmV1rDY3Ee9gV9CgrJijMrYEYAeu7NyjyBMDt2k4a6iUAAP4B+1VGQGf8tIjZvLrHh
+ yrkAWme4UU5xevGiEdmUvnWqaM1p7WXCmmdCcB5/ds9woLJ+jxaiKvTcp5RUxVdSCQ4J
+ fjyU37dsa1VKc5W01z0CEvstER8IaPngm/Wk1XRUUz3gB2gnguVYe2U5w0qfX/xbY4GS
+ mVsub3/KX6bWXD8zcEXrfWSYZoRfQVR0cSVMqIcMb6VbrdTfv0Jk6HhHcKMyYsoOPCcq
+ 1dXg==
+X-Gm-Message-State: AOJu0Yynt8byAxnqh2B3BC7g9m/qr7rr9hs8FViqZdGs8vOGq4piGwmT
+ bcVq7/ENcNffORFFyig+8JJI0k59MaTtJn8i71EAJiw+INCQAjEAexL8iu8vdd4Pr9Y=
+X-Gm-Gg: ASbGnctprAGOG81EaTDpFlL2khrGhbTw22eljeh5tABlYru/woZnKLyje+xjUXRkn0a
+ FJMxiDKbTzpBbwtW9QfHj5lPRK5zuj+v2YmoZr9R8kCer75JBZFZ9iBAq/mg8iKhMYrRGKgHlKv
+ ZGFHvY0pe7eoLeIoVKlk8rTv+XDDaEJ113HF6KARYSAUmB3yj3yc9B0+KPnd6ThtWIMFTRx4VHx
+ vaUc28ZC097DLufJMA1QURNiazE99ygbIaqoqQPzP8bIhgnB9Ql+W4ofE1g8peK0nuhS+BTVIlX
+ 54+7itsIIsOkwuQhJt5a8bCtlRuyQhSM+v3boKH410a17VKZ711ow9amWCa765U=
+X-Google-Smtp-Source: AGHT+IEzrNJfJxccfvZ1/Dv81sv9ibMeIsZbIicjBJbFPPlnMb0UfYqycjSiQbPuRMjeJfXuxbG2YQ==
+X-Received: by 2002:a05:6000:400b:b0:3a4:f2ed:217e with SMTP id
+ ffacd0b85a97d-3a5723af786mr11907985f8f.42.1750178039291; 
+ Tue, 17 Jun 2025 09:33:59 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568a53f79sm14266546f8f.4.2025.06.17.09.33.53
+ ffacd0b85a97d-3a568b090b0sm14359958f8f.46.2025.06.17.09.33.55
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Jun 2025 09:33:55 -0700 (PDT)
+ Tue, 17 Jun 2025 09:33:58 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 91A355F90D;
- Tue, 17 Jun 2025 17:33:52 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id 01A2B5F929;
+ Tue, 17 Jun 2025 17:33:53 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
@@ -74,18 +74,17 @@ Cc: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 07/11] target/arm: clamp value on icc_bpr_write to account
- for RES0 fields
-Date: Tue, 17 Jun 2025 17:33:47 +0100
-Message-ID: <20250617163351.2640572-8-alex.bennee@linaro.org>
+Subject: [RFC PATCH 11/11] kvm/arm: implement WFx traps for KVM
+Date: Tue, 17 Jun 2025 17:33:51 +0100
+Message-ID: <20250617163351.2640572-12-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
 In-Reply-To: <20250617163351.2640572-1-alex.bennee@linaro.org>
 References: <20250617163351.2640572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -108,39 +107,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If the user writes a large value to the register but with the bottom
-bits unset we could end up with something illegal. By clamping ahead
-of the check we at least assure we won't assert(bpr > 0) later in the
-GIC interface code.
+This allows the vCPU guest core to go to sleep on a WFx instruction.
 
 Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- hw/intc/arm_gicv3_cpuif.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ target/arm/kvm.c        | 28 ++++++++++++++++++++++++++++
+ target/arm/trace-events |  1 +
+ 2 files changed, 29 insertions(+)
 
-diff --git a/hw/intc/arm_gicv3_cpuif.c b/hw/intc/arm_gicv3_cpuif.c
-index 4b4cf09157..165f7e9c2f 100644
---- a/hw/intc/arm_gicv3_cpuif.c
-+++ b/hw/intc/arm_gicv3_cpuif.c
-@@ -1797,6 +1797,9 @@ static void icc_bpr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-     trace_gicv3_icc_bpr_write(ri->crm == 8 ? 0 : 1,
-                               gicv3_redist_affid(cs), value);
- 
-+    /* clamp the value to 2:0, the rest os RES0 */
-+    value = deposit64(0, 0, 3, value);
-+
-     if (grp == GICV3_G1 && gicv3_use_ns_bank(env)) {
-         grp = GICV3_G1NS;
-     }
-@@ -1820,7 +1823,7 @@ static void icc_bpr_write(CPUARMState *env, const ARMCPRegInfo *ri,
-         value = minval;
-     }
- 
--    cs->icc_bpr[grp] = value & 7;
-+    cs->icc_bpr[grp] = value;
-     gicv3_cpuif_update(cs);
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 1280e2c1e8..63ba8573a2 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -1544,6 +1544,32 @@ static int kvm_arm_handle_hypercall(ARMCPU *cpu,
+     return 0;
  }
  
++/*
++ * It would be perfectly fine to immediately return from any WFE/WFI
++ * trap however that would mean we spend a lot of time bouncing
++ * between the hypervisor and QEMU when things are idle.
++ */
++
++static const char * wfx_insn[] = {
++    "WFI",
++    "WFE",
++    "WFIT",
++    "WFET"
++};
++
++static int kvm_arm_handle_wfx(CPUState *cs, int esr_iss)
++{
++    int ti = extract32(esr_iss, 0, 2);
++    ARMCPU *cpu = ARM_CPU(cs);
++    CPUARMState *env = &cpu->env;
++
++    trace_kvm_wfx_trap(cs->cpu_index, wfx_insn[ti], env->pc);
++
++    /* stop the CPU, return to the top of the loop */
++    cs->stop = true;
++    return EXCP_YIELD;
++}
++
+ /**
+  * kvm_arm_handle_hard_trap:
+  * @cpu: ARMCPU
+@@ -1582,6 +1608,8 @@ static int kvm_arm_handle_hard_trap(ARMCPU *cpu,
+     case EC_AA64_HVC:
+     case EC_AA64_SMC:
+         return kvm_arm_handle_hypercall(cpu, esr_ec);
++    case EC_WFX_TRAP:
++        return kvm_arm_handle_wfx(cs, esr_iss);
+     default:
+         qemu_log_mask(LOG_UNIMP, "%s: unhandled EC: %x/%x/%x/%d\n",
+                 __func__, esr_ec, esr_iss, esr_iss2, esr_il);
+diff --git a/target/arm/trace-events b/target/arm/trace-events
+index 10cdba92a3..bb02da12ab 100644
+--- a/target/arm/trace-events
++++ b/target/arm/trace-events
+@@ -16,3 +16,4 @@ kvm_arm_fixup_msi_route(uint64_t iova, uint64_t gpa) "MSI iova = 0x%"PRIx64" is
+ kvm_sysreg_read(const char *name, uint64_t val) "%s => 0x%" PRIx64
+ kvm_sysreg_write(const char *name, uint64_t val) "%s <=  0x%" PRIx64
+ kvm_hypercall(int ec, uint64_t arg0) "%d: %"PRIx64
++kvm_wfx_trap(int vcpu, const char *insn, uint64_t vaddr) "%d: %s @ 0x%" PRIx64
 -- 
 2.47.2
 
