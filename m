@@ -4,70 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD3E1C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19908C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYzr-0006jY-Hj; Tue, 17 Jun 2025 12:17:21 -0400
+	id 1uRYtj-0001f9-Ni; Tue, 17 Jun 2025 12:10:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uRYqC-0005lz-RW
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:07:19 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1uRYll-0002Gq-HC
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:02:43 -0400
+Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1uRYq7-0002Th-5z
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:07:16 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-313154270bbso6458407a91.2
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:07:10 -0700 (PDT)
+ id 1uRYla-0001e6-J0
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:02:35 -0400
+Received: by mail-pf1-x42b.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso5126302b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:02:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750176429; x=1750781229; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750176135; x=1750780935; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=dPooGodvHOd25Hd926Qo9oypTPkB595thoSSxi84ong=;
- b=rP5Y7sAVIhqjA4cJFFAejRvJ/A3QaBVc93JG178mY70qSMjOLi2R8KKWQcXSIIKeWU
- 3PYvPbt2hBo9a6AHKKDRUm16LHphTGiGy79iVWa2PjF0LcyA3xi5f5FVlEZCcxIJJKCM
- ZyXgYfUtE4wzTY0zJvZUQXj/gekALXfO55Mb0glsZ1E6himxjlx6+dviOYtNFOWC82vD
- ULVTDJlJsnEtHOAEBZI5EKUFJJmVJGagP3SAnnE9csSWlOGnV+lfQfICph7eec3sNgqT
- C36xhoX4WpeWr0mvH1M4KGyxTB8NlmLxubVNI4bW0HRg6N867lflqCQzNYnwJthDQOb2
- S7ZQ==
+ bh=o6n9QnxZQEp3aVXoKzmKc1ufO76DC8Dyqg4znXD0ODE=;
+ b=WNkul4euTE4dLeRtBhYkiU4uILSkWsG2HLMXJ9hprzXbaXeyWyl6n9R2Ln5716/EN+
+ er5FK4oF1CgdDXkiuBnB1RYFcZwGESDQqPMnXDdBi4wdiNqiJ7+6RwQpiXZc5JMWGjNf
+ lFLYvj9p0eQibLIWshuVuIQ2v16fGJUeKbbRmLcasLVpEY/FCcAEQMt9cofP+ZrhGGny
+ LRAoINWh6xNtVcaFY8QX+yDQRRy3iXHyrxtH9dmDCsk0654aYP/IuUFkiDx7Yy4/Etb2
+ d4V51v5OCuQrOmESJfZ4QZilJYLER6i/x2BG/tUAdrKpqCBsfrJAr38KkOtZUqM5aQ3g
+ t87A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750176429; x=1750781229;
+ d=1e100.net; s=20230601; t=1750176135; x=1750780935;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=dPooGodvHOd25Hd926Qo9oypTPkB595thoSSxi84ong=;
- b=IR5jG3kaYnc73WHpUKIgUNpg6NPFH0LhIH56KCp6dIgbYkdOK+DSaXHEuLKBboK8Tf
- gafzlLmPG89FZqu9Os5ZROxvlAsQr0w6ftLRFDQPcQov0SzH4lp6xm4pO4wnJ0NKBoHP
- i3CAaNpk1Cu5i6r5Gpp2T6Bl2rMues97GLWP+wkJjbO1NZUnZsPwzgW9c1sTQ7SUroaE
- cL1wxI0iWccfy7iAhZyLAeFtPO1GBvclEI5+HbHROX/u8KYJ21kd0F93AdpqZSt0Gnl9
- TBYAFjd25f4Vddf7552VTGU0KFdE4BNerxn2MJ1ZTtwb0VCvKp8V/GotEfJZT4JTPFeW
- DGEQ==
+ bh=o6n9QnxZQEp3aVXoKzmKc1ufO76DC8Dyqg4znXD0ODE=;
+ b=LUjxyOL5OrHxk/HIvM/VRc8B1y3BQ6ujltjGjBN8fBm/cz8cRgIs9oY3NUwcf7SD2o
+ /jd+TNkFZd+9GPK3MPQeqI3appXSu3c41JQZKggPFK7a8Vk47co+uBEwlBJnY2jdWZ4h
+ TsMC9Fq3WqC26pcEsoj3nS2KLBin9SuALMuKA9NlwE9bHhLFh8Blkg+k+QoWO+Kw2UOB
+ a7ynykEJgGhr/9D/Ersb7wYS9jbi6KkvTQ/EE3yMcysarFMqbyVGVzKMrx/+vpl8vFNr
+ +tINM8mA5SqFhu1S4ZH/tBnH7jmE1NaKUvtmd6RkB7UbV+jkDc+x/ryut2tn41lS+qIe
+ TpdQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUoP92plS1s47L/G65FT9nmWAF5/XgWD5/nbDrrNSC8cXgr77rv1SxQrbNqFjNhfvUdm1Plq9c7hKJb@nongnu.org
-X-Gm-Message-State: AOJu0YzwcMQ8+lXGxE1eJ8mX7djOwr2ys8dVxbH7XmidmuGcIXD5RRHX
- FpfpZP6ei+c3eU7vyMAE1rHB3DkvI2tN/l5EX4two3pO8oy7t2DZ2o4vMkAmlhobA6M=
-X-Gm-Gg: ASbGncvg6wBkuze3dtwAq8pK2coRw30tuSju5IYFw5kI3Hjey9cCzmcCmCypCU3vqHg
- +nNq4dh8/XJZALhvKl0AzZh6wtmmKnHu1O7joy/LtZ8SXgELdcV8ql2eX3YHO0H8THCZFq4Qto9
- SYTVDeqaVvlwoVA5vleGzVWliwA8iKmlBj/za31shNl7ZabDOH9/xWbU/aatX6nzQ8Gxz+kXLBs
- YnUiwB0XsaV4BskMSP4IeNh3C2kSBn/bjZcbAfgFBqJ181o+AydQDVqG47sn+y0CPngFN0h27HZ
- i3t4YD83MHbFA/K8kRNtcw4apejgra5xvvPyG5FICzpbCe3WFBljeRtg360+l5pUfMFcqVTmEA=
+ AJvYcCX4CwHmACB+PGnljIyHJ81Gso9ijqI239i5mNN7Vpk9/KdQchg0hsZTehOCT+zDe1C0yJnXj4BfRfKh@nongnu.org
+X-Gm-Message-State: AOJu0YyZ8ij9CD+SlF+MIm6yY6/g0W2Jdg2V2RFt901XH0RCxbrDlHel
+ V8YCjRfnXI3RO4YnpkM2rHRdT7klL9wvIgeBr76g3Ol19OW9ZDfMze+xVLYfBToZl78=
+X-Gm-Gg: ASbGncthJR9VsF1AT7fKMCLLM/SgEClqWrGfjHMh4Kr8fbILGHEHMhANOhlIjKTg5gU
+ TW678MXsvnAQdwE6b75GFSYPIQg8JXmA0nAOgqkzwX+0cTlCA3Ue+9Ichth4GQRq+tGL0/GeS2+
+ mpH57eM7q5HLARBI0/k3yu5fQS3LZPU3vl/liumwC9nxKX3qcJG02EoNFODyHwQRJNf/Qtk6ERU
+ UE8sbkVof//RzupWtF/S034qpsSPhcyqScQTatvMlzEq8yga5tPcyUrRULm39xd0yESZwfNK5W8
+ YiKRIisgluRpgrCMcKWGkFzZy/Zyv3RkNjB6+JzmtqOkcOt3r9b0WpHBUiIi+EIw5/7BE9Cy3A=
  =
-X-Google-Smtp-Source: AGHT+IFtFXA0xCexhG7ezEYeGusVFz2h2wR9DiTKZsUvW4VMIi55VULTSoUi9FXA306bINke54IKhg==
-X-Received: by 2002:a17:90b:35cc:b0:30e:3718:e9d with SMTP id
- 98e67ed59e1d1-313f1d5077fmr21766876a91.35.1750176428956; 
- Tue, 17 Jun 2025 09:07:08 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7ORcj7hGyKP+K1856xWSJPgMTHtIdaYK3iwTAMrhn3+7Xef4Xwk08qX2sE5VKyVHzwCuMWA==
+X-Received: by 2002:a05:6a00:4f82:b0:748:2ebf:7418 with SMTP id
+ d2e1a72fcca58-7489d00e68bmr21133244b3a.24.1750176134470; 
+ Tue, 17 Jun 2025 09:02:14 -0700 (PDT)
 Received: from [192.168.0.102] ([186.215.60.20])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-313c1b2b545sm10805794a91.0.2025.06.17.09.07.05
+ d2e1a72fcca58-74890005f47sm9406061b3a.51.2025.06.17.09.02.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 09:07:08 -0700 (PDT)
-Message-ID: <825d1a10-0e47-4a73-a274-a01380785ec4@linaro.org>
-Date: Tue, 17 Jun 2025 13:06:53 -0300
+ Tue, 17 Jun 2025 09:02:14 -0700 (PDT)
+Message-ID: <e1c05a4c-ead6-437e-9287-84b77fcc9df4@linaro.org>
+Date: Tue, 17 Jun 2025 13:01:58 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 5/8] qtest/bios-tables-test: Add test for when ITS is
@@ -87,8 +87,8 @@ From: Gustavo Romero <gustavo.romero@linaro.org>
 In-Reply-To: <74c1948a-3c90-431b-805f-b5a4238beecb@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=gustavo.romero@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-pf1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -145,7 +145,16 @@ On 6/17/25 12:51, Eric Auger wrote:
 >> a DeviceID, hence say "while the RID and StreamID". Does it make sense?
 > I think I won't bother and would simply talk about "ID mappings" which
 > is the generic term used in the IORT spec.
->>
+
+But I just dove into it because you suggested to use "RID" (aka ReqID, aka
+Requestor ID, ah, I "love" these variations in specs), so I thought, well
+RIDs are related to RC and StreamIDs related to SMMU, so, actually, you meant
+"while the ID mappings from" instead of "while the RID mappings"?
+
+
+Cheers,
+Gustavo
+
 >>
 >>>> nodes to the ITS Group nodes are described in the IORT table.
 >>>>
@@ -243,19 +252,7 @@ On 6/17/25 12:51, Eric Auger wrote:
 > points out infractions to bios-tables-test.c rules!). Since it results
 > in less patches I think it is better. May be worth to clarify that
 > directly in bios-tables-test.c though.
-
-oh I didn't know it! wow, glad Option B passes the checkpatch scrutinity heh
-
-Yes I think I can update the doc now I confirmed with Igor the details.
-
-I'll cc Igor and you when submitting the doc improvement.
-
-Thanks.
-
-
-Cheers,
-Gustavo
-
+> 
 > Cheers
 > 
 > Eric
