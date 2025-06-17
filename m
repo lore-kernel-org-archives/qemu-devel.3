@@ -4,97 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29275C71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7B15C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYb9-0003Xc-HB; Tue, 17 Jun 2025 11:51:43 -0400
+	id 1uRYc6-00047u-3r; Tue, 17 Jun 2025 11:52:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRYKj-0004Bk-Ku
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:34:47 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uRYRq-0007Hl-D7
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:42:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRWS6-0001bE-3z
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 09:34:16 -0400
+ id 1uRYRl-0005rn-47
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:42:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750167251;
+ s=mimecast20190719; t=1750174920;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ha0XZi3PC2IVQ1lBR0EUp81EerH9P6ZxpdcTmNxLBlw=;
- b=aOHTL12h+wQN6KBcCM6UWdi3LNxx0eOXSdgpqLtfe5u+5HLDAaMhvrLr5WySisDHTDvHAB
- CAXzQuML8J8gCG6ExR1femx4vFTJ69tox6Q+dGMJcsmG7ChaBEHVTUuJy7l1gifyETQLX8
- N+1LPqJ8kVHeowmU6SDRLFSniyklEok=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=daHsNykC+60PUSpDLO+SebjuEw5ukuCfdxPUHgekuac=;
+ b=P3DLpNXL8Ro14D+GvW+X+uLT7LvwEH5WQGCDB02NYgyz5EqR0vnbdykjKxGO5EjenYWzUW
+ PHO2+ZdfUNwWkMaMksLfub5Ng900u5j7QlKLEXMqGr6JGNyGe135mEa7+xsJNcWDQNYp03
+ 4yuq3uqhBQmhfJ+VTx5a5ub5aBjmysg=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-227-1iE24AnvO12xqmOs6LT_-g-1; Tue, 17 Jun 2025 09:34:08 -0400
-X-MC-Unique: 1iE24AnvO12xqmOs6LT_-g-1
-X-Mimecast-MFC-AGG-ID: 1iE24AnvO12xqmOs6LT_-g_1750167247
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-3a4eb6fcd88so3416616f8f.1
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 06:34:08 -0700 (PDT)
+ us-mta-620-7Qz2L-mGOpye0Wa_RfZ7yg-1; Tue, 17 Jun 2025 11:41:58 -0400
+X-MC-Unique: 7Qz2L-mGOpye0Wa_RfZ7yg-1
+X-Mimecast-MFC-AGG-ID: 7Qz2L-mGOpye0Wa_RfZ7yg_1750174917
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-453080e4741so48123635e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 08:41:58 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750167247; x=1750772047;
+ d=1e100.net; s=20230601; t=1750174917; x=1750779717;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=ha0XZi3PC2IVQ1lBR0EUp81EerH9P6ZxpdcTmNxLBlw=;
- b=t2LQcOQXXagJkxNpCnEFAZieVykRxoIL66Tm53qkpx7h2NUz3AM97KoZrsAd4Q3Nlw
- NAMCkPu6I7rtHiSkZ7Jux9DbUp4Fn4sh+FmUvsgaY5eYGTWOAHVH3zlav9kQv6bcVDqe
- 8d5LOYRIAdc+4mn8tkSUEDboD6/9MksDHLVoLTTIAHAs4pqCpAItcd6eh2U7yQahuPWw
- LXKuXi4ZBUOBocEGrknKB/+F8E7QBIvlzAKugcS6A0J0KC8erjilnFkG9NwHi8csOhzb
- f/iP3jMuzeEctjDIrwyVw5mMT+aAUZ/V0uEniAKCSYTEtUZtlCsYJNPcdmrT5J4v1g1+
- /ypA==
+ bh=daHsNykC+60PUSpDLO+SebjuEw5ukuCfdxPUHgekuac=;
+ b=DwJBunV+pmCC5I9I0tXwWrIgxTd2WK7Q2X0EJ5EmqwwLDvE45oik0pLK0ZR2DmHxQl
+ /qQxo8VafDzmqu1aZyMlZ+twdZUaaALbrg+A+oPKQO4Y0wimPTk1avBoOEOt2U13vseG
+ uhhwwA77a4Fa9+MZVm27u1zfKkWBNe3LOh97ybQoQkocs+6+bz3OFQWOAWGWEpSrBX4U
+ mIkgbWtb0LdKLMRLG2RXWqLdFLlu0VTV0p2Tv5m/s1tC0ugOACCN+wvOOrcn7VtM3dmC
+ nPtkxxsM5z1HdppAk2PPLxFbDC8UrjJ7JdnCjgkMiERJgZxxQjXxSDLqJb6rGRHVVSWl
+ 0d2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXr/M+AX/KByMxQe8vcMNwWyz9pMIGpVA3+2N2FeCcA9HkUbaSX/tiROGR2GXQ2uwe+gKzlPGhC9diB@nongnu.org
-X-Gm-Message-State: AOJu0YwMakaTHcE5zYjyb/TJpzjgSAjNCCirMHDlaiegEh9UsZiX5Brk
- gpsjbw4zVfA8q9RhV8h95MF5mpR5+xrdEUHcfS6IgThzGj5bCPBd0hEXzAU76OUvF00OsUryjlS
- 5wzBqMVydmb1RaH+T3GopOS73tSRCsgovhaMCUm/88qbuh/cULQ4Jq3PA
-X-Gm-Gg: ASbGncsTiiEdLJrhL8SJDVqyMIBo5601JiO6V7JFFATjaVxQfGmiWE+ISNy7DrIZDjV
- gSGRTx9/5mTjKQHlC+i8kq1gikfES+0u9MLYZsAqDyzp9cKFn6ZXqeAiVRMzIsI7q7u5eXvVaFG
- VFH1HoQe8hCg5NCnsmrNP58jVIORmockkwJH4aCAJejc6W2dzfA/+5owHqWXaoU2zzgT73d3OWc
- LrQk1T8i3km5WXUCl09KwF9YqXdE7WoCUaBsIqnYH7jTP4iMUHQViDAjPT0Fh+eUIn/wg+8JsV1
- 9Fv9b4g+PYXDHa4CkDBxp2X3gylN8EprGDkyWXfUkbllPm7qMEGTBoiylFhQ8B9LKzxs6w==
-X-Received: by 2002:a05:6000:1447:b0:3a5:2fad:17af with SMTP id
- ffacd0b85a97d-3a572e58cbemr8799272f8f.57.1750167247311; 
- Tue, 17 Jun 2025 06:34:07 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEWuKpIzFA5EOrW7frVPEBawZ2k+SvHAPCXmr54cZJx+V/3fuGOT+6ARfwZpQgnkTzTkiXMbw==
-X-Received: by 2002:a05:6000:1447:b0:3a5:2fad:17af with SMTP id
- ffacd0b85a97d-3a572e58cbemr8799244f8f.57.1750167246910; 
- Tue, 17 Jun 2025 06:34:06 -0700 (PDT)
+ AJvYcCVcSGwWTyQGywc/qCEqWKzJg/fXhsReVWfUr78nd0x38R71YUrWyt5B4PuRP39/NOGNKKyu+edgZ3rH@nongnu.org
+X-Gm-Message-State: AOJu0YzG22wV8OfANAOUhVBaIdUI2MxnBhXHE0kzaAOeJlwynw3xmVtO
+ Kt5LT6iiYkNB50JLZZEDLiNuNo8IQR93k4qbKF2rLp3CUZYgLrX0XKnBMWtKN4wyz6b9M6jbGFW
+ jejpoR+Sr5MHVoT7z91MJp+pa6eybs0mJWOOQEIZUry5jyVRxDVNNU5t6
+X-Gm-Gg: ASbGnct2CBA4ft0yDgl7If50ubclLnnULiizXj7pqbTWjkvIUnOMSjI8n/Hek0FpW8l
+ 4hFmbxAOpzOUn85Y07InCZHJhIEMS/Ak+vGcD+j2dOL41IpLdOzVgCz/dtHXIegbRSa7PijgA83
+ H3CJgL4B1//8rRxrKIwJnwsRnxZp1amx2pr9D2vpBw7i31xPQnnVfNpJsPKctmKvix36uwXN2Ns
+ tH01jAUI6vAPdluGgIDpte9KFvwYEIhxQ82gO072PBvtR+qVCReXoFucVsPt8SYFi9PjIUImH4V
+ aG5GYVlU1Hzz/uX2E5TQbdB8Yszo4n2Dt726LTyeItssDDBou13OOhMC9oWK0XT8kIqHLA==
+X-Received: by 2002:a05:6000:290b:b0:3a4:dcb0:a4c with SMTP id
+ ffacd0b85a97d-3a57238b8e6mr11142645f8f.12.1750174916962; 
+ Tue, 17 Jun 2025 08:41:56 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IH8sDyeEtsNeyQa24qKjABHMdoTSt5NkAscnCIBlNYErQHQEJ8mICl1VILM2p57aTOaEkavDQ==
+X-Received: by 2002:a05:6000:290b:b0:3a4:dcb0:a4c with SMTP id
+ ffacd0b85a97d-3a57238b8e6mr11142606f8f.12.1750174916421; 
+ Tue, 17 Jun 2025 08:41:56 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568a68b0esm13828969f8f.29.2025.06.17.06.34.05
+ ffacd0b85a97d-3a568a54af6sm14195960f8f.6.2025.06.17.08.41.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 06:34:06 -0700 (PDT)
-Message-ID: <fe166574-9e53-4e27-9c12-c91f3fc774c7@redhat.com>
-Date: Tue, 17 Jun 2025 15:34:00 +0200
+ Tue, 17 Jun 2025 08:41:55 -0700 (PDT)
+Message-ID: <efd4cb44-3d63-43b5-9568-1263ccf7566a@redhat.com>
+Date: Tue, 17 Jun 2025 17:41:54 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 5/8] qtest/bios-tables-test: Add test for when ITS is
- off on aarch64
+Subject: Re: [PATCH v5 5/5] hw/arm/virt: Allow virt extensions with KVM
 Content-Language: en-US
-To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
- philmd@linaro.org, mst@redhat.com
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
- ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
- anisinha@redhat.com
-References: <20250616131824.425315-1-gustavo.romero@linaro.org>
- <20250616131824.425315-6-gustavo.romero@linaro.org>
+To: Miguel Luis <miguel.luis@oracle.com>, Alyssa Ross <hi@alyssa.is>
+Cc: "eric.auger.pro@gmail.com" <eric.auger.pro@gmail.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
+ "maz@kernel.org" <maz@kernel.org>,
+ "gkulkarni@amperecomputing.com" <gkulkarni@amperecomputing.com>,
+ "gankulkarni@os.amperecomputing.com" <gankulkarni@os.amperecomputing.com>
+References: <20250527062534.1186004-1-eric.auger@redhat.com>
+ <20250527062534.1186004-6-eric.auger@redhat.com> <875xgutpuh.fsf@alyssa.is>
+ <D3582F3A-B07A-4F05-827C-B030617B77EA@oracle.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20250616131824.425315-6-gustavo.romero@linaro.org>
+In-Reply-To: <D3582F3A-B07A-4F05-827C-B030617B77EA@oracle.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -103,7 +107,8 @@ X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_HELO_NONE=0.001,
+ T_SPF_TEMPERROR=0.01 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,93 +125,59 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gustavo,
 
-On 6/16/25 3:18 PM, Gustavo Romero wrote:
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
->
-> Arm64 GIC ITS (Interrupt Translation Service) is an optional piece of
-> hardware introduced in GICv3 and, being optional, it can be disabled
-> in QEMU aarch64 VMs that support it using machine option "its=off",
-> like, for instance: "-M virt,its=off".
->
-> In ACPI, the ITS is advertised, if present, in the MADT (aka APIC)
-> table and the remappings from the Root Complex (RC) and from the SMMU
-I would rephrase "and the remappings" by "while the RID mappings from ..."
-> nodes to the ITS Group nodes are described in the IORT table.
->
-> This new test verifies that when the "its=off" option is passed to the
-> machine the ITS-related data is correctly pruned from the ACPI tables.
->
-> The new blobs for this test will be added in a following commit.
->
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  tests/qtest/bios-tables-test-allowed-diff.h |  2 ++
->  tests/qtest/bios-tables-test.c              | 21 +++++++++++++++++++++
->  2 files changed, 23 insertions(+)
->
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8b..a88198d5c2 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-I still fail to understand whether empty tables + update if the
 
-bios-tables-test-allowed-diff.h need to be done prior to adding the new test.
+On 6/17/25 5:23 PM, Miguel Luis wrote:
+> Hi Alyssa,
+>
+>> On 17 Jun 2025, at 14:17, Alyssa Ross <hi@alyssa.is> wrote:
+>>
+>> Eric Auger <eric.auger@redhat.com> writes:
+>>
+>>> From: Haibo Xu <haibo.xu@linaro.org>
+>>>
+>>> Up to now virt support on guest has been only supported with TCG.
+>>> Now it becomes feasible to use it with KVM acceleration.
+>>>
+>>> Also check only in-kernel GICv3 is used along with KVM EL2.
+>>>
+>>> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
+>>> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
+>>> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+>>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Hi!  From what I can tell, this will produce an error on hosts that
+>> don't support nested virtualization when QEMU is invoked with -accel
+>> kvm:tcg
+> I didn’t know '-acell kvm:tcg’ could be used as a fallback mechanism between
+> acceleration modes. May I ask whether do you manage the ‘-cpu’ type for ‘-accel
+> kvm:tcg’ with cpu ‘max’ ?
+Does it exist?
+qemu-system-aarch64: -accel kvm:tcg: invalid accelerator kvm:tcg
 
- * How to add or update the tests or commit changes that affect ACPI tables:
- * Contributor:
- * 1. add empty files for new tables, if any, under tests/data/acpi
- * 2. list any changed files in tests/qtest/bios-tables-test-allowed-diff.h
- * 3. commit the above *before* making changes that affect the tables
-
-> @@ -1 +1,3 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/aarch64/virt/APIC.its_off",
-> +"tests/data/acpi/aarch64/virt/IORT.its_off",
-> diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> index 0b2bdf9d0d..4201ec1131 100644
-> --- a/tests/qtest/bios-tables-test.c
-> +++ b/tests/qtest/bios-tables-test.c
-> @@ -2146,6 +2146,25 @@ static void test_acpi_aarch64_virt_tcg_topology(void)
->      free_test_data(&data);
->  }
->  
-> +static void test_acpi_aarch64_virt_tcg_its_off(void)
-> +{
-> +    test_data data = {
-> +        .machine = "virt",
-> +        .arch = "aarch64",
-> +        .variant =".its_off",
-you have a checkpatch error here.
-> +        .tcg_only = true,
-> +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-> +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> +        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-> +        .ram_start = 0x40000000ULL,
-> +        .scan_len = 128ULL * 1024 * 1024,
-> +    };
-> +
-> +    test_acpi_one("-cpu cortex-a57 "
-> +                  "-M gic-version=3,iommu=smmuv3,its=off", &data);
-> +    free_test_data(&data);
-> +}
-> +
->  static void test_acpi_q35_viot(void)
->  {
->      test_data data = {
-> @@ -2577,6 +2596,8 @@ int main(int argc, char *argv[])
->                             test_acpi_aarch64_virt_tcg_acpi_hmat);
->              qtest_add_func("acpi/virt/topology",
->                             test_acpi_aarch64_virt_tcg_topology);
-> +            qtest_add_func("acpi/virt/its_off",
-> +                           test_acpi_aarch64_virt_tcg_its_off);
->              qtest_add_func("acpi/virt/numamem",
->                             test_acpi_aarch64_virt_tcg_numamem);
->              qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
-Thanks
-
-Eric
+Alyssa, didn't you mean -accel kvm or --accel tcg
+>
+> But more importantly, is this what you’re referring to?
+>
+> Although,
+>
+>> -machine virtualization=on,
+> should work for both '-accel kvm’ and ‘-accel tcg’.
+>
+>> but I don't think that's the ideal
+>> behaviour.  It would make more sense for it to fall back to the first
+>> permitted accel option that does support running the machine as
+>> configured, so if hardware nested virtualization is not supported, it
+>> should fall back to TCG.
+>>
+>> I maintain an OS development environment that includes scripts for
+>> running images in QEMU, where running KVM on those images is a
+>> requirement.  Currently, those scripts simply force TCG on aarch64.
+>> With this change, to take advantage of KVM NV support, I'd have to try
+>> to identify in the script whether NV would be supported.  QEMU would be
+>> in a much better position to determine this and fall back to TCG if it's
+>> unsupported, like how the -accel option with multiple values usually
+>> works.
+> Thanks,
+> Miguel
 
 
