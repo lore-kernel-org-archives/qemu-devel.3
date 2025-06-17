@@ -4,76 +4,141 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C044C71155
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 04:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E505EC7114A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 06:29:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRO5i-0002rT-ME; Tue, 17 Jun 2025 00:38:34 -0400
+	id 1uRPoU-0007Ba-Mn; Tue, 17 Jun 2025 02:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uRO5g-0002qo-Sc
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:32 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uRPoS-0007BM-8b
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 02:28:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1uRO5f-0007je-52
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 00:38:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750135112; x=1781671112;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=ue4HPEcFSIrDaSAT8nEWuR645zrsYBFtKwmN9cfIvAo=;
- b=OaFAFiB+CBy6R1Nx7R9hH2Rle66pYu4myLUpx6LhviRUVl4gE5mdANU7
- 3bymJHKv+L0SX9EXwxd1+J9a91Y6tvVfUZ9KLSczFnr/vtpzMLx8G+vhK
- qyk9XaOC0Zl5gNF3+T51O2A055N3DrhmvRHt+H+Fluwzs5n8LX1I40ohA
- dyJggC2bL21j4/SSgwoU1Jhj08eoGHaQkyUHevmeVncv/tjTFaT8CFp7u
- xU5NsNeA9eIoOYFBiSDh/Pt1vzGYm/oP8HyeKRK8VuOFju45gZunWxgVx
- jQd3ua2sLkU/oxdzwczkdSKTRZxQ7MQIhP3hmfDfsoqO91voEvNsbjX+B Q==;
-X-CSE-ConnectionGUID: fyc8id0KSri9/ltJ5OIhog==
-X-CSE-MsgGUID: GTXxWZxiSGSecvdtizQZug==
-X-IronPort-AV: E=McAfee;i="6800,10657,11465"; a="52432311"
-X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="52432311"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jun 2025 21:38:25 -0700
-X-CSE-ConnectionGUID: 4wV1pOAJS1GrrNntW1uzOw==
-X-CSE-MsgGUID: Zo5zqAGbT5yYYCik+qUaWg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,242,1744095600"; d="scan'208";a="149551052"
-Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Jun 2025 21:38:24 -0700
-From: Vivek Kasireddy <vivek.kasireddy@intel.com>
-To: qemu-devel@nongnu.org
-Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Frediano Ziglio <freddy77@gmail.com>, Dongwon Kim <dongwon.kim@intel.com>,
- Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Subject: [PATCH v6 5/7] ui/console-gl: Add a helper to create a texture with
- linear memory layout
-Date: Mon, 16 Jun 2025 21:32:29 -0700
-Message-ID: <20250617043546.1022779-6-vivek.kasireddy@intel.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250617043546.1022779-1-vivek.kasireddy@intel.com>
-References: <20250617043546.1022779-1-vivek.kasireddy@intel.com>
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uRPoP-0002gY-Dw
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 02:28:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750141726;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=uE6ULk4Kvmz75GZVOQEYKfzNmMk6ee7r0kULMAOhAJo=;
+ b=ZOkUyqt8mcUIM35Ma1fq/vGwZ0VcXZIhB5g7FSX+PJydW4VJxE2Rp2ftGl6YLsCXZjlsiH
+ cGPMyj/qWnaRConvaXnIDGKlPFZXSUw7ZKklH8//9vAky3xfz4KsHEjFMEagy2AzETBvUt
+ 7+DwsJlAXWby7Pc8wTaMQM/bJzEogI0=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-392-fUCI1iZJMImHEJjZ8U_BSQ-1; Tue, 17 Jun 2025 02:28:44 -0400
+X-MC-Unique: fUCI1iZJMImHEJjZ8U_BSQ-1
+X-Mimecast-MFC-AGG-ID: fUCI1iZJMImHEJjZ8U_BSQ_1750141723
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-450787c8626so39076165e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 23:28:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750141723; x=1750746523;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uE6ULk4Kvmz75GZVOQEYKfzNmMk6ee7r0kULMAOhAJo=;
+ b=jL9cvuUYMChowqVZX8UORZuy89GC+Uzvw8VGpQHNzrx83tsF459V5+WJ16uwV72tbO
+ SYEyNgMcwefFA+W8XhbmcGshsYRv1exr2W28a/jluufkDj2lwzwVjhx8cjImqte55ae1
+ J/peUk4w99jlYZVR0Nb3GKzlVswED5rm0ucZM8MVNf1z3m+8T3hc1YSf8I180Xd+jKWA
+ m4B0aPHSMN2R1A1uEGmT+heNi+ImR2h7vEwN2mt8+8jM1+9zWGJ7XDyJ0OFPCm8amOW6
+ tUznyeq9fYUbHhD3EID3o2STPV8Ib3FR78cxmuBNjCPUeb9JRSSWydqB30WSmskRVyeF
+ J9jA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUpiW5lD75qybTnkQRlTzJl9EXulJgyiXGVG42Xt6xnbyRNQePbQQ14cMG3++MRIGBmK3n/0+AVcAq5@nongnu.org
+X-Gm-Message-State: AOJu0YzlM4Zsew1kQfT4K4tgwhbTE+RfykH8cL7Rv9v7MYbmDKfjBIXb
+ zxvio9GFDVZC3boYPVrQ6UFWy07vR8VxRyY9IYsUM1TrGcI0aAiBXwKFDVkyBhREUgoL6hQNLMc
+ KuV5YfvKSxmDwJSm50XgmooIy6cM9j1xnZB01U4+R36ZCvYtcXLADQ8RI
+X-Gm-Gg: ASbGncshWReVjKRLIvksJq9M7Fqrc8qohujDiTRV1o94zxKqRxW/rUVgJlNVHaI1n7b
+ RJlzXBkCiC6SUMPy+NLJttUefPDrfylaZgQpDwocFUAXU0XA4crZ07dckvBMoJ/3rna/abteA+G
+ YQiKrHAxBuGhMap3fdK8xZ54bAAVNJXkc4mrO+4tKGEn64GKwzs2h8CwVq3HO29PSje4lQdcYyL
+ qXPSUTZZ6ELgE7gwxTW2x0LXsj7cOPZvY/oldR8uLiutzQw+CCpAt53mHJ9zDarxq3OgEBS8TAD
+ 5UiEjper4ysJhq4eEh5FfQ5NuonmfZg/NXyWQPXCkAaeK30DjXgpKaT5MAsb
+X-Received: by 2002:a5d:64cb:0:b0:3a4:ff01:218a with SMTP id
+ ffacd0b85a97d-3a572e45e20mr8923830f8f.50.1750141723478; 
+ Mon, 16 Jun 2025 23:28:43 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFE1DGj3hFx6mpSb5o9F6P4jr4MLcEwVbIuY/F6m7M9a9+8NkwsFlFQWaDDZFQpDNLouYhOww==
+X-Received: by 2002:a5d:64cb:0:b0:3a4:ff01:218a with SMTP id
+ ffacd0b85a97d-3a572e45e20mr8923813f8f.50.1750141723086; 
+ Mon, 16 Jun 2025 23:28:43 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a568b798d3sm12931571f8f.100.2025.06.16.23.28.42
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Jun 2025 23:28:42 -0700 (PDT)
+Message-ID: <f3fa7b7f-9318-40a4-8ae8-e9306e613500@redhat.com>
+Date: Tue, 17 Jun 2025 08:28:41 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] vfio: add documentation for posted write argument
+To: John Levon <john.levon@nutanix.com>, qemu-devel@nongnu.org
+Cc: Alex Williamson <alex.williamson@redhat.com>
+References: <20250616101314.3189793-1-john.levon@nutanix.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20250616101314.3189793-1-john.levon@nutanix.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18;
- envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -62
-X-Spam_score: -6.3
-X-Spam_bar: ------
-X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,106 +154,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-There are cases where we do not want the memory layout of a texture to
-be tiled as the component processing the texture would not know how to
-de-tile either via software or hardware. Therefore, ensuring that the
-memory backing the texture has a linear layout is absolutely necessary
-in these situations.
+On 6/16/25 12:13, John Levon wrote:
+> Signed-off-by: John Levon <john.levon@nutanix.com>
+> ---
+>   include/hw/vfio/vfio-device.h | 1 +
+>   1 file changed, 1 insertion(+)
+> 
+> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+> index d45e5a68a2..abea652be2 100644
+> --- a/include/hw/vfio/vfio-device.h
+> +++ b/include/hw/vfio/vfio-device.h
+> @@ -240,6 +240,7 @@ struct VFIODeviceIOOps {
+>        * @off: offset within the region
+>        * @size: size in bytes to write
+>        * @data: buffer to write from
+> +     * @post: true if this is a posted write
+>        *
+>        * Returns number of bytes write on success or -errno.
+>        */
 
-Cc: Gerd Hoffmann <kraxel@redhat.com>
-Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Cc: Frediano Ziglio <freddy77@gmail.com>
-Cc: Dongwon Kim <dongwon.kim@intel.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Co-developed-by: Michael Scherle <michael.scherle@rz.uni-freiburg.de>
-Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
----
- include/ui/console.h |  3 +++
- ui/console-gl.c      | 48 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 51 insertions(+)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 46b3128185..98feaa58bd 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -422,6 +422,9 @@ bool console_gl_check_format(DisplayChangeListener *dcl,
-                              pixman_format_code_t format);
- void surface_gl_create_texture(QemuGLShader *gls,
-                                DisplaySurface *surface);
-+bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture,
-+                                       GLuint *mem_obj);
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h);
-diff --git a/ui/console-gl.c b/ui/console-gl.c
-index 103b954017..afb36dba64 100644
---- a/ui/console-gl.c
-+++ b/ui/console-gl.c
-@@ -25,6 +25,7 @@
-  * THE SOFTWARE.
-  */
- #include "qemu/osdep.h"
-+#include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/shader.h"
- 
-@@ -96,6 +97,53 @@ void surface_gl_create_texture(QemuGLShader *gls,
-     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
- }
- 
-+bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
-+                                       int fd, GLuint *texture,
-+                                       GLuint *mem_obj)
-+{
-+    unsigned long size = surface_stride(surface) * surface_height(surface);
-+    GLenum err = glGetError();
-+    *texture = 0;
-+    *mem_obj = 0;
-+
-+    if (!epoxy_has_gl_extension("GL_EXT_memory_object") ||
-+        !epoxy_has_gl_extension("GL_EXT_memory_object_fd")) {
-+        error_report("spice: required OpenGL extensions not supported: "
-+                     "GL_EXT_memory_object and GL_EXT_memory_object_fd");
-+        return false;
-+    }
-+
-+#ifdef GL_EXT_memory_object_fd
-+    glCreateMemoryObjectsEXT(1, mem_obj);
-+    glImportMemoryFdEXT(*mem_obj, size, GL_HANDLE_TYPE_OPAQUE_FD_EXT, fd);
-+
-+    err = glGetError();
-+    if (err != GL_NO_ERROR) {
-+        error_report("spice: cannot import memory object from fd");
-+        goto cleanup_mem;
-+    }
-+
-+    glGenTextures(1, texture);
-+    glBindTexture(GL_TEXTURE_2D, *texture);
-+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_TILING_EXT, GL_LINEAR_TILING_EXT);
-+    glTexStorageMem2DEXT(GL_TEXTURE_2D, 1, GL_RGBA8, surface_width(surface),
-+                         surface_height(surface), *mem_obj, 0);
-+    err = glGetError();
-+    if (err != GL_NO_ERROR) {
-+        error_report("spice: cannot create texture from memory object");
-+        goto cleanup_tex_and_mem;
-+    }
-+    return true;
-+
-+cleanup_tex_and_mem:
-+    glDeleteTextures(1, texture);
-+cleanup_mem:
-+    glDeleteMemoryObjectsEXT(1, mem_obj);
-+
-+#endif
-+    return false;
-+}
-+
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h)
--- 
-2.49.0
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+
+Applied to vfio-next.
+
+Thanks,
+
+C.
+
 
 
