@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1D8C71159
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 01:27:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EAAEC71159
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 01:56:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRL5X-0007Qq-UQ; Mon, 16 Jun 2025 21:26:11 -0400
+	id 1uRLYA-0006Wp-PI; Mon, 16 Jun 2025 21:55:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uRL5Q-0007Q7-Af
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 21:26:06 -0400
+ id 1uRLY6-0006Wb-VG
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 21:55:43 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uRL5N-0001Ha-EW
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 21:26:04 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uRLY4-0004fK-20
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 21:55:42 -0400
 Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8CxyuAbxFBo9A4YAQ--.56295S3;
- Tue, 17 Jun 2025 09:25:47 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxCeEUy1BodhIYAQ--.14732S3;
+ Tue, 17 Jun 2025 09:55:32 +0800 (CST)
 Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMBxXsUUxFBovsEdAQ--.25346S3;
- Tue, 17 Jun 2025 09:25:42 +0800 (CST)
-Subject: Re: [PATCH 06/10] hw/loongarch: Implement avec controller imput and
- output pins
+ by front1 (Coremail) with SMTP id qMiowMDx_MQQy1Bo8MYdAQ--.22548S3;
+ Tue, 17 Jun 2025 09:55:31 +0800 (CST)
+Subject: Re: [PATCH 07/10] hw/loongarch: connect pch_msi controller to avec
+ controller
 To: Bibo Mao <maobibo@loongson.cn>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
 References: <20250609104833.839811-1-gaosong@loongson.cn>
- <20250609104833.839811-7-gaosong@loongson.cn>
- <5df19ba7-a37d-a806-1461-7f12b36cff70@loongson.cn>
+ <20250609104833.839811-8-gaosong@loongson.cn>
+ <b0441034-9c99-0480-d0e1-2e30aac9a143@loongson.cn>
 From: gaosong <gaosong@loongson.cn>
-Message-ID: <eebfb1f6-91ec-3014-c914-44522d4360cb@loongson.cn>
-Date: Tue, 17 Jun 2025 09:28:35 +0800
+Message-ID: <57f90747-1829-5e0e-fbb2-d4615ceeb72f@loongson.cn>
+Date: Tue, 17 Jun 2025 09:58:23 +0800
 User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
  Thunderbird/68.7.0
 MIME-Version: 1.0
-In-Reply-To: <5df19ba7-a37d-a806-1461-7f12b36cff70@loongson.cn>
+In-Reply-To: <b0441034-9c99-0480-d0e1-2e30aac9a143@loongson.cn>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-X-CM-TRANSID: qMiowMBxXsUUxFBovsEdAQ--.25346S3
+X-CM-TRANSID: qMiowMDx_MQQy1Bo8MYdAQ--.22548S3
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW3XF4UAr4rCF4UGFWfCry7XFc_yoW7Ary8pr
- ykAFy5JryUGr93Xw17J345WF98Ar18G3W2qr4S9Fy0yFsrAr10gr4UXrn0gFyUAw4kJr1U
- Xr1kXF43ZF17JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+X-Coremail-Antispam: 1Uk129KBj93XoWxXF4rWw1DZw1kCFWDtFyrGrX_yoW5tr1rpF
+ WkJrW5CrWUJ348Jr1kJr1UWry5Aw4UK3W7Xr1xXF18Jr1UXr1j9r18Xr1qgr1UArW8Xr1U
+ Xr1UXrZF9F1UA3gCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
  sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
  0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
  0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
  6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
- 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAF
  wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
  CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
  67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
  IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
  14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
- W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07URa0PU
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j0FALU
  UUUU=
 Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
  helo=mail.loongson.cn
@@ -84,133 +84,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/6/11 下午2:40, Bibo Mao 写道:
+在 2025/6/11 下午2:36, Bibo Mao 写道:
 >
 >
 > On 2025/6/9 下午6:48, Song Gao wrote:
->> the AVEC controller supports 256*256 irqs, all the irqs connect CPU 
->> INT_AVEC irq
->>
 >> Signed-off-by: Song Gao <gaosong@loongson.cn>
 >> ---
->>   hw/intc/loongarch_avec.c | 28 ++++++++++++++++++++++++++++
->>   hw/loongarch/virt.c      | 11 +++++++++--
->>   target/loongarch/cpu.h   |  3 ++-
->>   3 files changed, 39 insertions(+), 3 deletions(-)
+>>   hw/loongarch/virt.c | 18 +++++++++++++-----
+>>   1 file changed, 13 insertions(+), 5 deletions(-)
 >>
->> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
->> index 50956e7e4e..c692fef43c 100644
->> --- a/hw/intc/loongarch_avec.c
->> +++ b/hw/intc/loongarch_avec.c
->> @@ -36,9 +36,19 @@ static const MemoryRegionOps loongarch_avec_ops = {
->>       .endianness = DEVICE_LITTLE_ENDIAN,
->>   };
->>   +static void avec_irq_handler(void *opaque, int irq, int level)
->> +{
->> +    return;
->> +}
->> +
->>   static void loongarch_avec_realize(DeviceState *dev, Error **errp)
->>   {
->> +    LoongArchAVECState *s = LOONGARCH_AVEC(dev);
->>       LoongArchAVECClass *lac = LOONGARCH_AVEC_GET_CLASS(dev);
->> +    MachineState *machine = MACHINE(qdev_get_machine());
->> +    MachineClass *mc = MACHINE_GET_CLASS(machine);
->> +    const CPUArchIdList  *id_list;
->> +    int i, irq;
->>         Error *local_err = NULL;
->>       lac->parent_realize(dev, &local_err);
->> @@ -47,6 +57,24 @@ static void loongarch_avec_realize(DeviceState 
->> *dev, Error **errp)
->>           return;
->>       }
->>   +    assert(mc->possible_cpu_arch_ids);
->> +    id_list = mc->possible_cpu_arch_ids(machine);
->> +    s->num_cpu = id_list->len;
->> +    s->cpu = g_new(AVECCore, s->num_cpu);
->> +    if (s->cpu == NULL) {
->> +        error_setg(errp, "Memory allocation for AVECCore fail");
->> +        return;
->> +    }
->> +
->> +    for (i = 0; i < s->num_cpu; i++) {
->> +        s->cpu[i].arch_id = id_list->cpus[i].arch_id;
->> +        s->cpu[i].cpu = CPU(id_list->cpus[i].cpu);
->> +        for (irq = 0; irq < NR_VECTORS; irq++) {
->> +            qdev_init_gpio_out(dev, &s->cpu[i].parent_irq[irq], 1);
->> +        }
-> One parent irqline for per-cpu is ok, so the total number of parent 
-> irqline is s->num_cpu, the number of possible cpu.
->
-emm,  yes ,  so the avec gpio out num is s->num_cpu * s->num_cpu.,
-my thought   avec should  gpio_out = aveec gpio in,  and the avec gpio 
-in is NR_VECTORS * s->num_cpu.
->> +    }
->> +    qdev_init_gpio_in(dev, avec_irq_handler, NR_VECTORS * s->num_cpu);
-> avec_irq_handler() can be removed here.
->
-yes.  i 'll remove on v2.
-
-thanks.
-Song Gao
-> Regards
-> Bibo Mao
->> +
->>       return;
->>   }
->>   diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
->> index 272355da2d..718b5b4f92 100644
+>> diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index 718b5b4f92..6b670e7936 100644
 >> --- a/hw/loongarch/virt.c
 >> +++ b/hw/loongarch/virt.c
->> @@ -363,7 +363,7 @@ static void 
->> virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
->>       }
->>   }
->>   -static void virt_irq_init(LoongArchVirtMachineState *lvms)
->> +static void virt_irq_init(LoongArchVirtMachineState *lvms, 
->> MachineState *ms)
->>   {
->>       DeviceState *pch_pic, *pch_msi;
->>       DeviceState *ipi, *extioi, *avec;
->> @@ -459,6 +459,13 @@ static void 
->> virt_irq_init(LoongArchVirtMachineState *lvms)
->>           sysbus_realize_and_unref(SYS_BUS_DEVICE(avec), &error_fatal);
->>           memory_region_add_subregion(get_system_memory(), 
->> VIRT_PCH_MSI_ADDR_LOW,
->> sysbus_mmio_get_region(SYS_BUS_DEVICE(avec), 0));
->> +        CPUState *cpu_state;
->> +        DeviceState *cpudev;
->> +        for (int cpu = 0; cpu < ms->smp.cpus; cpu++) {
->> +            cpu_state = qemu_get_cpu(cpu);
->> +            cpudev = DEVICE(cpu_state);
->> +            qdev_connect_gpio_out(avec, cpu, 
->> qdev_get_gpio_in(cpudev, INT_AVEC));
-here connect all  avec gpio_out to  cpu gpio_in  INT_AVEC.
+>> @@ -503,11 +503,19 @@ static void 
+>> virt_irq_init(LoongArchVirtMachineState *lvms, MachineState *ms)
+>>       qdev_prop_set_uint32(pch_msi, "msi_irq_num", num);
+>>       d = SYS_BUS_DEVICE(pch_msi);
+>>       sysbus_realize_and_unref(d, &error_fatal);
+>> -    sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+>> -    for (i = 0; i < num; i++) {
+>> -        /* Connect pch_msi irqs to extioi */
+>> -        qdev_connect_gpio_out(DEVICE(d), i,
+>> -                              qdev_get_gpio_in(extioi, i + start));
+>> +    if (virt_is_avecintc_enabled(lvms)) {
+>> +        for (i = 0; i < num; i++) {
+>> +            /* Connect pch_msi irqs to avec */
+>> +            qdev_connect_gpio_out(DEVICE(d), i,
+>> +                                 qdev_get_gpio_in(avec, i + start));
+> one parent irqline for avec is enough. Variable num is the number 
+> allocated for pch_msi when connecting to extioi. So variable num is 
+> meaningless with avec.
+>
+hi,
+here is  pch_msi  [start-256] gpio_out  connect to avec gpio_in [start, 
+256], not the avec connect to cpu.
+and  I think  the 'one parent lrqline for avec'  is avec connect cpu 
+gpio_in INT_AVEC at patch 6
+'qdev_connect_gpio_out(avec, cpu, qdev_get_gpio_in(cpudev, INT_AVEC));'
+or all pch_msi gpio_out connect one avec gpio_in ?  I'm a little 
+confused here.
+
+> Also there is no msi memory map region for avec such as 
+> sysbus_mmio_map() in the following.
+>
+emm, the region add at patch 6
+   memory_region_add_subregion(get_system_memory(), VIRT_PCH_MSI_ADDR_LOW,
+sysbus_mmio_get_region(SYS_BUS_DEVICE(avec), 0));
+
+I will adjust the patch order and the code order.
+
+>> +        }
+>> +    } else {In the first, I think irqchip avec and pch_msi can 
+>> coexist together.
+> MSI memory area for avec is
+>    [VIRT_PCH_MSI_ADDR_LOW - 0x100000, VIRT_PCH_MSI_ADDR_LOW)
+yes, you're right. memory area for avec should be 2fe0000000-2ff0000000;
+> for pch_msi is
+>    [VIRT_PCH_MSI_ADDR_LOW, VIRT_PCH_MSI_ADDR_LOW + 0x8)
+>
+> For parent line, AVEC is connected to CPU MSGINT BIT14 and pch_msi is
+> connected to extioi.
+>
+> So they can coexists together, it only depends on how guest kernel use 
+> MSI controller.
+>
+emm,  in case avec exists we should pick avec.
+
+thanks.
+Song Gao.
+> Regards
+> Bibo Mao
+>> +        sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+>> +        for (i = 0; i < num; i++) {
+>> +            /* Connect pch_msi irqs to extioi */
+>> +            qdev_connect_gpio_out(DEVICE(d), i,
+>> +                                  qdev_get_gpio_in(extioi, i + start));
 >> +        }
 >>       }
->>         /* Create EXTIOI device */
->> @@ -799,7 +806,7 @@ static void virt_init(MachineState *machine)
->>       }
->>         /* Initialize the IO interrupt subsystem */
->> -    virt_irq_init(lvms);
->> +    virt_irq_init(lvms, machine);
->>       lvms->machine_done.notify = virt_done;
->> qemu_add_machine_init_done_notifier(&lvms->machine_done);
->>        /* connect powerdown request */
->> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
->> index a1918a85da..b96df1cb2a 100644
->> --- a/target/loongarch/cpu.h
->> +++ b/target/loongarch/cpu.h
->> @@ -240,9 +240,10 @@ FIELD(CSR_CRMD, WE, 9, 1)
->>   extern const char * const regnames[32];
->>   extern const char * const fregnames[32];
->>   -#define N_IRQS      13
->> +#define N_IRQS      15
->>   #define IRQ_TIMER   11
->>   #define IRQ_IPI     12
->> +#define INT_AVEC    14
->>     #define LOONGARCH_STLB         2048 /* 2048 STLB */
->>   #define LOONGARCH_MTLB         64   /* 64 MTLB */
+>>         virt_devices_init(pch_pic, lvms);
 >>
 
 
