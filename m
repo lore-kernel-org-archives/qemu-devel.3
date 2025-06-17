@@ -4,70 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9037C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 09:30:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13384C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 09:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRSdz-0004oq-6c; Tue, 17 Jun 2025 05:30:15 -0400
+	id 1uRSiq-0006AX-HF; Tue, 17 Jun 2025 05:35:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uRSdx-0004oQ-D7
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:30:13 -0400
-Received: from p-east3-cluster3-host3-snip4-5.eps.apple.com ([57.103.86.28]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRSip-00069T-41
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:35:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uRSdr-0007SA-9h
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:30:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=m5EHCxnLUI9g19UWq7w7xzHzv94wGzwFOBGbOx2WHpU=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Ya5DKljx3zciXx5S/12dmMe0HTN0WVuO9wCNcx88K+z45fld6aQyzbXYaT8PNcOZr
- +EGcrdKa5RK+RBww8ABNpYNyjjdBpuHHw+i+IG+pc7EldpEuOTeKeaIKQIUc0Y4gGN
- rMQUjI2K4M9HMnr3+qsQdrP5Y9A+KdED5nWkT5XI77GS3AERW4ygJQM2oht0yq3uYq
- 22OCtAt6EVP8mAAL7ym8Vr+ORQ4kHOUnynhYhuMnROxFX6TVT+1ywf4ekwjUz6UgHH
- CQ8qHDEJJw/9C6nmFHFARDqLyl/1DVhx1xt0e0OT3CI3i9rPd0QOc2Ep+dGB4dmB0L
- 6XCjhzanbhEeQ==
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by outbound.qs.icloud.com (Postfix) with ESMTPS id 0CB56180015C;
- Tue, 17 Jun 2025 09:30:04 +0000 (UTC)
-Received: from localhost.localdomain (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by outbound.qs.icloud.com (Postfix) with ESMTPSA id E74CA1800139;
- Tue, 17 Jun 2025 09:30:03 +0000 (UTC)
-From: Mads Ynddal <mads@ynddal.dk>
-To: qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>, Alexander Graf <agraf@csgraf.de>,
- Roman Bolshakov <rbolshakov@ddn.com>, Mads Ynddal <mads@ynddal.dk>
-Subject: [PATCH] MAINTAINERS: add myself as reviewer for Apple Silicon HVF
-Date: Tue, 17 Jun 2025 11:30:01 +0200
-Message-ID: <20250617093001.70080-1-mads@ynddal.dk>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRSii-00081A-Mr
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:35:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750152907;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=4IxRAZDdRGkQQHubgoZbvwTEto/wqcug0Mn7VTI75TQ=;
+ b=BOAwPTvC1apwn9HL4BrD55j1lFnAMHrK6dJNVurnjOsqcF7PnEY4q9Q+apUQoZC5jk8f4C
+ SmRyzwk+aVE8lnADquDOLuHPzxCPWgzbeJtmxEKs+sdNHEXfcw+jCfYmxktTmMiJ4Vod1w
+ OR68KHEDWQKNfHt1XTKwxoEoLt0GxKI=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-223-phR6JLv4P0e-N0onSIstvA-1; Tue, 17 Jun 2025 05:35:05 -0400
+X-MC-Unique: phR6JLv4P0e-N0onSIstvA-1
+X-Mimecast-MFC-AGG-ID: phR6JLv4P0e-N0onSIstvA_1750152904
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4530c186394so23866225e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 02:35:05 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750152904; x=1750757704;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4IxRAZDdRGkQQHubgoZbvwTEto/wqcug0Mn7VTI75TQ=;
+ b=baqUeHWLE0/jTeHPSoKo7ZXwgYhQN4eJnOOW41ryjsUYCxws3HQfUXlNahEluc2k/U
+ t3vfXjl8uZhgMd+l05MSu+Hp4I0Af9OmQnmwLCc3VqSYnQ99en4XMXUtAbJrS/bpCUwr
+ gpUxOwQnlbvg+U3AY4rc4K4yuRYhD7URSDDVCJXA5DQ9SFnQ9WdBVSGoArhLn+/9jqr2
+ NOpyUTtwcSDwdaOBoUWEYV/4gzM0ZxGxx3Fg4vhCQeCoIB3bngeTky085r3TgepYKVpv
+ 0p0GdawFqKzpuRzbl+pkoVGGt90L8uHOW7dDZCDcMw6EKKuVfiEPbkBPfjcb5Wy8yfae
+ CNWg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXrfpS5PZ57TXqZltZXoibRWAz6nCBdOEiy7X8/+YpP2l9VI15f3Jngbw2XKNqOcE/46LCcsiEonruy@nongnu.org
+X-Gm-Message-State: AOJu0YzDoe/9yzye1HwbQo53wJIjJe3JOAgr9wx4fMfP34onSh8rCAkZ
+ wwRXNR09Lm3H20zKbgQtpRS/dhJozf3JDgJQHon3ndZTZj3aLq0XqQLxFKlcGlJihq9T2CMc4E8
+ AqC4ZUZTF/x5JOjYLT/sp1If/uujfACKUhxbZyap03nSzAOa96Kbzy1H8
+X-Gm-Gg: ASbGncsKkCaH6ehRPGcNMguJWhHr+S/WN68f7TUUCGiSFLobc2/SpPS59xVYA4HJRYN
+ BgoLkcKF96FVpLfcIh4Boc/rbIdgxiCZ1wWcIRScLUdX++/LcZuqltTd0/EjtzTVOUaZWD6EZSX
+ U7NNgbqgmi8iq+NcBCHNSoahn5oFCC5oRZnQVyeUTz1KYtTWMAqV3LQsfsLqEPx7F3y4VeOpoqs
+ zoHL5+NQXSYHoKTo9kGEZ3cqwhKz8t0Ac5MBG1CJHwdWS5u7GNWbG4VW0yWRWSOcudqdTZaFGi4
+ LbpDv0/YZvuMCT5mD9kVpgZzmuMDeWvvffkjE67amg9mwY1cGTtZtMYRPMGv9fTfoVPJVg==
+X-Received: by 2002:a05:600c:4e09:b0:453:6f1:bdba with SMTP id
+ 5b1f17b1804b1-4533cb3bb4bmr101297755e9.20.1750152903974; 
+ Tue, 17 Jun 2025 02:35:03 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHeNRmGLbdBsxDpbmRGNNlYaih/7/XV82wwUqCPMwc3cSbIiCSnfyTp1Qw527wqAwMeSXEyfQ==
+X-Received: by 2002:a05:600c:4e09:b0:453:6f1:bdba with SMTP id
+ 5b1f17b1804b1-4533cb3bb4bmr101297365e9.20.1750152903583; 
+ Tue, 17 Jun 2025 02:35:03 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4531febf905sm197876505e9.0.2025.06.17.02.35.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Jun 2025 02:35:02 -0700 (PDT)
+Message-ID: <5b0f2250-e521-4172-870c-0384c5ef2382@redhat.com>
+Date: Tue, 17 Jun 2025 11:35:01 +0200
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH-for-10.1 v4 0/8] hw/arm: GIC 'its=off' ACPI table fixes
+Content-Language: en-US
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, mst@redhat.com,
+ Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
+ ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
+ anisinha@redhat.com
+References: <20250616131824.425315-1-gustavo.romero@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250616131824.425315-1-gustavo.romero@linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: I0_mB6wpvK0J66Zf7HkkFJPIMjBV8fc1
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDA3NyBTYWx0ZWRfX3GiyuRmnKUGc
- 9tU8cNbctMX1ZuNO3jlvKPbBGVuH1GKoYz3nwaQzEIoWX0zUzG+aG3fLcY6wR9beO1BEV59CI83
- P1p20Lyj7C89mYicuOO5sNkiPh21iqG55+345ZQMwZisOr1I1rGuaiQoCb2s+PnQlF3tWub9/BW
- VN1ks7YtRo0/RL36SCKOpTW2Bx7oOFZwqlvgKuUphKRue8KNJEvMp4Gs5CKIFc7md7U+NkFGB8y
- 5Z1n6sqKUlxz+IEaBP8cE+Mo8lQenXP28bkhc5emiBxRrFoBW+onfy7ZdgEw53ifkpp98OdSg=
-X-Proofpoint-ORIG-GUID: I0_mB6wpvK0J66Zf7HkkFJPIMjBV8fc1
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-17_04,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
- mlxlogscore=999 mlxscore=0 suspectscore=0 bulkscore=0 spamscore=0
- phishscore=0 malwarescore=0 clxscore=1030 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506060001 definitions=main-2506170077
-Received-SPF: pass client-ip=57.103.86.28; envelope-from=mads@ynddal.dk;
- helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,43 +115,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-I've both publicly and private been digging around the Apple Silicon HVF code,
-and use it daily as part of my job. I feel I have a solid understanding of it,
-so I thought I'd step up and assist.
+Hi Gustavo,
 
-I've added myself as reviewer to the common "HVF" as well, to be informed of
-changes that might affect the Apple Silicon HVF code, which will be my primary
-focus.
+On 6/16/25 3:18 PM, Gustavo Romero wrote:
+> Since v2:
+> - Fixed no_tcg_its inverted logic (rth)
+>
+> Since v3:
+> - Fixed remappings in the IORT table when ITS is no present
+> - Rebased on master and resoled conflics, like no more "no_its"
+>   flag in VirtMachineClass
+> - Dropped patch 1/9 because we actually want the instance flags,
+>   not only the class flags, and the instance flags are the ones
+>   to be used often when deciding about the presence/absence of a
+>   machine feature, instead of the negated class flags ("no_*")
+> - Adapted the other patches that depended on 1/9
+> - Dropped patch 4/9 in favor of using the instance flag for
+>   checking if ITS is on or off
+> - Simplified VM options for the new "its=off" test
+>
+> v1: https://lists.gnu.org/archive/html/qemu-devel/2025-03/msg07080.html
+> v2: https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00495.html (Patches 6/14 -> 14/14 in the series)
+> v3: https://lists.gnu.org/archive/html/qemu-devel/2025-04/msg00567.html
+>
+> Fix ACPI tables for '-M its=off' CLI option and resolve the issue:
+>
+> https://gitlab.com/qemu-project/qemu/-/issues/2886
 
-Signed-off-by: Mads Ynddal <mads@ynddal.dk>
----
- MAINTAINERS | 2 ++
- 1 file changed, 2 insertions(+)
+One first comment is that this series will collide with Shameer's SMMU
+multi instance series which has been lunder review for quite some time
+(adding him in TO):
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 28b3dd2684..2b9be05aaf 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -509,6 +509,7 @@ F: system/cpus.c
- 
- Apple Silicon HVF CPUs
- M: Alexander Graf <agraf@csgraf.de>
-+R: Mads Ynddal <mads@ynddal.dk>
- S: Maintained
- F: target/arm/hvf/
- F: target/arm/hvf-stub.c
-@@ -525,6 +526,7 @@ HVF
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
- R: Phil Dennis-Jordan <phil@philjordan.eu>
-+R: Mads Ynddal <mads@ynddal.dk>
- W: https://wiki.qemu.org/Features/HVF
- S: Maintained
- F: accel/hvf/
--- 
-2.49.0
+I think it may be more future proof if you could rebase on it - I know
+it is a pain ;-( -. Or if sbdy objects for Shameer's series please raise
+your voice now.
+
+[PATCH v4 0/7] hw/arm/virt: Add support for user creatable SMMUv3 device <https://lore.kernel.org/all/20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com/#r>
+
+https://lore.kernel.org/all/20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com/
+
+Also I understood Shameer intended to write some new bios-tables-test.
+
+Thanks
+
+Eric
+
+>
+> Cheers,
+> Gustavo
+>
+> Gustavo Romero (7):
+>   hw/intc/gicv3_its: Do not check its_class_name()
+>   hw/arm/virt: Simplify logic for setting instance's 'tcg_its' variable
+>   hw/arm/virt: Simplify create_its()
+>   hw/arm/virt-acpi-build: Fix comment in build_iort
+>   qtest/bios-tables-test: Add blobs for its=off test on aarch64
+>   hw/arm/virt-acpi-build: Fix ACPI IORT and MADT tables when its=off
+>   qtest/bios-tables-test: Update blobs for its=off test on aarch64
+>
+> Philippe Mathieu-Daudé (1):
+>   qtest/bios-tables-test: Add test for when ITS is off on aarch64
+>
+>  hw/arm/virt-acpi-build.c                  | 134 +++++++++++++---------
+>  hw/arm/virt.c                             |  25 ++--
+>  include/hw/intc/arm_gicv3_its_common.h    |   2 +-
+>  tests/data/acpi/aarch64/virt/APIC.its_off | Bin 0 -> 164 bytes
+>  tests/data/acpi/aarch64/virt/IORT.its_off | Bin 0 -> 172 bytes
+>  tests/qtest/bios-tables-test.c            |  21 ++++
+>  6 files changed, 113 insertions(+), 69 deletions(-)
+>  create mode 100644 tests/data/acpi/aarch64/virt/APIC.its_off
+>  create mode 100644 tests/data/acpi/aarch64/virt/IORT.its_off
+>
 
 
