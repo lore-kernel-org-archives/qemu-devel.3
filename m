@@ -4,74 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA6A3C71157
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:47:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5DF5C71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:47:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYWQ-000707-Ef; Tue, 17 Jun 2025 11:46:50 -0400
+	id 1uRYX5-0007hs-8S; Tue, 17 Jun 2025 11:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uRYJN-0001BQ-ES
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:33:22 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>)
+ id 1uRYJK-0002D3-KZ; Tue, 17 Jun 2025 11:33:19 -0400
+Received: from flow-b6-smtp.messagingengine.com ([202.12.124.141])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1uRX0L-0006dF-Kl
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 10:09:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750169374;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=GsIKRaGBHvBhoEGe3IQh6uNquzQxyT8kbXR/Bh6y3rA=;
- b=Mc2+21kQDPvZmlCxnR9H55tGnT7qyaFDsdH/QX/RVOJyweINjJ3JlE3xmJqdNlw8RCo5sn
- A/5Npe1VuiV1Cp4uXuO6/3WZB1E7kTTBMeqXzsZsEyrwvEeom3VY2++oFCkXPi6eXOGJWE
- XgdNiTU/6+7vUZc9Ki3CzQ5GC8iKUn0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-617-DV2AwAH_NESQSCoyZoLzeQ-1; Tue,
- 17 Jun 2025 10:09:30 -0400
-X-MC-Unique: DV2AwAH_NESQSCoyZoLzeQ-1
-X-Mimecast-MFC-AGG-ID: DV2AwAH_NESQSCoyZoLzeQ_1750169369
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 270531809C94; Tue, 17 Jun 2025 14:09:29 +0000 (UTC)
-Received: from localhost (unknown [10.2.16.91])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8B9501956094; Tue, 17 Jun 2025 14:09:28 +0000 (UTC)
-Date: Tue, 17 Jun 2025 10:09:27 -0400
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Tanish Desai <tanishdesai37@gmail.com>
-Cc: qemu-devel@nongnu.org,
- =?iso-8859-1?Q?Llu=EDs?= Vilanova <vilanova@ac.upc.edu>,
- Paolo Bonzini <pbonzini@redhat.com>, Mads Ynddal <mads@ynddal.dk>,
- Alex =?iso-8859-1?Q?Benn=E9e?= <alex.bennee@linaro.org>
-Subject: Re: [PATCH 0/3] tracetool:cleanup "if(true)" check from trace_foo()
-Message-ID: <20250617140927.GB117267@fedora>
-References: <20250616201222.6416-1-tanishdesai37@gmail.com>
+ (Exim 4.90_1) (envelope-from <hi@alyssa.is>)
+ id 1uRX7m-0007kO-Qm; Tue, 17 Jun 2025 10:17:21 -0400
+Received: from phl-compute-11.internal (phl-compute-11.phl.internal
+ [10.202.2.51])
+ by mailflow.stl.internal (Postfix) with ESMTP id 2864C1D40CC4;
+ Tue, 17 Jun 2025 10:17:14 -0400 (EDT)
+Received: from phl-mailfrontend-02 ([10.202.2.163])
+ by phl-compute-11.internal (MEProxy); Tue, 17 Jun 2025 10:17:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
+ :content-type:content-type:date:date:from:from:in-reply-to
+ :in-reply-to:message-id:mime-version:references:reply-to:subject
+ :subject:to:to; s=fm3; t=1750169834; x=1750177034; bh=U/eUk/pXF2
+ CFz/D+Hh9dfKdR+cTGZ/QsgERBZmy8ZSQ=; b=oFAa0xyyTNhlWF6xV+i9DVRzoh
+ /MXFKI3wKeaAyUaZWattU/0fq1YAFaejyS9xHX6uzjpIIevFd2tduIwPvJWHU0qM
+ B54Yg9vKP8w5BO9XhkKcSaS0t4XzrQlEL0Nz5dzqFQEH4jVvCw6d/AuK1ys8JRmy
+ kWlVNZRqF/46pyG+culnfuOkKEKWMdaNbdUF1xBnTf2DV73JRuW3VjKaF17YGGkR
+ hd42EhSbPBrBQiyj5/bNxUmkvUArrkZH2QhTLOVo6jGfHnSD9QrCG83pOxnhzcux
+ x3szAmq6e8so2Zv7d7AwAttgh0dWtHOuvfRZS8GcSc8TFKbKXK993CLuXIqA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1750169834; x=1750177034; bh=U/eUk/pXF2CFz/D+Hh9dfKdR+cTGZ/QsgER
+ BZmy8ZSQ=; b=YMvfhkey2NfM2EGMafKlz3AhpZJ5371ud8Sy8CPVtEISXD+FdoY
+ mFbYyVQi7avVbmoBz0UWZB7tWNUEYp98GoogH/PJ0fZvjROHG/HBJRid6KwvEAAn
+ 54WzJ1kUkw9ZDiqVCteZmNN1sL0h7GnB/b2VrgwZ8FxLUjeoFX1LqLMig/xdtni5
+ Jh68tpDwqVefvj/8j19HzGXUV3bZRR+mJ0D0/biAyJUP6fa85AGyi5Y/L5mmV74t
+ 935RH8ckxJqFg/8WCwJrJYdLHVCqKyJ6Ui+qzjdYzQturEAh6Atb5jhgyHo44MEG
+ QHslv3BX7z1NPB00jPDwf8LwfPd9u84rVjw==
+X-ME-Sender: <xms:6XhRaFmjygYZXaPDM3oL3bjfGchAVQuHgE1STNN0zALbmJfhaKjTsA>
+ <xme:6XhRaA2fC_9vmA5_kceJHLQ1tbkaYXb85IKMO-ZdsKHVKCiyy4TI0lw_0X2AukeOZ
+ 0EUrfYMGm8N9TbsgQ>
+X-ME-Received: <xmr:6XhRaLq-NOZrSKgfN50Dcl9Gj1QXpo5eC3ZunOuNQgE-iYLxpaHf3c5XrYpvpnot8ZnRQkVLw3YGjwPCiYnQxneCwPFsiuBjsLvdWAQHQA1dejBsmmI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeeffedrtddvgdegtdcutefuodetggdotefrodftvf
+ curfhrohhfihhlvgemucfhrghsthforghilhdpggftfghnshhusghstghrihgsvgdpuffr
+ tefokffrpgfnqfghnecuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnth
+ hsucdlqddutddtmdenucfjughrpefhvffujghffffkgggtsehgtderredttddtnecuhfhr
+ ohhmpeetlhihshhsrgcutfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrg
+ htthgvrhhnpedvuedviedvhefhieektddvvdehgfehffelveeuiefggfdtffffueejudej
+ jeekjeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
+ hhihesrghlhihsshgrrdhishdpnhgspghrtghpthhtohepuddtpdhmohguvgepshhmthhp
+ ohhuthdprhgtphhtthhopehgkhhulhhkrghrnhhisegrmhhpvghrvggtohhmphhuthhinh
+ hgrdgtohhmpdhrtghpthhtohepvghrihgtrdgruhhgvghrrdhprhhosehgmhgrihhlrdgt
+ ohhmpdhrtghpthhtohepmhgriieskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepphgvth
+ gvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtoheprhhitghhrghr
+ ugdrhhgvnhguvghrshhonheslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmhhuqd
+ grrhhmsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhho
+ nhhgnhhurdhorhhgpdhrtghpthhtohepmhhighhuvghlrdhluhhishesohhrrggtlhgvrd
+ gtohhmpdhrtghpthhtohepghgrnhhkuhhlkhgrrhhnihesohhsrdgrmhhpvghrvggtohhm
+ phhuthhinhhgrdgtohhm
+X-ME-Proxy: <xmx:6XhRaFm9K8x-lw0RmQihB-_6JI-0Z0E0x6ZVCjQ0lcIeDhM3bQpbRA>
+ <xmx:6XhRaD1ZDTMtD8UpA0xSKCYA8V_nEXX1OcKdj0mGv5JdPZOsdNDxQw>
+ <xmx:6XhRaEtp_mWoiJq2JC2hp9ouEi9q9n0WTIZMHjKkzqn3vn5KKI_gAw>
+ <xmx:6XhRaHXIrY25aTUU20c-ZJ4yRlwDnuj53eQynrNGxQWiqDrEUiOm2A>
+ <xmx:6XhRaD9-CimvMiSeZA8vmWB2M3yL6yqTZ8yEtQwMYfBXaDE8I-dPNc-X>
+Feedback-ID: i12284293:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Jun 2025 10:17:13 -0400 (EDT)
+Received: by mbp.qyliss.net (Postfix, from userid 1000)
+ id BC3469A0A3C; Tue, 17 Jun 2025 16:17:11 +0200 (CEST)
+From: Alyssa Ross <hi@alyssa.is>
+To: Eric Auger <eric.auger@redhat.com>, eric.auger.pro@gmail.com,
+ eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ miguel.luis@oracle.com, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, maz@kernel.org,
+ gkulkarni@amperecomputing.com, gankulkarni@os.amperecomputing.com
+Subject: Re: [PATCH v5 5/5] hw/arm/virt: Allow virt extensions with KVM
+In-Reply-To: <20250527062534.1186004-6-eric.auger@redhat.com>
+References: <20250527062534.1186004-1-eric.auger@redhat.com>
+ <20250527062534.1186004-6-eric.auger@redhat.com>
+Date: Tue, 17 Jun 2025 16:17:10 +0200
+Message-ID: <875xgutpuh.fsf@alyssa.is>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="HT296jN3UK4qLfC2"
-Content-Disposition: inline
-In-Reply-To: <20250616201222.6416-1-tanishdesai37@gmail.com>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; boundary="=-=-=";
+ micalg=pgp-sha512; protocol="application/pgp-signature"
+Received-SPF: pass client-ip=202.12.124.141; envelope-from=hi@alyssa.is;
+ helo=flow-b6-smtp.messagingengine.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,60 +117,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+--=-=-=
+Content-Type: text/plain
 
---HT296jN3UK4qLfC2
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Eric Auger <eric.auger@redhat.com> writes:
 
-On Mon, Jun 16, 2025 at 08:12:19PM +0000, Tanish Desai wrote:
-> This series of patch aims to removes the leftover if (true) condition fro=
-m trace_foo, a remnant from the TCG tracing feature removal.
-> It replaces it with a proper trace_event_get_state(...) check where neces=
-sary(for log/simple/syslog and ftrace backend).
-> Additionally, this change centralizes the generation of trace_event_get_s=
-tate(...) calls into format/h.py,
-> eliminating redundant code across individual backends.
-> This cleanup results in more consistent and less repetitive backend code.
+> From: Haibo Xu <haibo.xu@linaro.org>
+>
+> Up to now virt support on guest has been only supported with TCG.
+> Now it becomes feasible to use it with KVM acceleration.
+>
+> Also check only in-kernel GICv3 is used along with KVM EL2.
+>
+> Signed-off-by: Haibo Xu <haibo.xu@linaro.org>
+> Signed-off-by: Miguel Luis <miguel.luis@oracle.com>
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
-CCing Alex Benn=E9e, who authored commit 126d4123c50a ("tracing: excise
-the tcg related from tracetool").
+Hi!  From what I can tell, this will produce an error on hosts that
+don't support nested virtualization when QEMU is invoked with -accel
+kvm:tcg -machine virtualization=on, but I don't think that's the ideal
+behaviour.  It would make more sense for it to fall back to the first
+permitted accel option that does support running the machine as
+configured, so if hardware nested virtualization is not supported, it
+should fall back to TCG.
 
->=20
-> Tanish Desai (3):
->   tracetool: removed the unused vcpu property
->   tracetool: introduce generate_unconditional
->   tracetool: remove redundant event_get_state checks
->=20
->  scripts/tracetool/backend/__init__.py |  3 +++
->  scripts/tracetool/backend/dtrace.py   |  3 ++-
->  scripts/tracetool/backend/ftrace.py   |  3 ---
->  scripts/tracetool/backend/log.py      |  9 +--------
->  scripts/tracetool/backend/simple.py   | 11 +----------
->  scripts/tracetool/backend/syslog.py   | 11 +----------
->  scripts/tracetool/backend/ust.py      |  2 +-
->  scripts/tracetool/format/h.py         | 13 +++++++++----
->  8 files changed, 18 insertions(+), 37 deletions(-)
->=20
-> --=20
-> 2.34.1
->=20
+I maintain an OS development environment that includes scripts for
+running images in QEMU, where running KVM on those images is a
+requirement.  Currently, those scripts simply force TCG on aarch64.
+With this change, to take advantage of KVM NV support, I'd have to try
+to identify in the script whether NV would be supported.  QEMU would be
+in a much better position to determine this and fall back to TCG if it's
+unsupported, like how the -accel option with multiple values usually
+works.
 
---HT296jN3UK4qLfC2
-Content-Type: application/pgp-signature; name=signature.asc
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmhRdxcACgkQnKSrs4Gr
-c8jRvAf+L0Qw2GEYA8uFAiXrufILeFj2depnhzikxEj3QIDK6/49lSgk8KfRn0q0
-wUn//JbsvdR8gAv8FFCcnLyflc6RlqVgym+qdUhnLOWCX2eqjBy1/x9Us3PCOOZS
-+8Fy/U3cATy3yvn38dJ8QLkyW9/7poDYv3FB5HvJz8DskevonzXSJvcLJd3OnrkD
-/Jy4QUDd+GSsU952GLFvtUgwc7wdHF1NBpKQkR3Bmk0c8nsuht3dCB0CNAV3F/4L
-2LIrzgbyVnDaS/8EdkGel8q6xD9bRq3mCG/HnGSd+TEKk1IJz34ingrCjdcFN5eT
-2+txyo+MTPFoSeUocKh94MfcK9X3ow==
-=kVsq
+iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCaFF45gAKCRBbRZGEIw/w
+ok1AAP9QNkNFkNaw759IJnKaFhV3vMLiygMqSLbpUJkI0ubCOwEAm2MNXUbMBfet
+VqLAlJOhXL1IH8VLug590GWzT3HJaAo=
+=5p9U
 -----END PGP SIGNATURE-----
-
---HT296jN3UK4qLfC2--
-
+--=-=-=--
 
