@@ -4,74 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45283C7115B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:00:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 411E9C71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:00:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYeZ-0001UR-Ma; Tue, 17 Jun 2025 11:55:15 -0400
+	id 1uRYe0-0007ao-SK; Tue, 17 Jun 2025 11:54:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRYLO-0006Bx-1E
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:35:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRVWD-0002Da-K5
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 08:34:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750163660;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=VUhaNXnFBIIRi+RHB5CXO/kMQ0DnPMkle+LXwlTRRkw=;
- b=gx3aaJQ0kDSmCy5gISYgWUU3uJUd/hfJy3d5lfnbTWZ90A1tB1fNOwYTjp1pXfPPvKRQJo
- FPcpyWj8DGGh/YddmGYODxQ6ldkFg4VC2IL6TEwh3dgDDcAWCULixZmWQg7DiI3/C/6dBX
- aI2s/jw/OsLfK9etEUxhFb9SI1ZwDkI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-333-m-cmb4a0OtiP-HpZtUmD2Q-1; Tue,
- 17 Jun 2025 08:34:19 -0400
-X-MC-Unique: m-cmb4a0OtiP-HpZtUmD2Q-1
-X-Mimecast-MFC-AGG-ID: m-cmb4a0OtiP-HpZtUmD2Q_1750163658
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45D101800286; Tue, 17 Jun 2025 12:34:18 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.11])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 82FB918002B7; Tue, 17 Jun 2025 12:34:17 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D4E4A21E6A27; Tue, 17 Jun 2025 14:34:14 +0200 (CEST)
-From: Markus Armbruster <armbru@redhat.com>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,  Daniel =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter
- Maydell <peter.maydell@linaro.org>,  Akihiko Odaki
- <akihiko.odaki@daynix.com>
-Subject: Re: Build platform guarantees, docs, tests, and snakes in the garden
-In-Reply-To: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
- (John Snow's message of "Thu, 5 Jun 2025 15:35:04 -0400")
-References: <CAFn=p-YuqzXvWF-cGLUc0LVVMe2Rinx9+LOjvpHRY-vRrPyJow@mail.gmail.com>
-Date: Tue, 17 Jun 2025 14:34:14 +0200
-Message-ID: <87sejytum1.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
+ id 1uRYM1-0004Bk-Nk
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:36:10 -0400
+Received: from mail-ed1-f67.google.com ([209.85.208.67])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
+ id 1uRUyC-0006ws-0C
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 07:59:22 -0400
+Received: by mail-ed1-f67.google.com with SMTP id
+ 4fb4d7f45d1cf-607cf70b00aso11258712a12.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 04:59:13 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750161551; x=1750766351;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:to:subject:cc:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=mAnI7PyvFETj1ppQjxS0lmEjoQMMLw9l4r/Tz3MkT8U=;
+ b=utf2simbYJFnOE8bR96HDtlSAL9I72+Wx3j6t9tpBwJnqhVLSW1u0WtqiDPpgs6puf
+ vUjpjKdnm3gAvGUzzMllRkRQIZAf757iv670RMdOHBHVH+qCXaoQ5azSBzNoOAR7ZXDg
+ BslpRZkiM7F4cLeUO5PiMrImf95q+uoB5clb/xD1AgiMumxIDrR2c021WLKU+RFq2cNM
+ Sp7AOGThhcyTwEF55G2QPf4/2iBXm5BhgRjA6yGGovqwlZPks7dqiW2Un/ZNKuIVkJAu
+ proPrVdGUD1ow4Bta/HBanPH4wQoGnN2VXAytluJZ6l3Psnx9oGZC4EHy/g0rxa6S4gi
+ AENA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhawfO3yRA8cqy9lt2W9VIVMyHidnY8nG4OpZi9pV3Mu6kxnOxUk1Bajt8ndD5I2aWwvh7o0TZaWDD@nongnu.org
+X-Gm-Message-State: AOJu0YwLbpP+OgmKTqDTqBWKVXRYtTCSUGHFaZSRw5tg/Bbys/Psf0Oy
+ /AnaJ/WAIbu+BcZgnIE481Q5UozCKXRvpgXqmAWv66VCnY+lJhWNf9fx
+X-Gm-Gg: ASbGncu5yHsPbMvuP8vQSOpD2unY61+PEalQMWXMHx0I2TCMsYapjXY4nWeeA5RUwrR
+ MWYV0WDxyJ16JO0MVWgUPVMW3Cvl7B5H4FL6ib7LEDzyQivRY/+QITiiZIkuivO+DH+VpSpygfb
+ /R0pGZI7vD3oJMvSUGhQTSeXY6gxphlWGj3Cy6luKrMBQRow+v4CxLzzxoKYSJV6YgxPwxRrHv7
+ 8YwH1pptxaP00aQMf007ZsESwq1pS/KlO9m1VHQl0KDziAYY3lX80R6RvKBcA/nw8e4+5gGsBsV
+ a5HysrryMmOiVdomNedaxIMFVZQlezYghDW+QYsbTebq+RLp9p7NS4Tlhd0xSCf9h/bdroAG+vX
+ 6i8eQqH0cvM6mdOIsL+8A
+X-Google-Smtp-Source: AGHT+IFp+Jvp0GomItpNyaX/wjGaMe70+jUOCTXODNL0dNM9yHTyv+Ll3n4r/TysYJXVd7tU+ctDhg==
+X-Received: by 2002:a17:907:d86:b0:abf:7453:1f1a with SMTP id
+ a640c23a62f3a-adfad53b79bmr1347147966b.36.1750161551147; 
+ Tue, 17 Jun 2025 04:59:11 -0700 (PDT)
+Received: from [192.168.88.252] (78-80-97-102.customers.tmcz.cz.
+ [78.80.97.102]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-adec897c739sm866673766b.171.2025.06.17.04.59.09
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Jun 2025 04:59:10 -0700 (PDT)
+Message-ID: <36baa0a5-43ac-44c1-bf30-34f34ddfceba@ovn.org>
+Date: Tue, 17 Jun 2025 13:59:09 +0200
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Cc: i.maximets@ovn.org, Jason Wang <jasowang@redhat.com>,
+ Anton Protopopov <aspsk@isovalent.com>
+Subject: Re: [PATCH v3 1/2] net/af-xdp: Support pinned map path for AF_XDP
+ sockets
+To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
+References: <20250604112916.1195368-1-daniel@iogearbox.net>
+Content-Language: en-US
+From: Ilya Maximets <i.maximets@ovn.org>
+Autocrypt: addr=i.maximets@ovn.org; keydata=
+ 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
+In-Reply-To: <20250604112916.1195368-1-daniel@iogearbox.net>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.85.208.67;
+ envelope-from=i.maximets.ovn@gmail.com; helo=mail-ed1-f67.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
+ FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_PASS=-0.001,
+ T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,121 +139,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-John Snow <jsnow@redhat.com> writes:
+On 6/4/25 1:29 PM, Daniel Borkmann wrote:
+> Extend 'inhibit=on' setting with the option to specify a pinned XSK map
+> path along with a starting index (default 0) to push the created XSK
+> sockets into. Example usage:
+> 
+>   # ./build/qemu-system-x86_64 [...] \
+>    -netdev af-xdp,ifname=enp2s0f0np0,id=net0,mode=native,queues=2,start-queue=14,inhibit=on,map-path=/sys/fs/bpf/xsks_map,map-start-index=14 \
+>    -device virtio-net-pci,netdev=net0 [...]
+> 
+> This is useful for the case where an existing XDP program with XSK map
+> is present on the AF_XDP supported phys device and the XSK map is not
+> yet populated. For example, the former could have been pre-loaded onto
+> the netdevice by a control plane, which later launches qemu to populate
+> it with XSK sockets.
+> 
+> Normally, the main idea behind 'inhibit=on' is that the qemu instance
+> doesn't need to have a lot of privileges to use the pre-loaded program
+> and the pre-created sockets, but this mentioned use-case here is different
+> where qemu still needs privileges to create the sockets.
+> 
+> The 'map-start-index' parameter is optional and defaults to 0. It allows
+> flexible placement of the XSK sockets, and is up to the user to specify
+> when the XDP program with XSK map was already preloaded. In the simplest
+> case the queue-to-map-slot mapping is just 1:1 based on ctx->rx_queue_index
+> but the user might as well have a different scheme (or smaller map size,
+> e.g. ctx->rx_queue_index % max_size) to push the inbound traffic to one
+> of the XSK sockets.
+> 
+> Note that the bpf_xdp_query_id() is now only tested for 'inhibit=off'
+> since only in the latter case the libxdp takes care of installing the
+> XDP program which was installed based on the s->xdp_flags pointing to
+> either driver or skb mode. For 'inhibit=on' we don't make any assumptions
+> and neither go down the path of probing all possible options in which
+> way the user installed the XDP program.
+> 
+> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+> Cc: Ilya Maximets <i.maximets@ovn.org>
+> Cc: Jason Wang <jasowang@redhat.com>
+> Cc: Anton Protopopov <aspsk@isovalent.com>
+> ---
+>  net/af-xdp.c    | 80 +++++++++++++++++++++++++++++++++++++++++++++----
+>  qapi/net.json   | 29 +++++++++++-------
+>  qemu-options.hx | 23 ++++++++++++--
+>  3 files changed, 114 insertions(+), 18 deletions(-)
 
-> Hi, I've long been a little confused about the specifics of our build
-> platform guarantee and how it applies to documentation and testing.
+Hi, Daniel.  Thanks for v3!
 
-"Guarantee" feels too strong.  See below.
+checkpatch complains about 2 issues in the patch - a missing braces and
+onle too long line that can be wrapped.
 
-> My *current* understanding is that our build platform guarantee applies to
-> both unit tests and building documentation, but that this requirement may
-> not be as absolute as I imagine it.
->
-> The way I have endeavored to manage the Python tooling in our tree so far
-> is to preserve, without fail, our ability to perform fully offline builds
-> on all supported platforms (provided that the right distro repo packages
-> are available).
+There also seems to be some issue on a cleanup path that you attempt to
+fix in the second patch, so I reply about it there.
 
-Relevant part of docs/about/build-platforms.rst:
-
-    Some build dependencies may follow less conservative rules:
-
-    Python runtime
-      Distributions with long-term support often provide multiple versions
-      of the Python runtime.  While QEMU will initially aim to support the
-      distribution's default runtime, it may later increase its minimum version
-      to any newer python that is available as an option from the vendor.
-      In this case, it will be necessary to use the ``--python`` command line
-      option of the ``configure`` script to point QEMU to a supported
-      version of the Python runtime.
-
-      As of QEMU |version|, the minimum supported version of Python is 3.9.
-
-    Python build dependencies
-      Some of QEMU's build dependencies are written in Python.  Usually these
-      are only packaged by distributions for the default Python runtime.
-      If QEMU bumps its minimum Python version and a non-default runtime is
-      required, it may be necessary to fetch python modules from the Python
-      Package Index (PyPI) via ``pip``, in order to build QEMU.
-
-We "initially aim to support the distribution's default runtime".  Once
-we don't, fetching from PyPI "may be necessary".  This seems to imply
-that such fetching will be necessary when we use the default runtime.
-
-I read "aim" as "make an effort".  This isn't exactly a "guarantee".
-It's much, much weaker than "to preserve, without fail, our ability to
-perform fully offline builds on all supported platforms".
-
-Keeping fully offline builds working is certainly desirable, but not
-regardless of cost.
-
->                 The Python virtual environment created at configure time
-> bends over backwards to use system packages *whenever possible*, and the
-> list of exceptions - notably Meson itself - uses vendored packages only in
-> very specific cases where it is possible to vendor such packages. Fetching
-> packages from PyPI is generally offered only as a convenience for developer
-> workstations to, in general, save developers from having to know anything
-> about Python. (I think I've done a good job there, to be honest!)
-
-You have: few people have noticed your work.
-
-> (Notably: Meson is pure python and has no dependencies, so it is possible
-> to vendor it for offline builds. Tools like Sphinx, however, have many
-> dependencies and are not so easily vendored. Thus, we have created a
-> tenuous arrangement where we are allowed to use versions of Meson that
-> otherwise would break our build platform guarantee.)
->
-> Lately, we've had some issues with the wide range of Sphinx versions we
-> support presenting various cross-platform difficulties. In particular,
-> Akihiko Odaki has sent patches to bump our Sphinx version to at least
-> 6.2.1, because platforms with Python 3.13.1 can no longer run Sphinx 3.x at
-> all, so having that be our "default install version" causes issues on newer
-> platforms.
->
-> However, if we take as iron-clad our commitment to the build platform
-> promise -- *and* guarantee offline/tarball builds as well -- then Debian 12
-
-I do not think such a commitment exists; see my reading of
-build-platforms.rst above.
-
-Even if it did, treating it as iron-clad would be foolish.  We need to
-consider cost vs. reward, always.
-
-> (as an example) only offers Sphinx 5.3.0 and not newer unless we allow
-> internet access to fetch Sphinx 6.2.1. This is not a problem for developer
-> workstations at all, but I am unclear on what problems this may cause for
-> tarball releases and downstream offline/isolated/reproducible builds, if
-> any.
->
-> In this case, we can (probably) "fix" the issue by continuing to allow
-> older Sphinx while preferring a newer Sphinx version when it is missing,
-> but then we lose the ability to make code cleanups and drop a lot of
-> back-compat crud. If memory serves, there were other issues recently where
-> older versions of Sphinx behaved differently from newer versions, causing
-> intermittent failures that were hard to track down.
->
-> What I'd like to know is: what precisely are our options in this scenario?
-> Do we consider it acceptable for some platforms to be unable to build docs
-> offline? How highly do we value the ability to locally build docs for any
-> given release?
-
-I believe the value of fully offline builds goes down as the build
-platform ages.
-
-Initially, the distribution will (hopefully!) want to package the then
-current version of QEMU.  We want to make that easy.  Enabling fully
-offline builds are part of that.
-
-Perhaps the distribution later wants to package / build newer versions
-of QEMU fully offline on the now aged release.  I'd expect this to
-happen less and less as the distribution ages.  Making it easy is still
-desirable, but worth less and less trouble to us.
-
-> Before I throw my weight behind any given option, I just want to know what
-> we consider our non-negotiable obligations to be.
-
-In my opinion: none.  We should consider the tradeoffs, and make
-pragmatic decisions.
-
+Best regards, Ilya Maximets.
 
