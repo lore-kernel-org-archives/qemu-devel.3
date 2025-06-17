@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A725C71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 02:41:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AC07C71155
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 03:00:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRMFj-00085i-Fj; Mon, 16 Jun 2025 22:40:47 -0400
+	id 1uRMY0-0002AT-71; Mon, 16 Jun 2025 22:59:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uRMFi-00085a-Ig
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 22:40:46 -0400
-Received: from mail-vs1-xe33.google.com ([2607:f8b0:4864:20::e33])
+ id 1uRMXy-00029i-3y; Mon, 16 Jun 2025 22:59:38 -0400
+Received: from mail-ua1-x92a.google.com ([2607:f8b0:4864:20::92a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1uRMFg-0001uV-8k
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 22:40:46 -0400
-Received: by mail-vs1-xe33.google.com with SMTP id
- ada2fe7eead31-4e7f367ea11so1074880137.3
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 19:40:43 -0700 (PDT)
+ id 1uRMXv-0003sC-3Z; Mon, 16 Jun 2025 22:59:37 -0400
+Received: by mail-ua1-x92a.google.com with SMTP id
+ a1e0cc1a2514c-87edd8f4e9fso916555241.0; 
+ Mon, 16 Jun 2025 19:59:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750128043; x=1750732843; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1750129173; x=1750733973; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/zVaB+b7OPu+khFMAUPccjK/AM+vGrU2rhDXtxGhlAY=;
- b=WV382soEzcFRu1WqsKdm1uAuKZtduodCXMK7tasZJwW+hT1A02lbuny4Jllr9hbG+S
- ZU0s6c2e9Jbo+yyBKYRxgER76oQ7bU5Cyc+FaDfLiNMVE8m8JhA5KkeJN/9SQddCAVe2
- d9PxIiy3LF7wFzJpinJJaWxwn2j1F0Wa91deIDxQIkcNCif7hiqZBcdEZk4KeooG8D03
- Qw1jkiWmadR0O6WIjF5CI5dVCbcc4dNtr+jH1aLEhS4ErARlSCIcNxgWaKu73z3YUO93
- gT9pBzAQ9i5ZssRjx+UuBw6vbdaSqEeM9uSXX2L9hhI/q/7S8MkVhRkSUgjWqDEVQEbN
- pk0A==
+ bh=FTfV77CBkRiZGnO300YgD3CjULjl9ryYe74ACUd0PKI=;
+ b=fXDmVhe82/AZdjCcf6qF3KDho9hhivXUbWRezIX3k10mVDqmaOMjd211jFmOT0LJ/z
+ O2kkkdDMshTwDvhzjwrRKj3V5RGOjwS155JrSHwMY9ST8mbB4Vqi36Nb90zaZA251uCS
+ 5dJwDGa4rNqkMIlRgiQdWkfJ2fLfLiYD/rtk3vEW+++I6j0F3amXA0mmRt2k/zdihF64
+ wpAFKX518cbbWcDbxThUb/ihrTdmx4r2NLbUpK2YUfsQM0VW5kLMxS1TWfW6nuOCkaN4
+ ulZj9JytOb/rongo3TZ2YfA6CSsMdCyFoL/B4V+oTcwCIMwB+wVw1DaWsmfx5iRJuAJE
+ DUuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750128043; x=1750732843;
+ d=1e100.net; s=20230601; t=1750129173; x=1750733973;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=/zVaB+b7OPu+khFMAUPccjK/AM+vGrU2rhDXtxGhlAY=;
- b=i0rzFj8S6O3P24uR163m5gajJj9KE9Yce6F4ez4HMJF9Mnxha5PxoCB8GFAuQKbs9M
- fU4LT9StvXVeEe2sTwszijaiBQLi5N1If8Ui6K6JceyV5zqBUwOyKEcY+CS+UXuxdVxy
- IWJLIduyj+s8QRuM8QMp7IBVA82xULn0y0IPCmqjk/Hp65O4XGDjk+Cq2lcs1s6S3adR
- NvfJQVEUxhrcEHE6dnBVDgMP5s52OFEqKkB58kUTPobP1r+mBpTUdTwMkrAyZBax/dg1
- m44F3CRFpweHtVb2lFacbou/t1o1KKcbq4CDs7LTZVmPBTTHgPtqegeDjyVwTiWTT3QL
- L9hQ==
-X-Gm-Message-State: AOJu0YxwTCcuDSkWwxAdjOaDp3V+Au9muQ/+w+Wpm3UFiu6p7wvqoKDh
- +vMUPQaXcCIjhYpfjS+Rcpe2PzOwQ2+n71xRW+qSyfXQCmZoYMzbpq/MUMCDjgP7fr2yR8/hw9M
- TJj8/rhh22+uWexszpwFYRju5OfNXkS4=
-X-Gm-Gg: ASbGnctqFmdf5NuUtafa4v0zP++FJ1rP5LuIKHVEVc8a/+qwWHT9RqKy7x4oh9v2nV0
- EE/DP6ny1RKoZbfRWygrVyGY3N/Ocla1/WzgDQ/8T8fRWos3BdDtS2wMiDFjByrX/kLoz6yVH2R
- GWy1Fr2EzviIliHcRsMrvcN5eT6jclRAcZEigrNJfJt3BsHscISUvWYVxdNjdV3WJbC1ZlOeDeu
- lJEItOzj7vn
-X-Google-Smtp-Source: AGHT+IHUA+mkaDPUhgY6oIjyaADiFuC6gXx8dyD2MrXW6Y6aMSckUd8zf+GJ9Mj7kGl5BG5nHHz4gL8I0uUbUGoCmA4=
-X-Received: by 2002:a05:6102:418d:b0:4dd:b82d:e0de with SMTP id
- ada2fe7eead31-4e7f6223165mr7809924137.17.1750128042935; Mon, 16 Jun 2025
- 19:40:42 -0700 (PDT)
+ bh=FTfV77CBkRiZGnO300YgD3CjULjl9ryYe74ACUd0PKI=;
+ b=bFtK1GKcOzDQlNIKfhpTbjZhtg8QKX0WPTLftjHlEllnAL9SJfrZVRu6esiF0dPcRt
+ /fFfPZCpIXkTYeR7hc4cDgP7ez2923b0mVROBb/B9YakZHxi+Rx8cELkhV94St4cTC/S
+ 5CwglwlHfEK5E2aKJ/MAqvyhEBgVPcWlbo+z0mOsS64CgRGJ+1oA+zMeLTR5oqYkpfRS
+ Ne/LJKEmK15/L5JnpjfMl2agfGochOFS3DLnyOcXN/E8TEZ38okFogwSx9qpaYwGe6ss
+ umaA/gZ8REAZlJER2M8X9JiMSGkqeUvR9QtNANxmy/kqCs+UzyDkwaXPJNNH3a+eggzK
+ OpHg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWIQBX5WhEKqK6hiQZwrX9j6tl68sCg5bHLbI/ywFuvIdhfmwS/Vbe8Wq8NL8HbV87kvzpfJg2oey58Cg==@nongnu.org,
+ AJvYcCXZgDj2XyjU3qHfmNcDjiyBP6LOv6dIcgKaZ7wBlkd1YC7TtoZR6SZl2AmiSPiRnl3+NxUsM9HgF8D6@nongnu.org
+X-Gm-Message-State: AOJu0YzSPnUpnYOZZfIqdURG/4vqYBIrYBWXDx0EQi+dMqZ9mbbFRsPg
+ 3+W9uM4zlpVSe9dgjJ0k9DJv2AwmztLgvsHsFqxL74eOC2GHhZ+MDckU+9J9hM+uoIY1eDD9B6v
+ XXrBl390kh1NMAtsh8C2p5f/qqQTmMdA=
+X-Gm-Gg: ASbGncuuLQ+w06UzY3/4MU/0cCrj28IWE3JlhoxL5PuNL8W+JF+i59GvF6EETEG52LO
+ cj+T019VICBLctusJO8uSZAB+Vsc6TXskNHbluwqeKTp8l9bVojgHH935cpAXlYCrqKYNCmjxXq
+ /POgcvMrJW2N26LPK9Z9EzmDh2aEQsLr/1skkKpqKV0Pn37yOF6mtSfdBDUqVPychTnrGmTxHH2
+ w==
+X-Google-Smtp-Source: AGHT+IGWviSoAN9WCHmOgZ5TGedxuq4OB/EVcS5qa8wTSOBtlXAmpbtznnwBK6WZ/EMtEt2xE6rBbx9DRM2oOjxllUA=
+X-Received: by 2002:a05:6102:5349:b0:4e5:a67d:92a6 with SMTP id
+ ada2fe7eead31-4e7f639ec54mr7441702137.14.1750129172933; Mon, 16 Jun 2025
+ 19:59:32 -0700 (PDT)
 MIME-Version: 1.0
-References: <174971620915.19456.15836954551382475540-0@git.sr.ht>
- <174971620915.19456.15836954551382475540-1@git.sr.ht>
-In-Reply-To: <174971620915.19456.15836954551382475540-1@git.sr.ht>
+References: <20250425122238.383-1-wangran@bosc.ac.cn>
+In-Reply-To: <20250425122238.383-1-wangran@bosc.ac.cn>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Tue, 17 Jun 2025 12:40:15 +1000
-X-Gm-Features: AX0GCFvhTe7lMR2QWGsjlfASKTiMChv4LNr2u0d6720nCk5BY_WbcKZhkAFcshI
-Message-ID: <CAKmqyKMHJgh9bf7S1rJjhmrMkNK9dQy4Wh_dfVfn5LLZS4pzqA@mail.gmail.com>
-Subject: Re: [PATCH qemu v8 1/1] target/riscv: Add Zilsd and Zclsd extension
- support
-To: "~liuxu" <liuxu@nucleisys.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>
+Date: Tue, 17 Jun 2025 12:59:06 +1000
+X-Gm-Features: AX0GCFtx11xz5pGOWBNoQMRXpWZ1-ne-o2qjos5e2xuP1Atkb3-MbzKg6nLRrJc
+Message-ID: <CAKmqyKPvx4zfXgdKqQrXix_57aoF87vJg2BWc6it700B7jt6yw@mail.gmail.com>
+Subject: Re: [PATCH v4 2/2] hw/riscv: Initial support for BOSC's Xiangshan
+ Kunminghu FPGA prototype
+To: Ran Wang <wangran@bosc.ac.cn>
+Cc: 3543977024@qq.com, palmer@dabbelt.com, alistair.francis@wdc.com, 
+ liwei1518@gmail.com, dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com, 
+ qemu-riscv@nongnu.org, qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::e33;
- envelope-from=alistair23@gmail.com; helo=mail-vs1-xe33.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::92a;
+ envelope-from=alistair23@gmail.com; helo=mail-ua1-x92a.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -97,165 +99,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 12, 2025 at 6:16=E2=80=AFPM ~liuxu <liuxu@git.sr.ht> wrote:
+On Fri, Apr 25, 2025 at 10:22=E2=80=AFPM Ran Wang <wangran@bosc.ac.cn> wrot=
+e:
 >
-> From: lxx <1733205434@qq.com>
+> From: Huang Borong <3543977024@qq.com>
 >
-> This patch adds support for the Zilsd and Zclsd extension,
-> which is documented at https://github.com/riscv/riscv-zilsd/releases/tag/=
-v1.0
+> This implementation provides emulation for the Xiangshan Kunminghu
+> FPGA prototype platform, including support for UART, CLINT, IMSIC,
+> and APLIC devices. More details can be found at
+> https://github.com/OpenXiangShan/XiangShan
 >
-> Signed-off-by: LIU Xu <liuxu@nucleisys.com>
-> Co-developed-by: SUN Dongya <sundongya@nucleisys.com>
-> Co-developed-by: ZHAO Fujin <zhaofujin@nucleisys.com>
-> Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-
-Thanks!
-
-Applied to riscv-to-apply.next
-
-Alistair
-
+> Signed-off-by: qinshaoqing <qinshaoqing@bosc.ac.cn>
+> Signed-off-by: Yang Wang <wangyang@bosc.ac.cn>
+> Signed-off-by: Yu Hu <huyu@bosc.ac.cn>
+> Signed-off-by: Ran Wang <wangran@bosc.ac.cn>
+> Signed-off-by: Borong Huang <3543977024@qq.com>
+> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 > ---
->  target/riscv/cpu.c                        |   4 +
->  target/riscv/cpu_cfg_fields.h.inc         |   2 +
->  target/riscv/insn16.decode                |   8 ++
->  target/riscv/insn32.decode                |  12 ++-
->  target/riscv/insn_trans/trans_zilsd.c.inc | 112 ++++++++++++++++++++++
->  target/riscv/tcg/tcg-cpu.c                |  30 ++++++
->  target/riscv/translate.c                  |   1 +
->  7 files changed, 167 insertions(+), 2 deletions(-)
->  create mode 100644 target/riscv/insn_trans/trans_zilsd.c.inc
+>  MAINTAINERS                                 |   7 +
+>  configs/devices/riscv64-softmmu/default.mak |   1 +
+>  docs/system/riscv/xiangshan-kunminghu.rst   |  39 ++++
+>  docs/system/target-riscv.rst                |   1 +
+>  hw/riscv/Kconfig                            |   9 +
+>  hw/riscv/meson.build                        |   1 +
+>  hw/riscv/xiangshan_kmh.c                    | 220 ++++++++++++++++++++
+>  include/hw/riscv/xiangshan_kmh.h            |  78 +++++++
+>  8 files changed, 356 insertions(+)
+>  create mode 100644 docs/system/riscv/xiangshan-kunminghu.rst
+>  create mode 100644 hw/riscv/xiangshan_kmh.c
+>  create mode 100644 include/hw/riscv/xiangshan_kmh.h
 >
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 758f254c15..778816901a 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -121,6 +121,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zihintntl, PRIV_VERSION_1_10_0, ext_zihintntl),
->      ISA_EXT_DATA_ENTRY(zihintpause, PRIV_VERSION_1_10_0, ext_zihintpause=
-),
->      ISA_EXT_DATA_ENTRY(zihpm, PRIV_VERSION_1_12_0, ext_zihpm),
-> +    ISA_EXT_DATA_ENTRY(zilsd, PRIV_VERSION_1_12_0, ext_zilsd),
->      ISA_EXT_DATA_ENTRY(zimop, PRIV_VERSION_1_13_0, ext_zimop),
->      ISA_EXT_DATA_ENTRY(zmmul, PRIV_VERSION_1_12_0, ext_zmmul),
->      ISA_EXT_DATA_ENTRY(za64rs, PRIV_VERSION_1_12_0, has_priv_1_12),
-> @@ -144,6 +145,7 @@ const RISCVIsaExtData isa_edata_arr[] =3D {
->      ISA_EXT_DATA_ENTRY(zcmop, PRIV_VERSION_1_13_0, ext_zcmop),
->      ISA_EXT_DATA_ENTRY(zcmp, PRIV_VERSION_1_12_0, ext_zcmp),
->      ISA_EXT_DATA_ENTRY(zcmt, PRIV_VERSION_1_12_0, ext_zcmt),
-> +    ISA_EXT_DATA_ENTRY(zclsd, PRIV_VERSION_1_12_0, ext_zclsd),
->      ISA_EXT_DATA_ENTRY(zba, PRIV_VERSION_1_12_0, ext_zba),
->      ISA_EXT_DATA_ENTRY(zbb, PRIV_VERSION_1_12_0, ext_zbb),
->      ISA_EXT_DATA_ENTRY(zbc, PRIV_VERSION_1_12_0, ext_zbc),
-> @@ -1289,6 +1291,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
- =3D {
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 8978adf999..a9258bd610 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1667,6 +1667,13 @@ S: Maintained
+>  F: hw/riscv/microblaze-v-generic.c
+>  F: docs/system/riscv/microblaze-v-generic.rst
 >
->      MULTI_EXT_CFG_BOOL("zicntr", ext_zicntr, true),
->      MULTI_EXT_CFG_BOOL("zihpm", ext_zihpm, true),
-> +    MULTI_EXT_CFG_BOOL("zilsd", ext_zilsd, false),
->
->      MULTI_EXT_CFG_BOOL("zba", ext_zba, true),
->      MULTI_EXT_CFG_BOOL("zbb", ext_zbb, true),
-> @@ -1328,6 +1331,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_extensions[]=
- =3D {
->      MULTI_EXT_CFG_BOOL("zcmp", ext_zcmp, false),
->      MULTI_EXT_CFG_BOOL("zcmt", ext_zcmt, false),
->      MULTI_EXT_CFG_BOOL("zicond", ext_zicond, false),
-> +    MULTI_EXT_CFG_BOOL("zclsd", ext_zclsd, false),
->
->      /* Vector cryptography extensions */
->      MULTI_EXT_CFG_BOOL("zvbb", ext_zvbb, false),
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
-lds.h.inc
-> index 33c4f9bac8..9833d592bd 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -19,6 +19,7 @@ BOOL_FIELD(ext_zce)
->  BOOL_FIELD(ext_zcf)
->  BOOL_FIELD(ext_zcmp)
->  BOOL_FIELD(ext_zcmt)
-> +BOOL_FIELD(ext_zclsd)
->  BOOL_FIELD(ext_zk)
->  BOOL_FIELD(ext_zkn)
->  BOOL_FIELD(ext_zknd)
-> @@ -41,6 +42,7 @@ BOOL_FIELD(ext_zicond)
->  BOOL_FIELD(ext_zihintntl)
->  BOOL_FIELD(ext_zihintpause)
->  BOOL_FIELD(ext_zihpm)
-> +BOOL_FIELD(ext_zilsd)
->  BOOL_FIELD(ext_zimop)
->  BOOL_FIELD(ext_zcmop)
->  BOOL_FIELD(ext_ztso)
-> diff --git a/target/riscv/insn16.decode b/target/riscv/insn16.decode
-> index bf893d1c2e..c34020e4dc 100644
-> --- a/target/riscv/insn16.decode
-> +++ b/target/riscv/insn16.decode
-> @@ -130,10 +130,14 @@ sw                110  ... ... .. ... 00 @cs_w
->  {
->    ld              011  ... ... .. ... 00 @cl_d
->    c_flw           011  ... ... .. ... 00 @cl_w
-> +  # *** Zclsd Extension ***
-> +  zclsd_ld        011  ... ... .. ... 00 @cl_d
->  }
->  {
->    sd              111  ... ... .. ... 00 @cs_d
->    c_fsw           111  ... ... .. ... 00 @cs_w
-> +  # *** Zclsd Extension ***
-> +  zclsd_sd        111  ... ... .. ... 00 @cs_d
->  }
->
->  # *** RV32/64C Standard Extension (Quadrant 1) ***
-> @@ -212,10 +216,14 @@ sw                110 .  .....  ..... 10 @c_swsp
->    c64_illegal     011 -  00000  ----- 10 # c.ldsp, RES rd=3D0
->    ld              011 .  .....  ..... 10 @c_ldsp
->    c_flw           011 .  .....  ..... 10 @c_lwsp
-> +  # *** Zclsd Extension ***
-> +  zclsd_ldsp      011 .  .....  ..... 10 @c_ldsp
->  }
->  {
->    sd              111 .  .....  ..... 10 @c_sdsp
->    c_fsw           111 .  .....  ..... 10 @c_swsp
-> +  # *** Zclsd Extension ***
-> +  zclsd_sd        111 .  .....  ..... 10 @c_sdsp
->  }
->
->  # *** RV64 and RV32 Zcb Extension ***
-> diff --git a/target/riscv/insn32.decode b/target/riscv/insn32.decode
-> index cd23b1f3a9..b341832e41 100644
-> --- a/target/riscv/insn32.decode
-> +++ b/target/riscv/insn32.decode
-> @@ -182,8 +182,16 @@ csrrci   ............     ..... 111 ..... 1110011 @c=
-sr
->
->  # *** RV64I Base Instruction Set (in addition to RV32I) ***
->  lwu      ............   ..... 110 ..... 0000011 @i
-> -ld       ............   ..... 011 ..... 0000011 @i
-> -sd       ....... .....  ..... 011 ..... 0100011 @s
-> +{
-> +  ld       ............   ..... 011 ..... 0000011 @i
-> +  # *** Zilsd instructions ***
-> +  zilsd_ld ............   ..... 011 ..... 0000011 @i
-> +}
-> +{
-> +  sd       ....... .....  ..... 011 ..... 0100011 @s
-> +  # *** Zilsd instructions ***
-> +  zilsd_sd ....... .....  ..... 011 ..... 0100011 @s
-> +}
->  addiw    ............   ..... 000 ..... 0011011 @i
->  slliw    0000000 .....  ..... 001 ..... 0011011 @sh5
->  srliw    0000000 .....  ..... 101 ..... 0011011 @sh5
-> diff --git a/target/riscv/insn_trans/trans_zilsd.c.inc b/target/riscv/ins=
-n_trans/trans_zilsd.c.inc
+> +Xiangshan Kunminghu
+> +M: Ran Wang <wangran@bosc.ac.cn>
+> +S: Maintained
+> +F: docs/system/riscv/xiangshan-kunminghu.rst
+> +F: hw/riscv/xiangshan_kmh.c
+> +F: include/hw/riscv/xiangshan_kmh.h
+> +
+>  RX Machines
+>  -----------
+>  rx-gdbsim
+> diff --git a/configs/devices/riscv64-softmmu/default.mak b/configs/device=
+s/riscv64-softmmu/default.mak
+> index 39ed3a0061..e485bbd1a3 100644
+> --- a/configs/devices/riscv64-softmmu/default.mak
+> +++ b/configs/devices/riscv64-softmmu/default.mak
+> @@ -11,3 +11,4 @@
+>  # CONFIG_RISCV_VIRT=3Dn
+>  # CONFIG_MICROCHIP_PFSOC=3Dn
+>  # CONFIG_SHAKTI_C=3Dn
+> +# CONFIG_XIANGSHAN_KUNMINGHU=3Dn
+> diff --git a/docs/system/riscv/xiangshan-kunminghu.rst b/docs/system/risc=
+v/xiangshan-kunminghu.rst
 > new file mode 100644
-> index 0000000000..7bdc303298
+> index 0000000000..46e7ceeda0
 > --- /dev/null
-> +++ b/target/riscv/insn_trans/trans_zilsd.c.inc
-> @@ -0,0 +1,112 @@
+> +++ b/docs/system/riscv/xiangshan-kunminghu.rst
+> @@ -0,0 +1,39 @@
+> +BOSC Xiangshan Kunminghu FPGA prototype platform (``xiangshan-kunminghu`=
+`)
+> +=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D
+> +The ``xiangshan-kunminghu`` machine is compatible with our FPGA prototyp=
+e
+> +platform.
+> +
+> +XiangShan is an open-source high-performance RISC-V processor project.
+> +The third generation processor is called Kunminghu. Kunminghu is a 64-bi=
+t
+> +RV64GCBSUHV processor core. More information can be found in our Github
+> +repository:
+> +https://github.com/OpenXiangShan/XiangShan
+> +
+> +Supported devices
+> +-----------------
+> +The ``xiangshan-kunminghu`` machine supports the following devices:
+> +
+> +* Up to 16 xiangshan-kunminghu cores
+> +* Core Local Interruptor (CLINT)
+> +* Incoming MSI Controller (IMSIC)
+> +* Advanced Platform-Level Interrupt Controller (APLIC)
+> +* 1 UART
+> +
+> +Boot options
+> +------------
+> +The ``xiangshan-kunminghu`` machine can start using the standard ``-bios=
+``
+> +functionality for loading the boot image. You need to compile and link
+> +the firmware, kernel, and Device Tree (FDT) into a single binary file,
+> +such as ``fw_payload.bin``.
+> +
+> +Running
+> +-------
+> +Below is an example command line for running the ``xiangshan-kunminghu``
+> +machine:
+> +
+> +.. code-block:: bash
+> +
+> +   $ qemu-system-riscv64 -machine xiangshan-kunminghu \
+> +      -smp 16 -m 16G \
+> +      -bios path/to/opensbi/platform/generic/firmware/fw_payload.bin \
+> +      -nographic
+> diff --git a/docs/system/target-riscv.rst b/docs/system/target-riscv.rst
+> index 95457af130..89b2cb732c 100644
+> --- a/docs/system/target-riscv.rst
+> +++ b/docs/system/target-riscv.rst
+> @@ -71,6 +71,7 @@ undocumented; you can get a complete list by running
+>     riscv/shakti-c
+>     riscv/sifive_u
+>     riscv/virt
+> +   riscv/xiangshan-kunminghu
+>
+>  RISC-V CPU firmware
+>  -------------------
+> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+> index e6a0ac1fa1..fc9c35bd98 100644
+> --- a/hw/riscv/Kconfig
+> +++ b/hw/riscv/Kconfig
+> @@ -119,3 +119,12 @@ config SPIKE
+>      select HTIF
+>      select RISCV_ACLINT
+>      select SIFIVE_PLIC
+> +
+> +config XIANGSHAN_KUNMINGHU
+> +    bool
+> +    default y
+> +    depends on RISCV64
+> +    select RISCV_ACLINT
+> +    select RISCV_APLIC
+> +    select RISCV_IMSIC
+> +    select SERIAL_MM
+> diff --git a/hw/riscv/meson.build b/hw/riscv/meson.build
+> index c22f3a7216..2a8d5b136c 100644
+> --- a/hw/riscv/meson.build
+> +++ b/hw/riscv/meson.build
+> @@ -13,5 +13,6 @@ riscv_ss.add(when: 'CONFIG_ACPI', if_true: files('virt-=
+acpi-build.c'))
+>  riscv_ss.add(when: 'CONFIG_RISCV_IOMMU', if_true: files(
+>         'riscv-iommu.c', 'riscv-iommu-pci.c', 'riscv-iommu-sys.c', 'riscv=
+-iommu-hpm.c'))
+>  riscv_ss.add(when: 'CONFIG_MICROBLAZE_V', if_true: files('microblaze-v-g=
+eneric.c'))
+> +riscv_ss.add(when: 'CONFIG_XIANGSHAN_KUNMINGHU', if_true: files('xiangsh=
+an_kmh.c'))
+>
+>  hw_arch +=3D {'riscv': riscv_ss}
+> diff --git a/hw/riscv/xiangshan_kmh.c b/hw/riscv/xiangshan_kmh.c
+> new file mode 100644
+> index 0000000000..f7ae879d13
+> --- /dev/null
+> +++ b/hw/riscv/xiangshan_kmh.c
+> @@ -0,0 +1,220 @@
 > +/*
-> + * RISC-V translation routines for the Zilsd & Zclsd Extension.
+> + * QEMU RISC-V Board Compatible with the Xiangshan Kunminghu
+> + * FPGA prototype platform
 > + *
-> + * Copyright (c) 2025 Nucleisys, Inc.
+> + * Copyright (c) 2025 Beijing Institute of Open Source Chip (BOSC)
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + *
+> + * Provides a board compatible with the Xiangshan Kunminghu
+> + * FPGA prototype platform:
+> + *
+> + * 0) UART (16550A)
+> + * 1) CLINT (Core-Local Interruptor)
+> + * 2) IMSIC (Incoming MSI Controller)
+> + * 3) APLIC (Advanced Platform-Level Interrupt Controller)
+> + *
+> + * More information can be found in our Github repository:
+> + * https://github.com/OpenXiangShan/XiangShan
 > + *
 > + * This program is free software; you can redistribute it and/or modify =
 it
@@ -274,173 +294,335 @@ ng with
 > + * this program.  If not, see <http://www.gnu.org/licenses/>.
 > + */
 > +
-> +#define REQUIRE_ZILSD(ctx) do {    \
-> +    if (!ctx->cfg_ptr->ext_zilsd)  \
-> +        return false;              \
-> +} while (0)
+> +#include "qemu/osdep.h"
+> +#include "qapi/error.h"
+> +#include "exec/address-spaces.h"
+
+This should be
+
+#include "system/address-spaces.h"
+
+But even with that change I see a few errors with this patch
+
+FAILED: libqemu-riscv64-softmmu.a.p/hw_riscv_xiangshan_kmh.c.o
+...
+../hw/riscv/xiangshan_kmh.c:154:19: error: initialization of =E2=80=98void
+(*)(ObjectClass *, const void *)=E2=80=99 from incompatible pointer type =
+=E2=80=98void
+(*)(ObjectClass *,
+void *)=E2=80=99 [-Wincompatible-pointer-types]
+ 154 |     .class_init =3D xiangshan_kmh_soc_class_init,
+     |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../hw/riscv/xiangshan_kmh.c:154:19: note: (near initialization for
+=E2=80=98xiangshan_kmh_soc_info.class_init=E2=80=99)
+../hw/riscv/xiangshan_kmh.c:134:13: note:
+=E2=80=98xiangshan_kmh_soc_class_init=E2=80=99 declared here
+ 134 | static void xiangshan_kmh_soc_class_init(ObjectClass *klass, void *d=
+ata)
+     |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../hw/riscv/xiangshan_kmh.c:213:19: error: initialization of =E2=80=98void
+(*)(ObjectClass *, const void *)=E2=80=99 from incompatible pointer type =
+=E2=80=98void
+(*)(ObjectClass *,
+void *)=E2=80=99 [-Wincompatible-pointer-types]
+ 213 |     .class_init =3D xiangshan_kmh_machine_class_init,
+     |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../hw/riscv/xiangshan_kmh.c:213:19: note: (near initialization for
+=E2=80=98xiangshan_kmh_machine_info.class_init=E2=80=99)
+../hw/riscv/xiangshan_kmh.c:192:13: note:
+=E2=80=98xiangshan_kmh_machine_class_init=E2=80=99 declared here
+ 192 | static void xiangshan_kmh_machine_class_init(ObjectClass
+*klass, void *data)
+     |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Alistair
+
+> +#include "hw/boards.h"
+> +#include "hw/char/serial-mm.h"
+> +#include "hw/intc/riscv_aclint.h"
+> +#include "hw/intc/riscv_aplic.h"
+> +#include "hw/intc/riscv_imsic.h"
+> +#include "hw/qdev-properties.h"
+> +#include "hw/riscv/boot.h"
+> +#include "hw/riscv/xiangshan_kmh.h"
+> +#include "hw/riscv/riscv_hart.h"
+> +#include "system/system.h"
 > +
-> +#define REQUIRE_ZCLSD(ctx) do {    \
-> +    if (!ctx->cfg_ptr->ext_zclsd)  \
-> +        return false;              \
-> +} while (0)
+> +static const MemMapEntry xiangshan_kmh_memmap[] =3D {
+> +    [XIANGSHAN_KMH_ROM] =3D          {     0x1000,        0xF000 },
+> +    [XIANGSHAN_KMH_UART0] =3D        { 0x310B0000,       0x10000 },
+> +    [XIANGSHAN_KMH_CLINT] =3D        { 0x38000000,       0x10000 },
+> +    [XIANGSHAN_KMH_APLIC_M] =3D      { 0x31100000,        0x4000 },
+> +    [XIANGSHAN_KMH_APLIC_S] =3D      { 0x31120000,        0x4000 },
+> +    [XIANGSHAN_KMH_IMSIC_M] =3D      { 0x3A800000,       0x10000 },
+> +    [XIANGSHAN_KMH_IMSIC_S] =3D      { 0x3B000000,       0x80000 },
+> +    [XIANGSHAN_KMH_DRAM] =3D         { 0x80000000,           0x0 },
+> +};
 > +
-> +static bool gen_load_i64(DisasContext *ctx, arg_ld *a)
+> +static DeviceState *xiangshan_kmh_create_aia(uint32_t num_harts)
 > +{
-> +    if ((a->rd) % 2) {
-> +        return false;
+> +    int i;
+> +    const MemMapEntry *memmap =3D xiangshan_kmh_memmap;
+> +    hwaddr addr =3D 0;
+> +    DeviceState *aplic_m =3D NULL;
+> +
+> +    /* M-level IMSICs */
+> +    addr =3D memmap[XIANGSHAN_KMH_IMSIC_M].base;
+> +    for (i =3D 0; i < num_harts; i++) {
+> +        riscv_imsic_create(addr + i * IMSIC_HART_SIZE(0), i, true,
+> +                           1, XIANGSHAN_KMH_IMSIC_NUM_IDS);
 > +    }
 > +
-> +    TCGv dest_low =3D dest_gpr(ctx, a->rd);
-> +    TCGv dest_high =3D dest_gpr(ctx, a->rd + 1);
-> +    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
-> +    TCGv_i64 tmp =3D tcg_temp_new_i64();
-> +
-> +    tcg_gen_qemu_ld_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
-> +
-> +    if (a->rd =3D=3D 0) {
-> +        return true;
+> +    /* S-level IMSICs */
+> +    addr =3D memmap[XIANGSHAN_KMH_IMSIC_S].base;
+> +    for (i =3D 0; i < num_harts; i++) {
+> +        riscv_imsic_create(addr +
+> +                           i * IMSIC_HART_SIZE(XIANGSHAN_KMH_IMSIC_GUEST=
+_BITS),
+> +                           i, false, 1 + XIANGSHAN_KMH_IMSIC_GUEST_BITS,
+> +                           XIANGSHAN_KMH_IMSIC_NUM_IDS);
 > +    }
 > +
-> +    tcg_gen_extr_i64_tl(dest_low, dest_high, tmp);
+> +    /* M-level APLIC */
+> +    aplic_m =3D riscv_aplic_create(memmap[XIANGSHAN_KMH_APLIC_M].base,
+> +                                 memmap[XIANGSHAN_KMH_APLIC_M].size,
+> +                                 0, 0, XIANGSHAN_KMH_APLIC_NUM_SOURCES,
+> +                                 1, true, true, NULL);
 > +
-> +    gen_set_gpr(ctx, a->rd, dest_low);
-> +    gen_set_gpr(ctx, a->rd + 1, dest_high);
+> +    /* S-level APLIC */
+> +    riscv_aplic_create(memmap[XIANGSHAN_KMH_APLIC_S].base,
+> +                       memmap[XIANGSHAN_KMH_APLIC_S].size,
+> +                       0, 0, XIANGSHAN_KMH_APLIC_NUM_SOURCES,
+> +                       1, true, false, aplic_m);
 > +
-> +    return true;
+> +    return aplic_m;
 > +}
 > +
-> +static bool trans_zilsd_ld(DisasContext *ctx, arg_zilsd_ld *a)
+> +static void xiangshan_kmh_soc_realize(DeviceState *dev, Error **errp)
 > +{
-> +    REQUIRE_32BIT(ctx);
-> +    REQUIRE_ZILSD(ctx);
-> +    return gen_load_i64(ctx, a);
+> +    MachineState *ms =3D MACHINE(qdev_get_machine());
+> +    XiangshanKmhSoCState *s =3D XIANGSHAN_KMH_SOC(dev);
+> +    const MemMapEntry *memmap =3D xiangshan_kmh_memmap;
+> +    MemoryRegion *system_memory =3D get_system_memory();
+> +    uint32_t num_harts =3D ms->smp.cpus;
+> +
+> +    qdev_prop_set_uint32(DEVICE(&s->cpus), "num-harts", num_harts);
+> +    qdev_prop_set_uint32(DEVICE(&s->cpus), "hartid-base", 0);
+> +    qdev_prop_set_string(DEVICE(&s->cpus), "cpu-type",
+> +                         TYPE_RISCV_CPU_XIANGSHAN_KMH);
+> +    sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
+> +
+> +    /* AIA */
+> +    s->irqchip =3D xiangshan_kmh_create_aia(num_harts);
+> +
+> +    /* UART */
+> +    serial_mm_init(system_memory, memmap[XIANGSHAN_KMH_UART0].base, 2,
+> +                   qdev_get_gpio_in(s->irqchip, XIANGSHAN_KMH_UART0_IRQ)=
+,
+> +                   115200, serial_hd(0), DEVICE_LITTLE_ENDIAN);
+> +
+> +    /* CLINT */
+> +    riscv_aclint_swi_create(memmap[XIANGSHAN_KMH_CLINT].base,
+> +                            0, num_harts, false);
+> +    riscv_aclint_mtimer_create(memmap[XIANGSHAN_KMH_CLINT].base +
+> +                               RISCV_ACLINT_SWI_SIZE,
+> +                               RISCV_ACLINT_DEFAULT_MTIMER_SIZE,
+> +                               0, num_harts, RISCV_ACLINT_DEFAULT_MTIMEC=
+MP,
+> +                               RISCV_ACLINT_DEFAULT_MTIME,
+> +                               XIANGSHAN_KMH_CLINT_TIMEBASE_FREQ, true);
+> +
+> +    /* ROM */
+> +    memory_region_init_rom(&s->rom, OBJECT(dev), "xiangshan.kunminghu.ro=
+m",
+> +                           memmap[XIANGSHAN_KMH_ROM].size, &error_fatal)=
+;
+> +    memory_region_add_subregion(system_memory,
+> +                                memmap[XIANGSHAN_KMH_ROM].base, &s->rom)=
+;
 > +}
 > +
-> +static bool trans_zclsd_ld(DisasContext *ctx, arg_zclsd_ld *a)
+> +static void xiangshan_kmh_soc_class_init(ObjectClass *klass, void *data)
 > +{
-> +    REQUIRE_32BIT(ctx);
-> +    REQUIRE_ZCLSD(ctx);
-> +    return gen_load_i64(ctx, a);
+> +    DeviceClass *dc =3D DEVICE_CLASS(klass);
+> +
+> +    dc->realize =3D xiangshan_kmh_soc_realize;
+> +    dc->user_creatable =3D false;
 > +}
 > +
-> +static bool trans_zclsd_ldsp(DisasContext *ctx, arg_zclsd_ldsp *a)
+> +static void xiangshan_kmh_soc_instance_init(Object *obj)
 > +{
-> +    REQUIRE_32BIT(ctx);
-> +    REQUIRE_ZCLSD(ctx);
+> +    XiangshanKmhSoCState *s =3D XIANGSHAN_KMH_SOC(obj);
 > +
-> +    if (a->rd =3D=3D 0) {
-> +        return false;
+> +    object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY=
+);
+> +}
+> +
+> +static const TypeInfo xiangshan_kmh_soc_info =3D {
+> +    .name =3D TYPE_XIANGSHAN_KMH_SOC,
+> +    .parent =3D TYPE_DEVICE,
+> +    .instance_size =3D sizeof(XiangshanKmhSoCState),
+> +    .instance_init =3D xiangshan_kmh_soc_instance_init,
+> +    .class_init =3D xiangshan_kmh_soc_class_init,
+> +};
+> +
+> +static void xiangshan_kmh_soc_register_types(void)
+> +{
+> +    type_register_static(&xiangshan_kmh_soc_info);
+> +}
+> +type_init(xiangshan_kmh_soc_register_types)
+> +
+> +static void xiangshan_kmh_machine_init(MachineState *machine)
+> +{
+> +    XiangshanKmhState *s =3D XIANGSHAN_KMH_MACHINE(machine);
+> +    const MemMapEntry *memmap =3D xiangshan_kmh_memmap;
+> +    MemoryRegion *system_memory =3D get_system_memory();
+> +    hwaddr start_addr =3D memmap[XIANGSHAN_KMH_DRAM].base;
+> +
+> +    /* Initialize SoC */
+> +    object_initialize_child(OBJECT(machine), "soc", &s->soc,
+> +                            TYPE_XIANGSHAN_KMH_SOC);
+> +    qdev_realize(DEVICE(&s->soc), NULL, &error_fatal);
+> +
+> +    /* Register RAM */
+> +    memory_region_add_subregion(system_memory,
+> +                                memmap[XIANGSHAN_KMH_DRAM].base,
+> +                                machine->ram);
+> +
+> +    /* ROM reset vector */
+> +    riscv_setup_rom_reset_vec(machine, &s->soc.cpus,
+> +                              start_addr,
+> +                              memmap[XIANGSHAN_KMH_ROM].base,
+> +                              memmap[XIANGSHAN_KMH_ROM].size, 0, 0);
+> +    if (machine->firmware) {
+> +        riscv_load_firmware(machine->firmware, &start_addr, NULL);
 > +    }
-> +    return gen_load_i64(ctx, a);
+> +
+> +    /* Note: dtb has been integrated into firmware(OpenSBI) when compili=
+ng */
 > +}
 > +
-> +static bool gen_store_i64(DisasContext *ctx, arg_sd *a)
+> +static void xiangshan_kmh_machine_class_init(ObjectClass *klass, void *d=
+ata)
 > +{
-> +    if ((a->rs2) % 2) {
-> +        return false;
-> +    }
+> +    MachineClass *mc =3D MACHINE_CLASS(klass);
+> +    static const char *const valid_cpu_types[] =3D {
+> +        TYPE_RISCV_CPU_XIANGSHAN_KMH,
+> +        NULL
+> +    };
 > +
-> +    TCGv data_low =3D get_gpr(ctx, a->rs2, EXT_NONE);
-> +    TCGv data_high =3D get_gpr(ctx, a->rs2 + 1, EXT_NONE);
-> +    TCGv addr =3D get_address(ctx, a->rs1, a->imm);
-> +    TCGv_i64 tmp =3D tcg_temp_new_i64();
-> +
-> +    if (a->rs2 =3D=3D 0) {
-> +        tmp =3D tcg_constant_i64(0);
-> +    } else {
-> +        tcg_gen_concat_tl_i64(tmp, data_low, data_high);
-> +    }
-> +    tcg_gen_qemu_st_i64(tmp, addr, ctx->mem_idx, MO_TESQ);
-> +
-> +    return true;
+> +    mc->desc =3D "RISC-V Board compatible with the Xiangshan " \
+> +               "Kunminghu FPGA prototype platform";
+> +    mc->init =3D xiangshan_kmh_machine_init;
+> +    mc->max_cpus =3D XIANGSHAN_KMH_MAX_CPUS;
+> +    mc->default_cpu_type =3D TYPE_RISCV_CPU_XIANGSHAN_KMH;
+> +    mc->valid_cpu_types =3D valid_cpu_types;
+> +    mc->default_ram_id =3D "xiangshan.kunminghu.ram";
 > +}
 > +
-> +static bool trans_zilsd_sd(DisasContext *ctx, arg_zilsd_sd *a)
+> +static const TypeInfo xiangshan_kmh_machine_info =3D {
+> +    .name =3D TYPE_XIANGSHAN_KMH_MACHINE,
+> +    .parent =3D TYPE_MACHINE,
+> +    .instance_size =3D sizeof(XiangshanKmhState),
+> +    .class_init =3D xiangshan_kmh_machine_class_init,
+> +};
+> +
+> +static void xiangshan_kmh_machine_register_types(void)
 > +{
-> +    REQUIRE_32BIT(ctx);
-> +    REQUIRE_ZILSD(ctx);
-> +    return gen_store_i64(ctx, a);
+> +    type_register_static(&xiangshan_kmh_machine_info);
 > +}
+> +type_init(xiangshan_kmh_machine_register_types)
+> diff --git a/include/hw/riscv/xiangshan_kmh.h b/include/hw/riscv/xiangsha=
+n_kmh.h
+> new file mode 100644
+> index 0000000000..952473fbb6
+> --- /dev/null
+> +++ b/include/hw/riscv/xiangshan_kmh.h
+> @@ -0,0 +1,78 @@
+> +/*
+> + * QEMU RISC-V Board Compatible with the Xiangshan Kunminghu
+> + * FPGA prototype platform
+> + *
+> + * Copyright (c) 2025 Beijing Institute of Open Source Chip (BOSC)
+> + *
+> + * This program is free software; you can redistribute it and/or modify =
+it
+> + * under the terms and conditions of the GNU General Public License,
+> + * version 2 or later, as published by the Free Software Foundation.
+> + *
+> + * This program is distributed in the hope it will be useful, but WITHOU=
+T
+> + * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+> + * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License=
+ for
+> + * more details.
+> + *
+> + * You should have received a copy of the GNU General Public License alo=
+ng with
+> + * this program.  If not, see <http://www.gnu.org/licenses/>.
+> + */
 > +
-> +static bool trans_zclsd_sd(DisasContext *ctx, arg_zclsd_sd *a)
-> +{
-> +    REQUIRE_32BIT(ctx);
-> +    REQUIRE_ZCLSD(ctx);
-> +    return gen_store_i64(ctx, a);
-> +}
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 163e7ce364..0944426b38 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -818,6 +818,19 @@ void riscv_cpu_validate_set_extensions(RISCVCPU *cpu=
-, Error **errp)
->          cpu->pmu_avail_ctrs =3D 0;
->      }
->
-> +    if (cpu->cfg.ext_zclsd) {
-> +        if (riscv_has_ext(env, RVC) && riscv_has_ext(env, RVF)) {
-> +            error_setg(errp,
-> +                    "Zclsd cannot be supported together with C and F ext=
-ension");
-> +            return;
-> +        }
-> +        if (cpu->cfg.ext_zcf) {
-> +            error_setg(errp,
-> +                    "Zclsd cannot be supported together with Zcf extensi=
-on");
-> +            return;
-> +        }
-> +    }
+> +#ifndef HW_XIANGSHAN_KMH_H
+> +#define HW_XIANGSHAN_KMH_H
 > +
->      if (cpu->cfg.ext_zicfilp && !cpu->cfg.ext_zicsr) {
->          error_setg(errp, "zicfilp extension requires zicsr extension");
->          return;
-> @@ -1075,6 +1088,20 @@ static void cpu_enable_zc_implied_rules(RISCVCPU *=
-cpu)
->      }
->  }
->
-> +static void cpu_enable_zilsd_implied_rules(RISCVCPU *cpu)
-> +{
-> +    CPURISCVState *env =3D &cpu->env;
+> +#include "hw/boards.h"
+> +#include "hw/riscv/riscv_hart.h"
 > +
-> +    if (cpu->cfg.ext_zilsd && riscv_has_ext(env, RVC)) {
-> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zclsd), true);
-> +    }
+> +#define XIANGSHAN_KMH_MAX_CPUS 16
 > +
-> +    if (cpu->cfg.ext_zclsd) {
-> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zca), true);
-> +        cpu_cfg_ext_auto_update(cpu, CPU_CFG_OFFSET(ext_zilsd), true);
-> +    }
-> +}
+> +typedef struct XiangshanKmhSoCState {
+> +    /*< private >*/
+> +    DeviceState parent_obj;
 > +
->  static void riscv_cpu_enable_implied_rules(RISCVCPU *cpu)
->  {
->      RISCVCPUImpliedExtsRule *rule;
-> @@ -1083,6 +1110,9 @@ static void riscv_cpu_enable_implied_rules(RISCVCPU=
- *cpu)
->      /* Enable the implied extensions for Zc. */
->      cpu_enable_zc_implied_rules(cpu);
->
-> +    /* Enable the implied extensions for Zilsd. */
-> +    cpu_enable_zilsd_implied_rules(cpu);
+> +    /*< public >*/
+> +    RISCVHartArrayState cpus;
+> +    DeviceState *irqchip;
+> +    MemoryRegion rom;
+> +} XiangshanKmhSoCState;
 > +
->      /* Enable the implied MISAs. */
->      for (i =3D 0; (rule =3D riscv_misa_ext_implied_rules[i]); i++) {
->          if (riscv_has_ext(&cpu->env, rule->ext)) {
-> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-> index 9ddef2d6e2..62f714034f 100644
-> --- a/target/riscv/translate.c
-> +++ b/target/riscv/translate.c
-> @@ -1200,6 +1200,7 @@ static uint32_t opcode_at(DisasContextBase *dcbase,=
- target_ulong pc)
->  /* Include the auto-generated decoder for 16 bit insn */
->  #include "decode-insn16.c.inc"
->  #include "insn_trans/trans_rvzce.c.inc"
-> +#include "insn_trans/trans_zilsd.c.inc"
->  #include "insn_trans/trans_rvzcmop.c.inc"
->  #include "insn_trans/trans_rvzicfiss.c.inc"
->
+> +#define TYPE_XIANGSHAN_KMH_SOC "xiangshan.kunminghu.soc"
+> +DECLARE_INSTANCE_CHECKER(XiangshanKmhSoCState, XIANGSHAN_KMH_SOC,
+> +                         TYPE_XIANGSHAN_KMH_SOC)
+> +
+> +typedef struct XiangshanKmhState {
+> +    /*< private >*/
+> +    MachineState parent_obj;
+> +
+> +    /*< public >*/
+> +    XiangshanKmhSoCState soc;
+> +} XiangshanKmhState;
+> +
+> +#define TYPE_XIANGSHAN_KMH_MACHINE MACHINE_TYPE_NAME("xiangshan-kunmingh=
+u")
+> +DECLARE_INSTANCE_CHECKER(XiangshanKmhState, XIANGSHAN_KMH_MACHINE,
+> +                         TYPE_XIANGSHAN_KMH_MACHINE)
+> +
+> +enum {
+> +    XIANGSHAN_KMH_ROM,
+> +    XIANGSHAN_KMH_UART0,
+> +    XIANGSHAN_KMH_CLINT,
+> +    XIANGSHAN_KMH_APLIC_M,
+> +    XIANGSHAN_KMH_APLIC_S,
+> +    XIANGSHAN_KMH_IMSIC_M,
+> +    XIANGSHAN_KMH_IMSIC_S,
+> +    XIANGSHAN_KMH_DRAM,
+> +};
+> +
+> +enum {
+> +    XIANGSHAN_KMH_UART0_IRQ =3D 10,
+> +};
+> +
+> +/* Indicating Timebase-freq (1MHZ) */
+> +#define XIANGSHAN_KMH_CLINT_TIMEBASE_FREQ 1000000
+> +
+> +#define XIANGSHAN_KMH_IMSIC_NUM_IDS 255
+> +#define XIANGSHAN_KMH_IMSIC_NUM_GUESTS 7
+> +#define XIANGSHAN_KMH_IMSIC_GUEST_BITS 3
+> +
+> +#define XIANGSHAN_KMH_APLIC_NUM_SOURCES 96
+> +
+> +#endif
 > --
-> 2.45.3
+> 2.34.1
+>
 
