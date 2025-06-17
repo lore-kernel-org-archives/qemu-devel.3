@@ -4,91 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BED75C71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 00:57:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E1D8C71159
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 01:27:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRKdH-0003MG-L9; Mon, 16 Jun 2025 20:57:00 -0400
+	id 1uRL5X-0007Qq-UQ; Mon, 16 Jun 2025 21:26:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uRKd8-0003LN-LL
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 20:56:51 -0400
-Received: from mail-pl1-x643.google.com ([2607:f8b0:4864:20::643])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <tomitamoeko@gmail.com>)
- id 1uRKd6-0006mc-5l
- for qemu-devel@nongnu.org; Mon, 16 Jun 2025 20:56:49 -0400
-Received: by mail-pl1-x643.google.com with SMTP id
- d9443c01a7336-234d3261631so34323855ad.1
- for <qemu-devel@nongnu.org>; Mon, 16 Jun 2025 17:56:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750121806; x=1750726606; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from:subject
- :user-agent:mime-version:date:message-id:from:to:cc:subject:date
- :message-id:reply-to;
- bh=NWEwGhFdqGiyQLz0MN3j7qrDPtKzwCGWr+cRBapj6Gw=;
- b=mugMRS8BapLQbsOYAQ70LxcIq69KNEcOSqec9xR7+XNTmojj79sMtrRhubtf11q0Av
- vy+vpnmooD4E1hSgOpqHUbsxdt99h8giCX1JNQbZpgXB8Qnvebk2Mj8UbQBRHZ4Uw9aE
- TGZXqSklvkXszzgH6+oAydFxvt/HN12QJu3RpmwoH+D1jswedQD6bZuPifZkr8ADyPvL
- 0DJ1ReD4H4tUN0LhtfQ9cteuyrSGQp/7E/jJ3FQ/YIoWv247Y64oJ/NDfRyZOWLhbPkc
- IPCSx/JCbIGL/37p+1w41fmmGuOXg5M3adjov0E56nvIIDr/pLlPBsN3gcT5HVZuvoCf
- UIjQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750121806; x=1750726606;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from:subject
- :user-agent:mime-version:date:message-id:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=NWEwGhFdqGiyQLz0MN3j7qrDPtKzwCGWr+cRBapj6Gw=;
- b=sq1eLRFiow6Obc8u+OZpQhjk9S3WcB2PK+Vu3JFWcRlXze/R1yAxxEETvKBPWalc5D
- OupmWe+Q+tXDF3CJ4Hc/gmRIT4OSCxP6/CMRnqWxch2uEfIfY0X/9mv/H8uYOk8enHK2
- bHVxhFqfQ0uT6xB2HsAsTLP9slFYXNGhdO5/cYkkYbpOUtw5g5w5JFjd3ZazTGIWEQu0
- vdpgdVdqPWawiVCuPGRSlAgtdTETKDqCXovDF77AlhDL9F80DDGNygocfGW/K4Aeul2Z
- p3mkgk6TvEMzoLOHO7Gm4Zw61RBF3HwzNt2bEiM0izojNOsKUSzFnfASFGYMIBG1XXek
- n+TA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVf6VRkbaSwAvAHOOKPllfCc43gl06WYRsHjInG6a7v6YHN+Kw53qBKTQwzbsj9YbkXu/4hp+yjtyR9@nongnu.org
-X-Gm-Message-State: AOJu0YwZHLcfesEYkjgMRa/Vu+oVzhh5g1dtKfACBMCt9fGa829eIRHu
- oCAeHm9tU7bUfscud8/h8LSDuHGAWwZ9XJC45N7V0mLfwKbgZ398RNc=
-X-Gm-Gg: ASbGncthKhhiOdSEowe3YJTp772CnW9PcO2386EPMLSKWldTMnXxIyrryRobLQCGUlk
- K8FWYFOOw8r0dQrbJVgskKizbikMrhcS4ymoS+NRyKYKqlDL90YziidtLxk2JjvbDNXkPmX2JN3
- wz5td8C+XU0yBQIir5+oDKoNBhJo5c8ALMtP1F7+I3BRSMRjBaXQ/a3Jwali4XnFCpck6rI4UHd
- Ex13winVPSMhHALpMWEL52Ksh+wM6K2DFQ3Vuzz4HEHZr6PfCoJ0v8DH162fhQlIzH4c700xcV+
- FjHNwsCEHrAgP7L8AG9bjWyjCELzSKGQhUepUPxPAPK/E0AYpurKjsiiYYNc4x1ybeEQmqnvOQ/
- 5uqGu
-X-Google-Smtp-Source: AGHT+IHT9wj5iV372Nys0MJmSbZgChyGcmo2WBeQV8/AbipPUIw2pqscnHfutZuS4YhQlOKxHcr2Nw==
-X-Received: by 2002:a17:903:46c8:b0:234:c22:c612 with SMTP id
- d9443c01a7336-2366b17b6d8mr176715865ad.43.1750121806045; 
- Mon, 16 Jun 2025 17:56:46 -0700 (PDT)
-Received: from [172.20.10.3] ([58.246.155.248])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2365decb864sm67926375ad.213.2025.06.16.17.56.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Jun 2025 17:56:45 -0700 (PDT)
-Message-ID: <92845463-8315-4ad8-9eab-eb2f4972cbaa@gmail.com>
-Date: Tue, 17 Jun 2025 08:56:41 +0800
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uRL5Q-0007Q7-Af
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 21:26:06 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uRL5N-0001Ha-EW
+ for qemu-devel@nongnu.org; Mon, 16 Jun 2025 21:26:04 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8CxyuAbxFBo9A4YAQ--.56295S3;
+ Tue, 17 Jun 2025 09:25:47 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMBxXsUUxFBovsEdAQ--.25346S3;
+ Tue, 17 Jun 2025 09:25:42 +0800 (CST)
+Subject: Re: [PATCH 06/10] hw/loongarch: Implement avec controller imput and
+ output pins
+To: Bibo Mao <maobibo@loongson.cn>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
+References: <20250609104833.839811-1-gaosong@loongson.cn>
+ <20250609104833.839811-7-gaosong@loongson.cn>
+ <5df19ba7-a37d-a806-1461-7f12b36cff70@loongson.cn>
+From: gaosong <gaosong@loongson.cn>
+Message-ID: <eebfb1f6-91ec-3014-c914-44522d4360cb@loongson.cn>
+Date: Tue, 17 Jun 2025 09:28:35 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vfio/pci: Introduce x-pci-class-code option
-From: Tomita Moeko <tomitamoeko@gmail.com>
-To: Alex Williamson <alex.williamson@redhat.com>
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-References: <20250528155548.29344-1-tomitamoeko@gmail.com>
- <20250528123019.5ff938ed.alex.williamson@redhat.com>
- <d6c3adba-40a0-42ce-9578-2e0a4a68fe2b@gmail.com>
-In-Reply-To: <d6c3adba-40a0-42ce-9578-2e0a4a68fe2b@gmail.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::643;
- envelope-from=tomitamoeko@gmail.com; helo=mail-pl1-x643.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+In-Reply-To: <5df19ba7-a37d-a806-1461-7f12b36cff70@loongson.cn>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowMBxXsUUxFBovsEdAQ--.25346S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW3XF4UAr4rCF4UGFWfCry7XFc_yoW7Ary8pr
+ ykAFy5JryUGr93Xw17J345WF98Ar18G3W2qr4S9Fy0yFsrAr10gr4UXrn0gFyUAw4kJr1U
+ Xr1kXF43ZF17JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07URa0PU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -19
+X-Spam_score: -2.0
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-0.129,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,146 +84,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/5/29 18:41, Tomita Moeko wrote:
-> On 2025/5/29 2:30, Alex Williamson wrote:
->> On Wed, 28 May 2025 23:55:48 +0800
->> Tomita Moeko <tomitamoeko@gmail.com> wrote:
+在 2025/6/11 下午2:40, Bibo Mao 写道:
+>
+>
+> On 2025/6/9 下午6:48, Song Gao wrote:
+>> the AVEC controller supports 256*256 irqs, all the irqs connect CPU 
+>> INT_AVEC irq
 >>
->>> Introduce x-pci-class-code option to allow users to override PCI class
->>> code of a device, similar to the existing x-pci-vendor-id option. Only
->>> the lower 24 bits of this option are used, though a uint32 is used here
->>> for determining whether the value is valid and set by user.
->>>
->>> Additionally, to prevent exposing VGA ranges on non-VGA devices, the
->>> x-vga=on option requires x-pci-class-code is either unset or set to
->>> VGA controller class.
->>>
->>> This is mainly intended for IGD devices that expose themselves either
->>> as VGA controller (primary display) or Display controller (non-primary
->>> display). The UEFI GOP driver depends on the device reporting a VGA
->>> controller class code (0x030000).
->>>
->>> Signed-off-by: Tomita Moeko <tomitamoeko@gmail.com>
->>> ---
->>> v2:
->>> * Add vdev class code check in vfio_populate_vga().
->>> * Fix type in trace-events.
->>> Link: https://lore.kernel.org/all/20250524153102.19747-1-tomitamoeko@gmail.com/
->>>
->>>  hw/vfio/pci.c        | 25 +++++++++++++++++++++++++
->>>  hw/vfio/pci.h        |  1 +
->>>  hw/vfio/trace-events |  1 +
->>>  3 files changed, 27 insertions(+)
->>>
->>> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
->>> index b1250d85bf..d57cb7356e 100644
->>> --- a/hw/vfio/pci.c
->>> +++ b/hw/vfio/pci.c
->>> @@ -2726,6 +2726,14 @@ bool vfio_populate_vga(VFIOPCIDevice *vdev, Error **errp)
->>>          return false;
->>>      }
->>>  
->>> +    /* vdev class should be either unmodified (PCI_ANY_ID), or VGA controller */
->>> +    if ((vdev->class_code != PCI_ANY_ID) &&
->>> +        (vdev->class_code != (PCI_CLASS_DISPLAY_VGA << 8)) &&
->>> +        (vdev->class_code != (PCI_CLASS_NOT_DEFINED_VGA << 8))) {
->>> +        error_setg(errp, "vdev is not a VGA device");
->>> +        return false;
->>> +    }
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   hw/intc/loongarch_avec.c | 28 ++++++++++++++++++++++++++++
+>>   hw/loongarch/virt.c      | 11 +++++++++--
+>>   target/loongarch/cpu.h   |  3 ++-
+>>   3 files changed, 39 insertions(+), 3 deletions(-)
 >>
->> I think we should follow the scheme used for vendor_id and device_id to
->> populate the struct field when not specified.  That let's us use it
->> more easily and consistently for things like this.
-> 
-> Hi, Alex
-> 
-> The class code override takes place in vfio_pci_config_setup(), where
-> is after vfio_populate_vga() is called in vfio_populate_device(). So
-> I have to check if it equals to default or VGA class code here, and
-> not initializing the sturct field with device value. If we decide to
-> initialize it for other purpose, I personally think we should also
-> save the subvendor/subdevice value as well.
+>> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
+>> index 50956e7e4e..c692fef43c 100644
+>> --- a/hw/intc/loongarch_avec.c
+>> +++ b/hw/intc/loongarch_avec.c
+>> @@ -36,9 +36,19 @@ static const MemoryRegionOps loongarch_avec_ops = {
+>>       .endianness = DEVICE_LITTLE_ENDIAN,
+>>   };
+>>   +static void avec_irq_handler(void *opaque, int irq, int level)
+>> +{
+>> +    return;
+>> +}
+>> +
+>>   static void loongarch_avec_realize(DeviceState *dev, Error **errp)
+>>   {
+>> +    LoongArchAVECState *s = LOONGARCH_AVEC(dev);
+>>       LoongArchAVECClass *lac = LOONGARCH_AVEC_GET_CLASS(dev);
+>> +    MachineState *machine = MACHINE(qdev_get_machine());
+>> +    MachineClass *mc = MACHINE_GET_CLASS(machine);
+>> +    const CPUArchIdList  *id_list;
+>> +    int i, irq;
+>>         Error *local_err = NULL;
+>>       lac->parent_realize(dev, &local_err);
+>> @@ -47,6 +57,24 @@ static void loongarch_avec_realize(DeviceState 
+>> *dev, Error **errp)
+>>           return;
+>>       }
+>>   +    assert(mc->possible_cpu_arch_ids);
+>> +    id_list = mc->possible_cpu_arch_ids(machine);
+>> +    s->num_cpu = id_list->len;
+>> +    s->cpu = g_new(AVECCore, s->num_cpu);
+>> +    if (s->cpu == NULL) {
+>> +        error_setg(errp, "Memory allocation for AVECCore fail");
+>> +        return;
+>> +    }
+>> +
+>> +    for (i = 0; i < s->num_cpu; i++) {
+>> +        s->cpu[i].arch_id = id_list->cpus[i].arch_id;
+>> +        s->cpu[i].cpu = CPU(id_list->cpus[i].cpu);
+>> +        for (irq = 0; irq < NR_VECTORS; irq++) {
+>> +            qdev_init_gpio_out(dev, &s->cpu[i].parent_irq[irq], 1);
+>> +        }
+> One parent irqline for per-cpu is ok, so the total number of parent 
+> irqline is s->num_cpu, the number of possible cpu.
+>
+emm,  yes ,  so the avec gpio out num is s->num_cpu * s->num_cpu.,
+my thought   avec should  gpio_out = aveec gpio in,  and the avec gpio 
+in is NR_VECTORS * s->num_cpu.
+>> +    }
+>> +    qdev_init_gpio_in(dev, avec_irq_handler, NR_VECTORS * s->num_cpu);
+> avec_irq_handler() can be removed here.
+>
+yes.  i 'll remove on v2.
 
-It have been several weeks, wondering if there is further comments.
-
-Thanks,
-Moeko
-
->> I think we can ignore PCI_CLASS_NOT_DEFINED_VGA.  The PCI Local Bus
->> Specification 2.1, dated June 1, 1995 (earliest I can find on the SIG)
->> includes the VGA class code and specifies base class 0x00 is reserved
->> for compatibility with devices built before the base class field was
->> defined, so at least before 1995.  Also, neither the kernel or QEMU
->> is_vga helpers account for this, so they'd not have a VGA region or be
->> properly detected elsewhere.  Thanks,
+thanks.
+Song Gao
+> Regards
+> Bibo Mao
+>> +
+>>       return;
+>>   }
+>>   diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+>> index 272355da2d..718b5b4f92 100644
+>> --- a/hw/loongarch/virt.c
+>> +++ b/hw/loongarch/virt.c
+>> @@ -363,7 +363,7 @@ static void 
+>> virt_cpu_irq_init(LoongArchVirtMachineState *lvms)
+>>       }
+>>   }
+>>   -static void virt_irq_init(LoongArchVirtMachineState *lvms)
+>> +static void virt_irq_init(LoongArchVirtMachineState *lvms, 
+>> MachineState *ms)
+>>   {
+>>       DeviceState *pch_pic, *pch_msi;
+>>       DeviceState *ipi, *extioi, *avec;
+>> @@ -459,6 +459,13 @@ static void 
+>> virt_irq_init(LoongArchVirtMachineState *lvms)
+>>           sysbus_realize_and_unref(SYS_BUS_DEVICE(avec), &error_fatal);
+>>           memory_region_add_subregion(get_system_memory(), 
+>> VIRT_PCH_MSI_ADDR_LOW,
+>> sysbus_mmio_get_region(SYS_BUS_DEVICE(avec), 0));
+>> +        CPUState *cpu_state;
+>> +        DeviceState *cpudev;
+>> +        for (int cpu = 0; cpu < ms->smp.cpus; cpu++) {
+>> +            cpu_state = qemu_get_cpu(cpu);
+>> +            cpudev = DEVICE(cpu_state);
+>> +            qdev_connect_gpio_out(avec, cpu, 
+>> qdev_get_gpio_in(cpudev, INT_AVEC));
+here connect all  avec gpio_out to  cpu gpio_in  INT_AVEC.
+>> +        }
+>>       }
+>>         /* Create EXTIOI device */
+>> @@ -799,7 +806,7 @@ static void virt_init(MachineState *machine)
+>>       }
+>>         /* Initialize the IO interrupt subsystem */
+>> -    virt_irq_init(lvms);
+>> +    virt_irq_init(lvms, machine);
+>>       lvms->machine_done.notify = virt_done;
+>> qemu_add_machine_init_done_notifier(&lvms->machine_done);
+>>        /* connect powerdown request */
+>> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+>> index a1918a85da..b96df1cb2a 100644
+>> --- a/target/loongarch/cpu.h
+>> +++ b/target/loongarch/cpu.h
+>> @@ -240,9 +240,10 @@ FIELD(CSR_CRMD, WE, 9, 1)
+>>   extern const char * const regnames[32];
+>>   extern const char * const fregnames[32];
+>>   -#define N_IRQS      13
+>> +#define N_IRQS      15
+>>   #define IRQ_TIMER   11
+>>   #define IRQ_IPI     12
+>> +#define INT_AVEC    14
+>>     #define LOONGARCH_STLB         2048 /* 2048 STLB */
+>>   #define LOONGARCH_MTLB         64   /* 64 MTLB */
 >>
->> Alex
-> 
-> Got it, will remove this in v3.
-> 
-> Thanks,
-> Moeko
->  
->>> +
->>>      if (!(reg_info->flags & VFIO_REGION_INFO_FLAG_READ) ||
->>>          !(reg_info->flags & VFIO_REGION_INFO_FLAG_WRITE) ||
->>>          reg_info->size < 0xbffff + 1) {
->>> @@ -3092,6 +3100,21 @@ static bool vfio_pci_config_setup(VFIOPCIDevice *vdev, Error **errp)
->>>                                                vdev->sub_device_id);
->>>      }
->>>  
->>> +    /*
->>> +     * Class code is a 24-bit value at config space 0x09. Allow overriding it
->>> +     * with any 24-bit value.
->>> +     */
->>> +    if (vdev->class_code != PCI_ANY_ID) {
->>> +        if (vdev->class_code > 0xffffff) {
->>> +            error_setg(errp, "invalid PCI class code provided");
->>> +            return false;
->>> +        }
->>> +        /* Higher 24 bits of PCI_CLASS_REVISION are class code */
->>> +        vfio_add_emulated_long(vdev, PCI_CLASS_REVISION,
->>> +                               vdev->class_code << 8, ~0xff);
->>> +        trace_vfio_pci_emulated_class_code(vbasedev->name, vdev->class_code);
->>> +    }
->>> +
->>>      /* QEMU can change multi-function devices to single function, or reverse */
->>>      vdev->emulated_config_bits[PCI_HEADER_TYPE] =
->>>                                                PCI_HEADER_TYPE_MULTI_FUNCTION;
->>> @@ -3489,6 +3512,8 @@ static const Property vfio_pci_dev_properties[] = {
->>>                         sub_vendor_id, PCI_ANY_ID),
->>>      DEFINE_PROP_UINT32("x-pci-sub-device-id", VFIOPCIDevice,
->>>                         sub_device_id, PCI_ANY_ID),
->>> +    DEFINE_PROP_UINT32("x-pci-class-code", VFIOPCIDevice,
->>> +                       class_code, PCI_ANY_ID),
->>>      DEFINE_PROP_UINT32("x-igd-gms", VFIOPCIDevice, igd_gms, 0),
->>>      DEFINE_PROP_UNSIGNED_NODEFAULT("x-nv-gpudirect-clique", VFIOPCIDevice,
->>>                                     nv_gpudirect_clique,
->>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->>> index 5ce0fb916f..587eb8cc9a 100644
->>> --- a/hw/vfio/pci.h
->>> +++ b/hw/vfio/pci.h
->>> @@ -156,6 +156,7 @@ struct VFIOPCIDevice {
->>>      uint32_t device_id;
->>>      uint32_t sub_vendor_id;
->>>      uint32_t sub_device_id;
->>> +    uint32_t class_code;
->>>      uint32_t features;
->>>  #define VFIO_FEATURE_ENABLE_VGA_BIT 0
->>>  #define VFIO_FEATURE_ENABLE_VGA (1 << VFIO_FEATURE_ENABLE_VGA_BIT)
->>> diff --git a/hw/vfio/trace-events b/hw/vfio/trace-events
->>> index e90ec9bff8..e8d585b49a 100644
->>> --- a/hw/vfio/trace-events
->>> +++ b/hw/vfio/trace-events
->>> @@ -46,6 +46,7 @@ vfio_pci_emulated_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
->>>  vfio_pci_emulated_device_id(const char *name, uint16_t val) "%s 0x%04x"
->>>  vfio_pci_emulated_sub_vendor_id(const char *name, uint16_t val) "%s 0x%04x"
->>>  vfio_pci_emulated_sub_device_id(const char *name, uint16_t val) "%s 0x%04x"
->>> +vfio_pci_emulated_class_code(const char *name, uint32_t val) "%s 0x%06x"
->>>  
->>>  # pci-quirks.c
->>>  vfio_quirk_rom_in_denylist(const char *name, uint16_t vid, uint16_t did) "%s %04x:%04x"
->>
-> 
 
 
