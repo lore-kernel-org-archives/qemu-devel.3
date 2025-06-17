@@ -4,151 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B84CAC71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 09:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E011C71157
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 09:22:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRSQk-0000lg-ML; Tue, 17 Jun 2025 05:16:34 -0400
+	id 1uRSVv-00028o-EO; Tue, 17 Jun 2025 05:21:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uRSQj-0000kZ-5x
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:16:33 -0400
-Received: from p-east3-cluster1-host10-snip4-2.eps.apple.com ([57.103.87.95]
- helo=outbound.qs.icloud.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRSVr-00028M-Bz
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:21:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mads@ynddal.dk>) id 1uRSQf-0005Z1-4R
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:16:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ynddal.dk; s=sig1;
- bh=F2Lk87g/ffbwU6AtjA/WqgttL7/b0yIw5RLWx7pPGH8=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=t/ebtiKWDY2QkbdzHbQ8JHAQfW1irYE31MIXq5FeLuQBVi2srySC4AW71wet8gKuQ
- NlCtlcJtugl2N8OExL2XPUcYb01vz9cJeaP4XAHUNki1VR/W0mWuIgJx8RWVrvaWRH
- Byaa4t7oX7MCpWsgwXdEpyufTUl6xr1VGUemjO2LowKLdrX8vshUlah0LMXLG0/Otn
- DqAICXcAFc5hhPAYSdZkfGlEh+oBwZSg/5iGUd51B84db5dd/YZZ76xa8b442qkjH0
- ayL40utni9I3IDatF919KJrglGL7z8PuqtzAFeSjhXkTD/GNBcY1MXtOOq2jDTx/F/
- PhTKUTD3kuRQA==
-Received: from outbound.qs.icloud.com (unknown [127.0.0.2])
- by outbound.qs.icloud.com (Postfix) with ESMTPS id 23F3C18000A9;
- Tue, 17 Jun 2025 09:16:15 +0000 (UTC)
-Received: from smtpclient.apple (qs-asmtp-me-k8s.p00.prod.me.com
- [17.57.155.37])
- by outbound.qs.icloud.com (Postfix) with ESMTPSA id 9338118011E4;
- Tue, 17 Jun 2025 09:16:04 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.600.51.1.1\))
-Subject: Re: [PATCH v2 06/12] python: upgrade to python3.9+ syntax
-From: Mads Ynddal <mads@ynddal.dk>
-In-Reply-To: <20250612205451.1177751-7-jsnow@redhat.com>
-Date: Tue, 17 Jun 2025 11:15:53 +0200
-Cc: qemu-devel@nongnu.org, Joel Stanley <joel@jms.id.au>,
- Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Helge Deller <deller@gmx.de>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Fabiano Rosas <farosas@suse.de>, Alexander Bulekov <alxndr@bu.edu>,
- Darren Kenny <darren.kenny@oracle.com>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- =?utf-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>,
- Ed Maste <emaste@freebsd.org>, Gerd Hoffmann <kraxel@redhat.com>,
- Warner Losh <imp@bsdimp.com>, Kevin Wolf <kwolf@redhat.com>,
- Tyrone Ting <kfting@nuvoton.com>, Eric Blake <eblake@redhat.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
- Yoshinori Sato <ysato@users.sourceforge.jp>, Troy Lee <leetroy@gmail.com>,
- Halil Pasic <pasic@linux.ibm.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Michael Roth <michael.roth@amd.com>, Laurent Vivier <laurent@vivier.eu>,
- Ani Sinha <anisinha@redhat.com>, Weiwei Li <liwei1518@gmail.com>,
- Eric Farman <farman@linux.ibm.com>, Steven Lee <steven_lee@aspeedtech.com>,
- Brian Cain <brian.cain@oss.qualcomm.com>, Li-Wen Hsu <lwhsu@freebsd.org>,
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-s390x@nongnu.org,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
- qemu-block@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- =?utf-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
- Maksim Davydov <davydov-max@yandex-team.ru>,
- Niek Linnenbank <nieklinnenbank@gmail.com>,
- =?utf-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Paul Durrant <paul@xen.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Igor Mitsyanko <i.mitsyanko@gmail.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Markus Armbruster <armbru@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Peter Maydell <peter.maydell@linaro.org>, Cleber Rosa <crosa@redhat.com>,
- Eric Auger <eric.auger@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- qemu-arm@nongnu.org, Hao Wu <wuhaotsh@google.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>, qemu-riscv@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Nicholas Piggin <npiggin@gmail.com>, Michael Rolnik <mrolnik@gmail.com>,
- Zhao Liu <zhao1.liu@intel.com>, Alessandro Di Federico <ale@rev.ng>,
- Thomas Huth <thuth@redhat.com>, Antony Pavlov <antonynpavlov@gmail.com>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>, Hanna Reitz <hreitz@redhat.com>,
- Ilya Leoshkevich <iii@linux.ibm.com>,
- Marcelo Tosatti <mtosatti@redhat.com>,
- Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
- Daniel Henrique Barboza <danielhb413@gmail.com>,
- Qiuhao Li <Qiuhao.Li@outlook.com>, Hyman Huang <yong.huang@smartx.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- Magnus Damm <magnus.damm@gmail.com>, qemu-rust@nongnu.org,
- Bandan Das <bsd@redhat.com>,
- Strahinja Jankovic <strahinja.p.jankovic@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- kvm@vger.kernel.org, Fam Zheng <fam@euphon.net>,
- Jia Liu <proljc@gmail.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alistair Francis <alistair@alistair23.me>,
- Subbaraya Sundeep <sundeep.lkml@gmail.com>,
- Kyle Evans <kevans@freebsd.org>, Song Gao <gaosong@loongson.cn>,
- Alexandre Iooss <erdnaxe@crans.org>, Aurelien Jarno <aurelien@aurel32.net>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Peter Xu <peterx@redhat.com>,
- Stefan Hajnoczi <stefanha@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?utf-8?B?RnLDqWTDqXJpYyBCYXJyYXQ=?= <fbarrat@linux.ibm.com>,
- qemu-ppc@nongnu.org, Radoslaw Biernacki <rad@semihalf.com>,
- Beniamino Galvani <b.galvani@gmail.com>,
- David Hildenbrand <david@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- David Woodhouse <dwmw2@infradead.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Ahmed Karaman <ahmedkhaledkaraman@gmail.com>,
- Huacai Chen <chenhuacai@kernel.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <9C057F25-8BE4-45FC-9332-99F24440DB92@ynddal.dk>
-References: <20250612205451.1177751-1-jsnow@redhat.com>
- <20250612205451.1177751-7-jsnow@redhat.com>
-To: John Snow <jsnow@redhat.com>
-X-Mailer: Apple Mail (2.3826.600.51.1.1)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDA3NCBTYWx0ZWRfX6flXK9bQW94b
- pJhRZhBGKFxj3lG2g7w6QCE8uC9WUg0wn7rn9PJHRTtq39uGPdo5LGU1xE8xS/wePJaPs7EYL08
- Iwa/wui04kYrGFU98n3t8cxxZLiZtwcvvytg6FniPlo16ksCYxaWNCfIdZVCFfh/QSGD/YHzSPH
- yNIm7mrdH8tjzyzwJ7IjP9/VduRn8rZqm1T1DMbZQzXPEA0o54pUX+8rvDDWgOqMoyGDw5oYnBs
- xbCyKO5AHXZRA91yQKp41W64scRkgTTEl7Mq+rov+XdHXzu7exdDWFHhAvRtW8XuqB4EgCUm8=
-X-Proofpoint-GUID: wKgdYrb_CFsT9g0pbMc6pxf-vBqLxnwg
-X-Proofpoint-ORIG-GUID: wKgdYrb_CFsT9g0pbMc6pxf-vBqLxnwg
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-17_03,2025-06-13_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- bulkscore=0 malwarescore=0 spamscore=0 adultscore=0
- mlxlogscore=964
- mlxscore=0 clxscore=1030 phishscore=0 classifier=spam adjust=0 reason=mlx
- scancount=1 engine=8.22.0-2506060001 definitions=main-2506170074
-Received-SPF: pass client-ip=57.103.87.95; envelope-from=mads@ynddal.dk;
- helo=outbound.qs.icloud.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRSVj-0006Qq-PL
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 05:21:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750152097;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=R5yKjCNNeruAZkNxjeuEKEwe7iq4DANTcQ4xdjlOPdo=;
+ b=JClnjXFwepTe1Ze9LnEv59Qo27zoRZTCKVhMmsDlEKwD2MZjHlMmbBrLeES2x6zJue2QV/
+ zomcOs3ZmSUBek7f9ARps4lq78IQyrRBzTdcSqZ7QQ+NUuapLdadlNMAijmbic8q6k62F7
+ iulFlgZ+VFFghVY+Cm69jlGqV69uzNA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-316-9lEoN2XSNkio5fC-4OnCGQ-1; Tue, 17 Jun 2025 05:21:34 -0400
+X-MC-Unique: 9lEoN2XSNkio5fC-4OnCGQ-1
+X-Mimecast-MFC-AGG-ID: 9lEoN2XSNkio5fC-4OnCGQ_1750152093
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4f65a705dso2840792f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 02:21:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750152092; x=1750756892;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=R5yKjCNNeruAZkNxjeuEKEwe7iq4DANTcQ4xdjlOPdo=;
+ b=PIXElyJTSkHAnThuhdcqdIZ3P3S7qLbZiQpa3YraF36fWbk01RiDGRD/zJr/EJRnC2
+ Id7z3K8MSidoMALUqW0QDTA+87503GAot1ZYtyhsf6mSMq0wTEUtSpfvaRDV1KB4eUBM
+ 8Qecs93A6N8vPAU+DsXNTSxg21R95hnzDHyQzu9wfGU/yxWYAXkZuT0B/9dAyM+ouYhn
+ 5LiaJhYVLWwXgq0dlQHjNMbPkH77UIdDXzZo1Qh0y/6p9GQE+esgjfpeb1auD4eTWcsJ
+ HhyRbRDdOY0BxYLpp+3AjcP6Bo0zIUTUi+5NkwL5sj6XXuPScUydLnhozkHNEKB4y/8R
+ /VCg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXOvh8G6BOG2lcOpPlhySqEqd0HBVseThBizx0hVj+x1hpDFLzlCNzPFv9X6JNABEqiZ4O9CQ5BDqem@nongnu.org
+X-Gm-Message-State: AOJu0YwSjziZeL6jz9AWpQ+IgW19nJy7122IhFTK9dI1IWIQIm0BCnVv
+ uVqkmFfie31mqYkx864mPTtKRyZ367hP9lEYoM4Rl6ztJtucAv0Aa+0l7wb27LqGZJPRXUcAXfp
+ j1xSDTk9cpKYcWOw/yeXuXnmMw1j3GQ+7Vs5q6V17WHi0fceTyfNuhVfvvFPiJ8pp
+X-Gm-Gg: ASbGnctL0GLGMT+TcFFeKh6SBGL8uc6e47YVu4Xqtl/cbksGbF4we+Z12IkrAASmDiZ
+ gZwfUXed7hAlHQbruGIRD6yTB/VXJUGlP3c4QzLCNI+ALGVUEApSUp60s1yo0fG5rXLfV37Kvjh
+ AEXTi9ZfI9z5GP3DNSeqZes7HA1WnooDYa9u2tmPeMM7VLegbAhjrUL0RReuJjFrz7etRl18V9U
+ SIFqAZCjsRxo6xTuSF+DBPXl26bYcVChVx1OvJ4MKc+vH8764qG+rsnZnyP3ODRqNKTvSUM8wWe
+ Wu6NlbB+6xuVgeyZ+h5yDEOUf8PP6oYr1iEoRRq74+wgz5VLbkUS/klMw/zkJsE93ILd+A==
+X-Received: by 2002:a05:6000:290b:b0:3a5:2e84:cc7b with SMTP id
+ ffacd0b85a97d-3a57238b7f2mr9736412f8f.11.1750152092342; 
+ Tue, 17 Jun 2025 02:21:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IF+Vm1iRyQV6g1ZdtMuaZSDvaSR48Ccpmt3DVHgBxgMD0E8bYdtBEcf3fVorHHBV7kEYuA2nw==
+X-Received: by 2002:a05:6000:290b:b0:3a5:2e84:cc7b with SMTP id
+ ffacd0b85a97d-3a57238b7f2mr9736377f8f.11.1750152091931; 
+ Tue, 17 Jun 2025 02:21:31 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a568b5c372sm13081068f8f.89.2025.06.17.02.21.30
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Jun 2025 02:21:31 -0700 (PDT)
+Message-ID: <096d67cf-d5ba-4041-8919-3e47a9cd10eb@redhat.com>
+Date: Tue, 17 Jun 2025 11:21:29 +0200
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/7] hw/arm/virt-acpi-build: Update IORT for multiple
+ smmuv3 devices
+Content-Language: en-US
+To: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>,
+ qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, jgg@nvidia.com, nicolinc@nvidia.com,
+ ddutile@redhat.com, berrange@redhat.com, imammedo@redhat.com,
+ nathanc@nvidia.com, mochs@nvidia.com, smostafa@google.com,
+ linuxarm@huawei.com, wangzhou1@hisilicon.com, jiangkunkun@huawei.com,
+ jonathan.cameron@huawei.com, zhangfei.gao@linaro.org
+References: <20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com>
+ <20250613144449.60156-4-shameerali.kolothum.thodi@huawei.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250613144449.60156-4-shameerali.kolothum.thodi@huawei.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.892,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
@@ -163,97 +118,147 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Shameer,
 
-> diff --git a/scripts/simpletrace.py b/scripts/simpletrace.py
-> index cef81b0707f..a013e4402de 100755
-> --- a/scripts/simpletrace.py
-> +++ b/scripts/simpletrace.py
-> @@ -9,13 +9,15 @@
-> #
-> # For help see docs/devel/tracing.rst
->=20
-> -import sys
-> -import struct
-> import inspect
-> +import struct
-> +import sys
-> import warnings
-> -from tracetool import read_events, Event
+On 6/13/25 4:44 PM, Shameer Kolothum wrote:
+> With the soon to be introduced user-creatable SMMUv3 devices for
+> virt, it is possible to have multiple SMMUv3 devices associated
+> with different PCIe root complexes.
+>
+> Update IORT nodes accordingly.
+>
+> An example IORT Id mappings for a Qemu virt machine with two
+> PCIe Root Complexes each assocaited with a SMMUv3 will
+> be something like below,
+>
+>   -device arm-smmuv3,primary-bus=pcie.0,id=smmuv3.0
+>   -device arm-smmuv3,primary-bus=pcie.1,id=smmuv3.1
+>   ...
+>
+>   +--------------------+           +--------------------+
+>   |   Root Complex 0   |           |   Root Complex 1   |
+>   |                    |           |                    |
+>   |  Requestor IDs     |           |  Requestor IDs     |
+>   |  0x0000 - 0x00FF   |           |  0x0100 - 0x01FF   |
+>   +---------+----------+           +---------+----------+
+>             |                               |
+>             |                               |
+>             |       Stream ID Mapping       |
+>             v                               v
+>   +--------------------+          +--------------------+
+>   |    SMMUv3 Node 0   |          |    SMMUv3 Node 1   |
+>   |                    |          |                    |
+>   | Stream IDs 0x0000- |          | Stream IDs 0x0100- |
+>   | 0x00FF mapped from |          | 0x01FF mapped from |
+>   | RC0 Requestor IDs  |          | RC1 Requestor IDs  |
+>   +--------------------+          +--------------------+
+>             |                                |
+>             |                                |
+>             +----------------+---------------+
+>                              |
+>                              |Device ID Mapping
+>                              v
+>               +----------------------------+
+>               |       ITS Node 0           |
+>               |                            |
+>               | Device IDs:                |
+>               | 0x0000 - 0x00FF (from RC0) |
+>               | 0x0100 - 0x01FF (from RC1) |
+>               | 0x0200 - 0xFFFF (No SMMU)  |
+>               +----------------------------+
+>
+> Tested-by: Nathan Chen <nathanc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <shameerali.kolothum.thodi@huawei.com>
+> ---
+>  hw/arm/virt-acpi-build.c | 55 ++++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 55 insertions(+)
+>
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index d39506179a..72b79100ce 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -43,6 +43,7 @@
+>  #include "hw/acpi/generic_event_device.h"
+>  #include "hw/acpi/tpm.h"
+>  #include "hw/acpi/hmat.h"
+> +#include "hw/arm/smmuv3.h"
+>  #include "hw/pci/pcie_host.h"
+>  #include "hw/pci/pci.h"
+>  #include "hw/pci/pci_bus.h"
+> @@ -296,6 +297,58 @@ populate_smmuv3_legacy_dev(GArray *sdev_blob)
+>      g_array_append_val(sdev_blob, sdev);
+>  }
+>  
+> +static int smmuv3_dev_idmap_compare(gconstpointer a, gconstpointer b)
+> +{
+> +    AcpiIortSMMUv3Dev *sdev_a = (AcpiIortSMMUv3Dev *)a;
+> +    AcpiIortSMMUv3Dev *sdev_b = (AcpiIortSMMUv3Dev *)b;
+> +    AcpiIortIdMapping *map_a = &g_array_index(sdev_a->idmaps,
+> +                                              AcpiIortIdMapping, 0);
+> +    AcpiIortIdMapping *map_b = &g_array_index(sdev_b->idmaps,
+> +                                              AcpiIortIdMapping, 0);
+> +    return map_a->input_base - map_b->input_base;
+> +}
 > +
-> +from tracetool import Event, read_events
-> from tracetool.backend.simple import is_string
->=20
+> +static int iort_smmuv3_devices(Object *obj, void *opaque)
+> +{
+> +    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
+> +    GArray *sdev_blob = opaque;
+> +    AcpiIortIdMapping idmap;
+> +    PlatformBusDevice *pbus;
+> +    AcpiIortSMMUv3Dev sdev;
+> +    int min_bus, max_bus;
+> +    SysBusDevice *sbdev;
+> +    PCIBus *bus;
 > +
-> __all__ =3D ['Analyzer', 'Analyzer2', 'process', 'run']
->=20
-> # This is the binary format that the QEMU "simple" trace backend
-> @@ -166,11 +168,9 @@ def runstate_set(self, timestamp, pid, =
-new_state):
->=20
->     def begin(self):
->         """Called at the start of the trace."""
-> -        pass
->=20
->     def catchall(self, event, rec):
->         """Called if no specific method for processing a trace event =
-has been found."""
-> -        pass
->=20
->     def _build_fn(self, event):
->         fn =3D getattr(self, event.name, None)
-> @@ -208,7 +208,6 @@ def _process_event(self, rec_args, *, event, =
-event_id, timestamp_ns, pid, **kwar
->=20
->     def end(self):
->         """Called at the end of the trace."""
-> -        pass
->=20
->     def __enter__(self):
->         self.begin()
-> @@ -263,7 +262,6 @@ def runstate_set(self, new_state, *, timestamp_ns, =
-pid, **kwargs):
->=20
->     def catchall(self, *rec_args, event, timestamp_ns, pid, event_id, =
-**kwargs):
->         """Called if no specific method for processing a trace event =
-has been found."""
-> -        pass
->=20
->     def _process_event(self, rec_args, *, event, **kwargs):
->         fn =3D getattr(self, event.name, self.catchall)
-> @@ -279,7 +277,7 @@ def process(events, log, analyzer, =
-read_header=3DTrue):
->     """
->=20
->     if isinstance(events, str):
-> -        with open(events, 'r') as f:
-> +        with open(events) as f:
->             events_list =3D read_events(f, events)
->     elif isinstance(events, list):
->         # Treat as a list of events already produced by =
-tracetool.read_events
-> @@ -332,7 +330,7 @@ def run(analyzer):
->     except (AssertionError, ValueError):
->         raise SimpleException(f'usage: {sys.argv[0]} [--no-header] =
-<trace-events> <trace-file>\n')
->=20
-> -    with open(trace_event_path, 'r') as events_fobj, =
-open(trace_file_path, 'rb') as log_fobj:
-> +    with open(trace_event_path) as events_fobj, open(trace_file_path, =
-'rb') as log_fobj:
->         process(events_fobj, log_fobj, analyzer, read_header=3Dnot =
-no_header)
->=20
-> if __name__ =3D=3D '__main__':
+> +    if (!object_dynamic_cast(obj, TYPE_ARM_SMMUV3)) {
+> +        return 0;
+> +    }
+> +
+> +    bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
+> +    pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+> +    sbdev = SYS_BUS_DEVICE(obj);
+> +    sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> +    sdev.base += vms->memmap[VIRT_PLATFORM_BUS].base;
+> +    sdev.irq = platform_bus_get_irqn(pbus, sbdev, 0);
+> +    sdev.irq += vms->irqmap[VIRT_PLATFORM_BUS];
+> +    sdev.irq += ARM_SPI_BASE;
+> +
+> +    pci_bus_range(bus, &min_bus, &max_bus);
+> +    sdev.idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+> +    idmap.input_base = min_bus << 8,
+> +    idmap.id_count = (max_bus - min_bus + 1) << 8,
+> +    g_array_append_val(sdev.idmaps, idmap);
+> +    g_array_append_val(sdev_blob, sdev);
+> +    return 0;
+> +}
+> +
+> +static void populate_smmuv3_dev(GArray *sdev_blob)
+> +{
+> +    object_child_foreach_recursive(object_get_root(),
+> +                                   iort_smmuv3_devices, sdev_blob);
+> +    /* Sort the smmuv3 devices(if any) by smmu idmap input_base */
+> +    g_array_sort(sdev_blob, smmuv3_dev_idmap_compare);
+> +}
+> +
+>  /*
+>   * Input Output Remapping Table (IORT)
+>   * Conforms to "IO Remapping Table System Software on ARM Platforms",
+> @@ -320,6 +373,8 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      nb_nodes = 2; /* RC, ITS */
+>      if (vms->legacy_smmuv3_present) {
+>          populate_smmuv3_legacy_dev(smmuv3_devs);
+> +    } else {
+> +        populate_smmuv3_dev(smmuv3_devs);
+>      }
+>  
+>      num_smmus = smmuv3_devs->len;
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
 
-I'm not really a fan of the implicit default arguments, but I guess the =
-rest is fine. If this is the way everyone else wants to go, I won't =
-stand in the way.
-
-=E2=80=94
-Mads Ynddal
+Eric
 
 
