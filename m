@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031D4C71136
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07C59C7115B
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:34:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRZGQ-0000mc-LR; Tue, 17 Jun 2025 12:34:23 -0400
+	id 1uRZG2-0000kl-Uw; Tue, 17 Jun 2025 12:33:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZG2-0000kn-S4
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:33:58 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ id 1uRZG1-0000kE-9c
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:33:57 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRZFz-0000cf-Lk
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:33:58 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-45348bff79fso32505855e9.2
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:33:55 -0700 (PDT)
+ id 1uRZFz-0000cS-1v
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 12:33:57 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a54690d369so6093585f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 09:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750178034; x=1750782834; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/pVLW980tQUeFMbPOSrmbCV35FWVqLGwZwmiSRkT/nc=;
- b=AARro+sgTKnFkmA/pCZGdxHsKke7t5ORNlCD7/asYUSrNRTBhhUfHvudVVNoqG8kkQ
- taO7FDKy+1F3xYzgT5HioSBnmujf5apUsup6Dd4x5aGgLxQdUmmZXcnTmkuiDHSvVfP/
- 8VBeIaoNoiETopcMaXNKb/lTKNwzJ11egYrA7P5kyZy1ZYxM5f/r7xw/KWCA86XCchtm
- BtUJxx9nhQ6TQN+/VW3fYby0SoVzHZElzqbn9YPXrzFWidViKSmjswqgJEtKEKRILdrY
- shYahkoVtiLYlF0rE7B6bFD0YE8EgqqSzrE2WNVIDYY08UiGIBFAzXT3gc7Cr/k2buYL
- 3s+A==
+ d=linaro.org; s=google; t=1750178033; x=1750782833; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=7g71wEGz4iCfItRB+5Qq2e0WxZcJFHzJDCahI6238Rg=;
+ b=OkU7t5h7VpJxVC8gtDEEUabYFanJcQxf4KZtMEh2Imb4+scoLHMIuEK9ea0AGL/bZh
+ SsgVl3Y2/XyJ81P3YAI8uBeM3w032s681mlT76JKhe6pcWJNKkQCQGWyPP7AWFVY0tI2
+ 4ein5my4B80CAVzceOo/o82bN8LgMp3fR8A6C8FtrVNFh/6h7YBtzK7SH5Dux9NQhGdi
+ KTCwPRseY8sGvYp3owIHo8ajSBN9PhpFtnGqdEAokyl/lFoIH8fWamoTyBUXfbSwJo9q
+ YMfRBofUoyLfwiPiz4Av1tYUqFyeKKTZyPsbyD0DLsPSJ+2hylvQ7AZ6qvJwN69C7bAA
+ XcNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750178034; x=1750782834;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=/pVLW980tQUeFMbPOSrmbCV35FWVqLGwZwmiSRkT/nc=;
- b=ajkONnWGGWWScgyalrRD+lETQtPPKEG9GWg1CeM/qeva5PFeQ1xqmb/Lpzu/ImaasO
- 6gF6Pgd+qJDcB8+wHERLigH2Mev9DR5IYLbdEkkvUVEaJ3kE0cbrgbIve59eJjxPlP64
- zBrSJRvoMtx3eMPehkETnxGIB8SN3evhxvxA/HCvgMMx+Zq0/Uk1xMXlMzMQXr/7Nl9u
- dD953cKg6BouhD6W+zQYLnDl8JZRxTv64KAFIAagO8MrDMqEK3gtQcGVsVQ60/niGZ8T
- 8Y53M+GkThe5BM5xps7Y46aUnj3913vgFYDsEiDbjhnWzsA2tWSUNozhDmLGnEY1OWlk
- Mulg==
-X-Gm-Message-State: AOJu0Yz1F2NKSiktWSNbGrhwLz7nmb5UzUmmLJneUcTHZvbkYUCcVN3I
- Ebs1v34D8pS/ouy92JAR4CSUh4bhXvtDEA1HnHsNMNQkWqYwJODsGr7aDN/f25okK4Y=
-X-Gm-Gg: ASbGncvLmj8zzCKb16xIPFq54Df34FJXx9Jjul3gRHwYy64m6bHmLZ4P/lk47ucvClu
- YCB16NflaLXh2QKux3wzegPIkVm1uRLR/30Ir+48Oi4JbHVW+0KD777fJ2uwUYzJ2MsdI3BkeDk
- MUgTump5GmFSsBi3eNBv0eYqJf2N19ma2cg/AmPLU3upLRfUXE8EV/ya1/AP4AXfa8k5K/8E8J6
- avEb10AmaNrliUL6Te60lpaLb3axD9RUGQ61xmbqgYOhBHeIDOvlL6w4idlddU8ZzvDcZxs8MNL
- JVCQHIzWEqs3WELwwn9XpSs5Nld9iabUCcSGH0R0uXHnIEFuaEzgUiUtMsu8lWs=
-X-Google-Smtp-Source: AGHT+IE8v8HeR2piaWlFX6bbvfHCxqXZXhONIJkvHNHlEOHHSq+0M0P/3+bbuJRt/SWwiA7WH7QLGg==
-X-Received: by 2002:a05:600c:8286:b0:450:cfe1:a827 with SMTP id
- 5b1f17b1804b1-4533cb1a7c4mr155107765e9.31.1750178033665; 
+ d=1e100.net; s=20230601; t=1750178033; x=1750782833;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7g71wEGz4iCfItRB+5Qq2e0WxZcJFHzJDCahI6238Rg=;
+ b=bYcwu24Nso0lYhdVzirAVMpL7UoGxCBdIsfJfpeXJctcg455v4jwu3X8i39nRC2Y20
+ yUwuNq09bvZWG706iLXJObxZfX0ZRC4bRHAdUO/Scza58X3QNDnWPiHjj/zxNRqUwLdb
+ HfpOCZuu7MbhVeXfC5Ylzfhca4OGL1Lqm3LIzgcUbztYrHx14884YgbEjcEF2MP9xdt3
+ 4vggJu9/ExkSbJB1rapMyuh5r7q68vkVp+8oH8vL4XveGIvv+u167KJY3ofixH5sZBvs
+ wYxNFYl01MIvs2KTLVHakrUWYECo9vMrUmbcwI9GnY4bVCC0LxQwGsyquO/E+cP+TFrC
+ 29QQ==
+X-Gm-Message-State: AOJu0YzNzXbsJMZpQ/8CPESQAMaeeN0VN0ydFFTmTLlx+KF67JRz5wZ/
+ 55Gg/aMdesdPBYt6lRvoKTmKHU4suOyDnQQqqkvHtUihwpiYOXq1XfpoMGqfQafpeYQ=
+X-Gm-Gg: ASbGncsFdTDNFA1lLemxk/AzQ6DtcV4MtKODISyMGlAaEqT3KxRmB5CQWcO+usJNZR5
+ aSjGNmuE1XKHFkHxnk6tM7o5SoxoSeYRqcuj0UeKtSwURz9dhUQHzT3qFfCuTt3grTaSjS/+6ah
+ ujWfTfIKyr9NDTgpdhU1qRZL0rSgCA3SIoKLS+U670r9Cne3MW0ntaHnpwhAkHzXv4pY8K7CkYN
+ 9+iLkwpWAD91BZibmvoiJsmbeCte9bLLPS7FMirEra5YS33EIfhypffnu4VpFOfQlWBddtTnTae
+ SOWgv/Y2fpuuh0a722BTawRBo6zVkuvhkycaStRjF15ZcbtkjMURr0N+DgZiZPk=
+X-Google-Smtp-Source: AGHT+IGXjDEcTadgL/tfpywilh4gF6w7AoZlWcBsmeY/+2CORMJLZuFGY8Lwl3XURIT66o/5GXOVnQ==
+X-Received: by 2002:a05:6000:4021:b0:3a3:6595:9209 with SMTP id
+ ffacd0b85a97d-3a5723a3986mr12184278f8f.36.1750178033049; 
  Tue, 17 Jun 2025 09:33:53 -0700 (PDT)
 Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e268de2sm181468295e9.40.2025.06.17.09.33.52
+ 5b1f17b1804b1-4532e232e4asm178681425e9.11.2025.06.17.09.33.52
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 17 Jun 2025 09:33:52 -0700 (PDT)
 Received: from draig.lan (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 15EEF5F873;
- Tue, 17 Jun 2025 17:33:52 +0100 (BST)
+ by draig.lan (Postfix) with ESMTP id DB2275F834;
+ Tue, 17 Jun 2025 17:33:51 +0100 (BST)
 From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
@@ -74,17 +73,15 @@ Cc: Cornelia Huck <cohuck@redhat.com>, qemu-arm@nongnu.org,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
-Subject: [RFC PATCH 02/11] target/arm: re-arrange debug_cp_reginfo
-Date: Tue, 17 Jun 2025 17:33:42 +0100
-Message-ID: <20250617163351.2640572-3-alex.bennee@linaro.org>
+Subject: [RFC PATCH 00/11] kvm/arm: trap-me-harder implementation
+Date: Tue, 17 Jun 2025 17:33:40 +0100
+Message-ID: <20250617163351.2640572-1-alex.bennee@linaro.org>
 X-Mailer: git-send-email 2.47.2
-In-Reply-To: <20250617163351.2640572-1-alex.bennee@linaro.org>
-References: <20250617163351.2640572-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: 12
 X-Spam_score: 1.2
 X-Spam_bar: +
@@ -107,47 +104,182 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Although we are using structure initialisation the order of the
-op[012]/cr[nm] fields don't match the rest of the code base.
-Re-organise to be consistent and help the poor engineer who is
-grepping for system registers.
+The following is an RFC to explore how KVM would look if we forwarded
+almost all traps back to QEMU to deal with.
 
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
----
- target/arm/debug_helper.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+Why - won't it be horribly slow?
+--------------------------------
 
-diff --git a/target/arm/debug_helper.c b/target/arm/debug_helper.c
-index 69fb1d0d9f..8130ff78de 100644
---- a/target/arm/debug_helper.c
-+++ b/target/arm/debug_helper.c
-@@ -948,19 +948,21 @@ static const ARMCPRegInfo debug_cp_reginfo[] = {
-      * DBGDSAR is deprecated and must RAZ from v8 anyway, so it has no AArch64
-      * accessor.
-      */
--    { .name = "DBGDRAR", .cp = 14, .crn = 1, .crm = 0, .opc1 = 0, .opc2 = 0,
-+    { .name = "DBGDRAR", .cp = 14,
-+      .opc0 = 0, .crn = 1, .crm = 0, .opc1 = 0, .opc2 = 0,
-       .access = PL0_R, .accessfn = access_tdra,
-       .type = ARM_CP_CONST | ARM_CP_NO_GDB, .resetvalue = 0 },
-     { .name = "MDRAR_EL1", .state = ARM_CP_STATE_AA64,
--      .opc0 = 2, .opc1 = 0, .crn = 1, .crm = 0, .opc2 = 0,
-+      .opc0 = 2, .crn = 1, .crm = 0, .opc1 = 0, .opc2 = 0,
-       .access = PL1_R, .accessfn = access_tdra,
-       .type = ARM_CP_CONST, .resetvalue = 0 },
--    { .name = "DBGDSAR", .cp = 14, .crn = 2, .crm = 0, .opc1 = 0, .opc2 = 0,
-+    { .name = "DBGDSAR", .cp = 14,
-+      .opc0 = 0, .opc1 = 0, .crn = 2, .crm = 0,.opc2 = 0,
-       .access = PL0_R, .accessfn = access_tdra,
-       .type = ARM_CP_CONST | ARM_CP_NO_GDB, .resetvalue = 0 },
-     /* Monitor debug system control register; the 32-bit alias is DBGDSCRext. */
--    { .name = "MDSCR_EL1", .state = ARM_CP_STATE_BOTH,
--      .cp = 14, .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 2,
-+    { .name = "MDSCR_EL1", .state = ARM_CP_STATE_BOTH, .cp = 14,
-+      .opc0 = 2, .opc1 = 0, .crn = 0, .crm = 2, .opc2 = 2,
-       .access = PL1_RW, .accessfn = access_tda,
-       .fgt = FGT_MDSCR_EL1,
-       .nv2_redirect_offset = 0x158,
+Maybe, that's why its an RFC.
+
+Traditionally KVM tries to avoid full vmexit's to QEMU because the
+additional context switches add to the latency of servicing requests.
+For things like the GIC where latency really matters the normal KVM
+approach is to implement it in the kernel and then just leave QEMU to
+handling state saving and migration matters.
+
+Where we have to exit, for example for device emulation, platforms
+like VirtIO try really hard minimise the number of times we exit for
+any data transfer.
+
+However hypervisors can't virtualise everything and for some QEMU
+use-cases you might want to run the full software stack (firmware,
+hypervisor et all). This is the idea for the proposed SplitAccel where
+EL1/EL0 are run under a hypervisor and EL2+ get run under TCG's
+emulation. For this to work QEMU needs to be aware of the whole system
+state and have full control over anything that is virtualised by the
+hypervisor. We have an initial PoC for SplitAccel that works with
+HVF's much simpler programming model.
+
+This series is a precursor to implementing a SplitAccel for KVM and
+investigates how hacky it might look.
+
+Kernel
+------
+
+For this to work you need a modified kernel. You can find my tree
+here:
+
+  https://git.linaro.org/plugins/gitiles/people/alex.bennee/linux/+/refs/heads/kvm/trap-me-harder
+
+I will be posting the kernel patches to LKML in due course but the
+changes are pretty simple. We add a new creation flag
+(KVM_VM_TYPE_ARM_TRAP_ALL) that when activated implement an
+alternative table in KVM's handle_exit() code.
+
+The ESR_ELx_EC_IABT_LOW/ESR_ELx_EC_DABT_LOW exceptions are still
+handled by KVM as the kernel general has to deal with paging in the
+required memory. I've also left the debug exceptions to be processed
+in KVM as the handling of pstate gets tricky and takes care when
+re-entering the guest.
+
+Everything else exits with a new exit reason called
+KVM_EXIT_ARM_TRAP_HARDER when exposed the ESR_EL1 and a few other
+registers so QEMU can deal with things.
+
+QEMU Patches
+------------
+
+Patches 1-2 - minor tweaks that make debugging easier
+Patch   3   - bring in the uapi headers from Kernel
+Patches 4-5 - plumbing in -accel kvm,trap-harder=on
+Patches 6-7 - allow creation of an out-of-kernel GIC (kernel-irqchip=off)
+Patches 8-11- trap handlers for the kvm_arm_handle_hard_trap path
+
+Testing
+-------
+
+Currently I'm testing everything inside an emulated QEMU, so the guest
+host is booted with a standard Debian Trixie although I use virtiofsd to
+mount my real host home inside the guest hosts home:
+
+  ./qemu-system-aarch64 \
+             -machine type=virt,virtualization=on,pflash0=rom,pflash1=efivars,gic-version=max \
+             -blockdev node-name=rom,driver=file,filename=(pwd)/pc-bios/edk2-aarch64-code.fd,read-only=true \
+             -blockdev node-name=efivars,driver=file,filename=$HOME/images/qemu-arm64-efivars \
+             -cpu cortex-a76 \
+             -m 8192 \
+             -object memory-backend-memfd,id=mem,size=8G,share=on \
+             -numa node,memdev=mem \
+             -smp 4 \
+             -accel tcg \
+             -serial mon:stdio \
+             -device virtio-net-pci,netdev=unet \
+             -netdev user,id=unet,hostfwd=tcp::2222-:22 \
+             -device virtio-scsi-pci \
+             -device scsi-hd,drive=hd \
+             -blockdev driver=raw,node-name=hd,file.driver=host_device,file.filename=/dev/zen-ssd2/trixie-arm64,discard=unmap \
+             -kernel /home/alex/lsrc/linux.git/builds/arm64/arch/arm64/boot/Image \
+             -append "root=/dev/sda2" \
+             -chardev socket,id=vfs,path=/tmp/virtiofsd.sock \
+             -device vhost-user-fs-pci,chardev=vfs,tag=home \
+             -display none -s -S
+
+Inside the guest host I have built QEMU with:
+
+  ../../configure --disable-docs \
+    --enable-debug-info --extra-ldflags=-gsplit-dwarf \
+    --disable-tcg --disable-xen --disable-tools \
+    --target-list=aarch64-softmmu
+
+  make qemu-system-aarch64 -j(nproc)
+
+Even with a cut down configuration this can take awhile to build under
+softmmu emulation!
+
+And finally I can boot my guest image with:
+
+  ./qemu-system-aarch64 \
+             -machine type=virt,gic-version=3 \
+             -cpu host \
+             -smp 1 \
+             -accel kvm,kernel-irqchip=off,trap-harder=on \
+             -serial mon:stdio \
+             -m 4096 \
+             -kernel ~/lsrc/linux.git/builds/arm64.initramfs/arch/arm64/boot/Image \
+             -append "console=ttyAMA0" \
+             -display none -d unimp,trace:kvm_hypercall,trace:kvm_wfx_trap
+
+And you can witness the system slowly booting up. Currently the system
+hangs before displaying the login prompt because its not being woken
+up from the WFI:
+
+  [    0.315642] Serial: AMBA PL011 UART driver
+  [    0.345625] 9000000.pl011: ttyAMA0 at MMIO 0x9000000 (irq = 13, base_baud = 0) is a PL011 rev1
+  [    0.348138] printk: console [ttyAMA0] enabled
+  Saving 256 bits of creditable seed for next boot
+  Starting syslogd: OK
+  Starting klogd: OK
+  Running sysctl: OK
+  Populating /dev using udev: done
+  Starting system message bus: done
+  Starting network: udhcpc: started, v1.37.0
+  kvm_wfx_trap 0: WFI @ 0xffffffc080cf9be4
+
+Next steps
+----------
+
+I need to figure out whats going on with the WFI failing. I also
+intend to boot up my Aarch64 system and try it out on real hardware.
+Then I can start looking into the actual performance and what
+bottlenecks this might introduce.
+
+Once Philippe has posted the SplitAccel RFC I can look at what it
+would take to integrate this approach so we can boot a full-stack with
+EL3/EL2 starting.
+
+Alex Bennée (11):
+  target/arm: allow gdb to read ARM_CP_NORAW regs (!upstream)
+  target/arm: re-arrange debug_cp_reginfo
+  linux-headers: Update to Linux 6.15.1 with trap-mem-harder (WIP)
+  kvm: expose a trap-harder option to the command line
+  target/arm: enable KVM_VM_TYPE_ARM_TRAP_ALL when asked
+  kvm/arm: allow out-of kernel GICv3 to work with KVM
+  target/arm: clamp value on icc_bpr_write to account for RES0 fields
+  kvm/arm: plumb in a basic trap harder handler
+  kvm/arm: implement sysreg trap handler
+  kvm/arm: implement a basic hypercall handler
+  kvm/arm: implement WFx traps for KVM
+
+ include/standard-headers/linux/virtio_pci.h |   1 +
+ include/system/kvm_int.h                    |   4 +
+ linux-headers/linux/kvm.h                   |   8 +
+ linux-headers/linux/vhost.h                 |   4 +-
+ target/arm/kvm_arm.h                        |  17 ++
+ target/arm/syndrome.h                       |   4 +
+ hw/arm/virt.c                               |  18 +-
+ hw/intc/arm_gicv3_common.c                  |   4 -
+ hw/intc/arm_gicv3_cpuif.c                   |   5 +-
+ target/arm/cpu.c                            |   2 +-
+ target/arm/debug_helper.c                   |  12 +-
+ target/arm/gdbstub.c                        |   6 +-
+ target/arm/helper.c                         |  15 +-
+ target/arm/kvm-stub.c                       |   5 +
+ target/arm/kvm.c                            | 243 ++++++++++++++++++++
+ hw/intc/Kconfig                             |   2 +-
+ target/arm/trace-events                     |   4 +
+ 17 files changed, 334 insertions(+), 20 deletions(-)
+
 -- 
 2.47.2
 
