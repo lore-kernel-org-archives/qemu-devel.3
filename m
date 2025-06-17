@@ -4,105 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6C5F3C7115B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:44:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A8ABC71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 15:44:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYJA-0002qZ-IX; Tue, 17 Jun 2025 11:33:09 -0400
+	id 1uRYJ7-0002hQ-BE; Tue, 17 Jun 2025 11:33:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uRYI9-0000vN-HA
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uRYI8-0001BQ-SQ
  for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:32:05 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pabeni@redhat.com>) id 1uRXoa-0006iP-Ly
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:01:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750172489;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=tZ/FNwPh0yNIGXKX7HbyExeNX/fl39clUsNyyBOmEfg=;
- b=DKYgx/MqezHsQXkiXfiyKArKZAqbQJPTx+BMytZCbmZKpo2+xcKNpW1JqVfR8OR4Avzrjc
- 7aHdGrrb++TB+vnpj9rHAPL4oRuC6bNguF0/3GQ0NxraNuq5K+wUuB0CS2/HcY1EEs2lCA
- x5qZUw9gf5aEvS3rNZ2YdRf7Z/l3PaU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-49--NW3NLsRM0qIwDcgZ-RAvg-1; Tue, 17 Jun 2025 11:01:27 -0400
-X-MC-Unique: -NW3NLsRM0qIwDcgZ-RAvg-1
-X-Mimecast-MFC-AGG-ID: -NW3NLsRM0qIwDcgZ-RAvg_1750172486
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-450d57a0641so41515655e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 08:01:26 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750172485; x=1750777285;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=tZ/FNwPh0yNIGXKX7HbyExeNX/fl39clUsNyyBOmEfg=;
- b=LAhPs+uxeF3/9YtCqv7zShGEaJSj9X5RqheGhmLukCDFxZZWXifXQX5HaofqiCsRC1
- RyCOLyh6oWUcg8T1pAjaGbevbDK2242pB6oRDSghS1+OI2PQROgrQU9TXzPakmJ3dyn8
- /sOQepoWjIcnWUuGpOCFg5GyI9KmaZTtBNjEk4AE4cD9WZqCFmhg5pXvOo3UyGwJxhac
- 1lSt8JGWRGRViBu5j0ZxdsSqgMJWqXwA1GejeDMyQS1VfWfyGReaZXADjx8mUE30GPWp
- jJn3DqtseJ0p1ikHCJj6ARRnh7IBo9EAlJE2uh2dkG4hzK5wAy96FMdcOUoX0IpTTWIU
- S94g==
-X-Gm-Message-State: AOJu0YzJPDXbX2pBBcVvIS6fD50u+lIYCdoonzk5Gtwqnx4FxIKMSZMq
- sjibK83leqM0W8sW4LRxBdvX2wM/Ttc1MmVzd0Z/1ngweIfLV3J8UmlaYAKpbvG1nX0mP3Jo7Bm
- PdT9rYK/Jd2xd8IldKAB/wJJt9yrYnWt44VDawMqR0G/Ar/LDKuD2bVWmiA/FEeRNF+rtNo+InZ
- 6vZ/JesgdjPVQ4vzFPNZ39oHKl7cThoHXHzB9BbcLE
-X-Gm-Gg: ASbGnctfumlEKDpvOq6TxxjxfLI6Ajse57dy0eqzsTz9No+g7oFAbaLjSoKmYwt+PLG
- Q2G5jZbxGltE+F1nBgvtgvPsRuYPthDQnwpyvcRyN3ueKMc1Am9f+yXVk9VAaSHzoStjYVSmm5S
- 8emQ7Gyt7cuiBuYgURMBMlwqGpe1hNrSIqRW7t38BZOdcp8QGDNe0C3Nu0GHZH+mere8ScIFiSE
- i2v2h7/pJCxUJXfYTtNCxtD8PoclTCYM3abEoqgEwlGFfl+ncK3jnN7sFC7m050zj7AJS5+fXWb
- cjTgK29M2GXCJs77VULcnLYntnjCDA==
-X-Received: by 2002:a05:600c:5026:b0:43d:9f2:6274 with SMTP id
- 5b1f17b1804b1-4533ca7790fmr137575245e9.14.1750172485124; 
- Tue, 17 Jun 2025 08:01:25 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEXShLp4nzwV7kSci4ZucvrbBKmVFCbHTbN32Dbj5gmaLCy7gbWSmOpJkg9oyjWspCcHMS1TA==
-X-Received: by 2002:a05:600c:5026:b0:43d:9f2:6274 with SMTP id
- 5b1f17b1804b1-4533ca7790fmr137574365e9.14.1750172484469; 
- Tue, 17 Jun 2025 08:01:24 -0700 (PDT)
-Received: from ?IPV6:2a0d:3344:2448:cb10::f39? ([2a0d:3344:2448:cb10::f39])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b2f80asm14266211f8f.78.2025.06.17.08.01.22
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 08:01:23 -0700 (PDT)
-Message-ID: <9ea6bc07-f2c6-4c05-909b-e7fad4c239fe@redhat.com>
-Date: Tue, 17 Jun 2025 17:01:22 +0200
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC 00/16] virtio: introduce support for GSO over UDP
- tunnel
-From: Paolo Abeni <pabeni@redhat.com>
+ (Exim 4.90_1) (envelope-from <alejandro.j.jimenez@oracle.com>)
+ id 1uRXrZ-0006sL-Na
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:04:40 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+ by mx0b-00069f02.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55HEWwa9003868;
+ Tue, 17 Jun 2025 15:04:31 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=Qd9ck
+ DpIfzkSXuwON6JL4VOurKp58Q4gTqJb6IkYUVk=; b=kQN/OEKN3y/cibA07WucM
+ thDgENgc1sQwyDorgoXMtr6TKIbso362CVZsiF9e9HH6yCHiYAdTzu5dXFk7X0/7
+ nhr9mq0vDNbW8QMePL5OAGu6rMUm7A7YCRDOHFJOgNrNB1wMF2irmsNsK6Tmmpa4
+ +ctoksftRKHrJuthlNvwN9te1lcrlYDGQzH4bObtuJJo4rr4NonZLfBwHM43BAWh
+ PK3k/M8qVUyuaRCAgNv6BiFHPCayYLIK8QjtGe2VzD53N9gGsCmWgcpOrHCoZVEi
+ 8niMMf5p9s0XLC8A723JRrfAor3Db8wUNKB8S3c0WF53bn50AV5N4XLfBq9d6YJ/
+ Q==
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.appoci.oracle.com [130.35.100.223])
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 478yv55eya-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Jun 2025 15:04:30 +0000 (GMT)
+Received: from pps.filterd
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
+ with ESMTP id 55HEFnN2000824; Tue, 17 Jun 2025 15:04:30 GMT
+Received: from pps.reinject (localhost [127.0.0.1])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
+ 478yh9bxrk-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Jun 2025 15:04:30 +0000
+Received: from iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com
+ (iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 55HF4Svb014869;
+ Tue, 17 Jun 2025 15:04:29 GMT
+Received: from alaljimee5bm-ol9-20250405.osdevelopmeniad.oraclevcn.com
+ (alaljimee5bm-ol9-20250405.allregionaliads.osdevelopmeniad.oraclevcn.com
+ [100.100.254.235])
+ by iadpaimrmta01.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
+ 478yh9bxny-3; Tue, 17 Jun 2025 15:04:29 +0000
+From: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Dmitry Fleytman <dmitry.fleytman@gmail.com>,
- Akihiko Odaki <akihiko.odaki@daynix.com>, Jason Wang <jasowang@redhat.com>,
- Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>, Cornelia Huck <cohuck@redhat.com>,
- Luigi Rizzo <lrizzo@google.com>, Giuseppe Lettieri
- <g.lettieri@iet.unipi.it>, Vincenzo Maffione <v.maffione@gmail.com>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-References: <cover.1747825544.git.pabeni@redhat.com>
-Content-Language: en-US
-In-Reply-To: <cover.1747825544.git.pabeni@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pabeni@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+Cc: ethan.milon@eviden.com, mst@redhat.com, pbonzini@redhat.com,
+ mjt@tls.msk.ru, marcel.apfelbaum@gmail.com,
+ richard.henderson@linaro.org, eduardo@habkost.net,
+ vasant.hegde@amd.com, suravee.suthikulpanit@amd.com,
+ santosh.shukla@amd.com, sarunkod@amd.com, brijesh.singh@amd.com,
+ joao.m.martins@oracle.com, boris.ostrovsky@oracle.com,
+ alejandro.j.jimenez@oracle.com, philmd@linaro.org
+Subject: [PATCH v4 2/8] amd_iommu: Fix Device ID decoding for
+ INVALIDATE_IOTLB_PAGES command
+Date: Tue, 17 Jun 2025 15:04:21 +0000
+Message-ID: <20250617150427.20585-3-alejandro.j.jimenez@oracle.com>
+X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20250617150427.20585-1-alejandro.j.jimenez@oracle.com>
+References: <20250617150427.20585-1-alejandro.j.jimenez@oracle.com>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-17_06,2025-06-13_01,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ malwarescore=0
+ mlxlogscore=999 mlxscore=0 bulkscore=0 spamscore=0 adultscore=0
+ suspectscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2505160000 definitions=main-2506170117
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE3MDExOCBTYWx0ZWRfX0UJjT1+9fASP
+ KXWmrJEtB+qSqvWSblfFNSO93cH0lj7KzI2DNEItGfS7a6TEu52UrO1qSY89JcItG2Fs2Xh+Krh
+ Vm0+Wpu0E0b8Pv7PazrBre7EbDk23HKLUJ2voxEcledoQ1XYemvEfcd14r+g6hOiPuJAmQa0bSV
+ cH0iT0CkRsPk4/rnXA/gRlk94gWvyCR8uIulQnnDVzegdVF1TFQ0ILFEK068DwmAPP9FSZ0ldRi
+ OTqaArtMzxpV+6C2tcuTpB5qF+ZJ/WiNY2G5+ga+MYQPjEVqHwHiN+hMwCHpJMF3xPFSmIJxNEB
+ XwHY82UrJqScCHk3LwrzJyjjky1GcYzDsaVNWYqEjJ2NIk8C6Fc8ZfJGNXHQhO442tXYJAZ8vOa
+ B/2BdW/8UpnBlxbSS2ehDvAey8C+kuFqcwSKOH9aH+EfQwQYxq8VdYaGFBs0LN98GHhB7O8b
+X-Proofpoint-GUID: dxIiQUF7QYvFYKdmEryGF2p4zBU6QoO4
+X-Proofpoint-ORIG-GUID: dxIiQUF7QYvFYKdmEryGF2p4zBU6QoO4
+X-Authority-Analysis: v=2.4 cv=W9c4VQWk c=1 sm=1 tr=0 ts=685183fe b=1 cx=c_pps
+ a=zPCbziy225d3KhSqZt3L1A==:117 a=zPCbziy225d3KhSqZt3L1A==:17
+ a=6IFa9wvqVegA:10 a=69wJf7TsAAAA:8 a=yPCof4ZbAAAA:8 a=zd2uoN0lAAAA:8
+ a=r9zmrm_j51NoiylAmAIA:9
+ a=Fg1AiH1G6rFz08G2ETeA:22 cc=ntf awl=host:13206
+Received-SPF: pass client-ip=205.220.177.32;
+ envelope-from=alejandro.j.jimenez@oracle.com; helo=mx0b-00069f02.pphosted.com
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -120,55 +121,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/21/25 1:33 PM, Paolo Abeni wrote:
-> Some virtualized deployments use UDP tunnel pervasively and are impacted
-> negatively by the lack of GSO support for such kind of traffic in the
-> virtual NIC driver.
-> 
-> The virtio_net specification recently introduced support for GSO over
-> UDP tunnel, this series updates the virtio implementation to support
-> such a feature.
-> 
-> One of the reasons for the RFC tag is that the kernel-side
-> implementation has just been shared upstream and is not merged yet, but
-> there are also other relevant reasons, see below.
-> 
-> Currently, the kernel virtio support limits the feature space to 64 bits,
-> while the virtio specification allows for a larger number of features.
-> Specifically, the GSO-over-UDP-tunnel-related virtio features use bits
-> 65-69; the larger part of this series (patches 2-11) actually deals with
-> the extended feature space.
-> 
-> I tried to minimize the otherwise very large code churn by limiting the
-> extended features support to arches with native 128 integer support and
-> introducing the extended features space support only in virtio/vhost
-> core and in the relevant device driver.
-> 
-> The actual offload implementation is in patches 12-16 and boils down to
-> propagating the new offload to the tun devices and the vhost backend.
-> 
-> Tested with basic stream transfer with all the possible permutations of
-> host kernel/qemu/guest kernel with/without GSO over UDP tunnel support
-> and vs snapshots creation and restore.
-> 
-> Notably this does not include (yet) any additional tests. Some guidance
-> on such matter would be really appreciated, and any feedback about the
-> features extension strategy would be more than welcome!
+The DeviceID bits are extracted using an incorrect offset in the call to
+amdvi_iotlb_remove_page(). This field is read (correctly) earlier, so use
+the value already retrieved for devid.
 
-Some times has passed, and I haven't followed-up yet with a v2. The root
-cause (beyond the usual ENOTIME ;) is that I'm focusing on the
-kernel-side patches, which I almost co-posted with this RFC, and are
-still under discussion.
+Cc: qemu-stable@nongnu.org
+Fixes: d29a09ca6842 ("hw/i386: Introduce AMD IOMMU")
+Signed-off-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
+Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
+---
+ hw/i386/amd_iommu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Since the outcome of such discussion will influence also the userland,
-I'll wait it to settle before sharing a new revision here.
-
-It could take still some time, and the new revision will likely present
-significant different from v1, especially WRT virtio feature space
-expansion - as working on the kernel code showed a possibly better approach.
-
-Thanks,
-
-Paolo
+diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
+index 963aa2450c997..c27efa504d19a 100644
+--- a/hw/i386/amd_iommu.c
++++ b/hw/i386/amd_iommu.c
+@@ -508,7 +508,7 @@ static void amdvi_inval_inttable(AMDVIState *s, uint64_t *cmd)
+ static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
+ {
+ 
+-    uint16_t devid = extract64(cmd[0], 0, 16);
++    uint16_t devid = cpu_to_le16(extract64(cmd[0], 0, 16));
+     if (extract64(cmd[1], 1, 1) || extract64(cmd[1], 3, 1) ||
+         extract64(cmd[1], 6, 6)) {
+         amdvi_log_illegalcom_error(s, extract64(cmd[0], 60, 4),
+@@ -521,7 +521,7 @@ static void iommu_inval_iotlb(AMDVIState *s, uint64_t *cmd)
+                                     &devid);
+     } else {
+         amdvi_iotlb_remove_page(s, cpu_to_le64(extract64(cmd[1], 12, 52)) << 12,
+-                                cpu_to_le16(extract64(cmd[1], 0, 16)));
++                                devid);
+     }
+     trace_amdvi_iotlb_inval();
+ }
+-- 
+2.43.5
 
 
