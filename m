@@ -4,127 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9F5C71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:05:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47708C71136
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 16:05:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRYfb-0003KW-K9; Tue, 17 Jun 2025 11:56:22 -0400
+	id 1uRYil-0007tD-RU; Tue, 17 Jun 2025 11:59:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uRYM1-0006F5-LM
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:36:10 -0400
-Received: from mail-ed1-f66.google.com ([209.85.208.66])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <i.maximets.ovn@gmail.com>)
- id 1uRUyK-0006xW-3h
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 07:59:26 -0400
-Received: by mail-ed1-f66.google.com with SMTP id
- 4fb4d7f45d1cf-6088d856c6eso9937275a12.0
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 04:59:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRYaj-0003Kp-GV
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:51:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uRYaf-0007uE-JN
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 11:51:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750175471;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VS9urkfSFWt7AAn5yxzZ6Nil/NSfyk3gPz8NMoBeooM=;
+ b=ZlML2LJ4xWIrjyBHIQ+yQkQuaddWsz1pJBK1QkqeKXNtimMAfx/XDWWIv+9Jq5oE3UGFV2
+ i66uJwTXcwMYYOC/3TDPGaqsivnyQXOf4JgjrWTysCPpOgtxw214asgQgC5vU0IvdyW9u2
+ je1f7QVqJlD/0sv70e1Lt/SEDR0Bz28=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-151-mLE1sjApOPioRrRJdvQwtw-1; Tue, 17 Jun 2025 11:51:10 -0400
+X-MC-Unique: mLE1sjApOPioRrRJdvQwtw-1
+X-Mimecast-MFC-AGG-ID: mLE1sjApOPioRrRJdvQwtw_1750175469
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-450d50eacafso36041405e9.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 08:51:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750161562; x=1750766362;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:to:subject:cc:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=EU0DCQb/zd9WyUxYMFIGRJc9j60ngOl4viJXnSpEIdM=;
- b=BUlgxlCbCn3+UGy5xTGnkHosVlnqfOwwR2CXXcanJX/qHdB9eOROi1iPnAWBLM48IC
- GYA4buqlCFOJGPrklvg1iOqOnH+CEP1q3rVaqB6PjC23t9Qv0852xQ3RpwOfKUFhzair
- WT2mhJmyoITUD1mI8CfZOjsPB3yigYDKDyGV9l7+PuTO9XbLwt/UMB9iVnoygSJv6ZWU
- 2kvyAcn1CqRfN5CguThWuE0sxb8NaBsYNVfn8iO8PRfpPNgE5WWFWUDHgEKOkC728JRS
- 4uEH7WSlWSg7/L6Y7rTM+dvbr9CI234sVghIkfwVG492nhXRgJmqe+kwuKaluiyiCekm
- VAGA==
+ d=1e100.net; s=20230601; t=1750175469; x=1750780269;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VS9urkfSFWt7AAn5yxzZ6Nil/NSfyk3gPz8NMoBeooM=;
+ b=h69Me7ZN8awJIL72Jp47+huZhVQWvV0XGL+0B69la7T1PSVPwxuo4u71EQK5l4dxrF
+ SFST3/F49yA/r0QpgsJ/Gyb1KhCmX4RLRD1v3jbApyR15iqBFgWua9Wddp8ZWua/0Qnq
+ SCvm0sMIsq1ela/E7exDRoE0kl3tpS3Y42K1DTJX1wfX2tqJQO8bQ9F8y6cbCZr/Q2rt
+ 4/jcg2GoJ3NDI6AggxRc64EntpEt6MjrASiEQfckGCEaccqznuJDtQeKuXJMZsa85ubu
+ dkyG9HMZtMsAskeIkEiACfa+hHzi6ylB1lzzTDaTaLG1BYPBCXb3+G6W7Agf1VrLT/U7
+ PNLQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXbiolaPzXSvwDEOQqfcuRKQbnGx4rbLYoo2eSbeaOvIN0O0IOrzibR0V1zWom4pt3pmsnA812mh8qB@nongnu.org
-X-Gm-Message-State: AOJu0Yw8B9gkkGLg9DHOmnnjq0GaiiPAfWIoHYZOcsAX8EGVsv2PfkiV
- E7J9IPjlfnNyZmW1ROwOJk+wqxhMIricohFxBT9JeYCBnFn5Yza0DrD3
-X-Gm-Gg: ASbGncs3iKKwfzwg0Ljr9gyHwZ8PiyYMXr0Q7KM/A8OHPwuzgCGYyb5nCY3bZgwINqN
- Fy5dS1D3rW8ThKsdk1ip/TlJ6sEUHSxEz5n0LW9tHwvZpH0+O60/jOd+Myaxx4AAdhFnLM1UHGv
- soyP9VfF1QSVGXScIA74bt3zpq889cxK0PnUvElAf7dJwQJ6HTAFmdbZotjt5RPEDJG2mARfMAN
- BFIb9lt26fkv5BuGNh8Tc94qTCzbi2DErYd4bxu9NRGRcjUmD2Nym+xbx7Dun7UwGQws9b/yxYu
- 01l3p8EMD+9FMZ+31rNLrLSc1jTfnCeVP9AEXQWx7bpUirfm7Y5s9rMVTjqr3c3Zdz6irI1Cq8y
- IaSrSVfHFY49+wwqvwUyK
-X-Google-Smtp-Source: AGHT+IGD80YnBZ6Xyz3YA/r0wute/DqTa0eS6djh4+3Iyh/GyqY8a3Rw+jHNzsYYseRlduFjErwydQ==
-X-Received: by 2002:a17:906:6a1b:b0:ad5:7234:e4a9 with SMTP id
- a640c23a62f3a-adfad54b256mr1282817066b.28.1750161561350; 
- Tue, 17 Jun 2025 04:59:21 -0700 (PDT)
-Received: from [192.168.88.252] (78-80-97-102.customers.tmcz.cz.
- [78.80.97.102]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-adfbfc777c9sm550579866b.118.2025.06.17.04.59.20
+ AJvYcCUOJM0ziKsbyQuwxyJKQArpj/Ecv3ot2z2j8u790bM9cKwxgvMzCtIRWLUx8hMLNcChTfsub+mj+p1n@nongnu.org
+X-Gm-Message-State: AOJu0Yynqo4rU/Blob11yUt9ut7pQLAaKvq0UPK4BK8L+vx86qjmWZQ7
+ qLPRlpSnfGSFqotJKY+C4nbFcSgJgW8cjI/ycV1Md1JLHjc1zm5c4KFTPPznJevRMrh2nVPr8Io
+ GSGyNHUD3HmAkZWbxngpzqaF1UCXt1Z9Nj68PrC21YtzJBN5ULlBwvjFB
+X-Gm-Gg: ASbGncvoTWZNivS8fXO1Nt0g5DogeBQlzoZlWj1KwEGJEZLrmJfavkrrwEtOcxG00yI
+ v32oWsCYdVMNwXWLV19brlIEv1GbJ8O6dXJ9Jkc6OSl/8q7cbbp3po3GXs1HCfK06K8WR5x71Na
+ nWwNnYcVRYjaIvO4eVxsIkYEhEjW7PNFFB1MJt2pZs+5sXUxAyX/q1lDJcVpw5uj8LFwbRG2x3R
+ OVo3c8vM66E5AcMfdK8trUKSHYV0wr4Imeb0KDPPLZt/KrBKfOpYch1K7uWH+BlXWW8DOusuYbz
+ yeJhyt7crZGL9ayxAb0tVCrH2m2Tkj63cuWqlrQYPUggEDyrNA6GPBr6CuQI0Z8Ih5LWkg==
+X-Received: by 2002:a05:600c:a00c:b0:43d:40b0:5b with SMTP id
+ 5b1f17b1804b1-45353f6c370mr24876115e9.25.1750175469299; 
+ Tue, 17 Jun 2025 08:51:09 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGokbolh5+wMjavNcW3U/wAa79plPfJoTUUv9f444Ko9Di03DaZjj6NSsxccaDjfr0Lu0OZpQ==
+X-Received: by 2002:a05:600c:a00c:b0:43d:40b0:5b with SMTP id
+ 5b1f17b1804b1-45353f6c370mr24875805e9.25.1750175468818; 
+ Tue, 17 Jun 2025 08:51:08 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4532e25f207sm178883935e9.35.2025.06.17.08.51.07
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 04:59:21 -0700 (PDT)
-Message-ID: <945f230c-052b-43b5-b1c3-b8c450c21327@ovn.org>
-Date: Tue, 17 Jun 2025 13:59:20 +0200
+ Tue, 17 Jun 2025 08:51:08 -0700 (PDT)
+Message-ID: <74c1948a-3c90-431b-805f-b5a4238beecb@redhat.com>
+Date: Tue, 17 Jun 2025 17:51:07 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Cc: i.maximets@ovn.org, Jason Wang <jasowang@redhat.com>,
- Anton Protopopov <aspsk@isovalent.com>
-Subject: Re: [PATCH v3 2/2] net/af-xdp: Fix up cleanup path upon failure in
- queue creation
-To: Daniel Borkmann <daniel@iogearbox.net>, qemu-devel@nongnu.org
-References: <20250604112916.1195368-1-daniel@iogearbox.net>
- <20250604112916.1195368-2-daniel@iogearbox.net>
+Subject: Re: [PATCH v4 5/8] qtest/bios-tables-test: Add test for when ITS is
+ off on aarch64
 Content-Language: en-US
-From: Ilya Maximets <i.maximets@ovn.org>
-Autocrypt: addr=i.maximets@ovn.org; keydata=
- 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
-In-Reply-To: <20250604112916.1195368-2-daniel@iogearbox.net>
+To: Gustavo Romero <gustavo.romero@linaro.org>, qemu-devel@nongnu.org,
+ philmd@linaro.org, mst@redhat.com
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, udo@hypervisor.org,
+ ajones@ventanamicro.com, peter.maydell@linaro.org, imammedo@redhat.com,
+ anisinha@redhat.com
+References: <20250616131824.425315-1-gustavo.romero@linaro.org>
+ <20250616131824.425315-6-gustavo.romero@linaro.org>
+ <fe166574-9e53-4e27-9c12-c91f3fc774c7@redhat.com>
+ <3881403f-c618-47d1-afec-27592bd7be99@linaro.org>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <3881403f-c618-47d1-afec-27592bd7be99@linaro.org>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=209.85.208.66;
- envelope-from=i.maximets.ovn@gmail.com; helo=mail-ed1-f66.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9,
- FREEMAIL_FORGED_FROMDOMAIN=0.001, FREEMAIL_FROM=0.001,
- HEADER_FROM_DIFFERENT_DOMAINS=0.068, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -137,103 +118,206 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/4/25 1:29 PM, Daniel Borkmann wrote:
-> While testing, it turned out that upon error in the queue creation loop,
-> we never trigger the af_xdp_cleanup() handler. This is because we pass
-> errp instead of a local err pointer into the various AF_XDP setup functions
-> instead of a scheme like:
-> 
->     bool fn(..., Error **errp)
->     {
->         Error *err = NULL;
-> 
->         foo(arg, &err);
->         if (err) {
->             handle the error...
->             error_propagate(errp, err);
->             return false;
->         }
->         ...
->     }
-> 
-> With a conversion into the above format, the af_xdp_cleanup() handler is
-> called as expected.
 
-How exactly this prevents calling the cleanup function?  I don't see the
-errp being checked anywhere in the qemu_del_net_client() path.
 
-Could you provide a more detailed call sequence description where the cleanup
-is not called?
+On 6/17/25 5:12 PM, Gustavo Romero wrote:
+> Hi Eric,
+>
+> On 6/17/25 10:34, Eric Auger wrote:
+>> Hi Gustavo,
+>>
+>> On 6/16/25 3:18 PM, Gustavo Romero wrote:
+>>> From: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>
+>>> Arm64 GIC ITS (Interrupt Translation Service) is an optional piece of
+>>> hardware introduced in GICv3 and, being optional, it can be disabled
+>>> in QEMU aarch64 VMs that support it using machine option "its=off",
+>>> like, for instance: "-M virt,its=off".
+>>>
+>>> In ACPI, the ITS is advertised, if present, in the MADT (aka APIC)
+>>> table and the remappings from the Root Complex (RC) and from the SMMU
+>> I would rephrase "and the remappings" by "while the RID mappings from
+>> ..."
+>
+> hmm true. Do you think it would be even better to say something like:
+>
+> "while the RID and StreamID mappings from the RC and from the SMMU nodes
+> to the ITS Group nodes are described in the IORT table."?
+>
+> I'm saying that because I understand the map from RC to ITS is from
+> a RID to a DeviceID, while map from the SMMU to ITS is from a StreamID to
+> a DeviceID, hence say "while the RID and StreamID". Does it make sense?
+I think I won't bother and would simply talk about "ID mappings" which
+is the generic term used in the IORT spec.
+>
+>
+>>> nodes to the ITS Group nodes are described in the IORT table.
+>>>
+>>> This new test verifies that when the "its=off" option is passed to the
+>>> machine the ITS-related data is correctly pruned from the ACPI tables.
+>>>
+>>> The new blobs for this test will be added in a following commit.
+>>>
+>>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> ---
+>>>   tests/qtest/bios-tables-test-allowed-diff.h |  2 ++
+>>>   tests/qtest/bios-tables-test.c              | 21
+>>> +++++++++++++++++++++
+>>>   2 files changed, 23 insertions(+)
+>>>
+>>> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h
+>>> b/tests/qtest/bios-tables-test-allowed-diff.h
+>>> index dfb8523c8b..a88198d5c2 100644
+>>> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+>>> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+>> I still fail to understand whether empty tables + update if the
+>>
+>> bios-tables-test-allowed-diff.h need to be done prior to adding the
+>> new test.
+>>
+>>   * How to add or update the tests or commit changes that affect ACPI
+>> tables:
+>>   * Contributor:
+>>   * 1. add empty files for new tables, if any, under tests/data/acpi
+>>   * 2. list any changed files in
+>> tests/qtest/bios-tables-test-allowed-diff.h
+>>   * 3. commit the above *before* making changes that affect the tables
+>
+> I think the best reference I have to it is the reply from Igor to me
+> here:
+>
+> https://lore.kernel.org/qemu-devel/20250506173640.5ed03a16@imammedo.users.ipa.redhat.com/
+>
+>
+> I understand there are two possibilities when adding a new test:
+>
+> 1) Like in the steps above, 1., 2., and 3., which are taken from the
+> bios-tables-test.c.
+>
+> That gives option A:
+>
+> A Patch 1: New empty files uuder tests/data/acpi + list of them in
+> tests/qtest/bios-tables-test-allowed-diff.h
+> A Patch 2: New test (since the blobs are wrong but we added them in
+> Patch 1 to allow list, there is no fail in test
+> A Patch 3: Update blobs (actually you are adding the real blobs, or
+> updating from empty to real one)
+>
+> or (what I'm doing here), option B:
+>
+> B Patch 1: (A Patch 1) + (A Patch 2)
+> B Patch 2: Like (A Patch 3), i.e., just update the blobs (add the real
+> ones)
+>
+> This is the sequence Igor confirmed it's ok:
+>
+>> - Patch 1     : Add the new test, add the empty blobs *.suffix files,
+>> whitelist such a blobs
+>> - Patch 2     : Update the blobs in Patch 1 with the ones that make
+>> the new test pass and remove them from the whitelist
+>
+> Also, Igor says it's ok to add to the allow list the blobs that change
+> at the same time
+> we add test that changes the very same blobs even when updating an
+> existing test (not adding a
+> new one, which is slight variation):
+>
+>> - Patch 3     : Add the APIC.suffix blob to the whitelist (the table
+>> that changes due to the fix)
+>> - Patch 4 - n : Fix(es)
+>
+> "3 is not binary so it can be folded into 4 or be a separate patch
+> (either way works for me)"
+>  
+> The important thingy is to follow the rules:
+>
+> 1) Don't make a commit which fails the tests
+> 2) Don't fold a blob with the commit that changes the blob
+>
+> That's my current understanding about it.
+>
+> Let me know if that makes sense to you. We need to reach a consensus
+> on this, confusing as
+> these acrobatics may be! :)
 
-I agree thought that the local err variable is actually unused.  We should
-be able to just remove it and remove the error_propagate() call as well.
+Actually I checked your patch and effectively it does not produce any
+checkpatch error related to bios-tables-test rules so your patch is OK
+(yesterday I discovered with the ACPI PCI HP series that checkpatch
+points out infractions to bios-tables-test.c rules!). Since it results
+in less patches I think it is better. May be worth to clarify that
+directly in bios-tables-test.c though.
 
-> Also, making sure the XDP program will be removed does
-> require to set s->n_queues to i + 1 since the test is nc->queue_index ==
-> s->n_queues - 1, where nc->queue_index was set to i earlier.
+Cheers
 
-The idea behind 'i' instead of 'i + 1' was that if either af_xdp_umem_create()
-or af_xdp_socket_create() fails, we do not have xdp_flags initialized on the
-last queue.  And without it we can't remove the program, so we remove it while
-destroying the last actually configured queue.  And this is OK, because the
-failed queue was not added to the program, and if the af_xdp_socket_create()
-fails for the very first queue, then we don't have a program loaded at all.
-
-With the new changes in this patch set, we have an extra function that can fail,
-which is a new af_xdp_update_xsk_map(), and only if this one fails, we need to
-remove the program while cleaning up the current failed queue, since it was
-already created and xdp_flags are available.
-
-If we get this patch as-is and the af_xdp_socket_create() fails, we will not
-remove the program, AFAICT.
-
-Or am I missing something?
-
-Best regards, Ilya Maximets.
-
-> With both
-> fixed the cleanup triggers as expected. Note the error_propagate() handles
-> a NULL err internally.
-> 
-> Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-> Cc: Ilya Maximets <i.maximets@ovn.org>
-> Cc: Jason Wang <jasowang@redhat.com>
-> Cc: Anton Protopopov <aspsk@isovalent.com>
-> ---
->  net/af-xdp.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
-> 
-> diff --git a/net/af-xdp.c b/net/af-xdp.c
-> index b83d9bc47f..5d9857fdd8 100644
-> --- a/net/af-xdp.c
-> +++ b/net/af-xdp.c
-> @@ -559,12 +559,11 @@ int net_init_af_xdp(const Netdev *netdev,
->              s->map_start_index = opts->map_start_index;
->          }
->  
-> -        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, errp) ||
-> -            af_xdp_socket_create(s, opts, errp) ||
-> -            af_xdp_update_xsk_map(s, errp)) {
-> +        if (af_xdp_umem_create(s, sock_fds ? sock_fds[i] : -1, &err) ||
-> +            af_xdp_socket_create(s, opts, &err) ||
-> +            af_xdp_update_xsk_map(s, &err)) {
->              /* Make sure the XDP program will be removed. */
-> -            s->n_queues = i;
-> -            error_propagate(errp, err);
-> +            s->n_queues = i + 1;
->              goto err;
->          }
->      }
-> @@ -586,6 +585,7 @@ int net_init_af_xdp(const Netdev *netdev,
->  err:
->      if (nc0) {
->          qemu_del_net_client(nc0);
-> +        error_propagate(errp, err);
->      }
->  
->      return -1;
+Eric
+>
+>
+> Cheers,
+> Gustavo
+>
+>>> @@ -1 +1,3 @@
+>>>   /* List of comma-separated changed AML files to ignore */
+>>> +"tests/data/acpi/aarch64/virt/APIC.its_off",
+>>> +"tests/data/acpi/aarch64/virt/IORT.its_off",
+>>> diff --git a/tests/qtest/bios-tables-test.c
+>>> b/tests/qtest/bios-tables-test.c
+>>> index 0b2bdf9d0d..4201ec1131 100644
+>>> --- a/tests/qtest/bios-tables-test.c
+>>> +++ b/tests/qtest/bios-tables-test.c
+>>> @@ -2146,6 +2146,25 @@ static void
+>>> test_acpi_aarch64_virt_tcg_topology(void)
+>>>       free_test_data(&data);
+>>>   }
+>>>   +static void test_acpi_aarch64_virt_tcg_its_off(void)
+>>> +{
+>>> +    test_data data = {
+>>> +        .machine = "virt",
+>>> +        .arch = "aarch64",
+>>> +        .variant =".its_off",
+>> you have a checkpatch error here.
+>
+> ouch, thanks, will fix in v5.
+>
+>
+> Cheers,
+> Gustavo
+>
+>>> +        .tcg_only = true,
+>>> +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
+>>> +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
+>>> +        .cd =
+>>> "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
+>>> +        .ram_start = 0x40000000ULL,
+>>> +        .scan_len = 128ULL * 1024 * 1024,
+>>> +    };
+>>> +
+>>> +    test_acpi_one("-cpu cortex-a57 "
+>>> +                  "-M gic-version=3,iommu=smmuv3,its=off", &data);
+>>> +    free_test_data(&data);
+>>> +}
+>>> +
+>>>   static void test_acpi_q35_viot(void)
+>>>   {
+>>>       test_data data = {
+>>> @@ -2577,6 +2596,8 @@ int main(int argc, char *argv[])
+>>>                              test_acpi_aarch64_virt_tcg_acpi_hmat);
+>>>               qtest_add_func("acpi/virt/topology",
+>>>                              test_acpi_aarch64_virt_tcg_topology);
+>>> +            qtest_add_func("acpi/virt/its_off",
+>>> +                           test_acpi_aarch64_virt_tcg_its_off);
+>>>               qtest_add_func("acpi/virt/numamem",
+>>>                              test_acpi_aarch64_virt_tcg_numamem);
+>>>               qtest_add_func("acpi/virt/memhp",
+>>> test_acpi_aarch64_virt_tcg_memhp);
+>> Thanks
+>>
+>> Eric
+>>
+>
 
 
