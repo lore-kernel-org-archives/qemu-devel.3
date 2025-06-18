@@ -4,88 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0773C71157
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 09:30:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7948C71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 10:36:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRp6V-0003O7-QO; Wed, 18 Jun 2025 05:29:11 -0400
+	id 1uRq9H-0005GG-IN; Wed, 18 Jun 2025 06:36:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uRp6T-0003Nv-J5
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 05:29:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uRq9G-0005G6-CL
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 06:36:06 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uRp6L-00008Q-Ls
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 05:29:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750238939;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=7n1zWtfpue7IIpmzwuLkqlzLkSSoe7c5lR1D+TGtRxk=;
- b=SB37EJd3aX802WWBIUSiMAwx3/1cV/baQx6SQS+29AmVdIQC0PoWXYBAi2b8/AL18Wt/bn
- yRLf5mPxovjH5bBPFH8pRD2gjiRLmal02RyjFRtbQiY9o9j1IdgkLmK0w+UcqH8Wv2wxh2
- AzKjAYxpsYe51SYzqngYe6BGc0iWqW0=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-29-7DD5FnqIP5el8Psh84oMsw-1; Wed, 18 Jun 2025 05:28:57 -0400
-X-MC-Unique: 7DD5FnqIP5el8Psh84oMsw-1
-X-Mimecast-MFC-AGG-ID: 7DD5FnqIP5el8Psh84oMsw_1750238936
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-6fad2a25b65so112861746d6.3
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 02:28:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750238936; x=1750843736;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=7n1zWtfpue7IIpmzwuLkqlzLkSSoe7c5lR1D+TGtRxk=;
- b=QVr9akPG3ycvrOgitWDvtorB7UxjdIDkn+uc1bu7FmVy0qKluiI4ayPO+E9geadOrC
- z1Viuv+yrv4IgXUp/xGTb+aSqfSvWDmBuJi1652KqLFS2pGjpIdN3xtUKMrxfBAS7mqV
- yqi81OETk4X+miq5hs/bUUKCWsBUSUVRAVjiuZhqfKoLT9z9xWhzUIiMtkgzEfRLgiBk
- d68gyP2KFBXOLdef1aZoql1q7O/6ASAhZjeTn5w/w/yA7HwCd6oh10aKae3mg3kphfbw
- SW2sqmXf/6ne2RRrEcfr8H1mQN17xrTBp41GS2vw6knfUV8Sk37AKPHieIL8SuC5ZQur
- 1MAg==
-X-Gm-Message-State: AOJu0YzVYLHTKLg/PNimx1rWHWm+X9T36gY3wI8ILYyvQO3NcSJiByfS
- 0AkJPlYas4nNWxO5TEVMHNbq5UNkcapMhaAXHrlh2Z1YPQ//1q1kM6748s3LvKQ/UILs42e2QLA
- Tb3I3wv7OQDSybjGRhilwB4GQzbkp0hIjacqgvSspv19nYbQxo1GjZM7MS5hVK/IUbtxHDXdl6U
- tgoQ1LFuWhXE/Z0xd6yv3lXbyI3Gc9KPI=
-X-Gm-Gg: ASbGncu+R12Za2/X1zcYppVpMZKB3M4q0yg8AXiY1dTRoiZ2Imo7ycjTC38Vy2kOVU1
- ScXracnJVSPW1R+0qV7pjOZlrVg5pK69BQp6Hpawgnl6d3F/M/iM1OtXMDtt+6w5X3HY5J8EXm/
- kF14Bbmg==
-X-Received: by 2002:ad4:5d6f:0:b0:6fa:d8bb:294c with SMTP id
- 6a1803df08f44-6fb47726e99mr244564796d6.14.1750238936680; 
- Wed, 18 Jun 2025 02:28:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGrz8JVihBtKp8l/+5DJKQFiMFlrmzIaAlS/6s2qYYfu0dygmlSb2+H+nkj0tRX3agn/b4fQkG+fmqRjPOkZiQ=
-X-Received: by 2002:ad4:5d6f:0:b0:6fa:d8bb:294c with SMTP id
- 6a1803df08f44-6fb47726e99mr244564636d6.14.1750238936444; Wed, 18 Jun 2025
- 02:28:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uRq9E-0001JM-KX
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 06:36:06 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55I95BPF004256;
+ Wed, 18 Jun 2025 10:36:01 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=R3rDYszvxlWiTBfnSijGvFEIf2FE2S3DA8otQMWJp
+ 6w=; b=QVaRRVOjOARWxyrmpqYZp7rcTTNg+BeAHOB/yeMf7zwZZrjrI3G09jdA9
+ M5+57AcRehmEqT8wtaZEGQeqmy+geqahhI9NDCogg6nV8wdq23KqicQKvC5QJOxW
+ dNmmmh5ThahYLec0Fx/DF4GT5RmVRPKsCHbJydHS4jsuWYa96aFZlJEg3CSIAQOI
+ cZLdKaGsCx61Pf5ckqjygkbVxNftcCpfFqJssISEMpSOnEE6q+qDxnH7Vz316o15
+ FDEPVc3z5eQTYx4wFcUbp4rSshDf1mV1S9QX6964p2PmE4wk8Rj5EWZ998ZyDQ50
+ rvMuUh78rJP3zl+Y1J7W2fA/o6gFA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 478ygndy01-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Jun 2025 10:36:01 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55I9THw1014278;
+ Wed, 18 Jun 2025 10:36:00 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 479p42g41t-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Jun 2025 10:36:00 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55IAZuYp47907220
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 18 Jun 2025 10:35:57 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DAEDE20040;
+ Wed, 18 Jun 2025 10:35:56 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 9C8AC2004B;
+ Wed, 18 Jun 2025 10:35:56 +0000 (GMT)
+Received: from heavy.ibm.com (unknown [9.111.14.28])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 18 Jun 2025 10:35:56 +0000 (GMT)
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
+Subject: [PATCH] tcg: Remove null pointer arithmetic in tcg_malloc()
+Date: Wed, 18 Jun 2025 12:35:40 +0200
+Message-ID: <20250618103555.2020-1-iii@linux.ibm.com>
+X-Mailer: git-send-email 2.49.0
 MIME-Version: 1.0
-References: <20250618091806.170110-1-eashurov@redhat.com>
-In-Reply-To: <20250618091806.170110-1-eashurov@redhat.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 18 Jun 2025 12:28:45 +0300
-X-Gm-Features: Ac12FXwP2D3oJyPjPhKDbwM27GdopkLapCheeAXFJqW_6AcOxJTCuPiHQScxwGA
-Message-ID: <CAPMcbCrHRGU9JVBRU+j5Lprr93K3gQxgvW0xNZxWMuze8xKdhA@mail.gmail.com>
-Subject: Re: [PATCH v2] qga/vss-win32: Add VSS provider unregistration retry
-To: Elizabeth Ashurov <eashurov@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="000000000000144a560637d5427b"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDA4OCBTYWx0ZWRfX5PW+t6MDkhH6
+ R+tBFjnG36UqJhda2StP26uU0/csWIvLY4s+fjj6XEt9lLCESE8bjz/spXvHbWyl8qsj8DGiaX1
+ c61vDMIkEOUtlvT6+VSFzjsDdN14VIplppiOEkRx7aZkLvK1Nf5ek5xoYJi3ss9p3ncyGZTH3Wm
+ CSVj3dvd/TBidRPmxB5POApeOH4goZNy2Enm3SR9UZdRP9A/qTTnmCWCxtvTUQ3lJ0g+V09zUPE
+ VW+/gF2QRntgcXbGe5l48MjqG1iQ1QFpiAGVPa+9Ht01zXKLNrwD25oefWTmyNkhQvtuNQRECN5
+ t7FI3H6psyOSwo9i5e1RwbA4sbZEmN07nVMUYgC+S0dFZSDbZUeaVv82jA2659TRUmr9RDrp0cQ
+ td4OCzF3ufRjRqKYd18nobRBmAY64IJyej7Bj48tbw2aNq9DLn0ZyzuzCldEWfzz2Lfa9Ku/
+X-Authority-Analysis: v=2.4 cv=fYSty1QF c=1 sm=1 tr=0 ts=68529691 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=lYEB2wbCuentbSekCmQA:9
+X-Proofpoint-ORIG-GUID: 9CSpFsO9ol13eA3wmkPdryH3mxam5CO7
+X-Proofpoint-GUID: 9CSpFsO9ol13eA3wmkPdryH3mxam5CO7
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-18_04,2025-06-18_02,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 suspectscore=0
+ spamscore=0 mlxlogscore=946 lowpriorityscore=0 adultscore=0 mlxscore=0
+ impostorscore=0 bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501
+ classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506180088
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,113 +114,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000144a560637d5427b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Clang 20.1.6 (Fedora 20.1.6-1.fc42)'s UBSAN complains:
 
-Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+    qemu/include/tcg/tcg.h:715:19: runtime error: applying non-zero offset 64 to null pointer
 
-On Wed, Jun 18, 2025 at 12:18=E2=80=AFPM Elizabeth Ashurov <eashurov@redhat=
-.com>
-wrote:
+The code uses NULL as pool's initial start and end, with the intention
+that `pool_cur + size > pool_end` should trigger the allocation.
+Unfortunately C prohibits adding non-zero to NULL, even if the result
+is not dereferenced.
 
-> This commit improves the QGA VSS provider installation flow by attempting
-> to unregister the VSS provider if it's already
-> found during installation. This allows for a retry of installation even i=
-f
-> a previous unregistration failed or was not performed.
-> This will prevent inconsistencies between QGA and QGA-VSS versions.
-> Before this commit, QGA can use QGA-VSS from the previous installation.
->
-> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
-> ---
->  qga/vss-win32/install.cpp | 10 +++++++---
->  1 file changed, 7 insertions(+), 3 deletions(-)
->
-> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-> index 5cea5bcf74..9fe0dfc384 100644
-> --- a/qga/vss-win32/install.cpp
-> +++ b/qga/vss-win32/install.cpp
-> @@ -287,9 +287,13 @@ STDAPI COMRegister(void)
->
->      chk(QGAProviderFind(QGAProviderCount, (void *)&count));
->      if (count) {
-> -        errmsg(E_ABORT, "QGA VSS Provider is already installed");
-> -        qga_debug_end;
-> -        return E_ABORT;
-> +        qga_debug("QGA VSS Provider is already installed. Attempting to
-> unregister first.");
-> +        hr =3D COMUnregister();
-> +        if (FAILED(hr)) {
-> +            errmsg(hr, "Failed to unregister existing QGA VSS Provider.
-> Aborting installation.");
-> +            qga_debug_end;
-> +            return E_ABORT;
-> +        }
->      }
->
->      chk(CoCreateInstance(CLSID_COMAdminCatalog, NULL,
-> CLSCTX_INPROC_SERVER,
-> --
-> 2.49.0
->
->
+Fix by using a dummy pool.
 
---000000000000144a560637d5427b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
+---
+ tcg/tcg.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
-tiuk@redhat.com">kkostiuk@redhat.com</a>&gt;</div><br><div class=3D"gmail_q=
-uote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, J=
-un 18, 2025 at 12:18=E2=80=AFPM Elizabeth Ashurov &lt;<a href=3D"mailto:eas=
-hurov@redhat.com">eashurov@redhat.com</a>&gt; wrote:<br></div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex">This commit improves the QGA VSS provi=
-der installation flow by attempting to unregister the VSS provider if it&#3=
-9;s already<br>
-found during installation. This allows for a retry of installation even if =
-a previous unregistration failed or was not performed.<br>
-This will prevent inconsistencies between QGA and QGA-VSS versions.<br>
-Before this commit, QGA can use QGA-VSS from the previous installation.<br>
-<br>
-Signed-off-by: Elizabeth Ashurov &lt;<a href=3D"mailto:eashurov@redhat.com"=
- target=3D"_blank">eashurov@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/vss-win32/install.cpp | 10 +++++++---<br>
-=C2=A01 file changed, 7 insertions(+), 3 deletions(-)<br>
-<br>
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
-index 5cea5bcf74..9fe0dfc384 100644<br>
---- a/qga/vss-win32/install.cpp<br>
-+++ b/qga/vss-win32/install.cpp<br>
-@@ -287,9 +287,13 @@ STDAPI COMRegister(void)<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0chk(QGAProviderFind(QGAProviderCount, (void *)&amp;coun=
-t));<br>
-=C2=A0 =C2=A0 =C2=A0if (count) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(E_ABORT, &quot;QGA VSS Provider is alre=
-ady installed&quot;);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return E_ABORT;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug(&quot;QGA VSS Provider is already in=
-stalled. Attempting to unregister first.&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D COMUnregister();<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(hr, &quot;Failed to unreg=
-ister existing QGA VSS Provider. Aborting installation.&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return E_ABORT;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0chk(CoCreateInstance(CLSID_COMAdminCatalog, NULL, CLSCT=
-X_INPROC_SERVER,<br>
--- <br>
-2.49.0<br>
-<br>
-</blockquote></div>
-
---000000000000144a560637d5427b--
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index d714ae2889c..afcc7ec8849 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -1358,13 +1358,14 @@ void *tcg_malloc_internal(TCGContext *s, int size)
+ 
+ void tcg_pool_reset(TCGContext *s)
+ {
++    static uint8_t dummy_pool;
+     TCGPool *p, *t;
+     for (p = s->pool_first_large; p; p = t) {
+         t = p->next;
+         g_free(p);
+     }
+     s->pool_first_large = NULL;
+-    s->pool_cur = s->pool_end = NULL;
++    s->pool_cur = s->pool_end = &dummy_pool;
+     s->pool_current = NULL;
+ }
+ 
+-- 
+2.49.0
 
 
