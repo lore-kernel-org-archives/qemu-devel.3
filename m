@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D6E0C7115B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 08:42:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6B13C7115B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 08:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRoMy-0007I9-0h; Wed, 18 Jun 2025 04:42:08 -0400
+	id 1uRoN0-0007NQ-HO; Wed, 18 Jun 2025 04:42:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uRoMv-0007Ej-CS
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 04:42:05 -0400
+ id 1uRoMv-0007FE-Ok
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 04:42:06 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uRoMs-000355-5J
+ id 1uRoMs-00034x-5a
  for qemu-devel@nongnu.org; Wed, 18 Jun 2025 04:42:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750236121;
+ s=mimecast20190719; t=1750236120;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Jb0CgELTRKz19zoBNNtzjKkT3GlOqs/ymBmwcRa0rdA=;
- b=ChRS6E+zSrKynXFb+0E3FnDYd48jIBoloX9tdDVPE7jyqG0fdoAmIr+9mXq56kCe4r10bL
- 0COuEyInDdd+lQ74hCC5mQ0h7Im49lWaibz9w11+CHEEUOJUrTwjQdTotLTX75AZnOvBda
- I7ZmEut693vM8vsuWi9yo0vfv3rNgWo=
-Received: from mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com
+ bh=98fbt4qw4HwYndiyXk5w/3HnYje1W9j4KOXITPX2i1Q=;
+ b=KlG2+sI5Y8AyKAEnVt2VRSxVXEyLwLWr86f3BQ3eSdNE8rqYfPrwGj9xa93Viht6+JUFRp
+ E0XtmrDqEGl8kcSPAYh+MVDAhvFqomEvN48IXPpUVu08nPDn2wvBCImFV9HDOLUIegFGxJ
+ UREI7USk8DCF4oRNyTLgLLkOZidJ/mY=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-vBAub8AOPyComycXb_dRoQ-1; Wed,
- 18 Jun 2025 04:39:56 -0400
-X-MC-Unique: vBAub8AOPyComycXb_dRoQ-1
-X-Mimecast-MFC-AGG-ID: vBAub8AOPyComycXb_dRoQ_1750235996
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-340-UZmcFEnYOW6oY0RALYw_Sw-1; Wed,
+ 18 Jun 2025 04:40:16 -0400
+X-MC-Unique: UZmcFEnYOW6oY0RALYw_Sw-1
+X-Mimecast-MFC-AGG-ID: UZmcFEnYOW6oY0RALYw_Sw_1750236015
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5A6C19560AA; Wed, 18 Jun 2025 08:39:55 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AFFE619560A6; Wed, 18 Jun 2025 08:40:15 +0000 (UTC)
 Received: from lenovo-t14s.redhat.com (unknown [10.44.33.123])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8BB7619560A3; Wed, 18 Jun 2025 08:39:51 +0000 (UTC)
+ id 3318A19560B4; Wed, 18 Jun 2025 08:40:10 +0000 (UTC)
 From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -58,9 +58,9 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Markus Armbruster <armbru@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH 4/8] net: Add get_vhost_net callback to NetClientInfo
-Date: Wed, 18 Jun 2025 10:39:26 +0200
-Message-ID: <20250618083930.451313-5-lvivier@redhat.com>
+Subject: [PATCH 8/8] net/passt: Implement vhost-user backend support
+Date: Wed, 18 Jun 2025 10:39:30 +0200
+Message-ID: <20250618083930.451313-9-lvivier@redhat.com>
 In-Reply-To: <20250618083930.451313-1-lvivier@redhat.com>
 References: <20250618083930.451313-1-lvivier@redhat.com>
 MIME-Version: 1.0
@@ -91,255 +91,378 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The get_vhost_net() function previously contained a large switch
-statement to find the VHostNetState pointer based on the net
-client's type. This created a tight coupling, requiring the generic
-vhost layer to be aware of every specific backend that supported
-vhost, such as tap, vhost-user, and vhost-vdpa.
+This commit adds support for the vhost-user interface to the passt
+network backend, enabling high-performance, accelerated networking for
+guests using passt.
 
-This approach is not scalable and requires modifying a central function
-for any new backend. It also forced each backend to expose its internal
-getter function in a public header file.
+The passt backend can now operate in a vhost-user mode, where it
+communicates with the guest's virtio-net device over a socket pair
+using the vhost-user protocol. This offloads the datapath from the
+main QEMU loop, significantly improving network performance.
 
-This patch refactors the logic by introducing a new get_vhost_net
-function pointer to the NetClientInfo struct. The central
-get_vhost_net() function is now a simple, generic dispatcher that
-invokes the callback provided by the net client.
+The implementation involves:
+- Extending NetPasstState to manage the vhost-user connection
+  state, including the chardev frontend and the vhost_net
+  instance.
+- Adding the full vhost-user connection and event handling logic,
+  similar to the standalone net/vhost-user.c client.
+- Populating the NetClientInfo structure with implementations for
+  all the required vhost callbacks that were recently refactored
+  (is_vhost_user, get_vhost_net, save_acked_features, etc).
 
-Each backend now implements its own private getter and registers it in
-its NetClientInfo.
+When the vhost-user=on option is used with -netdev passt, the new
+vhost initialization path is taken instead of the standard
+stream-based connection.
 
 Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 ---
- hw/net/vhost_net.c       | 31 ++++---------------------------
- include/net/net.h        |  2 ++
- include/net/tap.h        |  3 ---
- include/net/vhost-user.h |  1 -
- include/net/vhost-vdpa.h |  2 --
- net/tap-win32.c          |  5 -----
- net/tap.c                | 20 +++++++++++++-------
- net/vhost-user.c         |  3 ++-
- net/vhost-vdpa.c         |  4 +++-
- 9 files changed, 24 insertions(+), 47 deletions(-)
+ net/passt.c | 288 ++++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 288 insertions(+)
 
-diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
-index 41d21e687ed9..16dadd022e75 100644
---- a/hw/net/vhost_net.c
-+++ b/hw/net/vhost_net.c
-@@ -646,41 +646,18 @@ void vhost_net_config_mask(VHostNetState *net, VirtIODevice *dev, bool mask)
+diff --git a/net/passt.c b/net/passt.c
+index c3b89e779c65..e4523a5e5617 100644
+--- a/net/passt.c
++++ b/net/passt.c
+@@ -7,11 +7,15 @@
+  */
+ #include "qemu/osdep.h"
+ #include <glib/gstdio.h>
++#include "qemu/error-report.h"
+ #include <gio/gio.h>
+ #include "net/net.h"
+ #include "clients.h"
+ #include "qapi/error.h"
+ #include "io/net-listener.h"
++#include "chardev/char-fe.h"
++#include "net/vhost_net.h"
++#include "hw/virtio/vhost-user.h"
+ #include "stream_data.h"
+ 
+ typedef struct NetPasstState {
+@@ -19,6 +23,15 @@ typedef struct NetPasstState {
+     GPtrArray *args;
+     gchar *pidfile;
+     pid_t pid;
++#ifdef CONFIG_VHOST_USER
++    /* vhost user */
++    VhostUserState *vhost_user;
++    VHostNetState *vhost_net;
++    CharBackend vhost_chr;
++    guint vhost_watch;
++    uint64_t acked_features;
++    bool started;
++#endif
+ } NetPasstState;
+ 
+ static int net_passt_stream_start(NetPasstState *s, Error **errp);
+@@ -27,6 +40,24 @@ static void net_passt_cleanup(NetClientState *nc)
  {
-     vhost_config_mask(&net->dev, dev, mask);
- }
+     NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
+ 
++#ifdef CONFIG_VHOST_USER
++    if (s->vhost_net) {
++        vhost_net_cleanup(s->vhost_net);
++        g_free(s->vhost_net);
++        s->vhost_net = NULL;
++    }
++    if (s->vhost_watch) {
++        g_source_remove(s->vhost_watch);
++        s->vhost_watch = 0;
++    }
++    qemu_chr_fe_deinit(&s->vhost_chr, true);
++    if (s->vhost_user) {
++        vhost_user_cleanup(s->vhost_user);
++        g_free(s->vhost_user);
++        s->vhost_user = NULL;
++    }
++#endif
 +
- VHostNetState *get_vhost_net(NetClientState *nc)
- {
--    VHostNetState *vhost_net = 0;
--
-     if (!nc) {
-         return 0;
-     }
- 
--    switch (nc->info->type) {
--    case NET_CLIENT_DRIVER_TAP:
--        vhost_net = tap_get_vhost_net(nc);
--        /*
--         * tap_get_vhost_net() can return NULL if a tap net-device backend is
--         * created with 'vhost=off' option, 'vhostforce=off' or no vhost or
--         * vhostforce or vhostfd options at all. Please see net_init_tap_one().
--         * Hence, we omit the assertion here.
--         */
--        break;
--#ifdef CONFIG_VHOST_NET_USER
--    case NET_CLIENT_DRIVER_VHOST_USER:
--        vhost_net = vhost_user_get_vhost_net(nc);
--        assert(vhost_net);
--        break;
--#endif
--#ifdef CONFIG_VHOST_NET_VDPA
--    case NET_CLIENT_DRIVER_VHOST_VDPA:
--        vhost_net = vhost_vdpa_get_vhost_net(nc);
--        assert(vhost_net);
--        break;
--#endif
--    default:
--        break;
-+    if (nc->info->get_vhost_net) {
-+        return nc->info->get_vhost_net(nc);
-     }
- 
--    return vhost_net;
-+    return NULL;
+     kill(s->pid, SIGTERM);
+     g_remove(s->pidfile);
+     g_free(s->pidfile);
+@@ -60,11 +91,110 @@ static gboolean net_passt_send(QIOChannel *ioc, GIOCondition condition,
+     return G_SOURCE_CONTINUE;
  }
  
- int vhost_set_vring_enable(NetClientState *nc, int enable)
-diff --git a/include/net/net.h b/include/net/net.h
-index 2c3b22f564b6..8a62cd6e8aab 100644
---- a/include/net/net.h
-+++ b/include/net/net.h
-@@ -68,6 +68,7 @@ typedef void (NetAnnounce)(NetClientState *);
- typedef bool (SetSteeringEBPF)(NetClientState *, int);
- typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
- typedef bool (IsVHostUser)(NetClientState *);
-+typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
- 
- typedef struct NetClientInfo {
-     NetClientDriver type;
-@@ -94,6 +95,7 @@ typedef struct NetClientInfo {
-     SetSteeringEBPF *set_steering_ebpf;
-     NetCheckPeerType *check_peer_type;
-     IsVHostUser *is_vhost_user;
-+    GetVHostNet *get_vhost_net;
- } NetClientInfo;
- 
- struct NetClientState {
-diff --git a/include/net/tap.h b/include/net/tap.h
-index 5d585515f9e3..6f34f13eae44 100644
---- a/include/net/tap.h
-+++ b/include/net/tap.h
-@@ -33,7 +33,4 @@ int tap_disable(NetClientState *nc);
- 
- int tap_get_fd(NetClientState *nc);
- 
--struct vhost_net;
--struct vhost_net *tap_get_vhost_net(NetClientState *nc);
--
- #endif /* QEMU_NET_TAP_H */
-diff --git a/include/net/vhost-user.h b/include/net/vhost-user.h
-index 35bf61970985..0b233a267345 100644
---- a/include/net/vhost-user.h
-+++ b/include/net/vhost-user.h
-@@ -12,7 +12,6 @@
- #define VHOST_USER_H
- 
- struct vhost_net;
--struct vhost_net *vhost_user_get_vhost_net(NetClientState *nc);
- uint64_t vhost_user_get_acked_features(NetClientState *nc);
- void vhost_user_save_acked_features(NetClientState *nc);
- 
-diff --git a/include/net/vhost-vdpa.h b/include/net/vhost-vdpa.h
-index b81f9a6f2a0e..916ead3793d9 100644
---- a/include/net/vhost-vdpa.h
-+++ b/include/net/vhost-vdpa.h
-@@ -14,8 +14,6 @@
- 
- #define TYPE_VHOST_VDPA "vhost-vdpa"
- 
--struct vhost_net *vhost_vdpa_get_vhost_net(NetClientState *nc);
--
- extern const int vdpa_feature_bits[];
- 
- #endif /* VHOST_VDPA_H */
-diff --git a/net/tap-win32.c b/net/tap-win32.c
-index 671dee970f7a..38baf90e0b3f 100644
---- a/net/tap-win32.c
-+++ b/net/tap-win32.c
-@@ -704,11 +704,6 @@ static void tap_win32_send(void *opaque)
-     }
- }
- 
--struct vhost_net *tap_get_vhost_net(NetClientState *nc)
--{
--    return NULL;
--}
--
- static NetClientInfo net_tap_win32_info = {
-     .type = NET_CLIENT_DRIVER_TAP,
-     .size = sizeof(TAPState),
-diff --git a/net/tap.c b/net/tap.c
-index ae1c7e398321..4beba6d7a784 100644
---- a/net/tap.c
-+++ b/net/tap.c
-@@ -329,6 +329,18 @@ int tap_get_fd(NetClientState *nc)
-     return s->fd;
- }
- 
-+/*
-+ * tap_get_vhost_net() can return NULL if a tap net-device backend is
-+ * created with 'vhost=off' option, 'vhostforce=off' or no vhost or
-+ * vhostforce or vhostfd options at all. Please see net_init_tap_one().
-+ */
-+static VHostNetState *tap_get_vhost_net(NetClientState *nc)
++#ifdef CONFIG_VHOST_USER
++static int passt_set_vnet_endianness(NetClientState *nc, bool enable)
 +{
-+    TAPState *s = DO_UPCAST(TAPState, nc, nc);
-+    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
++    return 0;
++}
++
++static bool passt_has_vnet_hdr(NetClientState *nc)
++{
++    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
++    return s->vhost_user != NULL;
++}
++
++static bool passt_has_ufo(NetClientState *nc)
++{
++    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
++    return s->vhost_user != NULL;
++}
++
++static bool passt_check_peer_type(NetClientState *nc, ObjectClass *oc,
++                                             Error **errp)
++{
++    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
++    const char *driver = object_class_get_name(oc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
++    if (s->vhost_user != NULL) {
++        return true;
++    }
++
++    if (!g_str_has_prefix(driver, "virtio-net-")) {
++        error_setg(errp, "vhost-user requires frontend driver virtio-net-*");
++        return false;
++    }
++
++    return true;
++}
++
++static bool passt_is_vhost_user(NetClientState *nc)
++{
++    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
++    return s->vhost_user != NULL;
++}
++
++static struct vhost_net *passt_get_vhost_net(NetClientState *nc)
++{
++    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
 +    return s->vhost_net;
 +}
 +
- /* fd support */
- 
- static NetClientInfo net_tap_info = {
-@@ -347,6 +359,7 @@ static NetClientInfo net_tap_info = {
-     .set_vnet_le = tap_set_vnet_le,
-     .set_vnet_be = tap_set_vnet_be,
-     .set_steering_ebpf = tap_set_steering_ebpf,
-+    .get_vhost_net = tap_get_vhost_net,
++static uint64_t passt_get_acked_features(NetClientState *nc)
++{
++    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
++    return s->acked_features;
++}
++
++static void passt_save_acked_features(NetClientState *nc)
++{
++    NetPasstState *s = DO_UPCAST(NetPasstState, data.nc, nc);
++
++    assert(nc->info->type == NET_CLIENT_DRIVER_PASST);
++
++    if (s->vhost_net) {
++        uint64_t features = vhost_net_get_acked_features(s->vhost_net);
++        if (features) {
++            s->acked_features = features;
++        }
++    }
++}
++#endif
++
+ static NetClientInfo net_passt_info = {
+     .type = NET_CLIENT_DRIVER_PASST,
+     .size = sizeof(NetPasstState),
+     .receive = net_passt_receive,
+     .cleanup = net_passt_cleanup,
++#ifdef CONFIG_VHOST_USER
++    .has_vnet_hdr = passt_has_vnet_hdr,
++    .has_ufo = passt_has_ufo,
++    .set_vnet_be = passt_set_vnet_endianness,
++    .set_vnet_le = passt_set_vnet_endianness,
++    .check_peer_type = passt_check_peer_type,
++    .is_vhost_user = passt_is_vhost_user,
++    .get_vhost_net = passt_get_vhost_net,
++    .get_acked_features = passt_get_acked_features,
++    .save_acked_features = passt_save_acked_features,
++#endif
  };
  
- static TAPState *net_tap_fd_init(NetClientState *peer,
-@@ -980,13 +993,6 @@ free_fail:
+ static void net_passt_client_connected(QIOTask *task, gpointer opaque)
+@@ -163,13 +293,171 @@ static int net_passt_stream_start(NetPasstState *s, Error **errp)
      return 0;
  }
  
--VHostNetState *tap_get_vhost_net(NetClientState *nc)
--{
--    TAPState *s = DO_UPCAST(TAPState, nc, nc);
--    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
--    return s->vhost_net;
--}
--
- int tap_enable(NetClientState *nc)
++#ifdef CONFIG_VHOST_USER
++static gboolean passt_vhost_user_watch(void *do_not_use, GIOCondition cond,
++                                       void *opaque)
++{
++    NetPasstState *s = opaque;
++
++    qemu_chr_fe_disconnect(&s->vhost_chr);
++
++    return G_SOURCE_CONTINUE;
++}
++
++static void passt_vhost_user_event(void *opaque, QEMUChrEvent event);
++
++static void chr_closed_bh(void *opaque)
++{
++    NetPasstState *s = opaque;
++
++    passt_save_acked_features(&s->data.nc);
++
++    net_client_set_link(&(NetClientState *){ &s->data.nc }, 1, false);
++
++    qemu_chr_fe_set_handlers(&s->vhost_chr, NULL, NULL, passt_vhost_user_event,
++                             NULL, s, NULL, true);
++}
++
++static void passt_vhost_user_stop(NetPasstState *s)
++{
++    passt_save_acked_features(&s->data.nc);
++    vhost_net_cleanup(s->vhost_net);
++}
++
++static int passt_vhost_user_start(NetPasstState *s, VhostUserState *be)
++{
++    struct vhost_net *net = NULL;
++    VhostNetOptions options;
++
++    options.backend_type = VHOST_BACKEND_TYPE_USER;
++    options.net_backend = &s->data.nc;
++    options.opaque = be;
++    options.busyloop_timeout = 0;
++    options.nvqs = 2;
++
++    net = vhost_net_init(&options);
++    if (!net) {
++        error_report("failed to init passt vhost_net");
++        goto err;
++    }
++
++    if (s->vhost_net) {
++        vhost_net_cleanup(s->vhost_net);
++        g_free(s->vhost_net);
++    }
++    s->vhost_net = net;
++
++    return 0;
++err:
++    if (net) {
++        vhost_net_cleanup(net);
++        g_free(net);
++    }
++    passt_vhost_user_stop(s);
++    return -1;
++}
++
++static void passt_vhost_user_event(void *opaque, QEMUChrEvent event)
++{
++    NetPasstState *s = opaque;
++    Error *err = NULL;
++
++    switch (event) {
++    case CHR_EVENT_OPENED:
++        if (passt_vhost_user_start(s, s->vhost_user) < 0) {
++            qemu_chr_fe_disconnect(&s->vhost_chr);
++            return;
++        }
++        s->vhost_watch = qemu_chr_fe_add_watch(&s->vhost_chr, G_IO_HUP,
++                                               passt_vhost_user_watch, s);
++        net_client_set_link(&(NetClientState *){ &s->data.nc }, 1, true);
++        s->started = true;
++        break;
++    case CHR_EVENT_CLOSED:
++        if (s->vhost_watch) {
++            AioContext *ctx = qemu_get_current_aio_context();
++
++            g_source_remove(s->vhost_watch);
++            s->vhost_watch = 0;
++            qemu_chr_fe_set_handlers(&s->vhost_chr, NULL, NULL,  NULL, NULL,
++                                     NULL, NULL, false);
++
++            aio_bh_schedule_oneshot(ctx, chr_closed_bh, s);
++        }
++        break;
++    case CHR_EVENT_BREAK:
++    case CHR_EVENT_MUX_IN:
++    case CHR_EVENT_MUX_OUT:
++        /* Ignore */
++        break;
++    }
++
++    if (err) {
++        error_report_err(err);
++    }
++}
++
+ static int net_passt_vhost_user_init(NetPasstState *s, Error **errp)
++{
++    Chardev *chr;
++    int sv[2];
++
++    if (socketpair(PF_UNIX, SOCK_STREAM, 0, sv) == -1) {
++        error_setg_errno(errp, errno, "socketpair() failed");
++        return -1;
++    }
++
++    /* connect to passt */
++    qemu_set_info_str(&s->data.nc, "connecting to passt");
++
++    /* create chardev */
++
++    chr = CHARDEV(object_new(TYPE_CHARDEV_SOCKET));
++    if (!chr || qemu_chr_add_client(chr, sv[0]) == -1) {
++        object_unref(OBJECT(chr));
++        error_setg(errp, "Failed to make socket chardev");
++        goto err;
++    }
++
++    s->vhost_user = g_new0(struct VhostUserState, 1);
++    if (!qemu_chr_fe_init(&s->vhost_chr, chr, errp) ||
++        !vhost_user_init(s->vhost_user, &s->vhost_chr, errp)) {
++        goto err;
++    }
+ 
++    /* start passt */
++    if (net_passt_start_daemon(s, sv[1], errp) == -1) {
++        goto err;
++    }
++
++    do {
++        if (qemu_chr_fe_wait_connected(&s->vhost_chr, errp) < 0) {
++            goto err;
++        }
++
++        qemu_chr_fe_set_handlers(&s->vhost_chr, NULL, NULL,
++                                 passt_vhost_user_event, NULL, s, NULL,
++                                 true);
++    } while (!s->started);
++
++    qemu_set_info_str(&s->data.nc, "vhost-user,connected to pid %d", s->pid);
++
++    close(sv[1]);
++    return 0;
++err:
++    close(sv[0]);
++    close(sv[1]);
++
++    return -1;
++}
++#else
++static int net_passt_vhost_user_init(NetPasstState *s, Error **errp)
  {
-     TAPState *s = DO_UPCAST(TAPState, nc, nc);
-diff --git a/net/vhost-user.c b/net/vhost-user.c
-index 4b4d02c56740..2caa7e56f7a0 100644
---- a/net/vhost-user.c
-+++ b/net/vhost-user.c
-@@ -32,7 +32,7 @@ typedef struct NetVhostUserState {
-     bool started;
- } NetVhostUserState;
+     error_setg(errp, "vhost-user parameter not yet implemented");
  
--VHostNetState *vhost_user_get_vhost_net(NetClientState *nc)
-+static struct vhost_net *vhost_user_get_vhost_net(NetClientState *nc)
- {
-     NetVhostUserState *s = DO_UPCAST(NetVhostUserState, nc, nc);
-     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_USER);
-@@ -239,6 +239,7 @@ static NetClientInfo net_vhost_user_info = {
-         .set_vnet_le = vhost_user_set_vnet_endianness,
-         .check_peer_type = vhost_user_check_peer_type,
-         .is_vhost_user = vhost_user_is_vhost_user,
-+        .get_vhost_net = vhost_user_get_vhost_net,
- };
+     return -1;
+ }
++#endif
  
- static gboolean net_vhost_user_watch(void *do_not_use, GIOCondition cond,
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index 58d738945dbc..0b86c917ed68 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -132,7 +132,7 @@ static const uint64_t vdpa_svq_device_features =
- 
- #define VHOST_VDPA_NET_CVQ_ASID 1
- 
--VHostNetState *vhost_vdpa_get_vhost_net(NetClientState *nc)
-+static struct vhost_net *vhost_vdpa_get_vhost_net(NetClientState *nc)
- {
-     VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
-     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
-@@ -432,6 +432,7 @@ static NetClientInfo net_vhost_vdpa_info = {
-         .set_vnet_le = vhost_vdpa_set_vnet_le,
-         .check_peer_type = vhost_vdpa_check_peer_type,
-         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
-+        .get_vhost_net = vhost_vdpa_get_vhost_net,
- };
- 
- static int64_t vhost_vdpa_get_vring_group(int device_fd, unsigned vq_index,
-@@ -1287,6 +1288,7 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
-     .has_ufo = vhost_vdpa_has_ufo,
-     .check_peer_type = vhost_vdpa_check_peer_type,
-     .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
-+    .get_vhost_net = vhost_vdpa_get_vhost_net,
- };
- 
- /*
+ static GPtrArray *net_passt_decode_args(const NetDevPasstOptions *passt,
+                                         gchar *pidfile, Error **errp)
 -- 
 2.49.0
 
