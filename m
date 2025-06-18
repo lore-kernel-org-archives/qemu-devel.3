@@ -4,100 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 685F4C7115A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 15:05:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7742C71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 15:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRuKy-0008Hz-6Y; Wed, 18 Jun 2025 11:04:28 -0400
+	id 1uRuo4-0006WJ-24; Wed, 18 Jun 2025 11:34:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=zn5s=ZB=kaod.org=clg@ozlabs.org>)
- id 1uRuKu-0008H7-SH; Wed, 18 Jun 2025 11:04:25 -0400
-Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uRunz-0006VU-RK; Wed, 18 Jun 2025 11:34:28 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=zn5s=ZB=kaod.org=clg@ozlabs.org>)
- id 1uRuKs-0007Dq-Dt; Wed, 18 Jun 2025 11:04:24 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bMn833m91z4x5k;
- Thu, 19 Jun 2025 01:04:19 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bMn802yt8z4x11;
- Thu, 19 Jun 2025 01:04:16 +1000 (AEST)
-Message-ID: <0e4c20ad-8271-4122-ae32-4b8e9419228f@kaod.org>
-Date: Wed, 18 Jun 2025 17:04:14 +0200
+ (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
+ id 1uRunx-00012A-HE; Wed, 18 Jun 2025 11:34:27 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IDe1aN017016;
+ Wed, 18 Jun 2025 15:34:21 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rxSzfV
+ srOOzaFbFeddixYn1wB8XM3kQras9169WDHME=; b=L14uiZGnf6/dC1Ap4HMzLq
+ 0Tyt6oFiI9U17UtbR3Vyh9jZP9TYBx0BZqsfte5+chNpZfLBEnWxaQIaK+jCoTPa
+ WAitnJeK+rUK3998eToaMgOLK8cW6CKs6isD07k+UZx4gmounYLYyIIcLa44wNOO
+ 0fdQTIUCnFwWhY5p5i9UtYCmjpTbPr3BKXo5GpJOlSBBXOScT5GJMkYfOWMYOgXc
+ 9IzsVSRvyiVaVEM1TTogv0rWoBeTqZtoc3Hn7CcJoi1yzjx/Nxboldub4JU+aqRF
+ okcEJfjTHKLeqato/HFCd72LtF6GEAkSinnySjLfeMxA9NQXaIQ84ZxyWEQcmX5g
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4790r277xe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Jun 2025 15:34:20 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55IC9pKd025763;
+ Wed, 18 Jun 2025 15:34:19 GMT
+Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 479xy5yntu-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Jun 2025 15:34:19 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 55IFYIbx29950590
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 18 Jun 2025 15:34:18 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id C2F8758061;
+ Wed, 18 Jun 2025 15:34:18 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2FF758060;
+ Wed, 18 Jun 2025 15:34:17 +0000 (GMT)
+Received: from [9.61.89.155] (unknown [9.61.89.155])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
+ Wed, 18 Jun 2025 15:34:17 +0000 (GMT)
+Message-ID: <935581ef-1cb2-4e2f-9c3f-23203b556ca8@linux.ibm.com>
+Date: Wed, 18 Jun 2025 11:34:17 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/2] hw/misc/aspeed_scu: Support the Frequency Counter
- Control register for AST2700
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: troy_lee@aspeedtech.com
-References: <20250618080006.846355-1-jamin_lin@aspeedtech.com>
- <20250618080006.846355-3-jamin_lin@aspeedtech.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20250618080006.846355-3-jamin_lin@aspeedtech.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=150.107.74.76;
- envelope-from=SRS0=zn5s=ZB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.067, RCVD_IN_DNSWL_MED=-2.3,
+From: Zhuoying Cai <zycai@linux.ibm.com>
+Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
+ certificate store
+To: Markus Armbruster <armbru@redhat.com>
+Cc: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
+ david@redhat.com, pbonzini@redhat.com, walling@linux.ibm.com,
+ jjherne@linux.ibm.com, jrossi@linux.ibm.com, pasic@linux.ibm.com,
+ borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
+ eblake@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
+References: <20250604215657.528142-1-zycai@linux.ibm.com>
+ <20250604215657.528142-3-zycai@linux.ibm.com> <87sejyskgj.fsf@pond.sub.org>
+ <41e788ad-77e2-46d2-a384-2c8f524391c2@linux.ibm.com>
+ <87wm99r3rh.fsf@pond.sub.org>
+Content-Language: en-US
+In-Reply-To: <87wm99r3rh.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: FB6GRy0doZHmncx-ePHInDVz3knmJlxB
+X-Proofpoint-ORIG-GUID: FB6GRy0doZHmncx-ePHInDVz3knmJlxB
+X-Authority-Analysis: v=2.4 cv=AqTu3P9P c=1 sm=1 tr=0 ts=6852dc7c cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=NB_RxL-2x5hI3PK_8MMA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDEyOSBTYWx0ZWRfX32l0g5sz5T6y
+ GmumBHoKwRFEmFRM71bRhdVJIcsHOs4EWCwqqiQ5uYYX0c/ljgH/0BbrM+R1UurLEf8rlBaZDqY
+ OeU04Uw437UfwLnUCosKHWwFf4iHNWPxXmviUQBwnbuA7ABkcpy0psfYoMauGLm//XZeRwWjhiX
+ mMLxFgEXv5T1IcdMVvRGhkREzIFD06Wv2yvLvFHpWiLwubsnHyhGE5EOtZy4UNv3tjuVMI+/uQs
+ o14gyCprRNN/clZEWSwATIBSpsHpj1LpWeTjrXkmCCCDg5cK9oMihum0WBfTWsK8AAMM4XNJ68k
+ nhvJSOFH8+BGKwJcws1Ka7yxySOVb538XoTkwDfXme3PgDMGdLCWpi2+nyzwNbVrcAvWIXzqWs/
+ XfgoLsffOnKNqRa4G0yDOy3+N+2bi7xlexMyDFopdoOyDzPpbdXakccGWLJ07KJUIXf4eqja
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
+ definitions=2025-06-18_05,2025-06-18_03,2025-03-28_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ clxscore=1015
+ lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
+ priorityscore=1501 phishscore=0 mlxlogscore=684 mlxscore=0 spamscore=0
+ bulkscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
+ definitions=main-2506180129
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,66 +128,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/25 10:00, Jamin Lin wrote:
-> According to the datasheet:
-> BIT[1] (SCU_FREQ_OSC_EN) enables the oscillator frequency measurement counter.
-> BIT[6] (SCU_FREQ_DONE) indicates the measurement is finished.
-> Firmware polls BIT[6] to determine when measurement is complete.
-> The flag can be cleared by writing BIT[1] to 0.
+On 6/18/25 1:57 AM, Markus Armbruster wrote:
+> Zhuoying Cai <zycai@linux.ibm.com> writes:
 > 
-> To simulate this hardware behavior in QEMU:
-> If BIT[1] is set to 1, BIT[6] is immediately set to 1 to avoid
-> firmware hanging during polling.
-> If BIT[1] is cleared to 0, BIT[6] is also cleared to 0 to match
-> hardware semantics.
+>> On 6/17/25 6:58 AM, Markus Armbruster wrote:
+>>> Zhuoying Cai <zycai@linux.ibm.com> writes:
+>>>
+>>>> Add helper functions for x509 certificate which will be used in the next
+>>>> patch for the certificate store.
+>>>>
+>>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
 > 
-> The initial value of this register is initialized to 0x80, reflecting the
-> default value confirmed from an EVB register dump.
+> [...]
 > 
-> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-
-
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-
-Thanks,
-
-C.
-
-
-> ---
->   hw/misc/aspeed_scu.c | 6 ++++++
->   1 file changed, 6 insertions(+)
+>>> Ignorant question: why are these QAPI enums?
+>>>
+>>> If they need to be QAPI enums, then I'll have some requests on the doc
+>>> comments.
+>>>
+>>
+>> Hi, thanks for the feedback.
+>>
+>> The helper functions in x509-utils.c either take QAPI enum values as
+>> parameters or return them. These enums are used later within QEMU.
 > 
-> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
-> index 4930e00fed..11d0739108 100644
-> --- a/hw/misc/aspeed_scu.c
-> +++ b/hw/misc/aspeed_scu.c
-> @@ -176,6 +176,7 @@
->   #define AST2700_SCUIO_UARTCLK_GEN       TO_REG(0x330)
->   #define AST2700_SCUIO_HUARTCLK_GEN      TO_REG(0x334)
->   #define AST2700_SCUIO_CLK_DUTY_MEAS_RST TO_REG(0x388)
-> +#define AST2700_SCUIO_FREQ_CNT_CTL      TO_REG(0x3A0)
->   
->   #define SCU_IO_REGION_SIZE 0x1000
->   
-> @@ -1022,6 +1023,10 @@ static void aspeed_ast2700_scuio_write(void *opaque, hwaddr offset,
->           s->regs[reg - 1] ^= data;
->           updated = true;
->           break;
-> +    case AST2700_SCUIO_FREQ_CNT_CTL:
-> +        s->regs[reg] = deposit32(s->regs[reg], 6, 1, !!(data & BIT(1)));
-> +        updated = true;
-> +        break;
->       default:
->           qemu_log_mask(LOG_GUEST_ERROR,
->                         "%s: Unhandled write at offset 0x%" HWADDR_PRIx "\n",
-> @@ -1066,6 +1071,7 @@ static const uint32_t ast2700_a0_resets_io[ASPEED_AST2700_SCU_NR_REGS] = {
->       [AST2700_SCUIO_UARTCLK_GEN]         = 0x00014506,
->       [AST2700_SCUIO_HUARTCLK_GEN]        = 0x000145c0,
->       [AST2700_SCUIO_CLK_DUTY_MEAS_RST]   = 0x0c9100d2,
-> +    [AST2700_SCUIO_FREQ_CNT_CTL]        = 0x00000080,
->   };
->   
->   static void aspeed_2700_scuio_class_init(ObjectClass *klass, const void *data)
+> Let's look at the first one I found:
+> 
+>     int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
+>                                     QCryptoCertFmt fmt, Error **errp)
+>     {
+>         int rc;
+>         int ret = -1;
+>         gnutls_x509_crt_t crt;
+>         gnutls_datum_t datum = {.data = cert, .size = size};
+> 
+>         if (fmt >= G_N_ELEMENTS(qcrypto_to_gnutls_cert_fmt_map)) {
+>             error_setg(errp, "Unknown certificate format");
+>             return ret;
+>         }
+> 
+>         if (gnutls_x509_crt_init(&crt) < 0) {
+>             error_setg(errp, "Failed to initialize certificate");
+>             return ret;
+>         }
+> 
+>         rc = gnutls_x509_crt_import(crt, &datum, qcrypto_to_gnutls_cert_fmt_map[fmt]);
+>         if (rc == GNUTLS_E_ASN1_TAG_ERROR) {
+>             goto cleanup;
+>         }
+> 
+>         ret = 0;
+> 
+>     cleanup:
+>         gnutls_x509_crt_deinit(crt);
+>         return ret;
+>     }
+> 
+> All it does with its @fmt argument is map it to the matching
+> GNUTLS_X509_FMT_*.
+> 
+> There's just one caller, init_cert_x509_der() in hw/s390x/cert-store.c:
+> 
+>     is_der = qcrypto_check_x509_cert_fmt((uint8_t *)raw, size,
+>                                          QCRYPTO_CERT_FMT_DER, &err);
+> 
+> QCRYPTO_CERT_FMT_DER gets mapped to GNUTLS_X509_FMT_DER.  Why not pass
+> that directly?  We don't need enum QCryptoCertFmt then.
+> 
+
+I received feedback on a previous patch series that directly using
+GNUTLS in QEMU code is discouraged, except for under the crypto/
+directory. Internal APIs should be defined to access GNUTLS
+functionality instead.
+
+> If we need enum QCryptoCertFmt for some reason I can't see, why does it
+> have to be a QAPI type?  Why not a plain C enum?
+> 
+
+While implementing the new helper functions, I referred to
+qcrypto_get_x509_cert_fingerprint() in crypto/x509-utils.c, which takes
+QCryptoHashAlgo as a parameter. Following this, I added corresponding
+QCRYPTO enums to map to GNUTLS enums.
+
+If using plain C enums is preferred, I can update the code accordingly
+in the next version.
+
+> Similar questions for the other QAPI enums added in this series.
+> 
 
 
