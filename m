@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78314C71157
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB75C7115C
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 07:09:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRmuN-00013I-MI; Wed, 18 Jun 2025 03:08:31 -0400
+	id 1uRmv1-0001E3-18; Wed, 18 Jun 2025 03:09:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRmuL-000136-Ke
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:08:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uRmux-000183-FJ
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:09:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRmuH-00039t-J6
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:08:29 -0400
+ id 1uRmuv-0003F6-Ke
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:09:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750230502;
+ s=mimecast20190719; t=1750230544;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7wVHwTOPwsa3xmay7wK+GjnNl5J82FIv5kBs4qjDtIg=;
- b=Ejm+07301GXR2r7MRzXwTJ5HwcXdaio7Nsl/oux7K0p22UeySZeJAILvEa9+LziafqmrRw
- rcWBvGzvj3gxLKyJySOcetHKT0ypZpRMfh8zJxZrXHFTi1IAr3XE/gOfDE6sUb5JYh7nNI
- +O0z0uan/34yfPYwcDeAWQTMMIhEOCU=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=X4s7PqshNPkXUBnc1XC76Zg7SlnAPmhgqvmWbSKBBso=;
+ b=H3YPcl1ObfZSn/7e+ac+GpZJkl/C2AYG0D72siOvN1MF2B9qUZiz/emhm1QZc1gwP6DVKQ
+ jxZ2dbUy1QRYgNHlOK749NHcR7dI6p+3IPNJ7v+1NMzmWtPvb+6mOzWWYrZOAlXkDuiGFM
+ BGePjIxxjDdL3OXkcKLOAh5l9qUd0ng=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-1-RuAVy5GzP1myz6t6otju2w-1; Wed, 18 Jun 2025 03:08:21 -0400
-X-MC-Unique: RuAVy5GzP1myz6t6otju2w-1
-X-Mimecast-MFC-AGG-ID: RuAVy5GzP1myz6t6otju2w_1750230500
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-450d290d542so39090085e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 00:08:21 -0700 (PDT)
+ us-mta-42-DTt4fokSMgi2PxqSlRarJQ-1; Wed, 18 Jun 2025 03:09:02 -0400
+X-MC-Unique: DTt4fokSMgi2PxqSlRarJQ-1
+X-Mimecast-MFC-AGG-ID: DTt4fokSMgi2PxqSlRarJQ_1750230542
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-45311704cdbso33802725e9.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 00:09:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750230500; x=1750835300;
+ d=1e100.net; s=20230601; t=1750230541; x=1750835341;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=7wVHwTOPwsa3xmay7wK+GjnNl5J82FIv5kBs4qjDtIg=;
- b=AwGPWpLygkUjTOelXRNBvE2DkkBus3oEQAo5Je5fPox22pT5HEZwBEbkXsUAxkZ2hH
- 3AO9YI0qlMV20uKFVfRjZojpoh1ofZu1w90oIFvhEjFiwArOjXhpplHtffimsteI72SV
- yl3dYP0Rq4druDG8tzzEwFO0KFxJ4dHkFJo+5/gNRw5KDpSzc4SpWxTXl81QAs8WuN0T
- tmNKa3dHs2VekZei2aamBcpX9rn1gKwCugU8BW2BsQNfqajo4tZFBAFAHqhgnCA+AA6F
- 5LJ5InkJJAdKi4LYSmxuiRmzTiCE8G4P13FJpLXyhIUNwPko73HDO8AczS5o0wZ1ohKh
- F8BQ==
+ bh=X4s7PqshNPkXUBnc1XC76Zg7SlnAPmhgqvmWbSKBBso=;
+ b=YPt/M9IvBh8Hn2xQrYqEy3TaELPyZRVYijti1uybV/IpOvbrqzmcyVQzG3dnWJ8/f1
+ 7aaAJP/Lu+woEaGWX5c9lm6jiZ5FuWaY24XS4pWd+RoPOI3HKDnm/O+9l5OCy5w24Vym
+ pJYr3YOv/Ja9BEsHe5j+UxHsPOuX/HPWIVY9BbIJYryYU3ffQ+1xiTKMYD9AlrmPxeLu
+ dS4TwCx8sXd3oAp/5oUawUN1spbqvpJebB/4TetRMKPcoWRibpKqeE+ODLQJdQdfFhht
+ aFC5zdmCfjXr16G//aKz32BtES3OFyeC86STZF1OdyyG6MZ3B6b39BFnUjUpXavlJkxP
+ yP5A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+8J9DdNPNVUgWO4fyi36xZAWl50ubRAPO4mYHp8LyovQjixT9uFUxR7XNj2tPaiWTODIRrBtsXsrw@nongnu.org
-X-Gm-Message-State: AOJu0YxSgGJhGqAczGbJOz6ppBCKF1QSDIgIE8jtA+xE36wBRb4i5Wxt
- x77St4B3nwmUlpAOznbWAC3Ncp98qi0/1RrQASzhlH3trjNIzWjP+bCGfoxRi+XGCUEnwRGez8Z
- Pe5Oidg1M4Lnnz+wIQhLlEUBA1nXyiC7bcoLZb6osCyKOCFVCrxR7VjiU
-X-Gm-Gg: ASbGncuTvi4AbfObmjrufTcFMtGb0Ke0ZQvZoG/imLu4+qDwuQBsH+O2PmNPnqvXjxQ
- eBIWvx3YcjycC4uRbv3OEfZ7czAdAF1fZ/EtwuJ6HRiymdSeb3KN4o4FikX34RnoBL8D6GzKa0o
- ASZuCgu7NHOzZHDUT713SvJNoluIGcsHP8JwZTYVu6rBv0otgGDIdWkDUdCeHr7Hbpv3oYOs7Ux
- 1vMbxaTU5ahd9JF8/jqn/r4Hq4VO+ge2t+BiEHcAslm5YlbGTR+zz2JRMvIhOxutd2F56NNYllT
- TNgTsHS8SEdnbb49AKl7VY4H4tpt321wdtc6jSSplVsXV2iiuv9EOyiobMdSEC/G2MnGkA==
-X-Received: by 2002:a05:600c:8b21:b0:445:1984:2479 with SMTP id
- 5b1f17b1804b1-4533ca4291fmr140566395e9.5.1750230500015; 
- Wed, 18 Jun 2025 00:08:20 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IF0XprNkCHA7WZiC7oP3KG/nr+JWCnL7qQabFDnWkHTfBZZCg0IYldwmXITvXgjRsQiucWGdw==
-X-Received: by 2002:a05:600c:8b21:b0:445:1984:2479 with SMTP id
- 5b1f17b1804b1-4533ca4291fmr140565975e9.5.1750230499594; 
- Wed, 18 Jun 2025 00:08:19 -0700 (PDT)
+ AJvYcCUp4wB6aJdOFTNR9bVwe6GDYzOxbz0LhRLf6pIe+Q9Hg1hqWu3dNyO4AXtDG+7yfkiTOdbk4npgDJdk@nongnu.org
+X-Gm-Message-State: AOJu0YxHQWnbTaXcVXCyNrlC/frll2N7CnCwDbv+cl/tClFAYWqXIuWm
+ A5EdnEtnj2ayN5xwY8Oz9ArNmnWD4CBryaMGhJG+UKeguvmFKJPta+MkwjR5XVyempjIHFpokWC
+ Kn4NEbBW0Ckv717kXSMVd3jBewdWJrYd2EpkI4z+4v2dXG7Atso45VDgq
+X-Gm-Gg: ASbGncvNvSKBnNiXl0ttFBZhK0luKMmll4HdxMwIpS0j8nViU34vfMkon2n0ZyMcdxY
+ AajhqFCd5YTpoytj4vFMa62IzW8Z1pnphESfXe1us5Ow2xEBh4j+N5G8dvmCO8cuFWWMOvMhwB3
+ jKO40eLfSlfyXZ76nFHi6GTLNBuKqZK/PGdvB11noCVAHUlGC6C5LYzIT/lCuj2HxY8Mbq+R9lD
+ uKpILb5EQT9spuIazg7Lfnmb/RKe5twF6j8g866o1owmWTAR+hmFdbHf2OWnKZugtentM00mTx2
+ XzxmEjhYXP12alESjnLjWZagHKTgbAPZ16C7FQxu9LDc1CfI+HMwEChxxZvaT1+H3+Xikw==
+X-Received: by 2002:a05:600c:5026:b0:43d:9f2:6274 with SMTP id
+ 5b1f17b1804b1-4533ca7790fmr160329025e9.14.1750230541593; 
+ Wed, 18 Jun 2025 00:09:01 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGuPX/dE2QXjOdsx6lR8LeRnxSeXRTsF3QO+FMu6IbzQJAXwo5UNZhK1EHVbOOh2xlZQRKILg==
+X-Received: by 2002:a05:600c:5026:b0:43d:9f2:6274 with SMTP id
+ 5b1f17b1804b1-4533ca7790fmr160328555e9.14.1750230541150; 
+ Wed, 18 Jun 2025 00:09:01 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b18f96sm16150003f8f.66.2025.06.18.00.08.15
+ 5b1f17b1804b1-4532e16a097sm203442985e9.33.2025.06.18.00.08.59
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Jun 2025 00:08:18 -0700 (PDT)
-Message-ID: <8ae7e5d2-185f-440b-bd82-d86b44f54f92@redhat.com>
-Date: Wed, 18 Jun 2025 09:08:11 +0200
+ Wed, 18 Jun 2025 00:09:00 -0700 (PDT)
+Message-ID: <b16b1a54-ff27-4b14-87e5-1123ec87d5c7@redhat.com>
+Date: Wed, 18 Jun 2025 09:08:56 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 03/15] intel_iommu: Check for compatibility with
- IOMMUFD backed device when x-flts=on
+Subject: Re: [PATCH v1 02/15] intel_iommu: Optimize context entry cache
+ utilization
 Content-Language: en-US
 To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
@@ -96,19 +96,20 @@ Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
  "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
  "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
  "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ "Peng, Chao P" <chao.p.peng@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+ Eduardo Habkost <eduardo@habkost.net>
 References: <20250606100416.346132-1-zhenzhong.duan@intel.com>
- <20250606100416.346132-4-zhenzhong.duan@intel.com>
- <a8b1cf9e-260f-4659-8eac-77993ebab842@redhat.com>
- <IA3PR11MB9136D8164C170467FE8C59C89272A@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <20250606100416.346132-3-zhenzhong.duan@intel.com>
+ <e75d6344-9858-400a-9c73-1359789e15a9@redhat.com>
+ <IA3PR11MB91363AC7DBFB6988CA1FAD229272A@IA3PR11MB9136.namprd11.prod.outlook.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <IA3PR11MB9136D8164C170467FE8C59C89272A@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <IA3PR11MB91363AC7DBFB6988CA1FAD229272A@IA3PR11MB9136.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -136,107 +137,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 6/18/25 4:14 AM, Duan, Zhenzhong wrote:
+On 6/18/25 4:10 AM, Duan, Zhenzhong wrote:
+> Hi Eric,
 >
 >> -----Original Message-----
 >> From: Eric Auger <eric.auger@redhat.com>
->> Subject: Re: [PATCH v1 03/15] intel_iommu: Check for compatibility with
->> IOMMUFD backed device when x-flts=on
+>> Subject: Re: [PATCH v1 02/15] intel_iommu: Optimize context entry cache
+>> utilization
 >>
 >> Hi Zhenzhong,
 >>
 >> On 6/6/25 12:04 PM, Zhenzhong Duan wrote:
->>> When vIOMMU is configured x-flts=on in scalable mode, stage-1 page table
->>> is passed to host to construct nested page table. We need to check
->>> compatibility of some critical IOMMU capabilities between vIOMMU and
->>> host IOMMU to ensure guest stage-1 page table could be used by host.
+>>> There are many call sites referencing context entry by calling
+>>> vtd_dev_to_context_entry() which will traverse the DMAR table.
 >>>
->>> For instance, vIOMMU supports stage-1 1GB huge page mapping, but host
->>> does not, then this IOMMUFD backed device should be failed.
+>>> In most cases we can use cached context entry in vtd_as->context_cache_entry
+>>> except when its entry is stale. Currently only global and domain context
+>>> invalidation stale it.
 >>>
->>> Signed-off-by: Yi Liu <yi.l.liu@intel.com>
+>>> So introduce a helper function vtd_as_to_context_entry() to fetch from cache
+>>> before trying with vtd_dev_to_context_entry().
+>>>
 >>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 >>> ---
->>>  hw/i386/intel_iommu_internal.h |  1 +
->>>  hw/i386/intel_iommu.c          | 28 ++++++++++++++++++++++++++++
->>>  2 files changed, 29 insertions(+)
+>>>  hw/i386/intel_iommu.c | 36 +++++++++++++++++++++++-------------
+>>>  1 file changed, 23 insertions(+), 13 deletions(-)
 >>>
->>> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
->>> index e8b211e8b0..2cda744786 100644
->>> --- a/hw/i386/intel_iommu_internal.h
->>> +++ b/hw/i386/intel_iommu_internal.h
->>> @@ -191,6 +191,7 @@
->>>  #define VTD_ECAP_PT                 (1ULL << 6)
->>>  #define VTD_ECAP_SC                 (1ULL << 7)
->>>  #define VTD_ECAP_MHMV               (15ULL << 20)
->>> +#define VTD_ECAP_NEST               (1ULL << 26)
->>>  #define VTD_ECAP_SRS                (1ULL << 31)
->>>  #define VTD_ECAP_PASID              (1ULL << 40)
->>>  #define VTD_ECAP_SMTS               (1ULL << 43)
 >>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->>> index a2f3250724..c42ef83ddc 100644
+>>> index f0b1f90eff..a2f3250724 100644
 >>> --- a/hw/i386/intel_iommu.c
 >>> +++ b/hw/i386/intel_iommu.c
->>> @@ -39,6 +39,7 @@
->>>  #include "kvm/kvm_i386.h"
->>>  #include "migration/vmstate.h"
->>>  #include "trace.h"
->>> +#include "system/iommufd.h"
+>>> @@ -1597,6 +1597,22 @@ static int
+>> vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
+>>>      return 0;
+>>>  }
 >>>
->>>  /* context entry operations */
->>>  #define VTD_CE_GET_RID2PASID(ce) \
->>> @@ -4361,6 +4362,33 @@ static bool vtd_check_hiod(IntelIOMMUState *s,
->> HostIOMMUDevice *hiod,
->>>          return true;
->>>      }
->>>
->>> +#ifdef CONFIG_IOMMUFD
->> is it requested?
-> Yes, windows build needs it.
-> iommu_hw_info_vtd and IOMMU_HW_INFO_TYPE_INTEL_VTD are defined in linux/iommufd.h,
-which is a linux dep
-> meanwhile all below check take effect only when IOMMUFD is supported.
-OK. I tried to remove #imply IOMMUFD in hw/i386/Kconfig and I did not
-get any error but well I did not build for Windows.
+>>> +static int vtd_as_to_context_entry(VTDAddressSpace *vtd_as,
+>> VTDContextEntry *ce)
+>>> +{
+>>> +    IntelIOMMUState *s = vtd_as->iommu_state;
+>>> +    uint8_t bus_num = pci_bus_num(vtd_as->bus);
+>>> +    uint8_t devfn = vtd_as->devfn;
+>>> +    VTDContextCacheEntry *cc_entry = &vtd_as->context_cache_entry;
+>>> +
+>>> +    /* Try to fetch context-entry from cache first */
+>>> +    if (cc_entry->context_cache_gen == s->context_cache_gen) {
+>>> +        *ce = cc_entry->context_entry;
+>>> +        return 0;
+>>> +    } else {
+>>> +        return vtd_dev_to_context_entry(s, bus_num, devfn, ce);
+>>> +    }
+>>> +}
+>>> +
+>> While the patch looks good to me can't you use the helper also in
+>> vtd_do_iommu_translate()?
+>> See " /* Try to fetch context-entry from cache first */"
+> It can, but it finally calls into vtd_dev_to_context_entry() so we can call vtd_dev_to_context_entry() directly.
+> I will drop this patch following Yi's suggestion.
+OK
+
+Cheers
 
 Eric
 >
 > Thanks
-
 > Zhenzhong
->
->> Cheers
->>
->> Eric
->>> +    struct HostIOMMUDeviceCaps *caps = &hiod->caps;
->>> +    struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
->>> +
->>> +    /* Remaining checks are all stage-1 translation specific */
->>> +    if (!object_dynamic_cast(OBJECT(hiod),
->> TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
->>> +        error_setg(errp, "Need IOMMUFD backend when x-flts=on");
->>> +        return false;
->>> +    }
->>> +
->>> +    if (caps->type != IOMMU_HW_INFO_TYPE_INTEL_VTD) {
->>> +        error_setg(errp, "Incompatible host platform IOMMU type %d",
->>> +                   caps->type);
->>> +        return false;
->>> +    }
->>> +
->>> +    if (!(vtd->ecap_reg & VTD_ECAP_NEST)) {
->>> +        error_setg(errp, "Host IOMMU doesn't support nested translation");
->>> +        return false;
->>> +    }
->>> +
->>> +    if (s->fs1gp && !(vtd->cap_reg & VTD_CAP_FS1GP)) {
->>> +        error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
->>> +        return false;
->>> +    }
->>> +#endif
->>> +
->>>      error_setg(errp, "host device is uncompatible with stage-1 translation");
->>>      return false;
->>>  }
 
 
