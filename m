@@ -4,94 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EFD1C71136
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Jun 2025 22:43:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E24A9C71136
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 01:26:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRf11-0005iB-8e; Tue, 17 Jun 2025 18:42:51 -0400
+	id 1uRhYV-0007RV-Bk; Tue, 17 Jun 2025 21:25:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRf0y-0005gl-Su
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 18:42:48 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <komlodi@google.com>)
+ id 1uRhYN-0007Pz-4f
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 21:25:28 -0400
+Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uRf0v-0007zh-U1
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 18:42:48 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-45347d6cba3so8847365e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 15:42:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <komlodi@google.com>)
+ id 1uRhYG-00051O-V6
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 21:25:25 -0400
+Received: by mail-pj1-x1031.google.com with SMTP id
+ 98e67ed59e1d1-311ef4fb43dso5041524a91.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 18:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750200133; x=1750804933; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ d=google.com; s=20230601; t=1750209917; x=1750814717; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Y0mElMK197BB4r23E4/nQRXPfIXPay3Ny6bJDuERBiQ=;
- b=NdGZZBWKanHbZSc/23ZFq2i53D5mWyvjqfe6Rw7pIOB0/OuYW8GptQ33qgK/H8j0y/
- dp+OnF0adPFRog+N1CWJKoq0XsyXfEnhkoNTUY3TklGW+MsYmNY6Kevb9BJA6ALiWr8g
- lOtL/nQTPCgC1MByE0DeF+M9ZAcE/iksQemkMoWyC8Gf59N0TUBfqzY8f8Dcjbb6445G
- 50fl4GK7c/9W6lKRC8U82Rc+B3/4H+szUGfa2G7FI8IbFnvjMTsr061yRqFYZN/D/Ebc
- 8KnPZBLhQqgQ4ecuD1ty87FbFMV/bnJMZQtzMjeCIqXguKmpDM6YRC1dFTrjmPtOumkB
- uo9A==
+ bh=IcKJlxotYYNzqhm17rsomT0rEkiw74pK5ylA3za2Brc=;
+ b=hRKdtrvq4/OtKLS9u+PjY2gENLLUr6DL+h/A+ChlQdahVFkQZ91fUWhsafKHg7Sftw
+ CbHEOwdp9tbf73RUnjCcOHxM3VT8aJrq+WlRPiIv/eyWRTalsJCeFXNwPPSRdsqBVBK7
+ ZMhWclA/0iNPnbyfBKabHZOJOgPk6WnW2WihrbNeCt1zuhSO8cLa6dMQG/Y3MfiTOe3q
+ 2JueIuXphqWtcuIKLDqpMxsT9yTvw2HsT2KtV/F53yQZvwy28N+atdepzV7zuPE33+vY
+ I8cgu5qxfVftQh2bwkke/Pn/fF/VZ+Y6wDaIfmRoFY37VbK0b+N001SdOabcxFO2zzIm
+ EezA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750200133; x=1750804933;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Y0mElMK197BB4r23E4/nQRXPfIXPay3Ny6bJDuERBiQ=;
- b=oYGmiXzrBU+6wW9ZfrLJu2UxweECLJYC23BfKdxfw+c56pSP7h7JSEQR8p/x+1hDnT
- LkuxBjuFUh4PbWylN6UVjv8rulvi9xAyM8YXclCsVgTytfs42ROpGHHc0DWcFFFI3UGD
- b7h+7v95hV+AosyTUnd2R5tEES1v1iPPJ9PeYK0ifuQL2FzhEf3Th693m4IHKs8J60nF
- ALKdPhto7hgf9ViNkQEATXAHR57k1x5crkdF+/gBC1XCNibvh1BWwtFTAYdd3Nuxv9QS
- e+WbZDfbqmwZl30Uux3TjNm3T1kHdCvS5ysDzpWg+QOAxSYFqxYWRWHgBAsE6EHJLvNY
- 1GNw==
-X-Gm-Message-State: AOJu0YwfTjKPa4gHbFSBj5UDTRgzKizbfL9/9vc9792fgTSEoNZYTT0d
- deqF/eBtAr6Gu4lPcBsNnhIsKgWOB/DeRRMfJVijK3Jciz5bcEeRVSy1yZbKlN9bkz0=
-X-Gm-Gg: ASbGncvM6/8kujCFfzv3ybLUdDLnijXFpGdwayYL8OKU6Uarm2aHYFz3UtHpJvfoMBS
- 2ZI63VtbNBQErUFG4XWQDRirRJOMgqBcIromGedzRf2JFLpyJsp0A2dOtpwiIGxBt/GW/SiymY0
- qUtoUK4Ah5TYkhkuYN3zdy4Uc6s99nilurUfCo+mkuevRg38UL8gp7nCpEsvYA4h7Xdru4Hr41a
- vCrRWXeJD4NIuDjlzw6q9MKPqTRyJcUhMnWlhRx5xjHM/FCZwvHKh5YnnWDV7RKNE0nKtlCzxuF
- GA8qT4H0cqN8J4mvVvDaJ4VNJk1MwmIDo/ofnWaCOrMUAOGcWgQdJ/7FAIlqBhZUiWay3zxkKA=
- =
-X-Google-Smtp-Source: AGHT+IH3/pU7q4iFFjbW1OlqIflChXxJb6phRbWCijSJpxyStHWxJTnzvYOMyaSirxtu4WCynCcGRQ==
-X-Received: by 2002:a05:600c:1c90:b0:450:d3b9:4ba4 with SMTP id
- 5b1f17b1804b1-4533cadf6c4mr143842105e9.2.1750200133237; 
- Tue, 17 Jun 2025 15:42:13 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b08dfesm15366468f8f.60.2025.06.17.15.42.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Jun 2025 15:42:12 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 34E125F845;
- Tue, 17 Jun 2025 23:42:11 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Tanish Desai <tanishdesai37@gmail.com>
-Cc: qemu-devel@nongnu.org,  =?utf-8?Q?Llu=C3=ADs?= Vilanova
- <vilanova@ac.upc.edu>,  Paolo
- Bonzini <pbonzini@redhat.com>,  Mads Ynddal <mads@ynddal.dk>,  Stefan
- Hajnoczi <stefanha@redhat.com>
-Subject: Re: [PATCH 2/3] tracetool: introduce generate_unconditional
-In-Reply-To: <20250616201222.6416-3-tanishdesai37@gmail.com> (Tanish Desai's
- message of "Mon, 16 Jun 2025 20:12:21 +0000")
-References: <20250616201222.6416-1-tanishdesai37@gmail.com>
- <20250616201222.6416-3-tanishdesai37@gmail.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Tue, 17 Jun 2025 23:42:11 +0100
-Message-ID: <87zfe6t2gs.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1750209917; x=1750814717;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=IcKJlxotYYNzqhm17rsomT0rEkiw74pK5ylA3za2Brc=;
+ b=G7LLB9pGrJtOPPnxBE8n+B9xpJbK30Jb4t9i3nsnsIMZKH/5IBE6J06KUVmvQnJQB9
+ dfdThbBcQuE/DwLZElF/gsRf05eHCvFh7zOBq8KItpnKxrbcBI3115GKQ8XeHKWUuw4+
+ ab3WI6Ed1HFH5RcJaZbrYMOTWPmsPz4V3cy7NP+rVJIKiz5VAqlDuBOuENjnJV2fakEN
+ aFmznOCRGXigzqhgEhLnIC0NZ314VCLXTubMd8Nbq1Wr9Zx2yjgY64QYkkTvLeuxPPRv
+ 8g+Ql3kSs9XTyUhc4dBzNlIDESu9vjvwPkBl2IxUNjpm6a8hGQjlPH+xFDjRzu1+khsq
+ h9DQ==
+X-Gm-Message-State: AOJu0YzBvKFCAl6QVZN1ARY/XnN3/jx1DHHdSRh/4vyZPAv1++ZRVrAY
+ z4z0tCkflVYn4kiFDZ1FD18YBDO+Fu8VfJ6wAmuSDcDZkUpnRCRr/rx6V0i/y9UM4pkqhVS48pu
+ DJZE1fddih0qTWk2bLnLGj0ymzXLV87q1AfbZaWiZ
+X-Gm-Gg: ASbGncsoX+wNPdhBKdMvhmFpTNA99ZorMskiQt62wOYvyS/UrZuYdtUB77+zbX2kDpX
+ orlZ25sTsjDDnkJ6dBkSbHsXD65CrmBjx/Duno+nk+jv5Al7WOZyFo9FQLU84FP2DqRUMif0S8S
+ w4EI29MIwZO5oYBqD03ViEPgJIvA98v5ATeg9EHFEqwk3YewXkGFi7zVObV2TOx10BEkYAjSDU
+X-Google-Smtp-Source: AGHT+IFH6t3RbREEiBbrFpl6K2pnX6ivmIbfyco8qswlN/4jzxCCxeMAtg1LzgGkAvBrB87Jbo/x9EWbkaAjeMIyhzo=
+X-Received: by 2002:a17:90b:1f92:b0:311:e8cc:424e with SMTP id
+ 98e67ed59e1d1-313f1ce543dmr21814795a91.24.1750209916647; Tue, 17 Jun 2025
+ 18:25:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+References: <20250613000411.1516521-1-komlodi@google.com>
+ <23deafc7-d832-470b-8d8e-aea0125d756f@kaod.org>
+In-Reply-To: <23deafc7-d832-470b-8d8e-aea0125d756f@kaod.org>
+From: Joe Komlodi <komlodi@google.com>
+Date: Tue, 17 Jun 2025 18:25:04 -0700
+X-Gm-Features: AX0GCFvq4VR_hFdnvIwoJysTOSa7grY78aoZUC42NOj6kk5zX4qiTtCwvnI5G2c
+Message-ID: <CAGDLtxti58hRfOjtr5RJuQE93+UWMOLhfM+YivwU4UZdgXRJfg@mail.gmail.com>
+Subject: Re: [PATCH 00/19] i3c: aspeed: Add I3C support
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Cc: qemu-devel@nongnu.org, venture@google.com, peter.maydell@linaro.org, 
+ steven_lee@aspeedtech.com, leetroy@gmail.com, jamin_lin@aspeedtech.com, 
+ andrew@codeconstruct.com.au, joel@jms.id.au, qemu-arm@nongnu.org, 
+ Jeremy Kerr <jk@codeconstruct.com.au>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x332.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
+ envelope-from=komlodi@google.com; helo=mail-pj1-x1031.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,112 +98,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tanish Desai <tanishdesai37@gmail.com> writes:
+Hi,
 
-> This patch separates the generation logic of trace_foo() for the UST and =
-DTrace backends from other backends.
-> The motivation is to remove the unnecessary if (true) in the _no_check fu=
-nction, as UST and DTrace do not require a trace_event_get_state check with=
-out introducing a seperate function it is very difficult to generate code w=
-hich keeps them out of unified if condition.
-> With this separation, we can safely move the trace_event_get_state check =
-into trace_foo for the other backends only, keeping UST/DTrace generation p=
-aths clean.
-> A new generate_h_unconditional function has been introduced for UST
-> and DTrace. It behaves similarly to generate_h, but is defined only in
-> UST and DTrace backends. This ensures that generate_h is used by the
-> other backends, while UST/DTrace selectively use
-> generate_h_unconditional.
-
-Please fix the word wrap on the commit at 78 chars.
-
+On Sun, Jun 15, 2025 at 11:49=E2=80=AFPM C=C3=A9dric Le Goater <clg@kaod.or=
+g> wrote:
 >
-> Signed-off-by: Tanish Desai <tanishdesai37@gmail.com>
-> ---
->  scripts/tracetool/backend/__init__.py |  3 +++
->  scripts/tracetool/backend/dtrace.py   |  3 ++-
->  scripts/tracetool/backend/ust.py      |  2 +-
->  scripts/tracetool/format/h.py         | 10 +++++++---
->  4 files changed, 13 insertions(+), 5 deletions(-)
+> Hi
 >
-> diff --git a/scripts/tracetool/backend/__init__.py b/scripts/tracetool/ba=
-ckend/__init__.py
-> index 7bfcc86cc5..c4456a5efd 100644
-> --- a/scripts/tracetool/backend/__init__.py
-> +++ b/scripts/tracetool/backend/__init__.py
-> @@ -118,6 +118,9 @@ def generate_begin(self, events, group):
->      def generate(self, event, group):
->          self._run_function("generate_%s", event, group)
->=20=20
-> +    def generate_unconditional(self, event, group):
-> +        self._run_function("generate_%s_unconditional", event, group)
-> +=20=20=20=20
->      def generate_backend_dstate(self, event, group):
->          self._run_function("generate_%s_backend_dstate", event, group)
->=20=20
-> diff --git a/scripts/tracetool/backend/dtrace.py b/scripts/tracetool/back=
-end/dtrace.py
-> index e17edc9b9d..171b7e09ed 100644
-> --- a/scripts/tracetool/backend/dtrace.py
-> +++ b/scripts/tracetool/backend/dtrace.py
-> @@ -61,7 +61,8 @@ def generate_h_begin(events, group):
->              '#endif',
->              uppername=3De.name.upper())
->=20=20
-> -def generate_h(event, group):
-> +
+> + Jeremy
+>
+> On 6/13/25 02:03, Joe Komlodi wrote:
+> > Hi all,
+> >
+> > This series adds I3C bus support to QEMU and adds more functionality to=
+ the
+> > Aspeed I3C controller.
+> >
+> > This implementation is a basic implementation that introduces IBIs
+> > (including hot-join), CCCs, and SDR data transfer. As-is, it doesn't su=
+pport
+> > multi-controller buses or HDR transfers.
+> >
+> > First we add the I3C bus and controller model. With that added we exten=
+d
+> > the functionality of the Aspeed I3C controller so it can do transfers
+> > and handle IBIs.
+> >
+> > Next, we add a mock I3C target. It's intended to be a very simple targe=
+t
+> > just to verify that I3C is working on the guest. Internally, we've used=
+ it
+> > on Linux to verify that i3C devices can be probed and can send/receive =
+data
+> > and IBIs.
+> > This target is sort of like an EEPROM, and it can also send IBIs upon
+> > reception of a user-defined magic number.>
+> > Lastly we add  hotplugging support. The hotplugging doesn't do anything=
+ too
+> > complicated, it just adds the device attempting to hotplug to the bus. =
+It
+> > is the device's responsibility to hot-join and go through the DAA proce=
+ss
+> > to participate on the bus.
+> >
+> > Thanks,
+> > Joe
+> >
+> > Joe Komlodi (19):
+> >    hw/misc/aspeed_i3c: Move to i3c directory
+> >    hw/i3c: Add bus support
+> >    hw/i3c: Split DesignWare I3C out of Aspeed I3C
+> >    hw/i3c/dw-i3c: Add more register fields
+> >    hw/i3c/aspeed_i3c: Add more register fields
+> >    hw/i3c/dw-i3c: Add more reset values
+> >    hw/i3c/aspeed_i3c: Add register RO field masks
+> >    hw/i3c/dw-i3c: Add register RO field masks
+> >    hw/i3c/dw-i3c: Treat more registers as read-as-zero
+> >    hw/i3c/dw-i3c: Use 32 bits on MMIO writes
+> >    hw/i3c/dw-i3c: Add IRQ MMIO behavior
+> >    hw/i3c/dw-i3c: Add data TX and RX
+> >    hw/i3c/dw-i3c: Add IBI handling
+> >    hw/i3c/dw-i3c: Add ctrl MMIO handling
+> >    hw/i3c/dw-i3c: Add controller resets
+> >    hw/i3c/aspeed: Add I3C bus get function
+> >    hw/i3c: Add Mock target
+> >    hw/arm/aspeed: Build with I3C_DEVICES
+> >    hw/i3c: Add hotplug support
+> >
+> >   hw/Kconfig                            |    1 +
+> >   hw/arm/Kconfig                        |    3 +
+> >   hw/i3c/Kconfig                        |   15 +
+> >   hw/i3c/aspeed_i3c.c                   |  261 ++++
+> >   hw/i3c/core.c                         |  669 +++++++++
+> >   hw/i3c/dw-i3c.c                       | 1881 ++++++++++++++++++++++++=
++
+> >   hw/i3c/meson.build                    |    6 +
+> >   hw/i3c/mock-i3c-target.c              |  311 ++++
+> >   hw/i3c/trace-events                   |   47 +
+> >   hw/i3c/trace.h                        |    2 +
+> >   hw/meson.build                        |    1 +
+> >   hw/misc/aspeed_i3c.c                  |  383 -----
+> >   hw/misc/meson.build                   |    1 -
+> >   hw/misc/trace-events                  |    6 -
+> >   include/hw/arm/aspeed_soc.h           |    2 +-
+> >   include/hw/{misc =3D> i3c}/aspeed_i3c.h |   22 +-
+> >   include/hw/i3c/dw-i3c.h               |  201 +++
+> >   include/hw/i3c/i3c.h                  |  277 ++++
+> >   include/hw/i3c/mock-i3c-target.h      |   52 +
+> >   meson.build                           |    1 +
+> >   20 files changed, 3735 insertions(+), 407 deletions(-)
+> >   create mode 100644 hw/i3c/Kconfig
+> >   create mode 100644 hw/i3c/aspeed_i3c.c
+> >   create mode 100644 hw/i3c/core.c
+> >   create mode 100644 hw/i3c/dw-i3c.c
+> >   create mode 100644 hw/i3c/meson.build
+> >   create mode 100644 hw/i3c/mock-i3c-target.c
+> >   create mode 100644 hw/i3c/trace-events
+> >   create mode 100644 hw/i3c/trace.h
+> >   delete mode 100644 hw/misc/aspeed_i3c.c
+> >   rename include/hw/{misc =3D> i3c}/aspeed_i3c.h (63%)
+> >   create mode 100644 include/hw/i3c/dw-i3c.h
+> >   create mode 100644 include/hw/i3c/i3c.h
+> >   create mode 100644 include/hw/i3c/mock-i3c-target.h
+> >
+>
+> This lacks a MAINTAINER.
 
-stray newline
+Ah, right. I can add that in v2. I can add myself to it, is there
+anyone else who should be on it?
+>
+> Could you please provide functional tests ? some with a standard I2C
+> device attached to an I3C legacy bus too.
 
-> +def generate_h_unconditional(event, group):
->      out('    QEMU_%(uppername)s(%(argnames)s);',
->          uppername=3Devent.name.upper(),
->          argnames=3D", ".join(event.args.names()))
-> diff --git a/scripts/tracetool/backend/ust.py b/scripts/tracetool/backend=
-/ust.py
-> index c857516f21..1564b490ec 100644
-> --- a/scripts/tracetool/backend/ust.py
-> +++ b/scripts/tracetool/backend/ust.py
-> @@ -30,7 +30,7 @@ def generate_h_begin(events, group):
->          '')
->=20=20
->=20=20
-> -def generate_h(event, group):
-> +def generate_h_unconditional(event, group):
->      argnames =3D ", ".join(event.args.names())
->      if len(event.args) > 0:
->          argnames =3D ", " + argnames
-> diff --git a/scripts/tracetool/format/h.py b/scripts/tracetool/format/h.py
-> index ea126b07ea..89d54b9aff 100644
-> --- a/scripts/tracetool/format/h.py
-> +++ b/scripts/tracetool/format/h.py
-> @@ -76,13 +76,17 @@ def generate(events, backend, group):
->          out('',
->              'static inline void %(api)s(%(args)s)',
->              '{',
-> -            '    if (%(cond)s) {',
-> +            api=3De.api(),
-> +            args=3De.args)
-> +=20=20=20=20=20=20=20=20
-> +        if "disable" not in e.properties:
-> +            backend.generate_unconditional(e, group)
-> +
-> +        out('    if (%(cond)s) {',
->              '        %(api_nocheck)s(%(names)s);',
->              '    }',
->              '}',
-> -            api=3De.api(),
->              api_nocheck=3De.api(e.QEMU_TRACE_NOCHECK),
-> -            args=3De.args,
->              names=3D", ".join(e.args.names()),
->              cond=3Dcond)
+I can work on that, probably v2 or v3 depending on how long it takes.
+>
+> Are there any other stakeholders interested in the I3C to get feedback ?
+>
+> Have there been any changes since:
+>
+>    https://lore.kernel.org/qemu-devel/20230331010131.1412571-1-komlodi@go=
+ogle.com/
+>
+Nothing too substantial. I decided not to upstream remote I3C since
+it's unlikely it would be useful upstream.
+I think there might be a couple bugfixes in the DwC controller as
+well, but I don't remember off-hand what they were. If there were any,
+they were all minor.
 
-Otherwise:
+Thanks,
+Joe
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
-
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+> Thanks,
+>
+> C.
 
