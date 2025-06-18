@@ -4,113 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7742C71157
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 15:35:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80FF7C7115A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 15:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRuo4-0006WJ-24; Wed, 18 Jun 2025 11:34:32 -0400
+	id 1uRvAU-0003EA-UL; Wed, 18 Jun 2025 11:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uRunz-0006VU-RK; Wed, 18 Jun 2025 11:34:28 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1uRvAM-0003CQ-1k
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uRunx-00012A-HE; Wed, 18 Jun 2025 11:34:27 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IDe1aN017016;
- Wed, 18 Jun 2025 15:34:21 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=rxSzfV
- srOOzaFbFeddixYn1wB8XM3kQras9169WDHME=; b=L14uiZGnf6/dC1Ap4HMzLq
- 0Tyt6oFiI9U17UtbR3Vyh9jZP9TYBx0BZqsfte5+chNpZfLBEnWxaQIaK+jCoTPa
- WAitnJeK+rUK3998eToaMgOLK8cW6CKs6isD07k+UZx4gmounYLYyIIcLa44wNOO
- 0fdQTIUCnFwWhY5p5i9UtYCmjpTbPr3BKXo5GpJOlSBBXOScT5GJMkYfOWMYOgXc
- 9IzsVSRvyiVaVEM1TTogv0rWoBeTqZtoc3Hn7CcJoi1yzjx/Nxboldub4JU+aqRF
- okcEJfjTHKLeqato/HFCd72LtF6GEAkSinnySjLfeMxA9NQXaIQ84ZxyWEQcmX5g
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4790r277xe-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Jun 2025 15:34:20 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55IC9pKd025763;
- Wed, 18 Jun 2025 15:34:19 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 479xy5yntu-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Jun 2025 15:34:19 +0000
-Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
- [10.241.53.105])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55IFYIbx29950590
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Jun 2025 15:34:18 GMT
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C2F8758061;
- Wed, 18 Jun 2025 15:34:18 +0000 (GMT)
-Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D2FF758060;
- Wed, 18 Jun 2025 15:34:17 +0000 (GMT)
-Received: from [9.61.89.155] (unknown [9.61.89.155])
- by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 18 Jun 2025 15:34:17 +0000 (GMT)
-Message-ID: <935581ef-1cb2-4e2f-9c3f-23203b556ca8@linux.ibm.com>
-Date: Wed, 18 Jun 2025 11:34:17 -0400
+ (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
+ id 1uRvAJ-000887-Dl
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750262248;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=5PjGJ6LmFzKkJysKqVxSszxh4Nlr1FXEK/WbkR5aWCg=;
+ b=AUmb5bm2CSgqdeQODp95fs3hEuft2epHs3gEyYFJHMp/o4beRqohLBBxseQOoeJlmcfL8L
+ MFsaIs2F2Q9lMdGtGAGT6Ib3bBKsP8b6CRyrcEsD/uOiSgGjlMuGTFdDS9oWaRfOWlx/Yf
+ QX0HejTPAh60ZE5QFfrFB15lqXSN2kg=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-6RHFwtDhO66M9O1AZFs56w-1; Wed,
+ 18 Jun 2025 11:57:25 -0400
+X-MC-Unique: 6RHFwtDhO66M9O1AZFs56w-1
+X-Mimecast-MFC-AGG-ID: 6RHFwtDhO66M9O1AZFs56w_1750262244
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2D63C18001D6; Wed, 18 Jun 2025 15:57:24 +0000 (UTC)
+Received: from lenovo-t14s.redhat.com (unknown [10.44.33.123])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C759718003FC; Wed, 18 Jun 2025 15:57:19 +0000 (UTC)
+From: Laurent Vivier <lvivier@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Stefan Weil <sw@weilnetz.de>,
+ Stefano Garzarella <sgarzare@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>
+Subject: [PATCH v2 00/10] net: Add passt netdev backend
+Date: Wed, 18 Jun 2025 17:57:08 +0200
+Message-ID: <20250618155718.550968-1-lvivier@redhat.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-From: Zhuoying Cai <zycai@linux.ibm.com>
-Subject: Re: [PATCH v3 02/28] crypto/x509-utils: Add helper functions for
- certificate store
-To: Markus Armbruster <armbru@redhat.com>
-Cc: thuth@redhat.com, berrange@redhat.com, richard.henderson@linaro.org,
- david@redhat.com, pbonzini@redhat.com, walling@linux.ibm.com,
- jjherne@linux.ibm.com, jrossi@linux.ibm.com, pasic@linux.ibm.com,
- borntraeger@linux.ibm.com, farman@linux.ibm.com, iii@linux.ibm.com,
- eblake@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-3-zycai@linux.ibm.com> <87sejyskgj.fsf@pond.sub.org>
- <41e788ad-77e2-46d2-a384-2c8f524391c2@linux.ibm.com>
- <87wm99r3rh.fsf@pond.sub.org>
-Content-Language: en-US
-In-Reply-To: <87wm99r3rh.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: FB6GRy0doZHmncx-ePHInDVz3knmJlxB
-X-Proofpoint-ORIG-GUID: FB6GRy0doZHmncx-ePHInDVz3knmJlxB
-X-Authority-Analysis: v=2.4 cv=AqTu3P9P c=1 sm=1 tr=0 ts=6852dc7c cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=NB_RxL-2x5hI3PK_8MMA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDEyOSBTYWx0ZWRfX32l0g5sz5T6y
- GmumBHoKwRFEmFRM71bRhdVJIcsHOs4EWCwqqiQ5uYYX0c/ljgH/0BbrM+R1UurLEf8rlBaZDqY
- OeU04Uw437UfwLnUCosKHWwFf4iHNWPxXmviUQBwnbuA7ABkcpy0psfYoMauGLm//XZeRwWjhiX
- mMLxFgEXv5T1IcdMVvRGhkREzIFD06Wv2yvLvFHpWiLwubsnHyhGE5EOtZy4UNv3tjuVMI+/uQs
- o14gyCprRNN/clZEWSwATIBSpsHpj1LpWeTjrXkmCCCDg5cK9oMihum0WBfTWsK8AAMM4XNJ68k
- nhvJSOFH8+BGKwJcws1Ka7yxySOVb538XoTkwDfXme3PgDMGdLCWpi2+nyzwNbVrcAvWIXzqWs/
- XfgoLsffOnKNqRa4G0yDOy3+N+2bi7xlexMyDFopdoOyDzPpbdXakccGWLJ07KJUIXf4eqja
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-18_05,2025-06-18_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015
- lowpriorityscore=0 suspectscore=0 adultscore=0 impostorscore=0
- priorityscore=1501 phishscore=0 mlxlogscore=684 mlxscore=0 spamscore=0
- bulkscore=0 malwarescore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506180129
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=zycai@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.895,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -128,92 +89,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/18/25 1:57 AM, Markus Armbruster wrote:
-> Zhuoying Cai <zycai@linux.ibm.com> writes:
-> 
->> On 6/17/25 6:58 AM, Markus Armbruster wrote:
->>> Zhuoying Cai <zycai@linux.ibm.com> writes:
->>>
->>>> Add helper functions for x509 certificate which will be used in the next
->>>> patch for the certificate store.
->>>>
->>>> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
-> 
-> [...]
-> 
->>> Ignorant question: why are these QAPI enums?
->>>
->>> If they need to be QAPI enums, then I'll have some requests on the doc
->>> comments.
->>>
->>
->> Hi, thanks for the feedback.
->>
->> The helper functions in x509-utils.c either take QAPI enum values as
->> parameters or return them. These enums are used later within QEMU.
-> 
-> Let's look at the first one I found:
-> 
->     int qcrypto_check_x509_cert_fmt(uint8_t *cert, size_t size,
->                                     QCryptoCertFmt fmt, Error **errp)
->     {
->         int rc;
->         int ret = -1;
->         gnutls_x509_crt_t crt;
->         gnutls_datum_t datum = {.data = cert, .size = size};
-> 
->         if (fmt >= G_N_ELEMENTS(qcrypto_to_gnutls_cert_fmt_map)) {
->             error_setg(errp, "Unknown certificate format");
->             return ret;
->         }
-> 
->         if (gnutls_x509_crt_init(&crt) < 0) {
->             error_setg(errp, "Failed to initialize certificate");
->             return ret;
->         }
-> 
->         rc = gnutls_x509_crt_import(crt, &datum, qcrypto_to_gnutls_cert_fmt_map[fmt]);
->         if (rc == GNUTLS_E_ASN1_TAG_ERROR) {
->             goto cleanup;
->         }
-> 
->         ret = 0;
-> 
->     cleanup:
->         gnutls_x509_crt_deinit(crt);
->         return ret;
->     }
-> 
-> All it does with its @fmt argument is map it to the matching
-> GNUTLS_X509_FMT_*.
-> 
-> There's just one caller, init_cert_x509_der() in hw/s390x/cert-store.c:
-> 
->     is_der = qcrypto_check_x509_cert_fmt((uint8_t *)raw, size,
->                                          QCRYPTO_CERT_FMT_DER, &err);
-> 
-> QCRYPTO_CERT_FMT_DER gets mapped to GNUTLS_X509_FMT_DER.  Why not pass
-> that directly?  We don't need enum QCryptoCertFmt then.
-> 
-
-I received feedback on a previous patch series that directly using
-GNUTLS in QEMU code is discouraged, except for under the crypto/
-directory. Internal APIs should be defined to access GNUTLS
-functionality instead.
-
-> If we need enum QCryptoCertFmt for some reason I can't see, why does it
-> have to be a QAPI type?  Why not a plain C enum?
-> 
-
-While implementing the new helper functions, I referred to
-qcrypto_get_x509_cert_fingerprint() in crypto/x509-utils.c, which takes
-QCryptoHashAlgo as a parameter. Following this, I added corresponding
-QCRYPTO enums to map to GNUTLS enums.
-
-If using plain C enums is preferred, I can update the code accordingly
-in the next version.
-
-> Similar questions for the other QAPI enums added in this series.
-> 
+This series introduces support for passt as a new network backend for=0D
+QEMU.=0D
+=0D
+passt is a modern, unprivileged, user-mode networking solution that=0D
+provides guest connectivity by launching an external helper process. This=0D
+series adds the core backend and integrates it with vhost-user for=0D
+high-performance, accelerated networking.=0D
+=0D
+The series is structured to first improve the general networking code=0D
+before adding the new feature. The first patch extracts from the stream=0D
+backend the functions that will be reused in the passt backend. The=0D
+following patches are a preparatory refactoring to decouple the generic=0D
+vhost layer from specific backend implementations (tap, vhost-user, etc.).=
+=0D
+This is achieved by replacing hardcoded type checks with a callback-based=0D
+system in NetClientInfo, making the vhost infrastructure more modular and=0D
+extensible.=0D
+=0D
+With the refactoring in place, subsequent patches introduce the passt=0D
+backend itself, reusing the generic stream handling logic. The final=0D
+patch adds vhost-user support to passt, which plugs cleanly into the=0D
+newly refactored vhost layer.=0D
+=0D
+Some benchmarks:=0D
+=0D
+ Reference '-net user':=0D
+=0D
+  -net user,hostfwd=3Dtcp::10001-:10001=0D
+=0D
+    iperf3 -c localhost -p 10001  -t 60 -4=0D
+=0D
+    [ ID] Interval           Transfer     Bitrate         Retr=0D
+    [  5]   0.00-60.00  sec  14.2 GBytes  2.03 Gbits/sec    1            se=
+nder=0D
+    [  5]   0.00-60.00  sec  14.2 GBytes  2.03 Gbits/sec                  r=
+eceiver=0D
+=0D
+ New backend '-netdev passt'=0D
+=0D
+  -netdev passt,vhost-user=3Doff,tcp-ports=3D10001=0D
+=0D
+    iperf3 -c localhost -p 10001  -t 60 -4=0D
+=0D
+    [ ID] Interval           Transfer     Bitrate         Retr=0D
+    [  5]   0.00-60.00  sec  27.1 GBytes  3.88 Gbits/sec    0            se=
+nder=0D
+    [  5]   0.00-60.03  sec  27.1 GBytes  3.88 Gbits/sec                  r=
+eceiver=0D
+=0D
+  -netdev passt,vhost-user=3Don,tcp-ports=3D10001=0D
+=0D
+    iperf3 -c localhost -p 10001  -t 60 -4=0D
+=0D
+    [ ID] Interval           Transfer     Bitrate         Retr=0D
+    [  5]   0.00-60.00  sec   224 GBytes  32.1 Gbits/sec    4            se=
+nder=0D
+    [  5]   0.00-60.05  sec   224 GBytes  32.0 Gbits/sec                  r=
+eceiver=0D
+=0D
+v2:=0D
+  - rebase:=0D
+      fix conflict with=0D
+        837b87c4c5ba ("net/stream: skip automatic zero-init of large array"=
+)=0D
+        (why is this needed? A buffer on a stack is normally not initialize=
+d...)=0D
+  - add path parameter to provide path of passt if it is not in PATH=0D
+  - add 2 patches:=0D
+        "net: Allow network backends to advertise max TX queue size"=0D
+        "net: Consolidate vhost feature bits into NetClientInfo"=0D
+=0D
+Thanks,=0D
+Laurent=0D
+=0D
+Laurent Vivier (10):=0D
+  net: Refactor stream logic for reuse in '-net passt'=0D
+  net: Define net_client_set_link()=0D
+  net: Introduce helper to identify vhost-user clients=0D
+  net: Add get_vhost_net callback to NetClientInfo=0D
+  net: Consolidate vhost feature bits into NetClientInfo=0D
+  net: Add get_acked_features callback to NetClientInfo=0D
+  net: Add save_acked_features callback to NetClientInfo=0D
+  net: Allow network backends to advertise max TX queue size=0D
+  net: Add passt network backend=0D
+  net/passt: Implement vhost-user backend support=0D
+=0D
+ hmp-commands.hx          |   3 +=0D
+ hw/net/vhost_net-stub.c  |   1 -=0D
+ hw/net/vhost_net.c       | 139 +------=0D
+ hw/net/virtio-net.c      |  18 +-=0D
+ include/net/net.h        |  14 +=0D
+ include/net/tap.h        |   3 -=0D
+ include/net/vhost-user.h |  19 -=0D
+ include/net/vhost-vdpa.h |   4 -=0D
+ meson.build              |   6 +=0D
+ meson_options.txt        |   2 +=0D
+ net/clients.h            |   4 +=0D
+ net/hub.c                |   3 +=0D
+ net/meson.build          |   6 +-=0D
+ net/net.c                |  55 ++-=0D
+ net/passt.c              | 768 +++++++++++++++++++++++++++++++++++++++=0D
+ net/stream.c             | 282 ++++----------=0D
+ net/stream_data.c        | 193 ++++++++++=0D
+ net/stream_data.h        |  31 ++=0D
+ net/tap-win32.c          |   5 -=0D
+ net/tap.c                |  39 +-=0D
+ net/vhost-user-stub.c    |   1 -=0D
+ net/vhost-user.c         |  66 +++-=0D
+ net/vhost-vdpa.c         |  10 +-=0D
+ qapi/net.json            | 124 +++++++=0D
+ qemu-options.hx          |  18 +=0D
+ 25 files changed, 1399 insertions(+), 415 deletions(-)=0D
+ delete mode 100644 include/net/vhost-user.h=0D
+ create mode 100644 net/passt.c=0D
+ create mode 100644 net/stream_data.c=0D
+ create mode 100644 net/stream_data.h=0D
+=0D
+-- =0D
+2.49.0=0D
+=0D
 
 
