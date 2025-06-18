@@ -4,87 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE4DC7115A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 21:36:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150C3C7115A
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 21:59:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uS0Rl-00078o-0Q; Wed, 18 Jun 2025 17:35:53 -0400
+	id 1uS0nv-0002SE-Do; Wed, 18 Jun 2025 17:58:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1uS0Rj-00078S-RF
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:35:51 -0400
-Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1uS0Rh-0002Kh-CQ
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:35:51 -0400
-Received: by mail-wm1-x342.google.com with SMTP id
- 5b1f17b1804b1-450cf0120cdso807445e9.2
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 14:35:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1750282547; x=1750887347; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/dtP/wPX6YaIMdCs/d+V0dG8onDo592JRn8CaOwFdRE=;
- b=LjMf07mnQkC0mpTQaYo5e5GHSrQsNi3jg9CaahrMpSlzvtB4gCXGPj8NqKOhwEWIsb
- eucmj729rmJQ0Awf0N/rdffIe7NpWpPm0rMO87Sw2ZMjOlxGWdfuL2Owty8Rwhe7Ycts
- 4WXFIpVA186O5MXdEiuYxpY2SQomMo6no6nsCm7q7ZWslBIwpomxqbXEvrbaYuADqkzj
- 60EjHjm8ildyUIbwJbLocvWppN85vXaIyw9TK4vgEr6vp0OnL8KqfrV+MJJmLXZfJiZ6
- brLcZaJ0Ak/GsnUkxqfFoHuBoavHrZ5ET2Ol8nCgM1eo6liFF26crmzgyeY4XLdZAlNP
- EVew==
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uS0nt-0002Rv-4G
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:58:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uS0nq-0007qE-MA
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:58:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750283920;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=1GX3VR3zwwzoNvJnv6ba5Oys9yAv3Y+PfHmnkUbPaN8=;
+ b=cJk2r8h+lasbidhDsTsFG3Q8dCxzqHmSkbecspA+gEztoTRl1XTU1cvpDdVS//Yduk3Sr9
+ n95TwVDdc4itmfTLuBsqzaMT2X+gvp0iMrGNLnNflBbuVKE24WbNE6d54TKUyj5EzdkaOf
+ cpUeunRIswNBy/zUX8a2NLPLW1LEKPk=
+Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
+ [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-527-psjAMVhMMk2ChAW7syaizQ-1; Wed, 18 Jun 2025 17:58:37 -0400
+X-MC-Unique: psjAMVhMMk2ChAW7syaizQ-1
+X-Mimecast-MFC-AGG-ID: psjAMVhMMk2ChAW7syaizQ_1750283916
+Received: by mail-pf1-f198.google.com with SMTP id
+ d2e1a72fcca58-748f13ef248so88470b3a.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 14:58:37 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750282547; x=1750887347;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/dtP/wPX6YaIMdCs/d+V0dG8onDo592JRn8CaOwFdRE=;
- b=QmcUbNT2vI+idKq6FsJn8oTIThRTQmkN95+rueiN/Lnz4zdyley8ZqDv06KhpCj+H7
- OAX5H7+ZI0fHgkxvw/2Z8iqKniMDfQnDNWHPrIzCTo/jYrxv541blNTQHY+mWlomasZN
- ElEyZtxqCQDdu36KJK/Am53/SoORHUZ2LmHSYcQQsLdlr0v/ldFkOVS8Gxd1nmCTPlbj
- 0MVYStfc/lPIclZ8TcYyOIPvfggmde8T207vQCvOfKBJOn3L0Iew410ms9bXrTzFeaMK
- IZte04vBphhalt4rgvI0QCOHS42gAYkMi3sG78WA2Jft5qorFTiBicue0RzEUY94irDw
- Hs0A==
-X-Gm-Message-State: AOJu0YyYjGagmF6o6UC8TTXKTTtfdTWihHv96KGFqg5YvAwz2ShU156t
- bqjLGZIjgc1AUa32XjkMK06cM/gb5BysVc+100gv/HLkx+i6rwPyhQqW+/h289IGzR9/QDBWow8
- mVNUVew6xKw==
-X-Gm-Gg: ASbGncvoMzixCjwkG9TexuPH5DFEszvrBfXjW7SoReYkP0QVqNCYpV2H+YtqU7OIlwR
- 5VhTTtCyiIP9D2kKCw04979KJCe/4uL140907vCu2iZtH0MDs7FWN+susHchztp2/vQ4Xq+kMtH
- XPugyA+9D5Cl2orTsqi1Bv0tVfCi727m2ZBl86e/FSpVPRFOXkUdV7/DQ+KAV4XecmbK9Cscf/n
- ZdJ4wFNGmyDWgRE5JevEXdt6USQlJsyj8/wAw4/rNBAKHOCDHnF865tspreW0iMcGzI74+W6ud8
- 69G6Kvb6s41gR8s9k7F5r06C+lQREOFwSdGITitShk3UvgVn70WQ5OAGt4CM0IU=
-X-Google-Smtp-Source: AGHT+IHfH0POiYdvqSbXnwEmTQeAnbr0JF1o2eOxl1YFcuUpQBicPPFXHBAyv3Lk1ylYejIBYr7GYA==
-X-Received: by 2002:a05:600c:1d06:b0:450:c20d:64c3 with SMTP id
- 5b1f17b1804b1-4533caad17fmr184569945e9.18.1750282547173; 
- Wed, 18 Jun 2025 14:35:47 -0700 (PDT)
-Received: from localhost ([2a02:587:4b09:8700:f50f:b7ef:31a4:1163])
- by smtp.gmail.com with UTF8SMTPSA id
- 5b1f17b1804b1-4535e982dd5sm8296275e9.12.2025.06.18.14.35.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Jun 2025 14:35:46 -0700 (PDT)
-From: Vasilis Liaskovitis <vliaskovitis@suse.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: dbarboza@ventanamicro.com, ajones@ventanamicro.com,
- alistair.francis@wdc.com, philmd@linaro.org,
- Vasilis Liaskovitis <vliaskovitis@suse.com>
-Subject: [PATCH v2] target/riscv: Add a property to set vill bit on reserved
- usage of vsetvli instruction
-Date: Wed, 18 Jun 2025 23:35:42 +0200
-Message-ID: <20250618213542.22873-1-vliaskovitis@suse.com>
-X-Mailer: git-send-email 2.46.0
+ d=1e100.net; s=20230601; t=1750283916; x=1750888716;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=1GX3VR3zwwzoNvJnv6ba5Oys9yAv3Y+PfHmnkUbPaN8=;
+ b=AfsVTh6GEXiU5CwO1X1384ffiGGiFWIvXGrIWZ7QRIgeUad406Ez567u9deMk8by9+
+ wacZCDEYyX9qVmPsHD03V+xzzbmxUNvKANJTT1JPok+muytXHf+vcjG4Zh9KxyKq5VgH
+ eMlqVO+YMvi1D37VmgRPAEOd+tl5doKE5wFenkMvGyCTQrr++251YzeRV6pCPNJx26O5
+ SclJ0X+mxRZRdwbtkjyKBHMU+0zMQS8XcpPUHIuk2nMEG+Yh6mlUAQa1BpHXgImITdOR
+ i4vE4QosYZbfLtIwbpzq5JbMZyNDpwHwII8bWqACMAZCAmU3GOxY6+618apP5Dx9gaF0
+ 8nlw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWFgodBr/m6uwf3syUdvUfJ+6pvLBfW2ryZbF91tFckIPlFp8X03flJQ+g9FW12TXnxAizr+KNh6v/d@nongnu.org
+X-Gm-Message-State: AOJu0YxyyYIu8IqsUZjZQR5w6qmp2rN20etG1+y7dBev9XnZMdrxNNxT
+ h+6MPeQtTC+oZ82rx3KX69GZjpbfldhUjvWLNYaSUOeZQXZldgDL0M6z3A+9PJA8NksvwfPmVzj
+ WWIH2Lvz/U8OdDJxZSybldwe3sVzVVstN+x31CIWM2p8vUqzLhIs1lfoY
+X-Gm-Gg: ASbGncviZ18dR5f8FZ7pqPeYTx8KHbwIB2bGx6Yk/Ux2mYDHSeoccBTn4qCBVZAn9Z1
+ XTx/+lLFGC2PaNslKTdpTjgH6aJKO2AVXJNmMeDHZJrO9o0YajMsIfFygJ3OW3D8SCnhwkEtkCQ
+ GxsgY00W72vsP295Oz4Zt8V50WqxusF6VAzYqOFAiRZCRVDyPeFDDAsEglc6/Z4ZNMRZ5YiI1rH
+ 6Zf39/zFJSZsUsFHNCH2fpKjvmbsnRYviO6z9V/+8OSeX+5cxCr4rQJpPkEFsnoyFcpHLqfZJIb
+ BzTg2L/B6L1OGA==
+X-Received: by 2002:a05:6a00:cc8:b0:73e:10ea:b1e9 with SMTP id
+ d2e1a72fcca58-7489ce45c6amr24603951b3a.6.1750283916089; 
+ Wed, 18 Jun 2025 14:58:36 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrGuvcRJ9h3sdim+cF5rfkGm/rfr7TlO54C2ki4yjnMzdbBlFJZcbtUwlDFQVM32x8tAx0IQ==
+X-Received: by 2002:a05:6a00:cc8:b0:73e:10ea:b1e9 with SMTP id
+ d2e1a72fcca58-7489ce45c6amr24603925b3a.6.1750283915692; 
+ Wed, 18 Jun 2025 14:58:35 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-7489000749csm12088504b3a.68.2025.06.18.14.58.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Jun 2025 14:58:34 -0700 (PDT)
+Date: Wed, 18 Jun 2025 17:58:28 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Chenyi Qiang <chenyi.qiang@intel.com>
+Cc: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>,
+ Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Roth <michael.roth@amd.com>, qemu-devel@nongnu.org,
+ kvm@vger.kernel.org, Williams Dan J <dan.j.williams@intel.com>,
+ Zhao Liu <zhao1.liu@intel.com>, Baolu Lu <baolu.lu@linux.intel.com>,
+ Gao Chao <chao.gao@intel.com>, Xu Yilun <yilun.xu@intel.com>,
+ Li Xiaoyao <xiaoyao.li@intel.com>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
+ Alex Williamson <alex.williamson@redhat.com>
+Subject: Re: [PATCH v7 0/5] Enable shared device assignment
+Message-ID: <aFM2hFgjiBm3nML6@x1.local>
+References: <20250612082747.51539-1-chenyi.qiang@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::342;
- envelope-from=vliaskovitis@suse.com; helo=mail-wm1-x342.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250612082747.51539-1-chenyi.qiang@intel.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.895,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,115 +114,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Usage of vsetvli instruction is reserved if VLMAX is changed when vsetvli rs1
-and rd arguments are x0.
+Hi, Chenyi,
 
-In this case, if the new property is true, only the vill bit will be set.
+On Thu, Jun 12, 2025 at 04:27:41PM +0800, Chenyi Qiang wrote:
+> Relationship with in-place conversion
+> -------------------------------------
+> In-place page conversion is the ongoing work to allow mmap() of
+> guest_memfd to userspace so that both private and shared memory can use
+> the same physical memory as the backend. This new design eliminates the
+> need to discard pages during shared/private conversions. When it is
+> ready, shared device assignment needs be adjusted to achieve an
+> unmap-before-conversion-to-private and map-after-conversion-to-shared
+> sequence to be compatible with the change.
 
-See https://github.com/riscv/riscv-isa-manual/blob/main/src/v-st-ext.adoc#avl-encoding
-According to the spec, the above use cases are reserved, and
-"Implementations may set vill in either case."
+Is it intentional to be prepared for this?
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2422
-Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
----
- target/riscv/cpu.c                      |  1 +
- target/riscv/cpu_cfg_fields.h.inc       |  1 +
- target/riscv/helper.h                   |  2 +-
- target/riscv/insn_trans/trans_rvv.c.inc |  4 ++--
- target/riscv/vector_helper.c            | 12 +++++++++++-
- 5 files changed, 16 insertions(+), 4 deletions(-)
+The question more or less come from the read of patch 5, where I see a
+bunch of very similar code versus virtio-mem, like:
 
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 629ac37501..1c29ed3b2b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2595,6 +2595,7 @@ static const Property riscv_cpu_properties[] = {
-     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
-     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
-     DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
-+    DEFINE_PROP_BOOL("rvv_vsetvl_x0_vill", RISCVCPU, cfg.rvv_vsetvl_x0_vill, false),
- 
-     /*
-      * write_misa() is marked as experimental for now so mark
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 59f134a419..9c78a797cf 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -114,6 +114,7 @@ BOOL_FIELD(ext_supm)
- BOOL_FIELD(rvv_ta_all_1s)
- BOOL_FIELD(rvv_ma_all_1s)
- BOOL_FIELD(rvv_vl_half_avl)
-+BOOL_FIELD(rvv_vsetvl_x0_vill)
- /* Named features  */
- BOOL_FIELD(ext_svade)
- BOOL_FIELD(ext_zic64b)
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 85d73e492d..f712b1c368 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -159,7 +159,7 @@ DEF_HELPER_FLAGS_3(hyp_hsv_d, TCG_CALL_NO_WG, void, env, tl, tl)
- #endif
- 
- /* Vector functions */
--DEF_HELPER_3(vsetvl, tl, env, tl, tl)
-+DEF_HELPER_4(vsetvl, tl, env, tl, tl, tl)
- DEF_HELPER_5(vle8_v, void, ptr, ptr, tl, env, i32)
- DEF_HELPER_5(vle16_v, void, ptr, ptr, tl, env, i32)
- DEF_HELPER_5(vle32_v, void, ptr, ptr, tl, env, i32)
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2b6077ac06..87071c5d62 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -202,7 +202,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
-         s1 = get_gpr(s, rs1, EXT_ZERO);
-     }
- 
--    gen_helper_vsetvl(dst, tcg_env, s1, s2);
-+    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl((int) (rd == 0 && rs1 == 0)));
-     gen_set_gpr(s, rd, dst);
-     finalize_rvv_inst(s);
- 
-@@ -222,7 +222,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
- 
-     dst = dest_gpr(s, rd);
- 
--    gen_helper_vsetvl(dst, tcg_env, s1, s2);
-+    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
-     gen_set_gpr(s, rd, dst);
-     finalize_rvv_inst(s);
-     gen_update_pc(s, s->cur_insn_len);
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 5dc1c10012..b41c29da0b 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -35,7 +35,7 @@
- #include <math.h>
- 
- target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
--                            target_ulong s2)
-+                            target_ulong s2, target_ulong x0)
- {
-     int vlmax, vl;
-     RISCVCPU *cpu = env_archcpu(env);
-@@ -83,6 +83,16 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     } else {
-         vl = vlmax;
-     }
-+
-+    if (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl)) {
-+        /* only set vill bit. */
-+        env->vill = 1;
-+        env->vtype = 0;
-+        env->vl = 0;
-+        env->vstart = 0;
-+        return 0;
-+    }
-+
-     env->vl = vl;
-     env->vtype = s2;
-     env->vstart = 0;
+        ram_block_attributes_for_each_populated_section
+        ram_block_attributes_for_each_discarded_section
+        ram_block_attributes_rdm_register_listener
+        ram_block_attributes_rdm_unregister_listener
+
+Fundamentally, IIUC it's because of the similar structure of bitmap used,
+and the listeners.  IOW, I wonder if it's possible to move the shared
+elements into RamDisgardManager for:
+
+    unsigned bitmap_size;
+    unsigned long *bitmap;
+    QLIST_HEAD(, RamDiscardListener) rdl_list;
+
+But if we know it'll be a tri-state some day, maybe that means it won't
+apply anymore.  However the rdl_list is still applicable to be merged if we
+want, it's just that it'll be a smaller portion to be shared.
+
+Other than that, even if I don't know how to test this.. I read the patches
+today and they look all good.  The duplication is a pure question I have
+above, but even if so it can also be done on top.
+
+I do plan to pick this up. Paolo/David, any comments before I do?
+
+Thanks,
+
 -- 
-2.46.0
+Peter Xu
 
 
