@@ -4,77 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 776A9C7115B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BE4DC7115A
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 21:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uS0SH-0007DH-2Z; Wed, 18 Jun 2025 17:36:25 -0400
+	id 1uS0Rl-00078o-0Q; Wed, 18 Jun 2025 17:35:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1uS0SF-0007Cq-MN
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:36:23 -0400
-Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ id 1uS0Rj-00078S-RF
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:35:51 -0400
+Received: from mail-wm1-x342.google.com ([2a00:1450:4864:20::342])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1uS0SE-0002MV-4J
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:36:23 -0400
-Received: by mail-lf1-x12d.google.com with SMTP id
- 2adb3069b0e04-553b544e7b4so63816e87.3
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 14:36:21 -0700 (PDT)
+ id 1uS0Rh-0002Kh-CQ
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:35:51 -0400
+Received: by mail-wm1-x342.google.com with SMTP id
+ 5b1f17b1804b1-450cf0120cdso807445e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 14:35:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1750282580; x=1750887380; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=My41l7o4NOrBRz0pujfqnxBCQaM/IGE7udFD8s5KHAg=;
- b=O5fZ7Fo6psW8958sw9u2LCwsB5owhxerbCSqEddBsynGtypX8bYhfa1iBUDZrKsw2S
- hXbqTx1qN1JXKuIqWWSeJkYqrdZb7J5owepuuYwV1xretbFQM/5XlcnkNRRxOdLEk30y
- vJ66Db1/7QPi3Tz2bOpqJOR9Baf+D+OczhkUpdqYZY97lhF0BZK4keetF3TJmaOX9n2C
- ixYKfjwbc3g2cVMhk4BGy2RCeih+8W6LlUJhVzQv8N5RwrzPnWKQ1qUVCnh9S5d5ctcx
- hYeILLoaIDySsgQwILjjGqANGn9nDsEWaepZoAjyvK+vo8hHAMvWZgobgwYpzEQRjFcR
- Bu2g==
+ d=suse.com; s=google; t=1750282547; x=1750887347; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=/dtP/wPX6YaIMdCs/d+V0dG8onDo592JRn8CaOwFdRE=;
+ b=LjMf07mnQkC0mpTQaYo5e5GHSrQsNi3jg9CaahrMpSlzvtB4gCXGPj8NqKOhwEWIsb
+ eucmj729rmJQ0Awf0N/rdffIe7NpWpPm0rMO87Sw2ZMjOlxGWdfuL2Owty8Rwhe7Ycts
+ 4WXFIpVA186O5MXdEiuYxpY2SQomMo6no6nsCm7q7ZWslBIwpomxqbXEvrbaYuADqkzj
+ 60EjHjm8ildyUIbwJbLocvWppN85vXaIyw9TK4vgEr6vp0OnL8KqfrV+MJJmLXZfJiZ6
+ brLcZaJ0Ak/GsnUkxqfFoHuBoavHrZ5ET2Ol8nCgM1eo6liFF26crmzgyeY4XLdZAlNP
+ EVew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750282580; x=1750887380;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=My41l7o4NOrBRz0pujfqnxBCQaM/IGE7udFD8s5KHAg=;
- b=IcljItsQQ74LfI8g3TNxhCbYGOQU+0lOYlu97mOHc5O4/+Nm7048KSTbkBpyDGEc/B
- EJOSVVcsrZvO/OsDnkiyawyshMGA3OIXKzCup2squy1vV8uy3pIC5ehwVgL4AcU/wJLK
- AlO5LLxQskUmyP+Tj1Uqw+mVTF592D+dXvXB2tENiC8vncpa8TjM1JhueBb9mgIr6pmA
- 526EKYIP04EBVKcepmWa+5UeO8Hg2OaVv7VuV097MYCiMJAijjJ/XoCUzbGLbPphX+H6
- zZ7x9N9g2N5igeUQI7fCIxYjXAfHbtVGjJ2h5VxTqxAv1DK8lmNYmfUQXQTeW4KtNGv0
- LuUw==
-X-Gm-Message-State: AOJu0Yxk2wQw7f87RkSdQt9euZQ4asEtmONPjFChxNr1pn1u4rhyPmZY
- qxu2kJPLqLfXp6fgVMZGmHX7iCsqq7RP8dEBaTM3y4vUEWVRJou509wPBi5ZAiW2g5hDEINXxCm
- UHDuw48F2dhLeUgsBM4bIxOFJ/Kf6zD671if5vJkHMA==
-X-Gm-Gg: ASbGnctoRK5oThe8qoz3W4Ut74bROH3XzmLtabBdbpB8pCpsh8slfMePkAdZhgRpmHO
- kFKv+fLOWtSO1GeVFFq8g5rB9u6z5UvKLxfnPlnY/g2kucso/tdpqo9xWkpksRJZd2UumoQZyzc
- M5YSlT63Bz25JVWoQYmeCiHGa95RWxsJ0GeniTHFzxGb8lG8BhBiFkutd3yM6xROcN4pFCzEslV
- ZsS
-X-Google-Smtp-Source: AGHT+IEvoOLvwUbZmK6mevQDEM0XnvNqlFSOT0INoPMZz+IBbkWEM4zX4utvBdH3Kdb7S6KS4usdf5+HBzcegvOD1TY=
-X-Received: by 2002:a05:6512:3194:b0:553:3322:49a6 with SMTP id
- 2adb3069b0e04-553b6ecf5e8mr5033675e87.25.1750282580323; Wed, 18 Jun 2025
- 14:36:20 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250618072500.8469-1-vliaskovitis@suse.com>
- <9812c3c3-c9e4-4b29-968b-9da99891489a@ventanamicro.com>
-In-Reply-To: <9812c3c3-c9e4-4b29-968b-9da99891489a@ventanamicro.com>
+ d=1e100.net; s=20230601; t=1750282547; x=1750887347;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=/dtP/wPX6YaIMdCs/d+V0dG8onDo592JRn8CaOwFdRE=;
+ b=QmcUbNT2vI+idKq6FsJn8oTIThRTQmkN95+rueiN/Lnz4zdyley8ZqDv06KhpCj+H7
+ OAX5H7+ZI0fHgkxvw/2Z8iqKniMDfQnDNWHPrIzCTo/jYrxv541blNTQHY+mWlomasZN
+ ElEyZtxqCQDdu36KJK/Am53/SoORHUZ2LmHSYcQQsLdlr0v/ldFkOVS8Gxd1nmCTPlbj
+ 0MVYStfc/lPIclZ8TcYyOIPvfggmde8T207vQCvOfKBJOn3L0Iew410ms9bXrTzFeaMK
+ IZte04vBphhalt4rgvI0QCOHS42gAYkMi3sG78WA2Jft5qorFTiBicue0RzEUY94irDw
+ Hs0A==
+X-Gm-Message-State: AOJu0YyYjGagmF6o6UC8TTXKTTtfdTWihHv96KGFqg5YvAwz2ShU156t
+ bqjLGZIjgc1AUa32XjkMK06cM/gb5BysVc+100gv/HLkx+i6rwPyhQqW+/h289IGzR9/QDBWow8
+ mVNUVew6xKw==
+X-Gm-Gg: ASbGncvoMzixCjwkG9TexuPH5DFEszvrBfXjW7SoReYkP0QVqNCYpV2H+YtqU7OIlwR
+ 5VhTTtCyiIP9D2kKCw04979KJCe/4uL140907vCu2iZtH0MDs7FWN+susHchztp2/vQ4Xq+kMtH
+ XPugyA+9D5Cl2orTsqi1Bv0tVfCi727m2ZBl86e/FSpVPRFOXkUdV7/DQ+KAV4XecmbK9Cscf/n
+ ZdJ4wFNGmyDWgRE5JevEXdt6USQlJsyj8/wAw4/rNBAKHOCDHnF865tspreW0iMcGzI74+W6ud8
+ 69G6Kvb6s41gR8s9k7F5r06C+lQREOFwSdGITitShk3UvgVn70WQ5OAGt4CM0IU=
+X-Google-Smtp-Source: AGHT+IHfH0POiYdvqSbXnwEmTQeAnbr0JF1o2eOxl1YFcuUpQBicPPFXHBAyv3Lk1ylYejIBYr7GYA==
+X-Received: by 2002:a05:600c:1d06:b0:450:c20d:64c3 with SMTP id
+ 5b1f17b1804b1-4533caad17fmr184569945e9.18.1750282547173; 
+ Wed, 18 Jun 2025 14:35:47 -0700 (PDT)
+Received: from localhost ([2a02:587:4b09:8700:f50f:b7ef:31a4:1163])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 5b1f17b1804b1-4535e982dd5sm8296275e9.12.2025.06.18.14.35.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Jun 2025 14:35:46 -0700 (PDT)
 From: Vasilis Liaskovitis <vliaskovitis@suse.com>
-Date: Wed, 18 Jun 2025 23:36:07 +0200
-X-Gm-Features: AX0GCFuA-8xc9rKZtZX1cICMRFsGxYcCGwdu1yxDYZV3e1wobHHP8F4KmhQMp-M
-Message-ID: <CAPnFoxfp1B4nBCLyFjf1RnEH5memnWoW5X-4xN3PpG4Ss_n0xQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Add a property to set vill bit on reserved
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: dbarboza@ventanamicro.com, ajones@ventanamicro.com,
+ alistair.francis@wdc.com, philmd@linaro.org,
+ Vasilis Liaskovitis <vliaskovitis@suse.com>
+Subject: [PATCH v2] target/riscv: Add a property to set vill bit on reserved
  usage of vsetvli instruction
-To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, ajones@ventanamicro.com, 
- alistair.francis@wdc.com, philmd@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
- envelope-from=vliaskovitis@suse.com; helo=mail-lf1-x12d.google.com
+Date: Wed, 18 Jun 2025 23:35:42 +0200
+Message-ID: <20250618213542.22873-1-vliaskovitis@suse.com>
+X-Mailer: git-send-email 2.46.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::342;
+ envelope-from=vliaskovitis@suse.com; helo=mail-wm1-x342.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -97,50 +100,115 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Usage of vsetvli instruction is reserved if VLMAX is changed when vsetvli rs1
+and rd arguments are x0.
 
-On Wed, Jun 18, 2025 at 4:22=E2=80=AFPM Daniel Henrique Barboza
-<dbarboza@ventanamicro.com> wrote:
-> > +    if ((sew > cpu->cfg.elen) || vill || (ediv !=3D 0) || (reserved !=
-=3D 0) ||
-> > +        (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl !=3D vl))) {
->
-> In this particular case I don't mind replicating code. The first existing=
- check can be
-> left untouched, exiting early before spending time calculating vlmax and =
-vl.
->
-> We can then add the new check that depends on vl here, even if we end up =
-copying those
-> few "env->something =3D" lines again. If you really want to avoid code du=
-plication I
-> wouldn't oppose adding a 'vill' label and using 'goto' as an alternative =
-of duplicating
-> those 6 lines.
+In this case, if the new property is true, only the vill bit will be set.
 
-thank you for the review. I sent a v2 simply duplicating the code.
+See https://github.com/riscv/riscv-isa-manual/blob/main/src/v-st-ext.adoc#avl-encoding
+According to the spec, the above use cases are reserved, and
+"Implementations may set vill in either case."
 
-thanks,
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2422
+Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
+---
+ target/riscv/cpu.c                      |  1 +
+ target/riscv/cpu_cfg_fields.h.inc       |  1 +
+ target/riscv/helper.h                   |  2 +-
+ target/riscv/insn_trans/trans_rvv.c.inc |  4 ++--
+ target/riscv/vector_helper.c            | 12 +++++++++++-
+ 5 files changed, 16 insertions(+), 4 deletions(-)
 
-- Vasilis
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 629ac37501..1c29ed3b2b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2595,6 +2595,7 @@ static const Property riscv_cpu_properties[] = {
+     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
++    DEFINE_PROP_BOOL("rvv_vsetvl_x0_vill", RISCVCPU, cfg.rvv_vsetvl_x0_vill, false),
+ 
+     /*
+      * write_misa() is marked as experimental for now so mark
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 59f134a419..9c78a797cf 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -114,6 +114,7 @@ BOOL_FIELD(ext_supm)
+ BOOL_FIELD(rvv_ta_all_1s)
+ BOOL_FIELD(rvv_ma_all_1s)
+ BOOL_FIELD(rvv_vl_half_avl)
++BOOL_FIELD(rvv_vsetvl_x0_vill)
+ /* Named features  */
+ BOOL_FIELD(ext_svade)
+ BOOL_FIELD(ext_zic64b)
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 85d73e492d..f712b1c368 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -159,7 +159,7 @@ DEF_HELPER_FLAGS_3(hyp_hsv_d, TCG_CALL_NO_WG, void, env, tl, tl)
+ #endif
+ 
+ /* Vector functions */
+-DEF_HELPER_3(vsetvl, tl, env, tl, tl)
++DEF_HELPER_4(vsetvl, tl, env, tl, tl, tl)
+ DEF_HELPER_5(vle8_v, void, ptr, ptr, tl, env, i32)
+ DEF_HELPER_5(vle16_v, void, ptr, ptr, tl, env, i32)
+ DEF_HELPER_5(vle32_v, void, ptr, ptr, tl, env, i32)
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 2b6077ac06..87071c5d62 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -202,7 +202,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+         s1 = get_gpr(s, rs1, EXT_ZERO);
+     }
+ 
+-    gen_helper_vsetvl(dst, tcg_env, s1, s2);
++    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl((int) (rd == 0 && rs1 == 0)));
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+ 
+@@ -222,7 +222,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+ 
+     dst = dest_gpr(s, rd);
+ 
+-    gen_helper_vsetvl(dst, tcg_env, s1, s2);
++    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+     gen_update_pc(s, s->cur_insn_len);
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 5dc1c10012..b41c29da0b 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -35,7 +35,7 @@
+ #include <math.h>
+ 
+ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+-                            target_ulong s2)
++                            target_ulong s2, target_ulong x0)
+ {
+     int vlmax, vl;
+     RISCVCPU *cpu = env_archcpu(env);
+@@ -83,6 +83,16 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     } else {
+         vl = vlmax;
+     }
++
++    if (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl)) {
++        /* only set vill bit. */
++        env->vill = 1;
++        env->vtype = 0;
++        env->vl = 0;
++        env->vstart = 0;
++        return 0;
++    }
++
+     env->vl = vl;
+     env->vtype = s2;
+     env->vstart = 0;
+-- 
+2.46.0
 
->
->
-> Patch LGTM otherwise. Thanks,
->
->
-> Daniel
->
-> > +        /* only set vill bit. */
-> > +        env->vill =3D 1;
-> > +        env->vtype =3D 0;
-> > +        env->vl =3D 0;
-> > +        env->vstart =3D 0;
-> > +        return 0;
-> > +    }
-> > +
-> >       env->vl =3D vl;
-> >       env->vtype =3D s2;
-> >       env->vstart =3D 0;
->
 
