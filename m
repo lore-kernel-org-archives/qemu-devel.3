@@ -4,87 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AF5C71157
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 07:26:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF811C7115B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 07:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRnAj-0003cZ-A3; Wed, 18 Jun 2025 03:25:25 -0400
+	id 1uRnVp-0007Mt-Pf; Wed, 18 Jun 2025 03:47:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1uRnAh-0003cM-7e
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:25:23 -0400
-Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
- id 1uRnAd-0002TL-6F
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:25:22 -0400
-Received: by mail-wr1-x444.google.com with SMTP id
- ffacd0b85a97d-3a4f72cba73so247130f8f.1
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 00:25:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=suse.com; s=google; t=1750231516; x=1750836316; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=1Sm0cmSYbg/JJyBuaEjGFwDjbHuaiEgtTZwZeawIrhw=;
- b=DaYC/pKJg8GmMFVSPhsJJ3NWcyv4F/2np9pzGiHGsCoNVcAJulmqkzx2OAKTblHbky
- 5BrHKtpejnpOR9z3jBpRlqJ+X5Aatbru3lfgQVEpHpiaXT/06SwSfejWMFqtEH33PXZg
- FAplzcYYeBVvWBGGx8iXOGOtoHKv55zBSdXrUBCqocbnpH+Nzx1I6qiThKep+8X5dnHF
- UUxYR7DuOgGf3Hipf49duq7SN6Ko1+XdUIGxwoEsN/ALOyUyjdZIMw6DjJD8pHClZ8CI
- IuBHkzbT4Jhe4BNTI187uieK9TRdd5KAaie2ayJiXmKU6AWXrM2rdVoe0m+TN2Pm6O+Q
- dR4w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750231516; x=1750836316;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1Sm0cmSYbg/JJyBuaEjGFwDjbHuaiEgtTZwZeawIrhw=;
- b=Pg2WMEFZMObFOfUbI0OQGoDyylC1p7XjWU/Z1etdH79lLU+ZAtxt9wgvmfh9RuMIfu
- smaJ3AcqSnPs8ukM0LOv1j4vRVIR25A4MnzGLqBYkbwx0Oe1jDLYYtwK2gfPqH0k49t7
- tePuv9ToqmsN7SRoTPo2YL0STGtdedL5Z8UHvagxY5WQ3OFF9Md83mz84EaGacuvAWVP
- o6vHrEs0yHtKH2lbB+M1PzobcqEfFMcrnyTK8Z9KHhktnuootwxtkBV9QaHaLiuL1jDC
- FiuXRyQhhymArw/dhyuoCl++0GxMM/DvnWaaQ/E4krqov4viLLclgFv7qP/E1bB79S7i
- zGrg==
-X-Gm-Message-State: AOJu0Yz0jHZuIb1XuG2zznIKVN5RIC5fPh1xaEs2bOIFObZYBgoUXATM
- 1EKNm6i68hB4tF5MX4iGZXkFi+sT/mRh1b8NTS9jUDUkVD8mkjbkTonCal8eR94MxC4wFDTAH7l
- Py5UOWOGh8g==
-X-Gm-Gg: ASbGnctwSU1D0HiqLPzhx/lumYkrvycpEmD8U2ImcYAWZ2ZERUbPKy4Oof+ESYJaFGb
- iwwkwIUSAUu5fNUgYc8LVto8TQY8NYq8RIyCki56HAM9jOm3BFCWw/Lentzxo7cPb9mXbymWr1E
- P73/uvEXmBSVJrzXTz6a0sOXYHgJ/sBHxzX68BkUXeSUB9hLMrH3T8TTMzx5SAxyDlKTYLkge7E
- Zb/MOf+P4e33LwWId4AD0KT9h1bca9c28UqoxA2rdyGWM4+hd1FoXzPdmpXHVYmK6Iyng6liEVB
- W0LLYm4X9sUQTBck1IE5Ij3jyNMSxlWhfIVHWfQdGQ/x7Rdvqj7nHl87jRD+kg==
-X-Google-Smtp-Source: AGHT+IGYm0rxg7L1Nx+sJXY53OBl6vCK+5oXYAFH8UZMMe6iQC/BGGk9XdyxtAe0VH7WJq0RX7/KdQ==
-X-Received: by 2002:a05:6000:2dc2:b0:3a4:da0e:517a with SMTP id
- ffacd0b85a97d-3a58e2656d0mr1203358f8f.23.1750231515699; 
- Wed, 18 Jun 2025 00:25:15 -0700 (PDT)
-Received: from localhost ([91.140.111.118])
- by smtp.gmail.com with UTF8SMTPSA id
- 41be03b00d2f7-b2fe1639fadsm8603881a12.11.2025.06.18.00.25.09
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Jun 2025 00:25:14 -0700 (PDT)
-From: Vasilis Liaskovitis <vliaskovitis@suse.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: dbarboza@ventanamicro.com, ajones@ventanamicro.com,
- alistair.francis@wdc.com, philmd@linaro.org,
- Vasilis Liaskovitis <vliaskovitis@suse.com>
-Subject: [PATCH] target/riscv: Add a property to set vill bit on reserved
- usage of vsetvli instruction
-Date: Wed, 18 Jun 2025 09:25:00 +0200
-Message-ID: <20250618072500.8469-1-vliaskovitis@suse.com>
-X-Mailer: git-send-email 2.46.0
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1uRnVk-0007MF-Do
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:47:09 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1uRnVh-0008Ee-Bm
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:47:08 -0400
+Received: from loongson.cn (unknown [10.20.42.239])
+ by gateway (Coremail) with SMTP id _____8BxrOLvblJoJ_kYAQ--.16388S3;
+ Wed, 18 Jun 2025 15:46:55 +0800 (CST)
+Received: from [10.20.42.239] (unknown [10.20.42.239])
+ by front1 (Coremail) with SMTP id qMiowMBx3MToblJooEQfAQ--.28211S3;
+ Wed, 18 Jun 2025 15:46:51 +0800 (CST)
+Subject: Re: [PATCH v6] target/loongarch: fix vldi/xvldi raise wrong error
+From: gaosong <gaosong@loongson.cn>
+To: qemu-devel@nongnu.org, philmd@linaro.org
+Cc: richard.henderson@linaro.org, maobibo@loongson.cn,
+ lorenz.hetterich@cispa.de
+References: <20250605015332.537413-1-gaosong@loongson.cn>
+Message-ID: <6def6137-5a45-b597-4b43-4b12d8ec8872@loongson.cn>
+Date: Wed, 18 Jun 2025 15:49:42 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20250605015332.537413-1-gaosong@loongson.cn>
+Content-Type: text/plain; charset=gbk; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::444;
- envelope-from=vliaskovitis@suse.com; helo=mail-wr1-x444.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Language: en-US
+X-CM-TRANSID: qMiowMBx3MToblJooEQfAQ--.28211S3
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoW7tryUuw1ftr4xXw4UJryDCFX_yoW8ZF1kpw
+ 1akr4UKr48KFWfJrZaqw4YyrnxWr4xKw42g3Z3twnYyFZ7Awn5Wr4UtwsFkFyxG342vr15
+ XF1Ivw1jga12qacCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
+ xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_Jr0_Jr4lYx0Ex4A2jsIE14v2
+ 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
+ vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
+ wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
+ 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
+ xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
+ 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU24SoDUUU
+ U
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -5
+X-Spam_score: -0.6
+X-Spam_bar: /
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, MIME_CHARSET_FARAWAY=2.45,
+ NICE_REPLY_A=-1.122, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,132 +83,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Usage of vsetvli instruction is reserved if VLMAX is changed when vsetvli rs1
-and rd arguments are x0.
-
-In this case, if the new property is true, only the vill bit will be set.
-
-See https://github.com/riscv/riscv-isa-manual/blob/main/src/v-st-ext.adoc#avl-encoding
-According to the spec, the above use cases are reserved, and
-"Implementations may set vill in either case."
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2422
-Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
----
- target/riscv/cpu.c                      |  1 +
- target/riscv/cpu_cfg_fields.h.inc       |  1 +
- target/riscv/helper.h                   |  2 +-
- target/riscv/insn_trans/trans_rvv.c.inc |  4 ++--
- target/riscv/vector_helper.c            | 22 ++++++++++++----------
- 5 files changed, 17 insertions(+), 13 deletions(-)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 629ac37501..1c29ed3b2b 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -2595,6 +2595,7 @@ static const Property riscv_cpu_properties[] = {
-     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
-     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
-     DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
-+    DEFINE_PROP_BOOL("rvv_vsetvl_x0_vill", RISCVCPU, cfg.rvv_vsetvl_x0_vill, false),
- 
-     /*
-      * write_misa() is marked as experimental for now so mark
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 59f134a419..9c78a797cf 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -114,6 +114,7 @@ BOOL_FIELD(ext_supm)
- BOOL_FIELD(rvv_ta_all_1s)
- BOOL_FIELD(rvv_ma_all_1s)
- BOOL_FIELD(rvv_vl_half_avl)
-+BOOL_FIELD(rvv_vsetvl_x0_vill)
- /* Named features  */
- BOOL_FIELD(ext_svade)
- BOOL_FIELD(ext_zic64b)
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index 85d73e492d..f712b1c368 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -159,7 +159,7 @@ DEF_HELPER_FLAGS_3(hyp_hsv_d, TCG_CALL_NO_WG, void, env, tl, tl)
- #endif
- 
- /* Vector functions */
--DEF_HELPER_3(vsetvl, tl, env, tl, tl)
-+DEF_HELPER_4(vsetvl, tl, env, tl, tl, tl)
- DEF_HELPER_5(vle8_v, void, ptr, ptr, tl, env, i32)
- DEF_HELPER_5(vle16_v, void, ptr, ptr, tl, env, i32)
- DEF_HELPER_5(vle32_v, void, ptr, ptr, tl, env, i32)
-diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-index 2b6077ac06..87071c5d62 100644
---- a/target/riscv/insn_trans/trans_rvv.c.inc
-+++ b/target/riscv/insn_trans/trans_rvv.c.inc
-@@ -202,7 +202,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
-         s1 = get_gpr(s, rs1, EXT_ZERO);
-     }
- 
--    gen_helper_vsetvl(dst, tcg_env, s1, s2);
-+    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl((int) (rd == 0 && rs1 == 0)));
-     gen_set_gpr(s, rd, dst);
-     finalize_rvv_inst(s);
- 
-@@ -222,7 +222,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
- 
-     dst = dest_gpr(s, rd);
- 
--    gen_helper_vsetvl(dst, tcg_env, s1, s2);
-+    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
-     gen_set_gpr(s, rd, dst);
-     finalize_rvv_inst(s);
-     gen_update_pc(s, s->cur_insn_len);
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index 5dc1c10012..2545d73cc1 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -35,7 +35,7 @@
- #include <math.h>
- 
- target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
--                            target_ulong s2)
-+                            target_ulong s2, target_ulong x0)
- {
-     int vlmax, vl;
-     RISCVCPU *cpu = env_archcpu(env);
-@@ -64,15 +64,6 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-         }
-     }
- 
--    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0)) {
--        /* only set vill bit. */
--        env->vill = 1;
--        env->vtype = 0;
--        env->vl = 0;
--        env->vstart = 0;
--        return 0;
--    }
--
-     /* lmul encoded as in DisasContext::lmul */
-     lmul = sextract32(FIELD_EX64(s2, VTYPE, VLMUL), 0, 3);
-     vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
-@@ -83,6 +74,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-     } else {
-         vl = vlmax;
-     }
-+
-+    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0) ||
-+        (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl))) {
-+        /* only set vill bit. */
-+        env->vill = 1;
-+        env->vtype = 0;
-+        env->vl = 0;
-+        env->vstart = 0;
-+        return 0;
-+    }
-+
-     env->vl = vl;
-     env->vtype = s2;
-     env->vstart = 0;
--- 
-2.46.0
+Ping ! :-)
+ÔÚ 2025/6/5 ÉÏÎç9:53, Song Gao Ð´µÀ:
+> on qemu we got an aborted error
+> **
+> ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
+> Bail out! ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
+> Aborted (core dumped)
+> but on 3A600/3A5000 we got a "Illegal instruction" error.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2971
+>
+> Fixes: 29bb5d727ff ("target/loongarch: Implement vldi")
+>   Cc: qemu-stable@nongnu.org
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+> Signed-off-by: Song Gao <gaosong@loongson.cn>
+> ---
+>   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 13 +++++++++++--
+>   1 file changed, 11 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+> index dff92772ad..7e50fa7541 100644
+> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+> @@ -3465,7 +3465,7 @@ TRANS(xvmsknz_b, LASX, gen_xx, gen_helper_vmsknz_b)
+>   static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
+>   {
+>       int mode;
+> -    uint64_t data, t;
+> +    uint64_t data = 0, t;
+>   
+>       /*
+>        * imm bit [11:8] is mode, mode value is 0-12.
+> @@ -3570,17 +3570,26 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
+>           }
+>           break;
+>       default:
+> -        generate_exception(ctx, EXCCODE_INE);
+>           g_assert_not_reached();
+>       }
+>       return data;
+>   }
+>   
+> +static bool check_vldi_mode(arg_vldi *a)
+> +{
+> +   return  extract32(a->imm, 8, 4) <= 12;
+> +}
+> +
+>   static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
+>   {
+>       int sel, vece;
+>       uint64_t value;
+>   
+> +    if (!check_vldi_mode(a)) {
+> +        generate_exception(ctx, EXCCODE_INE);
+> +        return true;
+> +    }
+> +
+>       if (!check_vec(ctx, oprsz)) {
+>           return true;
+>       }
 
 
