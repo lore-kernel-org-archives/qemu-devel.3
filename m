@@ -4,67 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF749C7115B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 06:15:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF0ECC71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 06:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRm2r-00023f-CM; Wed, 18 Jun 2025 02:13:15 -0400
+	id 1uRmBF-0007GR-Id; Wed, 18 Jun 2025 02:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uRm2m-000233-BZ
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 02:13:08 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRmBE-0007G2-0N
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 02:21:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uRm2g-0003xO-8Q
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 02:13:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:MIME-Version:
- References:In-Reply-To:Message-Id:Date:To:From:Sender:Reply-To:Cc:
- Content-Type:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID;
- bh=6FGpWyYgGDQDVT6MYWvX20DRvG0NRanL7OzhHiswAbE=; b=0OnWTZJMKp+lkn/PhH4PiB08zk
- siwDtvcbC2c7j3hHURrZX8D03ioJCTt+DsWUINu+cde2jiLntq1qRYPnmCXRSB8SMmyquuKYGhsKF
- v+N6L825RcGFAO5+q1AwnMr5AOdiAlMls+qMy55z9Hy52687I03+YvVgrnUMZNdDNLh+GGwbK82Oy
- C8OyAWV+2daBUUYoik0C/p/bYrhibg3mQDeO6D+S/07Xc/AZ+z1rLZfmrjKQYqlhwJRjMu6NEZNtz
- kumVn/mmuB+YKXe3gotE0rOto5NBeEmst7K6efmQrB5UE4nQqokmK/ovGfkXpXjBxBOVSXEHbCXTO
- xpYCkcZT5Vr4WVm+uzF/+JA0FD26ifZPdeGzSr6Ux38fhMCioJxL28UsxmJgH+jEQ2PxmsZHX/bGX
- 2Utw5ufdZmAazRWL82xJFxmSQAmPI+yaprSahjPBMcvHZVl7fsmwAwy4Ux9zlJddmiTYV0NZlbhSS
- s1OFzgPf2A21ePxWKxulGxU+HojoIcDQpPlI2iHKQD48aPykTUqLSporNyYMrdJNHGn2L5w6EsOLM
- 2j0kh9suNl1fHIqIy2lbGKoSg5cH7ZASzRkwbcohQ8zsr66eSjoafhyu8qdFvMTHz11XyVyLocksC
- hAYsXhVaNXlI56DbRh7vdVc/Gb5S3veUXP6pgSzfM=;
-Received: from [2a02:8012:2f01:0:737f:96a4:fe2:308c]
- (helo=localhost.localdomain)
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1uRm1A-0007ok-FK; Wed, 18 Jun 2025 07:11:28 +0100
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-To: pbonzini@redhat.com,
-	fam@euphon.net,
-	qemu-devel@nongnu.org
-Date: Wed, 18 Jun 2025 07:12:49 +0100
-Message-Id: <20250618061249.743897-8-mark.cave-ayland@ilande.co.uk>
-X-Mailer: git-send-email 2.39.5
-In-Reply-To: <20250618061249.743897-1-mark.cave-ayland@ilande.co.uk>
-References: <20250618061249.743897-1-mark.cave-ayland@ilande.co.uk>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1uRmBB-0006UK-8N
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 02:21:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750227706;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=WprEbIX45ycvIXXkk3cZDXtOVPeXzZhkN9DAwhdEtLM=;
+ b=DUtNzSxGxsNi+4M1wSqE6Dbg9wV/wvMUaK2X6HO27rxwOcmF45+MipOvVcuH8PQsoj3mfw
+ Uxc9nCfhf0nuPiflc6Sc2WJpRXLmFZdcMotk9QCyS4l3pqPRLquGNSpJwFfMBXHoCoQgMX
+ yEDPa1Xu6ewieXI07vgK+0828w3BCI8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-UVcGOon0OrahWT-vIY6lOg-1; Wed,
+ 18 Jun 2025 02:21:42 -0400
+X-MC-Unique: UVcGOon0OrahWT-vIY6lOg-1
+X-Mimecast-MFC-AGG-ID: UVcGOon0OrahWT-vIY6lOg_1750227700
+Received: from mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.40])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4C2571956089; Wed, 18 Jun 2025 06:21:39 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.11])
+ by mx-prod-int-04.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1BFF119560A3; Wed, 18 Jun 2025 06:21:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8679221E6A27; Wed, 18 Jun 2025 08:21:34 +0200 (CEST)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Zhenwei Pi <pizhenwei@bytedance.com>,  Stefan
+ Berger <stefanb@linux.vnet.ibm.com>,  Jiri Pirko <jiri@resnulli.us>,  Ani
+ Sinha <anisinha@redhat.com>,  Jason Wang <jasowang@redhat.com>,  Mads
+ Ynddal <mads@ynddal.dk>,  Zhao Liu <zhao1.liu@intel.com>,  Eduardo Habkost
+ <eduardo@habkost.net>,  Kashyap Chamarthy <kchamart@redhat.com>,  Peter
+ Maydell <peter.maydell@linaro.org>,  Hanna Reitz <hreitz@redhat.com>,
+ Cleber Rosa <crosa@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,
+ qemu-block@nongnu.org,  Igor Mammedov <imammedo@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau <marcandre.lureau@redhat.com>,  Eric Blake <eblake@redhat.com>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,  Lukas Straub
+ <lukasstraub2@web.de>,  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Vladimir Sementsov-Ogievskiy
+ <vsementsov@yandex-team.ru>,  Fan Ni <fan.ni@samsung.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Peter Xu
+ <peterx@redhat.com>,  Alex
+ =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,  Paolo Bonzini
+ <pbonzini@redhat.com>,
+ Yanan Wang <wangyanan55@huawei.com>,  Stefano Garzarella
+ <sgarzare@redhat.com>,  Alex Williamson <alex.williamson@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,  Jonathan Cameron
+ <jonathan.cameron@huawei.com>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Konstantin
+ Kostiuk <kkostiuk@redhat.com>,  Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH v2 2/3] docs: remove legacy QAPI manual generator
+In-Reply-To: <CAFn=p-bwa7ETp9znOQ_zMD5icJz2e7=Lj+uLWNctADwLrtqnhA@mail.gmail.com>
+ (John Snow's message of "Tue, 17 Jun 2025 15:54:07 -0400")
+References: <20250612221051.1224565-1-jsnow@redhat.com>
+ <20250612221051.1224565-3-jsnow@redhat.com>
+ <87ldprho83.fsf@pond.sub.org>
+ <CAFn=p-bwa7ETp9znOQ_zMD5icJz2e7=Lj+uLWNctADwLrtqnhA@mail.gmail.com>
+Date: Wed, 18 Jun 2025 08:21:34 +0200
+Message-ID: <87o6ulr2mp.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:737f:96a4:fe2:308c
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: [PATCH v2 7/7] esp.c: only allow ESP commands permitted in the
- current asc_mode
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.40
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -80,118 +114,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If an ESP command is issued in an incorrect mode then an illegal command
-interrupt should be generated. Add a new esp_cmd_is_valid() function to
-indicate whether the ESP command is valid for the current mode, and if not
-then raise the illegal command interrupt.
+John Snow <jsnow@redhat.com> writes:
 
-This fixes WinNT MIPS which issues ICCS after a Chip Reset which is not
-permitted, but will fail with an INACCESSIBLE_BOOT_DEVICE error unless an
-interrupt is generated.
+> On Mon, Jun 16, 2025 at 8:20=E2=80=AFAM Markus Armbruster <armbru@redhat.=
+com> wrote:
+>
+>> John Snow <jsnow@redhat.com> writes:
+>>
+>> > Thanks for your service!
+>> >
+>> > Remove the old qapidoc and the option to enable the transmogrifier,
+>> > leaving the "transmogrifier" as the ONLY qapi doc generator. This in
+>> > effect also converts the QAPI test to use the new documentation
+>> > generator, too.
+>> >
+>> > Signed-off-by: John Snow <jsnow@redhat.com>
+>>
+>> Fails "make check", because tests/qapi-schema/doc-good.txt needs an
+>> update.
+>>
+>> Unfortunately, the diff of the update is less than useful.  To make
+>> sense of what changes, I split doc-good.txt into parts before and after,
+>> and diffed those.
+>>
+>>
+>>   diff -rupw o/01 n/01
+>>   --- o/01      2025-06-16 13:53:05.036940854 +0200
+>>   +++ n/01      2025-06-16 13:49:07.167435996 +0200
+>>   @@ -1,11 +1,13 @@
+>>    Section
+>>    *******
+>>
+>>   +Just text, no heading.
+>>   +
+>>
+>> Looks like a bug fix.  Needs a mention in the commit message then.
+>>
+>
+> I think before, these sections just got ... discarded?
 
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Fixes: 83428f7a97 ("esp.c: move write_response() non-DMA logic to esp_do_nodma()")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2464
----
- hw/scsi/esp.c         | 37 +++++++++++++++++++++++++++++++++++++
- hw/scsi/trace-events  |  1 +
- include/hw/scsi/esp.h |  8 ++++++++
- 3 files changed, 46 insertions(+)
+Looks like it.  Definitely a bug.
 
-diff --git a/hw/scsi/esp.c b/hw/scsi/esp.c
-index 4aa58f9e48..1d264c40e5 100644
---- a/hw/scsi/esp.c
-+++ b/hw/scsi/esp.c
-@@ -1129,6 +1129,38 @@ static void parent_esp_reset(ESPState *s, int irq, int level)
-     }
- }
- 
-+static bool esp_cmd_is_valid(ESPState *s, uint8_t cmd)
-+{
-+    uint8_t cmd_group = (cmd & CMD_GRP_MASK) >> 4;
-+
-+    /* Always allow misc commands */
-+    if (cmd_group == CMD_GRP_MISC) {
-+        return true;
-+    }
-+
-+    switch (s->asc_mode) {
-+    case ESP_ASC_MODE_DIS:
-+        /* Disconnected mode: only allow disconnected commands */
-+        if (cmd_group == CMD_GRP_DISC) {
-+            return true;
-+        }
-+        break;
-+
-+    case ESP_ASC_MODE_INI:
-+        /* Initiator mode: allow initiator commands */
-+        if (cmd_group == CMD_GRP_INIT) {
-+            return true;
-+        }
-+        break;
-+
-+    default:
-+        g_assert_not_reached();
-+    }
-+
-+    trace_esp_invalid_cmd(cmd, s->asc_mode);
-+    return false;
-+}
-+
- static void esp_run_cmd(ESPState *s)
- {
-     uint8_t cmd = s->rregs[ESP_CMD];
-@@ -1285,6 +1317,11 @@ void esp_reg_write(ESPState *s, uint32_t saddr, uint64_t val)
-         break;
-     case ESP_CMD:
-         s->rregs[saddr] = val;
-+        if (!esp_cmd_is_valid(s, s->rregs[saddr])) {
-+            s->rregs[ESP_RSTAT] |= INTR_IL;
-+            esp_raise_irq(s);
-+            break;
-+        }
-         esp_run_cmd(s);
-         break;
-     case ESP_WBUSID ... ESP_WSYNO:
-diff --git a/hw/scsi/trace-events b/hw/scsi/trace-events
-index f0f2a98c2e..6c2788e202 100644
---- a/hw/scsi/trace-events
-+++ b/hw/scsi/trace-events
-@@ -198,6 +198,7 @@ esp_mem_writeb_cmd_ensel(uint32_t val) "Enable selection (0x%2.2x)"
- esp_mem_writeb_cmd_dissel(uint32_t val) "Disable selection (0x%2.2x)"
- esp_mem_writeb_cmd_ti(uint32_t val) "Transfer Information (0x%2.2x)"
- esp_set_phase(const char *phase) "setting bus phase to %s"
-+esp_invalid_cmd(uint8_t cmd, uint8_t asc_mode) "command 0x%x asc_mode 0x%x"
- 
- # esp-pci.c
- esp_pci_error_invalid_dma_direction(void) "invalid DMA transfer direction"
-diff --git a/include/hw/scsi/esp.h b/include/hw/scsi/esp.h
-index 6327060c7c..3526bad746 100644
---- a/include/hw/scsi/esp.h
-+++ b/include/hw/scsi/esp.h
-@@ -111,6 +111,13 @@ struct SysBusESPState {
- #define CMD_DMA 0x80
- #define CMD_CMD 0x7f
- 
-+#define CMD_GRP_MASK 0x70
-+
-+#define CMD_GRP_MISC 0x00
-+#define CMD_GRP_INIT 0x01
-+#define CMD_GRP_TRGT 0x02
-+#define CMD_GRP_DISC 0x04
-+
- #define CMD_NOP      0x00
- #define CMD_FLUSH    0x01
- #define CMD_RESET    0x02
-@@ -145,6 +152,7 @@ struct SysBusESPState {
- #define INTR_FC 0x08
- #define INTR_BS 0x10
- #define INTR_DC 0x20
-+#define INTR_IL 0x40
- #define INTR_RST 0x80
- 
- #define SEQ_0 0x0
--- 
-2.39.5
+>                                                        but with no special
+> formatting, they just get copied through. You could call it a bugfix, you
+> could call it an unintentional side effect.
+
+I'm calling it a bug fix.  Where was it broken?  Dig, dig, dig, ...
+
+commit b61a4eb3f32ce74c5ffe001806f9e786788a546f
+Author: John Snow <jsnow@redhat.com>
+Date:   Sun Feb 23 22:37:35 2025 -0500
+
+    docs/qapidoc: support header-less freeform sections
+=20=20=20=20
+    The code as written crashes when a free-form documentation block doesn't
+    start with a heading or subheading, for example:
+=20=20=20=20
+    | ##
+    | # Just text, no heading.
+    | ##
+=20=20=20=20
+    The code will attempt to use the `node` variable uninitialized. To fix,
+    create a generic block to insert the doc text into.
+=20=20=20=20
+    (This patch also removes a lingering pylint warning in the QAPIDoc
+    implementation that prevents getting a clean baseline to use for
+    forthcoming additions.)
+=20=20=20=20
+    Fixes: 43e0d14ee09a (docs/sphinx: fix extra stuff in TOC after freeform=
+ QMP sections)
+    Signed-off-by: John Snow <jsnow@redhat.com>
+    Message-ID: <20250224033741.222749-5-jsnow@redhat.com>
+    Reviewed-by: Markus Armbruster <armbru@redhat.com>
+    [Test updated to cover this]
+    Signed-off-by: Markus Armbruster <armbru@redhat.com>
+
+The patch adds such a block to doc-good.json.  It shows up in expected
+output doc-good.out, but not in doc-good.txt.  Review fail.
+
+Please mention the fix in the commit message, and add the Fixes: tag.
+
+[...]
 
 
