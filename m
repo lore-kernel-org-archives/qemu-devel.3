@@ -4,71 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8ED3C7115B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 03:54:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17B04C71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 05:51:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRjrS-0004Bq-Hu; Tue, 17 Jun 2025 23:53:18 -0400
+	id 1uRlhc-0005Ao-Jj; Wed, 18 Jun 2025 01:51:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uRjrP-0004Bh-Vr
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 23:53:15 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uRjrN-0007bO-8G
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 23:53:15 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8Bx22odOFJoJuAYAQ--.22265S3;
- Wed, 18 Jun 2025 11:53:02 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMBxLscaOFJo+QwfAQ--.33128S3;
- Wed, 18 Jun 2025 11:53:00 +0800 (CST)
-Subject: Re: [PATCH 07/10] hw/loongarch: connect pch_msi controller to avec
- controller
-To: Bibo Mao <maobibo@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250609104833.839811-1-gaosong@loongson.cn>
- <20250609104833.839811-8-gaosong@loongson.cn>
- <b0441034-9c99-0480-d0e1-2e30aac9a143@loongson.cn>
- <57f90747-1829-5e0e-fbb2-d4615ceeb72f@loongson.cn>
- <5551ef94-90fd-9388-d02d-5a32029e16aa@loongson.cn>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <92988f85-ab9a-8ae3-3a4c-991de61dfd21@loongson.cn>
-Date: Wed, 18 Jun 2025 11:55:52 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1uRlhZ-0005AU-Os
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 01:51:13 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lkp@intel.com>) id 1uRlhW-0007dH-FQ
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 01:51:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750225870; x=1781761870;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=Ix9bi/fX1Gwx5BysY/tiJbZOcKkeZxk/l1KDBs0K1Ek=;
+ b=berCmMMrC0B+wUbqcgOScAW5qZM3ubOpfHcvoR9mlj7WKKJ0GjFXabVW
+ WL9tyjpWs6ncs7gFXPnsBoakvfxA5eg7v+OVXjoBXtlgRhkuFrLwQUH2b
+ mM1pkFd02sARCr/kQT9Xr6CiOpUhNKeW6HTl5zhx/i6n2AVgB1crrUPjf
+ BFsMxpqEQvwRIN9wZgfu74JwxpDpbJzGdxjW7yETPExhy4Jhf2b7QKd1y
+ TdV3kOuKy0csz1jh1w/inn+Tgs/LxeU7s/J+3l3r8go952UNnHrzeRHi5
+ xw83X9bYIIB2t7mhFDw8f7mhEZ97UloEtwsSjtBO5koO2XL4uIQPdlc+y w==;
+X-CSE-ConnectionGUID: 3CIDLIxNQlq2M/nadrUAiw==
+X-CSE-MsgGUID: MollWDXCT/uqpUQtTMGxSg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11467"; a="52129821"
+X-IronPort-AV: E=Sophos;i="6.16,245,1744095600"; d="scan'208";a="52129821"
+Received: from orviesa009.jf.intel.com ([10.64.159.149])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Jun 2025 22:51:05 -0700
+X-CSE-ConnectionGUID: /xobBj0uSjSpdsNqEZHD3g==
+X-CSE-MsgGUID: /ZiOOu0qQ5qQbIq3slAqyw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,245,1744095600"; d="scan'208";a="149202862"
+Received: from lkp-server01.sh.intel.com (HELO e8142ee1dce2) ([10.239.97.150])
+ by orviesa009.jf.intel.com with ESMTP; 17 Jun 2025 22:51:04 -0700
+Received: from kbuild by e8142ee1dce2 with local (Exim 4.96)
+ (envelope-from <lkp@intel.com>) id 1uRlhM-000JRU-2A;
+ Wed, 18 Jun 2025 05:51:00 +0000
+Date: Wed, 18 Jun 2025 13:50:19 +0800
+From: kernel test robot <lkp@intel.com>
+To: Takashi Iwai <tiwai@suse.de>, Gabriel Somlo <somlo@cmu.edu>,
+ "Michael S . Tsirkin" <mst@redhat.com>
+Cc: oe-kbuild-all@lists.linux.dev, Fabian Vogt <fvogt@suse.de>,
+ linux-kernel@vger.kernel.org, qemu-devel@nongnu.org
+Subject: Re: [PATCH RESEND] firmware: qemu_fw_cfg: Do not hard depend on
+ CONFIG_HAS_IOPORT_MAP
+Message-ID: <202506181300.OUXh1Amh-lkp@intel.com>
+References: <20250616161408.26748-1-tiwai@suse.de>
 MIME-Version: 1.0
-In-Reply-To: <5551ef94-90fd-9388-d02d-5a32029e16aa@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMBxLscaOFJo+QwfAQ--.33128S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29K
- BjDU0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26c
- xKx2IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vE
- j48ve4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxV
- AFwI0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E
- 14v26F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI
- 0UMc02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUXVWUAwAv7VC2z280
- aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2
- xFo4CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAq
- x4xG67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r
- 1DMIIYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF
- 7I0E14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxV
- WUJVW8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07j1
- YL9UUUUU=
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -29
-X-Spam_score: -3.0
-X-Spam_bar: ---
-X-Spam_report: (-3.0 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.122,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+In-Reply-To: <20250616161408.26748-1-tiwai@suse.de>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=lkp@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -62
+X-Spam_score: -6.3
+X-Spam_bar: ------
+X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,17 +86,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/6/17 下午3:34, Bibo Mao 写道:
->>>
->> hi,
->> here is  pch_msi  [start-256] gpio_out  connect to avec gpio_in 
->> [start, 256], not the avec connect to cpu.
-> pch_msi is always connected to eiointc, and it is not connected to 
-> avec gpio_in. There is two MSI controllers coexisting together: 
-> pch_msi and avec, guest OS can choose use one of them or both. 
-   you're right.  I got it now.
+Hi Takashi,
 
-thanks.
-Song Gao
+kernel test robot noticed the following build errors:
 
+[auto build test ERROR on linus/master]
+[also build test ERROR on v6.16-rc2 next-20250617]
+[If your patch is applied to the wrong git tree, kindly drop us a note.
+And when submitting patch, we suggest to use '--base' as documented in
+https://git-scm.com/docs/git-format-patch#_base_tree_information]
+
+url:    https://github.com/intel-lab-lkp/linux/commits/Takashi-Iwai/firmware-qemu_fw_cfg-Do-not-hard-depend-on-CONFIG_HAS_IOPORT_MAP/20250617-001546
+base:   linus/master
+patch link:    https://lore.kernel.org/r/20250616161408.26748-1-tiwai%40suse.de
+patch subject: [PATCH RESEND] firmware: qemu_fw_cfg: Do not hard depend on CONFIG_HAS_IOPORT_MAP
+config: arm64-randconfig-r073-20250618 (https://download.01.org/0day-ci/archive/20250618/202506181300.OUXh1Amh-lkp@intel.com/config)
+compiler: aarch64-linux-gcc (GCC) 9.5.0
+reproduce (this is a W=1 build): (https://download.01.org/0day-ci/archive/20250618/202506181300.OUXh1Amh-lkp@intel.com/reproduce)
+
+If you fix the issue in a separate patch/commit (i.e. not just a new version of
+the same patch/commit), kindly add following tags
+| Reported-by: kernel test robot <lkp@intel.com>
+| Closes: https://lore.kernel.org/oe-kbuild-all/202506181300.OUXh1Amh-lkp@intel.com/
+
+All errors (new ones prefixed by >>):
+
+   drivers/firmware/qemu_fw_cfg.c: In function 'fw_cfg_io_cleanup':
+>> drivers/firmware/qemu_fw_cfg.c:207:3: error: implicit declaration of function 'ioport_unmap' [-Werror=implicit-function-declaration]
+     207 |   ioport_unmap(fw_cfg_dev_base);
+         |   ^~~~~~~~~~~~
+   cc1: some warnings being treated as errors
+
+
+vim +/ioport_unmap +207 drivers/firmware/qemu_fw_cfg.c
+
+2d6d60a3d3eca5 Marc-Andr� Lureau 2018-02-28  199  
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  200  /* clean up fw_cfg device i/o */
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  201  static void fw_cfg_io_cleanup(void)
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  202  {
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  203  	if (fw_cfg_is_mmio) {
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  204  		iounmap(fw_cfg_dev_base);
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  205  		release_mem_region(fw_cfg_p_base, fw_cfg_p_size);
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  206  	} else {
+75f3e8e47f3810 Gabriel Somlo     2016-01-28 @207  		ioport_unmap(fw_cfg_dev_base);
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  208  		release_region(fw_cfg_p_base, fw_cfg_p_size);
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  209  	}
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  210  }
+75f3e8e47f3810 Gabriel Somlo     2016-01-28  211  
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests/wiki
 
