@@ -4,78 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65132C7115B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 08:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC644C7115B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 08:28:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRo5n-0008L9-OX; Wed, 18 Jun 2025 04:24:23 -0400
+	id 1uRo9G-0001Dv-10; Wed, 18 Jun 2025 04:27:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uRo5i-0008KH-GA
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 04:24:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uRo9D-0001Df-8Q
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 04:27:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uRo5g-0005xR-0q
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 04:24:18 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uRo9A-0006Z9-DS
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 04:27:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750235049;
+ s=mimecast20190719; t=1750235270;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=XOd/TwSeFf3sn9dmgp438m1OZfBUEXiJMJgYzBxE9cs=;
- b=QLvJjlC92/s6LtEYtvYq1EQkt7CYVV9z99dcsU/+TSxmz/ZLWr56ZOTGE+hX+70ITO4Iik
- As/3f8/IfC2rXO586BP4eraKk49ihiGyMyoS4W1NDohiQBUUTexcIgJhPw5vjhV3aj+nEs
- wM3zEkqDjzdlgT6Ob2Tjb/Mp2xDV+20=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=8+7qm2QOt4HDeG9l0wtWmNg5ozuJh8NqO4G3QAepq4g=;
+ b=imBBUp0y/AxArVEXih4VSYIeZBd2Ok/1eYUqvvoEJufP/NO0dO+JCMd3C4Irx4Lm2QlKsp
+ WWPfCzO0ncIYmmJ21AXccLGqfaae7y+bZiYYs2fWTxoN8G5zWc0HDjpu1Q/3orHCm9MuHm
+ Dt5Rx3Y5WX+hCWS9DFC2oPieBoiH9m8=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-262-G-iAP0DNP3mFo3VyOoX2uw-1; Wed, 18 Jun 2025 04:24:04 -0400
-X-MC-Unique: G-iAP0DNP3mFo3VyOoX2uw-1
-X-Mimecast-MFC-AGG-ID: G-iAP0DNP3mFo3VyOoX2uw_1750235044
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-6fb32203ca6so143544196d6.3
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 01:24:04 -0700 (PDT)
+ us-mta-627-3S0ys-XfOgWD9IIYT4XCeQ-1; Wed, 18 Jun 2025 04:27:48 -0400
+X-MC-Unique: 3S0ys-XfOgWD9IIYT4XCeQ-1
+X-Mimecast-MFC-AGG-ID: 3S0ys-XfOgWD9IIYT4XCeQ_1750235267
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4ff581df3so236413f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 01:27:48 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750235043; x=1750839843;
+ d=1e100.net; s=20230601; t=1750235267; x=1750840067;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=XOd/TwSeFf3sn9dmgp438m1OZfBUEXiJMJgYzBxE9cs=;
- b=ifYlOWg45Fn0DYPPEYMIVBfiBx+8D/ePXwfEF1M5afZdLGlypl1/TFIjTzFpwgTUlg
- 6uEwRM0whUYEEUtOSh3BvWCWxcXQMrhuFqPk/ce2Nr7bmeSBMACFWi9UYBpszEVduAre
- OhJapqq4SFoiWp9a3nIQz23BIMAKqpIM1ihUY4N+VIpoIYqNDuzIuwheosOAIPz0vusF
- XyAPh6K68LlmEnt9zKfbBs43KS7Ofmg9LLk2huvFvX1blYzvxK3wH1lE3AgYGzthdOtA
- NDRvmKmD9GPVvNKCp+uYc/JWNRNrgWuNCzWJ6VU0z6hvEWjjMHRpZdi50r2+li7OSujl
- Z9fw==
-X-Gm-Message-State: AOJu0YyX1ivYoIwrAGrjHrFhm2HZwxQgwS18eYD4IlB5Qp1pXAosuknG
- SJtkVtEJq5g7GNLM20MYRC2c82kfK1TU5xOe9afVr3hhyVgNXB3mn/hv9rR/qrCX0xW3vTZnoIy
- ukLibsS3qr825tYOzm9NwxyLYPrmPHcp2GmoSnrgZCX0br3S3hDkR7hqrVd3Nw1GZyK26t6eLEy
- aToL39ebxIrQeFuo+6sMPbPGRYK3Cuqgo=
-X-Gm-Gg: ASbGncufef3TqJolFc/H8lYznHSLiIILuZkrYacEs1lNuVV+Gb0IjZwVcmoyCHIFnEW
- /FfNCzn1w6XJr7Ri8xpPO19LkUjVbkXXo86FF5jw0eg3lo8kKw5aKnHIJT/coiJxfb0SmPwBlqI
- SVFoKZfQ==
-X-Received: by 2002:a05:6214:485:b0:6fa:c166:d8b9 with SMTP id
- 6a1803df08f44-6fb47773332mr237124896d6.2.1750235043676; 
- Wed, 18 Jun 2025 01:24:03 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE9RSySQkWj3M/dahViG5Yq8tRNFP7oHvJC102e0mYJUCmRNiRzNUdyllZyxX0YHL21CNOxoWnWddivo7U4+5M=
-X-Received: by 2002:a05:6214:485:b0:6fa:c166:d8b9 with SMTP id
- 6a1803df08f44-6fb47773332mr237124756d6.2.1750235043418; Wed, 18 Jun 2025
- 01:24:03 -0700 (PDT)
+ bh=8+7qm2QOt4HDeG9l0wtWmNg5ozuJh8NqO4G3QAepq4g=;
+ b=iZXLS29jAD6twdK+52RmhOULQzOAQf9HQqLajnGG3/4a64KnET9/a57IOnNYGlRPK8
+ Ie2iQG0Y+ikfzxrE+9OPatcxUu6oJWj1P+58V2PVw2uvm5bOxn0g0n5qImgFq6uwMZuO
+ oORkdhxw0zZRvzvqjECIkS6hDq//ImQPoc18FhqkXzyBhv+71oD/JJDtGpFN5qgI6hL3
+ qPR8Zy/YEarplCJf4Dv16B0Vkd1ClGBcdbO/KGtE49d4SQKnMi20nUDra51hMYA0AL9e
+ tabD2Vo1wp0mldKPGDEYWhknSDzY1ZPs8YxeRInY/0yTrCQSIV/2vxxGBviOZjFRK6zK
+ rIZA==
+X-Gm-Message-State: AOJu0YyDM7xU/TYdGeNgdIXMTs6CzZPqIzbmekqduvP5zPQERRuApPPF
+ d6oeiqfLjM3lVs3TUNTL5Pd2UXXsHeH2PxpIF2JJupIdDGLunhUy9TEh62aUZpiH3Mp0MHGfGJG
+ CLxwaJyhs5Qax6mynxZbQMyGjw5kUFBisIhEIs0E3BeiG64AdsI9puHCrXRZa50CaFZ7CgGU09E
+ MsHT5LEtnHnPUuVxSvW295qdhEdqganQU=
+X-Gm-Gg: ASbGncvAHgofpEiuQN1s28m7FmnovWXJLFqUvsaPXLAWW5moPZXWToCvTdZ65ZjKBrw
+ So6m8uCbk++jmZEWY0GpFYO1w+ZvGkIoyYofBdY7Bn4xSEcIqOFhPHB8CAkY6BvdQ2Ae1QBJVtq
+ uhmzQ=
+X-Received: by 2002:a05:6000:386:b0:3a5:7944:c9f with SMTP id
+ ffacd0b85a97d-3a58e13fb12mr1354312f8f.2.1750235267364; 
+ Wed, 18 Jun 2025 01:27:47 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGsV3u1ClSgt8OoUXKBlV7V9QDsSQHpYeFYOE2GMyGGQsALPPKSFqZ4mKstFH7U+TB6Sr7fSr1TtpxZgzTM4OY=
+X-Received: by 2002:a05:6000:386:b0:3a5:7944:c9f with SMTP id
+ ffacd0b85a97d-3a58e13fb12mr1354282f8f.2.1750235266692; Wed, 18 Jun 2025
+ 01:27:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20250617174733.156349-1-eashurov@redhat.com>
-In-Reply-To: <20250617174733.156349-1-eashurov@redhat.com>
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Wed, 18 Jun 2025 11:23:52 +0300
-X-Gm-Features: Ac12FXzIF8piB2BqUJql_PoQGJBdjq1X5VHTo-AbJgbq1Z_GgC5NW_JobpTy2os
-Message-ID: <CAPMcbCrW6XzVUYOoBnxZC4E3Ma7FZtKGOwWwKZ6A0_Hd4jJmQg@mail.gmail.com>
-Subject: Re: [PATCH] qga/vss-win32: Add VSS provider unregistration retry
-To: Elizabeth Ashurov <eashurov@redhat.com>
-Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
-Content-Type: multipart/alternative; boundary="0000000000000969050637d45adb"
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
+References: <20250605101124.367270-1-pbonzini@redhat.com>
+ <875xgu95a0.fsf@pond.sub.org>
+In-Reply-To: <875xgu95a0.fsf@pond.sub.org>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Wed, 18 Jun 2025 10:27:35 +0200
+X-Gm-Features: Ac12FXyDE8ZZGtQt4QQZvafhgjJsN8mxstQmRlx91AhrC-E6Bvl_1kbSsLYxPv4
+Message-ID: <CABgObfZgp82HKSv3-CFL-MD-86LGQQGcAPYi83Q8Qhq_HbiORQ@mail.gmail.com>
+Subject: Re: [PATCH preview 0/3] reviving minimal QAPI generation from 2021
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ qemu-rust@nongnu.org, Martin Kletzander <mkletzan@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000584b660637d467ed"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -101,159 +104,198 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000000969050637d45adb
+--000000000000584b660637d467ed
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Best Regards,
-Konstantin Kostiuk.
+Il mar 17 giu 2025, 09:49 Markus Armbruster <armbru@redhat.com> ha scritto:
 
-
-On Tue, Jun 17, 2025 at 8:47=E2=80=AFPM Elizabeth Ashurov <eashurov@redhat.=
-com>
-wrote:
-
-> This commit improves the QGA VSS provider installation flow
-> by attempting to unregister the VSS provider if it's already
-> found during installation. This allows for a retry of installation
-> even if a previous unregistration failed or was not performed.
+> pylint isn't happy with the new module:
 >
 
-Please add:
-This will prevent inconsistencies between QGA and QGA-VSS versions.
-Before this commit, QGA can use QGA-VSS from the previous installation.
+Fixed, will post a new version.
+
+Can I pick your brain on whether to focus on Rust<->QObject conversion or
+give the Rust structs the full visitor treatment? (See other messages in
+reply to the cover letter).
+
+Paolo
 
 
+************* Module qapi.rs_types
+> scripts/qapi/rs_types.py:286:4: W0237: Parameter 'branches' has been
+> renamed to 'variants' in overriding
+> 'QAPISchemaGenRsTypeVisitor.visit_object_type' method (arguments-renamed)
+> scripts/qapi/rs_types.py:307:4: W0237: Parameter 'alternatives' has been
+> renamed to 'variants' in overriding
+> 'QAPISchemaGenRsTypeVisitor.visit_alternate_type' method (arguments-renamed)
+> scripts/qapi/rs_types.py:316:67: W0613: Unused argument 'builtins'
+> (unused-argument)
+> scripts/qapi/rs_types.py:9:0: W0611: Unused POINTER_SUFFIX imported from
+> common (unused-import)
+> scripts/qapi/rs_types.py:10:0: W0611: Unused rs_ctype_parse imported from
+> rs (unused-import)
+> scripts/qapi/rs_types.py:18:0: W0611: Unused QAPISchemaEnumType imported
+> from schema (unused-import)
+> scripts/qapi/rs_types.py:18:0: W0611: Unused QAPISchemaType imported from
+> schema (unused-import)
 >
-> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
-> ---
->  qga/vss-win32/install.cpp | 11 ++++++++---
->  1 file changed, 8 insertions(+), 3 deletions(-)
 >
-> diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-> index 5cea5bcf74..a136d46050 100644
-> --- a/qga/vss-win32/install.cpp
-> +++ b/qga/vss-win32/install.cpp
-> @@ -263,6 +263,7 @@ STDAPI COMRegister(void)
->      qga_debug_begin;
+> Might be too early to bother with the type hints, but here goes anyway:
 >
->      HRESULT hr;
-> +    HRESULT unregisterHr;
+> $ mypy scripts/qapi-gen.py
+> scripts/qapi/schema.py:70: error: Argument 1 to "rsgen_ifcond" has
+> incompatible type "str | dict[str, object] | None"; expected "str |
+> dict[str, Any]"  [arg-type]
+> scripts/qapi/rs.py:99: error: Incompatible types in assignment (expression
+> has type "str | None", variable has type "dict[str, str]")  [assignment]
+> scripts/qapi/rs.py:103: error: Unsupported left operand type for +
+> ("None")  [operator]
+> scripts/qapi/rs.py:103: note: Left operand is of type "str | None"
+> scripts/qapi/rs.py:103: error: Incompatible types in assignment
+> (expression has type "str | Any", variable has type "dict[str, str]")
+> [assignment]
+> scripts/qapi/rs.py:106: error: Incompatible types in assignment
+> (expression has type "str", variable has type "dict[str, str]")
+> [assignment]
+> scripts/qapi/rs.py:108: error: Incompatible types in assignment
+> (expression has type "str", variable has type "dict[str, str]")
+> [assignment]
+> scripts/qapi/rs.py:110: error: Incompatible types in assignment
+> (expression has type "str", variable has type "dict[str, str]")
+> [assignment]
+> scripts/qapi/rs.py:111: error: Incompatible return value type (got
+> "dict[str, str]", expected "str")  [return-value]
+> scripts/qapi/rs_types.py:47: error: Item "None" of "QAPISchemaVariants |
+> None" has no attribute "tag_member"  [union-attr]
+> scripts/qapi/rs_types.py:49: error: Item "None" of "QAPISchemaVariants |
+> None" has no attribute "variants"  [union-attr]
+> scripts/qapi/rs_types.py:84: error: Item "None" of "QAPISchemaVariants |
+> None" has no attribute "variants"  [union-attr]
+> scripts/qapi/rs_types.py:116: error: Incompatible default for argument
+> "exclude" (default has type "None", argument has type "list[str]")
+> [assignment]
+> scripts/qapi/rs_types.py:116: note: PEP 484 prohibits implicit Optional.
+> Accordingly, mypy has changed its default to no_implicit_optional=True
+> scripts/qapi/rs_types.py:116: note: Use
+> https://github.com/hauntsaninja/no_implicit_optional to automatically
+> upgrade your codebase
+> scripts/qapi/rs_types.py:118: error: Incompatible return value type (got
+> "list[str]", expected "str")  [return-value]
+> scripts/qapi/rs_types.py:251: error: Item "None" of "QAPISchemaVariants |
+> None" has no attribute "variants"  [union-attr]
+> scripts/qapi/rs_types.py:309: error: Argument 2 of "visit_alternate_type"
+> is incompatible with supertype "QAPISchemaVisitor"; supertype defines the
+> argument type as "QAPISourceInfo | None"  [override]
+> scripts/qapi/rs_types.py:309: note: This violates the Liskov substitution
+> principle
+> scripts/qapi/rs_types.py:309: note: See
+> https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-overrides
+> Found 15 errors in 3 files (checked 1 source file)
 >
-extra HRESULT is redundant; you can reuse existing one
+>
 
-
->      COMInitializer initializer;
->      COMPointer<IUnknown> pUnknown;
->      COMPointer<ICOMAdminCatalog2> pCatalog;
-> @@ -287,9 +288,13 @@ STDAPI COMRegister(void)
->
->      chk(QGAProviderFind(QGAProviderCount, (void *)&count));
->      if (count) {
-> -        errmsg(E_ABORT, "QGA VSS Provider is already installed");
-> -        qga_debug_end;
-> -        return E_ABORT;
-> +        qga_debug("QGA VSS Provider is already installed. Attempting to
-> unregister first.");
-> +        unregisterHr =3D COMUnregister();
-> +        if (FAILED(unregisterHr)) {
-> +            errmsg(unregisterHr, "Failed to unregister existing QGA VSS
-> Provider. Aborting installation.");
-> +            qga_debug_end;
-> +            return E_ABORT;
->
-
-.git/rebase-apply/patch:29: trailing whitespace.
-            return E_ABORT;
-warning: 1 line adds whitespace errors.
-please fix
-
-> +        }
->      }
->
->      chk(CoCreateInstance(CLSID_COMAdminCatalog, NULL,
-> CLSCTX_INPROC_SERVER,
-> --
-> 2.49.0
->
->
-
---0000000000000969050637d45adb
+--000000000000584b660637d467ed
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><div><br clear=3D"all"></div><div><div di=
-r=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><div>Best Regards,</di=
-v><div>Konstantin Kostiuk.</div></div></div></div><br></div><br><div class=
-=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr=
-">On Tue, Jun 17, 2025 at 8:47=E2=80=AFPM Elizabeth Ashurov &lt;<a href=3D"=
-mailto:eashurov@redhat.com">eashurov@redhat.com</a>&gt; wrote:<br></div><bl=
-ockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-lef=
-t:1px solid rgb(204,204,204);padding-left:1ex">This commit improves the QGA=
- VSS provider installation flow<br>
-by attempting to unregister the VSS provider if it&#39;s already<br>
-found during installation. This allows for a retry of installation<br>
-even if a previous unregistration failed or was not performed.<br></blockqu=
-ote><div><br></div><div>Please add:<br></div><div>This will prevent inconsi=
-stencies between QGA and QGA-VSS versions.</div><div>Before this commit, QG=
-A can use QGA-VSS from the previous installation.<br></div><div>=C2=A0</div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">
+<div dir=3D"auto"><div><br><br><div class=3D"gmail_quote gmail_quote_contai=
+ner"><div dir=3D"ltr" class=3D"gmail_attr">Il mar 17 giu 2025, 09:49 Markus=
+ Armbruster &lt;<a href=3D"mailto:armbru@redhat.com">armbru@redhat.com</a>&=
+gt; ha scritto:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:=
+0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">=
+pylint isn&#39;t happy with the new module:<br></blockquote></div></div><di=
+v dir=3D"auto"><br></div><div dir=3D"auto">Fixed, will post a new version.=
+=C2=A0</div><div dir=3D"auto"><br></div><div dir=3D"auto">Can I pick your b=
+rain on whether to focus on Rust&lt;-&gt;QObject conversion or give the Rus=
+t structs the full visitor treatment? (See other messages in reply to the c=
+over letter).</div><div dir=3D"auto"><br></div><div dir=3D"auto">Paolo</div=
+><div dir=3D"auto"><br></div><div dir=3D"auto"><br></div><div dir=3D"auto">=
+<div class=3D"gmail_quote gmail_quote_container"><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">
+************* Module qapi.rs_types<br>
+scripts/qapi/rs_types.py:286:4: W0237: Parameter &#39;branches&#39; has bee=
+n renamed to &#39;variants&#39; in overriding &#39;QAPISchemaGenRsTypeVisit=
+or.visit_object_type&#39; method (arguments-renamed)<br>
+scripts/qapi/rs_types.py:307:4: W0237: Parameter &#39;alternatives&#39; has=
+ been renamed to &#39;variants&#39; in overriding &#39;QAPISchemaGenRsTypeV=
+isitor.visit_alternate_type&#39; method (arguments-renamed)<br>
+scripts/qapi/rs_types.py:316:67: W0613: Unused argument &#39;builtins&#39; =
+(unused-argument)<br>
+scripts/qapi/rs_types.py:9:0: W0611: Unused POINTER_SUFFIX imported from co=
+mmon (unused-import)<br>
+scripts/qapi/rs_types.py:10:0: W0611: Unused rs_ctype_parse imported from r=
+s (unused-import)<br>
+scripts/qapi/rs_types.py:18:0: W0611: Unused QAPISchemaEnumType imported fr=
+om schema (unused-import)<br>
+scripts/qapi/rs_types.py:18:0: W0611: Unused QAPISchemaType imported from s=
+chema (unused-import)<br>
 <br>
-Signed-off-by: Elizabeth Ashurov &lt;<a href=3D"mailto:eashurov@redhat.com"=
- target=3D"_blank">eashurov@redhat.com</a>&gt;<br>
----<br>
-=C2=A0qga/vss-win32/install.cpp | 11 ++++++++---<br>
-=C2=A01 file changed, 8 insertions(+), 3 deletions(-)<br>
 <br>
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp<br>
-index 5cea5bcf74..a136d46050 100644<br>
---- a/qga/vss-win32/install.cpp<br>
-+++ b/qga/vss-win32/install.cpp<br>
-@@ -263,6 +263,7 @@ STDAPI COMRegister(void)<br>
-=C2=A0 =C2=A0 =C2=A0qga_debug_begin;<br>
+Might be too early to bother with the type hints, but here goes anyway:<br>
 <br>
-=C2=A0 =C2=A0 =C2=A0HRESULT hr;<br>
-+=C2=A0 =C2=A0 HRESULT unregisterHr;<br></blockquote><div>extra HRESULT is =
-redundant; you can reuse existing one<br></div><div>=C2=A0</div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0COMInitializer initializer;<br>
-=C2=A0 =C2=A0 =C2=A0COMPointer&lt;IUnknown&gt; pUnknown;<br>
-=C2=A0 =C2=A0 =C2=A0COMPointer&lt;ICOMAdminCatalog2&gt; pCatalog;<br>
-@@ -287,9 +288,13 @@ STDAPI COMRegister(void)<br>
+$ mypy scripts/qapi-gen.py <br>
+scripts/qapi/schema.py:70: error: Argument 1 to &quot;rsgen_ifcond&quot; ha=
+s incompatible type &quot;str | dict[str, object] | None&quot;; expected &q=
+uot;str | dict[str, Any]&quot;=C2=A0 [arg-type]<br>
+scripts/qapi/rs.py:99: error: Incompatible types in assignment (expression =
+has type &quot;str | None&quot;, variable has type &quot;dict[str, str]&quo=
+t;)=C2=A0 [assignment]<br>
+scripts/qapi/rs.py:103: error: Unsupported left operand type for + (&quot;N=
+one&quot;)=C2=A0 [operator]<br>
+scripts/qapi/rs.py:103: note: Left operand is of type &quot;str | None&quot=
+;<br>
+scripts/qapi/rs.py:103: error: Incompatible types in assignment (expression=
+ has type &quot;str | Any&quot;, variable has type &quot;dict[str, str]&quo=
+t;)=C2=A0 [assignment]<br>
+scripts/qapi/rs.py:106: error: Incompatible types in assignment (expression=
+ has type &quot;str&quot;, variable has type &quot;dict[str, str]&quot;)=C2=
+=A0 [assignment]<br>
+scripts/qapi/rs.py:108: error: Incompatible types in assignment (expression=
+ has type &quot;str&quot;, variable has type &quot;dict[str, str]&quot;)=C2=
+=A0 [assignment]<br>
+scripts/qapi/rs.py:110: error: Incompatible types in assignment (expression=
+ has type &quot;str&quot;, variable has type &quot;dict[str, str]&quot;)=C2=
+=A0 [assignment]<br>
+scripts/qapi/rs.py:111: error: Incompatible return value type (got &quot;di=
+ct[str, str]&quot;, expected &quot;str&quot;)=C2=A0 [return-value]<br>
+scripts/qapi/rs_types.py:47: error: Item &quot;None&quot; of &quot;QAPISche=
+maVariants | None&quot; has no attribute &quot;tag_member&quot;=C2=A0 [unio=
+n-attr]<br>
+scripts/qapi/rs_types.py:49: error: Item &quot;None&quot; of &quot;QAPISche=
+maVariants | None&quot; has no attribute &quot;variants&quot;=C2=A0 [union-=
+attr]<br>
+scripts/qapi/rs_types.py:84: error: Item &quot;None&quot; of &quot;QAPISche=
+maVariants | None&quot; has no attribute &quot;variants&quot;=C2=A0 [union-=
+attr]<br>
+scripts/qapi/rs_types.py:116: error: Incompatible default for argument &quo=
+t;exclude&quot; (default has type &quot;None&quot;, argument has type &quot=
+;list[str]&quot;)=C2=A0 [assignment]<br>
+scripts/qapi/rs_types.py:116: note: PEP 484 prohibits implicit Optional. Ac=
+cordingly, mypy has changed its default to no_implicit_optional=3DTrue<br>
+scripts/qapi/rs_types.py:116: note: Use <a href=3D"https://github.com/haunt=
+saninja/no_implicit_optional" rel=3D"noreferrer noreferrer" target=3D"_blan=
+k">https://github.com/hauntsaninja/no_implicit_optional</a> to automaticall=
+y upgrade your codebase<br>
+scripts/qapi/rs_types.py:118: error: Incompatible return value type (got &q=
+uot;list[str]&quot;, expected &quot;str&quot;)=C2=A0 [return-value]<br>
+scripts/qapi/rs_types.py:251: error: Item &quot;None&quot; of &quot;QAPISch=
+emaVariants | None&quot; has no attribute &quot;variants&quot;=C2=A0 [union=
+-attr]<br>
+scripts/qapi/rs_types.py:309: error: Argument 2 of &quot;visit_alternate_ty=
+pe&quot; is incompatible with supertype &quot;QAPISchemaVisitor&quot;; supe=
+rtype defines the argument type as &quot;QAPISourceInfo | None&quot;=C2=A0 =
+[override]<br>
+scripts/qapi/rs_types.py:309: note: This violates the Liskov substitution p=
+rinciple<br>
+scripts/qapi/rs_types.py:309: note: See <a href=3D"https://mypy.readthedocs=
+.io/en/stable/common_issues.html#incompatible-overrides" rel=3D"noreferrer =
+noreferrer" target=3D"_blank">https://mypy.readthedocs.io/en/stable/common_=
+issues.html#incompatible-overrides</a><br>
+Found 15 errors in 3 files (checked 1 source file)<br>
 <br>
-=C2=A0 =C2=A0 =C2=A0chk(QGAProviderFind(QGAProviderCount, (void *)&amp;coun=
-t));<br>
-=C2=A0 =C2=A0 =C2=A0if (count) {<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(E_ABORT, &quot;QGA VSS Provider is alre=
-ady installed&quot;);<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
--=C2=A0 =C2=A0 =C2=A0 =C2=A0 return E_ABORT;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug(&quot;QGA VSS Provider is already in=
-stalled. Attempting to unregister first.&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 unregisterHr =3D COMUnregister();<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (FAILED(unregisterHr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 errmsg(unregisterHr, &quot;Faile=
-d to unregister existing QGA VSS Provider. Aborting installation.&quot;);<b=
-r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qga_debug_end;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return E_ABORT; <br></blockquote=
-><div><br></div><div>.git/rebase-apply/patch:29: trailing whitespace.<br>=
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return E_ABORT; <br>warning: 1 li=
-ne adds whitespace errors.</div><div>please fix<br></div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0}<br>
-<br>
-=C2=A0 =C2=A0 =C2=A0chk(CoCreateInstance(CLSID_COMAdminCatalog, NULL, CLSCT=
-X_INPROC_SERVER,<br>
--- <br>
-2.49.0<br>
-<br>
-</blockquote></div></div>
+</blockquote></div></div></div>
 
---0000000000000969050637d45adb--
+--000000000000584b660637d467ed--
 
 
