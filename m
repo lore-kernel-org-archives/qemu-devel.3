@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80FF7C7115A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3BEBC71157
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 15:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRvAU-0003EA-UL; Wed, 18 Jun 2025 11:57:43 -0400
+	id 1uRvAc-0003G7-Ax; Wed, 18 Jun 2025 11:57:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uRvAM-0003CQ-1k
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uRvAZ-0003FT-UL
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uRvAJ-000887-Dl
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:33 -0400
+ id 1uRvAY-00089v-0o
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750262248;
+ s=mimecast20190719; t=1750262265;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=5PjGJ6LmFzKkJysKqVxSszxh4Nlr1FXEK/WbkR5aWCg=;
- b=AUmb5bm2CSgqdeQODp95fs3hEuft2epHs3gEyYFJHMp/o4beRqohLBBxseQOoeJlmcfL8L
- MFsaIs2F2Q9lMdGtGAGT6Ib3bBKsP8b6CRyrcEsD/uOiSgGjlMuGTFdDS9oWaRfOWlx/Yf
- QX0HejTPAh60ZE5QFfrFB15lqXSN2kg=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Jb0CgELTRKz19zoBNNtzjKkT3GlOqs/ymBmwcRa0rdA=;
+ b=ZSdZFgH7x1lntf9G725l9GR1m8JYE7M0DHq43eDPh8xL5JX4ZchEhkRQJfuAhhrHDbW0rm
+ FDjp1VdVqkofp04sgWoyGL2Drjsu/0YoKAVc6EopbTRV2epBRlQ7frgkZ2g5mm7Nr0lm35
+ cqr3Kd6RE3frwJVbRAKo4vB7M1g11jg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-582-6RHFwtDhO66M9O1AZFs56w-1; Wed,
- 18 Jun 2025 11:57:25 -0400
-X-MC-Unique: 6RHFwtDhO66M9O1AZFs56w-1
-X-Mimecast-MFC-AGG-ID: 6RHFwtDhO66M9O1AZFs56w_1750262244
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-rUevBL8EONm10nal903QHg-1; Wed,
+ 18 Jun 2025 11:57:43 -0400
+X-MC-Unique: rUevBL8EONm10nal903QHg-1
+X-Mimecast-MFC-AGG-ID: rUevBL8EONm10nal903QHg_1750262262
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2D63C18001D6; Wed, 18 Jun 2025 15:57:24 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B0E4D180028C; Wed, 18 Jun 2025 15:57:42 +0000 (UTC)
 Received: from lenovo-t14s.redhat.com (unknown [10.44.33.123])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C759718003FC; Wed, 18 Jun 2025 15:57:19 +0000 (UTC)
+ id B3C7C180045B; Wed, 18 Jun 2025 15:57:38 +0000 (UTC)
 From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -57,14 +58,15 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 00/10] net: Add passt netdev backend
-Date: Wed, 18 Jun 2025 17:57:08 +0200
-Message-ID: <20250618155718.550968-1-lvivier@redhat.com>
-Content-Type: text/plain; charset="utf-8"
+Subject: [PATCH v2 04/10] net: Add get_vhost_net callback to NetClientInfo
+Date: Wed, 18 Jun 2025 17:57:12 +0200
+Message-ID: <20250618155718.550968-5-lvivier@redhat.com>
+In-Reply-To: <20250618155718.550968-1-lvivier@redhat.com>
+References: <20250618155718.550968-1-lvivier@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=lvivier@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=lvivier@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -89,125 +91,256 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series introduces support for passt as a new network backend for=0D
-QEMU.=0D
-=0D
-passt is a modern, unprivileged, user-mode networking solution that=0D
-provides guest connectivity by launching an external helper process. This=0D
-series adds the core backend and integrates it with vhost-user for=0D
-high-performance, accelerated networking.=0D
-=0D
-The series is structured to first improve the general networking code=0D
-before adding the new feature. The first patch extracts from the stream=0D
-backend the functions that will be reused in the passt backend. The=0D
-following patches are a preparatory refactoring to decouple the generic=0D
-vhost layer from specific backend implementations (tap, vhost-user, etc.).=
-=0D
-This is achieved by replacing hardcoded type checks with a callback-based=0D
-system in NetClientInfo, making the vhost infrastructure more modular and=0D
-extensible.=0D
-=0D
-With the refactoring in place, subsequent patches introduce the passt=0D
-backend itself, reusing the generic stream handling logic. The final=0D
-patch adds vhost-user support to passt, which plugs cleanly into the=0D
-newly refactored vhost layer.=0D
-=0D
-Some benchmarks:=0D
-=0D
- Reference '-net user':=0D
-=0D
-  -net user,hostfwd=3Dtcp::10001-:10001=0D
-=0D
-    iperf3 -c localhost -p 10001  -t 60 -4=0D
-=0D
-    [ ID] Interval           Transfer     Bitrate         Retr=0D
-    [  5]   0.00-60.00  sec  14.2 GBytes  2.03 Gbits/sec    1            se=
-nder=0D
-    [  5]   0.00-60.00  sec  14.2 GBytes  2.03 Gbits/sec                  r=
-eceiver=0D
-=0D
- New backend '-netdev passt'=0D
-=0D
-  -netdev passt,vhost-user=3Doff,tcp-ports=3D10001=0D
-=0D
-    iperf3 -c localhost -p 10001  -t 60 -4=0D
-=0D
-    [ ID] Interval           Transfer     Bitrate         Retr=0D
-    [  5]   0.00-60.00  sec  27.1 GBytes  3.88 Gbits/sec    0            se=
-nder=0D
-    [  5]   0.00-60.03  sec  27.1 GBytes  3.88 Gbits/sec                  r=
-eceiver=0D
-=0D
-  -netdev passt,vhost-user=3Don,tcp-ports=3D10001=0D
-=0D
-    iperf3 -c localhost -p 10001  -t 60 -4=0D
-=0D
-    [ ID] Interval           Transfer     Bitrate         Retr=0D
-    [  5]   0.00-60.00  sec   224 GBytes  32.1 Gbits/sec    4            se=
-nder=0D
-    [  5]   0.00-60.05  sec   224 GBytes  32.0 Gbits/sec                  r=
-eceiver=0D
-=0D
-v2:=0D
-  - rebase:=0D
-      fix conflict with=0D
-        837b87c4c5ba ("net/stream: skip automatic zero-init of large array"=
-)=0D
-        (why is this needed? A buffer on a stack is normally not initialize=
-d...)=0D
-  - add path parameter to provide path of passt if it is not in PATH=0D
-  - add 2 patches:=0D
-        "net: Allow network backends to advertise max TX queue size"=0D
-        "net: Consolidate vhost feature bits into NetClientInfo"=0D
-=0D
-Thanks,=0D
-Laurent=0D
-=0D
-Laurent Vivier (10):=0D
-  net: Refactor stream logic for reuse in '-net passt'=0D
-  net: Define net_client_set_link()=0D
-  net: Introduce helper to identify vhost-user clients=0D
-  net: Add get_vhost_net callback to NetClientInfo=0D
-  net: Consolidate vhost feature bits into NetClientInfo=0D
-  net: Add get_acked_features callback to NetClientInfo=0D
-  net: Add save_acked_features callback to NetClientInfo=0D
-  net: Allow network backends to advertise max TX queue size=0D
-  net: Add passt network backend=0D
-  net/passt: Implement vhost-user backend support=0D
-=0D
- hmp-commands.hx          |   3 +=0D
- hw/net/vhost_net-stub.c  |   1 -=0D
- hw/net/vhost_net.c       | 139 +------=0D
- hw/net/virtio-net.c      |  18 +-=0D
- include/net/net.h        |  14 +=0D
- include/net/tap.h        |   3 -=0D
- include/net/vhost-user.h |  19 -=0D
- include/net/vhost-vdpa.h |   4 -=0D
- meson.build              |   6 +=0D
- meson_options.txt        |   2 +=0D
- net/clients.h            |   4 +=0D
- net/hub.c                |   3 +=0D
- net/meson.build          |   6 +-=0D
- net/net.c                |  55 ++-=0D
- net/passt.c              | 768 +++++++++++++++++++++++++++++++++++++++=0D
- net/stream.c             | 282 ++++----------=0D
- net/stream_data.c        | 193 ++++++++++=0D
- net/stream_data.h        |  31 ++=0D
- net/tap-win32.c          |   5 -=0D
- net/tap.c                |  39 +-=0D
- net/vhost-user-stub.c    |   1 -=0D
- net/vhost-user.c         |  66 +++-=0D
- net/vhost-vdpa.c         |  10 +-=0D
- qapi/net.json            | 124 +++++++=0D
- qemu-options.hx          |  18 +=0D
- 25 files changed, 1399 insertions(+), 415 deletions(-)=0D
- delete mode 100644 include/net/vhost-user.h=0D
- create mode 100644 net/passt.c=0D
- create mode 100644 net/stream_data.c=0D
- create mode 100644 net/stream_data.h=0D
-=0D
--- =0D
-2.49.0=0D
-=0D
+The get_vhost_net() function previously contained a large switch
+statement to find the VHostNetState pointer based on the net
+client's type. This created a tight coupling, requiring the generic
+vhost layer to be aware of every specific backend that supported
+vhost, such as tap, vhost-user, and vhost-vdpa.
+
+This approach is not scalable and requires modifying a central function
+for any new backend. It also forced each backend to expose its internal
+getter function in a public header file.
+
+This patch refactors the logic by introducing a new get_vhost_net
+function pointer to the NetClientInfo struct. The central
+get_vhost_net() function is now a simple, generic dispatcher that
+invokes the callback provided by the net client.
+
+Each backend now implements its own private getter and registers it in
+its NetClientInfo.
+
+Signed-off-by: Laurent Vivier <lvivier@redhat.com>
+---
+ hw/net/vhost_net.c       | 31 ++++---------------------------
+ include/net/net.h        |  2 ++
+ include/net/tap.h        |  3 ---
+ include/net/vhost-user.h |  1 -
+ include/net/vhost-vdpa.h |  2 --
+ net/tap-win32.c          |  5 -----
+ net/tap.c                | 20 +++++++++++++-------
+ net/vhost-user.c         |  3 ++-
+ net/vhost-vdpa.c         |  4 +++-
+ 9 files changed, 24 insertions(+), 47 deletions(-)
+
+diff --git a/hw/net/vhost_net.c b/hw/net/vhost_net.c
+index 41d21e687ed9..16dadd022e75 100644
+--- a/hw/net/vhost_net.c
++++ b/hw/net/vhost_net.c
+@@ -646,41 +646,18 @@ void vhost_net_config_mask(VHostNetState *net, VirtIODevice *dev, bool mask)
+ {
+     vhost_config_mask(&net->dev, dev, mask);
+ }
++
+ VHostNetState *get_vhost_net(NetClientState *nc)
+ {
+-    VHostNetState *vhost_net = 0;
+-
+     if (!nc) {
+         return 0;
+     }
+ 
+-    switch (nc->info->type) {
+-    case NET_CLIENT_DRIVER_TAP:
+-        vhost_net = tap_get_vhost_net(nc);
+-        /*
+-         * tap_get_vhost_net() can return NULL if a tap net-device backend is
+-         * created with 'vhost=off' option, 'vhostforce=off' or no vhost or
+-         * vhostforce or vhostfd options at all. Please see net_init_tap_one().
+-         * Hence, we omit the assertion here.
+-         */
+-        break;
+-#ifdef CONFIG_VHOST_NET_USER
+-    case NET_CLIENT_DRIVER_VHOST_USER:
+-        vhost_net = vhost_user_get_vhost_net(nc);
+-        assert(vhost_net);
+-        break;
+-#endif
+-#ifdef CONFIG_VHOST_NET_VDPA
+-    case NET_CLIENT_DRIVER_VHOST_VDPA:
+-        vhost_net = vhost_vdpa_get_vhost_net(nc);
+-        assert(vhost_net);
+-        break;
+-#endif
+-    default:
+-        break;
++    if (nc->info->get_vhost_net) {
++        return nc->info->get_vhost_net(nc);
+     }
+ 
+-    return vhost_net;
++    return NULL;
+ }
+ 
+ int vhost_set_vring_enable(NetClientState *nc, int enable)
+diff --git a/include/net/net.h b/include/net/net.h
+index 2c3b22f564b6..8a62cd6e8aab 100644
+--- a/include/net/net.h
++++ b/include/net/net.h
+@@ -68,6 +68,7 @@ typedef void (NetAnnounce)(NetClientState *);
+ typedef bool (SetSteeringEBPF)(NetClientState *, int);
+ typedef bool (NetCheckPeerType)(NetClientState *, ObjectClass *, Error **);
+ typedef bool (IsVHostUser)(NetClientState *);
++typedef struct vhost_net *(GetVHostNet)(NetClientState *nc);
+ 
+ typedef struct NetClientInfo {
+     NetClientDriver type;
+@@ -94,6 +95,7 @@ typedef struct NetClientInfo {
+     SetSteeringEBPF *set_steering_ebpf;
+     NetCheckPeerType *check_peer_type;
+     IsVHostUser *is_vhost_user;
++    GetVHostNet *get_vhost_net;
+ } NetClientInfo;
+ 
+ struct NetClientState {
+diff --git a/include/net/tap.h b/include/net/tap.h
+index 5d585515f9e3..6f34f13eae44 100644
+--- a/include/net/tap.h
++++ b/include/net/tap.h
+@@ -33,7 +33,4 @@ int tap_disable(NetClientState *nc);
+ 
+ int tap_get_fd(NetClientState *nc);
+ 
+-struct vhost_net;
+-struct vhost_net *tap_get_vhost_net(NetClientState *nc);
+-
+ #endif /* QEMU_NET_TAP_H */
+diff --git a/include/net/vhost-user.h b/include/net/vhost-user.h
+index 35bf61970985..0b233a267345 100644
+--- a/include/net/vhost-user.h
++++ b/include/net/vhost-user.h
+@@ -12,7 +12,6 @@
+ #define VHOST_USER_H
+ 
+ struct vhost_net;
+-struct vhost_net *vhost_user_get_vhost_net(NetClientState *nc);
+ uint64_t vhost_user_get_acked_features(NetClientState *nc);
+ void vhost_user_save_acked_features(NetClientState *nc);
+ 
+diff --git a/include/net/vhost-vdpa.h b/include/net/vhost-vdpa.h
+index b81f9a6f2a0e..916ead3793d9 100644
+--- a/include/net/vhost-vdpa.h
++++ b/include/net/vhost-vdpa.h
+@@ -14,8 +14,6 @@
+ 
+ #define TYPE_VHOST_VDPA "vhost-vdpa"
+ 
+-struct vhost_net *vhost_vdpa_get_vhost_net(NetClientState *nc);
+-
+ extern const int vdpa_feature_bits[];
+ 
+ #endif /* VHOST_VDPA_H */
+diff --git a/net/tap-win32.c b/net/tap-win32.c
+index 671dee970f7a..38baf90e0b3f 100644
+--- a/net/tap-win32.c
++++ b/net/tap-win32.c
+@@ -704,11 +704,6 @@ static void tap_win32_send(void *opaque)
+     }
+ }
+ 
+-struct vhost_net *tap_get_vhost_net(NetClientState *nc)
+-{
+-    return NULL;
+-}
+-
+ static NetClientInfo net_tap_win32_info = {
+     .type = NET_CLIENT_DRIVER_TAP,
+     .size = sizeof(TAPState),
+diff --git a/net/tap.c b/net/tap.c
+index ae1c7e398321..4beba6d7a784 100644
+--- a/net/tap.c
++++ b/net/tap.c
+@@ -329,6 +329,18 @@ int tap_get_fd(NetClientState *nc)
+     return s->fd;
+ }
+ 
++/*
++ * tap_get_vhost_net() can return NULL if a tap net-device backend is
++ * created with 'vhost=off' option, 'vhostforce=off' or no vhost or
++ * vhostforce or vhostfd options at all. Please see net_init_tap_one().
++ */
++static VHostNetState *tap_get_vhost_net(NetClientState *nc)
++{
++    TAPState *s = DO_UPCAST(TAPState, nc, nc);
++    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
++    return s->vhost_net;
++}
++
+ /* fd support */
+ 
+ static NetClientInfo net_tap_info = {
+@@ -347,6 +359,7 @@ static NetClientInfo net_tap_info = {
+     .set_vnet_le = tap_set_vnet_le,
+     .set_vnet_be = tap_set_vnet_be,
+     .set_steering_ebpf = tap_set_steering_ebpf,
++    .get_vhost_net = tap_get_vhost_net,
+ };
+ 
+ static TAPState *net_tap_fd_init(NetClientState *peer,
+@@ -980,13 +993,6 @@ free_fail:
+     return 0;
+ }
+ 
+-VHostNetState *tap_get_vhost_net(NetClientState *nc)
+-{
+-    TAPState *s = DO_UPCAST(TAPState, nc, nc);
+-    assert(nc->info->type == NET_CLIENT_DRIVER_TAP);
+-    return s->vhost_net;
+-}
+-
+ int tap_enable(NetClientState *nc)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+diff --git a/net/vhost-user.c b/net/vhost-user.c
+index 4b4d02c56740..2caa7e56f7a0 100644
+--- a/net/vhost-user.c
++++ b/net/vhost-user.c
+@@ -32,7 +32,7 @@ typedef struct NetVhostUserState {
+     bool started;
+ } NetVhostUserState;
+ 
+-VHostNetState *vhost_user_get_vhost_net(NetClientState *nc)
++static struct vhost_net *vhost_user_get_vhost_net(NetClientState *nc)
+ {
+     NetVhostUserState *s = DO_UPCAST(NetVhostUserState, nc, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_USER);
+@@ -239,6 +239,7 @@ static NetClientInfo net_vhost_user_info = {
+         .set_vnet_le = vhost_user_set_vnet_endianness,
+         .check_peer_type = vhost_user_check_peer_type,
+         .is_vhost_user = vhost_user_is_vhost_user,
++        .get_vhost_net = vhost_user_get_vhost_net,
+ };
+ 
+ static gboolean net_vhost_user_watch(void *do_not_use, GIOCondition cond,
+diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
+index 58d738945dbc..0b86c917ed68 100644
+--- a/net/vhost-vdpa.c
++++ b/net/vhost-vdpa.c
+@@ -132,7 +132,7 @@ static const uint64_t vdpa_svq_device_features =
+ 
+ #define VHOST_VDPA_NET_CVQ_ASID 1
+ 
+-VHostNetState *vhost_vdpa_get_vhost_net(NetClientState *nc)
++static struct vhost_net *vhost_vdpa_get_vhost_net(NetClientState *nc)
+ {
+     VhostVDPAState *s = DO_UPCAST(VhostVDPAState, nc, nc);
+     assert(nc->info->type == NET_CLIENT_DRIVER_VHOST_VDPA);
+@@ -432,6 +432,7 @@ static NetClientInfo net_vhost_vdpa_info = {
+         .set_vnet_le = vhost_vdpa_set_vnet_le,
+         .check_peer_type = vhost_vdpa_check_peer_type,
+         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
++        .get_vhost_net = vhost_vdpa_get_vhost_net,
+ };
+ 
+ static int64_t vhost_vdpa_get_vring_group(int device_fd, unsigned vq_index,
+@@ -1287,6 +1288,7 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
+     .has_ufo = vhost_vdpa_has_ufo,
+     .check_peer_type = vhost_vdpa_check_peer_type,
+     .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
++    .get_vhost_net = vhost_vdpa_get_vhost_net,
+ };
+ 
+ /*
+-- 
+2.49.0
 
 
