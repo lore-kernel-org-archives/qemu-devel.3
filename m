@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A0FC71136
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 01:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 07F8EC71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 01:50:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRhqX-0003Hs-Bk; Tue, 17 Jun 2025 21:44:13 -0400
+	id 1uRhvi-0004YV-Rb; Tue, 17 Jun 2025 21:49:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uRhqV-0003Gs-6u
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 21:44:11 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+ id 1uRhvg-0004Xt-8J
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 21:49:32 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uRhqT-0003cu-DJ
- for qemu-devel@nongnu.org; Tue, 17 Jun 2025 21:44:10 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-3137c2021a0so4737818a91.3
- for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 18:44:08 -0700 (PDT)
+ id 1uRhve-0004Db-L2
+ for qemu-devel@nongnu.org; Tue, 17 Jun 2025 21:49:31 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-879d2e419b9so6152136a12.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Jun 2025 18:49:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750211047; x=1750815847; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750211368; x=1750816168; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RX+3aU0eDanYb6DkwNX/vUApo5z9SdgWf84aaYJNi0E=;
- b=scFKVGWzDSfFRwPVm2vDRBJAlyjNMUPUJGprTotuEkShXe3a2AEucX49MR13An9Zey
- vgCGvsMkDAFAG2POx0cXWD/EAQwZZ1Nuw+JIgXy4wpD7YE7gOsp9J9FwONVUU2ME532u
- N3saX1dA9RYA4WOemUPVNG8ctpDlPq0iV1E6bLfDK46/lfATuA6J3AY3UxeXP/Uc78b1
- oWn5GFepcCkJNhvUi+/YN3krgpsgULz5YadlJYcml6yrQE3j1j0WMOtuQMXKCwOPLyd+
- MNz5/cFgrYXS61VeFwRieXSY4zOZeA9B25F8SDFBlLX+0QVePcH89UP6lJf8RqhE/DJk
- n3TQ==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=SD2yc9qKLTutFsyX3Z0eImcycxX62NNrTkBqJJGc4Hw=;
+ b=aGgl0D1yi3kCf8g+0b73tiqt97zDYFOQwcTJL6YYWKBQVqTzYZtqqiEdC1D9Ou4OdX
+ mKENRkM6p4a7nRkpi0YBr60C+LG3CYMum8P3MJws/Ww9ykDWulDzVsL0HEmIawHG2cJa
+ MQWK2t00w0FzVXLGcNWr0f+UU+VXd1cwuiMNol+MbsgplPEkxXlB+DcOST5S3BVQeGYj
+ FqiQigPcBM2g8duyocVz5l6CWMfKy3/41t+VGYoBQqVoTawEU1ga/PO1WCdQOZ5XzIwT
+ qY6XruydD3YSxA4i1RlXsCfFnDmyGQ/iKC2AhyUXIm1jO7Q8gD68uBTPOFGaJcloC7FM
+ Bq1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750211047; x=1750815847;
+ d=1e100.net; s=20230601; t=1750211368; x=1750816168;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=RX+3aU0eDanYb6DkwNX/vUApo5z9SdgWf84aaYJNi0E=;
- b=u6dxbq8VjD/8NbuSm+hOYV+bezge08mqi62zuAZUTfORmAocOXyMxa8KfqWlLZym32
- E4Zt250niPtZ3Bjc0F/zN6LSak7rZftOXINB2NUd8IpcOGhWXWX+0TDtGw28SQPiQC3v
- FTschprwSsYdNeWWz1H3bZFeiLKNSL5H2WeWPBXSaZCyta0W9GDxgrsh5dS6PtdByQQL
- IOQ1RVI1E5id0crDyj/ccoLrr/y5AvwBy1B1YyVdjDlDUKNltvDbyTnsw9sajAjoQdrT
- 1eJVdgUvgyWlZ2MCkav/tK+0xFY2IvSV2uf9Er7yjD55sY9KUn962DpwqORjv8oW4qSi
- Ucfg==
-X-Gm-Message-State: AOJu0YwkSRsJKIqBsmTdclw9/DE2rpkBX2XUlkVtmMYahbHkeDfMpNzD
- 3K5RPm+7lLjLGQ5508QhX27xVtQaTpQm6HTiyuCWbdoUQPOVBEDOb/yPxZz77aZU69U=
-X-Gm-Gg: ASbGncvNJxRuBL4eSLKpdDScFm5aEAIM7qFeRszc+Xfg2y+39h7UIEXfj6h71MH5a3c
- SbuKohGHB4zV5zQlWvJ+kI94vq/j2zuR/tcblggWmRK0oC0EmiE2QiYdQqvbgXptg7qlpvE6JyU
- X6qtazGg+wYnfXogqheaIuYGd5NHi+jgM25bdjTjPNurgdEGPHnNZWXZm90ktkXPFUZmoYiXjeP
- 4z0Fb3v2w+diThtSi6eag0twut8bY4QvdcB1uQQtgJTVR4hSFDx7RAmV/OZCDCQXrKw03Fl8kxs
- Aq4VQjI0C96DKo7k1FGS/mpjlqcwhKQ4Jw6KhowSP+nqR5jFw9XorVKIkRxDqvLluwAU1VtBsUa
- IgqYYV1pC0js2q8e1nGxz1OcJ0toH
-X-Google-Smtp-Source: AGHT+IHa+JxqB/74F+0abVRq/7zOyVn02Su5irAmFw7yQeTOFzyMl53KoWsxA6EG3p5DptuRicJMjg==
-X-Received: by 2002:a17:90b:1e07:b0:311:f99e:7f4e with SMTP id
- 98e67ed59e1d1-313f1cae835mr26944248a91.16.1750211047370; 
- Tue, 17 Jun 2025 18:44:07 -0700 (PDT)
+ bh=SD2yc9qKLTutFsyX3Z0eImcycxX62NNrTkBqJJGc4Hw=;
+ b=o7lXhvx6nWY1G56TPojwM4rg26gjoYTu/mRUAgJuhWf9aPqmw9IimVGbx0xUzhG5gH
+ P7PFKyisvMv6BvNbH1Kh66ukofEhgCQ/XbYijMzhHZZOMW9jO5Fdg59AXpd+YZS4pE3v
+ QH9gC7jkohGv9wFHjOWPMCCJpwxxnLh0QyHMNmiYhMnMFjPjNDO8YIVGd2tNnquV+Etx
+ 6CgKHgAE50yvCHD5ls9ElBuDSCJkNXMg528W2bKsyAN2/ujwheCCPDIxfuiaKS2qJln0
+ D1JotCeOKCJgS4IQbE+Uj+U2ccxFVvnozi33Tz2fNUki0dEZ9hcBUeBEu4T6W3AJtUzD
+ nVVA==
+X-Gm-Message-State: AOJu0YyWh35FKpu50zjtRwO8zk7I7RfgNL9PzgMfQZlMiLufRC5Ss+oZ
+ APa+gozPjf4JDe4pX0KvGMofHkPz5vGGZbb99tskughniZnzAEg6O9E4jvTFC/Fsaa8B1jivBHP
+ wCr9FVpY=
+X-Gm-Gg: ASbGncs2t3CljMZol41nJYqfA5ceMXC92PIQZaOEZxNSqBh07IvMC+zS/hP6Av1h+1+
+ LIptZigQGJuJzUe421qLOoYB7MI05tKQYmwkvxTz0VvfGQ0r70Q1yC/tC09hs+PkKqvoHFoUPqO
+ eS6ZH1KXh2fvQ2+QURJbiLUziSZeC8l9fEIiZeWzlVxBGCDGMQWW9e9VFLroyUFN7PUkEtLXtlp
+ 6/FIf8cGmScnjYne17mpZgzPuLqqZ0MponMougxJhZT2EakdENb9u6cjhnmtV8IsyHB0WrT8SyF
+ rTPV18p4Cm5x+6bcm8/SqBYnD9ouGOCCXLBTHLBOeNM36hgRdI30jImONlFt/37WfEv2wz3HgSL
+ 4txu2SmDLwm0ZP1fey545rDazOCgr
+X-Google-Smtp-Source: AGHT+IHEJj8xpKyLAbzpSh5+VIfmEvpF5kRn9DaKkurPiijp5zYl+zT7NKQRWuqZ7hDRaNWeUsquNg==
+X-Received: by 2002:a05:6a21:2d04:b0:215:d14d:6626 with SMTP id
+ adf61e73a8af0-21fbd525b89mr21348303637.12.1750211368544; 
+ Tue, 17 Jun 2025 18:49:28 -0700 (PDT)
 Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2365e0cffe6sm87274865ad.245.2025.06.17.18.44.06
+ 41be03b00d2f7-b319dc80726sm5537990a12.68.2025.06.17.18.49.28
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Jun 2025 18:44:06 -0700 (PDT)
-Message-ID: <3e1e6a7f-18d4-4667-b1a7-6857bdc3de66@linaro.org>
-Date: Tue, 17 Jun 2025 18:44:05 -0700
+ Tue, 17 Jun 2025 18:49:28 -0700 (PDT)
+Message-ID: <b8053a21-9c7e-4e45-9b37-5ba74f3802c9@linaro.org>
+Date: Tue, 17 Jun 2025 18:49:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: QEMU emulating ARM Neoverse N1 unexpectectly emulates `retaa`
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- root@wjsota.com, qemu-discuss@nongnu.org
-Cc: QEMU Developers <qemu-devel@nongnu.org>, qemu-arm <qemu-arm@nongnu.org>
-References: <1235E663-AD2F-499E-8CF9-16E54A1C01DD@wjsota.com>
- <7d1ddf7e-b16c-4820-958c-0d03bf8479d1@linaro.org>
+Subject: Re: [PATCH] target/arm: Make RETA[AB] UNDEF when pauth is not
+ implemented
+To: qemu-devel@nongnu.org
+References: <20250616171549.59190-1-root@wjsota.com>
 Content-Language: en-US
 From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <7d1ddf7e-b16c-4820-958c-0d03bf8479d1@linaro.org>
+In-Reply-To: <20250616171549.59190-1-root@wjsota.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=richard.henderson@linaro.org; helo=mail-pj1-x1036.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,57 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/15/25 22:09, Philippe Mathieu-Daudé wrote:
-> Hi Solomon,
+On 6/16/25 10:15, Solomon Tan wrote:
+> According to the Arm A-profile A64 Instruction Set Architecture,
+> RETA[AB] should be decoded as UNDEF if the pauth feature is not
+> implemented.
 > 
-> Cc'ing the qemu-arm@ list.
-> 
-> On 14/6/25 06:51, root@wjsota.com wrote:
->> Hi!
->>
->> Is `qemu-aarch64 -cpu neoverse-n1` supposed to emulate the `retaa` instruction?
->>
->> I have a binary called `main_pac` compiled from https://learn.arm.com/learning-paths/ 
->> servers-and-cloud-computing/pac/example/ .
->>
->> The compiling command is `aarch64-linux-gnu-gcc -march=armv8.5-a -fPIC -pedantic -Wall - 
->> Wextra -ggdb3 -O0 -mbranch-protection=standard -fno-stack-protector -fPIE -static main.c 
->> -o main_pac`. The binary includes the `paciasp` and `retaa` instructions associated with 
->> ARM PAC.
->>
->> ```
->> (gdb) disas main
->> Dump of assembler code for function main:
->>     0x0000000000400858 <+0>:    paciasp
->>     0x000000000040085c <+4>:    stp    x29, x30, [sp, #-32]!
->>     […]
->>     0x0000000000400898 <+64>:    ldp    x29, x30, [sp], #32
->>     0x000000000040089c <+68>:    retaa
->> End of assembler dump.
->> (gdb) quit
->> ```
->>
->> When emulated using `qemu-aarch64 -cpu neoverse-n1` , the program completes without issues.
->> ```
->> user@dell-op7020:~/learning/arm_learning_path_pac$ qemu-aarch64 -cpu neoverse-n1 
->> main_pac test
->> Hello World!
->> user@dell-op7020:~/learning/arm_learning_path_pac$
->> ```
->>
->> This is the case for two versions I tested:
->> - v9.2.1 (Debian 1:9.2.1+ds-1ubuntu5)
->> - v10.0.50 (v10.0.0-1610-gd9ce74873a)
->>
->>
->> The expected behavior is for an Illegal Instruction exception to occur. Citing the Arm 
->> A-profile A64 Instruction Set Architect Version 2025-03, the `retaa` instruction should 
->> return an Undefined Instruction error when the PAC feature is not implemented.
->> ```
->> if !IsFeatureImplemented(FEAT_PAuth) then EndOfDecode(Decode_UNDEF);
+> Fixes: 0ebbe9021254f ("target/arm: Convert BRA[AB]Z, BLR[AB]Z, RETA[AB] to decodetree")
+> Signed-off-by: Solomon Tan<root@wjsota.com>
+> ---
+>   target/arm/tcg/translate-a64.c | 4 ++++
+>   1 file changed, 4 insertions(+)
 
-Yes, trans_RETA() is missing the pauth check.
-
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 
 r~
 
