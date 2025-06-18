@@ -4,121 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CB75C7115C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 07:09:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7AF5C71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 07:26:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRmv1-0001E3-18; Wed, 18 Jun 2025 03:09:11 -0400
+	id 1uRnAj-0003cZ-A3; Wed, 18 Jun 2025 03:25:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRmux-000183-FJ
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:09:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1uRmuv-0003F6-Ke
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:09:07 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750230544;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=X4s7PqshNPkXUBnc1XC76Zg7SlnAPmhgqvmWbSKBBso=;
- b=H3YPcl1ObfZSn/7e+ac+GpZJkl/C2AYG0D72siOvN1MF2B9qUZiz/emhm1QZc1gwP6DVKQ
- jxZ2dbUy1QRYgNHlOK749NHcR7dI6p+3IPNJ7v+1NMzmWtPvb+6mOzWWYrZOAlXkDuiGFM
- BGePjIxxjDdL3OXkcKLOAh5l9qUd0ng=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-DTt4fokSMgi2PxqSlRarJQ-1; Wed, 18 Jun 2025 03:09:02 -0400
-X-MC-Unique: DTt4fokSMgi2PxqSlRarJQ-1
-X-Mimecast-MFC-AGG-ID: DTt4fokSMgi2PxqSlRarJQ_1750230542
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-45311704cdbso33802725e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 00:09:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
+ id 1uRnAh-0003cM-7e
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:25:23 -0400
+Received: from mail-wr1-x444.google.com ([2a00:1450:4864:20::444])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
+ id 1uRnAd-0002TL-6F
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 03:25:22 -0400
+Received: by mail-wr1-x444.google.com with SMTP id
+ ffacd0b85a97d-3a4f72cba73so247130f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 00:25:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1750231516; x=1750836316; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=1Sm0cmSYbg/JJyBuaEjGFwDjbHuaiEgtTZwZeawIrhw=;
+ b=DaYC/pKJg8GmMFVSPhsJJ3NWcyv4F/2np9pzGiHGsCoNVcAJulmqkzx2OAKTblHbky
+ 5BrHKtpejnpOR9z3jBpRlqJ+X5Aatbru3lfgQVEpHpiaXT/06SwSfejWMFqtEH33PXZg
+ FAplzcYYeBVvWBGGx8iXOGOtoHKv55zBSdXrUBCqocbnpH+Nzx1I6qiThKep+8X5dnHF
+ UUxYR7DuOgGf3Hipf49duq7SN6Ko1+XdUIGxwoEsN/ALOyUyjdZIMw6DjJD8pHClZ8CI
+ IuBHkzbT4Jhe4BNTI187uieK9TRdd5KAaie2ayJiXmKU6AWXrM2rdVoe0m+TN2Pm6O+Q
+ dR4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750230541; x=1750835341;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20230601; t=1750231516; x=1750836316;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=X4s7PqshNPkXUBnc1XC76Zg7SlnAPmhgqvmWbSKBBso=;
- b=YPt/M9IvBh8Hn2xQrYqEy3TaELPyZRVYijti1uybV/IpOvbrqzmcyVQzG3dnWJ8/f1
- 7aaAJP/Lu+woEaGWX5c9lm6jiZ5FuWaY24XS4pWd+RoPOI3HKDnm/O+9l5OCy5w24Vym
- pJYr3YOv/Ja9BEsHe5j+UxHsPOuX/HPWIVY9BbIJYryYU3ffQ+1xiTKMYD9AlrmPxeLu
- dS4TwCx8sXd3oAp/5oUawUN1spbqvpJebB/4TetRMKPcoWRibpKqeE+ODLQJdQdfFhht
- aFC5zdmCfjXr16G//aKz32BtES3OFyeC86STZF1OdyyG6MZ3B6b39BFnUjUpXavlJkxP
- yP5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUp4wB6aJdOFTNR9bVwe6GDYzOxbz0LhRLf6pIe+Q9Hg1hqWu3dNyO4AXtDG+7yfkiTOdbk4npgDJdk@nongnu.org
-X-Gm-Message-State: AOJu0YxHQWnbTaXcVXCyNrlC/frll2N7CnCwDbv+cl/tClFAYWqXIuWm
- A5EdnEtnj2ayN5xwY8Oz9ArNmnWD4CBryaMGhJG+UKeguvmFKJPta+MkwjR5XVyempjIHFpokWC
- Kn4NEbBW0Ckv717kXSMVd3jBewdWJrYd2EpkI4z+4v2dXG7Atso45VDgq
-X-Gm-Gg: ASbGncvNvSKBnNiXl0ttFBZhK0luKMmll4HdxMwIpS0j8nViU34vfMkon2n0ZyMcdxY
- AajhqFCd5YTpoytj4vFMa62IzW8Z1pnphESfXe1us5Ow2xEBh4j+N5G8dvmCO8cuFWWMOvMhwB3
- jKO40eLfSlfyXZ76nFHi6GTLNBuKqZK/PGdvB11noCVAHUlGC6C5LYzIT/lCuj2HxY8Mbq+R9lD
- uKpILb5EQT9spuIazg7Lfnmb/RKe5twF6j8g866o1owmWTAR+hmFdbHf2OWnKZugtentM00mTx2
- XzxmEjhYXP12alESjnLjWZagHKTgbAPZ16C7FQxu9LDc1CfI+HMwEChxxZvaT1+H3+Xikw==
-X-Received: by 2002:a05:600c:5026:b0:43d:9f2:6274 with SMTP id
- 5b1f17b1804b1-4533ca7790fmr160329025e9.14.1750230541593; 
- Wed, 18 Jun 2025 00:09:01 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGuPX/dE2QXjOdsx6lR8LeRnxSeXRTsF3QO+FMu6IbzQJAXwo5UNZhK1EHVbOOh2xlZQRKILg==
-X-Received: by 2002:a05:600c:5026:b0:43d:9f2:6274 with SMTP id
- 5b1f17b1804b1-4533ca7790fmr160328555e9.14.1750230541150; 
- Wed, 18 Jun 2025 00:09:01 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4532e16a097sm203442985e9.33.2025.06.18.00.08.59
+ bh=1Sm0cmSYbg/JJyBuaEjGFwDjbHuaiEgtTZwZeawIrhw=;
+ b=Pg2WMEFZMObFOfUbI0OQGoDyylC1p7XjWU/Z1etdH79lLU+ZAtxt9wgvmfh9RuMIfu
+ smaJ3AcqSnPs8ukM0LOv1j4vRVIR25A4MnzGLqBYkbwx0Oe1jDLYYtwK2gfPqH0k49t7
+ tePuv9ToqmsN7SRoTPo2YL0STGtdedL5Z8UHvagxY5WQ3OFF9Md83mz84EaGacuvAWVP
+ o6vHrEs0yHtKH2lbB+M1PzobcqEfFMcrnyTK8Z9KHhktnuootwxtkBV9QaHaLiuL1jDC
+ FiuXRyQhhymArw/dhyuoCl++0GxMM/DvnWaaQ/E4krqov4viLLclgFv7qP/E1bB79S7i
+ zGrg==
+X-Gm-Message-State: AOJu0Yz0jHZuIb1XuG2zznIKVN5RIC5fPh1xaEs2bOIFObZYBgoUXATM
+ 1EKNm6i68hB4tF5MX4iGZXkFi+sT/mRh1b8NTS9jUDUkVD8mkjbkTonCal8eR94MxC4wFDTAH7l
+ Py5UOWOGh8g==
+X-Gm-Gg: ASbGnctwSU1D0HiqLPzhx/lumYkrvycpEmD8U2ImcYAWZ2ZERUbPKy4Oof+ESYJaFGb
+ iwwkwIUSAUu5fNUgYc8LVto8TQY8NYq8RIyCki56HAM9jOm3BFCWw/Lentzxo7cPb9mXbymWr1E
+ P73/uvEXmBSVJrzXTz6a0sOXYHgJ/sBHxzX68BkUXeSUB9hLMrH3T8TTMzx5SAxyDlKTYLkge7E
+ Zb/MOf+P4e33LwWId4AD0KT9h1bca9c28UqoxA2rdyGWM4+hd1FoXzPdmpXHVYmK6Iyng6liEVB
+ W0LLYm4X9sUQTBck1IE5Ij3jyNMSxlWhfIVHWfQdGQ/x7Rdvqj7nHl87jRD+kg==
+X-Google-Smtp-Source: AGHT+IGYm0rxg7L1Nx+sJXY53OBl6vCK+5oXYAFH8UZMMe6iQC/BGGk9XdyxtAe0VH7WJq0RX7/KdQ==
+X-Received: by 2002:a05:6000:2dc2:b0:3a4:da0e:517a with SMTP id
+ ffacd0b85a97d-3a58e2656d0mr1203358f8f.23.1750231515699; 
+ Wed, 18 Jun 2025 00:25:15 -0700 (PDT)
+Received: from localhost ([91.140.111.118])
+ by smtp.gmail.com with UTF8SMTPSA id
+ 41be03b00d2f7-b2fe1639fadsm8603881a12.11.2025.06.18.00.25.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Jun 2025 00:09:00 -0700 (PDT)
-Message-ID: <b16b1a54-ff27-4b14-87e5-1123ec87d5c7@redhat.com>
-Date: Wed, 18 Jun 2025 09:08:56 +0200
+ Wed, 18 Jun 2025 00:25:14 -0700 (PDT)
+From: Vasilis Liaskovitis <vliaskovitis@suse.com>
+To: qemu-devel@nongnu.org,
+	qemu-riscv@nongnu.org
+Cc: dbarboza@ventanamicro.com, ajones@ventanamicro.com,
+ alistair.francis@wdc.com, philmd@linaro.org,
+ Vasilis Liaskovitis <vliaskovitis@suse.com>
+Subject: [PATCH] target/riscv: Add a property to set vill bit on reserved
+ usage of vsetvli instruction
+Date: Wed, 18 Jun 2025 09:25:00 +0200
+Message-ID: <20250618072500.8469-1-vliaskovitis@suse.com>
+X-Mailer: git-send-email 2.46.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 02/15] intel_iommu: Optimize context entry cache
- utilization
-Content-Language: en-US
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "alex.williamson@redhat.com" <alex.williamson@redhat.com>,
- "clg@redhat.com" <clg@redhat.com>, "mst@redhat.com" <mst@redhat.com>,
- "jasowang@redhat.com" <jasowang@redhat.com>,
- "peterx@redhat.com" <peterx@redhat.com>,
- "ddutile@redhat.com" <ddutile@redhat.com>, "jgg@nvidia.com"
- <jgg@nvidia.com>, "nicolinc@nvidia.com" <nicolinc@nvidia.com>,
- "shameerali.kolothum.thodi@huawei.com"
- <shameerali.kolothum.thodi@huawei.com>,
- "joao.m.martins@oracle.com" <joao.m.martins@oracle.com>,
- "clement.mathieu--drif@eviden.com" <clement.mathieu--drif@eviden.com>,
- "Tian, Kevin" <kevin.tian@intel.com>, "Liu, Yi L" <yi.l.liu@intel.com>,
- "Peng, Chao P" <chao.p.peng@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-References: <20250606100416.346132-1-zhenzhong.duan@intel.com>
- <20250606100416.346132-3-zhenzhong.duan@intel.com>
- <e75d6344-9858-400a-9c73-1359789e15a9@redhat.com>
- <IA3PR11MB91363AC7DBFB6988CA1FAD229272A@IA3PR11MB9136.namprd11.prod.outlook.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <IA3PR11MB91363AC7DBFB6988CA1FAD229272A@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.89,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::444;
+ envelope-from=vliaskovitis@suse.com; helo=mail-wr1-x444.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,76 +97,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Usage of vsetvli instruction is reserved if VLMAX is changed when vsetvli rs1
+and rd arguments are x0.
 
+In this case, if the new property is true, only the vill bit will be set.
 
-On 6/18/25 4:10 AM, Duan, Zhenzhong wrote:
-> Hi Eric,
->
->> -----Original Message-----
->> From: Eric Auger <eric.auger@redhat.com>
->> Subject: Re: [PATCH v1 02/15] intel_iommu: Optimize context entry cache
->> utilization
->>
->> Hi Zhenzhong,
->>
->> On 6/6/25 12:04 PM, Zhenzhong Duan wrote:
->>> There are many call sites referencing context entry by calling
->>> vtd_dev_to_context_entry() which will traverse the DMAR table.
->>>
->>> In most cases we can use cached context entry in vtd_as->context_cache_entry
->>> except when its entry is stale. Currently only global and domain context
->>> invalidation stale it.
->>>
->>> So introduce a helper function vtd_as_to_context_entry() to fetch from cache
->>> before trying with vtd_dev_to_context_entry().
->>>
->>> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
->>> ---
->>>  hw/i386/intel_iommu.c | 36 +++++++++++++++++++++++-------------
->>>  1 file changed, 23 insertions(+), 13 deletions(-)
->>>
->>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->>> index f0b1f90eff..a2f3250724 100644
->>> --- a/hw/i386/intel_iommu.c
->>> +++ b/hw/i386/intel_iommu.c
->>> @@ -1597,6 +1597,22 @@ static int
->> vtd_dev_to_context_entry(IntelIOMMUState *s, uint8_t bus_num,
->>>      return 0;
->>>  }
->>>
->>> +static int vtd_as_to_context_entry(VTDAddressSpace *vtd_as,
->> VTDContextEntry *ce)
->>> +{
->>> +    IntelIOMMUState *s = vtd_as->iommu_state;
->>> +    uint8_t bus_num = pci_bus_num(vtd_as->bus);
->>> +    uint8_t devfn = vtd_as->devfn;
->>> +    VTDContextCacheEntry *cc_entry = &vtd_as->context_cache_entry;
->>> +
->>> +    /* Try to fetch context-entry from cache first */
->>> +    if (cc_entry->context_cache_gen == s->context_cache_gen) {
->>> +        *ce = cc_entry->context_entry;
->>> +        return 0;
->>> +    } else {
->>> +        return vtd_dev_to_context_entry(s, bus_num, devfn, ce);
->>> +    }
->>> +}
->>> +
->> While the patch looks good to me can't you use the helper also in
->> vtd_do_iommu_translate()?
->> See " /* Try to fetch context-entry from cache first */"
-> It can, but it finally calls into vtd_dev_to_context_entry() so we can call vtd_dev_to_context_entry() directly.
-> I will drop this patch following Yi's suggestion.
-OK
+See https://github.com/riscv/riscv-isa-manual/blob/main/src/v-st-ext.adoc#avl-encoding
+According to the spec, the above use cases are reserved, and
+"Implementations may set vill in either case."
 
-Cheers
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2422
+Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
+---
+ target/riscv/cpu.c                      |  1 +
+ target/riscv/cpu_cfg_fields.h.inc       |  1 +
+ target/riscv/helper.h                   |  2 +-
+ target/riscv/insn_trans/trans_rvv.c.inc |  4 ++--
+ target/riscv/vector_helper.c            | 22 ++++++++++++----------
+ 5 files changed, 17 insertions(+), 13 deletions(-)
 
-Eric
->
-> Thanks
-> Zhenzhong
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 629ac37501..1c29ed3b2b 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -2595,6 +2595,7 @@ static const Property riscv_cpu_properties[] = {
+     DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
+     DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
++    DEFINE_PROP_BOOL("rvv_vsetvl_x0_vill", RISCVCPU, cfg.rvv_vsetvl_x0_vill, false),
+ 
+     /*
+      * write_misa() is marked as experimental for now so mark
+diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+index 59f134a419..9c78a797cf 100644
+--- a/target/riscv/cpu_cfg_fields.h.inc
++++ b/target/riscv/cpu_cfg_fields.h.inc
+@@ -114,6 +114,7 @@ BOOL_FIELD(ext_supm)
+ BOOL_FIELD(rvv_ta_all_1s)
+ BOOL_FIELD(rvv_ma_all_1s)
+ BOOL_FIELD(rvv_vl_half_avl)
++BOOL_FIELD(rvv_vsetvl_x0_vill)
+ /* Named features  */
+ BOOL_FIELD(ext_svade)
+ BOOL_FIELD(ext_zic64b)
+diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+index 85d73e492d..f712b1c368 100644
+--- a/target/riscv/helper.h
++++ b/target/riscv/helper.h
+@@ -159,7 +159,7 @@ DEF_HELPER_FLAGS_3(hyp_hsv_d, TCG_CALL_NO_WG, void, env, tl, tl)
+ #endif
+ 
+ /* Vector functions */
+-DEF_HELPER_3(vsetvl, tl, env, tl, tl)
++DEF_HELPER_4(vsetvl, tl, env, tl, tl, tl)
+ DEF_HELPER_5(vle8_v, void, ptr, ptr, tl, env, i32)
+ DEF_HELPER_5(vle16_v, void, ptr, ptr, tl, env, i32)
+ DEF_HELPER_5(vle32_v, void, ptr, ptr, tl, env, i32)
+diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+index 2b6077ac06..87071c5d62 100644
+--- a/target/riscv/insn_trans/trans_rvv.c.inc
++++ b/target/riscv/insn_trans/trans_rvv.c.inc
+@@ -202,7 +202,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+         s1 = get_gpr(s, rs1, EXT_ZERO);
+     }
+ 
+-    gen_helper_vsetvl(dst, tcg_env, s1, s2);
++    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl((int) (rd == 0 && rs1 == 0)));
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+ 
+@@ -222,7 +222,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+ 
+     dst = dest_gpr(s, rd);
+ 
+-    gen_helper_vsetvl(dst, tcg_env, s1, s2);
++    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
+     gen_set_gpr(s, rd, dst);
+     finalize_rvv_inst(s);
+     gen_update_pc(s, s->cur_insn_len);
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index 5dc1c10012..2545d73cc1 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -35,7 +35,7 @@
+ #include <math.h>
+ 
+ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+-                            target_ulong s2)
++                            target_ulong s2, target_ulong x0)
+ {
+     int vlmax, vl;
+     RISCVCPU *cpu = env_archcpu(env);
+@@ -64,15 +64,6 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+         }
+     }
+ 
+-    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0)) {
+-        /* only set vill bit. */
+-        env->vill = 1;
+-        env->vtype = 0;
+-        env->vl = 0;
+-        env->vstart = 0;
+-        return 0;
+-    }
+-
+     /* lmul encoded as in DisasContext::lmul */
+     lmul = sextract32(FIELD_EX64(s2, VTYPE, VLMUL), 0, 3);
+     vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+@@ -83,6 +74,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+     } else {
+         vl = vlmax;
+     }
++
++    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0) ||
++        (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl))) {
++        /* only set vill bit. */
++        env->vill = 1;
++        env->vtype = 0;
++        env->vl = 0;
++        env->vstart = 0;
++        return 0;
++    }
++
+     env->vl = vl;
+     env->vtype = s2;
+     env->vstart = 0;
+-- 
+2.46.0
 
 
