@@ -4,101 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6F44C7115A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 18:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 776A9C7115B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 21:36:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRxfz-0002cn-VL; Wed, 18 Jun 2025 14:38:24 -0400
+	id 1uS0SH-0007DH-2Z; Wed, 18 Jun 2025 17:36:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uRxfy-0002bk-FI
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 14:38:22 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>) id 1uRxfn-00048L-Pr
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 14:38:21 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55IF0Zem008391;
- Wed, 18 Jun 2025 18:38:07 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=pfV9xdcLyeIY2wvFFqGHM4uLO1Hufp6WBz2LkdkmM
- zc=; b=UmnNSclyMixtwGKCluVXKshgJJ4Zjx8GdcynLsvUDBbLaIqhmSJDhjJZa
- F5xjTL9k49wy1DL6WrkZ/7wpY+c/e0TiHBlUwpQtAId45bTCR/ZbGyvTJM4NgxL4
- 529mz2WUiBsyb/etgQjoZvNpwErPaL7w/IT5kGA/ZPoM/PgjQ+Cjn5NGnpzOAoWv
- IPfLN/TF/cKGPD6jPM2OtcqeaM0Ka+1CTxAhnXKbfGIlB0oIVsWZlcxlmrdo8vE4
- abXhgBDOGlea5sMz1z4ZPAYFBts70AMwiEFhkhutSSdT6w/dwot888vbmbLwpd8B
- GBuRVnjLg/JbvGODOCEkUFpimrYLA==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 478ygngenh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Jun 2025 18:38:06 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55IFxqmr000752;
- Wed, 18 Jun 2025 18:38:06 GMT
-Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 479mdpa9sh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Jun 2025 18:38:06 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55IIc2XN19071460
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Jun 2025 18:38:02 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id F2EE020043;
- Wed, 18 Jun 2025 18:38:01 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AD30920040;
- Wed, 18 Jun 2025 18:38:01 +0000 (GMT)
-Received: from heavy.ibm.com (unknown [9.111.53.145])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 18 Jun 2025 18:38:01 +0000 (GMT)
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, Ilya Leoshkevich <iii@linux.ibm.com>
-Subject: [PATCH v2] tcg: Remove NULL arithmetic in tcg_malloc()
-Date: Wed, 18 Jun 2025 20:37:35 +0200
-Message-ID: <20250618183759.9197-1-iii@linux.ibm.com>
-X-Mailer: git-send-email 2.49.0
+ (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
+ id 1uS0SF-0007Cq-MN
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:36:23 -0400
+Received: from mail-lf1-x12d.google.com ([2a00:1450:4864:20::12d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <vliaskovitis@suse.com>)
+ id 1uS0SE-0002MV-4J
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 17:36:23 -0400
+Received: by mail-lf1-x12d.google.com with SMTP id
+ 2adb3069b0e04-553b544e7b4so63816e87.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 14:36:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=suse.com; s=google; t=1750282580; x=1750887380; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=My41l7o4NOrBRz0pujfqnxBCQaM/IGE7udFD8s5KHAg=;
+ b=O5fZ7Fo6psW8958sw9u2LCwsB5owhxerbCSqEddBsynGtypX8bYhfa1iBUDZrKsw2S
+ hXbqTx1qN1JXKuIqWWSeJkYqrdZb7J5owepuuYwV1xretbFQM/5XlcnkNRRxOdLEk30y
+ vJ66Db1/7QPi3Tz2bOpqJOR9Baf+D+OczhkUpdqYZY97lhF0BZK4keetF3TJmaOX9n2C
+ ixYKfjwbc3g2cVMhk4BGy2RCeih+8W6LlUJhVzQv8N5RwrzPnWKQ1qUVCnh9S5d5ctcx
+ hYeILLoaIDySsgQwILjjGqANGn9nDsEWaepZoAjyvK+vo8hHAMvWZgobgwYpzEQRjFcR
+ Bu2g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750282580; x=1750887380;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=My41l7o4NOrBRz0pujfqnxBCQaM/IGE7udFD8s5KHAg=;
+ b=IcljItsQQ74LfI8g3TNxhCbYGOQU+0lOYlu97mOHc5O4/+Nm7048KSTbkBpyDGEc/B
+ EJOSVVcsrZvO/OsDnkiyawyshMGA3OIXKzCup2squy1vV8uy3pIC5ehwVgL4AcU/wJLK
+ AlO5LLxQskUmyP+Tj1Uqw+mVTF592D+dXvXB2tENiC8vncpa8TjM1JhueBb9mgIr6pmA
+ 526EKYIP04EBVKcepmWa+5UeO8Hg2OaVv7VuV097MYCiMJAijjJ/XoCUzbGLbPphX+H6
+ zZ7x9N9g2N5igeUQI7fCIxYjXAfHbtVGjJ2h5VxTqxAv1DK8lmNYmfUQXQTeW4KtNGv0
+ LuUw==
+X-Gm-Message-State: AOJu0Yxk2wQw7f87RkSdQt9euZQ4asEtmONPjFChxNr1pn1u4rhyPmZY
+ qxu2kJPLqLfXp6fgVMZGmHX7iCsqq7RP8dEBaTM3y4vUEWVRJou509wPBi5ZAiW2g5hDEINXxCm
+ UHDuw48F2dhLeUgsBM4bIxOFJ/Kf6zD671if5vJkHMA==
+X-Gm-Gg: ASbGnctoRK5oThe8qoz3W4Ut74bROH3XzmLtabBdbpB8pCpsh8slfMePkAdZhgRpmHO
+ kFKv+fLOWtSO1GeVFFq8g5rB9u6z5UvKLxfnPlnY/g2kucso/tdpqo9xWkpksRJZd2UumoQZyzc
+ M5YSlT63Bz25JVWoQYmeCiHGa95RWxsJ0GeniTHFzxGb8lG8BhBiFkutd3yM6xROcN4pFCzEslV
+ ZsS
+X-Google-Smtp-Source: AGHT+IEvoOLvwUbZmK6mevQDEM0XnvNqlFSOT0INoPMZz+IBbkWEM4zX4utvBdH3Kdb7S6KS4usdf5+HBzcegvOD1TY=
+X-Received: by 2002:a05:6512:3194:b0:553:3322:49a6 with SMTP id
+ 2adb3069b0e04-553b6ecf5e8mr5033675e87.25.1750282580323; Wed, 18 Jun 2025
+ 14:36:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE4MDE1NiBTYWx0ZWRfX/mAmMGM4TSG1
- cKZj/RJFI7VCgtUvBDkIeT0bFxJxEdXZvHFSuZSmiMqrk8u4t95RvPCBI9+GWLQp4jx/snG+bfK
- gLgJ8eOjSsh7t1qfyrPSAuBh+2It+2E07/pG9Gt+CDl7dNbIFM9WStZMPY1XTSUQBng9PB7AsRS
- 6JRiwfCKXKA0+3+sjSiAnXUvpNOvec+lYuOODZ56jnrDn/5NakPiUlX9NY8SlaipEcv5iXURIkt
- Lf3UnL12ub+FXChWikgOx0h96sYZQpuU2gHa/sX/DantYGjvHU1YNtAhUW+ZDEfl9m5BPOMfaTS
- wb3tutHJGpYqBxNylMyqw5kxhNlN+IXjbPj5ENhzaTfOosxQuqs+CcjEgBgpodSR6tepuKxUIr9
- 2cREwkOu5QzAcVG4y+7eANga7lgJCH2V8SG1K5/5L0EnWGTmyhtQnQFRY2XDWUuBYTViixfa
-X-Authority-Analysis: v=2.4 cv=fYSty1QF c=1 sm=1 tr=0 ts=6853078e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=6IFa9wvqVegA:10 a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=w8pzoHujezk9OHy1q1AA:9
-X-Proofpoint-ORIG-GUID: GW2yovYye4OcUQrynxRbuPoKfvskcyCL
-X-Proofpoint-GUID: GW2yovYye4OcUQrynxRbuPoKfvskcyCL
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-18_05,2025-06-18_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 suspectscore=0
- spamscore=0 mlxlogscore=764 lowpriorityscore=0 adultscore=0 mlxscore=0
- impostorscore=0 bulkscore=0 phishscore=0 clxscore=1015 priorityscore=1501
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506180156
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=iii@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+References: <20250618072500.8469-1-vliaskovitis@suse.com>
+ <9812c3c3-c9e4-4b29-968b-9da99891489a@ventanamicro.com>
+In-Reply-To: <9812c3c3-c9e4-4b29-968b-9da99891489a@ventanamicro.com>
+From: Vasilis Liaskovitis <vliaskovitis@suse.com>
+Date: Wed, 18 Jun 2025 23:36:07 +0200
+X-Gm-Features: AX0GCFuA-8xc9rKZtZX1cICMRFsGxYcCGwdu1yxDYZV3e1wobHHP8F4KmhQMp-M
+Message-ID: <CAPnFoxfp1B4nBCLyFjf1RnEH5memnWoW5X-4xN3PpG4Ss_n0xQ@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Add a property to set vill bit on reserved
+ usage of vsetvli instruction
+To: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, ajones@ventanamicro.com, 
+ alistair.francis@wdc.com, philmd@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12d;
+ envelope-from=vliaskovitis@suse.com; helo=mail-lf1-x12d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
- SPF_PASS=-0.001, T_SPF_HELO_TEMPERROR=0.01 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,77 +97,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Clang 20.1.6 (Fedora 20.1.6-1.fc42)'s UBSAN complains:
+Hi,
 
-    qemu/include/tcg/tcg.h:715:19: runtime error: applying non-zero offset 64 to null pointer
+On Wed, Jun 18, 2025 at 4:22=E2=80=AFPM Daniel Henrique Barboza
+<dbarboza@ventanamicro.com> wrote:
+> > +    if ((sew > cpu->cfg.elen) || vill || (ediv !=3D 0) || (reserved !=
+=3D 0) ||
+> > +        (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl !=3D vl))) {
+>
+> In this particular case I don't mind replicating code. The first existing=
+ check can be
+> left untouched, exiting early before spending time calculating vlmax and =
+vl.
+>
+> We can then add the new check that depends on vl here, even if we end up =
+copying those
+> few "env->something =3D" lines again. If you really want to avoid code du=
+plication I
+> wouldn't oppose adding a 'vill' label and using 'goto' as an alternative =
+of duplicating
+> those 6 lines.
 
-The code uses NULL as pool's initial start and end, with the intention
-that `pool_cur + size > pool_end` should trigger the allocation.
-Unfortunately C prohibits adding non-zero to NULL, even if the result
-is not dereferenced.
+thank you for the review. I sent a v2 simply duplicating the code.
 
-Fix by using a dummy pool and change the allocation check to
-`pool_end - pool_cur < size`. Both are required, because creating
-pointers larger than one past the end of an array is prohibited,
-as well as subtracting NULL from NULL.
+thanks,
 
-Signed-off-by: Ilya Leoshkevich <iii@linux.ibm.com>
----
+- Vasilis
 
-v1: https://lore.kernel.org/qemu-devel/20250618103555.2020-1-iii@linux.ibm.com/
-v1 -> v2: Also change the allocation check.
-
- include/tcg/tcg.h | 9 ++++-----
- tcg/tcg.c         | 3 ++-
- 2 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/include/tcg/tcg.h b/include/tcg/tcg.h
-index 125323f153a..4190e8bdbc9 100644
---- a/include/tcg/tcg.h
-+++ b/include/tcg/tcg.h
-@@ -706,17 +706,16 @@ size_t tcg_nb_tbs(void);
- static inline void *tcg_malloc(int size)
- {
-     TCGContext *s = tcg_ctx;
--    uint8_t *ptr, *ptr_end;
- 
-     /* ??? This is a weak placeholder for minimum malloc alignment.  */
-     size = QEMU_ALIGN_UP(size, 8);
- 
--    ptr = s->pool_cur;
--    ptr_end = ptr + size;
--    if (unlikely(ptr_end > s->pool_end)) {
-+    if (unlikely(s->pool_end - s->pool_cur < size)) {
-         return tcg_malloc_internal(tcg_ctx, size);
-     } else {
--        s->pool_cur = ptr_end;
-+        uint8_t *ptr = s->pool_cur;
-+
-+        s->pool_cur += size;
-         return ptr;
-     }
- }
-diff --git a/tcg/tcg.c b/tcg/tcg.c
-index d714ae2889c..afcc7ec8849 100644
---- a/tcg/tcg.c
-+++ b/tcg/tcg.c
-@@ -1358,13 +1358,14 @@ void *tcg_malloc_internal(TCGContext *s, int size)
- 
- void tcg_pool_reset(TCGContext *s)
- {
-+    static uint8_t dummy_pool;
-     TCGPool *p, *t;
-     for (p = s->pool_first_large; p; p = t) {
-         t = p->next;
-         g_free(p);
-     }
-     s->pool_first_large = NULL;
--    s->pool_cur = s->pool_end = NULL;
-+    s->pool_cur = s->pool_end = &dummy_pool;
-     s->pool_current = NULL;
- }
- 
--- 
-2.49.0
-
+>
+>
+> Patch LGTM otherwise. Thanks,
+>
+>
+> Daniel
+>
+> > +        /* only set vill bit. */
+> > +        env->vill =3D 1;
+> > +        env->vtype =3D 0;
+> > +        env->vl =3D 0;
+> > +        env->vstart =3D 0;
+> > +        return 0;
+> > +    }
+> > +
+> >       env->vl =3D vl;
+> >       env->vtype =3D s2;
+> >       env->vstart =3D 0;
+>
 
