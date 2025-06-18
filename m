@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A49C71157
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 16:00:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552F6C71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 16:00:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRvAu-0003JL-Ud; Wed, 18 Jun 2025 11:58:10 -0400
+	id 1uRvAZ-0003FO-Ld; Wed, 18 Jun 2025 11:57:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uRvAs-0003Is-Fk
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:58:06 -0400
+ id 1uRvAR-0003Cu-Ks
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lvivier@redhat.com>)
- id 1uRvAq-0008Bi-QA
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:58:06 -0400
+ id 1uRvAP-00088o-UQ
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 11:57:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750262284;
+ s=mimecast20190719; t=1750262256;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=kActzQWZPLXpkEvMFVLwpdhw0QHrTWdRdX5HrsZdUvs=;
- b=UikcorhG9e3oisoMwUfZEeuJAi2HYHbxFVTa6rhtRpyHkW8AWwh16Gq2hQQqI9OtjqRN6g
- Mx+xM0hEs6s1EbpSGZS7Lg/+ifanPUVOBQ6F22ZhJCAnTayAELAZKvRV1FuoNlT46qTgjm
- KRERznQWb6+2ZMNxjgiGpVWe6SV0UzY=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=XMSAIGjZQm7v/llfYTxAtUXEfhFeRyEzAV9SpCA0wyQ=;
+ b=V+lwvK4G56pVi9XxnKeIpsaSpzozzBh2lPeY5FfaedZRMKwmIO33ROJ+cCQ5vWfzwIJtIW
+ kunm77IOP9eXWTtbfaEoyhPHgYQxoSEiLQTOci13qhmWx2Mkd5JiceJDpnH52ruIc+3Wsu
+ 93fr9F0HxpJVySWwBEaAIZ+mFfNCR2o=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-459-taopULcsNBK1duBOfqX_7w-1; Wed,
- 18 Jun 2025 11:58:00 -0400
-X-MC-Unique: taopULcsNBK1duBOfqX_7w-1
-X-Mimecast-MFC-AGG-ID: taopULcsNBK1duBOfqX_7w_1750262279
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-369-2u4Qr764NPqg_NzhgdvtOg-1; Wed,
+ 18 Jun 2025 11:57:34 -0400
+X-MC-Unique: 2u4Qr764NPqg_NzhgdvtOg-1
+X-Mimecast-MFC-AGG-ID: 2u4Qr764NPqg_NzhgdvtOg_1750262253
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A9AA01800C25; Wed, 18 Jun 2025 15:57:59 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7308F19560B5; Wed, 18 Jun 2025 15:57:33 +0000 (UTC)
 Received: from lenovo-t14s.redhat.com (unknown [10.44.33.123])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C095D180045B; Wed, 18 Jun 2025 15:57:55 +0000 (UTC)
+ id 991C9180045B; Wed, 18 Jun 2025 15:57:29 +0000 (UTC)
 From: Laurent Vivier <lvivier@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
@@ -58,10 +58,9 @@ Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  "Dr. David Alan Gilbert" <dave@treblig.org>,
  Eric Blake <eblake@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>
-Subject: [PATCH v2 08/10] net: Allow network backends to advertise max TX
- queue size
-Date: Wed, 18 Jun 2025 17:57:16 +0200
-Message-ID: <20250618155718.550968-9-lvivier@redhat.com>
+Subject: [PATCH v2 02/10] net: Define net_client_set_link()
+Date: Wed, 18 Jun 2025 17:57:10 +0200
+Message-ID: <20250618155718.550968-3-lvivier@redhat.com>
 In-Reply-To: <20250618155718.550968-1-lvivier@redhat.com>
 References: <20250618155718.550968-1-lvivier@redhat.com>
 MIME-Version: 1.0
@@ -92,106 +91,116 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This commit refactors how the maximum transmit queue size for
-virtio-net devices is determined, making the mechanism more generic
-and extensible.
+The code to set the link status is currently located in
+qmp_set_link(). This function identifies the device by name,
+searches for the corresponding NetClientState, and then updates
+the link status.
 
-Previously, virtio_net_max_tx_queue_size() contained hardcoded
-checks for specific network backend types (vhost-user and
-vhost-vdpa) to determine their supported maximum queue size. This
-created direct dependencies and would require modifications for
-every new backend that supports variable queue sizes.
+In some parts of the code, such as vhost-user.c, the
+NetClientState are already available. Calling qmp_set_link()
+from these locations leads to a redundant search for the clients.
 
-To improve flexibility, a new max_tx_queue_size field is added
-to the NetClientInfo structure. This allows each network backend
-to advertise its supported maximum transmit queue size directly.
-
-This change centralizes the configuration of transmit queue sizes,
-simplifying the virtio-net driver and making it easier to integrate
-new network backends with diverse queue size capabilities.
+This patch refactors the logic by introducing a new function,
+net_client_set_link(), which accepts a NetClientState array
+directly. qmp_set_link() is simplified to be a wrapper that
+performs the client search and then calls the new function.
+The vhost-user implementation is updated to use net_client_set_link()
+directly, thereby eliminating the unnecessary client lookup.
 
 Signed-off-by: Laurent Vivier <lvivier@redhat.com>
 ---
- hw/net/virtio-net.c | 16 ++--------------
- include/net/net.h   |  1 +
- net/vhost-user.c    |  1 +
- net/vhost-vdpa.c    |  2 ++
- 4 files changed, 6 insertions(+), 14 deletions(-)
+ include/net/net.h |  1 +
+ net/net.c         | 32 ++++++++++++++++++++------------
+ net/vhost-user.c  |  4 ++--
+ 3 files changed, 23 insertions(+), 14 deletions(-)
 
-diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 1367d2b581b1..2468621375e9 100644
---- a/hw/net/virtio-net.c
-+++ b/hw/net/virtio-net.c
-@@ -671,23 +671,11 @@ static int virtio_net_max_tx_queue_size(VirtIONet *n)
- {
-     NetClientState *peer = n->nic_conf.peers.ncs[0];
- 
--    /*
--     * Backends other than vhost-user or vhost-vdpa don't support max queue
--     * size.
--     */
--    if (!peer) {
-+    if (!peer || !peer->info->max_tx_queue_size) {
-         return VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE;
-     }
- 
--    if (qemu_is_vhost_user(peer)) {
--        return VIRTQUEUE_MAX_SIZE;
--    }
--
--    if (peer->info->type == NET_CLIENT_DRIVER_VHOST_VDPA) {
--        return VIRTQUEUE_MAX_SIZE;
--    }
--
--    return VIRTIO_NET_TX_QUEUE_DEFAULT_SIZE;
-+    return peer->info->max_tx_queue_size;
- }
- 
- static int peer_attach(VirtIONet *n, int index)
 diff --git a/include/net/net.h b/include/net/net.h
-index 179ffee5bd11..25dd29e07d7f 100644
+index cdd5b109b0d2..ac59b593ba48 100644
 --- a/include/net/net.h
 +++ b/include/net/net.h
-@@ -101,6 +101,7 @@ typedef struct NetClientInfo {
-     GetVHostNet *get_vhost_net;
-     GetAckedFeatures *get_acked_features;
-     SaveAcketFeatures *save_acked_features;
-+    int max_tx_queue_size;
- } NetClientInfo;
+@@ -298,6 +298,7 @@ void net_client_parse(QemuOptsList *opts_list, const char *optstr);
+ void show_netdevs(void);
+ void net_init_clients(void);
+ void net_check_clients(void);
++void net_client_set_link(NetClientState **ncs, int queues, bool up);
+ void net_cleanup(void);
+ void hmp_host_net_add(Monitor *mon, const QDict *qdict);
+ void hmp_host_net_remove(Monitor *mon, const QDict *qdict);
+diff --git a/net/net.c b/net/net.c
+index 39d6f28158a3..cfa2d8e95827 100644
+--- a/net/net.c
++++ b/net/net.c
+@@ -1601,21 +1601,11 @@ void colo_notify_filters_event(int event, Error **errp)
+     }
+ }
  
- struct NetClientState {
+-void qmp_set_link(const char *name, bool up, Error **errp)
++void net_client_set_link(NetClientState **ncs, int queues, bool up)
+ {
+-    NetClientState *ncs[MAX_QUEUE_NUM];
+     NetClientState *nc;
+-    int queues, i;
+-
+-    queues = qemu_find_net_clients_except(name, ncs,
+-                                          NET_CLIENT_DRIVER__MAX,
+-                                          MAX_QUEUE_NUM);
++    int i;
+ 
+-    if (queues == 0) {
+-        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
+-                  "Device '%s' not found", name);
+-        return;
+-    }
+     nc = ncs[0];
+ 
+     for (i = 0; i < queues; i++) {
+@@ -1646,6 +1636,24 @@ void qmp_set_link(const char *name, bool up, Error **errp)
+     }
+ }
+ 
++void qmp_set_link(const char *name, bool up, Error **errp)
++{
++    NetClientState *ncs[MAX_QUEUE_NUM];
++    int queues;
++
++    queues = qemu_find_net_clients_except(name, ncs,
++                                          NET_CLIENT_DRIVER__MAX,
++                                          MAX_QUEUE_NUM);
++
++    if (queues == 0) {
++        error_set(errp, ERROR_CLASS_DEVICE_NOT_FOUND,
++                  "Device '%s' not found", name);
++        return;
++    }
++
++    net_client_set_link(ncs, queues, up);
++}
++
+ static void net_vm_change_state_handler(void *opaque, bool running,
+                                         RunState state)
+ {
 diff --git a/net/vhost-user.c b/net/vhost-user.c
-index 15609faedb88..89d216714c13 100644
+index 0b235e50c650..10ac8dc0b3d7 100644
 --- a/net/vhost-user.c
 +++ b/net/vhost-user.c
-@@ -284,6 +284,7 @@ static NetClientInfo net_vhost_user_info = {
-         .vhost_feature_bits = user_feature_bits,
-         .get_acked_features = vhost_user_get_acked_features,
-         .save_acked_features = vhost_user_save_acked_features,
-+        .max_tx_queue_size = VIRTQUEUE_MAX_SIZE,
- };
+@@ -264,7 +264,7 @@ static void chr_closed_bh(void *opaque)
+         vhost_user_save_acked_features(ncs[i]);
+     }
  
- static gboolean net_vhost_user_watch(void *do_not_use, GIOCondition cond,
-diff --git a/net/vhost-vdpa.c b/net/vhost-vdpa.c
-index bd699066a3ab..4fc5d381ceef 100644
---- a/net/vhost-vdpa.c
-+++ b/net/vhost-vdpa.c
-@@ -434,6 +434,7 @@ static NetClientInfo net_vhost_vdpa_info = {
-         .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
-         .get_vhost_net = vhost_vdpa_get_vhost_net,
-         .vhost_feature_bits = vdpa_feature_bits,
-+        .max_tx_queue_size = VIRTQUEUE_MAX_SIZE,
- };
+-    qmp_set_link(name, false, &err);
++    net_client_set_link(ncs, queues, false);
  
- static int64_t vhost_vdpa_get_vring_group(int device_fd, unsigned vq_index,
-@@ -1291,6 +1292,7 @@ static NetClientInfo net_vhost_vdpa_cvq_info = {
-     .set_steering_ebpf = vhost_vdpa_set_steering_ebpf,
-     .get_vhost_net = vhost_vdpa_get_vhost_net,
-     .vhost_feature_bits = vdpa_feature_bits,
-+    .max_tx_queue_size = VIRTQUEUE_MAX_SIZE,
- };
- 
- /*
+     qemu_chr_fe_set_handlers(&s->chr, NULL, NULL, net_vhost_user_event,
+                              NULL, opaque, NULL, true);
+@@ -300,7 +300,7 @@ static void net_vhost_user_event(void *opaque, QEMUChrEvent event)
+         }
+         s->watch = qemu_chr_fe_add_watch(&s->chr, G_IO_HUP,
+                                          net_vhost_user_watch, s);
+-        qmp_set_link(name, true, &err);
++        net_client_set_link(ncs, queues, true);
+         s->started = true;
+         qapi_event_send_netdev_vhost_user_connected(name, chr->label);
+         break;
 -- 
 2.49.0
 
