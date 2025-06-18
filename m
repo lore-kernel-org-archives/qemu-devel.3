@@ -4,97 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDF0BC7115A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 12:57:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5AA8C71157
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Jun 2025 14:24:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uRsLG-0000rI-3I; Wed, 18 Jun 2025 08:56:38 -0400
+	id 1uRtgz-0004Cp-LZ; Wed, 18 Jun 2025 10:23:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=zn5s=ZB=kaod.org=clg@ozlabs.org>)
- id 1uRsLC-0000ql-0P; Wed, 18 Jun 2025 08:56:34 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=zn5s=ZB=kaod.org=clg@ozlabs.org>)
- id 1uRsL4-0007b0-1O; Wed, 18 Jun 2025 08:56:33 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bMkJG1BT8z4x8y;
- Wed, 18 Jun 2025 22:56:14 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bMkJ95TKrz4x3S;
- Wed, 18 Jun 2025 22:56:09 +1000 (AEST)
-Message-ID: <75103d3d-1cee-4531-8d8b-ed98eba36fcb@kaod.org>
-Date: Wed, 18 Jun 2025 14:56:05 +0200
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uRtgt-0004Bj-Nt
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 10:23:07 -0400
+Received: from mail-pl1-x641.google.com ([2607:f8b0:4864:20::641])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1uRtgm-0002EL-OP
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 10:23:03 -0400
+Received: by mail-pl1-x641.google.com with SMTP id
+ d9443c01a7336-234b440afa7so70367215ad.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 07:22:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=ventanamicro.com; s=google; t=1750256572; x=1750861372; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=DknIqKYf/d5KQMcqshNZkkgpnnTskoUbbgAQq1PkHyA=;
+ b=EngBmpPzPBkeiTH3Y6deuMdzIBhNKfd/3Tqh+S2mSnLaUdUqklvsIvx0UHRdXlE32+
+ bX/huEUAL/CEkKPY6j1XE6y/5AsPYKDHovuKxYYm25sIGh1qklgLLh1+HlFKwwNZlFVp
+ FXZAQtA/rZW4cqS4woplo7NUCezEB+jCn636R2FFNfNZz21zudnzQySECxRpogNnAwV2
+ DsTPK4ja9hO35igzhp2ihWjLfWl0oRs41N0ISlmQuIpeyNal7Sq3wz6UhKgbGPXo3qi+
+ 4X9dpG6SH1hFRwdCj5Eee201kLNBg3cHCvxfYHcLW0j36SnRRutHbqdjp6joGf70oK1V
+ ZW2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750256572; x=1750861372;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=DknIqKYf/d5KQMcqshNZkkgpnnTskoUbbgAQq1PkHyA=;
+ b=WXm4e8qcWYzTPVNjdnD0ZNJfiQlAx1d20so8zC4K5zxUU1fijetrqXt5UtI+TBJGGK
+ BFInDdV6YlxaB95r04cZMHcy8luj5tUD6TY2k0of/BKAELSYx5xAzb08xYUlfUjlXKCn
+ 0g7/3ju6D29c8NabLaG1AIdeF0ZuHySNJhJLe4G6cz+AYXEO640d8tBVqW6eQecP9vQf
+ ewaSa1NjyJH36LCvWLgoLJVUBh4R0GnhHc4af1RmBucAcmtcyp02z3D1r5T9JhjCJ2xQ
+ AxrUgphG0TRDESbMqeen+JuU8v6GrobauBg2BJFgXQBLtxS23LrrYGWdHOKEcoRHJiDw
+ jquA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUVoD83epp1QQS9B9/iFzbcNoj8VBAwuoxkiEH9LPdSrsTezLPvWoQ0qGCnlzQxdmcT8OOrt+Mev9eI@nongnu.org
+X-Gm-Message-State: AOJu0Ywx88i1G7bMvmqlx0fZ1GYwIPuWZ7CnR6fwhMLtIVIKMEYSs9v8
+ YLlMnC8VqzQszkT32ekO+SPFmP4Cu5moyeRF09U9z05bGWHZjE5pqufbobjjddADQ0Q=
+X-Gm-Gg: ASbGncsptS1RAYSKBN0dkAKOkkwgDXFwdiCnVhpDcAX/ghhLlGeDWcx5zIAS/RvoRbG
+ 5ZQhp7j0P/f8W/gNujrsWMgRIveeoEe0KGT0lhehh5sQPSRgWzlYdAPzS8aSM64RAECjLIJTuuQ
+ MbORC8ySt1hC36u8RB/MJKcJwwZtKZD3b0YySiRBrsqZLj7dGONqOJPnrdnhmklaTi6lvMKpmIb
+ RGBx1DX22uc6w5cwtn/swJgUFHBmIY3cJEkofGBs6njf3wlqjrqF2WccS16qXj/9zWr/oTho7/w
+ hQPNir6PXWfcU7EKA9/y8tX8f2YSJVWzIkBEs4xa6aL5XYzUiggEtVFXsAdd+VF8vmx09CYG9Sp
+ V
+X-Google-Smtp-Source: AGHT+IEzC2kIAxqDS7lIuIeh2YAmV542Dg0U7NBq4LKBnDkrx0TT4o3F3ZGasoGgHo/oS1lh/zEmPQ==
+X-Received: by 2002:a17:902:b681:b0:236:748f:541f with SMTP id
+ d9443c01a7336-236748f5ec4mr173147985ad.33.1750256572516; 
+ Wed, 18 Jun 2025 07:22:52 -0700 (PDT)
+Received: from [192.168.68.110] ([191.255.35.152])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2365dea8ff7sm100719695ad.171.2025.06.18.07.22.50
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Jun 2025 07:22:51 -0700 (PDT)
+Message-ID: <9812c3c3-c9e4-4b29-968b-9da99891489a@ventanamicro.com>
+Date: Wed, 18 Jun 2025 11:22:48 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/19] i3c: aspeed: Add I3C support
-To: Joe Komlodi <komlodi@google.com>
-Cc: qemu-devel@nongnu.org, venture@google.com, peter.maydell@linaro.org,
- steven_lee@aspeedtech.com, leetroy@gmail.com, jamin_lin@aspeedtech.com,
- andrew@codeconstruct.com.au, joel@jms.id.au, qemu-arm@nongnu.org,
- Jeremy Kerr <jk@codeconstruct.com.au>
-References: <20250613000411.1516521-1-komlodi@google.com>
- <23deafc7-d832-470b-8d8e-aea0125d756f@kaod.org>
- <CAGDLtxti58hRfOjtr5RJuQE93+UWMOLhfM+YivwU4UZdgXRJfg@mail.gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <CAGDLtxti58hRfOjtr5RJuQE93+UWMOLhfM+YivwU4UZdgXRJfg@mail.gmail.com>
+Subject: Re: [PATCH] target/riscv: Add a property to set vill bit on reserved
+ usage of vsetvli instruction
+To: Vasilis Liaskovitis <vliaskovitis@suse.com>, qemu-devel@nongnu.org,
+ qemu-riscv@nongnu.org
+Cc: ajones@ventanamicro.com, alistair.francis@wdc.com, philmd@linaro.org
+References: <20250618072500.8469-1-vliaskovitis@suse.com>
+Content-Language: en-US
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+In-Reply-To: <20250618072500.8469-1-vliaskovitis@suse.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=zn5s=ZB=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.067, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::641;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x641.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,39 +107,148 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Hi,
 
->> This lacks a MAINTAINER.
+Thanks for putting this into a patch. A comment below:
+
+On 6/18/25 4:25 AM, Vasilis Liaskovitis wrote:
+> Usage of vsetvli instruction is reserved if VLMAX is changed when vsetvli rs1
+> and rd arguments are x0.
 > 
-> Ah, right. I can add that in v2. I can add myself to it, is there
-> anyone else who should be on it?
-
-Would any of your colleagues be interested too ?
-
->> Could you please provide functional tests ? some with a standard I2C
->> device attached to an I3C legacy bus too.
+> In this case, if the new property is true, only the vill bit will be set.
 > 
-> I can work on that, probably v2 or v3 depending on how long it takes.
+> See https://github.com/riscv/riscv-isa-manual/blob/main/src/v-st-ext.adoc#avl-encoding
+> According to the spec, the above use cases are reserved, and
+> "Implementations may set vill in either case."
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2422
+> Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
+> ---
+>   target/riscv/cpu.c                      |  1 +
+>   target/riscv/cpu_cfg_fields.h.inc       |  1 +
+>   target/riscv/helper.h                   |  2 +-
+>   target/riscv/insn_trans/trans_rvv.c.inc |  4 ++--
+>   target/riscv/vector_helper.c            | 22 ++++++++++++----------
+>   5 files changed, 17 insertions(+), 13 deletions(-)
+> 
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index 629ac37501..1c29ed3b2b 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -2595,6 +2595,7 @@ static const Property riscv_cpu_properties[] = {
+>       DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
+>       DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
+>       DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
+> +    DEFINE_PROP_BOOL("rvv_vsetvl_x0_vill", RISCVCPU, cfg.rvv_vsetvl_x0_vill, false),
+>   
+>       /*
+>        * write_misa() is marked as experimental for now so mark
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
+> index 59f134a419..9c78a797cf 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -114,6 +114,7 @@ BOOL_FIELD(ext_supm)
+>   BOOL_FIELD(rvv_ta_all_1s)
+>   BOOL_FIELD(rvv_ma_all_1s)
+>   BOOL_FIELD(rvv_vl_half_avl)
+> +BOOL_FIELD(rvv_vsetvl_x0_vill)
+>   /* Named features  */
+>   BOOL_FIELD(ext_svade)
+>   BOOL_FIELD(ext_zic64b)
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index 85d73e492d..f712b1c368 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -159,7 +159,7 @@ DEF_HELPER_FLAGS_3(hyp_hsv_d, TCG_CALL_NO_WG, void, env, tl, tl)
+>   #endif
+>   
+>   /* Vector functions */
+> -DEF_HELPER_3(vsetvl, tl, env, tl, tl)
+> +DEF_HELPER_4(vsetvl, tl, env, tl, tl, tl)
+>   DEF_HELPER_5(vle8_v, void, ptr, ptr, tl, env, i32)
+>   DEF_HELPER_5(vle16_v, void, ptr, ptr, tl, env, i32)
+>   DEF_HELPER_5(vle32_v, void, ptr, ptr, tl, env, i32)
+> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
+> index 2b6077ac06..87071c5d62 100644
+> --- a/target/riscv/insn_trans/trans_rvv.c.inc
+> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
+> @@ -202,7 +202,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
+>           s1 = get_gpr(s, rs1, EXT_ZERO);
+>       }
+>   
+> -    gen_helper_vsetvl(dst, tcg_env, s1, s2);
+> +    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl((int) (rd == 0 && rs1 == 0)));
+>       gen_set_gpr(s, rd, dst);
+>       finalize_rvv_inst(s);
+>   
+> @@ -222,7 +222,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
+>   
+>       dst = dest_gpr(s, rd);
+>   
+> -    gen_helper_vsetvl(dst, tcg_env, s1, s2);
+> +    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
+>       gen_set_gpr(s, rd, dst);
+>       finalize_rvv_inst(s);
+>       gen_update_pc(s, s->cur_insn_len);
+> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+> index 5dc1c10012..2545d73cc1 100644
+> --- a/target/riscv/vector_helper.c
+> +++ b/target/riscv/vector_helper.c
+> @@ -35,7 +35,7 @@
+>   #include <math.h>
+>   
+>   target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+> -                            target_ulong s2)
+> +                            target_ulong s2, target_ulong x0)
+>   {
+>       int vlmax, vl;
+>       RISCVCPU *cpu = env_archcpu(env);
+> @@ -64,15 +64,6 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>           }
+>       }
+>   
+> -    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0)) {
+> -        /* only set vill bit. */
+> -        env->vill = 1;
+> -        env->vtype = 0;
+> -        env->vl = 0;
+> -        env->vstart = 0;
+> -        return 0;
+> -    }
+> -
+>       /* lmul encoded as in DisasContext::lmul */
+>       lmul = sextract32(FIELD_EX64(s2, VTYPE, VLMUL), 0, 3);
+>       vlmax = vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+> @@ -83,6 +74,17 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
+>       } else {
+>           vl = vlmax;
+>       }
+> +
+> +    if ((sew > cpu->cfg.elen) || vill || (ediv != 0) || (reserved != 0) ||
+> +        (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl))) {
 
-It can come later.
+In this particular case I don't mind replicating code. The first existing check can be
+left untouched, exiting early before spending time calculating vlmax and vl.
 
->> Are there any other stakeholders interested in the I3C to get feedback ?
->>
->> Have there been any changes since:
->>
->>     https://lore.kernel.org/qemu-devel/20230331010131.1412571-1-komlodi@google.com/
->>
-> Nothing too substantial. I decided not to upstream remote I3C since
-> it's unlikely it would be useful upstream.
->
-> I think there might be a couple bugfixes in the DwC controller as
-> well, but I don't remember off-hand what they were. If there were any,
-> they were all minor.
-The code looks code AFAICT but we need someone with a minimum I3C
-knowledge to take a look. Could the Linux maintainers help review
-this series ?
+We can then add the new check that depends on vl here, even if we end up copying those
+few "env->something =" lines again. If you really want to avoid code duplication I
+wouldn't oppose adding a 'vill' label and using 'goto' as an alternative of duplicating
+those 6 lines.
 
-Thanks,
 
-C.
+Patch LGTM otherwise. Thanks,
 
+
+Daniel
+
+> +        /* only set vill bit. */
+> +        env->vill = 1;
+> +        env->vtype = 0;
+> +        env->vl = 0;
+> +        env->vstart = 0;
+> +        return 0;
+> +    }
+> +
+>       env->vl = vl;
+>       env->vtype = s2;
+>       env->vstart = 0;
 
 
