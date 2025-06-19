@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ABADC7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 08:52:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D687C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 08:52:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSB0J-0004g9-HR; Thu, 19 Jun 2025 04:52:15 -0400
+	id 1uSB0C-0004YR-RZ; Thu, 19 Jun 2025 04:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uSAzz-0004XN-EA
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:56 -0400
+ id 1uSAzu-0004Wc-TU
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:52 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uSAzx-00031Z-Bc
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:55 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uSAzs-000317-Ng
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:50 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Bxlmmaz1Non7UZAQ--.58485S3;
- Thu, 19 Jun 2025 16:51:38 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAxDcVtz1NohtwgAQ--.30176S16;
+ by gateway (Coremail) with SMTP id _____8AxGHGYz1NonLUZAQ--.61406S3;
  Thu, 19 Jun 2025 16:51:36 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowMAxDcVtz1NohtwgAQ--.30176S15;
+ Thu, 19 Jun 2025 16:51:34 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
-Cc: stefanha@gmail.com, Bibo Mao <maobibo@loongson.cn>,
- Richard Henderson <richard.henderson@linaro.org>
-Subject: [PULL 14/14] target/loongarch: fix vldi/xvldi raise wrong error
-Date: Thu, 19 Jun 2025 16:28:17 +0800
-Message-Id: <20250619082817.1517996-15-gaosong@loongson.cn>
+Cc: stefanha@gmail.com,
+	Bibo Mao <maobibo@loongson.cn>
+Subject: [PULL 13/14] hw/loongarch/virt: Add kernel irqchip support
+Date: Thu, 19 Jun 2025 16:28:16 +0800
+Message-Id: <20250619082817.1517996-14-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250619082817.1517996-1-gaosong@loongson.cn>
 References: <20250619082817.1517996-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxDcVtz1NohtwgAQ--.30176S16
+X-CM-TRANSID: qMiowMAxDcVtz1NohtwgAQ--.30176S15
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -65,65 +65,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-on qemu we got an aborted error
-**
-ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-Bail out! ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: code should not be reached
-Aborted (core dumped)
-but on 3A600/3A5000 we got a "Illegal instruction" error.
+From: Bibo Mao <maobibo@loongson.cn>
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2971
+If kvm_irqchip_in_kernel() return true, interrupt controller
+ExtIOI, IPI, PCH_PCI and PCH_MSI should be emlated in kernel. And
+it is not necessary to create memory region for these devices in
+user space.
 
-Fixes: 29bb5d727ff ("target/loongarch: Implement vldi")
- Cc: qemu-stable@nongnu.org
-Reviewed-by: Bibo Mao <maobibo@loongson.cn>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <20250606063607.2557540-1-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- target/loongarch/tcg/insn_trans/trans_vec.c.inc | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ hw/loongarch/virt.c        | 57 ++++++++++++++++++++++----------------
+ target/loongarch/cpu.h     |  1 +
+ target/loongarch/kvm/kvm.c | 16 +++++++++++
+ 3 files changed, 50 insertions(+), 24 deletions(-)
 
-diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-index d6f0560349..78730029cb 100644
---- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-+++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
-@@ -3465,7 +3465,7 @@ TRANS(xvmsknz_b, LASX, gen_xx, gen_helper_vmsknz_b)
- static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
- {
-     int mode;
--    uint64_t data, t;
-+    uint64_t data = 0, t;
+diff --git a/hw/loongarch/virt.c b/hw/loongarch/virt.c
+index e5468b6af9..b15ada2078 100644
+--- a/hw/loongarch/virt.c
++++ b/hw/loongarch/virt.c
+@@ -414,12 +414,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     lvms->ipi = ipi;
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(ipi), &error_fatal);
  
-     /*
-      * imm bit [11:8] is mode, mode value is 0-12.
-@@ -3570,17 +3570,26 @@ static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
-         }
-         break;
-     default:
--        generate_exception(ctx, EXCCODE_INE);
-         g_assert_not_reached();
+-    /* IPI iocsr memory region */
+-    memory_region_add_subregion(&lvms->system_iocsr, SMP_IPI_MAILBOX,
+-                   sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 0));
+-    memory_region_add_subregion(&lvms->system_iocsr, MAIL_SEND_ADDR,
+-                   sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
+-
+     /* Create EXTIOI device */
+     extioi = qdev_new(TYPE_LOONGARCH_EXTIOI);
+     lvms->extioi = extioi;
+@@ -427,12 +421,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+         qdev_prop_set_bit(extioi, "has-virtualization-extension", true);
      }
-     return data;
+     sysbus_realize_and_unref(SYS_BUS_DEVICE(extioi), &error_fatal);
+-    memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
+-                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
+-    if (virt_is_veiointc_enabled(lvms)) {
+-        memory_region_add_subregion(&lvms->system_iocsr, EXTIOI_VIRT_BASE,
+-                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
+-    }
+ 
+     virt_cpu_irq_init(lvms);
+     pch_pic = qdev_new(TYPE_LOONGARCH_PIC);
+@@ -440,13 +428,6 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     qdev_prop_set_uint32(pch_pic, "pch_pic_irq_num", num);
+     d = SYS_BUS_DEVICE(pch_pic);
+     sysbus_realize_and_unref(d, &error_fatal);
+-    memory_region_add_subregion(get_system_memory(), VIRT_IOAPIC_REG_BASE,
+-                            sysbus_mmio_get_region(d, 0));
+-
+-    /* Connect pch_pic irqs to extioi */
+-    for (i = 0; i < num; i++) {
+-        qdev_connect_gpio_out(DEVICE(d), i, qdev_get_gpio_in(extioi, i));
+-    }
+ 
+     pch_msi = qdev_new(TYPE_LOONGARCH_PCH_MSI);
+     start   =  num;
+@@ -456,12 +437,40 @@ static void virt_irq_init(LoongArchVirtMachineState *lvms)
+     d = SYS_BUS_DEVICE(pch_msi);
+     sysbus_realize_and_unref(d, &error_fatal);
+     sysbus_mmio_map(d, 0, VIRT_PCH_MSI_ADDR_LOW);
+-    for (i = 0; i < num; i++) {
+-        /* Connect pch_msi irqs to extioi */
+-        qdev_connect_gpio_out(DEVICE(d), i,
+-                              qdev_get_gpio_in(extioi, i + start));
+-    }
+ 
++    if (kvm_irqchip_in_kernel()) {
++        kvm_loongarch_init_irq_routing();
++    } else {
++        /* IPI iocsr memory region */
++        memory_region_add_subregion(&lvms->system_iocsr, SMP_IPI_MAILBOX,
++                       sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 0));
++        memory_region_add_subregion(&lvms->system_iocsr, MAIL_SEND_ADDR,
++                       sysbus_mmio_get_region(SYS_BUS_DEVICE(ipi), 1));
++
++        /* EXTIOI iocsr memory region */
++        memory_region_add_subregion(&lvms->system_iocsr, APIC_BASE,
++                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 0));
++        if (virt_is_veiointc_enabled(lvms)) {
++            memory_region_add_subregion(&lvms->system_iocsr, EXTIOI_VIRT_BASE,
++                    sysbus_mmio_get_region(SYS_BUS_DEVICE(extioi), 1));
++        }
++
++        /* PCH_PIC memory region */
++        memory_region_add_subregion(get_system_memory(), VIRT_IOAPIC_REG_BASE,
++                    sysbus_mmio_get_region(SYS_BUS_DEVICE(pch_pic), 0));
++
++        /* Connect pch_pic irqs to extioi */
++        for (i = 0; i < VIRT_PCH_PIC_IRQ_NUM; i++) {
++            qdev_connect_gpio_out(DEVICE(pch_pic), i,
++                                  qdev_get_gpio_in(extioi, i));
++        }
++
++        for (i = VIRT_PCH_PIC_IRQ_NUM; i < EXTIOI_IRQS; i++) {
++            /* Connect pch_msi irqs to extioi */
++            qdev_connect_gpio_out(DEVICE(pch_msi), i - VIRT_PCH_PIC_IRQ_NUM,
++                                  qdev_get_gpio_in(extioi, i));
++        }
++    }
+     virt_devices_init(pch_pic, lvms);
  }
  
-+static bool check_valid_vldi_mode(arg_vldi *a)
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 262bf87f7b..9538e8d61d 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -503,5 +503,6 @@ static inline void kvm_loongarch_cpu_post_init(LoongArchCPU *cpu)
+ {
+ }
+ #endif
++void kvm_loongarch_init_irq_routing(void);
+ 
+ #endif /* LOONGARCH_CPU_H */
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index c5d488aa42..e5ea2dba9d 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -1240,6 +1240,22 @@ void kvm_arch_init_irq_routing(KVMState *s)
+ {
+ }
+ 
++void kvm_loongarch_init_irq_routing(void)
 +{
-+   return  extract32(a->imm, 8, 4) <= 12;
++    int i;
++
++    kvm_async_interrupts_allowed = true;
++    kvm_msi_via_irqfd_allowed = kvm_irqfds_enabled();
++    if (kvm_has_gsi_routing()) {
++        for (i = 0; i < KVM_IRQCHIP_NUM_PINS; ++i) {
++            kvm_irqchip_add_irq_route(kvm_state, i, 0, i);
++        }
++
++        kvm_gsi_routing_allowed = true;
++        kvm_irqchip_commit_routes(kvm_state);
++    }
 +}
 +
- static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
+ int kvm_arch_get_default_type(MachineState *ms)
  {
-     int sel, vece;
-     uint64_t value;
- 
-+    if (!check_valid_vldi_mode(a)) {
-+        generate_exception(ctx, EXCCODE_INE);
-+        return true;
-+    }
-+
-     if (!check_vec(ctx, oprsz)) {
-         return true;
-     }
+     return 0;
 -- 
 2.47.0
 
