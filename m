@@ -4,78 +4,143 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A575C7115A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 11:51:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4650C7115A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 11:57:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSDmx-0008V6-2z; Thu, 19 Jun 2025 07:50:39 -0400
+	id 1uSDsp-0001JN-62; Thu, 19 Jun 2025 07:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1uSDmv-0008Uc-Vj; Thu, 19 Jun 2025 07:50:37 -0400
-Received: from sender4-op-o15.zoho.com ([136.143.188.15])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uSDso-0001J8-1Z
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 07:56:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@linux.beauty>)
- id 1uSDmr-0005bk-HJ; Thu, 19 Jun 2025 07:50:37 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1750333664; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=h8mlfb8H1FHNhvyxO/OVm4PSqaXrVFtVRbrLJzMtZN0VPSsjNYxZkAGVziA0w5ilCYJMKP/+Lee0g+4Dy99rFM7dirITpNNxPRNqQ6dhYGvvPFQgCf89jY3diE2JdKdsyk3uUuwgEqEsrEhfgIDLq2JKp95MBH+uHnULiGozScg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1750333664;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=gLDIUWyUND5lO0YnJQuBpvtjL0yTeCSTT0edWuoQoBQ=; 
- b=Pdf6zq7FmaLTMIJtgukgiknKOtpGOxdHkRBTiQFt66Kz6CLMwcGT/utnHJT2E6WIV922StTfjpoQjciFN7oqeUz0IwX3LfENlotmJUPoJazYVffLotEXtT5PzhhsDH1UJd9z1v2G6tIYyTYd+T8EOeGQdKAOJBTe9t2Y22/1LRY=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=linux.beauty;
- spf=pass  smtp.mailfrom=me@linux.beauty;
- dmarc=pass header.from=<me@linux.beauty>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1750333664; 
- s=zmail; d=linux.beauty; i=me@linux.beauty;
- h=Date:Date:From:From:To:To:Cc:Cc:Message-ID:In-Reply-To:References:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Reply-To;
- bh=gLDIUWyUND5lO0YnJQuBpvtjL0yTeCSTT0edWuoQoBQ=;
- b=DNMEOnc4DN6ig1tZruvrwKTIu1nkeuSogAWLKxB50cm7Y4MgIF6EMSsgmRE7zsN5
- /olHGh1e/zBqazECw9D8qBfTXHCh770sOzv4C068LAeqXDlabnPc+L7GtI7RKWI7Z/T
- /tfIhkveLKjkt4jG8kMQlv4s4ycwyFz2MFYU4pb8=
-Received: from mail.zoho.com by mx.zohomail.com
- with SMTP id 175033366310758.05017782068148;
- Thu, 19 Jun 2025 04:47:43 -0700 (PDT)
-Date: Thu, 19 Jun 2025 19:47:43 +0800
-From: Li Chen <me@linux.beauty>
-To: "Peter Maydell" <peter.maydell@linaro.org>,
- "Shannon Zhao" <shannon.zhaosl@gmail.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- "Igor Mammedov" <imammedo@redhat.com>, "Ani Sinha" <anisinha@redhat.com>,
- "Eduardo Habkost" <eduardo@habkost.net>,
- "Marcel Apfelbaum" <marcel.apfelbaum@gmail.com>,
- =?UTF-8?Q?=22Philippe_Mathieu-Daud=C3=A9=22?= <philmd@linaro.org>,
- "Yanan Wang" <wangyanan55@huawei.com>,
- "Zhao Liu" <zhao1.liu@intel.com>, "Song Gao" <gaosong@loongson.cn>,
- "Jiaxun Yang" <jiaxun.yang@flygoat.com>,
- "Sunil V L" <sunilvl@ventanamicro.com>,
- "Palmer Dabbelt" <palmer@dabbelt.com>,
- "Alistair Francis" <alistair.francis@wdc.com>,
- "Weiwei Li" <liwei1518@gmail.com>, "qemu-arm" <qemu-arm@nongnu.org>,
- "qemu-devel" <qemu-devel@nongnu.org>, "qemu-riscv" <qemu-riscv@nongnu.org>
-Cc: "Li Chen" <chenl311@chinatelecom.cn>
-Message-ID: <19788042767.f03f56de434541.2975113673579743624@linux.beauty>
-In-Reply-To: <20250528105404.457729-1-me@linux.beauty>
-References: <20250528105404.457729-1-me@linux.beauty>
-Subject: Re: [PATCH REPOST v4 0/4] acpi: Add machine option to disable SPCR
- table
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uSDsl-0006OC-28
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 07:56:41 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750334195;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ujUS8jSzIGcJySscxxjuGl+5z7PwxS1kG6uUVlPyq28=;
+ b=AP7C8N2JBmO9ENO/x4EsPrCR7gHqMmzGM42Qx4mGna1qxyuDFXVbvImUmukvZOl66E8YuP
+ yEH6U94s5jnAYbxqWbjHIXWTMkEpeatS6mCgLDobHQFVk5PHcjZeuJxy5N/BeH50H60YPD
+ dRhGGpSEnRDmwFbUqgGTwTvQkWWrwwQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-595-tZeXSJ-KPVqO6_kT28g-VQ-1; Thu, 19 Jun 2025 07:56:34 -0400
+X-MC-Unique: tZeXSJ-KPVqO6_kT28g-VQ-1
+X-Mimecast-MFC-AGG-ID: tZeXSJ-KPVqO6_kT28g-VQ_1750334193
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-451d2037f1eso4255275e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 04:56:34 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750334193; x=1750938993;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ujUS8jSzIGcJySscxxjuGl+5z7PwxS1kG6uUVlPyq28=;
+ b=DbAKu/O8QjPoks9UtU09VlB5b0GFG6x2xp5zRDsY0u2I9/eKlUFs6rDTT9tcYm0If3
+ ViHZI3MsmlaplHKJbmj9PY+GIke3otiyGutQk7J7+n6lxeybboRyob/nK/cmHUJc4JF2
+ /vqOOqQmUvpmE/4HQ7KVLylG5WALTb0cLx9ZEHS2BXLyQ1qQyfnjECyawt9HjgSJgSDZ
+ 8byb+8Xa80geQPQMD0UhoshT6OVycYSWV/bOyYQ48POB+IbdGJ77aTvM9OiQ2adtjfXy
+ OS0dyazw5QZi4LxWLPfgobIwYRtu7KnAQOt57ErS0FYwyllHwESNkjf7g9cYq7QfYQQd
+ 1PfA==
+X-Gm-Message-State: AOJu0YwoDrEfKZqqNzYp76W6eI1pe4RjCPa9MZXQrat/JjKzuAuWfLXm
+ Pqy6VWWcXXkQa67VIUPJ4tztnYL0N7PkgScmERyzH+vrVjjStxlVU1gTbBPGRzzSCn+fyT0SnBj
+ kWCy5ZJBPDu9IfV8gLifkkEfCruQowWRObU1QYguwYa0OS8rc3WO7N5kL
+X-Gm-Gg: ASbGncvzmiv0lEK62B38sX0cq0+LS337Lb5JJc3JC6eysLboAs/oW+NJPzDH5zpFJyE
+ fi1+SAdKyHjZ/Oa+Lm6tGhqfFMhgEkydXi+7O7Nae3tmpngMZVKGO6WVGu+1fCt7utAFmvYid89
+ lpZJFM98S2fDTwELDeviQl0dnv7IVVrqVvtT3vx3kA1zqgBbdt9SFKuXFDS2CWbd9F3ZdV2tCyq
+ TUxLwAh2VBYz+N9KwuvYEGn+t8M0HKCld/EkTbZw4z315A1yZ8rZySua8to4Fnrh09eamxrTzH8
+ CFYVNdeReRADhNdrG156KuFXVMfGQVey3n1PZzYwp749f1DWSYPWyRKenMOr
+X-Received: by 2002:a05:600c:5025:b0:43e:afca:808f with SMTP id
+ 5b1f17b1804b1-4533cb5ddabmr216699095e9.31.1750334192999; 
+ Thu, 19 Jun 2025 04:56:32 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHM5sTzjF6Chztg37mh3120rtWseQitMrTTtJyIgKvykMzyJJaToz5huK1YWOkh+Qxp+aKyPw==
+X-Received: by 2002:a05:600c:5025:b0:43e:afca:808f with SMTP id
+ 5b1f17b1804b1-4533cb5ddabmr216698755e9.31.1750334192564; 
+ Thu, 19 Jun 2025 04:56:32 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
+ ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4535e983803sm26016945e9.10.2025.06.19.04.56.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Jun 2025 04:56:31 -0700 (PDT)
+Message-ID: <c18de4a2-63d0-4ad2-9547-fe8bc221a887@redhat.com>
+Date: Thu, 19 Jun 2025 13:56:28 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Importance: Medium
-User-Agent: Zoho Mail
-X-Mailer: Zoho Mail
-Received-SPF: pass client-ip=136.143.188.15; envelope-from=me@linux.beauty;
- helo=sender4-op-o15.zoho.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/23] vfio-user client
+To: John Levon <john.levon@nutanix.com>
+Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+References: <20250607001056.335310-1-john.levon@nutanix.com>
+ <b6be1ca0-0ba0-4691-8a2c-f7d3ddc2f85e@redhat.com> <aErh-v3SfFo-2Br0@lent>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <aErh-v3SfFo-2Br0@lent>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
@@ -94,70 +159,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Gentle ping incase of forgotten.
+Hi John,
 
- ---- On Wed, 28 May 2025 18:53:34 +0800  Li Chen <me@linux.beauty> wrote -=
---=20
- > From: Li Chen <chenl311@chinatelecom.cn>
- >=20
- > (REPOST because the previous post failed to send to qemu-devel/qemu-risc=
-v/qemu-arm,
- >  see https://lore.kernel.org/qemu-devel/1971648603b.dce1f5d22901195.6702=
-025346547333607@linux.beauty/T/#u)
- >=20
- > This series introduces a new machine option, spcr=3Don|off, allowing use=
-rs
- > to disable the ACPI SPCR (Serial Port Console Redirection) table.
- > By default, SPCR is enabled. Disabling it can help ensure that the guest=
-'s
- > console behavior is determined solely by kernel command-line parameters
- > on arch like arm64, avoiding unintended serial console configurations im=
-posed
- > by firmware.
- >=20
- > Also add tests on AArch64 and RISC-V virt machines using TCG and UEFI bo=
-ot.
- >=20
- > Changes since v3:
- > - Add Reviewed-by from Sunil V L <sunilvl@ventanamicro.com> for patch 1,=
- 3, and 4.
- > - rename enable_spcr to acpi_spcr_enabled as suggested by Philippe Mathi=
-eu-Daud=C3=A9.
- > Changes since v2:
- > - Omit UART device from DSDT and SPCR construction if no serial device i=
-s present,
- > as suggested by Philippe Mathieu-Daud=C3=A9.
- > - Add Reviewed-by from Gavin Shan <gshan@redhat.com> for the first patch=
- and fix style issue.
- >=20
- > Changes since v1:
- > - Add bios-tables-test for RISC-V and ARM as suggested by
- > - Add Acked-by from Michael S. Tsirkin for the first patch
- > - Add Reviewed-by from Bibo Mao for the first patch
- >=20
- > Li Chen (4):
- >   acpi: Add machine option to disable SPCR table
- >   tests/qtest/bios-tables-test: Add test for disabling SPCR on AArch64
- >   tests/qtest/bios-tables-test: Add test for disabling SPCR on RISC-V
- >   acpi/virt: suppress UART device & SPCR when guest has no serial
- >     hardware
- >=20
- >  hw/arm/virt-acpi-build.c       | 18 ++++++++-----
- >  hw/core/machine.c              | 22 ++++++++++++++++
- >  hw/loongarch/virt-acpi-build.c |  4 ++-
- >  hw/riscv/virt-acpi-build.c     | 10 ++++++--
- >  include/hw/boards.h            |  1 +
- >  include/system/system.h        |  2 ++
- >  qemu-options.hx                |  5 ++++
- >  system/vl.c                    |  5 ++++
- >  tests/qtest/bios-tables-test.c | 47 ++++++++++++++++++++++++++++++++--
- >  9 files changed, 103 insertions(+), 11 deletions(-)
- >=20
- > --=20
- > 2.49.0
- >=20
- >=20
+>> I *really* would prefer if we had functional tests although I don't how
+> 
+> I agree it makes sense to have a working functional test before merging.
 
-Regards,
-Li
+Any progress ?
+  
+> In the meantime, I would like to continue with review of the main chunk - as you
+> said, there's a lot of code. I've not made substantial changes since v3 (only
+> the comments so far), so I'm happy to continue with v3 review, or if you prefer,
+> I can send out v4 against master. Please let me know.
+
+I doubt we will have much more reviews on the vfio-user part. Can you
+please send v4 ?
+
+Thanks,
+
+C.
+
+
 
