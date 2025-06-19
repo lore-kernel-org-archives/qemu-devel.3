@@ -4,91 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B746AC7115C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 15:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAE0FC7115A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 15:32:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSHBW-0001xs-A5; Thu, 19 Jun 2025 11:28:14 -0400
+	id 1uSHEz-0003Jd-Ve; Thu, 19 Jun 2025 11:31:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1uSHBV-0001xj-7U
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 11:28:13 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <sunilvl@ventanamicro.com>)
- id 1uSHBO-00049T-UW
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 11:28:13 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-73972a54919so665671b3a.3
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 08:28:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1750346883; x=1750951683; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=luOWSFgzP/rKccc7s4K9TLiyXYoWyKmChcndNKlURKc=;
- b=ibXa6TRasB+DQJ0ypJInEiuTWJtMzF46i6jWAwrRepoxA3aFxUCkN7mb+zs0Rvms9R
- hy7GBYV1yUiNKrJ+KIJS8HOLYmHjDU3HGSsqjUpmvFvCscIVSkXBXs4lIS8LWj6bArvP
- EAc8eKwVpjrkiVKRnpoWROj1zyFxi64IlNHDK8qNUrJ1K8ncjbyeCDulru6Cn+wfHfqn
- gD0518VEHK5ajQ/IQ5ar9FsucTatEneb0LVysFBfrr35jREdrSi+WQ4XxNjF1w+ESn7R
- xobJOCQ2YiknO1TtDRgZRgV9kLQJCDnOZOO4avE5FwatYNXetn0PVfjd8pFNcFLCCsJw
- 6PDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750346883; x=1750951683;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=luOWSFgzP/rKccc7s4K9TLiyXYoWyKmChcndNKlURKc=;
- b=PwNtCT5sjIYZkQ1PyZwyFmZQHCQUmKygH682M/VDY7/G9Bfw4lz8+V6GbcEcKDlRwO
- I48vgnba8UemUbGSx3zQ6co9xEJ+yw9g6K7Je5sppYwk5Qcg8vfkhAF1njPRoSuDRMEW
- clAFLmPiDE+Nocj6cJJKNoDuBIowNXx8dYNI8UVT3mMkMJ1gpcLRs+S+mXzJie2bWJHo
- bxuD6OoPx29XeW7ESDZxLpwA2yKyEKr/Vzi9zFRiNEpeqyidKUOpj8FunbGSXPNZUW6A
- xqA7zQ0EvZtP0cGLYURDfjPF8KNyvHTa4DknnV5KM0dJYI14FXFaxwNDPAqLfn/SF42l
- Z+lQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHGy7lzWryJb/g6iLlN29NCca+R2uU8PUs0sbv8l4Bz4MlVzyBjS4ys9skgmfOtZfOC8dDg4V2hMf0@nongnu.org
-X-Gm-Message-State: AOJu0Yyy60PieRG5bNGyPSXn55A9g4zEag8qI+kXo62orpW7TymL3Ia1
- g5WpXrvq1Ai5yOcEnquUWtVRAGxq4PXjc0/zhd8J6zNhdhGrD47gcAj/mt5yy73xNxo=
-X-Gm-Gg: ASbGnctgtv9dh3Wpz3gM2b+zRCQs7NCJpYXCUeYOlymoKt/taVjoC6zWtVCCqg7+mwv
- gs/n6KPs51jOVIRyQdCShEhAnGyQM6uesXpqif/rECV9iEeBGiMawkzlcBfHnYN7wlAD/18mJSn
- wiTWJtuUshfIOlCmlNcTDKa4zZIVDwwOBPsdUiBfWkyHW9mydiH94ZYEcUcxLtX2f7NdSkQoCWG
- x0ghF4wjk7gsrhJCizRL23BGsBUH2Z1E+NNQkoJCewSpAzG3us14XL4X2NRiJ82o7nirkmlIYFp
- Gsu1ir4lYo//pNFNE4KLK01NTL1mfYJ1yIH98LQ01kbIIOiODa6BPpiPww9RgmjXEQ/QRQ==
-X-Google-Smtp-Source: AGHT+IF9oYXXshN3eBZ947NClFg9EzZik2AZgCUwk+ajmuz5HHa2UBuAW1wWbOfQsB7E+JbEBsdF+A==
-X-Received: by 2002:a05:6a20:9f43:b0:1f5:6f61:a0ac with SMTP id
- adf61e73a8af0-21fbd5591d4mr28267821637.5.1750346883209; 
- Thu, 19 Jun 2025 08:28:03 -0700 (PDT)
-Received: from sunil-laptop ([103.97.166.196])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a465c40sm148684b3a.17.2025.06.19.08.27.58
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Jun 2025 08:28:02 -0700 (PDT)
-Date: Thu, 19 Jun 2025 20:57:54 +0530
-From: Sunil V L <sunilvl@ventanamicro.com>
-To: liu.xuemei1@zte.com.cn
-Cc: pbonzini@redhat.com, palmer@dabbelt.com, alistair.francis@wdc.com,
- liwei1518@gmail.com, dbarboza@ventanamicro.com,
- zhiwei_liu@linux.alibaba.com, bjorn@rivosinc.com,
- qemu-riscv@nongnu.org, qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/riscv/virt: Add acpi ged and powerdown support
-Message-ID: <aFQseigG0Wbqx1CC@sunil-laptop>
-References: <202506191556260735QxWC8sxRwFURYEvlD24y@zte.com.cn>
+ (Exim 4.90_1) (envelope-from <SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org>)
+ id 1uSHEd-00039q-MN; Thu, 19 Jun 2025 11:31:31 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org>)
+ id 1uSHEY-0004kE-A2; Thu, 19 Jun 2025 11:31:25 -0400
+Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bNPhg27bVz4xDf;
+ Fri, 20 Jun 2025 01:31:15 +1000 (AEST)
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (Client did not present a certificate)
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bNPhZ70rCz4wj2;
+ Fri, 20 Jun 2025 01:31:10 +1000 (AEST)
+Message-ID: <6ffe00d3-4a64-4799-ae52-2b64f11c9173@kaod.org>
+Date: Thu, 19 Jun 2025 17:31:06 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2] hw/arm/aspeed: add Catalina machine type
+To: Patrick Williams <patrick@stwcx.xyz>, Paolo Bonzini
+ <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+References: <20250619151458.2831859-1-patrick@stwcx.xyz>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20250619151458.2831859-1-patrick@stwcx.xyz>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <202506191556260735QxWC8sxRwFURYEvlD24y@zte.com.cn>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=sunilvl@ventanamicro.com; helo=mail-pf1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=150.107.74.76;
+ envelope-from=SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
+X-Spam_score_int: -40
+X-Spam_score: -4.1
+X-Spam_bar: ----
+X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.069, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,161 +110,332 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Xuemei Liu,
-
-Thank you for the patch!
-
-On Thu, Jun 19, 2025 at 03:56:26PM +0800, liu.xuemei1@zte.com.cn wrote:
-> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+On 6/19/25 17:14, Patrick Williams wrote:
+> Add the 'catalina-bmc' machine type based on the kernel DTS[1] as of
+> 6.16-rc2.  The i2c model is as complete as the current QEMU models
+> support, but in some cases I substituted devices that are close enough
+> for present functionality.  Strap registers are were verified with
+> hardware.
 > 
-> This adds powerdown support by implementing the ACPI GED.
+> This has been tested with an openbmc image built from [2].
 > 
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
-> Co-authored-by: Björn Töpel <bjorn@rivosinc.com>
+> Add a functional test in line with Bletchley, pointing at an image
+> obtained from the OpenBMC Jenkins server.
+> 
+> [1]: https://github.com/torvalds/linux/blob/v6.16-rc2/arch/arm/boot/dts/aspeed/aspeed-bmc-facebook-catalina.dts
+> [2]: https://github.com/openbmc/openbmc/commit/5bc73ec261f981d5e586bda5ac78eb0cbd5f92b0
+> 
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
+
+
 > ---
->  hw/riscv/Kconfig           |  1 +
->  hw/riscv/virt-acpi-build.c | 12 ++++++++++++
->  hw/riscv/virt.c            | 32 ++++++++++++++++++++++++++++++++
->  include/hw/riscv/virt.h    |  4 ++++
->  4 files changed, 49 insertions(+)
+>   hw/arm/Kconfig                               |   1 +
+>   hw/arm/aspeed.c                              | 200 +++++++++++++++++++
+>   tests/functional/meson.build                 |   2 +
+>   tests/functional/test_arm_aspeed_catalina.py |  25 +++
+>   4 files changed, 228 insertions(+)
+>   create mode 100755 tests/functional/test_arm_aspeed_catalina.py
 > 
-> diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-> index e6a0ac1fa1..16837e0e8f 100644
-> --- a/hw/riscv/Kconfig
-> +++ b/hw/riscv/Kconfig
-> @@ -68,6 +68,7 @@ config RISCV_VIRT
->      select PLATFORM_BUS
->      select ACPI
->      select ACPI_PCI
-> +    select ACPI_HW_REDUCED
-> 
->  config SHAKTI_C
->      bool
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 8b5683dbde..89365c40b4 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -29,6 +29,7 @@
->  #include "hw/acpi/aml-build.h"
->  #include "hw/acpi/pci.h"
->  #include "hw/acpi/utils.h"
-> +#include "hw/acpi/generic_event_device.h"
->
-NIT: Could you include this after aml-build.h to keep it sorted?
-
->  #include "hw/intc/riscv_aclint.h"
->  #include "hw/nvram/fw_cfg_acpi.h"
->  #include "hw/pci-host/gpex.h"
-> @@ -224,6 +225,16 @@ static void acpi_dsdt_add_iommu_sys(Aml *scope, const MemMapEntry *iommu_memmap,
->      aml_append(scope, dev);
->  }
-> 
-> +static void acpi_dsdt_add_ged(Aml *scope, RISCVVirtState *s)
-> +{
-> +    build_ged_aml(scope, "\\_SB."GED_DEVICE,
-> +                  HOTPLUG_HANDLER(s->acpi_ged),
-> +                  ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
-> +                  s->memmap[VIRT_ACPI_GED].base);
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index f543d944c3..6ea86534d5 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -532,6 +532,7 @@ config ASPEED_SOC
+>       select I2C
+>       select DPS310
+>       select PCA9552
+> +    select PCA9554
+>       select SERIAL_MM
+>       select SMBUS_EEPROM
+>       select PCA954X
+> diff --git a/hw/arm/aspeed.c b/hw/arm/aspeed.c
+> index d0b333646e..b0965ef8a0 100644
+> --- a/hw/arm/aspeed.c
+> +++ b/hw/arm/aspeed.c
+> @@ -19,6 +19,7 @@
+>   #include "hw/i2c/i2c_mux_pca954x.h"
+>   #include "hw/i2c/smbus_eeprom.h"
+>   #include "hw/gpio/pca9552.h"
+> +#include "hw/gpio/pca9554.h"
+>   #include "hw/nvram/eeprom_at24c.h"
+>   #include "hw/sensor/tmp105.h"
+>   #include "hw/misc/led.h"
+> @@ -1003,6 +1004,180 @@ static void fuji_bmc_i2c_init(AspeedMachineState *bmc)
+>   }
+>   
+>   #define TYPE_TMP421 "tmp421"
+> +#define TYPE_DS1338 "ds1338"
 > +
-> +    acpi_dsdt_add_power_button(scope);
->
-Instead of this wrapper function to create both ged and power button,
-please call them directly below where you are calling
-acpi_dsdt_add_ged(). It will help in future to add some other eventing
-mechanism to the power button.
-
+> +/* Catalina hardware value */
+> +#define CATALINA_BMC_HW_STRAP1 0x00002002
+> +#define CATALINA_BMC_HW_STRAP2 0x00000800
+> +
+> +#define CATALINA_BMC_RAM_SIZE ASPEED_RAM_SIZE(2 * GiB)
+> +
+> +static void catalina_bmc_i2c_init(AspeedMachineState *bmc)
+> +{
+> +    /* Reference from v6.16-rc2 aspeed-bmc-facebook-catalina.dts */
+> +
+> +    AspeedSoCState *soc = bmc->soc;
+> +    I2CBus *i2c[16] = {};
+> +    I2CSlave *i2c_mux;
+> +
+> +    /* busses 0-15 are all used. */
+> +    for (int i = 0; i < ARRAY_SIZE(i2c); i++) {
+> +        i2c[i] = aspeed_i2c_get_bus(&soc->i2c, i);
+> +    }
+> +
+> +    /* &i2c0 */
+> +    /* i2c-mux@71 (PCA9546) on i2c0 */
+> +    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x71);
+> +
+> +    /* i2c-mux@72 (PCA9546) on i2c0 */
+> +    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x72);
+> +
+> +    /* i2c0mux1ch1 */
+> +    /* io_expander7 - pca9535@20 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
+> +                            TYPE_PCA9552, 0x20);
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB);
+> +
+> +    /* i2c-mux@73 (PCA9546) on i2c0 */
+> +    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x73);
+> +
+> +    /* i2c-mux@75 (PCA9546) on i2c0 */
+> +    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x75);
+> +
+> +    /* i2c-mux@76 (PCA9546) on i2c0 */
+> +    i2c_mux = i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x76);
+> +
+> +    /* i2c0mux4ch1 */
+> +    /* io_expander8 - pca9535@21 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 1),
+> +                            TYPE_PCA9552, 0x21);
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 1), 0x50, 8 * KiB);
+> +
+> +    /* i2c-mux@77 (PCA9546) on i2c0 */
+> +    i2c_slave_create_simple(i2c[0], TYPE_PCA9546, 0x77);
+> +
+> +
+> +    /* &i2c1 */
+> +    /* i2c-mux@70 (PCA9548) on i2c1 */
+> +    i2c_mux = i2c_slave_create_simple(i2c[1], TYPE_PCA9548, 0x70);
+> +    /* i2c1mux0ch0 */
+> +    /* ina238@41 - no model */
+> +    /* ina238@42 - no model */
+> +    /* ina238@44 - no model */
+> +    /* i2c1mux0ch1 */
+> +    /* ina238@41 - no model */
+> +    /* ina238@43 - no model */
+> +    /* i2c1mux0ch4 */
+> +    /* ltc4287@42 - no model */
+> +    /* ltc4287@43 - no model */
+> +
+> +    /* i2c1mux0ch5 */
+> +    /* eeprom@54 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 5), 0x54, 8 * KiB);
+> +    /* tpm75@4f */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 5), TYPE_TMP75, 0x4f);
+> +
+> +    /* i2c1mux0ch6 */
+> +    /* io_expander5 - pca9554@27 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
+> +                            TYPE_PCA9554, 0x27);
+> +    /* io_expander6 - pca9555@25 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 6),
+> +                            TYPE_PCA9552, 0x25);
+> +    /* eeprom@51 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 6), 0x51, 8 * KiB);
+> +
+> +    /* i2c1mux0ch7 */
+> +    /* eeprom@53 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 7), 0x53, 8 * KiB);
+> +    /* temperature-sensor@4b - tmp75 */
+> +    i2c_slave_create_simple(pca954x_i2c_get_bus(i2c_mux, 7), TYPE_TMP75, 0x4b);
+> +
+> +    /* &i2c2 */
+> +    /* io_expander0 - pca9555@20 */
+> +    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x20);
+> +    /* io_expander0 - pca9555@21 */
+> +    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x21);
+> +    /* io_expander0 - pca9555@27 */
+> +    i2c_slave_create_simple(i2c[2], TYPE_PCA9552, 0x27);
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[2], 0x50, 8 * KiB);
+> +    /* eeprom@51 */
+> +    at24c_eeprom_init(i2c[2], 0x51, 8 * KiB);
+> +
+> +    /* &i2c5 */
+> +    /* i2c-mux@70 (PCA9548) on i2c5 */
+> +    i2c_mux = i2c_slave_create_simple(i2c[5], TYPE_PCA9548, 0x70);
+> +    /* i2c5mux0ch6 */
+> +    /* eeprom@52 */
+> +    at24c_eeprom_init(pca954x_i2c_get_bus(i2c_mux, 6), 0x52, 8 * KiB);
+> +    /* i2c5mux0ch7 */
+> +    /* ina230@40 - no model */
+> +    /* ina230@41 - no model */
+> +    /* ina230@44 - no model */
+> +    /* ina230@45 - no model */
+> +
+> +    /* &i2c6 */
+> +    /* io_expander3 - pca9555@21 */
+> +    i2c_slave_create_simple(i2c[6], TYPE_PCA9552, 0x21);
+> +    /* rtc@6f - nct3018y */
+> +    i2c_slave_create_simple(i2c[6], TYPE_DS1338, 0x6f);
+> +
+> +    /* &i2c9 */
+> +    /* io_expander4 - pca9555@4f */
+> +    i2c_slave_create_simple(i2c[9], TYPE_PCA9552, 0x4f);
+> +    /* temperature-sensor@4b - tpm75 */
+> +    i2c_slave_create_simple(i2c[9], TYPE_TMP75, 0x4b);
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[9], 0x50, 8 * KiB);
+> +    /* eeprom@56 */
+> +    at24c_eeprom_init(i2c[9], 0x56, 8 * KiB);
+> +
+> +    /* &i2c10 */
+> +    /* temperature-sensor@1f - tpm421 */
+> +    i2c_slave_create_simple(i2c[10], TYPE_TMP421, 0x1f);
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[10], 0x50, 8 * KiB);
+> +
+> +    /* &i2c11 */
+> +    /* ssif-bmc@10 - no model */
+> +
+> +    /* &i2c12 */
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[12], 0x50, 8 * KiB);
+> +
+> +    /* &i2c13 */
+> +    /* eeprom@50 */
+> +    at24c_eeprom_init(i2c[13], 0x50, 8 * KiB);
+> +    /* eeprom@54 */
+> +    at24c_eeprom_init(i2c[13], 0x54, 256);
+> +    /* eeprom@55 */
+> +    at24c_eeprom_init(i2c[13], 0x55, 256);
+> +    /* eeprom@57 */
+> +    at24c_eeprom_init(i2c[13], 0x57, 256);
+> +
+> +    /* &i2c14 */
+> +    /* io_expander9 - pca9555@10 */
+> +    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x10);
+> +    /* io_expander10 - pca9555@11 */
+> +    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x11);
+> +    /* io_expander11 - pca9555@12 */
+> +    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x12);
+> +    /* io_expander12 - pca9555@13 */
+> +    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x13);
+> +    /* io_expander13 - pca9555@14 */
+> +    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x14);
+> +    /* io_expander14 - pca9555@15 */
+> +    i2c_slave_create_simple(i2c[14], TYPE_PCA9552, 0x15);
+> +
+> +    /* &i2c15 */
+> +    /* temperature-sensor@1f - tmp421 */
+> +    i2c_slave_create_simple(i2c[15], TYPE_TMP421, 0x1f);
+> +    /* eeprom@52 */
+> +    at24c_eeprom_init(i2c[15], 0x52, 8 * KiB);
+> +}
+>   
+>   static void bletchley_bmc_i2c_init(AspeedMachineState *bmc)
+>   {
+> @@ -1585,6 +1760,27 @@ static void aspeed_machine_bletchley_class_init(ObjectClass *oc,
+>       aspeed_machine_class_init_cpus_defaults(mc);
+>   }
+>   
+> +static void aspeed_machine_catalina_class_init(ObjectClass *oc,
+> +                                               const void *data)
+> +{
+> +    MachineClass *mc = MACHINE_CLASS(oc);
+> +    AspeedMachineClass *amc = ASPEED_MACHINE_CLASS(oc);
+> +
+> +    mc->desc       = "Facebook Catalina BMC (Cortex-A7)";
+> +    amc->soc_name  = "ast2600-a3";
+> +    amc->hw_strap1 = CATALINA_BMC_HW_STRAP1;
+> +    amc->hw_strap2 = CATALINA_BMC_HW_STRAP2;
+> +    amc->fmc_model = "w25q01jvq";
+> +    amc->spi_model = NULL;
+> +    amc->num_cs    = 2;
+> +    amc->macs_mask = ASPEED_MAC2_ON;
+> +    amc->i2c_init  = catalina_bmc_i2c_init;
+> +    mc->auto_create_sdcard = true;
+> +    mc->default_ram_size = CATALINA_BMC_RAM_SIZE;
+> +    aspeed_machine_class_init_cpus_defaults(mc);
+> +    aspeed_machine_ast2600_class_emmc_init(oc);
 > +}
 > +
->  /*
->   * Serial Port Console Redirection Table (SPCR)
->   * Rev: 1.10
-> @@ -497,6 +508,7 @@ static void build_dsdt(GArray *table_data,
->                               VIRTIO_COUNT);
->          acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
->      }
-> +    acpi_dsdt_add_ged(scope, s);
-> 
-This should be conditional - only if s->acpi_ged is set.
+>   static void fby35_reset(MachineState *state, ResetType type)
+>   {
+>       AspeedMachineState *bmc = ASPEED_MACHINE(state);
+> @@ -1877,6 +2073,10 @@ static const TypeInfo aspeed_machine_types[] = {
+>           .name          = MACHINE_TYPE_NAME("bletchley-bmc"),
+>           .parent        = TYPE_ASPEED_MACHINE,
+>           .class_init    = aspeed_machine_bletchley_class_init,
+> +    }, {
+> +        .name          = MACHINE_TYPE_NAME("catalina-bmc"),
+> +        .parent        = TYPE_ASPEED_MACHINE,
+> +        .class_init    = aspeed_machine_catalina_class_init,
+>       }, {
+>           .name          = MACHINE_TYPE_NAME("fby35-bmc"),
+>           .parent        = MACHINE_TYPE_NAME("ast2600-evb"),
+> diff --git a/tests/functional/meson.build b/tests/functional/meson.build
+> index e9f19d54a2..11c32a8529 100644
+> --- a/tests/functional/meson.build
+> +++ b/tests/functional/meson.build
+> @@ -31,6 +31,7 @@ test_timeouts = {
+>     'arm_aspeed_ast2500' : 720,
+>     'arm_aspeed_ast2600' : 1200,
+>     'arm_aspeed_bletchley' : 480,
+> +  'arm_aspeed_catalina' : 480,
+>     'arm_aspeed_rainier' : 480,
+>     'arm_bpim2u' : 500,
+>     'arm_collie' : 180,
+> @@ -124,6 +125,7 @@ tests_arm_system_thorough = [
+>     'arm_aspeed_ast2500',
+>     'arm_aspeed_ast2600',
+>     'arm_aspeed_bletchley',
+> +  'arm_aspeed_catalina',
+>     'arm_aspeed_rainier',
+>     'arm_bpim2u',
+>     'arm_canona1100',
+> diff --git a/tests/functional/test_arm_aspeed_catalina.py b/tests/functional/test_arm_aspeed_catalina.py
+> new file mode 100755
+> index 0000000000..dc2f24e7b4
+> --- /dev/null
+> +++ b/tests/functional/test_arm_aspeed_catalina.py
+> @@ -0,0 +1,25 @@
+> +#!/usr/bin/env python3
+> +#
+> +# Functional test that boots the ASPEED machines
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +from qemu_test import Asset
+> +from aspeed import AspeedTest
+> +
+> +
+> +class CatalinaMachine(AspeedTest):
+> +
+> +    ASSET_CATALINA_FLASH = Asset(
+> +        'https://github.com/legoater/qemu-aspeed-boot/raw/a866feb5ef81245b4827a214584bf6bcc72939f6/images/catalina-bmc/obmc-phosphor-image-catalina-20250619123021.static.mtd.xz',
+> +        '287402e1ba021991e06be1d098f509444a02a3d81a73a932f66528b159e864f9')
+> +
+> +    def test_arm_ast2600_catalina_openbmc(self):
+> +        image_path = self.uncompress(self.ASSET_CATALINA_FLASH)
+> +
+> +        self.do_test_arm_aspeed_openbmc('catalina-bmc', image=image_path,
+> +                                        uboot='2019.04', cpu_id='0xf00',
+> +                                        soc='AST2600 rev A3')
+> +
+> +if __name__ == '__main__':
+> +    AspeedTest.main()
 
->      aml_append(dsdt, scope);
-> 
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index cf280a92e5..aaa33b9740 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -51,10 +51,12 @@
->  #include "system/kvm.h"
->  #include "system/tpm.h"
->  #include "system/qtest.h"
-> +#include "system/runstate.h"
->  #include "hw/pci/pci.h"
->  #include "hw/pci-host/gpex.h"
->  #include "hw/display/ramfb.h"
->  #include "hw/acpi/aml-build.h"
-> +#include "hw/acpi/generic_event_device.h"
->  #include "qapi/qapi-visit-common.h"
->  #include "hw/virtio/virtio-iommu.h"
->  #include "hw/uefi/var-service-api.h"
-> @@ -95,6 +97,7 @@ static const MemMapEntry virt_memmap[] = {
->      [VIRT_UART0] =        { 0x10000000,         0x100 },
->      [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
->      [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
-> +    [VIRT_ACPI_GED] =     { 0x10200000, ACPI_GED_EVT_SEL_LEN },
-Do we need to align the base address at 1MB? It can create a larger hole
-unnecessarily.
-
->      [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
->      [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
->      [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
-> @@ -1272,6 +1275,21 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
->      return dev;
->  }
-> 
-> +static DeviceState *create_acpi_ged(RISCVVirtState *s, DeviceState *irqchip)
-> +{
-> +    DeviceState *dev;
-> +    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
-> +
-> +    dev = qdev_new(TYPE_ACPI_GED);
-> +    qdev_prop_set_uint32(dev, "ged-event", event);
-> +    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-> +
-> +    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].base);
-> +    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0, qdev_get_gpio_in(irqchip, ACPI_GED_IRQ));
-> +
-> +    return dev;
-> +}
-> +
->  static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
->  {
->      FWCfgState *fw_cfg;
-> @@ -1430,6 +1448,14 @@ static void virt_build_smbios(RISCVVirtState *s)
->      }
->  }
-> 
-> +static void virt_powerdown_req(Notifier *notifier, void *opaque)
-> +{
-> +    RISCVVirtState *s;
-> +
-> +    s = container_of(notifier, RISCVVirtState, powerdown_notifier);
-> +    acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
-Check for s->acpi_ged here. 
-
-> +}
-> +
->  static void virt_machine_done(Notifier *notifier, void *data)
->  {
->      RISCVVirtState *s = container_of(notifier, RISCVVirtState,
-> @@ -1703,6 +1729,9 @@ static void virt_machine_init(MachineState *machine)
-> 
->      create_platform_bus(s, mmio_irqchip);
-> 
-> +    /* acpi ged */
-> +    s->acpi_ged = create_acpi_ged(s, mmio_irqchip);
-> +
->
-I think we should create GED only if ACPI is enabled.
-
-Thanks!
-Sunil
 
