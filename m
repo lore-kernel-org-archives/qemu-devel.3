@@ -4,81 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DB3DC77B7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 18:40:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7EEFC7115D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 18:57:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSKAI-0005fG-Ru; Thu, 19 Jun 2025 14:39:10 -0400
+	id 1uSKR8-0000tp-Ck; Thu, 19 Jun 2025 14:56:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <idryomov@gmail.com>)
- id 1uSKAE-0005ec-Vp; Thu, 19 Jun 2025 14:39:06 -0400
-Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
+ id 1uSKR2-0000t4-Ah; Thu, 19 Jun 2025 14:56:28 -0400
+Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <idryomov@gmail.com>)
- id 1uSKAD-0007f4-Ab; Thu, 19 Jun 2025 14:39:06 -0400
-Received: by mail-pl1-x630.google.com with SMTP id
- d9443c01a7336-235ef62066eso13529185ad.3; 
- Thu, 19 Jun 2025 11:39:04 -0700 (PDT)
+ id 1uSKQz-0000ze-5J; Thu, 19 Jun 2025 14:56:26 -0400
+Received: by mail-pg1-x531.google.com with SMTP id
+ 41be03b00d2f7-b2c2c762a89so887572a12.0; 
+ Thu, 19 Jun 2025 11:56:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750358343; x=1750963143; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1750359383; x=1750964183; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iD4LM1CZktZxWapBS5UB33ai9wuFW4H3I4OiQlgWQts=;
- b=Doo6pcHAM5ubq/4fLKehUve/N0w7NiL0vNXihlpCovJTP/eJhVFntWIry3eOh/dKgo
- abr3CJZwexBY84u/wSGCTVQ2hNZjcthE8uzeP3kSk34K89ROrxrothtzfyDFJzhsuGdY
- foqeIUVJBA+QHaUttZmympxjQRMluWCJRaDkVRypMYxsbr/iHgvSAl0A4saKsu6Kv+G6
- AALiZj9WmWW8zuoIrHnr9HENuTmEK/NkGazqWMSQ4e1P0zhVEYjjw2Gj5ffEfJvXL7Jf
- XdB4pKFqcTqfgoxCt2qCYSHTexAqKVVI6HTkyf/nchhEOYrvMUaM+j2VRtbrZI7glma1
- LyDg==
+ bh=X59hpwk1j0gAf9yfSf4iakytT6iYx4Uu2zET67ei1T8=;
+ b=FJ5fCO7eFya1sGCMNX0Csb8b/VEaqG6NGV6xeceH/pvga3DXa3B1x13KdaHCv5XTEE
+ svfFzyHNqptOChJY2co7gg9y0KAuKVVXXgy+8NJxfh8QxMEnqnMc7qVf6S4wFi87/OlN
+ 36NCer+4XW1u66QpmqQVdS5QJQQ0miSeZmEM3VrUvIgXrPdSLzUU5mjPns5i7W/nFNFY
+ bVv0AuzDfrmRki0dkq0hqwsuMooeExiZ9V17vTd8vt4qg9YudE6VDZlgWXZECoEOYQ6x
+ AIZZHbJK8vZYuxG0fHTgSoYeGQGlejCQd4pxL3PzWV+NiY7FdhL1TgugBz6GZLliJBBs
+ kL3w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750358343; x=1750963143;
+ d=1e100.net; s=20230601; t=1750359383; x=1750964183;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=iD4LM1CZktZxWapBS5UB33ai9wuFW4H3I4OiQlgWQts=;
- b=hWdOD9vSsvBueN4PPKXG9mSQuU+bYbBQHVB8R/F3iG4Bl+0B2FfVV7JJWZcS3I4JKy
- QiFABHFSWeAX0BFrTu5pJgH6AoHp2jdkq/wsOVVebHIW8QXLxvzfyseeSfxsVJFUu7Jj
- f/r9IiBI6rvNImWghwvOPmv03dT62AhVviBPglT5eexEsq8+eVd8ISCO+sF4lhBQ9jXb
- ZxOFZAnIRAVuefCjFQ7ehwEkNb9ugmo9gGr+jaHj/4R9VkXitvNTKgcnaQcWloiCcVUa
- pmoT91q1rffgbc/qsrav5AiPH6jmwPDFqBMTZk+3FXhGMRNNa2046HhQyDydwm33ZxUC
- TG4A==
+ bh=X59hpwk1j0gAf9yfSf4iakytT6iYx4Uu2zET67ei1T8=;
+ b=HWQB9Z/eLlosJ58vcSohMS0Tns3nRe5H4SHOqAjbigoT9Z6oZ4wrtebJLA3gahb1zT
+ zbE634c2Ri6n0DBZG75QeqeeScZUpl9MyfwiSCKBkiMg6i+fIGCpKy7WTC2uRMw9Tsm+
+ 3W3TQQJ7OreH1pUsH3TMy153ku+dufAZG56RBdnH7pMjCP5Os8h7+soqL54yp5HZs4yb
+ PUyuMKBg9BywkPeGpyyc/AQ0syNPAZZsbyP2l1RRX6SOTrojJgWtodPT/9VkaEZH65M5
+ OTkT+TrjYqHhaxndyfydjI3XXTpZS2vaDwb1uMIrFsMP2AQfERrN/p7wpVzc5C+Zx6ER
+ l6bA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV/Un1sti7DZGAzeC69kploKAt2KbcQNrjS5AYu8DstJeIH9ehRlVt2n1BxGqCqKGXQqf/Z3kknm3jtoQ==@nongnu.org,
- AJvYcCWAZvjXM+4OjkmrqyO3S5qFjI64ERmLFKWzUfyAv8Ndc+7xoBr7WPjZN5njApL2GrMcLWXDPbKszGc2@nongnu.org
-X-Gm-Message-State: AOJu0YxtGtngcUFCruwCiToYbSGcfd577TcQuCiU6QktvcIEYs9SwByr
- xK3k0bOg1YaqxBMftwLWUcmyouF8svOTOMg/aEDhViuES5g56X0wL94EfTawNwhDFaToRxDxpaH
- 1gvU+ZVbF2uaR0amevsPmCvpYmy+oOWM=
-X-Gm-Gg: ASbGncsk5SD6Hij6JZ2wxWGIIdj/oxsLJfqJvpnYegdkZWWbv07lQ4MWgRXkPnYrkDA
- 6g2sbtX286PJkKMyq6cHnKnMCJ4WSvXdcpzjEFKrbJ3Lc1h9dCSm0BEii6JAz1qtcQJrOo5KC6B
- gL0F33DvWy/HF1m0WYTD+oGE+OYB+MjPpXvzleR2PJ0RI=
-X-Google-Smtp-Source: AGHT+IHz9MpRvB8HRqYm/0gtHeQfjxbIUgLw/DNGkpwOpeYVbjOo2KB0LWZZgi/iFy3z8ASbBvboh1almG9PnfZXArc=
-X-Received: by 2002:a17:902:f683:b0:224:24d3:6103 with SMTP id
- d9443c01a7336-2366b3f78b9mr372429275ad.35.1750358343191; Thu, 19 Jun 2025
- 11:39:03 -0700 (PDT)
+ AJvYcCWKIWUInTacBSDDOpIYUxDtEzgC+DJQWzVion70oJjA6tNSmTxGQyo3vQF4+vzgHH7xeHdmCJg3Ennl@nongnu.org
+X-Gm-Message-State: AOJu0YzboydHJzmmjHlbMLD/0ySKn9BKhGysdtMGPl3ErO4H8EhC/jky
+ O4d0y+hvoo3vlhy2f94NWE9l+ug+RjGG+F9oU3TC9aocxkFeeTCv9me4swWZKQIbjPwYvcAPwSQ
+ vu2MFlOBEd35MPgo71bXBO/UHVfwhluk=
+X-Gm-Gg: ASbGncuTebg7EgUbwkhJAb4AbjvqFqVozp+8NCwLQD1T3oTWD6qoAYXDNkZemrd3U4z
+ SZX//jCAqt/1dqRLO3hoLjDqCtT082unvogtljaD2ArjB3zAKiTAKVuhpsRqfvhVYyFs/T8JBm5
+ uWmsRx8DzIp7aQSiAqg1glqwtv7IMBSpNDiNurzsCesow=
+X-Google-Smtp-Source: AGHT+IHlSDu5HoESr7xH/s08EG5P/AKDOMOo2aCm4x7aMRQnOOc4qCvTLzw7VwNfYDhDYcEe7ES0bxkExeK38gxB/Gg=
+X-Received: by 2002:a17:90b:3d85:b0:301:9f62:a944 with SMTP id
+ 98e67ed59e1d1-3159d8ff798mr472309a91.33.1750359383191; Thu, 19 Jun 2025
+ 11:56:23 -0700 (PDT)
 MIME-Version: 1.0
 References: <20250515112908.383693-1-f.ebner@proxmox.com>
- <20250515112908.383693-2-f.ebner@proxmox.com>
- <CAOi1vP94WJ7r1vPXvcpGZTs2xf6TZ=p=EmVGQvwipftufaYAMw@mail.gmail.com>
- <aE_pbAS_gS12Fp8f@redhat.com>
- <CAOi1vP-oc0XHR28E7JrvZOohL7KZEq7LunYKHfb540W=a8t=wQ@mail.gmail.com>
- <4a7ca415-0d16-4b21-ad93-31c35f1a4511@proxmox.com>
-In-Reply-To: <4a7ca415-0d16-4b21-ad93-31c35f1a4511@proxmox.com>
+ <20250515112908.383693-3-f.ebner@proxmox.com>
+ <CAOi1vP_kEY31-brzTfG6K9y0Wbv06e=9vH=rqD9ouwq32VaYAA@mail.gmail.com>
+ <b0f1ebc4-c7fd-45f9-aa99-a9507c1df55f@proxmox.com>
+In-Reply-To: <b0f1ebc4-c7fd-45f9-aa99-a9507c1df55f@proxmox.com>
 From: Ilya Dryomov <idryomov@gmail.com>
-Date: Thu, 19 Jun 2025 20:38:49 +0200
-X-Gm-Features: AX0GCFtbQrP8oNuDUDoqtUp8YsvSNwX_CnLLEpFzu6Ci7Uj8WMUw6e0b_xeai-c
-Message-ID: <CAOi1vP8sazy4h=HcZyxE+EaC_C-5QnYezvwnJLzTCnz+=HM4hQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] block/rbd: support selected key-value-pairs via QAPI
+Date: Thu, 19 Jun 2025 20:56:11 +0200
+X-Gm-Features: AX0GCFtoGX5yQWGmCADY88bGL37E1UAk5HHLXLplYARQHGa-7QoyS64uUD9vxDg
+Message-ID: <CAOi1vP8y0nFZU-uOCy0sUBBgBUZX3ZdMA0dLKX1s0dXc3oKePQ@mail.gmail.com>
+Subject: Re: [PATCH 2/2] block/rbd: support keyring option via QAPI
 To: Fiona Ebner <f.ebner@proxmox.com>
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, armbru@redhat.com, 
  eblake@redhat.com, hreitz@redhat.com, kwolf@redhat.com, pl@dlhnet.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
- envelope-from=idryomov@gmail.com; helo=mail-pl1-x630.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
+ envelope-from=idryomov@gmail.com; helo=mail-pg1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,84 +97,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Jun 16, 2025 at 2:38=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
+On Mon, Jun 16, 2025 at 2:51=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.com> w=
 rote:
 >
-> Am 16.06.25 um 12:28 schrieb Ilya Dryomov:
-> > On Mon, Jun 16, 2025 at 11:52=E2=80=AFAM Daniel P. Berrang=C3=A9 <berra=
-nge@redhat.com> wrote:
-> >> On Mon, Jun 16, 2025 at 11:25:54AM +0200, Ilya Dryomov wrote:
-> >>> On Thu, May 15, 2025 at 1:29=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.=
-com> wrote:
-> >>>>  ##
-> >>>>  # @BlockdevOptionsRbd:
-> >>>>  #
-> >>>> @@ -4327,6 +4360,9 @@
-> >>>>  #     authentication.  This maps to Ceph configuration option "key"=
-.
-> >>>>  #     (Since 3.0)
-> >>>>  #
-> >>>> +# @key-value-pairs: Key-value pairs for additional Ceph configurato=
-n.
-> >>>> +#     (Since 10.1)
-> >>>> +#
-> >>>>  # @server: Monitor host address and port.  This maps to the "mon_ho=
-st"
-> >>>>  #     Ceph option.
-> >>>>  #
-> >>>> @@ -4342,6 +4378,7 @@
-> >>>>              '*user': 'str',
-> >>>>              '*auth-client-required': ['RbdAuthMode'],
-> >>>>              '*key-secret': 'str',
-> >>>> +            '*key-value-pairs' : 'RbdKeyValuePairs',
-> >>>
-> >>> To side-step all of the above, have you considered implementing
-> >>> a straightforward passthrough to Ceph instead?  Something like
-> >>>
-> >>>   '*key-value-pairs': ['RbdKeyValuePair']
-> >>>
-> >>> where RbdKeyValuePair is just a pair arbitrary strings (and
-> >>> key-value-pairs is thus an optional list of those).  rados_conf_set()
-> >>> would be called just the same but the user would be able to override
-> >>> any Ceph option they wish, not just a few that we thought of here.
+> Am 16.06.25 um 11:34 schrieb Ilya Dryomov:
+> > On Thu, May 15, 2025 at 1:29=E2=80=AFPM Fiona Ebner <f.ebner@proxmox.co=
+m> wrote:
 > >>
-> >> Passing through arbitrary key/value pairs as strings is essentially
-> >> abdicating our design responsibility in QAPI. enums would no longer
-> >> be introspectable. Integers / booleans would require abnormal formatti=
-ng
-> >> by clients. API stability / deprecation promises can no longer be made=
-.
-> >> and more besides.
->
-> Yes, and I also was under the impression that there is no desire to
-> re-introduce arbitrary key-value pairs with QMP/blockdev options.
-
-Hi Fiona,
-
-What do you mean by re-introduce?
-
->
-> >> Given that limitation, if we did go the string pairs route, I would
-> >> expect it to be marked as "unstable" in the QAPI schema, so apps have
-> >> a suitable warning NOT to rely on this.
+> >> In Proxmox VE, it is not always required to have a dedicated Ceph
+> >> configuration file, and using the 'key-secret' QAPI option would
+> >> require obtaining a key from the keyring first. The keyring location
+> >> is readily available however, so having support for the 'keyring'
+> >> configuration option is most convenient.
 > >
-> > This sounds sensible to me.  We can continue exposing the most common
-> > Ceph options through a proper QAPI schema but add key-value-pairs as an
-> > alternative low-level route for those who want to avoid dealing with
-> > physical configuration files.
+> > Would such a setup have a ceph.conf file that is shared between
+> > multiple users (or no ceph.conf file at all if the monitors are
+> > specified via QAPI option) but individual keyring files for each
+> > user?
 >
-> As written in the commit message, the cache option should not apply to
-> all volumes, so using configuration files is rather impractical there.
+> There is only a single Ceph user and we could create a ceph.conf file
+> with the 'keyring' option set. It was just not required in the past,
+> because we specified 'keyring' via '-drive' directly, so having this
+> option would be more convenient for us.
 >
-> I'd prefer defining the cache option(s) explicitly, and have people add
-> additional key-value pairs they require explicitly going forward. But if
-> you really don't want me to, I can still go with the unstable, arbitrary
-> strings approach instead.
+> In short: we can still make it work on our side if there is no interest
+> in adding this option in the QAPI.
 
-The RBD cache policy option would definitely count as one of the most
-common, so I don't have an objection to it being added in an explicit
-form.  I'm also fine with the "disabled" enum value that you expressed
-a preference for in another email.
+I don't have a strong opinion, but it feels a bit like circumventing
+the QAPI secret infrastructure.  It's already possible to circumvent it
+indirectly through the keyring option in ceph.conf file but that is
+something that falls out naturally and has always been there.  Adding
+a more direct way to do it has me split...
 
 Thanks,
 
