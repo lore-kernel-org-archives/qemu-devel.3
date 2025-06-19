@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5348C7115E
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 08:53:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79E97C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 08:53:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSAzQ-0004PN-Px; Thu, 19 Jun 2025 04:51:21 -0400
+	id 1uSAzV-0004Rl-9u; Thu, 19 Jun 2025 04:51:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uSAzO-0004P0-JA
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:18 -0400
+ id 1uSAzQ-0004PS-3H
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:20 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uSAzL-0002w3-DT
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:18 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uSAzL-0002wU-Or
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:19 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxquB6z1NoerUZAQ--.17776S3;
- Thu, 19 Jun 2025 16:51:07 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8CxPuN+z1NofrUZAQ--.23861S3;
+ Thu, 19 Jun 2025 16:51:10 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAxDcVtz1NohtwgAQ--.30176S4;
- Thu, 19 Jun 2025 16:51:06 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxDcVtz1NohtwgAQ--.30176S6;
+ Thu, 19 Jun 2025 16:51:09 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 02/14] hw/intc/loongarch_extioi: Add kernel irqchip save and
- restore function
-Date: Thu, 19 Jun 2025 16:28:05 +0800
-Message-Id: <20250619082817.1517996-3-gaosong@loongson.cn>
+Subject: [PULL 04/14] hw/intc/loongson_ipi: Add load and save interface with
+ ipi_common class
+Date: Thu, 19 Jun 2025 16:28:07 +0800
+Message-Id: <20250619082817.1517996-5-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250619082817.1517996-1-gaosong@loongson.cn>
 References: <20250619082817.1517996-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxDcVtz1NohtwgAQ--.30176S4
+X-CM-TRANSID: qMiowMAxDcVtz1NohtwgAQ--.30176S6
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,169 +68,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-Add save and store funtction if kvm_irqchip_in_kernel() return true,
-it is to get and set ExtIOI irqchip state from KVM kernel.
+Add pre_save and post_load interfaces with ipi_common class, here only
+framework ipi_common adds these interfaces. The defailed implementation
+is LoongArchIPI child device in later.
 
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <20250606063033.2557365-3-maobibo@loongson.cn>
+Message-ID: <20250606063033.2557365-5-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_extioi.c         | 14 +++++
- hw/intc/loongarch_extioi_kvm.c     | 90 ++++++++++++++++++++++++++++++
- include/hw/intc/loongarch_extioi.h |  2 +
- 3 files changed, 106 insertions(+)
+ hw/intc/loongson_ipi_common.c         | 28 +++++++++++++++++++++++++++
+ include/hw/intc/loongson_ipi_common.h |  2 ++
+ 2 files changed, 30 insertions(+)
 
-diff --git a/hw/intc/loongarch_extioi.c b/hw/intc/loongarch_extioi.c
-index 837f649d6c..7be0685f36 100644
---- a/hw/intc/loongarch_extioi.c
-+++ b/hw/intc/loongarch_extioi.c
-@@ -393,11 +393,24 @@ static void loongarch_extioi_reset_hold(Object *obj, ResetType type)
-     }
+diff --git a/hw/intc/loongson_ipi_common.c b/hw/intc/loongson_ipi_common.c
+index ff2cc8bc91..8cd78d4858 100644
+--- a/hw/intc/loongson_ipi_common.c
++++ b/hw/intc/loongson_ipi_common.c
+@@ -282,10 +282,38 @@ static void loongson_ipi_common_unrealize(DeviceState *dev)
+     g_free(s->cpu);
  }
  
-+static int vmstate_extioi_pre_save(void *opaque)
++static int loongson_ipi_common_pre_save(void *opaque)
 +{
-+    if (kvm_irqchip_in_kernel()) {
-+        return kvm_extioi_get(opaque);
++    IPICore *ipicore = (IPICore *)opaque;
++    LoongsonIPICommonState *s = ipicore->ipi;
++    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(s);
++
++    if (licc->pre_save) {
++        return licc->pre_save(s);
 +    }
 +
 +    return 0;
 +}
 +
- static int vmstate_extioi_post_load(void *opaque, int version_id)
- {
-     LoongArchExtIOICommonState *s = LOONGARCH_EXTIOI_COMMON(opaque);
-     int i, start_irq;
- 
-+    if (kvm_irqchip_in_kernel()) {
-+        return kvm_extioi_put(opaque, version_id);
-+    }
-+
-     for (i = 0; i < (EXTIOI_IRQS / 4); i++) {
-         start_irq = i * 4;
-         extioi_update_sw_coremap(s, start_irq, s->coremap[i], false);
-@@ -423,6 +436,7 @@ static void loongarch_extioi_class_init(ObjectClass *klass, const void *data)
-                                       &lec->parent_unrealize);
-     resettable_class_set_parent_phases(rc, NULL, loongarch_extioi_reset_hold,
-                                        NULL, &lec->parent_phases);
-+    lecc->pre_save  = vmstate_extioi_pre_save;
-     lecc->post_load = vmstate_extioi_post_load;
- }
- 
-diff --git a/hw/intc/loongarch_extioi_kvm.c b/hw/intc/loongarch_extioi_kvm.c
-index e6d5dd379a..f4c618ca4c 100644
---- a/hw/intc/loongarch_extioi_kvm.c
-+++ b/hw/intc/loongarch_extioi_kvm.c
-@@ -12,6 +12,96 @@
- #include "qapi/error.h"
- #include "system/kvm.h"
- 
-+static void kvm_extioi_access_reg(int fd, uint64_t addr, void *val, bool write)
++static int loongson_ipi_common_post_load(void *opaque, int version_id)
 +{
-+    kvm_device_access(fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_REGS,
-+                      addr, val, write, &error_abort);
-+}
++    IPICore *ipicore = (IPICore *)opaque;
++    LoongsonIPICommonState *s = ipicore->ipi;
++    LoongsonIPICommonClass *licc = LOONGSON_IPI_COMMON_GET_CLASS(s);
 +
-+static void kvm_extioi_access_sw_state(int fd, uint64_t addr,
-+                                       void *val, bool write)
-+{
-+    kvm_device_access(fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_SW_STATUS,
-+                      addr, val, write, &error_abort);
-+}
-+
-+static void kvm_extioi_access_sw_status(void *opaque, bool write)
-+{
-+    LoongArchExtIOICommonState *lecs = LOONGARCH_EXTIOI_COMMON(opaque);
-+    LoongArchExtIOIState *les = LOONGARCH_EXTIOI(opaque);
-+    int addr;
-+
-+    addr = KVM_DEV_LOONGARCH_EXTIOI_SW_STATUS_STATE;
-+    kvm_extioi_access_sw_state(les->dev_fd, addr, &lecs->status, write);
-+}
-+
-+static void kvm_extioi_access_regs(void *opaque, bool write)
-+{
-+    LoongArchExtIOICommonState *lecs = LOONGARCH_EXTIOI_COMMON(opaque);
-+    LoongArchExtIOIState *les = LOONGARCH_EXTIOI(opaque);
-+    int fd = les->dev_fd;
-+    int addr, offset, cpu;
-+
-+    for (addr = EXTIOI_NODETYPE_START; addr < EXTIOI_NODETYPE_END; addr += 4) {
-+        offset = (addr - EXTIOI_NODETYPE_START) / 4;
-+        kvm_extioi_access_reg(fd, addr, &lecs->nodetype[offset], write);
++    if (licc->post_load) {
++        return licc->post_load(s, version_id);
 +    }
 +
-+    for (addr = EXTIOI_IPMAP_START; addr < EXTIOI_IPMAP_END; addr += 4) {
-+        offset = (addr - EXTIOI_IPMAP_START) / 4;
-+        kvm_extioi_access_reg(fd, addr, &lecs->ipmap[offset], write);
-+    }
-+
-+    for (addr = EXTIOI_ENABLE_START; addr < EXTIOI_ENABLE_END; addr += 4) {
-+        offset = (addr - EXTIOI_ENABLE_START) / 4;
-+        kvm_extioi_access_reg(fd, addr, &lecs->enable[offset], write);
-+    }
-+
-+    for (addr = EXTIOI_BOUNCE_START; addr < EXTIOI_BOUNCE_END; addr += 4) {
-+        offset = (addr - EXTIOI_BOUNCE_START) / 4;
-+        kvm_extioi_access_reg(fd, addr, &lecs->bounce[offset], write);
-+    }
-+
-+    for (addr = EXTIOI_ISR_START; addr < EXTIOI_ISR_END; addr += 4) {
-+        offset = (addr - EXTIOI_ISR_START) / 4;
-+        kvm_extioi_access_reg(fd, addr, &lecs->isr[offset], write);
-+    }
-+
-+    for (addr = EXTIOI_COREMAP_START; addr < EXTIOI_COREMAP_END; addr += 4) {
-+        offset = (addr - EXTIOI_COREMAP_START) / 4;
-+        kvm_extioi_access_reg(fd, addr, &lecs->coremap[offset], write);
-+    }
-+
-+    for (cpu = 0; cpu < lecs->num_cpu; cpu++) {
-+        for (addr = EXTIOI_COREISR_START;
-+             addr < EXTIOI_COREISR_END; addr += 4) {
-+            offset = (addr - EXTIOI_COREISR_START) / 4;
-+            kvm_extioi_access_reg(fd, (cpu << 16) | addr,
-+                                  &lecs->cpu[cpu].coreisr[offset], write);
-+        }
-+    }
-+}
-+
-+int kvm_extioi_get(void *opaque)
-+{
-+    kvm_extioi_access_regs(opaque, false);
-+    kvm_extioi_access_sw_status(opaque, false);
 +    return 0;
 +}
 +
-+int kvm_extioi_put(void *opaque, int version_id)
-+{
-+    LoongArchExtIOIState *les = LOONGARCH_EXTIOI(opaque);
-+    int fd = les->dev_fd;
-+
-+    kvm_extioi_access_regs(opaque, true);
-+    kvm_extioi_access_sw_status(opaque, true);
-+    kvm_device_access(fd, KVM_DEV_LOONGARCH_EXTIOI_GRP_CTRL,
-+                      KVM_DEV_LOONGARCH_EXTIOI_CTRL_LOAD_FINISHED,
-+                      NULL, true, &error_abort);
-+    return 0;
-+}
-+
- void kvm_extioi_realize(DeviceState *dev, Error **errp)
- {
-     LoongArchExtIOICommonState *lecs = LOONGARCH_EXTIOI_COMMON(dev);
-diff --git a/include/hw/intc/loongarch_extioi.h b/include/hw/intc/loongarch_extioi.h
-index 69565e14ab..9be1d736ea 100644
---- a/include/hw/intc/loongarch_extioi.h
-+++ b/include/hw/intc/loongarch_extioi.h
-@@ -27,5 +27,7 @@ struct LoongArchExtIOIClass {
+ static const VMStateDescription vmstate_ipi_core = {
+     .name = "ipi-single",
+     .version_id = 2,
+     .minimum_version_id = 2,
++    .pre_save  = loongson_ipi_common_pre_save,
++    .post_load = loongson_ipi_common_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINT32(status, IPICore),
+         VMSTATE_UINT32(en, IPICore),
+diff --git a/include/hw/intc/loongson_ipi_common.h b/include/hw/intc/loongson_ipi_common.h
+index b587f9c571..e58ce2aa1c 100644
+--- a/include/hw/intc/loongson_ipi_common.h
++++ b/include/hw/intc/loongson_ipi_common.h
+@@ -48,6 +48,8 @@ struct LoongsonIPICommonClass {
+     AddressSpace *(*get_iocsr_as)(CPUState *cpu);
+     int (*cpu_by_arch_id)(LoongsonIPICommonState *lics, int64_t id,
+                           int *index, CPUState **pcs);
++    int (*pre_save)(void *opaque);
++    int (*post_load)(void *opaque, int version_id);
  };
  
- void kvm_extioi_realize(DeviceState *dev, Error **errp);
-+int kvm_extioi_get(void *opaque);
-+int kvm_extioi_put(void *opaque, int version_id);
- 
- #endif /* LOONGARCH_EXTIOI_H */
+ MemTxResult loongson_ipi_core_readl(void *opaque, hwaddr addr, uint64_t *data,
 -- 
 2.47.0
 
