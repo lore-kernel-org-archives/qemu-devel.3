@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2CD74C7115A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD1FC7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:20:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSF6r-00065N-MQ; Thu, 19 Jun 2025 09:15:17 -0400
+	id 1uSF6u-0006Mp-Gq; Thu, 19 Jun 2025 09:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF6h-00056c-AB
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:15:07 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF6m-0005Re-1o
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:15:12 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF6e-0004E1-QF
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:15:06 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-442fda876a6so6683755e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 06:15:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF6k-0004Kv-3l
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:15:11 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-453426170b6so11665635e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 06:15:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750338903; x=1750943703; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750338908; x=1750943708; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZOrY1FO5kcbv6yzuU6OsNlHS46/lwsOolLM8hoDx0Ks=;
- b=iN17VTZZoDmSEWfiUkxKk6tWVMWphdhNTttC7Ru1M2Bmb+ln+RnEytJI0+baLtC2PW
- d0BZtxwBb/xpbr1MwnoK295dtgQV4mwEIZksFxGYdO511NtOfKM/1y6/j6TW8boGEyB9
- xOmvLSSoloL9NtJdjK5ECL9XzFjJhCtGeK8zpI5OIpN2RU4gPhu/fv1XWKfmLZg/tabj
- Jtja/Hq4UyWc3UxaR2qzNWUpTjH03/miLPKmG/Km0Spcn/uYuB2BbEPF+1F4y3hY2qmN
- YmI6BJG65EHpOmuhO9qyanbdnpsxAU3Twx54jyMNx0uwwnkVe56a8EWhKFe92+CHBph0
- 5zUA==
+ bh=yfbZh25j/JWcO06w+c80OaMwV9tGFnS1KSANu6xFbyE=;
+ b=jzPjDWpj81RuWVYolYhuqpW7YwtCEiNw1hNEgp7QNgq6eQIG5cq9opLc9Lcj82WONJ
+ oF5Sv6/27lKl90oC7+7dF7B5TAdR39hUIIKbsMjk3JfhDwZmvkG70jj2XdMPdXj3e/DD
+ H1+fN12NMVyI/GRx0amm/irCWy0VspTdyTiefvyfeQK0oZwvQu2MilpCVu9fVZ2/nnHh
+ Tjo+WA780JveA7jOlvoiHxfXdHzISM3RmDQnITrrRrif0Vs4XMGi9JI745blAjlJLDze
+ bV/xCBMfD5j9pH2h9nSm32BuoVt8OEZzXrjpdQ+laWO5KEaJ5XPUK/iZqpsOeBQflS+V
+ 5UWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750338903; x=1750943703;
+ d=1e100.net; s=20230601; t=1750338908; x=1750943708;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ZOrY1FO5kcbv6yzuU6OsNlHS46/lwsOolLM8hoDx0Ks=;
- b=aEvSwpJMd4n4u7K01dLuavq37VZ1zsLOvPCq2aPW/QnhV37xuoFKzcqzEe5zncISqe
- Jn9cmx2AYX93W8q1VH4GAsCZ6BrJx6GZQwKUoWK6mx66kWbdZAmA33Io+gVDZvpN2E2O
- wZqgZdDKXLI8PIfqmW6YS9Cw65v7ck1U3ObNtwU6ceJZ4wR/Eaesxjc2A+LoXJyd4tPq
- Ep2fqmpwZ+OWO93RvsFCIjMA89fLFpxy8453fmv1ZO1hPdshWuU43i/U77quqcvJpyKl
- m4dVNNU6MJEYcJDBNP8ABxD+fbxpplQjk96rK6bajV49U+zEtSSUe3t62Xlg8SxGBdhy
- 2m5w==
-X-Gm-Message-State: AOJu0YymEoaCjpcRF24/T+TYWrYd5nX+WiHTkjPMRJAF2DbYcaIdstNA
- dkFyaGYnYcv/CvuohWMrWIdSUxfUMX2hrc0CW+ZEn9klB76/o/95UC3xpUsKhSw+h7R6ghFoBmO
- rZFqeAts=
-X-Gm-Gg: ASbGncsiu8P935Ijkl8toESiT4uPp5JQl10UuCsZ09Vsmt21y9tsBi2md3pKHYttgCk
- xhxMVQWfwUOgXXIM5XwbHFYFcvemGSz1tp4HHF1juz2dBSQAhPNtddZn0b0TSUYVPqSL7eB1VEj
- 4M2KfNfyLhGIZGN07XND2xH/dE3ZJMT3t5s4s3zPucri6rQoaEeJ9wnEFGUbeaztskbtXUM8+KT
- EPMOtCMkzaTJ6Jyyla5h7uOfSwwRAgOgzX4dTd8P1+Vj1F5MN2bq0z3tL8jgdPLTbZP+ZigqdgE
- T/iX9zYOWTTsM30M+szeun8i/w2ngs2wC82SULNWbdYW2GT8kuZwmnIWvNnDkvx+5w8M+9o7Ntm
- eMRCmksiu7wbsdc9fuU4d4se/s8UDS8YFSKtd
-X-Google-Smtp-Source: AGHT+IFFj/4N5XELq/kLhF7E4qci2bJJhqg8HElhpm3KcUTcYoBlJ+rjYJOiQKm4H1fVjPvPjGO1Uw==
-X-Received: by 2002:a05:600c:a01:b0:453:6150:de41 with SMTP id
- 5b1f17b1804b1-4536150e073mr16395235e9.17.1750338902687; 
- Thu, 19 Jun 2025 06:15:02 -0700 (PDT)
+ bh=yfbZh25j/JWcO06w+c80OaMwV9tGFnS1KSANu6xFbyE=;
+ b=c3hA1ykakaseDsyqm18qkfhYU93XOJG49bjrTUiB9V8tL5aYNjQb+LVNWeezIhIlpP
+ dWX5CZTxQ1mnerp/8LJNz83D28Sy7y9UiYUsw3h/9ub/c9guQHnj6Cd7uGyRuM2cMyZi
+ 7IxVypstHtzywbwEkrxDKSKBU7jEE8DQA+HAO6mVL1Z+wMevhmSjNDfrdbR0kOtAfTj+
+ Seizb19RMuVW2A2Qp6K3WJ9Z6pXoB8IPSrOv6SaiL56AJD15341/2gh0hAEmrGJv3+A+
+ qhyQ2tVImbl0r+fyder31h3bEyhYTET6ha02wv+CXSgoAKQiTT622QZmYGzzJbUxBFf/
+ CXig==
+X-Gm-Message-State: AOJu0YzzuJB4K0jnu/yfRG5pkmW/g16EoVlC8OFXbEaqn+ChQO2K69n4
+ k7Kd8QO8U7N+vJoWWu2kU3Czf/LM3xOCFyWrprSm8grmX4ILogiyaDIilR0RLGmEniZVLG0QQrI
+ YJe2RkAM=
+X-Gm-Gg: ASbGnctPgM+2hptPleak3SmVKS+byTHeaA2pW/giCqgRLDZJ7+HIugswItpxEbPFHlO
+ A0rRIiQ66/s66XbbzH4XF1RlcQ1GZ7cof1vf/PBt+ZbBrT+PN5PQmuS6a1LEFlbPobkwq6IajTY
+ o7KLuro/t6tF77wGiV1nwNMzsiUyKKVA0D/T2ubW/y1tziwaMn8/ZxeL9H+cE2qBo4bNe0YC7Ph
+ XBYaTB5XMMRCV+gQyI/WWpZnTuzlNfFTvSvOK2dCQxWNrJLu7VT+o2hPbY2e/sqy07MIDEt3EKo
+ 2ZD9pMeQY2+UwdihVNBmaAWc8lkkl35RBuJrEganjkvIckLR4qh/H8n3CJvQuWlmYXuYw0HLwR+
+ A/0Qzwi/+mvbSXZ5INEGpBMrog20crtFFx8Lr
+X-Google-Smtp-Source: AGHT+IFW6hA3yAKdFTUe8EEI5kic43ZIITMi78xKgEZunkyJSkx0t16xPuunedGwf+ZaxjadES0vkQ==
+X-Received: by 2002:a05:6000:648:b0:3a4:dfbe:2b14 with SMTP id
+ ffacd0b85a97d-3a6c96c102bmr2506122f8f.16.1750338907890; 
+ Thu, 19 Jun 2025 06:15:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535eac8bb6sm28841155e9.25.2025.06.19.06.15.01
+ ffacd0b85a97d-3a568b2f80asm19552864f8f.78.2025.06.19.06.15.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Jun 2025 06:15:02 -0700 (PDT)
+ Thu, 19 Jun 2025 06:15:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -79,24 +79,25 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>
-Subject: [PATCH 19/20] hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB definition
-Date: Thu, 19 Jun 2025 15:13:18 +0200
-Message-ID: <20250619131319.47301-20-philmd@linaro.org>
+Subject: [PATCH 20/20] tests/functional/sbsa-ref: Move where machine type is
+ set
+Date: Thu, 19 Jun 2025 15:13:19 +0200
+Message-ID: <20250619131319.47301-21-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250619131319.47301-1-philmd@linaro.org>
 References: <20250619131319.47301-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,49 +113,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define RAMLIMIT_BYTES using the TiB definition and display
-the error parsed with size_to_str():
-
-  $ qemu-system-aarch64-unsigned -M sbsa-ref -m 9T
-  qemu-system-aarch64-unsigned: sbsa-ref: cannot model more than 8 TiB of RAM
+fetch_firmware() is only about fetching firmware.
+Set the machine type in test_sbsaref_edk2_firmware().
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/sbsa-ref.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ tests/functional/test_aarch64_sbsaref.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index deae5cf9861..3b7d4e7bf1d 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -19,6 +19,7 @@
-  */
+diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
+index e6a55aecfac..5536ec622e6 100755
+--- a/tests/functional/test_aarch64_sbsaref.py
++++ b/tests/functional/test_aarch64_sbsaref.py
+@@ -40,7 +40,6 @@ def fetch_firmware(test):
+         with open(path, "ab+") as fd:
+             fd.truncate(256 << 20)  # Expand volumes to 256MiB
  
- #include "qemu/osdep.h"
-+#include "qemu/cutils.h"
- #include "qemu/datadir.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-@@ -53,8 +54,7 @@
- #include "target/arm/cpu-qom.h"
- #include "target/arm/gtimer.h"
+-    test.set_machine('sbsa-ref')
+     test.vm.set_console()
+     test.vm.add_args(
+         "-drive", f"if=pflash,file={fs0_path},format=raw",
+@@ -70,6 +69,7 @@ def test_sbsaref_edk2_firmware(self):
  
--#define RAMLIMIT_GB 8192
--#define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
-+#define RAMLIMIT_BYTES (8 * TiB)
+         fetch_firmware(self)
  
- #define NUM_IRQS        256
- #define NUM_SMMU_IRQS   4
-@@ -756,7 +756,9 @@ static void sbsa_ref_init(MachineState *machine)
-     sms->smp_cpus = smp_cpus;
- 
-     if (machine->ram_size > sbsa_ref_memmap[SBSA_MEM].size) {
--        error_report("sbsa-ref: cannot model more than %dGB RAM", RAMLIMIT_GB);
-+        g_autofree char *size_str = size_to_str(RAMLIMIT_BYTES);
-+
-+        error_report("sbsa-ref: cannot model more than %s of RAM", size_str);
-         exit(1);
-     }
++        self.set_machine('sbsa-ref')
+         self.vm.add_args('-cpu', 'cortex-a57')
+         self.vm.launch()
  
 -- 
 2.49.0
