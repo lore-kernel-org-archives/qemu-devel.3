@@ -4,65 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49C75C7115A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 10:56:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42937C7115A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 11:17:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSCvl-0005vG-Ml; Thu, 19 Jun 2025 06:55:42 -0400
+	id 1uSDGB-0001nK-5o; Thu, 19 Jun 2025 07:16:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSCvk-0005us-1E
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 06:55:40 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSCvg-0002H8-Sk
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 06:55:39 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.231])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNHSs63zJz6L6Ll;
- Thu, 19 Jun 2025 18:50:37 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id D241C140446;
- Thu, 19 Jun 2025 18:55:20 +0800 (CST)
-Received: from localhost (10.122.19.247) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 19 Jun
- 2025 12:55:19 +0200
-Date: Thu, 19 Jun 2025 11:55:18 +0100
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, <fan.ni@samsung.com>,
- <qemu-devel@nongnu.org>, Alex =?ISO-8859-1?Q?Benn=E9e?=
- <alex.bennee@linaro.org>, Alexandre Iooss <erdnaxe@crans.org>, "Mahmoud
- Mandour" <ma.mandourr@gmail.com>, Bowman Terry <terry.bowman@amd.com>
-CC: <linuxarm@huawei.com>, <rientjes@google.com>, <dave@stgolabs.net>,
- <joshua.hahnjy@gmail.com>, <rkodsara@amd.com>, <sj@kernel.org>,
- <xuezhengchu@huawei.com>, <yiannis@zptcorp.com>, <ziy@nvidia.com>,
- <weixugc@google.com>, Bharata B Rao <bharata@amd.com>
-Subject: Re: [RFC PATCH v2 QEMU 2/4] hw/cxl: Add emulation of a CXL Hotness
- Monitoring Unit (CHMU)
-Message-ID: <20250619115518.00006e40@huawei.com>
-In-Reply-To: <20250612155724.1887266-3-Jonathan.Cameron@huawei.com>
-References: <20250612155724.1887266-1-Jonathan.Cameron@huawei.com>
- <20250612155724.1887266-3-Jonathan.Cameron@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uSDG8-0001n3-V8
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 07:16:44 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uSDG7-0006u2-2X
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 07:16:44 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-3a528243636so437845f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 04:16:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1750331800; x=1750936600; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=VsV7XSYlhVGZ9HquleMGhubOrNSe9ZmrMCHxUfeGJWw=;
+ b=nvStZf1pwLw+93WZAuUJExI77dcv/qgnO+V6GpVBvrjsw4ICdqpKbf7jQO2R6nAgMN
+ KDz7G8eC/YcGrVTOlN6yTUPyt8WN09ql8foEDNaivc1okC7xDtaEqu9++10Jj3Aoq1is
+ aO1EZ/DXEFW6c+dWrVzTPGBpDVE3fNB4yZH7t4TH9rvKY02ZGExHCJetbROksbTz9G8F
+ b3BGX9NoIaCHGVs2+zwU7KWJugQYxlEma1H3zjQ1OMFFtvk+q2n6ts+lgASVe1tVg+i9
+ uMAPaqqvm11LcwFPuGVbtpAavbI8FEwuautRXg3p+fl9wP0ZHRLBIvCk10iaQeDXrWkM
+ pIMA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750331800; x=1750936600;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=VsV7XSYlhVGZ9HquleMGhubOrNSe9ZmrMCHxUfeGJWw=;
+ b=L3WCqEpoufiAaDJ+9T9WJQ4YSsWxcNcLGU5nn+EKfHhqn5VrGEr8NG8N0LnMGM1Onm
+ 2E7sIeOqoi/ltcI8DXkGtcj25YNBMylFqCmTZR+8U8rcNI32SJQNGcbiN29yDTSUOoLd
+ qcekOCJrCYJQNa9DztZ0LrTAq0v3sUooM6iWfKyzU8GLluyPl96akmbVNjLkWJPq8vLZ
+ vxDvomsn0Gd/4SqK6Ki7ULNaXRAg43EvtFr9oENQENw4e2MaxM31paypBDX6YbAhWM6C
+ uFDheh742NxKKPkVNjuGlb5+seKzcFlQmqt18MfntNnD4WNzGbjOoGLtFVZ6oVTu+K+b
+ hN4g==
+X-Gm-Message-State: AOJu0Yy2GSgyeYfZufO8S8rkIGN8SJRGc0U5UTnny1/h9Y3Bs2Ulmqob
+ DPuuOOnNr1ktT2h36q06mChlnfZxrrjpFVbI3O5Ijdgp7jBmp5UPUX77/tSZOM8rLxK+9hOka8D
+ /5OkHnIo=
+X-Gm-Gg: ASbGnctLLEmFr+GFdd5d8ipeLrLivjZI72j7GUf8kEt6JZNDGAzHPFXTq8t9MRoM9r3
+ sMzWRmSHE0+XwXsKzOEDar0A2CgwICPdNpCocmOGbCeorehdAQWQ7sYgcll9VJ9SOhjrqJaVaQr
+ WJFYZvEdA96ZtU/UlsxQHZojzTHUD/hcLZnSBwfOapAXfCILlG05eltQqjx/lYVTHuLLpHNFRY5
+ BRWuLczYtT7JZEtWXSy7rJvMWtld1Vtu6i52tzhv3elYGSldJdkGCfqxKynNxFRpzGAjE8LuLpg
+ 2o1Ql0e4aq3u1BCSkch/ORfg8I9vuIucC/XAUOXbl+f8i6q6+zZSsNrVIOeeHHY=
+X-Google-Smtp-Source: AGHT+IE/LxOporILaIJQnp+eEQSo0ewsMfL1X3aVk7Rz+YJb2CgbMjcnYakWS01ZbhvWEX5of3LTpg==
+X-Received: by 2002:a05:6000:402a:b0:3a5:27ba:47ba with SMTP id
+ ffacd0b85a97d-3a572e925c6mr17694768f8f.44.1750331800461; 
+ Thu, 19 Jun 2025 04:16:40 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a568b5c372sm18818851f8f.89.2025.06.19.04.16.39
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Jun 2025 04:16:39 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 305AF5F713;
+ Thu, 19 Jun 2025 12:16:39 +0100 (BST)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [RFC PATCH] pc-bios/meson: split blobs by available targets
+Date: Thu, 19 Jun 2025 12:16:32 +0100
+Message-ID: <20250619111632.1076331-1-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.122.19.247]
-X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -75,170 +96,243 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Jun 2025 16:57:22 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+While building some kvm-unit-tests inside a buildroot environment I
+noticed the QEMU installer installs all blobs regardless of the
+enabled targets. Buildroot images typically try and keep filesystem
+and thin as possible we probably should skip blobs that will never be
+used.
 
-> CXL r3.2 defines a CXL Hotness Monitoring Unit. This allows for a CXL
-> device to do on device estimation of which 'granuals' of data are 'hot'
-> - that is accessed a lot. For a typical application hot data on a CXL
-> device both wastes potentially limited bandwidth and many have latency
-> impacts. Access counts are therefore a measurable proxy on which to base
-> memory placement decisions.
-> 
-> Typical use cases include:
-> 1 - Establishing which data to move to faster RAM in a tiered memory
->     system. Discussions on how to do this in Linux are ongoing so likely
->     use case 2 will happen first.
-> 2 - Provide detailed data (at low overhead) on what memory in an
->     application is hot, allowing for optimization of initial data
->     placement on future runs fo the application.
-> 
-> The focus of this emulation is providing a way to capture 'real' data
-> in order to help us develop and tune the kernel stack.
-> 
-> This emulated device will be fed with data from a QEMU plugin. That
-> plugin is responsible for the actual tracking and counting part of
-> hotness tracking. This device simply provides a timebase (epoch end
-> point) along with configuration and data retrieval.
-> 
-> The connection to the QEMU plugin providing the data is via a sockets.
-> Supply the cxl-type3 device parameter chmu-port=4443 to specify the
-> network port as 4443 and ensure the plugin is loaded (see later patch).
-> 
-> Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+We could also go further and refer to enabled devices to further
+filter out things like option roms.
 
-Although we don't support downsampling the device is currently reporting that
-it does by a factor of 2.  Fix below.
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ pc-bios/meson.build | 202 ++++++++++++++++++++++++++++----------------
+ 1 file changed, 129 insertions(+), 73 deletions(-)
 
-Yuquan Wang ran into some related problems.
-Note that with current posted rfc1 kernel driver best bet is just
-don't specify the downsampling parameter at all. It will default to none
-and doesn't run into the bug here (as we never check the value if not specified).
-
-Whilst testing this I did manage to trigger a double free in qemu, but
-I haven't replicated that yet. 
-
-Jonathan
-
-
-> ---
-
-> +static uint64_t chmu_read(void *opaque, hwaddr offset, unsigned size)
-> +{
-> +    const hwaddr chmu_stride = A_CXL_CHMU1_CAP0 - A_CXL_CHMU0_CAP0;
-> +    CHMUState *chmu = opaque;
-> +    CHMUInstance *chmui;
-> +    uint64_t val = 0;
-> +    int instance = 0;
-> +    int rc;
-> +
-> +    if (offset >= A_CXL_CHMU0_CAP0) {
-> +        instance = (offset - A_CXL_CHMU0_CAP0) / chmu_stride;
-> +        /*
-> +         * Offset allows register defs for CHMU instance 0 to be used
-> +         * for all instances. Includes COMMON_CAP.
-> +         */
-> +        offset -= chmu_stride * instance;
-> +    }
-> +
-> +    if (instance >= CXL_CHMU_INSTANCES_PER_BLOCK) {
-> +        return 0;
-> +    }
-> +
-> +    chmui = &chmu->inst[instance];
-> +    switch (offset) {
-> +    case A_CXL_CHMU_COMMON_CAP0:
-> +        val = FIELD_DP64(val, CXL_CHMU_COMMON_CAP0, VERSION, 1);
-> +        val = FIELD_DP64(val, CXL_CHMU_COMMON_CAP0, NUM_INSTANCES,
-> +                         CXL_CHMU_INSTANCES_PER_BLOCK);
-> +        break;
-> +    case A_CXL_CHMU_COMMON_CAP1:
-> +        val = FIELD_DP64(val, CXL_CHMU_COMMON_CAP1, INSTANCE_LENGTH,
-> +                         A_CXL_CHMU1_CAP0 - A_CXL_CHMU0_CAP0);
-> +        break;
-> +    case A_CXL_CHMU0_CAP0:
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, MSI_N, chmui->msi_n);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, OVERFLOW_INT, 1);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, LEVEL_INT, 1);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, EPOCH_TYPE,
-> +                         CXL_CHMU0_CAP0_EPOCH_TYPE_GLOBAL);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, TRACKED_M2S_REQ_NONTEE_R, 1);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, TRACKED_M2S_REQ_NONTEE_W, 1);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, TRACKED_M2S_REQ_NONTEE_RW, 1);
-> +        /* No emulation of TEE modes yet so don't pretend to support them */
-> +
-> +        /* Epoch length from 100 milliseconds to 100 second */
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, MAX_EPOCH_LENGTH_SCALE,
-> +                         CXL_CHMU_EPOCH_LENGTH_SCALE_1SEC);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, MAX_EPOCH_LENGTH_VAL, 100);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, MIN_EPOCH_LENGTH_SCALE,
-> +                         CXL_CHMU_EPOCH_LENGTH_SCALE_100MSEC);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, MIN_EPOCH_LENGTH_VAL, 1);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP0, HOTLIST_SIZE,
-> +                         CXL_HOTLIST_ENTRIES);
-> +        break;
-> +    case A_CXL_CHMU0_CAP1:
-> +        /* 4KiB and 8KiB only - 2^N * 256 for each bit set */
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP1, UNIT_SIZES, BIT(4) | BIT(5));
-> +        /* No downsampling  - 2^(N - 1) for each bit set */
-
-This spec is a bit confusing around this, but I think it is 2^N
-
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP1, DOWN_SAMPLING_FACTORS, BIT(1));
-Hence BIT(0) is appropriate here for no support (full rate only)
-
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP1, FLAGS_EPOCH_BASED, 1);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP1, FLAGS_ALWAYS_ON, 0);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP1, FLAGS_RANDOMIZED_DOWN_SAMPLING,
-> +                         1);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP1, FLAGS_OVERLAPPING_ADDRESS_RANGES,
-> +                         1);
-> +        /*
-> +         * Feature to enable a backlog of entries that immediately fill the list
-> +         * once space is available. Only relevant if reading list infrequently
-> +         * and concerned about stale data. (Not implemented)
-> +         */
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP1, FLAGS_INSERT_AFTER_CLEAR, 0);
-> +        break;
-> +    case A_CXL_CHMU0_CAP2:
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP2, BITMAP_REG_OFFSET,
-> +                         A_CXL_CHMU0_RANGE_CONFIG_BITMAP0 - A_CXL_CHMU0_CAP0);
-> +        break;
-> +    case A_CXL_CHMU0_CAP3:
-> +        val = FIELD_DP64(val, CXL_CHMU0_CAP3, HOTLIST_REG_OFFSET,
-> +                         A_CXL_CHMU0_HOTLIST0 - A_CXL_CHMU0_CAP0);
-> +        break;
-> +    case A_CXL_CHMU0_STATUS:
-> +        val = FIELD_DP64(val, CXL_CHMU0_STATUS, STATUS_ENABLED,
-> +                         chmui->enabled ? 1 : 0);
-> +        val = FIELD_DP64(val, CXL_CHMU0_STATUS, OPERATION_IN_PROG,
-> +                         0); /* All operations effectively instantaneous */
-> +        val = FIELD_DP64(val, CXL_CHMU0_STATUS, COUNTER_WIDTH, 16);
-> +        val = FIELD_DP64(val, CXL_CHMU0_STATUS, OVERFLOW_INT,
-> +                         chmui->overflow_set ? 1 : 0);
-> +        val = FIELD_DP64(val, CXL_CHMU0_STATUS, LEVEL_INT,
-> +                         chmui->fill_thresh_set ? 1 : 0);
-> +        break;
-> +    case A_CXL_CHMU0_CONF0:
-> +        val = FIELD_DP64(val, CXL_CHMU0_CONF0, M2S_REQ_TO_TRACK, chmui->what);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CONF0, FLAGS_RANDOMIZE_DOWNSAMPLING, 0);
-
-We hard code the value 0 here which corresponds to BIT(0) above.
-
-> +        val = FIELD_DP64(val, CXL_CHMU0_CONF0, FLAGS_INT_ON_OVERFLOW,
-> +                         chmui->int_on_overflow);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CONF0, FLAGS_INT_ON_FILL_THRESH,
-> +                         chmui->int_on_fill_thresh);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CONF0, CONTROL_ENABLE,
-> +                         chmui->enabled);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CONF0, CONTROL_RESET, 0);
-> +        val = FIELD_DP64(val, CXL_CHMU0_CONF0, HOTNESS_THRESHOLD,
-> +                         chmui->hotness_thresh);
-> +        break;
+diff --git a/pc-bios/meson.build b/pc-bios/meson.build
+index 3c41620044..cb0b59fbce 100644
+--- a/pc-bios/meson.build
++++ b/pc-bios/meson.build
+@@ -1,19 +1,36 @@
+ roms = []
+ if unpack_edk2_blobs
+-  fds = [
+-    'edk2-aarch64-code.fd',
+-    'edk2-arm-code.fd',
+-    'edk2-arm-vars.fd',
+-    'edk2-riscv-code.fd',
+-    'edk2-riscv-vars.fd',
+-    'edk2-i386-code.fd',
+-    'edk2-i386-secure-code.fd',
+-    'edk2-i386-vars.fd',
+-    'edk2-x86_64-code.fd',
+-    'edk2-x86_64-secure-code.fd',
+-    'edk2-loongarch64-code.fd',
+-    'edk2-loongarch64-vars.fd',
+-  ]
++
++  fds = []
++  if 'aarch64-softmmu' in target_dirs
++    fds += [ 'edk2-aarch64-code.fd' ]
++  endif
++
++  if 'arm-softmmu' in target_dirs or 'aarch64-softmmu' in target_dirs
++    fds += [ 'edk2-arm-code.fd',
++             'edk2-arm-vars.fd' ]
++  endif
++
++  if 'riscv64-softmmu' in target_dirs
++    fds += [ 'edk2-riscv-code.fd',
++             'edk2-riscv-vars.fd' ]
++  endif
++
++  if 'i386-softmmu' in target_dirs
++    fds += [ 'edk2-i386-code.fd',
++             'edk2-i386-secure-code.fd',
++             'edk2-i386-vars.fd' ]
++  endif
++
++  if 'x86_64-softmmu' in target_dirs
++    fds += [ 'edk2-x86_64-code.fd',
++             'edk2-x86_64-secure-code.fd' ]
++  endif
++
++  if 'loongarch64' in target_dirs
++    fds += [ 'edk2-loongarch64-code.fd',
++             'edk2-loongarch64-vars.fd' ]
++  endif
+ 
+   foreach f : fds
+     roms += custom_target(f,
+@@ -27,65 +44,104 @@ if unpack_edk2_blobs
+   endforeach
+ endif
+ 
+-blobs = [
+-  'ast27x0_bootrom.bin',
+-  'bios.bin',
+-  'bios-256k.bin',
+-  'bios-microvm.bin',
+-  'qboot.rom',
+-  'vgabios.bin',
+-  'vgabios-cirrus.bin',
+-  'vgabios-stdvga.bin',
+-  'vgabios-vmware.bin',
+-  'vgabios-qxl.bin',
+-  'vgabios-virtio.bin',
+-  'vgabios-ramfb.bin',
+-  'vgabios-bochs-display.bin',
+-  'vgabios-ati.bin',
+-  'openbios-sparc32',
+-  'openbios-sparc64',
+-  'openbios-ppc',
+-  'QEMU,tcx.bin',
+-  'QEMU,cgthree.bin',
+-  'pxe-e1000.rom',
+-  'pxe-eepro100.rom',
+-  'pxe-ne2k_pci.rom',
+-  'pxe-pcnet.rom',
+-  'pxe-rtl8139.rom',
+-  'pxe-virtio.rom',
+-  'efi-e1000.rom',
+-  'efi-eepro100.rom',
+-  'efi-ne2k_pci.rom',
+-  'efi-pcnet.rom',
+-  'efi-rtl8139.rom',
+-  'efi-virtio.rom',
+-  'efi-e1000e.rom',
+-  'efi-vmxnet3.rom',
+-  'qemu-nsis.bmp',
+-  'multiboot.bin',
+-  'multiboot_dma.bin',
+-  'linuxboot.bin',
+-  'linuxboot_dma.bin',
+-  'kvmvapic.bin',
+-  'pvh.bin',
+-  's390-ccw.img',
+-  'slof.bin',
+-  'skiboot.lid',
+-  'pnv-pnor.bin',
+-  'palcode-clipper',
+-  'u-boot.e500',
+-  'u-boot-sam460-20100605.bin',
+-  'qemu_vga.ndrv',
+-  'edk2-licenses.txt',
+-  'hppa-firmware.img',
+-  'hppa-firmware64.img',
+-  'opensbi-riscv32-generic-fw_dynamic.bin',
+-  'opensbi-riscv64-generic-fw_dynamic.bin',
+-  'npcm7xx_bootrom.bin',
+-  'npcm8xx_bootrom.bin',
+-  'vof.bin',
+-  'vof-nvram.bin',
+-]
++blobs = []
++
++if 'aarch64-softmmu' in target_dirs
++  blobs += [ 'ast27x0_bootrom.bin',
++             'npcm7xx_bootrom.bin',
++             'npcm8xx_bootrom.bin' ]
++endif
++
++# Most x86 blobs start in real mode anyway, need to check which blobs
++# are x86_64 only. Also we could limit the option roms based on the
++# build config.
++if 'x86_64-softmmu' in target_dirs or 'i386-softmmu' in target_dirs
++  blobs += [ 'bios.bin',
++             'bios-256k.bin',
++             'bios-microvm.bin',
++             'qboot.rom',
++             'vgabios.bin',
++             'vgabios-cirrus.bin',
++             'vgabios-stdvga.bin',
++             'vgabios-vmware.bin',
++             'vgabios-qxl.bin',
++             'vgabios-virtio.bin',
++             'vgabios-ramfb.bin',
++             'vgabios-bochs-display.bin',
++             'vgabios-ati.bin',
++             'pxe-e1000.rom',
++             'pxe-eepro100.rom',
++             'pxe-ne2k_pci.rom',
++             'pxe-pcnet.rom',
++             'pxe-rtl8139.rom',
++             'pxe-virtio.rom',
++             'efi-e1000.rom',
++             'efi-eepro100.rom',
++             'efi-ne2k_pci.rom',
++             'efi-pcnet.rom',
++             'efi-rtl8139.rom',
++             'efi-virtio.rom',
++             'efi-e1000e.rom',
++             'efi-vmxnet3.rom',
++             'multiboot.bin',
++             'multiboot_dma.bin',
++             'linuxboot.bin',
++             'linuxboot_dma.bin',
++             'kvmvapic.bin',
++             'pvh.bin' ]
++endif
++
++if 'sparc32-softmmu' in target_dirs
++  blobs += [ 'openbios-sparc32',
++             'QEMU,tcx.bin',
++             'QEMU,cgthree.bin' ]
++endif
++
++if 'sparc64-softmmu' in target_dirs
++  blobs += [ 'openbios-sparc64' ]
++endif
++
++if 'ppc64-softmmu' in target_dirs
++  blobs += [ 'openbios-ppc',
++             'slof.bin',
++             'skiboot.lid',
++             'pnv-pnor.bin',
++             'u-boot.e500',
++             'u-boot-sam460-20100605.bin',
++             'vof.bin',
++             'vof-nvram.bin' ]
++endif
++
++if 'ppc32-softmmu' in target_dirs
++  blobs += [ 'qemu_vga.ndrv' ]
++endif
++
++if host_os == 'windows'
++  blobs += [ 'qemu-nsis.bmp' ]
++endif
++
++if 's390x-softmmu' in target_dirs
++  blobs += [ 's390-ccw.img' ]
++endif
++
++if 'alpha-softmmu' in target_dirs
++  blobs += [ 'palcode-clipper' ]
++endif
++
++if 'hppa-softmmu' in target_dirs
++  blobs += [ 'hppa-firmware.img',
++             'hppa-firmware64.img' ]
++endif
++
++if 'riscv32-softmmu' in target_dirs
++  blobs += [ 'opensbi-riscv32-generic-fw_dynamic.bin' ]
++endif
++
++if 'riscv64-softmmu' in target_dirs
++  blobs += [ 'opensbi-riscv64-generic-fw_dynamic.bin' ]
++endif
++
++blobs += [ 'edk2-licenses.txt' ]
+ 
+ if get_option('install_blobs')
+   install_data(blobs, install_dir: qemu_datadir, install_mode: 'rw-r--r--')
+-- 
+2.47.2
 
 
