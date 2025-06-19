@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8609C7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 08:52:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65C98C7115E
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 08:52:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSAzn-0004VZ-UE; Thu, 19 Jun 2025 04:51:44 -0400
+	id 1uSB0C-0004YQ-RU; Thu, 19 Jun 2025 04:52:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uSAzb-0004Tp-Kc
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:32 -0400
+ id 1uSAzh-0004Ur-EN
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:38 -0400
 Received: from mail.loongson.cn ([114.242.206.163])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uSAzZ-0002zW-JA
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:31 -0400
+ (envelope-from <gaosong@loongson.cn>) id 1uSAze-00030O-Rt
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 04:51:37 -0400
 Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8CxyuCMz1NokLUZAQ--.59382S3;
- Thu, 19 Jun 2025 16:51:24 +0800 (CST)
+ by gateway (Coremail) with SMTP id _____8DxOGqRz1NolrUZAQ--.62339S3;
+ Thu, 19 Jun 2025 16:51:29 +0800 (CST)
 Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowMAxDcVtz1NohtwgAQ--.30176S11;
- Thu, 19 Jun 2025 16:51:22 +0800 (CST)
+ by front1 (Coremail) with SMTP id qMiowMAxDcVtz1NohtwgAQ--.30176S13;
+ Thu, 19 Jun 2025 16:51:28 +0800 (CST)
 From: Song Gao <gaosong@loongson.cn>
 To: qemu-devel@nongnu.org
 Cc: stefanha@gmail.com,
 	Bibo Mao <maobibo@loongson.cn>
-Subject: [PULL 09/14] hw/intc/loongarch_pch: Inject irq line interrupt to
- kernel
-Date: Thu, 19 Jun 2025 16:28:12 +0800
-Message-Id: <20250619082817.1517996-10-gaosong@loongson.cn>
+Subject: [PULL 11/14] target/loongarch: Report error with split kernel_irqchip
+ option
+Date: Thu, 19 Jun 2025 16:28:14 +0800
+Message-Id: <20250619082817.1517996-12-gaosong@loongson.cn>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20250619082817.1517996-1-gaosong@loongson.cn>
 References: <20250619082817.1517996-1-gaosong@loongson.cn>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMAxDcVtz1NohtwgAQ--.30176S11
+X-CM-TRANSID: qMiowMAxDcVtz1NohtwgAQ--.30176S13
 X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
 X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
  ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
@@ -68,33 +68,35 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bibo Mao <maobibo@loongson.cn>
 
-If kvm_irqchip_in_kernel() return true, irq line interrupt can be
-injected with API kvm_set_irq() to KVM.
+Option kernel_irqchip=split is not supported on LoongArch virt machine,
+report error and exit if detect split kernel_irqchip option.
 
 Reviewed-by: Song Gao <gaosong@loongson.cn>
 Signed-off-by: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <20250606063033.2557365-10-maobibo@loongson.cn>
+Message-ID: <20250606063431.2557468-1-maobibo@loongson.cn>
 Signed-off-by: Song Gao <gaosong@loongson.cn>
 ---
- hw/intc/loongarch_pch_pic.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ target/loongarch/kvm/kvm.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/hw/intc/loongarch_pch_pic.c b/hw/intc/loongarch_pch_pic.c
-index 13b5766444..1adef980d4 100644
---- a/hw/intc/loongarch_pch_pic.c
-+++ b/hw/intc/loongarch_pch_pic.c
-@@ -49,6 +49,11 @@ static void pch_pic_irq_handler(void *opaque, int irq, int level)
-     assert(irq < s->irq_num);
-     trace_loongarch_pch_pic_irq_handler(irq, level);
+diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
+index c66bdd5302..c5d488aa42 100644
+--- a/target/loongarch/kvm/kvm.c
++++ b/target/loongarch/kvm/kvm.c
+@@ -1253,7 +1253,12 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
  
-+    if (kvm_irqchip_in_kernel()) {
-+        kvm_set_irq(kvm_state, irq, !!level);
-+        return;
+ int kvm_arch_irqchip_create(KVMState *s)
+ {
+-    return 0;
++    if (kvm_kernel_irqchip_split()) {
++        error_report("kernel_irqchip=split is not supported on LoongArch");
++        exit(1);
 +    }
 +
-     if (s->intedge & mask) {
-         /* Edge triggered */
-         if (level) {
++    return kvm_check_extension(s, KVM_CAP_DEVICE_CTRL);
+ }
+ 
+ void kvm_arch_pre_run(CPUState *cs, struct kvm_run *run)
 -- 
 2.47.0
 
