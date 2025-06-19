@@ -4,89 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A486C71157
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 00:20:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 753F2C7115A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 01:46:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uS301-0001Rg-6W; Wed, 18 Jun 2025 20:19:25 -0400
+	id 1uS4Lq-0001Rm-56; Wed, 18 Jun 2025 21:46:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uS2zw-0001Qk-8W
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 20:19:20 -0400
-Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1uS2zu-00077V-DK
- for qemu-devel@nongnu.org; Wed, 18 Jun 2025 20:19:19 -0400
-Received: by mail-pl1-x632.google.com with SMTP id
- d9443c01a7336-235e1d710d8so3610045ad.1
- for <qemu-devel@nongnu.org>; Wed, 18 Jun 2025 17:19:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750292356; x=1750897156; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=0ioIL4mlGLuVtD9rvtFpJNNDDnS0C6VPMIJP/hs2SPY=;
- b=zsehog5QwW8yIB8tOp9KZn6obPAirKne149iqvUvKpkLteiJj6WVhbfltcXU7gMzEn
- h8H/R9y2Og78L/5uE5/tFICljSqptJps8V4oQGlCOotZDeRHmnZx1ecWwMnkop7k5EB0
- ZY0wq5sR9+O0HZTbe3W84UWCVM0WhFoymCZF6PEU3tn5mV4p9M9F2OeAjwezVXoPLSHc
- +dc4Ki1nX0VD6Ch/EpYlaaAi5vmbQHheRgdbwvCEprRHMouq2xo7DnKvw+7Lgzo8DJRt
- 7Kwcjw7OZMhgV8K1YxjxMXNMY8PWATgBsmOZJILIaD3vd6HVjYf40L1LbH5ictBkqQzZ
- KCSQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750292356; x=1750897156;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=0ioIL4mlGLuVtD9rvtFpJNNDDnS0C6VPMIJP/hs2SPY=;
- b=L1ZHHg5+cm45mhRA6zUMSPVMhWNUAIpYhROY05nJ0TZimWVcn1K+k+AH/gRawjZlTU
- 0m2iHpCkObyIRw8rN4Nv5cTqsIFbvf3vTKXduuMoGnr0XHGrPsQgUKjPkCVS2pWwYanE
- AxBrkefoHyA9lGU9svHdZzBuoU1qoySB5HLjOaXwKLcm4zAToDuZkrF8Q9EilhlHKVSg
- qTwULlKjVfraYDYyHsHILLVAgx71NvVmA379M7rKPb38C+VWb7fZMxnmVHL4oPRvuCgP
- V5Yl2S+mrKt5ptwDfiZP5pDGRrAYnvbPkmIiJc00ourr9+oqrstZAast/64qbOn0JYBk
- WijQ==
-X-Gm-Message-State: AOJu0Yy2sTmatj9mWJkJurXRVlqkO9bTgAC8nGEfm152sZavEerHwSxt
- OxmIIQPUIlnsUvnZCwS6oUoJKzzW4I91RVzjlP11ddscgGHtAvLZ2xhHMZz3g4DO3Bs=
-X-Gm-Gg: ASbGnctXTYsX10wNfytt2kX6Kassr5c4t+jBfb5muKWZ2ZGYmtncjXQDUY0dSCSZXhq
- kFZozQYgosC45h19/wCmS/F2jRFLhyj1qJby4gETACVKqc562FH208pSOYZL7C5wxfrJFUnp5Mc
- KalVlUOsQ1rKmGZTZwM7+XBW42enkCML2WuhA6QgRDkh4n6gyEZNE0tGluTSEuaZ+xe13UHsXzT
- FUI1pyeYSz1HGalARFq5PLnWoNHU+oTROTXlCOMrK1CNU8AxRKxxyOucQHSvvBavVgLLS6e2IzG
- bbKAUTlgAOvTGtRBg/BG/jN1lyvHemEU4KeiEHPWY2xr8Pxw0rKAB8UPz+JQjV4KfYxl6jJLj0c
- =
-X-Google-Smtp-Source: AGHT+IGteDflxneLF8SteCKvOFUfiJFbcg6yb3QvCEPbE7lQZ1+WpAH1xzvMjopdHb/hso/zsRsHBw==
-X-Received: by 2002:a17:902:c94e:b0:234:8a16:d62b with SMTP id
- d9443c01a7336-2366b34ed67mr326418275ad.12.1750292356076; 
- Wed, 18 Jun 2025 17:19:16 -0700 (PDT)
-Received: from [192.168.1.87] ([38.41.223.211])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2365dea7d98sm107649265ad.151.2025.06.18.17.19.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Jun 2025 17:19:15 -0700 (PDT)
-Message-ID: <630d1dd3-410c-4693-89b5-554a171557ba@linaro.org>
-Date: Wed, 18 Jun 2025 17:19:13 -0700
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1uS4Lg-0001Qa-Fy
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 21:45:55 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>) id 1uS4Ld-0002sf-4A
+ for qemu-devel@nongnu.org; Wed, 18 Jun 2025 21:45:52 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8DxQK_Ba1NoWocZAQ--.23651S3;
+ Thu, 19 Jun 2025 09:45:37 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowMAxj8W4a1NoAWcgAQ--.34687S3;
+ Thu, 19 Jun 2025 09:45:30 +0800 (CST)
+Subject: Re: [PATCH v6] target/loongarch: fix vldi/xvldi raise wrong error
+To: gaosong <gaosong@loongson.cn>, qemu-devel@nongnu.org, philmd@linaro.org
+Cc: richard.henderson@linaro.org, lorenz.hetterich@cispa.de
+References: <20250605015332.537413-1-gaosong@loongson.cn>
+ <6def6137-5a45-b597-4b43-4b12d8ec8872@loongson.cn>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <d6805a81-0695-6466-1994-aaf5ce5a8eac@loongson.cn>
+Date: Thu, 19 Jun 2025 09:44:04 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: The current implementation status of ARM Secure SMMU in QEMU
-To: GanDalf LeBron <lebrongandalf@gmail.com>, qemu-arm@nongnu.org
-Cc: qemu-devel@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- Mostafa Saleh <smostafa@google.com>
-References: <CA+V5jYUjqDc-UWKvQrX24c+MKtm+zdx4YCWU036180A4rX4ybQ@mail.gmail.com>
-Content-Language: en-US
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-In-Reply-To: <CA+V5jYUjqDc-UWKvQrX24c+MKtm+zdx4YCWU036180A4rX4ybQ@mail.gmail.com>
+In-Reply-To: <6def6137-5a45-b597-4b43-4b12d8ec8872@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-CM-TRANSID: qMiowMAxj8W4a1NoAWcgAQ--.34687S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxWry3Zr13ZrykXr4rXr4rXrc_yoW5Gr4Dpr
+ nYkrWUGrW8KF93Jr4rXw4UAFy5Jr18JanrXFn3t3WrCFWkAr1Ygr4jqrsF9F17GrW0qr1U
+ XF1UZwnxZF42q3XCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUvYb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
+ 6F4UJVW0owAS0I0E0xvYzxvE52x082IY62kv0487Mc804VCY07AIYIkI8VC2zVCFFI0UMc
+ 02F40EFcxC0VAKzVAqx4xG6I80ewAv7VC0I7IYx2IY67AKxVWUGVWUXwAv7VC2z280aVAF
+ wI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j6r4UM4x0Y48IcVAKI48JMxk0xIA0c2IEe2xFo4
+ CEbIxvr21l42xK82IYc2Ij64vIr41l4I8I3I0E4IkC6x0Yz7v_Jr0_Gr1lx2IqxVAqx4xG
+ 67AKxVWUJVWUGwC20s026x8GjcxK67AKxVWUGVWUWwC2zVAF1VAY17CE14v26r126r1DMI
+ IYrxkI7VAKI48JMIIF0xvE2Ix0cI8IcVAFwI0_Jr0_JF4lIxAIcVC0I7IYx2IY6xkF7I0E
+ 14v26r1j6r4UMIIF0xvE42xK8VAvwI8IcIk0rVWUJVWUCwCI42IY6I8E87Iv67AKxVWUJV
+ W8JwCI42IY6I8E87Iv6xkF7I0E14v26r1j6r4UYxBIdaVFxhVjvjDU0xZFpf9x07jUsqXU
+ UUUU=
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -35
+X-Spam_score: -3.6
+X-Spam_bar: ---
+X-Spam_report: (-3.6 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.694,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,49 +82,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Gandalf,
+It will be better if check_vldi_mode() is renamed as 
+check_valid_vldi_mode().
 
-On 5/7/25 8:39 AM, GanDalf LeBron wrote:
-> 
-> Hi there!
-> 
-> I am writing to inquire about the current implementation status of 
-> Secure SMMU features in QEMU.
-> 
-> I understand that non-secure SMMU emulation for general peripheral DMA 
-> (IOVA to PA translation and protection managed by the Normal World) is 
-> well-established in QEMU. However, my current understanding is that 
-> specific *Secure SMMU* functionality—where the SMMU's configuration and 
-> page tables are managed by Secure World software (e.g., at *Secure EL2)* 
-> to protect DMA for secure peripherals or confidential VMs—may not yet be 
-> fully implemented.
-> 
-> Could you please confirm or clarify this? Specifically, I'm interested 
-> in whether QEMU supports management of SMMU page tables and 
-> configurations by software running in Secure EL2?
-> 
-> Any pointers to existing support, relevant discussions, patches, or 
-> roadmap information regarding Secure SMMU capabilities would be greatly 
-> appreciated.
-> 
-> Thank you for your time and efforts.
-> 
-> LeBronGanDalf
-> 
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
 
-I guess you are referring to SMMUv3.2-SecEL2. It is indeed not yet 
-implemented, as only SMMU v3.1 is supported at this moment.
+On 2025/6/18 下午3:49, gaosong wrote:
+> Ping ! :-)
+> 在 2025/6/5 上午9:53, Song Gao 写道:
+>> on qemu we got an aborted error
+>> **
+>> ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: 
+>> code should not be reached
+>> Bail out! 
+>> ERROR:../target/loongarch/tcg/insn_trans/trans_vec.c.inc:3574:vldi_get_value: 
+>> code should not be reached
+>> Aborted (core dumped)
+>> but on 3A600/3A5000 we got a "Illegal instruction" error.
+>>
+>> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2971
+>>
+>> Fixes: 29bb5d727ff ("target/loongarch: Implement vldi")
+>>   Cc: qemu-stable@nongnu.org
+>> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+>> Signed-off-by: Song Gao <gaosong@loongson.cn>
+>> ---
+>>   target/loongarch/tcg/insn_trans/trans_vec.c.inc | 13 +++++++++++--
+>>   1 file changed, 11 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/target/loongarch/tcg/insn_trans/trans_vec.c.inc 
+>> b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>> index dff92772ad..7e50fa7541 100644
+>> --- a/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>> +++ b/target/loongarch/tcg/insn_trans/trans_vec.c.inc
+>> @@ -3465,7 +3465,7 @@ TRANS(xvmsknz_b, LASX, gen_xx, gen_helper_vmsknz_b)
+>>   static uint64_t vldi_get_value(DisasContext *ctx, uint32_t imm)
+>>   {
+>>       int mode;
+>> -    uint64_t data, t;
+>> +    uint64_t data = 0, t;
+>>       /*
+>>        * imm bit [11:8] is mode, mode value is 0-12.
+>> @@ -3570,17 +3570,26 @@ static uint64_t vldi_get_value(DisasContext 
+>> *ctx, uint32_t imm)
+>>           }
+>>           break;
+>>       default:
+>> -        generate_exception(ctx, EXCCODE_INE);
+>>           g_assert_not_reached();
+>>       }
+>>       return data;
+>>   }
+>> +static bool check_vldi_mode(arg_vldi *a)
+>> +{
+>> +   return  extract32(a->imm, 8, 4) <= 12;
+>> +}
+>> +
+>>   static bool gen_vldi(DisasContext *ctx, arg_vldi *a, uint32_t oprsz)
+>>   {
+>>       int sel, vece;
+>>       uint64_t value;
+>> +    if (!check_vldi_mode(a)) {
+>> +        generate_exception(ctx, EXCCODE_INE);
+>> +        return true;
+>> +    }
+>> +
+>>       if (!check_vec(ctx, oprsz)) {
+>>           return true;
+>>       }
 
-At Linaro, we are working on device assignment emulation (for Arm CCA), 
-and this feature will be needed, but there is no specific roadmap at the 
-moment.
- From the discussion I had with Mostafa, who worked on smmu emulation, 
-this will not be trivial, as we need to duplicate the state of SMMU, 
-which is not covered by existing design.
-
-If this is an option, I was informed that the device assignment for 
-confidential VM is working fine under FVP model, but I didn't try it myself.
-
-Regards,
-Pierrick
 
