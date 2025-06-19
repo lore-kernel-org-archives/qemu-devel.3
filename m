@@ -4,40 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B6D3C7115C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 15:17:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5454C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 15:17:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSH0f-0002pf-42; Thu, 19 Jun 2025 11:17:01 -0400
+	id 1uSH11-0002zv-Rj; Thu, 19 Jun 2025 11:17:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1uSH0d-0002nF-3b
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 11:16:59 -0400
+ id 1uSH0e-0002s3-RT
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 11:17:01 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <shiju.jose@huawei.com>)
- id 1uSH0a-00020h-6D
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 11:16:58 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNPGQ6QLlz6L6DB;
- Thu, 19 Jun 2025 23:11:58 +0800 (CST)
+ id 1uSH0a-00021T-9H
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 11:17:00 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNPKH6PQgz6L5sL;
+ Thu, 19 Jun 2025 23:14:27 +0800 (CST)
 Received: from frapeml500007.china.huawei.com (unknown [7.182.85.172])
- by mail.maildlp.com (Postfix) with ESMTPS id 8743614033C;
- Thu, 19 Jun 2025 23:16:42 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id EE8161400D9;
+ Thu, 19 Jun 2025 23:16:43 +0800 (CST)
 Received: from P_UKIT01-A7bmah.china.huawei.com (10.195.246.81) by
  frapeml500007.china.huawei.com (7.182.85.172) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.39; Thu, 19 Jun 2025 17:16:41 +0200
+ 15.1.2507.39; Thu, 19 Jun 2025 17:16:43 +0200
 To: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
  <jonathan.cameron@huawei.com>
 CC: <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>,
  <linuxarm@huawei.com>, <shiju.jose@huawei.com>
-Subject: [PATCH v2 2/7] hw/cxl/events: Updates for rev3.2 general media event
+Subject: [PATCH v2 4/7] hw/cxl/events: Updates for rev3.2 memory module event
  record
-Date: Thu, 19 Jun 2025 16:16:14 +0100
-Message-ID: <20250619151619.1695-3-shiju.jose@huawei.com>
+Date: Thu, 19 Jun 2025 16:16:16 +0100
+Message-ID: <20250619151619.1695-5-shiju.jose@huawei.com>
 X-Mailer: git-send-email 2.43.0.windows.1
 In-Reply-To: <20250619151619.1695-1-shiju.jose@huawei.com>
 References: <20250619151619.1695-1-shiju.jose@huawei.com>
@@ -77,134 +77,135 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Shiju Jose <shiju.jose@huawei.com>
 
-CXL spec rev3.2 section 8.2.10.2.1.1 Table 8-57, general media event
-table has updated with following new fields.
-1. Advanced Programmable Corrected Memory Error Threshold Event Flags
-2. Corrected Memory Error Count at Event
-3. Memory Event Sub-Type
+CXL spec rev3.2 section 8.2.10.2.1.3 Table 8-50, memory module
+event record has updated with following new fields.
+1. Validity Flags
+2. Component Identifier
+3. Device Event Sub-Type
 
-Add updates for the above spec changes in the CXL general media event
-reporting and QMP command to inject general media event.
+Add updates for the above spec changes in the CXL memory module
+event reporting and QMP command to inject memory module event.
 
 Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
 ---
- hw/mem/cxl_type3.c          |  9 +++++++++
- hw/mem/cxl_type3_stubs.c    |  3 +++
+ hw/mem/cxl_type3.c          | 16 ++++++++++++++++
+ hw/mem/cxl_type3_stubs.c    |  2 ++
  include/hw/cxl/cxl_events.h |  7 +++++--
- qapi/cxl.json               | 14 +++++++++++++-
- 4 files changed, 30 insertions(+), 3 deletions(-)
+ qapi/cxl.json               | 10 +++++++++-
+ 4 files changed, 32 insertions(+), 3 deletions(-)
 
 diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-index 0787a9bfca..410ff445d0 100644
+index b99a100fe0..81774bf4b9 100644
 --- a/hw/mem/cxl_type3.c
 +++ b/hw/mem/cxl_type3.c
-@@ -1813,6 +1813,7 @@ static const QemuUUID memory_module_uuid = {
- #define CXL_GMER_VALID_RANK                             BIT(1)
- #define CXL_GMER_VALID_DEVICE                           BIT(2)
- #define CXL_GMER_VALID_COMPONENT                        BIT(3)
-+#define CXL_GMER_VALID_COMPONENT_ID_FORMAT              BIT(4)
+@@ -2054,6 +2054,9 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint32_t flags
+     }
+ }
  
- static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
- {
-@@ -1840,6 +1841,9 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
-                                         bool has_rank, uint8_t rank,
-                                         bool has_device, uint32_t device,
-                                         const char *component_id,
-+                                        uint8_t cme_ev_flags,
-+                                        uint32_t cme_count,
++#define CXL_MMER_VALID_COMPONENT                        BIT(0)
++#define CXL_MMER_VALID_COMPONENT_ID_FORMAT              BIT(1)
++
+ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+                                         uint32_t flags, uint8_t class,
+                                         uint8_t subclass, uint16_t ld_id,
+@@ -2066,11 +2069,14 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+                                         uint32_t dirty_shutdown_count,
+                                         uint32_t corrected_volatile_error_count,
+                                         uint32_t corrected_persist_error_count,
++                                        const char *component_id,
 +                                        uint8_t sub_type,
                                          Error **errp)
  {
      Object *obj = object_resolve_path(path, NULL);
-@@ -1898,10 +1902,15 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
-         strncpy((char *)gem.component_id, component_id,
-                 sizeof(gem.component_id) - 1);
-         valid_flags |= CXL_GMER_VALID_COMPONENT;
-+        valid_flags |= CXL_GMER_VALID_COMPONENT_ID_FORMAT;
-     }
+     CXLEventMemoryModule module;
+     CXLEventRecordHdr *hdr = &module.hdr;
++    uint16_t valid_flags = 0;
+     CXLDeviceState *cxlds;
+     CXLType3Dev *ct3d;
+     uint8_t enc_log;
+@@ -2111,6 +2117,16 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+     stl_le_p(&module.corrected_persistent_error_count,
+              corrected_persist_error_count);
  
-     stw_le_p(&gem.validity_flags, valid_flags);
- 
-+    gem.cme_ev_flags = cme_ev_flags;
-+    st24_le_p(gem.cme_count, cme_count);
-+    gem.sub_type = sub_type;
++    if (component_id) {
++        strncpy((char *)module.component_id, component_id,
++                sizeof(module.component_id) - 1);
++        valid_flags |= CXL_MMER_VALID_COMPONENT;
++        valid_flags |= CXL_MMER_VALID_COMPONENT_ID_FORMAT;
++    }
++    module.sub_type = sub_type;
 +
-     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
++    stw_le_p(&module.validity_flags, valid_flags);
++
+     if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&module)) {
          cxl_event_irq_assert(ct3d);
      }
 diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
-index 263d8b4609..b2a11bded8 100644
+index 26161c086a..04c36ed262 100644
 --- a/hw/mem/cxl_type3_stubs.c
 +++ b/hw/mem/cxl_type3_stubs.c
-@@ -23,6 +23,9 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
-                                         bool has_rank, uint8_t rank,
-                                         bool has_device, uint32_t device,
-                                         const char *component_id,
-+                                        uint8_t cme_ev_flags,
-+                                        uint32_t cme_count,
+@@ -61,6 +61,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+                                         uint32_t dirty_shutdown_count,
+                                         uint32_t corrected_volatile_error_count,
+                                         uint32_t corrected_persist_error_count,
++                                        const char *component_id,
 +                                        uint8_t sub_type,
                                          Error **errp) {}
  
- void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint32_t flags,
+ void qmp_cxl_inject_poison(const char *path, uint64_t start, uint64_t length,
 diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-index 4d9cfdb621..352f9891bd 100644
+index a3c5f2ec20..4a7836ad72 100644
 --- a/include/hw/cxl/cxl_events.h
 +++ b/include/hw/cxl/cxl_events.h
-@@ -115,10 +115,10 @@ typedef struct CXLEventInterruptPolicy {
+@@ -166,7 +166,7 @@ typedef struct CXLEventDram {
  
  /*
-  * General Media Event Record
-- * CXL r3.1 Section 8.2.9.2.1.1; Table 8-45
-+ * CXL r3.2 Section 8.2.10.2.1.1; Table 8-57
+  * Memory Module Event Record
+- * CXL r3.1 Section 8.2.9.2.1.3: Table 8-47
++ * CXL r3.2 Section 8.2.10.2.1.3: Table 8-59
+  * All fields little endian.
   */
- #define CXL_EVENT_GEN_MED_COMP_ID_SIZE  0x10
--#define CXL_EVENT_GEN_MED_RES_SIZE      0x2e
-+#define CXL_EVENT_GEN_MED_RES_SIZE      0x29
- typedef struct CXLEventGenMedia {
-     CXLEventRecordHdr hdr;
-     uint64_t phys_addr;
-@@ -130,6 +130,9 @@ typedef struct CXLEventGenMedia {
-     uint8_t rank;
-     uint8_t device[3];
-     uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
-+    uint8_t cme_ev_flags;
-+    uint8_t cme_count[3];
+ typedef struct CXLEventMemoryModule {
+@@ -180,7 +180,10 @@ typedef struct CXLEventMemoryModule {
+     uint32_t dirty_shutdown_count;
+     uint32_t corrected_volatile_error_count;
+     uint32_t corrected_persistent_error_count;
+-    uint8_t reserved[0x3d];
++    uint16_t validity_flags;
++    uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
 +    uint8_t sub_type;
-     uint8_t reserved[CXL_EVENT_GEN_MED_RES_SIZE];
- } QEMU_PACKED CXLEventGenMedia;
++    uint8_t reserved[0x2a];
+ } QEMU_PACKED CXLEventMemoryModule;
  
+ /*
 diff --git a/qapi/cxl.json b/qapi/cxl.json
-index c38585d3c8..dd01d50c25 100644
+index 0ba3a8e0f3..0a40596a30 100644
 --- a/qapi/cxl.json
 +++ b/qapi/cxl.json
-@@ -82,6 +82,16 @@
- # @component-id: Device specific component identifier for the event.
- #     May describe a field replaceable sub-component of the device.
+@@ -253,6 +253,13 @@
+ # @corrected-persistent-error-count: Total number of correctable
+ #     errors in persistent memory
  #
-+# @cme-ev-flags: Advanced programmable corrected memory error
-+#     threshold event flags.
-+#     See CXL r3.2 Table 8-57 General Media Event Record.
++# @component-id: Device specific component identifier for the event.
++#     May describe a field replaceable sub-component of the device.
++#     See CXL r3.2 Table 8-59 Memory Module Event Record.
 +#
-+# @cme-count: Corrected memory error count at event.
-+#     See CXL r3.2 Table 8-57 General Media Event Record.
-+#
-+# @sub-type: Memory event sub-type.
-+#     See CXL r3.2 Table 8-57 General Media Event Record.
++# @sub-type: Device event sub-type.
++#     See CXL r3.2 Table 8-59 Memory Module Event Record.
 +#
  # Since: 8.1
  ##
- { 'command': 'cxl-inject-general-media-event',
-@@ -91,7 +101,9 @@
-             'dpa': 'uint64', 'descriptor': 'uint8',
-             'type': 'uint8', 'transaction-type': 'uint8',
-             '*channel': 'uint8', '*rank': 'uint8',
--            '*device': 'uint32', '*component-id': 'str' } }
-+            '*device': 'uint32', '*component-id': 'str',
-+            'cme-ev-flags':'uint8', 'cme-count':'uint32',
-+            'sub-type':'uint8' } }
+ { 'command': 'cxl-inject-memory-module-event',
+@@ -264,7 +271,8 @@
+             'life-used': 'uint8', 'temperature' : 'int16',
+             'dirty-shutdown-count': 'uint32',
+             'corrected-volatile-error-count': 'uint32',
+-            'corrected-persistent-error-count': 'uint32'
++            'corrected-persistent-error-count': 'uint32',
++            '*component-id': 'str', 'sub-type':'uint8'
+             }}
  
  ##
- # @cxl-inject-dram-event:
 -- 
 2.43.0
 
