@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06679C7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B2AC7115A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:35:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSFOT-00053Q-7F; Thu, 19 Jun 2025 09:33:37 -0400
+	id 1uSFO8-0004lJ-T3; Thu, 19 Jun 2025 09:33:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uSFNq-0004Sc-Us
+ id 1uSFNq-0004Sd-UN
  for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:32:51 -0400
 Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
- id 1uSFNm-0008Gi-NN
+ id 1uSFNm-0008GX-Hq
  for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:32:50 -0400
 Received: from pps.filterd (m0127843.ppops.net [127.0.0.1])
- by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55JAvH26013023;
- Thu, 19 Jun 2025 06:32:44 -0700
+ by mx0b-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55JAvH22013023;
+ Thu, 19 Jun 2025 06:32:41 -0700
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=
- proofpoint20171006; bh=O7D1DH71ZL0cecuRVvta2JFUkHHepebG/jc/avoOL
- hs=; b=g5d0qPF+LHlxilL751NxmH0PdGKKw3ZjT+WUDmSFctUjwJrI/NFhoUVoX
- lILZNiJz6fUuA2d6SRacyti2AvRaSnkeT+gUe/S4qMxbKeQQLeJNQ6JNIVjDccDG
- Ney2rGDG6ye+IMwCE2gu7IkJIpIm2XVsEfK301ohYEAHMC15s2RAPZTvrb99nyLr
- j6H3vglHY1b7DCP1QK/325gQjW81UIXa9BgIn0+7hcOcjhqmvYmfONiufEAdkriQ
- gnN8ntb3JQezIT1lOeQWEWXNrIOnEyVW2b3MA2aaiqssVVkbsEgt7fRt07LmtYDD
- yp+611aUyDXK/0g6L+ER+EjVkI2FQ==
+ proofpoint20171006; bh=6311tszg3B3Xgw32Umsi2InitNKIbeJrTmEavkjkr
+ tI=; b=s7wFWXN7Thm+svKBHxws0SxtU9oXzUVvlIfucwJo1bIoZVoJwRN1xlA3g
+ HCli0sIUIRDZ/csMSgNlIr3gIXg/Z4dv81lR6OEb59yXL6017czciX6T2rI11Feq
+ wiXrEBwQ0nkYn+SXik+LzFElMMyBCEMBj724QYf48HwBxIBzIJJwspZ2U92mJ9rS
+ t58UVIAKhqISdxot5BTT4kQ8Kt4yx35w9Gz5az3Jmhnh26PacyA2TNiO+n6FxK8m
+ XTPJfFTRDGOdpilsEv/pVC+CxkBZxCH+oz/NS6xTP7Daf0AHLrctnueyhvD+71u6
+ 8iJOyMuIDOuVYV3BS6cIUthINcpTQ==
 Received: from sj2pr03cu002.outbound.protection.outlook.com
  (mail-westusazon11023091.outbound.protection.outlook.com [52.101.44.91])
- by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 47976j3rag-5
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 47976j3rag-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Thu, 19 Jun 2025 06:32:44 -0700 (PDT)
+ Thu, 19 Jun 2025 06:32:41 -0700 (PDT)
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=kYCA7dngeRif79uMWpMJCa7Dbh06trSjG7TUfCG73B5+2/ATVfYbFEGO2nFObOKOzgj+we6IELT6EQbuRmph/Ig9CmpyuVGk250dZmM6yID4tKiTyjMl0I1RIa56BuARMQSaPf8iVjIKGf8H4Zafzb4k3SQt+dQXyyuw6071+fqgCmh1K07kI9khzoL6sP1drVhwysFAgtuvZ4NOVrHy2Qjvxbms4+fqw5WRGbj/ih9Bk6ZqATb2XMdHe/hbDggHCPYu0Ci3pAWreNOjqTwLffE89nKroiIo0lr3wToccvHpyNGnOh0zxz5XTeo2Pbbg80WFwq6hU0V38zRGWBGk+Q==
+ b=rgjTK9mE24alg/OHl25xfl4OREIfn+Ji6kzIPnRXB06ylgvLGCgrO0ZdQlqflbaVnejipE+A1qxw0BZYyZtvxf7PlsLgWWXmUgfVKRz3bl5t+AVfLRlO8LNNqlI0b8jT9NDvS9JppAiujGYPLyelRv0frmxiF2v9K8YADMLkgAqQsV2tNXqmqJa3KfEytv7NhdskY14l4JzWRn5FQgRhlNO7LFznc+wzhPjStWl7FjmYYyYrVz+xNXSChUBDdTi6UOZqchCE1xuNpho4Zn0J1BUH96OzinRXuzDBjMAOBAtvwkznRUGy7l2t+NYQrv0xCVZK+lzvI9/bZMp1X+bGkg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=O7D1DH71ZL0cecuRVvta2JFUkHHepebG/jc/avoOLhs=;
- b=N6GRRs4zOaCpCxZi4Ehlvwc0wSaKy176CQu4ekRMh3MQ4REijBzgGUaRJUNVC7YwNf+sqmWBWZEh+L4vTtzPRBWgQ++j4CSuYOyo86uQwKWFH/qako+eCTyVmi9D+qzWnNOxYYTYoD3G6uua7fQXGcyOK6ChTqOngA8x2oVGhHR2iSV6hyYFmNNjcviL9rH+FEipAgj0NzyZvKYFoMah7EvKZe+H1CaEbsAPgZzjveI3aAqeG/KGNrVATRM/Kxfxda1mot8uykks/d6ui3V7UXVsmbMYJSlQsrEiFCCAyqXkAwAdSO+txxk0miu5PeuhBu3ahGWF/Y5moB9KNFcE4A==
+ bh=6311tszg3B3Xgw32Umsi2InitNKIbeJrTmEavkjkrtI=;
+ b=Nyr3Mmbi01cbvE9jTvAs5vWw0HO+i/G/I8ZVWdaitrfFi46+eCcX0GqRBap6kYcuHkAy5cpT/YaMoyU0jUAIP+XnNVVx/ISqR/QmSJYJzqXaNVa+40nER+TQLJFETypzAPeHNL/m07Iks+FGGkkE0KA83sCFbHKS5En/OnDSVo66FOQkFXAtQjNXWI3boFeggmUjxb/NFKdwiGxB6pPHIbIQnQos+f2iXziPqq7sAJ9TxK23abDWr/BWp02506D5Ii6203II11jrwH8Qo0k3SMd0NiPYL+TQqFjHcvXyEDdf8S3bAJ42n5VxhvLwxknc++kJ+79Ulo2r7vGFnrVr0Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
  dkim=pass header.d=nutanix.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=O7D1DH71ZL0cecuRVvta2JFUkHHepebG/jc/avoOLhs=;
- b=lHJ2zjg5K2DM9WzFoAXNeVSMRmq1zexUNfKgHvydq8QgtnYvBjlReuklfaEB/SKGLAneCsrCXZ8mTQ/A+jaLxCtiEXp+1/WvIbRl6JRSPCxUsDkijdi+uRY4hgKnSGQOTbiZ+ledne/+W/j16r7+fvVk+gRJwAGOKoR4fcdOrMaIaxK8UlSk/8QVdWLqNrxZD4am+SAPy5HwY+thaBdGFsz0z9m1oggrZ5hcY6VyzxQZLvqgPbOB89GuZ5KxgCwXU9T2WqHy8LF+OfHLPB1RpuZwuKVdg6KYOmf/xNjgVfbt6v/4gy1HAVPGsLoX64MgSYFbPvKEakRy0bK/JhGyxw==
+ bh=6311tszg3B3Xgw32Umsi2InitNKIbeJrTmEavkjkrtI=;
+ b=TQPQjIMawCyqraNbA37rMPy4YV/VgF6JanLqNJe3hpOcQ4YKEHSei0bisdDMg+ofZhEO5K2IwYLOF2DXrvou7cOcnQk2Scj9O1ULiJjvtdQOL91jL4Pl2rSu/WyYzpv3W88P/OSQo9nWF0DGTdAny/ibI1owoFTv7we3X995NOVnWXf4eaVCQjjYrp1pvmlDppXMfrT+fD6imm/1uqaU6LjUnc41F1v4Zz5KEDcMeUVAd7BURRrUx/oaMa9pdYo/NufqV8nw/rQXdS+I1/qJDGeZGrH2FE/qfeU7uYGGqYcCaq23sOA02CC6H5ZXgMvLnqFYWVrMSCQjqVWi2VAPaA==
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
  by PH0PR02MB9383.namprd02.prod.outlook.com (2603:10b6:510:289::11) with
  Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.19; Thu, 19 Jun
- 2025 13:32:40 +0000
+ 2025 13:32:31 +0000
 Received: from CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
  ([fe80::fd77:ea65:a159:ef51%2]) with mapi id 15.20.8857.016; Thu, 19 Jun 2025
- 13:32:40 +0000
+ 13:32:31 +0000
 From: John Levon <john.levon@nutanix.com>
 To: qemu-devel@nongnu.org
 Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
@@ -72,12 +72,13 @@ Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
  Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ John Levon <levon@movementarian.org>,
  John Johnson <john.g.johnson@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>
-Subject: [PATCH v4 17/19] vfio-user: add coalesced posted writes
-Date: Thu, 19 Jun 2025 06:31:51 -0700
-Message-ID: <20250619133154.264786-18-john.levon@nutanix.com>
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Subject: [PATCH v4 13/19] vfio-user: implement VFIO_USER_DMA_MAP/UNMAP
+Date: Thu, 19 Jun 2025 06:31:47 -0700
+Message-ID: <20250619133154.264786-14-john.levon@nutanix.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250619133154.264786-1-john.levon@nutanix.com>
 References: <20250619133154.264786-1-john.levon@nutanix.com>
@@ -89,92 +90,93 @@ X-ClientProxiedBy: LO3P265CA0025.GBRP265.PROD.OUTLOOK.COM
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB9383:EE_
-X-MS-Office365-Filtering-Correlation-Id: e50cfe9b-95e8-45d5-a098-08ddaf35c339
+X-MS-Office365-Filtering-Correlation-Id: 6cd8a697-9efc-4f23-e367-08ddaf35bdb3
 x-proofpoint-crosstenant: true
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
-X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?NdBhwUD4Q77muquk9oySbl7I9QDjz232ymE5uojwklmm//X4H/lyC5mfaueP?=
- =?us-ascii?Q?67maoP2W+2JONJwU3W1CwkeL/+7O/ACTcTlMtrWwji4KpotH+0bawJztcsj5?=
- =?us-ascii?Q?vzpNu1GP/SSnjArLzOCgVW2oQYmaB+uli5bOmk3I9HUrunmgotklMFsiTWBh?=
- =?us-ascii?Q?8eWr9Z/wiMETs+vG8e85i3Jfw1XzfmzEdDCdz3B6/9i8XkQF1CroSBEw2v14?=
- =?us-ascii?Q?AEKTECIRvX2V6GDIvc6IH4ygAYJQkFYDiJCyPA14vK/w+m6oaIlWsSfYK3bY?=
- =?us-ascii?Q?PlfRQr6v1GUu5gRNZ8clCXknVy0AyOfvig8RG9d5h/pH0pVMjMkaFrOYqtAr?=
- =?us-ascii?Q?5AIrl2gb09wxA0GlOAjrsEMEKX+b90VOyKe0vkrDMQaefHyIur2v5zNxrZwc?=
- =?us-ascii?Q?zk9tZorBmnenRBzL4PTdDLwCGXsjgfTjbVpcFnG3aoOQR5GxTLHPZ2v/g+6K?=
- =?us-ascii?Q?nhLY+/XCv32z2fHzlA9KDeZKY8uA7gyNyBaHXCkIZXiQdLfTk9YimMmgEtZo?=
- =?us-ascii?Q?bZS1oEaX4uMPjg6KKUzB+laXUzWMwXGpjt0ce2+OidD+4BeTjiIdse1UuMZT?=
- =?us-ascii?Q?e/FNZFOTAGhhbFfct7mbB28Ck+9rNjdyG6igqHlrR9bF6+IPK+RSP7jpxpfj?=
- =?us-ascii?Q?wDZtfh2HdjV24MCg/mUlFwuf/bXGt/hn09dmDkQ2QJoxpZZtGTTPKjWP+I22?=
- =?us-ascii?Q?1jutAOqcRn0gmvsUwflZPi+M0f7X8qwIRRRJdM/8c+K2K1O5Oitq8NEq9BKI?=
- =?us-ascii?Q?yqXNtupB7pWUSm9r1IgnTq57Xci1s2EOP1rRGUwJ0+S7O06WIAq/nDFO0yPt?=
- =?us-ascii?Q?yODc9rBR41oS5z12x93aBhJNlBamSozUuaPzIHe/LGbl6fzwalP+Ys+Y2bAq?=
- =?us-ascii?Q?s3UBkf0C8tdZNRdKxJLgPIEjFIXXdfA5l7E40yvCDx6rp33dghTljCXSabWl?=
- =?us-ascii?Q?8WeDzEV+vCcoCypl6XX66nCjFdsrGG4IPHkiUnicqlhGI6t5GZadpi/lTfL3?=
- =?us-ascii?Q?vgeWUfstSnyyt2FthtC+YoxzbYRue1Vm8AhS3cyiU0JfKqO71NLoks1hU6sG?=
- =?us-ascii?Q?VbA5yzZBUny6Id754S8/E8jrYi8cRm7jH/a8iBqkMFp3JoUvXaXgo5OI/urT?=
- =?us-ascii?Q?m1b50eLZv3lAvP3cJc5obgr2tGrv+0fIHuTST3I2SON9SqDhjgVu2TSCSMdL?=
- =?us-ascii?Q?M1uiWeVZJee48+3udR9IuWsy4bvPyAx6rv6E0Umezcf7v3khv7jrYwYOKG31?=
- =?us-ascii?Q?858do47qyqSCY1VFuOeCCgd8H+KZOmhCZnuCYGI9S4yGHHU96PRp7FT3QVYp?=
- =?us-ascii?Q?7QpyUlVTtOiLO9DVDUklZGAhWCPGhQy9zo+A2HbVBBNTBTQRYIDm65eVZucL?=
- =?us-ascii?Q?pbBqIHpyYRg+82qy5vdHTIC+EmTJAt4RXnxjGqdLEUPFZ61O2TKNP9e+iS2Q?=
- =?us-ascii?Q?FJakKrWy+gE=3D?=
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?2HZ66Ku1qsiAGTxD0i4EHC3YTLxGPZnVDh/+PvzaAw+o9XqX0szk4keljwfn?=
+ =?us-ascii?Q?tXvHVH4WnFQZ9nuoQS3hXuNi/YkoQDksKqnuxEkb1237laSw32ZTTpzE4pFK?=
+ =?us-ascii?Q?EMtUa9R4AzqG7Knh/ZUzDSR4vgLpsutXk0M6/Z60Z/h/Obgui5fJGpXTc2Ay?=
+ =?us-ascii?Q?4M08znCraYMyZdEQMDMzW46ICPHXbVcVBVsysADz4wHIxaueU7bEsH2zyJQa?=
+ =?us-ascii?Q?r6EctisFBHlRQpMf6nY/1cEQ0uqEAMpM1UbYNFgx1Jgt4G/nQlsJ4SrdMBgW?=
+ =?us-ascii?Q?k8r0WZw4rz3T241NyCDMP/4wIHJCxsnJ07Y7xaJ/sVP2QD02sZ7z9J21xvVE?=
+ =?us-ascii?Q?FKv2G/V1Hcla39/7xgMnJq6RGHwr0Fkfwj/LPW76XEERQlABB54NUs+iIJNC?=
+ =?us-ascii?Q?D0hfADsuSVjL40HLpne0RuMTiqA4QejOUnjlgsTtfre/NluhIaV8azeHvZY0?=
+ =?us-ascii?Q?5BIKtiH6vHIwceh4QxWqAkIf64+ZcFOrw/Lt9Nosip2wRNYJ2pGC7fcdfMNo?=
+ =?us-ascii?Q?8jTrId2w2FKvEUox39uYDCfcPYqkXOcYHhucuj9e//GeVj6r1jpDlNwq7IAq?=
+ =?us-ascii?Q?AF/N4FpUxkIJosGITfwV8FFalXbhZBaBkB1pr0Wu4nkJqYnlcl9c4DS25n74?=
+ =?us-ascii?Q?ix5C15Un7jp1JIQElaUIMRGw1PiiqK5h2RlPI480J3AnWlAfOajPqpwJlfG/?=
+ =?us-ascii?Q?lXu99QCRD11yE78MyjrO0/DbRDmjJY4OAKOpCVWccbGgbdrlobgtJKeW9Cv9?=
+ =?us-ascii?Q?zrvIVHKnAs5MvzKHQC1G8bpeQGoan9qYKvNE6ecIaQf27Ry6i+kZiOIkU6wA?=
+ =?us-ascii?Q?DA+O7tC8OwQ9G88zst7/uBh1NM3U2czqEsOXFtquXeh+UjHWguy0bS2qTqsv?=
+ =?us-ascii?Q?1xtL6wLGATwA3eW5/G/VSLF9rMA11mJmi37LLW8tkeFNnkwA7wdQD2JImq3x?=
+ =?us-ascii?Q?g8/4+bEy2CxGwUyAFy8DafWwhVWCJG7kcm40gLNXxtOQ8I+Z7kiOIz314CKg?=
+ =?us-ascii?Q?hK8r0qSgLkEVK41WNQ1zzG9lZ0Rum4FBbIXTrbWHlT2VYVxFG/bRscSDD66A?=
+ =?us-ascii?Q?koqBTt5YBqNveST8RcymvD4gqlqkCrZfZtDPOJnWElWRQOUtJoA2cvFp9fSc?=
+ =?us-ascii?Q?Few6R4cc9oRAWuPow0DLCbEFr2zr4TPwt9+BTzPjOqoHJDRhdI7wQB67IRuw?=
+ =?us-ascii?Q?Fbmr5JV9l1nhtiPdHS3uZ9toDJNy/3Ii1SXBObrvUZoibnoSJaKtOn3LERYc?=
+ =?us-ascii?Q?zXqnb0V2qM0lZzQz/qI7u5cImAoCXDw3tnn6hhLthykbKDzGkkm86+S8v1H3?=
+ =?us-ascii?Q?I5B10y21FP1iyvs84HDIaQYTVLnb4o+3VUMUHUSA1T94zrNz+oFtJ5D5ArrS?=
+ =?us-ascii?Q?bqi0SIZMO56xsyWaPD7KQDIpQk4tjvnxiZMgl/J97Q3ge0hQax5WlDf5Vp1o?=
+ =?us-ascii?Q?Xzmm/SSdQgw=3D?=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1102; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?6Hr8wwNbxHd/wcbd2jSSL0NTOiVhL01QK7KRVkK2wO1HLA/SDyAD4zP/v0AX?=
- =?us-ascii?Q?tTBnwYM621U6lgb4UruwwKkUb2dPtubAjz3KJtUhjrKQQHkoRYIxAtuGK6Lj?=
- =?us-ascii?Q?wPS2msPnZYW+pthZcrWVirDiWyrJqi+MEjFfWYJ2vrW9DVHv4/IiLboqVi67?=
- =?us-ascii?Q?c9UD30kChnjuzoP1F/x4Alb5o+grXQnH2QrEK03H0XQdM1lnoInhs5aSs2gi?=
- =?us-ascii?Q?ElLrIuLD7dNyYAYBexDY/UJqGLoKQ/+L7jADhWdH8vMHyF/UzN5GQr1YDV1+?=
- =?us-ascii?Q?wbOWlIV4yS3f981/jueLWGL+y/p9FNRmNAO9yRHbT1pmZWLFaaPVm1PJzyg0?=
- =?us-ascii?Q?/P+T/4JW/9x2b3M4qDTjtd9T0wj7WEMhIBUoSUch3RQB2o7p4LjVVu7rg2+4?=
- =?us-ascii?Q?Iir+6/8vjfl+dnAhD9wR8nxBiomGQJWp1tm4zNFh56/s9S7AdYhUjC/bjXuw?=
- =?us-ascii?Q?mfa5HMWSZqTERaSzQ9aDC9xmOLvpx5MZJ9pQoom7f0lw1do/P0m2QCQ+Tu//?=
- =?us-ascii?Q?xSZi9my/frKreMSHA28PHhJAQCJPJbLKV2+yN8f2bHsyJeLJ9BdhCAowUqq4?=
- =?us-ascii?Q?Fwahcl1Winxty/9t1e5QjbhRVcH2Cp4vh1+11A7JK4luofgP6CewDPxvuHje?=
- =?us-ascii?Q?cO1E7mvXiDrtlyMqJFuFQAFFfrX0b2UFrz+M8HjpOJz54SulLuDOzI+DFGFJ?=
- =?us-ascii?Q?5+mBBPqlsf0dR0iG8eFg+50ZJ9VOhmhMgQp8Dn8ZQsFzfp5kD2pZv8c9Oddl?=
- =?us-ascii?Q?cvFwoj1kfrhja7HKWOXq2Q7UsXswVL1ToNGutf00gFDtubKUmR0JzJ+DBAtf?=
- =?us-ascii?Q?OCMorn8b/qNre4l2NGz8MluVSwtcdxb5HcnkITef/CeMwSAeLpPVHWxleSQh?=
- =?us-ascii?Q?Ra2jFhC6Asp/6MRu2ScQijuRR+m3HO0FA7XAeEOXsF0Sey0bL3ylLucAsuT4?=
- =?us-ascii?Q?kfDnZScLI31tlqq2CwkQOppiKzLEXer07ssfCN+xsh2LjpPmoPBDAXdPQSvB?=
- =?us-ascii?Q?OOeXUY6SLtJIEkdEjdIeL8G+FFs7R+mhDnkC0xhkmKIN+nxARkQR3LDvDFPa?=
- =?us-ascii?Q?ru+Zuqf9kJkGgvhdO9Ur1qs1xvLTy6Ckx8EtogL6Q/t6w/XQ2npwEF90qYVM?=
- =?us-ascii?Q?JhmF1gjwMe/6qk38IQv1hWZwuqWEJVoxBBieCu6L418y6xywjx7VguSZ1F1r?=
- =?us-ascii?Q?m/G7dM7a0YjLizcqm4oBw6KWXJGAwD06LUdKLyZY0opjr/RO5WF8r72zUSiz?=
- =?us-ascii?Q?AxoO1XDHbZFUPEm/LaYYPqAS87ZdfGZdrcfKayWBqbhLl1dKDCCoCbu+kipq?=
- =?us-ascii?Q?rnUsckvd/wpEa4rd7po+qE1+1We7G2TuXBsOwmZEDvzT9efmkooVp2AOEeDn?=
- =?us-ascii?Q?eWBNXUKpaQjm1ke0c0z7LXwjhc6CKqj9V+hnFOPCCyxLdfRiJB7MYBMo7tpp?=
- =?us-ascii?Q?J0kqTVlLYA9MdxR0lMYzBU+mKegHi9NEYimI8NYgxVm5YbbB7it3w59XsoSC?=
- =?us-ascii?Q?HeACYFzu36YRjmAMvE0sH1rlsBunamldaEuhJdKjEpnG/ilFmoIv5cBWhLTX?=
- =?us-ascii?Q?410ErlHhBVYxFUkQo2U53MW8onwYN8CzGe84EIUO?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?6cfM4El49kJQH+Uftw5zUa1sokNu+qMORRdwJgI63IvZ0O1CpA3alRethhvP?=
+ =?us-ascii?Q?diIDJ8kagzMlWnm9mDt+PYlajoVGdRdBs7nPH0Yjmk/+7KzvK/R372YKvV1o?=
+ =?us-ascii?Q?mXBqblqxfJNGIKh8ZjnCMZJpoak+SmShO0GSTOEArJnFWIR/sp/pIfldL15f?=
+ =?us-ascii?Q?3KwdePiIerJkqPnTGKdbP2qE50b92SOfFHJbgJgvYqWEov7gwLUMeY4lEub5?=
+ =?us-ascii?Q?3kKdl5eGc44aUIxstisSjYdS2A7Wn8x9vnYJkL2EGW4n+E8lprHmuKUh5HOi?=
+ =?us-ascii?Q?VJ4I+n/QZLi/Tux9VrKCC0hPKEolHwmEuWV4gKZUQ9R025o0jrU/OaPqYzw2?=
+ =?us-ascii?Q?+Rd0FkwEGAVl6SbHnySE/fD8XwgX39jUBygo+5EzSplq8zZwTOOvp6cOBY4b?=
+ =?us-ascii?Q?atOmLPyJARdncnKZOWLh5bceac+DvMPj+oTQ6XhwqTm3IYIqL+cur1g7eJJR?=
+ =?us-ascii?Q?C6sE3Q8Nd/X/pqDFdKXUmqHnGfgCWdpZEZ0NQueSDzW4tZQ7nLXOLWH4DCp3?=
+ =?us-ascii?Q?fE/IcG6vJY1320q6Htj1ROEtTfMIsFGz6yGEYvvYYnPNqDXr5q3iHmsupsvu?=
+ =?us-ascii?Q?5KF+ytjbEppJ88jlYa7QlEzt6XDTtxH87XQ7k3qjtzbS8gWGhJKNvlYM7oJf?=
+ =?us-ascii?Q?MouW2k4OzJHAFAzh14ZkAqemcg8YoeVH+hkrubLymgSsZKZOj8HaqXvp+DjM?=
+ =?us-ascii?Q?CPWYYdDM5/CiHH5hDtHU4VEqDjKPBfluaedLveERLnBOck0YyKhJ6AlZ+Lag?=
+ =?us-ascii?Q?7nqlcCiNLTlN7HDrG733PO83ugf14I2qqD3P0vKZRlLziuzhR9lvs7NaXeUn?=
+ =?us-ascii?Q?h2UlWlLJPHWmk0gK58Ut7oaZpFSDHWFhpdhbybaRfc+si21f5Uzip6Yia8Q/?=
+ =?us-ascii?Q?fa853UPvL4m3Hegg/dViRjI9SuHvpApdRoOh7sZdmK7NUHYGUbxZBEGTvkSJ?=
+ =?us-ascii?Q?30vpO+UkdKL9mOTVqo43sWhpOXPOGjL5jmI2PsbHVr/cuxzD31XrMsgfNQ8g?=
+ =?us-ascii?Q?ziDmrZqk8InqszfRPids7x26Y1MfG9YcWIAcnct49zgEM8ogGl3J7qIsqHi4?=
+ =?us-ascii?Q?eowLteI/GMJ+DTGtg8j0mtbXS/fX7JV1zVr97eAzJxfycez6ozI9jz/SHPI0?=
+ =?us-ascii?Q?bRe4DypJMdjPd0F5w57xtEisNgPiUwuPCq23hPKKS9x06nY9U5nXV0l2PV0z?=
+ =?us-ascii?Q?UT4QD0rmFDJ2wuxcRXpN2jI/cafDam4qVIfusJY3eurw2GPpd2qE05GRZGbX?=
+ =?us-ascii?Q?sCgSGJgkikTDTqc24YUm6mMi/VancrVno8TpupgVpVUX+RB+GH9Wiw5UVRSJ?=
+ =?us-ascii?Q?UzrIGYGojXLUeoNep/84pFjdPz1zM/vPHjFgknhArPA2m4tapcPE/fLpL8re?=
+ =?us-ascii?Q?psGv+fFX2C9KcQgJdYBG4JsJYVklx3vdqNLJlMQr0NAY4NS7XCiStukT9c/C?=
+ =?us-ascii?Q?+pAXQvJ1lYgLDFKns1gmxtdq4db3fj/H6MfjXCCZNbzCBJ2vUQUNK9q8+csl?=
+ =?us-ascii?Q?uQFMrSHsbyMxu3GqUr9Rs8VRXxeMBfG+N6ysv88uLpIIqSqiqNG8fYZukooB?=
+ =?us-ascii?Q?V6LztHb+h+K17Jzwj2KPV7it/jbWP16Na/yeHUVv?=
 X-OriginatorOrg: nutanix.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e50cfe9b-95e8-45d5-a098-08ddaf35c339
+X-MS-Exchange-CrossTenant-Network-Message-Id: 6cd8a697-9efc-4f23-e367-08ddaf35bdb3
 X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2025 13:32:40.3189 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2025 13:32:31.0910 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: XzVid0GEaCBAWyPIwAZeKXQqbzqN+YQD1z5tK0SmHdDv89uRkdLL81rrVfumiD8g02eaZx9HIKqNvU9amjXaLg==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0xWYn7+CqJ7wNkxitx5y9gQBk+qTo2zn1k4trGBlA583bDieUy1GcwiXxQnW3Ox1sjS8sMGdKjnILjXGxm2/sg==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB9383
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDExMyBTYWx0ZWRfX1I5qwmifbtna
- uMdMNN0GocgWkzr6WpTg8Mild3y83e9C0XNnDXqikcxp65UlkAJJ6Hhp/rF4Cg3o0zzFYZGKU24
- IsbsUTMxuTk+yg53LnyiqcCx3OqAs7LhtIw8smmisYw6HBQv1/bYegKSPDyh37pwXGGQwQe8ocu
- s2n6vdFKxoGTIqpxaUu5Qp+TAJ8MjfnSr9Aj5+J5Rey0ENU1DO5JuKkg2claHr+Ed0SaPEAMJ8q
- jo3hltOXgM+DwlKZ5QRhjWQ1XoIS0HY4zPRKR6S8+ZnmAPCCu/8EyLchMmHbVaa+DwpQgEloGim
- Fnf7Z6vIBeeY11whG3GeJ3djB53tI5w+unYowEdgy+0ednlR1Yfls44N5KuObfa40f1geu1YYqf
- 0b81lWQOw+2Xr12Qm3igmSysTDNsitvyerdbM5TUFFCMEzK7GTBAUnJ7tSqGyER6qNTEi4V6
-X-Authority-Analysis: v=2.4 cv=RcqQC0tv c=1 sm=1 tr=0 ts=6854117c cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDExMyBTYWx0ZWRfX6/gZbH2FUjTv
+ Wty4y9DZg7M30fg3yUGHyzfZ2BJ7T6ImumjHMa36UTF3PC4uSJBa+3CibBKE4A7oA6oI12ob7TI
+ 2DbD1SoDfTzjUk1oMlzWup49YlWFFo0JRDTUowxy3TVqXzEKR5UKXEpifJrgbGzphvVENGnelyr
+ o8LYtTGFJntwkUQ1J15rhnjfpY9GAL4TpIkaV3DGzfdtXxcIsXbl//wvAuO2fonSivIOO6w3YH+
+ PWZhH3F97WnNaFLQuNDV1mJN4nw9HWA8ymBXCHhjgmV6kw43ZZW17hd+Db/uhua2c0GTK36HK+f
+ OTBoK4xyOAPgVILKClIHht2UAIVL2T7sAQEzVTLgKQpQQnJUHqxO8fsBhvmQFSI3xLs0nS/+7Uy
+ WpiI8oD31gJood3rFwEvc2KO3MAt1sA4VHTgT4sVc49zeE2nJuhKt56X35uPFOcNKiG1SusH
+X-Authority-Analysis: v=2.4 cv=RcqQC0tv c=1 sm=1 tr=0 ts=68541179 cx=c_pps
  a=b9bpObgcEOTp51h0EtjbnQ==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
  a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
  a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
- a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10 a=yPCof4ZbAAAA:8
- a=64Cc0HZtAAAA:8 a=pwxC0n7aooic8zlvp-IA:9
-X-Proofpoint-ORIG-GUID: 5ty87x5o4K8Qe5wr9Aq52B6CkLd0sOEO
-X-Proofpoint-GUID: 5ty87x5o4K8Qe5wr9Aq52B6CkLd0sOEO
+ a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10 a=RQZ_2NmkAAAA:8
+ a=yPCof4ZbAAAA:8 a=64Cc0HZtAAAA:8 a=1ZqixiJJ9Y4JtCwCYkQA:9
+ a=46pEW5UW3zrkaSsnLxuo:22
+X-Proofpoint-ORIG-GUID: noPGGX5BtC_ph3nHya6cpVFeI-3AAl2r
+X-Proofpoint-GUID: noPGGX5BtC_ph3nHya6cpVFeI-3AAl2r
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-19_05,2025-06-18_03,2025-03-28_01
@@ -204,336 +206,364 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new message to send multiple writes to server in a single message.
-Prevents the outgoing queue from overflowing when a long latency
-operation is followed by a series of posted writes.
+From: John Levon <levon@movementarian.org>
+
+When the vfio-user container gets mapping updates, share them with the
+vfio-user by sending a message; this can include the region fd, allowing
+the server to directly mmap() the region as needed.
+
+For performance, we only wait for the message responses when we're doing
+with a series of updates via the listener_commit() callback.
 
 Originally-by: John Johnson <john.g.johnson@oracle.com>
-Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
 Signed-off-by: John Levon <john.levon@nutanix.com>
 ---
- hw/vfio-user/protocol.h   | 21 ++++++++++
- hw/vfio-user/proxy.h      | 12 ++++++
- hw/vfio-user/device.c     | 40 +++++++++++++++++++
- hw/vfio-user/proxy.c      | 84 +++++++++++++++++++++++++++++++++++++++
- hw/vfio-user/trace-events |  1 +
- 5 files changed, 158 insertions(+)
+ hw/vfio-user/protocol.h   |  32 +++++++++++
+ hw/vfio-user/proxy.h      |   6 +++
+ hw/vfio-user/container.c  | 108 +++++++++++++++++++++++++++++++++++++-
+ hw/vfio-user/proxy.c      |  77 ++++++++++++++++++++++++++-
+ hw/vfio-user/trace-events |   4 ++
+ 5 files changed, 223 insertions(+), 4 deletions(-)
 
 diff --git a/hw/vfio-user/protocol.h b/hw/vfio-user/protocol.h
-index 3e9d8e576b..3249a4a6b6 100644
+index 48144b2c33..524f3d633a 100644
 --- a/hw/vfio-user/protocol.h
 +++ b/hw/vfio-user/protocol.h
-@@ -39,6 +39,7 @@ enum vfio_user_command {
-     VFIO_USER_DMA_WRITE                 = 12,
-     VFIO_USER_DEVICE_RESET              = 13,
-     VFIO_USER_DIRTY_PAGES               = 14,
-+    VFIO_USER_REGION_WRITE_MULTI        = 15,
-     VFIO_USER_MAX,
- };
- 
-@@ -72,6 +73,7 @@ typedef struct {
- #define VFIO_USER_CAP_PGSIZES   "pgsizes"
- #define VFIO_USER_CAP_MAP_MAX   "max_dma_maps"
- #define VFIO_USER_CAP_MIGR      "migration"
-+#define VFIO_USER_CAP_MULTI     "write_multiple"
- 
- /* "migration" members */
- #define VFIO_USER_CAP_PGSIZE            "pgsize"
-@@ -218,4 +220,23 @@ typedef struct {
-     char data[];
- } VFIOUserBitmap;
+@@ -112,6 +112,31 @@ typedef struct {
+  */
+ #define VFIO_USER_DEF_MAX_BITMAP (256 * 1024 * 1024)
  
 +/*
-+ * VFIO_USER_REGION_WRITE_MULTI
++ * VFIO_USER_DMA_MAP
++ * imported from struct vfio_iommu_type1_dma_map
 + */
-+#define VFIO_USER_MULTI_DATA  8
-+#define VFIO_USER_MULTI_MAX   200
-+
-+typedef struct {
-+    uint64_t offset;
-+    uint32_t region;
-+    uint32_t count;
-+    char data[VFIO_USER_MULTI_DATA];
-+} VFIOUserWROne;
-+
 +typedef struct {
 +    VFIOUserHdr hdr;
-+    uint64_t wr_cnt;
-+    VFIOUserWROne wrs[VFIO_USER_MULTI_MAX];
-+} VFIOUserWRMulti;
++    uint32_t argsz;
++    uint32_t flags;
++    uint64_t offset;    /* FD offset */
++    uint64_t iova;
++    uint64_t size;
++} VFIOUserDMAMap;
++
++/*
++ * VFIO_USER_DMA_UNMAP
++ * imported from struct vfio_iommu_type1_dma_unmap
++ */
++typedef struct {
++    VFIOUserHdr hdr;
++    uint32_t argsz;
++    uint32_t flags;
++    uint64_t iova;
++    uint64_t size;
++} VFIOUserDMAUnmap;
++
+ /*
+  * VFIO_USER_DEVICE_GET_INFO
+  * imported from struct vfio_device_info
+@@ -175,4 +200,11 @@ typedef struct {
+     char data[];
+ } VFIOUserRegionRW;
+ 
++/*imported from struct vfio_bitmap */
++typedef struct {
++    uint64_t pgsize;
++    uint64_t size;
++    char data[];
++} VFIOUserBitmap;
 +
  #endif /* VFIO_USER_PROTOCOL_H */
 diff --git a/hw/vfio-user/proxy.h b/hw/vfio-user/proxy.h
-index 28233f0d33..0486097781 100644
+index e5ac558a65..a9a36e4110 100644
 --- a/hw/vfio-user/proxy.h
 +++ b/hw/vfio-user/proxy.h
-@@ -85,6 +85,8 @@ typedef struct VFIOUserProxy {
-     VFIOUserMsg *last_nowait;
-     VFIOUserMsg *part_recv;
-     size_t recv_left;
-+    VFIOUserWRMulti *wr_multi;
-+    int num_outgoing;
-     enum proxy_state state;
- } VFIOUserProxy;
+@@ -70,6 +70,7 @@ typedef struct VFIOUserProxy {
+     QemuCond close_cv;
+     AioContext *ctx;
+     QEMUBH *req_bh;
++    bool async_ops;
  
-@@ -92,6 +94,11 @@ typedef struct VFIOUserProxy {
- #define VFIO_PROXY_CLIENT        0x1
- #define VFIO_PROXY_FORCE_QUEUED  0x4
- #define VFIO_PROXY_NO_POST       0x8
-+#define VFIO_PROXY_USE_MULTI     0x16
-+
-+/* coalescing high and low water marks for VFIOProxy num_outgoing */
-+#define VFIO_USER_OUT_HIGH       1024
-+#define VFIO_USER_OUT_LOW        128
- 
- typedef struct VFIODevice VFIODevice;
- 
-@@ -119,4 +126,9 @@ void vfio_user_send_async(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
- void vfio_user_send_reply(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int size);
- void vfio_user_send_error(VFIOUserProxy *proxy, VFIOUserHdr *hdr, int error);
- 
-+void vfio_user_flush_multi(VFIOUserProxy *proxy);
-+void vfio_user_create_multi(VFIOUserProxy *proxy);
-+void vfio_user_add_multi(VFIOUserProxy *proxy, uint8_t index,
-+                         off_t offset, uint32_t count, void *data);
-+
- #endif /* VFIO_USER_PROXY_H */
-diff --git a/hw/vfio-user/device.c b/hw/vfio-user/device.c
-index e787fd542d..e2664760cb 100644
---- a/hw/vfio-user/device.c
-+++ b/hw/vfio-user/device.c
-@@ -8,6 +8,8 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/error-report.h"
-+#include "qemu/lockable.h"
-+#include "qemu/thread.h"
- 
- #include "hw/vfio-user/device.h"
- #include "hw/vfio-user/trace.h"
-@@ -294,6 +296,7 @@ static int vfio_user_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
-     VFIOUserRegionRW *msgp = NULL;
-     VFIOUserProxy *proxy = vbasedev->proxy;
-     int size = sizeof(*msgp) + count;
-+    bool can_multi;
-     int flags = 0;
-     int ret;
- 
-@@ -309,6 +312,43 @@ static int vfio_user_device_io_region_write(VFIODevice *vbasedev, uint8_t index,
-         flags |= VFIO_USER_NO_REPLY;
-     }
- 
-+    /* write eligible to be in a WRITE_MULTI msg ? */
-+    can_multi = (proxy->flags & VFIO_PROXY_USE_MULTI) && post &&
-+        count <= VFIO_USER_MULTI_DATA;
-+
-+    /*
-+     * This should be a rare case, so first check without the lock,
-+     * if we're wrong, vfio_send_queued() will flush any posted writes
-+     * we missed here
-+     */
-+    if (proxy->wr_multi != NULL ||
-+        (proxy->num_outgoing > VFIO_USER_OUT_HIGH && can_multi)) {
-+
-+        /*
-+         * re-check with lock
-+         *
-+         * if already building a WRITE_MULTI msg,
-+         *  add this one if possible else flush pending before
-+         *  sending the current one
-+         *
-+         * else if outgoing queue is over the highwater,
-+         *  start a new WRITE_MULTI message
-+         */
-+        WITH_QEMU_LOCK_GUARD(&proxy->lock) {
-+            if (proxy->wr_multi != NULL) {
-+                if (can_multi) {
-+                    vfio_user_add_multi(proxy, index, off, count, data);
-+                    return count;
-+                }
-+                vfio_user_flush_multi(proxy);
-+            } else if (proxy->num_outgoing > VFIO_USER_OUT_HIGH && can_multi) {
-+                vfio_user_create_multi(proxy);
-+                vfio_user_add_multi(proxy, index, off, count, data);
-+                return count;
-+            }
-+        }
-+    }
-+
-     msgp = g_malloc0(size);
-     vfio_user_request_msg(&msgp->hdr, VFIO_USER_REGION_WRITE, size, flags);
-     msgp->offset = off;
-diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
-index 0436994647..c9bcf39f4c 100644
---- a/hw/vfio-user/proxy.c
-+++ b/hw/vfio-user/proxy.c
-@@ -13,12 +13,14 @@
- #include "hw/vfio-user/proxy.h"
- #include "hw/vfio-user/trace.h"
- #include "qapi/error.h"
-+#include "qobject/qbool.h"
- #include "qobject/qdict.h"
- #include "qobject/qjson.h"
- #include "qobject/qnum.h"
- #include "qemu/error-report.h"
- #include "qemu/lockable.h"
- #include "qemu/main-loop.h"
-+#include "qemu/thread.h"
- #include "system/iothread.h"
- 
- static IOThread *vfio_user_iothread;
-@@ -441,6 +443,11 @@ static void vfio_user_send(void *opaque)
-         }
-         qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-                                        vfio_user_recv, NULL, NULL, proxy);
-+
-+        /* queue empty - send any pending multi write msgs */
-+        if (proxy->wr_multi != NULL) {
-+            vfio_user_flush_multi(proxy);
-+        }
-     }
- }
- 
-@@ -461,6 +468,7 @@ static int vfio_user_send_one(VFIOUserProxy *proxy)
-     }
- 
-     QTAILQ_REMOVE(&proxy->outgoing, msg, next);
-+    proxy->num_outgoing--;
-     if (msg->type == VFIO_MSG_ASYNC) {
-         vfio_user_recycle(proxy, msg);
-     } else {
-@@ -568,11 +576,18 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
- {
-     int ret;
- 
-+    /* older coalesced writes go first */
-+    if (proxy->wr_multi != NULL &&
-+        ((msg->hdr->flags & VFIO_USER_TYPE) == VFIO_USER_REQUEST)) {
-+        vfio_user_flush_multi(proxy);
-+    }
-+
      /*
-      * Unsent outgoing msgs - add to tail
-      */
-     if (!QTAILQ_EMPTY(&proxy->outgoing)) {
-         QTAILQ_INSERT_TAIL(&proxy->outgoing, msg, next);
-+        proxy->num_outgoing++;
-         return 0;
-     }
+      * above only changed when BQL is held
+@@ -99,9 +100,14 @@ void vfio_user_set_handler(VFIODevice *vbasedev,
+                            void *reqarg);
+ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp);
  
-@@ -586,6 +601,7 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
-     }
-     if (ret == QIO_CHANNEL_ERR_BLOCK) {
-         QTAILQ_INSERT_HEAD(&proxy->outgoing, msg, next);
-+        proxy->num_outgoing = 1;
-         qio_channel_set_aio_fd_handler(proxy->ioc, proxy->ctx,
-                                        vfio_user_recv, proxy->ctx,
-                                        vfio_user_send, proxy);
-@@ -1109,12 +1125,27 @@ static bool check_migr(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-     return caps_parse(proxy, qdict, caps_migr, errp);
- }
- 
-+static bool check_multi(VFIOUserProxy *proxy, QObject *qobj, Error **errp)
-+{
-+    QBool *qb = qobject_to(QBool, qobj);
++VFIOUserFDs *vfio_user_getfds(int numfds);
 +
-+    if (qb == NULL) {
-+        error_setg(errp, "malformed %s", VFIO_USER_CAP_MULTI);
-+        return false;
-+    }
-+    if (qbool_get_bool(qb)) {
-+        proxy->flags |= VFIO_PROXY_USE_MULTI;
-+    }
-+    return true;
+ void vfio_user_request_msg(VFIOUserHdr *hdr, uint16_t cmd,
+                            uint32_t size, uint32_t flags);
++void vfio_user_wait_reqs(VFIOUserProxy *proxy);
+ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                          VFIOUserFDs *fds, int rsize);
++void vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
++                           VFIOUserFDs *fds, int rsize);
+ 
+ #endif /* VFIO_USER_PROXY_H */
+diff --git a/hw/vfio-user/container.c b/hw/vfio-user/container.c
+index f7c285ec2d..a9cc4b197e 100644
+--- a/hw/vfio-user/container.c
++++ b/hw/vfio-user/container.c
+@@ -12,23 +12,125 @@
+ 
+ #include "hw/vfio-user/container.h"
+ #include "hw/vfio-user/device.h"
++#include "hw/vfio-user/trace.h"
+ #include "hw/vfio/vfio-cpr.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "hw/vfio/vfio-listener.h"
+ #include "qapi/error.h"
+ 
++/*
++ * When DMA space is the physical address space, the region add/del listeners
++ * will fire during memory update transactions.  These depend on BQL being held,
++ * so do any resulting map/demap ops async while keeping BQL.
++ */
++static void vfio_user_listener_begin(VFIOContainerBase *bcontainer)
++{
++    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
++                                                 bcontainer);
++
++    container->proxy->async_ops = true;
 +}
 +
- static struct cap_entry caps_cap[] = {
-     { VFIO_USER_CAP_MAX_FDS, check_max_fds },
-     { VFIO_USER_CAP_MAX_XFER, check_max_xfer },
-     { VFIO_USER_CAP_PGSIZES, check_pgsizes },
-     { VFIO_USER_CAP_MAP_MAX, check_max_dma },
-     { VFIO_USER_CAP_MIGR, check_migr },
-+    { VFIO_USER_CAP_MULTI, check_multi },
-     { NULL }
- };
- 
-@@ -1173,6 +1204,7 @@ static GString *caps_json(void)
-     qdict_put_int(capdict, VFIO_USER_CAP_MAX_XFER, VFIO_USER_DEF_MAX_XFER);
-     qdict_put_int(capdict, VFIO_USER_CAP_PGSIZES, VFIO_USER_DEF_PGSIZE);
-     qdict_put_int(capdict, VFIO_USER_CAP_MAP_MAX, VFIO_USER_DEF_MAP_MAX);
-+    qdict_put_bool(capdict, VFIO_USER_CAP_MULTI, true);
- 
-     qdict_put_obj(dict, VFIO_USER_CAP, QOBJECT(capdict));
- 
-@@ -1225,3 +1257,55 @@ bool vfio_user_validate_version(VFIOUserProxy *proxy, Error **errp)
-     trace_vfio_user_version(msgp->major, msgp->minor, msgp->capabilities);
-     return true;
- }
-+
-+void vfio_user_flush_multi(VFIOUserProxy *proxy)
++static void vfio_user_listener_commit(VFIOContainerBase *bcontainer)
 +{
-+    VFIOUserMsg *msg;
-+    VFIOUserWRMulti *wm = proxy->wr_multi;
++    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
++                                            bcontainer);
++
++    /* wait here for any async requests sent during the transaction */
++    container->proxy->async_ops = false;
++    vfio_user_wait_reqs(container->proxy);
++}
++
+ static int vfio_user_dma_unmap(const VFIOContainerBase *bcontainer,
+                                hwaddr iova, ram_addr_t size,
+                                IOMMUTLBEntry *iotlb, bool unmap_all)
+ {
+-    return -ENOTSUP;
++    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
++                                            bcontainer);
++
++    VFIOUserDMAUnmap *msgp = g_malloc(sizeof(*msgp));
++
++    vfio_user_request_msg(&msgp->hdr, VFIO_USER_DMA_UNMAP, sizeof(*msgp), 0);
++    msgp->argsz = sizeof(struct vfio_iommu_type1_dma_unmap);
++    msgp->flags = unmap_all ? VFIO_DMA_UNMAP_FLAG_ALL : 0;
++    msgp->iova = iova;
++    msgp->size = size;
++    trace_vfio_user_dma_unmap(msgp->iova, msgp->size, msgp->flags,
++                              container->proxy->async_ops);
++
++    if (container->proxy->async_ops) {
++        vfio_user_send_nowait(container->proxy, &msgp->hdr, NULL, 0);
++        return 0;
++    }
++
++    vfio_user_send_wait(container->proxy, &msgp->hdr, NULL, 0);
++    if (msgp->hdr.flags & VFIO_USER_ERROR) {
++        return -msgp->hdr.error_reply;
++    }
++
++    g_free(msgp);
++    return 0;
+ }
+ 
+ static int vfio_user_dma_map(const VFIOContainerBase *bcontainer, hwaddr iova,
+                              ram_addr_t size, void *vaddr, bool readonly,
+                              MemoryRegion *mrp)
+ {
+-    return -ENOTSUP;
++    VFIOUserContainer *container = container_of(bcontainer, VFIOUserContainer,
++                                                bcontainer);
++
++    VFIOUserProxy *proxy = container->proxy;
++    int fd = memory_region_get_fd(mrp);
 +    int ret;
 +
-+    proxy->wr_multi = NULL;
++    VFIOUserFDs *fds = NULL;
++    VFIOUserDMAMap *msgp = g_malloc0(sizeof(*msgp));
 +
-+    /* adjust size for actual # of writes */
-+    wm->hdr.size -= (VFIO_USER_MULTI_MAX - wm->wr_cnt) * sizeof(VFIOUserWROne);
++    vfio_user_request_msg(&msgp->hdr, VFIO_USER_DMA_MAP, sizeof(*msgp), 0);
++    msgp->argsz = sizeof(struct vfio_iommu_type1_dma_map);
++    msgp->flags = VFIO_DMA_MAP_FLAG_READ;
++    msgp->offset = 0;
++    msgp->iova = iova;
++    msgp->size = size;
 +
-+    msg = vfio_user_getmsg(proxy, &wm->hdr, NULL);
-+    msg->id = wm->hdr.id;
-+    msg->rsize = 0;
-+    msg->type = VFIO_MSG_ASYNC;
-+    trace_vfio_user_wrmulti("flush", wm->wr_cnt);
++    /*
++     * vaddr enters as a QEMU process address; make it either a file offset
++     * for mapped areas or leave as 0.
++     */
++    if (fd != -1) {
++        msgp->offset = qemu_ram_block_host_offset(mrp->ram_block, vaddr);
++    }
++
++    if (!readonly) {
++        msgp->flags |= VFIO_DMA_MAP_FLAG_WRITE;
++    }
++
++    trace_vfio_user_dma_map(msgp->iova, msgp->size, msgp->offset, msgp->flags,
++                            container->proxy->async_ops);
++
++    /*
++     * The async_ops case sends without blocking. They're later waited for in
++     * vfio_send_wait_reqs.
++     */
++    if (container->proxy->async_ops) {
++        /* can't use auto variable since we don't block */
++        if (fd != -1) {
++            fds = vfio_user_getfds(1);
++            fds->send_fds = 1;
++            fds->fds[0] = fd;
++        }
++        vfio_user_send_nowait(proxy, &msgp->hdr, fds, 0);
++        ret = 0;
++    } else {
++        VFIOUserFDs local_fds = { 1, 0, &fd };
++
++        fds = fd != -1 ? &local_fds : NULL;
++        vfio_user_send_wait(proxy, &msgp->hdr, fds, 0);
++        ret = (msgp->hdr.flags & VFIO_USER_ERROR) ? -msgp->hdr.error_reply : 0;
++        g_free(msgp);
++    }
++
++    return ret;
+ }
+ 
+ static int
+@@ -220,6 +322,8 @@ static void vfio_iommu_user_class_init(ObjectClass *klass, const void *data)
+     VFIOIOMMUClass *vioc = VFIO_IOMMU_CLASS(klass);
+ 
+     vioc->setup = vfio_user_setup;
++    vioc->listener_begin = vfio_user_listener_begin,
++    vioc->listener_commit = vfio_user_listener_commit,
+     vioc->dma_map = vfio_user_dma_map;
+     vioc->dma_unmap = vfio_user_dma_unmap;
+     vioc->attach_device = vfio_user_device_attach;
+diff --git a/hw/vfio-user/proxy.c b/hw/vfio-user/proxy.c
+index c6b6628505..315f5fd350 100644
+--- a/hw/vfio-user/proxy.c
++++ b/hw/vfio-user/proxy.c
+@@ -28,7 +28,6 @@ static void vfio_user_shutdown(VFIOUserProxy *proxy);
+ static int vfio_user_send_qio(VFIOUserProxy *proxy, VFIOUserMsg *msg);
+ static VFIOUserMsg *vfio_user_getmsg(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                                      VFIOUserFDs *fds);
+-static VFIOUserFDs *vfio_user_getfds(int numfds);
+ static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg);
+ 
+ static void vfio_user_recv(void *opaque);
+@@ -130,7 +129,7 @@ static void vfio_user_recycle(VFIOUserProxy *proxy, VFIOUserMsg *msg)
+     QTAILQ_INSERT_HEAD(&proxy->free, msg, next);
+ }
+ 
+-static VFIOUserFDs *vfio_user_getfds(int numfds)
++VFIOUserFDs *vfio_user_getfds(int numfds)
+ {
+     VFIOUserFDs *fds = g_malloc0(sizeof(*fds) + (numfds * sizeof(int)));
+ 
+@@ -606,6 +605,36 @@ static int vfio_user_send_queued(VFIOUserProxy *proxy, VFIOUserMsg *msg)
+     return 0;
+ }
+ 
++/*
++ * nowait send - vfio_wait_reqs() can wait for it later
++ */
++void vfio_user_send_nowait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
++                           VFIOUserFDs *fds, int rsize)
++{
++    VFIOUserMsg *msg;
++    int ret;
++
++    if (hdr->flags & VFIO_USER_NO_REPLY) {
++        error_printf("vfio_user_send_nowait on async message\n");
++        return;
++    }
++
++    QEMU_LOCK_GUARD(&proxy->lock);
++
++    msg = vfio_user_getmsg(proxy, hdr, fds);
++    msg->id = hdr->id;
++    msg->rsize = rsize ? rsize : hdr->size;
++    msg->type = VFIO_MSG_NOWAIT;
 +
 +    ret = vfio_user_send_queued(proxy, msg);
 +    if (ret < 0) {
 +        vfio_user_recycle(proxy, msg);
++        return;
 +    }
++
++    proxy->last_nowait = msg;
 +}
 +
-+void vfio_user_create_multi(VFIOUserProxy *proxy)
+ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+                          VFIOUserFDs *fds, int rsize)
+ {
+@@ -644,6 +673,50 @@ void vfio_user_send_wait(VFIOUserProxy *proxy, VFIOUserHdr *hdr,
+     qemu_mutex_unlock(&proxy->lock);
+ }
+ 
++void vfio_user_wait_reqs(VFIOUserProxy *proxy)
 +{
-+    VFIOUserWRMulti *wm;
++    VFIOUserMsg *msg;
 +
-+    wm = g_malloc0(sizeof(*wm));
-+    vfio_user_request_msg(&wm->hdr, VFIO_USER_REGION_WRITE_MULTI,
-+                          sizeof(*wm), VFIO_USER_NO_REPLY);
-+    proxy->wr_multi = wm;
-+}
++    /*
++     * Any DMA map/unmap requests sent in the middle
++     * of a memory region transaction were sent nowait.
++     * Wait for them here.
++     */
++    qemu_mutex_lock(&proxy->lock);
++    if (proxy->last_nowait != NULL) {
++        /*
++         * Change type to WAIT to wait for reply
++         */
++        msg = proxy->last_nowait;
++        msg->type = VFIO_MSG_WAIT;
++        proxy->last_nowait = NULL;
++        while (!msg->complete) {
++            if (!qemu_cond_timedwait(&msg->cv, &proxy->lock, wait_time)) {
++                VFIOUserMsgQ *list;
 +
-+void vfio_user_add_multi(VFIOUserProxy *proxy, uint8_t index,
-+                         off_t offset, uint32_t count, void *data)
-+{
-+    VFIOUserWRMulti *wm = proxy->wr_multi;
-+    VFIOUserWROne *w1 = &wm->wrs[wm->wr_cnt];
++                list = msg->pending ? &proxy->pending : &proxy->outgoing;
++                QTAILQ_REMOVE(list, msg, next);
++                error_printf("vfio_wait_reqs - timed out\n");
++                break;
++            }
++        }
 +
-+    w1->offset = offset;
-+    w1->region = index;
-+    w1->count = count;
-+    memcpy(&w1->data, data, count);
++        if (msg->hdr->flags & VFIO_USER_ERROR) {
++            error_printf("vfio_user_wait_reqs - error reply on async ");
++            error_printf("request: command %x error %s\n", msg->hdr->command,
++                         strerror(msg->hdr->error_reply));
++        }
 +
-+    wm->wr_cnt++;
-+    trace_vfio_user_wrmulti("add", wm->wr_cnt);
-+    if (wm->wr_cnt == VFIO_USER_MULTI_MAX ||
-+        proxy->num_outgoing < VFIO_USER_OUT_LOW) {
-+        vfio_user_flush_multi(proxy);
++        /*
++         * Change type back to NOWAIT to free
++         */
++        msg->type = VFIO_MSG_NOWAIT;
++        vfio_user_recycle(proxy, msg);
 +    }
++
++    qemu_mutex_unlock(&proxy->lock);
 +}
++
+ static QLIST_HEAD(, VFIOUserProxy) vfio_user_sockets =
+     QLIST_HEAD_INITIALIZER(vfio_user_sockets);
+ 
 diff --git a/hw/vfio-user/trace-events b/hw/vfio-user/trace-events
-index 7ef98813b3..64fac9137f 100644
+index 053f5932eb..7ef98813b3 100644
 --- a/hw/vfio-user/trace-events
 +++ b/hw/vfio-user/trace-events
-@@ -11,6 +11,7 @@ vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index
+@@ -11,3 +11,7 @@ vfio_user_get_region_info(uint32_t index, uint32_t flags, uint64_t size) " index
  vfio_user_region_rw(uint32_t region, uint64_t off, uint32_t count) " region %d offset 0x%"PRIx64" count %d"
  vfio_user_get_irq_info(uint32_t index, uint32_t flags, uint32_t count) " index %d flags 0x%x count %d"
  vfio_user_set_irqs(uint32_t index, uint32_t start, uint32_t count, uint32_t flags) " index %d start %d count %d flags 0x%x"
-+vfio_user_wrmulti(const char *s, uint64_t wr_cnt) " %s count 0x%"PRIx64
- 
- # container.c
- vfio_user_dma_map(uint64_t iova, uint64_t size, uint64_t off, uint32_t flags, bool async_ops) " iova 0x%"PRIx64" size 0x%"PRIx64" off 0x%"PRIx64" flags 0x%x async_ops %d"
++
++# container.c
++vfio_user_dma_map(uint64_t iova, uint64_t size, uint64_t off, uint32_t flags, bool async_ops) " iova 0x%"PRIx64" size 0x%"PRIx64" off 0x%"PRIx64" flags 0x%x async_ops %d"
++vfio_user_dma_unmap(uint64_t iova, uint64_t size, uint32_t flags,  bool async_ops) " iova 0x%"PRIx64" size 0x%"PRIx64" flags 0x%x async_ops %d"
 -- 
 2.43.0
 
