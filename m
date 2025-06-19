@@ -4,95 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1719C7115A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 09:25:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23F03C7115A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 09:31:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSBVE-00047S-Ve; Thu, 19 Jun 2025 05:24:13 -0400
+	id 1uSBcE-00084A-QZ; Thu, 19 Jun 2025 05:31:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org>)
- id 1uSBVD-00046u-47; Thu, 19 Jun 2025 05:24:11 -0400
-Received: from mail.ozlabs.org ([2404:9400:2221:ea00::3])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uSBbm-0007u9-2p; Thu, 19 Jun 2025 05:31:01 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org>)
- id 1uSBVA-00019b-DJ; Thu, 19 Jun 2025 05:24:10 -0400
-Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bNFXx2Y8hz4xCy;
- Thu, 19 Jun 2025 19:24:01 +1000 (AEST)
-Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits))
- (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bNFXq4sFNz4wj2;
- Thu, 19 Jun 2025 19:23:55 +1000 (AEST)
-Message-ID: <e2df1ff1-3ce4-4233-b32e-2bc680725c71@kaod.org>
-Date: Thu, 19 Jun 2025 11:23:53 +0200
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uSBbe-0002Pv-Hm; Thu, 19 Jun 2025 05:30:57 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNFgl14Gnz6M56S;
+ Thu, 19 Jun 2025 17:29:55 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 8F2751404C4;
+ Thu, 19 Jun 2025 17:30:31 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Thu, 19 Jun
+ 2025 11:30:30 +0200
+Date: Thu, 19 Jun 2025 10:30:28 +0100
+To: Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, Linuxarm
+ <linuxarm@huawei.com>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "peter.maydell@linaro.org"
+ <peter.maydell@linaro.org>, "jgg@nvidia.com" <jgg@nvidia.com>,
+ "nicolinc@nvidia.com" <nicolinc@nvidia.com>, "ddutile@redhat.com"
+ <ddutile@redhat.com>, "berrange@redhat.com" <berrange@redhat.com>,
+ "imammedo@redhat.com" <imammedo@redhat.com>, "nathanc@nvidia.com"
+ <nathanc@nvidia.com>, "mochs@nvidia.com" <mochs@nvidia.com>,
+ "smostafa@google.com" <smostafa@google.com>, "Wangzhou (B)"
+ <wangzhou1@hisilicon.com>, jiangkunkun <jiangkunkun@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>
+Subject: Re: [PATCH v4 1/7] hw/arm/smmu-common: Check SMMU has PCIe Root
+ Complex association
+Message-ID: <20250619103028.00000277@huawei.com>
+In-Reply-To: <5fd7717fcd7e45d9aaff3e293cf63683@huawei.com>
+References: <20250613144449.60156-1-shameerali.kolothum.thodi@huawei.com>
+ <20250613144449.60156-2-shameerali.kolothum.thodi@huawei.com>
+ <20250616112019.00003bce@huawei.com>
+ <fcd05844-d2d9-450e-b962-59b0f3964185@redhat.com>
+ <20250617175247.00007d43@huawei.com>
+ <49d4c4b73e9a44a783332ddfe9a2fbdf@huawei.com>
+ <327b5515-467c-4666-86d6-fb2a99925a8c@redhat.com>
+ <e4879b1e26f941b5baa419824e4c928c@huawei.com>
+ <6e180d39-b1eb-4935-98b0-3ac73766e8aa@redhat.com>
+ <5fd7717fcd7e45d9aaff3e293cf63683@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, fr
-To: "'qemu-arm@nongnu.org'" <qemu-arm@nongnu.org>,
- "open list:All patches CC here" <qemu-devel@nongnu.org>
-Cc: 'Andrew Jeffery' <andrew@codeconstruct.com.au>,
- Joel Stanley <joel@jms.id.au>, 'Jamin Lin' <jamin_lin@aspeedtech.com>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Patrick Williams <patrick@stwcx.xyz>
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Subject: aspeed: Split the machine definition into individual source files
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2404:9400:2221:ea00::3;
- envelope-from=SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
-X-Spam_score_int: -40
-X-Spam_score: -4.1
-X-Spam_bar: ----
-X-Spam_report: (-4.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.067, RCVD_IN_DNSWL_MED=-2.3,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100006.china.huawei.com (7.191.160.224) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_CERTIFIED_BLOCKED=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,81 +85,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Thu, 19 Jun 2025 09:05:07 +0100
+Shameerali Kolothum Thodi <shameerali.kolothum.thodi@huawei.com> wrote:
 
-This is a follow up of a private discussion with Patrick.
+> > -----Original Message-----
+> > From: Eric Auger <eric.auger@redhat.com>
+> > Sent: Thursday, June 19, 2025 8:41 AM
+> > To: Shameerali Kolothum Thodi
+> > <shameerali.kolothum.thodi@huawei.com>; Jonathan Cameron
+> > <jonathan.cameron@huawei.com>
+> > Cc: Linuxarm <linuxarm@huawei.com>; qemu-arm@nongnu.org; qemu-
+> > devel@nongnu.org; peter.maydell@linaro.org; jgg@nvidia.com;
+> > nicolinc@nvidia.com; ddutile@redhat.com; berrange@redhat.com;
+> > imammedo@redhat.com; nathanc@nvidia.com; mochs@nvidia.com;
+> > smostafa@google.com; Wangzhou (B) <wangzhou1@hisilicon.com>;
+> > jiangkunkun <jiangkunkun@huawei.com>; zhangfei.gao@linaro.org
+> > Subject: Re: [PATCH v4 1/7] hw/arm/smmu-common: Check SMMU has PCIe
+> > Root Complex association
+> >=20
+> > Hi Shameer,
+> >=20
+> > On 6/19/25 9:24 AM, Shameerali Kolothum Thodi wrote: =20
+> > > Hi Eric,
+> > > =20
+> > >> -----Original Message-----
+> > >> From: Eric Auger <eric.auger@redhat.com>
+> > >> Sent: Wednesday, June 18, 2025 6:00 PM
+> > >> To: Shameerali Kolothum Thodi
+> > >> <shameerali.kolothum.thodi@huawei.com>; Jonathan Cameron
+> > >> <jonathan.cameron@huawei.com>
+> > >> Cc: Linuxarm <linuxarm@huawei.com>; qemu-arm@nongnu.org; qemu-
+> > >> devel@nongnu.org; peter.maydell@linaro.org; jgg@nvidia.com;
+> > >> nicolinc@nvidia.com; ddutile@redhat.com; berrange@redhat.com;
+> > >> imammedo@redhat.com; nathanc@nvidia.com; mochs@nvidia.com;
+> > >> smostafa@google.com; Wangzhou (B) <wangzhou1@hisilicon.com>;
+> > >> jiangkunkun <jiangkunkun@huawei.com>; zhangfei.gao@linaro.org
+> > >> Subject: Re: [PATCH v4 1/7] hw/arm/smmu-common: Check SMMU has =20
+> > PCIe =20
+> > >> Root Complex association
+> > >>
+> > >> Hi Shameer, Jonathan,
+> > >>
+> > >> On 6/18/25 10:35 AM, Shameerali Kolothum Thodi wrote: =20
+> > >>>> -----Original Message-----
+> > >>>> From: Jonathan Cameron <jonathan.cameron@huawei.com>
+> > >>>> Sent: Tuesday, June 17, 2025 5:53 PM
+> > >>>> To: Eric Auger <eric.auger@redhat.com>
+> > >>>> Cc: Shameerali Kolothum Thodi
+> > >>>> <shameerali.kolothum.thodi@huawei.com>; Linuxarm
+> > >>>> <linuxarm@huawei.com>; qemu-arm@nongnu.org; qemu-
+> > >>>> devel@nongnu.org; peter.maydell@linaro.org; jgg@nvidia.com;
+> > >>>> nicolinc@nvidia.com; ddutile@redhat.com; berrange@redhat.com;
+> > >>>> imammedo@redhat.com; nathanc@nvidia.com; mochs@nvidia.com;
+> > >>>> smostafa@google.com; Wangzhou (B) <wangzhou1@hisilicon.com>;
+> > >>>> jiangkunkun <jiangkunkun@huawei.com>; zhangfei.gao@linaro.org
+> > >>>> Subject: Re: [PATCH v4 1/7] hw/arm/smmu-common: Check SMMU has =20
+> > >> PCIe =20
+> > >>>> Root Complex association
+> > >>>>
+> > >>>> On Tue, 17 Jun 2025 09:49:54 +0200
+> > >>>> Eric Auger <eric.auger@redhat.com> wrote:
+> > >>>> =20
+> > >>>>> On 6/16/25 12:20 PM, Jonathan Cameron wrote: =20
+> > >>>>>> On Fri, 13 Jun 2025 15:44:43 +0100
+> > >>>>>> Shameer Kolothum <shameerali.kolothum.thodi@huawei.com> =20
+> > wrote: =20
+> > >>>>>> =20
+> > >>>>>>> Although this change does not affect functionality at present, =
+it is =20
+> > >>>>>> Patch title says PCIe.  This check is vs PCI host bridge.
+> > >>>>>>
+> > >>>>>> No idea which one you wanted, but if it is PCIe needs to be
+> > >>>>>> TYPC_PCIE_HOST_BRIDGE from pcie_host.h not the pci_host.h one
+> > >>>>>> I think. =20
+> > >>>>> I think we need TYPE_PCI_HOST_BRIDGE as we want to check against =
+=20
+> > >> pxb =20
+> > >>>>> pci-bridge/pci_expander_bridge.c:=C2=A0=C2=A0=C2=A0 .parent=C2=A0=
+=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 =3D =20
+> > >>>> TYPE_PCI_HOST_BRIDGE, =20
+> > >> sorry but I still fail to understand why we can't just check against
+> > >>
+> > >> TYPE_PCI_HOST_BRIDGE for making sure the SMMU is attached to PXB or
+> > >> GPEX. What does it fail to check? Why shall we care about PCI vs PCI=
+e? =20
+> > > I think the concern is  getting any other TYPE_PCI_HOST_BRIDGE types =
+=20
+> > attached =20
+> > > to SMMUv3 other than pxb-pcie or GPEX. For example you could do,
+> > >
+> > > -device pxb-cxl,bus_nr=3D12,bus=3Dpcie.0,id=3Dcxl.1 \
+> > > -device arm-smmuv3,primary-bus=3Dcxl.1,id=3Dsmmuv3.1 \
+> > >
+> > > as pxb-cxl is of type TYPE_PCI_HOST_BRIDGE. I don't know if there are=
+ any =20
+> > other =20
+> > > ones similar to this out there.
+> > >
+> > > So the aim is to make the checking more specific to PXB. =20
+> >=20
+> > thank you for the clarification. Is it invalid to have the SMMU
+> > protecting RIDs comming from the pxb-cxl hierarchy? =20
+>=20
+> That=E2=80=99s a good question. I don't know that for sure.
 
-Aspeed modeling started nearly 10y ago with the palmetto-bmc machine.
-We now have 5 SoCs and 25 machines which are mostly defined in
-in a single aspeed.c file. Multi SoC machines, fby35 and ast2700fc,
-are defined in fby35.c and aspeed_ast27x0-fc.c respectively.
+It should be fine to support CXL for this but we can work that out later.
 
-Since we started separating the SoCs :
+For now limited use cases as there is no CXL VFIO support and the only thing
+emulated devices do that the SMMU might influence is MSIX.
 
-   hw/arm/aspeed_ast10x0.c
-   hw/arm/aspeed_ast2400.c
-   hw/arm/aspeed_ast2600.c
-   hw/arm/aspeed_ast27x0.c
-   hw/arm/aspeed_ast27x0-ssp.c
-   hw/arm/aspeed_ast27x0-tsp.c
+The one that concerned me is pxb-pci if we only care about pcie.
+I'm not sure if we need to make that distinction or not. =20
 
-We could do the same for the machines keeping an 'aspeed_ast<rev>'
-prefix (and maybe avoid the 'bmc' suffix). I think this would ease
-introduction of new machines. We would be able to get rid of
-aspeed_eeprom.[ch] and move machine custom data in the machine source
-file. Which seems cleaner.
+Jonathan
 
-Timing is about right for code reshuffling, still 3w before soft
-freeze, no important changes inflight, but if we start doing this
-conversion, we should do it for all. See the list below for the brave.
-
-Comments ?
-
-Thanks,
-
-C.
-
-
-
-* AST2400
-   
-   palmetto-bmc
-   quanta-q71l-bmc
-   supermicrox11-bmc
-   
-* AST2500
-   
-   ast2500-evb
-   romulus-bmc
-   sonorapass-bmc
-   witherspoon-bmc
-   yosemitev2-bmc
-   supermicro-x11spi-bmc
-   fp5280g2-bmc
-   g220a-bmc
-   tiogapass-bmc
-   
-* AST2600
-   
-   ast2600-evb
-   qcom-dc-scm-v1-bmc
-   qcom-firework-bmc
-   rainier-bmc
-   fuji-bmc
-   bletchley-bmc
-   fby35-bmc           (fby35.c should rename to aspeed_ast2600-fby35.c)
-   
-* AST2700
-   
-   ast2700a0-evb
-   ast2700a1-evb
-   ast2700fc           (aspeed_ast27x0-fc.c)
-   
-* AST1030
-   
-   ast1030-evb
+> Anyway currently the full support for CXL on virt is in progress here,
+> https://lore.kernel.org/qemu-devel/20250612134338.1871023-1-Jonathan.Came=
+ron@huawei.com/
+>=20
+> Jonathan?
+>=20
+> Thanks,
+> Shameer
+>=20
+> >  =20
+>=20
 
 
