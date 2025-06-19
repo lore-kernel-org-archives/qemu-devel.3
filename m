@@ -4,100 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E69AC7115D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 21:18:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77EF2C7115D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 21:20:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSMei-0004Ri-2M; Thu, 19 Jun 2025 17:18:44 -0400
+	id 1uSMgL-0005pG-RU; Thu, 19 Jun 2025 17:20:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSMea-0004PH-Eg
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:18:36 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSMgJ-0005ol-Dy
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:20:23 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSMeY-000150-QH
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:18:36 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3a589d99963so1213422f8f.1
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 14:18:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSMgH-0001Rr-Gs
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:20:23 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-3a589d99963so1214579f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 14:20:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750367912; x=1750972712; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750368019; x=1750972819; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=xJApBPtmtRS7y1RSET1/MQvgQfsp6CfckDvWTToLESk=;
- b=MroB5QJHyZf1SjP1PieDSbCnCQOh8+sJGCcEkZ5U2fxdeNHOKfd4I/Yfxj2dtOziI/
- u89UDYCuTGdLQLPr8Dh3lvtHKW3CoZ/3vaqU56a0Kt1vxlwQnWnw+FEDjU0PNlJPsVVH
- VufwtM1kiAKIO3wVODG1/10Ym4dmuGr9DujxQhYlpc33H2rKyF3Nv6x8qX1GnQEAjJ9w
- TRXVPVR1h/oMpbC+/c2HUzXj1Jznag6alovZf948M/wBjFwx8QisKi4lPQCuZweTGE1F
- RjqLjNyYOByBKEdIxxY9VOV5j1QhXcLAGpxPc7CV7650NtHSlIW17d8p0d2MJiJKudiJ
- HhTg==
+ :references:to:subject:user-agent:mime-version:date:message-id:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=BONmKAZrZ7qkm4Zys4J3JzTXrECjuPap2Jc9qPE0Qac=;
+ b=k9PltgHND3kCPdVKr9LcVViCKtSKH4OtEJaGztdakf5+/305vHbpMjSBiMZ4nXinrB
+ ZbrBxUQtl42aoG2q6jNYgcMOgyi3XfTVYXHyYAcAg7Yw5LB2k34WHvRa1+p3mG+9utW8
+ ItNmKlTMFxuSVptXWjF1VjukNo4cMhNWzcYPt05oP/LqH9UqJ6h8RWiy6AeCbwEiBhAS
+ 0K79srO3aYi/67K8g+Ul+s+kg1hd2AZHjEEoSCGigJL0v0T09Y59ZAIoTfiGmbtc1qVK
+ BKetGt1Zz1aVi5ZX9vyesDwjKM8LwIws+rDX3j9sX/2YU8mJctDKcLLdGlzYn65NFnWJ
+ OTag==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750367912; x=1750972712;
+ d=1e100.net; s=20230601; t=1750368019; x=1750972819;
  h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=xJApBPtmtRS7y1RSET1/MQvgQfsp6CfckDvWTToLESk=;
- b=OYICjHpo1hK9YHBegl0VutulqJ+TYt+wBPKWeZBvDATFR8AqTWWuLAS0cvP7CJDOpz
- LavdbdY/XGJg+foMSzawftUAkPBRKaqtyNuPlZvqMRCZmQ/EySWqr4ZLEhe1zLOuwM6c
- q6/8H0ufllHCcytmIEhHVUaPYWpM2TX645m/vbHus6LjJvyn6Crb+I23xNaZVwi/hRXK
- JHqE/u8zC488LbeZ4vsSVKthQnpT7nSQ/XFm+ZAYWidcT9L5rRydVgHUB/s8t/KyG0av
- BVrdgz5Gp6XXuKZFmZ0Z4UB+WUOx42eVR+bEnLpWaZ+Yfewzi74/izBOAPcFsM6ZECfl
- owvA==
-X-Gm-Message-State: AOJu0YxpCsMX2PtddXfseOsZgIxIA5z4CH6G4D+904Kgl8dzcjLcCtm/
- TcjWLXEEkTLXfYuhUIZ2NRtFtOELrYyg2CKnojZrBCZst7KAlhucIUjrFGNI8/0Csim3tDv/veU
- /njGAJk0=
-X-Gm-Gg: ASbGncvH1Naw8yHo/UBm+AimgnGVFT6eD6q1Jmml3Qngws314d8vCY4yX4my1Eu8zfg
- 4E/IsBsXiAFRWbrl/AFk7nfQMfFf5mEmIxVJRsaqTC0vur8AIOHhwT4Vdpk6uiLDwuP0KYuWhwL
- Kp64zc6KYLAsXvVfZGxU4kJAZKqrbW6DRCAnsfIB8huLL69GVoZdXCNqoDXqAhKD2DIqylUnAmI
- raO6n2Qwdh0euaCbvXsA3A2kZdgK9KpeDxs/5jG1PqmDe/nzIrMsJad/GdAi7N+6Mzbp4O8NDlU
- 9fDkjMTMMfFSKUGIC7/KfrbAhP/HB4KRcBvC8a70PzJyOo+Vvlvxf3akaJCRE6jtpcDL1Kt6aOg
- ioJtVL7s3wZjG+EsTTKRYtHTfQVy3rQ==
-X-Google-Smtp-Source: AGHT+IHgjW754Ix3/O/6V9bL66G7hqdE8u5RD4c3rIRemB3+kpmqlA3k9iNLm107VjOdv1rcvj3n7A==
-X-Received: by 2002:a05:6000:4a01:b0:3a5:2599:4183 with SMTP id
- ffacd0b85a97d-3a6d12b0e97mr365219f8f.25.1750367912501; 
- Thu, 19 Jun 2025 14:18:32 -0700 (PDT)
+ bh=BONmKAZrZ7qkm4Zys4J3JzTXrECjuPap2Jc9qPE0Qac=;
+ b=Jwcetscvgiu7VC3IJWBgkhRJ1T96HJfzmv+mda2XE74NoEdwHA/ItprwgFa+x27m6g
+ Y82FaUQXo77P9dH91Sq37iRA318cMSL+LLMoDsL+23bP5Sc8giGSn2dyL0VqtukHmMf4
+ R3gniH7z0lNkb5x0uYQnoUX+s5zALI6UNDMTi5Tx9Al+ljYe9HswVtk3lZdu5x6jT8cr
+ 0HfD9vpp3Dlc1GWGZNanfqw9BQrRXnfpHzWLTxKPI8k8HTCM6E6yg+0aWJyWb09de18W
+ Tby/acirWlZoGcrAorG4t+e9eW9NK9A/cXaWYyWR0vF2ABX/YJJLTM1SDcnTMOBqIlnL
+ XzMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUns/pIVFbukoykj3sE4O32hu5XPMLXPhON3aVZb2ZUSOpLxou2iOAAoK3kSx4pVR8WARE6jIYfq4zS@nongnu.org
+X-Gm-Message-State: AOJu0Yz1xfMFnwNkiuKjSkef1d72GBETmtBfw9XXlSoe6J6g+I3O+8Zn
+ HPfOmxASaraA0Rxe3DQsu/SnO8Dmyt4WAVvouQFx/zlgEgaGuFMRmlbS7cdlDt6ylL/kPAlPIvn
+ oc4/As40=
+X-Gm-Gg: ASbGncs/mQqgoYqfpouPkjSFN6WqBg9RN5NvFuWjPakFgD38zhxjIeTYq7/5j7+2yWr
+ fqhnckHlhQtiDLCsgqsdp9l8L39cmo/Ri8PqcMbjDRe90aRkAiPBs2DyvnilOdGWyccbdosIUSv
+ 9rhTSY25VhaPf0i3p4terSngwbliiU344EJi/6XvLgWe5p/Y9SZzW+b4JfSZjRW6FZjGC3p7qYq
+ ftHoAum9U09m7EDwglryeX79t2NeDqB9+JyXchXBs1FJjy5wyI+x7Yj05/I2UyVIn4Sxci0XVJ+
+ gyGXDdrSKx090RUFMrDo8dTY+nlRucXmFNkgfaY27civ4g2eiw+vEGUW/Lusf7AxXUHa0Rq3gqU
+ dtjramdfEPSvo+lKCii3bRP0F4IqPig==
+X-Google-Smtp-Source: AGHT+IEVP2JDyMIne+sCnMrGRBm6fn/DEfOO15j7Uu6FrxZhEKj6gre/R8dizGKvJNMOpmtC8f4V1Q==
+X-Received: by 2002:a05:6000:4614:b0:3a5:287b:da02 with SMTP id
+ ffacd0b85a97d-3a6d12e5cfcmr351519f8f.40.1750368018768; 
+ Thu, 19 Jun 2025 14:20:18 -0700 (PDT)
 Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535969dc4bsm30313095e9.0.2025.06.19.14.18.31
+ ffacd0b85a97d-3a6d0f18215sm354766f8f.29.2025.06.19.14.20.18
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Jun 2025 14:18:31 -0700 (PDT)
-Message-ID: <a1bf2f2d-f7c7-4922-971f-c4e7b1f5cf84@linaro.org>
-Date: Thu, 19 Jun 2025 23:18:30 +0200
+ Thu, 19 Jun 2025 14:20:18 -0700 (PDT)
+Message-ID: <b3bea159-8da3-4a7d-8485-fcd6519b845d@linaro.org>
+Date: Thu, 19 Jun 2025 23:20:17 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 10/20] target/arm: Restrict system register properties to
- system binary
-To: qemu-devel@nongnu.org
-Cc: Cameron Esfahani <dirty@apple.com>,
- Julian Armistead <julian.armistead@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>
+Subject: Re: [PATCH 19/20] hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB
+ definition
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250619131319.47301-1-philmd@linaro.org>
- <20250619131319.47301-11-philmd@linaro.org>
+ <20250619131319.47301-20-philmd@linaro.org>
+ <1e7d58dc-b348-4c6f-b7bd-e8da047e21c8@linaro.org>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250619131319.47301-11-philmd@linaro.org>
+In-Reply-To: <1e7d58dc-b348-4c6f-b7bd-e8da047e21c8@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,48 +105,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 19/6/25 15:13, Philippe Mathieu-Daudé wrote:
-> Do not expose system-specific properties on user-mode binaries.
+On 19/6/25 23:09, Richard Henderson wrote:
+> On 6/19/25 06:13, Philippe Mathieu-Daudé wrote:
+>> Define RAMLIMIT_BYTES using the TiB definition and display
+>> the error parsed with size_to_str():
+>>
+>>    $ qemu-system-aarch64-unsigned -M sbsa-ref -m 9T
+>>    qemu-system-aarch64-unsigned: sbsa-ref: cannot model more than 8 
+>> TiB of RAM
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/arm/sbsa-ref.c | 8 +++++---
+>>   1 file changed, 5 insertions(+), 3 deletions(-)
+>>
+>> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
+>> index deae5cf9861..3b7d4e7bf1d 100644
+>> --- a/hw/arm/sbsa-ref.c
+>> +++ b/hw/arm/sbsa-ref.c
+>> @@ -19,6 +19,7 @@
+>>    */
+>>   #include "qemu/osdep.h"
+>> +#include "qemu/cutils.h"
+>>   #include "qemu/datadir.h"
+>>   #include "qapi/error.h"
+>>   #include "qemu/error-report.h"
+>> @@ -53,8 +54,7 @@
+>>   #include "target/arm/cpu-qom.h"
+>>   #include "target/arm/gtimer.h"
+>> -#define RAMLIMIT_GB 8192
+>> -#define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
+>> +#define RAMLIMIT_BYTES (8 * TiB)
+>>   #define NUM_IRQS        256
+>>   #define NUM_SMMU_IRQS   4
+>> @@ -756,7 +756,9 @@ static void sbsa_ref_init(MachineState *machine)
+>>       sms->smp_cpus = smp_cpus;
+>>       if (machine->ram_size > sbsa_ref_memmap[SBSA_MEM].size) {
+>> -        error_report("sbsa-ref: cannot model more than %dGB RAM", 
+>> RAMLIMIT_GB);
+>> +        g_autofree char *size_str = size_to_str(RAMLIMIT_BYTES);
+>> +
+>> +        error_report("sbsa-ref: cannot model more than %s of RAM", 
+>> size_str);
+>>           exit(1);
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/arm/cpu.c | 4 +++-
->   1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index eb0639de719..c99981d88f8 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1500,6 +1500,7 @@ static void arm_cpu_initfn(Object *obj)
->    * 0 means "unset, use the default value". That default might vary depending
->    * on the CPU type, and is set in the realize fn.
->    */
-> +#ifndef CONFIG_USER_ONLY
->   static const Property arm_cpu_gt_cntfrq_property =
->               DEFINE_PROP_UINT64("cntfrq", ARMCPU, gt_cntfrq_hz, 0);
->   
-> @@ -1509,7 +1510,6 @@ static const Property arm_cpu_reset_cbar_property =
->   static const Property arm_cpu_reset_hivecs_property =
->               DEFINE_PROP_BOOL("reset-hivecs", ARMCPU, reset_hivecs, false);
->   
-> -#ifndef CONFIG_USER_ONLY
->   static const Property arm_cpu_has_el2_property =
->               DEFINE_PROP_BOOL("has_el2", ARMCPU, has_el2, true);
->   
-> @@ -1532,6 +1532,7 @@ static const Property arm_cpu_has_neon_property =
->   static const Property arm_cpu_has_dsp_property =
->               DEFINE_PROP_BOOL("dsp", ARMCPU, has_dsp, true);
->   
-> +#ifndef CONFIG_USER_ONLY
->   static const Property arm_cpu_has_mpu_property =
->               DEFINE_PROP_BOOL("has-mpu", ARMCPU, has_mpu, true);
->   
-> @@ -1544,6 +1545,7 @@ static const Property arm_cpu_pmsav7_dregion_property =
->               DEFINE_PROP_UNSIGNED_NODEFAULT("pmsav7-dregion", ARMCPU,
->                                              pmsav7_dregion,
->                                              qdev_prop_uint32, uint32_t);
-> +#endif
+> Not a bug bug, but autofree has no effect because the block doesn't end 
+> before the call to exit.
 
-Sorry, this patch is incomplete...
+Right. Isn't it better to use g_autofree as a general code pattern?
 
 
