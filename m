@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB0B0C77B7A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 20:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5145C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 20:44:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSM64-0000MR-1d; Thu, 19 Jun 2025 16:42:56 -0400
+	id 1uSM73-0001Rw-Tw; Thu, 19 Jun 2025 16:43:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSM61-0000LW-Ea
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 16:42:53 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSM72-0001Rn-TB
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 16:43:56 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSM5z-0005bK-Ki
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 16:42:53 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-453066fad06so7221075e9.2
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 13:42:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSM71-0005ip-5c
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 16:43:56 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-3a6cd1a6fecso843072f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 13:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750365770; x=1750970570; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750365833; x=1750970633; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=iPhIMM73bBRj4RyXNFDggG79DLPlHwWNCe9xdE+dmBI=;
- b=ug1bMt6HujmX/+R1OVS5N9cfTv90J9M1c2HZOaYqQ1wv0l7tKQyqLKhGOTtMZQ2mxi
- IsXOzsAnHPu79LL99r04wcDJm37SlYMA68PKU0svnCdI4Op0YTO4PYk+XQVeIR8g2CPn
- X8BeDd5uaxO3lL0gtiKDORf3K2kIfVv7LeQxB2v3fbIpZOqtaRpThJY9NAdN7OfwdShS
- r5/Lrz7hm2JfG+MpqLenAoBqLcqJNrc8G3/SFuPTcRHeTIpXqYcU+kLqTnc486LBLicq
- dsQBVd1MgYQSpUAib9nPpwTRpGfNVDFTu/mS/IrGa9ucGSk9BK+NaUrNXLTBKMlnD04e
- RTwg==
+ bh=aPawJDIcOsAw9OmMBzvU5j2uG8xgvuFN4z0OZ6WESOo=;
+ b=X+3OVxNtLFO9Ts9TKMh+FXShf4J6ViTUuqXABZTSoq25lbteZIC01Oif9mr7+BnSxN
+ IEZ37kSucej6v4Itr4PB+4KsIrd6R20SEUb1L2iHodaGeWrrUKHI/sj+jW850RDUx3YV
+ M5Pdm5wzq8Ico9+c0JaZatahy1eqXfvoPlbKA4AnR0QyLpeiH3K8CvjAr7HeqgoJvKW+
+ JSFt847D5daQFN5GcIBRpu0h/Nh0yQsCKJDs1iAq9zLTv9cY3zyhY9NsY5RN9qxDu9YC
+ Lzzb057VjAjWNo6CRe5aAUvOQ9tP5fzxP4PGLoJ8BIrFgSOQgHMhYUlcMCC7mYeLj3Al
+ gDrA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750365770; x=1750970570;
+ d=1e100.net; s=20230601; t=1750365833; x=1750970633;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=iPhIMM73bBRj4RyXNFDggG79DLPlHwWNCe9xdE+dmBI=;
- b=S+PxIZWFziwlKbLkCJYUU+M1UAHh49Zp19sl1EkzE53rYw//OiiEKfYqCRV3+xyD3C
- CnCgj7IrO6WSgcL7Nk6Qg9oabcyQbgchj8gm3OX3RqKtgzyAS3bEje2OEVzR/C/XNxTJ
- nxFeJ6M7TAS/tSn5GsnFzxBraevPGnxgJhAv5TkWa2DLlHdL/t5yGTlgvtB+u5YbgnU2
- HPYaSC7J5heFZlnUSHc7YvFBB3ccPMfo0oLK08INDwJVtgeLuJ3wHQQYf5wmf/mi0Gsk
- Xs22ACQ8V6CchW7iPu/AYyESVI8t4tBPLa1hWFvAt0TX9bOL4bulPl0XQDhJ624jejbB
- hJJw==
+ bh=aPawJDIcOsAw9OmMBzvU5j2uG8xgvuFN4z0OZ6WESOo=;
+ b=HrqmO2+h/NAu1hSzzhMX77Vd/XG1zJEMiFS9+cKOQUiFnW9ZHvJ85oVj4D7PisxPND
+ geuaxCb0kuM9GtvsGkoF8z76puJKfF+6UKpsNNU032D6DBzD9WDW6mrhHAseJw2ywxhS
+ c4VGVd3PSfeRuplz/PktLvVFIlSf+Pc7Bo6XylTB2tbWsSANb69jYVKXqbfIAPwDC/T/
+ nN3dMZ3ycVz7W70RYfMxkgMFy4fBt1cy0jQN0WNV7JzUKO6PE62sJHCeUKw8Sk4QhQkc
+ 7APZulWgdL/0LvC9/pHPeMdjnebSEBry6H3oHE24PopndP/LQ3JvBX65dQW+nBL8LFQL
+ YTcA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEwzERSRR/ubPoMnyQoXtfxUbd/uSyLmLqlDIoYX4OyNhHChSZg0eMhykxNpo+AZ5YoJw6/zMdSF+q@nongnu.org
-X-Gm-Message-State: AOJu0YzSYHMG7n1+Wdm+FD8FTIDRQhc/TWv3tZEf8ZPCMR1QpUyhcsEz
- OD+0GIqBZWnxG81r5E0TQ0BYau0qA59xrvBFq+xDje3dSbugURbarqhcxXEJpqQqmEU=
-X-Gm-Gg: ASbGnct+SLHZAbQDPVt+iHNPBpXranlYl/rMg2fLAqB7Og1y7xeb3XxaNt37WXnz14L
- Z+Gh/I2DKHkDpAFTIYUKP2+MpHh+3LgHsbkTADGPbSqixOGVmFgfi+T9jD2VKqDPBhfqceXAlAa
- j0lFgmDMOdBSN5eEgFqTss/rszX303jgH1dclWx9zYHLc7e7/RVjXwhwcUNpq6aoR+SXjUkR1mP
- CeElmZwvNKfsujZxZ4fTVgU8QOdKVwXnVgCKsT4aPK9ozVfa6v0IxUPrGN0X7CqwDRGUzDKftlT
- j3B6B9G3fjO7x9Yej+i0WfzqdlpykkIcZok24OWRzoAt1vcWBXZReJZ1hISg04yVKz70aPx4JHk
+ AJvYcCW62owFwQWeilPfjc/qDyT8YolK2pgcc0j1SEXvW0r+QrcdLbfW+XApcvdMh3jo8IBebG/fJUSC6uEt@nongnu.org
+X-Gm-Message-State: AOJu0YzxcCy//GyxtMXOhFYXSztlPIZXJFh2s1sRLC+x5h/FUnDoQvKg
+ FpY6iyrNQzhQov38NhzaTH/yHkt+LFZfEe2OBcQCKCqy+3Ym+UyO0DRED4xG8aiyU8w=
+X-Gm-Gg: ASbGnctwp97yAKy9TgrxAdcSabNmvGDcKu8I8B3IlgunoVzWPypCp4UGW+piXoCrpMJ
+ uv80TRh1wWPpEmgGvKwlFf8UDq6BHI9O8D15leo6hiu23UxyYSa/WvxYUOyNj3WY1ISyVoTPIQ+
+ cKpno35Qio8ZNi06qhb+aZb9lAVXuZSFg6wm6tLEc4vsyqhMAFnfmwbksj5wx1E1Ea1A61LxFms
+ Q+TXRNZSdELsNz0CPL50RArm0U2ac1x0GcpNsJ9+VGXQECWoB0SOPY1VoAEp521+1iNhHikJCCP
+ Tsf0bPReh2CSBPJJTG58wIyEoJCK7bCfilNI3K494H/xdLhST3L46zZJDgQ8sbwUwejMqAn9VrQ
  =
-X-Google-Smtp-Source: AGHT+IFvglpkbXSWETLGgLyNUUdeEPowIvtUh2vGZLbd9uY1w26dIJC7feO63gAmV0SUZwPogWh85Q==
-X-Received: by 2002:a05:600c:a00d:b0:445:1984:2479 with SMTP id
- 5b1f17b1804b1-4536539214emr1546095e9.5.1750365769746; 
- Thu, 19 Jun 2025 13:42:49 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG5NOq3zUA6IbK+HKtyXXVf4sr9XYnQ8rMXanaww0dvXp30YgVrmEUXG6f3alSDQHeOKknuGA==
+X-Received: by 2002:a05:6000:2504:b0:3a5:39d5:d962 with SMTP id
+ ffacd0b85a97d-3a6d13034a9mr273366f8f.41.1750365833582; 
+ Thu, 19 Jun 2025 13:43:53 -0700 (PDT)
 Received: from [192.168.69.167] ([88.187.86.199])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d117bf84sm289199f8f.52.2025.06.19.13.42.48
+ ffacd0b85a97d-3a6d11909f4sm277635f8f.88.2025.06.19.13.43.52
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Jun 2025 13:42:49 -0700 (PDT)
-Message-ID: <cf804316-b44d-4d44-90ce-15ec7ac56ca9@linaro.org>
-Date: Thu, 19 Jun 2025 22:42:46 +0200
+ Thu, 19 Jun 2025 13:43:53 -0700 (PDT)
+Message-ID: <d6ad1fad-25dc-4364-8bb6-e002b065cc8d@linaro.org>
+Date: Thu, 19 Jun 2025 22:43:50 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/12] hw/i386/pc_piix.c: assume pcmc->pci_enabled is
- always false in pc_init_isa()
+Subject: Re: [PATCH v2 09/12] hw/i386/pc_piix.c: always initialise ISA IDE
+ drives in pc_init_isa()
 To: Mark Cave-Ayland <mark.caveayland@nutanix.com>, pbonzini@redhat.com,
  mst@redhat.com, marcel.apfelbaum@gmail.com, eduardo@habkost.net,
  imammedo@redhat.com, qemu-devel@nongnu.org
 References: <20250618112828.235087-1-mark.caveayland@nutanix.com>
- <20250618112828.235087-11-mark.caveayland@nutanix.com>
+ <20250618112828.235087-10-mark.caveayland@nutanix.com>
 Content-Language: en-US
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20250618112828.235087-11-mark.caveayland@nutanix.com>
+In-Reply-To: <20250618112828.235087-10-mark.caveayland@nutanix.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,14 +105,19 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 18/6/25 13:27, Mark Cave-Ayland wrote:
-> By definition PCI can never be enabled on an isapc machine so hardcode the relevant values
-> set via pcmc->pci_enabled.
+> By definition an isapc machine must always use ISA IDE drives
+
+ISA: yes, IDE: not necessarily. Anyhow,
+
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+> so ensure that they
+> are always enabled. At the same time also remove the surrounding CONFIG_IDE_ISA
+> define since it will be enabled via the ISAPC Kconfig.
 > 
 > Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 > ---
->   hw/i386/pc_piix.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>   hw/i386/pc_piix.c | 35 +++++++++++++++--------------------
+>   1 file changed, 15 insertions(+), 20 deletions(-)
 
 
