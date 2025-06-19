@@ -4,40 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0F2EC7115A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 11:58:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA03EC7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 11:59:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSDuG-0001w3-BJ; Thu, 19 Jun 2025 07:58:12 -0400
+	id 1uSDv6-0002YI-Vu; Thu, 19 Jun 2025 07:59:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org>)
- id 1uSDuE-0001vl-UV; Thu, 19 Jun 2025 07:58:10 -0400
+ id 1uSDv4-0002Xn-V3; Thu, 19 Jun 2025 07:59:02 -0400
 Received: from gandalf.ozlabs.org ([150.107.74.76] helo=mail.ozlabs.org)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org>)
- id 1uSDu9-0006TW-2O; Thu, 19 Jun 2025 07:58:10 -0400
+ id 1uSDv2-0006XA-Of; Thu, 19 Jun 2025 07:59:02 -0400
 Received: from mail.ozlabs.org (mail.ozlabs.org [IPv6:2404:9400:2221:ea00::3])
- by gandalf.ozlabs.org (Postfix) with ESMTP id 4bNJyY5pryz4xG0;
- Thu, 19 Jun 2025 21:57:57 +1000 (AEST)
+ by gandalf.ozlabs.org (Postfix) with ESMTP id 4bNJzk0DdYz4xG0;
+ Thu, 19 Jun 2025 21:58:58 +1000 (AEST)
 Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits))
  (Client did not present a certificate)
- by mail.ozlabs.org (Postfix) with ESMTPSA id 4bNJyW2CgTz4xDf;
- Thu, 19 Jun 2025 21:57:54 +1000 (AEST)
-Message-ID: <6b336a63-464d-4b4d-89d2-370d19f97388@kaod.org>
-Date: Thu, 19 Jun 2025 13:57:52 +0200
+ by mail.ozlabs.org (Postfix) with ESMTPSA id 4bNJzf4ZqLz4x8y;
+ Thu, 19 Jun 2025 21:58:54 +1000 (AEST)
+Message-ID: <c58bf387-a484-4cc3-a4b6-76cb955c6b0e@kaod.org>
+Date: Thu, 19 Jun 2025 13:58:52 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/5] MAINTAINERS: Add myself as reviewer for PowerPC TCG
- CPUs
-To: Chinmay Rath <rathc@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org, npiggin@gmail.com, danielhb413@gmail.com
-Cc: richard.henderson@linaro.org, harshpb@linux.ibm.com
-References: <20250619095840.369351-1-rathc@linux.ibm.com>
- <20250619095840.369351-6-rathc@linux.ibm.com>
+Subject: Re: [PATCH v4] hw/misc/aspeed_scu: Handle AST2600 protection key
+ registers correctly
+To: Tan Siewert <tan@siewert.io>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ qemu-arm@nongnu.org
+References: <20250619085329.42125-1-tan@siewert.io>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -82,9 +84,9 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20250619095840.369351-6-rathc@linux.ibm.com>
+In-Reply-To: <20250619085329.42125-1-tan@siewert.io>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=150.107.74.76;
  envelope-from=SRS0=0/7f=ZC=kaod.org=clg@ozlabs.org; helo=mail.ozlabs.org
 X-Spam_score_int: -40
@@ -109,37 +111,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/25 11:58, Chinmay Rath wrote:
-> I have been working on Power ISA for a long time now and have mostly
-> contributed in TCG instruction translation area (moved 300+ instructions to
-> decodetree as of yet) and would like to continue contributing to PPC TCG in
-> best possible ways I can. I think it's time to step up and assist in reviewing
-> related patches to enable myself contribute more effectively in this direction.
-> 
-> Signed-off-by: Chinmay Rath <rathc@linux.ibm.com>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 16af37986a..a2db7d72aa 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -295,6 +295,7 @@ F: tests/tcg/openrisc/
->   PowerPC TCG CPUs
->   M: Nicholas Piggin <npiggin@gmail.com>
->   M: Daniel Henrique Barboza <danielhb413@gmail.com>
-> +R: Chinmay Rath <rathc@linux.ibm.com>
->   L: qemu-ppc@nongnu.org
->   S: Odd Fixes
->   F: target/ppc/
+Jamin,
 
+On 6/19/25 10:53, Tan Siewert wrote:
+> The AST2600 SCU has two protection key registers (0x00 and 0x10) that
+> both need to be unlocked. (Un-)locking 0x00 modifies both protection key
+> registers, while modifying 0x10 only modifies itself.
+> 
+> This commit updates the SCU write logic to reject writes unless both
+> protection key registers are unlocked, matching the behaviour of
+> real hardware.
+> 
+> Signed-off-by: Tan Siewert <tan@siewert.io>
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Could you please resend your R-b ?
 
 Thanks,
 
 C.
 
+
+
+> ---
+> V4:
+>    - Fix mis-understanding of or operator in lock check [Tan]
+>    - Move SCU protection data variable outside of switch case [Cedric]
+>    - Fix u32 -> uint32_t mistake (now bool as same result) [Cedric]
+> 
+>   hw/misc/aspeed_scu.c | 16 ++++++++++++++--
+>   1 file changed, 14 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/misc/aspeed_scu.c b/hw/misc/aspeed_scu.c
+> index 4930e00fed..39832cd861 100644
+> --- a/hw/misc/aspeed_scu.c
+> +++ b/hw/misc/aspeed_scu.c
+> @@ -91,6 +91,7 @@
+>   #define BMC_DEV_ID           TO_REG(0x1A4)
+>   
+>   #define AST2600_PROT_KEY          TO_REG(0x00)
+> +#define AST2600_PROT_KEY2         TO_REG(0x10)
+>   #define AST2600_SILICON_REV       TO_REG(0x04)
+>   #define AST2600_SILICON_REV2      TO_REG(0x14)
+>   #define AST2600_SYS_RST_CTRL      TO_REG(0x40)
+> @@ -722,6 +723,8 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
+>       int reg = TO_REG(offset);
+>       /* Truncate here so bitwise operations below behave as expected */
+>       uint32_t data = data64;
+> +    bool prot_data_state = data == ASPEED_SCU_PROT_KEY;
+> +    bool unlocked = s->regs[AST2600_PROT_KEY] && s->regs[AST2600_PROT_KEY2];
+>   
+>       if (reg >= ASPEED_AST2600_SCU_NR_REGS) {
+>           qemu_log_mask(LOG_GUEST_ERROR,
+> @@ -730,15 +733,24 @@ static void aspeed_ast2600_scu_write(void *opaque, hwaddr offset,
+>           return;
+>       }
+>   
+> -    if (reg > PROT_KEY && !s->regs[PROT_KEY]) {
+> +    if ((reg != AST2600_PROT_KEY && reg != AST2600_PROT_KEY2) && !unlocked) {
+>           qemu_log_mask(LOG_GUEST_ERROR, "%s: SCU is locked!\n", __func__);
+> +        return;
+>       }
+>   
+>       trace_aspeed_scu_write(offset, size, data);
+>   
+>       switch (reg) {
+>       case AST2600_PROT_KEY:
+> -        s->regs[reg] = (data == ASPEED_SCU_PROT_KEY) ? 1 : 0;
+> +        /*
+> +         * Writing a value to SCU000 will modify both protection
+> +         * registers to each protection register individually.
+> +         */
+> +        s->regs[AST2600_PROT_KEY] = prot_data_state;
+> +        s->regs[AST2600_PROT_KEY2] = prot_data_state;
+> +        return;
+> +    case AST2600_PROT_KEY2:
+> +        s->regs[AST2600_PROT_KEY2] = prot_data_state;
+>           return;
+>       case AST2600_HW_STRAP1:
+>       case AST2600_HW_STRAP2:
 
 
