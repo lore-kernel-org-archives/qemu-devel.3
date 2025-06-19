@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6AD1FC7115B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:20:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F594C7115B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:20:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSF6u-0006Mp-Gq; Thu, 19 Jun 2025 09:15:20 -0400
+	id 1uSF5v-0003iJ-BF; Thu, 19 Jun 2025 09:14:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF6m-0005Re-1o
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:15:12 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF5k-0003fB-Hq
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:14:10 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF6k-0004Kv-3l
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:15:11 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-453426170b6so11665635e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 06:15:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF5e-0003vY-LG
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:14:07 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-451d41e1ad1so5830605e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 06:14:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750338908; x=1750943708; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750338840; x=1750943640; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yfbZh25j/JWcO06w+c80OaMwV9tGFnS1KSANu6xFbyE=;
- b=jzPjDWpj81RuWVYolYhuqpW7YwtCEiNw1hNEgp7QNgq6eQIG5cq9opLc9Lcj82WONJ
- oF5Sv6/27lKl90oC7+7dF7B5TAdR39hUIIKbsMjk3JfhDwZmvkG70jj2XdMPdXj3e/DD
- H1+fN12NMVyI/GRx0amm/irCWy0VspTdyTiefvyfeQK0oZwvQu2MilpCVu9fVZ2/nnHh
- Tjo+WA780JveA7jOlvoiHxfXdHzISM3RmDQnITrrRrif0Vs4XMGi9JI745blAjlJLDze
- bV/xCBMfD5j9pH2h9nSm32BuoVt8OEZzXrjpdQ+laWO5KEaJ5XPUK/iZqpsOeBQflS+V
- 5UWg==
+ bh=zHGHBjHnm08XY2FWC1TeHuwJJyw8Eo3SwtB3aTyB57o=;
+ b=D7haTk6W1wzVr76xrdfjuJP9FVlduEb0cjJYSlkGMbsM59S1DsXIW9BT/cbab35JgZ
+ r4C1RwNDzO9SFr4Sn+Sjguh5CBCNIpxH1AJJXHNH2WkvPYjRIfHYy+S5hiB9zO3FaTWu
+ NxyLjWlsAj1flYOVsCQstGluWTa9CUoPavrGbE3X9LUfkTABvWVvWbwGZgkyJq1PPJEM
+ W7gHiYip01GyuNBd6SWI4o5VfQEUssZyy9ZGEbRphpLEI5svNZjSnO9onhfoPCGIiMas
+ VcCNgehwRz63VHQzF5H5kvPuPMKeg2VN4TRsppud4L4ZhBN6s8iek48NoFUEpb9EShAc
+ evCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750338908; x=1750943708;
+ d=1e100.net; s=20230601; t=1750338840; x=1750943640;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yfbZh25j/JWcO06w+c80OaMwV9tGFnS1KSANu6xFbyE=;
- b=c3hA1ykakaseDsyqm18qkfhYU93XOJG49bjrTUiB9V8tL5aYNjQb+LVNWeezIhIlpP
- dWX5CZTxQ1mnerp/8LJNz83D28Sy7y9UiYUsw3h/9ub/c9guQHnj6Cd7uGyRuM2cMyZi
- 7IxVypstHtzywbwEkrxDKSKBU7jEE8DQA+HAO6mVL1Z+wMevhmSjNDfrdbR0kOtAfTj+
- Seizb19RMuVW2A2Qp6K3WJ9Z6pXoB8IPSrOv6SaiL56AJD15341/2gh0hAEmrGJv3+A+
- qhyQ2tVImbl0r+fyder31h3bEyhYTET6ha02wv+CXSgoAKQiTT622QZmYGzzJbUxBFf/
- CXig==
-X-Gm-Message-State: AOJu0YzzuJB4K0jnu/yfRG5pkmW/g16EoVlC8OFXbEaqn+ChQO2K69n4
- k7Kd8QO8U7N+vJoWWu2kU3Czf/LM3xOCFyWrprSm8grmX4ILogiyaDIilR0RLGmEniZVLG0QQrI
- YJe2RkAM=
-X-Gm-Gg: ASbGnctPgM+2hptPleak3SmVKS+byTHeaA2pW/giCqgRLDZJ7+HIugswItpxEbPFHlO
- A0rRIiQ66/s66XbbzH4XF1RlcQ1GZ7cof1vf/PBt+ZbBrT+PN5PQmuS6a1LEFlbPobkwq6IajTY
- o7KLuro/t6tF77wGiV1nwNMzsiUyKKVA0D/T2ubW/y1tziwaMn8/ZxeL9H+cE2qBo4bNe0YC7Ph
- XBYaTB5XMMRCV+gQyI/WWpZnTuzlNfFTvSvOK2dCQxWNrJLu7VT+o2hPbY2e/sqy07MIDEt3EKo
- 2ZD9pMeQY2+UwdihVNBmaAWc8lkkl35RBuJrEganjkvIckLR4qh/H8n3CJvQuWlmYXuYw0HLwR+
- A/0Qzwi/+mvbSXZ5INEGpBMrog20crtFFx8Lr
-X-Google-Smtp-Source: AGHT+IFW6hA3yAKdFTUe8EEI5kic43ZIITMi78xKgEZunkyJSkx0t16xPuunedGwf+ZaxjadES0vkQ==
-X-Received: by 2002:a05:6000:648:b0:3a4:dfbe:2b14 with SMTP id
- ffacd0b85a97d-3a6c96c102bmr2506122f8f.16.1750338907890; 
- Thu, 19 Jun 2025 06:15:07 -0700 (PDT)
+ bh=zHGHBjHnm08XY2FWC1TeHuwJJyw8Eo3SwtB3aTyB57o=;
+ b=dUAGmdLy6T8RJE1F7RyVZUpmDIMxEENtNPOYs0ZCH+Z23PIRqe4mjKq1SY8v4Araqf
+ hliCEyAz5Be4JlSUeTGBV24OK8P5yBNxo+EBus9+e+b9ePsOziPbgE+m8WiLuIjQnnDq
+ EsQTwMrGHAz9K3SvDUx8iiMxL6jkQ5PW6yRCbovl9Mn7ycYJ6gShzUXxyI7+jNjAyeNL
+ 94nmISt4G+lOeAIykM+UZd3UHUQeCCeFbLg4OzcYcgzte1zaGfPfL14xxSmEy5D0wf1o
+ zafpbW9OADOoSeXZtfqh4iaCJ999zYnafkfVrXx+7ZEZrqs1ZmP3BK7iX7Nov1OTIgkC
+ 7s8Q==
+X-Gm-Message-State: AOJu0YxvAcudtmIk81FpkmBej7nHJZdc0O9FX5JZ7duxEHMX9pFrFJ9T
+ 81YIbhpl8ZJQ9MEYOX2RApM2mHyTlhnXY1jA7KN95mYKLPCgWjHi2OaUMXnweUXd47D7g4wqlCx
+ 9FxnEqkw=
+X-Gm-Gg: ASbGnctBc9ThOhFlew4A0sFMhnz9sfUIyQDXGvXS1BPG/5ki89IkSGRDeLDlI4A/xVV
+ v/SHUe4SvAQo9Png0dFaENszS76/zKiBIR2jOZs3+CGmPFJSl+QTaxf6/xTkl49GZ+CpTZjp2iM
+ nw81Oe8Z3pNKls1sbeDbamo7JQSriDOxKMBP3J/AN3rg0k1WTdZVN87kDOeYLShVUPLTZPPldne
+ +An1pMf1SlY+2i6KRzPacdnRjHaKz1APig7DJEUc3OKki9I6CSpTmo+EXUTno6hhB4SxGMauIFH
+ B/WaSZF4q9aR5U3NDnhBSNpYWuGZSem48qIUbmXWfIsytPu0oZvPES1A1xejn0fMGWdhNGGx/1d
+ rn1SN9VWIa6j+eZnQ/D37hy4Vow1rai7ijmJm
+X-Google-Smtp-Source: AGHT+IH0dt4iGJr6FYYNqBSMaXpFrU7CwfQvkc2Mt1yc9XX3BrxWP2rVzSQNRIHBHoy4vELO8HZkLA==
+X-Received: by 2002:a5d:5849:0:b0:3a4:dfc2:2a3e with SMTP id
+ ffacd0b85a97d-3a5723aeb2cmr17281843f8f.39.1750338840330; 
+ Thu, 19 Jun 2025 06:14:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b2f80asm19552864f8f.78.2025.06.19.06.15.06
+ ffacd0b85a97d-3a568a547ecsm19782672f8f.17.2025.06.19.06.13.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Jun 2025 06:15:07 -0700 (PDT)
+ Thu, 19 Jun 2025 06:13:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -79,18 +79,17 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>
-Subject: [PATCH 20/20] tests/functional/sbsa-ref: Move where machine type is
- set
-Date: Thu, 19 Jun 2025 15:13:19 +0200
-Message-ID: <20250619131319.47301-21-philmd@linaro.org>
+Subject: [PATCH 07/20] accel/hvf: Trace VM memory mapping
+Date: Thu, 19 Jun 2025 15:13:06 +0200
+Message-ID: <20250619131319.47301-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250619131319.47301-1-philmd@linaro.org>
 References: <20250619131319.47301-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,34 +112,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-fetch_firmware() is only about fetching firmware.
-Set the machine type in test_sbsaref_edk2_firmware().
+Trace memory mapped / unmapped in the guest.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/functional/test_aarch64_sbsaref.py | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ meson.build               | 1 +
+ accel/hvf/trace.h         | 2 ++
+ accel/hvf/hvf-accel-ops.c | 6 ++++++
+ accel/hvf/trace-events    | 7 +++++++
+ 4 files changed, 16 insertions(+)
+ create mode 100644 accel/hvf/trace.h
+ create mode 100644 accel/hvf/trace-events
 
-diff --git a/tests/functional/test_aarch64_sbsaref.py b/tests/functional/test_aarch64_sbsaref.py
-index e6a55aecfac..5536ec622e6 100755
---- a/tests/functional/test_aarch64_sbsaref.py
-+++ b/tests/functional/test_aarch64_sbsaref.py
-@@ -40,7 +40,6 @@ def fetch_firmware(test):
-         with open(path, "ab+") as fd:
-             fd.truncate(256 << 20)  # Expand volumes to 256MiB
+diff --git a/meson.build b/meson.build
+index 34729c2a3dd..5004678a26b 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3633,6 +3633,7 @@ if have_block
+ endif
+ if have_system
+   trace_events_subdirs += [
++    'accel/hvf',
+     'accel/kvm',
+     'audio',
+     'backends',
+diff --git a/accel/hvf/trace.h b/accel/hvf/trace.h
+new file mode 100644
+index 00000000000..83a1883343a
+--- /dev/null
++++ b/accel/hvf/trace.h
+@@ -0,0 +1,2 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "trace/trace-accel_hvf.h"
+diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
+index d60446b85b8..b38977207d2 100644
+--- a/accel/hvf/hvf-accel-ops.c
++++ b/accel/hvf/hvf-accel-ops.c
+@@ -59,6 +59,7 @@
+ #include "system/hvf_int.h"
+ #include "system/runstate.h"
+ #include "qemu/guest-random.h"
++#include "trace.h"
  
--    test.set_machine('sbsa-ref')
-     test.vm.set_console()
-     test.vm.add_args(
-         "-drive", f"if=pflash,file={fs0_path},format=raw",
-@@ -70,6 +69,7 @@ def test_sbsaref_edk2_firmware(self):
+ HVFState *hvf_state;
  
-         fetch_firmware(self)
- 
-+        self.set_machine('sbsa-ref')
-         self.vm.add_args('-cpu', 'cortex-a57')
-         self.vm.launch()
- 
+@@ -97,6 +98,7 @@ static int do_hvf_set_memory(hvf_slot *slot, hv_memory_flags_t flags)
+     if (macslot->present) {
+         if (macslot->size != slot->size) {
+             macslot->present = 0;
++            trace_hvf_vm_unmap(macslot->gpa_start, macslot->size);
+             ret = hv_vm_unmap(macslot->gpa_start, macslot->size);
+             assert_hvf_ok(ret);
+         }
+@@ -109,6 +111,10 @@ static int do_hvf_set_memory(hvf_slot *slot, hv_memory_flags_t flags)
+     macslot->present = 1;
+     macslot->gpa_start = slot->start;
+     macslot->size = slot->size;
++    trace_hvf_vm_map(slot->start, slot->size, slot->mem, flags,
++                     flags & HV_MEMORY_READ ?  'R' : '-',
++                     flags & HV_MEMORY_WRITE ? 'W' : '-',
++                     flags & HV_MEMORY_EXEC ?  'E' : '-');
+     ret = hv_vm_map(slot->mem, slot->start, slot->size, flags);
+     assert_hvf_ok(ret);
+     return 0;
+diff --git a/accel/hvf/trace-events b/accel/hvf/trace-events
+new file mode 100644
+index 00000000000..3c11f69f305
+--- /dev/null
++++ b/accel/hvf/trace-events
+@@ -0,0 +1,7 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# See docs/devel/tracing.rst for syntax documentation.
++
++# hvf-accel-ops.c
++hvf_vm_map(uint64_t paddr, uint64_t size, void *vaddr, uint8_t flags, const char r, const char w, const char e) "paddr:0x%016llx size:0x%08llx vaddr:%p flags:0x%02x/%c%c%c"
++hvf_vm_unmap(uint64_t paddr, uint64_t size) "paddr:0x%016llx size:0x%08llx"
 -- 
 2.49.0
 
