@@ -4,125 +4,191 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C20E9C77B7F
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3AFDC7115C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:38:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSFSF-0004AK-Ji; Thu, 19 Jun 2025 09:37:23 -0400
+	id 1uSFNg-0004GI-1R; Thu, 19 Jun 2025 09:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
- id 1uSFRw-00046r-Ql
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:37:05 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uSFNc-0004E5-5I
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:32:36 -0400
+Received: from mx0a-002c1b01.pphosted.com ([148.163.151.68])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leif.lindholm@oss.qualcomm.com>)
- id 1uSFRu-0000Up-Fm
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:37:04 -0400
-Received: from pps.filterd (m0279873.ppops.net [127.0.0.1])
- by mx0a-0031df01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55J5q6v0029581
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 13:36:58 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ (Exim 4.90_1) (envelope-from <john.levon@nutanix.com>)
+ id 1uSFNY-0008E1-C2
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:32:35 -0400
+Received: from pps.filterd (m0127838.ppops.net [127.0.0.1])
+ by mx0a-002c1b01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55J8A05x013187;
+ Thu, 19 Jun 2025 06:32:29 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 8Yw0pCK+yjsFyWICsC6tO8VSFWY/4YZhCmU+/h/OTjc=; b=l2vxXWjh02LBbxtO
- JGjaBro0ebbmcFV2TDr+Os2O1DI6HDj1iul82sq0ngHusUXcLbro/i63M+TSFDlL
- ODsBCXZYPWb/uktjcFyg+E6fAjaDk0IwIcmvb6sTLiyfWE/qMUpPwvFazJNWuQ3z
- HDuvBhi1kybjr1ftV0fdcVU+/15CXpVrpcprFZv12elSazl9qEmzGllv9svX7Zdl
- sUmtb9FF9fR/aTKSpkxjjKmeF+2BD3FkpPf4dHtdFCBetnpm57zR3CcPH5vHwkjW
- 7+TR8XLcYsCSJXnehMMPf/l/cxDEqATkOdeWT2pzqdMqyp6mKChOq1WZi0Aw35pA
- kEmafQ==
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4791h9g30b-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES128-GCM-SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 13:36:57 +0000 (GMT)
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-311d670ad35so744034a91.3
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 06:36:57 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750340216; x=1750945016;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=8Yw0pCK+yjsFyWICsC6tO8VSFWY/4YZhCmU+/h/OTjc=;
- b=Pzxm5CL6KHDtbzA2SO009eH3SeFRM/AWrtU1vpne/YFS4PNJCgmVeY9ovqNautvnh/
- F+HgyxVsqQ6zKoLD1+Jh4XHXmrCUrBhEK1VdwS/D99lAIlVbXjgu25DJnlz/ccArWxRK
- Ux+0FKnDcWI6JsKeH1WC9ijcTV44llxlanzlitBK5C5G96HbtvSOF/hfCpR7Hb9f22nO
- TwGZHSihP/nE5rgyuppxsbOirQQ1CROIm8Ko9hmIaHI8sHbDoY5J44jrRBwfigs58H9+
- 57beGkGTR5C/jJecNSaRtYX5gaxFyPzW4+myx8pCB+GUNy9vjopCcu1hr2Rn+cbzsFq1
- WHQQ==
-X-Gm-Message-State: AOJu0Yw4yX2MWHzkNA45ZCgfAcQIR9t5k4c3NOrH2DkuX6pRCpR7xMPB
- eIZZOxtiB6d9ocSuxWD9KT91+igU65lt8Z+U2uqLjAvhrJzhWAUCxRtX9O9OMwimfYH8KjGAQKT
- gLtwYJZ+455VeCySCqwGed9xdmJZp32ur7fYH2ts/Cuhi7PNAjYqDAAqsWFHPTMvTT9JFEsCLrp
- KEKWkxeaE8SVfNCOjB9z55jNoEtx0g76Ri
-X-Gm-Gg: ASbGncusaJLKQI1ZhQGfriXiLoxmoKDu4ZYGoddQf9veLhths/9VdJHnJl5IGlOofxX
- HBc5WiILgB8Ff+5nWZr1D9jAm4LmlDYBpIRKNOY3Bgt4JUn1xB37G6rvkrpM8WJai2cXvgU9fLV
- 4/FhXxrEOAUUUBCyvnbbPUu8XFK3o7c/rJL1pl
-X-Received: by 2002:a17:90b:3e43:b0:312:1d2d:18e1 with SMTP id
- 98e67ed59e1d1-313f1d52d85mr28143306a91.22.1750340216463; 
- Thu, 19 Jun 2025 06:36:56 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEL1Jhr0ZNa55jblw14p3se0kC8/uXBk2QsW0FG6l0DdQY6qBiOgnrLWDuN9hxt10liUT8ME2NlQ1lfNyomEU4=
-X-Received: by 2002:a17:90b:3e43:b0:312:1d2d:18e1 with SMTP id
- 98e67ed59e1d1-313f1d52d85mr28143274a91.22.1750340216029; Thu, 19 Jun 2025
- 06:36:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20250619131319.47301-1-philmd@linaro.org>
- <20250619131319.47301-20-philmd@linaro.org>
-In-Reply-To: <20250619131319.47301-20-philmd@linaro.org>
-From: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
-Date: Thu, 19 Jun 2025 14:36:43 +0100
-X-Gm-Features: AX0GCFsnBB6aVSiaBdg8ecDaocgSDD4NQoJgBj-uckYPnF8vAxEIpm4PkwkAxgs
-Message-ID: <CAD=n3R2GC0vFxkpzwiieVGSptPYdAEz++d34Z5Qwmn=mKDdwGg@mail.gmail.com>
-Subject: Re: [PATCH 19/20] hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB
- definition
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Cameron Esfahani <dirty@apple.com>,
- Julian Armistead <julian.armistead@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>,
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ :message-id:mime-version:references:subject:to; s=
+ proofpoint20171006; bh=h3H3fxLIImpA3+uMFRcbHSmeNviC4QoeybtFHFgYg
+ qI=; b=iVXSuQH7fTMG+uSo5TVUUnfDI7OUTEJ5k0tMrWzkpz9RB6BRtCWp+fcI6
+ Y0Kq3YC75Yl7/qvoxUPf/J/OKIxgUw/sIs9bEnZ0opTy2vuzHg0r22YqzMeCHmGg
+ YxN5E9qcwiy/+Ub4idSdnd00aCb6ieUXlutKGJC/z4CNc0Yo5gL8cQY/hBFJ4cN9
+ qifwRMdK+iJBo+ntygfmT2d3beqH/nBQpPcwKnq+Dy6N+Hlye7dHJUEpsnJDBcvJ
+ P2wE7Fe+gee9alkGN3wvJz8XAamlAVCC5cND4NVakXlXaQF8YbGpekInE8fI9ZXX
+ LpbIJsZ3Cnp5ePs3RQFe7XdxgPA1w==
+Received: from byapr05cu005.outbound.protection.outlook.com
+ (mail-westusazon11020121.outbound.protection.outlook.com [52.101.85.121])
+ by mx0a-002c1b01.pphosted.com (PPS) with ESMTPS id 4798mykwq7-3
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Jun 2025 06:32:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZuE9xKUWY+IIdJ/fIL4nyPuMaGhyqHvNs4F5/QT7WFnkDd2ZTRRVN+MUqnNvNosJk+/T/fi+XiozToAcjwfHwFBxICvYPYkEwWwS4MSEZORc6E04phcR+lJGLWyKSOEhr6/5wemVA1w2H4PLbZB3fNKk4AVdfuyxzQmyeX5yaRQHrNw02+2N1xOw3wNKNvFX5ihstMoIC0oatbeKYO5yuDuty20KIxOqQgE+Hx8vbZVNzujMlHf+z8K9XpyPH3kcqzARsEs8+O6H+iir1pNt0kA27c5Ass59C0hd2uchjHDbOvAtvT2ZldmG3pBq7/ts/uAmZSosbIldKLFd4A9h/w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=h3H3fxLIImpA3+uMFRcbHSmeNviC4QoeybtFHFgYgqI=;
+ b=jaCPplYvLRmKU0MYrIugFEwknZG1yFDjaE6+LVTe1QOQ2yl759MdzMZdUgftu2X21ENIAnUaNO21qJ6IxVJjRuLCH9TE9WNOAlRhXlqYOKRZzp7NVecWauK8nzDMlf4loOiLdGFZUK/+lNnNSQ54msXxVQGOqbkXY1EIxO4AJkQ1m53pGl9HV8itwvf1VfEJiuuNyxikwPTnoxgYjVhiMTfpc0wKs1nA/YAHOpyXHOC0ed4RgU71bRn+M8clPFi4nEO4gNV18LEaeSiZSd/16/ag6lJJJMEgZSE1+CL4TLges/gvkcLDed++dcn9UuNbIroG9UDpzkV/JtCfqmJaMg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h3H3fxLIImpA3+uMFRcbHSmeNviC4QoeybtFHFgYgqI=;
+ b=T+eLd5EWfzQGjKZtJkbYNtjRF3BgNiGwV9HLo0PP1DJS1fV8lYM+rOPz7NjQgsI4BcHGq4dxmjNIt8E0vomhSho1xOtGfwaIk2FYBU5cF+MT5FmcKfHbZDdUIjwISNDqY0DMoMhIlBG5R1gWdeRTGW8/cZUc/zbuPc8Lht28fCTLslS0WrUXi//xNVaSdcT57/sAGAOZl3bz0gJME0dDVCiGMJWOvXF2ZqEzP+/GkGIW5GLgtRbMTB5oAiaOTOnz2yauCxQId9QdQZuMnZkkDGlT8DGxoCSDeuGvf1k1gbBO5TrNa2Q6I/SaVpBQSg2VWwqtH+UuD7rnyIzGm+XT5Q==
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com (2603:10b6:610:7f::9)
+ by PH0PR02MB9383.namprd02.prod.outlook.com (2603:10b6:510:289::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8835.19; Thu, 19 Jun
+ 2025 13:32:19 +0000
+Received: from CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51]) by CH2PR02MB6760.namprd02.prod.outlook.com
+ ([fe80::fd77:ea65:a159:ef51%2]) with mapi id 15.20.8857.016; Thu, 19 Jun 2025
+ 13:32:19 +0000
+From: John Levon <john.levon@nutanix.com>
+To: qemu-devel@nongnu.org
+Cc: Thanos Makatos <thanos.makatos@nutanix.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ John Levon <john.levon@nutanix.com>,
+ Alex Williamson <alex.williamson@redhat.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
- Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-X-Proofpoint-ORIG-GUID: tPuMs84c3PktAwtkFcdZed6I1BY1NpGl
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDExMyBTYWx0ZWRfXxXm0DxP7P7eh
- KEWlGTg7suUkDuufBsaG2/Z8ti6SiQOcp67KryRe3ls6K9n9TZ1LnuhnGGNp34fsuZSNRlsTuAc
- /fivmfb5GQbWX8ZLwo5Dtkn6AG/JjD0uxGBN02wA2G93QVFIzjPA0cSXiWRZN13kdFFFkARjjHM
- UdbXAHvWJf4eScJRoJFZqKYmN5IDsKcbkYsEJ1X4tycpvuE9sLKKIqll24O78sD08cdz9xxvm5g
- MueFjH4wiwsmOYYEnSvG8CE8UiLF8iKUWrnGR5eTZiBQOHxrNW3DYa7gsCEM9cA86Fn6Dwcz0LD
- eZYgNEpJHj+UJ1xQdQx0vnyJ+44R4+oiZkt99/w/1etsmzUo9jpjFBPFx2oxL9DkUVSNWd2gbMC
- 8Hl+f43/lOivHHG7707m+TSpkv84KLjbV69+VJ5eCuAh53Yy6s+xGypibAMiuLiAKY6wtm6C
-X-Authority-Analysis: v=2.4 cv=UL/dHDfy c=1 sm=1 tr=0 ts=68541279 cx=c_pps
- a=UNFcQwm+pnOIJct1K4W+Mw==:117 a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10
- a=KKAkSRfTAAAA:8 a=EUspDBNiAAAA:8 a=_k9n5H8yiGyBNqQC-Y4A:9 a=QEXdDO2ut3YA:10
- a=uKXjsCUrEbL0IQVhDsJ9:22 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: tPuMs84c3PktAwtkFcdZed6I1BY1NpGl
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ John Johnson <john.g.johnson@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>
+Subject: [PATCH v4 08/19] vfio-user: set up PCI in vfio_user_pci_realize()
+Date: Thu, 19 Jun 2025 06:31:42 -0700
+Message-ID: <20250619133154.264786-9-john.levon@nutanix.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20250619133154.264786-1-john.levon@nutanix.com>
+References: <20250619133154.264786-1-john.levon@nutanix.com>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: LO3P265CA0025.GBRP265.PROD.OUTLOOK.COM
+ (2603:10a6:600:387::6) To CH2PR02MB6760.namprd02.prod.outlook.com
+ (2603:10b6:610:7f::9)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH2PR02MB6760:EE_|PH0PR02MB9383:EE_
+X-MS-Office365-Filtering-Correlation-Id: 98f0b573-99e3-4af4-b81c-08ddaf35b6b1
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|1800799024|366016;
+X-Microsoft-Antispam-Message-Info: =?us-ascii?Q?DNFdlVQQJ5V4Sqoa0jp1JQ/HTV1Y+Y2ufcWE730bFrVVYl6oibvkduWh1pVV?=
+ =?us-ascii?Q?fUq0oRUiBmhqfX52pON95N4OquvsT5xolF86xIRZvDfGP/r6itFUHL3f/MHD?=
+ =?us-ascii?Q?JJEGE3ZpTofqb8KuXLBwlIWEBmVp15g9/jGaPxlFPu5inzGM9EyiZg4sICkj?=
+ =?us-ascii?Q?BlOcOmyZGkRMSaPHKrtan8D0kriUtim7qtIfKhwlSlTizpfOw+8cAf/sbRA4?=
+ =?us-ascii?Q?reKSjltMbNMMbS7zhMdNK7nogYAEJmwzMwhu/yKgDqYdurJx6m/P5S2b+RaB?=
+ =?us-ascii?Q?Kxz/nrez1xDZL8TbzrjaTXstcKDbbRqt3AIcr8qXmYsTfeofbYE6j61mbw/K?=
+ =?us-ascii?Q?pUeVu3VcbjmvoyTHkdY+A9czfF0MyzOTBbLkd3x+/NXFXKQloy7SBpjbRHDp?=
+ =?us-ascii?Q?494xALvgkd6ZFxa0iQjxjnlCIeCbNBSMcgbFlO2O/td0e1tjqNUFFBYpMJSs?=
+ =?us-ascii?Q?QeAbbZB1dU5g2yj84sN+Q89V6ynrLgFgeAxhaTsu5g2SHfFv3BK+hRVT/GeJ?=
+ =?us-ascii?Q?2IPIVD9zCjLRtiutheP88YrtGaUq+07q0yyhN9cLm1XQJj2xAR5u+amXECXc?=
+ =?us-ascii?Q?vGUSV4z5nhnUkpPGS4WaAh0GxA3mXKjFltCzR/61b8JYRQtaucJ6eS8Md8ZP?=
+ =?us-ascii?Q?9GHLeyTtGF1L8F08BXE38Lup342G97MQPoJaFyK8UCr0TVHERt4DwKTQ9xr2?=
+ =?us-ascii?Q?eoCvBx3UTAuktnlJs56slG+xm5A0978MocqX4ordT7IpLY7/Y46KUm0mn5Mc?=
+ =?us-ascii?Q?lpgKYKaDUcbw4i1Jf19bBVw6pdJT8OhAMbOaoXadsd8vzKo4S8qC983TRXnN?=
+ =?us-ascii?Q?mHo+gHrGClfOYgzwDO2PLtTFHezc8bqACFC9U62G5AsMede2ImCUKqD0IkqH?=
+ =?us-ascii?Q?DX49pGs8fO4/3hH7+od/Y8T4jTYDgK/UcXgzTmK74jByzauPgDh3//rU4S1L?=
+ =?us-ascii?Q?kGXwMipcRACXKxZkGAU4vzRyydxAaQwLMwmF9+DUDDH09cQqWAxTluonW+a3?=
+ =?us-ascii?Q?CcTCtnNZfZer43PJB1p1SdZ7nMY3142skJLr47D6EPUwX1KsYGnwhyEQGoLR?=
+ =?us-ascii?Q?MCDeWhxo6CjLhW68nP5a++0/py8RgQiaSPHt1dhJuxolzECPBtqwj6G5/FeO?=
+ =?us-ascii?Q?L+pEYwGkua8v6gUObcz4b7NJq4BZqSeCP2SqyjEbuy/JVolt76GN/EHcxUpU?=
+ =?us-ascii?Q?1HqIkL7DJhDZx2GuHxFlRSf9yTJEgf4mw2byMZFKMZK9ZxSBIYwCf+CU0m5g?=
+ =?us-ascii?Q?A2FLs17kk3rg5NlE7SkiEjaZKYvuASoYxViZX7230YG3Qw86s8EVpPQHugoo?=
+ =?us-ascii?Q?spMtkcMMBmhUgBgNZqS60mA9c0bGUbIuU0VkbDxF19js2bgAeH15sbhwjWXK?=
+ =?us-ascii?Q?5DS6aQ4IOl0JxyB/khOcOycIJjspCvp8ziKAPldLofjB1g+CLCy0advM2kkN?=
+ =?us-ascii?Q?YpQhTeUX0UQ=3D?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH2PR02MB6760.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(1800799024)(366016); DIR:OUT; SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?kXAJNPMG2uDL/HU1kUCRBKPq2Es7mhQrCRD/9ITdQaJpRf1cjcMffmppDWkC?=
+ =?us-ascii?Q?zqwj+Y9TMs+eemxB0NZA7TxEMVGsUfts/EZ9ZivJDxuLp02IQR+NjUx5UIHp?=
+ =?us-ascii?Q?N/R3yNWMSIIHtnmwhi29XgmwMayUOFhLf9gW3IbhmsXJxRoBrJ19GfPCPTVX?=
+ =?us-ascii?Q?SmhVgU3kLdagJX8+LIJqtJLTQVsw5+Rmnm+XvLArFD6Hsu7MHtW3682YMKgX?=
+ =?us-ascii?Q?4p/w6id31b+JHW5mLKvP1QdJz6j8iL5pJ2WyBa7YUSnJpj99Mrbj9FSAFLOV?=
+ =?us-ascii?Q?P3w8BF74gIObVnV5r6BQwAmvbVtk5awJ4c310AV+rVh2lhSEvCG1mbygkIH+?=
+ =?us-ascii?Q?dKbmaO+5+UO3nPZ/XB0c4sXOD/LPzb/wv53QhAeeAYpjEeSyUYjOihSCghct?=
+ =?us-ascii?Q?kGMNlsq06vaXclW9GR0jaATJL45kaJ3gT7L9UGqTWPQOlKswpFWqrUlW2XmS?=
+ =?us-ascii?Q?DiuPgEFJt3qlQlQk3P3jwQlTDLl+/zdJg0mztqGAy/9pGyy0/T+7/MaD7DT9?=
+ =?us-ascii?Q?0mmEF3rqlKTxOQyGjFG3uhEEZAom5JPFDw5deoUTo355+SH5FCGe5G9uBb4z?=
+ =?us-ascii?Q?dlERocBPbXhocn0Y0WJ0mHrvZtEG3tl4CPoWAraKTgywn+6vMuWPLozuQwQJ?=
+ =?us-ascii?Q?dqREv5wuVvBhySiNiIpFPh2D5A24rZ+aqCo39nRy8+lCeSslXJVswFw5OMZV?=
+ =?us-ascii?Q?gNQ5rMkWn+pfmvVmlbePDq5am2kxWIvAoAZ/2K68WyoQyCXdcZ9X/83BMf89?=
+ =?us-ascii?Q?H56CntxLzpB6IdMCdXLDqDfNT7nrSmiFHo3UY6W8z8Gs3Tx0Hk/F3UGkbJCR?=
+ =?us-ascii?Q?pSknKT3StaG6Vi2h5UHpGKS/PICv1R/SBzQH+OOnSZetKtezzD/4BjOU2Syt?=
+ =?us-ascii?Q?qxl5hcKkHVWpcQmPuiWsaqE9uIrulDF4gSDMsWd/1qKldaasTgqAj0z9KtoI?=
+ =?us-ascii?Q?BtMOxjmYLFz4TonrSxlZzXc2ov6pAtlLOF44esfMTB9sYkEPHLv3qlX1kgIf?=
+ =?us-ascii?Q?pco6OPVF/QdQqOTxl5rZ7DbX6s9JD0sZLSAu8eR02fSBHIMbAWAE7K1oibHp?=
+ =?us-ascii?Q?FWlu7D/WSdR0FmeRrLsAiMVYGIeN0KvZzUzczuiocREFG+vlpUF8Z3XxdM8x?=
+ =?us-ascii?Q?hX1zeGnTIaod4pb9syr0CSbF7LB2feYBf4OS5taIKB6sR7i4tZw0thj5w5aq?=
+ =?us-ascii?Q?rPCSFvaqz0J0JJvISU/GV3A3P/uKUVbi7kT/CKT4UZ3yu8FiyQ2LKrP4WX/X?=
+ =?us-ascii?Q?S7Vr2QbLwBWZxkj8M6QKllB8f3SnzwWkCAFv8+S7MXRgA8W0/OqGwzsCD8Mm?=
+ =?us-ascii?Q?6yqk2wYkOTjKGemLYYG01WaE+RdDmH712SOwz4w02QBjDcwaI6b4goVCSXd4?=
+ =?us-ascii?Q?SWqxumEBm42VKEWl4QwF5lCd38nXjBO8yfyKL/fmZUdAnW1QuGvP//aeC2Gy?=
+ =?us-ascii?Q?69mJBer2udM7EN2hbaUrIM9bI4Ch8gMnXFzdbFiDNhasSJJKlvvPoZhi9S69?=
+ =?us-ascii?Q?sf4V9ltqkCyjm8jnAitupM+GYTfw7Mc7C1VI1BrNRTW2kocNswQw6nqBhEI2?=
+ =?us-ascii?Q?B4Kev14Vsv4s4jMJifqVG+d1Yc9+jFxZnzWxhzcN?=
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 98f0b573-99e3-4af4-b81c-08ddaf35b6b1
+X-MS-Exchange-CrossTenant-AuthSource: CH2PR02MB6760.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Jun 2025 13:32:19.3144 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: yyqW5T2daY3+PqvNwjXggmEb4oK9Kz7FCazeWktHQdVGF9/THiJ3fejXYVgbfCV8LaHHrHxZWw2ZDyOBjo7w+Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR02MB9383
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjE5MDExMiBTYWx0ZWRfX/uc8wsaLazVN
+ Im+rNFF/+qZYuZlxywWJR/yOgS2cm/rkSJVQzPQ+SV0Se53Y5SRQN/OROcVnbTzbL5XaIRb8ksC
+ 7i9438bW2fWLMCDEqpXm60cfB1nlwL9tFzy1EX4U5vZ1hegBtgGUDq1RhOrsWVwwgn33bOisaRd
+ 8HLNhhUEeAI9LxtnFrtECjgOqUkfBcSKX5zgHOTxp+kn2iMOLSc9icdUGCxiQ3JfIEaS6wxQbmt
+ 3PViAOnPZXN9yShvGbMv6JO99ZimVnoIUXJb2o319VJsMEjcprzUaBxQUkyhplgmo8AZkK2G76Q
+ vc9+lP8dEL1+AVht9LgmWxK4GOJcju7vJ+FPf3M5/s2K0uShfmDJuQJ6Zy8XCMtEk0IU2rLMtDo
+ Q4BhkujDo6qdDrFqxUGMaIDIsZHKEnMmXDxmnyDo9pnDkdOcJKsp6AmSfTBflJm9ZD8LgDW8
+X-Proofpoint-ORIG-GUID: CUonwYwkAeBRoKWIQTi-jdUZZD2P-SxN
+X-Proofpoint-GUID: CUonwYwkAeBRoKWIQTi-jdUZZD2P-SxN
+X-Authority-Analysis: v=2.4 cv=LIxmQIW9 c=1 sm=1 tr=0 ts=6854116d cx=c_pps
+ a=Yi5XoY1Pvk1/bV4Hj+lk7Q==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19 a=wKuvFiaSGQ0qltdbU6+NXLB8nM8=:19
+ a=Ol13hO9ccFRV9qXi2t6ftBPywas=:19
+ a=xqWC_Br6kY4A:10 a=6IFa9wvqVegA:10 a=0kUYKlekyDsA:10 a=yPCof4ZbAAAA:8
+ a=64Cc0HZtAAAA:8 a=uN1uQ0dK97G9gywtELIA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
  definitions=2025-06-19_05,2025-06-18_03,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- mlxscore=0 clxscore=1015 suspectscore=0 priorityscore=1501 adultscore=0
- lowpriorityscore=0 bulkscore=0 spamscore=0 phishscore=0 mlxlogscore=999
- malwarescore=0 impostorscore=0 classifier=spam authscore=0 authtc=n/a authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506190113
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=leif.lindholm@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.151.68;
+ envelope-from=john.levon@nutanix.com; helo=mx0a-002c1b01.pphosted.com
+X-Spam_score_int: -46
+X-Spam_score: -4.7
+X-Spam_bar: ----
+X-Spam_report: (-4.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,63 +204,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Jun 2025 at 14:15, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> Define RAMLIMIT_BYTES using the TiB definition and display
-> the error parsed with size_to_str():
->
->   $ qemu-system-aarch64-unsigned -M sbsa-ref -m 9T
->   qemu-system-aarch64-unsigned: sbsa-ref: cannot model more than 8 TiB of=
- RAM
->
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+Re-use PCI setup functions from hw/vfio/pci.c to realize the vfio-user
+PCI device.
 
-Reviewed-by: Leif Lindholm <leif.lindholm@oss.qualcomm.com>
+Originally-by: John Johnson <john.g.johnson@oracle.com>
+Signed-off-by: Elena Ufimtseva <elena.ufimtseva@oracle.com>
+Signed-off-by: Jagannathan Raman <jag.raman@oracle.com>
+Signed-off-by: John Levon <john.levon@nutanix.com>
+---
+ hw/vfio-user/pci.c | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
 
-/
-    Leif
+diff --git a/hw/vfio-user/pci.c b/hw/vfio-user/pci.c
+index d704e3d390..b49f42b980 100644
+--- a/hw/vfio-user/pci.c
++++ b/hw/vfio-user/pci.c
+@@ -126,10 +126,39 @@ static void vfio_user_pci_realize(PCIDevice *pdev, Error **errp)
+         goto error;
+     }
+ 
++    if (!vfio_pci_populate_device(vdev, errp)) {
++        goto error;
++    }
++
++    if (!vfio_pci_config_setup(vdev, errp)) {
++        goto error;
++    }
++
++    /*
++     * vfio_pci_config_setup will have registered the device's BARs
++     * and setup any MSIX BARs, so errors after it succeeds must
++     * use out_teardown
++     */
++
++    if (!vfio_pci_add_capabilities(vdev, errp)) {
++        goto out_teardown;
++    }
++
++    if (!vfio_pci_interrupt_setup(vdev, errp)) {
++        goto out_teardown;
++    }
++
++    vfio_pci_register_err_notifier(vdev);
++    vfio_pci_register_req_notifier(vdev);
++
+     return;
+ 
++out_teardown:
++    vfio_pci_teardown_msi(vdev);
++    vfio_pci_bars_exit(vdev);
+ error:
+     error_prepend(errp, VFIO_MSG_PREFIX, vdev->vbasedev.name);
++    vfio_pci_put_device(vdev);
+ }
+ 
+ static void vfio_user_instance_init(Object *obj)
+-- 
+2.43.0
 
-> ---
->  hw/arm/sbsa-ref.c | 8 +++++---
->  1 file changed, 5 insertions(+), 3 deletions(-)
->
-> diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-> index deae5cf9861..3b7d4e7bf1d 100644
-> --- a/hw/arm/sbsa-ref.c
-> +++ b/hw/arm/sbsa-ref.c
-> @@ -19,6 +19,7 @@
->   */
->
->  #include "qemu/osdep.h"
-> +#include "qemu/cutils.h"
->  #include "qemu/datadir.h"
->  #include "qapi/error.h"
->  #include "qemu/error-report.h"
-> @@ -53,8 +54,7 @@
->  #include "target/arm/cpu-qom.h"
->  #include "target/arm/gtimer.h"
->
-> -#define RAMLIMIT_GB 8192
-> -#define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
-> +#define RAMLIMIT_BYTES (8 * TiB)
->
->  #define NUM_IRQS        256
->  #define NUM_SMMU_IRQS   4
-> @@ -756,7 +756,9 @@ static void sbsa_ref_init(MachineState *machine)
->      sms->smp_cpus =3D smp_cpus;
->
->      if (machine->ram_size > sbsa_ref_memmap[SBSA_MEM].size) {
-> -        error_report("sbsa-ref: cannot model more than %dGB RAM", RAMLIM=
-IT_GB);
-> +        g_autofree char *size_str =3D size_to_str(RAMLIMIT_BYTES);
-> +
-> +        error_report("sbsa-ref: cannot model more than %s of RAM", size_=
-str);
->          exit(1);
->      }
->
-> --
-> 2.49.0
->
 
