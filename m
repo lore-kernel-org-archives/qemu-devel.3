@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B50AC7115C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1E56C7115A
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 13:14:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSF5k-0003eZ-91; Thu, 19 Jun 2025 09:14:10 -0400
+	id 1uSF5L-0003Ya-7a; Thu, 19 Jun 2025 09:13:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF5a-0003bm-9v
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:13:58 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF5K-0003YM-7M
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:13:42 -0400
 Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF5Y-0003us-J8
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:13:58 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSF5I-0003sY-OT
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 09:13:41 -0400
 Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-453426170b6so11657685e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 06:13:56 -0700 (PDT)
+ 5b1f17b1804b1-442fda876a6so6669295e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 06:13:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750338835; x=1750943635; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750338819; x=1750943619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UyPjw/EICSj11C7UIftsbx9d+1RqLVuFlx6cdDbkp90=;
- b=gr6+GD5+OH3NlGnZnhU47urC5+DZB3m5ANhI7H5Ie6P1oBz64tpfPjizGD56sO49wb
- V08g53PAVJUduO29g3NmvLYwzlSOUq4aKph9ByjYn1lBcMWk2Am3RynaVVCFgCcXVhX6
- bWKYl7K3hBINvku/pSvgiWOuKS9Z3FhmeVlOmwp2y/ZwNS+TD6WGdKxT74ZZEXX/3Pn1
- 3j7gP5ZhrvssGtW5QCa0SbXG7gD1oFx3SeFYoHVckl12olUSBVvAtApvXwwVfDYL176Z
- PUtvPLeJh0L6MttbAdD+pizk78iXNXrstKW/Cb/rPkdWWZW9MzDSOyT+PwjvmSyJJNfc
- /B+A==
+ bh=m13ygoLDvh6s/fst+7Tr47HarqNeCSRYva1lK7z13IU=;
+ b=nZUvq2ofQw3FbdzHhfpC+uYa9WFyaVRilvpg0i5hLG4BDV+oWsbSfJS0BVMFbumbTx
+ bpC6ooIGqy4gyvz2RBmU0+qbJtCjpKDqKzA+PD3Kj34PprBpsTrl7sWx0M9rv7CnDVTG
+ hmvuYcOnCjuxBSAj15svNhDvCeCD1q4q4R73ZwfF/+hbvHCuAhJjSMHA58bi26Z9Qkvl
+ h8Ky4wjcBPYokgnPgslzNi013/GaPjXtuGx9hETg2NNbR/4OxU49AzwkKrWWsKmA7+TT
+ 0zfYS8SWOgMdsQLQIVft8gcfuMEHOxviThvcjpAy86G6fkPiWT4xzYihhmF2qkKI2J2C
+ +/uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750338835; x=1750943635;
+ d=1e100.net; s=20230601; t=1750338819; x=1750943619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=UyPjw/EICSj11C7UIftsbx9d+1RqLVuFlx6cdDbkp90=;
- b=OElqdxpnMvQQoopYs3+V1rUfUJBdLzvfUZgoSwDKt+wAO4yHaFjd3R0cypAw8qISUm
- 2Dvb7Kx8PcYsVfHlxt1mbL93ib/OMdN/bcDF6FxI4JU9nCauzUQUHWCHJ/84E0iS7Bk6
- LtFhXh40q+JqlndrKz8dMHgNSc+RHrfljXUSqWtzKGgDIHUaXZG0t70cj2tlJKkMrMLn
- fFjPGIQzzUoW8hLxVrUDOVRA/cYx2oyyx5Xsl8COfCFcQWySsduUKjb3b1yB5bMQtxFC
- O+U8S6gBx3fEggtIo9QcM1WQwOnv5U8C/n9ueX7U8zoXaQKZVCLzvvXe54t47RAAedAK
- zp5g==
-X-Gm-Message-State: AOJu0Yxz3ng2H40ssaQHP3svFkiiFPn9JUbWVflnnwaX6eBX1DBmhto8
- gphi2EIJrNXehWVEjL2vicNr42CIQLDVwor2ENYO0wpMPErJKyTkClbAnhgriuR6qisx6uME+YB
- 6yX2YCVw=
-X-Gm-Gg: ASbGncuYxy8i6zti0l18IpxFF9Rmy5SGNv3yjHNOVmRLSZC+9rPtHCTeEJZnoyVIBQk
- e1cFvShkYchNj//b1+QHbikembxl5otfj4e2JMnvhl+sxpA+hPj1qZlquTtYzo1VtT0BaGVY62z
- 9tpKMynyJXDYhO5ENeKcY5Ptu84BhgZPKwt0sfqyERDXa9KGz9zbw2qT9oNv0WoD/lUu0tle4MC
- hyz0CjrkUEywu4ukDUQCbEs0LvoHk70sTd8hdrXqUGDM5pehpx1NoMtwVt0LiJmDCL8mqUDJmr+
- DDQHc1lqggh02rpxZlvur8bx8sIM2q7h4TlAtUvhRysFcvI8hivlGwcE0Y5mfhetLetk+JarSCy
- Jhrw67N4WcdJkOoBmezlwNg6i7LOyJYHm6IUq
-X-Google-Smtp-Source: AGHT+IEjodew1p2iOcXaxxRKozUpoGn7RLSDtMkNBt9kEo1h6AALkAFYm4aB/mN1Eoyo1pNh3qgXcA==
-X-Received: by 2002:a05:6000:2210:b0:3a5:1241:afde with SMTP id
- ffacd0b85a97d-3a6c9692af0mr3671381f8f.9.1750338834779; 
- Thu, 19 Jun 2025 06:13:54 -0700 (PDT)
+ bh=m13ygoLDvh6s/fst+7Tr47HarqNeCSRYva1lK7z13IU=;
+ b=Z7iY3tDXdwHX488nzlShTds7HbkoelR8+QUP/J2K2jX0ed5A6DLBvCBZBk8x5ag/sH
+ mPVKbFDvj1V2RjeVuaE7WY8WOlLRf9JTf98w5LU4uIKdU6tVmKxPPA+DN3Vgq/Ebvsk6
+ MEUxP8tKtrzmyZ9iPy6AoAGCDWa41Tcu467y6G11tvWNoWfC3gWKE0zfFnBe/Dh9jazA
+ SqUdCRgqUiIPbDKBFxLVGJOvpVWyEbtao88jfpMjBUHZzTo1HZQudL8ETQzR8yabp6OE
+ DpLpsTIMOMoWJWqNKEm9tGhF4Mzmde0m3VhCg3J2De6fCWzqlZrJMyvJ9u6BmLpqr1PO
+ Rcig==
+X-Gm-Message-State: AOJu0YyoS7Q/SK5FMRExCBMkxv/PNg3tn03pu0PwwcEHSCgYaJWma6K/
+ 8Vmo86VrcARDBbwELPmw4RmJcnrF40C6f0YHYqyToNP0osnRk5oDoOtbDuOQMO7E1oGB7AnBQuB
+ ltEtLb/s=
+X-Gm-Gg: ASbGncsvqCDaK2DW3gQvSPg+GmMs8FH+YzmfChmG+kMHS/TQzvUQDVc+zfGz9G9nMMm
+ 3VdzqogDtgSbQauX2rSaDNhWeA2n328qCJUG1PePLnARVHmziUj10tsusFVwWtXXNgp7ZXZBNe/
+ MUeX8zUV/mFdMZK/4zQpasftgck5kOINjxu0peX7jjJnhnrqRRQ6yrFRP/fU1Tbb35/be3xMqI7
+ CrwFRR5M7wH1WAwmFtDu4tTAPMvL2u3EQU/ys0OqJ2C+30Ebcr163bBT8hixZj9lsm9x1UMC+Bw
+ N+bsmSjHGhFxSQB54qsRkgbOP5JPzOg2/idxJKC3KPE3XUKonnfceurvGNvgioACbRxg0giMnbP
+ C0hYFRC5XBi/v/p9+XX0hmVq4zJfi4p/w/mrI
+X-Google-Smtp-Source: AGHT+IEO8Kjb4Mvn+BDG+XfJmXx2Yihaw89GQo0uaRCmp6Vgs4sSa39n5dXH1LqYB+JVnKA8de7+Fw==
+X-Received: by 2002:a05:600c:c16a:b0:450:cea0:1781 with SMTP id
+ 5b1f17b1804b1-4533caad471mr208337255e9.16.1750338818974; 
+ Thu, 19 Jun 2025 06:13:38 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a568b08c7csm19792341f8f.50.2025.06.19.06.13.53
+ ffacd0b85a97d-3a568a63a42sm19432884f8f.28.2025.06.19.06.13.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Jun 2025 06:13:54 -0700 (PDT)
+ Thu, 19 Jun 2025 06:13:38 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Cameron Esfahani <dirty@apple.com>,
@@ -79,9 +79,9 @@ Cc: Cameron Esfahani <dirty@apple.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>, qemu-arm@nongnu.org,
  Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>
-Subject: [PATCH 06/20] target/arm/hvf: Trace hv_vcpu_run() failures
-Date: Thu, 19 Jun 2025 15:13:05 +0200
-Message-ID: <20250619131319.47301-7-philmd@linaro.org>
+Subject: [PATCH 03/20] target/arm: Unify gen_exception_internal()
+Date: Thu, 19 Jun 2025 15:13:02 +0200
+Message-ID: <20250619131319.47301-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250619131319.47301-1-philmd@linaro.org>
 References: <20250619131319.47301-1-philmd@linaro.org>
@@ -112,44 +112,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Allow distinguishing HV_ILLEGAL_GUEST_STATE in trace events.
+Same code, use the generic variant.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c        | 10 +++++++++-
- target/arm/hvf/trace-events |  1 +
- 2 files changed, 10 insertions(+), 1 deletion(-)
+ target/arm/tcg/translate.h     | 1 +
+ target/arm/tcg/translate-a64.c | 6 ------
+ target/arm/tcg/translate.c     | 2 +-
+ 3 files changed, 2 insertions(+), 7 deletions(-)
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 30dfd97bebf..1ff3ff7b91a 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1914,7 +1914,15 @@ int hvf_vcpu_exec(CPUState *cpu)
-     bql_unlock();
-     r = hv_vcpu_run(cpu->accel->fd);
-     bql_lock();
--    assert_hvf_ok(r);
-+    switch (r) {
-+    case HV_SUCCESS:
-+        break;
-+    case HV_ILLEGAL_GUEST_STATE:
-+        trace_hvf_illegal_guest_state();
-+        /* fall through */
-+    default:
-+        g_assert_not_reached();
-+    }
+diff --git a/target/arm/tcg/translate.h b/target/arm/tcg/translate.h
+index 1bfdb0fb9bb..0004a97219b 100644
+--- a/target/arm/tcg/translate.h
++++ b/target/arm/tcg/translate.h
+@@ -347,6 +347,7 @@ void arm_jump_cc(DisasCompare *cmp, TCGLabel *label);
+ void arm_gen_test_cc(int cc, TCGLabel *label);
+ MemOp pow2_align(unsigned i);
+ void unallocated_encoding(DisasContext *s);
++void gen_exception_internal(int excp);
+ void gen_exception_insn_el(DisasContext *s, target_long pc_diff, int excp,
+                            uint32_t syn, uint32_t target_el);
+ void gen_exception_insn(DisasContext *s, target_long pc_diff,
+diff --git a/target/arm/tcg/translate-a64.c b/target/arm/tcg/translate-a64.c
+index ac80f572a2d..7c79b8c4401 100644
+--- a/target/arm/tcg/translate-a64.c
++++ b/target/arm/tcg/translate-a64.c
+@@ -433,12 +433,6 @@ static void gen_rebuild_hflags(DisasContext *s)
+     gen_helper_rebuild_hflags_a64(tcg_env, tcg_constant_i32(s->current_el));
+ }
  
-     /* handle VMEXIT */
-     uint64_t exit_reason = hvf_exit->reason;
-diff --git a/target/arm/hvf/trace-events b/target/arm/hvf/trace-events
-index 4fbbe4b45ec..a4870e0a5c4 100644
---- a/target/arm/hvf/trace-events
-+++ b/target/arm/hvf/trace-events
-@@ -11,3 +11,4 @@ hvf_exit(uint64_t syndrome, uint32_t ec, uint64_t pc) "exit: 0x%"PRIx64" [ec=0x%
- hvf_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid) "PSCI Call x0=0x%016"PRIx64" x1=0x%016"PRIx64" x2=0x%016"PRIx64" x3=0x%016"PRIx64" cpu=0x%x"
- hvf_vgic_write(const char *name, uint64_t val) "vgic write to %s [val=0x%016"PRIx64"]"
- hvf_vgic_read(const char *name, uint64_t val) "vgic read from %s [val=0x%016"PRIx64"]"
-+hvf_illegal_guest_state(void) "HV_ILLEGAL_GUEST_STATE"
+-static void gen_exception_internal(int excp)
+-{
+-    assert(excp_is_internal(excp));
+-    gen_helper_exception_internal(tcg_env, tcg_constant_i32(excp));
+-}
+-
+ static void gen_exception_internal_insn(DisasContext *s, int excp)
+ {
+     gen_a64_update_pc(s, 0);
+diff --git a/target/arm/tcg/translate.c b/target/arm/tcg/translate.c
+index 9962f43b1d0..f7d6d8ce196 100644
+--- a/target/arm/tcg/translate.c
++++ b/target/arm/tcg/translate.c
+@@ -372,7 +372,7 @@ static void gen_rebuild_hflags(DisasContext *s, bool new_el)
+     }
+ }
+ 
+-static void gen_exception_internal(int excp)
++void gen_exception_internal(int excp)
+ {
+     assert(excp_is_internal(excp));
+     gen_helper_exception_internal(tcg_env, tcg_constant_i32(excp));
 -- 
 2.49.0
 
