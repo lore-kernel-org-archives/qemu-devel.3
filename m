@@ -4,88 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3000DC7115A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 21:29:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820F8C7115A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Jun 2025 21:35:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSMoT-0000JP-SO; Thu, 19 Jun 2025 17:28:49 -0400
+	id 1uSMuB-0002Ac-Vf; Thu, 19 Jun 2025 17:34:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uSMoS-0000JH-SY
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:28:48 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSMuA-0002AR-J1
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:34:42 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uSMoR-0002JL-7E
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:28:48 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-748d982e97cso1022544b3a.1
- for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 14:28:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSMu8-0002rJ-Vq
+ for qemu-devel@nongnu.org; Thu, 19 Jun 2025 17:34:42 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a6cdc27438so899646f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Jun 2025 14:34:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750368526; x=1750973326; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750368879; x=1750973679; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Q8q91LM+dF24q3vCyU18PZxwc7MbhejnzJ5vltXfO0E=;
- b=wIQVgh9lYogwoFCcEnWk+cUraQMeDF88WlzqUZqjzXRGoxWwOpf7EHPQqG8bzNztTe
- 4Fkn5otUBcHyaFJCw/GzRZvioxJiW4ZyGcowvYatyKm00sfp9oHCu5+PHMx1mSYVqWYR
- 8tAELmtNtVIuq+JEkFN3HZDIfvqllUR39gfJ5ghOE1f8OrSW8ISHoBDFtngGRXZjkG8U
- U1P2I6gWR5wa0UezynbdOUu9vj9MXVl7/ahu3J1qIP++qrLFZ0BYERtLb2U1Ude0CyJR
- vKd5R6loMfMIzTaL3skivMI9XQFeFS+1RKNNNvqulmcTVUuX5biAoSOXO8G68Hxh3UNo
- f+AA==
+ bh=iTDwjqILZfkRvlFExD2iTfSpeUzaMy7m8OCPLYS/Gk4=;
+ b=MpemhGJSm5nZSKpWMj+yPis9yJBkK16yO0W7YLfV3LZpFrEPqiU53SEJS9yZfdjuGz
+ qICdPG7tAgd1RyMOGjXizhXQRTUxVpkqNti3GHrazTKecVia/UcCkF2UjfIV4g7MNIIU
+ q2P0KzbG3U/DPl9IRcvKmJcPkwcKyYM/A5vpz8iVOuPTy6QPPonhZfvL+bQLZetZlEqX
+ hNtCEGy1q/+Fgy3hRyMIYBYrqYxF9xocHFIzUftp8YcqccATTJlieTM7BNb474Hu88KW
+ sUfb5HR3E/TeSassc/srR2/anTQp02w5rXyZ8um2VKhxGM42+eerkckQD9UE171rFV9F
+ TTIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750368526; x=1750973326;
+ d=1e100.net; s=20230601; t=1750368879; x=1750973679;
  h=content-transfer-encoding:in-reply-to:from:content-language
  :references:to:subject:user-agent:mime-version:date:message-id
  :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Q8q91LM+dF24q3vCyU18PZxwc7MbhejnzJ5vltXfO0E=;
- b=qgFQcnA/iUor0Ujorfi6dbscWj2iv1BcqRLqjf1ybqfRKIsFiN8OBJXgoDXkiuM4xx
- qkz7uj6M34iHBeEyHvXrgUm2sDqSXPjXgigwnVAt3GoCcDKvmhzMlAfemXlWuVyLldpQ
- jV4Z7tzSFyw0Epb8TU+jOzhBFMi9UadrmzFh9hlNXQPBVxv0eBuyuEMb2L/zmZfjxeXv
- WnPxB7CPohXv+2FsgS3AWOrFth5l73NfmKu29RXSuJmNabJzuGGJmJ3w5Wv1w9yOkNZn
- Oz48myK/qB4POFgx/nGuMGdOX6ByWQFr/zX6Uvr4InMWXDoZTo7atJ4qd8pi4vBZYk19
- 84gw==
+ bh=iTDwjqILZfkRvlFExD2iTfSpeUzaMy7m8OCPLYS/Gk4=;
+ b=pIrypgcJuhC4XAbr7i+qLSq4AQKUXIK7UjqUvPbD3+4NeqTjcxNw9MeAvMaQNzW4KB
+ rozdvQz02yHSsOsuruDfCns4Um6+oZTwzlSqVujZUIhcpuNMscg5ZZ18q0gE1C7+tQtB
+ VH0qMfMuHe6Xar5WBev9aQ3AMy6i9PzrT2Cs4Fe+aI8HSgz7kue4WegJodbB2OG1yU2Q
+ qJBCa9k6VPeJqhsBHcEIhTjIFui5CvR+BCDe67evgbeo1h2IZR9AyTd+IRuElaAOD0of
+ n5thYkR4fjXh3Mj4G6zoc8IBoImDgd6NZpxiX+3eLf/Jf3qHv6pB1OjGJ39katL4D3w1
+ Bg9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWVWESaKVVvTqlaS5QgCS5inFl8ila5ngwOBP2CacJiek9wAOyHLclwiCO6LmsCmSCdVZM6oHqUuaU1@nongnu.org
-X-Gm-Message-State: AOJu0YxxUwAIFOxFsn3AuF+/1ce5Nf89rn0K6bjKSFcL4IwvflaHAnKo
- yR/j5WCkzt8xOoVtj4A9gqF5r+Ylx/Bwy6XDr7RPEHKqTGgVPk4UrLyAB5bsSaCclTE=
-X-Gm-Gg: ASbGncsGaKIJCCl3TkX/uYeyvXs4GI50v5/wKk1EWmj562XqQv+DW26yUvM+pzqn6uF
- 4+7vaIw0r2TgfERY4uf8AXyK6FDuR0BEB9S8J8KAZSMsUOiFQiXygS7i61DyThmz3bcJ7YV/eba
- FuHEvFNjucXvqiM/I4Ligxgbb/ns7+VouX6I3E88OlVNzyqP0dp0VNHbHY3Ac/eV0uFF+lbpOUm
- Nht/Ax0smGMDs6fiQFywt+5zqqbP7e3liNOBK0Iz4S9kPBNfXbrJ9yKYyfN81KmtsJVjaIJyDN9
- cpZgLQqGSlt0he/xkCbcTfZcfnZhAk9USm1zoiEs5e897TrzmREgYSHglHAsDYQV8Dkq3xbO7Gh
- mmyhMmD52WfIuNPCQ3KRJclse7lBL
-X-Google-Smtp-Source: AGHT+IEKMwlOuTSLooqFqiPgUndDuHmRMWWTVuJtQHxIOvVQ1g5J9V6OyUOGrXufkeUyZcufQOqggA==
-X-Received: by 2002:a05:6a00:a0f:b0:746:24c9:c92e with SMTP id
- d2e1a72fcca58-7490d6a290dmr415175b3a.8.1750368525705; 
- Thu, 19 Jun 2025 14:28:45 -0700 (PDT)
-Received: from [192.168.0.4] (71-212-47-143.tukw.qwest.net. [71.212.47.143])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a6494b3sm531910b3a.125.2025.06.19.14.28.45
+ AJvYcCUilYPph9akkDYqfzi/16R3tkqs7veIpsDhugtIKazQsF48CUnpuVj1ZFbb8r5q1owGlQm9EmpBUThY@nongnu.org
+X-Gm-Message-State: AOJu0Yyr0y+rhHk8hJam6YDvWsLbuVWT4buqjQGDegAoMlFH75pnGJ4l
+ MsM31epUUMOPwtEbydf4lh+UQf5E/wVM/JKMpMjC0XAfJGBLXA78BRgNqQvmIJOOe3U=
+X-Gm-Gg: ASbGncu8dxm5/VbZWovOH8C57fFgaQTQHMo/rAuW3DTRL7+AQu/jbhYuRVuYW/+FysU
+ PGCWy//MNZGrNGcPvvnyIcp4quVYBtZFpzMepmWHiCB0OMwHnGncAUlA/+tZZaAQwN/6ZpSEIqM
+ YtdSIRBse5fVSrOb/opkyWWOqYDvcpVJDfgYgiYCpLpRNWBgjpOZ3YD3YPYrsFRyY+JcXKZ7CyV
+ fz3hEW08DmY+fuh1eS/adIBonS9QztDEKAY390y5HXlktKkvBYeDZqTlDrv11PO6I15rbvVSTx9
+ mf5g7LNocJB7/RSGFqfObY3L8AvMH46KLkd20D0pKRrc4W27hctAAxeiuECaqmEywUwDRFsl4LA
+ 80xLngmN5j7TimExJH7cSceWvsB9Sjg==
+X-Google-Smtp-Source: AGHT+IG39ERt6GirwzwVypqKTmunZFNyklgxGtDeIqTjzYWmpQf7/iwWE/qY9z3o91fr+JRntD/OKw==
+X-Received: by 2002:a05:6000:210f:b0:3a5:2cb5:63fd with SMTP id
+ ffacd0b85a97d-3a6d12dbf71mr270570f8f.10.1750368878771; 
+ Thu, 19 Jun 2025 14:34:38 -0700 (PDT)
+Received: from [192.168.69.167] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d0f105efsm391366f8f.15.2025.06.19.14.34.37
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Jun 2025 14:28:45 -0700 (PDT)
-Message-ID: <2d819061-8262-4da5-add3-20d567dde52d@linaro.org>
-Date: Thu, 19 Jun 2025 14:28:43 -0700
+ Thu, 19 Jun 2025 14:34:38 -0700 (PDT)
+Message-ID: <b62a7645-03a7-4df9-ad10-221861e3b43d@linaro.org>
+Date: Thu, 19 Jun 2025 23:34:37 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH 19/20] hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB
  definition
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
 References: <20250619131319.47301-1-philmd@linaro.org>
  <20250619131319.47301-20-philmd@linaro.org>
  <1e7d58dc-b348-4c6f-b7bd-e8da047e21c8@linaro.org>
  <b3bea159-8da3-4a7d-8485-fcd6519b845d@linaro.org>
+ <2d819061-8262-4da5-add3-20d567dde52d@linaro.org>
 Content-Language: en-US
-From: Richard Henderson <richard.henderson@linaro.org>
-In-Reply-To: <b3bea159-8da3-4a7d-8485-fcd6519b845d@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <2d819061-8262-4da5-add3-20d567dde52d@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,36 +106,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/19/25 14:20, Philippe Mathieu-Daudé wrote:
->>> @@ -756,7 +756,9 @@ static void sbsa_ref_init(MachineState *machine)
->>>       sms->smp_cpus = smp_cpus;
->>>       if (machine->ram_size > sbsa_ref_memmap[SBSA_MEM].size) {
->>> -        error_report("sbsa-ref: cannot model more than %dGB RAM", RAMLIMIT_GB);
->>> +        g_autofree char *size_str = size_to_str(RAMLIMIT_BYTES);
->>> +
->>> +        error_report("sbsa-ref: cannot model more than %s of RAM", size_str);
->>>           exit(1);
+On 19/6/25 23:28, Richard Henderson wrote:
+> On 6/19/25 14:20, Philippe Mathieu-Daudé wrote:
+>>>> @@ -756,7 +756,9 @@ static void sbsa_ref_init(MachineState *machine)
+>>>>       sms->smp_cpus = smp_cpus;
+>>>>       if (machine->ram_size > sbsa_ref_memmap[SBSA_MEM].size) {
+>>>> -        error_report("sbsa-ref: cannot model more than %dGB RAM", 
+>>>> RAMLIMIT_GB);
+>>>> +        g_autofree char *size_str = size_to_str(RAMLIMIT_BYTES);
+>>>> +
+>>>> +        error_report("sbsa-ref: cannot model more than %s of RAM", 
+>>>> size_str);
+>>>>           exit(1);
+>>>
+>>> Not a bug bug, but autofree has no effect because the block doesn't 
+>>> end before the call to exit.
 >>
->> Not a bug bug, but autofree has no effect because the block doesn't end before the call 
->> to exit.
+>> Right. Isn't it better to use g_autofree as a general code pattern?
+>>
 > 
-> Right. Isn't it better to use g_autofree as a general code pattern?
+> It's a case of "this doesn't do what you think it does", which is bad form.
+
+I see.
+
 > 
+> If you are actually interested in freeing the string to avoid a false 
+> positive during leak analysis, wrap the two lines in another block:
+> 
+> 
+>      if (...) {
+>          {
+>              g_autofree ...
+>              error_report(...)
+>          }
+>          exit(1);
+>      }
 
-It's a case of "this doesn't do what you think it does", which is bad form.
+Interesting, thank you!
 
-If you are actually interested in freeing the string to avoid a false positive during leak 
-analysis, wrap the two lines in another block:
-
-
-     if (...) {
-         {
-             g_autofree ...
-             error_report(...)
-         }
-         exit(1);
-     }
-
-
-r~
 
