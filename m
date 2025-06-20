@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C99C7115D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:15:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D094C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:15:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSdRz-0002zH-Un; Fri, 20 Jun 2025 11:14:43 -0400
+	id 1uSdRv-0002y1-4d; Fri, 20 Jun 2025 11:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSdRy-0002z5-1H
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:42 -0400
+ id 1uSdRt-0002xq-Aj
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSdRw-00065I-JD
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:41 -0400
+ id 1uSdRr-00064G-Ui
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750432479;
+ s=mimecast20190719; t=1750432474;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=68oPZUBcR0lOIUXgVaaOSLm+CVhFgV3mNyxRSCWThXU=;
- b=cctxJUrZhFexBiM+yOKfaypn8aiGXARM47r8wyj+2yOyL0rBJ0WLGzhMBbpcps5Vznk48P
- B2dpi1Vm5/R/58ttvEWsGSY1PZ/pu0uRw0cIPLWIC92xquM6AGSNhxa5pBCLyXxLhRnkQY
- 6lUu6VUPub4Mb/tXtk73zOAR0f0hHi8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=WOg71voJ0ED8/lu34K936sWicaLbanvnyfw3YaaLIFU=;
+ b=FNDoLst4ARRLm0GlQsPZ2DrJXZZnUwamQUtKPQOqhmyUN7ujLuOSJ1a2l5R6kG5ftk5sz3
+ J6SRg5EmpTttHR5R5nfTyI2wZvnV/URUQed0+9uOcwo0bI9nCSfLgYU0OOxvR5MdGMY3E0
+ PaYpZtSqwhQYmxBgvOKv1jOBvIM7HzY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-gs-BzYYcO7GQ5ybyng8AVA-1; Fri,
- 20 Jun 2025 11:14:36 -0400
-X-MC-Unique: gs-BzYYcO7GQ5ybyng8AVA-1
-X-Mimecast-MFC-AGG-ID: gs-BzYYcO7GQ5ybyng8AVA_1750432475
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-688-G6CdX_-SPB62mchbdslWjQ-1; Fri,
+ 20 Jun 2025 11:14:33 -0400
+X-MC-Unique: G6CdX_-SPB62mchbdslWjQ-1
+X-Mimecast-MFC-AGG-ID: G6CdX_-SPB62mchbdslWjQ_1750432472
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 96E161956096; Fri, 20 Jun 2025 15:14:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 42A92195609D; Fri, 20 Jun 2025 15:14:32 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D69741956094; Fri, 20 Jun 2025 15:14:32 +0000 (UTC)
+ id 5BCBB1956094; Fri, 20 Jun 2025 15:14:29 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: kraxel@redhat.com, mst@redhat.com, anisinha@redhat.com,
  elena.ufimtseva@oracle.com, jag.raman@oracle.com, pbonzini@redhat.com,
  peterx@redhat.com, david@redhat.com, philmd@linaro.org
-Subject: [PATCH 3/3] mark HPET as unlocked
-Date: Fri, 20 Jun 2025 17:14:18 +0200
-Message-ID: <20250620151418.1166195-4-imammedo@redhat.com>
+Subject: [PATCH 2/3] acpi: mark PMTIMER as unlocked
+Date: Fri, 20 Jun 2025 17:14:17 +0200
+Message-ID: <20250620151418.1166195-3-imammedo@redhat.com>
 In-Reply-To: <20250620151418.1166195-1-imammedo@redhat.com>
 References: <20250620151418.1166195-1-imammedo@redhat.com>
 MIME-Version: 1.0
@@ -90,25 +90,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Reading QEMU_CLOCK_VIRTUAL is thread-safe.
 
 with CLI
- -M q35,hpet=on -cpu host -enable-kvm -smp 240,sockets=4
-patch makes WS2025 guest, that was able to boot in 4/2min, to boot in 2/1min.
+ -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4
+patch makes WS2025 guest, that wasn't able to boot in 30min, to boot in 2-1min.
 
 Signed-off-by: Igor Mammedov <imammedo@redhat.com>
 ---
- hw/timer/hpet.c | 2 ++
+ hw/acpi/core.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 0fd1337a15..1ebd715529 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -681,6 +681,8 @@ static void hpet_init(Object *obj)
- 
-     /* HPET Area */
-     memory_region_init_io(&s->iomem, obj, &hpet_ram_ops, s, "hpet", HPET_LEN);
-+    memory_region_enable_lockless_ro_io(&s->iomem);
-+    s->iomem.disable_reentrancy_guard = true;
-     sysbus_init_mmio(sbd, &s->iomem);
+diff --git a/hw/acpi/core.c b/hw/acpi/core.c
+index 58f8964e13..683fbdd8df 100644
+--- a/hw/acpi/core.c
++++ b/hw/acpi/core.c
+@@ -547,6 +547,8 @@ void acpi_pm_tmr_init(ACPIREGS *ar, acpi_update_sci_fn update_sci,
+     ar->tmr.timer = timer_new_ns(QEMU_CLOCK_VIRTUAL, acpi_pm_tmr_timer, ar);
+     memory_region_init_io(&ar->tmr.io, memory_region_owner(parent),
+                           &acpi_pm_tmr_ops, ar, "acpi-tmr", 4);
++    memory_region_enable_lockless_ro_io(&ar->tmr.io);
++    ar->tmr.io.disable_reentrancy_guard = true;
+     memory_region_add_subregion(parent, 8, &ar->tmr.io);
  }
  
 -- 
