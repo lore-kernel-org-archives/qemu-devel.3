@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF820C7115B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66484C77B7C
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 22:20:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSk3f-0000bW-LT; Fri, 20 Jun 2025 18:18:04 -0400
+	id 1uSk5S-0002rX-Mn; Fri, 20 Jun 2025 18:19:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfXj-00076u-1a
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:28:47 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfTx-0006kh-PT
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:24:53 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfXh-0005us-Iv
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:28:46 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-453643020bdso9552715e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:28:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfTv-0005aR-MU
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:24:53 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-45348bff79fso23846115e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:24:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750440524; x=1751045324; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fZzVF8esaMEHgF7o4hdbgL9Jdv4iiE3l72PZBRMZZ3E=;
- b=TxzONHKC0mUAmvW3qAaPhK5Pa6fylvpl5DGUvyBdW5dBvCD0ecuSb3LP28UqXo9y//
- zGa2i2t2UHOi2Et4lgAGF6isBQlsZMjHNRlYCKx+6dFbs+ccs0bOb7vDvVPKKBEYQF0x
- zTeqCZuZGzwyTV1wUGP2fwYRKBEJdlUY4HiZeZca/WT67MYnsXra5dWlLXiLwRrbveTe
- 6r5EzlAHYfLUgRoGVGnKvIQj2u73XJDFrsjdR4XhhlfueFuYU8aMPp6XDTo8g9JplbO1
- ggJgmJx7kjBItvZLqvefNrBfC83eLMnN0YtVRARPgruyENPO3sdbOfy+1/3OZF3Tmjcc
- KgNw==
+ d=linaro.org; s=google; t=1750440289; x=1751045089; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Z58Mj9AHxYXEvEbVh057KHI5t4/Z8R9hueKfYcnEoHE=;
+ b=IxGpHdCJEL0QLOJ/B5PYmNxEI6uoLf3xw9MkQyga2Q3vPUc50kFRkDJZ/ZRK9zyuUz
+ TZC3mrSQ5oKx6dgVR6rWLJLJj9kUvXkJeohX+0QYm5Hym460ro9LHy0LH6rQMnLZa5DA
+ Jx/Js9r/MRNh2Kinp0MdCPYEAtn6NwV08cdnk+l43TNQI2aX1cXFmv9zG8g6ty+T3+k1
+ 0pgM0NvqTJOhHv8IbHgm722b8Fgkw+vGynYYaKDZ58VOyKrAk2Pi88y3bNeTM8pJpnSn
+ MXK3wPjDLI9zbSsZ5rhOnDz3bjtUoYH/g1c1jbXh0COERmPs5Jv7l9Oi4BHZlNdI67dT
+ v67Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750440524; x=1751045324;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=fZzVF8esaMEHgF7o4hdbgL9Jdv4iiE3l72PZBRMZZ3E=;
- b=kP5YGRKWDLGVqYMEvDLwyTqnuPYfD9bWy0YqTLjHmbNBXcDfvL/kjV4jjHKrF8i80i
- uIA+jS7jbWWzXVs7pWBznON9rdmXiD75tJsDyJcgiiEC6vseo+gDkopEbYq2R+CQGZhb
- ygVpvD6vXHWbNnlMOokdD27xNBfiUQ+uHopptm5vs/+QZoXoV+wkqopR/QjS2pOrJ3y/
- VnmfOLZiUMHfPGg2Vvd9qW5lsiFjSTDdrodA7MBRCHAYz4N4dYt+JA0pI/omqO9jUs3b
- xy6LbuSQhWe0H6B+IgA1iCcPTpwaxTWrxNi/Bmnjp3Zb68hfamPvfMAPkrfRw4rwKIbu
- J9qA==
-X-Gm-Message-State: AOJu0YwcEojYydEUbF/WR7gGSnZhlrhKlmx774L97p6U4Dm2GL07x8/H
- nB+Y2LnI8sQ/Qh2LgKP6ET7a24X6VpNtyeWKuXasS8C0fsuaV2hrIB81Oo02DUavXAouSQJOJzO
- YIXPRiXCDNw==
-X-Gm-Gg: ASbGncuKy6i2AvsKG5OjccsNpQt8hRd44vfBSv50eocbvJC8RuEQmTpjK7rz9wLg8HW
- 46+0oYph/qhmLgTCtEZpHGcmrDw8A8I9uKam7LTcyrmeiAeRzHb0GXyhRpl5E5mP4ysnPHPzO9h
- DGTSe1KXiAlIPUxwKJRUlJpzKLxiQdGfoaT13ieJra12N4QIPw8tGlxAvDeBWPyMMIp0XNx48yd
- vvfgB51RrXGFHlxcXWzQsoZuURiNejuyZrf9/VZZFI3pZaAlbAHRR/77QAjqGtMYhX8uUfbYcMQ
- kGBLhUt6MR0SQzrupyk4ueyyxspzd9qwVlGPFGkHGvoqSXa2YcsQTgJf52O8EaTEUD0ecC1QMND
- 9D/pwuSeEFuVOhE8uA0zdSOb11xgf6DZoUs6dvoOmDUSFRK5xYIgkdPdb
-X-Google-Smtp-Source: AGHT+IED9E+nUoseKNwt5BBDlwzacLA6jlOji9KDf+D9GeBVkijb6hTkb5OHxPBuuTTB+1IbpntmgA==
-X-Received: by 2002:a05:6000:2010:b0:3a4:dcfb:3118 with SMTP id
- ffacd0b85a97d-3a6d12fc1f2mr3341600f8f.10.1750440523783; 
- Fri, 20 Jun 2025 10:28:43 -0700 (PDT)
-Received: from localhost.localdomain
- (101.red-95-127-63.dynamicip.rima-tde.net. [95.127.63.101])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d0f10113sm2604388f8f.2.2025.06.20.10.28.41
+ d=1e100.net; s=20230601; t=1750440289; x=1751045089;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Z58Mj9AHxYXEvEbVh057KHI5t4/Z8R9hueKfYcnEoHE=;
+ b=TGRY1U5yHBeqSG0NS8PDbfhWAq9wuVmrjIEBslJLdnEUgns5bftiXsrdsFIZDNJAoS
+ Xjj25wZxwREX2Oj9Jyq7VuTAUigiTV11BqTuoV0mupkHWyjOBDf9sPdGYKyT9K86sPn0
+ dIu8U3B7jWqHF8VqwQ2uP9xPZcoZyq+4jHhzmN0/zop0BxujQjyo/ZtQJWtTSioapcG4
+ uM2D86ak0uTmMpBPQdxMqqFJMvBA+fVbOBiveKrbK1z3/kyhH75p1xEFEkWSqQbdKdu6
+ o5Fv+LFN74sQsJ0dY00QbGgClQtnUqeGcq0Z90O6V0rIT2o9d4Obsxbc3VbhqMNYZVZn
+ ddeA==
+X-Gm-Message-State: AOJu0Yzky2+vNzOhV+xv0EtxwFVEWYobrBIjG40FNaUeLR7yLd3bMtDM
+ wskN/BN+of6xZq6DtwJatmQAVCLL3D4P/Kc8lgOda8DKIX0ORgQdtPDWuatuPeW65P7LOVvzSKD
+ AoSGrjDw=
+X-Gm-Gg: ASbGnctEOeFcMC6pgyIgN4DcdsbFPkx26GMYoe7LjT8rCTTymtqqGk8ZkHU8Z5XNXi/
+ FVm570wTgyRZZJnf2cJghKZgIk/gQMpk+XLzgTDP23IUvhGVkkPKoceSC35lXW07dff2W1PCRx6
+ RRSc4WCewfDQomg69CcX+ATmdZ7dUo98UX5HF/rc1C8y/d/EhYhi8tdpOCSKy6vHY7iQbKLfh9N
+ S/oBQfwKOJpSnEWKnaeOWTeWRzdVCb2CgSR5DLS9JjM/+A+hMdea1P2EpW7swybGd6zB2N6a5C7
+ rO8xPTHQUDZF8Zjk4CLhNeljwGMg3oIBjsSO5uLipxuFfGnGXnwXjKuXcZi7ttvtxBnEd/wra1j
+ jtSwdFiCeK5Y0EZRBNXE54Sx4G8k1Bx99c4Th
+X-Google-Smtp-Source: AGHT+IFxSvcq18TS9G6OIHqtblgNO/WT06KLqXJLHUI+L77yoo5MGoByuOgM9l57Y0YgQygfCuoqrw==
+X-Received: by 2002:a05:600c:1f0e:b0:450:cf42:7565 with SMTP id
+ 5b1f17b1804b1-453659ebf1amr33566955e9.23.1750440289332; 
+ Fri, 20 Jun 2025 10:24:49 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d0f104ebsm2605032f8f.6.2025.06.20.10.24.48
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 10:28:43 -0700 (PDT)
+ Fri, 20 Jun 2025 10:24:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Julian Armistead <julian.armistead@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
- Thomas Huth <thuth@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+Cc: Julian Armistead <julian.armistead@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Cameron Esfahani <dirty@apple.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Mark Burton <mburton@qti.qualcomm.com>, Thomas Huth <thuth@redhat.com>,
+ Alexander Graf <agraf@csgraf.de>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH RESEND 06/42] accel/split: Empty setup_post()
-Date: Fri, 20 Jun 2025 19:27:14 +0200
-Message-ID: <20250620172751.94231-7-philmd@linaro.org>
+Subject: [RFC PATCH 00/42] accel/split/arm: Run EL2 using TCG and EL1/EL0 in
+ hardware with HVF
+Date: Fri, 20 Jun 2025 19:24:04 +0200
+Message-ID: <20250620172447.93779-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250620172751.94231-1-philmd@linaro.org>
-References: <20250620172751.94231-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,35 +106,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- accel/split/split-all.c | 6 ------
- 1 file changed, 6 deletions(-)
+Hi,
 
-diff --git a/accel/split/split-all.c b/accel/split/split-all.c
-index 28f626d0ff4..8b9f8ff77a4 100644
---- a/accel/split/split-all.c
-+++ b/accel/split/split-all.c
-@@ -37,11 +37,6 @@ static int split_accel_init_machine(MachineState *ms, AccelState *as)
-     return 0;
- }
- 
--static void split_setup_post(MachineState *ms, AccelState *accel)
--{
--    g_assert_not_reached();
--}
--
- static bool split_has_memory(MachineState *ms, AddressSpace *as,
-                              hwaddr start_addr, hwaddr size)
- {
-@@ -129,7 +124,6 @@ static void split_accel_class_init(ObjectClass *oc, const void *data)
- 
-     ac->name = "split";
-     ac->init_machine = split_accel_init_machine;
--    ac->setup_post = split_setup_post;
-     ac->has_memory = split_has_memory;
-     ac->cpus_are_resettable = split_cpus_are_resettable;
-     ac->supports_guest_debug = split_supports_guest_debug;
+This RFC is a proof-of-concept we can have QEMU run both software
+emulator (TCG) and hardware accelerator (here HVF). Unfortunately
+I'm exhausted so I'll let Alex explain what this is about,
+otherwise I'll post the real cover letter next Monday after
+getting some rest.
+
+Full work available in the split-accel-rfc-v5 tag:
+https://gitlab.com/philmd/qemu/-/commits/split-accel-rfc-v5
+
+Regards,
+
+Phil.
+
+Julian Armistead (1):
+  accel/split: Minimal stubs for split accelerator
+
+Philippe Mathieu-Daudé (41):
+  accel/split: Define SplitAccelState
+  accel/split: Implement cpus_are_resettable()
+  accel/split: Implement accel_init_machine()
+  accel/split: Expose 'hw' and 'sw' properties
+  accel/split: Empty setup_post()
+  accel/split: Implement supports_guest_debug()
+  accel/split: Implement gdbstub_supported_sstep_flags()
+  accel/split: Add cpu_thread_routine() stub
+  accel/split: Define and allocate AccelCPUState
+  accel/split: Register MTTCG
+  accel/split: Have thread routine ready to dispatch over HW/SW
+  accel/split: Implement cpu_reset_hold()
+  accel/split: Implement synchronize_post_init()
+  accel/split: Implement synchronize_pre_resume()
+  accel/split: Implement synchronize_state()
+  accel/split: Implement synchronize_post_reset()
+  accel/split: Implement synchronize_pre_loadvm()
+  accel/split: Implement kick_vcpu_thread()
+  accel/split: Implement cpu_common_realize()
+  accel/split: Set use_hw in cpu_thread_routine() and switch over
+  accel/split: Add few trace events in cpu_thread_routine handler
+  target/arm: Implement SysemuCPUOps::can_accelerate() handler
+  accel/split: Implement handle_interrupt()
+  accel/split: Empty ops_init()
+  accel/split: Empty set/get_virtual_clock()
+  accel/split: Empty get_elapsed_ticks()
+  accel/split: Empty cpu_thread_is_idle()
+  accel/split: Kludge qemu_tcg_mttcg_enabled()
+  accel/split: Implement remove_all_breakpoints()
+  accel/split: Implement remove_breakpoint()
+  accel/split: Implement insert_breakpoint()
+  accel/split: Implement update_guest_debug()
+  accel/split: Implement get_[vcpu]_stats()
+  target/arm: Emulate EL2 under TCG
+  target/arm: Have ERET switch to hw accel for EL0/EL1
+  accel/hvf: Emulate HVC at EL2
+  accel/tcg: Introduce TCGCPUOps::rebuild_tb_hflags handler
+  target/arm: Implement TCGCPUOps::rebuild_tb_hflags()
+  accel/split: Call TCGCPUOps::rebuild_tb_hflags()
+  tests/functional: Add split_available() helper
+  tests/functional: Test Aarch64 virt machine with split-accelerator
+
+ meson.build                                 |   1 +
+ accel/split/split-accel.h                   |  54 +++
+ accel/split/trace.h                         |   2 +
+ accel/tcg/internal-common.h                 |   1 +
+ include/accel/tcg/cpu-ops.h                 |   2 +
+ include/exec/cpu-common.h                   |   1 +
+ include/system/accel-ops.h                  |   8 +
+ target/arm/cpu.h                            |   2 +
+ accel/split/split-accel-ops.c               | 381 ++++++++++++++++++++
+ accel/split/split-all.c                     | 196 ++++++++++
+ accel/tcg/cpu-exec.c                        |   9 +
+ accel/tcg/tcg-accel-ops.c                   |   1 +
+ accel/tcg/tcg-all.c                         |   1 +
+ system/vl.c                                 |   4 +
+ target/arm/cpu.c                            |   9 +
+ target/arm/cpu64.c                          |   7 +-
+ target/arm/hvf/hvf.c                        |   6 +
+ target/arm/tcg/cpu-v7m.c                    |   1 +
+ target/arm/tcg/helper-a64.c                 |   9 +
+ target/arm/tcg/hflags.c                     |   5 +
+ accel/Kconfig                               |   6 +
+ accel/meson.build                           |   1 +
+ accel/split/meson.build                     |   9 +
+ accel/split/trace-events                    |   9 +
+ python/qemu/utils/__init__.py               |   3 +-
+ python/qemu/utils/accel.py                  |  10 +
+ tests/functional/meson.build                |   1 +
+ tests/functional/qemu_test/testcase.py      |   4 +-
+ tests/functional/test_aarch64_virt_split.py |  69 ++++
+ 29 files changed, 808 insertions(+), 4 deletions(-)
+ create mode 100644 accel/split/split-accel.h
+ create mode 100644 accel/split/trace.h
+ create mode 100644 accel/split/split-accel-ops.c
+ create mode 100644 accel/split/split-all.c
+ create mode 100644 accel/split/meson.build
+ create mode 100644 accel/split/trace-events
+ create mode 100644 tests/functional/test_aarch64_virt_split.py
+
 -- 
 2.49.0
 
