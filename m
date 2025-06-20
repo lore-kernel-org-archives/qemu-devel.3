@@ -4,103 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9381EC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:23:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E03C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:37:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbhl-0006zL-Nz; Fri, 20 Jun 2025 09:22:53 -0400
+	id 1uSbuv-0002E8-QJ; Fri, 20 Jun 2025 09:36:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSbhb-0006wr-OR
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:22:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSbhW-0007Qp-Q5
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:22:43 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750425757;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1TrY03pQabW/7U+H8CdQTgK6FVk4MRFPxv/zbddqFY8=;
- b=AE6zH1mDDiQpsVh4nB0YIbH/xrSK5Xbu9RlWcKJwxOg82LXaO1t0TSBpHmWawVvb5gjz+H
- LkL9aN0/0BLWHXKG6CwBT9Tqac2daURYot1vt796neLfoFl0hy5LHLOTrNAc1hw9Cok4DA
- FqxCa+sRp5C70cQmTq+/7tCsliQmKWE=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-MhtOVbydOcyLTQrOfrsCnw-1; Fri, 20 Jun 2025 09:22:35 -0400
-X-MC-Unique: MhtOVbydOcyLTQrOfrsCnw-1
-X-Mimecast-MFC-AGG-ID: MhtOVbydOcyLTQrOfrsCnw_1750425754
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4ff581df3so978963f8f.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:22:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uSbuu-0002Dt-4N
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:36:28 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1uSbuo-0001Aw-PV
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:36:27 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-ad56cbc7b07so310504466b.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:36:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1750426579; x=1751031379; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QB4JEJnsPCpYuaPFuj/LnSZGFhUGvc8XENnOvSEvthI=;
+ b=citOoMa8jxzCcAFiqLOXMZLf07YQKI/4jTgpAZp1ijpFOfFEJFCcx+kQgOesFUU5xO
+ yvVQLa4ekfkOI9BFhCQ68ZaSqo7aHXfcM2eqU4wwocT7ZCg8jwfFV5t90xZx7I+L4XGP
+ ouhTGU6/Lg1L69VzJX5Scbnnnf+Hgsc5ME+IaeS+ikJK81+m1ZK/tLvrZ+p9rHdB0of0
+ nNM82xUR1v4r4cI+tVqeqpv9nkrjVOPCn0ZxsgEZUjSRTtDdXOM4oGzfBiFMU0yHbW3s
+ KDDfJrk6VB6YWjJBqcKtZD/lT+vF99MAzcZXgeHyypgdFecxHgiuaw2QpNyhTX6hFRnS
+ nWyQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750425754; x=1751030554;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=1TrY03pQabW/7U+H8CdQTgK6FVk4MRFPxv/zbddqFY8=;
- b=bJ0TJUxjDjhyuJOkdBeGllIZCZZHJ7rDKlPSNW4pdoaOOdbP4OCCaUHWfHC5RyJSaY
- mG4Gzkt1sNA0+U8GqXYpogdKCjc+pWpsUYorDbCjNQ2ZuBg/Y9tFalIzdhoBsYlLn//X
- 9+RlE3/R4QYaBQEg849XAkms1hvOm+lsXXz29eA6y6NkdexyJgahwPg2kitm1QGwy5ci
- 4lfndrlwrIQwhsS+y9taMgmtBdoQz3I/RLjPi6Ss/B4N/DatX32hZvm7HtVOXnLxkoev
- NHhfsxIRAW30w3JK1qDrZXnZWb/1kvQZmTshDIg5bCnpABy7sRVw4JqlJD6BeIgLaGo9
- Pn+w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXE2Kiku3dthxTPdd0kNkAgUPDXtPovU6kv96Gwm+nzsEGH7kzIUU7Err/MlfU9T5P1SNxW8e6w5a0S@nongnu.org
-X-Gm-Message-State: AOJu0YyM2EshGDc5kLhKH5PFNXoUmONJFmNGDLcW7WRk7kQBL1NAQ4dI
- 0Rg3u33A6S0tY5cNa/3cStOQpnYNDQnEyf5mSPqKhWQx+lVUa9nxFuuolVB3KkbydrSrTiVqPT3
- hFxkXzt7IcsRqcAVEkfJBdAc19SPDdqwPQEAQeeeEKLuuzxbu19pF7TBs
-X-Gm-Gg: ASbGncvNmufkOOJSMZnaPfAzaS+lPQJeue0vgNRJPNePU79gW3dyqRJTDfg1S51wN//
- v5i/3iic91BzHlVAbXABLpHWSrl56sdU7WChG111BzabWWJaVmkGFL3VQVFg2TxvisNnKdLbpRW
- iSvAidlPZUI2HRMD79RH0trVrIHXMiKF55Cr02Sjx722QBAkLSvzQa5F/bZtY8KEWHws0Vwm8sk
- 4kAd6eN9SQtbekHNqW5gk4kJKvCwVS96WOFO9P+1T+WKa2Tj8Bp0kQblwqWs5UfS+jYKOaQXWSF
- 9Arq8kWWn5zB
-X-Received: by 2002:a5d:588e:0:b0:3a5:2b1e:c49b with SMTP id
- ffacd0b85a97d-3a6d2802f51mr1924610f8f.29.1750425754130; 
- Fri, 20 Jun 2025 06:22:34 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFPFSqZhoNmVQoxMPzgnSJXmQkqHW/lKdpTuZ2lNRUmfS7QmXDTtclgE7fRkpjCnJ5leRB39Q==
-X-Received: by 2002:a5d:588e:0:b0:3a5:2b1e:c49b with SMTP id
- ffacd0b85a97d-3a6d2802f51mr1924579f8f.29.1750425753731; 
- Fri, 20 Jun 2025 06:22:33 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535e97ac4asm58965995e9.3.2025.06.20.06.22.32
+ d=1e100.net; s=20230601; t=1750426579; x=1751031379;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=QB4JEJnsPCpYuaPFuj/LnSZGFhUGvc8XENnOvSEvthI=;
+ b=pcrkVZeWWER+IN+1gcY3iF2gnPWgyQqsIxr4+ZTeKydjT1flgHVpgmKWBOIhklFRsa
+ Xsh6r3VUwbC7Xdfac6BIoYhc9nGHnU0UwtgYQmX8H8HXgTvBGNccao0Nv1Qfzg/UC8Yg
+ 8qVH5qllL87yQLxQ0LJH8Mx2SotYzGAgP7ctO2t3iez1DwJIkN2TEBXVNWkZ1Nl0d4Uq
+ 3+uiFkyi5ec8g0IWvXdeCfStgtOFTajfnOsiMLEUxNPGRdim6dMf2Z94V1Sd36a/Ce5K
+ Dv9/xWGyExXoI7Gqy+DBkfMvMwluaKGKvI8XMZw40dmuGv5Tpk4v4bE2FU6LN3byV2fp
+ M+QQ==
+X-Gm-Message-State: AOJu0YyBYg7eNGxZ0sVgYLtFaAyUAGMk4FbSUlY7NQgwbleLnnX8SuEp
+ AwDaDku3rPwfaa3/DH/dRI9b0qFcZv60Fnh+Bd/Iqg83iOBgfdGeu0YKWFq51MAXF+k=
+X-Gm-Gg: ASbGncvfxNfM+HiOdh+ZUyavayNMLMWWPXHLskFN+l5Ii4Y3DebuzKqMBS2aZDtBSyH
+ whsTib8uWacN4HJRbI84GRch8NtG1+trrbbqGp5WxzuxAPVEH7pAXQVk9PEBNTvKlZTgHjm7m4A
+ wh98/CWTuPdrCMmBKHrttiPt2xMcFQeE1qSnCE/CtJqeo5JicsE/sVHhnWFYMJLJ6LJm62LtV2u
+ Jb7b2nAc++z/WJMqjq/Dx1cjeWEcq9rOov4tcgE/+WR/FOBnWUfKKfUo/zcsCGQUgfNCKPMJnIv
+ 7p9SzuJCHXVNNmE1eut6m/ssyRQJKOdrSqT4MJI0hOXQKJGIKZ7RRVHLiQVbhEg=
+X-Google-Smtp-Source: AGHT+IG2rInnDHZyIj89bAYkbqAgLml9UXKICFI1aci/zBjLQpqNIzZbpauksKvffGuEb505MSVSdA==
+X-Received: by 2002:a17:907:940d:b0:ad8:9466:3354 with SMTP id
+ a640c23a62f3a-ae057cc5eb2mr294740466b.54.1750426578632; 
+ Fri, 20 Jun 2025 06:36:18 -0700 (PDT)
+Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-ae054080a61sm166144566b.106.2025.06.20.06.36.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 06:22:33 -0700 (PDT)
-Date: Fri, 20 Jun 2025 15:22:32 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>,
- <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
- <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH v3 28/29] tests/qtest/bios-tables-test: Add aarch64 ACPI
- PCI hotplug test
-Message-ID: <20250620152232.36683ffc@fedora>
-In-Reply-To: <20250620114029.00005a94@huawei.com>
-References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-29-eric.auger@redhat.com>
- <20250620114029.00005a94@huawei.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ Fri, 20 Jun 2025 06:36:18 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 55B7E5F876;
+ Fri, 20 Jun 2025 14:36:17 +0100 (BST)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Rowan Hart <rowanbhart@gmail.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Mahmoud
+ Mandour <ma.mandourr@gmail.com>,  Marcel Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao
+ Liu <zhao1.liu@intel.com>,  Eduardo Habkost <eduardo@habkost.net>
+Subject: Re: [PATCH v12 5/7] plugins: Add memory hardware address read/write
+ API
+In-Reply-To: <168f9716-1b1c-42fe-9be8-f6b895a9095f@gmail.com> (Rowan Hart's
+ message of "Tue, 17 Jun 2025 08:46:11 -0700")
+References: <20250611232409.2936521-1-rowanbhart@gmail.com>
+ <20250611232409.2936521-6-rowanbhart@gmail.com>
+ <87h60evf6t.fsf@draig.linaro.org>
+ <168f9716-1b1c-42fe-9be8-f6b895a9095f@gmail.com>
+User-Agent: mu4e 1.12.11; emacs 30.1
+Date: Fri, 20 Jun 2025 14:36:17 +0100
+Message-ID: <87pleysffy.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
+X-Spam_score_int: 12
+X-Spam_score: 1.2
+X-Spam_bar: +
+X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,90 +112,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Jun 2025 11:40:29 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+Rowan Hart <rowanbhart@gmail.com> writes:
 
-> On Mon, 16 Jun 2025 11:46:57 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
-> 
-> > From: Gustavo Romero <gustavo.romero@linaro.org>
-> > 
-> > The test uses -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on
-> > to force the usage of ACPI PCI hotplug.
-> > 
-> > Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
-> > Signed-off-by: Eric Auger <eric.auger@redhat.com>  
-> 
-> Could we add the necessary (I'm not quite sure what) to trigger the _DSM
-> creation so EDSM gets used?  I'm not keen on that being dead code
-> wrt to tests on ARM.
+>> My main concern about the long list of caveats for writing memory is the
+>> user will almost certainly cause weird things to happen which will then
+>> be hard to debug. I can see the patcher example however it would be
+>> useful to know what other practical uses this interface provides.
+>>
+> Of course! My main personal intent here is to facilitate introspection
+> and manipulation of guest state for security analysis. Some examples
+> of why the memory/register R/W primitives are necessary here include:
+>
+> Fuzzing:
+> - Read registers and memory for tracing control flow, comparison
+>   operands, and profiled values (e.g. memcmp arguments)
+> - Write memory to inject test cases into the guest (for me and other
+>   fuzzer developers, this is the biggest reason!)
+> - Write registers to reset execution or skip over complex checks like
+>   checksums
+> - Read and write memory, and read and write registers, to do basic
+>   snapshot/restore by tracking dirty pages and resetting them
+>
+> Virtual Machine Introspection (for malware analysis and reverse
+> engineering):
+> - Read memory and registers to find kernel, analyze kernel structures,
+>   and retrieve info like process lists, memory mappings
+> - Read memory and registers to quickly trace malware execution in VM
+> - Write memory and registers to test behavior under various
+>   conditions, like skipping into checks (motivating example: what
+>   happens if you skip into the kill switch statement for WannaCry)
+>
+> Runtime patching (as in the example):
+> - Writing memory to patch critical legacy code in production often can
+>   no longer be built or patched via means other than by applying
+>   binary patches (this is a real problem for e.g. the government, to
+>   the point where DARPA ran a program
+>   https://www.darpa.mil/research/programs/assured-micropatching to
+>   work on it!)
+> - Writing registers to skip over broken code, redirect to patch code, etc.
+>
+> Ultimately, the caveats boil down to "don't modify stuff that's
+> touched by currently executing code". I personally don't think that's
+> unreasonable (as long as it's in the doc-strings) because for any
+> plugin that needs to write memory, ensuring the write consistency is
+> probably the easiest problem to solve and people working in this space
+> are used to having way worse and jankier workarounds.
 
-relevant x86 example:
+I dread to think what jankier workarounds are!
 
-        " -device pcie-root-port,id=nohprp,port=0x0,chassis=2,hotplug=off,"      
-                                 "addr=7.0"                                      
-        " -device pci-testdev,bus=nohprp,acpi-index=501"  
-> 
-> Jonathan
-> 
-> 
-> 
-> > ---
-> >  tests/qtest/bios-tables-test.c | 34 ++++++++++++++++++++++++++++++++++
-> >  1 file changed, 34 insertions(+)
-> > 
-> > diff --git a/tests/qtest/bios-tables-test.c b/tests/qtest/bios-tables-test.c
-> > index 0b2bdf9d0d..4b9e391eaf 100644
-> > --- a/tests/qtest/bios-tables-test.c
-> > +++ b/tests/qtest/bios-tables-test.c
-> > @@ -1643,6 +1643,38 @@ static void test_acpi_aarch64_virt_tcg_memhp(void)
-> >  
-> >  }
-> >  
-> > +static void test_acpi_aarch64_virt_acpi_pci_hotplug(void)
-> > +{
-> > +    test_data data = {
-> > +        .machine = "virt",
-> > +        .arch = "aarch64",
-> > +        .tcg_only = true,
-> > +        .uefi_fl1 = "pc-bios/edk2-aarch64-code.fd",
-> > +        .uefi_fl2 = "pc-bios/edk2-arm-vars.fd",
-> > +        .cd = "tests/data/uefi-boot-images/bios-tables-test.aarch64.iso.qcow2",
-> > +        .ram_start = 0x40000000ULL,
-> > +        .scan_len = 256ULL * MiB,
-> > +        .variant = ".acpipcihp",
-> > +    };
-> > +
-> > +   /* Use ACPI PCI Hotplug */
-> > +   test_acpi_one(" -global acpi-ged.acpi-pci-hotplug-with-bridge-support=on"
-> > +                 " -cpu cortex-a57"
-> > +                 /*
-> > +                  * We just pick address=0x04 for the root port to avoid
-> > +                  * collisions with other PCI devices on the root bus (pcie.0).
-> > +                  * It could be any other value that doesn't collide.
-> > +                  *
-> > +                  * The 'chassis' and 'slot' options equal to 1 have no special
-> > +                  * meaning here, could be any integer, but we set them to known
-> > +                  * values to keep the test consistent.
-> > +                  */
-> > +                 " -device pcie-root-port,bus=pcie.0,chassis=1,slot=1,addr=0x04.0x00",
-> > +                 &data);
-> > +
-> > +    free_test_data(&data);
-> > +}
-> > +
-> >  static void test_acpi_microvm_prepare(test_data *data)
-> >  {
-> >      data->machine = "microvm";
-> > @@ -2580,6 +2612,8 @@ int main(int argc, char *argv[])
-> >              qtest_add_func("acpi/virt/numamem",
-> >                             test_acpi_aarch64_virt_tcg_numamem);
-> >              qtest_add_func("acpi/virt/memhp", test_acpi_aarch64_virt_tcg_memhp);
-> > +            qtest_add_func("acpi/virt/acpipcihp",
-> > +                           test_acpi_aarch64_virt_acpi_pci_hotplug);
-> >              qtest_add_func("acpi/virt/pxb", test_acpi_aarch64_virt_tcg_pxb);
-> >              qtest_add_func("acpi/virt/oem-fields",
-> >                             test_acpi_aarch64_virt_oem_fields);  
-> 
+However I accept that a doc string warning will do for now. I think if
+we can strengthen the guarantee at a later date to make the feature more
+bullet proof we should. For example we could use start/end_exclusive to
+halt the other threads while patching is taking place and then trigger a
+full tb-flush to be safe. It depends how often we expect to be patching
+things out?
 
+Richard,
+
+Do you have any view about this?
+
+> These plugin
+> functions make life way easier for them. I have been in touch with 20+
+> people from various companies and projects (including Microsoft, where
+> I work, as well as other big and small tech) all working on plugins
+> that could be better if this feature existed, so there is definitely a
+> user-base and appetite for it!
+>
+> The last cool use-case is that this moves us a long way towards
+> cleaning up the large number of QEMU forks out there designed for RE
+> and security testing like QEMU-Nyx, qemuafl, symqemu, and many more.
+> Instead of maintaining forks of QEMU (many of these are based on 4.2.0
+> or older!) folks can just maintain a plugin, which lets them take
+> advantage of updates and fixes without giant rebases. My goal is to
+> kill these forks and have these projects write small, maintainable
+> plugins instead, and the authors are on board :)
+
+Absolutely - I would like to see that too. The main reason those forks
+haven't been up-streamable is because they have to make fairly invasive
+changes to the frontends to do their instrumentation. I want to grow the
+API to the point we can support these more advanced use cases. I am
+however being conservative in adding new APIs so we take the time to get
+each one right and minimise:
+
+  - leaking internal details and constricting future evolution of the emula=
+tor
+  - giving the users too many foot guns in the API
+
+I'll have a look at the next version and see how we are doing.
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
