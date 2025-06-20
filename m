@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E6D1C7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 17:19:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A32A3C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 17:19:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSfLU-0002Sq-S4; Fri, 20 Jun 2025 13:16:10 -0400
+	id 1uSfNt-0005v4-UE; Fri, 20 Jun 2025 13:18:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKd-0001Vk-MZ
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:20 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKn-0001df-NC
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:27 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKb-0004TX-VJ
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:15 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-3a548a73ff2so1954148f8f.0
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:15:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKg-0004U2-J1
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:25 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-3a54700a46eso1320357f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:15:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750439712; x=1751044512; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750439716; x=1751044516; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8g3SAyDwaT1EwDV5s2zbr9B0oT21Z4aa77jAxEnb4OU=;
- b=f5bNpV/+60wPY1b0nDdn5udsBo86fq63SQVi6yhSp7bCCSeLbAmGRKAcAv4re76yDU
- C/BeuRPxHyuZQmW7s4gDHyghRp991HbgNyKuFu7SRsGWZtPhcSgqNkO/Z90dFKrlYHei
- PuYxNF5+UJ+Qm7fUAmJbf8M+JPttA1xkPVYO/6GNdVVyX7pCCmYxPc9X58VMs9Yk5Wr9
- 4ND+H0cn8pwAaGAVGXuM0Rnd4zgZEew+5mqAoWgqrVqpTxAH1zINMTzj1b6cersA2dYb
- +eQnAZelzAV2s3OoBMn3ZCK1KBITGAWx+yudRBfUzyncrTrOyWpJnhyEA9FCjH+y4hBR
- 3/1w==
+ bh=e0VDDXpzURiTm+yHwpwMlJR4kym/e2MQ7iLLDbJwJaQ=;
+ b=FyXhDkdaDQ85jI/vs8LlLtGNYDuebwO+9FYB17AgY2f6kb86BlWD2J+aVVcj4tJZYo
+ BQhN+xEjjLjgp1wPOSAstLTmNqZFBrCtZ1N9EAl95g9PEnfykIuP+dLJA/vwcv385opY
+ bFXC/fEnU7iaCRnqka/ZCzQc77tX0cS/WBiScb1fL1IXQuJCiuSbA243HqexMWrL9+ON
+ DDu6ZXmKrg+o00DMBjo0oqK0MtGGGHeELAaitR4yBovy8Eh29dXJ+z8T5z82SN1mpoUN
+ 8EArhG/JychjizNOf92dk5Lz/ljN6KBLlGEDSGgrt3VnRc6hZE+iFUEjDdQ+Uato0QRb
+ IJ9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750439712; x=1751044512;
+ d=1e100.net; s=20230601; t=1750439716; x=1751044516;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8g3SAyDwaT1EwDV5s2zbr9B0oT21Z4aa77jAxEnb4OU=;
- b=Re6Rg9D4EyGbWI8kIUq2btW6Ed+4Bu2LmShac4Z+0NFm0wq2IznKQEr7S1BKCtl+R3
- 248fGpH+6RKN8jEW1N2rMuU3sY3WmhscIATbsltKCsAuiv+Leso8s8c1Gqogmgzmq5/l
- MrxCyaXEj4camGPcyVJXnXQSB+1tgZQKtpLLgvviAqqonR3vD5Q7OJiW6b53zayo4T4W
- u3KOnieAeSxum+nnbiRCnULcCmedXBkvD8mhvu6a/fLKEmKeLqqyBcIeearn5Eln5rpi
- PpMqkLjXGncKqYNw9O6M6buIV6w1iGvuPAYrxqXQKW1v2XviDi7CXmxadw2xXmMMhsZx
- jYSg==
-X-Gm-Message-State: AOJu0YwbIs01zHx4t9Jyv3mf/qTrEO4iyZ4mry8YrNfn4OgwkX0sIrMH
- ijW95nyxG7p1zsc786qYPnIC+DzJZebCQFo4Lr0CI5/z//SDMs3L5mCnlGVIuvRadWIs9f6Qeet
- t1am7o5U=
-X-Gm-Gg: ASbGncvDwQacy68yNOYq7pQALQtU8ppR6nE3nofekYqKL6WsEXcXDT3Rve9pu1cjluV
- ZaeEzT2dfgoJnm8sydwP2wI9Wb+NuO/MfMVN2OFwHqkNI4+60oTAzbcWGwc9Zfriq6DK3AwLu03
- qK6YwoDVYi9w1Qv2i+xqLJ4j9/B/y8v4TaRa9oRzkVKk8XyL0PEu0CL1HOYtAvcbegmF/HLvcRH
- HFixV8TWBtdhs263cwPDh6xgY2GzEk6X/aRsSDx5iHaHcwVRgbuSGb9wXBlxuRy++4K+/+AFPjF
- Kek4smxR7FojqaiFUZjnNkR524mShyr41Gc77Ghg34joZpey9U7NfWMtruT6zzQ/LhhJL/k8/I7
- JgMfTOEVzsqjI+mvOj5OcZpOsXl8C2B22yNRN
-X-Google-Smtp-Source: AGHT+IHRa6uttUrX26Nx6rgKcLPuxl1hLSRTXVGAIMLxbgRQB4X2qajp39R7c3wgJzKETL/DPTcuWQ==
-X-Received: by 2002:a05:6000:1447:b0:3a4:f430:2547 with SMTP id
- ffacd0b85a97d-3a6d12bb41cmr3142916f8f.6.1750439711867; 
- Fri, 20 Jun 2025 10:15:11 -0700 (PDT)
+ bh=e0VDDXpzURiTm+yHwpwMlJR4kym/e2MQ7iLLDbJwJaQ=;
+ b=UanJo+Yj689y4Lo9njNnOXczkxB5L4a0OWyGYhTHP+77ufdLVUg+WT3cy+45tNH3Z5
+ /h7Be8gxDr5YrkEIWxwbRgO3X+XvmWS46/RoCrBuPoyxf4VSPbyZTA1EHINCttgr4yLS
+ /eHQpiuC+idLBE1szj9le+OxEed+40JABZZdk4fU0DmpacGvWJjWCykVneYk1Zlrx4sF
+ k8HNg3CArWjpKnCFwtUF2YKTwkIzTQ51r4Yq/W+cZZI4U75cayf/6D/A92kyYLO14inJ
+ tZOoyu1prMhx4E1Q/kE4a93YofT863MFSto1FUYI6I3skAGxDUFCNpRwp/O8BwNsxEOk
+ +eLA==
+X-Gm-Message-State: AOJu0Yz1eOhY2BuAv0jDhF/blpQT1r4Tp9FvgY1zOA0Ky4OB3nEZIVgK
+ uCXG142O1YtSobl3qrLBwTRVjfA91VZLmoqTaQV209UlzL4LJZTvr5aItzATIqSTttxSqyr6ltn
+ dZp8h1rU=
+X-Gm-Gg: ASbGnctzlfNE7vEfu+TYQ5eQ/+AeFXJBW1PEghwkgPEYRvqEeLwjmHNmSnwN7QauEBs
+ Dkkh2pHlKoXNG4m5Qypjtve6QoVDEfiFKgXaaBz/fLzqVU4pDr1X6uCU0AvzafSGx3GQ+5WAzRl
+ ym/3a/dJ13DpCOXbNYY0XbGMd0O2Uqqp+AUr6Jvq10zst3TilG1N4PRySn8EvXSeatyzF13AIwG
+ 9wvoR5sfGGHdMzuJVZ1cSGuxnp33nzD+kiyMXvAVsq26OcgJd/eICc9vz1B1aJ2zF+RpxBBSA0b
+ a5XUGNrP0QpMjFN/ACQKg6dtRNlqvdZh5dS+KCahwqUUvr9Be0C3nq9IGZGFjA4Pzxtd9eNsts6
+ sIp3+3Yp8ZdJgLL8a4gKSmDTo1oLdI8+fWiql
+X-Google-Smtp-Source: AGHT+IHM2qLaWgj0ZYkAjWCcCEKBOlR5PirkJRzuFRRaJjeM3Dx11w2EEGIRckAMD78LK+ANeuVMJA==
+X-Received: by 2002:adf:9d92:0:b0:3a3:6e62:d8e8 with SMTP id
+ ffacd0b85a97d-3a6d1330e96mr2977720f8f.55.1750439716636; 
+ Fri, 20 Jun 2025 10:15:16 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d118a1f2sm2507970f8f.83.2025.06.20.10.15.10
+ ffacd0b85a97d-3a6d1187df7sm2564802f8f.66.2025.06.20.10.15.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 10:15:11 -0700 (PDT)
+ Fri, 20 Jun 2025 10:15:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -75,17 +75,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH v2 18/48] accel/hvf: Implement get_vcpu_stats()
-Date: Fri, 20 Jun 2025 19:13:11 +0200
-Message-ID: <20250620171342.92678-19-philmd@linaro.org>
+Subject: [RFC PATCH v2 19/48] cpus: Document CPUState::vcpu_dirty field
+Date: Fri, 20 Jun 2025 19:13:12 +0200
+Message-ID: <20250620171342.92678-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620171342.92678-1-philmd@linaro.org>
 References: <20250620171342.92678-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,54 +110,21 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/hvf/hvf-accel-ops.c | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ include/hw/core/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index 45dd4baa321..bfdfef7c397 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -358,6 +358,12 @@ static inline int hvf_gdbstub_sstep_flags(AccelState *as)
-     return SSTEP_ENABLE | SSTEP_NOIRQ;
- }
- 
-+static void do_hvf_get_vcpu_exec_time(CPUState *cpu, run_on_cpu_data arg)
-+{
-+    int r = hv_vcpu_get_exec_time(cpu->accel->fd, arg.host_ptr);
-+    assert_hvf_ok(r);
-+}
-+
- static void hvf_accel_class_init(ObjectClass *oc, const void *data)
- {
-     AccelClass *ac = ACCEL_CLASS(oc);
-@@ -583,6 +589,16 @@ static void hvf_remove_all_breakpoints(CPUState *cpu)
-     }
- }
- 
-+static void hvf_get_vcpu_stats(CPUState *cpu, GString *buf)
-+{
-+    uint64_t time_us; /* units of mach_absolute_time() */
-+
-+    run_on_cpu(cpu, do_hvf_get_vcpu_exec_time, RUN_ON_CPU_HOST_PTR(&time_us));
-+
-+    g_string_append_printf(buf, "HVF cumulative execution time: %llu.%.3llus\n",
-+                                time_us / 1000000, (time_us % 1000000) / 1000);
-+}
-+
- static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
- {
-     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
-@@ -601,7 +617,10 @@ static void hvf_accel_ops_class_init(ObjectClass *oc, const void *data)
-     ops->remove_breakpoint = hvf_remove_breakpoint;
-     ops->remove_all_breakpoints = hvf_remove_all_breakpoints;
-     ops->update_guest_debug = hvf_update_guest_debug;
-+
-+    ops->get_vcpu_stats = hvf_get_vcpu_stats;
- };
-+
- static const TypeInfo hvf_accel_ops_type = {
-     .name = ACCEL_OPS_NAME("hvf"),
- 
+diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
+index 33296a1c080..69ea425c458 100644
+--- a/include/hw/core/cpu.h
++++ b/include/hw/core/cpu.h
+@@ -441,6 +441,7 @@ struct qemu_work_item;
+  * @opaque: User data.
+  * @mem_io_pc: Host Program Counter at which the memory was accessed.
+  * @accel: Pointer to accelerator specific state.
++ * @vcpu_dirty: Hardware accelerator is not synchronized with QEMU state
+  * @kvm_fd: vCPU file descriptor for KVM.
+  * @work_mutex: Lock to prevent multiple access to @work_list.
+  * @work_list: List of pending asynchronous work.
 -- 
 2.49.0
 
