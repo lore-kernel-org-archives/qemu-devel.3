@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6977C71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 12:39:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F468C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 12:46:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSb18-0002mj-9v; Fri, 20 Jun 2025 08:38:50 -0400
+	id 1uSb8A-0004Y0-EO; Fri, 20 Jun 2025 08:46:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSb0s-0002ji-8O
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:38:35 -0400
+ id 1uSb7z-0004Xb-Ac
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:45:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSb0n-00016K-5A
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:38:31 -0400
+ id 1uSb7w-0002Ao-VG
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:45:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750423107;
+ s=mimecast20190719; t=1750423551;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=C3bLo7hIKrLc57/oF3Sb/Ap/DFpOsCGkOd7xZprMPlc=;
- b=eQZF6FrWc+E2maccU3ghI1bC+n8zm51xykpK7tVFwHCOGLiClrQRuCunUzCx387/gy2ha3
- BduAAc4IxzCvOZ5kSXcVtLWxo5uRCd2eQwAF+3y8nyuRZC81N1kDjznnUadsZxXd2XB2zE
- WfuaaBnYjqZSSSms89uIkabe0XzLswU=
+ bh=ixw2GuPREzzHodVzbvCDgX1hhsFwnJGhUX8+FgDdGdg=;
+ b=WNkVtiypKVuLQenafztXoBwHDRAUn/cFErnStDeunH1PsQOWnS5L1CF7iyf7MD9N8W1Vpg
+ BjO3/nVoRvt3IGYChGju3kyLjWeLDB39RNPvuXXw1JivMIS8pbSAWATYITDZVKX+L5rb6J
+ gU1VA/ba3TORDOfjXLQDa51g73iDbWM=
 Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
  [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-108-q2A306TxOV6S7PVWEfUejw-1; Fri, 20 Jun 2025 08:38:25 -0400
-X-MC-Unique: q2A306TxOV6S7PVWEfUejw-1
-X-Mimecast-MFC-AGG-ID: q2A306TxOV6S7PVWEfUejw_1750423105
+ us-mta-654-RAXZYNr9Mcm7WYwSJ8AHGw-1; Fri, 20 Jun 2025 08:45:50 -0400
+X-MC-Unique: RAXZYNr9Mcm7WYwSJ8AHGw-1
+X-Mimecast-MFC-AGG-ID: RAXZYNr9Mcm7WYwSJ8AHGw_1750423549
 Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-450787c8626so15319215e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 05:38:25 -0700 (PDT)
+ 5b1f17b1804b1-45311704d22so11174885e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 05:45:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750423104; x=1751027904;
+ d=1e100.net; s=20230601; t=1750423549; x=1751028349;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=C3bLo7hIKrLc57/oF3Sb/Ap/DFpOsCGkOd7xZprMPlc=;
- b=dHmFmCQOIS5xLE/JRyyzJBadsWywHm9Pt/eaD9ZeHy2mUeM7q+Ilnasu4tAp9B7C1a
- An8Y8usnPK8R+RDVHMLhJWzOEZIe9oBZFQG8/xHlgqI7EZEWHUTP9Owfe8QGLfNvI/QO
- Z+KJQe0ezdJHXYQdcRNxoTqYWAx3n54fK0EerdU0TWWHKdX0fN7B2HlCT52wwPVCPqOU
- klC49K9HT9lqRwsosLQp6O6wfmN9pFAW2PmEzKp/8CtH52g6DRdp9w4QvyyhwntGfypf
- lS2Qcm2RyYAiql6XedmNiXf8rRjIJVwn/VHKSubJdhPrls0fJKo+mw2v/PlDfTKaSlIB
- is2Q==
+ bh=ixw2GuPREzzHodVzbvCDgX1hhsFwnJGhUX8+FgDdGdg=;
+ b=gWpCVtx4usE2ypKBwUDyrqFSwhzhw7sE+i/DDhudrAEupyuElUkBTSkXKcOKut2Be3
+ MXk83NKyz5y9+8pp1+j1DVBfO3M7IAHvFy7LfS61yCaSozmJh4DSK/5w+FDY836+LkCa
+ X5mSms6ZyztNmvJHkq3AkIVOVjEpKqVMNenm6BYuPk3GqigUThj9hSxl2p5TqgZhRB9P
+ lvk77LwFfvTUV/VZXqxGlMvk0Yp49cMXJdBzm+3aVVVp7pMz59c3ttwLhVrVV5L3scyo
+ OzrxnU2WBRLhoz9Gu5WNk86Kk+oafRc9rXw4u6azLg60reXERIISeBXg1tWl2uqO+6y2
+ C0Dg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXKq8G3X20bMXoscj4pFVgOVV3AW5dLQQd/Tft204EhDkzG2Crn492uzFQ/qY47K/vERoWsusZwd26r@nongnu.org
-X-Gm-Message-State: AOJu0YwHQIOfZHDYWu/nP9O5rxq377Y6bTi8Cq0zVCDtQvFzwwrL5wqL
- Md54PuykfAVlFSMVH9PJC5F6Q4tvGl+CU2fw++gMTpWkJxc3KfGSL/ZRLdYbROq+HAc6O/ZXUmH
- RjM9C0x/C+qMURrlMHdSxYp5/ZPtZPkEyahyiLP/HOVXGIr9dToXdBNsv
-X-Gm-Gg: ASbGncvZLwC8Q4zq8Q6wk8G5QvxS9XxuulGXOTpU1QDFccqzqIZllWJ/HVq9r9zpmS5
- /taD425S+EBD6PqZYVLFG9fJviool0neLLrgQSToSvTaogJG/QANErrmPDmjUwvXaDsk/t9WR2D
- cPUpYgZzX8v5uwxzUqe2IBB7dOuYARY2neNNRWV5h54GWnEV35iaPrddqPaw3f3VTdbzht3DSk4
- avc24dHkswv08UJ6pE4pHw7CZd9aDE/lvns9zQaW9MXwTKrbuVJDTb7Jt8qhFhkHnGLH5yXLEs9
- zwHinsFzMhgP
-X-Received: by 2002:a05:600c:314f:b0:43d:8ea:8d7a with SMTP id
- 5b1f17b1804b1-453656c313fmr22699805e9.28.1750423104510; 
- Fri, 20 Jun 2025 05:38:24 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IFra9AlbK03qy26v8AN5rp2vztQmrbKOoHAeJlXPdJgSGbsH3P58/OnXTVWLfftXEUndWqYiA==
-X-Received: by 2002:a05:600c:314f:b0:43d:8ea:8d7a with SMTP id
- 5b1f17b1804b1-453656c313fmr22699495e9.28.1750423104075; 
- Fri, 20 Jun 2025 05:38:24 -0700 (PDT)
+ AJvYcCWrttKOmKanZ2y17ycadCRRDUaRGGetJRR0CpC+Qvy87OuwwuQ3POfI64rtYrlT34eDTEupCY2A0x91@nongnu.org
+X-Gm-Message-State: AOJu0YxGqP02/qyxV2Nh/bdKlbgHS+b4bEnr9dZuwvaccwywzsfD73jU
+ KCVqcijRQFhRHmyX75XdQkid13m07g99ouWB7eoh8Q+cWuNM3Z97+Z8xCCt+pmDw1ahYRxP4uUY
+ cyflhnYM8iVT7cIaKS1hMvcYDAeI2mFQGHkkGKHLt254nu/zsDgxLk5hl
+X-Gm-Gg: ASbGncve43Jd2HsqlgHCAiw1Z8IRGe/FC2wK/GFOhZIAtL0fl32SewtOkrMi6g9En0G
+ PQT3CfbIcah+FlikNJcKxVNnwuwSBkJzHVvMG5xXsUupuRBHdhRTqeJX7PsPlhbn1hwDQeD2TrD
+ atf/beDdj2v7cvVECSBkeOYJwpb4XhSjBe8Ju+5nIQ0rcIgJSSPbg0e/yktfnhmHEZoLCEedRjg
+ 8Fj4ryXRCBJ43L/FR9K9mvQBFNrcgEqFPHrMO7KGhiQU8OfU+V9TuSwoHAO/OVz+h1tgjdr7bm2
+ CWdGSR9dGiXE
+X-Received: by 2002:a05:6000:4283:b0:3a4:f6c4:355a with SMTP id
+ ffacd0b85a97d-3a6d131ac8emr2269665f8f.57.1750423548814; 
+ Fri, 20 Jun 2025 05:45:48 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGrLT3wNR9H3+UM6jaYxsQGEx+qkhxAI0jiqUIfqR20b+tZYGc1HfpaZ42XLtYF9wy0dlXn8g==
+X-Received: by 2002:a05:6000:4283:b0:3a4:f6c4:355a with SMTP id
+ ffacd0b85a97d-3a6d131ac8emr2269639f8f.57.1750423548417; 
+ Fri, 20 Jun 2025 05:45:48 -0700 (PDT)
 Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d133175bsm1975804f8f.92.2025.06.20.05.38.23
+ 5b1f17b1804b1-4535e98b48asm59359715e9.16.2025.06.20.05.45.47
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 05:38:23 -0700 (PDT)
-Date: Fri, 20 Jun 2025 14:38:22 +0200
+ Fri, 20 Jun 2025 05:45:48 -0700 (PDT)
+Date: Fri, 20 Jun 2025 14:45:47 +0200
 From: Igor Mammedov <imammedo@redhat.com>
-To: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Cc: Eric Auger <eric.auger@redhat.com>, <eric.auger.pro@gmail.com>,
- <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>,
- <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
- <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
- <alex.bennee@linaro.org>
-Subject: Re: [PATCH v3 17/29] hw/arm/virt-acpi-build: Modify the DSDT ACPI
- table to enable ACPI PCI hotplug
-Message-ID: <20250620143822.7ab69038@fedora>
-In-Reply-To: <20250620103538.000021c1@huawei.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v3 18/29] hw/acpi/ged: Add a bus link property
+Message-ID: <20250620144547.2140006a@fedora>
+In-Reply-To: <20250616094903.885753-19-eric.auger@redhat.com>
 References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-18-eric.auger@redhat.com>
- <20250620103538.000021c1@huawei.com>
+ <20250616094903.885753-19-eric.auger@redhat.com>
 X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII
@@ -100,7 +97,7 @@ X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,122 +113,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Jun 2025 10:35:38 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+On Mon, 16 Jun 2025 11:46:47 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
 
-> On Mon, 16 Jun 2025 11:46:46 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
+> This property will be set by the machine code on the object
+> creation. It will be used by acpi pcihp hotplug code.
 > 
-> > Modify the DSDT ACPI table to enable ACPI PCI hotplug.
-> > 
-> > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> > 
-> > ---
-> > v2 -> v3:
-> > - use ACPI_PCIHP_SIZE instead of 0x1000 (Igor)
-> > - use cihp_state->use_acpi_hotplug_bridge  
-> 
-> pcihp_state
-> 
-> Takes a bit of searching to find the various bits of the
-> same support on x86 but this seems to match up.
-> Exactly when things are built does vary but not I think
-> in a way that matters.  e.g. I think on x86 the
-> EDSM stuff is built whether or not we have pcihp enabled
-> whereas here you've made it conditional on using acpi
-> hp.  Perhaps a tiny bit more description on that would be
-> useful if you do a v4?
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 
-edsm should be built regardless of pcihp
-(well intention was there, whether I messed it up or not I don't know)
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
 
-idea is that non hotplug ports can have a static acpi-index,
-so it doesn't depend on pcihp.
 
+also with that it's possible to end up with NULL root
+if someone forgets to wire it up.
+
+I'd add assert somewhere in pcihp.c
+so that we wouldn't end up with wounds from too much head scratching
+if it fails somewhere during runtime.
+
+> ---
+>  hw/acpi/generic_event_device.c | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
-> 
-> 
-> > ---
-> >  include/hw/acpi/pcihp.h  |  2 ++
-> >  include/hw/arm/virt.h    |  1 +
-> >  hw/arm/virt-acpi-build.c | 22 ++++++++++++++++++++++
-> >  hw/arm/virt.c            |  2 ++
-> >  hw/arm/Kconfig           |  2 ++
-> >  5 files changed, 29 insertions(+)
-> > 
-> > diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
-> > index 5506a58862..9ff548650b 100644
-> > --- a/include/hw/acpi/pcihp.h
-> > +++ b/include/hw/acpi/pcihp.h
-> > @@ -38,6 +38,8 @@
-> >  #define ACPI_PCIHP_SEJ_BASE 0x8
-> >  #define ACPI_PCIHP_BNMR_BASE 0x10
-> >  
-> > +#define ACPI_PCIHP_SIZE 0x0018
-> > +
-> >  typedef struct AcpiPciHpPciStatus {
-> >      uint32_t up;
-> >      uint32_t down;
-> > diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-> > index 9a1b0f53d2..0ed2e6b732 100644
-> > --- a/include/hw/arm/virt.h
-> > +++ b/include/hw/arm/virt.h
-> > @@ -79,6 +79,7 @@ enum {
-> >      VIRT_ACPI_GED,
-> >      VIRT_NVDIMM_ACPI,
-> >      VIRT_PVTIME,
-> > +    VIRT_ACPI_PCIHP,
-> >      VIRT_LOWMEMMAP_LAST,
-> >  };
-> >  
-> > diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> > index d7547c8d3b..a2e58288f8 100644
-> > --- a/hw/arm/virt-acpi-build.c
-> > +++ b/hw/arm/virt-acpi-build.c
-> > @@ -34,6 +34,7 @@
-> >  #include "hw/core/cpu.h"
-> >  #include "hw/acpi/acpi-defs.h"
-> >  #include "hw/acpi/acpi.h"
-> > +#include "hw/acpi/pcihp.h"
-> >  #include "hw/nvram/fw_cfg_acpi.h"
-> >  #include "hw/acpi/bios-linker-loader.h"
-> >  #include "hw/acpi/aml-build.h"
-> > @@ -809,6 +810,8 @@ static void
-> >  build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-> >  {
-> >      VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
-> > +    AcpiGedState *acpi_ged_state = ACPI_GED(vms->acpi_dev);
-> > +    AcpiPciHpState *pcihp_state = &acpi_ged_state->pcihp_state;
-> >      Aml *scope, *dsdt;
-> >      MachineState *ms = MACHINE(vms);
-> >      const MemMapEntry *memmap = vms->memmap;
-> > @@ -868,6 +871,25 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
-> >  
-> >      aml_append(dsdt, scope);
-> >  
-> > +    if (pcihp_state->use_acpi_hotplug_bridge) {
-> > +        Aml *pci0_scope = aml_scope("\\_SB.PCI0");
-> > +
-> > +        aml_append(pci0_scope, aml_pci_edsm());
-> > +        build_acpi_pci_hotplug(dsdt, AML_SYSTEM_MEMORY,
-> > +                               memmap[VIRT_ACPI_PCIHP].base);
-> > +        build_append_pcihp_resources(pci0_scope,
-> > +                                     memmap[VIRT_ACPI_PCIHP].base,
-> > +                                     memmap[VIRT_ACPI_PCIHP].size);
-> > +
-> > +        /* Scan all PCI buses. Generate tables to support hotplug. */
-> > +        build_append_pci_bus_devices(pci0_scope, vms->bus);
-> > +        if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
-> > +            build_append_pcihp_slots(pci0_scope, vms->bus);
-> > +        }
-> > +        build_append_notification_callback(pci0_scope, vms->bus);
-> > +        aml_append(dsdt, pci0_scope);
-> > +    }
-> > +
-> >      /* copy AML table into ACPI tables blob */
-> >      g_array_append_vals(table_data, dsdt->buf->data, dsdt->buf->len);
-> >    
-> 
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index 7831db412b..ef1c1ec51f 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -13,6 +13,7 @@
+>  #include "qapi/error.h"
+>  #include "hw/acpi/acpi.h"
+>  #include "hw/acpi/generic_event_device.h"
+> +#include "hw/pci/pci.h"
+>  #include "hw/irq.h"
+>  #include "hw/mem/pc-dimm.h"
+>  #include "hw/mem/nvdimm.h"
+> @@ -320,6 +321,8 @@ static const Property acpi_ged_properties[] = {
+>      DEFINE_PROP_UINT32("ged-event", AcpiGedState, ged_event_bitmap, 0),
+>      DEFINE_PROP_BOOL(ACPI_PM_PROP_ACPI_PCIHP_BRIDGE, AcpiGedState,
+>                       pcihp_state.use_acpi_hotplug_bridge, 0),
+> +    DEFINE_PROP_LINK("bus", AcpiGedState, pcihp_state.root,
+> +                     TYPE_PCI_BUS, PCIBus *),
+>  };
+>  
+>  static const VMStateDescription vmstate_memhp_state = {
 
 
