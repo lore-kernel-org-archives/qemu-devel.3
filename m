@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF3AC7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80CBBC7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSeng-0006UK-DE; Fri, 20 Jun 2025 12:41:12 -0400
+	id 1uSeoA-0006bH-8Z; Fri, 20 Jun 2025 12:41:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSenf-0006U0-4j
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:11 -0400
+ id 1uSeo6-0006aG-Fw
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:38 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSend-0000EP-GF
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:10 -0400
+ id 1uSeo4-0000HB-Kp
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437668;
+ s=mimecast20190719; t=1750437694;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aN7xXBZj4Ftx1dfcGboeMP703/cTHxafXoXtiLZOCMM=;
- b=euvtBywRWLfNOPZfz317V1ZRRGCwNhbxNxJX5YsJoHAJwZVAudmNvcqZ+B90X4jwqUqiWe
- V8CHAQ9t9GjMSLwATNGQ9ggCgP+jBvvETgUGHgBcAw4Ddmw0rpQiqnnYrN1dByqEfBCx4v
- zN1SCXcWsn+zumyv0nZFERFzbIst61A=
-Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
- [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=m09gyrXVI69lguFqQqhapy6DhI44HdNH8ReXpoV/H/Y=;
+ b=WQwZ/61/zHzjVHubL9Fs8RmrJ7Sb5IMtGknBuHKuREbnSt2psNz1ICuTcO4QTr+8M+PNWt
+ wYRfvvcYcYJ6D7xh5cdLuVGkqUpKK4ebJWnw+n7kJ/4bw/TN+Ydi3ghxBdq8qwD9CLMd6e
+ xeDoOAvSPvBZ5GLsvsfjwgniFYLhXHI=
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
+ [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-42-AR6twZNIMkixfzurSRktig-1; Fri, 20 Jun 2025 12:41:02 -0400
-X-MC-Unique: AR6twZNIMkixfzurSRktig-1
-X-Mimecast-MFC-AGG-ID: AR6twZNIMkixfzurSRktig_1750437661
-Received: by mail-ed1-f70.google.com with SMTP id
- 4fb4d7f45d1cf-606f504f228so1769228a12.3
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:02 -0700 (PDT)
+ us-mta-196-qhjya6dHMq-RFeI4ZBak_A-1; Fri, 20 Jun 2025 12:41:32 -0400
+X-MC-Unique: qhjya6dHMq-RFeI4ZBak_A-1
+X-Mimecast-MFC-AGG-ID: qhjya6dHMq-RFeI4ZBak_A_1750437692
+Received: by mail-ed1-f71.google.com with SMTP id
+ 4fb4d7f45d1cf-60785397a37so1970302a12.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:32 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437661; x=1751042461;
+ d=1e100.net; s=20230601; t=1750437691; x=1751042491;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=aN7xXBZj4Ftx1dfcGboeMP703/cTHxafXoXtiLZOCMM=;
- b=cpeLWP6B7croz1avIEySROKNwqX93zH2889BQJlMUIhyygbnpEibtrGxeGIvPtSbfU
- 1cMY4pAfO/I4fB/WsUXDQgD5x6vtKAwfVXG9tYXNbItXFGj+z3isDPiLoqNvbSH2VN/9
- wwH4HqWr2+R8FQxDeKR1hYxP5b4QEW7CUbCrFqZRDIfTklR5Ctwpc8Bdj7zT3t0nqAk8
- 3rdW0v/GegTLBmxRLJXzbsLzSMrtRzPQnyrwTkxlXcxeOjoCuGvw/smAYA323KET5Xrk
- KIT7955VubNoFjaa8fBOKuz0O4l2P4nOva3byAevUQJIz42KVnNeU0rpWoyTpJIxGNoo
- N/kw==
-X-Gm-Message-State: AOJu0YwpSSap0R/z/38QXkCiad9BmF6CoGs1BM9SVL1dgNIgHjAUmQxp
- PHIflWToSw3pXumf57wXvto2S2YWqVu70Q1mLAk6iz3TEU7KsBmOrRxeZiGwE6FEQZNZHxcW6Gf
- VPAMAtd3szKKg7sJafB4xGSje4ozoNWS/kS10w/fPIIJNYTyWpXaKzefOB9wZpBSnQc1TD9sxAg
- cxQ0N8AgFNGVephrB7x3B+QJZJ4oXPaAICc4yGAo/v
-X-Gm-Gg: ASbGncsiQHn+nmtNBk1k+271txyqo8Wj2lRww6f2p3+Lu+SRPtY436aWdpH5gcrge4s
- Puiw4llwFOJqv+2kWxNn0bxW3FbEeWAgZmrVBlxXx52oGTLJ0YJTmxWCK+HAvuIfu4HU8sOL77h
- 7x5XWJbgPhg1JQzIx6/Z9SIYa4R6zx0uiZDuzwm4SYBb+oIVRjCHqq29IZVnWsNH5EK1OHAzslR
- mBQrToMZ/L67k11B7JnA0oVaCn7fAD6i9yv4yQqFEqt0zeRmkqfdWE1GSFE44h5mH5KnbnGwoaV
- 9vsf+AMjc/H5gsqy1fOi7/2VTg==
-X-Received: by 2002:a05:6402:34cc:b0:607:35d8:4cf8 with SMTP id
- 4fb4d7f45d1cf-60a1ccbc846mr3361886a12.11.1750437660551; 
- Fri, 20 Jun 2025 09:41:00 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IE3JFuqE+dcd5fdcKUjRpgdDxKTjtijkxVvb+SPO11XtYAxXv/TItUZ6edJWO0hoyAyQlOheA==
-X-Received: by 2002:a05:6402:34cc:b0:607:35d8:4cf8 with SMTP id
- 4fb4d7f45d1cf-60a1ccbc846mr3361853a12.11.1750437659917; 
- Fri, 20 Jun 2025 09:40:59 -0700 (PDT)
+ bh=m09gyrXVI69lguFqQqhapy6DhI44HdNH8ReXpoV/H/Y=;
+ b=wTkWeENavxo+9WH9PsM574yU79JiM7TuM8rdPlWrrw0ZcAXzKty7TyfrHRCcsWVmct
+ ZysJisV3JW1bNivQC9qZBLg79c30hDYzqQ7kFPh/AlxzNlPe4kpi9ZcslGGA+JhdrSKb
+ mTWIBGWr/O4rwzeW43MoFXArf4bMS7ysxRGDQsW8D4CnZYyJ1993yMk66AYCUzWUYU9d
+ BIFblbjSX1GllrbiVVgwdI2BASMBWjl3LtXnOGFtagommjGbRMOb1yyJYraiVnQXbubj
+ iMr/RxaDi0ra4mJVtWKfsNcn1FSXrBHzvcAvSY8snwoP5lTZWRHSAGCG/ZyXiRMq41DT
+ hvvw==
+X-Gm-Message-State: AOJu0YxRcO8HFf5KFmptE3Vdn1a+FRRFWI/96QpHv9WH+GurRHKrEEGh
+ IB5a9BSP43ob4NrjGvhQB+crT7zUvuKVjyUenrKNJIkshYBeYZ//EO+yKy1DJaJBQfAhVBEMUra
+ xZSo63kviG6WDgzp2CUY9it9NEo8xhPSKVfSUdnXcxtfdJZQa4CioSx2GRCVyTHMTA0+3x5kJaP
+ kmfp1rqKklCIW+4K1EvhOSJubTVSfseJtxI22sR+0Z
+X-Gm-Gg: ASbGncsGcsM2km2zoi7Ynm096GyskuHFSu+JR8kZTumF1ksk4KQnPYS/IDDcPTKoGqv
+ IRHrFUPGxZg5etKdlpSoYorGiqU176tEod8/GMawthLJM/sFTvgCrata511TwASiX+KkmfHSAIR
+ arpNkS+dHhQzkI37DVKgBxEK6NuwsBS5CE5OYtMbl7738Ho9QKxvbktWbI3MAs89+QHTzuOvcTo
+ Xd/xhD48iv+Fbdp5WrEytkxpNjHtWobB3TIFb1KCptLWb4DxUJMUhhEdNbDmX3zxjGveyLo8LgH
+ Smt/mYUUxiYFWKiGeVxDuKf2mg==
+X-Received: by 2002:a05:6402:3546:b0:607:19a6:9f1d with SMTP id
+ 4fb4d7f45d1cf-60a1cd3206dmr3413679a12.14.1750437691226; 
+ Fri, 20 Jun 2025 09:41:31 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IGR614FVv/R2yCgf5Ei0LXIAbyWz9IHUQeJln+17GXwTuLoGBhTb4d1DESDCiOMg1d5qLISGg==
+X-Received: by 2002:a05:6402:3546:b0:607:19a6:9f1d with SMTP id
+ 4fb4d7f45d1cf-60a1cd3206dmr3413645a12.14.1750437690794; 
+ Fri, 20 Jun 2025 09:41:30 -0700 (PDT)
 Received: from [192.168.122.1] ([151.62.200.93])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60a185797bbsm1629935a12.35.2025.06.20.09.40.57
+ a640c23a62f3a-ae05408306fsm183794066b.84.2025.06.20.09.41.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:40:58 -0700 (PDT)
+ Fri, 20 Jun 2025 09:41:28 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 02/24] target/i386: fix TB exit logic in gen_movl_seg() when
- writing to SS
-Date: Fri, 20 Jun 2025 18:40:30 +0200
-Message-ID: <20250620164053.579416-3-pbonzini@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>
+Subject: [PULL 13/24] rust: pl011: Implement logging
+Date: Fri, 20 Jun 2025 18:40:41 +0200
+Message-ID: <20250620164053.579416-14-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
 References: <20250620164053.579416-1-pbonzini@redhat.com>
@@ -110,55 +108,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+From: Bernhard Beschow <shentey@gmail.com>
 
-Before commit e54ef98c8a ("target/i386: do not trigger IRQ shadow for LSS"), any
-write to SS in gen_movl_seg() would cause a TB exit. The changes introduced by
-this commit were intended to restrict the DISAS_EOB_INHIBIT_IRQ exit to the case
-where inhibit_irq is true, but missed that a DISAS_EOB_NEXT exit can still be
-required when writing to SS and inhibit_irq is false.
+Now that there is logging support in Rust for QEMU, use it in the pl011
+device.
 
-Comparing the PE(s) && !VM86(s) section with the logic in x86_update_hflags(), we
-can see that the DISAS_EOB_NEXT exit is still required for the !CODE32 case when
-writing to SS in gen_movl_seg() because any change to the SS flags can affect
-hflags. Similarly we can see that the existing CODE32 case is still correct since
-a change to any of DS, ES and SS can affect hflags. Finally for the
-gen_op_movl_seg_real() case an explicit TB exit is not needed because the segment
-register selector does not affect hflags.
-
-Update the logic in gen_movl_seg() so that a write to SS with inhibit_irq set to
-false where PE(s) && !VM86(s) will generate a DISAS_EOB_NEXT exit along with the
-inline comment. This has the effect of allowing Win98SE to boot in QEMU once
-again.
-
-Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Fixes: e54ef98c8a ("target/i386: do not trigger IRQ shadow for LSS")
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2987
-Link: https://lore.kernel.org/r/20250611130315.383151-1-mark.cave-ayland@ilande.co.uk
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Link: https://lore.kernel.org/r/20250615112037.11992-3-shentey@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/tcg/translate.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ rust/hw/char/pl011/src/device.rs | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
-index 0fcddc2ec08..0cb87d02012 100644
---- a/target/i386/tcg/translate.c
-+++ b/target/i386/tcg/translate.c
-@@ -2033,8 +2033,11 @@ static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src, bool inhibit
-         tcg_gen_trunc_tl_i32(sel, src);
-         gen_helper_load_seg(tcg_env, tcg_constant_i32(seg_reg), sel);
- 
--        /* For move to DS/ES/SS, the addseg or ss32 flags may change.  */
--        if (CODE32(s) && seg_reg < R_FS) {
-+        /*
-+         * For moves to SS, the SS32 flag may change. For CODE32 only, changes
-+         * to SS, DS and ES may change the ADDSEG flags.
-+         */
-+        if (seg_reg == R_SS || (CODE32(s) && seg_reg < R_FS)) {
-             s->base.is_jmp = DISAS_EOB_NEXT;
+diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
+index 2d416cd9a3c..92dc295540e 100644
+--- a/rust/hw/char/pl011/src/device.rs
++++ b/rust/hw/char/pl011/src/device.rs
+@@ -8,6 +8,8 @@
+     chardev::{CharBackend, Chardev, Event},
+     impl_vmstate_forward,
+     irq::{IRQState, InterruptSource},
++    log::Log,
++    log_mask_ln,
+     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
+     prelude::*,
+     qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
+@@ -276,8 +278,7 @@ pub(self) fn write(
+             DMACR => {
+                 self.dmacr = value;
+                 if value & 3 > 0 {
+-                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
+-                    eprintln!("pl011: DMA not implemented");
++                    log_mask_ln!(Log::Unimp, "pl011: DMA not implemented");
+                 }
+             }
          }
-     } else {
+@@ -534,7 +535,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
+                 u64::from(device_id[(offset - 0xfe0) >> 2])
+             }
+             Err(_) => {
+-                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
++                log_mask_ln!(Log::GuestError, "PL011State::read: Bad offset {offset}");
+                 0
+             }
+             Ok(field) => {
+@@ -566,7 +567,10 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
+                 .borrow_mut()
+                 .write(field, value as u32, &self.char_backend);
+         } else {
+-            eprintln!("write bad offset {offset} value {value}");
++            log_mask_ln!(
++                Log::GuestError,
++                "PL011State::write: Bad offset {offset} value {value}"
++            );
+         }
+         if update_irq {
+             self.update();
 -- 
 2.49.0
 
