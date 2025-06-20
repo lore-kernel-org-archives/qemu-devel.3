@@ -4,62 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B2DC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:15:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29C99C7115D
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:15:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSdRq-0002xK-Ty; Fri, 20 Jun 2025 11:14:34 -0400
+	id 1uSdRz-0002zH-Un; Fri, 20 Jun 2025 11:14:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSdRp-0002x6-FB
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uSdRy-0002z5-1H
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSdRn-00063t-IS
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:33 -0400
+ id 1uSdRw-00065I-JD
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750432470;
+ s=mimecast20190719; t=1750432479;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=zLCgUpy1c+pZNmitNXzxmNsmJgaxLDZlgno4bBUaD44=;
- b=WLkcz96uYo0Ke9VdTxfJPpilymSuz+Q0BmgJjcQ7DTsqvFuxrjv431OHHPJ4d3qpT9K4Az
- MtscGgQNxYBRWATrf1SxmGBmeMVwYG74d2EJ1o6rgpFapfCZOHYkps1H16F+ZcU5M6XTqc
- dJDEZ/4V88YwFcb5Voj0TLASRZNMVWI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=68oPZUBcR0lOIUXgVaaOSLm+CVhFgV3mNyxRSCWThXU=;
+ b=cctxJUrZhFexBiM+yOKfaypn8aiGXARM47r8wyj+2yOyL0rBJ0WLGzhMBbpcps5Vznk48P
+ B2dpi1Vm5/R/58ttvEWsGSY1PZ/pu0uRw0cIPLWIC92xquM6AGSNhxa5pBCLyXxLhRnkQY
+ 6lUu6VUPub4Mb/tXtk73zOAR0f0hHi8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-oUNObUurNrauQWrhuUSTxg-1; Fri,
- 20 Jun 2025 11:14:26 -0400
-X-MC-Unique: oUNObUurNrauQWrhuUSTxg-1
-X-Mimecast-MFC-AGG-ID: oUNObUurNrauQWrhuUSTxg_1750432465
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-686-gs-BzYYcO7GQ5ybyng8AVA-1; Fri,
+ 20 Jun 2025 11:14:36 -0400
+X-MC-Unique: gs-BzYYcO7GQ5ybyng8AVA-1
+X-Mimecast-MFC-AGG-ID: gs-BzYYcO7GQ5ybyng8AVA_1750432475
 Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3B23A195609E; Fri, 20 Jun 2025 15:14:25 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96E161956096; Fri, 20 Jun 2025 15:14:35 +0000 (UTC)
 Received: from dell-r430-03.lab.eng.brq2.redhat.com
  (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
  by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BBDB01956094; Fri, 20 Jun 2025 15:14:21 +0000 (UTC)
+ id D69741956094; Fri, 20 Jun 2025 15:14:32 +0000 (UTC)
 From: Igor Mammedov <imammedo@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: kraxel@redhat.com, mst@redhat.com, anisinha@redhat.com,
  elena.ufimtseva@oracle.com, jag.raman@oracle.com, pbonzini@redhat.com,
  peterx@redhat.com, david@redhat.com, philmd@linaro.org
-Subject: [PATCH 0/3] Reinvent BQL-free PIO/MMIO
-Date: Fri, 20 Jun 2025 17:14:15 +0200
-Message-ID: <20250620151418.1166195-1-imammedo@redhat.com>
+Subject: [PATCH 3/3] mark HPET as unlocked
+Date: Fri, 20 Jun 2025 17:14:18 +0200
+Message-ID: <20250620151418.1166195-4-imammedo@redhat.com>
+In-Reply-To: <20250620151418.1166195-1-imammedo@redhat.com>
+References: <20250620151418.1166195-1-imammedo@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -84,64 +87,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When booting WS2025 with following CLI
- 1)   -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4
-the guest boots very slow and is sluggish after boot
-or it's stuck on boot at spinning circle.
+Reading QEMU_CLOCK_VIRTUAL is thread-safe.
 
-pref shows that VM is experiencing heavy BQL contention on IO path
-which happens to be ACPI PM timer read access. A variation with
-HPET enabled moves contention to HPET timer read access.
-And it only gets worse with increasing number of VCPUs.
+with CLI
+ -M q35,hpet=on -cpu host -enable-kvm -smp 240,sockets=4
+patch makes WS2025 guest, that was able to boot in 4/2min, to boot in 2/1min.
 
-Series prevents large VM vCPUs contending on BQL due to PM|HPET timer
-access and lets it move on with boot process.
+Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+---
+ hw/timer/hpet.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-It's basically resurecting Jan's idea [2] of BQL-free IO access,
-with a twist that whitelist reads access only to minimze chances
-of [3] issues. If we hit issues later on, it might be better
-to actually find a root cause and perhaps fix guest side if
-possible. (so I tested series with a bucn of different guests
-instead, RHEL-[6..10]x64, WS2012R2, WS2016, WS2022, WS2025)
-
-In my tests, with [1] CLI WS2025 guest wasn't able to boot within 30min
-on both hosts
-  * 32 core 2NUMA nodes
-  * 448 cores 8NUMA nodes
-With ACPI PM timer in BQL-free read mode, guest boots within approx:
- * 2min
- * 1min
-respectively.
-
-With HPET enabled boot time shrinks ~2x
- * 4m13 -> 2m21
- * 2m19 -> 1m15
-respectively.
-
-Using hv-time=on cpu option helps a lot (when it works) and
-lets [1] guest boot fine in ~1-2min (this series reduces
-boot time on ~10% on top of hv-time improvements).
-
-2) 196ea13104f (memory: Add global-locking property to memory regions)
-  ... de7ea885c539 (kvm: Switch to unlocked MMIO)
-3) https://bugzilla.redhat.com/show_bug.cgi?id=1322713
-  1beb99f787 (Revert "acpi: mark PMTIMER as unlocked")
-
-Igor Mammedov (3):
-  memory: reintroduce BQL-free fine-grained PIO/MMIO
-  acpi: mark PMTIMER as unlocked
-  mark HPET as unlocked
-
- include/system/memory.h   | 10 +++++++++-
- hw/acpi/core.c            |  2 ++
- hw/remote/vfio-user-obj.c |  2 +-
- hw/timer/hpet.c           |  2 ++
- system/memory.c           |  5 +++++
- system/memory_ldst.c.inc  | 18 +++++++++---------
- system/physmem.c          |  9 +++++----
- 7 files changed, 33 insertions(+), 15 deletions(-)
-
---
+diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
+index 0fd1337a15..1ebd715529 100644
+--- a/hw/timer/hpet.c
++++ b/hw/timer/hpet.c
+@@ -681,6 +681,8 @@ static void hpet_init(Object *obj)
+ 
+     /* HPET Area */
+     memory_region_init_io(&s->iomem, obj, &hpet_ram_ops, s, "hpet", HPET_LEN);
++    memory_region_enable_lockless_ro_io(&s->iomem);
++    s->iomem.disable_reentrancy_guard = true;
+     sysbus_init_mmio(sbd, &s->iomem);
+ }
+ 
+-- 
 2.43.5
 
 
