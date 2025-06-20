@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8314C7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 14:49:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A46AC7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:06:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSd2k-0004f7-QX; Fri, 20 Jun 2025 10:48:39 -0400
+	id 1uSdJV-0008Rt-Fl; Fri, 20 Jun 2025 11:05:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSd2e-0004ee-71
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:48:32 -0400
-Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uSdJT-0008Rk-Sh
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:05:55 -0400
+Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSd2T-0002cd-SO
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:48:24 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bP0b465hNz6L56V;
- Fri, 20 Jun 2025 22:43:28 +0800 (CST)
-Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 9A8881400D7;
- Fri, 20 Jun 2025 22:48:15 +0800 (CST)
-Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
- (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 20 Jun
- 2025 16:48:15 +0200
-Date: Fri, 20 Jun 2025 15:48:13 +0100
-To: <shiju.jose@huawei.com>
-CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
- <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>
-Subject: Re: [PATCH v2 7/7] hw/cxl: Add emulation for memory sparing control
- feature
-Message-ID: <20250620154813.00002bbd@huawei.com>
-In-Reply-To: <20250619151619.1695-8-shiju.jose@huawei.com>
-References: <20250619151619.1695-1-shiju.jose@huawei.com>
- <20250619151619.1695-8-shiju.jose@huawei.com>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uSdJR-0004cu-Vi
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:05:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
+ s=2021Q3; t=1750431917;
+ bh=ryGAJSLg9sJ/L8XRjh+Bu25Lp6qsX2qu+NIKCkjGVvI=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=H4reFrR2IS8drr0mNOsnxdKlE7sdr6217W01rIR+LxtQtQMnCKBm1PZCOIllK5X5O
+ 5N53cM877mkLS9A1WmTAjvRHD3yjQY3Nh/5wj9tkOoua91JLBVxRScQxe7nomtQey1
+ zLFhqyHPeq20q8DqjnfvhUWBLH0TS77L9nl8bAW3LHwvEwH+CjtNfd0Qktnmn98ZJX
+ oOmNyEumzu2om4qggWgFgd1hP9ZxEsOx8+ymBRvrUZFmFXhctYJak6gM60BbLLwrSK
+ EjbowNC1rMD6tRJBZ0RPrCdXR8BYxL6nbqhWYyW/fwvKr/KueFCoQq+rly3K713QGg
+ 59sSVktiFFk/w==
+Received: from [192.168.0.144] (unknown [23.170.80.102])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by sean.taipei (Postfix) with ESMTPSA id 4EA3578C8;
+ Fri, 20 Jun 2025 23:05:15 +0800 (CST)
+Message-ID: <3e7fd1f4-3fa2-45cc-9ac9-fa3ef0765b27@sean.taipei>
+Date: Fri, 20 Jun 2025 11:04:58 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.66]
-X-ClientProxiedBy: lhrpeml100002.china.huawei.com (7.191.160.241) To
- frapeml500008.china.huawei.com (7.182.85.71)
-X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -33
-X-Spam_score: -3.4
-X-Spam_bar: ---
-X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/2] virtio-9p: move G_GNUC_PRINTF to header
+To: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Cc: qemu-devel@nongnu.org, Sean Wei <me@sean.taipei>,
+ Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <20250613.qemu.9p@sean.taipei> <2211604.2JEinP4xG6@silver>
+Content-Language: en-US
+From: Sean Wei <me@sean.taipei>
+In-Reply-To: <2211604.2JEinP4xG6@silver>
+Content-Type: multipart/signed; protocol="application/pkcs7-signature";
+ micalg=sha-512; boundary="------------ms060202090306000104020809"
+Received-SPF: pass client-ip=128.199.207.102; envelope-from=me@sean.taipei;
+ helo=sean.taipei
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,153 +70,143 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
-From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Jun 2025 16:16:19 +0100
-<shiju.jose@huawei.com> wrote:
+This is a cryptographically signed message in MIME format.
 
-> From: Shiju Jose <shiju.jose@huawei.com>
-> 
-> Memory sparing is defined as a repair function that replaces a portion of
-> memory with a portion of functional memory at that same DPA. The subclasses
-> for this operation vary in terms of the scope of the sparing being
-> performed. The Cacheline sparing subclass refers to a sparing action that
-> can replace a full cacheline. Row sparing is provided as an alternative to
-> PPR sparing functions and its scope is that of a single DDR row. Bank
-> sparing allows an entire bank to be replaced. Rank sparing is defined as
-> an operation in which an entire DDR rank is replaced.
-> 
-> Memory sparing maintenance operations may be supported by CXL devices
-> that implement CXL.mem protocol. A sparing maintenance operation requests
-> the CXL device to perform a repair operation on its media.
-> For example, a CXL device with DRAM components that support memory sparing
-> features may implement sparing Maintenance operations.
-> 
-> The host may issue a query command by setting Query Resources flag in the
-> Input Payload (CXL Spec 3.2 Table 8-120) to determine availability of
-> sparing resources for a given address. In response to a query request,
-> the device shall report the resource availability by producing the Memory
-> Sparing Event Record (CXL Spec 3.2 Table 8-60) in which the Channel, Rank,
-> Nibble Mask, Bank Group, Bank, Row, Column, Sub-Channel fields are a copy
-> of the values specified in the request.
-> 
-> During the execution of a sparing maintenance operation, a CXL memory device:
-> - May or may not retain data
-> - May or may not be able to process CXL.mem requests correctly.
-> These CXL memory device capabilities are specified by restriction flags
-> in the memory sparing feature readable attributes.
-> 
-> When a CXL device identifies error on a memory component, the device
-> may inform the host about the need for a memory sparing maintenance
-> operation by using DRAM event record, where the 'maintenance needed' flag
-> may set. The event record contains some of the DPA, Channel, Rank,
-> Nibble Mask, Bank Group, Bank, Row, Column, Sub-Channel fields that
-> should be repaired. The userspace tool requests for maintenance operation
-> if the 'maintenance needed' flag set in the CXL DRAM error record.
-> 
-> CXL spec 3.2 section 8.2.10.7.2.3 describes the memory sparing feature
-> discovery and configuration.
-> 
-> CXL spec 3.2 section 8.2.10.7.1.4 describes the device's memory sparing
-> maintenance operation feature.
-> 
-> Add emulation for CXL memory device memory sparing control feature
-> and memory sparing maintenance operation command.
-> 
-> TODO: Following are the pending tasks, though not sure how to implement.
->  1. Add emulation for memory sparing maintenance operation.
+--------------ms060202090306000104020809
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: base64
 
-At most wipe the data if advertising that it won't be retained.
-No need to actually do anything.
+SGkgQ2hyaXN0aWFuLA0KDQpPbiAyMDI1LzYvMjAgMTA6MTcgQU0sIENocmlzdGlhbiBTY2hv
+ZW5lYmVjayB3cm90ZToNCj4gT24gU2F0dXJkYXksIEp1bmUgMTQsIDIwMjUgNDowNzo0MCBB
+TSBDRVNUIFNlYW4gV2VpIHdyb3RlOg0KPj4gdjlmc19zdHJpbmdfc3ByaW50ZigpIGFuZCB2
+OWZzX3BhdGhfc3ByaW50ZigpIGFscmVhZHkgaGF2ZQ0KPj4gR19HTlVDX1BSSU5URiBhbm5v
+dGF0aW9ucyBpbiB0aGVpciBvd24gKi5jIGZpbGVzLCBidXQgdGhlDQo+PiBwcm90b3R5cGVz
+IGluIHRoZSBjb3JyZXNwb25kaW5nIGhlYWRlcnMgbGFjayB0aGVtLiAgV2hlbiBhbm90aGVy
+DQo+PiB0cmFuc2xhdGlvbiB1bml0IGluY2x1ZGVzIG9ubHkgdGhlIGhlYWRlciwgLVdmb3Jt
+YXQgY2FuIG5vIGxvbmdlcg0KPj4gdmFsaWRhdGUgdGhlIGFyZ3VtZW50IGxpc3QuDQo+Pg0K
+Pj4gVGhpcyBzZXJpZXMgcmVsb2NhdGVzIHRoZSBhbm5vdGF0aW9ucyB0byBmc2Rldi85cC1t
+YXJzaGFsLmggYW5kDQo+PiBody85cGZzLzlwLmgsIHRoZW4gZHJvcHMgdGhlIG5vdy1yZWR1
+bmRhbnQgYW5ub3RhdGlvbnMgaW4NCj4+IHRoZSAqLmMgZmlsZXMuICBUaGVyZSBpcyBubyBm
+dW5jdGlvbmFsIGNoYW5nZS4NCj4+DQo+PiBJJ3ZlIGNoZWNrZWQgYWxsIGNhbGwgc2l0ZXMg
+Zm9yIHRoZXNlIHR3byBoZWxwZXIgZnVuY3Rpb24sIGFsbA0KPj4gb2YgdGhlbSBhbHJlYWR5
+IHBhc3NlcyB0aGUgY29ycmVjdCBudW1iZXIgb2YgYXJndW1lbnRzLg0KPj4NCj4+IEEgbWlu
+aW1hbCBQb0MgKHNlbnQgYXMgdGhlIG5leHQgbWFpbCBpbiB0aGUgdGhyZWFkKSBkZW1vIGhv
+dw0KPj4gR19HTlVDX1BSSU5URiBiZWhhdmVzIGRpZmZlcmVudGx5IHdoZW4gdGhlIGF0dHJp
+YnV0ZSBpcyBwcmVzZW50DQo+PiBvbmx5IGluIGNvZGUuYyBvciBjb2RlLmggZmlsZS4NCj4+
+DQo+PiAtLQ0KPj4NCj4+IFNlYW4gV2VpICgzKToNCj4+ICAgIGZzZGV2LzlwLW1hcnNoYWw6
+IG1vdmUgR19HTlVDX1BSSU5URiB0byBoZWFkZXINCj4+ICAgIGh3LzlwZnM6IG1vdmUgR19H
+TlVDX1BSSU5URiB0byBoZWFkZXINCj4+DQo+PiAgIGZzZGV2LzlwLW1hcnNoYWwuYyB8ICAz
+ICstLQ0KPj4gICBmc2Rldi85cC1tYXJzaGFsLmggfCAgMiArLQ0KPj4gICBody85cGZzLzlw
+LmMgICAgICAgfCAgMyArLS0NCj4+ICAgaHcvOXBmcy85cC5oICAgICAgIHwgIDIgKy0NCj4+
+ICAgNCBmaWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDYgZGVsZXRpb25zKC0pDQo+
+Pg0KPj4NCj4gDQo+IFdpdGggY29kZSBzdHlsZSBmaXggcXVldWVkIG9uIDlwLm5leHQ6DQo+
+IGh0dHBzOi8vZ2l0aHViLmNvbS9jc2Nob2VuZWJlY2svcWVtdS9jb21taXRzLzlwLm5leHQN
+Cj4gDQo+IFBsZWFzZSBydW4gc2NyaXB0cy9jaGVja3BhdGNoLnBsIG5leHQgdGltZS4NCj4g
+DQo+IFRoYW5rcyENCj4gDQo+IC9DaHJpc3RpYW4NCj4gDQoNCkFwb2xvZ2llcyBmb3IgbWlz
+c2luZyB0aGUgY2hlY2stcGF0Y2ggc3RlcCwgSeKAmWxsIG1ha2Ugc3VyZSB0byBydW4gDQpz
+Y3JpcHRzL2NoZWNrcGF0Y2gucGwgbmV4dCB0aW1lLg0KDQpUaGFuayB5b3UgZm9yIGZpeGlu
+ZyB0aGUgY29kZSBzdHlsZSBhbmQgcXVldWluZyB0aGUgcGF0Y2ghDQoNCkFsbCB0aGUgYmVz
+dCwNClNlYW4gV2VpDQo=
 
->  2. On query, report memory sparing resource availability in a memory sparing
->     event record if required in the future.
-I'd go with a a per device per type set of counters.
-Lets just say we have X of them on a device - once used up they are gone.
-No need to worry too much on what X is.  Just pick some values so we have
-something to test against. 4 maybe enough for testing?
+--------------ms060202090306000104020809
+Content-Type: application/pkcs7-signature; name="smime.p7s"
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="smime.p7s"
+Content-Description: S/MIME Cryptographic Signature
 
-
-Some comments on previous patch feed through to here.  A few more things inline.
-
-Jonathan
-
-> 
-> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-> ---
->  hw/cxl/cxl-mailbox-utils.c  | 295 ++++++++++++++++++++++++++++++++++++
->  hw/mem/cxl_type3.c          |  44 ++++++
->  include/hw/cxl/cxl_device.h |  40 +++++
->  3 files changed, 379 insertions(+)
-> 
->  
-> +typedef struct CXLMemSparingMaintInPayload {
-> +    uint8_t flags;
-> +    uint8_t channel;
-> +    uint8_t rank;
-> +    uint8_t nibble_mask[3];
-> +    uint8_t bank_group;
-> +    uint8_t bank;
-> +    uint8_t row[3];
-> +    uint16_t column;
-> +    uint8_t sub_channel;
-> +} QEMU_PACKED CXLMemSparingMaintInPayload;
-> +
-> +static CXLRetCode cxl_perform_mem_sparing(CXLType3Dev *ct3d, uint8_t sub_class,
-> +                                          void *maint_pi)
-> +{
-> +     CXLMemSparingMaintInPayload *sparing_maint_pi = (void *)maint_pi;
-
-Odd spacing
-
-> +
-> +    qemu_log_mask(LOG_UNIMP, "Memory Sparing Maintenance Input Payload...\n");
-> +    qemu_log_mask(LOG_UNIMP, "flags = %u\n", sparing_maint_pi->flags);
-> +    qemu_log_mask(LOG_UNIMP, "channel= %u\n", sparing_maint_pi->channel);
-> +    qemu_log_mask(LOG_UNIMP, "rank = %u\n", sparing_maint_pi->rank);
-> +    qemu_log_mask(LOG_UNIMP, "nibble_mask[0] = 0x%x\n",
-> +                  sparing_maint_pi->nibble_mask[0]);
-> +    qemu_log_mask(LOG_UNIMP, "nibble_mask[1] = 0x%x\n",
-> +                  sparing_maint_pi->nibble_mask[1]);
-> +    qemu_log_mask(LOG_UNIMP, "nibble_mask[2] = 0x%x\n",
-> +                  sparing_maint_pi->nibble_mask[2]);
-> +    qemu_log_mask(LOG_UNIMP, "bank_group = %u\n",
-> +                  sparing_maint_pi->bank_group);
-> +    qemu_log_mask(LOG_UNIMP, "bank = %u\n", sparing_maint_pi->bank);
-> +    qemu_log_mask(LOG_UNIMP, "row[0] = 0x%x\n", sparing_maint_pi->row[0]);
-> +    qemu_log_mask(LOG_UNIMP, "row[1] = 0x%x\n", sparing_maint_pi->row[1]);
-> +    qemu_log_mask(LOG_UNIMP, "row[2] = 0x%x\n", sparing_maint_pi->row[2]);
-> +    qemu_log_mask(LOG_UNIMP, "column = %u\n", sparing_maint_pi->column);
-> +    qemu_log_mask(LOG_UNIMP, "sub_channel = %u\n",
-> +                  sparing_maint_pi->sub_channel);
-
-LOG_UNIMP is a bit odd given there is nothing to do really.
-
-> +
-> +    switch (sub_class) {
-> +    case 0: /* Cacheline Memory Sparing */
-> +        qemu_log("Cacheline Memory Sparing\n");
-> +        return CXL_MBOX_SUCCESS;
-> +    case 1: /* Row Memory Sparing */
-> +        qemu_log("Row Memory Sparing\n");
-> +        return CXL_MBOX_SUCCESS;
-> +    case 2: /* Bank Memory Sparing */
-> +        qemu_log("Bank Memory Sparing\n");
-> +        return CXL_MBOX_SUCCESS;
-> +    case 3: /* Rank Memory Sparing */
-> +        qemu_log("Rank Memory Sparing\n");
-> +        return CXL_MBOX_SUCCESS;
-> +    default:
-> +        return CXL_MBOX_UNSUPPORTED;
-
-As previously - I think this is invalid parameter as the command is supported
-just not the sub_class.
-
-> +    }
-> +}
-> +
-
+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
+ITAfBgNVBAoMGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEcMBoGA1UEAwwTQ2VydHVtIFNN
+SU1FIFJTQSBDQTAeFw0yNDAyMjAxMDI0NTRaFw0yNjAyMTkxMDI0NTNaMDgxFzAVBgNVBAMM
+Dm1lQHNlYW4udGFpcGVpMR0wGwYJKoZIhvcNAQkBFg5tZUBzZWFuLnRhaXBlaTCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBAMgBdqaX8wyudsaj+2/4E0Nrcn9H5D2ux8KpjEef
+D7+Ae9mK/borSr7JTszEFurh3f5N+nXg0X6rr37yfXYvqWvov+Ci8PgexSPXyYLlndbsVcCO
+Ca4Y+ikG1FtswWHPkXiwsIK8VPHXQvLUgUJWKPtYxc9/wFwMupX9Ziv1V3+gzxqVfqahy+x9
+rZnpdqGvy/ITMTvrKW2qYJqp6GAQzlWlmu/VeTDN+rh4gUAKaLsJkhvDeNy44SEwX1WOqRWD
+N3RlrDj5tmlC1Ew02HbeN3T33s/KG5qN9nimo4oJXHMSrivarkIsRqLhnm+jixqTpw5I2kUK
+aE0k7O/nIZPRG3RtKhc6szZVGmqZrW3S0OJS2UpRC3CGdgmwF2jr1zC7xL11RWYQwyTMZLOr
+9vY0yz9zemNHVNlI0aEKsFqcWw81/2zi56qkl/G9veaPST4UjsMomj5zvYiUT14lpJAut25V
+rW/Q/gouSfGHtprks+FiNBBYh8qmqESJPYNT3KAhdFkQUwqwd2HVCCkstmv8+M+w+fJhSRKr
+FPCXg/Ermms7fK1kl+i9l/uOgDwVMkGV+y0BGHUUkI6XdehBpillzMkPvRWBfHBEEl6StNKn
+wKiJb70wKivclWSFnlEc+GaErKlZuGo5r3IrYKV20RpwdCOFtDlaPV7dH4CqsQt+j7jTAgMB
+AAGjggGzMIIBrzAMBgNVHRMBAf8EAjAAMEEGA1UdHwQ6MDgwNqA0oDKGMGh0dHA6Ly9jc21p
+bWVyc2FjYS5jcmwuY2VydHVtLnBsL2NzbWltZXJzYWNhLmNybDCBgwYIKwYBBQUHAQEEdzB1
+MC4GCCsGAQUFBzABhiJodHRwOi8vY3NtaW1lcnNhY2Eub2NzcC1jZXJ0dW0uY29tMEMGCCsG
+AQUFBzAChjdodHRwOi8vY3NtaW1lcnNhY2EucmVwb3NpdG9yeS5jZXJ0dW0ucGwvY3NtaW1l
+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
+--------------ms060202090306000104020809--
 
