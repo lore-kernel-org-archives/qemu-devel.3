@@ -4,60 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A46AC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:06:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8B2DC7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:15:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSdJV-0008Rt-Fl; Fri, 20 Jun 2025 11:05:57 -0400
+	id 1uSdRq-0002xK-Ty; Fri, 20 Jun 2025 11:14:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uSdJT-0008Rk-Sh
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:05:55 -0400
-Received: from mail.sean.taipei ([128.199.207.102] helo=sean.taipei)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uSdRp-0002x6-FB
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <me@sean.taipei>) id 1uSdJR-0004cu-Vi
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:05:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=sean.taipei;
- s=2021Q3; t=1750431917;
- bh=ryGAJSLg9sJ/L8XRjh+Bu25Lp6qsX2qu+NIKCkjGVvI=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=H4reFrR2IS8drr0mNOsnxdKlE7sdr6217W01rIR+LxtQtQMnCKBm1PZCOIllK5X5O
- 5N53cM877mkLS9A1WmTAjvRHD3yjQY3Nh/5wj9tkOoua91JLBVxRScQxe7nomtQey1
- zLFhqyHPeq20q8DqjnfvhUWBLH0TS77L9nl8bAW3LHwvEwH+CjtNfd0Qktnmn98ZJX
- oOmNyEumzu2om4qggWgFgd1hP9ZxEsOx8+ymBRvrUZFmFXhctYJak6gM60BbLLwrSK
- EjbowNC1rMD6tRJBZ0RPrCdXR8BYxL6nbqhWYyW/fwvKr/KueFCoQq+rly3K713QGg
- 59sSVktiFFk/w==
-Received: from [192.168.0.144] (unknown [23.170.80.102])
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uSdRn-00063t-IS
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 11:14:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750432470;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zLCgUpy1c+pZNmitNXzxmNsmJgaxLDZlgno4bBUaD44=;
+ b=WLkcz96uYo0Ke9VdTxfJPpilymSuz+Q0BmgJjcQ7DTsqvFuxrjv431OHHPJ4d3qpT9K4Az
+ MtscGgQNxYBRWATrf1SxmGBmeMVwYG74d2EJ1o6rgpFapfCZOHYkps1H16F+ZcU5M6XTqc
+ dJDEZ/4V88YwFcb5Voj0TLASRZNMVWI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-oUNObUurNrauQWrhuUSTxg-1; Fri,
+ 20 Jun 2025 11:14:26 -0400
+X-MC-Unique: oUNObUurNrauQWrhuUSTxg-1
+X-Mimecast-MFC-AGG-ID: oUNObUurNrauQWrhuUSTxg_1750432465
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by sean.taipei (Postfix) with ESMTPSA id 4EA3578C8;
- Fri, 20 Jun 2025 23:05:15 +0800 (CST)
-Message-ID: <3e7fd1f4-3fa2-45cc-9ac9-fa3ef0765b27@sean.taipei>
-Date: Fri, 20 Jun 2025 11:04:58 -0400
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3B23A195609E; Fri, 20 Jun 2025 15:14:25 +0000 (UTC)
+Received: from dell-r430-03.lab.eng.brq2.redhat.com
+ (dell-r430-03.lab.eng.brq2.redhat.com [10.37.153.18])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id BBDB01956094; Fri, 20 Jun 2025 15:14:21 +0000 (UTC)
+From: Igor Mammedov <imammedo@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kraxel@redhat.com, mst@redhat.com, anisinha@redhat.com,
+ elena.ufimtseva@oracle.com, jag.raman@oracle.com, pbonzini@redhat.com,
+ peterx@redhat.com, david@redhat.com, philmd@linaro.org
+Subject: [PATCH 0/3] Reinvent BQL-free PIO/MMIO
+Date: Fri, 20 Jun 2025 17:14:15 +0200
+Message-ID: <20250620151418.1166195-1-imammedo@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/2] virtio-9p: move G_GNUC_PRINTF to header
-To: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Cc: qemu-devel@nongnu.org, Sean Wei <me@sean.taipei>,
- Greg Kurz <groug@kaod.org>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <20250613.qemu.9p@sean.taipei> <2211604.2JEinP4xG6@silver>
-Content-Language: en-US
-From: Sean Wei <me@sean.taipei>
-In-Reply-To: <2211604.2JEinP4xG6@silver>
-Content-Type: multipart/signed; protocol="application/pkcs7-signature";
- micalg=sha-512; boundary="------------ms060202090306000104020809"
-Received-SPF: pass client-ip=128.199.207.102; envelope-from=me@sean.taipei;
- helo=sean.taipei
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,140 +84,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a cryptographically signed message in MIME format.
+When booting WS2025 with following CLI
+ 1)   -M q35,hpet=off -cpu host -enable-kvm -smp 240,sockets=4
+the guest boots very slow and is sluggish after boot
+or it's stuck on boot at spinning circle.
 
---------------ms060202090306000104020809
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+pref shows that VM is experiencing heavy BQL contention on IO path
+which happens to be ACPI PM timer read access. A variation with
+HPET enabled moves contention to HPET timer read access.
+And it only gets worse with increasing number of VCPUs.
 
-SGkgQ2hyaXN0aWFuLA0KDQpPbiAyMDI1LzYvMjAgMTA6MTcgQU0sIENocmlzdGlhbiBTY2hv
-ZW5lYmVjayB3cm90ZToNCj4gT24gU2F0dXJkYXksIEp1bmUgMTQsIDIwMjUgNDowNzo0MCBB
-TSBDRVNUIFNlYW4gV2VpIHdyb3RlOg0KPj4gdjlmc19zdHJpbmdfc3ByaW50ZigpIGFuZCB2
-OWZzX3BhdGhfc3ByaW50ZigpIGFscmVhZHkgaGF2ZQ0KPj4gR19HTlVDX1BSSU5URiBhbm5v
-dGF0aW9ucyBpbiB0aGVpciBvd24gKi5jIGZpbGVzLCBidXQgdGhlDQo+PiBwcm90b3R5cGVz
-IGluIHRoZSBjb3JyZXNwb25kaW5nIGhlYWRlcnMgbGFjayB0aGVtLiAgV2hlbiBhbm90aGVy
-DQo+PiB0cmFuc2xhdGlvbiB1bml0IGluY2x1ZGVzIG9ubHkgdGhlIGhlYWRlciwgLVdmb3Jt
-YXQgY2FuIG5vIGxvbmdlcg0KPj4gdmFsaWRhdGUgdGhlIGFyZ3VtZW50IGxpc3QuDQo+Pg0K
-Pj4gVGhpcyBzZXJpZXMgcmVsb2NhdGVzIHRoZSBhbm5vdGF0aW9ucyB0byBmc2Rldi85cC1t
-YXJzaGFsLmggYW5kDQo+PiBody85cGZzLzlwLmgsIHRoZW4gZHJvcHMgdGhlIG5vdy1yZWR1
-bmRhbnQgYW5ub3RhdGlvbnMgaW4NCj4+IHRoZSAqLmMgZmlsZXMuICBUaGVyZSBpcyBubyBm
-dW5jdGlvbmFsIGNoYW5nZS4NCj4+DQo+PiBJJ3ZlIGNoZWNrZWQgYWxsIGNhbGwgc2l0ZXMg
-Zm9yIHRoZXNlIHR3byBoZWxwZXIgZnVuY3Rpb24sIGFsbA0KPj4gb2YgdGhlbSBhbHJlYWR5
-IHBhc3NlcyB0aGUgY29ycmVjdCBudW1iZXIgb2YgYXJndW1lbnRzLg0KPj4NCj4+IEEgbWlu
-aW1hbCBQb0MgKHNlbnQgYXMgdGhlIG5leHQgbWFpbCBpbiB0aGUgdGhyZWFkKSBkZW1vIGhv
-dw0KPj4gR19HTlVDX1BSSU5URiBiZWhhdmVzIGRpZmZlcmVudGx5IHdoZW4gdGhlIGF0dHJp
-YnV0ZSBpcyBwcmVzZW50DQo+PiBvbmx5IGluIGNvZGUuYyBvciBjb2RlLmggZmlsZS4NCj4+
-DQo+PiAtLQ0KPj4NCj4+IFNlYW4gV2VpICgzKToNCj4+ICAgIGZzZGV2LzlwLW1hcnNoYWw6
-IG1vdmUgR19HTlVDX1BSSU5URiB0byBoZWFkZXINCj4+ICAgIGh3LzlwZnM6IG1vdmUgR19H
-TlVDX1BSSU5URiB0byBoZWFkZXINCj4+DQo+PiAgIGZzZGV2LzlwLW1hcnNoYWwuYyB8ICAz
-ICstLQ0KPj4gICBmc2Rldi85cC1tYXJzaGFsLmggfCAgMiArLQ0KPj4gICBody85cGZzLzlw
-LmMgICAgICAgfCAgMyArLS0NCj4+ICAgaHcvOXBmcy85cC5oICAgICAgIHwgIDIgKy0NCj4+
-ICAgNCBmaWxlcyBjaGFuZ2VkLCA0IGluc2VydGlvbnMoKyksIDYgZGVsZXRpb25zKC0pDQo+
-Pg0KPj4NCj4gDQo+IFdpdGggY29kZSBzdHlsZSBmaXggcXVldWVkIG9uIDlwLm5leHQ6DQo+
-IGh0dHBzOi8vZ2l0aHViLmNvbS9jc2Nob2VuZWJlY2svcWVtdS9jb21taXRzLzlwLm5leHQN
-Cj4gDQo+IFBsZWFzZSBydW4gc2NyaXB0cy9jaGVja3BhdGNoLnBsIG5leHQgdGltZS4NCj4g
-DQo+IFRoYW5rcyENCj4gDQo+IC9DaHJpc3RpYW4NCj4gDQoNCkFwb2xvZ2llcyBmb3IgbWlz
-c2luZyB0aGUgY2hlY2stcGF0Y2ggc3RlcCwgSeKAmWxsIG1ha2Ugc3VyZSB0byBydW4gDQpz
-Y3JpcHRzL2NoZWNrcGF0Y2gucGwgbmV4dCB0aW1lLg0KDQpUaGFuayB5b3UgZm9yIGZpeGlu
-ZyB0aGUgY29kZSBzdHlsZSBhbmQgcXVldWluZyB0aGUgcGF0Y2ghDQoNCkFsbCB0aGUgYmVz
-dCwNClNlYW4gV2VpDQo=
+Series prevents large VM vCPUs contending on BQL due to PM|HPET timer
+access and lets it move on with boot process.
 
---------------ms060202090306000104020809
-Content-Type: application/pkcs7-signature; name="smime.p7s"
-Content-Transfer-Encoding: base64
-Content-Disposition: attachment; filename="smime.p7s"
-Content-Description: S/MIME Cryptographic Signature
+It's basically resurecting Jan's idea [2] of BQL-free IO access,
+with a twist that whitelist reads access only to minimze chances
+of [3] issues. If we hit issues later on, it might be better
+to actually find a root cause and perhaps fix guest side if
+possible. (so I tested series with a bucn of different guests
+instead, RHEL-[6..10]x64, WS2012R2, WS2016, WS2022, WS2025)
 
-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
-ITAfBgNVBAoMGEFzc2VjbyBEYXRhIFN5c3RlbXMgUy5BLjEcMBoGA1UEAwwTQ2VydHVtIFNN
-SU1FIFJTQSBDQTAeFw0yNDAyMjAxMDI0NTRaFw0yNjAyMTkxMDI0NTNaMDgxFzAVBgNVBAMM
-Dm1lQHNlYW4udGFpcGVpMR0wGwYJKoZIhvcNAQkBFg5tZUBzZWFuLnRhaXBlaTCCAiIwDQYJ
-KoZIhvcNAQEBBQADggIPADCCAgoCggIBAMgBdqaX8wyudsaj+2/4E0Nrcn9H5D2ux8KpjEef
-D7+Ae9mK/borSr7JTszEFurh3f5N+nXg0X6rr37yfXYvqWvov+Ci8PgexSPXyYLlndbsVcCO
-Ca4Y+ikG1FtswWHPkXiwsIK8VPHXQvLUgUJWKPtYxc9/wFwMupX9Ziv1V3+gzxqVfqahy+x9
-rZnpdqGvy/ITMTvrKW2qYJqp6GAQzlWlmu/VeTDN+rh4gUAKaLsJkhvDeNy44SEwX1WOqRWD
-N3RlrDj5tmlC1Ew02HbeN3T33s/KG5qN9nimo4oJXHMSrivarkIsRqLhnm+jixqTpw5I2kUK
-aE0k7O/nIZPRG3RtKhc6szZVGmqZrW3S0OJS2UpRC3CGdgmwF2jr1zC7xL11RWYQwyTMZLOr
-9vY0yz9zemNHVNlI0aEKsFqcWw81/2zi56qkl/G9veaPST4UjsMomj5zvYiUT14lpJAut25V
-rW/Q/gouSfGHtprks+FiNBBYh8qmqESJPYNT3KAhdFkQUwqwd2HVCCkstmv8+M+w+fJhSRKr
-FPCXg/Ermms7fK1kl+i9l/uOgDwVMkGV+y0BGHUUkI6XdehBpillzMkPvRWBfHBEEl6StNKn
-wKiJb70wKivclWSFnlEc+GaErKlZuGo5r3IrYKV20RpwdCOFtDlaPV7dH4CqsQt+j7jTAgMB
-AAGjggGzMIIBrzAMBgNVHRMBAf8EAjAAMEEGA1UdHwQ6MDgwNqA0oDKGMGh0dHA6Ly9jc21p
-bWVyc2FjYS5jcmwuY2VydHVtLnBsL2NzbWltZXJzYWNhLmNybDCBgwYIKwYBBQUHAQEEdzB1
-MC4GCCsGAQUFBzABhiJodHRwOi8vY3NtaW1lcnNhY2Eub2NzcC1jZXJ0dW0uY29tMEMGCCsG
-AQUFBzAChjdodHRwOi8vY3NtaW1lcnNhY2EucmVwb3NpdG9yeS5jZXJ0dW0ucGwvY3NtaW1l
-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
---------------ms060202090306000104020809--
+In my tests, with [1] CLI WS2025 guest wasn't able to boot within 30min
+on both hosts
+  * 32 core 2NUMA nodes
+  * 448 cores 8NUMA nodes
+With ACPI PM timer in BQL-free read mode, guest boots within approx:
+ * 2min
+ * 1min
+respectively.
+
+With HPET enabled boot time shrinks ~2x
+ * 4m13 -> 2m21
+ * 2m19 -> 1m15
+respectively.
+
+Using hv-time=on cpu option helps a lot (when it works) and
+lets [1] guest boot fine in ~1-2min (this series reduces
+boot time on ~10% on top of hv-time improvements).
+
+2) 196ea13104f (memory: Add global-locking property to memory regions)
+  ... de7ea885c539 (kvm: Switch to unlocked MMIO)
+3) https://bugzilla.redhat.com/show_bug.cgi?id=1322713
+  1beb99f787 (Revert "acpi: mark PMTIMER as unlocked")
+
+Igor Mammedov (3):
+  memory: reintroduce BQL-free fine-grained PIO/MMIO
+  acpi: mark PMTIMER as unlocked
+  mark HPET as unlocked
+
+ include/system/memory.h   | 10 +++++++++-
+ hw/acpi/core.c            |  2 ++
+ hw/remote/vfio-user-obj.c |  2 +-
+ hw/timer/hpet.c           |  2 ++
+ system/memory.c           |  5 +++++
+ system/memory_ldst.c.inc  | 18 +++++++++---------
+ system/physmem.c          |  9 +++++----
+ 7 files changed, 33 insertions(+), 15 deletions(-)
+
+--
+2.43.5
+
 
