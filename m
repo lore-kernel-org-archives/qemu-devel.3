@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B47BDC71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 14:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F8F4C7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 14:18:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uScUl-0001Hy-0G; Fri, 20 Jun 2025 10:13:31 -0400
+	id 1uScYU-0003Rb-MA; Fri, 20 Jun 2025 10:17:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uScUi-0001HS-D4
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:13:28 -0400
+ id 1uScYH-0003QB-KQ
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:17:13 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uScUf-0006Cx-Ki
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:13:28 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNzvV6rfYz6M4y6;
- Fri, 20 Jun 2025 22:12:38 +0800 (CST)
+ id 1uScYB-0006v9-BS
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:17:07 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNzxp5Qt1z6L5cB;
+ Fri, 20 Jun 2025 22:14:38 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 2E246140446;
- Fri, 20 Jun 2025 22:13:17 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 892DC140446;
+ Fri, 20 Jun 2025 22:16:57 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 20 Jun
- 2025 16:13:16 +0200
-Date: Fri, 20 Jun 2025 15:13:14 +0100
+ 2025 16:16:57 +0200
+Date: Fri, 20 Jun 2025 15:16:55 +0100
 To: <shiju.jose@huawei.com>
 CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
  <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>
-Subject: Re: [PATCH v2 2/7] hw/cxl/events: Updates for rev3.2 general media
- event record
-Message-ID: <20250620151314.0000535c@huawei.com>
-In-Reply-To: <20250619151619.1695-3-shiju.jose@huawei.com>
+Subject: Re: [PATCH v2 5/7] hw/cxl/cxl-mailbox-utils: Move declaration of
+ scrub and ECS feature attributes in cmd_features_set_feature()
+Message-ID: <20250620151655.00001cea@huawei.com>
+In-Reply-To: <20250619151619.1695-6-shiju.jose@huawei.com>
 References: <20250619151619.1695-1-shiju.jose@huawei.com>
- <20250619151619.1695-3-shiju.jose@huawei.com>
+ <20250619151619.1695-6-shiju.jose@huawei.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -75,156 +75,68 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Jun 2025 16:16:14 +0100
+On Thu, 19 Jun 2025 16:16:17 +0100
 <shiju.jose@huawei.com> wrote:
 
 > From: Shiju Jose <shiju.jose@huawei.com>
 > 
-> CXL spec rev3.2 section 8.2.10.2.1.1 Table 8-57, general media event
-> table has updated with following new fields.
-> 1. Advanced Programmable Corrected Memory Error Threshold Event Flags
-> 2. Corrected Memory Error Count at Event
-> 3. Memory Event Sub-Type
-> 
-> Add updates for the above spec changes in the CXL general media event
-> reporting and QMP command to inject general media event.
+> Move the declaration of scrub and ECS feature attributes in cmd_features_set_feature()
+> to the local scope where they are used.
 > 
 > Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-This has the same constraints on not changing the qemu api stuff
-in a non backwards compatible way.
 
-So make them optional parameters and fill them in with what
-we'd get if the device didn't support cme. These only really
-make sense if we have memory event type 5 anyway:
-Advanced Programmable Corrected Memory Counter Expiration
+Local scope is fine, but I'm fairly sure that style wise these
+files always use variable declarations at start of scope (except
+for when g_auto_free is in use where it gets more complex).
 
-We don't need to enforce that in the interface though.
 
-I don't mind if we do the incompatible 'counter expiry'
-and a count of 0 for a type 5 event.  We could check for that
-specific condition given the spec calls it out and reject the
-injection but perhaps we are better leaving it fully flexible
-so we can poke the OS with that invalid state.  Any real
-test paths will set it appropriately so the counter is non 0
-when we signal the event.
 
 > ---
->  hw/mem/cxl_type3.c          |  9 +++++++++
->  hw/mem/cxl_type3_stubs.c    |  3 +++
->  include/hw/cxl/cxl_events.h |  7 +++++--
->  qapi/cxl.json               | 14 +++++++++++++-
->  4 files changed, 30 insertions(+), 3 deletions(-)
+>  hw/cxl/cxl-mailbox-utils.c | 13 +++++--------
+>  1 file changed, 5 insertions(+), 8 deletions(-)
 > 
-> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
-> index 0787a9bfca..410ff445d0 100644
-> --- a/hw/mem/cxl_type3.c
-> +++ b/hw/mem/cxl_type3.c
-> @@ -1813,6 +1813,7 @@ static const QemuUUID memory_module_uuid = {
->  #define CXL_GMER_VALID_RANK                             BIT(1)
->  #define CXL_GMER_VALID_DEVICE                           BIT(2)
->  #define CXL_GMER_VALID_COMPONENT                        BIT(3)
-> +#define CXL_GMER_VALID_COMPONENT_ID_FORMAT              BIT(4)
->  
->  static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
+> diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
+> index 4d0c0b3edc..83668d7d93 100644
+> --- a/hw/cxl/cxl-mailbox-utils.c
+> +++ b/hw/cxl/cxl-mailbox-utils.c
+> @@ -1459,10 +1459,6 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>                                             CXLCCI *cci)
 >  {
-> @@ -1840,6 +1841,9 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
->                                          bool has_rank, uint8_t rank,
->                                          bool has_device, uint32_t device,
->                                          const char *component_id,
-> +                                        uint8_t cme_ev_flags,
-> +                                        uint32_t cme_count,
-> +                                        uint8_t sub_type,
->                                          Error **errp)
->  {
->      Object *obj = object_resolve_path(path, NULL);
-> @@ -1898,10 +1902,15 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
->          strncpy((char *)gem.component_id, component_id,
->                  sizeof(gem.component_id) - 1);
->          valid_flags |= CXL_GMER_VALID_COMPONENT;
-> +        valid_flags |= CXL_GMER_VALID_COMPONENT_ID_FORMAT;
->      }
+>      CXLSetFeatureInHeader *hdr = (void *)payload_in;
+> -    CXLMemPatrolScrubWriteAttrs *ps_write_attrs;
+> -    CXLMemPatrolScrubSetFeature *ps_set_feature;
+> -    CXLMemECSWriteAttrs *ecs_write_attrs;
+> -    CXLMemECSSetFeature *ecs_set_feature;
+>      CXLSetFeatureInfo *set_feat_info;
+>      uint16_t bytes_to_copy = 0;
+>      uint8_t data_transfer_flag;
+> @@ -1508,8 +1504,9 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>              return CXL_MBOX_UNSUPPORTED;
+>          }
 >  
->      stw_le_p(&gem.validity_flags, valid_flags);
+> -        ps_set_feature = (void *)payload_in;
+> -        ps_write_attrs = &ps_set_feature->feat_data;
+> +        CXLMemPatrolScrubSetFeature *ps_set_feature = (void *)payload_in;
+Move the declaration to start of scope.
+
+You can do assignment there as well as I don't think we care if we cast them
+to the wrong type as header version isn't what we think it should be.
+
+> +        CXLMemPatrolScrubWriteAttrs *ps_write_attrs =
+> +                                &ps_set_feature->feat_data;
 >  
-> +    gem.cme_ev_flags = cme_ev_flags;
-> +    st24_le_p(gem.cme_count, cme_count);
-> +    gem.sub_type = sub_type;
-> +
->      if (cxl_event_insert(cxlds, enc_log, (CXLEventRecordRaw *)&gem)) {
->          cxl_event_irq_assert(ct3d);
->      }
-> diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
-> index 263d8b4609..b2a11bded8 100644
-> --- a/hw/mem/cxl_type3_stubs.c
-> +++ b/hw/mem/cxl_type3_stubs.c
-> @@ -23,6 +23,9 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
->                                          bool has_rank, uint8_t rank,
->                                          bool has_device, uint32_t device,
->                                          const char *component_id,
-> +                                        uint8_t cme_ev_flags,
-> +                                        uint32_t cme_count,
-> +                                        uint8_t sub_type,
->                                          Error **errp) {}
+>          if ((uint32_t)hdr->offset + bytes_to_copy >
+>              sizeof(ct3d->patrol_scrub_wr_attrs)) {
+> @@ -1535,8 +1532,8 @@ static CXLRetCode cmd_features_set_feature(const struct cxl_cmd *cmd,
+>              return CXL_MBOX_UNSUPPORTED;
+>          }
 >  
->  void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint32_t flags,
-> diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
-> index 4d9cfdb621..352f9891bd 100644
-> --- a/include/hw/cxl/cxl_events.h
-> +++ b/include/hw/cxl/cxl_events.h
-> @@ -115,10 +115,10 @@ typedef struct CXLEventInterruptPolicy {
+> -        ecs_set_feature = (void *)payload_in;
+> -        ecs_write_attrs = ecs_set_feature->feat_data;
+> +        CXLMemECSSetFeature *ecs_set_feature = (void *)payload_in;
+> +        CXLMemECSWriteAttrs *ecs_write_attrs = ecs_set_feature->feat_data;
 >  
->  /*
->   * General Media Event Record
-> - * CXL r3.1 Section 8.2.9.2.1.1; Table 8-45
-> + * CXL r3.2 Section 8.2.10.2.1.1; Table 8-57
->   */
->  #define CXL_EVENT_GEN_MED_COMP_ID_SIZE  0x10
-> -#define CXL_EVENT_GEN_MED_RES_SIZE      0x2e
-> +#define CXL_EVENT_GEN_MED_RES_SIZE      0x29
->  typedef struct CXLEventGenMedia {
->      CXLEventRecordHdr hdr;
->      uint64_t phys_addr;
-> @@ -130,6 +130,9 @@ typedef struct CXLEventGenMedia {
->      uint8_t rank;
->      uint8_t device[3];
->      uint8_t component_id[CXL_EVENT_GEN_MED_COMP_ID_SIZE];
-> +    uint8_t cme_ev_flags;
-> +    uint8_t cme_count[3];
-> +    uint8_t sub_type;
->      uint8_t reserved[CXL_EVENT_GEN_MED_RES_SIZE];
->  } QEMU_PACKED CXLEventGenMedia;
->  
-> diff --git a/qapi/cxl.json b/qapi/cxl.json
-> index c38585d3c8..dd01d50c25 100644
-> --- a/qapi/cxl.json
-> +++ b/qapi/cxl.json
-> @@ -82,6 +82,16 @@
->  # @component-id: Device specific component identifier for the event.
->  #     May describe a field replaceable sub-component of the device.
->  #
-> +# @cme-ev-flags: Advanced programmable corrected memory error
-> +#     threshold event flags.
-> +#     See CXL r3.2 Table 8-57 General Media Event Record.
-> +#
-> +# @cme-count: Corrected memory error count at event.
-> +#     See CXL r3.2 Table 8-57 General Media Event Record.
-> +#
-> +# @sub-type: Memory event sub-type.
-> +#     See CXL r3.2 Table 8-57 General Media Event Record.
-> +#
->  # Since: 8.1
->  ##
->  { 'command': 'cxl-inject-general-media-event',
-> @@ -91,7 +101,9 @@
->              'dpa': 'uint64', 'descriptor': 'uint8',
->              'type': 'uint8', 'transaction-type': 'uint8',
->              '*channel': 'uint8', '*rank': 'uint8',
-> -            '*device': 'uint32', '*component-id': 'str' } }
-> +            '*device': 'uint32', '*component-id': 'str',
-> +            'cme-ev-flags':'uint8', 'cme-count':'uint32',
-> +            'sub-type':'uint8' } }
->  
->  ##
->  # @cxl-inject-dram-event:
+>          if ((uint32_t)hdr->offset + bytes_to_copy >
+>              sizeof(ct3d->ecs_wr_attrs)) {
 
 
