@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8EC9C71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 08:46:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE775C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 08:50:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSXNU-0000yt-Tm; Fri, 20 Jun 2025 04:45:41 -0400
+	id 1uSXRR-0001t9-7B; Fri, 20 Jun 2025 04:49:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSXNR-0000yY-RP; Fri, 20 Jun 2025 04:45:37 -0400
+ id 1uSXRO-0001sI-B7; Fri, 20 Jun 2025 04:49:42 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSXNO-00026I-SL; Fri, 20 Jun 2025 04:45:37 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.31])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNrb90crdz6L6Fc;
- Fri, 20 Jun 2025 16:43:01 +0800 (CST)
+ id 1uSXRM-0002KY-OZ; Fri, 20 Jun 2025 04:49:42 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNrdD4G8qz6L5JX;
+ Fri, 20 Jun 2025 16:44:48 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 3823E140417;
- Fri, 20 Jun 2025 16:45:19 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 8C75314033C;
+ Fri, 20 Jun 2025 16:49:34 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 20 Jun
- 2025 10:45:18 +0200
-Date: Fri, 20 Jun 2025 09:45:17 +0100
+ 2025 10:49:33 +0200
+Date: Fri, 20 Jun 2025 09:49:32 +0100
 To: Eric Auger <eric.auger@redhat.com>
 CC: <eric.auger.pro@gmail.com>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>, <imammedo@redhat.com>,
  <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
  <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
  <alex.bennee@linaro.org>
-Subject: Re: [PATCH v3 04/29] hw/pci-host/gpex-acpi: Add native_pci_hotplug
- arg to acpi_dsdt_add_pci_osc
-Message-ID: <20250620094517.00007eed@huawei.com>
-In-Reply-To: <20250616094903.885753-5-eric.auger@redhat.com>
+Subject: Re: [PATCH v3 05/29] tests/qtest/bios-tables-test: Prepare for
+ changes in the DSDT table
+Message-ID: <20250620094932.00000b74@huawei.com>
+In-Reply-To: <20250616094903.885753-6-eric.auger@redhat.com>
 References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-5-eric.auger@redhat.com>
+ <20250616094903.885753-6-eric.auger@redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -76,75 +76,45 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Jun 2025 11:46:33 +0200
+On Mon, 16 Jun 2025 11:46:34 +0200
 Eric Auger <eric.auger@redhat.com> wrote:
 
-> Add a new argument to acpi_dsdt_add_pci_osc to be able to disable
-> native pci hotplug.
+> From: Gustavo Romero <gustavo.romero@linaro.org>
 > 
+> This commit adds DSDT blobs to the whilelist in the prospect to
+> allow changes in the GPEX _OSC method.
+> 
+> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 > Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-After discussion on earlier version I'm now fine with this.
+
+FWIW given what this is and the involvement of foxes ;)
 
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+> 
+> ---
+> 
+> v2 -> v3:
+> - fox for microvm
 
-> 
+An excellent addition to any microvm.
+
+
+
 > ---
+>  tests/qtest/bios-tables-test-allowed-diff.h | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
-> rfc -> v1:
-> - updated the "Allow OS control for all 5 features" comment
-> ---
->  hw/pci-host/gpex-acpi.c | 15 ++++++++-------
->  1 file changed, 8 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
-> index 0aba47c71c..f34b7cf25e 100644
-> --- a/hw/pci-host/gpex-acpi.c
-> +++ b/hw/pci-host/gpex-acpi.c
-> @@ -50,7 +50,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
->      }
->  }
->  
-> -static void acpi_dsdt_add_pci_osc(Aml *dev)
-> +static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
->  {
->      Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
->  
-> @@ -77,11 +77,12 @@ static void acpi_dsdt_add_pci_osc(Aml *dev)
->      aml_append(ifctx, aml_store(aml_name("CDW3"), aml_name("CTRL")));
->  
->      /*
-> -     * Allow OS control for all 5 features:
-> -     * PCIeHotplug SHPCHotplug PME AER PCIeCapability.
-> +     * Allow OS control for SHPCHotplug, PME, AER, PCIeCapability,
-> +     * and PCIeHotplug depending on enable_native_pcie_hotplug
->       */
-> -    aml_append(ifctx, aml_and(aml_name("CTRL"), aml_int(0x1F),
-> -                              aml_name("CTRL")));
-> +    aml_append(ifctx, aml_and(aml_name("CTRL"),
-> +               aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)),
-> +               aml_name("CTRL")));
->  
->      ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(0x1))));
->      aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x08),
-> @@ -192,7 +193,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->              if (is_cxl) {
->                  build_cxl_osc_method(dev);
->              } else {
-> -                acpi_dsdt_add_pci_osc(dev);
-> +                acpi_dsdt_add_pci_osc(dev, true);
->              }
->  
->              aml_append(scope, dev);
-> @@ -267,7 +268,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
->      }
->      aml_append(dev, aml_name_decl("_CRS", rbuf));
->  
-> -    acpi_dsdt_add_pci_osc(dev);
-> +    acpi_dsdt_add_pci_osc(dev, true);
->  
->      Aml *dev_res0 = aml_device("%s", "RES0");
->      aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
+> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+> index dfb8523c8b..75f057767e 100644
+> --- a/tests/qtest/bios-tables-test-allowed-diff.h
+> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
+> @@ -1 +1,7 @@
+>  /* List of comma-separated changed AML files to ignore */
+> +"tests/data/acpi/aarch64/virt/DSDT",
+> +"tests/data/acpi/aarch64/virt/DSDT.acpihmatvirt",
+> +"tests/data/acpi/aarch64/virt/DSDT.memhp",
+> +"tests/data/acpi/aarch64/virt/DSDT.pxb",
+> +"tests/data/acpi/aarch64/virt/DSDT.topology",
+> +"tests/data/acpi/x86/microvm/DSDT.pcie",
 
 
