@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72096C7115C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B69BCC71155
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:12:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbVH-0006QI-5s; Fri, 20 Jun 2025 09:10:02 -0400
+	id 1uSbUK-0004hQ-3W; Fri, 20 Jun 2025 09:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUq-0006Ad-1D
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:09:32 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUH-0004TP-1L
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:57 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUo-0004zj-H4
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:09:31 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-45348bff79fso21175135e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:09:29 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUF-0004pi-9g
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:56 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-45348bff79fso21167535e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:08:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750424968; x=1751029768; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750424933; x=1751029733; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2ho90gmr9LBnf0X5r6n+/qD5b6A/rnGinNhmNB6fBLQ=;
- b=h5W6ZV+jJfjqLfkZoqArgbiag5+e5R0LmITY2mykPJJlfJVlhFuNlJjGm1lBrl+x6M
- StKuwhG+0oOvrvcoMq+qroCshLhH6u58I1UgscJeh4oInrrqCpZvFBAW9WaLBbMt459N
- 04Kh8Nao+O4zo82EqGb3DyW6H7JCvb1kkY9ndi1GNR5pXc4VYEKbwDF35HALDOlM0vxn
- jKvm5F8hfQuRU89RYmPVlV3qow0+cbieyLLQ4bV9dg1tV2g87WfVPGpycqR69mUNtuu6
- DBd7p2iefuBvw31hLaXHnWn+5bn+6mib57eAVWlBV4wn4CQIpql5w4Zg0AewcAmOvPku
- uEqg==
+ bh=WoXZ8Al0R/es9sXpuEKkELf4IYQr/L/uwmOyRIHiR2c=;
+ b=VJPAWiUU8ZrAI7HUR7Fh+SH22S5+wfd7ob+3W4tCfr9AIxxOm6vyCudaDtnAd88KaQ
+ s8nuVtaTGV7P58LicYxqpX0cM1BrX4MLuU0p1qkSj3cIPecwS0LE8WUvQSbjwFFSC+uU
+ K0gN+RuEQsAVLOPT0cnyVSFu8wetqnr+Srqge6+oVr9I8PVQCOUXwtgD+5GQkWGgpNEK
+ tLAGLD53njoL0jwGg6gspT0rIsg4j6WjhBQIxoosPdUfb07ptfsgs5TGeu2UCjLBT04H
+ IWh19k+LkiB5bAT1fO4nnSMLcsNgFKMf1FsGnDeCEYiPNsSeOIViXq9sVxf5EbTVPj4l
+ 1q4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750424968; x=1751029768;
+ d=1e100.net; s=20230601; t=1750424933; x=1751029733;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=2ho90gmr9LBnf0X5r6n+/qD5b6A/rnGinNhmNB6fBLQ=;
- b=q9cDXQrNPlDL+3qX4dIM1lXDSM8vckQPWJFybQ3K/DhFPlU1UBYP0jx+Q4dbCux4/c
- +TzAtHW6fiT4lT8Xy4J7aM+ndgT90UxHeS/QYwoLe1WVug0gHa3cjRJbFaMYnN/1lU7J
- /voTU7ZLcbj0rElg9pbbRFpNllS0VrNTGIGWAwx3kAuv9H8yF7/dYPxfR3TX9LikFV/4
- 1ZLaTRLUbLdZAvWNE98LiGBkutSRwT9ZL7hhb4+2MuICjBdvJh0xAQ8nNErBXEZIMrUr
- SM8Ozda+6bAfX8FaUsXzJbLfDS8F4WB/G62Qt3fwnDDnV/9I4t3KVHseqYp5oH/c6wyG
- hQag==
-X-Gm-Message-State: AOJu0YyP9krknuXuFZzLNsid5hor1Ssf2wT69Dox0eN49V2aUqjmhgSA
- CqpbxHBTUsBod4sTf88DAQYtLvw0y74pM7ivf7kTcnEz0q5dMUU7w0Fac1mW6pX8Vg//tiepI+d
- y0JmPH7I=
-X-Gm-Gg: ASbGncshav3ygEclwQujY6aXatAVcFN5dN/GI8fPhqKh7M15P7LNwSV/A4nVTzSEktL
- 3hkhO9JUnnOyXFMrSvFU64gqKF/+Lff5SgUQsjfB6+bb64SOp4IgROFAUD39XX3eAZZEl+6M8ZY
- lnSpdd0PC8jqQLoXC19YRaawK6tx/+3LkKld5HPMkmH1uswXhmAjep8HbEhtgQMbNZK0GUDaJGQ
- GYK4adYXb2JAqydbiNNupNPAu0E5hJNYWKQejLr7Kr0laFskNqTXp9RUyorsTuK3iauCf/lsHhb
- JN0/3ap5NL/5u0K+/k0x/dlb9/ip+VkrR8AUTcP5v+WqrRZQtyBR0jQiiLjJM+HdCTWJzxaByRn
- wFuJ7gjtVPXXqJ1YyfKbfH9ohUqgSRU1FdqZy
-X-Google-Smtp-Source: AGHT+IGF8bB+qSx4ZvZXQLjUAOyAVozgjbRUMGz4uRoQ08Z1w2S6A2LTzrO9vB7Kb0AUvy301GjaBg==
-X-Received: by 2002:a05:600c:4747:b0:450:d37c:9fc8 with SMTP id
- 5b1f17b1804b1-453659c0a51mr22550685e9.13.1750424968380; 
- Fri, 20 Jun 2025 06:09:28 -0700 (PDT)
+ bh=WoXZ8Al0R/es9sXpuEKkELf4IYQr/L/uwmOyRIHiR2c=;
+ b=Py/w4cOQ3ZO1zbKxOk7ELqP023okKqhlQFEb3DA0aVwdDyBYNfMJ4kTQnoNboQjrcP
+ aMEOi3PsWF0Grc3wTrKiKJ3C7yvDLEwlIPsgDf6Ot+fOoapt4tFfcxUp2hcGZzZzxikG
+ hzVTlA6pzR+DMc6convCBurnL5XMn1xCflaDjrVAXyJFZ2CJ8GPqP8v6gu1+Dz//LF1s
+ S+tc7pWFuL8R7dlMw0Kq8OjDeOEbfD8CePo/2CVSjDdGgviu8d3uLGQjrBT5+gHADCVj
+ guKTU/DDI+NZlKhjpHrWCAy6rpdj2LbCUHwapkuTDFWO5F4f4PbQsLmNoIE8PzqmrPRk
+ NoEg==
+X-Gm-Message-State: AOJu0YwA6+4VqOL+R+gT0vx2J/7NLqdNzNRW4rvQEOfM9WcSgzskN/XB
+ cFXiygvpVMonLdH5nU5JDN6lnbceIvaxRx9Glv++nLQNIJv5eo3nFPLBWdzDYA1pP+E8Uz1+0YY
+ u2nW6+Ys=
+X-Gm-Gg: ASbGnctv9jXZQBqa/Vixu6DiiUIAGPc2wYiWrS/nrEvt9V9Dybqyqw2NDeetwm7We6y
+ /a5oGF875rhW8Ywdt2Ep1+3213/TbWA9HnMMDiql2L0Ugc93x+Cn/1ZDUxfrafLQGnGJsYeC9U+
+ INsijHlhUoWiG7VhCw/qtvOu4SINmkx+5fsqcXoob1e2gjulRZfRrHAmvrUEypsdWp48TNx9mDM
+ EpuL/LmsLIo35Laofjt4c4+FRLqFPVH6RDL0zp/8JW1aYzdFqxwsR8P6hZPKOcgTQSs/ZK0Do1u
+ YMuQufvQmiuvYkia6dBKfb9wCqa1FDA4UyDijHdANlrWnAoDcTHo2VuBie7HID0omddMxwGjq25
+ PEL6LvHaVP4suz3z8858WJ+Gj1zeAa3m2va9D
+X-Google-Smtp-Source: AGHT+IGEOZJZmS9VN7oJFrBpyPnyA04MJAIvpYC6GlxrITVRrfApyBG3DfPjsMvyvrXG11kPH2vwoA==
+X-Received: by 2002:a05:600c:8b52:b0:441:b19c:96fe with SMTP id
+ 5b1f17b1804b1-453659c05e5mr32757335e9.10.1750424933502; 
+ Fri, 20 Jun 2025 06:08:53 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d1190c9asm2073452f8f.93.2025.06.20.06.09.27
+ 5b1f17b1804b1-4536470826fsm24688205e9.36.2025.06.20.06.08.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 06:09:27 -0700 (PDT)
+ Fri, 20 Jun 2025 06:08:53 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
@@ -80,18 +80,17 @@ Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 24/26] tests/functional: Require TCG to run Aarch64
- imx8mp-evk test
-Date: Fri, 20 Jun 2025 15:07:07 +0200
-Message-ID: <20250620130709.31073-25-philmd@linaro.org>
+Subject: [PATCH v2 18/26] target/arm/hvf: Trace host processor features
+Date: Fri, 20 Jun 2025 15:07:01 +0200
+Message-ID: <20250620130709.31073-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620130709.31073-1-philmd@linaro.org>
 References: <20250620130709.31073-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,25 +113,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The imx8mp-evk machine is only built when TCG is available.
+Tracing an Apple M1 (Icestorm core, ARMv8.4-A):
 
+  hvf_processor_feature_register EL0: 1
+  hvf_processor_feature_register EL1: 1
+  hvf_processor_feature_register EL2: 0
+  hvf_processor_feature_register FP: 1
+  hvf_processor_feature_register AdvSIMD: 1
+  hvf_processor_feature_register GIC: 0
+  hvf_processor_feature_register SVE: 0
+  hvf_processor_feature_register MTE: 0
+  hvf_processor_feature_register SME: 0
+
+Suggested-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- tests/functional/test_aarch64_imx8mp_evk.py | 1 +
- 1 file changed, 1 insertion(+)
+ target/arm/hvf/hvf.c        | 43 +++++++++++++++++++++++++++++++++++++
+ target/arm/hvf/trace-events |  1 +
+ 2 files changed, 44 insertions(+)
 
-diff --git a/tests/functional/test_aarch64_imx8mp_evk.py b/tests/functional/test_aarch64_imx8mp_evk.py
-index 638bf9e1310..99ddcdef835 100755
---- a/tests/functional/test_aarch64_imx8mp_evk.py
-+++ b/tests/functional/test_aarch64_imx8mp_evk.py
-@@ -49,6 +49,7 @@ def setUp(self):
-                      self.DTB_OFFSET, self.DTB_SIZE)
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 52199c4ff9d..87cd323c14d 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2160,8 +2160,51 @@ static void hvf_vm_state_change(void *opaque, bool running, RunState state)
+     }
+ }
  
-     def test_aarch64_imx8mp_evk_usdhc(self):
-+        self.require_accelerator("tcg")
-         self.set_machine('imx8mp-evk')
-         self.vm.set_console(console_index=1)
-         self.vm.add_args('-m', '2G',
++static void trace_processor_feature_register(void)
++{
++    hv_return_t ret = HV_SUCCESS;
++    hv_vcpu_exit_t *exit;
++    hv_vcpu_t fd;
++    uint64_t pfr;
++
++    if (!trace_event_get_state_backends(TRACE_HVF_PROCESSOR_FEATURE_REGISTER)) {
++        return;
++    }
++
++    /* We set up a small vcpu to extract host registers */
++    ret = hv_vcpu_create(&fd, &exit, NULL);
++    assert_hvf_ok(ret);
++
++    ret = hv_vcpu_get_sys_reg(fd, HV_SYS_REG_ID_AA64PFR0_EL1, &pfr);
++    assert_hvf_ok(ret);
++    trace_hvf_processor_feature_register("EL0",
++                                         FIELD_EX64(pfr, ID_AA64PFR0, EL0));
++    trace_hvf_processor_feature_register("EL1",
++                                         FIELD_EX64(pfr, ID_AA64PFR0, EL1));
++    trace_hvf_processor_feature_register("EL2",
++                                         FIELD_EX64(pfr, ID_AA64PFR0, EL2));
++    trace_hvf_processor_feature_register("FP",
++                                         FIELD_EX64(pfr, ID_AA64PFR0, FP));
++    trace_hvf_processor_feature_register("AdvSIMD", FIELD_EX64(pfr,
++                                         ID_AA64PFR0, ADVSIMD));
++    trace_hvf_processor_feature_register("GIC", FIELD_EX64(pfr,
++                                         ID_AA64PFR0, GIC));
++    trace_hvf_processor_feature_register("SVE", FIELD_EX64(pfr,
++                                         ID_AA64PFR0, SVE));
++
++    ret = hv_vcpu_get_sys_reg(fd, HV_SYS_REG_ID_AA64PFR1_EL1, &pfr);
++    assert_hvf_ok(ret);
++    trace_hvf_processor_feature_register("MTE",
++                                         FIELD_EX64(pfr, ID_AA64PFR1, MTE));
++    trace_hvf_processor_feature_register("SME",
++                                         FIELD_EX64(pfr, ID_AA64PFR1, SME));
++    ret = hv_vcpu_destroy(fd);
++    assert_hvf_ok(ret);
++}
++
+ int hvf_arch_init(void)
+ {
++    trace_processor_feature_register();
+     hvf_state->vtimer_offset = mach_absolute_time();
+     vmstate_register(NULL, 0, &vmstate_hvf_vtimer, &vtimer);
+     qemu_add_vm_change_state_handler(hvf_vm_state_change, &vtimer);
+diff --git a/target/arm/hvf/trace-events b/target/arm/hvf/trace-events
+index b49746f28d1..7ef75184901 100644
+--- a/target/arm/hvf/trace-events
++++ b/target/arm/hvf/trace-events
+@@ -12,3 +12,4 @@ hvf_psci_call(uint64_t x0, uint64_t x1, uint64_t x2, uint64_t x3, uint32_t cpuid
+ hvf_vgic_write(const char *name, uint64_t val) "vgic write to %s [val=0x%016"PRIx64"]"
+ hvf_vgic_read(const char *name, uint64_t val) "vgic read from %s [val=0x%016"PRIx64"]"
+ hvf_illegal_guest_state(void) "HV_ILLEGAL_GUEST_STATE"
++hvf_processor_feature_register(const char *regname, unsigned value) "%s: %u"
 -- 
 2.49.0
 
