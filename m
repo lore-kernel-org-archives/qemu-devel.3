@@ -4,89 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC5CCC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:44:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76ABAC7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSeoP-0006oi-Tb; Fri, 20 Jun 2025 12:41:57 -0400
+	id 1uSeo5-0006Zq-Bq; Fri, 20 Jun 2025 12:41:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeoO-0006lE-4Y
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uSeo2-0006Yu-5W
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeoM-0000L4-L9
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:55 -0400
+ id 1uSenz-0000Gq-UU
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437714;
+ s=mimecast20190719; t=1750437691;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=yl1rFXyPtvsbXYd9SVXPVaJzOj3OjnrKUbUoWlyChdo=;
- b=DBxFIuKIk0f7sL0WPAYpntPORfs4Q5kSuTSHnMSYOrgA2FPwq/Tlt/F2jYdleA03luJCR9
- w0npHDDmRrsqOfPBNeYqGgTsHnNuSwJ7IU7WarpXqrYan1fapjsu9Yb8106CkAlTxRRoWJ
- iHAlNOO7CJabn8zkpJkbO3mvhWpJkLk=
-Received: from mail-ed1-f69.google.com (mail-ed1-f69.google.com
- [209.85.208.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=ZbRxtT0IMJemouiEORMDGr9tGSaeLkY1c3ABjRf1eR8=;
+ b=JP8UPdnXVuIB1I2RDw1Oi73mlJQNBDdRAtf4Uul2s7y/tn4Meo5Cy3Gfb0C5iyijkC6zLl
+ RA1d8zsMRRiO3av5ZOO08nwdqKjoPX5tyJVg/9xqLmpNJaVBbM7XjxBgKi9aglraAg2wPC
+ WQ23u4jX0wq03edIWFqR9V3oGak6FzQ=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-593-o8kDJDm4PjmjA0MWnuQc2w-1; Fri, 20 Jun 2025 12:41:52 -0400
-X-MC-Unique: o8kDJDm4PjmjA0MWnuQc2w-1
-X-Mimecast-MFC-AGG-ID: o8kDJDm4PjmjA0MWnuQc2w_1750437712
-Received: by mail-ed1-f69.google.com with SMTP id
- 4fb4d7f45d1cf-60724177a1fso2028539a12.3
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:52 -0700 (PDT)
+ us-mta-604-v8-5ykeGP86BXIDR9iRdcA-1; Fri, 20 Jun 2025 12:41:16 -0400
+X-MC-Unique: v8-5ykeGP86BXIDR9iRdcA-1
+X-Mimecast-MFC-AGG-ID: v8-5ykeGP86BXIDR9iRdcA_1750437675
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-adb5f5f43dfso163930866b.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437711; x=1751042511;
+ d=1e100.net; s=20230601; t=1750437674; x=1751042474;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=yl1rFXyPtvsbXYd9SVXPVaJzOj3OjnrKUbUoWlyChdo=;
- b=EphWi1Xx9WTQUAAITRFCK/QdqXKAGKE5F48Ox+qXk9SDmeI4lyL8UiBFahsSdI2aJP
- d2G0VGSlTTlXARcVrK/nhQ/EQDZeA6kjUqTDDTN5/Cxj7H3nnyaIq8qKQBP9mA6caIdX
- UJnx4UXOX2VLhiCKvOsLFPANpHdXCvcGwxHdnLv4rEwLTmi+hhZ08Wywc9xdDQ0vXTDi
- C/yVGcnVEnEox/YG9C/HTB4Zhagrz3Xx12JTeI7MZ8ZnRCrqi+8cCeGnlvPwHVWFuKyT
- wvUF/nTctrb4XagBbtQdbGByArDEaEuheGMaIboofIv3MO45MVtevfS6j9eVINFPOm2q
- QasQ==
-X-Gm-Message-State: AOJu0YyGEtgQHf0W084QdmP1D6ORK6GDuhyL4gANmBueZvtCbefmGOoI
- tB5EYj/huo9XJ0HkxV3Lu/+1LPUHh/cUFqV0KdfyS+I1DaQYDbVzGYaQI0/vK9qCOblSePlZef/
- q+iWC4BAf38XV6Qf7/3Pe2YUZ3Xo8jvJpDikvf/x8Ut2fRk5qc9kevOWs2lABnXzrfL2tLWm02J
- vmt/afOJzauUYmr/9/ud30K2F0+O0WFrg599mDx1i0
-X-Gm-Gg: ASbGncvIkAL/P1hBodYQ7ETy60xvydCPa4NHIBn9oG4zeP8fhO7gPo28iGobEvog9Pg
- UgV+UD8yu6pW279lhpBRuELmg1Y+5SAmjnRP7petEpD3EZPd/ekPIF+ZVrE4TV+j97w/aaXytKj
- 48cxcB9AniSKUBv/+UFXiWUCAuacMs0ALnJ2nj5CLVyFGvAX/XsbsC6Zsq7tBjmuxnUYjBc+qzI
- UL/K2E0ws+5lz8Vqp004eusLa8g8BVveX3OAD0qfDW9ZgUkpcW//1/zSd96VQlxfcVKoSfZG9OJ
- 2pvwvOuJXMDxjVIc1jLP88rI+Q==
-X-Received: by 2002:a05:6402:26ca:b0:608:47ee:dc4 with SMTP id
- 4fb4d7f45d1cf-60a1cd31b60mr3003099a12.23.1750437710577; 
- Fri, 20 Jun 2025 09:41:50 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEQYOA+pZWoCsSHDbrPxRwqSYQOuWEAP/XL25oCkoRWsBmzZNi9YEneEICw1WM9dQMT5Bbd2Q==
-X-Received: by 2002:a05:6402:26ca:b0:608:47ee:dc4 with SMTP id
- 4fb4d7f45d1cf-60a1cd31b60mr3003079a12.23.1750437710111; 
- Fri, 20 Jun 2025 09:41:50 -0700 (PDT)
+ bh=ZbRxtT0IMJemouiEORMDGr9tGSaeLkY1c3ABjRf1eR8=;
+ b=o/pl0HHobNo+QbE2JIfeYXiHQJRNcGT0WVJR3d83+bA4pg3zUsiKaPfCFRcHyhN5o1
+ Njoubpc2uR9Djq1J9dBGUHngRmnTvOAbcL7FdrrDnf8m9QqIHKLKI8Jp9gEqQ3VB9InP
+ zeK3SJKTEQlnwBflp20swDjAz8R5EZZH0qZfY7WcxFq7HxYbk6cmeK1oUVdf/1xcNviW
+ d1acTlOTh5v9C0awFWVTPiig7SxBeblVhcUgdYwlYSZ/avDRUPml508nMmp8MgLRJHx7
+ 653kYccu+c3S0lSz5JYdC98Z8RlFJpxQCOzfX/UbWUtjIt+imi30BRChtUvxqC1WHnwX
+ LByg==
+X-Gm-Message-State: AOJu0YxvDiVDJsB7YwlnN5xDDu9Xdbl1feOOf3jybf+pkD0c6jiilVAG
+ xroewK14tR+9XSvJj5YnymlySO2NohLGqrdH2vAITBUU6De4YPf5R29a0QFfQji1MgEttJLXjUK
+ m77Ho42qU2wXsnSZnn6yAeMT/lqL2EZSHiOKvuD3sdfuBSkOLRlgcy/aXke+2wriMkVdVwSV9hd
+ XobWFIvFXx1A1PTJx5DnnsRpAHB1oL1n4U1hxiAHyD
+X-Gm-Gg: ASbGncvySDOnoaYHAePvN3YfJK3n5ywYRItonS82iqFEqRoFTGnxLtIg/MhA4PsYleE
+ +x5k+5vTgIWtLgzUQ/Uy4+WIHYieh8iY46yAY7o70xqMRENxAdiYgl2FygNc6uUa96Hy7LALuYo
+ hYAU7ilpw80kTEeKs0R/wJq6lxollkSaSqIgfs9Y6EZMkCmkRdVP1/wm7nPROuW9UFmIul6/oVV
+ CtENLedXHIPTUc5mF3NfxMzojZrF0shZ3snOGQA1MtwNbdjfFu3exWPize/IqIDWY58ioGdWhFB
+ 1hZ6ZMYGzYCQ+1QlkMmNAq347w==
+X-Received: by 2002:a17:907:9715:b0:ad8:9b5d:2c38 with SMTP id
+ a640c23a62f3a-ae057d4d2a3mr350810166b.26.1750437674302; 
+ Fri, 20 Jun 2025 09:41:14 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEjeaEMwqFfV9E8dSGQzWMqgp1qiygxRbnsjANyqiuxT+7P/gN4UDB8YsHXsV67tXWKOMAZGQ==
+X-Received: by 2002:a17:907:9715:b0:ad8:9b5d:2c38 with SMTP id
+ a640c23a62f3a-ae057d4d2a3mr350807566b.26.1750437673789; 
+ Fri, 20 Jun 2025 09:41:13 -0700 (PDT)
 Received: from [192.168.122.1] ([151.62.200.93])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60a1857e8f9sm1641292a12.32.2025.06.20.09.41.47
+ a640c23a62f3a-ae054209a2dsm190213166b.174.2025.06.20.09.41.11
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:41:48 -0700 (PDT)
+ Fri, 20 Jun 2025 09:41:11 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-Subject: [PULL 20/24] i386/tdx: Fix the typo of the comment of struct TdxGuest
-Date: Fri, 20 Jun 2025 18:40:48 +0200
-Message-ID: <20250620164053.579416-21-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 07/24] rust: qom: introduce ParentInit
+Date: Fri, 20 Jun 2025 18:40:35 +0200
+Message-ID: <20250620164053.579416-8-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
 References: <20250620164053.579416-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -111,36 +108,130 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+This is a smart pointer for MaybeUninit; it can be upcasted to the
+already-initialized parent classes, or dereferenced to a MaybeUninit
+for the class that is being initialized.
 
-Change sha348 to sha384.
-
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Link: https://lore.kernel.org/r/20250603050305.1704586-3-xiaoyao.li@intel.com
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/kvm/tdx.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ rust/qemu-api/src/qom.rs | 96 +++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 95 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
-index 04b5afe199f..8dd66e90149 100644
---- a/target/i386/kvm/tdx.h
-+++ b/target/i386/kvm/tdx.h
-@@ -40,9 +40,9 @@ typedef struct TdxGuest {
-     bool initialized;
-     uint64_t attributes;    /* TD attributes */
-     uint64_t xfam;
--    char *mrconfigid;       /* base64 encoded sha348 digest */
--    char *mrowner;          /* base64 encoded sha348 digest */
--    char *mrownerconfig;    /* base64 encoded sha348 digest */
-+    char *mrconfigid;       /* base64 encoded sha384 digest */
-+    char *mrowner;          /* base64 encoded sha384 digest */
-+    char *mrownerconfig;    /* base64 encoded sha384 digest */
+diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
+index 14f98fee60a..ef966e570ca 100644
+--- a/rust/qemu-api/src/qom.rs
++++ b/rust/qemu-api/src/qom.rs
+@@ -95,7 +95,7 @@
+ use std::{
+     ffi::{c_void, CStr},
+     fmt,
+-    mem::ManuallyDrop,
++    mem::{ManuallyDrop, MaybeUninit},
+     ops::{Deref, DerefMut},
+     ptr::NonNull,
+ };
+@@ -206,6 +206,100 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
+     }
+ }
  
-     MemoryRegion *tdvf_mr;
-     TdxFirmware tdvf;
++/// This struct knows that the superclasses of the object have already been
++/// initialized.
++pub struct ParentInit<'a, T>(&'a mut MaybeUninit<T>);
++
++impl<'a, T> ParentInit<'a, T> {
++    #[inline]
++    pub fn with(obj: &'a mut MaybeUninit<T>, f: impl FnOnce(ParentInit<'a, T>)) {
++        let parent_init = ParentInit(obj);
++        f(parent_init)
++    }
++}
++
++impl<T: ObjectType> ParentInit<'_, T> {
++    /// Return the receiver as a mutable raw pointer to Object.
++    ///
++    /// # Safety
++    ///
++    /// Fields beyond `Object` could be uninitialized and it's your
++    /// responsibility to avoid that they're used when the pointer is
++    /// dereferenced, either directly or through a cast.
++    pub fn as_object_mut_ptr(&self) -> *mut bindings::Object {
++        self.as_object_ptr().cast_mut()
++    }
++
++    /// Return the receiver as a mutable raw pointer to Object.
++    ///
++    /// # Safety
++    ///
++    /// Fields beyond `Object` could be uninitialized and it's your
++    /// responsibility to avoid that they're used when the pointer is
++    /// dereferenced, either directly or through a cast.
++    pub fn as_object_ptr(&self) -> *const bindings::Object {
++        self.0.as_ptr().cast()
++    }
++}
++
++impl<'a, T: ObjectImpl> ParentInit<'a, T> {
++    /// Convert from a derived type to one of its parent types, which
++    /// have already been initialized.
++    ///
++    /// # Safety
++    ///
++    /// Structurally this is always a safe operation; the [`IsA`] trait
++    /// provides static verification trait that `Self` dereferences to `U` or
++    /// a child of `U`, and only parent types of `T` are allowed.
++    ///
++    /// However, while the fields of the resulting reference are initialized,
++    /// calls might use uninitialized fields of the subclass.  It is your
++    /// responsibility to avoid this.
++    pub unsafe fn upcast<U: ObjectType>(&self) -> &'a U
++    where
++        T::ParentType: IsA<U>,
++    {
++        // SAFETY: soundness is declared via IsA<U>, which is an unsafe trait;
++        // the parent has been initialized before `instance_init `is called
++        unsafe { &*(self.0.as_ptr().cast::<U>()) }
++    }
++
++    /// Convert from a derived type to one of its parent types, which
++    /// have already been initialized.
++    ///
++    /// # Safety
++    ///
++    /// Structurally this is always a safe operation; the [`IsA`] trait
++    /// provides static verification trait that `Self` dereferences to `U` or
++    /// a child of `U`, and only parent types of `T` are allowed.
++    ///
++    /// However, while the fields of the resulting reference are initialized,
++    /// calls might use uninitialized fields of the subclass.  It is your
++    /// responsibility to avoid this.
++    pub unsafe fn upcast_mut<U: ObjectType>(&mut self) -> &'a mut U
++    where
++        T::ParentType: IsA<U>,
++    {
++        // SAFETY: soundness is declared via IsA<U>, which is an unsafe trait;
++        // the parent has been initialized before `instance_init `is called
++        unsafe { &mut *(self.0.as_mut_ptr().cast::<U>()) }
++    }
++}
++
++impl<T> Deref for ParentInit<'_, T> {
++    type Target = MaybeUninit<T>;
++
++    fn deref(&self) -> &Self::Target {
++        self.0
++    }
++}
++
++impl<T> DerefMut for ParentInit<'_, T> {
++    fn deref_mut(&mut self) -> &mut Self::Target {
++        self.0
++    }
++}
++
+ unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut bindings::Object) {
+     let mut state = NonNull::new(obj).unwrap().cast::<T>();
+     // SAFETY: obj is an instance of T, since rust_instance_init<T>
 -- 
 2.49.0
 
