@@ -4,101 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F06A7C71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:10:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD186C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbUj-00063g-5K; Fri, 20 Jun 2025 09:09:25 -0400
+	id 1uSbSd-0002Ig-2J; Fri, 20 Jun 2025 09:07:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUe-00060Y-FC
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:09:20 -0400
-Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUc-0004wU-HY
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:09:20 -0400
-Received: by mail-wr1-x431.google.com with SMTP id
- ffacd0b85a97d-3a50fc819f2so1494930f8f.2
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:09:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750424956; x=1751029756; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=tlzGRKm85UWY2+8yyhfs+sQBrY+hIXBP3ETvuuIJ2dg=;
- b=Pht7qKYbs4PNh3+1sfSzreFNcmsSlficbWNgEYaQqnMWJ53RYjmk4ycvkeJn8SnAKp
- U4IKxlgwjv4ppwiiLvNSkjkoWRO0fHrqLjfM+MmYkIgo9q76syP1NOFY36uh2DMksbzQ
- cGyROTZianVReO27rd3vXGy5jnNx2p+aM7LBXJR91LkPPvV0Pfjb4jXcuAmKu5mfPVwJ
- eQUEpQI2sn6gLVMyPjq5G1YNYHwZMAjumEGddl/Rkk9q02NOSjdrZ1a446k/tz0n8kFS
- X81pjBD44jE07f2w7P9DEUzNXOTik9VQsMGaWnB2LHrqV4Gr9P2IdlvegGcyUnoEldhE
- ODVA==
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uSbST-0002Hs-Of
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
+ id 1uSbSQ-0004S6-KE
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:05 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750424815;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=VCPugQeYEJztwx9I+h2+DYZRCQdWluxXl/h618kyee0=;
+ b=R/RmmU6vIDyWmGrs6T4hGHb4U+bueyshLaV/CzbvpCBARPG7ximM07CP18U/AeuuvO3T85
+ tLQoFIFtw8Fo8xLxoMbN9CFCQmNjGEbbSZxIhhxwFoFPZeW2lWmNpPlnvhLuYRLKcEOQZy
+ ZcWOfEpqiMyBM4svI7tjIKyvlsc9Km4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-530-GeVfLypPOjOM9_DhtkZmCA-1; Fri, 20 Jun 2025 09:06:53 -0400
+X-MC-Unique: GeVfLypPOjOM9_DhtkZmCA-1
+X-Mimecast-MFC-AGG-ID: GeVfLypPOjOM9_DhtkZmCA_1750424812
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-3a4eec544c6so972007f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:06:53 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750424956; x=1751029756;
+ d=1e100.net; s=20230601; t=1750424812; x=1751029612;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=tlzGRKm85UWY2+8yyhfs+sQBrY+hIXBP3ETvuuIJ2dg=;
- b=oS/udG7MJ4W+88Z5MLtxG5t/uIqC+Sxt1wc0t3JOa9dnD3z+dFJ8RMNnnJZbFVaOYD
- /24bIaDG3R63DWbTJheuGIGuzBS2dI7fApmt6z340tZtUnOPfawbyWZ96o/AYrcST+Hu
- 73wHUCy9T7e4nY9+Z4cAg8pgDF4WGDrYg537s8PiEqoyGfQ5DAZMdMN9dfv8o1aQEB95
- it/W9TiRqbT6L4ugmxTtN5qKaSzlJrNrhNAwwIu4RLdfvDeSYPfW7M/iNna+jshwUmP2
- zQCvUqUipfKz4Ef+XT+fS4cnCBA7COI5DZvxhg+mVOp6jGfCel3TeKS+xVRd7cr/VBvE
- bpdg==
-X-Gm-Message-State: AOJu0YzM4z5DuwwhLkdIncXEiRW7nHpCTHPumXhwsVY+7tkxxCC9e/Xt
- A0LNAIcZqxRg39ypb7MQsYdQMFtcKb9lD71nKLmtf9xNhJcAJWwbDOppAbUc1kcVabWp3Y99Rpv
- 8I+69cys=
-X-Gm-Gg: ASbGncsIA83Ym5x+DAYcSMeh4DCF5ozD27RWNsPXZo9zM2/QQ48+FsN0SgfpSMW0H/D
- +lmuC/yct9uWK215F8KoQ0fuYArKFVRuU0LQ3nAsClUymw/e9HSAQ54Jue5bO3ucJ0xColVEE7p
- C6GfLoFKDi1UF6Ss4zYupkTVR/fZMx/eZj6VvuSK72VCsQN1wqhB4nOqp1L/Kw+H6FafrVFhIRx
- s8VvNMgvDrzmBnZJnJLSStCZFyxNuqx91g5ge/vBfWPDZ5Knw1IqjgjyQuu/jEfuLfpIkpyvDJ4
- VxSXdlWUi6JOgChO4VpQ+uhTSeySOh0vfT6rsaDz660YRN4+dQphsROUVOHSQq6BD34FjVUgy+l
- UFGo21PywnP4aAEJ5ygniprKHnis7RgB/8rFB
-X-Google-Smtp-Source: AGHT+IF5uD/3snOQ4X+aLRPk1Xt/Xd4ZmVTTd6N1+20oIyEGbROy1hmGwi9rA/PwtOTLyfKem3s2JA==
-X-Received: by 2002:a05:6000:248a:b0:3a5:2fae:1348 with SMTP id
- ffacd0b85a97d-3a6d13129c6mr2233188f8f.51.1750424956479; 
- Fri, 20 Jun 2025 06:09:16 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d2236452sm1791926f8f.59.2025.06.20.06.09.15
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 06:09:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Radoslaw Biernacki <rad@semihalf.com>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Bernhard Beschow <shentey@gmail.com>, Cleber Rosa <crosa@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Cameron Esfahani <dirty@apple.com>, kvm@vger.kernel.org,
- qemu-arm@nongnu.org, Eric Auger <eric.auger@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
- John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 22/26] hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB
- definition
-Date: Fri, 20 Jun 2025 15:07:05 +0200
-Message-ID: <20250620130709.31073-23-philmd@linaro.org>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250620130709.31073-1-philmd@linaro.org>
-References: <20250620130709.31073-1-philmd@linaro.org>
+ bh=VCPugQeYEJztwx9I+h2+DYZRCQdWluxXl/h618kyee0=;
+ b=Poalyc3En0Nh8/InKHnt14Rr8Od13eLe25PP/NdIYu1A46I6W6rAR8QJSSg9YobBwy
+ O8qEwbwbJuRWU/XKPmEbL4FCVtJQBgtMoiiuBwKfVHfXqTK1k+HTudiE0atz6I3jFr5v
+ UDVqFEZKWmo0yGYwUZeFbMqc+21/jANmbpdAuEEaUzzGPW2DYkbdJk4hyFL6i6nYa2Os
+ QtTZViuk4XKwZRFDQCTnWThhWEoYW0pHrZ+rQld8TIYa+AGPwfP1cvYRBar0KYrhLrdP
+ PqUY3Mtt65H0Px/liT5XyhcduhLC3bn8EmRLJQYkHym2Hqb8Q2Jb7mq08rwwS9o5CIoY
+ jznw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULzVyI8kEqc89xT0GAJDcx4aiANxHGdp6U8aYba7zGCVTRRWB4AKp6rOin+R2AbvBv1mCPjdCZg2uq@nongnu.org
+X-Gm-Message-State: AOJu0YzUN05XSxeCJ3YodsTjIj4TXV7eeCcelS/d+grpM1QWKznYUHmS
+ 6bT/OOUfOISNm+oEar56TDtLfKV9uJOIFuSQ6ZqxmHPs/MGxzlD3aAxs8/o9ofFOfTY1AheWJw6
+ uPeNgaATQAvB//JF+R96dL1SPKe/lpVka0Rpz9uZPgFeCGGcmzNvqkSqL
+X-Gm-Gg: ASbGncvFVKBNeZejvd8OEk5QNUk+H6dovZ5QREBSponJHaPxQwvQmWFhL7dEYWvPcwY
+ ZAfjeu9zP0teIC5cXUaFS0ZnBLVGf5rVL5hLlGuRrcUUYYb6ZcaXs0Nyiaqe90GOME30wPoXpqt
+ ZQXsDh901Wh9m1agv4YnDVPdE8NzDkdiOjiqMTprvIFZOdtQdqeA61mD9T4GVbbth1434P6bv/p
+ T3kve5mqcJiJSq75dBxt9XE9awaOuw5IW0a+bU+V2jmslB9b+AoxXImApWk2ck2SvUDN6cZkWIP
+ u3Z03otKVvIQ
+X-Received: by 2002:a05:6000:3103:b0:3a5:58a5:6a83 with SMTP id
+ ffacd0b85a97d-3a6d13013eemr2635362f8f.13.1750424810819; 
+ Fri, 20 Jun 2025 06:06:50 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFge7Awv1P1VVAhisMZcx63sdih8ExUZZAl1or6KIRrJ+raw9Lchx23v9UKWOdXWuh2N3FBcg==
+X-Received: by 2002:a05:6000:3103:b0:3a5:58a5:6a83 with SMTP id
+ ffacd0b85a97d-3a6d13013eemr2635314f8f.13.1750424810401; 
+ Fri, 20 Jun 2025 06:06:50 -0700 (PDT)
+Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d1190b00sm1977849f8f.87.2025.06.20.06.06.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 20 Jun 2025 06:06:49 -0700 (PDT)
+Date: Fri, 20 Jun 2025 15:06:48 +0200
+From: Igor Mammedov <imammedo@redhat.com>
+To: Eric Auger <eric.auger@redhat.com>
+Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
+ mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
+ Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
+Subject: Re: [PATCH v3 25/29] hw/arm/virt: Let virt support pci
+ hotplug/unplug GED event
+Message-ID: <20250620150648.09dab163@fedora>
+In-Reply-To: <20250616094903.885753-26-eric.auger@redhat.com>
+References: <20250616094903.885753-1-eric.auger@redhat.com>
+ <20250616094903.885753-26-eric.auger@redhat.com>
+X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::431;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,51 +114,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define RAMLIMIT_BYTES using the TiB definition and display
-the error parsed with size_to_str():
+On Mon, 16 Jun 2025 11:46:54 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
 
-  $ qemu-system-aarch64-unsigned -M sbsa-ref -m 9T
-  qemu-system-aarch64-unsigned: sbsa-ref: cannot model more than 8 TiB of RAM
+> Set up the IO registers used to communicate between QEMU
+> and ACPI.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> 
+> ---
+> v2 -> v3:
+> - remove acpi_ged_state->pcihp_state.use_acpi_hotplug_bridge = true;
+> - use sysbus_mmio_map_name for all regs (Igor)
+> - create_pcie left at its original place
+> 
+> v1 -> v2:
+> - use ACPI_PCIHP_REGION_NAME
+> ---
+>  include/hw/acpi/generic_event_device.h |  1 +
+>  hw/arm/virt.c                          | 19 +++++++++++++++++--
+>  2 files changed, 18 insertions(+), 2 deletions(-)
+> 
+> diff --git a/include/hw/acpi/generic_event_device.h b/include/hw/acpi/generic_event_device.h
+> index ec8e1abe0a..8f5d903146 100644
+> --- a/include/hw/acpi/generic_event_device.h
+> +++ b/include/hw/acpi/generic_event_device.h
+> @@ -111,6 +111,7 @@ typedef struct GEDState {
+>  } GEDState;
+>  
+>  #define ACPI_PCIHP_REGION_NAME "pcihp container"
+> +#define ACPI_MEMHP_REGION_NAME "memhp container"
+>  
+>  struct AcpiGedState {
+>      SysBusDevice parent_obj;
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 41be8f6dbb..8c882e0794 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -684,6 +684,8 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>      DeviceState *dev;
+>      MachineState *ms = MACHINE(vms);
+>      SysBusDevice *sbdev;
+> +    AcpiGedState *acpi_ged_state;
+> +    AcpiPciHpState *pcihp_state;
+>      int irq = vms->irqmap[VIRT_ACPI_GED];
+>      uint32_t event = ACPI_GED_PWR_DOWN_EVT;
+>  
+> @@ -696,13 +698,26 @@ static inline DeviceState *create_acpi_ged(VirtMachineState *vms)
+>      }
+>  
+>      dev = qdev_new(TYPE_ACPI_GED);
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/arm/sbsa-ref.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+> +    acpi_ged_state = ACPI_GED(dev);
+> +    pcihp_state = &acpi_ged_state->pcihp_state;
+> +    if (pcihp_state->use_acpi_hotplug_bridge) {
+> +        event |= ACPI_GED_PCI_HOTPLUG_EVT;
+> +    }
 
-diff --git a/hw/arm/sbsa-ref.c b/hw/arm/sbsa-ref.c
-index deae5cf9861..15c1ff4b140 100644
---- a/hw/arm/sbsa-ref.c
-+++ b/hw/arm/sbsa-ref.c
-@@ -19,6 +19,7 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/cutils.h"
- #include "qemu/datadir.h"
- #include "qapi/error.h"
- #include "qemu/error-report.h"
-@@ -53,8 +54,7 @@
- #include "target/arm/cpu-qom.h"
- #include "target/arm/gtimer.h"
- 
--#define RAMLIMIT_GB 8192
--#define RAMLIMIT_BYTES (RAMLIMIT_GB * GiB)
-+#define RAMLIMIT_BYTES (8 * TiB)
- 
- #define NUM_IRQS        256
- #define NUM_SMMU_IRQS   4
-@@ -756,7 +756,9 @@ static void sbsa_ref_init(MachineState *machine)
-     sms->smp_cpus = smp_cpus;
- 
-     if (machine->ram_size > sbsa_ref_memmap[SBSA_MEM].size) {
--        error_report("sbsa-ref: cannot model more than %dGB RAM", RAMLIMIT_GB);
-+        char *size_str = size_to_str(RAMLIMIT_BYTES);
-+
-+        error_report("sbsa-ref: cannot model more than %s of RAM", size_str);
-         exit(1);
-     }
- 
--- 
-2.49.0
+Doesn't it belong to ged_realize()?
+
+>      qdev_prop_set_uint32(dev, "ged-event", event);
+>      object_property_set_link(OBJECT(dev), "bus", OBJECT(vms->bus), &error_abort);
+>      sbdev = SYS_BUS_DEVICE(dev);
+>      sysbus_realize_and_unref(sbdev, &error_fatal);
+>  
+> -    sysbus_mmio_map(sbdev, 0, vms->memmap[VIRT_ACPI_GED].base);
+> -    sysbus_mmio_map(sbdev, 1, vms->memmap[VIRT_PCDIMM_ACPI].base);
+> +    sysbus_mmio_map_name(sbdev, TYPE_ACPI_GED, vms->memmap[VIRT_ACPI_GED].base);
+> +    sysbus_mmio_map_name(sbdev, ACPI_MEMHP_REGION_NAME,
+> +                         vms->memmap[VIRT_PCDIMM_ACPI].base);
+> +    if (pcihp_state->use_acpi_hotplug_bridge) {
+
+like elsewhere, use property accessor
+
+> +        int pcihp_region_index;
+> +
+> +        pcihp_region_index = sysbus_mmio_map_name(sbdev, ACPI_PCIHP_REGION_NAME,
+> +                                                  vms->memmap[VIRT_ACPI_PCIHP].base);
+> +        assert(pcihp_region_index >= 0);
+> +    }
+>      sysbus_connect_irq(sbdev, 0, qdev_get_gpio_in(vms->gic, irq));
+>  
+>      return dev;
 
 
