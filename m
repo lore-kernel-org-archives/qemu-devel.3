@@ -4,65 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A84C7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:11:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9722AC7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:11:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbTA-0002Pu-2Z; Fri, 20 Jun 2025 09:07:48 -0400
+	id 1uSbSh-0002JT-1R; Fri, 20 Jun 2025 09:07:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbT5-0002PV-0u
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:43 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbSf-0002J3-2T
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:17 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbT3-0004XH-Gw
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:42 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-451ebd3d149so11651025e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:07:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbSd-0004U0-3J
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:16 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-3a53359dea5so1048946f8f.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:07:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750424860; x=1751029660; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XksfEnABhqse0vfJxYZJ+Lf0uyahV9aipIl1Sny7z0o=;
- b=UBwtG0MudX4paiA7gOqGytVjb/JBmLANjQuB1aKXFyqhMJFF7GYAvtkxI4VsYosuIU
- eW1219lN4RME1JE/9lbiOnFmJ5lPIBcKtvJ3ISTEYLuqz776gdbGzjC2Mhu93UT3TBxi
- 3sEmdeBXbNDT/4xrOZ4isfWIusul6IGI74XnkWgv0Z354xutGYP1+40gE7i3nqqjbcKH
- zsz8JEzYUG91A6zdR1qV9dXjRwo2QKgRCh93lYUsiIxWD05TF84em0ezhGdUkIiBMVNY
- m2X2mX0qSpchbTEnyeL4emsEAJYAybzOYnScDoyUs01AyHm+eYPyPyjKC0JP5AJORDVf
- SK3g==
+ d=linaro.org; s=google; t=1750424832; x=1751029632; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=+QJmU5PBg2tZeWfZeXKYOSoau8zVaAF0qlZsb030HdQ=;
+ b=cOblI3HebgHlpfnOSsV96ssafJjQK+UTt8b+PwtULW1nSCaulLh+ZgQfHSM9g+sxgq
+ ClTG8YprVtFqSzJo9phQvWZ2qlTpK2ljUJcKnhemHscvSozn7jBB9H9WMdDqlgFXTKz1
+ y2HqEpT8HGSs7L13gIHLVGCjRA3WQck71GA8bIsng7bkXNjZ/w5L1zroaQFQTcikhPbR
+ /8jUWiqjA+GEOFg9cRCG8SS3vbYrN/rdNhzXUVVAP2tFAvBSCmEYZnrrjIyXmgRoL5yA
+ LEVwd9thYc662MV1ni/H2rO/9O5QvP7c9wO23jB3rPtn/3a3UHWYCALI/1ljxZ04Hr94
+ ILyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750424860; x=1751029660;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=XksfEnABhqse0vfJxYZJ+Lf0uyahV9aipIl1Sny7z0o=;
- b=pYCS4+Yd1o8Rc3Jcn4fzLwxHsCwFYAa8LTGFI5lfeecuqFEqJpgYs8BhRQQpVj8XUz
- oXuBedszppZvQnFJq/uWdNyAxm87JynqpklSN4yn3mPkPfdQmmhgATjlWx2k4m0EyUjM
- wzyM31cSjnuJEi55rmECL8u/H9MyTI++P8lon3yHE1/n6wj55V2JBpz7vEAiRhvAFEhi
- fX2pOmxhsME6Q/ZkL/Y//SWT1OwTZDfLXLMq16JBTbeMkHoC+6e0PXEsIiejO9Xw7eVE
- mtBzb9GOW7QphtBcJzUkGwd+EMhReQnalrCsLSSD4doIq8MJsUhwa5ndzvLnxp3jgnU+
- ZPfQ==
-X-Gm-Message-State: AOJu0Yzk4yQfduAFsvmpnuHQGZX2qgRmCIMtSva/GETHOO60CBoQH7Fo
- L67VHNT0zi8KljKTGAm1quxHUCOQGB1Y7Cp9mBmi3a22Xj3H2qxWMxRuc+i7/gzWDZYDuSx3Ykn
- AMistKhA=
-X-Gm-Gg: ASbGncusJbl/KemDfGvd87HZlM+T3IPklt1lh2iA7ECbe6pltjszu9MPKqVkPbedyuO
- D+WVUKXIYNQySXxFqmiAch+2/BSuGk2osJggJ7Zxuj1DltxhXNyQzDlO7ujpfxU9dL55R9oIl/m
- rW4cJfRtrjTe7fDvbvlL7C/ne+NHVI1QOnxSzWlAiCKrC65fzKTVYq2maRwO7mfwdjViNzo7Wpj
- Y4IN5XpPLQ+3rSlWpolMXdfQypnCcX6WP2N2DhDebUL0pZBRgyAoKF7tnfLpXZnAzluLAagt9df
- wuhvnaoa+euuNs2UOYKX/KbBZM1MBKxPtK5G8yVztQGY+o41JcStBQ8VmIq9i5NPOWJBZD+6Dx5
- 9slvsG/hk5Npr6EQF0qBFSzLpOi0FW0krRZan
-X-Google-Smtp-Source: AGHT+IE/7BsLb9TONAHrydupa8DFXSIV1OrSggLSDyPpvWjke04D0dS/jXyuRBj9Ay/VLjM8ny9caw==
-X-Received: by 2002:a05:600c:c103:b0:43c:fffc:786c with SMTP id
- 5b1f17b1804b1-45368787924mr6185275e9.19.1750424859628; 
- Fri, 20 Jun 2025 06:07:39 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750424832; x=1751029632;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+QJmU5PBg2tZeWfZeXKYOSoau8zVaAF0qlZsb030HdQ=;
+ b=Dh3w8xdoVhQB32KOP8vXMdCmF89GDPX90k++nA+ydpKK6n7ioS5s6SStSqSDsOXylG
+ 4EiqsBmM5I9xszLEi4dwwbsyjWXfSlLR5V+J0gnJ370QZQ2u1wgAmj6x73ghl3AaxXDG
+ Ihq7mmNOr1hybw/qo/WpabKTXfCLkzVLLZNCnoOWdXe7uZDR/M51pQUrjpkOFBXhmIqL
+ 3+nY1sa6pCAE+n/lu42ceku6Qcz2iiSYQAViAwG37Hw1zzokkFRV+tcxPgn9np1qUMYj
+ RJp1ty/jVkvg/8W5ynOK9C5JkTc7h9K0y4aSCNh042RGBfz1mRu7v6/fylzO+MjkBnrS
+ ErQw==
+X-Gm-Message-State: AOJu0YzkzYPwStXG/Tvu4/T2oMlzUSopnSR+EVyMOW+3x+MO6fcUBLe0
+ U0lyyLR5CfzcJf+SfoHlWTuV2qlRTXUGAz/zqYEbZ3fVVpT+BwrNdNtT1p7uGDWt2ujnCfQ2cmP
+ JmK1EnC4=
+X-Gm-Gg: ASbGncs5frF/XAgF5Q7TwXqCf2ndZmAcd0vnaA7XbmsRICL4kQaYlOaRpHAeALFwunk
+ 9aNh6BqA40HCqqgGNNc+S3BbT74ilshom9rv0TdAQBtayb3bTKThr1WeR5q1h07zHpNgpriLJz2
+ adoGXTm83S6V//Cz0rM28ipP6384Sy6mJhhu6GTxOnRmm/FRrN9gk6z2ud8l0GSXGt+6Q21+iTA
+ vC83yPR01oWZO35cyDQNBUZTOjUuzL8vgkymPx7RcO5USVRZaxNA3Frk7x6LQ0XoJ1TqCKgUybe
+ NMdi4nNJEtx8kpqGTZ8CX/6/ngpBmyXqHIwG8N7fXVSm5Kb1xoMNJKHf2UsrBb4DrdqviActl1n
+ HeyUth/v91+44YNveXRkU1/boezAiuCSvHNVb
+X-Google-Smtp-Source: AGHT+IEJ9h5ss6DQ9nbsYss8UAzQAQ33xR7PMaeHXiIi1steBknP4WF0eD2p4PDUPBMV6vbuu4kWIQ==
+X-Received: by 2002:a05:6000:23c3:b0:3a4:f744:e00c with SMTP id
+ ffacd0b85a97d-3a6d130452fmr1797673f8f.29.1750424831952; 
+ Fri, 20 Jun 2025 06:07:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535eac8edbsm58978705e9.24.2025.06.20.06.07.38
+ 5b1f17b1804b1-453646dc66fsm24751975e9.18.2025.06.20.06.07.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 06:07:39 -0700 (PDT)
+ Fri, 20 Jun 2025 06:07:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
@@ -80,18 +79,15 @@ Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 05/26] target/arm/hvf: Directly re-lock BQL after
- hv_vcpu_run()
-Date: Fri, 20 Jun 2025 15:06:48 +0200
-Message-ID: <20250620130709.31073-6-philmd@linaro.org>
+Subject: [PATCH v2 00/26] arm: Fixes and preparatory cleanups for split-accel
+Date: Fri, 20 Jun 2025 15:06:43 +0200
+Message-ID: <20250620130709.31073-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250620130709.31073-1-philmd@linaro.org>
-References: <20250620130709.31073-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,36 +110,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Keep bql_unlock() / bql_lock() close.
+Since v1:
+- Addressed rth's review comments
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- target/arm/hvf/hvf.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+Omnibus series of ARM-related patches (noticed during the
+"split accel" PoC work).
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index c1ed8b510db..ef76dcd28de 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -1914,7 +1914,9 @@ int hvf_vcpu_exec(CPUState *cpu)
-     flush_cpu_state(cpu);
- 
-     bql_unlock();
--    assert_hvf_ok(hv_vcpu_run(cpu->accel->fd));
-+    r = hv_vcpu_run(cpu->accel->fd);
-+    bql_lock();
-+    assert_hvf_ok(r);
- 
-     /* handle VMEXIT */
-     uint64_t exit_reason = hvf_exit->reason;
-@@ -1922,7 +1924,6 @@ int hvf_vcpu_exec(CPUState *cpu)
-     uint32_t ec = syn_get_ec(syndrome);
- 
-     ret = 0;
--    bql_lock();
-     switch (exit_reason) {
-     case HV_EXIT_REASON_EXCEPTION:
-         /* This is the main one, handle below. */
+- Usual prototypes cleanups
+- Check TCG for EL2/EL3 features (and not !KVM or !HVF)
+- Improve HVF debugging
+- Correct HVF 'dtb_compatible' value for Linux
+- Fix HVF GTimer frequency (My M1 hardware has 24 MHz)
+  (this implies accel/ rework w.r.t. QDev vCPU REALIZE)
+- Expand functional tests w.r.t. HVF
+
+Regards,
+
+Phil.
+
+Philippe Mathieu-Daudé (26):
+  target/arm: Remove arm_handle_psci_call() stub
+  target/arm: Reduce arm_cpu_post_init() declaration scope
+  target/arm: Unify gen_exception_internal()
+  target/arm/hvf: Simplify GIC hvf_arch_init_vcpu()
+  target/arm/hvf: Directly re-lock BQL after hv_vcpu_run()
+  target/arm/hvf: Trace hv_vcpu_run() failures
+  accel/hvf: Trace VM memory mapping
+  target/arm/hvf: Log $pc in hvf_unknown_hvc() trace event
+  target/arm: Correct KVM & HVF dtb_compatible value
+  accel/hvf: Model PhysTimer register
+  target/arm/hvf: Pass @target_el argument to hvf_raise_exception()
+  target/arm: Restrict system register properties to system binary
+  target/arm: Create GTimers *after* features finalized / accel realized
+  accel: Keep reference to AccelOpsClass in AccelClass
+  accel: Introduce AccelOpsClass::cpu_target_realize() hook
+  accel/hvf: Add hvf_arch_cpu_realize() stubs
+  target/arm/hvf: Really set Generic Timer counter frequency
+  target/arm/hvf: Trace host processor features
+  hw/arm/virt: Only require TCG || QTest to use TrustZone
+  hw/arm/virt: Only require TCG || QTest to use virtualization extension
+  hw/arm/virt: Rename cpu_post_init() -> post_cpus_gic_realized()
+  hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB definition
+  tests/functional: Restrict nexted Aarch64 Xen test to TCG
+  tests/functional: Require TCG to run Aarch64 imx8mp-evk test
+  tests/functional: Add hvf_available() helper
+  tests/functional: Expand Aarch64 SMMU tests to run on HVF accelerator
+
+ meson.build                                 |   1 +
+ accel/hvf/trace.h                           |   2 +
+ include/qemu/accel.h                        |   3 +
+ include/system/accel-ops.h                  |   4 +-
+ include/system/hvf.h                        |   3 +
+ target/arm/cpu.h                            |   2 -
+ target/arm/internals.h                      |   6 +-
+ target/arm/tcg/translate.h                  |   1 +
+ accel/accel-common.c                        |   4 +
+ accel/accel-system.c                        |   3 +-
+ accel/hvf/hvf-accel-ops.c                   |   8 ++
+ accel/tcg/tcg-accel-ops.c                   |   4 +-
+ hw/arm/sbsa-ref.c                           |   8 +-
+ hw/arm/virt.c                               |   9 +-
+ target/arm/cpu.c                            |  78 ++++++------
+ target/arm/hvf/hvf.c                        | 129 +++++++++++++++-----
+ target/arm/kvm.c                            |   2 +-
+ target/arm/tcg/translate-a64.c              |   6 -
+ target/arm/tcg/translate.c                  |   2 +-
+ target/i386/hvf/hvf.c                       |   5 +
+ accel/hvf/trace-events                      |   7 ++
+ python/qemu/utils/__init__.py               |   2 +-
+ python/qemu/utils/accel.py                  |   8 ++
+ target/arm/hvf/trace-events                 |   6 +-
+ tests/functional/qemu_test/testcase.py      |   6 +-
+ tests/functional/test_aarch64_imx8mp_evk.py |   1 +
+ tests/functional/test_aarch64_smmu.py       |   9 +-
+ tests/functional/test_aarch64_xen.py        |   1 +
+ 28 files changed, 221 insertions(+), 99 deletions(-)
+ create mode 100644 accel/hvf/trace.h
+ create mode 100644 accel/hvf/trace-events
+
 -- 
 2.49.0
 
