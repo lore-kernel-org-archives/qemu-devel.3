@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80CBBC7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F15C5C7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSeoA-0006bH-8Z; Fri, 20 Jun 2025 12:41:42 -0400
+	id 1uSeos-0007p2-4C; Fri, 20 Jun 2025 12:42:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeo6-0006aG-Fw
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:38 -0400
+ id 1uSeoa-0007Aw-6c
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:42:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeo4-0000HB-Kp
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:38 -0400
+ id 1uSeoY-0000NU-ME
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:42:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437694;
+ s=mimecast20190719; t=1750437725;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=m09gyrXVI69lguFqQqhapy6DhI44HdNH8ReXpoV/H/Y=;
- b=WQwZ/61/zHzjVHubL9Fs8RmrJ7Sb5IMtGknBuHKuREbnSt2psNz1ICuTcO4QTr+8M+PNWt
- wYRfvvcYcYJ6D7xh5cdLuVGkqUpKK4ebJWnw+n7kJ/4bw/TN+Ydi3ghxBdq8qwD9CLMd6e
- xeDoOAvSPvBZ5GLsvsfjwgniFYLhXHI=
-Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com
- [209.85.208.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bPyEsEyR+eeawbg8Mgoqk136AaGHZYCr52XL3CFj5p0=;
+ b=ij/bELWj6L/urAMxxV73tsrdV4S6aXb333vrBp9ivz10ZevARosoVl6MmgRozmLaiyq35V
+ PuM0W+F8HVKH2oA80PO78u45XlC60rqEc+z/8O8ZGByP9734FM19Bk2vWrsGF4xDQrx6c+
+ +yWTe+wVF16ia+CHO9nXNva/qlvw0Tc=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-196-qhjya6dHMq-RFeI4ZBak_A-1; Fri, 20 Jun 2025 12:41:32 -0400
-X-MC-Unique: qhjya6dHMq-RFeI4ZBak_A-1
-X-Mimecast-MFC-AGG-ID: qhjya6dHMq-RFeI4ZBak_A_1750437692
-Received: by mail-ed1-f71.google.com with SMTP id
- 4fb4d7f45d1cf-60785397a37so1970302a12.2
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:32 -0700 (PDT)
+ us-mta-466-0wsDLc3ePbW9x2OKeL9xwQ-1; Fri, 20 Jun 2025 12:42:04 -0400
+X-MC-Unique: 0wsDLc3ePbW9x2OKeL9xwQ-1
+X-Mimecast-MFC-AGG-ID: 0wsDLc3ePbW9x2OKeL9xwQ_1750437723
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-607c91a207dso1833170a12.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:42:04 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437691; x=1751042491;
+ d=1e100.net; s=20230601; t=1750437722; x=1751042522;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=m09gyrXVI69lguFqQqhapy6DhI44HdNH8ReXpoV/H/Y=;
- b=wTkWeENavxo+9WH9PsM574yU79JiM7TuM8rdPlWrrw0ZcAXzKty7TyfrHRCcsWVmct
- ZysJisV3JW1bNivQC9qZBLg79c30hDYzqQ7kFPh/AlxzNlPe4kpi9ZcslGGA+JhdrSKb
- mTWIBGWr/O4rwzeW43MoFXArf4bMS7ysxRGDQsW8D4CnZYyJ1993yMk66AYCUzWUYU9d
- BIFblbjSX1GllrbiVVgwdI2BASMBWjl3LtXnOGFtagommjGbRMOb1yyJYraiVnQXbubj
- iMr/RxaDi0ra4mJVtWKfsNcn1FSXrBHzvcAvSY8snwoP5lTZWRHSAGCG/ZyXiRMq41DT
- hvvw==
-X-Gm-Message-State: AOJu0YxRcO8HFf5KFmptE3Vdn1a+FRRFWI/96QpHv9WH+GurRHKrEEGh
- IB5a9BSP43ob4NrjGvhQB+crT7zUvuKVjyUenrKNJIkshYBeYZ//EO+yKy1DJaJBQfAhVBEMUra
- xZSo63kviG6WDgzp2CUY9it9NEo8xhPSKVfSUdnXcxtfdJZQa4CioSx2GRCVyTHMTA0+3x5kJaP
- kmfp1rqKklCIW+4K1EvhOSJubTVSfseJtxI22sR+0Z
-X-Gm-Gg: ASbGncsGcsM2km2zoi7Ynm096GyskuHFSu+JR8kZTumF1ksk4KQnPYS/IDDcPTKoGqv
- IRHrFUPGxZg5etKdlpSoYorGiqU176tEod8/GMawthLJM/sFTvgCrata511TwASiX+KkmfHSAIR
- arpNkS+dHhQzkI37DVKgBxEK6NuwsBS5CE5OYtMbl7738Ho9QKxvbktWbI3MAs89+QHTzuOvcTo
- Xd/xhD48iv+Fbdp5WrEytkxpNjHtWobB3TIFb1KCptLWb4DxUJMUhhEdNbDmX3zxjGveyLo8LgH
- Smt/mYUUxiYFWKiGeVxDuKf2mg==
-X-Received: by 2002:a05:6402:3546:b0:607:19a6:9f1d with SMTP id
- 4fb4d7f45d1cf-60a1cd3206dmr3413679a12.14.1750437691226; 
- Fri, 20 Jun 2025 09:41:31 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGR614FVv/R2yCgf5Ei0LXIAbyWz9IHUQeJln+17GXwTuLoGBhTb4d1DESDCiOMg1d5qLISGg==
-X-Received: by 2002:a05:6402:3546:b0:607:19a6:9f1d with SMTP id
- 4fb4d7f45d1cf-60a1cd3206dmr3413645a12.14.1750437690794; 
- Fri, 20 Jun 2025 09:41:30 -0700 (PDT)
+ bh=bPyEsEyR+eeawbg8Mgoqk136AaGHZYCr52XL3CFj5p0=;
+ b=wqB4mkPAVnjA1rsr6dBuR4XYPphxEVpRVs3IHLkmszL1tGu3LP0GvbmKZ720glugNN
+ MH29keW1rkk7Ll3Xp+ewP4EKRLqrzKQHyCvZUCYsQ+Mq7ZPSgNlpH/6p1/9Pwo4oM9XL
+ fMKICQSJcJZPkUeyNZZJsdO0zFFi2njskWGitDZA+0z+P4PnizisUX9pk6F7nlLrPiru
+ Oy4MMcaHMWB//wngbxulYjUe5D7YdjnfY2Z1pVTXhNVyCA98sZhIttqBF4eOtE8OrF5Q
+ NxfiScIPpeEdUZ0CkS58GZ82YD4x5sfnOs4VFHDpOA4PxoXL66Re7Of6j1zHHnHciw6q
+ p0mg==
+X-Gm-Message-State: AOJu0Yw7AuZYXMCfk+kft4exJkbiqnNg+fagPXshzaG91EcCRTEhHcUy
+ vIlFNXGGErCIY+HDBNOoEIQ2yeGOZ/XR8QcZ/EZjRnN0TD3NqvVcr4XPIGbRzzAlhLDlyfId29P
+ kb3AiktlZl8ixoftJABqmX9NLaS9vPc3dM8mnGoUAttxa7ozhYMPjBXlqTA0DvTuk6+LJVpvyoG
+ EQi1uuW/D2ocM+noo495rN/V9iNu/rJS20sL27lXiL
+X-Gm-Gg: ASbGncuyeVRH9U3lzEaB24tRxhpw7Z5HTYCe8qnaY/PZNF8wFxKSvAsbH6is+w2L0DR
+ kB/7UyhV/yE8FANxjRvka2wGPW0x8+irdEpcFh1AlZ4qfTmqrKjEjeOwCczbnu1ofnuP/baSyQQ
+ y4szw4YqJFAsgKi2pM94RYy3j/tjBPm4+A21WLDo9MjR+14BFHUWw0Htw5PGlI5NtaLeWONfgU1
+ WeeOfqEmxM7awhG4O21Ihb/k1FQT7Bupjh+klgontYTwR6ProUrHAI7jgnq1+VJwVUJBhiMqQwP
+ INa53uR52fTm2+lsEts9TpoGaw==
+X-Received: by 2002:a05:6402:50c9:b0:604:bbd2:7c6c with SMTP id
+ 4fb4d7f45d1cf-60a1d19192amr3403845a12.27.1750437722639; 
+ Fri, 20 Jun 2025 09:42:02 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHlz6BoAxCUEJjgcQa1ACErmLeWI4wLoFzZZK2Fthe2g3GPIjgK2aifLaLOGdbU1tSyl9icQg==
+X-Received: by 2002:a05:6402:50c9:b0:604:bbd2:7c6c with SMTP id
+ 4fb4d7f45d1cf-60a1d19192amr3403816a12.27.1750437722107; 
+ Fri, 20 Jun 2025 09:42:02 -0700 (PDT)
 Received: from [192.168.122.1] ([151.62.200.93])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae05408306fsm183794066b.84.2025.06.20.09.41.28
+ 4fb4d7f45d1cf-60a18d0e561sm1645327a12.81.2025.06.20.09.41.59
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:41:28 -0700 (PDT)
+ Fri, 20 Jun 2025 09:42:00 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Bernhard Beschow <shentey@gmail.com>
-Subject: [PULL 13/24] rust: pl011: Implement logging
-Date: Fri, 20 Jun 2025 18:40:41 +0200
-Message-ID: <20250620164053.579416-14-pbonzini@redhat.com>
+Cc: Binbin Wu <binbin.wu@linux.intel.com>
+Subject: [PULL 23/24] i386/tdx: handle TDG.VP.VMCALL<GetTdVmCallInfo>
+Date: Fri, 20 Jun 2025 18:40:51 +0200
+Message-ID: <20250620164053.579416-24-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
 References: <20250620164053.579416-1-pbonzini@redhat.com>
@@ -108,62 +108,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Binbin Wu <binbin.wu@linux.intel.com>
 
-Now that there is logging support in Rust for QEMU, use it in the pl011
-device.
-
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Link: https://lore.kernel.org/r/20250615112037.11992-3-shentey@gmail.com
+Signed-off-by: Binbin Wu <binbin.wu@linux.intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/char/pl011/src/device.rs | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ target/i386/kvm/tdx.h      |  9 +++++++++
+ target/i386/kvm/kvm.c      | 12 ++++++++++++
+ target/i386/kvm/tdx-stub.c |  4 ++++
+ target/i386/kvm/tdx.c      | 12 ++++++++++++
+ 4 files changed, 37 insertions(+)
 
-diff --git a/rust/hw/char/pl011/src/device.rs b/rust/hw/char/pl011/src/device.rs
-index 2d416cd9a3c..92dc295540e 100644
---- a/rust/hw/char/pl011/src/device.rs
-+++ b/rust/hw/char/pl011/src/device.rs
-@@ -8,6 +8,8 @@
-     chardev::{CharBackend, Chardev, Event},
-     impl_vmstate_forward,
-     irq::{IRQState, InterruptSource},
-+    log::Log,
-+    log_mask_ln,
-     memory::{hwaddr, MemoryRegion, MemoryRegionOps, MemoryRegionOpsBuilder},
-     prelude::*,
-     qdev::{Clock, ClockEvent, DeviceImpl, DeviceState, Property, ResetType, ResettablePhasesImpl},
-@@ -276,8 +278,7 @@ pub(self) fn write(
-             DMACR => {
-                 self.dmacr = value;
-                 if value & 3 > 0 {
--                    // qemu_log_mask(LOG_UNIMP, "pl011: DMA not implemented\n");
--                    eprintln!("pl011: DMA not implemented");
-+                    log_mask_ln!(Log::Unimp, "pl011: DMA not implemented");
-                 }
-             }
+diff --git a/target/i386/kvm/tdx.h b/target/i386/kvm/tdx.h
+index 8dd66e90149..0dd41d5811a 100644
+--- a/target/i386/kvm/tdx.h
++++ b/target/i386/kvm/tdx.h
+@@ -21,6 +21,14 @@ typedef struct TdxGuestClass {
+ /* TDX requires bus frequency 25MHz */
+ #define TDX_APIC_BUS_CYCLES_NS 40
+ 
++#define TDVMCALL_GET_TD_VM_CALL_INFO    0x10000
++
++#define TDG_VP_VMCALL_SUCCESS           0x0000000000000000ULL
++#define TDG_VP_VMCALL_RETRY             0x0000000000000001ULL
++#define TDG_VP_VMCALL_INVALID_OPERAND   0x8000000000000000ULL
++#define TDG_VP_VMCALL_GPA_INUSE         0x8000000000000001ULL
++#define TDG_VP_VMCALL_ALIGN_ERROR       0x8000000000000002ULL
++
+ enum TdxRamType {
+     TDX_RAM_UNACCEPTED,
+     TDX_RAM_ADDED,
+@@ -61,5 +69,6 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp);
+ void tdx_set_tdvf_region(MemoryRegion *tdvf_mr);
+ int tdx_parse_tdvf(void *flash_ptr, int size);
+ int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run);
++void tdx_handle_get_tdvmcall_info(X86CPU *cpu, struct kvm_run *run);
+ 
+ #endif /* QEMU_I386_TDX_H */
+diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
+index 56a6b9b6381..8ef29fc1fb1 100644
+--- a/target/i386/kvm/kvm.c
++++ b/target/i386/kvm/kvm.c
+@@ -6170,6 +6170,18 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
+             break;
          }
-@@ -534,7 +535,7 @@ fn read(&self, offset: hwaddr, _size: u32) -> u64 {
-                 u64::from(device_id[(offset - 0xfe0) >> 2])
-             }
-             Err(_) => {
--                // qemu_log_mask(LOG_GUEST_ERROR, "pl011_read: Bad offset 0x%x\n", (int)offset);
-+                log_mask_ln!(Log::GuestError, "PL011State::read: Bad offset {offset}");
-                 0
-             }
-             Ok(field) => {
-@@ -566,7 +567,10 @@ fn write(&self, offset: hwaddr, value: u64, _size: u32) {
-                 .borrow_mut()
-                 .write(field, value as u32, &self.char_backend);
-         } else {
--            eprintln!("write bad offset {offset} value {value}");
-+            log_mask_ln!(
-+                Log::GuestError,
-+                "PL011State::write: Bad offset {offset} value {value}"
-+            );
-         }
-         if update_irq {
-             self.update();
+         break;
++    case KVM_EXIT_TDX:
++        /*
++         * run->tdx is already set up for the case where userspace
++         * does not handle the TDVMCALL.
++         */
++        switch (run->tdx.nr) {
++        case TDVMCALL_GET_TD_VM_CALL_INFO:
++            tdx_handle_get_tdvmcall_info(cpu, run);
++            break;
++        }
++        ret = 0;
++        break;
+     default:
+         fprintf(stderr, "KVM: unknown exit reason %d\n", run->exit_reason);
+         ret = -1;
+diff --git a/target/i386/kvm/tdx-stub.c b/target/i386/kvm/tdx-stub.c
+index 720a4ff046e..62a12a06775 100644
+--- a/target/i386/kvm/tdx-stub.c
++++ b/target/i386/kvm/tdx-stub.c
+@@ -18,3 +18,7 @@ int tdx_handle_report_fatal_error(X86CPU *cpu, struct kvm_run *run)
+ {
+     return -EINVAL;
+ }
++
++void tdx_handle_get_tdvmcall_info(X86CPU *cpu, struct kvm_run *run)
++{
++}
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index 2284167141a..ef10a193474 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1120,6 +1120,18 @@ int tdx_parse_tdvf(void *flash_ptr, int size)
+     return tdvf_parse_metadata(&tdx_guest->tdvf, flash_ptr, size);
+ }
+ 
++void tdx_handle_get_tdvmcall_info(X86CPU *cpu, struct kvm_run *run)
++{
++    if (run->tdx.get_tdvmcall_info.leaf != 1) {
++	return;
++    }
++
++    run->tdx.get_tdvmcall_info.r11 = 0;
++    run->tdx.get_tdvmcall_info.r12 = 0;
++    run->tdx.get_tdvmcall_info.r13 = 0;
++    run->tdx.get_tdvmcall_info.r14 = 0;
++}
++
+ static void tdx_panicked_on_fatal_error(X86CPU *cpu, uint64_t error_code,
+                                         char *message, uint64_t gpa)
+ {
 -- 
 2.49.0
 
