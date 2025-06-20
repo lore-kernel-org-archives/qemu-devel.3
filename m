@@ -4,80 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1023C7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 22:26:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E793C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 22:26:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSk4Z-0000vE-1P; Fri, 20 Jun 2025 18:18:59 -0400
+	id 1uSk6E-0004Cn-Vc; Fri, 20 Jun 2025 18:20:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uSgEY-0006Ns-0A
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 14:13:02 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfc3-00081w-Km
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:33:15 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
- id 1uSgEW-0002Kw-AN
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 14:13:01 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-606fdbd20afso3934645a12.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 11:12:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfc2-0006em-3Q
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:33:15 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-450dd065828so15681535e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:33:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1750443179; x=1751047979; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1750440792; x=1751045592; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Q67CJf58ORykLyT/bLzexzt1GDtdjD5qmsU6LVD3Fc0=;
- b=AR6QQUD+SkrEAKCFuU9SWf8c8m5k3bnDe0ubkFW/9/lA+UOl/YdCp0wev235Lgvq5n
- Ec5dVcGAFuiANaPebSUryP+kqN2Ipo4RkvAirXW+bmCo0RU5K3fDkv7LORvxg4AtNY6B
- PdFb9GcklKDWI0ByLqkyVfLw4I/1ullnQKPpDRGO7QnQIYyVQ+KR0SGDBAgEaqA5DNM7
- 1ZeGsC7Dw7qZE4/amxMZzY/w9xoJkprS6XNKlTb+6RUi+9QIWDMfggYqKjxn4k02Nk34
- qMfsxbttFGC1x5i2ygrYsUJeVXBEQvkGi2jJf77Tk3PzarFMIYoVvfxigPaRMKuOCSNJ
- 4nzQ==
+ bh=K5426YMMlpheSh4FU6UOd+lkxpX6kErFBSOpvyVvgmM=;
+ b=V9S7yQ+rwSb+oAXIFfhi6tFQj4LvX3n86xIVadkaYzvz58NwhDUi02m3z4AA8og7gR
+ bsYO4OnyC/pl5jwo6XK+dyoE7jmKFNPw3dl8mg3ROsjECD+7tukOmY4r/ZTKTeOupV9W
+ BfwxUcJ4bfzmua3spFB/2htaP00Kkvbeizx/xF946vTtGAQpYuT45EsRo6hfAZNjV0QO
+ 5LV6TwswzZOy/jx0X2u3eMwpwWoXa6yoXxzsiYghpNWihYkIIOJAb+5pJ//t7RgmJWeE
+ EaLavCazbVBa0TiRJp2XLFC1XWjhIV8vVZ/10u1CYmZly4s8KZHcMoBj+Dgbvi9/DISt
+ vz3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750443179; x=1751047979;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ d=1e100.net; s=20230601; t=1750440792; x=1751045592;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Q67CJf58ORykLyT/bLzexzt1GDtdjD5qmsU6LVD3Fc0=;
- b=SIfQzuWbyVtMhY7bsJreB8QXYd83GyxwvUnJQSPH7BtoQz21vlzViyMXzT2jjKQMrr
- hNuRTpCH9XxAp2nj8Z0crijWEKy+df165tfghWPC3kS85mfk+9VYli6bswdavfPKXaPY
- gRCzvZv2KDYUMR7kJWD1D/TWs9JlqIfOVA+OM0N6htlB9VOoQmb1FU3gWVCo88LZv9GA
- i85zJalgX9DR7ZtV3l0zFA7ppplimdHXYY5YfjPSl5EVVTif33RDNDmKjH7SyGOY3hZK
- YKiqskeefiyE7c9SP84sQdoesYiYGaPfilU+mRvhMXa8hWVEYH8f4dwT0Wo+Hi3rT/Hi
- LXYg==
-X-Gm-Message-State: AOJu0Yzq7w/7jPH0IILraMCNw9qttMvNa5p95NTY1I7R/DU2MqaS5pSJ
- JgiUzJRwJg+FRa57FbmAR9Z5dvhxJT7UYgc31HPrENcK0sUL2NBkAssGBtdGH5xYHt6f423TWT/
- SWPXNSxFlLYikvxqX9tQFFEssE0qpNjYN6xPp
-X-Gm-Gg: ASbGncuWSJ9o/m+iHKW6ydF24b6iz+hj5+5KTS6cw+MEspZPbf2V1JnMzJyn1wa8Fti
- PjMgbh2ijnvmPnZS4XNBRhIJ1jc/BEWhmwDnYV+FTM6N9HDAPhKpMNO58lW8HesdGg+ZqFCHBso
- VRUAxWerD4wRki1v3YAsAFoYnyEru++QcaFPcrWjL3Iw==
-X-Google-Smtp-Source: AGHT+IH9b0EgaKfgKk4ySTSxFhJ+7OjqMVtsOJJ3txXd+x3YM9qcwMpiBGBSUZI86PvxdTtH8fcyemePQQHs7wiZCe8=
-X-Received: by 2002:a05:6402:4315:b0:608:8204:c600 with SMTP id
- 4fb4d7f45d1cf-60a1cca9c67mr3834590a12.3.1750443178333; Fri, 20 Jun 2025
- 11:12:58 -0700 (PDT)
+ bh=K5426YMMlpheSh4FU6UOd+lkxpX6kErFBSOpvyVvgmM=;
+ b=gkVbMGM5F66tXbzLByVhspq2foUVlBXoYmD0teQcnTAHU2Pq1vMhSf6CCLFoO5NylD
+ J+XQrK3DTSbHeFEvgMRch1BJjpY3DRFniimqBcR/t6QAjKiNNA+Ocdb4LuVU/2apn9jx
+ ZGR7dwagA/GV2cRa7DcJDDwGnY8yjyHj1+M1Zyo18iDyFX6AbwIdsvJ3ODzDRN04iu90
+ tDnLk1893mK2PGdKB89iDmKdOSZjkBmNgDq/qPmdJh5aqrgvmaWvdUMO0mr/drXyxoW9
+ dp0jdpgbDFMjbb4YaMTfH/QrkH/KKWxseum+Os6Eko/W9kIV+D/gTxjxVIhvWovtpOk5
+ 8auw==
+X-Gm-Message-State: AOJu0Yz+eed76EF+2+VFV131KqQTlHEbQ9PScFvdP9b42KLyzB2xjvUa
+ SRqTdOH7UyzMW6b955qIoBCgn1v9OwTRb1qAY8jrfWXJJb6AVZNabNnzlxagO+uVnvjJI/8FZPY
+ Ig8rMvMAj5Q==
+X-Gm-Gg: ASbGnctu8e/MpJ3tfwslnOmS5GZfKHLi93yYmOD4u1+rEb3iTIEjxw6bya6kLV39S4n
+ WH0f1gUAuNUrhanNCynxD7OH+Ut962TKADetfg03zqH3e38q9dk7Wuzk9HNwR7hJ3WLt+CsJzv3
+ 7Q5bhA0z4JRqctwhA7vebFi+/KXAlwGZFUowUFaSPgUUvTq0OV0Ki0wUIGZ5Ml6jjcrfCAFGNfQ
+ 3nJB2IhKi44vcA+Y7aMhyWACjRRHFdH6pLezAXnkqtCOfs8Ky/FJumPFOhSm2NZM06HsnmchjXR
+ D0FunYFq96lIS/yxXtUF5rf+dsnodo+PUrBSv0FSy8qVRimpKQwST4APMUN9uWEDCDmmPpNZsvH
+ 9B0uOhOrCz4rioeACU72BSG2gZxheGonILeZgND6daGOAf/HnVTsM9DU0
+X-Google-Smtp-Source: AGHT+IHKan2VYxrVqiAyn2BBoZo+cirWMGMpaQj4jmSKGCvZQW6mIB2lxw0K+RhfxntU9tewZeIkdQ==
+X-Received: by 2002:a5d:64cd:0:b0:3a4:f90c:31e3 with SMTP id
+ ffacd0b85a97d-3a6d12d7abdmr3236742f8f.31.1750440791974; 
+ Fri, 20 Jun 2025 10:33:11 -0700 (PDT)
+Received: from localhost.localdomain
+ (101.red-95-127-63.dynamicip.rima-tde.net. [95.127.63.101])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d0f10502sm2671566f8f.18.2025.06.20.10.33.09
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Fri, 20 Jun 2025 10:33:11 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [RFC PATCH RESEND 37/42] accel/hvf: Emulate HVC at EL2
+Date: Fri, 20 Jun 2025 19:27:45 +0200
+Message-ID: <20250620172751.94231-38-philmd@linaro.org>
+X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250620172751.94231-1-philmd@linaro.org>
+References: <20250620172751.94231-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20250619082817.1517996-1-gaosong@loongson.cn>
- <CAJSP0QWsFx8qcR4k4nb2fBH0Q1aFWwCUU4JEs+NFCGHKhSphMA@mail.gmail.com>
- <b9f57a29-b13b-cd94-dc92-bc9ea45cc077@loongson.cn>
-In-Reply-To: <b9f57a29-b13b-cd94-dc92-bc9ea45cc077@loongson.cn>
-From: Stefan Hajnoczi <stefanha@gmail.com>
-Date: Fri, 20 Jun 2025 14:12:45 -0400
-X-Gm-Features: AX0GCFsOZB4EhdQTfM9vLc_8Ay4P5xmNFGcnTLa4Gt_m4L6N8fopZZd3z5SVhLY
-Message-ID: <CAJSP0QXGg9_hcdNVJ4LyVNB8ujFSX5jMfYSwbsfX2xQ2XAJdCw@mail.gmail.com>
-Subject: Re: [PULL 00/14] loongarch-to-apply queue
-To: gaosong <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=stefanha@gmail.com; helo=mail-ed1-x534.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -95,67 +110,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Jun 19, 2025 at 11:11=E2=80=AFPM gaosong <gaosong@loongson.cn> wrot=
-e:
->
-> =E5=9C=A8 2025/6/20 =E4=B8=8A=E5=8D=884:39, Stefan Hajnoczi =E5=86=99=E9=
-=81=93:
-> > gpg:                using RSA key CA473C44D6A09C189A193FCD452B96852B268=
-216
-> > gpg: Can't check signature: No public key
-> >
-> > Why has the GPG key changed? Your previous pull request was signed
-> > with key B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF.
-> >
-> > If you would like to change keys, please sign your new key using your
-> > old key and upload the new key to the key servers again. That way I
-> > know that the new key really belongs to you.
-> Hi, Stefan
->
-> I had  sign  new key using old key and send to the key server again
-> should I need pull again?
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/arm/hvf/hvf.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-Thanks!
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index 3907ea8791e..a4f823f834d 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -17,6 +17,7 @@
+ #include "system/hvf.h"
+ #include "system/hvf_int.h"
+ #include "system/hw_accel.h"
++#include "system/tcg.h"
+ #include "hvf_arm.h"
+ #include "cpregs.h"
+ 
+@@ -1117,6 +1118,8 @@ static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
+     env->exception.syndrome = syndrome;
+ 
+     arm_cpu_do_interrupt(cpu);
++    cpu->interrupt_request &= ~CPU_INTERRUPT_EXITTB;
++    cpu->exception_index = -1;
+ }
+ 
+ static void hvf_psci_cpu_off(ARMCPU *arm_cpu)
+@@ -2090,6 +2093,9 @@ int hvf_vcpu_exec(CPUState *cpu)
+                 /* SMCCC 1.3 section 5.2 says every unknown SMCCC call returns -1 */
+                 env->xregs[0] = -1;
+             }
++        } else if (tcg_enabled()) {
++            /* FIXME check we are called from EL1 (so EL0 -> UDEF) ? */
++            hvf_raise_exception(cpu, EXCP_HVC, syn_aa64_hvc(0), 2);
+         } else {
+             trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
+             hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
+-- 
+2.49.0
 
-The pull request does not need to be resent.
-
-I wasn't able to fetch your new key with the signature from the
-keyservers though. Did you `gpg --send-keys 0x452B96852B268216`?
-
-Alternatively, you could attach your new signed gpg key and send it as
-an email attachment.
-
-Stefan
-
->
-> Thanks.
-> Song Gao
->
-> gpg --list-signatures
-> /home/gaosong/.gnupg/pubring.kbx
-> --------------------------------
-> pub   rsa1024 2022-09-16 [SC]
->        B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF
-> uid           [ =E6=9C=AA=E7=9F=A5 ] Song Gao <m17746591750@163.com>
-> sig 3        40A2FFF239263EDF 2022-09-16  Song Gao <m17746591750@163.com>
-> sig          452B96852B268216 2025-06-20  Song Gao <gaosong@loongson.cn>
->
-> pub   rsa1024 2022-09-16 [SC]
->        CA473C44D6A09C189A193FCD452B96852B268216
-> uid           [ =E6=9C=AA=E7=9F=A5 ] Song Gao <gaosong@loongson.cn>
-> sig 3        452B96852B268216 2022-09-16  Song Gao <gaosong@loongson.cn>
-> sig          40A2FFF239263EDF 2025-06-20  Song Gao <m17746591750@163.com>
->
->
-> gpg --send-keys CA473C44D6A09C189A193FCD452B96852B268216
-> gpg: =E6=AD=A3=E5=9C=A8=E5=8F=91=E9=80=81=E5=AF=86=E9=92=A5 452B96852B268=
-216 =E5=88=B0 hkps://keys.openpgp.org
-> gpg --recv-keys CA473C44D6A09C189A193FCD452B96852B268216
-> gpg: =E5=AF=86=E9=92=A5 452B96852B268216=EF=BC=9A=E2=80=9CSong Gao <gaoso=
-ng@loongson.cn>=E2=80=9D =E6=9C=AA=E6=94=B9=E5=8F=98
-> gpg: =E5=A4=84=E7=90=86=E7=9A=84=E6=80=BB=E6=95=B0=EF=BC=9A1
-> gpg:              =E6=9C=AA=E6=94=B9=E5=8F=98=EF=BC=9A1
->
->
->
 
