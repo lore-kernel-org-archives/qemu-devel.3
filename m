@@ -4,101 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF704C7115D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 12:22:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1D05C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 12:28:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSakN-00050k-91; Fri, 20 Jun 2025 08:21:31 -0400
+	id 1uSaqA-000711-He; Fri, 20 Jun 2025 08:27:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSajt-0004wr-GO
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:21:02 -0400
+ (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
+ id 1uSaq7-00070L-V5
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:27:28 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <imammedo@redhat.com>)
- id 1uSajr-0007Mm-EW
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:21:01 -0400
+ (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
+ id 1uSaq5-00089y-Pq
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 08:27:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750422057;
+ s=mimecast20190719; t=1750422444;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=gCDuPbcz51+r9EY5thnNhRDzl+s2DLdA7Mhax7aDjbM=;
- b=i8IbxwVa3/DkxSYjrqcP23XGedoWUHD1yOcL1Z2wgwok08BYzT4/OoKBcNJjrVP7pFxNR6
- osDWjw9dMeZzxJTVcx7FI9YI4poKEtO4ga9JS5E8Kmyz0axIxnJdGUY2dK+A6pEiGM/+/7
- 6k9CjcvryUPbwJK/OdHQptWZWyIL+3Q=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rV5zQIyqDjNAC11vowRalPjH1E2sTSQ8IIHvMggJ0PI=;
+ b=TrA7lxYBp1E61AaWwAv1ps1mlCmbXY1KRjpCwEkml2piehXSnbm7vnrSNRaBF+rBD3Y0nU
+ 2eKqoRT+KFX8CLmdM4ltMLulLdxGIJ8MruP8cheJvtIAqNwDeWEHjfOt97CUk2LnedpgbS
+ 12wZxCtZV+hfl7Qy+T+NZ9Qv8cv+D7I=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-682-2giSYj9NMKCDMUuvYp36RA-1; Fri, 20 Jun 2025 08:20:56 -0400
-X-MC-Unique: 2giSYj9NMKCDMUuvYp36RA-1
-X-Mimecast-MFC-AGG-ID: 2giSYj9NMKCDMUuvYp36RA_1750422055
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-3a4f65a705dso1012433f8f.2
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 05:20:56 -0700 (PDT)
+ us-mta-106-p6ppniegOaGpJt7MQUNVdw-1; Fri, 20 Jun 2025 08:27:22 -0400
+X-MC-Unique: p6ppniegOaGpJt7MQUNVdw-1
+X-Mimecast-MFC-AGG-ID: p6ppniegOaGpJt7MQUNVdw_1750422440
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-70e33aeaad4so21421317b3.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 05:27:21 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750422055; x=1751026855;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:subject:cc:to:from:date:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=gCDuPbcz51+r9EY5thnNhRDzl+s2DLdA7Mhax7aDjbM=;
- b=TvJ6hQMq7fHxN9au4i3ZYSPSsTePUnytFeodAspTu9MfLGvQ39XU/opxAmN7dNtAb6
- OwtbWJm3S5lcB/UZ+jliPSu25aq1GB7wtpiuFgrsrKEFG0Gk1XjI6G4MTOsOTcB6X4C6
- ZFXiXrE3ntzyInSWRytcsAOOq4l9tTrB1i3fWKkiytXm+3iUgv13XUIevHW9F9sqled+
- CUB8W5CybPA0Y8d13lNSiAaJcf+ictS+ugMtVN7fLiSJvCn2eMIzSYy8MCF2aUxlGc/e
- mJJIFC2jDKWzqN4bG+9pqiFA9SdOcOdfhBwnLL1f+oNmL/q5O2iqCl55jhKQdI3Px2se
- Znhw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURoedTUoCN5fY9yN2lRxe1kxnyNgHl3JkuY/IVOO3GyknlNjqHnmn+AEtsde0jLskYv/bU7sZQtRdL@nongnu.org
-X-Gm-Message-State: AOJu0YzwvC1Wu8QkJAQE4Xv6VPR410wDqkqRUBNW18KmA3MXF+HuPc3E
- hXvJ0zXs7NxWv6nAOBy9rYZYDMZ/YSidVfcqbDeNSpuSmYfD1s53+6GNlp6Ni6aDnNNbc+aTnCz
- FgPfOEuRICQF0HTQU1lzKza/07nHwDb76qI4g1ETOWKXkFDl9LlEru8wd
-X-Gm-Gg: ASbGncugJP/IFry5xPRJgHplzBNr1XoGUfIF5K5hrNX5Ja//pwKk5lrQ97nz6wZe7mf
- vc7lk5CWClkbYARGpVxLWd85BkRxX+sy7e0HbUXql/elRd9vUokZZK3fvF0XSayr2YiCdh00a75
- i1FD1f303NxjrN7kOW/DqwV50r2d89eYv8DG0pKPPCIKakigkYKHuhrTPcFfYdml6+YbwFtgZ8J
- 8YZP5ixtJBXorxPJrbna7rTndmn7SEOtHpL1srM4qZPOcdnSdmlqw6OraIHOknJqNELhHWCVYH8
- qLLFW5pGZCr4
-X-Received: by 2002:a05:6000:65c:b0:3a4:e667:922e with SMTP id
- ffacd0b85a97d-3a6d12dbe56mr2141497f8f.4.1750422055283; 
- Fri, 20 Jun 2025 05:20:55 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHGOPPnwZQZDCN7GBhEHlQZ1eWYxrDYOQZAErz4+cZ6o9lSpDkRSgIVe461zPDNDp/xyfyk6A==
-X-Received: by 2002:a05:6000:65c:b0:3a4:e667:922e with SMTP id
- ffacd0b85a97d-3a6d12dbe56mr2141466f8f.4.1750422054881; 
- Fri, 20 Jun 2025 05:20:54 -0700 (PDT)
-Received: from fedora ([85.93.96.130]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-45366181aebsm7966475e9.3.2025.06.20.05.20.54
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 05:20:54 -0700 (PDT)
-Date: Fri, 20 Jun 2025 14:20:53 +0200
-From: Igor Mammedov <imammedo@redhat.com>
-To: Eric Auger <eric.auger@redhat.com>
-Cc: eric.auger.pro@gmail.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- peter.maydell@linaro.org, gustavo.romero@linaro.org, anisinha@redhat.com,
- mst@redhat.com, shannon.zhaosl@gmail.com, pbonzini@redhat.com,
- Jonathan.Cameron@huawei.com, philmd@linaro.org, alex.bennee@linaro.org
-Subject: Re: [PATCH v3 15/29] hw/i386/acpi-build: Use AcpiPciHpState::root
- in acpi_set_pci_info
-Message-ID: <20250620142053.3a32333e@fedora>
-In-Reply-To: <20250616094903.885753-16-eric.auger@redhat.com>
-References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-16-eric.auger@redhat.com>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.49; x86_64-redhat-linux-gnu)
+ d=1e100.net; s=20230601; t=1750422440; x=1751027240;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=rV5zQIyqDjNAC11vowRalPjH1E2sTSQ8IIHvMggJ0PI=;
+ b=jNekJZ34f+IWWeeTs9RAh5EGbLo5jjfpzu2x2+Wvf8PGk2rd94k6/7ycSQn/1z/HXf
+ tWJ3TMKtGb0VknjWbqvY7jqCK4dAyAv/bx/pNRliE1mimDrYfv/XjqZxLxmy8RK96sDA
+ mlBAhzU0WI0hMLDSJyAPfN8+r2G16RTwCi8wlXITkynXVYBa4Yf6mid2J/Jocze/1ilk
+ YNUpFVzyik32Hj0c+uHiPOzAbHflumTa4xKCHjuDdgXZ8RF2BkL3OKLRVm9Ll7PTPkSJ
+ ReRTxeMB+vzlc4vk4AjZ/sOGJvrBtUx0KKo9VN2OI9HSLV0YyyqKXh7jtuSlpJ3AXHEv
+ cMTg==
+X-Gm-Message-State: AOJu0Ywt7vMXmRwMkDt5MnaE+x6oZ8PGN0wFE51blWu/eOGfyVwp7KvK
+ f8/O/qr99igXx6oh5CmoaMJc9rFydPbdPQo/1HAedBOfmIwBBoMhP3w8NRMwHV7lSCC8c65LU/K
+ S5iKoH1kflicyZWAsbduF4oys8UNceYlKOa34TGLZFqomaTJJDTsKZlDHCdt6ROZYwueoKShXYQ
+ NIysansYa2ir3R0J9myeT/Ss67vkiX89o91FejcDEqO7ty
+X-Gm-Gg: ASbGncugGqzb5AKmg5Qig5JjPBDtgWfNxbMTNZQN1ajEEGT/xugxuixDSXkOKYaQamv
+ gGO9lPH6t60c88io6UW/mrzXkP8O7ssZ37oorQAX3s9GQ5nzEiHIZNA0hBhPJU1zUW1ltIWD94b
+ Q1gsg=
+X-Received: by 2002:a05:690c:6890:b0:70e:29d2:fba1 with SMTP id
+ 00721157ae682-712c64e5763mr38375327b3.23.1750422440220; 
+ Fri, 20 Jun 2025 05:27:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHdy/y7utJKvXN5FWPyW9+LZo4kPvEiueNGPUcFrB+ksg+qg0Z3BVA1paX1isgDAVU8yFgstFBWZfP8ZqyGwzM=
+X-Received: by 2002:a05:690c:6890:b0:70e:29d2:fba1 with SMTP id
+ 00721157ae682-712c64e5763mr38375027b3.23.1750422439780; Fri, 20 Jun 2025
+ 05:27:19 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=imammedo@redhat.com;
+References: <20250620102140.38556-1-kkostiuk@redhat.com>
+In-Reply-To: <20250620102140.38556-1-kkostiuk@redhat.com>
+From: Yan Vugenfirer <yvugenfi@redhat.com>
+Date: Fri, 20 Jun 2025 16:27:08 +0400
+X-Gm-Features: AX0GCFuWzmHCFcQCJjz_jRrTOat8dkTYuTf4DVvSCbdCqhid-9aItbPOsg5fP00
+Message-ID: <CAGoVJZw=itB_sZ4k+VjWMZ5k6ViT1NRmrFJ-A7XtJ1oPenPHbQ@mail.gmail.com>
+Subject: Re: [PATCH] MAINTAINERS: Update Kostiantyn Kostiuk transliteration
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000bb2ab70637fffb4e"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=yvugenfi@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
 X-Spam_bar: ----
 X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,71 +101,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Jun 2025 11:46:44 +0200
-Eric Auger <eric.auger@redhat.com> wrote:
+--000000000000bb2ab70637fffb4e
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-> pcihp acpi_set_pci_info() generic code currently uses
-> acpi_get_i386_pci_host() to retrieve the pci host bridge.
-> 
-> To make it work also on ARM we get rid of that call and
-> directly use AcpiPciHpState::root.
-> 
-> Signed-off-by: Eric Auger <eric.auger@redhat.com>
-> Suggested-by: Igor Mammedov <imammedo@redhat.com>
++1
 
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Reviewed-by: Yan Vugenfirer <yvugenfi@redhat.com>
 
-> 
+On Fri, Jun 20, 2025 at 2:23=E2=80=AFPM Kostiantyn Kostiuk <kkostiuk@redhat=
+.com>
+wrote:
+
+> Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
 > ---
-> 
-> v2 -> v3:
-> - Use AcpiPciHpState::root
-> 
-> v1 -> v2
-> - described the fact we changed the implementation of
->   acpi_get_pci_host() in the commit msg.
-> ---
->  hw/acpi/pcihp.c | 11 ++++-------
->  1 file changed, 4 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/acpi/pcihp.c b/hw/acpi/pcihp.c
-> index 236e175b69..e79a24b821 100644
-> --- a/hw/acpi/pcihp.c
-> +++ b/hw/acpi/pcihp.c
-> @@ -99,10 +99,10 @@ static void *acpi_set_bsel(PCIBus *bus, void *opaque)
->      return info;
->  }
->  
-> -static void acpi_set_pci_info(bool has_bridge_hotplug)
-> +static void acpi_set_pci_info(AcpiPciHpState *s)
->  {
->      static bool bsel_is_set;
-> -    Object *host = acpi_get_i386_pci_host();
-> +    bool has_bridge_hotplug = s->use_acpi_hotplug_bridge;
->      PCIBus *bus;
->      BSELInfo info = { .bsel_alloc = ACPI_PCIHP_BSEL_DEFAULT,
->                        .has_bridge_hotplug = has_bridge_hotplug };
-> @@ -112,11 +112,8 @@ static void acpi_set_pci_info(bool has_bridge_hotplug)
->      }
->      bsel_is_set = true;
->  
-> -    if (!host) {
-> -        return;
-> -    }
->  
-> -    bus = PCI_HOST_BRIDGE(host)->bus;
-> +    bus = s->root;
->      if (bus) {
->          /* Scan all PCI buses. Set property to enable acpi based hotplug. */
->          pci_for_each_bus_depth_first(bus, acpi_set_bsel, NULL, &info);
-> @@ -266,7 +263,7 @@ static void acpi_pcihp_update(AcpiPciHpState *s)
->  
->  void acpi_pcihp_reset(AcpiPciHpState *s)
->  {
-> -    acpi_set_pci_info(s->use_acpi_hotplug_bridge);
-> +    acpi_set_pci_info(s);
->      acpi_pcihp_update(s);
->  }
->  
+>  MAINTAINERS | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 94c4076127..3e7ca85c55 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -3370,7 +3370,7 @@ T: git https://repo.or.cz/qemu/armbru.git qapi-next
+>
+>  QEMU Guest Agent
+>  M: Michael Roth <michael.roth@amd.com>
+> -M: Konstantin Kostiuk <kkostiuk@redhat.com>
+> +M: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+>  S: Maintained
+>  F: qga/
+>  F: contrib/systemd/qemu-guest-agent.service
+> @@ -3381,7 +3381,7 @@ F: tests/*/test-qga*
+>  T: git https://github.com/mdroth/qemu.git qga
+>
+>  QEMU Guest Agent Win32
+> -M: Konstantin Kostiuk <kkostiuk@redhat.com>
+> +M: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+>  S: Maintained
+>  F: qga/*win32*
+>  F: qga/vss-win32/
+> --
+> 2.48.1
+>
+>
+>
+
+--000000000000bb2ab70637fffb4e
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr">+1<br><div><br></div><div>Reviewed-by: Yan Vugenfirer &lt;=
+<a href=3D"mailto:yvugenfi@redhat.com">yvugenfi@redhat.com</a>&gt;</div></d=
+iv><br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" cl=
+ass=3D"gmail_attr">On Fri, Jun 20, 2025 at 2:23=E2=80=AFPM Kostiantyn Kosti=
+uk &lt;<a href=3D"mailto:kkostiuk@redhat.com">kkostiuk@redhat.com</a>&gt; w=
+rote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0p=
+x 0.8ex;border-left-width:1px;border-left-style:solid;border-left-color:rgb=
+(204,204,204);padding-left:1ex">Signed-off-by: Kostiantyn Kostiuk &lt;<a hr=
+ef=3D"mailto:kkostiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>=
+&gt;<br>
+---<br>
+=C2=A0MAINTAINERS | 4 ++--<br>
+=C2=A01 file changed, 2 insertions(+), 2 deletions(-)<br>
+<br>
+diff --git a/MAINTAINERS b/MAINTAINERS<br>
+index 94c4076127..3e7ca85c55 100644<br>
+--- a/MAINTAINERS<br>
++++ b/MAINTAINERS<br>
+@@ -3370,7 +3370,7 @@ T: git <a href=3D"https://repo.or.cz/qemu/armbru.git"=
+ rel=3D"noreferrer" target=3D"_blank">https://repo.or.cz/qemu/armbru.git</a=
+> qapi-next<br>
+<br>
+=C2=A0QEMU Guest Agent<br>
+=C2=A0M: Michael Roth &lt;<a href=3D"mailto:michael.roth@amd.com" target=3D=
+"_blank">michael.roth@amd.com</a>&gt;<br>
+-M: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com" target=3D=
+"_blank">kkostiuk@redhat.com</a>&gt;<br>
++M: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com" target=3D=
+"_blank">kkostiuk@redhat.com</a>&gt;<br>
+=C2=A0S: Maintained<br>
+=C2=A0F: qga/<br>
+=C2=A0F: contrib/systemd/qemu-guest-agent.service<br>
+@@ -3381,7 +3381,7 @@ F: tests/*/test-qga*<br>
+=C2=A0T: git <a href=3D"https://github.com/mdroth/qemu.git" rel=3D"noreferr=
+er" target=3D"_blank">https://github.com/mdroth/qemu.git</a> qga<br>
+<br>
+=C2=A0QEMU Guest Agent Win32<br>
+-M: Konstantin Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com" target=3D=
+"_blank">kkostiuk@redhat.com</a>&gt;<br>
++M: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkostiuk@redhat.com" target=3D=
+"_blank">kkostiuk@redhat.com</a>&gt;<br>
+=C2=A0S: Maintained<br>
+=C2=A0F: qga/*win32*<br>
+=C2=A0F: qga/vss-win32/<br>
+-- <br>
+2.48.1<br>
+<br>
+<br>
+</blockquote></div>
+
+--000000000000bb2ab70637fffb4e--
 
 
