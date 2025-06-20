@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9CACC7115D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACF3AC7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSeoI-0006dZ-1R; Fri, 20 Jun 2025 12:41:50 -0400
+	id 1uSeng-0006UK-DE; Fri, 20 Jun 2025 12:41:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeoE-0006ch-GZ
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:46 -0400
+ id 1uSenf-0006U0-4j
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeoC-0000J4-93
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:45 -0400
+ id 1uSend-0000EP-GF
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437702;
+ s=mimecast20190719; t=1750437668;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=bJbNjmMjp67OqR9BVIK8ZHYJ0eu+dJxsQY3QIusygAE=;
- b=h1WhJ+QYVI2jQpPC4DIOy1kNefAxLV1OTFJAWEmeiTFHdT/34FUb3DuLQTZxQ/4pIVZ8/Q
- fwIQImVuiZhI/Q/xa8ZtQPREstKBtQrH58Y/SiEZt11vKolEetTES9p3BjaupIU1d2Mxtq
- h+UN+iV/OAQSAQRkKAt4uaJLqDvDAwU=
-Received: from mail-ej1-f72.google.com (mail-ej1-f72.google.com
- [209.85.218.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=aN7xXBZj4Ftx1dfcGboeMP703/cTHxafXoXtiLZOCMM=;
+ b=euvtBywRWLfNOPZfz317V1ZRRGCwNhbxNxJX5YsJoHAJwZVAudmNvcqZ+B90X4jwqUqiWe
+ V8CHAQ9t9GjMSLwATNGQ9ggCgP+jBvvETgUGHgBcAw4Ddmw0rpQiqnnYrN1dByqEfBCx4v
+ zN1SCXcWsn+zumyv0nZFERFzbIst61A=
+Received: from mail-ed1-f70.google.com (mail-ed1-f70.google.com
+ [209.85.208.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-644-cUn8Fq-NMs-O552K4jJ_QA-1; Fri, 20 Jun 2025 12:41:41 -0400
-X-MC-Unique: cUn8Fq-NMs-O552K4jJ_QA-1
-X-Mimecast-MFC-AGG-ID: cUn8Fq-NMs-O552K4jJ_QA_1750437700
-Received: by mail-ej1-f72.google.com with SMTP id
- a640c23a62f3a-ad8a2dc92ddso133642966b.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:41 -0700 (PDT)
+ us-mta-42-AR6twZNIMkixfzurSRktig-1; Fri, 20 Jun 2025 12:41:02 -0400
+X-MC-Unique: AR6twZNIMkixfzurSRktig-1
+X-Mimecast-MFC-AGG-ID: AR6twZNIMkixfzurSRktig_1750437661
+Received: by mail-ed1-f70.google.com with SMTP id
+ 4fb4d7f45d1cf-606f504f228so1769228a12.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:02 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437699; x=1751042499;
+ d=1e100.net; s=20230601; t=1750437661; x=1751042461;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bJbNjmMjp67OqR9BVIK8ZHYJ0eu+dJxsQY3QIusygAE=;
- b=oShaDagaFzJs6qVrtg5fAQxfK1ycDbOHAcZG3NlcqIHbphTa9+rMnEnC4hSpx2osDP
- NksOwH7vqs3hc4AykeXb6OqeZxM+rNVIVhj/nNgOpoT4tVRFG3mJuD9VKc+v0INQ7Zdg
- Ck3GN2M6AswXlV790R3I5XukwaztFa+y1I4povdTEDPHOqClfrqaR6gZ/ceVXkwpwVkS
- inGpoOHUfU2ImRxxwctU9cka8j6b/tVDzO2nETtHgDrz0uGvKy5S68EI0UmSMblO6zIM
- DI8dgBPCzapmXqD7Ejrp2xMBQyAE7N1G7wJQ9pZnvhdhIxLotaPVOSce9Btpl0F4zx1j
- 8pLA==
-X-Gm-Message-State: AOJu0Yy6ij8WH8lEVpYVN+3zzF73uDCl25xZXNGHu3Vy7PMBaJJAL5Ej
- 0KYK8TA2PAgE0FZeFHj4MoAtw4b34D4c/JKjnON9PRKDloQ5wvWvTeJy2ERFKGG6ytfuVDDaJPp
- yvjjHlQ8W4USU7xcpEJ1qK3L7ORaIb8W/wYCal7dXEp2sraqGBNynlBbb566qxqcl+UesgILvvh
- yBDIIxTZwv/E2oXqAGlHoiXVSZmjODM6C4XT/cGD0A
-X-Gm-Gg: ASbGncvGzhPDGqJ8QdE7+hGEJcUSd5DI4Ggc3Nuz7cP8w4NsMI3mildQlfpNKj7HBys
- EF0xOb9bQZbPznfcj0zv20bArpn4l8/jJSlA/GQulGk8zLJNe79N3MG6YpmimdQ7gH7uqv9dzkJ
- 8YRAP8gzgGERAWbHsVhUg0vVA5CnK1kjT9tj7lAmBShRLHwwInC6UQ2bNyIFyijMyh/YjioOmtK
- N7NaVSPzuYDixNgSzbUc3TsLdDgifLnL9ZMaRwIAhV/07d2qFzBDaVFrWA27kSZU6VJ2f9Gk+pU
- aFC+1fMIdeGoQPVuTT71M7lyDg==
-X-Received: by 2002:a17:907:868d:b0:ad8:9d9b:40f9 with SMTP id
- a640c23a62f3a-ae057f20a41mr348902266b.43.1750437699315; 
- Fri, 20 Jun 2025 09:41:39 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGaAWa45w8ofbc5wM39cegXCSvwa0EpUzq7BQe5qB3kwBQARZzEaKzOfUrgpX3L13wKMOrb0A==
-X-Received: by 2002:a17:907:868d:b0:ad8:9d9b:40f9 with SMTP id
- a640c23a62f3a-ae057f20a41mr348899766b.43.1750437698889; 
- Fri, 20 Jun 2025 09:41:38 -0700 (PDT)
+ bh=aN7xXBZj4Ftx1dfcGboeMP703/cTHxafXoXtiLZOCMM=;
+ b=cpeLWP6B7croz1avIEySROKNwqX93zH2889BQJlMUIhyygbnpEibtrGxeGIvPtSbfU
+ 1cMY4pAfO/I4fB/WsUXDQgD5x6vtKAwfVXG9tYXNbItXFGj+z3isDPiLoqNvbSH2VN/9
+ wwH4HqWr2+R8FQxDeKR1hYxP5b4QEW7CUbCrFqZRDIfTklR5Ctwpc8Bdj7zT3t0nqAk8
+ 3rdW0v/GegTLBmxRLJXzbsLzSMrtRzPQnyrwTkxlXcxeOjoCuGvw/smAYA323KET5Xrk
+ KIT7955VubNoFjaa8fBOKuz0O4l2P4nOva3byAevUQJIz42KVnNeU0rpWoyTpJIxGNoo
+ N/kw==
+X-Gm-Message-State: AOJu0YwpSSap0R/z/38QXkCiad9BmF6CoGs1BM9SVL1dgNIgHjAUmQxp
+ PHIflWToSw3pXumf57wXvto2S2YWqVu70Q1mLAk6iz3TEU7KsBmOrRxeZiGwE6FEQZNZHxcW6Gf
+ VPAMAtd3szKKg7sJafB4xGSje4ozoNWS/kS10w/fPIIJNYTyWpXaKzefOB9wZpBSnQc1TD9sxAg
+ cxQ0N8AgFNGVephrB7x3B+QJZJ4oXPaAICc4yGAo/v
+X-Gm-Gg: ASbGncsiQHn+nmtNBk1k+271txyqo8Wj2lRww6f2p3+Lu+SRPtY436aWdpH5gcrge4s
+ Puiw4llwFOJqv+2kWxNn0bxW3FbEeWAgZmrVBlxXx52oGTLJ0YJTmxWCK+HAvuIfu4HU8sOL77h
+ 7x5XWJbgPhg1JQzIx6/Z9SIYa4R6zx0uiZDuzwm4SYBb+oIVRjCHqq29IZVnWsNH5EK1OHAzslR
+ mBQrToMZ/L67k11B7JnA0oVaCn7fAD6i9yv4yQqFEqt0zeRmkqfdWE1GSFE44h5mH5KnbnGwoaV
+ 9vsf+AMjc/H5gsqy1fOi7/2VTg==
+X-Received: by 2002:a05:6402:34cc:b0:607:35d8:4cf8 with SMTP id
+ 4fb4d7f45d1cf-60a1ccbc846mr3361886a12.11.1750437660551; 
+ Fri, 20 Jun 2025 09:41:00 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE3JFuqE+dcd5fdcKUjRpgdDxKTjtijkxVvb+SPO11XtYAxXv/TItUZ6edJWO0hoyAyQlOheA==
+X-Received: by 2002:a05:6402:34cc:b0:607:35d8:4cf8 with SMTP id
+ 4fb4d7f45d1cf-60a1ccbc846mr3361853a12.11.1750437659917; 
+ Fri, 20 Jun 2025 09:40:59 -0700 (PDT)
 Received: from [192.168.122.1] ([151.62.200.93])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae053e8218bsm186423966b.4.2025.06.20.09.41.36
+ 4fb4d7f45d1cf-60a185797bbsm1629935a12.35.2025.06.20.09.40.57
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:41:37 -0700 (PDT)
+ Fri, 20 Jun 2025 09:40:58 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 16/24] i386/cpu: Move adjustment of CPUID_EXT_PDCM before
- feature_dependencies[] check
-Date: Fri, 20 Jun 2025 18:40:44 +0200
-Message-ID: <20250620164053.579416-17-pbonzini@redhat.com>
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PULL 02/24] target/i386: fix TB exit logic in gen_movl_seg() when
+ writing to SS
+Date: Fri, 20 Jun 2025 18:40:30 +0200
+Message-ID: <20250620164053.579416-3-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
 References: <20250620164053.579416-1-pbonzini@redhat.com>
@@ -110,48 +110,55 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 
-There is one entry relates to CPUID_EXT_PDCM in feature_dependencies[].
-So it needs to get correct value of CPUID_EXT_PDCM before using
-feature_dependencies[] to apply dependencies.
+Before commit e54ef98c8a ("target/i386: do not trigger IRQ shadow for LSS"), any
+write to SS in gen_movl_seg() would cause a TB exit. The changes introduced by
+this commit were intended to restrict the DISAS_EOB_INHIBIT_IRQ exit to the case
+where inhibit_irq is true, but missed that a DISAS_EOB_NEXT exit can still be
+required when writing to SS and inhibit_irq is false.
 
-Besides, it also ensures CPUID_EXT_PDCM value is tracked in
-env->features[FEAT_1_ECX].
+Comparing the PE(s) && !VM86(s) section with the logic in x86_update_hflags(), we
+can see that the DISAS_EOB_NEXT exit is still required for the !CODE32 case when
+writing to SS in gen_movl_seg() because any change to the SS flags can affect
+hflags. Similarly we can see that the existing CODE32 case is still correct since
+a change to any of DS, ES and SS can affect hflags. Finally for the
+gen_op_movl_seg_real() case an explicit TB exit is not needed because the segment
+register selector does not affect hflags.
 
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20250304052450.465445-2-xiaoyao.li@intel.com
+Update the logic in gen_movl_seg() so that a write to SS with inhibit_irq set to
+false where PE(s) && !VM86(s) will generate a DISAS_EOB_NEXT exit along with the
+inline comment. This has the effect of allowing Win98SE to boot in QEMU once
+again.
+
+Signed-off-by: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Fixes: e54ef98c8a ("target/i386: do not trigger IRQ shadow for LSS")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2987
+Link: https://lore.kernel.org/r/20250611130315.383151-1-mark.cave-ayland@ilande.co.uk
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ target/i386/tcg/translate.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 40aefb38f6d..29bce67c3a1 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -7349,9 +7349,6 @@ void cpu_x86_cpuid(CPUX86State *env, uint32_t index, uint32_t count,
-         if (threads_per_pkg > 1) {
-             *ebx |= threads_per_pkg << 16;
-         }
--        if (!cpu->enable_pmu) {
--            *ecx &= ~CPUID_EXT_PDCM;
--        }
-         break;
-     case 2:
-         /* cache info: needed for Pentium Pro compatibility */
-@@ -8341,6 +8338,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
-         }
-     }
+diff --git a/target/i386/tcg/translate.c b/target/i386/tcg/translate.c
+index 0fcddc2ec08..0cb87d02012 100644
+--- a/target/i386/tcg/translate.c
++++ b/target/i386/tcg/translate.c
+@@ -2033,8 +2033,11 @@ static void gen_movl_seg(DisasContext *s, X86Seg seg_reg, TCGv src, bool inhibit
+         tcg_gen_trunc_tl_i32(sel, src);
+         gen_helper_load_seg(tcg_env, tcg_constant_i32(seg_reg), sel);
  
-+    if (!cpu->enable_pmu) {
-+        env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
-+    }
-+
-     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
-         FeatureDep *d = &feature_dependencies[i];
-         if (!(env->features[d->from.index] & d->from.mask)) {
+-        /* For move to DS/ES/SS, the addseg or ss32 flags may change.  */
+-        if (CODE32(s) && seg_reg < R_FS) {
++        /*
++         * For moves to SS, the SS32 flag may change. For CODE32 only, changes
++         * to SS, DS and ES may change the ADDSEG flags.
++         */
++        if (seg_reg == R_SS || (CODE32(s) && seg_reg < R_FS)) {
+             s->base.is_jmp = DISAS_EOB_NEXT;
+         }
+     } else {
 -- 
 2.49.0
 
