@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25DBAC7115B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFFF4C7115D
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSeoO-0006jZ-1t; Fri, 20 Jun 2025 12:41:56 -0400
+	id 1uSeo7-0006aF-2E; Fri, 20 Jun 2025 12:41:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeoL-0006eI-RG
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:53 -0400
+ id 1uSeo4-0006Zj-TH
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:36 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeoK-0000KY-9W
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:53 -0400
+ id 1uSeo1-0000Gv-Ty
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:35 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437711;
+ s=mimecast20190719; t=1750437692;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AC4zT8sWe4ssqB8c1y68D3S1OxvabGsR5nhiZP73ISE=;
- b=iSxheyQEXQxQm1pv42wtMHdtFtKMfyh3e+9+VFg5wRqSUQchcy7Rq8Dgr8qr4XIEDyH2Xv
- lmkr4C4uhTlPj5QZyPuBnf4henaBmrmaLwnJSrgtFW7Z+iCNEdFhbUUeWOQTQAb1EObM63
- /LJyIz2q1dxDLJs4XCjrQwWOBaHOGSE=
-Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
- [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=wUb33t/Ddy47dv9hj5zcbOKfPHOBFw+S7xvVBLDYZiQ=;
+ b=SkPwrtrGdvblv2uMi8SQsoZCXzdoXqWaljpQku+yKw6va7W099rHn3Oj6twE7uEJ+xT1de
+ 7hxuGS9szXL55MFEG3qDwG3fOBKmiHLvHdUt/PtKItDmNipWuSxDI2p5nPdTzGfRVGU81o
+ vWbN5Onbi92q7egUe+b5zNiHRYSwv2I=
+Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
+ [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-156-D2R1i0VeO_K8s1D7e4btcA-1; Fri, 20 Jun 2025 12:41:49 -0400
-X-MC-Unique: D2R1i0VeO_K8s1D7e4btcA-1
-X-Mimecast-MFC-AGG-ID: D2R1i0VeO_K8s1D7e4btcA_1750437708
-Received: by mail-ej1-f71.google.com with SMTP id
- a640c23a62f3a-ad89a3bcc62so152242566b.0
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:49 -0700 (PDT)
+ us-mta-364-B6Z7r6faNzCzAuvZBIm-cg-1; Fri, 20 Jun 2025 12:41:31 -0400
+X-MC-Unique: B6Z7r6faNzCzAuvZBIm-cg-1
+X-Mimecast-MFC-AGG-ID: B6Z7r6faNzCzAuvZBIm-cg_1750437690
+Received: by mail-ed1-f72.google.com with SMTP id
+ 4fb4d7f45d1cf-6023d9a86ffso1283070a12.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437708; x=1751042508;
+ d=1e100.net; s=20230601; t=1750437689; x=1751042489;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AC4zT8sWe4ssqB8c1y68D3S1OxvabGsR5nhiZP73ISE=;
- b=NXJFP2irmq3KOHpcSgZypseH55UCVol8rvTLDKAoi4DF8/FBvC7LSV24iWT3//LCUo
- 6VKscOLpQbheDk8oHUfl3Vn3qXKTSieegOEaMochCZCHDZ8TCG5JpLdlQONvtWPV/yol
- h0Geh3L7Aw8Khi0A8d5YOVoEfElmXSCt4Yb+ematEQjSWgc2/8wDFUILyze3UAxfzrR7
- JNSPFipCfyQbX6rLH5ZLVSC8HxdJCpKCRYelIgPSxLwA1+nJ5Yrlsi4g9hgo8/aM4RoZ
- osBEBWuchg2WhcbRvONhD3bu+TMcgztOphlqzX6cGY7WFDEFRNpfY5tPuzkCHUP51RdE
- qhng==
-X-Gm-Message-State: AOJu0Yy/YV0KcIVgIqGtEIcN3G3SheZwnOeTxVkl45ZcKa1AR/eD0rhb
- 4Ok6F7N8jFRa4E8WaIBhHmjK41Ouzu9O4bIl9SUGNXXsQ94oMlw7dq5+o6/ha0Vc55vpRtGoyCm
- P1YO8BpF0Pd0xQ85n7rkHiIDQVjDfS02waPPZPH7iCQP4Ft3v1RD9mYfir93uAIE0xjEd6ThqFr
- qkQPaAGnjmZUAT3kjRB8W4y3uR6suLb8Bfzm4Q2C5g
-X-Gm-Gg: ASbGncskzjUJpxsN0PpDMxB5fvoCm5MLzys6CbB+U249WTywJOYa2ix6CL3Hcz/R7H0
- HFVvIxMLooRp6Co0MvW6oSmvLySU8LqkN0pY507iUxDtIZtiXiKjXmXb8tTssBVYoT1tlsxBF2P
- RlMeFTHOqvqFVlbeoF3bsd99OjQ/yqxiTY6B+NQOEXTdCcSEl4KN0XWVDUcBS0CxkA2ARKfvkl5
- dcxfPKG1A9QfZ6b3aDWWIRennx50xDT39GeRQDYJtK+NgBk3tOFDnYtTyaQnKCsUTeo6zhiCBN7
- 9vcqFLbJhS+fTZwZTtqAiHWF9g==
-X-Received: by 2002:a17:907:3c8b:b0:ae0:180b:bb54 with SMTP id
- a640c23a62f3a-ae057a32920mr341122266b.26.1750437707809; 
- Fri, 20 Jun 2025 09:41:47 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGwHct18rcZGnXx72ZNqidNLlwvFJJpJCCiioBIMlRmeFQjhnl2fUOW7GxEvUH3THIj+/w51w==
-X-Received: by 2002:a17:907:3c8b:b0:ae0:180b:bb54 with SMTP id
- a640c23a62f3a-ae057a32920mr341120066b.26.1750437707278; 
- Fri, 20 Jun 2025 09:41:47 -0700 (PDT)
+ bh=wUb33t/Ddy47dv9hj5zcbOKfPHOBFw+S7xvVBLDYZiQ=;
+ b=CXiHHGL3bEyOUQgkYgeSi1V9y+x4ZieJHt+riTpfe72bYErm7YNU2HISWKnMru8xDP
+ GQ9mSIoSaTOVdRL3WVtQmuUnQbmyk8JM+f3wwfdn21jcNSoSb+B085gv2ivDcpjYTCrI
+ KYpm6IKk7R8sQnlQFkeAzolOwtieVnkRbqlcWa0A+wJMS3zeqGEX5IlwDuI3i7kcyEqa
+ b3tY5ovRRxb9SsMtIbpEFTn56aSXh6av3djTVGc2eOHIydqBqheqW8XyIPQmRxnHrty6
+ iult+VF/FPIO8nezWOVD8zPrjsOnpqC6ywP+lnEoTYA9fBVAR1SxQhQ3pIbUlFhwwRxY
+ ArZg==
+X-Gm-Message-State: AOJu0Yx/A8sjyljZbm/OfzNKNgYTV0+uC9p2ihVXcYJ7pj/KC/Ks2LqE
+ mL+RYsnmsU/lakXq4SnFs9suNzpK3XcRd3h4MpVuHXWfzvnWfJe22SdI5dpnCF0yaqSEoxnNTp8
+ wRWeN1SWXGzZKUcX2Y7D66RbZlVjgGF9i8GljVWF9fFIB8LIGbCFSrfrLWaIkKWJdLu8lEXaCIx
+ d8G2YISwEE9Jmdy9FtfQ/UWYbRU8ufLxl85yU0fQRe
+X-Gm-Gg: ASbGncsd0T7JQwNbsFc/2cw/IkUVOKX8Dnhl7AMlCJxViC7+RVFOOLlQuH2PXPwEJKD
+ PlXTomg3NZ9y5gncTfRxwVWbQq9RwmSkm9zP4PgyxwR7ebVU/0nshFF313YBiLfTpudoZTLA5n6
+ wFnjMbCrjv6epaAbCU2uxjQ+LHiQJ0Gv/QQk65yFmhVVBYYdQJb5KkLQMAtYvofN1YH1WxsC3xW
+ X0NZtks2wMuP4svVHrUFryLYnPJhzuLhEfll8AVwVYbdvHnkNEujfxreabkQMZOjttoQ4X5eb5U
+ p1p4LHNerFRewMNSyZtmGEdcTg==
+X-Received: by 2002:a17:906:dc95:b0:ae0:16db:1b62 with SMTP id
+ a640c23a62f3a-ae057c8e314mr344551866b.59.1750437688702; 
+ Fri, 20 Jun 2025 09:41:28 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHk5NiQkEvw3hQWWNAuMQ4R/Inc7qCXwqsyHVrmecTMyVzC4XHagtWPMwSTcTgWwRx08DL69g==
+X-Received: by 2002:a17:906:dc95:b0:ae0:16db:1b62 with SMTP id
+ a640c23a62f3a-ae057c8e314mr344548666b.59.1750437688076; 
+ Fri, 20 Jun 2025 09:41:28 -0700 (PDT)
 Received: from [192.168.122.1] ([151.62.200.93])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae0543421e9sm185450166b.185.2025.06.20.09.41.45
+ a640c23a62f3a-ae05408301fsm188247066b.96.2025.06.20.09.41.25
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:41:45 -0700 (PDT)
+ Fri, 20 Jun 2025 09:41:25 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Xiaoyao Li <xiaoyao.li@intel.com>, Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 19/24] i386/cpu: Rename enable_cpuid_0x1f to force_cpuid_0x1f
-Date: Fri, 20 Jun 2025 18:40:47 +0200
-Message-ID: <20250620164053.579416-20-pbonzini@redhat.com>
+Cc: Bernhard Beschow <shentey@gmail.com>
+Subject: [PULL 12/24] rust/qemu-api: Add initial logging support based on C API
+Date: Fri, 20 Jun 2025 18:40:40 +0200
+Message-ID: <20250620164053.579416-13-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
 References: <20250620164053.579416-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -110,59 +108,169 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xiaoyao Li <xiaoyao.li@intel.com>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The name of "enable_cpuid_0x1f" isn't right to its behavior because the
-leaf 0x1f can be enabled even when "enable_cpuid_0x1f" is false.
+A log_mask_ln!() macro is provided which expects similar arguments as the
+C version. However, the formatting works as one would expect from Rust.
 
-Rename it to "force_cpuid_0x1f" to better reflect its behavior.
+To maximize code reuse the macro is just a thin wrapper around
+qemu_log(). Also, just the bare minimum of logging masks is provided
+which should suffice for the current use case of Rust in QEMU.
 
-Suggested-by: Igor Mammedov <imammedo@redhat.com>
-Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Reviewed-by: Igor Mammedov <imammedo@redhat.com>
-Link: https://lore.kernel.org/r/20250603050305.1704586-2-xiaoyao.li@intel.com
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Link: https://lore.kernel.org/r/20250615112037.11992-2-shentey@gmail.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h     | 4 ++--
- target/i386/kvm/tdx.c | 2 +-
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ docs/devel/rust.rst          |  1 +
+ rust/qemu-api/wrapper.h      |  2 +
+ rust/qemu-api/meson.build    |  1 +
+ rust/qemu-api/src/lib.rs     |  1 +
+ rust/qemu-api/src/log.rs     | 73 ++++++++++++++++++++++++++++++++++++
+ rust/qemu-api/src/prelude.rs |  2 +
+ 6 files changed, 80 insertions(+)
+ create mode 100644 rust/qemu-api/src/log.rs
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 5910dcf74d4..51e10139dfd 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2269,7 +2269,7 @@ struct ArchCPU {
-     bool enable_cpuid_0xb;
+diff --git a/docs/devel/rust.rst b/docs/devel/rust.rst
+index 47e9677fcb0..dc8c44109e1 100644
+--- a/docs/devel/rust.rst
++++ b/docs/devel/rust.rst
+@@ -162,6 +162,7 @@ module           status
+ ``errno``        complete
+ ``error``        stable
+ ``irq``          complete
++``log``          proof of concept
+ ``memory``       stable
+ ``module``       complete
+ ``qdev``         stable
+diff --git a/rust/qemu-api/wrapper.h b/rust/qemu-api/wrapper.h
+index 6060d3ba1ab..15a1b19847f 100644
+--- a/rust/qemu-api/wrapper.h
++++ b/rust/qemu-api/wrapper.h
+@@ -48,6 +48,8 @@ typedef enum memory_order {
+ #endif /* __CLANG_STDATOMIC_H */
  
-     /* Force to enable cpuid 0x1f */
--    bool enable_cpuid_0x1f;
-+    bool force_cpuid_0x1f;
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/log-for-trace.h"
+ #include "qemu/module.h"
+ #include "qemu-io.h"
+ #include "system/system.h"
+diff --git a/rust/qemu-api/meson.build b/rust/qemu-api/meson.build
+index 5b8c7e5e8d5..a090297c458 100644
+--- a/rust/qemu-api/meson.build
++++ b/rust/qemu-api/meson.build
+@@ -62,6 +62,7 @@ _qemu_api_rs = static_library(
+       'src/errno.rs',
+       'src/error.rs',
+       'src/irq.rs',
++      'src/log.rs',
+       'src/memory.rs',
+       'src/module.rs',
+       'src/prelude.rs',
+diff --git a/rust/qemu-api/src/lib.rs b/rust/qemu-api/src/lib.rs
+index c78198f0f41..86dcd8ef17a 100644
+--- a/rust/qemu-api/src/lib.rs
++++ b/rust/qemu-api/src/lib.rs
+@@ -21,6 +21,7 @@
+ pub mod errno;
+ pub mod error;
+ pub mod irq;
++pub mod log;
+ pub mod memory;
+ pub mod module;
+ pub mod qdev;
+diff --git a/rust/qemu-api/src/log.rs b/rust/qemu-api/src/log.rs
+new file mode 100644
+index 00000000000..d6c3d6c1b63
+--- /dev/null
++++ b/rust/qemu-api/src/log.rs
+@@ -0,0 +1,73 @@
++// Copyright 2025 Bernhard Beschow <shentey@gmail.com>
++// SPDX-License-Identifier: GPL-2.0-or-later
++
++//! Bindings for QEMU's logging infrastructure
++
++#[repr(u32)]
++/// Represents specific error categories within QEMU's logging system.
++///
++/// The `Log` enum provides a Rust abstraction for logging errors, corresponding
++/// to a subset of the error categories defined in the C implementation.
++pub enum Log {
++    /// Log invalid access caused by the guest.
++    /// Corresponds to `LOG_GUEST_ERROR` in the C implementation.
++    GuestError = crate::bindings::LOG_GUEST_ERROR,
++
++    /// Log guest access of unimplemented functionality.
++    /// Corresponds to `LOG_UNIMP` in the C implementation.
++    Unimp = crate::bindings::LOG_UNIMP,
++}
++
++/// A macro to log messages conditionally based on a provided mask.
++///
++/// The `log_mask_ln` macro checks whether the given mask matches the current
++/// log level and, if so, formats and logs the message. It is the Rust
++/// counterpart of the `qemu_log_mask()` macro in the C implementation.
++///
++/// # Parameters
++///
++/// - `$mask`: A log level mask. This should be a variant of the `Log` enum.
++/// - `$fmt`: A format string following the syntax and rules of the `format!`
++///   macro. It specifies the structure of the log message.
++/// - `$args`: Optional arguments to be interpolated into the format string.
++///
++/// # Example
++///
++/// ```
++/// use qemu_api::{log::Log, log_mask_ln};
++///
++/// let error_address = 0xbad;
++/// log_mask_ln!(Log::GuestError, "Address 0x{error_address:x} out of range");
++/// ```
++///
++/// It is also possible to use printf-style formatting, as well as having a
++/// trailing `,`:
++///
++/// ```
++/// use qemu_api::{log::Log, log_mask_ln};
++///
++/// let error_address = 0xbad;
++/// log_mask_ln!(
++///     Log::GuestError,
++///     "Address 0x{:x} out of range",
++///     error_address,
++/// );
++/// ```
++#[macro_export]
++macro_rules! log_mask_ln {
++    ($mask:expr, $fmt:tt $($args:tt)*) => {{
++        // Type assertion to enforce type `Log` for $mask
++        let _: Log = $mask;
++
++        if unsafe {
++            (::qemu_api::bindings::qemu_loglevel & ($mask as std::os::raw::c_int)) != 0
++        } {
++            let formatted_string = format!("{}\n", format_args!($fmt $($args)*));
++            let c_string = std::ffi::CString::new(formatted_string).unwrap();
++
++            unsafe {
++                ::qemu_api::bindings::qemu_log(c_string.as_ptr());
++            }
++        }
++    }};
++}
+diff --git a/rust/qemu-api/src/prelude.rs b/rust/qemu-api/src/prelude.rs
+index 43bfcd5fcab..8f9e23ee2c5 100644
+--- a/rust/qemu-api/src/prelude.rs
++++ b/rust/qemu-api/src/prelude.rs
+@@ -11,6 +11,8 @@
  
-     /* Enable auto level-increase for all CPUID leaves */
-     bool full_cpuid_auto_level;
-@@ -2539,7 +2539,7 @@ void mark_forced_on_features(X86CPU *cpu, FeatureWord w, uint64_t mask,
+ pub use crate::errno;
  
- static inline bool x86_has_cpuid_0x1f(X86CPU *cpu)
- {
--    return cpu->enable_cpuid_0x1f ||
-+    return cpu->force_cpuid_0x1f ||
-            x86_has_extended_topo(cpu->env.avail_cpu_topo);
- }
++pub use crate::log_mask_ln;
++
+ pub use crate::qdev::DeviceMethods;
  
-diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
-index 2b52de9d71b..acbe7497543 100644
---- a/target/i386/kvm/tdx.c
-+++ b/target/i386/kvm/tdx.c
-@@ -752,7 +752,7 @@ static void tdx_cpu_instance_init(X86ConfidentialGuest *cg, CPUState *cpu)
-     /* invtsc is fixed1 for TD guest */
-     object_property_set_bool(OBJECT(cpu), "invtsc", true, &error_abort);
- 
--    x86cpu->enable_cpuid_0x1f = true;
-+    x86cpu->force_cpuid_0x1f = true;
- }
- 
- static uint32_t tdx_adjust_cpuid_features(X86ConfidentialGuest *cg,
+ pub use crate::qom::InterfaceType;
 -- 
 2.49.0
 
