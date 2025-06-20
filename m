@@ -4,148 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 858B5C7115D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA15C7115B
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 08:32:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSXAa-0005BR-JY; Fri, 20 Jun 2025 04:32:20 -0400
+	id 1uSXA7-00058D-DF; Fri, 20 Jun 2025 04:31:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uSXAY-0005BJ-IF
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 04:32:18 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1uSXA5-00057y-8K
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 04:31:50 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1uSXAW-0000px-Gi
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 04:32:17 -0400
+ (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
+ id 1uSXA2-0000op-1s
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 04:31:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750408335;
+ s=mimecast20190719; t=1750408303;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=Q9EKifSmEvuEl272iBmK/uw8ii0ztmeiPBGFAWMVghY=;
- b=EczIuJVrS6vu59jVtYq4hpEcnfFukz8EfxCfsX2Xrvv2lStQu/RKWnpMT6yWznX0Cn/1aG
- ZQIy5khi6VJmHSDCLtA4ggJp4xA2kvz4IcXG44RCQn0ZjfwroGEEa6MTltBBVqIDwnpaRt
- Yo+hFnwGxMqRZuEW+K3B6itOJMmwawA=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-484-7CLER4WGPXOtAoUhtUKPSw-1; Fri, 20 Jun 2025 04:32:13 -0400
-X-MC-Unique: 7CLER4WGPXOtAoUhtUKPSw-1
-X-Mimecast-MFC-AGG-ID: 7CLER4WGPXOtAoUhtUKPSw_1750408332
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-450d50eacafso9697315e9.3
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 01:32:13 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750408332; x=1751013132;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Q9EKifSmEvuEl272iBmK/uw8ii0ztmeiPBGFAWMVghY=;
- b=Jzw2MiC3oqputJ91k3wQfLvlsYLlvrKjGOUD+zP8RnH8k8b9m7pze1flizDOCiIez2
- UdFg5/mcgNGDBOj9Bl+HwFg8+uw2xyppuk/X2yYsNulvwcjw9yLkBVDxnC2FRXJZ/qeB
- ZzMK+1kXMy17FI/hzL0cAZkmizes12ekaB5KmFs7t6ORGPYNdb5nTdlgWJA4xU1buCDI
- ecGBdig4h1Y6xu5+xlNqxXyoGe1IvKqS5aSf6DORC2ig1qPKO7jr/xAp2pPN2XkCC9QE
- IxZYZKKtiaLRbQYuHUDh0tN2sij0BKGhReT4dlsqAiZUsH58sfhk9RFVDE9jrfytv5dU
- jlIA==
-X-Gm-Message-State: AOJu0YykTvTUYxVzY4hK52tE0XGnPVkCxh74o/nMSVcWiE+LVypdueFO
- igeleK+Tk2RzWOWXQtVvrx+8rlFabJgYI0ve6HFxuV7a00xQOosDOslCJwDFjfRLOPSkDpts89Z
- bOAWgQ78SdmXzzYWV68DC6uuvPm7n9x8R+zf/3To7Tl5o1SiKqPvPKVi9
-X-Gm-Gg: ASbGnctVPrt8qOaGmPagdNIOSeQ9ZCMNF7k6f3S9Fo3RohrRO4OvX3iSzOBKuh03BNz
- BuP3anlrZthxsqXjQUYH8cZXncVsQKboXmeSXsRCDI4A5O95iM30XxGWtUEWTlzpZJzsilImCmm
- +7DCwqGHxE78d+ykgsB9jyBl1KQ6sYlAJnCurQMxLv8+VUjchhfqwsMQf73pju8CxAJrqOpsm9B
- blhKsFZorTJcaHU/A2qvZNyNW0kBLlGuC6cWi4h6uEMTA041JdimiSqoZOd734VIPeZp+rrrwH3
- +veFnkMTzwZynT0TrwEfd+stizcHN4dIo5NZwsIpx1dmZklI1/whqd0ER7LN
-X-Received: by 2002:a05:600c:c4aa:b0:453:a95:f07d with SMTP id
- 5b1f17b1804b1-453654cb7b3mr20280885e9.10.1750408331952; 
- Fri, 20 Jun 2025 01:32:11 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGVwnHCidtF1hnQDPbE9yXd6xYTNRXnI0oholH0y39WzYqgeDyIRbgISkz0IgRPbFIMvUZJzA==
-X-Received: by 2002:a05:600c:c4aa:b0:453:a95:f07d with SMTP id
- 5b1f17b1804b1-453654cb7b3mr20280495e9.10.1750408331588; 
- Fri, 20 Jun 2025 01:32:11 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:576b:abc6:6396:ed4a?
- ([2a01:e0a:280:24f0:576b:abc6:6396:ed4a])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4535ebcecb5sm51855135e9.37.2025.06.20.01.32.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Jun 2025 01:32:11 -0700 (PDT)
-Message-ID: <65274f7d-59ee-407e-a57f-dbf9e47890b5@redhat.com>
-Date: Fri, 20 Jun 2025 10:32:10 +0200
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=RJbb1zvw+UtAzVfYjQe7/0rp0ycLXD81+4lzw1HoUPk=;
+ b=iQnh6DALstC5FnJcXy3oVfJFsSCqj3PgtGTlAu9o2Vs3TO7q30qf2raglCoqLQcTcUVf2Y
+ YpOgaeqfxuOayj4WOMhp9cs4V/Bd575pgdUK8WAN8nrmixGwqlD94oO+x3tsr5jpFy0fAx
+ SOUCNXMOplSxof3hFDlvMiYFf3M/prs=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-jMwAobooOWWAa_Lavg397w-1; Fri,
+ 20 Jun 2025 04:31:37 -0400
+X-MC-Unique: jMwAobooOWWAa_Lavg397w-1
+X-Mimecast-MFC-AGG-ID: jMwAobooOWWAa_Lavg397w_1750408296
+Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A757619560BC; Fri, 20 Jun 2025 08:31:36 +0000 (UTC)
+Received: from srv1.redhat.com (unknown [10.44.33.241])
+ by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 602771956094; Fri, 20 Jun 2025 08:31:35 +0000 (UTC)
+From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Michael Roth <michael.roth@amd.com>,
+ Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Subject: [PATCH] qga-vss: Exit with non-zero code when register fail
+Date: Fri, 20 Jun 2025 11:31:32 +0300
+Message-ID: <20250620083132.28347-1-kkostiuk@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/23] vfio-user client
-To: Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- John Levon <john.levon@nutanix.com>
-Cc: qemu-devel@nongnu.org, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Thanos Makatos <thanos.makatos@nutanix.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Alex Williamson <alex.williamson@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20250607001056.335310-1-john.levon@nutanix.com>
- <b6be1ca0-0ba0-4691-8a2c-f7d3ddc2f85e@redhat.com> <aErh-v3SfFo-2Br0@lent>
- <c18de4a2-63d0-4ad2-9547-fe8bc221a887@redhat.com>
- <3b311f79-fc87-4b1b-8ba5-728d696a14b3@nutanix.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <3b311f79-fc87-4b1b-8ba5-728d696a14b3@nutanix.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -39
-X-Spam_score: -4.0
-X-Spam_bar: ----
-X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+X-Spam_score_int: -19
+X-Spam_score: -2.0
+X-Spam_bar: --
+X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ URI_TRY_3LD=1.999 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -161,34 +82,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Mark,
+QGA installer uses rundll32 to run the DLLCOMRegister function
+from qga-vss.dll and perform VSS provider registration.
+rundll32 ignores the return value of the function and always
+exits with a zero exit code. This causes a situation where
+the installer does not know the status of VSS provider registration.
 
-On 6/20/25 10:20, Mark Cave-Ayland wrote:
-> On 19/06/2025 12:56, Cédric Le Goater wrote:
-> 
->> Hi John,
->>
->>>> I *really* would prefer if we had functional tests although I don't how
->>>
->>> I agree it makes sense to have a working functional test before merging.
->>
->> Any progress ?
-> 
-> I've had to look at some other bits and pieces this week, but the basic status is sadly still unchanged - I have a test with 2 VMs, a client and server, that works fine when run by hand yet hangs when run within the functional test framework.
-> 
-> I do now have a VM with lots of extra debugging installed, but figuring out why I see these hangs is proving to be quite time intensive. If we could point you towards a manual image and some scripts, would that be sufficient for now?
+This commit forces to change exit code when the VSS provider
+registration fails.
 
-Before merging, I would like to be able to experiment a minimum.
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/rundll32
 
-Does a dummy device (server side) implementation exist ? and a
-GH repo I could pull the code from.
+Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+---
+ qga/vss-win32/install.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-John,
-
-How do you test ?
-
-Thanks,
-
-C.
+diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
+index 5cea5bcf74..6ee2f44a10 100644
+--- a/qga/vss-win32/install.cpp
++++ b/qga/vss-win32/install.cpp
+@@ -385,7 +385,10 @@ out:
+ STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int);
+ STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int)
+ {
+-    COMRegister();
++    HRESULT hr = COMRegister();
++    if (FAILED(hr)) {
++        exit(hr);
++    }
+ }
+ 
+ STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int);
+-- 
+2.48.1
 
 
