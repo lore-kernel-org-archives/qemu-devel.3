@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C59AC7115D
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 09:29:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF53CC71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 09:36:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSY3H-0006P5-Up; Fri, 20 Jun 2025 05:28:51 -0400
+	id 1uSYAD-0008LU-K7; Fri, 20 Jun 2025 05:36:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSY3G-0006On-DQ; Fri, 20 Jun 2025 05:28:50 -0400
+ id 1uSYAB-0008Kq-0d; Fri, 20 Jun 2025 05:35:59 -0400
 Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1uSY39-0007o0-NT; Fri, 20 Jun 2025 05:28:50 -0400
-Received: from mail.maildlp.com (unknown [172.18.186.216])
- by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNsZw2Qf3z6M56G;
- Fri, 20 Jun 2025 17:27:52 +0800 (CST)
+ id 1uSYA4-0000Pl-Dt; Fri, 20 Jun 2025 05:35:57 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNsfQ3wZTz6L64B;
+ Fri, 20 Jun 2025 17:30:54 +0800 (CST)
 Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
- by mail.maildlp.com (Postfix) with ESMTPS id 3F43A140446;
- Fri, 20 Jun 2025 17:28:30 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 98A8C140446;
+ Fri, 20 Jun 2025 17:35:40 +0800 (CST)
 Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
  (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 20 Jun
- 2025 11:28:29 +0200
-Date: Fri, 20 Jun 2025 10:28:28 +0100
+ 2025 11:35:40 +0200
+Date: Fri, 20 Jun 2025 10:35:38 +0100
 To: Eric Auger <eric.auger@redhat.com>
 CC: <eric.auger.pro@gmail.com>, <qemu-devel@nongnu.org>,
  <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>, <imammedo@redhat.com>,
  <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
  <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
  <alex.bennee@linaro.org>
-Subject: Re: [PATCH v3 16/29] hw/i386/acpi-build: Move aml_pci_edsm to a
- generic place
-Message-ID: <20250620102828.00005ea9@huawei.com>
-In-Reply-To: <20250620101936.00005f96@huawei.com>
+Subject: Re: [PATCH v3 17/29] hw/arm/virt-acpi-build: Modify the DSDT ACPI
+ table to enable ACPI PCI hotplug
+Message-ID: <20250620103538.000021c1@huawei.com>
+In-Reply-To: <20250616094903.885753-18-eric.auger@redhat.com>
 References: <20250616094903.885753-1-eric.auger@redhat.com>
- <20250616094903.885753-17-eric.auger@redhat.com>
- <20250620101936.00005f96@huawei.com>
+ <20250616094903.885753-18-eric.auger@redhat.com>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -77,194 +76,111 @@ From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Jun 2025 10:19:36 +0100
-Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
+On Mon, 16 Jun 2025 11:46:46 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
 
-> On Mon, 16 Jun 2025 11:46:45 +0200
-> Eric Auger <eric.auger@redhat.com> wrote:
+> Modify the DSDT ACPI table to enable ACPI PCI hotplug.
 > 
-> > Move aml_pci_edsm to pci-bridge.c since we want to reuse that for
-> > ARM and acpi-index support.
-> > 
-> > Signed-off-by: Eric Auger <eric.auger@redhat.com>  
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
 > 
-> A request for a bit of documentation inline.  aml_pci_edsm() sounds
-> like we should be able to grep the spec for edsm and find it but
-> that's just internal method naming in qemu.
-> 
-> 
-> More interesting is I don't think this will ever be called as
-> the kernel has no idea how to call it and unlike on x86 the
-> blobs don't show wrapping the call in a _DSM() (see aml_pci_static_endpoint_dsm())
-> 
-> Did EDSM usage get dropped as this set evolved leaving this behind?
-Doh. You moved and use build_append_pci_bus_devices().
+> ---
+> v2 -> v3:
+> - use ACPI_PCIHP_SIZE instead of 0x1000 (Igor)
+> - use cihp_state->use_acpi_hotplug_bridge
 
-So this is fine.  Ignore me.
+pcihp_state
 
-I'd still like a comment though - particularly as it turns up in the blobs
-with no callers because the examples don't use it yet.
+Takes a bit of searching to find the various bits of the
+same support on x86 but this seems to match up.
+Exactly when things are built does vary but not I think
+in a way that matters.  e.g. I think on x86 the
+EDSM stuff is built whether or not we have pcihp enabled
+whereas here you've made it conditional on using acpi
+hp.  Perhaps a tiny bit more description on that would be
+useful if you do a v4?
 
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
+
+> ---
+>  include/hw/acpi/pcihp.h  |  2 ++
+>  include/hw/arm/virt.h    |  1 +
+>  hw/arm/virt-acpi-build.c | 22 ++++++++++++++++++++++
+>  hw/arm/virt.c            |  2 ++
+>  hw/arm/Kconfig           |  2 ++
+>  5 files changed, 29 insertions(+)
 > 
-> 
-> 
-> >
-> > ---
-> > 
-> > v2 -> v3:
-> > - move to pci-bridge.c instead of pcihp.c (Igor)
-> > ---
-> >  include/hw/acpi/pci.h |  1 +
-> >  hw/acpi/pci-bridge.c  | 54 +++++++++++++++++++++++++++++++++++++++++++
-> >  hw/i386/acpi-build.c  | 53 ------------------------------------------
-> >  3 files changed, 55 insertions(+), 53 deletions(-)
-> > 
-> > diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
-> > index 69bae95eac..05e72815c8 100644
-> > --- a/include/hw/acpi/pci.h
-> > +++ b/include/hw/acpi/pci.h
-> > @@ -42,5 +42,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
-> >  void build_srat_generic_affinity_structures(GArray *table_data);
-> >  
-> >  Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug);
-> > +Aml *aml_pci_edsm(void);
-> >  
-> >  #endif
-> > diff --git a/hw/acpi/pci-bridge.c b/hw/acpi/pci-bridge.c
-> > index 7baa7034a1..be68a98c34 100644
-> > --- a/hw/acpi/pci-bridge.c
-> > +++ b/hw/acpi/pci-bridge.c
-> > @@ -35,3 +35,57 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope)
-> >          }
-> >      }
-> >  }
-> > +
-> > +Aml *aml_pci_edsm(void)  
-> 
-> Can we have some comments, or a more descriptive name than
-> the resulting method name?  There is stuff in the function obviously
-> that associates it with the naming DSM but given this is moving to
-> generic code maybe it needs a brief intro comment?
-> 
-> 
-> > +{
-> > +    Aml *method, *ifctx;
-> > +    Aml *zero = aml_int(0);
-> > +    Aml *func = aml_arg(2);
-> > +    Aml *ret = aml_local(0);
-> > +    Aml *aidx = aml_local(1);
-> > +    Aml *params = aml_arg(4);
-> > +
-> > +    method = aml_method("EDSM", 5, AML_SERIALIZED);
-> > +
-> > +    /* get supported functions */
-> > +    ifctx = aml_if(aml_equal(func, zero));
-> > +    {
-> > +        /* 1: have supported functions */
-> > +        /* 7: support for function 7 */
-> > +        const uint8_t caps = 1 | BIT(7);
-> > +        build_append_pci_dsm_func0_common(ifctx, ret);
-> > +        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
-> > +        aml_append(ifctx, aml_return(ret));
-> > +    }
-> > +    aml_append(method, ifctx);
-> > +
-> > +    /* handle specific functions requests */
-> > +    /*
-> > +     * PCI Firmware Specification 3.1
-> > +     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
-> > +     *        Operating Systems
-> > +     */
-> > +    ifctx = aml_if(aml_equal(func, aml_int(7)));
-> > +    {
-> > +       Aml *pkg = aml_package(2);
-> > +       aml_append(pkg, zero);
-> > +       /* optional, if not impl. should return null string */
-> > +       aml_append(pkg, aml_string("%s", ""));
-> > +       aml_append(ifctx, aml_store(pkg, ret));
-> > +
-> > +       /*
-> > +        * IASL is fine when initializing Package with computational data,
-> > +        * however it makes guest unhappy /it fails to process such AML/.
-> > +        * So use runtime assignment to set acpi-index after initializer
-> > +        * to make OSPM happy.
-> > +        */
-> > +       aml_append(ifctx,
-> > +           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
-> > +       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
-> > +       aml_append(ifctx, aml_return(ret));
-> > +    }
-> > +    aml_append(method, ifctx);
-> > +
-> > +    return method;
-> > +}
-> > +
-> > diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
-> > index fe8bc62c03..6cf623392e 100644
-> > --- a/hw/i386/acpi-build.c
-> > +++ b/hw/i386/acpi-build.c
-> > @@ -338,59 +338,6 @@ build_facs(GArray *table_data)
-> >      g_array_append_vals(table_data, reserved, 40); /* Reserved */
-> >  }
-> >  
-> > -static Aml *aml_pci_edsm(void)
-> > -{
-> > -    Aml *method, *ifctx;
-> > -    Aml *zero = aml_int(0);
-> > -    Aml *func = aml_arg(2);
-> > -    Aml *ret = aml_local(0);
-> > -    Aml *aidx = aml_local(1);
-> > -    Aml *params = aml_arg(4);
-> > -
-> > -    method = aml_method("EDSM", 5, AML_SERIALIZED);
-> > -
-> > -    /* get supported functions */
-> > -    ifctx = aml_if(aml_equal(func, zero));
-> > -    {
-> > -        /* 1: have supported functions */
-> > -        /* 7: support for function 7 */
-> > -        const uint8_t caps = 1 | BIT(7);
-> > -        build_append_pci_dsm_func0_common(ifctx, ret);
-> > -        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
-> > -        aml_append(ifctx, aml_return(ret));
-> > -    }
-> > -    aml_append(method, ifctx);
-> > -
-> > -    /* handle specific functions requests */
-> > -    /*
-> > -     * PCI Firmware Specification 3.1
-> > -     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
-> > -     *        Operating Systems
-> > -     */
-> > -    ifctx = aml_if(aml_equal(func, aml_int(7)));
-> > -    {
-> > -       Aml *pkg = aml_package(2);
-> > -       aml_append(pkg, zero);
-> > -       /* optional, if not impl. should return null string */
-> > -       aml_append(pkg, aml_string("%s", ""));
-> > -       aml_append(ifctx, aml_store(pkg, ret));
-> > -
-> > -       /*
-> > -        * IASL is fine when initializing Package with computational data,
-> > -        * however it makes guest unhappy /it fails to process such AML/.
-> > -        * So use runtime assignment to set acpi-index after initializer
-> > -        * to make OSPM happy.
-> > -        */
-> > -       aml_append(ifctx,
-> > -           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
-> > -       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
-> > -       aml_append(ifctx, aml_return(ret));
-> > -    }
-> > -    aml_append(method, ifctx);
-> > -
-> > -    return method;
-> > -}
-> > -
-> >  /*
-> >   * build_prt - Define interrupt routing rules
-> >   *  
-> 
+> diff --git a/include/hw/acpi/pcihp.h b/include/hw/acpi/pcihp.h
+> index 5506a58862..9ff548650b 100644
+> --- a/include/hw/acpi/pcihp.h
+> +++ b/include/hw/acpi/pcihp.h
+> @@ -38,6 +38,8 @@
+>  #define ACPI_PCIHP_SEJ_BASE 0x8
+>  #define ACPI_PCIHP_BNMR_BASE 0x10
+>  
+> +#define ACPI_PCIHP_SIZE 0x0018
+> +
+>  typedef struct AcpiPciHpPciStatus {
+>      uint32_t up;
+>      uint32_t down;
+> diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+> index 9a1b0f53d2..0ed2e6b732 100644
+> --- a/include/hw/arm/virt.h
+> +++ b/include/hw/arm/virt.h
+> @@ -79,6 +79,7 @@ enum {
+>      VIRT_ACPI_GED,
+>      VIRT_NVDIMM_ACPI,
+>      VIRT_PVTIME,
+> +    VIRT_ACPI_PCIHP,
+>      VIRT_LOWMEMMAP_LAST,
+>  };
+>  
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index d7547c8d3b..a2e58288f8 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -34,6 +34,7 @@
+>  #include "hw/core/cpu.h"
+>  #include "hw/acpi/acpi-defs.h"
+>  #include "hw/acpi/acpi.h"
+> +#include "hw/acpi/pcihp.h"
+>  #include "hw/nvram/fw_cfg_acpi.h"
+>  #include "hw/acpi/bios-linker-loader.h"
+>  #include "hw/acpi/aml-build.h"
+> @@ -809,6 +810,8 @@ static void
+>  build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>  {
+>      VirtMachineClass *vmc = VIRT_MACHINE_GET_CLASS(vms);
+> +    AcpiGedState *acpi_ged_state = ACPI_GED(vms->acpi_dev);
+> +    AcpiPciHpState *pcihp_state = &acpi_ged_state->pcihp_state;
+>      Aml *scope, *dsdt;
+>      MachineState *ms = MACHINE(vms);
+>      const MemMapEntry *memmap = vms->memmap;
+> @@ -868,6 +871,25 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>  
+>      aml_append(dsdt, scope);
+>  
+> +    if (pcihp_state->use_acpi_hotplug_bridge) {
+> +        Aml *pci0_scope = aml_scope("\\_SB.PCI0");
+> +
+> +        aml_append(pci0_scope, aml_pci_edsm());
+> +        build_acpi_pci_hotplug(dsdt, AML_SYSTEM_MEMORY,
+> +                               memmap[VIRT_ACPI_PCIHP].base);
+> +        build_append_pcihp_resources(pci0_scope,
+> +                                     memmap[VIRT_ACPI_PCIHP].base,
+> +                                     memmap[VIRT_ACPI_PCIHP].size);
+> +
+> +        /* Scan all PCI buses. Generate tables to support hotplug. */
+> +        build_append_pci_bus_devices(pci0_scope, vms->bus);
+> +        if (object_property_find(OBJECT(vms->bus), ACPI_PCIHP_PROP_BSEL)) {
+> +            build_append_pcihp_slots(pci0_scope, vms->bus);
+> +        }
+> +        build_append_notification_callback(pci0_scope, vms->bus);
+> +        aml_append(dsdt, pci0_scope);
+> +    }
+> +
+>      /* copy AML table into ACPI tables blob */
+>      g_array_append_vals(table_data, dsdt->buf->data, dsdt->buf->len);
+>  
 
 
