@@ -4,111 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B33FC7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 15:46:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03B35C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:02:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSdwA-0001nU-7O; Fri, 20 Jun 2025 11:45:54 -0400
+	id 1uSeBE-0004c2-0x; Fri, 20 Jun 2025 12:01:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uSdw7-0001lg-K8; Fri, 20 Jun 2025 11:45:51 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uSeB9-0004aq-DM
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:01:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zycai@linux.ibm.com>)
- id 1uSdw4-00028F-8c; Fri, 20 Jun 2025 11:45:50 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.2/8.18.1.2) with ESMTP id 55K9fv62003039;
- Fri, 20 Jun 2025 15:45:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=q7uWgi
- RrTwJ0Ng/X8aURzI9miPUCSmSoj283XrkZeFI=; b=XuG9hbAnlIdh3aW3guPQDv
- ugcitsNMi23VIBcr6hXEWnHkD6yjXi6Cak3lM1FxCuGOAhYCnpBTPC5KCQM68w+q
- wVWoNFUeBuMY7WXx8taGmIA7HAaxdlomjvn9dtDQEJ0Em6W0D0zZhEGpYHoy8riX
- BtcbcKI25QVH5qFlef8riDXthLjtsTXjnho1i1czd6d0TdOWV3qY5bMTbBY8WQxk
- 4XiUh1bUHRtA9PFgqVBwpWt8Yzcd8DistgPi+fAJoAm13uwoDBpUbBBwRnpxxMVn
- v/kmDw7cjmLa8iHtKBE83hDX8osgNzBGJfV0kjS/qJ7IkBjsL/rV7xWwXR85Xi+A
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 47beeta8cf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Jun 2025 15:45:41 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 55KCVBvM010853;
- Fri, 20 Jun 2025 15:45:40 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 479kdtv46n-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Jun 2025 15:45:40 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 55KFjcWt66847094
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Jun 2025 15:45:39 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BD69458057;
- Fri, 20 Jun 2025 15:45:38 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C9DE558058;
- Fri, 20 Jun 2025 15:45:37 +0000 (GMT)
-Received: from [9.61.49.33] (unknown [9.61.49.33])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 20 Jun 2025 15:45:37 +0000 (GMT)
-Message-ID: <7451ec24-1e42-4fb7-8a6a-4b7fa7009452@linux.ibm.com>
-Date: Fri, 20 Jun 2025 11:45:37 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1uSeB7-0003hx-E3
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:01:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750435277;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZpWHwc4W/lF1pbw83vZzmhSUuU8x1nmApfO+BKnMHOU=;
+ b=FGS00p2bnqns4gy21y7tO5jJsTVeTf+3N8Y0KeUPLb1Dz4T5qLGadbVH9iuDw2ucLwFGfV
+ rt4kvatgCgHAJbocTdpqQB7wt13obtAkpCfnzv7t458lvtHKjhp0KsEsl+FXUmNvjSh8Bz
+ 9+QobcMineyGTnd2PnJY9dG8Kk0zNfw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-599-tQcoGavBNpGfCfY2pIZ86g-1; Fri, 20 Jun 2025 12:01:14 -0400
+X-MC-Unique: tQcoGavBNpGfCfY2pIZ86g-1
+X-Mimecast-MFC-AGG-ID: tQcoGavBNpGfCfY2pIZ86g_1750435273
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-3a52bfda108so1067302f8f.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:01:14 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750435273; x=1751040073;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ZpWHwc4W/lF1pbw83vZzmhSUuU8x1nmApfO+BKnMHOU=;
+ b=I611saZXYx+/ypAvaJd/6Cuy2Exocx2HaXrd/dqPhPfgD748eneL5D5oHZNL/UdlGZ
+ fAWy1GWYdHcO8moK9L86ZCZrXnIm7t22N2eW7fJXrB2vHJ5197avAW7ydQw38K3AXqWe
+ KB1Cry3CtQytujNhjL0xh9YzYiNM1ffIZhmLJzf+Gf2BN+AmYl2ihRmhrrXwlcn+lm6x
+ G60X0QaGoughG+LHICEcq1A1ZKyoPeE+l1bCnbJe0mSu9h3u5xxUG+21SRCQYj46cc4A
+ CoZSsJhqopsDKS2hGWvu+5Q1xWhbsKSfqfOIzcRFAV3xeKKW795xk0skJ8T2Crrz66ym
+ UQyw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXyfbms2Eq1/UHdpjiTaO3OdZs2bQOrstq3YAqySCK4IJ/60s8XrRBCDR4e/E2AtErUjMIsD9R2ndf5@nongnu.org
+X-Gm-Message-State: AOJu0YwfKMoJooH5r8wYjWa5SumlGhUMKJJcwr5vxCSYbdaioZkwizCu
+ le1jwZc/dfYWczJCj5ZCttrmnAQDV8pr7B7Dd9cSzFvVVpHJ7S2ks+ZNXpDkMpoGL7d8wtoDVmF
+ /ra4cPSJfDr/oezkTs9QIfpcysDpU1FzhMgdrAZkoWzeuq7WudM0v6J+W
+X-Gm-Gg: ASbGncuyiMmugHrZUmerYEfggP44SGkYUDtteKz1br1bBETsNiEuGE8YH9D/EO/QiML
+ E+BMkHgn2n71VAYr2vbKBREmuMnbVi0+Smj25nhyrIHmvyAE6vaAYimtSp221qVkfveqoxQO4n/
+ oaRZ63tANvfSIEoKdzGljyX8/WL+sl4OoBMroaN1euI6oqTWyx2+zSZGBraOyG4LMNBTz/oc5rP
+ i80p9UUdq4P2Q+fyDYlxlDT3zJn0KVMlNY6nN7zv+9qBaxQSmmquN1b/VnNYtW8Dgcs2Kyqzpgo
+ t6605c9vvi9tjQulbWZQVMwnAgtjQ7QbdLNDGZcmm2SsVVM539mXlQQ3vvrKd31eMBN0GA==
+X-Received: by 2002:a05:6000:40cb:b0:3a5:8a68:b815 with SMTP id
+ ffacd0b85a97d-3a6d12e68ccmr2950044f8f.46.1750435272598; 
+ Fri, 20 Jun 2025 09:01:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IG7WHRU87ad9JjyayASLTxsPeVW8bbQntGHsCToKNWeSbpEE5IIq4mP1Ph2igReVvJd6MaMtw==
+X-Received: by 2002:a05:6000:40cb:b0:3a5:8a68:b815 with SMTP id
+ ffacd0b85a97d-3a6d12e68ccmr2949857f8f.46.1750435270334; 
+ Fri, 20 Jun 2025 09:01:10 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d1187e5fsm2413053f8f.70.2025.06.20.09.01.08
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Jun 2025 09:01:09 -0700 (PDT)
+Message-ID: <ec96eb95-f0d7-4d9e-986c-46367afef7fa@redhat.com>
+Date: Fri, 20 Jun 2025 18:01:08 +0200
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 01/28] Add boot-certificates to s390-ccw-virtio machine
- type option
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: thuth@redhat.com, richard.henderson@linaro.org, david@redhat.com,
- pbonzini@redhat.com, walling@linux.ibm.com, jjherne@linux.ibm.com,
- jrossi@linux.ibm.com, pasic@linux.ibm.com, borntraeger@linux.ibm.com,
- farman@linux.ibm.com, iii@linux.ibm.com, eblake@redhat.com,
- armbru@redhat.com, qemu-s390x@nongnu.org, qemu-devel@nongnu.org
-References: <20250604215657.528142-1-zycai@linux.ibm.com>
- <20250604215657.528142-2-zycai@linux.ibm.com> <aEL0bVhOFaCQbiBS@redhat.com>
+Subject: Re: [PATCH v2 18/19] Workaround for ERRATA_772415_SPR17
 Content-Language: en-US
-From: Zhuoying Cai <zycai@linux.ibm.com>
-In-Reply-To: <aEL0bVhOFaCQbiBS@redhat.com>
+To: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org
+Cc: alex.williamson@redhat.com, clg@redhat.com, mst@redhat.com,
+ jasowang@redhat.com, peterx@redhat.com, ddutile@redhat.com, jgg@nvidia.com,
+ nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
+ joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
+ kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com
+References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
+ <20250620071813.55571-19-zhenzhong.duan@intel.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20250620071813.55571-19-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: ake9q5OTmtz0ZxlK3n4BFOY-kJvBEWoo
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjUwNjIwMDEwOSBTYWx0ZWRfXwdh/jZMN4nj5
- oSlrTUkQHBKZOLqWJ7yzKsyVU+UMShacgE4RKVya4rK7jwmahx3sQQ6bmFCK8oZJyunTdC8Xy6k
- m3crjmTSoIwgIPoZiXouys43xWsoylSjE1UbYDZGuAhq8DGGA082X35VFzrq7M2b/W/vMkNWxBX
- i2Ft4LB1cZRr+5jnoW5r1RPblXAsez+bw1BEv5ZBKFaQER8xkVK+36vlprWOTAder92WEHWYZSx
- 0ltAg6hXWFpFEsEPHZFdku8KcN2DoHYz867nHfN01x137qmTny87lUgu6a7nNZMzba1YgY+bZex
- cUj9H9u7iARJZnkljzYf4v9Ruj23M1MurOfETeMQgbW+EcUXh+po31lirknYA9lcs9yNYO+CXDg
- 5W2HZoWunTa/wRxxebXQ6rqcWWAc1rwWQUMKorF8kd3Zo7kPVhh+IFvPGlidE7qYvzYdp+p0
-X-Authority-Analysis: v=2.4 cv=PrSTbxM3 c=1 sm=1 tr=0 ts=68558225 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=6IFa9wvqVegA:10 a=VnNF1IyMAAAA:8 a=Uu-oxMWvNaNqOFKj1Q8A:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: ake9q5OTmtz0ZxlK3n4BFOY-kJvBEWoo
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1099,Hydra:6.0.736,FMLib:17.12.80.40
- definitions=2025-06-20_06,2025-06-20_01,2025-03-28_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- clxscore=1015 mlxlogscore=999
- bulkscore=0 priorityscore=1501 adultscore=0 suspectscore=0 spamscore=0
- phishscore=0 malwarescore=0 mlxscore=0 lowpriorityscore=0 impostorscore=0
- classifier=spam authscore=0 authtc=n/a authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.19.0-2505280000
- definitions=main-2506200109
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=zycai@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -123,124 +116,138 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 6/6/25 10:00 AM, Daniel P. Berrangé wrote:
-> On Wed, Jun 04, 2025 at 05:56:29PM -0400, Zhuoying Cai wrote:
->> Add boot-certificates as a parameter of s390-ccw-virtio machine type option.
->>
->> The `boot-certificates=/path/dir:/path/file` parameter is implemented
->> to provide path to either a directory or a single certificate.
->>
->> Multiple paths can be delineated using a colon.
-> 
-> How do users specify paths which contain a colon as a valid
-> character ?
-> 
+Hi Zhenzhong,
 
-It was suggested to separate lists of directories and files with a
-colon, following the convention used by the shell PATH variable. As the
-colon serves as a delimiter, it’s expected that individual paths do not
-contain any colon characters.
+On 6/20/25 9:18 AM, Zhenzhong Duan wrote:
+> On a system influenced by ERRATA_772415, IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
+> is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the readonly
+> range mapped on stage-2 page table could still be written.
 
-> Ideally we should be using array properties when we need
-> a list of parameters.
-> 
+I would split this patch into a vfio only patch and an iommu one that
+sets bcontainer->readonly according to the fetched info.
+>
+> Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
+> Update, Errata Details, SPR17.
+> https://www.intel.com/content/www/us/en/content-details/772415/content-details.html
+the link does not work for me.
 
-Could you provide an example of specifying the boot-certificate
-parameter with the -machine option using array properties?
+Please could you explain in english what the errata is about and what
+actions need to be taken care in VFIO?
 
->>
->> Signed-off-by: Zhuoying Cai <zycai@linux.ibm.com>
->> ---
->>  hw/s390x/s390-virtio-ccw.c         | 22 ++++++++++++++++++++++
->>  include/hw/s390x/s390-virtio-ccw.h |  1 +
->>  qemu-options.hx                    |  7 ++++++-
->>  3 files changed, 29 insertions(+), 1 deletion(-)
->>
->> diff --git a/hw/s390x/s390-virtio-ccw.c b/hw/s390x/s390-virtio-ccw.c
->> index f20e02de9f..144ef52f34 100644
->> --- a/hw/s390x/s390-virtio-ccw.c
->> +++ b/hw/s390x/s390-virtio-ccw.c
->> @@ -798,6 +798,22 @@ static void machine_set_loadparm(Object *obj, Visitor *v,
->>      g_free(val);
->>  }
->>  
->> +static inline char *machine_get_boot_certificates(Object *obj, Error **errp)
->> +{
->> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
->> +
->> +    return g_strdup(ms->boot_certificates);
->> +}
->> +
->> +static void machine_set_boot_certificates(Object *obj, const char *str,
->> +                                          Error **errp)
->> +{
->> +    S390CcwMachineState *ms = S390_CCW_MACHINE(obj);
->> +
->> +    g_free(ms->boot_certificates);
->> +    ms->boot_certificates = g_strdup(str);
->> +}
->> +
->>  static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->>  {
->>      MachineClass *mc = MACHINE_CLASS(oc);
->> @@ -851,6 +867,12 @@ static void ccw_machine_class_init(ObjectClass *oc, const void *data)
->>              "Up to 8 chars in set of [A-Za-z0-9. ] (lower case chars converted"
->>              " to upper case) to pass to machine loader, boot manager,"
->>              " and guest kernel");
->> +
->> +    object_class_property_add_str(oc, "boot-certificates",
->> +                                  machine_get_boot_certificates,
->> +                                  machine_set_boot_certificates);
->> +    object_class_property_set_description(oc, "boot-certificates",
->> +            "provide path to a directory or a single certificate for secure boot");
->>  }
->>  
->>  static inline void s390_machine_initfn(Object *obj)
->> diff --git a/include/hw/s390x/s390-virtio-ccw.h b/include/hw/s390x/s390-virtio-ccw.h
->> index 526078a4e2..45adc8bce6 100644
->> --- a/include/hw/s390x/s390-virtio-ccw.h
->> +++ b/include/hw/s390x/s390-virtio-ccw.h
->> @@ -31,6 +31,7 @@ struct S390CcwMachineState {
->>      uint8_t loadparm[8];
->>      uint64_t memory_limit;
->>      uint64_t max_pagesize;
->> +    char *boot_certificates;
->>  
->>      SCLPDevice *sclp;
->>  };
->> diff --git a/qemu-options.hx b/qemu-options.hx
->> index 7eb8e02b4b..6d01f8c4b2 100644
->> --- a/qemu-options.hx
->> +++ b/qemu-options.hx
->> @@ -43,7 +43,8 @@ DEF("machine", HAS_ARG, QEMU_OPTION_machine, \
->>  #endif
->>      "                memory-backend='backend-id' specifies explicitly provided backend for main RAM (default=none)\n"
->>      "                cxl-fmw.0.targets.0=firsttarget,cxl-fmw.0.targets.1=secondtarget,cxl-fmw.0.size=size[,cxl-fmw.0.interleave-granularity=granularity]\n"
->> -    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n",
->> +    "                smp-cache.0.cache=cachename,smp-cache.0.topology=topologylevel\n"
->> +    "                boot-certificates='/path/directory:/path/file' provide a path to a directory or a boot certificate\n",
->>      QEMU_ARCH_ALL)
->>  SRST
->>  ``-machine [type=]name[,prop=value[,...]]``
->> @@ -200,6 +201,10 @@ SRST
->>          ::
->>  
->>              -machine smp-cache.0.cache=l1d,smp-cache.0.topology=core,smp-cache.1.cache=l1i,smp-cache.1.topology=core
->> +
->> +    ``boot-certificates='/path/directory:/path/file'``
->> +        Provide a path to a directory or a boot certificate on the host [s390x only].
->> +        A colon may be used to delineate multiple paths.
->>  ERST
->>  
->>  DEF("M", HAS_ARG, QEMU_OPTION_M,
->> -- 
->> 2.49.0
->>
-> 
-> With regards,
-> Daniel
+Sorry I failed to understand "
+
+Due to this errata, even the readonly
+range mapped on stage-2 page table could still be written.
+
+"
+>
+> Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
+> ---
+>  include/hw/vfio/vfio-container-base.h |  1 +
+>  hw/vfio/iommufd.c                     |  8 +++++++-
+>  hw/vfio/listener.c                    | 13 +++++++++----
+>  3 files changed, 17 insertions(+), 5 deletions(-)
+>
+> diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
+> index f0232654ee..e5c51a51ac 100644
+> --- a/include/hw/vfio/vfio-container-base.h
+> +++ b/include/hw/vfio/vfio-container-base.h
+> @@ -51,6 +51,7 @@ typedef struct VFIOContainerBase {
+>      QLIST_HEAD(, VFIODevice) device_list;
+>      GList *iova_ranges;
+>      NotifierWithReturn cpr_reboot_notifier;
+> +    bool bypass_ro;
+>  } VFIOContainerBase;
+>  
+>  typedef struct VFIOGuestIOMMU {
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 83a632bdee..23839a511a 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -306,6 +306,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>  {
+>      ERRP_GUARD();
+>      IOMMUFDBackend *iommufd = vbasedev->iommufd;
+> +    struct iommu_hw_info_vtd vtd;
+= {}; ?
+>      uint32_t type, flags = 0;
+>      uint64_t hw_caps;
+>      VFIOIOASHwpt *hwpt;
+> @@ -345,10 +346,15 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
+>       * instead.
+>       */
+>      if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
+> -                                         &type, NULL, 0, &hw_caps, errp)) {
+> +                                         &type, &vtd, sizeof(vtd), &hw_caps,
+> +                                         errp)) {
+>          return false;
+>      }
+>  
+> +    if (vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
+> +        container->bcontainer.bypass_ro = true;
+> +    }
+> +
+>      if (hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
+>          flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+>      }
+> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+> index f498e23a93..c64aa4539e 100644
+> --- a/hw/vfio/listener.c
+> +++ b/hw/vfio/listener.c
+> @@ -364,7 +364,8 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
+>      return true;
+>  }
+>  
+> -static bool vfio_listener_valid_section(MemoryRegionSection *section,
+> +static bool vfio_listener_valid_section(VFIOContainerBase *bcontainer,
+> +                                        MemoryRegionSection *section,
+>                                          const char *name)
+>  {
+>      if (vfio_listener_skipped_section(section)) {
+> @@ -375,6 +376,10 @@ static bool vfio_listener_valid_section(MemoryRegionSection *section,
+>          return false;
+>      }
+>  
+> +    if (bcontainer && bcontainer->bypass_ro && section->readonly) {
+> +        return false;
+> +    }
+> +
+>      if (unlikely((section->offset_within_address_space &
+>                    ~qemu_real_host_page_mask()) !=
+>                   (section->offset_within_region & ~qemu_real_host_page_mask()))) {
+> @@ -494,7 +499,7 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
+>      int ret;
+>      Error *err = NULL;
+>  
+> -    if (!vfio_listener_valid_section(section, "region_add")) {
+> +    if (!vfio_listener_valid_section(bcontainer, section, "region_add")) {
+>          return;
+>      }
+>  
+> @@ -655,7 +660,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
+>      int ret;
+>      bool try_unmap = true;
+>  
+> -    if (!vfio_listener_valid_section(section, "region_del")) {
+> +    if (!vfio_listener_valid_section(bcontainer, section, "region_del")) {
+>          return;
+>      }
+>  
+> @@ -812,7 +817,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
+>          container_of(listener, VFIODirtyRangesListener, listener);
+>      hwaddr iova, end;
+>  
+> -    if (!vfio_listener_valid_section(section, "tracking_update") ||
+> +    if (!vfio_listener_valid_section(NULL, section, "tracking_update") ||
+>          !vfio_get_section_iova_range(dirty->bcontainer, section,
+>                                       &iova, &end, NULL)) {
+>          return;
+Thanks
+
+Eric
 
 
