@@ -4,67 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F32BC71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 07:32:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90774C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 07:48:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSWEa-0008H5-OT; Fri, 20 Jun 2025 03:32:24 -0400
+	id 1uSWTG-0002ol-69; Fri, 20 Jun 2025 03:47:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
- id 1uSWEX-0008Gk-2y
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:32:21 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <maobibo@loongson.cn>) id 1uSWEU-0001K6-7I
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:32:20 -0400
-Received: from loongson.cn (unknown [10.20.42.62])
- by gateway (Coremail) with SMTP id _____8Axx2l8DlVoCj0aAQ--.25544S3;
- Fri, 20 Jun 2025 15:32:12 +0800 (CST)
-Received: from [10.20.42.62] (unknown [10.20.42.62])
- by front1 (Coremail) with SMTP id qMiowMBxb8d4DlVoZR4iAQ--.35357S3;
- Fri, 20 Jun 2025 15:32:11 +0800 (CST)
-Subject: Re: [PATCH v2 7/9] hw/loongarch: Implement avec set irq
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com
-References: <20250619023944.1278716-1-gaosong@loongson.cn>
- <20250619023944.1278716-8-gaosong@loongson.cn>
-From: Bibo Mao <maobibo@loongson.cn>
-Message-ID: <37f86b94-cc98-b960-4a16-ac0863e056e9@loongson.cn>
-Date: Fri, 20 Jun 2025 15:30:43 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uSWTB-0002nV-EU
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:47:30 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1uSWT9-00034S-KQ
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:47:29 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1750405643;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=OSzVx0A36/lS+sGsqB4jZLLzXavOOg7gRXGg5HazKDo=;
+ b=KK90CjndNqCzvVn1Z+t6DOc56hzsCsSBccxo9+M08Hc38Uv8TW10ILc2WI8ahLAfRLpxJc
+ QLmSvA5lvtpApR6O+W3b/+nAr3GaqTPEZ4DQFsBIgrY67PXfOhKLYP/rDiOKrd3bwNQgiw
+ fiAFhn7N0ONxS0PPQFwOAIVZeR/OgO8=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-582-cARPrvKOO7yAyFJgfNXqeA-1; Fri, 20 Jun 2025 03:47:22 -0400
+X-MC-Unique: cARPrvKOO7yAyFJgfNXqeA-1
+X-Mimecast-MFC-AGG-ID: cARPrvKOO7yAyFJgfNXqeA_1750405641
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-450d64026baso9336055e9.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 00:47:21 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1750405641; x=1751010441;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=OSzVx0A36/lS+sGsqB4jZLLzXavOOg7gRXGg5HazKDo=;
+ b=H/PLl51c6qPDHfpVhgqGpnFB9EQ3UR+9zqOqMXMui/IAMUO5maF/kkDZRD9EasR8UC
+ g9i0Oz5n8ZDoLchVoU0tn4eXJkOyWpFbtVbKSfEsek7J+y5wQBSBZGkOjDTjWgb3IX2p
+ NHICt1oZAqafPwA86tG3UAdehSIRSKeO46D6s3lR6Io8oZ6x+UYXy/QNSZRR7F057sV0
+ 7/lhMZNY7PQDRY3tY37IOYVOggotCucRE3RzeWQSC5TSw3949cOnW43+r4JRuOt5e0bE
+ hdtqSFyJ2fUsOyYwqYh+MB8g/lJi37nEyvc2QRvRICZFsD0sv6uk3X+YF1Y2ScQuIRdx
+ VC+g==
+X-Gm-Message-State: AOJu0YyRI0lvu0kGELO+c+oZ7J3P9733COt5O48FPvyGBKjbax76MtUu
+ fD8L3yI4tl71D3mmrqQIXbLDA1mkh58edli2E3HaEmLjGjrtxJ0qOwfmfNlQ241PJB1u4lcffTX
+ Wdyalq5GBWcKbgykV4hs302/EQvUA8wy5vXMVQyqCiNcE1I+FVySriMyL7K+qhFrcLRt531Ubt5
+ lUuMxbmPhVD9FKAYR1Rz+2nNC7WXLa+Z0=
+X-Gm-Gg: ASbGncvloR068yOuudhxJyn8KRnBDUdTyeG+TgtIguRvmK6s64oP4Qy2iEtdgWm1qOS
+ Dr7xvop1ldhZtYXYc1IHOSKOl5jZwzj5SVRsSyD99GG7xvePBdWPcs6t6ivmPlfz6R1jC2Vu1Yj
+ 52JnQ=
+X-Received: by 2002:a05:6000:2104:b0:3a3:652d:1638 with SMTP id
+ ffacd0b85a97d-3a6d132bf0bmr1166904f8f.48.1750405640891; 
+ Fri, 20 Jun 2025 00:47:20 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHvmHKlgdcMo9Jlt9bgnEWnspLNL948fmRdEd6NpaB+ZYxfgsXIPTNyy+XkdwpbE4eBlEeE79Ev/Z3Vnfftnx8=
+X-Received: by 2002:a05:6000:2104:b0:3a3:652d:1638 with SMTP id
+ ffacd0b85a97d-3a6d132bf0bmr1166893f8f.48.1750405640608; Fri, 20 Jun 2025
+ 00:47:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20250619023944.1278716-8-gaosong@loongson.cn>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowMBxb8d4DlVoZR4iAQ--.35357S3
-X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoWxXrW8uw1kKw13GF1rCr17Arc_yoW5Gr1fpa
- 93CF98Wr45JF47ZasxG345uFnxXr40gr1xX3ZIkF92kFZ0gw18WrW8JF9rtF1093yrWrWj
- vrn5Ga13W3W7JrXCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUvjb4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r1Y6r17M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Xr0_Ar1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW0oVCq3wA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
- GcCE3s1le2I262IYc4CY6c8Ij28IcVAaY2xG8wAqjxCEc2xF0cIa020Ex4CE44I27wAqx4
- xG64xvF2IEw4CE5I8CrVC2j2WlYx0E2Ix0cI8IcVAFwI0_JrI_JrylYx0Ex4A2jsIE14v2
- 6r1j6r4UMcvjeVCFs4IE7xkEbVWUJVW8JwACjcxG0xvEwIxGrwCYjI0SjxkI62AI1cAE67
- vIY487MxAIw28IcxkI7VAKI48JMxC20s026xCaFVCjc4AY6r1j6r4UMI8I3I0E5I8CrVAF
- wI0_Jr0_Jr4lx2IqxVCjr7xvwVAFwI0_JrI_JrWlx4CE17CEb7AF67AKxVWUAVWUtwCIc4
- 0Y0x0EwIxGrwCI42IY6xIIjxv20xvE14v26r1j6r1xMIIF0xvE2Ix0cI8IcVCY1x0267AK
- xVWUJVW8JwCI42IY6xAIw20EY4v20xvaj40_Jr0_JF4lIxAIcVC2z280aVAFwI0_Jr0_Gr
- 1lIxAIcVC2z280aVCY1x0267AKxVWUJVW8JbIYCTnIWIevJa73UjIFyTuYvjxU70PfDUUU
- U
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.648,
+References: <20250619203351.393786-1-pbonzini@redhat.com>
+ <20250619203351.393786-4-pbonzini@redhat.com>
+ <c60001b3-12d2-4261-8b6b-a7bfaf4e71ff@intel.com>
+In-Reply-To: <c60001b3-12d2-4261-8b6b-a7bfaf4e71ff@intel.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Date: Fri, 20 Jun 2025 09:47:09 +0200
+X-Gm-Features: Ac12FXzKI1kP-9p65vUQT0zvwRvzuQom7gsbWauqAu-E5-Sh1gH_4we_zLYh9oA
+Message-ID: <CABgObfYpkWDLtiJ3gAb8ouExON2q9BmB1NNMj6jyQ4Wh17rGKw@mail.gmail.com>
+Subject: Re: [PATCH 3/3] i386/tdx: handle TDG.VP.VMCALL<GetQuote>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: qemu-devel@nongnu.org, Chenyi Qiang <chenyi.qiang@intel.com>, 
+ Binbin Wu <binbin.wu@linux.intel.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Isaku Yamahata <isaku.yamahata@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -39
+X-Spam_score: -4.0
+X-Spam_bar: ----
+X-Spam_report: (-4.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -82,79 +107,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Jun 20, 2025 at 8:47=E2=80=AFAM Xiaoyao Li <xiaoyao.li@intel.com> w=
+rote:
+> > +void tdx_handle_get_quote(X86CPU *cpu, struct kvm_run *run)
+>
+> The previous version of mine, defined the return type as int, because it
+> wants to stop the QEMU when it hits the failure of
+> address_space_read/write. However, this patch returns
+> TDG_VP_VMCALL_INVALID_OPERAND to TD guest for such cases.
+>
+> Shouldn't the failure of address_space_read/write be treated as QEMU
+> internal error?
 
+The operands are provided by the guest, therefore I think it's an
+invalid operand error.
 
-On 2025/6/19 上午10:39, Song Gao wrote:
-> Implement avec set irq and update CSR_MSIS and CSR_MSGIR.
-> 
-> Signed-off-by: Song Gao <gaosong@loongson.cn>
-> ---
->   hw/intc/loongarch_avec.c | 31 +++++++++++++++++++++++++++++--
->   1 file changed, 29 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/intc/loongarch_avec.c b/hw/intc/loongarch_avec.c
-> index 7dd8bac696..bbd1b48c7d 100644
-> --- a/hw/intc/loongarch_avec.c
-> +++ b/hw/intc/loongarch_avec.c
-> @@ -16,6 +16,12 @@
->   #include "migration/vmstate.h"
->   #include "trace.h"
->   #include "hw/qdev-properties.h"
-> +#include "target/loongarch/cpu.h"
-> +
-> +/* msg addr field */
-> +FIELD(MSG_ADDR, IRQ_NUM, 4, 8)
-> +FIELD(MSG_ADDR, CPU_NUM, 12, 8)
-> +FIELD(MSG_ADDR, FIX, 28, 12)
->   
->   static uint64_t loongarch_avec_mem_read(void *opaque,
->                                           hwaddr addr, unsigned size)
-> @@ -23,12 +29,33 @@ static uint64_t loongarch_avec_mem_read(void *opaque,
->       return 0;
->   }
->   
-> +static void avec_set_irq(LoongArchAVECState *s, int cpu_num, int irq_num, int level)
-> +{
-> +   MachineState *machine = MACHINE(qdev_get_machine());
-> +   MachineClass *mc = MACHINE_GET_CLASS(machine);
-> +   const CPUArchIdList *id_list = NULL;
-> +   assert(mc->possible_cpu_arch_ids(machine));
-> +   id_list = mc->possible_cpu_arch_ids(machine);
-> +   CPUState *cpu = id_list->cpus[cpu_num].cpu;
-> +   CPULoongArchState *env = &LOONGARCH_CPU(cpu)->env;
-> +
-> +   set_bit(irq_num, &env->CSR_MSGIS[irq_num / 64]);
-> +   qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
-> +   env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, INTNUM, irq_num);
-> +   env->CSR_MSGIR = FIELD_DP64(env->CSR_MSGIR, CSR_MSGIR, ACTIVE, 0);
-I think that CSR_MSGIR should be set in this function. CSR_MSGIR is read 
-only logic register, it get and clear nearest bit about CSR_MSGIS[4] in 
-CSR register emulation.
-
-And when all bits about CSR_MSGIS[4] are cleared,  parent irq can be set 
-with 0 such as:
-    qemu_set_irq(s->cpu[cpu_num].parent_irq, 0);
-
-Regards
-Bibo Mao
-> +}
-> +
->   static void loongarch_avec_mem_write(void *opaque, hwaddr addr,
->                                        uint64_t val, unsigned size)
->   {
-> -    return;
-> -}
-> +    int irq_num, cpu_num = 0;
-> +    LoongArchAVECState *s = LOONGARCH_AVEC(opaque);
-> +    uint64_t msg_addr = addr + VIRT_AVEC_BASE;
->   
-> +    cpu_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
-> +    irq_num = FIELD_EX64(msg_addr, MSG_ADDR, CPU_NUM);
-> +    avec_set_irq(s, cpu_num, irq_num, 1);
-> +}
->   
->   static const MemoryRegionOps loongarch_avec_ops = {
->       .read = loongarch_avec_mem_read,
-> 
+Paolo
 
 
