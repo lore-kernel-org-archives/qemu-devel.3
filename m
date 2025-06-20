@@ -4,99 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48E03C71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:37:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE502C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 14:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbuv-0002E8-QJ; Fri, 20 Jun 2025 09:36:29 -0400
+	id 1uScLX-0007XE-EC; Fri, 20 Jun 2025 10:03:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uSbuu-0002Dt-4N
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:36:28 -0400
-Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1uSbuo-0001Aw-PV
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:36:27 -0400
-Received: by mail-ej1-x631.google.com with SMTP id
- a640c23a62f3a-ad56cbc7b07so310504466b.0
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:36:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750426579; x=1751031379; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=QB4JEJnsPCpYuaPFuj/LnSZGFhUGvc8XENnOvSEvthI=;
- b=citOoMa8jxzCcAFiqLOXMZLf07YQKI/4jTgpAZp1ijpFOfFEJFCcx+kQgOesFUU5xO
- yvVQLa4ekfkOI9BFhCQ68ZaSqo7aHXfcM2eqU4wwocT7ZCg8jwfFV5t90xZx7I+L4XGP
- ouhTGU6/Lg1L69VzJX5Scbnnnf+Hgsc5ME+IaeS+ikJK81+m1ZK/tLvrZ+p9rHdB0of0
- nNM82xUR1v4r4cI+tVqeqpv9nkrjVOPCn0ZxsgEZUjSRTtDdXOM4oGzfBiFMU0yHbW3s
- KDDfJrk6VB6YWjJBqcKtZD/lT+vF99MAzcZXgeHyypgdFecxHgiuaw2QpNyhTX6hFRnS
- nWyQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750426579; x=1751031379;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=QB4JEJnsPCpYuaPFuj/LnSZGFhUGvc8XENnOvSEvthI=;
- b=pcrkVZeWWER+IN+1gcY3iF2gnPWgyQqsIxr4+ZTeKydjT1flgHVpgmKWBOIhklFRsa
- Xsh6r3VUwbC7Xdfac6BIoYhc9nGHnU0UwtgYQmX8H8HXgTvBGNccao0Nv1Qfzg/UC8Yg
- 8qVH5qllL87yQLxQ0LJH8Mx2SotYzGAgP7ctO2t3iez1DwJIkN2TEBXVNWkZ1Nl0d4Uq
- 3+uiFkyi5ec8g0IWvXdeCfStgtOFTajfnOsiMLEUxNPGRdim6dMf2Z94V1Sd36a/Ce5K
- Dv9/xWGyExXoI7Gqy+DBkfMvMwluaKGKvI8XMZw40dmuGv5Tpk4v4bE2FU6LN3byV2fp
- M+QQ==
-X-Gm-Message-State: AOJu0YyBYg7eNGxZ0sVgYLtFaAyUAGMk4FbSUlY7NQgwbleLnnX8SuEp
- AwDaDku3rPwfaa3/DH/dRI9b0qFcZv60Fnh+Bd/Iqg83iOBgfdGeu0YKWFq51MAXF+k=
-X-Gm-Gg: ASbGncvfxNfM+HiOdh+ZUyavayNMLMWWPXHLskFN+l5Ii4Y3DebuzKqMBS2aZDtBSyH
- whsTib8uWacN4HJRbI84GRch8NtG1+trrbbqGp5WxzuxAPVEH7pAXQVk9PEBNTvKlZTgHjm7m4A
- wh98/CWTuPdrCMmBKHrttiPt2xMcFQeE1qSnCE/CtJqeo5JicsE/sVHhnWFYMJLJ6LJm62LtV2u
- Jb7b2nAc++z/WJMqjq/Dx1cjeWEcq9rOov4tcgE/+WR/FOBnWUfKKfUo/zcsCGQUgfNCKPMJnIv
- 7p9SzuJCHXVNNmE1eut6m/ssyRQJKOdrSqT4MJI0hOXQKJGIKZ7RRVHLiQVbhEg=
-X-Google-Smtp-Source: AGHT+IG2rInnDHZyIj89bAYkbqAgLml9UXKICFI1aci/zBjLQpqNIzZbpauksKvffGuEb505MSVSdA==
-X-Received: by 2002:a17:907:940d:b0:ad8:9466:3354 with SMTP id
- a640c23a62f3a-ae057cc5eb2mr294740466b.54.1750426578632; 
- Fri, 20 Jun 2025 06:36:18 -0700 (PDT)
-Received: from draig.lan ([185.126.160.19]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae054080a61sm166144566b.106.2025.06.20.06.36.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 06:36:18 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 55B7E5F876;
- Fri, 20 Jun 2025 14:36:17 +0100 (BST)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Rowan Hart <rowanbhart@gmail.com>
-Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,  Richard Henderson
- <richard.henderson@linaro.org>,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,  Yanan Wang <wangyanan55@huawei.com>,  Mahmoud
- Mandour <ma.mandourr@gmail.com>,  Marcel Apfelbaum
- <marcel.apfelbaum@gmail.com>,  Alexandre Iooss <erdnaxe@crans.org>,  Zhao
- Liu <zhao1.liu@intel.com>,  Eduardo Habkost <eduardo@habkost.net>
-Subject: Re: [PATCH v12 5/7] plugins: Add memory hardware address read/write
- API
-In-Reply-To: <168f9716-1b1c-42fe-9be8-f6b895a9095f@gmail.com> (Rowan Hart's
- message of "Tue, 17 Jun 2025 08:46:11 -0700")
-References: <20250611232409.2936521-1-rowanbhart@gmail.com>
- <20250611232409.2936521-6-rowanbhart@gmail.com>
- <87h60evf6t.fsf@draig.linaro.org>
- <168f9716-1b1c-42fe-9be8-f6b895a9095f@gmail.com>
-User-Agent: mu4e 1.12.11; emacs 30.1
-Date: Fri, 20 Jun 2025 14:36:17 +0100
-Message-ID: <87pleysffy.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uScLU-0007Wp-Ug
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:03:57 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uScLR-0004dy-6Z
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 10:03:56 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.231])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNzbk2kH6z6L6Lg;
+ Fri, 20 Jun 2025 21:58:58 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 0D74C14027A;
+ Fri, 20 Jun 2025 22:03:45 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 20 Jun
+ 2025 16:03:44 +0200
+Date: Fri, 20 Jun 2025 15:03:42 +0100
+To: <shiju.jose@huawei.com>
+CC: <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>,
+ <tanxiaofei@huawei.com>, <prime.zeng@hisilicon.com>, <linuxarm@huawei.com>
+Subject: Re: [PATCH v2 1/7] hw/cxl/events: Update for rev3.2 common event
+ record format
+Message-ID: <20250620150342.000055aa@huawei.com>
+In-Reply-To: <20250619151619.1695-2-shiju.jose@huawei.com>
+References: <20250619151619.1695-1-shiju.jose@huawei.com>
+ <20250619151619.1695-2-shiju.jose@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::631;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x631.google.com
-X-Spam_score_int: 12
-X-Spam_score: 1.2
-X-Spam_bar: +
-X-Spam_report: (1.2 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_SBL_CSS=3.335, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100005.china.huawei.com (7.191.160.25) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,98 +70,350 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rowan Hart <rowanbhart@gmail.com> writes:
+On Thu, 19 Jun 2025 16:16:13 +0100
+<shiju.jose@huawei.com> wrote:
 
->> My main concern about the long list of caveats for writing memory is the
->> user will almost certainly cause weird things to happen which will then
->> be hard to debug. I can see the patcher example however it would be
->> useful to know what other practical uses this interface provides.
->>
-> Of course! My main personal intent here is to facilitate introspection
-> and manipulation of guest state for security analysis. Some examples
-> of why the memory/register R/W primitives are necessary here include:
->
-> Fuzzing:
-> - Read registers and memory for tracing control flow, comparison
->   operands, and profiled values (e.g. memcmp arguments)
-> - Write memory to inject test cases into the guest (for me and other
->   fuzzer developers, this is the biggest reason!)
-> - Write registers to reset execution or skip over complex checks like
->   checksums
-> - Read and write memory, and read and write registers, to do basic
->   snapshot/restore by tracking dirty pages and resetting them
->
-> Virtual Machine Introspection (for malware analysis and reverse
-> engineering):
-> - Read memory and registers to find kernel, analyze kernel structures,
->   and retrieve info like process lists, memory mappings
-> - Read memory and registers to quickly trace malware execution in VM
-> - Write memory and registers to test behavior under various
->   conditions, like skipping into checks (motivating example: what
->   happens if you skip into the kill switch statement for WannaCry)
->
-> Runtime patching (as in the example):
-> - Writing memory to patch critical legacy code in production often can
->   no longer be built or patched via means other than by applying
->   binary patches (this is a real problem for e.g. the government, to
->   the point where DARPA ran a program
->   https://www.darpa.mil/research/programs/assured-micropatching to
->   work on it!)
-> - Writing registers to skip over broken code, redirect to patch code, etc.
->
-> Ultimately, the caveats boil down to "don't modify stuff that's
-> touched by currently executing code". I personally don't think that's
-> unreasonable (as long as it's in the doc-strings) because for any
-> plugin that needs to write memory, ensuring the write consistency is
-> probably the easiest problem to solve and people working in this space
-> are used to having way worse and jankier workarounds.
+> From: Shiju Jose <shiju.jose@huawei.com>
+> 
+> CXL spec 3.2 section 8.2.9.2.1 Table 8-55, Common Event Record
+> format has updated with Maintenance Operation Subclass, LD ID and
+> ID of the device head information.
+Hi Shiju,
 
-I dread to think what jankier workarounds are!
+Wrap a little longer - this is sub 70 and should aim for about 75 for
+commit descriptions.
 
-However I accept that a doc string warning will do for now. I think if
-we can strengthen the guarantee at a later date to make the feature more
-bullet proof we should. For example we could use start/end_exclusive to
-halt the other threads while patching is taking place and then trigger a
-full tb-flush to be safe. It depends how often we expect to be patching
-things out?
+> 
+> Add updates for the above spec changes in the related CXL events
+> reporting and QMP command to inject CXL events.
 
-Richard,
+Main comment in here is we need to keep these new parameters as optional
+as we shouldn't go adding required stuff to qapi and perhaps more importantly
+they are actually optional for most events.
 
-Do you have any view about this?
+Jonathan
 
-> These plugin
-> functions make life way easier for them. I have been in touch with 20+
-> people from various companies and projects (including Microsoft, where
-> I work, as well as other big and small tech) all working on plugins
-> that could be better if this feature existed, so there is definitely a
-> user-base and appetite for it!
->
-> The last cool use-case is that this moves us a long way towards
-> cleaning up the large number of QEMU forks out there designed for RE
-> and security testing like QEMU-Nyx, qemuafl, symqemu, and many more.
-> Instead of maintaining forks of QEMU (many of these are based on 4.2.0
-> or older!) folks can just maintain a plugin, which lets them take
-> advantage of updates and fixes without giant rebases. My goal is to
-> kill these forks and have these projects write small, maintainable
-> plugins instead, and the authors are on board :)
+> 
+> Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
 
-Absolutely - I would like to see that too. The main reason those forks
-haven't been up-streamable is because they have to make fairly invasive
-changes to the frontends to do their instrumentation. I want to grow the
-API to the point we can support these more advanced use cases. I am
-however being conservative in adding new APIs so we take the time to get
-each one right and minimise:
+> diff --git a/hw/mem/cxl_type3.c b/hw/mem/cxl_type3.c
+> index b5482f58a3..0787a9bfca 100644
+> --- a/hw/mem/cxl_type3.c
+> +++ b/hw/mem/cxl_type3.c
+> @@ -1780,12 +1780,18 @@ void qmp_cxl_inject_correctable_error(const char *path, CxlCorErrorType type,
+>  
+>  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+>                               const QemuUUID *uuid, uint32_t flags,
+> -                             uint8_t length, uint64_t timestamp)
+> +                             uint8_t length, uint64_t timestamp,
+> +                             uint8_t maint_class, uint8_t maint_subclass,
+> +                             uint16_t ld_id, uint8_t head_id)
+>  {
+>      st24_le_p(&hdr->flags, flags);
+>      hdr->length = length;
+>      memcpy(&hdr->id, uuid, sizeof(hdr->id));
+>      stq_le_p(&hdr->timestamp, timestamp);
+> +    hdr->maint_op_class = maint_class;
+> +    hdr->maint_op_subclass = maint_subclass;
+> +    hdr->ld_id = ld_id;
+2 bytes so 
 
-  - leaking internal details and constricting future evolution of the emula=
-tor
-  - giving the users too many foot guns in the API
+       stw_le_p(&hdr->ld_id, ld_id);
 
-I'll have a look at the next version and see how we are doing.
+> +    hdr->head_id = head_id;
+>  }
+>  
+>  static const QemuUUID gen_media_uuid = {
+> @@ -1825,7 +1831,9 @@ static int ct3d_qmp_cxl_event_log_enc(CxlEventLog log)
+>  }
+>  /* Component ID is device specific.  Define this as a string. */
+>  void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+> -                                        uint8_t flags, uint64_t dpa,
+> +                                        uint32_t flags, uint8_t class,
+> +                                        uint8_t subclass, uint16_t ld_id,
+> +                                        uint8_t head_id, uint64_t dpa,
+>                                          uint8_t descriptor, uint8_t type,
+>                                          uint8_t transaction_type,
+>                                          bool has_channel, uint8_t channel,
+> @@ -1863,7 +1871,8 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+>  
+>      memset(&gem, 0, sizeof(gem));
+>      cxl_assign_event_header(hdr, &gen_media_uuid, flags, sizeof(gem),
+> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
+> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
+> +                            class, subclass, ld_id, head_id);
+>  
+>      stq_le_p(&gem.phys_addr, dpa);
+>      gem.descriptor = descriptor;
+> @@ -1907,7 +1916,9 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+>  #define CXL_DRAM_VALID_COLUMN                           BIT(6)
+>  #define CXL_DRAM_VALID_CORRECTION_MASK                  BIT(7)
+>  
+> -void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+> +void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint32_t flags,
+> +                               uint8_t class, uint8_t subclass,
+> +                               uint16_t ld_id, uint8_t head_id,
+>                                 uint64_t dpa, uint8_t descriptor,
+>                                 uint8_t type, uint8_t transaction_type,
+>                                 bool has_channel, uint8_t channel,
+> @@ -1950,7 +1961,8 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+>  
+>      memset(&dram, 0, sizeof(dram));
+>      cxl_assign_event_header(hdr, &dram_uuid, flags, sizeof(dram),
+> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
+> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
+> +                            class, subclass, ld_id, head_id);
+>      stq_le_p(&dram.phys_addr, dpa);
+>      dram.descriptor = descriptor;
+>      dram.type = type;
+> @@ -2010,7 +2022,9 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+>  }
+>  
+>  void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+> -                                        uint8_t flags, uint8_t type,
+> +                                        uint32_t flags, uint8_t class,
+> +                                        uint8_t subclass, uint16_t ld_id,
+> +                                        uint8_t head_id, uint8_t type,
+>                                          uint8_t health_status,
+>                                          uint8_t media_status,
+>                                          uint8_t additional_status,
+> @@ -2049,7 +2063,8 @@ void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+>  
+>      memset(&module, 0, sizeof(module));
+>      cxl_assign_event_header(hdr, &memory_module_uuid, flags, sizeof(module),
+> -                            cxl_device_get_timestamp(&ct3d->cxl_dstate));
+> +                            cxl_device_get_timestamp(&ct3d->cxl_dstate),
+> +                            class, subclass, ld_id, head_id);
+>  
+>      module.type = type;
+>      module.health_status = health_status;
+> @@ -2284,7 +2299,8 @@ static void qmp_cxl_process_dynamic_capacity_prescriptive(const char *path,
+>       * Event Log.
+>       */
+>      cxl_assign_event_header(hdr, &dynamic_capacity_uuid, flags, sizeof(dCap),
+> -                            cxl_device_get_timestamp(&dcd->cxl_dstate));
+> +                            cxl_device_get_timestamp(&dcd->cxl_dstate),
+> +                            0, 0, 0, 0);
+As below - we'll need to pass in the validity flags as well for subclass, ld-id and head-id
+ as we don't really want to do that bit of computing 'flags' at each caller.
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+>  
+>      dCap.type = type;
+>      /* FIXME: for now, validity flag is cleared */
+> diff --git a/hw/mem/cxl_type3_stubs.c b/hw/mem/cxl_type3_stubs.c
+> index c1a5e4a7c1..263d8b4609 100644
+> --- a/hw/mem/cxl_type3_stubs.c
+> +++ b/hw/mem/cxl_type3_stubs.c
+> @@ -14,7 +14,9 @@
+>  #include "qapi/qapi-commands-cxl.h"
+>  
+>  void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+> -                                        uint8_t flags, uint64_t dpa,
+> +                                        uint32_t flags, uint8_t class,
+> +                                        uint8_t subclass, uint16_t ld_id,
+> +                                        uint8_t head_id, uint64_t dpa,
+>                                          uint8_t descriptor, uint8_t type,
+>                                          uint8_t transaction_type,
+>                                          bool has_channel, uint8_t channel,
+> @@ -23,7 +25,9 @@ void qmp_cxl_inject_general_media_event(const char *path, CxlEventLog log,
+>                                          const char *component_id,
+>                                          Error **errp) {}
+>  
+> -void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+> +void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint32_t flags,
+> +                               uint8_t class, uint8_t subclass,
+> +                               uint16_t ld_id, uint8_t head_id,
+>                                 uint64_t dpa, uint8_t descriptor,
+>                                 uint8_t type, uint8_t transaction_type,
+>                                 bool has_channel, uint8_t channel,
+> @@ -38,7 +42,9 @@ void qmp_cxl_inject_dram_event(const char *path, CxlEventLog log, uint8_t flags,
+>                                 Error **errp) {}
+>  
+>  void qmp_cxl_inject_memory_module_event(const char *path, CxlEventLog log,
+> -                                        uint8_t flags, uint8_t type,
+> +                                        uint32_t flags, uint8_t class,
+> +                                        uint8_t subclass, uint16_t ld_id,
+> +                                        uint8_t head_id, uint8_t type,
+>                                          uint8_t health_status,
+>                                          uint8_t media_status,
+>                                          uint8_t additional_status,
+With suggestion below, this will gain bool has_xxx parameters like
+qmp_cxl_inject_general_media already has.
+
+> diff --git a/include/hw/cxl/cxl_device.h b/include/hw/cxl/cxl_device.h
+> index 831fdefbac..fc6ec82670 100644
+> --- a/include/hw/cxl/cxl_device.h
+> +++ b/include/hw/cxl/cxl_device.h
+> @@ -827,7 +827,9 @@ bool ct3_test_region_block_backed(CXLType3Dev *ct3d, uint64_t dpa,
+>                                    uint64_t len);
+>  void cxl_assign_event_header(CXLEventRecordHdr *hdr,
+>                               const QemuUUID *uuid, uint32_t flags,
+> -                             uint8_t length, uint64_t timestamp);
+> +                             uint8_t length, uint64_t timestamp,
+> +                             uint8_t maint_class, uint8_t maint_subclass,
+> +                             uint16_t ld_id, uint8_t head_id);
+
+I think we need to add bools for the presence of maint_subclass, ld_id and head_id
+or we have to modify flags at each caller which is rather ugly.
+It's fine to just fill maint_class in with 0 if not set though as that has
+no valid bit.
+
+>  bool cxl_extents_overlaps_dpa_range(CXLDCExtentList *list,
+>                                      uint64_t dpa, uint64_t len);
+>  bool cxl_extent_groups_overlaps_dpa_range(CXLDCExtentGroupList *list,
+> diff --git a/include/hw/cxl/cxl_events.h b/include/hw/cxl/cxl_events.h
+> index 758b075a64..4d9cfdb621 100644
+> --- a/include/hw/cxl/cxl_events.h
+> +++ b/include/hw/cxl/cxl_events.h
+> @@ -29,9 +29,15 @@ typedef enum CXLEventLogType {
+>  
+>  /*
+>   * Common Event Record Format
+> - * CXL r3.1 section 8.2.9.2.1: Event Records; Table 8-43
+> + * CXL r3.2 section 8.2.10.2.1: Event Records; Table 8-55
+>   */
+> -#define CXL_EVENT_REC_HDR_RES_LEN 0xf
+> +#define CXL_EVENT_REC_FLAGS_PERMANENT_COND BIT(2)
+> +#define CXL_EVENT_REC_FLAGS_MAINT_NEEDED   BIT(3)
+> +#define CXL_EVENT_REC_FLAGS_PERF_DEGRADED  BIT(4)
+> +#define CXL_EVENT_REC_FLAGS_HW_REPLACEMENT_NEEDED BIT(5)
+> +#define CXL_EVENT_REC_FLAGS_MAINT_OP_SUBCLASS_VALID BIT(6)
+> +#define CXL_EVENT_REC_FLAGS_LD_ID_VALID BIT(7)
+> +#define CXL_EVENT_REC_FLAGS_HEAD_ID_VALID BIT(8)
+As below - here we have the 3 valid bits.
+
+>  typedef struct CXLEventRecordHdr {
+>      QemuUUID id;
+>      uint8_t length;
+> @@ -40,7 +46,10 @@ typedef struct CXLEventRecordHdr {
+>      uint16_t related_handle;
+>      uint64_t timestamp;
+>      uint8_t maint_op_class;
+> -    uint8_t reserved[CXL_EVENT_REC_HDR_RES_LEN];
+> +    uint8_t maint_op_subclass;
+> +    uint16_t ld_id;
+> +    uint8_t head_id;
+> +    uint8_t reserved[0xb];
+>  } QEMU_PACKED CXLEventRecordHdr;
+>  
+>  #define CXL_EVENT_RECORD_DATA_LENGTH 0x50
+> diff --git a/qapi/cxl.json b/qapi/cxl.json
+> index 8f2e9237b1..c38585d3c8 100644
+> --- a/qapi/cxl.json
+> +++ b/qapi/cxl.json
+> @@ -42,6 +42,18 @@
+>  # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+>  #     Record Format, Event Record Flags for subfield definitions.
+>  #
+> +# @class: Maintenance operation class the device requests to initiate.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @subclass: Maintenance operation subclass the device requests to
+> +#     initiate. See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @ld-id: LD ID of LD from where the event originated.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @head-id: ID of the device head from where the event originated.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+>  # @dpa: Device Physical Address (relative to @path device).  Note
+>  #     lower bits include some flags.  See CXL r3.0 Table 8-43 General
+>  #     Media Event Record, Physical Address.
+> @@ -73,7 +85,9 @@
+>  # Since: 8.1
+>  ##
+>  { 'command': 'cxl-inject-general-media-event',
+> -  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
+> +  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint32',
+> +	    'class':'uint8', 'subclass':'uint8',
+> +	    'ld-id':'uint16', 'head-id':'uint8',
+
+This is a bit of a problem as we should maintain backwards compatibility.
+
+ld-id, head-id etc are optional anyway so should be "*ld-id" and we should
+then check has_ld_id and set the valid bits appropriately.
+
+For class and subclass we should make them optional in this interface
+and follow the guidance to set them to 0 if they aren't explicitly set.
+Actually on closer inspection subclass is also optional and has a valid flag
+so the only one we are making optional in this interface that isn't in the
+spec is class.
+
+Also good to use fuller name to make it clear these are about maintenance
+classes.  Maybe maint-op-class and maint-op-subclass
+
+Similar comments apply to the other cases.
+
+ 
+>              'dpa': 'uint64', 'descriptor': 'uint8',
+>              'type': 'uint8', 'transaction-type': 'uint8',
+>              '*channel': 'uint8', '*rank': 'uint8',
+> @@ -93,6 +107,18 @@
+>  # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+>  #     Record Format, Event Record Flags for subfield definitions.
+>  #
+> +# @class: Maintenance operation class the device requests to initiate.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @subclass: Maintenance operation subclass the device requests to
+> +#     initiate. See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @ld-id: LD ID of LD from where the event originated.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @head-id: ID of the device head from where the event originated.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+>  # @dpa: Device Physical Address (relative to @path device).  Note
+>  #     lower bits include some flags.  See CXL r3.0 Table 8-44 DRAM
+>  #     Event Record, Physical Address.
+> @@ -132,7 +158,9 @@
+>  # Since: 8.1
+>  ##
+>  { 'command': 'cxl-inject-dram-event',
+> -  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint8',
+> +  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags': 'uint32',
+> +	    'class':'uint8', 'subclass':'uint8',
+> +	    'ld-id':'uint16', 'head-id':'uint8',
+
+>              'dpa': 'uint64', 'descriptor': 'uint8',
+>              'type': 'uint8', 'transaction-type': 'uint8',
+>              '*channel': 'uint8', '*rank': 'uint8', '*nibble-mask': 'uint32',
+> @@ -154,6 +182,18 @@
+>  # @flags: Event Record Flags.  See CXL r3.0 Table 8-42 Common Event
+>  #     Record Format, Event Record Flags for subfield definitions.
+>  #
+> +# @class: Maintenance operation class the device requests to initiate.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @subclass: Maintenance operation subclass the device requests to
+> +#     initiate. See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @ld-id: LD ID of LD from where the event originated.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+> +# @head-id: ID of the device head from where the event originated.
+> +#     See CXL r3.2 Table 8-55 Common Event Record Format.
+> +#
+>  # @type: Device Event Type.  See CXL r3.0 Table 8-45 Memory Module
+>  #     Event Record for bit definitions for bit definiions.
+>  #
+> @@ -184,7 +224,9 @@
+>  # Since: 8.1
+>  ##
+>  { 'command': 'cxl-inject-memory-module-event',
+> -  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags' : 'uint8',
+> +  'data': { 'path': 'str', 'log': 'CxlEventLog', 'flags' : 'uint32',
+> +	    'class':'uint8', 'subclass':'uint8',
+> +	    'ld-id':'uint16', 'head-id':'uint8',
+>              'type': 'uint8', 'health-status': 'uint8',
+>              'media-status': 'uint8', 'additional-status': 'uint8',
+>              'life-used': 'uint8', 'temperature' : 'int16',
+
 
