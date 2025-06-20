@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1250BC71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:13:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04DF1C7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:13:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbUa-0005iO-1T; Fri, 20 Jun 2025 09:09:16 -0400
+	id 1uSbTU-0002nK-Ge; Fri, 20 Jun 2025 09:08:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUY-0005Yq-74
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:09:14 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbTS-0002id-C9
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:06 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbUW-0004uR-Lk
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:09:13 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-3a528243636so1159206f8f.3
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:09:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbTQ-0004bK-6G
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:06 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-442e9c00bf4so15034255e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750424951; x=1751029751; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750424882; x=1751029682; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=y5LZcCqNpH4GazYoT4HEePjvcf7hcAUKrr97H91/oS0=;
- b=OwuGRA/4rWsALA1SholNrd6ABxL+j8EhWV8nJOyLyRjDDXSQamSBiNufgEJl9kR/Vq
- /k7fNjRuHZ51du0IM+Qa5Id06pqAnfSsd/hlh3W09r2OIIRBrwPLffzt57sKQUE52+FW
- 1vGFZky5SURlASTdj4xjQ61oJhX6weLmxhy8FERSOKh0SbWfQ2C7OPlYP3hoDAbIutcA
- 4UfHYZeGVuCFB7UtwxJG1yLqjQAIhvVDhKREdqXXrU4gHeMBHZYjLyRbfxtf/2PFJYaB
- mf4hYKmYB0yffOoF4Wh0gMq6e+m+dqUZd04ObV9C2GOzPheLa4WAgKBbErBExXzvgPNg
- isHQ==
+ bh=DHkUxhiwznLnPGQ7CmoJiivDkUiQkmNfBetsY13UZBg=;
+ b=mzU5OT7wO27hiwOCswg96hP1vq46euSOASpTsIMB5hASXGmQJExy9ebNWCYAHU3rUg
+ IwagJOjAE2HukMuWgBfh0TIf/KT0QjQBVNJY5ZDicQFC/kBL60TJQR13Kj1roE5AjKcY
+ heuWOBFLz6L8L0dkJHF+8GAMqAgvJcpRSCpSFpYaeHPZJmwa947fq+I+oH0NdTQCWNC+
+ ZDrYAQvmnD2bE2AqXnqGqbu3viwzpQw+KfHY3dz1wiaIte5KWKoYwVu9rY6NWVe7uBud
+ p41Rb/cuKvo7A/cYbPdRLsGUWZdUkMnppclajLHwEFqM0y7uSH2iJSzCw/5shN/85Ml7
+ dFMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750424951; x=1751029751;
+ d=1e100.net; s=20230601; t=1750424882; x=1751029682;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=y5LZcCqNpH4GazYoT4HEePjvcf7hcAUKrr97H91/oS0=;
- b=o1ksA//G9oJvZJAgsQQ1hZQyufVu37CmTmRzHUvwOz8/cEc0hOpK6CRYrc3QAHlFuZ
- Y8TU9oJOVn/sH45A70FdZdTe+o6jC0KSXjrz8IqPtMn2RVy0A+IZ4nWDNg/xwSc1Pnlq
- crfRCQrsfZGVCWCsGiyhqihGAPJkximiXwfegD6222YrrlBrTr+IwDsNPdy0w69k74jz
- J4HUyn89m6ezuFjM+0464FE760+gPxfKBzHgzEPsFzKmW/JUrUwHVqDdpbbqgVTPKKk9
- ZaLOb2na6kzspa4X2G0P66hSECs9gKYhp69Av1UKfwA8xLECpGTTDnZVzXxuf4tUhgnG
- ctoA==
-X-Gm-Message-State: AOJu0YxL5KFhkiUy1iI9DKro2XBmTq/x+SRhJ7ZDF4r80MwadzTmkMAP
- MTqbZg7Y+JOT+zYr05gpiTAA7YAXlD0LS4Nnosn7Xrdfi78mQ+zGPDOo/YQCe0eM2gEueWih0W+
- ZL0asV+s=
-X-Gm-Gg: ASbGncv7nYLOQPtojF2m7hvXFc1iFCwSsoI1gFiwW+jdkGaJgpiwGT3NNgmzoAV6qu6
- p+pr55evGogz10bizWBc/i5CyA1uUuhnus2uoc6hhA8f7RZpDKFL+lzMWRMdeAz6jBQoOdy8y1D
- OEa5TBFMHfXbmrfXls9gU5oUL80wsjehpmKzwQfq+dsjfl2XlYyBu/Qdm1CjZYKKky0CPjg4I2m
- 9cuVcI7El8lwdb2wt7PfNSVyIySs518+TaOJPAZW2Jl80yXYZI39XJYr8bn7AoEqZp3RGo5kzOZ
- g8QCXthFeVEHRuVAZlpkVu3YS0uNNrIQpemKbNMhb1JJ93jIadHhSZGChlM8KLkqj7y8AVr++g8
- EHCbdb6crYxTCJ+eHvwbt3aGBx33PGJwTwHpV
-X-Google-Smtp-Source: AGHT+IFC6yofAEZU9uIg4ElHVXtdVlW8O/y3B6pNs8rlLb+5bVvaCqliz0NCeVD+ukrt5UnUQmDjdA==
-X-Received: by 2002:a5d:584e:0:b0:3a4:e841:b236 with SMTP id
- ffacd0b85a97d-3a6d12d8c86mr2406728f8f.33.1750424950626; 
- Fri, 20 Jun 2025 06:09:10 -0700 (PDT)
+ bh=DHkUxhiwznLnPGQ7CmoJiivDkUiQkmNfBetsY13UZBg=;
+ b=l1Mchcu1U+IoQeDRLR9EYlwfrNU9GE+OKgu/3TrIgpr3CyX+clVZ+bSHySceql2YUA
+ C95BiNmfiMAqHdazcdh5kazChiL0l35PTWqahM00NozBGWfLsV/5XZzB+5YTuCSIcmg8
+ CXNi6MGTO9Cdjh6RuOcwk/bnIPClaMV470033ev6LefocIcJ1DH6BwIYwXT5M9Nlcl3d
+ B9LOPBqHh4ZKaqGCdb6HLOlNUwfcBAZAeNtwr2rs3jAqfg0FuPY5isz0tUU+xMANGMJk
+ PNy0Ru+XHUo91Q8Ma/BXV+04xMAkAzSbL0Lfy44DMQLig61keHSKxkqT6eDNLYQz5pcU
+ HzfQ==
+X-Gm-Message-State: AOJu0YzwvsNIj5OzKKcRUigv/uARlETdJ36d0MCvrfdyMBCkvSQWgsAp
+ dBslSGQvg2RYEN8QCzL8eeRaJmv2JaZZhWY86CdrVBqNXDGyTSBXf3StDNFa3CZdCZEwb9yY8mK
+ kcjlMad4=
+X-Gm-Gg: ASbGncuP6d8nCkLJetZt7sc10gXOOLb1cbLtRRe1ZNfpvDLvoCcClMCkv3QTFaH5nl6
+ FzDutaCpLcMrQ5xVCDrjpZnBKRvw/Kh0gsqDbZ10/5mac9DPUDLF8zjHNXiZOovKY/eUuotRz7T
+ e6bbhJz4KaBbhSHLqOE+7KF6nZ4MHeV6GsyzacP2RqJ7PwjYjpHHPSayrIR/nu7FBn0bvru+vAx
+ YhJLelwZQsjGJCGEchq0CuVrtm7/2SnVfx0MDH4E/R85lFNzxWgVWBb3To/8VIAR5hk5jAjJ1uN
+ cvclif4qPVR1/A1H60O6piSGRl3sy2b5XMN5o0GEOhVVgkF5FIt3q+C2q4FF8706J5zcWjNirJ5
+ tOGkRxhpRRAyXIK52FPK19XayZImuTDGWNkFw
+X-Google-Smtp-Source: AGHT+IFIRA+QgEzXaz5Kv5aRlxYuLkZKTx/pYgPZDxWBgIRvFsRGsi3xvxXp90rTSlKsbLeeXas7Hg==
+X-Received: by 2002:a05:600c:3acf:b0:440:6a37:be0d with SMTP id
+ 5b1f17b1804b1-453655c3d4fmr28644125e9.15.1750424882015; 
+ Fri, 20 Jun 2025 06:08:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d117bfd9sm2076809f8f.57.2025.06.20.06.09.09
+ 5b1f17b1804b1-4535e98b66asm57984935e9.17.2025.06.20.06.08.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 06:09:10 -0700 (PDT)
+ Fri, 20 Jun 2025 06:08:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
@@ -80,18 +80,17 @@ Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 21/26] hw/arm/virt: Rename cpu_post_init() ->
- post_cpus_gic_realized()
-Date: Fri, 20 Jun 2025 15:07:04 +0200
-Message-ID: <20250620130709.31073-22-philmd@linaro.org>
+Subject: [PATCH v2 09/26] target/arm: Correct KVM & HVF dtb_compatible value
+Date: Fri, 20 Jun 2025 15:06:52 +0200
+Message-ID: <20250620130709.31073-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620130709.31073-1-philmd@linaro.org>
 References: <20250620130709.31073-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,38 +113,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QDev uses _post_init() during instance creation, before being
-realized. Since here both vCPUs and GIC are REALIZED, rename
-as virt_post_cpus_gic_realized() for clarity.
+Linux kernel knows how to parse "arm,armv8", not "arm,arm-v8".
 
+See arch/arm64/boot/dts/foundation-v8.dts:
+
+  https://github.com/torvalds/linux/commit/90556ca1ebdd
+
+Fixes: 26861c7ce06 ("target-arm: Add minimal KVM AArch64 support")
+Fixes: 585df85efea ("hvf: arm: Implement -cpu host")
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/arm/virt.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ target/arm/hvf/hvf.c | 2 +-
+ target/arm/kvm.c     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index a9099570faa..da453768cce 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -2032,7 +2032,8 @@ static void finalize_gic_version(VirtMachineState *vms)
-  * virt_cpu_post_init() must be called after the CPUs have
-  * been realized and the GIC has been created.
-  */
--static void virt_cpu_post_init(VirtMachineState *vms, MemoryRegion *sysmem)
-+static void virt_post_cpus_gic_realized(VirtMachineState *vms,
-+                                        MemoryRegion *sysmem)
- {
-     int max_cpus = MACHINE(vms)->smp.max_cpus;
-     bool aarch64, pmu, steal_time;
-@@ -2349,7 +2350,7 @@ static void machvirt_init(MachineState *machine)
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index d4c58516e8b..bf59b17dcb9 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -879,7 +879,7 @@ static bool hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     hv_vcpu_exit_t *exit;
+     int i;
  
-     create_gic(vms, sysmem);
+-    ahcf->dtb_compatible = "arm,arm-v8";
++    ahcf->dtb_compatible = "arm,armv8";
+     ahcf->features = (1ULL << ARM_FEATURE_V8) |
+                      (1ULL << ARM_FEATURE_NEON) |
+                      (1ULL << ARM_FEATURE_AARCH64) |
+diff --git a/target/arm/kvm.c b/target/arm/kvm.c
+index 74fda8b8090..9a1b031556a 100644
+--- a/target/arm/kvm.c
++++ b/target/arm/kvm.c
+@@ -266,7 +266,7 @@ static bool kvm_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+     }
  
--    virt_cpu_post_init(vms, sysmem);
-+    virt_post_cpus_gic_realized(vms, sysmem);
+     ahcf->target = init.target;
+-    ahcf->dtb_compatible = "arm,arm-v8";
++    ahcf->dtb_compatible = "arm,armv8";
  
-     fdt_add_pmu_nodes(vms);
- 
+     err = read_sys_reg64(fdarray[2], &ahcf->isar.id_aa64pfr0,
+                          ARM64_SYS_REG(3, 0, 0, 4, 0));
 -- 
 2.49.0
 
