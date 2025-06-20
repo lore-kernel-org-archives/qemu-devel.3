@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F351C7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 17:20:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 603EBC7EE2A
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 17:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSfMM-0004Ag-C8; Fri, 20 Jun 2025 13:17:02 -0400
+	id 1uSfMj-0004qp-KJ; Fri, 20 Jun 2025 13:17:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKn-0001dX-Ml
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:27 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfLz-0003Y8-SA
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:16:41 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKl-0004Uv-H2
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:25 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-45363645a8eso10194355e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:15:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfLx-0004gB-Oi
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:16:39 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-442e9c00bf4so17094225e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:16:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750439721; x=1751044521; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750439796; x=1751044596; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ThJ9gD63sooyYfC0TwQMdGR/95qoYxG7tdS8NDTZY4I=;
- b=XFlb+S8rKhVj4IVRswDYEbMJny4gGdUxXLnmiQKJfIgeBR0y7wMeDPZOsco4lUsB/k
- dbvxzAYfdmIoyWxn6nNmOLF0CdMDXkYzSB4rSkE6mFshe+nSoFCzo3GxdYpynhAfzHFj
- MoQwWOPICWOdO7pgrP3Fts91ikMY9eLYvzDwxCpmcH3Dhpk89Xu7zQ/aa5rADaNKkXha
- zgWE6RJlRW0MyDMY/Hk+4h/ZCaliZdedltbIFaNL4vOL04ErByToxqFxxSXxcOs4V9SU
- hGFg0fjI+pWZf8E0WWKlDQquvrgV0h7trJHytIWhAdcDNc4HMLT0G2Ay4g/gYSz08CU4
- bLWw==
+ bh=bscCZhJPor6p9xOGYxKsyHkSJQbAuOk7LsWMwFm7sCY=;
+ b=NRNZLHw4/c3rizi8krRI6YzQwaFqPBbZZWLKCp2aHXE675QRht6WGMVkShK6W9+VkJ
+ mqoh0HOrprJuPbObSySYzPSf2xFStyzTTjjLJXxRWNiN2svgoy0Xr30XSCPBzG6nK5Af
+ nFuCtFhuxlwpMMKY7YLzHjBsGH/daPDvnViCLDcwtpAK810vtngW/79mSDyImiKuqCkc
+ 9ChPNQbZ+nwr5Y360VrbxDyU4nhS71oogF5LqblOLvPWbwa7v71Xkuh1r+5rNd9MLMl8
+ DTBqDEmqc3t7AbHa+8VwIqLlnCHP+Tyheiw2d0CVyJiBFBDjuwjmAWYJAC/C9z3Zi+n3
+ V+uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750439721; x=1751044521;
+ d=1e100.net; s=20230601; t=1750439796; x=1751044596;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=ThJ9gD63sooyYfC0TwQMdGR/95qoYxG7tdS8NDTZY4I=;
- b=ht3LkacLkxi67akFmdt/6h+BCaWbzFXQ+0pZxVXebF1QTsaZ6pHR1z1CJElNeSBg2K
- yyFNN9/9A2HQcZ9+cNOZJUMP5T0UjuKp1IR7UFL3GvyRQIW1Wj/1vEc8+s0P/pHFl9Xw
- ld7qQeGNmHQ8NjxI6pV0NWWxB3DEdhmz66pfMwoIxkRYJPQM94ajhOl/f+lPvB/uMEUB
- 4QptkVgTMlw39rB/GYntP6+l7wPvyIVU80fTD99xMxZZeSAzzCk+N53da16Dl8gwwiJg
- XtWieOq6lzEzXG7l/fd55nppEL/reI18ttFZWfnhZqFBz088V+R/snODYtJqecbG4Way
- xTHQ==
-X-Gm-Message-State: AOJu0YxUI+X2+ND3k5REq9Bm4O6XvZnRWbGmW7ItohNqSXLZOCm1cE8q
- Rjgzia4vm6rMWigbmzQ+AtwwS1NbRe7sUIBSQDB30sdYtFJ5LwvNNtZznWArRwOUz98qFJrd+DL
- FNMWdnws=
-X-Gm-Gg: ASbGncuTgDwsZvCAifq8RvVgqQlDXmmpH/OwNR5XLufzK+wItW3VhDJKJ3HbYExZGvZ
- KNvVO1OGeqdXtvZwkcKcd0wmYzxTqSS0krfVC6UNL49dpHM7pQofC3jyYOzEJRgM8p45cpeTWYa
- ZnzrME9/FRMFDKBOwpls+S9q/v2dVpzEbppTOxh53ywWjSJn23dL2qa9dqvJ3j0IIiMnLqkn8EY
- 03/ToccJg9rrY1noQHxM1+/ftqgJJ/LO6LcOrFaNz9Kn3xxc/zpYMuDmScoNFFdtX9RHExY3yZA
- IxMJOVT4MdgUY8CNLgGh+FIwvup5Vxa0nXL0UDWrm8kcQFh7LKBfr0WGRWBzyYe1+QGVGNHWHiR
- OCM4OvLY+cs60/DJluO3LNZE5UgNLT+KMy/cni83+PNuPbMM=
-X-Google-Smtp-Source: AGHT+IFNKlqCigwGJvLSwWFrhrPWLoAxc2tCmpjR5rTMdPHor3IOg3s/sY5xUT41gmn0DMCfYREWbA==
-X-Received: by 2002:a05:600c:4f0c:b0:450:b9c0:c7d2 with SMTP id
- 5b1f17b1804b1-453654cbfeamr30480215e9.11.1750439721420; 
- Fri, 20 Jun 2025 10:15:21 -0700 (PDT)
+ bh=bscCZhJPor6p9xOGYxKsyHkSJQbAuOk7LsWMwFm7sCY=;
+ b=RmMrLMJhXQNRhFLyHnr0Zraz8KDHd5lppf78IVd84zZ5JqI/+cZarDOQ4127VucasS
+ GyBfbjU8ehs9hrHFsO3yuvGi3JU1GRCsyykzG2IFKUwkvTAR+6U/ECZAdKXAQ4AGldcb
+ qbL10mHpTNnMefXVRYXPs/B475KAKlTjeXRM5ejlbZ4FH8F8zFV/nFYPYjGmF0Y0BQvA
+ cgkZ05jNCD2zDNOVnim6hjDY9PYVGrVQ4Ry1VuDxmNHGdoTrxI2paNnWP8KdRKjAXayA
+ cmky4OHzcEYMAK1gVYFB76PcZk1fyyJY7/K5NbH795IQKBHRksn2M5inf3izUdh8L7h2
+ DkTA==
+X-Gm-Message-State: AOJu0Yw+PjfLOKXfFRnMofUCI8aCxs2wtuSq1Fs142APa5EWOqqsj1s2
+ P3jIqywJ0RnUtvGUM9svFCaZKruuwvbz3R5iKTtVRNbA++3DKN3xcuAyUlZ9dXDAKICQpxPfkPS
+ DEXxP4s8=
+X-Gm-Gg: ASbGncsLQcXhTiwHibmtueq0tQLVfLQ8lHtdHpjlaDTi0J3hKR/N0ALBXWfxr0dz72k
+ bM14poJg5UZwfLnU31c7S1ffX4Ala3b4ZbonXW8PR5RbXaNA7+PtjuUs9dvX1mGHll/jsdb20OI
+ soBMJ5TBoZysbMasdxD+j6/1Niq79IbPMyBToRK4z2DE8saviDsk6ddVinBEgLRt9B55yzeYDYI
+ 50tX3lK9KO9ol3e8C1xw1yD6ougfMJttZHsgynQNTioc8YUVO3xVC3Dkn9CiTXH2WyXj2qrhgK8
+ PQGDa0ragOcNCl2b6z4ej9ATw+zR9T9xHNseUEvcO0QrHZ8Fdw/IKJcES3gY9k818E8CcZTZi49
+ 6wi3RLpDWJuKr0j+e7qnilG9AOSMRxGOdSAQOCK/oi74+TA4=
+X-Google-Smtp-Source: AGHT+IHW4TOzsOZCNJMNEx4Adz4KtLDndz5p9iwamV7rd0SQLzyTQ42FpsKAxmdD8EwMt9JSqP2KwQ==
+X-Received: by 2002:a05:600c:3115:b0:440:9b1a:cd78 with SMTP id
+ 5b1f17b1804b1-453654cbfdbmr39329235e9.10.1750439795791; 
+ Fri, 20 Jun 2025 10:16:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4536470415csm30991895e9.31.2025.06.20.10.15.20
+ 5b1f17b1804b1-453646d14ddsm30933445e9.10.2025.06.20.10.16.34
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 10:15:20 -0700 (PDT)
+ Fri, 20 Jun 2025 10:16:35 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -75,18 +75,18 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH v2 20/48] cpus: Rename 'vcpu_dirty' field as negated
- 'hwaccel_synchronized'
-Date: Fri, 20 Jun 2025 19:13:13 +0200
-Message-ID: <20250620171342.92678-21-philmd@linaro.org>
+Subject: [RFC PATCH v2 35/48] accel/nvmm: Convert to
+ AccelOpsClass::cpu_thread_routine
+Date: Fri, 20 Jun 2025 19:13:28 +0200
+Message-ID: <20250620171342.92678-36-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620171342.92678-1-philmd@linaro.org>
 References: <20250620171342.92678-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,152 +109,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Try to better describe which side is dirty (QEMU process or
-hardware accelerator) by renaming as @hwaccel_synchronized.
+By converting to AccelOpsClass::cpu_thread_routine we can
+let the common accel_create_vcpu_thread() create the thread.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/cpu.h |  4 ++--
- accel/kvm/kvm-all.c   | 20 ++++++++++----------
- target/mips/kvm.c     |  4 ++--
- 3 files changed, 14 insertions(+), 14 deletions(-)
+ target/i386/nvmm/nvmm-accel-ops.c | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
 
-diff --git a/include/hw/core/cpu.h b/include/hw/core/cpu.h
-index 69ea425c458..d5f82609943 100644
---- a/include/hw/core/cpu.h
-+++ b/include/hw/core/cpu.h
-@@ -441,7 +441,7 @@ struct qemu_work_item;
-  * @opaque: User data.
-  * @mem_io_pc: Host Program Counter at which the memory was accessed.
-  * @accel: Pointer to accelerator specific state.
-- * @vcpu_dirty: Hardware accelerator is not synchronized with QEMU state
-+ * @hwaccel_synchronized: Hardware accelerator is synchronized with QEMU state
-  * @kvm_fd: vCPU file descriptor for KVM.
-  * @work_mutex: Lock to prevent multiple access to @work_list.
-  * @work_list: List of pending asynchronous work.
-@@ -538,7 +538,6 @@ struct CPUState {
-     uint32_t kvm_fetch_index;
-     uint64_t dirty_pages;
-     int kvm_vcpu_stats_fd;
--    bool vcpu_dirty;
+diff --git a/target/i386/nvmm/nvmm-accel-ops.c b/target/i386/nvmm/nvmm-accel-ops.c
+index 21443078b72..bef6f61b776 100644
+--- a/target/i386/nvmm/nvmm-accel-ops.c
++++ b/target/i386/nvmm/nvmm-accel-ops.c
+@@ -61,16 +61,6 @@ static void *qemu_nvmm_cpu_thread_fn(void *arg)
+     return NULL;
+ }
  
-     /* Use by accel-block: CPU is executing an ioctl() */
-     QemuLockCnt in_ioctl_lock;
-@@ -555,6 +554,7 @@ struct CPUState {
-     int32_t exception_index;
- 
-     AccelCPUState *accel;
-+    bool hwaccel_synchronized;
- 
-     /* Used to keep track of an outstanding cpu throttle thread for migration
-      * autoconverge
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 37faf615cbc..dca6d4b99ef 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -478,8 +478,8 @@ static int kvm_create_vcpu(CPUState *cpu)
- 
-     cpu->kvm_fd = kvm_fd;
-     cpu->kvm_state = s;
--    if (!s->guest_state_protected) {
--        cpu->vcpu_dirty = true;
-+    if (s->guest_state_protected) {
-+        cpu->hwaccel_synchronized = true;
-     }
-     cpu->dirty_pages = 0;
-     cpu->throttle_us_per_full = 0;
-@@ -2880,7 +2880,7 @@ void kvm_flush_coalesced_mmio_buffer(void)
- 
- static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
+-static void nvmm_start_vcpu_thread(CPUState *cpu)
+-{
+-    char thread_name[VCPU_THREAD_NAME_SIZE];
+-
+-    snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "CPU %d/NVMM",
+-             cpu->cpu_index);
+-    qemu_thread_create(cpu->thread, thread_name, qemu_nvmm_cpu_thread_fn,
+-                       cpu, QEMU_THREAD_JOINABLE);
+-}
+-
+ /*
+  * Abort the call to run the virtual processor by another thread, and to
+  * return the control to that thread.
+@@ -85,7 +75,7 @@ static void nvmm_accel_ops_class_init(ObjectClass *oc, const void *data)
  {
--    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-+    if (cpu->hwaccel_synchronized && !kvm_state->guest_state_protected) {
-         Error *err = NULL;
-         int ret = kvm_arch_get_registers(cpu, &err);
-         if (ret) {
-@@ -2894,13 +2894,13 @@ static void do_kvm_cpu_synchronize_state(CPUState *cpu, run_on_cpu_data arg)
-             vm_stop(RUN_STATE_INTERNAL_ERROR);
-         }
+     AccelOpsClass *ops = ACCEL_OPS_CLASS(oc);
  
--        cpu->vcpu_dirty = true;
-+        cpu->hwaccel_synchronized = false;
-     }
- }
+-    ops->create_vcpu_thread = nvmm_start_vcpu_thread;
++    ops->cpu_thread_routine = qemu_nvmm_cpu_thread_fn;
+     ops->kick_vcpu_thread = nvmm_kick_vcpu_thread;
  
- void kvm_cpu_synchronize_state(CPUState *cpu)
- {
--    if (!cpu->vcpu_dirty && !kvm_state->guest_state_protected) {
-+    if (cpu->hwaccel_synchronized && !kvm_state->guest_state_protected) {
-         run_on_cpu(cpu, do_kvm_cpu_synchronize_state, RUN_ON_CPU_NULL);
-     }
- }
-@@ -2920,7 +2920,7 @@ static void do_kvm_cpu_synchronize_post_reset(CPUState *cpu, run_on_cpu_data arg
-         vm_stop(RUN_STATE_INTERNAL_ERROR);
-     }
- 
--    cpu->vcpu_dirty = false;
-+    cpu->hwaccel_synchronized = true;
- }
- 
- void kvm_cpu_synchronize_post_reset(CPUState *cpu)
-@@ -2946,7 +2946,7 @@ static void do_kvm_cpu_synchronize_post_init(CPUState *cpu, run_on_cpu_data arg)
-         exit(1);
-     }
- 
--    cpu->vcpu_dirty = false;
-+    cpu->hwaccel_synchronized = true;
- }
- 
- void kvm_cpu_synchronize_post_init(CPUState *cpu)
-@@ -2962,7 +2962,7 @@ void kvm_cpu_synchronize_post_init(CPUState *cpu)
- 
- static void do_kvm_cpu_synchronize_pre_loadvm(CPUState *cpu, run_on_cpu_data arg)
- {
--    cpu->vcpu_dirty = true;
-+    cpu->hwaccel_synchronized = false;
- }
- 
- void kvm_cpu_synchronize_pre_loadvm(CPUState *cpu)
-@@ -3131,7 +3131,7 @@ int kvm_cpu_exec(CPUState *cpu)
-     do {
-         MemTxAttrs attrs;
- 
--        if (cpu->vcpu_dirty) {
-+        if (!cpu->hwaccel_synchronized) {
-             Error *err = NULL;
-             ret = kvm_arch_put_registers(cpu, KVM_PUT_RUNTIME_STATE, &err);
-             if (ret) {
-@@ -3145,7 +3145,7 @@ int kvm_cpu_exec(CPUState *cpu)
-                 break;
-             }
- 
--            cpu->vcpu_dirty = false;
-+            cpu->hwaccel_synchronized = true;
-         }
- 
-         kvm_arch_pre_run(cpu, run);
-diff --git a/target/mips/kvm.c b/target/mips/kvm.c
-index ec53acb51a1..44fca0d649f 100644
---- a/target/mips/kvm.c
-+++ b/target/mips/kvm.c
-@@ -565,7 +565,7 @@ static void kvm_mips_update_state(void *opaque, bool running, RunState state)
-      * already saved and can be restored when it is synced back to KVM.
-      */
-     if (!running) {
--        if (!cs->vcpu_dirty) {
-+        if (cs->hwaccel_synchronized) {
-             ret = kvm_mips_save_count(cs);
-             if (ret < 0) {
-                 warn_report("Failed saving count");
-@@ -581,7 +581,7 @@ static void kvm_mips_update_state(void *opaque, bool running, RunState state)
-             return;
-         }
- 
--        if (!cs->vcpu_dirty) {
-+        if (cs->hwaccel_synchronized) {
-             ret = kvm_mips_restore_count(cs);
-             if (ret < 0) {
-                 warn_report("Failed restoring count");
+     ops->synchronize_post_reset = nvmm_cpu_synchronize_post_reset;
 -- 
 2.49.0
 
