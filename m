@@ -4,87 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09A7BC7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F691C7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:43:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSeoD-0006cM-UJ; Fri, 20 Jun 2025 12:41:45 -0400
+	id 1uSeob-0007AA-Rc; Fri, 20 Jun 2025 12:42:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeoA-0006be-Ka
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1uSeoS-0006ui-9F
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:42:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeo8-0000Ie-Us
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:42 -0400
+ id 1uSeoQ-0000Lr-El
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:42:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437700;
+ s=mimecast20190719; t=1750437717;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xj0lRSY0/RSQgCPx1FZDgyFJc1m6/HOI+FjSa4wjsdw=;
- b=EUf476X+9/HSAhDXqh22lI3bV/jUFRHHeh/JT5g0rKYY6DT2Tm22gkqiIrOMO88fgbFZ37
- DWf0G/HBl2BasqLFC3+uNZ3Dl46ULwsB3MwK4aHOyhzkBXRaRYnuWLAVvkBgM6aKsqWC+i
- 0ZcdTHhH5osv+MJg+mNVVvCDKHAQqVo=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=0iz8TBbp2Wl1d26CB0v1zApr7MJNN6I1UtHkwFZ3ZYg=;
+ b=FEqrve+T+HpIcsj1zQDjUZh7MgXfrBTtKZZaaQs0rtpPFZu+DIb4GM6lfGKBIHvYT07QLh
+ SzZ5B5GGbEyec0DjCc/apWbB8J83vhK53NcbTf7pJpch/Ff/UOzwVSCjLqvHMNHfsBtZzd
+ sNf1U7Xn9mAY4WIW2et7JRrlrXyBBUU=
+Received: from mail-ej1-f71.google.com (mail-ej1-f71.google.com
+ [209.85.218.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-576-Zn3nKUuSOhyJHbjsj0nEOA-1; Fri, 20 Jun 2025 12:41:38 -0400
-X-MC-Unique: Zn3nKUuSOhyJHbjsj0nEOA-1
-X-Mimecast-MFC-AGG-ID: Zn3nKUuSOhyJHbjsj0nEOA_1750437697
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-acb8f9f58ebso164357866b.2
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:38 -0700 (PDT)
+ us-mta-695-kt2pXrtYM8itNwqXg3HGNQ-1; Fri, 20 Jun 2025 12:41:56 -0400
+X-MC-Unique: kt2pXrtYM8itNwqXg3HGNQ-1
+X-Mimecast-MFC-AGG-ID: kt2pXrtYM8itNwqXg3HGNQ_1750437715
+Received: by mail-ej1-f71.google.com with SMTP id
+ a640c23a62f3a-ade5013dfe7so188967066b.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:56 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437697; x=1751042497;
+ d=1e100.net; s=20230601; t=1750437713; x=1751042513;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=xj0lRSY0/RSQgCPx1FZDgyFJc1m6/HOI+FjSa4wjsdw=;
- b=UAQ/fX8oByvNoTSASy2yowXMq0o8NbonOmoLFNu/x0ieQingKrtO8Y3rUyZh2xQV3l
- Cq4GFW7jFIj1H4+upTOUo6y+vRXVvkGMZyudoGp9K2UclZSvIAAxZ6Nj/dsgMkNlFohE
- 9L0zpWKr/xG6EAgOlTgOzQJzKSx3b/h+wql1evjvioMHW3UyNM/aJp0Eg3aTahN16Ylv
- fYYB9h0GZWBKJ9kRaDUWSlI6xpVTeKkoVSQ2eulpJBWf5pJFDC5a69uMoDYyR1oQSHKX
- DZHSv0qW0i6BN9dmTxCKn++qoLOSqPubgpa8ovdFKepwNDG6AkmBLVlEs3IA20VzCcvo
- mJUA==
-X-Gm-Message-State: AOJu0Yz9ZnFIKkDdFHfjuvUNhTi4URTVbMvoTgzTUfN2W00ZjlBmI6oN
- mqSGefe1dQdz0rUEuD2+/gEwPTUZ/H2E1f8feSt7L7HmbObSbUd8MThDhuNW8EaIe9XVmqs/8qo
- fPL8NTHTAopf/Mb8IzJVMCxIJYzvcRoEbLkTW4AtQHFJJGHuZDRHM4SyqsmdQ0prdTwVCwPlr2/
- GWLgqIRUnG21qaKKUM+q9wJDZSwJkGTFyRYKfPqf6c
-X-Gm-Gg: ASbGncsSlFihy1+1X+vaIDO4ICPkGwjaQe7+nVPhFxizgB336CY0OrbCyPalgoeEpfU
- KewbQSfcLh2i0iO/lHmvbS7SUGzfbV4N+P9BgyQbg8+a45dERpLTwNMqaqBnwq33Zp5kZ+yRoBL
- Hbhwb7jJDId5780LxmILsMgbB2Dix76rsnMVHyhc+JSWNaXTj7r9dFixAVAcoqRQNbVf83/25aJ
- 4eJX23DReVjD8rX2e5NVGnNKKXUTp8Ls59jDlyV6BpOZm+53Hvt0bgy0WYAuxRIjl/f1Hn8LUra
- 0sM/VCoPuva1Lxckq4HP4VbCOw==
-X-Received: by 2002:a17:907:3d51:b0:ae0:628a:5093 with SMTP id
- a640c23a62f3a-ae0628a61ccmr223496366b.3.1750437696652; 
- Fri, 20 Jun 2025 09:41:36 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IGUh7cEAihUDK1wggEwKVGhZcOd3ATAZGEk/YBcmxMqJ/WV3Ot32X0qcj05SxIHXKLGolhnNw==
-X-Received: by 2002:a17:907:3d51:b0:ae0:628a:5093 with SMTP id
- a640c23a62f3a-ae0628a61ccmr223493966b.3.1750437696218; 
- Fri, 20 Jun 2025 09:41:36 -0700 (PDT)
+ bh=0iz8TBbp2Wl1d26CB0v1zApr7MJNN6I1UtHkwFZ3ZYg=;
+ b=fdxd2G7jHyYU711dnOglVmTf2l3ali2SD1hfZLFlNM7LxbShBkXo+yLLxYIlO5K3vi
+ wt/9jlOaKJlKAT2VhnDpS3nTscGcInvsmquxsAi44L8At5wFkJWkgt7Kw0U6NQ1GVwha
+ BORa3YP4lqa6np7k+JltFWxypu8v5tJrR5bX6RnXx3EY48cpA6C5ELj3fjxUsrRUBSg3
+ B1tpENblFMdEupzBNWUdw/KouUDbokPiycA415ZkqgjaQfu9EVdDGKebFt9K1T0ZI31k
+ kW8KOrbneKPgpwIBQNKeeceUvEKBFbVcLvdvZI1f+bxk8iTsNop8I/8jWqFHDpvhEKDh
+ 8ylQ==
+X-Gm-Message-State: AOJu0Yw7vUFFLZ2R3kt7WAvkTvQnOBO1JRjqUX5479bP4+NqjKTGK873
+ zXbB6axNWhg1rzVPeWd++bVJutN4phmu+mvtaBkrhiON6IuNEIOokm86XBgzMA3zhqBIT7MPh/q
+ +Ez6xV0CabONzhWsKO+FQMdQvHVaeMuX5jhf5sndfmTT8n30zcE4GOPMn0y12sywpDxA4eVz37/
+ f81Xq4BQFchDepKhpF8OitTPZHlPE6jBukUjXThTvB
+X-Gm-Gg: ASbGncvFh7l81RjHVBrgE5VHUzsEFFd4VTJCxNJcG5yh+gP7A1D/msKX6QXae5ZLlhg
+ zTaJQMKglq1V+jCzVhD9Vogtukwey5hlSL2s/a4yc7auRrOA5gXFkJGntorDvo5aUKE08vItLw4
+ ewY28sm6T02OoKMkcEr2C8A6rHFCBIMTs4OEFJHcCeYidvNjgACpUuUW1lFOVfhqefgiDtAI0t1
+ Rb6b3FlXk2e9yYQKSo59oVldN1YJT/KjJ+EfYq55Hc7rl4+bMoZn0LFxMsxHUzNqF3INhOeuo75
+ PTvQ6LPkUk2gMj3UW+gBR6qmWg==
+X-Received: by 2002:a17:907:d807:b0:ad8:adbc:bbf6 with SMTP id
+ a640c23a62f3a-ae057c3e3c1mr346919066b.58.1750437713520; 
+ Fri, 20 Jun 2025 09:41:53 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IE1ynPxnFxxNVEuu4UWsjLDWBgwtm9FU4ZWIomywsVqP+1OA4iMzchbyZ1TgF+vpJUV3Owmzw==
+X-Received: by 2002:a17:907:d807:b0:ad8:adbc:bbf6 with SMTP id
+ a640c23a62f3a-ae057c3e3c1mr346916166b.58.1750437713025; 
+ Fri, 20 Jun 2025 09:41:53 -0700 (PDT)
 Received: from [192.168.122.1] ([151.62.200.93])
  by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae0540815c2sm190252966b.94.2025.06.20.09.41.33
+ a640c23a62f3a-ae0541b6f8asm186204566b.117.2025.06.20.09.41.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:41:34 -0700 (PDT)
+ Fri, 20 Jun 2025 09:41:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
-	Stefan Hajnoczi <stefanha@redhat.com>
-Subject: [PULL 15/24] rust: hpet: fix new warning
-Date: Fri, 20 Jun 2025 18:40:43 +0200
-Message-ID: <20250620164053.579416-16-pbonzini@redhat.com>
+Cc: Xiaoyao Li <xiaoyao.li@intel.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+Subject: [PULL 21/24] i386/tdx: Clarify the error message of
+ mrconfigid/mrowner/mrownerconfig
+Date: Fri, 20 Jun 2025 18:40:49 +0200
+Message-ID: <20250620164053.579416-22-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
 References: <20250620164053.579416-1-pbonzini@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -109,30 +112,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nightly rustc complains that HPETAddrDecode has a lifetime but it is not
-clearly noted that it comes from &self.  Apply the compiler's suggestion
-to shut it up.
+From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
+The error message is misleading - we successfully decoded the data,
+the decoded data was simply with the wrong length.
+
+Change the error message to show it is an length check failure with both
+the received and expected values.
+
+Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
+Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+Link: https://lore.kernel.org/r/20250603050305.1704586-4-xiaoyao.li@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- rust/hw/timer/hpet/src/device.rs | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/i386/kvm/tdx.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index a281927781e..acf7251029e 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -771,7 +771,7 @@ fn reset_hold(&self, _type: ResetType) {
-         self.rtc_irq_level.set(0);
-     }
- 
--    fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode {
-+    fn decode(&self, mut addr: hwaddr, size: u32) -> HPETAddrDecode<'_> {
-         let shift = ((addr & 4) * 8) as u32;
-         let len = std::cmp::min(size * 8, 64 - shift);
- 
+diff --git a/target/i386/kvm/tdx.c b/target/i386/kvm/tdx.c
+index acbe7497543..2284167141a 100644
+--- a/target/i386/kvm/tdx.c
++++ b/target/i386/kvm/tdx.c
+@@ -1032,7 +1032,9 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+             return -1;
+         }
+         if (data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
+-            error_setg(errp, "TDX: failed to decode mrconfigid");
++            error_setg(errp, "TDX 'mrconfigid' sha384 digest was %ld bytes, "
++                             "expected %d bytes", data_len,
++                             QCRYPTO_HASH_DIGEST_LEN_SHA384);
+             return -1;
+         }
+         memcpy(init_vm->mrconfigid, data, data_len);
+@@ -1045,7 +1047,9 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+             return -1;
+         }
+         if (data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
+-            error_setg(errp, "TDX: failed to decode mrowner");
++            error_setg(errp, "TDX 'mrowner' sha384 digest was %ld bytes, "
++                             "expected %d bytes", data_len,
++                             QCRYPTO_HASH_DIGEST_LEN_SHA384);
+             return -1;
+         }
+         memcpy(init_vm->mrowner, data, data_len);
+@@ -1058,7 +1062,9 @@ int tdx_pre_create_vcpu(CPUState *cpu, Error **errp)
+             return -1;
+         }
+         if (data_len != QCRYPTO_HASH_DIGEST_LEN_SHA384) {
+-            error_setg(errp, "TDX: failed to decode mrownerconfig");
++            error_setg(errp, "TDX 'mrownerconfig' sha384 digest was %ld bytes, "
++                             "expected %d bytes", data_len,
++                             QCRYPTO_HASH_DIGEST_LEN_SHA384);
+             return -1;
+         }
+         memcpy(init_vm->mrownerconfig, data, data_len);
 -- 
 2.49.0
 
