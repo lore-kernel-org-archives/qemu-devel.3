@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883E1C7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 17:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AEE8C77B7C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 22:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSfMi-0004cC-2p; Fri, 20 Jun 2025 13:17:24 -0400
+	id 1uSk3d-0000a3-BW; Fri, 20 Jun 2025 18:18:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfLL-0002HT-Cn
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:16:00 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfa9-0007mp-EQ
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:31:17 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfLJ-0004ag-SC
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:59 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-451d41e1ad1so15755545e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:15:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfa7-0006R5-Ob
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:31:17 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-451d54214adso15791655e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:31:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750439756; x=1751044556; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750440673; x=1751045473; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=d/XNfWiSbWGdYBzuDNRVlb7gdtXynRKks1ss0p+cqNk=;
- b=FimvPl6M829GfveQCYaJCnTwEka9HJ2tPwj/ZtDuS5+VGSSYHrxoChOye/U69d85AQ
- 0i2yWUZUYS9VztX9N+eI5uOIHTNZDRryoJGvMlYODbCHnvdsqFVinf2wANp6ZmstfW9R
- parehNuE7+pfFIpCpD/wz/7lPSMUM1jW8ZkxcujQT1Ujh/zhB9Dw1QF/Uh5aUdddIlga
- zO5Bds791XbpzjXUuR/kTwI/8PqcsdOTe1hBHmoEIs8XhI9upDaQpQEWljSO/C5O68rx
- 1c2KzCCS5Jm1BbopPHrX/tE2/xjoTJ0/D7sHgAMWOoG1DEkG2T63fNEEyvPk86B3zS9x
- CAtA==
+ bh=SgZw0o98z4SO2YkblX4Gw60mybDcjZ9BGBxkTRtPdgE=;
+ b=xFrZXRNwEI9sb82eB/HvgKeEhpJggsz1zkSfYkyDRjmyKdbOWwoVFaR0Wfl9HC/W62
+ zzBU+TJD8hG6w0ybVnhiKWqg1TCopCI2W9Eihuu7VJOAsx4meOgY4ZUUpNfwkE+1z25n
+ QCe2XaXUbpWjCJcvGsvQLUMrz2zujfBBHJ5U4rXR2JB4ty4l/zk74nKeUXYB0/UbLU7p
+ /q0L38+RQWB8cvobc7iCUk9SbTeSTRvk55IUiU8sWVuTFhsQTHIjugys+DI2nMvRDaJ0
+ 7Wcr9H7hei8n023h2nbYor+Ldf94PNU2MLrbRVSNGaggC8TSinKOsFJJY/0dKzf5iUd1
+ Xwyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750439756; x=1751044556;
+ d=1e100.net; s=20230601; t=1750440673; x=1751045473;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=d/XNfWiSbWGdYBzuDNRVlb7gdtXynRKks1ss0p+cqNk=;
- b=bXatlEAmg2I7boHLu5rjqvvQKsao99w7sOSuIBuvug/EdM4wzPi7IUQx1+gbGUrf/7
- jm6lml4LrhSN1ZJ7RK9jVXv3XoyifvoBC/C/Zx2hVIDzNJUy/3Hw1qrErr1F2jZsdoOC
- Tpn7DmUlU/BUnSHb0F68D/edHyoDhKpx1lrekypGUbU6Rg0lAeVT63E6F4sf/9z4poWJ
- d+eqYpkDuPUlr/QNxbEUmGxpIHStNHbLrpeSMbJfdWMhwvInJxvuWxUEnH5yp3FTorae
- wiilW61FFYICguefUDukEE3ZG31Z7GYnq3zWIT37Ox+hEdhEXS3QruEt/svdRRtfqEEO
- K8jg==
-X-Gm-Message-State: AOJu0Yzgj/5CcaFBLwL1iZ85nYpdNwHEdUr+8L3aZ+bGSzJ9tE50Q2mq
- EVO9I1mvVq8Ue+esv5GcODVh4qjR+QzhMTQacOTRF6prBZR1xkkDIAGc+aVZpdFJrYize1I5QQS
- 5g8UdFuA=
-X-Gm-Gg: ASbGncvbmsdaRQZVRRQPDxHhyJhFAFUxGX4R48kdNVciZMyF3Y7a6ZzwvB0W9H7OC75
- X7ZIsvDUmCDGJYsiJUWErmobu6TOC96Sr5d8s4GoWfhpMZ11BnhBnnhS6gv48L3kuSgeguuqMnO
- vB9YqDefKS84E+guzopbu59KFtdbNPAVW6tvZat+3OBGqHvTtj/okv8q/IAO07kgEi9o0G9LCQa
- DIDL+9/q5akS+zIERscjxN7BKOPi/tXQDrOpuD26b6U+V1fp5s9fAYuaFOrGBPHh3LNzITA8VTd
- zY5XjOvfexaL4tTQ09EZXjcAHgh2ztQi55DGpzN6nKNa79Bknw7QUgm4H8wER/PZjnEw2L6fjM0
- eu/uzNLckMH888lCyp0IH20wGYn5ZVIJLDG7g
-X-Google-Smtp-Source: AGHT+IFqTDFU0GFlbnDKdZz9ByBEWlL5tE+h96kZ5Cdpf8wDUVYMCGy3BnwXmGHu7siEzuvDUyeJvQ==
-X-Received: by 2002:a05:600c:4754:b0:43d:fa58:81d3 with SMTP id
- 5b1f17b1804b1-453656baaadmr32312825e9.32.1750439756086; 
- Fri, 20 Jun 2025 10:15:56 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453646cb692sm31618745e9.2.2025.06.20.10.15.54
+ bh=SgZw0o98z4SO2YkblX4Gw60mybDcjZ9BGBxkTRtPdgE=;
+ b=TWdf1H/wReXwNn6XpGO8JKTihHTS3tLYL8scBnKE5EfJdasa2q/fbfb16zPVUTZnn/
+ DIdwfHmi0bDmTU2NHPXKzTt3L94G0PMVLkGSm5oQQvAC/ZVlRrnmv+9polglfqzmn9bQ
+ LPBz1kEzD0+ZVYtSczatDwj5hjMskjRM7j0azbqmqqmb27Z4YT9REP4BdzUl5rkXeT7V
+ Hy0F0lvLHhMImJOc7RVtTis0fBseNzMy9mxcXzaxJOfZ09L2Vo7z6eu7TWDYx+GdnDUB
+ TQbu5cdAf5HcNhVDMEDomvah3abM3yLBskzjuQl3Ep8S11Nwt/rz3WmssvRNUUcxdBXj
+ Y+Aw==
+X-Gm-Message-State: AOJu0Yy60URt1bPpWAp82ByMQHwE7YcJBA+PCauqHDm+qXnXmWWZnXrh
+ jDq/fiBGIbU7ACS9En0Fjh5inHKojsbEyXdC9tRu/n31HVOf7lDH4CBidhmM8mEplIhMyLc7d3B
+ XUWMTMNIxww==
+X-Gm-Gg: ASbGnctT6C/eVmA8aGk+RGhmmWLws8TfijuQ42CRcAvgiBGdIXVfuIJgkapYPGf1g8R
+ pq+3hXwhBOUdncRQgV92nwUEjBnO+PNOqsuQMl+CNjcRKC4kzO2d4X01YfhFAjWSjxf8mIObBQC
+ srvJC0Xs7P3Z1IKfmoFgfuckPaeck8KX9C5e1ZhGpT8Lsmue+G1uZN63aIPBX0cO7SEd+Gd7uKB
+ qRcE/wwpxPGmU+r30RyFyv4LJy13nYouymR65k2auZgd/V2rdR6IW6eccUX0W8YUw3wEI1n1da2
+ STaH/SceWny+IfKKYUlw/m5O81KSakJWUX1+kT3xmrqnqI5MhufRhynDvvbPI2dDebqAtRkgocG
+ cBqi4Rk6aW5HKEqs4PaCYr3P5CXQXmR2N6j+nHJNMVigtFDohyjI/XxHc
+X-Google-Smtp-Source: AGHT+IE2Nc+f21UZUiaa7E/GuLOlv8d7Qf+QSYY8sQrd+jvJAQHtCYZFaPeTMVfrkHR8umhH26jEUA==
+X-Received: by 2002:a05:600c:4754:b0:453:23fe:ca86 with SMTP id
+ 5b1f17b1804b1-453659be4d6mr34945525e9.4.1750440672902; 
+ Fri, 20 Jun 2025 10:31:12 -0700 (PDT)
+Received: from localhost.localdomain
+ (101.red-95-127-63.dynamicip.rima-tde.net. [95.127.63.101])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-3a6d0f10502sm2667961f8f.18.2025.06.20.10.31.09
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 10:15:55 -0700 (PDT)
+ Fri, 20 Jun 2025 10:31:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Alexander Graf <agraf@csgraf.de>,
+Cc: Alexander Graf <agraf@csgraf.de>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Cameron Esfahani <dirty@apple.com>,
- Julian Armistead <julian.armistead@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Julian Armistead <julian.armistead@linaro.org>,
+ Cameron Esfahani <dirty@apple.com>, Mark Burton <mburton@qti.qualcomm.com>,
+ Thomas Huth <thuth@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH v2 27/48] accel/dummy: Factor dummy_thread_precreate() out
-Date: Fri, 20 Jun 2025 19:13:20 +0200
-Message-ID: <20250620171342.92678-28-philmd@linaro.org>
+Subject: [RFC PATCH RESEND 22/42] accel/split: Add few trace events in
+ cpu_thread_routine handler
+Date: Fri, 20 Jun 2025 19:27:30 +0200
+Message-ID: <20250620172751.94231-23-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250620171342.92678-1-philmd@linaro.org>
-References: <20250620171342.92678-1-philmd@linaro.org>
+In-Reply-To: <20250620172751.94231-1-philmd@linaro.org>
+References: <20250620172751.94231-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,56 +111,90 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Initialize the semaphore before creating the thread,
-factor out as dummy_thread_precreate().
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/system/cpus.h |  1 +
- accel/dummy-cpus.c    | 12 +++++++++---
- 2 files changed, 10 insertions(+), 3 deletions(-)
+ meson.build                   | 1 +
+ accel/split/trace.h           | 2 ++
+ accel/split/split-accel-ops.c | 7 +++++++
+ accel/split/trace-events      | 9 +++++++++
+ 4 files changed, 19 insertions(+)
+ create mode 100644 accel/split/trace.h
+ create mode 100644 accel/split/trace-events
 
-diff --git a/include/system/cpus.h b/include/system/cpus.h
-index 3226c765d01..bfaa339dd73 100644
---- a/include/system/cpus.h
-+++ b/include/system/cpus.h
-@@ -8,6 +8,7 @@ void cpus_register_accel(const AccelOpsClass *i);
- const AccelOpsClass *cpus_get_accel(void);
+diff --git a/meson.build b/meson.build
+index 5004678a26b..06c32e0e958 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3635,6 +3635,7 @@ if have_system
+   trace_events_subdirs += [
+     'accel/hvf',
+     'accel/kvm',
++    'accel/split',
+     'audio',
+     'backends',
+     'backends/tpm',
+diff --git a/accel/split/trace.h b/accel/split/trace.h
+new file mode 100644
+index 00000000000..46b45388930
+--- /dev/null
++++ b/accel/split/trace.h
+@@ -0,0 +1,2 @@
++/* SPDX-License-Identifier: GPL-2.0-or-later */
++#include "trace/trace-accel_split.h"
+diff --git a/accel/split/split-accel-ops.c b/accel/split/split-accel-ops.c
+index 1766834d537..399bf71a9ec 100644
+--- a/accel/split/split-accel-ops.c
++++ b/accel/split/split-accel-ops.c
+@@ -17,6 +17,7 @@
+ #include "system/hw_accel.h"
+ #include "system/tcg.h"
+ #include "split-accel.h"
++#include "trace.h"
  
- /* accel/dummy-cpus.c */
-+void dummy_thread_precreate(CPUState *cpu);
- 
- /* Create a dummy vcpu for AccelOpsClass->create_vcpu_thread */
- void dummy_start_vcpu_thread(CPUState *);
-diff --git a/accel/dummy-cpus.c b/accel/dummy-cpus.c
-index 867276144fa..7c34e6c0fc5 100644
---- a/accel/dummy-cpus.c
-+++ b/accel/dummy-cpus.c
-@@ -64,15 +64,21 @@ static void *dummy_cpu_thread_fn(void *arg)
-     return NULL;
- }
- 
-+void dummy_thread_precreate(CPUState *cpu)
-+{
-+#ifdef _WIN32
-+    qemu_sem_init(&cpu->sem, 0);
-+#endif
-+}
+ #include "accel/accel-internal.h"
+ #include "accel/tcg/tcg-accel-ops-mttcg.h"
+@@ -64,13 +65,18 @@ static void *split_cpu_thread_routine(void *arg)
+         if (cpu_can_run(cpu)) {
+             if (acs->use_hw) {
+                 r = hwops->exec_vcpu_thread(cpu);
++                trace_accel_split_exec_vcpu_thread_hw(r);
+             } else {
+                 r = swops->exec_vcpu_thread(cpu);
++                trace_accel_split_exec_vcpu_thread_sw(r);
+             }
+             switch (r) {
+             case 0:
+                 if (acs->use_hw) {
+                     acs->use_hw = cpu_acceleratable(cpu);
++                    if (!acs->use_hw) {
++                        trace_accel_split_sw_emulate();
++                    }
+                 }
+                 break;
+             case EXCP_INTERRUPT:
+@@ -95,6 +101,7 @@ static void *split_cpu_thread_routine(void *arg)
+                 break;
+             case EXCP_HWACCEL:
+                 assert(!acs->use_hw);
++                trace_accel_split_hw_accelerate();
+                 acs->use_hw = true;
+                 break;
+             default:
+diff --git a/accel/split/trace-events b/accel/split/trace-events
+new file mode 100644
+index 00000000000..c0b9fd97d1d
+--- /dev/null
++++ b/accel/split/trace-events
+@@ -0,0 +1,9 @@
++# SPDX-License-Identifier: GPL-2.0-or-later
++#
++# See docs/devel/tracing.rst for syntax documentation.
 +
- void dummy_start_vcpu_thread(CPUState *cpu)
- {
-     char thread_name[VCPU_THREAD_NAME_SIZE];
- 
-+    dummy_thread_precreate(cpu);
-+
-     snprintf(thread_name, VCPU_THREAD_NAME_SIZE, "CPU %d/DUMMY",
-              cpu->cpu_index);
-     qemu_thread_create(cpu->thread, thread_name, dummy_cpu_thread_fn, cpu,
-                        QEMU_THREAD_JOINABLE);
--#ifdef _WIN32
--    qemu_sem_init(&cpu->sem, 0);
--#endif
- }
++# split-accel-ops.c
++accel_split_exec_vcpu_thread_sw(int retval) "sw: rv:0x%x"
++accel_split_exec_vcpu_thread_hw(int retval) "hw: rv:0x%x"
++accel_split_hw_accelerate(void) ""
++accel_split_sw_emulate(void) ""
 -- 
 2.49.0
 
