@@ -4,69 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4CA15C7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 08:32:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8EC9C71155
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 08:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSXA7-00058D-DF; Fri, 20 Jun 2025 04:31:51 -0400
+	id 1uSXNU-0000yt-Tm; Fri, 20 Jun 2025 04:45:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uSXA5-00057y-8K
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 04:31:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uSXNR-0000yY-RP; Fri, 20 Jun 2025 04:45:37 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1uSXA2-0000op-1s
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 04:31:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750408303;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=RJbb1zvw+UtAzVfYjQe7/0rp0ycLXD81+4lzw1HoUPk=;
- b=iQnh6DALstC5FnJcXy3oVfJFsSCqj3PgtGTlAu9o2Vs3TO7q30qf2raglCoqLQcTcUVf2Y
- YpOgaeqfxuOayj4WOMhp9cs4V/Bd575pgdUK8WAN8nrmixGwqlD94oO+x3tsr5jpFy0fAx
- SOUCNXMOplSxof3hFDlvMiYFf3M/prs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-jMwAobooOWWAa_Lavg397w-1; Fri,
- 20 Jun 2025 04:31:37 -0400
-X-MC-Unique: jMwAobooOWWAa_Lavg397w-1
-X-Mimecast-MFC-AGG-ID: jMwAobooOWWAa_Lavg397w_1750408296
-Received: from mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.15])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A757619560BC; Fri, 20 Jun 2025 08:31:36 +0000 (UTC)
-Received: from srv1.redhat.com (unknown [10.44.33.241])
- by mx-prod-int-02.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 602771956094; Fri, 20 Jun 2025 08:31:35 +0000 (UTC)
-From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Michael Roth <michael.roth@amd.com>,
- Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Subject: [PATCH] qga-vss: Exit with non-zero code when register fail
-Date: Fri, 20 Jun 2025 11:31:32 +0300
-Message-ID: <20250620083132.28347-1-kkostiuk@redhat.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uSXNO-00026I-SL; Fri, 20 Jun 2025 04:45:37 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.31])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNrb90crdz6L6Fc;
+ Fri, 20 Jun 2025 16:43:01 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 3823E140417;
+ Fri, 20 Jun 2025 16:45:19 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 20 Jun
+ 2025 10:45:18 +0200
+Date: Fri, 20 Jun 2025 09:45:17 +0100
+To: Eric Auger <eric.auger@redhat.com>
+CC: <eric.auger.pro@gmail.com>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>, <imammedo@redhat.com>,
+ <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH v3 04/29] hw/pci-host/gpex-acpi: Add native_pci_hotplug
+ arg to acpi_dsdt_add_pci_osc
+Message-ID: <20250620094517.00007eed@huawei.com>
+In-Reply-To: <20250616094903.885753-5-eric.auger@redhat.com>
+References: <20250616094903.885753-1-eric.auger@redhat.com>
+ <20250616094903.885753-5-eric.auger@redhat.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.15
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -19
-X-Spam_score: -2.0
-X-Spam_bar: --
-X-Spam_report: (-2.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100001.china.huawei.com (7.191.160.183) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- URI_TRY_3LD=1.999 autolearn=ham autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,42 +71,80 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-QGA installer uses rundll32 to run the DLLCOMRegister function
-from qga-vss.dll and perform VSS provider registration.
-rundll32 ignores the return value of the function and always
-exits with a zero exit code. This causes a situation where
-the installer does not know the status of VSS provider registration.
+On Mon, 16 Jun 2025 11:46:33 +0200
+Eric Auger <eric.auger@redhat.com> wrote:
 
-This commit forces to change exit code when the VSS provider
-registration fails.
+> Add a new argument to acpi_dsdt_add_pci_osc to be able to disable
+> native pci hotplug.
+> 
+> Signed-off-by: Eric Auger <eric.auger@redhat.com>
+> Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
+> Reviewed-by: Igor Mammedov <imammedo@redhat.com>
+After discussion on earlier version I'm now fine with this.
 
-https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/rundll32
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
-Signed-off-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
----
- qga/vss-win32/install.cpp | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
-
-diff --git a/qga/vss-win32/install.cpp b/qga/vss-win32/install.cpp
-index 5cea5bcf74..6ee2f44a10 100644
---- a/qga/vss-win32/install.cpp
-+++ b/qga/vss-win32/install.cpp
-@@ -385,7 +385,10 @@ out:
- STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int);
- STDAPI_(void) CALLBACK DLLCOMRegister(HWND, HINSTANCE, LPSTR, int)
- {
--    COMRegister();
-+    HRESULT hr = COMRegister();
-+    if (FAILED(hr)) {
-+        exit(hr);
-+    }
- }
- 
- STDAPI_(void) CALLBACK DLLCOMUnregister(HWND, HINSTANCE, LPSTR, int);
--- 
-2.48.1
+> 
+> ---
+> 
+> rfc -> v1:
+> - updated the "Allow OS control for all 5 features" comment
+> ---
+>  hw/pci-host/gpex-acpi.c | 15 ++++++++-------
+>  1 file changed, 8 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/pci-host/gpex-acpi.c b/hw/pci-host/gpex-acpi.c
+> index 0aba47c71c..f34b7cf25e 100644
+> --- a/hw/pci-host/gpex-acpi.c
+> +++ b/hw/pci-host/gpex-acpi.c
+> @@ -50,7 +50,7 @@ static void acpi_dsdt_add_pci_route_table(Aml *dev, uint32_t irq,
+>      }
+>  }
+>  
+> -static void acpi_dsdt_add_pci_osc(Aml *dev)
+> +static void acpi_dsdt_add_pci_osc(Aml *dev, bool enable_native_pcie_hotplug)
+>  {
+>      Aml *method, *UUID, *ifctx, *ifctx1, *elsectx, *buf;
+>  
+> @@ -77,11 +77,12 @@ static void acpi_dsdt_add_pci_osc(Aml *dev)
+>      aml_append(ifctx, aml_store(aml_name("CDW3"), aml_name("CTRL")));
+>  
+>      /*
+> -     * Allow OS control for all 5 features:
+> -     * PCIeHotplug SHPCHotplug PME AER PCIeCapability.
+> +     * Allow OS control for SHPCHotplug, PME, AER, PCIeCapability,
+> +     * and PCIeHotplug depending on enable_native_pcie_hotplug
+>       */
+> -    aml_append(ifctx, aml_and(aml_name("CTRL"), aml_int(0x1F),
+> -                              aml_name("CTRL")));
+> +    aml_append(ifctx, aml_and(aml_name("CTRL"),
+> +               aml_int(0x1E | (enable_native_pcie_hotplug ? 0x1 : 0x0)),
+> +               aml_name("CTRL")));
+>  
+>      ifctx1 = aml_if(aml_lnot(aml_equal(aml_arg(1), aml_int(0x1))));
+>      aml_append(ifctx1, aml_or(aml_name("CDW1"), aml_int(0x08),
+> @@ -192,7 +193,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+>              if (is_cxl) {
+>                  build_cxl_osc_method(dev);
+>              } else {
+> -                acpi_dsdt_add_pci_osc(dev);
+> +                acpi_dsdt_add_pci_osc(dev, true);
+>              }
+>  
+>              aml_append(scope, dev);
+> @@ -267,7 +268,7 @@ void acpi_dsdt_add_gpex(Aml *scope, struct GPEXConfig *cfg)
+>      }
+>      aml_append(dev, aml_name_decl("_CRS", rbuf));
+>  
+> -    acpi_dsdt_add_pci_osc(dev);
+> +    acpi_dsdt_add_pci_osc(dev, true);
+>  
+>      Aml *dev_res0 = aml_device("%s", "RES0");
+>      aml_append(dev_res0, aml_name_decl("_HID", aml_string("PNP0C02")));
 
 
