@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34867C71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 07:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52507C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 07:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSW5D-0004bh-RK; Fri, 20 Jun 2025 03:22:43 -0400
+	id 1uSW5N-0004dx-1x; Fri, 20 Jun 2025 03:22:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uSW55-0004ak-5H
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:22:36 -0400
+ id 1uSW5L-0004dM-9Q
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:22:51 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uSW53-0008HF-AY
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:22:34 -0400
+ id 1uSW5I-0008IS-9b
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:22:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750404153; x=1781940153;
+ t=1750404168; x=1781940168;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=gyXkorc2YEb9t/HgYoa8r3CEUGrRW5Har2jZsB4EE1E=;
- b=IoyPO81I7uEqIT6bdoPbQI1bEnE9jZmQwrdqeW1OlHVr7VwhmN9Ifvju
- iq9YZWVi9EE9w+V7npk3gV5Xyy8KTYa6OrcquTLWwxpDzm82hSRRkcmYK
- alJvFtWQsBnlx0IK7n4NarIROvkXm0a/S9JIFhQARBaNFeIIrWjKP9GoQ
- 1vHsBpuKJL8xdQ556kJsuKva6Z2fB6RyGdlOnkUZAcVHmAuhj1Kx6CZ9y
- QxsPcfEQmazdgsIUqcFZA+MIatVjqDJdDS/xn3e2nHUaSyo3ZNR0EXD+w
- vYqJxC5y0RSlv6LKCXKK8hH/NxdmSI5AKCSAhToS/WFJnIDduftXX7fwP Q==;
-X-CSE-ConnectionGUID: Mcu7iPlBTB2hTzQOixBN9g==
-X-CSE-MsgGUID: jpkQ/BG9RjaCJoDpY4GO/A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11469"; a="52532312"
-X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="52532312"
+ bh=eXIY1EEbF1RfbgIJIQePt6T9VT6r816CRDXV+6DEzYs=;
+ b=ZF7syC4SfZ2ibu4iRVlVBsATnMiMWPCTgWHOkoiZKStfTycCIvlq4bls
+ aHevGhPqsqy/Yi3mdG41xcQzArMqHH8L7OURKKQpVj/XMLm3yZ+ednz8+
+ lVR9HGZa7VZfolqnAGWOTs5uCZk7g0VcdJEpDX8j4zi7fToM9QKdy6tHd
+ nqpYsffEaMPN7j5v2v3+Ozi8IHiweoIQxSIJnfweOqIggWsqqUAqVXDWs
+ 7kbfVreZIu9IB2atYcwKPlakZ2o2oKXzwUzc+EU9KTo1bCrGobvEJ9kQe
+ vmHMmJMPXv7BTAcdD6P6WO9ah4JJQPsO7z4Ad4mwayTPAwfXAvwJJzLM5 Q==;
+X-CSE-ConnectionGUID: t9Jz5NaTQO2UN/BtNp4Rlg==
+X-CSE-MsgGUID: LSYsXCPcR96zqI+gJJCpQw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11469"; a="52532366"
+X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="52532366"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Jun 2025 00:22:32 -0700
-X-CSE-ConnectionGUID: 6lanxiBTQ4qw3lws8WSthQ==
-X-CSE-MsgGUID: LknnLN3rR8K/3aHTGMgmTA==
+ 20 Jun 2025 00:22:48 -0700
+X-CSE-ConnectionGUID: BIL3ePNtS0aqS3G74NoEhQ==
+X-CSE-MsgGUID: CEXQSQkZSzG+Z1nnzxt69g==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="181863085"
+X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="181863140"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Jun 2025 00:22:29 -0700
+ 20 Jun 2025 00:22:43 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -54,11 +54,14 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
  Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 05/19] hw/pci: Export pci_device_get_iommu_bus_devfn() and
- return bool
-Date: Fri, 20 Jun 2025 15:17:59 +0800
-Message-Id: <20250620071813.55571-6-zhenzhong.duan@intel.com>
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+Subject: [PATCH v2 08/19] intel_iommu: Fail passthrough device under PCI
+ bridge if x-flts=on
+Date: Fri, 20 Jun 2025 15:18:02 +0800
+Message-Id: <20250620071813.55571-9-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250620071813.55571-1-zhenzhong.duan@intel.com>
 References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
@@ -89,76 +92,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Returns true if PCI device is aliased or false otherwise. This will be
-used in following patch to determine if a PCI device is under a PCI
-bridge.
+Currently we don't support nested translation for passthrough device
+with emulated device under same PCI bridge.
 
+Reason is for emulated devices, AS should switch to iommu MR, while for
+passthrough devices, it needs the AS stick with the system MR hence be
+able to keep the VFIO container IOAS as a GPA IOAS. To support this, let
+AS switch to iommu MR and have a separate GPA IOAS is needed, but that
+brings a new memory listener which duplicates with VFIO memory listener.
+
+For trade off, we choose to not support this special scenario because
+PCIE bridge is more popular than PCI bridge now.
+
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/pci/pci.h |  2 ++
- hw/pci/pci.c         | 12 ++++++++----
- 2 files changed, 10 insertions(+), 4 deletions(-)
+ hw/i386/intel_iommu.c | 13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 829757b2c2..3029cdf26f 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -640,6 +640,8 @@ typedef struct PCIIOMMUOps {
-                             bool is_write);
- } PCIIOMMUOps;
- 
-+bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
-+                                    PCIBus **aliased_bus, int *aliased_devfn);
- AddressSpace *pci_device_iommu_address_space(PCIDevice *dev);
- bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
-                                  Error **errp);
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index df1fb615a8..87f7c942b3 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -2857,20 +2857,21 @@ static void pci_device_class_base_init(ObjectClass *klass, const void *data)
-  * For call sites which don't need aliased BDF, passing NULL to
-  * aliased_[bus|devfn] is allowed.
-  *
-+ * Returns true if PCI device is aliased or false otherwise.
-+ *
-  * @piommu_bus: return root #PCIBus backed by an IOMMU for the PCI device.
-  *
-  * @aliased_bus: return aliased #PCIBus of the PCI device, optional.
-  *
-  * @aliased_devfn: return aliased devfn of the PCI device, optional.
-  */
--static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
--                                           PCIBus **piommu_bus,
--                                           PCIBus **aliased_bus,
--                                           int *aliased_devfn)
-+bool pci_device_get_iommu_bus_devfn(PCIDevice *dev, PCIBus **piommu_bus,
-+                                    PCIBus **aliased_bus, int *aliased_devfn)
- {
-     PCIBus *bus = pci_get_bus(dev);
-     PCIBus *iommu_bus = bus;
-     int devfn = dev->devfn;
-+    bool aliased = false;
- 
-     while (iommu_bus && !iommu_bus->iommu_ops && iommu_bus->parent_dev) {
-         PCIBus *parent_bus = pci_get_bus(iommu_bus->parent_dev);
-@@ -2907,6 +2908,7 @@ static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-                 devfn = parent->devfn;
-                 bus = parent_bus;
-             }
-+            aliased = true;
-         }
- 
-         iommu_bus = parent_bus;
-@@ -2928,6 +2930,8 @@ static void pci_device_get_iommu_bus_devfn(PCIDevice *dev,
-     if (aliased_devfn) {
-         *aliased_devfn = devfn;
-     }
-+
-+    return aliased;
+diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+index 1c79efc1cb..9d4adc9458 100644
+--- a/hw/i386/intel_iommu.c
++++ b/hw/i386/intel_iommu.c
+@@ -4330,9 +4330,10 @@ VTDAddressSpace *vtd_find_add_as(IntelIOMMUState *s, PCIBus *bus,
+     return vtd_dev_as;
  }
  
- AddressSpace *pci_device_iommu_address_space(PCIDevice *dev)
+-static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
++static bool vtd_check_hiod(IntelIOMMUState *s, VTDHostIOMMUDevice *vtd_hiod,
+                            Error **errp)
+ {
++    HostIOMMUDevice *hiod = vtd_hiod->hiod;
+     HostIOMMUDeviceClass *hiodc = HOST_IOMMU_DEVICE_GET_CLASS(hiod);
+     int ret;
+ 
+@@ -4359,6 +4360,8 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+ #ifdef CONFIG_IOMMUFD
+     struct HostIOMMUDeviceCaps *caps = &hiod->caps;
+     struct iommu_hw_info_vtd *vtd = &caps->vendor_caps.vtd;
++    PCIBus *bus = vtd_hiod->bus;
++    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), vtd_hiod->devfn);
+ 
+     /* Remaining checks are all stage-1 translation specific */
+     if (!object_dynamic_cast(OBJECT(hiod), TYPE_HOST_IOMMU_DEVICE_IOMMUFD)) {
+@@ -4381,6 +4384,12 @@ static bool vtd_check_hiod(IntelIOMMUState *s, HostIOMMUDevice *hiod,
+         error_setg(errp, "Stage-1 1GB huge page is unsupported by host IOMMU");
+         return false;
+     }
++
++    if (pci_device_get_iommu_bus_devfn(pdev, &bus, NULL, NULL)) {
++        error_setg(errp, "Host device under PCI bridge is unsupported "
++                   "when x-flts=on");
++        return false;
++    }
+ #endif
+ 
+     error_setg(errp, "host device is uncompatible with stage-1 translation");
+@@ -4414,7 +4423,7 @@ static bool vtd_dev_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+     vtd_hiod->iommu_state = s;
+     vtd_hiod->hiod = hiod;
+ 
+-    if (!vtd_check_hiod(s, hiod, errp)) {
++    if (!vtd_check_hiod(s, vtd_hiod, errp)) {
+         g_free(vtd_hiod);
+         vtd_iommu_unlock(s);
+         return false;
 -- 
 2.34.1
 
