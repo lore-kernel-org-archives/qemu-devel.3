@@ -4,64 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9722AC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:11:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8341BC7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:11:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbSh-0002JT-1R; Fri, 20 Jun 2025 09:07:19 -0400
+	id 1uSbTn-00039R-M6; Fri, 20 Jun 2025 09:08:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbSf-0002J3-2T
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:17 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbTl-000390-SA
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:25 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbSd-0004U0-3J
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:16 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-3a53359dea5so1048946f8f.0
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:07:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbTj-0004fH-Mf
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:25 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-45310223677so15215415e9.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:08:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750424832; x=1751029632; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=+QJmU5PBg2tZeWfZeXKYOSoau8zVaAF0qlZsb030HdQ=;
- b=cOblI3HebgHlpfnOSsV96ssafJjQK+UTt8b+PwtULW1nSCaulLh+ZgQfHSM9g+sxgq
- ClTG8YprVtFqSzJo9phQvWZ2qlTpK2ljUJcKnhemHscvSozn7jBB9H9WMdDqlgFXTKz1
- y2HqEpT8HGSs7L13gIHLVGCjRA3WQck71GA8bIsng7bkXNjZ/w5L1zroaQFQTcikhPbR
- /8jUWiqjA+GEOFg9cRCG8SS3vbYrN/rdNhzXUVVAP2tFAvBSCmEYZnrrjIyXmgRoL5yA
- LEVwd9thYc662MV1ni/H2rO/9O5QvP7c9wO23jB3rPtn/3a3UHWYCALI/1ljxZ04Hr94
- ILyA==
+ d=linaro.org; s=google; t=1750424902; x=1751029702; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oAt1PQLrHnO21M2Y87z2Ba1KRbOWR+1s+ZX+rYgrLRA=;
+ b=T+wTcnvzlfqB1H/TlIvqDpxFOwy7x+JdNO8nqiDxTJarKLSYsOIqFLRcbIahgsjUNL
+ 8ffItHZWkF/q6v912+ttjweTr9DPfPeRvniolpAqUPFkwhhZNIy5GwCC95CgTamEMK0c
+ oMCumrLM6W9Ywu+hKVFKZ6qLr+bhq7O5jjH1O805RPfpBWZYh2ru1UbhZifnvKgUcjUm
+ X8yTmHok2CA4uWzemUZx7OaE7KfGy+L6RKmO50ClrbfYPwNE7rG4jXZEcecjBTbyX80l
+ qrOt7p7H4VeqFxy9Hv38MHNZdWkcpeXPd5VyDtBQxr5AmqtIrS17XopDGNE8Yt6bpb06
+ tgwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750424832; x=1751029632;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+QJmU5PBg2tZeWfZeXKYOSoau8zVaAF0qlZsb030HdQ=;
- b=Dh3w8xdoVhQB32KOP8vXMdCmF89GDPX90k++nA+ydpKK6n7ioS5s6SStSqSDsOXylG
- 4EiqsBmM5I9xszLEi4dwwbsyjWXfSlLR5V+J0gnJ370QZQ2u1wgAmj6x73ghl3AaxXDG
- Ihq7mmNOr1hybw/qo/WpabKTXfCLkzVLLZNCnoOWdXe7uZDR/M51pQUrjpkOFBXhmIqL
- 3+nY1sa6pCAE+n/lu42ceku6Qcz2iiSYQAViAwG37Hw1zzokkFRV+tcxPgn9np1qUMYj
- RJp1ty/jVkvg/8W5ynOK9C5JkTc7h9K0y4aSCNh042RGBfz1mRu7v6/fylzO+MjkBnrS
- ErQw==
-X-Gm-Message-State: AOJu0YzkzYPwStXG/Tvu4/T2oMlzUSopnSR+EVyMOW+3x+MO6fcUBLe0
- U0lyyLR5CfzcJf+SfoHlWTuV2qlRTXUGAz/zqYEbZ3fVVpT+BwrNdNtT1p7uGDWt2ujnCfQ2cmP
- JmK1EnC4=
-X-Gm-Gg: ASbGncs5frF/XAgF5Q7TwXqCf2ndZmAcd0vnaA7XbmsRICL4kQaYlOaRpHAeALFwunk
- 9aNh6BqA40HCqqgGNNc+S3BbT74ilshom9rv0TdAQBtayb3bTKThr1WeR5q1h07zHpNgpriLJz2
- adoGXTm83S6V//Cz0rM28ipP6384Sy6mJhhu6GTxOnRmm/FRrN9gk6z2ud8l0GSXGt+6Q21+iTA
- vC83yPR01oWZO35cyDQNBUZTOjUuzL8vgkymPx7RcO5USVRZaxNA3Frk7x6LQ0XoJ1TqCKgUybe
- NMdi4nNJEtx8kpqGTZ8CX/6/ngpBmyXqHIwG8N7fXVSm5Kb1xoMNJKHf2UsrBb4DrdqviActl1n
- HeyUth/v91+44YNveXRkU1/boezAiuCSvHNVb
-X-Google-Smtp-Source: AGHT+IEJ9h5ss6DQ9nbsYss8UAzQAQ33xR7PMaeHXiIi1steBknP4WF0eD2p4PDUPBMV6vbuu4kWIQ==
-X-Received: by 2002:a05:6000:23c3:b0:3a4:f744:e00c with SMTP id
- ffacd0b85a97d-3a6d130452fmr1797673f8f.29.1750424831952; 
- Fri, 20 Jun 2025 06:07:11 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1750424902; x=1751029702;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=oAt1PQLrHnO21M2Y87z2Ba1KRbOWR+1s+ZX+rYgrLRA=;
+ b=RoMMpMRHWTeR8K3bWxflByvjckLEbs7CLsjm7fvvc2WcxcRG8/ehz9ag5RpxRbb2Bk
+ 5Ue/nBxY9cpG2u/VhYldTWbXY4b6JB27ooHge6h8QQAbCzInO5YftaKPfOfRWx47upcF
+ joHZLUqti+xDiwz5CANlgEfLsfwqRmNpDCZh6aCeiH9NtHKwPBnYfW9ZZ6UU/j/VGsZ7
+ /FhBmOBh8Fgpt4CF8TLZlZ3pdV8cwflU7VyyTo4CdUJsOjWpvHMA8pLWkjOP1bKYRmkO
+ cwXouF/Kf20tZCIQ4hE7QT+tIGCdR622ll9bWNL4yt1UTKdehzFCsCGawRw8s6idhcNh
+ aCZg==
+X-Gm-Message-State: AOJu0Yx2Ody9auNlrKH76A5dS8iY4p+CXVXuh4V56kHlSidCis6h7Rqz
+ 1BF3INcflG0xx+okK4h0j5dTykRP32m+IPTih0k0RHTM/wr0I+cMJswELfpav9Te9eLLBKCujD7
+ BseozSpk=
+X-Gm-Gg: ASbGncv7PmMOEm2EXsJqX7yENl8YvUwOlm53Xb3ZB0OsSsenEg5dkbUCmF8Dyeae6ur
+ b4vkmVQnq8aiMb/3MywhtmZUg3r0ja/JGpBWqZ65AwQ7+d1mMcYsB2aD480urxJZ2iwcRIl6d7g
+ 4ZIQGtDkt/MYlcZNEcJFwpPeqIsqBza96dtYzz444zkmjwKqYy/RqCgBobesCmbwMM2/yiqJyO+
+ QdHp/SGKEqr/b9ZBdZ2Ttg1DxtXY8be9vctbqo79Lgyf6IEm8LRFYnnyGcwi9CKS18Fup+E6t2O
+ QSuVNCXjifzLJRHZEbQgLS8AvwJxt4YyhQ0/236ME5VPZrsAdN3gLH0HnnRkuwp49QvhiuNeJsK
+ NzdVV5YgDXp0FDEcqEAFGNEwjEZUoo2ZWVtKQ
+X-Google-Smtp-Source: AGHT+IEGmchw+a0k0hX0S9KobjryclE57uq2sgKFzkmMvuxn/d4B/I66wfS6mkzaJen5FMifqGqbXw==
+X-Received: by 2002:a05:600c:37c5:b0:453:5c30:a1d0 with SMTP id
+ 5b1f17b1804b1-453659dcd62mr23896155e9.21.1750424899969; 
+ Fri, 20 Jun 2025 06:08:19 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453646dc66fsm24751975e9.18.2025.06.20.06.07.10
+ 5b1f17b1804b1-453646cb57fsm25578125e9.1.2025.06.20.06.08.18
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 06:07:11 -0700 (PDT)
+ Fri, 20 Jun 2025 06:08:19 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
@@ -79,15 +80,18 @@ Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 00/26] arm: Fixes and preparatory cleanups for split-accel
-Date: Fri, 20 Jun 2025 15:06:43 +0200
-Message-ID: <20250620130709.31073-1-philmd@linaro.org>
+Subject: [PATCH v2 12/26] target/arm: Restrict system register properties to
+ system binary
+Date: Fri, 20 Jun 2025 15:06:55 +0200
+Message-ID: <20250620130709.31073-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
+In-Reply-To: <20250620130709.31073-1-philmd@linaro.org>
+References: <20250620130709.31073-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,84 +114,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Since v1:
-- Addressed rth's review comments
+Do not expose the following system-specific properties on user-mode
+binaries:
 
-Omnibus series of ARM-related patches (noticed during the
-"split accel" PoC work).
+ - psci-conduit
+ - cntfrq (ARM_FEATURE_GENERIC_TIMER)
+ - rvbar (ARM_FEATURE_V8)
+ - has-mpu (ARM_FEATURE_PMSA)
+ - pmsav7-dregion (ARM_FEATURE_PMSA)
+ - reset-cbar (ARM_FEATURE_CBAR)
+ - reset-hivecs (ARM_FEATURE_M)
+ - init-nsvtor (ARM_FEATURE_M)
+ - init-svtor (ARM_FEATURE_M_SECURITY)
+ - idau (ARM_FEATURE_M_SECURITY)
 
-- Usual prototypes cleanups
-- Check TCG for EL2/EL3 features (and not !KVM or !HVF)
-- Improve HVF debugging
-- Correct HVF 'dtb_compatible' value for Linux
-- Fix HVF GTimer frequency (My M1 hardware has 24 MHz)
-  (this implies accel/ rework w.r.t. QDev vCPU REALIZE)
-- Expand functional tests w.r.t. HVF
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/arm/cpu.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-Regards,
-
-Phil.
-
-Philippe Mathieu-Daudé (26):
-  target/arm: Remove arm_handle_psci_call() stub
-  target/arm: Reduce arm_cpu_post_init() declaration scope
-  target/arm: Unify gen_exception_internal()
-  target/arm/hvf: Simplify GIC hvf_arch_init_vcpu()
-  target/arm/hvf: Directly re-lock BQL after hv_vcpu_run()
-  target/arm/hvf: Trace hv_vcpu_run() failures
-  accel/hvf: Trace VM memory mapping
-  target/arm/hvf: Log $pc in hvf_unknown_hvc() trace event
-  target/arm: Correct KVM & HVF dtb_compatible value
-  accel/hvf: Model PhysTimer register
-  target/arm/hvf: Pass @target_el argument to hvf_raise_exception()
-  target/arm: Restrict system register properties to system binary
-  target/arm: Create GTimers *after* features finalized / accel realized
-  accel: Keep reference to AccelOpsClass in AccelClass
-  accel: Introduce AccelOpsClass::cpu_target_realize() hook
-  accel/hvf: Add hvf_arch_cpu_realize() stubs
-  target/arm/hvf: Really set Generic Timer counter frequency
-  target/arm/hvf: Trace host processor features
-  hw/arm/virt: Only require TCG || QTest to use TrustZone
-  hw/arm/virt: Only require TCG || QTest to use virtualization extension
-  hw/arm/virt: Rename cpu_post_init() -> post_cpus_gic_realized()
-  hw/arm/sbsa-ref: Tidy up use of RAMLIMIT_GB definition
-  tests/functional: Restrict nexted Aarch64 Xen test to TCG
-  tests/functional: Require TCG to run Aarch64 imx8mp-evk test
-  tests/functional: Add hvf_available() helper
-  tests/functional: Expand Aarch64 SMMU tests to run on HVF accelerator
-
- meson.build                                 |   1 +
- accel/hvf/trace.h                           |   2 +
- include/qemu/accel.h                        |   3 +
- include/system/accel-ops.h                  |   4 +-
- include/system/hvf.h                        |   3 +
- target/arm/cpu.h                            |   2 -
- target/arm/internals.h                      |   6 +-
- target/arm/tcg/translate.h                  |   1 +
- accel/accel-common.c                        |   4 +
- accel/accel-system.c                        |   3 +-
- accel/hvf/hvf-accel-ops.c                   |   8 ++
- accel/tcg/tcg-accel-ops.c                   |   4 +-
- hw/arm/sbsa-ref.c                           |   8 +-
- hw/arm/virt.c                               |   9 +-
- target/arm/cpu.c                            |  78 ++++++------
- target/arm/hvf/hvf.c                        | 129 +++++++++++++++-----
- target/arm/kvm.c                            |   2 +-
- target/arm/tcg/translate-a64.c              |   6 -
- target/arm/tcg/translate.c                  |   2 +-
- target/i386/hvf/hvf.c                       |   5 +
- accel/hvf/trace-events                      |   7 ++
- python/qemu/utils/__init__.py               |   2 +-
- python/qemu/utils/accel.py                  |   8 ++
- target/arm/hvf/trace-events                 |   6 +-
- tests/functional/qemu_test/testcase.py      |   6 +-
- tests/functional/test_aarch64_imx8mp_evk.py |   1 +
- tests/functional/test_aarch64_smmu.py       |   9 +-
- tests/functional/test_aarch64_xen.py        |   1 +
- 28 files changed, 221 insertions(+), 99 deletions(-)
- create mode 100644 accel/hvf/trace.h
- create mode 100644 accel/hvf/trace-events
-
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index eb0639de719..e5b70f5de81 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1500,6 +1500,7 @@ static void arm_cpu_initfn(Object *obj)
+  * 0 means "unset, use the default value". That default might vary depending
+  * on the CPU type, and is set in the realize fn.
+  */
++#ifndef CONFIG_USER_ONLY
+ static const Property arm_cpu_gt_cntfrq_property =
+             DEFINE_PROP_UINT64("cntfrq", ARMCPU, gt_cntfrq_hz, 0);
+ 
+@@ -1509,7 +1510,6 @@ static const Property arm_cpu_reset_cbar_property =
+ static const Property arm_cpu_reset_hivecs_property =
+             DEFINE_PROP_BOOL("reset-hivecs", ARMCPU, reset_hivecs, false);
+ 
+-#ifndef CONFIG_USER_ONLY
+ static const Property arm_cpu_has_el2_property =
+             DEFINE_PROP_BOOL("has_el2", ARMCPU, has_el2, true);
+ 
+@@ -1532,6 +1532,7 @@ static const Property arm_cpu_has_neon_property =
+ static const Property arm_cpu_has_dsp_property =
+             DEFINE_PROP_BOOL("dsp", ARMCPU, has_dsp, true);
+ 
++#ifndef CONFIG_USER_ONLY
+ static const Property arm_cpu_has_mpu_property =
+             DEFINE_PROP_BOOL("has-mpu", ARMCPU, has_mpu, true);
+ 
+@@ -1544,6 +1545,7 @@ static const Property arm_cpu_pmsav7_dregion_property =
+             DEFINE_PROP_UNSIGNED_NODEFAULT("pmsav7-dregion", ARMCPU,
+                                            pmsav7_dregion,
+                                            qdev_prop_uint32, uint32_t);
++#endif
+ 
+ static bool arm_get_pmu(Object *obj, Error **errp)
+ {
+@@ -1731,6 +1733,7 @@ static void arm_cpu_post_init(Object *obj)
+                                         "Set on/off to enable/disable aarch64 "
+                                         "execution state ");
+     }
++#ifndef CONFIG_USER_ONLY
+     if (arm_feature(&cpu->env, ARM_FEATURE_CBAR) ||
+         arm_feature(&cpu->env, ARM_FEATURE_CBAR_RO)) {
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_reset_cbar_property);
+@@ -1746,7 +1749,6 @@ static void arm_cpu_post_init(Object *obj)
+                                        OBJ_PROP_FLAG_READWRITE);
+     }
+ 
+-#ifndef CONFIG_USER_ONLY
+     if (arm_feature(&cpu->env, ARM_FEATURE_EL3)) {
+         /* Add the has_el3 state CPU property only if EL3 is allowed.  This will
+          * prevent "has_el3" from existing on CPUs which cannot support EL3.
+@@ -1818,6 +1820,7 @@ static void arm_cpu_post_init(Object *obj)
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_has_dsp_property);
+     }
+ 
++#ifndef CONFIG_USER_ONLY
+     if (arm_feature(&cpu->env, ARM_FEATURE_PMSA)) {
+         qdev_property_add_static(DEVICE(obj), &arm_cpu_has_mpu_property);
+         if (arm_feature(&cpu->env, ARM_FEATURE_V7)) {
+@@ -1854,8 +1857,6 @@ static void arm_cpu_post_init(Object *obj)
+                                    &cpu->psci_conduit,
+                                    OBJ_PROP_FLAG_READWRITE);
+ 
+-    qdev_property_add_static(DEVICE(obj), &arm_cpu_cfgend_property);
+-
+     if (arm_feature(&cpu->env, ARM_FEATURE_GENERIC_TIMER)) {
+         qdev_property_add_static(DEVICE(cpu), &arm_cpu_gt_cntfrq_property);
+     }
+@@ -1864,7 +1865,6 @@ static void arm_cpu_post_init(Object *obj)
+         kvm_arm_add_vcpu_properties(cpu);
+     }
+ 
+-#ifndef CONFIG_USER_ONLY
+     if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64) &&
+         cpu_isar_feature(aa64_mte, cpu)) {
+         object_property_add_link(obj, "tag-memory",
+@@ -1882,6 +1882,7 @@ static void arm_cpu_post_init(Object *obj)
+         }
+     }
+ #endif
++    qdev_property_add_static(DEVICE(obj), &arm_cpu_cfgend_property);
+ }
+ 
+ static void arm_cpu_finalizefn(Object *obj)
 -- 
 2.49.0
 
