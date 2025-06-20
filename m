@@ -4,86 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76ABAC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F202C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:54:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSeo5-0006Zq-Bq; Fri, 20 Jun 2025 12:41:37 -0400
+	id 1uSezY-0004Jh-Bg; Fri, 20 Jun 2025 12:53:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSeo2-0006Yu-5W
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uSezR-0004JU-EP
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:53:22 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSenz-0000Gq-UU
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:33 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1uSezO-0001YY-OM
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:53:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437691;
+ s=mimecast20190719; t=1750438397;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=ZbRxtT0IMJemouiEORMDGr9tGSaeLkY1c3ABjRf1eR8=;
- b=JP8UPdnXVuIB1I2RDw1Oi73mlJQNBDdRAtf4Uul2s7y/tn4Meo5Cy3Gfb0C5iyijkC6zLl
- RA1d8zsMRRiO3av5ZOO08nwdqKjoPX5tyJVg/9xqLmpNJaVBbM7XjxBgKi9aglraAg2wPC
- WQ23u4jX0wq03edIWFqR9V3oGak6FzQ=
-Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
- [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=rSsk4jn+OBLz1Mo727gUcebERmYgU22qwW4AhJwD94I=;
+ b=JmQU1o+05qmv6ZYgHhMBahOqmFNeb06XVQhJ772SOo1QBrm8+5i+a/JAPXCUHB1v4oEEoW
+ Ou2LsW160AEUzkdEB8TyqnaL7mZUeDszl5UgKqEEaGWrvZxpyPT7yEphXCUB35eFdkmbFd
+ zrDyCGlP1ScKsaH4iKAE/fYLSlnV2zE=
+Received: from mail-pl1-f199.google.com (mail-pl1-f199.google.com
+ [209.85.214.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-v8-5ykeGP86BXIDR9iRdcA-1; Fri, 20 Jun 2025 12:41:16 -0400
-X-MC-Unique: v8-5ykeGP86BXIDR9iRdcA-1
-X-Mimecast-MFC-AGG-ID: v8-5ykeGP86BXIDR9iRdcA_1750437675
-Received: by mail-ej1-f69.google.com with SMTP id
- a640c23a62f3a-adb5f5f43dfso163930866b.3
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:16 -0700 (PDT)
+ us-mta-197-UWEvIT0PNJ2CTgfe5HtSgQ-1; Fri, 20 Jun 2025 12:53:13 -0400
+X-MC-Unique: UWEvIT0PNJ2CTgfe5HtSgQ-1
+X-Mimecast-MFC-AGG-ID: UWEvIT0PNJ2CTgfe5HtSgQ_1750438393
+Received: by mail-pl1-f199.google.com with SMTP id
+ d9443c01a7336-235196dfc50so19980725ad.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:53:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437674; x=1751042474;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ZbRxtT0IMJemouiEORMDGr9tGSaeLkY1c3ABjRf1eR8=;
- b=o/pl0HHobNo+QbE2JIfeYXiHQJRNcGT0WVJR3d83+bA4pg3zUsiKaPfCFRcHyhN5o1
- Njoubpc2uR9Djq1J9dBGUHngRmnTvOAbcL7FdrrDnf8m9QqIHKLKI8Jp9gEqQ3VB9InP
- zeK3SJKTEQlnwBflp20swDjAz8R5EZZH0qZfY7WcxFq7HxYbk6cmeK1oUVdf/1xcNviW
- d1acTlOTh5v9C0awFWVTPiig7SxBeblVhcUgdYwlYSZ/avDRUPml508nMmp8MgLRJHx7
- 653kYccu+c3S0lSz5JYdC98Z8RlFJpxQCOzfX/UbWUtjIt+imi30BRChtUvxqC1WHnwX
- LByg==
-X-Gm-Message-State: AOJu0YxvDiVDJsB7YwlnN5xDDu9Xdbl1feOOf3jybf+pkD0c6jiilVAG
- xroewK14tR+9XSvJj5YnymlySO2NohLGqrdH2vAITBUU6De4YPf5R29a0QFfQji1MgEttJLXjUK
- m77Ho42qU2wXsnSZnn6yAeMT/lqL2EZSHiOKvuD3sdfuBSkOLRlgcy/aXke+2wriMkVdVwSV9hd
- XobWFIvFXx1A1PTJx5DnnsRpAHB1oL1n4U1hxiAHyD
-X-Gm-Gg: ASbGncvySDOnoaYHAePvN3YfJK3n5ywYRItonS82iqFEqRoFTGnxLtIg/MhA4PsYleE
- +x5k+5vTgIWtLgzUQ/Uy4+WIHYieh8iY46yAY7o70xqMRENxAdiYgl2FygNc6uUa96Hy7LALuYo
- hYAU7ilpw80kTEeKs0R/wJq6lxollkSaSqIgfs9Y6EZMkCmkRdVP1/wm7nPROuW9UFmIul6/oVV
- CtENLedXHIPTUc5mF3NfxMzojZrF0shZ3snOGQA1MtwNbdjfFu3exWPize/IqIDWY58ioGdWhFB
- 1hZ6ZMYGzYCQ+1QlkMmNAq347w==
-X-Received: by 2002:a17:907:9715:b0:ad8:9b5d:2c38 with SMTP id
- a640c23a62f3a-ae057d4d2a3mr350810166b.26.1750437674302; 
- Fri, 20 Jun 2025 09:41:14 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEjeaEMwqFfV9E8dSGQzWMqgp1qiygxRbnsjANyqiuxT+7P/gN4UDB8YsHXsV67tXWKOMAZGQ==
-X-Received: by 2002:a17:907:9715:b0:ad8:9b5d:2c38 with SMTP id
- a640c23a62f3a-ae057d4d2a3mr350807566b.26.1750437673789; 
- Fri, 20 Jun 2025 09:41:13 -0700 (PDT)
-Received: from [192.168.122.1] ([151.62.200.93])
- by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-ae054209a2dsm190213166b.174.2025.06.20.09.41.11
+ d=1e100.net; s=20230601; t=1750438392; x=1751043192;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rSsk4jn+OBLz1Mo727gUcebERmYgU22qwW4AhJwD94I=;
+ b=abcAbWDD18+POlnmGPYWaxycO6uJKP+N+1r+jAHpR8uzM8kcUXHKgNahbf98N9hSzR
+ 1npYMkj8Upy7FpUDtO5ZPVcC0LoscV8gkA458dwpH/gBc/U3D4HKb4gdkCoUd1bWBBvt
+ xrS4frl2z3SUY+4Thh53t9r6FBc01OYcPrGb+MsyAiBEpyBefhPTGUmqXWBLn4LnSeqv
+ dMCpx6qK2nbxHInyQN9xf3+ntC8S+21azRi0UPcl7FjIBoLbLjf1fhJ80ttRZLug3VpL
+ qrOiqyJOtxpzKFPXiSRqgPahBijz3niNzgqotu0ddJ3FcWkSvochGg+2HWa9EvKuhyN6
+ PrlA==
+X-Gm-Message-State: AOJu0YyGGnJ4EgajP+vZzah7kLB7XU55H05e3Xvox9b5uT/s+a49PUX2
+ +Hekf/1G8Qdch1lSttKF9vR6+H6kZgWObWB3bGNR0mawU9G0hS/H1gxI80hdhfTmrcf6qX8ITdG
+ aYbGjNotODZwxvO0woWWg47cLm9LcCTbncj3Q6dpgidRffj1GJetuMYkA
+X-Gm-Gg: ASbGnctCSuSzXb/jIAeWsLeUJUzOjL7avI0Gz0+Q6VKtizGVOwA04jTp914d+ZjTkAn
+ 0FepNQIVBaKqyXoF3z7feOldfLblGrr0gLzvDv5e9hINpDebqWdfV14PDp1k7IVgYazLm/y8M0w
+ G5TIatLgDm6eWn2pbcCbhMpuNplcHNKBQAqFAgzFa91HdoOMBsLfWyJoyEeNUcny9Kspg42J3IA
+ yzJw8lZzRtD3P10HhgvyeWuE8VbUVeARMSjilDMA/HyMxAPUFBZUhLhgFdmri6qmavqlkztAAsx
+ x6+QUsJkIkuwyQ==
+X-Received: by 2002:a17:902:cecb:b0:235:efbb:9537 with SMTP id
+ d9443c01a7336-237daf6597amr43855835ad.3.1750438392572; 
+ Fri, 20 Jun 2025 09:53:12 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IHzdSTXVVpI47zlkG/VLAn5qfp6RXI+p98jmvsr+uTr3UfYG2LRJxDy50aAuVRuobUcBaSxcA==
+X-Received: by 2002:a17:902:cecb:b0:235:efbb:9537 with SMTP id
+ d9443c01a7336-237daf6597amr43855455ad.3.1750438392133; 
+ Fri, 20 Jun 2025 09:53:12 -0700 (PDT)
+Received: from x1.local ([85.131.185.92]) by smtp.gmail.com with ESMTPSA id
+ 41be03b00d2f7-b31f119f124sm2069495a12.32.2025.06.20.09.53.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:41:11 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 07/24] rust: qom: introduce ParentInit
-Date: Fri, 20 Jun 2025 18:40:35 +0200
-Message-ID: <20250620164053.579416-8-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.49.0
-In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
-References: <20250620164053.579416-1-pbonzini@redhat.com>
+ Fri, 20 Jun 2025 09:53:11 -0700 (PDT)
+Date: Fri, 20 Jun 2025 12:53:06 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Igor Mammedov <imammedo@redhat.com>
+Cc: qemu-devel@nongnu.org, kraxel@redhat.com, mst@redhat.com,
+ anisinha@redhat.com, elena.ufimtseva@oracle.com,
+ jag.raman@oracle.com, pbonzini@redhat.com, david@redhat.com,
+ philmd@linaro.org
+Subject: Re: [PATCH 1/3] memory: reintroduce BQL-free fine-grained PIO/MMIO
+Message-ID: <aFWR8rM7-4y1R0GG@x1.local>
+References: <20250620151418.1166195-1-imammedo@redhat.com>
+ <20250620151418.1166195-2-imammedo@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20250620151418.1166195-2-imammedo@redhat.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -108,131 +107,231 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is a smart pointer for MaybeUninit; it can be upcasted to the
-already-initialized parent classes, or dereferenced to a MaybeUninit
-for the class that is being initialized.
+On Fri, Jun 20, 2025 at 05:14:16PM +0200, Igor Mammedov wrote:
+> This patch brings back Jan's idea [1] of BQL-free IO access,
+> with a twist that whitelist read access only.
+> 
+> (as BQL-free write access in [1] used to cause issues [2]
+> and still does (Windows crash) if write path is not lock protected)
 
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- rust/qemu-api/src/qom.rs | 96 +++++++++++++++++++++++++++++++++++++++-
- 1 file changed, 95 insertions(+), 1 deletion(-)
+Can we add some explanation on why it would fail on lockless writes?
 
-diff --git a/rust/qemu-api/src/qom.rs b/rust/qemu-api/src/qom.rs
-index 14f98fee60a..ef966e570ca 100644
---- a/rust/qemu-api/src/qom.rs
-+++ b/rust/qemu-api/src/qom.rs
-@@ -95,7 +95,7 @@
- use std::{
-     ffi::{c_void, CStr},
-     fmt,
--    mem::ManuallyDrop,
-+    mem::{ManuallyDrop, MaybeUninit},
-     ops::{Deref, DerefMut},
-     ptr::NonNull,
- };
-@@ -206,6 +206,100 @@ fn fmt(&self, f: &mut fmt::Formatter<'_>) -> Result<(), fmt::Error> {
-     }
- }
- 
-+/// This struct knows that the superclasses of the object have already been
-+/// initialized.
-+pub struct ParentInit<'a, T>(&'a mut MaybeUninit<T>);
-+
-+impl<'a, T> ParentInit<'a, T> {
-+    #[inline]
-+    pub fn with(obj: &'a mut MaybeUninit<T>, f: impl FnOnce(ParentInit<'a, T>)) {
-+        let parent_init = ParentInit(obj);
-+        f(parent_init)
-+    }
-+}
-+
-+impl<T: ObjectType> ParentInit<'_, T> {
-+    /// Return the receiver as a mutable raw pointer to Object.
-+    ///
-+    /// # Safety
-+    ///
-+    /// Fields beyond `Object` could be uninitialized and it's your
-+    /// responsibility to avoid that they're used when the pointer is
-+    /// dereferenced, either directly or through a cast.
-+    pub fn as_object_mut_ptr(&self) -> *mut bindings::Object {
-+        self.as_object_ptr().cast_mut()
-+    }
-+
-+    /// Return the receiver as a mutable raw pointer to Object.
-+    ///
-+    /// # Safety
-+    ///
-+    /// Fields beyond `Object` could be uninitialized and it's your
-+    /// responsibility to avoid that they're used when the pointer is
-+    /// dereferenced, either directly or through a cast.
-+    pub fn as_object_ptr(&self) -> *const bindings::Object {
-+        self.0.as_ptr().cast()
-+    }
-+}
-+
-+impl<'a, T: ObjectImpl> ParentInit<'a, T> {
-+    /// Convert from a derived type to one of its parent types, which
-+    /// have already been initialized.
-+    ///
-+    /// # Safety
-+    ///
-+    /// Structurally this is always a safe operation; the [`IsA`] trait
-+    /// provides static verification trait that `Self` dereferences to `U` or
-+    /// a child of `U`, and only parent types of `T` are allowed.
-+    ///
-+    /// However, while the fields of the resulting reference are initialized,
-+    /// calls might use uninitialized fields of the subclass.  It is your
-+    /// responsibility to avoid this.
-+    pub unsafe fn upcast<U: ObjectType>(&self) -> &'a U
-+    where
-+        T::ParentType: IsA<U>,
-+    {
-+        // SAFETY: soundness is declared via IsA<U>, which is an unsafe trait;
-+        // the parent has been initialized before `instance_init `is called
-+        unsafe { &*(self.0.as_ptr().cast::<U>()) }
-+    }
-+
-+    /// Convert from a derived type to one of its parent types, which
-+    /// have already been initialized.
-+    ///
-+    /// # Safety
-+    ///
-+    /// Structurally this is always a safe operation; the [`IsA`] trait
-+    /// provides static verification trait that `Self` dereferences to `U` or
-+    /// a child of `U`, and only parent types of `T` are allowed.
-+    ///
-+    /// However, while the fields of the resulting reference are initialized,
-+    /// calls might use uninitialized fields of the subclass.  It is your
-+    /// responsibility to avoid this.
-+    pub unsafe fn upcast_mut<U: ObjectType>(&mut self) -> &'a mut U
-+    where
-+        T::ParentType: IsA<U>,
-+    {
-+        // SAFETY: soundness is declared via IsA<U>, which is an unsafe trait;
-+        // the parent has been initialized before `instance_init `is called
-+        unsafe { &mut *(self.0.as_mut_ptr().cast::<U>()) }
-+    }
-+}
-+
-+impl<T> Deref for ParentInit<'_, T> {
-+    type Target = MaybeUninit<T>;
-+
-+    fn deref(&self) -> &Self::Target {
-+        self.0
-+    }
-+}
-+
-+impl<T> DerefMut for ParentInit<'_, T> {
-+    fn deref_mut(&mut self) -> &mut Self::Target {
-+        self.0
-+    }
-+}
-+
- unsafe extern "C" fn rust_instance_init<T: ObjectImpl>(obj: *mut bindings::Object) {
-     let mut state = NonNull::new(obj).unwrap().cast::<T>();
-     // SAFETY: obj is an instance of T, since rust_instance_init<T>
+I saw that acpi_pm_tmr_write() is no-op, so I don't yet understand what
+raced, and also why guest writes to it at all..
+
+Thanks,
+
+> 
+> However with limiting it read path only, guest boots without issues.
+> This will let us make read access ACPI PM/HPET timers cheaper,
+> and prevent guest VCPUs BQL contention in case of workload
+> that heavily uses the timers.
+> 
+> 2) 196ea13104f (memory: Add global-locking property to memory regions)
+>    ... de7ea885c539 (kvm: Switch to unlocked MMIO)
+> 3) https://bugzilla.redhat.com/show_bug.cgi?id=1322713
+>    1beb99f787 (Revert "acpi: mark PMTIMER as unlocked")
+> 
+> Signed-off-by: Igor Mammedov <imammedo@redhat.com>
+> ---
+>  include/system/memory.h   | 10 +++++++++-
+>  hw/remote/vfio-user-obj.c |  2 +-
+>  system/memory.c           |  5 +++++
+>  system/memory_ldst.c.inc  | 18 +++++++++---------
+>  system/physmem.c          |  9 +++++----
+>  5 files changed, 29 insertions(+), 15 deletions(-)
+> 
+> diff --git a/include/system/memory.h b/include/system/memory.h
+> index fc35a0dcad..1afabf2d94 100644
+> --- a/include/system/memory.h
+> +++ b/include/system/memory.h
+> @@ -775,6 +775,7 @@ struct MemoryRegion {
+>      bool nonvolatile;
+>      bool rom_device;
+>      bool flush_coalesced_mmio;
+> +    bool lockless_ro_io;
+>      bool unmergeable;
+>      uint8_t dirty_log_mask;
+>      bool is_iommu;
+> @@ -2253,6 +2254,13 @@ void memory_region_set_flush_coalesced(MemoryRegion *mr);
+>   */
+>  void memory_region_clear_flush_coalesced(MemoryRegion *mr);
+>  
+> +/**
+> + * memory_region_enable_lockless_ro_io: Enable lockless (BQL) read-only acceess.
+> + *
+> + * Enable BQL-free readonly access for devices with fine-grained locking.
+> + */
+> +void memory_region_enable_lockless_ro_io(MemoryRegion *mr);
+> +
+>  /**
+>   * memory_region_add_eventfd: Request an eventfd to be triggered when a word
+>   *                            is written to a location.
+> @@ -3002,7 +3010,7 @@ MemTxResult address_space_write_cached_slow(MemoryRegionCache *cache,
+>                                              hwaddr len);
+>  
+>  int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr);
+> -bool prepare_mmio_access(MemoryRegion *mr);
+> +bool prepare_mmio_access(MemoryRegion *mr, bool read);
+>  
+>  static inline bool memory_region_supports_direct_access(MemoryRegion *mr)
+>  {
+> diff --git a/hw/remote/vfio-user-obj.c b/hw/remote/vfio-user-obj.c
+> index ea6165ebdc..936a9befd4 100644
+> --- a/hw/remote/vfio-user-obj.c
+> +++ b/hw/remote/vfio-user-obj.c
+> @@ -381,7 +381,7 @@ static int vfu_object_mr_rw(MemoryRegion *mr, uint8_t *buf, hwaddr offset,
+>           * The read/write logic used below is similar to the ones in
+>           * flatview_read/write_continue()
+>           */
+> -        release_lock = prepare_mmio_access(mr);
+> +        release_lock = prepare_mmio_access(mr, !is_write);
+>  
+>          access_size = memory_access_size(mr, size, offset);
+>  
+> diff --git a/system/memory.c b/system/memory.c
+> index 63b983efcd..5192195473 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -2558,6 +2558,11 @@ void memory_region_clear_flush_coalesced(MemoryRegion *mr)
+>      }
+>  }
+>  
+> +void memory_region_enable_lockless_ro_io(MemoryRegion *mr)
+> +{
+> +    mr->lockless_ro_io = true;
+> +}
+> +
+>  void memory_region_add_eventfd(MemoryRegion *mr,
+>                                 hwaddr addr,
+>                                 unsigned size,
+> diff --git a/system/memory_ldst.c.inc b/system/memory_ldst.c.inc
+> index 7f32d3d9ff..919357578c 100644
+> --- a/system/memory_ldst.c.inc
+> +++ b/system/memory_ldst.c.inc
+> @@ -35,7 +35,7 @@ static inline uint32_t glue(address_space_ldl_internal, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, false, attrs);
+>      if (l < 4 || !memory_access_is_direct(mr, false, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, true);
+>  
+>          /* I/O case */
+>          r = memory_region_dispatch_read(mr, addr1, &val,
+> @@ -104,7 +104,7 @@ static inline uint64_t glue(address_space_ldq_internal, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, false, attrs);
+>      if (l < 8 || !memory_access_is_direct(mr, false, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, true);
+>  
+>          /* I/O case */
+>          r = memory_region_dispatch_read(mr, addr1, &val,
+> @@ -171,7 +171,7 @@ uint8_t glue(address_space_ldub, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, false, attrs);
+>      if (!memory_access_is_direct(mr, false, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, true);
+>  
+>          /* I/O case */
+>          r = memory_region_dispatch_read(mr, addr1, &val, MO_8, attrs);
+> @@ -208,7 +208,7 @@ static inline uint16_t glue(address_space_lduw_internal, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, false, attrs);
+>      if (l < 2 || !memory_access_is_direct(mr, false, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, true);
+>  
+>          /* I/O case */
+>          r = memory_region_dispatch_read(mr, addr1, &val,
+> @@ -278,7 +278,7 @@ void glue(address_space_stl_notdirty, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, true, attrs);
+>      if (l < 4 || !memory_access_is_direct(mr, true, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, false);
+>  
+>          r = memory_region_dispatch_write(mr, addr1, val, MO_32, attrs);
+>      } else {
+> @@ -315,7 +315,7 @@ static inline void glue(address_space_stl_internal, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, true, attrs);
+>      if (l < 4 || !memory_access_is_direct(mr, true, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, false);
+>          r = memory_region_dispatch_write(mr, addr1, val,
+>                                           MO_32 | devend_memop(endian), attrs);
+>      } else {
+> @@ -378,7 +378,7 @@ void glue(address_space_stb, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, true, attrs);
+>      if (!memory_access_is_direct(mr, true, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, false);
+>          r = memory_region_dispatch_write(mr, addr1, val, MO_8, attrs);
+>      } else {
+>          /* RAM case */
+> @@ -411,7 +411,7 @@ static inline void glue(address_space_stw_internal, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, true, attrs);
+>      if (l < 2 || !memory_access_is_direct(mr, true, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, false);
+>          r = memory_region_dispatch_write(mr, addr1, val,
+>                                           MO_16 | devend_memop(endian), attrs);
+>      } else {
+> @@ -475,7 +475,7 @@ static void glue(address_space_stq_internal, SUFFIX)(ARG1_DECL,
+>      RCU_READ_LOCK();
+>      mr = TRANSLATE(addr, &addr1, &l, true, attrs);
+>      if (l < 8 || !memory_access_is_direct(mr, true, attrs)) {
+> -        release_lock |= prepare_mmio_access(mr);
+> +        release_lock |= prepare_mmio_access(mr, false);
+>          r = memory_region_dispatch_write(mr, addr1, val,
+>                                           MO_64 | devend_memop(endian), attrs);
+>      } else {
+> diff --git a/system/physmem.c b/system/physmem.c
+> index a8a9ca309e..60e330de99 100644
+> --- a/system/physmem.c
+> +++ b/system/physmem.c
+> @@ -2881,11 +2881,12 @@ int memory_access_size(MemoryRegion *mr, unsigned l, hwaddr addr)
+>      return l;
+>  }
+>  
+> -bool prepare_mmio_access(MemoryRegion *mr)
+> +bool prepare_mmio_access(MemoryRegion *mr, bool read)
+>  {
+>      bool release_lock = false;
+>  
+> -    if (!bql_locked()) {
+> +    if (!bql_locked() &&
+> +        !(read && mr->lockless_ro_io == true)) {
+>          bql_lock();
+>          release_lock = true;
+>      }
+> @@ -2935,7 +2936,7 @@ static MemTxResult flatview_write_continue_step(MemTxAttrs attrs,
+>      if (!memory_access_is_direct(mr, true, attrs)) {
+>          uint64_t val;
+>          MemTxResult result;
+> -        bool release_lock = prepare_mmio_access(mr);
+> +        bool release_lock = prepare_mmio_access(mr, false);
+>  
+>          *l = memory_access_size(mr, *l, mr_addr);
+>          /*
+> @@ -3032,7 +3033,7 @@ static MemTxResult flatview_read_continue_step(MemTxAttrs attrs, uint8_t *buf,
+>          /* I/O case */
+>          uint64_t val;
+>          MemTxResult result;
+> -        bool release_lock = prepare_mmio_access(mr);
+> +        bool release_lock = prepare_mmio_access(mr, true);
+>  
+>          *l = memory_access_size(mr, *l, mr_addr);
+>          result = memory_region_dispatch_read(mr, mr_addr, &val, size_memop(*l),
+> -- 
+> 2.43.5
+> 
+
 -- 
-2.49.0
+Peter Xu
 
 
