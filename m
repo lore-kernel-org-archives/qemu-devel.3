@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F695C7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:42:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34176C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 16:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSenZ-0006SJ-FO; Fri, 20 Jun 2025 12:41:05 -0400
+	id 1uSenm-0006Vh-FS; Fri, 20 Jun 2025 12:41:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSenY-0006S3-0j
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1uSenk-0006VI-U3
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1uSenW-0000Dh-H2
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:03 -0400
+ id 1uSenj-0000F4-D2
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 12:41:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1750437661;
+ s=mimecast20190719; t=1750437674;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dg0lyWp/iYHR0SwtBFKYV9jsMjYg3PofI7llGsLHSMo=;
- b=Ivse6f++J6dORJMzQ2RYxJJpO7LhAnKw7fQnT9bbQiy7V70XZQ+1V79AsAAZTjFR56G1C6
- Q+9nRMSuxGQE4XzEV39WbROiLwXeGx72d3MrkvabKdZgHA/FPmEJ5G3yacWHr79peXooW9
- ZB4538DTGcR1ePDawZ1aQPIzIlHPzX8=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=KETZnc4aDehl43qftNGze3IPzLrQSPsMMuMzCI6EM3Q=;
+ b=fGPx+ZHt5ywpOx6O7q6tt4/QE4FDzJh+MU5wu4n7i7DQU2f1l6pvpPZgJXD2K04mrfpBSm
+ K5VNe12dlDZeesiqcnjsYI8it/FeF0mMp5UCgwHGaPa8CiTFOyFEABT+Vbzp7g0ZaGi2Dd
+ S8yJoyxfxwRBVvvbKrgc3NsTmo9d2iQ=
+Received: from mail-ej1-f70.google.com (mail-ej1-f70.google.com
+ [209.85.218.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-523-5hRGvIxhPZO3mPkV87cNbw-1; Fri, 20 Jun 2025 12:41:00 -0400
-X-MC-Unique: 5hRGvIxhPZO3mPkV87cNbw-1
-X-Mimecast-MFC-AGG-ID: 5hRGvIxhPZO3mPkV87cNbw_1750437659
-Received: by mail-ed1-f72.google.com with SMTP id
- 4fb4d7f45d1cf-6077833ae13so1591842a12.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:40:59 -0700 (PDT)
+ us-mta-132-ZR6bHt9fOeKEHmMhb3UDHg-1; Fri, 20 Jun 2025 12:41:13 -0400
+X-MC-Unique: ZR6bHt9fOeKEHmMhb3UDHg-1
+X-Mimecast-MFC-AGG-ID: ZR6bHt9fOeKEHmMhb3UDHg_1750437672
+Received: by mail-ej1-f70.google.com with SMTP id
+ a640c23a62f3a-adb5f5f43dfso163925666b.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 09:41:13 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750437658; x=1751042458;
+ d=1e100.net; s=20230601; t=1750437671; x=1751042471;
  h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
+ :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=dg0lyWp/iYHR0SwtBFKYV9jsMjYg3PofI7llGsLHSMo=;
- b=R1VwaQ/l3DuyN8BqkTPWmJ2EBe6lw07t4M+f4oO4TAQQkrRIhhfEVXopl89jtCkjOY
- dR4RXcuW7w1CQXkGYw20gl/oZFshuPPoUZsaoMC8UDBsZYo/aoe0H0hoeBUOUlAHLB6w
- +6jgkCF/ezPn9mfcUg+mAKOgTcPSPK06hOW05qyOjYtfSSKgEtcg2XamRCVYc1DDeIzK
- 8J+SwED90tnDVlqMtN1aQU9SEYI6/I+6pzAEwwwOdf8dhNqB3YalMo72lN+HonZujEys
- C3g8t58DJYKBb9uhuE1wlipHmBdh++yNofpADzmluDKg5TA9vJ6kZZKnnpB6JesGq3Ng
- j3kQ==
-X-Gm-Message-State: AOJu0Yzgymvd0icox0gHFfOUNQYFBooDwALJrq5Hgfcn6E4osrNvHIRB
- 7y3HRCcxp6L4lXEt+Z1OkVToy36PI+pwK/EQxhZo22G30E8I9Rg0o6nZnP4luj/aYbLJ4Y+xSIp
- JAnocbapwvv7oPBf+7ljhOn5uoA0ik/ZZM3J+wA1WSDYMxcqoSlZKaJeyVzLnRhW8muWz/HuLj1
- X7s5nhK68DO6U7bbNlAtnydow9bJKOJaUtf1UiyBUQ
-X-Gm-Gg: ASbGncuekzB70p2fR2YadSRYnZAjxFr3RHs9MLSxRNRLeuWu8rRzG58yqjmpK1Mstby
- i6Jv2NO2bwgzHuZfjakg9RxkKm5sWImkwSce9cvZzof7ecJa+8A4JsPUWY/j29higzENVwlRRYF
- VXQLl6L4zohYqfB2Gfa6DE4CHC2ksLLXSvaUAGANJy1dWGUpKUAZ6I5U6ZusJdPXdBhHlYTic5y
- 0dbqIdjVyyrB28XmjCbIt/DSOWsXbc5Pzkb8ObPr/sXWxXrdZ7TtuqHP2k5dwVcwq0wHi2gtEtH
- aNXeQuHXnIg2lRC5sMZ0KnEU7w==
-X-Received: by 2002:a05:6402:1e89:b0:604:f62b:4118 with SMTP id
- 4fb4d7f45d1cf-60a1cd1a88emr3115268a12.5.1750437657882; 
- Fri, 20 Jun 2025 09:40:57 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IHm2Vv9lHQkXerKFiYB2TIpO23tiNUC8NS/3eSZHdis7Z++pIOlykAucgDZysigDUg15X+mfQ==
-X-Received: by 2002:a05:6402:1e89:b0:604:f62b:4118 with SMTP id
- 4fb4d7f45d1cf-60a1cd1a88emr3115246a12.5.1750437657375; 
- Fri, 20 Jun 2025 09:40:57 -0700 (PDT)
+ bh=KETZnc4aDehl43qftNGze3IPzLrQSPsMMuMzCI6EM3Q=;
+ b=oSKkQEoeUy3dNJk8nM3oSvxLlCnwXi4YBbiPnpGmGlQu3tUwkJAuczTbA08JaWuDno
+ httvdTEfR7Th6fUWZ27UBNiKZvUJy61ERTJzSGLkmH76A8KqhTEujVJDLft/NyszN0nw
+ +jXtCq6r3zSdr7bWkXIQBiZx+L4Tg5rnSGcUri/2mZ5PIwTVeWEJlVaVyFI22peLWa6W
+ zhejOdsg481zL4DXPxIscUleh9LOjqQirH+GkP4REjRIl6Iv+8Wr1DT7Fmzlielbovmm
+ pgePE1Mes40xwhb89o4ap2whR8x9UcHze71GPyHSd/kkqqeIQWN2/5GQdBxmPUPCah1I
+ ztRQ==
+X-Gm-Message-State: AOJu0YydaFKfqA1OXa9+rULa4LoTtBsIEUwaulIfTFY/wquFurKEyvt/
+ BaZwzWN8y4Mfl7e906iyW0lNsl4QIVmp+ljx6NXKUEjLjJv3KgHZmeLiLpvxVJ517ZPxJv61kY7
+ JGHzoMs5ttvZBQzinbE55j5aCKQaRiOB0fmjc/aDBcdmbIIc3jxUgaqs6+6T0kmAeyLUm+sQlU7
+ kVhqXUafMUH0m4RM0tHgnAh0IoEyh/C1xgObX0jCor
+X-Gm-Gg: ASbGncvCb28izvgmVr1S0o0kkyVYqe9CREYuR682BWK8Sp68Gd2EuIPKAN7P1JTMWD1
+ 5sud9CujWD8WRW3dVK65hK4WQjMklM/bqhjRSVWiPWbFQc0E6i6o/A/mKM/+5/4iUEu0Mp/Tv82
+ Tr8iY5S5Sha+bcPkNV6PfZem0qWQegbXuLly/6kkVw1LwDeKtrMuzluxkwVpGD+E7v/Ee5IH3zs
+ JRnsSwoJlDhtN+nkUs657hKZi/+or4otYpPoIZebLFHuMs/06re2yM6nDX9iezhr34KblJi5rZL
+ fH0WztILXSjFd6iyaChdrmqALQ==
+X-Received: by 2002:a17:906:c154:b0:ad8:a935:b8ff with SMTP id
+ a640c23a62f3a-ae057ef75famr395038466b.31.1750437671038; 
+ Fri, 20 Jun 2025 09:41:11 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IEKIXo5bvf5DFxav6ONdMjZu7+ciCVgv64jhuf5sBoov1UxO9ykrVnJL9NVvOVIBV16bPAvZA==
+X-Received: by 2002:a17:906:c154:b0:ad8:a935:b8ff with SMTP id
+ a640c23a62f3a-ae057ef75famr395035366b.31.1750437670525; 
+ Fri, 20 Jun 2025 09:41:10 -0700 (PDT)
 Received: from [192.168.122.1] ([151.62.200.93])
  by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-60a18cba650sm1591266a12.55.2025.06.20.09.40.55
- for <qemu-devel@nongnu.org>
+ a640c23a62f3a-ae0541b74b6sm185278566b.139.2025.06.20.09.41.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Jun 2025 09:40:56 -0700 (PDT)
+ Fri, 20 Jun 2025 09:41:08 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/24] meson: cleanup win32 library detection
-Date: Fri, 20 Jun 2025 18:40:29 +0200
-Message-ID: <20250620164053.579416-2-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 06/24] rust: hpet: fully initialize object during instance_init
+Date: Fri, 20 Jun 2025 18:40:34 +0200
+Message-ID: <20250620164053.579416-7-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620164053.579416-1-pbonzini@redhat.com>
 References: <20250620164053.579416-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -39
 X-Spam_score: -4.0
@@ -108,45 +108,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As pointed out by Akihiko Odaki, all Win32 libraries in MinGW have lowercase
-names.  This means that on (case-insensitive) Windows you can use the mixed-case
-names suggested by Microsoft or all-lowercase names, while on Linux you need to
-make them lowercase.
+The array of BqlRefCell<HPETTimer> is not initialized yet at the
+end of instance_init.  In particular, the "state" field is NonNull
+and therefore it is invalid to have it as zero bytes.
 
-QEMU was already using lowercase names, so there is no need to test the
-mixed-case name version of libSynchronization.  Remove the unnecessary test
-and while at it make all the tests use "required: true".
+Note that MaybeUninit is necessary because assigning to self.timers[index]
+would trigger Drop of the old value.
 
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- meson.build | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ rust/hw/timer/hpet/src/device.rs | 42 +++++++++++++++++++-------------
+ 1 file changed, 25 insertions(+), 17 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index 34729c2a3dd..ed60be2a2d0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -843,15 +843,12 @@ host_dsosuf = '.so'
- if host_os == 'windows'
-   midl = find_program('midl', required: false)
-   widl = find_program('widl', required: false)
--  pathcch = cc.find_library('pathcch')
--  synchronization = cc.find_library('Synchronization', required: false)
--  if not synchronization.found()
--    # The library name is lowercase on mingw
--    synchronization = cc.find_library('synchronization', required: true)
--  endif
+diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
+index 735b2fbef79..340ca1d355d 100644
+--- a/rust/hw/timer/hpet/src/device.rs
++++ b/rust/hw/timer/hpet/src/device.rs
+@@ -4,6 +4,7 @@
  
--  socket = cc.find_library('ws2_32')
--  winmm = cc.find_library('winmm')
-+  # MinGW uses lowercase for library names
-+  pathcch = cc.find_library('pathcch', required: true)
-+  synchronization = cc.find_library('synchronization', required: true)
-+  socket = cc.find_library('ws2_32', required: true)
-+  winmm = cc.find_library('winmm', required: true)
+ use std::{
+     ffi::{c_int, c_void, CStr},
++    mem::MaybeUninit,
+     pin::Pin,
+     ptr::{addr_of_mut, null_mut, NonNull},
+     slice::from_ref,
+@@ -25,6 +26,7 @@
+     qom_isa,
+     sysbus::{SysBusDevice, SysBusDeviceImpl},
+     timer::{Timer, CLOCK_VIRTUAL, NANOSECONDS_PER_SECOND},
++    uninit_field_mut,
+     vmstate::VMStateDescription,
+     vmstate_fields, vmstate_of, vmstate_struct, vmstate_subsections, vmstate_validate,
+     zeroable::Zeroable,
+@@ -212,13 +214,13 @@ pub struct HPETTimer {
+ }
  
-   win = import('windows')
-   version_res = win.compile_resources('version.rc',
+ impl HPETTimer {
+-    fn init(&mut self, index: u8, state: &HPETState) {
+-        *self = HPETTimer {
++    fn new(index: u8, state: *const HPETState) -> HPETTimer {
++        HPETTimer {
+             index,
+             // SAFETY: the HPETTimer will only be used after the timer
+             // is initialized below.
+             qemu_timer: unsafe { Timer::new() },
+-            state: NonNull::new((state as *const HPETState).cast_mut()).unwrap(),
++            state: NonNull::new(state.cast_mut()).unwrap(),
+             config: 0,
+             cmp: 0,
+             fsb: 0,
+@@ -226,19 +228,15 @@ fn init(&mut self, index: u8, state: &HPETState) {
+             period: 0,
+             wrap_flag: 0,
+             last: 0,
+-        };
++        }
++    }
+ 
++    fn init_timer_with_cell(cell: &BqlRefCell<Self>) {
++        let mut timer = cell.borrow_mut();
+         // SAFETY: HPETTimer is only used as part of HPETState, which is
+         // always pinned.
+-        let qemu_timer = unsafe { Pin::new_unchecked(&mut self.qemu_timer) };
+-        qemu_timer.init_full(
+-            None,
+-            CLOCK_VIRTUAL,
+-            Timer::NS,
+-            0,
+-            timer_handler,
+-            &state.timers[self.index as usize],
+-        )
++        let qemu_timer = unsafe { Pin::new_unchecked(&mut timer.qemu_timer) };
++        qemu_timer.init_full(None, CLOCK_VIRTUAL, Timer::NS, 0, timer_handler, cell);
+     }
+ 
+     fn get_state(&self) -> &HPETState {
+@@ -607,9 +605,18 @@ fn handle_legacy_irq(&self, irq: u32, level: u32) {
+         }
+     }
+ 
+-    fn init_timer(&self) {
+-        for (index, timer) in self.timers.iter().enumerate() {
+-            timer.borrow_mut().init(index.try_into().unwrap(), self);
++    fn init_timers(this: &mut MaybeUninit<Self>) {
++        let state = this.as_ptr();
++        for index in 0..HPET_MAX_TIMERS {
++            let mut timer = uninit_field_mut!(*this, timers[index]);
++
++            // Initialize in two steps, to avoid calling Timer::init_full on a
++            // temporary that can be moved.
++            let timer = timer.write(BqlRefCell::new(HPETTimer::new(
++                index.try_into().unwrap(),
++                state,
++            )));
++            HPETTimer::init_timer_with_cell(timer);
+         }
+     }
+ 
+@@ -710,6 +717,8 @@ unsafe fn init(&mut self) {
+             "hpet",
+             HPET_REG_SPACE_LEN,
+         );
++
++        Self::init_timers(unsafe { &mut *((self as *mut Self).cast::<MaybeUninit<Self>>()) });
+     }
+ 
+     fn post_init(&self) {
+@@ -731,7 +740,6 @@ fn realize(&self) -> qemu_api::Result<()> {
+ 
+         self.hpet_id.set(HPETFwConfig::assign_hpet_id()?);
+ 
+-        self.init_timer();
+         // 64-bit General Capabilities and ID Register; LegacyReplacementRoute.
+         self.capability.set(
+             HPET_CAP_REV_ID_VALUE << HPET_CAP_REV_ID_SHIFT |
 -- 
 2.49.0
 
