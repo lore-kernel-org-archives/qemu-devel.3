@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDF3FC7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 07:24:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10B77C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 07:24:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSW6E-0007CN-Ta; Fri, 20 Jun 2025 03:23:46 -0400
+	id 1uSW4y-0004Z0-3M; Fri, 20 Jun 2025 03:22:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uSW6C-000708-Pz
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:23:45 -0400
+ id 1uSW4v-0004Yj-04
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:22:25 -0400
 Received: from mgamail.intel.com ([198.175.65.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1uSW68-0008Ot-Bg
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:23:44 -0400
+ id 1uSW4p-0008FB-9q
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 03:22:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1750404220; x=1781940220;
+ t=1750404139; x=1781940139;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=VzUt0kb/wH2GYgYNrDND9uyye5VJquaKBiwKH23wriM=;
- b=d0Srf7vY7NkV311DWsbqx1X+XWzchwEkQSb8gfxfGsWqzmyZndkANZr/
- tXjJ3JhLo5ZTWw3i4w8rlN0muRkegU5PXyw4BOY/wcTMvNVg/+30Uh0Ml
- qc4HojIwWtDCSPoVac/H0d8ZByvAq/J5yWDcOkyWY3Z1kKRsUJglGjIpk
- poRuQXeACXfe01bd+NHf8VNbZGJpRsxBCQQ6hDbnpvP+/nwgesIrw4Nr5
- rypSMOmSdIFTUDBJa8s9zTvQws9/wrG9/4Y3ZOagVrMtY0XnqrQK+uoWu
- qW52/IemqCTw4GrKSIXQEePdKvwi+xucYw8+D0yuFoFmWkoCnW9jY5MI+ A==;
-X-CSE-ConnectionGUID: mprVRM0NTDioHqo4SpUN3w==
-X-CSE-MsgGUID: f8IIv6/iR9iWgkBa1KSHPw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11469"; a="52532550"
-X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="52532550"
+ bh=JL9CLBJX8nnHDI6v27343igxliBeYes2mrdVS1QU33g=;
+ b=UrghDAIts8AphfI8lfjV6Xwb6DWAuSoaygmhzRPIkoZcrJg1YjMgOuvT
+ xwYAaGiyi8Cv/jWfqZAksk4l1LftcpaLmVXg3ch851CCjDcfBk3/oufa1
+ knXbN4KrivV9VmqMcgeEbo7tMrdMZSOmGHN31wp88HC2dMMJxJsZtreyT
+ RU56UTOVMfeczBSviBhCaUDNKFB/1BCbTsuLlZzydzepe+mvw4uULxLRX
+ 3pJELTTDh7BHn/uKnCg2DAtcF0wFwXVI5B8nTld/Mt6uFw8yXjuBvYdIR
+ MPMChjPe+frW2HmyKtZ3CYDliekvIjZlhzP8QA9uT63uuqFuyIfebmXWq w==;
+X-CSE-ConnectionGUID: 0UUyiQB9TACbgssqkjGopA==
+X-CSE-MsgGUID: fWNLUBV3S++PBacU66aRIw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11469"; a="52532265"
+X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="52532265"
 Received: from orviesa002.jf.intel.com ([10.64.159.142])
  by orvoesa113.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Jun 2025 00:23:39 -0700
-X-CSE-ConnectionGUID: IWNMB03hQsO0t2+mjKmWCg==
-X-CSE-MsgGUID: JMfLiqzcSEScfErqv577Ww==
+ 20 Jun 2025 00:22:19 -0700
+X-CSE-ConnectionGUID: gr8yW0rXQv6A63KToe1nYA==
+X-CSE-MsgGUID: d1nWaVJRSiqvVG6FmpO2Tg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="181863284"
+X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="181863056"
 Received: from spr-s2600bt.bj.intel.com ([10.240.192.127])
  by orviesa002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 20 Jun 2025 00:23:35 -0700
+ 20 Jun 2025 00:22:15 -0700
 From: Zhenzhong Duan <zhenzhong.duan@intel.com>
 To: qemu-devel@nongnu.org
 Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
@@ -53,10 +53,11 @@ Cc: alex.williamson@redhat.com, clg@redhat.com, eric.auger@redhat.com,
  jgg@nvidia.com, nicolinc@nvidia.com, shameerali.kolothum.thodi@huawei.com,
  joao.m.martins@oracle.com, clement.mathieu--drif@eviden.com,
  kevin.tian@intel.com, yi.l.liu@intel.com, chao.p.peng@intel.com,
- Zhenzhong Duan <zhenzhong.duan@intel.com>
-Subject: [PATCH v2 18/19] Workaround for ERRATA_772415_SPR17
-Date: Fri, 20 Jun 2025 15:18:12 +0800
-Message-Id: <20250620071813.55571-19-zhenzhong.duan@intel.com>
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+Subject: [PATCH v2 02/19] hw/pci: Introduce pci_device_get_viommu_cap()
+Date: Fri, 20 Jun 2025 15:17:56 +0800
+Message-Id: <20250620071813.55571-3-zhenzhong.duan@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20250620071813.55571-1-zhenzhong.duan@intel.com>
 References: <20250620071813.55571-1-zhenzhong.duan@intel.com>
@@ -87,114 +88,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On a system influenced by ERRATA_772415, IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17
-is repored by IOMMU_DEVICE_GET_HW_INFO. Due to this errata, even the readonly
-range mapped on stage-2 page table could still be written.
+pci_device_get_viommu_cap() call pci_device_get_iommu_bus_devfn()
+to get iommu_bus->iommu_ops and call get_viommu_cap() callback to
+get a bitmap with each bit represents a vIOMMU exposed capability.
 
-Reference from 4th Gen Intel Xeon Processor Scalable Family Specification
-Update, Errata Details, SPR17.
-https://www.intel.com/content/www/us/en/content-details/772415/content-details.html
-
+Suggested-by: Yi Liu <yi.l.liu@intel.com>
 Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 ---
- include/hw/vfio/vfio-container-base.h |  1 +
- hw/vfio/iommufd.c                     |  8 +++++++-
- hw/vfio/listener.c                    | 13 +++++++++----
- 3 files changed, 17 insertions(+), 5 deletions(-)
+ include/hw/pci/pci.h | 22 ++++++++++++++++++++++
+ hw/pci/pci.c         | 11 +++++++++++
+ 2 files changed, 33 insertions(+)
 
-diff --git a/include/hw/vfio/vfio-container-base.h b/include/hw/vfio/vfio-container-base.h
-index f0232654ee..e5c51a51ac 100644
---- a/include/hw/vfio/vfio-container-base.h
-+++ b/include/hw/vfio/vfio-container-base.h
-@@ -51,6 +51,7 @@ typedef struct VFIOContainerBase {
-     QLIST_HEAD(, VFIODevice) device_list;
-     GList *iova_ranges;
-     NotifierWithReturn cpr_reboot_notifier;
-+    bool bypass_ro;
- } VFIOContainerBase;
- 
- typedef struct VFIOGuestIOMMU {
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 83a632bdee..23839a511a 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -306,6 +306,7 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
- {
-     ERRP_GUARD();
-     IOMMUFDBackend *iommufd = vbasedev->iommufd;
-+    struct iommu_hw_info_vtd vtd;
-     uint32_t type, flags = 0;
-     uint64_t hw_caps;
-     VFIOIOASHwpt *hwpt;
-@@ -345,10 +346,15 @@ static bool iommufd_cdev_autodomains_get(VFIODevice *vbasedev,
-      * instead.
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index df3cc7b875..829757b2c2 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -453,6 +453,18 @@ typedef struct PCIIOMMUOps {
+      * @devfn: device and function number of the PCI device.
       */
-     if (!iommufd_backend_get_device_info(vbasedev->iommufd, vbasedev->devid,
--                                         &type, NULL, 0, &hw_caps, errp)) {
-+                                         &type, &vtd, sizeof(vtd), &hw_caps,
-+                                         errp)) {
-         return false;
-     }
+     void (*unset_iommu_device)(PCIBus *bus, void *opaque, int devfn);
++    /**
++     * @get_viommu_cap: get vIOMMU capabilities
++     *
++     * Optional callback, if not implemented, then vIOMMU doesn't
++     * support exposing capabilities to other subsystem, e.g., VFIO.
++     * vIOMMU can choose which capabilities to expose.
++     *
++     * @opaque: the data passed to pci_setup_iommu().
++     *
++     * Returns: 64bit bitmap with each bit represents a capability.
++     */
++    uint64_t (*get_viommu_cap)(void *opaque);
+     /**
+      * @get_iotlb_info: get properties required to initialize a device IOTLB.
+      *
+@@ -633,6 +645,16 @@ bool pci_device_set_iommu_device(PCIDevice *dev, HostIOMMUDevice *hiod,
+                                  Error **errp);
+ void pci_device_unset_iommu_device(PCIDevice *dev);
  
-+    if (vtd.flags & IOMMU_HW_INFO_VTD_ERRATA_772415_SPR17) {
-+        container->bcontainer.bypass_ro = true;
-+    }
++/**
++ * pci_device_get_viommu_cap: get vIOMMU capabilities.
++ *
++ * Returns a 64bit bitmap with each bit represents a vIOMMU exposed
++ * capability, 0 if vIOMMU doesn't support esposing capabilities.
++ *
++ * @dev: PCI device pointer.
++ */
++uint64_t pci_device_get_viommu_cap(PCIDevice *dev);
 +
-     if (hw_caps & IOMMU_HW_CAP_DIRTY_TRACKING) {
-         flags = IOMMU_HWPT_ALLOC_DIRTY_TRACKING;
+ /**
+  * pci_iommu_get_iotlb_info: get properties required to initialize a
+  * device IOTLB.
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index c70b5ceeba..df1fb615a8 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -2992,6 +2992,17 @@ void pci_device_unset_iommu_device(PCIDevice *dev)
      }
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index f498e23a93..c64aa4539e 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -364,7 +364,8 @@ static bool vfio_known_safe_misalignment(MemoryRegionSection *section)
-     return true;
  }
  
--static bool vfio_listener_valid_section(MemoryRegionSection *section,
-+static bool vfio_listener_valid_section(VFIOContainerBase *bcontainer,
-+                                        MemoryRegionSection *section,
-                                         const char *name)
- {
-     if (vfio_listener_skipped_section(section)) {
-@@ -375,6 +376,10 @@ static bool vfio_listener_valid_section(MemoryRegionSection *section,
-         return false;
-     }
- 
-+    if (bcontainer && bcontainer->bypass_ro && section->readonly) {
-+        return false;
-+    }
++uint64_t pci_device_get_viommu_cap(PCIDevice *dev)
++{
++    PCIBus *iommu_bus;
 +
-     if (unlikely((section->offset_within_address_space &
-                   ~qemu_real_host_page_mask()) !=
-                  (section->offset_within_region & ~qemu_real_host_page_mask()))) {
-@@ -494,7 +499,7 @@ void vfio_container_region_add(VFIOContainerBase *bcontainer,
-     int ret;
-     Error *err = NULL;
- 
--    if (!vfio_listener_valid_section(section, "region_add")) {
-+    if (!vfio_listener_valid_section(bcontainer, section, "region_add")) {
-         return;
-     }
- 
-@@ -655,7 +660,7 @@ static void vfio_listener_region_del(MemoryListener *listener,
-     int ret;
-     bool try_unmap = true;
- 
--    if (!vfio_listener_valid_section(section, "region_del")) {
-+    if (!vfio_listener_valid_section(bcontainer, section, "region_del")) {
-         return;
-     }
- 
-@@ -812,7 +817,7 @@ static void vfio_dirty_tracking_update(MemoryListener *listener,
-         container_of(listener, VFIODirtyRangesListener, listener);
-     hwaddr iova, end;
- 
--    if (!vfio_listener_valid_section(section, "tracking_update") ||
-+    if (!vfio_listener_valid_section(NULL, section, "tracking_update") ||
-         !vfio_get_section_iova_range(dirty->bcontainer, section,
-                                      &iova, &end, NULL)) {
-         return;
++    pci_device_get_iommu_bus_devfn(dev, &iommu_bus, NULL, NULL);
++    if (iommu_bus && iommu_bus->iommu_ops->get_viommu_cap) {
++        return iommu_bus->iommu_ops->get_viommu_cap(iommu_bus->iommu_opaque);
++    }
++    return 0;
++}
++
+ int pci_pri_request_page(PCIDevice *dev, uint32_t pasid, bool priv_req,
+                          bool exec_req, hwaddr addr, bool lpig,
+                          uint16_t prgi, bool is_read, bool is_write)
 -- 
 2.34.1
 
