@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34CA8C71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:11:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36A84C7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 13:11:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSbTk-00038Y-3E; Fri, 20 Jun 2025 09:08:24 -0400
+	id 1uSbTA-0002Pu-2Z; Fri, 20 Jun 2025 09:07:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbTi-00037m-2X
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:22 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbT5-0002PV-0u
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:43 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbTc-0004dY-PW
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:08:21 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-450cf214200so17544345e9.1
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:08:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSbT3-0004XH-Gw
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 09:07:42 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-451ebd3d149so11651025e9.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 06:07:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750424895; x=1751029695; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750424860; x=1751029660; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fZYVTt5RemOQGhErk/wxiT1GRcR8x45vVeqGw/eKctk=;
- b=NwF6LY1gkY0jTrfmu8pocegTrmHtCD0rHvvz7dh65JpW0BOgmBQE44lv5wvOZn5NMO
- pPb1cN1/x/G7j4GgCyVgvpuY7xZn1A3aG2+oRoAGU96rbJTa9VAm+Fr7YwYl//cdrmjR
- 2Cx1eMzjaWP7nx+laOt1teHHXqCIwdKG1F6d4DYLwnc2UdPwBSof9k9Q+lYqgKQIhx0z
- TuD5ayVUvjfRgGRR6T0UVDYpK36pqNTZmpbdsGE4hT+R/p+V28H2URxRzz0VDUwaoYdB
- aJ0rfbr+AnLtGoVwL+z8+B0xrFpp3lV1FpVrMW/zeqqmht2ewodUukDpYWfq4oHkFLHT
- 7tFg==
+ bh=XksfEnABhqse0vfJxYZJ+Lf0uyahV9aipIl1Sny7z0o=;
+ b=UBwtG0MudX4paiA7gOqGytVjb/JBmLANjQuB1aKXFyqhMJFF7GYAvtkxI4VsYosuIU
+ eW1219lN4RME1JE/9lbiOnFmJ5lPIBcKtvJ3ISTEYLuqz776gdbGzjC2Mhu93UT3TBxi
+ 3sEmdeBXbNDT/4xrOZ4isfWIusul6IGI74XnkWgv0Z354xutGYP1+40gE7i3nqqjbcKH
+ zsz8JEzYUG91A6zdR1qV9dXjRwo2QKgRCh93lYUsiIxWD05TF84em0ezhGdUkIiBMVNY
+ m2X2mX0qSpchbTEnyeL4emsEAJYAybzOYnScDoyUs01AyHm+eYPyPyjKC0JP5AJORDVf
+ SK3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750424895; x=1751029695;
+ d=1e100.net; s=20230601; t=1750424860; x=1751029660;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=fZYVTt5RemOQGhErk/wxiT1GRcR8x45vVeqGw/eKctk=;
- b=lc5PzNdlbLUexF0iuSnC0ycHUQk10Vp5lIdf9WGZiLRck0Dbv46DxnK9DBxtAgPAC1
- YRZf9fB+7T3W0smpULLrbdZ1Hk6BxEh49Lwi6FwBUnV8yYVxZyuuZhp5ybVSh6o8kRTt
- ZjPjXHC4SfH2XvLwMW1uB5//JJq7kRRU3H+0BU2fTHQBFfek8Mll8ugEgO7rE5pERxGc
- dsQRsbA/9uIr7pfmzpFhLczuffUSOFfd/csuw+aSiEzjFgXlCIURFuQ0Z7c4XH4X0Pa7
- 0MfflqhzI+0kaBXVHJKQ5Z3JsYtEaKiJnmt6IihtCI4nNt0lBE8Hd2676+GD0s+c/DYT
- X/UQ==
-X-Gm-Message-State: AOJu0YwjxZeli3BeVQiYWtPiR/8djR0HEkA010TE7xyRY6JQ7w/XLUiE
- z9aAEMgFKlzvgreaA4NkQGBQJHlLh5pRTguvui/uPLq2c1xu232BVTVbF9DoW1nyQa4Df1BfGJ4
- pRnvOR14=
-X-Gm-Gg: ASbGncsvPzyoOSVCm0MyMPAQq0K7BvsgJ7ceanr5OizPBZjgtHyma47gNsvdk2m708H
- bdnYqW8bQdj0FWTX/WIw0ibvu3Co1UysEFOAPdNy328PcvsDfFjE1qMicjgR66SMcxQRBvtEvHo
- fot1YrGYKH6DSRMqGPao6kV3H0RHpoQkUhUtM9xN+eutE+4cIKHxE3x+F69F+dVCtkByq6Edld1
- ww3EArRo9mjrUvgm/ZRpQ+7Gi0dshioHOHjVM5KF+3EXwrkG5zgwFCGuylbP9v2nSvVIhY4zDVc
- gsDGE/H21phR/gVuFzERHEvPscuTPaEqBhKNX4bpSFQPnmipQ4EsoeuhO8MYSCBNfsl3bq9eWgA
- HWF+6+Sdn0oJlvbEQgxUQ49ZMMWDDJxzelsYt4Bt2i6SjBgc=
-X-Google-Smtp-Source: AGHT+IFVLdhGyOe5Gwiz0JlxZs0z4PUuLavXcnnSLq49twNgh52Q6RjdjYzWXSk1EhN5FYPARRZVKg==
-X-Received: by 2002:a05:600c:1f94:b0:439:9424:1b70 with SMTP id
- 5b1f17b1804b1-45365a05192mr27153005e9.30.1750424894423; 
- Fri, 20 Jun 2025 06:08:14 -0700 (PDT)
+ bh=XksfEnABhqse0vfJxYZJ+Lf0uyahV9aipIl1Sny7z0o=;
+ b=pYCS4+Yd1o8Rc3Jcn4fzLwxHsCwFYAa8LTGFI5lfeecuqFEqJpgYs8BhRQQpVj8XUz
+ oXuBedszppZvQnFJq/uWdNyAxm87JynqpklSN4yn3mPkPfdQmmhgATjlWx2k4m0EyUjM
+ wzyM31cSjnuJEi55rmECL8u/H9MyTI++P8lon3yHE1/n6wj55V2JBpz7vEAiRhvAFEhi
+ fX2pOmxhsME6Q/ZkL/Y//SWT1OwTZDfLXLMq16JBTbeMkHoC+6e0PXEsIiejO9Xw7eVE
+ mtBzb9GOW7QphtBcJzUkGwd+EMhReQnalrCsLSSD4doIq8MJsUhwa5ndzvLnxp3jgnU+
+ ZPfQ==
+X-Gm-Message-State: AOJu0Yzk4yQfduAFsvmpnuHQGZX2qgRmCIMtSva/GETHOO60CBoQH7Fo
+ L67VHNT0zi8KljKTGAm1quxHUCOQGB1Y7Cp9mBmi3a22Xj3H2qxWMxRuc+i7/gzWDZYDuSx3Ykn
+ AMistKhA=
+X-Gm-Gg: ASbGncusJbl/KemDfGvd87HZlM+T3IPklt1lh2iA7ECbe6pltjszu9MPKqVkPbedyuO
+ D+WVUKXIYNQySXxFqmiAch+2/BSuGk2osJggJ7Zxuj1DltxhXNyQzDlO7ujpfxU9dL55R9oIl/m
+ rW4cJfRtrjTe7fDvbvlL7C/ne+NHVI1QOnxSzWlAiCKrC65fzKTVYq2maRwO7mfwdjViNzo7Wpj
+ Y4IN5XpPLQ+3rSlWpolMXdfQypnCcX6WP2N2DhDebUL0pZBRgyAoKF7tnfLpXZnAzluLAagt9df
+ wuhvnaoa+euuNs2UOYKX/KbBZM1MBKxPtK5G8yVztQGY+o41JcStBQ8VmIq9i5NPOWJBZD+6Dx5
+ 9slvsG/hk5Npr6EQF0qBFSzLpOi0FW0krRZan
+X-Google-Smtp-Source: AGHT+IE/7BsLb9TONAHrydupa8DFXSIV1OrSggLSDyPpvWjke04D0dS/jXyuRBj9Ay/VLjM8ny9caw==
+X-Received: by 2002:a05:600c:c103:b0:43c:fffc:786c with SMTP id
+ 5b1f17b1804b1-45368787924mr6185275e9.19.1750424859628; 
+ Fri, 20 Jun 2025 06:07:39 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d117c663sm2084326f8f.64.2025.06.20.06.08.13
+ 5b1f17b1804b1-4535eac8edbsm58978705e9.24.2025.06.20.06.07.38
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 06:08:13 -0700 (PDT)
+ Fri, 20 Jun 2025 06:07:39 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
@@ -80,18 +80,18 @@ Cc: Leif Lindholm <leif.lindholm@oss.qualcomm.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Thomas Huth <thuth@redhat.com>, Roman Bolshakov <rbolshakov@ddn.com>,
  John Snow <jsnow@redhat.com>
-Subject: [PATCH v2 11/26] target/arm/hvf: Pass @target_el argument to
- hvf_raise_exception()
-Date: Fri, 20 Jun 2025 15:06:54 +0200
-Message-ID: <20250620130709.31073-12-philmd@linaro.org>
+Subject: [PATCH v2 05/26] target/arm/hvf: Directly re-lock BQL after
+ hv_vcpu_run()
+Date: Fri, 20 Jun 2025 15:06:48 +0200
+Message-ID: <20250620130709.31073-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620130709.31073-1-philmd@linaro.org>
 References: <20250620130709.31073-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,79 +114,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In preparation of raising exceptions at EL2, add the 'target_el'
-argument to hvf_raise_exception().
+Keep bql_unlock() / bql_lock() close.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/arm/hvf/hvf.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ target/arm/hvf/hvf.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 5169bf6e23c..b932134a833 100644
+index c1ed8b510db..ef76dcd28de 100644
 --- a/target/arm/hvf/hvf.c
 +++ b/target/arm/hvf/hvf.c
-@@ -1089,13 +1089,13 @@ void hvf_kick_vcpu_thread(CPUState *cpu)
- }
+@@ -1914,7 +1914,9 @@ int hvf_vcpu_exec(CPUState *cpu)
+     flush_cpu_state(cpu);
  
- static void hvf_raise_exception(CPUState *cpu, uint32_t excp,
--                                uint32_t syndrome)
-+                                uint32_t syndrome, int target_el)
- {
-     ARMCPU *arm_cpu = ARM_CPU(cpu);
-     CPUARMState *env = &arm_cpu->env;
+     bql_unlock();
+-    assert_hvf_ok(hv_vcpu_run(cpu->accel->fd));
++    r = hv_vcpu_run(cpu->accel->fd);
++    bql_lock();
++    assert_hvf_ok(r);
  
-     cpu->exception_index = excp;
--    env->exception.target_el = 1;
-+    env->exception.target_el = target_el;
-     env->exception.syndrome = syndrome;
+     /* handle VMEXIT */
+     uint64_t exit_reason = hvf_exit->reason;
+@@ -1922,7 +1924,6 @@ int hvf_vcpu_exec(CPUState *cpu)
+     uint32_t ec = syn_get_ec(syndrome);
  
-     arm_cpu_do_interrupt(cpu);
-@@ -1454,7 +1454,7 @@ static int hvf_sysreg_read(CPUState *cpu, uint32_t reg, uint64_t *val)
-                                     SYSREG_CRN(reg),
-                                     SYSREG_CRM(reg),
-                                     SYSREG_OP2(reg));
--    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
-+    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
-     return 1;
- }
- 
-@@ -1760,7 +1760,7 @@ static int hvf_sysreg_write(CPUState *cpu, uint32_t reg, uint64_t val)
-                                      SYSREG_CRN(reg),
-                                      SYSREG_CRM(reg),
-                                      SYSREG_OP2(reg));
--    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
-+    hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
-     return 1;
- }
- 
-@@ -1963,7 +1963,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-         if (!hvf_find_sw_breakpoint(cpu, env->pc)) {
-             /* Re-inject into the guest */
-             ret = 0;
--            hvf_raise_exception(cpu, EXCP_BKPT, syn_aa64_bkpt(0));
-+            hvf_raise_exception(cpu, EXCP_BKPT, syn_aa64_bkpt(0), 1);
-         }
-         break;
-     }
-@@ -2074,7 +2074,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-             }
-         } else {
-             trace_hvf_unknown_hvc(env->pc, env->xregs[0]);
--            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
-+            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
-         }
-         break;
-     case EC_AA64_SMC:
-@@ -2089,7 +2089,7 @@ int hvf_vcpu_exec(CPUState *cpu)
-             }
-         } else {
-             trace_hvf_unknown_smc(env->xregs[0]);
--            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized());
-+            hvf_raise_exception(cpu, EXCP_UDEF, syn_uncategorized(), 1);
-         }
-         break;
-     default:
+     ret = 0;
+-    bql_lock();
+     switch (exit_reason) {
+     case HV_EXIT_REASON_EXCEPTION:
+         /* This is the main one, handle below. */
 -- 
 2.49.0
 
