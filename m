@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71F8BC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 22:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA568C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 22:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSk4g-00011C-Va; Fri, 20 Jun 2025 18:19:07 -0400
+	id 1uSk5J-0002Wf-4e; Fri, 20 Jun 2025 18:19:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfZF-0007Uw-TR
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:30:22 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfbr-00080y-69
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:33:03 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfZE-0006GY-BS
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:30:21 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-3a522224582so1032922f8f.3
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:30:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfbm-0006dD-Vu
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:33:01 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-3a589d99963so2076221f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:32:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750440618; x=1751045418; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750440769; x=1751045569; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9GJIXguPnTzHOl7nBNGD6GFgfAgl7y9Fdn3YOIBOtqE=;
- b=nOjA9/nySZw3lp1ogtlv5lGJMK2pOxJ+wO2PDWSA8Q8dB2Z7dmLig+AtXUnhiZWMw4
- C2GMJAMUfQdyE9VaPm5g5dH8ToCjusWniRY6jKDtregwZ7UR5TPztXADBG0+6icN87Rv
- hRmInjyBxSFKs2+Dc3R90zVbLTypCRdk+9n/9jqwbr1xaTYctUjH5/jLwYvZ910w9lpY
- H64C0MwkyPAcEN0PoYV9EnYMCKXbSTw79PHK/3ojKewMWwbpBaT4RVS65eHdOq2a4HRB
- hbwYcRVFMCwtSF2CiIvMlyf6qDxcC4QLM28NppTmR4O8i8irQj7k0YFR8ILfNuwDyrZZ
- o5dg==
+ bh=CQvaTWJ84vGBT7RjC70BH9slhZwXcz3sDRCxnDfuym4=;
+ b=tqUiTsG+Y+p8uYmdgaqZFkEenb5g8RtQvlIcyzhpvRS0uGjTFxF0U31PJzwvLPKwj3
+ SSR0OZS8YY8gBi08n1A8VJwjeBVD9Uys1WxvTNIPN+P4CADevFlIqFmETZHQ6GBvE4SE
+ JihVYaJUQ5abKfZbp6fzPpLJlCCEDUHUlU0GwovhrXpiJY0Ez6tLRNH4gtVW3M9pjmw2
+ Gh1pOsT60oVsiaTiYH72LtmW/RBlGUhXbt0cU0mTs9/wVuJAtDxmZc/VrC9gXABzMLGo
+ AH76Pqrq/3bio9HtL1+OT8vleFPnSKFBhsTag8zAKKuYeHPI8+CQeRTOwlS7qUtYXu50
+ d4uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750440618; x=1751045418;
+ d=1e100.net; s=20230601; t=1750440769; x=1751045569;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=9GJIXguPnTzHOl7nBNGD6GFgfAgl7y9Fdn3YOIBOtqE=;
- b=M++YRUPYRJ2PHZk3HYWm3VFMcdKR0GwXL4NI9oeksRuJvA9yIZrKP6e4k7KH/b2rkM
- cF4atAoDU1Gg8XLzYpcpQHv+YV65MetAspdz5bd8Ec/dbJ9NWz/OVLT31oN9wJW1lw/J
- N6OIzzjkJXOb11FDBGZW4Qj0qIhVDjl77MVWprWyLQ6X4WtLiae2J84G66JOPTDNBoFs
- WDX93IgvI/u+ogOf4b32X7LuwwlWRnd9kB3psHgpyWh3qwfKLVCWccPlGX53P5nSwJ9O
- xc/fr3U0zHBCN4E/V3qPMl+FaODiDoGN2/pdSB6U7zKjdLJLjWUcJwxBO9LgaWtMpXLo
- rwMQ==
-X-Gm-Message-State: AOJu0Yx+ZwN5JguBJ90whCXrAROnW524UJ2QgPnKfbqWsuTLvPTLm/3v
- +cv5W2ZwKCQWewwLK4HjApEhWbMts6QTJAzHyU8u7vxuIBqjnOd6a1lO3rC6cnHojXaXTYAJdJH
- jzTFNpObrIg==
-X-Gm-Gg: ASbGnctlInLYMoyxknJqt55G2n7T8Dz5/F5BkDB4neDY4vdivVBjNJARw7o1tDhKZG9
- cqvzO28rjP3KRn0qC9BpERVtDA089/6PUinIFIcpzR496W0PfgBixl/QCMs//9v46Lg9AyrQet1
- ytwCSii51yoRDldDJmINDkAVf4y0GB4Zp1GmzQiaNb5Swi3vxEC8cvm6KAGKo+NSXoZEpg/AmyP
- i8wBmsTXa+c5by8FhU/+zALFZ3bbPlEbLFXKBksBlFocMGRNx8+V1sBj80YwzzRNi6tt6dfNZ4e
- 5abyPzTBnPXgVtt/duYrRAd5JoDrhxaJNGhPHyUrug1oz45rF2Hx82M1/S2LTGPaIbdQ9MNEJx6
- LV5AvRHjRgn3zXaWocvBDk5+3riluQqB37o8BtvKG91FrwBmNA8Snf5tc
-X-Google-Smtp-Source: AGHT+IH7esC5FlTfsrgIuOltEUjk2uMoyK/Y+9wVx8bn6s//S+uxtC/r1zFtaGfqjtOqhGRy2mRlCQ==
-X-Received: by 2002:a05:6000:288c:b0:3a5:2182:bd11 with SMTP id
- ffacd0b85a97d-3a6d12a24f8mr3110649f8f.20.1750440618558; 
- Fri, 20 Jun 2025 10:30:18 -0700 (PDT)
+ bh=CQvaTWJ84vGBT7RjC70BH9slhZwXcz3sDRCxnDfuym4=;
+ b=Vi5gDtMJA8QWp7egMJH42RrDqTbAETdDRJdgJKj6lfeDrERlqgoCiiSnHWNrZ1izmg
+ 83/npADNJire6JuhjexM8ghyz/R+dcPeTeKQHSBTsQ9OrqfkQeUYFXetO7BJROXWXf63
+ jpxaGvebWTQSLUkIhaGpQ9EsqkHpuKJdPj0RyVaLIHGw2sn3hDjH/totzQGD1zI4gcJJ
+ hwGMM/XYVTwGVgwyTWYlIDWP+Qxw6d7jxnTNDj5+PPUWtkG5fYFBgqynSJNvVvKLfc5p
+ 6f05FGPF1PV9dzM5HHZDzOa7HxnvEUkkesNyNNarNs/iK8pDkqoX7l3LlpFxF3ws4mMp
+ B24A==
+X-Gm-Message-State: AOJu0YxiW4EYu/g+Yw3GXsSaUnIbn4EVzYY9DmK9PfqyM+MEvUxRgu9e
+ BMHKq8HoDHx+bPc5aIH3iOTmYeHaSpgrUqJy6W1PoyJA3TiyE/VGDKh85LcUATL+LgR2T8RDRBs
+ AHwobIaS3xA==
+X-Gm-Gg: ASbGnctDjcAhFSDrkGDeU5IYUF9umEnuyJETDZeN2zUTBePV9TzLAAcsQqOXzhN12Nj
+ DxBI3goplw+A/kMMqFIG6pywumI8+tn4Hb2oPz51fnATEtYDhsMuCadhw33nMZY93Bzl1K5qIW6
+ jDaSSYNp1DQfUb0RT4oDjjvPIwlFoXobuND9s/7mlIlncUrrJ7TPm+0P1U+hX6XIvLnEybJabu4
+ sRAUCiuGvI0Ht4IMzG1f5INIO1Qnr4cU8Eb0DhqluN9KXSQZ4C65oL2i8lDxNohlsWrePvEFJjN
+ eGypaEFqijVedXXffBTjiglhO/GJA8wRX6nDaMGJK2q//x8ovOZMEoM+Y8E6rPEui7wvMnL5XcX
+ hgPM4Pl6SD3P9Re6DT95PEUl5VF2h6z5J0O4V1Fr+W878VUYbhe8VdmqZPvUiezE5FoA=
+X-Google-Smtp-Source: AGHT+IHpbLCkzhf5+PRP07/Tnzc7aYLEqXpHuy1Rebfw9SPzmvwLu0S1fCnqyhlx/gvJ/9R+tcQbbg==
+X-Received: by 2002:a5d:584e:0:b0:3a3:648d:aa84 with SMTP id
+ ffacd0b85a97d-3a6d128a59bmr3488790f8f.5.1750440768626; 
+ Fri, 20 Jun 2025 10:32:48 -0700 (PDT)
 Received: from localhost.localdomain
  (101.red-95-127-63.dynamicip.rima-tde.net. [95.127.63.101])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-453646cb57fsm32104275e9.1.2025.06.20.10.30.15
+ ffacd0b85a97d-3a6d0f1815dsm2551017f8f.28.2025.06.20.10.32.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 10:30:18 -0700 (PDT)
+ Fri, 20 Jun 2025 10:32:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alexander Graf <agraf@csgraf.de>,
@@ -77,18 +77,17 @@ Cc: Alexander Graf <agraf@csgraf.de>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH RESEND 18/42] accel/split: Implement
- synchronize_pre_loadvm()
-Date: Fri, 20 Jun 2025 19:27:26 +0200
-Message-ID: <20250620172751.94231-19-philmd@linaro.org>
+Subject: [RFC PATCH RESEND 34/42] accel/split: Implement get_[vcpu]_stats()
+Date: Fri, 20 Jun 2025 19:27:42 +0200
+Message-ID: <20250620172751.94231-35-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620172751.94231-1-philmd@linaro.org>
 References: <20250620172751.94231-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,31 +112,117 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- accel/split/split-accel-ops.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ accel/split/split-accel.h     |  5 +++++
+ accel/split/split-accel-ops.c | 24 +++++++++++++++++++++++-
+ accel/split/split-all.c       | 16 +++++++++++++++-
+ 3 files changed, 43 insertions(+), 2 deletions(-)
 
+diff --git a/accel/split/split-accel.h b/accel/split/split-accel.h
+index 8a2888507f3..80a19bbb1e5 100644
+--- a/accel/split/split-accel.h
++++ b/accel/split/split-accel.h
+@@ -36,6 +36,11 @@ struct SplitAccelState {
+ 
+     char *hw_name;
+     char *sw_name;
++
++    struct {
++        unsigned transitions; /* number of HW <-> SW transitions */
++        uint64_t exec_count[2]; /* SW:0 HW:1 */
++    } stats;
+ };
+ 
+ struct AccelCPUState {
 diff --git a/accel/split/split-accel-ops.c b/accel/split/split-accel-ops.c
-index 91ed0af2746..746a6a2782d 100644
+index d59e70e0d9b..615faf1d96b 100644
 --- a/accel/split/split-accel-ops.c
 +++ b/accel/split/split-accel-ops.c
-@@ -188,7 +188,16 @@ static void split_synchronize_state(CPUState *cpu)
+@@ -9,6 +9,7 @@
+ #include "qemu/osdep.h"
+ #include "qemu/main-loop.h"
+ #include "qemu/guest-random.h"
++#include "qapi/type-helpers.h"
+ #include "exec/cpu-common.h"
+ #include "exec/cpu-interrupt.h"
+ #include "hw/core/cpu.h"
+@@ -16,6 +17,7 @@
+ #include "system/cpus.h"
+ #include "system/hw_accel.h"
+ #include "system/tcg.h"
++#include "monitor/monitor.h"
+ #include "split-accel.h"
+ #include "trace.h"
  
- static void split_synchronize_pre_loadvm(CPUState *cpu)
+@@ -70,6 +72,7 @@ static void *split_cpu_thread_routine(void *arg)
+                 r = swops->exec_vcpu_thread(cpu);
+                 trace_accel_split_exec_vcpu_thread_sw(r);
+             }
++            sas->stats.exec_count[acs->use_hw]++;
+             switch (r) {
+             case 0:
+                 if (acs->use_hw) {
+@@ -103,6 +106,7 @@ static void *split_cpu_thread_routine(void *arg)
+                 assert(!acs->use_hw);
+                 trace_accel_split_hw_accelerate();
+                 acs->use_hw = true;
++                sas->stats.transitions++;
+                 break;
+             default:
+                 /* Ignore everything else? */
+@@ -314,7 +318,25 @@ static void split_remove_all_breakpoints(CPUState *cpu)
+ 
+ static void split_get_vcpu_stats(CPUState *cpu, GString *buf)
  {
 -    g_assert_not_reached();
 +    SplitAccelState *sas = SPLIT_ACCEL(cpu->accel->accel);
 +    AccelClass *hwc = ACCEL_GET_CLASS(sas->hw);
 +    AccelClass *swc = ACCEL_GET_CLASS(sas->sw);
++    g_autofree char *cpu_model =
++        cpu_model_from_type(object_get_typename(OBJECT(cpu)));
 +
-+    if (hwc->ops->synchronize_pre_loadvm) {
-+        hwc->ops->synchronize_pre_loadvm(cpu);
++    if (cpu->cluster_index != -1) {
++        g_string_append_printf(buf, "CPU#%d@%d: %s\n",
++                               cpu->cpu_index, cpu->cluster_index, cpu_model);
++    } else {
++        g_string_append_printf(buf, "CPU#%d: %s\n",
++                               cpu->cpu_index, cpu_model);
 +    }
-+    if (swc->ops->synchronize_pre_loadvm) {
-+        swc->ops->synchronize_pre_loadvm(cpu);
++    if (hwc->ops->get_vcpu_stats) {
++        hwc->ops->get_vcpu_stats(cpu, buf);
++    }
++    if (swc->ops->get_vcpu_stats) {
++        swc->ops->get_vcpu_stats(cpu, buf);
 +    }
  }
  
- static void split_synchronize_pre_resume(bool step_pending)
+ static void split_accel_ops_class_init(ObjectClass *oc, const void *data)
+diff --git a/accel/split/split-all.c b/accel/split/split-all.c
+index 413954af96c..9e0848db971 100644
+--- a/accel/split/split-all.c
++++ b/accel/split/split-all.c
+@@ -94,7 +94,21 @@ static int split_gdbstub_supported_sstep_flags(AccelState *as)
+ 
+ static void split_get_stats(AccelState *as, GString *buf)
+ {
+-    g_assert_not_reached();
++    SplitAccelState *sas = SPLIT_ACCEL(as);
++    AccelClass *hwc = ACCEL_GET_CLASS(sas->hw);
++    AccelClass *swc = ACCEL_GET_CLASS(sas->sw);
++
++    g_string_append_printf(buf,
++                           "%u transitions, %llu SW and %llu HW executions\n",
++                           sas->stats.transitions,
++                           sas->stats.exec_count[0],
++                           sas->stats.exec_count[1]);
++    if (hwc->get_stats) {
++        hwc->get_stats(as, buf);
++    }
++    if (swc->get_stats) {
++        swc->get_stats(as, buf);
++    }
+ }
+ 
+ static char *split_get_hw(Object *obj, Error **errp)
 -- 
 2.49.0
 
