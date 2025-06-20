@@ -4,57 +4,208 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4A2C7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 03:31:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABB2DC7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 04:06:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSSSl-0002Zv-Dl; Thu, 19 Jun 2025 23:30:47 -0400
+	id 1uST0X-0000MQ-7S; Fri, 20 Jun 2025 00:05:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1uSSSg-0002ZB-QU; Thu, 19 Jun 2025 23:30:43 -0400
-Received: from mxhk.zte.com.cn ([160.30.148.35])
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uST0R-0000LP-GZ
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 00:05:38 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1uSSSe-0005dS-3U; Thu, 19 Jun 2025 23:30:42 -0400
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4bNjfZ6GNLz8R04B;
- Fri, 20 Jun 2025 11:30:30 +0800 (CST)
-Received: from xaxapp05.zte.com.cn ([10.99.98.109])
- by mse-fl2.zte.com.cn with SMTP id 55K3U8OD066125;
- Fri, 20 Jun 2025 11:30:08 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp04[null]) by mapi (Zmail) with MAPI id mid32;
- Fri, 20 Jun 2025 11:30:09 +0800 (CST)
-Date: Fri, 20 Jun 2025 11:30:09 +0800 (CST)
-X-Zmail-TransId: 2afb6854d5c1ffffffffe81-9b369
-X-Mailer: Zmail v1.0
-Message-ID: <202506201130099861lTkD839Hh6oko8Jo2W2H@zte.com.cn>
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
- <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
- <zhiwei_liu@linux.alibaba.com>, <sunilvl@ventanamicro.com>,
- <bjorn@rivosinc.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: =?UTF-8?B?W1BBVENIIHYyXSBody9yaXNjdi92aXJ0OiBBZGQgYWNwaSBnZWQgYW5kIHBvd2VyZG93biBzdXBwb3J0?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 55K3U8OD066125
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 6854D5D6.001/4bNjfZ6GNLz8R04B
-Received-SPF: pass client-ip=160.30.148.35;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1uST0P-0000qK-07
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 00:05:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1750392333; x=1781928333;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=i8mnhtmun4LgBYtg4G5jJRalFU6uLlokvs58dDApbiI=;
+ b=e3iRITne8gS+KAOPmwSZ9CLAvWTGjEDfU+GMQN3BDccfupYXfthg8DuP
+ 7TiIMFIZMDKHLfPGf5CwJDcMoCuvE0vF2XIEp5y6E0oVgbeDz6Z2KqU6K
+ uKGCiKgmcvyzgGMGCBwiKiUHUHBAjD9s0276hMOUSKhqeUfSW5iNmtnJ9
+ /C36pR2L1JjJAVEvbEKj8EpDUqJnOgR7h9ZO47jlZLcfgugED/r++c/A+
+ Yjp7jPK2O78+QNjQshWoH/tq+ggCPmnScq3YcxH9dTAxSB4j3v9Idgapx
+ l8wcSTlWj+1siJGG2xREJbepojPukMHWVcBlw57nLZfmdtYBs1Q+xEY2D g==;
+X-CSE-ConnectionGUID: xAnq2lDuT3GZ3QsFiLYm8Q==
+X-CSE-MsgGUID: Wk1QJOj9SCqo8byInb6aFg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11469"; a="56444847"
+X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="56444847"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jun 2025 21:05:27 -0700
+X-CSE-ConnectionGUID: lZPuPtc4QU+8CUb5vBLWMQ==
+X-CSE-MsgGUID: CXTxSOoyTs2Gz00MsIEFug==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.16,250,1744095600"; d="scan'208";a="188028626"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa001.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 19 Jun 2025 21:05:27 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Thu, 19 Jun 2025 21:05:26 -0700
+Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25 via Frontend Transport; Thu, 19 Jun 2025 21:05:26 -0700
+Received: from NAM10-BN7-obe.outbound.protection.outlook.com (40.107.92.56) by
+ edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.25; Thu, 19 Jun 2025 21:05:26 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=yLiUK4YVG7ZBpI8Chr0jGUkjnfqe7itYujFRXrF54yNKumsBz1eI2xjQDBQn4ehbve4z9JSLwhFfbtu9N3dqnpznjo9o3GoJBkUkfCVxjRmHfiGPTHg4yju4Tz24ybZRu2OTWKDMtRSYzgozT2BL3u4HI+iGfCbHaS9PSJzOmJL/tczVnsChXZgU2psBb8iBovMMW771AtrUzJqgl3Dpkf61FPiEi4kDGf0Jev1RVhjHX+hqfrCwLJraOwPT5nDNA8IPdMrkb8a7SBoiHExw5n+yqKETNbP3zDF4+E7C95KokThCX2oPD8R7N5AsI7VqSAAEhDjs0rAEePAjWRIM7A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=CNvLVClLGZ21D0gKpRYoymNPqlC7Qyg3eRd7GZK+PjE=;
+ b=CoiU0l7q81o4IG5BQuwKNM6d//xGjfyyNRnIRlWXbX+vENOL5Vq4itB+b6Lwa+w0FU8um/05UtZMY4f/mkvfmsueySlFa6m6GD7N5JmXE9kSQhtJgnaqzmIlOC18Et41cd0ZEoIwfH0T8+7ZSV3Eu/WKykShgLWON4465kSRrdLZ7h2KCtwC0mEd08uEUzC+LfTjG8zdkP0OB3q4uFGxgKqNEP8TcOk/Hn30ya2zBZnOmg6BKvDgYokN3eMxOJh0pTpiRE7EjXaHkhgYKt/wMoF9TVzKZnZf4ai/jtZEr/D0LfLIahzkgze9vyYJqE/MONgF7svImZHN4d/cYFkNNw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ BN9PR11MB5289.namprd11.prod.outlook.com (2603:10b6:408:136::10) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.8857.23; Fri, 20 Jun
+ 2025 04:04:55 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::3225:d39b:ca64:ab95%4]) with mapi id 15.20.8835.034; Fri, 20 Jun 2025
+ 04:04:55 +0000
+Message-ID: <b890b7f4-8765-4f44-9334-8a14178a498f@intel.com>
+Date: Fri, 20 Jun 2025 12:04:45 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v7 3/5] memory: Unify the definiton of ReplayRamPopulate()
+ and ReplayRamDiscard()
+To: Peter Xu <peterx@redhat.com>
+CC: David Hildenbrand <david@redhat.com>, Alexey Kardashevskiy <aik@amd.com>, 
+ Gupta Pankaj <pankaj.gupta@amd.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Michael Roth
+ <michael.roth@amd.com>, <qemu-devel@nongnu.org>, <kvm@vger.kernel.org>,
+ Williams Dan J <dan.j.williams@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Baolu Lu <baolu.lu@linux.intel.com>, Gao Chao <chao.gao@intel.com>, Xu Yilun
+ <yilun.xu@intel.com>, Li Xiaoyao <xiaoyao.li@intel.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, Alex Williamson
+ <alex.williamson@redhat.com>
+References: <20250612082747.51539-1-chenyi.qiang@intel.com>
+ <20250612082747.51539-4-chenyi.qiang@intel.com>
+ <0de41d54-31da-466c-a6bb-f45ff919ced5@intel.com> <aFQe1NcMSyCTiDoF@x1.local>
+Content-Language: en-US
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+In-Reply-To: <aFQe1NcMSyCTiDoF@x1.local>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2P153CA0004.APCP153.PROD.OUTLOOK.COM
+ (2603:1096:4:140::23) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|BN9PR11MB5289:EE_
+X-MS-Office365-Filtering-Correlation-Id: e92b2120-74ce-41d1-c74d-08ddafaf9d69
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;ARA:13230040|376014|7416014|366016|1800799024;
+X-Microsoft-Antispam-Message-Info: =?utf-8?B?YkVWOWJFNytnN0Jsd3JBKzJOQkRLcDNFUmlRem9PSUY0M01TVmV6Nnc4YmRt?=
+ =?utf-8?B?UXN6KzlhL3JyQWVZNHZvdWNYdE5EenBLS1Z6eFJlNnFQS0p1NGtyWTM3UzN3?=
+ =?utf-8?B?dkhPZGtZTEErTk5LSlRuY1l5N1ZtVDJBdGpzalhzTThWeXJyRDFDM0FHYVB5?=
+ =?utf-8?B?TUQ4S2NtNmM2dTZNbm9xREJpUXhnK2VFNDdjbG8zSDBLVFBGOWVlRWhLVWJj?=
+ =?utf-8?B?SUF6MWl6NzUrczV3NEp4OE8yQkwwalA1SU05c29wR01Pc242MFh6a2JiM3lC?=
+ =?utf-8?B?YVo4RUpkc1M2THpRNHZzdHh2eHhwQjlmK3RCUFdwdWxzRjlSSXZ2c3NyT3Y2?=
+ =?utf-8?B?OCtSeTJRSmk0VUI4ank3TGluQXRUaDAvLzROTFNURHRQZmlWVHlYRndNMXlY?=
+ =?utf-8?B?QmpUeTRkb0hNZVhJK0tuUlpUNXc1OE1hUDRYazBTdjJmbHRlN3ZNNEpWbmc0?=
+ =?utf-8?B?M295Q2xkOXgvc1NHdldHUmNCZ3pTQmp0SkhEbWV2Mk95Sk9tVVpadk43d0Mv?=
+ =?utf-8?B?bW1iY0tnOEU4cGYrUHI1dTlRM3RXWC9OSFVrSDVhZnEyKytaNTMyNllqWHZQ?=
+ =?utf-8?B?WE1QWDFQKzY3cXJwaGIrUmVTbUpZVXMvWmp0SUNmM3pRK1hZMnJCZjVsZ3M5?=
+ =?utf-8?B?WmFXYlJlS0ZmNS80MlpDRUtXM0pGTXd2L2t0QlNPcjBSdi8yL3B0ZnFkcjBk?=
+ =?utf-8?B?d2xRenhNTmplYzEzb3dITVBJd3huWlRqb1BhSnRvYzMyQWUwbEFPL1UwdnFH?=
+ =?utf-8?B?OTJiZUx0QlV0WXZSNEVUSk5yeWhmdTFnZkszRU5pOXcyTkgzaEdFODNhekY4?=
+ =?utf-8?B?UkN6dHIyWDk1S1c4RHlXbzdoTExiaEpDbDN6ZElyWlhUVDZ1bWgwSzFUUE1L?=
+ =?utf-8?B?VWlMWWVnS2Jvajc3eExHV2FvVmhtMnRMR2lrUWEvSzh3L21TT0FrNndUekZr?=
+ =?utf-8?B?S0txVEh4WTQ1UHJudVdaandFczMrZE5LVTBJVUY0M0RoNEN5Ti9kMEVGcU13?=
+ =?utf-8?B?cER1dFdVTHJTdG9CNWZScHlsdWNCVEhpbVFnL05TSWhnbTlydnRvMWw4bnlR?=
+ =?utf-8?B?UkVYSmNwRDlKbHZlcFZuUDd6bVdUN25MRzNLNjloWUxmbWJKU3ZNMk5HbUdG?=
+ =?utf-8?B?dnZieUJLRjY2V1I2UkVLenU0THNBaUY0YVl4TUk0VEpMY1pmNmttL28zT0Z6?=
+ =?utf-8?B?alp6SFB3dTczWW85UTZEMjg3Y1hLTldUWXZqOGU4anBwQWZMRGpOYmkwNkJy?=
+ =?utf-8?B?N2x5bVpkWFZzRC9Scjd6QUN1dDB3ZGJzMHJ5N3dZdHV1M3QyNUdkdW1CYkk3?=
+ =?utf-8?B?NW4vWGN5QzJTd0dnaDBaYWdXMHlKenZSdW5XaklMZEVlMzF5NTd4TU0wY3JF?=
+ =?utf-8?B?R0t5YWJYZFdYMkhNUFBHdnh1MXcwWXRMbTNrYmhjQ1ZYT0JkOEhyZGdEbzdv?=
+ =?utf-8?B?bGpEZkEzdDdXb2ZWd01CWXYzSWhWZU5IMTZJNjVoTDU0cjZCc0sweDFWbjVE?=
+ =?utf-8?B?dmZxMUY1bkd0WWxtWkpaUjMwbFlEZWpza2JyVDN2ZGp3QjNQY2ZzVlBDaDZw?=
+ =?utf-8?B?dzdwRHVpa1Y2cTVNQ25iTExwT21zL203ZTB4eHpwazE5VGFxV1VacHdab01V?=
+ =?utf-8?B?enZlWWVhdTd4ZlJ2a1RKSGNQb0taSURQelFndjZDS21lREgweWdINU1TWnE0?=
+ =?utf-8?B?eHJUcy9yNGxUdmMxOXZBK2RxR2p3Q0d4Y1BSa0crUTZ2WWMvai85V2U2alU3?=
+ =?utf-8?B?SUlwS25nc29QWVJCL2h4VkhBTDdSckNBSkNVbFIrRTQ1MTErOElBNFhFVndR?=
+ =?utf-8?B?NEp5TGNMQmNCV0NEdU51aEFXbFhoNTZmNnlJSE1iK3YxVkROWnBhbW16RHBh?=
+ =?utf-8?B?VjQwbkdoSFBQNkwyM21raUxlR1VSRU43b0V0WVA2ejZwcGRkQjVjUHU2RHBy?=
+ =?utf-8?Q?dqf4vEute3VZw1BYPzNJOB3vrBM4u+Rf?=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024); DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Y3AyRnFleGZwTC9lZGZxZkx5YllZUnlTd1hkejlQSkFFdzVrNkppL0o0c0lI?=
+ =?utf-8?B?bkdBejZ1ODRQMGwxN05kNEVxNnFmK1g2UEFMWG9PN2h5VE41d0gxcVhINzZz?=
+ =?utf-8?B?Ym1HR0dQMUYxK2pWQWFYa1VIUlFDZW5TV1daMlUwbXBIdmVlQWMzQVR5T3ZG?=
+ =?utf-8?B?QW5NaURSWmNoazR1Wm8vL1RHUk9KUXZsQ253eDhIeEdrdzBsQTZnR1NvVmNq?=
+ =?utf-8?B?VkpNR0UxMFBEQWQ1a1dGUnRWalhjRUo3MzRDRUR3WjNhOWdZZmFHeTdNY1lZ?=
+ =?utf-8?B?UEdWdDRnM3NGb0xCbnBYMjdYRUkvUmgrWHl6c2doWXBwSVo2Rk9GM0RaTGpo?=
+ =?utf-8?B?WWRGN2NpMlZYSTd3WXI5OGZ6UDZYY2wxRVBNcU90Yk9JZG9EdmFlakVtY0dK?=
+ =?utf-8?B?dDBhQWVrWE9JeUNnQ0ZnN3ZPQ2dFNDlhUHdlSUhEYTV3WUtFeWRjVUZ3YVho?=
+ =?utf-8?B?Q1ZHbHQybzNBRnBWVzA1L21NMWNiNFJxWGVpVTJBelY1MXl2c1dQRG9IeFF5?=
+ =?utf-8?B?MTVyRkZlenpPNm5XNHFTVUhpZlNZQmV6cnpCZGxkY3FwUkZzWTlxaVIvcVoz?=
+ =?utf-8?B?VmgzcFJaQXNLUGZjcDhsc3FWblRkVmlGNldnN0xEa3lSYXZJYWNneXV2Z05P?=
+ =?utf-8?B?YlQxbHFoQXQ5ajd1MjlMaytaZ2NVYVkxUUU2ZEJId1Jsdk1VazdlVXljOWhP?=
+ =?utf-8?B?UEZkZTVQcFlVamxaVytsZ2NsMUZCTGVIMHNXWlhBelhWbHo0OWsrSzRSNi9l?=
+ =?utf-8?B?bVpsekdiQmZnVkZ2VWRWQUFvdFpGbUlHMGVGNVY4UXB5R21GQjc5NmpWalU0?=
+ =?utf-8?B?NnhlK00vRE16b2RyTTJBdmd4V3V5Rk93VjBiMjNDckVOWUZzWTYwMnkvdUY0?=
+ =?utf-8?B?OGZTU3VEWG44aVI2OFZlZFVCLzU4TGhJRjJPT3lpajUxdnpyeEVsRzBRT0Vp?=
+ =?utf-8?B?Z0hUNHMwLzBKMjIwbTltSnl4aXB3MkgvZ3VGOGkvczJuT0EvRDBFczZMdnQ3?=
+ =?utf-8?B?UkF2bVpuSVlaWGJsdE8vMWRvcGkzVjY4dGN3ODV4V0haeTlJZDRMWm9zbmR2?=
+ =?utf-8?B?ak5LZEZFWmJkb1g0RTRNMzdaTVczbTFML05hbHJIV29keU5uR0JmLzltL1di?=
+ =?utf-8?B?alRjLzI4VnkxQjZ0Vzcvc3Axc3gwN2xrZHdkdFBOa1ZTbmtIajhLYVRkTnlG?=
+ =?utf-8?B?ZjRHaUUvUXhpdnlyVGc2VWgyNHArWW5QK0lYVmVsT3BQZHJkM2daK3N0MHZE?=
+ =?utf-8?B?NEhQNG8xK2Vib1BheitxTi9vVjNYNkRGVDN5QlR5Yjc2UHErK0ttVExEd255?=
+ =?utf-8?B?di85ODl3a0xjVGVVTXVIeUgyNFY2d25wVUFybW5BOFFHNVRiVkhFaEU0dXNT?=
+ =?utf-8?B?bXFHREsyRjJGWXdFak5EaGkzWDVmZExmWWRUeEVNTHdHdElDb2s1RjNJR0pD?=
+ =?utf-8?B?aG5GQTkwYXRQdXkwVHBHeG5FbDNsR1BWTDErS2lmc09YdGxQUVM4NzVuUC9l?=
+ =?utf-8?B?ZTBld2UrY2JJWEJudEcxUUJ5TldGa2FRamJTUGtlREcrMDJSOGdzZEVQR2xS?=
+ =?utf-8?B?UlVlMWFXa2FvcEZqcW1Ec1VKcFYxSDk4eGx5UHhXaDN5TGJ4MlMrR1BGTzZQ?=
+ =?utf-8?B?bDVVR1ppaGtZbnpIRzBZSjU0cUhmR1pVYU9ibHZTVmdaL2s1RlNzbVlqaFBG?=
+ =?utf-8?B?cEZwYVZDUGd2K1dmNlpzTVhINklXZnE1MFg4WS9HeWFzNXZlamlON3pFamhm?=
+ =?utf-8?B?WVFJQmZZTERRaVd5Wkg5ZWhhZm9GanNRTTZTOGhmQkx4a3dlVi9RRnl0Qzll?=
+ =?utf-8?B?TlQzeFNGSkRqb1JUeUc4U2l0Z2FHaVJ4WXc3ek1jOFdLbzB6SFlITXk1cjVU?=
+ =?utf-8?B?SGxjRDdnVW1oelUwSzNvQS90bi8wZTlHaGJiUjVDZDJlbTIxeWgzWWlxandM?=
+ =?utf-8?B?RHZhdU12dy90ODZZcTdXTGZDbHZJcjNnR1VJVzJrUGg1WktFS3JnWXBvdi9k?=
+ =?utf-8?B?UnhYNmxiWWlJeHNIb0tic2I4Lzc2YitYY0kxbVk0NlNmZC8rcWlMb0s0eDZk?=
+ =?utf-8?B?VGNORURSanQ0SE5yQ1ZOUkZ1MFNBcnllUCtkY2JraXNKNVhKZFVTajJaRWQ5?=
+ =?utf-8?B?YUgyaTdLR3IyVFZmUjJnNHNWZE81ZGorRG40RFRFWlNsQTFLTi9LbmFEQmxW?=
+ =?utf-8?B?eXc9PQ==?=
+X-MS-Exchange-CrossTenant-Network-Message-Id: e92b2120-74ce-41d1-c74d-08ddafaf9d69
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 20 Jun 2025 04:04:55.5509 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: k2yE9mMMSgr3UBLfn29/btZH3mKZFiqgtK8vlD40kPgou5graw9o13xnP4ZCdpxMi2ZprZNSMaBhINauycPEfg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR11MB5289
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.14;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -62
+X-Spam_score: -6.3
+X-Spam_bar: ------
+X-Spam_report: (-6.3 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-1.897,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,176 +221,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-This adds powerdown support by implementing the ACPI GED.
 
-Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
-Co-authored-by: Björn Töpel <bjorn@rivosinc.com>
+On 6/19/2025 10:29 PM, Peter Xu wrote:
+> On Thu, Jun 19, 2025 at 11:06:46AM +0800, Chenyi Qiang wrote:
+>> To fix the build error with --enable-docs configuration, Add the below fixup
+> 
+> Thanks, this works for me.
+> 
+> Though I just noticed it has more than the doc issue.. please see:
+> 
+> https://gitlab.com/peterx/qemu/-/jobs/10403528070
 
----
-Changes in v2:
-- Unwrappered acpi_dsdt_add_ged function
-- Modified base address of VIRT_ACPI_GED
-- Added conditions for function calls
-- Adjusted code formatting
+Thanks for reporting. I didn't try the different configure combination..
 
- hw/riscv/Kconfig           |  1 +
- hw/riscv/virt-acpi-build.c | 10 ++++++++++
- hw/riscv/virt.c            | 35 +++++++++++++++++++++++++++++++++++
- include/hw/riscv/virt.h    |  4 ++++
- 4 files changed, 50 insertions(+)
+> 
+> So 6 failures (and you can ignore the rust warnings):
+> 
+> https://gitlab.com/peterx/qemu/-/pipelines/1878653850
+> 
+> WASM complains a bit more than others, but worth double check from your
+> side too.
 
-diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
-index e6a0ac1fa1..16837e0e8f 100644
---- a/hw/riscv/Kconfig
-+++ b/hw/riscv/Kconfig
-@@ -68,6 +68,7 @@ config RISCV_VIRT
-     select PLATFORM_BUS
-     select ACPI
-     select ACPI_PCI
-+    select ACPI_HW_REDUCED
+Most of the warnings are not from this series. I think they can be ignored.
+I have sent a fixup for patch #4. I think it can resolve those 6 failures
+which report the same error.
 
- config SHAKTI_C
-     bool
-diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-index 8b5683dbde..163533f9b8 100644
---- a/hw/riscv/virt-acpi-build.c
-+++ b/hw/riscv/virt-acpi-build.c
-@@ -27,6 +27,7 @@
- #include "hw/acpi/acpi-defs.h"
- #include "hw/acpi/acpi.h"
- #include "hw/acpi/aml-build.h"
-+#include "hw/acpi/generic_event_device.h"
- #include "hw/acpi/pci.h"
- #include "hw/acpi/utils.h"
- #include "hw/intc/riscv_aclint.h"
-@@ -498,6 +499,15 @@ static void build_dsdt(GArray *table_data,
-         acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
-     }
+> 
+> Thanks,
+> 
 
-+    if (s->acpi_ged) {
-+        build_ged_aml(scope, "\\_SB."GED_DEVICE,
-+                      HOTPLUG_HANDLER(s->acpi_ged),
-+                      ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
-+                      s->memmap[VIRT_ACPI_GED].base);
-+    }
-+
-+    acpi_dsdt_add_power_button(scope);
-+
-     aml_append(dsdt, scope);
-
-     /* copy AML table into ACPI tables blob and patch header there */
-diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-index cf280a92e5..3e95a49c64 100644
---- a/hw/riscv/virt.c
-+++ b/hw/riscv/virt.c
-@@ -51,10 +51,12 @@
- #include "system/kvm.h"
- #include "system/tpm.h"
- #include "system/qtest.h"
-+#include "system/runstate.h"
- #include "hw/pci/pci.h"
- #include "hw/pci-host/gpex.h"
- #include "hw/display/ramfb.h"
- #include "hw/acpi/aml-build.h"
-+#include "hw/acpi/generic_event_device.h"
- #include "qapi/qapi-visit-common.h"
- #include "hw/virtio/virtio-iommu.h"
- #include "hw/uefi/var-service-api.h"
-@@ -95,6 +97,7 @@ static const MemMapEntry virt_memmap[] = {
-     [VIRT_UART0] =        { 0x10000000,         0x100 },
-     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
-     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
-+    [VIRT_ACPI_GED] =     { 0x10101000, ACPI_GED_EVT_SEL_LEN },
-     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
-     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
-     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
-@@ -1272,6 +1275,22 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
-     return dev;
- }
-
-+static DeviceState *create_acpi_ged(RISCVVirtState *s, DeviceState *irqchip)
-+{
-+    DeviceState *dev;
-+    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
-+
-+    dev = qdev_new(TYPE_ACPI_GED);
-+    qdev_prop_set_uint32(dev, "ged-event", event);
-+    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
-+
-+    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].base);
-+    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
-+                       qdev_get_gpio_in(irqchip, ACPI_GED_IRQ));
-+
-+    return dev;
-+}
-+
- static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
- {
-     FWCfgState *fw_cfg;
-@@ -1430,6 +1449,14 @@ static void virt_build_smbios(RISCVVirtState *s)
-     }
- }
-
-+static void virt_powerdown_req(Notifier *notifier, void *opaque)
-+{
-+    RISCVVirtState *s;
-+
-+    s = container_of(notifier, RISCVVirtState, powerdown_notifier);
-+    acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
-+}
-+
- static void virt_machine_done(Notifier *notifier, void *data)
- {
-     RISCVVirtState *s = container_of(notifier, RISCVVirtState,
-@@ -1703,6 +1730,11 @@ static void virt_machine_init(MachineState *machine)
-
-     create_platform_bus(s, mmio_irqchip);
-
-+    /* acpi ged */
-+    if (virt_is_acpi_enabled()) {
-+        s->acpi_ged = create_acpi_ged(s, mmio_irqchip);
-+    }
-+
-     serial_mm_init(system_memory, s->memmap[VIRT_UART0].base,
-         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
-         serial_hd(0), DEVICE_LITTLE_ENDIAN);
-@@ -1744,6 +1776,9 @@ static void virt_machine_init(MachineState *machine)
-         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
-     }
-
-+    s->powerdown_notifier.notify = virt_powerdown_req;
-+    qemu_register_powerdown_notifier(&s->powerdown_notifier);
-+
-     s->machine_done.notify = virt_machine_done;
-     qemu_add_machine_init_done_notifier(&s->machine_done);
- }
-diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-index 7b4c2c8b7d..9422b45d0c 100644
---- a/include/hw/riscv/virt.h
-+++ b/include/hw/riscv/virt.h
-@@ -47,6 +47,8 @@ struct RISCVVirtState {
-
-     /*< public >*/
-     Notifier machine_done;
-+    Notifier powerdown_notifier;
-+    DeviceState *acpi_ged;
-     DeviceState *platform_bus_dev;
-     RISCVHartArrayState soc[VIRT_SOCKETS_MAX];
-     DeviceState *irqchip[VIRT_SOCKETS_MAX];
-@@ -88,9 +90,11 @@ enum {
-     VIRT_PLATFORM_BUS,
-     VIRT_PCIE_ECAM,
-     VIRT_IOMMU_SYS,
-+    VIRT_ACPI_GED,
- };
-
- enum {
-+    ACPI_GED_IRQ = 9,
-     UART0_IRQ = 10,
-     RTC_IRQ = 11,
-     VIRTIO_IRQ = 1, /* 1 to 8 */
--- 
-2.27.0
 
