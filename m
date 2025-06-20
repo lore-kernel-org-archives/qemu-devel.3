@@ -4,69 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E930DC7115B
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 03:11:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E4A2C7115B
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 03:31:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSS9N-0008Ic-ON; Thu, 19 Jun 2025 23:10:45 -0400
+	id 1uSSSl-0002Zv-Dl; Thu, 19 Jun 2025 23:30:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1uSS9J-0008G8-VT
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 23:10:41 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1uSS9G-0002hJ-R5
- for qemu-devel@nongnu.org; Thu, 19 Jun 2025 23:10:41 -0400
-Received: from loongson.cn (unknown [10.20.42.239])
- by gateway (Coremail) with SMTP id _____8BxJHAn0VRobCoaAQ--.18710S3;
- Fri, 20 Jun 2025 11:10:31 +0800 (CST)
-Received: from [10.20.42.239] (unknown [10.20.42.239])
- by front1 (Coremail) with SMTP id qMiowMCxbsUk0VRo3uMhAQ--.41504S3;
- Fri, 20 Jun 2025 11:10:30 +0800 (CST)
-Subject: Re: [PULL 00/14] loongarch-to-apply queue
-To: Stefan Hajnoczi <stefanha@gmail.com>
-Cc: qemu-devel@nongnu.org
-References: <20250619082817.1517996-1-gaosong@loongson.cn>
- <CAJSP0QWsFx8qcR4k4nb2fBH0Q1aFWwCUU4JEs+NFCGHKhSphMA@mail.gmail.com>
-From: gaosong <gaosong@loongson.cn>
-Message-ID: <b9f57a29-b13b-cd94-dc92-bc9ea45cc077@loongson.cn>
-Date: Fri, 20 Jun 2025 11:13:22 +0800
-User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
-MIME-Version: 1.0
-In-Reply-To: <CAJSP0QWsFx8qcR4k4nb2fBH0Q1aFWwCUU4JEs+NFCGHKhSphMA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-CM-TRANSID: qMiowMCxbsUk0VRo3uMhAQ--.41504S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBj93XoW7tr4fGF48GrWfuw17XF47Awc_yoW8Wr13pF
- 1fW3WfWFyDAF4UAF4FyF4kWF17twn8tF17Jr98t348GFZ8Zr1Igry3ta1xK3sFvr9Ygr13
- Zrn7WFWIkF1ktagCm3ZEXasCq-sJn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7ZEXa
- sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
- 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
- IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
- e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Gr0_Xr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
- 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVWxJr0_GcWl84ACjcxK6I8E87Iv6xkF7I0E14v2
- 6rxl6s0DM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
- 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r1j6r18McIj6I8E87Iv67AK
- xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
- AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
- 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_Jrv_JF1lIx
- kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
- wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
- 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU8czVUUU
- UUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -34
-X-Spam_score: -3.5
-X-Spam_bar: ---
-X-Spam_report: (-3.5 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-1.648,
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1uSSSg-0002ZB-QU; Thu, 19 Jun 2025 23:30:43 -0400
+Received: from mxhk.zte.com.cn ([160.30.148.35])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
+ id 1uSSSe-0005dS-3U; Thu, 19 Jun 2025 23:30:42 -0400
+Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
+ (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+ (No client certificate requested)
+ by mxhk.zte.com.cn (FangMail) with ESMTPS id 4bNjfZ6GNLz8R04B;
+ Fri, 20 Jun 2025 11:30:30 +0800 (CST)
+Received: from xaxapp05.zte.com.cn ([10.99.98.109])
+ by mse-fl2.zte.com.cn with SMTP id 55K3U8OD066125;
+ Fri, 20 Jun 2025 11:30:08 +0800 (+08)
+ (envelope-from liu.xuemei1@zte.com.cn)
+Received: from mapi (xaxapp04[null]) by mapi (Zmail) with MAPI id mid32;
+ Fri, 20 Jun 2025 11:30:09 +0800 (CST)
+Date: Fri, 20 Jun 2025 11:30:09 +0800 (CST)
+X-Zmail-TransId: 2afb6854d5c1ffffffffe81-9b369
+X-Mailer: Zmail v1.0
+Message-ID: <202506201130099861lTkD839Hh6oko8Jo2W2H@zte.com.cn>
+Mime-Version: 1.0
+From: <liu.xuemei1@zte.com.cn>
+To: <pbonzini@redhat.com>, <palmer@dabbelt.com>, <alistair.francis@wdc.com>,
+ <liwei1518@gmail.com>, <dbarboza@ventanamicro.com>,
+ <zhiwei_liu@linux.alibaba.com>, <sunilvl@ventanamicro.com>,
+ <bjorn@rivosinc.com>
+Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: =?UTF-8?B?W1BBVENIIHYyXSBody9yaXNjdi92aXJ0OiBBZGQgYWNwaSBnZWQgYW5kIHBvd2VyZG93biBzdXBwb3J0?=
+Content-Type: text/plain;
+	charset="UTF-8"
+X-MAIL: mse-fl2.zte.com.cn 55K3U8OD066125
+X-Fangmail-Anti-Spam-Filtered: true
+X-Fangmail-MID-QID: 6854D5D6.001/4bNjfZ6GNLz8R04B
+Received-SPF: pass client-ip=160.30.148.35;
+ envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, CTE_8BIT_MISMATCH=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,47 +70,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-在 2025/6/20 上午4:39, Stefan Hajnoczi 写道:
-> gpg:                using RSA key CA473C44D6A09C189A193FCD452B96852B268216
-> gpg: Can't check signature: No public key
->
-> Why has the GPG key changed? Your previous pull request was signed
-> with key B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF.
->
-> If you would like to change keys, please sign your new key using your
-> old key and upload the new key to the key servers again. That way I
-> know that the new key really belongs to you.
-Hi, Stefan
+From: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-I had  sign  new key using old key and send to the key server again
-should I need pull again?
+This adds powerdown support by implementing the ACPI GED.
 
-Thanks.
-Song Gao
+Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
+Co-authored-by: Björn Töpel <bjorn@rivosinc.com>
 
-gpg --list-signatures
-/home/gaosong/.gnupg/pubring.kbx
---------------------------------
-pub   rsa1024 2022-09-16 [SC]
-       B8FF1DA0D2FDCB2DA09C6C2C40A2FFF239263EDF
-uid           [ 未知 ] Song Gao <m17746591750@163.com>
-sig 3        40A2FFF239263EDF 2022-09-16  Song Gao <m17746591750@163.com>
-sig          452B96852B268216 2025-06-20  Song Gao <gaosong@loongson.cn>
+---
+Changes in v2:
+- Unwrappered acpi_dsdt_add_ged function
+- Modified base address of VIRT_ACPI_GED
+- Added conditions for function calls
+- Adjusted code formatting
 
-pub   rsa1024 2022-09-16 [SC]
-       CA473C44D6A09C189A193FCD452B96852B268216
-uid           [ 未知 ] Song Gao <gaosong@loongson.cn>
-sig 3        452B96852B268216 2022-09-16  Song Gao <gaosong@loongson.cn>
-sig          40A2FFF239263EDF 2025-06-20  Song Gao <m17746591750@163.com>
+ hw/riscv/Kconfig           |  1 +
+ hw/riscv/virt-acpi-build.c | 10 ++++++++++
+ hw/riscv/virt.c            | 35 +++++++++++++++++++++++++++++++++++
+ include/hw/riscv/virt.h    |  4 ++++
+ 4 files changed, 50 insertions(+)
 
+diff --git a/hw/riscv/Kconfig b/hw/riscv/Kconfig
+index e6a0ac1fa1..16837e0e8f 100644
+--- a/hw/riscv/Kconfig
++++ b/hw/riscv/Kconfig
+@@ -68,6 +68,7 @@ config RISCV_VIRT
+     select PLATFORM_BUS
+     select ACPI
+     select ACPI_PCI
++    select ACPI_HW_REDUCED
 
-gpg --send-keys CA473C44D6A09C189A193FCD452B96852B268216
-gpg: 正在发送密钥 452B96852B268216 到 hkps://keys.openpgp.org
-gpg --recv-keys CA473C44D6A09C189A193FCD452B96852B268216
-gpg: 密钥 452B96852B268216：“Song Gao <gaosong@loongson.cn>” 未改变
-gpg: 处理的总数：1
-gpg:              未改变：1
+ config SHAKTI_C
+     bool
+diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
+index 8b5683dbde..163533f9b8 100644
+--- a/hw/riscv/virt-acpi-build.c
++++ b/hw/riscv/virt-acpi-build.c
+@@ -27,6 +27,7 @@
+ #include "hw/acpi/acpi-defs.h"
+ #include "hw/acpi/acpi.h"
+ #include "hw/acpi/aml-build.h"
++#include "hw/acpi/generic_event_device.h"
+ #include "hw/acpi/pci.h"
+ #include "hw/acpi/utils.h"
+ #include "hw/intc/riscv_aclint.h"
+@@ -498,6 +499,15 @@ static void build_dsdt(GArray *table_data,
+         acpi_dsdt_add_gpex_host(scope, PCIE_IRQ + VIRT_IRQCHIP_NUM_SOURCES * 2);
+     }
 
++    if (s->acpi_ged) {
++        build_ged_aml(scope, "\\_SB."GED_DEVICE,
++                      HOTPLUG_HANDLER(s->acpi_ged),
++                      ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
++                      s->memmap[VIRT_ACPI_GED].base);
++    }
++
++    acpi_dsdt_add_power_button(scope);
++
+     aml_append(dsdt, scope);
 
+     /* copy AML table into ACPI tables blob and patch header there */
+diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
+index cf280a92e5..3e95a49c64 100644
+--- a/hw/riscv/virt.c
++++ b/hw/riscv/virt.c
+@@ -51,10 +51,12 @@
+ #include "system/kvm.h"
+ #include "system/tpm.h"
+ #include "system/qtest.h"
++#include "system/runstate.h"
+ #include "hw/pci/pci.h"
+ #include "hw/pci-host/gpex.h"
+ #include "hw/display/ramfb.h"
+ #include "hw/acpi/aml-build.h"
++#include "hw/acpi/generic_event_device.h"
+ #include "qapi/qapi-visit-common.h"
+ #include "hw/virtio/virtio-iommu.h"
+ #include "hw/uefi/var-service-api.h"
+@@ -95,6 +97,7 @@ static const MemMapEntry virt_memmap[] = {
+     [VIRT_UART0] =        { 0x10000000,         0x100 },
+     [VIRT_VIRTIO] =       { 0x10001000,        0x1000 },
+     [VIRT_FW_CFG] =       { 0x10100000,          0x18 },
++    [VIRT_ACPI_GED] =     { 0x10101000, ACPI_GED_EVT_SEL_LEN },
+     [VIRT_FLASH] =        { 0x20000000,     0x4000000 },
+     [VIRT_IMSIC_M] =      { 0x24000000, VIRT_IMSIC_MAX_SIZE },
+     [VIRT_IMSIC_S] =      { 0x28000000, VIRT_IMSIC_MAX_SIZE },
+@@ -1272,6 +1275,22 @@ static inline DeviceState *gpex_pcie_init(MemoryRegion *sys_mem,
+     return dev;
+ }
 
++static DeviceState *create_acpi_ged(RISCVVirtState *s, DeviceState *irqchip)
++{
++    DeviceState *dev;
++    uint32_t event = ACPI_GED_PWR_DOWN_EVT;
++
++    dev = qdev_new(TYPE_ACPI_GED);
++    qdev_prop_set_uint32(dev, "ged-event", event);
++    sysbus_realize_and_unref(SYS_BUS_DEVICE(dev), &error_fatal);
++
++    sysbus_mmio_map(SYS_BUS_DEVICE(dev), 0, s->memmap[VIRT_ACPI_GED].base);
++    sysbus_connect_irq(SYS_BUS_DEVICE(dev), 0,
++                       qdev_get_gpio_in(irqchip, ACPI_GED_IRQ));
++
++    return dev;
++}
++
+ static FWCfgState *create_fw_cfg(const MachineState *ms, hwaddr base)
+ {
+     FWCfgState *fw_cfg;
+@@ -1430,6 +1449,14 @@ static void virt_build_smbios(RISCVVirtState *s)
+     }
+ }
+
++static void virt_powerdown_req(Notifier *notifier, void *opaque)
++{
++    RISCVVirtState *s;
++
++    s = container_of(notifier, RISCVVirtState, powerdown_notifier);
++    acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
++}
++
+ static void virt_machine_done(Notifier *notifier, void *data)
+ {
+     RISCVVirtState *s = container_of(notifier, RISCVVirtState,
+@@ -1703,6 +1730,11 @@ static void virt_machine_init(MachineState *machine)
+
+     create_platform_bus(s, mmio_irqchip);
+
++    /* acpi ged */
++    if (virt_is_acpi_enabled()) {
++        s->acpi_ged = create_acpi_ged(s, mmio_irqchip);
++    }
++
+     serial_mm_init(system_memory, s->memmap[VIRT_UART0].base,
+         0, qdev_get_gpio_in(mmio_irqchip, UART0_IRQ), 399193,
+         serial_hd(0), DEVICE_LITTLE_ENDIAN);
+@@ -1744,6 +1776,9 @@ static void virt_machine_init(MachineState *machine)
+         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), &error_fatal);
+     }
+
++    s->powerdown_notifier.notify = virt_powerdown_req;
++    qemu_register_powerdown_notifier(&s->powerdown_notifier);
++
+     s->machine_done.notify = virt_machine_done;
+     qemu_add_machine_init_done_notifier(&s->machine_done);
+ }
+diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
+index 7b4c2c8b7d..9422b45d0c 100644
+--- a/include/hw/riscv/virt.h
++++ b/include/hw/riscv/virt.h
+@@ -47,6 +47,8 @@ struct RISCVVirtState {
+
+     /*< public >*/
+     Notifier machine_done;
++    Notifier powerdown_notifier;
++    DeviceState *acpi_ged;
+     DeviceState *platform_bus_dev;
+     RISCVHartArrayState soc[VIRT_SOCKETS_MAX];
+     DeviceState *irqchip[VIRT_SOCKETS_MAX];
+@@ -88,9 +90,11 @@ enum {
+     VIRT_PLATFORM_BUS,
+     VIRT_PCIE_ECAM,
+     VIRT_IOMMU_SYS,
++    VIRT_ACPI_GED,
+ };
+
+ enum {
++    ACPI_GED_IRQ = 9,
+     UART0_IRQ = 10,
+     RTC_IRQ = 11,
+     VIRTIO_IRQ = 1, /* 1 to 8 */
+-- 
+2.27.0
 
