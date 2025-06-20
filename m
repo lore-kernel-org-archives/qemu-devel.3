@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02CEBC7115C
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 17:16:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05C2CC7115C
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 17:16:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSfK3-0000cA-2j; Fri, 20 Jun 2025 13:14:39 -0400
+	id 1uSfKt-0001fm-5a; Fri, 20 Jun 2025 13:15:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfK0-0000bS-9N
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:14:36 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKT-0001Hw-IR
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:05 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfJy-0004EL-Ju
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:14:36 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-3a52874d593so2023571f8f.0
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:14:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1uSfKR-0004Hd-Ny
+ for qemu-devel@nongnu.org; Fri, 20 Jun 2025 13:15:05 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-453636fa0ceso13437325e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 10:15:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750439673; x=1751044473; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750439702; x=1751044502; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vlBAvJidlTd0lWKONZB4JfLwR/GbdHPA4nQcc8Yttvg=;
- b=BqGK7QmDwCCKMwxQqWD4yRAXMCvOs50aF3s7bA8pE1qWuDifVsLglFLhr5tPHhlAlb
- wQTGdR8s5vl1GL1uy6PQ6l5Dq/3YbbigvWwbZPL5M7xzTHnMHxs7zJy6Dd1/h575I2GN
- f3GvR6Uzjzx5W6D7/5/izeezZoI0lMb2traNoA20bg5Ex/aJ8PWd0wG0ZncBJBxj02tm
- SAcSjU6VHudXyZ65ZCnE5YOXbHQ1rluUzDr/T1i/iD1bHqWBuDbFogPO5wk4CUwuO0c9
- Fp5d9mS6br0gYy+1h2/CILDsx3OZstm6KrBMWg00nnGoPamN2BW74EFGT/qZdGdgfo/V
- y89w==
+ bh=NQF4H7S4J/KumkA9IIMkTsQov5jwGOrtTGEPyYAegEw=;
+ b=Hk7rKxAh2CM0nZKz1kgvmrliotU5/IsSRglmEE8Y7aJihoAuDTER7W3v4LaRD0+hYQ
+ cuiyXsRr9tG2OkWA9p81nf4gvuSGus1CdCdkvo7oEoWtqwWMXkGCO7w0RsAmz1Eocqec
+ eveFa3Y6yAq8Kk4mYYxuyxzQEbdhWXA4l1ku4SDZE2XQJq0L9MFN+5vY5xV6EfWOcPgU
+ BNMvFPfYfP3+JnwMWplIOwnAk5A3zqzSBDQajfLWBs9nXZDcT8StMdjtFAhGa5Hsy4Bt
+ /VkjqtYS+MEowHSNw9zRCGhKite1qlJGDFkEoypa1QXBlA/DNktXY/SDNuMUhXzfrTS4
+ 9l/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750439673; x=1751044473;
+ d=1e100.net; s=20230601; t=1750439702; x=1751044502;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=vlBAvJidlTd0lWKONZB4JfLwR/GbdHPA4nQcc8Yttvg=;
- b=JwCSC3RYa2GO3jp7R1Keyhc6kugzahubfuB2dEXuTnApwGI30d19dku/T/hv6i/TgJ
- kQg+pNYnUrchw3GocHzgEUx2e6nuQUJIBkopmBKqi6MnpaOajhVhObTHCi0mhFAvVUf2
- Bw+R34ROF7SfTbgwwPtV9lbtIatxm6LmWePIxshhAvk3rran3qfWmcyqeuPA0JmVfMo7
- 2GvVOIrjo9PVGLeR8cojf10n19PmltjWcrpN3s4Oh/kjZvwDkNxSlmiUDVU8UGqqOhoj
- CdNQdXg+tNxwCdpnG95g6de8hRR5sh/N7Y5LNLF+YQ8H5e/gqjxh3s+A94gqPVU/uroA
- 4HfA==
-X-Gm-Message-State: AOJu0YzKWdv+R+UayV1TqFloMSxsai5q1ceViBQ5zREAfquNJgGeNgCE
- cZvSHzGyx5kdQdrs26oR689nNEwkxyBwOUNkTsyHvmQzDtEGOBESfnR+vYOXWZm33Bj+qfgn8zW
- p6S+1jtQ=
-X-Gm-Gg: ASbGncvS9ZkoKGfjVhQIASjaBcZAwEjoKBSvP6YAEg3x4DZRWJqVSTh+sz6PfhgarvR
- VkgiTEllOhN9Q0is8qqZpAC6TftsRF21VdwC5i3dP5vowSz61U6OhlCHiC1MD4Z9J0UCD6aJRUt
- OypdXV7rthGbf3wIqvJst3n2dabiaDWnZxUtQGD/3za5pd1LPOBHcflUpX0hluqEM+CLo0X/XTs
- JJB1MVpBPSsOXHvvNJl3bMt0aZC9E7YTW5uLRpUN7pqRyTyYyRLLj2IH/eDgAiGedO+4LYhaWjB
- 7LIbjxz/az9LTeAq4Qaydr/c5waZ8mBJ26J3Mv5yPSn2Hpeh+0DdE7EN8Yf+a/ZgA/dIf3NGS70
- p2Pi487hjI/PfwgskHJ8bNHCH1ooDocbpnqHv
-X-Google-Smtp-Source: AGHT+IG3TuoWXd+fjRa3Qw+J6xlLFzSR5o0eFDsfdGMj05AZ0OinwWxEMzGp4DHqdR84VhgVKrOaZA==
-X-Received: by 2002:a05:6000:2308:b0:3a5:2f23:377d with SMTP id
- ffacd0b85a97d-3a6d1324f04mr2778464f8f.50.1750439672761; 
- Fri, 20 Jun 2025 10:14:32 -0700 (PDT)
+ bh=NQF4H7S4J/KumkA9IIMkTsQov5jwGOrtTGEPyYAegEw=;
+ b=FQdDLwlbYGWPyGPY+T5UxJV8pSHlSCFdZ8r5FtEtBZ+qntjARxM1W1Mn/KrgkZyt5m
+ OFuwYOQfASywzG2uMfzY6527Wr6wVm1tU3MEKf3eYiW/7qtW6F70XTZVAe8AObF/0hCf
+ v0o+ipiNbNYDRaTeoklIfGiBDl34wGfclA3S2meSL4n27tUFjUExBVSCVj5AfhuhX+Me
+ geqhv/IXCPPvJP6LbfrkOjTYz1PdrUDHOEwOhmI9LpWYV1R26ZNZa/wah0he5Q0AYPZf
+ aHI0C6rRhBZwKUJrZ9ylr3mDnmX7nvgisBt4N9bH+RzzDPMZz+U0gSZGddyqrNJI+SBn
+ rk6w==
+X-Gm-Message-State: AOJu0YxXQyHpFIv7Wkmkufyow1TARq/irpdusU8QvUGwSNvYlFmeH8T0
+ 5sW1d1Jwhhi7gBcVqOVL4QpvcDw0O3SAIixghKh2BazfgDHSzBRKPS4Q0jzBX2JHwMLDJ3+TLy8
+ aCfc/TcM=
+X-Gm-Gg: ASbGncsIhVI0NyXqRqRZr8BBzuIn4wVK389XRHKET6g74v7x4RFCZ0L4u32TF2kMq3e
+ +6diPlC0VwYDkKFZ3l0VsvmUiQ6VGKWDyzY/7EcbSy/qNl/r0vvEt20ziOstpuoO2SQCw7QmdHZ
+ qxL0L0dasB41gxu321SRzjVoqlvxC4sNDniXn/bsA6C8+4CLY2z3bhXKFO22r3WzjJLV5V+K12d
+ 7GJwKk8cRe5Rsx7QZrOtRmXdO384DWAfkfyuBo1Wg7FccD3y4cTPkoTV0fExJa8TDlpKMAQ+KrV
+ XsGNT2gg5w4UwSLoeFF3X0hpV9TNh5r4rAE/GsBE8kpNJap9IsBwfMqMDNQV6TJ5+zisloJQObp
+ npi5aV04HF/H+mICxUW+TJIaZ8ZER7F+t9O4OAIrPErIgv3M=
+X-Google-Smtp-Source: AGHT+IGgo7xyMUNzSqjyeGJPvBAGdbsmN3AQw7WpdXo5VOc6+5vhP7P041tYB50GyISJgxzgYobtwA==
+X-Received: by 2002:adf:8b02:0:b0:3a5:8934:4940 with SMTP id
+ ffacd0b85a97d-3a6d1330d62mr2259561f8f.50.1750439701688; 
+ Fri, 20 Jun 2025 10:15:01 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-3a6d0f17c35sm2663454f8f.31.2025.06.20.10.14.31
+ 5b1f17b1804b1-453646fd816sm31376135e9.24.2025.06.20.10.15.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Jun 2025 10:14:31 -0700 (PDT)
+ Fri, 20 Jun 2025 10:15:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
@@ -75,18 +75,17 @@ Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH v2 10/48] accel: Pass AccelState argument to
- gdbstub_supported_sstep_flags()
-Date: Fri, 20 Jun 2025 19:13:03 +0200
-Message-ID: <20250620171342.92678-11-philmd@linaro.org>
+Subject: [RFC PATCH v2 16/48] accel/tcg: Factor tcg_dump_flush_info() out
+Date: Fri, 20 Jun 2025 19:13:09 +0200
+Message-ID: <20250620171342.92678-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.49.0
 In-Reply-To: <20250620171342.92678-1-philmd@linaro.org>
 References: <20250620171342.92678-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,83 +108,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to have AccelClass methods instrospect their state,
-we need to pass AccelState by argument.
-
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/qemu/accel.h      | 2 +-
- accel/accel-common.c      | 2 +-
- accel/hvf/hvf-accel-ops.c | 2 +-
- accel/kvm/kvm-all.c       | 2 +-
- accel/tcg/tcg-all.c       | 2 +-
- 5 files changed, 5 insertions(+), 5 deletions(-)
+ accel/tcg/internal-common.h |  2 ++
+ accel/tcg/monitor.c         | 27 +++++++++++++++++----------
+ 2 files changed, 19 insertions(+), 10 deletions(-)
 
-diff --git a/include/qemu/accel.h b/include/qemu/accel.h
-index 39b52adc9cb..2831e61de08 100644
---- a/include/qemu/accel.h
-+++ b/include/qemu/accel.h
-@@ -50,7 +50,7 @@ typedef struct AccelClass {
-                        hwaddr start_addr, hwaddr size);
+diff --git a/accel/tcg/internal-common.h b/accel/tcg/internal-common.h
+index 1dbc45dd955..fb265d0cefa 100644
+--- a/accel/tcg/internal-common.h
++++ b/accel/tcg/internal-common.h
+@@ -139,4 +139,6 @@ G_NORETURN void cpu_io_recompile(CPUState *cpu, uintptr_t retaddr);
+ void tb_phys_invalidate(TranslationBlock *tb, tb_page_addr_t page_addr);
+ void tb_set_jmp_target(TranslationBlock *tb, int n, uintptr_t addr);
  
-     /* gdbstub related hooks */
--    int (*gdbstub_supported_sstep_flags)(void);
-+    int (*gdbstub_supported_sstep_flags)(AccelState *as);
- 
-     bool *allowed;
-     /*
-diff --git a/accel/accel-common.c b/accel/accel-common.c
-index 55d21b63a48..1d04610f55e 100644
---- a/accel/accel-common.c
-+++ b/accel/accel-common.c
-@@ -128,7 +128,7 @@ int accel_supported_gdbstub_sstep_flags(void)
-     AccelState *accel = current_accel();
-     AccelClass *acc = ACCEL_GET_CLASS(accel);
-     if (acc->gdbstub_supported_sstep_flags) {
--        return acc->gdbstub_supported_sstep_flags();
-+        return acc->gdbstub_supported_sstep_flags(accel);
-     }
-     return 0;
- }
-diff --git a/accel/hvf/hvf-accel-ops.c b/accel/hvf/hvf-accel-ops.c
-index 6a612599856..3797cab2bf6 100644
---- a/accel/hvf/hvf-accel-ops.c
-+++ b/accel/hvf/hvf-accel-ops.c
-@@ -353,7 +353,7 @@ static int hvf_accel_init(MachineState *ms, AccelState *as)
-     return hvf_arch_init();
++void tcg_dump_flush_info(GString *buf);
++
+ #endif
+diff --git a/accel/tcg/monitor.c b/accel/tcg/monitor.c
+index 1c182b6bfb5..5f74881f2a3 100644
+--- a/accel/tcg/monitor.c
++++ b/accel/tcg/monitor.c
+@@ -146,11 +146,26 @@ static void tcg_dump_info(GString *buf)
+     g_string_append_printf(buf, "[TCG profiler not compiled]\n");
  }
  
--static inline int hvf_gdbstub_sstep_flags(void)
-+static inline int hvf_gdbstub_sstep_flags(AccelState *as)
++void tcg_dump_flush_info(GString *buf)
++{
++    size_t flush_full, flush_part, flush_elide;
++
++    g_string_append_printf(buf, "TB flush count      %u\n",
++                           qatomic_read(&tb_ctx.tb_flush_count));
++    g_string_append_printf(buf, "TB invalidate count %u\n",
++                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
++
++    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
++    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
++    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
++    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
++}
++
+ static void dump_exec_info(GString *buf)
  {
-     return SSTEP_ENABLE | SSTEP_NOIRQ;
- }
-diff --git a/accel/kvm/kvm-all.c b/accel/kvm/kvm-all.c
-index 8f6c0bf3888..2a44d9eaabb 100644
---- a/accel/kvm/kvm-all.c
-+++ b/accel/kvm/kvm-all.c
-@@ -3974,7 +3974,7 @@ static void kvm_accel_instance_init(Object *obj)
-  * Returns: SSTEP_* flags that KVM supports for guest debug. The
-  * support is probed during kvm_init()
-  */
--static int kvm_gdbstub_sstep_flags(void)
-+static int kvm_gdbstub_sstep_flags(AccelState *as)
- {
-     return kvm_sstep_flags;
- }
-diff --git a/accel/tcg/tcg-all.c b/accel/tcg/tcg-all.c
-index 4b1238ed345..4eb49c6407d 100644
---- a/accel/tcg/tcg-all.c
-+++ b/accel/tcg/tcg-all.c
-@@ -219,7 +219,7 @@ static void tcg_set_one_insn_per_tb(Object *obj, bool value, Error **errp)
-     qatomic_set(&one_insn_per_tb, value);
+     struct tb_tree_stats tst = {};
+     struct qht_stats hst;
+-    size_t nb_tbs, flush_full, flush_part, flush_elide;
++    size_t nb_tbs;
+ 
+     tcg_tb_foreach(tb_tree_stats_iter, &tst);
+     nb_tbs = tst.nb_tbs;
+@@ -187,15 +202,7 @@ static void dump_exec_info(GString *buf)
+     qht_statistics_destroy(&hst);
+ 
+     g_string_append_printf(buf, "\nStatistics:\n");
+-    g_string_append_printf(buf, "TB flush count      %u\n",
+-                           qatomic_read(&tb_ctx.tb_flush_count));
+-    g_string_append_printf(buf, "TB invalidate count %u\n",
+-                           qatomic_read(&tb_ctx.tb_phys_invalidate_count));
+-
+-    tlb_flush_counts(&flush_full, &flush_part, &flush_elide);
+-    g_string_append_printf(buf, "TLB full flushes    %zu\n", flush_full);
+-    g_string_append_printf(buf, "TLB partial flushes %zu\n", flush_part);
+-    g_string_append_printf(buf, "TLB elided flushes  %zu\n", flush_elide);
++    tcg_dump_flush_info(buf);
+     tcg_dump_info(buf);
  }
  
--static int tcg_gdbstub_supported_sstep_flags(void)
-+static int tcg_gdbstub_supported_sstep_flags(AccelState *as)
- {
-     /*
-      * In replay mode all events will come from the log and can't be
 -- 
 2.49.0
 
