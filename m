@@ -4,92 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 401BBC71155
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 09:21:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C59AC7115D
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Jun 2025 09:29:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSXvT-0004ds-NI; Fri, 20 Jun 2025 05:20:47 -0400
+	id 1uSY3H-0006P5-Up; Fri, 20 Jun 2025 05:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uSXvP-0004d7-RO
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 05:20:44 -0400
-Received: from mail-pl1-x644.google.com ([2607:f8b0:4864:20::644])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1uSXvM-00075L-BM
- for qemu-devel@nongnu.org; Fri, 20 Jun 2025 05:20:43 -0400
-Received: by mail-pl1-x644.google.com with SMTP id
- d9443c01a7336-23636167afeso15638355ad.3
- for <qemu-devel@nongnu.org>; Fri, 20 Jun 2025 02:20:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1750411237; x=1751016037; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=6xHf02YcT0Rgbc6pCd7Ec7qDWqlk0cFy9O/dqA1x7yU=;
- b=SsKy9E1rtlIBAlq/uqnRaI6e45jSlKSikuxF6MgBsYuNk+t6gHnO4ohI77PN+7iGV4
- NWqTahdN/izgr+byDvJYWw08xNkxpUbqSq57AdUgiMWVIuYw4E6YKSuPeFI/XezdOlD9
- wyUGdESL4OC4j/bkKdCs1x6kYjFnQOus0kOl6Ia5eoHvoYY3c8XJwmZlKWTq8EqfF5MG
- fgSHoY5hEv3hgbp0H6TCwchXsSIwuyKOoZqKADWhQf0LT6plCBdfH9sYTiPu9X18nS8O
- 8rYEn632nPESlzkNbRmc5DOro8KLCOXE4QbbxqIXVbLcooqwykmVA5tk/FBjRWsSwwKi
- e3cQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750411237; x=1751016037;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=6xHf02YcT0Rgbc6pCd7Ec7qDWqlk0cFy9O/dqA1x7yU=;
- b=koal7TyK7NDGUNFTOQYvDzFvhRckgCJsngM8Fu2+e6OPhj3yJir/G+0MLQJTK+VNKy
- E1Qpco/SkeQRFM6nfwwu+0buOKRJpx176ciXdDG8DMtVM6d8TX/ZSaeHFaRCC9lL+H5M
- l2Qt0bUyMfVlQSSVpXm6rJxxvdZzixWHkzj2MwqJcl1prD5DoW8kHmC0BGAHyZYNSSSV
- 3KcsHEyi/sbOqqUJthMN0K6Gx6r/Ml67hXV+5E4IsAO4vSqU/0PhpxP1PRQMV6JXpxCg
- 79DZSWX6OOUILt3BUJEp0vBDPFjagDBGKUBPwVoSJihzprzfZiqk+GpUVC3+ieMfFMKI
- gFig==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURm9KDPepbvTbtZCGB+GKLTMJg8zzg3Vf8BTwUmtVbIbpqu2N6uY5IVKaeOkpEEqQCS3DoY03VIZd8@nongnu.org
-X-Gm-Message-State: AOJu0YzSzIPnalWIv6vaIfk7E47I/zlmSeNyZbuzZ4aYMJJctUBDtfm4
- 5AZvJejjtzjQIdYw1NGSqctghMESeOO6/zHubmTR2Ps+yunVhuYuz/rrQIvmMiWm7fo=
-X-Gm-Gg: ASbGncvvHwjqfb6Of8uyo4rs1NpOnuh5ieoWSrlaaTDtkWPY0YHZ9LaIY5MV2uILm0F
- +F2R2Wp9RLREb9fL4N6hUMJpCMfhUCMKqqq5Q3ZAZFy/bHNhL3MYgl7CHM0aN3Xa9nDaLYW2BBm
- SFj/K4Aelw+1YhZyVfjhAbXi5jcn2Dj59cqFyzTnyHntUePDwkqCnnPUzGlxnmYg87iXjZWSvSx
- mtyLOLb7R0+r2TfDHZKEMowT1B4RE78tTg4Wr54FeSnRG9lG9DBNVuHBQ7dxv/s2qWmO9tJKNo3
- mgWGqEOQ8s0RLh9rUROoOE5nobD0cYMDtONIQkkm1k+4YxmRt2ZmU90ZuSCsxwtvjuCYsTZrr7j
- XIes2M/jG9Xc=
-X-Google-Smtp-Source: AGHT+IECNGHCkAQh0JRfvKbJzCdStwuRNQsOlMU0/3+x/qzRb3MLORqBCOX1gpOwD4wT14LOsW/mVQ==
-X-Received: by 2002:a17:903:2285:b0:235:225d:3098 with SMTP id
- d9443c01a7336-237d9b9384amr31681505ad.46.1750411236941; 
- Fri, 20 Jun 2025 02:20:36 -0700 (PDT)
-Received: from [192.168.68.110] ([191.255.35.152])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-237d83ce31asm13440085ad.63.2025.06.20.02.20.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Jun 2025 02:20:36 -0700 (PDT)
-Message-ID: <15fe0336-71e2-4bd6-8465-805522c14197@ventanamicro.com>
-Date: Fri, 20 Jun 2025 06:20:31 -0300
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uSY3G-0006On-DQ; Fri, 20 Jun 2025 05:28:50 -0400
+Received: from [185.176.79.56] (helo=frasgout.his.huawei.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1uSY39-0007o0-NT; Fri, 20 Jun 2025 05:28:50 -0400
+Received: from mail.maildlp.com (unknown [172.18.186.216])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTP id 4bNsZw2Qf3z6M56G;
+ Fri, 20 Jun 2025 17:27:52 +0800 (CST)
+Received: from frapeml500008.china.huawei.com (unknown [7.182.85.71])
+ by mail.maildlp.com (Postfix) with ESMTPS id 3F43A140446;
+ Fri, 20 Jun 2025 17:28:30 +0800 (CST)
+Received: from localhost (10.203.177.66) by frapeml500008.china.huawei.com
+ (7.182.85.71) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.1.2507.39; Fri, 20 Jun
+ 2025 11:28:29 +0200
+Date: Fri, 20 Jun 2025 10:28:28 +0100
+To: Eric Auger <eric.auger@redhat.com>
+CC: <eric.auger.pro@gmail.com>, <qemu-devel@nongnu.org>,
+ <qemu-arm@nongnu.org>, <peter.maydell@linaro.org>, <imammedo@redhat.com>,
+ <gustavo.romero@linaro.org>, <anisinha@redhat.com>, <mst@redhat.com>,
+ <shannon.zhaosl@gmail.com>, <pbonzini@redhat.com>, <philmd@linaro.org>,
+ <alex.bennee@linaro.org>
+Subject: Re: [PATCH v3 16/29] hw/i386/acpi-build: Move aml_pci_edsm to a
+ generic place
+Message-ID: <20250620102828.00005ea9@huawei.com>
+In-Reply-To: <20250620101936.00005f96@huawei.com>
+References: <20250616094903.885753-1-eric.auger@redhat.com>
+ <20250616094903.885753-17-eric.auger@redhat.com>
+ <20250620101936.00005f96@huawei.com>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] target/riscv: Add a property to set vill bit on
- reserved usage of vsetvli instruction
-To: Vasilis Liaskovitis <vliaskovitis@suse.com>, qemu-devel@nongnu.org,
- qemu-riscv@nongnu.org
-Cc: ajones@ventanamicro.com, alistair.francis@wdc.com, philmd@linaro.org
-References: <20250618213542.22873-1-vliaskovitis@suse.com>
-Content-Language: en-US
-From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
-In-Reply-To: <20250618213542.22873-1-vliaskovitis@suse.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset="US-ASCII"
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::644;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-pl1-x644.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Originating-IP: [10.203.177.66]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ frapeml500008.china.huawei.com (7.182.85.71)
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 185.176.79.56 (deferred)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -33
+X-Spam_score: -3.4
+X-Spam_bar: ---
+X-Spam_report: (-3.4 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.001, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.001,
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,122 +72,199 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <Jonathan.Cameron@huawei.com>
+From:  Jonathan Cameron via <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, 20 Jun 2025 10:19:36 +0100
+Jonathan Cameron <Jonathan.Cameron@huawei.com> wrote:
 
+> On Mon, 16 Jun 2025 11:46:45 +0200
+> Eric Auger <eric.auger@redhat.com> wrote:
+> 
+> > Move aml_pci_edsm to pci-bridge.c since we want to reuse that for
+> > ARM and acpi-index support.
+> > 
+> > Signed-off-by: Eric Auger <eric.auger@redhat.com>  
+> 
+> A request for a bit of documentation inline.  aml_pci_edsm() sounds
+> like we should be able to grep the spec for edsm and find it but
+> that's just internal method naming in qemu.
+> 
+> 
+> More interesting is I don't think this will ever be called as
+> the kernel has no idea how to call it and unlike on x86 the
+> blobs don't show wrapping the call in a _DSM() (see aml_pci_static_endpoint_dsm())
+> 
+> Did EDSM usage get dropped as this set evolved leaving this behind?
+Doh. You moved and use build_append_pci_bus_devices().
 
-On 6/18/25 6:35 PM, Vasilis Liaskovitis wrote:
-> Usage of vsetvli instruction is reserved if VLMAX is changed when vsetvli rs1
-> and rd arguments are x0.
-> 
-> In this case, if the new property is true, only the vill bit will be set.
-> 
-> See https://github.com/riscv/riscv-isa-manual/blob/main/src/v-st-ext.adoc#avl-encoding
-> According to the spec, the above use cases are reserved, and
-> "Implementations may set vill in either case."
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/2422
-> Signed-off-by: Vasilis Liaskovitis <vliaskovitis@suse.com>
-> ---
+So this is fine.  Ignore me.
 
-Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+I'd still like a comment though - particularly as it turns up in the blobs
+with no callers because the examples don't use it yet.
 
->   target/riscv/cpu.c                      |  1 +
->   target/riscv/cpu_cfg_fields.h.inc       |  1 +
->   target/riscv/helper.h                   |  2 +-
->   target/riscv/insn_trans/trans_rvv.c.inc |  4 ++--
->   target/riscv/vector_helper.c            | 12 +++++++++++-
->   5 files changed, 16 insertions(+), 4 deletions(-)
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index 629ac37501..1c29ed3b2b 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -2595,6 +2595,7 @@ static const Property riscv_cpu_properties[] = {
->       DEFINE_PROP_BOOL("rvv_ta_all_1s", RISCVCPU, cfg.rvv_ta_all_1s, false),
->       DEFINE_PROP_BOOL("rvv_ma_all_1s", RISCVCPU, cfg.rvv_ma_all_1s, false),
->       DEFINE_PROP_BOOL("rvv_vl_half_avl", RISCVCPU, cfg.rvv_vl_half_avl, false),
-> +    DEFINE_PROP_BOOL("rvv_vsetvl_x0_vill", RISCVCPU, cfg.rvv_vsetvl_x0_vill, false),
->   
->       /*
->        * write_misa() is marked as experimental for now so mark
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index 59f134a419..9c78a797cf 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -114,6 +114,7 @@ BOOL_FIELD(ext_supm)
->   BOOL_FIELD(rvv_ta_all_1s)
->   BOOL_FIELD(rvv_ma_all_1s)
->   BOOL_FIELD(rvv_vl_half_avl)
-> +BOOL_FIELD(rvv_vsetvl_x0_vill)
->   /* Named features  */
->   BOOL_FIELD(ext_svade)
->   BOOL_FIELD(ext_zic64b)
-> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-> index 85d73e492d..f712b1c368 100644
-> --- a/target/riscv/helper.h
-> +++ b/target/riscv/helper.h
-> @@ -159,7 +159,7 @@ DEF_HELPER_FLAGS_3(hyp_hsv_d, TCG_CALL_NO_WG, void, env, tl, tl)
->   #endif
->   
->   /* Vector functions */
-> -DEF_HELPER_3(vsetvl, tl, env, tl, tl)
-> +DEF_HELPER_4(vsetvl, tl, env, tl, tl, tl)
->   DEF_HELPER_5(vle8_v, void, ptr, ptr, tl, env, i32)
->   DEF_HELPER_5(vle16_v, void, ptr, ptr, tl, env, i32)
->   DEF_HELPER_5(vle32_v, void, ptr, ptr, tl, env, i32)
-> diff --git a/target/riscv/insn_trans/trans_rvv.c.inc b/target/riscv/insn_trans/trans_rvv.c.inc
-> index 2b6077ac06..87071c5d62 100644
-> --- a/target/riscv/insn_trans/trans_rvv.c.inc
-> +++ b/target/riscv/insn_trans/trans_rvv.c.inc
-> @@ -202,7 +202,7 @@ static bool do_vsetvl(DisasContext *s, int rd, int rs1, TCGv s2)
->           s1 = get_gpr(s, rs1, EXT_ZERO);
->       }
->   
-> -    gen_helper_vsetvl(dst, tcg_env, s1, s2);
-> +    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl((int) (rd == 0 && rs1 == 0)));
->       gen_set_gpr(s, rd, dst);
->       finalize_rvv_inst(s);
->   
-> @@ -222,7 +222,7 @@ static bool do_vsetivli(DisasContext *s, int rd, TCGv s1, TCGv s2)
->   
->       dst = dest_gpr(s, rd);
->   
-> -    gen_helper_vsetvl(dst, tcg_env, s1, s2);
-> +    gen_helper_vsetvl(dst, tcg_env, s1, s2, tcg_constant_tl(0));
->       gen_set_gpr(s, rd, dst);
->       finalize_rvv_inst(s);
->       gen_update_pc(s, s->cur_insn_len);
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 5dc1c10012..b41c29da0b 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -35,7 +35,7 @@
->   #include <math.h>
->   
->   target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
-> -                            target_ulong s2)
-> +                            target_ulong s2, target_ulong x0)
->   {
->       int vlmax, vl;
->       RISCVCPU *cpu = env_archcpu(env);
-> @@ -83,6 +83,16 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->       } else {
->           vl = vlmax;
->       }
-> +
-> +    if (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl != vl)) {
-> +        /* only set vill bit. */
-> +        env->vill = 1;
-> +        env->vtype = 0;
-> +        env->vl = 0;
-> +        env->vstart = 0;
-> +        return 0;
-> +    }
-> +
->       env->vl = vl;
->       env->vtype = s2;
->       env->vstart = 0;
+> 
+> 
+> >
+> > ---
+> > 
+> > v2 -> v3:
+> > - move to pci-bridge.c instead of pcihp.c (Igor)
+> > ---
+> >  include/hw/acpi/pci.h |  1 +
+> >  hw/acpi/pci-bridge.c  | 54 +++++++++++++++++++++++++++++++++++++++++++
+> >  hw/i386/acpi-build.c  | 53 ------------------------------------------
+> >  3 files changed, 55 insertions(+), 53 deletions(-)
+> > 
+> > diff --git a/include/hw/acpi/pci.h b/include/hw/acpi/pci.h
+> > index 69bae95eac..05e72815c8 100644
+> > --- a/include/hw/acpi/pci.h
+> > +++ b/include/hw/acpi/pci.h
+> > @@ -42,5 +42,6 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope);
+> >  void build_srat_generic_affinity_structures(GArray *table_data);
+> >  
+> >  Aml *build_pci_host_bridge_osc_method(bool enable_native_pcie_hotplug);
+> > +Aml *aml_pci_edsm(void);
+> >  
+> >  #endif
+> > diff --git a/hw/acpi/pci-bridge.c b/hw/acpi/pci-bridge.c
+> > index 7baa7034a1..be68a98c34 100644
+> > --- a/hw/acpi/pci-bridge.c
+> > +++ b/hw/acpi/pci-bridge.c
+> > @@ -35,3 +35,57 @@ void build_pci_bridge_aml(AcpiDevAmlIf *adev, Aml *scope)
+> >          }
+> >      }
+> >  }
+> > +
+> > +Aml *aml_pci_edsm(void)  
+> 
+> Can we have some comments, or a more descriptive name than
+> the resulting method name?  There is stuff in the function obviously
+> that associates it with the naming DSM but given this is moving to
+> generic code maybe it needs a brief intro comment?
+> 
+> 
+> > +{
+> > +    Aml *method, *ifctx;
+> > +    Aml *zero = aml_int(0);
+> > +    Aml *func = aml_arg(2);
+> > +    Aml *ret = aml_local(0);
+> > +    Aml *aidx = aml_local(1);
+> > +    Aml *params = aml_arg(4);
+> > +
+> > +    method = aml_method("EDSM", 5, AML_SERIALIZED);
+> > +
+> > +    /* get supported functions */
+> > +    ifctx = aml_if(aml_equal(func, zero));
+> > +    {
+> > +        /* 1: have supported functions */
+> > +        /* 7: support for function 7 */
+> > +        const uint8_t caps = 1 | BIT(7);
+> > +        build_append_pci_dsm_func0_common(ifctx, ret);
+> > +        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
+> > +        aml_append(ifctx, aml_return(ret));
+> > +    }
+> > +    aml_append(method, ifctx);
+> > +
+> > +    /* handle specific functions requests */
+> > +    /*
+> > +     * PCI Firmware Specification 3.1
+> > +     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
+> > +     *        Operating Systems
+> > +     */
+> > +    ifctx = aml_if(aml_equal(func, aml_int(7)));
+> > +    {
+> > +       Aml *pkg = aml_package(2);
+> > +       aml_append(pkg, zero);
+> > +       /* optional, if not impl. should return null string */
+> > +       aml_append(pkg, aml_string("%s", ""));
+> > +       aml_append(ifctx, aml_store(pkg, ret));
+> > +
+> > +       /*
+> > +        * IASL is fine when initializing Package with computational data,
+> > +        * however it makes guest unhappy /it fails to process such AML/.
+> > +        * So use runtime assignment to set acpi-index after initializer
+> > +        * to make OSPM happy.
+> > +        */
+> > +       aml_append(ifctx,
+> > +           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
+> > +       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
+> > +       aml_append(ifctx, aml_return(ret));
+> > +    }
+> > +    aml_append(method, ifctx);
+> > +
+> > +    return method;
+> > +}
+> > +
+> > diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> > index fe8bc62c03..6cf623392e 100644
+> > --- a/hw/i386/acpi-build.c
+> > +++ b/hw/i386/acpi-build.c
+> > @@ -338,59 +338,6 @@ build_facs(GArray *table_data)
+> >      g_array_append_vals(table_data, reserved, 40); /* Reserved */
+> >  }
+> >  
+> > -static Aml *aml_pci_edsm(void)
+> > -{
+> > -    Aml *method, *ifctx;
+> > -    Aml *zero = aml_int(0);
+> > -    Aml *func = aml_arg(2);
+> > -    Aml *ret = aml_local(0);
+> > -    Aml *aidx = aml_local(1);
+> > -    Aml *params = aml_arg(4);
+> > -
+> > -    method = aml_method("EDSM", 5, AML_SERIALIZED);
+> > -
+> > -    /* get supported functions */
+> > -    ifctx = aml_if(aml_equal(func, zero));
+> > -    {
+> > -        /* 1: have supported functions */
+> > -        /* 7: support for function 7 */
+> > -        const uint8_t caps = 1 | BIT(7);
+> > -        build_append_pci_dsm_func0_common(ifctx, ret);
+> > -        aml_append(ifctx, aml_store(aml_int(caps), aml_index(ret, zero)));
+> > -        aml_append(ifctx, aml_return(ret));
+> > -    }
+> > -    aml_append(method, ifctx);
+> > -
+> > -    /* handle specific functions requests */
+> > -    /*
+> > -     * PCI Firmware Specification 3.1
+> > -     * 4.6.7. _DSM for Naming a PCI or PCI Express Device Under
+> > -     *        Operating Systems
+> > -     */
+> > -    ifctx = aml_if(aml_equal(func, aml_int(7)));
+> > -    {
+> > -       Aml *pkg = aml_package(2);
+> > -       aml_append(pkg, zero);
+> > -       /* optional, if not impl. should return null string */
+> > -       aml_append(pkg, aml_string("%s", ""));
+> > -       aml_append(ifctx, aml_store(pkg, ret));
+> > -
+> > -       /*
+> > -        * IASL is fine when initializing Package with computational data,
+> > -        * however it makes guest unhappy /it fails to process such AML/.
+> > -        * So use runtime assignment to set acpi-index after initializer
+> > -        * to make OSPM happy.
+> > -        */
+> > -       aml_append(ifctx,
+> > -           aml_store(aml_derefof(aml_index(params, aml_int(0))), aidx));
+> > -       aml_append(ifctx, aml_store(aidx, aml_index(ret, zero)));
+> > -       aml_append(ifctx, aml_return(ret));
+> > -    }
+> > -    aml_append(method, ifctx);
+> > -
+> > -    return method;
+> > -}
+> > -
+> >  /*
+> >   * build_prt - Define interrupt routing rules
+> >   *  
+> 
 
 
