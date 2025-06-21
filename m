@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44C00C7115C
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:59:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17382C7115C
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:59:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT82f-0003LU-Cg; Sat, 21 Jun 2025 19:54:37 -0400
+	id 1uT83d-0006dD-TQ; Sat, 21 Jun 2025 19:55:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT82S-0002LW-Rp
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:25 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1uT82P-0002D4-I2
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:21 -0400
+Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT82R-0005Aw-7M
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:24 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-74931666cbcso234466b3a.0
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:54:22 -0700 (PDT)
+ id 1uT82N-00057w-TJ
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:21 -0400
+Received: by mail-pf1-x42d.google.com with SMTP id
+ d2e1a72fcca58-748f5a4a423so1829693b3a.1
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:54:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750550062; x=1751154862; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750550058; x=1751154858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8EtlLBp+HVhoQ869WpxoCy9SLx2DoSJRlXXH9wDNtJc=;
- b=wUNXuT6r8dbDLoNVVIiBWrGUfdZblBKcCG2+2XdWR1o5PNeCL8t1Pn2c0SXirovd68
- XPWt0hrufoqULD7t5lgZvoy8P4sPUIWP48AQJKIpnigQ8fM16FtoFIoOgyVedqkCNLRd
- zbG05ZdP3iTVXQLQ0yLr4c1nTTHFtSlptf7IUBSX6+NPEB5miTV2S4LPAMSXlCZ+K4So
- S8YzIrCDAWMkzgJGVcu4c2JzcJJ902g+bswGtj53n2uDhA6pjr7RbU3fCyEIbdwRUBnQ
- cWO9HydHE0yxw6T0VLq5qLf5CNR4pHSuE3qufMmMPx7++JVwPKa+VrtJGUvDSiqnux0l
- I3zw==
+ :reply-to; bh=orsxG4rs9FtH+hzDD4WeCDCtjgD4SnzwwyW7O92dK2w=;
+ b=WTHsUktJoN7R7GWfVaf48IyKrEq3U1/qI/+kcLAqPA0IJWcXpraGTyHYy3/bjqX1Oz
+ g5tfJtFv0/Tv2RwGJF+Irg0sEwxaz4kLFRCJXo51JWhJmzwChPVx4jt5m4tTrfJUyjcc
+ ZNgD6MSag4wAAVBX1hg9fiR8Y8CMCBN9O0M1izs80AU0/D+1qMPCpith2uyuSBwbgdWi
+ rbmkWG8r4XBTRnH01SRAE35Hpj0i9gnJ1v/sVV16uJMoEHO1v8aTL75xhLE/LLVboCWY
+ DAQ3Vccxuc+1hPoMNl3gxeoE4j5PiTK+JuPHv2NL+yYl4ql0VY4i1U0BM+Cfm7/Bh8ne
+ HQMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750550062; x=1751154862;
+ d=1e100.net; s=20230601; t=1750550058; x=1751154858;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=8EtlLBp+HVhoQ869WpxoCy9SLx2DoSJRlXXH9wDNtJc=;
- b=Q2bLU/9fon0SnPf+6zEZ8L0K16yT4+W28SPpdb2X7QJRNkITUu9h0rl4qaGhT0nFBT
- ROB1Msew6wLvIXzeFx/avHJ90nYeppai/kv+NKkZsPUDT7mSLGHBCPYO/omL7kPLuPN4
- 97xoPgGZz7J03FghpYg75k3bmXZrqhMoI+XNK7o1JRKzYjnjGdVJHoR4pq+QvXbOqzLN
- TMTkULmk67zaacMkHZxoZCMKJNqETukGvnrN1ieG4DtEw9qOIIxVldCiPHsemDaxoLZr
- T2l+0NWuhH+tD0lqGAXvwr/e5xAHOx5s0OaGLb/CbmiQ4bFT6DI529T5Rj3bpiIUvJ2h
- ZRpQ==
-X-Gm-Message-State: AOJu0Yyjeygq7boQeKr1VYVpmXsUg1ofynPh+TSy2akE3iI858KhFte+
- UtYaK4AtKKGapAv1xzgAVfJ4NZG9RcXWSmMk3E7y5tGKYTkBYhE6gsaHjao/TaDggOFvf++KgXU
- yv+0FAvE=
-X-Gm-Gg: ASbGnctnMTnaQAc8XQND9wxBvjnbiGTwrphY+hE70NQl058jllb+kaaLAeeRODOaR0e
- ivFNr9/zmYNZUcopekDvxlgDlgCuH0zqYVAbE4FGwLBwnth/X3TDn3LY5E0ELVwJ9orA/c/fxqH
- TC4LbgIovogx8IBmG3GK3ad2LKPwAy6jzBR1S2j5AH3Lk6fsD+cJN6prZAxP9gTX/JxuF4sEsWv
- 0IX1u5PkMnLcTUatg46Al/tJiGv4OrgxguQGqufbRXhkb1tpM2do7Q4CiRQHU1tEuVJv4SLBxJP
- sY+ha/vbZxqSPJeHbo2wCvwzaG16awLF081TkuMIKE5pb2UZck+hgrv53sHW/4NWOSYJdMSQcLq
- 0PIZcyB/NYrXa/9WQ/X1W
-X-Google-Smtp-Source: AGHT+IGrqerGxGmf8K+kWbH+N+xpPmYPK1rIn/de2iXVWXYhmzrQcO0WuwyexES2N16zkR5EsoOBoA==
-X-Received: by 2002:a05:6a00:4612:b0:746:3040:4da2 with SMTP id
- d2e1a72fcca58-7490d51ba3emr12130745b3a.8.1750550061814; 
- Sat, 21 Jun 2025 16:54:21 -0700 (PDT)
+ bh=orsxG4rs9FtH+hzDD4WeCDCtjgD4SnzwwyW7O92dK2w=;
+ b=CX1eAUtCfmKJZUqIqixVGqtrOAQnYcTxi2ONGZ1tNE2lUgZM1gCL+DZsYqxZsReFSY
+ kiTb3ojkKYsRFb6wgJZReMNNHhHWIRKxEZp6C8lvAzrT1ANhJ+zLAQVvlx1+ip5YFvRB
+ EX5pTBrkW7TXyeMROrUlr4pUlXGEbv0AIFeOIQeLrgoHIbimqBiEbhiacAFqM/NnAlNH
+ EZPNPGDyrHEu7lb85MmkAnAEoj3al6bIbc2bV+2P+hTrsNVpwawmB14qUkAF9B9u2i6D
+ oEkQhF8MsUjFNiEKuCzXmMnYY65rnk6hBrfxh4Tx7C51qGMomvZlXLhSLGQT9jhB3xCY
+ POiA==
+X-Gm-Message-State: AOJu0YypYinH5QZf2PjYWLjUTvmyrHbAFgSVUqg8PzNKZkSsZmjZjmOT
+ XvtgLXVh55CzJ8B5g5TROXRSHVnONKzw5SUu4ILCAc+B0/MnnClOdahNJxUKcwGKBJ9TyBL2meH
+ nr0QrN7g=
+X-Gm-Gg: ASbGncsEO0Gb+ciFZ94wjd0lT00xl+aicMOtHcccGABwWPB4nBmfK5t437PYdP6Tohe
+ o9lf9V6Mxm0BAv5gFnPRi7lpIxHtnLel3suKrUfj90IUxaF4v610RKgfglZ59h6BzyIChIZXQnX
+ z24GCBmhZ4kNkhvj83FPl9Bk+M5dQHdXu6tVt4/1dSzIvcxtpAg28mfh0MNwsmEQZPORRVmylnW
+ 6dlvr88tsTTrvaOIjllBKLM+qM+GJ1hzJSlG34E7yCcDKxInz4hDCRjZr7Ew6iri7eVIVtcoXT9
+ +YkEeJjRus1AQEPZkNiSx8jFLIF60wz2NPNq4GH7DHw5ijiNbAg4VZJAtuLJ2I3vDA9JDCTeyGZ
+ wDnIALXq+2Ppi03rBWD02
+X-Google-Smtp-Source: AGHT+IFlSpyfi+wwf2eNoAURQag+DBRV+JFrD6nLWUe7VtjcyKkJqdkKzN4p6h6yDA/wYzknnUEKZA==
+X-Received: by 2002:a05:6a20:ce43:b0:21e:f2c4:7743 with SMTP id
+ adf61e73a8af0-22026d5f209mr12653611637.7.1750550058534; 
+ Sat, 21 Jun 2025 16:54:18 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a46b590sm4970051b3a.27.2025.06.21.16.54.21
+ d2e1a72fcca58-7490a46b590sm4970051b3a.27.2025.06.21.16.54.18
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:54:21 -0700 (PDT)
+ Sat, 21 Jun 2025 16:54:18 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 067/101] target/arm: Implement FCLAMP for SME2, SVE2p1
-Date: Sat, 21 Jun 2025 16:50:03 -0700
-Message-ID: <20250621235037.74091-68-richard.henderson@linaro.org>
+Subject: [PATCH v2 062/101] target/arm: Move do_urshr,
+ do_srshr to vec_internal.h
+Date: Sat, 21 Jun 2025 16:49:58 -0700
+Message-ID: <20250621235037.74091-63-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,57 +100,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This is the single vector version within SVE decode space.
+Unify two copies of these inline functions.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-sve.c | 22 ++++++++++++++++++++++
- target/arm/tcg/sve.decode      |  2 ++
- 2 files changed, 24 insertions(+)
+ target/arm/tcg/vec_internal.h | 21 +++++++++++++++++++++
+ target/arm/tcg/mve_helper.c   | 21 ---------------------
+ target/arm/tcg/sve_helper.c   | 21 ---------------------
+ 3 files changed, 21 insertions(+), 42 deletions(-)
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index abdcafd952..235022110f 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7381,6 +7381,28 @@ static void gen_uclamp(unsigned vece, uint32_t d, uint32_t n, uint32_t m,
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index c0ccf6da7a..0d806b73c4 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -230,6 +230,27 @@ int64_t do_sqrdmlah_d(int64_t, int64_t, int64_t, bool, bool);
+ #define do_usat_h(val)  MIN(MAX(val, 0), UINT16_MAX)
+ #define do_usat_s(val)  MIN(MAX(val, 0), UINT32_MAX)
  
- TRANS_FEAT(UCLAMP, aa64_sme_or_sve2p1, gen_gvec_fn_arg_zzzz, gen_uclamp, a)
- 
-+static bool trans_FCLAMP(DisasContext *s, arg_FCLAMP *a)
++static inline uint64_t do_urshr(uint64_t x, unsigned sh)
 +{
-+    static gen_helper_gvec_3_ptr * const fn[] = {
-+        gen_helper_sme2_bfclamp,
-+        gen_helper_sme2_fclamp_h,
-+        gen_helper_sme2_fclamp_s,
-+        gen_helper_sme2_fclamp_d,
-+    };
-+
-+    /* This insn uses MO_8 to encode BFloat16. */
-+    if (a->esz == MO_8
-+        ? dc_isar_feature(aa64_sve_b16b16, s)
-+        : dc_isar_feature(aa64_sme2_or_sve2p1, s)) {
-+        return false;
++    if (likely(sh < 64)) {
++        return (x >> sh) + ((x >> (sh - 1)) & 1);
++    } else if (sh == 64) {
++        return x >> 63;
++    } else {
++        return 0;
 +    }
-+
-+    /* So far we never optimize rda with MOVPRFX */
-+    assert(a->rd == a->ra);
-+    return gen_gvec_fpst_zzz(s, fn[a->esz], a->rd, a->rn, a->rm, 1,
-+                             a->esz == MO_16 ? FPST_A64_F16 : FPST_A64);
 +}
 +
- TRANS_FEAT(SQCVTN_sh, aa64_sme2_or_sve2p1, gen_gvec_ool_zz,
-            gen_helper_sme2_sqcvtn_sh, a->rd, a->rn, 0)
- TRANS_FEAT(UQCVTN_sh, aa64_sme2_or_sve2p1, gen_gvec_ool_zz,
-diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index 7e29882a71..b0c7b58271 100644
---- a/target/arm/tcg/sve.decode
-+++ b/target/arm/tcg/sve.decode
-@@ -1722,3 +1722,5 @@ PSEL            00100101 .1 1 000 .. 01 .... 0 .... 0 ....  \
- 
- SCLAMP          01000100 .. 0 ..... 110000 ..... .....          @rda_rn_rm
- UCLAMP          01000100 .. 0 ..... 110001 ..... .....          @rda_rn_rm
++static inline int64_t do_srshr(int64_t x, unsigned sh)
++{
++    if (likely(sh < 64)) {
++        return (x >> sh) + ((x >> (sh - 1)) & 1);
++    } else {
++        /* Rounding the sign bit always produces 0. */
++        return 0;
++    }
++}
 +
-+FCLAMP          01100100 .. 1 ..... 001001 ..... .....          @rda_rn_rm
+ /**
+  * bfdotadd:
+  * @sum: addend
+diff --git a/target/arm/tcg/mve_helper.c b/target/arm/tcg/mve_helper.c
+index 506d1c3475..b9b2faa3a7 100644
+--- a/target/arm/tcg/mve_helper.c
++++ b/target/arm/tcg/mve_helper.c
+@@ -2164,27 +2164,6 @@ DO_VSHLL_ALL(vshllt, true)
+     DO_VSHRN(OP##tb, true, 1, uint8_t, 2, uint16_t, FN)         \
+     DO_VSHRN(OP##th, true, 2, uint16_t, 4, uint32_t, FN)
+ 
+-static inline uint64_t do_urshr(uint64_t x, unsigned sh)
+-{
+-    if (likely(sh < 64)) {
+-        return (x >> sh) + ((x >> (sh - 1)) & 1);
+-    } else if (sh == 64) {
+-        return x >> 63;
+-    } else {
+-        return 0;
+-    }
+-}
+-
+-static inline int64_t do_srshr(int64_t x, unsigned sh)
+-{
+-    if (likely(sh < 64)) {
+-        return (x >> sh) + ((x >> (sh - 1)) & 1);
+-    } else {
+-        /* Rounding the sign bit always produces 0. */
+-        return 0;
+-    }
+-}
+-
+ DO_VSHRN_ALL(vshrn, DO_SHR)
+ DO_VSHRN_ALL(vrshrn, do_urshr)
+ 
+diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
+index 67e1fe543c..e78d807ce1 100644
+--- a/target/arm/tcg/sve_helper.c
++++ b/target/arm/tcg/sve_helper.c
+@@ -2050,27 +2050,6 @@ void HELPER(NAME)(void *vd, void *vn, void *vg, uint32_t desc)  \
+    when N is negative, add 2**M-1.  */
+ #define DO_ASRD(N, M) ((N + (N < 0 ? ((__typeof(N))1 << M) - 1 : 0)) >> M)
+ 
+-static inline uint64_t do_urshr(uint64_t x, unsigned sh)
+-{
+-    if (likely(sh < 64)) {
+-        return (x >> sh) + ((x >> (sh - 1)) & 1);
+-    } else if (sh == 64) {
+-        return x >> 63;
+-    } else {
+-        return 0;
+-    }
+-}
+-
+-static inline int64_t do_srshr(int64_t x, unsigned sh)
+-{
+-    if (likely(sh < 64)) {
+-        return (x >> sh) + ((x >> (sh - 1)) & 1);
+-    } else {
+-        /* Rounding the sign bit always produces 0. */
+-        return 0;
+-    }
+-}
+-
+ DO_ZPZI(sve_asr_zpzi_b, int8_t, H1, DO_SHR)
+ DO_ZPZI(sve_asr_zpzi_h, int16_t, H1_2, DO_SHR)
+ DO_ZPZI(sve_asr_zpzi_s, int32_t, H1_4, DO_SHR)
 -- 
 2.43.0
 
