@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70952C7115C
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:55:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36131C71157
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:55:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT7zH-0005E9-Pc; Sat, 21 Jun 2025 19:51:07 -0400
+	id 1uT7z6-00057U-L0; Sat, 21 Jun 2025 19:50:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7zA-00059O-8S
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:51:00 -0400
-Received: from mail-pf1-x42d.google.com ([2607:f8b0:4864:20::42d])
+ id 1uT7z3-00055W-3j
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:53 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7z8-0004VI-DP
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:59 -0400
-Received: by mail-pf1-x42d.google.com with SMTP id
- d2e1a72fcca58-748e81d37a7so1840548b3a.1
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:50:57 -0700 (PDT)
+ id 1uT7z0-0004T6-N2
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:52 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-747e41d5469so3128665b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:50:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750549856; x=1751154656; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750549849; x=1751154649; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=bgT8k2Fh4ol5NJOIIsQXh+0Tw9ZLXo9iAD2wBE7oMlo=;
- b=IOd7jN/scqhgZo4COlr/EKzpTRhoztQYEWSEc7XryenU+sq/1pPdrgJUoj863HvTnP
- bjviARKh3cfXSxlvesFwcjiGYEdFlNtOfunVLdunLpWriwMfjEKcGauNVrFBcn2tzjtZ
- jBJvaZ8SuHpy/npWeZVRZri6SaGoNi3iFlhgwEI8JhmRSEroC7ZxQgE+j8FmlcGIB1xb
- n5vmu4SvzYAEwOSqmWIClvorMtHAmYksTOZFPTXR8HKXBfaojDygFCOtsO6R83Jj5+vd
- xq55ynA0VD4tT3yGJMQnRkw+oM+/Yk8gUcdanhjMXv/WIwu5/OD3WeOxZ0hjlQYq4NOz
- B2nA==
+ :reply-to; bh=TzQwMdaC2f0TIl2lwe12HdG9hZiKzE5709XOOuQijrs=;
+ b=q/KJkkLOLK0dlTtUvjO6mtkGlUPrwZ6XWUJ4M6aqa4wxkD5OfFbCTiXd+KdCFmF9uJ
+ MvTwS5VEwhTvegrkLpEGHVcGyqv9JkkE+6nX0Dht9LT2EtjBdB70eelyfn0GIpU9wn81
+ UeUvKUt+frENQoC7zW+4ZjrsXzNrhsRX1Cl1YyRxbS2rW5lBqDwTWdjQFqW2jb3lqcf/
+ 6gWJz9B5N3T1dmgIll9l099cigOsc+heseVsae5pQFl1ZN7CSay8s1cpdFSvGTkDwloQ
+ KKJDmx/igxsvfd0gaMOCWyxLw6+Yp5b4A13mQYJ+sOeT2EzSLMdG7L+9jYKKtsuz7E3Q
+ BiKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750549856; x=1751154656;
+ d=1e100.net; s=20230601; t=1750549849; x=1751154649;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=bgT8k2Fh4ol5NJOIIsQXh+0Tw9ZLXo9iAD2wBE7oMlo=;
- b=VvUsgEkN6+tLcO2iGUsEnXVe1/zOq/N9OwnJwnKXYqjzNKBlyvG01FMT/ifRTxBeKo
- O4Dd5DSooCW8h/6m+kjB7b8gxnZ4vWVrti+Br56a707CxW6gwYY69uHDBZ//NW7BH9DM
- IYaz33BY0aCiYYX+Y6aPv2bSxQJbnUKWIhCBxUXaVja+M4622XFfym+C8gtaTLzMcLtT
- wX8ZtxhY27ufjXUyD50VDsJukv8BUbwZ6BOgEoL9bxcQygwONp7Hn3Z2QZSEc2VYL7Vk
- ac40BrgW/FAnzB/AB2e4tedHeO6nXETL5ANFqBMS3GG+iTlvMO77goR3MnerBufmxfeI
- SEDQ==
-X-Gm-Message-State: AOJu0YyeeRpwlIIYjESNyof2E8RkZGe7TaD3BJVAQ3uuWgkh1rww7eSE
- LJ2K2NleUu42JzCB09WBkTpFO0O8PIRmDhj/0n7ZReXsowwGO93WX/BKfLfmrv9eU8XuBA1d+aH
- FI1tU
-X-Gm-Gg: ASbGnctiWTXNkNPvVm1n7HUFbcU4Im901Ea/FnyYmlt07eZtSqfa07eO7bcHxoSDsXh
- W7YhAPP5BCnbaJngBgLlIbgfTgquzyISFrZHgVWy+ggHAqD8mlomwia6YlPAfEF4CvqW+Q+pdhW
- ydRYjwxThPAD6ytkklIVtfRJxpsVIogB9DcgkLE1DRSVJRkcAk/m5PSLwI7Py3PW6c5UabqY8xy
- UunQvazecBGaw8H25xo/DKUuuZOTGGFHaiO86YYo/td35xRb4VdKLaFgsShBGy6sWnN44SsS8Jv
- 3Q5xGDBLf7bWmCnlNd8sGct/TKlGFB6Z4fCNZlv4eJn5aincYYb9bfcZao7Qvsbfr2GmgsjAL2q
- gox3AgzmbXFCSk2NSgLal
-X-Google-Smtp-Source: AGHT+IG4SF9RAfiv6bu0Bv6E/jtYdlgfa9r75HPOZ+C7s8ORjEvInYuUq3rtt/RMzK4Z6gFcd1A8wg==
-X-Received: by 2002:a05:6a00:3cca:b0:749:421:efcc with SMTP id
- d2e1a72fcca58-7490d74f563mr9066711b3a.5.1750549856533; 
- Sat, 21 Jun 2025 16:50:56 -0700 (PDT)
+ bh=TzQwMdaC2f0TIl2lwe12HdG9hZiKzE5709XOOuQijrs=;
+ b=l/hm4nKFwUsjz9g2WMoJ4RvZ6aU72gKYmju6WP/taG3ou/8gmmJxTLZxsfLsk94/Sj
+ ST3zoefJvUt2EPcz5w0ba/LtwsPUp8/iRSoli3U1MQhHaGFxXj/aTp0ECnOp3gDPbF6A
+ HU/wDZH5ceApmk0QqbM9QzoMdhykk2iMVt8immBGhDr8qMLzs8wOq6IfKQveVSPiqOTC
+ ClGTVYz93zY05tUJ7fE52eOADQ8X+ElbSCT6KMNpP8ht5rVwFDSUw7ShpIKWLfUzOqoT
+ q/TujUcnp8w/cHKyAXgtlMfQqq1bKszClvjmdKQXmdlDGQr3DcPjWEQCyetahxFT/0N8
+ oKng==
+X-Gm-Message-State: AOJu0YzU93kDFKLNnDCmXjgQRU2uU9H37HGrMJLr3+nR/sa73WM5zok1
+ GS4FFsAN2PkJDnFP6+I9aO2vshNzenlOTBNOkKIMiKDMalkTTQfyEA5JFF51O0daHpKDWnIlxE5
+ tSFZN
+X-Gm-Gg: ASbGncsTW7Nrbb1zdNLswDgHFWASjEH5oOnX1ifKNKwnrVDXk2LsG48dt/aEXV8gm6M
+ q65ivx2xuESsQEmLglDirPzmHGdnkyOnw5LBG0jB8nMU+tikGyUtjszEdPclev/A0N4rBx39OEv
+ watVBMyEaf8/Qpa2ffd9toUGrur4tYO85E1GYXvNQTb0jFSeB1SCVTQOasWlJDXXrKXEnHPkzYy
+ efK3eYQSTDTBmoPpTLtc1mPIi3bq/06OSrHNtoE//DW+g/ufUGm3ntg3brpWiu5BUnA58uvmxhM
+ sqOmHSeJNWurYLZ+3Y9fS6v8aVJY3DBKstz+IUidNVzByJJsXO5Ek4vB4vt7ctk16U+Ht8sFBoF
+ 4uBalkT29dLSvw77y6icuOOfRt8zWQ/w=
+X-Google-Smtp-Source: AGHT+IFjJh5pvq/kaKiI8/tf+RbfZhccpUrI8EhSRyQrJX4EVxTNvsM0G8r/FQXpURwpJCpPcom8Lw==
+X-Received: by 2002:a05:6a00:2d8c:b0:748:ed51:1305 with SMTP id
+ d2e1a72fcca58-7490d4f4be1mr9075226b3a.5.1750549849452; 
+ Sat, 21 Jun 2025 16:50:49 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.50.55
+ d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.50.49
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:50:56 -0700 (PDT)
+ Sat, 21 Jun 2025 16:50:49 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 027/101] target/arm: Implement SME2 SMOPS, UMOPS (2-way)
-Date: Sat, 21 Jun 2025 16:49:23 -0700
-Message-ID: <20250621235037.74091-28-richard.henderson@linaro.org>
+Subject: [PATCH v2 016/101] target/arm: Add ZT0
+Date: Sat, 21 Jun 2025 16:49:12 -0700
+Message-ID: <20250621235037.74091-17-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42d;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,113 +99,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a 512-bit array introduced with SME2.
+Save it only when ZA is in use.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-sme.h    |  4 ++++
- target/arm/tcg/sme_helper.c    | 37 +++++++++++++++++++++++++---------
- target/arm/tcg/translate-sme.c |  2 ++
- target/arm/tcg/sme.decode      |  2 ++
- 4 files changed, 35 insertions(+), 10 deletions(-)
+ target/arm/cpu.h     |  3 +++
+ target/arm/machine.c | 20 ++++++++++++++++++++
+ 2 files changed, 23 insertions(+)
 
-diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
-index 17d1a7c102..ecd06f2cd1 100644
---- a/target/arm/tcg/helper-sme.h
-+++ b/target/arm/tcg/helper-sme.h
-@@ -156,3 +156,7 @@ DEF_HELPER_FLAGS_6(sme_usmopa_d, TCG_CALL_NO_RWG,
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index 052ca20283..465fc188d0 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -715,6 +715,9 @@ typedef struct CPUArchState {
+     uint64_t scxtnum_el[4];
  
- DEF_HELPER_FLAGS_6(sme2_bmopa_s, TCG_CALL_NO_RWG,
-                    void, ptr, ptr, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_6(sme2_smopa2_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, i32)
-+DEF_HELPER_FLAGS_6(sme2_umopa2_s, TCG_CALL_NO_RWG,
-+                   void, ptr, ptr, ptr, ptr, ptr, i32)
-diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
-index 20a3fafdb6..194560eafa 100644
---- a/target/arm/tcg/sme_helper.c
-+++ b/target/arm/tcg/sme_helper.c
-@@ -1231,7 +1231,7 @@ static inline void do_imopa_d(uint64_t *za, uint64_t *zn, uint64_t *zm,
-     }
- }
- 
--#define DEF_IMOP_32(NAME, NTYPE, MTYPE) \
-+#define DEF_IMOP_8x4_32(NAME, NTYPE, MTYPE) \
- static uint32_t NAME(uint32_t n, uint32_t m, uint32_t a, uint8_t p, bool neg) \
- {                                                                           \
-     uint32_t sum = 0;                                                       \
-@@ -1244,7 +1244,7 @@ static uint32_t NAME(uint32_t n, uint32_t m, uint32_t a, uint8_t p, bool neg) \
-     return neg ? a - sum : a + sum;                                         \
- }
- 
--#define DEF_IMOP_64(NAME, NTYPE, MTYPE) \
-+#define DEF_IMOP_16x4_64(NAME, NTYPE, MTYPE) \
- static uint64_t NAME(uint64_t n, uint64_t m, uint64_t a, uint8_t p, bool neg) \
- {                                                                           \
-     uint64_t sum = 0;                                                       \
-@@ -1257,15 +1257,15 @@ static uint64_t NAME(uint64_t n, uint64_t m, uint64_t a, uint8_t p, bool neg) \
-     return neg ? a - sum : a + sum;                                         \
- }
- 
--DEF_IMOP_32(smopa_s, int8_t, int8_t)
--DEF_IMOP_32(umopa_s, uint8_t, uint8_t)
--DEF_IMOP_32(sumopa_s, int8_t, uint8_t)
--DEF_IMOP_32(usmopa_s, uint8_t, int8_t)
-+DEF_IMOP_8x4_32(smopa_s, int8_t, int8_t)
-+DEF_IMOP_8x4_32(umopa_s, uint8_t, uint8_t)
-+DEF_IMOP_8x4_32(sumopa_s, int8_t, uint8_t)
-+DEF_IMOP_8x4_32(usmopa_s, uint8_t, int8_t)
- 
--DEF_IMOP_64(smopa_d, int16_t, int16_t)
--DEF_IMOP_64(umopa_d, uint16_t, uint16_t)
--DEF_IMOP_64(sumopa_d, int16_t, uint16_t)
--DEF_IMOP_64(usmopa_d, uint16_t, int16_t)
-+DEF_IMOP_16x4_64(smopa_d, int16_t, int16_t)
-+DEF_IMOP_16x4_64(umopa_d, uint16_t, uint16_t)
-+DEF_IMOP_16x4_64(sumopa_d, int16_t, uint16_t)
-+DEF_IMOP_16x4_64(usmopa_d, uint16_t, int16_t)
- 
- #define DEF_IMOPH(P, NAME, S) \
-     void HELPER(P##_##NAME##_##S)(void *vza, void *vzn, void *vzm,          \
-@@ -1295,3 +1295,20 @@ static uint32_t bmopa_s(uint32_t n, uint32_t m, uint32_t a, uint8_t p, bool neg)
- }
- 
- DEF_IMOPH(sme2, bmopa, s)
+     struct {
++        /* SME2 ZT0 -- 512 bit array, with data ordered like ARMVectorReg. */
++        uint64_t zt0[512 / 64] QEMU_ALIGNED(16);
 +
-+#define DEF_IMOP_16x2_32(NAME, NTYPE, MTYPE) \
-+static uint32_t NAME(uint32_t n, uint32_t m, uint32_t a, uint8_t p, bool neg) \
-+{                                                                           \
-+    uint32_t sum = 0;                                                       \
-+    /* Apply P to N as a mask, making the inactive elements 0. */           \
-+    n &= expand_pred_h(p);                                                  \
-+    sum += (NTYPE)(n >> 0) * (MTYPE)(m >> 0);                               \
-+    sum += (NTYPE)(n >> 16) * (MTYPE)(m >> 16);                             \
-+    return neg ? a - sum : a + sum;                                         \
+         /*
+          * SME ZA storage -- 256 x 256 byte array, with bytes in host
+          * word order, as we do with vfp.zregs[].  This corresponds to
+diff --git a/target/arm/machine.c b/target/arm/machine.c
+index 6e73368ef9..6986915bee 100644
+--- a/target/arm/machine.c
++++ b/target/arm/machine.c
+@@ -321,6 +321,25 @@ static const VMStateDescription vmstate_za = {
+     }
+ };
+ 
++static bool zt0_needed(void *opaque)
++{
++    ARMCPU *cpu = opaque;
++
++    return za_needed(cpu) && cpu_isar_feature(aa64_sme2, cpu);
 +}
 +
-+DEF_IMOP_16x2_32(smopa2_s, int16_t, int16_t)
-+DEF_IMOP_16x2_32(umopa2_s, uint16_t, uint16_t)
++static const VMStateDescription vmstate_zt0 = {
++    .name = "cpu/zt0",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .needed = zt0_needed,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT64_ARRAY(env.za_state.zt0, ARMCPU,
++                             ARRAY_SIZE(((CPUARMState *)0)->za_state.zt0)),
++        VMSTATE_END_OF_LIST()
++    }
++};
 +
-+DEF_IMOPH(sme2, smopa2, s)
-+DEF_IMOPH(sme2, umopa2, s)
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 25139cb7aa..57c7aacb6d 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -509,3 +509,5 @@ TRANS_FEAT(SUMOPA_d, aa64_sme_i16i64, do_outprod, a, MO_64, gen_helper_sme_sumop
- TRANS_FEAT(USMOPA_d, aa64_sme_i16i64, do_outprod, a, MO_64, gen_helper_sme_usmopa_d)
- 
- TRANS_FEAT(BMOPA, aa64_sme2, do_outprod, a, MO_32, gen_helper_sme2_bmopa_s)
-+TRANS_FEAT(SMOPA2_s, aa64_sme2, do_outprod, a, MO_32, gen_helper_sme2_smopa2_s)
-+TRANS_FEAT(UMOPA2_s, aa64_sme2, do_outprod, a, MO_32, gen_helper_sme2_umopa2_s)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index de8d04cb87..36f369d02a 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -167,3 +167,5 @@ USMOPA_d        1010000 1 11 0 ..... ... ... ..... . 0 ...      @op_64
- UMOPA_d         1010000 1 11 1 ..... ... ... ..... . 0 ...      @op_64
- 
- BMOPA           1000000 0 10 0 ..... ... ... ..... . 10 ..      @op_32
-+SMOPA2_s        1010000 0 10 0 ..... ... ... ..... . 10 ..      @op_32
-+UMOPA2_s        1010000 1 10 0 ..... ... ... ..... . 10 ..      @op_32
+ static bool serror_needed(void *opaque)
+ {
+     ARMCPU *cpu = opaque;
+@@ -1096,6 +1115,7 @@ const VMStateDescription vmstate_arm_cpu = {
+         &vmstate_m_security,
+         &vmstate_sve,
+         &vmstate_za,
++        &vmstate_zt0,
+         &vmstate_serror,
+         &vmstate_irq_line_state,
+         &vmstate_wfxt_timer,
 -- 
 2.43.0
 
