@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D167CC7115C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC2B7C7115D
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT7zI-0005F2-T7; Sat, 21 Jun 2025 19:51:08 -0400
+	id 1uT7yy-00052Z-AO; Sat, 21 Jun 2025 19:50:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7zF-0005CP-4r
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:51:05 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1uT7yw-00050s-FE
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:46 -0400
+Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7zD-0004XD-JB
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:51:04 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-b2f0faeb994so3236074a12.0
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:51:03 -0700 (PDT)
+ id 1uT7yu-0004R2-I6
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:46 -0400
+Received: by mail-pf1-x434.google.com with SMTP id
+ d2e1a72fcca58-742caef5896so2329793b3a.3
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:50:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750549862; x=1751154662; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750549843; x=1751154643; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AVLGi6yVBj9f4DTQN3Bb0Gk823PKe0kOw43jnGxIjBU=;
- b=DJQWOYvVIB8xz/KcNDWH/07TmcwjGsOvA6HRO2IPbIpj2IpI9vLvQa6E95Py999ID3
- x3Af5W3tWTvaKpAEDaD+tZtXIdafoMhvIXAZfGFAh/oV8Vddz3CU8UVIm03IIWCALJF0
- +N1J8cLgxfeyL9OpJYmiMTzYSFxMnHwwLON2X4XP7PXC6zL61zua1n0yl+1n31YUkH/a
- epgAbh++bBZ48pw4LqYz1/PqJFzj0ph2CXFIK+4WAFn9SnKLzLOUTnW0VX6hLjJylRlI
- 1SFCorsHqkE2FHx0TTx0TLodJF+MOAI9hl8ZUjHe47BBRimJMhficrYCb04FwQPqyRMx
- 8YIA==
+ :reply-to; bh=9cf3tZ+uL08zlh8bFAF0MJI9Fv9UayGjAADjcJixVgA=;
+ b=hdzeNEPAxu2GFJAOfAijvgnutWdLVfMCDmztrLV96E6du/C37eRRRkU7bbmu56+IT6
+ KnAmt1wROpoA7j02olTSIo/c46ZauVHswnQE4bkmOz/iLif/hOENeW0u+BROsMLMl83S
+ lf04y2GxuKOfYFCZKXtB3l6WNPBf84+RkliWudAwhHGAWh3yQS2Zl389kOI4AkCG8mCo
+ ksPPYSXuFl8spFRCQsPE7+gFdQwOEFAEv7WaX4QsP7g0rW+2wadMVagUlDFxm15RJUD7
+ TASBerMwNueD9Z4LYqg8d5GSXyt6Q+tesTqck8ePsDnJ/aIWh5xXHW1VnvO7+JAVE0fF
+ nhzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750549862; x=1751154662;
+ d=1e100.net; s=20230601; t=1750549843; x=1751154643;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=AVLGi6yVBj9f4DTQN3Bb0Gk823PKe0kOw43jnGxIjBU=;
- b=gVV4DCslMT1OtzGe8ZV0Gi05kgPAWxKcc5h0Jojvouaw//ba6GRW2UcHk4daWeFnpr
- +wOHDcfGlQ4+Hqvjxj3Cs3AFFlJRXfFwF+iqmrXE8ZE1QNv6PP8rnCNkpI0IKyd28ZUo
- 2VIU7ryK0DPHmI7TGK1NUPn88jO0l0DcfwUOIaerBpkJzvY7Z4OlCTCi2mw1JYjUOWaY
- 4/cgfZoZH+Q8Sx4siXnFZOaKgJQsA8/4GJYRAc2U+PNZXRkRNZSrWoOWoU9p90vQCb6O
- xvo0Z0/jcBhF2L+6yD/7L5yV2pvYdq/+NtGe7fBijc24rruW09LcLxCpAZO+Yht3zerB
- WnnA==
-X-Gm-Message-State: AOJu0YwfiM8CZEnAlD4yMaCX/ddfkJsbQmYPURnkhBgzCqBHOQ4iIvYg
- B+5p7ThBMY2k1AV8QHK3EGwq2oSLk7UnkBI4EBJ/avzACAjUb9BVxlMFw/t3i1PGv9hz/4SeDpc
- M1Ygz
-X-Gm-Gg: ASbGncsT6/bWeTQRQRlcqX8CJx4KDJjQszpNwLRWYEUUw3DlGEWSu+H/odUGXnte82V
- TTDVfbpopgoEFfElBQc71OlnsyjBJLjtLRs6ZcpQfR7u/87VfeVhGqwINdFOYy0G716vYYcLo5r
- 4ahY3MPmaallNXVCbZPcS3mkAc6ZMvcWp+KO6o/w7gL0YycnVDKGxdGvnMGeLVXEXHBmvSyUJOh
- ZpQV2hUpI2z8Z69vPhWdca1zdBUy7uPOV2gmV4ZwpVLA9CpOXPCUy/YowXXt14eVnK9XfPYQ2Pn
- B/05wR7xeFlR5PjP25B7W+vt75A+pjTAtmHaLLWY94zb82aFPsI3pUaRZvj52i7m0YygVgt/HAR
- mjX1if2NCzj+xo7b6gy0P
-X-Google-Smtp-Source: AGHT+IHapHY14W/TxmnIG347DkCvCbHWhYpSfV3/icKB1c+xbM5wWkDEzgS+4rmyJEYpfSe7c05rvA==
-X-Received: by 2002:a05:6a20:9148:b0:21f:419f:9019 with SMTP id
- adf61e73a8af0-22026e95549mr11650424637.21.1750549862202; 
- Sat, 21 Jun 2025 16:51:02 -0700 (PDT)
+ bh=9cf3tZ+uL08zlh8bFAF0MJI9Fv9UayGjAADjcJixVgA=;
+ b=uAZOUqgQ2IBGJ4e8rZDptaZqLcQWR8KmtyHjrGcZVlVPmAI5/wH33pu8NmwHLDRCHb
+ lUtKE+5IB5Zrin5kDF/87O1QeeN7k4gz/llsP5s32AbSh3YfXGe/zbb0LFbLG9ayJFCk
+ TNdCPjAvUURr3BN8W0aAjmccSvSL4L/MgVK7YxSBXKnHZdpcHWxkrRv862Dnpfsu8DcL
+ HpZoDJn5NkOujHjTQbPdIAO9mR+a3jOmjhnKMdxRIjwAMG/aT7LOF6D4sFLbGAqi7PRI
+ tNzEa5G4EW5OykvvANIQjkIV1zptQZtpB2vkIezaApjEV22NBghsEPMMgENenr93tpCS
+ Y/tQ==
+X-Gm-Message-State: AOJu0YzRmUEmZ6xuoItAf7ZXBeN7aMwwLRb9Yw/XNijvDF+sEzxeir4f
+ x8MLGbTuyUmk5OziTXHuRfrpn/117pdA3mQCsf282/YHlJtVKiJg4KwzidBrysyG3fuSt3nwybO
+ pzyrS
+X-Gm-Gg: ASbGncvXf8tTWUt5HBMPVZgotp7kC3dOPdTPnaZO2gN1wr+pDgfzsQKvEVV9Jct3Yfn
+ PfSIeu6faOF245RP90H2wdgSjrUidb7ZnHMBYEX+XgMrtzd1OY3BpkDyBBs4QQee/EF5I9khh7n
+ F9kN7vGNgEysmIl8169I3C1wMbWiLAuztkjK8AWVvbFfymYvpQK6yU+guUjdmm5fnSRg86Hy/wM
+ x80Dh08AWyQG3w4EhkVtu8bsbi6DCMWGCyKzyDVASS9n4nydgQnwDfpNXhJwUQS63lYLvWebzN7
+ LBKC9Fh63n78oJz16bI0qx+8B24y+wmWiCW1WR6P2ZgrZ8LFGsLLCxrn/DtMkVZwkegMxoB1MTt
+ eYrKnOK4Tq/8LblmeCWE3IV0ylQCJf4c=
+X-Google-Smtp-Source: AGHT+IHM+xK3hNe6f+EnJztszqqiMrh4+mtIlLVnLOVUWqsTBMhAjNl8uDr7ljMN8wm3m19LxOoNvQ==
+X-Received: by 2002:a05:6a00:c82:b0:73e:2dc5:a93c with SMTP id
+ d2e1a72fcca58-7490da69427mr9909107b3a.11.1750549843151; 
+ Sat, 21 Jun 2025 16:50:43 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.51.01
+ d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.50.42
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:51:01 -0700 (PDT)
+ Sat, 21 Jun 2025 16:50:42 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 036/101] target/arm: Implement SME2 BFDOT
-Date: Sat, 21 Jun 2025 16:49:32 -0700
-Message-ID: <20250621235037.74091-37-richard.henderson@linaro.org>
+Subject: [PATCH v2 006/101] tcg: Split out tcg_gen_gvec_3_var
+Date: Sat, 21 Jun 2025 16:49:02 -0700
+Message-ID: <20250621235037.74091-7-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x434.google.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, OBFU_UNSUB_UL=1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,66 +101,250 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/translate-sme.c | 17 +++++++++++++++++
- target/arm/tcg/sme.decode      |  9 +++++++++
- 2 files changed, 26 insertions(+)
+ include/tcg/tcg-op-gvec-common.h |   4 ++
+ tcg/tcg-op-gvec.c                | 102 +++++++++++++++++++------------
+ 2 files changed, 68 insertions(+), 38 deletions(-)
 
-diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
-index 607dd2a928..f4467d13c6 100644
---- a/target/arm/tcg/translate-sme.c
-+++ b/target/arm/tcg/translate-sme.c
-@@ -862,3 +862,20 @@ static bool do_fdot_nx(DisasContext *s, arg_azx_n *a)
+diff --git a/include/tcg/tcg-op-gvec-common.h b/include/tcg/tcg-op-gvec-common.h
+index 877871c101..6e8fccad01 100644
+--- a/include/tcg/tcg-op-gvec-common.h
++++ b/include/tcg/tcg-op-gvec-common.h
+@@ -236,6 +236,10 @@ void tcg_gen_gvec_2i(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
+                      uint32_t maxsz, int64_t c, const GVecGen2i *);
+ void tcg_gen_gvec_2s(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
+                      uint32_t maxsz, TCGv_i64 c, const GVecGen2s *);
++void tcg_gen_gvec_3_var(TCGv_ptr dbase, uint32_t dofs,
++                        TCGv_ptr abase, uint32_t aofs,
++                        TCGv_ptr bbase, uint32_t bofs,
++                        uint32_t oprsz, uint32_t maxsz, const GVecGen3 *);
+ void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+                     uint32_t oprsz, uint32_t maxsz, const GVecGen3 *);
+ void tcg_gen_gvec_3i(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
+index 08019421f2..3e53e43354 100644
+--- a/tcg/tcg-op-gvec.c
++++ b/tcg/tcg-op-gvec.c
+@@ -178,9 +178,11 @@ void tcg_gen_gvec_2i_ool(uint32_t dofs, uint32_t aofs, TCGv_i64 c,
  }
  
- TRANS_FEAT(FDOT_nx, aa64_sme2, do_fdot_nx, a)
-+
-+static bool do_bfdot(DisasContext *s, arg_azz_n *a, bool multi)
+ /* Generate a call to a gvec-style helper with three vector operands.  */
+-void tcg_gen_gvec_3_ool(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+-                        uint32_t oprsz, uint32_t maxsz, int32_t data,
+-                        gen_helper_gvec_3 *fn)
++static void expand_3_ool(TCGv_ptr dbase, uint32_t dofs,
++                         TCGv_ptr abase, uint32_t aofs,
++                         TCGv_ptr bbase, uint32_t bofs,
++                         uint32_t oprsz, uint32_t maxsz,
++                         int32_t data, gen_helper_gvec_3 *fn)
+ {
+     TCGv_ptr a0, a1, a2;
+     TCGv_i32 desc = tcg_constant_i32(simd_desc(oprsz, maxsz, data));
+@@ -189,9 +191,9 @@ void tcg_gen_gvec_3_ool(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+     a1 = tcg_temp_ebb_new_ptr();
+     a2 = tcg_temp_ebb_new_ptr();
+ 
+-    tcg_gen_addi_ptr(a0, tcg_env, dofs);
+-    tcg_gen_addi_ptr(a1, tcg_env, aofs);
+-    tcg_gen_addi_ptr(a2, tcg_env, bofs);
++    tcg_gen_addi_ptr(a0, dbase, dofs);
++    tcg_gen_addi_ptr(a1, abase, aofs);
++    tcg_gen_addi_ptr(a2, bbase, bofs);
+ 
+     fn(a0, a1, a2, desc);
+ 
+@@ -200,6 +202,14 @@ void tcg_gen_gvec_3_ool(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+     tcg_temp_free_ptr(a2);
+ }
+ 
++void tcg_gen_gvec_3_ool(uint32_t dofs, uint32_t aofs, uint32_t bofs,
++                        uint32_t oprsz, uint32_t maxsz, int32_t data,
++                        gen_helper_gvec_3 *fn)
 +{
-+    return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm, 0, 0,
-+                         multi, FPST_ENV, gen_helper_gvec_bfdot);
++    expand_3_ool(tcg_env, dofs, tcg_env, aofs, tcg_env, bofs,
++                 oprsz, maxsz, data, fn);
 +}
 +
-+TRANS_FEAT(BFDOT_n1, aa64_sme2, do_bfdot, a, false)
-+TRANS_FEAT(BFDOT_nn, aa64_sme2, do_bfdot, a, true)
-+
-+static bool do_bfdot_nx(DisasContext *s, arg_azx_n *a)
+ /* Generate a call to a gvec-style helper with four vector operands.  */
+ void tcg_gen_gvec_4_ool(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+                         uint32_t cofs, uint32_t oprsz, uint32_t maxsz,
+@@ -789,8 +799,10 @@ static void expand_2s_i32(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
+ }
+ 
+ /* Expand OPSZ bytes worth of three-operand operations using i32 elements.  */
+-static void expand_3_i32(uint32_t dofs, uint32_t aofs,
+-                         uint32_t bofs, uint32_t oprsz, bool load_dest,
++static void expand_3_i32(TCGv_ptr dbase, uint32_t dofs,
++                         TCGv_ptr abase, uint32_t aofs,
++                         TCGv_ptr bbase, uint32_t bofs,
++                         uint32_t oprsz, bool load_dest,
+                          void (*fni)(TCGv_i32, TCGv_i32, TCGv_i32))
+ {
+     TCGv_i32 t0 = tcg_temp_new_i32();
+@@ -799,13 +811,13 @@ static void expand_3_i32(uint32_t dofs, uint32_t aofs,
+     uint32_t i;
+ 
+     for (i = 0; i < oprsz; i += 4) {
+-        tcg_gen_ld_i32(t0, tcg_env, aofs + i);
+-        tcg_gen_ld_i32(t1, tcg_env, bofs + i);
++        tcg_gen_ld_i32(t0, abase, aofs + i);
++        tcg_gen_ld_i32(t1, bbase, bofs + i);
+         if (load_dest) {
+-            tcg_gen_ld_i32(t2, tcg_env, dofs + i);
++            tcg_gen_ld_i32(t2, dbase, dofs + i);
+         }
+         fni(t2, t0, t1);
+-        tcg_gen_st_i32(t2, tcg_env, dofs + i);
++        tcg_gen_st_i32(t2, dbase, dofs + i);
+     }
+     tcg_temp_free_i32(t2);
+     tcg_temp_free_i32(t1);
+@@ -953,8 +965,10 @@ static void expand_2s_i64(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
+ }
+ 
+ /* Expand OPSZ bytes worth of three-operand operations using i64 elements.  */
+-static void expand_3_i64(uint32_t dofs, uint32_t aofs,
+-                         uint32_t bofs, uint32_t oprsz, bool load_dest,
++static void expand_3_i64(TCGv_ptr dbase, uint32_t dofs,
++                         TCGv_ptr abase, uint32_t aofs,
++                         TCGv_ptr bbase, uint32_t bofs,
++                         uint32_t oprsz, bool load_dest,
+                          void (*fni)(TCGv_i64, TCGv_i64, TCGv_i64))
+ {
+     TCGv_i64 t0 = tcg_temp_new_i64();
+@@ -963,13 +977,13 @@ static void expand_3_i64(uint32_t dofs, uint32_t aofs,
+     uint32_t i;
+ 
+     for (i = 0; i < oprsz; i += 8) {
+-        tcg_gen_ld_i64(t0, tcg_env, aofs + i);
+-        tcg_gen_ld_i64(t1, tcg_env, bofs + i);
++        tcg_gen_ld_i64(t0, abase, aofs + i);
++        tcg_gen_ld_i64(t1, bbase, bofs + i);
+         if (load_dest) {
+-            tcg_gen_ld_i64(t2, tcg_env, dofs + i);
++            tcg_gen_ld_i64(t2, dbase, dofs + i);
+         }
+         fni(t2, t0, t1);
+-        tcg_gen_st_i64(t2, tcg_env, dofs + i);
++        tcg_gen_st_i64(t2, dbase, dofs + i);
+     }
+     tcg_temp_free_i64(t2);
+     tcg_temp_free_i64(t1);
+@@ -1114,8 +1128,9 @@ static void expand_2s_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
+ }
+ 
+ /* Expand OPSZ bytes worth of three-operand operations using host vectors.  */
+-static void expand_3_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
+-                         uint32_t bofs, uint32_t oprsz,
++static void expand_3_vec(unsigned vece, TCGv_ptr dbase, uint32_t dofs,
++                         TCGv_ptr abase, uint32_t aofs,
++                         TCGv_ptr bbase, uint32_t bofs, uint32_t oprsz,
+                          uint32_t tysz, TCGType type, bool load_dest,
+                          void (*fni)(unsigned, TCGv_vec, TCGv_vec, TCGv_vec))
+ {
+@@ -1124,13 +1139,13 @@ static void expand_3_vec(unsigned vece, uint32_t dofs, uint32_t aofs,
+         TCGv_vec t1 = tcg_temp_new_vec(type);
+         TCGv_vec t2 = tcg_temp_new_vec(type);
+ 
+-        tcg_gen_ld_vec(t0, tcg_env, aofs + i);
+-        tcg_gen_ld_vec(t1, tcg_env, bofs + i);
++        tcg_gen_ld_vec(t0, abase, aofs + i);
++        tcg_gen_ld_vec(t1, bbase, bofs + i);
+         if (load_dest) {
+-            tcg_gen_ld_vec(t2, tcg_env, dofs + i);
++            tcg_gen_ld_vec(t2, dbase, dofs + i);
+         }
+         fni(vece, t2, t0, t1);
+-        tcg_gen_st_vec(t2, tcg_env, dofs + i);
++        tcg_gen_st_vec(t2, dbase, dofs + i);
+     }
+ }
+ 
+@@ -1432,8 +1447,10 @@ void tcg_gen_gvec_2s(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
+ }
+ 
+ /* Expand a vector three-operand operation.  */
+-void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+-                    uint32_t oprsz, uint32_t maxsz, const GVecGen3 *g)
++void tcg_gen_gvec_3_var(TCGv_ptr dbase, uint32_t dofs,
++                        TCGv_ptr abase, uint32_t aofs,
++                        TCGv_ptr bbase, uint32_t bofs,
++                        uint32_t oprsz, uint32_t maxsz, const GVecGen3 *g)
+ {
+     const TCGOpcode *this_list = g->opt_opc ? : vecop_list_empty;
+     const TCGOpcode *hold_list = tcg_swap_vecop_list(this_list);
+@@ -1441,7 +1458,7 @@ void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+     uint32_t some;
+ 
+     check_size_align(oprsz, maxsz, dofs | aofs | bofs);
+-    check_overlap_3(tcg_env, dofs, tcg_env, aofs, tcg_env, bofs, maxsz);
++    check_overlap_3(dbase, dofs, abase, aofs, bbase, bofs, maxsz);
+ 
+     type = 0;
+     if (g->fniv) {
+@@ -1454,8 +1471,8 @@ void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+          * that e.g. size == 80 would be expanded with 2x32 + 1x16.
+          */
+         some = QEMU_ALIGN_DOWN(oprsz, 32);
+-        expand_3_vec(g->vece, dofs, aofs, bofs, some, 32, TCG_TYPE_V256,
+-                     g->load_dest, g->fniv);
++        expand_3_vec(g->vece, dbase, dofs, abase, aofs, bbase, bofs,
++                     some, 32, TCG_TYPE_V256, g->load_dest, g->fniv);
+         if (some == oprsz) {
+             break;
+         }
+@@ -1466,23 +1483,25 @@ void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+         maxsz -= some;
+         /* fallthru */
+     case TCG_TYPE_V128:
+-        expand_3_vec(g->vece, dofs, aofs, bofs, oprsz, 16, TCG_TYPE_V128,
+-                     g->load_dest, g->fniv);
++        expand_3_vec(g->vece, dbase, dofs, abase, aofs, bbase, bofs,
++                     oprsz, 16, TCG_TYPE_V128, g->load_dest, g->fniv);
+         break;
+     case TCG_TYPE_V64:
+-        expand_3_vec(g->vece, dofs, aofs, bofs, oprsz, 8, TCG_TYPE_V64,
+-                     g->load_dest, g->fniv);
++        expand_3_vec(g->vece, dbase, dofs, abase, aofs, bbase, bofs,
++                     oprsz, 8, TCG_TYPE_V64, g->load_dest, g->fniv);
+         break;
+ 
+     case 0:
+         if (g->fni8 && check_size_impl(oprsz, 8)) {
+-            expand_3_i64(dofs, aofs, bofs, oprsz, g->load_dest, g->fni8);
++            expand_3_i64(dbase, dofs, abase, aofs, bbase, bofs,
++                         oprsz, g->load_dest, g->fni8);
+         } else if (g->fni4 && check_size_impl(oprsz, 4)) {
+-            expand_3_i32(dofs, aofs, bofs, oprsz, g->load_dest, g->fni4);
++            expand_3_i32(dbase, dofs, abase, aofs, bbase, bofs,
++                         oprsz, g->load_dest, g->fni4);
+         } else {
+             assert(g->fno != NULL);
+-            tcg_gen_gvec_3_ool(dofs, aofs, bofs, oprsz,
+-                               maxsz, g->data, g->fno);
++            expand_3_ool(dbase, dofs, abase, aofs, bbase, bofs,
++                         oprsz, maxsz, g->data, g->fno);
+             oprsz = maxsz;
+         }
+         break;
+@@ -1493,10 +1512,17 @@ void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+     tcg_swap_vecop_list(hold_list);
+ 
+     if (oprsz < maxsz) {
+-        expand_clr(tcg_env, dofs + oprsz, maxsz - oprsz);
++        expand_clr(dbase, dofs + oprsz, maxsz - oprsz);
+     }
+ }
+ 
++void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
++                    uint32_t oprsz, uint32_t maxsz, const GVecGen3 *g)
 +{
-+    return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm, a->idx, 0,
-+                         false, FPST_ENV, gen_helper_gvec_bfdot_idx);
++    tcg_gen_gvec_3_var(tcg_env, dofs, tcg_env, aofs, tcg_env, bofs,
++                       oprsz, maxsz, g);
 +}
 +
-+TRANS_FEAT(BFDOT_nx, aa64_sme2, do_bfdot_nx, a)
-diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
-index a2b93519c4..18e625605f 100644
---- a/target/arm/tcg/sme.decode
-+++ b/target/arm/tcg/sme.decode
-@@ -288,6 +288,9 @@ BFMLSL_n1       11000001 001 1 .... 0 .. 010 ..... 110 ..   @azz_nx1_o2x2 n=4
- FDOT_n1         11000001 001 0 .... 0 .. 100 ..... 00 ...   @azz_nx1_o3 n=2
- FDOT_n1         11000001 001 1 .... 0 .. 100 ..... 00 ...   @azz_nx1_o3 n=4
- 
-+BFDOT_n1        11000001 001 0 .... 0 .. 100 ..... 10 ...   @azz_nx1_o3 n=2
-+BFDOT_n1        11000001 001 1 .... 0 .. 100 ..... 10 ...   @azz_nx1_o3 n=4
-+
- ### SME2 Multi-vector Multiple Array Vectors
- 
- %zn_ax2         6:4 !function=times_2
-@@ -328,6 +331,9 @@ BFMLSL_nn       11000001 101 ...01 0 .. 010 ...00 110 ..    @azz_4x4_o2x2
- FDOT_nn         11000001 101 ....0 0 .. 100 ....0 00 ...    @azz_2x2_o3
- FDOT_nn         11000001 101 ...01 0 .. 100 ...00 00 ...    @azz_4x4_o3
- 
-+BFDOT_nn        11000001 101 ....0 0 .. 100 ....0 10 ...    @azz_2x2_o3
-+BFDOT_nn        11000001 101 ...01 0 .. 100 ...00 10 ...    @azz_4x4_o3
-+
- ### SME2 Multi-vector Indexed
- 
- &azx_n          n off rv zn zm idx
-@@ -365,3 +371,6 @@ BFMLSL_nx       11000001 1001 .... 1 .. 1 .. ...00 11 ...   @azx_4x1_o2x2
- 
- FDOT_nx         11000001 0101 .... 0 .. 1 .. ....0 01 ...   @azx_2x1_i2_o3
- FDOT_nx         11000001 0101 .... 1 .. 1 .. ...00 01 ...   @azx_4x1_i2_o3
-+
-+BFDOT_nx        11000001 0101 .... 0 .. 1 .. ....0 11 ...   @azx_2x1_i2_o3
-+BFDOT_nx        11000001 0101 .... 1 .. 1 .. ...00 11 ...   @azx_4x1_i2_o3
+ /* Expand a vector operation with three vectors and an immediate.  */
+ void tcg_gen_gvec_3i(uint32_t dofs, uint32_t aofs, uint32_t bofs,
+                      uint32_t oprsz, uint32_t maxsz, int64_t c,
 -- 
 2.43.0
 
