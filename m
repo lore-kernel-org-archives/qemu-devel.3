@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EBF0BC7115C
-	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 00:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCE9C7EE2A
+	for <qemu-devel@archiver.kernel.org>; Sun, 22 Jun 2025 00:00:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT83G-0005YQ-8E; Sat, 21 Jun 2025 19:55:16 -0400
+	id 1uT85o-00068z-1v; Sat, 21 Jun 2025 19:57:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT82Z-00030Y-U3
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:32 -0400
-Received: from mail-pg1-x52b.google.com ([2607:f8b0:4864:20::52b])
+ id 1uT85c-0005Ng-96
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:57:40 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT82X-0005Ex-In
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:31 -0400
-Received: by mail-pg1-x52b.google.com with SMTP id
- 41be03b00d2f7-b31d8dd18cbso3210023a12.3
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:54:29 -0700 (PDT)
+ id 1uT85a-0006bz-3h
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:57:39 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2363e973db1so21209195ad.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:57:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750550068; x=1751154868; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750550256; x=1751155056; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=Po7ui2Tn5JOW7Osl/wUvf33T7pYaJNFCyJOETEletY4=;
- b=yD030V+D7oSl/azDO0gBEc89nrtTX1zC4s0UQMpHJwbw8Tm3L7NL/x6KqXUBAwjlsk
- +TtBs3HYscDCvFV9MJh5gOlfkeLqNKs2CGnNh6o+xwIoK547xV0ImgAubSumcCBvS9vR
- /XjHPo94h3rN2RIX3Bi010W2oJMFWGOoexWrSsEjR5C6zuTzXl21wEpM4Ci6Oazpwq56
- xVdoFs+nx+o2Mr2CYj5AgTAzirra/upmQFXYRjOcfDJvibN9lUW++KGB2wrH7qOJZioI
- 5Xn409O2bdfDoVHWE8CdI2UAXHIWPjFZHxRZFFKIWn4a5utvUPMKcyd3O7MEViWA9gX4
- 83Ag==
+ :reply-to; bh=94eN2/+hr4yQMwjTplbGW4fRmz5C2Lr2iKkNQZzstUY=;
+ b=SxYgjTKfAK5SUyJcjbYLuSv5K7xY1BpSA7hjW6QUOO+n6BkaWIbGinI4w/F5L/7Ymb
+ sIqazfMCRGBvRnnCmYhJoXmmlgJNvXcdd6L3yisIaBzs1EApLbgy+BdaWavKJpSAlhdE
+ CbKy2CiPearBnRdeVYN12BZDuIAJnBXEM+rP4zj1ShSdAnRVTwyeoyyjbWcZpPmt6YYv
+ FoAdFoFA7Hi5wOyie7omnVCpA/YppehdQHouZJ8F/r2CYa15RAy5mr+1EkBpgaHsGSCW
+ WPczqdntxRpfADvzgZJT3jvgCCBtsAFufXKWFIq9gKo9T/nFLXX0Fkx6LjeV11dofc7C
+ eieA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750550068; x=1751154868;
+ d=1e100.net; s=20230601; t=1750550256; x=1751155056;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=Po7ui2Tn5JOW7Osl/wUvf33T7pYaJNFCyJOETEletY4=;
- b=HG4LNlne6d2+YOzdCkF17scHOgzNtHaKCHp2kU8JOaNSw7M01WVlJ78Qz5HwezSiZP
- hIzH9r9tZc+y8Q7WvbN60LHZxVSwN6Yp9dBnnY5nxGH6pxNGvkloG6ZAtR720iSdlZ9/
- zwB1u5O5pl+upXrA2tVlqRTA2AVGaWPWlA3tluNQG831/tfXLuWoSvEay3OtiG43cyO+
- bkjmSH40kedUQqWA2iKHUacJjwMPiudNM88ebRjZWz7RPi+h3kyWkb5DcGSPrz6dqHe2
- cJB7iJ112BfzojbQ42cKua1syMwz59O+4nr1jDHhSHoVMUjPoZGgLUQw/ghKgg19xYku
- 7IVA==
-X-Gm-Message-State: AOJu0YyZ3hqauTWPNBSeho+n75s51QqNdgUeEkOx1/ZY2AwyZRQlEyuN
- qrYhq2qSn6OCnANbAD1pPkZNw45XLho0ma7mdg0FzdpNebqw8alsymlKJ0wwh3IFYKClN0NgIIo
- 2T8XQpNU=
-X-Gm-Gg: ASbGncv2RkMGe+1fqTPJE0YiHH0CvnNpmO3iholBbnCR7H0Y+Uha44AUNkW3qpOxE6w
- rxEPc859vSgx0oyIvRAgja/Tips09nG6JNcTUqcMlQ9KfqRnoNClu9b4OslQXrtBVQxUTyfLSMR
- mZ/PEHxHen+f+lVY0zOcmOjfdVxVklVxX4VKKeHCHq8qARAf2eHvcEOge7zjvIv6dGCcuEl6kLm
- 3F77Je8yMb2EzF4a+cMmMWG1UOqTMtxHWK+YeTPwPqXkm+3BbeV2yb+884Z1ah5Cxc5KfM+3V2q
- eujin2RMvPEXaAXJB9iB7VaZpLM1iJJ8SQTnMbP88EK5Nva8suhY6WM8atEx+hHCQKx7b+wDAg8
- CltcXwf4LnJX3AEqqfkH8
-X-Google-Smtp-Source: AGHT+IECQU/lrG1j5uihJH9SsZiVa8oMnl12B4zPOPaqjDLSDcHSPCGxW4VhM2Pgb0DamnwyZFGcig==
-X-Received: by 2002:a05:6a21:348b:b0:220:103c:436c with SMTP id
- adf61e73a8af0-22026ec5114mr12585214637.24.1750550067907; 
- Sat, 21 Jun 2025 16:54:27 -0700 (PDT)
+ bh=94eN2/+hr4yQMwjTplbGW4fRmz5C2Lr2iKkNQZzstUY=;
+ b=haquGkoMnPn9ciJckJC/SzT+hFj7QpXOpdfB0HJMpIujAzEQtM7KHaVv47nl4m2Lc8
+ inMPeP91+E+3DtDxJ5kQbkQOFLfClHIevh4qdXejHtYohVtxudy89PuXg0Ku9T9eKhJ4
+ ujOOQyjEz8gthHg5daG/by6M03r0yJ3BhOgLnAHuhW4IUZ7Lhs6x+qG47yBhV1mh0dib
+ tRRZR91ma2DHv98hzXBxpCpHuY3Q+cR2xIMLKSEwcq4ehA8w5cpb5KwWeMDR1jfGywPz
+ xBoOmgwMVZV9XrYpdtDhY5Ibfyh4wuA17uSTfCmbNUX4sqAeGC3XKM4MAZ233+oTeiAq
+ jpjQ==
+X-Gm-Message-State: AOJu0YwC5QGA0YPFXQLRfCBUJnfD6lXZFBVlQ40ms3y1//8WUxI73rt2
+ b5Lo3l7Iufn27zl0aTJYYmNYVPf8Eiwmi1cCe0NVv1B7chsNzgkp8hvKEfpFD5bBRUIJecRSJJe
+ 7Haz8dFQ=
+X-Gm-Gg: ASbGncsHExkuA+OLN3OGVGqNYLCOvzAia+gqdXpdzEkl7cjzBCjCaemTgdi6uMgSbPA
+ SGYKkOM5oBzBKSrNns6vZCpw6dVf4+VawQaRXc2ywQrwnPsEvwiEPZObRChdUl6nPMjtBzLd5Ab
+ OQZgJ+0ZfAaLYpHv1kMY3+OccPYRtg0WmiP+u1ICsgIsWLmz8DsBwl9GeFF1SlWd02TXCfFzQq7
+ i+SboQqIKxRr0eT/Eo4HckFrcnU97Q7KKGH0sFpR51cTYQpHN2J83hWhyEj20neD76mE0JdIdMZ
+ M+rgLCjXOKrbtVVFbxR61jSQo8xRKLWQZJcGOt+NmB7AEvRS/9MUAc4frQcHGC9dMslN7z4MHjN
+ k6nw9tVGpPjIjW+Wyj+wQ
+X-Google-Smtp-Source: AGHT+IGQ4uS2Q+pXmctqTW2pY/41509Mh22ya17lOQZ5lCMlcHaemvNuBLqfQ4i1aN2jiLmkXh8KEQ==
+X-Received: by 2002:a17:902:ea04:b0:22e:457d:3989 with SMTP id
+ d9443c01a7336-237dad62e05mr104926855ad.0.1750550256479; 
+ Sat, 21 Jun 2025 16:57:36 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a46b590sm4970051b3a.27.2025.06.21.16.54.27
+ 41be03b00d2f7-b31f12584cbsm4551790a12.55.2025.06.21.16.57.36
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:54:27 -0700 (PDT)
+ Sat, 21 Jun 2025 16:57:36 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 077/101] target/arm: Implement SVE2p1 WHILE (predicate as
- counter)
-Date: Sat, 21 Jun 2025 16:50:13 -0700
-Message-ID: <20250621235037.74091-78-richard.henderson@linaro.org>
+Subject: [PATCH v2 090/101] target/arm: Implement TBLQ, TBXQ for SME2p1/SVE2p1
+Date: Sat, 21 Jun 2025 16:50:26 -0700
+Message-ID: <20250621235037.74091-91-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52b;
- envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,179 +101,104 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/helper-sve.h    |  3 +++
- target/arm/tcg/sve_helper.c    | 49 ++++++++++++++++++++++++++++++++++
- target/arm/tcg/translate-sve.c | 22 +++++++++++----
- target/arm/tcg/sve.decode      | 11 ++++++++
- 4 files changed, 80 insertions(+), 5 deletions(-)
+ target/arm/tcg/helper-sve.h    | 10 ++++++++++
+ target/arm/tcg/sve_helper.c    | 10 ++++++++++
+ target/arm/tcg/translate-sve.c | 14 ++++++++++++++
+ target/arm/tcg/sve.decode      |  3 +++
+ 4 files changed, 37 insertions(+)
 
 diff --git a/target/arm/tcg/helper-sve.h b/target/arm/tcg/helper-sve.h
-index eac23e75b9..74029c641b 100644
+index 0f510ea610..5f4b4aa036 100644
 --- a/target/arm/tcg/helper-sve.h
 +++ b/target/arm/tcg/helper-sve.h
-@@ -944,6 +944,9 @@ DEF_HELPER_FLAGS_3(sve_whileg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
- DEF_HELPER_FLAGS_3(sve_while2l, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
- DEF_HELPER_FLAGS_3(sve_while2g, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
+@@ -676,11 +676,21 @@ DEF_HELPER_FLAGS_5(sve2_tbl_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sve2_tbl_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_5(sve2_tbl_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, ptr, i32)
  
-+DEF_HELPER_FLAGS_3(sve_whilecl, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
-+DEF_HELPER_FLAGS_3(sve_whilecg, TCG_CALL_NO_RWG, i32, ptr, i32, i32)
++DEF_HELPER_FLAGS_4(sve2p1_tblq_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sve2p1_tblq_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sve2p1_tblq_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sve2p1_tblq_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
 +
- DEF_HELPER_FLAGS_4(sve_subri_b, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
- DEF_HELPER_FLAGS_4(sve_subri_h, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
- DEF_HELPER_FLAGS_4(sve_subri_s, TCG_CALL_NO_RWG, void, ptr, ptr, i64, i32)
+ DEF_HELPER_FLAGS_4(sve2_tbx_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sve2_tbx_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sve2_tbx_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_4(sve2_tbx_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
+ 
++DEF_HELPER_FLAGS_4(sve2p1_tbxq_b, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sve2p1_tbxq_h, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sve2p1_tbxq_s, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++DEF_HELPER_FLAGS_4(sve2p1_tbxq_d, TCG_CALL_NO_RWG, void, ptr, ptr, ptr, i32)
++
+ DEF_HELPER_FLAGS_3(sve_sunpk_h, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(sve_sunpk_s, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(sve_sunpk_d, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
 diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 2beb012292..dfc3e5cabe 100644
+index ed5147031f..a6410d8fc4 100644
 --- a/target/arm/tcg/sve_helper.c
 +++ b/target/arm/tcg/sve_helper.c
-@@ -4096,6 +4096,29 @@ uint64_t HELPER(sve_cntp)(void *vn, void *vg, uint32_t pred_desc)
-     return sum;
- }
+@@ -3844,6 +3844,16 @@ DO_PERSEG_ZZZ(sve2p1_zipq_h, helper_sve_zip_h)
+ DO_PERSEG_ZZZ(sve2p1_zipq_s, helper_sve_zip_s)
+ DO_PERSEG_ZZZ(sve2p1_zipq_d, helper_sve_zip_d)
  
-+/* C.f. Arm pseudocode EncodePredCount */
-+static uint64_t encode_pred_count(uint32_t elements, uint32_t count,
-+                                  uint32_t esz, bool invert)
-+{
-+    uint32_t pred;
++DO_PERSEG_ZZZ(sve2p1_tblq_b, helper_sve_tbl_b)
++DO_PERSEG_ZZZ(sve2p1_tblq_h, helper_sve_tbl_h)
++DO_PERSEG_ZZZ(sve2p1_tblq_s, helper_sve_tbl_s)
++DO_PERSEG_ZZZ(sve2p1_tblq_d, helper_sve_tbl_d)
 +
-+    if (count == 0) {
-+        return 0;
-+    }
-+    if (invert) {
-+        count = elements - count;
-+    } else if (count == elements) {
-+        count = 0;
-+        invert = true;
-+    }
++DO_PERSEG_ZZZ(sve2p1_tbxq_b, helper_sve2_tbx_b)
++DO_PERSEG_ZZZ(sve2p1_tbxq_h, helper_sve2_tbx_h)
++DO_PERSEG_ZZZ(sve2p1_tbxq_s, helper_sve2_tbx_s)
++DO_PERSEG_ZZZ(sve2p1_tbxq_d, helper_sve2_tbx_d)
 +
-+    pred = (count << 1) | 1;
-+    pred <<= esz;
-+    pred |= invert << 15;
-+
-+    return pred;
-+}
-+
- /* C.f. Arm pseudocode PredCountTest */
- static uint32_t pred_count_test(uint32_t elements, uint32_t count, bool invert)
- {
-@@ -4179,6 +4202,19 @@ uint32_t HELPER(sve_while2l)(void *vd, uint32_t count, uint32_t pred_desc)
-     return pred_count_test(2 * oprbits, count, false);
- }
+ #undef DO_PERSEG_ZZZ
  
-+uint32_t HELPER(sve_whilecl)(void *vd, uint32_t count, uint32_t pred_desc)
-+{
-+    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
-+    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t scale = FIELD_EX32(pred_desc, PREDDESC, DATA);
-+    uint32_t elements = (oprsz >> esz) << scale;
-+    ARMPredicateReg *d = vd;
-+
-+    do_zero(d, oprsz);
-+    d->p[0] = encode_pred_count(elements, count, esz, false);
-+    return pred_count_test(elements, count, false);
-+}
-+
- static void do_whileg(uint64_t *d, uint64_t esz_mask,
-                       uint32_t count, uint32_t oprbits)
- {
-@@ -4234,6 +4270,19 @@ uint32_t HELPER(sve_while2g)(void *vd, uint32_t count, uint32_t pred_desc)
-     return pred_count_test(2 * oprbits, count, true);
- }
- 
-+uint32_t HELPER(sve_whilecg)(void *vd, uint32_t count, uint32_t pred_desc)
-+{
-+    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
-+    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t scale = FIELD_EX32(pred_desc, PREDDESC, DATA);
-+    uint32_t elements = (oprsz >> esz) << scale;
-+    ARMPredicateReg *d = vd;
-+
-+    do_zero(d, oprsz);
-+    d->p[0] = encode_pred_count(elements, count, esz, true);
-+    return pred_count_test(elements, count, true);
-+}
-+
- /* Recursive reduction on a function;
-  * C.f. the ARM ARM function ReducePredicated.
-  *
+ #define DO_TRN(NAME, TYPE, H) \
 diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index c2a5b2f76f..3e82c1ed49 100644
+index bbb424b738..f0c00d8ace 100644
 --- a/target/arm/tcg/translate-sve.c
 +++ b/target/arm/tcg/translate-sve.c
-@@ -3093,7 +3093,7 @@ static bool trans_CTERM(DisasContext *s, arg_CTERM *a)
+@@ -2380,12 +2380,26 @@ static gen_helper_gvec_4 * const sve2_tbl_fns[4] = {
+ TRANS_FEAT(TBL_sve2, aa64_sve2, gen_gvec_ool_zzzz, sve2_tbl_fns[a->esz],
+            a->rd, a->rn, (a->rn + 1) % 32, a->rm, 0)
  
- typedef void gen_while_fn(TCGv_i32, TCGv_ptr, TCGv_i32, TCGv_i32);
- static bool do_WHILE(DisasContext *s, arg_while *a,
--                     bool lt, int scale, gen_while_fn *fn)
-+                     bool lt, int scale, int data, gen_while_fn *fn)
- {
-     TCGv_i64 op0, op1, t0, t1, tmax;
-     TCGv_i32 t2;
-@@ -3179,6 +3179,7 @@ static bool do_WHILE(DisasContext *s, arg_while *a,
- 
-     desc = FIELD_DP32(desc, PREDDESC, OPRSZ, vsz / 8);
-     desc = FIELD_DP32(desc, PREDDESC, ESZ, a->esz);
-+    desc = FIELD_DP32(desc, PREDDESC, DATA, data);
- 
-     ptr = tcg_temp_new_ptr();
-     tcg_gen_addi_ptr(ptr, tcg_env, pred_full_reg_offset(s, a->rd));
-@@ -3189,13 +3190,24 @@ static bool do_WHILE(DisasContext *s, arg_while *a,
-     return true;
- }
- 
--TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE, a, true, 0, gen_helper_sve_whilel)
--TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE, a, false, 0, gen_helper_sve_whileg)
-+TRANS_FEAT(WHILE_lt, aa64_sve, do_WHILE,
-+           a, true, 0, 0, gen_helper_sve_whilel)
-+TRANS_FEAT(WHILE_gt, aa64_sve2, do_WHILE,
-+           a, false, 0, 0, gen_helper_sve_whileg)
- 
- TRANS_FEAT(WHILE_lt_pair, aa64_sme2_or_sve2p1, do_WHILE,
--           a, true, 1, gen_helper_sve_while2l)
-+           a, true, 1, 0, gen_helper_sve_while2l)
- TRANS_FEAT(WHILE_gt_pair, aa64_sme2_or_sve2p1, do_WHILE,
--           a, false, 1, gen_helper_sve_while2g)
-+           a, false, 1, 0, gen_helper_sve_while2g)
++static gen_helper_gvec_3 * const tblq_fns[4] = {
++    gen_helper_sve2p1_tblq_b, gen_helper_sve2p1_tblq_h,
++    gen_helper_sve2p1_tblq_s, gen_helper_sve2p1_tblq_d
++};
++TRANS_FEAT(TBLQ, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zzz,
++           tblq_fns[a->esz], a, 0)
 +
-+TRANS_FEAT(WHILE_lt_cnt2, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, true, 1, 1, gen_helper_sve_whilecl)
-+TRANS_FEAT(WHILE_lt_cnt4, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, true, 2, 2, gen_helper_sve_whilecl)
-+TRANS_FEAT(WHILE_gt_cnt2, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, false, 1, 1, gen_helper_sve_whilecg)
-+TRANS_FEAT(WHILE_gt_cnt4, aa64_sme2_or_sve2p1, do_WHILE,
-+           a, false, 2, 2, gen_helper_sve_whilecg)
+ static gen_helper_gvec_3 * const tbx_fns[4] = {
+     gen_helper_sve2_tbx_b, gen_helper_sve2_tbx_h,
+     gen_helper_sve2_tbx_s, gen_helper_sve2_tbx_d
+ };
+ TRANS_FEAT(TBX, aa64_sve2, gen_gvec_ool_arg_zzz, tbx_fns[a->esz], a, 0)
  
- static bool trans_WHILE_ptr(DisasContext *s, arg_WHILE_ptr *a)
++static gen_helper_gvec_3 * const tbxq_fns[4] = {
++    gen_helper_sve2p1_tbxq_b, gen_helper_sve2p1_tbxq_h,
++    gen_helper_sve2p1_tbxq_s, gen_helper_sve2p1_tbxq_d
++};
++TRANS_FEAT(TBXQ, aa64_sme2p1_or_sve2p1, gen_gvec_ool_arg_zzz,
++           tbxq_fns[a->esz], a, 0)
++
+ static bool trans_PMOV_pv(DisasContext *s, arg_PMOV_pv *a)
  {
+     static gen_helper_gvec_2 * const fns[4] = {
 diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
-index a919fe117b..fbc4487b06 100644
+index 623c6f2520..4e5a927f1b 100644
 --- a/target/arm/tcg/sve.decode
 +++ b/target/arm/tcg/sve.decode
-@@ -59,6 +59,8 @@
+@@ -663,6 +663,9 @@ ZIPQ2           01000100 .. 0 ..... 111 001 ..... .....         @rd_rn_rm
+ UZPQ1           01000100 .. 0 ..... 111 010 ..... .....         @rd_rn_rm
+ UZPQ2           01000100 .. 0 ..... 111 011 ..... .....         @rd_rn_rm
  
- %rn_ax2         6:4 !function=times_2
- 
-+%pnd            0:3 !function=plus_8
++TBLQ            01000100 .. 0 ..... 111 110 ..... .....         @rd_rn_rm
++TBXQ            00000101 .. 1 ..... 001 101 ..... .....         @rd_rn_rm
 +
- ###########################################################################
- # Named attribute sets.  These are used to make nice(er) names
- # when creating helpers common to those for the individual
-@@ -804,6 +806,15 @@ WHILE_ptr       00100101 esz:2 1 rm:5 001 100 rn:5 rw:1 rd:4
- WHILE_lt_pair   00100101 .. 1 ..... 0101 . 1 ..... 1 ... .  @while_pair
- WHILE_gt_pair   00100101 .. 1 ..... 0101 . 0 ..... 1 ... .  @while_pair
+ ### SVE Permute - Predicated Group
  
-+# SVE2.1 predicate as count
-+@while_cnt      ........ esz:2 . rm:5 .... u:1 . rn:5 . eq:1 ... \
-+                &while rd=%pnd sf=1
-+
-+WHILE_lt_cnt2   00100101 .. 1 ..... 0100 . 1 ..... 1 . ...  @while_cnt
-+WHILE_lt_cnt4   00100101 .. 1 ..... 0110 . 1 ..... 1 . ...  @while_cnt
-+WHILE_gt_cnt2   00100101 .. 1 ..... 0100 . 0 ..... 1 . ...  @while_cnt
-+WHILE_gt_cnt4   00100101 .. 1 ..... 0110 . 0 ..... 1 . ...  @while_cnt
-+
- ### SVE Integer Wide Immediate - Unpredicated Group
- 
- # SVE broadcast floating-point immediate (unpredicated)
+ # SVE compress active elements
 -- 
 2.43.0
 
