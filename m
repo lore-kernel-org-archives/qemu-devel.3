@@ -4,52 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A279EC7115C
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 05:53:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 607B2C71157
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 06:00:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uSr9Q-0001k6-9G; Sat, 21 Jun 2025 01:52:29 -0400
+	id 1uSrGo-0002ql-5h; Sat, 21 Jun 2025 02:00:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uSr9K-0001jo-9z
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 01:52:22 -0400
+ id 1uSrGl-0002pt-HF; Sat, 21 Jun 2025 02:00:03 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1uSr9H-0008Ed-Lc
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 01:52:22 -0400
+ id 1uSrGh-0002Qu-3X; Sat, 21 Jun 2025 02:00:02 -0400
 Received: from [192.168.201.189]
  (210-129-16-52.radian.jp-east.compute.idcfcloud.net [210.129.16.52])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 55L5q3k7005843
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 55L5xh1o008238
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Sat, 21 Jun 2025 14:52:04 +0900 (JST)
+ Sat, 21 Jun 2025 14:59:44 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=NzlKK4GSiPe0MWCEuCELlrDsY3UydCY9bRsdzXWqczs=; 
+DKIM-Signature: a=rsa-sha256; bh=A2K7dukmy58VPS1HXZpQskpJaho+5/KzxKe+927BTMA=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=Message-ID:Date:Subject:To:From;
- s=rs20250326; t=1750485124; v=1;
- b=KfaSz7ByerFmSS9DQIEi42bmrUsMmYlffwqQanq261j8N99Junh43vDQ/91KGx/d
- +Xh6IXBSBr49ACJnhurwYktL11yyW1ldgVd17IiMo2MtjscypwmQ/rSayf29yS4X
- hDMC/yqtxync5CjnBDcVB48cwU4LDiin+WQOVdyI1ngImU1o4X44GuYiQvPoXryL
- 4JSequaMDVuKwr4Gd+fd+lGEaRat+6Mtww9FoxoOKUjnhmPww0kytzlIJeamtyeV
- sgnzvERxnR17zzZpB3mleDEJFN0OAsgIGXLhBsryfRaqcL+ugiE3Dm4TGKJ8fUIj
- vNhaRP2ZeDO5STIQTGSgTA==
-Message-ID: <22de010f-8fa3-4630-bc6c-e3ce8704ec04@rsg.ci.i.u-tokyo.ac.jp>
-Date: Sat, 21 Jun 2025 14:52:03 +0900
+ s=rs20250326; t=1750485584; v=1;
+ b=U8eG6PjwzMMRlbbG4bfoCu4RWkjeR1o3d/RrWnVlcFcLE3nMKWoK1HJaeffRTdtq
+ gs5fRxW5r6uEiT7jgqGhR3Q2AkIiH/CBxIv0AxGpSMhiBFh1YHSVQhrQSwdK47/F
+ 3dr9j0Fvwewhnz6mk+iMbhyGQ6E7upC33MQ58WAzKl3imwV6Jou5ltlwDijEKnOZ
+ aAvTMITZ59qDamfuapvrUjvFLnxxOjRFN5gqF3f1njvR2cFv0JzJbomVQCSvAP+T
+ 16+l9AtxVnvuweaCFBHJQzF1cWrz1B90Hboj/TX5KVCo62GEmKaXfq1Iq5a8yf7E
+ /BjFWyw3JgN8A62SRSyd/A==
+Message-ID: <155e2866-cb7c-4f15-a527-d19688401ef1@rsg.ci.i.u-tokyo.ac.jp>
+Date: Sat, 21 Jun 2025 14:59:43 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vdpa: Allow VDPA to work on big-endian machine
-To: Konstantin Shkolnyy <kshk@linux.ibm.com>, jasowang@redhat.com,
- yin31149@gmail.com
-Cc: qemu-devel@nongnu.org, mjrosato@linux.ibm.com,
- =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
-References: <20250616133647.1662767-1-kshk@linux.ibm.com>
+Subject: Re: [PULL 12/17] virtio-gpu: support context init multiple timeline
+To: Yiwei Zhang <zzyiwei@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>
+References: <20250605162651.2614401-1-alex.bennee@linaro.org>
+ <20250605162651.2614401-13-alex.bennee@linaro.org>
+ <d504e5de-cb7f-4eda-a046-9edef5d23749@rsg.ci.i.u-tokyo.ac.jp>
+ <CAJ+hS_jUtitaeqYYxHN6q9ijqBu=Zyviid+EJc2sJ1yQLRxSDQ@mail.gmail.com>
+ <877c16ud1r.fsf@draig.linaro.org>
+ <CAJ+hS_insLDZRmQhVWfbLxqzdA4oWXYGHHOkFVJTdz3TucYqjg@mail.gmail.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20250616133647.1662767-1-kshk@linux.ibm.com>
+In-Reply-To: <CAJ+hS_insLDZRmQhVWfbLxqzdA4oWXYGHHOkFVJTdz3TucYqjg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -76,21 +80,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2025/06/16 22:36, Konstantin Shkolnyy wrote:
-> After commit 0caed25cd171 vhost_vdpa_net_load_vlan() started seeing
-> VIRTIO_NET_F_CTRL_VLAN flag and making 4096 calls to the kernel with
-> VIRTIO_NET_CTRL_VLAN_ADD command. However, it forgot to convert the
-> 16-bit VLAN IDs to LE format. On BE machine, the kernel calls failed
-> when they saw "VLAN IDs" greater than 4095, and QEMU then said:
-> "unable to start vhost net: 5: falling back on userspace virtio", and
-> VDPA became disabled.
+On 2025/06/21 4:47, Yiwei Zhang wrote:
+> On Thu, Jun 19, 2025 at 11:45 PM Alex Bennée <alex.bennee@linaro.org> wrote:
+>>
+>> Yiwei Zhang <zzyiwei@gmail.com> writes:
+>>
+>>> On Sun, Jun 8, 2025 at 1:24 AM Akihiko Odaki
+>>> <odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>>>>
+>>>> On 2025/06/06 1:26, Alex Bennée wrote:
+>>>>> From: Yiwei Zhang <zzyiwei@gmail.com>
+>>>>>
+>>>>> Venus and later native contexts have their own fence context along with
+>>>>> multiple timelines within. Fences wtih VIRTIO_GPU_FLAG_INFO_RING_IDX in
+>>>>> the flags must be dispatched to be created on the target context. Fence
+>>>>> signaling also has to be handled on the specific timeline within that
+>>>>> target context.
+>>>>>
+>>>>> Before this change, venus fencing is completely broken if the host
+>>>>> driver doesn't support implicit fencing with external memory objects.
+>>>>> Frames can go backwards along with random artifacts on screen if the
+>>>>> host driver doesn't attach an implicit fence to the render target. The
+>>>>> symptom could be hidden by certain guest wsi backend that waits on a
+>>>>> venus native VkFence object for the actual payload with limited present
+>>>>> modes or under special configs. e.g. x11 mailbox or xwayland.
+>>>>>
+>>>>> After this change, everything related to venus fencing starts making
+>>>>> sense. Confirmed this via guest and host side perfetto tracing.
+>>>>>
+>>>>> Cc: qemu-stable@nongnu.org
+>>>>> Fixes: 94d0ea1c1928 ("virtio-gpu: Support Venus context")
+>>>>
+>>>> I suggest moving this in the front of the patch series to ease backporting.
+>>>>
+>>>> I also wonder if "[PULL 11/17] ui/gtk-gl-area: Remove extra draw call in
+>>>> refresh" requires Cc: qemu-stable@nongnu.org. Fixing -display gtk,gl=on
+>>>> for Wayland sounds as important as this patch.
+>>>>
+>>>> Regards,
+>>>> Akihiko Odaki
+>>>
+>>> Hi Alex,
+>>>
+>>> +1 for Akihiko's point. I'm also curious when will the venus fix land
+>>> in-tree?
+>>
+>> We have a problem that there are two contradictory bugs - one that shows
+>> up in the x86/kvm case and one in the aarch64/tcg case. Both are caused
+>> by the weird lifetime semantics of the virgl resource vs QEMU memory
+>> region and we haven't found a solution that solves both yet.
 > 
-> Convert the VLAN ID to LE before putting it into virtio queue.
-> 
-> Fixes: 8f7e9967484d ("vdpa: Restore vlan filtering state")
-> Signed-off-by: Konstantin Shkolnyy <kshk@linux.ibm.com>
-> Acked-by: Jason Wang <jasowang@redhat.com>
-> Acked-by: Eugenio Pérez <eperezma@redhat.com>
+> Sounds like irrelevant to the venus fix. Might be worth filing a
+> virglrenderer issue with some details. More eyes would be helpful if
+> this turns out to be some known kvm issue seen before on other vmms.
+
+This patch itself looks good to me so:
 
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+
+It's up to Alex whether to wait until other patches (the blob 
+mapping/memory region fix in particular) piles up or not.
+
+Regards,
+Akihiko Odaki
 
