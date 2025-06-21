@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75E67C7EE2A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44558C71157
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:54:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT7z1-00053n-44; Sat, 21 Jun 2025 19:50:51 -0400
+	id 1uT7zI-0005F1-OM; Sat, 21 Jun 2025 19:51:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7yy-00052n-Nx
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:48 -0400
-Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
+ id 1uT7zF-0005CZ-8j
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:51:05 -0400
+Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7yx-0004Rv-1R
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:48 -0400
-Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-73972a54919so2371899b3a.3
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:50:46 -0700 (PDT)
+ id 1uT7zD-0004X1-AR
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:51:05 -0400
+Received: by mail-pf1-x435.google.com with SMTP id
+ d2e1a72fcca58-742c3d06de3so3591819b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:51:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750549846; x=1751154646; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750549861; x=1751154661; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=JesRsBxTW9P6euxGCiWnEca1MfgSBXk2WdQ/r2EWxHc=;
- b=iPyOdAGPXIv755Rt2XQwuyOvFzC/aWU/U9kupKYON6AIZ7XQnVDOr+GY9ccBfhIjZ2
- HpD6wa9fBnGrWN8C6JscA7UophRKmTAKFZSeha5uqh5XPwGcwC7zYEolDp+AWOnZdZpV
- ALyhF15JtTtY5oswX5PIgKAK3c51sMEdXcrKNzuPDZvX4Ctp5NqbzpCHshGk2gf9oZS3
- tW+zhxrLsH6SMKEL6U2PDi8eFipxYY9mlAGm6K1GzkAnddJ78LaKiRUrDPBkLzC0wYeL
- V3cePjw2ZXl49vHWyAKQJ5wqhx8VnMu++QYuz7vCRlBmFHRzSRR2BcQUegGOoK5VQfIh
- 7Mbg==
+ :reply-to; bh=ep/ctJ4lC0vJApF/uSjfzJ7QIfqX7YOFiWVYoLn9Hg0=;
+ b=E9JQMo1HdsNgirTXzg4VOYjUdmfUjujefk3wN+yffi1pBhsAR+UHNJlHwdgYx0hiGq
+ UMPLgmUJzY3Tut50m/PqJoUvQNfy5+FBjq1pEsez+cvAkho5lB9zL5pP0wQcsJigNiRo
+ VBw0D2Wmiluv7Q7cvTiirqOmzxbgOndJN2qU7MEuSO0GlF2NGVhPAfVVdAx8jjSClE6f
+ VOfiSAcOkxNTAvGmzefaGi89g5pd6kWuJnUvUdDbs3NSviLCwLPQtxrSozikgZ1dX/Ru
+ L+WLFlB65MYLcbej7IpvdhdCsxUXbx79sucqGeGN9liqKIXv+x90OPQs8LdVMDk2j8oB
+ M8Cg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750549846; x=1751154646;
+ d=1e100.net; s=20230601; t=1750549861; x=1751154661;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=JesRsBxTW9P6euxGCiWnEca1MfgSBXk2WdQ/r2EWxHc=;
- b=XAt3t3HZuhc3v/RY3y6ZGaKKgx1S2gp/UVU5ZvnWgRI0fMLBo62c5Ich+sY5ge+Le+
- 2c3n5hIJ3BoblCm+pT/nu2intkQP0DxE+qoTx5BAgTKveI/Kb+3rh7a0BujyuCjIG3K6
- cs5z5drsqehRasfBZa3kRTklcHhDfcDDw+YATriK2LcXMgQNzi3U/blXbeNc+V1ybhhu
- W9R/lC066YnqZVkVdAHVfrqCrOUjrwALfsIRncx4/kbPzH5yOmcqCscIo+EYddfvx9X7
- hzZ+/elVCnAdkhAYuTH7+EGBpPX5DAOfYpl1pcOpgtH9Cg9BzPorUauVbyRfmeWdc/nW
- hrUQ==
-X-Gm-Message-State: AOJu0YzauDDSBQLXL4qi1RMbYHcPWHnWOZ5CHmWLcAnpGxZyLWBG5vgB
- G26VwQ9Zhy7Wz05Ffo/2aAChhiQtOgNLwEaQYRl0mBi/TsZfjcYtQSb7YzsG0alN5WnzWfgmje0
- /4s/k
-X-Gm-Gg: ASbGncuZ1n5HTzf9UVTM43JKmeu+yZCZDz3x4KOFSAd/K2RX0kEndYwuPDw8JrpRnSa
- tEnTT+8epl4MM5JV4g/fGnzRhzljGeaflO83GlcavqBxC8wS2ysIHaZRhCnJnjtFIDg9ueG+AUQ
- A0uL/DQmSmKjDGBECfjNCqC3+gyts+rDKz8U2SRc6mSEf8VAHz+08ykzBAf+JfY+Nb1XVUL+Uu/
- yonqZZn8TRKR5e1iqeTcxBhIrcb1nA3YYFZIzOuSYyOoL7EUDAnQaEs3UR2M/ZsBheGnXsOfeKB
- QtBJGyT9BiSHu8TfJIRLMe6I7FUZyIEC487qGNeG51KHHxqus0+INKcf2CA8n7xmuDpjI71lQ7g
- +w4pdBP9/6iB8qJvFvrv1
-X-Google-Smtp-Source: AGHT+IFzx+2q0Zr8+hyHaFAGqQCJIY8QAXOoakh/i9EWo23rQ6m15H0mHNKxI9ER8M7REBuob7otww==
-X-Received: by 2002:a05:6a20:244a:b0:21a:b9d4:ad73 with SMTP id
- adf61e73a8af0-22026ffb540mr14761532637.40.1750549845671; 
- Sat, 21 Jun 2025 16:50:45 -0700 (PDT)
+ bh=ep/ctJ4lC0vJApF/uSjfzJ7QIfqX7YOFiWVYoLn9Hg0=;
+ b=ENuQq04woqlCGiHFGG7dwv940gSnKtKy5o8tr41YwZRVIUHA2gfg1ZirDvh9TMeTHx
+ 9BaU8xqSsVIT42Kewlv0i8oJJRsH1JutHu7PLUADU3BDPOzwtg1Gfz3eC4qFcnBQvirl
+ urRs4AGCDBEZoUi4530npp28QRwNnjhAJpTjAuG+qXAJBwg3tJSIjCS0De6GJ/S8a1mK
+ 0QYOm2o0NgYWXlTECK17lt3JH57JJRovCY7uslB8aIm3sFpUf8vuEQOgISA7W0O+kdHT
+ XvSXj322mU7udk/pHJqEZCiTF6CAiCjhTBh06+R5vuGWol0R0QAb2CE+4EVSkZVNqRSp
+ 9lag==
+X-Gm-Message-State: AOJu0YyR7qUtEBR2bPDlE20YxwIIE8H6pJw/78k2N1c2WzvLQWwx6349
+ 5SD9s6B0Bd2S/PsNuKkKSotmn4LsXrvA0bXpWlESmB2wAbDAfnNIbrJNEymodatK6NMQu3DEUFM
+ lynx9
+X-Gm-Gg: ASbGncvOhm5xF0vqhAvJObzirRQlVQYyxUzwIRc/5kMgdO8WCQVz4dL8fHilRS3y7Qh
+ OSQHHKqp/FCEz82Kqql+tAspJ9SmwTcq6uq+fzz0RZYX/l125SkCwTZUa8P+upFEnA8B94mjNFl
+ vuy02qTprPsQO4P09+ryTjRUxxG4TH4mQWy93imc/KAYsbfU2dtQkJyvF3ghXyYn/u1+vjWGCrD
+ oRINkzm0+NFK5Mwu9umJ03ehXWzQy/elA0iMEQ4kh7SBD3QpG6X0k1+v44LxlvD6N7Ei8kBukOu
+ vW5wOSkSP0P51aPh6Q5/U4UBP8IHuQ6S6JcL9DBRPX5lGJmjeXGxG0vwozMAdQa7YOK7RkxetGH
+ jtz4oQkklBax79Zkt5Rua
+X-Google-Smtp-Source: AGHT+IFlDX4G2TsN51q28ELC/1gJCxWbOKMqWRPTPgFIm3V0djXbDKJfbdRjWWY6ZZYG5oH16Aay4Q==
+X-Received: by 2002:a05:6a00:1804:b0:748:e38d:fed4 with SMTP id
+ d2e1a72fcca58-7490d691e08mr12439647b3a.6.1750549861544; 
+ Sat, 21 Jun 2025 16:51:01 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.50.45
+ d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.51.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:50:45 -0700 (PDT)
+ Sat, 21 Jun 2025 16:51:01 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 010/101] linux-user/aarch64: Update hwcap bits from 6.14
-Date: Sat, 21 Jun 2025 16:49:06 -0700
-Message-ID: <20250621235037.74091-11-richard.henderson@linaro.org>
+Subject: [PATCH v2 035/101] target/arm: Implement SME2 FDOT
+Date: Sat, 21 Jun 2025 16:49:31 -0700
+Message-ID: <20250621235037.74091-36-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,130 +101,186 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- linux-user/elfload.c | 75 ++++++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 72 insertions(+), 3 deletions(-)
+ target/arm/tcg/helper-sme.h    |  5 ++++
+ target/arm/tcg/sme_helper.c    | 44 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-sme.c | 18 ++++++++++++++
+ target/arm/tcg/translate-sve.c |  5 ++++
+ target/arm/tcg/sme.decode      | 14 +++++++++++
+ target/arm/tcg/sve.decode      |  8 +++++--
+ 6 files changed, 92 insertions(+), 2 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 82ebf6a212..2add1665c7 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -751,7 +751,23 @@ enum {
-     ARM_HWCAP_A64_SSBS          = 1 << 28,
-     ARM_HWCAP_A64_SB            = 1 << 29,
-     ARM_HWCAP_A64_PACA          = 1 << 30,
--    ARM_HWCAP_A64_PACG          = 1UL << 31,
-+    ARM_HWCAP_A64_PACG          = 1ULL << 31,
-+    ARM_HWCAP_A64_GCS           = 1ULL << 32,
-+    ARM_HWCAP_A64_CMPBR         = 1ULL << 33,
-+    ARM_HWCAP_A64_FPRCVT        = 1ULL << 34,
-+    ARM_HWCAP_A64_F8MM8         = 1ULL << 35,
-+    ARM_HWCAP_A64_F8MM4         = 1ULL << 36,
-+    ARM_HWCAP_A64_SVE_F16MM     = 1ULL << 37,
-+    ARM_HWCAP_A64_SVE_ELTPERM   = 1ULL << 38,
-+    ARM_HWCAP_A64_SVE_AES2      = 1ULL << 39,
-+    ARM_HWCAP_A64_SVE_BFSCALE   = 1ULL << 40,
-+    ARM_HWCAP_A64_SVE2P2        = 1ULL << 41,
-+    ARM_HWCAP_A64_SME2P2        = 1ULL << 42,
-+    ARM_HWCAP_A64_SME_SBITPERM  = 1ULL << 43,
-+    ARM_HWCAP_A64_SME_AES       = 1ULL << 44,
-+    ARM_HWCAP_A64_SME_SFEXPA    = 1ULL << 45,
-+    ARM_HWCAP_A64_SME_STMOP     = 1ULL << 46,
-+    ARM_HWCAP_A64_SME_SMOP4     = 1ULL << 47,
+diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
+index cdd7058aed..ec93ff57ff 100644
+--- a/target/arm/tcg/helper-sme.h
++++ b/target/arm/tcg/helper-sme.h
+@@ -173,3 +173,8 @@ DEF_HELPER_FLAGS_5(gvec_fmaxnum_b16, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, fpst, i32)
+ DEF_HELPER_FLAGS_5(gvec_fminnum_b16, TCG_CALL_NO_RWG,
+                    void, ptr, ptr, ptr, fpst, i32)
++
++DEF_HELPER_FLAGS_6(sme2_fdot_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, env, i32)
++DEF_HELPER_FLAGS_6(sme2_fdot_idx_h, TCG_CALL_NO_RWG,
++                   void, ptr, ptr, ptr, ptr, env, i32)
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 194560eafa..bd9b81d5aa 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -1122,6 +1122,50 @@ void HELPER(sme_fmopa_h)(void *vza, void *vzn, void *vzm, void *vpn,
+     }
+ }
  
-     ARM_HWCAP2_A64_DCPODP       = 1 << 0,
-     ARM_HWCAP2_A64_SVE2         = 1 << 1,
-@@ -798,6 +814,25 @@ enum {
-     ARM_HWCAP2_A64_SME_F16F16   = 1ULL << 42,
-     ARM_HWCAP2_A64_MOPS         = 1ULL << 43,
-     ARM_HWCAP2_A64_HBC          = 1ULL << 44,
-+    ARM_HWCAP2_A64_SVE_B16B16   = 1ULL << 45,
-+    ARM_HWCAP2_A64_LRCPC3       = 1ULL << 46,
-+    ARM_HWCAP2_A64_LSE128       = 1ULL << 47,
-+    ARM_HWCAP2_A64_FPMR         = 1ULL << 48,
-+    ARM_HWCAP2_A64_LUT          = 1ULL << 49,
-+    ARM_HWCAP2_A64_FAMINMAX     = 1ULL << 50,
-+    ARM_HWCAP2_A64_F8CVT        = 1ULL << 51,
-+    ARM_HWCAP2_A64_F8FMA        = 1ULL << 52,
-+    ARM_HWCAP2_A64_F8DP4        = 1ULL << 53,
-+    ARM_HWCAP2_A64_F8DP2        = 1ULL << 54,
-+    ARM_HWCAP2_A64_F8E4M3       = 1ULL << 55,
-+    ARM_HWCAP2_A64_F8E5M2       = 1ULL << 56,
-+    ARM_HWCAP2_A64_SME_LUTV2    = 1ULL << 57,
-+    ARM_HWCAP2_A64_SME_F8F16    = 1ULL << 58,
-+    ARM_HWCAP2_A64_SME_F8F32    = 1ULL << 59,
-+    ARM_HWCAP2_A64_SME_SF8FMA   = 1ULL << 60,
-+    ARM_HWCAP2_A64_SME_SF8DP4   = 1ULL << 61,
-+    ARM_HWCAP2_A64_SME_SF8DP2   = 1ULL << 62,
-+    ARM_HWCAP2_A64_POE          = 1ULL << 63,
- };
- 
- #define ELF_HWCAP   get_elf_hwcap()
-@@ -886,7 +921,7 @@ uint64_t get_elf_hwcap2(void)
- 
- const char *elf_hwcap_str(uint32_t bit)
++void HELPER(sme2_fdot_h)(void *vd, void *vn, void *vm, void *va,
++                         CPUARMState *env, uint32_t desc)
++{
++    intptr_t i, oprsz = simd_maxsz(desc);
++    bool za = extract32(desc, SIMD_DATA_SHIFT, 1);
++    float_status *fpst_std = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
++    float_status *fpst_f16 = &env->vfp.fp_status[za ? FPST_ZA_F16 : FPST_A64_F16];
++    float_status fpst_odd = *fpst_std;
++    float32 *d = vd, *a = va;
++    uint32_t *n = vn, *m = vm;
++
++    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
++
++    for (i = 0; i < oprsz / sizeof(float32); ++i) {
++        d[H4(i)] = f16_dotadd(a[H4(i)], n[H4(i)], m[H4(i)],
++                              fpst_f16, fpst_std, &fpst_odd);
++    }
++}
++
++void HELPER(sme2_fdot_idx_h)(void *vd, void *vn, void *vm, void *va,
++                             CPUARMState *env, uint32_t desc)
++{
++    intptr_t i, j, oprsz = simd_maxsz(desc);
++    intptr_t elements = oprsz / sizeof(float32);
++    intptr_t eltspersegment = MIN(4, elements);
++    int idx = extract32(desc, SIMD_DATA_SHIFT, 2);
++    bool za = extract32(desc, SIMD_DATA_SHIFT + 2, 1);
++    float_status *fpst_std = &env->vfp.fp_status[za ? FPST_ZA : FPST_A64];
++    float_status *fpst_f16 = &env->vfp.fp_status[za ? FPST_ZA_F16 : FPST_A64_F16];
++    float_status fpst_odd = *fpst_std;
++    float32 *d = vd, *a = va;
++    uint32_t *n = vn, *m = (uint32_t *)vm + H4(idx);
++
++    set_float_rounding_mode(float_round_to_odd, &fpst_odd);
++
++    for (i = 0; i < elements; i += eltspersegment) {
++        uint32_t mm = m[i];
++        for (j = 0; j < eltspersegment; ++j) {
++            d[H4(i + j)] = f16_dotadd(a[H4(i + j)], n[H4(i + j)], mm,
++                                      fpst_f16, fpst_std, &fpst_odd);
++        }
++    }
++}
++
+ void HELPER(sme_bfmopa)(void *vza, void *vzn, void *vzm,
+                         void *vpn, void *vpm, CPUARMState *env, uint32_t desc)
  {
--    static const char *hwcap_str[] = {
-+    static const char * const hwcap_str[] = {
-     [__builtin_ctz(ARM_HWCAP_A64_FP      )] = "fp",
-     [__builtin_ctz(ARM_HWCAP_A64_ASIMD   )] = "asimd",
-     [__builtin_ctz(ARM_HWCAP_A64_EVTSTRM )] = "evtstrm",
-@@ -919,6 +954,22 @@ const char *elf_hwcap_str(uint32_t bit)
-     [__builtin_ctz(ARM_HWCAP_A64_SB      )] = "sb",
-     [__builtin_ctz(ARM_HWCAP_A64_PACA    )] = "paca",
-     [__builtin_ctz(ARM_HWCAP_A64_PACG    )] = "pacg",
-+    [__builtin_ctzll(ARM_HWCAP_A64_GCS   )] = "gcs",
-+    [__builtin_ctzll(ARM_HWCAP_A64_CMPBR )] = "cmpbr",
-+    [__builtin_ctzll(ARM_HWCAP_A64_FPRCVT)] = "fprcvt",
-+    [__builtin_ctzll(ARM_HWCAP_A64_F8MM8 )] = "f8mm8",
-+    [__builtin_ctzll(ARM_HWCAP_A64_F8MM4 )] = "f8mm4",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SVE_F16MM)] = "svef16mm",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SVE_ELTPERM)] = "sveeltperm",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SVE_AES2)] = "sveaes2",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SVE_BFSCALE)] = "svebfscale",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SVE2P2)] = "sve2p2",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SME2P2)] = "sme2p2",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SME_SBITPERM)] = "smesbitperm",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SME_AES)] = "smeaes",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SME_SFEXPA)] = "smesfexpa",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SME_STMOP)] = "smestmop",
-+    [__builtin_ctzll(ARM_HWCAP_A64_SME_SMOP4)] = "smesmop4",
-     };
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index ec12bfd089..607dd2a928 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -844,3 +844,21 @@ static bool do_bfmlal_nx(DisasContext *s, arg_azx_n *a, bool sub)
  
-     return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
-@@ -926,7 +977,7 @@ const char *elf_hwcap_str(uint32_t bit)
+ TRANS_FEAT(BFMLAL_nx, aa64_sme2, do_bfmlal_nx, a, false)
+ TRANS_FEAT(BFMLSL_nx, aa64_sme2, do_bfmlal_nx, a, true)
++
++static bool do_fdot(DisasContext *s, arg_azz_n *a, bool multi)
++{
++    return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm, 1, 0,
++                         multi, FPST_ENV, gen_helper_sme2_fdot_h);
++}
++
++TRANS_FEAT(FDOT_n1, aa64_sme2, do_fdot, a, false)
++TRANS_FEAT(FDOT_nn, aa64_sme2, do_fdot, a, true)
++
++static bool do_fdot_nx(DisasContext *s, arg_azx_n *a)
++{
++    return do_azz_acc_fp(s, a->n, 1, a->rv, a->off, a->zn, a->zm,
++                         a->idx | 2, 0, false, FPST_ENV,
++                         gen_helper_sme2_fdot_idx_h);
++}
++
++TRANS_FEAT(FDOT_nx, aa64_sme2, do_fdot_nx, a)
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 7f8ca78a91..2a1efa4394 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -7183,6 +7183,11 @@ TRANS_FEAT_NONSTREAMING(USMMLA, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
+ TRANS_FEAT_NONSTREAMING(UMMLA, aa64_sve_i8mm, gen_gvec_ool_arg_zzzz,
+                         gen_helper_gvec_ummla_b, a, 0)
  
- const char *elf_hwcap2_str(uint32_t bit)
- {
--    static const char *hwcap_str[] = {
-+    static const char * const hwcap_str[] = {
-     [__builtin_ctz(ARM_HWCAP2_A64_DCPODP       )] = "dcpodp",
-     [__builtin_ctz(ARM_HWCAP2_A64_SVE2         )] = "sve2",
-     [__builtin_ctz(ARM_HWCAP2_A64_SVEAES       )] = "sveaes",
-@@ -972,6 +1023,24 @@ const char *elf_hwcap2_str(uint32_t bit)
-     [__builtin_ctzll(ARM_HWCAP2_A64_SME_F16F16 )] = "smef16f16",
-     [__builtin_ctzll(ARM_HWCAP2_A64_MOPS       )] = "mops",
-     [__builtin_ctzll(ARM_HWCAP2_A64_HBC        )] = "hbc",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_SVE_B16B16 )] = "sveb16b16",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_LRCPC3     )] = "lrcpc3",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_LSE128     )] = "lse128",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_FPMR       )] = "fpmr",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_LUT        )] = "lut",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_FAMINMAX   )] = "faminmax",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_F8CVT      )] = "f8cvt",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_F8FMA      )] = "f8fma",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_F8DP4      )] = "f8dp4",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_F8DP2      )] = "f8dp2",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_F8E4M3     )] = "f8e4m3",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_F8E5M2     )] = "f8e5m2",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_SME_LUTV2  )] = "smelutv2",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_SME_F8F16  )] = "smef8f16",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_SME_F8F32  )] = "smef8f32",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_SME_SF8DP4 )] = "smesf8dp4",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_SME_SF8DP2 )] = "smesf8dp2",
-+    [__builtin_ctzll(ARM_HWCAP2_A64_POE        )] = "poe",
-     };
++TRANS_FEAT(FDOT_zzzz, aa64_sme2_or_sve2p1, gen_gvec_env_arg_zzzz,
++           gen_helper_sme2_fdot_h, a, 0)
++TRANS_FEAT(FDOT_zzxz, aa64_sme2_or_sve2p1, gen_gvec_env_arg_zzxz,
++           gen_helper_sme2_fdot_idx_h, a)
++
+ TRANS_FEAT(BFDOT_zzzz, aa64_sve_bf16, gen_gvec_env_arg_zzzz,
+            gen_helper_gvec_bfdot, a, 0)
+ TRANS_FEAT(BFDOT_zzxz, aa64_sve_bf16, gen_gvec_env_arg_zzxz,
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 9850c19d90..a2b93519c4 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -285,6 +285,9 @@ BFMLSL_n1       11000001 001 0 .... 0 .. 011 ..... 11 ...   @azz_nx1_o3x2 n=1
+ BFMLSL_n1       11000001 001 0 .... 0 .. 010 ..... 110 ..   @azz_nx1_o2x2 n=2
+ BFMLSL_n1       11000001 001 1 .... 0 .. 010 ..... 110 ..   @azz_nx1_o2x2 n=4
  
-     return bit < ARRAY_SIZE(hwcap_str) ? hwcap_str[bit] : NULL;
++FDOT_n1         11000001 001 0 .... 0 .. 100 ..... 00 ...   @azz_nx1_o3 n=2
++FDOT_n1         11000001 001 1 .... 0 .. 100 ..... 00 ...   @azz_nx1_o3 n=4
++
+ ### SME2 Multi-vector Multiple Array Vectors
+ 
+ %zn_ax2         6:4 !function=times_2
+@@ -322,6 +325,9 @@ BFMLAL_nn       11000001 101 ...01 0 .. 010 ...00 100 ..    @azz_4x4_o2x2
+ BFMLSL_nn       11000001 101 ....0 0 .. 010 ....0 110 ..    @azz_2x2_o2x2
+ BFMLSL_nn       11000001 101 ...01 0 .. 010 ...00 110 ..    @azz_4x4_o2x2
+ 
++FDOT_nn         11000001 101 ....0 0 .. 100 ....0 00 ...    @azz_2x2_o3
++FDOT_nn         11000001 101 ...01 0 .. 100 ...00 00 ...    @azz_4x4_o3
++
+ ### SME2 Multi-vector Indexed
+ 
+ &azx_n          n off rv zn zm idx
+@@ -351,3 +357,11 @@ BFMLAL_nx       11000001 1001 .... 1 .. 1 .. ...00 10 ...   @azx_4x1_o2x2
+ BFMLSL_nx       11000001 1000 .... . .. 1 .. ..... 11 ...   @azx_1x1_o3x2
+ BFMLSL_nx       11000001 1001 .... 0 .. 1 .. ....0 11 ...   @azx_2x1_o2x2
+ BFMLSL_nx       11000001 1001 .... 1 .. 1 .. ...00 11 ...   @azx_4x1_o2x2
++
++@azx_2x1_i2_o3  ........ .... zm:4 . .. . idx:2 .... ... off:3 \
++                &azx_n n=2 rv=%mova_rv zn=%zn_ax2
++@azx_4x1_i2_o3  ........ .... zm:4 . .. . idx:2 .... ... off:3 \
++                &azx_n n=2 rv=%mova_rv zn=%zn_ax4
++
++FDOT_nx         11000001 0101 .... 0 .. 1 .. ....0 01 ...   @azx_2x1_i2_o3
++FDOT_nx         11000001 0101 .... 1 .. 1 .. ...00 01 ...   @azx_4x1_i2_o3
+diff --git a/target/arm/tcg/sve.decode b/target/arm/tcg/sve.decode
+index 04b6fcc0cf..3a0ee429a8 100644
+--- a/target/arm/tcg/sve.decode
++++ b/target/arm/tcg/sve.decode
+@@ -1662,7 +1662,9 @@ FMLSLT_zzzw     01100100 10 1 ..... 10 1 00 1 ..... .....  @rda_rn_rm_e0
+ BFMLALB_zzzw    01100100 11 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_e0
+ BFMLALT_zzzw    01100100 11 1 ..... 10 0 00 1 ..... .....  @rda_rn_rm_e0
+ 
+-### SVE2 floating-point bfloat16 dot-product
++### SVE2 floating-point dot-product
++
++FDOT_zzzz       01100100 00 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_e0
+ BFDOT_zzzz      01100100 01 1 ..... 10 0 00 0 ..... .....  @rda_rn_rm_e0
+ 
+ ### SVE2 floating-point multiply-add long (indexed)
+@@ -1673,7 +1675,9 @@ FMLSLT_zzxw     01100100 10 1 ..... 0110.1 ..... .....     @rrxr_3a esz=2
+ BFMLALB_zzxw    01100100 11 1 ..... 0100.0 ..... .....     @rrxr_3a esz=2
+ BFMLALT_zzxw    01100100 11 1 ..... 0100.1 ..... .....     @rrxr_3a esz=2
+ 
+-### SVE2 floating-point bfloat16 dot-product (indexed)
++### SVE2 floating-point dot-product (indexed)
++
++FDOT_zzxz       01100100 00 1 ..... 010000 ..... .....     @rrxr_2 esz=2
+ BFDOT_zzxz      01100100 01 1 ..... 010000 ..... .....     @rrxr_2 esz=2
+ 
+ ### SVE broadcast predicate element
 -- 
 2.43.0
 
