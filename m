@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C27C3C7115D
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00595C7EE2A
 	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT7z0-00053j-OC; Sat, 21 Jun 2025 19:50:50 -0400
+	id 1uT82d-0003Ag-7Z; Sat, 21 Jun 2025 19:54:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7yv-00050L-3u
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:45 -0400
+ id 1uT82P-0002CT-9w
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:21 -0400
 Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7yt-0004Qi-8n
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:44 -0400
+ id 1uT82N-00057c-D9
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:21 -0400
 Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-742c7a52e97so2412542b3a.3
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:50:42 -0700 (PDT)
+ d2e1a72fcca58-747ef5996edso2314414b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:54:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750549842; x=1751154642; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750550058; x=1751154858; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=uoQR56lcjZAhphgQyGDSgdvmVHPYbCeYqSZu6JrpeEQ=;
- b=zVT9xJY/aEQHpoBxI73PNSA7YAWoto5th8i9cMkej7vyWbqx5tRTuXQAFF2+Fj/MnM
- gbAyV4FFDzAIidFv8/lWQhl4v+Z6zTRzw4fAY/N7v7VT3tCtyg1l6rQX6CuokwEzGX/y
- zd46NZqv2K9EYib5/jqH1IOQD9MHErCxzuCOhtSCEAOFt5ZEOkkuXIKASjayaOvd2c9u
- VlH9op8WkRLO0SckbNm2cZgb0v9nmQ7dCV/5EOPuHyXZ/D47y2Rb7mrsChsC9eWOsIs7
- eS5EwOt6FMKlVSbuXnWtEqp7XQssHK99ElRRipUn2HF9IttALF3bHKI0mMcj013FmLh2
- 4lzA==
+ :reply-to; bh=xBHVvntoe0VYWbFR8TJvAId1+IERgh+E/AsOyyauGi0=;
+ b=e4XurnO0GUDVJANa4aqwCAAVpRvhXXr3LipYyMIvqd2bbow7/+gyywOf16qnYDhEtt
+ wGyTKKbdH+f2qgSFsFYiuC4ELRhWk/ld+q5P7l1zS5jNByhUxYXG+JulL93H2BGsDw9v
+ 9c/4p7Op1kG3LcdOv7WQ1Rtmtde0LCe9NLJx0w6nk81vcMZINw6yXUiVnK15eKBhMByu
+ X8yOSDYir8N/73wmN/9kDmwhRX8CRABohRRicFgqmRA+GMjHBFe96aic89BuwSh4ao1+
+ vhv6kslADiBtPhixYRd9L3C8PRSkIrhZ1pJj8ji62L/rCdtyNkX74nOuuWI7nCUmgxCD
+ eg8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750549842; x=1751154642;
+ d=1e100.net; s=20230601; t=1750550058; x=1751154858;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uoQR56lcjZAhphgQyGDSgdvmVHPYbCeYqSZu6JrpeEQ=;
- b=Gru/HtKpF+khEhTTh9Ey8G1NsDNRyYDbCHoSHyWlNHv1OnsZ6vYCl4ytkddOVY6FVf
- b5oP7JUof8UmlQn9s9PJBlwtwJkIIh6TKHDfccEDnF0uu/Baitb9j/sM6QNr+huQ28wV
- c3TwrGU3EGqpD3LT4zaeI18GGCrM0EElMeHlRvUkHVAYIyUGnrQ7ONs5D+XpGmdDqDt5
- O4cuAuZwsG1TtVsTT/ZDW4PCnITlkaxIf/YZi9/3WNdtBcp1o6sleqPocxFcIWjoX7rE
- F1WC+A0oT1a+mnWUlCp2XW0FJpNemgP5L5DeB650GygwR6PKybIwU0pQHdulZmhCl+/a
- yi+g==
-X-Gm-Message-State: AOJu0YwsLRrIDc88xK+70BPE2CHhNvGMUzjRhSoqfMkn3CLG33mniMGX
- f9XH+/m+NB0NX4D/O8Nsn8jDf43JvcvN4j0dqrVeRWxVrhhIp79p5ljul3rWMtftkhCEqylqDl5
- TmBbd
-X-Gm-Gg: ASbGnctzFrs6pAKbvf8OuU0+K6tPyConYKFYugpi4yB0Y3mVl/ZD4aSE+gRg+LjFdek
- 7xKo1zFo9kAmkrLESL67HBPtmvZy09uXEBEhaV9RlwoXNaqYS8sYWmUkOK1j2XeYZaYA+i4Ys8J
- MbYkUqXxKrRyHdLAC8sIJpfZQm1HHWljdj61nngWX3B7mkyRFcM6EjK6sBxaF4cRX/99GgLGNhm
- 0OnkVIDrE6D9aarPvngy4UCLuhQO5fzX9jd6rbDQmcuHMKt37Ilr9U238f4eTpFo9n+VGFm/hD6
- smmoQD7RShj2Lpxgj7ZI0W4R3iLfalLNz+DcOdOQcUcX3i3dWyALwG2wQtdB2okcJ/dYxOZ3ooj
- wBD4WONR1ntuQICo5+hR401UWEgwYABw=
-X-Google-Smtp-Source: AGHT+IHWQmsCemto+F7Ei3pjhKdfWRTfrKKwBCW5mgdzakXeCU2hwiyz3XLlzhDREcSNs9mNiDgAoA==
-X-Received: by 2002:a05:6a00:4f8c:b0:732:2484:e0ce with SMTP id
- d2e1a72fcca58-7490da9cd1amr9981329b3a.17.1750549841747; 
- Sat, 21 Jun 2025 16:50:41 -0700 (PDT)
+ bh=xBHVvntoe0VYWbFR8TJvAId1+IERgh+E/AsOyyauGi0=;
+ b=BCekuXpSwBrNVnpZv8yUSq+kWA4P2S7Bl9+KvugFYTonoIr3dTDh381XUhkNtx0CM+
+ wUklRAlH/fupDeM76ohFGH2zN3ncc5G9G7CyFmaAy/hu5T/1/ftgwaAR10WhDTbvDwNZ
+ 2Pfm+ah71DampRz9PIkOBU8yshNUuek3mwTVgoFPDOmM9a4Rmw1I+fNeo5ocy1qs8zDz
+ BMJcjwXxqg2rR/a7HUhIVWxt4J+9zlPe8zUhqjkvyZwHAzqoyocD5pFkJIlQGwf/R0CT
+ RUWFqYNhnK3S3vJwQR6DePSXWlVMp9q8RVpbixvpAdYaw8DVw2zg6iO1/NQ7rc/WACpi
+ rS9g==
+X-Gm-Message-State: AOJu0YxjJ4AjYO7RSqZxsfkwRX3jlhNBWsJv5aiZtpGyTLQq4ZHmvouv
+ 9VwvJMZUwtZlc2UuYZJRwN3wf+2Lbp+4qAMlC4+pfBRWEsLj1rtzyTnhGj9A/I9EpexbYnq70Od
+ I9iInRrs=
+X-Gm-Gg: ASbGncswpTzcqhLwGBTeH6ZlqIGbCjP64ZP6IQAlyMkrkP/yO+acJ915d7+fTGBbnqb
+ URSc9bExrCt0CwCPuMTz4gb2saMXK6T230wA+uf1E8o2BW1PVadxhzQ+4iR2PcfdP6hiyZlwENA
+ 1cVRZIxqP/VQSBWzx2OWldy0f8pHuAJx/oS+SaaIBWU+M5L2rAxjykV5/LpozJZ9Yc26ZpSKkLx
+ WNYGI9OKwc3sbVkgAYhD5jWi8zQZtmhINWCPAoIi1GgY75KFnIQWnzqqCDknLK/gZicG8ZbZy9w
+ HSJlZH0qcCAovww1z6hk2nV5a8S+QBGgwbiclGDCzh7K1M9FoiJJtlvxmeoUwmCNgBVmZh9TFpI
+ kdq1bzHjKupfTazK+ueQU
+X-Google-Smtp-Source: AGHT+IGQhjFi6jktzVAWWLYfNiO7FO2s6z5tv4K9ikjvRGwGiYg7IK2VPOMOa3LlissI7Bj42hGaaQ==
+X-Received: by 2002:a05:6a21:6d9c:b0:1f5:8153:93fb with SMTP id
+ adf61e73a8af0-22026e8cef8mr11108998637.10.1750550057952; 
+ Sat, 21 Jun 2025 16:54:17 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.50.41
+ d2e1a72fcca58-7490a46b590sm4970051b3a.27.2025.06.21.16.54.17
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:50:41 -0700 (PDT)
+ Sat, 21 Jun 2025 16:54:17 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 004/101] tcg: Add base arguments to check_overlap_[234]
-Date: Sat, 21 Jun 2025 16:49:00 -0700
-Message-ID: <20250621235037.74091-5-richard.henderson@linaro.org>
+Subject: [PATCH v2 061/101] target/arm: Implement SME2 ZIP,
+ UZP (four registers)
+Date: Sat, 21 Jun 2025 16:49:57 -0700
+Message-ID: <20250621235037.74091-62-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
@@ -101,154 +102,177 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- tcg/tcg-op-gvec.c | 55 ++++++++++++++++++++++++++---------------------
- 1 file changed, 31 insertions(+), 24 deletions(-)
+ target/arm/tcg/helper-sme.h    | 12 ++++++
+ target/arm/tcg/sme_helper.c    | 68 ++++++++++++++++++++++++++++++++++
+ target/arm/tcg/translate-sme.c | 35 +++++++++++++++++
+ target/arm/tcg/sme.decode      | 11 ++++++
+ 4 files changed, 126 insertions(+)
 
-diff --git a/tcg/tcg-op-gvec.c b/tcg/tcg-op-gvec.c
-index c26cfb24cc..54304d08cc 100644
---- a/tcg/tcg-op-gvec.c
-+++ b/tcg/tcg-op-gvec.c
-@@ -58,29 +58,34 @@ static void check_size_align(uint32_t oprsz, uint32_t maxsz, uint32_t ofs)
+diff --git a/target/arm/tcg/helper-sme.h b/target/arm/tcg/helper-sme.h
+index 8d3018fbd9..83277bdcdb 100644
+--- a/target/arm/tcg/helper-sme.h
++++ b/target/arm/tcg/helper-sme.h
+@@ -253,3 +253,15 @@ DEF_HELPER_FLAGS_3(sme2_uunpk2_sd, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(sme2_uunpk4_bh, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(sme2_uunpk4_hs, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
+ DEF_HELPER_FLAGS_3(sme2_uunpk4_sd, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++
++DEF_HELPER_FLAGS_3(sme2_zip4_b, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_zip4_h, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_zip4_s, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_zip4_d, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_zip4_q, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++
++DEF_HELPER_FLAGS_3(sme2_uzp4_b, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_uzp4_h, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_uzp4_s, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_uzp4_d, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
++DEF_HELPER_FLAGS_3(sme2_uzp4_q, TCG_CALL_NO_RWG, void, ptr, ptr, i32)
+diff --git a/target/arm/tcg/sme_helper.c b/target/arm/tcg/sme_helper.c
+index 12e86de643..f6af876286 100644
+--- a/target/arm/tcg/sme_helper.c
++++ b/target/arm/tcg/sme_helper.c
+@@ -1754,3 +1754,71 @@ void HELPER(sme2_fcvtl)(void *vd, void *vs, float_status *fpst, uint32_t desc)
+         d1[H4(i)] = v1;
+     }
  }
++
++#define ZIP4(NAME, TYPE, H)                                     \
++void HELPER(NAME)(void *vd, void *vs, uint32_t desc)            \
++{                                                               \
++    ARMVectorReg scratch[4];                                    \
++    size_t oprsz = simd_oprsz(desc);                            \
++    size_t quads = oprsz / (sizeof(TYPE) * 4);                  \
++    TYPE *s0, *s1, *s2, *s3;                                    \
++    if (vs == vd) {                                             \
++        vs = memcpy(scratch, vs, sizeof(scratch));              \
++    }                                                           \
++    s0 = vs;                                                    \
++    s1 = vs + sizeof(ARMVectorReg);                             \
++    s2 = vs + 2 * sizeof(ARMVectorReg);                         \
++    s3 = vs + 3 * sizeof(ARMVectorReg);                         \
++    for (size_t r = 0; r < 4; ++r) {                            \
++        TYPE *d = vd + r * sizeof(ARMVectorReg);                \
++        size_t base = r * quads;                                \
++        for (size_t q = 0; q < quads; ++q) {                    \
++            d[H(4 * q + 0)] = s0[base + H(q)];                  \
++            d[H(4 * q + 1)] = s1[base + H(q)];                  \
++            d[H(4 * q + 2)] = s2[base + H(q)];                  \
++            d[H(4 * q + 3)] = s3[base + H(q)];                  \
++        }                                                       \
++    }                                                           \
++}
++
++ZIP4(sme2_zip4_b, uint8_t, H1)
++ZIP4(sme2_zip4_h, uint16_t, H2)
++ZIP4(sme2_zip4_s, uint32_t, H4)
++ZIP4(sme2_zip4_d, uint64_t, )
++ZIP4(sme2_zip4_q, Int128, )
++
++#undef ZIP4
++
++#define UZP4(NAME, TYPE, H)                                     \
++void HELPER(NAME)(void *vd, void *vs, uint32_t desc)            \
++{                                                               \
++    ARMVectorReg scratch[4];                                    \
++    size_t oprsz = simd_oprsz(desc);                            \
++    size_t quads = oprsz / (sizeof(TYPE) * 4);                  \
++    TYPE *d0, *d1, *d2, *d3;                                    \
++    if (vs == vd) {                                             \
++        vs = memcpy(scratch, vs, sizeof(scratch));              \
++    }                                                           \
++    d0 = vd;                                                    \
++    d1 = vd + sizeof(ARMVectorReg);                             \
++    d2 = vd + 2 * sizeof(ARMVectorReg);                         \
++    d3 = vd + 3 * sizeof(ARMVectorReg);                         \
++    for (size_t r = 0; r < 4; ++r) {                            \
++        TYPE *s = vs + r * sizeof(ARMVectorReg);                \
++        size_t base = r * quads;                                \
++        for (size_t q = 0; q < quads; ++q) {                    \
++            d0[base + H(q)] = s[H(4 * q + 0)];                  \
++            d1[base + H(q)] = s[H(4 * q + 1)];                  \
++            d2[base + H(q)] = s[H(4 * q + 2)];                  \
++            d3[base + H(q)] = s[H(4 * q + 3)];                  \
++        }                                                       \
++    }                                                           \
++}
++
++UZP4(sme2_uzp4_b, uint8_t, H1)
++UZP4(sme2_uzp4_h, uint16_t, H2)
++UZP4(sme2_uzp4_s, uint32_t, H4)
++UZP4(sme2_uzp4_d, uint64_t, )
++UZP4(sme2_uzp4_q, Int128, )
++
++#undef UZP4
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 6e0a1997b4..b118e34849 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -1363,3 +1363,38 @@ TRANS_FEAT(UUNPK_2sd, aa64_sme2, do_zz, a, 0, gen_helper_sme2_uunpk2_sd)
+ TRANS_FEAT(UUNPK_4bh, aa64_sme2, do_zz, a, 0, gen_helper_sme2_uunpk4_bh)
+ TRANS_FEAT(UUNPK_4hs, aa64_sme2, do_zz, a, 0, gen_helper_sme2_uunpk4_hs)
+ TRANS_FEAT(UUNPK_4sd, aa64_sme2, do_zz, a, 0, gen_helper_sme2_uunpk4_sd)
++
++static bool do_zipuzp_4(DisasContext *s, arg_zz_e *a,
++                        gen_helper_gvec_2 * const fn[5])
++{
++    int svl = streaming_vec_reg_size(s);
++
++    /* Both MO_64 and MO_128 can fail the size test. */
++    if (svl < (4 << a->esz)) {
++        return false;
++    }
++    if (sme_sm_enabled_check(s)) {
++        tcg_gen_gvec_2_ool(vec_full_reg_offset(s, a->zd),
++                           vec_full_reg_offset(s, a->zn),
++                           svl, svl, 0, fn[a->esz]);
++    }
++    return true;
++}
++
++static gen_helper_gvec_2 * const zip4_fns[] = {
++    gen_helper_sme2_zip4_b,
++    gen_helper_sme2_zip4_h,
++    gen_helper_sme2_zip4_s,
++    gen_helper_sme2_zip4_d,
++    gen_helper_sme2_zip4_q,
++};
++TRANS_FEAT(ZIP_4, aa64_sme2, do_zipuzp_4, a, zip4_fns)
++
++static gen_helper_gvec_2 * const uzp4_fns[] = {
++    gen_helper_sme2_uzp4_b,
++    gen_helper_sme2_uzp4_h,
++    gen_helper_sme2_uzp4_s,
++    gen_helper_sme2_uzp4_d,
++    gen_helper_sme2_uzp4_q,
++};
++TRANS_FEAT(UZP_4, aa64_sme2, do_zipuzp_4, a, uzp4_fns)
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 1da64c5258..a43edb625c 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -722,6 +722,7 @@ FMLS_nx_d       11000001 1101 .... 1 .. 00. ...00 10 ...    @azx_4x1_i1_o3
  
- /* Verify vector overlap rules for two operands.  */
--static void check_overlap_2(uint32_t d, uint32_t a, uint32_t s)
-+static void check_overlap_2(TCGv_ptr dbase, uint32_t d,
-+                            TCGv_ptr abase, uint32_t a, uint32_t s)
- {
--    tcg_debug_assert(d == a || d + s <= a || a + s <= d);
-+    tcg_debug_assert(dbase != abase || d == a || d + s <= a || a + s <= d);
- }
+ ### SME2 Multi-vector SVE Constructive Unary
  
- /* Verify vector overlap rules for three operands.  */
--static void check_overlap_3(uint32_t d, uint32_t a, uint32_t b, uint32_t s)
-+static void check_overlap_3(TCGv_ptr dbase, uint32_t d,
-+                            TCGv_ptr abase, uint32_t a,
-+                            TCGv_ptr bbase, uint32_t b, uint32_t s)
- {
--    check_overlap_2(d, a, s);
--    check_overlap_2(d, b, s);
--    check_overlap_2(a, b, s);
-+    check_overlap_2(dbase, d, abase, a, s);
-+    check_overlap_2(dbase, d, bbase, b, s);
-+    check_overlap_2(abase, a, bbase, b, s);
- }
- 
- /* Verify vector overlap rules for four operands.  */
--static void check_overlap_4(uint32_t d, uint32_t a, uint32_t b,
--                            uint32_t c, uint32_t s)
-+static void check_overlap_4(TCGv_ptr dbase, uint32_t d,
-+                            TCGv_ptr abase, uint32_t a,
-+                            TCGv_ptr bbase, uint32_t b,
-+                            TCGv_ptr cbase, uint32_t c, uint32_t s)
- {
--    check_overlap_2(d, a, s);
--    check_overlap_2(d, b, s);
--    check_overlap_2(d, c, s);
--    check_overlap_2(a, b, s);
--    check_overlap_2(a, c, s);
--    check_overlap_2(b, c, s);
-+    check_overlap_2(dbase, d, abase, a, s);
-+    check_overlap_2(dbase, d, bbase, b, s);
-+    check_overlap_2(dbase, d, cbase, c, s);
-+    check_overlap_2(abase, a, bbase, b, s);
-+    check_overlap_2(abase, a, cbase, c, s);
-+    check_overlap_2(bbase, b, cbase, c, s);
- }
- 
- /* Create a descriptor from components.  */
-@@ -1205,7 +1210,7 @@ void tcg_gen_gvec_2(uint32_t dofs, uint32_t aofs,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs);
--    check_overlap_2(dofs, aofs, maxsz);
-+    check_overlap_2(tcg_env, dofs, tcg_env, aofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -1269,7 +1274,7 @@ void tcg_gen_gvec_2i(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs);
--    check_overlap_2(dofs, aofs, maxsz);
-+    check_overlap_2(tcg_env, dofs, tcg_env, aofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -1335,7 +1340,7 @@ void tcg_gen_gvec_2s(uint32_t dofs, uint32_t aofs, uint32_t oprsz,
-     TCGType type;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs);
--    check_overlap_2(dofs, aofs, maxsz);
-+    check_overlap_2(tcg_env, dofs, tcg_env, aofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -1415,7 +1420,7 @@ void tcg_gen_gvec_3(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs | bofs);
--    check_overlap_3(dofs, aofs, bofs, maxsz);
-+    check_overlap_3(tcg_env, dofs, tcg_env, aofs, tcg_env, bofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -1482,7 +1487,7 @@ void tcg_gen_gvec_3i(uint32_t dofs, uint32_t aofs, uint32_t bofs,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs | bofs);
--    check_overlap_3(dofs, aofs, bofs, maxsz);
-+    check_overlap_3(tcg_env, dofs, tcg_env, aofs, tcg_env, bofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -1550,7 +1555,8 @@ void tcg_gen_gvec_4(uint32_t dofs, uint32_t aofs, uint32_t bofs, uint32_t cofs,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs | bofs | cofs);
--    check_overlap_4(dofs, aofs, bofs, cofs, maxsz);
-+    check_overlap_4(tcg_env, dofs, tcg_env, aofs,
-+                    tcg_env, bofs, tcg_env, cofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -1620,7 +1626,8 @@ void tcg_gen_gvec_4i(uint32_t dofs, uint32_t aofs, uint32_t bofs, uint32_t cofs,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs | bofs | cofs);
--    check_overlap_4(dofs, aofs, bofs, cofs, maxsz);
-+    check_overlap_4(tcg_env, dofs, tcg_env, aofs,
-+                    tcg_env, bofs, tcg_env, cofs, maxsz);
- 
-     type = 0;
-     if (g->fniv) {
-@@ -3149,7 +3156,7 @@ do_gvec_shifts(unsigned vece, uint32_t dofs, uint32_t aofs, TCGv_i32 shift,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs);
--    check_overlap_2(dofs, aofs, maxsz);
-+    check_overlap_2(tcg_env, dofs, tcg_env, aofs, maxsz);
- 
-     /* If the backend has a scalar expansion, great.  */
-     type = choose_vector_type(g->s_list, vece, oprsz, vece == MO_64);
-@@ -3769,7 +3776,7 @@ void tcg_gen_gvec_cmp(TCGCond cond, unsigned vece, uint32_t dofs,
-     uint32_t some;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs | bofs);
--    check_overlap_3(dofs, aofs, bofs, maxsz);
-+    check_overlap_3(tcg_env, dofs, tcg_env, aofs, tcg_env, bofs, maxsz);
- 
-     if (cond == TCG_COND_NEVER || cond == TCG_COND_ALWAYS) {
-         do_dup(MO_8, tcg_env, dofs, oprsz, maxsz,
-@@ -3889,7 +3896,7 @@ void tcg_gen_gvec_cmps(TCGCond cond, unsigned vece, uint32_t dofs,
-     TCGType type;
- 
-     check_size_align(oprsz, maxsz, dofs | aofs);
--    check_overlap_2(dofs, aofs, maxsz);
-+    check_overlap_2(tcg_env, dofs, tcg_env, aofs, maxsz);
- 
-     if (cond == TCG_COND_NEVER || cond == TCG_COND_ALWAYS) {
-         do_dup(MO_8, tcg_env, dofs, oprsz, maxsz,
++&zz_e           zd zn esz
+ &zz_n           zd zn n
+ @zz_1x2         ........ ... ..... ...... ..... zd:5        \
+                 &zz_n n=1 zn=%zn_ax2
+@@ -799,3 +800,13 @@ SUNPK_4sd       11000001 111 10101 111000 ....0 ...00       @zz_4x2_n1
+ UUNPK_4bh       11000001 011 10101 111000 ....0 ...01       @zz_4x2_n1
+ UUNPK_4hs       11000001 101 10101 111000 ....0 ...01       @zz_4x2_n1
+ UUNPK_4sd       11000001 111 10101 111000 ....0 ...01       @zz_4x2_n1
++
++ZIP_4           11000001 esz:2 1 10110 111000 ...00 ... 00   \
++                &zz_e zd=%zd_ax4 zn=%zn_ax4
++ZIP_4           11000001 001     10111 111000 ...00 ... 00   \
++                &zz_e esz=4 zd=%zd_ax4 zn=%zn_ax4
++
++UZP_4           11000001 esz:2 1 10110 111000 ...00 ... 10   \
++                &zz_e zd=%zd_ax4 zn=%zn_ax4
++UZP_4           11000001 001     10111 111000 ...00 ... 10   \
++                &zz_e esz=4 zd=%zd_ax4 zn=%zn_ax4
 -- 
 2.43.0
 
