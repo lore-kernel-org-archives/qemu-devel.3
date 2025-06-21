@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30EBCC71157
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:52:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85D5BC7115C
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:52:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT7z2-000549-5E; Sat, 21 Jun 2025 19:50:52 -0400
+	id 1uT7z9-00058e-5n; Sat, 21 Jun 2025 19:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7z0-00053V-Dy
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:50 -0400
-Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ id 1uT7z6-00057V-P0
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:56 -0400
+Received: from mail-pg1-x52f.google.com ([2607:f8b0:4864:20::52f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT7yy-0004SJ-K5
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:50 -0400
-Received: by mail-pf1-x429.google.com with SMTP id
- d2e1a72fcca58-74264d1832eso3934306b3a.0
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:50:48 -0700 (PDT)
+ id 1uT7z4-0004UH-V9
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:50:56 -0400
+Received: by mail-pg1-x52f.google.com with SMTP id
+ 41be03b00d2f7-b2c4e46a89fso2372039a12.2
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:50:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750549847; x=1751154647; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750549852; x=1751154652; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KV3u/NMl2mm2+PD0vFp086adYqxm1W+7r+6YGl/n7yw=;
- b=Z/7hseckLaR7QIWYclZ42CsUkK7o61LAHtMDKX08yB/gyapqqR/Sy5QQqAc/kXc0Zq
- /Ki3rTUYZq3cmxVqtpN+TzNj/DnKlPAyV66g4PRbmrDs9BqveXy9zdsdJoI16cQAFipS
- hUkc2Xd6U2GUYeZZljsVBq03pBvedJ8GHv+HIyBm9QTNY5+VQi5MRjxEgRm+qTRNPXL1
- BRFCyApUEnFZCxTTw8yD9C8Q3jRBcjyP744pmRPxDmRxlR4fZPXKQLvg6NneuxipEnxy
- bGgRQ4hty/1GF7aZUykpV2Y+PhzdvgYaA5Q5K6/r/06qtmlIE4oYnLqxnU/y0PPsQupt
- Vw2Q==
+ :reply-to; bh=K/KRFheEnFJgkLqHH8Ou/wv5NETcBB8J6PUtxw1iYZg=;
+ b=JH6+Z9jnqs4qb+1HSlQI+6Qd1CtLYqNbSQgfh/abC/OuyUw6tlbe1wbBDK7+5ULFm3
+ bE0bMH67DIzsbBbEsbG1moq1M9BTMwKGKfv067mpIC5z024cWjXHm4+DaEQxLulQYD3S
+ JXgFgoHvtChZS6ByUCU34pwQau/BMBrrj99Uq4dU0WJuaLyH+xcxmP0F70izZA9nhNPu
+ NAHh7vo6PMi7wQdpg00zXihNi1Je2ccBNIDRACGcwllM5yjlDZlbZ+r2r0n5DpKzaHlD
+ g988fp75iE98Dv5w6OLhgUGUhZjEvm+HE4foYhl4bpGWn2eYPNfXxiPoA65OWnQGEhdT
+ 52cQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750549847; x=1751154647;
+ d=1e100.net; s=20230601; t=1750549852; x=1751154652;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KV3u/NMl2mm2+PD0vFp086adYqxm1W+7r+6YGl/n7yw=;
- b=k5qQB9D/00M3iU0E9oIEV6gsuiboTjY6uT3OzUlCdF24zbnFIl1bKvMDmFPSb2aT3t
- kmHJxBYf+j+idC0funm1uU7gB/gubTkOQGsndfEX7auTgRsZ8KaAQodY2mt5+IcsnCbN
- UD4wcp3DeIrq/YYvV8RLDIsDhFTE9TGmkfeQtGE0KWTBqiSFsu8vYKa9iNlysGom7LbE
- AS/mkwKvZXyrHG/naUgUHTYmJPBoy0Uq3JR5HTIK2RxPSGV47yCd4ycGFC4pqeZAEfVz
- CPT7dMjuDv9BPDIyWBmj4vLBc6V1c/Yeh/DC5vLgh3IchBuKlX3gBkFCTBhiusQCJBZu
- 0jxQ==
-X-Gm-Message-State: AOJu0Yw5y88/S3NkqDrEcSJwEfkfpQzYuhbFsau0c2EmIYWf6fkTZ+Ei
- tUdcKj+g4B5O1+2azD28rR2xejRD7wVIX7ZXjPKMIQEMKtyKAXaehfEkND4hAGwWzyYnQmalu36
- 1W5KL
-X-Gm-Gg: ASbGncvpl+GwE/3BddAMoeBTHMzd/SYwS6Y6oyzTYcS3PZ2g1v+MguTk/ofg6rYzjDw
- RMwGhUCmULYJmUcSFGWFI46Qip/FiyoftsBUgHWRKYmmJzSkj6q3/Z5H31r/K0dwonacoTD95KU
- fGH61cMrsIuAztwMLQsU5U/qruu6MoaRGQp9IyhgsnBZSvKiyZJAFbcFeNNneygDMd1ST9DNqd5
- N2cGurTPLPyTj2LWGk2SdUtpK/lfDe9A19/Dpy4I2iaKTHfTMhjLHJIsiWDeiM2tmteaEjf8uW0
- 0Mv8JRKj9ni8t+e9064GnnOHV7ZFx2TIOUmKWq7Z/20IQv2+suVEN1juuBDD59XtFQ6a2l1k9b5
- quRcDYeS+VQBPVPNrSk2n
-X-Google-Smtp-Source: AGHT+IH13mP5K964Gi6/EiIQQOUNCQ46ILyX2Ikph0VbWpvIoQFiwgGTbhvq2yxZPQ1wsZ2vP7tmew==
-X-Received: by 2002:a05:6a20:3d83:b0:1f5:9024:324f with SMTP id
- adf61e73a8af0-22026ecb493mr15247871637.31.1750549846987; 
- Sat, 21 Jun 2025 16:50:46 -0700 (PDT)
+ bh=K/KRFheEnFJgkLqHH8Ou/wv5NETcBB8J6PUtxw1iYZg=;
+ b=CO8ONEqgxbGyhdUZV6cm2FQcGn9RnaZE1R5kKudTrHhlwzmiVnEJGVVT0S2TVrE4BU
+ ptixevPoksAjojYloZy8QLIt9pAQYqNfJv6KTyClR7e5kFsPFawx4+VgNkyptV45PLMV
+ gH/Slosi0LW/PgDW3dn3DG5rwgVkxvTx68fwlCrqp1AJ8sCjQ8tJC9/4Bv45bsQC4Y/p
+ EXhq/itEb32WBi7Y/wbbzTWkK5prBttbOqbTPrJP+LW/0WYAlMgV5ikZPBmuKrk1Iqo4
+ LCz7ieTlAar+v6Fo4hE9XM5x58GsjD/oRz0AX3b6HaWPW+QgZBSajVtxABhYYUILUm5L
+ Ye8A==
+X-Gm-Message-State: AOJu0YzeGMFQsRcl7Hd+VBFhLZZ4/ykjsUHrGJNVkoXOg9tW4sEvhXXO
+ avi3aprw/tEk0VXbf0A/LBQZpJVoqJrPcCJHq/4vBZkK24jPJ/7sMyQ8E8uwUX7Dr8Y0KmKeWeq
+ wPxiC
+X-Gm-Gg: ASbGncti4IgcVYIRx5iEt/mhml4XYV5NFQTWM28LByiSUw9/kNN0MN/2B/YhhIuHjOz
+ /3iSrbUC01uNPPA10R96X8s3tzWcoWO1hwmnKFonSa6ITS6ezLw9NEIG7CQH+OV1j06tCtafJmQ
+ SnHdUJZNHZNFsQkRE7650zAbumRPPR4ufqjk8Ptd0CFKfuZDTV1wZFrkctKxpJ/y9+g8IGz2502
+ hGSpGkzxhsVaIR8qZIXzPROHqO1JtUtwxvJ3pvKnLrvQJmrTTl+5hwAreuMsa8Mbv96c8NU3+e5
+ LA2W/yvyjzMcF2KHGTIDnEQ6FiPhCFeZr4RHXVa2F2XpT3hWMc8RmsNONl/WuRUZ6m51FWdQqDX
+ +goAV3jOG/hNZSwsc3gLF
+X-Google-Smtp-Source: AGHT+IE035fEgDyS/dGyYx5Ms7eU7eZfxcAfsoZkw9au/DB2vnag7M3rdQ1C3p6UAvnucwXr3AO5mw==
+X-Received: by 2002:a05:6a20:729b:b0:21d:a9d:ba3b with SMTP id
+ adf61e73a8af0-22026fe7577mr12213274637.39.1750549852518; 
+ Sat, 21 Jun 2025 16:50:52 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.50.46
+ d2e1a72fcca58-7490a49ebd0sm5073744b3a.55.2025.06.21.16.50.52
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:50:46 -0700 (PDT)
+ Sat, 21 Jun 2025 16:50:52 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 012/101] target/arm: Introduce FPST_ZA, FPST_ZA_F16
-Date: Sat, 21 Jun 2025 16:49:08 -0700
-Message-ID: <20250621235037.74091-13-richard.henderson@linaro.org>
+Subject: [PATCH v2 021/101] target/arm: Split get_tile_rowcol argument
+ tile_index
+Date: Sat, 21 Jun 2025 16:49:17 -0700
+Message-ID: <20250621235037.74091-22-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x429.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pg1-x52f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,130 +100,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Rather than repeatedly copying FPST_FPCR to locals
-and setting default nan mode, create dedicated float_status.
+Decode tile number and index offset beforehand and separately.
 
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/cpu.h            | 12 +++++++++++-
- target/arm/cpu.c            |  4 ++++
- target/arm/tcg/vfp_helper.c | 10 ++++++++++
- 3 files changed, 25 insertions(+), 1 deletion(-)
+ target/arm/tcg/translate-sme.c | 17 +++++--------
+ target/arm/tcg/sme.decode      | 46 +++++++++++++++++++++++-----------
+ 2 files changed, 38 insertions(+), 25 deletions(-)
 
-diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 15b47a5bfc..c5060bcb97 100644
---- a/target/arm/cpu.h
-+++ b/target/arm/cpu.h
-@@ -206,6 +206,8 @@ typedef struct NVICState NVICState;
-  *       when FPCR.AH == 1 (bfloat16 conversions and multiplies,
-  *       and the reciprocal and square root estimate/step insns);
-  *       for half-precision
-+ * ZA: the "streaming sve" fp status.
-+ * ZA_F16: likewise for half-precision.
-  *
-  * Half-precision operations are governed by a separate
-  * flush-to-zero control bit in FPSCR:FZ16. We pass a separate
-@@ -226,6 +228,12 @@ typedef struct NVICState NVICState;
-  * they ignore FPCR.RMode. But they don't ignore FPCR.FZ16,
-  * which means we need an FPST_AH_F16 as well.
-  *
-+ * The "ZA" float_status are for Streaming SVE operations which use
-+ * default-NaN and do not generate fp exceptions, which means that they
-+ * do not accumulate exception bits back into FPCR.
-+ * See e.g. FPAdd vs FPAdd_ZA pseudocode functions, and the setting
-+ * of fpcr.DN and fpexec parameters.
-+ *
-  * To avoid having to transfer exception bits around, we simply
-  * say that the FPSCR cumulative exception flags are the logical
-  * OR of the flags in the four fp statuses. This relies on the
-@@ -239,10 +247,12 @@ typedef enum ARMFPStatusFlavour {
-     FPST_A64_F16,
-     FPST_AH,
-     FPST_AH_F16,
-+    FPST_ZA,
-+    FPST_ZA_F16,
-     FPST_STD,
-     FPST_STD_F16,
- } ARMFPStatusFlavour;
--#define FPST_COUNT  8
-+#define FPST_COUNT  10
+diff --git a/target/arm/tcg/translate-sme.c b/target/arm/tcg/translate-sme.c
+index 13314c5cd7..bd6095ffb6 100644
+--- a/target/arm/tcg/translate-sme.c
++++ b/target/arm/tcg/translate-sme.c
+@@ -41,15 +41,10 @@ static bool sme2_zt0_enabled_check(DisasContext *s)
+     return true;
+ }
  
- typedef struct CPUArchState {
-     /* Regs for current mode.  */
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index e025e241ed..6111b9db91 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -554,11 +554,15 @@ static void arm_cpu_reset_hold(Object *obj, ResetType type)
-     set_flush_inputs_to_zero(1, &env->vfp.fp_status[FPST_STD]);
-     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD]);
-     set_default_nan_mode(1, &env->vfp.fp_status[FPST_STD_F16]);
-+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA]);
-+    set_default_nan_mode(1, &env->vfp.fp_status[FPST_ZA_F16]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
-+    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A32_F16]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
-+    arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
-     arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_STD_F16]);
-     arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_AH]);
-     set_flush_to_zero(1, &env->vfp.fp_status[FPST_AH]);
-diff --git a/target/arm/tcg/vfp_helper.c b/target/arm/tcg/vfp_helper.c
-index b1324c5c0a..189fbd4f9e 100644
---- a/target/arm/tcg/vfp_helper.c
-+++ b/target/arm/tcg/vfp_helper.c
-@@ -196,6 +196,8 @@ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
-         set_float_rounding_mode(i, &env->vfp.fp_status[FPST_A64]);
-         set_float_rounding_mode(i, &env->vfp.fp_status[FPST_A32_F16]);
-         set_float_rounding_mode(i, &env->vfp.fp_status[FPST_A64_F16]);
-+        set_float_rounding_mode(i, &env->vfp.fp_status[FPST_ZA]);
-+        set_float_rounding_mode(i, &env->vfp.fp_status[FPST_ZA_F16]);
+-/*
+- * Resolve tile.size[index] to a host pointer, where tile and index
+- * are always decoded together, dependent on the element size.
+- */
++/* Resolve tile.size[rs+imm] to a host pointer. */
+ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+-                                int tile_index, bool vertical)
++                                int tile, int imm, bool vertical)
+ {
+-    int tile = tile_index >> (4 - esz);
+-    int index = esz == MO_128 ? 0 : extract32(tile_index, 0, 4 - esz);
+     int pos, len, offset;
+     TCGv_i32 tmp;
+     TCGv_ptr addr;
+@@ -57,7 +52,7 @@ static TCGv_ptr get_tile_rowcol(DisasContext *s, int esz, int rs,
+     /* Compute the final index, which is Rs+imm. */
+     tmp = tcg_temp_new_i32();
+     tcg_gen_trunc_tl_i32(tmp, cpu_reg(s, rs));
+-    tcg_gen_addi_i32(tmp, tmp, index);
++    tcg_gen_addi_i32(tmp, tmp, imm);
+ 
+     /* Prepare a power-of-two modulo via extraction of @len bits. */
+     len = ctz32(streaming_vec_reg_size(s)) - esz;
+@@ -185,7 +180,7 @@ static bool trans_MOVA(DisasContext *s, arg_MOVA *a)
+         return true;
      }
-     if (changed & FPCR_FZ16) {
-         bool ftz_enabled = val & FPCR_FZ16;
-@@ -203,15 +205,18 @@ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
-         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64_F16]);
-         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
-         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_AH_F16]);
-+        set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_ZA_F16]);
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A32_F16]);
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64_F16]);
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_STD_F16]);
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_AH_F16]);
-+        set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_ZA_F16]);
+ 
+-    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za_imm, a->v);
++    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
+     t_zr = vec_full_reg_ptr(s, a->zr);
+     t_pg = pred_full_reg_ptr(s, a->pg);
+ 
+@@ -264,7 +259,7 @@ static bool trans_LDST1(DisasContext *s, arg_LDST1 *a)
+         return true;
      }
-     if (changed & FPCR_FZ) {
-         bool ftz_enabled = val & FPCR_FZ;
-         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A32]);
-         set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A64]);
-+        set_flush_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_ZA]);
-         /* FIZ is A64 only so FZ always makes A32 code flush inputs to zero */
-         set_flush_inputs_to_zero(ftz_enabled, &env->vfp.fp_status[FPST_A32]);
+ 
+-    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za_imm, a->v);
++    t_za = get_tile_rowcol(s, a->esz, a->rs, a->za, a->off, a->v);
+     t_pg = pred_full_reg_ptr(s, a->pg);
+     addr = tcg_temp_new_i64();
+ 
+@@ -295,7 +290,7 @@ static bool do_ldst_r(DisasContext *s, arg_ldstr *a, GenLdStR *fn)
      }
-@@ -223,6 +228,7 @@ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
-         bool fitz_enabled = (val & FPCR_FIZ) ||
-             (val & (FPCR_FZ | FPCR_AH)) == FPCR_FZ;
-         set_flush_inputs_to_zero(fitz_enabled, &env->vfp.fp_status[FPST_A64]);
-+        set_flush_inputs_to_zero(fitz_enabled, &env->vfp.fp_status[FPST_ZA]);
-     }
-     if (changed & FPCR_DN) {
-         bool dnan_enabled = val & FPCR_DN;
-@@ -240,9 +246,13 @@ void vfp_set_fpcr_to_host(CPUARMState *env, uint32_t val, uint32_t mask)
-             /* Change behaviours for A64 FP operations */
-             arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
-             arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
-+            arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
-+            arm_set_ah_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
-         } else {
-             arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64]);
-             arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_A64_F16]);
-+            arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA]);
-+            arm_set_default_fp_behaviours(&env->vfp.fp_status[FPST_ZA_F16]);
-         }
-     }
-     /*
+ 
+     /* ZA[n] equates to ZA0H.B[n]. */
+-    base = get_tile_rowcol(s, MO_8, a->rv, imm, false);
++    base = get_tile_rowcol(s, MO_8, a->rv, 0, imm, false);
+ 
+     fn(s, base, 0, svl, a->rn, imm * svl);
+     return true;
+diff --git a/target/arm/tcg/sme.decode b/target/arm/tcg/sme.decode
+index 83ca6a9104..efe369e079 100644
+--- a/target/arm/tcg/sme.decode
++++ b/target/arm/tcg/sme.decode
+@@ -27,17 +27,29 @@ ZERO_zt0        11000000 01 001 00000000000 00000001
+ ### SME Move into/from Array
+ 
+ %mova_rs        13:2 !function=plus_12
+-&mova           esz rs pg zr za_imm v:bool to_vec:bool
++&mova           esz rs pg zr za off v:bool to_vec:bool
+ 
+-MOVA            11000000 esz:2 00000 0 v:1 .. pg:3 zr:5 0 za_imm:4  \
+-                &mova to_vec=0 rs=%mova_rs
+-MOVA            11000000 11    00000 1 v:1 .. pg:3 zr:5 0 za_imm:4  \
+-                &mova to_vec=0 rs=%mova_rs esz=4
++MOVA            11000000 00 00000 0 v:1 .. pg:3 zr:5 0 off:4  \
++                &mova to_vec=0 rs=%mova_rs esz=0 za=0
++MOVA            11000000 01 00000 0 v:1 .. pg:3 zr:5 0 za:1 off:3  \
++                &mova to_vec=0 rs=%mova_rs esz=1
++MOVA            11000000 10 00000 0 v:1 .. pg:3 zr:5 0 za:2 off:2  \
++                &mova to_vec=0 rs=%mova_rs esz=2
++MOVA            11000000 11 00000 0 v:1 .. pg:3 zr:5 0 za:3 off:1  \
++                &mova to_vec=0 rs=%mova_rs esz=3
++MOVA            11000000 11 00000 1 v:1 .. pg:3 zr:5 0 za:4  \
++                &mova to_vec=0 rs=%mova_rs esz=4 off=0
+ 
+-MOVA            11000000 esz:2 00001 0 v:1 .. pg:3 0 za_imm:4 zr:5  \
+-                &mova to_vec=1 rs=%mova_rs
+-MOVA            11000000 11    00001 1 v:1 .. pg:3 0 za_imm:4 zr:5  \
+-                &mova to_vec=1 rs=%mova_rs esz=4
++MOVA            11000000 00 00001 0 v:1 .. pg:3 0 off:4      zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=0 za=0
++MOVA            11000000 01 00001 0 v:1 .. pg:3 0 za:1 off:3 zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=1
++MOVA            11000000 10 00001 0 v:1 .. pg:3 0 za:2 off:2 zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=2
++MOVA            11000000 11 00001 0 v:1 .. pg:3 0 za:3 off:1 zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=3
++MOVA            11000000 11 00001 1 v:1 .. pg:3 0 za:4       zr:5  \
++                &mova to_vec=1 rs=%mova_rs esz=4 off=0
+ 
+ ### SME Move into/from ZT0
+ 
+@@ -46,12 +58,18 @@ MOVT_ztr        1100 0000 0100 1110 0 off:3 00 11111 rt:5
+ 
+ ### SME Memory
+ 
+-&ldst           esz rs pg rn rm za_imm v:bool st:bool
++&ldst           esz rs pg rn rm za off v:bool st:bool
+ 
+-LDST1           1110000 0 esz:2 st:1 rm:5 v:1 .. pg:3 rn:5 0 za_imm:4  \
+-                &ldst rs=%mova_rs
+-LDST1           1110000 111     st:1 rm:5 v:1 .. pg:3 rn:5 0 za_imm:4  \
+-                &ldst esz=4 rs=%mova_rs
++LDST1           1110000 0 00 st:1 rm:5 v:1 .. pg:3 rn:5 0 off:4  \
++                &ldst rs=%mova_rs esz=0 za=0
++LDST1           1110000 0 01 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:1 off:3  \
++                &ldst rs=%mova_rs esz=1
++LDST1           1110000 0 10 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:2 off:2  \
++                &ldst rs=%mova_rs esz=2
++LDST1           1110000 0 11 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:3 off:1  \
++                &ldst rs=%mova_rs esz=3
++LDST1           1110000 1 11 st:1 rm:5 v:1 .. pg:3 rn:5 0 za:4  \
++                &ldst rs=%mova_rs esz=4 off=0
+ 
+ &ldstr          rv rn imm
+ @ldstr          ....... ... . ...... .. ... rn:5 . imm:4 \
 -- 
 2.43.0
 
