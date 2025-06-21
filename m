@@ -4,80 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EC37C7115C
-	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:57:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 76035C71157
+	for <qemu-devel@archiver.kernel.org>; Sat, 21 Jun 2025 23:57:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1uT82k-0003hO-DF; Sat, 21 Jun 2025 19:54:42 -0400
+	id 1uT82S-0002Jh-NY; Sat, 21 Jun 2025 19:54:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT82W-0002eh-7b
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:28 -0400
-Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
+ id 1uT82M-00027I-2U
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:19 -0400
+Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
- id 1uT82U-0005CS-A6
- for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:27 -0400
-Received: by mail-pf1-x42e.google.com with SMTP id
- d2e1a72fcca58-747fba9f962so2273502b3a.0
- for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:54:25 -0700 (PDT)
+ id 1uT82K-000525-5j
+ for qemu-devel@nongnu.org; Sat, 21 Jun 2025 19:54:17 -0400
+Received: by mail-pf1-x42f.google.com with SMTP id
+ d2e1a72fcca58-7425bd5a83aso2538000b3a.0
+ for <qemu-devel@nongnu.org>; Sat, 21 Jun 2025 16:54:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1750550065; x=1751154865; darn=nongnu.org;
+ d=linaro.org; s=google; t=1750550055; x=1751154855; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=KSMYEPMmFHBsuW15JHYPo//vS6oU9zg++I26gTjYMvo=;
- b=mwG3yHkkz1YdiIlsStAHEbC77n51nd2bOCkX/O6mcZ0RjEuXHXdKWID7SUHXHG2xkP
- 5x/1o5EVESL+or+Sus/9S7lVz5aBJLE7H5yft+GCbXpZ2X2adTOdwsKJaWMdV5cQlCCV
- n4g+uduXOEGLe8DlLPj/leIEU1NFgSEdTlCO2hWd0J8SZf0yI3Nfpr8S4+jfnT50dP8o
- 0lsVzQfdFB3XdejMpUJq7yBhsZ2fb9LW1NWbqjmgxAi9CAfvniIOdsFFfd+6R12XiH19
- /hCurLjAdZsxA7zxjYXC266Tqr+c7i4XijGu8SI7ax4OTrHGgirgA5A1dvES2BPZ+uDg
- l99Q==
+ :reply-to; bh=+3cqECiVR2tg+Fz3JMivkL65UkvEtN1qjo705uznv9o=;
+ b=wEa1LyapauaH0nwSYRbnkIqqsmvAhd/5VN9ESjlW50Unqhx1csZdmsNntjz+cVu3I2
+ 0zTAYbhalN6iMPA7Ceb4lGvpIbAKUCtFG37x5PTlz4Wy65afCQP87fQ2uCmmCm9mPRZ7
+ vQa+u6bTKd2F3Ri4wpCC5FIOZmopGx2oN1Binn81SbNgkyPv3gOk+VMYv8lm08fPsVFl
+ DycRvt2W1h5aT8J4m6SrLM5V2xSq9zEkp1vnZL/gaWdnPnllUK7JdAYg8jzMp/HPY1AF
+ HmphXvYFp+4G8KBGppuIL/LRs4Lhry38gHdp85Z3TNHWe/mTX4Ovz25iGVixCVc1+9Mj
+ ksaQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1750550065; x=1751154865;
+ d=1e100.net; s=20230601; t=1750550055; x=1751154855;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=KSMYEPMmFHBsuW15JHYPo//vS6oU9zg++I26gTjYMvo=;
- b=pX4FtM0ksHCG2L9Zn6mvt5Hb4hom84q/d65mF0hKLlerMGyamjDYaKXpevZRHLEvxK
- DT0OshtZmCc2XqmErfOccK6UdcIZbofeaypi+1A3s20Df0FqCLFkSUNgYX2RyGeh61WC
- yN0+SpQ6JfLNeR19Advz8uKY0wo2YhZmjxIndZY+o/Wexam+aPj0Mu7WA2OQyJAGwX0I
- QD2s4eYyp+Ne4j8Y0OCMyy5UPX65WwuOO1hyLKVN8NkFuHAkZh1w58AK2/dBQ1g2lMyP
- 1USwqUBqRLwukmkRcn976Pwktca8KWdCh3ppdPE2GrZz+m2Blbti0ATSm+KLawR0f2ix
- JuWA==
-X-Gm-Message-State: AOJu0Yzb/f8y8zMrlV4250zx8+gDWq+EpigrtGHvWRDLRIyU9e6AhpHG
- ZXDG+3xF8Zs+Hi6+V2PdlJZuWPtKDWoHsE7yThpaCaRgLMckjA+CUYt+dGgWyqEORPiRFpvAPS5
- gHMnDOg4=
-X-Gm-Gg: ASbGnct2LFbtptoEcOrGZsrMX66iLhcGAQIpjz9A5p82K3DJ4Qc1co01FyI0z7wKBTK
- n9fRWdjbBf/z+Dc4/NzLgS54nVvpeuwctQVZoliJ9g3SmQdmE/rp0kDal0vU765mKXS0UWFBW2t
- BrLcCh8lXUwkOmDzYii99uJHWtXfXNzYtl3vmGif6Y6oaexSSdZyEv+ny/sk+AED7bKEdUn/B24
- XH08mJc3byP3Mmk1mhXWUi6rsDJJHcPWoHsgBbWesU9i8ddc1BlqEEZioAgIGJlbiz2omddSitE
- YeDqjT9o3UtMSlAUZlcVhNlvaXFnnkRxCxuFmrrBuuZM5rB2JhoETGNoGz72/D9Qaz5xPNcaSrA
- D09RLNgc3u9J8cKoFQ7AT
-X-Google-Smtp-Source: AGHT+IHZAH944svGZB54r2KSz5IPaVzcVangGJv5zaZz9eZ2RsDQYFmj6I2QzUndj82Cg8zXzHbpfw==
-X-Received: by 2002:a05:6a20:7350:b0:21f:56d0:65dc with SMTP id
- adf61e73a8af0-220292bc007mr10204933637.13.1750550064874; 
- Sat, 21 Jun 2025 16:54:24 -0700 (PDT)
+ bh=+3cqECiVR2tg+Fz3JMivkL65UkvEtN1qjo705uznv9o=;
+ b=q7uNqfVWDWbvAgjQAm17ji1w+4zDhbwbCJxheYy/rZzFcuRGkSib7EWVa/wvX9wSEu
+ Mocm693BGBpGGYCRApNQoy5/59ssSCFgR436HN741gzveiWjcqqZ3PnmJdRtZjhDtP86
+ h5ReUzPBSi4AJojmaHOYIZb1Rr/1qeJc91WJ2py1DAQARU+UjCcIVc1NEfoGsVSnSMOW
+ bfq80qgG5p3tz9KJu2mJ/LRuJSll5vgzX/N9REJcezf6xdNcWu0VVNtXmqN3yeyDabjN
+ EFtvTgpQvdTvcJTdbAhf2GKir5LfjdSDuCgGmM68iTIPMdnK9Yj02nSMR2o5TDxn3ApQ
+ 5K6Q==
+X-Gm-Message-State: AOJu0YyCa/OXdArW6f25XkfinzA8WfP97Slpw7NRTIXo4UaR5jVjAHld
+ CCRaB/pzPJIYyVrFEM3f0dKeN9ChkyzAOSOqtggh42UZBbOCS5ljUExxVRTe7J1iLF/Et5W8RZ0
+ bNns+veM=
+X-Gm-Gg: ASbGncudasBDdaqQhvmczY1Fa0dLMlvHM8N5BmZ/AzapefUIJ2kMoAM2SpKHVzVzNcB
+ DprtVPEteCC3aUHsmCdkGUYxVwxY0pfBCbbN4t2wC55qS8wpEbOW0JL7/1HEYSjSN+lwZeD4SnP
+ wQ+Sf0SXFhDEiTzx3oEfft64w4pREMaVVeu8yy9fc6QmdsPfg2xW6vedPGGlT7iKM2wa4aXO0Xd
+ jjLr/B2ovimW2YkrFFzEKjyn5tg38WHBHvV1pz5DOvY94u4ryGmuhfK4dNzopwM+1vTrNIjBZQV
+ xtn2piJBCGDh7w9NkVMFrKSbpmVYUl5UI4kB0euagN/iCp8gB8EH3YejA46USr9MlZee/McU7uF
+ 005pBYON9l+eeNZFgEsVI
+X-Google-Smtp-Source: AGHT+IFFBzpCUkkEDJgy4F4KNuti3xqkVdvl8zkqU3YqAgBd/BmGopLwCdHyz6zqeT8DDcmrAPkDGQ==
+X-Received: by 2002:a05:6a00:2e88:b0:742:a77b:8bc with SMTP id
+ d2e1a72fcca58-7490d5c1d0cmr11257038b3a.2.1750550054832; 
+ Sat, 21 Jun 2025 16:54:14 -0700 (PDT)
 Received: from stoup.. (174-21-67-243.tukw.qwest.net. [174.21.67.243])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-7490a46b590sm4970051b3a.27.2025.06.21.16.54.24
+ d2e1a72fcca58-7490a46b590sm4970051b3a.27.2025.06.21.16.54.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 21 Jun 2025 16:54:24 -0700 (PDT)
+ Sat, 21 Jun 2025 16:54:14 -0700 (PDT)
 From: Richard Henderson <richard.henderson@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PATCH v2 072/101] target/arm: Split out do_whilel from
- helper_sve_whilel
-Date: Sat, 21 Jun 2025 16:50:08 -0700
-Message-ID: <20250621235037.74091-73-richard.henderson@linaro.org>
+Subject: [PATCH v2 056/101] target/arm: Introduce do_[us]sat_[bhs] macros
+Date: Sat, 21 Jun 2025 16:49:52 -0700
+Message-ID: <20250621235037.74091-57-richard.henderson@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20250621235037.74091-1-richard.henderson@linaro.org>
 References: <20250621235037.74091-1-richard.henderson@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
- envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,58 +99,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Inputs are a wider type of indeterminate sign.
+
 Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
 ---
- target/arm/tcg/sve_helper.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ target/arm/tcg/vec_internal.h | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/target/arm/tcg/sve_helper.c b/target/arm/tcg/sve_helper.c
-index 789c9ce3a5..0d16c318cf 100644
---- a/target/arm/tcg/sve_helper.c
-+++ b/target/arm/tcg/sve_helper.c
-@@ -4128,26 +4128,30 @@ static uint32_t pred_count_test(uint32_t elements, uint32_t count, bool invert)
-     return flags;
- }
+diff --git a/target/arm/tcg/vec_internal.h b/target/arm/tcg/vec_internal.h
+index 64a7249d01..c0ccf6da7a 100644
+--- a/target/arm/tcg/vec_internal.h
++++ b/target/arm/tcg/vec_internal.h
+@@ -223,6 +223,13 @@ int16_t do_sqrdmlah_h(int16_t, int16_t, int16_t, bool, bool, uint32_t *);
+ int32_t do_sqrdmlah_s(int32_t, int32_t, int32_t, bool, bool, uint32_t *);
+ int64_t do_sqrdmlah_d(int64_t, int64_t, int64_t, bool, bool);
  
--uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
-+static void do_whilel(uint64_t *d, uint64_t esz_mask,
-+                      uint32_t count, uint32_t oprbits)
- {
--    intptr_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
--    intptr_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
--    uint64_t esz_mask = pred_esz_masks[esz];
--    ARMPredicateReg *d = vd;
--    intptr_t i, oprbits = oprsz * 8;
-+    uint32_t i;
- 
-     tcg_debug_assert(count <= oprbits);
- 
--    /* Begin with a zero predicate register.  */
--    do_zero(d, oprsz);
--
--    /* Set all of the requested bits.  */
-     for (i = 0; i < count / 64; ++i) {
--        d->p[i] = esz_mask;
-+        d[i] = esz_mask;
-     }
-     if (count & 63) {
--        d->p[i] = MAKE_64BIT_MASK(0, count & 63) & esz_mask;
-+        d[i] = MAKE_64BIT_MASK(0, count & 63) & esz_mask;
-     }
-+}
++#define do_ssat_b(val)  MIN(MAX(val, INT8_MIN), INT8_MAX)
++#define do_ssat_h(val)  MIN(MAX(val, INT16_MIN), INT16_MAX)
++#define do_ssat_s(val)  MIN(MAX(val, INT32_MIN), INT32_MAX)
++#define do_usat_b(val)  MIN(MAX(val, 0), UINT8_MAX)
++#define do_usat_h(val)  MIN(MAX(val, 0), UINT16_MAX)
++#define do_usat_s(val)  MIN(MAX(val, 0), UINT32_MAX)
 +
-+uint32_t HELPER(sve_whilel)(void *vd, uint32_t count, uint32_t pred_desc)
-+{
-+    uint32_t oprsz = FIELD_EX32(pred_desc, PREDDESC, OPRSZ);
-+    uint32_t esz = FIELD_EX32(pred_desc, PREDDESC, ESZ);
-+    uint32_t oprbits = oprsz * 8;
-+    uint64_t esz_mask = pred_esz_masks[esz];
-+
-+    do_zero(vd, oprsz);
-+    do_whilel(vd, esz_mask, count, oprbits);
- 
-     return pred_count_test(oprbits, count, false);
- }
+ /**
+  * bfdotadd:
+  * @sum: addend
 -- 
 2.43.0
 
